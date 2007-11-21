@@ -8,6 +8,9 @@
 	# $Id$
 =====================================================================
 Version 4.2
+ - Added theme based template for person box (yalnifj)
+ - Added gender field to individual table (yalnifj)
+ - Added type field to media mapping table (yalnifj)
  - Added Tree tab to individual page (yalnifj)
  - Added Event class (yalnifj, neumont)
  - Fixed Top menu text wraps when using IE or Opera (canajun2eh)

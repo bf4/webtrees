@@ -68,7 +68,7 @@ class ra_guide extends ra_form {
 					<legend> <?php print $pgv_lang["analyze_people"]; ?></legend>
 					<form method="get" action="individual.php">
 					<br /><?php print $pgv_lang["pid_know_more"]; ?><br />
-					<input type="hidden" name="tab" value="5" />
+					<input type="hidden" name="tab" value="6" />
 					<input type="text" id="pid" name="pid" size="5" /><?php print_findindi_link("pid", ""); ?>
 					<input type="submit" value="<?php print $pgv_lang['view']; ?>" />
 					</form>

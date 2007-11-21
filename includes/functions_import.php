@@ -314,8 +314,9 @@ function import_record($indirec, $update) {
 		} else
 			$indi["rin"] = $gid;
 
+		$gender = get_gedcom_value("SEX", 1, $indirec, '', false);
 		$isdead = (int)is_dead($indirec, '', true);
-		$sql = "INSERT INTO " . $TBLPREFIX . "individuals VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($indi["gedfile"]) . "','" . $DBCONN->escapeSimple($indi["rin"]) . "','" . $DBCONN->escapeSimple($names[0][0]) . "',".$DBCONN->escapeSimple($isdead).",'" . $DBCONN->escapeSimple($indi["gedcom"]) . "','" . $DBCONN->escapeSimple($names[0][1]) . "','" . $DBCONN->escapeSimple($names[0][2]) . "')";
+		$sql = "INSERT INTO " . $TBLPREFIX . "individuals VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($indi["gedfile"]) . "','" . $DBCONN->escapeSimple($indi["rin"]) . "','" . $DBCONN->escapeSimple($names[0][0]) . "',".$DBCONN->escapeSimple($isdead).",'" . $DBCONN->escapeSimple($indi["gedcom"]) . "','" . $DBCONN->escapeSimple($names[0][1]) . "','" . $DBCONN->escapeSimple($names[0][2]) . "', '".$DBCONN->escapeSimple($gender)."')";
 		$res = dbquery($sql);
 
 		//-- PEAR supports prepared statements in mysqli we will use this code instead of the code above
@@ -830,6 +831,8 @@ function setup_database() {
 	$has_soundex = false;
 	$has_sourcelinks = false;
 	$has_assolinks = false;
+	$has_media_mapping_type = false;
+	$has_gender = false;
 	
 	$sqlite = ($DBTYPE == "sqlite");
 
@@ -850,6 +853,9 @@ function setup_database() {
 								break;
 							case "i_surname" :
 								$has_individuals_surname = true;
+								break;
+							case "i_gender" :
+								$has_gender = true;
 								break;
 						}
 					}
@@ -925,6 +931,14 @@ function setup_database() {
 					break;
 				case "media_mapping" :
 					$has_media_mapping = true;
+					$info = $DBCONN->tableInfo($TBLPREFIX . "media_maping");
+					foreach ($info as $indexval => $field) {
+						switch ($field["name"]) {
+							case "mm_gid_type" : 
+								$has_media_mapping_type = true;
+								break;
+						}
+					}
 					break;
 				case "nextid" :
 					$has_nextid = true;
@@ -952,12 +966,16 @@ function setup_database() {
 	}
 
 	//---------- Upgrade the database
-	if (!$has_individuals || $sqlite && (!$has_individuals_rin || !$has_individuals_letter || !$has_individuals_surname)) {
+	if (!$has_individuals || $sqlite && (!$has_individuals_rin || !$has_individuals_letter || !$has_individuals_surname || !$has_gender)) {
 		create_individuals_table();
 	} else { // check columns in the table
 		if (!$has_individuals_rin) {
 			$sql = "ALTER TABLE " . $TBLPREFIX . "individuals ADD i_rin VARCHAR(255)";
 			$res = dbquery($sql); //print "i_rin added<br/>\n";
+		}
+		if (!$has_gender) {
+			$sql = "ALTER TABLE " . $TBLPREFIX . "individuals ADD i_gender VARCHAR(2)";
+			$res = dbquery($sql); //print "i_gender added<br/>\n";
 		}
 		if (!$has_individuals_letter) {
 			$sql = "ALTER TABLE " . $TBLPREFIX . "individuals ADD i_letter VARCHAR(5)";
@@ -1064,7 +1082,7 @@ function setup_database() {
 	if (!$has_remotelinks) {
 		create_remotelinks_table();
 	}
-	if (!$has_media_mapping) {
+	if (!$has_media_mapping || !$has_media_mapping_type) {
 		create_media_mapping_table();
 	}
 	//-- table for keeping the next ID to store
@@ -1106,7 +1124,7 @@ function create_individuals_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "individuals";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255) NOT NULL, i_file INT NOT NULL, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100), PRIMARY KEY(i_id, i_file))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255) NOT NULL, i_file INT NOT NULL, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100), i_gender VARCHAR(2), PRIMARY KEY(i_id, i_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1386,7 +1404,7 @@ function create_media_mapping_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "media_mapping";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "media_mapping (mm_id INT NOT NULL, mm_media VARCHAR(15) NOT NULL DEFAULT '', mm_gid VARCHAR(15) NOT NULL DEFAULT '', mm_order INT NOT NULL DEFAULT '0', mm_gedfile INT DEFAULT NULL, mm_gedrec ".DB_LONGTEXT_TYPE.", PRIMARY KEY (mm_id))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "media_mapping (mm_id INT NOT NULL, mm_media VARCHAR(15) NOT NULL DEFAULT '', mm_gid VARCHAR(15) NOT NULL DEFAULT '', mm_gid_type VARCHAR(6), mm_order INT NOT NULL DEFAULT '0', mm_gedfile INT DEFAULT NULL, mm_gedrec ".DB_LONGTEXT_TYPE.", PRIMARY KEY (mm_id))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {

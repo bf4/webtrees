@@ -1,8 +1,15 @@
 <pre>
 <?php
 require_once('config.php');
-ob_start();
 require_once('SOAP/Client.php');
+require_once('webservice/PGVServiceLogic.class.php');
+//
+//$genealogyServer = new PGVServiceLogic();
+//$result = $genealogyServer->search('','NAME=Finlay&BIRTHDATE=1983',0,10);
+//print_r($result);
+//exit;
+
+
 
 //-- put your URL here
 $url = 'http://localhost/pgv-svn/genservice.php?wsdl';
@@ -106,6 +113,5 @@ print_r($s);
 //$s = $soap->deleteRecord($result->SID, 'RoyalBaseGarrett05.ged');
 //print_r($s);
 
-ob_end_flush();
 ?>
 </pre>

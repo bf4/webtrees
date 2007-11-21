@@ -608,16 +608,14 @@ function expandbox(boxid, bstyle) {
 		if (thumb1) {
 			oldthumbdisp = thumb1.style.display;
 			thumb1.style.display='block';
-			oldimgw = thumb1.width;
-			oldimgh = thumb1.height;
-			if (oldimgw) thumb1.style.width = oldimgw*2;
-			if (oldimgh) thumb1.style.height = oldimgh*2;
+			oldimgw = thumb1.offsetWidth;
+			oldimgh = thumb1.offsetHeight;
+			if (oldimgw) thumb1.style.width = (oldimgw*2)+"px";
+			if (oldimgh) thumb1.style.height = (oldimgh*2)+"px";
 		}
 		if (gender) {
 			oldimgw1 = gender.width;
 			oldimgh1 = gender.height;
-//			if (oldimgw1) gender.style.width = oldimgw1*2;
-//			if (oldimgh1) gender.style.height = oldimgh1*2;
 			if (oldimgw1) gender.style.width = "15px";
 			if (oldimgh1) gender.style.height = "15px";
 		}

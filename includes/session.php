@@ -431,7 +431,12 @@ if ($configOverride) {
 	exit;
 }
 
-if (!empty($_SERVER["PHP_SELF"])) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
+if (!empty($_SERVER["PHP_SELF"])) {
+	//-- fix CGI mode duplication of PHP_SELF bug (causes double login)
+	$temp = preg_split("/\.php/", $_SERVER["PHP_SELF"]);
+	if (count($temp)>2) $_SERVER["PHP_SELF"] = $temp[0].".php";
+	$SCRIPT_NAME=$_SERVER["PHP_SELF"];
+}
 else if (!empty($_SERVER["SCRIPT_NAME"])) $SCRIPT_NAME=$_SERVER["SCRIPT_NAME"];
 $SCRIPT_NAME = preg_replace("~/+~", "/", $SCRIPT_NAME);
 if (!empty($_SERVER["QUERY_STRING"])) $QUERY_STRING = $_SERVER["QUERY_STRING"];

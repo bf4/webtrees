@@ -529,14 +529,16 @@ function print_repository_record($sid) {
  * print any source information attached to the fact
  * @param string $factrec	The fact record to look for sources in
  * @param int $level		The level to look for sources at
+ * @param boolean $return	whether to return the data or print the data
  */
-function print_fact_sources($factrec, $level) {
+function print_fact_sources($factrec, $level, $return=false) {
 	global $pgv_lang;
 	global $factarray;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
 	$printDone = false;
+	$data = "";
 	$nlevel = $level+1;
-	if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return;
+	if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return "";
 	// -- Systems not using source records [ 1046971 ]
 	$ct = preg_match_all("/$level SOUR (.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {
@@ -545,7 +547,7 @@ function print_fact_sources($factrec, $level) {
 			$srec = substr($srec, 5); // remove SOUR
 			$srec = str_replace("\n".($level+1)." CONT ", " ", $srec); // remove n+1 CONT
 			$srec = str_replace("\n".($level+1)." CONC ", "", $srec); // remove n+1 CONC
-			print "<br /><span class=\"label\">".$pgv_lang["source"].":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
+			$data .= "<br /><span class=\"label\">".$pgv_lang["source"].":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
 			$printDone = true;
 		}
 	}
@@ -560,44 +562,45 @@ function print_fact_sources($factrec, $level) {
 			if (!$spos2) $spos2 = strlen($factrec);
 			$srec = substr($factrec, $spos1, $spos2-$spos1);
 			$lt = preg_match_all("/$nlevel \w+/", $srec, $matches);
-			print "<br />";
-			print "\n\t\t<span class=\"label\">";
+			$data .= "<br />";
+			$data .= "\n\t\t<span class=\"label\">";
 			$elementID = $sid."-".floor(microtime()*1000000);
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
-			if ($lt>0) print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
-			print $pgv_lang["source"].":</span> <span class=\"field\">";
+			if ($lt>0) $data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			$data .= $pgv_lang["source"].":</span> <span class=\"field\">";
 			$source = find_source_record($sid);
-			print "<a href=\"source.php?sid=".$sid."\">";
+			$data .= "<a href=\"source.php?sid=".$sid."\">";
 			$text = PrintReady(get_source_descriptor($sid));
 			//-- Print additional source title
 			$add_descriptor = get_add_source_descriptor($sid);
 			if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
 			// if (strpos($source, " _ITALIC")) print "<i>".$text."</i>"; else print $text;
-			print $text;
-			print "</a>";
-			print "</span>";
+			$data .= $text;
+			$data .= "</a>";
+			$data .= "</span>";
 
-			print "<div id=\"$elementID\"";
-			if ($EXPAND_SOURCES) print " style=\"display:block\"";
-			print " class=\"source_citations\">";
+			$data .= "<div id=\"$elementID\"";
+			if ($EXPAND_SOURCES) $data .= " style=\"display:block\"";
+			$data .= " class=\"source_citations\">";
 			// PUBL
 			$text = get_gedcom_value("PUBL", "1", $source);
 			if (!empty($text)) {
-				print "<span class=\"label\">".$factarray["PUBL"].": </span>";
-				// if (strpos($source, " _PAREN")) print "(".$text.")"; else print $text;
-				print $text;
+				$data .= "<span class=\"label\">".$factarray["PUBL"].": </span>";
+				$data .= $text;
 			}
 			printSourceStructure(getSourceStructure($srec));
-			print "<div class=\"indent\">";
+			$data .= "<div class=\"indent\">";
 			print_media_links($srec, $nlevel);
 			print_fact_notes($srec, $nlevel);
-			print "</div>";
-			print "</div>";
+			$data .= "</div>";
+			$data .= "</div>";
 			
 			$printDone = true;
 		}
 	}
-	if ($printDone) print "<br />";
+	if ($printDone) $data .= "<br />";
+	if (!$return) print $data;
+	else return $data;
 }
 
 //-- Print the links to multi-media objects
@@ -858,8 +861,8 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	$ct = preg_match_all("/$level SOUR @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	$spos2 = 0;
 	for($j=0; $j<$ct; $j++) {
-		$sid=$match[$j][1];
-		$spos1 = strpos($factrec, "$level SOUR @".$match[$j][1]."@", $spos2);
+		$sid = $match[$j][1];
+		$spos1 = strpos($factrec, "$level SOUR @".$sid."@", $spos2);
 		$spos2 = strpos($factrec, "\n$level", $spos1);
 		if (!$spos2) $spos2 = strlen($factrec);
 		$srec = substr($factrec, $spos1, $spos2-$spos1);

@@ -1864,11 +1864,11 @@ function get_media_relations($mid){
 
 	$media = array();
 
-	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
+	$dbq = "SELECT mm_gid, mm_gid_type FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
 		if ($row[0] != $mid){
-			$media[$row[0]] = id_type($row[0]);
+			$media[$row[0]] = $row[1];
 		}
 	}
 	$medialist[$keyMediaList]['LINKS'] = $media;

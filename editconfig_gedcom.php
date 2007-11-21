@@ -1578,18 +1578,16 @@ foreach ($factarray as $factkey=>$factlabel) {
 	}
 }
 print "</table>";
-print "<tr>";
 ?>
+</td>
+</tr>
+	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("EXPAND_RELATIVES_EVENTS_help", "qm", "EXPAND_RELATIVES_EVENTS"); print $pgv_lang["EXPAND_RELATIVES_EVENTS"];?></td>
 		<td class="optionbox">
 			<select name="NEW_EXPAND_RELATIVES_EVENTS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('EXPAND_RELATIVES_EVENTS_help');">
 				<option value="yes" <?php if ($EXPAND_RELATIVES_EVENTS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$EXPAND_RELATIVES_EVENTS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
-		</td>
-<?php
-print "</tr>";
-?>
 		</td>
 	</tr>
 	<tr>

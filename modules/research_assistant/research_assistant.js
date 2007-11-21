@@ -42,6 +42,6 @@
   	}
 	function confirm_prompt(text, commentid, pid) {
     	if (confirm(text)) {
-      		window.location = 'individual.php?pid='+pid+'&action=delete_comment&uc_id='+commentid+'&tab=5';
+      		window.location = 'individual.php?pid='+pid+'&action=delete_comment&uc_id='+commentid+'&tab=6';
     	}
     }

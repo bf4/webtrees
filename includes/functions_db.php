@@ -79,7 +79,7 @@ else if ($DBTYPE=='mssql') {
  * @param string $sql		the sql query to execture
  * @param boolean $show_error	whether or not to show any error messages
  * @param int $count	the number of records to return, 0 returns all
- * @return Object the connection result
+ * @return DB_result the connection result
  */
 function &dbquery($sql, $show_error=true, $count=0) {
 	global $DBCONN, $TOTAL_QUERIES, $INDEX_DIRECTORY, $SQL_LOG, $LAST_QUERY, $CONFIGURED;

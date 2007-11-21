@@ -282,21 +282,28 @@ class Event {
 			return $this->label;
 	}
 	
-	function print_simple_fact() {
+	/**
+	 * Print a simple fact version of this event
+	 *
+	 * @param boolean $return	whether to print or return
+	 */
+	function print_simple_fact($return=false) {
 		global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS;
 		
-		if (!$this->canShow()) return;
-		
+		if (!$this->canShow()) return "";
+		$data = "";
 		if ($this->gedComRecord != "1 DEAT"){
-		   print "<span class=\"details_label\">".$this->getLabel($ABBREVIATE_CHART_LABELS)."</span> ";
+		   $data .= "<span class=\"details_label\">".$this->getLabel($ABBREVIATE_CHART_LABELS)."</span> ";
 		}
 		if ($this->canShowDetails()) {
 			$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","OBJE","CHAN","_SEPR","RESI", "DATA", "MAP");
-			print PrintReady($this->detail);
-			if (!$this->dest) print_fact_date($this, false, false);
-			print_fact_place($this);
+			$data .= PrintReady($this->detail);
+			if (!$this->dest) $data .= print_fact_date($this, false, false, true);
+			$data .= print_fact_place($this, false, false, false, true);
 		}
-		print "<br />\n";
+		$data .= "<br />\n";
+		if (!$return) print $data;
+		else return $data;
 	}
 
 /* Print a fact icon that varies by the decade, century, and subtype

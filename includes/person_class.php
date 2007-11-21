@@ -458,7 +458,6 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathYear($est = true) {
 		// TODO - change the design to use julian days, not gregorian years.
-		//$ddate = parse_date($this->getDeathDate());
 		$this->_parseBirthDeath();
 		$ddate = $this->deathEvent->getDate();
 		return $ddate->date1->y;
@@ -653,6 +652,9 @@ class Person extends GedcomRecord {
 		return reset($families);
 	}
 	/**
+<<<<<<< .mine
+<<<<<<< .working
+=======
 	 * get family with child pedigree
 	 * @return string FAMC:PEDI value [ adopted | birth | foster | sealing ]
 	 */
@@ -663,6 +665,19 @@ class Person extends GedcomRecord {
 		return $pedi;
 	}
 	/**
+>>>>>>> .merge-right.r2229
+=======
+	 * get family with child pedigree
+	 * @return string FAMC:PEDI value [ adopted | birth | foster | sealing ]
+	 */
+	function getChildFamilyPedigree($famid) {
+		$subrec = get_sub_record(1, "1 FAMC @".$famid."@", $this->gedrec);
+		$pedi = get_gedcom_value("PEDI", 2, $subrec, '', false);
+		if (strpos($pedi, "birt")!==false) return ""; // birth=default => return an empty string
+		return $pedi;
+	}
+	/**
+>>>>>>> .r2231
 	 * get the step families from the parents
 	 * @return array	array of Family objects
 	 */
@@ -1396,9 +1411,10 @@ class Person extends GedcomRecord {
 			$found=false;
 			$oldfactrec = $this->indifacts[$i]->getGedcomRecord();
 			foreach($diff->indifacts as $indexval => $newfact) {
+				$newfactrec = $newfact->getGedcomRecord();
 				//-- remove all whitespace for comparison
-				$tnf = preg_replace("/\s+/", " ", $newfact[1]);
-				$tif = preg_replace("/\s+/", " ", $this->indifacts[$i][1]);
+				$tnf = preg_replace("/\s+/", " ", $newfactrec);
+				$tif = preg_replace("/\s+/", " ", $oldfactrec);
 				if ($tnf==$tif) {
 					$this->indifacts[$i] = $newfact;				//-- make sure the correct linenumber is used
 					$found=true;
@@ -1414,8 +1430,8 @@ class Person extends GedcomRecord {
 		foreach($diff->indifacts as $indexval => $newfact) {
 			$found=false;
 			foreach($this->indifacts as $indexval => $fact) {
-				$tif = preg_replace("/\s+/", " ", $fact[1]);
-				$tnf = preg_replace("/\s+/", " ", $newfact[1]);
+				$tif = preg_replace("/\s+/", " ", $fact->getGedcomRecord());
+				$tnf = preg_replace("/\s+/", " ", $newfact->getGedcomRecord());
 				if ($tif==$tnf) {
 					$found=true;
 					break;
