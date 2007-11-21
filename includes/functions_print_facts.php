@@ -858,6 +858,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	$ct = preg_match_all("/$level SOUR @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	$spos2 = 0;
 	for($j=0; $j<$ct; $j++) {
+		$sid=$match[$j][1];
 		$spos1 = strpos($factrec, "$level SOUR @".$match[$j][1]."@", $spos2);
 		$spos2 = strpos($factrec, "\n$level", $spos1);
 		if (!$spos2) $spos2 = strlen($factrec);

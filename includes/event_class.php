@@ -43,7 +43,6 @@ class Event {
 	var $canShowDetails = null;
 	var $canEdit = null;
 	var $state = "";
-	var $familyId = NULL;
 	var $type = NULL;
 	var $tag = NULL;
 	var $date = NULL;
@@ -174,13 +173,17 @@ class Event {
 	}
 	
 	function getFamilyId() {
-		if (is_null($this->familyId))
-			$this->familyId=$this->getValue('_PGVFS');
-		return $this->familyId;
+		if (preg_match("/\n1 _PGVFS @(.*)@/", $this->gedComRecord, $match))
+			return $match[1];
+		else
+			return NULL;
 	}
 	
 	function getSpouseId() {
-		return $this->getValue("_PGVS");
+		if (preg_match("/\n1 _PGVS @(.*)@/", $this->gedComRecord, $match))
+			return $match[1];
+		else
+			return NULL;
 	}
 	
 	/**

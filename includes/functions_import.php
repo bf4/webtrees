@@ -529,17 +529,13 @@ function update_dates($gid, $indirec) {
 			// 1 FACT/2 TYPE XXXX gets recorded as XXXX to enable searching
 			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $factrec, $match) && array_key_exists($match[1], $factarray))
 				$fact=$match[1];
-			$event = trim($match[2]);
-		}
-		$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
-		for ($i = 0; $i < $pt; $i++) {
-			$dates = parse_date($match[$i][1]);
-			foreach($dates as $date) {
-				$year = $date['year'];
-				//-- fix years with spaces
-				if (preg_match('/(\d\d\d\d) \d+/', $year, $ymatch)) $year = $ymatch[1];
-				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$year},{$date['jd1']},{$date['jd2']},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
-				$res=dbquery($sql);
+			$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
+			for ($i = 0; $i < $pt; $i++) {
+				$dates = parse_date($match[$i][1]);
+				foreach($dates as $date) {
+					$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$date['year']},{$date['jd1']},{$date['jd2']},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
+					$res=dbquery($sql);
+				}
 			}
 		}
 	}
