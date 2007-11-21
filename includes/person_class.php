@@ -652,9 +652,6 @@ class Person extends GedcomRecord {
 		return reset($families);
 	}
 	/**
-<<<<<<< .mine
-<<<<<<< .working
-=======
 	 * get family with child pedigree
 	 * @return string FAMC:PEDI value [ adopted | birth | foster | sealing ]
 	 */
