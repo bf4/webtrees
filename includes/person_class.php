@@ -665,19 +665,6 @@ class Person extends GedcomRecord {
 		return $pedi;
 	}
 	/**
->>>>>>> .merge-right.r2229
-=======
-	 * get family with child pedigree
-	 * @return string FAMC:PEDI value [ adopted | birth | foster | sealing ]
-	 */
-	function getChildFamilyPedigree($famid) {
-		$subrec = get_sub_record(1, "1 FAMC @".$famid."@", $this->gedrec);
-		$pedi = get_gedcom_value("PEDI", 2, $subrec, '', false);
-		if (strpos($pedi, "birt")!==false) return ""; // birth=default => return an empty string
-		return $pedi;
-	}
-	/**
->>>>>>> .r2231
 	 * get the step families from the parents
 	 * @return array	array of Family objects
 	 */
