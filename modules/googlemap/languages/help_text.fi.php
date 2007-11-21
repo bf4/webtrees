@@ -113,6 +113,7 @@ $pgv_lang["PLE_FLAGS_help"]             = "Using the pull down menu it is possib
 
 $pgv_lang["PLIF_FILENAME"]              = "Lisää tiedostonimi";
 $pgv_lang["PLIF_FILENAME_help"]         = "Enter the name of the file containing the place locations in CSV format.";
+$pgv_lang["PLIF_LOCALFILE_help"]        = "Valitse palvelimella jo olevista tiedostoista se tiedosto, joka sisältää paikkatiedot CSV-muodossa.";
 
 $pgv_lang["PLIF_CLEAN"]                 = "Siivoa paikkatieto tietokanta";
 $pgv_lang["PLIF_CLEAN_help"]            = "When this option is selected the placelocation database will be cleared. This means that only the location stored in this table will be deleted. This will not change anything in the GEDCOM.";

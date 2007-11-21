@@ -28,7 +28,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+$pgv_lang["FormDesciption"]			= "Lisää lomakkeen kuvaus";
+$pgv_lang["comment_body"]			= 'Kommentti';
+$pgv_lang["choose_form_label"]		= "Valitse yleinen tutkimuslomake:";
 
+$pgv_lang["autosearch_ssurname"] 	= "Lisää puolison sukunimi:";
+$pgv_lang["autosearch_sgivennames"] = "Lisää puolison etunimet:";
+$pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com lisäke";
 
 $pgv_lang["googlemap"]              = "Kartta";
 $pgv_lang["no_gmtab"]               = "Ei kartta tietoa tällä henkilöllä";
@@ -72,7 +78,6 @@ $pgv_lang["gm_pp_pr_po_n_b"]        = "Etuliite, jälkiliite, normal, kumpikin";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Jälkiliite, etuliite, normal, kumpikin";
 $pgv_lang["googlemap_coord"]        = "Näytä kartta koordinaatit";
 
-
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Muokkaa sijainti paikka tietoja";
 $pgv_lang["pl_no_places_found"]     = "Ei paikkoja lyötynyt";
@@ -89,6 +94,7 @@ $pgv_lang["pl_north_short"]         = "P";
 $pgv_lang["pl_south_short"]         = "E";
 $pgv_lang["pl_east_short"]          = "I";
 $pgv_lang["pl_west_short"]          = "L";
+$pgv_lang["pl_places_localfile"]	= "Palvelintiedosto, joka sisältää paikkoja (CSV)";
 $pgv_lang["pl_places_filename"]     = "Tiedosto sisältää paikkoja (CSV)";
 $pgv_lang["pl_clean_db"]            = "Siivoa kaikki paikkatiedot ennen tuontia?";
 $pgv_lang["pl_update_only"]         = "Päivitä vain olemassaolevat paikat?";
