@@ -29,7 +29,7 @@
 
 require "config.php";
 
-loadLangFile("pgv_help, pgv_admin, pgv_editor, ra_lang, gm_lang, gm_help");	// Load language keys
+loadLangFile("pgv_help, pgv_admin, pgv_editor, ra_lang, gm_lang, gm_help, sm_lang, sm_help");	// Load language keys
 
 if (!isset($help)) $help = "";
 

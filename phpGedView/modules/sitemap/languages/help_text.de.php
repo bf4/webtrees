@@ -2,7 +2,7 @@
 /**
  * German Language file for PhpGedView.
  *
- * phpGedView: Genealogy Viewer
+ * PhpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,20 +21,23 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
+ * @translator Gerd Kroll
  * @version $Id$
  */
+
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-  print "You cannot access a language file directly.";
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
   exit;
 }
 
 $pgv_lang["SITEMAP"]                = "Sitemap Information";
-$pgv_lang["SITEMAP_help"]           = "~#pgv_lang[SITEMAP]#~<br /><br />Mit dieser Seite können Sie eine Sitemap generieren. Sitemaps können von Suchmaschinen zur Optimierung der Indizierung Ihrer Seiten benutzt werdene. Dazu wird eine Datei mit allen Links die der Suchmaschine bekannt gemacht werden sollen angelgt.<br>Dieses Werkzeug erzeugt eine Sitemap Datei pro GEDCOM und (falls mehr als eine Sitemap-Datei generiert wurde) eine Siteindex-Datei. Die generierten Dateien sollten Sie in das Basisverzeichnis von phpGedView kopieren.<br>Zur Zeit werden Sitemap-Dateien nur von Google genutzt. Weitere Informationen auf:<br><a href=\"https://www.google.com/webmasters/sitemaps/docs/en/about.html\">About Google webmaster tools</a>";
+$pgv_lang["SITEMAP_help"]           = "~#pgv_lang[SITEMAP]#~<br /><br />Mit diesem Modul können Sie Sitemap-Dateien erstellen.  Im Moment sind diese Dateien leider nur von Google unterstützt.<br /><br />Jede GEDCOM-Datei hat seine eigene Sitemap-Datei, und wenn Ihre Site mehrere GEDCOMs unterstützt, ist dann auch noch eine weitere Index Sitemap-Datei vorhanden.  Sitemap-Dateien enthalten Links zu Seiten, zu denen Sie Suchmaschinen-Besuche erwünschen.<br /><br />Nachdem die Sitemap-Dateien erstellt sind, sollten Sie feststellen, dass deren Inhalt in Ordnung ist.  Danach sollten Sie die Sitemap-Dateien ins PhpGedView-Verzeichnis übertragen und dann sich bei <a href=\"https://www.google.com/webmasters/sitemaps/\" target=\"_blank\">Google webmaster tools</a> anmelden um die neuen Sitemap-Dateien dort anzukündigen.<br /><br />Ausführliche Auskunft über Sitemap ist in englischer Sprache bei der <a href=\"https://www.google.com/webmasters/sitemaps/docs/en/about.html\" target=\"_blank\">Google webmaster tools</a> Seite erhältlich.";
 
-$pgv_lang["SM_GEDCOM_SELECT"]       = "GEDCOMs auswählen";
-$pgv_lang["SM_GEDCOM_SELECT_help"]  = "~#pgv_lang[SM_GEDCOM_SELECT]#~<br /><br />Wählen Sie hier die GEDCOMs aus, für die eine Sitemap-Datei generiert werden soll. Sie müssen mindestens ein GEDCOM auswählen.";
+$pgv_lang["SM_GEDCOM_SELECT"]       = "GEDCOMs wählen";
+$pgv_lang["SM_GEDCOM_SELECT_help"]  = "~#pgv_lang[SM_GEDCOM_SELECT]#~<br />Wählen Sie hier die GEDCOMs, für welche Sie Sitemap-Dateien erstellen möchten.  Sie müssen mindestens eine GEDCOM wählen.<br /><br />Wenn die <b>Nur öffentlich zugreifbare Seiten zeigen</b> Option angekreuzt ist, enthalten die Sitemap-Dateien nur Links zu Seiten, die öffentlich zugreifbar sind.";
 
-$pgv_lang["SM_ITEM_SELECT"]         = "Seiten auswählen";
-$pgv_lang["SM_ITEM_SELECT_help"]    = "~#pgv_lang[SM_ITEM_SELECT]#~<br /><br />Wählen Sie hier die relevanten Seiten für die Sitemap-Datei aus. Für alle ausgewählten Seiten wird eine Priorität relativ zu den anderen Seiten innerhalb der Sitemap festgelegt.<br>Auch wird die voraussichtliche Häufigkeit der Aktualisierung eingestellt, in der sich die Daten in diesen Seiten ändern. Das beeinflusst natürlich auch die Häufigkeit der Besuche durch die Suchmaschine und beeinflusst so den Traffic, den die Seite erzeugt.";
+$pgv_lang["SM_ITEM_SELECT"]         = "Seiten wählen";
+$pgv_lang["SM_ITEM_SELECT_help"]    = "~#pgv_lang[SM_ITEM_SELECT]#~<br />Select the elements to be included in the Sitemap file.<br /><br />A priority can be specified for all selected elements. This priority is relative to the other priorities in the file.  The update frequency can also be specified. This is an indication of how frequently the data in these items might change. This can influence the time between visits by the search engine, and thus will influence the amount of traffic the site generates.";
+$pgv_lang["SM_ITEM_SELECT_help"]    = "~#pgv_lang[SM_ITEM_SELECT]#~<br />Bitte wählen Sie die Seitentypen zu denen Sie Links in den Sitemap-Dateien erstellen möchten.<br /><br />Für alle gewählten Seiten können Sie die Wichtigkeit relativ zu anderen Seiten der Sitemap bestimmen.  Sie können den Suchmaschinen auch andeuten, wie oft der Seiteninhalt sich gewöhnlich ändert. Das beeinflusst natürlich auch die Häufigkeit der Suchmaschinen-Besuche und beeinflusst so den Verkehr, den die Seite erzeugt.";
 
 ?>
