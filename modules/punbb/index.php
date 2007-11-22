@@ -22,8 +22,8 @@
 
 ************************************************************************/
 
-
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
+//define('PUN_ROOT', './');
 require PUN_ROOT.'include/common.php';
 
 
