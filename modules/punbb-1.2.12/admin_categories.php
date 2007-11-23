@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -112,7 +112,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 	<div class="blockform">
 		<h2><span>Category delete</span></h2>
 		<div class="box">
-			<form method="post" action="admin_categories.php">
+			<form method="post" action="<?php genurl('admin_categories.php', true, true)?>">
 				<div class="inform">
 				<input type="hidden" name="cat_to_delete" value="<?php echo $cat_to_delete ?>" />
 					<fieldset>
@@ -184,7 +184,7 @@ generate_admin_menu('categories');
 	<div class="blockform">
 		<h2><span>Add/remove/edit categories</span></h2>
 		<div class="box">
-		<form method="post" action="admin_categories.php?action=foo">
+		<form method="post" action="<?php genurl('admin_categories.php?action=foo', true, true)?>">
 			<div class="inform">
 				<fieldset>
 					<legend>Add/delete categories</legend>

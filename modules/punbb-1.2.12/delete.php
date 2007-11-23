@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -99,14 +99,14 @@ $cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smili
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="viewforum.php?id=<?php echo $cur_post['fid'] ?>"><?php echo pun_htmlspecialchars($cur_post['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_post['subject']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="<?php genurl("viewforum.php?id={$cur_post['fid']}", false, true)?>"><?php echo pun_htmlspecialchars($cur_post['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_post['subject']) ?></li></ul>
 	</div>
 </div>
 
 <div class="blockform">
 	<h2><span><?php echo $lang_delete['Delete post'] ?></span></h2>
 	<div class="box">
-		<form method="post" action="delete.php?id=<?php echo $id ?>">
+		<form method="post" action="<?php genurl("delete.php?id={$id}", true, true)?>">
 			<div class="inform">
 				<fieldset>
 					<legend class="warntext"><?php echo $lang_delete['Warning'] ?></legend>

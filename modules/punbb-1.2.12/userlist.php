@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -41,10 +41,10 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
 // Determine if we are allowed to view post counts
 $show_post_count = ($pun_config['o_show_post_count'] == '1' || $pun_user['g_id'] < PUN_GUEST) ? true : false;
 
-$username = (isset($_GET['username']) && $pun_user['g_search_users'] == '1') ? $_GET['username'] : '';
-$show_group = (!isset($_GET['show_group']) || intval($_GET['show_group']) < -1 && intval($_GET['show_group']) > 2) ? -1 : intval($_GET['show_group']);
-$sort_by = (!isset($_GET['sort_by']) || $_GET['sort_by'] != 'username' && $_GET['sort_by'] != 'registered' && ($_GET['sort_by'] != 'num_posts' || !$show_post_count)) ? 'username' : $_GET['sort_by'];
-$sort_dir = (!isset($_GET['sort_dir']) || $_GET['sort_dir'] != 'ASC' && $_GET['sort_dir'] != 'DESC') ? 'ASC' : strtoupper($_GET['sort_dir']);
+$username = (isset($_POST['username']) && $pun_user['g_search_users'] == '1') ? $_POST['username'] : '';
+$show_group = (!isset($_POST['show_group']) || intval($_POST['show_group']) < -1 && intval($_POST['show_group']) > 2) ? -1 : intval($_POST['show_group']);
+$sort_by = (!isset($_POST['sort_by']) || $_POST['sort_by'] != 'username' && $_POST['sort_by'] != 'registered' && ($_POST['sort_by'] != 'num_posts' || !$show_post_count)) ? 'username' : $_POST['sort_by'];
+$sort_dir = (!isset($_POST['sort_dir']) || $_POST['sort_dir'] != 'ASC' && $_POST['sort_dir'] != 'DESC') ? 'ASC' : strtoupper($_POST['sort_dir']);
 
 
 $page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['User list'];
@@ -58,7 +58,7 @@ require PUN_ROOT.'header.php';
 <div class="blockform">
 	<h2><span><?php echo $lang_search['User search'] ?></span></h2>
 	<div class="box">
-	<form id="userlist" method="get" action="userlist.php">
+	<form id="userlist" method="post" action="<?php genurl('userlist.php', true, true)?>">
 		<div class="inform">
 			<fieldset>
 				<legend><?php echo $lang_ul['User find legend'] ?></legend>
@@ -120,14 +120,14 @@ $result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u WHERE u.id
 $num_users = $db->result($result);
 
 
-// Determine the user offset (based on $_GET['p'])
+// Determine the user offset (based on $_POST['p'])
 $num_pages = ceil($num_users / 50);
 
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+$p = (!isset($_POST['p']) || $_POST['p'] <= 1 || $_POST['p'] > $num_pages) ? 1 : $_POST['p'];
 $start_from = 50 * ($p - 1);
 
 // Generate paging links
-$paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'userlist.php?username='.urlencode($username).'&amp;show_group='.$show_group.'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir));
+$paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, genurl('userlist.php?username='.urlencode($username).'&amp;show_group='.$show_group.'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)));
 
 
 ?>
@@ -163,7 +163,7 @@ if ($db->num_rows($result))
 
 ?>
 				<tr>
-					<td class="tcl"><?php echo '<a href="profile.php?id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
+					<td class="tcl"><?php echo '<a href="'.genurl('profile.php?id='.$user_data['id']).'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
 					<td class="tc2"><?php echo $user_title_field ?></td>
 <?php if ($show_post_count): ?>					<td class="tc3"><?php echo $user_data['num_posts'] ?></td>
 <?php endif; ?>

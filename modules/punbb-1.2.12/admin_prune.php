@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -124,7 +124,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	<div class="blockform">
 		<h2><span>Prune</span></h2>
 		<div class="box">
-			<form method="post" action="admin_prune.php?action=foo">
+			<form method="post" action="<?php genurl('admin_prune.php?action=foo', true, true)?>">
 				<div class="inform">
 					<input type="hidden" name="prune_days" value="<?php echo $prune_days ?>" />
 					<input type="hidden" name="prune_sticky" value="<?php echo $_POST['prune_sticky'] ?>" />
@@ -162,7 +162,7 @@ else
 	<div class="blockform">
 		<h2><span>Prune</span></h2>
 		<div class="box">
-			<form id="prune" method="post" action="admin_prune.php?action=foo" onsubmit="return process_form(this)">
+			<form id="prune" method="post" action="<?php genurl('admin_prune.php?action=foo', true, true)?>" onsubmit="return process_form(this)">
 				<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />
 					<fieldset>

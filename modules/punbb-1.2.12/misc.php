@@ -26,7 +26,7 @@
 if (isset($_GET['action']))
 	define('PUN_QUIET_VISIT', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -136,7 +136,7 @@ else if (isset($_GET['email']))
 <div class="blockform">
 	<h2><span><?php echo $lang_misc['Send e-mail to'] ?> <?php echo pun_htmlspecialchars($recipient) ?></span></h2>
 	<div class="box">
-		<form id="email" method="post" action="misc.php?email=<?php echo $recipient_id ?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
+		<form id="email" method="post" action="<?php genurl("misc.php?email={$recipient_id}", true, true)?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_misc['Write e-mail'] ?></legend>
@@ -202,7 +202,7 @@ else if (isset($_GET['report']))
 			if ($pun_config['o_mailing_list'] != '')
 			{
 				$mail_subject = 'Report('.$forum_id.') - \''.$subject.'\'';
-				$mail_message = 'User \''.$pun_user['username'].'\' has reported the following message:'."\n".$pun_config['o_base_url'].'/viewtopic.php?pid='.$post_id.'#p'.$post_id."\n\n".'Reason:'."\n".$reason;
+				$mail_message = 'User \''.$pun_user['username'].'\' has reported the following message:'."\n".$pun_config['o_base_url'].'/'.genurl('viewtopic.php?pid='.$post_id.'#p'.$post_id)."\n\n".'Reason:'."\n".$reason;
 
 				require PUN_ROOT.'include/email.php';
 
@@ -223,7 +223,7 @@ else if (isset($_GET['report']))
 <div class="blockform">
 	<h2><span><?php echo $lang_misc['Report post'] ?></span></h2>
 	<div class="box">
-		<form id="report" method="post" action="misc.php?report=<?php echo $post_id ?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
+		<form id="report" method="post" action="<?php genurl("misc.php?report={$post_id}", true, true)?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_misc['Reason desc'] ?></legend>

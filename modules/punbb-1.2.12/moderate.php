@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -50,7 +50,7 @@ if (isset($_GET['get_host']))
 		$ip = $db->result($result);
 	}
 
-	message('The IP address is: '.$ip.'<br />The host name is: '.@gethostbyaddr($ip).'<br /><br /><a href="admin_users.php?show_users='.$ip.'">Show more users for this IP</a>');
+	message('The IP address is: '.$ip.'<br />The host name is: '.@gethostbyaddr($ip).'<br /><br /><a href="'.genurl('admin_users.php?show_users='.$ip).'">Show more users for this IP</a>');
 }
 
 
@@ -130,7 +130,7 @@ if (isset($_GET['tid']))
 <div class="blockform">
 	<h2><span><?php echo $lang_misc['Delete posts'] ?></span></h2>
 	<div class="box">
-		<form method="post" action="moderate.php?fid=<?php echo $fid ?>&amp;tid=<?php echo $tid ?>">
+		<form method="post" action="<?php genurl("moderate.php?fid={$fid}", true, true)?>&amp;tid=<?php echo $tid ?>">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_misc['Confirm delete legend'] ?></legend>
@@ -166,7 +166,7 @@ if (isset($_GET['tid']))
 	$start_from = $pun_user['disp_posts'] * ($p - 1);
 
 	// Generate paging links
-	$paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'moderate.php?fid='.$fid.'&amp;tid='.$tid);
+	$paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, genurl('moderate.php?fid='.$fid.'&amp;tid='.$tid));
 
 
 	if ($pun_config['o_censoring'] == '1')
@@ -180,12 +180,12 @@ if (isset($_GET['tid']))
 <div class="linkst">
 	<div class="inbox">
 		<p class="pagelink conl"><?php echo $paging_links ?></p>
-		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="viewforum.php?id=<?php echo $fid ?>"><?php echo pun_htmlspecialchars($cur_topic['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_topic['subject']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="<?php genurl("viewforum.php?id={$fid}", false, true)?>"><?php echo pun_htmlspecialchars($cur_topic['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_topic['subject']) ?></li></ul>
 		<div class="clearer"></div>
 	</div>
 </div>
 
-<form method="post" action="moderate.php?fid=<?php echo $fid ?>&amp;tid=<?php echo $tid ?>">
+<form method="post" action="<?php genurl("moderate.php?fid={$fid}", true, true)?>&amp;tid=<?php echo $tid ?>">
 <?php
 
 	require PUN_ROOT.'include/parser.php';
@@ -203,7 +203,7 @@ if (isset($_GET['tid']))
 		// If the poster is a registered user.
 		if ($cur_post['poster_id'] > 1)
 		{
-			$poster = '<a href="profile.php?id='.$cur_post['poster_id'].'">'.pun_htmlspecialchars($cur_post['poster']).'</a>';
+			$poster = '<a href="'.genurl('profile.php?id='.$cur_post['poster_id']).'">'.pun_htmlspecialchars($cur_post['poster']).'</a>';
 
 			// get_title() requires that an element 'username' be present in the array
 			$cur_post['username'] = $cur_post['poster'];
@@ -230,7 +230,7 @@ if (isset($_GET['tid']))
 
 <div class="blockpost<?php echo $vtbg ?>">
 	<a name="<?php echo $cur_post['id'] ?>"></a>
-	<h2><span><span class="conr">#<?php echo ($start_from + $post_count) ?>&nbsp;</span><a href="viewtopic.php?pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
+	<h2><span><span class="conr">#<?php echo ($start_from + $post_count) ?>&nbsp;</span><a href="<?php genurl("viewtopic.php?pid={$cur_post['id']}#p{$cur_post['id']}", true, true)?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
 	<div class="box">
 		<div class="inbox">
 			<div class="postleft">
@@ -341,7 +341,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 <div class="blockform">
 	<h2><span><?php echo ($action == 'single') ? $lang_misc['Move topic'] : $lang_misc['Move topics'] ?></span></h2>
 	<div class="box">
-		<form method="post" action="moderate.php?fid=<?php echo $fid ?>">
+		<form method="post" action="<?php genurl("moderate.php?fid={$fid}", true, true)?>">
 			<div class="inform">
 			<input type="hidden" name="topics" value="<?php echo $topics ?>" />
 				<fieldset>
@@ -438,7 +438,7 @@ if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 <div class="blockform">
 	<h2><?php echo $lang_misc['Delete topics'] ?></h2>
 	<div class="box">
-		<form method="post" action="moderate.php?fid=<?php echo $fid ?>">
+		<form method="post" action="<?php genurl("moderate.php?fid={$fid}", true, true)?>">
 			<input type="hidden" name="topics" value="<?php echo implode(',', array_keys($topics)) ?>" />
 			<div class="inform">
 				<fieldset>
@@ -556,12 +556,12 @@ $paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'moderate.ph
 <div class="linkst">
 	<div class="inbox">
 		<p class="pagelink conl"><?php echo $paging_links ?></p>
-		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></li></ul>
 		<div class="clearer"></div>
 	</div>
 </div>
 
-<form method="post" action="moderate.php?fid=<?php echo $fid ?>">
+<form method="post" action="<?php genurl("moderate.php?fid={$fid}", true, true)?>">
 <div id="vf" class="blocktable">
 	<h2><span><?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></span></h2>
 	<div class="box">
@@ -596,7 +596,7 @@ if ($db->num_rows($result))
 
 		if ($cur_topic['moved_to'] == null)
 		{
-			$last_post = '<a href="viewtopic.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id'].'">'.format_time($cur_topic['last_post']).'</a> '.$lang_common['by'].' '.pun_htmlspecialchars($cur_topic['last_poster']);
+			$last_post = '<a href="'.genurl('viewtopic.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id']).'">'.format_time($cur_topic['last_post']).'</a> '.$lang_common['by'].' '.pun_htmlspecialchars($cur_topic['last_poster']);
 			$ghost_topic = false;
 		}
 		else
@@ -609,12 +609,12 @@ if ($db->num_rows($result))
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 		if ($cur_topic['moved_to'] != 0)
-			$subject = $lang_forum['Moved'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].' '.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = $lang_forum['Moved'].': <a href="'.genurl('viewtopic.php?id='.$cur_topic['moved_to']).'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].' '.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 		else if ($cur_topic['closed'] == '0')
-			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span>'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = '<a href="'.genurl('viewtopic.php?id='.$cur_topic['id']).'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span>'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 		else
 		{
-			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].' '.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = '<a href="'.genurl('viewtopic.php?id='.$cur_topic['id']).'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].' '.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			$icon_text = $lang_common['Closed icon'];
 			$item_status = 'iclosed';
 		}
@@ -625,7 +625,7 @@ if ($db->num_rows($result))
 			$item_status .= ' inew';
 			$icon_type = 'icon inew';
 			$subject = '<strong>'.$subject.'</strong>';
-			$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
+			$subject_new_posts = '<span class="newtext">[&nbsp;<a href="'.genurl('viewtopic.php?id='.$cur_topic['id'].'&amp;action=new').'" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
 		}
 		else
 			$subject_new_posts = null;
@@ -644,7 +644,7 @@ if ($db->num_rows($result))
 		$num_pages_topic = ceil(($cur_topic['num_replies'] + 1) / $pun_user['disp_posts']);
 
 		if ($num_pages_topic > 1)
-			$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$cur_topic['id']).' ]';
+			$subject_multipage = '[ '.paginate($num_pages_topic, -1, genurl('viewtopic.php?id='.$cur_topic['id'])).' ]';
 		else
 			$subject_multipage = null;
 

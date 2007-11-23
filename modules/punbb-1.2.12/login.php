@@ -26,7 +26,7 @@
 if (isset($_GET['action']))
 	define('PUN_QUIET_VISIT', 1);
 
-define('PUN_ROOT', './');
+define('PUN_ROOT', 'modules/punbb/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -40,9 +40,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	$form_username = trim($_POST['req_username']);
 	$form_password = trim($_POST['req_password']);
 
-	$username_sql = ($db_type == 'mysql' || $db_type == 'mysqli') ? 'username=\''.$db->escape($form_username).'\'' : 'LOWER(username)=LOWER(\''.$db->escape($form_username).'\')';
-
-	$result = $db->query('SELECT id, group_id, password, save_pass FROM '.$db->prefix.'users WHERE '.$username_sql) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT id, group_id, password, save_pass FROM '.$db->prefix.'users WHERE username=\''.$db->escape($form_username).'\'') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	list($user_id, $group_id, $db_password_hash, $save_pass) = $db->fetch_row($result);
 
 	$authorized = false;
@@ -66,7 +64,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	}
 
 	if (!$authorized)
-		message($lang_login['Wrong user/pass'].' <a href="login.php?action=forget">'.$lang_login['Forgotten pass'].'</a>');
+		message($lang_login['Wrong user/pass'].' <a href="module.php?mod=punbb&amp;pgvaction=login&amp;action=forget">'.$lang_login['Forgotten pass'].'</a>');
 
 	// Update the status if this is the first time the user logged in
 	if ($group_id == PUN_UNVERIFIED)
@@ -78,7 +76,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	$expire = ($save_pass == '1') ? time() + 31536000 : 0;
 	pun_setcookie($user_id, $form_password_hash, $expire);
 
-	redirect(htmlspecialchars($_POST['redirect_url']), $lang_login['Login redirect']);
+	redirect($_POST['redirect_url'], $lang_login['Login redirect']);
 }
 
 
@@ -86,7 +84,7 @@ else if ($action == 'out')
 {
 	if ($pun_user['is_guest'] || !isset($_GET['id']) || $_GET['id'] != $pun_user['id'])
 	{
-		header('Location: index.php');
+		header('Location: module.php?mod=punbb&amp;pgvaction=index');
 		exit;
 	}
 
@@ -99,14 +97,14 @@ else if ($action == 'out')
 
 	pun_setcookie(1, random_pass(8), time() + 31536000);
 
-	redirect('index.php', $lang_login['Logout redirect']);
+	redirect('module.php?mod=punbb&amp;pgvaction=index', $lang_login['Logout redirect']);
 }
 
 
 else if ($action == 'forget' || $action == 'forget_2')
 {
 	if (!$pun_user['is_guest'])
-		header('Location: index.php');
+		header('Location: module.php?mod=punbb&;action=index');
 
 	if (isset($_POST['form_sent']))
 	{
@@ -153,7 +151,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 			message($lang_login['Forget mail'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.');
 		}
 		else
-			message($lang_login['No e-mail match'].' '.htmlspecialchars($email).'.');
+			message($lang_login['No e-mail match'].' '.$email.'.');
 	}
 
 
@@ -166,7 +164,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 <div class="blockform">
 	<h2><span><?php echo $lang_login['Request pass'] ?></span></h2>
 	<div class="box">
-		<form id="request_pass" method="post" action="login.php?action=forget_2" onsubmit="this.request_pass.disabled=true;if(process_form(this)){return true;}else{this.request_pass.disabled=false;return false;}">
+		<form id="request_pass" method="post" action="module.php?mod=punbb&amp;pgvaction=login&amp;action=forget_2" onsubmit="this.request_pass.disabled=true;if(process_form(this)){return true;}else{this.request_pass.disabled=false;return false;}">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_login['Request pass legend'] ?></legend>
@@ -188,10 +186,10 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 
 if (!$pun_user['is_guest'])
-	header('Location: index.php');
+	header('Location: module.php?mod=punbb&pgvaction=index');
 
 // Try to determine if the data in HTTP_REFERER is valid (if not, we redirect to index.php after login)
-$redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';
+$redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'index.php';
 
 $page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Login'];
 $required_fields = array('req_username' => $lang_common['Username'], 'req_password' => $lang_common['Password']);
@@ -202,7 +200,7 @@ require PUN_ROOT.'header.php';
 <div class="blockform">
 	<h2><span><?php echo $lang_common['Login'] ?></span></h2>
 	<div class="box">
-		<form id="login" method="post" action="login.php?action=in" onsubmit="return process_form(this)">
+		<form id="login" method="post" action="module.php?mod=punbb&amp;pgvaction=login&amp;action=in" onsubmit="return process_form(this)">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_login['Login legend'] ?></legend>
@@ -212,8 +210,8 @@ require PUN_ROOT.'header.php';
 							<label class="conl"><strong><?php echo $lang_common['Username'] ?></strong><br /><input type="text" name="req_username" size="25" maxlength="25" tabindex="1" /><br /></label>
 							<label class="conl"><strong><?php echo $lang_common['Password'] ?></strong><br /><input type="password" name="req_password" size="16" maxlength="16" tabindex="2" /><br /></label>
 							<p class="clearb"><?php echo $lang_login['Login info'] ?></p>
-							<p><a href="register.php" tabindex="4"><?php echo $lang_login['Not registered'] ?></a>&nbsp;&nbsp;
-							<a href="login.php?action=forget" tabindex="5"><?php echo $lang_login['Forgotten pass'] ?></a></p>
+							<p><a href="module.php?mod=punbb&amp;pgvaction=register" tabindex="4"><?php echo $lang_login['Not registered'] ?></a>&nbsp;&nbsp;
+							<a href="module.php?mod=punbb&amp;pgvaction=login&amp;action=forget" tabindex="5"><?php echo $lang_login['Forgotten pass'] ?></a></p>
 						</div>
 				</fieldset>
 			</div>

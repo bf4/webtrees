@@ -28,6 +28,85 @@
 function check_cookie(&$pun_user)
 {
 	global $db, $pun_config, $cookie_name, $cookie_seed;
+	$now = time();
+	$uname = getUserName();
+	if (empty($uname)) {
+		if (!empty($ctype)) {
+			if ($ctype=="user") {
+				header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
+				exit;
+			}
+		}
+		$ctype="gedcom";
+	}
+	else
+	{
+		$user = getUser($uname);
+	}
+	if (isset ($user))
+	{
+		$result = $db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.username=\''.$user['username'].'\'') or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
+		$pun_user = $db->fetch_assoc($result);
+		if (!isset ($pun_user['id']))
+		{
+			// Insert the new user into the database. We do this now to get the last inserted id for later use.
+			if(userIsAdmin(getUserName()))
+			{
+				$intial_group_id = PUN_ADMIN;
+			}
+			else
+			{
+				$intial_group_id = $pun_config['o_default_user_group'];
+			}
+
+			// Add the user
+			$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, save_pass, timezone, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($user['username']).'\', '.$intial_group_id.', \''.$user['password'].'\', \''.$user['email'].'\', 1, 1, 0 , \'English\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.get_remote_address().'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());
+			$new_uid = $db->insert_id();
+			$result = $db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.username=\''.$user['username'].'\'') or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
+			$pun_user = $db->fetch_assoc($result);
+		}
+		// Set a default language if the user selected language no longer exists
+		if (!@file_exists(PUN_ROOT.'lang/'.$pun_user['language']))
+			$pun_user['language'] = $pun_config['o_default_lang'];
+
+		// Set a default style if the user selected style no longer exists
+		if (!@file_exists(PUN_ROOT.'style/'.$pun_user['style'].'.css'))
+			$pun_user['style'] = $pun_config['o_default_style'];
+
+		if (!$pun_user['disp_topics'])
+			$pun_user['disp_topics'] = $pun_config['o_disp_topics_default'];
+		if (!$pun_user['disp_posts'])
+			$pun_user['disp_posts'] = $pun_config['o_disp_posts_default'];
+
+		if ($pun_user['save_pass'] == '0')
+			$expire = 0;
+
+		// Define this if you want this visit to affect the online list and the users last visit data
+		if (!defined('PUN_QUIET_VISIT'))
+		{
+			// Update the online list
+			if (!$pun_user['logged'])
+				$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$now.')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+			else
+			{
+				// Special case: We've timed out, but no other user has browsed the forums since we timed out
+				if ($pun_user['logged'] < ($now-$pun_config['o_timeout_visit']))
+				{
+					$db->query('UPDATE '.$db->prefix.'users SET last_visit='.$pun_user['logged'].' WHERE id='.$pun_user['id']) or error('Unable to update user visit data', __FILE__, __LINE__, $db->error());
+					$pun_user['last_visit'] = $pun_user['logged'];
+				}
+
+				$idle_sql = ($pun_user['idle'] == '1') ? ', idle=0' : '';
+				$db->query('UPDATE '.$db->prefix.'online SET logged='.$now.$idle_sql.' WHERE user_id='.$pun_user['id']) or error('Unable to update online list', __FILE__, __LINE__, $db->error());
+			}
+		}
+		$pun_user['is_guest'] = false;
+	}
+	else
+	{
+		set_default_user();
+	}
+	return;
 
 	$now = time();
 	$expire = $now + 31536000;	// The cookie expires after a year
@@ -95,7 +174,6 @@ function check_cookie(&$pun_user)
 	else
 		set_default_user();
 }
-
 
 //
 // Fill $pun_user with default values (for guests)
@@ -238,19 +316,19 @@ function generate_navlinks()
 	global $pun_config, $lang_common, $pun_user;
 
 	// Index and Userlist should always be displayed
-	$links[] = '<li id="navindex"><a href="index.php">'.$lang_common['Index'].'</a>';
-	$links[] = '<li id="navuserlist"><a href="userlist.php">'.$lang_common['User list'].'</a>';
+	$links[] = '<li id="navindex"><a href="'.genurl('index.php').'">'.$lang_common['Index'].'</a>';
+	$links[] = '<li id="navuserlist"><a href="'.genurl('userlist.php').'">'.$lang_common['User list'].'</a>';
 
 	if ($pun_config['o_rules'] == '1')
-		$links[] = '<li id="navrules"><a href="misc.php?action=rules">'.$lang_common['Rules'].'</a>';
+		$links[] = '<li id="navrules"><a href="'.genurl('misc.php?action=rules').'">'.$lang_common['Rules'].'</a>';
 
 	if ($pun_user['is_guest'])
 	{
 		if ($pun_user['g_search'] == '1')
-			$links[] = '<li id="navsearch"><a href="search.php">'.$lang_common['Search'].'</a>';
+			$links[] = '<li id="navsearch"><a href="'.genurl('search.php').'">'.$lang_common['Search'].'</a>';
 
-		$links[] = '<li id="navregister"><a href="register.php">'.$lang_common['Register'].'</a>';
-		$links[] = '<li id="navlogin"><a href="login.php">'.$lang_common['Login'].'</a>';
+//		$links[] = '<li id="navregister"><a href="register.php">'.$lang_common['Register'].'</a>';
+//		$links[] = '<li id="navlogin"><a href="login.php">'.$lang_common['Login'].'</a>';
 
 		$info = $lang_common['Not logged in'];
 	}
@@ -259,17 +337,17 @@ function generate_navlinks()
 		if ($pun_user['g_id'] > PUN_MOD)
 		{
 			if ($pun_user['g_search'] == '1')
-				$links[] = '<li id="navsearch"><a href="search.php">'.$lang_common['Search'].'</a>';
+				$links[] = '<li id="navsearch"><a href="'.genurl('search.php').'">'.$lang_common['Search'].'</a>';
 
-			$links[] = '<li id="navprofile"><a href="profile.php?id='.$pun_user['id'].'">'.$lang_common['Profile'].'</a>';
-			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
+			$links[] = '<li id="navprofile"><a href="'.genurl('profile.php?id='.$pun_user['id']).'">'.$lang_common['Profile'].'</a>';
+//			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
 		}
 		else
 		{
-			$links[] = '<li id="navsearch"><a href="search.php">'.$lang_common['Search'].'</a>';
-			$links[] = '<li id="navprofile"><a href="profile.php?id='.$pun_user['id'].'">'.$lang_common['Profile'].'</a>';
-			$links[] = '<li id="navadmin"><a href="admin_index.php">'.$lang_common['Admin'].'</a>';
-			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
+			$links[] = '<li id="navsearch"><a href="'.genurl('search.php').'">'.$lang_common['Search'].'</a>';
+			$links[] = '<li id="navprofile"><a href="'.genurl('profile.php?id='.$pun_user['id']).'">'.$lang_common['Profile'].'</a>';
+			$links[] = '<li id="navadmin"><a href="'.genurl('admin_index.php').'">'.$lang_common['Admin'].'</a>';
+//			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
 		}
 	}
 
@@ -302,13 +380,13 @@ function generate_profile_menu($page = '')
 		<div class="box">
 			<div class="inbox">
 				<ul>
-					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="profile.php?section=essentials&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
-					<li<?php if ($page == 'personal') echo ' class="isactive"'; ?>><a href="profile.php?section=personal&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section personal'] ?></a></li>
-					<li<?php if ($page == 'messaging') echo ' class="isactive"'; ?>><a href="profile.php?section=messaging&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section messaging'] ?></a></li>
-					<li<?php if ($page == 'personality') echo ' class="isactive"'; ?>><a href="profile.php?section=personality&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section personality'] ?></a></li>
-					<li<?php if ($page == 'display') echo ' class="isactive"'; ?>><a href="profile.php?section=display&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section display'] ?></a></li>
-					<li<?php if ($page == 'privacy') echo ' class="isactive"'; ?>><a href="profile.php?section=privacy&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section privacy'] ?></a></li>
-<?php if ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_ban_users'] == '1')): ?>					<li<?php if ($page == 'admin') echo ' class="isactive"'; ?>><a href="profile.php?section=admin&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section admin'] ?></a></li>
+					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=essentials&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
+					<li<?php if ($page == 'personal') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=personal&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section personal'] ?></a></li>
+					<li<?php if ($page == 'messaging') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=messaging&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section messaging'] ?></a></li>
+					<li<?php if ($page == 'personality') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=personality&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section personality'] ?></a></li>
+					<li<?php if ($page == 'display') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=display&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section display'] ?></a></li>
+					<li<?php if ($page == 'privacy') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=privacy&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section privacy'] ?></a></li>
+<?php if ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_ban_users'] == '1')): ?>					<li<?php if ($page == 'admin') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=admin&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section admin'] ?></a></li>
 <?php endif; ?>				</ul>
 			</div>
 		</div>
@@ -581,6 +659,7 @@ function message($message, $no_back_link = false)
 <?php
 
 	require PUN_ROOT.'footer.php';
+  exit;
 }
 
 
@@ -641,8 +720,8 @@ function confirm_referrer($script)
 {
 	global $pun_config, $lang_common;
 
-	if (!preg_match('#^'.preg_quote(str_replace('www.', '', $pun_config['o_base_url']).'/'.$script, '#').'#i', str_replace('www.', '', (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''))))
-		message($lang_common['Bad referrer']);
+//	if (!preg_match('#^'.preg_quote(str_replace('www.', '', $pun_config['o_base_url']).'/'.$script, '#').'#i', str_replace('www.', '', (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''))))
+//		message($lang_common['Bad referrer']);
 }
 
 
@@ -819,6 +898,8 @@ function redirect($destination_url, $message)
 	if ($destination_url == '')
 		$destination_url = 'index.php';
 
+	$destination_url = genurl($destination_url, true);
+
 	// If the delay is 0 seconds, we might as well skip the redirect all together
 	if ($pun_config['o_redirect_delay'] == '0')
 		header('Location: '.str_replace('&amp;', '&', $destination_url));
@@ -921,22 +1002,6 @@ function error($message, $file, $line, $db_error = false)
 		ob_start('ob_gzhandler');
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html dir="ltr">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?> / Error</title>
-<style type="text/css">
-<!--
-BODY {MARGIN: 10% 20% auto 20%; font: 10px Verdana, Arial, Helvetica, sans-serif}
-#errorbox {BORDER: 1px solid #B84623}
-H2 {MARGIN: 0; COLOR: #FFFFFF; BACKGROUND-COLOR: #B84623; FONT-SIZE: 1.1em; PADDING: 5px 4px}
-#errorbox DIV {PADDING: 6px 5px; BACKGROUND-COLOR: #F1F1F1}
--->
-</style>
-</head>
-<body>
-
 <div id="errorbox">
 	<h2>An error was encountered</h2>
 	<div>
@@ -960,9 +1025,6 @@ H2 {MARGIN: 0; COLOR: #FFFFFF; BACKGROUND-COLOR: #B84623; FONT-SIZE: 1.1em; PADD
 ?>
 	</div>
 </div>
-
-</body>
-</html>
 <?php
 
 	// If a database connection was established (before this error) we close it
@@ -1036,7 +1098,7 @@ function unregister_globals()
 	// Prevent script.php?GLOBALS[foo]=bar
 	if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS']))
 		exit('I\'ll have a steak sandwich and... a steak sandwich.');
-	
+
 	// Variables that shouldn't be unset
 	$no_unset = array('GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
 

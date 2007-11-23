@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -74,7 +74,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	<div class="blockform">
 		<h2><span>Group settings</span></h2>
 		<div class="box">
-			<form id="groups2" method="post" action="admin_groups.php" onsubmit="return process_form(this)">
+			<form id="groups2" method="post" action="<?php genurl('admin_groups.php', true, true)?>" onsubmit="return process_form(this)">
 				<p class="submittop"><input type="submit" name="add_edit_group" value=" Save " /></p>
 				<div class="inform">
 					<input type="hidden" name="mode" value="<?php echo $mode ?>" />
@@ -326,7 +326,7 @@ else if (isset($_GET['del_group']))
 	<div class="blockform">
 		<h2><span>Remove group</span></h2>
 		<div class="box">
-			<form id="groups" method="post" action="admin_groups.php?del_group=<?php echo $group_id ?>">
+			<form id="groups" method="post" action="<?php genurl("admin_groups.php?del_group={$group_id}", true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Move users currently in group</legend>
@@ -373,7 +373,7 @@ generate_admin_menu('groups');
 	<div class="blockform">
 		<h2><span>Add/setup groups</span></h2>
 		<div class="box">
-			<form id="groups" method="post" action="admin_groups.php?action=foo">
+			<form id="groups" method="post" action="<?php genurl('admin_groups.php?action=foo', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Add new group</legend>
@@ -451,7 +451,7 @@ while ($cur_group = $db->fetch_assoc($result))
 $result = $db->query('SELECT g_id, g_title FROM '.$db->prefix.'groups ORDER BY g_id') or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 
 while ($cur_group = $db->fetch_assoc($result))
-	echo "\t\t\t\t\t\t\t\t".'<tr><th scope="row"><a href="admin_groups.php?edit_group='.$cur_group['g_id'].'">Edit</a>'.(($cur_group['g_id'] > PUN_MEMBER) ? ' - <a href="admin_groups.php?del_group='.$cur_group['g_id'].'">Remove</a>' : '').'</th><td>'.pun_htmlspecialchars($cur_group['g_title']).'</td></tr>'."\n";
+	echo "\t\t\t\t\t\t\t\t".'<tr><th scope="row"><a href="'.genurl("admin_groups.php?edit_group={$cur_group['g_id']}").'">Edit</a>'.(($cur_group['g_id'] > PUN_MEMBER) ? ' - <a href="'.genurl("admin_groups.php?del_group={$cur_group['g_id']}").'">Remove</a>' : '').'</th><td>'.pun_htmlspecialchars($cur_group['g_title']).'</td></tr>'."\n";
 
 ?>
 							</table>

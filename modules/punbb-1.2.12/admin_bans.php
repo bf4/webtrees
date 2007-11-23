@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -110,7 +110,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	<div class="blockform">
 		<h2><span>Ban advanced settings</span></h2>
 		<div class="box">
-			<form id="bans2" method="post" action="admin_bans.php">
+			<form id="bans2" method="post" action="<?php genurl('admin_bans.php', true, true)?>">
 				<div class="inform">
 				<input type="hidden" name="mode" value="<?php echo $mode ?>" />
 <?php if ($mode == 'edit'): ?>				<input type="hidden" name="ban_id" value="<?php echo $ban_id ?>" />
@@ -283,7 +283,7 @@ generate_admin_menu('bans');
 	<div class="blockform">
 		<h2><span>New ban</span></h2>
 		<div class="box">
-			<form id="bans" method="post" action="admin_bans.php?action=more">
+			<form id="bans" method="post" action="<?php genurl('admin_bans.php?action=more', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Add ban</legend>
@@ -338,7 +338,7 @@ if ($db->num_rows($result))
 									<td><?php echo pun_htmlspecialchars($cur_ban['message']) ?></td>
 								</tr>
 <?php endif; ?>							</table>
-							<p class="linkactions"><a href="admin_bans.php?edit_ban=<?php echo $cur_ban['id'] ?>">Edit</a> - <a href="admin_bans.php?del_ban=<?php echo $cur_ban['id'] ?>">Remove</a></p>
+							<p class="linkactions"><a href="<?php genurl("admin_bans.php?edit_ban={$cur_ban['id']}", false, true)?>">Edit</a> - <a href="<?php genurl("admin_bans.php?del_ban={$cur_ban['id']}", false, true)?>">Remove</a></p>
 						</div>
 					</fieldset>
 				</div>

@@ -32,6 +32,7 @@
 if (!defined('PUN_ROOT'))
 	exit('The constant PUN_ROOT must be defined and point to a valid PunBB installation root directory.');
 
+require_once PUN_ROOT.'include/pgv.php';
 
 // Load the functions script
 require PUN_ROOT.'include/functions.php';
@@ -45,15 +46,16 @@ if (@ini_get('register_globals'))
 
 // If PUN isn't defined, config.php is missing or corrupt
 if (!defined('PUN'))
-	exit('The file \'config.php\' doesn\'t exist or is corrupt. Please run <a href="install.php">install.php</a> to install PunBB first.');
+	exit('The file \'config.php\' doesn\'t exist or is corrupt. Please run <a href="'.genurl('install.php').'">install.php</a> to install PunBB first.');
 
+if($db_name != $DBNAME){$db_prefix = "{$db_name}.{$db_prefix}";}
 
 // Record the start time (will be used to calculate the generation time for the page)
 list($usec, $sec) = explode(' ', microtime());
 $pun_start = ((float)$usec + (float)$sec);
 
 // Make sure PHP reports all errors except E_NOTICE. PunBB supports E_ALL, but a lot of scripts it may interact with, do not.
-error_reporting(E_ALL ^ E_NOTICE);
+//error_reporting(E_ALL ^ E_NOTICE);
 
 // Turn off magic_quotes_runtime
 set_magic_quotes_runtime(0);
@@ -145,4 +147,3 @@ check_bans();
 
 // Update online list
 update_users_online();
-

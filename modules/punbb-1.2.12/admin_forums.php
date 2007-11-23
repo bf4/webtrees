@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -107,7 +107,7 @@ else if (isset($_GET['del_forum']))
 	<div class="blockform">
 		<h2><span>Confirm delete forum</span></h2>
 		<div class="box">
-			<form method="post" action="admin_forums.php?del_forum=<?php echo $forum_id ?>">
+			<form method="post" action="<?php genurl("admin_forums.php?del_forum={$forum_id}", true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Important! Read before deleting</legend>
@@ -244,7 +244,7 @@ else if (isset($_GET['edit_forum']))
 	<div class="blockform">
 		<h2><span>Edit forum</span></h2>
 		<div class="box">
-			<form id="edit_forum" method="post" action="admin_forums.php?edit_forum=<?php echo $forum_id ?>">
+			<form id="edit_forum" method="post" action="<?php genurl("admin_forums.php?edit_forum={$forum_id}", true, true)?>">
 				<p class="submittop"><input type="submit" name="save" value="Save changes" tabindex="6" /></p>
 				<div class="inform">
 					<fieldset>
@@ -362,6 +362,7 @@ else if (isset($_GET['edit_forum']))
 	require PUN_ROOT.'footer.php';
 }
 
+else {
 
 $page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / Admin / Forums';
 require PUN_ROOT.'header.php';
@@ -372,7 +373,7 @@ generate_admin_menu('forums');
 	<div class="blockform">
 		<h2><span>Add forum</span></h2>
 		<div class="box">
-			<form method="post" action="admin_forums.php?action=adddel">
+			<form method="post" action="<?php genurl('admin_forums.php?action=adddel', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Create a new forum</legend>
@@ -402,7 +403,7 @@ generate_admin_menu('forums');
 
 		<h2 class="block2"><span>Edit forums</span></h2>
 		<div class="box">
-			<form id="edforum" method="post" action="admin_forums.php?action=edit">
+			<form id="edforum" method="post" action="<?php genurl('admin_forums.php?action=edit', true, true)?>">
 				<p class="submittop"><input type="submit" name="update_positions" value="Update positions" tabindex="3" /></p>
 <?php
 
@@ -432,7 +433,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 
 ?>
 								<tr>
-									<th><a href="admin_forums.php?edit_forum=<?php echo $cur_forum['fid'] ?>">Edit</a> - <a href="admin_forums.php?del_forum=<?php echo $cur_forum['fid'] ?>">Delete</a></th>
+									<th><a href="<?php genurl("admin_forums.php?edit_forum={$cur_forum['fid']}", false, true)?>">Edit</a> - <a href="<?php genurl("admin_forums.php?del_forum={$cur_forum['fid']}", false, true)?>">Delete</a></th>
 									<td>Position&nbsp;&nbsp;<input type="text" name="position[<?php echo $cur_forum['fid'] ?>]" size="3" maxlength="3" value="<?php echo $cur_forum['disp_position'] ?>" tabindex="<?php echo $tabindex_count ?>" />
 									&nbsp;&nbsp;<strong><?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></strong></td>
 								</tr>
@@ -455,3 +456,5 @@ while ($cur_forum = $db->fetch_assoc($result))
 <?php
 
 require PUN_ROOT.'footer.php';
+
+}
