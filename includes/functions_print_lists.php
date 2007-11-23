@@ -400,8 +400,15 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		echo "</td>";
 		//-- Birth anniversary
-		if ($tiny)
-			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($bdate)."</span></td>";
+		if ($tiny) {
+			echo "<td class=\"list_value_wrap rela\">";
+			$bage =GedcomDate::GetAgeYears($bdate);
+			if (empty($bage))
+				echo "&nbsp;";
+			else
+				echo "<span class=\"age\">".$bage."</span>";
+			echo "</td>";
+		}
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
 		if(!empty($SEARCH_SPIDER)) {
@@ -434,9 +441,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Death anniversary
 		if ($tiny) {
 			print "<td class=\"list_value_wrap rela\">";
-			if ($person->isDead() && !$person->dest) {
+			if ($person->isDead() && !$person->dest && $bdate->MinJD()>0)
 				echo "<span class=\"age\">".GedcomDate::GetAgeYears($ddate)."</span>";
-			} else
+			else
 				echo "&nbsp;";
 			print '</td>';
 		}
