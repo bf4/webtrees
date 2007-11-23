@@ -143,29 +143,6 @@ function &dbquery($sql, $show_error=true, $count=0) {
 }
 
 /**
- * prepare an item to be updated in the database
- *
- * add slashes and convert special chars so that it can be added to db
- * @param mixed $item		an array or string to be prepared for the database
- */
-function db_prep($item) {
-	global $DBCONN;
-
-	if (is_array($item)) {
-		foreach($item as $key=>$value) {
-			$item[$key]=db_prep($value);
-		}
-		return $item;
-	}
-	else {
-		if (DB::isError($DBCONN) || empty($DBCONN)) return $item;
-		if (is_object($DBCONN)) return $DBCONN->escapeSimple($item);
-		//-- use the following commented line to convert between character sets
-		//return $DBCONN->escapeSimple(iconv("iso-8859-1", "UTF-8", $item));
-	}
-}
-
-/**
  * Clean up an item retrieved from the database
  *
  * clean the slashes and convert special
