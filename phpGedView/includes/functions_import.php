@@ -517,11 +517,12 @@ function update_dates($gid, $indirec) {
 				$fact=$match[1];
 			$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
 			for ($i = 0; $i < $pt; $i++) {
-				$dates = parse_date($match[$i][1]);
-				foreach($dates as $date) {
-					$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$date['year']},{$date['jd1']},{$date['jd2']},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
-					$res=dbquery($sql);
-				}
+				$geddate=new GedcomDate($match[$i][1]);
+				$dates=array($geddate->date1);
+				if ($geddate->date2)
+					$dates[]=$geddate->date2;
+				foreach($dates as $date)
+					dbquery("INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date->d},'".$date->Format('O')."',{$date->m},{$date->y},{$date->minJD},{$date->maxJD},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},'{$date->CALENDAR_ESCAPE}')");
 			}
 		}
 	}

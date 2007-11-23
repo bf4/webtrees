@@ -2968,9 +2968,9 @@ function get_anniversary_events($jd, $facts='') {
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 				// to be cached.  We should store the level1 fact here (or somewhere)
-				$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
+				$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)){
+					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 						$date=new GedcomDate($match[1]);
 						if (preg_match('/2 PLAC (.+)/', $factrec, $match))
 							$plac=$match[1];
@@ -3035,7 +3035,7 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 			// to be cached.  We should store the level1 fact here (or somewhere)
-			$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
+			$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 					$date=new GedcomDate($match[1]);
