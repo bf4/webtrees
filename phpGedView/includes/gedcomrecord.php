@@ -406,11 +406,11 @@ class GedcomRecord {
 		if (preg_match('/^(\d\d):(\d\d):(\d\d)/', get_gedcom_value('DATE:TIME', 2, $chan_rec, '', false).':00', $match)) {
 			$t=mktime($match[1], $match[2], $match[3]);
 			$sort=$d->MinJD().$match[1].$match[2].$match[3];
+			$text=strip_tags($d->Display(false, "{$DATE_FORMAT} -", array()).date(" {$TIME_FORMAT}", $t));
 		} else {
-			$t=mktime(0,0,0);
 			$sort=$d->MinJD().'000000';
+			$text=strip_tags($d->Display(false, "{$DATE_FORMAT}", array()));
 		}
-		$text=strip_tags($d->Display(false, "{$DATE_FORMAT} -", array()).date(" {$TIME_FORMAT}", $t));
 		if ($add_url)
 			$text='<a name="'.$sort.'" href="'.$this->getLinkUrl().'">'.$text.'</a>';
 		return $text;
