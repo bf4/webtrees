@@ -1089,7 +1089,7 @@ class GedcomDate {
 	
 		// Return at least one printable character, for better formatting in tables.
 		$tmp=trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}");
-		if (empty($tmp))
+		if (strip_tags($tmp)=='')
 			return '&nbsp;';
 		else
 			return "<span class=\"date\">{$tmp}</span>";
