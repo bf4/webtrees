@@ -452,6 +452,12 @@ if ($show_full)
 			  print_simple_fact($indirec, "DEAT", $pid);
 		  }
 	 }
+	 else if (strpos($indirec, "1 BURI")) {
+		  if (showFact("BURI", $pid)) {
+			  print_simple_fact($indirec, "BURI", $pid);
+		  }
+
+	 }
 	 foreach (array("BURI", "CREM") as $indexval => $tag) {
 	 	if (strpos($CHART_BOX_TAGS, $tag)!==false && showFact($tag, $pid)) print_simple_fact($indirec, $tag, $pid);
 	}
