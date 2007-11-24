@@ -502,15 +502,31 @@ class CalendarDate {
 	}
 
 	// Create a URL that links this date to the PGV calendar
-	function CalendarURL() {
-		$URL='calendar.php?cal='.urlencode($this->CALENDAR_ESCAPE).'&amp;day='.$this->FormatGedcomDay().'&amp;month='.$this->FormatGedcomMonth().'&amp;year='.$this->FormatGedcomYear();
-		if ($this->d>0)
-			return $URL.'&amp;action=today';
-		else
+	function CalendarURL($date_fmt="") {
+		global $DATE_FORMAT;
+		if (empty($date_fmt))
+			$date_fmt=$DATE_FORMAT;
+		$URL='calendar.php?cal='.urlencode($this->CALENDAR_ESCAPE);
+		$action="year";
+		if (strpos($date_fmt, "Y")!==false
+		||  strpos($date_fmt, "y")!==false) {
+			$URL.='&amp;year='.$this->FormatGedcomYear();
+		}
+		if (strpos($date_fmt, "F")!==false
+		||  strpos($date_fmt, "M")!==false
+		||  strpos($date_fmt, "m")!==false
+		||  strpos($date_fmt, "n")!==false) {
+			$URL.='&amp;month='.$this->FormatGedcomMonth();
 			if ($this->m>0)
-				return $URL.'&amp;action=calendar';
-			else
-				return $URL.'&amp;action=year';
+				$action="calendar";
+		}
+		if (strpos($date_fmt, "d")!==false
+		||  strpos($date_fmt, "j")!==false) {
+			$URL.='&amp;day='.$this->FormatGedcomDay();
+			if ($this->d>0)
+				$action="today";
+		}
+		return $URL.'&amp;action'.$action;
 	}
 } // class CalendarDate
 
@@ -1067,24 +1083,24 @@ class GedcomDate {
 				// If the date is different to the unconverted date, add it to the date string.
 				if ($d1!=$d1tmp && $d1tmp!='')
 					if ($url)
-					    if ($CALENDAR_FORMAT!="none")
-							$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a>)</span>';
+						if ($CALENDAR_FORMAT!="none")
+							$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL($date_fmt).'">'.$d1tmp.'</a>)</span>';
 						else	
-							$conv1.=' <span dir="'.$TEXT_DIRECTION.'"><br /><a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a></span>';
+							$conv1.=' <span dir="'.$TEXT_DIRECTION.'"><br /><a href="'.$d1conv->CalendarURL($date_fmt).'">'.$d1tmp.'</a></span>';
 					else
 						$conv1.=' <span dir="'.$TEXT_DIRECTION.'">('.$d1tmp.')</span>';
 				if (!is_null($this->date2) && $d2!=$d2tmp && $d1tmp!='')
 					if ($url)
-						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d2conv->CalendarURL().'">'.$d2tmp.'</a>)</span>';
+						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d2conv->CalendarURL($date_fmt).'">'.$d2tmp.'</a>)</span>';
 					else
 						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">('.$d2tmp.')</span>';
 			}
 
 		// Add URLs, if requested
 		if ($url) {
-			$d1='<a href="'.$this->date1->CalendarURL().'">'.$d1.'</a>';
+			$d1='<a href="'.$this->date1->CalendarURL($date_fmt).'">'.$d1.'</a>';
 			if (!is_null($this->date2))
-				$d2='<a href="'.$this->date2->CalendarURL().'">'.$d2.'</a>';
+				$d2='<a href="'.$this->date2->CalendarURL($date_fmt).'">'.$d2.'</a>';
 		}
 	
 		// Return at least one printable character, for better formatting in tables.
