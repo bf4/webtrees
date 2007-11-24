@@ -1079,14 +1079,20 @@ class GedcomDate {
 					else
 						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">('.$d2tmp.')</span>';
 			}
-			// Add URLs, if requested
-			if ($url) {
-				$d1='<a href="'.$this->date1->CalendarURL().'">'.$d1.'</a>';
-				if (!is_null($this->date2))
-					$d2='<a href="'.$this->date2->CalendarURL().'">'.$d2.'</a>';
-			}
+
+		// Add URLs, if requested
+		if ($url) {
+			$d1='<a href="'.$this->date1->CalendarURL().'">'.$d1.'</a>';
+			if (!is_null($this->date2))
+				$d2='<a href="'.$this->date2->CalendarURL().'">'.$d2.'</a>';
+		}
 	
-		return '<span class="date">'.trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}").'</span>';
+		// Return at least one printable character, for better formatting in tables.
+		$tmp=trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}");
+		if (empty($tmp))
+			return '&nbsp;';
+		else
+			return "<span class=\"date\">{$tmp}</span>";
 	}
 
 	// Get the earliest/latest date/JD from this date
