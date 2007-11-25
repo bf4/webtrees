@@ -1478,6 +1478,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				print_place_subfields($element_id);
 			}
 		}
+			}
+		}
 	// MARRiage TYPE : hide text field and show a selection list
 	if ($fact=="TYPE" and $tags[0]=="MARR") {
 		print "<script type='text/javascript'>";
