@@ -840,48 +840,6 @@ require_once("includes/functions_privacy.php");
 
 if (!isset($SCRIPT_NAME)) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
 
-$monthtonum = array();
-$monthtonum["jan"] = 1;
-$monthtonum["feb"] = 2;
-$monthtonum["mar"] = 3;
-$monthtonum["apr"] = 4;
-$monthtonum["may"] = 5;
-$monthtonum["jun"] = 6;
-$monthtonum["jul"] = 7;
-$monthtonum["aug"] = 8;
-$monthtonum["sep"] = 9;
-$monthtonum["oct"] = 10;
-$monthtonum["nov"] = 11;
-$monthtonum["dec"] = 12;
-//-- @#DHEBREW@
-$monthtonum["tsh"] = 1;
-$monthtonum["csh"] = 2;
-$monthtonum["ksl"] = 3;
-$monthtonum["tvt"] = 4;
-$monthtonum["shv"] = 5;
-$monthtonum["adr"] = 6;
-$monthtonum["ads"] = 7;
-$monthtonum["nsn"] = 8;
-$monthtonum["iyr"] = 9;
-$monthtonum["svn"] = 10;
-$monthtonum["tmz"] = 11;
-$monthtonum["aav"] = 12;
-$monthtonum["ell"] = 13;
-//-- @#DFRENCH R@
-$monthtonum["vend"] = 1;
-$monthtonum["brum"] = 2;
-$monthtonum["frim"] = 3;
-$monthtonum["nivo"] = 4;
-$monthtonum["pluv"] = 5;
-$monthtonum["vent"] = 6;
-$monthtonum["germ"] = 7;
-$monthtonum["flor"] = 8;
-$monthtonum["prai"] = 9;
-$monthtonum["mess"] = 10;
-$monthtonum["ther"] = 11;
-$monthtonum["fruc"] = 12;
-$monthtonum["comp"] = 13;
-
 if (!isset($show_context_help)) $show_context_help = "";
 if (!isset($_SESSION["show_context_help"])) $_SESSION["show_context_help"] = $SHOW_CONTEXT_HELP;
 if (!isset($_SESSION["pgv_user"])) $_SESSION["pgv_user"] = "";

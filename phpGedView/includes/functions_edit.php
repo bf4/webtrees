@@ -545,7 +545,7 @@ function undo_change($cid, $index) {
  * @param string $famtag		how the new person is added to the family
  */
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
-	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
+	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 

@@ -2653,13 +2653,13 @@ function print_add_new_fact($id, $usedfacts, $type) {
  * @param none
  */
 function init_calendar_popup() {
-	global $monthtonum, $pgv_lang, $WEEK_START;
+	global $pgv_lang, $WEEK_START;
 
 	print "<script language=\"JavaScript\" type='text/javascript'>\n<!--\n";
 	// month names
 	print "cal_setMonthNames(";
-	foreach(array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec') as $mon) {
-		if ($monthtonum[$mon]>1) print ",";
+	foreach(array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec') as $n=>$mon) {
+		if ($n>0) print ",";
 		print "\"".$pgv_lang[$mon]."\"";
 	}
 	print ");\n";
