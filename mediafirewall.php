@@ -33,21 +33,6 @@ $debug_watermark		= 0; 	// set to 1 if you want to see error messages from the w
 $debug_forceImageRegen	= 0;	// set to 1 if you want to force an image to be regenerated (for debugging only)
 $debug_verboseLogging = 0;		// set to 1 for extra logging details
 
-// pass in an image type and this will determine if your system supports editing of that image type 
-function isImageTypeSupported($reqtype) {
-	$reqtype = strtolower($reqtype);
-	if ( ( ($reqtype == 'jpg') || ($reqtype == 'jpeg') ) && (imagetypes() & IMG_JPG)) {
-		return ('jpeg');
-	} else if (($reqtype == 'gif') && (imagetypes() & IMG_GIF)) {
-		return ('gif');
-	} else if (($reqtype == 'png') && (imagetypes() & IMG_PNG)) {
-		return ('png');
-	} else if ( ( ($reqtype == 'wbmp') || ($reqtype == 'bmp') ) && (imagetypes() & IMG_WBMP)) {
-		return ('wbmp');
-	} else {
-		return false;
-	}
-}
 
 // pass in an image type and an error message
 // if the image type is supported:
@@ -171,9 +156,9 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 	if ($useTTF) {
 		// imagettftext is available, make sure the requested font exists
 		if (!isset($font)||($font=='')||!file_exists('includes/fonts/'.$font)) {
-	  	$font = 'DejaVuSans.ttf'; // this font ships with PGV
+			$font = 'DejaVuSans.ttf'; // this font ships with PGV
 			if (!file_exists('includes/fonts/'.$font)) {
-			  $useTTF = false;
+				$useTTF = false;
 	    }
 	  }
 	} 
@@ -288,49 +273,12 @@ function imagettftextErrorHandler($errno, $errstr, $errfile, $errline) {
 	return true;
 }
 
-// converts raw values from php.ini file into bytes 
-// from http://www.php.net/manual/en/function.ini-get.php
-function return_bytes($val) {
-	if (!$val) {
-		// no value was passed in, assume no limit and return -1 
-		$val = -1; 
-	}
-	$val = trim($val);
-	$last = strtolower($val{strlen($val)-1});
-	switch($last) {
-		case 'g': $val *= 1024;  // fallthrough
-		case 'm': $val *= 1024;  // fallthrough
-		case 'k': $val *= 1024;
-	}
-	return $val;
-}
-
-// pass in the full path to an image, returns string with size/height/width/bits/channels
-function getImageInfoForLog($filename) {
-	$filesize = sprintf("%.2f", filesize($filename)/1024);
-	$imgsize = @getimagesize($filename);
-	$strinfo = $filesize."kb ";
-	if (is_array($imgsize)) { $strinfo .= @$imgsize[0]."x".@$imgsize[1]." ".@$imgsize['bits']." bits ".@$imgsize['channels']. " channels"; }
-	return ($strinfo);
-}
-
-// for systems that do not have memory_get_usage defined,
-// create a stub that returns the approximate amount of overhead that PGV requires
-if( !function_exists('memory_get_usage') )
-{
-    function memory_get_usage()
-    {
-			return (900000);
-    }
-}
-
-
 // ******************************************************
 // start processing here
 
 // to allow watermarking of large images, attempt to disable or raise memory limits
 // @ini_set("memory_limit", "-1");
-@ini_set("memory_limit", "64M");
+// @ini_set("memory_limit", "64M");
 
 // this needs to be a global variable so imagettftextErrorHandler can set it
 $useTTF = (function_exists("imagettftext")) ? true : false;
@@ -402,26 +350,9 @@ if ($type && function_exists("applyWatermark")) {
 
 // determine whether we have enough memory to watermark this image
 if ($usewatermark) {
-	// find out how much total memory this script can access
-	$memoryAvailable = return_bytes(@ini_get('memory_limit'));
-	// if memory is unlimited, it will return -1 and we don't need to worry about it
-	if ($memoryAvailable > -1) {
-		// find out how much memory we are already using
-		$memoryUsed = memory_get_usage();
-		// find out how much memory this image needs for processing, probably only works for jpegs
-		// from comments on http://www.php.net/imagecreatefromjpeg
-		$imgsize = @getimagesize($serverFilename);
-		if (is_array($imgsize) && isset($imgsize['bits']) && (isset($imgsize['channels']))) {
-			$memoryNeeded = Round(($imgsize[0] * $imgsize[1] * $imgsize['bits'] * $imgsize['channels'] / 8 + Pow(2, 16)) * 1.65);
-			$memorySpare = $memoryAvailable - $memoryUsed - $memoryNeeded;
-			if ($memorySpare < 0) {
-				// not enough memory to watermark this file
-				$usewatermark = false;
-				AddToLog("Media Firewall error: >image too large to watermark< file >".$serverFilename."< (".getImageInfoForLog($serverFilename).") memory avail: ".$memoryAvailable." used: ".$memoryUsed." needed: ".$memoryNeeded." spare: ".$memorySpare);
-			} else {
-				if ($debug_verboseLogging) AddToLog("Media Firewall log: >about to open< file >".$serverFilename."< (".getImageInfoForLog($serverFilename).") memory avail: ".$memoryAvailable." used: ".$memoryUsed." needed: ".$memoryNeeded." spare: ".$memorySpare);
-			}
-		}
+	if (!hasMemoryForImage($serverFilename, $debug_verboseLogging)) {
+		// not enough memory to watermark this file
+		$usewatermark = false;
 	}
 }
 
