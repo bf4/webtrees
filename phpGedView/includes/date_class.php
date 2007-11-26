@@ -526,7 +526,7 @@ class CalendarDate {
 			if ($this->d>0)
 				$action="today";
 		}
-		return $URL.'&amp;action'.$action;
+		return $URL.'&amp;action='.$action;
 	}
 } // class CalendarDate
 
