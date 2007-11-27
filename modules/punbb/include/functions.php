@@ -891,7 +891,7 @@ function maintenance_message()
 
 ?>
 <title><?php echo pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Maintenance'] ?></title>
-<link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo PUN_ROOT . 'style/' . $pun_user['style'] . '.css' ?>" />
 <?php
 
 	$tpl_temp = trim(ob_get_contents());
