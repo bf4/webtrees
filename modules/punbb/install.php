@@ -27,9 +27,11 @@
 $punbb_version = '1.2.16';
 
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
+require_once PUN_ROOT.'include/pgv.php';
+
 if (file_exists(PUN_ROOT.'config.php'))
-	exit('The file \'config.php\' already exists which would mean that PunBB is already installed. You should go <a href="index.php">here</a> instead.');
+	exit('The file \'config.php\' already exists which would mean that PunBB is already installed. You should go <a href="'. genurl('index.php') .'">here</a> instead.');
 
 
 // Make sure we are running at least PHP 4.1.0
@@ -72,7 +74,7 @@ if (!isset($_POST['form_sent']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>PunBB Installation</title>
-<link rel="stylesheet" type="text/css" href="style/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo PUN_ROOT ?>style/Oxygen.css" />
 <script type="text/javascript">
 <!--
 function process_form(the_form)
@@ -127,7 +129,7 @@ function process_form(the_form)
 <div class="blockform">
 	<h2><span>Install PunBB 1.2</span></h2>
 	<div class="box">
-		<form id="install" method="post" action="install.php" onsubmit="this.start.disabled=true;if(process_form(this)){return true;}else{this.start.disabled=false;return false;}">
+		<form id="install" method="post" action="<?php genurl('install.php', true, true);?>" onsubmit="this.start.disabled=true;if(process_form(this)){return true;}else{this.start.disabled=false;return false;}">
 		<div><input type="hidden" name="form_sent" value="1" /></div>
 			<div class="inform">
 				<div class="forminfo">
@@ -176,7 +178,7 @@ function process_form(the_form)
 					<div class="infldset">
 						<p>Enter the username and password with which you connect to the database. Ignore for SQLite.</p>
 						<label class="conl">Database username<br /><input type="text" name="db_username" size="30" maxlength="50" /><br /></label>
-						<label class="conl">Database password<br /><input type="text" name="db_password" size="30" maxlength="50" /><br /></label>
+						<label class="conl">Database password<br /><input type="password" name="db_password" size="30" maxlength="50" /><br /></label>
 						<div class="clearer"></div>
 					</div>
 				</fieldset>
@@ -208,8 +210,8 @@ function process_form(the_form)
 					<legend>Enter and confirm Administrator password</legend>
 					<div class="infldset">
 					<p>Passwords can be between 4 and 16 characters long. Passwords are case sensitive.</p>
-						<label class="conl"><strong>Password</strong><br /><input id="req_password1" type="text" name="req_password1" size="16" maxlength="16" /><br /></label>
-						<label class="conl"><strong>Confirm password</strong><br /><input type="text" name="req_password2" size="16" maxlength="16" /><br /></label>
+						<label class="conl"><strong>Password</strong><br /><input id="req_password1" type="password" name="req_password1" size="16" maxlength="16" /><br /></label>
+						<label class="conl"><strong>Confirm password</strong><br /><input type="password" name="req_password2" size="16" maxlength="16" /><br /></label>
 						<div class="clearer"></div>
 					</div>
 				</fieldset>
@@ -1392,16 +1394,16 @@ else
 
 	$alerts = '';
 	// Check if the cache directory is writable
-	if (!@is_writable('./cache/'))
+	if (!@is_writable(PUN_ROOT . 'cache/'))
 		$alerts .= '<p style="font-size: 1.1em"><span style="color: #C03000"><strong>The cache directory is currently not writable!</strong></span> In order for PunBB to function properly, the directory named <em>cache</em> must be writable by PHP. Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777.</p>';
 
 	// Check if default avatar directory is writable
-	if (!@is_writable('./img/avatars/'))
+	if (!@is_writable(PUN_ROOT . 'img/avatars/'))
 		$alerts .= '<p style="font-size: 1.1em"><span style="color: #C03000"><strong>The avatar directory is currently not writable!</strong></span> If you want users to be able to upload their own avatar images you must see to it that the directory named <em>img/avatars</em> is writable by PHP. You can later choose to save avatar images in a different directory (see Admin/Options). Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777.</p>';
 
 
 	/// Display config.php and give further instructions
-	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(md5(time()), -8)."';\n\ndefine('PUN', 1);";
+	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(md5(time()), -8)."';\n\ndefine('PUN', 1);\n\n?>";
 
 
 ?>
@@ -1411,7 +1413,7 @@ else
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>PunBB Installation</title>
-<link rel="stylesheet" type="text/css" href="style/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo PUN_ROOT ?>style/Oxygen.css" />
 </head>
 <body>
 
@@ -1437,7 +1439,7 @@ else
 			<div class="inform">
 				<div class="forminfo">
 					<p>Once you have created config.php with the contents above, PunBB is installed!</p>
-					<p><a href="index.php">Go to forum index</a></p>
+					<p><a href="<?php genurl('index.php', false, true);?>">Go to forum index</a></p>
 				</div>
 			</div>
 		</div>
