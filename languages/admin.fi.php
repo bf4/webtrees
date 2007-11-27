@@ -23,6 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
+ * @translator Matti Valve 
  * @version $Id$
  */
 

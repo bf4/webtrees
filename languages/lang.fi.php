@@ -21,8 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @author Matti Valve
- * @author Jaakko Sarell
+ * @translator Matti Valve
  * @version $Id$
  */
 
@@ -628,7 +627,6 @@ $pgv_lang["tmz"]          = "tamuz-kuu";
 $pgv_lang["aav"]          = "av-kuu";
 $pgv_lang["ell"]          = "elul-kuu";
 
-//@@
 $pgv_lang["muhar"]        = "muharram";
 $pgv_lang["safar"]        = "safar";
 $pgv_lang["rabia"]        = "rabi` al-awwal";

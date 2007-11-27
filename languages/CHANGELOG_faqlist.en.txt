@@ -41,6 +41,7 @@ VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$faqlist["FAQ_030_GIVN2"]							24 November 2007        w - added a leading space
 *$faqlist["FAQ_030_PLACES4"]						08 September 2007       w
 *$faqlist["FAQ_030_MARRNAME2"						08 September 2007       p
 *$faqlist["FAQ_030_PLACES3"]						07 September 2007       w	

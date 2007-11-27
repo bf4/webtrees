@@ -29,6 +29,19 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
+// Added in VERSION 4.1.4 
+
+//$pgv_lang["lb_details"]			= "Details";
+//$pgv_lang["lb_detail_info"]		= "View this Media Item Details ...  Plus other Media Options - MediaViewer page";
+//$pgv_lang["lb_pause_ss"]		= "Pause Slideshow";
+//$pgv_lang["lb_start_ss"]		= "Start Slideshow";
+//$pgv_lang["lb_music"]			= "Turn Music On/Off";
+//$pgv_lang["lb_zoom_off"]		= "Disable Zoom";
+//$pgv_lang["lb_zoom_on"]			= "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out";
+//$pgv_lang["lb_close_win"]		= "Close Lightbox window";
+
+// VERSION 4.1.3 
+
 $pgv_lang["add_task_inst"]		= "Mikäli tutkimustuloksiasi varten ei vielä ole luotu tehtävää, sinun tulisi ensin luoda tehtävä ja sitten valita vaihtoehto tallentaa ja suorittaa tehtävä loppuun."; 
 $pgv_lang["complete_task_inst"]	= "Valitse tehtävä allaolevasta tehtäväluettelosta suorittaaksesi sen lopuun ja lisää tulokset:";
 $pgv_lang["enter_results"]		= "Lisää tulokset";
