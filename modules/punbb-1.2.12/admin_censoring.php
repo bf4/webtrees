@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -94,7 +94,7 @@ generate_admin_menu('censoring');
 	<div class="blockform">
 		<h2><span>Censoring</span></h2>
 		<div class="box">
-			<form id="censoring" method="post" action="admin_censoring.php?action=foo">
+			<form id="censoring" method="post" action="<?php genurl('admin_censoring.php?action=foo', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Add word</legend>

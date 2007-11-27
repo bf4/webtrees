@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -64,7 +64,7 @@ generate_admin_menu('permissions');
 	<div class="blockform">
 		<h2><span>Permissions</span></h2>
 		<div class="box">
-			<form method="post" action="admin_permissions.php">
+			<form method="post" action="<?php genurl('admin_permissions.php', true, true)?>">
 				<p class="submittop"><input type="submit" name="save" value="Save changes" /></p>
 				<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />

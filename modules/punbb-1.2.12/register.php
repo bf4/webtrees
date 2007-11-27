@@ -23,14 +23,14 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', './');
+define('PUN_ROOT', 'modules/punbb/');
 require PUN_ROOT.'include/common.php';
 
 
 // If we are logged in, we shouldn't be here
 if (!$pun_user['is_guest'])
 {
-	header('Location: index.php');
+	header('Location: module.php?mod=punbb&amp;pgvaction=index');
 	exit;
 }
 
@@ -46,7 +46,7 @@ if ($pun_config['o_regs_allow'] == '0')
 
 // User pressed the cancel button
 if (isset($_GET['cancel']))
-	redirect('index.php', $lang_register['Reg cancel redirect']);
+	redirect('module.php?mod=punbb&amp;pgvaction=index', $lang_register['Reg cancel redirect']);
 
 
 else if ($pun_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POST['form_sent']))
@@ -58,7 +58,7 @@ else if ($pun_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POS
 <div class="blockform">
 	<h2><span><?php echo $lang_register['Forum rules'] ?></span></h2>
 	<div class="box">
-		<form method="get" action="register.php">
+		<form method="get" action="module.php?mod=punbb&amp;pgvaction=register">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_register['Rules legend'] ?></legend>
@@ -79,13 +79,6 @@ else if ($pun_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POS
 
 else if (isset($_POST['form_sent']))
 {
-	// Check that someone from this IP didn't register a user within the last hour (DoS prevention)
-	$result = $db->query('SELECT 1 FROM '.$db->prefix.'users WHERE registration_ip=\''.get_remote_address().'\' AND registered>'.(time() - 3600)) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
-
-	if ($db->num_rows($result))
-		message('A new user was registered with the same IP address as you within the last hour. To prevent registration flooding, at least an hour has to pass between registrations from the same IP. Sorry for the inconvenience.');
-
-
 	$username = pun_trim($_POST['req_username']);
 	$email1 = strtolower(trim($_POST['req_email1']));
 
@@ -132,7 +125,7 @@ else if (isset($_POST['form_sent']))
 	}
 
 	// Check that the username (or a too similar username) is not already registered
-	$result = $db->query('SELECT username FROM '.$db->prefix.'users WHERE UPPER(username)=UPPER(\''.$db->escape($username).'\') OR UPPER(username)=UPPER(\''.$db->escape(preg_replace('/[^\w]/', '', $username)).'\')') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT username FROM '.$db->prefix.'users WHERE username=\''.$db->escape($username).'\' OR username=\''.$db->escape(preg_replace('/[^\w]/', '', $username)).'\'') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 	if ($db->num_rows($result))
 	{
@@ -178,7 +171,7 @@ else if (isset($_POST['form_sent']))
 	$save_pass = (!isset($_POST['save_pass']) || $_POST['save_pass'] != '1') ? '0' : '1';
 
 	$email_setting = intval($_POST['email_setting']);
-	if ($email_setting < 0 || $email_setting > 2) $email_setting = 1;
+	if ($email_setting < 0 && $email_setting > 2) $email_setting = 1;
 
 	// Insert the new user into the database. We do this now to get the last inserted id for later use.
 	$now = time();
@@ -243,7 +236,7 @@ else if (isset($_POST['form_sent']))
 
 	pun_setcookie($new_uid, $password_hash, ($save_pass != '0') ? $now + 31536000 : 0);
 
-	redirect('index.php', $lang_register['Reg complete']);
+	redirect('module.php?mod=punbb&amp;pgvaction=index', $lang_register['Reg complete']);
 }
 
 
@@ -256,7 +249,7 @@ require PUN_ROOT.'header.php';
 <div class="blockform">
 	<h2><span><?php echo $lang_register['Register'] ?></span></h2>
 	<div class="box">
-		<form id="register" method="post" action="register.php?action=register" onsubmit="this.register.disabled=true;if(process_form(this)){return true;}else{this.register.disabled=false;return false;}">
+		<form id="register" method="post" action="module.php?mod=punbb&amp;pgvaction=register&amp;action=register" onsubmit="this.register.disabled=true;if(process_form(this)){return true;}else{this.register.disabled=false;return false;}">
 			<div class="inform">
 				<div class="forminfo">
 					<h3><?php echo $lang_common['Important information'] ?></h3>
@@ -344,7 +337,7 @@ require PUN_ROOT.'header.php';
 		$d = dir(PUN_ROOT.'lang');
 		while (($entry = $d->read()) !== false)
 		{
-			if ($entry != '.' && $entry != '..' && is_dir(PUN_ROOT.'lang/'.$entry) && file_exists(PUN_ROOT.'lang/'.$entry.'/common.php'))
+			if ($entry != '.' && $entry != '..' && is_dir(PUN_ROOT.'lang/'.$entry))
 				$languages[] = $entry;
 		}
 		$d->close();

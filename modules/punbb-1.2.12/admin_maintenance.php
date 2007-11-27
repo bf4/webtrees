@@ -28,7 +28,7 @@ define('PUN_ADMIN_CONSOLE', 1);
 // Tell common.php that we don't want output buffering
 define('PUN_DISABLE_BUFFERING', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -37,17 +37,17 @@ if ($pun_user['g_id'] > PUN_ADMIN)
 	message($lang_common['No permission']);
 
 
-if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
+if (isset($_POST['i_per_page']) && isset($_POST['i_start_at']))
 {
-	$per_page = intval($_GET['i_per_page']);
-	$start_at = intval($_GET['i_start_at']);
+	$per_page = intval($_POST['i_per_page']);
+	$start_at = intval($_POST['i_start_at']);
 	if ($per_page < 1 || $start_at < 1)
 		message($lang_common['Bad request']);
 
 	@set_time_limit(0);
 
 	// If this is the first cycle of posts we empty the search index before we proceed
-	if (isset($_GET['i_empty_index']))
+	if (isset($_POST['i_empty_index']))
 	{
 		// This is the only potentially "dangerous" thing we can do here, so we check the referer
 		confirm_referrer('admin_maintenance.php');
@@ -125,7 +125,7 @@ Rebuilding index &hellip; This might be a good time to put on some coffee :-)<br
 	$db->end_transaction();
 	$db->close();
 
-	exit('<script type="text/javascript">window.location="admin_maintenance.php'.$query_str.'"</script><br />JavaScript redirect unsuccessful. Click <a href="admin_maintenance.php'.$query_str.'">here</a> to continue.');
+	exit('<script type="text/javascript">window.location="'.genurl('admin_maintenance.php'.$query_str,true).'"</script><br />JavaScript redirect unsuccessful. Click <a href="'.genurl('admin_maintenance.php'.$query_str).'">here</a> to continue.');
 }
 
 
@@ -143,7 +143,7 @@ generate_admin_menu('maintenance');
 	<div class="blockform">
 		<h2><span>Forum Maintenance</span></h2>
 		<div class="box">
-			<form method="get" action="admin_maintenance.php">
+			<form method="post" action="<?php genurl('admin_maintenance.php',true,true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Rebuild search index</legend>

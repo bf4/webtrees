@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -97,7 +97,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 	}
 	else
 	{
-		$forum_field = '<h3><a href="viewforum.php?id='.$cur_forum['fid'].'">'.pun_htmlspecialchars($cur_forum['forum_name']).'</a></h3>';
+		$forum_field = '<h3><a href="'.genurl('viewforum.php?id='.$cur_forum['fid']).'">'.pun_htmlspecialchars($cur_forum['forum_name']).'</a></h3>';
 		$num_topics = $cur_forum['num_topics'];
 		$num_posts = $cur_forum['num_posts'];
 	}
@@ -108,7 +108,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 
 	// If there is a last_post/last_poster.
 	if ($cur_forum['last_post'] != '')
-		$last_post = '<a href="viewtopic.php?pid='.$cur_forum['last_post_id'].'#p'.$cur_forum['last_post_id'].'">'.format_time($cur_forum['last_post']).'</a> <span class="byuser">'.$lang_common['by'].' '.pun_htmlspecialchars($cur_forum['last_poster']).'</span>';
+		$last_post = '<a href="'.genurl('viewtopic.php?pid='.$cur_forum['last_post_id'].'#p'.$cur_forum['last_post_id']).'">'.format_time($cur_forum['last_post']).'</a> <span class="byuser">'.$lang_common['by'].' '.pun_htmlspecialchars($cur_forum['last_poster']).'</span>';
 	else
 		$last_post = '&nbsp;';
 
@@ -118,7 +118,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 		$moderators = array();
 
 		while (list($mod_username, $mod_id) = @each($mods_array))
-			$moderators[] = '<a href="profile.php?id='.$mod_id.'">'.pun_htmlspecialchars($mod_username).'</a>';
+			$moderators[] = '<a href="'.genurl('profile.php?id='.$mod_id).'">'.pun_htmlspecialchars($mod_username).'</a>';
 
 		$moderators = "\t\t\t\t\t\t\t\t".'<p><em>('.$lang_common['Moderated by'].'</em> '.implode(', ', $moderators).')</p>'."\n";
 	}
@@ -171,7 +171,7 @@ list($stats['total_topics'], $stats['total_posts']) = $db->fetch_row($result);
 			</dl>
 			<dl class="conl">
 				<dt><strong><?php echo $lang_index['User info'] ?></strong></dt>
-				<dd><?php echo $lang_index['Newest user'] ?>: <a href="profile.php?id=<?php echo $stats['last_user']['id'] ?>"><?php echo pun_htmlspecialchars($stats['last_user']['username']) ?></a></dd>
+				<dd><?php echo $lang_index['Newest user'] ?>: <a href="<?php genurl("profile.php?id={$stats['last_user']['id']}", false, true);?>"><?php echo pun_htmlspecialchars($stats['last_user']['username']) ?></a></dd>
 <?php
 
 if ($pun_config['o_users_online'] == '1')
@@ -184,7 +184,7 @@ if ($pun_config['o_users_online'] == '1')
 	while ($pun_user_online = $db->fetch_assoc($result))
 	{
 		if ($pun_user_online['user_id'] > 1)
-			$users[] = "\n\t\t\t\t".'<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
+			$users[] = "\n\t\t\t\t".'<dd><a href="'.genurl('profile.php?id='.$pun_user_online['user_id']).'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 		else
 			++$num_guests;
 	}

@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -38,8 +38,8 @@ if ($pun_user['g_id'] > PUN_ADMIN)
 if (isset($_POST['form_sent']))
 {
 	// Lazy referer check (in case base_url isn't correct)
-	if (!isset($_SERVER['HTTP_REFERER']) || !preg_match('#/admin_options\.php#i', $_SERVER['HTTP_REFERER']))
-		message($lang_common['Bad referrer']);
+//	if (!isset($_SERVER['HTTP_REFERER']) || !preg_match('#/admin_options\.php#i', $_SERVER['HTTP_REFERER']))
+//		message($lang_common['Bad referrer']);
 
 	$form = array_map('trim', $_POST['form']);
 
@@ -146,7 +146,7 @@ generate_admin_menu('options');
 	<div class="blockform">
 		<h2><span>Options</span></h2>
 		<div class="box">
-			<form method="post" action="admin_options.php?action=foo">
+			<form method="post" action="<?php genurl('admin_options.php?action=foo', true, true)?>">
 				<p class="submittop"><input type="submit" name="save" value="Save changes" /></p>
 				<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />
@@ -428,21 +428,21 @@ generate_admin_menu('options');
 									<th scope="row"><a name="censoring">Censor words</a></th>
 									<td>
 										<input type="radio" name="form[censoring]" value="1"<?php if ($pun_config['o_censoring'] == '1') echo ' checked="checked"' ?> />&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="form[censoring]" value="0"<?php if ($pun_config['o_censoring'] == '0') echo ' checked="checked"' ?> />&nbsp;<strong>No</strong>
-										<span>Enable this to censor specific words in the forum. See <a href="admin_censoring.php">Censoring</a> for more info.</span>
+										<span>Enable this to censor specific words in the forum. See <a href="<?php genurl('admin_censoring.php', false, true)?>">Censoring</a> for more info.</span>
 									</td>
 								</tr>
 								<tr>
 									<th scope="row"><a name="ranks">User ranks</a></th>
 									<td>
 										<input type="radio" name="form[ranks]" value="1"<?php if ($pun_config['o_ranks'] == '1') echo ' checked="checked"' ?> />&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="form[ranks]" value="0"<?php if ($pun_config['o_ranks'] == '0') echo ' checked="checked"' ?> />&nbsp;<strong>No</strong>
-										<span>Enable this to use user ranks. See <a href="admin_ranks.php">Ranks</a> for more info.</span>
+										<span>Enable this to use user ranks. See <a href="<?php genurl('admin_ranks.php', false, true)?>">Ranks</a> for more info.</span>
 									</td>
 								</tr>
 								<tr>
 									<th scope="row">User has posted earlier</th>
 									<td>
 										<input type="radio" name="form[show_dot]" value="1"<?php if ($pun_config['o_show_dot'] == '1') echo ' checked="checked"' ?> />&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="form[show_dot]" value="0"<?php if ($pun_config['o_show_dot'] == '0') echo ' checked="checked"' ?> />&nbsp;<strong>No</strong>
-										<span>This feature displays a dot in front of topics in viewforum.php in case the currently logged in user has posted in that topic earlier. Disable if you are experiencing high server load.</span>
+										<span>This feature displays a dot in front of topics in viewforum in case the currently logged in user has posted in that topic earlier. Disable if you are experiencing high server load.</span>
 									</td>
 								</tr>
 								<tr>

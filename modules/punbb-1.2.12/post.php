@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -248,16 +248,16 @@ if (isset($_POST['form_sent']))
 								$mail_subject = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_subject);
 								$mail_message = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_message);
 								$mail_message = str_replace('<replier>', $username, $mail_message);
-								$mail_message = str_replace('<post_url>', $pun_config['o_base_url'].'/viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $mail_message);
-								$mail_message = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/misc.php?unsubscribe='.$tid, $mail_message);
+								$mail_message = str_replace('<post_url>', $pun_config['o_base_url'].'/'.genurl('viewtopic.php?pid=',true,false).$new_pid.'#p'.$new_pid, $mail_message);
+								$mail_message = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/'.genurl('misc.php?unsubscribe=',true,false).$tid, $mail_message);
 								$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message);
 
 								$mail_subject_full = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_subject_full);
 								$mail_message_full = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_message_full);
 								$mail_message_full = str_replace('<replier>', $username, $mail_message_full);
 								$mail_message_full = str_replace('<message>', $message, $mail_message_full);
-								$mail_message_full = str_replace('<post_url>', $pun_config['o_base_url'].'/viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $mail_message_full);
-								$mail_message_full = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/misc.php?unsubscribe='.$tid, $mail_message_full);
+								$mail_message_full = str_replace('<post_url>', $pun_config['o_base_url'].'/'.genurl('viewtopic.php?pid=',true,false).$new_pid.'#p'.$new_pid, $mail_message_full);
+								$mail_message_full = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/'.genurl('misc.php?unsubscribe=',true,false).$tid, $mail_message_full);
 								$mail_message_full = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message_full);
 
 								$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
@@ -329,7 +329,8 @@ if (isset($_POST['form_sent']))
 if ($tid)
 {
 	$action = $lang_post['Post a reply'];
-	$form = '<form id="post" method="post" action="post.php?action=post&amp;tid='.$tid.'" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">';
+	$form = '<form id="post" method="post" action="'.genurl('post.php?action=post&amp;tid='.$tid, true).'" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">';
+
 
 	// If a quote-id was specified in the url.
 	if (isset($_GET['qid']))
@@ -376,13 +377,13 @@ if ($tid)
 			$quote = '> '.$q_poster.' '.$lang_common['wrote'].':'."\n\n".'> '.$q_message."\n";
 	}
 
-	$forum_name = '<a href="viewforum.php?id='.$cur_posting['id'].'">'.pun_htmlspecialchars($cur_posting['forum_name']).'</a>';
+	$forum_name = '<a href="'.genurl('viewforum.php?id='.$cur_posting['id']).'">'.pun_htmlspecialchars($cur_posting['forum_name']).'</a>';
 }
 // If a forum_id was specified in the url (new topic).
 else if ($fid)
 {
 	$action = $lang_post['Post new topic'];
-	$form = '<form id="post" method="post" action="post.php?action=post&amp;fid='.$fid.'" onsubmit="return process_form(this)">';
+	$form = '<form id="post" method="post" action="'.genurl('post.php?action=post&amp;fid='.$fid, true).'" onsubmit="return process_form(this)">';
 
 	$forum_name = pun_htmlspecialchars($cur_posting['forum_name']);
 }
@@ -407,7 +408,7 @@ require PUN_ROOT.'header.php';
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo $forum_name ?><?php if (isset($cur_posting['subject'])) echo '</li><li>&nbsp;&raquo;&nbsp;'.pun_htmlspecialchars($cur_posting['subject']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo $forum_name ?><?php if (isset($cur_posting['subject'])) echo '</li><li>&nbsp;&raquo;&nbsp;'.pun_htmlspecialchars($cur_posting['subject']) ?></li></ul>
 	</div>
 </div>
 
@@ -471,6 +472,30 @@ $cur_index = 1;
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_common['Write message legend'] ?></legend>
+					<!-- Start of smilies list -->
+					<fieldset style="margin-left:4px; line-height:1.5em; width:22%; float:right; margin-top:16px; text-align:left; text-decoration:none;border-style: solid;border-width: 1px;padding: 0 0 0 10px;">
+					<legend>Smilies</legend><div style="overflow:auto; height:300px; padding: 2px;">
+					<?php
+					require_once PUN_ROOT.'include/parser.php';
+					$smilies = "";
+					$images = array();
+					foreach($smiley_text as $key => $value)
+						{
+						$smiley_text[$key] = str_replace("</p>"," ",$smiley_text[$key]);
+						$smiley_text[$key] = str_replace("<p>"," ",$smiley_text[$key]);
+
+						if(in_array($smiley_img[$key],$images))
+								{
+								continue;
+								}
+						$images[] = $smiley_img[$key];
+						$smilies .= "<tt style=\"cursor:pointer;\" OnClick=\"javascript:insert_text(' ".$smiley_text[$key]." ', '')\"><span title=\"{$smiley_text[$key]}\">" . parse_message($smiley_text[$key],0) . "</span></tt>";
+						}
+					$smilies = str_replace(array("<p>","</p>")," ",$smilies);
+					echo $smilies;
+					?>
+					</div></fieldset>
+					<!-- End of smilies list -->
 					<div class="infldset txtarea">
 						<input type="hidden" name="form_sent" value="1" />
 						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
@@ -490,12 +515,12 @@ if ($pun_user['is_guest'])
 
 if ($fid): ?>
 						<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo pun_htmlspecialchars($subject); ?>" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
-<?php endif; ?>						<label><strong><?php echo $lang_common['Message'] ?></strong><br />
-						<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo isset($_POST['req_message']) ? pun_htmlspecialchars($message) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
+<?php endif; require PUN_ROOT.'mod_easy_bbcode.php'; ?>						<label><strong><?php echo $lang_common['Message'] ?></strong><br />
+						<textarea id="msg" name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo isset($_POST['req_message']) ? pun_htmlspecialchars($message) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
 						<ul class="bblinks">
-							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="<?php genurl('help.php#bbcode', false, true)?>" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="<?php genurl('help.php#img', false, true)?>" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="<?php genurl('help.php#smilies', false, true)?>" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
 						</ul>
 					</div>
 				</fieldset>

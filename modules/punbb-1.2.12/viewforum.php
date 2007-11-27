@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -61,7 +61,7 @@ $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD &&
 
 // Can we or can we not post new topics?
 if (($cur_forum['post_topics'] == '' && $pun_user['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $is_admmod)
-	$post_link = "\t\t".'<p class="postlink conr"><a href="post.php?fid='.$id.'">'.$lang_forum['Post topic'].'</a></p>'."\n";
+	$post_link = "\t\t".'<p class="postlink conr"><a href="'.genurl('post.php?fid='.$id).'">'.$lang_forum['Post topic'].'</a></p>'."\n";
 else
 	$post_link = '';
 
@@ -85,7 +85,7 @@ require PUN_ROOT.'header.php';
 	<div class="inbox">
 		<p class="pagelink conl"><?php echo $paging_links ?></p>
 <?php echo $post_link ?>
-		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></li></ul>
 		<div class="clearer"></div>
 	</div>
 </div>
@@ -145,7 +145,7 @@ if ($db->num_rows($result))
 		$icon_type = 'icon';
 
 		if ($cur_topic['moved_to'] == null)
-			$last_post = '<a href="viewtopic.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id'].'">'.format_time($cur_topic['last_post']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
+			$last_post = '<a href="'.genurl('viewtopic.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id']).'">'.format_time($cur_topic['last_post']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
 		else
 			$last_post = '&nbsp;';
 
@@ -153,12 +153,12 @@ if ($db->num_rows($result))
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 		if ($cur_topic['moved_to'] != 0)
-			$subject = $lang_forum['Moved'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = $lang_forum['Moved'].': <a href="'.genurl('viewtopic.php?id='.$cur_topic['moved_to']).'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 		else if ($cur_topic['closed'] == '0')
-			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = '<a href="'.genurl('viewtopic.php?id='.$cur_topic['id']).'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 		else
 		{
-			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = '<a href="'.genurl('viewtopic.php?id='.$cur_topic['id']).'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			$icon_text = $lang_common['Closed icon'];
 			$item_status = 'iclosed';
 		}
@@ -169,7 +169,7 @@ if ($db->num_rows($result))
 			$item_status .= ' inew';
 			$icon_type = 'icon inew';
 			$subject = '<strong>'.$subject.'</strong>';
-			$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
+			$subject_new_posts = '<span class="newtext">[&nbsp;<a href="'.genurl('viewtopic.php?id='.$cur_topic['id'].'&amp;action=new').'" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
 		}
 		else
 			$subject_new_posts = null;
@@ -193,7 +193,7 @@ if ($db->num_rows($result))
 		$num_pages_topic = ceil(($cur_topic['num_replies'] + 1) / $pun_user['disp_posts']);
 
 		if ($num_pages_topic > 1)
-			$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$cur_topic['id']).' ]';
+			$subject_multipage = '[ '.paginate($num_pages_topic, -1, genurl('viewtopic.php?id='.$cur_topic['id'])).' ]';
 		else
 			$subject_multipage = null;
 
@@ -244,7 +244,7 @@ else
 	<div class="inbox">
 		<p class="pagelink conl"><?php echo $paging_links ?></p>
 <?php echo $post_link ?>
-		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php')?>"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></li></ul>
 		<div class="clearer"></div>
 	</div>
 </div>

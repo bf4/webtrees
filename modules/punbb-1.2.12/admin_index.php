@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -175,7 +175,7 @@ generate_admin_menu('index');
 				<dl>
 					<dt>PunBB version</dt>
 					<dd>
-						PunBB <?php echo $pun_config['o_cur_version'] ?> - <a href="admin_index.php?action=check_upgrade">Check for upgrade</a><br />
+						PunBB <?php echo $pun_config['o_cur_version'] ?> - <a href="<?php genurl('admin_index.php?action=check_upgrade', false, true)?>">Check for upgrade</a><br />
 						&copy; Copyright 2002, 2003, 2004, 2005 Rickard Andersson
 					</dd>
 					<dt>Server load</dt>
@@ -185,7 +185,7 @@ generate_admin_menu('index');
 <?php if ($pun_user['g_id'] == PUN_ADMIN): ?>					<dt>Environment</dt>
 					<dd>
 						Operating system: <?php echo PHP_OS ?><br />
-						PHP: <?php echo phpversion() ?> - <a href="admin_index.php?action=phpinfo">Show info</a><br />
+						PHP: <?php echo phpversion() ?> - <a href="<?php genurl('admin_index.php?action=phpinfo', false, true)?>">Show info</a><br />
 						Accelerator: <?php echo $php_accelerator."\n" ?>
 					</dd>
 					<dt>Database</dt>

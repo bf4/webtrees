@@ -30,9 +30,25 @@ if (!defined('PUN'))
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
 $smiley_text = array(':)', '=)', ':|', '=|', ':(', '=(', ':D', '=D', ':o', ':O', ';)', ':/', ':P', ':lol:', ':mad:', ':rolleyes:', ':cool:');
 $smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad.png', 'sad.png', 'big_smile.png', 'big_smile.png', 'yikes.png', 'yikes.png', 'wink.png', 'hmm.png', 'tongue.png', 'lol.png', 'mad.png', 'roll.png', 'cool.png');
+// This is for the Smilies plugin
+	# Query the database
+$smiley_result = $db->query("SELECT * FROM " . $db->prefix . "smilies");
+if(is_resource($smiley_result))
+	{
+	$num_rows = $db->num_rows($smiley_result);
+
+	if($num_rows > 0)
+		{
+		while($smiley_row = $db->fetch_row($smiley_result))
+			{
+			$smiley_text[] 	= stripslashes($smiley_row[2]);
+			$smiley_img[] 	= stripslashes($smiley_row[3]);
+			}
+		}
+	}
 
 // Uncomment the next row if you add smilies that contain any of the characters &"'<>
-//$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
+$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
 
 
 //
@@ -363,7 +379,7 @@ function do_smilies($text)
 
 	$num_smilies = count($smiley_text);
 	for ($i = 0; $i < $num_smilies; ++$i)
-		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/smilies/'.$smiley_img[$i].'" width="15" height="15" alt="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
+		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="'.PUN_ROOT.'img/smilies/'.$smiley_img[$i].'" width="15" height="15" alt="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
 
 	return substr($text, 1, -1);
 }

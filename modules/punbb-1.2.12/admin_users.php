@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -77,10 +77,10 @@ if (isset($_GET['ip_stats']))
 
 ?>
 				<tr>
-					<td class="tcl"><a href="moderate.php?get_host=<?php echo $cur_ip['poster_ip'] ?>"><?php echo $cur_ip['poster_ip'] ?></a></td>
+					<td class="tcl"><a href="<?php genurl("moderate.php?get_host={$cur_ip['poster_ip']}", false, true)?>"><?php echo $cur_ip['poster_ip'] ?></a></td>
 					<td class="tc2"><?php echo format_time($cur_ip['last_used']) ?></td>
 					<td class="tc3"><?php echo $cur_ip['used_times'] ?></td>
-					<td class="tcr"><a href="admin_users.php?show_users=<?php echo $cur_ip['poster_ip'] ?>">Find more users for this ip</a></td>
+					<td class="tcr"><a href="<?php genurl("admin_users.php?show_users={$cur_ip['poster_ip']}", false, true)?>">Find more users for this ip</a></td>
 				</tr>
 <?php
 
@@ -159,11 +159,11 @@ if (isset($_GET['show_users']))
 			{
 				$user_title = get_title($user_data);
 
-				$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
+				$actions = '<a href="'.genurl('admin_users.php?ip_stats='.$user_data['id']).'">View IP stats</a> - <a href="'.genurl('search.php?action=show_user&amp;user_id='.$user_data['id']).'">Show posts</a>';
 
 ?>
 				<tr>
-					<td class="tcl"><?php echo '<a href="profile.php?id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
+					<td class="tcl"><?php echo '<a href="'.genurl('profile.php?id='.$user_data['id']).'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
 					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
 					<td class="tc3"><?php echo $user_title ?></td>
 					<td class="tc4"><?php echo $user_data['num_posts'] ?></td>
@@ -312,11 +312,11 @@ else if (isset($_POST['find_user']))
 			if (($user_data['g_id'] == '' || $user_data['g_id'] == PUN_UNVERIFIED) && $user_title != $lang_common['Banned'])
 				$user_title = '<span class="warntext">Not verified</span>';
 
-			$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
+			$actions = '<a href="'.genurl('admin_users.php?ip_stats='.$user_data['id']).'">View IP stats</a> - <a href="'.genurl('search.php?action=show_user&amp;user_id='.$user_data['id']).'">Show posts</a>';
 
 ?>
 				<tr>
-					<td class="tcl"><?php echo '<a href="profile.php?id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
+					<td class="tcl"><?php echo '<a href="'.genurl('profile.php?id='.$user_data['id']).'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
 					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
 					<td class="tc3"><?php echo $user_title ?></td>
 					<td class="tc4"><?php echo $user_data['num_posts'] ?></td>
@@ -360,7 +360,7 @@ else
 	<div class="blockform">
 		<h2><span>User search</span></h2>
 		<div class="box">
-			<form id="find_user" method="post" action="admin_users.php?action=find_user">
+			<form id="find_user" method="post" action="<?php genurl('admin_users.php?action=find_user', true, true)?>">
 				<p class="submittop"><input type="submit" name="find_user" value="Submit search" tabindex="1" /></p>
 				<div class="inform">
 					<fieldset>

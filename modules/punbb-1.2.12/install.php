@@ -22,14 +22,14 @@
 
 ************************************************************************/
 
-
 // The PunBB version this script installs
 $punbb_version = '1.2.12';
 
 
-define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
+require_once PUN_ROOT.'include/pgv.php';
 if (file_exists(PUN_ROOT.'config.php'))
-	exit('The file \'config.php\' already exists which would mean that PunBB is already installed. You should go <a href="index.php">here</a> instead.');
+	exit('The file \'config.php\' already exists which would mean that PunBB is already installed. You should go <a href="'.genurl('index.php').'">here</a> instead.');
 
 
 // Make sure we are running at least PHP 4.1.0
@@ -127,7 +127,7 @@ function process_form(the_form)
 <div class="blockform">
 	<h2><span>Install PunBB 1.2</span></h2>
 	<div class="box">
-		<form id="install" method="post" action="install.php" onsubmit="this.start.disabled=true;if(process_form(this)){return true;}else{this.start.disabled=false;return false;}">
+		<form id="install" method="post" action="<?php genurl('install.php', true, true);?>" onsubmit="this.start.disabled=true;if(process_form(this)){return true;}else{this.start.disabled=false;return false;}">
 		<div><input type="hidden" name="form_sent" value="1" /></div>
 			<div class="inform">
 				<div class="forminfo">
@@ -144,8 +144,10 @@ function process_form(the_form)
 <?php
 
 	foreach ($db_extensions as $db_type)
-		echo "\t\t\t\t\t\t\t".'<option value="'.$db_type[0].'">'.$db_type[1].'</option>'."\n";
-
+	{
+		if($db_type[0] == $DBTYPE){$sel = ' selected="SELECTED"';}else{$sel = '';}
+		echo "\t\t\t\t\t\t\t".'<option value="'.$db_type[0].'"'.$sel.'>'.$db_type[1].'</option>'."\n";
+	}
 ?>
 						</select>
 						<br /></label>
@@ -157,7 +159,7 @@ function process_form(the_form)
 					<legend>Enter your database server hostname</legend>
 					<div class="infldset">
 						<p>The address of the database server (example: localhost, db.myhost.com or 192.168.0.15). You can specify a custom port number if your database doesn't run on the default port (example: localhost:3580). For SQLite support, just enter anything or leave it at 'localhost'.</p>
-						<label><strong>Database server hostname</strong><br /><input type="text" name="req_db_host" value="localhost" size="50" maxlength="100" /><br /></label>
+						<label><strong>Database server hostname</strong><br /><input type="text" name="req_db_host" value="localhost" size="50" maxlength="100" value="<?php print $DBHOST;?>" /><br /></label>
 					</div>
 				</fieldset>
 			</div>
@@ -166,7 +168,7 @@ function process_form(the_form)
 					<legend>Enter then name of your database</legend>
 					<div class="infldset">
 						<p>The name of the database that PunBB will be installed into. The database must exist. For SQLite, this is the relative path to the database file. If the SQLite database file does not exist, PunBB will attempt to create it.</p>
-						<label for="req_db_name"><strong>Database name</strong><br /><input id="req_db_name" type="text" name="req_db_name" size="30" maxlength="50" /><br /></label>
+						<label for="req_db_name"><strong>Database name</strong><br /><input id="req_db_name" type="text" name="req_db_name" size="30" maxlength="50" value="<?php print $DBNAME;?>" /><br /></label>
 					</div>
 				</fieldset>
 			</div>
@@ -176,7 +178,7 @@ function process_form(the_form)
 					<div class="infldset">
 						<p>Enter the username and password with which you connect to the database. Ignore for SQLite.</p>
 						<label class="conl">Database username<br /><input type="text" name="db_username" size="30" maxlength="50" /><br /></label>
-						<label class="conl">Database password<br /><input type="text" name="db_password" size="30" maxlength="50" /><br /></label>
+						<label class="conl">Database password<br /><input type="password" name="db_password" size="30" maxlength="50" /><br /></label>
 						<div class="clearer"></div>
 					</div>
 				</fieldset>
@@ -186,7 +188,7 @@ function process_form(the_form)
 					<legend>Enter database table prefix</legend>
 					<div class="infldset">
 						<p>If you like you can specify a table prefix. This way you can run multiple copies of PunBB in the same database (example: foo_).</p>
-						<label>Table prefix<br /><input id="db_prefix" type="text" name="db_prefix" size="20" maxlength="30" /><br /></label>
+						<label>Table prefix<br /><input id="db_prefix" type="text" name="db_prefix" size="20" maxlength="30" value="punbb_" /><br /></label>
 					</div>
 				</fieldset>
 			</div>
@@ -199,7 +201,7 @@ function process_form(the_form)
 					<legend>Enter Administrators username</legend>
 					<div class="infldset">
 						<p>The username of the forum administrator. You can later create more administrators and moderators. Usernames can be between 2 and 25 characters long.</p>
-						<label><strong>Administrator username</strong><br /><input type="text" name="req_username" size="25" maxlength="25" /><br /></label>
+						<label><strong>Administrator username</strong><br /><input type="text" name="req_username" size="25" maxlength="25" value="<?php print getUserName();?>" /><br /></label>
 					</div>
 				</fieldset>
 			</div>
@@ -208,30 +210,26 @@ function process_form(the_form)
 					<legend>Enter and confirm Administrator password</legend>
 					<div class="infldset">
 					<p>Passwords can be between 4 and 16 characters long. Passwords are case sensitive.</p>
-						<label class="conl"><strong>Password</strong><br /><input id="req_password1" type="text" name="req_password1" size="16" maxlength="16" /><br /></label>
-						<label class="conl"><strong>Confirm password</strong><br /><input type="text" name="req_password2" size="16" maxlength="16" /><br /></label>
+						<label class="conl"><strong>Password</strong><br /><input id="req_password1" type="password" name="req_password1" size="16" maxlength="16" /><br /></label>
+						<label class="conl"><strong>Confirm password</strong><br /><input type="password" name="req_password2" size="16" maxlength="16" /><br /></label>
 						<div class="clearer"></div>
 					</div>
 				</fieldset>
 			</div>
+<?php
+$user = getUser(getUserName());
+if($SERVER_URL[strlen($SERVER_URL) - 1] == '/'){$sep = '';}else{$sep = '/';}
+?>
 			<div class="inform">
 				<fieldset>
 					<legend>Enter Administrator's e-mail</legend>
 					<div class="infldset">
 						<p>The e-mail address of the forum administrator.</p>
-						<label for="req_email"><strong>Administrator's e-mail</strong><br /><input id="req_email" type="text" name="req_email" size="50" maxlength="50" /><br /></label>
+						<label for="req_email"><strong>Administrator's e-mail</strong><br /><input id="req_email" type="text" name="req_email" size="50" maxlength="50" value="<?php print $user['email'];?>" /><br /></label>
 					</div>
 				</fieldset>
 			</div>
-			<div class="inform">
-				<fieldset>
-					<legend>Enter the Base URL of your PunBB installation</legend>
-					<div class="infldset">
-						<p>The URL (without trailing slash) of your PunBB forum (example: http://forum.myhost.com or http://myhost.com/~myuser). This <strong>must</strong> be correct or administrators and moderators will not be able to submit any forms. Please note that the preset value below is just an educated guess by PunBB.</p>
-						<label><strong>Base URL</strong><br /><input type="text" name="req_base_url" value="http://<?php echo $_SERVER['SERVER_NAME'].str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])) ?>" size="60" maxlength="100" /><br /></label>
-					</div>
-				</fieldset>
-			</div>
+			<input type="hidden" name="req_base_url" value="<?php print $SERVER_URL;?>" />
 			<p><input type="submit" name="start" value="Start install" /></p>
 		</form>
 	</div>
@@ -757,7 +755,7 @@ else
 					poster_id INT(10) UNSIGNED NOT NULL DEFAULT 1,
 					poster_ip VARCHAR(15),
 					poster_email VARCHAR(50),
-					message TEXT NOT NULL DEFAULT '',
+					message TEXT NOT NULL,
 					hide_smilies TINYINT(1) NOT NULL DEFAULT 0,
 					posted INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					edited INT(10) UNSIGNED,
@@ -852,7 +850,7 @@ else
 					forum_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					reported_by INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					created INT(10) UNSIGNED NOT NULL DEFAULT 0,
-					message TEXT NOT NULL DEFAULT '',
+					message TEXT NOT NULL,
 					zapped INT(10) UNSIGNED,
 					zapped_by INT(10) UNSIGNED,
 					PRIMARY KEY (id)
@@ -901,7 +899,7 @@ else
 			$sql = 'CREATE TABLE '.$db_prefix."search_cache (
 					id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					ident VARCHAR(200) NOT NULL DEFAULT '',
-					search_data TEXT NOT NULL DEFAULT '',
+					search_data TEXT NOT NULL,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
@@ -1227,6 +1225,40 @@ else
 
 	$db->query($sql) or error('Unable to create table '.$db_prefix.'users. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
 
+	switch ($db_type)
+	{
+		case 'mysql':
+		case 'mysqli':
+			$sql = "CREATE TABLE " . $db->prefix . "smilies (
+										Id INT( 11 ) NOT NULL AUTO_INCREMENT ,
+										Smiley_Name VARCHAR( 255 ) NOT NULL ,
+										Smiley_Text CHAR( 15 ) NOT NULL ,
+										Smiley_Image VARCHAR( 255 ) NOT NULL ,
+										PRIMARY KEY ( Id )
+										)";
+
+			break;
+		case 'pgsql':
+			$sql = "CREATE TABLE " . $db->prefix . "smilies (
+										Id SERIAL ,
+										Smiley_Name VARCHAR( 255 ) NOT NULL ,
+										Smiley_Text CHAR( 15 ) NOT NULL ,
+										Smiley_Image VARCHAR( 255 ) NOT NULL ,
+										PRIMARY KEY ( Id )
+										)";
+			break;
+		default:
+			$sql = "CREATE TABLE " . $db->prefix . "smilies (
+										Id INT( 11 ) NOT NULL AUTO_INCREMENT ,
+										Smiley_Name VARCHAR( 255 ) NOT NULL ,
+										Smiley_Text CHAR( 15 ) NOT NULL ,
+										Smiley_Image VARCHAR( 255 ) NOT NULL ,
+										PRIMARY KEY ( Id )
+										)";
+			break;
+	}
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'smilies. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+
 
 	// Add some indexes
 	switch ($db_type)
@@ -1391,16 +1423,16 @@ else
 
 	$alerts = '';
 	// Check if the cache directory is writable
-	if (!@is_writable('./cache/'))
+	if (!@is_writable(PUN_ROOT.'cache/'))
 		$alerts .= '<p style="font-size: 1.1em"><span style="color: #C03000"><strong>The cache directory is currently not writable!</strong></span> In order for PunBB to function properly, the directory named <em>cache</em> must be writable by PHP. Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777.</p>';
 
 	// Check if default avatar directory is writable
-	if (!@is_writable('./img/avatars/'))
+	if (!@is_writable(PUN_ROOT.'img/avatars/'))
 		$alerts .= '<p style="font-size: 1.1em"><span style="color: #C03000"><strong>The avatar directory is currently not writable!</strong></span> If you want users to be able to upload their own avatar images you must see to it that the directory named <em>img/avatars</em> is writable by PHP. You can later choose to save avatar images in a different directory (see Admin/Options). Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777.</p>';
 
 
 	/// Display config.php and give further instructions
-	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(md5(time()), -8)."';\n\ndefine('PUN', 1);";
+	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(md5(time()), -8)."';\n\ndefine('PUN', 1);\n\n?>";
 
 
 ?>
@@ -1410,7 +1442,7 @@ else
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>PunBB Installation</title>
-<link rel="stylesheet" type="text/css" href="style/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="modules/<?php print PUN_MOD_NAME?>/style/Oxygen.css" />
 </head>
 <body>
 
@@ -1427,7 +1459,7 @@ else
 <?php if ($alerts != ''): ?>					<?php echo $alerts."\n" ?>
 <?php endif; ?>				</div>
 				<fieldset>
-					<legend>Copy contents to config.php</legend>
+					<legend>Copy contents to modules/<?php print PUN_MOD_NAME?>/config.php</legend>
 					<div class="infldset">
 						<textarea cols="80" rows="20"><?php echo htmlspecialchars($config) ?></textarea>
 					</div>
@@ -1435,8 +1467,8 @@ else
 			</div>
 			<div class="inform">
 				<div class="forminfo">
-					<p>Once you have created config.php with the contents above, PunBB is installed!</p>
-					<p><a href="index.php">Go to forum index</a></p>
+					<p>Once you have created modules/<?php print PUN_MOD_NAME?>/config.php with the contents above, PunBB is installed!</p>
+					<p><a href="<?php genurl('index.php', false, true);?>">Go to forum index</a></p>
 				</div>
 			</div>
 		</div>
