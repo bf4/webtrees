@@ -21,8 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @author Jaakko Sarell
- * @author Matti Valve
+ * @translator Matti Valve
  * @version $Id$
  */
 

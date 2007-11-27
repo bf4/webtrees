@@ -27,11 +27,11 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "אין לך גישה ישירה לקובץ השפות.";
 	exit;
 }
 
-$pgv_lang["add_marriage"]			= "הוסף נישואין"; //@@
+$pgv_lang["add_marriage"]			= "הוסף נישואין"; 
 $pgv_lang["edit_concurrency_change"] 	= "הרשומה הזו שונתה לאחרונה ע\"י <i>#CHANGEUSER#</i> ב-#CHANGEDATE#"; 
 $pgv_lang["edit_concurrency_msg2"]	= "הרשומה עם קוד זיהוי #PID# שונתה ע\"י משתמש אחר לאחר שניגשת אליה בפעם האחרונה ."; 
 $pgv_lang["edit_concurrency_msg1"]	= "הייתה שגיאה בזמן יצירת טופס העריכה.  יתכן שהרשומה שונתה ע\"י משתמש אחר אחרי שהסתכלת עליה בפעם הקודמת."; 

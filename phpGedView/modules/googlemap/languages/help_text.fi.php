@@ -21,11 +21,11 @@
  *
  * @package PhpGedView
  * @subpackage GoogleMap
- * @author Jani Miettinen
+ * @translator Jani Miettinen
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
 

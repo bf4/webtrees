@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author Meliza
+ * @translathor Meliza
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -35,12 +35,12 @@ $pgv_lang["new_gedcom_title"]			= "חקר משפחה מקובץ [#GEDCOMFILE#]";
 $pgv_lang["keep_media_help"]			= "~#pgv_lang[keep_media]#~<br /><br />Should existing media links be retained in the database when a replacement GEDCOM is being uploaded. The <b>No</b> option removes existing media links from the database, while the <b>Yes</b> option keeps them.<br /><br />This option is useful when you export your GEDCOM from PhpGedView to an off-line GEDCOM maintenance program that does not handle embedded media pointers properly, and then subsequently re-import that changed GEDCOM into PhpGedView.  Under such circumstances, the media pointers within the GEDCOM you exported to your off-line editing program are destroyed, and you would have to re-link all of your media files to the proper Person, Family, and Source records after you re-import the GEDCOM into PhpGedView.<br /><br />The <b>Yes</b> option tells PhpGedView to keep the existing media links so that you do not have to re-create them after you import the changed GEDCOM, but this requires the off-line editing program to always produce the same Person, Family, and Source identification numbers.<br /><br /><i>Family Tree Maker</i> is one of several off-line editing programs that does <u>not</u> properly handle media object pointers within the GEDCOM.  <i>Legacy</i>, among many others, <u>does</u> handle these properly.<br /><br />";
 $pgv_lang["USE_MEDIA_VIEWER"]			= "השתמש במציג מדיה"; 
 $pgv_lang["USE_MEDIA_VIEWER_help"]		= "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />When this option is <b>#pgv_lang[yes]#</b>, clicking on images will produce the Media Viewer page.  This page shows the details of the image.  If you have sufficient rights, you can also edit these details.<br /><br />When this option is <b>#pgv_lang[no]#</b>, clicking on images will produce a full-size image in a new window.<br /><br />";
-$pgv_lang["USE_MEDIA_FIREWALL"]			= "השתמש בחומת אש של מדיה";
-$pgv_lang["USE_MEDIA_FIREWALL_help"]	= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />See the Wiki for a description of how to use the Media Firewall. <a href=\"http://wiki.phpgedview.net/en/index.php/Media_Firewall\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php/Media_Firewall</a><br /><br />";
-$pgv_lang["MEDIA_FIREWALL_ROOTDIR"]			= "ספריית השורש בחומת האש של מדיה";
+$pgv_lang["USE_MEDIA_FIREWALL"]		= "השתמש בחומת אש של מדיה";
+$pgv_lang["USE_MEDIA_FIREWALL_help"]		= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />See the Wiki for a description of how to use the Media Firewall. <a href=\"http://wiki.phpgedview.net/en/index.php/Media_Firewall\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php/Media_Firewall</a><br /><br />";
+$pgv_lang["MEDIA_FIREWALL_ROOTDIR"]		= "ספריית השורש בחומת האש של מדיה";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]	= "~#pgv_lang[MEDIA_FIREWALL_ROOTDIR]#~<br /><br />Directory in which the protected Media directory can be created.  #pgv_lang[MEDIA_FIREWALL_ROOTDIR_note]#<br /><br />";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]	= "כאשר שדה זה ריק, משתמשים בתיקיית <b>#GLOBALS[INDEX_DIRECTORY]#</b>."; 
-$pgv_lang["MEDIA_FIREWALL_THUMBS"]			= "הגן על תמונות ממוזעות של תמונות מוגנות"; 
+$pgv_lang["MEDIA_FIREWALL_THUMBS"]		= "הגן על תמונות ממוזעות של תמונות מוגנות"; 
 $pgv_lang["MEDIA_FIREWALL_THUMBS_help"]	= "~#pgv_lang[MEDIA_FIREWALL_THUMBS]#~<br /><br />When an image is in the protected Media directory, should its thumbnail be protected as well?<br /><br />";
 $pgv_lang["SHOW_SPIDER_TAGLINE"]		= "הראה tagline של עכבישים";
 $pgv_lang["SHOW_SPIDER_TAGLINE_help"]	= "~#pgv_lang[SHOW_SPIDER_TAGLINE]#~<br /><br />On pages generated for search engines, display as the last line the particular search engine the page detected.  If this option is on, it can bias Google AdSense towards search engine optimization tools.<br />";
@@ -53,10 +53,10 @@ $pgv_lang["COMMIT_COMMAND_help"] 		= "~#pgv_lang[COMMIT_COMMAND]#~<br /><br />If
 $pgv_lang["COMMIT_COMMAND"] 			= "פקודת Commit של ניהול מהדורות";
 $pgv_lang["SHOW_MULTISITE_SEARCH_help"]	= "~#pgv_lang[SHOW_MULTISITE_SEARCH]#~<br /><br />Multi-site search allows users to search across multiple PhpGedView websites which you have setup in the Manage Sites administration area or remotely linked to.  This option controls whether the Multi-site Search feature is available to everyone or only to authenticated users.<br />";
 $pgv_lang["SHOW_MULTISITE_SEARCH"]		= "הראה חיפוש באתרים מרובים";
-$pgv_lang["SHOW_NO_WATERMARK_help"]		= "~#pgv_lang[SHOW_NO_WATERMARK]#~<br /><br />If the Media Firewall is enabled, users will see watermarks if they do not have the privilege level specified here.<br />";
-$pgv_lang["SHOW_NO_WATERMARK"]			= "מי יכול לראות תמונות ללא סימני מים?";
+$pgv_lang["SHOW_NO_WATERMARK_help"]	= "~#pgv_lang[SHOW_NO_WATERMARK]#~<br /><br />If the Media Firewall is enabled, users will see watermarks if they do not have the privilege level specified here.<br />";
+$pgv_lang["SHOW_NO_WATERMARK"]		= "מי יכול לראות תמונות ללא סימני מים?";
 $pgv_lang["WATERMARK_THUMB_help"]		= "~#pgv_lang[WATERMARK_THUMB]#~<br /><br />If the Media Firewall is enabled, should thumbnails be watermarked? Your media lists will load faster if you don't watermark the thumbnails.<br />";
-$pgv_lang["WATERMARK_THUMB"]			= "הוסף סימני מים לתמונות ממוזערות?";
+$pgv_lang["WATERMARK_THUMB"]		= "הוסף סימני מים לתמונות ממוזערות?";
 $pgv_lang["SAVE_WATERMARK_THUMB_help"]	= "~#pgv_lang[SAVE_WATERMARK_THUMB]#~<br /><br />If the Media Firewall is enabled, should copies of watermarked thumbnails be stored on the server in addition to the same thumbnails without watermarks?<br /><br />When set to <b>#pgv_lang[yes]#</b>, media lists containing watermarked thumbnails will be produced more quickly at the expense of higher server disk space requirements.<br />";
 $pgv_lang["SAVE_WATERMARK_THUMB"]		= "שמור תמונות ממוזערות בעלות סימני מים על השרת?"; 
 $pgv_lang["SAVE_WATERMARK_IMAGE_help"]	= "~#pgv_lang[SAVE_WATERMARK_IMAGE]#~<br /><br />If the Media Firewall is enabled and a watermark module is installed, do you want to store copies of watermarked full size images on the server? (If you have plenty of disk space, this will save time generating the watermarked image.)<br />";

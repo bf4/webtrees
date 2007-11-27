@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Languages
  * @author Jaakko Sarell
- * @author Matti
+ * @translator Matti Valve
  * @version $Id$
  */
 
@@ -159,7 +159,6 @@ $factarray["EMAIL"]	= "Sähköpostiosoite";
 $factarray["_TODO"]	= "Työlistalla";
 $factarray["_UID"]		= "Yleistunniste";
 $factarray["_PGVU"]	= "Muuttanut";
-//$factarray["_PGVU"]	= "by"; // @@@last changed by
 $factarray["SERV"] 	= "Etäpalvelin";
 $factarray["_GEDF"] 	= "GEDCOM-tiedosto";
 $factarray["_PRIM"]	= "Korostettu kuva";
