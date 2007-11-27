@@ -2028,6 +2028,7 @@ function mkdirs($dir, $mode = 0777, $recursive = true) {
 
 // pass in an image type and this will determine if your system supports editing of that image type 
 function isImageTypeSupported($reqtype) {
+	if (!function_exists("imagetypes")) return false;
 	$reqtype = strtolower($reqtype);
 	if ( ( ($reqtype == 'jpg') || ($reqtype == 'jpeg') ) && (imagetypes() & IMG_JPG)) {
 		return ('jpeg');
