@@ -465,14 +465,15 @@
     </dd>
 
     <dd>The script banner.php must be located in the user include
-    directory mentioned above. PunBB will execute the script and
-    the pun_include variable will be replaced by any output that
-    the script produces. Please note that all included scripts have
-    access to the PunBB variables, so if you e.g. wanted to access
-    the database, you could use the $db object just like the rest of
-    PunBB does. Replacement of the pun_include variable is the last
-    thing that PunBB does when it outputs a page, so you don't have
-    to worry about not using variable names that PunBB uses.</dd>
+    directory mentioned above and its file extension must be .php,
+    .php4, .php5, .inc, .htm, .html or .txt. PunBB will execute the
+    script and the pun_include variable will be replaced by any
+    output that the script produces. Please note that all included
+    scripts have access to the PunBB variables, so if you e.g.
+    wanted to access the database, you could use the $db object just
+    like the rest of PunBB does. Be careful when dealing with global
+    variables in included scripts so that they don't collide with
+    PunBB's global variables.</dd>
 
     <dt>3.5 - I want to display information from the forums on my
     website's front page. How can I do this?<a name="faq3_5" id=

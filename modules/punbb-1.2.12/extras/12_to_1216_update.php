@@ -23,13 +23,13 @@
 ************************************************************************/
 
 
-// This script updates the forum database from version 1.2.* to 1.2.11.
+// This script updates the forum database from version 1.2.* to 1.2.16.
 // Copy this file to the forum root directory and run it. Then remove it from
 // the root directory.
 
 
-$update_from = array('1.2', '1.2.1', '1.2.2', '1.2.3', '1.2.4', '1.2.5', '1.2.6', '1.2.7', '1.2.8', '1.2.9', '1.2.10', '1.2.11');
-$update_to = '1.2.12';
+$update_from = array('1.2', '1.2.1', '1.2.2', '1.2.3', '1.2.4', '1.2.5', '1.2.6', '1.2.7', '1.2.8', '1.2.9', '1.2.10', '1.2.11', '1.2.12', '1.2.13', '1.2.14', '1.2.15');
+$update_to = '1.2.16';
 
 
 define('PUN_ROOT', './');
@@ -123,6 +123,14 @@ else
 		$db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES(\'o_additional_navlinks\', NULL)') or error('Unable to alter DB structure.', __FILE__, __LINE__, $db->error());
 	}
 
+	// We need to add a unique index to avoid users having multiple rows in the online table
+	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	{
+		$result = $db->query('SHOW INDEX FROM '.$db->prefix.'online') or error('Unable to check DB structure.', __FILE__, __LINE__, $db->error());
+
+		if ($db->num_rows($result) == 1)
+			$db->query('ALTER TABLE '.$db->prefix.'online ADD UNIQUE INDEX '.$db->prefix.'online_user_id_ident_idx(user_id,ident)') or error('Unable to alter DB structure.', __FILE__, __LINE__, $db->error());
+	}
 
 	// This feels like a good time to synchronize the forums
 	$result = $db->query('SELECT id FROM '.$db->prefix.'forums') or error('Unable to fetch forum info.', __FILE__, __LINE__, $db->error());
