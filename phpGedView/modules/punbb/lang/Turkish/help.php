@@ -3,40 +3,40 @@
 // Language definitions used in help.php
 $lang_help = array(
 
-'Help'					=>	'Yardım',
-'produces'				=>	'şu çıktıyı verir: ',
+'Help'					=>	'YardÄ±m',
+'produces'				=>	'ÅŸu Ã§Ä±ktÄ±yÄ± verir: ',
 
-'BBCode info 1'			=>	'BBCode ları forumda metin düzenlemek için kullanabileceğiniz tag lardır. Tag yapıları HTML ile büyük benzerlik göstermektedir. aşağıda kullanabileceğiniz BBCode taglarının bir listesi ve kullanım şekilleri bulunmaktadır.',
-'BBCode info 2'			=>	'Yöneticiler BBCode un kullanımını kısıtlayabilirler. Bunu anlamak için yeni bir konu postalarken ya da imzanızı düzenlerken sol taraftaki sayfa boşluğuna bakınız.',
+'BBCode info 1'			=>	'BBCode larÄ± forumda metin dÃ¼zenlemek iÃ§in kullanabileceÄŸiniz tag lardÄ±r. Tag yapÄ±larÄ± HTML ile bÃ¼yÃ¼k benzerlik gÃ¶stermektedir. aÅŸaÄŸÄ±da kullanabileceÄŸiniz BBCode taglarÄ±nÄ±n bir listesi ve kullanÄ±m ÅŸekilleri bulunmaktadÄ±r.',
+'BBCode info 2'			=>	'YÃ¶neticiler BBCode un kullanÄ±mÄ±nÄ± kÄ±sÄ±tlayabilirler. Bunu anlamak iÃ§in yeni bir konu postalarken ya da imzanÄ±zÄ± dÃ¼zenlerken sol taraftaki sayfa boÅŸluÄŸuna bakÄ±nÄ±z.',
 
 'Text style'			=>	'Metin Stili',
-'Text style info'		=>	'Aşağıdaki taglar metin stilini şu şekilde değiştirir:',
-'Bold text'				=>	'KAlın metin',
-'Underlined text'		=>	'Altıçizili metin',
-'Italic text'			=>	'Eğik metin',
-'Red text'				=>	'Kırmızı metin',
+'Text style info'		=>	'AÅŸaÄŸÄ±daki taglar metin stilini ÅŸu ÅŸekilde deÄŸiÅŸtirir:',
+'Bold text'				=>	'KalÄ±n metin',
+'Underlined text'		=>	'AltÄ±Ã§izili metin',
+'Italic text'			=>	'EÄŸik metin',
+'Red text'				=>	'KÄ±rmÄ±zÄ± metin',
 'Blue text'				=>	'Mavi metin',
 
-'Links and images'		=>	'Bağlantılar ve resimler',
-'Links info'			=>	'Başka dokümanlara bağlantı oluşturabilir ya da aşağıdaki tag ları kullanarak e-posta gönderebilirsiniz:',
+'Links and images'		=>	'BaÄŸlantÄ±lar ve resimler',
+'Links info'			=>	'BaÅŸka dokÃ¼manlara baÄŸlantÄ± oluÅŸturabilir ya da aÅŸaÄŸÄ±daki tag larÄ± kullanarak e-posta gÃ¶nderebilirsiniz:',
 'My e-mail address'		=>	'e-posta adresim',
-'Images info'			=>	'Mesajınıza resim eklemek için img tagını kullanabilirsiniz.',
+'Images info'			=>	'MesajÄ±nÄ±za resim eklemek iÃ§in img tagÄ±nÄ± kullanabilirsiniz.',
 
-'Quotes'				=>	'Alıntı',
-'Quotes info'			=>	'Alintı yapabilmek için quote tagını kullanabilirsiniz.',
-'Quotes info 2'			=>	'quote tagını özel olarak birisinden alıntı yapmadan kullanmak için kullanıcı ismi belirtmeyiniz.',
-'Quote text'			=>	'Alıntı yapmak istediğim metin',
-'produces quote box'	=>	'Örnek alıntı kutusu::',
+'Quotes'				=>	'AlÄ±ntÄ±',
+'Quotes info'			=>	'AlintÄ± yapabilmek iÃ§in quote tagÄ±nÄ± kullanabilirsiniz.',
+'Quotes info 2'			=>	'quote tagÄ±nÄ± Ã¶zel olarak birisinden alÄ±ntÄ± yapmadan kullanmak iÃ§in kullanÄ±cÄ± ismi belirtmeyiniz.',
+'Quote text'			=>	'AlÄ±ntÄ± yapmak istediÄŸim metin',
+'produces quote box'	=>	'Ã–rnek alÄ±ntÄ± kutusu::',
 
 'Code'					=>	'Kod',
 'Code info'				=>	'When displaying source code you should make sure that you use the code tag. Text displayed with the code tag will use a monospaced font and will not be affected by other tags.',
-'Code text'				=>	'Örnek kod',
-'produces code box'		=>	'Örnek kod kutusu:',
+'Code text'				=>	'Ã–rnek kod',
+'produces code box'		=>	'Ã–rnek kod kutusu:',
 
-'Nested tags'			=>	'İçiçe tag lar',
-'Nested tags info'		=>	'BBCode ları içiçe kullanılarak daha profesyonel görünümler oluşturulabilir.Örneğin:',
-'Bold, underlined text'	=>	'Kalın,altçizgili metin',
+'Nested tags'			=>	'Ä°Ã§iÃ§e tag lar',
+'Nested tags info'		=>	'BBCode larÄ± iÃ§iÃ§e kullanÄ±larak daha profesyonel gÃ¶rÃ¼nÃ¼mler oluÅŸturulabilir.Ã–rneÄŸin:',
+'Bold, underlined text'	=>	'KalÄ±n,altÃ§izgili metin',
 
-'Smilies info'			=>	'Arzu ederseniz (ve yönetici tarafından bir kısıtlanma uygulanmamışsa) forum gülen yüz metinlerini otomatik olarak grafik formatta gösterebilir.Aşağıdaki gülenyüzler forum tarafından tanınır ve otomatik olarak grafik karşılıkları gösterime sunulur:'
+'Smilies info'			=>	'Arzu ederseniz (ve yÃ¶netici tarafÄ±ndan bir kÄ±sÄ±tlanma uygulanmamÄ±ÅŸsa) forum gÃ¼len yÃ¼z metinlerini otomatik olarak grafik formatta gÃ¶sterebilir.AÅŸaÄŸÄ±daki gÃ¼lenyÃ¼zler forum tarafÄ±ndan tanÄ±nÄ±r ve otomatik olarak grafik karÅŸÄ±lÄ±klarÄ± gÃ¶sterime sunulur:'
 
 );

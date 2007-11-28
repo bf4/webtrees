@@ -1,11 +1,11 @@
-Subject: <board_title> Forumlarına Hoşgeldiniz!
+Subject: <board_title> ForumlarÄ±na HoÅŸgeldiniz!
 
-<base_url> Forumlarına kayıt yaptırdığınız için teşekkür ederiz. Hesabınızla ilgili detaylar aşağıdadır:
+<base_url> ForumlarÄ±na kayÄ±t yaptÄ±rdÄ±ÄŸÄ±nÄ±z iÃ§in teÅŸekkÃ¼r ederiz. HesabÄ±nÄ±zla ilgili detaylar aÅŸaÄŸÄ±dadÄ±r:
 
-Kullanıcı Adı: <username>
-Şifre: <password>
+KullanÄ±cÄ± AdÄ±: <username>
+Åifre: <password>
 
-<login_url> bağlantısına giderek hesabınızı aktive edebilirsiniz.
+<login_url> baÄŸlantÄ±sÄ±na giderek hesabÄ±nÄ±zÄ± aktive edebilirsiniz.
 
 --
 <board_mailer>
