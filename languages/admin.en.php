@@ -151,6 +151,7 @@ $pgv_lang["create_user"]						= "Create User";
 $pgv_lang["current_users"]						= "User List";
 $pgv_lang["daily"]								= "Daily";
 $pgv_lang["dataset_exists"] 					= "A GEDCOM with this file name has already been imported into the database.";
+$pgv_lang["unsync_warning"] 					= "This GEDCOM file is <em>not</em> synchronised with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload.";
 $pgv_lang["date_registered"]					= "Date registered";
 $pgv_lang["day_before_month"]					= "Day before Month (DD MM YYYY)";
 $pgv_lang["DEFAULT_GEDCOM"]						= "Default GEDCOM";

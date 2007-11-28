@@ -201,6 +201,7 @@ if (isset($ged)) {
 		$gedcom_id = $GEDCOMS[$ged]["id"];
 		$FILE = $ged;
 		$oldged = $ged;
+		$pgv_ver=$GEDCOMS[$ged]["pgv_ver"];
 	}
 	else {
 		if (empty($_POST["GEDCOMPATH"])) {
@@ -210,6 +211,7 @@ if (isset($ged)) {
 		$gedcom_config = "config_gedcom.php";
 		$gedcom_privacy = "privacy.php";
 		$gedcom_id = "";
+		$pgv_ver=$VERSION;
 	}
 }
 else {
@@ -220,6 +222,7 @@ else {
 	$gedcom_id = "";
 	$path = "";
 	$GEDFILENAME = "";
+	$pgv_ver=$VERSION;
 }
 $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;
@@ -255,6 +258,7 @@ if ($action=="update") {
 	$gedarray["title"] = stripLRMRLM($gedarray["title"]);
 	$gedarray["path"] = $path.$GEDFILENAME;
 	$gedarray["id"] = $gedcom_id;
+	$gedarray["pgv_ver"] = $pgv_ver;
 
 	// Check that add/remove common surnames are separated by [,;] blank
 	$_POST["NEW_COMMON_NAMES_REMOVE"] = preg_replace("/[,;]\b/", ", ", $_POST["NEW_COMMON_NAMES_REMOVE"]);
