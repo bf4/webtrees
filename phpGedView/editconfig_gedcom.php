@@ -430,31 +430,37 @@ if ($action=="update") {
 		// create the media directory 
 		// if NEW_MEDIA_FIREWALL_ROOTDIR is the INDEX_DIRECTORY, PGV will have perms to create it
 		// if PGV is unable to create the directory, tell the user to create it
-		if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
-			@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY, 0777);
+		if (($NEW_USE_MEDIA_FIREWALL=='yes') || $USE_MEDIA_FIREWALL) {
 			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
-				$errors = true;
-				$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_no_exist"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY, 0777);
+				if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
+					$errors = true;
+					$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_no_exist"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+				}
 			}
 		}
 	}
 	if (!$errors) {
 		// create the thumbs dir to make sure we have write perms
-		if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
-			@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs", 0777);
+		if (($NEW_USE_MEDIA_FIREWALL=='yes') || $USE_MEDIA_FIREWALL) {
 			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
-				$errors = true;
-				$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_not_writable"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+				@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs", 0777);
+				if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
+					$errors = true;
+					$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_not_writable"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+				}
 			}
 		}
-	}	
+	}
 	if (!$errors) {
 		// copy the .htaccess file from INDEX_DIRECTORY to NEW_MEDIA_FIREWALL_ROOTDIR in case it is still in a web-accessible area
-		if (file_exists($INDEX_DIRECTORY.".htaccess")) {
-			copy ($INDEX_DIRECTORY.".htaccess", $NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess");
-			if (!file_exists($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess")) {
-				$errors = true;
-				$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_not_writable"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+		if (($NEW_USE_MEDIA_FIREWALL=='yes') || $USE_MEDIA_FIREWALL) {
+			if ( (file_exists($INDEX_DIRECTORY.".htaccess")) && (is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) && (!file_exists($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess")) ) {
+				@copy($INDEX_DIRECTORY.".htaccess", $NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess");
+				if (!file_exists($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess")) {
+					$errors = true;
+					$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_not_writable"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+				}
 			}
 		}
 	}
