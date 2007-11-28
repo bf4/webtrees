@@ -130,6 +130,7 @@ $pgv_lang["create_user"]				= "Benutzer erstellen";
 $pgv_lang["current_users"]				= "Benutzerliste";
 $pgv_lang["daily"]						= "Täglich";
 $pgv_lang["dataset_exists"]				= "Eine GEDCOM-Datei mit diesem Namen wurde bereits in die Datenbank importiert.";
+$pgv_lang["unsync_warning"] 			= "Diese GEDCOM-Datei ist <em>nicht</em> mit der Datenbank synchronisiert.  Es ist möglich, dass die GEDCOM-Datei nicht alle aktuellen Daten enthält.  Um die Daten der Datenbank neu zu importieren, müssen Sie die Datenbank als GEDCOM exportieren, und dann die dadurch heruntergeladene Datei neu auf den Server übertragen.";
 $pgv_lang["date_registered"]			= "Datum der Registrierung";
 $pgv_lang["day_before_month"]			= "Tag vor Monat (DD MM YYYY)";
 $pgv_lang["DEFAULT_GEDCOM"]				= "Standard GEDCOM";
