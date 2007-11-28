@@ -521,6 +521,7 @@ class CalendarDate {
 				$action="calendar";
 		}
 		if (strpos($date_fmt, "d")!==false
+		||  strpos($date_fmt, "D")!==false
 		||  strpos($date_fmt, "j")!==false) {
 			$URL.='&amp;day='.$this->FormatGedcomDay();
 			if ($this->d>0)
