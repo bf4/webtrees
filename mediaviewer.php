@@ -50,7 +50,7 @@ global $tmb;
 // LBox  ============================================================================		
 	
 	//The following lines of code are used to print the menu box on the top right hand corner
-	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
+	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {
 		if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
 			<table class="sublinks_table rtl noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
 				<tr>
@@ -82,7 +82,7 @@ global $tmb;
 		<table width="70%">
 			<tr>
 				<td class="name_head" colspan="2">
-					 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
+					 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
 					 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br /><br />
 					 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 				</td>
@@ -92,8 +92,7 @@ global $tmb;
 					<?php
 					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
-					$filename = $controller->getLocalFilename();
-					if (isFileExternal($filename) || $controller->mediaobject->fileExists()){
+					if (isFileExternal($filename) || $controller->mediaobject->fileExists()) {
 						// the file is external, or it exists locally 
 						// attempt to get the image size
 						if ($controller->mediaobject->getWidth()) {
@@ -103,7 +102,7 @@ global $tmb;
 							if (file_exists("modules/lightbox/album.php")) {							
 								$dwidth = 150;
 							}else{
-							$dwidth = 300;
+								$dwidth = 300;							
 							}
 							if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 							
@@ -118,8 +117,8 @@ global $tmb;
 
 							}else{
 								//Else open image with the Image View Page
-							?>
-							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
+								?>
+								<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);"> 
 								<?php 
 							} ?>
 							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getTitle())); ?>" />
@@ -167,7 +166,7 @@ global $tmb;
 				<td class="center" colspan="2">
 					<?php
 					$links = get_media_relations($controller->pid);
-					if (isset($links)){
+					if (isset($links) && !empty($links)){
 					?>
 					 <br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
 					<?php
@@ -219,7 +218,6 @@ function ilinkitem(mediaid, type) {
 
 
 <br /><br /><br />
-	<?php
-}
+<?php
 print_footer();
 ?>
