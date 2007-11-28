@@ -1672,14 +1672,14 @@ function compare_facts_date($arec, $brec) {
 	else {
 		//-- ranged date... take the type of fact into account
 		$factWeight = compare_facts_type($arec, $brec);
-		print substr($arec, 0, 6)." ".substr($brec, 0, 6)." factweight: ".$factWeight." ";
+		//print substr($arec, 0, 6)." ".substr($brec, 0, 6)." factweight: ".$factWeight." ";
 		//-- fact is prefered to come before, so compare using the minimum ranges
-		if ($factWeight < 0 && $amin!=$bmin) {print "$amin $bmin<br />"; return ($amin-$bmin);}
+		if ($factWeight < 0 && $amin!=$bmin) {/*print "$amin $bmin<br />";*/ return ($amin-$bmin);}
 		//-- fact is prefered to come after, so compare using the max of the ranges
-		else if ($factWeight > 0 && $bmax!=$amax) {print "$bmax $amax<br />"; return ($bmax-$amax);}
+		else if ($factWeight > 0 && $bmax!=$amax) {/*print "$bmax $amax<br />";*/ return ($bmax-$amax);}
 		//-- facts are the same or the ranges don't give enough info, so use the average of the range
 		else {
-			print "<br />";
+			//print "<br />";
 			$aavg = ($amin+$amax)/2;
 			$bavg = ($bmin+$bmax)/2;
 			if ($aavg<$bavg) return -1;
