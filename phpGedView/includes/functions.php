@@ -238,6 +238,7 @@ function store_gedcoms() {
 		$gedcomtext .= "\$gedarray[\"privacy\"] = \"".$GED["privacy"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"title\"] = \"".$GED["title"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"path\"] = \"".$GED["path"]."\";\n";
+		$gedcomtext .= "\$gedarray[\"pgv_ver\"] = \"".$GED["pgv_ver"]."\";\n";
 		if (isset($GED["imported"])) $gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
 		// TODO: Commonsurnames from an old gedcom are used
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM

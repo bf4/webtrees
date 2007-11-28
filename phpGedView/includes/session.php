@@ -608,6 +608,11 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 		$i++;
 		$GEDCOMS[$key]["commonsurnames"] = stripslashes($gedcom["commonsurnames"]);
 		if (empty($GEDCOMS[$key]["id"])) $GEDCOMS[$key]["id"] = $i;
+		if (empty($GEDCOMS[$key]["pgv_ver"])) $GEDCOMS[$key]["pgv_ver"] = $VERSION;
+
+		// Force the gedcom to be re-imported if the code has been significantly upgraded
+		if (substr($GEDCOMS[$key]["pgv_ver"], 0, 3) != substr($VERSION, 0, 3))
+			$GEDCOMS[$key]["imported"] = false;
 	}
 }
 else $GEDCOMS=array();

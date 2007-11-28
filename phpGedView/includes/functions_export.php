@@ -51,7 +51,7 @@ function gedcom_header($gedfile, $CRLF="\r\n")
 	$SUBM="1 SUBM @SUBM@{$CRLF}0 @SUBM@ SUBM{$CRLF}1 NAME ".getUserName().$CRLF; // The SUBM record is mandatory
 
 	// Preserve some values from the original header
-	if (isset($GEDCOMS[$gedfile])) {
+	if (isset($GEDCOMS[$gedfile]['imported']) && $GEDCOMS[$gedfile]['imported']) {
 		$head=find_gedcom_record("HEAD");
 		if (preg_match("/(1 CHAR [^\r\n]+)/", $head, $match))
 			$CHAR=$match[1].$CRLF;
