@@ -3,10 +3,10 @@
 // Language definitions used in userlist.php
 $lang_ul = array(
 
-'User find legend'		=>	'Kullanýcýlarý bul ve sýrala',
-'User search info'		=>	'Arama yapmak için bir kullanýcý ismi ve/veya süzmek için bir kullanýcý grubu giriniz.Kullanýcý adý kutusu boþ býrakýlabilir.Kýsmi arama yapmak için * iþaretini kullanabilirsiniz.Kullanýcýlarý artan/azalan biçimde kullanýcý adý,kayýt tarihi vaya ileti sayýsý kriterleriyle sýralayabilirsiniz.',
-'User group'			=>	'Kullanýcý gruplarý',
-'No of posts'			=>	'Ýleti sayýsý',
+'User find legend'		=>	'KullanÄ±cÄ±larÄ± bul ve sÄ±rala',
+'User search info'		=>	'Arama yapmak iÃ§in bir kullanÄ±cÄ± ismi ve/veya sÃ¼zmek iÃ§in bir kullanÄ±cÄ± grubu giriniz.KullanÄ±cÄ± adÄ± kutusu boÅŸ bÄ±rakÄ±labilir.KÄ±smi arama yapmak iÃ§in * iÅŸaretini kullanabilirsiniz.KullanÄ±cÄ±larÄ± artan/azalan biÃ§imde kullanÄ±cÄ± adÄ±,kayÄ±t tarihi vaya ileti sayÄ±sÄ± kriterleriyle sÄ±ralayabilirsiniz.',
+'User group'			=>	'KullanÄ±cÄ± gruplarÄ±',
+'No of posts'			=>	'Ä°leti sayÄ±sÄ±',
 'All users'				=>	'Hepsi'
 
 );

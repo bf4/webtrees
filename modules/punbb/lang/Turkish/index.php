@@ -3,19 +3,19 @@
 // Language definitions used in index.php
 $lang_index = array(
 
-'Topics'				=>  'Başlıklar',
+'Topics'				=>  'BaÅŸlÄ±klar',
 'Moderators'			=>  'Denetmenler',
-'Link to'				=>	'Bağlantı adresi',	// As in "Link to http://www.punbb.org/"
-'Empty board'			=>	'Boş pano',
-'Newest user'			=>	'En yeni üyemiz',
-'Users online'			=>	'Bağlı kayıtlı kullanıcılar',
-'Guests online'			=>	'Bağlı misafirler',
-'No of users'			=>	'Toplam kayıtlı kullanıcı sayısı',
-'No of topics'			=>	'Toplam konu sayısı',
-'No of posts'			=>	'Toplam ileti sayısı',
-'Online'				=>	'Bağlı',	// As in "Online: User A, User B etc."
+'Link to'				=>	'BaÄŸlantÄ± adresi',	// As in "Link to http://www.punbb.org/"
+'Empty board'			=>	'BoÅŸ pano',
+'Newest user'			=>	'En yeni Ã¼yemiz',
+'Users online'			=>	'BaÄŸlÄ± kayÄ±tlÄ± kullanÄ±cÄ±lar',
+'Guests online'			=>	'BaÄŸlÄ± misafirler',
+'No of users'			=>	'Toplam kayÄ±tlÄ± kullanÄ±cÄ± sayÄ±sÄ±',
+'No of topics'			=>	'Toplam konu sayÄ±sÄ±',
+'No of posts'			=>	'Toplam ileti sayÄ±sÄ±',
+'Online'				=>	'BaÄŸlÄ±',	// As in "Online: User A, User B etc."
 'Board info'			=>	'Pano bilgisi',
 'Board stats'			=>	'Pano istatistikleri',
-'User info'				=>	'Kullanıcı bilgisi'
+'User info'				=>	'KullanÄ±cÄ± bilgisi'
 
 );

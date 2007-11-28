@@ -1,8 +1,8 @@
 Subject: <mail_subject>
 
-<board_title> sayfasından <sender> isimli kullanıcı size bir mesaj gönderdi.Bu mesaja cevap olarak yazacağınız mesaj  <sender> isimli kullanıcıya iletilecektir.
+<board_title> sayfasÄ±ndan <sender> isimli kullanÄ±cÄ± size bir mesaj gÃ¶nderdi. Bu mesaja cevap olarak yazacaÄŸÄ±nÄ±z mesaj  <sender> isimli kullanÄ±cÄ±ya iletilecektir.
 
-Mesaj metni aşağıdadır:
+Mesaj metni aÅŸaÄŸÄ±dadÄ±r:
 -----------------------------------------------------------------------
 
 <mail_message>

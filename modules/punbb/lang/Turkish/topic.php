@@ -4,22 +4,22 @@
 $lang_topic = array(
 
 'Post reply'		=>	'Cevap yaz',
-'Topic closed'		=>	'Baþlýk kapandý',
-'From'				=>	'Gönderen',				// User location
+'Topic closed'		=>	'BaÅŸlÄ±k kapandÄ±',
+'From'				=>	'GÃ¶nderen',				// User location
 'Note'				=>	'Not',				// Admin note
 'Website'			=>	'Websitesi',
 'Guest'				=>	'Misafir',
-'Online'			=>	'Baðlý',
-'Offline'			=>	'Baðlý deðil',
-'Last edit'			=>	'Son olarak düzenleyen',
+'Online'			=>	'BaÄŸlÄ±',
+'Offline'			=>	'BaÄŸlÄ± deÄŸil',
+'Last edit'			=>	'Son olarak dÃ¼zenleyen',
 'Report'			=>	'Rapor',
 'Delete'			=>	'Sil',
-'Edit'				=>	'Düzenle',
-'Quote'				=>	'Alýntý yap',
-'Is subscribed'		=>	'Bu baþlýða üyesiniz',
-'Unsubscribe'		=>	'Üyelikten çýk',
-'Subscribe'			=>	'Bu konuya üye ol',
-'Quick post'		=>	'Hýzlý cevap',
+'Edit'				=>	'DÃ¼zenle',
+'Quote'				=>	'AlÄ±ntÄ± yap',
+'Is subscribed'		=>	'Bu baÅŸlÄ±ÄŸa Ã¼yesiniz',
+'Unsubscribe'		=>	'Ãœyelikten Ã§Ä±k',
+'Subscribe'			=>	'Bu konuya Ã¼ye ol',
+'Quick post'		=>	'HÄ±zlÄ± cevap',
 
 'Link separator'	=>	' | ',	// The text that separates links in posts (website, e-mail, report, edit etc.)
 'Mod controls'		=>	'Denetmen kontrolleri'

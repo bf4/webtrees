@@ -29,125 +29,125 @@ $lang_common = array(
 
 // Text orientation and encoding
 'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
-'lang_encoding'			=>	'iso-8859-9',
+'lang_encoding'			=>	'UTF-8',
 'lang_multibyte'		=>	false,
 
 // Notices
-'Bad request'			=>	'Hatalý Talep.Takip ettiðiniz link yanlýþ ya da güncel deðil',
-'No view'				=>	'Bu forumlarý görmek için gerekli yetkiye sahip deðilsiniz.',
-'No permission'			=>	'Bu sayfaya eriþmek için  için gerekli yetkiye sahip deðilsiniz.',
+'Bad request'			=>	'HatalÄ± Talep. Takip ettiÄŸiniz link yanlÄ±ÅŸ ya da gÃ¼ncel deÄŸil.',
+'No view'				=>	'Bu forumlarÄ± gÃ¶rmek iÃ§in gerekli yetkiye sahip deÄŸilsiniz.',
+'No permission'			=>	'Bu sayfaya eriÅŸmek iÃ§in  iÃ§in gerekli yetkiye sahip deÄŸilsiniz.',
 'Bad referrer'			=>	'Bad HTTP_REFERER. You were referred to this page from an unauthorized source. If the problem persists please make sure that \'Base URL\' is correctly set in Admin/Options and that you are visiting the forum by navigating to that URL. More information regarding the referrer check can be found in the PunBB documentation.',
 
 // Topic/forum indicators
 'New icon'				=>	'Yeni iletiler var.',
 'Normal icon'			=>	'<!-- -->',
-'Closed icon'			=>	'Bu baþlýk kapandý.',
-'Redirect icon'			=>	'Yönlendirilmiþ forum',
+'Closed icon'			=>	'Bu baÅŸlÄ±k kapandÄ±.',
+'Redirect icon'			=>	'YÃ¶nlendirilmiÅŸ forum',
 
 // Miscellaneous
 'Announcement'			=>	'Duyuru',
-'Options'				=>	'Seçenekler',
+'Options'				=>	'SeÃ§enekler',
 'Actions'				=>	'Faaliyetler',
 'Submit'				=>	'Onayla',	// "name" of submit buttons
-'Ban message'			=>	'Bu forumdan banlandýnýz.',
-'Ban message 2'			=>	'Ban kaldýrýlma tarihi ',
-'Ban message 3'			=>	'Banlayan yönetici bu mesajý bu mesajý size býraktý:',
-'Ban message 4'			=>	'Forum yöneticisiyle iletiþim kurmak için:',
+'Ban message'			=>	'Bu forumdan banlandÄ±nÄ±z.',
+'Ban message 2'			=>	'Ban kaldÄ±rÄ±lma tarihi ',
+'Ban message 3'			=>	'Banlayan yÃ¶netici bu mesajÄ± bu mesajÄ± size bÄ±raktÄ±:',
+'Ban message 4'			=>	'Forum yÃ¶neticisiyle iletiÅŸim kurmak iÃ§in:',
 'Never'					=>	'Asla',
-'Today'					=>	'Bugün',
-'Yesterday'				=>	'Dün',
+'Today'					=>	'BugÃ¼n',
+'Yesterday'				=>	'DÃ¼n',
 'Info'					=>	'Bilgi',		// a common table header
 'Go back'				=>	'Geri',
-'Maintenance'			=>	'Bakým',
-'Redirecting'			=>	'Yönlendirilyor',
-'Click redirect'		=>	'Sayfaya hemen gitmek için buraya týklayýnýz.(ya da tarayýcýnýz sizi otomatik olarak yönlendirmiyorsa)',
-'on'					=>	'Açýk',		// as in "BBCode is on"
-'off'					=>	'Kapalý',
-'Invalid e-mail'		=>	'Girdiðiniz e-posta adresi geçerli deðil.',
-'required field'		=>	'forumda dolurulmasý zorunludur.',	// for javascript form validation
-'Last post'				=>	'Son gönderilen ileti',
-'by'					=>	'gönderen',	// as in last post by someuser
+'Maintenance'			=>	'BakÄ±m',
+'Redirecting'			=>	'YÃ¶nlendiriliyor',
+'Click redirect'		=>	'Sayfaya hemen gitmek iÃ§in buraya tÄ±klayÄ±nÄ±z.(ya da tarayÄ±cÄ±nÄ±z sizi otomatik olarak yÃ¶nlendirmiyorsa)',
+'on'					=>	'AÃ§Ä±k',		// as in "BBCode is on"
+'off'					=>	'KapalÄ±',
+'Invalid e-mail'		=>	'GirdiÄŸiniz e-posta adresi geÃ§erli deÄŸil.',
+'required field'		=>	'forumda dolurulmasÄ± zorunludur.',	// for javascript form validation
+'Last post'				=>	'Son gÃ¶nderilen ileti',
+'by'					=>	'gÃ¶nderen',	// as in last post by someuser
 'New posts'				=>	'Yeni&nbsp;iletiler',	// the link that leads to the first new post (use &nbsp; for spaces)
-'New posts info'		=>	'Bu baþlýktaki en yeni iletiye git.',	// the popup text for new posts links
-'Username'				=>	'Kullanýcý ismi',
-'Password'				=>	'Þifre',
+'New posts info'		=>	'Bu baÅŸlÄ±ktaki en yeni iletiye git.',	// the popup text for new posts links
+'Username'				=>	'KullanÄ±cÄ± ismi',
+'Password'				=>	'Åžifre',
 'E-mail'				=>	'e-posta',
-'Send e-mail'			=>	'e-posta gönder',
+'Send e-mail'			=>	'e-posta gÃ¶nder',
 'Moderated by'			=>	'Denetmen: ',
-'Registered'			=>	'Kayýtlý',
-'Subject'				=>	'Konu baþlýðý',
+'Registered'			=>	'KayÄ±tlÄ±',
+'Subject'				=>	'Konu baÅŸlÄ±ÄŸÄ±',
 'Message'				=>	'Mesaj',
-'Topic'					=>	'Baþlýk',
+'Topic'					=>	'BaÅŸlÄ±k',
 'Forum'					=>	'Forum',
-'Posts'					=>	'Ýletiler',
+'Posts'					=>	'Ä°letiler',
 'Replies'				=>	'Cevaplar',
 'Author'				=>	'Yazan',
 'Pages'					=>	'Sayfalar',
 'BBCode'				=>	'BBCode',	// You probably shouldn't change this
 'img tag'				=>	'[img] tag',
-'Smilies'				=>	'Gülen yüzler',
+'Smilies'				=>	'GÃ¼len yÃ¼zler',
 'and'					=>	've',
 'Image link'			=>	'resim',	// This is displayed (i.e. <image>) instead of images when "Show images" is disabled in the profile
-'wrote'					=>	'yazdý',	// For [quote]'s
+'wrote'					=>	'yazdÄ±',	// For [quote]'s
 'Code'					=>	'Kod',		// For [code]'s
 'Mailer'				=>	'Posta servisi',	// As in "MyForums Mailer" in the signature of outgoing e-mails
-'Important information'	=>	'Önemli Bilgi',
-'Write message legend'	=>	'Mesajýnýzý yazýp onaylayýn.',
+'Important information'	=>	'Ã–nemli Bilgi',
+'Write message legend'	=>	'MesajÄ±nÄ±zÄ± yazÄ±p onaylayÄ±n.',
 
 // Title
-'Title'					=>	'Baþlýk',
-'Member'				=>	'Üye',	// Default title
+'Title'					=>	'BaÅŸlÄ±k',
+'Member'				=>	'Ãœye',	// Default title
 'Moderator'				=>	'Denetmen',
-'Administrator'			=>	'Yönetici',
+'Administrator'			=>	'YÃ¶netici',
 'Banned'				=>	'Banlanan',
 'Guest'					=>	'Misafir',
 
 // Stuff for include/parser.php
-'BBCode error'			=>	'Hatalý BBCode sözdizimi.',
-'BBCode error 1'		=>	'[quote] tagýný yazmadýnýz.',
-'BBCode error 2'		=>	'[code] tagý kapatýlmadý.',
-'BBCode error 3'		=>	'[code] tagýný yazmadýnýz.',
-'BBCode error 4'		=>	'Bir ya da birden fazla [quote] tagý kapanma hatasý.',
-'BBCode error 5'		=>	'Bir ya da birden fazla [/quote] tagý baþlatma hatasý.',
+'BBCode error'			=>	'HatalÄ± BBCode sÃ¶zdizimi.',
+'BBCode error 1'		=>	'[quote] tagÄ±nÄ± yazmadÄ±nÄ±z.',
+'BBCode error 2'		=>	'[code] tagÄ± kapatÄ±lmadÄ±.',
+'BBCode error 3'		=>	'[code] tagÄ±nÄ± yazmadÄ±nÄ±z.',
+'BBCode error 4'		=>	'Bir ya da birden fazla [quote] tagÄ± kapanma hatasÄ±.',
+'BBCode error 5'		=>	'Bir ya da birden fazla [/quote] tagÄ± baÅŸlatma hatasÄ±.',
 
 // Stuff for the navigator (top of every page)
 'Index'					=>	'Anasayfa',
-'User list'				=>	'Kullanýcýlar',
+'User list'				=>	'KullanÄ±cÄ±lar',
 'Rules'					=>  'Kurallar',
 'Search'				=>  'Arama',
-'Register'				=>  'Kayýt',
-'Login'					=>  'Giriþ',
-'Not logged in'			=>  'Giriþ yapmadýnýz.',
+'Register'				=>  'KayÄ±t',
+'Login'					=>  'GiriÅŸ',
+'Not logged in'			=>  'GiriÅŸ yapmadÄ±nÄ±z.',
 'Profile'				=>	'Profil',
-'Logout'				=>	'Çýkýþ',
-'Logged in as'			=>	'Giriþ yapan',
-'Admin'					=>	'Yönetim',
+'Logout'				=>	'Ã‡Ä±kÄ±ÅŸ',
+'Logged in as'			=>	'GiriÅŸ yapan',
+'Admin'					=>	'YÃ¶netim',
 'Last visit'			=>	'Son ziyaret',
 'Show new posts'		=>	'En yeni iletiler',
-'Mark all as read'		=>	'Hepsini okundu olarak iþaretle',
+'Mark all as read'		=>	'Hepsini okundu olarak iÅŸaretle',
 'Link separator'		=>	'',	// The text that separates links in the navigator
 
 // Stuff for the page footer
 'Board footer'			=>	'Board footer',
-'Search links'			=>	'Arama baðlantýlarý',
-'Show recent posts'		=>	'Yeni iletileri göster',
-'Show unanswered posts'	=>	'Cevaplanmayan iletileri göster',
-'Show your posts'		=>	'Ýletilerimi göster',
-'Show subscriptions'	=>	'Üye olduðum konular.',
+'Search links'			=>	'Arama baÄŸlantÄ±larÄ±',
+'Show recent posts'		=>	'Yeni iletileri gÃ¶ster',
+'Show unanswered posts'	=>	'Cevaplanmayan iletileri gÃ¶ster',
+'Show your posts'		=>	'Ä°letilerimi gÃ¶ster',
+'Show subscriptions'	=>	'Ãœye olduÄŸum konular.',
 'Jump to'				=>	'Atla',
 'Go'					=>	' Git',		// submit button in forum jump
-'Move topic'			=>  'Konu taþý',
+'Move topic'			=>  'Konu taÅŸÄ±',
 'Open topic'			=>  '',
 'Close topic'			=>  'Konu kapat',
-'Unstick topic'			=>  'Konudaki sabit özelliðini kaldýr',
+'Unstick topic'			=>  'Konudaki sabit Ã¶zelliÄŸini kaldÄ±r',
 'Stick topic'			=>  'Konuyu sabitle',
-'Moderate forum'		=>	'Forumu kýsýtla',
-'Delete posts'			=>	'Çoklu iletileri sil',
-'Debug table'			=>	'Hata ayýklama bilgileri',
+'Moderate forum'		=>	'Forumu kÄ±sÄ±tla',
+'Delete posts'			=>	'Ã‡oklu iletileri sil',
+'Debug table'			=>	'Hata ayÄ±klama bilgileri',
 
 // For extern.php RSS feed
-'RSS Desc Active	'	=>	'Ýlgili en yeni aktif baþlýklar',	// board_title will be appended to this string
-'RSS Desc New'			=>	'Ýlgili en yeni baþlýk',					// board_title will be appended to this string
-'Posted'				=>	'Gönderildi'	// The date/time a topic was started
+'RSS Desc Active	'	=>	'Ä°lgili en yeni aktif baÅŸlÄ±klar',	// board_title will be appended to this string
+'RSS Desc New'			=>	'Ä°lgili en yeni baÅŸlÄ±k',					// board_title will be appended to this string
+'Posted'				=>	'GÃ¶nderildi'	// The date/time a topic was started
 
 );

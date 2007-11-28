@@ -4,19 +4,19 @@
 $lang_login = array(
 
 // Miscellaneous
-'Wrong user/pass'		=>	'Hatalı kullanıcı ismi ve/veya şifresi',
-'Forgotten pass'		=>	'Şifremi unuttum',
-'Login redirect'		=>	'Giriş yapıldı.. Yönlendirme &hellip;',
-'Logout redirect'		=>	'Çıktınız. Yönlendirme &hellip;',
-'No e-mail match'		=>	'Bu e-postayla kayıtlı bir kullanıcı bulunmamaktadır',
-'Request pass'			=>	'Şifre gönder',
-'Request pass legend'	=>	'Kayıt için kullandığınız e-posta adresini buraya yazınız',
-'Request pass info'		=>	'Belirttiğiniz adrese yeni şifreniz ve aktivasyon bağlantısı gönderilecektir.',
+'Wrong user/pass'		=>	'HatalÄ± kullanÄ±cÄ± ismi ve/veya ÅŸifresi',
+'Forgotten pass'		=>	'Åifremi unuttum',
+'Login redirect'		=>	'GiriÅŸ yapÄ±ldÄ±.. YÃ¶nlendirme &hellip;',
+'Logout redirect'		=>	'Ã‡Ä±ktÄ±nÄ±z. YÃ¶nlendirme &hellip;',
+'No e-mail match'		=>	'Bu e-postayla kayÄ±tlÄ± bir kullanÄ±cÄ± bulunmamaktadÄ±r',
+'Request pass'			=>	'Åifre gÃ¶nder',
+'Request pass legend'	=>	'KayÄ±t iÃ§in kullandÄ±ÄŸÄ±nÄ±z e-posta adresini buraya yazÄ±nÄ±z',
+'Request pass info'		=>	'BelirttiÄŸiniz adrese yeni ÅŸifreniz ve aktivasyon baÄŸlantÄ±sÄ± gÃ¶nderilecektir.',
 'Not registered'		=>	'Kaydolmak istiyorum',
-'Login legend'			=>	'Kullanıcı adınızı ve şifrenizi yazınız',
-'Login info'			=>	'Kayıt yapmadıysanız ya da şifrenizi unuttuysanız aşağıdaki bağlantılardan sizin için uygun olanına tıklayınız.',
+'Login legend'			=>	'KullanÄ±cÄ± adÄ±nÄ±zÄ± ve ÅŸifrenizi yazÄ±nÄ±z',
+'Login info'			=>	'KayÄ±t yapmadÄ±ysanÄ±z ya da ÅŸifrenizi unuttuysanÄ±z aÅŸaÄŸÄ±daki baÄŸlantÄ±lardan sizin iÃ§in uygun olanÄ±na tÄ±klayÄ±nÄ±z.',
 
 // Forget password mail stuff
-'Forget mail'			=>	'Belirtilen adrese şifre değişim bilgilerini içeren bir mesaj gönderildi.Şayet mesajı alamazsanız aşağıdaki e-posta adresine tıklayarak yönetici ile temasa geçiniz.:'
+'Forget mail'			=>	'Belirtilen adrese ÅŸifre deÄŸiÅŸim bilgilerini iÃ§eren bir mesaj gÃ¶nderildi.Åayet mesajÄ± alamazsanÄ±z aÅŸaÄŸÄ±daki e-posta adresine tÄ±klayarak yÃ¶netici ile temasa geÃ§iniz.:'
 
 );

@@ -1,11 +1,11 @@
-Subject: <topic_subject> konusuna yazılan cevap
+Subject: <topic_subject> konusuna yazÄ±lan cevap
 
-<replier> isimli kullanıcı sizin de abonesi olduğunuz <topic_subject> konusuna cevap yazdı. Daha fazla cevap gönderilmiş olabilir ancak bu bilgilendirme mesajı siz forumu yeniden ziyaret edene kadar ikinci kez gönderilmeyecektir.
+<replier> isimli kullanÄ±cÄ± sizin de abonesi olduÄŸunuz <topic_subject> konusuna cevap yazdÄ±. Daha fazla cevap gÃ¶nderilmiÅŸ olabilir ancak bu bilgilendirme mesajÄ± siz forumu yeniden ziyaret edene kadar ikinci kez gÃ¶nderilmeyecektir.
 
-Bu iletinin bulunduğu bağlantıya gitmek için : <post_url>
+Bu iletinin bulunduÄŸu baÄŸlantÄ±ya gitmek iÃ§in: <post_url>
 
-Bu konuyla ilgili aboneliğinizi ipal etmek için: <unsubscribe_url>
+Bu konuyla ilgili aboneliÄŸinizi ipal etmek iÃ§in: <unsubscribe_url>
 
 -- 
 <board_mailer>
-(Lütfen bu iletiye cevap vermeyiniz!)
+(LÃ¼tfen bu iletiye cevap vermeyiniz!)

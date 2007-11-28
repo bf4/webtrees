@@ -3,10 +3,10 @@
 // Language definitions used in delete.php
 $lang_delete = array(
 
-'Delete post'			=>	'Delete post',
-'Warning'				=>	'Dikkat!!! Başlıktaki ilk iletiyi silerseniz bütü zincir silinecektir.',
+'Delete post'			=>	'MesajÄ± Sil',
+'Warning'				=>	'Dikkat!!! BaÅŸlÄ±ktaki ilk iletiyi silerseniz bÃ¼tÃ¼ zincir silinecektir.',
 'Delete'				=>	'Sil',	// The submit button
-'Post del redirect'		=>	'İleti silindi. Yönlendirme &hellip;',
-'Topic del redirect'	=>	'Başlık silindi.Yönlendirme &hellip;'
+'Post del redirect'		=>	'Ä°leti silindi. YÃ¶nlendirme &hellip;',
+'Topic del redirect'	=>	'BaÅŸlÄ±k silindi.YÃ¶nlendirme &hellip;'
 
 );

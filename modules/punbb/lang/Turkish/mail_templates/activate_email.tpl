@@ -1,12 +1,12 @@
-Subject: e-posta adres değişikliği talebi
+Subject: e-posta adres deÄŸiÅŸikliÄŸi talebi
 
 Selam <username>,
 
-<base_url> bağlantısında, hesabınızda daha önce belirtilmiş olan e-posta adresini değiştirmek istediğinizi belirttiniz.Eğer bu isteği siz yapmadıysanız ya da e-posta adresinizi değiştirmek istemiyorsanız lütfen bu mesajı gözardı ediniz.Aşağıdaki bağlantıya tıklarsanız e-posta adres değişikliği gerçekleşecektir.Aktivasyon sayfasının çalışabilmesi için forumlara giriş yapmış olmanız gerekmektedir.
+<base_url> baÄŸlantÄ±sÄ±nda, hesabÄ±nÄ±zda daha Ã¶nce belirtilmiÅŸ olan e-posta adresini deÄŸiÅŸtirmek istediÄŸinizi belirttiniz. EÄŸer bu isteÄŸi siz yapmadÄ±ysanÄ±z ya da e-posta adresinizi deÄŸiÅŸtirmek istemiyorsanÄ±z lÃ¼tfen bu mesajÄ± gÃ¶zardÄ± ediniz. AÅŸaÄŸÄ±daki baÄŸlantÄ±ya tÄ±klarsanÄ±z e-posta adres deÄŸiÅŸikliÄŸi gerÃ§ekleÅŸecektir. Aktivasyon sayfasÄ±nÄ±n Ã§alÄ±ÅŸabilmesi iÃ§in forumlara giriÅŸ yapmÄ±ÅŸ olmanÄ±z gerekmektedir.
 
-e-posta adreslerinizi değiştirmek için lütfen aşağıdaki bağlantıya tıklayın:
+e-posta adreslerinizi deÄŸiÅŸtirmek iÃ§in lÃ¼tfen aÅŸaÄŸÄ±daki baÄŸlantÄ±ya tÄ±klayÄ±n:
 <activation_url>
 
 -- 
 <board_mailer>
-(Lütfen bu mesaja cevap yazmayın)
+(LÃ¼tfen bu mesaja cevap yazmayÄ±n)

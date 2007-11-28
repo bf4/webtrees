@@ -4,30 +4,30 @@
 $lang_post = array(
 
 // Post validation stuff (many are similiar to those in edit.php)
-'No subject'			=>	'Ba˛l˝˝n bir konu iÁermesi zorunludur..',
+'No subject'			=>	'Ba≈ülƒ±ƒüƒ±n bir konu i√ßermesi zorunludur..',
 'Too long subject'		=>	'Konu 70 karakterden uzun olamaz.',
-'No message'			=>	'Mesaj alan˝ doldurmak zorunludur.',
-'Too long message'		=>	'›letiler 65535 karakterden (64 KB) uzun olamaz. ',
+'No message'			=>	'Mesaj alanƒ± doldurmak zorunludur.',
+'Too long message'		=>	'ƒ∞letiler 65535 karakterden (64 KB) uzun olamaz. ',
 
 // Posting
-'Post errors'			=>	'›leti hatalar˝',
-'Post errors info'		=>	'›letiniz gˆndermeen ˆnce l¸tfen a˛a˝daki hata(lar)˝ d¸zeltiniz:',
-'Post preview'			=>	'÷nzileme',
-'Guest name'			=>	'›sim',	// For guests (instead of Username)
-'Post redirect'			=>	'›leti ba˛ar˝yla girildi Yˆnlendirme &hellip;',
+'Post errors'			=>	'ƒ∞leti hatalarƒ±',
+'Post errors info'		=>	'ƒ∞letiniz g√∂ndermeen √∂nce l√ºtfen a≈üaƒüƒ±daki hata(lar)ƒ± d√ºzeltiniz:',
+'Post preview'			=>	'√ñnzileme',
+'Guest name'			=>	'ƒ∞sim',	// For guests (instead of Username)
+'Post redirect'			=>	'ƒ∞leti ba≈üarƒ±yla girildi Y√∂nlendirme &hellip;',
 'Post a reply'			=>	'Cevap yaz',
-'Post new topic'		=>	'Yeni konu aÁ',
-'Hide smilies'			=>	'Bu postadaki g¸leny¸zleri gˆsterme',
-'Subscribe'				=>	'Bu konuya ¸ye ol',
-'Topic review'			=>	'Ba˛l˝k gˆzden geÁirme (en yenilerden itibaren)',
+'Post new topic'		=>	'Yeni konu a√ß',
+'Hide smilies'			=>	'Bu postadaki g√ºleny√ºzleri g√∂sterme',
+'Subscribe'				=>	'Bu konuya √ºye ol',
+'Topic review'			=>	'Ba≈ülƒ±k g√∂zden ge√ßirme (en yenilerden itibaren)',
 'Flood start'			=>	'en az',
-'flood end'				=>	'›ki gˆnderi aras˝ndaki en k˝sa zaman dilimi.L¸tfen bir s¸re bekledikten sonra tekrar deneyiniz.',
-'Preview'				=>	'÷nizleme',	// submit button to preview message
+'flood end'				=>	'ƒ∞ki g√∂nderi arasƒ±ndaki en kƒ±sa zaman dilimi.L√ºtfen bir s√ºre bekledikten sonra tekrar deneyiniz.',
+'Preview'				=>	'√ñnizleme',	// submit button to preview message
 
 // Edit post
-'Edit post legend'		=>	'Gˆnderiyi d¸zenleyin ve dei˛iklikleri onaylay˝n',
-'Silent edit'			=>	'Sessiz d¸zenleme.(Rˆtu˛ mesaj˝ ana mesaja eklenmesin)',
-'Edit post'				=>	'Gˆnderiyi d¸zenle',
-'Edit redirect'			=>	'Gˆnderi g¸ncellendi. Yˆnlendirme &hellip;'
+'Edit post legend'		=>	'G√∂nderiyi d√ºzenleyin ve deƒüi≈üiklikleri onaylayƒ±n',
+'Silent edit'			=>	'Sessiz d√ºzenleme.(R√∂tu≈ü mesajƒ± ana mesaja eklenmesin)',
+'Edit post'				=>	'G√∂nderiyi d√ºzenle',
+'Edit redirect'			=>	'G√∂nderi g√ºncellendi. Y√∂nlendirme &hellip;'
 
 );

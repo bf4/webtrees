@@ -4,9 +4,9 @@
 $lang_forum = array(
 
 'Post topic'	=>	'Yeni konu',
-'Views'			=>	'Gˆr¸n¸m',
-'Moved'			=>	'Ta˛˝nd˝',
+'Views'			=>	'G√∂r√ºn√ºm',
+'Moved'			=>	'Ta≈üƒ±ndƒ±',
 'Sticky'		=>	'Sabit Konu',
-'Empty forum'	=>	'Bo˛ Forum'
+'Empty forum'	=>	'Bo≈ü Forum'
 
 );

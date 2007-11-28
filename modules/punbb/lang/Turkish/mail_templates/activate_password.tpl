@@ -1,14 +1,14 @@
-Subject: Yeni şifre talebi
+Subject: Yeni ÅŸifre talebi
 
 Selam <username>,
 
-<base_url> bağlantısında yeni şifre talebiniz işleme alınmıştır.Bu talebi siz yapmamışsanız ya da şifrenizi değiştirmekten vazgeçtiyseniz lütfen bu mesajı göz ardı ediniz. Sadece ağaşıdaki bağlantıya tıklarsanız şifreniz değiştirilecektir.
+<base_url> baÄŸlantÄ±sÄ±nda yeni ÅŸifre talebiniz iÅŸleme alÄ±nmÄ±ÅŸtÄ±r. Bu talebi siz yapmamÄ±ÅŸsanÄ±z ya da ÅŸifrenizi deÄŸiÅŸtirmekten vazgeÃ§tiyseniz lÃ¼tfen bu mesajÄ± gÃ¶z ardÄ± ediniz. Sadece aÄŸaÅŸÄ±daki baÄŸlantÄ±ya tÄ±klarsanÄ±z ÅŸifreniz deÄŸiÅŸtirilecektir.
 
-Yeni şifreniz: <new_password>
+Yeni ÅŸifreniz: <new_password>
 
-Şifrenizi değiştirmek için lütfen aşağıdaki bağlantıya tıklayınız:
+Åifrenizi deÄŸiÅŸtirmek iÃ§in lÃ¼tfen aÅŸaÄŸÄ±daki baÄŸlantÄ±ya tÄ±klayÄ±nÄ±z:
 <activation_url>
 
 -- 
 <board_mailer>
-(Lütfen bu mesaja cevap yazmayınız!)
+(LÃ¼tfen bu mesaja cevap yazmayÄ±nÄ±z!)

@@ -1,6 +1,6 @@
 <?php
 /**
- * English Language file for PhpGedView.
+ * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team

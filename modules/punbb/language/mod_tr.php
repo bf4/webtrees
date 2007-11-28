@@ -24,7 +24,7 @@
  * @author Patrick Kellum
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
  */
-$pgv_lang["mod_punbb"] = "Mesaj Forumu";
-$pgv_lang["mod_punbb_search"] = "Forumda Ara";
-$pgv_lang["mod_punbb_admin"] = "Forum Yönetimi";
+$pgv_lang['mod_punbb'] = 'Mesaj Forumu';
+$pgv_lang['mod_punbb_search'] = 'Forumda Ara';
+$pgv_lang['mod_punbb_admin'] = 'Forum Yönetimi';
 ?>

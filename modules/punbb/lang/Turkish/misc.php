@@ -3,65 +3,65 @@
 // Language definitions used in various scripts
 $lang_misc = array(
 
-'Mark read redirect'		=>	'Tüm başlıklar ve forumlar okundu olarak işaretlendi.. Yönlendirme &hellip;',
+'Mark read redirect'		=>	'TÃ¼m baÅŸlÄ±klar ve forumlar okundu olarak iÅŸaretlendi.. YÃ¶nlendirme &hellip;',
 
 // Send e-mail
-'Form e-mail disabled'		=>	'e-posta göndermeye çalıştığınız kulanıcı form yoluyla mesaj alma seçeneğini kapatmış.',
-'No e-mail subject'			=>	'Lütfen bir başlık giriniz.',
-'No e-mail message'			=>	'Lütfen mesajınızı giriniz.',
+'Form e-mail disabled'		=>	'e-posta gÃ¶ndermeye Ã§alÄ±ÅŸtÄ±ÄŸÄ±nÄ±z kulanÄ±cÄ± form yoluyla mesaj alma seÃ§eneÄŸini kapatmÄ±ÅŸ.',
+'No e-mail subject'			=>	'LÃ¼tfen bir baÅŸlÄ±k giriniz.',
+'No e-mail message'			=>	'LÃ¼tfen mesajÄ±nÄ±zÄ± giriniz.',
 'Too long e-mail message'	=>	'Mesajlar 65535 karakterden (64 Kb) daha uzun olamaz .',
-'E-mail sent redirect'		=>	'e-posta gönderildi. Yönlendirme &hellip;',
-'Send e-mail to'			=>	'e-posta gönder:',
-'E-mail subject'			=>	'Başlık',
+'E-mail sent redirect'		=>	'e-posta gÃ¶nderildi. YÃ¶nlendirme &hellip;',
+'Send e-mail to'			=>	'e-posta gÃ¶nder:',
+'E-mail subject'			=>	'BaÅŸlÄ±k',
 'E-mail message'			=>	'Mesaj',
-'E-mail disclosure note'	=>	'Uyarı : e-posta adresiniz alıcı tarafından görünecektir.',
-'Write e-mail'				=>	'e-posta mesajınızı yazıp onaylayınız',
+'E-mail disclosure note'	=>	'UyarÄ± : e-posta adresiniz alÄ±cÄ± tarafÄ±ndan gÃ¶rÃ¼necektir.',
+'Write e-mail'				=>	'e-posta mesajÄ±nÄ±zÄ± yazÄ±p onaylayÄ±nÄ±z',
 
 // Report
-'No reason'					=>	'Lütfen bir neden giriniz.',
-'Report redirect'			=>	'Rapor gönderildi. Yönlendirme &hellip;',
-'Report post'				=>	'Rapor gönder',
+'No reason'					=>	'LÃ¼tfen bir neden giriniz.',
+'Report redirect'			=>	'Rapor gÃ¶nderildi. YÃ¶nlendirme &hellip;',
+'Report post'				=>	'Rapor gÃ¶nder',
 'Reason'					=>	'Neden',
-'Reason desc'				=>	'Lütfen bu raporu neden gönderdiğinizi anlatan açıklamayı yazınız.',
+'Reason desc'				=>	'LÃ¼tfen bu raporu neden gÃ¶nderdiÄŸinizi anlatan aÃ§Ä±klamayÄ± yazÄ±nÄ±z.',
 
 // Subscriptions
-'Already subscribed'		=>	'Bu başlığa zaten üyesiniz.',
-'Subscribe redirect'		=>	'Üyeliğiniz işleme alındı. Yönlendirme &hellip;',
-'Not subscribed'			=>	'Bu başlığa üye değilsiniz.',
-'Unsubscribe redirect'		=>	'Üyeliğiniz kaldırıldı. Yönlendirme &hellip;',
+'Already subscribed'		=>	'Bu baÅŸlÄ±ÄŸa zaten Ã¼yesiniz.',
+'Subscribe redirect'		=>	'ÃœyeliÄŸiniz iÅŸleme alÄ±ndÄ±. YÃ¶nlendirme &hellip;',
+'Not subscribed'			=>	'Bu baÅŸlÄ±ÄŸa Ã¼ye deÄŸilsiniz.',
+'Unsubscribe redirect'		=>	'ÃœyeliÄŸiniz kaldÄ±rÄ±ldÄ±. YÃ¶nlendirme &hellip;',
 
 // General forum and topic moderation
 'Moderate'					=>	'Modere et',
-'Select'					=>	'Seç',	// the header of a column of checkboxes
-'Move'						=>	'Taşı',
+'Select'					=>	'SeÃ§',	// the header of a column of checkboxes
+'Move'						=>	'TaÅŸÄ±',
 'Delete'					=>	'Sil',
 
 // Moderate forum
-'Open'						=>	'Aç',
+'Open'						=>	'AÃ§',
 'Close'						=>	'Kapa',
-'Move topic'				=>	'Başlığı taşı',
-'Move topics'				=>	'Başlıkları taşı',
-'Move legend'				=>	'Nereye taşınacak?',
-'Move to'					=>	'taşınacak yer',
-'Leave redirect'			=>	'Başlıkl(ar)ı yönlendirme',
-'Move topic redirect'		=>	'Başlık taşındı. Yönlendirme &hellip;',
-'Move topics redirect'		=>	'Başlıklar taşındı. Yönlendirme &hellip;',
-'Confirm delete legend'		=>	'Silme işlemini onaylayınız',
-'Delete topics'				=>	'Başlıkları sil',
-'Delete topics comply'		=>	'Gerçekten seçili başlıkarı silmek istiyor musunuz?',
-'Delete topics redirect'	=>	'Başlıklar silindi. Yönlendirme &hellip;',
-'Open topic redirect'		=>	'Başlık açıldı. Yönlendirme &hellip;',
-'Open topics redirect'		=>	'Başlıklar açıldı. Yönlendirme &hellip;',
-'Close topic redirect'		=>	'Başlık kapandı. Yönlendirme &hellip;',
-'Close topics redirect'		=>	'Başlıklar kapandı. Yönlendirme &hellip;',
-'No topics selected'		=>	'Taşımak/silmek/açmak/kapamak için en az bir başlık seçmelisiniz.',
-'Stick topic redirect'		=>	'Konu sabitlendi. Yönlendirme &hellip;',
-'Unstick topic redirect'	=>	'Sabit özelliği kaldırıldı. Yönlendirme &hellip;',
+'Move topic'				=>	'BaÅŸlÄ±ÄŸÄ± taÅŸÄ±',
+'Move topics'				=>	'BaÅŸlÄ±klarÄ± taÅŸÄ±',
+'Move legend'				=>	'Nereye taÅŸÄ±nacak?',
+'Move to'					=>	'taÅŸÄ±nacak yer',
+'Leave redirect'			=>	'BaÅŸlÄ±kl(ar)Ä± yÃ¶nlendirme',
+'Move topic redirect'		=>	'BaÅŸlÄ±k taÅŸÄ±ndÄ±. YÃ¶nlendirme &hellip;',
+'Move topics redirect'		=>	'BaÅŸlÄ±klar taÅŸÄ±ndÄ±. YÃ¶nlendirme &hellip;',
+'Confirm delete legend'		=>	'Silme iÅŸlemini onaylayÄ±nÄ±z',
+'Delete topics'				=>	'BaÅŸlÄ±klarÄ± sil',
+'Delete topics comply'		=>	'GerÃ§ekten seÃ§ili baÅŸlÄ±karÄ± silmek istiyor musunuz?',
+'Delete topics redirect'	=>	'BaÅŸlÄ±klar silindi. YÃ¶nlendirme &hellip;',
+'Open topic redirect'		=>	'BaÅŸlÄ±k aÃ§Ä±ldÄ±. YÃ¶nlendirme &hellip;',
+'Open topics redirect'		=>	'BaÅŸlÄ±klar aÃ§Ä±ldÄ±. YÃ¶nlendirme &hellip;',
+'Close topic redirect'		=>	'BaÅŸlÄ±k kapandÄ±. YÃ¶nlendirme &hellip;',
+'Close topics redirect'		=>	'BaÅŸlÄ±klar kapandÄ±. YÃ¶nlendirme &hellip;',
+'No topics selected'		=>	'TaÅŸÄ±mak/silmek/aÃ§mak/kapamak iÃ§in en az bir baÅŸlÄ±k seÃ§melisiniz.',
+'Stick topic redirect'		=>	'Konu sabitlendi. YÃ¶nlendirme &hellip;',
+'Unstick topic redirect'	=>	'Sabit Ã¶zelliÄŸi kaldÄ±rÄ±ldÄ±. YÃ¶nlendirme &hellip;',
 
 // Delete multiple posts in topic
-'Delete posts'				=>	'İletileri sil',
-'Delete posts comply'		=>	'Seçili iletileri gerçekten silmek istiyor musunuz?',
-'Delete posts redirect'		=>	'İleti silindi. Yönlendirme &hellip;',
-'No posts selected'			=>	'Silme işleminin gerçekleştirilmesi için en az bir başlık seçmelisiniz.'
+'Delete posts'				=>	'Ä°letileri sil',
+'Delete posts comply'		=>	'SeÃ§ili iletileri gerÃ§ekten silmek istiyor musunuz?',
+'Delete posts redirect'		=>	'Ä°leti silindi. YÃ¶nlendirme &hellip;',
+'No posts selected'			=>	'Silme iÅŸleminin gerÃ§ekleÅŸtirilmesi iÃ§in en az bir baÅŸlÄ±k seÃ§melisiniz.'
 
 );
