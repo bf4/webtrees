@@ -150,7 +150,6 @@ $factarray["MARS"]	= "הסדר נישואין";
 $factarray["NATI"] 	= "לאום";
 $factarray["NATU"] = "התאזרחות";
 $factarray["MARR"] = "נישואין";
-$factarray["PAGE"]	= "פרטי ציטוט";
 $factarray["OCCU"]	= "מקצוע";
 $factarray["ORDI"]	= "הסמכה";
 $factarray["ORDN"]	= "הסמכה לכמורה";

@@ -492,7 +492,6 @@ $pgv_lang["bom_check_desc"]		= "בדיקה זו תנתח את כל קבצי הש
 $pgv_lang["lang_debug"]			= "אופציית ניפוי באגים של טכסט עזרה";
 $pgv_lang["lang_debug_help"]		= "~#pgv_lang[lang_debug]#~<br /><br />#pgv_lang[lang_debug_desc]#<br />";
 $pgv_lang["lang_debug_desc"]		= "התרת האופציה מדפיסה שמות של משתני שפה שבשימוש בטכסט העזרה, בחלון הצץ של טכסט העזרה.<br />הוא עוזר למתרגמים לקבוע את שם המשתנה אם יש להתאים את הטכסט.<br />ההגדרה בתוקף רק בישיבת ה-PhpGedView הנוכחית שלך.";
-$pgv_lang["lang_debug_help"]		= "~#pgv_lang[lang_debug]#~<br /><br />#pgv_lang[lang_debug_desc]#<br />";
 $pgv_lang["lang_debug_use"]		= "השתמש באופציית ניפוי באגים של טכסט עזרה";
 $pgv_lang["bom_not_found"]		= "אף BOM לא התגלה.";
 $pgv_lang["bom_found"]			= "BOM נמצא ב-";
