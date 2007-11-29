@@ -1096,10 +1096,14 @@ class Person extends GedcomRecord {
 						$factrec .= "\n3 RELA ".$rela;
 						// add parents on grandchildren, cousin or nephew's birth
 						if ($option=="_GCHI" or $option=="_COUS" or $option=="_NEPH") {
-							$factrec .= "\n2 ASSO @".$family->getHusbId()."@";
-							$factrec .= "\n3 RELA from";
-							$factrec .= "\n2 ASSO @".$family->getWifeId()."@";
-							$factrec .= "\n3 RELA and";
+							if ($family->getHusbId()) {
+								$factrec .= "\n2 ASSO @".$family->getHusbId()."@";
+								$factrec .= "\n3 RELA father";
+							}
+							if ($family->getWifeId()) {
+								$factrec .= "\n2 ASSO @".$family->getWifeId()."@";
+								$factrec .= "\n3 RELA mother";
+							}
 						}
 						// recorded as ASSOciate ? [ 1690092 ]
 						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
