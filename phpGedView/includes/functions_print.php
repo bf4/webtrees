@@ -2238,15 +2238,15 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			if ($rct>0) {
 				// RELAtionship name in user language
 				$key = strtolower(trim($rmatch[1]));
-	            $cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
-                if ($cr > 0) {
-                    $rela = get_sosa_name($relamatch[0][1]);
-                }
-                else
-                {
-				    if (isset($pgv_lang["$key"])) $rela = $pgv_lang[$key];
-				    else $rela = $rmatch[1];
-                }
+				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
+				if ($cr > 0) {
+					$rela = get_sosa_name($relamatch[0][1]);
+				}
+				else {
+					if (isset($pgv_lang[$key])) $rela = $pgv_lang[$key];
+					else if (isset($factarray[strtoupper($key)])) $rela = $factarray[strtoupper($key)];
+					else $rela = $rmatch[1];
+				}
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
 				if ($pid2==$pid) print "<span class=\"details_label\">";
