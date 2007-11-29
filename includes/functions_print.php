@@ -2333,29 +2333,38 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
  * @param string $bdate	child birthdate
  */
 function print_parents_age($pid, $bdate) {
-	global $pgv_lang, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	if ($SHOW_PARENTS_AGE) {
-		$person = Person::getInstance($pid);
-		$families = $person->getChildFamilies();
-		// dont show age of parents if more than one family (ADOPtion)
-		if (count($families)==1) {
-			print " <span class=\"age\">";
-			$family = current($families);
-			$spouse = $family->getHusband();
-			// father
-			if ($spouse && showFact("BIRT", $spouse->getXref())) {
-				$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
-				if (10<$age && $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
-			}
-			// mother
-			$spouse = $family->getWife();
-			if ($spouse && showFact("BIRT", $spouse->getXref())) {
-				$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
-				if (10<$age && $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
-			}
-			print "</span>";
-		}
+	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	if (!$SHOW_PARENTS_AGE) return "";
+	$person = Person::getInstance($pid);
+	$families = $person->getChildFamilies();
+	// dont show age of parents if more than one family (ADOPtion)
+	if (count($families)>1) return "";
+	$family = current($families);
+	if (!$family) return "";
+	print " <span class=\"age\">";
+	// father
+	$spouse = $family->getHusband();
+	if ($spouse && showFact("BIRT", $spouse->getXref())) {
+		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
+		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
 	}
+	// mother
+	$spouse = $family->getWife();
+	if ($spouse && showFact("BIRT", $spouse->getXref())) {
+		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
+		// [ 1749591 ] Highlight maternal death
+		if ($spouse->getDeathDate(false)) {
+			$child_bdate=new GedcomDate($bdate);
+			$mother_ddate=new GedcomDate($spouse->getDeathDate(false));
+			if ($mother_ddate->date1->minJD>0
+			&& $child_bdate->date1->minJD>0
+			&& $mother_ddate->date1->minJD < $child_bdate->date1->minJD+90) {
+				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+			}
+		}
+		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
+	}
+	print "</span>";
 }
 /**
  * print fact DATE TIME
