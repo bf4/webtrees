@@ -937,6 +937,7 @@ function getUser($username) {
 
 	if (empty($username)) return false;
 	if (isset($users[$username])) return $users[$username];
+	if (DB::isError($DBCONN))	return false; // We can call this function
 	$username = $DBCONN->escapeSimple($username);
 	$sql = "SELECT * FROM ".$TBLPREFIX."users WHERE ";
 	if (stristr($DBTYPE, "mysql")!==false) $sql .= "BINARY ";

@@ -38,13 +38,14 @@ class Mutex {
 	function checkDBCONN() {
 		global $DBCONN, $CONFIGURED;
 		
-		if (!isset($DBCONN) || DB::isError($DBCONN)) 
+		if (!isset($DBCONN) || DB::isError($DBCONN)) {
 			if ($CONFIGURED) {
 				//-- fix bad configuration prevents edit config page from loading
 				//die("Cannot use mutex without database");
 				$CONFIGURED = false;
 			}
-			else return false;
+			return false;
+		}
 		return true;
 	}
 	/**
