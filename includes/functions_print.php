@@ -2399,7 +2399,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 				$person=new Person($indirec);
 				$birth_date=new GedcomDate($person->getBirthDate(false));
 				$death_date=new GedcomDate($person->getDeathDate(false));
-				if (GedcomDate::Compare($date, $death_date)<0 || $fact=='DEAT') {
+				if (GedcomDate::Compare($date, $death_date)<=0 || $fact=='DEAT') {
 					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
