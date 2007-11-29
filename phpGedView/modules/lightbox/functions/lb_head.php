@@ -28,7 +28,7 @@
  */
 ?>
 <?php
-global $lang_short_cut, $LANGUAGE;
+global $lang_short_cut, $LANGUAGE, $PHP_SELF;
 
 loadLangFile("lb_lang");
 
