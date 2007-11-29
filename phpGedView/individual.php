@@ -660,7 +660,7 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	function paste_id(value) {
 		catch_and_ignore = value;
 	}
-<?php if ($controller->isPrintPreview()) print "tabswitch(0)";
+<?php if ($controller->isPrintPreview()) print "tabswitch(0);";
 else print "tabswitch(". ($controller->default_tab+1) .");\n";
 ?>
 if (typeof toggleByClassName == "undefined") alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');
