@@ -1282,12 +1282,12 @@ class Person extends GedcomRecord {
 					if ($arec) {
 						$temp = preg_match("/^\d (\w*)/", $srec, $factname);
 						$fact = $factname[1];
-						if (isset($factarray[$fact])) $label = strip_tags($factarray[$fact]);
-						else $label = $fact;
+						$label = $fact;
 						if ($fact=="EVEN") {
 							$trec = get_sub_record(2, "2 TYPE ", $srec);
 							if ($trec) $label = trim(substr($trec, 7));
 						}
+						if (isset($factarray[$label])) $label = strip_tags($factarray[$label]);
 						$sdate = get_sub_record(2, "2 DATE", $srec);
 						// relationship ?
 						$rrec = get_sub_record(3, "3 RELA", $arec);
