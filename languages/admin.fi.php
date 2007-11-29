@@ -319,7 +319,6 @@ $pgv_lang["no_link"]      = "ei linkity takaisin";
 $pgv_lang["data"]         = "data";
 $pgv_lang["see"]          = "katso";
 $pgv_lang["noref"]        = "Ei yhtään lähdettä tässä tallenteessa";
-$pgv_lang["level"]        = "taso";
 $pgv_lang["tag"]          = "merkitsin";
 $pgv_lang["spacing"]      = "välistys";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Erityiset nimitiedot";

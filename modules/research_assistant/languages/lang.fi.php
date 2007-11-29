@@ -74,7 +74,7 @@ $pgv_lang["add_task"]						= "Lisää tehtävä";
 $pgv_lang["view_folders"]					= "Näytä hakemistot";
 $pgv_lang["view_probabilities"]				= "Näytä todennäköisyydet";
 $pgv_lang["up_folder"]						= "Ylempi hakemsitotaso";
-$pgv_lang["edit_folder"]					= "Lisää/editoi hakemisto(a)";
+//$pgv_lang["edit_folder"]					= "Lisää/editoi hakemisto(a)";
 $pgv_lang["gen_tasks"]						= "Luo automaattisesti tehtäviä";
 
 // -- RA GENERAL MESSAGES
@@ -105,7 +105,7 @@ $pgv_lang["FormBuilder"]					= "Lomakkeen luontity?kalu";
 $pgv_lang["FormName"]						= "Anna lomakkeen nimi";
 $pgv_lang["MultiplePeople"]					= "Koskeeko lomake ueampaa henkilöä?";
 $pgv_lang["EnterGEDCOMExtension"]			= "Anna GEDCOM-tiedoston tunniste lomakkeen tietotyypin mukaisesti";
-//$pgv_lang['FormDesciption']					= "Anna lomakkeen kuvaus";
+$pgv_lang["FormDesciption"]					= "Anna lomakkeen kuvaus";
 $pgv_lang["FormGeneration"]					= "Lomakkeen luonti valmis!";
 $pgv_lang["CustomField"]					= "Mukautettu kentän nimi";
 $pgv_lang["txt"]							= "Teksti"; 
@@ -233,7 +233,7 @@ $pgv_lang["no_indi_tasks"]					= "Tähän tehtävään ei ole liitetty yhtään 
 $pgv_lang["no_sour_tasks"]					= "No tasks associated with this ssource.";
 $pgv_lang["edit_comment"]					= "Editoi kommenttia";
 $pgv_lang["comment_success"]				= "Kommenttisi on lisätty.";
-//$pgv_lang['comment_body']					= 'Kommentti';
+$pgv_lang["comment_body"]					= 'Kommentti';
 
 //-- RA_COMMENT MESSAGES
 $pgv_lang["comment_delete_check"]			= "Haluatko varmasti poistaa tämän kommentin?";
@@ -268,7 +268,7 @@ $pgv_lang["county"]                     	= "Maa";
 $pgv_lang["city"]                       	= "Kaupunki";
 $pgv_lang["complete_title"]					= "Viimeistele tehtävä";
 $pgv_lang["select_form"]					= "Valitse lomake";
-//$pgv_lang['choose_form_label']				= "Valitse yleinen tutkimuslomake:";
+$pgv_lang["choose_form_label"]				= "Valitse yleinen tutkimuslomake:";
 $pgv_lang["book"]                 			= "Kirja";
 $pgv_lang["folio"]                   		= "Folio"; 
 $pgv_lang["uk_county"]						= "Maakunta";
