@@ -1534,7 +1534,7 @@ function compare_facts_type($arec, $brec) {
 	// Facts from different families stay grouped together
 	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
 		return 0;
-
+		
 	// Extract fact type from record
 	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
 		return 0;
@@ -1627,14 +1627,22 @@ function compare_facts_date($arec, $brec) {
 		$brec = $brec[1];
 
 	// If either fact is undated, the facts sort equally.
-	if (!preg_match("/2 DATE (.*)/", $arec, $amatch) || !preg_match("/2 DATE (.*)/", $brec, $bmatch))
+	if (!preg_match("/2 _?DATE (.*)/", $arec, $amatch) || !preg_match("/2 _?DATE (.*)/", $brec, $bmatch)) {
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+			return $match1[1]-$match2[1];
+		}
 		return 0;
+	}
 
 	$adate = new GedcomDate($amatch[1]);
 	$bdate = new GedcomDate($bmatch[1]);
 	// If either date can't be parsed, don't sort.
-	if ($adate->MinJD()==0 || $bdate->MinJD()==0)
+	if ($adate->MinJD()==0 || $bdate->MinJD()==0){
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+			return $match1[1]-$match2[1];
+		}
 		return 0;
+	}
 
 	// Remember that dates can be ranges and overlapping ranges sort equally.
   $amin=$adate->MinJD();
@@ -1665,23 +1673,23 @@ function compare_facts_date($arec, $brec) {
 	else if ($amin>$bmax)
 		return 1;
 	else {
-		//-- ranged date... take the type of fact into account
-		$factWeight = compare_facts_type($arec, $brec);
-		//print substr($arec, 0, 6)." ".substr($brec, 0, 6)." factweight: ".$factWeight." ";
+		//-- ranged date... take the type of fact sorting into account
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+			$factWeight = $match1[1]-$match2[1];
+		}
+//		print $factWeight.": ".substr($arec, 0, 6)." ".substr($brec, 0, 6)."<br />";
 		//-- fact is prefered to come before, so compare using the minimum ranges
-		if ($factWeight < 0 && $amin!=$bmin) {/*print "$amin $bmin<br />";*/ return ($amin-$bmin);}
+		if ($factWeight < 0 && $amin!=$bmin) {return ($amin-$bmin);}
 		//-- fact is prefered to come after, so compare using the max of the ranges
-		else if ($factWeight > 0 && $bmax!=$amax) {/*print "$bmax $amax<br />";*/ return ($bmax-$amax);}
+		else if ($factWeight > 0 && $bmax!=$amax) {return ($bmax-$amax);}
 		//-- facts are the same or the ranges don't give enough info, so use the average of the range
 		else {
-			//print "<br />";
 			$aavg = ($amin+$amax)/2;
 			$bavg = ($bmin+$bmax)/2;
 			if ($aavg<$bavg) return -1;
 			else if ($aavg>$bavg) return 1;
-			else return 0;
+			else return $factWeight;
 		}
-		
 		
 		return 0;
 	}
@@ -1695,15 +1703,38 @@ function compare_facts_date($arec, $brec) {
 // *mostly* being in sequence.
 function sort_facts(&$arr) {
 	// Pass one - insertion sort on fact type
-	for ($i=1; $i<count($arr); ++$i) {
-		$tmp=$arr[$i];
-		$j=$i;
-		while ($j>0 && compare_facts_type($arr[$j-1], $tmp)>0) {
-			$arr[$j]=$arr[$j-1];
-			--$j;
+	$lastDate = "";
+	for ($i=0; $i<count($arr); ++$i) {
+		if ($i>0) {
+			$tmp=$arr[$i];
+			$j=$i;
+			while ($j>0 && compare_facts_type($arr[$j-1], $tmp)>0) {
+				$arr[$j]=$arr[$j-1];
+				--$j;
+			}
+			$arr[$j]=$tmp;
 		}
-		$arr[$j]=$tmp;
 	}
+
+	//-- add extra codes for the next pass of sorting
+	//TODO in the 4.2 branch this can be stored in the Event object
+	//-- add a fake date for the date sorting based on the previous fact that came before
+	$lastDate = "";
+	for($i=0; $i<count($arr); $i++) {
+		//-- add a fake date for the date sorting based on the previous fact that came before
+		if (is_array($arr[$i])) {
+			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate)) $arr[$i][1].="2 _DATE ".$lastDate."\r\n";
+			else $lastDate = $match[1];
+			//-- also add a sort field so that we can compare based on how they were sorted by the previous pass when the date does not give enough information
+			$arr[$i][1] .= "2 _SORT ".$i."\r\n";
+		}
+		else {
+			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate)) $arr[$i].="2 _DATE ".$lastDate."\r\n";
+			else $lastDate = $match[1];
+			$arr[$i] .= "2 _SORT ".$i."\r\n";
+		}
+	}
+	
 	// Pass two - modified bubble/insertion sort on date
 	for ($i=0; $i<count($arr)-1; ++$i)
 		for ($j=count($arr)-1; $j>$i; --$j)
@@ -1713,6 +1744,18 @@ function sort_facts(&$arr) {
 					$arr[$k]=$arr[$k+1];
 				$arr[$j]=$tmp;
 			}
+			
+	//-- delete the temporary fields
+	for($i=0; $i<count($arr); $i++) {
+		if (is_array($arr[$i])) {
+			$arr[$i][1] = preg_replace("/2 _DATE (.+)/", "", $arr[$i][1]);
+			$arr[$i][1] = preg_replace("/2 _SORT (.+)/", "", $arr[$i][1]);
+		}
+		else {
+			$arr[$i] = preg_replace("/2 _DATE (.+)/", "", $arr[$i]);
+			$arr[$i] = preg_replace("/2 _SORT (.+)/", "", $arr[$i]);
+		}
+	}
 	return;
 }
 
