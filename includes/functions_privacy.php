@@ -292,6 +292,56 @@ function displayDetails($indirec) {
 
 //-- allow users to overide functions in privacy file
 if (!function_exists("displayDetailsByID")) {
+	
+/**
+ * checks if the person has died recently before showing their data
+ * @param string $pid	the id of the person to check
+ * @return boolean
+ */
+function checkPrivacyByYear($pid) {
+	global $MAX_ALIVE_AGE, $GEDCOMS, $GEDCOM, $indilist;
+	
+	$cyear = date("Y");
+	$indirec = find_person_record($pid);
+	//-- check death record
+	$deatrec = get_sub_record(1, "1 DEAT", $indirec);
+	$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $deatrec, $match);
+	if ($ct>0) {
+		$dyear = $match[1];
+		if (($cyear-$dyear) <= $MAX_ALIVE_AGE-25) {
+			return false;
+		}
+	}
+
+	//-- check marriage records
+	$famids = find_families_in_record($indirec, "FAMS");
+	foreach($famids as $indexval => $famid) {
+		$famrec = find_family_record($famid);
+		//-- check death record
+		$marrrec = get_sub_record(1, "1 MARR", $indirec);
+		$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $marrrec, $match);
+		if ($ct>0) {
+			$myear = $match[1];
+			if (($cyear-$myear) <= $MAX_ALIVE_AGE-15) {
+				return false;
+			}
+		}
+	}
+
+	//-- check birth record
+	$birtrec = get_sub_record(1, "1 BIRT", $indirec);
+	$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $birtrec, $match);
+	if ($ct>0) {
+		$byear = $match[1];
+		if (($cyear-$byear) <= $MAX_ALIVE_AGE) {
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+	
 /**
  * check if details for a GEDCOM XRef ID should be shown
  *
@@ -343,6 +393,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 
 	$cache_privacy = true;
 
+	//-- start of user specific privacy checks
 	$username = getUserName();
 	if (!empty($username)) {
 		if (isset($user_privacy[$username]["all"])) {
@@ -365,6 +416,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				return false;
 			}
 		}
+		
 		if (isset($person_privacy[$pid])) {
 			if ($person_privacy[$pid]>=getUserAccessLevel($username)) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
@@ -379,14 +431,43 @@ function displayDetailsByID($pid, $type = "INDI") {
 			if ($cache_privacy) $privacy_cache[$pkey] = true;
 			return true;
 		}
+		
+		//-- look for an Ancestral File RESN (restriction) tag
+		if (isset($PRIVACY_BY_RESN) && ($PRIVACY_BY_RESN==true)) {
+			$gedrec = find_gedcom_record($pid);
+			$resn = get_gedcom_value("RESN", 1, $gedrec);
+			if (!empty($resn)) {
+				if ($resn == "confidential") $ret = false;
+				else if (($resn == "privacy") && ($user["gedcomid"][$GEDCOM] != $pid)) $ret = false;
+				else $ret = true;
+				if (!$ret) {
+					if ($cache_privacy) $privacy_cache[$pkey] = $ret;
+					return $ret;
+				}
+			}
+		}
+	
 		if (userCanAccess($username)) {
 			$user = getUser($username);
 			if ($type=="INDI") {
 				$isdead = is_dead_id($pid);
 				if ($USE_RELATIONSHIP_PRIVACY || $user["relationship_privacy"]=="Y") {
 					if ($isdead) {
-						if ($cache_privacy) $privacy_cache[$pkey] = true;
-						return true;
+						if ($SHOW_DEAD_PEOPLE>=getUserAccessLevel($username)) {
+							if ($PRIVACY_BY_YEAR && $SHOW_DEAD_PEOPLE==getUserAccessLevel($username)) {
+								$res = checkPrivacyByYear($pid);
+								if (!$res) {
+									if ($cache_privacy) $privacy_cache[$pkey] = false;
+									return false;
+								}
+							}
+							if ($cache_privacy) $privacy_cache[$pkey] = true;
+							return true;
+						}
+						else {
+							if ($cache_privacy) $privacy_cache[$pkey] = false;
+							return false;
+						}
 					}
 					else {
 						if (empty($user["gedcomid"][$GEDCOM])) {
@@ -433,18 +514,9 @@ function displayDetailsByID($pid, $type = "INDI") {
 					}
 				}
 			}
-			//-- look for an Ancestral File RESN (restriction) tag
-			if (isset($PRIVACY_BY_RESN) && ($PRIVACY_BY_RESN==true)) {
-				$gedrec = find_gedcom_record($pid);
-				$resn = get_gedcom_value("RESN", 1, $gedrec);
-				if (($resn == "confidential") && (!userGedcomAdmin($username))) $ret = false;
-				else if (($resn == "privacy") && (($user["gedcomid"][$GEDCOM] != $pid) || (!userGedcomAdmin($username)))) $ret = false;
-				else $ret = true;
-				if ($cache_privacy) $privacy_cache[$pkey] = $ret;
-				return $ret;
-			}
 		}
-	}
+	} //-- end the user specif privacy settings
+	
 	//-- check the person privacy array for an exception
 	if (isset($person_privacy[$pid])) {
 		if ($person_privacy[$pid]>=getUserAccessLevel($username)) {
@@ -480,53 +552,13 @@ function displayDetailsByID($pid, $type = "INDI") {
 	if ($type=="INDI") {
 		//-- option to keep person living if they haven't been dead very long
 		if ($PRIVACY_BY_YEAR) {
-			$cyear = date("Y");
-			$indirec = find_person_record($pid);
-			//-- check death record
-			$deatrec = get_sub_record(1, "1 DEAT", $indirec);
-			$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $deatrec, $match);
-			if ($ct>0) {
-				$dyear = $match[1];
-				if (($cyear-$dyear) <= $MAX_ALIVE_AGE-25) {
-					if ($cache_privacy) {
-						$privacy_cache[$pkey] = false;
+			$res = checkPrivacyByYear($pid);
+			if (!$res) {
+				if ($cache_privacy) {
+					$privacy_cache[$pkey] = false;
 					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-					}
-					return false;
 				}
-			}
-
-			//-- check marriage records
-			$famids = find_sfamily_ids($pid);
-			foreach($famids as $indexval => $famid) {
-				$famrec = find_family_record($famid);
-				//-- check death record
-				$marrrec = get_sub_record(1, "1 MARR", $indirec);
-				$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $marrrec, $match);
-				if ($ct>0) {
-					$myear = $match[1];
-					if (($cyear-$myear) <= $MAX_ALIVE_AGE-15) {
-						if ($cache_privacy) {
-							$privacy_cache[$pkey] = false;
-						$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-						}
-						return false;
-					}
-				}
-			}
-
-			//-- check birth record
-			$birtrec = get_sub_record(1, "1 BIRT", $indirec);
-			$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $birtrec, $match);
-			if ($ct>0) {
-				$byear = $match[1];
-				if (($cyear-$byear) <= $MAX_ALIVE_AGE) {
-					if ($cache_privacy) {
-						$privacy_cache[$pkey] = false;
-					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-					}
-					return false;
-				}
+				return false;
 			}
 		}
 		

@@ -1017,6 +1017,7 @@ function get_indi_names($indirec, $import=false) {
 			if (!empty($addname)) {
 				$surname = extract_surname($addname, false);
 				if (empty($surname)) $surname = "@N.N.";
+				//-- remove these characters so that they do not get selected as the first letter
 				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 				if (empty($lname)) $lname = $surname;
 				$letter = get_first_letter($lname, $import);
@@ -1031,7 +1032,7 @@ function get_indi_names($indirec, $import=false) {
 				$marriedname = trim($match[$i][1]);
 				$surname = extract_surname($marriedname, false);
 				if (empty($surname)) $surname = "@N.N.";
-				$lname = preg_replace("/^[a-z0-9 \.\-]+/", "", $surname);
+				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 				if (empty($lname)) $lname = $surname;
 				$letter = get_first_letter($lname, $import);
 				$letter = str2upper($letter);
@@ -1045,7 +1046,7 @@ function get_indi_names($indirec, $import=false) {
 				$marriedname = trim($match[$i][1]);
 				$surname = extract_surname($marriedname, false);
 				if (empty($surname)) $surname = "@N.N.";
-				$lname = preg_replace("/^[a-z0-9 \.\-]+/", "", $surname);
+				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 				if (empty($lname)) $lname = $surname;
 				$letter = get_first_letter($lname, $import);
 				$letter = str2upper($letter);

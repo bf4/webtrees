@@ -550,8 +550,7 @@ if ($controller->action == "general") {
 		print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
 	}
 	if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
-		$sitelist = get_server_list();
-		if (count($sitelist) > 0) {
+		if (count($controller->Sites) > 0) {
 				
 		
 			print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
@@ -563,8 +562,7 @@ else if ($controller->action == "replace")
 	print "<a href='?action=general'>".$pgv_lang["search_general"]."</a> | ";
 	print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
 		if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
-			$sitelist = get_server_list();
-			if (count($sitelist) > 0) {
+			if (count($controller->Sites) > 0) {
 				
 				print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
 			}
@@ -578,9 +576,7 @@ else
 			print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
 		}	
 		if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
-			$sitelist = get_server_list();
-			if (count($sitelist) > 0) {
-				
+			if (count($controller->Sites) > 0) {
 				print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
 			}
 		}
