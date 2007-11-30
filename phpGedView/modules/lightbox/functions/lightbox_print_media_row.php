@@ -46,9 +46,14 @@
 	if (isset($reorder) && $reorder==1) {
 		print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";	
 		print "<b><font size=2 style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b>";
-	//Else If reorder media has NOT been clicked
+	// Else If reorder media has NOT been clicked
+	// Highlight Album Thunmbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
+	}else if ($rtype=='new'){
+		print "<li class=\"li_new\">" . "\n";
+	}else if ($rtype=='old'){
+		print "<li class=\"li_old\">" . "\n";
 	}else{
-		print "<li>" . "\n";
+		print "<li class=\"li_norm\">" . "\n";
 	}
 
     //If media is linked to a 'private' person
