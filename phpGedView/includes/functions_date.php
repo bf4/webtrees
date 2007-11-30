@@ -79,40 +79,6 @@ function get_age_at_event($agestring, $show_years) {
 	return $agestring;
 }
 
-// This function is deprecated.  Use class GedcomDate instead.
-function parse_date($date)
-{
-	$gdate=new GedcomDate($date);
-	$pdate=array();
-	$pdate[]=array(
-		'ext'=>strtoupper($gdate->qual1),
-		'cal'=>$gdate->date1->CALENDAR_ESCAPE,
-		'day'=>$gdate->date1->d,
-		'mon'=>$gdate->date1->m,
-		'month'=>strtoupper($gdate->date1->NUM_TO_MONTH[$gdate->date1->m]),
-		'year'=>$gdate->date1->y,
-		'jd1'=>$gdate->date1->minJD,
-		'jd2'=>$gdate->date1->maxJD
-		);
-	if (!preg_match("/{$gdate->date1->CALENDAR_ESCAPE}/", $date))
-		$pdate[0]['cal']='';
-	if (!is_null($gdate->date2)) {
-		$pdate[]=array(
-			'ext'=>strtoupper($gdate->qual2),
-			'cal'=>$gdate->date2->CALENDAR_ESCAPE,
-			'day'=>$gdate->date2->d,
-			'mon'=>$gdate->date2->m,
-			'month'=>strtoupper($gdate->date2->NUM_TO_MONTH[$gdate->date2->m]),
-			'year'=>$gdate->date2->y,
-			'jd1'=>$gdate->date2->minJD,
-			'jd2'=>$gdate->date2->maxJD
-		);
-		if (!preg_match("/{$gdate->date2->CALENDAR_ESCAPE}/", $date))
-			$pdate[1]['cal']='';
-	}
-	return $pdate;
-}
-
 /**
  * Parse a time string into its different parts
  * @param string $timestr	the time as it was taken from the TIME tag

@@ -308,21 +308,25 @@ class Person extends GedcomRecord {
 		if (empty($this->dplace)) $this->dplace = get_gedcom_value("BURI:PLAC", 1, $this->gedrec, '', false);
 		//-- if no death estimate from birth
 		if (empty($this->ddate) && !empty($this->bdate)) {
-			$pdate=parse_date($this->bdate);
-			if ($pdate[0]["year"]>0) {
+			$pdate=new GedcomDate($this->bdate);
+			if ($pdate->MinJD() != 0) {
+				$est_date=$pdate->AddYears($MAX_ALIVE_AGE, 'BEF');
+				$est_date=$pdate->MinDate();
 				$this->dest = true;
-				$this->drec .= "\n2 DATE BEF ".($pdate[0]["year"]+$MAX_ALIVE_AGE);
-				$this->ddate = get_gedcom_value("DATE", 2, $this->drec, '', false);
+				$this->ddate = $est_date->Format('@ A O E');
+				$this->drec .= "\n2 DATE BEF ".$this->ddate;
 			}
 			else if (!empty($this->drec)) $this->ddate = $pgv_lang["yes"];
 		}
 		//-- if no birth estimate from death
 		if (empty($this->bdate) && !empty($this->ddate)) {
-			$pdate=parse_date($this->ddate);
-			if ($pdate[0]["year"]>0) {
+			$pdate=new GedcomDate($this->ddate);
+			if ($pdate->MinJD() != 0) {
+				$est_date=$pdate->AddYears(-$MAX_ALIVE_AGE, 'AFT');
+				$est_date=$pdate->MinDate();
 				$this->best = true;
-				$this->brec .= "\n2 DATE AFT ".($pdate[0]["year"]-$MAX_ALIVE_AGE);
-				$this->bdate = get_gedcom_value("DATE", 2, $this->brec, '', false);
+				$this->bdate = $est_date->Format('@ A O E');
+				$this->brec .= "\n2 DATE AFT ".$this->bdate;
 			}
 			else if (!empty($this->brec)) $this->bdate = $pgv_lang["yes"];
 		}
@@ -384,8 +388,9 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthYear($est = true){
 		// TODO - change the design to use julian days, not gregorian years.
-		$bdate = parse_date($this->getBirthDate($est));
-		return $bdate[0]['year'];
+		$bdate = new GedcomDate($this->getBirthDate($est));
+		$bdate=$bdate->MinDate();
+		return $bdate->y;
 	}
 
 	/**
@@ -425,8 +430,9 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathYear($est = true) {
 		// TODO - change the design to use julian days, not gregorian years.
-		$ddate = parse_date($this->getDeathDate($est));
-		return $ddate[0]['year'];
+		$ddate = new GedcomDate($this->getDeathDate($est));
+		$ddate=$ddate->MinDate();
+		return $ddate->y;
 	}
 
 	/**
@@ -476,10 +482,10 @@ class Person extends GedcomRecord {
 		$label = "";
 		$gap = 0;
 		if ($elderdate) {
-			$p1 = parse_date($elderdate);
-			$p2 = parse_date($this->getBirthDate(false));
-			if ($p1[0]["jd1"] && $p2[0]["jd1"]) {
-				$gap = $p2[0]["jd1"]-$p1[0]["jd1"]; // days
+			$p1 = new GedcomDate($elderdate);
+			$p2 = new GedcomDate($this->getBirthDate(false));
+			if ($p1->MinJD() && $p2->MinJD()) {
+				$gap = $p2->MinJD()-$p1->MinJD(); // days
 				$label .= "<div class=\"elderdate age $TEXT_DIRECTION\">";
 				// warning if negative gap : wrong order
 				if ($gap<0 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";

@@ -192,9 +192,10 @@ function checkChangeTime($pid, $gedrec) {
 		if (!empty($cdate)) {
 			$ctime = get_gedcom_value("DATE:TIME", 2, $changrec);
 			$changeUser = get_gedcom_value("_PGVU", 2, $changrec, '', false);
-			$chan_date = parse_date($cdate);
+			$chan_date = new GedcomDate($cdate);
+			$chan_date = $chan_date->MinDate();
 			$chan_time = parse_time($ctime);
-			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], (int)$chan_date[0]['mon'], (int)$chan_date[0]['day'], $chan_date[0]['year']);
+			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], $chan_date->m, $chan_date->d, $chan_date->y);
 		}
 	}
 	if (isset($_REQUEST['linenum']) && $changeTime!=0 && isset($_SESSION['last_access_time']) && $changeTime > $_SESSION['last_access_time']) {

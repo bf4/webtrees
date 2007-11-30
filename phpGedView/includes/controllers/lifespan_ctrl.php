@@ -494,8 +494,10 @@ class LifespanControllerRoot extends BaseController {
 						$date = get_gedcom_value("DATE",2,$val[1]);
 						$ft = preg_match("/1\s(\w+)(.*)/", $val[1], $match);
 						if ($ft>0) $fact = $match[1];
-						$date_arr = parse_date($date);
-						$yearsin = $date_arr[0]["year"]-$birthYear;
+						$date_arr = new GedcomDate($date);
+						$date_arr = $date_arr->MinDate();
+						$date_arr = $date_arr->convert_to_cal('gregorian');
+						$yearsin = $date_arr->y-$birthYear;
 						if ($lifespannumeral==0) $lifespannumeral = 1; 
 						$eventwidth = ($yearsin/$lifespannumeral)* 100; // percent of the lifespan before the event occured used for determining div spacing
 						// figure out some schema

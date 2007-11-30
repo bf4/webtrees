@@ -1630,38 +1630,32 @@ function compare_facts_date($arec, $brec) {
 	if (!preg_match("/2 DATE (.*)/", $arec, $amatch) || !preg_match("/2 DATE (.*)/", $brec, $bmatch))
 		return 0;
 
-	$adate = parse_date($amatch[1]);
-	$bdate = parse_date($bmatch[1]);
+	$adate = new GedcomDate($amatch[1]);
+	$bdate = new GedcomDate($bmatch[1]);
 	// If either date can't be parsed, don't sort.
-	if ($adate[0]['jd1']==0 || $bdate[0]['jd1']==0)
+	if ($adate->MinJD()==0 || $bdate->MinJD()==0)
 		return 0;
 
 	// Remember that dates can be ranges and overlapping ranges sort equally.
-  $amin=$adate[0]['jd1'];
-  $bmin=$bdate[0]['jd1'];
-	if (empty($adate[1]))
-		$amax=$adate[0]['jd2'];
-	else
-		$amax=$adate[1]['jd2'];
-	if (empty($bdate[1]))
-		$bmax=$bdate[0]['jd2'];
-	else
-		$bmax=$bdate[1]['jd2'];
+  $amin=$adate->MinJD();
+  $bmin=$bdate->MinJD();
+	$amax=$adate->MaxJD();
+	$bmax=$bdate->MaxJD();
 
 	// BEF/AFT XXX sort as the day before/after XXX
-	if ($adate[0]['ext']=='BEF') {
+	if ($adate->qual1=='BEF') {
 		$amin=$amin-1;
 		$amax=$amin;
 	}
-	else if ($adate[0]['ext']=='AFT') {
+	else if ($adate->qual1=='AFT') {
 		$amax=$amax+1;
 		$amin=$amax;
 	}
-	if ($bdate[0]['ext']=='BEF') {
+	if ($bdate->qual1=='BEF') {
 		$bmin=$bmin-1;
 		$bmax=$bmin;
 	}
-	else if ($bdate[0]['ext']=='AFT') {
+	else if ($bdate->qual1=='AFT') {
 		$bmax=$bmax+1;
 		$bmin=$bmax;
 	}
