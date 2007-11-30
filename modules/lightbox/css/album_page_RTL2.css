@@ -135,6 +135,18 @@ padding-right: 4px;
 float: right; 
 }
 
+li.li_norm{
+border: 2px solid transparent; 
+}
+
+li.li_new {
+ border: 2px solid #0000ff; 
+}
+
+li.li_old {
+ border: 2px solid #ff0000; 
+}
+
 #thumblist_1 a img, #thumblist_2 a img, #thumblist_3 a img, #thumblist_4 a img, #thumblist_5 a img,
 #thumblist_1a a img, #thumblist_2a a img, #thumblist_3a a img, #thumblist_4a a img, #thumblist_5a a img
 {
