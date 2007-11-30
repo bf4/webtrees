@@ -1565,15 +1565,15 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										$bdatea = $bdatea->MinDate();
 										$bdatea = $bdatea->convert_to_cal('gregorian');
 										$bdate  = $bdatea->Format('Y');
-										$bdate .= ($bdatea->m) ? $bdatea.Format('m') : '00';
-										$bdate .= ($bdatea->d) ? $bdatea.Format('d') : '00';
+										$bdate .= ($bdatea->m) ? $bdatea->Format('m') : '00';
+										$bdate .= ($bdatea->d) ? $bdatea->Format('d') : '00';
 
 										$ddatea = new GedcomDate($person->getDeathDate());
 										$ddatea = $ddatea->MinDate();
 										$ddatea = $ddatea->convert_to_cal('gregorian');
 										$ddate  = $ddatea->Format('Y');
-										$ddate .= ($ddatea->m) ? $ddatea.Format('m') : '00';
-										$ddate .= ($ddatea->d) ? $ddatea.Format('d') : '00';
+										$ddate .= ($ddatea->m) ? $ddatea->Format('m') : '00';
+										$ddate .= ($ddatea->d) ? $ddatea->Format('d') : '00';
 										
 										$sourcesInferred = array();
 										$sourcesPrinted = array();
