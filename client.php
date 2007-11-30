@@ -519,18 +519,18 @@ else if ($action=="getchanges") {
 		print "ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.\n";
 	}
 	else {
-		$lastdate = parse_date($date);
+		$lastdate = new GedcomDate($date);
 		
-		if ($lastdate[0]['jd1']==0) {
+		if ($lastdate->MinJD()==0) {
 			addDebugLog($action." ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.");
 			print "ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.\n";
 		} else {
 			print "SUCCESS\n";
-			if ($lastdate[0]['jd1']<server_jd()-180) {
+			if ($lastdate->MinJD()<server_jd()-180) {
 				addDebugLog($action." ERROR 24: You cannot retrieve updates for more than 180 days.");
 				print "ERROR 24: You cannot retrieve updates for more than 180 days.\n";
 			} else {
-				$changes = get_recent_changes($lastdate[0]['jd1']);
+				$changes = get_recent_changes($lastdate->MinJD());
 				$results = array();
 				foreach($changes as $id=>$change) {
 					print $change['d_gid']."\n";

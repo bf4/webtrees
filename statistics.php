@@ -69,28 +69,24 @@ global $match1,$match2;
 
 		$ybirth= -1; $mbirth= -1;
 		$ydeath= -1; $mdeath= -1;
-		if ($birthdate !== "")
-		{
-			$dates= parse_date($birthdate);
-// the parse_date function is in function.php
-$ik=0; $mrk= "  :  ";
-//-- print "gegevens b/m=" . $key . $mrk . $birthdate . $mrk . $dates[$ik]["day"] . $mrk . $dates[$ik]["mon"] . $mrk . $dates[$ik]["year"] . $mrk . $dates[$ik]["ext"] ;
-			if ($dates[0]["ext"] == "")
-			{	$ybirth= $dates[0]["year"];
-				$mbirth= $dates[0]["mon"];
-//--print "gevonden jaar en maand" . $birthdate . ":" .$ybirth . ":" . $mbirth . ":<br/>";
+		if ($birthdate !== "") {
+			$dates = new GedcomDate($birthdate);
+			if ($dates->qual1 == "") {
+				$date  =$dates->MinDate();
+				$date  =$date->convert_to_cal('gregorian');
+				$ybirth=$date->y;
+				$mbirth=$date->m;
 			}
 		}
 
 		if ($deathdate !== "")
 		{
-			$dates= parse_date($deathdate);
-// the parse_date function is in function.php
-$ik=0; $mrk= "  :  ";
-//-- print "====" . $mrk . $deathdate . $mrk . $dates[$ik]["day"] . $mrk . $dates[$ik]["mon"] . $mrk . $dates[$ik]["year"] . $mrk . $dates[$ik]["ext"] . "<br/>" ;
-			if ($dates[0]["ext"] == "")
-			{	$ydeath= $dates[0]["year"];
-				$mdeath= $dates[0]["mon"];
+			$dates = new GedcomDate($deathdate);
+			if ($dates->qual1 == "") {
+				$date  =$dates->MinDate();
+				$date  =$date->convert_to_cal('gregorian');
+				$ydeath=$date->y;
+				$mdeath=$date->m;
 			}
 		}
 //-- else {print "==== no deathdate<br/>";}
@@ -209,27 +205,22 @@ $dates= array();
 			{$divorcedate= $match1[1]; $divorceplace=$match2[1];}
 		if ($marriagedate !== "")
 		{
-			$dates= parse_date($marriagedate);
-// the parse_date function is in function.php
-$ik=0; $mrk= "  :  ";
-//-- print "marriage, nr, key=" .$i . $mrk . $key . $mrk . $marriagedate . $mrk . $dates[$ik]["day"] . $mrk . $dates[$ik]["mon"] . $mrk . $dates[$ik]["year"] . $mrk . $dates[$ik]["ext"] ;
-//--	==== beware that every about 1850 means that the value will be set to unidentified == -1 ======
-			if ($dates[0]["ext"] == "")
-			{	$ymarr= $dates[0]["year"];
-				$mmarr= $dates[0]["mon"];
+			$dates = new GedcomDate($marriagedate);
+			if ($dates->qual1 == "") {
+				$date =$dates->MinDate();
+				$date =$date->convert_to_cal('gregorian');
+				$ymarr=$date->y;
+				$mmarr=$date->m;
 			}
 		}
 		if ($divorcedate !== "")
 		{
-			$dates= parse_date($divorcedate);
-// the parse_date function is in function.php
-$ik=0; $mrk= "  :  ";
-//-- print "===divorce=" . $mrk . $divorcedate . $mrk . $dates[$ik]["day"] . $mrk . $dates[$ik]["mon"] . $mrk . $dates[$ik]["year"] . $mrk . $dates[$ik]["ext"] ;
-//		$ydiv= substr($divorcedate,6,4);
-//		$mdiv= substr($divorcedate,3,2);
-			if ($dates[0]["ext"] == "")
-			{	$ydiv= $dates[0]["year"];
-				$mdiv= $dates[0]["mon"];
+			$dates = new GedcomDate($divorcedate);
+			if ($dates->qual1 == "") {
+				$date=$dates->MinDate();
+				$date=$date->convert_to_cal('gregorian');
+				$ydiv=$date->y;
+				$mdiv=$date->m;
 			}
 
 		}

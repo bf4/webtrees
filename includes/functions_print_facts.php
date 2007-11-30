@@ -1579,10 +1579,13 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 
 	if ($SHOW_FACT_ICONS) {
 		$fact_image = "";
-		if (preg_match('/2 DATE (.+)/', $factrec, $match))
-			$factdate = parse_date($match[1]);
-		else
-			$factdate[0]['year']=0;
+		if (preg_match('/2 DATE (.+)/', $factrec, $match)) {
+			$factdate = new GedcomDate($match[1]);
+			$factdate = $factdate->MinDate();
+			$factdate = $factdate->convert_to_cal('gregorian');
+			$factyear = $factdate->y;
+		} else
+			$factyear=0;
 		$joe = null;
 		if (id_type($pid)=='INDI') $joe = Person::getInstance($pid);
 		$sexcheck = "";
@@ -1594,15 +1597,14 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 		// If the date is not on the fact, fall back to birth if available
 		// Does not catch the date if it is attached to the source of the fact
 		// (ratid entered OCCU) or if the fact comes from a family record. (MARR)
-		if($factdate[0]["year"] == 0) {
-			if (!is_null($joe)) {
-				$fallback = $joe->getBirthYear();
-				if(!empty($fallback))
-					$factdate[0]["year"] = $fallback;
-				}
+		if ($factyear == 0 && !is_null($joe)) {
+			$fallback = $joe->getBirthYear();
+			if(!empty($fallback))
+				$factyear = $fallback;
 		}
+
 		// converting from scalar to array string.
-		$century = $decade = sprintf("%04d", $factdate[0]["year"]);
+		$century = $decade = sprintf("%04d", $factyear);
 		$decade[3] = '0';	// Zero out the years
 		$century[2] = '0';	// Zero out the decades
 		$century[3] = '0';

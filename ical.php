@@ -235,9 +235,15 @@ function getIcalRecord($date, $summary, $description, $URL=""){
  * @TODO by the spec, an end date is not needed, but since most applications generate and end date, we should test iCal before the commented out DTEND support is removed is removed
  */
 function getIcalDate($gedDate, $endDate=false){
-	$pBD = parse_date($gedDate);
-	list($m,$d,$y)=explode('/', jdtogregorian($pBD[0]['jd1']));
-	return sprintf("%04d%02d%02d", $y, $m, $d);
+	$date = new GedcomDate($gedDate);
+	$date = $date->MinDate();
+	$date = $date->convert_to_cal('gregorian');
+
+	$tmp = $date->Format('Y');
+	$tmp.=($date->m) ? $date->Format('m') : '00';
+	$tmp.=($date->d) ? $date->Format('d') : '00';
+
+	return $tmp;
 }
 
 /**

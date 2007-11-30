@@ -1561,18 +1561,19 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
 										'</td>
 									</tr>';
-										$bdate = $person->getBirthDate();
-										$bdatea = parse_date($bdate);
-										if (empty($bdatea[0]['year'])) $bdatea[0]['year'] = "0000";
-										if (empty($bdatea[0]['mon'])) $bdatea[0]['mon'] = "00";
-										if (empty($bdatea[0]['day'])) $bdatea[0]['day'] = "00";
-										$bdate = $bdatea[0]['year'].$bdatea[0]['mon'].$bdatea[0]['day'];
-										$ddate = $person->getDeathDate();
-										$ddatea = parse_date($ddate);
-										if (empty($ddatea[0]['year'])) $ddatea[0]['year'] = "0000";
-										if (empty($ddatea[0]['mon'])) $ddatea[0]['mon'] = "00";
-										if (empty($ddatea[0]['day'])) $ddatea[0]['day'] = "00";
-										$ddate = $ddatea[0]['year'].$ddatea[0]['mon'].$ddatea[0]['day'];
+										$bdatea = new GedcomDate($person->getBirthDate());
+										$bdatea = $bdatea->MinDate();
+										$bdatea = $bdatea->convert_to_cal('gregorian');
+										$bdate  = $bdatea->Format('Y');
+										$bdate .= ($bdatea->m) ? $bdatea.Format('m') : '00';
+										$bdate .= ($bdatea->d) ? $bdatea.Format('d') : '00';
+
+										$ddatea = new GedcomDate($person->getDeathDate());
+										$ddatea = $ddatea->MinDate();
+										$ddatea = $ddatea->convert_to_cal('gregorian');
+										$ddate  = $ddatea->Format('Y');
+										$ddate .= ($ddatea->m) ? $ddatea.Format('m') : '00';
+										$ddate .= ($ddatea->d) ? $ddatea.Format('d') : '00';
 										
 										$sourcesInferred = array();
 										$sourcesPrinted = array();
@@ -1807,21 +1808,26 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												{
 													$tempDate = get_gedcom_value("DATE",2,$tVal[1]);
 													$tempPlace = get_gedcom_value("PLAC",2,$tVal[1]);
-													$parsedDates = parse_date($tempDate);
-													//-- 4.0 compat
-													if (!isset($parsedDates[0]['sort'])) $parsedDates[0]['sort'] = $parsedDates[0]['year']."-".$parsedDates[0]['mon']."-".$parsedDates[0]['day']; 
+													$parsedDates = new GedcomDate($tempDate);
+													$parsedDates = $parsedDates->MinDate();
+													$parsedDates = $parsedDates->convert_to_cal('gregorian');
+
+													$sortdate = $parsedDates->Format('Y');
+													$sortdate.=($parsedDates->m) ? $parsedDates->Format('m') : '00';
+													$sortdate.=($parsedDates->d) ? $parsedDates->Format('d') : '00';
+
 													$place = trim($place);
 														
 													if(empty($closest))
 													{
-														$closest = preg_replace("/-/","",$parsedDates[0]["sort"]);
+														$closest = $sortdate;
 														$place = $tempPlace;
 														$lastPlace = $place;														
 													}
 													else
 													{
 														$temp = $closest;
-														$closest = $this->determineClosest($closest,preg_replace("/-/","",$parsedDates[0]["sort"]),$gVal["startdate"]);
+														$closest = $this->determineClosest($closest,$sortdate,$gVal["startdate"]);
 														
 														if($closest != $temp && !empty($tempPlace))
 														{
