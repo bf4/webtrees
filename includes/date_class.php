@@ -186,18 +186,23 @@ class CalendarDate {
 		global $LANGUAGE;
   	switch ($calendar) {
 		case 'gregorian':
+		case '@#DGREGORIAN@':
 			return new GregorianDate($this);
 		case 'julian':
+		case '@#DJULIAN@':
 			return new JulianDate($this);
 		case 'jewish':
+		case '@#DHEBREW@':
 			if ($LANGUAGE!='hebrew')
 				return new JewishDate($this);
 			// no  break
 		case 'hebrew':
 			return new HebrewDate($this);
 		case 'french':
+		case '@#DFRENCH R@':
 			return new FrenchRDate($this);
 		case 'arabic':
+		case '@#DHIJRI@':
 			if ($LANGUAGE!='arabic')
 				return new ArabicDate($this);
 			// no  break

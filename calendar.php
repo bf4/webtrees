@@ -91,6 +91,95 @@ $today_month=$today->Format('O');
 if ($cal_date->d>$days_in_month && $action=='today')
 	$action='calendar';
 
+// Convert event filter option to a list of gedcom event codes
+if ($filterev=='all')
+	$events='';
+else
+	if ($filterev=='bdm')
+		$events='BIRT MARR DEAT';
+	else
+		$events=$filterev;
+
+// Fetch data for day/month/year views
+switch ($action) {
+case 'today':
+	$found_facts=apply_filter(get_anniversary_events($cal_date->minJD, $events), $filterof, $filtersx);
+	break;
+case 'calendar':
+	$cal_date->d=0;
+	$cal_date->SetJDfromYMD();
+	// Make a separate list for each day.  Unspecified/invalid days go in day 0.
+	$found_facts=array();
+	for ($d=0; $d<=$days_in_month; ++$d)
+		$found_facts[$d]=array();
+	// Fetch events for each day
+	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
+		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
+			$tmp=$event['date']->MinDate();
+			if ($tmp->d>=1 && $tmp->d<=$cal_date->DaysInMonth())
+				$d=$jd-$cal_date->minJD+1;
+			else
+				$d=0;
+			$found_facts[$d][]=$event;
+		}
+	break;
+case 'year':
+	$cal_date->m=0;
+	$cal_date->SetJDfromYMD();
+	$found_facts=apply_filter(get_calendar_events($ged_date->MinJD(), $ged_date->MaxJD(), $events), $filterof, $filtersx);
+	// Eliminate duplictes (e.g. BET JUL 1900 AND SEP 1900 will appear twice in 1900)
+	foreach ($found_facts as $key=>$value)
+		$found_facts[$key]=serialize($found_facts[$key]);
+	$found_facts=array_unique($found_facts);
+	foreach ($found_facts as $key=>$value)
+		$found_facts[$key]=unserialize($found_facts[$key]);
+	break;
+}
+
+// The titles need converting to all the calendars which appear on the page.
+$used_calendars=array(); 
+
+// Group the facts by family/individual
+switch ($action) {
+case 'year':
+case 'today':
+	$indis=array();
+	$fams=array();
+	foreach ($found_facts as $fact) {
+		$used_calendars[$fact['date']->date1->CALENDAR_ESCAPE]=$fact['date']->date1->CALENDAR_ESCAPE;
+		$fact_text=calendar_fact_text($fact, true);
+		switch ($fact['objtype']) {
+		case 'INDI':
+			if (empty($indis[$fact['id']]))
+				$indis[$fact['id']]=$fact_text;
+			else
+				$indis[$fact['id']].='<br/>'.$fact_text;
+			break;
+		case 'FAM':
+			if (empty($fams[$fact['id']]))
+				$fams[$fact['id']]=$fact_text;
+			else
+				$fams[$fact['id']].='<br/>'.$fact_text;
+			break;
+		}
+	}
+	break;
+case 'calendar':
+	$cal_facts=array();
+	foreach ($found_facts as $d=>$facts) {
+		$cal_facts[$d]=array();
+		foreach ($facts as $fact) {
+			$used_calendars[$fact['date']->date1->CALENDAR_ESCAPE]=$fact['date']->date1->CALENDAR_ESCAPE;
+			$id=$fact['id'];
+			if (empty($cal_facts[$d][$id]))
+				$cal_facts[$d][$id]=calendar_fact_text($fact, false);
+			else
+				$cal_facts[$d][$id].='<br/>'.calendar_fact_text($fact, false);
+		}
+	}
+	break;
+}
+
 // Print the header stuff
 print_header($pgv_lang['anniversary_calendar']);
 print '<div style="text-align: center;" id="calendar_page">';
@@ -99,13 +188,13 @@ print '<tr><td class="facts_label" colspan="8"><h2>';
 
 switch ($action) {
 case 'today':
-	print $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false).'</td></tr>';
+	print $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false, NULL, $used_calendars).'</td></tr>';
 	break;
 case 'calendar':
-	print $pgv_lang['in_this_month'].'<br/>'.$ged_date->Display(false, 'F Y').'</td></tr>';
+	print $pgv_lang['in_this_month'].'<br/>'.$ged_date->Display(false, 'F Y', $used_calendars).'</td></tr>';
 	break;
 case 'year':
-	print $pgv_lang['in_this_year'].'<br/>'.$ged_date->Display(false, 'Y').'</td></tr>';
+	print $pgv_lang['in_this_year'].'<br/>'.$ged_date->Display(false, 'Y', $used_calendars).'</td></tr>';
 	break;
 }
 
@@ -297,90 +386,6 @@ if ($view!='preview') {
 	print "</td></tr>";
 } // print preview
 print "</table>";
-
-// Convert event filter option to a list of gedcom event codes
-if ($filterev=='all')
-	$events='';
-else
-	if ($filterev=='bdm')
-		$events='BIRT MARR DEAT';
-	else
-		$events=$filterev;
-
-// Fetch data for day/month/year views
-switch ($action) {
-case 'today':
-	$found_facts=apply_filter(get_anniversary_events($cal_date->minJD, $events), $filterof, $filtersx);
-	break;
-case 'calendar':
-	$cal_date->d=0;
-	$cal_date->SetJDfromYMD();
-	// Make a separate list for each day.  Unspecified/invalid days go in day 0.
-	$found_facts=array();
-	for ($d=0; $d<=$days_in_month; ++$d)
-		$found_facts[$d]=array();
-	// Fetch events for each day
-	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
-		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
-			$tmp=$event['date']->MinDate();
-			if ($tmp->d>=1 && $tmp->d<=$cal_date->DaysInMonth())
-				$d=$jd-$cal_date->minJD+1;
-			else
-				$d=0;
-			$found_facts[$d][]=$event;
-		}
-	break;
-case 'year':
-	$cal_date->m=0;
-	$cal_date->SetJDfromYMD();
-	$found_facts=apply_filter(get_calendar_events($ged_date->MinJD(), $ged_date->MaxJD(), $events), $filterof, $filtersx);
-	// Eliminate duplictes (e.g. BET JUL 1900 AND SEP 1900 will appear twice in 1900)
-	foreach ($found_facts as $key=>$value)
-		$found_facts[$key]=serialize($found_facts[$key]);
-	$found_facts=array_unique($found_facts);
-	foreach ($found_facts as $key=>$value)
-		$found_facts[$key]=unserialize($found_facts[$key]);
-	break;
-}
-
-// Group the facts by family/individual
-switch ($action) {
-case 'year':
-case 'today':
-	$indis=array();
-	$fams=array();
-	foreach ($found_facts as $fact) {
-		$fact_text=calendar_fact_text($fact, true);
-		switch ($fact['objtype']) {
-		case 'INDI':
-			if (empty($indis[$fact['id']]))
-				$indis[$fact['id']]=$fact_text;
-			else
-				$indis[$fact['id']].='<br/>'.$fact_text;
-			break;
-		case 'FAM':
-			if (empty($fams[$fact['id']]))
-				$fams[$fact['id']]=$fact_text;
-			else
-				$fams[$fact['id']].='<br/>'.$fact_text;
-			break;
-		}
-	}
-	break;
-case 'calendar':
-	$cal_facts=array();
-	foreach ($found_facts as $d=>$facts) {
-		$cal_facts[$d]=array();
-		foreach ($facts as $fact) {
-			$id=$fact['id'];
-			if (empty($cal_facts[$d][$id]))
-				$cal_facts[$d][$id]=calendar_fact_text($fact, false);
-			else
-				$cal_facts[$d][$id].='<br/>'.calendar_fact_text($fact, false);
-		}
-	}
-	break;
-}
 
 switch ($action) {
 case 'year':
