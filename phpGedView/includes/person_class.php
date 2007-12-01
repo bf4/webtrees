@@ -939,9 +939,9 @@ class Person extends GedcomRecord {
 			if ($sosa==1) $fact="_DEAT_FATH"; else $fact="_DEAT_GPAR";
 			if ($spouse && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 				$srec = $spouse->getDeathRecord(false);
-				if (compare_facts_date($this->getBirthRecord(), $srec)<0 && compare_facts_date($srec, $this->getBirthRecord)<0) {
+				$sdate = get_sub_record(2, "2 DATE", $srec);
+				if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
 					$factrec = "1 ".$fact;
-					$sdate = get_sub_record(2, "2 DATE", $srec);
 					if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
 					$factrec .= "\n".trim($sdate);
 					if (!showFact("DEAT", $spouse->getXref())) $factrec .= "\n2 RESN privacy";
