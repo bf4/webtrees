@@ -1725,13 +1725,13 @@ function sort_facts(&$arr) {
 		//-- add a fake date for the date sorting based on the previous fact that came before
 		if (is_array($arr[$i])) {
 			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate)) $arr[$i][1].="2 _DATE ".$lastDate."\r\n";
-			else $lastDate = $match[1];
+			else $lastDate = @$match[1];
 			//-- also add a sort field so that we can compare based on how they were sorted by the previous pass when the date does not give enough information
 			$arr[$i][1] .= "2 _SORT ".$i."\r\n";
 		}
 		else {
 			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate)) $arr[$i].="2 _DATE ".$lastDate."\r\n";
-			else $lastDate = $match[1];
+			else $lastDate = @$match[1];
 			$arr[$i] .= "2 _SORT ".$i."\r\n";
 		}
 	}
