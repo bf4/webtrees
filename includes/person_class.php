@@ -995,7 +995,7 @@ class Person extends GedcomRecord {
 				}
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					$sfamids = $parent->getSpouseFamilies();
-						foreach ($sfamids as $sfamid=>$sfamily) {
+					foreach ($sfamids as $sfamid=>$sfamily) {
 						if ($sfamid==$famid && $rela=="mother") continue; // show current family marriage only for father
 						$srec = $sfamily->getMarriageRecord();
 						$sdate = get_sub_record(2, "2 DATE", $srec);
@@ -1449,23 +1449,23 @@ class Person extends GedcomRecord {
 
 	/**
 	 * get primary parents names for this person
-	 * @param string $classname optional css class for the span block
-	 * @return string a span block with father & mother names
+	 * @param string $classname optional css class
+	 * @param string $display optional css style display
+	 * @return string a div block with father & mother names
 	 */
-	function getPrimaryParentsNames($classname="") {
-		global $pgv_lang;
+	function getPrimaryParentsNames($classname="", $display="") {
+		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$fam = $this->getPrimaryChildFamily();
 		if (!$fam) return "";
+		$txt = "<div";
+		if ($classname) $txt .= " class=\"$classname\"";
+		if ($display) $txt .= " style=\"display:$display\"";
+		$txt .= ">";
 		$husb = $fam->getHusband();
-		if ($husb) $father = $husb->getSortableName();
-		else $father = "";
+		if ($husb) $txt .= $pgv_lang["father"].": ".$husb->getSortableName()."<br />";
 		$wife = $fam->getWife();
-		if ($wife) $mother = $wife->getSortableName();
-		else $mother = "";
-		$txt = "<span class=\"".$classname."\">";
-		$txt .= "<br />".$pgv_lang["father"].": ".$father;
-		$txt .= "<br />".$pgv_lang["mother"].": ".$mother;
-		$txt .= "</span>";
+		if ($wife) $txt .= $pgv_lang["mother"].": ".$wife->getSortableName();
+		$txt .= "</div>";
 		return $txt;
 	}
 
