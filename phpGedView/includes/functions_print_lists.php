@@ -352,12 +352,13 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$hidden++;
 			continue;
 		}
+		if (empty($name)) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- Gedcom ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$person->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">'.$person->getXrefLink("_blank").'</td>';
 		//-- Indi name(s)
 		$tdclass = "list_value_wrap";
 		if (!$person->isDead()) $tdclass .= " alive";
@@ -372,6 +373,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 				if (empty($addname)) break;
 			}
 		}
+		// Indi parents
+		if ($person->xref) print $person->getPrimaryParentsNames("indi_pnames details1", "none");
 		echo "</td>";
 		//-- GIVN
 		echo "<td style=\"display:none\">";
@@ -502,6 +505,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
 	echo "<td class=\"list_label\">"; // NAME
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "<input id=\"cb_indi_pnames\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'indi_pnames');\" /><label for=\"indi_pnames\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
@@ -623,10 +627,10 @@ function print_fam_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- Family ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$family->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">'.$family->getXrefLink("_blank").'</td>';
 		//-- Husband ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink("_blank").'</td>';
 		//-- Husband name(s)
 		if (isset($value["name"])) {
 			$partners = explode(" + ", $value["name"]); // "husb + wife"
@@ -646,6 +650,8 @@ function print_fam_table($datalist, $legend="") {
 				if (empty($addname)) break;
 			}
 		}
+		// Husband parents
+		if ($husb->xref) echo $husb->getPrimaryParentsNames("fam_pnames details1", "none");
 		echo "</td>";
 		//-- Husb GIVN
 		echo "<td style=\"display:none\">";
@@ -664,7 +670,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
 		if (isset($value["name"])) $name = check_NN($partners[1]);
 		else $name = $wife->getSortableName();
@@ -681,6 +687,8 @@ function print_fam_table($datalist, $legend="") {
 				if (empty($addname)) break;
 			}
 		}
+		// Wife parents
+		if ($wife->xref) echo $wife->getPrimaryParentsNames("fam_pnames details1", "none");
 		echo "</td>";
 		//-- Wife GIVN
 		echo "<td style=\"display:none\">";
@@ -770,6 +778,7 @@ function print_fam_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
 	echo "<td class=\"list_label\">"; // HUSB:NAME
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "<input id=\"cb_fam_pnames\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'fam_pnames');\" /><label for=\"fam_pnames\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_fams"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";

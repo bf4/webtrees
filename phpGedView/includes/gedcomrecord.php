@@ -3,7 +3,7 @@
  * Base class for all gedcom records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ class GedcomRecord {
 		if (isset($otherlist[$pid]) && $otherlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($otherlist[$pid]['object'])) return $otherlist[$pid]['object'];
 		}
-
+		
 		//-- look for the gedcom record
 		$indirec = find_gedcom_record($pid);
 		if (empty($indirec)) {
@@ -284,10 +284,12 @@ class GedcomRecord {
 	}
 
 	// Get an HTML link to this object, for use in sortable lists.
-	function getXrefLink() {
+	function getXrefLink($target="") {
 		global $SEARCH_SPIDER;
-		if (empty($SEARCH_SPIDER))
-			return "<a href=\"".$this->getLinkUrl()."\" name=\"".preg_replace('/\D/','',$this->getXref())."\">".$this->getXref()."</a>";
+		if (empty($SEARCH_SPIDER)) {
+			if ($target) $target = "target=\"".$target."\"";
+			return "<a href=\"".$this->getLinkUrl()."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
+		}
 		else
 			return $this->getXref();
 	}
