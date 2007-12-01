@@ -1674,6 +1674,7 @@ function compare_facts_date($arec, $brec) {
 		return 1;
 	else {
 		//-- ranged date... take the type of fact sorting into account
+		$factWeight = 0;
 		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
 			$factWeight = $match1[1]-$match2[1];
 		}
