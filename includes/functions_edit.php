@@ -676,9 +676,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	// Make sure there are two slashes in the name
-	if (preg_match('/\//', $name_fields['NAME'])==0)
+	if (!preg_match('/\//', $name_fields['NAME']))
 		$name_fields['NAME'].=' /';
-	if (preg_match('/\//', $name_fields['NAME'])==1)
+	if (!preg_match('/\/.*\//', $name_fields['NAME']))
 		$name_fields['NAME'].='/';
 
 	// Populate any missing 2 XXXX fields from the 1 NAME field
