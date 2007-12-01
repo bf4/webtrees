@@ -317,7 +317,8 @@ $CONFIG_VARS = array(
 	"PGV_SIMPLE_MAIL",
 	"CONFIG_VERSION",
 	"CONFIGURED",
-	"MANUAL_SESSON_START"
+	"MANUAL_SESSON_START",
+	"REQUIRE_ADMIN_AUTH_REGISTRATION"
 );
 
 
@@ -386,11 +387,11 @@ foreach ($language_settings as $key => $value) {
 while (true) {
 	$configOverride = true;
 	// Check for override of $CONFIG_VARS
-	if (strstr($_SERVER["REQUEST_URI"], "CONFIG_VARS=")) break;
+	if (strstr($_SERVER["REQUEST_URI"], "CONFIG_VARS=") || array_key_exists("CONFIG_VARS", $_POST)) break;
 
 	// $CONFIG_VARS is safe: now check for any in its list
 	foreach($CONFIG_VARS as $indexval => $VAR) {
-		if (strstr($_SERVER["REQUEST_URI"], $VAR."=")) break;
+		if (strstr($_SERVER["REQUEST_URI"], $VAR."=") || array_key_exists($VAR, $_POST)) break 2;
 	}
 
 	// Check for $LANGUAGE variable override
