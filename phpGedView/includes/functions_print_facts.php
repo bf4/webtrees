@@ -1091,10 +1091,6 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	$nlevel = $level+1;
 	$ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {
-		/**$spos1 = strpos($factrec, "$level NOTE ".$match[$j][1]);
-		$spos2 = strpos($factrec, "\n$level", $spos1);
-		if (!$spos2) $spos2 = strlen($factrec);
-		$nrec = substr($factrec, $spos1, $spos2-$spos1);**/
 		$nrec = get_sub_record($level, "$level NOTE", $factrec, $j+1);
 		if (!showFact("NOTE", $pid)||FactViewRestricted($pid, $factrec)) return false;
 		$nt = preg_match("/\d NOTE @(.*)@/", $match[$j][0], $nmatch);
@@ -1195,8 +1191,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			print $text;
 			if (!empty($noterec)) print_fact_sources($noterec, 1);
 			// See if RESN tag prevents display or edit/delete
-			$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $match);
-			if ($resn_tag > 0) $resn_value = strtolower(trim($match[1]));
+			$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $rmatch);
+			if ($resn_tag > 0) $resn_value = strtolower(trim($rmatch[1]));
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				print "<br /><img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
