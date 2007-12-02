@@ -560,9 +560,6 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
  		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
-//-- import the post, get, and cookie variable into the scope on new versions of php
-@import_request_variables("cgp");
-
 //-- prevent sql and code injection
 foreach($_REQUEST as $key=>$value) {
 	if (!is_array($value)) {
