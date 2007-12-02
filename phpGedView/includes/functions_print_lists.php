@@ -374,7 +374,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			}
 		}
 		// Indi parents
-		if ($person->xref) print $person->getPrimaryParentsNames("indi_pnames details1", "none");
+		if ($person->xref) print $person->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- GIVN
 		echo "<td style=\"display:none\">";
@@ -505,7 +505,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
 	echo "<td class=\"list_label\">"; // NAME
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-	echo "<input id=\"cb_indi_pnames\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'indi_pnames');\" /><label for=\"indi_pnames\">".$pgv_lang["parents"]."</label><br />";
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
@@ -651,7 +651,7 @@ function print_fam_table($datalist, $legend="") {
 			}
 		}
 		// Husband parents
-		if ($husb->xref) echo $husb->getPrimaryParentsNames("fam_pnames details1", "none");
+		if ($husb->xref) echo $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Husb GIVN
 		echo "<td style=\"display:none\">";
@@ -688,7 +688,7 @@ function print_fam_table($datalist, $legend="") {
 			}
 		}
 		// Wife parents
-		if ($wife->xref) echo $wife->getPrimaryParentsNames("fam_pnames details1", "none");
+		if ($wife->xref) echo $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Wife GIVN
 		echo "<td style=\"display:none\">";
@@ -778,7 +778,7 @@ function print_fam_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
 	echo "<td class=\"list_label\">"; // HUSB:NAME
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-	echo "<input id=\"cb_fam_pnames\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'fam_pnames');\" /><label for=\"fam_pnames\">".$pgv_lang["parents"]."</label><br />";
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_fams"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
@@ -1239,7 +1239,15 @@ function print_changes_table($datalist) {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$record->getXrefLink().'</td>';
 		//-- Record name(s)
-		if ($record->type=="FAM") $name = $record->getSortableName(true);
+		if ($record->type=="FAM") {
+			$name=$record->getSortableName(true);
+			$exp = explode("<br />", $name);
+			$husb = $record->getHusband();
+			if ($husb) $exp[0].= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
+			$wife = $record->getWife();
+			if ($wife) $exp[1].= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
+			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
+		}
 		else $name = $record->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
@@ -1254,6 +1262,7 @@ function print_changes_table($datalist) {
 					if (empty($addname)) break;
 				}
 			}
+			if ($record->xref) print $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
 		if ($record->type=="SOUR" || $record->type=="REPO") {
 			$name_subtags = array("_HEB", "ROMN");
@@ -1280,6 +1289,7 @@ function print_changes_table($datalist) {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_names"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	if ($n>=$NMAX) echo "<br /><span class=\"warning\">".$pgv_lang["recent_changes"]." &gt; ".$NMAX."</span>";
@@ -1357,10 +1367,18 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		$n++;
 		print "<tr class=\"vevent\">"; // hCalendar:vevent
 		//-- Record name(s)
-		if ($record->type=="FAM")
+		if ($record->type=="FAM") {
 			$name=$record->getSortableName(true);
-		else
+			$exp = explode("<br />", $name);
+			$husb = $record->getHusband();
+			if ($husb) $exp[0].= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
+			$wife = $record->getWife();
+			if ($wife) $exp[1].= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
+			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
+		}
+		else {
 			$name=$record->getSortableName();
+		}
 		$url=$record->getLinkUrl();
 
 		print "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
@@ -1377,6 +1395,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 							print "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
 				}
 			}
+			if ($record->xref) print $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
 		print "</td>";
 		//-- GIVN
@@ -1414,6 +1433,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//if ($SHOW_ID_NUMBERS) print "<td></td>";
 	print "<td class=\"list_label\">";
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	print $pgv_lang["stat_events"].": ".$n;
 	if ($hidden) print "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	print "</td>";
