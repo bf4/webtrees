@@ -867,6 +867,7 @@ function check_indi($id)
 	if (isset($fams)) {
 		$elder=0;
 		foreach ($fams as $k=>$v) {
+			if (strpos($k, ":")!==false) continue; // ignore remote links
 			$gedrec=$fam_list[$k]["gedcom"];
 			$subged=get_sub_record(1, "1 MARR", $gedrec);
 			if (empty($subged)) $subged=get_sub_record(1, "1 ENGA", $gedrec);
@@ -952,6 +953,7 @@ function check_fam($id)
 	if (isset($chil)) {
 		$elder=0;
 		foreach ($chil as $k=>$v) {
+			if (strpos($k, ":")!==false) continue; // ignore remote links
 			$gedrec=$indi_list[$k]["gedcom"];
 			$subged=get_sub_record(1, "1 BIRT", $gedrec);
 			if (empty($subged)) $subged=get_sub_record(1, "1 CHR", $gedrec);
