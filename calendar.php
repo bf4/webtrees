@@ -106,26 +106,28 @@ case 'today':
 	$found_facts=apply_filter(get_anniversary_events($cal_date->minJD, $events), $filterof, $filtersx);
 	break;
 case 'calendar':
-	$cal_date->d=0;
-	$cal_date->SetJDfromYMD();
+	$tmp_cal_date=(PHP_VERSION<5)? $cal_date : clone($cal_date);
+	$tmp_cal_date->d=0;
+	$tmp_cal_date->SetJDfromYMD();
 	// Make a separate list for each day.  Unspecified/invalid days go in day 0.
 	$found_facts=array();
 	for ($d=0; $d<=$days_in_month; ++$d)
 		$found_facts[$d]=array();
 	// Fetch events for each day
-	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
+	for ($jd=$tmp_cal_date->minJD; $jd<=$tmp_cal_date->maxJD; ++$jd)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
 			$tmp=$event['date']->MinDate();
-			if ($tmp->d>=1 && $tmp->d<=$cal_date->DaysInMonth())
-				$d=$jd-$cal_date->minJD+1;
+			if ($tmp->d>=1 && $tmp->d<=$tmp_cal_date->DaysInMonth())
+				$d=$jd-$tmp_cal_date->minJD+1;
 			else
 				$d=0;
 			$found_facts[$d][]=$event;
 		}
 	break;
 case 'year':
-	$cal_date->m=0;
-	$cal_date->SetJDfromYMD();
+	$tmp_cal_date=(PHP_VERSION<5)? $cal_date : clone($cal_date);
+	$tmp_cal_date->m=0;
+	$tmp_cal_date->SetJDfromYMD();
 	$found_facts=apply_filter(get_calendar_events($ged_date->MinJD(), $ged_date->MaxJD(), $events), $filterof, $filtersx);
 	// Eliminate duplictes (e.g. BET JUL 1900 AND SEP 1900 will appear twice in 1900)
 	foreach ($found_facts as $key=>$value)
