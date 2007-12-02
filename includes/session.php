@@ -344,12 +344,8 @@ unset($ini_include_path, $includes_dir); // destroy some variables for security 
 
 set_magic_quotes_runtime(0);
 
-if (phpversion()<4.2) {
-	//-- detect old versions of PHP and display error message
-	//-- cannot add this to the language files because the language has not been established yet.
-	print "<html>\n<body><b style=\"color: red;\">PhpGedView requires PHP version 4.3 or later.</b><br /><br />\nYour server is running PHP version ".phpversion().".  Please ask your server's Administrator to upgrade the PHP installation.</body></html>";
-	exit;
-}
+if (version_compare(phpversion(), '4.3.5')<0)
+	die ("<html>\n<body><b style=\"color: red;\">PhpGedView requires PHP version 4.3.5 or later.</b><br /><br />\nYour server is running PHP version ".phpversion().".  Please ask your server's Administrator to upgrade the PHP installation.</body></html>");
 
 //-- load file for language settings
 require_once( "includes/lang_settings_std.php");
@@ -504,11 +500,8 @@ if (isset($MANUAL_SESSION_START) && !empty($SID)) session_id($SID);
 
 @session_start();
 
-if((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) { // user following a search engine listing in,
-	if (phpversion() >= '4.3.2') {			// so we want to give them the full page.
-		session_regenerate_id(); 		// FIX: PHP >= 4.3.2, how to do for earlier
-	}
-}
+if((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) // user following a search engine listing in,
+	session_regenerate_id();
 
 if(!empty($SEARCH_SPIDER)) {
 	$spidertime = time();
@@ -568,38 +561,36 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
 }
 
 //-- import the post, get, and cookie variable into the scope on new versions of php
-if (phpversion() >= '4.1') {
-	@import_request_variables("cgp");
-}
-if (phpversion() >= '4.2.2') {
-	//-- prevent sql and code injection
-	foreach($_REQUEST as $key=>$value) {
-		if (!is_array($value)) {
-			if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $value, $imatch)>0) {
-				print "Possible SQL injection detected: $key=>$value.  <b>$imatch[0]</b> Script terminated.";
-				require_once("includes/authentication.php");      // -- load the authentication system
-				AddToLog("Possible SQL injection detected: $key=>$value. <b>$imatch[0]</b> Script terminated.");
-				exit;
-			}
-			//-- don't let any html in
-			if (!empty($value)) ${$key} = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $value);
+@import_request_variables("cgp");
+
+//-- prevent sql and code injection
+foreach($_REQUEST as $key=>$value) {
+	if (!is_array($value)) {
+		if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $value, $imatch)>0) {
+			print "Possible SQL injection detected: $key=>$value.  <b>$imatch[0]</b> Script terminated.";
+			require_once("includes/authentication.php");      // -- load the authentication system
+			AddToLog("Possible SQL injection detected: $key=>$value. <b>$imatch[0]</b> Script terminated.");
+			exit;
 		}
-		else {
-			foreach($value as $key1=>$val) {
-				if (!is_array($val)) {
-					if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $val, $imatch)>0) {
-						print "Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.";
-						require_once("includes/authentication.php");      // -- load the authentication system
-						AddToLog("Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.");
-						exit;
-					}
-					//-- don't let any html in
-					if (!empty($val)) ${$key}[$key1] = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $val);
+		//-- don't let any html in
+		if (!empty($value)) ${$key} = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $value);
+	}
+	else {
+		foreach($value as $key1=>$val) {
+			if (!is_array($val)) {
+				if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $val, $imatch)>0) {
+					print "Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.";
+					require_once("includes/authentication.php");      // -- load the authentication system
+					AddToLog("Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.");
+					exit;
 				}
+				//-- don't let any html in
+				if (!empty($val)) ${$key}[$key1] = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $val);
 			}
 		}
 	}
 }
+
 //-- import the gedcoms array
 if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	require_once($INDEX_DIRECTORY."gedcoms.php");
