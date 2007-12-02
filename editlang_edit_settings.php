@@ -557,50 +557,34 @@ if ($action == "save" or $action=="toggleActive") {
       fwrite($fp, "\$language_settings = array();\r\n");
       foreach ($language_settings as $key => $value) {
         fwrite($fp, "\r\n");
-        fwrite($fp, "//-- settings for " . $languages[$key] . "\r\n");
-        fwrite($fp, "\$lang = array();\r\n");
-        fwrite($fp, "\$lang[\"pgv_langname\"]    = \"" . $languages[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"pgv_lang_use\"]    = ");
-        if ($pgv_lang_use[$key]) fwrite($fp, "true"); else fwrite($fp, "false");
-        fwrite($fp, ";\r\n");
-        fwrite($fp, "\$lang[\"pgv_lang\"]    = \"" . $pgv_lang[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"lang_short_cut\"]    = \"" . $lang_short_cut[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"langcode\"]    = \"" . $lang_langcode[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"pgv_language\"]    = \"" . $pgv_language[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"confighelpfile\"]    = \"" . $confighelpfile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"helptextfile\"]    = \"" . $helptextfile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"flagsfile\"]    = \"" . $flagsfile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"factsfile\"]    = \"" . $factsfile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"adminfile\"]    = \"" . $adminfile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"editorfile\"]    = \"" . $editorfile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"countryfile\"]    = \"" . $countryfile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"faqlistfile\"]    = \"" . $faqlistfile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"extrafile\"]    = \"" . $extrafile[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"DATE_FORMAT\"]    = \"" . $DATE_FORMAT_array[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"TIME_FORMAT\"]    = \"" . $TIME_FORMAT_array[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"WEEK_START\"]    = \"" . $WEEK_START_array[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"TEXT_DIRECTION\"]    = \"" . $TEXT_DIRECTION_array[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"NAME_REVERSE\"]    = ");
-        if ($NAME_REVERSE_array[$key]) fwrite($fp, "true"); else fwrite($fp, "false");
-        fwrite($fp, ";\r\n");
-        fwrite($fp, "\$lang[\"ALPHABET_upper\"]    = \"" . $ALPHABET_upper[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"ALPHABET_lower\"]    = \"" . $ALPHABET_lower[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"MULTI_LETTER_ALPHABET\"]    = \"" . $MULTI_LETTER_ALPHABET[$key] . "\";\r\n");
-        fwrite($fp, "\$lang[\"DICTIONARY_SORT\"]    = ");
-        if ($DICTIONARY_SORT[$key]) fwrite($fp, "true"); else fwrite($fp, "false");
-        fwrite($fp, ";\r\n");
-        fwrite($fp, "\$language_settings[\"" . $languages[$key] . "\"]  = \$lang;\r\n");
+        fwrite($fp, "//-- settings for {$languages[$key]}\r\n");
+        fwrite($fp, "\$language_settings['{$languages[$key]}']=array(\r\n");
+        fwrite($fp, "'pgv_langname'=>'{$languages[$key]}',\r\n");
+        fwrite($fp, "'pgv_lang_use'=>".($pgv_lang_use[$key]?'true':'false').",\r\n");
+        fwrite($fp, "'pgv_lang'=>'{$pgv_lang[$key]}',\r\n");
+        fwrite($fp, "'lang_short_cut'=>'{$lang_short_cut[$key]}',\r\n");
+        fwrite($fp, "'langcode'=>'{$lang_langcode[$key]}',\r\n");
+        fwrite($fp, "'pgv_language'=>'{$pgv_language[$key]}',\r\n");
+        fwrite($fp, "'confighelpfile'=>'{$confighelpfile[$key]}',\r\n");
+        fwrite($fp, "'helptextfile'=>'{$helptextfile[$key]}',\r\n");
+        fwrite($fp, "'flagsfile'=>'{$flagsfile[$key]}',\r\n");
+        fwrite($fp, "'factsfile'=>'{$factsfile[$key]}',\r\n");
+        fwrite($fp, "'adminfile'=>'{$adminfile[$key]}',\r\n");
+        fwrite($fp, "'editorfile'=>'{$editorfile[$key]}',\r\n");
+        fwrite($fp, "'countryfile'=>'{$countryfile[$key]}',\r\n");
+        fwrite($fp, "'faqlistfile'=>'{$faqlistfile[$key]}',\r\n");
+        fwrite($fp, "'extrafile'=>'{$extrafile[$key]}',\r\n");
+        fwrite($fp, "'DATE_FORMAT'=>'{$DATE_FORMAT_array[$key]}',\r\n");
+        fwrite($fp, "'TIME_FORMAT'=>'{$TIME_FORMAT_array[$key]}',\r\n");
+        fwrite($fp, "'WEEK_START'=>'{$WEEK_START_array[$key]}',\r\n");
+        fwrite($fp, "'TEXT_DIRECTION'=>'{$TEXT_DIRECTION_array[$key]}',\r\n");
+        fwrite($fp, "'NAME_REVERSE'=>".($NAME_REVERSE_array[$key]?'true':'false').",\r\n");
+        fwrite($fp, "'ALPHABET_upper'=>'{$ALPHABET_upper[$key]}',\r\n");
+        fwrite($fp, "'ALPHABET_lower'=>'{$ALPHABET_lower[$key]}',\r\n");
+        fwrite($fp, "'MULTI_LETTER_ALPHABET'=>'{$MULTI_LETTER_ALPHABET[$key]}',\r\n");
+        fwrite($fp, "'DICTIONARY_SORT'=>".($DICTIONARY_SORT[$key]?'true':'false')."\r\n");
+        fwrite($fp, ");\r\n");
       }
-/*
-      $end_found = false;
-      for ($x = 0; $x < count($file_array); $x++) {
-        $dDummy00 = trim($file_array[$x]);
-        if ($dDummy00 == "//-- NEVER manually delete or edit this entry and every line above this entry! --END--//"){fwrite($fp, "\r\n"); $end_found = true;}
-        if ($end_found) fwrite($fp, $file_array[$x]);
-      } */
-
-      fwrite($fp, "\r\n");
-      fwrite($fp, "//-- NEVER manually delete or edit this entry and every line above this entry! --END--//\r\n");
       fwrite($fp, "\r\n");
       fwrite($fp, "?>");
       fclose($fp);
