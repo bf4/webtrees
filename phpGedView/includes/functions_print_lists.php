@@ -1458,7 +1458,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
  *
  * This performs the same function as print_events_table(), but formats the output differently.
  */
-function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false) {
+function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $sort_by_name=false) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 
 	// Did we have any output?  Did we skip anything?
@@ -1468,7 +1468,9 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 	$return='';
 
-	foreach(get_event_list() as $key => $value) {
+	$filtered_events=array();
+
+	foreach(get_event_list() as $value) {
 		if ($value['jd']<$startjd || $value['jd']>$endjd)
 			continue;
 		//-- only birt/marr/deat ?
@@ -1506,7 +1508,16 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		}
 		$output=true;
 
-		$name=$record->getSortableName();
+		$value['name']=$record->getSortableName();
+		$filtered_events[]=$value;
+	}
+
+	// Now we've filtered the list, we can sort by name, if required
+	if ($sort_by_name)
+		uasort($filtered_events, 'source_sort');
+
+	foreach($filtered_events as $value) {
+		$name=$value['name'];
 		$url=$record->getLinkUrl();
 
 		$return.="<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
