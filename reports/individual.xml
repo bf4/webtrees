@@ -94,7 +94,7 @@
 									<PGVRText style="pagenum">  <PGVRvar var="pgv_lang[husband]" /></PGVRText>
 								</PGVRif>
 								<PGVRif condition="@SEX=='F'">
-									<PGVRText style="pagenum">  <PGVRvar var="pgv_lang[wife]" /></PGVRText>
+									<PGVRText style="pagenum"> <PGVRvar var="pgv_lang[wife]" /></PGVRText>
 								</PGVRif>
 								<PGVRText style="text"> <PGVRGetPersonName id="" /></PGVRText>
 							</PGVRGedcom>
@@ -103,7 +103,9 @@
 					<!-- facts without descriptions -->
 					<PGVRif condition="@desc==''">
 						<PGVRTextBox border="1" width="$width2" height="16" newline="1">
-							<PGVRText style="pagenum"><PGVRvar var="factarray[PLAC]" />   </PGVRText>
+							<PGVRif condition="@PLAC!=''">
+								<PGVRText style="pagenum"><PGVRvar var="factarray[PLAC]" />   </PGVRText>
+							</PGVRif>
 							<PGVRText style="text"><PGVRGedcomValue tag="@fact:PLAC" /></PGVRText>
 							<PGVRText style="text"><PGVRGedcomValue tag="@fact:TEMP" /></PGVRText>
 							<PGVRGedcom id="@_PGVS">
@@ -111,7 +113,7 @@
 									<PGVRText style="pagenum">  <PGVRvar var="pgv_lang[husband]" /></PGVRText>
 								</PGVRif>
 								<PGVRif condition="@SEX=='F'">
-									<PGVRText style="pagenum">  <PGVRvar var="pgv_lang[wife]" /></PGVRText>
+									<PGVRText style="pagenum"> <PGVRvar var="pgv_lang[wife]" /></PGVRText>
 								</PGVRif>
 								<PGVRText style="text"> <PGVRGetPersonName id="" /></PGVRText>
 							</PGVRGedcom>
