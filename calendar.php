@@ -139,7 +139,14 @@ case 'year':
 }
 
 // The titles need converting to all the calendars which appear on the page.
-$used_calendars=array(); 
+$used_calendars=explode('_and_', $CALENDAR_FORMAT); 
+$cal_conv=array(
+	'@#DGREGORIAN@'=>'gregorian',
+	'@#DJULIAN@'   =>'julian',
+	'@#DHIJRI@'    =>'hijri',
+	'@#DFRENCH R@' =>'french',
+	'@#DHEBREW@'   =>'jewish'
+);
 
 // Group the facts by family/individual
 switch ($action) {
@@ -148,7 +155,8 @@ case 'today':
 	$indis=array();
 	$fams=array();
 	foreach ($found_facts as $fact) {
-		$used_calendars[$fact['date']->date1->CALENDAR_ESCAPE]=$fact['date']->date1->CALENDAR_ESCAPE;
+		$cal_type=$cal_conv[$fact['date']->date1->CALENDAR_ESCAPE];
+		$used_calendars[$cal_type]=$cal_type;
 		$fact_text=calendar_fact_text($fact, true);
 		switch ($fact['objtype']) {
 		case 'INDI':
@@ -171,7 +179,8 @@ case 'calendar':
 	foreach ($found_facts as $d=>$facts) {
 		$cal_facts[$d]=array();
 		foreach ($facts as $fact) {
-			$used_calendars[$fact['date']->date1->CALENDAR_ESCAPE]=$fact['date']->date1->CALENDAR_ESCAPE;
+			$cal_type=$cal_conv[$fact['date']->date1->CALENDAR_ESCAPE];
+			$used_calendars[$cal_type]=$cal_type;
 			$id=$fact['id'];
 			if (empty($cal_facts[$d][$id]))
 				$cal_facts[$d][$id]=calendar_fact_text($fact, false);
