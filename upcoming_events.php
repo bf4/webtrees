@@ -96,7 +96,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	switch ($infoStyle) {
 	case "style1":
 		// Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
-		print print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
+		print print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 		break;
 	case "style2":
   	// Style 2: New format, tables, big text, etc.  Not too good on right side of page
