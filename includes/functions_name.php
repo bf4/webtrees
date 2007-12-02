@@ -28,6 +28,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+require_once 'includes/functions_edit.php'; // for $NPFX_accept
 /**
  * Get array of common surnames from index
  *
@@ -228,6 +229,7 @@ function get_sortable_name($pid, $alpha="", $surname="", $allnames=false) {
  * @return string 	The new name in the form Surname, Given Names
  */
 function sortable_name_from_name($name) {
+	global $NPFX_accept;
 	//-- remove any unwanted characters from the name
 	if (preg_match("/^\.(\.*)$|^\?(\?*)$|^_(_*)$|^,(,*)$/", $name)) $name = preg_replace(array("/,/","/\./","/_/","/\?/"), array("","","",""), $name);
 	$ct = preg_match("~(.*)/(.*)/(.*)~", $name, $match);
@@ -240,6 +242,11 @@ function sortable_name_from_name($name) {
 			$givenname = $othername;
 			$othername = "";
 		}
+
+		// Remove any prefixes from given name
+		while (preg_match('/^(\w+)\.? +(.*)/', $givenname, $match) && in_array($match[1], $NPFX_accept))
+			$givenname=$match[2];
+
 		if (empty($givenname)) $givenname = "@P.N.";
 		$name = $surname;
 		if (!empty($othername)) $name .= " ".$othername;
