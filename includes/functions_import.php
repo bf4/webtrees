@@ -1376,7 +1376,7 @@ function create_nextid_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "nextid ";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "nextid (ni_id INT, ni_type VARCHAR(30), ni_gedfile INT)";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "nextid (ni_id UNSIGNED INT NOT NULL, ni_type VARCHAR(30), ni_gedfile INT, PRIMARY KEY(ni_type, ni_gedfile))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
