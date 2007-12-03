@@ -82,7 +82,7 @@ function getUpcomingEvents() {
 	$startjd=client_jd()+1;
 	$endjd=client_jd()+$daysprint;
 
-  $daytext=print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
+  $daytext=print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 	$daytext = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $daytext);
 	$daytext = strip_tags($daytext, '<a><ul><li><b><span>');
 	$dataArray[2]  = $daytext;
@@ -111,7 +111,7 @@ function getTodaysEvents() {
 	if (isset($config["onlyBDM"])) $onlyBDM = $config["onlyBDM"];  // "yes" or "no"
 	else $onlyBDM = "no";
 
-  $daytext=print_events_list(client_jd(), client_jd(), $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
+  $daytext=print_events_list(client_jd(), client_jd(), $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 	$daytext = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $daytext);
 	$daytext = strip_tags($daytext, '<a><ul><li><b><span>');
 	$dataArray[2]  = $daytext;
