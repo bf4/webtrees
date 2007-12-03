@@ -1509,6 +1509,11 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		$output=true;
 
 		$value['name']=$record->getSortableName();
+		$value['url']=$record->getLinkUrl();
+		if ($record->type=="INDI")
+			$value['sex']=$record->getSexImage();
+		else
+			$value['sex']='';
 		$filtered_events[]=$value;
 	}
 
@@ -1517,12 +1522,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		uasort($filtered_events, 'source_sort');
 
 	foreach($filtered_events as $value) {
-		$name=$value['name'];
-		$url=$record->getLinkUrl();
-
-		$return.="<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		if ($record->type=="INDI")
-			$return.=$record->getSexImage();
+		$return.="<a href=\"".$value['url']."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
 		$return.="<div class=\"indent\">";
 		$return.=$factarray[$value['fact']].' - '.$value['date']->Display(true);
 		if ($value['anniv']!=0)
