@@ -1519,7 +1519,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 	// Now we've filtered the list, we can sort by name, if required
 	if ($sort_by_name)
-		uasort($filtered_events, 'source_sort');
+		uasort($filtered_events, 'event_sort');
 
 	foreach($filtered_events as $value) {
 		$return.="<a href=\"".$value['url']."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
