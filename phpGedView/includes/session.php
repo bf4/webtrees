@@ -318,7 +318,8 @@ $CONFIG_VARS = array(
 	"CONFIG_VERSION",
 	"CONFIGURED",
 	"MANUAL_SESSON_START",
-	"REQUIRE_ADMIN_AUTH_REGISTRATION"
+	"REQUIRE_ADMIN_AUTH_REGISTRATION",
+	"COMMIT_COMMAND"
 );
 
 
@@ -383,11 +384,11 @@ foreach ($language_settings as $key => $value) {
 while (true) {
 	$configOverride = true;
 	// Check for override of $CONFIG_VARS
-	if (strstr($_SERVER["REQUEST_URI"], "CONFIG_VARS=") || array_key_exists("CONFIG_VARS", $_POST)) break;
+	if (array_key_exists("CONFIG_VARS", $_REQUEST)) break;
 
 	// $CONFIG_VARS is safe: now check for any in its list
-	foreach($CONFIG_VARS as $indexval => $VAR) {
-		if (strstr($_SERVER["REQUEST_URI"], $VAR."=") || array_key_exists($VAR, $_POST)) break 2;
+	foreach($CONFIG_VARS as $VAR) {
+		if (array_key_exists($VAR, $_REQUEST)) break 2;
 	}
 
 	// Check for $LANGUAGE variable override
