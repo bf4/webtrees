@@ -310,10 +310,10 @@ class Person extends GedcomRecord {
 		if (empty($this->ddate) && !empty($this->bdate)) {
 			$pdate=new GedcomDate($this->bdate);
 			if ($pdate->MinJD() != 0) {
-				$est_date=$pdate->AddYears($MAX_ALIVE_AGE, 'BEF');
-				$est_date=$pdate->MinDate();
+				$pdate=$pdate->AddYears($MAX_ALIVE_AGE, 'BEF');
+				$pdate=$pdate->MinDate();
 				$this->dest = true;
-				$this->ddate = $est_date->Format('@ A O E');
+				$this->ddate = $pdate->Format('@ A O E');
 				$this->drec .= "\n2 DATE BEF ".$this->ddate;
 			}
 			else if (!empty($this->drec)) $this->ddate = $pgv_lang["yes"];
@@ -322,10 +322,10 @@ class Person extends GedcomRecord {
 		if (empty($this->bdate) && !empty($this->ddate)) {
 			$pdate=new GedcomDate($this->ddate);
 			if ($pdate->MinJD() != 0) {
-				$est_date=$pdate->AddYears(-$MAX_ALIVE_AGE, 'AFT');
-				$est_date=$pdate->MinDate();
+				$pdate=$pdate->AddYears(-$MAX_ALIVE_AGE, 'AFT');
+				$pdate=$pdate->MinDate();
 				$this->best = true;
-				$this->bdate = $est_date->Format('@ A O E');
+				$this->bdate = $pdate->Format('@ A O E');
 				$this->brec .= "\n2 DATE AFT ".$this->bdate;
 			}
 			else if (!empty($this->brec)) $this->bdate = $pgv_lang["yes"];
