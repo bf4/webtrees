@@ -1,13 +1,19 @@
 <?php
 	/*
 	 * A test suite for running all PhpGedView Tests
+	 * The logged in user must be a PGV admin
 	 */
 	
-	chdir("../");
 	define('RUNNER', true);
-	require_once("config.php");
-    require_once('simpletest/unit_tester.php');
-    require_once('simpletest/reporter.php');
+	define('TESTING_MOD_NAME', basename(dirname(__FILE__))); define('TESTING_ROOT', 'modules/'.TESTING_MOD_NAME.'/');
+	
+	if (!userIsAdmin(getUserName())) {
+   		header("Location: login.php?url=module.php?mod=".TESTING_MOD_NAME);
+		exit;
+	}
+	
+    require_once(TESTING_ROOT.'include/simpletest/unit_tester.php');
+    require_once(TESTING_ROOT.'include/simpletest/reporter.php');
 
     // Create the test Group and add tests to it
     $test = &new TestSuite('All PhpGedView Tests');

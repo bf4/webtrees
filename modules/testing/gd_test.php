@@ -3,9 +3,7 @@
  * Tests for the required prerequisites and environment
  */
 
-chdir("../");
-require_once("config.php");
-//require_once('simpletest/unit_tester.php');
+require_once(TESTING_ROOT.'include/simpletest/unit_tester.php');
 
 class TestOfGD extends UnitTestCase {
 	var $min_gd_version = 1;

@@ -3,10 +3,7 @@
 	 * Tests for the Person class
 	 */
 	
-	chdir("../");
-	require_once("config.php");
-	require_once('simpletest/unit_tester.php');
-	
+	require_once(TESTING_ROOT.'include/simpletest/unit_tester.php');
 	require_once('includes/person_class.php');
 	
 	class TestOfPerson extends UnitTestCase {
