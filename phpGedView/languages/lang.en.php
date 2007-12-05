@@ -633,6 +633,14 @@ $pgv_lang["cal_hebrew_and_gregorian"] = "Hebrew and Gregorian";
 $pgv_lang["cal_hijri"]                = "Hijri";
 $pgv_lang["cal_arabic"]               = "Arabic";
 
+// some religious dates
+$pgv_lang["easter"]     = "Easter";
+$pgv_lang["ascension"]  = "Ascension";
+$pgv_lang["pentecost"]  = "Pentecost";
+$pgv_lang["assumption"] = "Assumption";
+$pgv_lang["all_saints"] = "All Saints";
+$pgv_lang["christmas"]  = "Christmas";
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "am";
 $pgv_lang["p.m."]         = "pm";
