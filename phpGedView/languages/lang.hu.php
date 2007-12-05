@@ -3,7 +3,7 @@
  * Hungarian Language file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  István Pető and Gábor Hrotkó
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "A nyelvi fájl közvetlenül nem érhető el.";
 	exit;
 }
   	 
@@ -180,7 +180,7 @@ $pgv_lang["foster"]			= "Nevelő";
 $pgv_lang["sealing"]			= "Befogadás";
 $pgv_lang["infant"]					= "Csecsemő";
 $pgv_lang["link_as_wife"]			= "Ezt a személyt hozzákapcsolni egy létezö családhoz mint feleség";
-$pgv_lang["deceased"]				= "Elhúnyt";
+$pgv_lang["deceased"]				= "Elhunyt";
 $pgv_lang["stillborn"]				= "Halva született";
 $pgv_lang["disproved"]				= "Nem elfogadott";
 $pgv_lang["challenged"]				= "Rokkant";
@@ -736,7 +736,7 @@ $pgv_lang["stat_individuals"]		= "Személyek";
 $pgv_lang["stat_families"]		= "Családok";
 $pgv_lang["stat_sources"]		= "Források";
 $pgv_lang["stat_other"]			= "Egyéb adatok";
-$pgv_lang["stat_latest_birth"] 	= "Legutólsó születési év";
+$pgv_lang["stat_latest_birth"] 		= "Legutolsó születési év";
 $pgv_lang["stat_earliest_birth"] 	= "Legrégibb születési év";
 $pgv_lang["customize_page"]		= "Állítsa be az Ön személyes oldalát";
 $pgv_lang["customize_gedcom_page"]	= "Állítsa be ezt a GEDCOM-oldalt";
@@ -952,7 +952,7 @@ $pgv_lang["sunday_1st"]					= "V";
 $pgv_lang["stat_surnames"]			= "Vezetéknevek száma";
 $pgv_lang["stat_events"]			= "Események száma";
 $pgv_lang["stat_average_children"]	= "Gyermekek száma átlagosan családonként";
-$pgv_lang["stat_most_children"]		= "Legnagyobb gyermekes család";
+$pgv_lang["stat_most_children"]		= "Legtöbb gyermekkel rendelkezõ család";
 $pgv_lang["stat_longest_life"]		= "Legidősebb személy";
 $pgv_lang["stat_avg_age_at_death"]	= "Átlagos életkor";
 $pgv_lang["ex-husband"] = "Volt férj";
@@ -1017,8 +1017,8 @@ $pgv_lang["ahnentafel_generation"]		= "Generáció ";
 $pgv_lang["ahnentafel_buried_f"]		= "eltemetve";
 $pgv_lang["ahnentafel_buried_m"]		= "eltemetve";
 $pgv_lang["of"] 						= "/";
-$pgv_lang["ahnentafel_died_f"]			= "elhúnyt";
-$pgv_lang["ahnentafel_died_m"]			= "elhúnyt";
+$pgv_lang["ahnentafel_died_f"]			= "elhunyt";
+$pgv_lang["ahnentafel_died_m"]			= "elhunyt";
 $pgv_lang["ahnentafel_married_f"]		= "házasodott";
 $pgv_lang["ahnentafel_married_m"]		= "házasodott";
 $pgv_lang["ahnentafel_christened_f"]	= "keresztelkedett";
@@ -1230,8 +1230,7 @@ $pgv_lang["block_desc"]				= "Leírás Blokk";
 $pgv_lang["description"]			= "Leírás";
 $pgv_lang["definitions"]			= "Definicíók";
 $pgv_lang["maybe"]					= "Talán ";
-$pgv_lang["dead"]					= "Elhúnyt ";
-$pgv_lang["dead"]					= "Elhúnyt";
+$pgv_lang["dead"]					= "Elhunyt ";
 $pgv_lang["alive"]					= "Él ";
 $pgv_lang["is_alive_in"]			= "Él #YEAR# évében";
 $pgv_lang["add_faq_header"] = "FAQ fejléc";
