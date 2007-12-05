@@ -15,13 +15,14 @@
 	require_once(TESTING_ROOT.'include/simpletest/unit_tester.php');
 	require_once(TESTING_ROOT.'include/simpletest/reporter.php');
 
-	// Create the test Group and add tests to it
-	$test = &new TestSuite('All PhpGedView Tests');
-	$test->addTestFile(dirname(__FILE__) . '/backend_test.php');
-	$test->addTestFile(dirname(__FILE__) . '/gd_test.php');
-	$test->addTestFile(dirname(__FILE__) . '/person_test.php');
-	$test->addTestFile(dirname(__FILE__) . '/media_test.php');
-
-	// run the test suite and create report
-	$test->run(new HtmlReporter());
+    // Create the test Group and add tests to it
+    $test = &new TestSuite('All PhpGedView Tests');
+    $test->addTestFile(dirname(__FILE__) . '/unittests/backend_test.php');
+    $test->addTestFile(dirname(__FILE__) . '/unittests/gd_test.php');
+    
+    $test->addTestFile(dirname(__FILE__) . '/unittests/person_test.php');
+    $test->addTestFile(dirname(__FILE__) . '/unittests/media_test.php');
+    
+    // run the test suite and create report
+    $test->run(new HtmlReporter());
 ?>
