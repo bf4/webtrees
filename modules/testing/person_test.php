@@ -3,9 +3,6 @@
 	 * Tests for the Person class
 	 */
 	
-	require_once(TESTING_ROOT.'include/simpletest/unit_tester.php');
-	require_once('includes/person_class.php');
-	
 	class TestOfPerson extends UnitTestCase {
 		function setUp() {
 	        // this to setup at the start of each test method
@@ -16,7 +13,10 @@
 	        
 	    }
 		function testCreatingNewPerson() {
-			$personGedcom = '0 @I13@ INDI
+			global $GEDCOM_ID_PREFIX, $GEDCOM;
+
+			$pid = $GEDCOM_ID_PREFIX.'123456';
+			$personGedcom = '0 @'.$pid.'@ INDI
 1 NAME Lucy Special /ANSEL/
 1 SEX F
 1 BIRT
@@ -81,7 +81,7 @@
 			$this->assertEqual($person->add_historical_facts(), NULL);
 			//$this->assertEqual($person->add_asso_facts(), "F");
 			//$this->assertEqual($person->diffMerge(), NULL);
-			$this->assertEqual($person->getLinkUrl(), 'individual.php?pid=I13&amp;ged=');
+			$this->assertEqual($person->getLinkUrl(), 'individual.php?pid='.$pid.'&amp;ged='.$GEDCOM);
 			//$this->assertEqual($person->getPrimaryParentsNames(), "F");
 			
 			
