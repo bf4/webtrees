@@ -129,7 +129,9 @@ function setup_place_subfields($element_id) {
 			for(i=0;i<sel.length;++i) if (sel.options[i].value==ctry) sel.options[i].selected=true;
 			// refresh country flag
 			var img=document.getElementsByName(place_tag+'_PLAC_CTRY_flag')[0];
-			img.src='places/flags/'+ctry+'.gif';
+			var ctryFlag = 'places/flags/'+ctry+'.gif';
+			if (ctry=='') ctryFlag = 'places/flags/blank.gif';
+			img.src=ctryFlag;
 			img.alt=ctry;
 			img.title=ctry;
 			// load html map file from server
@@ -302,7 +304,7 @@ function print_place_subfields($element_id) {
 		print " />\n";
 		// country selector
 		if ($i==$icountry) {
-			print " <img id=\"".$element_id."_PLAC_CTRY_flag\" name=\"".$element_id."_PLAC_CTRY_flag\" /> ";
+			print " <img id=\"".$element_id."_PLAC_CTRY_flag\" name=\"".$element_id."_PLAC_CTRY_flag\" src=\"places/flags/blank.gif\" class=\"brightflag border1\" style=\"vertical-align:bottom\"/> ";
 			print "<select id=\"".$subtagid."_select\" name=\"".$subtagname."_select\" class=\"submenuitem\"";
 			print " onchange=\"setPlaceCountry(this.value, '".$element_id."');\"";
 //			print " acdropdown=\"true\" autocomplete_complete=\"true\"";

@@ -521,6 +521,10 @@ a:hover .nameZoom {
 	opacity: 0.4;	/* IE does not yet support this (booo!) */
 }
 
+.border1 {
+	border: solid black 1px;
+}	
+
 .header_select {
 	font-size: 9pt;
 }
