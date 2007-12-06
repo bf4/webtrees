@@ -573,6 +573,28 @@ class GregorianDate extends CalendarDate {
 			--$year;
 		return array($year, $month, $day);
 	}
+
+	// Get Easter date in JD format
+	function EasterJD($year) {
+		// See : http://www.php.net/manual/en/function.easter-days.php#14805
+		$a = $year % 19;
+		$b = floor($year / 100);
+		$c = $year % 100;
+		$d = floor($b / 4);
+		$e = $b % 4;
+		$f = floor(($b + 8) / 25);
+		$g = floor(($b - $f + 1) / 3);
+		$h = (19 * $a + $b - $d - $g + 15) % 30;
+		$i = floor($c / 4);
+		$k = $c % 4;
+		$l = (32 + 2 * $e + 2 * $i - $h - $k) % 7;
+		$m = floor(($a + 11 * $h + 22 * $l) / 451);
+		$n = ($h + $l - 7 * $m + 114);
+		$month = floor($n / 31);
+		$day = $n % 31 + 1;
+		return GregorianDate::YMDtoJD($year, $month, $day);
+	}
+
 } // class GregorianDate
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1056,15 +1078,15 @@ class GedcomDate {
 			$d2=$this->date2->Format($date_fmt);
 		$q3='';
 		// some religious dates [ 1843618 ]
-		if ($this->date1->y && $this->date1->m && $this->date1->d && !$d2) {
-			if (abs(EasterJD($this->date1->y)   -$this->MinJD())<2) $q3=$pgv_lang["easter"];
-			if (abs(EasterJD($this->date1->y)+39-$this->MinJD())<2) $q3=$pgv_lang["ascension"];
-			if (abs(EasterJD($this->date1->y)+49-$this->MinJD())<2) $q3=$pgv_lang["pentecost"];
-			if (abs(cal_to_jd(CAL_GREGORIAN, 08, 15, $this->date1->y)-$this->MinJD())<2) $q3=$pgv_lang["assumption"];
-			if (abs(cal_to_jd(CAL_GREGORIAN, 11, 01, $this->date1->y)-$this->MinJD())<2) $q3=$pgv_lang["all_saints"];
-			if (abs(cal_to_jd(CAL_GREGORIAN, 12, 25, $this->date1->y)-$this->MinJD())<2) $q3=$pgv_lang["christmas"];
+		/**if ($this->date1->y && $this->date1->m && $this->date1->d && !$d2) {
+			if (abs(GregorianDate::EasterJD($this->date1->y)       -$this->MinJD())<2) $q3=$pgv_lang["easter"];
+			if (abs(GregorianDate::EasterJD($this->date1->y)+39    -$this->MinJD())<2) $q3=$pgv_lang["ascension"];
+			if (abs(GregorianDate::EasterJD($this->date1->y)+49    -$this->MinJD())<2) $q3=$pgv_lang["pentecost"];
+			if (abs(GregorianDate::YMDtoJD($this->date1->y, 08, 15)-$this->MinJD())<2) $q3=$pgv_lang["assumption"];
+			if (abs(GregorianDate::YMDtoJD($this->date1->y, 11, 01)-$this->MinJD())<2) $q3=$pgv_lang["all_saints"];
+			if (abs(GregorianDate::YMDtoJD($this->date1->y, 12, 25)-$this->MinJD())<2) $q3=$pgv_lang["christmas"];
 			if ($q3) $q3="[$q3]";
-		}
+		}**/
 		// Localise the date
 		$func($q1, $d1, $q2, $d2, $q3);
 		// Convert to other calendars, if requested
@@ -1227,26 +1249,5 @@ function DefaultDateLocalisation(&$q1, &$d1, &$q2, &$d2, &$q3) {
 		$q1=$pgv_lang[$q1];
 	if (isset($pgv_lang[$q2]))
 		$q2=$pgv_lang[$q2];
-}
-
-// Get Easter date in JD format
-function EasterJD($year) {
-	// See : http://www.php.net/manual/en/function.easter-days.php#14805
-	$a = $year % 19;
-	$b = floor($year / 100);
-	$c = $year % 100;
-	$d = floor($b / 4);
-	$e = $b % 4;
-	$f = floor(($b + 8) / 25);
-	$g = floor(($b - $f + 1) / 3);
-	$h = (19 * $a + $b - $d - $g + 15) % 30;
-	$i = floor($c / 4);
-	$k = $c % 4;
-	$l = (32 + 2 * $e + 2 * $i - $h - $k) % 7;
-	$m = floor(($a + 11 * $h + 22 * $l) / 451);
-	$n = ($h + $l - 7 * $m + 114);
-	$month = floor($n / 31);
-	$day = $n % 31 + 1;
-	return GregorianToJD($month, $day, $year);
 }
 ?>
