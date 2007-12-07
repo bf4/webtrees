@@ -2966,7 +2966,7 @@ function DumpString($input) {
 			$thisLine .= "<br />";
 			print str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
 		}
-		print "<br>";
+		print "<br />";
 		$pos += $lineLength;
 		if ($pos >= $lastPos) break;
 	}

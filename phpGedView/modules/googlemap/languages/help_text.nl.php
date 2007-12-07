@@ -29,7 +29,7 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 }
 
 $pgv_lang["GOOGLEMAP_ENABLE"]           = "Google-map aanzetten";
-$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Via deze optie is het mogelijk om de Googlemap module aan of uit te zetten.<br>Indien de module uitgezet is zal de kaart-tab wel zichtbaar zijn, maar deze blijft leeg. De link naar de configuratie pagina zal wel beschikbaar blijven, maar alleen voor beheerders";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Via deze optie is het mogelijk om de Googlemap module aan of uit te zetten.<br />Indien de module uitgezet is zal de kaart-tab wel zichtbaar zijn, maar deze blijft leeg. De link naar de configuratie pagina zal wel beschikbaar blijven, maar alleen voor beheerders";
 
 $pgv_lang["GOOGLEMAP_API_KEY"]      = "Google-map API code";
 $pgv_lang["GOOGLEMAP_API_KEY_help"] = "~#pgv_lang[GOOGLEMAP_API_KEY]#~<br /><br />Voer hier uw Google Map API code in. U kunt een code aanvragen op <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\">http://www.google.com/apis/maps/</a>";
@@ -48,7 +48,7 @@ $pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "~#pgv_lang[GM_DEFAULT_LEVEL_0]#~<br /
 
 $pgv_lang["GM_NOF_LEVELS"]              = "Aantal locatie-nivo's in gebruik
 bij Googlemap";
-$pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />Het aantal lokatie-nivo's welke in gebruik is in de Googlemap modules.<br>De standaard waarde is 4 (Land, Provncie/staat, Gemeente, Plaats), welke onder normale omstandigheden voldoet. De waarde kan gewijzigd worden om een extra nivo toe te voegen (bijvoorbeeld om lokaties binnen een plaats aan te kunnen geven, zoals een begraafplaats of een school) of om een nivo te verwijderen (bijvoorbeeld gemeente). Houdt er echter wel rekening mee dat de aangeleverde files over het algemeen de standaard 4-nivo structuur gebruiken.";
+$pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />Het aantal lokatie-nivo's welke in gebruik is in de Googlemap modules.<br />De standaard waarde is 4 (Land, Provncie/staat, Gemeente, Plaats), welke onder normale omstandigheden voldoet. De waarde kan gewijzigd worden om een extra nivo toe te voegen (bijvoorbeeld om lokaties binnen een plaats aan te kunnen geven, zoals een begraafplaats of een school) of om een nivo te verwijderen (bijvoorbeeld gemeente). Houdt er echter wel rekening mee dat de aangeleverde files over het algemeen de standaard 4-nivo structuur gebruiken.";
 
 $pgv_lang["GM_NAME_PREFIX"]             = "Te gebruiken Voorvoegsel";
 $pgv_lang["GM_NAME_PREFIX_help"]        = "~#pgv_lang[GM_NAME_PREFIX]#~<br /><br />De waarde zal worden toegevoegd voor de namen op dit nivo. Er mogen meerdere waardes worden gespecificeerd, gescheiden door een puntkomma.";
@@ -57,10 +57,10 @@ $pgv_lang["GM_NAME_POSTFIX"]            = "Te gebruiken Achtervoegsel";
 $pgv_lang["GM_NAME_POSTFIX_help"]       = "~#pgv_lang[GM_NAME_POSTFIX]#~<br /><br />De waarde zal worden toegevoegd achter de namen op dit nivo. Er mogen meerdere waardes worden gespecificeerd, gescheiden door een puntkomma.";
 
 $pgv_lang["GM_NAME_PRE_POST"]           = "Volgorde van zoeken naar namen";
-$pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />Dit veld geeft aan in welke volgorde er gezocht zal worden naar de naam. De mogelijk waardes zijn:<br><ul><li>Geen pre/postfix</li><li>Normale naam, met voorvoegsel, met achtervoegsel, beide</li><li>Normale naam, met achtervoegsel met voorvoegsel, beide</li><li>Met voorvoegsel, met achtervoegsel, beide, normale naam</li><li>Met achtervoegsel, met voorvoegsel, beide, normale naam</li><li>Met voorvoegsel, met achtervoegsel, normale naam, beide</li><li>Met achtervoegsel, met voorvoegsel, normale naam, beide</ul>";
+$pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />Dit veld geeft aan in welke volgorde er gezocht zal worden naar de naam. De mogelijk waardes zijn:<br /><ul><li>Geen pre/postfix</li><li>Normale naam, met voorvoegsel, met achtervoegsel, beide</li><li>Normale naam, met achtervoegsel met voorvoegsel, beide</li><li>Met voorvoegsel, met achtervoegsel, beide, normale naam</li><li>Met achtervoegsel, met voorvoegsel, beide, normale naam</li><li>Met voorvoegsel, met achtervoegsel, normale naam, beide</li><li>Met achtervoegsel, met voorvoegsel, normale naam, beide</ul>";
 
 $pgv_lang["PL_EDIT_LOCATION"]           = "Wijzig of verwijder locatie";
-$pgv_lang["PL_EDIT_LOCATION_help"]      = "Hier kunnen de gegevens van een locatie worden aangepast of kan een locatie worden verwijderd. Vie de Wijzig-link wordt een nieuw venster geopend, waarin de waardes van de locatie kunnen worden aangepast.<br>Via het ikoon \"Verwijderen\" kan de betreffende locatie worden verwijderd. Dit is echter alleen mogelijk indien er geen locaties afhankelijk zijn van deze locatie. Indien een locatie verwijderd kan worden is deze actief, anders is het ikoon inactief.";
+$pgv_lang["PL_EDIT_LOCATION_help"]      = "Hier kunnen de gegevens van een locatie worden aangepast of kan een locatie worden verwijderd. Vie de Wijzig-link wordt een nieuw venster geopend, waarin de waardes van de locatie kunnen worden aangepast.<br />Via het ikoon \"Verwijderen\" kan de betreffende locatie worden verwijderd. Dit is echter alleen mogelijk indien er geen locaties afhankelijk zijn van deze locatie. Indien een locatie verwijderd kan worden is deze actief, anders is het ikoon inactief.";
 
 $pgv_lang["PL_ADD_LOCATION"]            = "Locatie toevoegen";
 $pgv_lang["PL_ADD_LOCATION_help"]       = "Gebruik deze link om een locatie toe te voegen aan de tabel.";
@@ -89,7 +89,7 @@ $pgv_lang["PLE_PRECISION"]              = "Voer precisie in";
 $pgv_lang["PLE_PRECISION_help"]         = "Hier kan de precisie worden ingevoerd. Deze waarde wordt gebruikt om het aantal cijfers te bepalen wat gebruikt wordt voor de lengtebraad en breedtegraad.";
 
 $pgv_lang["PLE_LATLON_CTRL"]            = "Voer lengte en breedtegraad in";
-$pgv_lang["PLE_LATLON_CTRL_help"]       = "Hier kan de lengte en breedtegraad worden ingevoerd. Selecteer eerst het kwadrant (N/Z en O/W), daarna kan de waarde voor lengte en breedtegraad worden ingevoerd. Deze waarde moet decimaal worden ingevoerd.<br>De decimale waarde kan worden bepaald door de minuten en seconden om te zetten volgend de volgende formule:<br>decimale_waarde = ((seconden / 60) _ minuten ) / 60 + geheel aantal graden.";
+$pgv_lang["PLE_LATLON_CTRL_help"]       = "Hier kan de lengte en breedtegraad worden ingevoerd. Selecteer eerst het kwadrant (N/Z en O/W), daarna kan de waarde voor lengte en breedtegraad worden ingevoerd. Deze waarde moet decimaal worden ingevoerd.<br />De decimale waarde kan worden bepaald door de minuten en seconden om te zetten volgend de volgende formule:<br />decimale_waarde = ((seconden / 60) _ minuten ) / 60 + geheel aantal graden.";
 
 $pgv_lang["PLE_ZOOM"]                   = "Voer zoom-factor in";
 $pgv_lang["PLE_ZOOM_help"]              = "Hier kan de zoom-factor worden ingevoerd. Met deze waarde wordt de maximale zoomfactor bepaald als deze locatie op een kaart wordt getoond.";
@@ -107,9 +107,9 @@ $pgv_lang["PLIF_CLEAN"]                 = "Plaats-database leegmaken";
 $pgv_lang["PLIF_CLEAN_help"]            = "Als deze optie is geselecteerd zal de database met plaats-gegevens worden leeggemaakt. Deze bevat alleen de gegevens van de plaatsen. Er zullen geen wijzigingen in de GEDCOM gegevens worden aangebracht.";
 
 $pgv_lang["PLIF_UPDATE"]                = "Alleen bijwerken bestaande gegevens";
-$pgv_lang["PLIF_UPDATE_help"]           = "Alleen bijwerken van bestaande gegevens.<br>Als deze optie wordt geselecteerd zullen alleen de gegevens bijgewerkt worden welke al in de database aanwezig zijn. Er zullen geen nieuwe plaatsen toegevoegd worden aan de database.";
+$pgv_lang["PLIF_UPDATE_help"]           = "Alleen bijwerken van bestaande gegevens.<br />Als deze optie wordt geselecteerd zullen alleen de gegevens bijgewerkt worden welke al in de database aanwezig zijn. Er zullen geen nieuwe plaatsen toegevoegd worden aan de database.";
 
 $pgv_lang["PLIF_OVERWRITE"]             = "Overschrijf locatie gegevens";
-$pgv_lang["PLIF_OVERWRITE_help"]        = "Overschrijf locatie gegevens in de database met gegevens uit de file.<br>Indien deze optie is geselcteerd zullen de gegevens (indien aanwezig in de database) worden overschreven met de gegevens uit de file. Indien de gegevens niet aanwezig zijn zal een nieuwe plaats worden aangemaakt, tenzij de optie Alleen bijwerken ook is geselcteerd.";
+$pgv_lang["PLIF_OVERWRITE_help"]        = "Overschrijf locatie gegevens in de database met gegevens uit de file.<br />Indien deze optie is geselcteerd zullen de gegevens (indien aanwezig in de database) worden overschreven met de gegevens uit de file. Indien de gegevens niet aanwezig zijn zal een nieuwe plaats worden aangemaakt, tenzij de optie Alleen bijwerken ook is geselcteerd.";
 
 ?>

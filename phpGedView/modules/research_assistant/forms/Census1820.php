@@ -143,10 +143,10 @@ class Census1820 extends ra_form {
         $out .= '<td colspan="4" class="descriptionbox" align="center">Free Colored Persons</td>';
         
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Foreigners not noturalized</td>';
-        $out .= '<td class="descriptionbox" align="center" rowspan="2">Numbers of persons<br>engaged in Agriculture</td>';
-        $out .= '<td class="descriptionbox" align="center" rowspan="2">Numbers of persons<br>engaged in Commerce</td>';
-        $out .= '<td class="descriptionbox" align="center" rowspan="2">Numbers of persons<br>engaged in Manufactures</td>';
-        $out .= '<td class="descriptionbox" align="center" rowspan="2">All other persons<br>except Indians not taxed</td></tr>';
+        $out .= '<td class="descriptionbox" align="center" rowspan="2">Numbers of persons<br />engaged in Agriculture</td>';
+        $out .= '<td class="descriptionbox" align="center" rowspan="2">Numbers of persons<br />engaged in Commerce</td>';
+        $out .= '<td class="descriptionbox" align="center" rowspan="2">Numbers of persons<br />engaged in Manufactures</td>';
+        $out .= '<td class="descriptionbox" align="center" rowspan="2">All other persons<br />except Indians not taxed</td></tr>';
 //		  Next row of description cells
         $out .=	'<tr><td class="descriptionbox">Under 10</td><td class="descriptionbox">10 thru 15</td>';
         $out .= '<td class="descriptionbox">16 thru 25</td><td class="descriptionbox">26 thru 44</td><td class="descriptionbox">45 and over</td>';

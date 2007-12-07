@@ -217,7 +217,7 @@ if ($action=="generate") {
     }
     print "   <tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_placement"]."</td></tr>\n";
     print "</table>\n";
-    print "<br>\n";
+    print "<br />\n";
 }
 
 if ($action=="") {
@@ -234,7 +234,7 @@ if ($action=="") {
             <td class="optionbox" colspan="3">
 <?php
     foreach($GEDCOMS as $ged_index=>$ged_rec) {
-        print "                <input type=\"checkbox\" name=\"GEDCOM_".$ged_rec["id"]."\" value=\"".$ged_rec["id"]."\" tabindex=\"".$i++."\" checked>".$ged_rec["title"]."<br>\n";
+        print "                <input type=\"checkbox\" name=\"GEDCOM_".$ged_rec["id"]."\" value=\"".$ged_rec["id"]."\" tabindex=\"".$i++."\" checked>".$ged_rec["title"]."<br />\n";
     }
 ?>
             </td>

@@ -103,7 +103,7 @@ $edit=$edit;
                 //-- spouses and children
                 $families = $this->indi->getSpouseFamilies();
                 foreach($families as $famid=>$family) {
-                                echo "<tr><td><br></td><td></td></tr>";
+                                echo "<tr><td><br /></td><td></td></tr>";
                                 //$personcount = 0;
                                 $people = $this->buildFamilyList($family, "spouse");
 

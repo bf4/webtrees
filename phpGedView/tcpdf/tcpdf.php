@@ -42,8 +42,8 @@
 require_once(dirname(__FILE__).'/config/tcpdf_config.php');
 
 /**
- * This is a PHP4 class for generating PDF files on-the-fly without requiring external extensions.<br>
- * TCPDF project (http://tcpdf.sourceforge.net) is based on the public Domain FPDF class by Olivier Plathey (http://www.fpdf.org).<br>
+ * This is a PHP4 class for generating PDF files on-the-fly without requiring external extensions.<br />
+ * TCPDF project (http://tcpdf.sourceforge.net) is based on the public Domain FPDF class by Olivier Plathey (http://www.fpdf.org).<br />
  * <h3>TCPDF main changes from FPDF are:</h3><ul>
  * <li>PHP4 porting</li>
  * <li>UTF-8 Unicode support</li>
@@ -74,10 +74,10 @@ if(!class_exists('TCPDF')) {
 	define('PDF_PRODUCER','TCPDF 1.53.0.TC033_PHP4 (http://tcpdf.sourceforge.net)');
 	
 	/**
-	* This is a PHP4 class for generating PDF files on-the-fly without requiring external extensions.<br>
-	* This class is an extension and improvement of the FPDF class by Olivier Plathey (http://www.fpdf.org).<br>
-	* This version contains some changes: [porting to PHP4, support for UTF-8 Unicode, code style and formatting, php documentation (www.phpdoc.org), ISO page formats, minor improvements, image scale factor]<br>
-	* TCPDF project (http://tcpdf.sourceforge.net) is based on the public Domain FPDF class by Olivier Plathey (http://www.fpdf.org).<br>
+	* This is a PHP4 class for generating PDF files on-the-fly without requiring external extensions.<br />
+	* This class is an extension and improvement of the FPDF class by Olivier Plathey (http://www.fpdf.org).<br />
+	* This version contains some changes: [porting to PHP4, support for UTF-8 Unicode, code style and formatting, php documentation (www.phpdoc.org), ISO page formats, minor improvements, image scale factor]<br />
+	* TCPDF project (http://tcpdf.sourceforge.net) is based on the public Domain FPDF class by Olivier Plathey (http://www.fpdf.org).<br />
 	* To add your own TTF fonts please read /fonts/README.TXT
 	* @name TCPDF
 	* @package com.tecnick.tcpdf
@@ -1523,7 +1523,7 @@ if(!class_exists('TCPDF')) {
 		}
 
 		/**
-		* Returns the length of a string in user unit. A font must be selected.<br>
+		* Returns the length of a string in user unit. A font must be selected.<br />
 		* Support UTF-8 Unicode [Nicola Asuni, 2005-01-02]
 		* @param string $s The string whose length is to be computed
 		* @return int
@@ -3263,7 +3263,7 @@ if(!class_exists('TCPDF')) {
 		}
 
 		/**
-		* Adds unicode fonts.<br>
+		* Adds unicode fonts.<br />
 		* Based on PDF Reference 1.3 (section 5)
 		* @access protected
 		* @author Nicola Asuni
@@ -3376,8 +3376,8 @@ if(!class_exists('TCPDF')) {
 		}
 
 		 /**
-		 * Converts UTF-8 strings to codepoints array.<br>
-		 * Invalid byte sequences will be replaced with 0xFFFD (replacement character)<br>
+		 * Converts UTF-8 strings to codepoints array.<br />
+		 * Invalid byte sequences will be replaced with 0xFFFD (replacement character)<br />
 		 * Based on: http://www.faqs.org/rfcs/rfc3629.html
 		 * <pre>
 		 * 	  Char. number range  |        UTF-8 octet sequence
@@ -3474,7 +3474,7 @@ if(!class_exists('TCPDF')) {
 		}
 		
 		/**
-		 * Converts UTF-8 strings to UTF16-BE.<br>
+		 * Converts UTF-8 strings to UTF16-BE.<br />
 		 * Based on: http://www.faqs.org/rfcs/rfc2781.html
 	 	 * <pre>
 		 *   Encoding UTF-16:
@@ -3676,7 +3676,7 @@ if(!class_exists('TCPDF')) {
 		function writeHTML($html, $ln=true, $fill=0) {
 						
 			// store some variables
-			$html=strip_tags($html,"<h1><h2><h3><h4><h5><h6><b><u><i><a><img><p><br><br/><strong><em><font><blockquote><li><ul><ol><hr><td><th><tr><table><sup><sub><small>"); //remove all unsupported tags
+			$html=strip_tags($html,"<h1><h2><h3><h4><h5><h6><b><u><i><a><img><p><br><br /><strong><em><font><blockquote><li><ul><ol><hr><td><th><tr><table><sup><sub><small>"); //remove all unsupported tags
 			//replace carriage returns, newlines and tabs
 			$repTable = array("\t" => " ", "\n" => " ", "\r" => " ", "\0" => " ", "\x0B" => " "); 
 			$html = strtr($html, $repTable);

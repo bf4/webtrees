@@ -98,7 +98,7 @@ $pgv_lang["turn_edit_OFF"] 		= "Desactivar el modo de edición";
 
 $pgv_lang["lb_source_avail"] 	= "Hay información de la fuente - Haga clic aquí.";
 
-$pgv_lang["lb_private"] 		= "Imagen vinculada a <br> una persona privada";
+$pgv_lang["lb_private"] 		= "Imagen vinculada a <br /> una persona privada";
 $pgv_lang["lb_view_source_tip"] = "Ver fuente : ";
 $pgv_lang["lb_view_details_tip"] = "Ver detalles del objeto : ";
 

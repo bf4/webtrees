@@ -29,18 +29,18 @@ function footmsg() {
     $total_time = ""._PAGEGENERATION." ".substr($total_time,0,5)." "._SECONDS."";
     echo "<font class=\"footmsg\">\n";
     if ($foot1 != "") {
-	echo "$foot1<br>\n";
+	echo "$foot1<br />\n";
     }
     if ($foot2 != "") {
-	echo "$foot2<br>\n";
+	echo "$foot2<br />\n";
     }
     if ($foot3 != "") {
-	echo "$foot3<br>\n";
+	echo "$foot3<br />\n";
     }
     // DO NOT REMOVE THE FOLLOWING COPYRIGHT LINE. YOU'RE NOT ALLOWED TO REMOVE NOR EDIT THIS.
     // IF YOU REALLY NEED TO REMOVE IT AND HAVE MY WRITTEN AUTHORIZATION CHECK: http://phpnuke.org/modules.php?name=Commercial_License
     // PLAY FAIR AND SUPPORT THE DEVELOPMENT, PLEASE!
-    echo "$copyright<br>$total_time<br>\n</font>\n";
+    echo "$copyright<br />$total_time<br />\n</font>\n";
 }
 
 function foot() {
