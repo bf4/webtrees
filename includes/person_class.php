@@ -1147,13 +1147,13 @@ class Person extends GedcomRecord {
 							if (!showFact("MARR", $sfamid)) $factrec .= "\n2 RESN privacy";
 							$factrec .= "\n2 ASSO @".$spid."@";
 							$factrec .= "\n3 RELA ".$rela;
-							if ($rela=="son") $rela2="daughter-in-law";
-							else if ($rela=="daughter") $rela2="son-in-law";
-							else if ($rela=="brother" or $rela=="halfbrother") $rela2="sister-in-law";
-							else if ($rela=="sister" or $rela=="halfsister") $rela2="brother-in-law";
+							if ($rela=="son") $rela2="daughter_in_law";
+							else if ($rela=="daughter") $rela2="son_in_law";
+							else if ($rela=="brother" or $rela=="halfbrother") $rela2="sister_in_law";
+							else if ($rela=="sister" or $rela=="halfsister") $rela2="brother_in_law";
 							else if ($rela=="uncle") $rela2="aunt";
 							else if ($rela=="aunt") $rela2="uncle";
-							else if (strstr($rela, "cousin")) $rela2="cousin-in-law";
+							else if (strstr($rela, "cousin")) $rela2="cousin_in_law";
 							else $rela2="spouse";
 							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($spid)."@";
 							$factrec .= "\n3 RELA ".$rela2;
