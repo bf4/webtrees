@@ -45,6 +45,10 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["stat_help"]								07 Dec 2007				f  change <br> to <br />
+*$pgv_lang["stat_help_x"]							07 Dec 2007				f  change <br> to <br />
+*$pgv_lang["stat_help_y"]							07 Dec 2007				f  change <br> to <br />
+*$pgv_lang["stat_help_z"]							07 Dec 2007				f  change <br> to <br />
 *$pgv_lang["index_charts_help"]						18 Nov 2007				W
 
 
