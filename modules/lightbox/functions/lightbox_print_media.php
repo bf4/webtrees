@@ -149,11 +149,11 @@
 		echo '<td width="80" align="center" class="descriptionbox">' ;
 		
 		if ($t==5){
-			echo "<b><br>" . $tt . "</b><br><br>";
+			echo "<b><br />" . $tt . "</b><br /><br />";
 		}else if ( ($t!=5) && (userCanAccess(getUserName())) ){
-			echo "<b><br><br>" . $tt . "</b><br><br>(" . $numm . ")";
+			echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $numm . ")";
 		}else{
-			echo "<b><br>" . $tt . "</b><br><br>";	
+			echo "<b><br />" . $tt . "</b><br /><br />";	
 		}
 		
 		echo '</td>';
@@ -313,7 +313,7 @@
 					if ( $typ2a ) {
 						echo '<table border=0 class="facts_table"><tr>';
 						echo '<td width="80" align="center" class="descriptionbox">' ;
-						echo "<b><br><br>" . $tt . "</b><br><br>(" . $ct . ")";
+						echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $ct . ")";
 						echo '</td>' . "\n";
 						echo '<td class="facts_value">';
 						echo "<center>" . "\n\n";

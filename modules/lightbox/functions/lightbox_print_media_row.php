@@ -131,7 +131,7 @@
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
-							print "<br>";
+							print "<br />";
 							$items[$n+1]= $item+1;
 							$n++;
 						}							
@@ -139,12 +139,12 @@
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
-							print "<br>";
+							print "<br />";
 							$items[$n+1]= $item+1;
 							$n++;
 					}else{
 						print "<font size=1>&nbsp;</font>";				
-						print "<br>";
+						print "<br />";
 					}
 					$item++;
 //	print $item;						
@@ -160,12 +160,12 @@
 						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"\" 						
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-									. "<br>"
+									. "<br />"
 									
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2  
 									. "</font></b><\/a>" 
-									. "<br>" 
+									. "<br />" 
 									. "&nbsp;" . PrintReady($pgv_lang["lb_view_details_tip"]) . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
@@ -179,7 +179,7 @@
 						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-									. "<br>"
+									. "<br />"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
@@ -202,7 +202,7 @@
 							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
 //							print $note[$n] . "\"> <font size=1>" . $note[$n] . "</font>";							
-							print "<br>";
+							print "<br />";
 							$items[$n+1]= $item+1;
 							$n++;
 						}							
@@ -210,12 +210,12 @@
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";					
-							print "<br>";
+							print "<br />";
 							$items[$n+1]= $item+1;
 							$n++;
 					}else{
 						print "<font size=1>&nbsp;</font>";				
-						print "<br>";
+						print "<br />";
 					}
 					$item++;
 //	print $item;						
@@ -229,11 +229,11 @@
 						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-									. "<br>" 								
+									. "<br />" 								
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
 									. "</font></b><\/a>" 
-									. "<br>" 
+									. "<br />" 
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
@@ -246,7 +246,7 @@
 						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-									. "<br>"
+									. "<br />"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
@@ -268,7 +268,7 @@
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
-							print "<br>";
+							print "<br />";
 							$items[$n+1]= $item+1;
 							$n++;
 						}							
@@ -276,12 +276,12 @@
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";						
-							print "<br>";
+							print "<br />";
 							$items[$n+1]= $item+1;
 							$n++;
 					}else{
 						print "<font size=1>&nbsp;</font>";				
-						print "<br>";
+						print "<br />";
 					}
 					$item++;
 //	print $item;						
@@ -297,11 +297,11 @@
 								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-									. "<br>" 								
+									. "<br />" 								
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
 									. "</font></b><\/a>" 
-									. "<br>" 
+									. "<br />" 
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
@@ -315,7 +315,7 @@
 								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-									. "<br>"
+									. "<br />"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"

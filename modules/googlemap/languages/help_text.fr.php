@@ -65,7 +65,7 @@ $pgv_lang["GM_NAME_PRE_POST"]           = "Ordre préfixe/suffixe";
 #pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />This field indicates the order in which names are tried using the prefix and postfix. The possible values are:<br/><ul><li>No pre/postfix</li><li>Normal name, Prefix, Postfix, both</li><li>Normal name, Postfix, Prefix, both</li><li>Prefix, Postfix, both, Normal name</li><li>Postfix, Prefix, both, Normal name</li><li>Prefix, Postfix, Normal name, both</li><li>Postfix, Prefix, Normal name, both</li></ul>";
 
 $pgv_lang["PL_EDIT_LOCATION"]           = "Éditer ou effacer un lieu";
-$pgv_lang["PL_EDIT_LOCATION_help"]      = "Permet d'éditer ou de supprimer un lieu. Une nouvelle fenêtre s'affiche et permet de modifier les données.<br>Si vous cliquer sur l'icône de suppression, cet enregistrement sera supprimé. Cette opération n'est possible que si aucun évènement n'est en relation avec ce lieu. Si c'est bien le cas, l'icône de suppression est active, sinon elle est inactive.";
+$pgv_lang["PL_EDIT_LOCATION_help"]      = "Permet d'éditer ou de supprimer un lieu. Une nouvelle fenêtre s'affiche et permet de modifier les données.<br />Si vous cliquer sur l'icône de suppression, cet enregistrement sera supprimé. Cette opération n'est possible que si aucun évènement n'est en relation avec ce lieu. Si c'est bien le cas, l'icône de suppression est active, sinon elle est inactive.";
 
 $pgv_lang["PL_ADD_LOCATION"]            = "Ajouter un lieu";
 $pgv_lang["PL_ADD_LOCATION_help"]       = "Utiliser cette fonction pour ajouter une entrée à la table qui contient tous les lieux.";
@@ -99,7 +99,7 @@ $pgv_lang["PLE_PRECISION"]              = "Précision";
 $pgv_lang["PLE_PRECISION_help"]         = "Permet de définir la précision. Cette valeur est utilisée pour déterminer le nombre de chiffres significatifs de la latitude et de la longitude.";
 
 $pgv_lang["PLE_LATLON_CTRL"]            = "Latitude ou longitude";
-$pgv_lang["PLE_LATLON_CTRL_help"]       = "Permet d'entrer la latitude et la longitude du lieu. Sélectionnez d'abord la coordonnée (E/W ou N/S). Entrez ensuite la valeur pour la latitude ou la longitude. Elles doivent être exprimées en degrés décimaux.<br>Les degrés décimaux peuvent être déduits des degrés/minutes/secondes grâce à la formule suivante:<br>degrés_décimaux = ((secondes / 60) + minutes) / 60 + degrés.";
+$pgv_lang["PLE_LATLON_CTRL_help"]       = "Permet d'entrer la latitude et la longitude du lieu. Sélectionnez d'abord la coordonnée (E/W ou N/S). Entrez ensuite la valeur pour la latitude ou la longitude. Elles doivent être exprimées en degrés décimaux.<br />Les degrés décimaux peuvent être déduits des degrés/minutes/secondes grâce à la formule suivante:<br />degrés_décimaux = ((secondes / 60) + minutes) / 60 + degrés.";
 
 $pgv_lang["PLE_ZOOM"]                   = "Facteur de zoom";
 $pgv_lang["PLE_ZOOM_help"]              = "Permet de définir le facteur de zoom. Cette valeur définit le facteur minimal lors de l'affichage de ce lieu sur la carte.";

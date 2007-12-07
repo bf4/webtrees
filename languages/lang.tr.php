@@ -1314,7 +1314,7 @@ $pgv_lang["statistiek_list"]	= "İstatistik Alanı";
 //-- statisticsplot utility
 $pgv_lang["stpl"]			= "...";
 $pgv_lang["stplGDno"]			= "Grafik sergileme kütüphanesi mevcut değildir, Sistem yöneticinize PHP 4 sorun";
-$pgv_lang["stpljpgraphno"]		= "JPgraph modülleri rehber <i>PhpGedView/jpgraph/</i> da mevcut değiller. <br />Lütfen http://www.aditus.nu/jpgraph/jpdownload.php den onları önce alın<br> <br /><h3>Rehber <i>PhpGedView/jpgraph/</i></h3> da Jpgraph kurun<br>";
+$pgv_lang["stpljpgraphno"]		= "JPgraph modülleri rehber <i>PhpGedView/jpgraph/</i> da mevcut değiller. <br />Lütfen http://www.aditus.nu/jpgraph/jpdownload.php den onları önce alın<br /> <br /><h3>Rehber <i>PhpGedView/jpgraph/</i></h3> da Jpgraph kurun<br />";
 $pgv_lang["stplinfo"]			= "Çizge için değişken";
 $pgv_lang["stpltype"]			= "Tipi:";
 $pgv_lang["stplnoim"]			= "Uygulanacak yok:";

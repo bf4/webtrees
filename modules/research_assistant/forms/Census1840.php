@@ -145,8 +145,8 @@ class Census1840 extends ra_form {
         $out .= '<td colspan="6" class="descriptionbox" align="center">Free Female Colored Persons</td>';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Total</td>';
         
-        $out .= '<td colspan="7" class="descriptionbox" align="center">Number of persons in each<br>family employed in</td>';
-        $out .= '<td colspan="1" class="descriptionbox" align="center">Pensioners for Revolutionary<br>or military services, included<br>in the foregoing.</td>';
+        $out .= '<td colspan="7" class="descriptionbox" align="center">Number of persons in each<br />family employed in</td>';
+        $out .= '<td colspan="1" class="descriptionbox" align="center">Pensioners for Revolutionary<br />or military services, included<br />in the foregoing.</td>';
         
         $out .= '<td colspan="6" class="descriptionbox" align="center">White Persons included in foregoing.</td>';
         $out .= '<td colspan="4" class="descriptionbox" align="center">Slaves and Colored Persons, included in foregoing.</td>';
@@ -180,31 +180,31 @@ class Census1840 extends ra_form {
         $out .= '<td class="descriptionbox">Mining.</td>';
         $out .= '<td class="descriptionbox">Agriculture.</td>';
         $out .= '<td class="descriptionbox">Commerce.</td>';
-        $out .= '<td class="descriptionbox">Manufacture<br>and trade.</td>';
-        $out .= '<td class="descriptionbox">Navigation of<br>the ocean.</td>';
-        $out .= '<td class="descriptionbox">Navigation of<br>canals, lakes,<br>rivers.</td>';
-        $out .= '<td class="descriptionbox">Learned professional<br>engineers.</td>';
+        $out .= '<td class="descriptionbox">Manufacture<br />and trade.</td>';
+        $out .= '<td class="descriptionbox">Navigation of<br />the ocean.</td>';
+        $out .= '<td class="descriptionbox">Navigation of<br />canals, lakes,<br />rivers.</td>';
+        $out .= '<td class="descriptionbox">Learned professional<br />engineers.</td>';
         
          $out .= '<td class="descriptionbox">Names</td>';
         
-        $out .= '<td class="descriptionbox">Who are Deaf & Dumb,<br> under 14 of age</td>';
-        $out .= '<td class="descriptionbox">Who are Deaf & Dumb,<br> of the age of 14 and under 25</td>';
-        $out .= '<td class="descriptionbox">Who are Deaf and dumb<br>25 and up</td>';
+        $out .= '<td class="descriptionbox">Who are Deaf & Dumb,<br /> under 14 of age</td>';
+        $out .= '<td class="descriptionbox">Who are Deaf & Dumb,<br /> of the age of 14 and under 25</td>';
+        $out .= '<td class="descriptionbox">Who are Deaf and dumb<br />25 and up</td>';
         $out .= '<td class="descriptionbox">Who are Blind</td>';
-        $out .= '<td class="descriptionbox">Insane and idiots<br>at public charge</td>';
-        $out .= '<td class="descriptionbox">Insane and idiots<br>at private charge</td>';
+        $out .= '<td class="descriptionbox">Insane and idiots<br />at public charge</td>';
+        $out .= '<td class="descriptionbox">Insane and idiots<br />at private charge</td>';
         $out .= '<td class="descriptionbox">Deaf & Dumb</td>';
         $out .= '<td class="descriptionbox">Blind</td>';
-        $out .= '<td class="descriptionbox">Insane and idiots<br>at public charge</td>';
-        $out .= '<td class="descriptionbox">Insane and idiots<br>at private charge</td>';
+        $out .= '<td class="descriptionbox">Insane and idiots<br />at public charge</td>';
+        $out .= '<td class="descriptionbox">Insane and idiots<br />at private charge</td>';
         
         $out .= '<td class="descriptionbox">Universities or college</td>';
         $out .= '<td class="descriptionbox">Number of students</td>';
-        $out .= '<td class="descriptionbox">Academies &<br>Grammar Schools</td>';
+        $out .= '<td class="descriptionbox">Academies &<br />Grammar Schools</td>';
         $out .= '<td class="descriptionbox">No. of Scholars</td>';
-        $out .= '<td class="descriptionbox">Primary and Common<br>Schools</td>';
-        $out .= '<td class="descriptionbox">No. of Scholars at<br>Public charge</td>';
-        $out .= '<td class="descriptionbox">No. of white persons<br>over 20 years of age in<br>each family who cannot<br>read and write.</td></tr>';
+        $out .= '<td class="descriptionbox">Primary and Common<br />Schools</td>';
+        $out .= '<td class="descriptionbox">No. of Scholars at<br />Public charge</td>';
+        $out .= '<td class="descriptionbox">No. of white persons<br />over 20 years of age in<br />each family who cannot<br />read and write.</td></tr>';
 
 //		  Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;

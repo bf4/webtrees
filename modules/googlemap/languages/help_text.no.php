@@ -29,7 +29,7 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 }
 
 $pgv_lang["GOOGLEMAP_ENABLE"]           = "Aktivere Google Map";
-$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Her kan du aktivere eller deaktivere funksjonene til som bruker Google Map.<br>Arkfanen Kart på siden for opplysninger om en person vil bli vist uansett, men den vil være tom dersom dette valget er deaktivert. Valget for oppsett på siden for administrasjon vil uansett være tilgjengelig.";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Her kan du aktivere eller deaktivere funksjonene til som bruker Google Map.<br />Arkfanen Kart på siden for opplysninger om en person vil bli vist uansett, men den vil være tom dersom dette valget er deaktivert. Valget for oppsett på siden for administrasjon vil uansett være tilgjengelig.";
 
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Google kart - API-nøkkel";
 $pgv_lang["GOOGLEMAP_API_KEY_help"]     = "~#pgv_lang[GOOGLEMAP_API_KEY]#~<br /><br />Oppgi nøkkelen din til Google Map API her.  Dersom du ikke har en nøkkel, kan du be om å få en på nettsiden til <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\">Google kart</a>";
@@ -50,7 +50,7 @@ $pgv_lang["GM_DEFAULT_LEVEL_0"]         = "Standard verdi for toppnivå";
 $pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "~#pgv_lang[GM_DEFAULT_LEVEL_0]#~<br /><br />Her kan du definere standard nivå for det høyeste nivå i steds-hierarkiet. Dersom et sted ikke finnes i stedsbasen, vil stedsnavnet bli lagt angitt med høyeste nivå (land). Deretter vil det bli startet et nytt søk.";
 
 $pgv_lang["GM_NOF_LEVELS"]              = "Dette angir antall nivåer som brukes av modulen Google Map";
-$pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />This field indicates the number of levels in the places-hierarchy that is being used by the Googlemap modules.<br>Standard verdi for steds-hirarki er 4 (land, fylke, kommune, sted), som til vanlig er godt nok. Dersom du ønsker å legge til et ekstra nivå (f.eks. for å legge til en kirkegård, skole eller lignende), kan du endre dene verdien. Du kan også fjerne et nivå (f.eks. sted), men dette er ikke å anbefale fordi stedene er lagret med en struktur på 4 nivå.";
+$pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />This field indicates the number of levels in the places-hierarchy that is being used by the Googlemap modules.<br />Standard verdi for steds-hirarki er 4 (land, fylke, kommune, sted), som til vanlig er godt nok. Dersom du ønsker å legge til et ekstra nivå (f.eks. for å legge til en kirkegård, skole eller lignende), kan du endre dene verdien. Du kan også fjerne et nivå (f.eks. sted), men dette er ikke å anbefale fordi stedene er lagret med en struktur på 4 nivå.";
 
 $pgv_lang["GM_NAME_PREFIX"]             = "Prefiks for navn brukt på dette nivået";
 $pgv_lang["GM_NAME_PREFIX_help"]        = "~#pgv_lang[GM_NAME_PREFIX]#~<br /><br />Denne verdien vil bli lagt til forran navnet for dette nivået. Du kan angi flere verdier, separert med semikolon";
@@ -59,10 +59,10 @@ $pgv_lang["GM_NAME_POSTFIX"]            = "Postfiks for navn brukt på dette niv
 $pgv_lang["GM_NAME_POSTFIX_help"]       = "~#pgv_lang[GM_NAME_POSTFIX]#~<br /><br />Denne verdien vil bli lagt til etter navnet for dette nivået. Du kan angi flere verdier, separert med semikolon";
 
 $pgv_lang["GM_NAME_PRE_POST"]           = "Rekkefølgen som skal brukes for pre-/postfiks";
-$pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />Dette feltet angir rekkefølgen for hvordan navn skal vises sammen med pre- og postfiks. Mulige kombinasjoner er:<br><ul><li>Ingen pre-/postfiks</li><li>Normalt navn, prefiks, postfiks, begge</li><li>Normalt navn, postfiks, prefiks, begge</li><li>Prefiks, postfiks, begge, normalt navn</li><li>Postfiks, prefiks, begge, normalt navn</li><li>Prefiks, postfiks, normalt navn, begge</li><li>Postfiks, prefiks, normalt navn, begge</li></ul>";
+$pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />Dette feltet angir rekkefølgen for hvordan navn skal vises sammen med pre- og postfiks. Mulige kombinasjoner er:<br /><ul><li>Ingen pre-/postfiks</li><li>Normalt navn, prefiks, postfiks, begge</li><li>Normalt navn, postfiks, prefiks, begge</li><li>Prefiks, postfiks, begge, normalt navn</li><li>Postfiks, prefiks, begge, normalt navn</li><li>Prefiks, postfiks, normalt navn, begge</li><li>Postfiks, prefiks, normalt navn, begge</li></ul>";
 
 $pgv_lang["PL_EDIT_LOCATION"]           = "Redigere eller slette et sted";
-$pgv_lang["PL_EDIT_LOCATION_help"]      = "Her kan du enten:<br><dl><dt>Redigere</dt><dd>Du vil få opp et nytt vindu der du kan endre verdiene til stedet.</dd><dt>Slette</dt><dd>Stedet vil bli slettet.<br>NB! Dette kan bare gjøres dersom det ikke er registrert andre steder \"under\" dette stedet (f.eks. kommuner i et fylke). Velget vil være deaktivert hvis dette er tilfelle.</dd></dl>";
+$pgv_lang["PL_EDIT_LOCATION_help"]      = "Her kan du enten:<br /><dl><dt>Redigere</dt><dd>Du vil få opp et nytt vindu der du kan endre verdiene til stedet.</dd><dt>Slette</dt><dd>Stedet vil bli slettet.<br />NB! Dette kan bare gjøres dersom det ikke er registrert andre steder \"under\" dette stedet (f.eks. kommuner i et fylke). Velget vil være deaktivert hvis dette er tilfelle.</dd></dl>";
 
 $pgv_lang["PL_ADD_LOCATION"]            = "Legg til sted";
 $pgv_lang["PL_ADD_LOCATION_help"]       = "Bruk dette valget for å legge til et nytt sted. Stedet vil bli lagt til på dette nivået.";
@@ -91,7 +91,7 @@ $pgv_lang["PLE_PRECISION"]              = "Angi nøyaktighet";
 $pgv_lang["PLE_PRECISION_help"]         = "Her kan du angi hvor nøyaktig et sted skal benevnes. Basert på denne innstillingen, vil dette bestemme hvor mange siffer som skal brukes i lengde- og breddegradene for stedet.";
 
 $pgv_lang["PLE_LATLON_CTRL"]            = "Angi lengde- og breddegrad";
-$pgv_lang["PLE_LATLON_CTRL_help"]       = "Her kan du angi lengde- og breddegraden til stedet. Først velger du området du ønsker å angi (Ø/V eller N/S). Deretter angir du verdien for lengde- eller breddegraden. Dett bør være en desimalverdi.<br>Desimalverdien kan bestemmes ved å konvertere minuttene og sekundene ved å bruke følgende format:<br>degrees_decimal = ((sekunder / 60) + minutter) / 60 + grader.";
+$pgv_lang["PLE_LATLON_CTRL_help"]       = "Her kan du angi lengde- og breddegraden til stedet. Først velger du området du ønsker å angi (Ø/V eller N/S). Deretter angir du verdien for lengde- eller breddegraden. Dett bør være en desimalverdi.<br />Desimalverdien kan bestemmes ved å konvertere minuttene og sekundene ved å bruke følgende format:<br />degrees_decimal = ((sekunder / 60) + minutter) / 60 + grader.";
 
 $pgv_lang["PLE_ZOOM"]                   = "Angi nivå for zoom";
 $pgv_lang["PLE_ZOOM_help"]              = "Her angir du ønsket nivå for zoom av kartutsnitt. Denne verdien vil bli brukt som minimumsverdi når stedet blir vist på et kart.";
@@ -109,9 +109,9 @@ $pgv_lang["PLIF_CLEAN"]                 = "Tøm tabellen i databasen med stedsop
 $pgv_lang["PLIF_CLEAN_help"]            = "Her kan du du velge å tømme tabellen med stedsopplysninger i databasen. Det betyr at <u>kun</u> innholdet i tabellen blir fjernet, mens slektsfilen (GED) vil forbli inntakt.";
 
 $pgv_lang["PLIF_UPDATE"]                = "Oppdatere bare steder som finnes fra før";
-$pgv_lang["PLIF_UPDATE_help"]           = "Her kan du oppdatere steder som er registrert fra før.<br>Dette valget kan brukes for å fylle ut lengde- og breddegrad for steder som allerede er importert fra en slektsfil. Det vil ikke bli lagt til noen nye steder.";
+$pgv_lang["PLIF_UPDATE_help"]           = "Her kan du oppdatere steder som er registrert fra før.<br />Dette valget kan brukes for å fylle ut lengde- og breddegrad for steder som allerede er importert fra en slektsfil. Det vil ikke bli lagt til noen nye steder.";
 
 $pgv_lang["PLIF_OVERWRITE"]             = "Overskrive kartreferanser";
-$pgv_lang["PLIF_OVERWRITE_help"]        = "Her kan du legge inn kartreferanser på nytt fra datafilen.<br>Dersom du velger dette, vil kartreferansene (lengde- og breddegrader, zoomnivå og flagg) til de ulike stedene bli overskrevet med dataene fra filen. Dersom valget \"Oppdatere bare steder som finnes fra før\" ikke er markert, vil også steder som ikke finnes fra før, bli importert.";
+$pgv_lang["PLIF_OVERWRITE_help"]        = "Her kan du legge inn kartreferanser på nytt fra datafilen.<br />Dersom du velger dette, vil kartreferansene (lengde- og breddegrader, zoomnivå og flagg) til de ulike stedene bli overskrevet med dataene fra filen. Dersom valget \"Oppdatere bare steder som finnes fra før\" ikke er markert, vil også steder som ikke finnes fra før, bli importert.";
 
 ?>
