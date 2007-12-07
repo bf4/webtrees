@@ -41,16 +41,34 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.4
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
+-$pgv_lang["son-in-law"]							07 Dec 2007				D
+-$pgv_lang["daughter-in-law"]						07 Dec 2007				D
+-$pgv_lang["brother-in-law"]						07 Dec 2007				D
+-$pgv_lang["sister-in-law"]							07 Dec 2007				D
+-$pgv_lang["cousin-in-law"]							07 Dec 2007				D
+*$pgv_lang["mother_in_law"]							07 Dec 2007				w
+*$pgv_lang["father_in_law"]							07 Dec 2007				w
+*$pgv_lang["brother_in_law"]						07 Dec 2007				w
+*$pgv_lang["sister_in_law"]							07 Dec 2007				w
+*$pgv_lang["son_in_law"]							07 Dec 2007				w
+*$pgv_lang["daughter_in_law"]						07 Dec 2007				w
++$pgv_lang["cousin_in_law"]							07 Dec 2007				A
++$pgv_lang["easter"]								04 Dec 2007				A	[ 1843618 ] To show some religious dates
++$pgv_lang["ascension"]								04 Dec 2007				A	=
++$pgv_lang["pentecost"]								04 Dec 2007				A	=
++$pgv_lang["assumption"]							04 Dec 2007				A	=
++$pgv_lang["all_saints"]							04 Dec 2007				A	=
++$pgv_lang["christmas"]								04 Dec 2007				A	=
+
+
 VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["easter"]                  04 Dec 2007    A    [ 1843618 ] To show some religious dates
-+$pgv_lang["ascension"]                  04 Dec 2007    A   =
-+$pgv_lang["pentecost"]                  04 Dec 2007    A   =
-+$pgv_lang["assumption"]                  04 Dec 2007    A    =
-+$pgv_lang["all_saints"]                  04 Dec 2007    A    =
-+$pgv_lang["christmas"]                  04 Dec 2007    A   =
 +$pgv_lang["show_fact_sources"]						12 Nov 2007				A
 +$pgv_lang["show_fact_notes"]						12 Nov 2007				A
 +$pgv_lang["none"]									07 Nov 2007				A	see [1828065] moved from admin.en.php
