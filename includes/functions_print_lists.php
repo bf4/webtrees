@@ -1405,7 +1405,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		echo "</td>";
 		//-- Event date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a name="'.$value['date']->MinJD().'"', $value['date']->Display(empty($SEARCH_SPIDER)));
+		print str_replace('<a', '<a name="'.$value['jd'].'"', $value['date']->Display(empty($SEARCH_SPIDER)));
 		print "</td>";
 		//-- Anniversary
 		print "<td class=\"list_value_wrap rela\">";
