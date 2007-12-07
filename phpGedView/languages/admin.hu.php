@@ -94,7 +94,7 @@ $pgv_lang["dataset_exists"]		= "Ezzel a névvel már van adatbázisba importált
 $pgv_lang["day_before_month"]		= "Nap a hónap előtt (NN HH ÉÉÉÉ)";
 $pgv_lang["do_not_change"]		= "Ne legyen változás";
 $pgv_lang["download_gedcom"]		= "GEDCOM-állomány letöltése";
-$pgv_lang["download_note"]              = "Megjegyzés: A nagyméretű GEDCOM-állományok letöltés előtti feldolgozása hosszú időt vehet igénybe. Ha PHP előre definiált futási ideje letelik a letöltés befejezése előtt, akkor Ön egy nem teljes állomnyt kaphat.<br/><br/>A helyes letöltést ellenőrizheti az állomány végén található értékkel: <b>0&nbsp;TRLR</b>. GEDCOM álományok sima írott szöveggel vannak írva igy bármilyen szövegolvasó szofverrel kitudja nyitni, de biztos legyen benne hogy <u>ne</u> spórolja meg a GEDCOM álományt az ellenörzés után.<br/><br/>Általánosságban a letöltés kb. annyi ideig tart, mint az adott GEDCOM-állomány importálása.";
+$pgv_lang["download_note"]              = "Megjegyzés: A nagyméretű GEDCOM-állományok letöltés előtti feldolgozása hosszú időt vehet igénybe. Ha PHP előre definiált futási ideje letelik a letöltés befejezése előtt, akkor Ön egy nem teljes állomnyt kaphat.<br /><br />A helyes letöltést ellenőrizheti az állomány végén található értékkel: <b>0&nbsp;TRLR</b>. GEDCOM álományok sima írott szöveggel vannak írva igy bármilyen szövegolvasó szofverrel kitudja nyitni, de biztos legyen benne hogy <u>ne</u> spórolja meg a GEDCOM álományt az ellenörzés után.<br /><br />Általánosságban a letöltés kb. annyi ideig tart, mint az adott GEDCOM-állomány importálása.";
 $pgv_lang["duplicate_username"]		= "Ezzel a névvel már létezik felhasználó. Kérem, lépjen vissza és válasszon másik felhasználónevet!";
 $pgv_lang["editaccount"]		= "A felhasználó szerkesztheti a saját felhasználói adatait";
 $pgv_lang["empty_dataset"]		= "Ki szeretné törölni a régi adatokat és kicserélni ezzel az új adatokkal?";
@@ -105,7 +105,7 @@ $pgv_lang["example_date"]		= "Hibás dátum a GEDCOM-állományból:";
 $pgv_lang["example_place"]		= "Hibás helyszín a GEDCOM-állományból:";
 $pgv_lang["found_record"]		= "Rekordot találtunk";
 $pgv_lang["ged_import"]			= "Importálás";
-$pgv_lang["gedcom_downloadable"]        = "Ez a GEDCOM-állomány letölthető az interneten keresztül.<br/>Kérjük, tekintse át a <a href=\"readme.txt\"><b>readme.txt</b></a> SECURITY (BIZTONSÁG) fejezetét a probléma megszüntetéséhez.";
+$pgv_lang["gedcom_downloadable"]        = "Ez a GEDCOM-állomány letölthető az interneten keresztül.<br />Kérjük, tekintse át a <a href=\"readme.txt\"><b>readme.txt</b></a> SECURITY (BIZTONSÁG) fejezetét a probléma megszüntetéséhez.";
 $pgv_lang["gedcom_file"]		= "GEDCOM-állomány:";
 $pgv_lang["img_admin_settings"]		= "A képeszekesztés beállításai";
 $pgv_lang["import_complete"]		= "Az importálás elkészült";
