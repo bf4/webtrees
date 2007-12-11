@@ -1409,7 +1409,7 @@ function getUserFavorites($username) {
 	$sql = "SELECT * FROM ".$TBLPREFIX."favorites WHERE fv_username='".$DBCONN->escapeSimple($username)."'";
 	$res = dbquery($sql);
 
-	if (!$res) return $favorites;
+	if (DB::isError($res)) return $favorites;
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		if (isset($GEDCOMS[$row["fv_file"]])) {
@@ -1446,7 +1446,7 @@ function getBlocks($username) {
 	$blocks["right"] = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' ORDER BY b_location, b_order";
 	$res = dbquery($sql);
-
+	if (DB::isError($res)) return $blocks;
 	if ($res->numRows() > 0) {
 		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			$row = db_cleanup($row);
@@ -1460,7 +1460,7 @@ function getBlocks($username) {
 		if ($user) {
 			//-- if no blocks found, check for a default block setting
 			$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
-			$res2 =& dbquery($sql);
+			if (DB::isError($res2)) return $blocks;
 			while($row =& $res2->fetchRow(DB_FETCHMODE_ASSOC)){
 				$row = db_cleanup($row);
 				if (!isset($row["b_config"])) $row["b_config"]="";
