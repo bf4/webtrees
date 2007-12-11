@@ -28,6 +28,42 @@
 
 require("config.php");
 require_once("includes/functions_charts.php");
+// -- args
+$view="";
+if (!empty($_REQUEST['view'])) $view = $_REQUEST['view'];
+$pid = "";
+if (!empty($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+$pid = clean_input($pid);
+$descent=5;
+if (isset($_REQUEST['descent'])) $descent=$_REQUEST['descent'];
+
+$show_full=$PEDIGREE_FULL_DETAILS;
+if (isset($_REQUEST['show_full'])) $show_full=$_REQUEST['show_full'];
+$show_spouse=0;
+if (isset($_REQUEST['show_spouse'])) $show_spouse=$_REQUEST['show_spouse'];
+$generations = 2;
+if (isset($_REQUEST['generations'])) $generations = $_REQUEST['generations'];
+
+if ($generations > $MAX_DESCENDANCY_GENERATIONS) $generations = $MAX_DESCENDANCY_GENERATIONS;
+
+// -- size of the boxes
+$box_width = "100";
+if (!empty($_REQUEST['box_width']))  $box_width = $_REQUEST['box_width'];
+$box_width=max($box_width, 50);
+$box_width=min($box_width, 300);
+if (!$show_full) $bwidth = ($bwidth / 1.5);
+$bwidth = (int) ($bwidth * $box_width/100);
+
+if ($show_full==false) {
+	$bheight = (int) ($bheight / 2.5);
+}
+$bhalfheight = (int) ($bheight / 2);
+
+// -- root id
+if (!isset($pid)) $pid="";
+$pid=check_rootid($pid);
+if ((DisplayDetailsByID($pid))||(showLivingNameByID($pid))) $name = get_person_name($pid);
+else $name = $pgv_lang["private"];
 
 function print_descendency($pid, $count) {
 	global $show_spouse, $dgenerations, $bwidth, $bheight, $bhalfheight, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;
@@ -345,31 +381,6 @@ function print_family_book($pid, $descent)
     }
     
 }
-// -- args
-if (!isset($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
-if (!isset($show_spouse)) $show_spouse=0;
-if (empty($generations)) $generations = 2;
-if (empty($descent)) $descent = 5;
-if ($generations > $MAX_DESCENDANCY_GENERATIONS) $generations = $MAX_DESCENDANCY_GENERATIONS;
-if (!isset($view)) $view="";
-
-// -- size of the boxes
-if (empty($box_width)) $box_width = "100";
-$box_width=max($box_width, 50);
-$box_width=min($box_width, 300);
-if (!$show_full) $bwidth = ($bwidth / 1.5);
-$bwidth = (int) ($bwidth * $box_width/100);
-
-if ($show_full==false) {
-	$bheight = (int) ($bheight / 2.5);
-}
-$bhalfheight = (int) ($bheight / 2);
-
-// -- root id
-if (!isset($pid)) $pid="";
-$pid=check_rootid($pid);
-if ((DisplayDetailsByID($pid))||(showLivingNameByID($pid))) $name = get_person_name($pid);
-else $name = $pgv_lang["private"];
 
 // -- print html header information
 print_header(PrintReady($name)." ".$pgv_lang["familybook_chart"]);

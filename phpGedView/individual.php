@@ -27,7 +27,6 @@
  */
 
 require_once("includes/controllers/individual_ctrl.php");
-require_once("includes/serviceclient_class.php");
 
 loadLangFile("lb_lang");	// Load Lightbox language file
 loadLangFile("gm_lang");	// Load GoogleMap language file

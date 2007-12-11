@@ -24,7 +24,10 @@
  */
 require_once("config.php");
 
-$pid = $_REQUEST['pid'];
+$pid = "";
+if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+$pid = clean_input($pid);
+
 $indirec = find_person_record($pid);
 
 $skipfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO");

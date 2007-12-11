@@ -34,6 +34,8 @@ require "config.php";
 require "includes/functions_edit.php";
 header("Content-Type: text/plain; charset=$CHARACTER_SET");
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+
 $pgv_user = getUserName();
 $READ_ONLY = 0;
 if ((isset($_SESSION["readonly"]))&&($_SESSION["readonly"]==true)) $READ_ONLY = 1;
@@ -111,6 +113,7 @@ else if (empty($_SESSION['connected'])){
 	print "ERROR 12: use 'connect' action to initiate a session.\n";
 }
 else if ($action=='get') {
+	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 	if (!empty($xref)) {
 		$xrefs = preg_split("/;/", $xref);
 		$success = true;
@@ -158,6 +161,7 @@ else if ($action=='get') {
 	}
 }
 else if ($action=='getvar') {
+	if (isset($_REQUEST['var'])) $var = $_REQUEST['var'];
 	$public_vars = array("READ_ONLY","CHARACTER_SET","GEDCOM","PEDIGREE_ROOT_ID");
 	if (!empty($var) && (in_array($var, $public_vars)) && isset($$var)) {
 		addDebugLog($action." var=$var SUCCESS\n".$$var);
@@ -173,7 +177,9 @@ else if ($action=='getvar') {
 	}
 }
 else if ($action=='update') {
+	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 	if (!empty($xref)) {
+		if (isset($_REQUEST['gedrec'])) $gedrec = $_REQUEST['gedrec'];
 		if (!empty($gedrec)) {
 			if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))&&(displayDetails($gedrec))) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
@@ -199,6 +205,7 @@ else if ($action=='update') {
 	}
 }
 else if ($action=='append') {
+	if (isset($_REQUEST['gedrec'])) $gedrec = $_REQUEST['gedrec'];
 	if (!empty($gedrec)) {
 		if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))) {
 			$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
@@ -219,6 +226,7 @@ else if ($action=='append') {
 	}
 }
 else if ($action=='delete') {
+	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 	if (!empty($xref)) {
 		if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))&&(displayDetailsById($xref))) {
 			$success = delete_gedrec($xref);
@@ -238,6 +246,7 @@ else if ($action=='delete') {
 	}
 }
 else if ($action=='getnext') {
+	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 	$myindilist = get_indi_list();
 	$gedrec="";
 	if (!empty($xref)) {
@@ -257,6 +266,7 @@ else if ($action=='getnext') {
 	}
 }
 else if ($action=='getprev') {
+	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 	$myindilist = get_indi_list();
 	$gedrec="";
 	if (!empty($xref)) {
@@ -276,6 +286,7 @@ else if ($action=='getprev') {
 	}
 }
 else if ($action=='search') {
+	if (isset($_REQUEST['query'])) $query = $_REQUEST['query'];
 	if (!empty($query)) {
 		$sindilist = search_indis($query);
 		uasort($sindilist, "itemsort");
@@ -292,34 +303,21 @@ else if ($action=='search') {
 	}
 }
 else if ($action=='soundex') {
+	if (isset($_REQUEST['lastname'])) $lastname = $_REQUEST['lastname'];
+	if (isset($_REQUEST['firstname'])) $firstname = $_REQUEST['firstname'];
+	if (isset($_REQUEST['place'])) $place = $_REQUEST['$place'];
+	if (isset($_REQUEST['soundex'])) $soundex = $_REQUEST['$soundex'];
+	
+	if(empty($soundex)) $soundex = "Russell";
 	if ((!empty($lastname))||(!empty($firstname))) {
-		$myindilist = get_indi_list();
-		$sindilist = array();
-		// -- only get the names who match soundex
-		foreach ($myindilist as $key => $value) {
-			$save = false;
-			$name = preg_replace("/ [jJsS][rR]\.?,/", ",", $value["name"]);
-			$names = preg_split("/,/", $name);
-			if (soundex($names[0])==soundex($lastname)) {
-				$save = true;
-				if (!empty($firstname)) {
-					$save = false;
-					$firstnames = preg_split("/\s/", trim($firstname));
-					if (isset($names[1])) $fnames = preg_split("/\s/", trim($names[1]));
-					else $fnames = preg_split("/\s/", trim($names[0]));
-					for($i=0; $i<count($fnames); $i++) {
-						for($j=0; $j<count($firstnames); $j++) {
-							if (soundex($fnames[$i])==soundex($firstnames[$j])) $save = true;
-						}
-					}
-				}
-			}
-			if ($save) $sindilist["$key"] = $value;
-		}
+		$res = search_indis_soundex($soundex, $lastname, $firstname, $place);
 		$msg_out = "SUCCESS\n";
-		uasort($sindilist, "itemsort");
-		reset($sindilist);
-		foreach($sindilist as $xref=>$indi) {
+		// -- only get the names who match soundex
+		while($value = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$indilist[$row[4]]["gedcom"] = $row['i_gedcom'];
+			$indilist[$row[4]]["names"] = get_indi_names($row['i_gedcom']);
+			$indilist[$row[4]]["isdead"] = $row['i_isdead'];
+			$indilist[$row[4]]["gedfile"] = $row['i_file'];
 			if (displayDetailsById($xref)) $msg_out .= "$xref\n";
 		}
 		addDebugLog($action." lastname=$lastname firstname=$firstname ".$msg_out);
@@ -331,6 +329,8 @@ else if ($action=='soundex') {
 	}
 }
 else if ($action=='getxref') {
+	if (isset($_REQUEST['position'])) $position = $_REQUEST['position'];
+	if (isset($_REQUEST['type'])) $type = $_REQUEST['type'];
 	if (empty($position)) $position='first';
 	if (empty($type)) $type='INDI';
 	if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
@@ -514,6 +514,7 @@ else if ($action=="uploadmedia") {
 	}
 }
 else if ($action=="getchanges") {
+	if (isset($_REQUEST['date'])) $date = $_REQUEST['date'];
 	if (empty($date)) {
 		addDebugLog($action." ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.");
 		print "ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.\n";

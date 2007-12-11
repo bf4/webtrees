@@ -1329,6 +1329,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		//-- check if we need to get the object from a remote location
 		$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 		if ($ct>0) {
+			require_once 'includes/serviceclient_class.php';
 			$client = ServiceClient::getInstance($match[1]);
 			if (!is_null($client)) {
 				$newrec = $client->getRemoteRecord($match[2]);
