@@ -10,7 +10,8 @@
 
 
 Version 4.1.4
- - Added [ 1843618 ] To show some religious dates (opus27)
+ - Added [ 1840895 ] reorder children in modified families (opus27)
+ - Added [ 1686246 ] Insert new child at the right place in the family (opus27)
  - Fixed [ 1838140 ] Edit interface bug when place editing (opus27)
  - Fixed [ 1833538 ] GedCheck problem (opus27)
  - Added [ 1599135 ] Father's First Name in Lists (opus27)
