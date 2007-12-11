@@ -174,6 +174,15 @@ class Family extends GedcomRecord {
 	}
 
 	/**
+	 * get the children ids
+	 * @return array 	array of children ids
+	 */
+	function getChildrenIds() {
+		if (!$this->children_loaded) $this->loadChildren();
+		return $this->childrenIds;
+	}
+
+	/**
 	 * Load the children from the database
 	 * We used to load the children when the family was created, but that has performance issues
 	 * because we often don't need all the children

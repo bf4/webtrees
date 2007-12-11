@@ -792,18 +792,13 @@ class IndividualControllerRoot extends BaseController {
 			$labels["sister"] = $pgv_lang["daughter"];
 			$labels["brother"] = $pgv_lang["son"];
 		}
-
 		$newhusb = null;
 		$newwife = null;
-		$newchildren = array();
-		$delchildren = array();
-		$children = array();
 		$husb = null;
 		$wife = null;
 		if (!$family->getChanged()) {
 			$husb = $family->getHusband();
 			$wife = $family->getWife();
-			$children = $family->getChildren();
 		}
 		//-- step families : set the label for the common parent
 		if ($type=="step") {
@@ -872,98 +867,46 @@ class IndividualControllerRoot extends BaseController {
 					$newwife->setLabel($label);
 				}
 				else $newwife = null;
-				//-- check for any new children
-				$merged_children = array();
-				$new_children = $newfamily->getChildren();
-				$num = count($children);
-				for($i=0; $i<$num; $i++) {
-					$child = $children[$i];
-					if (!is_null($child)) {
-						$found = false;
-						foreach($new_children as $key=>$newchild) {
-							if (!is_null($newchild)) {
-								if ($child->equals($newchild)) {
-									$found = true;
-									break;
-								}
-							}
-						}
-						if (!$found) $delchildren[] = $child;
-						else $merged_children[] = $child;
-					}
-				}
-				foreach($new_children as $key=>$newchild) {
-					if (!is_null($newchild)) {
-						$found = false;
-						foreach($children as $key1=>$child) {
-							if (!is_null($child)) {
-								if ($child->equals($newchild)) {
-									$found = true;
-									break;
-								}
-							}
-						}
-						if (!$found) $newchildren[] = $newchild;
-					}
-				}
-				$children = $merged_children;
 			}
 		}
-		//-- set the labels for the children
-		$num = count($children);
-		for($i=0; $i<$num; $i++) {
-			if (!is_null($children[$i])) {
+		//-- check children
+		$children = array();
+		// new children ?
+		if (isset($newfamily) && $newfamily->getChildren()) {
+			$childrenIds = $newfamily->getChildrenIds();
+			// add deleted children
+			$childrenIds = array_merge($childrenIds, array_diff($family->getChildrenIds(), $newfamily->getChildrenIds()));
+		}
+		else $childrenIds = $family->getChildrenIds();
+		foreach ($childrenIds as $k=>$pid) {
+			$child = Person::getInstance($pid);
+			if ($child->getSex()=="F")
+				$label = $labels["sister"];
+			else if ($child->getSex()=="M")
+				$label = $labels["brother"];
+			else
 				$label = $labels["sibling"];
-				$sex = $children[$i]->getSex();
-				if ($sex=="F") {
-					$label = $labels["sister"];
-				}
-				if ($sex=="M") {
-					$label = $labels["brother"];
-				}
-				if ($children[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-				$pedi = $children[$i]->getChildFamilyPedigree($family->getXref());
-				if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
-				$children[$i]->setLabel($label);
+			if ($child->getXref()==$this->pid)
+				$label = "<img src=\"images/selected.png\" alt=\"\" />";
+			$pedi = $child->getChildFamilyPedigree($family->getXref());
+			if ($pedi && isset($pgv_lang[$pedi]))
+				$label .= " (".$pgv_lang[$pedi].")";
+			if (isset($newfamily)) {
+				// deleted child
+				if (in_array($pid, $family->getChildrenIds())
+				&& (!in_array($pid, $newfamily->getChildrenIds()))) $label = "- ".$label;
+				// new child
+				if (!in_array($pid, $family->getChildrenIds())
+				&& (in_array($pid, $newfamily->getChildrenIds()))) $label = "+ ".$label;
 			}
-		}
-		$num = count($newchildren);
-		for($i=0; $i<$num; $i++) {
-			$label = $labels["sibling"];
-			$sex = $newchildren[$i]->getSex();
-			if ($sex=="F") {
-				$label = $labels["sister"];
-			}
-			if ($sex=="M") {
-				$label = $labels["brother"];
-			}
-			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$pedi = $newchildren[$i]->getChildFamilyPedigree($family->getXref());
-			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
-			$newchildren[$i]->setLabel($label);
-		}
-		$num = count($delchildren);
-		for($i=0; $i<$num; $i++) {
-			$label = $labels["sibling"];
-			$sex = $delchildren[$i]->getSex();
-			if ($sex=="F") {
-				$label = $labels["sister"];
-			}
-			if ($sex=="M") {
-				$label = $labels["brother"];
-			}
-			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$pedi = $delchildren[$i]->getChildFamilyPedigree($family->getXref());
-			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
-			$delchildren[$i]->setLabel($label);
+			$child->setLabel($label);
+			$children[] = $child;
 		}
 		if (!is_null($newhusb)) $people['newhusb'] = $newhusb;
 		if (!is_null($husb)) $people['husb'] = $husb;
 		if (!is_null($newwife)) $people['newwife'] = $newwife;
 		if (!is_null($wife)) $people['wife'] = $wife;
 		$people['children'] = $children;
-		$people['newchildren'] = $newchildren;
-		$people['delchildren'] = $delchildren;
 		return $people;
 	}
 
@@ -1027,9 +970,11 @@ class IndividualControllerRoot extends BaseController {
 			<tr id="row_top">
 				<td></td>
 				<td class="descriptionbox rela">
-					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" /><label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
+					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
+					<label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
-						<input id="checkbox_histo" type="checkbox" onclick="toggleByClassName('TR', 'row_histo');" /><label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
+						<input id="checkbox_histo" type="checkbox" onclick="toggleByClassName('TR', 'row_histo');" />
+						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
 				</td>
 			</tr>
@@ -1406,46 +1351,25 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 				<?php
 				}
-				$styleadd = "blue";
-				if (isset($people["newchildren"])) {
-					foreach($people["newchildren"] as $key=>$child) {
+				//-- children
+				$elderdate = $family->getMarriageDate();
+				foreach($people["children"] as $key=>$child) {
+					$label = $child->getLabel();
+					if ($label[0]=='+')
+						$styleadd = "blue";
+					else if ($label[0]=='-')
+						$styleadd = "red";
+					else
+						$styleadd = "";
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
-						<td class="<?php print $this->getPersonStyle($child); ?>">
-						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-						</td>
-					</tr>
-					<?php
-					}
-				}
-				$styleadd = "";
-				if (isset($people["children"])) {
-					$elderdate = $family->getMarriageDate();
-					foreach($people["children"] as $key=>$child) {
-					?>
-					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php if ($styleadd=="red") print $child->getLabel(); else print $child->getLabel($elderdate, $key+1); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
 					$elderdate = $child->getBirthDate(false);
-					}
-				}
-				$styleadd = "red";
-				if (isset($people["delchildren"])) {
-					foreach($people["delchildren"] as $key=>$child) {
-					?>
-					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
-						<td class="<?php print $this->getPersonStyle($child); ?>">
-						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-						</td>
-					</tr>
-					<?php
-					}
 				}
 				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 					?>
@@ -1566,46 +1490,25 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 				<?php
 				}
-				$styleadd = "blue";
-				if (isset($people["newchildren"])) {
-					foreach($people["newchildren"] as $key=>$child) {
+				//-- children
+				$elderdate = $family->getMarriageDate();
+				foreach($people["children"] as $key=>$child) {
+					$label = $child->getLabel();
+					if ($label[0]=='+')
+						$styleadd = "blue";
+					else if ($label[0]=='-')
+						$styleadd = "red";
+					else
+						$styleadd = "";
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
-						<td class="<?php print $this->getPersonStyle($child); ?>">
-						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-						</td>
-					</tr>
-					<?php
-					}
-				}
-				$styleadd = "";
-				if (isset($people["children"])) {
-					$elderdate = $family->getMarriageDate();
-					foreach($people["children"] as $key=>$child) {
-					?>
-					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php if ($styleadd=="red") print $child->getLabel(); else print $child->getLabel($elderdate, $key+1); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
 					$elderdate = $child->getBirthDate(false);
-					}
-				}
-				$styleadd = "red";
-				if (isset($people["delchildren"])) {
-					foreach($people["delchildren"] as $key=>$child) {
-					?>
-					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
-						<td class="<?php print $this->getPersonStyle($child); ?>">
-						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-						</td>
-					</tr>
-					<?php
-					}
 				}
 				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 					?>
@@ -1743,46 +1646,25 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 				<?php
 				}
-				$styleadd = "blue";
-				if (isset($people["newchildren"])) {
-					foreach($people["newchildren"] as $key=>$child) {
+				//-- children
+				$elderdate = $family->getMarriageDate();
+				foreach($people["children"] as $key=>$child) {
+					$label = $child->getLabel();
+					if ($label[0]=='+')
+						$styleadd = "blue";
+					else if ($label[0]=='-')
+						$styleadd = "red";
+					else
+						$styleadd = "";
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
-						<td class="<?php print $this->getPersonStyle($child); ?>">
-						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-						</td>
-					</tr>
-					<?php
-					}
-				}
-				$styleadd = "";
-				if (isset($people["children"])) {
-					$elderdate = $family->getMarriageDate();
-					foreach($people["children"] as $key=>$child) {
-					?>
-					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php if ($styleadd=="red") print $child->getLabel(); else print $child->getLabel($elderdate, $key+1); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
 					$elderdate = $child->getBirthDate(false);
-					}
-				}
-				$styleadd = "red";
-				if (isset($people["delchildren"])) {
-					foreach($people["delchildren"] as $key=>$child) {
-					?>
-					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
-						<td class="<?php print $this->getPersonStyle($child); ?>">
-						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-						</td>
-					</tr>
-					<?php
-					}
 				}
 				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 					?>

@@ -963,14 +963,31 @@ case 'addchildaction':
 		print "<br /><br />".$pgv_lang["update_successful"];
 		$gedrec = "";
 		if (!empty($famid)) {
-			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $gedrec = find_gedcom_record($famid);
-			else $gedrec = find_updated_record($famid);
-			if (!empty($gedrec)) {
-				$gedrec = trim($gedrec);
-				$gedrec .= "\r\n1 CHIL @$xref@\r\n";
-				if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
-				replace_gedrec($famid, $gedrec);
+			// Insert new child at the right place [ 1686246 ]
+			$newchild = Person::getInstance($xref);
+			$family = Family::getInstance($famid);
+			if ($family->getUpdatedFamily()) $family = $family->getUpdatedFamily();
+			$gedrec = $family->gedrec;
+			$done = false;
+			foreach($family->getChildren() as $key=>$child) {
+				//print $xref." ".$newchild->getBirthYear()." <==> ".$child->getXref()." ".$child->getBirthYear()."<br />";
+				if ($newchild->getBirthYear() && $newchild->getBirthYear() < $child->getBirthYear()) {
+					// new child is older : insert before
+					$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
+																"1 CHIL @$xref@\r\n1 CHIL @".$child->getXref()."@",
+																$gedrec);
+					$done = true;
+					break;
+				}
 			}
+			if (!$done) {
+				// new child is the youngest or undated : insert last
+				$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
+															"1 CHIL @".$child->getXref()."@\r\n1 CHIL @$xref@",
+															$gedrec);
+			}
+			if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+			replace_gedrec($famid, $gedrec);
 		}
 		$success = true;
 	}
@@ -1612,24 +1629,27 @@ case 'reorder_children':
 		<input type="hidden" name="option" value="bybirth" />
 		<ul id="reorder_list">
 		<?php
+			// reorder children in modified families [ 1840895 ]
+			$family = Family::getInstance($pid);
+			$ids = $family->getChildrenIds();
+			if ($family->getUpdatedFamily()) $family = $family->getUpdatedFamily();
 			$children = array();
-			$ct = preg_match_all("/1 CHIL @(.+)@/", $gedrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$child = trim($match[$i][1]);
-				$irec = find_person_record($child);
-				if ($irec===false) $irec = find_updated_record($child);
-				if (isset($indilist[$child])) $children[$child] = $indilist[$child];
+			foreach ($family->getChildren() as $k=>$child) {
+				$bdate = new GedcomDate($child->getBirthDate());
+				$sortkey = $bdate->MinJD();
+				if (!$sortkey) $sortkey = 1e8; // birth date missing => sort last
+				$children[$child->getXref()] = $sortkey;
 			}
 			if ((!empty($option))&&($option=="bybirth")) {
-				uasort($children, "compare_date");
+				asort($children);
 			}
 			$i=0;
-			foreach($children as $pid=>$child) {
-				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$pid\" >";
-				//print_pedigree_person($pid,2,false);
-				print "<span class=\"name2\">".PrintReady(get_person_name($pid))."</span>";
-				print_first_major_fact($pid);
-				print "<input type=\"hidden\" name=\"order[$pid]\" value=\"$i\"/>";
+			foreach($children as $id=>$child) {
+				print "<li style=\"cursor:move;margin-bottom:2px;\"";
+				if (!in_array($id, $ids)) print " class=\"facts_valueblue\"";
+				print " id=\"li_$id\" >";
+				print_pedigree_person($id, 2, false);
+				print "<input type=\"hidden\" name=\"order[$id]\" value=\"$i\"/>";
 				print "</li>";
 				$i++;
 			}
