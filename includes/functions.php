@@ -1019,28 +1019,17 @@ function find_highlighted_object($pid, $indirec) {
 	//-- handle finding the media of remote objects
 	$ct = preg_match("/(.*):(.*)/", $pid, $match);
 	if ($ct>0) {
-		if (class_exists("ServiceClient")) {
-			$client = ServiceClient::getInstance($match[1]);
-			if (!is_null($client)) {
-				$mt = preg_match_all("/\d OBJE @(.*)@/", $indirec, $matches, PREG_SET_ORDER);
-				for($i=0; $i<$mt; $i++) {
-					$mediaObj = Media::getInstance($matches[$i][1]);
-					$mrec = $mediaObj->getGedcomRecord();
-						if (!empty($mrec)) {
-							$file = get_gedcom_value("FILE", 1, $mrec);
-							$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
-							$media[] = $row;
-						}
-					/*
-					$parts = preg_split("/:/", $matches[$i][1]);
-					if (isset($parts[1])) {
-						$mrec = $client->getRemoteRecord($parts[1]);
-						if (!empty($mrec)) {
-							$file = get_gedcom_value("FILE", 1, $mrec);
-							$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
-							$media[] = $row;
-						}
-					} */
+		require_once 'includes/serviceclient_class.php';
+		$client = ServiceClient::getInstance($match[1]);
+		if (!is_null($client)) {
+			$mt = preg_match_all("/\d OBJE @(.*)@/", $indirec, $matches, PREG_SET_ORDER);
+			for($i=0; $i<$mt; $i++) {
+				$mediaObj = Media::getInstance($matches[$i][1]);
+				$mrec = $mediaObj->getGedcomRecord();
+				if (!empty($mrec)) {
+					$file = get_gedcom_value("FILE", 1, $mrec);
+					$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
+					$media[] = $row;
 				}
 			}
 		}

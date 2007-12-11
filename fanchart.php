@@ -424,9 +424,11 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 }
 
 // -- args
-if (!isset($fan_style)) $fan_style = 0;
+if (isset($_REQUEST['fan_style'])) $fan_style = $_REQUEST['fan_style'];
+if (empty($fan_style)) $fan_style = 0;
 if ($fan_style==0) $fan_style = 3;
-if ((!isset($PEDIGREE_GENERATIONS)) || ($PEDIGREE_GENERATIONS == "")) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
+if (empty($_REQUEST['PEDIGREE_GENERATIONS'])) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
+else $PEDIGREE_GENERATIONS = $_REQUEST['PEDIGREE_GENERATIONS'];
 
 if ($PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
 	$PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
@@ -440,12 +442,14 @@ if ($PEDIGREE_GENERATIONS < $MIN_FANCHART_GENERATIONS) {
 }
 $OLD_PGENS = $PEDIGREE_GENERATIONS;
 
-if (!isset($rootid)) $rootid = "";
+$rootid = "";
+if (!empty($_REQUEST['rootid'])) $rootid = $_REQUEST['rootid'];
 $rootid = clean_input($rootid);
 $rootid = check_rootid($rootid);
 
 // -- size of the chart
-if (!isset($fan_width)) $fan_width = "100";
+$fan_width = "100";
+if (!empty($_REQUEST['fan_width'])) $fan_width = $_REQUEST['fan_width'];
 $fan_width=max($fan_width, 50);
 $fan_width=min($fan_width, 300);
 

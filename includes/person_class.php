@@ -100,6 +100,7 @@ class Person extends GedcomRecord {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
+				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
 				if (!empty($service)) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
@@ -1483,6 +1484,7 @@ class Person extends GedcomRecord {
 				$servid = $parts[0];
 				$aliaid = $parts[1];
 				if (!empty($servid)&&!empty($aliaid)) {
+					require_once 'includes/serviceclient_class.php';
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!empty($serviceClient)) {
 						$surl = $serviceClient->getURL();

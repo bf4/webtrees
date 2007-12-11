@@ -65,6 +65,7 @@ class Repository extends GedcomRecord {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
+				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
 				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ REPO\r\n1 RFN ".$pid, false);
 				$repositoryrec = $newrec;
@@ -228,6 +229,7 @@ class Repository extends GedcomRecord {
 				$servid = $parts[0];
 				$aliaid = $parts[1];
 				if (!empty($servid)&&!empty($aliaid)) {
+					require_once 'includes/serviceclient_class.php';
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!empty($serviceClient)) {
 						$surl = $serviceClient->getURL();

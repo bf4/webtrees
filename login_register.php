@@ -30,6 +30,21 @@ require "config.php";
 
 loadLangFile("pgv_confighelp");
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['user_firstname'])) $user_firstname = $_REQUEST['user_firstname'];
+if (isset($_REQUEST['user_lastname'])) $user_lastname = $_REQUEST['user_lastname'];
+if (isset($_REQUEST['url'])) $url = $_REQUEST['url'];
+if (isset($_REQUEST['time'])) $time = $_REQUEST['time'];
+if (isset($_REQUEST['user_name'])) $user_name = $_REQUEST['user_name'];
+if (isset($_REQUEST['user_email'])) $user_email = $_REQUEST['user_email'];
+if (isset($_REQUEST['user_password01'])) $user_password01 = $_REQUEST['user_password01'];
+if (isset($_REQUEST['user_password02'])) $user_password02 = $_REQUEST['user_password02'];
+if (isset($_REQUEST['user_language'])) $user_language = $_REQUEST['user_language'];
+if (isset($_REQUEST['user_gedcomid'])) $user_gedcomid = $_REQUEST['user_gedcomid'];
+if (isset($_REQUEST['user_comments'])) $user_comments = $_REQUEST['user_comments'];
+if (isset($_REQUEST['user_password'])) $user_password = $_REQUEST['user_password'];
+if (isset($_REQUEST['user_hashcode'])) $user_hashcode = $_REQUEST['user_hashcode'];
+
 // Remove slashes
 if (isset($user_firstname)) $user_firstname = stripslashes($user_firstname);
 if (isset($user_lastname)) $user_lastname = stripslashes($user_lastname);

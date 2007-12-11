@@ -35,6 +35,10 @@ if ($_SESSION["cookie_login"]) {
 	header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
 	exit;
 }
+
+if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+
 $success = false;
 //check for pid
 if(!isset($pid)){

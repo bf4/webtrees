@@ -37,6 +37,9 @@ if (!userGedcomAdmin(getUserName())) {
 
 loadLangFile("pgv_confighelp");
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['logfilename'])) $logfilename = $_REQUEST['logfilename'];
+
 if (!isset($action)) $action="";
 
 print_header($pgv_lang["administration"]);

@@ -83,6 +83,15 @@ function check_alive($indirec, $year) {
 }
 //-- end functions
 
+if (isset($_REQUEST['surname_sublist'])) $surname_sublist = $_REQUEST['surname_sublist'];
+if (isset($_REQUEST['show_all'])) $show_all = $_REQUEST['show_all'];
+if (isset($_REQUEST['show_all_firstnames'])) $show_all_firstnames = $_REQUEST['show_all_firstnames'];
+if (isset($_REQUEST['year'])) $year = $_REQUEST['year'];
+if (isset($_REQUEST['alpha'])) $alpha = $_REQUEST['alpha'];
+if (isset($_REQUEST['surname'])) $surname = $_REQUEST['surname'];
+if (isset($_REQUEST['view'])) $view = $_REQUEST['view'];
+
+
 if (empty($surname_sublist)) $surname_sublist = "yes";
 if (empty($show_all)) $show_all = "no";
 if (empty($show_all_firstnames)) $show_all_firstnames = "no";

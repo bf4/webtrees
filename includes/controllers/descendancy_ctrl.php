@@ -105,6 +105,7 @@ class DescendancyControllerRoot extends BaseController {
 	 */
 	function init() {
 	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
+	global $show_full;
 
 	$this->sexarray["M"] = $pgv_lang["male"];
 	$this->sexarray["F"] = $pgv_lang["female"];
@@ -113,6 +114,7 @@ class DescendancyControllerRoot extends BaseController {
 	//set arguments
 	if (isset($_REQUEST["show_full"])) $this->show_full = $_REQUEST["show_full"];
 	else $this->show_full = 1;
+	$show_full = $this->show_full;
 	if (!empty($_REQUEST["chart_style"])) $this->chart_style = $_REQUEST["chart_style"];
 	else $this->chart_style = 0;
 	if (!empty($_REQUEST["generations"])) $this->generations = $_REQUEST["generations"];

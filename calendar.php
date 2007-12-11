@@ -34,6 +34,15 @@
 require("config.php");
 require_once("includes/functions_print_lists.php");
 
+if (isset($_REQUEST['cal'])) $cal = $_REQUEST['cal'];
+if (isset($_REQUEST['day'])) $day = $_REQUEST['day'];
+if (isset($_REQUEST['month'])) $month = $_REQUEST['month'];
+if (isset($_REQUEST['year'])) $year = $_REQUEST['year'];
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['filterev'])) $filterev = $_REQUEST['filterev'];
+if (isset($_REQUEST['filterof'])) $filterof = $_REQUEST['filterof'];
+if (isset($_REQUEST['filtersx'])) $filtersx = $_REQUEST['filtersx'];
+
 // Set undefined parameters to defaults
 if (empty($cal     )) $cal     ='';
 if (empty($day     )) $day     ='';

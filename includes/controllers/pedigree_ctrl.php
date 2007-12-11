@@ -71,7 +71,7 @@ class PedigreeControllerRoot extends BaseController {
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT, $MAX_PEDIGREE_GENERATIONS;
 		global $DEFAULT_PEDIGREE_GENERATIONS, $SHOW_EMPTY_BOXES;
 		global $bwidth, $bheight, $baseyoffset, $basexoffset, $byspacing, $bxspacing;
-		global $TEXT_DIRECTION, $BROWSER_TYPE;
+		global $TEXT_DIRECTION, $BROWSER_TYPE, $show_full, $talloffset;
 		
 		$this->log2 = log(2);
 		if ($this->isPrintPreview()) {
@@ -81,10 +81,12 @@ class PedigreeControllerRoot extends BaseController {
 		if (!isset($_REQUEST['show_full'])) $this->show_full=$PEDIGREE_FULL_DETAILS;
 		else $this->show_full = $_REQUEST['show_full'];
 		if ($this->show_full=="") $this->show_full = 0;
+		$show_full = $this->show_full;
 		
 		if (!isset($_REQUEST['talloffset'])) $this->talloffset = (int)$PEDIGREE_LAYOUT;
 		else $this->talloffset = $_REQUEST['talloffset'];
 		if ($this->talloffset=="") $this->talloffset = 0;
+		$talloffset = $this->talloffset;
 		
 		if (empty($_REQUEST['PEDIGREE_GENERATIONS'])) $this->PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
 		else $this->PEDIGREE_GENERATIONS=$_REQUEST['PEDIGREE_GENERATIONS'];
