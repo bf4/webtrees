@@ -77,7 +77,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS;
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $SHOW_FACT_ICONS;
-	global $n_chil, $n_gchi;
+	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER, $NAME_REVERSE;
 	
 	//-- keep the time of this access to help with concurrent edits
@@ -137,6 +137,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			print $factarray[$fact];
 			if ($fact=="_BIRT_CHIL" and isset($n_chil)) print "<br />".$pgv_lang["number_sign"].$n_chil++;
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) print "<br />".$pgv_lang["number_sign"].$n_gchi++;
+			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) print "<br />".$pgv_lang["number_sign"].$n_ggch++;
 			if (!$noedit && (userCanEdit(getUserName()))&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
 				$menu = array();
 				$menu["label"] = $pgv_lang["edit"];

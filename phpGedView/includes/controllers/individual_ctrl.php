@@ -946,7 +946,7 @@ class IndividualControllerRoot extends BaseController {
 
 	function print_facts_tab() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
-		global $n_chil, $n_gchi;
+		global $n_chil, $n_gchi, $n_ggch;
 		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 
 		//-- only need to add family facts on this tab
@@ -982,6 +982,7 @@ class IndividualControllerRoot extends BaseController {
 			$yetdied=false;
 			$n_chil=1;
 			$n_gchi=1;
+			$n_ggch=1;
 			foreach ($indifacts as $key => $value) {
 				if (stristr($value[1], "1 DEAT")) $yetdied=true;
 				if (stristr($value[1], "1 BURI")) $yetdied=true;
