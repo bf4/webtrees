@@ -717,7 +717,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					$mnsct = preg_match('/\/(.+)\//', $value, $match2);
 					$marnm_surn = "";
 					if ($mnsct>0) $marnm_surn = $match2[1];
-					add_simple_tag("2 _MARNM");
+					add_simple_tag("2 _MARNM ".$value);
 					add_simple_tag("2 _MARNM_SURN ".$marnm_surn);
 				} else {
 					add_simple_tag("2 $tag $value");
