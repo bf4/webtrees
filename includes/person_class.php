@@ -937,7 +937,7 @@ class Person extends GedcomRecord {
 		foreach($fams as $famid=>$family) {
 			// add father death
 			$spouse = $family->getHusband();
-			if ($sosa==1) $fact="_DEAT_FATH"; else $fact="_DEAT_GPAR";
+			if ($sosa==1) $fact="_DEAT_FATH"; else if ($sosa<4) $fact="_DEAT_GPAR"; else $fact="_DEAT_GGPA";
 			if ($spouse && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 				$srec = $spouse->getDeathRecord(false);
 				$sdate = get_sub_record(2, "2 DATE", $srec);
@@ -957,7 +957,7 @@ class Person extends GedcomRecord {
 			$this->add_parents_facts($spouse, $sosa*2); // recursive call for father ancestors
 			// add mother death
 			$spouse = $family->getWife();
-			if ($sosa==1) $fact="_DEAT_MOTH"; else $fact="_DEAT_GPAR";
+			if ($sosa==1) $fact="_DEAT_MOTH"; else if ($sosa<4) $fact="_DEAT_GPAR"; else $fact="_DEAT_GGPA";
 			if ($spouse and strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 				$srec = $spouse->getDeathRecord(false);
 				$sdate = get_sub_record(2, "2 DATE", $srec);
@@ -1056,6 +1056,12 @@ class Person extends GedcomRecord {
 					if ($sex=="F") $rela="granddaughter";
 					if ($sex=="M") $rela="grandson";
 				}
+				// great-grandchildren
+				if ($option=="_GGCH") {
+					$rela="greatgrandchild";
+					if ($sex=="F") $rela="greatgranddaughter";
+					if ($sex=="M") $rela="greatgrandson";
+				}
 				// stepsiblings
 				if ($option=="_HSIB") {
 					$rela="halfsibling";
@@ -1102,7 +1108,7 @@ class Person extends GedcomRecord {
 						$factrec .= "\n2 ASSO @".$spid."@";
 						$factrec .= "\n3 RELA ".$rela;
 						// add parents on grandchildren, cousin or nephew's birth
-						if ($option=="_GCHI" or $option=="_COUS" or $option=="_NEPH") {
+						if ($option=="_GCHI" or $option=="_GGCH" or $option=="_COUS" or $option=="_NEPH") {
 							if ($family->getHusbId()) {
 								$factrec .= "\n2 ASSO @".$family->getHusbId()."@";
 								$factrec .= "\n3 RELA father";
@@ -1164,10 +1170,16 @@ class Person extends GedcomRecord {
 						}
 					}
 				}
-				// add children of children = grand-children
+				// add children of children = grandchildren
 				if ($option=="_CHIL") {
 					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
 						$this->add_children_facts($sfamily, "_GCHI");
+					}
+				}
+				// add children of grandchildren = great-grandchildren
+				if ($option=="_GCHI") {
+					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
+						$this->add_children_facts($sfamily, "_GGCH");
 					}
 				}
 				// add children of siblings = nephew/niece

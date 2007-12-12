@@ -10,6 +10,7 @@
 
 
 Version 4.1.4
+ - Events of close relatives : add great-grandchildren/parents (opus27)
  - Added [ 1840895 ] reorder children in modified families (opus27)
  - Added [ 1686246 ] Insert new child at the right place in the family (opus27)
  - Fixed [ 1838140 ] Edit interface bug when place editing (opus27)
