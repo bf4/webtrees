@@ -516,7 +516,7 @@ class GedcomRecord {
 			foreach($this->facts as $indexval => $event) {
 				$newfact = $newevent->getGedcomRecord();
 				$newfact=preg_replace("/\\\/", "/", $newfact);
-				if (trim($newfact)==trim($fact->getGedcomRecord())) {
+				if (trim($newfact)==trim($event->getGedcomRecord())) {
 					$found = true;
 					break;
 				}

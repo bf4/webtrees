@@ -38,6 +38,8 @@ require_once 'includes/functions_charts.php';
 require_once 'includes/family_class.php';
 require_once 'includes/menu.php';
 
+$nonfacts = array("FAMS", "FAMC", "MAY", "BLOB", "HUSB", "WIFE", "CHIL", "");
+
 class FamilyRoot extends BaseController
 {
 	var $user = null;
@@ -109,24 +111,15 @@ class FamilyRoot extends BaseController
 		}
 		$_REQUEST['famid'] = clean_input($_REQUEST['famid']);
 		$this->famid = $_REQUEST['famid'];
-		$this->famrec = find_family_record($this->famid);
-		
-		if (empty($this->famrec)) {
-			$ct = preg_match("/(\w+):(.+)/", $this->famid, $match);
-			if ($ct>0) {
-				$servid = trim($match[1]);
-				$remoteid = trim($match[2]);
-				$service = ServiceClient::getInstance($servid);
-				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\r\n1 RFN ".$this->famid, false);
-				
-				$this->famrec = $newrec;
-			}
-		}
+		$this->family = Family::getInstance($this->famid);
 		
 		//-- if no record was found create a default empty one
-		if (empty($this->famrec)) $this->famrec = "0 @".$this->famid."@ FAM\r\n";
+		if (empty($this->family)) {
+			$this->famrec = "0 @".$this->famid."@ FAM\r\n";
+			$this->family = new Family($this->famrec);
+		}
+		$this->famrec = $this->family->getGedcomRecord();
 		$this->display = displayDetailsByID($this->famid, 'FAM');
-		$this->family = new Family($this->famrec);
 
 		$this->uname = getUserName();
 		//-- if the user can edit and there are changes then get the new changes
@@ -135,8 +128,9 @@ class FamilyRoot extends BaseController
 			if (empty($newrec)) $newrec = find_family_record($this->famid);
 			$this->difffam = new Family($newrec);
 			$this->difffam->setChanged(true);
-			$this->famrec = $newrec;
-			$this->family = new Family($this->famrec);
+			$this->family->diffMerge($this->difffam);
+			//$this->famrec = $newrec;
+			//$this->family = new Family($this->famrec);
 		}
 		$this->parents = array('HUSB'=>$this->family->getHusbId(), 'WIFE'=>$this->family->getWifeId());
 

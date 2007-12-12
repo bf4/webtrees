@@ -130,7 +130,7 @@ print_header($controller->getPageTitle());
 			<?php print_family_children($controller->getFamilyID());?>
 		</td>
 		<td valign="top">
-			<?php print_family_facts($controller->getFamilyID());?>
+			<?php print_family_facts($controller->family);?>
 		</td>
 	</tr>
 </table>
