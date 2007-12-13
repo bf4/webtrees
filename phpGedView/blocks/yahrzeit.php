@@ -186,7 +186,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 
 				//-- death/yahrzeit event date
 				print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-				print $yahrzeit['date']->Display(true, NULL, array());
+				print "<a name='{$yahrzeit['jd']}'>".$yahrzeit['date']->Display(true, NULL, array())."</a>";
 				print "</td>";
 
 				//-- Anniversary
