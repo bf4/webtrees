@@ -396,6 +396,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	//-- start of user specific privacy checks
 	$username = getUserName();
 	if (!empty($username)) {
+		$user = getUser($username);
 		if (isset($user_privacy[$username]["all"])) {
 			if ($user_privacy[$username]["all"] >= getUserAccessLevel($username)) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
@@ -448,7 +449,6 @@ function displayDetailsByID($pid, $type = "INDI") {
 		}
 	
 		if (userCanAccess($username)) {
-			$user = getUser($username);
 			if ($type=="INDI") {
 				$isdead = is_dead_id($pid);
 				if ($USE_RELATIONSHIP_PRIVACY || $user["relationship_privacy"]=="Y") {
