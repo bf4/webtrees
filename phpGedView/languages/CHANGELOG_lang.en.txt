@@ -45,6 +45,9 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["greatgrandchild"]						15 Dec 2007				A
++$pgv_lang["greatgrandson"]							15 Dec 2007				A
++$pgv_lang["greatgranddaughter"]					15 Dec 2007				A
 -$pgv_lang["son-in-law"]							07 Dec 2007				D
 -$pgv_lang["daughter-in-law"]						07 Dec 2007				D
 -$pgv_lang["brother-in-law"]						07 Dec 2007				D

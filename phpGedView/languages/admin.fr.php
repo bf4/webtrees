@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,15 +21,20 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @author Christophe Bx
- * @author Julien Damon
  * @version $Id$
  */
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
 
+#pgv_lang["associated_files"]           = "Associated files:";
+#pgv_lang["remove_all_files"]           = "Remove all nonessential files";
+#pgv_lang["warn_file_delete"]           = "This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?";
+#pgv_lang["deleted_files"]              = "Deleted files:";
+#pgv_lang["index_dir_cleanup_inst"]     = "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.<br /><br />";
+#pgv_lang["index_dir_cleanup"]          = "Cleanup Index directory";
 $pgv_lang["clear_cache_succes"]         = "Fichiers supprimés du cache.";
 $pgv_lang["clear_cache"]                = "Vider le cache";
 $pgv_lang["sanity_err0"]                = "Erreurs:";
@@ -144,6 +149,7 @@ $pgv_lang["create_user"]                = "Ajouter un utilisateur";
 $pgv_lang["current_users"]              = "Liste des utilisateurs";
 $pgv_lang["daily"]                      = "Quotidien";
 $pgv_lang["dataset_exists"]             = "Un fichier GEDCOM de même nom a déjà été introduit dans la base de données.";
+#pgv_lang["unsync_warning"]             = "This GEDCOM file is <em>not</em> synchronized with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload.";
 $pgv_lang["date_registered"]            = "Déclaration";
 $pgv_lang["day_before_month"]           = "Jour Mois Année (JJ MM AAAA)";
 $pgv_lang["DEFAULT_GEDCOM"]             = "Fichier GEDCOM par défaut";
@@ -153,7 +159,6 @@ $pgv_lang["del_proceed"]                = "Continuer";
 $pgv_lang["del_unvera"]                 = "Compte non vérifié par un administrateur.";
 $pgv_lang["del_unveru"]                 = "Compte non vérifié sous 7 jours.";
 $pgv_lang["do_not_change"]              = "Ne pas modifier";
-$pgv_lang["download_file"]              = "Télécharger le fichier sur votre système (<i>Download</i>)";
 $pgv_lang["download_gedcom"]            = "Recevoir le fichier GEDCOM sur votre système (download)";
 $pgv_lang["download_here"]              = "Charger le fichier sur votre système (<i>Download</i>).";
 $pgv_lang["download_note"]              = "Note: un gros fichier GEDCOM risque d'être long à charger. Si PHP stoppe avant la fin du chargement, votre fichier sera incomplet. Vérifier la présence de la ligne '0 TRLR' à la fin du fichier. Généralement, les temps d'envoi (upload)  ou de réception (download) du fichier GEDCOM sont équivalents.";
@@ -193,10 +198,7 @@ $pgv_lang["INDEX_DIRECTORY"]            = "Répertoire des fichiers d'index";
 $pgv_lang["invalid_dates"]              = "Les dates de mauvais format seront transformées en JJ MMM AAAA (ie. 1 JAN 2004).";
 $pgv_lang["BOM_detected"]               = "Marqueur Byte Order Mark (BOM) trouvé en début de fichier. Il sera supprimé.";
 $pgv_lang["invalid_header"]             = "Lignes trouvées avant le premier marqueur GEDCOM (0 HEAD). Au chargement, elles seront supprimées.";
-$pgv_lang["label_add_server"]           = "Ajouter";
-$pgv_lang["label_add_search_server"]    = "Ajouter IP";
 $pgv_lang["label_added_servers"]        = "Serveurs distants ajoutés";
-$pgv_lang["label_ban_server"]           = "Soumettre";
 $pgv_lang["label_banned_servers"]       = "Liste noire";
 $pgv_lang["label_families"]             = "Familles";
 $pgv_lang["label_gedcom_id2"]           = "ID base de données";
@@ -234,7 +236,6 @@ $pgv_lang["mysqli"]                     = "MySQL 4.1+ et PHP 5";
 $pgv_lang["never"]                      = "Jamais";
 $pgv_lang["no_logs"]                    = "Journal désactivé";
 $pgv_lang["no_messaging"]               = "Messagerie désactivée";
-$pgv_lang["none"]                       = "Libre";
 $pgv_lang["oci8"]                       = "Oracle 7+";
 $pgv_lang["page_views"]                 = "&nbsp;&nbsp;visites en &nbsp;&nbsp;";
 $pgv_lang["performing_validation"]      = "Validation du fichier GEDCOM";
@@ -346,4 +347,5 @@ $pgv_lang["spanish"]                    = "Façon Espagnole";
 $pgv_lang["portuguese"]                 = "Façon Portugaise";
 $pgv_lang["icelandic"]                  = "Façon Islandaise";
 $pgv_lang["paternal"]                   = "Nom du père (défaut)";
+
 ?>
