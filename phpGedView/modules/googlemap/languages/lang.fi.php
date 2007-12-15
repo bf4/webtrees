@@ -28,10 +28,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
-$pgv_lang["FormDesciption"]			= "Lisää lomakkeen kuvaus";
-$pgv_lang["comment_body"]			= 'Kommentti';
-$pgv_lang["choose_form_label"]		= "Valitse yleinen tutkimuslomake:";
-
 $pgv_lang["autosearch_ssurname"] 	= "Lisää puolison sukunimi:";
 $pgv_lang["autosearch_sgivennames"] = "Lisää puolison etunimet:";
 $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com lisäke";

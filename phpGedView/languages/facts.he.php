@@ -33,24 +33,24 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 // -- Define a fact array to map GEDCOM tags with their English values
 $factarray["ABBR"] 	= "קיצור";
-$factarray["ADDR"] = "כתובת";
+$factarray["ADDR"] 	= "כתובת";
 $factarray["ADR1"] 	= "כתובת 1";
 $factarray["ADR2"] 	= "כתובת 2";
 $factarray["ADOP"]	= "אמוץ";
-$factarray["AGE"] 	= "גיל";
-$factarray["AFN"]	= "מספר קובץ אב-אבות (AFN)";
+$factarray["AGE"] 		= "גיל";
+$factarray["AFN"]		= "מספר קובץ אב-אבות (AFN)";
 $factarray["AGNC"]	= "סוכנות";
-$factarray["ALIA"]	= "שם נרדף";
+$factarray["ALIA"]		= "שם נרדף";
 $factarray["ANCE"]	= "אב-אבות";
-$factarray["ANCI"]	= "עניין אב-אבות";
+$factarray["ANCI"]		= "עניין אב-אבות";
 $factarray["ANUL"]	= "ביטול";
 $factarray["ASSO"]	= "שותפים";
 $factarray["AUTH"] 	= "מחבר";
 $factarray["BAPL"]	= "טבילת מורמונים";
 $factarray["BAPM"]	= "טבילה";
-$factarray["BARM"] = "בר מצווה";
-$factarray["BASM"] = "בת מצווה";
-$factarray["BIRT"] 	= "לידה";
+$factarray["BARM"] 	= "בר מצווה";
+$factarray["BASM"] 	= "בת מצווה";
+$factarray["BIRT"] 		= "לידה";
 $factarray["BLES"]	= "ברכה";
 $factarray["BLOB"] 	= "אובייקט נתונים בינארי";
 $factarray["BURI"] 	= "קבורה";
@@ -60,11 +60,11 @@ $factarray["CAUS"]	= "גורם המות";
 $factarray["CEME"]	= "בית קברות";
 $factarray["CENS"]	= "מפקד אוכלוסין";
 $factarray["CHAN"]	= "שנוי אחרון";
-$factarray["CHAR"] = "ערכת תווים";
+$factarray["CHAR"] 	= "ערכת תווים";
 $factarray["CHIL"] 	= "ילד/ה";
-$factarray["CHR"]	= "הטבלה";
+$factarray["CHR"]		= "הטבלה";
 $factarray["CHRA"]	= "הטבלת מבוגרים";
-$factarray["CITY"] 	= "עיר";
+$factarray["CITY"] 		= "עיר";
 $factarray["CONF"]	= "ברית";
 $factarray["CONL"]	= "ברית המורמונים";
 $factarray["COPR"] 	= "זכויות יוצרים";
@@ -75,28 +75,28 @@ $factarray["DATA"] 	= "נתונים";
 $factarray["DATE"] 	= "תאריך";
 $factarray["DEAT"] 	= "פטירה";
 $factarray["DESC"]	= "צאצאים";
-$factarray["DESI"]	= "עניין הצאצאים";
+$factarray["DESI"]		= "עניין הצאצאים";
 $factarray["DEST"]	= "יעד";
-$factarray["DIV"]	= "גירושין";
-$factarray["DIVF"]	= "הגשת בקשה לגירושין";
+$factarray["DIV"]		= "גירושין";
+$factarray["DIVF"]		= "הגשת בקשה לגירושין";
 $factarray["EDUC"]	= "השכלה";
 $factarray["DSCR"] 	= "תיאור";
 $factarray["EMIG"] 	= "הגירה";
 $factarray["ENDL"]	= "סמיכה של מיקדש המורמונים";
-$factarray["ENGA"] = "אירוסין";
+$factarray["ENGA"]	= "אירוסין";
 $factarray["EVEN"] 	= "אירוע";
-$factarray["FAM"] 	= "משפחה";
+$factarray["FAM"] 		= "משפחה";
 $factarray["FAMC"]	= "משפחה כילד";
-$factarray["FAMF"] = "קובץ משפחה";
+$factarray["FAMF"] 	= "קובץ משפחה";
 $factarray["FAMS"]	= "משפחה כבן/בת זוג";
 $factarray["FCOM"]	= "הסעודה הראשונה";
-$factarray["FILE"]	= "קובץ  חיצוני";
-$factarray["FORM"] = "תבנית";
+$factarray["FILE"]		= "קובץ  חיצוני";
+$factarray["FORM"] 	= "תבנית";
 $factarray["GIVN"] 	= "שמות פרטיים";
-$factarray["GRAD"] = "סיום לימודים";
+$factarray["GRAD"] 	= "סיום לימודים";
 $factarray["HUSB"]	= "בעל";
 $factarray["IDNO"] 	= "קוד זיהוי";
-$factarray["IMMI"] 	= "עליה";
+$factarray["IMMI"] 		= "עליה";
 $factarray["LEGA"]	= "יורש";
 $factarray["MARB"]	= "הודעת נישואין";
 $factarray["MARC"]= "כתובה";
@@ -216,14 +216,14 @@ $factarray["_MSTAT"] = "מעמד תחילת נישואין";
 $factarray["_MEND"]  = "מעמד סיום נישואין";
 
 // GEDCOM 5.5.1 related facts
-$factarray["FAX"] 	= "פקס";
+$factarray["FAX"] 		= "פקס";
 $factarray["FACT"] 	= "עובדה";
-$factarray["WWW"] = "דף בית";
+$factarray["WWW"] 	= "דף בית";
 $factarray["MAP"] 	= "מפה";
-$factarray["LATI"]	= "קו רוחב";
+$factarray["LATI"]		= "קו רוחב";
 $factarray["LONG"]	= "קו אורך";
 $factarray["FONE"] 	= "פונטי";
-$factarray["ROMN"] = "לטיני";
+$factarray["ROMN"] 	= "לטיני";
 
 // PAF related facts
 $factarray["_NAME"] = "שם למשלוח דואר";
@@ -288,6 +288,10 @@ $factarray["_BIRT_GCHI"] = "לידת נכד/ה";
 $factarray["_MARR_GCHI"] = "נישואי נכד/ה";
 $factarray["_DEAT_GCHI"] = "פטירת נכד/ה";
 
+$factarray["_BIRT_GGCH"] = "לידת שלש או שלשה";
+$factarray["_MARR_GGCH"] = "נישואי שלש או שלשה"; 
+$factarray["_DEAT_GGCH"] = "פטירת שלש או שלשה";
+
 $factarray["_MARR_FATH"] = "נישואי אב";
 $factarray["_DEAT_FATH"] = "פטירת אב";
 
@@ -305,7 +309,10 @@ $factarray["_DEAT_HSIB"] = "פטירת אח/ות למחצה";
 $factarray["_BIRT_NEPH"] = "לידת אחיין או אחיינית"; 
 $factarray["_MARR_NEPH"] = "נישואי אחיין או אחיינית"; 
 $factarray["_DEAT_NEPH"] = "פטירת אחיין או אחיינית";
+
 $factarray["_DEAT_GPAR"] = "פטירת סבא או סבתא";
+
+$factarray["_DEAT_GGPA"] = "פטירת סבא רבא או סבתא רבתא";
 
 $factarray["_BIRT_FSIB"] = "לידת אח או אחות האב";
 $factarray["_MARR_FSIB"] = "נישואי אח/ות של האב";
@@ -327,5 +334,6 @@ $factarray["_THUM"] = "השתמש בתמונה זו כתמונה ממוזערת?
 $factarray["_PGVU"] = "ע\"י"; 
 $factarray["SERV"]  = "שרת מרוחק";
 $factarray["_GEDF"] = "קובץ GEDCOM";
+$factarray["_HIST"] = "הסטוריה"; 
 
 ?>

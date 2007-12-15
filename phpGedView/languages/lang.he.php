@@ -633,6 +633,14 @@ $pgv_lang["cal_hebrew_and_gregorian"] = "עברי וגרגוריאני";
 $pgv_lang["cal_hijri"]                = "לוח שנה מוסלמי";
 $pgv_lang["cal_arabic"]               = "ערבי";
 
+// some religious dates
+$pgv_lang["easter"]     = "פסחא";
+$pgv_lang["ascension"]  = "עליה"; 
+$pgv_lang["pentecost"]  = "שבועות הנוצרי"; 
+$pgv_lang["assumption"] = "עלית מריה השמיימה"; 
+$pgv_lang["all_saints"] = "יום כל הקדושים"; 
+$pgv_lang["christmas"]  = "חג המולד"; 
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "לפנה\"צ"; 
 $pgv_lang["p.m."]         = "אחה\"צ";
@@ -741,8 +749,8 @@ $pgv_lang["moveto_2"]		= "העבר לתיקייה מוגנת";
 $pgv_lang["moveto_3"]		= "העבר לתיקייה רגילה"; 
 $pgv_lang["move_standard"]	= "העבר לרגיל"; 
 $pgv_lang["move_protected"]	= "העבר למוגן"; 
-$pgv_lang["move_mediadirs"]			= "העבר תיקייות מדיה"; 
-$pgv_lang["setperms"]				= "הגדר הרשאות של המדיה";
+$pgv_lang["move_mediadirs"]		= "העבר תיקייות מדיה"; 
+$pgv_lang["setperms"]			= "הגדר הרשאות של המדיה";
 $pgv_lang["setperms_writable"]		= "אפשר כתיבה בצורה גורפת "; 
 $pgv_lang["setperms_readonly"]		= "אפשר רק קריאה בצורה גורפת "; 
 $pgv_lang["setperms_success"]		= "ההרשאות הוגדרו"; 
@@ -763,15 +771,18 @@ $pgv_lang["no_link_found"]		= "לא נמצא קשר (אחר) בין שני הא�
 $pgv_lang["sibling"]		= "אח/אחות";
 $pgv_lang["follow_spouse"]		= "בדוק קירבת נישואין.";
 $pgv_lang["timeout_error"]		= "החיפוש ארך יותר מידי זמן.";
-$pgv_lang["son-in-law"]		= "חתן";  // the husband of your daughter
-$pgv_lang["daughter-in-law"]	= "כלה"; // the wife of your son
+$pgv_lang["son_in_law"]		= "חתן";  // the husband of your daughter
+$pgv_lang["daughter_in_law"]	= "כלה"; // the wife of your son
 $pgv_lang["grandchild"]		= "נכד/ה";
 $pgv_lang["grandson"]		= "נכד";
 $pgv_lang["granddaughter"]	= "נכדה";
+$pgv_lang["greatgrandchild"]	= "שלש או שלשה"; 
+$pgv_lang["greatgrandson"]	= "שלש";
+$pgv_lang["greatgranddaughter"]	= "שלשה"; 
 $pgv_lang["brother"]		= "אח";
 $pgv_lang["sister"]		= "אחות";
-$pgv_lang["brother-in-law"]		= "גיס";
-$pgv_lang["sister-in-law"]		= "גיסה";
+$pgv_lang["brother_in_law"]		= "גיס";
+$pgv_lang["sister_in_law"]		= "גיסה";
 $pgv_lang["aunt"]			= "דודה";
 $pgv_lang["uncle"]		= "דוד";
 $pgv_lang["nephew"]		= "אחיינית";
@@ -779,7 +790,7 @@ $pgv_lang["niece"]		= "אחיין";
 $pgv_lang["firstcousin"]		= "בן דוד מדרגה ראשונה";
 $pgv_lang["femalecousin"]		= "בת דודה";
 $pgv_lang["malecousin"]		= "בן דוד";
-$pgv_lang["cousin-in-law"]		= "בן דוד דרך נישואין";
+$pgv_lang["cousin_in_law"]		= "בן דוד דרך נישואין";
 $pgv_lang["relationship_to_me"]	= "קירבה אלי";
 $pgv_lang["rela_husb"]		= "קירבה לבעל";
 $pgv_lang["rela_wife"]		= "קירבה לאישה";
@@ -794,11 +805,6 @@ $pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s היא %2\$s של %3\$
 
 $pgv_lang["mother_in_law"]		= "חמות"; 
 $pgv_lang["father_in_law"]		= "חם";
-$pgv_lang["brother_in_law"]		= "גיס";
-$pgv_lang["sister_in_law"]		= "גיסה";
-$pgv_lang["son_in_law"]		= "חתן";
-$pgv_lang["daughter_in_law"]		= "כלה";
-
 $pgv_lang["step_son"]		= "בן חורג";
 $pgv_lang["step_daughter"]	    	= "בת חורגת";
 
