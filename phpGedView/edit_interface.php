@@ -980,8 +980,10 @@ case 'addchildaction':
 					break;
 				}
 			}
-			if (!$done) {
-				// new child is the youngest or undated : insert last
+			// new child is the only one
+			if (count($family->getChildren())<1) $gedrec .= "\r\n1 CHIL @$xref@";
+			else if (!$done) {
+				// new child is the youngest or undated : insert after
 				$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
 															"1 CHIL @".$child->getXref()."@\r\n1 CHIL @$xref@",
 															$gedrec);
