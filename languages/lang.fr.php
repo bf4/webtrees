@@ -40,7 +40,6 @@ $pgv_lang["differences"]                = "Différences";
 #pgv_lang["chart_type"]                 = "Chart Type";
 #pgv_lang["changedate1"]                = "Ending range of change dates";
 #pgv_lang["changedate2"]                = "Starting range of change dates";
-#pgv_lang["changes_report"]             = "Changes Report";
 $pgv_lang["search_place_word"]          = "Mots entiers seulement";
 $pgv_lang["invalid_search_input"]       = "Entrez un nom de personne ou de lieu en complément de l'année";
 $pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";
@@ -125,8 +124,6 @@ $pgv_lang["no_search_site"]             = "Merci d'indiquer au moins un site dis
 $pgv_lang["search_sites"]               = "Sites de recherche";
 $pgv_lang["site_list"]                  = "Site: ";
 $pgv_lang["site_had"]                   = " contenait les informations suivantes";
-$pgv_lang["indi_is_remote"]             = "Les informations de cette personne proviennent d'un autre site.";
-$pgv_lang["link_remote"]                = "Lier à une personne d'un autre site";
 $pgv_lang["label_search_engine_detected"]= "Robot détecté";
 
 $pgv_lang["ex-spouse"]                  = "Ex-conjoint";
@@ -187,7 +184,6 @@ $pgv_lang["title_search_link"]          = "Ajouter un lien distant local";
 $pgv_lang["label_site_url2"]            = "URL du site";
 //new stuff
 
-$pgv_lang["cancel"]                     = "Annuler";
 $pgv_lang["delete_family_confirm"]      = "Confirmez-vous la suppression de cette famille ? NB: les individus ne seront pas effacés";
 $pgv_lang["delete_family"]              = "Supprimer cette famille";
 $pgv_lang["add_favorite"]               = "Ajouter un favori";
@@ -295,6 +291,7 @@ $pgv_lang["stepsister"]                 = "Sœur par remariage";
 $pgv_lang["stepbrother"]                = "Frère par remariage";
 $pgv_lang["fams_charts"]                = "Options pour cette famille";
 $pgv_lang["indis_charts"]               = "Options pour cet individu";
+$pgv_lang["none"]                       = "Libre";
 $pgv_lang["locked"]                     = "Restreint";
 $pgv_lang["privacy"]                    = "Protégé";
 #pgv_lang["number_sign"]                = "#";
@@ -439,6 +436,8 @@ $pgv_lang["no_tab3"]                    = "Aucune source liée à cet individu."
 $pgv_lang["no_tab4"]                    = "Aucun objet MultiMedia lié à cet individu.";
 $pgv_lang["no_tab5"]                    = "Aucun proche lié à cet individu.";
 $pgv_lang["no_tab6"]                    = "Aucune recherche liée à cet individu.";
+$pgv_lang["show_fact_sources"]          = "Voir toutes les sources";
+$pgv_lang["show_fact_notes"]            = "Voir toutes les notes";
 
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]                = "Informations de la famille";
@@ -554,7 +553,6 @@ $pgv_lang["find_repository"]            = "Choisir un dépôt d'archives";
 $pgv_lang["total_repositories"]         = "Nombre de dépôts d'archives";
 $pgv_lang["confirm_delete_repo"]        = "Confirmez-vous la suppression de cet élément ?";
 
-
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]                = "Information sur la source";
 $pgv_lang["people"]                     = "Individus";
@@ -634,12 +632,12 @@ $pgv_lang["cal_hijri"]                  = "Hijri";
 $pgv_lang["cal_arabic"]                 = "Arabe";
 
 // some religious dates
-$pgv_lang["easter"]     = "Pâques";
-$pgv_lang["ascension"]  = "Ascension";
-$pgv_lang["pentecost"]  = "Pentecôte";
-$pgv_lang["assumption"] = "Assomption";
-$pgv_lang["all_saints"] = "Toussaint";
-$pgv_lang["christmas"]  = "Noël";
+$pgv_lang["easter"]                     = "Pâques";
+$pgv_lang["ascension"]                  = "Ascension";
+$pgv_lang["pentecost"]                  = "Pentecôte";
+$pgv_lang["assumption"]                 = "Assomption";
+$pgv_lang["all_saints"]                 = "Toussaint";
+$pgv_lang["christmas"]                  = "Noël";
 
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]                       = "matin";
@@ -738,7 +736,6 @@ $pgv_lang["research_assistant"]         = "Assistant de recherches";
 $pgv_lang["utf8_to_ansi"]               = "Convertir ce fichier GEDCOM format UTF-8 en format ANSI (ISO-8859-1) ?";
 $pgv_lang["media_linked"]               = "Cet objet MultiMedia est relié à :";
 $pgv_lang["media_not_linked"]           = "Cet objet MultiMedia n'est relié à aucun enregistrement GEDCOM.";
-#pgv_lang["deleted_files"]              = "Deleted Files:";
 #pgv_lang["media_dir_1"]                = "This media object is located on an external server";
 #pgv_lang["media_dir_2"]                = "This media object is in the standard media directory";
 #pgv_lang["media_dir_3"]                = "This media object is in the protected media directory";
@@ -750,10 +747,18 @@ $pgv_lang["media_not_linked"]           = "Cet objet MultiMedia n'est relié à 
 #pgv_lang["move_standard"]              = "Move to standard";
 #pgv_lang["move_protected"]             = "Move to protected";
 #pgv_lang["move_mediadirs"]             = "Move Media directories";
+#pgv_lang["setperms"]                   = "Set Media Permissions";
+#pgv_lang["setperms_writable"]          = "Make World-Writable";
+#pgv_lang["setperms_readonly"]          = "Make World-Read Only";
+#pgv_lang["setperms_success"]           = "Permissions Set";
+#pgv_lang["setperms_failure"]           = "Permissions Not Set";
+#pgv_lang["setperms_time_exceeded"]     = "The execution time limit was reached.  Try the command again on a smaller directory.";
 #pgv_lang["move_time_exceeded"]         = "The execution time limit was reached.  Try the command again to move the rest of the files.";
 #pgv_lang["media_firewall_rootdir_no_exist"]= "The Media Firewall root directory you requested does not exist.  You must create it first.";
 #pgv_lang["media_firewall_protected_dir_no_exist"]= "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable.";
 #pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media directory in the Media Firewall root directory is not world writable. ";
+#pgv_lang["media_firewall_invalid_dir"] = "Error: The Media Firewall was launched from a directory other than the media directory.";
+
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]         = "Grand";
 $pgv_lang["relationship_chart"]         = "Parenté";
@@ -763,15 +768,14 @@ $pgv_lang["no_link_found"]              = "Aucun (autre) lien trouvé entre les 
 $pgv_lang["sibling"]                    = "Frère/Sœur";
 $pgv_lang["follow_spouse"]              = "Suivre les liens par mariage.";
 $pgv_lang["timeout_error"]              = "La recherche s'est achevée avant qu'un lien de parenté ne soit trouvé.";
-$pgv_lang["son-in-law"]                 = "Gendre";
-$pgv_lang["daughter-in-law"]            = "Belle-fille";
 $pgv_lang["grandchild"]                 = "Petit-enfant";
 $pgv_lang["grandson"]                   = "Petit-fils";
 $pgv_lang["granddaughter"]              = "Petite-fille";
+$pgv_lang["greatgrandchild"]            = "Arrière-petit-enfant";
+$pgv_lang["greatgrandson"]              = "Arrière-petit-fils";
+$pgv_lang["greatgranddaughter"]         = "Arrière-petite-fille";
 $pgv_lang["brother"]                    = "Frère";
 $pgv_lang["sister"]                     = "Sœur";
-$pgv_lang["brother-in-law"]             = "Beau-frère";
-$pgv_lang["sister-in-law"]              = "Belle-sœur";
 $pgv_lang["aunt"]                       = "Tante";
 $pgv_lang["uncle"]                      = "Oncle";
 $pgv_lang["nephew"]                     = "Neveu";
@@ -779,7 +783,6 @@ $pgv_lang["niece"]                      = "Nièce";
 $pgv_lang["firstcousin"]                = "Cousin(e) germain(e)";
 $pgv_lang["femalecousin"]               = "Cousine";
 $pgv_lang["malecousin"]                 = "Cousin";
-$pgv_lang["cousin-in-law"]              = "Cous. par alliance";
 $pgv_lang["relationship_to_me"]         = "Parenté avec moi";
 $pgv_lang["rela_husb"]                  = "Parenté avec l'époux";
 $pgv_lang["rela_wife"]                  = "Parenté avec l'épouse";
@@ -792,15 +795,16 @@ $pgv_lang["oldest_top"]                 = "Afficher les parents en haut";
 $pgv_lang["relationship_male_1_is_the_2_of_3"]= "%1\$s est le %2\$s de %3\$s.";
 $pgv_lang["relationship_female_1_is_the_2_of_3"]= "%1\$s est la %2\$s de %3\$s.";
 
-$pgv_lang["mother_in_law"]              = "belle-mère";
-$pgv_lang["father_in_law"]              = "beau-père";
-$pgv_lang["brother_in_law"]             = "beau-frère";
-$pgv_lang["sister_in_law"]              = "belle-sœur";
-$pgv_lang["son_in_law"]                 = "beau-fils";
-$pgv_lang["daughter_in_law"]            = "belle-fille";
+$pgv_lang["mother_in_law"]              = "Belle-mère";
+$pgv_lang["father_in_law"]              = "Beau-père";
+$pgv_lang["brother_in_law"]             = "Beau-frère";
+$pgv_lang["sister_in_law"]              = "Belle-sœur";
+$pgv_lang["son_in_law"]                 = "Gendre";
+$pgv_lang["daughter_in_law"]            = "Belle-fille";
+$pgv_lang["cousin_in_law"]              = "Cous. par alliance";
 
-$pgv_lang["step_son"]                   = "beau-fils";
-$pgv_lang["step_daughter"]              = "belle-fille";
+$pgv_lang["step_son"]                   = "Beau-fils";
+$pgv_lang["step_daughter"]              = "Belle-fille";
 
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
@@ -939,7 +943,6 @@ $pgv_lang["sosa_aunt_bm_7"]             = "grand-tante";      // mothers mothers
 $pgv_lang["n_x_paternal_aunt_bm"]       = "%2\$d x ";
 $pgv_lang["n_x_maternal_aunt_bm"]       = "%2\$d x ";
 
-
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "cousin germain";
 $pgv_lang["male_cousin_2"]              = "cousin issu de germain";
@@ -1025,7 +1028,6 @@ $pgv_lang["female_cousin_n"]            = "";
 #pgv_lang["removed_descending_18"]      = " eighteen times removed descending";
 #pgv_lang["removed_descending_19"]      = " nineteen times removed descending";
 #pgv_lang["removed_descending_20"]      = " twenty times removed descending";
-
 
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]               = "Confirmez-vous la suppression de cet élément ?";
@@ -1313,6 +1315,7 @@ $pgv_lang["block_not_configure"]        =	"Ce bloc ne peut pas être configuré.
 
 //-- validate GEDCOM
 $pgv_lang["add_media_tool"]             = "Utilitaire «Ajout media»";
+
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]            = "Sablier";
 
@@ -1344,6 +1347,11 @@ $pgv_lang["ahnentafel_buried_m"]        = "a été enterré";
 $pgv_lang["ahnentafel_buried_f"]        = "a été enterrée";
 $pgv_lang["ahnentafel_place"]           = ", ";
 $pgv_lang["ahnentafel_no_details"]      = " les détails sont inconnus";
+
+//-- Changes report
+#pgv_lang["changes_report"]             = "Changes Report";
+#pgv_lang["changes_pending_tot"]        = "Total pending changes: ";
+#pgv_lang["changes_accepted_tot"]       = "Total accepted changes: ";
 
 //-- Descendancy report
 $pgv_lang["descend_report"]             = "Descendance";

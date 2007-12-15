@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,6 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @author Christophe Bx
- * @author Julien Damon
  * @version $Id$
  */
 
@@ -31,6 +29,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["add_marriage"]               = "Ajouter un nouveau mariage";
+$pgv_lang["edit_concurrency_change"]    = "Enregistrement modifié en dernier par <i>#CHANGEUSER#</i> le #CHANGEDATE#";
+$pgv_lang["edit_concurrency_msg2"]      = "L'enregistrement #PID# a été modifié par un autre utilisateur depuis votre dernière visite.";
+$pgv_lang["edit_concurrency_msg1"]      = "Erreur au chargement : cet enregistrement a peut-être été modifié par un autre utilisateur depuis votre dernière visite.";
+$pgv_lang["edit_concurrency_reload"]    = "Recharger la page avec le bouton &laquo;Page précédente&raquo; de votre navigateur pour être certain d'afficher la dernière version de l'enregistrement.";
 $pgv_lang["admin_override"]             = "Option administrateur";
 $pgv_lang["no_update_CHAN"]             = "Conserver la date de mise à jour (CHAN)";
 $pgv_lang["select_events"]              = "Choisir un évènement";
@@ -75,6 +78,7 @@ $pgv_lang["main_media_fail0"]           = "Fichier MultiMedia <b>#GLOBALS[oldMed
 $pgv_lang["main_media_fail1"]           = "Fichier MultiMedia <b>#GLOBALS[oldMediaName]#</b> impossible à renommer en <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_fail2"]           = "Fichier MultiMedia <b>#GLOBALS[oldMediaName]#</b> impossible à déplacer de <b>#GLOBALS[oldMediaFolder]#</b> vers <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_fail3"]           = "Fichier MultiMedia impossible à renommer et déplacer de <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> vers <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+#pgv_lang["resn_disabled"]              = "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect.";
 $pgv_lang["thumb_media_ok1"]            = "Vignette <b>#GLOBALS[oldMediaName]#</b> renommée <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]            = "Vignette <b>#GLOBALS[oldMediaName]#</b> déplacée de <b>#GLOBALS[oldThumbFolder]#</b> vers <b>#GLOBALS[newThumbFolder]#</b>.";
 $pgv_lang["thumb_media_ok3"]            = "Vignette renommée et déplacée de <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> vers <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
@@ -179,10 +183,10 @@ $pgv_lang["media_deleted"]              = "Répertoire Media supprimé.";
 $pgv_lang["media_exists"]               = "Le fichier MultiMedia existe déjà.";
 $pgv_lang["media_file"]                 = "Objet MultiMedia";
 $pgv_lang["media_file_deleted"]         = "Le fichier MultiMedia a été supprimé.";
+$pgv_lang["media_file_moved"]           = "Le fichier MultiMedia a été déplacé.";
 $pgv_lang["media_file_not_moved"]       = "Impossible de déplacer le fichier MultiMedia.";
 $pgv_lang["media_file_not_renamed"]     = "Impossible de déplacer ou renommer le fichier MultiMedia.";
 $pgv_lang["media_thumb_exists"]         = "La vignette existe déjà.";
-$pgv_lang["multi_site_search"]          = "Recherche multi-sites";
 $pgv_lang["multiple_gedcoms"]           = "Impossible de supprimer, renommer ou déplacer ce fichier : il reste des liens avec un autre GEDCOM sur ce serveur.";
 $pgv_lang["must_provide"]               = "Vous devez fournir un";
 $pgv_lang["name_search"]                = "Nom: ";
@@ -215,4 +219,5 @@ $pgv_lang["upload_media"]               = "Charger des objets MultiMedia";
 $pgv_lang["upload_media_help"]          = "~#pgv_lang[upload_media]#~<br /><br />Choisir un fichier sur votre ordinateur. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement.";
 $pgv_lang["upload_successful"]          = "Téléchargement réussi";
 $pgv_lang["view_change_diff"]           = "Voir les différences";
+
 ?>
