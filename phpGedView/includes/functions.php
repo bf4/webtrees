@@ -1723,15 +1723,15 @@ function sort_facts(&$arr) {
 	for($i=0; $i<count($arr); $i++) {
 		//-- add a fake date for the date sorting based on the previous fact that came before
 		if (is_array($arr[$i])) {
-			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate)) $arr[$i][1].="2 _DATE ".$lastDate."\r\n";
+			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate)) $arr[$i][1].="\r\n2 _DATE ".$lastDate."\r\n";
 			else $lastDate = @$match[1];
 			//-- also add a sort field so that we can compare based on how they were sorted by the previous pass when the date does not give enough information
-			$arr[$i][1] .= "2 _SORT ".$i."\r\n";
+			$arr[$i][1] .= "\r\n2 _SORT ".$i."\r\n";
 		}
 		else {
-			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate)) $arr[$i].="2 _DATE ".$lastDate."\r\n";
+			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate)) $arr[$i].="\r\n2 _DATE ".$lastDate."\r\n";
 			else $lastDate = @$match[1];
-			$arr[$i] .= "2 _SORT ".$i."\r\n";
+			$arr[$i] .= "\r\n2 _SORT ".$i."\r\n";
 		}
 	}
 	
@@ -1750,10 +1750,12 @@ function sort_facts(&$arr) {
 		if (is_array($arr[$i])) {
 			$arr[$i][1] = preg_replace("/2 _DATE (.+)/", "", $arr[$i][1]);
 			$arr[$i][1] = preg_replace("/2 _SORT (.+)/", "", $arr[$i][1]);
+			$arr[$i][1] = trim($arr[$i][1]);
 		}
 		else {
 			$arr[$i] = preg_replace("/2 _DATE (.+)/", "", $arr[$i]);
 			$arr[$i] = preg_replace("/2 _SORT (.+)/", "", $arr[$i]);
+			$arr[$i] = trim($arr[$i]);
 		}
 	}
 	return;

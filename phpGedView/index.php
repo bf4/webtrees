@@ -40,6 +40,9 @@ if (isset ($_REQUEST['mod']))
 	exit;
 }
 
+if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+
 /**
  * Block definition array
  *
