@@ -102,10 +102,12 @@ function table_filter_alive(id) {
 		// don't do sortbottom last rows
 		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
 		// get jd of birth/death
+		b_jd=0;
 		key=row.cells[BCOL].getElementsByTagName("a");
-		b_jd=parseInt(key[0].name,10);
+		if (key.length) b_jd=parseInt(key[0].name,10);
+		d_jd=0;
 		key=row.cells[DCOL].getElementsByTagName("a");
-		d_jd=parseInt(key[0].name,10);
+		if (key.length) d_jd=parseInt(key[0].name,10);
 		// assume birth/death based on max age of 100 years
 		if (b_jd==0 && d_jd>0)
 			b_jd=d_jd-36525;
