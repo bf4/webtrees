@@ -412,6 +412,7 @@ function find_gedcom_record($pid, $gedfile = "", $type="") {
 	//-- try to look ahead and guess the best type of record to look for
 	//-- NOTE: not foolproof so leave the other section in place
 	if (empty($type)) $type = id_type($pid);
+
 	switch($type) {
 		case 'INDI':
 			$gedrec = find_person_record($pid, $gedfile);

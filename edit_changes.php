@@ -34,6 +34,10 @@ if (!userCanAccept(getUserName())) {
 	exit;
 }
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['cid'])) $cid = $_REQUEST['cid'];
+if (isset($_REQUEST['index'])) $index = $_REQUEST['index'];
+if (isset($_REQUEST['ged'])) $ged = $_REQUEST['ged'];
 if (empty($action)) $action="";
 
 print_simple_header($pgv_lang["review_changes"]);

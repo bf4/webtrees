@@ -85,8 +85,8 @@ class ServiceClient extends GedcomRecord {
 	function getTitle() {
 		global $pgv_lang;
 
-		if (empty($this->name)) return $pgv_lang["unknown"];
-		return $this->name;
+		if (empty($this->title)) return $pgv_lang["unknown"];
+		return $this->title;
 	}
 
 	function getURL() {
@@ -149,7 +149,7 @@ if ($this->DEBUG) print "In getRemoteRecord($remoteid)<br />";
 		if (!is_object($this->soapClient)||$this->isError($this->soapClient)) return false;
 		$rec = $this->soapClient->getGedcomRecord($this->SID, $remoteid);
 		if (is_string($rec)) {
-			$rec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $rec);
+			$rec = preg_replace("/@([^#@\s]+)@/", "@".$this->xref.":$1@", $rec);
 			return $rec;
 		}
 		else return "";
@@ -179,7 +179,10 @@ if ($this->DEBUG) print "In getRemoteRecord($remoteid)<br />";
 	 */
 	function _merge($record1, $record2)
 	{
-if ($this->DEBUG) print "In _merge()<br />";
+if ($this->DEBUG) {
+	print "\n\n<br />In _merge()<br />\n\n";
+	//debug_print_backtrace();
+}
 		// Returns second record if first is empty, no merge needed
 		if (empty($record1)) return $record2;
 		// Returns first record if second is empty, no merge needed
@@ -568,12 +571,17 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 		}
 		else return false;
 		$family1 = Family::getInstance($family1);
+		if (is_null($family1)) return false;
 		$family2 = new Family($famrec2);
 
-		// Creat the fathers if their is some
-		$father1 = $family1->getHusband();
+		if (!is_null($family1)) {
+			// Creat the fathers if their is some
+			$father1 = $family1->getHusband();
+			$CountFamily1+=1.0;
+			$mother1=$family1->getWife();
+			$CountFamily1+=1.0;
+		}
 		$father2 = $family2->getHusband();
-		$CountFamily1+=1.0;
 		$CountFamily2+=1.0;
 		if(empty($father1)){
 			unset($father1);
@@ -585,9 +593,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 		}
 
 		// Creat the mothers if their is some
-		$mother1=$family1->getWife();
 		$mother2=$family2->getWife();
-		$CountFamily1+=1.0;
 		$CountFamily2+=1.0;
 		if(empty($mother1)){
 			unset($mother1);
@@ -798,7 +804,6 @@ if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 			$gedrec = find_gedcom_record($this->xref.":".$xref);
 			if (!empty($gedrec)) $localrec = $gedrec;
 		}
-
 		//-- used to force an update on the first time linking a person
 		if ($firstLink) {
 			$this->authenticate();
@@ -811,7 +816,7 @@ if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 				return $localrec;
 			}
 			$gedrec = $result;
-			$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
+			$gedrec = preg_replace("/@([^#@\s]+)@/", "@".$this->xref.":$1@", $gedrec);
 			$gedrec = $this->checkIds($gedrec);
 			$localrec = $this->_merge($localrec, $gedrec);
 			include_once("includes/functions_edit.php");
@@ -842,8 +847,9 @@ if ($this->DEBUG) print_r($result);
 				return $localrec;
 			}
 			$gedrec = $result;
-			$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
+			$gedrec = preg_replace("/@([^#@\s]+)@/", "@".$this->xref.":$1@", $gedrec);
 			$gedrec = $this->checkIds($gedrec);
+			
 			$localrec = $this->_merge($localrec, $gedrec);
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0)
@@ -858,7 +864,7 @@ if ($this->DEBUG) print_r($result);
 				else {
 					require_once("includes/functions_import.php");
 if ($this->DEBUG) debug_print_backtrace();
-if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
+if ($this->DEBUG) print "\r\n".__LINE__." adding record to the database ".$localrec;
 					update_record($localrec);
 				}
 			}
@@ -867,7 +873,7 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 			$chan_date = new GedcomDate($change_date);
 			$chan_time_str = get_gedcom_value("CHAN:DATE:TIME", 1, $localrec, '', false);
 			$chan_time = parse_time($chan_time_str);
-			$change_time = mktime($chan_time[0], $chan_time[1], $chan_time[2], $chan_date->m, $chan_date->d, $chan_date->y);
+			$change_time = mktime($chan_time[0], $chan_time[1], $chan_time[2], $chan_date->date1->m, $chan_date->date1->d, $chan_date->date1->y);
 			/**
 			 * @todo make the timeout a config option
 			 */
@@ -909,7 +915,7 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 				// If changes have been made to the remote record
 				else {
 					$gedrec = $person->gedcom;
-					$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
+					$gedrec = preg_replace("/@([^#@\s]+)@/", "@".$this->xref.":$1@", $gedrec);
 					$gedrec = $this->checkIds($gedrec);
 					$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 					if ($ct>0)

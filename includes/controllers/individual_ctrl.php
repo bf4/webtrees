@@ -203,6 +203,7 @@ class IndividualControllerRoot extends BaseController {
 					$servid = $parts[0];
 					$aliaid = $parts[1];
 					if (!empty($servid)&&!empty($aliaid)) {
+						require_once("includes/serviceclient_class.php");
 						$serviceClient = ServiceClient::getInstance($servid);
 						if (!is_null($serviceClient)) {
 							if (!empty($newrec)) $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $newrec, true);
@@ -257,6 +258,7 @@ class IndividualControllerRoot extends BaseController {
 			//-- only get the requested tab and then exit
 			exit;
 		}
+		//print $this->indi->gedrec;
 	}
 	//-- end of init function
 	/**

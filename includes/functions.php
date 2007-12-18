@@ -1758,7 +1758,6 @@ function sort_facts(&$arr) {
 			$arr[$i] = trim($arr[$i]);
 		}
 	}
-	return;
 }
 
 /**
