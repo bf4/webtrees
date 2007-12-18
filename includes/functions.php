@@ -1615,7 +1615,11 @@ function compare_facts_type($arec, $brec) {
 		else
 			$bfact="_????_";
 
-	return $factsort[$afact]-$factsort[$bfact];
+	$ret = $factsort[$afact]-$factsort[$bfact];
+	//-- if the facts are the same, then go ahead and compare them by date
+	//-- this will improve the positioning of non-dated elements on the next pass
+	if ($ret==0) $ret = compare_facts_date($arec, $brec);
+	return $ret;
 }
 
 // Helper function to sort facts.

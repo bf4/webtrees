@@ -309,7 +309,7 @@ function find_person_record($pid, $gedfile="") {
 	if (!is_int($gedfile)) $gedfile = get_gedcom_from_id($gedfile);
 	//-- first check the indilist cache
 	// cache is unreliable for use with different gedcoms in user favorites (sjouke)
-	if ((isset($indilist[$pid]["gedcom"]))&&($indilist[$pid]["gedfile"]==$GEDCOMS[$gedfile]["id"])) return $indilist[$pid]["gedcom"];
+	if ((isset($indilist[$pid]["gedcom"]))&&isset($indilist[$pid]["gedfile"])&&($indilist[$pid]["gedfile"]==$GEDCOMS[$gedfile]["id"])) return $indilist[$pid]["gedcom"];
 
 	$sql = "SELECT i_gedcom, i_name, i_isdead, i_file FROM ".$TBLPREFIX."individuals WHERE i_id LIKE '".$DBCONN->escapeSimple($pid)."' AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"]);
 	$res = dbquery($sql);
