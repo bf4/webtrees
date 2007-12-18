@@ -59,7 +59,7 @@ class GedcomRecord {
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!is_null($serviceClient)) {
 						if (!$simple || $serviceClient->type=='local') {
-							$gedrec = $serviceClient->mergeGedcomRecord($aliaid, $gedrec);
+							$gedrec = $serviceClient->mergeGedcomRecord($aliaid, $gedrec, true);
 						}
 					}
 				}
