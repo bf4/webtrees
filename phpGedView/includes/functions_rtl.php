@@ -505,8 +505,12 @@ function hasLTRText($text) {
 		for ($i=0; $i<strlen($text); $i++) {
 			if (in_array(ord(substr(trim($text),$i,2)),$RTLOrd) || in_array(ord(substr(trim($text),$i-1,2)),$RTLOrd)) $i++;
 		  	else {
-				$byte = substr(trim($text),$i,1);
-			    if (!in_array($byte,$SpecialChar) && !in_array($byte,$SpecialPar) && !in_array($byte,$SpecialNum)) return true;
+			  	if (substr($text,$i,26)=='<span class="starredname">') $i+=25;
+			  	else if (substr($text,$i,7)=="</span>") $i+=6;
+			  	else {
+					$byte = substr(trim($text),$i,1);
+			    	if (!in_array($byte,$SpecialChar) && !in_array($byte,$SpecialPar) && !in_array($byte,$SpecialNum)) return true;
+		    	}
 		    }
 		}
 		return false;
