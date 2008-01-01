@@ -430,7 +430,7 @@ function getRecentChanges() {
 
 	$action = "today";
 	$found_facts = array();
-	$changes=get_recent_changes(client_jd()-$config['days']);
+	$changes=get_recent_changes(client_jd()-$configDays;
 
 	if (count($changes)>0) {
 		$found_facts = array();
