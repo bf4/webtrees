@@ -401,7 +401,8 @@ if ($action=="update") {
 			if (!empty($TITL)) $objrec .= "2 TITL $TITL\r\n";
 			$objid = append_gedrec($objrec);
 			
-			$factrec = "1 OBJE @".$objid."@\r\n1 _PRIM Y\r\n";
+//			$factrec = "1 OBJE @".$objid."@\r\n1 _PRIM Y\r\n"; //@@ MA  _PRIM should either not exist or we should write it as 2 _PRIM here or as 1 _PRIM for the 0 OBJE
+			$factrec = "1 OBJE @".$objid."@\r\n";
 			if (empty($replace)) $gedrec .= "\r\n".$factrec;
 			else {
 				$fact = "OBJE";
