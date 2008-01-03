@@ -1124,7 +1124,7 @@ function search_indis_names($query, $allgeds=false) {
  * @return Database ResultSet
  */
 function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sgeds='') {
-	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
+	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $REGEXP_DB, $DBCONN;
 	
 	$res = false;
 
@@ -1134,7 +1134,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 		if (strlen($firstname) == 1)
 		$firstname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $firstname);
 		if ($REGEXP_DB)
-		$firstname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $firstname);
+			$firstname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $firstname);
 		else {
 			$firstname = "%".preg_replace("/\s+/", "%", $firstname)."%";
 		}
