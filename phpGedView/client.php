@@ -115,7 +115,7 @@ else if (empty($_SESSION['connected'])){
 else if ($action=='get') {
 	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 	if (!empty($xref)) {
-		$xrefs = preg_split("/;/", $xref);
+		$xrefs = preg_split("/[;, ]/", $xref);
 		$success = true;
 		$gedrecords="";
 		foreach($xrefs as $indexval => $xref1) {
@@ -180,6 +180,7 @@ else if ($action=='update') {
 	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 	if (!empty($xref)) {
 		if (isset($_REQUEST['gedrec'])) $gedrec = $_REQUEST['gedrec'];
+		if (empty($gedrec)) $gedrec = trim($HTTP_RAW_POST_DATA);
 		if (!empty($gedrec)) {
 			if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))&&(displayDetails($gedrec))) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
@@ -206,6 +207,7 @@ else if ($action=='update') {
 }
 else if ($action=='append') {
 	if (isset($_REQUEST['gedrec'])) $gedrec = $_REQUEST['gedrec'];
+	if (empty($gedrec)) $gedrec = trim($HTTP_RAW_POST_DATA);
 	if (!empty($gedrec)) {
 		if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))) {
 			$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);

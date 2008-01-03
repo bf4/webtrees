@@ -135,7 +135,7 @@ class SearchControllerRoot extends BaseController {
 		if (isset ($_REQUEST["query"])) {
 			// Reset the "Search" text from the page header
 			if ($_REQUEST["query"] == $pgv_lang["search"] || strlen($_REQUEST["query"])<2 || preg_match("/^\.+$/", $_REQUEST["query"])>0) {
-				unset ($this->query);
+				$this->query="";
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
 				$this->myquery = $this->query;
@@ -194,28 +194,28 @@ class SearchControllerRoot extends BaseController {
 			$this->firstname = $_REQUEST["firstname"];
 			$this->myfirstname = $this->firstname;
 		} else {
-			unset ($this->firstname);
+			$this->firstname="";
 			$this->myfirstname = "";
 		}
 		if (!empty ($_REQUEST["lastname"])) {
 			$this->lastname = $_REQUEST["lastname"];
 			$this->mylastname = $this->lastname;
 		} else {
-			unset ($this->lastname);
+			$this->lastname="";
 			$this->mylastname = "";
 		}
 		if (!empty ($_REQUEST["place"])) {
 			$this->place = $_REQUEST["place"];
 			$this->myplace = $this->place;
 		} else {
-			unset ($this->place);
+			$this->place="";
 			$this->myplace = "";
 		}
 		if (!empty ($_REQUEST["year"])) {
 			$this->year = $_REQUEST["year"];
 			$this->myyear = $this->year;
 		} else {
-			unset ($this->year);
+			$this->year="";
 			$this->myyear = "";
 		}
 
@@ -224,49 +224,49 @@ class SearchControllerRoot extends BaseController {
 			$this->multiquery = $_REQUEST["multiquery"];
 			$this->mymultiquery = $this->multiquery;
 		} else {
-			unset ($this->multiquery);
+			$this->multiquery="";
 			$this->mymultiquery = "";
 		}
 		if (!empty ($_REQUEST["name"])) {
 			$this->name = $_REQUEST["name"];
 			$this->myname = $this->name;
 		} else {
-			unset ($this->name);
+			$this->name="";
 			$this->myname = "";
 		}
 		if (!empty ($_REQUEST["birthdate"])) {
 			$this->birthdate = $_REQUEST["birthdate"];
 			$this->mybirthdate = $this->birthdate;
 		} else {
-			unset ($this->birthdate);
+			$this->birthdate="";
 			$this->mybirthdate = "";
 		}
 		if (!empty ($_REQUEST["birthplace"])) {
 			$this->birthplace = $_REQUEST["birthplace"];
 			$this->mybirthplace = $this->birthplace;
 		} else {
-			unset ($this->birthplace);
+			$this->birthplace="";
 			$this->mybirthplace = "";
 		}
 		if (!empty ($_REQUEST["deathdate"])) {
 			$this->deathdate = $_REQUEST["deathdate"];
 			$this->mydeathdate = $this->deathdate;
 		} else {
-			unset ($this->deathdate);
+			$this->deathdate="";
 			$this->mydeathdate = "";
 		}
 		if (!empty ($_REQUEST["deathplace"])) {
 			$this->deathplace = $_REQUEST["deathplace"];
 			$this->mydeathplace = $this->deathplace;
 		} else {
-			unset ($this->deathplace);
+			$this->deathplace="";
 			$this->mydeathplace = "";
 		}
 		if (!empty ($_REQUEST["gender"])) {
 			$this->gender = $_REQUEST["gender"];
 			$this->mygender = $this->gender;
 		} else {
-			unset ($this->gender);
+			$this->gender="";
 			$this->mygender = "";
 		}
 
@@ -762,10 +762,10 @@ class SearchControllerRoot extends BaseController {
 				if ($res!==false) {
 					while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 						$indilist[$row['i_id']]["gedcom"] = $row['i_gedcom'];
-						$indilist[$row['i_id']]["names"] = get_indi_names($row['i_gedcom']);
+						//$indilist[$row['i_id']]["names"] = get_indi_names($row['i_gedcom']);
 						$indilist[$row['i_id']]["isdead"] = $row['i_isdead'];
 						$indilist[$row['i_id']]["gedfile"] = $row['i_file'];
-						$namearray = $indilist[$row['i_id']]["names"];
+						//$namearray = $indilist[$row['i_id']]["names"];
 						$save = true;
 						if ((!empty ($this->place)) || (!empty ($this->year))) {
 							$indirec = $row['i_gedcom'];
@@ -818,7 +818,7 @@ class SearchControllerRoot extends BaseController {
 						}
 						if ($save === true) {
 							//								print "Added ".sortable_name_from_name($namearray[0]);
-							$this->printname[] = array (sortable_name_from_name($namearray[$row[2]][0]), $row[0], get_gedcom_from_id($row[3]), "");
+							$this->printname[] = array (sortable_name_from_name($row["i_name"]), $row["i_id"], get_gedcom_from_id($row["i_file"]), "");
 							//								break; // leave out if we want all names from one indi shown
 						}
 					}
