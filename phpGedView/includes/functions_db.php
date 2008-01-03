@@ -109,12 +109,13 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br />","","");
 		}
 		*/
+	
 	if (!empty($SQL_LOG)) $start_time2 = getmicrotime();
 	if ($count == 0)
-	$res =& $DBCONN->query($sql);
+		$res =& $DBCONN->query($sql);
 	else
-	$res =& $DBCONN->limitQuery($sql, 0, $count);
-
+		$res =& $DBCONN->limitQuery($sql, 0, $count);
+		
 	$LAST_QUERY = $sql;
 	$TOTAL_QUERIES++;
 	if (!empty($SQL_LOG)) {
@@ -137,6 +138,17 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		fclose($fp);
 	}
 	if (DB::isError($res)) {
+		//-- check if DB connection timed out or went away and try to create a new connection
+		if ($res->getCode()==-14) {
+			global $PGV_DB_LAST_ERROR;
+			//-- only try to recurse once
+			if (empty($PGV_DB_LAST_ERROR)) {
+				$PGV_DB_LAST_ERROR = $res->getCode();
+				//-- create a new connection
+				check_db(true);
+				return dbquery($sql, $show_error, $count);
+			}
+		}
 		if ($show_error) print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
 	}
 	return $res;
