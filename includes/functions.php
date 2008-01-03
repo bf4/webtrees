@@ -82,6 +82,8 @@ function check_db($ignore_previous=false) {
 		'hostspec' => $DBHOST,
 		'database' => $DBNAME
 	);
+	
+	if ($ignore_previous) $dsn['new_link'] = true;
 
 	$options = array(
 		'debug' 	  => 3,
