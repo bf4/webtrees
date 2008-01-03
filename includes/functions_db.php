@@ -146,10 +146,17 @@ function &dbquery($sql, $show_error=true, $count=0) {
 				$PGV_DB_LAST_ERROR = $res->getCode();
 				//-- create a new connection
 				check_db(true);
-				return dbquery($sql, $show_error, $count);
+				$res2 = dbquery($sql, $show_error, $count);
+				if (DB::isError($res2)) {
+					if ($show_error) {
+						print "<span class=\"error\"><b>ERROR:".$res2->getCode()." ".$res2->getMessage()." <br />SQL:</b>".$res2->getUserInfo()."</span><br /><br />\n";
+						print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
+					}
+					return $res2;
+				}
 			}
 		}
-		if ($show_error) print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
+		else if ($show_error) print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
 	}
 	return $res;
 }
