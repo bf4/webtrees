@@ -152,8 +152,8 @@ function &dbquery($sql, $show_error=true, $count=0) {
 						print "<span class=\"error\"><b>ERROR:".$res2->getCode()." ".$res2->getMessage()." <br />SQL:</b>".$res2->getUserInfo()."</span><br /><br />\n";
 						print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
 					}
-					return $res2;
 				}
+				return $res2;
 			}
 		}
 		else if ($show_error) print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
