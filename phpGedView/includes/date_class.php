@@ -378,7 +378,8 @@ class CalendarDate {
 	}
 
 	function FormatGedcomMonth() {
-		return strtoupper($this->NUM_TO_MONTH[$this->m]);
+		if (isset($this->NUM_TO_MONTH[$this->m])) return strtoupper($this->NUM_TO_MONTH[$this->m]);
+		else return "";
 	}
 
 	function FormatGedcomYear() {

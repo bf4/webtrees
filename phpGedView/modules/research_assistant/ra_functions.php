@@ -1432,12 +1432,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			// Loop through all the task ID's and pull the info we need on them,
 			// then format them nicely to show the user.
 			while ($taskid = $res->fetchrow(DB_FETCHMODE_ASSOC)) {
-//				$sql = "SELECT * FROM ".$TBLPREFIX."tasks WHERE t_id = '".$taskid['ts_t_id']."'";
-//				$result = dbquery($sql);
-//				$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
-//     			$task = db_cleanup($task);
 				$date=new GedcomDate(date("d M Y", $taskid["t_startdate"]));
-				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.$date->Format(false).'</td></tr>';
+				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
 			}
 		}
 		return $out;

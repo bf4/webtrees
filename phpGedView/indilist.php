@@ -47,7 +47,12 @@ print_header($pgv_lang["individual_list"]);
 print "<div class =\"center\">";
 print "\n\t<h2>".$pgv_lang["individual_list"]."</h2>";
 
-
+if (isset($_REQUEST['show_all'])) $show_all = $_REQUEST['show_all'];
+if (isset($_REQUEST['show_all_firstnames'])) $show_all_firstnames = $_REQUEST['show_all_firstnames'];
+if (isset($_REQUEST['alpha'])) $alpha = $_REQUEST['alpha'];
+if (isset($_REQUEST['surname'])) $surname = $_REQUEST['surname'];
+if (isset($_REQUEST['surname_sublist'])) $surname_sublist = $_REQUEST['surname_sublist'];
+if (isset($_REQUEST['falpha'])) $falpha = $_REQUEST['falpha'];
 
 if (empty($show_all)) $show_all = "no";
 if (empty($show_all_firstnames)) $show_all_firstnames = "no";
@@ -365,6 +370,7 @@ else {
 			if (isset($fstartalpha)) $falpha = $fstartalpha;
 			if ($show_all_firstnames=="no") {
 				$findilist = array();
+				if (empty($falpha)) $falpha = key($firstalpha);
 				$ids = preg_split("/,/", $firstalpha[$falpha]["ids"]);
 				foreach($ids as $indexval => $id) {
 					if (isset($indilist[$id])) $findilist[$id] = $indilist[$id];
