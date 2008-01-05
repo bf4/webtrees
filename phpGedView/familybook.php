@@ -358,7 +358,7 @@ function print_family_book($pid, $descent)
         //-- descendancy
         print "<td valign=\"middle\">\n";
         $dgenerations = $generations;
-        $dgenerations = max_descendency_generations($pid, 0);
+// $dgenerations = max_descendency_generations($pid, 0);
         print_descendency($pid, 1);
         print "</td>\n";
         //-- pedigree
