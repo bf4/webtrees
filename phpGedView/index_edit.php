@@ -50,6 +50,14 @@ loadLangFile("pgv_confighelp");
 global $pgv_lang, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION;
 global $GEDCOM_TITLE;
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
+if (isset($_REQUEST['main'])) $main = $_REQUEST['main'];
+if (isset($_REQUEST['right'])) $right = $_REQUEST['right'];
+if (isset($_REQUEST['setdefault'])) $setdefault = $_REQUEST['setdefault'];
+if (isset($_REQUEST['side'])) $side = $_REQUEST['side'];
+if (isset($_REQUEST['index'])) $index = $_REQUEST['index'];
+if (isset($_REQUEST['name'])) $name = $_REQUEST['name'];
 
 //-- make sure that they have user status before they can use this page
 //-- otherwise have them login again

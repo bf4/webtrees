@@ -133,14 +133,18 @@ if ($MULTI_MEDIA) {
 						// Apply filter criteria
 						$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
 						$objectID = $match[1];
-						$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
-						if ($ct2>0) {
-							$objectRefLevel = $match2[1];
-							if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
-							if ($filter=="event" && $objectRefLevel=="1") $disp = false;
-							if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />\n";}
+						//-- we could probably use the database for this filter
+						foreach($links as $key=>$type) {
+							$gedrec = find_gedcom_record($key);
+							$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
+							if ($ct2>0) {
+								$objectRefLevel = $match2[1];
+								if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
+								if ($filter=="event" && $objectRefLevel=="1") $disp = false;
+								if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />\n";}
+							}
+							else $disp = false;
 						}
-						else $disp = false;
 					}
 				}
 				//-- leave the loop if we find an image that works
