@@ -846,7 +846,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		return false;
 	}
 	function trim(str) {
-		str=str.replace(/,/g," ");
+		//-- why do we replace commas?
+		//-- str=str.replace(/,/g," ");
 		str=str.replace(/\s\s+/g," ");
 		return str.replace(/(^\s+)|(\s+$)/g,'');
 	}
