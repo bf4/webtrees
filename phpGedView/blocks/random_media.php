@@ -119,6 +119,7 @@ if ($MULTI_MEDIA) {
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />\n";}
 
 				if ($disp && count($links) != 0){
+					/** link privacy allready checked in displayDetailsById
 					foreach($links as $key=>$type) {
 						$gedrec = find_gedcom_record($key);
 						$disp &= !empty($gedrec);
@@ -127,6 +128,7 @@ if ($MULTI_MEDIA) {
 						$disp &= displayDetailsById($key, $type);
 					}
 					if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />\n";}
+					*/
 					if ($disp && $filter!="all") {
 						// Apply filter criteria
 						$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);

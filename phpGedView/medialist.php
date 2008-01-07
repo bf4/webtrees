@@ -93,6 +93,7 @@ if ($search == "yes") {
 	    $disp &= displayDetailsById($media["XREF"], "OBJE");
 	    // Display when this Media object isn't restricted
 	    $disp &= !FactViewRestricted($media["XREF"], $media["GEDCOM"]);
+	    /** -- already included in the displayDetailsById() function
 		if ($disp) {
 		    $links = $media["LINKS"];
 		    //-- make sure that only media with links are shown
@@ -102,6 +103,7 @@ if ($search == "yes") {
 		        }
 		    }
 		}
+		*/
 		if (!$disp) unset($medialist[$key]);
 	}
 	usort($medialist, "mediasort"); // Reset numbering of medialist array
