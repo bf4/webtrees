@@ -846,8 +846,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		return false;
 	}
 	function trim(str) {
-		//-- why do we replace commas?
+		//-- See the NAME_TEXT portion of the GEDCOM spec
+		//-- according to GEDCOM spec commas should not be allowed in NAME_TEXT, but
+		//-- some localization requirements require commas
 		//-- str=str.replace(/,/g," ");
+		
 		str=str.replace(/\s\s+/g," ");
 		return str.replace(/(^\s+)|(\s+$)/g,'');
 	}
