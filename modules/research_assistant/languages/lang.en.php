@@ -313,5 +313,5 @@ $pgv_lang["autosearch_keywords"] = "Keywords:";
 
 //Folder deletion error messages
 $pgv_lang["has_tasks"]                 ="The folder currently contains tasks and cannot be deleted";
-$pgv_lang["has_folders"]               ="The folder currently countains folders and cannot be deleted";
+$pgv_lang["has_folders"]               ="The folder currently contains folders and cannot be deleted";
 ?>

@@ -45,17 +45,28 @@ class ra_form {
 	 */
 	function getPeople(){
         global $TBLPREFIX, $DBCONN;
+		$people = array();
 
 		if (!is_null($this->people)) return $this->people;
 		
+		if(isset($_REQUEST['personid'])) {
+			$peopleList=split(";",$_REQUEST['personid']);
+			foreach($peopleList as $pid) {
+				if(!empty($pid))
+				$people[$pid] = Person::getInstance($pid);
+			}
+			return $people;
+		}
+	
+		if($_REQUEST["taskid"]!=0) {
 		$sql = 	"SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
-		$people = array();
 		while($row = $res->fetchRow()){
 			$people[$row[0]] = Person::getInstance($row[0]);
 		}
 		$res->free();
+		}
 		$this->people = $people;
 		return $people;
 	}
@@ -311,7 +322,7 @@ class ra_form {
 	                   			}
 	                   $out .= '</div>
 	                   <input type="hidden" id="personid" name="personid" size="3" value="'.$pval.'" />';
-	                   $out .= print_findindi_link("personid", "peoplelink", true,false,'','');
+	                   $out .= print_findindi_link("personid", "peoplelink", true,true,'','');
 	                   $out .= '<br />
 	            </td>
 	        </tr>';
@@ -729,6 +740,7 @@ END_OUT;
 			}
 			//-->
 			</script>
+			<input type="hidden" value="{$_REQUEST['personid']}" name="personid"/>
 			<input type="button" value="{$pgv_lang["add"]}" onclick="add_ra_fact('newfact','indi');" />
 			</td>
 		</tr>

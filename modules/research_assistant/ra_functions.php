@@ -456,19 +456,30 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		// Setup which kind of message it is
 		if ($status) {
 			$status = "Success!";
-			$image = "modules/research_assistant/images/checkbutton.gif";
+			$output="<br/>";
+			
+			//gets each person that was changed and shows their name with a link to their individual page
+			$thePeopleList=split(";",$_REQUEST['personid']);
+			foreach($thePeopleList as $i=>$pid) {
+				if(!empty($pid)) {
+						$person=Person::getInstance($pid);
+						$output.='<a href="'.$person->getLinkUrl().'">'.$person->getName().'</a><br/>';
+				}
+			}
+			
+			$output.="<br/>";
 			$div = "<span class=\"warning\">";
 			$end = "</span>";
 		} else {
 			$status = "Error!";
-			$image = "modules/research_assistant/images/xbutton.gif";
+			$output = "<img src=\"modules/research_assistant/images/xbutton.gif\"/>";
 			$div = "<div class=\"error\">";
 			$end = "</div>";
 		}
 
 		// The actual message layout
 		$out = '<table align="center" width="50%" height="100" valign="center">';
-		$out .= '<tr><td class="optionbox" align="center" valign="center"><img src="'.$image.'" /></td></tr>';
+		$out .= '<tr><td class="optionbox" align="center" valign="center">'.$output.'</td></tr>';
 		$out .= '<tr><td class="optionbox" valign="center" align="center"><h3>'.$div.''.$message.''.$end.'</h3></td></tr>';
 		$out .= '</table>';
 
@@ -1074,6 +1085,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if ($person->sex == "U") //check for missing sex info
 			{
 			$MissingReturn[] = array("SEX", $pgv_lang["All"]);
+		
 		}
 		if ($person->getBirthRecord(false) != "") //check for missing birth info
 			{

@@ -1958,23 +1958,17 @@ case 'reorder_fams':
 		<input type="hidden" name="option" value="bymarriage" />
 		<ul id="reorder_list">
 		<?php
-			$fams = array();
-			$ct = preg_match_all("/1 FAMS @(.+)@/", $gedrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$famid = trim($match[$i][1]);
-				$frec = find_family_record($famid);
-				if ($frec===false) $frec = find_updated_record($famid);
-				if (isset($famlist[$famid])) $fams[$famid] = $famlist[$famid];
-			}
+			$person = Person::getInstance($pid);
+			$fams = $person->getSpouseFamilies();
 			if ((!empty($option))&&($option=="bymarriage")) {
 				$sortby = "MARR";
 				uasort($fams, "compare_date");
 			}
 			$i=0;
-			foreach($fams as $famid=>$fam) {
+			foreach($fams as $famid=>$family) {
 				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$famid\" >";
 				print "<span class=\"name2\">".PrintReady(get_family_descriptor($famid))."</span><br />";
-				print_simple_fact($fam["gedcom"], "MARR", $famid);
+				if (!is_null($family->getMarriage())) $family->getMarriage()->print_simple_fact();
 				print "<input type=\"hidden\" name=\"order[$famid]\" value=\"$i\"/>";
 				print "</li>";
 				$i++;

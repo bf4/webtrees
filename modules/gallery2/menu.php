@@ -24,7 +24,7 @@
  * @author Patrick Kellum
  */
 //-- security check, only allow access from module.php
-if(strstr($_SERVER['SCRIPT_NAME'], 'menu.php')){print "Now, why would you want to do that.  You're not hacking are you?";exit;}
+if(strstr($_SERVER['SCRIPT_NAME'], 'gallery2/menu.php')){print "Now, why would you want to do that.  You're not hacking are you?";exit;}
 
 //require_once 'modules/gallery2/pgv.php';
 //mod_gallery2_load(getUserName());

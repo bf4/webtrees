@@ -1569,11 +1569,13 @@ function usersort($a, $b) {
  * @return int negative numbers sort $a first, positive sort $b first
  */
 function itemsort($a, $b) {
-	if (isset($a["name"])) $aname = sortable_name_from_name($a["name"]);
+	if (is_object($a)) $aname = $a->getName();
+	else if (isset($a["name"])) $aname = sortable_name_from_name($a["name"]);
 	else if (isset($a["names"])) $aname = sortable_name_from_name($a["names"][0][0]);
 	else if (is_array($a)) $aname = sortable_name_from_name(array_shift($a));
 	else $aname=$a;
-	if (isset($b["name"])) $bname = sortable_name_from_name($b["name"]);
+	if (is_object($b)) $bname = $b->getName();
+	else if (isset($b["name"])) $bname = sortable_name_from_name($b["name"]);
 	else if (isset($b["names"])) $bname = sortable_name_from_name($b["names"][0][0]);
 	else if (is_array($b)) $bname = sortable_name_from_name(array_shift($b));
 	else $bname=$b;
@@ -1679,7 +1681,17 @@ function compare_date($a, $b) {
 
 	$tag = "BIRT";
 	if (!empty($sortby)) $tag = $sortby;
-	if (isset($a["undo"])) {
+	if (is_object($a)) {
+		$afact = $a->getFactByType($tag);
+		$bfact = $b->getFactByType($tag);
+		if (!is_null($afact) && !is_null($bfact)) {
+			$cmp=GedcomDate::Compare($afact->getDate(), $bfact->getDate());
+			if ($cmp!=0)
+				return $cmp;
+		}
+		return itemsort($a, $b);
+	}
+	else if (isset($a["undo"])) {
 		// Look at record in pgv_changes.php
 		$adate=get_gedcom_value("$tag:DATE", 1, $a['undo'], '', false);
 		$bdate=get_gedcom_value("$tag:DATE", 1, $b['undo'], '', false);
