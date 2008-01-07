@@ -134,15 +134,10 @@ class ra_functions {
 	function getEventsForDates($startDate,$endDate,$factLookingFor = "",$place = "")
 	{
 		global $DBCONN, $TBLPREFIX;
-		$parts = preg_split("/,/",$place);
 		if(empty($endDate))
 		{
 			//Add a ten year difference if no end date was sent in
 			$endDate = $startDate + 00100000;
-		}
-		for($i = 0; $i < count($parts); $i++)
-		{
-			$parts[$i] = trim($parts[$i]);
 		}
 		
 		if(empty($factLookingFor))
@@ -154,23 +149,29 @@ class ra_functions {
 			$sql = 'Select * from '.$TBLPREFIX.'factlookup WHERE StartDate <= '.$endDate.' AND EndDate >= '.$startDate.' AND Gedcom_fact like \'%'.$factLookingFor.'%\'';
 		}
 		
-		if(count($parts) > 0)
-		{
-			$numOfParts = count($parts) -1;
-			if(count($parts) == 1)
+		if (!empty($place)) {
+			$parts = preg_split("/,/",$place);
+			for($i = 0; $i < count($parts); $i++)
 			{
-				$sql .= ' AND PL_LV1 LIKE \'%'.$DBCONN->escapeSimple($parts[0]).'%\'';
+				$parts[$i] = trim($parts[$i]);
 			}
-			else
+			
+			if(count($parts) > 0)
 			{
+				$numOfParts = count($parts) -1;
 				for($i = 0; ($i < count($parts) && $i<5); $i++)
 				{
-					$sql .= ' AND PL_LV'.($i+1).' LIKE \'%'.$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
+					if (!empty($parts[$numOfParts])) {
+						$sql .= ' AND PL_LV'.($i+1).' LIKE \'%'.$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
+					}
 					$numOfParts--;
 				}
+				
 			}
 		}
-		$sql .=';';
+		else {
+			$sql .= ' AND PL_LV1 IS NULL ';
+		}
 		$res = dbquery($sql);
 		$rows = array();
 		while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -1786,21 +1787,19 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												}
 												
 											}
-										
 										}
 										
 										$genericEvents = $this->getEventsForDates($bdate,$ddate);
 										$lastPlace = null;
 										foreach($genericEvents as $gKey=>$gVal)
 										{
-											
 											if(!isset($sourcesPrinted[$gVal["id"]]))
 											{
-														$closest = null;
-														$offset = null;
-														$place = null;
+												$closest = null;
+												$offset = null;
+												$place = null;
 														
-											foreach($tempDates as $tKey=>$tVal)
+												foreach($tempDates as $tKey=>$tVal)
 												{
 													$tempDate = get_gedcom_value("DATE",2,$tVal[1]);
 													$tempPlace = get_gedcom_value("PLAC",2,$tVal[1]);
