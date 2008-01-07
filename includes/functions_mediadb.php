@@ -1858,7 +1858,7 @@ function get_media_relations($mid){
 		$restChar = $mid;
 	}
 	$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $GEDCOMS[$GEDCOM]['id'];
-	if (isset ($medialist[$keyMediaList])) {
+	if (isset ($medialist[$keyMediaList]['LINKS'])) {
 		return $medialist[$keyMediaList]['LINKS'];
 	}
 
