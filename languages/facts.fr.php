@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,9 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @author Christophe Bx
- * @author Julien Damon
  * @version $Id$
  */
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	header("HTTP/1.0 403 Forbidden" );
 	exit;
@@ -158,11 +157,13 @@ $factarray["_TODO"]                     = "Note";
 $factarray["_UID"]                      = "Identificateur universel (UID)";
 $factarray["_PRIM"]                     = "Image principale";
 $factarray["_DBID"]                     = "Bases liées";
+
 // These facts are used in specific contexts
 $factarray["STAT:DATE"]                 = "Date de modification du statut";
+
 //These facts are compounds for the view probabilities page
-$factarray["FAMC:HUSB:SURN"]            = "Prénom du père";
-$factarray["FAMC:WIFE:SURN"]            = "Prénom de la mère";
+$factarray["FAMC:HUSB:SURN"]            = "Nom de famille du père";
+$factarray["FAMC:WIFE:SURN"]            = "Nom de famille de la mère";
 $factarray["FAMC:HUSB:BIRT:PLAC"]       = "Lieu de naissance du père";
 $factarray["FAMC:WIFE:BIRT:PLAC"]       = "Lieu de naissance de la mère";
 $factarray["FAMC:MARR:PLAC"]            = "Lieu de mariage des parents";
@@ -170,11 +171,15 @@ $factarray["FAMC:HUSB:OCCU"]            = "Métier du père";
 $factarray[":BIRT:PLAC"]                = "Lieu de naissance";
 $factarray["FAMS:MARR:PLAC"]            = "Lieu de mariage";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"]     = "Lieu de décès du conjoint";
-$factarray["FAMC:HUSB:GIVN"]            = "Nom de famille du père";
+$factarray["FAMC:HUSB:GIVN"]            = "Prénom du père";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"]     = "Lieu de naissance du conjoint";
-$factarray["FAMC:WIFE:GIVN"]            = "Nom de famille de la mère";
-$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"]  = "Nom de famille du grand-père";
-$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"]  = "Nom de famille de la grand-mère";
+$factarray["FAMC:WIFE:GIVN"]            = "Prénom de la mère";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"]  = "Prénom du grand-père paternel";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"]  = "Prénom de la grand-mère maternelle";
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"]  = "Prénom du grand-père maternel";
+$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"]  = "Prénom de la grand-mère paternelle";
+$factarray["FAMS:CHIL:BIRT:PLAC"]       = "Lieu de naissance de l'enfant";
+
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"]                 = "Lieu de naissance";
 $factarray["DEAT:PLAC"]                 = "Lieu de décès";
@@ -182,6 +187,7 @@ $factarray["CHR:PLAC"]                  = "Lieu de baptême";
 $factarray["BAPM:PLAC"]                 = "Lieu de baptême";
 $factarray["BURI:PLAC"]                 = "Lieu de sépulture";
 $factarray["MARR:PLAC"]                 = "Lieu de mariage";
+
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]                     = "Médical";
 $factarray["_DEG"]                      = "Diplôme";
@@ -206,6 +212,7 @@ $factarray["_MREL"]                     = "Lien avec la mère";
 $factarray["_FREL"]                     = "Lien avec le père";
 $factarray["_MSTAT"]                    = "Début Mariage (LDS)";
 $factarray["_MEND"]                     = "Fin Mariage (LDS)";
+
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"]                       = "Fax";
 $factarray["FACT"]                      = "Evènement";
@@ -215,6 +222,7 @@ $factarray["LATI"]                      = "Latitude";
 $factarray["LONG"]                      = "Longitude";
 $factarray["FONE"]                      = "Phonétique";
 $factarray["ROMN"]                      = "Alphabet Romain";
+
 // PAF related facts
 $factarray["_NAME"]                     = "Adresse Mailing";
 $factarray["URL"]                       = "URL";
@@ -223,11 +231,14 @@ $factarray["_HEB"]                      = "Hébreu";
 $factarray["_SCBK"]                     = "Album";
 $factarray["_TYPE"]                     = "Type MultiMedia";
 $factarray["_SSHOW"]                    = "Diaporama";
+
 // Rootsmagic
 $factarray["_SUBQ"]                     = "Version courte";
 $factarray["_BIBL"]                     = "Bibliographie";
+
 // Reunion
 $factarray["EMAL"]                      = "Adresse courriel";
+
 // Other common customized facts
 $factarray["_ADPF"]                     = "Adoption par le père";
 $factarray["_ADPM"]                     = "Adoption par la mère";
@@ -255,48 +266,71 @@ $factarray["_MARNM"]                    = "Nom après mariage";
 $factarray["_MARNM_SURN"]               = "Nom de famille après mariage";
 $factarray["_STAT"]                     = "Statut Mariage";
 $factarray["COMM"]                      = "Commentaire";
+
 // Aldfaer related facts
 $factarray["MARR_CIVIL"]                = "Mariage civil";
 $factarray["MARR_RELIGIOUS"]            = "Mariage religieux";
 $factarray["MARR_PARTNERS"]             = "Partenaires";
 $factarray["MARR_UNKNOWN"]              = "";
+
 $factarray["_HNM"]                      = "Nom hébreu";
+
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"]                = "Décès du conjoint";
+
 $factarray["_BIRT_CHIL"]                = "Naissance d'un enfant";
 $factarray["_MARR_CHIL"]                = "Mariage d'un enfant";
 $factarray["_DEAT_CHIL"]                = "Décès d'un enfant";
+
 $factarray["_BIRT_GCHI"]                = "Naissance d'un petit-enfant";
 $factarray["_MARR_GCHI"]                = "Mariage d'un petit-enfant";
 $factarray["_DEAT_GCHI"]                = "Décès d'un petit-enfant";
+
+$factarray["_BIRT_GGCH"]                = "Naissance d'un arrière-petit-enfant";
+$factarray["_MARR_GGCH"]                = "Mariage d'un arrière-petit-enfant";
+$factarray["_DEAT_GGCH"]                = "Décès d'un arrière-petit-enfant";
+
 $factarray["_MARR_FATH"]                = "Mariage du père";
 $factarray["_DEAT_FATH"]                = "Décès du père";
+
 $factarray["_MARR_MOTH"]                = "Mariage de la mère";
 $factarray["_DEAT_MOTH"]                = "Décès de la mère";
+
 $factarray["_BIRT_SIBL"]                = "Naissance frère/sœur";
 $factarray["_MARR_SIBL"]                = "Mariage frère/sœur";
 $factarray["_DEAT_SIBL"]                = "Décès frère/sœur";
+
 $factarray["_BIRT_HSIB"]                = "Naissance demi-frère/sœur";
 $factarray["_MARR_HSIB"]                = "Mariage demi-frère/sœur";
 $factarray["_DEAT_HSIB"]                = "Décès demi-frère/sœur";
+
 $factarray["_BIRT_NEPH"]                = "Naissance neveu/nièce";
 $factarray["_MARR_NEPH"]                = "Mariage neveu/nièce";
 $factarray["_DEAT_NEPH"]                = "Décès neveu/nièce";
+
 $factarray["_DEAT_GPAR"]                = "Décès d'un grand-parent";
+
+$factarray["_DEAT_GGPA"]                = "Décès d'un arrière-grand-parent";
+
 $factarray["_BIRT_FSIB"]                = "Naissance frère/sœur du père";
 $factarray["_MARR_FSIB"]                = "Mariage frère/sœur du père";
 $factarray["_DEAT_FSIB"]                = "Décès frère/sœur du père";
+
 $factarray["_BIRT_MSIB"]                = "Naissance frère/sœur de la mère";
 $factarray["_MARR_MSIB"]                = "Mariage frère/sœur de la mère";
 $factarray["_DEAT_MSIB"]                = "Décès frère/sœur de la mère";
+
 $factarray["_BIRT_COUS"]                = "Naissance cousin(e) germain(e)";
 $factarray["_MARR_COUS"]                = "Mariage cousin(e) germain(e)";
 $factarray["_DEAT_COUS"]                = "Décès cousin(e) germain(e)";
+
 $factarray["_FAMC_EMIG"]                = "Emigration des parents";
 $factarray["_FAMC_RESI"]                = "Domicile des parents";
+
 //-- PGV Only facts
 $factarray["_THUM"]                     = "Vignette";
 $factarray["_PGVU"]                     = "par";
 $factarray["SERV"]                      = "Serveur distant";
 $factarray["_GEDF"]                     = "Fichier GEDCOM";
+
 ?>

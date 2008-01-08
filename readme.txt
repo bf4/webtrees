@@ -169,10 +169,9 @@ installing PHP applications.
 
 *A.  Upload Program Files:
 To install PhpGedView, unzip the compressed package and upload the files to 
-a directory on your web server.  Copy config.dist to config.php.
+a directory on your web server.  Rename the config.dist file to config.php.
 
-If you have limited space on your server, you can save space in the following 
-ways:
+If you have limited space on your server, you can save space in the following ways:
 1.  Delete the themes from the themes folder that you do not plan to use.
 2.  Delete some of the language files that you do not want.  English files 
     are named configure_help.en.php, countries.en.php, facts.en.php, 
@@ -183,7 +182,7 @@ ways:
     before the files for the selected language are loaded.  This ensures 
     that all language variables are defined, and that the English version 
     will be used when a given variable is missing in the new language.
-3.  Do not upload the "places" folder.  This folder contains maps for some
+3.  Do not upload the entire "places" folder.  This folder contains maps for some
     countries.  It also contains text files containing state, county, and 
     place names.  Its purpose is to allow you to enter place names by 
     picking them from lists.    

@@ -746,7 +746,7 @@ $pgv_lang["setperms_readonly"]		= "Dar al mundo sólo permiso de lectura";
 $pgv_lang["setperms_success"]		= "Permisos fijados";
 $pgv_lang["setperms_failure"]		= "Permisos no fijadso";
 $pgv_lang["setperms_time_exceeded"]	= "Se sobrepasó el límite de tiempo de ejecución.  Intente realizar el proceso en un directorio más pequeño.";
-$pgv_lang["move_time_exceeded"]	= "Se sobrepasó el límite de tiempo de ejecución.  Intente el proceso de nuevo para trasladar el resto de los archivos.";
+$pgv_lang["move_time_exceeded"]		= "Se sobrepasó el límite de tiempo de ejecución.  Intente el proceso de nuevo para trasladar el resto de los archivos.";
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "El directorio raíz que indicó para el cortafuegos de objetos audiovisuales no existe.  Debe crearlo antes.";
 $pgv_lang["media_firewall_protected_dir_no_exist"]		= "El directorio protegido de objetos no se pudo crear en el directorio raíz del cortafuegos de objetos.  Por favor, cree este directorio y dé permiso de escritura al mundo.";
 $pgv_lang["media_firewall_protected_dir_not_writable"]	= "El directorio protegido de objetos en el directorio raíz del cortafuegos de objetos no tiene permiso de escritura para el mundo.";
@@ -1099,7 +1099,7 @@ $pgv_lang["mail02_subject"] 		= "Nuevo registro en #SERVER_NAME#";
 $pgv_lang["hashcode"]				= "Código de verificación:";
 $pgv_lang["thankyou"]				= "Hola #user_fullname# ...<br />Gracias por registrarse";
 $pgv_lang["pls_note06"] 			= "Ahora enviaremos un correo de confirmación a la dirección <b>#user_email#</b>. Debe verificar su solicitud de cuenta siguiendo las instrucciones que se dan en ese correo.  Si no confirma su solicitud de cuenta en siete días, su solicitud se rechazará automáticamente.  Tendrá que hacer una nueva solicitud.<br /><br />Después de haber seguido las instrucciones del correo de confirmación, el administrador aún habrá de aprobar la solicitud antes de que puede utilizarse su cuenta.<br /><br />Para entrar a este sitio, necesitará conocer su nombre de usuario y su contraseña.<br /><br />";
-$pgv_lang["pls_note06a"] 			= "Ahora recibirá un mensaje de correo electrónico para confirmar su dirección de correo <b>#user_email#</b>. Siga las instrucciones en ese mensaje de correo para completar la verificación y activar su cuenta. Si no lo hace antes de siete días, se borrará su solicitud automáticamente.  En ese caso, tendrá que repetir el proceso con una nueva solicitud.<br><br />Cuando haya seguido los pasos indicados en ese mensaje de correo, podrá entrar. Para entrar, necesitará hacer uso de su usuario y su contraseña.<br /><br />";
+$pgv_lang["pls_note06a"] 			= "Ahora recibirá un mensaje de correo electrónico para confirmar su dirección de correo <b>#user_email#</b>. Siga las instrucciones en ese mensaje de correo para completar la verificación y activar su cuenta. Si no lo hace antes de siete días, se borrará su solicitud automáticamente.  En ese caso, tendrá que repetir el proceso con una nueva solicitud.<br /><br />Cuando haya seguido los pasos indicados en ese mensaje de correo, podrá entrar. Para entrar, necesitará hacer uso de su usuario y su contraseña.<br /><br />";
 
 $pgv_lang["registernew"]			= "Nueva confirmación de Cuenta";
 $pgv_lang["user_verify"]			= "Verificación de usuario";

@@ -39,9 +39,8 @@
 global $errors, $warnings, $pgv_lang;
 $errors = array();
 $warnings = array();
-if ((double) phpversion() < 4.3) 
+if (version_compare(phpversion(), '4.3.5')<0) 
 {
-//	$errors[] = "<span class=\"error\">You need to have PHP version 4.3 or higher.</span>";
 	$errors[] = "<span class=\"error\">".$pgv_lang["sanity_err1"]."</span>";
 }
 

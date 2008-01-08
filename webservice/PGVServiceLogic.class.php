@@ -766,9 +766,10 @@ class PGVServiceLogic extends GenealogyService
 			// a search on the birthdate supply in $query  if it exists
 			if(array_key_exists('BIRTHDATE', $array_querys))
 			{
-				$date = parse_date($array_querys['BIRTHDATE']);
+				$date = new GedcomDate($array_querys['BIRTHDATE']);
+				$date = $date->MinDate();
 				//$day="", $month="", $year="", $fact="", $allgeds=false, $ANDOR="AND")
-				$results_from_birth_date = search_indis_dates($date[0]['day'],$date[0]['month'],$date[0]['year'],'BIRT');
+				$results_from_birth_date = search_indis_dates($date->d,$date->Format('O'),$date->y,'BIRT');
 	//			AddToLog("Found ".count($results_from_birth_date)." searching for birth.");
 			}
 			else
@@ -780,8 +781,9 @@ class PGVServiceLogic extends GenealogyService
 			// a search on the deathdate supply in $query  if it exists
 			if(array_key_exists('DEATHDATE', $array_querys))
 			{
-				$date = parse_date($array_querys['DEATHDATE']);
-				$results_from_death_date = search_indis_dates($date[0]['day'],$date[0]['month'],$date[0]['year'],'DEAT');
+				$date = new GedcomDate($array_querys['DEATHDATE']);
+				$date = $date->MinDate();
+				$results_from_death_date = search_indis_dates($date->d,$date->Format('O'),$date->y,'DEAT');
 			}
 			else
 			{
@@ -955,16 +957,10 @@ class PGVServiceLogic extends GenealogyService
 				return new SOAP_Fault('perform_update_check','Last update date Unknown');
 			}
 
-			$chan_date = parse_date($change_date);
-			$incoming_date = parse_date($lastUpdate);
-	//		AddToLog('Dates have been reformated');
+			$chan_date     = new GedcomDate($change_date);
+			$incoming_date = new GedcomDate($lastUpdate);
 
-			// chaning the gedcom date into a time
-			$change_time = mktime(1, 0, 0, (int)$chan_date[0]['mon'], (int)$chan_date[0]['day'], $chan_date[0]['year']);
-			$incoming_time = mktime(1, 0, 0, (int)$incoming_date[0]['mon'], (int)$incoming_date[0]['day'], $incoming_date[0]['year']);
-
-
-			if ($change_time > $incoming_time)
+			if ($change_time->MinJD() > $incoming_time->MinJD())
 			{
 	//			AddToLog('Changes were made since last update');
 				$result = $this->createPerson($RID, $indirec, "result");
@@ -982,15 +978,15 @@ class PGVServiceLogic extends GenealogyService
 
 	function postCheckUpdates($SID,$lastUpdate)
 	{
-		$date = parse_date($lastUpdate);
+		$date = new GedcomDate($lastUpdate);
 
-		if ($date[0]['jd1']==0)
+		if ($date->MinJD()==0)
 			return new SOAP_Fault('perform_update_check','Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.');
 
-		if ($date[0]['jd1']<server_jd()-180)
+		if ($date->MinJD()<server_jd()-180)
 			return new SOAP_Fault('checkUpdates', 'You cannot retrieve updates for more than 180 days.');
 
-		$changes = get_recent_changes($date[0]['jd1']);
+		$changes = get_recent_changes($date->MinJD()]);
 		$results = array();
 		foreach($changes as $id=>$change) {
 			$results[] = $change['d_gid'];

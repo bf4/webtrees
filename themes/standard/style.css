@@ -495,6 +495,10 @@ a:hover .nameZoom {
 	opacity: 0.4;	/* IE does not yet support this */
 }
 
+.border1 {
+	border: solid black 1px;
+}	
+
 .header_select {
 	font-size: 9pt;
 }
@@ -525,9 +529,6 @@ a:hover .nameZoom {
 }
 
 .submenu, .submenu_rtl {
-	visibility: hidden;
-	position: absolute;
-	z-index: 100;
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;

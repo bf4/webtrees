@@ -877,14 +877,14 @@ function print_lang_form($option=0) {
 					$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
 					foreach ($vars as $var) {
 						$parts = preg_split("/=/", $var);
-								print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".urldecode($parts[1])."\" />";
+						print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
 					}
 					print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
 					print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
 					foreach ($used_langs as $key=>$value) {
 						 if ($language_settings[$key]["pgv_lang_use"]) {
 							  print "\n\t\t\t<option value=\"$key\" ";
-							  if ($LANGUAGE == $key) print "class=\"selected-option\"";
+							  if ($LANGUAGE == $key) print " selected=\"selected\" class=\"selected-option\"";
 							  print ">".$pgv_lang[$key]."</option>";
 						 }
 					}
@@ -2524,13 +2524,13 @@ function print_add_new_fact($id, $usedfacts, $type) {
  * @param none
  */
 function init_calendar_popup() {
-	global $monthtonum, $pgv_lang, $WEEK_START;
+	global $pgv_lang, $WEEK_START;
 
 	print "<script language=\"JavaScript\" type='text/javascript'>\n<!--\n";
 	// month names
 	print "cal_setMonthNames(";
-	foreach(array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec') as $mon) {
-		if ($monthtonum[$mon]>1) print ",";
+	foreach(array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec') as $n=>$mon) {
+		if ($n>0) print ",";
 		print "\"".$pgv_lang[$mon]."\"";
 	}
 	print ");\n";
@@ -2837,7 +2837,7 @@ function DumpString($input) {
 			$thisLine .= "<br />";
 			print str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
 		}
-		print "<br>";
+		print "<br />";
 		$pos += $lineLength;
 		if ($pos >= $lastPos) break;
 	}

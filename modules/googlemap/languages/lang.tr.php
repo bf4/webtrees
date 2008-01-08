@@ -87,7 +87,8 @@ $pgv_lang["pl_north_short"]         = "K";
 $pgv_lang["pl_south_short"]         = "G";
 $pgv_lang["pl_east_short"]          = "D";
 $pgv_lang["pl_west_short"]          = "B";
-$pgv_lang["pl_places_filename"]     = "Yerleri kapsayan (CSV) dosya";
+$pgv_lang["pl_places_localfile"]	  = "Yerleri kapsayan sunucudaki (CSV) dosya yükle";
+$pgv_lang["pl_places_filename"]     = "Yerleri kapsayan (CSV) dosya yükle";
 $pgv_lang["pl_clean_db"]            = "Konumları içeri aktarmadan önce-Tüm yeri temizle?";
 $pgv_lang["pl_update_only"]         = "Sadece var olan yerleri güncelle?";
 $pgv_lang["pl_overwrite_data"]      = "Dosyadan veri ile veri-konumun üzerine yaz?";
@@ -109,10 +110,10 @@ $pgv_lang["pl_remove_flag"]         = "Bayrağı kaldır";
 
 $pgv_lang["pl_remove_location"]     = "Bu konumu kaldır?";
 $pgv_lang["pl_delete_error"]        = "Konum kaldırılmaz: bu yer alt-konumları kapsar";
-$pgv_lang["list_inactive"]        	= "Hareketsiz yerleri görmek için burayı tıkla";
+$pgv_lang["list_inactive"]        	= "Konumlanmayan yerleri görmek için burayı tıkla";
 
 //Placecheck specific text
-$pgv_lang["placecheck"]				= "Lütfen Denetle";
+$pgv_lang["placecheck"]				= "Yerleri Denetle";
 $pgv_lang["placecheck_text"]		= "Bu seçilmiş GEDCOM dosyasından bütün yerleri listeleyecek. Varsayılan yoluyla bu GEDCOM dosyası ve GoogleMap tabloları arasında tamamen eşlenen yerler içermeyecek";
 $pgv_lang["placecheck_top"]			= "Üst Yer Değeri";
 $pgv_lang["placecheck_one"]			= "Bir Yer Değeri";

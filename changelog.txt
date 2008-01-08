@@ -33,9 +33,20 @@ Version 4.2
 
 
 Version 4.1.4
+ - Fixed [ 1864117 ] R-A:Fatal error: Call to undefined method GedcomDate::Format
+ - Fixed [ 1857074 ] Media Firewalled Files not included on Backup (ljm)
+ - Events of close relatives : add great-grandchildren/parents (opus27)
+ - Added [ 1840895 ] reorder children in modified families (opus27)
+ - Added [ 1686246 ] Insert new child at the right place in the family (opus27)
+ - Fixed [ 1838140 ] Edit interface bug when place editing (opus27)
+ - Fixed [ 1833538 ] GedCheck problem (opus27)
+ - Added [ 1599135 ] Father's First Name in Lists (opus27)
+ - Fixed [ 1842091 ] Error in Notes Tab V4.1.3 (and 4.1.4 svn) (opus27)
+ - Added [ 1749591 ] Highlight maternal death (opus27)
+ - Fixed [ 1840934 ] Associate Individual FACT/EVEN TYPE text (opus27)
  - Fixed [ 1834996 ] Sitemap module uses incorrect $SERVER_URL value (canajun2eh)
 
-Version 4.1.3
+Version 4.1.3 2007.11.16
  - Fixed [ 1822946 ] Missing reference to port number in $SERVER_URL (yalnifj)
  - Fixed [ 1586584 ] Minimal theme - Icons on some Indi page tabs (canajun2eh)
  - Fixed [ 1549501 ] Quick Edit - Name editing rarely works (yalnifj)

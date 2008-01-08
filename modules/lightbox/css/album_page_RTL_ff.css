@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Modules
- * @version $Id: album_page_RTL_ff.css 2106 2007-11-02 13:20:31Z canajun2eh $
+ * @version $Id: album_page_RTL_ff.css 2334 2007-11-30 16:53:23Z windmillway $
  */
  
 /* lightbox_plus.css version 3.00  29/06/2007  */
@@ -115,6 +115,7 @@ width: 100%;
 text-align: center, justify;
 }
 
+
 #thumblist_1, #thumblist_2, #thumblist_3, #thumblist_4, #thumblist_5,
 #thumblist_1a, #thumblist_2a, #thumblist_3a, #thumblist_4a, #thumblist_5a
 {
@@ -133,6 +134,18 @@ padding-bottom: 0px;
 padding-left: 4px;
 padding-right: 4px;
 float: right; 
+}
+
+li.li_norm{
+border: 2px solid transparent; 
+}
+
+li.li_new {
+ border: 2px solid #0000ff; 
+}
+
+li.li_old {
+ border: 2px solid #ff0000; 
 }
 
 #thumblist_1 a img, #thumblist_2 a img, #thumblist_3 a img, #thumblist_4 a img, #thumblist_5 a img,

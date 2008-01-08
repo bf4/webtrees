@@ -1,17 +1,34 @@
 <?php
-/*=================================================
-   charset=utf-8
-   Project:	phpGedView
-   File:	facts.sk.php
-   Author:	John Finlay
-   Comments:	Defines an array of GEDCOM codes and the czech name facts that they represent.
-   Translation:	Peter Moravčík
-   Change Log:	8/5/02 - File Created
-===================================================*/
-# $Id$
+/**
+ * Slovak Language file for PhpGedView.
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007  PGV Development Team
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *
+ * @author PGV Developers
+ * @package PhpGedView
+ * @subpackage Languages
+ * @author Peter Moravčík
+ * @version $Id$
+ */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nemáte priamy prístup k súboru so slovenčinou.";
+	print "Nemáte priamy prístup k súboru zo slovenčinou.";
 	exit;
 }
 
@@ -114,7 +131,7 @@ $factarray["PROB"]	= "Súdne overenie poslednej vôle";
 $factarray["PROP"]	= "Vlastníctvo";
 $factarray["PUBL"]	= "Vydal";
 $factarray["QUAY"]	= "Kvalita dát";
-$factarray["REPO"]	= "Zdroj";
+$factarray["REPO"]	= "Prameň";
 $factarray["REFN"]	= "Referenčné číslo";
 $factarray["RELA"]	= "Príbuzenský vzťah";
 $factarray["RELI"]	= "Náboženstvo";
@@ -130,7 +147,7 @@ $factarray["SLGS"]	= "Vydanie záznamu o sobáši (LDS)";
 $factarray["SOUR"]	= "Zdroj";
 $factarray["SPFX"]	= "Prefix pred priezviskom";
 ///////////////////////////////////////////////////////////////////////////////
-$factarray["SSN"]	= "Social Security Number";
+$factarray["SSN"]	= "Social Security Number (USA)";
 ///////////////////////////////////////////////////////////////////////////////
 $factarray["STAE"]	= "Štát";
 $factarray["STAT"]	= "Stav";
@@ -147,13 +164,35 @@ $factarray["WILL"]	= "Záveť";
 $factarray["_EMAIL"]	= "E-mailová adresa";
 $factarray["EMAIL"]	= "E-mailová adresa";
 ///////////////////////////////////////////////////////////////////////////////
-$factarray["_TODO"]	= "To Do Item";
+$factarray["_TODO"]	= "To Do položka";
 ///////////////////////////////////////////////////////////////////////////////
 $factarray["_UID"]	= "Univerzálny identifikátor";
 $factarray["_PGVU"]	= "Naposledy zmenil(a)";
 $factarray["SERV"] 	= "Vzdialený server";
 $factarray["_GEDF"] 	= "GEDCOM súbor";
 $factarray["_PRIM"]	= "Zvýraznený obrázok";
+$factarray["_DBID"] 	= "ID prilinkovanej databazi";
+$factarray["STAT:DATE"] = "Dátum zmeny stavu";
+$factarray["FAMC:HUSB:SURN"] = "Otcove priezvisko";
+$factarray["FAMC:WIFE:SURN"] = "Matkine priezvisko";
+$factarray["FAMC:HUSB:BIRT:PLAC"] = "Otcove miesto narodenia";
+$factarray["FAMC:WIFE:BIRT:PLAC"] = "Matkine miesto narodenia";
+$factarray["FAMC:MARR:PLAC"] = "Miesto sňatku rodičov";
+$factarray["FAMC:HUSB:OCCU"] = "Otcove zamestnanie";
+$factarray[":BIRT:PLAC"] = "Miesto narodenia";
+$factarray["FAMS:MARR:PLAC"] = "Miesto sňatku";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Miesto úmrtia manžela";
+$factarray["FAMC:HUSB:GIVN"] = "Otcove krstné meno";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Miesto narodenia manžela";
+$factarray["FAMC:WIFE:GIVN"] = "Matkine krstné meno";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Krstné meno po dedkovi";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Krstnné meno po babičke";
+$factarray["BIRT:PLAC"] = "Miesto narodenia";
+$factarray["DEAT:PLAC"] = "Miesto úmrtia";
+$factarray["CHR:PLAC"] = "Miesto krstu";
+$factarray["BAPM:PLAC"] = "Miesto krstu";
+$factarray["BURI:PLAC"] = "Miesto pohrebu";
+$factarray["MARR:PLAC"] = "Miesto sňatku";
 $factarray["_THUM"]	= "Použiť tento obrázok ako náhľad?";
 
 // These facts are specific to gedcom exports from Family Tree Maker
@@ -195,6 +234,7 @@ $factarray["FONE"] 	= "Fonetický prepis";
 $factarray["ROMN"] 	= "Latinkou";
 $factarray["_NAME"] 	= "Meno na poštových zásielkach";
 $factarray["URL"] 	= "URL stránok";
+$factarray["_URL"] 	= "URL stránok";
 $factarray["_HEB"] 	= "Hebrejsky";
 $factarray["_SCBK"] 	= "Album";
 $factarray["_TYPE"] 	= "Typ média";
@@ -228,6 +268,7 @@ $factarray["_PRMN"]	= "Číslo občianského preukazu";
 $factarray["_WEIG"]	= "Váha";
 $factarray["_YART"]	= "Židovský dátum narodenia Yartzeit";
 $factarray["_MARNM"]	= "Priezvisko manželov";
+$factarray["_MARNM_SURN"] = "Priezvisko po sobáši";
 $factarray["_STAT"]	= "Rodinný stav";
 $factarray["COMM"]	= "Komentár";
 $factarray["MARR_CIVIL"] = "Civilný sobáš";

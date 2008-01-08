@@ -496,6 +496,10 @@ table.center{
 	opacity: 0.4;	/* IE does not yet support this */
 }
 
+.border1 {
+	border: solid black 1px;
+}	
+
 .header_select {
 	font-size: 9pt;
 }

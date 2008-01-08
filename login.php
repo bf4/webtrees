@@ -30,13 +30,15 @@
 
 require "config.php";
 $message="";
-if (!isset($action)) {
+if (!isset($_REQUEST['action'])) {
 	$action="";
 	$username="";
 	$password="";
 }
+else $action = $_REQUEST['action'];
 
-if (!isset($type)) $type = "full";
+if (!isset($_REQUEST['type'])) $type = "full";
+else $type = $_REQUEST['type'];
 
 if ($action=="login") {
 	if (isset($_POST['username'])) $username = strip_tags($_POST['username']);
@@ -65,6 +67,7 @@ if ($action=="login") {
 		if (!isset($ged)) $ged = $GEDCOM;
 		
 		//-- section added based on UI feedback
+		if (isset($_REQUEST['url'])) $url = $_REQUEST['url'];
 		if ($url == "individual.php") {
 			$pid = "";
 			foreach($MyUser['gedcomid'] as $gedname=>$value) {

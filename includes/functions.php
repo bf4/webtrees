@@ -83,6 +83,8 @@ function check_db($ignore_previous=false) {
 		'database' => $DBNAME
 	);
 
+	if ($ignore_previous) $dsn['new_link'] = true;
+
 	$options = array(
 		'debug' 	  => 3,
 		'portability' => DB_PORTABILITY_ALL,
@@ -238,6 +240,7 @@ function store_gedcoms() {
 		$gedcomtext .= "\$gedarray[\"privacy\"] = \"".$GED["privacy"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"title\"] = \"".$GED["title"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"path\"] = \"".$GED["path"]."\";\n";
+		$gedcomtext .= "\$gedarray[\"pgv_ver\"] = \"".$GED["pgv_ver"]."\";\n";
 		if (isset($GED["imported"])) $gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
 		// TODO: Commonsurnames from an old gedcom are used
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
@@ -1018,7 +1021,7 @@ function find_highlighted_object($pid, $indirec) {
 	//-- handle finding the media of remote objects
 	$ct = preg_match("/(.*):(.*)/", $pid, $match);
 	if ($ct>0) {
-		if (class_exists("ServiceClient")) {
+		require_once 'includes/serviceclient_class.php';
 			$client = ServiceClient::getInstance($match[1]);
 			if (!is_null($client)) {
 				$mt = preg_match_all("/\d OBJE @(.*)@/", $indirec, $matches, PREG_SET_ORDER);
@@ -1030,17 +1033,6 @@ function find_highlighted_object($pid, $indirec) {
 							$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
 							$media[] = $row;
 						}
-					/*
-					$parts = preg_split("/:/", $matches[$i][1]);
-					if (isset($parts[1])) {
-						$mrec = $client->getRemoteRecord($parts[1]);
-						if (!empty($mrec)) {
-							$file = get_gedcom_value("FILE", 1, $mrec);
-							$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
-							$media[] = $row;
-						}
-					} */
-				}
 			}
 		}
 	}
@@ -1149,126 +1141,6 @@ function extract_filename($fullpath) {
 	return $filename;
 }
 
-/**
- * function to generate a thumbnail image
- * @param string $filename
- * @param string $thumbnail
- */
-function generate_thumbnail($filename, $thumbnail) {
-	global $MEDIA_DIRECTORY, $THUMBNAIL_WIDTH, $AUTO_GENERATE_THUMBS, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS;
-
-	if (!$AUTO_GENERATE_THUMBS) return false;
-	if (media_exists($thumbnail)) return false;
-	if (!is_writable($MEDIA_DIRECTORY."thumbs")) return false;
-
-/*	No references to "media/thumbs/urls" exist anywhere else
-	if (!is_dir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) {
-		mkdir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"), 0777);
-		AddToLog("Folder ".$MEDIA_DIRECTORY."thumbs/urls created.");
-	}
-	if (!is_writable(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) return false;
-*/
-
-	$ext = "";
-	$ct = preg_match("/\.([^\.]+)$/", $filename, $match);
-	if ($ct>0) {
-		$ext = strtolower(trim($match[1]));
-	}
-	if ($ext!='jpg' && $ext!='jpeg' && $ext!='gif' && $ext!='png') return false;
-
-	if (!isFileExternal($filename)) {
-		// internal
-		if (!file_exists(filename_decode($filename))) {
-			if ($USE_MEDIA_FIREWALL) {
-				// see if the file exists in the protected index directory
-				$filename = get_media_firewall_path($filename); 
-				if (!file_exists(filename_decode($filename))) return false;
-				if ($MEDIA_FIREWALL_THUMBS) {
-					// put the thumbnail in the protected directory too
-					$thumbnail = get_media_firewall_path($thumbnail);
-				}
-				// ensure the directory exists
-				if (!is_dir(dirname($thumbnail))) {
-					if (!mkdirs(dirname($thumbnail))) {
-						return false;
-					}
-				}
-			} else {
-				return false;
-			}
-		}
-		$imgsize = getimagesize(filename_decode($filename));
-		// Check if a size has been determined
-		if (!$imgsize) return false;
-
-		//-- check if file is small enough to be its own thumbnail
-		if (($imgsize[0]<150)&&($imgsize[1]<150)) {
-			@copy($filename, $thumbnail);
-			return true;
-		}
-	}
-	else {
-		// external
-		if ($fp = @fopen(filename_decode($filename), "rb")) {
-			if ($fp===false) return false;
-			$conts = "";
-			while(!feof($fp)) {
-				$conts .= fread($fp, 4098);
-			}
-			fclose($fp);
-			$fp = fopen(filename_decode($thumbnail), "wb");
-			if (!fwrite($fp, $conts)) return false;
-			fclose($fp);
-			if (!isFileExternal($filename)) $imgsize = getimagesize(filename_decode($filename));
-			else $imgsize = getimagesize(filename_decode($thumbnail));
-			if ($imgsize===false) return false;
-			if (($imgsize[0]<150)&&($imgsize[1]<150)) return true;
-		}
-		else return false;
-	}
-
-	$width = $THUMBNAIL_WIDTH;
-	$height = round($imgsize[1] * ($width/$imgsize[0]));
-
-	if ($ext=="gif") {
-		if (function_exists("imagecreatefromgif") && function_exists("imagegif")) {
-			$im = imagecreatefromgif(filename_decode($filename));
-			if (empty($im)) return false;
-			$new = imagecreatetruecolor($width, $height);
-			imagecopyresampled($new, $im, 0, 0, 0, 0, $width, $height, $imgsize[0], $imgsize[1]);
-			imagegif($new, filename_decode($thumbnail));
-			imagedestroy($im);
-			imagedestroy($new);
-			return true;
-		}
-	}
-	else if ($ext=="jpg" || $ext=="jpeg") {
-		if (function_exists("imagecreatefromjpeg") && function_exists("imagejpeg")) {
-			$im = imagecreatefromjpeg(filename_decode($filename));
-			if (empty($im)) return false;
-			$new = imagecreatetruecolor($width, $height);
-			imagecopyresampled($new, $im, 0, 0, 0, 0, $width, $height, $imgsize[0], $imgsize[1]);
-			imagejpeg($new, filename_decode($thumbnail));
-			imagedestroy($im);
-			imagedestroy($new);
-			return true;
-		}
-	}
-	else if ($ext=="png") {
-		if (function_exists("imagecreatefrompng") && function_exists("imagepng")) {
-			$im = imagecreatefrompng(filename_decode($filename));
-			if (empty($im)) return false;
-			$new = imagecreatetruecolor($width, $height);
-			imagecopyresampled($new, $im, 0, 0, 0, 0, $width, $height, $imgsize[0], $imgsize[1]);
-			imagepng($new, filename_decode($thumbnail));
-			imagedestroy($im);
-			imagedestroy($new);
-			return true;
-		}
-	}
-
-	return false;
-}
 
 // ************************************************* START OF SORTING FUNCTIONS ********************************* //
 /**
@@ -1587,6 +1459,16 @@ function itemsort($a, $b) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Sort a list events for the today/upcoming blocks
+////////////////////////////////////////////////////////////////////////////////
+function event_sort($a, $b) {
+	if ($a['jd']==$b['jd'])
+		return compareStrings($a['name'], $b['name']);
+	else
+		return $a['jd']-$b['jd'];
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Sort a list (e.g. of SOURCES) by alphabetical name
 ////////////////////////////////////////////////////////////////////////////////
 function source_sort($a, $b) {
@@ -1642,6 +1524,185 @@ function lettersort($a, $b) {
 	return stringsort($a["letter"], $b["letter"]);
 }
 
+// Helper function to sort facts.
+function compare_facts_type($arec, $brec) {
+	global $factarray;
+	static $factsort;
+
+	if (is_array($arec))
+		$arec = $arec[1];
+	if (is_array($brec))
+		$brec = $brec[1];
+
+	// Facts from different families stay grouped together
+	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
+		return 0;
+		
+	// Extract fact type from record
+	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
+		return 0;
+	$afact=$matcha[1];
+	$bfact=$matchb[1];
+
+	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
+		$afact=$match[1];
+	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
+		$bfact=$match[1];
+
+	if (!is_array($factsort))
+		$factsort = array_flip(array(
+			"BIRT",
+			"_HNM",
+			"ALIA", "_AKA", "_AKAN",
+			"ADOP", "_ADPF", "_ADPF",
+			"_BRTM",
+			"CHR", "BAPM",
+			"FCOM",
+			"CONF",
+			"BARM", "BASM",
+			"EDUC",
+			"GRAD",
+			"_DEG",
+			"EMIG", "IMMI",
+			"NATU",
+			"_MILI", "_MILT",
+			"ENGA",
+			"MARB", "MARC", "MARL", "_MARI", "_MBON",
+			"MARR", "MARR_CIVIL", "MARR_RELIGIOUS", "MARR_PARTNERS", "MARR_UNKNOWN", "_COML",
+			"_STAT",
+			"_SEPR",
+			"DIVF",
+			"MARS",
+			"_BIRT_CHIL",
+			"DIV", "ANUL",
+			"_BIRT_", "_MARR_", "_DEAT_",
+			"CENS",
+			"OCCU",
+			"RESI",
+			"PROP",
+			"CHRA",
+			"RETI",
+			"FACT", "EVEN",
+			"_NMR", "_NMAR", "NMR",
+			"NCHI",
+			"WILL",
+			"_HOL",
+			"_????_",
+			"DEAT", "CAUS",
+			"_FNRL", "BURI", "CREM", "_INTE", "CEME",
+			"_YART",
+			"_NLIV",
+			"PROB",
+			"TITL",
+			"COMM",
+			"NATI",
+			"CITN",
+			"CAST",
+			"RELI",
+			"SSN", "IDNO",
+			"TEMP",
+			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
+			"AFN", "REFN", "_PRMN", "REF", "RIN",
+			"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
+			"CHAN", "_TODO"
+		));
+
+	// Events not in the above list get mapped onto one that is.
+	if (!isset($factsort[$afact]))
+		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $afact, $match))
+			$afact=$match[1];
+		else
+			$afact="_????_";
+	if (!isset($factsort[$bfact]))
+		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $bfact, $match))
+			$bfact=$match[1];
+		else
+			$bfact="_????_";
+
+	$ret = $factsort[$afact]-$factsort[$bfact];
+	//-- if the facts are the same, then go ahead and compare them by date
+	//-- this will improve the positioning of non-dated elements on the next pass
+	if ($ret==0) $ret = compare_facts_date($arec, $brec);
+	return $ret;
+}
+
+// Helper function to sort facts.
+function compare_facts_date($arec, $brec) {
+	if (is_array($arec))
+		$arec = $arec[1];
+	if (is_array($brec))
+		$brec = $brec[1];
+
+	// If either fact is undated, the facts sort equally.
+	if (!preg_match("/2 _?DATE (.*)/", $arec, $amatch) || !preg_match("/2 _?DATE (.*)/", $brec, $bmatch)) {
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+			return $match1[1]-$match2[1];
+		}
+		return 0;
+	}
+
+	$adate = new GedcomDate($amatch[1]);
+	$bdate = new GedcomDate($bmatch[1]);
+	// If either date can't be parsed, don't sort.
+	if ($adate->MinJD()==0 || $bdate->MinJD()==0){
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+			return $match1[1]-$match2[1];
+		}
+		return 0;
+	}
+
+	// Remember that dates can be ranges and overlapping ranges sort equally.
+  $amin=$adate->MinJD();
+  $bmin=$bdate->MinJD();
+	$amax=$adate->MaxJD();
+	$bmax=$bdate->MaxJD();
+
+	// BEF/AFT XXX sort as the day before/after XXX
+	if ($adate->qual1=='BEF') {
+		$amin=$amin-1;
+		$amax=$amin;
+	}
+	else if ($adate->qual1=='AFT') {
+		$amax=$amax+1;
+		$amin=$amax;
+	}
+	if ($bdate->qual1=='BEF') {
+		$bmin=$bmin-1;
+		$bmax=$bmin;
+	}
+	else if ($bdate->qual1=='AFT') {
+		$bmax=$bmax+1;
+		$bmin=$bmax;
+	}
+
+	if ($amax<$bmin)
+		return -1;
+	else if ($amin>$bmax)
+		return 1;
+	else {
+		//-- ranged date... take the type of fact sorting into account
+		$factWeight = 0;
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+			$factWeight = $match1[1]-$match2[1];
+		}
+//		print $factWeight.": ".substr($arec, 0, 6)." ".substr($brec, 0, 6)."<br />";
+		//-- fact is prefered to come before, so compare using the minimum ranges
+		if ($factWeight < 0 && $amin!=$bmin) {return ($amin-$bmin);}
+		//-- fact is prefered to come after, so compare using the max of the ranges
+		else if ($factWeight > 0 && $bmax!=$amax) {return ($bmax-$amax);}
+		//-- facts are the same or the ranges don't give enough info, so use the average of the range
+		else {
+			$aavg = ($amin+$amax)/2;
+			$bavg = ($bmin+$bmax)/2;
+			if ($aavg<$bavg) return -1;
+			else if ($aavg>$bavg) return 1;
+			else return $factWeight;
+		}
+		
+		return 0;
+	}
+}
+
 // Sort the facts, using three conflicting rules (family sequence,
 // date sequence and fact sequence).
 // We sort by fact first (preserving family order where possible) and then
@@ -1650,25 +1711,61 @@ function lettersort($a, $b) {
 // *mostly* being in sequence.
 function sort_facts(&$arr) {
 	// Pass one - insertion sort on fact type
-	for ($i=1; $i<count($arr); ++$i) {
+	$lastDate = "";
+	for ($i=0; $i<count($arr); ++$i) {
+		if ($i>0) {
 		$tmp=$arr[$i];
 		$j=$i;
-		while ($j>0 && Event::CompareType($arr[$j-1], $tmp)>0) {
+			while ($j>0 && compare_facts_type($arr[$j-1], $tmp)>0) {
 			$arr[$j]=$arr[$j-1];
 			--$j;
 		}
 		$arr[$j]=$tmp;
 	}
+	}
+
+	//-- add extra codes for the next pass of sorting
+	//TODO in the 4.2 branch this can be stored in the Event object
+	//-- add a fake date for the date sorting based on the previous fact that came before
+	$lastDate = "";
+	for($i=0; $i<count($arr); $i++) {
+		//-- add a fake date for the date sorting based on the previous fact that came before
+		if (is_array($arr[$i])) {
+			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate)) $arr[$i][1].="\r\n2 _DATE ".$lastDate."\r\n";
+			else $lastDate = @$match[1];
+			//-- also add a sort field so that we can compare based on how they were sorted by the previous pass when the date does not give enough information
+			$arr[$i][1] .= "\r\n2 _SORT ".$i."\r\n";
+		}
+		else {
+			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate)) $arr[$i].="\r\n2 _DATE ".$lastDate."\r\n";
+			else $lastDate = @$match[1];
+			$arr[$i] .= "\r\n2 _SORT ".$i."\r\n";
+		}
+	}
+	
 	// Pass two - modified bubble/insertion sort on date
 	for ($i=0; $i<count($arr)-1; ++$i)
 		for ($j=count($arr)-1; $j>$i; --$j)
-			if (Event::CompareDate($arr[$i],$arr[$j])>0) {
+			if (compare_facts_date($arr[$i],$arr[$j])>0) {
 				$tmp=$arr[$i];
 				for ($k=$i; $k<$j; ++$k)
 					$arr[$k]=$arr[$k+1];
 				$arr[$j]=$tmp;
 			}
-	return;
+			
+	//-- delete the temporary fields
+	for($i=0; $i<count($arr); $i++) {
+		if (is_array($arr[$i])) {
+			$arr[$i][1] = preg_replace("/2 _DATE (.+)/", "", $arr[$i][1]);
+			$arr[$i][1] = preg_replace("/2 _SORT (.+)/", "", $arr[$i][1]);
+			$arr[$i][1] = trim($arr[$i][1]);
+		}
+		else {
+			$arr[$i] = preg_replace("/2 _DATE (.+)/", "", $arr[$i]);
+			$arr[$i] = preg_replace("/2 _SORT (.+)/", "", $arr[$i]);
+			$arr[$i] = trim($arr[$i]);
+		}
+	}
 }
 
 /**

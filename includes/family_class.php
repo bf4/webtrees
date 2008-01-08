@@ -31,7 +31,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require_once 'includes/gedcomrecord.php';
 require_once 'includes/person_class.php';
-require_once 'includes/serviceclient_class.php';
 
 class Family extends GedcomRecord {
 	var $husb = null;
@@ -81,29 +80,29 @@ class Family extends GedcomRecord {
 			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
 		}
 
-		$indirec = find_family_record($pid);
-		if (empty($indirec)) {
+		$gedrec = find_family_record($pid);
+		if (empty($gedrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
+				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
-				$newrec = $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ FAM\r\n1 RFN ".$pid, false);
-				$indirec = $newrec;
+				if ($service) $gedrec = $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ FAM\r\n1 RFN ".$pid, false);
 			}
 		}
-		if (empty($indirec)) {
+		if (empty($gedrec)) {
 			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$indirec = find_updated_record($pid);
+				$gedrec = find_updated_record($pid);
 				$fromfile = true;
 			}
 		}
-		if (empty($indirec)) return null;
-		$family = new Family($indirec, $simple);
-		if (!empty($fromfile)) $family->setChanged(true);
-		$famlist[$pid]['object'] = &$family;
+		if (empty($gedrec)) return null;
+		$object = new Family($gedrec, $simple);
+		if (!empty($fromfile)) $object->setChanged(true);
+		$famlist[$pid]['object'] = &$object;
 		if (!isset($famlist[$pid]['gedfile'])) $famlist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-		return $family;
+		return $object;
 	}
 
 	/**
@@ -170,6 +169,15 @@ class Family extends GedcomRecord {
 	function getChildren() {
 		if (!$this->children_loaded) $this->loadChildren();
 		return $this->children;
+	}
+
+	/**
+	 * get the children ids
+	 * @return array 	array of children ids
+	 */
+	function getChildrenIds() {
+		if (!$this->children_loaded) $this->loadChildren();
+		return $this->childrenIds;
 	}
 
 	/**

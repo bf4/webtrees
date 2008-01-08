@@ -134,15 +134,10 @@ class ra_functions {
 	function getEventsForDates($startDate,$endDate,$factLookingFor = "",$place = "")
 	{
 		global $DBCONN, $TBLPREFIX;
-		$parts = preg_split("/,/",$place);
 		if(empty($endDate))
 		{
 			//Add a ten year difference if no end date was sent in
 			$endDate = $startDate + 00100000;
-		}
-		for($i = 0; $i < count($parts); $i++)
-		{
-			$parts[$i] = trim($parts[$i]);
 		}
 		
 		if(empty($factLookingFor))
@@ -154,23 +149,29 @@ class ra_functions {
 			$sql = 'Select * from '.$TBLPREFIX.'factlookup WHERE StartDate <= '.$endDate.' AND EndDate >= '.$startDate.' AND Gedcom_fact like \'%'.$factLookingFor.'%\'';
 		}
 		
-		if(count($parts) > 0)
-		{
-			$numOfParts = count($parts) -1;
-			if(count($parts) == 1)
+		if (!empty($place)) {
+			$parts = preg_split("/,/",$place);
+			for($i = 0; $i < count($parts); $i++)
 			{
-				$sql .= ' AND PL_LV1 LIKE \'%'.$DBCONN->escapeSimple($parts[0]).'%\'';
+				$parts[$i] = trim($parts[$i]);
 			}
-			else
+			
+			if(count($parts) > 0)
 			{
+				$numOfParts = count($parts) -1;
 				for($i = 0; ($i < count($parts) && $i<5); $i++)
 				{
+					if (!empty($parts[$numOfParts])) {
 					$sql .= ' AND PL_LV'.($i+1).' LIKE \'%'.$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
+					}
 					$numOfParts--;
 				}
+				
 			}
+			}
+		else {
+			$sql .= ' AND PL_LV1 IS NULL ';
 		}
-		$sql .=';';
 		$res = dbquery($sql);
 		$rows = array();
 		while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -472,14 +473,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$end = "</span>";
 		} else {
 			$status = "Error!";
-			$output = "<img src=\"modules/research_assistant/images/xbutton.gif\"/>";
+			$image = "modules/research_assistant/images/xbutton.gif";
 			$div = "<div class=\"error\">";
 			$end = "</div>";
 		}
 
 		// The actual message layout
 		$out = '<table align="center" width="50%" height="100" valign="center">';
-		$out .= '<tr><td class="optionbox" align="center" valign="center">'.$output.'</td></tr>';
+		$out .= '<tr><td class="optionbox" align="center" valign="center"><img src="'.$image.'" /></td></tr>';
 		$out .= '<tr><td class="optionbox" valign="center" align="center"><h3>'.$div.''.$message.''.$end.'</h3></td></tr>';
 		$out .= '</table>';
 
@@ -1085,7 +1086,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if ($person->sex == "U") //check for missing sex info
 			{
 			$MissingReturn[] = array("SEX", $pgv_lang["All"]);
-		
 		}
 		if ($person->getBirthRecord(false) != "") //check for missing birth info
 			{
@@ -1442,12 +1442,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			// Loop through all the task ID's and pull the info we need on them,
 			// then format them nicely to show the user.
 			while ($taskid = $res->fetchrow(DB_FETCHMODE_ASSOC)) {
-//				$sql = "SELECT * FROM ".$TBLPREFIX."tasks WHERE t_id = '".$taskid['ts_t_id']."'";
-//				$result = dbquery($sql);
-//				$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
-//     			$task = db_cleanup($task);
 				$date=new GedcomDate(date("d M Y", $taskid["t_startdate"]));
-				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.$date->Format(false).'</td></tr>';
+				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
 			}
 		}
 		return $out;
@@ -1801,14 +1797,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												}
 												
 											}
-										
 										}
 										
 										$genericEvents = $this->getEventsForDates($bdate,$ddate);
 										$lastPlace = null;
 										foreach($genericEvents as $gKey=>$gVal)
 										{
-											
 											if(!isset($sourcesPrinted[$gVal["id"]]))
 											{
 														$closest = null;
@@ -1820,8 +1814,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 													$tempDate = $tVal->getDate();
 													$tempPlace = $tVal->getPlace();
 													
-													//-- 4.0 compat
-													if (!isset($parsedDates[0]['sort'])) $parsedDates[0]['sort'] = $parsedDates[0]['year']."-".$parsedDates[0]['mon']."-".$parsedDates[0]['day']; 
 													$place = trim($place);
 														
 													if(empty($closest))

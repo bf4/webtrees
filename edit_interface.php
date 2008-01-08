@@ -35,6 +35,22 @@ if ($_SESSION["cookie_login"]) {
 	exit;
 }
 
+$action="";
+$linenum="";
+$pid="";
+$famid="";
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['linenum'])) $linenum = $_REQUEST['linenum'];
+if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+if (isset($_REQUEST['famid'])) $famid = $_REQUEST['famid'];
+if (isset($_REQUEST['text'])) $text = $_REQUEST['text'];
+if (isset($_REQUEST['tag'])) $tag = $_REQUEST['tag'];
+if (isset($_REQUEST['famtag'])) $famtag = $_REQUEST['famtag'];
+if (isset($_REQUEST['glevels'])) $glevels = $_REQUEST['glevels'];
+if (isset($_REQUEST['islink'])) $islink = $_REQUEST['islink'];
+if (isset($_REQUEST['type'])) $type = $_REQUEST['type'];
+if (isset($_REQUEST['fact'])) $fact = $_REQUEST['fact'];
+
 // Remove slashes
 if (isset($text)){
 	foreach ($text as $l => $line){
@@ -42,8 +58,6 @@ if (isset($text)){
 	}
 }
 //$DEBUG=1;
-if (!isset($action)) $action="";
-if (!isset($linenum)) $linenum="";
 if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"] == "on"))
 	$update_CHAN = false;
 else
@@ -514,6 +528,8 @@ case 'linkfamaction':
 		if (preg_match("/1 $itag @$famid@/", $gedrec)==0) {
 			if ($itag=="FAMC") {
 				$gedrec .= "\r\n";
+				$pedigree="";
+				if (isset($_REQUEST['pedigree'])) $pedigree = $_REQUEST['pedigree'];
 				switch ($pedigree) {
 				case 'birth':
 					$gedrec .= "1 FAMC @$famid@\r\n2 PEDI $pedigree";
@@ -662,6 +678,7 @@ case 'addnewsource':
 case 'addsourceaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$newgedrec = "0 @XREF@ SOUR\r\n";
+	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
 	if (!empty($EVEN) && count($EVEN)>0) {
 		$newgedrec .= "1 DATA\r\n";
 		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\r\n";
@@ -669,11 +686,19 @@ case 'addsourceaction':
 		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\r\n";
 		if (!empty($AGNC))	$newgedrec .= "2 AGNC ".$AGNC."\r\n";
 	}
+	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
+	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
+	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
+	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
+	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
 	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\r\n";
 	if (!empty($TITL)) {
 		$newgedrec .= "1 TITL $TITL\r\n";
 		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\r\n";
-		if (!empty($ROMN)) $newgedrec .= "2 ROMN $_HEB\r\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $_ROMN\r\n";
 	}
 	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\r\n";
 	if (!empty($PUBL)) $newgedrec .= "1 PUBL $PUBL\r\n";
@@ -756,10 +781,19 @@ case 'addnewrepository':
 case 'addrepoaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$newgedrec = "0 @XREF@ REPO\r\n";
+	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['ADDR'])) $ADDR = $_REQUEST['ADDR'];
+	if (isset($_REQUEST['PHON'])) $PHON = $_REQUEST['PHON'];
+	if (isset($_REQUEST['FAX'])) $FAX = $_REQUEST['FAX'];
+	if (isset($_REQUEST['EMAIL'])) $EMAIL = $_REQUEST['EMAIL'];
+	if (isset($_REQUEST['WWW'])) $WWW = $_REQUEST['WWW'];
+	
 	if (!empty($NAME)) {
 		$newgedrec .= "1 NAME $NAME\r\n";
 		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\r\n";
-		if (!empty($ROMN)) $newgedrec .= "2 ROMN $_HEB\r\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\r\n";
 	}
 	if (!empty($ADDR)) $newgedrec .= "1 ADDR $ADDR\r\n";
 	if (!empty($PHON)) $newgedrec .= "1 PHON $PHON\r\n";
@@ -788,6 +822,7 @@ case 'addrepoaction':
 //------------------------------------------------------------------------------
 //-- get the new incoming raw gedcom record and store it in the file
 case 'updateraw':
+	if (isset($_REQUEST['newgedrec'])) $newgedrec = $_REQUEST['newgedrec'];
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$newgedrec = trim($newgedrec);
@@ -804,6 +839,7 @@ case 'update':
 	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
 	//-- check for photo update
 	if (count($_FILES)>0) {
+		if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
 		$uploaded_files = array();
 		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		if (substr($folder,0,1) == "/") $folder = substr($folder,1);
@@ -843,6 +879,20 @@ case 'update':
 		while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
 	}
 	if (!isset($glevels)) $glevels = array();
+	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+	if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+	if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+	if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+	if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+	if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+	if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+	
 	if (!empty($NAME)) $newged .= "1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\r\n";
@@ -875,6 +925,21 @@ case 'addchildaction':
 
 	splitSOUR();			// separate SOUR record from the rest
 
+	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+	if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+	if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+	if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+	if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+	if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+	if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
+	
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
@@ -889,6 +954,16 @@ case 'addchildaction':
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
+	
+	if (isset($_REQUEST['BIRT_DATE'])) $BIRT_DATE = $_REQUEST['BIRT_DATE'];
+	if (isset($_REQUEST['BIRT_PLAC'])) $BIRT_PLAC = $_REQUEST['BIRT_PLAC'];
+	if (isset($_REQUEST['BIRT_ROMN'])) $BIRT_ROMN = $_REQUEST['BIRT_ROMN'];
+	if (isset($_REQUEST['BIRT_FONE'])) $BIRT_FONE = $_REQUEST['BIRT_FONE'];
+	if (isset($_REQUEST['BIRT__HEB'])) $BIRT__HEB = $_REQUEST['BIRT__HEB'];
+	if (isset($_REQUEST['BIRT_LATI'])) $BIRT_LATI = $_REQUEST['BIRT_LATI'];
+	if (isset($_REQUEST['BIRT_LONG'])) $BIRT_LONG = $_REQUEST['BIRT_LONG'];
+	if (isset($_REQUEST['SOUR_BIRT'])) $SOUR_BIRT = $_REQUEST['SOUR_BIRT'];
+	if (isset($_REQUEST['BIRT'])) $BIRT = $_REQUEST['BIRT'];
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
 		if (!empty($BIRT_DATE)) {
@@ -911,6 +986,17 @@ case 'addchildaction':
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
+	
+	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
+	if (isset($_REQUEST['DEAT_DATE'])) $DEAT_DATE = $_REQUEST['DEAT_DATE'];
+	if (isset($_REQUEST['DEAT_PLAC'])) $DEAT_PLAC = $_REQUEST['DEAT_PLAC'];
+	if (isset($_REQUEST['DEAT_ROMN'])) $DEAT_ROMN = $_REQUEST['DEAT_ROMN'];
+	if (isset($_REQUEST['DEAT_FONE'])) $DEAT_FONE = $_REQUEST['DEAT_FONE'];
+	if (isset($_REQUEST['DEAT__HEB'])) $DEAT__HEB = $_REQUEST['DEAT__HEB'];
+	if (isset($_REQUEST['DEAT_LATI'])) $DEAT_LATI = $_REQUEST['DEAT_LATI'];
+	if (isset($_REQUEST['DEAT_LONG'])) $DEAT_LONG = $_REQUEST['DEAT_LONG'];
+	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
+	if (isset($_REQUEST['SOUR_DEAT'])) $SOUR_DEAT = $_REQUEST['SOUR_DEAT'];
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
@@ -935,6 +1021,8 @@ case 'addchildaction':
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 	if (!empty($famid)) {
 		$gedrec .= "\r\n";
+		$PEDI="";
+		if (isset($_REQUEST['PEDI'])) $PEDI = $_REQUEST['PEDI'];
 		switch ($PEDI) {
 		case 'birth':
 			$gedrec.="1 FAMC @$famid@\r\n2 PEDI $PEDI";
@@ -955,6 +1043,7 @@ case 'addchildaction':
 		$gedrec .= "\r\n";
 	}
 
+	if (isset($_REQUEST['SOUR_INDI'])) $SOUR_INDI = $_REQUEST['SOUR_INDI'];
 	if (isset($SOUR_INDI) && $SOUR_INDI=="Y") $gedrec = handle_updates($gedrec);
 	else $gedrec = updateRest($gedrec);
 
@@ -965,15 +1054,34 @@ case 'addchildaction':
 		print "<br /><br />".$pgv_lang["update_successful"];
 		$gedrec = "";
 		if (!empty($famid)) {
-			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $gedrec = find_gedcom_record($famid);
-			else $gedrec = find_updated_record($famid);
-			if (!empty($gedrec)) {
-				$gedrec = trim($gedrec);
-				$gedrec .= "\r\n1 CHIL @$xref@\r\n";
+			// Insert new child at the right place [ 1686246 ]
+			$newchild = Person::getInstance($xref);
+			$family = Family::getInstance($famid);
+			if ($family->getUpdatedFamily()) $family = $family->getUpdatedFamily();
+			$gedrec = $family->gedrec;
+			$done = false;
+			foreach($family->getChildren() as $key=>$child) {
+				//print $xref." ".$newchild->getBirthYear()." <==> ".$child->getXref()." ".$child->getBirthYear()."<br />";
+				if ($newchild->getBirthYear() && $newchild->getBirthYear() < $child->getBirthYear()) {
+					// new child is older : insert before
+					$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
+																"1 CHIL @$xref@\r\n1 CHIL @".$child->getXref()."@",
+																$gedrec);
+					$done = true;
+					break;
+				}
+			}
+			// new child is the only one
+			if (count($family->getChildren())<1) $gedrec .= "\r\n1 CHIL @$xref@";
+			else if (!$done) {
+				// new child is the youngest or undated : insert after
+				$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
+															"1 CHIL @".$child->getXref()."@\r\n1 CHIL @$xref@",
+															$gedrec);
+			}
 				if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 				replace_gedrec($famid, $gedrec);
 			}
-		}
 		$success = true;
 	}
 	break;
@@ -983,6 +1091,21 @@ case 'addspouseaction':
 
 	splitSOUR();			// separate SOUR record from the rest
 
+	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+	if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+	if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+	if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+	if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+	if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+	if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
+	
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
@@ -997,6 +1120,16 @@ case 'addspouseaction':
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
+	
+	if (isset($_REQUEST['BIRT_DATE'])) $BIRT_DATE = $_REQUEST['BIRT_DATE'];
+	if (isset($_REQUEST['BIRT_PLAC'])) $BIRT_PLAC = $_REQUEST['BIRT_PLAC'];
+	if (isset($_REQUEST['BIRT_ROMN'])) $BIRT_ROMN = $_REQUEST['BIRT_ROMN'];
+	if (isset($_REQUEST['BIRT_FONE'])) $BIRT_FONE = $_REQUEST['BIRT_FONE'];
+	if (isset($_REQUEST['BIRT__HEB'])) $BIRT__HEB = $_REQUEST['BIRT__HEB'];
+	if (isset($_REQUEST['BIRT_LATI'])) $BIRT_LATI = $_REQUEST['BIRT_LATI'];
+	if (isset($_REQUEST['BIRT_LONG'])) $BIRT_LONG = $_REQUEST['BIRT_LONG'];
+	if (isset($_REQUEST['SOUR_BIRT'])) $SOUR_BIRT = $_REQUEST['SOUR_BIRT'];
+	if (isset($_REQUEST['BIRT'])) $BIRT = $_REQUEST['BIRT'];
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
 		if (!empty($BIRT_DATE)) {
@@ -1019,6 +1152,17 @@ case 'addspouseaction':
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
+	
+	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
+	if (isset($_REQUEST['DEAT_DATE'])) $DEAT_DATE = $_REQUEST['DEAT_DATE'];
+	if (isset($_REQUEST['DEAT_PLAC'])) $DEAT_PLAC = $_REQUEST['DEAT_PLAC'];
+	if (isset($_REQUEST['DEAT_ROMN'])) $DEAT_ROMN = $_REQUEST['DEAT_ROMN'];
+	if (isset($_REQUEST['DEAT_FONE'])) $DEAT_FONE = $_REQUEST['DEAT_FONE'];
+	if (isset($_REQUEST['DEAT__HEB'])) $DEAT__HEB = $_REQUEST['DEAT__HEB'];
+	if (isset($_REQUEST['DEAT_LATI'])) $DEAT_LATI = $_REQUEST['DEAT_LATI'];
+	if (isset($_REQUEST['DEAT_LONG'])) $DEAT_LONG = $_REQUEST['DEAT_LONG'];
+	if (isset($_REQUEST['SOUR_DEAT'])) $SOUR_DEAT = $_REQUEST['SOUR_DEAT'];
+	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
@@ -1042,6 +1186,7 @@ case 'addspouseaction':
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 
+	if (isset($_REQUEST['SOUR_INDI'])) $SOUR_INDI = $_REQUEST['SOUR_INDI'];
 	if (isset($SOUR_INDI) && $SOUR_INDI=="Y") $gedrec = handle_updates($gedrec);
 	else $gedrec = updateRest($gedrec);
 
@@ -1064,6 +1209,17 @@ case 'addspouseaction':
 			$famrec .= "1 WIFE @$xref@\r\n";
 			$famrec .= "1 HUSB @$pid@\r\n";
 		}
+		
+		if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
+		if (isset($_REQUEST['MARR_PLAC'])) $MARR_PLAC = $_REQUEST['MARR_PLAC'];
+		if (isset($_REQUEST['MARR_ROMN'])) $MARR_ROMN = $_REQUEST['MARR_ROMN'];
+		if (isset($_REQUEST['MARR_FONE'])) $MARR_FONE = $_REQUEST['MARR_FONE'];
+		if (isset($_REQUEST['MARR__HEB'])) $MARR__HEB = $_REQUEST['MARR__HEB'];
+		if (isset($_REQUEST['MARR_LATI'])) $MARR_LATI = $_REQUEST['MARR_LATI'];
+		if (isset($_REQUEST['MARR_LONG'])) $MARR_LONG = $_REQUEST['MARR_LONG'];
+		if (isset($_REQUEST['MARR'])) $MARR = $_REQUEST['MARR'];
+		if (isset($_REQUEST['SOUR_MARR'])) $SOUR_MARR = $_REQUEST['SOUR_MARR'];
+		if (isset($_REQUEST['SOUR_FAM'])) $SOUR_FAM = $_REQUEST['SOUR_FAM'];
 		if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 			$famrec .= "1 MARR\r\n";
 			if (!empty($MARR_DATE)) {
@@ -1099,6 +1255,16 @@ case 'addspouseaction':
 		else $famrec = find_family_record($famid);
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\r\n1 $famtag @$xref@\r\n";
+			if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
+			if (isset($_REQUEST['MARR_PLAC'])) $MARR_PLAC = $_REQUEST['MARR_PLAC'];
+			if (isset($_REQUEST['MARR_ROMN'])) $MARR_ROMN = $_REQUEST['MARR_ROMN'];
+			if (isset($_REQUEST['MARR_FONE'])) $MARR_FONE = $_REQUEST['MARR_FONE'];
+			if (isset($_REQUEST['MARR__HEB'])) $MARR__HEB = $_REQUEST['MARR__HEB'];
+			if (isset($_REQUEST['MARR_LATI'])) $MARR_LATI = $_REQUEST['MARR_LATI'];
+			if (isset($_REQUEST['MARR_LONG'])) $MARR_LONG = $_REQUEST['MARR_LONG'];
+			if (isset($_REQUEST['MARR'])) $MARR = $_REQUEST['MARR'];
+			if (isset($_REQUEST['SOUR_MARR'])) $SOUR_MARR = $_REQUEST['SOUR_MARR'];
+			if (isset($_REQUEST['SOUR_FAM'])) $SOUR_FAM = $_REQUEST['SOUR_FAM'];
 			if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 				$famrec .= "1 MARR\r\n";
 				if (!empty($MARR_DATE)) {
@@ -1156,6 +1322,7 @@ case 'linkspouseaction':
 
 	splitSOUR();			// separate SOUR record from the rest
 
+	if (isset($_REQUEST['spid'])) $spid = $_REQUEST['spid'];
 	if (!empty($spid)) {
 		if (isset($pgv_changes[$spid.'_'.$GEDCOM])) $gedrec = find_updated_record($spid);
 		else $gedrec = find_person_record($spid);
@@ -1174,6 +1341,16 @@ case 'linkspouseaction':
 					$famrec .= "1 WIFE @$spid@\r\n";
 					$famrec .= "1 HUSB @$pid@\r\n";
 				}
+				if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
+				if (isset($_REQUEST['MARR_PLAC'])) $MARR_PLAC = $_REQUEST['MARR_PLAC'];
+				if (isset($_REQUEST['MARR_ROMN'])) $MARR_ROMN = $_REQUEST['MARR_ROMN'];
+				if (isset($_REQUEST['MARR_FONE'])) $MARR_FONE = $_REQUEST['MARR_FONE'];
+				if (isset($_REQUEST['MARR__HEB'])) $MARR__HEB = $_REQUEST['MARR__HEB'];
+				if (isset($_REQUEST['MARR_LATI'])) $MARR_LATI = $_REQUEST['MARR_LATI'];
+				if (isset($_REQUEST['MARR_LONG'])) $MARR_LONG = $_REQUEST['MARR_LONG'];
+				if (isset($_REQUEST['MARR'])) $MARR = $_REQUEST['MARR'];
+				if (isset($_REQUEST['SOUR_MARR'])) $SOUR_MARR = $_REQUEST['SOUR_MARR'];
+				if (isset($_REQUEST['SOUR_FAM'])) $SOUR_FAM = $_REQUEST['SOUR_FAM'];
 				if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 					$famrec .= "1 MARR\r\n";
 					if (!empty($MARR_DATE)) {
@@ -1226,6 +1403,20 @@ case 'addnewparentaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 
 	splitSOUR();			// separate SOUR record from the rest
+	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+	if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+	if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+	if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+	if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+	if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+	if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
 
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
@@ -1241,6 +1432,16 @@ case 'addnewparentaction':
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
+	
+	if (isset($_REQUEST['BIRT_DATE'])) $BIRT_DATE = $_REQUEST['BIRT_DATE'];
+	if (isset($_REQUEST['BIRT_PLAC'])) $BIRT_PLAC = $_REQUEST['BIRT_PLAC'];
+	if (isset($_REQUEST['BIRT_ROMN'])) $BIRT_ROMN = $_REQUEST['BIRT_ROMN'];
+	if (isset($_REQUEST['BIRT_FONE'])) $BIRT_FONE = $_REQUEST['BIRT_FONE'];
+	if (isset($_REQUEST['BIRT__HEB'])) $BIRT__HEB = $_REQUEST['BIRT__HEB'];
+	if (isset($_REQUEST['BIRT_LATI'])) $BIRT_LATI = $_REQUEST['BIRT_LATI'];
+	if (isset($_REQUEST['BIRT_LONG'])) $BIRT_LONG = $_REQUEST['BIRT_LONG'];
+	if (isset($_REQUEST['SOUR_BIRT'])) $SOUR_BIRT = $_REQUEST['SOUR_BIRT'];
+	if (isset($_REQUEST['BIRT'])) $BIRT = $_REQUEST['BIRT'];
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
 		if (!empty($BIRT_DATE)) {
@@ -1263,6 +1464,17 @@ case 'addnewparentaction':
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
+	
+	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
+	if (isset($_REQUEST['DEAT_DATE'])) $DEAT_DATE = $_REQUEST['DEAT_DATE'];
+	if (isset($_REQUEST['DEAT_PLAC'])) $DEAT_PLAC = $_REQUEST['DEAT_PLAC'];
+	if (isset($_REQUEST['DEAT_ROMN'])) $DEAT_ROMN = $_REQUEST['DEAT_ROMN'];
+	if (isset($_REQUEST['DEAT_FONE'])) $DEAT_FONE = $_REQUEST['DEAT_FONE'];
+	if (isset($_REQUEST['DEAT__HEB'])) $DEAT__HEB = $_REQUEST['DEAT__HEB'];
+	if (isset($_REQUEST['DEAT_LATI'])) $DEAT_LATI = $_REQUEST['DEAT_LATI'];
+	if (isset($_REQUEST['DEAT_LONG'])) $DEAT_LONG = $_REQUEST['DEAT_LONG'];
+	if (isset($_REQUEST['SOUR_DEAT'])) $SOUR_DEAT = $_REQUEST['SOUR_DEAT'];
+	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
@@ -1286,6 +1498,7 @@ case 'addnewparentaction':
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 
+	if (isset($_REQUEST['SOUR_INDI'])) $SOUR_INDI = $_REQUEST['SOUR_INDI'];
 	if (isset($SOUR_INDI) && $SOUR_INDI=="Y") $gedrec = handle_updates($gedrec);
 	else $gedrec = updateRest($gedrec);
 
@@ -1306,6 +1519,17 @@ case 'addnewparentaction':
 			$famrec .= "1 WIFE @$xref@\r\n";
 			$famrec .= "1 CHIL @$pid@\r\n";
 		}
+		
+		if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
+		if (isset($_REQUEST['MARR_PLAC'])) $MARR_PLAC = $_REQUEST['MARR_PLAC'];
+		if (isset($_REQUEST['MARR_ROMN'])) $MARR_ROMN = $_REQUEST['MARR_ROMN'];
+		if (isset($_REQUEST['MARR_FONE'])) $MARR_FONE = $_REQUEST['MARR_FONE'];
+		if (isset($_REQUEST['MARR__HEB'])) $MARR__HEB = $_REQUEST['MARR__HEB'];
+		if (isset($_REQUEST['MARR_LATI'])) $MARR_LATI = $_REQUEST['MARR_LATI'];
+		if (isset($_REQUEST['MARR_LONG'])) $MARR_LONG = $_REQUEST['MARR_LONG'];
+		if (isset($_REQUEST['MARR'])) $MARR = $_REQUEST['MARR'];
+		if (isset($_REQUEST['SOUR_MARR'])) $SOUR_MARR = $_REQUEST['SOUR_MARR'];
+		if (isset($_REQUEST['SOUR_FAM'])) $SOUR_FAM = $_REQUEST['SOUR_FAM'];
 		if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 			$famrec .= "1 MARR\r\n";
 			if (!empty($MARR_DATE)) {
@@ -1341,6 +1565,17 @@ case 'addnewparentaction':
 		else $famrec = find_family_record($famid);
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\r\n1 $famtag @$xref@\r\n";
+			
+			if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
+			if (isset($_REQUEST['MARR_PLAC'])) $MARR_PLAC = $_REQUEST['MARR_PLAC'];
+			if (isset($_REQUEST['MARR_ROMN'])) $MARR_ROMN = $_REQUEST['MARR_ROMN'];
+			if (isset($_REQUEST['MARR_FONE'])) $MARR_FONE = $_REQUEST['MARR_FONE'];
+			if (isset($_REQUEST['MARR__HEB'])) $MARR__HEB = $_REQUEST['MARR__HEB'];
+			if (isset($_REQUEST['MARR_LATI'])) $MARR_LATI = $_REQUEST['MARR_LATI'];
+			if (isset($_REQUEST['MARR_LONG'])) $MARR_LONG = $_REQUEST['MARR_LONG'];
+			if (isset($_REQUEST['MARR'])) $MARR = $_REQUEST['MARR'];
+			if (isset($_REQUEST['SOUR_MARR'])) $SOUR_MARR = $_REQUEST['SOUR_MARR'];
+			if (isset($_REQUEST['SOUR_FAM'])) $SOUR_FAM = $_REQUEST['SOUR_FAM'];
 			if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 				$famrec .= "1 MARR\r\n";
 				if (!empty($MARR_DATE)) {
@@ -1614,24 +1849,27 @@ case 'reorder_children':
 		<input type="hidden" name="option" value="bybirth" />
 		<ul id="reorder_list">
 		<?php
+			// reorder children in modified families [ 1840895 ]
+			$family = Family::getInstance($pid);
+			$ids = $family->getChildrenIds();
+			if ($family->getUpdatedFamily()) $family = $family->getUpdatedFamily();
 			$children = array();
-			$ct = preg_match_all("/1 CHIL @(.+)@/", $gedrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$child = trim($match[$i][1]);
-				$irec = find_person_record($child);
-				if ($irec===false) $irec = find_updated_record($child);
-				if (isset($indilist[$child])) $children[$child] = $indilist[$child];
+			foreach ($family->getChildren() as $k=>$child) {
+				$bdate = new GedcomDate($child->getBirthDate());
+				$sortkey = $bdate->MinJD();
+				if (!$sortkey) $sortkey = 1e8; // birth date missing => sort last
+				$children[$child->getXref()] = $sortkey;
 			}
 			if ((!empty($option))&&($option=="bybirth")) {
-				uasort($children, "compare_date");
+				asort($children);
 			}
 			$i=0;
-			foreach($children as $pid=>$child) {
-				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$pid\" >";
-				//print_pedigree_person($pid,2,false);
-				print "<span class=\"name2\">".PrintReady(get_person_name($pid))."</span>";
-				print_first_major_fact($pid);
-				print "<input type=\"hidden\" name=\"order[$pid]\" value=\"$i\"/>";
+			foreach($children as $id=>$child) {
+				print "<li style=\"cursor:move;margin-bottom:2px;\"";
+				if (!in_array($id, $ids)) print " class=\"facts_valueblue\"";
+				print " id=\"li_$id\" >";
+				print_pedigree_person($id, 2, false);
+				print "<input type=\"hidden\" name=\"order[$id]\" value=\"$i\"/>";
 				print "</li>";
 				$i++;
 			}
@@ -1797,6 +2035,7 @@ case 'changefamily_update':
 	$children = $family->getChildren();
 	$updated = false;
 	//-- add the new father link
+	if (isset($_REQUEST['HUSB'])) $HUSB = $_REQUEST['HUSB'];
 	if (!empty($HUSB) && (is_null($father) || $father->getXref()!=$HUSB)) {
 		if (strstr($gedrec, "1 HUSB")!==false)
 			$gedrec = preg_replace("/1 HUSB @.*@/", "1 HUSB @$HUSB@", $gedrec);
@@ -1834,6 +2073,7 @@ case 'changefamily_update':
 		}
 	}
 	//-- add the new mother link
+	if (isset($_REQUEST['WIFE'])) $WIFE = $_REQUEST['WIFE'];
 	if (!empty($WIFE) && (is_null($mother) || $mother->getXref()!=$WIFE)) {
 		if (strstr($gedrec, "1 WIFE")!==false)
 			$gedrec = preg_replace("/1 WIFE @.*@/", "1 WIFE @$WIFE@", $gedrec);
@@ -1875,8 +2115,8 @@ case 'changefamily_update':
 	$i=0;
 	$var = "CHIL".$i;
 	$newchildren = array();
-	while(isset($$var)) {
-		$CHIL = $$var;
+	while(isset($_REQUEST[$var])) {
+		$CHIL = $_REQUEST[$var];
 		if (!empty($CHIL)) {
 			$newchildren[] = $CHIL;
 			if (preg_match("/1 CHIL @$CHIL@/", $gedrec)==0) {
@@ -1930,6 +2170,7 @@ case 'changefamily_update':
 //------------------------------------------------------------------------------
 case 'reorder_update':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (isset($_REQUEST['order'])) $order = $_REQUEST['order'];
 	asort($order);
 	reset($order);
 	$newgedrec = $gedrec;
@@ -1998,6 +2239,7 @@ case 'reorder_fams':
 //------------------------------------------------------------------------------
 case 'reorder_fams_update':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (isset($_REQUEST['order'])) $order = $_REQUEST['order'];
 	asort($order);
 	reset($order);
 	$lines = preg_split("/\n/", $gedrec);
@@ -2016,6 +2258,7 @@ case 'reorder_fams_update':
 //-- the following section provides a hook for modules
 //-- for reuse of editing functions from forms
 case 'mod_edit_fact':
+	if (isset($_REQUEST['mod'])) $mod = $_REQUEST['mod'];
 	include_once('modules/'.$mod.'/'.$mod.'.php');
 	$module = new $mod();
 	if (method_exists($module, "edit_fact")) {
@@ -2024,6 +2267,8 @@ case 'mod_edit_fact':
 	break;
 }
 // Redirect to new record, if requested
+if (isset($_REQUEST['goto'])) $goto = $_REQUEST['goto'];
+if (isset($_REQUEST['link'])) $link = $_REQUEST['link'];
 if (empty($goto) || empty($link))
 	$link='';
 //------------------------------------------------------------------------------

@@ -27,11 +27,14 @@ require("config.php");
 require_once("includes/functions_charts.php");
 
 // -- args
-if (!isset($rootid)) $rootid = "";
+$rootid = "";
+if (!empty($_REQUEST['rootid'])) $rootid = $_REQUEST['rootid'];
 $rootid = clean_input($rootid);
 $rootid = check_rootid($rootid);
-if (!isset($showids)) $showids = 0;
-if (!isset($showthumbs)) $showthumbs = 0;
+$showids = 0;
+if (!empty($_REQUEST['showids'])) $showids = $_REQUEST['showids'];
+$showthumbs = 0;
+if (!empty($_REQUEST['showthumbs'])) $showthumbs = $_REQUEST['showthumbs'];
 
 $person = Person::getInstance($rootid);
 

@@ -40,7 +40,7 @@ print_header($pgv_lang["configure_lightbox"]);
 if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
 
 print "<span class=\"subheaders\">".$pgv_lang["configure_lightbox"]."</span>";
-print "<br><br>";
+print "<br /><br />";
 
 
 
@@ -242,7 +242,7 @@ $i = 0;
 	
     </table>
 	
-	<br><br>	
+	<br /><br />	
 	
     <table class="facts_table">
 

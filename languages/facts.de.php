@@ -283,13 +283,17 @@ $factarray["_HNM"] = "Hebräischer Name";
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"] = "Tod des Ehegattens";
 
-$factarray["_BIRT_CHIL"] = "Geburt eines Kindes";
-$factarray["_MARR_CHIL"] = "Ehe eines Kindes";
-$factarray["_DEAT_CHIL"] = "Tod eines Kindes";
+$factarray["_BIRT_CHIL"] = "Geburt von Kind";
+$factarray["_MARR_CHIL"] = "Ehe von Kind";
+$factarray["_DEAT_CHIL"] = "Tod von Kind";
 
-$factarray["_BIRT_GCHI"] = "Geburt eines Enkelkindes";
-$factarray["_MARR_GCHI"] = "Ehe eines Enkelkindes";
-$factarray["_DEAT_GCHI"] = "Tod eines Enkelkindes";
+$factarray["_BIRT_GCHI"] = "Geburt von Enkel";
+$factarray["_MARR_GCHI"] = "Ehe von Enkel";
+$factarray["_DEAT_GCHI"] = "Tod von Enkel";
+
+$factarray["_BIRT_GGCH"] = "Geburt von Ur-Enkel";
+$factarray["_MARR_GGCH"] = "Ehe von Ur-Enkel";
+$factarray["_DEAT_GGCH"] = "Tod von Ur-Enkel";
 
 $factarray["_MARR_FATH"] = "Ehe des Vaters";
 $factarray["_DEAT_FATH"] = "Tod des Vaters";
@@ -297,7 +301,7 @@ $factarray["_DEAT_FATH"] = "Tod des Vaters";
 $factarray["_MARR_MOTH"] = "Ehe der Mutter";
 $factarray["_DEAT_MOTH"] = "Tod der Mutter";
 
-$factarray["_BIRT_SIBL"] = "Geburt eines Geschwisters";
+$factarray["_BIRT_SIBL"] = "Geburt von Geschwister";
 $factarray["_MARR_SIBL"] = "Ehe von Geschwister";
 $factarray["_DEAT_SIBL"] = "Tod von Geschwister";
 
@@ -310,6 +314,8 @@ $factarray["_MARR_NEPH"] = "Ehe von Neffe oder Nichte";
 $factarray["_DEAT_NEPH"] = "Tod von Neffe oder Nichte";
 
 $factarray["_DEAT_GPAR"] = "Tod von Großeltern";
+
+$factarray["_DEAT_GGPA"] = "Tod von Ur-Großeltern";
 
 $factarray["_BIRT_FSIB"] = "Geburt von Vaters Geschwister";
 $factarray["_MARR_FSIB"] = "Ehe von Vaters Geschwister";

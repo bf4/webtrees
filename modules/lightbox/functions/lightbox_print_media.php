@@ -148,11 +148,11 @@ if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm
 		echo '<td width="80" align="center" class="descriptionbox">' ;
 	
 		if ($t==5){
-			echo "<b><br>" . $tt . "</b><br><br>";
+			echo "<b><br />" . $tt . "</b><br /><br />";
 	}else if ( ($t!=5) && (userCanAccess(getUserName())) ){
-			echo "<b><br><br>" . $tt . "</b><br><br>(" . $numm . ")";
+			echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $numm . ")";
 		}else{
-		echo "<b><br>" . $tt . "</b><br><br>";	
+			echo "<b><br />" . $tt . "</b><br /><br />";	
 		}
 	
 	echo '</td>';
@@ -180,21 +180,44 @@ if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm
 				if (in_array($rowm["m_ext"], $MEDIATYPE)) {
 					$imgwidth = 400+40;
 					$imgheight = 500+150;
-				} 
-				else{
+				}else{
 					$imgwidth = 800+40;
 					$imgheight = 400+150;
 				}
-			}
-			else if (media_exists(check_media_depth($rowm["m_file"], "NOTRUNC"))) {
+			}else if (media_exists(check_media_depth($rowm["m_file"], "NOTRUNC"))) {
 				$imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
 			}
 			$rows=array();
-
+			//-- if there is a change to this media item then get the
+			//-- updated media item and show it
+			if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM])) {
+				$newrec = find_updated_record($rowm["m_media"]);
+				$row = array();
+				$row['m_media'] = $rowm["m_media"];
+				$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+				$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+				if (empty($row['m_titl'])) $row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+				$row['m_gedrec'] = $newrec;
+				$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
+				$ext = "";
+				if ($et>0) $ext = substr(trim($ematch[1]),1);
+				$row['m_ext'] = $ext;
+				$row['mm_gid'] = $pid;
+				$row['mm_gedrec'] = $rowm["mm_gedrec"];
+				$rows['new'] = $row;
+				$rows['old'] = $rowm;
+				$current_objes[$rowm['m_media']]--;
+			}else{
+				if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) $rows['old'] = $rowm;
+				else {
 			$rows['normal'] = $rowm;
 		if (isset($current_objes[$rowm['m_media']]))  $current_objes[$rowm['m_media']]--;
+				}
+			}
+//			$rows['normal'] = $rowm;
+//			if (isset($current_objes[$rowm['m_media']]))  $current_objes[$rowm['m_media']]--;
 
 				foreach($rows as $rtype => $rowm) {
 					if ($t!=5){
@@ -244,7 +267,6 @@ if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm
 		echo '</td>'. "\n";
 		echo '</td></tr></table>' . "\n\n";
 		
-		
 }
 	
 
@@ -260,6 +282,7 @@ foreach($current_objes as $media_id=>$value) {
 			$ct = ( preg_match("/(.*):(.*)/", $media_id, $match) );
 
 			if ($ct>0) {
+				require_once 'includes/serviceclient_class.php';
 				$client = ServiceClient::getInstance($match[1]);
 				if (!is_null($client)) {
 					$newrec = $client->getRemoteRecord($match[2]);
@@ -293,7 +316,7 @@ foreach($current_objes as $media_id=>$value) {
 					if ( $typ2a ) {
 						echo '<table border=0 class="facts_table"><tr>';
 						echo '<td width="80" align="center" class="descriptionbox">' ;
-						echo "<b><br><br>" . $tt . "</b><br><br>(" . $ct . ")";
+						echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $ct . ")";
 						echo '</td>' . "\n";
 						echo '<td class="facts_value">';
 						echo "<center>" . "\n\n";

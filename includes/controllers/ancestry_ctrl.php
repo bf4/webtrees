@@ -90,10 +90,13 @@ class AncestryControllerRoot extends BaseController {
 	function init() {
 	global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 	global $DEFAULT_PEDIGREE_GENERATIONS, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $OLD_PGENS, $box_width, $Dbwidth, $Dbheight;
+		global $show_full;
 
 	// -- args
 	if (isset($_REQUEST["show_full"])) $this->show_full = $_REQUEST["show_full"];
 	else $this->show_full = 1;
+		$show_full = $this->show_full;
+
 	if (isset($_REQUEST["chart_style"])) $this->chart_style = $_REQUEST["chart_style"];
 	else $this->chart_style = 0;
 	if (isset($_REQUEST["show_cousins"])) $this->show_cousins = $_REQUEST["show_cousins"];
@@ -123,7 +126,7 @@ class AncestryControllerRoot extends BaseController {
 	else $this->rootid = $_REQUEST["rootid"];
 
 	// -- size of the boxes
-	if (!isset($box_width)) $box_width = "100";
+		if (isset($_REQUEST['box_width'])) $box_width = $_REQUEST['box_width'];
 	if (empty($box_width)) $box_width = "100";
 	$box_width=max($box_width, 50);
 	$box_width=min($box_width, 300);

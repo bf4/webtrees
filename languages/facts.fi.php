@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Languages
  * @author Jaakko Sarell
- * @author Matti
+ * @translator Matti Valve
  * @version $Id$
  */
 
@@ -48,9 +48,9 @@ $factarray["ASSO"]	= "Kumppanit";
 $factarray["AUTH"]	= "Tekijä";
 $factarray["BAPL"]	= "Mormoonikaste";
 $factarray["BAPM"]	= "Kastettu";
-$factarray["BARM"]	= "Bar Mitzva";
-$factarray["BASM"]	= "Bat Mitzva";
-$factarray["BIRT"]		= "Syntynyt";
+$factarray["BARM"]	= "Bar Mitzvah";
+$factarray["BASM"]	= "Bat Mitzvah";
+$factarray["BIRT"]	= "Syntynyt";
 $factarray["BLES"]	= "Siunaus";
 $factarray["BLOB"]	= "Binaaridataobjekti";
 $factarray["BURI"]		= "Haudattu";
@@ -159,9 +159,9 @@ $factarray["EMAIL"]	= "Sähköpostiosoite";
 $factarray["_TODO"]	= "Työlistalla";
 $factarray["_UID"]		= "Yleistunniste";
 $factarray["_PGVU"]	= "Muuttanut";
-//$factarray["_PGVU"]	= "by"; // @@@last changed by
 $factarray["SERV"] 	= "Etäpalvelin";
 $factarray["_GEDF"] 	= "GEDCOM-tiedosto";
+$factarray["_HIST"] = "Historia";
 $factarray["_PRIM"]	= "Korostettu kuva";
 $factarray["_DBID"] = "Linkitetyn tietokannan ID";
 $factarray["STAT:DATE"] = "Tilanmuutostieto";
@@ -240,7 +240,7 @@ $factarray["_NLIV"]	= "Ei elossa";
 $factarray["_NMAR"]	= "Ei koskaan naimisissa";
 $factarray["_PRMN"]	= "Pysyvä numero";
 $factarray["_WEIG"]	= "Paino";
-$factarray["_YART"]	= "Yartzeit";
+$factarray["_YART"]	= "Jortsait";
 $factarray["_MARNM"]	= "Avionimi";
 $factarray["_MARNM_SURN"] = "Avionimi";
 $factarray["_STAT"]	= "Aviosääty";
@@ -304,7 +304,7 @@ $factarray["FAMC:WIFE:GIVN"] = "Äidin etunimi";
 //$factarray["FAMC:WIFE:GIVN"] = "Mother's Given Name";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Isänisän etunimi";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Äidinäidin etunimi";
-$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Äidinisän etunimi"; 
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Äidinisän etunimi";
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Isänäidin etunimi";
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "Lapsen syntymäpaikkä";
 

@@ -481,6 +481,13 @@ function valid_date(datefield) {
 	// other format
 	datestr = datefield.value;
 	datestr = datestr.replace(/-/g, "/");
+
+	// Use Javascript's Date() function to interpret a range of dates
+
+  date = new Date('opera bug');  // Detect Opera bug
+	if (date && date.toString()!="NaN" && date.getDate().toString()!="NaN")
+		return;
+
 	date = new Date(datestr);
 	if (date && date.toString()!="NaN" && date.getDate().toString()!="NaN") {
 		day = date.getDate();
@@ -614,8 +621,8 @@ function expandbox(boxid, bstyle) {
 			if (oldimgh) thumb1.style.height = (oldimgh*2)+"px";
 		}
 		if (gender) {
-			oldimgw1 = gender.width;
-			oldimgh1 = gender.height;
+			oldimgw1 = gender.offsetWidth;
+			oldimgh1 = gender.offsetHeight;
 			if (oldimgw1) gender.style.width = "15px";
 			if (oldimgh1) gender.style.height = "15px";
 		}

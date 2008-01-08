@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
- * @created 2007-10-05
- * @version $Id: faqlist.tr.php 2102 2007-11-01 18:47:00Z canajun2eh $
+ * @author Adem GENÇ
+ * @created 2007-11-19
+ * @version $Id: faqlist.tr.php 2322 2007-11-28 22:11:00Z canajun2eh $
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -30,9 +30,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-
-
+//-- Define Turkish Frequently Asked Questions
+$faqlist["FAQ_010_head"] = "#GLOBALS[GEDCOM_TITLE]# NİN SSS HOŞ GELDİNİZ";
+$faqlist["FAQ_022_head"] = "BEN NİÇİN KAYIT OLMALIYIM?";
+$faqlist["FAQ_040_head"] = "PEKİ YA MAHREMİYET?";
 $faqlist["FAQ_050_head"] = "TEŞEKKÜR EDERİM";
-$faqlist["FAQ_030_body3"] = "Email yoluyla güncelleştirmelerinizi aynı zamanda gönderebilirsiniz.";
-$faqlist["FAQ_030_body"] = "İşte birkaç işaret edici şeyler burada";
+
 ?>

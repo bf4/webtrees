@@ -524,12 +524,14 @@ function getRelationshipSentence($node, $pid1, $pid2)
     return $sentence;
 }
 
-if (!isset($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
-if (!isset($path_to_find)){
+$show_full=$PEDIGREE_FULL_DETAILS;
+if (isset($_REQUEST['show_full'])) $show_full = $_REQUEST['show_full']; 
+if (!isset($_REQUEST['path_to_find'])){
 	$path_to_find = 0;
 	$pretty = 1;
 	unset($_SESSION["relationships"]);
 }
+else $path_to_find = $_REQUEST['path_to_find'];
 if ($path_to_find == -1){
 	$path_to_find = 0;
 	unset($_SESSION["relationships"]);
@@ -548,11 +550,16 @@ $bwidth = $Dbwidth;
 $bheight = $Dbheight;
 
 $title_string = "";
-if (!isset($pid1)) $pid1 = "";
-if (!isset($pid2)) $pid2 = "";
-if (!isset($followspouse)) $followspouse = 0;
-if (!isset($pretty)) $pretty = 0;
-if (!isset($asc)) $asc=1;
+if (!isset($_REQUEST['pid1'])) $pid1 = "";
+else $pid1 = $_REQUEST['pid1'];
+if (!isset($_REQUEST['pid2'])) $pid2 = "";
+else $pid2 = $_REQUEST['pid2'];
+if (!isset($_REQUEST['followspouse'])) $followspouse = 0;
+else $followspouse = $_REQUEST['followspouse'];
+if (!isset($_REQUEST['pretty'])) $pretty = 0;
+else $pretty = $_REQUEST['pretty'];
+if (!isset($_REQUEST['asc'])) $asc=1;
+else $asc = $_REQUEST['asc'];
 if ($asc=="") $asc=1;
 if (empty($pid1)) {
 	$followspouse = 1;

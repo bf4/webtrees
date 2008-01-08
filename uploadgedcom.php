@@ -466,7 +466,11 @@ if ($verify == "verify_gedcom") {
 		
 		<?php
 		
-		if ($imported) print "<span class=error>".$pgv_lang["dataset_exists"]."</span><br /><br />";
+		if ($imported) {
+			print "<span class=error>".$pgv_lang["dataset_exists"]."</span><br /><br />";
+			if (!$SYNC_GEDCOM_FILE)
+				print "<span class=error>".$pgv_lang["unsync_warning"]."</span><br /><br />";
+		}
 		if ($bakfile != "") print $pgv_lang["verify_upload_instructions"]."</td></tr>";
 		// NOTE: Check for existing changes
 		foreach ($pgv_changes as $cid => $changes) {
@@ -1304,6 +1308,7 @@ if ($stage == 1) {
 	// NOTE: Finished Links
 	cleanup_database();
 	$GEDCOMS[$ged]["imported"] = true;
+	$GEDCOMS[$ged]["pgv_ver" ] = $VERSION;
 	store_gedcoms();
 	print "</td></tr>";
 	

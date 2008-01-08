@@ -28,7 +28,7 @@
  */
 ?>
 <?php
-global $lang_short_cut, $LANGUAGE;
+global $lang_short_cut, $LANGUAGE, $PHP_SELF;
 
 loadLangFile("lb_lang");
 
@@ -66,7 +66,7 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 include('modules/lightbox/functions/lb_call_js.php'); 
 
 	//Lightbox-Album header Links
-		//print "<br>";
+		//print "<br />";
 		print "<table border=0 width=\"66%\"><tr>";
 		print "<td class=\"width10 center wrap\" valign=\"top\">";
 

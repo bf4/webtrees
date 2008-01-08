@@ -1,6 +1,6 @@
 <?php
 /**
- * English Language file for PhpGedView.
+ * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team
@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage SiteMap
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
- * @version $Id: lang.tr.php 2102 2007-11-01 18:47:00Z canajun2eh $
+ * @version $Id: lang.tr.php 2322 2007-11-28 22:11:00Z canajun2eh $
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Doğrudan lisan dosyasına erişemezsiniz.";

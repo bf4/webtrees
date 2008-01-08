@@ -36,11 +36,6 @@ require_once 'includes/menu.php';
 require_once 'includes/person_class.php';
 require_once 'includes/family_class.php';
 
-loadLangFile("gm_lang");	// Load GoogleMap language file
-if (file_exists("modules/lightbox/".$pgv_language["english"])) require("modules/lightbox/".$pgv_language["english"]);
-if (file_exists("modules/lightbox/".$pgv_language[$LANGUAGE])) require("modules/lightbox/".$pgv_language[$LANGUAGE]);
-
-
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
 $otheritems = array();			  //-- notes, sources, media objects
@@ -209,6 +204,7 @@ class IndividualControllerRoot extends BaseController {
 					$servid = $parts[0];
 					$aliaid = $parts[1];
 					if (!empty($servid)&&!empty($aliaid)) {
+						require_once("includes/serviceclient_class.php");
 						$serviceClient = ServiceClient::getInstance($servid);
 						if (!is_null($serviceClient)) {
 							if (!empty($newrec)) $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $newrec, true);
@@ -429,8 +425,6 @@ class IndividualControllerRoot extends BaseController {
 		if (preg_match("/PGV_OLD/", $factrec)>0) print " class=\"namered\"";
 		if (preg_match("/PGV_NEW/", $factrec)>0) print " class=\"nameblue\"";
 		print ">";
-		
-		$lines = split("\n", $factrec);
 		// Second/third names are *NOT* necessarily AKA names.
 		//if ($this->name_count>1) print "\n\t\t<span class=\"label\">".$pgv_lang["aka"]." </span><br />\n";
 		$ct = preg_match_all("/2 (SURN)|(GIVN) (.*)/", $factrec, $nmatch, PREG_SET_ORDER);
@@ -1012,7 +1006,7 @@ class IndividualControllerRoot extends BaseController {
 
 	function print_facts_tab() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
-		global $n_chil, $n_gchi;
+		global $n_chil, $n_gchi, $n_ggch;
 		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 
 		//-- only need to add family facts on this tab
@@ -1036,9 +1030,11 @@ class IndividualControllerRoot extends BaseController {
 			<tr id="row_top">
 				<td></td>
 				<td class="descriptionbox rela">
-					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="togglerow('row_rela');" /><label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
+					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
+					<label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
-						<input id="checkbox_histo" type="checkbox" onclick="togglerow('row_histo');" /><label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
+						<input id="checkbox_histo" type="checkbox" onclick="toggleByClassName('TR', 'row_histo');" />
+						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
 				</td>
 			</tr>
@@ -1046,6 +1042,7 @@ class IndividualControllerRoot extends BaseController {
 			$yetdied=false;
 			$n_chil=1;
 			$n_gchi=1;
+			$n_ggch=1;
 			foreach ($indifacts as $key => $value) {
 				if ($value->getTag() == "DEAT") $yetdied = true;
 				if ($value->getTag() == "BURI") $yetdied = true;
@@ -1068,23 +1065,9 @@ class IndividualControllerRoot extends BaseController {
 		<br />
 		<script language="JavaScript" type="text/javascript">
 		<!--
-		function togglerow(classname) {
-			var rows = document.getElementsByTagName("tr");
-			for (i=0; i<rows.length; i++) {
-				if (rows[i].className.indexOf(classname) != -1) {
-					var disp = rows[i].style.display;
-					if (disp=="none") {
-						disp="table-row";
-						if (document.all && !window.opera) disp = "inline"; // IE
-					}
-					else disp="none";
-					rows[i].style.display=disp;
-				}
-			}
-		}
 		<?php
-		if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n";
-		print "togglerow('row_histo');\n";
+		if (!$EXPAND_RELATIVES_EVENTS) print "toggleByClassName('TR', 'row_rela');\n";
+		print "toggleByClassName('TR', 'row_histo');\n";
 		?>
 		//-->
 		</script>
@@ -1172,7 +1155,8 @@ class IndividualControllerRoot extends BaseController {
 		global $SHOW_LEVEL2_NOTES;
 		?>
 		<table class="facts_table">
-		<?php	if (!$this->indi->canDisplayDetails()) {
+		<?php
+		if (!$this->indi->canDisplayDetails()) {
 				print "<tr><td class=\"facts_value\">";
 				print_privacy_error($CONTACT_EMAIL);
 				print "</td></tr>";
@@ -1280,20 +1264,8 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_changes, $GEDCOM;
 		if (!$this->isPrintPreview()) {
 		?>
-		<script type="text/javascript">
-		<!--
-			function toggleElderdate() {
-				hiddenEls = document.getElementsByName('elderdate');
-				for(i=0; i<hiddenEls.length; i++) {
-					if (hiddenEls[i].style.display=='none') hiddenEls[i].style.display='block';
-					else hiddenEls[i].style.display='none';
-				}
-			}
-			<?php if (!$SHOW_AGE_DIFF) echo "toggleElderdate();";?>
-		//-->
-		</script>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
-		<input id="checkbox_elder" type="checkbox" onclick="toggleElderdate();" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
+		<input id="checkbox_elder" type="checkbox" onclick="toggleByClassName('DIV', 'elderdate');" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
 		<label for="checkbox_elder"><?php print $pgv_lang['age_differences'] ?></label>
 		</td></tr></table>
 		<?php
@@ -1830,6 +1802,11 @@ class IndividualControllerRoot extends BaseController {
 		}
 		if ($personcount==0) print "<table><tr><td id=\"no_tab5\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab5"]."</td></tr></table>\n";
 		?>
+		<script type="text/javascript">
+		<!--
+			<?php if (!$SHOW_AGE_DIFF) echo "toggleByClassName('DIV', 'elderdate');";?>
+		//-->
+		</script>
 		<br />
 		<?php
 		if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
@@ -1974,7 +1951,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 // -----------------------------------------------------------------------------
-// Functions for Lightbox Album V3.0 29/July/2007
+// Functions for Lightbox Album 
 // -----------------------------------------------------------------------------
 	/**
 	 * print the lightbox tab, ( which =  getTab8()  )

@@ -529,6 +529,14 @@ $pgv_lang["cal_hebrew_and_gregorian"] = "Hebräisch und Gregorianisch";
 $pgv_lang["cal_hijri"]                = "Hijri";
 $pgv_lang["cal_arabic"]               = "Arabisch";
 
+// some religious dates
+$pgv_lang["easter"]     = "Ostern";
+$pgv_lang["ascension"]  = "Himmelfahrt";
+$pgv_lang["pentecost"]  = "Pfingsten";
+$pgv_lang["assumption"] = "Mariä Himmelfahrt";
+$pgv_lang["all_saints"] = "Allerheiligen";
+$pgv_lang["christmas"]  = "Weihnachten";
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "am";
 $pgv_lang["p.m."]         = "pm";
@@ -662,15 +670,14 @@ $pgv_lang["follow_spouse"]				= "Verwandtschaft anhand der Ehen überprüfen";
 $pgv_lang["timeout_error"]				= "Die maximal zulässige Ausführungszeit wurde überschritten, bevor ein Verwandtschaftsverhältnis gefunden werden konnte.";
 $pgv_lang["son"]						= "Sohn";
 $pgv_lang["daughter"]					= "Tochter";
-$pgv_lang["son-in-law"]					= "Schwiegersohn";
-$pgv_lang["daughter-in-law"]			= "Schwiegertochter";
 $pgv_lang["grandchild"]					= "Enkelkind";
 $pgv_lang["grandson"]					= "Enkelsohn";
 $pgv_lang["granddaughter"]				= "Enkeltochter";
+$pgv_lang["greatgrandchild"]			= "Urenkelkind";
+$pgv_lang["greatgrandson"]				= "Urenkelsohn";
+$pgv_lang["greatgranddaughter"]			= "Urenkeltochter";
 $pgv_lang["brother"]					= "Bruder";
 $pgv_lang["sister"]						= "Schwester";
-$pgv_lang["brother-in-law"]				= "Schwager";
-$pgv_lang["sister-in-law"]				= "Schwägerin";
 $pgv_lang["aunt"]						= "Tante";
 $pgv_lang["uncle"]						= "Onkel";
 $pgv_lang["nephew"]						= "Neffe";
@@ -678,7 +685,6 @@ $pgv_lang["niece"]						= "Nichte";
 $pgv_lang["firstcousin"]				= "Vetter ersten Grades";
 $pgv_lang["femalecousin"]				= "Cousine";
 $pgv_lang["malecousin"]					= "Cousin";
-$pgv_lang["cousin-in-law"]				= "Schwiegercousin";
 $pgv_lang["relationship_to_me"]			= "Verwandtschaft zu mir";
 $pgv_lang["rela_husb"]					= "Verwandtschaft zum Ehemann";
 $pgv_lang["rela_wife"]					= "Verwandschaft zur Ehefrau";
@@ -695,6 +701,7 @@ $pgv_lang["brother_in_law"]				= "Schwager";
 $pgv_lang["sister_in_law"]				= "Schwägerin";
 $pgv_lang["son_in_law"]					= "Schwiegersohn";
 $pgv_lang["daughter_in_law"]			= "Schwiegertochter";
+$pgv_lang["cousin_in_law"]				= "Schwiegercousin";
 $pgv_lang["step_son"]					= "Stiefsohn";
 $pgv_lang["step_daughter"]				= "Stieftochter";
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number

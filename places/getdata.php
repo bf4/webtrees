@@ -35,9 +35,9 @@ $city=@$HTTP_GET_VARS["city"];
 if (empty($ctry)) return;
 
 $mapname="";
-if ($field=="PLAC_STAE") $mapname=$ctry;
-if ($field=="PLAC_CNTY") $mapname=$ctry."_".$stae;
-if ($field=="PLAC_CITY") $mapname=$ctry."_".$stae."_".$cnty;
+if (strpos($field, "PLAC_STAE")!==false) $mapname=$ctry;
+if (strpos($field, "PLAC_CNTY")!==false) $mapname=$ctry."_".$stae;
+if (strpos($field, "PLAC_CITY")!==false) $mapname=$ctry."_".$stae."_".$cnty;
 //print $mapname."|";
 if (empty($mapname)) return;
 $data = "";
@@ -71,9 +71,9 @@ $p = strpos($data, "</map>");
 if ($p === false) return;
 $data = substr($data, 0, $p);
 // match : alt="text"
-     if ($field=="PLAC_STAE") $found = preg_match_all("/setPlaceState\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
-else if ($field=="PLAC_CNTY") $found = preg_match_all("/setPlaceCounty\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
-else if ($field=="PLAC_CITY") $found = preg_match_all("/setPlaceCity\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
+     if (strpos($field, "PLAC_STAE")!==false) $found = preg_match_all("/setPlaceState\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
+else if (strpos($field, "PLAC_CNTY")!==false) $found = preg_match_all("/setPlaceCounty\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
+else if (strpos($field, "PLAC_CITY")!==false) $found = preg_match_all("/setPlaceCity\('([^']+)'\)/", $data, $match, PREG_PATTERN_ORDER);
 if (!$found) $found = preg_match_all('/alt="([^"]+)"/', $data, $match, PREG_PATTERN_ORDER);
 if (!$found) return;
 // sort results

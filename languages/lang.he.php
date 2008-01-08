@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author Meliza
+ * @translator Meliza
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -32,14 +32,14 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 $pgv_lang["age_differences"]		= "הראה הפרשי גילים";
-$pgv_lang["date_of_entry"]		= "תאריך רישום במקור האוריגינלי";
+$pgv_lang["date_of_entry"]			= "תאריך רישום במקור האוריגינלי";
 $pgv_lang["multi_site_search"] 		= "חיפוש רב אתרים";
 $pgv_lang["switch_lifespan"]		= "הראה תרשים תוחלת חיים"; 
 $pgv_lang["switch_timeline"]		= "הראה תרשים קו הזמן"; 
 $pgv_lang["differences"]			= "הפרשים"; 
 $pgv_lang["charts_block"]			= "אזור תרשימים"; 
 $pgv_lang["charts_block_descr"]		= "אזור התרשימים מאפשר לשים תרשים על הדף ברוכים הבאים או על הפורטל MyGedView.  ניתן לקנפג את האזור כך שיראה אב-אבות, צאצאים או שעון חול.  אפשר גם לבחור את אדם המוצא של התרשים.";
-$pgv_lang["chart_type"]				= "סוג תרשים"; 
+$pgv_lang["chart_type"]			= "סוג תרשים"; 
 $pgv_lang["changedate1"]			= "סוף התחום של תאריכי שינוי";
 $pgv_lang["changedate2"]			= "תחילת התחום של תאריכי שינוי";
 $pgv_lang["search_place_word"]		= "מילים שלמות בלבד";
@@ -51,20 +51,20 @@ $pgv_lang["activate"]			= "הפעל";
 $pgv_lang["deactivate"]			= "נטרל"; 
 $pgv_lang["play"]				= "הפעל"; 
 $pgv_lang["stop"]				= "עצור"; 
-$pgv_lang["random_media_start_slide"]		= "התחל מצגת שקופיות כאשר הדף נטען?";
+$pgv_lang["random_media_start_slide"]	= "התחל מצגת שקופיות כאשר הדף נטען?";
 $pgv_lang["random_media_ajax_controls"]	= "הראה כפתורי בקרה של מצגת שקופיות?";  
 $pgv_lang["description"]			= "תאור"; 
 $pgv_lang["current_dir"]			= "התיקייה הנוכחית"; 
 $pgv_lang["SHOW_ID_NUMBERS"]		= "הראה קודי זיהוי ליד שמות"; 
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "הראת תמונות מודגשות בתיבות של אנשים"; 
-$pgv_lang["view_img_details"]			= "הצג פירטי האימג'";
+$pgv_lang["view_img_details"]		= "הצג פירטי האימג'";
 $pgv_lang["server_folder"]			= "שם התיקייה על השרת"; 
-$pgv_lang["medialist_recursive"]	= "הצג קבצים בתיקייות משנה"; //
-$pgv_lang["media_options"]			= "אופציות מדיה"; 
+$pgv_lang["medialist_recursive"]		= "הצג קבצים בתיקייות משנה"; //
+$pgv_lang["media_options"]		= "אופציות מדיה"; 
 $pgv_lang["confirm_password"]		= "עליך לאשר את הסיסמא."; 
 $pgv_lang["enter_email"]			= "עליך להכניס כתובת דואר אלקטרוני."; 
-$pgv_lang["enter_fullname"] 			= "עליך למלא שם פרטי ושם משפחה."; 
-$pgv_lang["name"]				= "שם";
+$pgv_lang["enter_fullname"] 		= "עליך למלא שם פרטי ושם משפחה."; 
+$pgv_lang["name"]			= "שם";
 $pgv_lang["children"]			= "ילדים";
 $pgv_lang["child"]				= "ילד/ה";
 $pgv_lang["family"]			= "משפחה";
@@ -75,39 +75,39 @@ $pgv_lang["other_repo_records"]		= "רשומות קשורות למאגר זה:";
 $pgv_lang["repo_info"]			= "נתוני מאגר";
 $pgv_lang["enter_terms"]			= "הכנס תנאי חיפוש";
 $pgv_lang["search_asso_label"]		= "שותפים";
-$pgv_lang["search_asso_text"]			= "הראה אנשים/משפחות קשורים";
+$pgv_lang["search_asso_text"]		= "הראה אנשים/משפחות קשורים";
 $pgv_lang["search_DM"]			= "דאיטש-מוקוטוף";
 $pgv_lang["search_fams"]			= "שמות משפחה של משפחות"; 
-$pgv_lang["search_gedcom"]			= "חפש מאגרי נתונים";
+$pgv_lang["search_gedcom"]		= "חפש מאגרי נתונים";
 $pgv_lang["search_geds"]			= "מאגרי נתונים בהם יש לחפש";
 $pgv_lang["search_indis"]			= "שמות משפחה של אנשים"; 
 $pgv_lang["search_inrecs"]			= "חפש";
 $pgv_lang["search_prtall"]			= "כל השמות";
 $pgv_lang["search_prthit"]			= "שמות שנמצאו";
-$pgv_lang["results_per_page"]			= "תוצאות לדף"; 
-$pgv_lang["firstname_search"]			= "פרטי";
-$pgv_lang["search_prtnames"]			= "שמות אנשים<br />להדפסה:";
-$pgv_lang["other_searches"]			= "חיפושים אחרים";
+$pgv_lang["results_per_page"]		= "תוצאות לדף"; 
+$pgv_lang["firstname_search"]		= "פרטי";
+$pgv_lang["search_prtnames"]		= "שמות אנשים<br />להדפסה:";
+$pgv_lang["other_searches"]		= "חיפושים אחרים";
 $pgv_lang["add_to_cart"]			= "הוסף לעגלת גזירים";  
 $pgv_lang["view_gedcom"]			= "הצג מידע מ-GEDCOM";
 $pgv_lang["welcome"]			= "ברוך הבא";
 $pgv_lang["son"]				= "בן";
 $pgv_lang["daughter"]			= "בת";
-$pgv_lang["welcome_page"]			= "ברוכים הבאים";
+$pgv_lang["welcome_page"]		= "ברוכים הבאים";
 $pgv_lang["editowndata"]			= "המשתמש שלי";
 $pgv_lang["user_admin"]			= "ניהול משתמשים";
 $pgv_lang["manage_media"]		= "נהל מדיה";
 $pgv_lang["search_general"]		= "חיפוש כללי";
-$pgv_lang["clipping_privacy"]			= "לא ניתן להוסיף חלק מהפריטים בגלל הגבלת פרטיות";
+$pgv_lang["clipping_privacy"]		= "לא ניתן להוסיף חלק מהפריטים בגלל הגבלת פרטיות";
 $pgv_lang["chart_new"]			= "תרשים אילן יוחסין";
-$pgv_lang["loading"]				="טוען...";  
+$pgv_lang["loading"]			= "טוען...";  
 $pgv_lang["clear_chart"]			= "נקה תרשים";
-$pgv_lang["file_information"]			= "מידע על קובץ";
-$pgv_lang["choose_file_type"]			= "בחר סוג קובץ";
+$pgv_lang["file_information"]		= "מידע על קובץ";
+$pgv_lang["choose_file_type"]		= "בחר סוג קובץ";
 $pgv_lang["add_individual_by_id"]		= "הוסף אדם לפי קוד זיהוי";
 $pgv_lang["advanced_options"]		= "אופציות מתקדמות";
 $pgv_lang["zip_files"]			= "קובץ/קובצי זיפ";
-$pgv_lang["include_media"]			= "כלול מדיה (יוצר קובצי זיפ אוטומטית)";
+$pgv_lang["include_media"]		= "כלול מדיה (יוצר קובצי זיפ אוטומטית)";
 $pgv_lang["roman_surn"]			= "שם משפחה לועזי";
 $pgv_lang["roman_givn"]			= "שמות פרטיים לועזיים";
 $pgv_lang["include"]				= "כלול:";
@@ -402,7 +402,7 @@ $pgv_lang["indi_info"]		= "מידע אישי";
 $pgv_lang["pedigree_chart"]	= "אילן יוחסין";
 $pgv_lang["individual"]		= "אדם";
 $pgv_lang["as_spouse"]		= "משפחה עם בן/בת זוג";
-$pgv_lang["privacy_error"]		= ".הנתונים על אדם זה הם אישיים<br />";
+$pgv_lang["privacy_error"]		= ".הנתונים הם פרטיים ולא ניתן להראות אותם"; 
 $pgv_lang["more_information"]	= "לפרטים נוספים נא להתקשר אל ";
 $pgv_lang["given_name"]		= "שם פרטי:";
 $pgv_lang["surname"]		= "שם משפחה:";
@@ -443,15 +443,15 @@ $pgv_lang["show_fact_notes"]	= "הראה את כל ההערות";
 
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "נתוני משפחה";
-$pgv_lang["family_group_info"]		= "נתוני קבוצת משפחה";
+$pgv_lang["family_group_info"]	= "נתוני קבוצת משפחה";
 $pgv_lang["husband"]		= "בעל";
 $pgv_lang["wife"]			= "אישה";
 $pgv_lang["marriage"]		= "נישואין:";
 $pgv_lang["lds_sealing"]		= "אישור המורמונים:";
-$pgv_lang["marriage_license"]		= "רישיון נישואין:";
+$pgv_lang["marriage_license"]	= "רישיון נישואין:";
 $pgv_lang["no_children"]		= "אין ילדים באתר";
-$pgv_lang["childless_family"]		= "המשפחה רשומה ללא ילדים";
-$pgv_lang["parents_timeline"]		= "הצג הזוג על תרשים קו הזמן";
+$pgv_lang["childless_family"]	= "המשפחה רשומה ללא ילדים";
+$pgv_lang["parents_timeline"]	= "הצג הזוג על תרשים קו הזמן";
 
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]		= "עגלת גזירי העץ";
@@ -464,22 +464,22 @@ $pgv_lang["continue"]		= "המשך להוסיף";
 $pgv_lang["which_p_links"]		= "איזה קשרים ברצונך להוסיף לאדם זה?";
 $pgv_lang["just_person"]		= "הוסף רק אדם זה.";
 $pgv_lang["person_parents_sibs"]	= "הוסף אדם זה ואחיו ואחיותיו.";
-$pgv_lang["person_ancestors"]		= "הוסף אדם זה ואב-אבותיו הישירים.";
+$pgv_lang["person_ancestors"]	= "הוסף אדם זה ואב-אבותיו הישירים.";
 $pgv_lang["person_ancestor_fams"]	= "הוסף אדם זה ואב-אבותיו הישירים ומשפחותיהם.";
-$pgv_lang["person_spouse"]		= "הוסף אדם זה, בן/בת זוגו וילדיו.";
+$pgv_lang["person_spouse"]	= "הוסף אדם זה, בן/בת זוגו וילדיו.";
 $pgv_lang["person_desc"]		= "הוסף אדם זה, בן/בת זוגו ואת כל הצאצאים.";
 $pgv_lang["which_s_links"]		= "איזה רשומות הקשורות למקור הזה יש להוסיף?";  
 $pgv_lang["just_source"]		= "הוסף רק את המקור הזה."; 
 $pgv_lang["linked_source"]		= "הוסף את המקור והמשפחות/האנשים הקשורים אליו."; 
-$pgv_lang["person_private"]		= "נתוני אדם זה אישיים. נתונים אישיים אינם נכללים.";
+$pgv_lang["person_private"]	= "נתוני אדם זה אישיים. נתונים אישיים אינם נכללים.";
 $pgv_lang["family_private"]		= "נתוני המשפחה הזו אישיים. נתוני המשפחה אינם נכללים.";
 $pgv_lang["download"]		= "קליק ימני (קונטרול-קליק על מק) על הקישורים שמתחת ובחר \"Save Target As ...\" כדי להוריד הקבצים.";
 $pgv_lang["cart_is_empty"]		= "עגלת הגזרים שלך ריקה.";
 $pgv_lang["id"]			= "קוד זיהוי";
-$pgv_lang["name_description"]		= "שם / תאור";
-$pgv_lang["remove"]			= "הסר";
+$pgv_lang["name_description"]	= "שם / תאור";
+$pgv_lang["remove"]		= "הסר";
 $pgv_lang["empty_cart"]		= "רוקן עגלה";
-$pgv_lang["download_now"]		= "הורד עכשיו";
+$pgv_lang["download_now"]	= "הורד עכשיו";
 $pgv_lang["download_file"]		= "הורד קובץ #GLOBALS[whichFile]#"; 
 $pgv_lang["indi_downloaded_from"]	= "האדם הורד מהאתר:";
 $pgv_lang["family_downloaded_from"]	= "המשפחה הורדה מהאתר:";
@@ -543,7 +543,7 @@ $pgv_lang["search_tagfoff"]		= "ללא פילטר";
 $pgv_lang["associate"]		= "שותף";
 $pgv_lang["search_record"]		= "רשומה שלמה";
 $pgv_lang["search_to"]		= "עד";
-
+ 
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["titles_found"]		= "כותרות";
 $pgv_lang["find_source"]		= "מצא מקור";
@@ -602,6 +602,7 @@ $pgv_lang["years"]			= "שנים";
 $pgv_lang["day1"]			= "יום";
 $pgv_lang["month1"]			= "חודש";
 $pgv_lang["year1"]			= "שנה";
+$pgv_lang["after_death"]        ="לאחר הפטירה"; 
 $pgv_lang["timeline_title"]		= "תרשים קו הזמן של PhpGedView";
 $pgv_lang["timeline_chart"]		= "תרשים קו הזמן";
 $pgv_lang["remove_person"]		= "הסר אדם";
@@ -631,6 +632,14 @@ $pgv_lang["cal_jewish_and_gregorian"] = "יהודי וגרגוריאני";
 $pgv_lang["cal_hebrew_and_gregorian"] = "עברי וגרגוריאני";
 $pgv_lang["cal_hijri"]                = "לוח שנה מוסלמי";
 $pgv_lang["cal_arabic"]               = "ערבי";
+
+// some religious dates
+$pgv_lang["easter"]     = "פסחא";
+$pgv_lang["ascension"]  = "עליה"; 
+$pgv_lang["pentecost"]  = "שבועות הנוצרי"; 
+$pgv_lang["assumption"] = "עלית מריה השמיימה"; 
+$pgv_lang["all_saints"] = "יום כל הקדושים"; 
+$pgv_lang["christmas"]  = "חג המולד"; 
 
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "לפנה\"צ"; 
@@ -683,10 +692,10 @@ $pgv_lang["ell"]          		= "אלול";
 
 $pgv_lang["muhar"]        = "מוחרם";
 $pgv_lang["safar"]        = "צפר";
-$pgv_lang["rabi1"]        = "רביע אל-אוול";
-$pgv_lang["rabi2"]        = "רביע א-ת'אני";
-$pgv_lang["juma1"]        = "ג׳ומאדא אל-אוואל";
-$pgv_lang["juma2"]        = "ג׳ומאדא אל-ת'אניה";
+$pgv_lang["rabia"]        = "רביע אל-אוול";
+$pgv_lang["rabit"]        = "רביע א-ת'אני";
+$pgv_lang["jumaa"]        = "ג׳ומאדא אל-אוואל";
+$pgv_lang["jumat"]        = "ג׳ומאדא אל-ת'אניה";
 $pgv_lang["rajab"]        = "רג׳ב";
 $pgv_lang["shaab"]        = "שעבאן";
 $pgv_lang["ramad"]        = "רמדאן";
@@ -715,19 +724,20 @@ $pgv_lang["password_mismatch"]	= "הסיסמאות אינן מתאימות.";
 $pgv_lang["enter_username"]		= ".יש למלא קוד משתמש";
 $pgv_lang["enter_password"]		= ".יש למלא סיסמא";
 $pgv_lang["save"]			= "שמור";
-$pgv_lang["delete"]			= "מחק";
+$pgv_lang["saveandgo"]		= "שמור ועבור לרשומה חדשה"; 
+$pgv_lang["delete"]		= "מחק";
 $pgv_lang["edit"]			= "ערוך";
 $pgv_lang["no_login"]		= "לא ניתן לאשר משתמש.";
 $pgv_lang["basic_realm"]		= "מערכת אימות של PhpGedView";
-$pgv_lang["basic_auth_failure"]		= "עליך להכניס קוד משתמש וסיסמא תקפים כדי להיכנס למשאב זה";
+$pgv_lang["basic_auth_failure"]	= "עליך להכניס קוד משתמש וסיסמא תקפים כדי להיכנס למשאב זה";
 $pgv_lang["basic_auth"]		= "אימות בסיסי";
 $pgv_lang["digest_auth"]		= "אימות Digest Authentication"; //not used in code yet
-$pgv_lang["no_auth_needed"]		= "אין אימות";
+$pgv_lang["no_auth_needed"]	= "אין אימות";
 $pgv_lang["file_not_exists"]		= "לא קיים קובץ בשם הזה.";
-$pgv_lang["research_assistant"]		= "עוזר מחקר";
+$pgv_lang["research_assistant"]	= "עוזר מחקר";
 $pgv_lang["utf8_to_ansi"]		= "הסב מ-UTF-8 ל-(ANSI (ISO-8859-1?";
 $pgv_lang["media_linked"]		= "המדיה הזו מקושרת ל-";
-$pgv_lang["media_not_linked"]		= "המדיה הזו אינה מקושרת לשום רשומת GEDCOM.";
+$pgv_lang["media_not_linked"]	= "המדיה הזו אינה מקושרת לשום רשומת GEDCOM.";
 //$pgv_lang["deleted_files"]          	= "קבצים שנמחקו:";
 $pgv_lang["media_dir_1"]		= "ישות המדיה הזו נימצאת על שרת חיצוני"; 
 $pgv_lang["media_dir_2"]		= "ישות המדיה הזו נימצאת בתיקיית המדיה הרגילה"; 
@@ -739,8 +749,8 @@ $pgv_lang["moveto_2"]		= "העבר לתיקייה מוגנת";
 $pgv_lang["moveto_3"]		= "העבר לתיקייה רגילה"; 
 $pgv_lang["move_standard"]	= "העבר לרגיל"; 
 $pgv_lang["move_protected"]	= "העבר למוגן"; 
-$pgv_lang["move_mediadirs"]			= "העבר תיקייות מדיה"; 
-$pgv_lang["setperms"]				= "הגדר הרשאות של המדיה";
+$pgv_lang["move_mediadirs"]		= "העבר תיקייות מדיה"; 
+$pgv_lang["setperms"]			= "הגדר הרשאות של המדיה";
 $pgv_lang["setperms_writable"]		= "אפשר כתיבה בצורה גורפת "; 
 $pgv_lang["setperms_readonly"]		= "אפשר רק קריאה בצורה גורפת "; 
 $pgv_lang["setperms_success"]		= "ההרשאות הוגדרו"; 
@@ -753,31 +763,34 @@ $pgv_lang["media_firewall_protected_dir_not_writable"]	= "ספריית המדי�
 $pgv_lang["media_firewall_invalid_dir"]	= "שגיאה: חומת האש הופעלה מתיקיה שונה מתיקית המדיה"; 
 
 //-- Relationship chart messages
-$pgv_lang["relationship_great"]		= "Great"; //--@@ ??
-$pgv_lang["relationship_chart"]		= "קירבה משפחתית";
+$pgv_lang["relationship_great"]	= "Great"; //--@#@ ??
+$pgv_lang["relationship_chart"]	= "קירבה משפחתית";
 $pgv_lang["person1"]		= "אדם א'";
 $pgv_lang["person2"]		= "אדם ב'";
 $pgv_lang["no_link_found"]		= "לא נמצא קשר (אחר) בין שני האנשים.";
-$pgv_lang["sibling"]			= "אח/אחות";
+$pgv_lang["sibling"]		= "אח/אחות";
 $pgv_lang["follow_spouse"]		= "בדוק קירבת נישואין.";
 $pgv_lang["timeout_error"]		= "החיפוש ארך יותר מידי זמן.";
-$pgv_lang["son-in-law"]		= "חתן";  // the husband of your daughter
-$pgv_lang["daughter-in-law"]		= "כלה"; // the wife of your son
+$pgv_lang["son_in_law"]		= "חתן";  // the husband of your daughter
+$pgv_lang["daughter_in_law"]	= "כלה"; // the wife of your son
 $pgv_lang["grandchild"]		= "נכד/ה";
 $pgv_lang["grandson"]		= "נכד";
-$pgv_lang["granddaughter"]		= "נכדה";
-$pgv_lang["brother"]			= "אח";
-$pgv_lang["sister"]			= "אחות";
-$pgv_lang["brother-in-law"]		= "גיס";
-$pgv_lang["sister-in-law"]		= "גיסה";
+$pgv_lang["granddaughter"]	= "נכדה";
+$pgv_lang["greatgrandchild"]	= "שלש או שלשה"; 
+$pgv_lang["greatgrandson"]	= "שלש";
+$pgv_lang["greatgranddaughter"]	= "שלשה"; 
+$pgv_lang["brother"]		= "אח";
+$pgv_lang["sister"]		= "אחות";
+$pgv_lang["brother_in_law"]		= "גיס";
+$pgv_lang["sister_in_law"]		= "גיסה";
 $pgv_lang["aunt"]			= "דודה";
-$pgv_lang["uncle"]			= "דוד";
+$pgv_lang["uncle"]		= "דוד";
 $pgv_lang["nephew"]		= "אחיינית";
 $pgv_lang["niece"]		= "אחיין"; 
 $pgv_lang["firstcousin"]		= "בן דוד מדרגה ראשונה";
 $pgv_lang["femalecousin"]		= "בת דודה";
 $pgv_lang["malecousin"]		= "בן דוד";
-$pgv_lang["cousin-in-law"]		= "בן דוד דרך נישואין";
+$pgv_lang["cousin_in_law"]		= "בן דוד דרך נישואין";
 $pgv_lang["relationship_to_me"]	= "קירבה אלי";
 $pgv_lang["rela_husb"]		= "קירבה לבעל";
 $pgv_lang["rela_wife"]		= "קירבה לאישה";
@@ -792,11 +805,6 @@ $pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s היא %2\$s של %3\$
 
 $pgv_lang["mother_in_law"]		= "חמות"; 
 $pgv_lang["father_in_law"]		= "חם";
-$pgv_lang["brother_in_law"]		= "גיס";
-$pgv_lang["sister_in_law"]		= "גיסה";
-$pgv_lang["son_in_law"]		= "חתן";
-$pgv_lang["daughter_in_law"]		= "כלה";
-
 $pgv_lang["step_son"]		= "בן חורג";
 $pgv_lang["step_daughter"]	    	= "בת חורגת";
 
@@ -981,7 +989,7 @@ $pgv_lang["female_cousin_19"]           	= "דודנית מדרגה 19";
 $pgv_lang["female_cousin_20"]           	= "דודנית מדרגה 20";
 $pgv_lang["female_cousin_n"]           		= "דודנית מדרגה %d";
 // Only referenced from english specific functions
-//@@ SEE http://www.weinel.com/family/relations.html - ASCENDING?
+//@#@ SEE http://www.weinel.com/family/relations.html - ASCENDING?
 $pgv_lang["removed_ascending_1"]   = " במרחק 1 עולה"; //" once removed ascending";
 $pgv_lang["removed_ascending_2"]   = " במרחק 2 עולה";
 $pgv_lang["removed_ascending_3"]   = " במרחק 3 עולה";
@@ -1433,7 +1441,7 @@ $pgv_lang["sosa_15"]		= "סבתא רבתא";
 $pgv_lang["sosa_16"]               	= "N/A";
 $pgv_lang["sosa_17"]               	= "N/A";
 $pgv_lang["sosa_18"]               	= "N/A";
-$pgv_lang["sosa_19"]             		= "N/A";
+$pgv_lang["sosa_19"]             	= "N/A";
 $pgv_lang["sosa_20"]               	= "N/A";
 $pgv_lang["sosa_21"]               	= " רבתא";
 $pgv_lang["sosa_22"]               	= " רבא";
@@ -1637,8 +1645,8 @@ $pgv_lang["hs_keyword"] 		= "חפש את";
 $pgv_lang["hs_searchin"]		= "חפש ב-";
 $pgv_lang["hs_searchuser"]		= "עזרה למשתמשים";
 $pgv_lang["hs_searchmodules"]	= "עזרה במודולים";
-$pgv_lang["hs_searchconfig"]		= "עזרה למנהלנים";
-$pgv_lang["hs_searchhow"]		= "סוג חיפוש";
+$pgv_lang["hs_searchconfig"]	= "עזרה למנהלנים";
+$pgv_lang["hs_searchhow"]	= "סוג חיפוש";
 $pgv_lang["hs_searchall"]		= "כל המילים";
 $pgv_lang["hs_searchany"]		= "מילה כלשהיא";
 $pgv_lang["hs_searchsentence"]	= "ביטוי מדויק";
@@ -1650,7 +1658,7 @@ $pgv_lang["choose"] 		= "בחר: ";
 $pgv_lang["account_information"] 	= "נתוני קוד משתמש";
 
 //-- Media item "TYPE" sub-field
-$pgv_lang["TYPE__audio"] 			= "אודיו";
+$pgv_lang["TYPE__audio"] 		= "אודיו";
 $pgv_lang["TYPE__book"] 			= "ספר";
 $pgv_lang["TYPE__card"] 			= "כרטיס";
 $pgv_lang["TYPE__certificate"] 		= "תעודה";
@@ -1662,20 +1670,20 @@ $pgv_lang["TYPE__magazine"] 		= "כתב עת";
 $pgv_lang["TYPE__manuscript"] 		= "כתב-יד";
 $pgv_lang["TYPE__map"] 			= "מפה";
 $pgv_lang["TYPE__newspaper"] 		= "עיתון";
-$pgv_lang["TYPE__photo"] 			= "צילום";
+$pgv_lang["TYPE__photo"] 		= "צילום";
 $pgv_lang["TYPE__tombstone"] 		= "מצבה";
-$pgv_lang["TYPE__video"] 			= "וידאו";
+$pgv_lang["TYPE__video"] 		= "וידאו";
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] 			= "התבונן כמצגת שקופיות"; 
+$pgv_lang["view_slideshow"] 		= "התבונן כמצגת שקופיות"; 
 $pgv_lang["download_image"]		= "הורד קובץ";
-$pgv_lang["no_media"]		= "לא נמצאה מדיה";
-$pgv_lang["media_privacy"]			= "Privacy restrictions prevent you from viewing this item"; //@@
+$pgv_lang["no_media"]			= "לא נמצאה מדיה";
+$pgv_lang["media_privacy"]		= "הגבלות פרטיות מונעות ממך לראות פריט זה"; 
 $pgv_lang["relations_heading"]		= "האימג' קשור ל-:";
-$pgv_lang["file_size"]		= "גודל הקובץ:";
-$pgv_lang["img_size"]		= "גודל האימג'";
-$pgv_lang["media_broken"]			= "This media file is broken and unreadable by PHP"; //@@
-$pgv_lang["unknown_mime"]			= "Unknown mimetype for this media file, this will cause problems for the Media Firewall."; //@@
+$pgv_lang["file_size"]			= "גודל הקובץ:";
+$pgv_lang["img_size"]			= "גודל האימג'";
+$pgv_lang["media_broken"]		= "קובץ המדיה הזה פגום ואינו ניתן לסמן אותו בסימן מים";
+$pgv_lang["unknown_mime"]		= "שגיאת חומת האש של מדיה: >סוג Mime לא ידוע< עבור קובץ"; 
 
 //-- Modules
 $pgv_lang["module_error_unknown_action_v2"] 	= "פעולה בלתי ידועה: [פעולה].";
@@ -1685,10 +1693,10 @@ $pgv_lang["module_error_unknown_type"] 	= "סוג מודול בלתי ידוע."
 $pgv_lang["button_alive_in_year"] 		= "הראה אנשים חיים בשנה שצויינה.";
 $pgv_lang["button_BIRT_Y100"] 		= "הראה אנשים שנולדו ב-100 השנים האחרונות.";
 $pgv_lang["button_BIRT_YES"] 		= "הראה אנשים שנולדו לפני יותר מ-100 שנה.";
-$pgv_lang["button_DEAT_H"] 			= "הראה זוגות שבהם רק בן הזוג נפטר.";
+$pgv_lang["button_DEAT_H"] 		= "הראה זוגות שבהם רק בן הזוג נפטר.";
 $pgv_lang["button_DEAT_N"] 		= "הראה אנשים חיים או זוגות שבהם שני בני הזוג חיים."; 
 $pgv_lang["button_DEAT_W"] 		= "הראה זוגות שבהם רק בת הזוג נפטרה.";
-$pgv_lang["button_DEAT_Y"] 			= "הראה אנשים שנפטרו או זוגות שבהם שני בני הזוג נפטרו.";
+$pgv_lang["button_DEAT_Y"] 		= "הראה אנשים שנפטרו או זוגות שבהם שני בני הזוג נפטרו.";
 $pgv_lang["button_DEAT_Y100"] 		= "הראה אנשים שנפטרו ב-100 השנים האחרונות.";
 $pgv_lang["button_DEAT_YES"] 		= "הראה אנשים שנפטרו לפני יותר מ-100 שנה.";
 $pgv_lang["button_MARR_DIV"] 		= "הראה זוגות שהתגרשו.";

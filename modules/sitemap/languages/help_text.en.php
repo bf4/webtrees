@@ -2,7 +2,7 @@
 /**
  * English Language file for PhpGedView.
  *
- * phpGedView: Genealogy Viewer
+ * PhpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,18 +23,19 @@
  * @subpackage SiteMap
  * @version $Id$
  */
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
 
 $pgv_lang["SITEMAP"]                = "Sitemap information";
-$pgv_lang["SITEMAP_help"]           = "~#pgv_lang[SITEMAP]#~<br /><br />Using this page you can generate a sitemap. A sitemap is can be used by search engines to optimize indexing your site. This is done by providing a file containing links to all pages you want the searchengine to show.<br/>This tool will generate a sitemap file per GEDCOM and (if more than one sitemap file is generated) a siteindex file. The generated files should be place in the root of your phpGedView installation.<br/>At this moment only Google is using the sitemap files. See this page for more information:<br/><a href=\"https://www.google.com/webmasters/sitemaps/docs/en/about.html\">About Google webmaster tools</a>";
+$pgv_lang["SITEMAP_help"]           = "~#pgv_lang[SITEMAP]#~<br />This module generates Sitemap files for use by search engines. Currently, only the Google search engine supports Sitemap files.<br /><br />There is a Sitemap file for each GEDCOM on your site, and when your site has more than one GEDCOM there is also an index Sitemap file that points to each of the GEDCOMs.  The Sitemap files contain links to pages of your site that you want the search engine to index.<br /><br />After this module has generated the Sitemap files, you should inspect them and make whatever changes are necessary.  You should copy these files to the server directory where PhpGedView is installed, and then log into the <a href=\"https://www.google.com/webmasters/sitemaps/\" target=\"_blank\">Google webmaster tools</a> site to make Google aware of their presence.<br /><br />For more information on Google and Sitemap files, visit the <a href=\"https://www.google.com/webmasters/sitemaps/docs/en/about.html\" target=\"_blank\">Google webmaster tools</a> site.";
 
 $pgv_lang["SM_GEDCOM_SELECT"]       = "Select GEDCOMs";
-$pgv_lang["SM_GEDCOM_SELECT_help"]  = "~#pgv_lang[SM_GEDCOM_SELECT]#~<br /><br />Select the GEDCOMs you want to create a sitemap file for. Select at least one.<br/>When the option \"No links to private information\" is selected, only links to data that is publicly available will be included.";
+$pgv_lang["SM_GEDCOM_SELECT_help"]  = "~#pgv_lang[SM_GEDCOM_SELECT]#~<br />Select the GEDCOMs for which you want to create a Sitemap file. You must select at least one.<br /><br />When the <b>No links to private information</b> option is selected, only links to data that is publicly available will be included.";
 
 $pgv_lang["SM_ITEM_SELECT"]         = "Select items";
-$pgv_lang["SM_ITEM_SELECT_help"]    = "~#pgv_lang[SM_ITEM_SELECT]#~<br /><br />Select the elements to put in the sitemap file. For all selected elements a priority can be given. This priority is relative to the other priorities in the file.<br/>Also the update frequency can be given. This is the frequency the data in these items might change. This can influence the time between visits by the search-engine bot, and thus will influence the amount of traffic the site generates.";
+$pgv_lang["SM_ITEM_SELECT_help"]    = "~#pgv_lang[SM_ITEM_SELECT]#~<br />Select the elements to be included in the Sitemap file.<br /><br />A priority can be specified for all selected elements. This priority is relative to the other priorities in the file.  The update frequency can also be specified. This is an indication of how frequently the data in these items might change. This can influence the time between visits by the search engine, and thus will influence the amount of traffic the site generates.";
 
 ?>

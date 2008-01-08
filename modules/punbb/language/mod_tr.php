@@ -20,11 +20,11 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id: mod_tr.php 2102 2007-11-01 18:47:00Z canajun2eh $
+ * @version $Id: mod_tr.php 2322 2007-11-28 22:11:00Z canajun2eh $
  * @author Patrick Kellum
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
  */
-$pgv_lang["mod_punbb"] = "Mesaj Forumu";
-$pgv_lang["mod_punbb_search"] = "Forumda Ara";
-$pgv_lang["mod_punbb_admin"] = "Forum Yönetimi";
+$pgv_lang['mod_punbb'] = 'Mesaj Forumu';
+$pgv_lang['mod_punbb_search'] = 'Forumda Ara';
+$pgv_lang['mod_punbb_admin'] = 'Forum Yönetimi';
 ?>

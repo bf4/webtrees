@@ -103,7 +103,9 @@
 					<!-- facts without descriptions -->
 					<PGVRif condition="@desc==''">
 						<PGVRTextBox border="1" width="$width2" height="16" newline="1">
+							<PGVRif condition="@PLAC!=''">
 							<PGVRText style="pagenum"><PGVRvar var="factarray[PLAC]" />   </PGVRText>
+							</PGVRif>
 							<PGVRText style="text"><PGVRGedcomValue tag="@fact:PLAC" /></PGVRText>
 							<PGVRText style="text"><PGVRGedcomValue tag="@fact:TEMP" /></PGVRText>
 							<PGVRGedcom id="@_PGVS">

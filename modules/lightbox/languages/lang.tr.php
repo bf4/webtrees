@@ -24,7 +24,7 @@
  * @package PhpGedView
  * @subpackage Module
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
- * @version $Id: lang.tr.php 2102 2007-11-01 18:47:00Z canajun2eh $
+ * @version $Id: lang.tr.php 2322 2007-11-28 22:11:00Z canajun2eh $
  */
 
 //-- security check, only allow access from module.php
@@ -35,8 +35,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]		= "Lightbox-Albüm konfigürasyonu";
-$pgv_lang["mediatab"]       		= "<b>Medya Etiketi - Kişisel Sayfada</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Görünüm";
+$pgv_lang["mediatab"]       		= "<b>Kişisel Sayfada - Medya Etiketi";
+$pgv_lang["lb_appearance"]				= "Görünüm";
+$pgv_lang["lb_linkAppearance"]			= "Link görünümü";
+$pgv_lang["lb_MP3Only"]					= "(Sadece mp3)";
 $pgv_lang["lb_admin_error"]         = "Sadece Yöneticiler için sayfa";
+$pgv_lang["lb_toAlbumPage"]				= "Albüm Sayfasına Geri Dön";
 
 $pgv_lang["lb_icon"]				= "İkon";
 $pgv_lang["lb_text"]				= "Metin";
@@ -44,12 +48,20 @@ $pgv_lang["lb_both"]				= "Her ikisi";
 $pgv_lang["lb_none"]				= "Hiç biri";
 $pgv_lang["lb_ml_ThumbLinkAdvice"]	= "İkon, Metin, Her ikisi, yada Hiç biri";
 
-$pgv_lang["lb_al_head_links"]		= "<b>Kişisel Sayfada - Albüm Etiketi</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link görünümü";
-$pgv_lang["lb_al_thumb_links"]		= "<b>Kişisel Sayfada - Tırnak Önizleme Etiketi</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link görünümü";
-$pgv_lang["lb_ml_thumb_links"]		= "<b>Tırnak önizlemeleri - Çoklu sayfa</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link görünümü";
-$pgv_lang["lb_music_file"]			= "<b>Slayt gösterimde müzik</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(sadece mp3)";
+$pgv_lang["lb_transition"]				= "Resim Geçiş Hızı";
+$pgv_lang["lb_normal"]					= "Normal";
+$pgv_lang["lb_double"]					= "Çift";
+$pgv_lang["lb_warp"]					= "Çarpıklı";
+$pgv_lang["lb_url_dimensions"]			= "URL Pencere Boyutu";
+$pgv_lang["lb_url_dimensionsAdvice"]	= "Piksel olarak URL penceresinin genişiliği ve yüksekliği";
+$pgv_lang["lb_width"]					= "Genişlik";
+$pgv_lang["lb_height"]					= "Yükseklik";
+$pgv_lang["lb_al_head_links"]		= "Kişisel Sayfada - Albüm Etiketin Başında";
+$pgv_lang["lb_al_thumb_links"]		= "Kişisel Sayfada - Tırnak Önizleme Etiketi";
+$pgv_lang["lb_ml_thumb_links"]		= "Tırnak önizlemeleri - Çoklu sayfa";
+$pgv_lang["lb_music_file"]			= "Slayt gösterimde müzik";
 $pgv_lang["lb_musicFileAdvice"]		= "Ses dosyanın sunucudaki konumu (Müziksiz için burayı boşalt)";
-$pgv_lang["lb_ss_speed"]			= "<b>Slayt gösterim hızı</b>";
+$pgv_lang["lb_ss_speed"]			= "Slayt gösterim hızı";
 $pgv_lang["lb_ss_SpeedAdvice"]		= "Slayt değiştirme zamanı saniye olarak";
 
 // ---------------------------------------------------------------------

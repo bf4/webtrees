@@ -192,9 +192,10 @@ function checkChangeTime($pid, $gedrec) {
 		if (!empty($cdate)) {
 			$ctime = get_gedcom_value("DATE:TIME", 2, $changrec);
 			$changeUser = get_gedcom_value("_PGVU", 2, $changrec, '', false);
-			$chan_date = parse_date($cdate);
+			$chan_date = new GedcomDate($cdate);
+			$chan_date = $chan_date->MinDate();
 			$chan_time = parse_time($ctime);
-			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], (int)$chan_date[0]['mon'], (int)$chan_date[0]['day'], $chan_date[0]['year']);
+			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], $chan_date->m, $chan_date->d, $chan_date->y);
 		}
 	}
 	if (isset($_REQUEST['linenum']) && $changeTime!=0 && isset($_SESSION['last_access_time']) && $changeTime > $_SESSION['last_access_time']) {
@@ -545,7 +546,7 @@ function undo_change($cid, $index) {
  * @param string $famtag		how the new person is added to the family
  */
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
-	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
+	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 
@@ -675,9 +676,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	// Make sure there are two slashes in the name
-	if (preg_match('/\//', $name_fields['NAME'])==0)
+	if (!preg_match('/\//', $name_fields['NAME']))
 		$name_fields['NAME'].=' /';
-	if (preg_match('/\//', $name_fields['NAME'])==1)
+	if (!preg_match('/\/.*\//', $name_fields['NAME']))
 		$name_fields['NAME'].='/';
 
 	// Populate any missing 2 XXXX fields from the 1 NAME field
@@ -716,7 +717,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					$mnsct = preg_match('/\/(.+)\//', $value, $match2);
 					$marnm_surn = "";
 					if ($mnsct>0) $marnm_surn = $match2[1];
-					add_simple_tag("2 _MARNM");
+					add_simple_tag("2 _MARNM ".$value);
 					add_simple_tag("2 _MARNM_SURN ".$marnm_surn);
 				} else {
 					add_simple_tag("2 $tag $value");
@@ -848,7 +849,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		return false;
 	}
 	function trim(str) {
-		str=str.replace(/,/g," ");
+		//-- See the NAME_TEXT portion of the GEDCOM spec
+		//-- according to GEDCOM spec commas should not be allowed in NAME_TEXT, but
+		//-- some localization requirements require commas
+		//-- str=str.replace(/,/g," ");
+		
 		str=str.replace(/\s\s+/g," ");
 		return str.replace(/(^\s+)|(\s+$)/g,'');
 	}
@@ -1091,7 +1096,7 @@ function print_addnewsource_link($element_id) {
  * @param boolean $rowDisplay	True to have the row displayed by default, false to hide it by default
  */
 function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="", $rowDisplay=true) {
-	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES, $lang_short_cut, $LANGUAGE;
+	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
@@ -2099,9 +2104,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	// where a level 1 tag is missing a level 2 tag.  Here we only need to
 	// handle the more complicated cases.
 	$expected_subtags=array(
-		// Can't use this logic for SOUR, as it gets the order of subfields wrong.
-		//'SOUR'=>array('PAGE', 'QUAY'),
-		//'PAGE'=>array('TEXT', 'DATE'),
+		'SOUR'=>array('PAGE', 'DATA', 'QUAY'),
+		'DATA'=>array('TEXT', 'DATE'),
 		'PLAC'=>array('MAP'),
 		'MAP' =>array('LATI', 'LONG')
 	);
@@ -2115,6 +2119,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			if ($j>2) $text .= " ";
 			$text .= $fields[$j];
 		}
+		$text = rtrim($text);
 		while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." (CON[CT])\s?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
 			if ($cmatch[1]=="CONT") $text.="\n";
 			else if ($WORD_WRAPPED_NOTES) $text .= " ";
@@ -2122,6 +2127,11 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			$conctxt = preg_replace("/[\r\n]/","",$conctxt);
 			$text.=$conctxt;
 			$i++;
+		}
+
+		if ($type=="SOUR") {
+			$inSource = true;
+			$levelSource = $level;
 		}
 
 		if ($type!="DATA" && $type!="CONC" && $type!="CONT") {
@@ -2139,15 +2149,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			else add_simple_tag($subrecord, $level0type);
 		}
 
-		if ($type=="SOUR") {
-			$inSource = true;
-			$levelSource = $level;
-			$haveSourcePage = false;
-			$haveSourceText = false;
-			$haveSourceDate = false;
-			$haveSourceQuay = false;
-		}
-
 		// Get a list of tags present at the next level
 		$subtags=array();
 		for ($ii=$i+1; isset($gedlines[$ii]) && preg_match('/^\s*(\d+)\s+(\S+)/', $gedlines[$ii], $mm) && $mm[1]>$level; ++$ii)
@@ -2158,10 +2159,13 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		if (!empty($expected_subtags[$type]))
 			foreach ($expected_subtags[$type] as $subtag)
 				if (!in_array($subtag, $subtags)) {
+					if (!$inSource || $subtag!="DATA") {
 					add_simple_tag(($level+1).' '.$subtag);
+					}
 					if (!empty($expected_subtags[$subtag]))
 						foreach ($expected_subtags[$subtag] as $subsubtag)
-							add_simple_tag(($level+2).' '.$subsubtag);
+							if ($inSource && $subsubtag=="DATE") add_simple_tag(($level+2).' '.$subsubtag, "", $pgv_lang["date_of_entry"]);
+							else add_simple_tag(($level+2).' '.$subsubtag);
 				}
 
 		// Awkward special cases
@@ -2177,40 +2181,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			if (isset($fields[1])) $type = trim($fields[1]);
 			else $level = 0;
 		} else $level = 0;
-
-		// Check for, and add, missing tags subordinate to SOUR
-		// The logic here is complicated because the missing tags MUST
-		// be in the right order.
-		if ($inSource) {
-			if ($levelSource < $level) {
-				if ($type=="PAGE") $haveSourcePage = true;
-				if ($type=="TEXT") {
-					if (!$haveSourcePage) {
-						add_simple_tag(($levelSource+1)." PAGE");
-						$haveSourcePage = true;
-					}
-					$haveSourceText = true;
-				}
-				if ($type=="DATE") {
-					if (!$haveSourceText) {
-						if (!$haveSourcePage) {
-							add_simple_tag(($levelSource+1)." PAGE");
-							$haveSourcePage = true;
-						}
-						add_simple_tag($levelSource." TEXT");
-						$haveSourceText = true;
-					}
-				}
-				if ($type=="DATE") $haveSourceDate = true;
-				if ($type=="QUAY") $haveSourceQuay = true;
-			} else {
-				if (!$haveSourcePage) add_simple_tag(($levelSource+1)." PAGE");
-				if (!$haveSourceText) add_simple_tag(($levelSource+2)." TEXT");
-				if (!$haveSourceDate) add_simple_tag(($levelSource+2)." DATE", "", $pgv_lang["date_of_entry"]);
-				if (!$haveSourceQuay) add_simple_tag(($levelSource+1)." QUAY");
-				$inSource = false;
-			}
-		}
 
 		if ($level<=$glevel) break;
 

@@ -109,11 +109,36 @@
 #CB_Text {
 	text-align: center;
 	color: #0000FF;
+	margin-top: 4px;	
+/*	width: 150px;
+	overflow: auto;	*/
+}
+
+#CB_Text {
+	position: relative;
+	top: -6px;
+}
+
+#CB_TopText {
+    background-color: #FFFFFF;
+	text-align: center;
+	font-weight: 500;
+	color: #8800FF;
+	padding-bottom: 4px;
+	margin-top: -6px;
+	margin-bottom: 6px;  
+}
+
+#CB_TopText a, #CB_Txt2 a {
+	color: #888888;
+}
+#CB_TopText a:hover, #CB_Txt2 a:hover  {
+	color: #AA0000;
 }
 
 #CB_Window {
 	/* For IE */
-	right:expression( (document.body.clientWidth - CB_ImgWidthOld ) / 2 + 'px'); 
+	right:expression( (document.body.clientWidth - CB_ImgWidthOld ) /2 + 'px'); 
 	/* For FF */
 	left:50%;  
 	position:absolute;
@@ -226,7 +251,8 @@ background:transparent url(../pic/next.gif) no-repeat scroll right 50%;
 
 #CB_SlideShowS, #CB_SlideShowP {
 	position: absolute;
-	top: -4px;
+/*	top: -4px; */
+	top: 2px;
 	left: 2px; 
 	z-index: 1104;
 	cursor: pointer;
@@ -234,44 +260,41 @@ background:transparent url(../pic/next.gif) no-repeat scroll right 50%;
 
 #CB_MusicOn, #CB_MusicOff {
 	position: absolute;
-	top: -6px;
-	left: 22px;
+/*	top: -6px; */
+	top: 0px;
+	left: 28px;
 	z-index: 1104;
 	cursor: pointer;
 }
 
 #CB_Speak, #CB_Speaker {
 	position: absolute;
-	top: -6px;
-	left: 22px;
+/*	top: -6px; */
+	top: 0px;	
+	left: 28px;
 	z-index: 1104;
 	cursor: pointer;
 }
 
-#CB_Text {
-	position: relative;
-	top: -6px;
-}
-
 #CB_ZoomOn {
 	position: absolute;
-	top: -5px;
-	right: 20px;
+	top: -1px;
+	right: 28px;
 	z-index: 1104;
 	cursor: pointer;
 }
 
 #CB_ZoomOff {
 	position: absolute;
-	top: -5px;
-	right: 20px;
+	top: -1px;
+	right: 28px;
 	z-index: 1104;
 	cursor: pointer;
 }
 
 #CB_CloseWindow {
 	position: absolute;
-	top: -3px;
+	top: 1px;
 	right: 2px;
 	z-index: 1104;
 	cursor: pointer;

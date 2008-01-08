@@ -35,75 +35,62 @@ function check_alive($indirec, $year) {
 	global $MAX_ALIVE_AGE;
 	if (is_dead($indirec, $year)) return -1;
 
-	//-- if death date after year return 0
+	// Died before year?
 	$deathrec = get_sub_record(1, "1 DEAT", $indirec);
-	if (!empty($deathrec)) {
-		$ct = preg_match("/\d DATE (.*)/", $deathrec, $match);
-		if ($ct>0) {
-			if (strstr($match[1], "@#DHEBREW@")===false) {
-				$ddate = parse_date($match[1]);
-				if ($year>$ddate[0]["year"]) {
-					//print "A".$indirec;
+	if (preg_match("/\d DATE (.*)/", $deathrec, $match)) {
+		$ddate = new GedcomDate($match[1]);
+		$ddate = $ddate->MaxDate();
+		$ddate = $ddate->convert_to_cal('gregorian');
+		if ($year>$ddate->y)
 					return -1;
 				}
-			}
-		}
-	}
 
-	//-- if birthdate less than $MAX_ALIVE_AGE return false
+	// Born after year?
 	$birthrec = get_sub_record(1, "1 BIRT", $indirec);
-	if (!empty($birthrec)) {
-		$ct = preg_match("/\d DATE (.*)/", $birthrec, $match);
-		if ($ct>0) {
-			if (strstr($match[1], "@#DHEBREW@")===false) {
-				$bdate = parse_date($match[1]);
-				if ($year<$bdate[0]["year"]) {
-					//print "B".$indirec;
+	if (preg_match("/\d DATE (.*)/", $birthrec, $match)) {
+		$bdate = new GedcomDate($match[1]);
+		$bdate = $bdate->MinDate();
+		$bdate = $bdate->convert_to_cal('gregorian');
+		if ($year<$bdate->y)
 					return 1;
 				}
-			}
-		}
-	}
 
-	//-- check if year is between birth and death
-	if (isset($bdate) && isset($ddate)) {
-		//print "HERE $year>={$bdate[0]["year"]} && $year<={$ddate[0]["year"]}";
-		if ($year>=$bdate[0]["year"] && $year<=$ddate[0]["year"]) {
-			//print "C".$indirec;
+	// Born before year and died after year
+	if (isset($bdate) && isset($ddate) && $year>=$bdate->y && $year<=$ddate->y)
 			return 0;
-		}
-	}
 
 	// If no death record than check all dates;
 	$years = array();
 	$subrecs = get_all_subrecords($indirec, "CHAN", true, true, false);
-	foreach($subrecs as $ind=>$subrec) {
-		$ct = preg_match("/\d DATE (.*)/", $subrec, $match);
-
-		if ($ct>0 && strstr($match[0], "@#DHEBREW@")===false) {
-			$bdate = parse_date($match[1]);
-			if (!empty($bdate[0]["year"])) $years[] = $bdate[0]["year"];
-		}
+	foreach($subrecs as $ind=>$subrec)
+		if (preg_match("/\d DATE (.*)/", $subrec, $match)) {
+			$date = new GedcomDate($match[1]);
+			$date = $date->MinDate();
+			$date = $date->convert_to_cal('gregorian');
+			if ($date->y > 0)
+				$years[] = $date->y;
 	}
-	//print_r($years);
-	if (count($years)>1) {
-		//print "HERE $year>={$years[0]} && $year<={$years[count($years)-1]}";
-		if ($year>=$years[0] && $year<=$years[count($years)-1]) {
-			//print "E".$indirec;
+
+	// Events both before and after year
+	if (count($years)>1 && $year>=$years[0] && $year<=$years[count($years)-1])
 			return 0;
-		}
-	}
 
-	foreach($years as $ind=>$year1) {
-		if (($year1-$year) > $MAX_ALIVE_AGE) {
-			//print "F".$match[$i][0].$indirec;
+	foreach($years as $ind=>$year1)
+		if (($year1-$year) > $MAX_ALIVE_AGE)
 			return -1;
-		}
-	}
 
 	return 0;
 }
 //-- end functions
+
+if (isset($_REQUEST['surname_sublist'])) $surname_sublist = $_REQUEST['surname_sublist'];
+if (isset($_REQUEST['show_all'])) $show_all = $_REQUEST['show_all'];
+if (isset($_REQUEST['show_all_firstnames'])) $show_all_firstnames = $_REQUEST['show_all_firstnames'];
+if (isset($_REQUEST['year'])) $year = $_REQUEST['year'];
+if (isset($_REQUEST['alpha'])) $alpha = $_REQUEST['alpha'];
+if (isset($_REQUEST['surname'])) $surname = $_REQUEST['surname'];
+if (isset($_REQUEST['view'])) $view = $_REQUEST['view'];
+
 
 if (empty($surname_sublist)) $surname_sublist = "yes";
 if (empty($show_all)) $show_all = "no";

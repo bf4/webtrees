@@ -127,6 +127,7 @@ class UserMigrateControllerRoot extends BaseController {
 	 */
 	function backup() {
 		global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $MEDIA_DIRECTORY, $SYNC_GEDCOM_FILE;
+		global $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_ROOTDIR;
 		global $VERSION, $VERSION_RELEASE;
 		$this->flist = array();
 	
@@ -226,6 +227,14 @@ class UserMigrateControllerRoot extends BaseController {
 			while(false !== ($entry = $dir->read())) {
 				if ($entry{0} != ".") {
 					if ($entry != "thumbs") $this->flist[] = $MEDIA_DIRECTORY.$entry;
+				}
+			}
+			if ($USE_MEDIA_FIREWALL) {
+				$dir = dir($MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY);
+				while(false !== ($entry = $dir->read())) {
+					if ($entry{0} != ".") {
+						if ( ($entry != "thumbs") && ($entry != "watermark") ) $this->flist[] = $MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.$entry;
+					}
 				}
 			}
 		}

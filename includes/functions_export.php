@@ -51,7 +51,7 @@ function gedcom_header($gedfile, $CRLF="\r\n")
 	$SUBM="1 SUBM @SUBM@{$CRLF}0 @SUBM@ SUBM{$CRLF}1 NAME ".getUserName().$CRLF; // The SUBM record is mandatory
 
 	// Preserve some values from the original header
-	if (isset($GEDCOMS[$gedfile])) {
+	if (isset($GEDCOMS[$gedfile]['imported']) && $GEDCOMS[$gedfile]['imported']) {
 		$head=find_gedcom_record("HEAD");
 		if (preg_match("/(1 CHAR [^\r\n]+)/", $head, $match))
 			$CHAR=$match[1].$CRLF;
@@ -411,7 +411,8 @@ function um_export($proceed) {
 		$blocks["location"] = $row["b_location"];
 		$blocks["order"] = $row["b_order"];
 		$blocks["name"] = $row["b_name"];
-		$blocks["config"] = @unserialize($row["b_config"]);
+		//-- see [ phpgedview-Bugs-1823749 ] Backup fails, 4.1.2 
+		$blocks["config"] = @unserialize(str_replace("'", "\'", $row["b_config"]));
 		if ($blocks["config"]===false) print "<span class=\"error\">There was an error serializing the block configuration for ".$blocks["name"]." ".$blocks["username"].".</span>";
 		$allblocks[] = $blocks;
 	}

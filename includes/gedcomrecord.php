@@ -3,7 +3,7 @@
  * Base class for all gedcom records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ class GedcomRecord {
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!is_null($serviceClient)) {
 						if (!$simple || $serviceClient->type=='local') {
-							$gedrec = $serviceClient->mergeGedcomRecord($aliaid, $gedrec);
+							$gedrec = $serviceClient->mergeGedcomRecord($aliaid, $gedrec, true);
 						}
 					}
 				}
@@ -118,6 +118,7 @@ class GedcomRecord {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
+				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
 				//-- the INDI will be replaced with the type from the remote record
 				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
@@ -280,6 +281,7 @@ class GedcomRecord {
 				$servid = $parts[0];
 				$aliaid = $parts[1];
 				if (!empty($servid)&&!empty($aliaid)) {
+					require_once 'includes/serviceclient_class.php';
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!empty($serviceClient)) {
 						$title = $serviceClient->getTitle();
@@ -291,10 +293,12 @@ class GedcomRecord {
 	}
 
 	// Get an HTML link to this object, for use in sortable lists.
-	function getXrefLink() {
+	function getXrefLink($target="") {
 		global $SEARCH_SPIDER;
-		if (empty($SEARCH_SPIDER))
-			return "<a href=\"".$this->getLinkUrl()."\" name=\"".preg_replace('/\D/','',$this->getXref())."\">".$this->getXref()."</a>";
+		if (empty($SEARCH_SPIDER)) {
+			if ($target) $target = "target=\"".$target."\"";
+			return "<a href=\"".$this->getLinkUrl()."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
+		}
 		else
 			return $this->getXref();
 	}

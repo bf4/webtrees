@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 $pgv_lang["GOOGLEMAP_ENABLE"]           = "Kartendarstellung aktivieren";
-$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "Kartendarstellung aktivieren<br /><br />Diese Option aktiviert oder deaktiviert die Kartendarstellung mit Google-Map.<br>Bei deaktivierter Kartendarstellung bleibt der Karteireiter für die Kartendarstellung zwar leer, der Link um die Darstellung zu verwalten ist aber weiterhin aktiv.";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "Kartendarstellung aktivieren<br /><br />Diese Option aktiviert oder deaktiviert die Kartendarstellung mit Google-Map.<br />Bei deaktivierter Kartendarstellung bleibt der Karteireiter für die Kartendarstellung zwar leer, der Link um die Darstellung zu verwalten ist aber weiterhin aktiv.";
 
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Google-Map API Schlüssel";
 $pgv_lang["GOOGLEMAP_API_KEY_help"]     = "Google-Map API Schlüssel<br /><br />Tragen Sie hier Ihren Google-Map API Schlüssel (key) ein. Den Schlüssel bekommen Sie auf folgendem URL: <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\" title=\"Hier klicken, um Google-Map Key zu beantragen\">http://www.google.com/apis/maps/</a>";
@@ -52,7 +52,7 @@ $pgv_lang["GM_DEFAULT_LEVEL_0"]         = "Standardwert für oberste Stufe";
 $pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "Standardwert für oberste Stufe<br /><br />Hier wird der Standardwert der Genauigkeit für die höchste Stufe in der Orte-Hierarchie bestimmt werden. Wenn ein Ort in der Datenbank nicht gefunden wird, wird sein Name als höchste Stufe (Staat) eingetragen und die Datenbank erneut durchsucht.";
 
 $pgv_lang["GM_NOF_LEVELS"]              = "Anzahl der Stufen, die von Googlemap benutzt werden";
-$pgv_lang["GM_NOF_LEVELS_help"]         = "Anzahl der Stufen, die von Googlemap benutzt werden<br /><br />Dieser Wert gibt an, wieviel Stufen in der Orte-Hierarchie von Googlemap genutzt werden.<br>Der Standardwert ist 4 (Staat, Bundesland, State, Kreis / Kreisfreie Stadt, Ort), was im Normalfall ausreicht. Ändern Sie diesen Wert, wenn Sie zusätzliche Stufen (wie z. B. Straßenangaben, Schulen oder Friedhöfe) nutzen wollen. Falls Sie eine Stufe entfernen, muss dieser Wert ebenfalss angepasst werden. Denken Sie aber daran, dass die Datei mit den Ortsdaten eine 4-stufige Struktur hat!";
+$pgv_lang["GM_NOF_LEVELS_help"]         = "Anzahl der Stufen, die von Googlemap benutzt werden<br /><br />Dieser Wert gibt an, wieviel Stufen in der Orte-Hierarchie von Googlemap genutzt werden.<br />Der Standardwert ist 4 (Staat, Bundesland, State, Kreis / Kreisfreie Stadt, Ort), was im Normalfall ausreicht. Ändern Sie diesen Wert, wenn Sie zusätzliche Stufen (wie z. B. Straßenangaben, Schulen oder Friedhöfe) nutzen wollen. Falls Sie eine Stufe entfernen, muss dieser Wert ebenfalss angepasst werden. Denken Sie aber daran, dass die Datei mit den Ortsdaten eine 4-stufige Struktur hat!";
 
 $pgv_lang["GM_NAME_PREFIX"]             = "Präfix für Namen auf dieser Stufe";
 $pgv_lang["GM_NAME_PREFIX_help"]        = "Präfix für Namen auf dieser Stufe<br /><br />Dieser Wert wird allen Namen dieser Stufe vorangestellt. Es können mehrere Werte, durch Semikola getrennt, verwendet werden";
@@ -61,10 +61,10 @@ $pgv_lang["GM_NAME_POSTFIX"]            = "Suffix für Namen auf dieser Stufe";
 $pgv_lang["GM_NAME_POSTFIX_help"]       = "Suffix für Namen auf dieser Stufe<br /><br />Dieser Wert wird allen Namen dieser Stufe angehängt. Es können mehrere Werte, durch Semikola getrennt, verwendet werden";
 
 $pgv_lang["GM_NAME_PRE_POST"]           = "Reihenfolge für den Gebrauch von Präfix / Suffix.";
-$pgv_lang["GM_NAME_PRE_POST_help"]      = "Reihenfolge für den Gebrauch von Präfix / Suffix.<br /><br />Dieses Feld bezeichnet die Reihenfolge, in der die Präfixe / Suffixe bei den Namen angewendet werden sollen. Mögliche Werte:<br><ul><li>Kein Präfix / Suffix</li><li>Normaler Name, Präfix, Suffix, beide</li><li>Normaler Name, Suffix, Präfix, beidet</li><li>Präfix, Suffix, beide, normaler Name</li><li>Suffix, Präfix, beide, normaler Name</li><li>Präfix, Suffix, normaler Name, beide</li><li>Suffix, Präfix, normaler Name, beide</li></ul>";
+$pgv_lang["GM_NAME_PRE_POST_help"]      = "Reihenfolge für den Gebrauch von Präfix / Suffix.<br /><br />Dieses Feld bezeichnet die Reihenfolge, in der die Präfixe / Suffixe bei den Namen angewendet werden sollen. Mögliche Werte:<br /><ul><li>Kein Präfix / Suffix</li><li>Normaler Name, Präfix, Suffix, beide</li><li>Normaler Name, Suffix, Präfix, beidet</li><li>Präfix, Suffix, beide, normaler Name</li><li>Suffix, Präfix, beide, normaler Name</li><li>Präfix, Suffix, normaler Name, beide</li><li>Suffix, Präfix, normaler Name, beide</li></ul>";
 
 $pgv_lang["PL_EDIT_LOCATION"]           = "Ortsdaten bearbeiten oder löschen";
-$pgv_lang["PL_EDIT_LOCATION_help"]      = "Ortsdaten bearbeiten oder löschen<br /><br />Hier können Sie die Ortsdaten ändern oder löschen. Ein Klick auf 'bearbeiten' öffnet ein neues Bearbeitungsfenster für die geografischen Ortsdaten.<br>Ein Klick auf 'löschen' ist nur möglich, wenn keine anderen Orte unterhalb dieser Hierarchie definiert sind.";
+$pgv_lang["PL_EDIT_LOCATION_help"]      = "Ortsdaten bearbeiten oder löschen<br /><br />Hier können Sie die Ortsdaten ändern oder löschen. Ein Klick auf 'bearbeiten' öffnet ein neues Bearbeitungsfenster für die geografischen Ortsdaten.<br />Ein Klick auf 'löschen' ist nur möglich, wenn keine anderen Orte unterhalb dieser Hierarchie definiert sind.";
 
 $pgv_lang["PL_ADD_LOCATION"]            = "Ortsdaten hinzufügen";
 $pgv_lang["PL_ADD_LOCATION_help"]       = "Ortsdaten hinzufügen<br /><br />Hiermit können Sie einen Ort in die Ortetabelle eintragen. Der Ort wird auf der aktuellen Hierarchiestufe hinzugefügt!";
@@ -93,7 +93,7 @@ $pgv_lang["PLE_PRECISION"]              = "Genauigkeit";
 $pgv_lang["PLE_PRECISION_help"]         = "Genauigkeit<br /><br />Hier wird die Detailtiefe (Genauigkeit) der Kartendarstellung eingetragen. Dieser Wert bestimmt die Anzahl der Nachkommastellen für die Längen- und Breitengrade.";
 
 $pgv_lang["PLE_LATLON_CTRL"]            = "Breiten- / Längengrad";
-$pgv_lang["PLE_LATLON_CTRL_help"]       = "Breiten- / Längengrad<br /><br />Hier können Breiten- und Längengrad eingetragen werden. Zuerst bitte den Bereich (N/S oder O/W) auswählen. Danach den Breiten- oder Längengrad als Dezimalwert eintragen. <br>Der Dezimalwert errechnet sich anhand folgender Formel:<br>Grad_dezimal = ((Sekunden / 60) + Minuten) / 60 + Grad.";
+$pgv_lang["PLE_LATLON_CTRL_help"]       = "Breiten- / Längengrad<br /><br />Hier können Breiten- und Längengrad eingetragen werden. Zuerst bitte den Bereich (N/S oder O/W) auswählen. Danach den Breiten- oder Längengrad als Dezimalwert eintragen. <br />Der Dezimalwert errechnet sich anhand folgender Formel:<br />Grad_dezimal = ((Sekunden / 60) + Minuten) / 60 + Grad.";
 
 $pgv_lang["PLE_ZOOM"]                   = "Zoomstufe";
 $pgv_lang["PLE_ZOOM_help"]              = "Zoomstufe<br /><br />Hier wird die Vergrößerungsstufe eingetragen. Der Wert stellt die kleinste Zoomstufe dieses Ortes auf der Karte dar.";
@@ -115,6 +115,6 @@ $pgv_lang["PLIF_UPDATE"]                = "Aktualisieren vorhandener Datensätze
 $pgv_lang["PLIF_UPDATE_help"]           = "Aktualisieren vorhandener Datensätze<br /><br />Mit dieser Option kann man selektiv nur die vorhandenen Datensätze aktualisieren. Das kann man zum Eintragen der Längen- und Breitengrade von Orten benutzen, die aus einer GEDCOM-Datei importiert wurden. Neue Orte werden nicht in die Datenbank eingefügt.";
 
 $pgv_lang["PLIF_OVERWRITE"]             = "Überschreiben der Ortsdaten";
-$pgv_lang["PLIF_OVERWRITE_help"]        = "Überschreiben der Ortsdaten<br /><br />Überschreibt die Ortsdaten in der Datenbank mit den Daten aus der Datei.<br>Diese Option überschreibt Ortsdaten in der DB (Längengrad, Breitengrad, Vergrößerungsstufe und Flagge) mit den Daten aus der Datei, soweit vorhanden. Ist ein Datensatz in der DB noch nicht vorhanden, wird er angelegt, es sei denn, die Option 'Aktualisieren vorhandener Datensätze' ist ausgewählt.";
+$pgv_lang["PLIF_OVERWRITE_help"]        = "Überschreiben der Ortsdaten<br /><br />Überschreibt die Ortsdaten in der Datenbank mit den Daten aus der Datei.<br />Diese Option überschreibt Ortsdaten in der DB (Längengrad, Breitengrad, Vergrößerungsstufe und Flagge) mit den Daten aus der Datei, soweit vorhanden. Ist ein Datensatz in der DB noch nicht vorhanden, wird er angelegt, es sei denn, die Option 'Aktualisieren vorhandener Datensätze' ist ausgewählt.";
 
 ?>

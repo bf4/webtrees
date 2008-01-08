@@ -29,12 +29,25 @@
 
 //-- security check, only allow access from module.php
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "אין לך גישה ישירה לקובץ השפות.";
 	exit;
 }
 
+// Added in VERSION 4.1.4 
+
+$pgv_lang["lb_details"]			= "פרטים"; 
+$pgv_lang["lb_detail_info"]			= " ראה את פירטי ישות מדיה זו ... ואופציות מדיה נוספות - דף מציג מדיה";
+$pgv_lang["lb_pause_ss"]			= "הפסק מצגת שקפים"; 
+$pgv_lang["lb_start_ss"]			= "התחל מצגת שקפים"; 
+$pgv_lang["lb_music"]			= "הפעל/כבה מוסיקה"; 
+$pgv_lang["lb_zoom_off"]			= "מנע זום"; 
+$pgv_lang["lb_zoom_on"]			= "זום אופשר ... השתמש בגלגל של העכבר או במקשי ן ו-ם כדי להפעל הגדלה או הקטנה של זום"; 
+$pgv_lang["lb_close_win"]			= "סגור חלון מדיה - תיבת אור"; 
+
+// VERSION 4.1.3 
+
 //Config Parameters -------------------------------------
-$pgv_lang["configure_lightbox"]		= "ערוך אלבום Lightbox";
+$pgv_lang["configure_lightbox"]		= "ערוך אלבום תיבת אור - Lightbox";
 $pgv_lang["mediatab"]       			= "דף אישי - חציץ מדיה"; 
 $pgv_lang["lb_appearance"]		= "צורה";
 $pgv_lang["lb_linkAppearance"]		= "קישר";
@@ -70,9 +83,7 @@ $pgv_lang["lb_height"]			= "גובה";
 $pgv_lang["lb_help"] 	= "עזרת אלבום";
 $pgv_lang["lightbox"] 	= "אלבום";
 $pgv_lang["showmenu"] 	= "הראה תפריט:";
-//$pgv_lang["active"] 	= "פעיל";
 $pgv_lang["TYPE__other"] 	= "אחר";
-//$pgv_lang["no_media"] 	= "אין"; 
 $pgv_lang["TYPE__footnotes"] = "הערות שוליים"; 
 
 $pgv_lang["census_text"]  = "\"תמונות המפקד האלו התקבלו מ\"הארכיון הלאומי\", השומר על הרשומות המקוריות, "; 
@@ -96,7 +107,7 @@ $pgv_lang["turn_edit_OFF"] = "הפסק צורת עריכה";
 
 $pgv_lang["lb_source_avail"] = "קיימים נתוני מקור - לחץ כאן.";
 
-$pgv_lang["lb_private"] = "התמונה קשורה<br>לאדם פרטי"; 
+$pgv_lang["lb_private"] = "התמונה קשורה<br />לאדם פרטי"; 
 $pgv_lang["lb_view_source_tip"] = "הראה מקור: "; 
 $pgv_lang["lb_view_details_tip"] = "הראה פרטי מדיה: ";
 

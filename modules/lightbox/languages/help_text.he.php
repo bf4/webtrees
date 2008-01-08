@@ -23,13 +23,13 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: help_text.he.php 1903 2007-10-13 11:00:22Z meliza $
+ * @version $Id: help_text.he.php 2311 2007-11-27 21:38:04Z meliza $
  * @author Brian Holland
  */
 
 //-- security check, only allow access from module.php
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "אין לך גישה ישירה לקובץ השפות.";
 	exit;
 }
 

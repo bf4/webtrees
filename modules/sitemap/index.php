@@ -217,7 +217,7 @@ if ($action=="generate") {
     }
     print "   <tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_placement"]."</td></tr>\n";
     print "</table>\n";
-    print "<br>\n";
+    print "<br />\n";
 }
 
 if ($action=="") {
@@ -228,19 +228,19 @@ if ($action=="") {
 
 <form method="post" enctype="multipart/form-data" id="sitemap" name="sitemap" action="module.php?mod=sitemap">
     <input type="hidden" name="action" value="generate" />
-    <table class="facts_table">
+    <table class="facts_table width100">
         <tr>
-            <td class="descriptionbox"><?php print_help_link("SM_GEDCOM_SELECT_help", "qm", "SM_GEDCOM_SELECT"); print $pgv_lang["gedcoms_selected"];?></td>
+            <td class="descriptionbox wrap width50"><?php print_help_link("SM_GEDCOM_SELECT_help", "qm", "SM_GEDCOM_SELECT"); print $pgv_lang["gedcoms_selected"];?></td>
             <td class="optionbox" colspan="3">
 <?php
     foreach($GEDCOMS as $ged_index=>$ged_rec) {
-        print "                <input type=\"checkbox\" name=\"GEDCOM_".$ged_rec["id"]."\" value=\"".$ged_rec["id"]."\" tabindex=\"".$i++."\" checked>".$ged_rec["title"]."<br>\n";
+        print "                <input type=\"checkbox\" name=\"GEDCOM_".$ged_rec["id"]."\" value=\"".$ged_rec["id"]."\" tabindex=\"".$i++."\" checked>".$ged_rec["title"]."<br />\n";
     }
 ?>
             </td>
         </tr>
         <tr>
-            <td class="descriptionbox" rowspan="6">
+            <td class="descriptionbox wrap width50" rowspan="6">
                 <?php print_help_link("SM_ITEM_SELECT_help", "qm", "SM_ITEM_SELECT"); print $pgv_lang["selected_item"];?>
             </td>
             <td class="topbottombar"><?php print $pgv_lang["sm_item"];?></td>

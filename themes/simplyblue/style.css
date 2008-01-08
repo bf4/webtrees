@@ -304,7 +304,7 @@ table.center {
 
 a:hover .name1 {
 	color: white;
-	font: bold 10px tahoma, arial, helvetica, sans-serif;
+	font: bold 10px tahoma, arial, helvetica, sans-serif; 
 	text-decoration: underline;
 }
 
@@ -540,6 +540,10 @@ a:hover .nameZoom {
 	border: none;
 	opacity: 0.4;	/* IE does not yet support this */ 
 }
+
+.border1 {
+	border: solid black 1px;
+}	
 
 .header_select {
 	font-size: 9pt; 

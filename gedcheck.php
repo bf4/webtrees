@@ -184,7 +184,7 @@ $DAY                                  ='(0?[1-9]|[12][0-9]|30|31)';
 $MONTH                                ='(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)';
 $YEAR                                 ='([0-9]{3,4})';
 $YEAR_GREG                            ='([0-9]{3,4}(\/[0-9][0-9])?)';
-$MONTH_FREN                           ='(VEND|BRUM|FRIM|NIVO|PLUV|GERM|FLOR|PRAI|MESS|THER|FRUC|COMP)';
+$MONTH_FREN                           ='(VEND|BRUM|FRIM|NIVO|PLUV|VENT|GERM|FLOR|PRAI|MESS|THER|FRUC|COMP)';
 $MONTH_HEBR                           ='(TSH|CSH|KSL|TVT|SHV|ADR|ADS|NSN|IYR|SVN|TMZ|AAV|ELL)';
 $DATE_FREN                            ="(@#DFRENCH R@ (($DAY )?$MONTH_FREN )?$YEAR)";
 $DATE_HEBR                            ="(@#DHEBREW@ (($DAY )?$MONTH_HEBR )?$YEAR)";
@@ -867,6 +867,7 @@ function check_indi($id)
 	if (isset($fams)) {
 		$elder=0;
 		foreach ($fams as $k=>$v) {
+			if (strpos($k, ":")!==false) continue; // ignore remote links
 			$gedrec=$fam_list[$k]["gedcom"];
 			$subged=get_sub_record(1, "1 MARR", $gedrec);
 			if (empty($subged)) $subged=get_sub_record(1, "1 ENGA", $gedrec);
@@ -952,6 +953,7 @@ function check_fam($id)
 	if (isset($chil)) {
 		$elder=0;
 		foreach ($chil as $k=>$v) {
+			if (strpos($k, ":")!==false) continue; // ignore remote links
 			$gedrec=$indi_list[$k]["gedcom"];
 			$subged=get_sub_record(1, "1 BIRT", $gedrec);
 			if (empty($subged)) $subged=get_sub_record(1, "1 CHR", $gedrec);
@@ -1119,7 +1121,7 @@ foreach ($gedfile as $num=>$value) {
 			for ($i=max(0,$num-$context_lines); $i<$num; ++$i)
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		}
-		printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; {$pgv_lang["see"]} %s</font></b>\n", $num+1, htmlentities($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
+		printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; {$pgv_lang["see"]} %s</font></b>\n", $num+1, htmlspecialchars($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
 		flush();
 		$last_err_num=$num;
 	} else

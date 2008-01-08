@@ -36,6 +36,10 @@ if (!userCanEdit(getUserName())) {
 	exit;
 }
 
+if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+if (isset($_REQUEST['server'])) $server = $_REQUEST['server'];
+if (isset($_REQUEST['indiName'])) $indiName = $_REQUEST['indiName']; 
+
 //To use addsearchlink you should have come from a multisearch result link
 if(isset($pid) && isset($server) && isset($indiName))
 {

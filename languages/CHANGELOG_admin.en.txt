@@ -40,6 +40,16 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
+
+VERSION 4.1.4
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
+*$pgv_lang["sanity_err1"]             02 Dec 2007         w
+*$pgv_lang["unsync_warning"]						28 Nov 2007				S	(have to use American spelling)
++$pgv_lang["unsync_warning"]						28 Nov 2007				A
+
+
 VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments

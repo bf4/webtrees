@@ -740,7 +740,6 @@ function addUser($newuser, $msg = "added") {
 //		}
 //		if (!isset($newuser["max_relation_path"])) $newuser["max_relation_path"] = $MAX_RELATION_PATH_LENGTH;
 //		if (!isset($newuser["auto_accept"])) $newuser["auto_accept"] = "N";
-		$newuser = db_prep($newuser);
 		$newuser["firstname"] = preg_replace("/\//", "", $newuser["firstname"]);
 		$newuser["lastname"] = preg_replace("/\//", "", $newuser["lastname"]);
 		$sql = "INSERT INTO ".$TBLPREFIX."users VALUES('".$DBCONN->escapeSimple($newuser["username"])."','".$DBCONN->escapeSimple($newuser["password"])."','".$DBCONN->escapeSimple($newuser["firstname"])."','".$DBCONN->escapeSimple($newuser["lastname"])."','".$DBCONN->escapeSimple(serialize($newuser["gedcomid"]))."','".$DBCONN->escapeSimple(serialize($newuser["rootid"]))."'";
@@ -800,7 +799,6 @@ function updateUser($username, $newuser, $msg = "updated") {
 	global $TBLPREFIX, $DBCONN, $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH;
 
 	if (checkTableExists()) {
-		$newuser = db_prep($newuser);
 		$newuser['previous_username'] = $username;
 		$newuser["firstname"] = preg_replace("/\//", "", $newuser["firstname"]);
 		$newuser["lastname"] = preg_replace("/\//", "", $newuser["lastname"]);
@@ -870,9 +868,9 @@ function updateUser($username, $newuser, $msg = "updated") {
  * @param string $msg		a message to write to the log file
  */
 function deleteUser($username, $msg = "deleted") {
-	global $TBLPREFIX, $users;
+	global $TBLPREFIX, $DBCONN, $users;
 	unset($users[$username]);
-	$username = db_prep($username);
+	$username = $DBCONN->escapeSimple($username);
 	$sql = "DELETE FROM ".$TBLPREFIX."users WHERE u_username='$username'";
 	$res = dbquery($sql);
 
@@ -947,11 +945,12 @@ function create_export_user($export_accesslevel) {
  * @return array the user array to return
  */
 function getUser($username) {
-	global $TBLPREFIX, $users, $REGEXP_DB, $GEDCOMS, $DBTYPE;
+	global $TBLPREFIX, $users, $REGEXP_DB, $GEDCOMS, $DBCONN, $DBTYPE;
 
 	if (empty($username)) return false;
 	if (isset($users[$username])) return $users[$username];
-	$username = db_prep($username);
+	if (DB::isError($DBCONN))	return false; // We can call this function
+	$username = $DBCONN->escapeSimple($username);
 	$sql = "SELECT * FROM ".$TBLPREFIX."users WHERE ";
 	if (stristr($DBTYPE, "mysql")!==false) $sql .= "BINARY ";
 	$sql .= "u_username='".$username."'";
@@ -1028,12 +1027,12 @@ function getUser($username) {
  * @return array 	returns a user array
  */
 function getUserByGedcomId($id, $gedcom) {
-	global $TBLPREFIX, $users, $REGEXP_DB;
+	global $TBLPREFIX, $DBCONN, $users, $REGEXP_DB;
 
 	if (empty($id) || empty($gedcom)) return false;
 
 	$user = false;
-	$id = db_prep($id);
+	$id = $DBCONN->escapeSimple($id);
 	$sql = "SELECT * FROM ".$TBLPREFIX."users WHERE ";
 	$sql .= "u_gedcomid LIKE '%".$id."%'";
 	$res = dbquery($sql, false);
@@ -1422,7 +1421,7 @@ function getUserFavorites($username) {
 	$sql = "SELECT * FROM ".$TBLPREFIX."favorites WHERE fv_username='".$DBCONN->escapeSimple($username)."'";
 	$res = dbquery($sql);
 
-	if (!$res) return $favorites;
+	if (DB::isError($res)) return $favorites;
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		if (isset($GEDCOMS[$row["fv_file"]])) {
@@ -1459,7 +1458,7 @@ function getBlocks($username) {
 	$blocks["right"] = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' ORDER BY b_location, b_order";
 	$res = dbquery($sql);
-
+	if (DB::isError($res)) return $blocks;
 	if ($res->numRows() > 0) {
 		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			$row = db_cleanup($row);
@@ -1473,7 +1472,8 @@ function getBlocks($username) {
 		if ($user) {
 			//-- if no blocks found, check for a default block setting
 			$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
-			$res2 =& dbquery($sql);
+			$res2 = dbquery($sql);
+			if (DB::isError($res2)) return $blocks;
 			while($row =& $res2->fetchRow(DB_FETCHMODE_ASSOC)){
 				$row = db_cleanup($row);
 				if (!isset($row["b_config"])) $row["b_config"]="";

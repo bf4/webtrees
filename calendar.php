@@ -34,6 +34,15 @@
 require("config.php");
 require_once("includes/functions_print_lists.php");
 
+if (isset($_REQUEST['cal'])) $cal = $_REQUEST['cal'];
+if (isset($_REQUEST['day'])) $day = $_REQUEST['day'];
+if (isset($_REQUEST['month'])) $month = $_REQUEST['month'];
+if (isset($_REQUEST['year'])) $year = $_REQUEST['year'];
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['filterev'])) $filterev = $_REQUEST['filterev'];
+if (isset($_REQUEST['filterof'])) $filterof = $_REQUEST['filterof'];
+if (isset($_REQUEST['filtersx'])) $filtersx = $_REQUEST['filtersx'];
+
 // Set undefined parameters to defaults
 if (empty($cal     )) $cal     ='';
 if (empty($day     )) $day     ='';
@@ -154,7 +163,7 @@ if ($view!='preview') {
 			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$month_name}</a>";
 			print ' | ';
 		}
-	print "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('F Y').'</b></a></td></tr>';
+	print "<a href=\"calendar.php?cal={$cal}&amp;day=".min($cal_date->d, $today->DaysInMonth())."&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('F Y').'</b></a></td></tr>';
 	// Year selector
 	print '<tr><td class="descriptionbox vmiddle">';
 	print_help_link('annivers_year_select_help', 'qm', 'year');
@@ -163,7 +172,7 @@ if ($view!='preview') {
 	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y==1?-1:$cal_date->y-1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">-1</a>";
 	print " <input type=\"text\" name=\"year\" value=\"{$year}\" size=\"7\" /> ";
 	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y==-1?1:$cal_date->y+1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">+1</a>";
-	print " | <a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('Y')."</b></a>";
+	print " | <a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('Y')."</b></a>";
 	print "</td> ";
 	// Filtering options
 		print "<td class=\"descriptionbox vmiddle\">";

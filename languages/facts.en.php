@@ -286,6 +286,10 @@ $factarray["_BIRT_GCHI"] = "Birth of a grandchild";
 $factarray["_MARR_GCHI"] = "Marriage of a grandchild";
 $factarray["_DEAT_GCHI"] = "Death of a grandchild";
 
+$factarray["_BIRT_GGCH"] = "Birth of a great-grandchild";
+$factarray["_MARR_GGCH"] = "Marriage of a great-grandchild";
+$factarray["_DEAT_GGCH"] = "Death of a great-grandchild";
+
 $factarray["_MARR_FATH"] = "Marriage of father";
 $factarray["_DEAT_FATH"] = "Death of father";
 
@@ -305,6 +309,8 @@ $factarray["_MARR_NEPH"] = "Marriage of a nephew or niece";
 $factarray["_DEAT_NEPH"] = "Death of a nephew or niece";
 
 $factarray["_DEAT_GPAR"] = "Death of a grand-parent";
+
+$factarray["_DEAT_GGPA"] = "Death of a great-grand-parent";
 
 $factarray["_BIRT_FSIB"] = "Birth of a father's sibling";
 $factarray["_MARR_FSIB"] = "Marriage of a father's sibling";

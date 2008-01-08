@@ -2,7 +2,7 @@
 /**
  * German Language file for PhpGedView.
  *
- * phpGedView: Genealogy Viewer
+ * PhpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,18 +21,23 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
+ * @translator Gerd Kroll
  * @version $Id$
  */
 
+if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+  exit;
+}
 
 // Admin menu
-$pgv_lang["generate_sitemap"]       = "Sitemap-Dateien generieren";
+$pgv_lang["generate_sitemap"]       = "Sitemap-Dateien erstellen";
 
 // Sitemap pages
 $pgv_lang["selected_item"]          = "Seiten, die in die Sitemap aufgenommen werden:";
-$pgv_lang["gedcoms_selected"]       = "GEDCOMS, die in die Sitemap aufgenommen werden:";
-$pgv_lang["sitemaps_generated"]     = "Folgende Sitemaps wurden generiert und können heruntergeladen werden:";
-$pgv_lang["sitemaps_placement"]     = "Kopieren Sie alle Dateien in das PhpGedView-Basisverzeichnis.";
+$pgv_lang["gedcoms_selected"]       = "GEDCOMs, die in die Sitemap aufgenommen werden:";
+$pgv_lang["sitemaps_generated"]     = "Folgende Sitemap-Dateien wurden erstellt und können heruntergeladen werden:";
+$pgv_lang["sitemaps_placement"]     = "Bitte kopieren Sie alle Dateien ins PhpGedView-Verzeichnis.";
 $pgv_lang["sm_indi_info"]			= "Personen Information";
 $pgv_lang["sm_family_info"]			= "Familien Information";
 $pgv_lang["sm_individual_list"]		= "Personenliste";
@@ -47,7 +52,8 @@ $pgv_lang["sm_weekly"]              = "wöchentlich";
 $pgv_lang["sm_monthly"]             = "monatlich";
 $pgv_lang["sm_yearly"]              = "jährlich";
 $pgv_lang["sm_never"]               = "niemals";
-$pgv_lang["sm_generate"]            = "Generieren";
+$pgv_lang["sm_generate"]            = "Erstellen";
+$pgv_lang["gedcoms_privacy"]        = "Nur öffentlich zugreifbare Seiten zeigen";
 
 
 ?>

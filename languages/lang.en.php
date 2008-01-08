@@ -636,6 +636,14 @@ $pgv_lang["cal_hebrew_and_gregorian"] = "Hebrew and Gregorian";
 $pgv_lang["cal_hijri"]                = "Hijri";
 $pgv_lang["cal_arabic"]               = "Arabic";
 
+// some religious dates
+$pgv_lang["easter"]     = "Easter";
+$pgv_lang["ascension"]  = "Ascension";
+$pgv_lang["pentecost"]  = "Pentecost";
+$pgv_lang["assumption"] = "Assumption";
+$pgv_lang["all_saints"] = "All Saints";
+$pgv_lang["christmas"]  = "Christmas";
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "am";
 $pgv_lang["p.m."]         = "pm";
@@ -765,15 +773,14 @@ $pgv_lang["no_link_found"]			= "No (other) link between the two individuals coul
 $pgv_lang["sibling"]				= "Sibling";
 $pgv_lang["follow_spouse"]			= "Check relationships by marriage.";
 $pgv_lang["timeout_error"]			= "The script timed out before a relationship could be found.";
-$pgv_lang["son-in-law"]				= "Son-in-law";  // the husband of your daughter
-$pgv_lang["daughter-in-law"]		= "Daughter-in-law"; // the wife of your son
 $pgv_lang["grandchild"]				= "Grandchild";
 $pgv_lang["grandson"]				= "Grandson";
 $pgv_lang["granddaughter"]			= "Granddaughter";
+$pgv_lang["greatgrandchild"]		= "Great grandchild";
+$pgv_lang["greatgrandson"]			= "Great grandson";
+$pgv_lang["greatgranddaughter"]		= "Great granddaughter";
 $pgv_lang["brother"]				= "Brother";
 $pgv_lang["sister"] 				= "Sister";
-$pgv_lang["brother-in-law"]		= "Brother-in-law";
-$pgv_lang["sister-in-law"]			= "Sister-in-law";
 $pgv_lang["aunt"]					= "Aunt";
 $pgv_lang["uncle"]				= "Uncle";
 $pgv_lang["nephew"]				= "Nephew";
@@ -781,7 +788,6 @@ $pgv_lang["niece"]				= "Niece";
 $pgv_lang["firstcousin"]			= "First cousin";
 $pgv_lang["femalecousin"]			= "Female cousin";
 $pgv_lang["malecousin"]				= "Male cousin";
-$pgv_lang["cousin-in-law"]			= "Cousin-in-law";
 $pgv_lang["relationship_to_me"] 	= "Relationship to me";
 $pgv_lang["rela_husb"]				= "Relationship to husband";
 $pgv_lang["rela_wife"]				= "Relationship to wife";
@@ -794,12 +800,13 @@ $pgv_lang["oldest_top"]             = "Show oldest top";
 $pgv_lang["relationship_male_1_is_the_2_of_3"] = "%1\$s is the %2\$s of %3\$s.";
 $pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s is the %2\$s of %3\$s.";
 
-$pgv_lang["mother_in_law"]		    = "mother in law";
-$pgv_lang["father_in_law"]		    = "father in law";
-$pgv_lang["brother_in_law"]		    = "brother in law";
-$pgv_lang["sister_in_law"]		    = "sister in law";
-$pgv_lang["son_in_law"]		        = "son in law";
-$pgv_lang["daughter_in_law"]		= "daughter in law";
+$pgv_lang["mother_in_law"]		    = "Mother-in-law";
+$pgv_lang["father_in_law"]		    = "Father-in-law";
+$pgv_lang["brother_in_law"]		    = "Brother-in-law";
+$pgv_lang["sister_in_law"]		    = "Sister-in-law";
+$pgv_lang["son_in_law"]		        = "Son-in-law";
+$pgv_lang["daughter_in_law"]		= "Daughter-in-law";
+$pgv_lang["cousin_in_law"]			= "Cousin-in-law";
 
 $pgv_lang["step_son"]		        = "step son";
 $pgv_lang["step_daughter"]	    	= "step daughter";

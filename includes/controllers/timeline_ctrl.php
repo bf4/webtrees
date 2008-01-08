@@ -106,14 +106,14 @@ class TimelineControllerRoot extends BaseController {
 				//-- setup string of valid pids for links
 				$this->pidlinks .= "pids[]=".$indi->getXref()."&amp;";
 				$bdate = $indi->getBirthDate();
-				if (!empty($bdate) && (stristr($bdate, "hebrew")===false)) {
-					$date = parse_date($bdate);
-					if (!empty($date[0]["year"])) {
-						$this->birthyears[$indi->getXref()] = $date[0]["year"];
-						if (!empty($date[0]["mon"])) $this->birthmonths[$indi->getXref()] = $date[0]["mon"];
-						else $this->birthmonths[$indi->getXref()] = 1;
-						if (!empty($date[0]["day"])) $this->birthdays[$indi->getXref()] = $date[0]["day"];
-						$this->birthdays[$indi->getXref()] = 1;
+				if (!empty($bdate)) {
+					$date = new GedcomDate($bdate);
+					$date = $date->MinDate();
+					$date = $date->convert_to_cal('gregorian');
+					if ($date->y) {
+						$this->birthyears [$indi->getXref()] = $date->y;
+						$this->birthmonths[$indi->getXref()] = max(1, $date->m);
+						$this->birthdays  [$indi->getXref()] = max(1, $date->d);
 					}
 				}
 				// find all the fact information
@@ -125,17 +125,16 @@ class TimelineControllerRoot extends BaseController {
 						$fact = trim($match[1]);
 						$desc = trim($match[2]);
 						//-- check for a date
-						$ct = preg_match("/2 DATE (.*)/", $factrec, $match);
-						if ($ct>0) {
-							$datestr = trim($match[1]);
-							$date = parse_date($datestr);
-							//-- do not print hebrew dates
-							if ((stristr($date[0]["cal"], "hebrew")===false)&&($date[0]["year"]!=0)) {
-								if ($date[0]["year"]<$this->baseyear) $this->baseyear=$date[0]["year"];
-								if ($date[0]["year"]>$this->topyear) $this->topyear=$date[0]["year"];
-								if (!is_dead_id($indi->getXref())) {
-									if ($this->topyear < date("Y")) $this->topyear = date("Y");
-								}
+						if (preg_match("/2 DATE (.*)/", $factrec, $match)) {
+							$date=new GedcomDate($match[1]);
+							$date=$date->MinDate();
+							$date=$date->convert_to_cal('gregorian');
+							if ($date->y) {
+								$this->baseyear=min($this->baseyear, $date->y);
+								$this->topyear =max($this->topyear,  $date->y);
+
+								if (!is_dead_id($indi->getXref()))
+									$this->topyear=max($this->topyear, date('Y'));
 								$tfact = array();
 								$tfact["p"] = $p;
 								$tfact["pid"] = $indi->getXref();
@@ -203,11 +202,12 @@ class TimelineControllerRoot extends BaseController {
 					if (isset($familyfacts[$famid.$fact])&&($familyfacts[$famid.$fact]!=$factitem["p"])) return;
 					$familyfacts[$famid.$fact] = $factitem["p"];
 				}
-				$datestr = trim($match[1]);
-				$date = parse_date($datestr);
-				$year = $date[0]["year"];
-				$month = $date[0]["mon"];
-				$day = $date[0]["day"];
+				$gdate=new GedcomDate($match[1]);
+				$date=$gdate->MinDate();
+				$date=$date->convert_to_cal('gregorian');
+				$year  = $date->y;
+				$month = max(1, $date->m);
+				$day   = max(1, $date->d);
 				$xoffset = $basexoffset+20;
 				$yoffset = $baseyoffset+(($year-$this->baseyear) * $this->scale)-($this->scale);
 				$yoffset = $yoffset + (($month / 12) * $this->scale);
@@ -231,8 +231,7 @@ class TimelineControllerRoot extends BaseController {
 				$yoffset += $tyoffset;
 				$xoffset += abs($tyoffset);
 				$placements[$place] = $yoffset;
-				//-- do not print hebrew dates
-				if (($date[0]["year"]!=0)&&(stristr($date[0]["cal"], "hebrew")===false)) {
+
 					print "\n\t\t<div id=\"fact$factcount\" style=\"position:absolute; ".($TEXT_DIRECTION =="ltr"?"left: ".($xoffset):"right: ".($xoffset))."px; top:".($yoffset)."px; font-size: 8pt; height: ".($this->bheight)."px; \" onmousedown=\"factMD(this, '".$factcount."', ".($yoffset-$tyoffset).");\">\n";
 					print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"cursor: hand;\"><tr><td>\n";
 					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" name=\"boxline$factcount\" id=\"boxline$factcount\" height=\"3\" align=\"left\" hspace=\"0\" width=\"10\" vspace=\"0\" alt=\"\" style=\"padding-";
@@ -246,12 +245,10 @@ class TimelineControllerRoot extends BaseController {
 					else if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
 					else print $fact;
 					print "--";
-					$date=new GedcomDate($datestr);
-					print $date->Display(false);
+				print $gdate->Display(false);
 					$indi=Person::GetInstance($factitem["pid"]); // TODO we already have this object somewhere....
 					$birth_date=new GedcomDate($indi->getBirthDate());
-					$event_date=new GedcomDate($datestr);
-					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
+				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $gdate), false);
 					if (!empty($age))
 						print " ({$pgv_lang['age']} {$age})";
 					print " {$desc}";
@@ -311,7 +308,6 @@ class TimelineControllerRoot extends BaseController {
 					print " background-image: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$img]["other"]."');";
 					print " background-position: 0% $ypos; \" >\n";
 					print "</div>\n";
-				}
 			}
 		}
 	}

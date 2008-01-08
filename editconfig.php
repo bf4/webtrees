@@ -155,10 +155,6 @@ if (check_db(true)) {
 		}
 	}
 	if (!userIsAdmin(getUserName())) {
-		require_once("includes/functions_import.php");
-//		//-- upgrade the database
-//		setup_database(1);
-//		cleanup_database();
    		header("Location: login.php?url=editconfig.php");
 		exit;
 	}
@@ -244,10 +240,6 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	if (check_db(true)) {
 		$configtext = preg_replace('/\$CONFIGURED\s*=\s*.*;/', "\$CONFIGURED = true;", $configtext);
 		$CONFIGURED = true;
-//		require_once("includes/functions_import.php");
-//        //-- upgrade the database
-//        setup_database(1);
-//        cleanup_database();
 	}
 
 	// Save the languages the user has chosen to have active on the website
@@ -655,19 +647,6 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 		<input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
 		</td>
 	</tr>
-<?php
-	/*
-	 * 
-	 if (!file_is_writeable("config.php")) {
-			print "<tr><td class=\"descriptionbox wrap\" colspan=\"2\"><span class=\"largeError\">";
-			print_text("not_writable");
-			print "</span></td></tr>";
-			print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"";
-			print $pgv_lang["download_file"];
-			print "\" name=\"download\" /></td></tr>\n";
-	}
-	*/
-?>
 </table>
 </form>
 <?php if (!$CONFIGURED) { ?>

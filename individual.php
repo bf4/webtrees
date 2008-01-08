@@ -27,7 +27,6 @@
  */
  	
 require_once("includes/controllers/individual_ctrl.php");
-require_once("includes/serviceclient_class.php");
 
 loadLangFile("lb_lang");	// Load Lightbox language file
 loadLangFile("gm_lang");	// Load GoogleMap language file
@@ -214,23 +213,22 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 	<?php if ($controller->indi->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
 // <![CDATA[
-function open_link_remote(pid){
-	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
-	return false;
-}
-
 // javascript function to open a window with the raw gedcom in it
 function show_gedcom_record(shownew) {
 	fromfile="";
 	if (shownew=="yes") fromfile='&fromfile=1';
 	var recwin = window.open("gedrecord.php?pid=<?php print $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 }
+<?php if (userCanAccept(getUserName())) { ?>
+function open_link_remote(pid){
+	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
+	return false;
+}
 
 function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
-
-
+<?php } ?>
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
@@ -401,9 +399,7 @@ if (file_exists("modules/lightbox/album.php")) {
 	</tr>
 </table>
 
-
-
-<!-- ================== Start 1st tab individual page ============ Personal Facts and Details -->
+<!-- ======================== Start 1st tab individual page ============ Personal Facts and Details -->
 <?php
 if(empty($SEARCH_SPIDER))
 	print "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -525,8 +521,6 @@ if(empty($SEARCH_SPIDER)) {
 <!-- =========================== Start 8th tab individual page ==== GoogleMaps -->
 <?php
 // Only show this section if we are not talking to a search engine.
-//--------------------------------Start 7th tab individual page
-//--- Google map
 if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/googlemap/defaultconfig.php")) {
 		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -629,6 +623,7 @@ if(empty($SEARCH_SPIDER)) {
 }
 
 ?>
+<!-- ========================== End 8th tab individual page ==== GoogleMaps ===== -->
 
 
 <!-- ========================== Start 9th tab individual page ==== Album ======== -->
@@ -693,7 +688,7 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	function paste_id(value) {
 		catch_and_ignore = value;
 	}
-<?php if ($controller->isPrintPreview()) print "tabswitch(0)";
+<?php if ($controller->isPrintPreview()) print "tabswitch(0);";
 else print "tabswitch(". ($controller->default_tab+1) .");\n";
 ?>
 if (typeof toggleByClassName == "undefined") alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');

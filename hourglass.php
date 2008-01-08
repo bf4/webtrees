@@ -28,6 +28,7 @@
  * @version $Id$
  */
 require_once("includes/controllers/hourglass_ctrl.php");
+if (isset($_REQUEST['show_full'])) $show_full = $_REQUEST['show_full'];
 $controller->init();
 
 // -- print html header information

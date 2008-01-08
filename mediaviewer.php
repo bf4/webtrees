@@ -49,6 +49,8 @@ global $tmb;
 }
 // LBox  ============================================================================		
 	
+loadLangFile("lb_lang");	// Load Lightbox language file	
+	
 	//The following lines of code are used to print the menu box on the top right hand corner
 	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {
 		if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
@@ -113,8 +115,7 @@ global $tmb;
 									href=\"" . $filename . "\" 
 									onmouseover=\"window.status='javascript:;'; return true;\" 
 									onmouseout=\"window.status=''; return true;\"
-									rel=\"clearbox[general]\" title=\"" . PrintReady(htmlspecialchars($controller->mediaobject->getTitle())) . "\">" . "\n";	
-
+									rel=\"clearbox[general]\" title=\"" . $controller->pid . ":" . $GEDCOM . ":" . PrintReady(htmlspecialchars($controller->mediaobject->getTitle())) . "\">" . "\n";	
 							}else{
 								//Else open image with the Image View Page
 								?>

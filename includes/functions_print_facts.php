@@ -74,7 +74,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS;
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $SHOW_FACT_ICONS;
-	global $n_chil, $n_gchi;
+	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER, $NAME_REVERSE;
 	
 	//-- keep the time of this access to help with concurrent edits
@@ -133,6 +133,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			print $factarray[$fact];
 			if ($fact=="_BIRT_CHIL" and isset($n_chil)) print "<br />".$pgv_lang["number_sign"].$n_chil++;
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) print "<br />".$pgv_lang["number_sign"].$n_gchi++;
+			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) print "<br />".$pgv_lang["number_sign"].$n_ggch++;
 			if (!$noedit && (userCanEdit(getUserName()))&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
 				$menu = array();
 				$menu["label"] = $pgv_lang["edit"];
@@ -308,7 +309,6 @@ function print_fact(&$eventObj, $noedit=false) {
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
-				print " ";
 				$spouse=$match[1];
 				if ($spouse!=="") {
  					print " <a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
@@ -1114,10 +1114,6 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	$nlevel = $level+1;
 	$ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {
-		/**$spos1 = strpos($factrec, "$level NOTE ".$match[$j][1]);
-		$spos2 = strpos($factrec, "\n$level", $spos1);
-		if (!$spos2) $spos2 = strlen($factrec);
-		$nrec = substr($factrec, $spos1, $spos2-$spos1);**/
 		$nrec = get_sub_record($level, "$level NOTE", $factrec, $j+1);
 		if (!showFact("NOTE", $pid)||FactViewRestricted($pid, $factrec)) return false;
 		$nt = preg_match("/\d NOTE @(.*)@/", $match[$j][0], $nmatch);
@@ -1218,8 +1214,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			print $text;
 			if (!empty($noterec)) print_fact_sources($noterec, 1);
 			// See if RESN tag prevents display or edit/delete
-			$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $match);
-			if ($resn_tag > 0) $resn_value = strtolower(trim($match[1]));
+			$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $rmatch);
+			if ($resn_tag > 0) $resn_value = strtolower(trim($rmatch[1]));
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				print "<br /><img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
@@ -1356,6 +1352,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		//-- check if we need to get the object from a remote location
 		$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 		if ($ct>0) {
+			require_once 'includes/serviceclient_class.php';
 			$client = ServiceClient::getInstance($match[1]);
 			if (!is_null($client)) {
 				$newrec = $client->getRemoteRecord($match[2]);
@@ -1589,6 +1586,10 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=fal
 
 function lightbox_print_media_row($rtype, $rowm, $pid) {
          include("modules/lightbox/functions/lightbox_print_media_row.php");
+}
+
+function lightbox_print_media_row_sort($rtype, $rowm, $pid) {
+         include("modules/lightbox/functions/lightbox_print_media_row_sort.php");
 }
 
 // -----------------------------------------------------------------------------

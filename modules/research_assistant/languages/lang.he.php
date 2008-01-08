@@ -22,11 +22,11 @@
  * @package PhpGedView
  * @subpackage Research_Assistant
  * @version $Id$
- * @translator 		Meliza Amity
+ * @translator Meliza Amity
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "אין לך גישה ישירה לקובץ השפות.";
 	exit;
 }
 $pgv_lang["autosearch_ssurname"] = "כלול שם משפחה של בן/בת זוג:"; 
@@ -88,7 +88,7 @@ $pgv_lang["FormBuilder"]		= "בונה טופס";
 $pgv_lang["FormName"]		= "הכנס את שם הטופס";  
 $pgv_lang["MultiplePeople"]		= "האם הטופס משמש מספר אנשים?"; 
 $pgv_lang["EnterGEDCOMExtension"]	= "נא הכנס את סיומת ה-GEDCOM לסוג העובדה של הטופס"; 
-$pgv_lang['FormDesciption']		= "נא הכנס תאור לטופס"; 
+$pgv_lang["FormDesciption"]		= "נא הכנס תאור לטופס"; 
 $pgv_lang["FormGeneration"]		= "יצירת הטופס הסתיימה!"; 
 $pgv_lang["CustomField"]		= "שם שדה פרטי";
 $pgv_lang["txt"]			= "טכסט";
@@ -168,7 +168,7 @@ $pgv_lang["no_indi_tasks"]		= "אין משימות השייכות לאדם זה.
 $pgv_lang["no_sour_tasks"]		= "אין משימות הקשורות למקור זה."; 
 $pgv_lang["edit_comment"]		= "ערוך הערה";
 $pgv_lang["comment_success"]		= "הערתך הוספה בהצלחה."; 
-$pgv_lang['comment_body']		= 'הערה';
+$pgv_lang["comment_body"]		= 'הערה';
 
 //-- RA_COMMENT MESSAGES
 $pgv_lang["comment_delete_check"]	= "האם באמת תרצה למחוק את ההערה?"; 
@@ -199,7 +199,7 @@ $pgv_lang["county"]                     	= "מחוז";
 $pgv_lang["city"]                       	= "עיר"; 
 $pgv_lang["complete_title"]		= "סיים משימה";
 $pgv_lang["select_form"]		= "בחר טופס"; 
-$pgv_lang['choose_form_label']	= "בחר טופס מחקר משותף ";
+$pgv_lang["choose_form_label"]	= "בחר טופס מחקר משותף ";
 $pgv_lang["book"]                 		= "ספר"; 
 $pgv_lang["folio"]                   		= "פוליו"; 
 $pgv_lang["uk_county"]		= "מחוז";

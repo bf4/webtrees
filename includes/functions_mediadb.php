@@ -1858,7 +1858,7 @@ function get_media_relations($mid){
 		$restChar = $mid;
 	}
 	$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $GEDCOMS[$GEDCOM]['id'];
-	if (isset ($medialist[$keyMediaList])) {
+	if (isset ($medialist[$keyMediaList]['LINKS'])) {
 		return $medialist[$keyMediaList]['LINKS'];
 	}
 
@@ -2024,6 +2024,186 @@ function mkdirs($dir, $mode = 0777, $recursive = true) {
 		return mkdir($dir, $mode);
 	}
 	return FALSE;
+}
+
+// pass in an image type and this will determine if your system supports editing of that image type 
+function isImageTypeSupported($reqtype) {
+	if (!function_exists("imagetypes")) return false;
+	$reqtype = strtolower($reqtype);
+	if ( ( ($reqtype == 'jpg') || ($reqtype == 'jpeg') ) && (imagetypes() & IMG_JPG)) {
+		return ('jpeg');
+	} else if (($reqtype == 'gif') && (imagetypes() & IMG_GIF)) {
+		return ('gif');
+	} else if (($reqtype == 'png') && (imagetypes() & IMG_PNG)) {
+		return ('png');
+	} else if ( ( ($reqtype == 'wbmp') || ($reqtype == 'bmp') ) && (imagetypes() & IMG_WBMP)) {
+		return ('wbmp');
+	} else {
+		return false;
+	}
+}
+
+// converts raw values from php.ini file into bytes 
+// from http://www.php.net/manual/en/function.ini-get.php
+function return_bytes($val) {
+	if (!$val) {
+		// no value was passed in, assume no limit and return -1 
+		$val = -1; 
+	}
+	$val = trim($val);
+	$last = strtolower($val{strlen($val)-1});
+	switch($last) {
+		case 'g': $val *= 1024;  // fallthrough
+		case 'm': $val *= 1024;  // fallthrough
+		case 'k': $val *= 1024;
+	}
+	return $val;
+}
+
+// pass in the full path to an image, returns string with size/height/width/bits/channels
+function getImageInfoForLog($filename) {
+	$filesize = sprintf("%.2f", filesize($filename)/1024);
+	$imgsize = @getimagesize($filename);
+	$strinfo = $filesize."kb ";
+	if (is_array($imgsize)) { $strinfo .= @$imgsize[0]."x".@$imgsize[1]." ".@$imgsize['bits']." bits ".@$imgsize['channels']. " channels"; }
+	return ($strinfo);
+}
+
+// attempts to determine whether there is enough memory to load a particular image
+function hasMemoryForImage($serverFilename, $debug_verboseLogging=false) {
+	// find out how much total memory this script can access
+	$memoryAvailable = return_bytes(@ini_get('memory_limit'));
+	// if memory is unlimited, it will return -1 and we don't need to worry about it
+	if ($memoryAvailable == -1) return true;
+	
+	// find out how much memory we are already using
+	// if the memory_get_usage() function doesn't exist, assume we are using 900k to load the PGV framework
+	$memoryUsed = ( function_exists('memory_get_usage') ) ? memory_get_usage() : 900000;
+
+	$imgsize = @getimagesize($serverFilename);
+	// find out how much memory this image needs for processing, probably only works for jpegs
+	// from comments on http://www.php.net/imagecreatefromjpeg
+	if (is_array($imgsize) && isset($imgsize['bits']) && (isset($imgsize['channels']))) {
+		$memoryNeeded = Round(($imgsize[0] * $imgsize[1] * $imgsize['bits'] * $imgsize['channels'] / 8 + Pow(2, 16)) * 1.65);
+		$memorySpare = $memoryAvailable - $memoryUsed - $memoryNeeded;
+		if ($memorySpare > 0) {
+			// we have enough memory to load this file
+			if ($debug_verboseLogging) AddToLog("Media: >about to load< file >".$serverFilename."< (".getImageInfoForLog($serverFilename).") memory avail: ".$memoryAvailable." used: ".$memoryUsed." needed: ".$memoryNeeded." spare: ".$memorySpare);
+			return true;
+		} else {
+			// not enough memory to load this file
+			AddToLog("Media: >image too large to load< file >".$serverFilename."< (".getImageInfoForLog($serverFilename).") memory avail: ".$memoryAvailable." used: ".$memoryUsed." needed: ".$memoryNeeded." spare: ".$memorySpare);
+			return false;
+		}
+	} else {
+		// assume there is enough memory
+		// TODO find out how to check memory needs for gif and png
+		return true;
+	}
+}
+
+/**
+ * function to generate a thumbnail image
+ * @param string $filename
+ * @param string $thumbnail
+ */
+function generate_thumbnail($filename, $thumbnail) {
+	global $MEDIA_DIRECTORY, $THUMBNAIL_WIDTH, $AUTO_GENERATE_THUMBS, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS;
+
+	if (!$AUTO_GENERATE_THUMBS) return false;
+	if (media_exists($thumbnail)) return false;
+	if (!is_writable($MEDIA_DIRECTORY."thumbs")) return false;
+
+/*	No references to "media/thumbs/urls" exist anywhere else
+	if (!is_dir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) {
+		mkdir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"), 0777);
+		AddToLog("Folder ".$MEDIA_DIRECTORY."thumbs/urls created.");
+	}
+	if (!is_writable(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) return false;
+*/
+
+	$ext = "";
+	$ct = preg_match("/\.([^\.]+)$/", $filename, $match);
+	if ($ct>0) {
+		$ext = strtolower(trim($match[1]));
+	}
+
+	$type = isImageTypeSupported($ext);
+	if ( !$type ) return false;
+	
+	if (!isFileExternal($filename)) {
+		// internal
+		if (!file_exists(filename_decode($filename))) {
+			if ($USE_MEDIA_FIREWALL) {
+				// see if the file exists in the protected index directory
+				$filename = get_media_firewall_path($filename); 
+				if (!file_exists(filename_decode($filename))) return false;
+				if ($MEDIA_FIREWALL_THUMBS) {
+					// put the thumbnail in the protected directory too
+					$thumbnail = get_media_firewall_path($thumbnail);
+				}
+				// ensure the directory exists
+				if (!is_dir(dirname($thumbnail))) {
+					if (!mkdirs(dirname($thumbnail))) {
+						return false;
+					}
+				}
+			} else {
+				return false;
+			}
+		}
+		$imgsize = getimagesize(filename_decode($filename));
+		// Check if a size has been determined
+		if (!$imgsize) return false;
+
+		//-- check if file is small enough to be its own thumbnail
+		if (($imgsize[0]<150)&&($imgsize[1]<150)) {
+			@copy($filename, $thumbnail);
+			return true;
+		}
+	}
+	else {
+		// external
+		if ($fp = @fopen(filename_decode($filename), "rb")) {
+			if ($fp===false) return false;
+			$conts = "";
+			while(!feof($fp)) {
+				$conts .= fread($fp, 4098);
+			}
+			fclose($fp);
+			$fp = fopen(filename_decode($thumbnail), "wb");
+			if (!fwrite($fp, $conts)) return false;
+			fclose($fp);
+			if (!isFileExternal($filename)) $imgsize = getimagesize(filename_decode($filename));
+			else $imgsize = getimagesize(filename_decode($thumbnail));
+			if ($imgsize===false) return false;
+			if (($imgsize[0]<150)&&($imgsize[1]<150)) return true;
+		}
+		else return false;
+	}
+
+	// make sure we have enough memory to process this file
+	if (!hasMemoryForImage(filename_decode($filename))) return false;
+
+	$width = $THUMBNAIL_WIDTH;
+	$height = round($imgsize[1] * ($width/$imgsize[0]));
+
+	$imCreateFunc = 'imagecreatefrom'.$type;
+	$imSendFunc = 'image'.$type;
+		
+	// load the image into memory
+	$im = @$imCreateFunc(filename_decode($filename));
+	if (!$im) return false;
+	// create a blank thumbnail image in memory
+	$new = imagecreatetruecolor($width, $height);
+	// resample the original image into the thumbnail
+	imagecopyresampled($new, $im, 0, 0, 0, 0, $width, $height, $imgsize[0], $imgsize[1]);
+	// save the thumbnail to a file 
+	$imSendFunc($new, filename_decode($thumbnail));
+	// free up memory
+	imagedestroy($im);
+	imagedestroy($new);
+	return true;
 }
 
 ?>

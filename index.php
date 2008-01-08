@@ -27,6 +27,7 @@
 
 require_once("config.php");
 require_once("includes/index_cache.php");
+require_once("includes/functions_print_facts.php");  //--needed for the expand url function in some of the blocks
 
 if (!isset($CONFIGURED)) {
 	print "Unable to include the config.php file.  Make sure that . is in your PHP include path in the php.ini file.";
@@ -38,6 +39,9 @@ if (isset ($_REQUEST['mod']))
 	require_once 'module.php';
 	exit;
 }
+
+if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
 /**
  * Block definition array

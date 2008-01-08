@@ -100,15 +100,16 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	 */
 /* -- commenting out for final release
 	if (preg_match('/[^\\\]"/', $sql)>0) {
-		pgv_error_handler(2, "<span class=\"error\">Incompatible SQL syntax. Double quote query: $sql</span><br>","","");
+		pgv_error_handler(2, "<span class=\"error\">Incompatible SQL syntax. Double quote query: $sql</span><br />","","");
 	}
 	if (preg_match('/LIMIT \d/', $sql)>0) {
-		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax. Limit query error, use dbquery \$count parameter instead: $sql</span><br>","","");
+		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax. Limit query error, use dbquery \$count parameter instead: $sql</span><br />","","");
 	}
 	if (preg_match('/(&&)|(\|\|)/', $sql)>0) {
-		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br>","","");
+		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br />","","");
 	}
 	*/
+	
 	if (!empty($SQL_LOG)) $start_time2 = getmicrotime();
 	if ($count == 0)
 		$res =& $DBCONN->query($sql);
@@ -137,32 +138,27 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		fclose($fp);
 	}
 	if (DB::isError($res)) {
-		if ($show_error) print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
+		//-- check if DB connection timed out or went away and try to create a new connection
+		if ($res->getCode()==-14) {
+			global $PGV_DB_LAST_ERROR;
+			//-- only try to recurse once
+			if (empty($PGV_DB_LAST_ERROR)) {
+				$PGV_DB_LAST_ERROR = $res->getCode();
+				//-- create a new connection
+				check_db(true);
+				$res2 = dbquery($sql, $show_error, $count);
+				if (DB::isError($res2)) {
+					if ($show_error) {
+						print "<span class=\"error\"><b>ERROR:".$res2->getCode()." ".$res2->getMessage()." <br />SQL:</b>".$res2->getUserInfo()."</span><br /><br />\n";
+						print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
+	}
+}
+				return $res2;
+		}
+	}
+		else if ($show_error) print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
 	}
 	return $res;
-}
-
-/**
- * prepare an item to be updated in the database
- *
- * add slashes and convert special chars so that it can be added to db
- * @param mixed $item		an array or string to be prepared for the database
- */
-function db_prep($item) {
-	global $DBCONN;
-
-	if (is_array($item)) {
-		foreach($item as $key=>$value) {
-			$item[$key]=db_prep($value);
-		}
-		return $item;
-	}
-	else {
-		if (DB::isError($DBCONN) || empty($DBCONN)) return $item;
-		if (is_object($DBCONN)) return $DBCONN->escapeSimple($item);
-		//-- use the following commented line to convert between character sets
-		//return $DBCONN->escapeSimple(iconv("iso-8859-1", "UTF-8", $item));
-	}
 }
 
 /**
@@ -332,7 +328,7 @@ function find_person_record($pid, $gedfile="") {
 	if (!is_int($gedfile)) $gedfile = get_gedcom_from_id($gedfile);
 	//-- first check the indilist cache
 	// cache is unreliable for use with different gedcoms in user favorites (sjouke)
-	if ((isset($indilist[$pid]["gedcom"]))&&($indilist[$pid]["gedfile"]==$GEDCOMS[$gedfile]["id"])) return $indilist[$pid]["gedcom"];
+	if ((isset($indilist[$pid]["gedcom"]))&&isset($indilist[$pid]["gedfile"])&&($indilist[$pid]["gedfile"]==$GEDCOMS[$gedfile]["id"])) return $indilist[$pid]["gedcom"];
 
 	$sql = "SELECT i_gedcom, i_name, i_isdead, i_file FROM ".$TBLPREFIX."individuals WHERE i_id LIKE '".$DBCONN->escapeSimple($pid)."' AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"]); 
 	$res = dbquery($sql);
@@ -1132,6 +1128,172 @@ function search_indis_names($query, $allgeds=false) {
 		$res->free();
 	}
 	return $myindilist;
+}
+
+/**
+ * Search for individuals using soundex
+ * @param string $soundex	Russell or DaitchM
+ * @param string $lastname
+ * @param string $firstname
+ * @param string $place		Soundex search on a place location
+ * @param array	$sgeds		The array of gedcoms to search in
+ * @return Database ResultSet
+ */
+function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sgeds='') {
+	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $REGEXP_DB, $DBCONN;
+	
+	$res = false;
+
+	if (empty($sgeds)) $sgeds = array($GEDCOM);
+	// Adjust the search criteria
+	if (isset ($firstname)) {
+		if (strlen($firstname) == 1)
+		$firstname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $firstname);
+		if ($REGEXP_DB)
+			$firstname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $firstname);
+		else {
+			$firstname = "%".preg_replace("/\s+/", "%", $firstname)."%";
+		}
+	}
+	if (isset ($lastname)) {
+		// see if there are brackets around letter(groups)
+		$bcount = substr_count($lastname, "[");
+		if (($bcount == substr_count($lastname, "]")) && $bcount > 0) {
+			$barr = array ();
+			$ln = $lastname;
+			$pos = 0;
+			$npos = 0;
+			for ($i = 0; $i < $bcount; $i ++) {
+				$pos1 = strpos($ln, "[") + 1;
+				$pos2 = strpos($ln, "]");
+				$barr[$i] = array (substr($ln, $pos1, $pos2 - $pos1), $pos1 + $npos -1, $pos2 - $pos1);
+				$npos = $npos + $pos2 -1;
+				$ln = substr($ln, $pos2 +1);
+			}
+		}
+		if (strlen($lastname) == 1)
+		$lastname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $lastname);
+		if ($REGEXP_DB)
+		$lastname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $lastname);
+		else {
+			$lastname = "%".preg_replace("/\s+/", "%", $lastname)."%";
+		}
+	}
+	if (isset ($place)) {
+		if (strlen($place) == 1)
+		$place = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $place);
+		if ($REGEXP_DB)
+		$place = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $place);
+		else {
+			$place = "%".preg_replace("/\s+/", "%", $place)."%";
+		}
+	}
+	if (isset ($year)) {
+		if (strlen($year) == 1)
+		$year = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $year);
+		if ($REGEXP_DB)
+		$year = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $year);
+		else {
+			$year = "%".preg_replace("/\s+/", "%", $year)."%";
+		}
+	}
+	if (count($sgeds) > 0) {
+		if ($soundex == "DaitchM")
+		DMsoundex("", "opencache");
+
+		// Do some preliminary stuff: determine the soundex codes for the search criteria
+		if ((!empty ($lastname)) && ($soundex == "DaitchM"))
+		{
+			$arr2 = DMsoundex($lastname);
+		}
+		if ((!empty ($lastname)) && ($soundex == "Russell"))
+		{
+			$arr2 = array(soundex($lastname));
+		}
+			
+		$farr = array ();
+		if (!empty ($firstname)) {
+			$firstnames = preg_split("/\s/", trim($firstname));
+			for ($j = 0; $j < count($firstnames); $j ++) {
+				if ($soundex == "Russell") $farr[$j] = array(soundex($firstnames[$j]));
+				if ($soundex == "DaitchM") $farr[$j] = DMsoundex($firstnames[$j]);
+			}
+		}
+		if ((!empty ($place)) && ($soundex == "DaitchM"))
+		$parr = DMsoundex($place);
+		if ((!empty ($place)) && ($soundex == "Russell"))
+		$parr = array(soundex(trim($place)));
+
+		if(empty($place) || !empty($firstname) || !empty($lastname))
+		{
+			$sql = "SELECT i_id, i_gedcom, i_name, i_isdead, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
+			if (!empty($place)) {
+				$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
+			}
+			$sql .= " WHERE sx_i_id = i_id AND sx_file = i_file AND ";
+			if (!empty($place)) {
+				$sql .= "pl_file = i_file AND i_file = p_file AND pl_gid = i_id AND pl_p_id = p_id AND ";
+			}
+
+			if ((is_array($sgeds)) && (count($sgeds) != 0)) {
+				$sql .= " (";
+				for ($i=0; $i<count($sgeds); $i++) {
+					$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$sgeds[$i]]["id"])."'";
+					if ($i < count($sgeds)-1) $sql .= " OR ";
+				}
+				$sql .= ") ";
+			}
+
+			$x = 0;
+
+			if (count($farr)>0) {
+				$sql .= "AND (";
+				$fnc = 0;
+				if($soundex == "DaitchM") $field = "sx_fn_dm_code";
+				else $field = "sx_fn_std_code";
+				foreach($farr as $name)
+				{
+					foreach($name as $name1) {
+						if ($fnc>0) $sql .= " OR ";
+						$fnc++;
+						$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name1)."%'";
+					}
+				}
+				$sql .= ") ";
+			}
+			if (!empty($arr2) && count($arr2)>0)
+			{
+				$sql .= "AND (";
+				$lnc = 0;
+				if($soundex == "DaitchM") $field = "sx_ln_dm_code";
+				else $field = "sx_ln_std_code";
+				foreach($arr2 as $name) {
+					if ($lnc>0) $sql .= " OR ";
+					$lnc++;
+					$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name)."%'";
+				}
+				$sql .= ") ";
+			}
+
+			if(!empty($place))
+			{
+				if($soundex == "DaitchM") $field = "p_dm_soundex";
+				if ($soundex == "Russell") $field = "p_std_soundex";
+				$sql .= "AND (";
+				$pc = 0;
+				foreach ($parr as $place) {
+					if ($pc>0) $sql .= " OR ";
+					$pc++;
+					$sql .= $field." LIKE '%".$DBCONN->escapeSimple($place)."%'";
+				}
+				$sql .= ") ";
+			}
+			//--group by
+			$sql .= "GROUP BY i_id";
+			$res = dbquery($sql);
+		}
+	}
+	return $res;
 }
 
 /**
@@ -2981,15 +3143,22 @@ function get_anniversary_events($jd, $facts='') {
 		$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 		
 		// Now fetch these anniversaries
-		$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-		$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+		$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+		$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
 		foreach (array($ind_sql, $fam_sql) as $sql) {
 			$res=dbquery($sql);
 			while ($row=&$res->fetchRow()) {
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 				// to be cached.  We should store the level1 fact here (or somewhere)
-				$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
+				if ($row[7]=='@#DJULIAN@')
+				if ($row[6]<0)
+				$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
+				else
+				$year_regex="({$row[6]}|".($row[6]-1)."\/".($row[6]%100).")";
+				else
+				$year_regex="0*".$row[6];
+				$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
 				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)){
 						$date=new GedcomDate($match[1]);
@@ -3048,15 +3217,22 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 	$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 			
 	// Now fetch these events
-	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
-	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
+	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
+	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
 	foreach (array($ind_sql, $fam_sql) as $sql) {
 		$res=dbquery($sql);
 		while ($row=&$res->fetchRow()) {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 			// to be cached.  We should store the level1 fact here (or somewhere)
-			$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
+			if ($row[7]=='@#DJULIAN@')
+			if ($row[6]<0)
+			$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
+			else
+			$year_regex="({$row[6]}|".($row[6]-1)."\/".($row[6]%100).")";
+			else
+			$year_regex="0*".$row[6];
+			$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 					$date=new GedcomDate($match[1]);

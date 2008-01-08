@@ -2,7 +2,7 @@
 /**
  * English Language file for PhpGedView.
  *
- * phpGedView: Genealogy Viewer
+ * PhpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,7 @@
  * @subpackage SiteMap
  * @version $Id$
  */
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
@@ -33,9 +34,9 @@ $pgv_lang["generate_sitemap"]       = "Generate Sitemap files";
 
 // Sitemap pages
 $pgv_lang["selected_item"]          = "Selected items to store in Sitemap:";
-$pgv_lang["gedcoms_selected"]       = "GEDCOMS to store in Sitemap:";
-$pgv_lang["sitemaps_generated"]     = "The following sitemaps are generated and can be downloaded:";
-$pgv_lang["sitemaps_placement"]     = "Place all the files in the root of your phpGedView installation.";
+$pgv_lang["gedcoms_selected"]       = "GEDCOMs to store in Sitemap:";
+$pgv_lang["sitemaps_generated"]     = "The following Sitemap files have been generated and can be downloaded:";
+$pgv_lang["sitemaps_placement"]     = "Place all the files in the root of your PhpGedView installation.";
 $pgv_lang["sm_indi_info"]			= "Individual Information";
 $pgv_lang["sm_family_info"]			= "Family Information";
 $pgv_lang["sm_individual_list"]		= "Individual List";

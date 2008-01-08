@@ -317,7 +317,9 @@ $CONFIG_VARS = array(
 	"PGV_SIMPLE_MAIL",
 	"CONFIG_VERSION",
 	"CONFIGURED",
-	"MANUAL_SESSON_START"
+	"MANUAL_SESSON_START",
+	"REQUIRE_ADMIN_AUTH_REGISTRATION",
+	"COMMIT_COMMAND"
 );
 
 
@@ -343,12 +345,8 @@ unset($ini_include_path, $includes_dir); // destroy some variables for security 
 
 set_magic_quotes_runtime(0);
 
-if (phpversion()<4.2) {
-	//-- detect old versions of PHP and display error message
-	//-- cannot add this to the language files because the language has not been established yet.
-	print "<html>\n<body><b style=\"color: red;\">PhpGedView requires PHP version 4.3 or later.</b><br /><br />\nYour server is running PHP version ".phpversion().".  Please ask your server's Administrator to upgrade the PHP installation.</body></html>";
-	exit;
-}
+if (version_compare(phpversion(), '4.3.5')<0)
+	die ("<html>\n<body><b style=\"color: red;\">PhpGedView requires PHP version 4.3.5 or later.</b><br /><br />\nYour server is running PHP version ".phpversion().".  Please ask your server's Administrator to upgrade the PHP installation.</body></html>");
 
 //-- load file for language settings
 require_once( "includes/lang_settings_std.php");
@@ -386,27 +384,11 @@ foreach ($language_settings as $key => $value) {
 while (true) {
 	$configOverride = true;
 	// Check for override of $CONFIG_VARS
-	if (strstr($_SERVER["REQUEST_URI"], "CONFIG_VARS=")) break;
+	if (array_key_exists("CONFIG_VARS", $_REQUEST)) break;
 
 	// $CONFIG_VARS is safe: now check for any in its list
-	foreach($CONFIG_VARS as $indexval => $VAR) {
-		if (strstr($_SERVER["REQUEST_URI"], $VAR."=")) break;
-	}
-
-	// Check for $LANGUAGE variable override
-	//		Don't let incoming request change to an unsupported or inactive language
-	if (isset($_REQUEST["NEWLANGUAGE"])) {
-		if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
-		if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
-	}
-
-	if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
-		if(stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
-			$SESSION_HIDE_GOOGLEMAP = "true";
-		}
-		if(stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
-			$SESSION_HIDE_GOOGLEMAP = "false";
-		}
+	foreach($CONFIG_VARS as $VAR) {
+		if (array_key_exists($VAR, $_REQUEST)) break 2;
 	}
 
 	$configOverride = false;
@@ -431,12 +413,23 @@ if ($configOverride) {
 	exit;
 }
 
-if (!empty($_SERVER["PHP_SELF"])) {
-	//-- fix CGI mode duplication of PHP_SELF bug (causes double login)
-	$temp = preg_split("/\.php/", $_SERVER["PHP_SELF"]);
-	if (count($temp)>2) $_SERVER["PHP_SELF"] = $temp[0].".php";
-	$SCRIPT_NAME=$_SERVER["PHP_SELF"];
+// Check for $LANGUAGE variable override
+//		Don't let incoming request change to an unsupported or inactive language
+if (isset($_REQUEST["NEWLANGUAGE"])) {
+	if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
+	if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
 }
+
+if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
+	if(stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
+		$SESSION_HIDE_GOOGLEMAP = "true";
+	}
+	if(stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
+		$SESSION_HIDE_GOOGLEMAP = "false";
+	}
+}
+
+if (!empty($_SERVER["PHP_SELF"])) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
 else if (!empty($_SERVER["SCRIPT_NAME"])) $SCRIPT_NAME=$_SERVER["SCRIPT_NAME"];
 $SCRIPT_NAME = preg_replace("~/+~", "/", $SCRIPT_NAME);
 if (!empty($_SERVER["QUERY_STRING"])) $QUERY_STRING = $_SERVER["QUERY_STRING"];
@@ -500,19 +493,22 @@ $date = date("D M j H:i:s T Y", $time);
 //-- set the path to the pgv site so that users cannot login on one site
 //-- and then automatically be logged in at another site on the same server
 $pgv_path = "/";
-if (!empty($SCRIPT_NAME)) $pgv_path = str_replace("\\", "/", dirname($SCRIPT_NAME));
+if (!empty($SCRIPT_NAME)) {
+     $dirname = dirname($SCRIPT_NAME);
+     if (strstr($SERVER_URL, $dirname)!==false) $pgv_path = str_replace("\\", "/", $dirname);
+     unset($dirname);
+}
 session_set_cookie_params($date, $pgv_path);
+unset($date);
+unset($pgv_path);
 if (($PGV_SESSION_TIME>0)&&(function_exists('session_cache_expire'))) session_cache_expire($PGV_SESSION_TIME/60);
 if (!empty($PGV_SESSION_SAVE_PATH)) session_save_path($PGV_SESSION_SAVE_PATH);
 if (isset($MANUAL_SESSION_START) && !empty($SID)) session_id($SID);
 
 @session_start();
 
-if((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) { // user following a search engine listing in,
-	if (phpversion() >= '4.3.2') {			// so we want to give them the full page.
-		session_regenerate_id(); 		// FIX: PHP >= 4.3.2, how to do for earlier
-	}
-}
+if((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) // user following a search engine listing in,
+	session_regenerate_id();
 
 if(!empty($SEARCH_SPIDER)) {
 	$spidertime = time();
@@ -571,39 +567,6 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
  		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
-//-- import the post, get, and cookie variable into the scope on new versions of php
-if (phpversion() >= '4.1') {
-	@import_request_variables("cgp");
-}
-if (phpversion() >= '4.2.2') {
-	//-- prevent sql and code injection
-	foreach($_REQUEST as $key=>$value) {
-		if (!is_array($value)) {
-			if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $value, $imatch)>0) {
-				print "Possible SQL injection detected: $key=>$value.  <b>$imatch[0]</b> Script terminated.";
-				require_once("includes/authentication.php");      // -- load the authentication system
-				AddToLog("Possible SQL injection detected: $key=>$value. <b>$imatch[0]</b> Script terminated.");
-				exit;
-			}
-			//-- don't let any html in
-			if (!empty($value)) ${$key} = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $value);
-		}
-		else {
-			foreach($value as $key1=>$val) {
-				if (!is_array($val)) {
-					if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $val, $imatch)>0) {
-						print "Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.";
-						require_once("includes/authentication.php");      // -- load the authentication system
-						AddToLog("Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.");
-						exit;
-					}
-					//-- don't let any html in
-					if (!empty($val)) ${$key}[$key1] = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $val);
-				}
-			}
-		}
-	}
-}
 //-- import the gedcoms array
 if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	require_once($INDEX_DIRECTORY."gedcoms.php");
@@ -613,6 +576,11 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 		$i++;
 		$GEDCOMS[$key]["commonsurnames"] = stripslashes($gedcom["commonsurnames"]);
 		if (empty($GEDCOMS[$key]["id"])) $GEDCOMS[$key]["id"] = $i;
+		if (empty($GEDCOMS[$key]["pgv_ver"])) $GEDCOMS[$key]["pgv_ver"] = $VERSION;
+
+		// Force the gedcom to be re-imported if the code has been significantly upgraded
+		if (substr($GEDCOMS[$key]["pgv_ver"], 0, 3) != substr($VERSION, 0, 3))
+			$GEDCOMS[$key]["imported"] = false;
 	}
 }
 else $GEDCOMS=array();
@@ -819,9 +787,9 @@ if(empty($SEARCH_SPIDER)) {
 }
 
 if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
-	if ((isset($changelanguage))&&($changelanguage=="yes")) {
-		if (!empty($NEWLANGUAGE) && isset($pgv_language[$NEWLANGUAGE])) {
-			$LANGUAGE=$NEWLANGUAGE;
+	if ((isset($_REQUEST['changelanguage']))&&($_REQUEST['changelanguage']=="yes")) {
+		if (!empty($_REQUEST['NEWLANGUAGE']) && isset($pgv_language[$_REQUEST['NEWLANGUAGE']])) {
+			$LANGUAGE=$_REQUEST['NEWLANGUAGE'];
 			unset($_SESSION["upcoming_events"]);
 			unset($_SESSION["todays_events"]);
 		}
@@ -846,49 +814,8 @@ require_once("includes/functions_privacy.php");
 
 if (!isset($SCRIPT_NAME)) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
 
-$monthtonum = array();
-$monthtonum["jan"] = 1;
-$monthtonum["feb"] = 2;
-$monthtonum["mar"] = 3;
-$monthtonum["apr"] = 4;
-$monthtonum["may"] = 5;
-$monthtonum["jun"] = 6;
-$monthtonum["jul"] = 7;
-$monthtonum["aug"] = 8;
-$monthtonum["sep"] = 9;
-$monthtonum["oct"] = 10;
-$monthtonum["nov"] = 11;
-$monthtonum["dec"] = 12;
-//-- @#DHEBREW@
-$monthtonum["tsh"] = 1;
-$monthtonum["csh"] = 2;
-$monthtonum["ksl"] = 3;
-$monthtonum["tvt"] = 4;
-$monthtonum["shv"] = 5;
-$monthtonum["adr"] = 6;
-$monthtonum["ads"] = 7;
-$monthtonum["nsn"] = 8;
-$monthtonum["iyr"] = 9;
-$monthtonum["svn"] = 10;
-$monthtonum["tmz"] = 11;
-$monthtonum["aav"] = 12;
-$monthtonum["ell"] = 13;
-//-- @#DFRENCH R@
-$monthtonum["vend"] = 1;
-$monthtonum["brum"] = 2;
-$monthtonum["frim"] = 3;
-$monthtonum["nivo"] = 4;
-$monthtonum["pluv"] = 5;
-$monthtonum["vent"] = 6;
-$monthtonum["germ"] = 7;
-$monthtonum["flor"] = 8;
-$monthtonum["prai"] = 9;
-$monthtonum["mess"] = 10;
-$monthtonum["ther"] = 11;
-$monthtonum["fruc"] = 12;
-$monthtonum["comp"] = 13;
-
-if (!isset($show_context_help)) $show_context_help = "";
+$show_context_help = "";
+if (!empty($_REQUEST['show_context_help'])) $show_context_help = $_REQUEST['show_context_help'];
 if (!isset($_SESSION["show_context_help"])) $_SESSION["show_context_help"] = $SHOW_CONTEXT_HELP;
 if (!isset($_SESSION["pgv_user"])) $_SESSION["pgv_user"] = "";
 if (!isset($_SESSION["cookie_login"])) $_SESSION["cookie_login"] = false;
@@ -920,7 +847,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 
 	//-----------------------------------
 	//-- if user wishes to logout this is where we will do it
-	if ((!empty($logout))&&($logout==1)) {
+	if ((!empty($_REQUEST['logout']))&&($_REQUEST['logout']==1)) {
 		userLogout();
 		if ($REQUIRE_AUTHENTICATION) {
 			header("Location: ".$HOME_SITE_URL);
@@ -937,7 +864,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 					&&(strstr($SCRIPT_NAME, "genservice.php")===false)
 					&&(strstr($SCRIPT_NAME, "help_text.php")===false)
 					&&(strstr($SCRIPT_NAME, "message.php")===false)) {
-				if (!empty($auth) && $auth=="basic") { //if user is attempting basic authentication //TODO: Update if degest auth is ever implemented
+				if (!empty($_REQUEST['auth']) && $_REQUEST['auth']=="basic") { //if user is attempting basic authentication //TODO: Update if degest auth is ever implemented
 						basicHTTPAuthenticateUser();
 				} else {
 					$url = basename($_SERVER["PHP_SELF"])."?".$QUERY_STRING;
@@ -982,7 +909,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 }
 
 //-- load the user specific theme
-if ((!empty($pgv_username))&&(!isset($logout))) {
+if ((!empty($pgv_username))&&(!isset($_REQUEST['logout']))) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin($pgv_username);

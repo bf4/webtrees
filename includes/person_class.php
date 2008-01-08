@@ -40,6 +40,7 @@ class Person extends GedcomRecord {
 	var $indifacts = array();
 	var $otherfacts = array();
 	var $globalfacts = array();
+	var $mediafacts = array();
 	var $facts_parsed = false;
 	var $bd_parsed = false;
 	var $birthEvent = null;
@@ -94,6 +95,7 @@ class Person extends GedcomRecord {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
+				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
 				if (!empty($service)) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
@@ -475,7 +477,7 @@ class Person extends GedcomRecord {
 	 * get the person's sex image
 	 * @return string 	<img ... />
 	 */
-	function getSexImage($style='', $id='') {
+	function getSexImage($style='') {
 		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		if ($this->getSex()=="M") $s = "sex";
 		else if ($this->getSex()=="F") $s = "sexf";
@@ -510,11 +512,11 @@ class Person extends GedcomRecord {
 		$label = "";
 		$gap = 0;
 		if ($elderdate) {
-			$p1 = $elderdate;
-			$p2 = $this->getBirthDate(false);
-			if ($p1->date1->minJD && $p2->date1->minJD) {
-				$gap = $p2->date1->minJD - $p1->date1->minJD; // days
-				$label .= "<div name=\"elderdate\" class=\"age $TEXT_DIRECTION\">";
+			$p1 = new GedcomDate($elderdate);
+			$p2 = new GedcomDate($this->getBirthDate(false));
+			if ($p1->MinJD() && $p2->MinJD()) {
+				$gap = $p2->MinJD()-$p1->MinJD(); // days
+				$label .= "<div class=\"elderdate age $TEXT_DIRECTION\">";
 				// warning if negative gap : wrong order
 				if ($gap<0 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
 				// warning if gap<6 months
@@ -1086,6 +1088,12 @@ class Person extends GedcomRecord {
 					if ($sex=="F") $rela="granddaughter";
 					if ($sex=="M") $rela="grandson";
 				}
+				// great-grandchildren
+				if ($option=="_GGCH") {
+					$rela="greatgrandchild";
+					if ($sex=="F") $rela="greatgranddaughter";
+					if ($sex=="M") $rela="greatgrandson";
+				}
 				// stepsiblings
 				if ($option=="_HSIB") {
 					$rela="halfsibling";
@@ -1132,13 +1140,17 @@ class Person extends GedcomRecord {
 						$factrec .= "\n2 ASSO @".$spid."@";
 						$factrec .= "\n3 RELA ".$rela;
 						// add parents on grandchildren, cousin or nephew's birth
-						if ($option=="_GCHI" or $option=="_COUS" or $option=="_NEPH") {
+						if ($option=="_GCHI" or $option=="_GGCH" or $option=="_COUS" or $option=="_NEPH") {
+							if ($family->getHusbId()) {
 							$factrec .= "\n2 ASSO @".$family->getHusbId()."@";
-							$factrec .= "\n3 RELA from";
+								$factrec .= "\n3 RELA father";
+							}
+							if ($family->getWifeId()) {
 							$factrec .= "\n2 ASSO @".$family->getWifeId()."@";
-							$factrec .= "\n3 RELA and";
+								$factrec .= "\n3 RELA mother";
 						}
-						// recorded as ASSOciate ?
+						}
+						// recorded as ASSOciate ? [ 1690092 ]
 						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 						//$this->indifacts[]=array(0, $factrec);
 						$this->indifacts[] = new Event($factrec, 0);
@@ -1158,7 +1170,7 @@ class Person extends GedcomRecord {
 						if (!showFact("DEAT", $spid)) $factrec .= "\n2 RESN privacy";
 						$factrec .= "\n2 ASSO @".$spid."@";
 						$factrec .= "\n3 RELA ".$rela;
-						// recorded as ASSOciate ?
+						// recorded as ASSOciate ? [ 1690092 ]
 						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 						//$this->indifacts[]=array(0, $factrec);
 						$this->indifacts[] = new Event($factrec, 0);
@@ -1178,26 +1190,33 @@ class Person extends GedcomRecord {
 							if (!showFact("MARR", $sfamid)) $factrec .= "\n2 RESN privacy";
 							$factrec .= "\n2 ASSO @".$spid."@";
 							$factrec .= "\n3 RELA ".$rela;
-							if ($rela=="son") $rela2="daughter-in-law";
-							else if ($rela=="daughter") $rela2="son-in-law";
-							else if ($rela=="brother" or $rela=="halfbrother") $rela2="sister-in-law";
-							else if ($rela=="sister" or $rela=="halfsister") $rela2="brother-in-law";
+							if ($rela=="son") $rela2="daughter_in_law";
+							else if ($rela=="daughter") $rela2="son_in_law";
+							else if ($rela=="brother" or $rela=="halfbrother") $rela2="sister_in_law";
+							else if ($rela=="sister" or $rela=="halfsister") $rela2="brother_in_law";
 							else if ($rela=="uncle") $rela2="aunt";
 							else if ($rela=="aunt") $rela2="uncle";
-							else if (strstr($rela, "cousin")) $rela2="cousin-in-law";
+							else if (strstr($rela, "cousin")) $rela2="cousin_in_law";
 							else $rela2="spouse";
 							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($spid)."@";
 							$factrec .= "\n3 RELA ".$rela2;
+							// recorded as ASSOciate ? [ 1690092 ]
 							$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 							//$this->indifacts[]=array(0, $factrec);
 							$this->indifacts[] = new Event($factrec, 0);
 						}
 					}
 				}
-				// add children of children = grand-children
+				// add children of children = grandchildren
 				if ($option=="_CHIL") {
 					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
 						$this->add_children_facts($sfamily, "_GCHI");
+					}
+				}
+				// add children of grandchildren = great-grandchildren
+				if ($option=="_GCHI") {
+					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
+						$this->add_children_facts($sfamily, "_GGCH");
 					}
 				}
 				// add children of siblings = nephew/niece
@@ -1249,7 +1268,7 @@ class Person extends GedcomRecord {
 				if (!showFact("DEAT", $spouse->getXref())) $factrec .= "\n2 RESN privacy";
 				$factrec .= "\n2 ASSO @".$spouse->getXref()."@";
 				$factrec .= "\n3 RELA spouse";
-				// recorded as ASSOciate ?
+				// recorded as ASSOciate ? [ 1690092 ]
 				$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 
 				//$this->indifacts[]=array(0, $factrec);
@@ -1335,12 +1354,12 @@ class Person extends GedcomRecord {
 					if ($arec) {
 						$temp = preg_match("/^\d (\w*)/", $srec, $factname);
 						$fact = $factname[1];
-						if (isset($factarray[$fact])) $label = strip_tags($factarray[$fact]);
-						else $label = $fact;
+						$label = $fact;
 						if ($fact=="EVEN") {
 							$trec = get_sub_record(2, "2 TYPE ", $srec);
 							if ($trec) $label = trim(substr($trec, 7));
 						}
+						if (isset($factarray[$label])) $label = strip_tags($factarray[$label]);
 						$sdate = get_sub_record(2, "2 DATE", $srec);
 						// relationship ?
 						$rrec = get_sub_record(3, "3 RELA", $arec);
@@ -1495,6 +1514,27 @@ class Person extends GedcomRecord {
 	}
 
 	/**
+	 * get primary parents names for this person
+	 * @param string $classname optional css class
+	 * @param string $display optional css style display
+	 * @return string a div block with father & mother names
+	 */
+	function getPrimaryParentsNames($classname="", $display="") {
+		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		$fam = $this->getPrimaryChildFamily();
+		if (!$fam) return "";
+		$txt = "<div";
+		if ($classname) $txt .= " class=\"$classname\"";
+		if ($display) $txt .= " style=\"display:$display\"";
+		$txt .= ">";
+		$husb = $fam->getHusband();
+		if ($husb) $txt .= $pgv_lang["father"].": ".PrintReady($husb->getSortableName())."<br />";
+		$wife = $fam->getWife();
+		if ($wife) $txt .= $pgv_lang["mother"].": ".PrintReady($wife->getSortableName());
+		$txt .= "</div>";
+		return $txt;
+	}
+	/**
 	 * get the URL to link to this person
 	 * @string a url that can be used to link to this person
 	 */
@@ -1508,6 +1548,7 @@ class Person extends GedcomRecord {
 				$servid = $parts[0];
 				$aliaid = $parts[1];
 				if (!empty($servid)&&!empty($aliaid)) {
+					require_once 'includes/serviceclient_class.php';
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!empty($serviceClient)) {
 						$surl = $serviceClient->getURL();
@@ -1525,28 +1566,6 @@ class Person extends GedcomRecord {
 			}
 		}
 		return $url;
-	}
-
-	/**
-	 * get primary parents names for this person
-	 * @param string $htmlclass optional html class for the span block
-	 * @return string a span block with father & mother names
-	 */
-	function getPrimaryParentsNames($htmlclass="") {
-		global $pgv_lang;
-		$fam = $this->getPrimaryChildFamily();
-		if (!$fam) return "";
-		$husb = $fam->getHusband();
-		if ($husb) $father = $husb->getSortableName();
-		else $father = "";
-		$wife = $fam->getWife();
-		if ($wife) $mother = $wife->getSortableName();
-		else $mother = "";
-		$txt = "<span class=\"".$htmlclass."\">";
-		$txt .= "<br />".$pgv_lang["father"].": ".$father;
-		$txt .= "<br />".$pgv_lang["mother"].": ".$mother;
-		$txt .= "</span>";
-		return $txt;
 	}
 }
 ?>

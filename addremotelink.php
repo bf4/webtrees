@@ -35,6 +35,10 @@ if ($_SESSION["cookie_login"]) {
 	header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
 	exit;
 }
+
+if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+
 $success = false;
 //check for pid
 if(!isset($pid)){
@@ -95,6 +99,7 @@ if ($action=="addlink") {
 			if (isset($_POST["txtPassword"])) $password = $_POST["txtPassword"];
 			else $password = "";
 			$gedcom_string = "0 @new@ SOUR\r\n";
+			if (preg_match("/\?wsdl$/", $server_name)==0) $server_name.="?wsdl";
 			$gedcom_string.= "1 URL ".$server_name."\r\n";
 			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
 			$gedcom_string.= "2 _USER ".$username."\r\n";

@@ -24,7 +24,7 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "אין לך גישה ישירה לקובץ השפות.";
 	exit;
 }
 
@@ -32,7 +32,7 @@ $pgv_lang["googlemap"]              	= "מפה";
 $pgv_lang["no_gmtab"]               	= "אין נתוני מפה עבור אדם זה";
 $pgv_lang["gm_disabled"]            	= "מודול GoogleMap נוטרל"; 
 
-$pgv_lang['gm_redraw_map']          	= "צייר מפה מחדש";
+$pgv_lang["gm_redraw_map"]          	= "צייר מפה מחדש";
 $pgv_lang["gm_map"]                 	= "מפה";
 $pgv_lang["gm_satellite"]           	= "לויין";
 $pgv_lang["gm_hybrid"]              	= "מעורב";
@@ -111,20 +111,20 @@ $pgv_lang["list_inactive"]        		= "לחץ כאן כדי להראות מקו�
 
 //Placecheck specific text
 $pgv_lang["placecheck"]		= "בדיקת מקום";
-$pgv_lang['placecheck_text']	= "זה יבנה רשימה של כל המקומות מקובץ ה-GEDCOM הנבחר. לפי ברירת מחדל זה <b>אינו</b> כולל מקומות עם התאמה מלאה בין קובץ ה-GEDCOM וטבלאות ה-GoogleMap";
-$pgv_lang['placecheck_top']	= "מקום של רמה עליונה"; 
-$pgv_lang['placecheck_one']	= "מקום של רמה ראשונה";
-$pgv_lang['placecheck_select1']	= "בחר את הרמה העליונה...";
-$pgv_lang['placecheck_select2']	= "בחר את הרמה הבאה...";
-$pgv_lang['placecheck_key']	= "מפתח לצבעים שבשימוש למטה"; 
-$pgv_lang['placecheck_key1']	= "מקום זה והקואורדינטות שלו אינן קיימות בטבלאות ה-GoogleMap";
-$pgv_lang['placecheck_key2']	= "מקום זה קיים בטבלאות GoogleMap, אבל ללא קואורדינטות";
-$pgv_lang['placecheck_key3']	= "רמת מקום זו ריקה בקובץ ה-GEDCOM שלך. יש להוסיף אותו <br/>למקומות GoogleMap כ\"בלתי ידוע\" עם הקואורדינטות של רמת ההורה שלו<br/>לפני שמוסיפים מקום ברמה הבאה";
-$pgv_lang['placecheck_key4']           	= "רשימת מקומות עבור בקובץ GEDCOM";
-$pgv_lang['placecheck_head']	= "הרמה הזו של רשימת מקומות ריקה בקובץ ה-GEDCOM שלך, אבל קיימת כ'בלתי ידוע'<br/>בטבלת המקומות של GoogleMap עם קואורדינטות. שום פעולה אינה נדרשת<br/>עד שמוסיפים את הרמה החסרה";
-$pgv_lang['placecheck_gedheader']	= "נתוני המקומות של קובץ GEDCOM<br/>2 PLAC";
-$pgv_lang['placecheck_gm_header']	= "נתוני טבלת המקומות של GoogleMap";
-$pgv_lang['placecheck_unique']	= "סה\"כ מקומות יחודיים"; 
+$pgv_lang["placecheck_text"]	= "זה יבנה רשימה של כל המקומות מקובץ ה-GEDCOM הנבחר. לפי ברירת מחדל זה <b>אינו</b> כולל מקומות עם התאמה מלאה בין קובץ ה-GEDCOM וטבלאות ה-GoogleMap";
+$pgv_lang["placecheck_top"]	= "מקום של רמה עליונה"; 
+$pgv_lang["placecheck_one"]	= "מקום של רמה ראשונה";
+$pgv_lang["placecheck_select1"]	= "בחר את הרמה העליונה...";
+$pgv_lang["placecheck_select2"]	= "בחר את הרמה הבאה...";
+$pgv_lang["placecheck_key"]	= "מפתח לצבעים שבשימוש למטה"; 
+$pgv_lang["placecheck_key1"]	= "מקום זה והקואורדינטות שלו אינן קיימות בטבלאות ה-GoogleMap";
+$pgv_lang["placecheck_key2"]	= "מקום זה קיים בטבלאות GoogleMap, אבל ללא קואורדינטות";
+$pgv_lang["placecheck_key3"]	= "רמת מקום זו ריקה בקובץ ה-GEDCOM שלך. יש להוסיף אותו <br/>למקומות GoogleMap כ\"בלתי ידוע\" עם הקואורדינטות של רמת ההורה שלו<br/>לפני שמוסיפים מקום ברמה הבאה";
+$pgv_lang["placecheck_key4"]           	= "רשימת מקומות עבור בקובץ GEDCOM";
+$pgv_lang["placecheck_head"]	= "הרמה הזו של רשימת מקומות ריקה בקובץ ה-GEDCOM שלך, אבל קיימת כ'בלתי ידוע'<br/>בטבלת המקומות של GoogleMap עם קואורדינטות. שום פעולה אינה נדרשת<br/>עד שמוסיפים את הרמה החסרה";
+$pgv_lang["placecheck_gedheader"]	= "נתוני המקומות של קובץ GEDCOM<br/>2 PLAC";
+$pgv_lang["placecheck_gm_header"]	= "נתוני טבלת המקומות של GoogleMap";
+$pgv_lang["'placecheck_unique"]	= "סה\"כ מקומות יחודיים"; 
 $pgv_lang["placecheck_zoom"]         	= "זום=";
 $pgv_lang["placecheck_options"]     	= "אופציות של רשימת בדיקת מקום";
 $pgv_lang["placecheck_filter_text"] 	= "תציג אופציות של הפילטר";

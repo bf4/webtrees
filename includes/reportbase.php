@@ -1786,17 +1786,17 @@ function PGVRListSHandler($attrs) {
 				$tags = preg_split("/:/", $filter["tag"]);
 				if (end($tags)=="DATE") {
 					if ($filter['expr']=='LTE') {
-						$enddate = parse_date($filter['val']);
+						$enddate = new GedcomDate($filter['val']);
 						$endtag = $tags[0];
 					}
 					if ($filter['expr']=='GTE') {
-						$startdate = parse_date($filter['val']);
+						$startdate = new GedcomDate($filter['val']);
 						$starttag = $tags[0];
 					}
 				}
 			}
 			if (isset($startdate) && isset($enddate)) {
-				$dlist = search_indis_daterange($startdate[0]['jd1'], $enddate[0]['jd2'], $starttag.",".$endtag);
+				$dlist = search_indis_daterange($startdate->MinJD(), $enddate->MaxJD(), $starttag.",".$endtag);
 				if (!isset($list) || count($list)==0)
 					$list = $dlist;
 				else {
@@ -1838,32 +1838,17 @@ function PGVRListSHandler($attrs) {
 					switch ($expr) {
 						case "GTE":
 								if ($t=="DATE") {
-									$date1 = parse_date($v);
-									$date2 = parse_date($val);
-									if ($date1[0]["year"] > $date2[0]["year"]) $keep = true;
-									else if ($date1[0]["year"] == $date2[0]["year"]) {
-										if ($date1[0]["mon"] > $date2[0]["mon"] or empty($date1[0]["mon"]) or empty($date2[0]["mon"])) $keep = true;
-										else if ($date1[0]["mon"] == $date2[0]["mon"]) {
-											if ($date1[0]["day"] >= $date2[0]["day"] or empty($date1[0]["day"]) or empty($date2[0]["day"])) $keep = true;
-											else $keep = false;
-										} else $keep = false;
-									} else $keep = false;
+									$date1 = new GedcomDate($v);
+									$date2 = new GedcomDate($val);
+									$keep = (GedcomDate::Compare($date1, $date2)>0);
 								}
 								else if ($val >= $v) $keep=true;
 							break;
 						case "LTE":
 								if ($t=="DATE") {
-									$date1 = parse_date($v);
-									$date2 = parse_date($val);
-									if ($date1[0]["year"] < $date2[0]["year"]) $keep = true;
-									else if ($date1[0]["year"] == $date2[0]["year"]) {
-										if ($date1[0]["mon"] < $date2[0]["mon"] or empty($date1[0]["mon"]) or empty($date2[0]["mon"])) $keep = true;
-										else if ($date1[0]["mon"] == $date2[0]["mon"]) {
-											if ($date1[0]["day"] <= $date2[0]["day"] or empty($date1[0]["day"]) or empty($date2[0]["day"])) $keep = true;
-											else $keep = false;
-										} else $keep = false;
-									} else $keep = false;
-									//print "[$key ".implode(" ", $date1[0])." ".implode(" ", $date2[0])." keep=$keep] ";
+									$date1 = new GedcomDate($v);
+									$date2 = new GedcomDate($val);
+									$keep = (GedcomDate::Compare($date1, $date2)<0);
 								}
 								else if ($val >= $v) $keep=true;
 							break;

@@ -135,7 +135,7 @@ class SearchControllerRoot extends BaseController {
 		if (isset ($_REQUEST["query"])) {
 			// Reset the "Search" text from the page header
 			if ($_REQUEST["query"] == $pgv_lang["search"] || strlen($_REQUEST["query"])<2 || preg_match("/^\.+$/", $_REQUEST["query"])>0) {
-				unset ($this->query);
+				$this->query="";
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
 				$this->myquery = $this->query;
@@ -194,28 +194,28 @@ class SearchControllerRoot extends BaseController {
 			$this->firstname = $_REQUEST["firstname"];
 			$this->myfirstname = $this->firstname;
 		} else {
-			unset ($this->firstname);
+			$this->firstname="";
 			$this->myfirstname = "";
 		}
 		if (!empty ($_REQUEST["lastname"])) {
 			$this->lastname = $_REQUEST["lastname"];
 			$this->mylastname = $this->lastname;
 		} else {
-			unset ($this->lastname);
+			$this->lastname="";
 			$this->mylastname = "";
 		}
 		if (!empty ($_REQUEST["place"])) {
 			$this->place = $_REQUEST["place"];
 			$this->myplace = $this->place;
 		} else {
-			unset ($this->place);
+			$this->place="";
 			$this->myplace = "";
 		}
 		if (!empty ($_REQUEST["year"])) {
 			$this->year = $_REQUEST["year"];
 			$this->myyear = $this->year;
 		} else {
-			unset ($this->year);
+			$this->year="";
 			$this->myyear = "";
 		}
 
@@ -224,49 +224,49 @@ class SearchControllerRoot extends BaseController {
 			$this->multiquery = $_REQUEST["multiquery"];
 			$this->mymultiquery = $this->multiquery;
 		} else {
-			unset ($this->multiquery);
+			$this->multiquery="";
 			$this->mymultiquery = "";
 		}
 		if (!empty ($_REQUEST["name"])) {
 			$this->name = $_REQUEST["name"];
 			$this->myname = $this->name;
 		} else {
-			unset ($this->name);
+			$this->name="";
 			$this->myname = "";
 		}
 		if (!empty ($_REQUEST["birthdate"])) {
 			$this->birthdate = $_REQUEST["birthdate"];
 			$this->mybirthdate = $this->birthdate;
 		} else {
-			unset ($this->birthdate);
+			$this->birthdate="";
 			$this->mybirthdate = "";
 		}
 		if (!empty ($_REQUEST["birthplace"])) {
 			$this->birthplace = $_REQUEST["birthplace"];
 			$this->mybirthplace = $this->birthplace;
 		} else {
-			unset ($this->birthplace);
+			$this->birthplace="";
 			$this->mybirthplace = "";
 		}
 		if (!empty ($_REQUEST["deathdate"])) {
 			$this->deathdate = $_REQUEST["deathdate"];
 			$this->mydeathdate = $this->deathdate;
 		} else {
-			unset ($this->deathdate);
+			$this->deathdate="";
 			$this->mydeathdate = "";
 		}
 		if (!empty ($_REQUEST["deathplace"])) {
 			$this->deathplace = $_REQUEST["deathplace"];
 			$this->mydeathplace = $this->deathplace;
 		} else {
-			unset ($this->deathplace);
+			$this->deathplace="";
 			$this->mydeathplace = "";
 		}
 		if (!empty ($_REQUEST["gender"])) {
 			$this->gender = $_REQUEST["gender"];
 			$this->mygender = $this->gender;
 		} else {
-			unset ($this->gender);
+			$this->gender="";
 			$this->mygender = "";
 		}
 
@@ -732,7 +732,7 @@ class SearchControllerRoot extends BaseController {
 	function SoundexSearch() {
 		global $REGEXP_DB, $GEDCOM, $GEDCOMS;
 		global $TBLPREFIX;
-		global $DBCONN;
+		global $DBCONN, $indilist;
 		
 		if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (count($this->sgeds) > 0)) {
 			$logstring = "Type: Soundex<br />";
@@ -746,172 +746,29 @@ class SearchControllerRoot extends BaseController {
 			$logstring .= "Year: ".$this->year."<br />";
 			AddToSearchlog($logstring, $this->sgeds);
 
-			// Adjust the search criteria
-			if (isset ($this->firstname)) {
-				if (strlen($this->firstname) == 1)
-				$this->firstname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->firstname);
-				if ($REGEXP_DB)
-				$this->firstname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->firstname);
-				else {
-					$this->firstname = "%".preg_replace("/\s+/", "%", $this->firstname)."%";
+			if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
+				{
+				$this->Place_Search();
+				return;
 				}
-			}
-			if (isset ($this->lastname)) {
-				// see if there are brackets around letter(groups)
-				$bcount = substr_count($this->lastname, "[");
-				if (($bcount == substr_count($this->lastname, "]")) && $bcount > 0) {
-					$barr = array ();
-					$ln = $this->lastname;
-					$pos = 0;
-					$npos = 0;
-					for ($i = 0; $i < $bcount; $i ++) {
-						$pos1 = strpos($ln, "[") + 1;
-						$pos2 = strpos($ln, "]");
-						$barr[$i] = array (substr($ln, $pos1, $pos2 - $pos1), $pos1 + $npos -1, $pos2 - $pos1);
-						$npos = $npos + $pos2 -1;
-						$ln = substr($ln, $pos2 +1);
-					}
-				}
-				if (strlen($this->lastname) == 1)
-				$this->lastname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->lastname);
-				if ($REGEXP_DB)
-				$this->lastname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->lastname);
-				else {
-					$this->lastname = "%".preg_replace("/\s+/", "%", $this->lastname)."%";
-				}
-			}
-			if (isset ($this->place)) {
-				if (strlen($this->place) == 1)
-				$this->place = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->place);
-				if ($REGEXP_DB)
-				$this->place = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->place);
-				else {
-					$this->place = "%".preg_replace("/\s+/", "%", $this->place)."%";
-				}
-			}
-			if (isset ($this->year)) {
-				if (strlen($this->year) == 1)
-				$this->year = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->year);
-				if ($REGEXP_DB)
-				$this->year = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->year);
-				else {
-					$this->year = "%".preg_replace("/\s+/", "%", $this->year)."%";
-				}
-			}
+
 			$this->myindilist = array ();
 			if (count($this->sgeds) > 0) {
-
-				if ($this->soundex == "DaitchM")
-				DMsoundex("", "opencache");
-
-				// Do some preliminary stuff: determine the soundex codes for the search criteria
-				if ((!empty ($this->lastname)) && ($this->soundex == "DaitchM"))
-				{
-					$arr2 = DMsoundex($this->lastname);
-				}
-				if ((!empty ($this->lastname)) && ($this->soundex == "Russell"))
-				{
-					$arr2 = array(soundex($this->lastname));
-				}
-					
-				$farr = array ();
-				if (!empty ($this->firstname)) {
-					$firstnames = preg_split("/\s/", trim($this->firstname));
-					for ($j = 0; $j < count($firstnames); $j ++) {
-						if ($this->soundex == "Russell") $farr[$j] = array(soundex($firstnames[$j]));
-						if ($this->soundex == "DaitchM") $farr[$j] = DMsoundex($firstnames[$j]);
-					}
-				}
-				if ((!empty ($this->place)) && ($this->soundex == "DaitchM"))
-				$parr = DMsoundex($this->place);
-				if ((!empty ($this->place)) && ($this->soundex == "Russell"))
-				$parr = array(soundex(trim($this->place)));
-
 				// Start the search
 				//$oldged = $GEDCOM;
 				$this->printname = array ();
 				$this->printfamname = array ();
-
-				if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
-				{
-					$this->Place_Search();
-					return;
-				}
-				else
-				{
-					$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
-					if (!empty($this->place)) {
-						$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
-					}
-					$sql .= " WHERE sx_i_id = i_id AND sx_file = i_file AND ";
-					if (!empty($this->place)) {
-						$sql .= "pl_file = i_file AND i_file = p_file AND pl_gid = i_id AND pl_p_id = p_id AND ";
-					}
-
-					if ((is_array($this->sgeds)) && (count($this->sgeds) != 0)) {
-						$sql .= " (";
-						for ($i=0; $i<count($this->sgeds); $i++) {
-							$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$this->sgeds[$i]]["id"])."'";
-							if ($i < count($this->sgeds)-1) $sql .= " OR ";
-						}
-						$sql .= ") ";
-					}
-						
-						$x = 0;
-						
-						if (count($farr)>0) {
-							$sql .= "AND (";
-							$fnc = 0;
-							if($this->soundex == "DaitchM") $field = "sx_fn_dm_code";
-							else $field = "sx_fn_std_code";
-							foreach($farr as $name)
-							{
-								foreach($name as $name1) {
-									if ($fnc>0) $sql .= " OR ";
-									$fnc++;
-									$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name1)."%'";
-								}
-							}
-							$sql .= ") ";
-						}
-						if (!empty($arr2) && count($arr2)>0) 
-						{
-							$sql .= "AND (";
-							$lnc = 0;
-							if($this->soundex == "DaitchM") $field = "sx_ln_dm_code";
-							else $field = "sx_ln_std_code";
-							foreach($arr2 as $name) {
-								if ($lnc>0) $sql .= " OR ";
-								$lnc++;
-								$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name)."%'";
-							}
-							$sql .= ") ";
-						}
-						
-					if(!empty($this->place))
-					{
-						if($this->soundex == "DaitchM") $field = "p_dm_soundex";
-						if ($this->soundex == "Russell") $field = "p_std_soundex";
-						$sql .= "AND (";
-						$pc = 0;
-						foreach ($parr as $place) {
-							if ($pc>0) $sql .= " OR ";
-							$pc++;
-							$sql .= $field." LIKE '%".$DBCONN->escapeSimple($place)."%'";
-						}
-						$sql .= ") ";
-					}
-					//--group by
-					$sql .= "GROUP BY i_id";
-
-//               echo "<br />sql= ".$sql;	//debug			
-					$res = dbquery($sql);
-
-					while($row = $res->fetchRow()) {
-						$namearray = get_indi_names($row[1]);
+				$res = search_indis_soundex($this->soundex, $this->lastname, $this->firstname, $this->place, $this->sgeds);
+				if ($res!==false) {
+					while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+						$indilist[$row['i_id']]["gedcom"] = $row['i_gedcom'];
+						//$indilist[$row['i_id']]["names"] = get_indi_names($row['i_gedcom']);
+						$indilist[$row['i_id']]["isdead"] = $row['i_isdead'];
+						$indilist[$row['i_id']]["gedfile"] = $row['i_file'];
+						//$namearray = $indilist[$row['i_id']]["names"];
 						$save = true;
 						if ((!empty ($this->place)) || (!empty ($this->year))) {
-							$indirec = find_person_record($row[0]);
+							$indirec = $row['i_gedcom'];
 							if ((!empty ($this->place)) &&  empty ($this->lastname) && empty ($this->firstname)) {
 								$savep = false;
 								$pt = preg_match_all("/\d PLAC (.*)/i", $indirec, $match, PREG_PATTERN_ORDER);
@@ -961,7 +818,7 @@ class SearchControllerRoot extends BaseController {
 						}
 						if ($save === true) {
 									//								print "Added ".sortable_name_from_name($namearray[0]);
-							$this->printname[] = array (sortable_name_from_name($namearray[$row[2]][0]), $row[0], get_gedcom_from_id($row[3]), "");
+							$this->printname[] = array (sortable_name_from_name($row["i_name"]), $row["i_id"], get_gedcom_from_id($row["i_file"]), "");
 									//								break; // leave out if we want all names from one indi shown
 						}
 					}

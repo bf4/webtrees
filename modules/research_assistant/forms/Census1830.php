@@ -343,13 +343,13 @@ class Census1830 extends ra_form {
         $out .= '<td colspan="5" class="descriptionbox" align="center">White Persons included in foregoing.</td>';
         $out .= '<td colspan="15" class="descriptionbox" align="center">Slaves and Colored Persons, included in foregoing.</td></tr><tr>';
         
-          $out .= '<td class="descriptionbox" colspan="2">Who are Deaf & Dumb,<br> under 14 of age</td>';
-        $out .= '<td class="descriptionbox" colspan="3">Who are Deaf & Dumb,<br> of the age of 14 and under 25</td>';
+          $out .= '<td class="descriptionbox" colspan="2">Who are Deaf & Dumb,<br /> under 14 of age</td>';
+        $out .= '<td class="descriptionbox" colspan="3">Who are Deaf & Dumb,<br /> of the age of 14 and under 25</td>';
         $out .= '<td class="descriptionbox" colspan="2">Who are Deaf 25 and up</td>';
         $out .= '<td class="descriptionbox" colspan="2">Who are Blind</td>';
-        $out .= '<td class="descriptionbox" colspan="3">ALIENS - Foreigners<br>not naturalized</td>';
-        $out .= '<td class="descriptionbox" colspan="2">Who are Deaf & Dumb,<br> under 14 of age</td>';
-        $out .= '<td class="descriptionbox" colspan="2">Who are Deaf & Dumb,<br> of the age of 14 and under 25</td>';
+        $out .= '<td class="descriptionbox" colspan="3">ALIENS - Foreigners<br />not naturalized</td>';
+        $out .= '<td class="descriptionbox" colspan="2">Who are Deaf & Dumb,<br /> under 14 of age</td>';
+        $out .= '<td class="descriptionbox" colspan="2">Who are Deaf & Dumb,<br /> of the age of 14 and under 25</td>';
         $out .= '<td class="descriptionbox" colspan="2">Who are Deaf 25 and up</td>';
         $out .= '<td class="descriptionbox" colspan="2">Who are Blind</td></tr><tr>';
         

@@ -378,7 +378,8 @@ class CalendarDate {
 	}
 
 	function FormatGedcomMonth() {
-		return strtoupper($this->NUM_TO_MONTH[$this->m]);
+		if (isset($this->NUM_TO_MONTH[$this->m])) return strtoupper($this->NUM_TO_MONTH[$this->m]);
+		else return "";
 	}
 
 	function FormatGedcomYear() {
@@ -502,15 +503,32 @@ class CalendarDate {
 	}
 
 	// Create a URL that links this date to the PGV calendar
-	function CalendarURL() {
-		$URL='calendar.php?cal='.urlencode($this->CALENDAR_ESCAPE).'&amp;day='.$this->FormatGedcomDay().'&amp;month='.$this->FormatGedcomMonth().'&amp;year='.$this->FormatGedcomYear();
-		if ($this->d>0)
-			return $URL.'&amp;action=today';
-		else
+	function CalendarURL($date_fmt="") {
+		global $DATE_FORMAT;
+		if (empty($date_fmt))
+			$date_fmt=$DATE_FORMAT;
+		$URL='calendar.php?cal='.urlencode($this->CALENDAR_ESCAPE);
+		$action="year";
+		if (strpos($date_fmt, "Y")!==false
+		||  strpos($date_fmt, "y")!==false) {
+			$URL.='&amp;year='.$this->FormatGedcomYear();
+		}
+		if (strpos($date_fmt, "F")!==false
+		||  strpos($date_fmt, "M")!==false
+		||  strpos($date_fmt, "m")!==false
+		||  strpos($date_fmt, "n")!==false) {
+			$URL.='&amp;month='.$this->FormatGedcomMonth();
 			if ($this->m>0)
-				return $URL.'&amp;action=calendar';
-			else
-				return $URL.'&amp;action=year';
+				$action="calendar";
+		}
+		if (strpos($date_fmt, "d")!==false
+		||  strpos($date_fmt, "D")!==false
+		||  strpos($date_fmt, "j")!==false) {
+			$URL.='&amp;day='.$this->FormatGedcomDay();
+			if ($this->d>0)
+				$action="today";
+		}
+		return $URL.'&amp;action='.$action;
 	}
 } // class CalendarDate
 
@@ -556,6 +574,28 @@ class GregorianDate extends CalendarDate {
 			--$year;
 		return array($year, $month, $day);
 	}
+
+	// Get Easter date in JD format
+	function EasterJD($year) {
+		// See : http://www.php.net/manual/en/function.easter-days.php#14805
+		$a = $year % 19;
+		$b = floor($year / 100);
+		$c = $year % 100;
+		$d = floor($b / 4);
+		$e = $b % 4;
+		$f = floor(($b + 8) / 25);
+		$g = floor(($b - $f + 1) / 3);
+		$h = (19 * $a + $b - $d - $g + 15) % 30;
+		$i = floor($c / 4);
+		$k = $c % 4;
+		$l = (32 + 2 * $e + 2 * $i - $h - $k) % 7;
+		$m = floor(($a + 11 * $h + 22 * $l) / 451);
+		$n = ($h + $l - 7 * $m + 114);
+		$month = floor($n / 31);
+		$day = $n % 31 + 1;
+		return GregorianDate::YMDtoJD($year, $month, $day);
+	}
+
 } // class GregorianDate
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1007,8 +1047,8 @@ class GedcomDate {
 
 	// Convert a date to the prefered format and calendar(s) display.
 	// Optionally make the date a URL to the calendar.
-	function Display($url=false, $date_fmt='', $cal_fmts=NULL, $spanTag=true) {
-		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
+	function Display($url=false, $date_fmt='', $cal_fmts=NULL) {
+		global $pgv_lang, $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
 		// Convert dates to given calendars and given formats
 		if (empty($date_fmt))
@@ -1038,6 +1078,16 @@ class GedcomDate {
 		else
 			$d2=$this->date2->Format($date_fmt);
 		$q3='';
+		// some religious dates [ 1843618 ]
+		/**if ($this->date1->y && $this->date1->m && $this->date1->d && !$d2) {
+			if (abs(GregorianDate::EasterJD($this->date1->y)       -$this->MinJD())<2) $q3=$pgv_lang["easter"];
+			if (abs(GregorianDate::EasterJD($this->date1->y)+39    -$this->MinJD())<2) $q3=$pgv_lang["ascension"];
+			if (abs(GregorianDate::EasterJD($this->date1->y)+49    -$this->MinJD())<2) $q3=$pgv_lang["pentecost"];
+			if (abs(GregorianDate::YMDtoJD($this->date1->y, 08, 15)-$this->MinJD())<2) $q3=$pgv_lang["assumption"];
+			if (abs(GregorianDate::YMDtoJD($this->date1->y, 11, 01)-$this->MinJD())<2) $q3=$pgv_lang["all_saints"];
+			if (abs(GregorianDate::YMDtoJD($this->date1->y, 12, 25)-$this->MinJD())<2) $q3=$pgv_lang["christmas"];
+			if ($q3) $q3="[$q3]";
+		}**/
 		// Localise the date
 		$func($q1, $d1, $q2, $d2, $q3);
 		// Convert to other calendars, if requested
@@ -1068,26 +1118,30 @@ class GedcomDate {
 				if ($d1!=$d1tmp && $d1tmp!='')
 					if ($url)
 					    if ($CALENDAR_FORMAT!="none")
-							$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a>)</span>';
+							$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL($date_fmt).'">'.$d1tmp.'</a>)</span>';
 						else	
-							$conv1.=' <span dir="'.$TEXT_DIRECTION.'"><br /><a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a></span>';
+							$conv1.=' <span dir="'.$TEXT_DIRECTION.'"><br /><a href="'.$d1conv->CalendarURL($date_fmt).'">'.$d1tmp.'</a></span>';
 					else
 						$conv1.=' <span dir="'.$TEXT_DIRECTION.'">('.$d1tmp.')</span>';
 				if (!is_null($this->date2) && $d2!=$d2tmp && $d1tmp!='')
 					if ($url)
-						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d2conv->CalendarURL().'">'.$d2tmp.'</a>)</span>';
+						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d2conv->CalendarURL($date_fmt).'">'.$d2tmp.'</a>)</span>';
 					else
 						$conv2.=' <span dir="'.$TEXT_DIRECTION.'">('.$d2tmp.')</span>';
 			}
 			// Add URLs, if requested
 			if ($url) {
-				$d1='<a href="'.$this->date1->CalendarURL().'">'.$d1.'</a>';
+			$d1='<a href="'.$this->date1->CalendarURL($date_fmt).'">'.$d1.'</a>';
 				if (!is_null($this->date2))
-					$d2='<a href="'.$this->date2->CalendarURL().'">'.$d2.'</a>';
+				$d2='<a href="'.$this->date2->CalendarURL($date_fmt).'">'.$d2.'</a>';
 			}
 	
-		if ($spanTag) return '<span class="date">'.trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}").'</span>';
-		else return trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}");
+		// Return at least one printable character, for better formatting in tables.
+		$tmp=trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}");
+		if (strip_tags($tmp)=='')
+			return '<a>&nbsp;</a>';
+		else
+			return "<span class=\"date\">{$tmp}</span>";
 	}
 
 	// Get the earliest/latest date/JD from this date

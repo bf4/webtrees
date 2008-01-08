@@ -60,7 +60,7 @@ function iso8601_date($time) {
  * 				$dataArray[2] = data
  */
 function getUpcomingEvents() {
-	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SERVER_URL;
 
@@ -82,7 +82,7 @@ function getUpcomingEvents() {
 	$startjd=client_jd()+1;
 	$endjd=client_jd()+$daysprint;
 
-  $daytext=print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
+  $daytext=print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 	$daytext = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $daytext);
 	$daytext = strip_tags($daytext, '<a><ul><li><b><span>');
 	$dataArray[2]  = $daytext;
@@ -97,7 +97,7 @@ function getUpcomingEvents() {
  * 				$dataArray[2] = data
  */
 function getTodaysEvents() {
-	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 	global $SERVER_URL;
 	global $DAYS_TO_SHOW_LIMIT;
@@ -111,7 +111,7 @@ function getTodaysEvents() {
 	if (isset($config["onlyBDM"])) $onlyBDM = $config["onlyBDM"];  // "yes" or "no"
 	else $onlyBDM = "no";
 
-  $daytext=print_events_list(client_jd(), client_jd(), $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
+  $daytext=print_events_list(client_jd(), client_jd(), $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 	$daytext = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $daytext);
 	$daytext = strip_tags($daytext, '<a><ul><li><b><span>');
 	$dataArray[2]  = $daytext;
@@ -410,7 +410,7 @@ function getTop10Surnames() {
  * @TODO use date of most recent change instead of curent time
  */
 function getRecentChanges() {
-	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $REGEXP_DB, $DEBUG, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
     global $objectlist, $SERVER_URL;
 
@@ -430,7 +430,7 @@ function getRecentChanges() {
 
 	$action = "today";
 	$found_facts = array();
-	$changes=get_recent_changes(client_jd()-$config['days']);
+	$changes=get_recent_changes(client_jd()-$configDays);
 
 	if (count($changes)>0) {
 		$found_facts = array();
@@ -691,8 +691,8 @@ function getRandomMedia() {
 
 	$randomMedia = "";
 
-	if (!$MULTI_MEDIA) return;
 
+	if (!$MULTI_MEDIA) return;
 	$medialist = array();
 	$foundlist = array();
 

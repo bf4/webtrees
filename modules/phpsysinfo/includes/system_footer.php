@@ -93,7 +93,7 @@ if (!$hide_picklist) {
 
   echo "\n\n</center>";
 } else {
-  echo "\n\n<br>";
+  echo "\n\n<br />";
 }
 
 echo "\n<hr>\n";
@@ -103,6 +103,6 @@ echo "<td align=\"" . $direction['left'] . "\"><font size=\"-1\">" . $text['crea
 echo "<td align=\"" . $direction['right'] . "\"><font size=\"-1\">" . round( ( array_sum( explode( " ", microtime() ) ) - $startTime ), 4 ). " sec</font></td>\n";
 echo "  </tr>\n</table>\n";
 
-//echo "\n<br>\n</body>\n</html>\n";
+//echo "\n<br />\n</body>\n</html>\n";
 
 ?>

@@ -1,27 +1,51 @@
+/* clsource_music.js - Author Brian Holland .... email webman@windmillway.f2s.com    -  (modified from Clsource.js - Author Pyro ... email pyrex@chello.hu)
+ * @package PhpGedView
+ * @subpackage Module
+ * @version $Id$
+ * @author Brian Holland
+*/
+
+// Initial variable settings
 
 var CB_Show = 1;
+
 var CB_Zoom = null;
-var zoomSet = 0;
+
+var zoomSet = 0; 	// ZoomSet = 0 means No Lightbox window.  (Leave at 0 here please)
+					// Note: ZoomSet = 1 means Lightbox window open. 
+					// Note: ZoomSet = 2 means Lightbox window open and zoomed. 
+
 var soond = null;
+var CB_Animation	= CB_Animation;
+var CB_SlShowTime	= CB_SlShowTime;
+var CB_ImgDetails	= CB_ImgDetails;
+var CB_Detail_Info	= CB_Detail_Info;
+var CB_Start_SS		= CB_Start_SS;
+var CB_Pause_SS		= CB_Pause_SS;
+var CB_Music		= CB_Music; 
+var CB_Zoom_Off		= CB_Zoom_Off;			
+var CB_Zoom_On		= CB_Zoom_On;		
+var CB_Close_Win	= CB_Close_Win;
 
 // ------- Keyboard options ---------------------------------------------------------
-    function CB_KeyPress(a) {
-        var b;
-        if (!a) {
-            var a = window.event;
-        }
-        if (a.keyCode) {
-            b = a.keyCode;
-        } else if (a.which) {
-            b = a.which;
-        }
-        var c = String.fromCharCode(b);
-		
-		
-        if (CB_ClearBox == "be") {
 
+	function CB_KeyPress(a) {
+	
+		var b;
+		if (!a) {
+			var a = window.event;
+		}
+		if (a.keyCode) {
+			b = a.keyCode;
+		}else if (a.which) {
+			b = a.which;
+		}
+		var c = String.fromCharCode(b);
+		
+		if (CB_ClearBox == "be") {
+		
 			// Previous or Move Left  - "Keys P, or left arrow, or 4"
-            if (c == "%" || c == "p" || b == 80 || b == 37 || b == 52) {
+			if (c == "%" || c == "p" || b == 80 || b == 37 || b == 52) {
 				if (CB_Zoom == "true" ) {
 					moveLeft();
 					return false;
@@ -33,10 +57,10 @@ var soond = null;
 					return false;
 				}else{
 				}				
-            }
+			}
 			
 			// Next or Move Right  - "Keys N, or right arrow, or 6"
-            if (c == "'" || c == "n" || b == 78 || b == 39 || b == 54) {
+			if (c == "'" || c == "n" || b == 78 || b == 39 || b == 54) {
 				if (CB_Zoom == "true") {
 					moveRight();
 					return false;	
@@ -48,53 +72,53 @@ var soond = null;
 					return false;
 				}else{
 				}
-            }
+			}
 			
 			// Move Up  - "Keys U, or up arrow"
-            if (c == "u" || b == 38 || b == 85) {
+			if (c == "u" || b == 38 || b == 85) {
 				if (CB_Zoom == "true") {
 					moveUp();
 					return false;
 				}else{	
 				}
-            }	
-
+			}
+			
 			// Move Up  - "Keys D, or down arrow"
-            if (c == "d" || b == 40 || b == 68) {
+			if (c == "d" || b == 40 || b == 68) {
 				if (CB_Zoom == "true") {
 					moveDown();
 					return false;
 				}else{	
 				}
-            }				
+			}
 			
 			// Start/Stop Slideshow - "Key Spacebar"
-            if ((c == " " || b == 32) && CB_IsAnimating == 0) {
-                if (CB_Gallery.length < 3) {
-                    return false;
-                }
-                if (CB_SS == "start") {
+			if ((c == " " || b == 32) && CB_IsAnimating == 0) {
+				if (CB_Gallery.length < 3) {
+					return false;
+					}
+				if (CB_SS == "start") {
 					resetZoom();
-                    CB_SSStart();
-                    return false;
-                } else {
-                    CB_SSPause();
-                    return false;
-                }
-            }
+					CB_SSStart();
+					return false;
+				}else{
+					CB_SSPause();
+					return false;
+				}
+			}
 			
 			// Close - "Keys Esc or X"
-            if (c == "\x1B" || b == 27 || c == "x" || b == 88 ) {
-                CB_Close();
-                return false;
-            }
+			if (c == "\x1B" || b == 27 || c == "x" || b == 88 ) {
+				CB_Close();
+				return false;
+			}
 			
 			// Toggle Volume - "Key S"
-            if (c == "s" || b == 83) {
-                player.toggleVolume();
-                return false;
-            }
-		
+			if (c == "s" || b == 83) {
+				player.toggleVolume();
+				return false;
+			}
+			
 			// Zoom in  - "Key I"
 			if (c == "i" || b == 73) {
 				if (CB_SS == "start") {
@@ -102,7 +126,7 @@ var soond = null;
 					return false;
 				}
 			}
-
+			
 			// Zoom Out - "Key O"
 			if (c == "o" || b == 79) {
 				if (CB_SS == "start") {
@@ -110,32 +134,36 @@ var soond = null;
 					return false;
 				}
 			}
-
+			
 			// Reset Zoom  - "Key Z"
 			if (c == "z" || b == 90) {
-				if (CB_SS == "start" && zoomSet==1) {
+				if (CB_SS == "start") {
 					resetZoom();
+					CB_SSStart();
+					CB_SSPause();
 					return false;
 		//		}else if (CB_SS == "start" && zoomSet==1) {
 		//			CB_FullSize();
 				}else{
 				}
-			}				
+			}
 			
 			// Do nothing - "Key Enter"
-            if (b == 13) {
-                return false;
-            }
-			
-		} else {
+			if (b == 13) {
+				return false;
+			}
+		
+		}else{
+		
 			// If animating Do nothing - "Keys Spacebar, or Enter"
-            if (CB_IsAnimating == 1 && (c == " " || b == 32 || b == 13)) {
-                return false;
-            }
-        }
-    }
-	
-	
+			if (CB_IsAnimating == 1 && (c == " " || b == 32 || b == 13)) {
+				return false;
+			}
+		}
+	}
+// End function keyboard ----------------------------------------------
+
+
 // Mousewheel for zooming ---------------------------------------------
 // if (zoomSet == 2) {
 	function handle(delta) {
@@ -163,7 +191,7 @@ var soond = null;
 		}
 		if (delta )
 			handle(delta);
-			
+
 		if (zoomSet == 2 || zoomSet == 1) {	
 			// Prevents default scrolling
 			if (event.preventDefault)  
@@ -177,21 +205,18 @@ var soond = null;
 		window.addEventListener('DOMMouseScroll', wheel, false);
 	window.onmousewheel = document.onmousewheel = wheel;
 //}
+// End Mousewheel for zooming ---------------------------------------------
 	
 	
-//Dragging Zoomed Images ----------------------------------------
-
-
-
 // Music Player Class ----------------------------------------------
 	function Player () {
 		this.paused = true;
 		this.stoped = true;
-
+	
 		this.options = new Object();
 		this.options.swfLocation = SoundBridgeSWF;
 		this.sound = new Sound(this.options);
-		
+	
 		this.position = 0;
 		this.frequency = 1000;
 		this.isLoaded = false;
@@ -199,82 +224,79 @@ var soond = null;
 		this.bytesTotal = 0;
 		this.callback = this.registerCallback();
 	}
-   
+	
+	
 	Player.prototype.onTimerEvent = function() {
 		var isDurationOk = false
 		if(!this.paused) {
-
 			var position = this.sound.getPosition();
 			if(!position) position = 0;
+			
 			if(position != this.position && position != 0) {
 				this.onPlaying();
 			} else {
 				this.onBuffering();
 			}
 			this.position = position;          
-          
+			
 			var duration = 0;                   
 			duration = this.sound.getDuration();
-          
+			
 			if(!duration) duration = 0;
 			if(duration == this.duration && duration != 0) {
 				isDurationOk = true;             
 			}
-          
 			this.duration = duration;
 			var progress = position/duration;
 			if(isDurationOk) {
 				this.setProgressBar(progress);
 			}
-          
+			
 			var isBytesTotalOk = false;
-          
+			
 			var bytesTotal = this.sound.getBytesTotal();
 			if(bytesTotal == this.bytesTotal) {
 				isBytesTotalOk = true;    
 			}
 			this.bytesTotal = bytesTotal;
-          
+			
 			if(isBytesTotalOk) {
 				var loaded =  this.sound.getBytesLoaded()/bytesTotal;
 				this.setLoadedBar(loaded);
 			}
-          
 			if (progress == 1 && duration != 0 && position != 0) {
 					this.onSoundComplete();
 			}
 		}
 	}
-	
+
 	Player.prototype.registerCallback = function() {
 		return setInterval(this.onTimerEvent.bind(this), this.frequency);
 	}
-	
 	Player.prototype.clearCallback = function() {
    		clearInterval(this.callback);
    		this.callback = null;
 	}
-	
+
 	Player.prototype.setProgressBar = function(progress) {
 		if(!progress) progress = 0;        
 	}
-	
+
 	Player.prototype.setLoadedBar = function(loaded) {
 		if(!loaded) loaded = 0;
 	}   
-	
+
 	Player.prototype.onPlaying = function() {   
 		//Element.show('caption');
 		//Element.setInnerHTML( 'caption', this.sound.getId3());
 	}
-	
+
 	Player.prototype.onPause = function() {
 	}   
-	
+
 	Player.prototype.onBuffering = function() {      
 	}   
 
-	
 	Player.prototype.onSoundComplete = function() {
 		if(!this.paused) {
 			if (loopMusic) {
@@ -282,7 +304,7 @@ var soond = null;
 			}
 		}
 	}
-	
+
 	Player.prototype.onForward = function() {
 		this.position = 0;
 		this.duration = 0;
@@ -305,14 +327,14 @@ var soond = null;
 			}
 		}		
 	}   
-	
+
 	Player.prototype.fadeOut = function() {
 		for (var i=this.sound.getVolume()-1; i>=0; i--) {   	  	
 	       	this.sound.setVolume(i);
 			//pause(1);
 		}            	
 	}   
-  
+
 	Player.prototype.fadeIn = function() {
 		for (var i=1; i <= 100; i++) {   	  	
 	       	this.sound.setVolume(i);
@@ -335,7 +357,6 @@ var soond = null;
 		}
 	}
 
-
 	Player.prototype.play = function() {
 		if(this.paused) {
 			this.paused = false;
@@ -352,7 +373,6 @@ var soond = null;
 			this.onPause();
 			CB_Speak.setAttribute('src', CB_PicDir + CB_MusicStart);
 		}
-		
 	}
 
 	Player.prototype.stop = function() {
@@ -370,7 +390,7 @@ var soond = null;
 		this.sound.start(this.duration/1000, 1);       
 		this.sound.stop();         
 	}   
-  
+
 	Player.prototype.loadTrack = function(track) {
 		this.track = track;
 	} 
@@ -386,9 +406,9 @@ var soond = null;
 // 		$('button_play').className ='button_play';
 //		$('display').innerHTML = "stoped";  
 	}      
+
 	var player;
 
-	
 // Set Music Player functions  ----------------------------------------------	
 	function setMusicPlayer() {
 		if (slideshowMusic == null) {
@@ -403,13 +423,11 @@ var soond = null;
 		}else{
 		}
 	}
-
 			
+
 // Start slideshow ---------------------------------------------------------------------
 	function CB_SSStart() {
-
 		resetZoom();
-	
 		saveForeverLoop = foreverLoop;
 		saveLoopMusic = loopMusic;
 //		if (imageArray.length == 1) {
@@ -432,13 +450,14 @@ var soond = null;
 			}					
 			if (foreverLoop == 1) { loopMusic = true;  }
 //		}
+
 //	CB_Prv.style.display = "none";
 //	CB_Nxt.style.display = "none";	
         CB_SlideS.style.display = "none";
         CB_SlideP.style.display = "block";
 		CB_ZoomS.style.display = "none";
         CB_ZoomP.style.display = "none";
-        CB_SlideB.style.display = "block";		
+        CB_SlideB.style.display = "block";
         CB_SS = "pause";		
         CB_SlideShow();
 		if ( slideshowMusic != null && soond==null) {		
@@ -446,6 +465,7 @@ var soond = null;
 		}else{
 		}
     }
+
 
 // Pause slideshow	---------------------------------------------------------------------
     function CB_SSPause() {
@@ -459,10 +479,12 @@ var soond = null;
 			CB_Speak.style.display = "block";
 		}
         CB_ZoomS.style.display = "block";
-        CB_ZoomP.style.display = "none";			
+        CB_ZoomP.style.display = "none";
         CB_SlideShowStop();
 	}
 
+//  ---------------------------------------------------------------------
+	
 	
     CB_AnimTimeout = parseInt(CB_AnimTimeout);
     if (CB_AnimTimeout < 5) {
@@ -504,64 +526,77 @@ var soond = null;
     if (CB_WinPadd < 0) {
         CB_WinPadd = 5;
     }
+
     if (CB_Animation != "none" &&
         CB_Animation != "normal" &&
         CB_Animation != "double" && CB_Animation != "warp") {
         CB_Animation = "double";
     }
+
     CB_Jump_X = parseInt(CB_Jump_X);
     if (CB_Jump_X < 1 || CB_Jump_X > 99) {
         CB_Jump_X = 50;
     }
+
     CB_Jump_Y = parseInt(CB_Jump_Y);
     if (CB_Jump_Y < 1 || CB_Jump_Y > 99) {
         CB_Jump_Y = 50;
     }
+
     CB_ImgBorder = parseInt(CB_ImgBorder);
     if (CB_ImgBorder < 0) {
         CB_ImgBorder = 1;
     }
+
     CB_Padd = parseInt(CB_Padd);
     if (CB_Padd < 0) {
         CB_Padd = 2;
     }
+
     if (CB_ShowImgURL != "be" && CB_ShowImgURL != "ki") {
         CB_ShowImgURL = "ki";
     }
+
     CB_PadT = parseInt(CB_PadT);
     if (CB_PadT < 0) {
         CB_PadT = 10;
     }
+
     CB_RoundPix = parseInt(CB_RoundPix);
     if (CB_RoundPix < 0) {
         CB_RoundPix = 12;
     }
+
     CB_TextH = parseInt(CB_TextH);
     if (CB_TextH < 25) {
         CB_TextH = 25;
     }
+
     CB_FontSize = parseInt(CB_FontSize);
     if (CB_FontSize < 6) {
         CB_FontSize = 13;
     }
+
     if (CB_ImgNum != "be" && CB_ImgNum != "ki") {
         CB_ImgNum = "be";
     }
-	
+
     CB_SlShowTime = parseInt(CB_SlShowTime);
     if (CB_SlShowTime < 1) {
         CB_SlShowTime = 5;
     }
-	
+
 //	var CB_SlShowTime = 5;
-	
+
     CB_SlShowTime *= 1000;
     if (CB_CheckDuplicates != "be" && CB_CheckDuplicates != "ki") {
         CB_CheckDuplicates = "ki";
     }
+
     if (CB_Preload != "be" && CB_Preload != "ki") {
         CB_Preload = "be";
     }
+	
     var CB_AllThumbsWidth, CB_ResizeTimer, CB_IsAnimating, CB_ImgWidthOrig, CB_ImgHeightOrig;
 	var CB_ieRPBug = 0, CB_ie6RPBug = "", CB_ClearBox, CB_AnimX, CB_AnimY;
 	var CB_BodyMarginX = CB_BodyMarginLeft + CB_BodyMarginRight, CB_BodyMarginY = CB_BodyMarginTop + CB_BodyMarginBottom;
@@ -570,7 +605,9 @@ var soond = null;
 	var CB_ImgWidth = CB_WinBaseW, CB_ImgHeight = CB_WinBaseH - CB_TextH;
 	var CB_ImgRate, CB_Win, CB_Txt, CB_Img, CB_Prv, CB_Nxt, CB_ImgWidthOld, CB_ImgHeightOld, CB_ActImgId;
 	var CB_Gallery, CB_Count, CB_preImages, CB_Loaded, CB_Header, CB_Footer, CB_Left, CB_Right;
+
     CB_PicDir += "/";
+
     var IE = document.all ? true : false;
     if (!IE) {
         document.captureEvents(Event.MOUSEMOVE);
@@ -585,16 +622,18 @@ var soond = null;
             window.attachEvent("on" + a, b);
         }
     }
-	
+
     OnLoad("load", CB_Init);
-//BH --------------- Changed following lines for IE7 arrow keys -------------
+
+
     function CB_Init() {
+		//BH --------------- Changed following lines for IE7 arrow keys -------------	
 		if (navigator.appVersion.indexOf("MSIE")!=-1){
 			document.onkeydown = CB_KeyPress;
 		}else{
 			document.onkeypress = CB_KeyPress;
 		}
-//BH ------------------------------------------------------------------------------	
+		//BH ------------------------------------------------------------------------------	
         if (!document.getElementById("CB_All") && CB_Show != 0) {
             document.body.style.position = "static";
             var a = "<div class=\"CB_RoundPixBugFix\" style=\"width: " + CB_RoundPix + "px; height: " + CB_RoundPix + "px;\"></div>";
@@ -602,21 +641,25 @@ var soond = null;
             var c = document.createElement("div");
             c.setAttribute("id", "CB_All");
             b.appendChild(c);
-            document.getElementById("CB_All").innerHTML = "<table cellspacing=\"0\" cellpadding=\"0\" id=\"CB_Window\"><tr id=\"CB_Header\"><td id=\"CB_TopLeft\">" + a + "</td><td id=\"CB_Top\"></td><td id=\"CB_TopRight\">" + a + "</td></tr><tr id=\"CB_Body\"><td id=\"CB_Left\"></td><td id=\"CB_Content\" valign=\"top\" align=\"left\"><div id=\"CB_Padding\"><div id=\"CB_ImgContainer\"><iframe frameborder=\"0\" id=\"CB_iFrame\" src=\"\"></iframe><div id=\"CB_ShowTh\"></div><div id=\"CB_Thumbs\"><div id=\"CB_Thumbs2\"></div></div><img id=\"CB_LoadingImage\" title=\"loading\" src=\"" + CB_PicDir + CB_PictureLoading + "\" /><img id=\"CB_Image\" alt=\"\" src=\"" + CB_PicDir + "blank.gif\" /><div id=\"CB_PrevNext\"><div id=\"CB_ImgHide\"></div><img id=\"CB_SlideShowBar\" src=\"" + CB_PicDir + "white.gif\" /><a id=\"CB_Prev\" href=\"#\"></a><a id=\"CB_Next\" href=\"#\"></a></div></div><div id=\"CB_NavBar\"><img id=\"CB_SlideShowP\" title=\"Pause SlideShow\" src=\"" + CB_PicDir + CB_PicturePause + "\" /><img id=\"CB_SlideShowS\" title=\"Start SlideShow\" src=\"" + CB_PicDir + CB_PictureStart + "\" /><img id=\"CB_Speaker\" title=\"Turn Music On/Off\" src=\"" + CB_PicDir + CB_MusicNull + "\" /><img id=\"CB_ZoomOff\" title=\"Disable Zoom\" src=\"" + CB_PicDir + CB_ZoomStop + "\" /><img id=\"CB_ZoomOn\" title=\"Zoom is Enabled .... Use Mousewheel or I and O keys\" src=\"" + CB_PicDir + CB_ZoomStart + "\" /><div id=\"CB_Text\"></div><img id=\"CB_CloseWindow\" title=\"Close\" src=\"" + CB_PicDir + CB_PictureClose + "\" /></div></div></td><td id=\"CB_Right\"></td></tr><tr id=\"CB_Footer\"><td id=\"CB_BtmLeft\">" + a + "</td><td id=\"CB_Btm\"></td><td id=\"CB_BtmRight\">" + a + "</td></tr></table><div id=\"CB_ContentHide\"></div>";
+			
+            document.getElementById("CB_All").innerHTML = "<table cellspacing=\"0\" cellpadding=\"0\" id=\"CB_Window\"><tr id=\"CB_Header\"><td id=\"CB_TopLeft\">" + a + "</td><td id=\"CB_Top\"></td><td id=\"CB_TopRight\">" + a + "</td></tr><tr id=\"CB_Body\"><td id=\"CB_Left\"></td><td id=\"CB_Content\" valign=\"top\" align=\"left\"><div id=\"CB_Padding\"><div id=\"CB_Text\"></div><div id=\"CB_ImgContainer\"><iframe frameborder=\"0\" id=\"CB_iFrame\" src=\"\"></iframe><div id=\"CB_ShowTh\"></div><div id=\"CB_Thumbs\"><div id=\"CB_Thumbs2\"></div></div><img id=\"CB_LoadingImage\" title=\"loading\" src=\"" + CB_PicDir + CB_PictureLoading + "\" /><img id=\"CB_Image\" alt=\"\" src=\"" + CB_PicDir + "blank.gif\" /><div id=\"CB_PrevNext\"><div id=\"CB_ImgHide\"></div><img id=\"CB_SlideShowBar\" src=\"" + CB_PicDir + "white.gif\" /><a id=\"CB_Prev\" href=\"#\"></a><a id=\"CB_Next\" href=\"#\"></a></div></div><div id=\"CB_NavBar\"><img id=\"CB_SlideShowP\" title=\"" + CB_Pause_SS + "\" src=\"" + CB_PicDir + CB_PicturePause + "\" /><img id=\"CB_SlideShowS\" title=\"" + CB_Start_SS + "\" src=\"" + CB_PicDir + CB_PictureStart + "\" /><img id=\"CB_Speaker\" title=\"" + CB_Music + "\" src=\"" + CB_PicDir + CB_MusicNull + "\" /><img id=\"CB_ZoomOff\" title=\"" + CB_Zoom_Off + "\" src=\"" + CB_PicDir + CB_ZoomStop + "\" /><img id=\"CB_ZoomOn\" title=\"" + CB_Zoom_On + "\" src=\"" + CB_PicDir + CB_ZoomStart + "\" /><div id=\"CB_TopText\" title=\"" + CB_Detail_Info + "\"><a href=\"\">" + CB_ImgDetails + "</a></div><img id=\"CB_CloseWindow\" title=\"" + CB_Close_Win + "\" src=\"" + CB_PicDir + CB_PictureClose + "\" /></div></div></td><td id=\"CB_Right\"></td></tr><tr id=\"CB_Footer\"><td id=\"CB_BtmLeft\">" + a + "</td><td id=\"CB_Btm\"></td><td id=\"CB_BtmRight\">" + a + "</td></tr></table><div id=\"CB_ContentHide\"></div>";
+			
+
             if (navigator.userAgent.indexOf("MSIE 6") != -1 &&
                 CB_RoundPix == 0) {
                 CB_ie6RPBug = 1;
             }
+
             if (navigator.userAgent.indexOf("MSIE") != -1 &&
                 CB_RoundPix < 2) {
                 CB_ieRPBug = 6;
             }
-		
+
 			//Music player
 			var objFlashPlayer = document.createElement("div");
 			objFlashPlayer.setAttribute('id','__sound_flash__');
 			b.appendChild(objFlashPlayer);
-		
+
 			//CB All elements
             document.getElementById("CB_Padding").style.padding = CB_Padd + "px";
             CB_ShTh = document.getElementById("CB_ShowTh");
@@ -647,13 +690,22 @@ var soond = null;
             CB_Prv = document.getElementById("CB_Prev");
             CB_Nxt = document.getElementById("CB_Next");
             CB_Txt = document.getElementById("CB_Text");
-            CB_Txt.style.height = CB_TextH - CB_PadT + "px";
-            CB_Txt.style.marginTop = CB_PadT + "px";
+ //           	CB_Txt.style.height = CB_TextH - CB_PadT + "px";
+ //           	CB_Txt.style.marginTop = CB_PadT + "px";
             CB_Txt.style.fontFamily = CB_Font;
             CB_Txt.style.fontSize = CB_FontSize + "px";
             CB_Txt.style.fontWeight = CB_FontWeigth;
-            CB_Txt.style.color = CB_FontColor;
-            CB_Header = document.getElementById("CB_Header").style;
+//		CB_Txt.style.color = CB_FontColor;
+	
+			CB_Txt2 = document.getElementById("CB_TopText");
+ //       	CB_Txt2.style.height = CB_TextH - CB_PadT + "px";
+ //       	CB_Txt2.style.marginTop = CB_PadT + "px";
+			CB_Txt2.style.fontFamily = CB_Font;
+			CB_Txt2.style.fontSize = CB_FontSize + "px";
+			CB_Txt2.style.fontWeight = CB_FontWeigth;
+ //		CB_Txt2.style.color = CB_FontColor;	
+
+			CB_Header = document.getElementById("CB_Header").style;
             CB_Header.height = CB_RoundPix + "px";
             CB_Footer = document.getElementById("CB_Footer").style;
             CB_Footer.height = CB_RoundPix + "px";
@@ -667,21 +719,25 @@ var soond = null;
             CB_ImgHd.onmouseover = function () {CB_HideThumbs();return;};
             CB_Txt.onmouseover = function () {CB_HideThumbs();return;};
             CB_HideContent.onmouseover = function () {CB_HideThumbs();return;};
+
             if (navigator.userAgent.indexOf("MSIE") != -1 &&
                 navigator.userAgent.indexOf("Windows") != -1 &&
                 navigator.userAgent.indexOf("MSIE 7") == -1) {
                 CB_pngFixIE();
             }
+
             if (navigator.userAgent.indexOf("Opera") != -1) {
                 CB_BodyMarginX = 0;
                 CB_BodyMarginY = 0;
             }
+
             if (navigator.userAgent.indexOf("Firefox") != -1) {
                 CB_BodyMarginY = 0;
             }
         }
-					  
+
         document.getElementById("CB_Thumbs").onmousemove = getMouseXY;
+		
         var d = 0;
         var e = 0;
         CB_Links = document.getElementsByTagName("a");
@@ -691,15 +747,14 @@ var soond = null;
             if (CB_Rel.match("clearbox") != null && CB_Show != 0) {
                 if (CB_Rel == "clearbox") {
                     CB_Links[i].onclick = function () {CB_ClickIMG(this.rel + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
-                } else {
-                    if (CB_Rel.substring(0, 8) == "clearbox" &&
-                        CB_Rel.charAt(8) == "[" &&
-                        CB_Rel.charAt(CB_Rel.length - 1) == "]") {
-                        if (CB_Links[i].rel.substring(9, CB_Links[i].rel.length - 1).split(",")[0] != "clearbox") {
-                            CB_Links[i].onclick = function () {CB_ClickIMG(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
-                        } else {
-                            alert("ClearBox HIBA:\n\nClearBox galeria neve NEM lehet \"clearbox[clearbox]\"!\n(Helye: dokumentum, a " + i + ". <a> tag-en belul.)");
-                        }
+				} else {
+					if (CB_Rel.substring(0, 8) == "clearbox" &&
+						CB_Rel.charAt(8) == "[" &&
+						CB_Rel.charAt(CB_Rel.length - 1) == "]") {
+						if (CB_Links[i].rel.substring(9, CB_Links[i].rel.length - 1).split(",")[0] != "clearbox") {
+							CB_Links[i].onclick = function () {CB_ClickIMG(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+						} else {
+							alert("ClearBox HIBA:\n\nClearBox galeria neve NEM lehet \"clearbox[clearbox]\"!\n(Helye: dokumentum, a " + i + ". <a> tag-en belul.)");						}
                     } else if (CB_Rel.substring(0, 8) == "clearbox" &&
                         CB_Rel.charAt(8) == "(" &&
                         CB_Rel.charAt(CB_Rel.length - 1) == ")") {
@@ -716,25 +771,28 @@ var soond = null;
         }
     }
 
-
     function CB_ClickIMG(a) {
 	    zoomSet=1;
         if (CB_Show == 0) {
             return false;
         }
+
         CB_Cls.onclick = "";
         CB_SlideS.onclick = "";
         CB_SlideP.onclick = "";
         CB_Clicked = a.split("+\\+");
         CB_Rel = CB_Clicked[0].split(",");
+
         if (CB_Rel[1] > 0) {
             CB_SlShowTimer = parseInt(CB_Rel[1]) * 1000;
         } else {
             CB_SlShowTimer = CB_SlShowTime;
         }
+
         if (CB_Rel[2] == "start") {
             CB_SS = "pause";
         }
+
         if (CB_Gallery &&
             CB_Rel[0] == CB_Gallery[0][0] && CB_Gallery[0][0] != "clearbox") {
         } else {
@@ -756,12 +814,16 @@ var soond = null;
                         } else {
                             b = CB_Links[i].getAttribute("tnhref");
                         }
-                        CB_Gallery.push(new Array(CB_Links[i].getAttribute("href"), CB_Links[i].getAttribute("title"), b));
+						// Split the Title info
+						var splitTitle = CB_Links[i].getAttribute("title").split(":",3);
+                        CB_Gallery.push(new Array(CB_Links[i].getAttribute("href"), splitTitle[2], b, splitTitle[0], splitTitle[1]));
                     }
                 }
             }
         }
+		
         CB_ActImgId = 0;
+		
         while (CB_Gallery[CB_ActImgId][0] != CB_Clicked[1]) {
             CB_ActImgId++;
         }
@@ -769,9 +831,7 @@ var soond = null;
         CB_ImgHeightOld = CB_WinBaseH - CB_TextH;
         CB_SetAllPositions();
         CB_HideDocument();
-	
     }
-
 
     function CB_SetAllPositions() {
         getBrowserSize();
@@ -802,7 +862,6 @@ var soond = null;
         return;
     }
 
-
     function CB_ClickURL(a) {
         if (CB_Show == 0) {
             return false;
@@ -813,6 +872,7 @@ var soond = null;
 		CB_Cls.style.display = "block";
 		CB_Cls.onclick = function () {CB_Close();return false;};
         CB_Rel = CB_Clicked[0].split(",");
+// alert(CB_Clicked[0] + " and " + CB_Clicked[1] + " and " + CB_Clicked[2]);
         CB_SetAllPositions();
         CB_ImgWidth = parseInt(CB_Rel[0]);
         CB_ImgHeight = parseInt(CB_Rel[1]);
@@ -834,11 +894,12 @@ var soond = null;
 		CB_Speak.style.display = "none";		
         CB_ZoomS.style.display = "none";
         CB_ZoomP.style.display = "none";
+ //       CB_Txt2.style.display = "none";	
+ //       CB_Toptext.style.display = "none";			
         CB_HideDocument("x");
 		CB_HideContent.onclick = function () {CB_Close();return false;};
 		CB_SS = "pause";
     }
-
 
     function CB_HideDocument(a) {
         var b = a;
@@ -864,19 +925,16 @@ var soond = null;
         }
     }
 
-
     function CB_NewWindow() {
         CB_Img.style.width = CB_WinBaseW + "px";
         CB_Img.style.height = CB_WinBaseH - CB_TextH + "px";
         CB_Img.style.display = "block";
         CB_Img.style.visibility = "hidden";
         CB_Win.style.visibility = "visible";
-	    CB_LoadImage();
+		CB_LoadImage();
     }
 
-
     function CB_LoadImage(a) {
-	
 		CB_ImgWidthOld = CB_ImgWidth;
 		CB_ImgHeightOld = CB_ImgHeight;	
         CB_Thm.style.display = "none";
@@ -931,13 +989,10 @@ var soond = null;
 //		CB_preImages.onerror = function () {CB_ShowImage();alert("ClearBox ERROR:\n\nCould not open Image: " + CB_Gallery[CB_ActImgId][0]);return;};
 		CB_preImages.onerror = function () {CB_ShowImage();alert("ClearBox ERROR:\n\nCould not open Image : " );return;};
         CB_CheckLoaded();
-		
 //		resetZoom();
-		
     }
 
-	
-    function CB_CheckLoaded() {
+	function CB_CheckLoaded() {
         if (CB_Count == 1) {
             CB_Loaded = true;
             clearTimeout(CB_ImgLoadTimer);
@@ -951,7 +1006,6 @@ var soond = null;
         return;
     }
 
-	
     function CB_GetImageSize() {
         CB_ImgWidth = CB_preImages.width;
         CB_ImgHeight = CB_preImages.height;
@@ -960,11 +1014,12 @@ var soond = null;
         CB_ImgRate = CB_ImgWidth / CB_ImgHeight;
         CB_FitToBrowser();
         CB_Img.src = CB_Gallery[CB_ActImgId][0];
+// CB_Img.mid = CB_Gallery[CB_ActImgId][2];		
+// CB_Txt.style.width = CB_ImgWidth + "px";		
         CB_AnimatePlease();
         return;
     }
 
-	
     function CB_AnimatePlease(a) {
 		CB_Speak.style.display = "none";
         CB_JumpX = CB_Jump_X;
@@ -991,7 +1046,12 @@ var soond = null;
             CB_AnimY = "true";
         } else if (CB_Animation == "normal") {
             CB_WindowResizeX();
-        }
+        }else{
+			// ---Adjust Title width to image ---------------------------------------
+			CB_Txt.style.width = CB_ImgWidthOld + "px";
+			// --------------------------------------------------------------------------	
+			
+		}
         if (a) {
             CB_CheckResize2();
         } else {
@@ -1000,7 +1060,6 @@ var soond = null;
         return;
     }
 
-	
     function CB_WindowResizeX() {
         if (CB_ImgWidth == CB_ImgWidthOld) {
             if (CB_TimerX) {
@@ -1050,13 +1109,15 @@ var soond = null;
                 CB_ImgWidthOld += CB_JumpX;
             }
             CB_Img.style.width = CB_ImgWidthOld + "px";
+			// ---Adjust Title width to image ---------------------------------------
+			CB_Txt.style.width = CB_ImgWidthOld + "px";
+			// --------------------------------------------------------------------------	
             CB_MarginL = parseInt(DocScrX - (CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
             CB_Win.style.marginLeft = CB_MarginL + "px";
             CB_TimerX = setTimeout("CB_WindowResizeX()", CB_AnimTimeout);
         }
     }
 
-	
     function CB_WindowResizeY() {
         if (CB_ImgHeight == CB_ImgHeightOld) {
             if (CB_TimerY) {
@@ -1108,19 +1169,22 @@ var soond = null;
         }
     }
 
-	
     function CB_CheckResize() {
         if (CB_AnimX == "true" && CB_AnimY == "true") {
             if (CB_ResizeTimer) {
                 clearTimeout(CB_ResizeTimer);
             }
+			
+			// ---Adjust Title width to image ---------------------------------------
+			CB_Txt.style.width = CB_ImgWidthOld + "px";
+			// --------------------------------------------------------------------------	
+			
             CB_ShowImage();
             return;
         } else {
             CB_ResizeTimer = setTimeout("CB_CheckResize()", 5);
         }
     }
-
 	
     function CB_CheckResize2() {
         if (CB_AnimX == "true" && CB_AnimY == "true") {
@@ -1135,11 +1199,19 @@ var soond = null;
             CB_iFr.style.left = CB_ImgBorder + "px";
             CB_iFr.style.width = CB_ImgWidth + "px";
 //BH next line changed to make url navbar smaller in Firefox
-//BH            		CB_iFr.style.height = CB_ImgHeight + 2 + "px";			
-				CB_iFr.style.height = CB_ImgHeight + 8 + "px";
+//BH            	CB_iFr.style.height = CB_ImgHeight + 2 + "px";			
+			CB_iFr.style.height = CB_ImgHeight + 4 + "px";
             if (CB_Clicked[2] &&
                 CB_Clicked[2] != "null" && CB_Clicked[2] != null) {
-                CB_Txt.innerHTML = CB_Clicked[2];
+//				CB_Txt.innerHTML =  CB_Clicked[2];	
+
+				// Split URL title and also create CB_Txt.innerHTML   
+				var splitURLTitle = CB_Clicked[2].split(":",3);				
+				CB_Txt.innerHTML = splitURLTitle[2];
+				var MIDa = splitURLTitle[0];
+				var GEDCOMa = splitURLTitle[1];		
+				CB_Txt2.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MIDa+'&ged='+GEDCOMa; return false; };
+				
             } else {
                 CB_Txt.innerHTML = CB_Clicked[1];
             }
@@ -1152,6 +1224,7 @@ var soond = null;
             CB_ResizeTimer = setTimeout("CB_CheckResize2()", 5);
         }
     }
+
 
 	function moveLeft() {
 		if ( CB_ImgWidthOld > BrSizeX ) {
@@ -1168,7 +1241,7 @@ var soond = null;
 		}else{
 		}
 	}	
-	
+
 	function moveRight() {
 		if (CB_ImgWidthOld > BrSizeX ){
 			CB_MarginL = CB_MarginL + 10;
@@ -1200,7 +1273,7 @@ var soond = null;
 		}else{
 		}
 	}	
-	
+
 	function moveDown() {
 		if ( CB_ImgHeightOld > BrSizeY )  {
 			CB_MarginT = CB_MarginT + 10;
@@ -1216,36 +1289,40 @@ var soond = null;
 		}else{
 		}
 	}			
-	
 
-	
 	function zoomIn() {
-	if (zoomSet == 1) {
-		CB_ImgWidthOld = CB_ImgWidthOld + ( CB_ImgWidthOld * 0.05 );
-		CB_ImgHeightOld = CB_ImgHeightOld + ( CB_ImgHeightOld * 0.05 );
-		CB_Img.style.width = CB_ImgWidthOld + "px";
-		CB_Img.style.height	= CB_ImgHeightOld + "px" ;
-		CB_ImgCont.style.height = CB_ImgHeightOld + ( 2 ) * CB_ImgBorder + "px";
-		CB_MarginL = parseInt(DocScrX - (CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);		
-		CB_Win.style.marginLeft = CB_MarginL + "px";		
-		CB_MarginT = parseInt(DocScrY - (CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);		
-		CB_Win.style.marginTop = CB_MarginT - FF_ScrollbarBug / 2 + "px";				
-		CB_Prv.style.display = "none";
-		CB_Nxt.style.display = "none";	
-		CB_SlideB.style.display = "none";
-		CB_ZoomP.style.display = "block";
-		CB_ZoomS.style.display = "none";
-        if (CB_Gallery.length < 3) {		
-			CB_SlideS.style.display = "none";
-		}else{
-			CB_SlideS.style.display = "block";		
+		if (zoomSet == 1) {
+			CB_ImgWidthOld = CB_ImgWidthOld + ( CB_ImgWidthOld * 0.05 );
+			CB_ImgHeightOld = CB_ImgHeightOld + ( CB_ImgHeightOld * 0.05 );
+			CB_Img.style.width = CB_ImgWidthOld + "px";
+			CB_Img.style.height	= CB_ImgHeightOld + "px" ;
+			CB_ImgCont.style.height = CB_ImgHeightOld + ( 2 ) * CB_ImgBorder + "px";
+			CB_MarginL = parseInt(DocScrX - (CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);		
+			CB_Win.style.marginLeft = CB_MarginL + "px";		
+			CB_MarginT = parseInt(DocScrY - (CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);		
+			CB_Win.style.marginTop = CB_MarginT - FF_ScrollbarBug / 2 + "px";				
+			CB_Prv.style.display = "none";
+			CB_Nxt.style.display = "none";	
+			CB_SlideB.style.display = "none";
+			CB_ZoomP.style.display = "block";
+			CB_ZoomS.style.display = "none";
+			if (CB_Gallery.length < 3) {		
+				CB_SlideS.style.display = "none";
+			}else{
+				CB_SlideS.style.display = "block";		
+			}
+			CB_SlideP.style.display = "none";
+			CB_ShTh.style.display = "none";
+			// ---Adjust Title width to image ---------------------------------------
+			CB_Txt.style.width = CB_ImgWidthOld + "px";
+			// --------------------------------------------------------------------------				
+			CB_Zoom = "true";
+			// Drag and Drop
+			dragDrop.initElement(CB_Win);
+			CB_Win.onclick = function() {return false;};	
 		}
-		CB_SlideP.style.display = "none";
-		CB_ShTh.style.display = "none";
-		CB_Zoom = "true";
 	}
-	}
-
+	
 	function zoomOut() {
 		if (zoomSet == 1) {
 			CB_ImgWidthOld = CB_ImgWidthOld - ( CB_ImgWidthOld * 0.05 );
@@ -1269,17 +1346,25 @@ var soond = null;
 			}
 			CB_SlideP.style.display = "none";
 			CB_ShTh.style.display = "none";	
+			// ---Adjust Title width to image ---------------------------------------
+			CB_Txt.style.width = CB_ImgWidthOld + "px";
+			// --------------------------------------------------------------------------				
 			CB_Zoom = "true";
+			// Drag and Drop
+			dragDrop.initElement(CB_Win);
+			CB_Win.onclick = function() {return false;};
 		}
 	}
-
+	
 	function setZoom() {
 		zoomSet = 2;
 		// Drag and Drop
 	}
 	
 	function resetZoom() {
+	
 		CB_AnimatePlease();	
+		
 		CB_ImgWidthOld = CB_ImgWidthOrig;
 		CB_ImgHeightOld = CB_ImgHeightOrig;	
 		CB_Img.style.width = CB_ImgWidthOld + "px";
@@ -1306,12 +1391,14 @@ var soond = null;
 		}
 		CB_SlideP.style.display = "none";
 		CB_ShTh.style.display = "block";
-		CB_Zoom = "false";
 		zoomSet=1;
 		CB_Win.style.left = "50%";
-		CB_Win.style.top = "50%";		
+		CB_Win.style.top = "50%";
+		return;
 	}	
+
 	
+
 	function closeZoom() {
 		CB_ImgWidthOld = CB_ImgWidthOrig;
 		CB_ImgHeightOld = CB_ImgHeightOrig;	
@@ -1330,30 +1417,26 @@ var soond = null;
 		CB_SlideS.style.display = "block";
 		CB_SlideP.style.display = "none";
 		CB_ShTh.style.display = "block";
-		CB_Zoom = "false";
 		zoomSet=1;
+		return;
 	}		
-	
-	
+
     function CB_ShowImage() {
+		// ---Adjust Title width to image ----------------------------
+		CB_Txt.style.width = CB_ImgWidth +"px";
+		// ---------------------------------------------------------------		
+		
 		// init music player
 		setMusicPlayer();
 		// set navigation controls
-		CB_Cls.onclick = function () {resetVolume(); CB_Close();};
-        CB_SlideS.onclick = function () {resetZoom(); CB_SSStart();return false; };
-        CB_SlideP.onclick = function () {CB_SSPause();return false;};		
-		CB_Speak.onclick = function () {
-			player.play();return false;
-		};
-		CB_ZoomP.onclick = function () {resetZoom(); return false; };
-	//	CB_ZoomS.onclick = function () {CB_FullSize(); };
-
-		// Drag and Drop
-		if (CB_ZoomP) {
-			dragDrop.initElement(CB_Win);
-			CB_Win.onclick = function() {return false;};
-		}
-	
+		CB_Cls.onclick = function () {resetVolume(); CB_Close();};									// Close
+		CB_SlideS.onclick = function () {resetZoom(); CB_SSStart();return false; };					// Start Slideshow
+		CB_SlideP.onclick = function () {CB_SSPause();return false;};								// pause Slideshow
+		CB_Speak.onclick = function () {player.play();return false;};								// Speaker on/off
+		CB_ZoomP.onclick = function () {resetZoom(); CB_SSStart(); CB_SSPause(); return false; };	// Reset Zoom
+		CB_Win.ondblclick= function () {resetZoom(); CB_SSStart(); CB_SSPause(); return false; };	// REset Zoom
+//		CB_ZoomS.onclick = function () {CB_FullSize(); };
+		
         CB_PrvNxt.display = "block";
         if (CB_Animation != "warp") {
             CB_Txt.innerHTML = "";
@@ -1372,12 +1455,14 @@ var soond = null;
         } else {
             if (CB_ShowImgURL == "be") {
                 CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][0].split("/")[CB_Gallery[CB_ActImgId][0].split("/").length - 1];
-            }
+			}
         }
         if (CB_ImgNum == "be" && CB_Gallery.length > 2) {
             CB_Txt.innerHTML += " " + CB_ImgNumBracket.substring(0, 1) + CB_ActImgId + "/" + (CB_Gallery.length - 1) + CB_ImgNumBracket.substring(1, 2);
         }
+		
         CB_PrevNext();
+		
         CB_Txt.style.visibility = "visible";
         if (CB_Gallery.length > 0) {
            	CB_ImgWidthOld = CB_ImgWidth;
@@ -1411,6 +1496,7 @@ var soond = null;
             CB_ImgHd.style.width = CB_ImgWidth + 2 + "px";
             CB_ImgHd.style.height = CB_ImgHeight + 2 + "px";
             CB_Thm.style.width = CB_ImgWidth + 2 + "px";
+			
             var a = "";
             var b = 5;
             CB_AllThumbsWidth = 0;
@@ -1420,6 +1506,7 @@ var soond = null;
                 CB_AllThumbsWidth += Math.round(CB_preThumbs.width / CB_preThumbs.height * 50);
             }
             CB_AllThumbsWidth += (CB_Gallery.length - 2) * b;
+
             var c = 0;
             for (i = 1; i < CB_Gallery.length; i++) {
                 CB_preThumbs = new Image;
@@ -1431,25 +1518,34 @@ var soond = null;
             CB_Thm2.innerHTML = a;
             CB_Thm2.style.marginLeft = (CB_ImgWidth - CB_AllThumbsWidth) / 2 + "px";
         }
+		
+//		var MID = splitURLTitle[0]		
+		var MID = CB_Gallery[CB_ActImgId][3];
+		var GEDCOM = CB_Gallery[CB_ActImgId][4];
+//		CB_Txt2.onclick = function () { window.open('mediaviewer.php?filename='+MID+'&ged='+GEDCOM+'', "win01", " resizable=1, scrollbars=1, top=50, HEIGHT=800, WIDTH=1100 "); };
+		if (MID != "") { 
+			CB_Txt2.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MID+'&ged='+GEDCOM; return false; };
+		}else{
+			CB_Txt2.onclick = function () { CB_Close(); };
+		}
+		
         return true;
-
 	}
-
-
+	
+	
+	
     function CB_ShowThumbs() {
         CB_ImgHd.style.visibility = "visible";
         CB_Thm.style.display = "block";
         return;
     }
-
-
+	
     function CB_HideThumbs() {
         CB_ImgHd.style.visibility = "hidden";
         CB_Thm.style.display = "none";
         return;
     }
-
-
+	
     function getMouseXY(e) {
         if (CB_AllThumbsWidth > CB_ImgWidth) {
             if (IE) {
@@ -1463,8 +1559,7 @@ var soond = null;
             CB_Thm2.style.marginLeft = ((BrSizeX - CB_ImgWidth) / 2 - tempX) / (CB_ImgWidth / (CB_AllThumbsWidth - CB_ImgWidth)) + "px";
         }
     }
-
-
+	
     function CB_FullSize() {
 		setZoom();
         CB_Img.style.width = CB_ImgWidthOrig + "px";
@@ -1473,15 +1568,13 @@ var soond = null;
 		CB_ZoomS.style.display = "none";
 		CB_ZoomP.style.display = "block";
 //		CB_Speak.style.display = "block";
-    }
-
+	}
 	
     function CB_SlideShowStop() {
         CB_SS = "start";
         CB_SlideShowJump();
     }
-
-
+	
     function CB_SlideShowJump() {
         if (CB_SSTimer) {
             clearTimeout(CB_SSTimer);
@@ -1489,9 +1582,7 @@ var soond = null;
         CB_jj = 0;
         CB_SlideBW = 0;
         CB_SlideB.style.display = "none";
-		
     }
-
 
     function CB_SlideShow() {
         if (CB_SlShowTimer > CB_jj) {
@@ -1499,7 +1590,8 @@ var soond = null;
             CB_jj += 25;
 //BH ----- Changed slide show progress bar width as controls are now at bottom ---------------------
 //BH			CB_SlideBW += (CB_ImgWidth - 44) / (CB_SlShowTimer / 25);
-            CB_SlideBW += (CB_ImgWidth - 4) / (CB_SlShowTimer / 25);			
+            CB_SlideBW += (CB_ImgWidth - 4) / (CB_SlShowTimer / 25);
+			
             CB_SlideB.style.width = CB_SlideBW + "px";
         } else {
             clearTimeout(CB_SSTimer);
@@ -1514,19 +1606,17 @@ var soond = null;
         }
     }
 
-
     function CB_FitToBrowser() {
         if (CB_ImgWidth > BrSizeX - 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd + CB_WinPadd)) {
             CB_ImgWidth = BrSizeX - 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd + CB_WinPadd);
             CB_ImgHeight = Math.round(CB_ImgWidth / CB_ImgRate);
         }
-        if (CB_ImgHeight > BrSizeY - 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd + CB_WinPadd) - CB_TextH) {
-            CB_ImgHeight = BrSizeY - 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd + CB_WinPadd) - CB_TextH;
+        if (CB_ImgHeight > BrSizeY - 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd + CB_WinPadd) - 3*CB_TextH) {
+            CB_ImgHeight = BrSizeY - 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd + CB_WinPadd) - 3*CB_TextH;
             CB_ImgWidth = Math.round(CB_ImgRate * CB_ImgHeight);
         }
         return;
     }
-
 
     function CB_SetMargins() {
         CB_MarginL = parseInt(DocScrX - (CB_ImgWidth + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
@@ -1535,7 +1625,6 @@ var soond = null;
         CB_Win.style.marginTop = CB_MarginT - FF_ScrollbarBug / 2 + "px";
         return;
     }
-
 
     function CB_PrevNext() {
         if (CB_ActImgId > 1) {
@@ -1574,9 +1663,7 @@ var soond = null;
 			}
 		}
         return;
-	
     }
-
 
     function CB_Close() {
 		CB_Win.style.left = "50%";
@@ -1605,12 +1692,12 @@ var soond = null;
 		}else{
 			player.onStopButtonClick();		
 		}
+		
 		soond=null;
-		closeZoom();
+//		closeZoom();
 		zoomSet=0;
         return;
     }
-	
 
     function CB_ShowDocument() {
         if (CB_Hide > 0) {
@@ -1629,7 +1716,6 @@ var soond = null;
             return;
         }
     }
-
 
     function getDocumentSize() {
         this.DocSizeX = 0;
@@ -1656,7 +1742,6 @@ var soond = null;
         }
         return;
     }
-
 
     function getBrowserSize() {
         this.BrSizeX = 0;
@@ -1688,7 +1773,6 @@ var soond = null;
         return;
     }
 
-
     function getScrollPosition() {
         this.DocScrX = 0;
         this.DocScrY = 0;
@@ -1708,8 +1792,7 @@ var soond = null;
         return;
     }
 
-
-    function CB_pngFixIE() {
+	function CB_pngFixIE() {
         var s, i, j;
         var a = new Array;
         a.push(document.getElementById("CB_CloseWindow"));
@@ -1741,10 +1824,10 @@ var soond = null;
             }
         }
     }
-
-
 	
+
 // ---------------------------------------------------
+
 function showFlash(){
 	var flashObjects = document.getElementsByTagName("object");
 	for (i = 0; i < flashObjects.length; i++) {
@@ -1759,6 +1842,7 @@ function showFlash(){
 
 // ---------------------------------------------------
 
+
 function hideFlash(){
 	var flashObjects = document.getElementsByTagName("object");
 	for (i = 0; i < flashObjects.length; i++) {
@@ -1769,12 +1853,11 @@ function hideFlash(){
 	for (i = 0; i < flashEmbeds.length; i++) {
 		flashEmbeds[i].style.visibility = "hidden";
 	}
-
 }
 
 
-
 /*------------------------------Drag and Drop - quirksmode----------------------------------------------*/
+
 dragDrop = {
     keyHTML: '<a href="#" class="keyLink">#</a>',
     keySpeed: 10, // pixels per keypress event
@@ -1785,14 +1868,16 @@ dragDrop = {
     dXKeys: undefined,
     dYKeys: undefined,
     draggedObject: undefined,
+	
     initElement: function (element) {
 /*	
 		if (typeof element == 'string')
 			element = document.getElementById(element);
 				element = document.getElementById(element);
 */	
-		element.onmousedown = dragDrop.startDragMouse;
-
+		if (CB_ZoomP.style.display == "block") {
+			element.onmousedown = dragDrop.startDragMouse;
+		}
 /*		
 		element.innerHTML += dragDrop.keyHTML;
 		var links = element.getElementsByTagName('a');
@@ -1801,6 +1886,7 @@ dragDrop = {
 		lastLink.onclick = dragDrop.startDragKeys;
 */
     },
+
     startDragMouse: function (e) {
         dragDrop.startDrag(CB_Win);
         var evt = e || window.event;
@@ -1810,6 +1896,7 @@ dragDrop = {
         addEventSimple(document,'mouseup',dragDrop.releaseElement);
         return false;
     },
+
     startDragKeys: function () {
         dragDrop.startDrag(this.relatedElement);
         dragDrop.dXKeys = dragDrop.dYKeys = 0;
@@ -1818,12 +1905,13 @@ dragDrop = {
         this.blur();
         return false;
     },
+
     startDrag: function (obj) {
         if (dragDrop.draggedObject)
             dragDrop.releaseElement();
 		if(IE){	
 			dragDrop.startX = (obj.offsetLeft+(CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
-			dragDrop.startY = (obj.offsetTop+(CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+			dragDrop.startY = ((obj.offsetTop-document.documentElement.scrollTop)+(CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
 		}else{
 			dragDrop.startX = (obj.offsetLeft)+CB_ieRPBug ;
 			dragDrop.startY = (obj.offsetTop)+CB_ieRPBug ;
@@ -1831,6 +1919,7 @@ dragDrop = {
         dragDrop.draggedObject = obj;
         obj.className += ' dragged';
     },
+
     dragMouse: function (e) {
         var evt = e || window.event;
         var dX = evt.clientX - dragDrop.initialMouseX;
@@ -1838,6 +1927,7 @@ dragDrop = {
         dragDrop.setPosition(dX,dY);
         return false;
     },
+
     dragKeys: function(e) {
         var evt = e || window.event;
         var key = evt.keyCode;
@@ -1846,42 +1936,51 @@ dragDrop = {
             case 63234:
                 dragDrop.dXKeys -= dragDrop.keySpeed;
                 break;
+				
             case 38:    // up
             case 63232:
                 dragDrop.dYKeys -= dragDrop.keySpeed;
                 break;
+				
             case 39:    // right
             case 63235:
                 dragDrop.dXKeys += dragDrop.keySpeed;
                 break;
+				
             case 40:    // down
             case 63233:
                 dragDrop.dYKeys += dragDrop.keySpeed;
                 break;
+				
             case 13:     // enter
             case 27:     // escape
                 dragDrop.releaseElement();
                 return false;
+				
             default:
                 return true;
-        }
+		}
+		
         dragDrop.setPosition(dragDrop.dXKeys,dragDrop.dYKeys);
         if (evt.preventDefault) // also solves problem in Saf; keypress part of default ???
             evt.preventDefault();
         return false;
     },
+	
     setPosition: function (dx,dy) {
         dragDrop.draggedObject.style.left = dragDrop.startX + dx + 'px';
         dragDrop.draggedObject.style.top = dragDrop.startY + dy + 'px';
     },
+	
     switchKeyEvents: function () {
-
         // for Opera and Safari 1.3
-
         removeEventSimple(document,'keydown',dragDrop.dragKeys);
         removeEventSimple(document,'keypress',dragDrop.switchKeyEvents);
         addEventSimple(document,'keypress',dragDrop.dragKeys);
+	
     },
+	
+	
     releaseElement: function() {
         removeEventSimple(document,'mousemove',dragDrop.dragMouse);
         removeEventSimple(document,'mouseup',dragDrop.releaseElement);
@@ -1892,6 +1991,7 @@ dragDrop = {
         dragDrop.draggedObject = null;
     }
 }
+
 
 function addEventSimple(obj,evt,fn) {
     if (obj.addEventListener)
@@ -1906,10 +2006,6 @@ function removeEventSimple(obj,evt,fn) {
     else if (obj.detachEvent)
         obj.detachEvent('on'+evt,fn);
 }
- 
+
 // --------------------------------------------------------------------------------------
 
- 
-
-
-	
