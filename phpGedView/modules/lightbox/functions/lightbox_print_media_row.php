@@ -340,13 +340,15 @@
 				
 			// Else Print the Regular Thumbnail if associated with an image, 
 			}else{
-			
 				$browser = $_SERVER['HTTP_USER_AGENT']; 
 				if(strstr($browser,"MSIE")) {
-					print "<img src=\"" . $thumbnail . "\" height=80 border=\"0\" " ;
+					$height = 80;
 				}else{
-					print "<img src=\"" . $thumbnail . "\" height=78 border=\"0\" " ;
+					$height = 78;
 				}			
+				$size = getimagesize($thumbnail);
+				if ($size[1]<$height) $height = $size[1];
+				print "<img src=\"" . $thumbnail . "\" height=\"".$height."\" border=\"0\" " ;
 
 			}
 			// These next lines disable the extra IE Browser tooltip. (It has to be done manually in Firefox but this is not recommended)
