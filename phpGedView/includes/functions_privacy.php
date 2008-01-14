@@ -893,13 +893,13 @@ function privatize_gedcom($gedrec) {
 			//-- check if we need to do any fact privacy checking
 			//---- check for RESN
 			$resn = false;
-			if (preg_match("/^\d RESN/", $gedrec)) $resn = true;
+			if (preg_match("/\d RESN/", $gedrec)) $resn = true;
 			//---- check for any person facts
 			$ppriv = isset($person_facts[$gid]);
 			//---- check for any global facts
 			$gpriv = false;
 			foreach($global_facts as $key=>$gfact) {
-				if (preg_match("/\n1 ".$key."/", $gedrec)>0) $gpriv = true;
+				if (preg_match("/1 ".$key."/", $gedrec)>0) $gpriv = true;
 			}
 			//-- if no fact privacy then return the record
 			if (!$resn && !$ppriv && !$gpriv) return $gedrec;
