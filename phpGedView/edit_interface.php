@@ -696,7 +696,7 @@ case 'addsourceaction':
 	if (!empty($TITL)) {
 		$newgedrec .= "1 TITL $TITL\r\n";
 		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\r\n";
-		if (!empty($ROMN)) $newgedrec .= "2 ROMN $_ROMN\r\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\r\n";
 	}
 	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\r\n";
 	if (!empty($PUBL)) $newgedrec .= "1 PUBL $PUBL\r\n";
