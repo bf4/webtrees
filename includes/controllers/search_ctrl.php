@@ -1589,6 +1589,7 @@ class SearchControllerRoot extends BaseController {
 						$this->totalResults = 0;
 						$this->multiTotalResults = 0;
 						foreach ($this->multisiteResults as $key => $siteResults) {
+							include_once('includes/serviceclient_class.php');
 							$serviceClient = ServiceClient :: getInstance($key);
 							$siteName = $serviceClient->getServiceTitle();
 							$siteURL = dirname($serviceClient->getURL());
