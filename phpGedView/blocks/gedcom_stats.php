@@ -219,7 +219,12 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 					<?php echo $pgv_lang["stat_users"]?>
 				</td>
 				<td class="facts_value"><div dir="rtl">
-					<?php echo count(getUsers())?>
+				<?php
+				if (userGedcomAdmin($username, $GEDCOM)){
+					echo "<a href=\"useradmin.php\">" . count(getUsers()) . "</a>";
+				} else {
+					echo count(getUsers());
+				}?>
 				</div></td>
 			</tr>
 			<?php

@@ -26,7 +26,8 @@
  */
 
 require "config.php";
-if (empty($action)) $action="";
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['source'])) $source = $_REQUEST['source'];
 if (empty($source)) $source="";		// Set when loaded from uploadgedcom.php
 if (!userGedcomAdmin(getUserName())) {
 	header("Location: editgedcoms.php");
@@ -107,6 +108,14 @@ if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 // Remove slashes
 if (isset($_POST["NEW_COMMON_NAMES_ADD"])) $_POST["NEW_COMMON_NAMES_ADD"] = stripslashes($_POST["NEW_COMMON_NAMES_ADD"]);
 if (isset($_POST["NEW_COMMON_NAMES_REMOVE"])) $_POST["NEW_COMMON_NAMES_REMOVE"] = stripslashes($_POST["NEW_COMMON_NAMES_REMOVE"]);
+if (isset($_REQUEST['path'])) $path = $_REQUEST['path'];
+if (isset($_REQUEST['oldged'])) $oldged = $_REQUEST['oldged'];
+if (isset($_REQUEST['GEDFILENAME'])) $GEDFILENAME = $_REQUEST['GEDFILENAME'];
+if (isset($_REQUEST['GEDCOMPATH'])) $GEDCOMPATH = $_REQUEST['GEDCOMPATH'];
+if (isset($_REQUEST['ged'])) $ged = $_REQUEST['ged'];
+if (isset($_REQUEST['gedcom_title'])) $gedcom_title = $_REQUEST['gedcom_title'];
+if (isset($_REQUEST['THEME_DIR'])) $THEME_DIR = $_REQUEST['THEME_DIR'];
+
 if (empty($oldged)) $oldged = "";
 else $ged = $oldged;
 if (!isset($path)) $path = "";

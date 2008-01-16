@@ -258,7 +258,6 @@ class IndividualControllerRoot extends BaseController {
 			//-- only get the requested tab and then exit
 			exit;
 		}
-		//print $this->indi->gedrec;
 	}
 	//-- end of init function
 	/**
@@ -913,7 +912,6 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function getTab($tab) {
-		//var $tabarray = array("facts","notes","sources","media","relatives","research","map","lightbox");
 		$tabType = $this->tabarray[$tab];
 		switch($tabType) {
 			case "facts":

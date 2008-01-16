@@ -77,7 +77,7 @@ project.
 -------------------------------------------------------
 SYSTEM REQUIREMENTS
 
-PhpGedView requires a web server with at least PHP v4.3 and around 20MB of
+PhpGedView requires a web server with at least PHP v4.3.5 and around 20MB of
 web space.  The default installations of PHP on most servers should provide
 you with all of the PHP functionality you should need.
 
