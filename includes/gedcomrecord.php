@@ -40,6 +40,7 @@ class GedcomRecord {
 	var $type = "";
 	var $changed = false;
 	var $rfn = null;
+	var $disp = null;
 
 	/**
 	 * constructor for this class
@@ -341,7 +342,8 @@ class GedcomRecord {
 	 * @return boolean
 	 */
 	function canDisplayDetails() {
-		return displayDetails($this->gedrec, $this->type);
+		if (is_null($this->disp)) $this->disp = displayDetailsById($this->xref, $this->type);
+		return $this->disp;
 	}
 	
 	/**

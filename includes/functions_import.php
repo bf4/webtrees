@@ -1242,6 +1242,8 @@ function create_names_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX name_surn ON " . $TBLPREFIX . "names (n_surname)";
 	$res = dbquery($sql);
+	$sql = "CREATE INDEX name_file ON " . $TBLPREFIX . "names (n_file)";
+	$res = dbquery($sql);
 	if (isset($DEBUG) && $DEBUG==true) print "Successfully created names table.<br />\n";
 }
 /**
@@ -1263,6 +1265,8 @@ function create_remotelinks_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX r_link_id ON " . $TBLPREFIX . "remotelinks (r_linkid)";
 	$res = dbquery($sql);
+	$sql = "CREATE INDEX r_file ON " . $TBLPREFIX . "remotelinks (r_file)";
+	$res = dbquery($sql);
 
 	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_remotelinks"] . "<br />\n";
 }
@@ -1282,6 +1286,8 @@ function create_soundex_table()
 		exit;
 	}
 	$sql = "CREATE INDEX sx_i_id_ix ON ".$TBLPREFIX."soundex (sx_i_id)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX sx_file_ix ON " . $TBLPREFIX . "soundex (sx_file)";
 	$res = dbquery($sql);
 	if (isset($DEBUG) && $DEBUG==true) print "Successfully created soundex table.<br />\n";
 }

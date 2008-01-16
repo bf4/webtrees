@@ -457,7 +457,18 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		// Setup which kind of message it is
 		if ($status) {
 			$status = "Success!";
-			$image = "modules/research_assistant/images/checkbutton.gif";
+			$output="<br/>";
+			
+			//gets each person that was changed and shows their name with a link to their individual page
+			$thePeopleList=split(";",$_REQUEST['personid']);
+			foreach($thePeopleList as $i=>$pid) {
+				if(!empty($pid)) {
+						$person=Person::getInstance($pid);
+						$output.='<a href="'.$person->getLinkUrl().'">'.$person->getName().'</a><br/>';
+				}
+			}
+			
+			$output.="<br/>";
 			$div = "<span class=\"warning\">";
 			$end = "</span>";
 		} else {
@@ -1492,6 +1503,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		{
 			return $currentDate;
 		}
+		//var_dump($people);
+		return $people;
 	}
 
 	/**

@@ -643,12 +643,12 @@ function displayDetailsByID($pid, $type = "INDI") {
     	//-- for media privacy check all of the links to the media
 	    $links = get_media_relations($pid);
 	    $disp = true;
-	    foreach($links as $gid=>$type) {
-	    	$disp = $disp && displayDetailsById($gid, id_type($gid));
-	    	if (!$disp) {
-	    		$privacy_cache[$pkey] = false;
-	    		return false;
-	    }
+		    foreach($links as $gid=>$type) {
+		    	$disp = $disp && displayDetailsById($gid, id_type($gid));
+		    	if (!$disp) {
+		    		$privacy_cache[$pkey] = false;
+		    		return false;
+		    }
 	    }
 	    $privacy_cache[$pkey] = $disp;
 	    return $disp;

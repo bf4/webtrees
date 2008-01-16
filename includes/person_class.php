@@ -516,7 +516,9 @@ class Person extends GedcomRecord {
 	 */
 	function getSpouseFamilyIds() {
 		if (!is_null($this->fams)) return $this->fams;
-		$this->fams = find_families_in_record($this->gedrec, "FAMS");
+		//$this->fams = find_families_in_record($this->gedrec, "FAMS");
+		preg_match_all("/1\s*FAMS\s*@(.+)@/", $this->gedrec, $match);
+		$this->fams = $match[1];
 		return $this->fams;
 	}
 	/**
@@ -577,7 +579,9 @@ class Person extends GedcomRecord {
 	 */
 	function getChildFamilyIds() {
 		if (!is_null($this->famc)) return $this->famc;
-		$this->famc = find_families_in_record($this->gedrec, "FAMC");
+		//$this->famc = find_families_in_record($this->gedrec, "FAMC");
+		preg_match_all("/1\s*FAMC\s*@(.+)@/", $this->gedrec, $match);
+		$this->famc = $match[1];
 		return $this->famc;
 	}
 	/**
@@ -858,6 +862,9 @@ class Person extends GedcomRecord {
 	function add_family_facts($otherfacts = true) {
 		global $GEDCOM, $nonfacts, $nonfamfacts;
 
+		if (!isset($nonfacts)) $nonfacts = array();
+		if (!isset($nonfamfacts)) $nonfamfacts = array();
+
 		if (!$this->canDisplayDetails()) return;
 		$this->parseFacts();
 		//-- Get the facts from the family with spouse (FAMS)
@@ -884,6 +891,8 @@ class Person extends GedcomRecord {
 					else $fact="";
 					$fact = trim($fact);
 					if ($fact=="DIV") $hasdiv = true;
+					$factrec = trim($factrec);
+					if (!empty($factrec)) {
 					// -- handle special source fact case
 					if (($fact!="SOUR") && ($fact!="OBJE") && ($fact!="NOTE") && ($fact!="CHAN") && ($fact!="_UID") && ($fact!="RIN")) {
 						if ((!in_array($fact, $nonfacts))&&(!in_array($fact, $nonfamfacts))) {
@@ -897,6 +906,7 @@ class Person extends GedcomRecord {
 						if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@";
 						$factrec.="\r\n1 _PGVFS @$famid@\r\n";
 						$this->otherfacts[]=array($linenum, $factrec);
+					}
 					}
 					$factrec = $line;
 					$linenum = $i;

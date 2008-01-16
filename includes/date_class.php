@@ -1180,6 +1180,7 @@ class GedcomDate {
 	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
 	function GetAgeYears($d1, $d2=NULL) {
+		if (is_null($d1)) return;
 		if (is_null($d2))
 			return $d1->date1->GetAge(false, client_jd());
 		else
