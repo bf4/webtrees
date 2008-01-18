@@ -567,6 +567,8 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
  		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
+@import_request_variables("cgp");
+
 //-- import the gedcoms array
 if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	require_once($INDEX_DIRECTORY."gedcoms.php");

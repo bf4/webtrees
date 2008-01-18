@@ -512,8 +512,8 @@ class Person extends GedcomRecord {
 		$label = "";
 		$gap = 0;
 		if ($elderdate) {
-			$p1 = new GedcomDate($elderdate);
-			$p2 = new GedcomDate($this->getBirthDate(false));
+			$p1 = $elderdate;
+			$p2 = $this->getBirthDate(false);
 			if ($p1->MinJD() && $p2->MinJD()) {
 				$gap = $p2->MinJD()-$p1->MinJD(); // days
 				$label .= "<div class=\"elderdate age $TEXT_DIRECTION\">";

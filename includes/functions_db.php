@@ -2932,6 +2932,7 @@ function get_server_list(){
 			$source["gedcom"] = $row["s_gedcom"];
 			$row = db_cleanup($row);
 			$source["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+			$source["url"] = get_gedcom_value("URL", 1, $source["gedcom"]);
 			$sitelist[$row["s_id"]] = $source;
 			$sourcelist[$row["s_id"]] = $source;
 		}

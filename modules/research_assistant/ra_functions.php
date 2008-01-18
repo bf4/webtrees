@@ -1892,6 +1892,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							</table>\n
 					</td></tr></table>";
 			
+		//beginning of FamilySearch results functionality
+		if (file_exists("modules/FamilySearch/RA_AutoMatch.php")) {
+			include_once("modules/FamilySearch/RA_AutoMatch.php");
+			$matcher = new RA_AutoMatch();
+			$out .= $matcher->generateResultsTable($person);
+			unset($matcher);
+		}
 
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {

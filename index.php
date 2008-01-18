@@ -42,6 +42,7 @@ if (isset ($_REQUEST['mod']))
 
 if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['message_id'])) $message_id = $_REQUEST['message_id'];
 
 /**
  * Block definition array
