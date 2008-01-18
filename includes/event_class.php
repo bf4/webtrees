@@ -54,6 +54,8 @@ class Event {
 	var $parentObject = null;
 	var $detail = NULL;
 	var $values = NULL;
+	var $sortOrder = 0;
+	var $sortDate = NULL;
 	
 	/**
 	 * Get the value for the first given GEDCOM tag
@@ -369,11 +371,32 @@ class Event {
 		return '';
 	}
 
-	// Helper functions to sort events
+	/**
+	 * Static Helper functions to sort events
+	 *
+	 * @param Event $a
+	 * @param Event $b
+	 * @return int
+	 */
 	function CompareDate(&$a, &$b) {
-		return GedcomDate::Compare($a->getDate(), $b->getDate());
+		$adate = $a->getDate();
+		if (is_null($adate) && !is_null($a->sortDate)) $adate = $a->sortDate;
+		$bdate = $b->getDate();
+		if (is_null($bdate) && !is_null($b->sortDate)) $bdate = $b->sortDate;
+		$ret = GedcomDate::Compare($adate, $bdate);
+		if ($ret==0) {
+			$ret = $a->sortOrder - $b->sortOrder;
+		}
+		return $ret;
 	}
 
+	/**
+	 * Static method to Compare two events by their type
+	 *
+	 * @param Event $a
+	 * @param Event $b
+	 * @return int
+	 */
 	function CompareType(&$a, &$b) {
 		static $factsort=NULL;
 
@@ -455,45 +478,11 @@ class Event {
 			else
 				$btag="_????_";
 
-		return $factsort[$atag]-$factsort[$btag];
+		$ret = $factsort[$atag]-$factsort[$btag];
+		//-- if the facts are the same, then go ahead and compare them by date
+		//-- this will improve the positioning of non-dated elements on the next pass
+		if ($ret==0) $ret = Event::CompareDate($a, $b);
+		return $ret;
 	}
-
-
-// When classes are fully implemented for these methods, getters should use lazy instantiation
-//	/**
-//	 * The address of the place where the event occured.
-//	 * Note: Future versions may want to return an actual address class.
-//	 * @return string
-//	 */
-//	function getAddress() {
-//		return $this->address;
-//	}
-//		
-//	/**
-//	 * The list of notes associated with this event.
-//	 *
-//	 * @return array<string>
-//	 */
-//	function getNotes() {
-//		return $this->note;
-//	}
-//	
-//	/**
-//	 * The list of source citations associated with this event.
-//	 *
-//	 * @return array<SourceCitation>
-//	 */
-//	function getSourceCitations() {
-//		return $this->sourceCitation;
-//	}
-//
-//	/**
-//	 * The list of Multimedia Links associated with this event.
-//	 *
-//	 * @return array<MultimediaLink>
-//	 */
-//	function getMultimediaLink() {
-//		return $this->multimediaLink;
-//	}
 }
 ?>

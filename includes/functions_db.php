@@ -216,6 +216,18 @@ function check_for_import($ged) {
 	return $GEDCOMS[$ged]["imported"];
 }
 
+// Generate a modulus function for various flavours of sql
+function sql_mod_function($x,$y) {
+	global $DBTYPE;
+
+	switch ($DBTYPE) {
+	case 'sqlite':
+		return "(($x)-ROUND(($x)/($y)-0.5)*($y))";
+	default:
+		return "MOD($x,$y)";
+	}
+}
+
 /**
  * find the gedcom record for a family
  *
@@ -3101,7 +3113,7 @@ function get_anniversary_events($jd, $facts='') {
 					else
 						$where.=" AND d_day={$anniv->d}";
 				if ($anniv->IsLeapYear())
-					$where.=" AND (d_mon=6 AND MOD(7*d_year+1,19)<7)";
+					$where.=" AND (d_mon=6 AND ".sql_mod_function("7*d_year+1","19")."<7)";
 				else
 					$where.=" AND (d_mon=6 OR d_mon=7)";
 				break;
@@ -3113,7 +3125,7 @@ function get_anniversary_events($jd, $facts='') {
 						$where.=" AND d_day>={$anniv->d}";
 					else
 						$where.=" AND d_day={$anniv->d}";
-				$where.=" AND (d_mon=6 AND MOD(7*d_year+1,19)>=7 OR d_mon=7)";
+				$where.=" AND (d_mon=6 AND ".sql_mod_function("7*d_year+1","19").">=7 OR d_mon=7)";
 				break;
 			case 8: // 1 NSN includes 30 ADR, if this year is non-leap
 				if ($anniv->d==1) {

@@ -32,6 +32,8 @@ exit;
 
 loadLangFile("pgv_confighelp");
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+
 if (!isset($action)) $action = "";
 
 if ($action == "phpinfo") {

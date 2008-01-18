@@ -43,8 +43,8 @@ class GedcomRecord {
 	var $changed = false;
 	var $rfn = null;
 	var $facts = null;
-	var $disp = null;
 	var $changeEvent = null;
+	var $disp = null;
 
 	/**
 	 * constructor for this class

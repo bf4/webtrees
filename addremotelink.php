@@ -29,6 +29,11 @@
 require_once("config.php");
 require_once("includes/functions_edit.php");
 require_once("includes/serviceclient_class.php");
+$has_familysearch = false;
+if (file_exists("modules/FamilySearch/familySearchWrapper.php")) {
+	$has_familysearch = true;
+	require_once("modules/FamilySearch/familySearchWrapper.php");
+}
 
 //-- require that the user have entered their password
 if ($_SESSION["cookie_login"]) {
@@ -109,6 +114,45 @@ if ($action=="addlink") {
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
 			if (PEAR::isError($sid)) {
+				print "<span class=\"error\">failed to authenticate to remote site</span>";
+				print_r($sid);
+			}
+			if (!empty($sid)) {
+				$title = $service->getServiceTitle();
+				$gedcom_string.= "1 TITL ".$title."\r\n";
+				$serverID = append_gedrec($gedcom_string);
+			}
+			else print "<span class=\"error\">failed to authenticate to remote site</span>";
+		}
+	}
+	//this will happen when the family search radio button is selected.
+	//TODO: Make sure that it is merging correctly
+	else if($is_remote=="FamilySearch"){
+	if(empty($_POST["txtFS_URL"])) {
+			echo "Must enter a URL";
+			//print $_POST["cbExistingServers"];
+		}
+		else {
+			if (isset($_POST["txtFS_URL"])) $server_name = $_POST["txtFS_URL"];
+			else $server_name = "";
+			if (isset($_POST["txtFS_GID"]))$gedcom_id = $_POST["txtFS_GID"];
+			else $gedcom_id = "";
+			if (isset($_POST["txtFS_Username"])) $username = $_POST["txtFS_Username"];
+			else $username = "";
+			if (isset($_POST["txtFS_Password"])) $password = $_POST["txtFS_Password"];
+			else $password = "";
+			$gedcom_string = "0 @new@ SOUR\r\n";
+			$gedcom_string.= "1 URL ".$server_name."\r\n";
+			$gedcom_string.= "2 TYPE FamilySearch url\r\n";
+			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
+			$gedcom_string.= "2 _USER ".$username."\r\n";
+			$gedcom_string.= "2 _PASS ".$password."\r\n";
+			
+			//-- only allow admin users to see password
+			$gedcom_string.= "2 RESN Confidential\r\n";
+			$service = new FamilySearchWrapper($gedcom_string);
+			$sid = $service->authenticate();
+			if ($sid==false || PEAR::isError($sid)) {
 				print "<span class=\"error\">failed to authenticate to remote site</span>";
 				print_r($sid);
 			}
@@ -294,8 +338,14 @@ function swapComponents(btnPressed){
       tdblah.innerHTML = '<?php print preg_replace(array("/'/", "/[\r\n]+/"), array("\\'", " "), print_help_link("link_remote_site_help", "qm", "", false, true));?> <?php echo $pgv_lang["label_site"];?>';
       tdblah2.innerHTML =  '<?php echo $pgv_lang["lbl_server_list"]; ?><br /><select id="cbExistingServers" name="cbExistingServers" style="width: 400px;"><?php if(isset($server_list)){foreach($server_list as $key=>$server){?><option value="<?php echo $key; ?>"><?php print $server['name'];?></option><?php }}?></select><br /><br />-or-<br /><br /><?php echo $pgv_lang["lbl_type_server"];?><br /><?php echo $pgv_lang["label_site_url"];?><input type="text" id="txtURL" name="txtURL" size="66"><br /><?php echo $pgv_lang["label_gedcom_id2"];?><input type="text" id="txtGID" name="txtGID" size="14"/><br /><?php echo $pgv_lang["label_username_id2"];?><input type="text" id="txtUsername" name="txtUsername" size="20"/><br /><?php echo $pgv_lang["label_password_id2"];?>&nbsp;<input type="password" id="txtPassword" name="txtPassword" size="20"/>';
       tdId.innerHTML = '<?php print preg_replace(array("/'/", "/[\r\n]+/"), array("\\'", " "), print_help_link("link_person_id_help", "qm", "", false, true));?> <?php echo $pgv_lang['label_remote_id'];?>';
+	}
+	else if(btnPressed=="FamilySearch"){
+	    tdblah.innerHTML = '<?php print preg_replace(array("/'/", "/[\r\n]+/"), array("\\'", " "), print_help_link("link_family_search_help", "qm", "", false, true));?> <?php echo "Family Search";?>';
+		tdblah2.innerHTML =  '<?php echo $pgv_lang["label_site_url"];?><input type="text" id="txtFS_Url" name="txtFS_URL" size="40"/><br /><?php echo $pgv_lang["label_username_id2"];?><input type="text" id="txtFS_Username" name="txtFS_Username" size="20"/><br /><?php echo $pgv_lang["label_password_id2"];?>&nbsp;<input type="password" id="txtFS_Password" name="txtFS_Password" size="20"/>';
+        tdId.innerHTML = '<?php print preg_replace(array("/'/", "/[\r\n]+/"), array("\\'", " "), print_help_link("link_person_id_help", "qm", "", false, true));?> <?php echo $pgv_lang['label_remote_id'];?>';
+	}
 
-    }else{
+	else{
         tdblah.innerHTML = '<?php print preg_replace(array("/'/", "/[\r\n]+/"), array("\\'", " "), print_help_link("link_gedcom_id_help", "qm", "", false, true));?> <?php echo $pgv_lang['label_gedcom_id'];?>';
         tdId.innerHTML = '<?php print preg_replace(array("/'/", "/[\r\n]+/"), array("\\'", " "), print_help_link("link_person_id_help", "qm", "", false, true));?> <?php echo $pgv_lang['label_local_id'];?>';
         tdblah2.innerHTML = '<select id="cbGedcomId" name="cbGedcomId" style="width: 200px;"><?php foreach($GEDCOMS as $ged){?><option><?php print $ged["gedcom"];?></option><?php }?></select><br />';
@@ -345,17 +395,19 @@ function checkform(frm){
 	</tr>
 	<tr>
 		<td class="descriptionbox width20"><?php print_help_link('link_remote_location_help', 'qm');?> <?php echo $pgv_lang["label_location"];?></td>
-		<td class="optionbox"><input type="radio" id="local"
-			name="location" value="local" onclick="swapComponents('')" />
+		<td class="optionbox"><input type="radio" id="local" name="location" value="local" onclick="swapComponents('')" />
 			<?php echo $pgv_lang["label_same_server"];?>&nbsp;&nbsp;&nbsp;
 		<input type="radio" id="remote" name="location" value="remote" checked
-			onclick="swapComponents('remote')" />
-			<?php echo $pgv_lang["label_diff_server"];?></td>
+			onclick="swapComponents('remote')" /> <?php echo $pgv_lang["label_diff_server"];?>&nbsp;&nbsp;&nbsp;
+		<?php if ($has_familysearch) { ?>
+		<input type="radio" id="FamilySearch" name="location" value="FamilySearch" onclick="swapComponents('FamilySearch')" /> Family Search
+		<?php } ?>
+		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox width20" id="tdUrl"><?php print_help_link('link_remote_site_help', 'qm');?> <?php echo $pgv_lang["label_site"];?></td>
-		<td class="optionbox" id="tdUrlText">
-		<?php echo $pgv_lang["lbl_server_list"]; ?><br />
+		<td class="descriptionbox width20" id="tdUrl"><?php print_help_link('link_remote_site_help', 'qm');?>
+		<?php echo $pgv_lang["label_site"];?></td>
+		<td class="optionbox" id="tdUrlText"><?php echo $pgv_lang["lbl_server_list"]; ?><br />
 		<select id="cbExistingServers" name="cbExistingServers"
 			style="width: 400px;">
 			<?php
@@ -373,23 +425,25 @@ function checkform(frm){
 		-or-<br />
 		<br />
 		<?php echo $pgv_lang["lbl_type_server"];?><br />
-		<?php echo $pgv_lang["label_site_url"];?><input type="text" id="txtURL" name="txtURL" size="66"><br />
-		<?php echo $pgv_lang["label_gedcom_id2"];?><input
-			type="text" id="txtGID" name="txtGID" size="14" /><br />
-			<?php echo $pgv_lang["label_username_id2"];?><input
-			type="text" id="txtUsername" name="txtUsername" size="20" /><br />
+		<?php echo $pgv_lang["label_site_url"];?><input type="text"
+			id="txtURL" name="txtURL" size="66"><br />
+			<?php echo $pgv_lang["label_gedcom_id2"];?><input type="text"
+			id="txtGID" name="txtGID" size="14" /><br />
+			<?php echo $pgv_lang["label_username_id2"];?><input type="text"
+			id="txtUsername" name="txtUsername" size="20" /><br />
 			<?php echo $pgv_lang["label_password_id2"];?>&nbsp;<input
 			type="password" id="txtPassword" name="txtPassword" size="20" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox width20" id="tdId"><?php print_help_link('link_person_id_help', 'qm');?> <?php echo $pgv_lang["label_remote_id"];?></td>
-		<td class="optionbox"><input type="text" id="txtPID"
-			name="txtPID" size="14" /></td>
+		<td class="descriptionbox width20" id="tdId"><?php print_help_link('link_person_id_help', 'qm');?>
+		<?php echo $pgv_lang["label_remote_id"];?></td>
+		<td class="optionbox"><input type="text" id="txtPID" name="txtPID"
+			size="14" /></td>
 	</tr>
 </table>
 <br />
-<input type="submit" value="<?php echo $pgv_lang['label_add_remote_link'];?>" id="btnSubmit" name="btnSubmit"
-value="add"/></form>
+<input type="submit" value="<?php echo $pgv_lang['label_add_remote_link'];?>"
+id="btnSubmit" name="btnSubmit" value="add"/></form>
 <?php
 }
 // autoclose window when update successful

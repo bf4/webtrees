@@ -116,6 +116,7 @@ class IndividualControllerRoot extends BaseController {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
+				include_once('includes/serviceclient_class.php');
 				$service = ServiceClient::getInstance($servid);
 				//$indirec =
 				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\r\n1 RFN ".$this->pid, false);

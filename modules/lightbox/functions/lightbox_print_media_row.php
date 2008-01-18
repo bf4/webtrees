@@ -82,7 +82,8 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
     $thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
     $isExternal = isFileExternal($thumbnail);
     $linenum = 0;
-    
+	
+
     if (showFactDetails("OBJE", $pid)) {
 	
 		//  Get the title of the media
@@ -123,8 +124,11 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 
                 // For Regular filetypes supported by lightbox at the moment ================
 				if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file'])  ) {
-					print "<table class=\"pic\"><tr>" . "\n";
-					print "<td align=\"center\" colspan=1>". "\n";
+					print "<table class=\"pic\" border=0><tr>" . "\n";
+					print "<td align=\"center\" rowspan=2 >
+					<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>
+					</td>". "\n";
+					print "<td align=\"center\" >". "\n";
 					
 					// Check for Notes associated media item
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
@@ -192,8 +196,11 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					}
 
                 // For URL filetypes supported by lightbox at the moment  ================
-				}else if ( eregi("http",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ) {				
-					print "<table class=\"pic\"><tr>" . "\n";
+				}else if ( eregi("http",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ) {
+					print "<table class=\"pic\" border=0><tr>" . "\n";
+					print "<td align=\"center\" rowspan=2 >
+					<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>
+					</td>". "\n";
 					print "<td align=\"center\" colspan=1>". "\n";	
 					
 					// Check for Notes associated media item
@@ -261,7 +268,10 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					
 				// Else For filetypes NOT supported by lightbox at the moment, use the pop-up window technique ==============================
 				}else{
-					print "<table class=\"pic\" ><tr>" . "\n";
+					print "<table class=\"pic\" border=0><tr>" . "\n";
+					print "<td align=\"center\" rowspan=2 >
+					<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>
+					</td>". "\n";
 					print "<td align=\"center\" colspan=1>" . "\n";
 					
 					// Check for Notes associated media item
@@ -341,13 +351,16 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 				
 			// Else Print the Regular Thumbnail if associated with an image, 
 			}else{
-			
+
 				$browser = $_SERVER['HTTP_USER_AGENT']; 
 				if(strstr($browser,"MSIE")) {
-			print "<img src=\"" .$thumbnail . "\" height=80 border=\"0\" " ;
+					$height = 80;
 				}else{
-					print "<img src=\"" . $thumbnail . "\" height=78 border=\"0\" " ;
+					$height = 78;
 				}			
+				$size = findImageSize($thumbnail);
+				if ($size[1]<$height) $height = $size[1];
+				print "<img src=\"" . $thumbnail . "\" height=\"".$height."\" border=\"0\" " ;
 
 			}
 			// These next lines disable the extra IE Browser tooltip. (It has to be done manually in Firefox but this is not recommended)

@@ -113,6 +113,19 @@ class FamilyRoot extends BaseController
 		$this->famid = $_REQUEST['famid'];
 		$this->family = Family::getInstance($this->famid);
 		
+		if (empty($this->famrec)) {
+			$ct = preg_match("/(\w+):(.+)/", $this->famid, $match);
+			if ($ct>0) {
+				$servid = trim($match[1]);
+				$remoteid = trim($match[2]);
+				include_once('includes/serviceclient_class.php');
+				$service = ServiceClient::getInstance($servid);
+				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\r\n1 RFN ".$this->famid, false);
+				
+				$this->famrec = $newrec;
+			}
+		}
+		
 		//-- if no record was found create a default empty one
 		if (empty($this->family)) {
 			$this->famrec = "0 @".$this->famid."@ FAM\r\n";

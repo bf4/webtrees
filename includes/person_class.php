@@ -912,7 +912,9 @@ class Person extends GedcomRecord {
 						else if ($fact=="OBJE") {
 							if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@";
 							$factrec.="\r\n1 _PGVFS @$famid@\r\n";
-							$this->otherfacts[]=array($linenum, $factrec);
+							$event = new Event($factrec, $linenum);
+							$event->setParentObject($this);
+							$this->otherfacts[]=$event;
 						}
 					}
 					$factrec = $line;

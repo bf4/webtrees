@@ -86,7 +86,7 @@ function import_record($indirec, $update) {
 	$FILE = $GEDCOM;
 
 	// Clean input record
-	$indirec=preg_replace('/[\x00-\x09\x0B-\x0C\x0B-\x1F\x7F]+/', ' ', $indirec); // Illegal control characters
+	$indirec=preg_replace('/[\x00-\x09\x0B-\x0C\x0E-\x1F\x7F]+/', ' ', $indirec); // Illegal control characters
 	$indirec=preg_replace('/[\r\n]+/', "\n", $indirec); // Standardise line endings
 	// EEK! We only need to remove repeated spaces in certain circumstances.
 	// This global replace breaks various other things, so take it out

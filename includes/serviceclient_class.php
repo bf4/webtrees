@@ -998,8 +998,8 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 			if (!empty($url) && (strtolower($url)!=strtolower($SERVER_URL))) {
 				//if familysearch type
 				if(!empty($cType)) {
-					require_once("includes/familySearchWrapper.php");
-					$server = new familyWrapper($gedrec);
+					require_once("modules/FamilySearch/familySearchWrapper.php");
+					$server = new FamilySearchWrapper($gedrec);
 				}
 				else $server = new ServiceClient($gedrec);//else create a Serviceclient class
 			}
