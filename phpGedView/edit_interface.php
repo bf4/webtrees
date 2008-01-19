@@ -2207,7 +2207,7 @@ case 'reorder_fams':
 			foreach($fams as $famid=>$family) {
 				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$famid\" >";
 				print "<span class=\"name2\">".PrintReady(get_family_descriptor($famid))."</span><br />";
-				print_simple_fact($fam["gedcom"], "MARR", $famid);
+				print_simple_fact($family->getGedcomRecord(), "MARR", $famid);
 				print "<input type=\"hidden\" name=\"order[$famid]\" value=\"$i\"/>";
 				print "</li>";
 				$i++;
