@@ -151,7 +151,7 @@ function getHelp(which) {
         $countryList = array();
         $placesDir = scandir('./places/');
         for ($i = 0; $i < count($country); $i++) {
-            if (count(preg_grep('/'.$country[$i].'/', $placesDir)) != 0) {
+            if (count(preg_grep('/'.$country[$i].'[^.]/', $placesDir)) != 0) {
                 $rep = opendir('./places/'.$country[$i].'/');
                 while ($file = readdir($rep)) {
                     if (stristr($file, "flags")) {
