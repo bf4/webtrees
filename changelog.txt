@@ -10,6 +10,7 @@
 
 
 Version 4.1.4
+ - Added [ 1850735 ] Statistics : use Google Chart API (opus27)
  - Fixed [ 1864117 ] R-A:Fatal error: Call to undefined method GedcomDate::Format
  - Fixed [ 1857074 ] Media Firewalled Files not included on Backup (ljm)
  - Events of close relatives : add great-grandchildren/parents (opus27)
