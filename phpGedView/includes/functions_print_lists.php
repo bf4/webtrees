@@ -6,7 +6,7 @@
  * used on the indilist, famlist, find, and search pages.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -268,11 +268,16 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
-
+	//-- init chart data
+	for ($age=0; $age<120; $age++) $deat_by_age[$age]="";
+	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
+	for ($year=1550; $year<2030; $year+=10) $deat_by_decade[$year]="";
+	//-- fieldset
 	if ($legend == "") $legend = $pgv_lang["individuals"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	echo "<div id=\"".$table_id."-table\">";
 	//-- filter buttons
 	$person = new Person("");
 	echo "<button type=\"button\" class=\"SEX_M\" title=\"".$pgv_lang["button_SEX_M"]."\" >";
@@ -305,7 +310,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo $pgv_lang["reset"]."</button> ";
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
+	echo "<thead><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
@@ -324,8 +329,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<th class=\"list_label\" style=\"display:none\">BIRT</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">TREE</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>";
 	$hidden = 0;
 	$n = 0;
 	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
@@ -396,6 +402,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$bdate=new GedcomDate($person->getBirthDate(false));
 		print str_replace('<a', '<a name="'.$bdate->MinJD().'"', $bdate->Display(empty($SEARCH_SPIDER)));
+		$byear = $person->getBirthYear(false, 'gregorian');
+		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $person->getSex();
 		//-- Birth 2nd date ?
 		if (!empty($person->bdate2)) {
 			$bdate2=new GedcomDate($person->bdate2);
@@ -435,6 +443,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$ddate=new GedcomDate($person->getDeathDate(false));
 		print str_replace('<a', '<a name="'.$ddate->MaxJD().'"', $ddate->Display(empty($SEARCH_SPIDER)));
+		$dyear = $person->getDeathYear(false, 'gregorian');
+		if (is_numeric($dyear) && $dyear>0) $deat_by_decade[max(1570, floor($dyear/10)*10)] .= $person->getSex();
 		//-- Death 2nd date ?
 		if (!empty($person->ddate2)) {
 			$ddate2=new GedcomDate($person->ddate2);
@@ -452,8 +462,13 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Age at death
 		print "<td class=\"list_value_wrap\">";
-		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0)
-			echo "<a name=\"".($ddate->MaxJD()-$bdate->MinJD())."\" class=\"list_item age\">".GedcomDate::GetAgeYears($bdate, $ddate)."</a>";
+		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0) {
+			$age = GedcomDate::GetAgeYears($bdate, $ddate);
+			//$age_jd = $ddate->MaxJD()-$bdate->MinJD();
+			$age_jd = $ddate->MinJD()-$bdate->MinJD();
+			echo "<a name=\"".$age_jd."\" title=\"".$age_jd."\" class=\"list_item age\">".$age."</a>";
+			if (is_numeric($age)) $deat_by_age[min(105, $age)] .= $person->getSex();
+		}
 		else
 			echo '<a name="-1">&nbsp;</a>';
 		echo "</td>";
@@ -499,8 +514,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>";
 	//-- table footer
-	echo "<tr class=\"sortbottom\">";
+	echo "<tfoot><tr class=\"sortbottom\">";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
 	echo "<td class=\"list_label\">"; // NAME
@@ -525,7 +541,20 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<td style=\"display:none\">DEAT</td>";
 	echo "<td style=\"display:none\">TREE</td>";
 	echo "</tr>";
+	echo "</tfoot>";
 	echo "</table>\n";
+	echo "</div>";
+	//-- charts
+	echo "<div id=\"".$table_id."-charts\">";
+	echo "<table class=\"list_table center\">";
+	echo "<tr><td class=\"list_value_wrap\">";
+	print_chart_by_decade($birt_by_decade, "Decade of birth");
+	echo "</td><td class=\"list_value_wrap\">";
+	print_chart_by_decade($deat_by_decade, "Decade of death");
+	echo "</td></tr><tr><td colspan=\"2\" class=\"list_value_wrap\">";
+	print_chart_by_age($deat_by_age, "Age at death");
+	echo "</td></tr></table>";
+	echo "</div>";
 	echo "</fieldset>\n";
 }
 
@@ -545,11 +574,16 @@ function print_fam_table($datalist, $legend="") {
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once("js/sorttable.js.htm");
 	require_once("includes/family_class.php");
-
+	//-- init chart data
+	for ($age=0; $age<120; $age++) $marr_by_age[$age]="";
+	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
+	for ($year=1550; $year<2030; $year+=10) $marr_by_decade[$year]="";
+	//-- fieldset
 	if ($legend == "") $legend = $pgv_lang["families"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	echo "<div id=\"".$table_id."-table\">";
 	//-- filter buttons
 	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".$pgv_lang["button_DEAT_N"]."\" >";
 	echo $pgv_lang["both_alive"]."</button> ";
@@ -576,7 +610,7 @@ function print_fam_table($datalist, $legend="") {
 	echo $pgv_lang["reset"]."</button> ";
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
+	echo "<thead><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">FAM</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
@@ -595,8 +629,9 @@ function print_fam_table($datalist, $legend="") {
 	echo "<th style=\"display:none\">MARR</th>";
 	echo "<th style=\"display:none\">DEAT</th>";
 	echo "<th style=\"display:none\">TREE</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
@@ -658,6 +693,9 @@ function print_fam_table($datalist, $legend="") {
 		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
+		//-- Husb BIRT
+		$byear = $husb->getBirthYear(false, 'gregorian');
+		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $husb->getSex();
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
 		$mdate=new GedcomDate($family->getMarriageDate());
@@ -665,8 +703,10 @@ function print_fam_table($datalist, $legend="") {
 		$hage =GedcomDate::GetAgeYears($hdate, $mdate);
 		if (empty($hage))
 			print "&nbsp;";
-		else
+		else {
 			print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
+			if (is_numeric($hage)) $marr_by_age[min(105, $hage)] .= $husb->getSex();
+		}
 		echo "</td>";
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS)
@@ -695,18 +735,25 @@ function print_fam_table($datalist, $legend="") {
 		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
+		//-- Wife BIRT
+		$byear = $wife->getBirthYear(false, 'gregorian');
+		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $wife->getSex();
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
 		$wdate=new GedcomDate($wife->GetBirthDate());
 		$wage =GedcomDate::GetAgeYears($wdate, $mdate);
 		if (empty($wage))
 			print "&nbsp;";
-		else
+		else {
 			print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
+			if (is_numeric($wage)) $marr_by_age[min(105, $wage)] .= $wife->getSex();
+		}
 		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a name="'.$mdate->MinJD().'"', $mdate->Display(empty($SEARCH_SPIDER)));
+		print str_replace('<a', '<a name="'.$mdate->MinJD().'" title="'.$mdate->MinJD().'"', $mdate->Display(empty($SEARCH_SPIDER)));
+		$myear = $family->getMarriageYear(false, 'gregorian');
+		if (is_numeric($myear) && $myear>0) $marr_by_decade[max(1570, floor($myear/10)*10)] .= $husb->getSex().$wife->getSex();
 		//-- Marriage 2nd date ?
 		if (!empty($family->marr_date2)) {
 			$mdate2=new GedcomDate($family->marr_date2);
@@ -771,8 +818,9 @@ function print_fam_table($datalist, $legend="") {
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>";
 	//-- table footer
-	echo "<tr class=\"sortbottom\">";
+	echo "<tfoot><tr class=\"sortbottom\">";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // FAM:ID
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
@@ -798,8 +846,21 @@ function print_fam_table($datalist, $legend="") {
 	echo "<td style=\"display:none\">MARR</td>";
 	echo "<td style=\"display:none\">DEAT</td>";
 	echo "<td style=\"display:none\">TREE</td>";
-	echo "</tr>";
+	echo "</tr></tfoot>";
 	echo "</table>\n";
+	echo "</div>";
+	//-- charts
+	echo "<div id=\"".$table_id."-charts\">";
+	echo "<table class=\"list_table center\">";
+	echo "<tr><td class=\"list_value_wrap\">";
+	print_chart_by_decade($birt_by_decade, "Decade of birth");
+	echo "</td><td class=\"list_value_wrap\">";
+	print_chart_by_decade($marr_by_decade, "Decade of marriage");
+	echo "</td></tr><tr><td colspan=\"2\" class=\"list_value_wrap\">";
+	print_chart_by_age($marr_by_age, "Age at marriage");
+	echo "</td></tr></table>";
+	echo "</div>";
+
 	echo "</fieldset>\n";
 }
 
@@ -1573,6 +1634,88 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 	$return.="</b>";
 	return $return;
+}
+
+/**
+ * print a chart by age using Google chart API
+ *
+ * @param array $data
+ * @param string $title
+ */
+function print_chart_by_age($data, $title) {
+	global $pgv_lang;
+
+	$count = 0;
+	$vmax = 0;
+	foreach ($data as $age=>$v) {
+		$n = strlen($v);
+		$vmax = max($vmax, $n);
+		$count += $n;
+	}
+	if ($count<1) return;
+	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
+	$chart_url .= "&chs=720x150"; // size
+	$chart_url .= "&chbh=3,2,2"; // bvg : 4,1,2
+	$chart_url .= "&chco=9ca3d4,ff2080"; // bar color
+	$chart_url .= "&chdl=".$pgv_lang["stat_males"]."|".$pgv_lang["stat_females"]; // legend
+	$chart_url .= "&chtt=".urlencode($title); // title
+	$chart_url .= "&chxt=x,y,r";
+	$chart_url .= "&chxl=0:|"; // label
+	for ($age=0; $age<105; $age+=5) $chart_url .= $age."|||||"; // x axis
+	$chart_url .= ">||"; // age>=105
+	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
+	$chart_url .= "|2:||";
+	$step = $vmax;
+	for ($d=floor($vmax); $d>0; $d--) if ($vmax<($d*10+1) && fmod($vmax,$d)==0) $step = $d;
+	for ($n=$step; $n<$vmax; $n+=$step) $chart_url .= $n."|";
+	$chart_url .= $vmax." / ".$count; // r axis
+	$chart_url .= "&chg=100,".round(100*$step/$vmax,1).",1,5"; // grid
+	$chart_url .= "&chd=s:"; // data : simple encoding from A=0 to 9=61
+	$CHART_ENCODING61 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	for ($age=0; $age<107; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "M")*61/$vmax)];
+	$chart_url .= ",";
+	for ($age=0; $age<107; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "F")*61/$vmax)];
+	echo "<img src=\"".$chart_url."\" alt=\"".$title."\" title=\"".$title."\" class=\"gchart\" />";
+}
+
+/**
+ * print a chart by decade using Google chart API
+ *
+ * @param array $data
+ * @param string $title
+ */
+function print_chart_by_decade($data, $title) {
+	global $pgv_lang;
+
+	$count = 0;
+	$vmax = 0;
+	foreach ($data as $age=>$v) {
+		$n = strlen($v);
+		$vmax = max($vmax, $n);
+		$count += $n;
+	}
+	if ($count<1) return;
+	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
+	$chart_url .= "&chs=360x150"; // size
+	$chart_url .= "&chbh=3,3"; // bvg : 4,1,2
+	$chart_url .= "&chco=9ca3d4,ff2080"; // bar color
+	$chart_url .= "&chtt=".urlencode($title); // title
+	$chart_url .= "&chxt=x,y,r";
+	$chart_url .= "&chxl=0:|<|||"; // <1570
+	for ($y=1600; $y<2030; $y+=50) $chart_url .= $y."|||||"; // x axis
+	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
+	$chart_url .= "|2:||";
+	$step = $vmax;
+	for ($d=floor($vmax); $d>0; $d--) if ($vmax<($d*10+1) && fmod($vmax,$d)==0) $step = $d;
+	for ($n=$step; $n<$vmax; $n+=$step) $chart_url .= $n."|";
+	$chart_url .= $vmax." / ".$count; // r axis
+	$chart_url .= "&chg=100,".round(100*$step/$vmax,1).",1,5"; // grid
+	$chart_url .= "&chd=s:"; // data : simple encoding from A=0 to 9=61
+	$CHART_ENCODING61 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	for ($y=1570; $y<2030; $y+=10) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$y], "M")*61/$vmax)];
+	$chart_url .= ",";
+	for ($y=1570; $y<2030; $y+=10) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$y], "F")*61/$vmax)];
+	echo "<img src=\"".$chart_url."\" alt=\"".$title."\" title=\"".$title."\" class=\"gchart\" />";
 }
 
 /**
