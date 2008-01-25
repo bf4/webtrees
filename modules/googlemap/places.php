@@ -494,7 +494,10 @@ if ($action=="DeleteRecord") {
 	if ($res->numRows()==0) {
 		$res->free();
 		$sql="DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($deleteRecord);
-		$res=dbquery($sql, true, 1);
+		if ($DBTYPE == "pgsql")
+			$res=dbquery($sql); /* postgres does not support LIMIT or OFFSET on DELETE */
+		else
+			$res=dbquery($sql, true, 1);
 	} else {
 		print "<table class=\"facts_table\"><tr><td class=\"optionbox\">{$pgv_lang['pl_delete_error']}</td></tr></table>";
 	}
