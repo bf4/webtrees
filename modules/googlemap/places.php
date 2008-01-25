@@ -32,6 +32,8 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
+
+
 require( "modules/googlemap/defaultconfig.php" );
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
@@ -91,8 +93,11 @@ function place_id_to_hierarchy($id) {
 
 // NB This function exists in both places.php and places_edit.php
 function getHighestIndex() {
-	global $TBLPREFIX;
-	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1";
+	global $TBLPREFIX, $DBTYPE;
+	if ($DBTYPE == "pgsql")
+		$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE TRUE";
+	else
+		$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1";
 	$res=dbquery($sql);
 	$row=&$res->fetchRow();
 	$res->free();
@@ -358,7 +363,10 @@ if ($action=="ImportFile") {
 
 if ($action=="ImportFile2") {
 	if (isset($_POST["cleardatabase"])) {
-		$sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE 1";
+		if ($DBTYPE == "pgsql")
+			$sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE TRUE";
+		else
+			$sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE 1";
 		$res = dbquery($sql);
 	}
 	if (!empty($_FILES["placesfile"]["tmp_name"])) $lines = file($_FILES["placesfile"]["tmp_name"]);
