@@ -470,16 +470,25 @@ if ($action=="ImportFile2") {
 				$parent_id = $row[0];
 				if ((isset($_POST["overwritedata"])) && ($i+1 == count($parent))) {
 					$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."',pl_zoom='".$place["zoom"]."',pl_icon='".$place["icon"]."' where pl_id=$parent_id";
-					$res = dbquery($sql, true, 1);
+            		if ($DBTYPE == "pgsql")
+                        $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
+                    else
+    					$res = dbquery($sql, true, 1);
 				}
 				else {
 					if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
 						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
-						$res = dbquery($sql, true, 1);
+                		if ($DBTYPE == "pgsql")
+                            $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
+                        else
+						  $res = dbquery($sql, true, 1);
 					}
 					if (empty($row[4]) && !empty($place['icon'])) {
 						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."' where pl_id=$parent_id";
-						$res = dbquery($sql, true, 1);
+                		if ($DBTYPE == "pgsql")
+                            $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
+                        else
+			     			$res = dbquery($sql, true, 1);
 					}
 				}
 			}
@@ -495,7 +504,7 @@ if ($action=="DeleteRecord") {
 		$res->free();
 		$sql="DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($deleteRecord);
 		if ($DBTYPE == "pgsql")
-			$res=dbquery($sql); /* postgres does not support LIMIT or OFFSET on DELETE */
+			$res=dbquery($sql); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */
 		else
 			$res=dbquery($sql, true, 1);
 	} else {
