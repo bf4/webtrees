@@ -192,8 +192,12 @@ function getHelp(which) {
     $j = 1;
     for ($i = 0; $i < count($flags); $i++) {
         if ($countrySelected == "Countries") {
-            print "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"".$countries[$country[$i]]."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
-        }
+            $tempstr = "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"";
+            if (array_key_exists( $country[$i], $countries) )
+                $tempstr .=$countries[$country[$i]];
+            else
+                $tempstr .= $flags[$i];
+            print $tempstr."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";            }
         else {
             print "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/".$countrySelected."/flags/".$flags[$i].".gif\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
         }
