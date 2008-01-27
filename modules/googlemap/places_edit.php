@@ -117,7 +117,10 @@ if ($action=='updaterecord') {
 		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='{$_POST['NEW_PLACE_NAME']}',pl_lati='{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', pl_long='{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}',pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
 	}
 	if (userIsAdmin(getUserName())) {
-		$res = dbquery($sql, true, 1);
+   		if ($DBTYPE == "pgsql")
+            $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
+        else
+	       	$res = dbquery($sql, true, 1);
 	}
 	if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
