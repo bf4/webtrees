@@ -1101,6 +1101,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
+	global $LANGUAGE, $lang_short_cut;
 
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
