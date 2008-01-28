@@ -113,7 +113,10 @@ class ra_functions {
 		// If the Table is not in the array
 		if (!in_array($TBLPREFIX.'factlookup', $data)) {
 			//Then create Table
-			$sql = 'create table '.$TBLPREFIX.'factlookup (id INT AUTO_INCREMENT,Description VARCHAR(255) not null,StartDate INT not null, EndDate INT not null, Gedcom_fact VARCHAR(10),PL_LV1 VARCHAR(255), PL_LV2 VARCHAR(255), PL_LV3 VARCHAR(255), PL_LV4 VARCHAR(255), PL_LV5 VARCHAR(255), SOUR_ID VARCHAR(255),Comment VARCHAR(255),PRIMARY KEY(id))';
+	   	   if ($DBTYPE == "pgsql")
+				$sql = 'create table '.$TBLPREFIX.'factlookup (id SERIAL,Description VARCHAR(255) not null,StartDate INT not null, EndDate INT not null, Gedcom_fact VARCHAR(10),PL_LV1 VARCHAR(255), PL_LV2 VARCHAR(255), PL_LV3 VARCHAR(255), PL_LV4 VARCHAR(255), PL_LV5 VARCHAR(255), SOUR_ID VARCHAR(255),Comment VARCHAR(255),PRIMARY KEY(id))';			
+			else
+				$sql = 'create table '.$TBLPREFIX.'factlookup (id INT AUTO_INCREMENT,Description VARCHAR(255) not null,StartDate INT not null, EndDate INT not null, Gedcom_fact VARCHAR(10),PL_LV1 VARCHAR(255), PL_LV2 VARCHAR(255), PL_LV3 VARCHAR(255), PL_LV4 VARCHAR(255), PL_LV5 VARCHAR(255), SOUR_ID VARCHAR(255),Comment VARCHAR(255),PRIMARY KEY(id))';
 			$res = dbquery($sql);
 			$this->insertInitialFacts();
 		}
