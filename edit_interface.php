@@ -699,24 +699,19 @@ case 'addsourceaction':
 		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\r\n";
 	}
 	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\r\n";
-	if (!empty($PUBL)) $newgedrec .= "1 PUBL $PUBL\r\n";
+	if (!empty($PUBL)) {
+		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\r\n";
+			else $newgedrec .= "2 CONT $newlines[$k]\r\n";
+		}
+	}
 	if (!empty($REPO)) {
 		$newgedrec .= "1 REPO @$REPO@\r\n";
 		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\r\n";
 	}
-	$newlines = preg_split("/\r?\n/", stripLRMRLM($newgedrec));
-	$newged = $newlines[0]."\r\n";
-	$level = substr($newlines[0], 0, 1) + 1;
-	for($k=1; $k<count($newlines); $k++) {
-		if (preg_match("/^\d (.....|....|...) /", $newlines[$k])!==false) {
-			$level = substr($newlines[$k], 0, 1) + 1;
-		} else {
-			$newlines[$k] = "{$level} CONT ".$newlines[$k];
-		}
-		$newged .= breakConts($newlines[$k]);
-	}
-	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
-	$xref = append_gedrec($newged);
+	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	$xref = append_gedrec($newgedrec);
 	$link = "source.php?sid=$xref&amp;show_changes=yes";
 	if ($xref) {
 		print "<br /><br />\n".$pgv_lang["new_source_created"]."<br /><br />";
@@ -793,24 +788,20 @@ case 'addrepoaction':
 		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\r\n";
 		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\r\n";
 	}
-	if (!empty($ADDR)) $newgedrec .= "1 ADDR $ADDR\r\n";
+	if (!empty($ADDR)) {
+		$newlines = preg_split("/\r?\n/",$ADDR,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 ADDR $newlines[$k]\r\n";
+			else $newgedrec .= "2 CONT $newlines[$k]\r\n";
+		}
+	}
 	if (!empty($PHON)) $newgedrec .= "1 PHON $PHON\r\n";
 	if (!empty($FAX)) $newgedrec .= "1 FAX $FAX\r\n";
 	if (!empty($EMAIL)) $newgedrec .= "1 EMAIL $EMAIL\r\n";
 	if (!empty($WWW)) $newgedrec .= "1 WWW $WWW\r\n";
-	$newlines = preg_split("/\r?\n/", stripLRMRLM($newgedrec));
-	$newged = $newlines[0]."\r\n";
-	$level = substr($newlines[0], 0, 1) + 1;
-	for($k=1; $k<count($newlines); $k++) {
-		if (preg_match("/^\d (.....|....|...) /", $newlines[$k])!==false) {
-			$level = substr($newlines[$k], 0, 1) + 1;
-		} else {
-			$newlines[$k] = "{$level} CONT ".$newlines[$k];
-		}
-		$newged .= breakConts($newlines[$k]);
-	}
-	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
-	$xref = append_gedrec($newged);
+
+	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	$xref = append_gedrec($newgedrec);
 	$link = "repo.php?rid=$xref&amp;show_changes=yes";
 	if ($xref) {
 		print "<br /><br />\n".$pgv_lang["new_repo_created"]."<br /><br />";
