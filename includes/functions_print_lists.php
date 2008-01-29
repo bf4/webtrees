@@ -545,7 +545,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "</table>\n";
 	echo "</div>";
 	//-- charts
-	echo "<div id=\"".$table_id."-charts\">";
+	/*echo "<div id=\"".$table_id."-charts\">";
 	echo "<table class=\"list_table center\">";
 	echo "<tr><td class=\"list_value_wrap\">";
 	print_chart_by_decade($birt_by_decade, "Decade of birth");
@@ -554,7 +554,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "</td></tr><tr><td colspan=\"2\" class=\"list_value_wrap\">";
 	print_chart_by_age($deat_by_age, "Age at death");
 	echo "</td></tr></table>";
-	echo "</div>";
+	echo "</div>";*/
 	echo "</fieldset>\n";
 }
 
@@ -850,7 +850,7 @@ function print_fam_table($datalist, $legend="") {
 	echo "</table>\n";
 	echo "</div>";
 	//-- charts
-	echo "<div id=\"".$table_id."-charts\">";
+	/*echo "<div id=\"".$table_id."-charts\">";
 	echo "<table class=\"list_table center\">";
 	echo "<tr><td class=\"list_value_wrap\">";
 	print_chart_by_decade($birt_by_decade, "Decade of birth");
@@ -859,8 +859,7 @@ function print_fam_table($datalist, $legend="") {
 	echo "</td></tr><tr><td colspan=\"2\" class=\"list_value_wrap\">";
 	print_chart_by_age($marr_by_age, "Age at marriage");
 	echo "</td></tr></table>";
-	echo "</div>";
-
+	echo "</div>";*/
 	echo "</fieldset>\n";
 }
 
