@@ -156,7 +156,7 @@ print_header($pgv_lang["search"]);
 			<?php print $pgv_lang["enter_terms"]; ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
-			<input tabindex="1" type="text" name="query" value="<?php if (isset($controller->myquery)) print $controller->myquery; ?>" />
+			<input tabindex="1" id="firstfocus" type="text" name="query" value="<?php if (isset($controller->myquery)) print $controller->myquery; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="4">
 			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"] ?>" />
@@ -240,7 +240,7 @@ if($controller->action == "replace")
 	<!-- // search terms -->
 	<tr>
 		<td class="list_label" style="padding: 5px;"><?php print $pgv_lang["enter_terms"]; ?></td>
-		<td class="list_value" style="padding: 5px;"><input tabindex="1" name="query" value="" type="text"/></td>
+		<td class="list_value" style="padding: 5px;"><input tabindex="1" id="firstfocus" name="query" value="" type="text"/></td>
 			<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="3">
 			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
 		</td>	
@@ -297,7 +297,7 @@ if ($controller->action == "soundex") {
 			<?php print $pgv_lang["firstname_search"]; ?>
 		</td>
 		<td class="list_value">
-			<input tabindex="3" type="text" name="firstname" value="<?php print $controller->myfirstname; ?>" />
+			<input tabindex="3" type="text" id="firstfocus" name="firstname" value="<?php print $controller->myfirstname; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="6">
 			<input tabindex="7" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
@@ -605,4 +605,16 @@ echo "<br /><br /><br />";
 //-- somewhere the session gedcom gets changed, so we will change it back
 $_SESSION['GEDCOM'] = $GEDCOM;
 print_footer();
+?>
+<?php
+// set the focus on the first field unless multisite
+if ($controller->action != "multisite") {
+?>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		document.getElementById('firstfocus').focus();
+	//-->
+	</script>
+<?php
+}
 ?>
