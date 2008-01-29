@@ -88,6 +88,7 @@ $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
 // check for worms and bad bots
 $worms = array(
+	'libwww-perl',
 	'LWP::Simple',
 	'lwp-trivial',
 	'HTTrack'
