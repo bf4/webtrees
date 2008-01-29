@@ -738,6 +738,7 @@ if ($action=="update") {
 
 		//-- add the new family id to the new spouse record
 		$spouserec = find_updated_record($xref);
+		if (empty($spouserec)) $spouserec = find_person_record($xref);
 		$spouserec .= "\r\n1 FAMS @$newfamid@\r\n";
 		replace_gedrec($xref, $spouserec, $update_CHAN);
 		
@@ -800,6 +801,7 @@ if ($action=="update") {
 			
 			//-- add the new family to the new child
 			$childrec = find_updated_record($cxref);
+			if (empty($childrec)) $childrec = find_person_record($cxref);
 			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
 			replace_gedrec($cxref, $childrec, $update_CHAN);
 			
@@ -812,6 +814,7 @@ if ($action=="update") {
 			
 			//-- add the family to the new child
 			$childrec = find_updated_record($cxref);
+			if (empty($childrec)) $childrec = find_person_record($cxref);
 			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
 			replace_gedrec($cxref, $childrec, $update_CHAN);
 		}
@@ -907,6 +910,7 @@ if ($action=="update") {
 			}
 			if (empty($oldfamrec)) {
 				$spouserec = find_updated_record($FATHER[$i]);
+				if (empty($spouserec)) $spouserec = find_person_record($FATHER[$i]);
 				$spouserec .= "\r\n1 FAMS @$famid@";
 				replace_gedrec($FATHER[$i], $spouserec, $update_CHAN);
 			}
@@ -986,6 +990,7 @@ if ($action=="update") {
 			}
 			if (empty($oldfamrec)) {
 				$spouserec = find_updated_record($MOTHER[$i]);
+				if (empty($spouserec)) $spouserec = find_person_record($MOTHER[$i]);
 				$spouserec .= "\r\n1 FAMS @$famid@";
 				replace_gedrec($MOTHER[$i], $spouserec, $update_CHAN);
 			}
