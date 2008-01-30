@@ -127,6 +127,7 @@ $pgv_lang["create_user"]		= "Luo uusi käyttäjä";
 $pgv_lang["daily"]								= "Päivittäin";
 $pgv_lang["current_users"]						= "Nykyinen käyttäjälista";
 $pgv_lang["dataset_exists"] 		= "Tämän niminen GEDCOM-tiedosto on jo tuotu tietokantaan ";
+$pgv_lang["unsync_warning"] 					= "Tätä GEDCOM-tiedostoa <em>ei</em> ole synkronoitu tietokannan kanssa. Siitä saattaa puuttua viimeisin tietosi. Jotta voisit tuoda tiedon mieluummin tietokannasta kuin tiedostosta, sinun tulisi ensin ladata se omalle koneellesi ja sitten ladata uudelleen palvelimelle.";
 $pgv_lang["date_registered"]					= "Rekisteröintipäivä";
 $pgv_lang["day_before_month"]	= "Päivä ennen kuukautta (DD MM YYYY)";
 $pgv_lang["DEFAULT_GEDCOM"]						= "Vakio GEDCOM";
