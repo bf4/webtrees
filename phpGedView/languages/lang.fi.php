@@ -576,6 +576,12 @@ $pgv_lang["cal_hijri"]                = "Hijri";
 $pgv_lang["cal_jewish_and_gregorian"] = "Juutalainen ja Gregoriaaninen";
 $pgv_lang["cal_hebrew"]               = "Heprealainen";
 $pgv_lang["cal_arabic"]               = "Arabialainen";
+$pgv_lang["easter"]     = "Pääsiäinen";
+$pgv_lang["ascension"]  = "Helatorstai";
+$pgv_lang["pentecost"]  = "Helluntai";
+$pgv_lang["assumption"] = "Kristuksen taivaaseenastuminen";
+$pgv_lang["all_saints"] = "Pyhäinmiestenpäivä";
+$pgv_lang["christmas"]  = "Joulu";
 
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "ap.";
@@ -707,6 +713,7 @@ $pgv_lang["chart_new"]				= "Sukupuukaavio";
 $pgv_lang["grandchild"]		= "Lapsenlapsi";
 $pgv_lang["grandson"]		= "Pojan-/tyttärenpoika";
 $pgv_lang["granddaughter"]		= "Pojan-/tyttärentytär";
+$pgv_lang["greatgrandchild"]		= "Lapsenlapsen lapsi";
 $pgv_lang["brother"]			= "Veli";
 $pgv_lang["sister"]			= "Sisar";
 $pgv_lang["aunt"]			= "Täti";
