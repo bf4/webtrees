@@ -493,7 +493,7 @@ class stats
 	function firstBirthYear()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_gid, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
+		$rows=$this->_runSQL("SELECT d_year, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
 		$row=$rows[0];
 		return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
 	}
@@ -1002,7 +1002,7 @@ class stats
 	function lastEvent()
 	{
 		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND ORDER BY d_julianday2 DESC", 1);
+		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
 		$row=$rows[0];
 		if (displayDetailsById($row['d_gid'])) {
 			ob_start();
@@ -1018,7 +1018,7 @@ class stats
 	function lastEventYear()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_gid, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND ORDER BY d_julianday2 DESC", 1);
+		$rows=$this->_runSQL("SELECT d_gid, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
 		$row=$rows[0];
 		return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
 	}
@@ -1026,7 +1026,7 @@ class stats
 	function lastEventType()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_fact FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND ORDER BY d_julianday2 DESC", 1);
+		$rows=$this->_runSQL("SELECT d_fact FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
 		$row=$rows[0];
 		$event=$this->_getEventType($row['d_fact']);
 		if ($event==false) {
@@ -1038,7 +1038,7 @@ class stats
 	function lastEventName()
 	{
 		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND ORDER BY d_julianday2 DESC", 1);
+		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
 		$row=$rows[0];
 		$id='';
 		if ($SHOW_ID_NUMBERS) {
@@ -1054,7 +1054,7 @@ class stats
 	function lastEventPlace()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_gid, d_fact FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND ORDER BY d_julianday2 DESC", 1);
+		$rows=$this->_runSQL("SELECT d_gid, d_fact FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
 		$row=$rows[0];
 		ob_start();
 		print_fact_place(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid'])), true, true, true);
