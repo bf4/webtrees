@@ -1429,6 +1429,7 @@ function create_nextid_table() {
 	$sql = "DROP TABLE " . $TBLPREFIX . "nextid ";
 	$res = dbquery($sql, false);
 	if ( $DBTYPE == "pgsql")
+		// TODO UNSIGNED ints are preferred for the nextid table because they allow for bigger ints, therefore bigger GEDCOMS
 		$sql = "CREATE TABLE " . $TBLPREFIX . "nextid (ni_id INTEGER NOT NULL, ni_type VARCHAR(30) NOT NULL, ni_gedfile INT NOT NULL, PRIMARY KEY(ni_type, ni_gedfile))";
 	else
 		$sql = "CREATE TABLE " . $TBLPREFIX . "nextid (ni_id INT UNSIGNED NOT NULL, ni_type VARCHAR(30) NOT NULL, ni_gedfile INT NOT NULL, PRIMARY KEY(ni_type, ni_gedfile))";

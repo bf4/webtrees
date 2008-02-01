@@ -41,6 +41,8 @@ loadLangFile("pgv_lang, pgv_confighelp, pgv_help, pgv_facts, gm_lang, gm_help");
 
 if (!isset($action)) $action="";
 if (!isset($parent)) $parent=0;
+// phre7d 2008-901-23 added for persistant display of inactive records
+if (!isset($display)) $display="";
 
 // Create GM tables, if not already present
 $tables = $DBCONN->getListOf('tables');
@@ -93,11 +95,8 @@ function place_id_to_hierarchy($id) {
 
 // NB This function exists in both places.php and places_edit.php
 function getHighestIndex() {
-	global $TBLPREFIX, $DBTYPE;
-	if ($DBTYPE == "pgsql")
+	global $TBLPREFIX;
 		$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE TRUE";
-	else
-		$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1";
 	$res=dbquery($sql);
 	$row=&$res->fetchRow();
 	$res->free();
@@ -363,10 +362,7 @@ if ($action=="ImportFile") {
 
 if ($action=="ImportFile2") {
 	if (isset($_POST["cleardatabase"])) {
-		if ($DBTYPE == "pgsql")
 			$sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE TRUE";
-		else
-			$sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE 1";
 		$res = dbquery($sql);
 	}
 	if (!empty($_FILES["placesfile"]["tmp_name"])) $lines = file($_FILES["placesfile"]["tmp_name"]);
@@ -504,7 +500,7 @@ if ($action=="DeleteRecord") {
 		$res->free();
 		$sql="DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($deleteRecord);
 		if ($DBTYPE == "pgsql")
-			$res=dbquery($sql); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */
+            $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
 		else
 			$res=dbquery($sql, true, 1);
 	} else {
@@ -557,14 +553,18 @@ foreach (array_reverse($where_am_i, true) as $id=>$place) {
 	if ($id==$parent)
 		print PrintReady($place);
 	else
-		print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}\">".PrintReady($place)."</a>";
+// phre7d 2008-901-23 modified for persistant display of inactive records
+		print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">".PrintReady($place)."</a>";
 	print " - ";
 }
-print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0\">{$pgv_lang['top_level']}</a>";
-
-print "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&parent=$parent\">";
+// phre7d 2008-901-23 modified for persistant display of inactive records	
+print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0&display=$display\">{$pgv_lang['top_level']}</a>";
+// phre7d 2008-901-23 modified for persistant display of inactive records	
+print "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&parent=$parent&display=$display\">";
 print "<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"]."  - <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
-if (isset($display)) print " checked=\"checked\"";
+// phre7d 2008-901-23 modified for persistant display of inactive records
+// if (isset($display)) print " checked=\"checked\"";
+if ($display == 'inactive') print " checked=\"checked\"";
 print ">";
 print "   <input type=\"submit\" value=\"".$pgv_lang["view"]."\"   >";
 print_help_link("PLE_ACTIVE_help", "qm", "PLE_ACTIVE");
@@ -585,7 +585,8 @@ print "{$pgv_lang['pl_edit']}</th></tr>";
 if (count($placelist) == 0)
 	print "<tr><td colspan=\"7\" class=\"facts_value\">{$pgv_lang['pl_no_places_found']}</td></tr>";
 foreach ($placelist as $place) {
-	print "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}\">".PrintReady($place["place"])."</a></td>";
+// phre7d 2008-901-23 modified for persistant display of inactive records	
+	print "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}&display={$display}\">".PrintReady($place["place"])."</a></td>";
 	print "<td class=\"optionbox\">{$place['lati']}</td>";
 	print "<td class=\"optionbox\">{$place['long']}</td>";
 	print "<td class=\"optionbox\">{$place['zoom']}</td>";

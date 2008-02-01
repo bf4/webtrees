@@ -64,53 +64,44 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		}
 	}
 
-	print "<div id=\"logged_in_users\" class=\"block\">\n";
-	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-	print "<td class=\"blockh1\" >&nbsp;</td>";
-	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	print_help_link("index_loggedin_help", "qm");
-	print "<b>" . $pgv_lang["users_logged_in"] . "</b>";
-	print "</div></td>";
-	print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-	print "</table>";
-	print "<div class=\"blockcontent\">";
-	if ($block)
-		print "<div class=\"small_inner_block\">\n";
-	print "<table width=\"90%\">";
+	$id = "logged_in_users";
+	$title = print_help_link("index_loggedin_help", "qm", "", false, true);
+	$title .= $pgv_lang["users_logged_in"];
+	$content = "<table width=\"90%\">";
 	$LoginUsers = count($loggedusers);
 	if (($LoginUsers == 0) and ($NumAnonymous == 0)) {
-		print "<tr><td><b>" . $pgv_lang["no_login_users"] . "</b></td></tr>";
+		$content .= "<tr><td><b>" . $pgv_lang["no_login_users"] . "</b></td></tr>";
 	}
 	$Advisory = "anon_user";
 	if ($NumAnonymous > 1)
 		$Advisory .= "s";
 	if ($NumAnonymous > 0) {
 		$pgv_lang["global_num1"] = $NumAnonymous; // Make it visible
-		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
+		$content .= "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
 	$Advisory = "login_user";
 	if ($LoginUsers > 1)
 		$Advisory .= "s";
 	if ($LoginUsers > 0) {
 		$pgv_lang["global_num1"] = $LoginUsers; // Make it visible
-		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
+		$content .= "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
 	uasort($loggedusers, "usersort");
 	foreach ($loggedusers as $indexval => $user) {
 		if ($NAME_REVERSE) $userName = $user["lastname"] . " " . $user["firstname"];
 		else $userName = $user["firstname"] . " " . $user["lastname"];
-		print "<tr><td>";
-		print "<br />" . PrintReady($userName);
-		print " - " . $user["username"];
+		$content .= "<tr><td>";
+		$content .= "<br />" . PrintReady($userName);
+		$content .= " - " . $user["username"];
 		if (($cusername != $user["username"]) and ($user["contactmethod"] != "none")) {
-			print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user["username"] . "');\">" . $pgv_lang["message"] . "</a>";
+			$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user["username"] . "');\">" . $pgv_lang["message"] . "</a>";
 		}
-		print "</td></tr>";
+		$content .= "</td></tr>";
 	}
-	print "</table>";
-	if ($block)
-		print "</div>\n";
-	print "</div>"; // blockcontent
-	print "</div>"; // block
+	$content .= "</table>";
+	
+	global $THEME_DIR;
+	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
+	else include($THEME_DIR."/templates/block_main_temp.php");
 }
 ?>

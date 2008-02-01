@@ -34,17 +34,13 @@ $PGV_BLOCKS["print_block_theme_select"]["config"]		= array("cache"=>-1);
 
 function print_block_theme_select($style=0, $config="", $side, $index) {
 	global $pgv_lang;
-	print "<div id=\"theme_select\" class=\"block\">\n";
-	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-	print "<td class=\"blockh1\" >&nbsp;</td>";
-	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	print "<b>".$pgv_lang["change_theme"]."</b>";
-	print_help_link("change_theme", "qm");
-	print "</div></td>";
-	print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-	print "</table>";
-	print "<div class=\"blockcontent\"><div class=\"center\"><br />";
-			global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
+	
+	$id="theme_select";
+	$title = $pgv_lang["change_theme"];
+	$title .= print_help_link("change_theme", "qm","",false,true);
+	$content = "<div class=\"center\"><br />";
+			
 
 	if (!isset($themeformcount)) $themeformcount = 0;
 	$themeformcount++;
@@ -54,25 +50,25 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 	$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
 	
 	$themes = get_theme_names();
-	print "<div class=\"theme_form\">\n";
+	$content .= "<div class=\"theme_form\">\n";
 	$style=0;
 	switch ($style) {
 			case 0:
-			print "<form action=\"themechange.php\" name=\"themeform$themeformcount\" method=\"post\">";
-			print "<input type=\"hidden\" name=\"frompage\" value=\"".urlencode($frompage)."\" />";
-			print "<select name=\"mytheme\" class=\"header_select\" onchange=\"document.themeform$themeformcount.submit();\">";
-			print "<option value=\"\">".$pgv_lang["change_theme"]."</option>\n";
+			$content .= "<form action=\"themechange.php\" name=\"themeform$themeformcount\" method=\"post\">";
+			$content .= "<input type=\"hidden\" name=\"frompage\" value=\"".urlencode($frompage)."\" />";
+			$content .= "<select name=\"mytheme\" class=\"header_select\" onchange=\"document.themeform$themeformcount.submit();\">";
+			$content .= "<option value=\"\">".$pgv_lang["change_theme"]."</option>\n";
 			foreach($themes as $indexval => $themedir) {
-					print "<option value=\"".$themedir["dir"]."\"";
+					$content .= "<option value=\"".$themedir["dir"]."\"";
 					if ($uname) {
-							if ($themedir["dir"] == $user["theme"]) print " class=\"selected-option\"";
+							if ($themedir["dir"] == $user["theme"]) $content .= " class=\"selected-option\"";
 					}
 					else {
-							 if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
+							 if ($themedir["dir"] == $THEME_DIR) $content .= " class=\"selected-option\"";
 					}
-					print ">".$themedir["name"]."</option>\n";
+					$content .= ">".$themedir["name"]."</option>\n";
 			}
-			print "</select></form>";
+			$content .= "</select></form>";
 			break;
 			case 1:
 					$menu = array();
@@ -93,12 +89,17 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 							$submenu["hoverclass"] = "favsubmenuitem_hover";
 							$menu["items"][] = $submenu;
 					}
+					ob_start();
 					print_menu($menu);
+					$content .= ob_get_clean();
 			break;
 	}
-	print "</div>\n";
+	$content .= "</div>\n";
 
-	print "<br /></div></div>";
-	print "</div>";
+	$content .= "<br /></div>";
+	
+	global $THEME_DIR;
+	if ($style) include($THEME_DIR."/templates/block_small_temp.php");
+	else include($THEME_DIR."/templates/block_main_temp.php");
 }
 ?>

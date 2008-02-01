@@ -128,8 +128,8 @@ if (isset($GEDCOMPATH)) {
 		// NOTE: Extract the GEDCOM filename
 		if (!empty($path)) $GEDFILENAME = basename($path);
 		else $GEDFILENAME = $_FILES['GEDCOMPATH']['name'];
-		if ($path=="") $upload_path = $INDEX_DIRECTORY;
-		else $upload_path = $path;
+		if ($path=="" || dirname($path) == ".") $upload_path = $INDEX_DIRECTORY;
+		else $upload_path = dirname($path)."/";
 		if (empty($GEDFILENAME)) $GEDFILENAME = $_FILES['GEDCOMPATH']['name'];
 
 		//-- remove any funny characters from uploaded files

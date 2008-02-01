@@ -151,7 +151,7 @@ function getHelp(which) {
         $countryList = array();
         $placesDir = scandir('./places/');
         for ($i = 0; $i < count($country); $i++) {
-            if (count(preg_grep('/'.$country[$i].'/', $placesDir)) != 0) {
+            if (count(preg_grep('/'.$country[$i].'[^.]/', $placesDir)) != 0) {
                 $rep = opendir('./places/'.$country[$i].'/');
                 while ($file = readdir($rep)) {
                     if (stristr($file, "flags")) {
@@ -197,8 +197,7 @@ function getHelp(which) {
                 $tempstr .=$countries[$country[$i]];
             else
                 $tempstr .= $flags[$i];
-            print $tempstr."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";    
-        }
+            print $tempstr."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";            }
         else {
             print "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/".$countrySelected."/flags/".$flags[$i].".gif\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
         } 

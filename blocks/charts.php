@@ -33,15 +33,16 @@ $PGV_BLOCKS["print_charts_block"]["canconfig"]	= true;
 $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	"cache"=>1,
 	"rootId"=>'',
-	"type"=>'pedigree'
+	"type"=>'pedigree',
+	"details"=>'no'
 	);
 	
 function print_charts_block($block = true, $config="", $side, $index) {
 	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID;
-	global $show_full;
+	global $show_full, $bwidth, $bheight;
 	
-	$show_full=0;
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
+	if (empty($config['details'])) $config['details'] = 'no';
 	if (empty($config["rootId"])) {
 		$username = getUserName();
 		if (empty($username)) $config["rootId"] = $PEDIGREE_ROOT_ID;
@@ -50,6 +51,14 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			if (!empty($user["gedcom_id"][$GEDCOM])) $config["rootId"] = $user["gedcom_id"][$GEDCOM];
 			else $config["rootId"] = $PEDIGREE_ROOT_ID;
 		}
+	}
+	
+	$show_full=0;
+	$bheight -= 15;
+	if ($config["details"]=="yes") {
+		$show_full=1;
+		$bwidth += 40;
+		$bheight += 20;
 	}
 	
 	if ($config['type']!='treenav') {
@@ -67,83 +76,78 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	$person = Person::getInstance($config["rootId"]);
 	if ($person==null) $person = Person::getInstance($PEDIGREE_ROOT_ID);
 	
-	print "<div id=\"charts_block\" class=\"block\">\n";
-	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-	print "<td class=\"blockh1\" >&nbsp;</td>";
-	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	print_help_link("index_charts_help", "qm");
+	$id = "charts_block";
+	$title = print_help_link("index_charts_help", "qm", "", false, true);
 	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
 		$username = getUserName();
 		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
 			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 			else $name = $username;
-			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
-			print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 		}
 	}
-	$title = "";
 	$name = $person->getName();
 	switch($config['type']) {
 		case 'pedigree':
-			$title = $name." ".$pgv_lang["index_header"];
+			$title .= $name." ".$pgv_lang["index_header"];
 			break;
 		case 'descendants':
-			$title = $name." ".$pgv_lang["descend_chart"];
+			$title .= $name." ".$pgv_lang["descend_chart"];
 			break;
 		case 'hourglass':
-			$title = $name." ".$pgv_lang["hourglass_chart"];
+			$title .= $name." ".$pgv_lang["hourglass_chart"];
 			break;
 		case 'treenav':
-			$title = $name." ".$pgv_lang["tree"];
+			$title .= $name." ".$pgv_lang["tree"];
 			break;
 	}
-	print "<b>".$title."</b>";
-	print "</div></td>";
-	print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-	print "</table>";
-	print "<div class=\"blockcontent\">";
-	print "<div class=\"small_inner_block\">";
-	?>
-	<table cellspacing="0" cellpadding="0" border="0"><tr>
-	<?php
+	$content = '<table cellspacing="0" cellpadding="0" border="0"><tr>';
 	if ($config['type']=='descendants' || $config['type']=='hourglass') {
-		print "<td valign=\"middle\">";
+		$content .= "<td valign=\"middle\">";
+		ob_start();
 		$controller->print_descendency($config['rootId'], 1, false);
-		print "</td>";
+		$content .= ob_get_clean();
+		$content .= "</td>";
 	}
 	if ($config['type']=='pedigree' || $config['type']=='hourglass') {
 		//-- print out the root person
 		if ($config['type']!='hourglass') {
-			print "<td valign=\"middle\">";
+			$content .= "<td valign=\"middle\">";
+			ob_start();
 			print_pedigree_person($config['rootId']);
-			print "</td>";
+			$content .= ob_get_clean();
+			$content .= "</td>";
 		}
-		print "<td valign=\"middle\">";
+		$content .= "<td valign=\"middle\">";
+		ob_start();
 		$controller->print_person_pedigree($config['rootId'], 1);
-		print "</td>";
+		$content .= ob_get_clean();
+		$content .= "</td>";
 	}
 	if ($config['type']=='treenav') {
-		print "<td>";
+		$content .= "<td>";
+		ob_start();
 		$nav->drawViewport('blocknav', "", "240px");
-		print "</td>";
+		$content .= ob_get_clean();
+		$content .= "</td>";
 	}
-	print "</tr></table>\n";
-		?>
-		<script type="text/javascript">
+	$content .= "</tr></table>\n";
+	$content .= '<script type="text/javascript">
 		<!--
 		if (sizeLines) sizeLines();
 		//-->
-		</script>
-		<?php
-	print "</div>\n";
-	print "</div>\n";
-	print "</div>";
+		</script>';
+	
+	global $THEME_DIR;
+	include($THEME_DIR."/templates/block_small_temp.php");
 }
 
 function print_charts_block_config($config) {
 	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $PEDIGREE_ROOT_ID;
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config["rootId"])) $config["rootId"] = $PEDIGREE_ROOT_ID;
+	if (empty($config['details'])) $config['details'] = 'no';
 ?>
 	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["chart_type"]; ?></td>
 	<td class="optionbox">
@@ -156,6 +160,15 @@ function print_charts_block_config($config) {
 			<?php } ?>
 		</select>
 	</td></tr>
+	<tr>
+		<td class="descriptionbox wrap width33"><?php print $pgv_lang["show_details"]; ?></td>
+		<td class="optionbox">
+			<select name="details">
+				<option value="no" <?php if ($config["details"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang['no'] ?></option>
+				<option value="yes" <?php if ($config["details"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang['yes'] ?></option>
+			</select>
+		</td>
+	</tr>
 	<tr>
 		<td class="descriptionbox wrap width33"><?php print $pgv_lang["root_person"]; ?></td>
 		<td class="optionbox">

@@ -63,44 +63,37 @@ function print_todays_events($block=true, $config="", $side, $index) {
   if (empty($username)) $allowDownload = "no";
 
   //-- Start output
-  print "<div id=\"on_this_day_events\" class=\"block\">";
-  print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-  print "<td class=\"blockh1\" >&nbsp;</td>";
-  print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-  print_help_link("index_onthisday_help", "qm");
+  $id ="on_this_day_events";
+  $title = print_help_link("index_onthisday_help", "qm","",false,true);
   $username = getUserName();
   if ($PGV_BLOCKS["print_todays_events"]["canconfig"]) {
     $username = getUserName();
     if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
       if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
       else $name = $username;
-      print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-      print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
+      $title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+      $title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
     }
   }
-  print "<b>".$pgv_lang["on_this_day"]."</b>";
-  print "</div></td>";
-  print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-  print "</table>";
+  $title .= $pgv_lang["on_this_day"];
 
-  print "<div class=\"blockcontent\" >";
-  if ($block) print "<div class=\"small_inner_block\">\n";
-
+  $content = "";
 	switch ($infoStyle) {
 	case "style1":
 		// Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
-		print print_events_list($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
+		$content .= print_events_list($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 		break;
 	case "style2":
   	// Style 2: New format, tables, big text, etc.  Not too good on right side of page
+  		ob_start();
 		print_events_table($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes');
+		$content .= ob_get_clean();
 		break;
 	}
-
-	if ($block)
-		print "</div>\n";
-  print "</div>"; // blockcontent
-  print "</div>"; // block
+	
+	global $THEME_DIR;
+	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
+	else include($THEME_DIR."/templates/block_main_temp.php");
 }
 
 function print_todays_events_config($config) {

@@ -83,63 +83,28 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		$_SESSION["top10"][$GEDCOM] = $surnames;
 	}
 	if (count($surnames)>0) {
-		print "<div id=\"top10surnames\" class=\"block\">\n";
-		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-		print "<td class=\"blockh1\" >&nbsp;</td>";
-		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-		print_help_link("index_common_names_help", "qm");
+		$id="top10surnames";
+		$title = print_help_link("index_common_names_help", "qm","",false,true);
 		if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
 			$username = getUserName();
 			if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
 				if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 				else $name = $username;
-				print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-				print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
+				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+				$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 			}
 		}
-		print "<b>".str_replace("10", $config["num"], $pgv_lang["block_top10_title"])."</b>";
-		print "</div></td>";
-		print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-		print "</table>";
-		print "<div class=\"blockcontent\">\n";
-		if ($block) print "<div class=\"small_inner_block\">\n";
+		$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
 		
 		if (array_key_exists("UNKNOWN", $surnames)) unset($surnames["UNKNOWN"]);
 		if (array_key_exists("@N.N.", $surnames)) unset($surnames["@N.N."]);
+		ob_start();
 		print_surn_table(array_slice($surnames, 0, $config["num"]));
-		/** DEPRECATED
-		print "<table>";
-		$i=0;
-		foreach($surnames as $indexval => $surname) {
-			if (stristr($surname["name"], "@N.N")===false) {
-				print "<tr valign=\"top\">";
-				if ($CountSide=="left") {
-					print "<td dir=\"ltr\" align=\"right\">";
-					if ($TEXT_DIRECTION=="rtl") print "&nbsp;";
-					print "[".$surname["match"]."]";
-					if ($TEXT_DIRECTION=="ltr") print "&nbsp;";
-					print "</td>";
-				}
-				print "<td class=\"name2\" ";
-				if ($block) print "width=\"86%\"";
-				print "><a href=\"indilist.php?ged=".$GEDCOM."&amp;surname=".urlencode($surname["name"])."\">".PrintReady($surname["name"])."</a></td>";
-				if ($CountSide=="right") {
-					print "<td dir=\"ltr\" align=\"right\">";
-					if ($TEXT_DIRECTION=="ltr") print "&nbsp;";
-					print "[".$surname["match"]."]";
-					if ($TEXT_DIRECTION=="rtl") print "&nbsp;";
-					print "</td>";
-				}
-				print "</tr>";
-				$i++;
-				if ($i>=$config["num"]) break;
-			}
-		}
-		print "</table>";
-		**/
-		if ($block) print "</div>\n";
-		print "</div>";
-		print "</div>";
+		$content = ob_get_clean();
+		
+		global $THEME_DIR;
+		if ($block) include($THEME_DIR."/templates/block_small_temp.php");
+		else include($THEME_DIR."/templates/block_main_temp.php");
 	}
 }
 
@@ -147,23 +112,14 @@ function print_block_name_top10_config($config) {
 	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_name_top10"]["config"]["cache"];
-
-	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["num_to_show"]."</td>";?>
+?>
+	<tr>
+		<td class="descriptionbox wrap width33"><?php print $pgv_lang["num_to_show"] ?></td>
 	<td class="optionbox">
 		<input type="text" name="num" size="2" value="<?php print $config["num"]; ?>" />
 	</td></tr>
 
 	<?php
-	/** DEPRECATED
-  	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["before_or_after"]."</td>";?>
-	<td class="optionbox">
-	<select name="count_placement">
-		<option value="left"<?php if ($config["count_placement"]=="left") print " selected=\"selected\"";?>><?php print $pgv_lang["before"]; ?></option>
-		<option value="right"<?php if ($config["count_placement"]=="right") print " selected=\"selected\"";?>><?php print $pgv_lang["after"]; ?></option>
-	</select>
-	</td></tr>
-	<?php
-	**/
 
 	// Cache file life
 	if ($ctype=="gedcom") {

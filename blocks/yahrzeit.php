@@ -62,11 +62,8 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	if (empty($username))
 		$allowDownload = "no";
 
-	print '<div id="yahrzeit" class="block">';
-	print '<table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc">';
-	print_help_link('yahrzeit_help', 'qm');
+	$id="yahrzeit";
+	$title = print_help_link('yahrzeit_help', 'qm','',false,true);
 	if ($PGV_BLOCKS['print_yahrzeit']['canconfig'] && (
 		($ctype=='gedcom' && userGedcomAdmin($username)) ||
 	  ($ctype=='user' && !empty($username)))) {
@@ -74,14 +71,10 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			$name=addslashes($GEDCOM);
 		else
 			$name=$username;
-		print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-		print "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>\n";
+		$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+		$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>\n";
 	}
-	print "<b>{$pgv_lang['yahrzeit_block']}</b></td>";
-	print '<td class="blockh3">&nbsp;</td></tr></table>';
-	print '<div class="blockcontent">';
-	if ($block)
-		print '<div class="small_inner_block">';
+	$title .= $pgv_lang['yahrzeit_block'];
 
 	// The standard anniversary rules cover most of the Yahrzeit rules, we just
 	// need to handle a few special cases.
@@ -121,30 +114,33 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			}
 		}
 
+		$content = "";
 	switch ($config['infoStyle']) {
 	case "style1": // List style
 		foreach ($yahrzeits as $yahrzeit)
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
-				print "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\">".$ind->getName()."</a>".$ind->getSexImage();
-				print "<div class=\"indent\">";
-				print $yahrzeit['date']->Display(true);
-				print ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
-				print "</div>";
+				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\">".$ind->getName()."</a>".$ind->getSexImage();
+				$content .= "<div class=\"indent\">";
+				$content .= $yahrzeit['date']->Display(true);
+				$content .= ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
+				$content .= "</div>";
 			}
 		break;
 	case "style2": // Table style
+		ob_start();
 		require_once("js/sorttable.js.htm");
+		$content .= ob_get_clean();
 		require_once("includes/gedcomrecord.php");
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-		print "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
-		print "<tr>";
-		print "<th class=\"list_label\">{$factarray['NAME']}</th>";
-		print "<th style=\"display:none\">GIVN</th>";
-		print "<th class=\"list_label\">{$factarray['DATE']}</th>";
-		print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"{$pgv_lang['anniversary']}\" title=\"{$pgv_lang['anniversary']}\" border=\"0\" /></th>";
-		print "<th class=\"list_label\">{$factarray['_YART']}</th>";
-		print "</tr>";
+		$content .= "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
+		$content .= "<tr>";
+		$content .= "<th class=\"list_label\">{$factarray['NAME']}</th>";
+		$content .= "<th style=\"display:none\">GIVN</th>";
+		$content .= "<th class=\"list_label\">{$factarray['DATE']}</th>";
+		$content .= "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"{$pgv_lang['anniversary']}\" title=\"{$pgv_lang['anniversary']}\" border=\"0\" /></th>";
+		$content .= "<th class=\"list_label\">{$factarray['_YART']}</th>";
+		$content .= "</tr>";
 
 		// Which types of name do we display for an INDI
 		$name_subtags = array("", "_AKA", "_HEB", "ROMN");
@@ -154,13 +150,13 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		foreach ($yahrzeits as $yahrzeit)
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
-				print "<tr class=\"vevent\">"; // hCalendar:vevent
+				$content .= "<tr class=\"vevent\">"; // hCalendar:vevent
 				//-- Record name(s)
 				$name=$ind->getSortableName();
 				$url=$ind->getLinkUrl();
-				print "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-				print "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-				print $ind->getSexImage();
+				$content .= "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
+				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+				$content .= $ind->getSexImage();
 				foreach ($name_subtags as $subtag) {
 					for ($num=1; ; ++$num) {
 						$addname = $ind->getSortableName($subtag, $num);
@@ -169,80 +165,79 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 							break;
 						else
 							if ($addname!=$name)
-								print "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
+								$content .= "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
 					}
 				}
-				print "</td>";
+				$content .= "</td>";
 
 				//-- GIVN for sorting
-				echo "<td style=\"display:none\">";
+				$content .= "<td style=\"display:none\">";
 				$exp = explode(",", str_replace('<', ',', $name).",");
-				echo $exp[1];
-				echo "</td>";
+				$content .= $exp[1];
+				$content .= "</td>";
 
 		//		print "<a href=\"".$ind->getLinkUrl()."\">".PrintReady($ind->getSortableName())."</a>".$ind->getSexImage();
 				$today=new JewishDate($yahrzeit['jd']);
 				$td=new GedcomDate($today->Format('@ A O E'));
 
 				//-- death/yahrzeit event date
-				print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-				print "<a name='{$yahrzeit['jd']}'>".$yahrzeit['date']->Display(true, NULL, array())."</a>";
-				print "</td>";
+				$content .= "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
+				$content .= "<a name='{$yahrzeit['jd']}'>".$yahrzeit['date']->Display(true, NULL, array())."</a>";
+				$content .= "</td>";
 
 				//-- Anniversary
-				print "<td class=\"list_value_wrap rela\">";
+				$content .= "<td class=\"list_value_wrap rela\">";
 				$anniv = $yahrzeit['anniv'];
 				if ($anniv==0)
-					print '<a name="0">&nbsp;</a>';
+					$content .= '<a name="0">&nbsp;</a>';
 				else
-					print "<a name=\"{$anniv}\">{$anniv}</a>";
+					$content .= "<a name=\"{$anniv}\">{$anniv}</a>";
 				if ($config['allowDownload']=='yes') {
 					// hCalendar:dtstart and hCalendar:summary
 		//TODO does this work??
-					print "<abbr class=\"dtstart\" title=\"".strip_tags($yahrzeit['date']->Display(false,'Ymd',array()))."\"></abbr>";
-					print "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$yahrzeit['fact']]." : ".PrintReady(strip_tags($ind->getSortableName()))."\"></abbr>";
+					$content .= "<abbr class=\"dtstart\" title=\"".strip_tags($yahrzeit['date']->Display(false,'Ymd',array()))."\"></abbr>";
+					$content .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$yahrzeit['fact']]." : ".PrintReady(strip_tags($ind->getSortableName()))."\"></abbr>";
 				}
 
 				//-- upcomming yahrzeit dates
-				print "<td class=\"list_value_wrap\">";
+				$content .= "<td class=\"list_value_wrap\">";
 
 		// TODO print the 2 dates one under the other - done by changing the date class
 		// should the style be the same as the style of the death date (in cloudy)?
 		// TODO should sort by julian day  - I see now 2 KSL between 19 and 20 CHS and 1 TSH should sort after 20 ELL
 
-				print "<a href=\"".$url."\" class=\"list_item url\">".$td->Display(true, NULL, array('gregorian'))."</a>"; // hCalendar:url
-				print "&nbsp;</td>";
+				$content .= "<a href=\"".$url."\" class=\"list_item url\">".$td->Display(true, NULL, array('gregorian'))."</a>"; // hCalendar:url
+				$content .= "&nbsp;</td>";
 
-				print "</tr>\n";
+				$content .= "</tr>\n";
 			}
 
 		//-- table footer
-		print "<tr class=\"sortbottom\">";
-		print "<td class=\"list_label\">";
-		echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-		print $pgv_lang["total_names"].": ".count($yahrzeits);
+		$content .= "<tr class=\"sortbottom\">";
+		$content .= "<td class=\"list_label\">";
+		$content .= '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+		$content .= $pgv_lang["total_names"].": ".count($yahrzeits);
 		if ($hidden)
-			print "<br /><span class=\"warning\">{$pgv_lang['hidden']} : {$hidden}</span>";
-		print "</td>";
-		print "<td style=\"display:none\">GIVN</td>";
-		print "<td>";
+			$content .= "<br /><span class=\"warning\">{$pgv_lang['hidden']} : {$hidden}</span>";
+		$content .= "</td>";
+		$content .= "<td style=\"display:none\">GIVN</td>";
+		$content .= "<td>";
 		if ($config['allowDownload']=='yes') {
 			$uri = $SERVER_URL.basename($_SERVER['REQUEST_URI']);
 			global $whichFile;
 			$whichFile = 'hCal-events.ics';
 			$title = print_text('download_file',0,1);
 			if (count($yahrzeits))
-				print "<a href=\"http://feeds.technorati.com/events/{$uri}\"><img src=\"images/hcal.png\" border=\"0\" alt=\"{$title}\" title=\"{$title}\" /></a>";
+				$content .= "<a href=\"http://feeds.technorati.com/events/{$uri}\"><img src=\"images/hcal.png\" border=\"0\" alt=\"{$title}\" title=\"{$title}\" /></a>";
 		}
-		print '</td><td>&nbsp;</td><td>&nbsp;</td></tr>';
-		print '</table>';
+		$content .= '</td><td>&nbsp;</td><td>&nbsp;</td></tr>';
+		$content .= '</table>';
 		break;
 	}
 
-	if ($block)
-		print '</div>';
-  print '</div>'; // blockcontent
- 	print '</div>'; // block
+	global $THEME_DIR;
+	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
+	else include($THEME_DIR."/templates/block_main_temp.php");
 }
 
 function print_yahrzeit_config($config) {

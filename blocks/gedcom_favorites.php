@@ -37,81 +37,83 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 
 		$userfavs = getUserFavorites($GEDCOM);
 		if (!is_array($userfavs)) $userfavs = array();
-		print "<div id=\"gedcom_favorites\" class=\"block\">\n";
 
-		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-		print "<td class=\"blockh1\" >&nbsp;</td>";
-		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-		print_help_link("index_favorites_help", "qm");
-		print "<b>".$pgv_lang["gedcom_favorites"]."&nbsp;&nbsp;";
-		if ($TEXT_DIRECTION=="rtl") print getRLM();
-		print "(".count($userfavs).")";
-		if ($TEXT_DIRECTION=="rtl") print getRLM();
-		print "</b>";
-		print "</div></td>";
-		print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-		print "</table>";
-		print "<div class=\"blockcontent\">";
-		if ($block) print "<div class=\"small_inner_block\">\n";
+		$id = "gedcom_favorites";
+		$title = print_help_link("index_favorites_help", "qm", "", false, true);
+		$title .= $pgv_lang["gedcom_favorites"]."&nbsp;&nbsp;";
+		if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
+		$title .= "(".count($userfavs).")";
+		if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
+		
+		$content = "";
 		if (count($userfavs)==0) {
-				if (userGedcomAdmin(getUserName())) print_text("no_favorites");
-				else print_text("no_gedcom_favorites");
+				if (userGedcomAdmin(getUserName())) $content .= print_text("no_favorites",0,1);
+				else $content .= print_text("no_gedcom_favorites",0,1);
 		}
 		else {
-			print "<table width=\"100%\" class=\"$TEXT_DIRECTION\">";
+			$content .= "<table width=\"100%\" class=\"$TEXT_DIRECTION\">";
 			if ($block) $style = 1;
 			else $style = 2;
 			foreach($userfavs as $key=>$favorite) {
 				if (isset($favorite["id"])) $key=$favorite["id"];
 				$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype=$ctype&amp;action=deletefav&amp;fv_id=".$key."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />\n";
-				print "<tr><td>";
+				$content .= "<tr><td>";
 				if ($favorite["type"]=="URL") {
-					print "<div id=\"boxurl".$key.".0\" class=\"person_box\">\n";
-					if ($ctype=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
-					print "<a href=\"".$favorite["url"]."\"><b>".PrintReady($favorite["title"])."</b></a>";
-					print "<br />".PrintReady($favorite["note"]);
-					print "</div>\n";
+					$content .= "<div id=\"boxurl".$key.".0\" class=\"person_box\">\n";
+					if ($ctype=="user" || userGedcomAdmin(getUserName())) $content .= $removeFavourite;
+					$content .= "<a href=\"".$favorite["url"]."\"><b>".PrintReady($favorite["title"])."</b></a>";
+					$content .= "<br />".PrintReady($favorite["note"]);
+					$content .= "</div>\n";
 				} else {
 					if (displayDetailsbyId($favorite["gid"], $favorite["type"])) {
 						if ($favorite["type"]=="INDI") {
 							$indirec = find_person_record($favorite["gid"]);
-							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
-							if (preg_match("/1 SEX F/", $indirec)>0) print "F";
-							else if (preg_match("/1 SEX M/", $indirec)>0) print "";
-							else print "NN";
-							print "\">\n";
-							if ($ctype=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+							$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
+							if (preg_match("/1 SEX F/", $indirec)>0) $content .= "F";
+							else if (preg_match("/1 SEX M/", $indirec)>0) $content .= "";
+							else $content .= "NN";
+							$content .= "\">\n";
+							if ($ctype=="user" || userGedcomAdmin(getUserName())) $content .= $removeFavourite;
+							ob_start();
 							print_pedigree_person($favorite["gid"], $style, 1, $key);
-							print PrintReady($favorite["note"]);
-							print "</div>\n";
+							$content .= ob_get_clean();
+							$content .= PrintReady($favorite["note"]);
+							$content .= "</div>\n";
 						}
 						if ($favorite["type"]=="FAM") {
-							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
-							if ($ctype=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+							$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
+							if ($ctype=="user" || userGedcomAdmin(getUserName())) $content .= $removeFavourite;
+							ob_start();
 							print_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, "", false);
-							print PrintReady($favorite["note"]);
-							print "</div>\n";
+							$content .= ob_get_clean();
+							$content .= PrintReady($favorite["note"]);
+							$content .= "</div>\n";
 						}
 						if ($favorite["type"]=="SOUR") {
-							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
-							if ($ctype=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+							$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
+							if ($ctype=="user" || userGedcomAdmin(getUserName())) $content .= $removeFavourite;
+							ob_start();
 							print_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], false);
-							print PrintReady($favorite["note"]);
-							print "</div>\n";
+							$content .= ob_get_clean();
+							$content .= PrintReady($favorite["note"]);
+							$content .= "</div>\n";
 						}
 						if ($favorite["type"]=="OBJE") {
-							print "<div id=\"box".$favorite["gid"].".0\">\n";
-							if ($ctype=="user" || userIsAdmin(getUserName())) print $removeFavourite;
+							$content .= "<div id=\"box".$favorite["gid"].".0\">\n";
+							if ($ctype=="user" || userIsAdmin(getUserName())) $content .= $removeFavourite;
+							ob_start();
 							print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
-							print PrintReady($favorite["note"]);
+							$content .= ob_get_clean();
+							$content .= PrintReady($favorite["note"]);
 						}
 					}
 				}
-				print "</td></tr>\n";
+				$content .= "</td></tr>\n";
 			}
-			print "</table>\n";
+			$content .= "</table>\n";
 		}
-		if (userGedcomAdmin(getUserName())) { ?>
+		if (userGedcomAdmin(getUserName())) { 
+		$content .= '
 			<script language="JavaScript" type="text/javascript">
 			<!--
 			var pastefield;
@@ -121,32 +123,33 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 			//-->
 			</script>
 			<br />
-			<?php
-			print_help_link("index_add_favorites_help", "qm");
-			print "<b><a href=\"javascript:// ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
-			print "<br /><div id=\"add_ged_fav\" style=\"display: none;\">\n";
-			print "<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n";
-			print "<input type=\"hidden\" name=\"action\" value=\"addfav\" />\n";
-			print "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
-			print "<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n";
-			print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
-			print "<table border=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
-			print "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid\" size=\"3\" value=\"\" />";
-			print_findindi_link("gid","");
-			print_findfamily_link("gid");
-			print_findsource_link("gid");
-			print "\n<br />".$pgv_lang["add_fav_or_enter_url"];
-			print "\n<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
-			print "\n<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
-			print "\n</td><td>";
-			print "\n".$pgv_lang["add_fav_enter_note"];
-			print "\n<br /><textarea name=\"favnote\" rows=\"6\" cols=\"40\"></textarea>";
-			print "</td></tr></table>\n";
-			print "\n<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" style=\"font-size: 8pt; \" />";
-			print "\n</form></div>\n";
+			';
+			$content .= print_help_link("index_add_favorites_help", "qm", "", false, true);
+			$content .= "<b><a href=\"javascript:// ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
+			$content .= "<br /><div id=\"add_ged_fav\" style=\"display: none;\">\n";
+			$content .= "<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n";
+			$content .= "<input type=\"hidden\" name=\"action\" value=\"addfav\" />\n";
+			$content .= "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
+			$content .= "<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n";
+			$content .= "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
+			$content .= "<table border=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
+			$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid\" size=\"3\" value=\"\" />";
+			$content .= print_findindi_link("gid","",true);
+			$content .= print_findfamily_link("gid","",true);
+			$content .= print_findsource_link("gid","",true);
+			$content .= "\n<br />".$pgv_lang["add_fav_or_enter_url"];
+			$content .= "\n<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
+			$content .= "\n<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
+			$content .= "\n</td><td>";
+			$content .= "\n".$pgv_lang["add_fav_enter_note"];
+			$content .= "\n<br /><textarea name=\"favnote\" rows=\"6\" cols=\"40\"></textarea>";
+			$content .= "</td></tr></table>\n";
+			$content .= "\n<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" style=\"font-size: 8pt; \" />";
+			$content .= "\n</form></div>\n";
 		}
-		if ($block) print "</div>\n";
-		print "</div>"; // blockcontent
-		print "</div>"; // block
+		
+		global $THEME_DIR;
+		if ($block) include($THEME_DIR."/templates/block_small_temp.php");
+		else include($THEME_DIR."/templates/block_main_temp.php");
 }
 ?>

@@ -79,7 +79,8 @@ function place_id_to_hierarchy($id) {
 // NB This function exists in both places.php and places_edit.php
 function getHighestIndex() {
 	global $TBLPREFIX;
-	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1";
+//	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1";
+	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE TRUE";
 	$res=dbquery($sql, true, 1);
 	$row=&$res->fetchRow();
 	$res->free();

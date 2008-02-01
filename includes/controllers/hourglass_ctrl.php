@@ -238,10 +238,11 @@ class HourglassControllerRoot extends BaseController {
 	/**
 	 * Prints descendency of passed in person
 	 *
-	 * @param mixed $pid ID of person to print descendency for
-	 * @param mixed $count count of generations to print
+	 * @param string $pid ID of person to print descendency for
+	 * @param int $count count of generations to print
+	 * @param boolean $showNav	if the child navigation should be shown
 	 * @access public
-	 * @return void
+	 * @return int	returns the number of people in this descendancy
 	 */
 	function print_descendency($pid, $count, $showNav=true) {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
