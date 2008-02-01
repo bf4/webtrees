@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ $pgv_lang["switch_timeline"]		= "Lebenspannenanzeige zeigen";
 $pgv_lang["differences"]			= "Differenzen";
 $pgv_lang["charts_block"]			= "Diagramm-Block";
 $pgv_lang["charts_block_descr"]		= "Dieser Block ermöglicht es Ihnen, Diagramme auf den haupt und persönlichen Begrüßungsseiten zu zeigen.  Sie können in dessen Konfiguration bestimmen, ob der Block das Ahnen-, Nachfahren-, oder Sanduhr-Diagramm zeigen soll.  Sie können auch die ID-Nummer der Startperson bestimmen.";
+$pgv_lang["charts_click_box"]		= "Den Kasten klicken, um Details über diese Person zu erhalten.";
 $pgv_lang["chart_type"]				= "Diagramm-Typ";
 $pgv_lang["changedate1"]			= "Datenbereich Ende";
 $pgv_lang["changedate2"]			= "Datenbereich Anfang";
@@ -670,10 +671,10 @@ $pgv_lang["follow_spouse"]				= "Verwandtschaft anhand der Ehen überprüfen";
 $pgv_lang["timeout_error"]				= "Die maximal zulässige Ausführungszeit wurde überschritten, bevor ein Verwandtschaftsverhältnis gefunden werden konnte.";
 $pgv_lang["son"]						= "Sohn";
 $pgv_lang["daughter"]					= "Tochter";
-$pgv_lang["grandchild"]					= "Enkelkind";
+$pgv_lang["grandchild"]					= "Enkel";
 $pgv_lang["grandson"]					= "Enkelsohn";
 $pgv_lang["granddaughter"]				= "Enkeltochter";
-$pgv_lang["greatgrandchild"]			= "Urenkelkind";
+$pgv_lang["greatgrandchild"]			= "Urenkel";
 $pgv_lang["greatgrandson"]				= "Urenkelsohn";
 $pgv_lang["greatgranddaughter"]			= "Urenkeltochter";
 $pgv_lang["brother"]					= "Bruder";
