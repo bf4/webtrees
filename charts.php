@@ -5,7 +5,7 @@
  * This block prints pedigree, descendency, or hourglass charts for the chosen person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,14 +33,14 @@ $PGV_BLOCKS["print_charts_block"]["canconfig"]	= true;
 $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	"cache"=>1,
 	"rootId"=>'',
-	"type"=>'pedigree'
+	"type"=>'pedigree',
+	"details"=>'no'
 	);
 	
 function print_charts_block($block = true, $config="", $side, $index) {
 	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID;
-	global $show_full;
+	global $show_full, $bwidth, $bheight;
 	
-	$show_full=0;
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config["rootId"])) {
 		$username = getUserName();
@@ -50,6 +50,14 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			if (!empty($user["gedcom_id"][$GEDCOM])) $config["rootId"] = $user["gedcom_id"][$GEDCOM];
 			else $config["rootId"] = $PEDIGREE_ROOT_ID;
 		}
+	}
+	if (empty($config["details"])) $config["details"] = "no";
+	if ($config["details"]=="no") {
+		$show_full = 0;
+		// Here we could adjust the block width & height to accommodate larger displays 
+	} else {
+		$show_full = 1;
+		// Here we could adjust the block width & height to accommodate larger displays 
 	}
 	
 	if ($config['type']!='treenav') {
@@ -103,6 +111,9 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	print "</table>";
 	print "<div class=\"blockcontent\">";
 	print "<div class=\"small_inner_block\">";
+	if ($show_full==0) {
+		print "<span class=\"details2\"><center>".$pgv_lang["charts_click_box"]."</center></span><br />";
+	}
 	?>
 	<table cellspacing="0" cellpadding="0" border="0"><tr>
 	<?php
@@ -144,6 +155,7 @@ function print_charts_block_config($config) {
 	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $PEDIGREE_ROOT_ID;
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config["rootId"])) $config["rootId"] = $PEDIGREE_ROOT_ID;
+	if (empty($config["details"])) $config["details"] = "no";
 ?>
 	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["chart_type"]; ?></td>
 	<td class="optionbox">
@@ -154,6 +166,13 @@ function print_charts_block_config($config) {
 			<?php if (file_exists("includes/treenav_class.php")) { ?>
 			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\"";?>>TreeNav</option>
 			<?php } ?>
+		</select>
+	</td></tr>
+	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["show_details"]; ?></td>
+	<td class="optionbox">
+		<select name="details">
+			<option value="no"<?php if ($config["details"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			<option value="yes"<?php if ($config["details"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
 		</select>
 	</td></tr>
 	<tr>
