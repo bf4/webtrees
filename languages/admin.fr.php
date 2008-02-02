@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,12 +29,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-#pgv_lang["associated_files"]           = "Associated files:";
-#pgv_lang["remove_all_files"]           = "Remove all nonessential files";
-#pgv_lang["warn_file_delete"]           = "This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?";
-#pgv_lang["deleted_files"]              = "Deleted files:";
-#pgv_lang["index_dir_cleanup_inst"]     = "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.<br /><br />";
-#pgv_lang["index_dir_cleanup"]          = "Cleanup Index directory";
+$pgv_lang["associated_files"]           = "Fichiers associés:";
+$pgv_lang["remove_all_files"]           = "Supprimer les fichiers non essentiels";
+$pgv_lang["warn_file_delete"]           = "Ce fichier contient des informations importantes telles que les paramètres de la langue ou les informations en attente de modification. Êtes-vous certain de vouloir supprimer ce fichier ?";
+$pgv_lang["deleted_files"]              = "Fichiers supprimés:";
+$pgv_lang["index_dir_cleanup_inst"]     = "Pour supprimer un fichier ou un répertoire du répertoire Index il vous suffit de le déplacer dans la corbeille ou de cocher la case correspondante. Cliquez sur le bouton Supprimer pour supprimer définitivement les fichiers indiqués.<br /><br />Les fichiers qui sont identifiés par des <img src=\"./images/RESN_confidential.gif\" /> sont nécessaires pour le bon fonctionnement du logiciel et ne peuvent pas être supprimés.<br />Les fichiers qui sont identifiés par <img src=\"./images/RESN_locked.gif\" /> contiennent des paramètres importants ou des données en attente de modification et ne doivent être supprimés que si vous êtes certain de ce que vous faites.<br /><br />";
+$pgv_lang["index_dir_cleanup"]          = "Nettoyer le répertoire Index";
 $pgv_lang["clear_cache_succes"]         = "Fichiers supprimés du cache.";
 $pgv_lang["clear_cache"]                = "Vider le cache";
 $pgv_lang["sanity_err0"]                = "Erreurs:";
@@ -53,13 +53,13 @@ $pgv_lang["sanity_warn5"]               = "Librairie 'DOM XML'  absente. Il vous
 $pgv_lang["sanity_warn6"]               = "Librairie 'Calendar' absente. Il vous sera impossible d'utiliser certaines fonctionnalités : conversion de dates au format hébreu ou calendrier révolutionnaire. Pour en savoir plus : <a href='http://www.php.net/manual/fr/ref.calendar.php'>http://www.php.net/manual/fr/ref.calendar.php</a>.";
 $pgv_lang["ip_address"]                 = "Adresse IP";
 $pgv_lang["date_time"]                  = "Date et heure";
-#pgv_lang["log_message"]                = "Log Message";
+$pgv_lang["log_message"]                = "Message de log";
 $pgv_lang["searchtype"]                 = "Type de recherche";
 $pgv_lang["query"]                      = "Requête";
 $pgv_lang["user"]                       = "Utilisateur authentifié";
 $pgv_lang["thumbnail_deleted"]          = "Vignette supprimée.";
 $pgv_lang["thumbnail_not_deleted"]      = "Ce fichier vignette est protégé et ne peut pas être supprimé sans autorisation.";
-$pgv_lang["step2"]                      = "Etape 2/4 :";
+$pgv_lang["step2"]                      = "Étape 2/4 :";
 $pgv_lang["refresh"]                    = "Rafraîchir";
 $pgv_lang["move_file_success"]          = "Le fichier MultiMedia et la vignette ont été déplacés.";
 $pgv_lang["media_folder_corrupt"]       = "Le dossier MultiMedia est corrompu.";
@@ -103,11 +103,11 @@ $pgv_lang["label_add_search_server"]    = "Ajouter IP";
 $pgv_lang["label_add_server"]           = "Ajouter";
 $pgv_lang["label_ban_server"]           = "Soumettre";
 $pgv_lang["label_delete"]               = "Supprimer";
-$pgv_lang["progress_bars_info"]         = "La barre d'état vous indique la progression du chargement. En cas de dépassement du temps-limite, cliquer sur 'Continuer'. Si le bouton 'Continuer' n'apparait pas, recommencer l'opération avec un temps-limite plus petit.";
-$pgv_lang["upload_replacement"]         = "Ecraser le fichier";
+$pgv_lang["progress_bars_info"]         = "La barre d'état vous indique la progression du chargement. En cas de dépassement du temps-limite, cliquer sur 'Continuer'. Si le bouton 'Continuer' n'apparaît pas, recommencer l'opération avec un temps-limite plus petit.";
+$pgv_lang["upload_replacement"]         = "Écraser le fichier";
 $pgv_lang["about_user"]                 = "Vous devez d'abord créer un <b>administrateur principal</b>. Cet utilisateur pourra mettre à jour les fichiers de configuration, consulter les données privées et accorder des droits à d'autres utilisateurs.";
 $pgv_lang["access"]                     = "Droits pour Consulter";
-$pgv_lang["add_gedcom"]                 = "Paramètrer un GEDCOM déjà envoyé sur le serveur";
+$pgv_lang["add_gedcom"]                 = "Paramétrer un GEDCOM déjà envoyé sur le serveur";
 $pgv_lang["add_new_gedcom"]             = "Créer un nouveau GEDCOM vide";
 $pgv_lang["add_new_language"]           = "Ajouter fichiers et paramètres pour une nouvelle langue";
 $pgv_lang["add_user"]                   = "Ajouter un nouvel utilisateur";
@@ -149,12 +149,12 @@ $pgv_lang["create_user"]                = "Ajouter un utilisateur";
 $pgv_lang["current_users"]              = "Liste des utilisateurs";
 $pgv_lang["daily"]                      = "Quotidien";
 $pgv_lang["dataset_exists"]             = "Un fichier GEDCOM de même nom a déjà été introduit dans la base de données.";
-#pgv_lang["unsync_warning"]             = "This GEDCOM file is <em>not</em> synchronized with the database.  It may not contain the latest version of your data.  To re-import from the database rather than the file, you should download and re-upload.";
+$pgv_lang["unsync_warning"]             = "Ce fichier GEDCOM est <em>not</em> synchronisé avec la base de données.  Il pourrait ne pas contenir la dernière version de vos données. Pour réimporter ces données depuis votre base de données plutôt qu'à partir du fichier, vous devriez télécharger puis transférer à nouveau votre fichier.";
 $pgv_lang["date_registered"]            = "Déclaration";
 $pgv_lang["day_before_month"]           = "Jour Mois Année (JJ MM AAAA)";
 $pgv_lang["DEFAULT_GEDCOM"]             = "Fichier GEDCOM par défaut";
 $pgv_lang["default_user"]               = "Création de l'administrateur par défaut.";
-#pgv_lang["del_gedrights"]              = "GEDCOM no longer active, remove user references.";
+$pgv_lang["del_gedrights"]              = "Ce GEDCOM n'est plus actif, supprimez les références utilisateurs.";
 $pgv_lang["del_proceed"]                = "Continuer";
 $pgv_lang["del_unvera"]                 = "Compte non vérifié par un administrateur.";
 $pgv_lang["del_unveru"]                 = "Compte non vérifié sous 7 jours.";
@@ -167,11 +167,11 @@ $pgv_lang["empty_dataset"]              = "Voulez-vous vider le fichier ?";
 $pgv_lang["empty_lines_detected"]       = "Lignes vides trouvées dans le fichier GEDCOM. Au chargement, elles seront supprimées.";
 $pgv_lang["enable_disable_lang"]        = "Configurer les langues";
 $pgv_lang["error_ban_server"]           = "Adresse IP invalide.";
-#pgv_lang["error_delete_person"]        = "You must select the person whose remote link you wish to delete.";
+$pgv_lang["error_delete_person"]        = "Vous devez choisir l'individu dont vous souhaitez supprimer le lien à distance.";
 $pgv_lang["error_header_write"]         = "Le fichier GEDCOM #GEDCOM# est en lecture-seule. Vérifier les attributs et droits d'accès.";
-$pgv_lang["error_siteauth_failed"]      = "Echec d'authentification au site distant";
-#pgv_lang["error_url_blank"]            = "Please do not leave remote site title or URL blank";
-#pgv_lang["error_view_info"]            = "You must select the person whose information you wish to view.";
+$pgv_lang["error_siteauth_failed"]      = "Échec d'authentification au site distant";
+$pgv_lang["error_url_blank"]            = "S'il vous plaît, ne laissez pas vide l'adresse URL ou le titre du site distant";
+$pgv_lang["error_view_info"]            = "Vous devez sélectionner l'individu dont vous souhaitez visualiser les informations.";
 $pgv_lang["example_date"]               = "Exemple de date incorrecte dans votre GEDCOM";
 $pgv_lang["example_place"]              = "Exemple de lieu incorrect dans votre GEDCOM";
 $pgv_lang["fbsql"]                      = "FrontBase";
@@ -203,12 +203,12 @@ $pgv_lang["label_banned_servers"]       = "Liste noire";
 $pgv_lang["label_families"]             = "Familles";
 $pgv_lang["label_gedcom_id2"]           = "ID base de données";
 $pgv_lang["label_individuals"]          = "Individus";
-#pgv_lang["label_manual_search_engines"]= "Manually mark Search Engines by IP";
+$pgv_lang["label_manual_search_engines"]= "Marquez manuellement les moteurs de recherche avec leur adresse IP";
 $pgv_lang["label_new_server"]           = "Ajouter un site";
 $pgv_lang["label_password_id"]          = "Mot de passe";
 $pgv_lang["label_remove_ip"]            = "Adresse IP indésirable (Ex: 198.128.*.*): ";
-#pgv_lang["label_remove_search"]        = "Mark IP addresses as Search Engine Spiders: ";
-#pgv_lang["label_server_info"]          = "All people remotely linked through the site:";
+$pgv_lang["label_remove_search"]        = "Marquez ces adresses IP comme des moteurs de recherche et d'indexation: ";
+$pgv_lang["label_server_info"]          = "Toutes les personnes qui sont liées à distance à votre site:";
 $pgv_lang["label_server_url"]           = "URL ou adresse IP du site";
 $pgv_lang["label_username_id"]          = "Utilisateur";
 $pgv_lang["label_view_local"]           = "Voir info locale sur cette personne";
@@ -216,7 +216,7 @@ $pgv_lang["label_view_remote"]          = "Voir info distante sur cette personne
 $pgv_lang["LANG_SELECTION"]             = "Langues supportées";
 $pgv_lang["LANGUAGE_DEFAULT"]           = "Vous n'avez pas configuré les options de langues.<br />PhpGedView va utiliser les valeurs par défaut.";
 $pgv_lang["last_login"]                 = "Dernière visite";
-$pgv_lang["lasttab"]                    = "Dernier onglet sélectioné";
+$pgv_lang["lasttab"]                    = "Dernier onglet sélectionné";
 $pgv_lang["leave_blank"]                = "Laisser le champ vide pour conserver le mot de passe existant.";
 $pgv_lang["link_manage_servers"]        = "Gestion des sites";
 $pgv_lang["logfile_content"]            = "Contenu du fichier journal";
@@ -291,12 +291,12 @@ $pgv_lang["users_total"]                = "Nombre total d'utilisateurs";
 $pgv_lang["users_unver"]                = "Non vérifié par l'utilisateur";
 $pgv_lang["users_unver_admin"]          = "Non vérifié par l'administrateur";
 $pgv_lang["usr_deleted"]                = "Utilisateur supprimé: ";
-#pgv_lang["usr_idle"]                   = "Number of months since the last login for a user's account to be considered inactive: ";
-#pgv_lang["usr_idle_toolong"]           = "User's account has been inactive too long: ";
+$pgv_lang["usr_idle"]                   = "Nombre de mois écoulés depuis la dernière connexion pour qu'un compte utilisateur soit considéré comme inactif:";
+$pgv_lang["usr_idle_toolong"]           = "Le compte utilisateur a été inactif depuis trop longtemps: ";
 $pgv_lang["usr_no_cleanup"]             = "Rien à supprimer";
-#pgv_lang["usr_unset_gedcomid"]         = "Unset GEDCOM ID for ";
-#pgv_lang["usr_unset_rights"]           = "Unset GEDCOM rights for ";
-#pgv_lang["usr_unset_rootid"]           = "Unset root ID for ";
+$pgv_lang["usr_unset_gedcomid"]         = "Modifier l'ID du GEDCOM ID pour ";
+$pgv_lang["usr_unset_rights"]           = "Modifier les droits du GEDCOM rights pour ";
+$pgv_lang["usr_unset_rootid"]           = "Modifier l'ID de l'individu racine pour ";
 $pgv_lang["valid_gedcom"]               = "Fichier GEDCOM correct.  Le nettoyage de la base n'est pas nécessaire.";
 $pgv_lang["validate_gedcom"]            = "Validation GEDCOM";
 $pgv_lang["verified"]                   = "Vérifié par l'utilisateur";
@@ -312,37 +312,37 @@ $pgv_lang["warn_users"]                 = "Utilisateurs en anomalie";
 $pgv_lang["weekly"]                     = "Hebdo";
 $pgv_lang["welcome_new"]                = "Bienvenue sur votre site PhpGedView. L'affichage de cette page signifie que PhpGedView a été correctement installé sur votre serveur. Vous pouvez lancer la configuration.<br />";
 $pgv_lang["yearly"]                     = "Annuel";
-#pgv_lang["admin_OK_subject"]           = "Approval of account at #SERVER_NAME#";
-#pgv_lang["admin_OK_message"]           = "The administrator at the PhpGedView site #SERVER_NAME# has approved your application for an account.  You may now login by accessing the following link:\r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["admin_OK_subject"]           = "Approbation (validation) du compte sur #SERVER_NAME#";
+$pgv_lang["admin_OK_message"]           = "L'administrateur du site PhpGedView #SERVER_NAME# a approuvé la création de votre compte utilisateur. Vous pouvez maintenant vous connecter en utilisant le lien suivant  :\r\n\r\n#SERVER_NAME#\r\n";
 
-// Text for the Gedcom Checker
-$pgv_lang["gedcheck"]                   = "Vérificateur Gedcom";          // Module title
+// Texte pour la vérification des fichiers GEDCOM
+$pgv_lang["gedcheck"]                   = "Vérificateur Gedcom";          // Titre du module
 $pgv_lang["gedcheck_text"]              = "Ce module vérifie le format du fichier GEDCOM selon la norme <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">GEDCOM 5.5.1</a>. L'outil détecte aussi certaines erreurs fréquentes dans les données. Comme il existe de nombreuses variantes de cette norme, seules les erreurs 'graves' sont indispensables à corriger. Merci de bien lire l'explication de chaque erreur dans la norme avant de demander de l'aide.";
-$pgv_lang["level"]                      = "Niveau";                   // Levels of checking
+$pgv_lang["level"]                      = "Niveau";                   // Niveaux de vérification
 $pgv_lang["critical"]                   = "Erreur grave";
 $pgv_lang["error"]                      = "Erreur";
 $pgv_lang["warning"]                    = "Avertissement";
 $pgv_lang["info"]                       = "Information";
-$pgv_lang["open_link"]                  = "Ouvrir les liens dans";           // Where to open links
+$pgv_lang["open_link"]                  = "Ouvrir les liens dans";           // Où ouvrir les liens
 $pgv_lang["same_win"]                   = "le même onglet ou la même fenêtre";
 $pgv_lang["new_win"]                    = "un nouvel onglet ou une nouvelle fenêtre";
-$pgv_lang["context_lines"]              = "Nombre de lignes GEDCOM<br />avant et après la ligne en erreur"; // Number of lines either side of error
-$pgv_lang["all_rec"]                    = "Tous les enregistrements";             // What to show
+$pgv_lang["context_lines"]              = "Nombre de lignes GEDCOM<br />avant et après la ligne en erreur"; // Nombre de lignes de chaque côté de l'erreur
+$pgv_lang["all_rec"]                    = "Tous les enregistrements";             // Ce qu'il y a à montrer
 $pgv_lang["err_rec"]                    = "Les enregistrements comportant une erreur";
-$pgv_lang["missing"]                    = "balise manquante";                 // General error messages
+$pgv_lang["missing"]                    = "balise manquante";                 // Messages d'erreur généraux
 $pgv_lang["multiple"]                   = "multiple";
 $pgv_lang["invalid"]                    = "mauvaise";
 $pgv_lang["too_many"]                   = "trop";
 $pgv_lang["too_few"]                    = "pas assez";
 $pgv_lang["no_link"]                    = "le lien de retour est manquant";
-$pgv_lang["data"]                       = "donnée";                    // Specific errors (used with general errors)
+$pgv_lang["data"]                       = "donnée";                    // Erreurs spécifiques (utilisé avec les erreurs générales)
 $pgv_lang["see"]                        = "voir";
 $pgv_lang["noref"]                      = "aucun lien vers cet enregistrement";
 $pgv_lang["tag"]                        = "balise";
 $pgv_lang["spacing"]                    = "espacement";
 $pgv_lang["ADVANCED_NAME_FACTS"]        = "Options avancées pour le nom de famille";
 $pgv_lang["ADVANCED_PLAC_FACTS"]        = "Options avancées pour le lieu";
-$pgv_lang["SURNAME_TRADITION"]          = "Mode de transmission du nom"; // Default surname inheritance
+$pgv_lang["SURNAME_TRADITION"]          = "Mode de transmission du nom"; // Héritage par défaut du nom
 $pgv_lang["spanish"]                    = "Façon Espagnole";
 $pgv_lang["portuguese"]                 = "Façon Portugaise";
 $pgv_lang["icelandic"]                  = "Façon Islandaise";
