@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,12 +65,12 @@ $pgv_lang["add_unlinked_source"]        = "Ajouter une source isolée";
 $pgv_lang["server_file"]                = "Nom du fichier sur le serveur";
 $pgv_lang["server_file_advice"]         = "Ne pas modifier pour conserver le nom d'origine.";
 $pgv_lang["server_file_advice2"]        = "Entrer une URL commencant par &laquo;http://&raquo;.";
-#pgv_lang["server_folder_advice"]       = "You can enter up to #GLOBALS[MEDIA_DIRECTORY_LEVELS]# folder names to follow the default &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />Do not enter the &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo; part of the destination folder name.";
-#pgv_lang["server_folder_advice2"]      = "This entry is ignored if you have entered a URL into the file name field.";
-#pgv_lang["add_linkid_advice"]          = "Enter or search for the ID of the person, family, or source to which this media item should be linked.";
-#pgv_lang["use_browse_advice"]          = "Use the &laquo;Browse&raquo; button to search your local computer for the desired file.";
-#pgv_lang["add_media_other_folder"]     = "Other folder... please type in";
-#pgv_lang["add_media_file"]             = "Existing Media file on server";
+$pgv_lang["server_folder_advice"]       = "Vous pouvez entrer jusqu'à #GLOBALS[MEDIA_DIRECTORY_LEVELS]# répertoires à l'intérieur du répertoire par défaut &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />N'entrez pas le &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo; qui fait partie du nom du répertoire de destination.";
+$pgv_lang["server_folder_advice2"]      = "Cette entrée est ignorée si vous avez entré une adresse URL dans le champ correspondant au nom de fichier.";
+$pgv_lang["add_linkid_advice"]          = "Entrez ou recherchez l'ID de la personne, de la famille, ou de la source auqiel ce media doit être lié.";
+$pgv_lang["use_browse_advice"]          = "Utilisez le bouton &laquo;Parcourir&raquo; pour rechercher sur votre ordinateur le fichier voulu.";
+$pgv_lang["add_media_other_folder"]     = "Autre répertoire... renseignez ici le nom de ce nouveau répertoire";
+$pgv_lang["add_media_file"]             = "Fichiers media existant sur le serveur";
 $pgv_lang["main_media_ok1"]             = "Fichier MultiMedia <b>#GLOBALS[oldMediaName]#</b> renommé <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]             = "Fichier MultiMedia <b>#GLOBALS[oldMediaName]#</b> déplacé de <b>#GLOBALS[oldMediaFolder]#</b> vers <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]             = "Fichier MultiMedia renommé et déplacé de <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> vers <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
@@ -78,7 +78,7 @@ $pgv_lang["main_media_fail0"]           = "Fichier MultiMedia <b>#GLOBALS[oldMed
 $pgv_lang["main_media_fail1"]           = "Fichier MultiMedia <b>#GLOBALS[oldMediaName]#</b> impossible à renommer en <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_fail2"]           = "Fichier MultiMedia <b>#GLOBALS[oldMediaName]#</b> impossible à déplacer de <b>#GLOBALS[oldMediaFolder]#</b> vers <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_fail3"]           = "Fichier MultiMedia impossible à renommer et déplacer de <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> vers <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
-#pgv_lang["resn_disabled"]              = "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect.";
+$pgv_lang["resn_disabled"]              = "Note: Vous pouvez utiliser la balise 'Use GEDCOM (RESN) Privacy restriction' pour que ce paramètre soit effectif.";
 $pgv_lang["thumb_media_ok1"]            = "Vignette <b>#GLOBALS[oldMediaName]#</b> renommée <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]            = "Vignette <b>#GLOBALS[oldMediaName]#</b> déplacée de <b>#GLOBALS[oldThumbFolder]#</b> vers <b>#GLOBALS[newThumbFolder]#</b>.";
 $pgv_lang["thumb_media_ok3"]            = "Vignette renommée et déplacée de <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> vers <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
@@ -125,7 +125,7 @@ $pgv_lang["basic_search_discription"]   = "Recherche basique";
 $pgv_lang["birthdate_search"]           = "Date de naissance: ";
 $pgv_lang["birthplace_search"]          = "Lieu de naissance: ";
 $pgv_lang["change"]                     = "Changer";
-#pgv_lang["change_family_instr"]        = "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes.<br />";
+$pgv_lang["change_family_instr"]        = "Utilisez cette page pour modifier ou supprimer un membre de la famille.<br /><br />Pour chaque membre de la famille, vous pouvez utiliser le lien 'Modifier' pour choisir un individu différent pour remplir ce rôle (père, mère ...) dans la famille. Vous pouvez également utiliser le lien 'supprimer' pour supprimer cet individu de cette famille.<br /><br />Quand vous avez terminé les modifications des membres de la famille, cliquez sur le bouton 'sauver (enregistrer)' pour sauvegarder vos modifications.<br />";
 $pgv_lang["change_family_members"]      = "Modifier les membres de la famille";
 $pgv_lang["changes_occurred"]           = "Les modifications suivantes ont été faites pour cet individu";
 $pgv_lang["confirm_remove"]             = "Confirmez-vous la suppression de cette personne de la famille ?";
@@ -160,8 +160,8 @@ $pgv_lang["hebrew_surn"]                = "Nom Hébreu";
 $pgv_lang["hide_changes"]               = "Masquer les modifications.";
 $pgv_lang["highlighted"]                = "Surbrillance";
 $pgv_lang["illegal_chars"]              = "Présence de caractères interdits";
-#pgv_lang["invalid_search_multisite_input"]= "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender ";
-#pgv_lang["invalid_search_multisite_input_gender"]= "Please search again with more information than just gender";
+$pgv_lang["invalid_search_multisite_input"]= "SVP saisissez l'une des informations suivantes: Nom, Date de naissance, Lieu de naissance, Date de décès, Lieu de décès, et sexe";
+$pgv_lang["invalid_search_multisite_input_gender"]= "SVP renouvelez votre recherche en utilisant plus d'informations que le sexe seulement";
 $pgv_lang["label_diff_server"]          = "Un autre site";
 $pgv_lang["label_location"]             = "Adresse";
 $pgv_lang["label_password_id2"]         = "Mot de passe: ";
