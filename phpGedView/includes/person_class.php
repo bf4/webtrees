@@ -535,7 +535,10 @@ class Person extends GedcomRecord {
 		foreach($fams as $key=>$famid) {
 			if (!empty($famid)) {
 				$family = Family::getInstance($famid);
-				if (!is_null($family)) $families[$famid] = $family;
+				// only include family if it is displayable by current user
+				if (!is_null($family)) {
+					if ($family->disp) $families[$famid] = $family;
+				}
 				else echo "<span class=\"warning\">".$pgv_lang["unable_to_find_family"]." ".$famid."</span>";
 			}
 		}
@@ -598,7 +601,10 @@ class Person extends GedcomRecord {
 		foreach($fams as $key=>$famid) {
 			if (!empty($famid)) {
 				$family = Family::getInstance($famid);
-				if (!is_null($family)) $families[$famid] = $family;
+				// only include family if it is displayable by current user
+				if (!is_null($family)) {
+					if ($family->disp) $families[$famid] = $family;
+				}
 				else echo "<span class=\"warning\">".$pgv_lang["unable_to_find_family"]." ".$famid."</span>";
 			}
 		}

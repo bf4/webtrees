@@ -892,26 +892,26 @@ function find_children_in_record($famrec, $me='') {
  * find all child family ids
  *
  * searches an individual gedcom record and returns an array of the FAMC ids where this person is a
- * child in the family
+ * child in the family, but only those families that are allowed to be seen by current user
  * @param string $pid the gedcom xref id for the person to look in
  * @return array array of family ids
  */
 function find_family_ids($pid) {
 	$indirec=find_person_record($pid);
-	return find_families_in_record($indirec, "FAMC");
+	return find_visible_families_in_record($indirec, "FAMC");
 }
 
 /**
  * find all spouse family ids
  *
  * searches an individual gedcom record and returns an array of the FAMS ids where this person is a
- * spouse in the family
+ * spouse in the family, but only those families that are allowed to be seen by current user
  * @param string $pid the gedcom xref id for the person to look in
  * @return array array of family ids
  */
 function find_sfamily_ids($pid) {
 	$indirec=find_person_record($pid);
-	return find_families_in_record($indirec, "FAMS");
+	return find_visible_families_in_record($indirec, "FAMS");
 }
 
 /**
@@ -925,6 +925,26 @@ function find_sfamily_ids($pid) {
 function find_families_in_record($indirec, $tag) {
 	preg_match_all("/1\s*{$tag}\s*@(.+)@/", $indirec, $match);
 	return $match[1];
+}
+
+/**
+ * find all family ids in the given record that should be visible to the current user
+ *
+ * searches an individual gedcom record and returns an array of the FAMS|C ids that are visible
+ * @param string $indirec the gedcom record for the person to look in
+ * @param string $tag 	The family tag to look for, FAMS or FAMC
+ * @return array array of family ids
+ */
+function find_visible_families_in_record($indirec, $tag) {
+	$allfams = find_families_in_record($indirec, $tag);
+	$visiblefams = array();
+	// select only those that are visible to current user
+	foreach($allfams as $key=>$famid) {
+		if (displayDetailsById($famid,"FAM")) {
+			$visiblefams[] = $famid;
+		}
+	}
+	return $visiblefams;
 }
 
 /**
