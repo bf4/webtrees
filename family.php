@@ -29,6 +29,12 @@
 require_once 'includes/controllers/family_ctrl.php';
 
 print_header($controller->getPageTitle());
+// completely prevent display if privacy dictates so
+if (!$controller->family->disp) {
+	print_privacy_error($CONTACT_EMAIL);
+	print_footer();
+	exit;
+}
 ?>
 <?php if ($controller->family->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
