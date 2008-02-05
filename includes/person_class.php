@@ -849,8 +849,18 @@ class Person extends GedcomRecord {
 				  }
 				  else if ($fact=="OBJE") {}
 				  else if (!isset($nonfacts) || !in_array($fact, $nonfacts)) {
-						 $this->indifacts[$f]=array($linenum, $factrec);
+						 $thisfact = array($linenum, $factrec);
+						 if (preg_match("/@(F.*)@/", $thisfact[1], $match)>0) {
+							// a family ref in fact, only include it if family is displayable
+							if ( displayDetailsByID( $match[1], "FAM" ) ) {
+								$this->indifacts[$f]=$thisfact;
 						 $f++;
+				  }
+						 }
+						 else {
+							$this->indifacts[$f]=$thisfact;
+							$f++;
+						 }
 				  }
 				  $factrec = $line;
 				  $linenum = $i;
