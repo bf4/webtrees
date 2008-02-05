@@ -56,7 +56,8 @@ function check_db($ignore_previous=false) {
 	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX;
 
 	if (!$ignore_previous) {
-		if ((is_object($DBCONN)) && (!DB::isError($DBCONN))) return true;
+		if ((is_object($DBCONN)) && (!DB::isError($DBCONN)))
+			return true;
 		if (DB::isError($DBCONN)) {
 			return false;
 		}
@@ -86,7 +87,7 @@ function check_db($ignore_previous=false) {
 	if ($ignore_previous) $dsn['new_link'] = true;
 
 	$options = array(
-		'debug' 	  => 3,
+		'debug'       => 3,
 		'portability' => DB_PORTABILITY_ALL,
 		'persistent'  => $DBPERSIST
 	);
@@ -115,20 +116,23 @@ function check_db($ignore_previous=false) {
 function get_config_file($ged="") {
 	global $GEDCOMS, $GEDCOM;
 
-	if (empty($ged)) $ged = $GEDCOM;
+	if (empty($ged))
+		$ged = $GEDCOM;
 	$config = "config_gedcom.php";
 	if (count($GEDCOMS)==0) {
 		return $config;
 	}
-	if ((!empty($GEDCOM))&&(isset($GEDCOMS[$GEDCOM]))) $config = $GEDCOMS[$GEDCOM]["config"];
+	if ((!empty($GEDCOM))&&(isset($GEDCOMS[$GEDCOM])))
+		$config = $GEDCOMS[$GEDCOM]["config"];
 	else {
-		foreach($GEDCOMS as $GEDCOM=>$gedarray) {
+		foreach ($GEDCOMS as $GEDCOM=>$gedarray) {
 			$_SESSION["GEDCOM"] = $GEDCOM;
 			$config = $gedarray["config"];
 			break;
 		}
 	}
-	if (!file_exists($config)) $config = "config_gedcom.php";
+	if (!file_exists($config))
+		$config = "config_gedcom.php";
 	return $config;
 }
 
@@ -168,18 +172,23 @@ function get_privacy_file() {
 		$privfile = "privacy.php";
 	}
 	if ((!empty($GEDCOM))&&(isset($GEDCOMS[$GEDCOM]))) {
-		if ((isset($GEDCOMS[$GEDCOM]["privacy"]))&&(file_exists($GEDCOMS[$GEDCOM]["privacy"]))) $privfile = $GEDCOMS[$GEDCOM]["privacy"];
-		else $privfile = "privacy.php";
+		if ((isset($GEDCOMS[$GEDCOM]["privacy"]))&&(file_exists($GEDCOMS[$GEDCOM]["privacy"])))
+			$privfile = $GEDCOMS[$GEDCOM]["privacy"];
+		else
+			$privfile = "privacy.php";
 	}
 	else {
-		foreach($GEDCOMS as $GEDCOM=>$gedarray) {
+		foreach ($GEDCOMS as $GEDCOM=>$gedarray) {
 			$_SESSION["GEDCOM"] = $GEDCOM;
-			if ((isset($gedarray["privacy"]))&&(file_exists($gedarray["privacy"]))) $privfile = $gedarray["privacy"];
-			else $privfile = "privacy.php";
+			if ((isset($gedarray["privacy"]))&&(file_exists($gedarray["privacy"])))
+				$privfile = $gedarray["privacy"];
+			else
+				$privfile = "privacy.php";
 		}
 	}
 	$privversion = get_privacy_file_version($privfile);
-	if ($privversion<$REQUIRED_PRIVACY_VERSION) $privfile = "privacy.php";
+	if ($privversion<$REQUIRED_PRIVACY_VERSION)
+		$privfile = "privacy.php";
 
 	return $privfile;
 }
@@ -192,7 +201,7 @@ function get_privacy_file() {
  * on php.net
  * @return float time in micro seconds
  */
-function getmicrotime(){
+function getmicrotime() {
 	list($usec, $sec) = explode(" ",microtime());
 	return ((float)$usec + (float)$sec);
 }
@@ -209,9 +218,11 @@ function store_gedcoms() {
 	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $DEFAULT_GEDCOM, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
 	global $COMMIT_COMMAND, $IN_STORE_GEDCOMS;
 
-	if (!$CONFIGURED) return false;
+	if (!$CONFIGURED)
+		return false;
 	//-- do not allow recursion into this function
-	if (isset($IN_STORE_GEDCOMS) && $IN_STORE_GEDCOMS==true) return false;
+	if (isset($IN_STORE_GEDCOMS) && $IN_STORE_GEDCOMS==true)
+		return false;
 	$IN_STORE_GEDCOMS = true;
 	$mutex = new Mutex("gedcoms.php");
 	$mutex->Wait();
@@ -220,20 +231,23 @@ function store_gedcoms() {
 	$gedcomtext .= "\$GEDCOMS = array();\n";
 	$maxid = 0;
 	foreach ($GEDCOMS as $name => $details) {
-		if (isset($details["id"]) && $details["id"] > $maxid) $maxid = $details["id"];
+		if (isset($details["id"]) && $details["id"] > $maxid)
+			$maxid = $details["id"];
 	}
-	if ($maxid !=0) $maxid++;
+	if ($maxid !=0)
+		$maxid++;
 	reset($GEDCOMS);
 	//-- keep a local copy in case another function tries to change $GEDCOMS
 	$geds = $GEDCOMS;
-	foreach($geds as $indexval => $GED) {
+	foreach ($geds as $indexval => $GED) {
 		$GED["config"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["config"]);
-		if (isset($GED["privacy"])) $GED["privacy"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["privacy"]);
-		else $GED["privacy"] = "privacy.php";
+		if (isset($GED["privacy"]))
+			$GED["privacy"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["privacy"]);
+		else
+			$GED["privacy"] = "privacy.php";
 		$GED["path"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["path"]);
 		$GED["title"] = stripslashes($GED["title"]);
 		$GED["title"] = preg_replace("/\"/", "\\\"", $GED["title"]);
-		//if (!isset($GED["imported"])) $GED["imported"] = check_for_import($indexval);
 		$gedcomtext .= "\$gedarray = array();\n";
 		$gedcomtext .= "\$gedarray[\"gedcom\"] = \"".$GED["gedcom"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"config\"] = \"".$GED["config"]."\";\n";
@@ -241,22 +255,27 @@ function store_gedcoms() {
 		$gedcomtext .= "\$gedarray[\"title\"] = \"".$GED["title"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"path\"] = \"".$GED["path"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"pgv_ver\"] = \"".$GED["pgv_ver"]."\";\n";
-		if (isset($GED["imported"])) $gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
+		if (isset($GED["imported"]))
+			$gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
 		// TODO: Commonsurnames from an old gedcom are used
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
 
 		// NOTE: Set the GEDCOM ID
-		if (!isset($GED["id"]) && $maxid == 0) $GED["id"] = 1;
-		else if (!isset($GED["id"]) && $maxid > 0) $GED["id"] = $maxid;
-		else if (empty($GED["id"])) $GED["id"] = $maxid;
+		if (!isset($GED["id"]) && $maxid == 0)
+			$GED["id"] = 1;
+		else
+			if (!isset($GED["id"]) && $maxid > 0)
+				$GED["id"] = $maxid;
+			else
+				if (empty($GED["id"]))
+					$GED["id"] = $maxid;
 
 		$gedcomtext .= "\$gedarray[\"id\"] = \"".$GED["id"]."\";\n";
 		if (empty($GED["commonsurnames"])) {
 			if ($GED["gedcom"]==$GEDCOM) {
 				$GED["commonsurnames"] = "";
 				$surnames = get_common_surnames($COMMON_NAMES_THRESHOLD);
-//				$GED["commonsurnames"] = ",";
-				foreach($surnames as $indexval => $surname) {
+				foreach ($surnames as $indexval => $surname) {
 					$GED["commonsurnames"] .= $surname["name"].", ";
 				}
 			}
@@ -278,7 +297,8 @@ function store_gedcoms() {
 	else {
 		fwrite($fp, $gedcomtext);
 		fclose($fp);
-		if (!empty($COMMIT_COMMAND)) check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
+		if (!empty($COMMIT_COMMAND))
+			check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
 	$mutex->Release();
 	$IN_STORE_GEDCOMS = false;
@@ -293,9 +313,11 @@ function store_gedcoms() {
 function get_gedcom_from_id($ged_id) {
 	global $GEDCOMS;
 
-	if (isset($GEDCOMS[$ged_id])) return $ged_id;
-	foreach($GEDCOMS as $ged=>$gedarray) {
-		if ($gedarray["id"]==$ged_id) return $ged;
+	if (isset($GEDCOMS[$ged_id]))
+		return $ged_id;
+	foreach ($GEDCOMS as $ged=>$gedarray) {
+		if ($gedarray["id"]==$ged_id)
+			return $ged;
 	}
 
 	return $ged;
@@ -312,7 +334,8 @@ function get_gedcom_from_id($ged_id) {
 function is_dead_id($pid) {
 	global $indilist, $BUILDING_INDEX, $GEDCOM, $GEDCOMS;
 
-	if (empty($pid)) return true;
+	if (empty($pid))
+		return true;
 
 	//-- if using indexes then first check the indi_isdead array
 	if ((!$BUILDING_INDEX)&&(isset($indilist))) {
@@ -320,11 +343,14 @@ function is_dead_id($pid) {
 		if ((!isset($indilist[$pid]["isdead"]))||($indilist[$pid]["gedfile"]!=$GEDCOMS[$GEDCOM]['id'])) {
 			//-- load the individual into the cache by calling the find_person_record function
 			$gedrec = find_person_record($pid);
-			if (empty($gedrec)) return true;
+			if (empty($gedrec))
+				return true;
 		}
 		if ($indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
-			if (!isset($indilist[$pid]["isdead"])) $indilist[$pid]["isdead"] = -1;
-			if ($indilist[$pid]["isdead"]==-1) $indilist[$pid]["isdead"] = update_isdead($pid, $indilist[$pid]);
+			if (!isset($indilist[$pid]["isdead"]))
+				$indilist[$pid]["isdead"] = -1;
+			if ($indilist[$pid]["isdead"]==-1)
+				$indilist[$pid]["isdead"] = update_isdead($pid, $indilist[$pid]);
 			return $indilist[$pid]["isdead"];
 		}
 	}
@@ -356,57 +382,39 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 
 	if ((error_reporting() > 0)&&($errno<2048)) {
 		$LAST_ERROR = $errstr." in ".$errfile." on line ".$errline;
-		if ($ERROR_LEVEL==0) return;
-		if (stristr($errstr,"by reference")==true) return;
+		if ($ERROR_LEVEL==0)
+			return;
+		if (stristr($errstr,"by reference")==true)
+			return;
 		$msg = "\n<br />ERROR ".$errno.": ".$errstr."<br />\n";
-		//$msg .= "Error occurred on line ".$errline." of file ".basename($errfile)."<br />\n";
 		print $msg;
-		//AddToLog($msg);
 		if (($errno<16)&&(function_exists("debug_backtrace"))&&(strstr($errstr, "headers already sent by")===false)) {
 			$backtrace = array();
-			if (function_exists('debug_backtrace')) $backtrace = debug_backtrace();
+			if (function_exists('debug_backtrace'))
+				$backtrace = debug_backtrace();
 			$num = count($backtrace);
-			if ($ERROR_LEVEL==1) $num = 1;
-			for($i=0; $i<$num; $i++) {
+			if ($ERROR_LEVEL==1)
+				$num = 1;
+			for ($i=0; $i<$num; $i++) {
 				print $i;
-				if ($i==0) print " Error occurred on ";
-				else print " called from ";
-				if (isset($backtrace[$i]["line"]) && isset($backtrace[$i]["file"])) print "line <b>".$backtrace[$i]["line"]."</b> of file <b>".basename($backtrace[$i]["file"])."</b>";
-				if ($i<$num-1) print " in function <b>".$backtrace[$i+1]["function"]."</b>";
-				/*if ($i<$num-1) print " args(";
-				if (isset($backtrace[$i]['args'])) {
-					if (is_array($backtrace[$i]['args']))
-						foreach($backtrace[$i]['args'] as $name=>$value) print $value.",";
-					else print $backtrace[$i]['args'];
-				}
-				print ")";*/
+				if ($i==0)
+					print " Error occurred on ";
+				else
+					print " called from ";
+				if (isset($backtrace[$i]["line"]) && isset($backtrace[$i]["file"]))
+					print "line <b>".$backtrace[$i]["line"]."</b> of file <b>".basename($backtrace[$i]["file"])."</b>";
+				if ($i<$num-1)
+					print " in function <b>".$backtrace[$i+1]["function"]."</b>";
 				print "<br />\n";
 			}
 		}
-		if ($errno==1) die();
+		if ($errno==1)
+			die();
 	}
 	return false;
 }
 
 // ************************************************* START OF GEDCOM FUNCTIONS ********************************* //
-
-/**
- * Replacement function for strrpos()
- * Returns the numeric position of the last occurrence of needle in the haystack string.
- * Note that the needle in this case can only be a single character in PHP 4. If a string
- * is passed as the needle, then only the first character of that string will be used.
- * @author escii at hotmail dot com ( Brendan )
- * @param string $haystack The text to be searched through
- * @param string $needle The text to be found
- * @param int $ret The position at which the needle is found
- */
-function strrpos4($haystack, $needle) {
-       while($ret = strrpos($haystack,$needle)) {
-		  if(strncmp(substr($haystack,$ret,strlen($needle)), $needle,strlen($needle)) == 0 ) return $ret;
-            $haystack = substr($haystack,0,$ret -1 );
-       }
-       return $ret;
-}
 
 /**
  * Get first tag in GEDCOM sub-record
@@ -419,7 +427,8 @@ function get_first_tag($level, $tag, $gedrec, $num=1) {
 	$temp = get_sub_record($level, $level." ".$tag, $gedrec, $num)."\n";
 	$temp = str_replace("\r\n", "\n", $temp);
 	$length = strpos($temp, "\n");
-	if ($length===false) $length = strlen($temp);
+	if ($length===false)
+		$length = strlen($temp);
 	return substr($temp, 2, $length-2);
 }
 
@@ -446,43 +455,32 @@ function get_first_tag($level, $tag, $gedrec, $num=1) {
  * @return string the subrecord that was found or an empty string "" if not found.
  */
 function get_sub_record($level, $tag, $gedrec, $num=1) {
-	if (empty($gedrec)) return "";
+	if (empty($gedrec))
+		return "";
 	// -- adding \n before and after gedrec
 	$gedrec = "\n".$gedrec."\n";
 	$pos1=0;
 	$subrec = "";
 	$tag = trim($tag);
-	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\W]/"; // see [ 1492470 ] and [ 1507176 ]
-	//$searchTarget = "/[\r\n]".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
 	$searchTarget = "~[\r\n]".$tag."[\s]~";
 	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 	if ($ct==0) {
 		$tag = preg_replace("/(\w+)/", "_$1", $tag);
 		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
-		if ($ct==0) return "";
+		if ($ct==0)
+			return "";
 	}
-	if ($ct<$num) return "";
+	if ($ct<$num)
+		return "";
 	$pos1 = $match[$num-1][0][1];
 	$pos2 = strpos($gedrec, "\n$level", $pos1+1);
-	if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+1);
-	if (!$pos2) $pos2 = strpos($gedrec, "\nPGV_", $pos1+1); // PGV_SPOUSE, PGV_FAMILY_ID ...
-	if (!$pos2) return ltrim(substr($gedrec, $pos1));
+	if (!$pos2)
+		$pos2 = strpos($gedrec, "\n1", $pos1+1);
+	if (!$pos2)
+		$pos2 = strpos($gedrec, "\nPGV_", $pos1+1); // PGV_SPOUSE, PGV_FAMILY_ID ...
+	if (!$pos2)
+		return ltrim(substr($gedrec, $pos1));
 	$subrec = substr($gedrec, $pos1, $pos2-$pos1);
-	//-- does anybody know what this is for?
-	/**
-	if ($num==1) {
-		$lowtag = "\n".($level-1).(substr($tag, 1));
-		if (phpversion() < 5) {
-			if ($newpos = strrpos4($subrec, $lowtag)) {
-			$pos2 = $pos2 - (strlen($subrec) - $newpos);
-			$subrec = substr($gedrec, $pos1, $pos2-$pos1);
-			}
-		}
-		else if ($newpos = strripos($subrec, $lowtag)) {
-			$pos2 = $pos2 - (strlen($subrec) - $newpos);
-			$subrec = substr($gedrec, $pos1, $pos2-$pos1);
-		}
-	}**/
 	return ltrim($subrec);
 }
 
@@ -507,27 +505,32 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 	$hasResn = strstr($gedrec, " RESN ");
 	$prev_tags = array();
 	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
-	for($i=0; $i<$ct; $i++) {
+	for ($i=0; $i<$ct; $i++) {
 		$fact = trim($match[$i][1][0]);
 		$pos1 = $match[$i][0][1];
-		if ($i<$ct-1) $pos2 = $match[$i+1][0][1];
-		else $pos2 = strlen($gedrec);
+		if ($i<$ct-1)
+			$pos2 = $match[$i+1][0][1];
+		else
+			$pos2 = strlen($gedrec);
 		if (empty($ignore) || strpos($ignore, $fact)===false) {
 			if (!$ApplyPriv || (showFact($fact, $id)&& showFactDetails($fact,$id))) {
-				if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
-				else $prev_tags[$fact] = 1;
-				//$subrec = get_sub_record(1, "1 $fact", $gedrec, $prev_tags[$fact]);
+				if (isset($prev_tags[$fact]))
+					$prev_tags[$fact]++;
+				else
+					$prev_tags[$fact] = 1;
 				$subrec = substr($gedrec, $pos1, $pos2-$pos1);
 				if (!$ApplyPriv || !$hasResn || !FactViewRestricted($id, $subrec)) {
 					if ($fact=="EVEN") {
 						$tt = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 						if ($tt>0) {
 							$type = trim($tmatch[1]);
-							if (!$ApplyPriv || (showFact($type, $id)&&showFactDetails($type,$id))) $repeats[] = trim($subrec)."\r\n";
-						}
-						else $repeats[] = trim($subrec)."\r\n";
+							if (!$ApplyPriv || (showFact($type, $id)&&showFactDetails($type,$id)))
+								$repeats[] = trim($subrec)."\r\n";
+						} else
+							$repeats[] = trim($subrec)."\r\n";
 					}
-					else $repeats[] = trim($subrec)."\r\n";
+					else
+						$repeats[] = trim($subrec)."\r\n";
 				}
 			}
 		}
@@ -536,20 +539,24 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 	//-- look for any records in FAMS records
 	if ($families) {
 		$ft = preg_match_all("/1 FAMS @(.+)@/", $gedrec, $fmatch, PREG_SET_ORDER);
-		for($f=0; $f<$ft; $f++) {
+		for ($f=0; $f<$ft; $f++) {
 			$famid = $fmatch[$f][1];
 			$famrec = find_gedcom_record($fmatch[$f][1]);
 			$parents = find_parents_in_record($famrec);
-			if ($id==$parents["HUSB"]) $spid = $parents["WIFE"];
-			else $spid = $parents["HUSB"];
+			if ($id==$parents["HUSB"])
+				$spid = $parents["WIFE"];
+			else
+				$spid = $parents["HUSB"];
 			$prev_tags = array();
 			$ct = preg_match_all("/\n1 (\w+)(.*)/", $famrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
+			for ($i=0; $i<$ct; $i++) {
 				$fact = trim($match[$i][1]);
 				if (empty($ignore) || strpos($ignore, $fact)===false) {
 					if (!$ApplyPriv || (showFact($fact, $id)&&showFactDetails($fact,$id))) {
-						if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
-						else $prev_tags[$fact] = 1;
+						if (isset($prev_tags[$fact]))
+							$prev_tags[$fact]++;
+						else
+							$prev_tags[$fact] = 1;
 						$subrec = get_sub_record(1, "1 $fact", $famrec, $prev_tags[$fact]);
 						$subrec .= "\r\n2 _PGVS @$spid@\r\n";
 						$subrec .= "2 _PGVFS @$famid@\r\n";
@@ -557,11 +564,14 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 							$ct = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 							if ($ct>0) {
 								$type = trim($tmatch[1]);
-								if (!$ApplyPriv or (showFact($type, $id)&&showFactDetails($type,$id))) $repeats[] = trim($subrec)."\r\n";
+								if (!$ApplyPriv or (showFact($type, $id)&&showFactDetails($type,$id)))
+									$repeats[] = trim($subrec)."\r\n";
 							}
-							else $repeats[] = trim($subrec)."\r\n";
+							else
+								$repeats[] = trim($subrec)."\r\n";
 						}
-						else $repeats[] = trim($subrec)."\r\n";
+						else
+							$repeats[] = trim($subrec)."\r\n";
 					}
 				}
 			}
@@ -587,7 +597,8 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 	global $SHOW_PEDIGREE_PLACES, $pgv_lang;
 
-	if (empty($gedrec)) return "";
+	if (empty($gedrec))
+		return "";
 	$tags = preg_split("/:/", $tag);
 	$origlevel = $level;
 	if ($level==0) {
@@ -595,8 +606,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 	}
 
 	$subrec = $gedrec;
-//	print $level;
-	foreach($tags as $indexval => $t) {
+	foreach ($tags as $indexval => $t) {
 		$lastsubrec = $subrec;
 		$subrec = get_sub_record($level, "$level $t", $subrec);
 		if (empty($subrec) && $origlevel==0) {
@@ -606,29 +616,30 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 		if (empty($subrec)) {
 			if ($t=="TITL") {
 				$subrec = get_sub_record($level, "$level ABBR", $lastsubrec);
-				if (!empty($subrec)) $t = "ABBR";
+				if (!empty($subrec))
+					$t = "ABBR";
 			}
 			if (empty($subrec)) {
-				if ($level>0) $level--;
+				if ($level>0)
+					$level--;
 				$subrec = get_sub_record($level, "@ $t", $gedrec);
 				if (empty($subrec)) {
 					return;
 				}
 			}
 		}
-		//print "[$level $t-:$subrec:]";
 		$level++;
 	}
 	$level--;
-	//print "[".$tag.":".$subrec."]";
 	$ct = preg_match("/$level $t(.*)/", $subrec, $match);
-	if ($ct==0) $ct = preg_match("/$level @.+@ (.+)/", $subrec, $match);
-	if ($ct==0) $ct = preg_match("/@ $t (.+)/", $subrec, $match);
-	//print $ct;
+	if ($ct==0)
+		$ct = preg_match("/$level @.+@ (.+)/", $subrec, $match);
+	if ($ct==0)
+		$ct = preg_match("/@ $t (.+)/", $subrec, $match);
 	if ($ct > 0) {
 		$value = trim($match[1]);
 		$ct = preg_match("/@(.*)@/", $value, $match);
-		if (($ct > 0 ) && ($t!="DATE")){
+		if (($ct > 0 ) && ($t!="DATE")) {
 			$oldsub = $subrec;
 			$subrec = find_gedcom_record($match[1]);
 			if ($subrec) {
@@ -637,13 +648,15 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 				if ($ct>0) {
 					$value = $match[1];
 					$level = 0;
-				}
-				else $subrec = $oldsub;
+				} else
+					$subrec = $oldsub;
 			}
 			//-- set the value to the id without the @
-			else $value = $match[1];
+			else
+				$value = $match[1];
 		}
-		if ($level!=0 || $t!="NOTE") $value .= get_cont($level+1, $subrec);
+		if ($level!=0 || $t!="NOTE")
+			$value .= get_cont($level+1, $subrec);
 		$value = preg_replace("'\n'", "", $value);
 		$value = preg_replace("'<br />'", "\n", $value);
 		$value = trim($value);
@@ -661,56 +674,63 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			}
 		}
 		//-- if it is a place value then apply the pedigree place limit
-		else if ($convert && $t=="PLAC") {
-			if ($SHOW_PEDIGREE_PLACES>0) {
-				$plevels = preg_split("/,/", $value);
-				$value = "";
-				for($plevel=0; $plevel<$SHOW_PEDIGREE_PLACES; $plevel++) {
-					if (!empty($plevels[$plevel])) {
-						if ($plevel>0) $value .= ", ";
-						$value .= trim($plevels[$plevel]);
-					}
-				}
-			}
-			if (!empty($truncate)) {
-				if (strlen($value)>$truncate) {
+		else
+			if ($convert && $t=="PLAC") {
+				if ($SHOW_PEDIGREE_PLACES>0) {
 					$plevels = preg_split("/,/", $value);
 					$value = "";
-					for($plevel=0; $plevel<count($plevels); $plevel++) {
+					for ($plevel=0; $plevel<$SHOW_PEDIGREE_PLACES; $plevel++) {
 						if (!empty($plevels[$plevel])) {
-							if (strlen($plevels[$plevel])+strlen($value)+3 < $truncate) {
-								if ($plevel>0) $value .= ", ";
-								$value .= trim($plevels[$plevel]);
-							}
-							else break;
+							if ($plevel>0)
+								$value .= ", ";
+							$value .= trim($plevels[$plevel]);
 						}
 					}
 				}
-			}
-		}
-		else if ($convert && $t=="SEX") {
-			if ($value=="M") $value = get_first_letter($pgv_lang["male"]);
-			else if ($value=="F") $value = get_first_letter($pgv_lang["female"]);
-			else $value = get_first_letter($pgv_lang["unknown"]);
-		}
-		else {
-			if (!empty($truncate)) {
-				if (strlen($value)>$truncate) {
-					$plevels = preg_split("/ /", $value);
-					$value = "";
-					for($plevel=0; $plevel<count($plevels); $plevel++) {
-						if (!empty($plevels[$plevel])) {
-							if (strlen($plevels[$plevel])+strlen($value)+3 < $truncate) {
-								if ($plevel>0) $value .= " ";
-								$value .= trim($plevels[$plevel]);
+				if (!empty($truncate)) {
+					if (strlen($value)>$truncate) {
+						$plevels = preg_split("/,/", $value);
+						$value = "";
+						for ($plevel=0; $plevel<count($plevels); $plevel++) {
+							if (!empty($plevels[$plevel])) {
+								if (strlen($plevels[$plevel])+strlen($value)+3 < $truncate) {
+									if ($plevel>0)
+										$value .= ", ";
+									$value .= trim($plevels[$plevel]);
+								}
+								else
+									break;
 							}
-							else break;
 						}
 					}
 				}
-			}
-		}
-		//print "\n[ $t $value] \n";
+			} else
+				if ($convert && $t=="SEX") {
+					if ($value=="M")
+						$value = get_first_letter($pgv_lang["male"]);
+					else
+						if ($value=="F")
+							$value = get_first_letter($pgv_lang["female"]);
+						else
+							$value = get_first_letter($pgv_lang["unknown"]);
+				} else {
+					if (!empty($truncate)) {
+						if (strlen($value)>$truncate) {
+							$plevels = preg_split("/ /", $value);
+							$value = "";
+							for ($plevel=0; $plevel<count($plevels); $plevel++) {
+								if (!empty($plevels[$plevel])) {
+									if (strlen($plevels[$plevel])+strlen($value)+3 < $truncate) {
+										if ($plevel>0)
+											$value .= " ";
+										$value .= trim($plevels[$plevel]);
+									}
+									else break;
+								}
+							}
+						}
+					}
+				}
 		return $value;
 	}
 	return "";
@@ -732,12 +752,14 @@ function breakConts($newline) {
 	// Determine level number of CONC and CONT lines
 	$level = substr($newline, 0, 1);
 	$tag = substr($newline, 1, 6);
-	if ($tag!=" CONC " && $tag!=" CONT ") $level ++;
+	if ($tag!=" CONC " && $tag!=" CONT ")
+		$level ++;
 
 	$newged = "";
 	$newlines = preg_split("/\r?\n/", rtrim(stripLRMRLM($newline)));
-	for($k=0; $k<count($newlines); $k++) {
-		if ($k>0) $newlines[$k] = "{$level} CONT ".$newlines[$k];
+	for ($k=0; $k<count($newlines); $k++) {
+		if ($k>0)
+			$newlines[$k] = "{$level} CONT ".$newlines[$k];
 		if (strlen($newlines[$k])>255) {
 			if ($WORD_WRAPPED_NOTES) {
 				while(strlen($newlines[$k])>255) {
@@ -778,16 +800,19 @@ function breakConts($newline) {
 function get_cont($nlevel, $nrec, $tobr=true) {
 	global $WORD_WRAPPED_NOTES;
 	$text = "";
-//	if ($tobr) $newline = "<br />\n";
-	if ($tobr) $newline = "<br />";
+	if ($tobr)
+		$newline = "<br />";
 	else $newline = "\r\n";
 
 	$subrecords = explode("\n", $nrec);
 	foreach ($subrecords as $thisSubrecord) {
-		if (substr($thisSubrecord, 0, 2)!=$nlevel." ") continue;
+		if (substr($thisSubrecord, 0, 2)!=$nlevel." ")
+			continue;
 		$subrecordType = substr($thisSubrecord, 2, 4);
-		if ($subrecordType=="CONT") $text .= $newline;
-		if ($subrecordType=="CONC" && $WORD_WRAPPED_NOTES) $text .= " ";
+		if ($subrecordType=="CONT")
+			$text .= $newline;
+		if ($subrecordType=="CONC" && $WORD_WRAPPED_NOTES)
+			$text .= " ";
 		if ($subrecordType=="CONT" || $subrecordType=="CONC") {
 			$text .= rtrim(substr($thisSubrecord, 7));
 		}
@@ -811,9 +836,10 @@ function find_parents($famid) {
 	if (empty($famrec)) {
 		if (userCanEdit(getUserName())) {
 			$famrec = find_updated_record($famid);
-			if (empty($famrec)) return false;
-		}
-		else return false;
+			if (empty($famrec))
+				return false;
+		} else
+			return false;
 	}
 	return find_parents_in_record($famrec);
 }
@@ -829,13 +855,16 @@ function find_parents($famid) {
 function find_parents_in_record($famrec) {
 	global $pgv_lang;
 
-	if (empty($famrec)) return false;
+	if (empty($famrec))
+		return false;
 	$parents = array();
 	$ct = preg_match("/1 HUSB @(.*)@/", $famrec, $match);
-	if ($ct>0) $parents["HUSB"]=$match[1];
+	if ($ct>0)
+		$parents["HUSB"]=$match[1];
 	else $parents["HUSB"]="";
 	$ct = preg_match("/1 WIFE @(.*)@/", $famrec, $match);
-	if ($ct>0) $parents["WIFE"]=$match[1];
+	if ($ct>0)
+		$parents["WIFE"]=$match[1];
 	else $parents["WIFE"]="";
 	return $parents;
 }
@@ -857,9 +886,10 @@ function find_children($famid, $me='') {
 	if (empty($famrec)) {
 		if (userCanEdit(getUserName())) {
 			$famrec = find_updated_record($famid);
-			if (empty($famrec)) return false;
-		}
-		else return false;
+			if (empty($famrec))
+				return false;
+		} else
+			return false;
 	}
 	return find_children_in_record($famrec);
 }
@@ -878,12 +908,14 @@ function find_children_in_record($famrec, $me='') {
 	global $pgv_lang;
 
 	$children = array();
-	if (empty($famrec)) return $children;
+	if (empty($famrec))
+		return $children;
 
 	$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $match,PREG_SET_ORDER);
-	for($i=0; $i<$num; $i++) {
+	for ($i=0; $i<$num; $i++) {
 		$child = trim($match[$i][1]);
-		if ($child!=$me) $children[] = $child;
+		if ($child!=$me)
+			$children[] = $child;
 	}
 	return $children;
 }
@@ -939,7 +971,7 @@ function find_visible_families_in_record($indirec, $tag) {
 	$allfams = find_families_in_record($indirec, $tag);
 	$visiblefams = array();
 	// select only those that are visible to current user
-	foreach($allfams as $key=>$famid) {
+	foreach ($allfams as $key=>$famid) {
 		if (displayDetailsById($famid,"FAM")) {
 			$visiblefams[] = $famid;
 		}
@@ -957,7 +989,8 @@ function find_visible_families_in_record($indirec, $tag) {
 function find_record_in_file($gid) {
 	global $GEDCOMS, $GEDCOM, $indilist;
 	$fpged = fopen($GEDCOMS[$GEDCOM]["path"], "r");
-	if (!$fpged) return false;
+	if (!$fpged)
+		return false;
 	$BLOCK_SIZE = 1024*4;	//-- 4k bytes per read
 	$fcontents = "";
 	$count = 0;
@@ -967,9 +1000,7 @@ function find_record_in_file($gid) {
 		$pos1 = strpos($fcontents, "0 @$gid@", 0);
 		if ($pos1===false)  {
 			$pos1 = strrpos($fcontents, "\n");
-		//	print $pos1."-".$count."<br /> ";
 			$fcontents = substr($fcontents, $pos1);
-		//	print "[".$fcontents."]";
 		}
 		else {
 			$pos2 = strpos($fcontents, "\n0", $pos1+1);
@@ -977,9 +1008,10 @@ function find_record_in_file($gid) {
 				$fcontents .= fread($fpged, $BLOCK_SIZE);
 				$pos2 = strpos($fcontents, "\n0", $pos1+1);
 			}
-			if ($pos2) $indirec = substr($fcontents, $pos1, $pos2-$pos1);
-			else $indirec = substr($fcontents, $pos1);
-//			fclose($fpged);
+			if ($pos2)
+				$indirec = substr($fcontents, $pos1, $pos2-$pos1);
+			else
+				$indirec = substr($fcontents, $pos1);
 			$ct = preg_match("/0 @.+@ (.+)/", $indirec, $match);
 			if ($ct>0) {
 				$type = trim($match[1]);
@@ -1008,7 +1040,8 @@ function find_record_in_file($gid) {
 function find_updated_record($gid, $gedfile="") {
 	global $GEDCOMS, $GEDCOM, $pgv_changes;
 
-	if (empty($gedfile)) $gedfile = $GEDCOM;
+	if (empty($gedfile))
+		$gedfile = $GEDCOM;
 
 	if (isset($pgv_changes[$gid."_".$gedfile])) {
 		$change = end($pgv_changes[$gid."_".$gedfile]);
@@ -1034,7 +1067,8 @@ function find_highlighted_object($pid, $indirec) {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL;
 	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
 
-	if (!showFactDetails("OBJE", $pid)) return false;
+	if (!showFactDetails("OBJE", $pid))
+		return false;
 	$object = array();
 	$media = array();
 
@@ -1045,7 +1079,7 @@ function find_highlighted_object($pid, $indirec) {
 		$client = ServiceClient::getInstance($match[1]);
 		if (!is_null($client)) {
 			$mt = preg_match_all("/\d OBJE @(.*)@/", $indirec, $matches, PREG_SET_ORDER);
-			for($i=0; $i<$mt; $i++) {
+			for ($i=0; $i<$mt; $i++) {
 				$mediaObj = Media::getInstance($matches[$i][1]);
 				$mrec = $mediaObj->getGedcomRecord();
 				if (!empty($mrec)) {
@@ -1068,13 +1102,14 @@ function find_highlighted_object($pid, $indirec) {
 	}
 
 	//-- for the given media choose the
-	foreach($media as $i=>$row) {
+	foreach ($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
 			$level=0;
 			$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
-			if ($ct>0) $level = $match[1];
-			// Wrong test to match against.   if ($row[3] != null || $row[3] != ""){
-			if(strstr($row[3], "_PRIM ")) {
+			if ($ct>0)
+				$level = $match[1];
+			// Wrong test to match against.   if ($row[3] != null || $row[3] != "") {
+			if (strstr($row[3], "_PRIM ")) {
 				$thum = get_gedcom_value('_THUM', $level+1, $row[3]);
 				$prim = get_gedcom_value('_PRIM', $level+1, $row[3]);
 			}
@@ -1121,7 +1156,8 @@ function find_highlighted_object($pid, $indirec) {
  */
 function extract_fullpath($mediarec) {
 	preg_match("/(\d) _*FILE (.*)/", $mediarec, $amatch);
-	if (empty($amatch[2])) return "";
+	if (empty($amatch[2]))
+		return "";
 	$level = trim($amatch[1]);
 	$fullpath = trim($amatch[2]);
 	$filerec = get_sub_record($level, $amatch[0], $mediarec);
@@ -1144,16 +1180,19 @@ function extract_filename($fullpath) {
 	$regexp = "'[/\\\]'";
 	$srch = "/".addcslashes($MEDIA_DIRECTORY,'/.')."/";
 	$repl = "";
-	if (!isFileExternal($fullpath)) $nomedia = stripcslashes(preg_replace($srch, $repl, $fullpath));
+	if (!isFileExternal($fullpath))
+		$nomedia = stripcslashes(preg_replace($srch, $repl, $fullpath));
 	else $nomedia = $fullpath;
 	$ct = preg_match($regexp, $nomedia, $match);
 	if ($ct>0) {
 		$subelements = preg_split($regexp, $nomedia);
 		$subelements = array_reverse($subelements);
 		$max = $MEDIA_DIRECTORY_LEVELS;
-		if ($max>=count($subelements)) $max=count($subelements)-1;
-		for($s=$max; $s>=0; $s--) {
-			if ($s!=$max) $filename = $filename."/".$subelements[$s];
+		if ($max>=count($subelements))
+			$max=count($subelements)-1;
+		for ($s=$max; $s>=0; $s--) {
+			if ($s!=$max)
+				$filename = $filename."/".$subelements[$s];
 			else $filename = $subelements[$s];
 		}
 	}
@@ -1193,7 +1232,8 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 	global $digraph, $trigraph, $quadgraph;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 
-	if (is_array($aName)) debug_print_backtrace();
+	if (is_array($aName))
+		debug_print_backtrace();
 	getAlphabet();
 
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
@@ -1213,13 +1253,14 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 	//-- loop through the arrays of strings and numbers
 	$ac = count($aParts);
 	$bc = count($bParts);
-	for($j=0; ($j<$ac && $j<$bc); $j++) {
+	for ($j=0; ($j<$ac && $j<$bc); $j++) {
 		$aName = $aParts[$j];
 		$bName = $bParts[$j];
 
 		//-- sort numbers differently
 		if (is_numeric($aName) && is_numeric($bName)) {
-			if ($aName!=$bName) return $aName-$bName;
+			if ($aName!=$bName)
+				return $aName-$bName;
 		}
 		else {
 			//-- Take care of Danish and Norwegian character transformations
@@ -1437,7 +1478,7 @@ function usersort($a, $b) {
 	$aname = "";
 	$bname = "";
 	if (!empty($usersortfields)) {
-		foreach($usersortfields as $ind=>$field) {
+		foreach ($usersortfields as $ind=>$field) {
 			if (isset($a[$field])) $aname .= $a[$field];
 			if (isset($b[$field])) $bname .= $b[$field];
 		}
@@ -1461,14 +1502,26 @@ function usersort($a, $b) {
  * @return int negative numbers sort $a first, positive sort $b first
  */
 function itemsort($a, $b) {
-	if (isset($a["name"])) $aname = sortable_name_from_name($a["name"]);
-	else if (isset($a["names"])) $aname = sortable_name_from_name($a["names"][0][0]);
-	else if (is_array($a)) $aname = sortable_name_from_name(array_shift($a));
-	else $aname=$a;
-	if (isset($b["name"])) $bname = sortable_name_from_name($b["name"]);
-	else if (isset($b["names"])) $bname = sortable_name_from_name($b["names"][0][0]);
-	else if (is_array($b)) $bname = sortable_name_from_name(array_shift($b));
-	else $bname=$b;
+	if (isset($a["name"]))
+		$aname = sortable_name_from_name($a["name"]);
+	else
+		if (isset($a["names"]))
+			$aname = sortable_name_from_name($a["names"][0][0]);
+		else
+			if (is_array($a))
+				$aname = sortable_name_from_name(array_shift($a));
+	else
+		$aname=$a;
+	if (isset($b["name"]))
+		$bname = sortable_name_from_name($b["name"]);
+	else
+		if (isset($b["names"]))
+			$bname = sortable_name_from_name($b["names"][0][0]);
+		else
+			if (is_array($b))
+				$bname = sortable_name_from_name(array_shift($b));
+	else
+		$bname=$b;
 
 	$aname = strip_prefix($aname);
 	$bname = strip_prefix($bname);
@@ -1526,14 +1579,18 @@ function mediasort($a, $b) {
 function idsort($a, $b) {
 	if (isset($a["gedcom"])) {
 		$ct = preg_match("/0 @(.*)@/", $a["gedcom"], $match);
-		if ($ct>0) $aid = $match[1];
+		if ($ct>0)
+			$aid = $match[1];
 	}
 	if (isset($b["gedcom"])) {
 		$ct = preg_match("/0 @(.*)@/", $b["gedcom"], $match);
-		if ($ct>0) $bid = $match[1];
+		if ($ct>0)
+			$bid = $match[1];
 	}
-	if (empty($aid) || empty($bid)) return itemsort($a, $b);
-	else return stringsort($aid, $bid);
+	if (empty($aid) || empty($bid))
+		return itemsort($a, $b);
+	else
+		return stringsort($aid, $bid);
 }
 
 //-- comparison function for usort
@@ -1640,7 +1697,8 @@ function compare_facts_type($arec, $brec) {
 	$ret = $factsort[$afact]-$factsort[$bfact];
 	//-- if the facts are the same, then go ahead and compare them by date
 	//-- this will improve the positioning of non-dated elements on the next pass
-	if ($ret==0) $ret = compare_facts_date($arec, $brec);
+	if ($ret==0)
+		$ret = compare_facts_date($arec, $brec);
 	return $ret;
 }
 
@@ -1653,7 +1711,7 @@ function compare_facts_date($arec, $brec) {
 
 	// If either fact is undated, the facts sort equally.
 	if (!preg_match("/2 _?DATE (.*)/", $arec, $amatch) || !preg_match("/2 _?DATE (.*)/", $brec, $bmatch)) {
-		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
 			return $match1[1]-$match2[1];
 		}
 		return 0;
@@ -1662,16 +1720,16 @@ function compare_facts_date($arec, $brec) {
 	$adate = new GedcomDate($amatch[1]);
 	$bdate = new GedcomDate($bmatch[1]);
 	// If either date can't be parsed, don't sort.
-	if ($adate->MinJD()==0 || $bdate->MinJD()==0){
-		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+	if ($adate->MinJD()==0 || $bdate->MinJD()==0) {
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
 			return $match1[1]-$match2[1];
 		}
 		return 0;
 	}
 
 	// Remember that dates can be ranges and overlapping ranges sort equally.
-  $amin=$adate->MinJD();
-  $bmin=$bdate->MinJD();
+	$amin=$adate->MinJD();
+	$bmin=$bdate->MinJD();
 	$amax=$adate->MaxJD();
 	$bmax=$bdate->MaxJD();
 
@@ -1700,10 +1758,9 @@ function compare_facts_date($arec, $brec) {
 	else {
 		//-- ranged date... take the type of fact sorting into account
 		$factWeight = 0;
-		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)){
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
 			$factWeight = $match1[1]-$match2[1];
 		}
-//		print $factWeight.": ".substr($arec, 0, 6)." ".substr($brec, 0, 6)."<br />";
 		//-- fact is prefered to come before, so compare using the minimum ranges
 		if ($factWeight < 0 && $amin!=$bmin) {return ($amin-$bmin);}
 		//-- fact is prefered to come after, so compare using the max of the ranges
@@ -1746,18 +1803,20 @@ function sort_facts(&$arr) {
 	//TODO in the 4.2 branch this can be stored in the Event object
 	//-- add a fake date for the date sorting based on the previous fact that came before
 	$lastDate = "";
-	for($i=0; $i<count($arr); $i++) {
+	for ($i=0; $i<count($arr); $i++) {
 		//-- add a fake date for the date sorting based on the previous fact that came before
 		if (is_array($arr[$i])) {
-			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate)) $arr[$i][1].="\r\n2 _DATE ".$lastDate."\r\n";
+			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate))
+				$arr[$i][1].="\r\n2 _DATE ".$lastDate."\r\n";
 			else $lastDate = @$match[1];
 			//-- also add a sort field so that we can compare based on how they were sorted by the previous pass when the date does not give enough information
 			$arr[$i][1] .= "\r\n2 _SORT ".$i."\r\n";
 		}
 		else {
-			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate)) $arr[$i].="\r\n2 _DATE ".$lastDate."\r\n";
+			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate))
+				$arr[$i].="\r\n2 _DATE ".$lastDate."\r\n";
 			else $lastDate = @$match[1];
-			$arr[$i] .= "\r\n2 _SORT ".$i."\r\n";
+				$arr[$i].="\r\n2 _SORT ".$i."\r\n";
 		}
 	}
 	
@@ -1772,7 +1831,7 @@ function sort_facts(&$arr) {
 			}
 			
 	//-- delete the temporary fields
-	for($i=0; $i<count($arr); $i++) {
+	for ($i=0; $i<count($arr); $i++) {
 		if (is_array($arr[$i])) {
 			$arr[$i][1] = preg_replace("/2 _DATE (.+)/", "", $arr[$i][1]);
 			$arr[$i][1] = preg_replace("/2 _SORT (.+)/", "", $arr[$i][1]);
@@ -1795,7 +1854,8 @@ function compare_date($a, $b) {
 	global $sortby;
 
 	$tag = "BIRT";
-	if (!empty($sortby)) $tag = $sortby;
+	if (!empty($sortby))
+		$tag = $sortby;
 	if (isset($a["undo"]) && $tag=="CHAN") {
 		// Look at record in pgv_changes.php
 		$abirt = get_sub_record(1, "1 $tag", $a["undo"]);
@@ -1806,8 +1866,10 @@ function compare_date($a, $b) {
 		$bbirt = get_sub_record(1, "1 $tag", $b["gedcom"]);
 	}
 	$c = compare_facts_date($abirt, $bbirt);
-	if ($c==0) return itemsort($a, $b);
-	else return $c;
+	if ($c==0)
+		return itemsort($a, $b);
+	else
+		return $c;
 }
 function compare_date_descending($a, $b) {
 	$result = compare_date($a, $b);
@@ -1841,50 +1903,61 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 
 	$pid1 = strtoupper($pid1);
 	$pid2 = strtoupper($pid2);
-	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && userCanEdit(getUserName())) $indirec = find_updated_record($pid2);
-	else $indirec = find_person_record($pid2);
+	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && userCanEdit(getUserName()))
+		$indirec = find_updated_record($pid2);
+	else
+		$indirec = find_person_record($pid2);
 	//-- check the cache
 	if ($USE_RELATIONSHIP_PRIVACY && !$ignore_cache) {
-		if(isset($NODE_CACHE["$pid1-$pid2"])) {
+		if (isset($NODE_CACHE["$pid1-$pid2"])) {
 			if ($NODE_CACHE["$pid1-$pid2"]=="NOT FOUND") return false;
-			if (($maxlength==0)||(count($NODE_CACHE["$pid1-$pid2"]["path"])-1<=$maxlength)) return $NODE_CACHE["$pid1-$pid2"];
-			else return false;
+			if (($maxlength==0)||(count($NODE_CACHE["$pid1-$pid2"]["path"])-1<=$maxlength))
+				return $NODE_CACHE["$pid1-$pid2"];
+			else
+				return false;
 		}
 		//-- check the cache for person 2's children
 		$famids = array();
 		$ct = preg_match_all("/1\sFAMS\s@(.*)@/", $indirec, $match, PREG_SET_ORDER);
-		for($i=0; $i<$ct; $i++) {
+		for ($i=0; $i<$ct; $i++) {
 			$famids[$i]=$match[$i][1];
 		}
-		foreach($famids as $indexval => $fam) {
-			if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($fam);
-			else $famrec = find_family_record($fam);
+		foreach ($famids as $indexval => $fam) {
+			if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName()))
+				$famrec = find_updated_record($fam);
+			else
+				$famrec = find_family_record($fam);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
+			for ($i=0; $i<$ct; $i++) {
 				$child = $match[$i][1];
-				if (!empty($child)){
-					if(isset($NODE_CACHE["$pid1-$child"])) {
+				if (!empty($child)) {
+					if (isset($NODE_CACHE["$pid1-$child"])) {
 						if (($maxlength==0)||(count($NODE_CACHE["$pid1-$child"]["path"])+1<=$maxlength)) {
 							$node1 = $NODE_CACHE["$pid1-$child"];
 							if ($node1!="NOT FOUND") {
 								$node1["path"][] = $pid2;
 								$node1["pid"] = $pid2;
 								$ct = preg_match("/1 SEX F/", $indirec, $match);
-								if ($ct>0) $node1["relations"][] = "mother";
-								else $node1["relations"][] = "father";
+								if ($ct>0)
+									$node1["relations"][] = "mother";
+								else
+									$node1["relations"][] = "father";
 							}
 							$NODE_CACHE["$pid1-$pid2"] = $node1;
-							if ($node1=="NOT FOUND") return false;
+							if ($node1=="NOT FOUND")
+								return false;
 							return $node1;
 						}
-						else return false;
+						else
+							return false;
 					}
 				}
 			}
 		}
 
 		if ((!empty($NODE_CACHE_LENGTH))&&($maxlength>0)) {
-			if ($NODE_CACHE_LENGTH>=$maxlength) return false;
+			if ($NODE_CACHE_LENGTH>=$maxlength)
+				return false;
 		}
 	}
 	//-- end cache checking
@@ -1894,25 +1967,31 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 	$byear2 = -1;
 	if ($birthrec!==false) {
 		$dct = preg_match("/2 DATE .*(\d\d\d\d)/", $birthrec, $match);
-		if ($dct>0) $byear2 = $match[1];
+		if ($dct>0)
+			$byear2 = $match[1];
 	}
 	if ($byear2==-1) {
 		$numfams = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
-		for($j=0; $j<$numfams; $j++) {
+		for ($j=0; $j<$numfams; $j++) {
 			// Get the family record
-			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($fmatch[$j][1]);
-			else $famrec = find_family_record($fmatch[$j][1]);
+			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && userCanEdit(getUserName()))
+				$famrec = find_updated_record($fmatch[$j][1]);
+			else
+				$famrec = find_family_record($fmatch[$j][1]);
 
 			// Get the set of children
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $cmatch, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
+			for ($i=0; $i<$ct; $i++) {
 				// Get each child's record
-				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && userCanEdit(getUserName())) $childrec = find_updated_record($cmatch[$i][1]);
-				else $childrec = find_person_record($cmatch[$i][1]);
+				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && userCanEdit(getUserName()))
+					$childrec = find_updated_record($cmatch[$i][1]);
+				else
+					$childrec = find_person_record($cmatch[$i][1]);
 				$birthrec = get_sub_record(1, "1 BIRT", $childrec);
 				if ($birthrec!==false) {
 					$dct = preg_match("/2 DATE .*(\d\d\d\d)/", $birthrec, $bmatch);
-					if ($dct>0) $byear2 = $bmatch[1]-25;
+					if ($dct>0)
+						$byear2 = $bmatch[1]-25;
 				}
 			}
 		}
@@ -1944,7 +2023,8 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		//-- information about why these lines are included
 		if (headers_sent()) {
 			print " ";
-			if ($count%100 == 0) flush();
+			if ($count%100 == 0)
+				flush();
 		}
 		$count++;
 		$end_time = getmicrotime();
@@ -1955,8 +2035,11 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		}
 		if (count($p1nodes)==0) {
 			if ($maxlength!=0) {
-				if (!isset($NODE_CACHE_LENGTH)) $NODE_CACHE_LENGTH = $maxlength;
-				else if ($NODE_CACHE_LENGTH<$maxlength) $NODE_CACHE_LENGTH = $maxlength;
+				if (!isset($NODE_CACHE_LENGTH))
+					$NODE_CACHE_LENGTH = $maxlength;
+				else
+					if ($NODE_CACHE_LENGTH<$maxlength)
+						$NODE_CACHE_LENGTH = $maxlength;
 			}
 			if (headers_sent()) {
 				print "\n<!-- Relationship $pid1-$pid2 NOT FOUND | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
@@ -1968,14 +2051,17 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		}
 		//-- search the node list for the shortest path length
 		$shortest = -1;
-		foreach($p1nodes as $index=>$node) {
-			if ($shortest == -1) $shortest = $index;
+		foreach ($p1nodes as $index=>$node) {
+			if ($shortest == -1)
+				$shortest = $index;
 			else {
 				$node1 = $p1nodes[$shortest];
-				if ($node1["length"] > $node["length"]) $shortest = $index;
+				if ($node1["length"] > $node["length"])
+					$shortest = $index;
 			}
 		}
-		if ($shortest==-1) return false;
+		if ($shortest==-1)
+			return false;
 		$node = $p1nodes[$shortest];
 		if (($maxlength==0)||(count($node["path"])<=$maxlength)) {
 			if ($node["pid"]==$pid2) {
@@ -1989,13 +2075,16 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				$childh = 3;
 
 				//-- generate heuristic values based of the birthdates of the current node and p2
-				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && userCanEdit(getUserName())) $indirec = find_updated_record($node["pid"]);
-				else $indirec = find_person_record($node["pid"]);
+				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && userCanEdit(getUserName()))
+					$indirec = find_updated_record($node["pid"]);
+				else
+					$indirec = find_person_record($node["pid"]);
 				$byear1 = -1;
 				$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 				if ($birthrec!==false) {
 					$dct = preg_match("/2 DATE .*(\d\d\d\d)/", $birthrec, $match);
-					if ($dct>0) $byear1 = $match[1];
+					if ($dct>0)
+						$byear1 = $match[1];
 				}
 				if (($byear1!=-1)&&($byear2!=-1)) {
 					$yeardiff = $byear1-$byear2;
@@ -2059,13 +2148,16 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				//-- check all parents and siblings of this node
 				$famids = array();
 				$ct = preg_match_all("/1\sFAMC\s@(.*)@/", $indirec, $match, PREG_SET_ORDER);
-				for($i=0; $i<$ct; $i++) {
-					if (!isset($visited[$match[$i][1]])) $famids[$i]=$match[$i][1];
+				for ($i=0; $i<$ct; $i++) {
+					if (!isset($visited[$match[$i][1]]))
+						$famids[$i]=$match[$i][1];
 				}
-				foreach($famids as $indexval => $fam) {
+				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($fam);
-					else $famrec = find_family_record($fam);
+					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName()))
+						$famrec = find_updated_record($fam);
+					else
+						$famrec = find_family_record($fam);
 					$parents = find_parents_in_record($famrec);
 					if ((!empty($parents["HUSB"]))&&(!isset($visited[$parents["HUSB"]]))) {
 						$node1 = $node;
@@ -2075,13 +2167,15 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 						$node1["relations"][] = "father";
 						$p1nodes[] = $node1;
 						if ($node1["pid"]==$pid2) {
-							if ($path_to_find>0) $path_to_find--;
+							if ($path_to_find>0)
+								$path_to_find--;
 							else {
 								$found=true;
 								$resnode = $node1;
 							}
 						}
-						else $visited[$parents["HUSB"]] = true;
+						else
+							$visited[$parents["HUSB"]] = true;
 						if ($USE_RELATIONSHIP_PRIVACY) {
 							$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 						}
@@ -2094,7 +2188,8 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 						$node1["relations"][] = "mother";
 						$p1nodes[] = $node1;
 						if ($node1["pid"]==$pid2) {
-							if ($path_to_find>0) $path_to_find--;
+							if ($path_to_find>0)
+								$path_to_find--;
 							else {
 								$found=true;
 								$resnode = $node1;
@@ -2106,7 +2201,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 						}
 					}
 					$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
-					for($i=0; $i<$ct; $i++) {
+					for ($i=0; $i<$ct; $i++) {
 						$child = $match[$i][1];
 						if ((!empty($child))&&(!isset($visited[$child]))) {
 							$node1 = $node;
@@ -2116,13 +2211,15 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 							$node1["relations"][] = "sibling";
 							$p1nodes[] = $node1;
 							if ($node1["pid"]==$pid2) {
-								if ($path_to_find>0) $path_to_find--;
+								if ($path_to_find>0)
+									$path_to_find--;
 								else {
 									$found=true;
 									$resnode = $node1;
 								}
 							}
-							else $visited[$child] = true;
+							else
+								$visited[$child] = true;
 							if ($USE_RELATIONSHIP_PRIVACY) {
 								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 							}
@@ -2132,13 +2229,13 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				//-- check all spouses and children of this node
 				$famids = array();
 				$ct = preg_match_all("/1\sFAMS\s@(.*)@/", $indirec, $match, PREG_SET_ORDER);
-				for($i=0; $i<$ct; $i++) {
-//					if (!isset($visited[$match[$i][1]])) $famids[$i]=$match[$i][1];
+				for ($i=0; $i<$ct; $i++) {
 					$famids[$i]=$match[$i][1];
 				}
-				foreach($famids as $indexval => $fam) {
+				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($fam);
+					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName()))
+						$famrec = find_updated_record($fam);
 					else $famrec = find_family_record($fam);
 					if ($followspouse) {
 						$parents = find_parents_in_record($famrec);
@@ -2150,7 +2247,8 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 							$node1["relations"][] = "spouse";
 							$p1nodes[] = $node1;
 							if ($node1["pid"]==$pid2) {
-								if ($path_to_find>0) $path_to_find--;
+								if ($path_to_find>0)
+									$path_to_find--;
 								else {
 									$found=true;
 									$resnode = $node1;
@@ -2169,7 +2267,8 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 							$node1["relations"][] = "spouse";
 							$p1nodes[] = $node1;
 							if ($node1["pid"]==$pid2) {
-								if ($path_to_find>0) $path_to_find--;
+								if ($path_to_find>0)
+									$path_to_find--;
 								else {
 									$found=true;
 									$resnode = $node1;
@@ -2182,7 +2281,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 						}
 					}
 					$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
-					for($i=0; $i<$ct; $i++) {
+					for ($i=0; $i<$ct; $i++) {
 						$child = $match[$i][1];
 						if ((!empty($child))&&(!isset($visited[$child]))) {
 							$node1 = $node;
@@ -2192,13 +2291,15 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 							$node1["relations"][] = "child";
 							$p1nodes[] = $node1;
 							if ($node1["pid"]==$pid2) {
-								if ($path_to_find>0) $path_to_find--;
+								if ($path_to_find>0)
+									$path_to_find--;
 								else {
 									$found=true;
 									$resnode = $node1;
 								}
 							}
-							else $visited[$child] = true;
+							else
+								$visited[$child] = true;
 							if ($USE_RELATIONSHIP_PRIVACY) {
 								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 							}
@@ -2232,13 +2333,14 @@ function write_changes() {
 	$mutex = new Mutex("pgv_changes");
 	$mutex->Wait();
 	//-- what to do if file changed while waiting
-	if (!isset($LAST_CHANGE_EMAIL)) $LAST_CHANGE_EMAIL = time();
+	if (!isset($LAST_CHANGE_EMAIL))
+		$LAST_CHANGE_EMAIL = time();
 	//-- write the changes file
 	$changestext = "<?php\n\$LAST_CHANGE_EMAIL = $LAST_CHANGE_EMAIL;\n\$pgv_changes = array();\n";
-	foreach($pgv_changes as $gid=>$changes) {
+	foreach ($pgv_changes as $gid=>$changes) {
 		if (count($changes)>0) {
 			$changestext .= "\$pgv_changes[\"$gid\"] = array();\n";
-			foreach($changes as $indexval => $change) {
+			foreach ($changes as $indexval => $change) {
 				$changestext .= "// Start of change record.\n";
 				$changestext .= "\$change = array();\n";
 				$changestext .= "\$change[\"gid\"] = '".$change["gid"]."';\n";
@@ -2247,7 +2349,8 @@ function write_changes() {
 				$changestext .= "\$change[\"status\"] = '".$change["status"]."';\n";
 				$changestext .= "\$change[\"user\"] = '".$change["user"]."';\n";
 				$changestext .= "\$change[\"time\"] = '".$change["time"]."';\n";
-				if (isset($change["linkpid"])) $changestext .= "\$change[\"linkpid\"] = '".$change["linkpid"]."';\n";
+				if (isset($change["linkpid"]))
+					$changestext .= "\$change[\"linkpid\"] = '".$change["linkpid"]."';\n";
 				$changestext .= "\$change[\"undo\"] = '".str_replace("\\\\'", "\\'", preg_replace("/'/", "\\'", $change["undo"]))."';\n";
 				$changestext .= "// End of change record.\n";
 				$changestext .= "\$pgv_changes[\"$gid\"][] = \$change;\n";
@@ -2293,8 +2396,10 @@ function get_theme_names() {
 			$theme = array();
 			$themefile = implode("", file("themes/$entry/theme.php"));
 			$tt = preg_match("/theme_name\s+=\s+\"(.*)\";/", $themefile, $match);
-			if ($tt>0) $themename = trim($match[1]);
-			else $themename = "themes/$entry";
+			if ($tt>0)
+				$themename = trim($match[1]);
+			else
+				$themename = "themes/$entry";
 			$theme["name"] = $themename;
 			$theme["dir"] = "themes/$entry/";
 			$themes[] = $theme;
@@ -2313,8 +2418,10 @@ function get_theme_names() {
  */
 function filename_decode($filename) {
 	global $WIN32;
-	if ($WIN32) return utf8_decode($filename);
-	else return $filename;
+	if ($WIN32)
+		return utf8_decode($filename);
+	else
+		return $filename;
 }
 
 /**
@@ -2325,8 +2432,10 @@ function filename_decode($filename) {
  */
 function filename_encode($filename) {
 	global $WIN32;
-	if ($WIN32) return utf8_encode($filename);
-	else return $filename;
+	if ($WIN32)
+		return utf8_encode($filename);
+	else
+		return $filename;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2347,7 +2456,7 @@ function normalize_query_string($query) {
 	return $new_query;
 }
 
-function getAlphabet(){
+function getAlphabet() {
 	global $ALPHABET_upper, $ALPHABET_lower, $LANGUAGE;
 	global $alphabet, $alphabet_lower, $alphabet_upper, $alphabet_lang;
 
@@ -2356,7 +2465,7 @@ function getAlphabet(){
 		$alphabet = "0123456789".$ALPHABET_upper[$LANGUAGE].$ALPHABET_lower[$LANGUAGE];
 		$alphabet_lower = "0123456789".$ALPHABET_lower[$LANGUAGE];
 		$alphabet_upper = "0123456789".$ALPHABET_upper[$LANGUAGE];
-		foreach ($ALPHABET_upper as $l => $upper){
+		foreach ($ALPHABET_upper as $l => $upper) {
 			if ($l <> $LANGUAGE) {
 				$alphabet .= $ALPHABET_upper[$l];
 				$alphabet_upper .= $ALPHABET_upper[$l];
@@ -2391,8 +2500,9 @@ function get_report_list($force=false) {
 			}
 			fclose($fp);
 			$files = unserialize($reportdat);
-			foreach($files as $indexval => $file) {
-				if (isset($file["title"][$LANGUAGE]) && (strlen($file["title"][$LANGUAGE])>1)) return $files;
+			foreach ($files as $indexval => $file) {
+				if (isset($file["title"][$LANGUAGE]) && (strlen($file["title"][$LANGUAGE])>1))
+					return $files;
 			}
 		}
 	}
@@ -2401,15 +2511,17 @@ function get_report_list($force=false) {
 	$d = dir("reports");
 	while (false !== ($entry = $d->read())) {
 		if (($entry{0}!=".") && ($entry!="CVS") && (preg_match('/\.xml$/i', $entry)>0)) {
-			if (!isset($files[$entry]["file"])) $files[$entry]["file"] = "reports/".$entry;
+			if (!isset($files[$entry]["file"]))
+				$files[$entry]["file"] = "reports/".$entry;
 		}
 	}
 	$d->close();
 
 	require_once("includes/reportheader.php");
 	$report_array = array();
-	if (!function_exists("xml_parser_create")) return $report_array;
-	foreach($files as $file=>$r) {
+	if (!function_exists("xml_parser_create"))
+		return $report_array;
+	foreach ($files as $file=>$r) {
 		$report_array = array();
 		//-- start the sax parser
 		$xml_parser = xml_parser_create();
@@ -2423,7 +2535,7 @@ function get_report_list($force=false) {
 		if (file_exists($r["file"])) {
 			//-- open the file
 			if (!($fp = fopen($r["file"], "r"))) {
-			   die("could not open XML input");
+				die("could not open XML input");
 			}
 			//-- read the file and parse it 4kb at a time
 			while ($data = fread($fp, 4096)) {
@@ -2499,21 +2611,27 @@ function runHooks($type, $params=array())
 	global $THEME_DIR;
 	static $cache = array();
 	// check for cache
-	if(isset($cache[$type]))
+	if (isset($cache[$type]))
 	{
 		$hooks = $cache[$type];
 	}
 	else
 	{
 		// look for core hooks, shouldn't be needed, but may be useful for quick site customizing
-		if(file_exists("hooks/{$type}.php")){$hooks = array('core'=>"hooks/{$type}.php");}else{$hooks = array();}
+		if (file_exists("hooks/{$type}.php")) {
+			$hooks = array('core'=>"hooks/{$type}.php");
+		} else {
+			$hooks = array();
+		}
 		// look for module hooks
 		if (file_exists("modules")) {
 			$d = dir('modules/');
 			while(false !== ($f = $d->read()))
 			{
-				if($f === '.' || $f === '..'){continue;}
-				if(is_dir("modules/$f") && file_exists("modules/{$f}/pgvhooks/{$type}.php"))
+				if ($f === '.' || $f === '..') {
+					continue;
+				}
+				if (is_dir("modules/$f") && file_exists("modules/{$f}/pgvhooks/{$type}.php"))
 				{
 					$hooks[$f] = "modules/{$f}/pgvhooks/{$type}.php";
 				}
@@ -2521,47 +2639,41 @@ function runHooks($type, $params=array())
 			$d->close();
 		}
 		// look for theme hooks
-		if(file_exists("{$THEME_DIR}hooks/{$type}.php")){$hooks['theme'] = "{$THEME_DIR}hooks/{$type}.php";}
+		if (file_exists("{$THEME_DIR}hooks/{$type}.php")) {
+			$hooks['theme'] = "{$THEME_DIR}hooks/{$type}.php";
+		}
 		// cache the results for speed
 		$cache[$type] = $hooks;
 	}
 	// run all found hooks
 	$results = array();
-	foreach($hooks as $module=>$hook)
+	foreach ($hooks as $module=>$hook)
 	{
 		include_once $hook;
 		$cl = "mod_{$module}_{$type}";
 		$obj = new $cl();
 		$res = $obj->hook($params);
-		if($res !== null){$results = array_merge($results, $res);}
+		if ($res !== null) {
+			$results = array_merge($results, $res);
+		}
 	}
 	return $results;
 }
 
 function getfilesize($bytes) {
-   if ($bytes >= 1099511627776) {
-       $return = round($bytes / 1024 / 1024 / 1024 / 1024, 2);
-       $suffix = "TB";
-   } elseif ($bytes >= 1073741824) {
-       $return = round($bytes / 1024 / 1024 / 1024, 2);
-       $suffix = "GB";
-   } elseif ($bytes >= 1048576) {
-       $return = round($bytes / 1024 / 1024, 2);
-       $suffix = "MB";
-   } elseif ($bytes >= 1024) {
-       $return = round($bytes / 1024, 2);
-       $suffix = "KB";
-   } else {
-       $return = $bytes;
-       $suffix = "B";
-   }
-   /*if ($return == 1) {
-       $return .= " " . $suffix;
-   } else {
-       $return .= " " . $suffix . "s";
-   }*/
-   $return .= " " . $suffix;
-   return $return;
+	if ($bytes>=1099511627776) {
+		return round($bytes/1099511627776, 2)." TB";
+	}
+	if ($bytes>=1073741824) {
+		return round($bytes/1073741824, 2)." GB";
+	}
+	if ($bytes>=1048576) {
+		return round($bytes/1048576, 2)." MB";
+	}
+	if ($bytes>=1024) {
+		return round($bytes/1024, 2)." KB";
+	}
+	return $bytes." B";
 }
 
 /**
@@ -2574,10 +2686,12 @@ function getfilesize($bytes) {
 function splitkey($key, $type) {
 	$p1 = strpos($key,"[");
 	$id = substr($key,0,$p1);
-	if ($type == "id") return $id;
+	if ($type == "id")
+		return $id;
 	$p2 = strpos($key,"]");
 	$ged = substr($key,$p1+1,$p2-$p1-1);
-	if ($ged>=1) get_gedcom_from_id($ged);
+	if ($ged>=1)
+		get_gedcom_from_id($ged);
 	return $ged;
 }
 
@@ -2589,7 +2703,7 @@ function splitkey($key, $type) {
  * @param array $array2
  */
 function pgv_array_merge($array1, $array2) {
-	foreach($array2 as $key=>$value) {
+	foreach ($array2 as $key=>$value) {
 		$array1[$key] = $value;
 	}
 	return $array1;
@@ -2602,19 +2716,25 @@ function pgv_array_merge($array1, $array2) {
 function get_query_string() {
 	$qstring = "";
 	if (!empty($_GET)) {
-		foreach($_GET as $key => $value) {
-			if($key != "view") {
-				if (!is_array($value)) $qstring .= $key."=".urlencode($value)."&amp;";
-				else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
+		foreach ($_GET as $key => $value) {
+			if ($key != "view") {
+				if (!is_array($value))
+					$qstring .= $key."=".urlencode($value)."&amp;";
+				else
+					foreach ($value as $k=>$v)
+						$qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
 			}
 		}
-	}
-	else {
+	} else {
 		if (!empty($_POST)) {
-			foreach($_POST as $key => $value) {
-				if($key != "view") {
-					if (!is_array($value)) $qstring .= $key."=".urlencode($value)."&amp;";
-					else foreach($value as $k=>$v) if (!is_array($v)) $qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
+			foreach ($_POST as $key => $value) {
+				if ($key != "view") {
+					if (!is_array($value))
+						$qstring .= $key."=".urlencode($value)."&amp;";
+					else
+						foreach ($value as $k=>$v)
+							if (!is_array($v))
+								$qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
 				}
 			}
 		}
@@ -2637,8 +2757,8 @@ function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false
 		$id = array_shift($genlist);
 		$famids = find_family_ids($id);
 		if (count($famids)>0) {
-			if ($show_empty){
-				for ($i=0;$i<$num_skipped;$i++){
+			if ($show_empty) {
+				for ($i=0;$i<$num_skipped;$i++) {
 					$list["empty" . $total_num_skipped] = array();
 					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
 					$list["empty" . $total_num_skipped]["gedcom"] = "";
@@ -2647,64 +2767,73 @@ function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false
 				}
 			}
 			$num_skipped = 0;
-			foreach($famids as $indexval => $famid) {
+			foreach ($famids as $indexval => $famid) {
 				$parents = find_parents($famid);
 				if (!empty($parents["HUSB"])) {
 					find_person_record($parents["HUSB"]);
 					$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
 					$list[$parents["HUSB"]]["generation"] = $list[$id]["generation"]+1;
-				}
-				else if ($show_empty) {
-					$list["empty" . $total_num_skipped] = array("empty");
-					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-					$list["empty" . $total_num_skipped]["gedcom"] = "";
-				}
+				} else
+					if ($show_empty) {
+						$list["empty" . $total_num_skipped] = array("empty");
+						$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
+						$list["empty" . $total_num_skipped]["gedcom"] = "";
+					}
 				if (!empty($parents["WIFE"])) {
 					find_person_record($parents["WIFE"]);
 					$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
 					$list[$parents["WIFE"]]["generation"] = $list[$id]["generation"]+1;
-				}
-				else if ($show_empty) {
-					$list["empty" . $total_num_skipped] = array("empty");
-					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-					$list["empty" . $total_num_skipped]["gedcom"] = "";
-				}
+				} else
+					if ($show_empty) {
+						$list["empty" . $total_num_skipped] = array("empty");
+						$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
+						$list["empty" . $total_num_skipped]["gedcom"] = "";
+					}
 				if ($generations == -1 || $list[$id]["generation"]+1 < $generations) {
 					$skipped_gen = $list[$id]["generation"]+1;
-					if (!empty($parents["HUSB"])) array_push($genlist, $parents["HUSB"]);
-					else if ($show_empty) array_push($genlist, "empty" . $total_num_skipped);
-					if (!empty($parents["WIFE"])) array_push($genlist, $parents["WIFE"]);
-					else if ($show_empty) array_push($genlist, "empty" . $total_num_skipped);
+					if (!empty($parents["HUSB"]))
+						array_push($genlist, $parents["HUSB"]);
+					else
+						if ($show_empty)
+							array_push($genlist, "empty" . $total_num_skipped);
+					if (!empty($parents["WIFE"]))
+						array_push($genlist, $parents["WIFE"]);
+					else
+						if ($show_empty)
+							array_push($genlist, "empty" . $total_num_skipped);
 				}
 				$total_num_skipped++;
 				if ($children) {
 					$famrec = find_family_record($famid);
 					if ($famrec) {
 						$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-						for($i=0; $i<$num; $i++) {
+						for ($i=0; $i<$num; $i++) {
 							find_person_record($smatch[$i][1]);
 							$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
-							if (isset($list[$id]["generation"])) $list[$smatch[$i][1]]["generation"] = $list[$id]["generation"];
-							else $list[$smatch[$i][1]]["generation"] = 1;
+							if (isset($list[$id]["generation"]))
+								$list[$smatch[$i][1]]["generation"] = $list[$id]["generation"];
+							else
+								$list[$smatch[$i][1]]["generation"] = 1;
 						}
 					}
 				}
 			}
 		}
-		else if ($show_empty) {
-			if ($skipped_gen > $list[$id]["generation"]){
-				$list["empty" . $total_num_skipped] = array();
-				$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-				$list["empty" . $total_num_skipped]["gedcom"] = "";
-				$total_num_skipped++;
-				$list["empty" . $total_num_skipped] = array();
-				$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-				$list["empty" . $total_num_skipped]["gedcom"] = "";
-				array_push($genlist, "empty" . ($total_num_skipped - 1));
-				array_push($genlist, "empty" . $total_num_skipped);
-				$total_num_skipped++;
-			}
-			else $num_skipped += 2;
+		else
+			if ($show_empty) {
+				if ($skipped_gen > $list[$id]["generation"]) {
+					$list["empty" . $total_num_skipped] = array();
+					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
+					$list["empty" . $total_num_skipped]["gedcom"] = "";
+					$total_num_skipped++;
+					$list["empty" . $total_num_skipped] = array();
+					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
+					$list["empty" . $total_num_skipped]["gedcom"] = "";
+					array_push($genlist, "empty" . ($total_num_skipped - 1));
+					array_push($genlist, "empty" . $total_num_skipped);
+					$total_num_skipped++;
+				} else
+					$num_skipped += 2;
 		}
 
 	}
@@ -2716,15 +2845,17 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 
 	if (!isset($list[$pid])) {
 		$indirec = find_person_record($pid);
-		if (!empty($indirec)) $list[$pid] = $indilist[$pid];
-		else return;
+		if (!empty($indirec))
+			$list[$pid] = $indilist[$pid];
+		else
+			return;
 	}
 	if (!isset($list[$pid]["generation"])) {
 		$list[$pid]["generation"] = 0;
 	}
 	$famids = find_sfamily_ids($pid);
 	if (count($famids)>0) {
-		foreach($famids as $indexval => $famid) {
+		foreach ($famids as $indexval => $famid) {
 			$famrec = find_family_record($famid);
 			if ($famrec) {
 				if ($parents) {
@@ -2732,28 +2863,34 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 					if (!empty($parents["HUSB"])) {
 						find_person_record($parents["HUSB"]);
 						$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
-						if (isset($list[$pid]["generation"])) $list[$parents["HUSB"]]["generation"] = $list[$pid]["generation"]-1;
-						else $list[$parents["HUSB"]]["generation"] = 1;
+						if (isset($list[$pid]["generation"]))
+							$list[$parents["HUSB"]]["generation"] = $list[$pid]["generation"]-1;
+						else
+							$list[$parents["HUSB"]]["generation"] = 1;
 					}
 					if (!empty($parents["WIFE"])) {
 						find_person_record($parents["WIFE"]);
 						$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
-						if (isset($list[$pid]["generation"])) $list[$parents["WIFE"]]["generation"] = $list[$pid]["generation"]-1;
-						else $list[$parents["WIFE"]]["generation"] = 1;
+						if (isset($list[$pid]["generation"]))
+							$list[$parents["WIFE"]]["generation"] = $list[$pid]["generation"]-1;
+						else
+							$list[$parents["WIFE"]]["generation"] = 1;
 					}
 				}
 				$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-				for($i=0; $i<$num; $i++) {
+				for ($i=0; $i<$num; $i++) {
 					$indirec = find_person_record($smatch[$i][1]);
 					if (!empty($indirec)) {
 						$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
-						if (isset($list[$pid]["generation"])) $list[$smatch[$i][1]]["generation"] = $list[$pid]["generation"]+1;
-						else $list[$smatch[$i][1]]["generation"] = 2;
+						if (isset($list[$pid]["generation"]))
+							$list[$smatch[$i][1]]["generation"] = $list[$pid]["generation"]+1;
+						else
+							$list[$smatch[$i][1]]["generation"] = 2;
 					}
 				}
-				if($generations == -1 || $list[$pid]["generation"]+1 < $generations)
+				if ($generations == -1 || $list[$pid]["generation"]+1 < $generations)
 				{
-					for($i=0; $i<$num; $i++) {
+					for ($i=0; $i<$num; $i++) {
 						add_descendancy($smatch[$i][1], $parents, $generations);	// recurse on the childs family
 					}
 				}
@@ -2768,11 +2905,13 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 function CheckPageViews() {
 	global $SEARCH_SPIDER, $MAX_VIEWS, $MAX_VIEW_TIME;
 
-	if ($MAX_VIEW_TIME == 0 || $MAX_VIEWS == 0 || !empty($SEARCH_SPIDER)) return;
+	if ($MAX_VIEW_TIME == 0 || $MAX_VIEWS == 0 || !empty($SEARCH_SPIDER))
+		return;
 
 	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {
 		$_SESSION["pageviews"]["number"] ++;
-		if ($_SESSION["pageviews"]["number"] < $MAX_VIEWS) return;
+		if ($_SESSION["pageviews"]["number"] < $MAX_VIEWS)
+			return;
 		$sleepTime = $MAX_VIEW_TIME - time() + $_SESSION["pageviews"]["time"];
 		if ($sleepTime > 0) {
 			// The configured page view rate has been exceeded
@@ -2797,10 +2936,10 @@ function get_new_xref($type='INDI', $use_cache=false) {
 
 	//-- during online updates $FILE comes through as an array for some odd reason
 	if (!empty($FILE) && !is_array($FILE)) {
-		//print_r($FILE);
 		$gedid = $GEDCOMS[$FILE]["id"];
 	}
-	else $gedid = $GEDCOMS[$GEDCOM]["id"];
+	else
+		$gedid = $GEDCOMS[$GEDCOM]["id"];
 
 	$num = null;
 	//-- check if an id is stored in MAX_IDS used mainly during the import
@@ -2822,12 +2961,13 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		if (is_null($num) && !empty($fcontents)) {
 			$ct = preg_match_all("/0 @(.*)@ $type/", $fcontents, $match, PREG_SET_ORDER);
 			$num = 0;
-			for($i=0; $i<$ct; $i++) {
+			for ($i=0; $i<$ct; $i++) {
 				$ckey = $match[$i][1];
 				$bt = preg_match("/(\d+)/", $ckey, $bmatch);
 				if ($bt>0) {
 					$bnum = trim($bmatch[1]);
-					if ($num < $bnum) $num = $bnum;
+					if ($num < $bnum)
+						$num = $bnum;
 				}
 			}
 			$num++;
@@ -2840,7 +2980,6 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		}
 	}
 
-	// $prefix = $type{0};
 	if ($type == "INDI") $prefix = $GEDCOM_ID_PREFIX;
 	else if ($type == "FAM") $prefix = $FAM_ID_PREFIX;
 	else if ($type == "OBJE") $prefix = $MEDIA_ID_PREFIX;
@@ -2875,10 +3014,11 @@ function get_new_xref($type='INDI', $use_cache=false) {
  */
 function has_utf8($string) {
 	$len = strlen($string);
-	for($i=0; $i<$len; $i++) {
+	for ($i=0; $i<$len; $i++) {
 		$letter = substr($string, $i, 1);
 		$ord = ord($letter);
-		if ($ord==95 || $ord>=195) return true;
+		if ($ord==95 || $ord>=195)
+			return true;
 	}
 	return false;
 }
@@ -2912,39 +3052,39 @@ function id_type($id) {
 
 //-- only declare this function when it is necessary
 if (!empty($COMMIT_COMMAND)) {
-/**
- * check file in
- * @param string $logline	Log message
- * @param string $filename	Filename
- * @param string $dirname	Directory
- * @param boolean $bInsert	Insert Log message
- * @return boolean			whether the file was checked in
- */
-function check_in($logline, $filename, $dirname, $bInsert = false) {
-	global $COMMIT_COMMAND;
-	$bRetSts = false;
-        if(! empty($COMMIT_COMMAND))
-        {
-        	$cwd = getcwd();
-			if(! empty($dirname))
+	/**
+ 	* check file in
+ 	* @param string $logline	Log message
+ 	* @param string $filename	Filename
+ 	* @param string $dirname	Directory
+ 	* @param boolean $bInsert	Insert Log message
+ 	* @return boolean			whether the file was checked in
+ 	*/
+	function check_in($logline, $filename, $dirname, $bInsert = false) {
+		global $COMMIT_COMMAND;
+		$bRetSts = false;
+		if (!empty($COMMIT_COMMAND))
+		{
+			$cwd = getcwd();
+			if (!empty($dirname))
 				chdir($dirname);
-        	$cmdline = $COMMIT_COMMAND." commit -m \"".$logline."\" ".$filename;
-        	$output = "";
-        	$retval = "";
-	        exec($cmdline, $output, $retval);
-        	if(! empty($output))
-	        {
-		        if($bInsert)
-			        AddToChangeLog($logline);
-        		$outputstring = implode('\n', $output);
-	        	AddToChangeLog("System Output :".$outputstring.", Return Value :".$retval);
+			$cmdline = $COMMIT_COMMAND." commit -m \"".$logline."\" ".$filename;
+			$output = "";
+			$retval = "";
+			exec($cmdline, $output, $retval);
+			if (!empty($output))
+			{
+				if ($bInsert)
+					AddToChangeLog($logline);
+				$outputstring = implode('\n', $output);
+				AddToChangeLog("System Output :".$outputstring.", Return Value :".$retval);
 				$bRetSts = true;
-        	}
-			if(! empty($dirname))
+			}
+			if (!empty($dirname))
 				chdir($cwd);
-        }
-	return $bRetSts;
-}
+		}
+		return $bRetSts;
+	}
 }
 
 /**
@@ -2974,14 +3114,15 @@ function loadLangFile($fileListNames="") {
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
 
 	// Empty list or "all" means "load complete file set"
-	if (empty($fileListNames) || $fileListNames=="all") $fileListNames = $allLists;
+	if (empty($fileListNames) || $fileListNames=="all")
+		$fileListNames = $allLists;
 
 	// Split input into a list of file types
 	$fileListNames = str_replace(array(";", " "), array(",", ""), $fileListNames);
 	$list = explode(",", $fileListNames);
 
 	// Work on each input file type 
-	foreach($list as $fileListName) {
+	foreach ($list as $fileListName) {
 		switch ($fileListName) {
 		case "ra_lang":
 			$fileName1 = "modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php";
@@ -3050,18 +3191,24 @@ function loadLangFile($fileListNames="") {
 		default:
 			return;
 		}
-		if (file_exists($fileName1)) require $fileName1;
-		if ($LANGUAGE!="english" && file_exists($fileName2)) require $fileName2;
+		if (file_exists($fileName1))
+			require $fileName1;
+		if ($LANGUAGE!="english" && file_exists($fileName2))
+			require $fileName2;
 	}
 
 	// Now that the variables have been loaded in the desired language, load the optional 
 	// "extra.xx.php" file so that they can be over-ridden as desired by the site Admin
 	// For compatibility reasons, we'll first look for optional file "lang.xx.extra.php"
-	if (file_exists("languages/lang.".$lang_short_cut["english"].".extra.php")) require "languages/lang.".$lang_short_cut["english"].".extra.php";
-	if (file_exists($extrafile["english"])) require $extrafile["english"];
+	if (file_exists("languages/lang.".$lang_short_cut["english"].".extra.php"))
+		require "languages/lang.".$lang_short_cut["english"].".extra.php";
+	if (file_exists($extrafile["english"]))
+		require $extrafile["english"];
 	if ($LANGUAGE!="english") {
-		if (file_exists("languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php")) require "languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
-		if (file_exists($extrafile[$LANGUAGE])) require $extrafile[$LANGUAGE];
+		if (file_exists("languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php"))
+			require "languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+		if (file_exists($extrafile[$LANGUAGE]))
+			require $extrafile[$LANGUAGE];
 	}
 	
 }
@@ -3092,10 +3239,12 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $unknownNN, $unknownPN;
 	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
 
-	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
+	if (!isset($pgv_language[$desiredLanguage]))
+		$desiredLanguage = "english";
 	$username = getUserName();
 	$user = getUser($username);
-	if (!$user) $user['canadmin'] = false;
+	if (!$user)
+		$user['canadmin'] = false;
 	$result = false;
 	if ($forceLoad) {
 		$LANGUAGE = "english";
@@ -3214,7 +3363,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			// if (strpos($CALENDAR_FORMAT, $LANGUAGE)===false) $CALENDAR_FORMAT.="_and_{$language}"; // add to gedcom calendar choice
 			break;
 		}
-  	$DATE_FORMAT=trim(str_replace('R', '', $DATE_FORMAT));
+		$DATE_FORMAT=trim(str_replace('R', '', $DATE_FORMAT));
 	}
 
 /**
@@ -3226,7 +3375,8 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	$digraph = array();
 	$trigraph = array();
 	$quadgraph = array();
-	if (!isset($MULTI_LETTER_ALPHABET[$LANGUAGE])) $MULTI_LETTER_ALPHABET[$LANGUAGE] = "";
+	if (!isset($MULTI_LETTER_ALPHABET[$LANGUAGE]))
+		$MULTI_LETTER_ALPHABET[$LANGUAGE] = "";
 	if ($MULTI_LETTER_ALPHABET[$LANGUAGE]!="") {
 		$myList = str2upper($MULTI_LETTER_ALPHABET[$LANGUAGE]);
 		$myList = str_replace(array(";", ","), " ", $myList);
@@ -3236,12 +3386,17 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$sortValue = array();
 		foreach ($wholeList as $letter) {
 			$first = substr($letter, 0, 1);
-			if ($letter=="CH") $first = "H";	// This one doesn't follow the rule
-			if (!isset($sortValue[$first])) $sortValue[$first] = 0;
+			if ($letter=="CH")
+				$first = "H";	// This one doesn't follow the rule
+			if (!isset($sortValue[$first]))
+				$sortValue[$first] = 0;
 			$sortValue[$first] ++;
-			if (strlen($letter)==2) $digraph[$letter] = $sortValue[$first];
-			if (strlen($letter)==3) $trigraph[$letter] = $sortValue[$first];
-			if (strlen($letter)==4) $quadgraph[$letter] = $sortValue[$first];
+			if (strlen($letter)==2)
+				$digraph[$letter] = $sortValue[$first];
+			if (strlen($letter)==3)
+				$trigraph[$letter] = $sortValue[$first];
+			if (strlen($letter)==4)
+				$quadgraph[$letter] = $sortValue[$first];
 		}
 		$MULTI_LETTER_ALPHABET[$LANGUAGE] = " ".$myList." ";
 	}
@@ -3251,7 +3406,8 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	$quadgraphAll = array();
 	$MULTI_LETTER_ALPHABET["all"] = "";
 	foreach ($MULTI_LETTER_ALPHABET as $lang => $letters) {
-		if ($lang!="all") $MULTI_LETTER_ALPHABET["all"] .= $letters." ";
+		if ($lang!="all")
+			$MULTI_LETTER_ALPHABET["all"] .= $letters." ";
 	}
 	$MULTI_LETTER_ALPHABET["all"] = str2upper($MULTI_LETTER_ALPHABET["all"]);
 	$MULTI_LETTER_ALPHABET["all"] = str_replace(array(";", ","), " ", $MULTI_LETTER_ALPHABET["all"]);
@@ -3260,12 +3416,17 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	$sortValue = array();
 	foreach ($wholeList as $letter) {
 		$first = substr($letter, 0, 1);
-		if ($letter=="CH") $first = "H";	// This one doesn't follow the rule
-		if (!isset($sortValue[$first])) $sortValue[$first] = 0;
+		if ($letter=="CH")
+			$first = "H";	// This one doesn't follow the rule
+		if (!isset($sortValue[$first]))
+			$sortValue[$first] = 0;
 		$sortValue[$first] ++;
-		if (strlen($letter)==2) $digraphAll[$letter] = $sortValue[$first];
-		if (strlen($letter)==3) $trigraphAll[$letter] = $sortValue[$first];
-		if (strlen($letter)==4) $quadgraphAll[$letter] = $sortValue[$first];
+		if (strlen($letter)==2)
+			$digraphAll[$letter] = $sortValue[$first];
+		if (strlen($letter)==3)
+			$trigraphAll[$letter] = $sortValue[$first];
+		if (strlen($letter)==4)
+			$quadgraphAll[$letter] = $sortValue[$first];
 	}
 	$MULTI_LETTER_ALPHABET["all"] = " ".trim($MULTI_LETTER_ALPHABET["all"])." ";
 
@@ -3304,6 +3465,7 @@ function isFileExternal($file) {
 } 
 
 // optional extra file
-if (file_exists( "includes/functions.extra.php")) require  "includes/functions.extra.php";
+if (file_exists( "includes/functions.extra.php"))
+	require  "includes/functions.extra.php";
 
 ?>
