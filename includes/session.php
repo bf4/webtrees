@@ -3,7 +3,7 @@
  * Startup and session logic
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,8 @@ $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
 // check for worms and bad bots
 $worms = array(
+	'Wget',
+	'DataCha',
 	'libwww-perl',
 	'LWP::Simple',
 	'lwp-trivial',
@@ -96,6 +98,15 @@ $worms = array(
 foreach ($worms as $worm) {
 	if (eregi($worm, $ua)) {
 		print "Bad Worm! Crawl back into your hole.";
+		if ((!ini_get('register_globals'))||(ini_get('register_globals')=="Off")) {
+			//-- load common functions
+			require_once("includes/functions.php");
+			//-- load db specific functions
+			require_once("includes/functions_db.php");
+			require_once("includes/authentication.php");      // -- load the authentication system
+			AddToLog("UA>".$ua."< Blocked crawler detected. Possible hacking attempt. Script terminated.");
+			AddToLog("URI>".$_SERVER["REQUEST_URI"]."<");
+		}
 		exit;
 		}
 	}
