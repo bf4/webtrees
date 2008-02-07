@@ -241,8 +241,7 @@ class CalendarDate {
 			$format=preg_replace('/(^[,. ;\/-]+)|([,. ;\/-]+$)/', '', $format);
 		// Build up the formated date, character at a time
 		$str='';
-		//foreach (str_split($format) as $code) // PHP5
-		preg_match_all('/(.)/', $format, $match); foreach ($match[1] as $code) // PHP4
+		foreach (str_split($format) as $code)
 			switch ($code) {
 			case 'd': $str.=$this->FormatDayZeros(); break;
 			case 'j': $str.=$this->FormatDay(); break;
@@ -493,7 +492,7 @@ class CalendarDate {
 		return $this->JDtoYMD(GregorianDate::YMDtoJD(date('Y'), date('n'), date('j')));
 	}
 	function Today() {
-		$tmp=(PHP_VERSION<5)? $this : clone($this);
+		$tmp=clone($this);
 		$ymd=$tmp->TodayYMD();
 		$tmp->y=$ymd[0];
 		$tmp->m=$ymd[1];
@@ -1166,7 +1165,7 @@ class GedcomDate {
 
 	// Offset this date by N years, and round to the whole year
 	function AddYears($n, $qual='') {
-		$tmp=(PHP_VERSION<5)? $this : clone($this);
+		$tmp=clone($this);
 		$tmp->date1->y+=$n;
 		$tmp->date1->m=0;
 		$tmp->date1->d=0;
@@ -1201,7 +1200,7 @@ class GedcomDate {
 	// return >0 if $b>$a
 	// return  0 if dates same/overlap/invalid
 	// BEF/AFT sort as the day before/after.
-	function Compare(&$a, &$b) {
+	function Compare($a, $b) {
 		// Incomplete dates can't be sorted
 		if (!is_object($a) || !is_object($b) || $a->MinJD()==0 || $b->MinJD()==0)
 			return 0;

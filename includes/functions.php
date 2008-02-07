@@ -192,19 +192,6 @@ function get_privacy_file() {
 }
 
 /**
- * Get the current time in micro seconds
- *
- * returns a timestamp for the current time in micro seconds
- * obtained from online documentation for the microtime() function
- * on php.net
- * @return float time in micro seconds
- */
-function getmicrotime() {
-	list($usec, $sec) = explode(" ",microtime());
-	return ((float)$usec + (float)$sec);
-}
-
-/**
  * Store GEDCOMS array
  *
  * this function will store the <var>$GEDCOMS</var> array in the <var>$INDEX_DIRECTORY</var>/gedcoms.php
@@ -2051,7 +2038,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				flush();
 		}
 		$count++;
-		$end_time = getmicrotime();
+		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;
 		if (($TIME_LIMIT>1)&&($exectime > $TIME_LIMIT-1)) {
 			print "<span class=\"error\">".$pgv_lang["timeout_error"]."</span>\n";

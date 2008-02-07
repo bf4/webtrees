@@ -21,10 +21,7 @@ $footer = 1;
 
 function footmsg() {
     global $foot1, $foot2, $foot3, $copyright, $total_time, $start_time;
-    $mtime = microtime();
-    $mtime = explode(" ",$mtime);
-    $mtime = $mtime[1] + $mtime[0];
-    $end_time = $mtime;
+    $end_time = microtime(true);
     $total_time = ($end_time - $start_time);
     $total_time = ""._PAGEGENERATION." ".substr($total_time,0,5)." "._SECONDS."";
     echo "<font class=\"footmsg\">\n";
