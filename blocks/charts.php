@@ -5,7 +5,7 @@
  * This block prints pedigree, descendency, or hourglass charts for the chosen person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +51,14 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			if (!empty($user["gedcom_id"][$GEDCOM])) $config["rootId"] = $user["gedcom_id"][$GEDCOM];
 			else $config["rootId"] = $PEDIGREE_ROOT_ID;
 		}
+	}
+	if (empty($config["details"])) $config["details"] = "no";
+	if ($config["details"]=="no") {
+		$show_full = 0;
+		// Here we could adjust the block width & height to accommodate larger displays 
+	} else {
+		$show_full = 1;
+		// Here we could adjust the block width & height to accommodate larger displays 
 	}
 	
 	$show_full=0;
@@ -102,7 +110,16 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			$title .= $name." ".$pgv_lang["tree"];
 			break;
 	}
-	$content = '<table cellspacing="0" cellpadding="0" border="0"><tr>';
+	$content =  "<b>".$title."</b>";
+	$content .=  "</div></td>";
+	$content .=  "<td class=\"blockh3\">&nbsp;</td></tr>\n";
+	$content .=  "</table>";
+	$content .=  "<div class=\"blockcontent\">";
+	$content .=  "<div class=\"small_inner_block\">";
+	if ($show_full==0) {
+		$content .=  "<span class=\"details2\"><center>".$pgv_lang["charts_click_box"]."</center></span><br />";
+	}
+	$content .= '<table cellspacing="0" cellpadding="0" border="0"><tr>';
 	if ($config['type']=='descendants' || $config['type']=='hourglass') {
 		$content .= "<td valign=\"middle\">";
 		ob_start();
@@ -158,6 +175,13 @@ function print_charts_block_config($config) {
 			<?php if (file_exists("includes/treenav_class.php")) { ?>
 			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\"";?>>TreeNav</option>
 			<?php } ?>
+		</select>
+	</td></tr>
+	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["show_details"]; ?></td>
+	<td class="optionbox">
+		<select name="details">
+			<option value="no"<?php if ($config["details"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			<option value="yes"<?php if ($config["details"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
 		</select>
 	</td></tr>
 	<tr>

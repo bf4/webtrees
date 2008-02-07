@@ -3,7 +3,7 @@
  * Class file for a Family
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -381,6 +381,18 @@ class Family extends GedcomRecord {
 		if (!$this->disp) return $pgv_lang["private"];
 		if (is_null($this->marriage)) $this->_parseMarriageRecord();
 		return $this->marriage->getDate();
+	}
+
+	/**
+	 * get the marriage year
+	 * @return string
+	 */
+	function getMarriageYear($est = true, $cal = ""){
+		// TODO - change the design to use julian days, not gregorian years.
+		$mdate = new GedcomDate($this->getMarriageDate());
+		$mdate=$mdate->MinDate();
+		if ($cal) $mdate=$mdate->convert_to_cal($cal);
+		return $mdate->y;
 	}
 
 	/**

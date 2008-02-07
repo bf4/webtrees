@@ -268,66 +268,73 @@ class UserMigrateControllerRoot extends BaseController {
 	 *
 	 */
 	function import() {
-		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $DBCONN;
+	  global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $DBCONN;
 		
-		if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
+	    if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
 			$this->impSuccess = false;
 			return;
-		}
-		
-		require $INDEX_DIRECTORY."authenticate.php";
-		$countold = count($users);
-		$sql = "DELETE FROM ".$TBLPREFIX."users";
-		$res = dbquery($sql);
-		if (!$res || DB::isERROR($res)) {
-			$this->errorMsg = "<span class=\"error\">Unable to update <i>Users</i> table.</span><br />\n";
-			$this->impSuccess = false;
-			return;
-		}
-		foreach($users as $username=>$user) {
-			if ($user["visibleonline"] == "1") $user["visibleonline"] = false;
-			else $user["visibleonline"] = true;
-			if ($user["editaccount"] == "1") $user["editaccount"] = false;
-			else $user["editaccount"] = true;
-			//-- make sure fields are set for v4.0 DB
-			if (!isset($user["firstname"])) {
-				if (isset($user["fullname"])) {
-					$parts = preg_split("/ /", trim($user["fullname"]));
-					$user["lastname"] = array_pop($parts);
-					$user["firstname"] = implode(" ", $parts);
-				}
-				else {
-					$user["firstname"] = '';
-					$user["lastname"] = '';
-				}
+	    }
+	    else {	
+			require $INDEX_DIRECTORY."authenticate.php";
+			$countold = count($users);
+			$sql = "DELETE FROM ".$TBLPREFIX."users";
+			$res = dbquery($sql);
+			if (!$res || DB::isERROR($res)) {
+				$this->errorMsg = "<span class=\"error\">Unable to update <i>Users</i> table.</span><br />\n";
+				$this->impSuccess = false;
+				return;
 			}
-			if (!isset($user["comment"])) $user["comment"] = '';
-			if (!isset($user["comment_exp"])) $user["comment_exp"] = '';
-			if (!isset($user["sync_gedcom"])) $user["sync_gedcom"] = 'N';
-			if (!isset($user["relationship_privacy"])) $user["relationship_privacy"] = 'N';
-			if (!isset($user["max_relation_path"])) $user["max_relation_path"] = '2';
-			if (!isset($user["auto_accept"])) $user["auto_accept"] = 'N';
-			addUser($user, "imported");
-		}
-		$countnew = count(getUsers());
-		if ($countold == $countnew) {
-			$this->impSuccess = true;
+			foreach($users as $username=>$user) {
+				if ($user["visibleonline"] == "1") $user["visibleonline"] = "Y";
+				else $user["visibleonline"] = "N";
+				if ($user["editaccount"] == "1") $user["editaccount"] = "Y";
+				else $user["editaccount"] = "N";
+/* wrong			
+				if ($user["visibleonline"] == "1") $user["visibleonline"] = false;
+				else $user["visibleonline"] = true;
+				if ($user["editaccount"] == "1") $user["editaccount"] = false;
+				else $user["editaccount"] = true;
+*/			
+				//-- make sure fields are set for v4.0 DB
+				if (!isset($user["firstname"])) {
+					if (isset($user["fullname"])) {
+						$parts = preg_split("/ /", trim($user["fullname"]));
+						$user["lastname"] = array_pop($parts);
+						$user["firstname"] = implode(" ", $parts);
+					}
+					else {
+						$user["firstname"] = '';
+						$user["lastname"] = '';
+					}
+				}
+				if (!isset($user["comment"])) $user["comment"] = '';
+				if (!isset($user["comment_exp"])) $user["comment_exp"] = '';
+				if (!isset($user["sync_gedcom"])) $user["sync_gedcom"] = 'N';
+				if (!isset($user["relationship_privacy"])) $user["relationship_privacy"] = 'N';
+				if (!isset($user["max_relation_path"])) $user["max_relation_path"] = '2';
+				if (!isset($user["auto_accept"])) $user["auto_accept"] = 'N';
+				addUser($user, "imported");
+			}
+			$countnew = count(getUsers());
+			if ($countold == $countnew) {
+				$this->impSuccess = true;
+			}
+			else {
+				$this->impSuccess = false;
+			}
+	    }
+	  	
+	    if ((file_exists($INDEX_DIRECTORY."messages.dat")) == false) {
+			$this->msgSuccess = false;
 		}
 		else {
-			$this->impSuccess = false;
-		}
-		
-		$sql = "DELETE FROM ".$TBLPREFIX."messages";
-		$res = dbquery($sql);
-		if (!$res || DB::isError($res)) {
-			$this->errorMsg = "<span class=\"error\">Unable to update <i>Messages</i> table.</span><br />\n";
-			$this->msgSuccess = false;
-			return;
-		}
-		if ((file_exists($INDEX_DIRECTORY."messages.dat")) == false) {
-			$this->msgSuccess = false;
-		}
-		else {
+			$sql = "DELETE FROM ".$TBLPREFIX."messages";
+			$res = dbquery($sql);
+			if (!$res || DB::isError($res)) {
+				$this->errorMsg = "<span class=\"error\">Unable to update <i>Messages</i> table.</span><br />\n";
+				$this->msgSuccess = false;
+				return;
+			}
 			$messages = array();
 			$fp = fopen($INDEX_DIRECTORY."messages.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."messages.dat"));
@@ -345,17 +352,17 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->msgSuccess = true;
 		}
 		
-		$sql = "DELETE FROM ".$TBLPREFIX."favorites";
-		$res = dbquery($sql);
-		if (!$res || DB::isError($res)) {
-			$this->errorMsg = "<span class=\"error\">Unable to update <i>Favorites</i> table.</span><br />\n";
-			return;
-		}
 		if ((file_exists($INDEX_DIRECTORY."favorites.dat")) == false) {
 			$this->favSuccess = false;
 			print $pgv_lang["um_nofav"]."<br /><br />";
 		}
 		else {
+			$sql = "DELETE FROM ".$TBLPREFIX."favorites";
+			$res = dbquery($sql);
+			if (!$res || DB::isError($res)) {
+				$this->errorMsg = "<span class=\"error\">Unable to update <i>Favorites</i> table.</span><br />\n";
+				return;
+			}
 			$favorites = array();
 			$fp = fopen($INDEX_DIRECTORY."favorites.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."favorites.dat"));
@@ -372,17 +379,17 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->favSuccess = true;
 		}
 		
-		$sql = "DELETE FROM ".$TBLPREFIX."news";
-		$res = dbquery($sql);
-		if (!$res) {
-			$this->errorMsg = "<span class=\"error\">Unable to update <i>News</i> table.</span><br />\n";
-			$this->newsSuccess = false;
-			return;
-		}
 		if ((file_exists($INDEX_DIRECTORY."news.dat")) == false) {
 			$this->newsSuccess = false;
 		}
 		else {
+			$sql = "DELETE FROM ".$TBLPREFIX."news";
+			$res = dbquery($sql);
+			if (!$res) {
+				$this->errorMsg = "<span class=\"error\">Unable to update <i>News</i> table.</span><br />\n";
+				$this->newsSuccess = false;
+				return;
+			}
 			$allnews = array();
 			$fp = fopen($INDEX_DIRECTORY."news.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."news.dat"));
@@ -398,16 +405,16 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->newsSuccess = true;
 		}
 		
-		$sql = "DELETE FROM ".$TBLPREFIX."blocks";
-		$res = dbquery($sql);
-		if (!$res) {
-			$this->errorMsg = "<span class=\"error\">Unable to update <i>Blocks</i> table.</span><br />\n";
-			exit;
-		}
 		if ((file_exists($INDEX_DIRECTORY."blocks.dat")) == false) {
 			$this->blockSuccess = false;
 		}
-		else {
+		else {		
+			$sql = "DELETE FROM ".$TBLPREFIX."blocks";
+			$res = dbquery($sql);
+			if (!$res) {
+				$this->errorMsg = "<span class=\"error\">Unable to update <i>Blocks</i> table.</span><br />\n";
+				exit;
+			}
 			$allblocks = array();
 			$fp = fopen($INDEX_DIRECTORY."blocks.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."blocks.dat"));

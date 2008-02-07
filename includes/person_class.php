@@ -3,7 +3,7 @@
  * Class file for a person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -414,7 +414,7 @@ class Person extends GedcomRecord {
 	 * get the birth year
 	 * @return string
 	 */
-	function getBirthYear($est = true){
+	function getBirthYear($est = true, $cal = ""){
 		// TODO - change the design to use julian days, not gregorian years.
 		$this->_parseBirthDeath();
 		//$bdate = parse_date($this->getBirthDate());
@@ -458,7 +458,7 @@ class Person extends GedcomRecord {
 	 * get the death year
 	 * @return string the year of death
 	 */
-	function getDeathYear($est = true) {
+	function getDeathYear($est = true, $cal = "") {
 		// TODO - change the design to use julian days, not gregorian years.
 		$this->_parseBirthDeath();
 		$ddate = $this->deathEvent->getDate();
@@ -562,7 +562,10 @@ class Person extends GedcomRecord {
 		foreach($fams as $key=>$famid) {
 			if (!empty($famid)) {
 				$family = Family::getInstance($famid);
-				if (!is_null($family)) $families[$famid] = $family;
+				// only include family if it is displayable by current user
+				if (!is_null($family)) {
+					if ($family->disp) $families[$famid] = $family;
+				}
 				else echo "<span class=\"warning\">".$pgv_lang["unable_to_find_family"]." ".$famid."</span>";
 			}
 		}
@@ -625,7 +628,10 @@ class Person extends GedcomRecord {
 		foreach($fams as $key=>$famid) {
 			if (!empty($famid)) {
 				$family = Family::getInstance($famid);
-				if (!is_null($family)) $families[$famid] = $family;
+				// only include family if it is displayable by current user
+				if (!is_null($family)) {
+					if ($family->disp) $families[$famid] = $family;
+				}
 				else echo "<span class=\"warning\">".$pgv_lang["unable_to_find_family"]." ".$famid."</span>";
 			}
 		}

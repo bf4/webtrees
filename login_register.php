@@ -465,9 +465,9 @@ switch ($action) {
 					$mail_body .= $pgv_lang["mail01_line04"] . "\r\n\r\n";
 					if ($TEXT_DIRECTION=="rtl") {
 						$mail_body .= "<a href=\"";
-						$mail_body .= $serverURL . "/login_register.php?action=userverify&user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"]) . "\">";
+						$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"])."&action=userverify\">";
 					}
-					$mail_body .= $serverURL . "/login_register.php?action=userverify&user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"]);
+					$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"])."&action=userverify";
 					if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 					$mail_body .= "\r\n";
 					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";

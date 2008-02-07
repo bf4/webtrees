@@ -3,7 +3,7 @@
  * Online UI for editing config.php site configuration variables
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -189,6 +189,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	$configtext = implode('', file("config.php"));
 	print $pgv_lang["config_file_read"];
 	print "<br />\n";
+	$NEW_SERVER_URL = trim($NEW_SERVER_URL);
 	if (!isFileExternal($NEW_SERVER_URL)) $NEW_SERVER_URL = "http://".$NEW_SERVER_URL;
 	if (preg_match("'/$'", $NEW_SERVER_URL)==0) $NEW_SERVER_URL .= "/";
 	$_POST["NEW_INDEX_DIRECTORY"] = preg_replace('/\\\/','/',$_POST["NEW_INDEX_DIRECTORY"]);

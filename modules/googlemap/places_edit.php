@@ -122,6 +122,7 @@ if ($action=='updaterecord') {
             $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
         else
 	       	$res = dbquery($sql, true, 1);
+
 	}
 	if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
