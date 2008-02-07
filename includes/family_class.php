@@ -55,8 +55,6 @@ class Family extends GedcomRecord {
 	function Family($gedrec, $simple=true) {
 		global $pgv_changes, $GEDCOM;
 
-		parent::GedcomRecord($gedrec);
-		$this->disp = displayDetailsById($this->xref, "FAM");
 		$husbrec = get_sub_record(1, "1 HUSB", $gedrec);
 		if (!empty($husbrec)) {
 			//-- get the husbands ids
@@ -69,6 +67,9 @@ class Family extends GedcomRecord {
 			$wife = get_gedcom_value("WIFE", 1, $wiferec);
 			$this->wife = Person::getInstance($wife, $simple);
 		}
+		//-- load the parents before privatizing the record because the parents may be remote records
+		parent::GedcomRecord($gedrec);
+		$this->disp = displayDetailsById($this->xref, "FAM");
 	}
 
 	/**

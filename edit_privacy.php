@@ -39,11 +39,14 @@ if ((!userGedcomAdmin(getUserName(), $ged))||(empty($ged))) {
 	exit;
 }
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+
 $PRIVACY_CONSTANTS = array();
 $PRIVACY_CONSTANTS[$PRIV_HIDE] = "\$PRIV_HIDE";
 $PRIVACY_CONSTANTS[$PRIV_PUBLIC] = "\$PRIV_PUBLIC";
 $PRIVACY_CONSTANTS[$PRIV_USER] = "\$PRIV_USER";
 $PRIVACY_CONSTANTS[$PRIV_NONE] = "\$PRIV_NONE";
+
 if (!isset($PRIVACY_BY_YEAR)) $PRIVACY_BY_YEAR = false;
 if (!isset($MAX_ALIVE_AGE)) $MAX_ALIVE_AGE = 120;
 
