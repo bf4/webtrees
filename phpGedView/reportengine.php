@@ -46,6 +46,13 @@ function get_tag_values($tag) {
 	return $vals;
 }
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['report'])) $report = $_REQUEST['report'];
+if (isset($_REQUEST['output'])) $output = $_REQUEST['output'];
+if (isset($_REQUEST['vars'])) $vars = $_REQUEST['vars'];
+if (isset($_REQUEST['varnames'])) $varnames = $_REQUEST['varnames'];
+if (isset($_REQUEST['type'])) $type = $_REQUEST['type'];
+
 if (empty($action)) $action = "choose";
 if (!isset($report)) $report = "";
 if (!isset($output)) $output = "PDF";

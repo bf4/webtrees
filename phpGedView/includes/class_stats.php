@@ -100,7 +100,6 @@ class stats
 		 */
 		for ($i=0; $i < $c; $i++)
 		{
-			// Why are PHP functions case insentive?
 			if ($this->_compat) {
 				if (!array_search($tags[$i], $funcs)) {
 					continue;
