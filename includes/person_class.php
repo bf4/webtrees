@@ -417,7 +417,8 @@ class Person extends GedcomRecord {
 	function getBirthYear($est = true, $cal = ""){
 		// TODO - change the design to use julian days, not gregorian years.
 		$this->_parseBirthDeath();
-		//$bdate = parse_date($this->getBirthDate());
+		if (is_null($this->birthEvent))
+			return null;
 		$bdate = $this->birthEvent->getDate();
 		return $bdate->date1->y;
 	}
@@ -461,6 +462,8 @@ class Person extends GedcomRecord {
 	function getDeathYear($est = true, $cal = "") {
 		// TODO - change the design to use julian days, not gregorian years.
 		$this->_parseBirthDeath();
+		if (is_null($this->deathEvent))
+			return null;
 		$ddate = $this->deathEvent->getDate();
 		return $ddate->date1->y;
 	}
