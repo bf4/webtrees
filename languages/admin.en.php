@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -189,6 +189,7 @@ $pgv_lang["gedcom_not_imported"]				= "This GEDCOM has not yet been imported.";
 $pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"] 				= "Edit Image Manipulation Configuration";
+$pgv_lang["autoContinue"]						= "Automatically press «Continue» button";
 $pgv_lang["import_complete"]					= "Import complete";
 $pgv_lang["import_marr_names"]					= "Import Married Names";
 $pgv_lang["import_options"]						= "Import Options";
