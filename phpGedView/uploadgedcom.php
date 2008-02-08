@@ -7,7 +7,7 @@
  * file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -729,6 +729,16 @@ if ($import == true) {
 	print "/>\n";
 	print "</td></tr>";
 
+	// NOTE: Auto-click "Continue" button
+	// TODO: Write help text
+	print "<tr><td class=\"descriptionbox width20 wrap\">";
+	print_help_link("autoContinue_help", "qm", "autoContinue");
+	print $pgv_lang["autoContinue"];
+	print "</td><td class=\"optionbox\"><select name=\"autoContinue\">\n";
+	print "<option value=\"YES\" selected=\"selected\">".$pgv_lang["yes"]."</option>\n";
+	print "<option value=\"NO\">".$pgv_lang["no"]."</option>\n</select>";
+	print "</td></tr>";
+
 	// NOTE: Import married names
 	print "<tr><td class=\"descriptionbox width20 wrap\">";
 	print_help_link("import_marr_names_help", "qm", "import_marr_names");
@@ -961,6 +971,7 @@ if ($stage == 1) {
 		$i_start = $_SESSION["i_start"];
 		$type_BYTES = $_SESSION["type_BYTES"];
 		$i = $_SESSION["i"];
+		$autoContinue = $_SESSION["autoContinue"];
 		fseek($fpged, $TOTAL_BYTES);
 	} else {
 		$fcontents = "";
@@ -1064,6 +1075,7 @@ if ($stage == 1) {
 					$_SESSION["show_type"] = $show_type;
 					$_SESSION["i_start"] = $i_start;
 					$_SESSION["type_BYTES"] = $type_BYTES;
+					$_SESSION["autoContinue"] = $autoContinue;
 
 					//-- close the file connection
 					fclose($fpged);
@@ -1092,7 +1104,20 @@ if ($stage == 1) {
 							value="<?php print $pgv_lang["del_proceed"]; ?>" /></td>
 					</tr>
 					</table>
-					<?php
+					<?php if ($autoContinue=="YES") { ?>
+					<script type="text/javascript">
+						<!--
+						(function (fn) {
+							if (window.addEventListener) window.addEventListener('load', fn, false);
+							else window.attachEvent('onload', fn);
+						})
+						(function() {
+							document.forms['configform'].elements['continue'].click();
+						});
+						//-->
+					</script>
+					<?php 
+					}
 					cleanup_database();
 					print_footer();
 					session_write_close();

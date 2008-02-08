@@ -3,7 +3,7 @@
  * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ $pgv_lang["label_add_search_server"]	= "IP hinzufügen";
 $pgv_lang["label_add_server"]			= "Hinzufügen";
 $pgv_lang["label_ban_server"]			= "Einreichen";
 $pgv_lang["label_delete"]				= "Löschen";
-$pgv_lang["progress_bars_info"]			= "Die unten angezeigten Barren informieren Sie über den Fortschritt der Dateneinfuhr.  Wenn die angegebene Zeitlimit erreicht wird, wird die Dateneinfuhr unterbrochen.  Sie können dann auf einen «Fortsetzen» Button klicken.  Falls Ihnen dieser Button nicht zugänglich ist, müssen Sie die Dateneinfuhr mit einer kleineren Zeitlimit neu starten.";
+$pgv_lang["progress_bars_info"]			= "Die unten angezeigten Barren informieren Sie über den Fortschritt der Dateneinfuhr.  Wenn die angegebene Zeitbeschränkung erreicht wird, wird die Dateneinfuhr unterbrochen.  Sie können dann auf einen «Fortsetzen» Button klicken.  Falls Ihnen dieser Button nicht zugänglich ist, müssen Sie die Dateneinfuhr mit einer kleineren Zeitbeschränkung neu starten.";
 $pgv_lang["upload_replacement"]			= "Ersatzdatei hochladen";
 $pgv_lang["about_user"]					= "Sie müssen zunächst den Hauptverwalter erstellen. Dieser Benutzer wird das Recht erhalten, die Konfigurationsdateien zu verändern, private Daten zu sehen oder andere Benutzer zu erstellen.";
 $pgv_lang["access"]						= "Zugreifen";
@@ -168,6 +168,7 @@ $pgv_lang["gedcom_not_imported"]		= "Diese GEDCOM-Datei wurde noch nicht importi
 $pgv_lang["ibase"]						= "InterBase";
 $pgv_lang["ifx"]						= "Informix";
 $pgv_lang["img_admin_settings"]			= "Bild-Veränderungs-Konfiguration bearbeiten";
+$pgv_lang["autoContinue"]				= "«Fortsetzen» Button automatisch drücken";
 $pgv_lang["import_complete"]			= "Import beendet";
 $pgv_lang["import_marr_names"]			= "Ehenamen einführen";
 $pgv_lang["import_options"]				= "Import Optionen";
