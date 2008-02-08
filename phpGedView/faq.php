@@ -3,7 +3,7 @@
  * Customizable FAQ page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,9 +57,11 @@ if ($action=="commit") {
 				if ($order==$oldOrder) break;
 			}
 		}
+		$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), $header);
 		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".$order."', b_username='".$whichGEDCOM."', b_config='".$DBCONN->escapeSimple(serialize($header))."' WHERE b_id='".$pidh."' and b_username='".$oldGEDCOM."' and b_location='header'";
 		$tempsql = dbquery($sql);
 		$res =& $tempsql;
+		$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), $body);
 		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".$order."', b_username='".$whichGEDCOM."', b_config='".$DBCONN->escapeSimple(serialize($body))."' WHERE b_id='".$pidb."' and b_username='".$oldGEDCOM."' and b_location='body'";
 		$tempsql = dbquery($sql);
 		$res =& $tempsql;		
@@ -83,9 +85,11 @@ if ($action=="commit") {
 			}
 		}
 		$newid = get_next_id("blocks", "b_id");
+		$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), $header);
 		$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES ($newid, '".$whichGEDCOM."', 'header', '$order', 'faq', '".$DBCONN->escapeSimple(serialize($header))."')";
 		$tempsql = dbquery($sql);
 		$res =& $tempsql;
+		$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), $body);
 		$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES (".($newid+1).", '".$whichGEDCOM."', 'body', '".$order."', 'faq', '".$DBCONN->escapeSimple(serialize($body))."')";
 		$tempsql = dbquery($sql);
 		$res =& $tempsql;
@@ -194,14 +198,16 @@ if ($action == "edit") {
 			print "<input type=\"hidden\" name=\"pidb\" value=\"".$data["body"]["pid"]."\" />";
 			print "<input type=\"hidden\" name=\"oldGEDCOM\" value=\"".$data["header"]["gedcom"]."\" />";
 			print "<input type=\"hidden\" name=\"oldOrder\" value=\"".$id."\" />";
+			$header = str_replace(array('&', '<', '>',), array('&amp;', '&lt;', '&gt;'), stripslashes($data["header"]["text"]));
 			print "<tr><td class=\"descriptionbox\" colspan=\"2\">";
 			print_help_link("add_faq_header_help","qm","add_faq_header");
 			print $pgv_lang["add_faq_header"]."</td></tr>";
-			print "<tr><td class=\"optionbox\" colspan=\"2\"><input type=\"text\" name=\"header\" size=\"90\" tabindex=\"".$i++."\" value=\"".$data["header"]["text"]."\" /></td></tr>";
+			print "<tr><td class=\"optionbox\" colspan=\"2\"><input type=\"text\" name=\"header\" size=\"90\" tabindex=\"".$i++."\" value=\"".$header."\" /></td></tr>";
 			print "<tr><td class=\"descriptionbox\" colspan=\"2\">";
 			print_help_link("add_faq_body_help","qm","add_faq_body");
 			print $pgv_lang["add_faq_body"]."</td></tr>";
-			print "<tr><td class=\"optionbox\" colspan=\"2\"><textarea name=\"body\" rows=\"10\" cols=\"90\" tabindex=\"".$i++."\">".html_entity_decode(stripslashes($data["body"]["text"]))."</textarea></td></tr>";
+			$body = str_replace(array('&', '<', '>',), array('&amp;', '&lt;', '&gt;'), stripslashes($data["body"]["text"]));
+			print "<tr><td class=\"optionbox\" colspan=\"2\"><textarea name=\"body\" rows=\"10\" cols=\"90\" tabindex=\"".$i++."\">".$body."</textarea></td></tr>";
 			print "<tr><td class=\"descriptionbox\">";
 			print_help_link("add_faq_order_help","qm","add_faq_order");
 			print $pgv_lang["add_faq_order"]."</td><td class=\"descriptionbox\">";
@@ -273,8 +279,9 @@ if ($action == "show") {
 					print "</td>";
 				}
 				// NOTE: Print the header of the current item
-				$itemTitle = print_text($data["header"]["text"], 0, 2);
-				print "<td class=\"list_label wrap\">".html_entity_decode($itemTitle)."</td></tr>";
+				$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), stripslashes(print_text($data["header"]["text"], 0, 2)));
+				print "<td class=\"list_label wrap\">".$header."</td></tr>";
+				$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), stripslashes(print_text($data["body"]["text"], 0, 2)));
 				print "<tr>";
 				// NOTE: Print the edit options of the current item
 				if ($canconfig && $adminedit) {
@@ -293,8 +300,7 @@ if ($action == "show") {
 					print "</td>";
 				}
 				// NOTE: Print the body text of the current item
-				$itemText = print_text($data["body"]["text"], 0, 2);
-				print "<td class=\"list_value wrap\">".nl2br(html_entity_decode(stripslashes($itemText)))."</td></tr>";				
+				print "<td class=\"list_value wrap\">".nl2br($body)."</td></tr>";				
 			}
 		}
 	}

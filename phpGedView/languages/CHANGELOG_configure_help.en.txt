@@ -45,6 +45,11 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["index_gedcom_news_adm_help"]			07 Feb 2008				W
+*$pgv_lang["WELCOME_TEXT_AUTH_MODE_CUST_help"]		07 Feb 2008				W
+*$pgv_lang["add_faq_header_help"]					07 Feb 2008				W
+*$pgv_lang["add_faq_body_help"]						07 Feb 2008				W
++$pgv_lang["add_faq_HTML"]							07 Feb 2008				A
 *$pgv_lang["date_format_help"]						07 Dec 2007				f  change <br> to <br />
 
 
