@@ -3,7 +3,7 @@
  *  PGV SOAP implementation of the genealogy web service
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -986,7 +986,7 @@ class PGVServiceLogic extends GenealogyService
 		if ($date->MinJD()<server_jd()-180)
 			return new SOAP_Fault('checkUpdates', 'You cannot retrieve updates for more than 180 days.');
 
-		$changes = get_recent_changes($date->MinJD()]);
+		$changes = get_recent_changes($date->MinJD());
 		$results = array();
 		foreach($changes as $id=>$change) {
 			$results[] = $change['d_gid'];
