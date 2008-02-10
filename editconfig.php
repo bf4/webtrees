@@ -203,7 +203,9 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 		$configtext = preg_replace('/\$TBLPREFIX/', "\$DBPERSIST = false;\r\n\$TBLPREFIX", $configtext);
 		$configtext = preg_replace('/\$CONFIG_VERSION\s*=\s*".*";/', "\$CONFIG_VERSION = \"4.0\";", $configtext);
 	}
-	$configtext = preg_replace('/\$DBHOST\s*=\s*".*";/', "\$DBHOST = \"".$_POST["NEW_DBHOST"]."\";", $configtext);
+	preg_match('/(.*):(\d{1,6})/', $_POST["NEW_DBHOST"], $match);
+	$configtext = preg_replace('/\$DBHOST\s*=\s*".*";/', "\$DBHOST = \"".$match[1]."\";", $configtext);
+	$configtext = preg_replace('/\$DBPORT\s*=\s*".*";/', "\$DBPORT = \"".$match[2]."\";", $configtext);
 	$configtext = preg_replace('/\$DBUSER\s*=\s*".*";/', "\$DBUSER = \"".$_POST["NEW_DBUSER"]."\";", $configtext);
 	if (!empty($_POST["NEW_DBPASS"])) $configtext = preg_replace('/\$DBPASS\s*=\s*".*";/', "\$DBPASS = \"".$_POST["NEW_DBPASS"]."\";", $configtext);
 	$configtext = preg_replace('/\$DBNAME\s*=\s*".*";/', "\$DBNAME = \"".$_POST["NEW_DBNAME"]."\";", $configtext);
@@ -231,7 +233,9 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 		$configtext = preg_replace('/\$PGV_MEMORY_LIMIT/', "\$LOGIN_URL = \"".$_POST["NEW_LOGIN_URL"]."\";\r\n\$PGV_MEMORY_LIMIT", $configtext);
 	}
 	$configtext = preg_replace('/\$PGV_MEMORY_LIMIT\s*=\s*".*";/', "\$PGV_MEMORY_LIMIT = \"".$_POST["NEW_PGV_MEMORY_LIMIT"]."\";", $configtext);
-	$DBHOST = $_POST["NEW_DBHOST"];
+	preg_match('/(.*):(\d{1,6})$/', $_POST["NEW_DBHOST"], $match);
+	$DBHOST = $match[1];
+	$DBPORT = $match[2];
 	$DBTYPE = $_POST["NEW_DBTYPE"];
 	$DBUSER = $_POST["NEW_DBUSER"];
 	$DBNAME = $_POST["NEW_DBNAME"];
@@ -424,7 +428,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBHOST_help", "qm", "DBHOST"); print $pgv_lang["DBHOST"];?></td>
-		<td class="optionbox"><input type="text" dir="ltr" name="NEW_DBHOST" value="<?php print $DBHOST?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBHOST_help');" /></td>
+		<td class="optionbox"><input type="text" dir="ltr" name="NEW_DBHOST" value="<?php print $DBHOST.":".$DBPORT?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBHOST_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBUSER_help", "qm", "DBUSER"); print $pgv_lang["DBUSER"];?></td>
@@ -432,7 +436,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBPASS_help", "qm", "DBPASS"); print $pgv_lang["DBPASS"];?></td>
-		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="<?php print $DBPASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /><br /><span style="color: red;"><?php print_text("enter_db_pass");?></span></td>
+		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="<?php print $DBPASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBNAME_help", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>

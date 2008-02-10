@@ -171,13 +171,12 @@ $pgv_lang["disabled"]			= "Disabled";
 $pgv_lang["mouseover"]			= "On Mouse Over";
 $pgv_lang["mousedown"]			= "On Mouse Down";
 $pgv_lang["click"]			= "On Mouse Click";
-$pgv_lang["enter_db_pass"]		= "For security, you must always enter the #pgv_lang[DBUSER]# and #pgv_lang[DBPASS]# when changing any configuration values.";
 $pgv_lang["server_url_note"]	= "This should be the URL to your PhpGedView folder.  You should only change this setting if you are sure you know what you are doing.  PhpGedView has determined this value to be <b>#GUESS_URL#</b>";
 
 $pgv_lang["DBTYPE"]			= "Database Type";
 $pgv_lang["DBTYPE_help"]		= "~#pgv_lang[DBTYPE]#~<br /><br />The type of PEAR supported database to connect to.<br /><br />PhpGedView supports MySQL, PostgreSQL, and SQLite databases.  MySQL and PostgreSQL both require libraries to be installed in PHP.  SQLite comes installed by default in PHP 5.<br /><br />With SQLite you don't need to configure #pgv_lang[DBHOST]#, #pgv_lang[DBUSER]#, or #pgv_lang[DBPASS]#, but you will need to set a file path for your database in the #pgv_lang[DBNAME]# field.<br /><br />This sets \$DBTYPE in <i>config.php</i>.<br />";
 $pgv_lang["DBHOST"]			= "Database Host";
-$pgv_lang["DBHOST_help"]		= "~#pgv_lang[DBHOST]#~<br /><br />The DNS or IP address of the computer hosting your database server.  This setting is ignored if you are using an SQLite database.<br /><br />This sets \$DBHOST in <i>config.php</i>.<br />";
+$pgv_lang["DBHOST_help"]		= "~#pgv_lang[DBHOST]#~<br /><br />The DNS or IP address with optional port address, e.g., localhost:5432, of the computer hosting your database server.  This setting is ignored if you are using an SQLite database.<br /><br />This sets \$DBHOST and \$DBPORT in <i>config.php</i>.<br />";
 $pgv_lang["DBUSER"]			= "Database Username";
 $pgv_lang["DBUSER_help"]		= "~#pgv_lang[DBUSER]#~<br /><br />The database username required to login to your database.  This setting is ignored if you are using an SQLite database.<br /><br />This sets \$DBUSER in <i>config.php</i>.<br />";
 $pgv_lang["DBPASS"]			= "Database Password";

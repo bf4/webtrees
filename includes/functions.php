@@ -45,14 +45,19 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
 
 // ************************************************* START OF INITIALIZATION FUNCTIONS ********************************* //
 /**
- * initialize and check the database
+ * Initialize and check the database.
  *
- * this function will create a database connection and return false if any errors occurred
- * @param boolean $ignore_previous	whether or not to ignore a previous connection , this parameter is used mainly for the editconfig.php page when setting everything up
- * @return boolean true if database successfully connected, false if there was an error
+ * This will create a database connection and return false if any errors occurred.
+ *
+ * @param boolean $ignore_previous
+ *	Whether or not to ignore a previous connection, this parameter is used
+ *	mainly for the editconfig.php page when setting everything up.
+ * @return boolean
+ *	True if database successfully connected, false if there was an error.
  */
 function check_db($ignore_previous=false) {
-	global $DBTYPE, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
+	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN;
+       	global $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
 	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX;
 
 	if (!$ignore_previous) {
@@ -67,7 +72,11 @@ function check_db($ignore_previous=false) {
 			if (isset($_POST['NEW_DBTYPE'])) $DBTYPE = $_POST['NEW_DBTYPE'];
 			if (isset($_POST['NEW_DBUSER'])) $DBUSER = $_POST['NEW_DBUSER'];
 			if (isset($_POST['NEW_DBPASS'])) $DBPASS = $_POST['NEW_DBPASS'];
-			if (isset($_POST['NEW_DBHOST'])) $DBHOST = $_POST['NEW_DBHOST'];
+			if (isset($_POST['NEW_DBHOST'])) {
+			    preg_match('/(.*):(\d{1,6})$/', $_POST['NEW_DBHOST'], $match);
+			    $DBHOST = $match[1];
+			    $DBPORT = $match[2];
+			}
 			if (isset($_POST['NEW_DBNAME'])) $DBNAME = $_POST['NEW_DBNAME'];
 			if (isset($_POST['NEW_DBPERSIST'])) $DBPERSIST = $_POST['NEW_DBPERSIST'];
 		}
@@ -80,13 +89,14 @@ function check_db($ignore_previous=false) {
 		'username' => $DBUSER,
 		'password' => $DBPASS,
 		'hostspec' => $DBHOST,
+		'port'     => $DBPORT,
 		'database' => $DBNAME
 	);
 
 	if ($ignore_previous) $dsn['new_link'] = true;
 
 	$options = array(
-		'debug' 	  => 3,
+		'debug'	      => 3,
 		'portability' => DB_PORTABILITY_ALL,
 		'persistent'  => $DBPERSIST
 	);
@@ -107,10 +117,14 @@ function check_db($ignore_previous=false) {
 }
 
 /**
- * get gedcom configuration file
+ * Get Gedcom configuration file.
  *
- * this function returns the path to the currently active GEDCOM configuration file
- * @return string path to gedcom.ged_conf.php configuration file
+ * This function returns the path to the currently active GEDCOM configuration
+ * file.
+ *
+ * @param string $ged Gedcom file to check.
+ *
+ * @return string Path to gedcom.ged_conf.php configuration file.
  */
 function get_config_file($ged="") {
 	global $GEDCOMS, $GEDCOM;
@@ -136,11 +150,13 @@ function get_config_file($ged="") {
 }
 
 /**
- * Get the version of the privacy file
+ * Get the version of the privacy file.
  *
- * This function opens the given privacy file and returns the privacy version from the file
- * @param string $privfile the path to the privacy file
- * @return string the privacy file version number
+ * Opens the given privacy file and returns the privacy version from the file.
+ *
+ * @param string $privfile The path to the privacy file.
+ *
+ * @return string The privacy file version number.
  */
 function get_privacy_file_version($privfile) {
 	$privversion = "0";
@@ -158,10 +174,11 @@ function get_privacy_file_version($privfile) {
 }
 
 /**
- * Get the path to the privacy file
+ * Get the path to the privacy file.
  *
- * Get the path to the privacy file for the currently active GEDCOM
- * @return string path to the privacy file
+ * Get the path to the privacy file for the currently active GEDCOM.
+ *
+ * @return string Path to the privacy file.
  */
 function get_privacy_file() {
 	global $GEDCOMS, $GEDCOM, $REQUIRED_PRIVACY_VERSION;
