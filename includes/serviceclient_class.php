@@ -412,7 +412,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 		$FamilyListReturn=$Familylist;
 
 		if (isset($pgv_changes[$Family1."_".$GEDCOM])) $famrec1 = find_updated_record($Family1);
-		else $famrec1 = find_family_record($Family1);
+		else $famrec1 = find_gedcom_record($Family1);
 
 		$ct = preg_match("/(\w+):(.+)/", $Family2, $match);
 		if ($ct>0) {
@@ -562,7 +562,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 
 		$firstTimeChildren=true;
 
-		$famrec1 = find_family_record($family1);
+		$famrec1 = find_gedcom_record($family1);
 		$ct = preg_match("/(\w+):(.+)/", $family2, $match);
 		if ($ct>0) {
 			$servid = trim($match[1]);
@@ -796,7 +796,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	 * @param boolean $firstLink	is this the first time this record is being linked
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
-		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist;
+		global $FILE, $GEDCOM, $indilist, $famlist;
 		global $TBLPREFIX, $GEDCOMS, $pgv_changes;
 if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 		$FILE = $GEDCOM;

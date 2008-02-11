@@ -82,7 +82,7 @@ class Family extends GedcomRecord {
 			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
 		}
 
-		$gedrec = find_family_record($pid);
+		$gedrec = find_gedcom_record($pid);
 		if (empty($gedrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
 			if ($ct>0) {
@@ -198,7 +198,6 @@ class Family extends GedcomRecord {
 			$this->childrenIds[] = $chil;
 		}
 		//-- load the children with one query
-		load_people($this->childrenIds);
 		foreach($this->childrenIds as $t=>$chil) {
 			$child = Person::getInstance($chil);
 			if ( !is_null($child)) $this->children[] = $child;

@@ -231,7 +231,7 @@ require_once("includes/person_class.php");
 				// Create an instance of person and look for their family record	
 				$person = Person :: getInstance($clipping["id"]);
 				$famId = $person->getChildFamilyIds();
-				$famrec = find_family_record($famId[0]);
+				$famrec = find_gedcom_record($famId[0]);
 				$fid = $famId[0];
 				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
 				if ($handle == null && id_in_cart($fid)) {

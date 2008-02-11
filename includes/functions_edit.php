@@ -96,29 +96,7 @@ function newConnection() {
 function get_next_xref($gid, $type='INDI') {
 	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
 
-	switch($type) {
-		case "INDI":
-			$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(i_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(i_id,2)";
-			break;
-		case "FAM":
-			$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(f_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(f_id,2)";
-			break;
-		case "SOUR":
-			$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(s_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(s_id,2)";
-			break;
-		case "REPO":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-		case "NOTE":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-		case "OBJE":
-			$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(m_media,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(m_media,2)";
-			break;
-		case "OTHER":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-		}
+	$sql = "SELECT rec_xref FROM {$TBLPREFIX}records WHERE rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(rec_xref,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(rec_xref,2)";
 	$res = dbquery($sql, true, 1);
 	if ($res->numRows()>0) {
 		$row = $res->fetchRow();
@@ -134,29 +112,7 @@ function get_next_xref($gid, $type='INDI') {
 function get_prev_xref($gid, $type='INDI') {
 	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
 
-	switch($type) {
-		case "INDI":
-			$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(i_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(i_id,2) DESC";
-			break;
-		case "FAM":
-			$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(f_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(f_id,2) DESC";
-			break;
-		case "SOUR":
-			$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(s_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(s_id,2) DESC";
-			break;
-		case "REPO":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-		case "NOTE":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-		case "OBJE":
-			$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(m_media,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(m_media,2) DESC";
-			break;
-		case "OTHER":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-		}
+	$sql = "SELECT rec_xref FROM {$TBLPREFIX}records WHERE rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(rec_xref,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(rec_xref,2) DESC";
 	$res = dbquery($sql, true, 1);
 	if ($res->numRows()>0) {
 		$row = $res->fetchRow();
@@ -581,17 +537,17 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		if (isset($pgv_changes[$famid."_".$GEDCOM]))
 			$famrec=find_updated_record($famid);
 		else
-			$famrec=find_family_record($famid);
+			$famrec=find_gedcom_record($famid);
 		if (empty($famrec))
 			$famrec = find_record_in_file($famid);
 		$parents=find_parents_in_record($famrec);
-		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB']));
-		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE']));
+		$father_name=get_gedcom_value('NAME', 0, find_gedcom_record($parents['HUSB']));
+		$mother_name=get_gedcom_value('NAME', 0, find_gedcom_record($parents['WIFE']));
 		// We'll need the spouse/child's name to set the spouse/parent's surname
 		if (isset($pgv_changes[$pid."_".$GEDCOM]))
 			$prec=find_updated_record($pid);
 		else
-			$prec=find_person_record($pid);
+			$prec=find_gedcom_record($pid);
 		if (empty($prec))
 			$prec = find_record_in_file($pid);
 		$indi_name=get_gedcom_value('NAME', 0, $prec);
@@ -2246,7 +2202,7 @@ function delete_person($pid, $gedrec='') {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 
-	if (empty($gedrec)) $gedrec = find_person_record($pid);
+	if (empty($gedrec)) $gedrec = find_gedcom_record($pid);
 	if (!empty($gedrec)) {
 		$success = true;
 		$ct = preg_match_all("/1 FAM. @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -2303,7 +2259,7 @@ function delete_person($pid, $gedrec='') {
  */
 function delete_family($pid, $gedrec='') {
 	global $GEDCOM, $pgv_lang;
-	if (empty($gedrec)) $gedrec = find_family_record($pid);
+	if (empty($gedrec)) $gedrec = find_gedcom_record($pid);
 	if (!empty($gedrec)) {
 		$success = true;
 		$ct = preg_match_all("/1 (\w+) @(.*)@/", $gedrec, $match, PREG_SET_ORDER);

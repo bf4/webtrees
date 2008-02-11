@@ -66,7 +66,7 @@ $disp = true;
 if (empty($pid) && !empty($mid)) $pid = $mid;
 if (!empty($pid)) {
 	$pid = clean_input($pid);
-	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_media_record($pid);
+	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
 	if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
 	$disp = displayDetails($pid, "OBJE");

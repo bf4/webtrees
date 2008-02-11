@@ -109,9 +109,7 @@ class LifespanControllerRoot extends BaseController {
 			$myids[] = $row[0];
 		}
 		$res->free();
-		//var_dump($myids);
-		$myindilist = load_people($myids);
-		return $myindilist;
+		return $myids;
 	}
 	
 	/**
@@ -223,7 +221,7 @@ class LifespanControllerRoot extends BaseController {
 				//			print_execution_stats();
 			//--Populates an array of people that had an event within those years
 					
-			foreach ($indis as $pid => $indi) {
+			foreach ($indis as $pid) {
 				if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
 					$person = Person::getInstance($pid);
 					if (!is_null($person)) {

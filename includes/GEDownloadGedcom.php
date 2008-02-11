@@ -183,7 +183,7 @@ class GEDownloadGedcom extends GrampsExport
 				$eSourceRef = $this->dom->createElement("sourceref");
 				if (($sourceHlink = $this->query_dom("./sources/source[@id = \"$sourceID\"]/@handle")) == null)
 				{
-					$tempRecord = find_source_record($sourceID);
+					$tempRecord = find_gedcom_record($sourceID);
 					if($tempRecord == null || $tempRecord == "")
 					return;
 					$this->create_source($sourceID, $tempRecord);
@@ -242,7 +242,7 @@ class GEDownloadGedcom extends GrampsExport
 		$famid = get_gedcom_value($tag, 1, $personRec);
 		$handle = $famid;
 		$created = false;
-		$frec = find_family_record($famid);
+		$frec = find_gedcom_record($famid);
 		
 		$this->create_family($frec, $famid);
 		
@@ -290,7 +290,7 @@ class GEDownloadGedcom extends GrampsExport
 //				 * perhaps there is some other way this can be done reducing the overhead?
 //				 * 
 //				 */
-//				$this->create_person(find_person_record($id), $id);
+//				$this->create_person(find_gedcom_record($id), $id);
 //				$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
 //			}
 			if (!empty($id)) {
@@ -314,7 +314,7 @@ class GEDownloadGedcom extends GrampsExport
 //				 * perhaps there is some other way this can be done reducing the overhead?
 //				 * 
 //				 */
-//				$this->create_person(find_person_record($id), $id);
+//				$this->create_person(find_gedcom_record($id), $id);
 //				$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
 //			}
 			if (isset ($id) && trim($id) != "" && $id != null) {
@@ -417,7 +417,7 @@ class GEDownloadGedcom extends GrampsExport
 				// Create an instance of person and look for their family record	
 				$person = Person :: getInstance($clipping["id"]);
 				$famId = $person->getChildFamilyIds();
-				$famrec = find_family_record($famId[0]);
+				$famrec = find_gedcom_record($famId[0]);
 				$fid = $famId[0];
 				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
 				if ($handle == null) {

@@ -63,7 +63,7 @@ if ($action=="sendFiles") {
     }
 
     if (isset($indi_rec)) {
-        $sql = "SELECT i_id,i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$index."' ORDER BY 'i_id' ASC";
+        $sql = "SELECT rec_xref, rec_gedcom FROM ".$TBLPREFIX."records WHERE rec_type='INDI' AND rec_ged_id='".$index."' ORDER BY 'rec_xref' ASC";
         $res = dbquery($sql, true, 20000);
         while ($row =& $res->fetchRow()) {
             print "   <url>\n";
@@ -79,7 +79,7 @@ if ($action=="sendFiles") {
     }
 
     if (isset($fam_rec)) {
-        $sql = "SELECT f_id,f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$index."' ORDER BY 'f_id' ASC";
+        $sql = "SELECT rec_xref, rec_gedcom FROM ".$TBLPREFIX."records WHERE rec_type='FAM' AND rec_ged_id='".$index."' ORDER BY 'rec_xref' ASC";
         $res = dbquery($sql, true, 20000);
         while ($row =& $res->fetchRow()) {
             print "   <url>\n";

@@ -53,11 +53,7 @@ class Repository extends GedcomRecord {
 	 * @param string $pid	the ID of the repository to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $repolist, $GEDCOM, $GEDCOMS, $pgv_changes;
-
-		if (isset($repolist[$pid]) && $repolist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($repolist[$pid]['object'])) return $repolist[$pid]['object'];
-		}
+		global $GEDCOM, $GEDCOMS, $pgv_changes;
 
 		$repositoryrec = find_repository_record($pid);
 		if (empty($repositoryrec)) {
@@ -80,7 +76,6 @@ class Repository extends GedcomRecord {
 		if (empty($repositoryrec)) return null;
 		$repository = new Repository($repositoryrec, $simple);
 		if (!empty($fromfile)) $repository->setChanged(true);
-		$repolist[$pid]['object'] = &$repository;
 		return $repository;
 	}
 

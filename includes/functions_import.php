@@ -77,11 +77,12 @@ $TRANSLATE_TAGS=array(
  * @param boolean $update whether or not this is an updated record that has been accepted
  */
 function import_record($indirec, $update) {
-	global $DBCONN, $gid, $type, $indilist, $famlist, $sourcelist, $otherlist, $TOTAL_QUERIES, $prepared_statement;
+	global $DBCONN, $gid, $type, $indilist, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
 	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS, $GENERATE_UIDS;
 	global $TRANSLATE_TAGS;
+	global $DBH;
 
 	$FILE = $GEDCOM;
 
@@ -96,10 +97,8 @@ function import_record($indirec, $update) {
 	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
 	
 	// Replace TAG_FORMAL_NAME (as sometimes created by FTM) with TAG
-	if (is_array($TRANSLATE_TAGS)) {
-		foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
-			$indirec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $indirec);
-	}
+	foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
+		$indirec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $indirec);
 
 	//-- import different types of records
 	$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $indirec, $match);
@@ -120,10 +119,6 @@ function import_record($indirec, $update) {
 	if ($GENERATE_UIDS && $type != "HEAD" && $type != "TRLR" && preg_match("/1 _UID /", $indirec) == 0) {
 		$indirec = trim($indirec) . "\r\n1 _UID " . uuid();
 	}
-	//-- uncomment to replace existing _UID, normally we want them to stay the same
-	//	else {
-	//		$indirec = preg_replace("/1 _UID (.*)/", "1 _UID ".uuid(), $indirec);
-	//	}
 
 	//-- keep track of the max id for each type as they are imported
 	if (!isset ($MAX_IDS))
@@ -139,16 +134,12 @@ function import_record($indirec, $update) {
 			$MAX_IDS[$type] = $idnum;
 
 	if ($USE_RTL_FUNCTIONS) {
-		//-- replace any added ltr processing codes
-		//		$indirec = preg_replace(array("/".html_entity_decode("&rlm;",ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $indirec);
-		// Because of a bug in PHP 4, the above generates an error message and does nothing.
-		// see:  http://bugs.php.net/bug.php?id=25670
-		// HTML entity &rlm; is the 3-byte UTF8 character 0xE2808F
-		// HTML entity &lrm; is the 3-byte UTF8 character 0xE2808E
 		$indirec = str_replace(array (
 			chr(0xE2
 		) . chr(0x80) . chr(0x8F), chr(0xE2) . chr(0x80) . chr(0x8E)), "", $indirec);
 	}
+
+	// TODO Handle $WORD_WRAPPED_NOTES
 
 	// Update the dates and places tables.
 	update_places($gid, $indirec);
@@ -301,17 +292,19 @@ function import_record($indirec, $update) {
 			$indi["rin"] = $gid;
 
 		$isdead = (int)is_dead($indirec, '', true);
-		$sql = "INSERT INTO " . $TBLPREFIX . "individuals VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($indi["gedfile"]) . "','" . $DBCONN->escapeSimple($indi["rin"]) . "','" . $DBCONN->escapeSimple($names[0][0]) . "',".$DBCONN->escapeSimple($isdead).",'" . $DBCONN->escapeSimple($indi["gedcom"]) . "','" . $DBCONN->escapeSimple($names[0][1]) . "','" . $DBCONN->escapeSimple($names[0][2]) . "')";
-		$res = dbquery($sql);
 
-		//-- PEAR supports prepared statements in mysqli we will use this code instead of the code above
-		//if (!isset($prepared_statement)) $prepared_statement = $DBCONN->prepare("INSERT INTO ".$TBLPREFIX."individuals VALUES (?,?,?,?,?,?,?,?)");
-		//$data = array($DBCONN->escapeSimple($gid), $DBCONN->escapeSimple($indi["file"]), $indi["rin"], $names[0][0], -1, $indi["gedcom"], $DBCONN->escapeSimple($names[0][1]), $names[0][2]);
-		//$res =& $DBCONN->execute($prepared_statement, $data);
-		//$TOTAL_QUERIES++;
-		if (DB :: isError($res)) {
-			// die(__LINE__." ".__FILE__."  ".$res->getMessage());
+		static $statement_ins_ind=null;
+		if (is_null($statement_ins_ind)) {
+			$statement_ins_ind=$DBH->prepare("INSERT INTO {$TBLPREFIX}individuals (i_file, i_id, i_rin, i_name, i_isdead, i_letter, i_surname) VALUES (?, ?, ?, ?, ?, ?, ?)");
 		}
+		$statement_ins_ind->bindValue(1, $indi['gedfile'], PDO::PARAM_INT);
+		$statement_ins_ind->bindValue(2, $gid,             PDO::PARAM_STR);
+		$statement_ins_ind->bindValue(3, $indi['rin'],     PDO::PARAM_STR);
+		$statement_ins_ind->bindValue(4, $names[0][0],     PDO::PARAM_STR);
+		$statement_ins_ind->bindValue(5, $isdead,          PDO::PARAM_INT);
+		$statement_ins_ind->bindValue(6, $names[0][1],     PDO::PARAM_STR);
+		$statement_ins_ind->bindValue(7, $names[0][2],     PDO::PARAM_STR);
+		$statement_ins_ind->execute();
 	} else
 		if ($type == "FAM") {
 			cleanup_tags_y($indirec);
@@ -339,59 +332,208 @@ function import_record($indirec, $update) {
 			$fam["CHIL"] = $chil;
 			$fam["gedcom"] = $indirec;
 			$fam["gedfile"] = $GEDCOMS[$FILE]["id"];
-			//$famlist[$gid] = $fam;
-			$sql = "INSERT INTO " . $TBLPREFIX . "families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($fam["gedfile"]) . "','" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
-			$res = dbquery($sql);
 
-		} else
-			if ($type == "SOUR") {
-				$et = preg_match("/1 ABBR (.*)/", $indirec, $smatch);
-				if ($et > 0)
-					$name = $smatch[1];
-				$tt = preg_match("/1 TITL (.*)/", $indirec, $smatch);
-				if ($tt > 0)
-					$name = $smatch[1];
-				if (empty ($name))
-					$name = $gid;
-				$subindi = preg_split("/1 TITL /", $indirec);
-				if (count($subindi) > 1) {
-					$pos = strpos($subindi[1], "\n1", 0);
-					if ($pos)
-						$subindi[1] = substr($subindi[1], 0, $pos);
-					$ct = preg_match_all("/2 CON[C|T] (.*)/", $subindi[1], $match, PREG_SET_ORDER);
-					for ($i = 0; $i < $ct; $i++) {
-						$name = trim($name);
-						if ($WORD_WRAPPED_NOTES)
-							$name .= " " . $match[$i][1];
-						else
-							$name .= $match[$i][1];
+			static $statement_ins_fam=null;
+			if (is_null($statement_ins_fam)) {
+				$statement_ins_fam=$DBH->prepare("INSERT INTO {$TBLPREFIX}families (f_file, f_id, f_husb, f_wife, f_chil, f_numchil) VALUES (?, ?, ?, ?, ?, ?)");
+			}
+			$statement_ins_fam->bindValue(1, $fam['gedfile'], PDO::PARAM_INT);
+			$statement_ins_fam->bindValue(2, $gid,            PDO::PARAM_STR);
+			$statement_ins_fam->bindValue(3, $fam['HUSB'],    PDO::PARAM_STR);
+			$statement_ins_fam->bindValue(4, $fam['WIFE'],    PDO::PARAM_STR);
+			$statement_ins_fam->bindValue(5, $fam['CHIL'],    PDO::PARAM_STR);
+			$statement_ins_fam->bindValue(6, $ct,             PDO::PARAM_INT);
+			$statement_ins_fam->execute();
+		}
+
+	// Prepare the SQL insert statements
+	static $statement_ins_rec =null;
+	static $statement_ins_fact=null;
+	static $statement_ins_link=null;
+	static $statement_ins_name=null;
+	if (is_null($statement_ins_rec)) {
+		$statement_ins_rec=$DBH->prepare("INSERT INTO {$TBLPREFIX}records (rec_ged_id, rec_xref, rec_type, rec_gedcom) VALUES (?, ?, ?, ?)");
+		$statement_ins_fact=$DBH->prepare("INSERT INTO {$TBLPREFIX}facts (fact_rec_id, fact_type, fact_value, fact_resn, fact_date, fact_plac, fact_gedcom) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$statement_ins_link=$DBH->prepare("INSERT INTO {$TBLPREFIX}links (link_fact_id, link_type, link_xref) VALUES (?, ?, ?)");
+		$statement_ins_name=$DBH->prepare("INSERT INTO {$TBLPREFIX}names (name_fact_id, name_type, name_full, name_sort1, name_sort2, name_list) VALUES (?, ?, ?, ?, ?, ?)");
+	}
+
+	// Store the gedcom record
+	$statement_ins_rec->bindValue(1, $GEDCOMS[$GEDCOM]['id'], PDO::PARAM_INT);
+	$statement_ins_rec->bindValue(2, $gid,                    PDO::PARAM_STR);
+	$statement_ins_rec->bindValue(3, $type,                   PDO::PARAM_STR);
+	$statement_ins_rec->bindValue(4, $indirec,                PDO::PARAM_STR);
+	$statement_ins_rec->execute();
+	$rec_id=$DBH->lastInsertId();
+
+	// Split the record into facts and store each one
+	if (preg_match_all('/\n1 +(\w+) +(.*)((\n(?:[2-9] |[1-9][0-9] ).*)*)/', $indirec, $fact_matches, PREG_SET_ORDER)) {
+		$statement_ins_fact->bindValue(1, $rec_id, PDO::PARAM_INT);
+		foreach ($fact_matches as $fact_match) {
+			list($gedrec, $tag, $value, $level2)=$fact_match;
+
+			// TODO: Translate 1 EVEN/2 TYPE XXXX into 1 XXXX for known tags
+			$statement_ins_fact->bindValue(2, $tag,   PDO::PARAM_STR);
+			$statement_ins_fact->bindValue(3, $value, PDO::PARAM_STR);
+
+			// Extract the RESN value into its own field
+			if (preg_match('/\n2 +RESN +(.*)/', $level2, $resn_match)) {
+				$level2=str_replace($resn_match[0], '', $level2);
+				$statement_ins_fact->bindValue(4, $resn_match[1], PDO::PARAM_STR);
+			} else {
+				$statement_ins_fact->bindValue(4, '', PDO::PARAM_STR);
+			}
+
+			// Extract the DATE value into its own field
+			if (preg_match('/\n2 +DATE +(.*)/', $level2, $resn_match)) {
+				$level2=str_replace($resn_match[0], '', $level2);
+				$statement_ins_fact->bindValue(5, $resn_match[1], PDO::PARAM_STR);
+			} else {
+				$statement_ins_fact->bindValue(5, '', PDO::PARAM_STR);
+			}
+
+			// Extract the PLAC value into its own field
+			// TODO: deal with MAP/LATI/LONG subtags
+			if (preg_match('/\n2 +PLAC +(.*)/',$level2, $resn_match)) {
+				$level2=str_replace($resn_match[0], '', $level2);
+				$statement_ins_fact->bindValue(6, $resn_match[1], PDO::PARAM_STR);
+			} else {
+				$statement_ins_fact->bindValue(6, '', PDO::PARAM_STR);
+			}
+
+			$level2=substr($level2, 1); // Remove leading \n;
+			$statement_ins_fact->bindValue(7, $level2, PDO::PARAM_STR);
+			$statement_ins_fact->execute();
+			$fact_id=$DBH->lastInsertId();
+
+			// Store the links from this fact
+			if (preg_match_all("/^\d+ +(\w+) +@([^@#\n][^@\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
+				$statement_ins_link->bindValue(1, $fact_id, PDO::PARAM_INT);
+				foreach ($matches as $match) {
+					$statement_ins_link->bindValue(2, $match[1], PDO::PARAM_STR);
+					$statement_ins_link->bindValue(3, $match[2], PDO::PARAM_STR);
+					$statement_ins_link->execute();
+				} // foreach link to insert
+			} // if links to insert
+
+			// Extract any record names from this fact
+			$names=array();
+			switch ($type) {
+			case 'INDI':
+				if ($tag=='NAME' || $tag=='_HNM') {
+					$names[]=extract_name_bits($tag, $gedrec);
+					// Custom sub-tags such as _MARNM and _AKA mostly come from FTM as it only supports one NAME record.
+					if (preg_match_all('/^2 (_\w+|FONE|ROMN|NICK) +(.+)/m', $level2, $submatches, PREG_SET_ORDER)) {
+						foreach ($submatches as $submatch) {
+							$names[]=extract_name_bits($submatch[1], $submatch[0]);
+						}
 					}
 				}
-				$sql = "INSERT INTO " . $TBLPREFIX . "sources VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($indirec) . "')";
-				$res = dbquery($sql);
-
-			} else
-				if ($type == "OBJE") {
-					//-- don't duplicate OBJE records
-					//-- OBJE records are imported by update_media function
-				} else
-					if (preg_match("/_/", $type) == 0) {
-						if ($type == "HEAD") {
-							$ct = preg_match("/1 DATE (.*)/", $indirec, $match);
-							if ($ct == 0) {
-								$indirec = trim($indirec);
-								$indirec .= "\r\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
-							}
-						}
-						if ($gid=="") $gid = $type;
-						$sql = "INSERT INTO " . $TBLPREFIX . "other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($indirec) . "')";
-						$res = dbquery($sql);
-
+				break;
+			case 'FAM':
+				// Families don't have names - constructed dynamically from HUSB/WIFE names
+				break;
+			case 'SOUR':
+				if ($tag=='TITL' || $tag=='ABBR') {
+					$names[]=array($tag, $value, $value, '', $value);
+				}
+				break;
+			case 'OBJE':
+				if (preg_match('/^\d TITL +(.*)/m', $gedrec, $name_match)) {
+					$names[]=array($tag, $name_match[1], $name_match[1], '', $name_match[1]);
+				} else {
+					if (preg_match('/^\d FILE +(.*)/m', $gedrec, $name_match)) {
+						$names[]=array($tag, $name_match[1], $name_match[1], '', $name_match[1]);
 					}
+				}
+				break;
+			case 'REPO':
+			case 'SUBM':
+				if ($tag=='NAME') {
+					$names[]=array($tag, $value, $value, '', $value);
+				}
+				break;
+			case 'SUBN':
+				if ($tag=='FAMF') {
+					$names[]=array($tag, $value, $value, '', $value);
+				}
+				break;
+			} // Extract names
+			foreach ($names as $name) {
+				$statement_ins_name->bindValue(1, $fact_id, PDO::PARAM_INT);
+				$statement_ins_name->bindValue(2, $name[0], PDO::PARAM_STR);
+				$statement_ins_name->bindValue(3, $name[1], PDO::PARAM_STR);
+				$statement_ins_name->bindValue(4, $name[2], PDO::PARAM_STR);
+				$statement_ins_name->bindValue(5, $name[3], PDO::PARAM_STR);
+				$statement_ins_name->bindValue(6, $name[4], PDO::PARAM_STR);
+				$statement_ins_name->execute();
+				// TODO: Create soundex codes for the name.
+			} // foreach name to insert
+		} // foreach fact to insert
+	} // if facts to insert
+	else {
+		// A record with no facts?  Delete it.
+		var_dump($indirec);
+	}
 
 	//-- if this is not an update then write it to the new gedcom file
 	if (!$update && !empty ($fpnewged) && !(empty ($indirec)))
 		fwrite($fpnewged, trim($indirec) . "\r\n");
+}
+
+// TODO this is temporary - need better name handling. A class?
+function extract_name_bits($tag, $namerec) {
+	// NPFX
+	if (preg_match('/2 NPFX (.*)/', $namerec, $match))
+		$npfx=trim($match[1]);
+	else
+		$npfx='';
+	// GIVN
+	if (preg_match('/2 GIVN (.*)/', $namerec, $match))
+		$givn=preg_replace('/[, ]+/', ' ', $match[1]);
+	else
+		if (preg_match("/\d +{$tag} +([^\/\r\n]*)/", $namerec, $match))
+			$givn=preg_replace('/^'.addcslashes($npfx, '/').' /i', '', $match[1]);
+		else
+			$givn='';
+	$givn=preg_replace('/^[._?]+$/', '', trim($givn));
+	if (empty($givn))
+		$givn= '@P.N.';
+	// NICK
+	if (preg_match('/2 NICK (.*)/', $namerec, $match))
+		$nick=trim($match[1]);
+	else
+		$nick='';
+	// SPFX
+	if (preg_match('/2 SPFX (.*)/', $namerec, $match))
+		$spfx=trim($match[1]);
+	else
+		$spfx='';
+	// SURN
+	if (preg_match('/2 SURN (.*)/', $namerec, $match))
+		$surn=$match[1];
+	else
+		if (preg_match("/\d +{$tag} +[^\/\r\n]*\/([^\/\r\n]*)/", $namerec, $match))
+			$surn=preg_replace('/^'.addcslashes($spfx, '/').' /i', '', $match[1]);
+		else
+			$surn='';
+	$surn=preg_replace('/^[._?]+$/', '', trim($surn));
+	if (empty($surn)) {
+		$surn='@N.N.';
+		$spfx='';
+	}
+	// NSFX
+	if (preg_match('/2 NSFX (.*)/', $namerec, $match))
+		$nsfx=trim($match[1]);
+	else
+		if (preg_match("/\d +{$tag} +.*\/.*\/(.*)/", $namerec, $match))
+			$nsfx=trim($match[1]);
+		else
+			$nsfx='';
+	// Combine the components into a full name
+	$tmp1=trim($npfx.' '.$givn);
+	$tmp2=trim($spfx.' '.$surn);
+	return array($tag, trim("{$tmp1} /{$tmp2}/ {$nsfx}"), $surn, $givn, "$tmp2, $tmp1");
 }
 
 /**
@@ -410,7 +552,7 @@ function add_new_name($gid, $newname, $letter, $surname, $indirec) {
 	$sql = 'INSERT INTO ' . $TBLPREFIX . 'names VALUES(\'' . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($newname) . "','" . $DBCONN->escapeSimple($letter) . "','" . $DBCONN->escapeSimple($surname) . "','C')";
 	$res = dbquery($sql);
 
-	$sql = 'UPDATE ' . $TBLPREFIX . 'individuals SET i_gedcom=\'' . $DBCONN->escapeSimple($indirec) . "' WHERE i_id='" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "'";
+	$sql = "UPDATE {$TBLPREFIX}records SET rec_gedcom=".$DBCONN->escapeSimple($indirec). "' WHERE rec_xref='".$DBCONN->escapeSimple($gid)."' AND rec_ged_id='".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])."'";
 	$res = dbquery($sql);
 
 	$indilist[$gid]["names"][] = array (
@@ -504,7 +646,12 @@ function update_places($gid, $indirec) {
  * @param string $indirec
  */
 function update_dates($gid, $indirec) {
-	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS, $factarray;
+	global $FILE, $TBLPREFIX, $DBH, $GEDCOMS, $factarray;
+	static $statement=null;
+
+	if (is_null($statement))
+		$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES(?,?,?,?,?,?,?,?,?,?)");
+
 	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
 	if ($pt == 0)
 		return 0;
@@ -521,8 +668,19 @@ function update_dates($gid, $indirec) {
 				$dates=array($geddate->date1);
 				if ($geddate->date2)
 					$dates[]=$geddate->date2;
-				foreach($dates as $date)
-					dbquery("INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date->d},'".$date->Format('O')."',{$date->m},{$date->y},{$date->minJD},{$date->maxJD},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},'{$date->CALENDAR_ESCAPE}')");
+				foreach($dates as $date) {
+					$statement->bindValue(1,  $date->d,               PDO::PARAM_INT);
+					$statement->bindValue(2,  $date->Format('O'),     PDO::PARAM_STR);
+					$statement->bindValue(3,  $date->m,               PDO::PARAM_INT);
+					$statement->bindValue(4,  $date->y,               PDO::PARAM_INT);
+					$statement->bindValue(5,  $date->minJD,           PDO::PARAM_INT);
+					$statement->bindValue(6,  $date->maxJD,           PDO::PARAM_INT);
+					$statement->bindValue(7,  $fact,                  PDO::PARAM_STR);
+					$statement->bindValue(8,  $gid,                   PDO::PARAM_STR);
+					$statement->bindValue(9,  $GEDCOMS[$FILE]['id'],  PDO::PARAM_INT);
+					$statement->bindValue(10, $date->CALENDAR_ESCAPE, PDO::PARAM_STR);
+					$statement->execute();
+				}
 			}
 		}
 	}
@@ -587,8 +745,8 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		if ($new_media === false) {
 			//-- add it to the media database table
 			$m_id = get_next_id("media", "m_id");
-			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
-			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($objrec) . "')";
+			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile)";
+			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])/* . "', '" . $DBCONN->escapeSimple($objrec)*/ . "')";
 			$res = dbquery($sql);
 			$media_count++;
 			//-- if this is not an update then write it to the new gedcom file
@@ -671,8 +829,8 @@ function update_media($gid, $indirec, $update = false) {
 		//--check if we already have a similar object
 		$new_media = Media :: in_obje_list($media);
 		if ($new_media === false) {
-			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
-			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($indirec) . "')";
+			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile)";
+			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "')";
 			$res = dbquery($sql);
 			$media_count++;
 		} else {
@@ -786,7 +944,7 @@ function update_media($gid, $indirec, $update = false) {
  * way is to surround it by single quotes.
  */
 function setup_database() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DBH;
 
 	//---------- Check if tables exist
 	$has_individuals = false;
@@ -800,9 +958,6 @@ function setup_database() {
 	$has_places_gid = false;
 	$has_places_std_soundex = false;
 	$has_places_dm_soundex = false;
-	$has_names = false;
-	$has_names_surname = false;
-	$has_names_type = false;
 	$has_placelinks = false;
 	$has_dates = false;
 	$has_dates_mon = false;
@@ -812,8 +967,6 @@ function setup_database() {
 	$has_media_mapping = false;
 	$has_nextid = false;
 	$has_remotelinks = false;
-	$has_other = false;
-	$has_sources = false;
 	$has_soundex = false;
 	
 	$sqlite = ($DBTYPE == "sqlite");
@@ -871,20 +1024,6 @@ function setup_database() {
 						}
 					}
 					break;
-				case "names" :
-					$has_names = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "names");
-					foreach ($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "n_surname" :
-								$has_names_surname = true;
-								break;
-							case "n_type" :
-								$has_names_type = true;
-								break;
-						}
-					}
-					break;
 				case "placelinks" :
 					$has_placelinks = true;
 					break;
@@ -916,12 +1055,6 @@ function setup_database() {
 					break;
 				case "remotelinks" :
 					$has_remotelinks = true;
-					break;
-				case "other" :
-					$has_other = true;
-					break;
-				case "sources" :
-					$has_sources = true;
 					break;
 				case "soundex":
 					$has_soundex = true;
@@ -992,24 +1125,6 @@ function setup_database() {
 	if (!$has_placelinks) {
 		create_placelinks_table();
 	}
-	if (!$has_names || $sqlite && (!$has_names_surname || !$has_names_type)) {
-		create_names_table();
-	} else { // check columns in the table
-		if (!$has_names_surname) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "names ADD n_surname VARCHAR(100)";
-			$res = dbquery($sql); //print "n_surname added<br/>\n";
-
-			if (DB :: isError($res)) {
-				exit;
-			}
-			$sql = "CREATE INDEX name_surn ON " . $TBLPREFIX . "names (n_surname)";
-			$res = dbquery($sql);
-		}
-		if (!$has_names_type) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "names ADD n_type VARCHAR(10)";
-			$res = dbquery($sql); //print "n_type added<br/>\n";
-		}
-	}
 	if (!$has_dates || stristr($DBTYPE, "mysql") === false && // AFTER keyword only in mysql
 	(!$has_dates_mon || !$has_dates_datestamp || !$has_dates_juliandays)) {
 		create_dates_table();
@@ -1050,27 +1165,117 @@ function setup_database() {
 	if (!$has_nextid) {
 		create_nextid_table();
 	}
-	if (!$has_other) {
-		create_other_table();
-	}
-	if (!$has_sources) {
-		create_sources_table();
-	}
 	if(!$has_soundex) {
 		create_soundex_table();
 	}
-	/*-- commenting out as it seems to cause more problems than it helps
-	$sql = "LOCK TABLE ".$TBLPREFIX."individuals WRITE, ".$TBLPREFIX."families WRITE, ".$TBLPREFIX."sources WRITE, ".$TBLPREFIX."other WRITE, ".$TBLPREFIX."places WRITE, ".$TBLPREFIX."users WRITE";
-	$res = dbquery($sql); */
-	if (preg_match("/mysql|pgsql/", $DBTYPE) > 0)
-		$DBCONN->autoCommit(false);
-	//-- start a transaction
-	if ($DBTYPE == 'mssql')
-		$sql = "BEGIN TRANSACTION";
-	else
-		$sql = "BEGIN";
-	$res = dbquery($sql);
+
+	$DBH->exec(
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}gedcoms (".
+		" ged_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
+		" CONSTRAINT {$TBLPREFIX}gedcoms_pk PRIMARY KEY (ged_id)".
+		") ENGINE=INNODB"
+	);
+
+	$DBH->exec(
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}gedcom_settings (".
+		" ged_id        INTEGER UNSIGNED NOT NULL,".
+		" ged_parameter VARCHAR(32)      NOT NULL,".
+		" ged_value     VARCHAR(255)     NULL,".
+		" CONSTRAINT {$TBLPREFIX}tree_settings_pk  PRIMARY KEY (ged_id, ged_parameter),".
+		" CONSTRAINT {$TBLPREFIX}tree_settings_fk1 FOREIGN KEY (ged_id) REFERENCES {$TBLPREFIX}gedcoms (ged_id) ON DELETE CASCADE".
+		") ENGINE=INNODB"
+	);
+
+	$DBH->exec(
+		"CREATE TABLE   IF NOT EXISTS {$TBLPREFIX}edits (".
+		" edit_id       INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
+		" edit_user_id  INTEGER UNSIGNED NOT NULL,".
+		" edit_time     TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,".
+		" CONSTRAINT {$TBLPREFIX}edits_pk  PRIMARY KEY (edit_id)".
+		//" CONSTRAINT {$TBLPREFIX}edits_fk1 FOREIGN KEY (edit_user_id) REFERENCES {$TBLPREFIX}users (user_id) ON DELETE RESTRICT".
+		") ENGINE=INNODB"
+	);
+
+	try {
+		$DBH->exec(
+			"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}records (".
+			" rec_id      INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
+			" rec_ged_id  INTEGER UNSIGNED NOT NULL,".
+			" rec_xref    VARCHAR(255)     NULL,". // @I123@, etc.
+			" rec_type    VARCHAR(20)      NULL,". // SOUR/INDI/FAM/etc.
+			" rec_gedcom  MEDIUMTEXT       NULL,". // Temporary until the fact/event table is created
+			" CONSTRAINT {$TBLPREFIX}records_pk  PRIMARY KEY  (rec_id),".
+			" CONSTRAINT {$TBLPREFIX}records_fk1 FOREIGN KEY  (rec_ged_id) REFERENCES {$TBLPREFIX}gedcoms (ged_id),".
+			" CONSTRAINT {$TBLPREFIX}records_ix1 UNIQUE INDEX (rec_xref, rec_ged_id, rec_type),".
+			" CONSTRAINT {$TBLPREFIX}records_ix2 UNIQUE INDEX (rec_type, rec_ged_id, rec_xref)".
+			") ENGINE INNODB"
+		);
+
+		$DBH->exec(
+			"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}links (".
+			" link_id      INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
+			" link_fact_id INTEGER UNSIGNED NOT NULL,".
+			" link_type    VARCHAR(20)      NOT NULL,". // SOUR/INDI/FAM/etc.
+			" link_xref    VARCHAR(255)     NOT NULL,". // @I123@, etc.
+			" CONSTRAINT {$TBLPREFIX}links_pk  PRIMARY KEY  (link_id),".
+			" CONSTRAINT {$TBLPREFIX}links_fk1 FOREIGN KEY  (link_fact_id) REFERENCES {$TBLPREFIX}facts (fact_id) ON DELETE CASCADE,".
+			" INDEX {$TBLPREFIX}links_ix1 (link_fact_id, link_type, link_xref),".
+			" INDEX {$TBLPREFIX}links_ix2 (link_type, link_fact_id, link_xref)".
+			") ENGINE INNODB"
+		);
+
+		$DBH->exec(
+			"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}facts (".
+			" fact_id      INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
+			" fact_rec_id  INTEGER UNSIGNED NOT NULL,".
+			" fact_type    VARCHAR(15)      NOT NULL,". // The 1 XXXX
+			" fact_value   VARCHAR(255)     NULL,".     // The 1 EVENT XXXX
+			" fact_resn    VARCHAR(255)     NULL,". // The 2 RESN value
+			" fact_date    VARCHAR(255)     NULL,". // The 2 DATE value
+			" fact_plac    VARCHAR(255)     NULL,". // The 2 PLAC value
+			" fact_gedcom  MEDIUMTEXT       NULL,". // Any remaining 2 XXXX attributes
+			" fact_created INTEGER UNSIGNED NULL,".
+			" fact_deleted INTEGER UNSIGNED NULL,".
+			" CONSTRAINT {$TBLPREFIX}events_pk  PRIMARY KEY (fact_id),".
+			" CONSTRAINT {$TBLPREFIX}events_fk1 FOREIGN KEY (fact_rec_id)  REFERENCES {$TBLPREFIX}records (rec_id)  ON DELETE CASCADE,".
+			" CONSTRAINT {$TBLPREFIX}events_fk2 FOREIGN KEY (fact_created) REFERENCES {$TBLPREFIX}edits   (edit_id) ON DELETE RESTRICT,".
+			" CONSTRAINT {$TBLPREFIX}events_fk3 FOREIGN KEY (fact_deleted) REFERENCES {$TBLPREFIX}edits   (edit_id) ON DELETE RESTRICT,".
+			" INDEX {$TBLPREFIX}facts_ix1 (fact_type),".
+			" INDEX {$TBLPREFIX}facts_ix2 (fact_deleted, fact_created),".
+			" INDEX {$TBLPREFIX}facts_ix3 (fact_created, fact_deleted)".
+			") ENGINE=INNODB"
+		);
+
+		try {
+			// If this doesn't throw, then we have the PGV4 names table
+			$DBH->exec("UPDATE {$TBLPREFIX}names SET n_gid=n_gid WHERE 0");
+			$DBH->exec("DROP TABLE {$TBLPREFIX}names");
+		} catch (PDOException $e) {
+		}
+
+		$DBH->exec(
+			"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}names (".
+			" name_id        INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
+			" name_fact_id   INTEGER UNSIGNED NOT NULL,".
+			" name_type      VARCHAR(20)      NOT NULL,". // e.g. NAME/_MARNM/FONE/TITL/ABBR
+			" name_full      VARCHAR(255)     NOT NULL,". // e.g. Lord John de Vere
+			" name_sort1     VARCHAR(255)     NOT NULL,". // e.g. Vere
+			" name_sort2     VARCHAR(255)     NOT NULL,". // e.g. John, Lord
+			" name_list      VARCHAR(255)     NOT NULL,". // e.g. de Vere, Lord John
+			" CONSTRAINT {$TBLPREFIX}names_pk  PRIMARY KEY (name_id),".
+			" CONSTRAINT {$TBLPREFIX}names_fk1 FOREIGN KEY (name_fact_id) REFERENCES {$TBLPREFIX}facts (fact_id) ON DELETE CASCADE,".
+			" INDEX {$TBLPREFIX}names_ix1 (name_type),".
+			" INDEX {$TBLPREFIX}names_ix2 (name_sort1, name_sort2, name_type)".
+			") ENGINE INNODB"
+		);
+
+		$DBH->exec("DROP TABLE IF EXISTS {$TBLPREFIX}other");
+		$DBH->exec("DROP TABLE IF EXISTS {$TBLPREFIX}sources");
+	} catch (PDOException $e) {
+		die ($e->getMessage());
+	}
 }
+
 /**
  * Create the individuals table
  */
@@ -1079,7 +1284,7 @@ function create_individuals_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "individuals";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255) NOT NULL, i_file INT NOT NULL, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100), PRIMARY KEY(i_id, i_file))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255) NOT NULL, i_file INT NOT NULL, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_letter VARCHAR(5), i_surname VARCHAR(100), PRIMARY KEY(i_id, i_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1107,7 +1312,7 @@ function create_families_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "families";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255) NOT NULL, f_file INT NOT NULL, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom ".DB_LONGTEXT_TYPE.", f_numchil INT, PRIMARY KEY(f_id, f_file))";
+	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255) NOT NULL, f_file INT NOT NULL, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_numchil INT, PRIMARY KEY(f_id, f_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1124,50 +1329,6 @@ function create_families_table() {
 	$res = dbquery($sql);
 
 	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_fams"] . "<br />\n";
-}
-/**
- * Create the sources table
- */
-function create_sources_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
-
-	$sql = "DROP TABLE " . $TBLPREFIX . "sources";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "sources (s_id VARCHAR(255)NOT NULL, s_file INT NOT NULL, s_name VARCHAR(255), s_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(s_id, s_file))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_sources_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX sour_id ON " . $TBLPREFIX . "sources (s_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX sour_name ON " . $TBLPREFIX . "sources (s_name)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX sour_file ON " . $TBLPREFIX . "sources (s_file)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_sources"] . "<br />\n";
-}
-/**
- * Create the other table
- */
-function create_other_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
-
-	$sql = "DROP TABLE " . $TBLPREFIX . "other";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "other (o_id VARCHAR(255) NOT NULL, o_file INT NOT NULL, o_type VARCHAR(20), o_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(o_id, o_file))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_other_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX other_id ON " . $TBLPREFIX . "other (o_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX other_file ON " . $TBLPREFIX . "other (o_file)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_other"] . "<br />\n";
 }
 /**
  * Create the placelinks table
@@ -1216,35 +1377,6 @@ function create_places_table() {
 	$res = dbquery($sql);
 
 	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_places"] . "<br />\n";
-}
-/**
- * Create the names table
- */
-function create_names_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
-
-	$sql = "DROP TABLE " . $TBLPREFIX . "names";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "names (n_gid VARCHAR(255), n_file INT, n_name VARCHAR(255), n_letter VARCHAR(5), n_surname VARCHAR(100), n_type VARCHAR(10))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print "Unable to create names table";
-		exit;
-	}
-	$sql = "CREATE INDEX name_gid ON " . $TBLPREFIX . "names (n_gid)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_name ON " . $TBLPREFIX . "names (n_name)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_letter ON " . $TBLPREFIX . "names (n_letter)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_type ON " . $TBLPREFIX . "names (n_type)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_surn ON " . $TBLPREFIX . "names (n_surname)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_file ON " . $TBLPREFIX . "names (n_file)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print "Successfully created names table.<br />\n";
 }
 /**
  * Create the remotelinks table
@@ -1299,7 +1431,7 @@ function create_media_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "media";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "media (m_id INT NOT NULL, m_media VARCHAR(15), m_ext VARCHAR(6), m_titl VARCHAR(255), m_file VARCHAR(255), m_gedfile INT, m_gedrec ".DB_LONGTEXT_TYPE.", PRIMARY KEY (m_id))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "media (m_id INT NOT NULL, m_media VARCHAR(15), m_ext VARCHAR(6), m_titl VARCHAR(255), m_file VARCHAR(255), m_gedfile INT, PRIMARY KEY (m_id))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1401,25 +1533,23 @@ function empty_database($FILE, $keepmedia=false) {
 	global $TBLPREFIX, $DBCONN, $GEDCOMS;
 
 	$FILE = $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]);
+
+	dbquery("DELETE FROM {$TBLPREFIX}records WHERE rec_ged_id='$FILE'");
+	// If the DB doesn't support foreign key constraints, we must do it ourself :-(
+	dbquery("DELETE FROM {$TBLPREFIX}facts   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}records)");
+	dbquery("DELETE FROM {$TBLPREFIX}links   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
+	dbquery("DELETE FROM {$TBLPREFIX}names   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
+
 	$sql = "DELETE FROM " . $TBLPREFIX . "individuals WHERE i_file='$FILE'";
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "families WHERE f_file='$FILE'";
 	$res = dbquery($sql);
 
-	$sql = "DELETE FROM " . $TBLPREFIX . "sources WHERE s_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "other WHERE o_file='$FILE'";
-	$res = dbquery($sql);
-
 	$sql = "DELETE FROM " . $TBLPREFIX . "places WHERE p_file='$FILE'";
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "placelinks WHERE pl_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "names WHERE n_file='$FILE'";
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "dates WHERE d_file='$FILE'";
@@ -1466,10 +1596,6 @@ function empty_database($FILE, $keepmedia=false) {
  */
 function cleanup_database() {
 	global $DBTYPE, $DBCONN, $TBLPREFIX, $MAX_IDS, $GEDCOMS, $FILE;
-	/*-- commenting out as it seems to cause more problems than it helps
-	$sql = "UNLOCK TABLES";
-	$res = dbquery($sql); */
-	//-- end the transaction
 	if (isset ($MAX_IDS)) {
 		$sql = "DELETE FROM " . $TBLPREFIX . "nextid WHERE ni_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "'";
 		$res = dbquery($sql);
@@ -1478,13 +1604,6 @@ function cleanup_database() {
 			$res = dbquery($sql);
 		}
 	}
-	if ($DBTYPE == 'mssql')
-		$sql = "COMMIT TRANSACTION";
-	else
-		$sql = "COMMIT";
-	$res = dbquery($sql);
-
-	//if (preg_match("/mysql|pgsql/", $DBTYPE)>0) $DBCONN->autoCommit(false);
 	return;
 }
 
@@ -1723,6 +1842,12 @@ function update_record($indirec, $delete = false) {
 		}
 	}
 
+	dbquery("DELETE FROM {$TBLPREFIX}records WHERE rec_xref='".$DBCONN->escapeSimple($gid)."' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]));
+	// If the DB doesn't support foreign key constraints, we must do it ourself :-(
+	dbquery("DELETE FROM {$TBLPREFIX}facts   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}records)");
+	dbquery("DELETE FROM {$TBLPREFIX}links   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
+	dbquery("DELETE FROM {$TBLPREFIX}names   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
+
 	//-- delete any media mapping references
 	$sql = "DELETE FROM " . $TBLPREFIX . "media_mapping WHERE mm_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND mm_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
@@ -1734,9 +1859,6 @@ function update_record($indirec, $delete = false) {
 		$sql = "DELETE FROM " . $TBLPREFIX . "individuals WHERE i_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
 
-		$sql = "DELETE FROM " . $TBLPREFIX . "names WHERE n_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-		$res = dbquery($sql);
-		
 		$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_i_id LIKE '".$DBCONN->escapeSimple($gid)."' AND sx_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 		$res = dbquery($sql);
 
@@ -1746,19 +1868,11 @@ function update_record($indirec, $delete = false) {
 			$res = dbquery($sql);
 
 		} else
-			if ($type == "SOUR") {
-				$sql = "DELETE FROM " . $TBLPREFIX . "sources WHERE s_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND s_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+			if ($type == "OBJE") {
+				$sql = "DELETE FROM " . $TBLPREFIX . "media WHERE m_media LIKE '" . $DBCONN->escapeSimple($gid) . "' AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 				$res = dbquery($sql);
 
-			} else
-				if ($type == "OBJE") {
-					$sql = "DELETE FROM " . $TBLPREFIX . "media WHERE m_media LIKE '" . $DBCONN->escapeSimple($gid) . "' AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-					$res = dbquery($sql);
-				} else {
-					$sql = "DELETE FROM " . $TBLPREFIX . "other WHERE o_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND o_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-					$res = dbquery($sql);
-
-				}
+			}
 	if (!$delete) {
 		import_record($indirec, true);
 	}

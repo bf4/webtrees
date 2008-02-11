@@ -51,7 +51,7 @@ global $match1,$match2;
 		$deathdate="";
 		$birthdate="";
 		$sex= "";
-		$indirec= find_person_record($key);
+		$indirec= find_gedcom_record($key);
 		if (dateplace($indirec,"1 BIRT")!==false)
 			{$birthdate= $match1[1]; $birthplace=$match2[1];}
 //--	print ("geboorte:".$birthdate."--".$birthplace."<br/>");
@@ -193,7 +193,7 @@ $dates= array();
 		$key = $keys[$i];
 		$marriagedate=""; $ymarr= -1; $mmarr= -1;
 		$divorcedate= ""; $ydiv= -1; $mdiv= -1;
-		$indirec= find_family_record($key);
+		$indirec= find_gedcom_record($key);
 //--	print("famrec:" . $key . ":" . $indirec . "<br/>");
 		if (dateplace($indirec,"1 MARR")!==false)
 			{$marriagedate= $match1[1]; $marriageplace=$match2[1]; $sex=1;}

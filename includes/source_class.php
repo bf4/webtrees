@@ -62,7 +62,7 @@ class Source extends GedcomRecord {
 			if (isset($sourcelist[$pid]['object'])) return $sourcelist[$pid]['object'];
 		}
 
-		$sourcerec = find_source_record($pid);
+		$sourcerec = find_gedcom_record($pid);
 		if (empty($sourcerec)) {
 			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
 			if ($ct>0) {
@@ -212,7 +212,6 @@ class Source extends GedcomRecord {
 				$famids[] = $famid;
 			}
 		}
-		load_families($famids);
 		return $this->indilist;
 	}
 

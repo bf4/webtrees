@@ -94,7 +94,7 @@ class Person extends GedcomRecord {
 			if (isset($indilist[$pid]['object'])) return $indilist[$pid]['object'];
 		}
 
-		$indirec = find_person_record($pid);
+		$indirec = find_gedcom_record($pid);
 		if (empty($indirec)) {
 			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
 			if ($ct>0) {
@@ -1351,7 +1351,7 @@ class Person extends GedcomRecord {
 						$factrec .= "\n".trim($sdate);
 						if (!showFact($fact, $rid)) $factrec .= "\n2 RESN privacy";
 						if ($typ=='FAM') {
-							$famrec = find_family_record($rid);
+							$famrec = find_gedcom_record($rid);
 							if ($famrec) {
 								$parents = find_parents_in_record($famrec);
 								if ($parents["HUSB"]) $factrec .= "\n2 ASSO @".$parents["HUSB"]."@"; //\n3 RELA ".$factarray[$fact];

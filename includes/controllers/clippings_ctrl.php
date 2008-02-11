@@ -372,19 +372,19 @@ class ClippingsControllerRoot extends BaseController {
 									$clipping = $cart[$i];
 
 									if ($clipping["type"] == "indi") {
-										$indirec = find_person_record($clipping["id"]);
+										$indirec = find_gedcom_record($clipping["id"]);
 										$gramps_Exp->create_person($indirec, $clipping["id"]);
 									}
 									if ($clipping["type"] == "fam") {
-										$famrec = find_family_record($clipping["id"]);
+										$famrec = find_gedcom_record($clipping["id"]);
 										$gramps_Exp->create_family($famrec, $clipping["id"]);
 									}
 //									if ($clipping["type"] == "obje") {
-//										$famrec = find_family_record($clipping["id"]);
+//										$famrec = find_gedcom_record($clipping["id"]);
 //										$gramps_Exp->create_family($famrec, $clipping["id"]);
 //									}
 //									if ($clipping["type"] == "sour") {
-//										$famrec = find_family_record($clipping["id"]);
+//										$famrec = find_gedcom_record($clipping["id"]);
 //										$gramps_Exp->create_family($famrec, $clipping["id"]);
 //									}
 								}
@@ -585,7 +585,7 @@ function download_clipping(){
 		if (!$famid)
 			return;
 		//print "add_family_descendancy(" . $famid . ")<br />";					# --------------
-		$famrec = find_family_record($famid);
+		$famrec = find_gedcom_record($famid);
 		if ($famrec) {
 			$parents = find_parents_in_record($famrec);
 			if (!empty ($parents["HUSB"])) {
@@ -638,7 +638,7 @@ function download_clipping(){
 			$clipping['id'] = $parents["WIFE"];
 			$this->add_clipping($clipping);
 		}
-		$famrec = find_family_record($famid);
+		$famrec = find_gedcom_record($famid);
 		if ($famrec) {
 			$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 			for ($i = 0; $i < $num; $i++) {
@@ -707,7 +707,7 @@ function download_clipping(){
 						$ret = $this->add_clipping($clipping);
 						$this->add_ancestors_to_cart_families($parents["WIFE"]);
 					}
-					$famrec = find_family_record($famid);
+					$famrec = find_gedcom_record($famid);
 					if ($famrec) {
 						$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 						for ($i = 0; $i < $num; $i++) {

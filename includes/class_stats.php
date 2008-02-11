@@ -380,7 +380,7 @@ class stats
 	function totalSexMales()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_gedcom LIKE '%1 SEX M%'");
+		$rows=$this->_runSQL("SELECT COUNT(1) AS tot FROM {$TBLPREFIX}records WHERE rec_type='INDI' AND rec_ged_id={$this->_gedcom['id']} AND rec_gedcom LIKE '%1 SEX M%'");
 		return $rows[0]['tot'];
 	}
 	function totalSexMalesPercentage()
@@ -392,7 +392,7 @@ class stats
 	function totalSexFemales()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_gedcom LIKE '%1 SEX F%'");
+		$rows=$this->_runSQL("SELECT COUNT(1) AS tot FROM {$TBLPREFIX}records WHERE rec_type='INDI' AND rec_ged_id={$this->_gedcom['id']} AND rec_gedcom LIKE '%1 SEX F%'");
 		return $rows[0]['tot'];
 	}
 
@@ -405,7 +405,7 @@ class stats
 	function totalSexUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')");
+		$rows=$this->_runSQL("SELECT COUNT(1) AS tot FROM {$TBLPREFIX}records WHERE rec_type='INDI' AND rec_ged_id={$this->_gedcom['id']} AND (rec_gedcom NOT LIKE '%1 SEX M%' AND rec_gedcom NOT LIKE '%1 SEX F%')");
 		return $rows[0]['tot'];
 	}
 
@@ -520,7 +520,7 @@ class stats
 		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
 		$row=$rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid'])), true, true, true);
+		print_fact_place(get_sub_record(1, '1 BIRT', find_gedcom_record($row['d_gid'])), true, true, true);
 		$place=ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -572,7 +572,7 @@ class stats
 		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' ORDER BY d_julianday2 DESC", 1);
 		$row=$rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid'])), true, true, true);
+		print_fact_place(get_sub_record(1, '1 BIRT', find_gedcom_record($row['d_gid'])), true, true, true);
 		$place=ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -628,7 +628,7 @@ class stats
 		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
 		$row=$rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid'])), true, true, true);
+		print_fact_place(get_sub_record(1, '1 DEAT', find_gedcom_record($row['d_gid'])), true, true, true);
 		$place=ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -680,7 +680,7 @@ class stats
 		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' ORDER BY d_julianday2 DESC", 1);
 		$row=$rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid'])), true, true, true);
+		print_fact_place(get_sub_record(1, '1 DEAT', find_gedcom_record($row['d_gid'])), true, true, true);
 		$place=ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -775,7 +775,7 @@ class stats
 	function longestLifeMale()
 	{
 		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
+		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX M%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
 		$row=$rows[0];
 		if (displayDetailsById($row['d_gid'])) {
 			ob_start();
@@ -791,7 +791,7 @@ class stats
 	function longestLifeMaleAge()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 1);
+		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 1);
 		$row=$rows[0];
 		return floor($row['age']/365.25);
 	}
@@ -799,7 +799,7 @@ class stats
 	function longestLifeMaleName()
 	{
 		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
+		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX M%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
 		$row=$rows[0];
 		$id='';
 		if ($SHOW_ID_NUMBERS) {
@@ -815,7 +815,7 @@ class stats
 	function topTenOldestMale()
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 10);
+		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 10);
 		$top10=array();
 		foreach ($rows as $row) {
 			$top10[]="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]";
@@ -830,7 +830,7 @@ class stats
 	function topTenOldestMaleList()
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 10);
+		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 10);
 		$top10=array();
 		foreach ($rows as $row) {
 			$top10[]="\t<li><a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]</li>";
@@ -845,7 +845,7 @@ class stats
 	function averageLifespanMale()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT AVG(death.d_julianday2-birth.d_julianday1) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%'", 1);
+		$rows=$this->_runSQL("SELECT AVG(death.d_julianday2-birth.d_julianday1) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX M%'", 1);
 		$row=$rows[0];
 		return floor($row['age']/365.25);
 	}
@@ -855,7 +855,7 @@ class stats
 	function longestLifeFemale()
 	{
 		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
+		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX F%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
 		$row=$rows[0];
 		if (displayDetailsById($row['d_gid'])) {
 			ob_start();
@@ -871,7 +871,7 @@ class stats
 	function longestLifeFemaleAge()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 1);
+		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 1);
 		$row=$rows[0];
 		return floor($row['age']/365.25);
 	}
@@ -879,7 +879,7 @@ class stats
 	function longestLifeFemaleName()
 	{
 		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
+		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX F%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
 		$row=$rows[0];
 		$id='';
 		if ($SHOW_ID_NUMBERS) {
@@ -895,7 +895,7 @@ class stats
 	function topTenOldestFemale()
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 10);
+		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 10);
 		$top10=array();
 		foreach ($rows as $row) {
 			$top10[]="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]";
@@ -910,7 +910,7 @@ class stats
 	function topTenOldestFemaleList()
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 10);
+		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 10);
 		$top10=array();
 		foreach ($rows as $row) {
 			$top10[]="\t<li><a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]</li>";
@@ -925,7 +925,7 @@ class stats
 	function averageLifespanFemale()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT AVG(death.d_julianday2-birth.d_julianday1) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%'", 1);
+		$rows=$this->_runSQL("SELECT AVG(death.d_julianday2-birth.d_julianday1) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}records AS indi WHERE indi.rec_xref=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND rec_gedcom LIKE '%1 SEX F%'", 1);
 		$row=$rows[0];
 		return floor($row['age']/365.25);
 	}

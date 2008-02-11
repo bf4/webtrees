@@ -101,25 +101,6 @@ function exists_db_link($media, $indi, $ged) {
 }
 
 /**
- * Updates any gedcom records associated with the media.
- *
- * Replace the gedrec for the media record.
- *
- * @param string $media The gid of the record to be removed in the form Mxxxx.
- * @param string $gedrec The gedcom record as a string without the gid.
- * @param string $ged The gedcom file this action is to apply to.
- */
-function update_db_media($media, $gedrec, $ged) {
-	global $GEDCOMS, $TBLPREFIX;
-
-	// replace the gedrec for the media record
-	$sql = "UPDATE " . $TBLPREFIX . "media SET m_gedrec = '" . addslashes($gedrec) . "' WHERE (m_id = '" . addslashes($media) . "' AND m_gedfile = '" . $GEDCOMS[$ged]["id"] . "')";
-	$tempsql = dbquery($sql);
-	$res = & $tempsql;
-
-}
-
-/**
  * Updates any gedcom records associated with the link.
  *
  * Replace the gedrec for an existing link record.
@@ -216,7 +197,7 @@ function get_db_media_list() {
 	global $TBLPREFIX;
 
 	$medialist = array ();
-	$sql = "SELECT m_id, m_media, m_file, m_ext, m_titl, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile='{$GEDCOMS[$GEDCOM]['id']}' ORDER BY m_id";
+	$sql = "SELECT m_id, m_media, m_file, m_ext, m_titl, rec_gedcom FROM {$TBLPREFIX}media,{$TBLPREFIX}records WHERE m_media=rec_xref AND m_file=rec_ged_id AND m_gedfile='{$GEDCOMS[$GEDCOM]['id']}' ORDER BY m_id";
 	$tempsql = dbquery($sql);
 	$res = & $tempsql;
 	$ct = $res->numRows();
@@ -228,7 +209,7 @@ function get_db_media_list() {
 		$media["FILE"] = stripslashes($row["m_file"]);
 		$media["FORM"] = stripslashes($row["m_ext"]);
 		$media["TITL"] = stripslashes($row["m_titl"]);
-		$media["NOTE"] = stripslashes($row["m_gedrec"]);
+		$media["NOTE"] = stripslashes($row["rec_gedcom"]);
 		$medialist[] = $media;
 	}
 	return $medialist;
@@ -522,7 +503,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	if (empty ($directory))
 		$directory = $MEDIA_DIRECTORY;
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
-	$sql = "SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT m_id, m_file, m_media, rec_gedcom, m_titl FROM {$TBLPREFIX}media, {$TBLPREFIX} WHERE m_media=rec_xref AND m_file=rec_ged_id m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	if ($random == true) {
 		$sql .= " ORDER BY ".DB_RANDOM."()";
 		$res = & dbquery($sql, true, 5);
@@ -560,8 +541,8 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 						$media["EXISTS"] = media_exists($fileName);
 					}
 					$media["TITL"] = stripslashes($row["m_titl"]);
-					$media["GEDCOM"] = stripslashes($row["m_gedrec"]);
-					$gedrec = & trim($row["m_gedrec"]);
+					$media["GEDCOM"] = stripslashes($row["rec_gedcom"]);
+					$gedrec = & trim($row["rec_gedcom"]);
 					$media["LEVEL"] = $gedrec{0};
 					$media["LINKED"] = false;
 					$media["LINKS"] = array ();
@@ -730,10 +711,6 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			$peopleIds[] = stripslashes($row["mm_gid"]);
 		}
 		$res->free();
-
-		//-- load up all of the related people into the cache
-		load_people($peopleIds);
-		load_families($peopleIds);
 	}
 
 	// Search the list of GEDCOM changes pending approval.  There may be some new
@@ -968,14 +945,14 @@ function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
 	else
 		$term = "LIKE";
 	if (!is_array($query))
-		$sql = "SELECT m_media as m_media FROM " . $TBLPREFIX . "media WHERE (m_gedrec $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2upper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2lower($query)) . "')";
+		$sql = "SELECT m_media FROM " . $TBLPREFIX . "media, {$TBLPREFIX}records WHERE m_file=rec_ged_id AND m_media=rec_xref AND (rec_gedcom $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR rec_gedcom $term '" . $DBCONN->escapeSimple(str2upper($query)) . "' OR rec_gedcom $term '" . $DBCONN->escapeSimple(str2lower($query)) . "')";
 	else {
 		$sql = "SELECT m_media FROM " . $TBLPREFIX . "media WHERE (";
 		$i = 0;
 		foreach ($query as $indexval => $q) {
 			if ($i > 0)
 				$sql .= " $ANDOR ";
-			$sql .= "(m_gedrec $term '" . $DBCONN->escapeSimple(str2upper($q)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2lower($q)) . "')";
+			$sql .= "(rec_gedcom $term '" . $DBCONN->escapeSimple(str2upper($q)) . "' OR rec_gedcom $term '" . $DBCONN->escapeSimple(str2lower($q)) . "')";
 			$i++;
 		}
 		$sql .= ")";
@@ -1380,7 +1357,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		$gedrec = find_updated_record($pid);
 	else
 		if (id_type($pid) == "OBJE")
-			$gedrec = find_media_record($pid);
+			$gedrec = find_gedcom_record($pid);
 		else
 			$gedrec = "";
 
@@ -1896,7 +1873,7 @@ function picture_clip($person_id, $image_id, $filename, $thumbDir)
 {
 	global $GEDCOMS,$GEDCOM,$TBLPREFIX,$MEDIA_DIRECTORY;
 	// This gets the gedrec
-	$query = "select m_gedrec from ".$TBLPREFIX."media where m_media='".$image_id."' AND m_gedfile=".$GEDCOMS[$GEDCOM]['id'];
+	$query = "select rec_gedcom from ".$TBLPREFIX."records where rec_xref='".$image_id."' AND rec_ged_id=".$GEDCOMS[$GEDCOM]['id'];
 	$res = dbquery($query);
 	$result = $res->fetchRow();
 	//Get the location of the file, and then make a location for the clipped image

@@ -57,7 +57,7 @@ if (userCanAccept(getUserName())) {
 
 $nonfacts = array();
 
-$repo = find_repo_record($rid);
+$repo = find_gedcom_record($rid);
 //-- make sure we have the true id from the record
 $ct = preg_match("/0 @(.*)@/", $repo, $match);
 if ($ct>0) $rid = trim($match[1]);

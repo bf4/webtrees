@@ -109,7 +109,7 @@ class FamilyRoot extends BaseController
 		}
 		$_REQUEST['famid'] = clean_input($_REQUEST['famid']);
 		$this->famid = $_REQUEST['famid'];
-		$this->famrec = find_family_record($this->famid);
+		$this->famrec = find_gedcom_record($this->famid);
 		
 		if (empty($this->famrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->famid, $match);
@@ -133,7 +133,7 @@ class FamilyRoot extends BaseController
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes=="yes" && userCanEdit($this->uname) && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->famid);
-			if (empty($newrec)) $newrec = find_family_record($this->famid);
+			if (empty($newrec)) $newrec = find_gedcom_record($this->famid);
 			$this->difffam = new Family($newrec);
 			$this->difffam->setChanged(true);
 			$this->famrec = $newrec;
@@ -184,7 +184,7 @@ class FamilyRoot extends BaseController
 					$this->accept_success = true;
 					unset($famlist[$_REQUEST['famid']]);
 					//-- check if we just deleted the record and redirect to index
-					$famrec = find_family_record($_REQUEST['famid']);
+					$famrec = find_gedcom_record($_REQUEST['famid']);
 					if (empty($famrec)) {
 						header("Location: index.php?ctype=gedcom");
 						exit;

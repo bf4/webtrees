@@ -170,12 +170,12 @@ function getTitle(){
 	function getSources(){
         global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
-		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, ".$TBLPREFIX."tasksource WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_s_id=s_id AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = 	"SELECT rec_xref, name_full FROM {$TBLPREFIX}tasksource, {$TBLPREFIX}records, {$TBLPREFIX}facts, {$TBLPREFIX}names WHERE ts_t_id=".$DBCONN->escapeSimple($_REQUEST["taskid"])." AND ts_s_id=rec_xref AND rec_id=fact_rec_id AND fact_id=name_fact_id";
 		$res = dbquery($sql);
 
 		$sources = array();
 		while($source =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$sources[$source["s_id"]] = $source["s_name"];
+			$sources[$source["rec_xref"]] = $source["name_full"];
 		}
 
 		return $sources;

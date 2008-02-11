@@ -1241,7 +1241,7 @@ case 'addspouseaction':
 	else if (!empty($famid)) {
 		$famrec = "";
 		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
-		else $famrec = find_family_record($famid);
+		else $famrec = find_gedcom_record($famid);
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\r\n1 $famtag @$xref@\r\n";
 			if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
@@ -1314,7 +1314,7 @@ case 'linkspouseaction':
 	if (isset($_REQUEST['spid'])) $spid = $_REQUEST['spid'];
 	if (!empty($spid)) {
 		if (isset($pgv_changes[$spid.'_'.$GEDCOM])) $gedrec = find_updated_record($spid);
-		else $gedrec = find_person_record($spid);
+		else $gedrec = find_gedcom_record($spid);
 		$gedrec = trim($gedrec);
 		if (!empty($gedrec)) {
 			if ($famid=="new") {
@@ -1551,7 +1551,7 @@ case 'addnewparentaction':
 	else if (!empty($famid)) {
 		$famrec = "";
 		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
-		else $famrec = find_family_record($famid);
+		else $famrec = find_gedcom_record($famid);
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\r\n1 $famtag @$xref@\r\n";
 			
@@ -1599,7 +1599,7 @@ case 'addnewparentaction':
 			/**
 			$gedrec = "";
 			if (isset($pgv_changes[$xref."_".$GEDCOM])) $gedrec = find_updated_record($xref);
-			else $gedrec = find_person_record($xref);
+			else $gedrec = find_gedcom_record($xref);
 			**/
 			$gedrec = $spouserec;
 			$gedrec = trim($gedrec) . "\r\n1 FAMS @$famid@\r\n";
@@ -2030,7 +2030,7 @@ case 'changefamily_update':
 			$gedrec = preg_replace("/1 HUSB @.*@/", "1 HUSB @$HUSB@", $gedrec);
 		else $gedrec .= "\r\n1 HUSB @$HUSB@\r\n";
 		if (isset($pgv_changes[$HUSB."_".$GEDCOM])) $indirec = find_updated_record($HUSB);
-		else $indirec = find_person_record($HUSB);
+		else $indirec = find_gedcom_record($HUSB);
 		if (!empty($indirec) && (preg_match("/1 FAMS @$famid@/", $indirec)==0)) {
 			$indirec .= "\r\n1 FAMS @$famid@\r\n";
 			replace_gedrec($HUSB, $indirec);
@@ -2051,7 +2051,7 @@ case 'changefamily_update':
 	//-- remove the FAMS link from the old father
 	if (!is_null($father) && $father->getXref()!=$HUSB) {
 		if (isset($pgv_changes[$father->getXref()."_".$GEDCOM])) $indirec = find_updated_record($father->getXref());
-		else $indirec = find_person_record($father->getXref());
+		else $indirec = find_gedcom_record($father->getXref());
 		$pos1 = strpos($indirec, "1 FAMS @$famid@");
 		if ($pos1!==false) {
 			$pos2 = strpos($indirec, "\n1", $pos1+5);
@@ -2068,7 +2068,7 @@ case 'changefamily_update':
 			$gedrec = preg_replace("/1 WIFE @.*@/", "1 WIFE @$WIFE@", $gedrec);
 		else $gedrec .= "\r\n1 WIFE @$WIFE@\r\n";
 		if (isset($pgv_changes[$WIFE."_".$GEDCOM])) $indirec = find_updated_record($WIFE);
-		else $indirec = find_person_record($WIFE);
+		else $indirec = find_gedcom_record($WIFE);
 		if (!empty($indirec) && (preg_match("/1 FAMS @$famid@/", $indirec)==0)) {
 			$indirec .= "\r\n1 FAMS @$famid@\r\n";
 			replace_gedrec($WIFE, $indirec);
@@ -2089,7 +2089,7 @@ case 'changefamily_update':
 	//-- remove the FAMS link from the old father
 	if (!is_null($mother) && $mother->getXref()!=$WIFE) {
 		if (isset($pgv_changes[$mother->getXref()."_".$GEDCOM])) $indirec = find_updated_record($mother->getXref());
-		else $indirec = find_person_record($mother->getXref());
+		else $indirec = find_gedcom_record($mother->getXref());
 		$pos1 = strpos($indirec, "1 FAMS @$famid@");
 		if ($pos1!==false) {
 			$pos2 = strpos($indirec, "\n1", $pos1+5);
@@ -2112,7 +2112,7 @@ case 'changefamily_update':
 				$gedrec .= "\r\n1 CHIL @$CHIL@\r\n";
 				$updated = true;
 				if (isset($pgv_changes[$CHIL."_".$GEDCOM])) $indirec = find_updated_record($CHIL);
-				else $indirec = find_person_record($CHIL);
+				else $indirec = find_gedcom_record($CHIL);
 				if (!empty($indirec) && (preg_match("/1 FAMC @$famid@/", $indirec)==0)) {
 					$indirec .= "\r\n1 FAMC @$famid@\r\n";
 					replace_gedrec($CHIL, $indirec);
@@ -2138,7 +2138,7 @@ case 'changefamily_update':
 				}
 				//-- remove the FAMC link from the child record
 				if (isset($pgv_changes[$child->getXref()."_".$GEDCOM])) $indirec = find_updated_record($child->getXref());
-				else $indirec = find_person_record($child->getXref());
+				else $indirec = find_gedcom_record($child->getXref());
 				$pos1 = strpos($indirec, "1 FAMC @$famid@");
 				if ($pos1!==false) {
 					$pos2 = strpos($indirec, "\n1", $pos1+5);

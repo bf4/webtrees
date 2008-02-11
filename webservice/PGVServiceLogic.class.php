@@ -381,7 +381,7 @@ class PGVServiceLogic extends GenealogyService
 		$fams = find_families_in_record($gedrec, "FAMS");
 		$familyS = array();
 		foreach($fams as $f=>$famid) {
-//			$famrec = find_family_record($famid);
+//			$famrec = find_gedcom_record($famid);
 	//		$family = $this->createFamily($famid, $famrec, "item");
 			$familyS[] = $famid;
 		}
@@ -389,7 +389,7 @@ class PGVServiceLogic extends GenealogyService
 		$famc = find_families_in_record($gedrec, "FAMC");
 		$familyC = array();
 		foreach($famc as $f=>$famid) {
-			$famrec = find_family_record($famid);
+			$famrec = find_gedcom_record($famid);
 //			$family = $this->createFamily($famid, $famrec, "item");
 			$familyC[] = $famid;
 		}
@@ -426,7 +426,7 @@ class PGVServiceLogic extends GenealogyService
 						$gedrec = find_updated_record($xref1);
 
 					if (empty($gedrec))
-						$gedrec = find_person_record($xref1);
+						$gedrec = find_gedcom_record($xref1);
 
 					if (!empty($gedrec))
 					{
@@ -510,7 +510,7 @@ class PGVServiceLogic extends GenealogyService
 						$gedrec = find_updated_record($xref1);
 
 					if (empty($gedrec))
-						$gedrec = find_family_record($xref1);
+						$gedrec = find_gedcom_record($xref1);
 
 					if (!empty($gedrec))
 					{
@@ -581,7 +581,7 @@ class PGVServiceLogic extends GenealogyService
 						$gedrec = find_updated_record($xref1);
 
 					if (empty($gedrec))
-						$gedrec = find_source_record($xref1);
+						$gedrec = find_gedcom_record($xref1);
 
 					if (!empty($gedrec))
 					{
@@ -942,7 +942,7 @@ class PGVServiceLogic extends GenealogyService
 	{
 	//	AddToLog('Checking Up date by ID');
 		// Method call used to retrieve data by the Gedcom Id form PGV
-		$indirec = find_person_record($RID);
+		$indirec = find_gedcom_record($RID);
 
 		if(!empty($indirec))
 		{

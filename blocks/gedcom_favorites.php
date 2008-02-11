@@ -74,7 +74,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 				} else {
 					if (displayDetailsbyId($favorite["gid"], $favorite["type"])) {
 						if ($favorite["type"]=="INDI") {
-							$indirec = find_person_record($favorite["gid"]);
+							$indirec = find_gedcom_record($favorite["gid"]);
 							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
 							if (preg_match("/1 SEX F/", $indirec)>0) print "F";
 							else if (preg_match("/1 SEX M/", $indirec)>0) print "";

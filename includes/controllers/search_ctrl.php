@@ -372,14 +372,14 @@ class SearchControllerRoot extends BaseController {
 		if (isset ($this->query)) {
 
 			// see if it's an indi ID. If it's found and privacy allows it, JUMP!!!!
-			if (find_person_record($this->query)) {
+			if (find_gedcom_record($this->query)) {
 				if (showLivingNameByID($this->query) || displayDetailsByID($this->query)) {
 					header("Location: individual.php?pid=".$this->query."&ged=".$GEDCOM);
 					exit;
 				}
 			}
 			// see if it's a family ID. If it's found and privacy allows it, JUMP!!!!
-			if (find_family_record($this->query)) {
+			if (find_gedcom_record($this->query)) {
 				//-- check if we can display both parents
 				if (displayDetailsByID($this->query, "FAM") == true) {
 					$parents = find_parents($this->query);
@@ -391,7 +391,7 @@ class SearchControllerRoot extends BaseController {
 			}
 			// see if it's an source ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= getUserAccessLevel(getUserName())) {
-				if (find_source_record($this->query)) {
+				if (find_gedcom_record($this->query)) {
 					header("Location: source.php?sid=".$this->query."&ged=".$GEDCOM);
 					exit;
 				}
@@ -399,7 +399,7 @@ class SearchControllerRoot extends BaseController {
 
 			// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= getUserAccessLevel(getUserName())) {
-				if (find_repo_record($this->query)) {
+				if (find_gedcom_record($this->query)) {
 					header("Location: repo.php?rid=".$this->query."&ged=".$GEDCOM);
 					exit;
 				}
@@ -732,7 +732,6 @@ class SearchControllerRoot extends BaseController {
 	function SoundexSearch() {
 		global $REGEXP_DB, $GEDCOM, $GEDCOMS;
 		global $TBLPREFIX;
-		global $DBCONN, $indilist;
 
 		if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (count($this->sgeds) > 0)) {
 			$logstring = "Type: Soundex<br />";
@@ -761,14 +760,9 @@ class SearchControllerRoot extends BaseController {
 				$res = search_indis_soundex($this->soundex, $this->lastname, $this->firstname, $this->place, $this->sgeds);
 				if ($res!==false) {
 					while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-						$indilist[$row['i_id']]["gedcom"] = $row['i_gedcom'];
-						//$indilist[$row['i_id']]["names"] = get_indi_names($row['i_gedcom']);
-						$indilist[$row['i_id']]["isdead"] = $row['i_isdead'];
-						$indilist[$row['i_id']]["gedfile"] = $row['i_file'];
-						//$namearray = $indilist[$row['i_id']]["names"];
 						$save = true;
 						if ((!empty ($this->place)) || (!empty ($this->year))) {
-							$indirec = $row['i_gedcom'];
+							$indirec = $row['rec_gedcom'];
 							if ((!empty ($this->place)) &&  empty ($this->lastname) && empty ($this->firstname)) {
 								$savep = false;
 								$pt = preg_match_all("/\d PLAC (.*)/i", $indirec, $match, PREG_PATTERN_ORDER);

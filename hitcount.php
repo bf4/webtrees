@@ -56,7 +56,7 @@ if($SHOW_COUNTER)
       fclose($fp);
   }
 
-  if(isset($pid) && find_person_record($pid)) { //individual counter
+  if(isset($pid) && find_gedcom_record($pid)) { //individual counter
 
   	// Capitalize ID to make sure we have a correct hitcount on the individual
   	$pid = strtoupper($pid);

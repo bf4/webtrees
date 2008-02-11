@@ -67,7 +67,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 if ($count==0) $count = rand();
 	 $lbwidth = $bwidth*.75;
 	 if ($lbwidth < 150) $lbwidth = 150;
-	 $indirec=find_person_record($pid);
+	 $indirec=find_gedcom_record($pid);
 	 if (!$indirec) $indirec = find_updated_record($pid);
 	 $isF = "NN";
 	 if (preg_match("/1 SEX F/", $indirec)>0) $isF="F";
@@ -128,7 +128,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
 					for ($i=0; $i<$ct; $i++) {
 						 $famid = $match[$i][1];
-						 $famrec = find_family_record($famid);
+						 $famrec = find_gedcom_record($famid);
 						 if ($famrec) {
 							  $parents = find_parents_in_record($famrec);
 							  $spouse = "";
@@ -2290,7 +2290,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview") {
 				if ($type=='FAM') {
-					$famrec = find_family_record($pid);
+					$famrec = find_gedcom_record($pid);
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
@@ -2404,7 +2404,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 			// age at event
 			else if ($fact!="CHAN") {
 				if (!$indirec)
-					$indirec=find_person_record($pid);
+					$indirec=find_gedcom_record($pid);
 				$person=new Person($indirec);
 				$birth_date=new GedcomDate($person->getBirthDate(false));
 				$death_date=new GedcomDate($person->getDeathDate(false));
@@ -2544,15 +2544,14 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 	}
 }
 /**
- * print first major fact for an Individual
+ * print first major fact for an Individual/Family
  *
  * @param string $key	indi pid
  */
 function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
 
-	$indirec = find_person_record($key);
-	if (!$indirec) $indirec = find_family_record($key);
+	$indirec = find_gedcom_record($key);
 	foreach ($majorfacts as $indexval => $fact) {
 		$factrec = get_sub_record(1, "1 $fact", $indirec);
 		if (strlen($factrec)>7 and showFact("$fact", $key) and !FactViewRestricted($key, $factrec)) {
@@ -2816,7 +2815,7 @@ function get_lds_glance($indirec) {
 	$found = false;
 	$ct = preg_match_all("/1 FAMS @(.*)@/", $indirec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$famrec = find_family_record($match[$i][1]);
+		$famrec = find_gedcom_record($match[$i][1]);
 		if ($famrec) {
 			$ord = get_sub_record(1, "1 SLGS", $famrec);
 			if ($ord) {

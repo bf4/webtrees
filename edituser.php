@@ -103,7 +103,7 @@ if ($action=="edituser2") {
 					if (!empty($gedid)) {
 						include_once("includes/functions_edit.php");
 						$GEDCOM = $gedc;
-						$indirec = find_person_record($gedid);
+						$indirec = find_gedcom_record($gedid);
 						if (!empty($indirec)) {
 							if (preg_match("/\d _?EMAIL/", $indirec)>0) {
 								$indirec = preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$user["email"], $indirec);

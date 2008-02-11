@@ -65,13 +65,9 @@ class Media extends GedcomRecord {
 	 * @param string $pid	the ID of the media to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $objectlist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $GEDCOM, $GEDCOMS, $pgv_changes;
 
-		if (isset($objectlist[$pid]['gedfile']) && $objectlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($objectlist[$pid]['object'])) return $objectlist[$pid]['object'];
-		}
-
-		$gedrec = find_media_record($pid);
+		$gedrec = find_gedcom_record($pid);
 		if (empty($gedrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
 			if ($ct>0) {
@@ -92,7 +88,6 @@ class Media extends GedcomRecord {
 		if (empty($gedrec)) return null;
 		$obje = new Media($gedrec, $simple);
 		if (!empty($fromfile)) $obje->setChanged(true);
-		$objectlist[$pid]['object'] = &$obje;
 		return $obje;
 	}
 

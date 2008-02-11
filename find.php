@@ -427,7 +427,7 @@ if ($action=="filter") {
 		$famquery = array();
 
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
-		if (find_person_record($filter)) {
+		if (find_gedcom_record($filter)) {
 			$printname = search_fams_members($filter);
 			$ctf = count($printname);
 		}
