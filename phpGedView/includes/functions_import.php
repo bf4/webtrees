@@ -1792,16 +1792,17 @@ function cleanup_tags_y(& $irec) {
 // Create a pseudo-random UUID, as per RFC4122
 function uuid() {
 	return sprintf(
-		'%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X',
+		//'%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X', // RFC4122 format (with hyphens)
+		'%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X', // PAF format (without hyphens)
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
-		rand(0, 255)&0x3f|0x80, // Set the version to random (0100xxxx)
+		rand(0, 255)&0x3f|0x80, // Set the version to random (10xxxxxx)
 		rand(0, 255),
-		rand(0, 255)&0x0f|0x40, // Set the variant to RFC4122 (10xxxxxx)
+		rand(0, 255)&0x0f|0x40, // Set the variant to RFC4122 (0100xxxx)
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
