@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,14 +32,15 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 $pgv_lang["age_differences"]            = "Voir les écarts d'âge";
 $pgv_lang["date_of_entry"]              = "Date d'entrée dans le document original";
 $pgv_lang["multi_site_search"]          = "Recherche multi-sites";
-#pgv_lang["switch_lifespan"]            = "Show Lifespan chart";
-#pgv_lang["switch_timeline"]            = "Show Timeline chart";
+$pgv_lang["switch_lifespan"]            = "Montrer le diagramme Ligne de temps";
+$pgv_lang["switch_timeline"]            = "Montrer le diagramme Echelle de temps";
 $pgv_lang["differences"]                = "Différences";
-#pgv_lang["charts_block"]               = "Charts Block";
-#pgv_lang["charts_block_descr"]         = "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.";
-#pgv_lang["chart_type"]                 = "Chart Type";
-#pgv_lang["changedate1"]                = "Ending range of change dates";
-#pgv_lang["changedate2"]                = "Starting range of change dates";
+$pgv_lang["charts_block"]               = "Bloc Diagrammes";
+$pgv_lang["charts_block_descr"]         = "Le bloc diagrammes vous permet de placer un diagramme sur la page d'accueil ou sur la page Mon Portail. Vous pouvez configurer le bloc pour montrer les ancêtres, les descendants ou la vue sablier. Vous pouvez également choisir la personne racine du diagramme.";
+$pgv_lang["charts_click_box"]           = "Cliquez sur le boite de votre choix afin d'obtenir plus d'informations sur cette personne.";
+$pgv_lang["chart_type"]                 = "Type de diagramme";
+$pgv_lang["changedate1"]                = "Fin de plage des dates à modifier";
+$pgv_lang["changedate2"]                = "Début de plage des dates à modifier";
 $pgv_lang["search_place_word"]          = "Mots entiers seulement";
 $pgv_lang["invalid_search_input"]       = "Entrez un nom de personne ou de lieu en complément de l'année";
 $pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";
@@ -207,12 +208,12 @@ $pgv_lang["html_block_sample_part1"]    = "<p class='blockhc'><b>Saisir le titre
 $pgv_lang["html_block_sample_part2"]    = "pour modifier ce texte</p>";
 $pgv_lang["html_block_name"]            = "Bloc HTML";
 $pgv_lang["htmlplus_block_name"]        = "Bloc HTML avancé";
-#pgv_lang["htmlplus_block_descr"]       = "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text.";
+$pgv_lang["htmlplus_block_descr"]       = "Il s'agit d'un bloc HTML que vous pouvez placer sur votre page afin d'ajouter tout type de message. Vous pouvez insérer des références à certaines informations issues de votre fichier GEDCOM dans un format texte HTML.";
 $pgv_lang["htmlplus_block_templates"]   = "Modèles";
 $pgv_lang["htmlplus_block_content"]     = "Contenu";
-#pgv_lang["htmlplus_block_narrative"]   = "Narrative style (English only)";
+$pgv_lang["htmlplus_block_narrative"]   = "Style narratif (Anglais uniquement)";
 $pgv_lang["htmlplus_block_custom"]      = "Personnalisé";
-#pgv_lang["htmlplus_block_keyword"]     = "Keyword Examples (English only)";
+$pgv_lang["htmlplus_block_keyword"]     = "Exemples de mots clés (Anglais uniquement)";
 $pgv_lang["htmlplus_block_taglist"]     = "Liste de balises";
 $pgv_lang["htmlplus_block_compat"]      = "Compatibilité";
 $pgv_lang["htmlplus_block_current"]     = "Courant";
@@ -659,47 +660,47 @@ $pgv_lang["oct"]                        = "Octobre";
 $pgv_lang["nov"]                        = "Novembre";
 $pgv_lang["dec"]                        = "Décembre";
 
-#pgv_lang["vend"]                       = "Vendémiaire";
-#pgv_lang["brum"]                       = "Brumaire";
-#pgv_lang["frim"]                       = "Frimaire";
-#pgv_lang["nivo"]                       = "Nivôse";
-#pgv_lang["pluv"]                       = "Pluviôse";
-#pgv_lang["vent"]                       = "Ventôse";
-#pgv_lang["germ"]                       = "Germinal";
-#pgv_lang["flor"]                       = "Floréal";
-#pgv_lang["prai"]                       = "Prairial";
-#pgv_lang["mess"]                       = "Messidor";
-#pgv_lang["ther"]                       = "Thermidor";
-#pgv_lang["fruc"]                       = "Fructidor";
-#pgv_lang["comp"]                       = "jours complémentaires";
+$pgv_lang["vend"]                       = "Vendémiaire";
+$pgv_lang["brum"]                       = "Brumaire";
+$pgv_lang["frim"]                       = "Frimaire";
+$pgv_lang["nivo"]                       = "Nivôse";
+$pgv_lang["pluv"]                       = "Pluviôse";
+$pgv_lang["vent"]                       = "Ventôse";
+$pgv_lang["germ"]                       = "Germinal";
+$pgv_lang["flor"]                       = "Floréal";
+$pgv_lang["prai"]                       = "Prairial";
+$pgv_lang["mess"]                       = "Messidor";
+$pgv_lang["ther"]                       = "Thermidor";
+$pgv_lang["fruc"]                       = "Fructidor";
+$pgv_lang["comp"]                       = "jours complémentaires";
 
-#pgv_lang["tsh"]                        = "Tishrei";
-#pgv_lang["csh"]                        = "Heshvan";
-#pgv_lang["ksl"]                        = "Kislev";
-#pgv_lang["tvt"]                        = "Tevet";
-#pgv_lang["shv"]                        = "Shevat";
-#pgv_lang["adr"]                        = "Adar";
-#pgv_lang["adr_leap_year"]              = "Adar I";
-#pgv_lang["ads"]                        = "Adar II";
-#pgv_lang["nsn"]                        = "Nissan";
-#pgv_lang["iyr"]                        = "Iyar";
-#pgv_lang["svn"]                        = "Sivan";
-#pgv_lang["tmz"]                        = "Tamuz";
-#pgv_lang["aav"]                        = "Av";
-#pgv_lang["ell"]                        = "Elul";
+$pgv_lang["tsh"]                        = "Tishrei";
+$pgv_lang["csh"]                        = "Heshvan";
+$pgv_lang["ksl"]                        = "Kislev";
+$pgv_lang["tvt"]                        = "Tevet";
+$pgv_lang["shv"]                        = "Shevat";
+$pgv_lang["adr"]                        = "Adar";
+$pgv_lang["adr_leap_year"]              = "Adar I";
+$pgv_lang["ads"]                        = "Adar II";
+$pgv_lang["nsn"]                        = "Nissan";
+$pgv_lang["iyr"]                        = "Iyar";
+$pgv_lang["svn"]                        = "Sivan";
+$pgv_lang["tmz"]                        = "Tamuz";
+$pgv_lang["aav"]                        = "Av";
+$pgv_lang["ell"]                        = "Elul";
 
-#pgv_lang["muhar"]                      = "Muharram";
-#pgv_lang["safar"]                      = "Safar";
-#pgv_lang["rabia"]                      = "Rabi' al-awwal";
-#pgv_lang["rabit"]                      = "Rabi' al-thani";
-#pgv_lang["jumaa"]                      = "Jumada al-awwal";
-#pgv_lang["jumat"]                      = "Jumada al-thani";
-#pgv_lang["rajab"]                      = "Rajab";
-#pgv_lang["shaab"]                      = "Sha'aban";
-#pgv_lang["ramad"]                      = "Ramadan";
-#pgv_lang["shaww"]                      = "Shawwal";
-#pgv_lang["dhuaq"]                      = "Dhu al-Qi'dah";
-#pgv_lang["dhuah"]                      = "Dhu al-Hijjah";
+$pgv_lang["muhar"]                      = "Muharram";
+$pgv_lang["safar"]                      = "Safar";
+$pgv_lang["rabia"]                      = "Rabi' al-awwal";
+$pgv_lang["rabit"]                      = "Rabi' al-thani";
+$pgv_lang["jumaa"]                      = "Jumada al-awwal";
+$pgv_lang["jumat"]                      = "Jumada al-thani";
+$pgv_lang["rajab"]                      = "Rajab";
+$pgv_lang["shaab"]                      = "Sha'aban";
+$pgv_lang["ramad"]                      = "Ramadan";
+$pgv_lang["shaww"]                      = "Shawwal";
+$pgv_lang["dhuaq"]                      = "Dhu al-Qi'dah";
+$pgv_lang["dhuah"]                      = "Dhu al-Hijjah";
 
 $pgv_lang["b.c."]                       = "av.J-C";
 
@@ -736,28 +737,28 @@ $pgv_lang["research_assistant"]         = "Assistant de recherches";
 $pgv_lang["utf8_to_ansi"]               = "Convertir ce fichier GEDCOM format UTF-8 en format ANSI (ISO-8859-1) ?";
 $pgv_lang["media_linked"]               = "Cet objet MultiMedia est relié à :";
 $pgv_lang["media_not_linked"]           = "Cet objet MultiMedia n'est relié à aucun enregistrement GEDCOM.";
-#pgv_lang["media_dir_1"]                = "This media object is located on an external server";
-#pgv_lang["media_dir_2"]                = "This media object is in the standard media directory";
-#pgv_lang["media_dir_3"]                = "This media object is in the protected media directory";
-#pgv_lang["thumb_dir_1"]                = "This thumbnail is located on an external server";
-#pgv_lang["thumb_dir_2"]                = "This thumbnail is in the standard media directory";
-#pgv_lang["thumb_dir_3"]                = "This thumbnail is in the protected media directory";
-#pgv_lang["moveto_2"]                   = "Move to protected directory";
-#pgv_lang["moveto_3"]                   = "Move to standard directory";
-#pgv_lang["move_standard"]              = "Move to standard";
-#pgv_lang["move_protected"]             = "Move to protected";
-#pgv_lang["move_mediadirs"]             = "Move Media directories";
-#pgv_lang["setperms"]                   = "Set Media Permissions";
-#pgv_lang["setperms_writable"]          = "Make World-Writable";
-#pgv_lang["setperms_readonly"]          = "Make World-Read Only";
-#pgv_lang["setperms_success"]           = "Permissions Set";
-#pgv_lang["setperms_failure"]           = "Permissions Not Set";
-#pgv_lang["setperms_time_exceeded"]     = "The execution time limit was reached.  Try the command again on a smaller directory.";
-#pgv_lang["move_time_exceeded"]         = "The execution time limit was reached.  Try the command again to move the rest of the files.";
-#pgv_lang["media_firewall_rootdir_no_exist"]= "The Media Firewall root directory you requested does not exist.  You must create it first.";
-#pgv_lang["media_firewall_protected_dir_no_exist"]= "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable.";
-#pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media directory in the Media Firewall root directory is not world writable. ";
-#pgv_lang["media_firewall_invalid_dir"] = "Error: The Media Firewall was launched from a directory other than the media directory.";
+$pgv_lang["media_dir_1"]                = "Cet objet MultiMedia est situé sur un serveur externe";
+$pgv_lang["media_dir_2"]                = "Cet objet MultiMedia est situé dans le répertoire media standard";
+$pgv_lang["media_dir_3"]                = "Cet objet MultiMedia est situé dans le répertoire media protégé";
+$pgv_lang["thumb_dir_1"]                = "Cette vignette est située sur un serveur externe";
+$pgv_lang["thumb_dir_2"]                = "Cette vignette est située dans le répertoire media standard";
+$pgv_lang["thumb_dir_3"]                = "Cette vignette est située dans le répertoire media protégé";
+$pgv_lang["moveto_2"]                   = "A déplacer vers le répertoire protégé";
+$pgv_lang["moveto_3"]                   = "A déplacer vers le répertoire standard";
+$pgv_lang["move_standard"]              = "A déplacer vers le répertoire standard";
+$pgv_lang["move_protected"]             = "A déplacer vers le répertoire protégé";
+$pgv_lang["move_mediadirs"]             = "Déplacez les répertoires multimedia";
+$pgv_lang["setperms"]                   = "Paramétrez les droits à permissions des répertoires (lecture, écriture)";
+$pgv_lang["setperms_writable"]          = "Permettre à tout le monde d'y écrire";
+$pgv_lang["setperms_readonly"]          = "N'autoriser que la lecture à tout le monde";
+$pgv_lang["setperms_success"]           = "Les droits à permissions (lecture, écriture) ont été paramétrées";
+$pgv_lang["setperms_failure"]           = "Les droits à permissions (lecture, écriture) n'ont pas été paramétrées";
+$pgv_lang["setperms_time_exceeded"]     = "Le temps d'exécution limite a été atteint.  Essayez la commande une nouvelle fois sur un répertoire plus petit.";
+$pgv_lang["move_time_exceeded"]         = "Le temps d'exécution limite a été atteint.  Essayez la commande une nouvelle fois pour déplacer le reste des fichiers.";
+$pgv_lang["media_firewall_rootdir_no_exist"]= "Le répertoire racine du parefeu des media (Media Firewall) que vous avez indiqué n'existe pas. Vous devez d'abord le créer.";
+$pgv_lang["media_firewall_protected_dir_no_exist"]= "Le répertoire contenant les media protégés n'est pas créé dans le répertoire racine du parefeu des media (Media Firewall).  Créez ce répertoire et rendez-le modifiable par tout le monde.";
+$pgv_lang["media_firewall_protected_dir_not_writable"]	= "Le répertoire contenant les media protégés dans le répertoire racine du parefeu des media n'est pas modifiable par tout le monde. ";
+$pgv_lang["media_firewall_invalid_dir"] = "Erreur: le parefeu des media (Media Firewall) a été lancé depuis un répertoire autre que le répertoire media. ";
 
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]         = "Grand";
@@ -1234,8 +1235,8 @@ $pgv_lang["upcoming_events_block"]      = "Bloc «Evènements à venir»";
 $pgv_lang["upcoming_events_descr"]      = "Le bloc «Evènements à venir» affiche les anniversaires des 30 prochains jours.";
 $pgv_lang["todays_events_block"]        = "Bloc «Ce jour-là»";
 $pgv_lang["todays_events_descr"]        = "Le bloc «Ce jour-là» affiche les anniversaires du jour. Les utilisateurs identifiés voient les anniversaires des personnes vivantes.";
-#pgv_lang["yahrzeit_block"]             = "Upcoming Yahrzeiten";
-#pgv_lang["yahrzeit_descr"]             = "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look.";
+$pgv_lang["yahrzeit_block"]             = "Les Yahrzeiten à venir";
+$pgv_lang["yahrzeit_descr"]             = "Le bloc des Yahrzeiten à venir affiche les anniversaires des décès qui vont arriver dans un futur proche. Vous pouvez configurer la période qui est affichée, et l'administrateur peut configurer la date jusqu'à laquelle ce bloc doit aller chercher ces anniversaires.";
 $pgv_lang["logged_in_users_block"]      = "Bloc «Utilisateurs connectés»";
 $pgv_lang["logged_in_users_descr"]      = "Le bloc «Utilisateurs connectés» affiche les comptes des utilisateurs actuellement connectés à cette base.";
 $pgv_lang["user_messages_block"]        = "Bloc «Mes messages»";
@@ -1349,9 +1350,9 @@ $pgv_lang["ahnentafel_place"]           = ", ";
 $pgv_lang["ahnentafel_no_details"]      = " les détails sont inconnus";
 
 //-- Changes report
-#pgv_lang["changes_report"]             = "Changes Report";
-#pgv_lang["changes_pending_tot"]        = "Total pending changes: ";
-#pgv_lang["changes_accepted_tot"]       = "Total accepted changes: ";
+$pgv_lang["changes_report"]             = "Rapport des modifications";
+$pgv_lang["changes_pending_tot"]        = "Nombre total des modifications en attente de validation: ";
+$pgv_lang["changes_accepted_tot"]       = "Nombre total des modifications acceptées: ";
 
 //-- Descendancy report
 $pgv_lang["descend_report"]             = "Descendance";
@@ -1642,7 +1643,7 @@ $pgv_lang["hs_results"]                 = "Résultats :";
 $pgv_lang["hs_keyword"]                 = "Rechercher";
 $pgv_lang["hs_searchin"]                = "Rechercher dans";
 $pgv_lang["hs_searchuser"]              = "Aide utilisateur";
-#pgv_lang["hs_searchmodules"]           = "Modules Help";
+$pgv_lang["hs_searchmodules"]           = "Aide sur les modules";
 $pgv_lang["hs_searchconfig"]            = "Aide administrateur";
 $pgv_lang["hs_searchhow"]               = "Type de recherche";
 $pgv_lang["hs_searchall"]               = "Tous les mots";
@@ -1656,21 +1657,21 @@ $pgv_lang["choose"]                     = "Choisir : ";
 $pgv_lang["account_information"]        = "Informations du compte";
 
 //-- Media item "TYPE" sub-field
-#pgv_lang["TYPE__audio"]                = "Audio";
+$pgv_lang["TYPE__audio"]                = "Audio";
 $pgv_lang["TYPE__book"]                 = "Livre";
 $pgv_lang["TYPE__card"]                 = "Carte";
 $pgv_lang["TYPE__certificate"]          = "Certificat";
-#pgv_lang["TYPE__document"]             = "Document";
-$pgv_lang["TYPE__electronic"]           = "Electronique";
-#pgv_lang["TYPE__fiche"]                = "Microfiche";
-#pgv_lang["TYPE__film"]                 = "Microfilm";
-#pgv_lang["TYPE__magazine"]             = "Magazine";
+$pgv_lang["TYPE__document"]             = "Document";
+$pgv_lang["TYPE__electronic"]           = "Électronique";
+$pgv_lang["TYPE__fiche"]                = "Microfiche";
+$pgv_lang["TYPE__film"]                 = "Microfilm";
+$pgv_lang["TYPE__magazine"]             = "Magazine";
 $pgv_lang["TYPE__manuscript"]           = "Manuscrit";
 $pgv_lang["TYPE__map"]                  = "Carte ou plan";
 $pgv_lang["TYPE__newspaper"]            = "Journal";
-#pgv_lang["TYPE__photo"]                = "Photo";
+$pgv_lang["TYPE__photo"]                = "Photo";
 $pgv_lang["TYPE__tombstone"]            = "Pierre tombale";
-#pgv_lang["TYPE__video"]                = "Video";
+$pgv_lang["TYPE__video"]                = "Vidéo";
 
 //-- Other media suff
 $pgv_lang["view_slideshow"]             = "Voir en diaporama";
@@ -1680,8 +1681,8 @@ $pgv_lang["media_privacy"]              = "Objet MultiMedia est protégé";
 $pgv_lang["relations_heading"]          = "Cette image est liée à :";
 $pgv_lang["file_size"]                  = "Taille du fichier";
 $pgv_lang["img_size"]                   = "Taille de l'image";
-#pgv_lang["media_broken"]               = "This media file is broken and cannot be watermarked";
-#pgv_lang["unknown_mime"]               = "Media Firewall error: >Unknown Mimetype< for file";
+$pgv_lang["media_broken"]               = "Ce fichier multimedia est défectueux et ne peut pas être mis en surbrillance";
+$pgv_lang["unknown_mime"]               = "Erreur du parefeu des objets multimedia: >Mimetype< pour ce fichier";
 
 //-- Modules
 $pgv_lang["module_error_unknown_action_v2"]= "Type d'action inconnu: [action].";

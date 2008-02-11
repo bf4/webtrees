@@ -105,7 +105,7 @@ class ra_functions {
 		//require_once("includes/functions_db.php");//Need to fix this the file is not found
 
 		// Grab our database connections and table prefix from the site
-		global $DBCONN, $TBLPREFIX;
+		global $DBCONN, $TBLPREFIX, $DBTYPE;
 
 		$data = $DBCONN->getListOf('tables');
 		$res = 0;
@@ -113,6 +113,7 @@ class ra_functions {
 		// If the Table is not in the array
 		if (!in_array($TBLPREFIX.'factlookup', $data)) {
 			//Then create Table
+			// TODO don't use auto-inc fields... instead use the get_next_id serializer
 	   	   if ($DBTYPE == "pgsql")
 				$sql = 'create table '.$TBLPREFIX.'factlookup (id SERIAL,Description VARCHAR(255) not null,StartDate INT not null, EndDate INT not null, Gedcom_fact VARCHAR(10),PL_LV1 VARCHAR(255), PL_LV2 VARCHAR(255), PL_LV3 VARCHAR(255), PL_LV4 VARCHAR(255), PL_LV5 VARCHAR(255), SOUR_ID VARCHAR(255),Comment VARCHAR(255),PRIMARY KEY(id))';			
 			else
