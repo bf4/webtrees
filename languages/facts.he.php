@@ -56,7 +56,7 @@ $factarray["BLOB"] 	= "אובייקט נתונים בינארי";
 $factarray["BURI"] 	= "קבורה";
 $factarray["CALN"]	= "מספר קריאה";
 $factarray["CAST"]	= "כת / מעמד חברתי";
-$factarray["CAUS"]	= "גורם המות";
+$factarray["CAUS"]	= "גורם המוות";
 $factarray["CEME"]	= "בית קברות";
 $factarray["CENS"]	= "מפקד אוכלוסין";
 $factarray["CHAN"]	= "שנוי אחרון";
@@ -100,7 +100,7 @@ $factarray["IMMI"] 		= "עליה";
 $factarray["LEGA"]	= "יורש";
 $factarray["MARB"]	= "הודעת נישואין";
 $factarray["MARC"]= "כתובה";
-$factarray["MARL"] = "רשיון נישואין";
+$factarray["MARL"] = "רישיון נישואין";
 $factarray["MEDI"]	= "סוג מדיה";
 $factarray["NCHI"] 	= "מספר ילדים";
 $factarray["NICK"] 	= "כנוי";
@@ -124,7 +124,7 @@ $factarray["REPO"]	= "מאגר";
 $factarray["SPFX"]	= "קידומת שם משפחה";
 $factarray["SSN"]	= "מספר מזהה (SSN)";
 $factarray["STAE"]	= "מדינה";
-$factarray["STAT"]	= "סטטוס";
+$factarray["STAT"]	= "סטאטוס";
 $factarray["SUBM"]	= "מגיש";
 $factarray["SUBN"]	= "הגשה";
 $factarray["PROP"]	= "נכס";
@@ -162,7 +162,7 @@ $factarray["_PRIM"]	= "תמונה מודגשת";
 $factarray["_DBID"] = "קוד זיהוי של מאגר נתונים מקושר"; 
 
 // These facts are used in specific contexts
-$factarray["STAT:DATE"] = "תאריך שינוי הסטטוס";
+$factarray["STAT:DATE"] = "תאריך שינוי הסטאטוס";
 
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"] = "שם המשפחה של האב";
@@ -188,7 +188,7 @@ $factarray["DEAT:PLAC"] = "מקום פטירה";
 $factarray["CHR:PLAC"] = "מקום טבילה";
 $factarray["BAPM:PLAC"] = "מקום הטבלה";
 $factarray["BURI:PLAC"] = "מקום קבורה";
-$factarray["MARR:PLAC"] = "מקום נשואין"; 
+$factarray["MARR:PLAC"] = "מקום נישואין"; 
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"] = "רפואי";
@@ -334,6 +334,6 @@ $factarray["_THUM"] = "השתמש בתמונה זו כתמונה ממוזערת?
 $factarray["_PGVU"] = "ע\"י"; 
 $factarray["SERV"]  = "שרת מרוחק";
 $factarray["_GEDF"] = "קובץ GEDCOM";
-$factarray["_HIST"] = "הסטוריה"; 
+$factarray["_HIST"] = "היסטוריה"; 
 
 ?>
