@@ -455,7 +455,7 @@ class stats
 
 	function totalUsers()
 	{
-		return count(getUsers());
+		return count(get_all_users());
 	}
 
 	function totalMedia()

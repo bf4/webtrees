@@ -48,7 +48,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * @return bool return true if the username and password credentials match a user in the database return false if they don't
  */
 function authenticateUser($username, $password, $basic=false) {
-	global $TBLPREFIX, $GEDCOM, $pgv_lang;
+	global $GEDCOM, $pgv_lang;
 	checkTableExists();
 	$user = getUser($username);
 	//-- make sure that we have the actual username as it was stored in the DB
@@ -60,8 +60,7 @@ function authenticateUser($username, $password, $basic=false) {
 			if (!isset($user["verified_by_admin"]))
 				$user["verified_by_admin"] = "";
 			if ((($user["verified"] == "yes") && ($user["verified_by_admin"] == "yes")) || ($user["canadmin"] != "")) {
-				$sql = "UPDATE ".$TBLPREFIX."users SET u_loggedin='Y', u_sessiontime='".time()."' WHERE u_username='$username'";
-				$res = dbquery($sql,false);
+				set_user_setting($username, 'loggedin', 'Y');
 
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $username ."<-");
 				//-- reset the user's session
@@ -124,7 +123,7 @@ function basicHTTPAuthenticateUser() {
  * @param string $username	optional parameter to logout a specific user
  */
 function userLogout($username = "") {
-	global $TBLPREFIX, $GEDCOM, $LANGUAGE;
+	global $GEDCOM, $LANGUAGE;
 
 	if ($username=="") {
 		if (isset($_SESSION["pgv_user"]))
@@ -135,8 +134,7 @@ function userLogout($username = "") {
 			else
 				return;
 	}
-	$sql = "UPDATE ".$TBLPREFIX."users SET u_loggedin='N' WHERE u_username='".$username."'";
-	$res = dbquery($sql,false);
+	set_user_setting($username, 'loggedin', 'N');
 
 	AddToLog("Logout - " . $username);
 
@@ -166,15 +164,12 @@ function userLogout($username = "") {
  * @param string $username	the username to update the login info for
  */
 function userUpdateLogin($username) {
-	global $TBLPREFIX;
-
 	if (empty($username))
 		$username = getUserName();
 	if (empty($username))
 		return;
 
-	$sql = "UPDATE ".$TBLPREFIX."users SET u_sessiontime='".time()."' WHERE u_username='$username'";
-	$res = dbquery($sql);
+	set_user_setting($username, 'sessiontime', time());
 }
 
 /**
@@ -186,70 +181,11 @@ function userUpdateLogin($username) {
  * @param string $order asc or dec
  * @return array returns a sorted array of users
  */
-function getUsers($field = "username", $order = "asc", $sort2 = "firstname") {
-	global $TBLPREFIX, $usersortfields;
-	$sql = "SELECT * FROM ".$TBLPREFIX."users ORDER BY u_".$field." ".strtoupper($order).", u_".$sort2;
-	$res = dbquery($sql);
-
+function getUsers($field='username', $order='asc', $sort2='firstname') {
 	$users = array();
-	if ($res) {
-		while ($user_row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$user = array();
-			$user["username"]=$user_row["u_username"];
-			$user["firstname"]=stripslashes($user_row["u_firstname"]);
-			$user["lastname"]=stripslashes($user_row["u_lastname"]);
-			$user["gedcomid"]=unserialize($user_row["u_gedcomid"]);
-			$user["rootid"]=unserialize($user_row["u_rootid"]);
-			$user["password"]=$user_row["u_password"];
-			if ($user_row["u_canadmin"]=='Y')
-				$user["canadmin"]=true;
-			else
-				$user["canadmin"]=false;
-			$user["canedit"]=unserialize($user_row["u_canedit"]);
-			//-- convert old <3.1 access levels to the new 3.2 access levels
-			foreach($user["canedit"] as $key=>$value) {
-				if ($value=="no")
-					$user["canedit"][$key] = "access";
-				if ($value=="yes")
-					$user["canedit"][$key] = "edit";
-			}
-			$user["email"] = $user_row["u_email"];
-			$user["verified"] = $user_row["u_verified"];
-			$user["verified_by_admin"] = $user_row["u_verified_by_admin"];
-			$user["language"] = $user_row["u_language"];
-			$user["pwrequested"] = $user_row["u_pwrequested"];
-			$user["reg_timestamp"] = $user_row["u_reg_timestamp"];
-			$user["reg_hashcode"] = $user_row["u_reg_hashcode"];
-			$user["theme"] = $user_row["u_theme"];
-			$user["loggedin"] = $user_row["u_loggedin"];
-			$user["sessiontime"] = $user_row["u_sessiontime"];
-			$user["contactmethod"] = $user_row["u_contactmethod"];
-			if ($user_row["u_visibleonline"]!='N')
-				$user["visibleonline"] = true;
-			else
-				$user["visibleonline"] = false;
-			if ($user_row["u_editaccount"]!='N')
-				$user["editaccount"] = true;
-			else
-				$user["editaccount"] = false;
-			$user["default_tab"] = $user_row["u_defaulttab"];
-			$user["comment"] = $user_row["u_comment"];
-			$user["comment_exp"] = $user_row["u_comment_exp"];
-			$user["sync_gedcom"] = $user_row["u_sync_gedcom"];
-			$user["relationship_privacy"] = $user_row["u_relationship_privacy"];
-			$user["max_relation_path"] = $user_row["u_max_relation_path"];
-			if ($user_row["u_auto_accept"]!="N")
-				$user["auto_accept"] = true;
-			else
-				$user["auto_accept"] = false;
-			$ext = runHooks('getuser', $user);
-			if (count($ext) > 0) {
-				$user = array_merge($user, $ext);
-			}
-			$users[$user_row["u_username"]] = $user;
-		}
+	foreach (get_all_users($order, $field, $sort2) as $username) {
+		$users[$username]=getUser($username);
 	}
-	$res->free();
 	return $users;
 }
 
@@ -281,13 +217,10 @@ function getUserName() {
 		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
 			if (!is_object($DBCONN))
 				return $_COOKIE["pgv_rem"];
-			$user = getUser($_COOKIE["pgv_rem"]);
-			if ($user) {
-				if (time() - $user["sessiontime"] < 60*60*24*7) {
-					$_SESSION['pgv_user'] = $_COOKIE["pgv_rem"];
-					$_SESSION['cookie_login'] = true;
-					return $_COOKIE["pgv_rem"];
-				}
+			if (time() - get_user_setting($_COOKIE['pgv_rem'], 'sessiontime', 0) < 60*60*24*7) {
+				$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
+				$_SESSION['cookie_login'] = true;
+				return $_COOKIE['pgv_rem'];
 			}
 		}
 	}
@@ -302,14 +235,10 @@ function getUserName() {
  * to change the configuration files
  */
 function userIsAdmin($username) {
-	if (empty($username))
-		return false;
 	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true)
 		return false;
-	$user = getUser($username);
-	if (!$user)
-		return false;
-	return $user["canadmin"];
+
+	return get_user_setting($username, 'canadmin')=='Y';
 }
 
 /**
@@ -326,20 +255,11 @@ function userGedcomAdmin($username, $ged="") {
 		$ged = $GEDCOM;
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
-	if (userIsAdmin($username))
+
+	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
-	if (empty($username))
-		return false;
-	$user = getUser($username);
-	if (!$user)
-		return false;
-	if (isset($user["canedit"][$ged])) {
-		if ($user["canedit"][$ged]=="admin")
-			return true;
-		else
-			return false;
-	} else
-		return false;
+
+	return get_user_gedcom_setting($username, $ged, 'canedit')=='admin';
 }
 
 /**
@@ -353,20 +273,10 @@ function userGedcomAdmin($username, $ged="") {
 function userCanAccess($username) {
 	global $GEDCOM;
 
-	if (userIsAdmin($username))
+	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
-	if (empty($username))
-		return false;
-	$user = getUser($username);
-	if (!$user)
-		return false;
-	if (isset($user["canedit"][$GEDCOM])) {
-		if ($user["canedit"][$GEDCOM]!="none" || $user["canadmin"])
-			return true;
-		else
-			return false;
-	} else
-		return false;
+
+	return get_user_gedcom_setting($username, $GEDCOM, 'canedit')!='none';
 }
 
 /**
@@ -382,22 +292,12 @@ function userCanEdit($username) {
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
-	if (userIsAdmin($username))
+
+	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
-	if (empty($username))
-		return false;
-	$user = getUser($username);
-	if (!$user)
-		return false;
-	if ($user["canadmin"])
-		return true;
-	if (isset($user["canedit"][$GEDCOM])) {
-		if ($user["canedit"][$GEDCOM]=="yes" || $user["canedit"][$GEDCOM]=="edit" || $user["canedit"][$GEDCOM]=="admin"|| $user["canedit"][$GEDCOM]=="accept" || $user["canedit"][$GEDCOM]===true)
-			return true;
-		else
-			return false;
-	} else
-		return false;
+
+	$tmp=get_user_gedcom_setting($username, $GEDCOM, 'canedit');
+	return $tmp=='admin' || $tmp=='accept' || $tmp=='edit';
 }
 
 /**
@@ -411,26 +311,17 @@ function userCanEdit($username) {
 function userCanAccept($username) {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
-	if ($_SESSION['cookie_login'])
+	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
-	if (userIsAdmin($username))
+
+	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
+
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
-	if (empty($username))
-		return false;
-	$user = getUser($username);
-	if (!$user)
-		return false;
-	if (isset($user["canedit"][$GEDCOM])) {
-		if ($user["canedit"][$GEDCOM]=="accept")
-			return true;
-		if ($user["canedit"][$GEDCOM]=="admin")
-			return true;
-		else
-			return false;
-	} else
-		return false;
+	
+	$tmp=get_user_gedcom_setting($username, $GEDCOM, 'canedit');
+	return $tmp=='admin' || $tmp=='accept';
 }
 
 /**
@@ -441,13 +332,8 @@ function userCanAccept($username) {
 function userAutoAccept($username = "") {
 	if (empty($username))
 		$username = getUserName();
-	if (empty($username))
-		return false;
 
-	if (!userCanAccept($username))
-		return false;
-	$user = getUser($username);
-	return $user["auto_accept"];
+	return get_user_setting($username, 'auto_accept')=='Y';
 }
 
 /**
@@ -457,25 +343,14 @@ function userAutoAccept($username = "") {
  * @return boolean true if an admin user has been defined
  */
 function adminUserExists() {
-	global $TBLPREFIX, $DBCONN, $PGV_ADMIN_EXISTS;
+	static $PGV_ADMIN_EXISTS=null;
 
-	if (isset($PGV_ADMIN_EXISTS))
+	if (!is_null($PGV_ADMIN_EXISTS))
 		return $PGV_ADMIN_EXISTS;
 
 	if (checkTableExists()) {
-		$sql = "SELECT u_username FROM ".$TBLPREFIX."users WHERE u_canadmin='Y'";
-		$res = dbquery($sql);
-
-		if ($res!==false && !DB::isError($res)) {
-			$count = $res->numRows();
-			$res->free();
-			if ($count==0) {
-				$PGV_ADMIN_EXISTS = false;
-				return false;
-			}
-			$PGV_ADMIN_EXISTS = true;
-			return true;
-		}
+		$PGV_ADMIN_EXISTS=admin_user_exists();
+		return $PGV_ADMIN_EXISTS;
 	}
 	return false;
 }
@@ -776,57 +651,44 @@ function checkTableExists() {
  * @param string $msg		The log message to write to the log
  */
 function addUser($newuser, $msg = "added") {
-	global $TBLPREFIX, $DBCONN, $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH;
 
 	if (checkTableExists()) {
-		$newuser["firstname"] = preg_replace("/\//", "", $newuser["firstname"]);
-		$newuser["lastname"] = preg_replace("/\//", "", $newuser["lastname"]);
-		$sql = "INSERT INTO ".$TBLPREFIX."users VALUES('".$DBCONN->escapeSimple($newuser["username"])."','".$DBCONN->escapeSimple($newuser["password"])."','".$DBCONN->escapeSimple($newuser["firstname"])."','".$DBCONN->escapeSimple($newuser["lastname"])."','".$DBCONN->escapeSimple(serialize($newuser["gedcomid"]))."','".$DBCONN->escapeSimple(serialize($newuser["rootid"]))."'";
-		if ($newuser["canadmin"])
-			$sql .= ",'Y'";
-		else
-			$sql .= ",'N'";
-		$sql .= ",'".$DBCONN->escapeSimple(serialize($newuser["canedit"]))."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["email"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["verified"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["verified_by_admin"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["language"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["pwrequested"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["reg_timestamp"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["reg_hashcode"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["theme"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["loggedin"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["sessiontime"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["contactmethod"])."'";
-		if ($newuser["visibleonline"])
-			$sql .= ",'Y'";
-		else
-			$sql .= ",'N'";
-		if ($newuser["editaccount"])
-			$sql .= ",'Y'";
-		else
-			$sql .= ",'N'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["default_tab"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["comment"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["comment_exp"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["sync_gedcom"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["relationship_privacy"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["max_relation_path"])."'";
-		if ($newuser["auto_accept"])
-			$sql .= ",'Y'";
-		else
-			$sql .= ",'N'";
-		$sql .= ")";
-		$tmp = dbquery($sql);
-		$res =& $tmp;
+		$user=$newuser['username'];
+		create_user($user);
+		set_user_setting($user, 'password',             $newuser['password']);
+		set_user_setting($user, 'firstname',            preg_replace("/\//", "", $newuser["firstname"]));
+		set_user_setting($user, 'lastname',             preg_replace("/\//", "", $newuser["lastname"]));
+		set_user_setting($user, 'gedcomid',             serialize($newuser['gedcomid']));
+		set_user_setting($user, 'rootid',               serialize($newuser['rootid']));
+		set_user_setting($user, 'canadmin',             $newuser['canadmin'] ? 'Y' : 'N');
+		set_user_setting($user, 'canedit',              serialize($newuser["canedit"]));
+		set_user_setting($user, 'email',                $newuser['email']);
+		set_user_setting($user, 'verified',             $newuser['verified']);
+		set_user_setting($user, 'verified_by_admin',    $newuser['verified_by_admin']);
+		set_user_setting($user, 'language',             $newuser['language']);
+		set_user_setting($user, 'pwrequested',          $newuser['pwrequested']);
+		set_user_setting($user, 'reg_timestamp',        $newuser['reg_timestamp']);
+		set_user_setting($user, 'reg_hashcode',         $newuser['reg_hashcode']);
+		set_user_setting($user, 'theme',                $newuser['theme']);
+		set_user_setting($user, 'loggedin',             $newuser['loggedin']);
+		set_user_setting($user, 'sessiontime',          $newuser['sessiontime']);
+		set_user_setting($user, 'contactmethod',        $newuser['contactmethod']);
+		set_user_setting($user, 'visibleonline',        $newuser['visibleonline'] ? 'Y' : 'N');
+		set_user_setting($user, 'editaccount',          $newuser['editaccount'] ? 'Y' : 'N');
+		set_user_setting($user, 'defaulttab',           $newuser['default_tab']);
+		set_user_setting($user, 'comment',              $newuser['comment']);
+		set_user_setting($user, 'comment_exp',          $newuser['comment_exp']);
+		set_user_setting($user, 'sync_gedcom',          $newuser['sync_gedcom']);
+		set_user_setting($user, 'relationship_privacy', $newuser['relationship_privacy']);
+		set_user_setting($user, 'max_relation_path',    $newuser['max_relation_path']);
+		set_user_setting($user, 'auto_accept',          $newuser['auto_accept'] ? 'Y' : 'N');
+
 		$activeuser = getUserName();
 		if ($activeuser == "")
 			$activeuser = "Anonymous user";
 		AddToLog($activeuser." ".$msg." user -> ".$newuser["username"]." <-");
-		if ($res) {
-			runHooks('adduser', $newuser);
-			return true;
-		}
+		runHooks('adduser', $newuser);
+		return true;
 	}
 	return false;
 }
@@ -843,73 +705,47 @@ function updateUser($username, $newuser, $msg = "updated") {
 	global $TBLPREFIX, $DBCONN, $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH;
 
 	if (checkTableExists()) {
-		$newuser['previous_username'] = $username;
-		$newuser["firstname"] = preg_replace("/\//", "", $newuser["firstname"]);
-		$newuser["lastname"] = preg_replace("/\//", "", $newuser["lastname"]);
-		$sql = "UPDATE ".$TBLPREFIX."users SET u_username='".$DBCONN->escapeSimple($newuser["username"])."', " .
-				"u_password='".$newuser["password"]."', " .
-				"u_firstname='".$DBCONN->escapeSimple($newuser["firstname"])."', " .
-				"u_lastname='".$DBCONN->escapeSimple($newuser["lastname"])."', " .
-				"u_gedcomid='".$DBCONN->escapeSimple(serialize($newuser["gedcomid"]))."'," .
-				"u_rootid='".$DBCONN->escapeSimple(serialize($newuser["rootid"]))."'";
-		if ($newuser["canadmin"])
-			$sql .= ", u_canadmin='Y'";
-		else
-			$sql .= ", u_canadmin='N'";
-		$sql .= ", u_canedit='".$DBCONN->escapeSimple(serialize($newuser["canedit"]))."'";
-		$sql .= ", u_email='".$DBCONN->escapeSimple($newuser["email"])."'";
-		$sql .= ", u_verified='".$DBCONN->escapeSimple($newuser["verified"])."'";
-		$sql .= ", u_verified_by_admin='".$DBCONN->escapeSimple($newuser["verified_by_admin"])."'";
-		$sql .= ", u_language='".$DBCONN->escapeSimple($newuser["language"])."'";
-		$sql .= ", u_pwrequested='".$DBCONN->escapeSimple($newuser["pwrequested"])."'";
-		$sql .= ", u_reg_timestamp='".$DBCONN->escapeSimple($newuser["reg_timestamp"])."'";
-		$sql .= ", u_reg_hashcode='".$DBCONN->escapeSimple($newuser["reg_hashcode"])."'";
-		$sql .= ", u_theme='".$DBCONN->escapeSimple($newuser["theme"])."'";
-		$sql .= ", u_loggedin='".$DBCONN->escapeSimple($newuser["loggedin"])."'";
-		$sql .= ", u_sessiontime='".$DBCONN->escapeSimple($newuser["sessiontime"])."'";
-		$sql .= ", u_contactmethod='".$DBCONN->escapeSimple($newuser["contactmethod"])."'";
-		if ($newuser["visibleonline"])
-			$sql .= ", u_visibleonline='Y'";
-		else
-			$sql .= ", u_visibleonline='N'";
-		if ($newuser["editaccount"])
-			$sql .= ", u_editaccount='Y'";
-		else
-			$sql .= ", u_editaccount='N'";
-		$sql .= ", u_defaulttab='".$DBCONN->escapeSimple($newuser["default_tab"])."'";
-		$sql .= ", u_comment='".$DBCONN->escapeSimple($newuser["comment"])."'";
-		$sql .= ", u_comment_exp='".$DBCONN->escapeSimple($newuser["comment_exp"])."'";
-		$sql .= ", u_sync_gedcom='".$DBCONN->escapeSimple($newuser["sync_gedcom"])."'";
-		$sql .= ", u_relationship_privacy='".$DBCONN->escapeSimple($newuser["relationship_privacy"])."'";
-		$sql .= ", u_max_relation_path='".$DBCONN->escapeSimple($newuser["max_relation_path"])."'";
-		if ($newuser["auto_accept"])
-			$sql .= ", u_auto_accept='Y'";
-		else
-			$sql .= ", u_auto_accept='N'";
-		$sql .= " WHERE u_username='".$DBCONN->escapeSimple($username)."'";
-		$res = dbquery($sql);
+		if ($username==$newuser['username']) {
+			$user=$username;
+		} else {
+			rename_user($username, $newuser['username']);
+			$user=$newuser['username'];
+		}
+		set_user_setting($user, 'password',             $newuser['password']);
+		set_user_setting($user, 'firstname',            preg_replace("/\//", "", $newuser["firstname"]));
+		set_user_setting($user, 'lastname',             preg_replace("/\//", "", $newuser["lastname"]));
+		set_user_setting($user, 'gedcomid',             serialize($newuser['gedcomid']));
+		set_user_setting($user, 'rootid',               serialize($newuser['rootid']));
+		set_user_setting($user, 'canadmin',             $newuser['canadmin'] ? 'Y' : 'N');
+		set_user_setting($user, 'canedit',              serialize($newuser["canedit"]));
+		set_user_setting($user, 'email',                $newuser['email']);
+		set_user_setting($user, 'verified',             $newuser['verified']);
+		set_user_setting($user, 'verified_by_admin',    $newuser['verified_by_admin']);
+		set_user_setting($user, 'language',             $newuser['language']);
+		set_user_setting($user, 'pwrequested',          $newuser['pwrequested']);
+		set_user_setting($user, 'reg_timestamp',        $newuser['reg_timestamp']);
+		set_user_setting($user, 'reg_hashcode',         $newuser['reg_hashcode']);
+		set_user_setting($user, 'theme',                $newuser['theme']);
+		set_user_setting($user, 'loggedin',             $newuser['loggedin']);
+		set_user_setting($user, 'sessiontime',          $newuser['sessiontime']);
+		set_user_setting($user, 'contactmethod',        $newuser['contactmethod']);
+		set_user_setting($user, 'visibleonline',        $newuser['visibleonline'] ? 'Y' : 'N');
+		set_user_setting($user, 'editaccount',          $newuser['editaccount'] ? 'Y' : 'N');
+		set_user_setting($user, 'defaulttab',           $newuser['default_tab']);
+		set_user_setting($user, 'comment',              $newuser['comment']);
+		set_user_setting($user, 'comment_exp',          $newuser['comment_exp']);
+		set_user_setting($user, 'sync_gedcom',          $newuser['sync_gedcom']);
+		set_user_setting($user, 'relationship_privacy', $newuser['relationship_privacy']);
+		set_user_setting($user, 'max_relation_path',    $newuser['max_relation_path']);
+		set_user_setting($user, 'auto_accept',          $newuser['auto_accept'] ? 'Y' : 'N');
+
 		$activeuser = getUserName();
 		if ($activeuser == "")
 			$activeuser = "Anonymous user";
-		AddToLog($activeuser." ".$msg." user [old username '".$newuser['previous_username']."'] new username-> ".$newuser["username"]." <-");
+		AddToLog($activeuser." ".$msg." user [old username '".$username."'] new username-> ".$newuser["username"]." <-");
 
-		//-- update all reference tables if username changed
-		if ($newuser["username"]!=$username) {
-			$sql = "UPDATE ".$TBLPREFIX."blocks SET b_username='".$DBCONN->escapeSimple($newuser["username"])."' WHERE b_username='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-			$sql = "UPDATE ".$TBLPREFIX."favorites SET fv_username='".$DBCONN->escapeSimple($newuser["username"])."' WHERE fv_username='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-			$sql = "UPDATE ".$TBLPREFIX."messages SET m_from='".$DBCONN->escapeSimple($newuser["username"])."' WHERE m_from='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-			$sql = "UPDATE ".$TBLPREFIX."messages SET m_to='".$DBCONN->escapeSimple($newuser["username"])."' WHERE m_to='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-			$sql = "UPDATE ".$TBLPREFIX."news SET n_username='".$DBCONN->escapeSimple($newuser["username"])."' WHERE n_username='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-		}
-		if ($res) {
-			runHooks('updateuser', $newuser);
-			return true;
-		}
+		runHooks('updateuser', $newuser);
+		return true;
 	}
 	return false;
 }
@@ -919,11 +755,10 @@ function updateUser($username, $newuser, $msg = "updated") {
  * @param string $username	the username to delete
  */
 function deleteUser($username) {
-	global $TBLPREFIX, $DBCONN, $users;
+	global $users;
 	unset($users[$username]);
-	$username = $DBCONN->escapeSimple($username);
-	$sql = "DELETE FROM ".$TBLPREFIX."users WHERE u_username='$username'";
-	$res = dbquery($sql);
+
+	delete_user($username);
 
 	$activeuser = getUserName();
 	if ($activeuser == "")
@@ -939,8 +774,8 @@ function deleteUser($username) {
 function create_export_user($export_accesslevel) {
 	GLOBAL $GEDCOM;
 
-	if (getUser("export"))
-		deleteUser("export");
+	if (user_exists('export'))
+		deleteUser('export');
 
 	$newuser = array();
 	$newuser["username"] = "export";
@@ -1000,181 +835,52 @@ function create_export_user($export_accesslevel) {
 function getUser($username) {
 	global $TBLPREFIX, $users, $REGEXP_DB, $GEDCOMS, $DBCONN, $DBTYPE;
 
-	if (empty($username))
+	if (!user_exists($username))
 		return false;
-	if (isset($users[$username]))
-		return $users[$username];
-	if (DB::isError($DBCONN))
-		return false; // We can call this function
-	$username = $DBCONN->escapeSimple($username);
-	$sql = "SELECT * FROM ".$TBLPREFIX."users WHERE ";
-	if (stristr($DBTYPE, "mysql")!==false)
-		$sql .= "BINARY ";
-	$sql .= "u_username='".$username."'";
-	$res = dbquery($sql, false);
 
-	if ($res===false || DB::isError($res))
-		return false;
-	if ($res->numRows()==0)
-		return false;
-	if ($res) {
-		while ($user_row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if ($user_row) {
-				$user = array();
-				$user["username"]=$user_row["u_username"];
-				$user["firstname"]=stripslashes($user_row["u_firstname"]);
-				$user["lastname"]=stripslashes($user_row["u_lastname"]);
-				$user["gedcomid"]=unserialize($user_row["u_gedcomid"]);
-				$user["rootid"]=unserialize($user_row["u_rootid"]);
-				$user["password"]=$user_row["u_password"];
-				if ($user_row["u_canadmin"]=='Y')
-					$user["canadmin"]=true;
-				else
-					$user["canadmin"]=false;
-				$user["canedit"]=unserialize($user_row["u_canedit"]);
-				//-- convert old <3.1 access levels to the new 3.2 access levels
-				foreach($user["canedit"] as $key=>$value) {
-					if ($value=="no")
-						$user["canedit"][$key] = "access";
-					if ($value=="yes")
-						$user["canedit"][$key] = "edit";
-				}
-				foreach($GEDCOMS as $ged=>$gedarray) {
-					if (!isset($user["canedit"][$ged]))
-						$user["canedit"][$ged] = "access";
-				}
-				$user["email"] = $user_row["u_email"];
-				$user["verified"] = $user_row["u_verified"];
-				$user["verified_by_admin"] = $user_row["u_verified_by_admin"];
-				$user["language"] = $user_row["u_language"];
-				$user["pwrequested"] = $user_row["u_pwrequested"];
-				$user["reg_timestamp"] = $user_row["u_reg_timestamp"];
-				$user["reg_hashcode"] = $user_row["u_reg_hashcode"];
-				$user["theme"] = $user_row["u_theme"];
-				$user["loggedin"] = $user_row["u_loggedin"];
-				$user["sessiontime"] = $user_row["u_sessiontime"];
-				$user["contactmethod"] = $user_row["u_contactmethod"];
-				if ($user_row["u_visibleonline"]!='N')
-					$user["visibleonline"]=true;
-				else
-					$user["visibleonline"]=false;
-				if ($user_row["u_editaccount"]!='N' || $user["canadmin"])
-					$user["editaccount"]=true;
-				else
-					$user["editaccount"]=false;
-				$user["default_tab"] = $user_row["u_defaulttab"];
-				$user["comment"] = $user_row["u_comment"];
-				$user["comment_exp"] = $user_row["u_comment_exp"];
-				$user["sync_gedcom"] = $user_row["u_sync_gedcom"];
-				$user["relationship_privacy"] = $user_row["u_relationship_privacy"];
-				$user["max_relation_path"] = $user_row["u_max_relation_path"];
-				if ($user_row["u_auto_accept"]!='N')
-					$user["auto_accept"]=true;
-				else
-					$user["auto_accept"]=false;
-				$ext = runHooks('getuser', $user);
-				if (count($ext) > 0) {
-					$user = array_merge($user, $ext);
-				}
-				$users[$user_row["u_username"]] = $user;
-			}
-		}
-		$res->free();
-		if (isset($user))
-			return $user;
+	$user=array(
+		'username'            =>$username,
+		'firstname'           =>stripslashes(get_user_setting($username, 'firstname')),
+		'lastname'            =>stripslashes(get_user_setting($username, 'lastname')),
+		'gedcomid'            =>unserialize(get_user_setting($username, 'gedcomid')),
+		'rootid'              =>unserialize(get_user_setting($username, 'rootid')),
+		'password'            =>get_user_setting($username, 'password'),
+		'canadmin'            =>get_user_setting($username, 'canadmin')=='Y',
+		'canedit'             =>unserialize(get_user_setting($username, 'canedit')),
+		'email'               =>get_user_setting($username, 'email'),
+		'verified'            =>get_user_setting($username, 'verified'),
+		'verified_by_admin'   =>get_user_setting($username, 'verified_by_admin'),
+		'language'            =>get_user_setting($username, 'language'),
+		'pwrequested'         =>get_user_setting($username, 'pwrequested'),
+		'reg_timestamp'       =>get_user_setting($username, 'reg_timestamp'),
+		'reg_hashcode'        =>get_user_setting($username, 'reg_hashcode'),
+		'theme'               =>get_user_setting($username, 'theme'),
+		'loggedin'            =>get_user_setting($username, 'loggedin'),
+		'sessiontime'         =>get_user_setting($username, 'sessiontime'),
+		'contactmethod'       =>get_user_setting($username, 'contactmethod'),
+		'visibleonline'       =>get_user_setting($username, 'visibleonline')=='Y',
+		'editaccount'         =>get_user_setting($username, 'editaccount')=='Y',
+		'default_tab'         =>get_user_setting($username, 'defaulttab'),
+		'comment'             =>get_user_setting($username, 'comment'),
+		'comment_exp'         =>get_user_setting($username, 'comment_exp'),
+		'sync_gedcom'         =>get_user_setting($username, 'sync_gedcom'),
+		'relationship_privacy'=>get_user_setting($username, 'relationship_privacy'),
+		'max_relation_path'   =>get_user_setting($username, 'max_relation_path'),
+		'auto_accept'         =>get_user_setting($username, 'auto_accept')=='Y'
+	);
+	//-- convert old <3.1 access levels to the new 3.2 access levels
+	foreach ($user['canedit'] as $key=>$value) {
+		if ($value=='no')
+			$user['canedit'][$key]='access';
+		if ($value=='yes')
+			$user['canedit'][$key]='edit';
 	}
-	return false;
-}
-
-/**
- * get a user from a gedcom id
- *
- * finds a user from their gedcom id
- * @param string $id	the gedcom id to to search on
- * @param string $gedcom	the gedcom filename to match
- * @return array 	returns a user array
- */
-function getUserByGedcomId($id, $gedcom) {
-	global $TBLPREFIX, $DBCONN, $users, $REGEXP_DB;
-
-	if (empty($id) || empty($gedcom))
-		return false;
-
-	$user = false;
-	$id = $DBCONN->escapeSimple($id);
-	$sql = "SELECT * FROM ".$TBLPREFIX."users WHERE ";
-	$sql .= "u_gedcomid LIKE '%".$id."%'";
-	$res = dbquery($sql, false);
-
-	if (DB::isError($res))
-		return false;
-	if ($res->numRows()==0)
-		return false;
-	if ($res) {
-		while ($user_row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if ($user_row) {
-				$gedcomid=unserialize($user_row["u_gedcomid"]);
-				if (isset($gedcomid[$gedcom]) && ($gedcomid[$gedcom]==$id)) {
-					$user = array();
-					$user["username"]=$user_row["u_username"];
-					$user["firstname"]=stripslashes($user_row["u_firstname"]);
-					$user["lastname"]=stripslashes($user_row["u_lastname"]);
-					$user["gedcomid"]=$gedcomid;
-					$user["rootid"]=unserialize($user_row["u_rootid"]);
-					$user["password"]=$user_row["u_password"];
-					if ($user_row["u_canadmin"]=='Y')
-						$user["canadmin"]=true;
-					else
-						$user["canadmin"]=false;
-					$user["canedit"]=unserialize($user_row["u_canedit"]);
-					//-- convert old <3.1 access levels to the new 3.2 access levels
-					foreach($user["canedit"] as $key=>$value) {
-						if ($value=="no")
-							$user["canedit"][$key] = "access";
-						if ($value=="yes")
-							$user["canedit"][$key] = "edit";
-					}
-					$user["email"] = $user_row["u_email"];
-					$user["verified"] = $user_row["u_verified"];
-					$user["verified_by_admin"] = $user_row["u_verified_by_admin"];
-					$user["language"] = $user_row["u_language"];
-					$user["pwrequested"] = $user_row["u_pwrequested"];
-					$user["reg_timestamp"] = $user_row["u_reg_timestamp"];
-					$user["reg_hashcode"] = $user_row["u_reg_hashcode"];
-					$user["theme"] = $user_row["u_theme"];
-					$user["loggedin"] = $user_row["u_loggedin"];
-					$user["sessiontime"] = $user_row["u_sessiontime"];
-					$user["contactmethod"] = $user_row["u_contactmethod"];
-					if ($user_row["u_visibleonline"]!='N')
-						$user["visibleonline"]=true;
-					else
-						$user["visibleonline"]=false;
-					if ($user_row["u_editaccount"]!='N' || $user["canadmin"])
-						$user["editaccount"]=true;
-					else
-						$user["editaccount"]=false;
-					$user["default_tab"] = $user_row["u_defaulttab"];
-					$user["comment"] = $user_row["u_comment"];
-					$user["comment_exp"] = $user_row["u_comment_exp"];
-					$user["sync_gedcom"] = $user_row["u_sync_gedcom"];
-					$user["relationship_privacy"] = $user_row["u_relationship_privacy"];
-					$user["max_relation_path"] = $user_row["u_max_relation_path"];
-					if ($user_row["u_auto_accept"]!='N')
-						$user["auto_accept"]=true;
-					else
-						$user["auto_accept"]=false;
-					$ext = runHooks('getuser', $user);
-					if (count($ext) > 0) {
-						$user = array_merge($user, $ext);
-					}
-					$users[$user_row["u_username"]] = $user;
-				}
-			}
-		}
-		$res->free();
-		return $user;
+	$ext=runHooks('getuser', $user);
+	if (count($ext) > 0) {
+		$user=array_merge($user, $ext);
 	}
-	return false;
+
+	return $user;
 }
 
 /**
@@ -1381,8 +1087,7 @@ function addMessage($message) {
 		}
 		if (!isset($message["no_from"])) {
 			if (stristr($from, $PHPGEDVIEW_EMAIL)){
-				$admuser = getuser($WEBMASTER_EMAIL);
-				$from = $admuser["email"];
+				$from = get_user_setting($WEBMASTER_EMAIL, 'email');
 			}
 			if (!$fUser)
 				$header2 = $PHPGEDVIEW_EMAIL;

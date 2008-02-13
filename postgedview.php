@@ -130,8 +130,8 @@
 			
 			// is the user there and verified ?
 			if (getUser($post_user) and ($admin_ver == "yes")) {
-				$sql = "UPDATE ".$TBLPREFIX."users SET u_loggedin='Y', u_sessiontime='".time()."' WHERE u_username='$post_user'";
-				$res = dbquery($sql);
+				set_user_setting($post_user, 'loggedin',    'Y');
+				set_user_setting($post_user, 'sessiontime', time());
 				AddToLog("Login Successful ->" . $post_user ."<-");
 				
 				$_SESSION['pgv_user'] = $post_user;
