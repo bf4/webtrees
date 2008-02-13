@@ -78,7 +78,6 @@ if ($action=="edituser2") {
 			$newuser = $olduser;
 			if (empty($pass1)) $newuser["password"]=$olduser["password"];
 			else $newuser["password"]=crypt($pass1);
-			//deleteUser($oldusername, "changed");
 			$newuser["username"]=$username;
 			$newuser["firstname"]=$firstname;
 			$newuser["lastname"]=$lastname;

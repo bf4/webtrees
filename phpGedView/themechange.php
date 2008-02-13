@@ -38,7 +38,6 @@ require("config.php");
 		if ($olduser["editaccount"]) {
 			$newuser = array();
 			$newuser = $olduser;
-			//deleteUser($uname, "changed");
 			$newuser["theme"] = $theme_dir;
 			updateUser($uname, $newuser, "changed");
 			$user = $newuser;
