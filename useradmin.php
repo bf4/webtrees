@@ -229,6 +229,7 @@ if ($action=="edituser2") {
 		if (($uusername!=$oldusername)&&(getUser($uusername)!==false)) {
 			print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 			$action="edituser";
+			$username=$oldusername;
 		}
 		else if ($pass1==$pass2) {
 			$sync_data_changed = false;
