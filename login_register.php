@@ -115,14 +115,11 @@ switch ($action) {
 				$user_new_pw .= $passchars{$index};
 			}
 			
-			//$user_new_pw = md5 (uniqid (rand()));
 			$newuser = getUser($user_name);
 			$olduser = $newuser;
-			//deleteUser($user_name, "reqested new password for");
 			
 			$newuser["password"] = crypt($user_new_pw, $user_new_pw);
 			$newuser["pwrequested"] = "1";
-			//$newuser["reg_timestamp"] = date("U");
 			updateUser($newuser['username'], $newuser, "reqested new password for");
 			
 			// switch language to user settings
@@ -591,8 +588,6 @@ switch ($action) {
 			if (($pw_ok) and ($hc_ok)) {
 				$newuser = $user;
 				$olduser = $user;
-				//deleteUser($user_name, "verified");
-				//storeUsers();
 
  				if ($NAME_REVERSE) $fullName = $newuser["lastname"]." ".$newuser["firstname"];
 				else $fullName = $newuser["firstname"]." ".$newuser["lastname"];
