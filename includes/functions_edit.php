@@ -96,7 +96,7 @@ function newConnection() {
 function get_next_xref($gid, $type='INDI') {
 	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
 
-	$sql = "SELECT rec_xref FROM {$TBLPREFIX}records WHERE rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(rec_xref,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(rec_xref,2)";
+	$sql = "SELECT rec_xref FROM {$TBLPREFIX}record WHERE rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(rec_xref,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(rec_xref,2)";
 	$res = dbquery($sql, true, 1);
 	if ($res->numRows()>0) {
 		$row = $res->fetchRow();
@@ -112,7 +112,7 @@ function get_next_xref($gid, $type='INDI') {
 function get_prev_xref($gid, $type='INDI') {
 	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
 
-	$sql = "SELECT rec_xref FROM {$TBLPREFIX}records WHERE rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(rec_xref,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(rec_xref,2) DESC";
+	$sql = "SELECT rec_xref FROM {$TBLPREFIX}record WHERE rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(rec_xref,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(rec_xref,2) DESC";
 	$res = dbquery($sql, true, 1);
 	if ($res->numRows()>0) {
 		$row = $res->fetchRow();

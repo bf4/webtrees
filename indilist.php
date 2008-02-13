@@ -102,8 +102,7 @@ $tindilist = array();
  * @global array $indialpha
  */
 
-$indialpha = get_indi_alpha();
-uasort($indialpha, "stringsort");
+$indialpha=get_indi_alpha();
 
 if (isset($alpha) && !isset($indialpha["$alpha"])) $alpha="";
 

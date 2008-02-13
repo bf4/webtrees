@@ -197,7 +197,7 @@ function get_db_media_list() {
 	global $TBLPREFIX;
 
 	$medialist = array ();
-	$sql = "SELECT m_id, m_media, m_file, m_ext, m_titl, rec_gedcom FROM {$TBLPREFIX}media,{$TBLPREFIX}records WHERE m_media=rec_xref AND m_file=rec_ged_id AND m_gedfile='{$GEDCOMS[$GEDCOM]['id']}' ORDER BY m_id";
+	$sql = "SELECT m_id, m_media, m_file, m_ext, m_titl, rec_gedcom FROM {$TBLPREFIX}media,{$TBLPREFIX}record WHERE m_media=rec_xref AND m_file=rec_ged_id AND m_gedfile='{$GEDCOMS[$GEDCOM]['id']}' ORDER BY m_id";
 	$tempsql = dbquery($sql);
 	$res = & $tempsql;
 	$ct = $res->numRows();
@@ -503,7 +503,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	if (empty ($directory))
 		$directory = $MEDIA_DIRECTORY;
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
-	$sql = "SELECT m_id, m_file, m_media, rec_gedcom, m_titl FROM {$TBLPREFIX}media, {$TBLPREFIX} WHERE m_media=rec_xref AND m_file=rec_ged_id m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT m_id, m_file, m_media, rec_gedcom, m_titl FROM {$TBLPREFIX}media, {$TBLPREFIX}record WHERE m_media=rec_xref AND m_file=rec_ged_id m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	if ($random == true) {
 		$sql .= " ORDER BY ".DB_RANDOM."()";
 		$res = & dbquery($sql, true, 5);
@@ -945,7 +945,7 @@ function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
 	else
 		$term = "LIKE";
 	if (!is_array($query))
-		$sql = "SELECT m_media FROM " . $TBLPREFIX . "media, {$TBLPREFIX}records WHERE m_file=rec_ged_id AND m_media=rec_xref AND (rec_gedcom $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR rec_gedcom $term '" . $DBCONN->escapeSimple(str2upper($query)) . "' OR rec_gedcom $term '" . $DBCONN->escapeSimple(str2lower($query)) . "')";
+		$sql = "SELECT m_media FROM " . $TBLPREFIX . "media, {$TBLPREFIX}record WHERE m_file=rec_ged_id AND m_media=rec_xref AND (rec_gedcom $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR rec_gedcom $term '" . $DBCONN->escapeSimple(str2upper($query)) . "' OR rec_gedcom $term '" . $DBCONN->escapeSimple(str2lower($query)) . "')";
 	else {
 		$sql = "SELECT m_media FROM " . $TBLPREFIX . "media WHERE (";
 		$i = 0;
@@ -1873,7 +1873,7 @@ function picture_clip($person_id, $image_id, $filename, $thumbDir)
 {
 	global $GEDCOMS,$GEDCOM,$TBLPREFIX,$MEDIA_DIRECTORY;
 	// This gets the gedrec
-	$query = "select rec_gedcom from ".$TBLPREFIX."records where rec_xref='".$image_id."' AND rec_ged_id=".$GEDCOMS[$GEDCOM]['id'];
+	$query = "select rec_gedcom from {$TBLPREFIX}record where rec_xref='".$image_id."' AND rec_ged_id=".$GEDCOMS[$GEDCOM]['id'];
 	$res = dbquery($query);
 	$result = $res->fetchRow();
 	//Get the location of the file, and then make a location for the clipped image

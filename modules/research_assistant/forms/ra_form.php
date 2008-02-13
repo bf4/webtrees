@@ -69,7 +69,7 @@ class ra_form {
 	function getSources(){
         global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
-		$sql = 	"SELECT rec_xref, name_full FROM {$TBLPREFIX}tasksource, {$TBLPREFIX}records, {$TBLPREFIX}facts, {$TBLPREFIX}names WHERE ts_t_id=".$DBCONN->escapeSimple($_REQUEST["taskid"])." AND ts_s_id=rec_xref AND rec_id=fact_rec_id AND fact_id=name_fact_id";
+		$sql = 	"SELECT rec_xref, name_full FROM {$TBLPREFIX}tasksource, {$TBLPREFIX}record, {$TBLPREFIX}fact, {$TBLPREFIX}name WHERE ts_t_id=".$DBCONN->escapeSimple($_REQUEST["taskid"])." AND ts_s_id=rec_xref AND rec_id=fact_rec_id AND fact_id=name_fact_id";
 		$res = dbquery($sql);
 		$sources = array();
 		while($source =& $res->fetchRow(DB_FETCHMODE_ASSOC)){

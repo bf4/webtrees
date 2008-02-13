@@ -34,7 +34,7 @@ $pgv_lang["gm_disabled"]            	= "מודול GoogleMap נוטרל";
 
 $pgv_lang["gm_redraw_map"]          	= "צייר מפה מחדש";
 $pgv_lang["gm_map"]                 	= "מפה";
-$pgv_lang["gm_satellite"]           	= "לויין";
+$pgv_lang["gm_satellite"]           	= "לוויין";
 $pgv_lang["gm_hybrid"]              	= "מעורב";
 
 // Configuration texts
@@ -61,13 +61,13 @@ $pgv_lang["gm_name_postfix"]        	= "סיומת";
 $pgv_lang["gm_name_pre_post"]      = "סדר תחילית / סיומת";
 $pgv_lang["gm_level"]               	= "רמה";
 $pgv_lang["gm_pp_none"]             	= "אין תחילית/סיומת";
-$pgv_lang["gm_pp_n_pr_po_b"]        = "נורמלי, תחילית, סיומת, שניהם";
-$pgv_lang["gm_pp_n_po_pr_b"]        = "נורמלי, סיומת, תחילית, שניהם";
-$pgv_lang["gm_pp_pr_po_b_n"]        = "תחילית, סיומת, שניהם, נורמלי";
-$pgv_lang["gm_pp_po_pr_b_n"]        = "סיומת, תחילית, שניהם, נורמלי";
-$pgv_lang["gm_pp_pr_po_n_b"]        = "תחילית, סיומת, נורמלי, שניהם";
-$pgv_lang["gm_pp_po_pr_n_b"]        = "סיומת, תחילית, נורמלי, שניהם";
-$pgv_lang["googlemap_coord"]        	= "הצג קוארדינטות של המפה";  
+$pgv_lang["gm_pp_n_pr_po_b"]        = "נורמאלי, תחילית, סיומת, שניהם";
+$pgv_lang["gm_pp_n_po_pr_b"]        = "נורמאלי, סיומת, תחילית, שניהם";
+$pgv_lang["gm_pp_pr_po_b_n"]        = "תחילית, סיומת, שניהם, נורמאלי";
+$pgv_lang["gm_pp_po_pr_b_n"]        = "סיומת, תחילית, שניהם, נורמאלי";
+$pgv_lang["gm_pp_pr_po_n_b"]        = "תחילית, סיומת, נורמאלי, שניהם";
+$pgv_lang["gm_pp_po_pr_n_b"]        = "סיומת, תחילית, נורמאלי, שניהם";
+$pgv_lang["googlemap_coord"]        	= "הצג קואורדינטות של המפה";  
 
 
 // Texts used on the Places location page
@@ -117,14 +117,14 @@ $pgv_lang["placecheck_one"]	= "מקום של רמה ראשונה";
 $pgv_lang["placecheck_select1"]	= "בחר את הרמה העליונה...";
 $pgv_lang["placecheck_select2"]	= "בחר את הרמה הבאה...";
 $pgv_lang["placecheck_key"]	= "מפתח לצבעים שבשימוש למטה"; 
-$pgv_lang["placecheck_key1"]	= "מקום זה והקואורדינטות שלו אינן קיימות בטבלאות ה-GoogleMap";
-$pgv_lang["placecheck_key2"]	= "מקום זה קיים בטבלאות GoogleMap, אבל ללא קואורדינטות";
-$pgv_lang["placecheck_key3"]	= "רמת מקום זו ריקה בקובץ ה-GEDCOM שלך. יש להוסיף אותו <br/>למקומות GoogleMap כ\"בלתי ידוע\" עם הקואורדינטות של רמת ההורה שלו<br/>לפני שמוסיפים מקום ברמה הבאה";
+$pgv_lang["placecheck_key1"]	= "מקום זה והקואורדינאטות שלו אינן קיימות בטבלאות ה-GoogleMap";
+$pgv_lang["placecheck_key2"]	= "מקום זה קיים בטבלאות GoogleMap, אבל ללא קואורדינאטות";
+$pgv_lang["placecheck_key3"]	= "רמת מקום זו ריקה בקובץ ה-GEDCOM שלך. יש להוסיף אותו <br/>למקומות GoogleMap כ\"בלתי ידוע\" עם הקואורדינאטות של רמת ההורה שלו<br/>לפני שמוסיפים מקום ברמה הבאה";
 $pgv_lang["placecheck_key4"]           	= "רשימת מקומות עבור בקובץ GEDCOM";
-$pgv_lang["placecheck_head"]	= "הרמה הזו של רשימת מקומות ריקה בקובץ ה-GEDCOM שלך, אבל קיימת כ'בלתי ידוע'<br/>בטבלת המקומות של GoogleMap עם קואורדינטות. שום פעולה אינה נדרשת<br/>עד שמוסיפים את הרמה החסרה";
+$pgv_lang["placecheck_head"]	= "הרמה הזו של רשימת מקומות ריקה בקובץ ה-GEDCOM שלך, אבל קיימת כ'בלתי ידוע'<br/>בטבלת המקומות של GoogleMap עם קואורדינאטות. שום פעולה אינה נדרשת<br/>עד שמוסיפים את הרמה החסרה";
 $pgv_lang["placecheck_gedheader"]	= "נתוני המקומות של קובץ GEDCOM<br/>2 PLAC";
 $pgv_lang["placecheck_gm_header"]	= "נתוני טבלת המקומות של GoogleMap";
-$pgv_lang["'placecheck_unique"]	= "סה\"כ מקומות יחודיים"; 
+$pgv_lang["'placecheck_unique"]	= "סה\"כ מקומות ייחודיים"; 
 $pgv_lang["placecheck_zoom"]         	= "זום=";
 $pgv_lang["placecheck_options"]     	= "אופציות של רשימת בדיקת מקום";
 $pgv_lang["placecheck_filter_text"] 	= "תציג אופציות של הפילטר";

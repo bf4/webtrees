@@ -36,7 +36,7 @@ $pgv_lang["edit_concurrency_change"] 	= "הרשומה הזו שונתה לאחר
 $pgv_lang["edit_concurrency_msg2"]	= "הרשומה עם קוד זיהוי #PID# שונתה ע\"י משתמש אחר לאחר שניגשת אליה בפעם האחרונה ."; 
 $pgv_lang["edit_concurrency_msg1"]	= "הייתה שגיאה בזמן יצירת טופס העריכה.  יתכן שהרשומה שונתה ע\"י משתמש אחר אחרי שהסתכלת עליה בפעם הקודמת."; 
 $pgv_lang["edit_concurrency_reload"]	= " השתמש בכפתור הדף הקודם של הדפדפן שלך כדי להעלות מחדש את הדף שהיית בו קודם כדי להבטיח שאתה עובד על רשומה עדכנית."; 
-$pgv_lang["admin_override"]		= " אופצית מנהלן";
+$pgv_lang["admin_override"]		= " אופציית מנהלן";
 $pgv_lang["no_update_CHAN"]	= "אין לעדכן רשומת שינוי אחרון CHAN"; 
 $pgv_lang["select_events"]		= "בחר מאורעות"; 
 $pgv_lang["source_events"]		= "קשר מאורעות למקור זה";
@@ -127,7 +127,7 @@ $pgv_lang["basic_search_discription"] 	= "חיפוש בסיסי באתר";
 $pgv_lang["birthdate_search"]		= "תאריך לידה: ";
 $pgv_lang["birthplace_search"]		= "מקום לידה: ";
 $pgv_lang["change"]			= "שנה";
-$pgv_lang["change_family_instr"]	= "השתמש בדף זה כדי לשנות או להסיר בני משפחה.<br /><br />עבור כל בן משפחה, ניתן להשתמש בקישורית \"שנה\" כדי לשנות אדם אחר בתפקיד זה בתוך המשפחה. ניתן גם כן להשתמש בקישור \"הסר\" כדי להסיר את האדם מהמשפחה.<br /><br />אחרי שתסיים לשנות בני משפחה, לחץ על כפתור שמור כדי לשמור את השינויים.<br />";
+$pgv_lang["change_family_instr"]	= "השתמש בדף זה כדי לשנות או להסיר בני משפחה.<br /><br />עבור כל בן משפחה, ניתן להשתמש בקישור \"שנה\" כדי לשנות אדם אחר בתפקיד זה בתוך המשפחה. ניתן גם כן להשתמש בקישור \"הסר\" כדי להסיר את האדם מהמשפחה.<br /><br />אחרי שתסיים לשנות בני משפחה, לחץ על כפתור שמור כדי לשמור את השינויים.<br />";
 $pgv_lang["change_family_members"]	= "שנה בני משפחה";
 $pgv_lang["changes_occurred"]	= "השינויים הבאים בוצעו ברשומה זו:";
 $pgv_lang["confirm_remove"]		= "האם אתה בטוח שתרצה להסיר אדם זה מהמשפחה?";
@@ -220,7 +220,7 @@ $pgv_lang["update_successful"]		= "העדכון הצליח";
 $pgv_lang["upload"]			= "העלה";
 $pgv_lang["upload_error"]		= "התגלתה שגיאה בהעלאת הקובץ שלך.";
 $pgv_lang["upload_media"]		= "העלאת קבצי מדיה";
-$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b><span dir=\"ltr\">#MEDIA_DIRECTORY#</span></b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-<span dir=\"ltr\">#MEDIA_DIRECTORY#</span>, למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תווצר בצורה אוטומטית.";
+$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b><span dir=\"ltr\">#MEDIA_DIRECTORY#</span></b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-<span dir=\"ltr\">#MEDIA_DIRECTORY#</span>, למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תיווצר בצורה אוטומטית.";
 $pgv_lang["upload_successful"]		= "ההעלאה הצליחה.";
 $pgv_lang["view_change_diff"]		= "התבונן בשינויים ";
 

@@ -207,7 +207,8 @@ if ($action=="createuser") {
 // NOTE: No table parts
 if ($action=="deleteuser") {
 	//-- do not delete self
-	if ($username!=getUserName()) deleteUser($username, "deleted");
+	if ($username!=getUserName())
+		deleteUser($username);
 }
 //-- section to update a user by first deleting them
 //-- and then adding them again
@@ -228,6 +229,7 @@ if ($action=="edituser2") {
 		if (($uusername!=$oldusername)&&(getUser($uusername)!==false)) {
 			print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 			$action="edituser";
+			$username=$oldusername;
 		}
 		else if ($pass1==$pass2) {
 			$sync_data_changed = false;
@@ -237,7 +239,6 @@ if ($action=="edituser2") {
 
 			if (empty($pass1)) $newuser["password"]=$olduser["password"];
 			else $newuser["password"]=crypt($pass1);
-			//deleteUser($oldusername, "changed");
 			$newuser["username"]=$uusername;
 			$newuser["firstname"]=$ufirstname;
 			$newuser["lastname"]=$ulastname;
@@ -1133,7 +1134,6 @@ if ($action == "cleanup2") {
 						unset($user["gedcomid"][$gedid]);
 						print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_gedcomid"].$user["username"]."<br />";
 					}
-					//deleteUser($key, "changed");
 					updateUser($key, $user, "changed");
 				}
 			}

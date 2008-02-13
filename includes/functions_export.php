@@ -185,7 +185,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if (isset ($HTTP_SESSION_VARS)) {
 			$HTTP_SESSION_VARS["pgv_user"] = $HTTP_SESSION_VARS["org_user"];
 		}
-		deleteuser("export");
+		deleteUser("export");
 	}
 }
 
@@ -198,7 +198,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	$geDownloadGedcom = new GEDownloadGedcom();
 	$geDownloadGedcom->begin_xml();
 
-	$sql = "SELECT rec_gedcom, rec_xref FROM {$TBLPREFIX}records WHERE rec_type='INDI' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom, rec_xref FROM {$TBLPREFIX}record WHERE rec_type='INDI' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
 		$rec = trim($row[0]).$CRLF;
@@ -207,7 +207,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-	$sql = "SELECT rec_gedcom, rec_xref FROM {$TBLPREFIX}records WHERE rec_type='FAM' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom, rec_xref FROM {$TBLPREFIX}record WHERE rec_type='FAM' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
 		$rec = trim($row[0]).$CRLF;
@@ -216,7 +216,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-	$sql = "SELECT rec_gedcom, rec_xref FROM {$TBLPREFIX}records WHERE rec_type='SOUR' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom, rec_xref FROM {$TBLPREFIX}record WHERE rec_type='SOUR' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
 		$rec = trim($row[0]).$CRLF;
@@ -225,9 +225,9 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-	$sql = "SELECT rec_gedcom, rec_xref FROM {$TBLPREFIX}records WHERE rec_type='OBJE' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom, rec_xref FROM {$TBLPREFIX}record WHERE rec_type='OBJE' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
-	
+
 	while ($row = $res->fetchRow()) {
 		$rec = trim($row[0]).$CRLF;
 		$rec = remove_custom_tags($rec, $remove);
@@ -240,24 +240,23 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 
 function um_export($proceed) {
 	global $INDEX_DIRECTORY, $TBLPREFIX, $DBCONN, $pgv_lang;
-	
+
 	// Get user array and create authenticate.php
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
 	$authtext = "<?php\n\n\$users = array();\n\n";
 	$users = GetUsers();
-	foreach($users as $key=>$user) {
+	foreach ($users as $key=>$user) {
 		$user["firstname"] = $DBCONN->escapeSimple($user["firstname"]);
 		$user["lastname"] = $DBCONN->escapeSimple($user["lastname"]);
 		$user["comment"] = $DBCONN->escapeSimple($user["comment"]);
 		$authtext .= "\$user = array();\n";
-		foreach($user as $ukey=>$value) {
+		foreach ($user as $ukey=>$value) {
 			if (!is_array($value)) {
 				$value = preg_replace('/"/', '\\"', $value);
 				$authtext .= "\$user[\"$ukey\"] = '$value';\n";
-			}
-			else {
+			} else {
 				$authtext .= "\$user[\"$ukey\"] = array();\n";
-				foreach($value as $subkey=>$subvalue) {
+				foreach ($value as $subkey=>$subvalue) {
 					$subvalue = preg_replace('/"/', '\\"', $subvalue);
 					$authtext .= "\$user[\"$ukey\"][\"$subkey\"] = '$subvalue';\n";
 				}
@@ -268,26 +267,25 @@ function um_export($proceed) {
 	$authtext .= "?".">\n";
 	if (file_exists($INDEX_DIRECTORY."authenticate.php")) {
 		print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."authenticate.php<br /><br />";
-	}
-	else {
+	} else {
 		$fp = fopen($INDEX_DIRECTORY."authenticate.php", "w");
 		if ($fp) {
 			fwrite($fp, $authtext);
 			fclose($fp);
 			$logline = AddToLog("authenticate.php updated by >".getUserName()."<");
- 			if (!empty($COMMIT_COMMAND)) check_in($logline, "authenticate.php", $INDEX_DIRECTORY);	
+ 			if (!empty($COMMIT_COMMAND)) check_in($logline, "authenticate.php", $INDEX_DIRECTORY);
 			if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." authenticate.php<br /><br />";
-		}
-		else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."authenticate.php. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+		} else
+			print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."authenticate.php. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 	}
 
-	// Get messages and create messages.dat 
+	// Get messages and create messages.dat
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"messages.dat\"<br /><br />";
 	$messages = array();
 	$mesid = 1;
 	$sql = "SELECT * FROM ".$TBLPREFIX."messages ORDER BY m_id DESC";
 	$res = dbquery($sql);
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		$message = array();
 		$message["id"] = $mesid;
@@ -298,35 +296,33 @@ function um_export($proceed) {
 		$message["body"] = stripslashes($row["m_body"]);
 		$message["created"] = $row["m_created"];
 		$messages[] = $message;
-	}	
+	}
 	if ($mesid > 1) {
 		$mstring = serialize($messages);
 			if (file_exists($INDEX_DIRECTORY."messages.dat")) {
 			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."messages.dat<br /><br />";
-		}
-		else {
+		} else {
 			$fp = fopen($INDEX_DIRECTORY."messages.dat", "wb");
 			if ($fp) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline = AddToLog("messages.dat updated by >".getUserName()."<");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "messages.dat", $INDEX_DIRECTORY);	
+ 				if (!empty($COMMIT_COMMAND)) check_in($logline, "messages.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." messages.dat<br /><br />";
-			}
-		else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."messages.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+			} else
+				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."messages.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 		}
-	}
-	else {
+	} else {
 		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_nomsg"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
 	}
 
-	// Get favorites and create favorites.dat 
+	// Get favorites and create favorites.dat
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"favorites.dat\"<br /><br />";
 	$favorites = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."favorites";
 	$res = dbquery($sql);
 	$favid = 1;
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		$favorite = array();
 		$favorite["id"] = $favid;
@@ -344,29 +340,27 @@ function um_export($proceed) {
 		$mstring = serialize($favorites);
 		if (file_exists($INDEX_DIRECTORY."favorites.dat")) {
 			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."favorites.dat<br /><br />";
-			}
-		else {
+		} else {
 			$fp = fopen($INDEX_DIRECTORY."favorites.dat", "wb");
 			if ($fp) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline = AddToLog("favorites.dat updated by >".getUserName()."<");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "favorites.dat", $INDEX_DIRECTORY);	
+ 				if (!empty($COMMIT_COMMAND)) check_in($logline, "favorites.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." favorites.dat<br /><br />";
-			}
-			else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."favorites.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+			} else
+				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."favorites.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 		}
-	}
-	else {
+	} else {
 		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_nofav"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
 	}
 
-	// Get news and create news.dat 
+	// Get news and create news.dat
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"news.dat\"<br /><br />";
 	$allnews = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."news ORDER BY n_date DESC";
 	$res = dbquery($sql);
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		$news = array();
 		$news["id"] = $row["n_id"];
@@ -380,38 +374,36 @@ function um_export($proceed) {
 		$mstring = serialize($allnews);
 		if (file_exists($INDEX_DIRECTORY."news.dat")) {
 			print $pgv_lang["um_file_create_fail1"].$INDEX_DIRECTORY."news.dat<br /><br />";
-			}
-		else {
+		} else {
 			$fp = fopen($INDEX_DIRECTORY."news.dat", "wb");
 			if ($fp) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline = AddToLog("news.dat updated by >".getUserName()."<");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "news.dat", $INDEX_DIRECTORY);	
+ 				if (!empty($COMMIT_COMMAND)) check_in($logline, "news.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." news.dat<br /><br />";
-			}
-			else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."news.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+			} else
+				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."news.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 		}
-	}
-	else {
+	} else {
 		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_nonews"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
 	}
 
-	// Get blocks and create blocks.dat 
+	// Get blocks and create blocks.dat
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"blocks.dat\"<br /><br />";
 	$allblocks = array();
 	$blocks["main"] = array();
 	$blocks["right"] = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."blocks ORDER BY b_location, b_order";
 	$res = dbquery($sql);
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		$blocks = array();
 		$blocks["username"] = $row["b_username"];
 		$blocks["location"] = $row["b_location"];
 		$blocks["order"] = $row["b_order"];
 		$blocks["name"] = $row["b_name"];
-		//-- see [ phpgedview-Bugs-1823749 ] Backup fails, 4.1.2 
+		//-- see [ phpgedview-Bugs-1823749 ] Backup fails, 4.1.2
 		$blocks["config"] = @unserialize(str_replace("'", "\'", $row["b_config"]));
 		if ($blocks["config"]===false) print "<span class=\"error\">There was an error serializing the block configuration for ".$blocks["name"]." ".$blocks["username"].".</span>";
 		$allblocks[] = $blocks;
@@ -420,20 +412,18 @@ function um_export($proceed) {
 		$mstring = serialize($allblocks);
 		if (file_exists($INDEX_DIRECTORY."blocks.dat")) {
 			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."blocks.dat<br /><br />";
-		}
-		else {
+		} else {
 			$fp = fopen($INDEX_DIRECTORY."blocks.dat", "wb");
 			if ($fp) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline = AddToLog("blocks.dat updated by >".getUserName()."<");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "blocks.dat", $INDEX_DIRECTORY);	
+ 				if (!empty($COMMIT_COMMAND)) check_in($logline, "blocks.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." blocks.dat<br /><br />";
-			}
-			else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."blocks.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
+			} else
+				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."blocks.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 		}
-	}
-	else {
+	} else {
 		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_noblocks"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
 	}
 }

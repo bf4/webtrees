@@ -342,7 +342,7 @@ else if ($action=='getxref') {
 	}
 	
 	if ($position=='first') {
-		$sql="SELECT rec_xref FROM {$TBLPREFIX}records WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+		$sql="SELECT rec_xref FROM {$TBLPREFIX}record WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 		$res = dbquery($sql, true, 1);
 		$row = $res->fetchRow();
 		$res->free();
@@ -351,7 +351,7 @@ else if ($action=='getxref') {
 		print "SUCCESS\n$xref\n";
 	}
 	else if ($position=='last') {
-		$sql="SELECT rec_xref FROM {$TBLPREFIX}records WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+		$sql="SELECT rec_xref FROM {$TBLPREFIX}record WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 		$sql .= " DESC";
 		$res = dbquery($sql, true, 1);
 		$row = $res->fetchRow();
@@ -388,7 +388,7 @@ else if ($action=='getxref') {
 	}
 	else if ($position=='all') {
 		$msg_out = "SUCCESS\n";
-		$sql="SELECT rec_xref FROM {$TBLPREFIX}records WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+		$sql="SELECT rec_xref FROM {$TBLPREFIX}record WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {		
 			$msg_out .= "$row[0]\n";

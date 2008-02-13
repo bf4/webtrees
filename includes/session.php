@@ -35,12 +35,12 @@ $VERSION_RELEASE = "";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
 function isAlphaNum($value) {
-	return preg_match('/^[a-zA-Z0-9]+$/', $value);
-}
+        return preg_match('/^[a-zA-Z0-9]+$/', $value);
+    }
 
 function isAlpha($value) {
-	return preg_match('/^[a-zA-Z]+$/', $value);
-}
+        return preg_match('/^[a-zA-Z]+$/', $value);
+    }
 
 function gen_spider_session_name($bot_name, $bot_language) {
 	// session names are limited to alphanum upper and lower only.
@@ -50,10 +50,10 @@ function gen_spider_session_name($bot_name, $bot_language) {
 	$outname = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 	$bot_limit = strlen($bot_name);
-	if ($bot_limit > 27)
+        if($bot_limit > 27)
 		$bot_limit = 27;
-	for ($x=0; $x < $bot_limit; $x++) {
-		if (isAlphaNum($bot_name{$x}))
+	for($x=0; $x < $bot_limit; $x++) {
+		if(isAlphaNum($bot_name{$x}))
 			$outname{$x+2} = strtoupper($bot_name{$x});
 		else if ($bot_name{$x} == '.')
 			$outname{$x+2} = 'd';
@@ -71,7 +71,8 @@ function gen_spider_session_name($bot_name, $bot_language) {
 			$outname{$x+2} = 'o';
 	}
 	return($outname);
-}
+    }
+
 
 // Search Engines are treated special, and receive only core data, without the
 // pretty bells and whistles.  Recursion is also going to be kept to a minimum.
@@ -85,8 +86,8 @@ $SESSION_HIDE_GOOGLEMAP = "empty";
 
 $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
-// check for worms and bad bots
 $worms = array(
+	'Super_Ale',
 	'Wget',
 	'DataCha',
 	'libwww-perl',
@@ -94,26 +95,46 @@ $worms = array(
 	'lwp-trivial',
 	'HTTrack'
 	);
-foreach ($worms as $worm) {
-	if (eregi($worm, $ua)) {
-		print "Bad Worm! Crawl back into your hole.";
-		if ((!ini_get('register_globals'))||(ini_get('register_globals')=="Off")) {
-			//-- load common functions
-			require_once("includes/functions.php");
-			//-- load db specific functions
-			require_once("includes/functions_db.php");
-			require_once("includes/authentication.php");      // -- load the authentication system
-			AddToLog("UA>".$ua."< Blocked crawler detected. Possible hacking attempt. Script terminated.");
-			AddToLog("URI>".$_SERVER["REQUEST_URI"]."<");
+$quitReason = "";
+
+// check for attempt to redirect
+if (eregi("=.*://", rawurldecode($_SERVER["REQUEST_URI"]))) {
+	$quitReason = "Embedded URL detected";
+}
+
+// check for worms and bad bots
+if ($quitReason == "") { 
+	foreach ($worms as $worm) {
+		if (eregi($worm, $ua)) {
+			$quitReason = "Blocked crawler detected";
+			break;
 		}
-		exit;
 	}
 }
+
+// Do we have a reason to quit now?
+if ($quitReason != "") {
+	header("HTTP/1.0 403 Forbidden");
+	print "Hackers are not welcome here.";
+	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
+		//-- load common functions
+		require_once("includes/functions.php");
+		//-- load db specific functions
+		require_once("includes/functions_db.php");
+		require_once("includes/authentication.php");      // -- load the authentication system
+		AddToLog("MSG>{$quitReason}; script terminated.");
+		AddToLog("UA>{$ua}<");
+		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
+	}
+	exit;
+}
+
 
 // The search list has been reversed.  Whitelist all browsers, and
 // mark everything else as a spider/bot.
 // Java/ Axis/ and PEAR required for GDBI and our own cross site communication.
 $real_browsers = array(
+	'PGVAgent',
 	'MSIE ',
 	'Opera',
 	'Firefox',
@@ -138,8 +159,8 @@ $spider_name = '                                                                
 // If you want to disable spider detection, set real to true here.
 $real = false;
 
-if ($ua != "") {
-	foreach ($real_browsers as $browser_check) {
+if($ua != "") {
+	foreach($real_browsers as $browser_check) {
 		if (eregi($browser_check, $ua)) {
 			$real = true;
 			break;
@@ -156,14 +177,15 @@ if ($ua != "") {
 			}
 		}
 	}
-} else {
+}
+else {
 	// For the people who firewall identifying information
 	// Switch real to false if you wish to restrict these connections.
 	$ua = "Browser User Agent Empty";
 	$real = true;
 }
 
-if (!$real) {
+if(!$real) {
 	$bot_name = $ua;
 	// strip out several common strings that clutter the User Agent.
 	$bot_name = eregi_replace("Mozilla\/... \(compatible;", "", $bot_name);
@@ -176,60 +198,59 @@ if (!$real) {
 	$y = 0;
 	$valid_char = false;
 	$bot_limit = strlen($bot_name);
-	for ($x=0; $x < $bot_limit; $x++) {
-		if (isAlpha($bot_name{$x})) {
+	for($x=0; $x < $bot_limit; $x++) {
+		if(isAlpha($bot_name{$x})) {
 			$spider_name{$y} = $bot_name{$x};
 			$valid_char = true;
 			$y++;
-			if ($y > 70)
-				break;
-		} else if ($bot_name{$x} == ' ')	{
-			if ($valid_char) {
+			if ($y > 70) break;
+		}
+		else if ($bot_name{$x} == ' ')	{
+			if($valid_char) {
 				$spider_name{$y} = ' ';
 				$valid_char = false;
 				$y++;
-				if ($y > 70)
-					break;
+				if ($y > 70) break;
 			}
-		} else if ($bot_name{$x} == '.')	{
-			if ($valid_char) {
+		}
+		else if ($bot_name{$x} == '.')	{
+			if($valid_char) {
 				$spider_name{$y} = '.';
 				$valid_char = true;
 				$y++;
-				if ($y > 70)
-					break;
+				if ($y > 70) break;
 			}
-		} else if ($bot_name{$x} == ':')	{
+		}
+		else if ($bot_name{$x} == ':')	{
 			$spider_name{$y} = ':';
 			$valid_char = true;
 			$y++;
-			if ($y > 70)
-				break;
-		} else if ($bot_name{$x} == '/')	{
+			if ($y > 70) break;
+		}
+		else if ($bot_name{$x} == '/')	{
 			$spider_name{$y} = '/';
 			$valid_char = true;
 			$y++;
-			if ($y > 70)
-				break;
-		} else if ($bot_name{$x} == '-')	{
+			if ($y > 70) break;
+		}
+		else if ($bot_name{$x} == '-')	{
 			$spider_name{$y} = '-';
 			$valid_char = true;
 			$y++;
-			if ($y > 70)
-				break;
-		} else if ($bot_name{$x} == '_')	{
+			if ($y > 70) break;
+		}
+		else if ($bot_name{$x} == '_')	{
 			$spider_name{$y} = '_';
 			$valid_char = true;
 			$y++;
-			if ($y > 70)
-				break;
-		} else { // Compress consecutive invalids down to one space char.
-			if ($valid_char) {
+			if ($y > 70) break;
+		}
+		else { // Compress consecutive invalids down to one space char.
+			if($valid_char) {
 				$spider_name{$y} = ' ';
 				$valid_char = false;
 				$y++;
-				if ($y > 70)
-					break;
+				if ($y > 70) break;
 			}
 		}
 	}
@@ -247,7 +268,7 @@ $bots_not_allowed = array(
 	'clippings',
 );
 if (!empty($SEARCH_SPIDER)) {
-	foreach ($bots_not_allowed as $place) {
+	foreach($bots_not_allowed as $place) {
 		if (eregi($place, $_SERVER['PHP_SELF'])) {
 			header("HTTP/1.0 403 Forbidden");
 			print "Sorry, this page is not available for search engine bots.";
@@ -257,24 +278,24 @@ if (!empty($SEARCH_SPIDER)) {
 }
 
 /**
- * Manual Search Engine IP Address tagging
- *   Allow and admin to mark IP addresses as known search engines even if
- *   they are not automatically detected above.   Setting his own IP address
- *   in this file allows him to see exactly what the search engine receives.
- *   To return to normal, the admin MUST use a different IP to get to admin
- *   mode or edit search_engines.php by hand.
- */
+  * Manual Search Engine IP Address tagging
+  *   Allow and admin to mark IP addresses as known search engines even if
+  *   they are not automatically detected above.   Setting his own IP address
+  *   in this file allows him to see exactly what the search engine receives.
+  *   To return to normal, the admin MUST use a different IP to get to admin
+  *   mode or edit search_engines.php by hand.
+  */
 if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
 	require($INDEX_DIRECTORY."search_engines.php");
 	//loops through each ip in search_engines.php
-	foreach ($search_engines as $key=>$value) {
+	foreach($search_engines as $key=>$value) {
 		//creates a regex foreach ip
 		$ipRegEx = '';
 		$arrayIP = explode('*', $value);
 		$ipRegEx .= $arrayIP[0];
 		if (count($arrayIP) > 1) {
-			for ($i=1; $i < count($arrayIP); $i++) {
-				if ($i == (count($arrayIP)))
+			for($i=1; $i < count($arrayIP); $i++) {
+				if($i == (count($arrayIP)))
 		 			$ipRegEx .= "\d{0,3}";
 	 			else
 	 				$ipRegEx .= "\d{0,3}".$arrayIP[$i];
@@ -282,7 +303,7 @@ if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
 		}
 		//checks the remote ip address against each ip regex
 		if (preg_match('/^'.$ipRegEx.'/', $_SERVER['REMOTE_ADDR'])) {
-			if (empty($SEARCH_SPIDER))
+			if(empty($SEARCH_SPIDER))
 				$SEARCH_SPIDER = "Manual Search Engine entry of ".$_SERVER['REMOTE_ADDR'];
 			$bot_name = "MAN".$_SERVER['REMOTE_ADDR'];
 			$bot_session = gen_spider_session_name($bot_name, "");
@@ -298,41 +319,40 @@ if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
 @error_reporting(0);
 
 //-- required for running PHP in CGI Mode on Windows
-if (!isset($_SERVER['REQUEST_URI']))
-	$_SERVER['REQUEST_URI'] = "";
+if (!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = "";
 
 //-- list of critical configuration variables
 $CONFIG_VARS = array(
-	"PGV_BASE_DIRECTORY",
-	"PGV_DATABASE",
-	"DBTYPE",
-	"DBHOST",
-	"DBUSER",
-	"DBPASS",
-	"DBNAME",
-	"TBLPREFIX",
-	"INDEX_DIRECTORY",
-	"AUTHENTICATION_MODULE",
-	"USE_REGISTRATION_MODULE",
-	"ALLOW_USER_THEMES",
-	"ALLOW_REMEMBER_ME",
-	"DEFAULT_GEDCOM",
-	"ALLOW_CHANGE_GEDCOM",
-	"LOGFILE_CREATE",
-	"PGV_SESSION_SAVE_PATH",
-	"PGV_SESSION_TIME",
-	"GEDCOMS",
-	"SERVER_URL",
-	"LOGIN_URL",
-	"PGV_MEMORY_LIMIT",
-	"PGV_STORE_MESSAGES",
-	"PGV_SIMPLE_MAIL",
-	"CONFIG_VERSION",
-	"CONFIGURED",
-	"MANUAL_SESSON_START",
-	"REQUIRE_ADMIN_AUTH_REGISTRATION",
-	"COMMIT_COMMAND"
-);
+	'PGV_BASE_DIRECTORY',
+	'PGV_DATABASE',
+	'DBTYPE',
+	'DBHOST',
+	'DBUSER',
+	'DBPASS',
+	'DBNAME',
+	'TBLPREFIX',
+	'INDEX_DIRECTORY',
+	'AUTHENTICATION_MODULE',
+	'USE_REGISTRATION_MODULE',
+	'ALLOW_USER_THEMES',
+	'ALLOW_REMEMBER_ME',
+	'DEFAULT_GEDCOM',
+	'ALLOW_CHANGE_GEDCOM',
+	'LOGFILE_CREATE',
+	'PGV_SESSION_SAVE_PATH',
+	'PGV_SESSION_TIME',
+	'GEDCOMS',
+	'SERVER_URL',
+	'LOGIN_URL',
+	'PGV_MEMORY_LIMIT',
+	'PGV_STORE_MESSAGES',
+	'PGV_SIMPLE_MAIL',
+	'CONFIG_VERSION',
+	'CONFIGURED',
+	'MANUAL_SESSON_START',
+	'REQUIRE_ADMIN_AUTH_REGISTRATION',
+	'COMMIT_COMMAND'
+	);
 
 
 //-- Detect and report Windows or OS/2 Server environment
@@ -343,11 +363,11 @@ $CONFIG_VARS = array(
 //				from UTF-8 to ISO when handing a file/folder name to Windows and OS/2,
 //				and all file/folder names received from Windows and OS/2 must be
 //				translated from ISO to UTF-8 before they can be processed by PGV.
-$WIN32=substr(PHP_OS, 0, 3)=='WIN' || substr(PHP_OS, 0, 4)=='OS/2' || substr(PHP_OS, 0, 7)=='NetWare';
-if ($WIN32)
-	$seperator=";";
-else
-	$seperator = ":";
+$WIN32 = false;
+if(substr(PHP_OS, 0, 3) == 'WIN') $WIN32 = true;
+if(substr(PHP_OS, 0, 4) == 'OS/2') $WIN32 = true;
+if(substr(PHP_OS, 0, 7) == 'NetWare') $WIN32 = true;
+if($WIN32) $seperator=";"; else $seperator = ":";
 //-- append our 'includes/' path to the include_path ini setting for ease of use.
 $ini_include_path = @ini_get('include_path');
 $includes_dir = dirname(@realpath(__FILE__));
@@ -371,8 +391,7 @@ if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_D
 	// Now copy new language settings into existing configuration
 	foreach ($DefaultSettings as $lang => $settings) {
 		foreach ($settings as $key => $value) {
-			if (!isset($language_settings[$lang][$key]))
-				$language_settings[$lang][$key] = $value;
+			if (!isset($language_settings[$lang][$key])) $language_settings[$lang][$key] = $value;
 		}
 	}
 	unset($DefaultSettings);
@@ -397,31 +416,18 @@ foreach ($language_settings as $key => $value) {
 while (true) {
 	$configOverride = true;
 	// Check for override of $CONFIG_VARS
-	if (array_key_exists("CONFIG_VARS", $_REQUEST))
-		break;
+	if (array_key_exists("CONFIG_VARS", $_REQUEST)) break;
 
 	// $CONFIG_VARS is safe: now check for any in its list
-	foreach ($CONFIG_VARS as $VAR) {
-		if (array_key_exists($VAR, $_REQUEST))
-			break 2;
+	foreach($CONFIG_VARS as $VAR) {
+		if (array_key_exists($VAR, $_REQUEST)) break 2;
 	}
 
 	// Check for $LANGUAGE variable override
 	//		Don't let incoming request change to an unsupported or inactive language
 	if (isset($_REQUEST["NEWLANGUAGE"])) {
-		if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]))
-			break;
-		if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])
-			break;
-	}
-
-	if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
-		if (stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
-			$SESSION_HIDE_GOOGLEMAP = "true";
-		}
-		if (stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
-			$SESSION_HIDE_GOOGLEMAP = "false";
-		}
+		if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
+		if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
 	}
 
 	$configOverride = false;
@@ -433,66 +439,65 @@ while (true) {
 
 //-- check if they are trying to hack
 if ($configOverride) {
-	print "Config variable override detected. Possible hacking attempt. Script terminated.\n";
-	if ((!ini_get('register_globals'))||(ini_get('register_globals')=="Off")) {
+	header("HTTP/1.0 403 Forbidden");
+	print "Hackers are not welcome here.";
+	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
 		//-- load common functions
 		require_once("includes/functions.php");
 		//-- load db specific functions
 		require_once("includes/functions_db.php");
 		require_once("includes/authentication.php");      // -- load the authentication system
-		AddToLog("Config variable override detected. Possible hacking attempt. Script terminated.");
-		AddToLog("URI>".$_SERVER["REQUEST_URI"]."<");
+		AddToLog("MSG>Configuration override detected; script terminated.");
+		AddToLog("UA>{$ua}<");
+		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 	}
 	exit;
 }
 
-if (!empty($_SERVER["PHP_SELF"]))
-	$SCRIPT_NAME=$_SERVER["PHP_SELF"];
-else
-	if (!empty($_SERVER["SCRIPT_NAME"]))
-		$SCRIPT_NAME=$_SERVER["SCRIPT_NAME"];
+if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
+	if(stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
+		$SESSION_HIDE_GOOGLEMAP = "true";
+	}
+	if(stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
+		$SESSION_HIDE_GOOGLEMAP = "false";
+	}
+}
+
+if (!empty($_SERVER["PHP_SELF"])) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
+else if (!empty($_SERVER["SCRIPT_NAME"])) $SCRIPT_NAME=$_SERVER["SCRIPT_NAME"];
 $SCRIPT_NAME = preg_replace("~/+~", "/", $SCRIPT_NAME);
-if (!empty($_SERVER["QUERY_STRING"]))
-	$QUERY_STRING = $_SERVER["QUERY_STRING"];
-else
-	$QUERY_STRING="";
+if (!empty($_SERVER["QUERY_STRING"])) $QUERY_STRING = $_SERVER["QUERY_STRING"];
+else $QUERY_STRING="";
 $QUERY_STRING = preg_replace(array("/&/","/</"), array("&amp;","&lt;"), $QUERY_STRING);
 $QUERY_STRING = preg_replace("/show_context_help=(no|yes)/", "", $QUERY_STRING);
 
 //-- if not configured then redirect to the configuration script
 if (!$CONFIGURED) {
-		 if ((strstr($SCRIPT_NAME, "admin.php")===false)
-		 &&(strstr($SCRIPT_NAME, "login.php")===false)
-		 &&(strstr($SCRIPT_NAME, "editconfig.php")===false)
-		 &&(strstr($SCRIPT_NAME, "config_download.php")===false)
-		 &&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
-				header("Location: editconfig.php");
-				exit;
-		 }
+   if ((strstr($SCRIPT_NAME, "admin.php")===false)
+   &&(strstr($SCRIPT_NAME, "login.php")===false)
+   &&(strstr($SCRIPT_NAME, "editconfig.php")===false)
+   &&(strstr($SCRIPT_NAME, "config_download.php")===false)
+   &&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
+      header("Location: editconfig.php");
+      exit;
+   }
 }
 //-- allow user to cancel
 ignore_user_abort(false);
 
-if (empty($CONFIG_VERSION))
-	$CONFIG_VERSION = "2.65";
+if (empty($CONFIG_VERSION)) $CONFIG_VERSION = "2.65";
 if (empty($SERVER_URL)) {
 	$SERVER_URL = "http://".$_SERVER["SERVER_NAME"];
-	if (!empty($_SERVER["SERVER_PORT"]) && $_SERVER["SERVER_PORT"]!=80)
-		$SERVER_URL .= ":".$_SERVER["SERVER_PORT"];
-	$SERVER_URL .= dirname($SCRIPT_NAME);
+	if (!empty($_SERVER["SERVER_PORT"]) && $_SERVER["SERVER_PORT"]!=80) $SERVER_URL .= ":".$_SERVER["SERVER_PORT"];
+	$SERVER_URL .= dirname($SCRIPT_NAME)."/";
 	$SERVER_URL = stripslashes($SERVER_URL);
 }
-if (substr($SERVER_URL,-1)!="/")
-	$SERVER_URL .= "/";	// make SURE that trailing "/" is present
-if (!isset($ALLOW_REMEMBER_ME))
-	$ALLOW_REMEMBER_ME = true;
-if (!isset($PGV_SIMPLE_MAIL))
-	$PGV_SIMPLE_MAIL = false;
-if (!isset($DBPERSIST))
-	$DBPERSIST = false;
+if (substr($SERVER_URL,-1)!="/") $SERVER_URL .= "/";	// make SURE that trailing "/" is present
+if (!isset($ALLOW_REMEMBER_ME)) $ALLOW_REMEMBER_ME = true;
+if (!isset($PGV_SIMPLE_MAIL)) $PGV_SIMPLE_MAIL = false;
+if (!isset($DBPERSIST)) $DBPERSIST = false;
 
-if (empty($PGV_MEMORY_LIMIT))
-	$PGV_MEMORY_LIMIT = "32M";
+if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = "32M";
 @ini_set('memory_limit', $PGV_MEMORY_LIMIT);
 
 //-- backwards compatibility with v < 3.1
@@ -515,32 +520,29 @@ $start_time = microtime(true);
 $MEDIATYPE = array("a11","acb","adc","adf","afm","ai","aiff","aif","amg","anm","ans","apd","asf","au","avi","awm","bga","bmp","bob","bpt","bw","cal","cel","cdr","cgm","cmp","cmv","cmx","cpi","cur","cut","cvs","cwk","dcs","dib","dmf","dng","doc","dsm","dxf","dwg","emf","enc","eps","fac","fax","fit","fla","flc","fli","fpx","ftk","ged","gif","gmf","hdf","iax","ica","icb","ico","idw","iff","img","jbg","jbig","jfif","jpe","jpeg","jp2","jpg","jtf","jtp","lwf","mac","mid","midi","miff","mki","mmm",".mod","mov","mp2","mp3","mpg","mpt","msk","msp","mus","mvi","nap","ogg","pal","pbm","pcc","pcd","pcf","pct","pcx","pdd","pdf","pfr","pgm","pic","pict","pk","pm3","pm4","pm5","png","ppm","ppt","ps","psd","psp","pxr","qt","qxd","ras","rgb","rgba","rif","rip","rla","rle","rpf","rtf","scr","sdc","sdd","sdw","sgi","sid","sng","swf","tga","tiff","tif","txt","text","tub","ul","vda","vis","vob","vpg","vst","wav","wdb","win","wk1","wks","wmf","wmv","wpd","wxf","wp4","wp5","wp6","wpg","wpp","xbm","xls","xpm","xwd","yuv","zgm");
 $BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsignore", ".svn", "watermark");
 
+
 //-- start the php session
 $time = time()+$PGV_SESSION_TIME;
 $date = date("D M j H:i:s T Y", $time);
 //-- set the path to the pgv site so that users cannot login on one site
 //-- and then automatically be logged in at another site on the same server
 $pgv_path = "/";
-if (!empty($SCRIPT_NAME))
-	$pgv_path = str_replace("\\", "/", dirname($SCRIPT_NAME));
+if (!empty($SCRIPT_NAME)) $pgv_path = str_replace("\\", "/", dirname($SCRIPT_NAME));
 session_set_cookie_params($date, $pgv_path);
-if (($PGV_SESSION_TIME>0)&&(function_exists('session_cache_expire')))
-	session_cache_expire($PGV_SESSION_TIME/60);
-if (!empty($PGV_SESSION_SAVE_PATH))
-	session_save_path($PGV_SESSION_SAVE_PATH);
-if (isset($MANUAL_SESSION_START) && !empty($SID))
-	session_id($SID);
+if (($PGV_SESSION_TIME>0)&&(function_exists('session_cache_expire'))) session_cache_expire($PGV_SESSION_TIME/60);
+if (!empty($PGV_SESSION_SAVE_PATH)) session_save_path($PGV_SESSION_SAVE_PATH);
+if (isset($MANUAL_SESSION_START) && !empty($SID)) session_id($SID);
 
 @session_start();
 
-if ((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) // user following a search engine listing in,
+if((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) // user following a search engine listing in,
 	session_regenerate_id();
 
-if (!empty($SEARCH_SPIDER)) {
+if(!empty($SEARCH_SPIDER)) {
 	$spidertime = time();
 	$spiderdate = date("d.m.Y", $spidertime);
 	$_SESSION['last_spider_name'] = $SEARCH_SPIDER;
-	if (isset($_SESSION['spider_count']))
+	if(isset($_SESSION['spider_count']))
 		$spidercount = $_SESSION['spider_count'] + 1;
 	else {
 		$spidercount = 1;
@@ -551,8 +553,8 @@ if (!empty($SEARCH_SPIDER)) {
 		$outstr = preg_replace('/ - /', ' ', $outstr);
 		AddToLog("New search engine encountered: ->".$outstr."<-");
 	}
-	if (isset($_SESSION['last_spider_date'])) {
-		if ($spiderdate != $_SESSION['last_spider_date']) {
+	if(isset($_SESSION['last_spider_date'])) {
+		if($spiderdate != $_SESSION['last_spider_date']) {
 			//adds a message to the log that a new spider session is starting
 			require_once("includes/authentication.php");      // -- Loaded early so AddToLog works
 			$outstr = preg_replace('/\s\s+/', ' ', $SEARCH_SPIDER); // trim trailing whitespace
@@ -565,17 +567,17 @@ if (!empty($SEARCH_SPIDER)) {
 	}
 	$_SESSION['last_spider_date'] = $spiderdate;
 	$_SESSION['spider_count'] = $spidercount;
-	if (isset($_SERVER['REMOTE_ADDR']))
+	if(isset($_SERVER['REMOTE_ADDR']))
 		$_SESSION['last_spider_ip'] = $_SERVER['REMOTE_ADDR'];
-	if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		$_SESSION['last_spider_lang'] = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 }
 
-if ((!empty($SEARCH_SPIDER)) && (!empty($_SESSION['pgv_user'])) && ($_SESSION['pgv_user'] != "")) {
+if((!empty($SEARCH_SPIDER)) && (!empty($_SESSION['pgv_user'])) && ($_SESSION['pgv_user'] != "")) {
 	$_SESSION['pgv_user'] = "";	// Don't allow search engine into user/admin mode.
 }
 
-if (!empty($SEARCH_SPIDER)) {
+if(!empty($SEARCH_SPIDER)) {
 	// FIX SANITIZE: What other data do we need to reset back to anonymous default?
 	// overkill to force a disk flush
 	$_SESSION['CLANGUAGE'] = "";	// Force language to gedcom default language.
@@ -584,12 +586,10 @@ if (!empty($SEARCH_SPIDER)) {
 }
 
 // change the session values and store if needed.
-if ($SESSION_HIDE_GOOGLEMAP == "true")
-	$_SESSION['hide_googlemap'] = true;
-if ($SESSION_HIDE_GOOGLEMAP == "false")
-	$_SESSION['hide_googlemap'] = false;
-if ($SESSION_HIDE_GOOGLEMAP == "empty") {
-	if ((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
+if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
+if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
+if($SESSION_HIDE_GOOGLEMAP == "empty") {
+	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
  		$SESSION_HIDE_GOOGLEMAP = "true";
 	else 
  		$SESSION_HIDE_GOOGLEMAP = "false";
@@ -599,7 +599,7 @@ if ($SESSION_HIDE_GOOGLEMAP == "empty") {
 @import_request_variables("cgp");
 
 //-- prevent sql and code injection
-foreach ($_REQUEST as $key=>$value) {
+foreach($_REQUEST as $key=>$value) {
 	if (!is_array($value)) {
 		if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $value, $imatch)>0) {
 			print "Possible SQL injection detected: $key=>$value.  <b>$imatch[0]</b> Script terminated.";
@@ -608,11 +608,10 @@ foreach ($_REQUEST as $key=>$value) {
 			exit;
 		}
 		//-- don't let any html in
-		if (!empty($value))
-			${$key} = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $value);
+		if (!empty($value)) ${$key} = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $value);
 	}
 	else {
-		foreach ($value as $key1=>$val) {
+		foreach($value as $key1=>$val) {
 			if (!is_array($val)) {
 				if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $val, $imatch)>0) {
 					print "Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.";
@@ -621,8 +620,7 @@ foreach ($_REQUEST as $key=>$value) {
 					exit;
 				}
 				//-- don't let any html in
-				if (!empty($val))
-					${$key}[$key1] = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $val);
+				if (!empty($val)) ${$key}[$key1] = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $val);
 			}
 		}
 	}
@@ -631,55 +629,47 @@ foreach ($_REQUEST as $key=>$value) {
 //-- import the gedcoms array
 if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	require_once($INDEX_DIRECTORY."gedcoms.php");
-	if (!is_array($GEDCOMS))
-		$GEDCOMS = array();
+	if (!is_array($GEDCOMS)) $GEDCOMS = array();
 	$i=0;
 	foreach ($GEDCOMS as $key => $gedcom) {
 		$i++;
 		$GEDCOMS[$key]["commonsurnames"] = stripslashes($gedcom["commonsurnames"]);
-		if (empty($GEDCOMS[$key]["id"]))
-			$GEDCOMS[$key]["id"] = $i;
-		if (empty($GEDCOMS[$key]["pgv_ver"]))
-			$GEDCOMS[$key]["pgv_ver"] = $VERSION;
+		if (empty($GEDCOMS[$key]["id"])) $GEDCOMS[$key]["id"] = $i;
+		if (empty($GEDCOMS[$key]["pgv_ver"])) $GEDCOMS[$key]["pgv_ver"] = $VERSION;
 
 		// Force the gedcom to be re-imported if the code has been significantly upgraded
 		if (substr($GEDCOMS[$key]["pgv_ver"], 0, 3) != substr($VERSION, 0, 3))
 			$GEDCOMS[$key]["imported"] = false;
 	}
-} else
-	$GEDCOMS=array();
+}
+else $GEDCOMS=array();
 
 //-- connect to the database
 check_db();
 
 if (isset($_REQUEST["GEDCOM"])){
-	$_REQUEST["GEDCOM"] = trim($_REQUEST["GEDCOM"]);
+   $_REQUEST["GEDCOM"] = trim($_REQUEST["GEDCOM"]);
 }
-if (!isset($DEFAULT_GEDCOM))
-	$DEFAULT_GEDCOM = "";
+if (!isset($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = "";
 if (empty($_REQUEST["GEDCOM"])) {
-	if (isset($_SESSION["GEDCOM"]))
-		$GEDCOM = $_SESSION["GEDCOM"];
-	else {
-		if (empty($GEDCOM) || empty($GEDCOMS[$GEDCOM]))
-			$GEDCOM=$DEFAULT_GEDCOM;
-		else
-			if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
-			 foreach ($GEDCOMS as $ged_file=>$ged_array) {
-				$GEDCOM = $ged_file;
-				if (check_for_import($ged_file))
-					break;
-				}
-			}
-	}
-} else {
+   if (isset($_SESSION["GEDCOM"])) $GEDCOM = $_SESSION["GEDCOM"];
+   else {
+      if (empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) $GEDCOM=$DEFAULT_GEDCOM;
+      else if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
+         foreach($GEDCOMS as $ged_file=>$ged_array) {
+	         $GEDCOM = $ged_file;
+	         if (check_for_import($ged_file)) break;
+         }
+      }
+   }
+}
+else {
 	$GEDCOM = $_REQUEST["GEDCOM"];
 }
 if (isset($_REQUEST["ged"])) {
 	$GEDCOM = trim($_REQUEST["ged"]);
 }
-if (is_int($GEDCOM))
-	$GEDCOM = get_gedcom_from_id($GEDCOM);
+if (is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
 $_SESSION["GEDCOM"] = $GEDCOM;
 $INDILIST_RETRIEVED = false;
 $FAMLIST_RETRIEVED = false;
@@ -708,19 +698,19 @@ require_once("includes/functions_name.php");
 require_once("includes/authentication.php");      // -- load the authentication system
 
 /**
- * Remote IP Address Banning
- */
+  * Remote IP Address Banning
+  */
  if (file_exists($INDEX_DIRECTORY."banned.php")) {
  	require($INDEX_DIRECTORY."banned.php");
  	//loops through each ip in banned.php
-	foreach ($banned as $key=>$value) {
+	foreach($banned as $key=>$value) {
 		//creates a regex foreach ip
 		$ipRegEx = '';
 		$arrayIP = explode('*', $value);
 		$ipRegEx .= $arrayIP[0];
 		if (count($arrayIP) > 1) {
-			for ($i=1; $i < count($arrayIP); $i++) {
-				if ($i == (count($arrayIP)))
+			for($i=1; $i < count($arrayIP); $i++) {
+				if($i == (count($arrayIP)))
 		 			$ipRegEx .= "\d{0,3}";
 	 			else
 	 				$ipRegEx .= "\d{0,3}".$arrayIP[$i];
@@ -745,12 +735,10 @@ if (strstr($SCRIPT_NAME, "client.php")===false && strstr($SCRIPT_NAME, "genservi
 	require_once("includes/functions_rtl.php");
 }
 
-if ($MULTI_MEDIA)
-	require_once("includes/functions_mediadb.php");
+if ($MULTI_MEDIA) require_once("includes/functions_mediadb.php");
 require_once("includes/functions_date.php");
 
-if (empty($PEDIGREE_GENERATIONS))
-	$PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
+if (empty($PEDIGREE_GENERATIONS)) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
 
 /* Re-build the various language-related arrays
  *		Note:
@@ -824,15 +812,11 @@ foreach ($language_settings as $key => $value) {
  *    revert back to the language they first saw when arriving at the site according to
  *    rule 1.
  */
-if ((!empty($logout))&&($logout==1))
-	unset($_SESSION["CLANGUAGE"]);		// user is about to log out
+if ((!empty($logout))&&($logout==1)) unset($_SESSION["CLANGUAGE"]);		// user is about to log out
 
 if (($ENABLE_MULTI_LANGUAGE)&&(empty($_SESSION["CLANGUAGE"]))&&(empty($SEARCH_SPIDER))) {
-	if (isset($HTTP_ACCEPT_LANGUAGE))
-		$accept_langs = $HTTP_ACCEPT_LANGUAGE;
-	else
-		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-			$accept_langs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	if (isset($HTTP_ACCEPT_LANGUAGE)) $accept_langs = $HTTP_ACCEPT_LANGUAGE;
+	else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $accept_langs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 	if (isset($accept_langs)) {
 		// Seach list of supported languages for this Browser's preferred page languages
 		$langs_array = preg_split("/(,\s*)|(;\s*)/", $accept_langs);
@@ -840,30 +824,24 @@ if (($ENABLE_MULTI_LANGUAGE)&&(empty($_SESSION["CLANGUAGE"]))&&(empty($SEARCH_SP
 		foreach ($langs_array as $browserLang) {
 			$browserLang = strtolower($browserLang).";";
 			foreach ($pgv_lang_use as $language => $active) {
-				if (!$active)
-					continue;
-				if (strpos($lang_langcode[$language], $browserLang) === false)
-					continue;
+				if (!$active) continue;
+				if (strpos($lang_langcode[$language], $browserLang) === false) continue;
 				$LANGUAGE = $language;
 				$foundLanguage = true;
 				break;
 			}
-			if ($foundLanguage)
-				break;
+			if ($foundLanguage) break;
 		}
 	}
 }
 $deflang = $LANGUAGE;
 
-if (empty($SEARCH_SPIDER)) {
-	if (!empty($_SESSION['CLANGUAGE']))
-		$CLANGUAGE = $_SESSION['CLANGUAGE'];
-	else
-		if (!empty($HTTP_SESSION_VARS['CLANGUAGE']))
-			$CLANGUAGE = $HTTP_SESSION_VARS['CLANGUAGE'];
-	if (!empty($CLANGUAGE)) {
-		$LANGUAGE = $CLANGUAGE;
-	}
+if(empty($SEARCH_SPIDER)) {
+   if (!empty($_SESSION['CLANGUAGE'])) $CLANGUAGE = $_SESSION['CLANGUAGE'];
+   else if (!empty($HTTP_SESSION_VARS['CLANGUAGE'])) $CLANGUAGE = $HTTP_SESSION_VARS['CLANGUAGE'];
+   if (!empty($CLANGUAGE)) {
+      $LANGUAGE = $CLANGUAGE;
+   }
 }
 
 if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
@@ -876,8 +854,7 @@ if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
 	}
 }
 
-if (!isset($pgv_username))
-	$pgv_username = getUserName();
+if (!isset($pgv_username)) $pgv_username = getUserName();
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);
@@ -893,33 +870,32 @@ require_once(get_privacy_file());
 //-- load the privacy functions
 require_once("includes/functions_privacy.php");
 
-if (!isset($SCRIPT_NAME))
-	$SCRIPT_NAME=$_SERVER["PHP_SELF"];
+if (!isset($SCRIPT_NAME)) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
 
-if (!isset($show_context_help))
-	$show_context_help = "";
-if (!isset($_SESSION["show_context_help"]))
-	$_SESSION["show_context_help"] = $SHOW_CONTEXT_HELP;
-if (!isset($_SESSION["pgv_user"]))
-	$_SESSION["pgv_user"] = "";
-if (!isset($_SESSION["cookie_login"]))
-	$_SESSION["cookie_login"] = false;
-if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes')
-	$_SESSION["show_context_help"] = true;
-if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no')
-	$_SESSION["show_context_help"] = false;
-if (!isset($USE_THUMBS_MAIN))
-	$USE_THUMBS_MAIN = false;
-if ((strstr($SCRIPT_NAME, "editconfig.php")===false) &&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
+if (!isset($show_context_help)) $show_context_help = "";
+if (!isset($_SESSION["show_context_help"])) $_SESSION["show_context_help"] = $SHOW_CONTEXT_HELP;
+if (!isset($_SESSION["pgv_user"])) $_SESSION["pgv_user"] = "";
+if (!isset($_SESSION["cookie_login"])) $_SESSION["cookie_login"] = false;
+if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION["show_context_help"] = true;
+if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_context_help"] = false;
+if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
+if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
+	&&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
 	if ((!check_db())||(!adminUserExists())) {
 		header("Location: editconfig.php");
 		exit;
 	}
 	
-	// If we haven't imported a gedcom yet, these are the only scripts that may run
 	if ((count($GEDCOMS)==0)||(!check_for_import($GEDCOM))) {
 		$scriptList = array("editconfig_gedcom.php", "help_text.php", "editconfig_help.php", "editgedcoms.php", "uploadgedcom.php", "login.php", "admin.php", "config_download.php", "addnewgedcom.php", "validategedcom.php", "addmedia.php", "importgedcom.php", "client.php", "edit_privacy.php", "upgrade33-40.php", "gedcheck.php", "printlog.php", "editlang.php", "editlang_edit.php" ,"useradmin.php");
-		if (!in_array(basename($SCRIPT_NAME), $scriptList)) {
+		$inList = false;
+		foreach ($scriptList as $key => $listEntry) {
+			if (strstr($SCRIPT_NAME, $listEntry)) {
+				$inList = true;
+				break;
+			}
+		}
+		if (!$inList) {
 			header("Location: editgedcoms.php");
 			exit;
 		}
@@ -936,6 +912,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false) &&(strstr($SCRIPT_NAME, "ed
 		}
 	}
 
+
 	if ($REQUIRE_AUTHENTICATION) {
 		if (empty($pgv_username)) {
 			if ((strstr($SCRIPT_NAME, "login.php")===false)
@@ -950,8 +927,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false) &&(strstr($SCRIPT_NAME, "ed
 					$url = basename($_SERVER["PHP_SELF"])."?".$QUERY_STRING;
 					if (stristr($url, "index.php")!==false) {
 						if (stristr($url, "ctype=")===false) {
-							if ((!isset($_SERVER['HTTP_REFERER'])) || (stristr($_SERVER['HTTP_REFERER'],$SERVER_URL)===false))
-								$url .= "&ctype=gedcom";
+							if ((!isset($_SERVER['HTTP_REFERER'])) || (stristr($_SERVER['HTTP_REFERER'],$SERVER_URL)===false)) $url .= "&ctype=gedcom";
 						}
 					}
 					if (stristr($url, "ged=")===false)  {
@@ -965,28 +941,25 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false) &&(strstr($SCRIPT_NAME, "ed
 		}
 	}
 
-	// -- setup session information for tree clippings cart features
-	if ((!isset($_SESSION['cart'])) || (!empty($_SESSION['last_spider_name']))) {	// reset cart everytime for spiders
-		$_SESSION['cart'] = array();
-	}
-	$cart = $_SESSION['cart'];
+   // -- setup session information for tree clippings cart features
+   if ((!isset($_SESSION['cart'])) || (!empty($_SESSION['last_spider_name']))) {	// reset cart everytime for spiders
+     $_SESSION['cart'] = array();
+   }
+   $cart = $_SESSION['cart'];
 
-	$_SESSION['CLANGUAGE'] = $LANGUAGE;
-	if (!isset($_SESSION["timediff"])) {
-		$_SESSION["timediff"] = 0;
-	}
+   $_SESSION['CLANGUAGE'] = $LANGUAGE;
+   if (!isset($_SESSION["timediff"])) {
+	   $_SESSION["timediff"] = 0;
+   }
 
-	//-- load any editing changes
-	if (userCanEdit($pgv_username)) {
-		if (file_exists($INDEX_DIRECTORY."pgv_changes.php"))
-			require_once($INDEX_DIRECTORY."pgv_changes.php");
-		else
-			$pgv_changes = array();
-	} else
-		$pgv_changes = array();
+   //-- load any editing changes
+   if (userCanEdit($pgv_username)) {
+      if (file_exists($INDEX_DIRECTORY."pgv_changes.php")) require_once($INDEX_DIRECTORY."pgv_changes.php");
+      else $pgv_changes = array();
+   }
+   else $pgv_changes = array();
 
-	if (empty($LOGIN_URL))
-		$LOGIN_URL = "login.php";
+   if (empty($LOGIN_URL)) $LOGIN_URL = "login.php";
 
 } else {
 	check_db();
@@ -1002,26 +975,24 @@ if ((!empty($pgv_username))&&(!isset($logout))) {
 
 	$tempuser = getUser($pgv_username);
 	$usertheme = $tempuser["theme"];
-	if ((!empty($_POST["user_theme"]))&&(!empty($_POST["oldusername"]))&&($_POST["oldusername"]==$pgv_username))
-		$usertheme = $_POST["user_theme"];
+	if ((!empty($_POST["user_theme"]))&&(!empty($_POST["oldusername"]))&&($_POST["oldusername"]==$pgv_username)) $usertheme = $_POST["user_theme"];
 	if ((!empty($usertheme)) && (file_exists($usertheme."theme.php")))  {
 		$THEME_DIR = $usertheme;
 	}
 }
 
-if (isset($_SESSION["theme_dir"])) {
+if (isset($_SESSION["theme_dir"]))
+{
 	$THEME_DIR = $_SESSION["theme_dir"];
-	if (!empty($pgv_username)) {
+	if (!empty($pgv_username))
+	{
 		$tempuser = getUser($pgv_username);
-		if ($tempuser["editaccount"])
-			unset($_SESSION["theme_dir"]);
+		if ($tempuser["editaccount"]) unset($_SESSION["theme_dir"]);
 	}
 }
 
-if (empty($THEME_DIR))
-	$THEME_DIR="standard/";
-if (file_exists($THEME_DIR."theme.php"))
-	require_once($THEME_DIR."theme.php");
+if (empty($THEME_DIR)) $THEME_DIR="standard/";
+if (file_exists($THEME_DIR."theme.php")) require_once($THEME_DIR."theme.php");
 else {
 	$THEME_DIR = "themes/standard/";
 	require_once($THEME_DIR."theme.php");

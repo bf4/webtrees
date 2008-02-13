@@ -103,6 +103,18 @@ function check_db($ignore_previous=false) {
 				PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ
 			)
 		);
+
+		// Talk to the DB in UTF-8
+		switch ($DBTYPE) {
+		case 'mysql':
+			$DBH->exec("SET NAMES UTF8");
+			$DBH->exec("SET CHARACTER SET UTF8");
+			break;
+		case 'postgres':
+			$DBH->exec("SET NAMES 'UTF8'");
+			break;
+		}
+
 		$DBH_OK=true;
 	} catch (PDOException $e) {
 		$DBH_OK=false;

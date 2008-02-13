@@ -1679,82 +1679,27 @@ function get_media_list() {
  * @return array	an array of all letters
  */
 function get_indi_alpha() {
-	global $TBLPREFIX, $GEDCOM, $LANGUAGE, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
-	global $MULTI_LETTER_ALPHABET;
-	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
+	global $DBH, $TBLPREFIX, $GEDCOMS, $GEDCOM, $SHOW_MARRIED_NAMES, $TOTAL_QUERIES;
+	static $statement=null;
 
-	$indialpha = array();
-
-	$danishex = array("OE", "AE", "AA");
-	$danishFrom = array("AA", "AE", "OE");
-	$danishTo = array("Å", "Æ", "Ø");
-	// Force danish letters in the top list [ 1579889 ]
-	if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-		foreach ($danishTo as $k=>$v)
-			$indialpha[$v] = $v;
-
-	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY alpha";
-	$res = dbquery($sql);
-
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = str2upper($row["alpha"]);
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-			$letter = str_replace($danishFrom, $danishTo, $letter);
-		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-		if ($inArray===false) {
-			if ((ord(substr($letter, 0, 1)) & 0x80)==0x00)
-				$letter = substr($letter, 0, 1);
+	if (is_null($statement)) {
+		if ($SHOW_MARRIED_NAMES) {
+			$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}names, {$TBLPREFIX}facts, {$TBLPREFIX}records WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=? GROUP BY 1 ORDER BY letter='@', letter");
+		} else {
+			$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}names, {$TBLPREFIX}facts, {$TBLPREFIX}records WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND name_type!='_MARNM' AND rec_ged_id=? GROUP BY 1 ORDER BY letter='@', letter");
 		}
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$position = strpos($UCDiacritWhole, $letter);
-			if ($position!==false) {
-				$position = $position >> 1;
-				$letter = substr($UCDiacritStrip, $position, 1);
-			} else {
-				$position = strpos($LCDiacritWhole, $letter);
-				if ($position!==false) {
-					$position = $position >> 1;
-					$letter = substr($LCDiacritStrip, $position, 1);
-				}
-			}
-		}
-		$indialpha[$letter] = $letter;
 	}
-	$res->free();
 
-	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names WHERE n_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
-	if (!$SHOW_MARRIED_NAMES)
-		$sql .= " AND n_type!='C'";
-	$sql .= " ORDER BY alpha";
-	$res = dbquery($sql);
+	$initials=array();
 
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = str2upper($row["alpha"]);
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-			$letter = str_replace($danishFrom, $danishTo, $letter);
-		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-		if ($inArray===false) {
-			if ((ord(substr($letter, 0, 1)) & 0x80)==0x00)
-				$letter = substr($letter, 0, 1);
-		}
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$position = strpos($UCDiacritWhole, $letter);
-			if ($position!==false) {
-				$position = $position >> 1;
-				$letter = substr($UCDiacritStrip, $position, 1);
-			} else {
-				$position = strpos($LCDiacritWhole, $letter);
-				if ($position!==false) {
-					$position = $position >> 1;
-					$letter = substr($LCDiacritStrip, $position, 1);
-				}
-			}
-		}
-		$indialpha[$letter] = $letter;
+	$statement->bindValue(1, $GEDCOMS[$GEDCOM]['id'], PDO::PARAM_INT);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	while ($row=$statement->fetchObject()) {
+		$initials[]=$row->letter;
 	}
-	$res->free();
 
-	return $indialpha;
+	return $initials;
 }
 
 //-- get the first character in the list
@@ -1773,7 +1718,7 @@ function get_fam_alpha() {
 		foreach ($danishTo as $k=>$v)
 			$famalpha[$v] = $v;
 
-	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}records WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
+	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
 	$res = dbquery($sql);
 
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -1802,7 +1747,7 @@ function get_fam_alpha() {
 	}
 	$res->free();
 
-	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names, ".$TBLPREFIX."records WHERE rec_ged_id=n_file AND rec_xref=n_gid AND n_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
+	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names, {$TBLPREFIX}record WHERE rec_ged_id=n_file AND rec_xref=n_gid AND n_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
 	$res = dbquery($sql);
 
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -1870,7 +1815,7 @@ function get_alpha_indis($letter) {
 
 	$checkDictSort = true;
 
-	$sql = "SELECT i_id, rec_gedcom, i_name, i_letter,i_surname, i_isdead FROM {$TBLPREFIX}individuals, {$TBLPREFIX}records WHERE i_id=rec_xref AND i_file=rec_ged_id AND ";
+	$sql = "SELECT i_id, rec_gedcom, i_name, i_letter,i_surname, i_isdead FROM {$TBLPREFIX}individuals, {$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND ";
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
 		if ($letter == "Ø")
 			$text = "OE";
@@ -1963,7 +1908,7 @@ function get_alpha_indis($letter) {
 
 	$checkDictSort = true;
 
-	$sql = "SELECT i_id, i_name, i_file, i_isdead, rec_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names,{$TBLPREFIX}records WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=n_gid AND i_file=n_file AND ";
+	$sql = "SELECT i_id, i_name, i_file, i_isdead, rec_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names,{$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=n_gid AND i_file=n_file AND ";
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
 		if ($letter == "Ø")
 			$text = "OE";
@@ -2077,7 +2022,7 @@ function get_alpha_indis($letter) {
 function get_surname_indis($surname) {
 	global $TBLPREFIX, $GEDCOM, $indilist, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
 	$tindilist = array();
-	$sql = "SELECT i_id, i_isdead, i_file, rec_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}records WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql = "SELECT i_id, i_isdead, i_file, rec_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	$sql .= "AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 	$sql .= " ORDER BY i_surname";
 	$res = dbquery($sql);
@@ -2132,7 +2077,7 @@ function get_surname_indis($surname) {
 		$res->free();
 	}
 
-	$sql = "SELECT i_id, i_name, i_file, i_isdead, rec_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names, {$TBLPREFIX}records WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql = "SELECT i_id, i_name, i_file, i_isdead, rec_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names, {$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	if (!$SHOW_MARRIED_NAMES)
 		$sql .= "AND n_type!='C' ";
 	$sql .= "AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY n_surname";
@@ -2372,7 +2317,7 @@ function get_surname_fams($surname) {
 	//-- handle the special case for @N.N. when families don't have any husb or wife
 	//-- SHOULD WE SHOW THE UNDEFINED? 
 	if ($surname=="@N.N.") {
-		$sql = "SELECT f_id, rec_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families, {$TBLPREFIX}records WHERE f_file=rec_ged_id AND f_id=rec_xref AND (f_husb='' OR f_wife='') AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+		$sql = "SELECT f_id, rec_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families, {$TBLPREFIX}record WHERE f_file=rec_ged_id AND f_id=rec_xref AND (f_husb='' OR f_wife='') AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 		$res = dbquery($sql);
 
 		if ($res->numRows()>0) {
@@ -2631,7 +2576,7 @@ function get_server_list(){
 	$sitelist = array();
 
 	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
-		$sql = "SELECT s_id ,s_name, rec_gedcom FROM {$TBLPREFIX}sources, {$TBLPREFIX}records WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 _DBID%' ORDER BY s_name";
+		$sql = "SELECT s_id ,s_name, rec_gedcom FROM {$TBLPREFIX}sources, {$TBLPREFIX}record WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 _DBID%' ORDER BY s_name";
 		$res = dbquery($sql, false);
 		if (DB::isError($res))
 			return $sitelist;
@@ -2868,7 +2813,7 @@ function get_anniversary_events($jd, $facts='') {
 		$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 		
 		// Now fetch these anniversaries
-		$sql="SELECT d_gid, rec_gedcom, rec_type, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}records {$where} AND d_gid=rec_xref AND d_file=rec_ged_id ORDER BY d_day ASC, d_year DESC";
+		$sql="SELECT d_gid, rec_gedcom, rec_type, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}record {$where} AND d_gid=rec_xref AND d_file=rec_ged_id ORDER BY d_day ASC, d_year DESC";
 		$res=dbquery($sql);
 		while ($row=&$res->fetchRow()) {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
@@ -2939,7 +2884,7 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 	$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 			
 	// Now fetch these events
-	$sql="SELECT d_gid, rec_gedcom, rec_type, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}records {$where} AND d_gid=rec_xref AND d_file=rec_ged_id ORDER BY d_julianday1";
+	$sql="SELECT d_gid, rec_gedcom, rec_type, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}record {$where} AND d_gid=rec_xref AND d_file=rec_ged_id ORDER BY d_julianday1";
 	$res=dbquery($sql);
 	while ($row=&$res->fetchRow()) {
 		// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
@@ -3027,6 +2972,180 @@ function get_event_list() {
 			check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
 	}
 	return $found_facts;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_USERS table
+////////////////////////////////////////////////////////////////////////////////
+
+function create_user($user) {
+	global $DBCONN, $TBLPREFIX;
+
+	$user=$DBCONN->escapeSimple($user);
+	dbquery("INSERT INTO {$TBLPREFIX}users (u_username) VALUES ('{$user}')");
+}
+
+function rename_user($olduser, $newuser) {
+	global $DBCONN, $TBLPREFIX;
+
+	$olduser=$DBCONN->escapeSimple($olduser);
+	$newuser=$DBCONN->escapeSimple($newuser);
+	dbquery("UPDATE {$TBLPREFIX}users SET u_username='{$newuser}' WHERE u_username='{$olduser}'");
+
+	// For databases without foreign key constraints, manually update dependent tables
+	dbquery("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$newuser}' WHERE b_username ='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}favorites SET fv_username='{$newuser}' WHERE fv_username='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$newuser}' WHERE m_from     ='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$newuser}' WHERE m_to       ='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}news      SET n_username ='{$newuser}' WHERE n_username ='{$olduser}'");
+}
+
+function delete_user($user) {
+	global $DBCONN, $TBLPREFIX;
+
+	$user=$DBCONN->escapeSimple($user);
+	dbquery("DELETE FROM {$TBLPREFIX}users WHERE u_username='{$user}'");
+
+	// For databases without foreign key constraints, manually update dependent tables
+	dbquery("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username ='{$user}'");
+	dbquery("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username='{$user}'");
+	dbquery("DELETE FROM {$TBLPREFIX}messages  WHERE m_from     ='{$user}' OR m_to='{$user}'");
+	dbquery("DELETE FROM {$TBLPREFIX}news      WHERE n_username ='{$user}'");
+}
+
+function get_all_users($order='asc', $key1='lastname', $key2='firstname') {
+	global $DBCONN, $TBLPREFIX;
+
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}");
+	while ($row=$res->fetchRow()) {
+		$users[]=$row[0];
+	}
+	$res->free();
+	return $users;
+}
+
+function user_exists($user) {
+	global $DBCONN, $TBLPREFIX;
+
+	static $cache=array();
+	if (array_key_exists($user, $cache)) {
+		return $cache[$user];
+	}
+
+	$user=$DBCONN->escapeSimple($user);
+	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$user}'");
+	// We may call this function before creating the table, so must check for errors.
+	if ($res!==false && !DB::isError($res)) {
+		$row=$res->fetchRow();
+		$res->free();
+		$cache[$user]=$row[0]>0;
+		return $row[0]>0;
+	}
+	$cache[$user]=false;
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// A future version of PGV will have a table PGV_USER_SETTING, which will
+// contain the values currently stored in columns in the table PGV_USERS.
+//
+// Until then, we use this "logical" structure, but with the access functions
+// mapped onto the existing "physical" structure.
+//
+// $parameter is one of the column names in PGV_USERS, without the u_ prefix.
+////////////////////////////////////////////////////////////////////////////////
+
+function get_user_setting($user, $parameter, $default=null) {
+	global $DBCONN, $TBLPREFIX;
+
+	static $cache=array();
+	if (array_key_exists("{$user}/{$parameter}", $cache))
+		return $cache["{$user}/{$parameter}"];
+
+	$user=$DBCONN->escapeSimple($user);
+	$sql="SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username='{$user}'";
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+
+	if ($row==false) {
+		return $default;
+	} else {
+		$cache["{$user}/{$parameter}"]=$row[0];
+		return $row[0];
+	}
+}
+
+function set_user_setting($user, $parameter, $value) {
+	global $DBCONN, $TBLPREFIX;
+
+	$user =$DBCONN->escapeSimple($user);
+	$value=$DBCONN->escapeSimple($value);
+	// Only write to the DB if the value has changed.
+	if (get_user_setting($user, $parameter, null)!==$value) {
+		dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user}'");
+	}
+}
+
+function admin_user_exists() {
+	global $DBCONN, $TBLPREFIX;
+
+	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_canadmin='Y'");
+	// We may call this function before creating the table, so must check for errors.
+	if ($res!==false && !DB::isError($res)) {
+		$row=$res->fetchRow();
+		$res->free();
+		return $row[0]>0;
+	}
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// A future version of PGV will have a table PGV_USER_GEDCOM_SETTING, which will
+// contain the values currently stored in serialized arrays in columns in the
+// table PGV_USERS.
+//
+// Until then, we use this "logical" structure, but with the access functions
+// mapped onto the existing "physical" structure.
+//
+// $parameter is one of: "gedcomid", "rootid" and "canedit".
+////////////////////////////////////////////////////////////////////////////////
+
+function get_user_gedcom_setting($user, $gedcom, $parameter, $default=null) {
+	$tmp_array=unserialize(get_user_setting($user, $parameter, 'a:0:{}'));
+	if (array_key_exists($gedcom, $tmp_array))
+		return $tmp_array[$gedcom];
+	else
+		return $default;
+}
+
+function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
+	$tmp_array=unserialize(get_user_setting($user, $parameter, 'a:0:{}'));
+	if (empty($value)) {
+		// delete the value
+		unset($tmp_array[$gedcom]);
+	} else {
+		// update the value
+		$tmp_array[$gedcom]=$value;
+	}
+	set_user_setting($user, $parameter, serialize($tmp_array));
+}
+
+function get_user_from_gedcom_xref($gedcom, $xref) {
+	global $TBLPREFIX;
+
+	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
+	$user=false;
+	while ($row=$res->fetchRow()) {
+		$tmp_array=unserialize($row[1]);
+		if (array_key_exists($gedcom, $tmp_array) && $tmp_array[$gedcom]==$xref) {
+			$user=$row[0];
+			break;
+		}
+	}
+	$res->free();
+	return $user;
 }
 
 ?>

@@ -181,6 +181,7 @@ function import_record($indirec, $update) {
 		$indi = array ();
 		$names = get_indi_names($indirec, true);
 		$j = 0;
+/*
 		foreach ($names as $indexval => $name) {
 			if ($j > 0) {
 				$sql = "INSERT INTO " . $TBLPREFIX . "names VALUES('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name[0]) . "','" . $DBCONN->escapeSimple($name[1]) . "','" . $DBCONN->escapeSimple($name[2]) . "','" . $DBCONN->escapeSimple($name[3]) . "')";
@@ -277,6 +278,7 @@ function import_record($indirec, $update) {
 			$res = dbquery($sql);
 
 		}
+*/
 		$indi["names"] = $names;
 		$indi["isdead"] = $isdead;
 		$indi["gedcom"] = $indirec;
@@ -352,10 +354,10 @@ function import_record($indirec, $update) {
 	static $statement_ins_link=null;
 	static $statement_ins_name=null;
 	if (is_null($statement_ins_rec)) {
-		$statement_ins_rec=$DBH->prepare("INSERT INTO {$TBLPREFIX}records (rec_ged_id, rec_xref, rec_type, rec_gedcom) VALUES (?, ?, ?, ?)");
-		$statement_ins_fact=$DBH->prepare("INSERT INTO {$TBLPREFIX}facts (fact_rec_id, fact_type, fact_value, fact_resn, fact_date, fact_plac, fact_gedcom) VALUES (?, ?, ?, ?, ?, ?, ?)");
-		$statement_ins_link=$DBH->prepare("INSERT INTO {$TBLPREFIX}links (link_fact_id, link_type, link_xref) VALUES (?, ?, ?)");
-		$statement_ins_name=$DBH->prepare("INSERT INTO {$TBLPREFIX}names (name_fact_id, name_type, name_full, name_sort1, name_sort2, name_list) VALUES (?, ?, ?, ?, ?, ?)");
+		$statement_ins_rec=$DBH->prepare("INSERT INTO {$TBLPREFIX}record (rec_ged_id, rec_xref, rec_type, rec_gedcom) VALUES (?, ?, ?, ?)");
+		$statement_ins_fact=$DBH->prepare("INSERT INTO {$TBLPREFIX}fact (fact_rec_id, fact_type, fact_value, fact_resn, fact_date, fact_plac, fact_gedcom) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$statement_ins_link=$DBH->prepare("INSERT INTO {$TBLPREFIX}link (link_fact_id, link_type, link_xref) VALUES (?, ?, ?)");
+		$statement_ins_name=$DBH->prepare("INSERT INTO {$TBLPREFIX}name (name_fact_id, name_type, name_full, name_sort1, name_sort2, name_list1, name_list2) VALUES (?, ?, ?, ?, ?, ?, ?)");
 	}
 
 	// Store the gedcom record
@@ -435,27 +437,27 @@ function import_record($indirec, $update) {
 				break;
 			case 'SOUR':
 				if ($tag=='TITL' || $tag=='ABBR') {
-					$names[]=array($tag, $value, $value, '', $value);
+					$names[]=array($tag, $value, $value, '', $value, '');
 				}
 				break;
 			case 'OBJE':
 				if (preg_match('/^\d TITL +(.*)/m', $gedrec, $name_match)) {
-					$names[]=array($tag, $name_match[1], $name_match[1], '', $name_match[1]);
+					$names[]=array($tag, $name_match[1], $name_match[1], '', $name_match[1], '');
 				} else {
 					if (preg_match('/^\d FILE +(.*)/m', $gedrec, $name_match)) {
-						$names[]=array($tag, $name_match[1], $name_match[1], '', $name_match[1]);
+						$names[]=array($tag, $name_match[1], $name_match[1], '', $name_match[1], '');
 					}
 				}
 				break;
 			case 'REPO':
 			case 'SUBM':
 				if ($tag=='NAME') {
-					$names[]=array($tag, $value, $value, '', $value);
+					$names[]=array($tag, $value, $value, '', $value, '');
 				}
 				break;
 			case 'SUBN':
 				if ($tag=='FAMF') {
-					$names[]=array($tag, $value, $value, '', $value);
+					$names[]=array($tag, $value, $value, '', $value, '');
 				}
 				break;
 			} // Extract names
@@ -466,6 +468,7 @@ function import_record($indirec, $update) {
 				$statement_ins_name->bindValue(4, $name[2], PDO::PARAM_STR);
 				$statement_ins_name->bindValue(5, $name[3], PDO::PARAM_STR);
 				$statement_ins_name->bindValue(6, $name[4], PDO::PARAM_STR);
+				$statement_ins_name->bindValue(7, $name[5], PDO::PARAM_STR);
 				$statement_ins_name->execute();
 				// TODO: Create soundex codes for the name.
 			} // foreach name to insert
@@ -533,7 +536,7 @@ function extract_name_bits($tag, $namerec) {
 	// Combine the components into a full name
 	$tmp1=trim($npfx.' '.$givn);
 	$tmp2=trim($spfx.' '.$surn);
-	return array($tag, trim("{$tmp1} /{$tmp2}/ {$nsfx}"), $surn, $givn, "$tmp2, $tmp1");
+	return array($tag, trim("{$tmp1} /{$tmp2}/ {$nsfx}"), $surn, $givn, $tmp2, trim("{$tmp1} {$nsfx}"));
 }
 
 /**
@@ -548,11 +551,13 @@ function extract_name_bits($tag, $namerec) {
  */
 function add_new_name($gid, $newname, $letter, $surname, $indirec) {
 	global $TBLPREFIX, $USE_RIN, $indilist, $FILE, $DBCONN, $GEDCOMS;
+	return;
+	// TODO: Calculate these at run-time, not import-time ?
 
 	$sql = 'INSERT INTO ' . $TBLPREFIX . 'names VALUES(\'' . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($newname) . "','" . $DBCONN->escapeSimple($letter) . "','" . $DBCONN->escapeSimple($surname) . "','C')";
 	$res = dbquery($sql);
 
-	$sql = "UPDATE {$TBLPREFIX}records SET rec_gedcom=".$DBCONN->escapeSimple($indirec). "' WHERE rec_xref='".$DBCONN->escapeSimple($gid)."' AND rec_ged_id='".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])."'";
+	$sql = "UPDATE {$TBLPREFIX}record SET rec_gedcom=".$DBCONN->escapeSimple($indirec). "' WHERE rec_xref='".$DBCONN->escapeSimple($gid)."' AND rec_ged_id='".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])."'";
 	$res = dbquery($sql);
 
 	$indilist[$gid]["names"][] = array (
@@ -1169,111 +1174,7 @@ function setup_database() {
 		create_soundex_table();
 	}
 
-	$DBH->exec(
-		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}gedcoms (".
-		" ged_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
-		" CONSTRAINT {$TBLPREFIX}gedcoms_pk PRIMARY KEY (ged_id)".
-		") ENGINE=INNODB"
-	);
-
-	$DBH->exec(
-		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}gedcom_settings (".
-		" ged_id        INTEGER UNSIGNED NOT NULL,".
-		" ged_parameter VARCHAR(32)      NOT NULL,".
-		" ged_value     VARCHAR(255)     NULL,".
-		" CONSTRAINT {$TBLPREFIX}tree_settings_pk  PRIMARY KEY (ged_id, ged_parameter),".
-		" CONSTRAINT {$TBLPREFIX}tree_settings_fk1 FOREIGN KEY (ged_id) REFERENCES {$TBLPREFIX}gedcoms (ged_id) ON DELETE CASCADE".
-		") ENGINE=INNODB"
-	);
-
-	$DBH->exec(
-		"CREATE TABLE   IF NOT EXISTS {$TBLPREFIX}edits (".
-		" edit_id       INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
-		" edit_user_id  INTEGER UNSIGNED NOT NULL,".
-		" edit_time     TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,".
-		" CONSTRAINT {$TBLPREFIX}edits_pk  PRIMARY KEY (edit_id)".
-		//" CONSTRAINT {$TBLPREFIX}edits_fk1 FOREIGN KEY (edit_user_id) REFERENCES {$TBLPREFIX}users (user_id) ON DELETE RESTRICT".
-		") ENGINE=INNODB"
-	);
-
-	try {
-		$DBH->exec(
-			"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}records (".
-			" rec_id      INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
-			" rec_ged_id  INTEGER UNSIGNED NOT NULL,".
-			" rec_xref    VARCHAR(255)     NULL,". // @I123@, etc.
-			" rec_type    VARCHAR(20)      NULL,". // SOUR/INDI/FAM/etc.
-			" rec_gedcom  MEDIUMTEXT       NULL,". // Temporary until the fact/event table is created
-			" CONSTRAINT {$TBLPREFIX}records_pk  PRIMARY KEY  (rec_id),".
-			" CONSTRAINT {$TBLPREFIX}records_fk1 FOREIGN KEY  (rec_ged_id) REFERENCES {$TBLPREFIX}gedcoms (ged_id),".
-			" CONSTRAINT {$TBLPREFIX}records_ix1 UNIQUE INDEX (rec_xref, rec_ged_id, rec_type),".
-			" CONSTRAINT {$TBLPREFIX}records_ix2 UNIQUE INDEX (rec_type, rec_ged_id, rec_xref)".
-			") ENGINE INNODB"
-		);
-
-		$DBH->exec(
-			"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}links (".
-			" link_id      INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
-			" link_fact_id INTEGER UNSIGNED NOT NULL,".
-			" link_type    VARCHAR(20)      NOT NULL,". // SOUR/INDI/FAM/etc.
-			" link_xref    VARCHAR(255)     NOT NULL,". // @I123@, etc.
-			" CONSTRAINT {$TBLPREFIX}links_pk  PRIMARY KEY  (link_id),".
-			" CONSTRAINT {$TBLPREFIX}links_fk1 FOREIGN KEY  (link_fact_id) REFERENCES {$TBLPREFIX}facts (fact_id) ON DELETE CASCADE,".
-			" INDEX {$TBLPREFIX}links_ix1 (link_fact_id, link_type, link_xref),".
-			" INDEX {$TBLPREFIX}links_ix2 (link_type, link_fact_id, link_xref)".
-			") ENGINE INNODB"
-		);
-
-		$DBH->exec(
-			"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}facts (".
-			" fact_id      INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
-			" fact_rec_id  INTEGER UNSIGNED NOT NULL,".
-			" fact_type    VARCHAR(15)      NOT NULL,". // The 1 XXXX
-			" fact_value   VARCHAR(255)     NULL,".     // The 1 EVENT XXXX
-			" fact_resn    VARCHAR(255)     NULL,". // The 2 RESN value
-			" fact_date    VARCHAR(255)     NULL,". // The 2 DATE value
-			" fact_plac    VARCHAR(255)     NULL,". // The 2 PLAC value
-			" fact_gedcom  MEDIUMTEXT       NULL,". // Any remaining 2 XXXX attributes
-			" fact_created INTEGER UNSIGNED NULL,".
-			" fact_deleted INTEGER UNSIGNED NULL,".
-			" CONSTRAINT {$TBLPREFIX}events_pk  PRIMARY KEY (fact_id),".
-			" CONSTRAINT {$TBLPREFIX}events_fk1 FOREIGN KEY (fact_rec_id)  REFERENCES {$TBLPREFIX}records (rec_id)  ON DELETE CASCADE,".
-			" CONSTRAINT {$TBLPREFIX}events_fk2 FOREIGN KEY (fact_created) REFERENCES {$TBLPREFIX}edits   (edit_id) ON DELETE RESTRICT,".
-			" CONSTRAINT {$TBLPREFIX}events_fk3 FOREIGN KEY (fact_deleted) REFERENCES {$TBLPREFIX}edits   (edit_id) ON DELETE RESTRICT,".
-			" INDEX {$TBLPREFIX}facts_ix1 (fact_type),".
-			" INDEX {$TBLPREFIX}facts_ix2 (fact_deleted, fact_created),".
-			" INDEX {$TBLPREFIX}facts_ix3 (fact_created, fact_deleted)".
-			") ENGINE=INNODB"
-		);
-
-		try {
-			// If this doesn't throw, then we have the PGV4 names table
-			$DBH->exec("UPDATE {$TBLPREFIX}names SET n_gid=n_gid WHERE 0");
-			$DBH->exec("DROP TABLE {$TBLPREFIX}names");
-		} catch (PDOException $e) {
-		}
-
-		$DBH->exec(
-			"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}names (".
-			" name_id        INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,".
-			" name_fact_id   INTEGER UNSIGNED NOT NULL,".
-			" name_type      VARCHAR(20)      NOT NULL,". // e.g. NAME/_MARNM/FONE/TITL/ABBR
-			" name_full      VARCHAR(255)     NOT NULL,". // e.g. Lord John de Vere
-			" name_sort1     VARCHAR(255)     NOT NULL,". // e.g. Vere
-			" name_sort2     VARCHAR(255)     NOT NULL,". // e.g. John, Lord
-			" name_list      VARCHAR(255)     NOT NULL,". // e.g. de Vere, Lord John
-			" CONSTRAINT {$TBLPREFIX}names_pk  PRIMARY KEY (name_id),".
-			" CONSTRAINT {$TBLPREFIX}names_fk1 FOREIGN KEY (name_fact_id) REFERENCES {$TBLPREFIX}facts (fact_id) ON DELETE CASCADE,".
-			" INDEX {$TBLPREFIX}names_ix1 (name_type),".
-			" INDEX {$TBLPREFIX}names_ix2 (name_sort1, name_sort2, name_type)".
-			") ENGINE INNODB"
-		);
-
-		$DBH->exec("DROP TABLE IF EXISTS {$TBLPREFIX}other");
-		$DBH->exec("DROP TABLE IF EXISTS {$TBLPREFIX}sources");
-	} catch (PDOException $e) {
-		die ($e->getMessage());
-	}
+	require_once 'includes/create_db_schema.php';
 }
 
 /**
@@ -1534,11 +1435,11 @@ function empty_database($FILE, $keepmedia=false) {
 
 	$FILE = $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]);
 
-	dbquery("DELETE FROM {$TBLPREFIX}records WHERE rec_ged_id='$FILE'");
+	dbquery("DELETE FROM {$TBLPREFIX}record WHERE rec_ged_id='$FILE'");
 	// If the DB doesn't support foreign key constraints, we must do it ourself :-(
-	dbquery("DELETE FROM {$TBLPREFIX}facts   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}records)");
-	dbquery("DELETE FROM {$TBLPREFIX}links   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
-	dbquery("DELETE FROM {$TBLPREFIX}names   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
+	dbquery("DELETE FROM {$TBLPREFIX}fact   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}record)");
+	dbquery("DELETE FROM {$TBLPREFIX}link   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}fact)");
+	dbquery("DELETE FROM {$TBLPREFIX}name   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}fact)");
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "individuals WHERE i_file='$FILE'";
 	$res = dbquery($sql);
@@ -1756,8 +1657,8 @@ function accept_changes($cid) {
 
 		if ($change["type"] != "delete") {
 			//-- synchronize the gedcom record with any user account
-			$user = getUserByGedcomId($gid, $GEDCOM);
-			if ($user && ($user["sync_gedcom"] == "Y")) {
+			$username = get_user_from_gedcom_xref($GEDCOM, $gid);
+			if ($username && get_user_setting($username, 'sync_gedcom')=='Y') {
 				$firstname = get_gedcom_value("GIVN", 2, $indirec);
 				$lastname = get_gedcom_value("SURN", 2, $indirec);
 				if (empty ($lastname)) {
@@ -1771,13 +1672,14 @@ function accept_changes($cid) {
 				}
 				//-- SEE [ 1753047 ] Email/sync with account
 				$email = get_gedcom_value("EMAIL", 1, $indirec);
-				if (empty($email)) $email = get_gedcom_value("_EMAIL", 1, $indirec);
-				if (($lastname != $user["lastname"]) || ($firstname != $user["firstname"]) || ($email != $user["email"])) {
-					if (!empty($email)) $user["email"] = $email;
-					$user["firstname"] = $firstname;
-					$user["lastname"] = $lastname;
-					updateUser($user["username"], $user);
+				if (empty($email)) {
+					$email = get_gedcom_value("_EMAIL", 1, $indirec);
 				}
+				if (!empty($email)) {
+					set_user_setting($username, 'email', $email);
+				}
+				set_user_setting($username, 'firstname', $firstname);
+				set_user_setting($username, 'lastname',  $lastname);
 			}
 		}
 
@@ -1842,11 +1744,11 @@ function update_record($indirec, $delete = false) {
 		}
 	}
 
-	dbquery("DELETE FROM {$TBLPREFIX}records WHERE rec_xref='".$DBCONN->escapeSimple($gid)."' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]));
+	dbquery("DELETE FROM {$TBLPREFIX}record WHERE rec_xref='".$DBCONN->escapeSimple($gid)."' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]));
 	// If the DB doesn't support foreign key constraints, we must do it ourself :-(
-	dbquery("DELETE FROM {$TBLPREFIX}facts   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}records)");
-	dbquery("DELETE FROM {$TBLPREFIX}links   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
-	dbquery("DELETE FROM {$TBLPREFIX}names   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
+	dbquery("DELETE FROM {$TBLPREFIX}fact   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}record)");
+	dbquery("DELETE FROM {$TBLPREFIX}link   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}fact)");
+	dbquery("DELETE FROM {$TBLPREFIX}name   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}fact)");
 
 	//-- delete any media mapping references
 	$sql = "DELETE FROM " . $TBLPREFIX . "media_mapping WHERE mm_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND mm_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
@@ -1906,16 +1808,17 @@ function cleanup_tags_y(& $irec) {
 // Create a pseudo-random UUID, as per RFC4122
 function uuid() {
 	return sprintf(
-		'%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X',
+		//'%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X', // RFC4122 format (with hyphens)
+		'%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X', // PAF format (without hyphens)
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
-		rand(0, 255)&0x3f|0x80, // Set the version to random (0100xxxx)
+		rand(0, 255)&0x3f|0x80, // Set the version to random (10xxxxxx)
 		rand(0, 255),
-		rand(0, 255)&0x0f|0x40, // Set the variant to RFC4122 (10xxxxxx)
+		rand(0, 255)&0x0f|0x40, // Set the variant to RFC4122 (0100xxxx)
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),

@@ -160,7 +160,7 @@ if ($action!="choose") {
 						if ($success) print "<br />".$pgv_lang["gedrec_deleted"]."<br />\n";
 						
 						//-- replace all the records that link to gid2
-						$sql = "SELECT rec_xref, rec_gedcom FROM ".$TBLPREFIX."records WHERE rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND rec_gedcom LIKE '%@$gid2@%'";
+						$sql = "SELECT rec_xref, rec_gedcom FROM {$TBLPREFIX}record WHERE rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND rec_gedcom LIKE '%@$gid2@%'";
 						$res = dbquery($sql);
 						while($row = $res->fetchRow()) {
 							$record = $row[1];
