@@ -1637,8 +1637,8 @@ function accept_changes($cid) {
 
 		if ($change["type"] != "delete") {
 			//-- synchronize the gedcom record with any user account
-			$user = getUserByGedcomId($gid, $GEDCOM);
-			if ($user && ($user["sync_gedcom"] == "Y")) {
+			$username = get_user_from_gedcom_xref($GEDCOM, $gid);
+			if ($username && get_user_setting($username, 'sync_gedcom')=='Y') {
 				$firstname = get_gedcom_value("GIVN", 2, $indirec);
 				$lastname = get_gedcom_value("SURN", 2, $indirec);
 				if (empty ($lastname)) {
@@ -1652,13 +1652,14 @@ function accept_changes($cid) {
 				}
 				//-- SEE [ 1753047 ] Email/sync with account
 				$email = get_gedcom_value("EMAIL", 1, $indirec);
-				if (empty($email)) $email = get_gedcom_value("_EMAIL", 1, $indirec);
-				if (($lastname != $user["lastname"]) || ($firstname != $user["firstname"]) || ($email != $user["email"])) {
-					if (!empty($email)) $user["email"] = $email;
-					$user["firstname"] = $firstname;
-					$user["lastname"] = $lastname;
-					updateUser($user["username"], $user);
+				if (empty($email)) {
+					$email = get_gedcom_value("_EMAIL", 1, $indirec);
 				}
+				if (!empty($email)) {
+					set_user_setting($username, 'email', $email);
+				}
+				set_user_setting($username, 'firstname', $firstname);
+				set_user_setting($username, 'lastname',  $lastname);
 			}
 		}
 
