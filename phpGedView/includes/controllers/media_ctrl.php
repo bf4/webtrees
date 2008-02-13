@@ -5,7 +5,7 @@
  * Menu options are changed to apply to a media object instead of an individual
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2008	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ class MediaControllerRoot extends IndividualController{
 				//   IIS:    /phpGedView/mediafirewall.php?404;http://server/phpGedView/media/a.jpg
 				$requestedfile = $_SERVER['REQUEST_URI'];
 				// urldecode the request
-				$requestedfile = urldecode($requestedfile);
+				$requestedfile = rawurldecode($requestedfile);
 				// make sure the requested file is in the media directory
 				if (strpos($requestedfile, $MEDIA_DIRECTORY) !== false) {
 					// strip off the pgv directory and media directory from the requested url so just the image information is left
