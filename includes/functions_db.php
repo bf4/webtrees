@@ -3033,10 +3033,13 @@ function user_exists($user) {
 		return $cache[$user];
 	}
 
+	if (!is_object($DBCONN) || DB::isError($DBCONN))
+		return false;
+
 	$user=$DBCONN->escapeSimple($user);
-	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$user}'");
+	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$user}'", false);
 	// We may call this function before creating the table, so must check for errors.
-	if ($res!==false && !DB::isError($res)) {
+	if ($res!=false && !DB::isError($res)) {
 		$row=$res->fetchRow();
 		$res->free();
 		$cache[$user]=$row[0]>0;
@@ -3063,9 +3066,14 @@ function get_user_setting($user, $parameter, $default=null) {
 	if (array_key_exists("{$user}/{$parameter}", $cache))
 		return $cache["{$user}/{$parameter}"];
 
+	if (!is_object($DBCONN) || DB::isError($DBCONN))
+		return false;
+
 	$user=$DBCONN->escapeSimple($user);
 	$sql="SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username='{$user}'";
 	$res=dbquery($sql);
+	if ($res==false)
+		return $default;
 	$row=$res->fetchRow();
 	$res->free();
 
@@ -3091,9 +3099,9 @@ function set_user_setting($user, $parameter, $value) {
 function admin_user_exists() {
 	global $DBCONN, $TBLPREFIX;
 
-	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_canadmin='Y'");
+	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_canadmin='Y'", false);
 	// We may call this function before creating the table, so must check for errors.
-	if ($res!==false && !DB::isError($res)) {
+	if ($res!=false && !DB::isError($res)) {
 		$row=$res->fetchRow();
 		$res->free();
 		return $row[0]>0;
@@ -3113,7 +3121,10 @@ function admin_user_exists() {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_gedcom_setting($user, $gedcom, $parameter, $default=null) {
-	$tmp_array=unserialize(get_user_setting($user, $parameter, 'a:0:{}'));
+	$tmp=get_user_setting($user, $parameter);
+	if (!is_array($tmp))
+		return $default;
+	$tmp_array=unserialize($tmp);
 	if (array_key_exists($gedcom, $tmp_array))
 		return $tmp_array[$gedcom];
 	else
@@ -3121,7 +3132,10 @@ function get_user_gedcom_setting($user, $gedcom, $parameter, $default=null) {
 }
 
 function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
-	$tmp_array=unserialize(get_user_setting($user, $parameter, 'a:0:{}'));
+	$tmp=get_user_setting($user, $parameter);
+	if (!is_array($tmp))
+		return $default;
+	$tmp_array=unserialize($tmp);
 	if (empty($value)) {
 		// delete the value
 		unset($tmp_array[$gedcom]);

@@ -3278,9 +3278,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if (!isset($pgv_language[$desiredLanguage]))
 		$desiredLanguage = "english";
 	$username = getUserName();
-	$user = getUser($username);
-	if (!$user)
-		$user['canadmin'] = false;
 	if ($forceLoad) {
 		$LANGUAGE = "english";
 		require($pgv_language[$LANGUAGE]);			// Load English
@@ -3300,14 +3297,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username) || $user['canadmin'] || !$CONFIGURED) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username)) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username) || userCanEdit($username)) {
+			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit($username)) {
 				include($file);
 			}
 		}
@@ -3348,14 +3345,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username) || $user['canadmin'] || !$CONFIGURED) {
-					include($file);
+			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username)) {
+				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username) || userCanEdit($username)) {
+			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit($username)) {
 				include($file);
 			}
 		}
