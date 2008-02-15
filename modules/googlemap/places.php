@@ -171,9 +171,9 @@ if ($action=="ImportGedcom") {
 	$placelist = array();
 	$j = 0;
 	if ($mode == "all") {
-		$sql = "SELECT rec_gedcom FROM ${TBLPREFIX}records WHERE rec_type IN ('INDI','FAM')";
+		$sql = "SELECT rec_gedcom FROM ${TBLPREFIX}record WHERE rec_type IN ('INDI','FAM')";
 	} else {
-		$sql = "SELECT rec_gedcom FROM ${TBLPREFIX}records WHERE rec_type IN ('INDI','FAM') WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql = "SELECT rec_gedcom FROM ${TBLPREFIX}record WHERE rec_type IN ('INDI','FAM') WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
 	}
 	$res = dbquery($sql);
 	while ($row =& $res->fetchRow()) {

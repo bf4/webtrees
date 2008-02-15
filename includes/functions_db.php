@@ -229,7 +229,7 @@ function find_gedcom_record($xref, $gedcom=null) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=$DBH->prepare("SELECT rec_gedcom FROM {$TBLPREFIX}records WHERE rec_xref LIKE ? ESCAPE '@' AND rec_ged_id=?");
+		$statement=$DBH->prepare("SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_xref LIKE ? ESCAPE '@' AND rec_ged_id=?");
 	}
 
 	if (is_null($gedcom)) {
@@ -320,7 +320,7 @@ function get_source_add_title_list() {
 
 	$sourcelist = array();
 
- 	$sql = "SELECT s_id, s_file, s_file as s_name, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}records WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND ((rec_gedcom LIKE '% _HEB %') OR (rec_gedcom LIKE '% ROMN %'));";
+ 	$sql = "SELECT s_id, s_file, s_file as s_name, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}record WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND ((rec_gedcom LIKE '% _HEB %') OR (rec_gedcom LIKE '% ROMN %'));";
 
 	$res = dbquery($sql);
 
@@ -353,7 +353,7 @@ function get_source_list() {
 
 	$sourcelist = array();
 
-	$sql = "SELECT s_id, s_name, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}records WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY s_name";
+	$sql = "SELECT s_id, s_name, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}record WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY s_name";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
@@ -377,7 +377,7 @@ function get_repo_list() {
 
 	$repolist = array();
 
-	$sql = "SELECT rec_xref, rec_gedcom FROM {$TBLPREFIX}records WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_type='REPO'";
+	$sql = "SELECT rec_xref, rec_gedcom FROM {$TBLPREFIX}record WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_type='REPO'";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
@@ -408,7 +408,7 @@ function get_repo_id_list() {
 
 	$repo_id_list = array();
 
-	$sql = "SELECT rec_xref, rec_gedcom FROM {$TBLPREFIX}records WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_type='REPO' ORDER BY rec_xref";
+	$sql = "SELECT rec_xref, rec_gedcom FROM {$TBLPREFIX}record WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_type='REPO' ORDER BY rec_xref";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
@@ -442,7 +442,7 @@ function get_repo_add_title_list() {
 
 	$repolist = array();
 
- 	$sql = "SELECT rec_xref, rec_ged_id, rec_gedcom FROM ".$TBLPREFIX."records WHERE rec_type='REPO' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND ((rec_gedcom LIKE '% _HEB %') OR (rec_gedcom LIKE '% ROMN %'));";
+ 	$sql = "SELECT rec_xref, rec_ged_id, rec_gedcom FROM {$TBLPREFIX}record WHERE rec_type='REPO' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND ((rec_gedcom LIKE '% _HEB %') OR (rec_gedcom LIKE '% ROMN %'));";
 
 	$res = dbquery($sql);
 
@@ -472,7 +472,7 @@ function get_indi_list() {
 	if ($INDILIST_RETRIEVED)
 		return $indilist;
 	$indilist = array();
-	$sql = "SELECT i_id, rec_gedcom, i_name, i_isdead, i_letter, i_surname  FROM {$TBLPREFIX}individuals, {$TBLPREFIX}records WHEERE i_file=rec_ged_id AND i_id=rec_xref WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY i_surname";
+	$sql = "SELECT i_id, rec_gedcom, i_name, i_isdead, i_letter, i_surname  FROM {$TBLPREFIX}individuals, {$TBLPREFIX}record WHEERE i_file=rec_ged_id AND i_id=rec_xref WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY i_surname";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
@@ -514,7 +514,7 @@ function get_asso_list($type = "all", $ipid='') {
 
 	$oldged = $GEDCOM;
 	if (($type == "all") || ($type == "fam")) {
-		$sql = "SELECT f_id, f_file, rec_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families, {$TBLPREFIX}records WHERE f_id=rec_xref AND f_file=rec_ged_id AND rec_gedcom ";
+		$sql = "SELECT f_id, f_file, rec_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND rec_gedcom ";
 		if (!empty($pid))
 			$sql .= "LIKE '% ASSO @$ipid@%'";
 		else
@@ -555,7 +555,7 @@ function get_asso_list($type = "all", $ipid='') {
 	}
 
 	if (($type == "all") || ($type == "indi")) {
-		$sql = "SELECT i_id, i_file, rec_gedcom FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}records WHERE i_file-rec_ged_id AND i_id=rec_xref AND rec_gedcom ";
+		$sql = "SELECT i_id, i_file, rec_gedcom FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_file-rec_ged_id AND i_id=rec_xref AND rec_gedcom ";
 		if (!empty($pid))
 			$sql .= "LIKE '% ASSO @$ipid@%'";
 		else
@@ -594,7 +594,7 @@ function get_fam_list() {
 	if ($FAMLIST_RETRIEVED)
 		return $famlist;
 	$famlist = array();
-	$sql = "SELECT f_id, f_husb,f_wife, f_chil, rec_gedcom, f_numchil FROM {$TBLPREFIX}families, {$TBLPREFIX}records WHERE f_id=rec_xref AND f_file=rec_ged_id AND  f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+	$sql = "SELECT f_id, f_husb,f_wife, f_chil, rec_gedcom, f_numchil FROM {$TBLPREFIX}families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND  f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
@@ -652,7 +652,7 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 			$term = "LIKE";
 	//-- if the query is a string
 	if (!is_array($query)) {
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}records WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
+		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
 			$sql .= "rec_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR rec_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
@@ -660,7 +660,7 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 			$sql .= "rec_gedcom $term '".$DBCONN->escapeSimple($query)."')";
 	} else {
 	//-- create a more complicated query if it is an array
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}records WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
+		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
 		$i=0;
 		foreach($query as $indexval => $q) {
 			if ($i>0)
@@ -737,12 +737,12 @@ function search_indis_names($query, $allgeds=false) {
 
 	$myindilist = array();
 	if (empty($query))
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}records WHERE i_file=rec_ged_id AND i_id=rec_xref";
+		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref";
 	else
 		if (!is_array($query))
-			$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}records WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_name $term '".$DBCONN->escapeSimple($query)."'";
+			$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_name $term '".$DBCONN->escapeSimple($query)."'";
 	else {
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}records WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
+		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
 		$i=0;
 		foreach($query as $indexval => $q) {
 			if (!empty($q)) {
@@ -779,9 +779,9 @@ function search_indis_names($query, $allgeds=false) {
 
 	//-- search the names table too
 	if (!is_array($query))
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}records WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_id=n_gid AND i_file=n_file AND n_name $term '".$DBCONN->escapeSimple($query)."'";
+		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_id=n_gid AND i_file=n_file AND n_name $term '".$DBCONN->escapeSimple($query)."'";
 	else {
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}records WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_id=n_gid AND i_file=n_file AND (";
+		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_id=n_gid AND i_file=n_file AND (";
 		$i=0;
 		foreach($query as $indexval => $q) {
 			if (!empty($q)) {
@@ -917,7 +917,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 		$parr = array(soundex(trim($place)));
 
 		if (empty($place) || !empty($firstname) || !empty($lastname)) {
-			$sql = "SELECT i_id, rec_gedcom, i_name, i_isdead, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals, {$TBLPREFIX}records";
+			$sql = "SELECT i_id, rec_gedcom, i_name, i_isdead, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals, {$TBLPREFIX}record";
 			if (!empty($place)) {
 				$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
 			}
@@ -1035,7 +1035,7 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $GEDCOMS;
 	$myindilist = array();
 	
-	$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals, {$TBLPREFIX}records WHERE i_id=d_gid AND i_file=d_file AND i_id=rec_xref AND i_file=rec_ged_id ";
+	$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_id=d_gid AND i_file=d_file AND i_id=rec_xref AND i_file=rec_ged_id ";
 	if (!empty($day))
 		$sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
 	if (!empty($month))
@@ -1104,7 +1104,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 	global $USE_RTL_FUNCTIONS, $year; 
 	$myindilist = array();
 	
-	$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals, {$TBLPREFIX}records WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=d_gid AND i_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
+	$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals, {$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=d_gid AND i_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -1168,9 +1168,9 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 			$term='LIKE';
 	$myfamlist = array();
 	if (!is_array($query))
-		$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}records WHERE f_id=rec_xref AND f_file=rec_ged_id AND (rec_gedcom $term '".$DBCONN->escapeSimple($query)."')";
+		$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND (rec_gedcom $term '".$DBCONN->escapeSimple($query)."')";
 	else {
-		$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}records WHERE f_id=rec_xref AND f_file=rec_ged_id AND (";
+		$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND (";
 		$i=0;
 		foreach($query as $indexval => $q) {
 			if ($i>0)
@@ -1250,7 +1250,7 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 function search_fams_names($query, $ANDOR="AND", $allnames=false, $gedcnt=1) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN;
 	$myfamlist = array();
-	$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}records WHERE f_id=rec_xref AND f_file=rec_ged_id AND (";
+	$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND (";
 	$i=0;
 	foreach($query as $indexval => $q) {
 		if ($i>0)
@@ -1408,7 +1408,7 @@ function search_sources($query, $allgeds=false, $ANDOR="AND") {
 		else
 			$term='LIKE';
 	if (!is_array($query)) {
-		$sql = "SELECT s_id, s_name, s_file, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}records WHERE s_id=rec_xref AND s_file=rec_ged_id AND ";
+		$sql = "SELECT s_id, s_name, s_file, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}record WHERE s_id=rec_xref AND s_file=rec_ged_id AND ";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
 			$sql .= "(rec_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR rec_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
@@ -1625,7 +1625,7 @@ function get_media_list() {
 	$sqlmm = "SELECT mm_gid, mm_media FROM ".$TBLPREFIX."media_mapping WHERE mm_gedfile = ".$GEDCOMS[$GEDCOM]["id"]." ORDER BY mm_id ASC";
 	$resmm =@ dbquery($sqlmm);
 	while($rowmm =& $resmm->fetchRow(DB_FETCHMODE_ASSOC)){
-		$sqlm = "SELECT m_id, m_titl, rec_gedcom, m_file FROM {$TBLPREFIX}media, {$TBLPREFIX}records WHERE m_media=rec_xref AND m_file=rec_ged_id AND m_media='{$rowmm['mm_media']}' AND m_gedfile={$GEDCOMS[$GEDCOM]['id']}"; 
+		$sqlm = "SELECT m_id, m_titl, rec_gedcom, m_file FROM {$TBLPREFIX}media, {$TBLPREFIX}record WHERE m_media=rec_xref AND m_file=rec_ged_id AND m_media='{$rowmm['mm_media']}' AND m_gedfile={$GEDCOMS[$GEDCOM]['id']}"; 
 		$resm =@ dbquery($sqlm);
 		while($rowm =& $resm->fetchRow(DB_FETCHMODE_ASSOC)){
 			$filename = check_media_depth($rowm["m_file"], "NOTRUNC");
@@ -1684,9 +1684,9 @@ function get_indi_alpha() {
 
 	if (is_null($statement)) {
 		if ($SHOW_MARRIED_NAMES) {
-			$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}names, {$TBLPREFIX}facts, {$TBLPREFIX}records WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=? GROUP BY 1 ORDER BY letter='@', letter");
+			$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=? GROUP BY 1 ORDER BY letter='@', letter");
 		} else {
-			$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}names, {$TBLPREFIX}facts, {$TBLPREFIX}records WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND name_type!='_MARNM' AND rec_ged_id=? GROUP BY 1 ORDER BY letter='@', letter");
+			$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND name_type!='_MARNM' AND rec_ged_id=? GROUP BY 1 ORDER BY letter='@', letter");
 		}
 	}
 
@@ -2213,7 +2213,7 @@ function get_alpha_fams($letter) {
 	//-- handle the special case for @N.N. when families don't have any husb or wife
 	//-- SHOULD WE SHOW THE UNDEFINED? MA
 	if ($letter=="@") {
-		$sql = "SELECT f_id, rec_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families, {$TBLPREFIX}records WHERE f_file=rec_ged_id AND f_id=rec_file_xerf AND (f_husb='' OR f_wife='') AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+		$sql = "SELECT f_id, rec_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families, {$TBLPREFIX}record WHERE f_file=rec_ged_id AND f_id=rec_file_xerf AND (f_husb='' OR f_wife='') AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 		$res = dbquery($sql);
 
 		if ($res->numRows()>0) {
@@ -2370,13 +2370,13 @@ function delete_gedcom($ged) {
 		return;
 	$dbged = $GEDCOMS[$ged]["id"];
 
-	dbquery("DELETE FROM {$TBLPREFIX}gedcoms WHERE ged_id=".$DBCONN->escapeSimple($dbged));
+	dbquery("DELETE FROM {$TBLPREFIX}gedcom WHERE ged_id=".$DBCONN->escapeSimple($dbged));
 	// If the DB doesn't support foreign key constraints, we must do it ourself :-(
-	dbquery("DELETE FROM {$TBLPREFIX}records WHERE rec_ged_id=".$DBCONN->escapeSimple($dbged));
-	//dbquery("DELETE FROM {$TBLPREFIX}records WHERE rec_ged_id   NOT IN (SELECT ged_id  FROM {$TBLPREFIX}gedcoms)");
-	dbquery("DELETE FROM {$TBLPREFIX}facts   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}records)");
-	dbquery("DELETE FROM {$TBLPREFIX}links   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
-	dbquery("DELETE FROM {$TBLPREFIX}names   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}facts)");
+	dbquery("DELETE FROM {$TBLPREFIX}record WHERE rec_ged_id=".$DBCONN->escapeSimple($dbged));
+	//dbquery("DELETE FROM {$TBLPREFIX}record WHERE rec_ged_id   NOT IN (SELECT ged_id  FROM {$TBLPREFIX}gedcom)");
+	dbquery("DELETE FROM {$TBLPREFIX}fact   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}record)");
+	dbquery("DELETE FROM {$TBLPREFIX}link   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}fact)");
+	dbquery("DELETE FROM {$TBLPREFIX}name   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}fact)");
 
 
 	$sql = "DELETE FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($ged)."'";
@@ -2445,7 +2445,7 @@ function get_list_size($list, $filter="") {
 
 	switch($list) {
 		case "indilist":
-			$sql = "SELECT count(1) FROM ".$TBLPREFIX."records WHERE rec_type='INDI' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type='INDI' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter)
 				$sql .= " AND rec_gedcom $term '$filter'";
 			$res = dbquery($sql);
@@ -2454,7 +2454,7 @@ function get_list_size($list, $filter="") {
 			return $row[0];
 		break;
 		case "famlist":
-			$sql = "SELECT count(1) FROM ".$TBLPREFIX."records WHERE rec_type='FAM' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type='FAM' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter)
 				$sql .= " AND rec_gedcom $term '$filter'";
 			$res = dbquery($sql);
@@ -2464,7 +2464,7 @@ function get_list_size($list, $filter="") {
 			return $row[0];
 		break;
 		case "sourcelist":
-			$sql = "SELECT count(1) FROM ".$TBLPREFIX."records WHERE rec_type='SOUR' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type='SOUR' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter)
 				$sql .= " AND rec_gedcom $term '$filter'";
 			$res = dbquery($sql);
@@ -2474,7 +2474,7 @@ function get_list_size($list, $filter="") {
 			return $row[0];
 		break;
 		case "objectlist": // media object
-			$sql = "SELECT count(1) FROM ".$TBLPREFIX."records WHERE rec_type='OBJE' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type='OBJE' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter)
 				$sql .= " AND rec_gedcom $term '$filter'";
 			$res = dbquery($sql);
@@ -2484,7 +2484,7 @@ function get_list_size($list, $filter="") {
 			return $row[0];
 		break;
 		case "otherlist": // REPO
-			$sql = "SELECT count(1) FROM ".$TBLPREFIX."records WHERE rec_type NOT IN ('HEAD','TRLR','INDI','FAM','SOUR','OBJE') AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type NOT IN ('HEAD','TRLR','INDI','FAM','SOUR','OBJE') AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter)
 				$sql .= " AND rec_gedcom $term '$filter'";
 			$res = dbquery($sql);
@@ -2975,42 +2975,48 @@ function get_event_list() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Functions to access the PGV_USERS table
+// Functions to access the PGV_USER table
 ////////////////////////////////////////////////////////////////////////////////
 
 function create_user($user) {
-	global $DBCONN, $TBLPREFIX;
+	global $DBH, $TBLPREFIX;
 
-	$user=$DBCONN->escapeSimple($user);
-	dbquery("INSERT INTO {$TBLPREFIX}users (u_username) VALUES ('{$user}')");
+	$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}users (user_name) VALUES (?)");
+	$statement->bindValue(1, $user, PDO::PARAM_STR);
+	$statement->execute();
 }
 
 function rename_user($olduser, $newuser) {
-	global $DBCONN, $TBLPREFIX;
+	global $DBH, $TBLPREFIX;
 
-	$olduser=$DBCONN->escapeSimple($olduser);
-	$newuser=$DBCONN->escapeSimple($newuser);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_username='{$newuser}' WHERE u_username='{$olduser}'");
+	$statement=$DBH->prepare("UPDATE {$TBLPREFIX}users SET u_username=? WHERE u_username=?");
+	$statement->bindValue(1, $newuser, PDO::PARAM_STR);
+	$statement->bindValue(2, $olduser, PDO::PARAM_STR);
+	$statement->execute();
 
-	// For databases without foreign key constraints, manually update dependent tables
-	dbquery("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$newuser}' WHERE b_username ='{$olduser}'");
-	dbquery("UPDATE {$TBLPREFIX}favorites SET fv_username='{$newuser}' WHERE fv_username='{$olduser}'");
-	dbquery("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$newuser}' WHERE m_from     ='{$olduser}'");
-	dbquery("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$newuser}' WHERE m_to       ='{$olduser}'");
-	dbquery("UPDATE {$TBLPREFIX}news      SET n_username ='{$newuser}' WHERE n_username ='{$olduser}'");
+	// TEMPORARY: update "old" PGV functions that don't use user_id as the key.
+	$DBH->exec("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$newuser}' WHERE b_username ='{$olduser}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}favorites SET fv_username='{$newuser}' WHERE fv_username='{$olduser}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$newuser}' WHERE m_from     ='{$olduser}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$newuser}' WHERE m_to       ='{$olduser}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}news      SET n_username ='{$newuser}' WHERE n_username ='{$olduser}'");
 }
 
 function delete_user($user) {
-	global $DBCONN, $TBLPREFIX;
+	global $DBH, $TBLPREFIX;
 
-	$user=$DBCONN->escapeSimple($user);
-	dbquery("DELETE FROM {$TBLPREFIX}users WHERE u_username='{$user}'");
+	$statement=$DBH->prepare("DELETE FROM {$TBLPREFIX}user WHERE user_name=?");
+	$statement->bindValue(1, $user, PDO::PARAM_STR);
+	$statement->execute();
 
 	// For databases without foreign key constraints, manually update dependent tables
-	dbquery("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username ='{$user}'");
-	dbquery("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username='{$user}'");
-	dbquery("DELETE FROM {$TBLPREFIX}messages  WHERE m_from     ='{$user}' OR m_to='{$user}'");
-	dbquery("DELETE FROM {$TBLPREFIX}news      WHERE n_username ='{$user}'");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}user_settings WHERE uset_user_id NOT IN (SELECT user_id FROM {$TBLPREFIX}user)");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}user_gedcom_settings WHERE ugset_user_id NOT IN (SELECT user_id FROM {$TBLPREFIX}user)");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username  NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}messages  WHERE m_from      NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}messages  WHERE m_to        NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}news      WHERE n_username  NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
 }
 
 function get_all_users($order='asc', $key1='lastname', $key2='firstname') {
@@ -3050,13 +3056,7 @@ function user_exists($user) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// A future version of PGV will have a table PGV_USER_SETTING, which will
-// contain the values currently stored in columns in the table PGV_USERS.
-//
-// Until then, we use this "logical" structure, but with the access functions
-// mapped onto the existing "physical" structure.
-//
-// $parameter is one of the column names in PGV_USERS, without the u_ prefix.
+// Functions to access the PGV_USER_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_setting($user, $parameter, $default=null) {
@@ -3110,14 +3110,7 @@ function admin_user_exists() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// A future version of PGV will have a table PGV_USER_GEDCOM_SETTING, which will
-// contain the values currently stored in serialized arrays in columns in the
-// table PGV_USERS.
-//
-// Until then, we use this "logical" structure, but with the access functions
-// mapped onto the existing "physical" structure.
-//
-// $parameter is one of: "gedcomid", "rootid" and "canedit".
+// Functions to access the PGV_USER_GEDCOM_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_gedcom_setting($user, $gedcom, $parameter, $default=null) {

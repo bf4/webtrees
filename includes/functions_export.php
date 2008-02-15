@@ -111,7 +111,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	$head = remove_custom_tags($head, $remove);
 	fwrite($gedout, $head);
 
-	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}records WHERE rec_type='INDI' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_type='INDI' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
 		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
@@ -124,7 +124,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}records WHERE rec_type='FAM' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_type='FAM' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
 		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
@@ -137,7 +137,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}records WHERE rec_type='SOUR' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_type='SOUR' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
 		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
@@ -150,7 +150,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}records WHERE rec_type NOT IN ('INDI','FAM','SOUR','OBJE','HEAD','TRLR') AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_type NOT IN ('INDI','FAM','SOUR','OBJE','HEAD','TRLR') AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
 		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
@@ -163,7 +163,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}records WHERE rec_type='OBJE' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_type='OBJE' AND rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
 		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;

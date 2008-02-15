@@ -1100,7 +1100,7 @@ function find_highlighted_object($pid, $indirec) {
 	}
 
 	//-- find all of the media items for a person
-	$sql = "SELECT m_media, m_file, rec_gedcom, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping, {$TBLPREFIX}records WHERE m_media=rec_ged_id AND m_file=rec_ged_id AND m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."' AND mm_gid='".$DBCONN->escapeSimple($pid)."' ORDER BY mm_order";
+	$sql = "SELECT m_media, m_file, rec_gedcom, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping, {$TBLPREFIX}record WHERE m_media=rec_ged_id AND m_file=rec_ged_id AND m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."' AND mm_gid='".$DBCONN->escapeSimple($pid)."' ORDER BY mm_order";
 	$res = dbquery($sql);
 	if (!DB::isError($res)) {
 		while ($row = $res->fetchRow()) {

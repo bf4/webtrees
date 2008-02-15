@@ -1245,7 +1245,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
 	// but it may not work for all RDBMS.
 	$sqlmm = "SELECT ";
-	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, rec_gedcom AS m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping, {$TBLPREFIX}records WHERE m_file=rec_ged_id AND m_media=rec_xref AND ";
+	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, rec_gedcom AS m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping, {$TBLPREFIX}record WHERE m_file=rec_ged_id AND m_media=rec_xref AND ";
 	$sqlmm .= "mm_gid IN (";
 	$i=0;
 	foreach($ids as $key=>$id) {
