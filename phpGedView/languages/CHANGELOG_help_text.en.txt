@@ -45,6 +45,7 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["addmedia_tool_help"]					15 Feb 2007				D
 *$pgv_lang["import_marr_names_help"]				09 Feb 2008				W
 +$pgv_lang["autoContinue_help"]						07 Feb 2008				A
 *$pgv_lang["link_remote_help"]						22 Jan 2008				w  Correct Wiki URL
