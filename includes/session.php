@@ -881,7 +881,7 @@ if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_cont
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
 if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 	&&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
-	if ((!check_db())||(!adminUserExists())) {
+	if ((!check_db())||(!admin_user_exists())) {
 		header("Location: editconfig.php");
 		exit;
 	}

@@ -2975,39 +2975,90 @@ function get_event_list() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_GEDCOM table
+////////////////////////////////////////////////////////////////////////////////
+
+function create_gedcom($gedcom) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}gedcom (ged_gedcom) VALUES (?)");
+	$statement->bindValue(1, $gedcom, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+
+	return $DBH->lastInsertId();
+}
+
+function get_gedcom_id($gedcom) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	// We may call this function before creating the table, so must ignore errors.
+	try {
+		if (!is_object($DBH)) {
+			return null;
+		}
+
+		static $statement=null;
+		if (is_null($statement)) {
+			$statement=$DBH->prepare("SELECT ged_id FROM {$TBLPREFIX}gedcom WHERE ged_gedcom=?");
+		}
+
+		$statement->bindValue(1, $gedcom, PDO::PARAM_STR);
+		$statement->execute();
+		++$TOTAL_QUERIES;
+		$row=$statement->fetchObject();
+		$statement->closeCursor();
+		if ($row) {
+			return $row->user_id;
+		} else {
+			return null;
+		}
+	} catch (PDOException $e) {
+		return null;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER table
 ////////////////////////////////////////////////////////////////////////////////
 
-function create_user($user) {
-	global $DBH, $TBLPREFIX;
+function create_user($username, $password) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}users (user_name) VALUES (?)");
-	$statement->bindValue(1, $user, PDO::PARAM_STR);
+	$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}user (user_name, user_pass) VALUES (?, ?)");
+	$statement->bindValue(1, $username, PDO::PARAM_STR);
+	$statement->bindValue(2, $password, PDO::PARAM_STR);
 	$statement->execute();
+	++$TOTAL_QUERIES;
+
+	return $DBH->lastInsertId();
 }
 
-function rename_user($olduser, $newuser) {
-	global $DBH, $TBLPREFIX;
+function rename_user($old_username, $new_username) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("UPDATE {$TBLPREFIX}users SET u_username=? WHERE u_username=?");
-	$statement->bindValue(1, $newuser, PDO::PARAM_STR);
-	$statement->bindValue(2, $olduser, PDO::PARAM_STR);
+	$statement=$DBH->prepare("UPDATE {$TBLPREFIX}users SET user_name=? WHERE user_name=?");
+	$statement->bindValue(1, $new_user_name, PDO::PARAM_STR);
+	$statement->bindValue(2, $old_user_name, PDO::PARAM_STR);
 	$statement->execute();
+	++$TOTAL_QUERIES;
 
 	// TEMPORARY: update "old" PGV functions that don't use user_id as the key.
-	$DBH->exec("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$newuser}' WHERE b_username ='{$olduser}'");
-	$DBH->exec("UPDATE {$TBLPREFIX}favorites SET fv_username='{$newuser}' WHERE fv_username='{$olduser}'");
-	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$newuser}' WHERE m_from     ='{$olduser}'");
-	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$newuser}' WHERE m_to       ='{$olduser}'");
-	$DBH->exec("UPDATE {$TBLPREFIX}news      SET n_username ='{$newuser}' WHERE n_username ='{$olduser}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$new_username}' WHERE b_username ='{$old_username}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}favorites SET fv_username='{$new_username}' WHERE fv_username='{$old_username}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$new_username}' WHERE m_from     ='{$old_username}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$new_username}' WHERE m_to       ='{$old_username}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}news      SET n_username ='{$new_username}' WHERE n_username ='{$old_username}'");
+	$TOTAL_QUERIES+=5;
 }
 
-function delete_user($user) {
-	global $DBH, $TBLPREFIX;
+function delete_user($user_id) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("DELETE FROM {$TBLPREFIX}user WHERE user_name=?");
-	$statement->bindValue(1, $user, PDO::PARAM_STR);
+	$statement=$DBH->prepare("DELETE FROM {$TBLPREFIX}user WHERE user_id=?");
+	$statement->bindValue(1, $user_id, PDO::PARAM_INT);
 	$statement->execute();
+	++$TOTAL_QUERIES;
 
 	// For databases without foreign key constraints, manually update dependent tables
 	$DBH->exec("DELETE FROM {$TBLPREFIX}user_settings WHERE uset_user_id NOT IN (SELECT user_id FROM {$TBLPREFIX}user)");
@@ -3017,142 +3068,298 @@ function delete_user($user) {
 	$DBH->exec("DELETE FROM {$TBLPREFIX}messages  WHERE m_from      NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
 	$DBH->exec("DELETE FROM {$TBLPREFIX}messages  WHERE m_to        NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
 	$DBH->exec("DELETE FROM {$TBLPREFIX}news      WHERE n_username  NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
+	$TOTAL_QUERIES+=7;
 }
 
-function get_all_users($order='asc', $key1='lastname', $key2='firstname') {
-	global $DBCONN, $TBLPREFIX;
+function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}");
-	while ($row=$res->fetchRow()) {
-		$users[]=$row[0];
-	}
-	$res->free();
-	return $users;
+	$statement=$DBH->prepare(
+		"SELECT user_id FROM {$TBLPREFIX}user".
+		"	LEFT OUTER JOIN {$TBLPREFIX}user_setting sort1 ON user_id=sort1.uset_user_id AND sort1.uset_parameter=?".
+		"	LEFT OUTER JOIN {$TBLPREFIX}user_setting sort2 ON user_id=sort2.uset_user_id AND sort2.uset_parameter=?".
+		"  ORDER BY sort1.uset_parameter {$order}, sort2.uset_parameter {$order}");
+	$statement->bindValue(1, $key1, PDO::PARAM_STR);
+	$statement->bindValue(2, $key2, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	return $statement->fetchAll(PDO::FETCH_COLUMN);
 }
 
-function user_exists($user) {
-	global $DBCONN, $TBLPREFIX;
+function get_user_id($username) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	static $cache=array();
-	if (array_key_exists($user, $cache)) {
-		return $cache[$user];
+	// We may call this function before creating the table, so must ignore errors.
+	try {
+		if (!is_object($DBH)) {
+			return null;
+		}
+
+		static $statement=null;
+		if (is_null($statement)) {
+			$statement=$DBH->prepare("SELECT user_id FROM {$TBLPREFIX}user WHERE user_name=?");
+		}
+
+		$statement->bindValue(1, $username, PDO::PARAM_STR);
+		$statement->execute();
+		++$TOTAL_QUERIES;
+		$row=$statement->fetchObject();
+		$statement->closeCursor();
+		if ($row) {
+			return $row->user_id;
+		} else {
+			return null;
+		}
+	} catch (PDOException $e) {
+		return null;
 	}
+}
 
-	if (!is_object($DBCONN) || DB::isError($DBCONN))
-		return false;
+function get_user_password($user_id) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$user=$DBCONN->escapeSimple($user);
-	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$user}'", false);
-	// We may call this function before creating the table, so must check for errors.
-	if ($res!=false && !DB::isError($res)) {
-		$row=$res->fetchRow();
-		$res->free();
-		$cache[$user]=$row[0]>0;
-		return $row[0]>0;
-	}
-	$cache[$user]=false;
-	return false;
+	$statement=$DBH->prepare("SELECT user_pass FROM {$TBLPREFIX}user WHERE user_id=?");
+
+	$statement->bindValue(1, $user_id, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	return $row->user_pass;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_setting($user, $parameter, $default=null) {
-	global $DBCONN, $TBLPREFIX;
+function get_user_setting($user_id, $parameter) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	static $cache=array();
-	if (array_key_exists("{$user}/{$parameter}", $cache))
-		return $cache["{$user}/{$parameter}"];
+	// We may call this function before creating the table, so must check for errors.
+	try {
+		if (!is_object($DBH)) {
+			return null;
+		}
 
-	if (!is_object($DBCONN) || DB::isError($DBCONN))
-		return false;
+		static $statement=null;
+		if (is_null($statement)) {
+			$statement=$DBH->prepare(
+				"SELECT uset_value FROM {$TBLPREFIX}user_setting WHERE uset_user_id=? AND uset_parameter=?"
+			);
+		}
 
-	$user=$DBCONN->escapeSimple($user);
-	$sql="SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username='{$user}'";
-	$res=dbquery($sql);
-	if ($res==false)
-		return $default;
-	$row=$res->fetchRow();
-	$res->free();
-
-	if ($row==false) {
-		return $default;
-	} else {
-		$cache["{$user}/{$parameter}"]=$row[0];
-		return $row[0];
+		$statement->bindValue(1, $user_id,   PDO::PARAM_INT);
+		$statement->bindValue(2, $parameter, PDO::PARAM_STR);
+		$statement->execute();
+		++$TOTAL_QUERIES;
+		$row=$statement->fetchObject();
+		$statement->closeCursor();
+		if ($row) {
+			return $row->uset_value;
+		} else {
+			return null;
+		}
+	} catch (PDOException $e) {
+		return null;
 	}
 }
 
-function set_user_setting($user, $parameter, $value) {
-	global $DBCONN, $TBLPREFIX;
+function set_user_setting($user_id, $parameter, $value) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$user =$DBCONN->escapeSimple($user);
-	$value=$DBCONN->escapeSimple($value);
-	// Only write to the DB if the value has changed.
-	if (get_user_setting($user, $parameter, null)!==$value) {
-		dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user}'");
+	static $statement1=null;
+	static $statement2=null;
+	static $statement3=null;
+	if (is_null($statement1)) {
+		$statement1=$DBH->prepare(
+			"DELETE FROM {$TBLPREFIX}user_setting WHERE uset_user_id=? AND uset_parameter=?"
+		);
+		$statement2=$DBH->prepare(
+			"INSERT INTO {$TBLPREFIX}user_setting (uset_user_id, uset_parameter, uset_value) VALUES (?, ?,?)"
+		);
+		$statement3=$DBH->prepare(
+			"UPDATE {$TBLPREFIX}user_setting SET uset_value=? WHERE uset_user_id=? AND uset_parameter=?"
+		);
+	}
+
+	if (empty($value)) {
+		// delete
+		$statement1->bindValue(1, $user_id,   PDO::PARAM_INT);
+		$statement1->bindValue(2, $parameter, PDO::PARAM_STR);
+		$statement1->execute();
+		++$TOTAL_QUERIES;
+	} else {
+		$tmp=get_user_setting($user_id, $parameter);
+		if (is_null($tmp)) {
+			// insert
+			$statement2->bindValue(1, $user_id,   PDO::PARAM_INT);
+			$statement2->bindValue(2, $parameter, PDO::PARAM_STR);
+			$statement2->bindValue(3, $value,     PDO::PARAM_STR);
+			$statement2->execute();
+			++$TOTAL_QUERIES;
+		} else {
+			if ($tmp!=$value)  {
+				// update
+				$statement3->bindValue(1, $value,     PDO::PARAM_STR);
+				$statement3->bindValue(2, $user_id,   PDO::PARAM_INT);
+				$statement3->bindValue(3, $parameter, PDO::PARAM_STR);
+				$statement3->execute();
+				++$TOTAL_QUERIES;
+			}
+		}
 	}
 }
 
 function admin_user_exists() {
-	global $DBCONN, $TBLPREFIX;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_canadmin='Y'", false);
 	// We may call this function before creating the table, so must check for errors.
-	if ($res!=false && !DB::isError($res)) {
-		$row=$res->fetchRow();
-		$res->free();
-		return $row[0]>0;
+	try {
+		if (!is_object($DBH)) {
+			return false;
+		}
+	
+		$statement=$DBH->prepare(
+			"SELECT COUNT(1) AS num FROM {$TBLPREFIX}user_setting WHERE uset_parameter='canadmin' AND uset_value='Y'"
+		);
+		$statement->execute();
+		++$TOTAL_QUERIES;
+		$row=$statement->fetchObject();
+		$statement->closeCursor();
+		return $row->num > 0;
+	} catch (PDOException $e) {
+		return false;
 	}
-	return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER_GEDCOM_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_gedcom_setting($user, $gedcom, $parameter, $default=null) {
-	$tmp=get_user_setting($user, $parameter);
-	if (!is_array($tmp))
-		return $default;
-	$tmp_array=unserialize($tmp);
-	if (array_key_exists($gedcom, $tmp_array))
-		return $tmp_array[$gedcom];
-	else
-		return $default;
+function get_user_gedcom_setting($user_id, $ged_id, $parameter, $default=null) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	// We may call this function before creating the table, so must check for errors.
+	try {
+		if (!is_object($DBH)) {
+			return null;
+		}
+
+		static $statement=null;
+		if (is_null($statement)) {
+			$statement=$DBH->prepare(
+				"SELECT ugset_value FROM {$TBLPREFIX}user_gedcom_setting".
+				" WHERE ugset_user_id=? AND ugset_ged_id=? AND ugset_parameter=?"
+			);
+		}
+	
+		$statement->bindValue(1, $user_id,   PDO::PARAM_INT);
+		$statement->bindValue(2, $ged_id,    PDO::PARAM_INT);
+		$statement->bindValue(3, $parameter, PDO::PARAM_STR);
+		$statement->execute();
+		++$TOTAL_QUERIES;
+		$row=$statement->fetchObject();
+		$statement->closeCursor();
+		if ($row) {
+			return $row->uset_value;
+		} else {
+			return null;
+		}
+	} catch (PDOException $e) {
+		return null;
+	}
 }
 
-function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
-	$tmp=get_user_setting($user, $parameter);
-	if (!is_array($tmp))
-		return $default;
-	$tmp_array=unserialize($tmp);
-	if (empty($value)) {
-		// delete the value
-		unset($tmp_array[$gedcom]);
-	} else {
-		// update the value
-		$tmp_array[$gedcom]=$value;
+function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	static $statement1=null;
+	static $statement2=null;
+	static $statement3=null;
+	if (is_null($statement1)) {
+		$statement1=$DBH->prepare(
+			"DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE ugset_user_id=? AND ugset_ged_id=? AND ugset_parameter=?"
+		);
+		$statement2=$DBH->prepare(
+			"INSERT INTO {$TBLPREFIX}user_gedcom_setting (ugset_user_id, ugset_ged_id, ugset_parameter, ugset_value) VALUES (?, ?, ?, ?)"
+		);
+		$statement3=$DBH->prepare(
+			"UPDATE {$TBLPREFIX}user_gedcom_setting SET ugset_value=? WHERE ugset_user_id=? AND ugset_ged_id=? AND ugset_parameter=?"
+		);
 	}
-	set_user_setting($user, $parameter, serialize($tmp_array));
+
+	if (empty($value)) {
+		// delete
+		$statement1->bindValue(1, $user_id,   PDO::PARAM_INT);
+		$statement1->bindValue(2, $ged_id,    PDO::PARAM_INT);
+		$statement1->bindValue(3, $parameter, PDO::PARAM_STR);
+		$statement1->execute();
+		++$TOTAL_QUERIES;
+	} else {
+		$tmp=get_user_setting($user_id, $parameter);
+		if (is_null($tmp)) {
+			// insert
+			$statement2->bindValue(1, $user_id,   PDO::PARAM_INT);
+			$statement2->bindValue(2, $ged_id,    PDO::PARAM_INT);
+			$statement2->bindValue(3, $parameter, PDO::PARAM_STR);
+			$statement2->bindValue(4, $value,     PDO::PARAM_STR);
+			$statement2->execute();
+			++$TOTAL_QUERIES;
+		} else {
+			if ($tmp!=$value)  {
+				// update
+				$statement3->bindValue(1, $value,     PDO::PARAM_STR);
+				$statement3->bindValue(2, $user_id,   PDO::PARAM_INT);
+				$statement3->bindValue(3, $ged_id,    PDO::PARAM_INT);
+				$statement3->bindValue(4, $parameter, PDO::PARAM_STR);
+				$statement3->execute();
+				++$TOTAL_QUERIES;
+			}
+		}
+	}
 }
 
 function get_user_from_gedcom_xref($gedcom, $xref) {
-	global $TBLPREFIX;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
-	$user=false;
-	while ($row=$res->fetchRow()) {
-		$tmp_array=unserialize($row[1]);
-		if (array_key_exists($gedcom, $tmp_array) && $tmp_array[$gedcom]==$xref) {
-			$user=$row[0];
-			break;
-		}
+	$statement=$DBH->prepare(
+		"SELECT ugset_user_id FROM {$TBLPREFIX}user_gedcom_setting".
+		" WHERE ugset_value=? AND ugset_parameter='gedcomid' AND ugset_parameter=?"
+	);
+
+	$statement->bindValue(1, $xref, PDO::PARAM_STR);
+	$statement->bindValue(2, $xref, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	if ($row) {
+		return $row->ugset_user_id;
+	} else {
+		return null;
 	}
-	$res->free();
-	return $user;
+}
+
+function get_gedcom_xref_from_user($user_id, $prefered_ged_id) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare(
+		"SELECT ugset_ged_id, ugset_value FROM {$TBLPREFIX}user_gedcom_setting".
+		" WHERE ugset_user_id=? AND ugset_parameter='gedcomid'".
+		"  ORDER BY ugset_ged_id!=?"
+	);
+
+	$statement->bindValue(1, $user_id,         PDO::PARAM_INT);
+	$statement->bindValue(2, $prefered_ged_id, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	if ($row) {
+		return $row;
+	} else {
+		return null;
+	}
 }
 
 ?>

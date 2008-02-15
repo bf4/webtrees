@@ -30,6 +30,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+global $DBH, $TBLPREFIX, $DBTYPE;
+
 // DB portability
 switch ($DBTYPE) {
 case 'mysql':
@@ -61,20 +63,22 @@ default:
 }
 
 // Import data from PGV4.x style config files into an array of definitions
-function get_file_scalar_definitions($filename) {
-	$vars=array();
-	if (file_exists($filename)) {
-		foreach (file($filename) as $line) {
-			if (preg_match('/^\s*\$(\w+)\s*=\s*(true|false)\s*;/', $line, $match)) {
-				$vars[$match[1]]=$match[2]=='true' ? 'Y' :'N';
-			} else {
-				if (preg_match('/^\s*\$(\w+)\s*=\s*"(.*)"\s*;/', $line, $match)) {
-					$vars[$match[1]]=$match[2];
+if (!function_exists('get_file_scalar_definitions')) {
+	function get_file_scalar_definitions($filename) {
+		$vars=array();
+		if (file_exists($filename)) {
+			foreach (file($filename) as $line) {
+				if (preg_match('/^\s*\$(\w+)\s*=\s*(true|false)\s*;/', $line, $match)) {
+					$vars[$match[1]]=$match[2]=='true' ? 'Y' :'N';
+				} else {
+					if (preg_match('/^\s*\$(\w+)\s*=\s*"(.*)"\s*;/', $line, $match)) {
+						$vars[$match[1]]=$match[2];
+					}
 				}
 			}
 		}
+		return $vars;
 	}
-	return $vars;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +95,6 @@ try {
 		" CONSTRAINT {$TBLPREFIX}gedcom_uk UNIQUE      (ged_gedcom)".
 		") {$STORAGE} {$COLLATION}"
 	);
-	echo "<p>CREATE TABLE {$TBLPREFIX}gedcom</p>";
 
 	// Migrate PGV4.x data from gedcoms.php
 	global $INDEX_DIRECTORY;
@@ -103,14 +106,10 @@ try {
 				$statement->bindValue(1, $GEDCOM['id'],     PDO::PARAM_INT);
 				$statement->bindValue(2, $GEDCOM['gedcom'], PDO::PARAM_STR);
 				$statement->execute();
-				echo "<p>Migrated {$GEDCOM['gedcom']} from gedcoms.php into {$TBLPREFIX}gedcom</p>";
 			}
 		}
 	}
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +125,6 @@ try {
 		" CONSTRAINT {$TBLPREFIX}gedcom_setting_fk1 FOREIGN KEY (gset_ged_id) REFERENCES {$TBLPREFIX}gedcom (ged_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
-	echo "<p>CREATE TABLE {$TBLPREFIX}gedcom_setting</p>";
 
 	// Migrate PGV4.x data from gedcoms.php and *_(conf|priv).php
 	global $INDEX_DIRECTORY;
@@ -150,30 +148,23 @@ try {
 						$statement->execute();
 					}
 				}
-				echo "<p>Migrate {$GEDCOM['gedcom']} from gedcoms.php into {$TBLPREFIX}gedcom_settings</p>";
 	
 				foreach (get_file_scalar_definitions($GEDCOM['config']) as $param=>$value) {
 					$statement->bindValue(1, $param, PDO::PARAM_STR);
 					$statement->bindValue(2, $value, PDO::PARAM_STR);
 					$statement->execute();
 				}
-				echo "<p>Migrate settings from {$GEDCOM['config']} into {$TBLPREFIX}gedcom_settings</p>";
 				foreach (get_file_scalar_definitions($GEDCOM['privacy']) as $param=>$value) {
 					$statement->bindValue(1, $param, PDO::PARAM_STR);
 					$statement->bindValue(2, $value, PDO::PARAM_STR);
 					$statement->execute();
 				}
-				echo "<p>Migrate settings from {$GEDCOM['privacy']} into {$TBLPREFIX}gedcom_settings</p>";
 	
 				//unlink($GEDCOM['config']);
-				//echo "<p>Deleted {$GEDCOM['config']}</p>";
 			}
 		}
 	}
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -191,18 +182,13 @@ try {
 		" CONSTRAINT {$TBLPREFIX}user_u1 UNIQUE (user_name)".
 		") {$STORAGE} {$COLLATION}"
 	);
-	echo "<p>CREATE TABLE {$TBLPREFIX}user</p>";
 
 	// Migrate PGV4.x data from pgv_users
 	$DBH->exec(
 		"INSERT INTO {$TBLPREFIX}user (user_name, user_pass)".
 		"	SELECT u_username, u_password FROM {$TBLPREFIX}users"
 	);
-	echo "<p>Migrated {$TBLPREFIX}users to {$TBLPREFIX}user</p>";
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -226,7 +212,6 @@ try {
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix1 ON {$TBLPREFIX}privacy (priv_xref, priv_ged_id)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix2 ON {$TBLPREFIX}privacy (priv_tag)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix3 ON {$TBLPREFIX}privacy (priv_type)");
-	echo "<p>CREATE TABLE {$TBLPREFIX}privacy</p>";
 
 	// Migrate PGV4.x data from *_priv.php
 	global $INDEX_DIRECTORY;
@@ -281,18 +266,13 @@ try {
 							}
 						}
 					}
-					echo "<p>Migrated {$GEDCOM['privacy']} into {$TBLPREFIX}privacy</p>";
 		
 					// unlink($GEDCOM['privacy']);
-					// echo "<p>Deleted {$GEDCOM['privacy']}</p>";
 				}
 			}
 		}
 	}
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -308,7 +288,6 @@ try {
 		" CONSTRAINT {$TBLPREFIX}user_setting_fk1 FOREIGN KEY (uset_user_id) REFERENCES {$TBLPREFIX}user (user_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
-	echo "<p>CREATE TABLE {$TBLPREFIX}user_setting</p>";
 
 	// Migrate PGV4.x data from gedcoms.php into the new table
 	$columns=array(
@@ -324,7 +303,6 @@ try {
 			"  WHERE u_username=user_name"
 		);
 	}
-	echo "<p>Migrated {$TBLPREFIX}users into {$TBLPREFIX}user_setting</p>";
 
 	$statement=$DBH->prepare(
 		"INSERT INTO {$TBLPREFIX}user_setting (uset_user_id, uset_parameter, uset_value)".
@@ -341,16 +319,11 @@ try {
 				$statement->bindValue(3, $row->u_username, PDO::PARAM_STR);
 				$statement->execute();
 			}
-			echo "<p>Migrated {$TBLPREFIX}users to {$TBLPREFIX}user_setting</p>";
 		}
 	}
 
 	//$DBH->exec("DROP TABLE {$TBLPREFIX}users");
-	//echo "<p>DROP TABLE {$TBLPREFIX}users</p>";
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -368,7 +341,6 @@ try {
 		" CONSTRAINT {$TBLPREFIX}user_gedcom_setting_fk2 FOREIGN KEY (ugset_ged_id)  REFERENCES {$TBLPREFIX}gedcom (ged_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
-	echo "<p>CREATE TABLE {$TBLPREFIX}user_gedcom_setting</p>";
 
 	// Migrate PGV4.x data from pgv_useres
 	$statement=$DBH->prepare(
@@ -390,11 +362,7 @@ try {
 			}
 		}
 	}
-	echo "<p>Migrate {$TBLPREFIX}users into {$TBLPREFIX}user_gedcom_settings</p>";
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -410,11 +378,7 @@ try {
 		" CONSTRAINT {$TBLPREFIX}edit_fk1 FOREIGN KEY (edit_user_id) REFERENCES {$TBLPREFIX}user (user_id) ON DELETE RESTRICT".
 		") {$STORAGE} {$COLLATION}"
 	);
-	echo "<p>CREATE TABLE {$TBLPREFIX}edit</p>";
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -436,11 +400,7 @@ try {
 	);
 	$DBH->exec("CREATE UNIQUE INDEX {$TBLPREFIX}record_ix1 ON {$TBLPREFIX}record (rec_xref, rec_ged_id, rec_type)");
 	$DBH->exec("CREATE UNIQUE INDEX {$TBLPREFIX}record_ix2 ON {$TBLPREFIX}record  (rec_type, rec_ged_id, rec_xref)");
-	echo "<p>CREATE TABLE {$TBLPREFIX}record</p>";
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -468,11 +428,7 @@ try {
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix1 ON {$TBLPREFIX}fact (fact_type)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix2 ON {$TBLPREFIX}fact (fact_deleted, fact_created)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix3 ON {$TBLPREFIX}fact (fact_created, fact_deleted)");
-	echo "<p>CREATE TABLE {$TBLPREFIX}fact</p>";
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -491,11 +447,7 @@ try {
 	);
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix1 ON {$TBLPREFIX}link (link_fact_id, link_type, link_xref)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix2 ON {$TBLPREFIX}link (link_type, link_fact_id, link_xref)");
-	echo "<p>CREATE TABLE {$TBLPREFIX}link</p>";
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -518,11 +470,10 @@ try {
 	);
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix1 ON {$TBLPREFIX}name (name_type)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix2 ON {$TBLPREFIX}name (name_sort1, name_sort2, name_type)");
-	echo "<p>CREATE TABLE {$TBLPREFIX}name</p>";
 } catch (PDOException $e) {
-	if ($DBH->errorCode()!='42S01') { // Table already exists
-		echo "<p>", $e->GetMessage(), "</p>";
-	}
 }
+
+// Temporary: this logic should eventually move here.
+CheckTableExists();
 
 ?>

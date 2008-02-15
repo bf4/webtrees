@@ -503,7 +503,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	if (empty ($directory))
 		$directory = $MEDIA_DIRECTORY;
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
-	$sql = "SELECT m_id, m_file, m_media, rec_gedcom, m_titl FROM {$TBLPREFIX}media, {$TBLPREFIX}record WHERE m_media=rec_xref AND m_file=rec_ged_id m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT m_id, m_file, m_media, rec_gedcom, m_titl FROM {$TBLPREFIX}media, {$TBLPREFIX}record WHERE m_media=rec_xref AND m_file=rec_ged_id AND m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	if ($random == true) {
 		$sql .= " ORDER BY ".DB_RANDOM."()";
 		$res = & dbquery($sql, true, 5);

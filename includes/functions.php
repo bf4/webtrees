@@ -274,14 +274,8 @@ function store_gedcoms() {
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
 
 		// NOTE: Set the GEDCOM ID
-		if (!isset($GED["id"]) && $maxid == 0)
-			$GED["id"] = 1;
-		else
-			if (!isset($GED["id"]) && $maxid > 0)
-				$GED["id"] = $maxid;
-			else
-				if (empty($GED["id"]))
-					$GED["id"] = $maxid;
+		if (empty($GED["id"]))
+			$GED["id"] = create_gedcom($GED['gedcom']);
 
 		$gedcomtext .= "\$gedarray[\"id\"] = \"".$GED["id"]."\";\n";
 		if (empty($GED["commonsurnames"])) {
@@ -3297,14 +3291,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username)) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !admin_user_exists() || userGedcomAdmin($username)) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit($username)) {
+			if (DB::isError($DBCONN) || !admin_user_exists() || userCanEdit($username)) {
 				include($file);
 			}
 		}
@@ -3345,14 +3339,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username)) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !admin_user_exists() || userGedcomAdmin($username)) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit($username)) {
+			if (DB::isError($DBCONN) || !admin_user_exists() || userCanEdit($username)) {
 				include($file);
 			}
 		}

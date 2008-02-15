@@ -55,30 +55,28 @@ if ($action=="login") {
 		else $_SESSION["usertime"]=time();
 		$_SESSION["timediff"]=time()-$_SESSION["usertime"];
 		$MyUserName = getUserName();
-		$MyUser = $users[$MyUserName];
-		if (isset($MyUser["language"])) {
-		  if (isset($_SESSION['CLANGUAGE']))$_SESSION['CLANGUAGE'] = $MyUser["language"];
-		  else if (isset($HTTP_SESSION_VARS['CLANGUAGE'])) $HTTP_SESSION_VARS['CLANGUAGE'] = $MyUser["language"];
+		$MyLanguage=get_user_setting(get_user_id($MyUserName), 'language');
+		if (!is_null($MyLanguage)) {
+		  if (isset($_SESSION['CLANGUAGE']))$_SESSION['CLANGUAGE'] = $MyLanguage;
+		  else if (isset($HTTP_SESSION_VARS['CLANGUAGE'])) $HTTP_SESSION_VARS['CLANGUAGE'] = $MyLanguage;
 		}
 		session_write_close();
 		
-		
-		if (!isset($ged)) $ged = $GEDCOM;
+		if (!isset($ged))
+			$ged = $GEDCOM;
 		
 		//-- section added based on UI feedback
-		if (isset($_REQUEST['url'])) $url = $_REQUEST['url'];
+		if (isset($_REQUEST['url']))
+			$url = $_REQUEST['url'];
 		if ($url == "individual.php") {
-			$pid = "";
-			foreach($MyUser['gedcomid'] as $gedname=>$value) {
-				if (!empty($value)) {
-					$pid = $value;
-					$ged = $gedname;
-					break;
-				}
-			}
-			if (!empty($pid)) $url = "individual.php?pid=".$pid;
+			$tmp=get_gedcom_xref_from_user(get_user_id($MyUserName), $GEDCOMS[$GEDCOM]['id']);
+			if ($tmp) {
+				$url = "individual.php?pid=".$tmp->ugset_value;
+				$ged = $tmp->ged_gedcom;
+			} else {
 			//-- user does not have a pid?  Go to mygedview portal
-			else $url = "index.php?ctype=user";
+				$url = "index.php?ctype=user";
+			}
 		}
 		
 		$urlnew = $SERVER_URL;
