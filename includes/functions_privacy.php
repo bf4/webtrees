@@ -604,12 +604,9 @@ function displayDetailsByID($pid, $type = "INDI") {
 		}
 	}
     if ($type=="FAM") {
-	    //-- check if we can display both parents
+	    //-- check if we can display at least one parent
 		$parents = find_parents($pid);
-		$display = displayDetailsByID($parents["HUSB"]);
-		if ($display) {
-			$display = displayDetailsByID($parents["WIFE"]);
-		}
+		$display = displayDetailsByID($parents["HUSB"]) || displayDetailsByID($parents["WIFE"]);
 		$privacy_cache[$pkey] = $display;
 		return $display;
     }
