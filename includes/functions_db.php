@@ -3653,7 +3653,7 @@ function get_user_setting($user, $parameter) {
 	$sql="SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username='{$user}'";
 	$res=dbquery($sql);
 	if ($res==false)
-		return $default;
+		return null;
 	$row=$res->fetchRow();
 	$res->free();
 
@@ -3724,7 +3724,7 @@ function get_user_gedcom_setting($user, $gedcom, $parameter) {
 function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
 	$tmp=get_user_setting($user, $parameter);
 	if (!is_array($tmp))
-		return $default;
+		return null;
 	$tmp_array=unserialize($tmp);
 	if (empty($value)) {
 		// delete the value
