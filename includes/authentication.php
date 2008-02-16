@@ -71,7 +71,7 @@ function authenticateUser($username, $password, $basic=false) {
 				$tmp=get_gedcom_xref_from_user($user_id, get_gedcom_id($GEDCOM));
 				if ($tmp) {
 					$_SESSION['GEDCOM']=$tmp->ged_gedcom;
-						}
+				}
 
 				runHooks('login', array('user'=>$username));
 				return true;
@@ -228,6 +228,10 @@ function getUserName() {
 function userIsAdmin($username="") {
 	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true)
 		return false;
+
+	if (empty($username))
+		$username=getUserName();
+
 	return get_user_setting(get_user_id($username), 'canadmin')=='Y';
 }
 
@@ -244,9 +248,15 @@ function userGedcomAdmin($username="", $ged="") {
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
 
+	if (empty($username))
+		$username=getUserName();
+
 	$user_id=get_user_id($username);
 	if (get_user_setting($user_id, 'canadmin')=='Y')
 		return true;
+
+	if (empty($ged))
+		$ged=$GEDCOM;
 
 	$ged_id=get_gedcom_id($ged);
 	return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin';
@@ -262,6 +272,9 @@ function userGedcomAdmin($username="", $ged="") {
  */
 function userCanAccess($username="") {
 	global $GEDCOM;
+
+	if (empty($username))
+		$username=getUserName();
 
 	$user_id=get_user_id($username);
 	if (get_user_setting($user_id, 'canadmin')=='Y')
@@ -283,6 +296,9 @@ function userCanEdit($username="") {
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
+
+	if (empty($username))
+		$username=getUserName();
 
 	$user_id=get_user_id($username);
 	if (get_user_setting($user_id, 'canadmin')=='Y')
@@ -306,7 +322,11 @@ function userCanAccept($username="") {
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
 
+	if (empty($username))
+		$username=getUserName();
+
 	$user_id=get_user_id($username);
+
 	if (get_user_setting($user_id, 'canadmin')=='Y')
 		return true;
 
@@ -322,12 +342,8 @@ function userCanAccept($username="") {
  * @param string $username	the user name of the user to check
  * @return boolean 		true if the changes should automatically be accepted
  */
-function userAutoAccept($username = "") {
-	if (empty($username))
-		$username = getUserName();
-
-	$user_id=get_user_id($username);
-	return get_user_setting($user_id, 'auto_accept')=='Y';
+function userAutoAccept() {
+	return get_user_setting(get_user_id(getUserName()), 'auto_accept')=='Y';
 }
 
 /**
@@ -651,10 +667,7 @@ function addUser($newuser, $msg = "added") {
 	$user_id=create_user($newuser['username'], $newuser['password']);
 	set_user_setting($user_id, 'firstname',            preg_replace("/\//", "", $newuser["firstname"]));
 	set_user_setting($user_id, 'lastname',             preg_replace("/\//", "", $newuser["lastname"]));
-	set_user_setting($user_id, 'gedcomid',             serialize($newuser['gedcomid']));
-	set_user_setting($user_id, 'rootid',               serialize($newuser['rootid']));
 	set_user_setting($user_id, 'canadmin',             $newuser['canadmin'] ? 'Y' : 'N');
-	set_user_setting($user_id, 'canedit',              serialize($newuser["canedit"]));
 	set_user_setting($user_id, 'email',                $newuser['email']);
 	set_user_setting($user_id, 'verified',             $newuser['verified']);
 	set_user_setting($user_id, 'verified_by_admin',    $newuser['verified_by_admin']);
@@ -823,35 +836,37 @@ function create_export_user($export_accesslevel) {
 function getUser($username) {
 	global $TBLPREFIX, $users, $REGEXP_DB, $GEDCOMS, $DBCONN, $DBTYPE;
 
-	if (get_user_id($username))
+	$user_id=get_user_id($username);
+
+	if (!$user_id)
 		return false;
 
 	$user=array(
 		'username'            =>$username,
-		'firstname'           =>stripslashes(get_user_setting($username, 'firstname')),
-		'lastname'            =>stripslashes(get_user_setting($username, 'lastname')),
-		'password'            =>get_user_setting($username, 'password'),
-		'canadmin'            =>get_user_setting($username, 'canadmin')=='Y',
-		'email'               =>get_user_setting($username, 'email'),
-		'verified'            =>get_user_setting($username, 'verified'),
-		'verified_by_admin'   =>get_user_setting($username, 'verified_by_admin'),
-		'language'            =>get_user_setting($username, 'language'),
-		'pwrequested'         =>get_user_setting($username, 'pwrequested'),
-		'reg_timestamp'       =>get_user_setting($username, 'reg_timestamp'),
-		'reg_hashcode'        =>get_user_setting($username, 'reg_hashcode'),
-		'theme'               =>get_user_setting($username, 'theme'),
-		'loggedin'            =>get_user_setting($username, 'loggedin'),
-		'sessiontime'         =>get_user_setting($username, 'sessiontime'),
-		'contactmethod'       =>get_user_setting($username, 'contactmethod'),
-		'visibleonline'       =>get_user_setting($username, 'visibleonline')=='Y',
-		'editaccount'         =>get_user_setting($username, 'editaccount')=='Y',
-		'default_tab'         =>get_user_setting($username, 'defaulttab'),
-		'comment'             =>get_user_setting($username, 'comment'),
-		'comment_exp'         =>get_user_setting($username, 'comment_exp'),
-		'sync_gedcom'         =>get_user_setting($username, 'sync_gedcom'),
-		'relationship_privacy'=>get_user_setting($username, 'relationship_privacy'),
-		'max_relation_path'   =>get_user_setting($username, 'max_relation_path'),
-		'auto_accept'         =>get_user_setting($username, 'auto_accept')=='Y'
+		'firstname'           =>stripslashes(get_user_setting($user_id, 'firstname')),
+		'lastname'            =>stripslashes(get_user_setting($user_id, 'lastname')),
+		'password'            =>get_user_setting($user_id, 'password'),
+		'canadmin'            =>get_user_setting($user_id, 'canadmin')=='Y',
+		'email'               =>get_user_setting($user_id, 'email'),
+		'verified'            =>get_user_setting($user_id, 'verified'),
+		'verified_by_admin'   =>get_user_setting($user_id, 'verified_by_admin'),
+		'language'            =>get_user_setting($user_id, 'language'),
+		'pwrequested'         =>get_user_setting($user_id, 'pwrequested'),
+		'reg_timestamp'       =>get_user_setting($user_id, 'reg_timestamp'),
+		'reg_hashcode'        =>get_user_setting($user_id, 'reg_hashcode'),
+		'theme'               =>get_user_setting($user_id, 'theme'),
+		'loggedin'            =>get_user_setting($user_id, 'loggedin'),
+		'sessiontime'         =>get_user_setting($user_id, 'sessiontime'),
+		'contactmethod'       =>get_user_setting($user_id, 'contactmethod'),
+		'visibleonline'       =>get_user_setting($user_id, 'visibleonline')=='Y',
+		'editaccount'         =>get_user_setting($user_id, 'editaccount')=='Y',
+		'default_tab'         =>get_user_setting($user_id, 'defaulttab'),
+		'comment'             =>get_user_setting($user_id, 'comment'),
+		'comment_exp'         =>get_user_setting($user_id, 'comment_exp'),
+		'sync_gedcom'         =>get_user_setting($user_id, 'sync_gedcom'),
+		'relationship_privacy'=>get_user_setting($user_id, 'relationship_privacy'),
+		'max_relation_path'   =>get_user_setting($user_id, 'max_relation_path'),
+		'auto_accept'         =>get_user_setting($user_id, 'auto_accept')=='Y'
 	);
 	$ext=runHooks('getuser', $user);
 	if (count($ext) > 0) {

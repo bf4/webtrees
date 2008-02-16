@@ -243,13 +243,7 @@ function store_gedcoms() {
 	uasort($GEDCOMS, "gedcomsort");
 	$gedcomtext = "<?php\n//--START GEDCOM CONFIGURATIONS\n";
 	$gedcomtext .= "\$GEDCOMS = array();\n";
-	$maxid = 0;
-	foreach ($GEDCOMS as $name => $details) {
-		if (isset($details["id"]) && $details["id"] > $maxid)
-			$maxid = $details["id"];
-	}
-	if ($maxid !=0)
-		$maxid++;
+
 	reset($GEDCOMS);
 	//-- keep a local copy in case another function tries to change $GEDCOMS
 	$geds = $GEDCOMS;
@@ -275,7 +269,7 @@ function store_gedcoms() {
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
 
 		// NOTE: Set the GEDCOM ID
-				if (empty($GED["id"]))
+		if (empty($GED["id"]))
 			$GED["id"] = create_gedcom($GED['gedcom']);
 
 		$gedcomtext .= "\$gedarray[\"id\"] = \"".$GED["id"]."\";\n";
@@ -1095,7 +1089,7 @@ function find_highlighted_object($pid, $indirec) {
 	}
 
 	//-- find all of the media items for a person
-	$sql = "SELECT m_media, m_file, rec_gedcom, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping, {$TBLPREFIX}record WHERE m_media=rec_ged_id AND m_file=rec_ged_id AND m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."' AND mm_gid='".$DBCONN->escapeSimple($pid)."' ORDER BY mm_order";
+	$sql = "SELECT m_media, m_file, m_gedrec, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."' AND mm_gid='".$DBCONN->escapeSimple($pid)."' ORDER BY mm_order";
 	$res = dbquery($sql);
 	if (!DB::isError($res)) {
 		while ($row = $res->fetchRow()) {

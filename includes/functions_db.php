@@ -421,12 +421,9 @@ function load_people($ids, $gedfile='') {
  * @param string $gedcom the gedcom file containing $pid
  * @return string the raw gedcom record is returned
  */
-function find_gedcom_record($xref, $gedcom=null) {
-	global $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBH;
-	static $statement=null;
+function find_gedcom_record($pid, $gedcom=null) {
+	global $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
 
-	if (is_null($statement)) {
-		$statement=$DBH->prepare("SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_xref LIKE ? ESCAPE '@' AND rec_ged_id=?");
 	if (empty($gedfile))
 		$gedfile = $GEDCOM;
 
@@ -501,9 +498,14 @@ function find_gedcom_record($xref, $gedcom=null) {
 					}
 				}
 			}
-		}
+	}
 	return $gedrec;
-}
+/*
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=$DBH->prepare("SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_xref LIKE ? ESCAPE '@' AND rec_ged_id=?");
+	}
 
 	// Escape SQL wildcards - we are only using LIKE for case insensitivity
 	$xref=str_replace(array("@","_", "%"), array("@@", "@_", "@%"), $xref);
@@ -519,7 +521,47 @@ function find_gedcom_record($xref, $gedcom=null) {
 	} else {
 		return $row->rec_gedcom;
 	}
+ */
 }
+
+/**
+ * find the gedcom record for a source
+ *
+ * This function first checks the <var>$sourcelist</var> cache to see if the source has already
+ * been retrieved from the database.  If it hasn't been retrieved, then query the database and
+ * add it to the cache.
+ * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#source
+ * @param string $sid the unique gedcom xref id of the source record to retrieve
+ * @return string the raw gedcom record is returned
+ */
+function find_source_record($sid, $gedfile="") {
+	global $TBLPREFIX, $GEDCOMS;
+	global $GEDCOM, $sourcelist, $DBCONN;
+
+	if ($sid=="")
+		return false;
+	if (empty($gedfile))
+		$gedfile = $GEDCOM;
+
+	if (isset($sourcelist[$sid]["gedcom"]) && ($sourcelist[$sid]["gedfile"]==$GEDCOMS[$gedfile]["id"]))
+		return $sourcelist[$sid]["gedcom"];
+
+	$sql = "SELECT s_gedcom, s_name, s_file FROM ".$TBLPREFIX."sources WHERE s_id LIKE '".$DBCONN->escapeSimple($sid)."' AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"]);
+	$res = dbquery($sql);
+
+	if ($res->numRows()!=0) {
+		$row =& $res->fetchRow();
+		$sourcelist[$sid]["name"] = stripslashes($row[1]);
+		$sourcelist[$sid]["gedcom"] = $row[0];
+		$sourcelist[$sid]["gedfile"] = $row[2];
+		$res->free();
+		return $row[0];
+	} else {
+		return false;
+
+	}
+}
+
 
 /**
  * Find a repository record by its ID
@@ -3424,7 +3466,7 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
 	$statement=$DBH->prepare(
-		"SELECT user_id FROM {$TBLPREFIX}user".
+		"SELECT user_id, user_name FROM {$TBLPREFIX}user".
 		"	LEFT OUTER JOIN {$TBLPREFIX}user_setting sort1 ON user_id=sort1.uset_user_id AND sort1.uset_parameter=?".
 		"	LEFT OUTER JOIN {$TBLPREFIX}user_setting sort2 ON user_id=sort2.uset_user_id AND sort2.uset_parameter=?".
 		"  ORDER BY sort1.uset_parameter {$order}, sort2.uset_parameter {$order}");
@@ -3432,8 +3474,13 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 	$statement->bindValue(2, $key2, PDO::PARAM_STR);
 	$statement->execute();
 	++$TOTAL_QUERIES;
-	return $statement->fetchAll(PDO::FETCH_COLUMN);
+	$users=array();
+	while ($row=$statement->fetchObject()) {
+		$users[$row->user_id]=$row->user_name;
 	}
+	$statement->closeCursor();
+	return $users;
+}
 
 function get_user_id($username) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
@@ -3462,6 +3509,19 @@ function get_user_id($username) {
 	} catch (PDOException $e) {
 		return null;
 	}
+}
+
+function get_user_name($user_id) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare("SELECT user_name FROM {$TBLPREFIX}user WHERE user_id=?");
+
+	$statement->bindValue(1, $user_id, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	return $row->user_name;
 }
 
 function get_user_password($user_id) {
@@ -3585,15 +3645,14 @@ function admin_user_exists() {
 // Functions to access the PGV_USER_GEDCOM_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_gedcom_setting($user_id, $ged_id, $parameter, $default=null) {
+function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
 	// We may call this function before creating the table, so must check for errors.
 	try {
 		if (!is_object($DBH)) {
-		return null;
-	}
-}
+			return null;
+		}
 
 		static $statement=null;
 		if (is_null($statement)) {
@@ -3612,12 +3671,12 @@ function get_user_gedcom_setting($user_id, $ged_id, $parameter, $default=null) {
 		$statement->closeCursor();
 		if ($row) {
 			return $row->uset_value;
-	} else {
-		return null;
-	}
+		} else {
+			return null;
+		}
 	} catch (PDOException $e) {
 		return null;
-}
+	}
 }
 
 function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {

@@ -40,7 +40,7 @@ if (!isset($COMMIT_COMMAND)) $COMMIT_COMMAND="";
 if ($CONFIGURED) {
 	if (check_db(true)) {
 		//-- check if no users have been defined and create the main admin user
-		if (!admin_user_exists()) {
+		if (!adminUserExists()) {
 			require_once 'includes/create_db_schema.php';
 			print_header($pgv_lang["configure_head"]);
 			print "<span class=\"subheaders\">".$pgv_lang["configure"]."</span><br />";
