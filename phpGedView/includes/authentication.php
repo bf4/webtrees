@@ -217,7 +217,10 @@ function getUserName() {
 		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
 			if (!is_object($DBCONN))
 				return $_COOKIE["pgv_rem"];
-			if (time() - get_user_setting($_COOKIE['pgv_rem'], 'sessiontime', 0) < 60*60*24*7) {
+			$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
+			if (is_null($session_time))
+				$session_time=0;
+			if (time() - $session_time < 60*60*24*7) {
 				$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
 				$_SESSION['cookie_login'] = true;
 				return $_COOKIE['pgv_rem'];

@@ -3639,7 +3639,7 @@ function user_exists($user) {
 // $parameter is one of the column names in PGV_USERS, without the u_ prefix.
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_setting($user, $parameter, $default=null) {
+function get_user_setting($user, $parameter) {
 	global $DBCONN, $TBLPREFIX;
 
 	static $cache=array();
@@ -3658,7 +3658,8 @@ function get_user_setting($user, $parameter, $default=null) {
 	$res->free();
 
 	if ($row==false) {
-		return $default;
+		$cache["{$user}/{$parameter}"]=null;
+		return null;
 	} else {
 		$cache["{$user}/{$parameter}"]=$row[0];
 		return $row[0];
@@ -3671,7 +3672,7 @@ function set_user_setting($user, $parameter, $value) {
 	$user =$DBCONN->escapeSimple($user);
 	$value=$DBCONN->escapeSimple($value);
 	// Only write to the DB if the value has changed.
-	if (get_user_setting($user, $parameter, null)!==$value) {
+	if (get_user_setting($user, $parameter)!==$value) {
 		dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user}'");
 	}
 }
@@ -3700,15 +3701,24 @@ function admin_user_exists() {
 // $parameter is one of: "gedcomid", "rootid" and "canedit".
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_gedcom_setting($user, $gedcom, $parameter, $default=null) {
+function get_user_gedcom_setting($user, $gedcom, $parameter) {
+	static $cache=array();
+	if (array_key_exists("{$user}/{$gedcom}/{$parameter}", $cache))
+		return $cache["{$user}/{$gedcom}/{$parameter}"];
+
 	$tmp=get_user_setting($user, $parameter);
-	if (!is_array($tmp))
-		return $default;
+	if (!is_array($tmp)) {
+		$cache["{$user}/{$gedcom}/{$parameter}"]=null;
+		return null;
+	}
 	$tmp_array=unserialize($tmp);
-	if (array_key_exists($gedcom, $tmp_array))
+	if (array_key_exists($gedcom, $tmp_array)) {
+		$cache["{$user}/{$gedcom}/{$parameter}"]=$tmp_array[$gedcom];
 		return $tmp_array[$gedcom];
-	else
-		return $default;
+	} else {
+		$cache["{$user}/{$gedcom}/{$parameter}"]=null;
+		return null;
+	}
 }
 
 function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
