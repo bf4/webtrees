@@ -33,10 +33,10 @@ require_once("includes/functions_print_lists.php");
 print_simple_header('View Connections');
 
 //-- only allow gedcom admins here
-if (!userGedcomAdmin(getUserName())) {
+if (!userGedcomAdmin()) {
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!userGedcomAdmin(getUserName())) print "<br />".$pgv_lang["user_cannot_edit"];
+	if (!userGedcomAdmin()) print "<br />".$pgv_lang["user_cannot_edit"];
 	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".$pgv_lang["close_window"]."\" onclick=\"window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
 	print_simple_footer();
 	exit;

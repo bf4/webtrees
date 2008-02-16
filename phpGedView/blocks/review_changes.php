@@ -74,7 +74,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 				}
 			}
 		}
-		if (userCanEdit(getUserName())) {
+		if (userCanEdit()) {
 			print "<div id=\"review_changes_block\" class=\"block\">\n";
 			print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 			print "<td class=\"blockh1\" >&nbsp;</td>";
@@ -82,7 +82,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			print_help_link("review_changes_help", "qm");
 			if ($PGV_BLOCKS["review_changes_block"]["canconfig"]) {
 				$username = getUserName();
-				if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+				if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
 					if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 					else $name = $username;
 					print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
@@ -94,7 +94,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
 			print "</table>";
 			print "<div class=\"blockcontent\">";
-			if (userCanAccept(getUserName())) print "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />\n";
+			if (userCanAccept()) print "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />\n";
 			if ($block) print "<div class=\"small_inner_block, $TEXT_DIRECTION\">\n";
 			if ($config["sendmail"]=="yes") {
 				print $pgv_lang["last_email_sent"].format_timestamp($LAST_CHANGE_EMAIL)."<br />\n";
@@ -121,7 +121,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 						if ($TEXT_DIRECTION=="rtl") print getRLM();
 					}
 					else if ($type=="SOUR") {
-						if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
+						if ($SHOW_SOURCES>=getUserAccessLevel()) {
 							print "<b>".PrintReady(get_source_descriptor($change["gid"]))."</b>&nbsp;";
 							if ($TEXT_DIRECTION=="rtl") print getRLM();
 							print "(".$change["gid"].")";
@@ -138,7 +138,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					if ($block) print "<br />";
 					if ($type=="INDI") print " <a href=\"individual.php?pid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
 					if ($type=="FAM") print " <a href=\"family.php?famid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
-					if (($type=="SOUR") && ($SHOW_SOURCES>=getUserAccessLevel(getUserName()))) print " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
+					if (($type=="SOUR") && ($SHOW_SOURCES>=getUserAccessLevel())) print " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
 				}
 			}
 			if ($block) print "</div>\n";

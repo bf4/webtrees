@@ -33,7 +33,7 @@ print '<span class="helpheader">';
 print_text("config_help");
 print '</span><br /><br /><span class="helptext">';
 if ($help == "help_contents_help") {
-		if (userIsAdmin(getUserName())) {
+		if (userIsAdmin()) {
 		$help = "admin_help_contents_help";
 		print_text("admin_help_contents_head_help");
 	}

@@ -50,7 +50,7 @@ function print_gedcom_block($block = true, $config="", $side, $index) {
 	if ($SHOW_COUNTER)
 		print $pgv_lang["hit_count"]."  ".$hits."<br />\n";
 	print "\n<br />";
-	if (userGedcomAdmin(getUserName())) {
+	if (userGedcomAdmin()) {
 		print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".preg_replace("/'/", "\'", $GEDCOM)."&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1'); return false;\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
 	}
 	print "</div>";

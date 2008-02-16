@@ -30,7 +30,7 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (empty($action)) $action = "";
 if (isset($_REQUEST['source'])) $source = $_REQUEST['source'];
 if (empty($source)) $source="";		// Set when loaded from uploadgedcom.php
-if (!userGedcomAdmin(getUserName())) {
+if (!userGedcomAdmin()) {
 	header("Location: editgedcoms.php");
 	exit;
 }

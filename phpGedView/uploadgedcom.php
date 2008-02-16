@@ -53,7 +53,7 @@ require_once "includes/functions_export.php";
 
 loadLangFile("pgv_confighelp");
 
-if (!userGedcomAdmin(getUserName())) {
+if (!userGedcomAdmin()) {
 	header("Location: login.php?url=uploadgedcom.php");
 	exit;
 }

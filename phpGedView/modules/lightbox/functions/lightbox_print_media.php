@@ -150,7 +150,7 @@
 		
 		if ($t==5){
 			echo "<b><br />" . $tt . "</b><br /><br />";
-		}else if ( ($t!=5) && (userCanAccess(getUserName())) ){
+		}else if ( ($t!=5) && (userCanAccess()) ){
 			echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $numm . ")";
 		}else{
 			echo "<b><br />" . $tt . "</b><br /><br />";	

@@ -227,14 +227,14 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			
-			if ($SHOW_GEDCOM_RECORD || userIsAdmin(getUserName())) {
+			if ($SHOW_GEDCOM_RECORD || userIsAdmin()) {
 				$submenu = new Menu($pgv_lang["edit_raw"]);
 				$submenu->addOnclick("return edit_raw('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 			//- end plain edit option
-			if (userGedcomAdmin(getUserName())) {
+			if (userGedcomAdmin()) {
 				//- remove object option
 				$submenu = new Menu($pgv_lang["remove_object"]);
 				$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);

@@ -44,7 +44,7 @@ print "<br /><br />";
 
 
 
-if (!userIsAdmin(getUserName())) {
+if (!userIsAdmin()) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["lb_admin_error"];
     print "</td></tr></table>\n";

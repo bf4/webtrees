@@ -27,7 +27,7 @@
 require "config.php";
 require_once("includes/functions_import.php");
 
-if (!userIsAdmin(getUserName())) {
+if (!userIsAdmin()) {
 	header("Location: login.php?url=upgrade33-40.php");
 	exit;
 }

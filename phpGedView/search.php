@@ -230,7 +230,7 @@ print_header($pgv_lang["search"]);
 /**************************************************** Search and Replace Search Form ****************************************************/
 if($controller->action == "replace")
 {
-	if(userCanEdit(getUserName()))
+	if(userCanEdit())
 	{
 ?>
 				<td colspan="3" class="facts_label03" style="text-align: center;">
@@ -545,7 +545,7 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 
 if ($controller->action == "general") {
 	print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
-	if(userCanEdit(getUserName()))
+	if(userCanEdit())
 	{
 		print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
 	}
@@ -571,7 +571,7 @@ else if ($controller->action == "replace")
 else
 	if ($controller->action == "soundex") {
 		print "<a href='?action=general'>".$pgv_lang["search_general"]."</a>";
-		if(userCanEdit(getUserName()))
+		if(userCanEdit())
 		{
 			print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
 		}
@@ -584,7 +584,7 @@ else
 	 else
 		if ($controller->action == "multisite")
 		{
-			if(userCanEdit(getUserName()))
+			if(userCanEdit())
 			{
 				print "<a href='?action=replace'>".$pgv_lang["search_replace"]."</a> | ";
 			}

@@ -40,7 +40,7 @@ print_header($pgv_lang["merge_records"]);
 
 //-- make sure they have accept access privileges
 $uname = getUserName();
-if (!userCanAccept($uname)) {
+if (!userCanAccept()) {
 	print "<span class=\"error\">".$pgv_lang["access_denied"]."</span>";
 	print_footer();
 	exit;

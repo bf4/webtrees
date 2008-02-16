@@ -90,7 +90,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		print_help_link("index_common_names_help", "qm");
 		if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
 			$username = getUserName();
-			if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+			if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
 				if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 				else $name = $username;
 				print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";

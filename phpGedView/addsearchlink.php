@@ -30,7 +30,7 @@ require ("config.php");
 print_simple_header($pgv_lang["title_search_link"]);
 
 //-- only allow users with editing access to this page
-if (!userCanEdit(getUserName())) {
+if (!userCanEdit()) {
 	print $pgv_lang["access_denied"];
 	print_simple_footer();
 	exit;

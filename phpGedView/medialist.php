@@ -67,10 +67,10 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 
 // LBox  ================================================================================
 
-$isEditUser = userCanEdit(getUserName());		// -- Determines whether to show file names
+$isEditUser = userCanEdit();		// -- Determines whether to show file names
 
 //-- automatically generate an image
-if (userIsAdmin(getUserName()) && $action=="generate" && !empty($file) && !empty($thumb)) {
+if (userIsAdmin() && $action=="generate" && !empty($file) && !empty($thumb)) {
 	generate_thumbnail($file, $thumb);
 }
 if ($search == "yes") {
@@ -345,7 +345,7 @@ if ($ct>0){
 		
 //LBox --------  added for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php"  )) {
-			if ( userCanEdit(getUserName())  ) {
+			if ( userCanEdit()  ) {
 			
 				if ($LB_ML_THUMB_LINKS != "none") {
 					print "<table border=0><tr>";
