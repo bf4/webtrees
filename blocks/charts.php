@@ -82,7 +82,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	print_help_link("index_charts_help", "qm");
 	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
 		$username = getUserName();
-		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+		if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
 			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 			else $name = $username;
 			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";

@@ -80,12 +80,12 @@ if ($action=="update" || $action=="newentry") {
 	}
 }
 
-if ((!userCanEdit(getUserName()))||(!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
+if ((!userCanEdit())||(!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
 	//print "pid: $pid<br />";
 	//print "gedrec: $gedrec<br />";
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!userCanEdit(getUserName())) print "<br />".$pgv_lang["user_cannot_edit"];
+	if (!userCanEdit()) print "<br />".$pgv_lang["user_cannot_edit"];
 	if (!$ALLOW_EDIT_GEDCOM) print "<br />".$pgv_lang["gedcom_editing_disabled"];
 	if (!$disp) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
@@ -173,7 +173,7 @@ if ($action=="newentry") {
 		$error = "";
 		
 		// Determine file name on server
-		if (userGedcomAdmin(getUserName()) && !empty($text[0])) {
+		if (userGedcomAdmin() && !empty($text[0])) {
 			$parts = pathinfo($text[0]);
 			$mediaFile = $parts["basename"];
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
@@ -406,7 +406,7 @@ if ($action=="newentry") {
 		$media_id = get_new_xref("OBJE");
 		$newged = "0 @".$media_id."@ OBJE\r\n";
 		//-- set the FILE text to the correct file location in the standard media directory
-		if (userGedcomAdmin(getUserName())) $text[0] = $folderName.$mediaFile;
+		if (userGedcomAdmin()) $text[0] = $folderName.$mediaFile;
 		else $newged .= "1 FILE ".$folderName.$mediaFile."\r\n";
 
 		$newged = handle_updates($newged);

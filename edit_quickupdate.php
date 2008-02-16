@@ -90,7 +90,7 @@ if (!empty($user["gedcomid"][$GEDCOM])) {
 	}
 }
 if (empty($pid)) $pass=false;
-if ((!userCanEdit($uname))&&(!$pass)) {
+if ((!userCanEdit())&&(!$pass)) {
 	print $pgv_lang["access_denied"];
 	print_simple_footer();
 	exit;
@@ -122,7 +122,7 @@ if ((!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
 
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!userCanEdit(getUserName())) print "<br />".$pgv_lang["user_cannot_edit"];
+	if (!userCanEdit()) print "<br />".$pgv_lang["user_cannot_edit"];
 	if (!$ALLOW_EDIT_GEDCOM) print "<br />".$pgv_lang["gedcom_editing_disabled"];
 	if (!$disp) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
@@ -2772,7 +2772,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<?php
 	$i++;
 }
-if (UserIsAdmin(GetUserName())) {
+if (UserIsAdmin()) {
 	print "<table class=\"facts_table width80\">\n";
 	print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap>";
 	print_help_link("no_update_CHAN_help", "qm");

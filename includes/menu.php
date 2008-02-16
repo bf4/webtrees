@@ -705,7 +705,7 @@ class MenuBar
 		$menuList = array();
 		$menuList["individual"] = $pgv_lang["individual_list"];
 		if (file_exists("famlist.php")) $menuList["family"] = $pgv_lang["family_list"];
-		if (!$surname and file_exists("sourcelist.php") and $SHOW_SOURCES>=getUserAccessLevel(getUserName())) $menuList["source"] = $pgv_lang["source_list"];
+		if (!$surname and file_exists("sourcelist.php") and $SHOW_SOURCES>=getUserAccessLevel()) $menuList["source"] = $pgv_lang["source_list"];
 		if (!$surname and file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
 		if (!$surname and file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
 		if (!$surname and file_exists("medialist.php") and $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
@@ -885,7 +885,7 @@ class MenuBar
 		foreach($menuList as $file=>$label) {
 			$report = $reports[$file];
 			if (!isset($report["access"])) $report["access"] = $PRIV_PUBLIC;
-			if ($report["access"]>=getUserAccessLevel($username)) {
+			if ($report["access"]>=getUserAccessLevel()) {
 				// indi report
 				if ($pid) $submenu = new Menu($label, "reportengine.php?action=setup&amp;report=".$report["file"]."&amp;pid=".$pid);
 				// family report
@@ -1112,7 +1112,7 @@ class MenuBar
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
-		if (userGedcomAdmin(getUserName())) {
+		if (userGedcomAdmin()) {
 			$submenu = new Menu($pgv_lang["wiki_admin_guide"], "http://wiki.phpgedview.net/en/index.php/Administrators_Guide\" target=\"wiki");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);

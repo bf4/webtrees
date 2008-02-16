@@ -323,7 +323,7 @@ function build_indiv_map($indifacts, $famids) {
 		print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
 		print "<script type=\"text/javascript\">\n";
 		print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
-		if (userIsAdmin(getUserName())) {
+		if (userIsAdmin()) {
 			print "<tr><td align=\"center\" colspan=\"2\">\n";
 			print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 			print "</td></tr>\n";
@@ -533,7 +533,7 @@ function build_indiv_map($indifacts, $famids) {
 		print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_gmtab"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
 		print "<script type=\"text/javascript\">\n";
 		print "function ResizeMap ()\n{\n}\n</script>\n";
-		if (userIsAdmin(getUserName())) {
+		if (userIsAdmin()) {
 			print "<tr><td align=\"center\" colspan=\"2\">\n";
 			print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 			print "</td></tr>\n";

@@ -101,7 +101,7 @@ print "<input type=\"checkbox\" name=\"searchmodules\" dir=\"ltr\" value=\"yes\"
 if ($searchmodules == "yes") print " checked=\"checked\"";
 print " />".$pgv_lang["hs_searchmodules"]."<br />";
 // Show "administrator help" choice only to admins
-if (userGedcomAdmin(GetUserName())) {
+if (userGedcomAdmin()) {
 	print "<input type=\"checkbox\" name=\"searchconfig\" dir=\"ltr\" value=\"yes\"";
 	if ($searchconfig == "yes") print " checked=\"checked\"";
 	print " />".$pgv_lang["hs_searchconfig"];
@@ -126,8 +126,8 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 
 	// Determine the language files to be searched
 	$langFiles = "pgv_lang, ";
-	if (userGedcomAdmin(GetUserName())) $langFiles .= "pgv_admin, ";
-	if (userCanEdit(GetUserName())) $langFiles .= "pgv_editor, ";
+	if (userGedcomAdmin()) $langFiles .= "pgv_admin, ";
+	if (userCanEdit()) $langFiles .= "pgv_editor, ";
 	if ($searchuser == "yes") $langFiles .= "pgv_help, ";
 	if ($searchconfig == "yes") $langFiles .= "pgv_confighelp, ";
 	if ($searchmodules == "yes") $langFiles .= "ra_lang, ra_help, gm_lang, gm_help, sm_lang, sm_help, ";

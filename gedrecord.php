@@ -43,7 +43,7 @@ $pid = clean_input($pid);
 
 $username = GetUserName();
 
-if ((!$SHOW_GEDCOM_RECORD) && (!UserCanAccept($username))) {
+if ((!$SHOW_GEDCOM_RECORD) && (!userCanAccept())) {
 	print "<span class=\"error\">".$pgv_lang["ged_noshow"]."</span>\n";
 	print "</body></html>";
 	exit;

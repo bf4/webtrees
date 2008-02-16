@@ -68,7 +68,7 @@ class Repository extends GedcomRecord {
 			}
 		}
 		if (empty($repositoryrec)) {
-			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$repositoryrec = find_updated_record($pid);
 				$fromfile = true;
 			}

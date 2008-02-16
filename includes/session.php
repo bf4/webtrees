@@ -114,8 +114,6 @@ if ($quitReason == "") {
 
 // Do we have a reason to quit now?
 if ($quitReason != "") {
-	header("HTTP/1.0 403 Forbidden");
-	print "Hackers are not welcome here.";
 	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
 		//-- load common functions
 		require_once("includes/functions.php");
@@ -126,6 +124,9 @@ if ($quitReason != "") {
 		AddToLog("UA>{$ua}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 	}
+	sleep(300);			// Delay for 5 minutes before responding to encourage the hacker to go elsewhere
+	header("HTTP/1.0 403 Forbidden");
+	print "Hackers are not welcome here.";
 	exit;
 }
 
@@ -439,8 +440,6 @@ while (true) {
 
 //-- check if they are trying to hack
 if ($configOverride) {
-	header("HTTP/1.0 403 Forbidden");
-	print "Hackers are not welcome here.";
 	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
 		//-- load common functions
 		require_once("includes/functions.php");
@@ -451,6 +450,9 @@ if ($configOverride) {
 		AddToLog("UA>{$ua}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 	}
+	sleep(300);			// Delay for 5 minutes before responding to encourage the hacker to go elsewhere
+	header("HTTP/1.0 403 Forbidden");
+	print "Hackers are not welcome here.";
 	exit;
 }
 

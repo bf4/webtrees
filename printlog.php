@@ -26,7 +26,7 @@
 require "config.php";
 
 //-- only allow admins
-if (!userGedcomAdmin(getUserName())) {
+if (!userGedcomAdmin()) {
 	header("Location: login.php?url=admin.php");
 	exit;
 }
@@ -56,7 +56,7 @@ if ($logtype == "searchlog") {
 //-- make sure that they have admin status before they can use this page
 $uname = getUserName();
 $auth = false;
-if (($logtype == "syslog") && (userIsAdmin($uname))) $auth = true;
+if (($logtype == "syslog") && (userIsAdmin())) $auth = true;
 if ((($logtype == "gedlog") || ($logtype == "searchlog"))  && (userGedcomAdmin($uname, $gedname))) $auth = true;
 
 if ($auth) {

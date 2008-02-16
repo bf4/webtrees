@@ -3244,6 +3244,7 @@ function get_user_gedcom_setting($user_id, $ged_id, $parameter, $default=null) {
 		if (!is_object($DBH)) {
 			return null;
 		}
+}
 
 		static $statement=null;
 		if (is_null($statement)) {

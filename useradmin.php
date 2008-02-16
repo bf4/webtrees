@@ -47,7 +47,7 @@ if (!isset($usrlang)) $usrlang="";
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-if (!userIsAdmin(getUserName())) {
+if (!userIsAdmin()) {
 	$loginURL = "$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING);
 	header("Location: $loginURL");
 	exit;
@@ -989,7 +989,7 @@ if ($action == "createform") {
 				</select>
 			</td>
 		</tr>
-		<?php if (userIsAdmin(GetUserName())) { ?>
+		<?php if (userIsAdmin()) { ?>
 		<tr>
 			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_help", "qm", "comment"); print $pgv_lang["comment"];?></td>
 			<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php $tab++; print $tab; ?>" ></textarea></td>

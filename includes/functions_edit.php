@@ -765,7 +765,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		add_simple_tag("0 LATI", "DEAT");
 		add_simple_tag("0 LONG", "DEAT");
 	}
-	if (UserIsAdmin(GetUserName())) {
+	if (userIsAdmin()) {
 		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";

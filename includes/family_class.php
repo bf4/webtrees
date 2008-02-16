@@ -95,7 +95,7 @@ class Family extends GedcomRecord {
 			}
 		}
 		if (empty($gedrec)) {
-			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$gedrec = find_updated_record($pid);
 				$fromfile = true;
 			}
@@ -281,7 +281,7 @@ class Family extends GedcomRecord {
 	function &getUpdatedFamily() {
 		global $GEDCOM, $pgv_changes;
 		if ($this->changed) return $this;
-		if (userCanEdit(getUserName())&&($this->disp)) {
+		if (userCanEdit()&&($this->disp)) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
 				$newrec = find_updated_record($this->xref);
 				if (!empty($newrec)) {

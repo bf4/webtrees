@@ -109,7 +109,7 @@ class Person extends GedcomRecord {
 			}
 		}
 		if (empty($indirec)) {
-			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$indirec = find_updated_record($pid);
 				$fromfile = true;
 			}

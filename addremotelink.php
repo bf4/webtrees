@@ -60,12 +60,12 @@ if (!isset($action)) $action = "";
 print_simple_header($pgv_lang["title_remote_link"]);
 
 //-- only allow gedcom admins to create remote links
-if ((!userGedcomAdmin(getUserName()))||(!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
+if ((!userGedcomAdmin())||(!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
 	//print "pid: $pid<br />";
 	//print "gedrec: $gedrec<br />";
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!userGedcomAdmin(getUserName())) print "<br />".$pgv_lang["user_cannot_edit"];
+	if (!userGedcomAdmin()) print "<br />".$pgv_lang["user_cannot_edit"];
 	if (!$ALLOW_EDIT_GEDCOM) print "<br />".$pgv_lang["gedcom_editing_disabled"];
 	if (!$disp) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];

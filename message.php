@@ -44,7 +44,7 @@ if (empty($to)) {
 	print_simple_footer();
 	exit;
 }
-if ($to=="all" && !userIsAdmin(getUserName())) {
+if ($to=="all" && !userIsAdmin()) {
 	print "<span class=\"error\">".$pgv_lang["no_to_user"]."</span><br />";
 	print_simple_footer();
 	exit;

@@ -27,7 +27,7 @@
  */
 
 require 'config.php';
-if (!userIsAdmin(getUserName())) {
+if (!userIsAdmin()) {
 	header('Location: index.php');
 	exit;
 }

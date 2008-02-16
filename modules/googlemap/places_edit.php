@@ -33,7 +33,7 @@ loadLangFile("pgv_facts, gm_lang, gm_help");
 
 print_simple_header($pgv_lang["edit_place_locations"]);
 
-if (!userIsAdmin(getUserName())) {
+if (!userIsAdmin()) {
 	print "<table class=\"facts_table\">\n";
 	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
 	print "</td></tr></table>\n";
@@ -101,7 +101,7 @@ if ($action=='addrecord') {
 	} else {
 		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', '{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}', '{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
 	}
-	if (userIsAdmin(getUserName())) {
+	if (userIsAdmin()) {
 		$res = dbquery($sql);
 	}
 	if ($EDIT_AUTOCLOSE and !$GLOBALS['DEBUG']) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
@@ -117,7 +117,7 @@ if ($action=='updaterecord') {
 	} else {
 		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='{$_POST['NEW_PLACE_NAME']}',pl_lati='{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', pl_long='{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}',pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
 	}
-	if (userIsAdmin(getUserName())) {
+	if (userIsAdmin()) {
    		if ($DBTYPE == "pgsql")
             $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
         else

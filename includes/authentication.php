@@ -205,7 +205,10 @@ function getUserName() {
 		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
 			if (!is_object($DBCONN))
 				return $_COOKIE["pgv_rem"];
-			if (time() - get_user_setting($_COOKIE['pgv_rem'], 'sessiontime', 0) < 60*60*24*7) {
+			$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
+			if (is_null($session_time))
+				$session_time=0;
+			if (time() - $session_time < 60*60*24*7) {
 				$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
 				$_SESSION['cookie_login'] = true;
 				return $_COOKIE['pgv_rem'];
@@ -222,7 +225,7 @@ function getUserName() {
  * user has administrative privileges
  * to change the configuration files
  */
-function userIsAdmin($username) {
+function userIsAdmin($username="") {
 	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true)
 		return false;
 	return get_user_setting(get_user_id($username), 'canadmin')=='Y';
@@ -235,11 +238,9 @@ function userIsAdmin($username) {
  * user has administrative privileges
  * to change the configuration files for the currently active gedcom
  */
-function userGedcomAdmin($username, $ged="") {
+function userGedcomAdmin($username="", $ged="") {
 	global $GEDCOM;
 
-	if (empty($ged))
-		$ged = $GEDCOM;
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
 
@@ -259,7 +260,7 @@ function userGedcomAdmin($username, $ged="") {
  * @param string $username the username of the user to check
  * @return boolean true if user can access false if they cannot
  */
-function userCanAccess($username) {
+function userCanAccess($username="") {
 	global $GEDCOM;
 
 	$user_id=get_user_id($username);
@@ -277,7 +278,7 @@ function userCanAccess($username) {
  * @param string $username the username of the user to check
  * @return boolean true if user can edit false if they cannot
  */
-function userCanEdit($username) {
+function userCanEdit($username="") {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
 	if (!$ALLOW_EDIT_GEDCOM)
@@ -299,7 +300,7 @@ function userCanEdit($username) {
  * @param string $username	the username of the user check privileges
  * @return boolean true if user can accept false if user cannot accept
  */
-function userCanAccept($username) {
+function userCanAccept($username="") {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))

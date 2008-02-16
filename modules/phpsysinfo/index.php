@@ -1,5 +1,5 @@
 <?php
-if(!userIsAdmin(getUserName())){header('Location: index.php');exit;}
+if(!userIsAdmin()){header('Location: index.php');exit;}
 
 // phpSysInfo - A PHP System Information Script
 // http://phpsysinfo.sourceforge.net/

@@ -83,7 +83,7 @@
 	}
 
 	// Third sub-menu (visible only to users with site Admin rights)
-	if (userIsAdmin(getUserName())) {
+	if (userIsAdmin()) {
 		$submenu = new Menu("Custom Menu Item 3", "custom link #2");
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
