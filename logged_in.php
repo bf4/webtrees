@@ -56,7 +56,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 			if (time() - $user["sessiontime"] > $PGV_SESSION_TIME && $user["username"] != $cusername)
 				userLogout($user["username"]);
 			else {
-				if ((userIsAdmin($cusername)) || (($user['visibleonline']) && ($thisuser['visibleonline'])))
+				if ((userIsAdmin()) || (($user['visibleonline']) && ($thisuser['visibleonline'])))
 					$loggedusers[] = $user;
 				else
 					$NumAnonymous++;

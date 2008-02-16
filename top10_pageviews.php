@@ -45,7 +45,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 	$PGV_COUNTER_FILENAME = $INDEX_DIRECTORY.$GEDCOM."pgv_counters.txt";
 	//-- if the counter file does not exist then don't do anything
 	if (!file_exists($PGV_COUNTER_FILENAME)) {
-		if (userIsAdmin(getUserName())) {
+		if (userIsAdmin()) {
 			print "<div id=\"top10\" class=\"block\">\n";
 			print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 			print "<td class=\"blockh1\" >&nbsp;</td>";
@@ -81,7 +81,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 	print_help_link("index_top10_pageviews_help", "qm");
 	if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
 		$username = getUserName();
-		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+		if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
 			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 			else $name = $username;
 			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
@@ -147,7 +147,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 						$i++;
 					}
 					if ($type=="REPO") {
-						if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
+						if ($SHOW_SOURCES>=getUserAccessLevel()) {
 							print "<tr valign=\"top\">";
 							if ($CountSide=="left") {
 								print "<td dir=\"ltr\" align=\"right\">";
@@ -169,7 +169,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 						}
 					}
 					if ($type=="SOUR") {
-						if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
+						if ($SHOW_SOURCES>=getUserAccessLevel()) {
 							print "<tr valign=\"top\">";
 							if ($CountSide=="left") {
 								print "<td dir=\"ltr\" align=\"right\">";
