@@ -489,7 +489,7 @@ function getRecentChanges() {
 				$gid = $factarr[0];
 				$factrec = $factarr[1];
 				if (displayDetailsById($gid)) {
-					$indirec = find_gedcom_record($gid);
+					$indirec = find_person_record($gid);
 					if ($indirec) {
 						if ($lastgid!=$gid) {
 							$name = check_NN(get_sortable_name($gid));
@@ -524,7 +524,7 @@ function getRecentChanges() {
 				$gid = $factarr[0];
 				$factrec = $factarr[1];
 				if (displayDetailsById($gid, "FAM")) {
-					$famrec = find_gedcom_record($gid);
+					$famrec = find_family_record($gid);
 					if ($famrec) {
 						$name = get_family_descriptor($gid);
 						if ($lastgid!=$gid) {
@@ -558,7 +558,7 @@ function getRecentChanges() {
 				$gid = $factarr[0];
 				$factrec = $factarr[1];
 				if (displayDetailsById($gid, "SOUR")) {
-					$sourcerec = find_gedcom_record($gid);
+					$sourcerec = find_source_record($gid);
 					if ($sourcerec) {
 						$name = get_source_descriptor($gid);
 						if ($lastgid!=$gid) {
@@ -592,7 +592,7 @@ function getRecentChanges() {
 				$gid = $factarr[0];
 				$factrec = $factarr[1];
 				if (displayDetailsById($gid, "REPO")) {
-					$reporec = find_gedcom_record($gid);
+					$reporec = find_repo_record($gid);
 					if ($reporec) {
 						$name = get_repo_descriptor($gid);
 						if ($lastgid!=$gid) {
@@ -625,7 +625,7 @@ function getRecentChanges() {
 				$gid = $factarr[0];
 				$factrec = $factarr[1];
 				if (displayDetailsById($gid, "OBJE")) {
-					$mediarec = find_gedcom_record($gid);
+					$mediarec = find_media_record($gid);
 					if ($mediarec) {
 						if (isset($objectlist[$gid]["title"]) && $objectlist[$gid]["title"] != "") $title=$objectlist[$gid]["title"];
 						else $title = $objectlist[$gid]["file"];

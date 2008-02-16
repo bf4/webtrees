@@ -71,7 +71,7 @@ class SourceControllerRoot extends BaseController {
 		if (!empty($_REQUEST["sid"])) $this->sid = strtoupper($_REQUEST["sid"]);
 		$this->sid = clean_input($this->sid);
 		
-		$sourcerec = find_gedcom_record($this->sid);
+		$sourcerec = find_source_record($this->sid);
 		if (!$sourcerec) $sourcerec = "0 @".$this->sid."@ SOUR\r\n";
 		
 		$this->source = new Source($sourcerec);
@@ -124,7 +124,7 @@ class SourceControllerRoot extends BaseController {
 		if (empty($this->uname)) return;
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_gedcom_record($gid);
+			$indirec = find_source_record($gid);
 			if ($indirec) {
 				$favorite = array();
 				$favorite["username"] = $this->uname;
@@ -150,7 +150,7 @@ class SourceControllerRoot extends BaseController {
 		if (accept_changes($this->sid."_".$GEDCOM)) {
 			$this->show_changes="no";
 			$this->accept_success=true;
-			$indirec = find_gedcom_record($this->sid);
+			$indirec = find_source_record($this->sid);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");

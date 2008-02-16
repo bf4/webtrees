@@ -67,7 +67,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 if ($count==0) $count = rand();
 	 $lbwidth = $bwidth*.75;
 	 if ($lbwidth < 150) $lbwidth = 150;
-	 $indirec=find_gedcom_record($pid);
+	 $indirec=find_person_record($pid);
 	 if (!$indirec) $indirec = find_updated_record($pid);
 	 $isF = "NN";
 	 if (preg_match("/1 SEX F/", $indirec)>0) $isF="F";
@@ -128,7 +128,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
 					for ($i=0; $i<$ct; $i++) {
 						 $famid = $match[$i][1];
-						 $famrec = find_gedcom_record($famid);
+						 $famrec = find_family_record($famid);
 						 if ($famrec) {
 							  $parents = find_parents_in_record($famrec);
 							  $spouse = "";
@@ -580,51 +580,49 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	else
 		$query_string = $QUERY_STRING;
 	if ($view!="preview") {
-		$old_META_AUTHOR = $META_AUTHOR;
-		$old_META_PUBLISHER = $META_PUBLISHER;
-		$old_META_COPYRIGHT = $META_COPYRIGHT;
-		$old_META_DESCRIPTION = $META_DESCRIPTION;
-		$old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-		$cuser = get_user_id($CONTACT_EMAIL);
-		if ($cuser) {
-			if ($NAME_REVERSE)
-				$cuserName = get_user_setting($cuser, 'lastname').' '.get_user_setting($cuser, 'firstname');
-			else
-				$cuserName = get_user_setting($cuser, 'firstname').' '.get_user_setting($cuser, 'lastname');
-			if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
-			if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
-			if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
-		}
-		if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".$META_AUTHOR."\" />\n";
-		if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".$META_PUBLISHER."\" />\n";
-		if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".$META_COPYRIGHT."\" />\n";
-		print "<meta name=\"keywords\" content=\"".$META_KEYWORDS;
-		if ($META_SURNAME_KEYWORDS) {
-			$surnames = get_common_surnames_index($GEDCOM);
-			foreach($surnames as $surname=>$count) if (!empty($surname)) print ", $surname";
-		}
-		print "\" />\n";
-		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
-		if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
-		if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", $META_DESCRIPTION)."\" />\n";
-		if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", $META_PAGE_TOPIC)."\" />\n";
-		if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"$META_AUDIENCE\" />\n";
-		if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"$META_PAGE_TYPE\" />\n";
+		 $old_META_AUTHOR = $META_AUTHOR;
+		 $old_META_PUBLISHER = $META_PUBLISHER;
+		 $old_META_COPYRIGHT = $META_COPYRIGHT;
+		 $old_META_DESCRIPTION = $META_DESCRIPTION;
+		 $old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
+		  $cuser = getUser($CONTACT_EMAIL);
+		  if ($cuser) {
+			  if ($NAME_REVERSE) $cuserName = $cuser["lastname"]." ".$cuser["firstname"];
+			  else $cuserName = $cuser["firstname"]." ".$cuser["lastname"];
+			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
+			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
+			  if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
+		  }
+		  if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".$META_AUTHOR."\" />\n";
+		  if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".$META_PUBLISHER."\" />\n";
+		  if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".$META_COPYRIGHT."\" />\n";
+		  print "<meta name=\"keywords\" content=\"".$META_KEYWORDS;
+		  if ($META_SURNAME_KEYWORDS) {
+		  	$surnames = get_common_surnames_index($GEDCOM);
+		  	foreach($surnames as $surname=>$count) if (!empty($surname)) print ", $surname";
+	  	  }
+		  print "\" />\n";
+		  if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
+		  if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
+		  if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", $META_DESCRIPTION)."\" />\n";
+		  if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", $META_PAGE_TOPIC)."\" />\n";
+	 	  if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"$META_AUDIENCE\" />\n";
+	 	  if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"$META_PAGE_TYPE\" />\n";
 
-		// Restrict good search engine spiders to the index page and the individual.php pages.
-		// Quick and dirty hack that will still leave some url only links in Google.
-		// Also ignored by crawlers like wget, so other checks have to be done too.
-		if((strstr($SCRIPT_NAME, "/individual.php")) ||
-		   (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		   (strstr($SCRIPT_NAME, "/family.php")) ||
-		   (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		   (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		   (strstr($SCRIPT_NAME, "/source.php")) ||
-		   (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		   (strstr($SCRIPT_NAME, "/index.php")) ) {
+		  // Restrict good search engine spiders to the index page and the individual.php pages.
+		  // Quick and dirty hack that will still leave some url only links in Google.
+		  // Also ignored by crawlers like wget, so other checks have to be done too.
+		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
+		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
+		     (strstr($SCRIPT_NAME, "/source.php")) ||
+		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
+		     (strstr($SCRIPT_NAME, "/index.php")) ) {
 			// empty case is to index,follow anyways.
-			if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
-				print "<meta name=\"robots\" content=\"$META_ROBOTS\" />\n";
+	 	  	if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
+			print "<meta name=\"robots\" content=\"$META_ROBOTS\" />\n";
 		  }
 		  else {
 			print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
@@ -1037,10 +1035,10 @@ function print_user_links() {
 	 global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM, $PRIV_USER, $PRIV_PUBLIC, $USE_REGISTRATION_MODULE, $pid;
 	 global $LOGIN_URL, $SEARCH_SPIDER;
 	 $username = getUserName();
-	 $user_id = get_user_id($username);
-	 if ($user_id) {
+	 $user = getUser($username);
+	 if ($user && !empty($username)) {
 		  print '<a href="edituser.php" class="link">'.$pgv_lang["logged_in_as"].' ('.$username.')</a><br />';
-		  if (get_user_setting($user_id, 'canadmin') || (userGedcomAdmin($username, $GEDCOM))) print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
+		  if ($user["canadmin"] || (userGedcomAdmin($username, $GEDCOM))) print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
 		  print "<a href=\"index.php?logout=1\" class=\"link\">".$pgv_lang["logout"]."</a>";
 	 } else {
 		  $QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
@@ -1068,45 +1066,45 @@ function print_contact_links($style=0) {
 			print "<div class=\"contact_links\">\n";
 			//--only display one message if the contact users are the same
 			if ($CONTACT_EMAIL==$WEBMASTER_EMAIL) {
-				$user_id = get_user_id($WEBMASTER_EMAIL);
-				if (($user_id)&&($SUPPORT_METHOD!="mailto")) {
-					if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-					else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
+				$user = getUser($WEBMASTER_EMAIL);
+				if (($user)&&($SUPPORT_METHOD!="mailto")) {
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					else $userName = $user["firstname"]." ".$user["lastname"];
 					print $pgv_lang["for_all_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$userName."</a><br />\n";
 				} else {
 					print $pgv_lang["for_support"]." <a href=\"mailto:";
-					if ($user_id) {
-						if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-						else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
-						print get_user_setting($user_id, 'email')."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
+					if ($user) {
+						if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+						else $userName = $user["firstname"]." ".$user["lastname"];
+						print $user["email"]."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
 					} else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
 				}
 			} else {
 			//-- display two messages if the contact users are different
-				  $user_id = get_user_id($CONTACT_EMAIL);
-				  if (($user_id)&&($CONTACT_METHOD!="mailto")) {
-						if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-						else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
+				  $user = getUser($CONTACT_EMAIL);
+				  if (($user)&&($CONTACT_METHOD!="mailto")) {
+					  if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					  else $userName = $user["firstname"]." ".$user["lastname"];
 					  print $pgv_lang["for_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;\">".$userName."</a><br />\n";
 				  } else {
-					  print $pgv_lang["for_contact"]." <a href=\"mailto:";
-					  if ($user_id) {
-							if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-							else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
-							print get_user_setting($user_id, 'email')."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
+					   print $pgv_lang["for_contact"]." <a href=\"mailto:";
+					   if ($user) {
+					  		if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					  		else $userName = $user["firstname"]." ".$user["lastname"];
+							print $user["email"]."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
 					   } else print $CONTACT_EMAIL."\">".$CONTACT_EMAIL."</a><br />\n";
 				  }
-				  $user_id = get_user_id($WEBMASTER_EMAIL);
-				  if (($user_id)&&($SUPPORT_METHOD!="mailto")) {
-						if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-						else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
+				  $user = getUser($WEBMASTER_EMAIL);
+				  if (($user)&&($SUPPORT_METHOD!="mailto")) {
+					  if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					  else $userName = $user["firstname"]." ".$user["lastname"];
 					  print $pgv_lang["for_support"]." <a href=\"javascript:;\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$userName."</a><br />\n";
 				  } else {
-					  print $pgv_lang["for_support"]." <a href=\"mailto:";
-					  if ($user_id) {
-							if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-							else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
-						   print get_user_setting($user_id, 'email')."\">".$userName."</a><br />\n";
+					   print $pgv_lang["for_support"]." <a href=\"mailto:";
+					   if ($user) {
+					  	   if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					  	   else $userName = $user["firstname"]." ".$user["lastname"];
+						   print $user["email"]."\">".$userName."</a><br />\n";
 					   } else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
 				  }
 			}
@@ -1116,10 +1114,10 @@ function print_contact_links($style=0) {
 			$menuitems = array();
 			if ($CONTACT_EMAIL==$WEBMASTER_EMAIL) {
 				$submenu = array();
-				$user_id = get_user_id($WEBMASTER_EMAIL);
-				if (($user_id)&&($SUPPORT_METHOD!="mailto")) {
-					if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-					else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
+				$user = getUser($WEBMASTER_EMAIL);
+				if (($user)&&($SUPPORT_METHOD!="mailto")) {
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					else $userName = $user["firstname"]." ".$user["lastname"];
 					$submenu["label"] = $pgv_lang["support_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;";
 					$submenu["link"] = "#";
@@ -1127,10 +1125,10 @@ function print_contact_links($style=0) {
 				else {
 					$submenu["label"] = $pgv_lang["support_contact"]." ";
 					$submenu["link"] = "mailto:";
-					if ($user_id) {
-						if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-						else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
-						$submenu["link"] .= get_user_setting($user_id, 'email');
+					if ($user) {
+						if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+						else $userName = $user["firstname"]." ".$user["lastname"];
+						$submenu["link"] .= $user["email"];
 						$submenu["label"] .= $userName;
 					} else {
 						$submenu["link"] .= $WEBMASTER_EMAIL;
@@ -1144,20 +1142,20 @@ function print_contact_links($style=0) {
 	            $menuitems[] = $submenu;
 			} else {
 				$submenu = array();
-				$user_id = get_user_id($CONTACT_EMAIL);
-				if (($user_id)&&($CONTACT_METHOD!="mailto")) {
-					if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-					else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
+				$user = getUser($CONTACT_EMAIL);
+				if (($user)&&($CONTACT_METHOD!="mailto")) {
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					else $userName = $user["firstname"]." ".$user["lastname"];
 					$submenu["label"] = $pgv_lang["genealogy_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;";
 					$submenu["link"] = "#";
 				} else {
 					$submenu["label"] = $pgv_lang["genealogy_contact"]." ";
 					$submenu["link"] = "mailto:";
-					if ($user_id) {
-						if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-						else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
-						$submenu["link"] .= get_user_setting($user_id, 'email');
+					if ($user) {
+						if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+						else $userName = $user["firstname"]." ".$user["lastname"];
+						$submenu["link"] .= $user["email"];
 						$submenu["label"] .= $userName;
 					} else {
 						$submenu["link"] .= $CONTACT_EMAIL;
@@ -1169,20 +1167,20 @@ function print_contact_links($style=0) {
 	            $submenu["hoverclass"] = "submenuitem_hover";
 	            $menuitems[] = $submenu;
 	            $submenu = array();
-				$user_id = get_user_id($WEBMASTER_EMAIL);
-				if (($user_id)&&($SUPPORT_METHOD!="mailto")) {
-					if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-					else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
+				$user = getUser($WEBMASTER_EMAIL);
+				if (($user)&&($SUPPORT_METHOD!="mailto")) {
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					else $userName = $user["firstname"]." ".$user["lastname"];
 					$submenu["label"] = $pgv_lang["support_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;";
 					$submenu["link"] = "#";
 				} else {
 					$submenu["label"] = $pgv_lang["support_contact"]." ";
 					$submenu["link"] = "mailto:";
-					if ($user_id) {
-						if ($NAME_REVERSE) $userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id,'firstname');
-						else $userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id,'lastname');
-						$submenu["link"] .= get_user_setting($user_id, 'email');
+					if ($user) {
+						if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+						else $userName = $user["firstname"]." ".$user["lastname"];
+						$submenu["link"] .= $user["email"];
 						$submenu["label"] .= $userName;
 					} else {
 						$submenu["link"] .= $WEBMASTER_EMAIL;
@@ -1668,7 +1666,7 @@ function print_privacy_error($username) {
 
 	 $method = $CONTACT_METHOD;
 	 if ($username==$WEBMASTER_EMAIL) $method = $SUPPORT_METHOD;
-	 $user_id = get_user_id($username);
+	 $user = getUser($username);
 	 if (!$user) $method = "mailto";
 	 print "<br /><span class=\"error\">".$pgv_lang["privacy_error"]." ";
 	 if ($method=="none") {
@@ -1677,18 +1675,18 @@ function print_privacy_error($username) {
 	 }
 	 print $pgv_lang["more_information"];
 	 if ($method=="mailto") {
-		  if (!$user_id) {
+		  if (!$user) {
 			   $email = $username;
 			   $fullname = $username;
 		  } else {
-			   $email = get_user_setting($user_id, 'email');
-			   if ($NAME_REVERSE) $fullname = get_user_setting($user_id, 'lastname')." ".get_user_setting($user_id, 'firstname');
-			   else $fullname = get_user_setting($user_id, 'firstname')." ".get_user_setting($user_id, 'lastname');
+			   $email = $user["email"];
+			   if ($NAME_REVERSE) $fullname = $user["lastname"]." ".$user["firstname"];
+			   else $fullname = $user["firstname"]." ".$user["lastname"];
 		  }
 		  print " <a href=\"mailto:$email\">".$fullname."</a></span><br />";
 	 } else {
-	   if ($NAME_REVERSE) $fullname = get_user_setting($user_id, 'lastname')." ".get_user_setting($user_id, 'firstname');
-	   else $fullname = get_user_setting($user_id, 'firstname')." ".get_user_setting($user_id, 'lastname');
+		 if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+		 else $userName = $user["firstname"]." ".$user["lastname"];
 		 print " <a href=\"javascript:;\" onclick=\"message('$username','$method'); return false;\">".$userName."</a></span><br />";
 	 }
 }
@@ -2292,7 +2290,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview") {
 				if ($type=='FAM') {
-					$famrec = find_gedcom_record($pid);
+					$famrec = find_family_record($pid);
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
@@ -2406,7 +2404,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 			// age at event
 			else if ($fact!="CHAN") {
 				if (!$indirec)
-					$indirec=find_gedcom_record($pid);
+					$indirec=find_person_record($pid);
 				$person=new Person($indirec);
 				$birth_date=new GedcomDate($person->getBirthDate(false));
 				$death_date=new GedcomDate($person->getDeathDate(false));
@@ -2546,14 +2544,15 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 	}
 }
 /**
- * print first major fact for an Individual/Family
+ * print first major fact for an Individual
  *
  * @param string $key	indi pid
  */
 function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
 
-	$indirec = find_gedcom_record($key);
+	$indirec = find_person_record($key);
+	if (!$indirec) $indirec = find_family_record($key);
 	foreach ($majorfacts as $indexval => $fact) {
 		$factrec = get_sub_record(1, "1 $fact", $indirec);
 		if (strlen($factrec)>7 and showFact("$fact", $key) and !FactViewRestricted($key, $factrec)) {
@@ -2817,7 +2816,7 @@ function get_lds_glance($indirec) {
 	$found = false;
 	$ct = preg_match_all("/1 FAMS @(.*)@/", $indirec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$famrec = find_gedcom_record($match[$i][1]);
+		$famrec = find_family_record($match[$i][1]);
 		if ($famrec) {
 			$ord = get_sub_record(1, "1 SLGS", $famrec);
 			if ($ord) {

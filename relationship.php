@@ -132,8 +132,8 @@ function getRelationshipSentence($node, $pid1, $pid2)
         return false;
     }
 
-    $person1 = find_gedcom_record($pid1);
-    $person2 = find_gedcom_record($pid2);
+    $person1 = find_person_record($pid1);
+    $person2 = find_person_record($pid2);
     $mf = "NN";
     if (preg_match("/1 SEX F/", $person2, $smatch)>0) $mf="F";
     if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
@@ -578,7 +578,7 @@ print_header($title_string);
 if (!empty($pid1)) {
 	if (preg_match("/[A-Za-z]+/", $pid1)==0) $pid1 = $GEDCOM_ID_PREFIX.$pid1;
 	//-- check if the id is valid
-	$indirec = find_gedcom_record($pid1);
+	$indirec = find_person_record($pid1);
 	if (empty($indirec)) $pid1 = "";
 	if ((!displayDetailsByID($pid1))&&(!showLivingNameByID($pid1))) $title_string .= ": ".$pgv_lang["private"];
 	else $title_string .= ":<br />".get_person_name($pid1);
@@ -590,7 +590,7 @@ if (!empty($pid1)) {
 if (!empty($pid2)) {
 	if (preg_match("/[A-Za-z]+/", $pid2)==0) $pid2 = $GEDCOM_ID_PREFIX.$pid2;
 	//-- check if the id is valid
-	$indirec = find_gedcom_record($pid2);
+	$indirec = find_person_record($pid2);
 	if (empty($indirec)) $pid2 = "";
 	if ((!displayDetailsByID($pid2))&&(!showLivingNameByID($pid2))) $title_string .= " - " . $pgv_lang["private"]." ";
 	else $title_string .= " ".$pgv_lang["and"]." ".get_person_name($pid2)." ";
@@ -881,7 +881,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				$linex = $xoffset;
 				$liney = $yoffset;
 				$mfstyle = "NN";
-				$indirec = find_gedcom_record($pid);
+				$indirec = find_person_record($pid);
 				if (preg_match("/1 SEX F/", $indirec, $smatch)>0) $mfstyle="F";
 				if (preg_match("/1 SEX M/", $indirec, $smatch)>0) $mfstyle="";
 				$arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];

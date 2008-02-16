@@ -142,7 +142,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 			$parents = find_parents($fmatch[$j][1]);
 			if ($parents) {
 				if (!empty($parents["HUSB"])) {
-					$prec = find_gedcom_record($parents["HUSB"]);
+					$prec = find_person_record($parents["HUSB"]);
 					$ct = preg_match_all("/\d DATE.*\s(\d{3,4})\s/", $prec, $match, PREG_SET_ORDER);
 					for($i=0; $i<$ct; $i++) {
 						$byear = $match[$i][1];
@@ -154,7 +154,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 					}
 				}
 				if (!empty($parents["WIFE"])) {
-					$prec = find_gedcom_record($parents["WIFE"]);
+					$prec = find_person_record($parents["WIFE"]);
 					$ct = preg_match_all("/\d DATE.*\s(\d{3,4})\s/", $prec, $match, PREG_SET_ORDER);
 					for($i=0; $i<$ct; $i++) {
 						$byear = $match[$i][1];
@@ -172,7 +172,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 		$numfams = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
 		for($j=0; $j<$numfams; $j++) {
 			// Get the family record
-			$famrec = find_gedcom_record($fmatch[$j][1]);
+			$famrec = find_family_record($fmatch[$j][1]);
 
 			//-- check for marriage date
 			$marrec = get_sub_record(1, "1 MARR", $famrec);
@@ -192,7 +192,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 			if ($parents) {
 				if ($parents["HUSB"]!=$pid) $spid = $parents["HUSB"];
 				else $spid = $parents["WIFE"];
-				$spouserec = find_gedcom_record($spid);
+				$spouserec = find_person_record($spid);
 				// Check dates
 				$bt = preg_match_all("/\d DATE.*\s(\d{3,4})\s/", $spouserec, $bmatch, PREG_SET_ORDER);
 				for($h=0; $h<$bt; $h++) {
@@ -208,7 +208,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
 				// Get each child's record
-				$childrec = find_gedcom_record($match[$i][1]);
+				$childrec = find_person_record($match[$i][1]);
 				$children[] = $childrec;
 
 				// Check each child's dates
@@ -229,13 +229,13 @@ function is_dead($indirec, $cyear="", $import=false) {
 			$numfams = preg_match_all("/1\s*FAMS\s*@(.*)@/", $child, $fmatch, PREG_SET_ORDER);
 			for($j=0; $j<$numfams; $j++) {
 				// Get the family record
-				$famrec = find_gedcom_record($fmatch[$j][1]);
+				$famrec = find_family_record($fmatch[$j][1]);
 
 				// Get the set of children
 				$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 				for($i=0; $i<$ct; $i++) {
 					// Get each child's record
-					$childrec = find_gedcom_record($match[$i][1]);
+					$childrec = find_person_record($match[$i][1]);
 
 					// Check each grandchild's dates
 					$bt = preg_match_all("/\d DATE.*\s(\d{3,4})\s/", $childrec, $bmatch, PREG_SET_ORDER);
@@ -302,7 +302,7 @@ function checkPrivacyByYear($pid) {
 	global $MAX_ALIVE_AGE, $GEDCOMS, $GEDCOM, $indilist;
 	
 	$cyear = date("Y");
-	$indirec = find_gedcom_record($pid);
+	$indirec = find_person_record($pid);
 	//-- check death record
 	$deatrec = get_sub_record(1, "1 DEAT", $indirec);
 	$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $deatrec, $match);
@@ -316,7 +316,7 @@ function checkPrivacyByYear($pid) {
 	//-- check marriage records
 	$famids = find_families_in_record($indirec, "FAMS");
 	foreach($famids as $indexval => $famid) {
-		$famrec = find_gedcom_record($famid);
+		$famrec = find_family_record($famid);
 		//-- check death record
 		$marrrec = get_sub_record(1, "1 MARR", $indirec);
 		$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $marrrec, $match);
@@ -613,7 +613,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	if ($type=="SOUR") {
 	    if ($SHOW_SOURCES>=getUserAccessLevel()) {
 	    	$disp = true;
-	    	$sourcerec = find_gedcom_record($pid);
+	    	$sourcerec = find_source_record($pid);
 	    	if (!empty($sourcerec)) {
 	    		$repoid = get_gedcom_value("REPO", 1, $sourcerec);
 	    		$disp = displayDetailsByID($repoid, "REPO");
@@ -977,7 +977,7 @@ function FactEditRestricted($pid, $factrec) {
 			
 			if ($myindi == $pid) return false;
 			if (substr($pid,0,1) == $FAM_ID_PREFIX){
-				$famrec = find_gedcom_record($pid);
+				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["HUSB"]) return false;
 				if ($myindi == $parents["WIFE"]) return false;
@@ -1014,7 +1014,7 @@ function FactViewRestricted($pid, $factrec) {
 			//-- NOTE: This could lead to a potential bug in GEDCOMS that do not prefix their records with a number
 			//-- it is safer to look up the gedcom record
 			if (substr($pid,0,1) == $FAM_ID_PREFIX){
-				$famrec = find_gedcom_record($pid);
+				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["WIFE"]) return false;
 				if ($myindi == $parents["HUSB"]) return false;

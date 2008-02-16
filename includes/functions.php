@@ -55,7 +55,7 @@ function check_db($ignore_previous=false) {
 	global $DBTYPE, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
 	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX;
 	global $DBH, $DBH_OK;
-	
+
 	if (!$ignore_previous) {
 		if ($DBH_OK===true)
 			return true;
@@ -122,6 +122,7 @@ function check_db($ignore_previous=false) {
 
 	$DBCONN = DB::connect($dsn, $options);
 	if (DB::isError($DBCONN)) {
+		//die($DBCONN->getMessage());
 		return false;
 	}
 
@@ -274,7 +275,7 @@ function store_gedcoms() {
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
 
 		// NOTE: Set the GEDCOM ID
-		if (empty($GED["id"]))
+				if (empty($GED["id"]))
 			$GED["id"] = create_gedcom($GED['gedcom']);
 
 		$gedcomtext .= "\$gedarray[\"id\"] = \"".$GED["id"]."\";\n";
@@ -347,8 +348,8 @@ function is_dead_id($pid) {
 	if ((!$BUILDING_INDEX)&&(isset($indilist))) {
 		//-- check if the person is already in the $indilist cache
 		if ((!isset($indilist[$pid]["isdead"]))||($indilist[$pid]["gedfile"]!=$GEDCOMS[$GEDCOM]['id'])) {
-			//-- load the individual into the cache by calling the find_gedcom_record function
-			$gedrec = find_gedcom_record($pid);
+			//-- load the individual into the cache by calling the find_person_record function
+			$gedrec = find_person_record($pid);
 			if (empty($gedrec))
 				return true;
 		}
@@ -360,7 +361,7 @@ function is_dead_id($pid) {
 			return $indilist[$pid]["isdead"];
 		}
 	}
-	return is_dead(find_gedcom_record($pid));
+	return is_dead(find_person_record($pid));
 }
 
 // This functions checks if an existing file is physically writeable
@@ -833,7 +834,7 @@ function get_cont($nlevel, $nrec, $tobr=true) {
 function find_parents($famid) {
 	global $pgv_lang;
 
-	$famrec = find_gedcom_record($famid);
+	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
 		if (userCanEdit()) {
 			$famrec = find_updated_record($famid);
@@ -885,7 +886,7 @@ function find_parents_in_record($famrec) {
 function find_children($famid, $me='') {
 	global $pgv_lang;
 
-	$famrec = find_gedcom_record($famid);
+	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
 		if (userCanEdit()) {
 			$famrec = find_updated_record($famid);
@@ -932,7 +933,7 @@ function find_children_in_record($famrec, $me='') {
  * @return array array of family ids
  */
 function find_family_ids($pid) {
-	$indirec=find_gedcom_record($pid);
+	$indirec=find_person_record($pid);
 	return find_visible_families_in_record($indirec, "FAMC");
 }
 
@@ -945,7 +946,7 @@ function find_family_ids($pid) {
  * @return array array of family ids
  */
 function find_sfamily_ids($pid) {
-	$indirec=find_gedcom_record($pid);
+	$indirec=find_person_record($pid);
 	return find_visible_families_in_record($indirec, "FAMS");
 }
 
@@ -1940,7 +1941,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && userCanEdit())
 		$indirec = find_updated_record($pid2);
 	else
-		$indirec = find_gedcom_record($pid2);
+		$indirec = find_person_record($pid2);
 	//-- check the cache
 	if ($USE_RELATIONSHIP_PRIVACY && !$ignore_cache) {
 		if (isset($NODE_CACHE["$pid1-$pid2"])) {
@@ -1960,7 +1961,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
 				$famrec = find_updated_record($fam);
 			else
-				$famrec = find_gedcom_record($fam);
+				$famrec = find_family_record($fam);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				$child = $match[$i][1];
@@ -2010,7 +2011,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && userCanEdit())
 				$famrec = find_updated_record($fmatch[$j][1]);
 			else
-				$famrec = find_gedcom_record($fmatch[$j][1]);
+				$famrec = find_family_record($fmatch[$j][1]);
 
 			// Get the set of children
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $cmatch, PREG_SET_ORDER);
@@ -2019,7 +2020,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && userCanEdit())
 					$childrec = find_updated_record($cmatch[$i][1]);
 				else
-					$childrec = find_gedcom_record($cmatch[$i][1]);
+					$childrec = find_person_record($cmatch[$i][1]);
 				$birthrec = get_sub_record(1, "1 BIRT", $childrec);
 				if ($birthrec!==false) {
 					$dct = preg_match("/2 DATE .*(\d\d\d\d)/", $birthrec, $bmatch);
@@ -2110,7 +2111,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && userCanEdit())
 					$indirec = find_updated_record($node["pid"]);
 				else
-					$indirec = find_gedcom_record($node["pid"]);
+					$indirec = find_person_record($node["pid"]);
 				$byear1 = -1;
 				$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 				if ($birthrec!==false) {
@@ -2188,7 +2189,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
 						$famrec = find_updated_record($fam);
 					else
-						$famrec = find_gedcom_record($fam);
+						$famrec = find_family_record($fam);
 					$parents = find_parents_in_record($famrec);
 					if ((!empty($parents["HUSB"]))&&(!isset($visited[$parents["HUSB"]]))) {
 						$node1 = $node;
@@ -2266,7 +2267,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
 						$famrec = find_updated_record($fam);
 					else
-						$famrec = find_gedcom_record($fam);
+						$famrec = find_family_record($fam);
 					if ($followspouse) {
 						$parents = find_parents_in_record($famrec);
 						if ((!empty($parents["HUSB"]))&&(!isset($visited[$parents["HUSB"]]))) {
@@ -2793,7 +2794,7 @@ function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false
 			foreach ($famids as $indexval => $famid) {
 				$parents = find_parents($famid);
 				if (!empty($parents["HUSB"])) {
-					find_gedcom_record($parents["HUSB"]);
+					find_person_record($parents["HUSB"]);
 					$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
 					$list[$parents["HUSB"]]["generation"] = $list[$id]["generation"]+1;
 				} else
@@ -2803,7 +2804,7 @@ function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false
 						$list["empty" . $total_num_skipped]["gedcom"] = "";
 					}
 				if (!empty($parents["WIFE"])) {
-					find_gedcom_record($parents["WIFE"]);
+					find_person_record($parents["WIFE"]);
 					$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
 					$list[$parents["WIFE"]]["generation"] = $list[$id]["generation"]+1;
 				} else
@@ -2827,11 +2828,11 @@ function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false
 				}
 				$total_num_skipped++;
 				if ($children) {
-					$famrec = find_gedcom_record($famid);
+					$famrec = find_family_record($famid);
 					if ($famrec) {
 						$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 						for ($i=0; $i<$num; $i++) {
-							find_gedcom_record($smatch[$i][1]);
+							find_person_record($smatch[$i][1]);
 							$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
 							if (isset($list[$id]["generation"]))
 								$list[$smatch[$i][1]]["generation"] = $list[$id]["generation"];
@@ -2866,7 +2867,7 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 	global $list, $indilist;
 
 	if (!isset($list[$pid])) {
-		$indirec = find_gedcom_record($pid);
+		$indirec = find_person_record($pid);
 		if (!empty($indirec))
 			$list[$pid] = $indilist[$pid];
 		else
@@ -2878,12 +2879,12 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 	$famids = find_sfamily_ids($pid);
 	if (count($famids)>0) {
 		foreach ($famids as $indexval => $famid) {
-			$famrec = find_gedcom_record($famid);
+			$famrec = find_family_record($famid);
 			if ($famrec) {
 				if ($parents) {
 					$parents = find_parents_in_record($famrec);
 					if (!empty($parents["HUSB"])) {
-						find_gedcom_record($parents["HUSB"]);
+						find_person_record($parents["HUSB"]);
 						$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
 						if (isset($list[$pid]["generation"]))
 							$list[$parents["HUSB"]]["generation"] = $list[$pid]["generation"]-1;
@@ -2891,7 +2892,7 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 							$list[$parents["HUSB"]]["generation"] = 1;
 					}
 					if (!empty($parents["WIFE"])) {
-						find_gedcom_record($parents["WIFE"]);
+						find_person_record($parents["WIFE"]);
 						$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
 						if (isset($list[$pid]["generation"]))
 							$list[$parents["WIFE"]]["generation"] = $list[$pid]["generation"]-1;
@@ -2901,7 +2902,7 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 				}
 				$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 				for ($i=0; $i<$num; $i++) {
-					$indirec = find_gedcom_record($smatch[$i][1]);
+					$indirec = find_person_record($smatch[$i][1]);
 					if (!empty($indirec)) {
 						$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
 						if (isset($list[$pid]["generation"]))
@@ -3290,14 +3291,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !admin_user_exists() || userGedcomAdmin()) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin()) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !admin_user_exists() || userCanEdit()) {
+			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit()) {
 				include($file);
 			}
 		}
@@ -3338,14 +3339,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !admin_user_exists() || userGedcomAdmin()) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin()) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !admin_user_exists() || userCanEdit()) {
+			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit()) {
 				include($file);
 			}
 		}

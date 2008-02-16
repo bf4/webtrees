@@ -1437,7 +1437,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $indilist;
 		global $factarray;
         	
-		$sql="SELECT rec_xref, name_full FROM {$TBLPREFIX}tasks, {$TBLPREFIX}tasksource, {$TBLPREFIX}record, {$TBLPREFIX}fact, {$TBLPREFIX}name WHERE ts_t_id=t_id AND ts_s_id=rec_xref AND rec_xref='".$DBCONN->escapeSimple($sId)."' AND rec_ged_id=".$GEDCOMS[$GEDCOM]['id']." AND rec_id=fact_rec_id AND fact_id=name_fact_id";
+		$sql = "SELECT * FROM ".$TBLPREFIX."tasks, ".$TBLPREFIX."tasksource, ".$TBLPREFIX."sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id='".$DBCONN->escapeSimple($sId)."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
 		$res = dbquery($sql);
 	
 		$out = "\n\t<table class=\"list_table\">";

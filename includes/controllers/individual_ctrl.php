@@ -105,11 +105,11 @@ class IndividualControllerRoot extends BaseController {
 		$pid = $this->pid;
 		
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
-		$indirec = find_gedcom_record($this->pid);
+		$indirec = find_person_record($this->pid);
 //		print_r($indirec);
 		if (($USE_RIN)&&($indirec==false)) {
 		   $this->pid = find_rin_id($this->pid);
-		   $indirec = find_gedcom_record($this->pid);
+		   $indirec = find_person_record($this->pid);
 		}
 		if (empty($indirec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->pid, $match);
@@ -267,7 +267,7 @@ class IndividualControllerRoot extends BaseController {
 		if (empty($this->uname)) return;
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_gedcom_record($gid);
+			$indirec = find_person_record($gid);
 			if ($indirec) {
 				$favorite = array();
 				$favorite["username"] = $this->uname;

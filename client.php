@@ -316,8 +316,8 @@ else if ($action=='soundex') {
 		$msg_out = "SUCCESS\n";
 		// -- only get the names who match soundex
 		while($value = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$indilist[$row[4]]["gedcom"] = $row['rec_gedcom'];
-			$indilist[$row[4]]["names"] = get_indi_names($row['rec_gedcom']);
+			$indilist[$row[4]]["gedcom"] = $row['i_gedcom'];
+			$indilist[$row[4]]["names"] = get_indi_names($row['i_gedcom']);
 			$indilist[$row[4]]["isdead"] = $row['i_isdead'];
 			$indilist[$row[4]]["gedfile"] = $row['i_file'];
 			if (displayDetailsById($xref)) $msg_out .= "$xref\n";
@@ -342,7 +342,29 @@ else if ($action=='getxref') {
 	}
 	
 	if ($position=='first') {
-		$sql="SELECT rec_xref FROM {$TBLPREFIX}record WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+		switch($type) {
+			case "INDI":
+				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
+				break;
+			case "FAM":
+				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
+				break;
+			case "SOUR":
+				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
+				break;
+			case "REPO":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "NOTE":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "OBJE":
+				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
+				break;
+			case "OTHER":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+		}
 		$res = dbquery($sql, true, 1);
 		$row = $res->fetchRow();
 		$res->free();
@@ -351,7 +373,29 @@ else if ($action=='getxref') {
 		print "SUCCESS\n$xref\n";
 	}
 	else if ($position=='last') {
-		$sql="SELECT rec_xref FROM {$TBLPREFIX}record WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+		switch($type) {
+			case "INDI":
+				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
+				break;
+			case "FAM":
+				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
+				break;
+			case "SOUR":
+				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
+				break;
+			case "REPO":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "NOTE":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "OBJE":
+				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
+				break;
+			case "OTHER":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+		}
 		$sql .= " DESC";
 		$res = dbquery($sql, true, 1);
 		$row = $res->fetchRow();
@@ -388,7 +432,29 @@ else if ($action=='getxref') {
 	}
 	else if ($position=='all') {
 		$msg_out = "SUCCESS\n";
-		$sql="SELECT rec_xref FROM {$TBLPREFIX}record WHERE rec_ged_id={$GEDCOMS[$GEDCOM]['id']}";
+		switch($type) {
+			case "INDI":
+				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
+				break;
+			case "FAM":
+				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
+				break;
+			case "SOUR":
+				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
+				break;
+			case "REPO":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "NOTE":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "OBJE":
+				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
+				break;
+			case "OTHER":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+		}
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {		
 			$msg_out .= "$row[0]\n";

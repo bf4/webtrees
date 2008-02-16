@@ -123,7 +123,7 @@
 	// but it may not work for all RDBMS.
 	// $sqlmm  = "SELECT ";
 	$sqlmm = "SELECT DISTINCT ";
-	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, rec_gedrec as m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping, {$TBLPREFIX}record WHERE rec_xref=m_media AND rec_ged_id=m_file AND";
+	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
 	$i=0;
 	foreach($ids as $key=>$id) {

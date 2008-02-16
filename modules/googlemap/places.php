@@ -171,9 +171,16 @@ if ($action=="ImportGedcom") {
 	$placelist = array();
 	$j = 0;
 	if ($mode == "all") {
-		$sql = "SELECT rec_gedcom FROM ${TBLPREFIX}record WHERE rec_type IN ('INDI','FAM')";
-	} else {
-		$sql = "SELECT rec_gedcom FROM ${TBLPREFIX}record WHERE rec_type IN ('INDI','FAM') WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families";
+	}
+	else {
+		if (isset($GEDCOMS[$GEDCOM]["id"])) {
+			// Needed for PGV 4.0
+			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families WHERE f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		} else {
+			// Needed for PGV 3.3.8
+			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."' UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."'";
+		}
 	}
 	$res = dbquery($sql);
 	while ($row =& $res->fetchRow()) {

@@ -72,7 +72,7 @@ foreach($vars as $name=>$var) {
 			if (preg_match("/0 @.*@ INDI/", $gedcom)>0) {
 				$fams = find_sfamily_ids($var);
 				if (!empty($fams[0])) {
-					$gedcom = find_gedcom_record($fams[0]);
+					$gedcom = find_family_record($fams[0]);
 					if (!empty($gedcom)) $vars[$name] = $fams[0];
 					else $action="setup";
 				}

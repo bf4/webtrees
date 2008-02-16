@@ -431,7 +431,7 @@ class GrampsExport {
 		$eMediaRef = $eParent->appendChild($eMediaRef);
 
 		if (($sourceHlink = $this->query_dom("./objects/object[@id = \"$mediaId\"]/@handle")) == null)
-			$this->create_media($mediaId, find_gedcom_record($mediaId));
+			$this->create_media($mediaId, find_media_record($mediaId));
 		$eMediaRef->setAttribute("hlink", $this->query_dom("./objects/object[@id = \"$mediaId\"]/@handle"));
 
 		$eParent->appendChild($eMediaRef);

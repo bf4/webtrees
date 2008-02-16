@@ -214,7 +214,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 		while ($sosa >= $p2) {
 			$pid=$treeid[$sosa];
 			if (!empty($pid)) {
-				$indirec=find_gedcom_record($pid);
+				$indirec=find_person_record($pid);
 				if (!$indirec) $indirec = find_updated_record($pid);
 
 				if ($sosa%2) $bg=$bgcolorF;
@@ -329,13 +329,13 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 					$cfamids = find_family_ids($pid);
 					$num=0;
 					for ($f=0; $f<count($cfamids); $f++) {
-						$famrec = find_gedcom_record($cfamids[$f]);
+						$famrec = find_family_record($cfamids[$f]);
 						if ($famrec) $num += preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 					}
 					if ($famids ||($num>1)) {
 						//-- spouse(s) and children
 						for ($f=0; $f<count($famids); $f++) {
-							$famrec = find_gedcom_record(trim($famids[$f]));
+							$famrec = find_family_record(trim($famids[$f]));
 							if ($famrec) {
 								$parents = find_parents($famids[$f]);
 								if($parents) {
@@ -362,7 +362,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 						}
 						//-- siblings
 						for ($f=0; $f<count($cfamids); $f++) {
-							$famrec = find_gedcom_record($cfamids[$f]);
+							$famrec = find_family_record($cfamids[$f]);
 							if ($famrec) {
 								$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 								if ($num>1) print "\n<br /><span class=\"name1\">".$pgv_lang["siblings"]."</span>";

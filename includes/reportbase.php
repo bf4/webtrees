@@ -1763,6 +1763,13 @@ function PGVRListSHandler($attrs) {
 			if (count($filters)>0) $list = search_fams($filters);
 			else $list = get_fam_list();
 			break;
+		/*
+		case "source":
+			$list = get_source_list();
+			break;
+		case "other":
+			$list = get_other_list();
+			break; */
 		case "pending":
 			$list = array();
 			foreach($pgv_changes as $cid=>$changes) {
@@ -1992,7 +1999,7 @@ function PGVRRelativesSHandler($attrs) {
 	
 
 	$list = array();
-	$indirec = find_gedcom_record($id);
+	$indirec = find_person_record($id);
 	if (!empty($indirec)) {
 		$list[$id] = $indilist[$id];
 		switch ($group) {
@@ -2001,17 +2008,17 @@ function PGVRRelativesSHandler($attrs) {
 				foreach($famids as $indexval => $famid) {
 					$parents = find_parents($famid);
 					if (!empty($parents["HUSB"])) {
-						$temp = find_gedcom_record($parents["HUSB"]);
+						$temp = find_person_record($parents["HUSB"]);
 						if (!empty($temp)) $list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
 					}
 					if (!empty($parents["WIFE"])) {
-						$temp = find_gedcom_record($parents["WIFE"]);
+						$temp = find_person_record($parents["WIFE"]);
 						if (!empty($temp)) $list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
 					}
-					$famrec = find_gedcom_record($famid);
+					$famrec = find_family_record($famid);
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 					for($i=0; $i<$num; $i++) {
-						$temp = find_gedcom_record($smatch[$i][1]);
+						$temp = find_person_record($smatch[$i][1]);
 						if (!empty($temp)) $list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
 					}
 				}
@@ -2020,14 +2027,14 @@ function PGVRRelativesSHandler($attrs) {
 				$famids = find_sfamily_ids($id);
 				foreach($famids as $indexval => $famid) {
 					$parents = find_parents($famid);
-					$temp = find_gedcom_record($parents["HUSB"]);
+					$temp = find_person_record($parents["HUSB"]);
 					if (!empty($temp)) $list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
-					$temp = find_gedcom_record($parents["WIFE"]);
+					$temp = find_person_record($parents["WIFE"]);
 					if (!empty($temp)) $list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
-					$famrec = find_gedcom_record($famid);
+					$famrec = find_family_record($famid);
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 					for($i=0; $i<$num; $i++) {
-						$temp = find_gedcom_record($smatch[$i][1]);
+						$temp = find_person_record($smatch[$i][1]);
 						if (!empty($temp)) $list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
 					}
 				}

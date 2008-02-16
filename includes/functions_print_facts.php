@@ -507,7 +507,7 @@ function print_submitter_info($sid) {
 function print_repository_record($sid) {
 	global $TEXT_DIRECTION;
 	if (displayDetailsById($sid, "REPO")) {
-		$source = find_gedcom_record($sid);
+		$source = find_repo_record($sid);
 		$ct = preg_match("/1 NAME (.*)/", $source, $match);
 		if ($ct > 0) {
 			$ct2 = preg_match("/0 @(.*)@/", $source, $rmatch);
@@ -567,7 +567,7 @@ function print_fact_sources($factrec, $level) {
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
 			if ($lt>0) print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 			print $pgv_lang["source"].":</span> <span class=\"field\">";
-			$source = find_gedcom_record($sid);
+			$source = find_source_record($sid);
 			print "<a href=\"source.php?sid=".$sid."\">";
 			$text = PrintReady(get_source_descriptor($sid));
 			//-- Print additional source title
@@ -616,7 +616,7 @@ function print_media_links($factrec, $level,$pid='') {
 	while ($objectNum < count($omatch)) {
 		$media_id = preg_replace("/@/", "", trim($omatch[$objectNum][1]));
 		if (displayDetailsById($media_id, "OBJE")) {
-			$sql = "SELECT m_titl, m_file, rec_gedcom AS m_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}record WHERE m_media=rec_xref AND m_file=rec_ged_id AND m_media='{$media_id}' AND m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
+			$sql = "SELECT m_titl, m_file, m_gedrec FROM {$TBLPREFIX}media where m_media='{$media_id}' AND m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 			$tempsql = dbquery($sql);
 			$res =& $tempsql;
 			if ($res->numRows()>0) {
@@ -918,7 +918,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			print "\n\t\t\t<td class=\"optionbox $styleadd wrap\">";
 			//print "\n\t\t\t<td class=\"facts_value$styleadd\">";
 			if (showFactDetails("SOUR", $pid)) {
-				$source = find_gedcom_record($sid);
+				$source = find_source_record($sid);
 				echo "<a href=\"source.php?sid=".$sid."\">";
 				$text = PrintReady(get_source_descriptor($sid));
 				//-- Print additional source title
@@ -1245,7 +1245,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
 	// but it may not work for all RDBMS.
 	$sqlmm = "SELECT ";
-	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, rec_gedcom AS m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping, {$TBLPREFIX}record WHERE m_file=rec_ged_id AND m_media=rec_xref AND ";
+	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
 	$i=0;
 	foreach($ids as $key=>$id) {
@@ -1352,7 +1352,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		else {
 			$row = array();
 			$newrec = find_updated_record($media_id);
-			if (empty($newrec)) $newrec = find_gedcom_record($media_id);
+			if (empty($newrec)) $newrec = find_media_record($media_id);
 			$row['m_media'] = $media_id;
 			$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 			$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);

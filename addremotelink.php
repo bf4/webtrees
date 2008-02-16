@@ -49,7 +49,7 @@ if(!isset($pid)){
 else{
 	$pid = clean_input($pid);
 	$name = get_person_name($pid);
-	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
+	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_person_record($pid);
 	else $gedrec = find_updated_record($pid);
 	if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
 	$disp = displayDetailsById($pid);
@@ -136,7 +136,7 @@ if ($action=="addlink") {
 
 	if (!empty($serverID)&&!empty($link_pid)) {
 		if (isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_updated_record($pid);
-		else $indirec = find_gedcom_record($pid);
+		else $indirec = find_person_record($pid);
 
 		if($relation_type=="father"){
 			$indistub = "0 @new@ INDI\r\n";

@@ -82,8 +82,28 @@ class GedcomRecord {
 	 * @return GedcomRecord
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $indilist, $famlist, $sourcelist, $repolist, $otherlist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
+		//-- first check for the object in the cache
+		if (isset($indilist[$pid]) && $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($indilist[$pid]['object'])) return $indilist[$pid]['object'];
+		}
+		if (isset($famlist[$pid]) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
+		}
+		if (isset($sourcelist[$pid]) && $sourcelist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($sourcelist[$pid]['object'])) return $sourcelist[$pid]['object'];
+		}
+		if (isset($repolist[$pid]) && $repolist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($repolist[$pid]['object'])) return $repolist[$pid]['object'];
+		}
+		if (isset($objectlist[$pid]) && $objectlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($objectlist[$pid]['object'])) return $objectlist[$pid]['object'];
+		}
+		if (isset($otherlist[$pid]) && $otherlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($otherlist[$pid]['object'])) return $otherlist[$pid]['object'];
+		}
+		
 		//-- look for the gedcom record
 		$indirec = find_gedcom_record($pid);
 		if (empty($indirec)) {
@@ -114,31 +134,37 @@ class GedcomRecord {
 			if ($type=="INDI") {
 				$record = new Person($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
+				$indilist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else if ($type=="FAM") {
 				$record = new Family($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
+				$famlist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else if ($type=="SOUR") {
 				$record = new Source($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
+				$sourcelist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else if ($type=="REPO") {
 				$record = new Repository($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
+				$repolist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else if ($type=="OBJE") {
 				$record = new Media($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
+				$objectlist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else {
 				$record = new GedcomRecord($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
+				$otherlist[$pid]['object'] = &$record;
 				return $record;
 			}
 		}

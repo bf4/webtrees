@@ -69,7 +69,7 @@ function indi2roots() {
 		$key=$keys[$i];
 		$value= $my2indilist[$key]["names"][0][0];
 		$value2= $my2indilist[$key]["gedfile"];
-		$person= find_gedcom_record($key);
+		$person= find_person_record($key);
 		$famc="";
 		$ctc= preg_match("/1\s*FAMC\s*@(.*)@/",$person,$match);
 		if ($ctc > 0) {
@@ -110,7 +110,7 @@ function indi2roots() {
 //		$value= trim($patrilist[$key]["name"]);
 		$value = get_sortable_name($key);
 		$value2= $patrilist[$key]["gedfile"];
-		$person= find_gedcom_record($key);
+		$person= find_person_record($key);
 //--> Changed MA @@@ as in extract_surname() etc.
 		$tmpnames = preg_split("/,/", $value);
 		$tmpnames[0] = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^[a-z\. ]*/"), array(",",",",""), $tmpnames[0]);

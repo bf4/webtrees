@@ -66,7 +66,7 @@ class TimelineControllerRoot extends BaseController {
 		//-- new pid
 		if (isset($_REQUEST['newpid'])) {
 			$newpid = clean_input($_REQUEST['newpid']);
-			$indirec = find_gedcom_record($newpid);
+			$indirec = find_person_record($newpid);
 			if (empty($indirec)) {
 				if (stristr($newpid, "I")===false) $newpid = "I".$newpid;
 			}

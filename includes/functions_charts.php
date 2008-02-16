@@ -340,7 +340,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
  						$divrec = "";
 						if (showFact("MARR", $famid)) {
 							// marriage date
-							$famrec = find_gedcom_record($famid);
+							$famrec = find_family_record($famid);
 							$ct = preg_match("/2 DATE.*(\d\d\d\d)/", get_sub_record(1, "1 MARR", $famrec), $match);
 							if ($ct>0) print "<span class=\"date\">".trim($match[1])."</span>";
 							// divorce date
@@ -395,11 +395,11 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 
 		$nchi = "";
 		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
-		else $famrec = find_gedcom_record($famid);
+		else $famrec = find_family_record($famid);
 		$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 		if ($ct>0) $nchi = $match[1];
 		else {
-			$famrec = find_gedcom_record($famid);
+			$famrec = find_family_record($famid);
 			$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 			if ($ct>0) $nchi = $match[1];
 		}
@@ -447,7 +447,7 @@ function print_family_facts($famid, $sosa = 0) {
 		// -- find all the fact information
 		$indifacts = array(); // -- array to store the fact records in for sorting and displaying
 		$otheritems = array();
-		$famrec = find_gedcom_record($famid);
+		$famrec = find_family_record($famid);
 		$indilines = split("\n", $famrec); // -- find the number of lines in the individuals record
 		$lct = count($indilines);
 		$factrec = ""; // -- complete fact record
@@ -694,18 +694,18 @@ function check_rootid($rootid) {
 	// -- if the $rootid is not already there then find the first person in the file and make him the root
 	if (empty($rootid)) {
 		$user = getUser(getUserName());
-		if ((!empty($user["rootid"][$GEDCOM])) && (find_gedcom_record($user["rootid"][$GEDCOM]))) $rootid = $user["rootid"][$GEDCOM];
-		else if ((!empty($user["gedcomid"][$GEDCOM])) && (find_gedcom_record($user["gedcomid"][$GEDCOM]))) $rootid = $user["gedcomid"][$GEDCOM];
+		if ((!empty($user["rootid"][$GEDCOM])) && (find_person_record($user["rootid"][$GEDCOM]))) $rootid = $user["rootid"][$GEDCOM];
+		else if ((!empty($user["gedcomid"][$GEDCOM])) && (find_person_record($user["gedcomid"][$GEDCOM]))) $rootid = $user["gedcomid"][$GEDCOM];
 		// -- allow users to overide default id in the config file.
 		if (empty($rootid)) {
 			$PEDIGREE_ROOT_ID = trim($PEDIGREE_ROOT_ID);
-			if ((!empty($PEDIGREE_ROOT_ID)) && (find_gedcom_record($PEDIGREE_ROOT_ID))) $rootid = $PEDIGREE_ROOT_ID;
+			if ((!empty($PEDIGREE_ROOT_ID)) && (find_person_record($PEDIGREE_ROOT_ID))) $rootid = $PEDIGREE_ROOT_ID;
 			else $rootid = find_first_person();
 		}
 	}
 
 	if ($USE_RIN) {
-		$indirec = find_gedcom_record($rootid);
+		$indirec = find_person_record($rootid);
 		if ($indirec == false) $rootid = find_rin_id($rootid);
 	} else {
 		if (preg_match("/[A-Za-z]+/", $rootid) == 0) {
@@ -813,7 +813,7 @@ function pedigree_array($rootid) {
  */
 function get_children_ids($famid) {
 	$children = array();
-	$famrec = find_gedcom_record($famid);
+	$famrec = find_family_record($famid);
 	$ct = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $match, PREG_SET_ORDER);
 	for($i = 0; $i < $ct; $i++) {
 		$children[] = $match[$i][1];
@@ -1007,7 +1007,7 @@ function get_sosa_name($sosa) {
 function print_childbox_popup($rootid, $indirec, $url) {
 	global $TEXT_DIRECTION, $pgv_lang;
 
-	if (empty($indirec)) $indirec = find_gedcom_record($rootid);
+	if (empty($indirec)) $indirec = find_person_record($rootid);
 	if (!displayDetails($indirec) and !showLivingName($indirec)) return;
 
 	$famids = find_sfamily_ids($rootid);
@@ -1015,7 +1015,7 @@ function print_childbox_popup($rootid, $indirec, $url) {
 	$cfamids = find_family_ids($rootid);
 	$num=0;
 	for($f=0; $f<count($cfamids); $f++) {
-		$famrec = find_gedcom_record($cfamids[$f]);
+		$famrec = find_family_record($cfamids[$f]);
 		if ($famrec) {
 			$num += preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 		}
@@ -1028,7 +1028,7 @@ function print_childbox_popup($rootid, $indirec, $url) {
 	print "\n\t\t\t\t<a href=\"individual.php?pid=$rootid\" class=\"name1\">". PrintReady(rtrim(get_person_name($rootid))) . "</a><br />";
 	if ($famids||($num>1)) {
 		for($f=0; $f<count($famids); $f++) {
-			$famrec = find_gedcom_record(trim($famids[$f]));
+			$famrec = find_family_record(trim($famids[$f]));
 			if ($famrec) {
 				$parents = find_parents($famids[$f]);
 				if($parents) {
@@ -1063,7 +1063,7 @@ function print_childbox_popup($rootid, $indirec, $url) {
 		}
 		//-- print the siblings
 		for($f=0; $f<count($cfamids); $f++) {
-			$famrec = find_gedcom_record($cfamids[$f]);
+			$famrec = find_family_record($cfamids[$f]);
 			if ($famrec) {
 				$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 				if ($num>1) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
@@ -1155,7 +1155,7 @@ function print_cousins($famid, $personcount="1") {
 		print "</table>";
 	}
 	else {
-		$famrec = find_gedcom_record($famid);
+		$famrec = find_family_record($famid);
 		$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 		if ($ct>0) $nchi = $match[1];
 		else $nchi = "";

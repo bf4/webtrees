@@ -62,7 +62,7 @@ function get_common_surnames($min) {
 	global $TBLPREFIX, $GEDCOM, $indilist, $CONFIGURED, $GEDCOMS, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $pgv_lang, $HNN, $ANN;
 
 	$surnames = array();
-	if (!$CONFIGURED || !admin_user_exists() || (count($GEDCOMS)==0) || (!check_for_import($GEDCOM))) return $surnames;
+	if (!$CONFIGURED || !adminUserExists() || (count($GEDCOMS)==0) || (!check_for_import($GEDCOM))) return $surnames;
 	//-- this line causes a bug where the common surnames list is not properly updated
 	// if ((!isset($indilist))||(!is_array($indilist))) return $surnames;
 	$surnames = get_top_surnames(100);
@@ -196,9 +196,9 @@ function get_sortable_name($pid, $alpha="", $surname="", $allnames=false) {
 		$names = $indilist[$pid]["names"];
 	}
 	else {
-		//-- cache missed, so load the person into the cache with the find_gedcom_record function
+		//-- cache missed, so load the person into the cache with the find_person_record function
 		//-- and get the name from the cache again
-		$gedrec = find_gedcom_record($pid);
+		$gedrec = find_person_record($pid);
 		if (empty($gedrec)) $gedrec = find_updated_record($pid);
 		if (!empty($indilist[$pid]["names"])) {
 			$names = $indilist[$pid]["names"];
@@ -277,7 +277,7 @@ function get_person_name($pid, $checkUnknown=true) {
 
 	//-- get the name from the gedcom record
 	if ($NAME_FROM_GEDCOM) {
-		$indirec = find_gedcom_record($pid);
+		$indirec = find_person_record($pid);
 		if (!$indirec) $indirec = find_updated_record($pid);
 		//$name = get_name_in_record($indirec);
 		//-- SEE bug [ 1830176 ] get_name_in_record() incorrect results
@@ -289,9 +289,9 @@ function get_person_name($pid, $checkUnknown=true) {
 			$name = $indilist[$pid]["names"][0][0];
 		}
 		else {
-			//-- cache missed, so load the person into the cache with the find_gedcom_record function
+			//-- cache missed, so load the person into the cache with the find_person_record function
 			//-- and get the name from the cache again
-			$gedrec = find_gedcom_record($pid);
+			$gedrec = find_person_record($pid);
 			if (empty($gedrec)) $gedrec = find_updated_record($pid);
 			if (!empty($gedrec)) {
 				if (isset($indilist[$pid]["names"])) $name = $indilist[$pid]["names"][0][0];
@@ -343,12 +343,18 @@ function reverse_name($name) {
  * @return string the title of the source
  */
 function get_media_descriptor($id) {
+	global $objectlist;
 	if ($id=="") return false;
 
-	$gedrec = find_gedcom_record($id);
-	if (!empty($gedrec)) {
+	if (isset($objectlist[$id]["title"])) {
 		if (!empty($objectlist[$id]["title"])) return $objectlist[$id]["title"];
 		else return $objectlist[$id]["file"];
+	} else {
+		$gedrec = find_media_record($id);
+		if (!empty($gedrec)) {
+			if (!empty($objectlist[$id]["title"])) return $objectlist[$id]["title"];
+			else return $objectlist[$id]["file"];
+		}
 	}
 	return false;
 }
@@ -366,7 +372,7 @@ function get_source_descriptor($sid) {
 	if (isset($sourcelist[$sid]["name"])) {
 		return $sourcelist[$sid]["name"];
 	} else {
-		$gedrec = find_gedcom_record($sid);
+		$gedrec = find_source_record($sid);
 		if (!empty($gedrec)) return $sourcelist[$sid]["name"];
 	}
 	return false;
@@ -406,7 +412,7 @@ function get_add_source_descriptor($sid) {
 	$title = "";
 	if ($sid=="") return false;
 
-	$gedrec = find_gedcom_record($sid);
+	$gedrec = find_source_record($sid);
 	if (!empty($gedrec)) {
 		$ct = preg_match("/\d ROMN (.*)/", $gedrec, $match);
 		if ($ct>0) return($match[1]);
@@ -428,7 +434,7 @@ function get_add_repo_descriptor($rid) {
 	$title = "";
 	if ($rid=="") return false;
 
-	$gedrec = find_gedcom_record($rid);
+	$gedrec = find_repo_record($rid);
 	if (!empty($gedrec)) {
 		$ct = preg_match("/\d ROMN (.*)/", $gedrec, $match);
 		if ($ct>0) return($match[1]);
@@ -520,7 +526,7 @@ function get_add_person_name($pid) {
 	global $NAME_FROM_GEDCOM;
 
 	//-- get the name from the indexes
-	$record = find_gedcom_record($pid);
+	$record = find_person_record($pid);
 	$name_record = get_sub_record(1, "1 NAME", $record);
 	$name = get_add_person_name_in_record($name_record);
 	$name = check_NN($name); 
@@ -559,7 +565,7 @@ function get_sortable_add_name($pid) {
 	global $NAME_FROM_GEDCOM;
 
 	//-- get the name from the indexes
-	$record = find_gedcom_record($pid);
+	$record = find_person_record($pid);
 	$name_record = get_sub_record(1, "1 NAME", $record);
 
 	// Check for ROMN name

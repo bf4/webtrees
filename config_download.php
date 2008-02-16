@@ -26,7 +26,7 @@
 require "config.php";
 loadLangFile("pgv_confighelp");
 
-if ((admin_user_exists()&&!userIsAdmin())&&$CONFIGURED) {
+if ((adminUserExists()&&!userIsAdmin())&&$CONFIGURED) {
 	header("Location: admin.php");
 	exit;
 }
