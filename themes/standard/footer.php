@@ -13,7 +13,7 @@ print "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_l
 print "<br />";
 if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
 if ($buildindex) print " ".$pgv_lang["build_error"]."  <a href=\"editgedcoms.php\">".$pgv_lang["rebuild_indexes"]."</a>\n";
-if ((count($pgv_changes) > 0) and (userCanAccept(getUserName())))
+if ((count($pgv_changes) > 0) and (userCanAccept()))
 {
 print "<br />".$pgv_lang["changes_exist"].
 " <a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".

@@ -237,9 +237,12 @@ function getUserName() {
  * user has administrative privileges
  * to change the configuration files
  */
-function userIsAdmin($username) {
+function userIsAdmin($username="") {
 	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true)
 		return false;
+
+	if (empty($username))
+		$username=getUserName();
 
 	return get_user_setting($username, 'canadmin')=='Y';
 }
@@ -251,16 +254,20 @@ function userIsAdmin($username) {
  * user has administrative privileges
  * to change the configuration files for the currently active gedcom
  */
-function userGedcomAdmin($username, $ged="") {
+function userGedcomAdmin($username="", $ged="") {
 	global $GEDCOM;
 
-	if (empty($ged))
-		$ged = $GEDCOM;
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
 
+	if (empty($username))
+		$username=getUserName();
+
 	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
+
+	if (empty($ged))
+		$ged = $GEDCOM;
 
 	return get_user_gedcom_setting($username, $ged, 'canedit')=='admin';
 }
@@ -273,8 +280,11 @@ function userGedcomAdmin($username, $ged="") {
  * @param string $username the username of the user to check
  * @return boolean true if user can access false if they cannot
  */
-function userCanAccess($username) {
+function userCanAccess($username="") {
 	global $GEDCOM;
+
+	if (empty($username))
+		$username=getUserName();
 
 	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
@@ -290,11 +300,14 @@ function userCanAccess($username) {
  * @param string $username the username of the user to check
  * @return boolean true if user can edit false if they cannot
  */
-function userCanEdit($username) {
+function userCanEdit($username="") {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
+
+	if (empty($username))
+		$username=getUserName();
 
 	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
@@ -311,11 +324,14 @@ function userCanEdit($username) {
  * @param string $username	the username of the user check privileges
  * @return boolean true if user can accept false if user cannot accept
  */
-function userCanAccept($username) {
+function userCanAccept($username="") {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
+
+	if (empty($username))
+		$username=getUserName();
 
 	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
@@ -332,11 +348,8 @@ function userCanAccept($username) {
  * @param string $username	the user name of the user to check
  * @return boolean 		true if the changes should automatically be accepted
  */
-function userAutoAccept($username = "") {
-	if (empty($username))
-		$username = getUserName();
-
-	return get_user_setting($username, 'auto_accept')=='Y';
+function userAutoAccept() {
+	return get_user_setting(getUserName(), 'auto_accept')=='Y';
 }
 
 /**

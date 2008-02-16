@@ -144,7 +144,7 @@ function outputLevel($parent_id) {
 	$res->free();
 }
 
-if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
+if (($action=="ExportFile") && (userIsAdmin())) {
 	$tmp=place_id_to_hierarchy($parent);
 	$tmp[0]="places";
 	$outputFileName=preg_replace('/[:;\/\\\(\)\{\}\[\] $]/', '_', implode('-', $tmp)).'.csv';
@@ -157,7 +157,7 @@ if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
 
 print_header($pgv_lang["edit_place_locations"]);
 
-if (!userIsAdmin(getUserName())) {
+if (!userIsAdmin()) {
 	print "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}</span><br /><br />";
 	print "<table class=\"facts_table\">\n";
 	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];

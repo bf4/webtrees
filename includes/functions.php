@@ -63,7 +63,7 @@ function check_db($ignore_previous=false) {
 		}
 	} else {
 		//-- if we are not configured then try to connect with the updated values
-		if (!$CONFIGURED || userIsAdmin(getUserName())) {
+		if (!$CONFIGURED || userIsAdmin()) {
 			if (isset($_POST['NEW_DBTYPE'])) $DBTYPE = $_POST['NEW_DBTYPE'];
 			if (isset($_POST['NEW_DBUSER'])) $DBUSER = $_POST['NEW_DBUSER'];
 			if (isset($_POST['NEW_DBPASS'])) $DBPASS = $_POST['NEW_DBPASS'];
@@ -826,7 +826,7 @@ function find_parents($famid) {
 
 	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
-		if (userCanEdit(getUserName())) {
+		if (userCanEdit()) {
 			$famrec = find_updated_record($famid);
 			if (empty($famrec))
 				return false;
@@ -878,7 +878,7 @@ function find_children($famid, $me='') {
 
 	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
-		if (userCanEdit(getUserName())) {
+		if (userCanEdit()) {
 			$famrec = find_updated_record($famid);
 			if (empty($famrec))
 				return false;
@@ -1928,7 +1928,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 
 	$pid1 = strtoupper($pid1);
 	$pid2 = strtoupper($pid2);
-	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && userCanEdit(getUserName()))
+	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && userCanEdit())
 		$indirec = find_updated_record($pid2);
 	else
 		$indirec = find_person_record($pid2);
@@ -1948,7 +1948,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$famids[$i]=$match[$i][1];
 		}
 		foreach ($famids as $indexval => $fam) {
-			if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName()))
+			if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
 				$famrec = find_updated_record($fam);
 			else
 				$famrec = find_family_record($fam);
@@ -1998,7 +1998,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$numfams = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
 		for ($j=0; $j<$numfams; $j++) {
 			// Get the family record
-			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && userCanEdit(getUserName()))
+			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && userCanEdit())
 				$famrec = find_updated_record($fmatch[$j][1]);
 			else
 				$famrec = find_family_record($fmatch[$j][1]);
@@ -2007,7 +2007,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $cmatch, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				// Get each child's record
-				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && userCanEdit(getUserName()))
+				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && userCanEdit())
 					$childrec = find_updated_record($cmatch[$i][1]);
 				else
 					$childrec = find_person_record($cmatch[$i][1]);
@@ -2098,7 +2098,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				$childh = 3;
 
 				//-- generate heuristic values based of the birthdates of the current node and p2
-				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && userCanEdit(getUserName()))
+				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && userCanEdit())
 					$indirec = find_updated_record($node["pid"]);
 				else
 					$indirec = find_person_record($node["pid"]);
@@ -2176,7 +2176,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName()))
+					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
 						$famrec = find_updated_record($fam);
 					else
 						$famrec = find_family_record($fam);
@@ -2254,7 +2254,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName()))
+					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
 						$famrec = find_updated_record($fam);
 					else
 						$famrec = find_family_record($fam);
@@ -3262,7 +3262,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 	if (!isset($pgv_language[$desiredLanguage]))
 		$desiredLanguage = "english";
-	$username = getUserName();
 	if ($forceLoad) {
 		$LANGUAGE = "english";
 		require($pgv_language[$LANGUAGE]);			// Load English
@@ -3282,14 +3281,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username)) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin()) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit($username)) {
+			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit()) {
 				include($file);
 			}
 		}
@@ -3330,14 +3329,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin($username)) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin()) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit($username)) {
+			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit()) {
 				include($file);
 			}
 		}

@@ -41,7 +41,7 @@ if (isset($action)) $actione = $action;
 if (($help == "help_useradmin.php")&& ($actione == "edituser")) $help = "edit_useradmin_help";
 if (($help == "help_login_register.php")&& ($actione == "pwlost")) $help = "help_login_lost_pw.php";
 if ($help == "help_contents_help") {
-	if (userIsAdmin(getUserName())) {
+	if (userIsAdmin()) {
 		$help = "admin_help_contents_help";
 		print $pgv_lang["admin_help_contents_head_help"];
 	}

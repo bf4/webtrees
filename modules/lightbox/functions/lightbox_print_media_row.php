@@ -384,7 +384,7 @@
 				//Do nothing
 				
 			// Else if an editor, show editing icons
-            }elseif ( userCanEdit(getUserName()) && $edit=="1" ) {
+            }elseif ( userCanEdit() && $edit=="1" ) {
 				print "<tr><td align=\"center\" nowrap=\"nowrap\">". "\n";
 				
 				// Edit Media Item Details

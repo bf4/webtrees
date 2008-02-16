@@ -69,7 +69,7 @@ if (empty($uname) || empty($name)) {
 	print_simple_footer();
 	exit;
 }
-if (!userIsAdmin($uname)) $setdefault=false;
+if (!userIsAdmin()) $setdefault=false;
 
 if (!isset($action)) $action="";
 if (!isset($ctype)) $ctype="user";
@@ -558,7 +558,7 @@ else {
 	print "</div></td></tr>";
 	print "<tr><td class=\"topbottombar\" colspan=\"7\">";
 
-	if ((userIsAdmin($uname))&&($ctype=='user')) {
+	if ((userIsAdmin())&&($ctype=='user')) {
 		print $pgv_lang["use_blocks_for_default"]."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
 	}
 
@@ -574,7 +574,7 @@ else {
 	print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"select_options(); save_form();\" />\n";
 	print "&nbsp;&nbsp;";
 	print "<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
-	if (userGedcomAdmin(getUserName()) && $ctype!="user") {
+	if (userGedcomAdmin() && $ctype!="user") {
 		print "<br />";
 		print_help_link("clear_cache_help", "qm");
 		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".preg_replace("/'/", "\'", $name)."';\" />";

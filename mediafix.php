@@ -26,7 +26,7 @@
 require("config.php");
 require("includes/functions_edit.php");
 
-if (!userGedcomAdmin(getUserName())) {
+if (!userGedcomAdmin()) {
 	header('Location: index.php');
 }
 

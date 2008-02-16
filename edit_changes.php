@@ -29,7 +29,7 @@ require "includes/functions_edit.php";
 require "includes/functions_import.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
 
-if (!userCanAccept(getUserName())) {
+if (!userCanAccept()) {
 	header("Location: login.php?url=edit_changes.php");
 	exit;
 }

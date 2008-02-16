@@ -28,7 +28,7 @@
 require_once("config.php");
 require_once("includes/functions_export.php");
 
-if ((!userGedcomAdmin(getUserName())) || (empty ($ged))) {
+if ((!userGedcomAdmin()) || (empty ($ged))) {
 	header("Location: editgedcoms.php");
 	exit;
 }

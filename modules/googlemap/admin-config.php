@@ -50,7 +50,7 @@ loadLangFile("gm_lang, gm_help");
 </script>
 <?php
 
-if (userIsAdmin(getUserName())) { ?>
+if (userIsAdmin()) { ?>
    <tr>
 	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["configure_googlemap"]; ?></td>
    </tr>

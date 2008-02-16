@@ -50,7 +50,7 @@ function check_cookie(&$pun_user)
 		if (!isset ($pun_user['id']))
 		{
 			// Insert the new user into the database. We do this now to get the last inserted id for later use.
-			if(userIsAdmin(getUserName()))
+			if(userIsAdmin())
 			{
 				$intial_group_id = PUN_ADMIN;
 			}

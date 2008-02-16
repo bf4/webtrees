@@ -156,7 +156,7 @@ if ($bpos1) {
 		}
 }
 
-if (userCanEdit(getUserName())) {
+if (userCanEdit()) {
    if (isset($pgv_changes[$pid."_".$GEDCOM])) {
 		  $newrec = find_record_in_file($pid);
 		  $indilines = split("\n", $newrec);   // -- find the number of lines in the individuals record
@@ -654,7 +654,7 @@ if ($view!="preview") {
 
 	//-- only allow editors or users who are editing their own individual or their immediate relatives
 	$uname = getUserName();
-	$canedit = userCanEdit($uname);
+	$canedit = userCanEdit();
 	if (!$canedit) {
 		$user = getUser($uname);
 		if (!empty($user["gedcomid"][$GEDCOM])) {
@@ -776,7 +776,7 @@ if ($view!="preview") {
 			$submenu["class"] = "submenuitem$ff";
 			$submenu["hoverclass"] = "submenuitem_hover$ff";
 			$menu["items"][] = $submenu;
-			if (userCanAccept(getUserName())) {
+			if (userCanAccept()) {
 				$submenu = array();
 				$submenu["label"] = $pgv_lang["accept_all"];
 				$submenu["labelpos"] = "right";
@@ -802,7 +802,7 @@ if ($view!="preview") {
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$menu["icon"] = $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];
-				if ($show_changes=="yes"  && userCanEdit(getUserName())) $menu["link"] = "javascript:show_gedcom_record('new');";
+				if ($show_changes=="yes"  && userCanEdit()) $menu["link"] = "javascript:show_gedcom_record('new');";
 				else $menu["link"] = "javascript:show_gedcom_record();";
 		}
 		else {
@@ -824,7 +824,7 @@ if ($view!="preview") {
 			$submenu["labelpos"] = "right";
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu["icon"] = $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];
-			if ($show_changes=="yes"  && userCanEdit(getUserName())) $submenu["link"] = "javascript:show_gedcom_record('new');";
+			if ($show_changes=="yes"  && userCanEdit()) $submenu["link"] = "javascript:show_gedcom_record('new');";
 			else $submenu["link"] = "javascript:show_gedcom_record();";
 			$submenu["class"] = "submenuitem$ff";
 			$submenu["hoverclass"] = "submenuitem_hover$ff";
@@ -1159,7 +1159,7 @@ if ($view!="preview") {
    <tr>
 		  <td id="pagetab0" class="tab_cell_active" onclick="return switch_tab(0);"><a href="#" onclick="return switch_tab(0);"><?php print $pgv_lang["personal_facts"]?></a></td>
 		  <td id="pagetab1" class="tab_cell_inactive" onclick="return switch_tab(1);"><a href="#" onclick="return switch_tab(1);"><?php print $pgv_lang["notes"]?></a></td>
-		  <?php if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) { ?>
+		  <?php if ($SHOW_SOURCES>=getUserAccessLevel()) { ?>
 			<td id="pagetab2" class="tab_cell_inactive" onclick="return switch_tab(2);"><a href="#" onclick="return switch_tab(2);"><?php print $pgv_lang["ssourcess"]?></a></td>
 		  <?php }
 		  if ($MULTI_MEDIA == TRUE){?>
@@ -1176,7 +1176,7 @@ if ($view!="preview") {
 		<tr>
 		  <td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
 		  <td id="pagetab1bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
-		  <?php if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) { ?>
+		  <?php if ($SHOW_SOURCES>=getUserAccessLevel()) { ?>
 		  <td id="pagetab2bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
 		  <?php } if ($MULTI_MEDIA == TRUE){?>
 		  <td id="pagetab3bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
@@ -1225,7 +1225,7 @@ else {
 		}
 }
 //-- new fact link
-if (($view!="preview") &&(userCanEdit(getUserName()))&&($disp)) {
+if (($view!="preview") &&(userCanEdit())&&($disp)) {
 	$addfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","CAST","DSCR","EDUC","IDNO","NATI","NCHI","NMR","OCCU","PROP","RELI","RESI","SSN","TITL","BAPL","CONL","ENDL","SLGC","_MILI");
 	//-- the following line needs to be rethought because sometimes you want to add the same fact twice if you have conflicting information (john)
 //   	$addfacts = array_merge(CheckFactUnique(array("BIRT","DEAT","BURI","CREM","FCOM","IDNO","NCHI","NMR","RETI","SSN"), $indifacts, "INDI"), array("CHR","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","CAST","DSCR","EDUC","NATI","OCCU","PROP","RELI","RESI","TITL","BAPL","CONL","ENDL","SLGC","_MILI"));
@@ -1283,7 +1283,7 @@ else {
 		  }
    if ($notecount==0) print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[1]='tab_cell_inactive_empty'; document.getElementById('pagetab1').className='tab_cell_inactive_empty';</script></td></tr>\n";
    //-- New Note Link
-   if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+   if (($view!="preview") && (userCanEdit())&&($disp)) {
 		  print "<tr><td class=\"facts_label\">".$pgv_lang["add_note_lbl"]."</td>";
 		  print "<td class=\"facts_value\">";
 		  print "<a href=\"#\" onclick=\"return add_new_record('$pid','NOTE');\">".$pgv_lang["add_note"]."</a>";
@@ -1300,7 +1300,7 @@ print "</div>\n";
 
 //--------------------------------Start 3rd tab individual page
 //--- Sources
-if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
+if ($SHOW_SOURCES>=getUserAccessLevel()) {
 print "\n\t<div id=\"sources\" class=\"tab_page\" style=\"position: $position; display: $display; top: auto; left: auto; visibility: $visibility; z-index: 2; \">";
 	if ($view=="preview") print "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span>";
 	print "\n\t<table class=\"facts_table\">";
@@ -1326,7 +1326,7 @@ print "\n\t<div id=\"sources\" class=\"tab_page\" style=\"position: $position; d
 
 	   if ($sourcecount==0) print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[2]='tab_cell_inactive_empty'; document.getElementById('pagetab2').className='tab_cell_inactive_empty';</script></td></tr>\n";
 	   //-- New Source Link
-	   if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+	   if (($view!="preview") && (userCanEdit())&&($disp)) {
 			  print "<tr><td class=\"facts_label\">".$pgv_lang["add_source_lbl"]."</td>";
 	    	  print "<td class=\"facts_value\">";
 			  print "<a href=\"#\" onclick=\"return add_new_record('$pid','SOUR');\">".$pgv_lang["add_source"]."</a>";
@@ -1370,7 +1370,7 @@ else {
    if ($mediacount==0) print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[3]='tab_cell_inactive_empty'; document.getElementById('pagetab3').className='tab_cell_inactive_empty';</script></td></tr>\n";
 
    //-- New Media link
-   if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+   if (($view!="preview") && (userCanEdit())&&($disp)) {
 		  print "<tr><td class=\"facts_label\">".$pgv_lang["add_media_lbl"]."</td>";
 		  print "<td class=\"facts_value\">";
 		  print "<a href=\"#\" onclick=\"return add_new_record('$pid','OBJE');\">".$pgv_lang["add_media"]."</a>";
@@ -1391,7 +1391,7 @@ print "</div>\n";
 print "\n\t<div id=\"relatives\" class=\"tab_page\" style=\"position: $position; display: $display; top: auto; left: auto; visibility: $visibility; z-index: 3; \">";
 //-- print the names of the parents
 $hfamids = find_family_ids($pid);
-if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+if (($view!="preview") && (userCanEdit())&&($disp)) {
 	if (($show_changes=="yes")&&(isset($pgv_changes[$pid."_".$GEDCOM]))) {
 	   if (empty($newrec)) $newrec = find_record_in_file($pid);
 	   $ct = preg_match_all("/1\sFAMC\s@(.*)@/", $newrec, $match, PREG_SET_ORDER);
@@ -1424,7 +1424,7 @@ if (count($hfamids)>0) {
 			$hparents = find_parents_in_record($famrec);
 			$newhparents = $hparents;
 			//-- check for an updated family record
-			if (userCanEdit(getUserName())&&($disp)) {
+			if (userCanEdit()&&($disp)) {
 				if (($show_changes=="yes")&&(isset($pgv_changes[$hfamids[$j]."_".$GEDCOM]))) {
 					$newrec = find_record_in_file($hfamids[$j]);
 					$newhparents = find_parents_in_record($newrec);
@@ -1477,7 +1477,7 @@ if (count($hfamids)>0) {
 					print "</td></tr>\n";
 				}
 				else {
-					if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+					if (($view!="preview") && (userCanEdit())&&($disp)) {
 						print "<tr><td class=\"facts_label$styleadd\">".$pgv_lang["father"]."</td><td class=\"facts_value, person_box\">";
 						print "<a href=\"#\" onclick=\"return addnewparentfamily('$pid', 'HUSB', '$hfamids[$j]');\">".$pgv_lang["add_father"]."</a>";
 						print_help_link("add_new_parent_help", "qm");
@@ -1524,7 +1524,7 @@ if (count($hfamids)>0) {
 					print "</td></tr>\n";
 				}
 				else {
-					if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+					if (($view!="preview") && (userCanEdit())&&($disp)) {
 						print "<tr><td class=\"facts_label$styleadd\">".$pgv_lang["mother"]."</td><td class=\"facts_value, person_box\">";
 						print "<a href=\"#\" onclick=\"return addnewparentfamily('$pid', 'WIFE', '$hfamids[$j]');\">".$pgv_lang["add_mother"]."</a>";
 						print_help_link("add_new_parent_help", "qm");
@@ -1580,7 +1580,7 @@ if (count($hfamids)>0) {
 					}
 				}
 			}
-			if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+			if (($view!="preview") && (userCanEdit())&&($disp)) {
 				print "<tr><td class=\"facts_label\">".$pgv_lang["add_child_to_family"]."</td><td class=\"facts_value\"><a href=\"#\" onclick=\"return addnewchild('$hfamids[$j]');\">".$pgv_lang["add_sibling"]."</a>";
 				print_help_link("add_sibling_help", "qm");
 				print "</td></tr>\n";
@@ -1699,7 +1699,7 @@ if (count($hfamids)>0) {
 	}
 }
 else {
-	if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+	if (($view!="preview") && (userCanEdit())&&($disp)) {
 		print "<a href=\"#\" onclick=\"return addnewparent('$pid', 'HUSB');\">".$pgv_lang["add_father"]."</a><br />";
 		print "<a href=\"#\" onclick=\"return addnewparent('$pid', 'WIFE');\">".$pgv_lang["add_mother"]."</a>";
 	}
@@ -1707,7 +1707,7 @@ else {
 
 //-- print the spouses and children
 $famids = find_sfamily_ids($pid);
-if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+if (($view!="preview") && (userCanEdit())&&($disp)) {
    if (($show_changes=="yes")&&(isset($pgv_changes[$pid."_".$GEDCOM]))) {
 		   $newrec = find_record_in_file($pid);
 		   $ct = preg_match_all("/1\sFAMS\s@(.*)@/", $newrec, $match, PREG_SET_ORDER);
@@ -1751,7 +1751,7 @@ if (count($famids)>0) {
 					print "\n\t<table class=\"facts_table\">";
 					$newparents = $parents;
 					unset($newchil);
-					if (userCanEdit(getUserName())&&($disp)) {
+					if (userCanEdit()&&($disp)) {
 							   if (($show_changes=="yes")&&(isset($pgv_changes[$famids[$f]."_".$GEDCOM]))) {
 									   $newrec = find_record_in_file($famids[$f]);
 									   $newparents = find_parents_in_record($newrec);
@@ -1804,7 +1804,7 @@ if (count($famids)>0) {
 									print "</td></tr>\n";
 							}
 							else {
-									if (userCanEdit(getUserName())&&($disp)) {
+									if (userCanEdit()&&($disp)) {
 											print "<tr><td class=\"facts_label\">";
 											if ($spousetag=="WIFE") print $pgv_lang["add_wife"];
 											else print $pgv_lang["add_husb"];
@@ -1859,7 +1859,7 @@ if (count($famids)>0) {
 										}
 								}
 						}
-				   if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+				   if (($view!="preview") && (userCanEdit())&&($disp)) {
 						print "<tr><td class=\"facts_label\">".$pgv_lang["add_child_to_family"]."</td><td class=\"facts_value\"><a href=\"#\" onclick=\"return addnewchild('$famids[$f]');\">".$pgv_lang["add_son_daughter"]."</a>";
 						print_help_link("add_son_daughter_help", "qm");
 						print "</td></tr>\n";
@@ -1875,7 +1875,7 @@ if ($personcount==0){
 	print "</td></tr></table>\n";
 }
 print "<br />\n";
-if (($view!="preview") && (userCanEdit(getUserName()))&&($disp)) {
+if (($view!="preview") && (userCanEdit())&&($disp)) {
 	if (count($famids)>1) {
 		print "<a href=\"#\" onclick=\"return reorder_families('$pid');\">".$pgv_lang["reorder_families"]."</a>";
 		print_help_link("reorder_families_help", "qm");

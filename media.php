@@ -223,7 +223,7 @@ $directory_fw = get_media_firewall_path($directory);
 $thumbdir_fw = get_media_firewall_path($thumbdir);
 
 //-- check for admin once (used a bit in this script)
-$isadmin =  userIsAdmin(getUserName());
+$isadmin =  userIsAdmin();
 
 //-- only allow users with Admin privileges to access script.
 if (!$isadmin || !$ALLOW_EDIT_GEDCOM) {

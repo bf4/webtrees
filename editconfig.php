@@ -154,7 +154,7 @@ if ($CONFIGURED) {
 				exit;
 			}
 		}
-		if (!userIsAdmin(getUserName())) {
+		if (!userIsAdmin()) {
 			header("Location: login.php?url=editconfig.php");
 			exit;
 		}
