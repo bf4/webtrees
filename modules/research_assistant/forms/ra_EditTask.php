@@ -153,7 +153,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 					nl2br($comment["c_body"]).			// INSERT body
 					'<hr size="1" />';
 					
-			if((userIsAdmin(getUserName())) || (getUserName() == $comment["c_u_username"])){
+			if((userIsAdmin()) || (getUserName() == $comment["c_u_username"])){
 				$out .= '<a href="javascript:;" onclick="editcomment(' .
 							''.$comment["c_id"].'' .	// INSERT commentid
 							')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .

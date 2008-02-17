@@ -1740,8 +1740,8 @@ function accept_changes($cid) {
 
 		if ($change["type"] != "delete") {
 			//-- synchronize the gedcom record with any user account
-			$user = getUserByGedcomId($gid, $GEDCOM);
-			if ($user && ($user["sync_gedcom"] == "Y")) {
+			$username = get_user_from_gedcom_xref($GEDCOM, $gid);
+			if ($username && get_user_setting($username, 'sync_gedcom')=='Y') {
 				$firstname = get_gedcom_value("GIVN", 2, $indirec);
 				$lastname = get_gedcom_value("SURN", 2, $indirec);
 				if (empty ($lastname)) {
@@ -1755,13 +1755,14 @@ function accept_changes($cid) {
 				}
 				//-- SEE [ 1753047 ] Email/sync with account
 				$email = get_gedcom_value("EMAIL", 1, $indirec);
-				if (empty($email)) $email = get_gedcom_value("_EMAIL", 1, $indirec);
-				if (($lastname != $user["lastname"]) || ($firstname != $user["firstname"]) || ($email != $user["email"])) {
-					if (!empty($email)) $user["email"] = $email;
-					$user["firstname"] = $firstname;
-					$user["lastname"] = $lastname;
-					updateUser($user["username"], $user);
+				if (empty($email)) {
+					$email = get_gedcom_value("_EMAIL", 1, $indirec);
 				}
+				if (!empty($email)) {
+					set_user_setting($username, 'email', $email);
+				}
+				set_user_setting($username, 'firstname', $firstname);
+				set_user_setting($username, 'lastname',  $lastname);
 			}
 		}
 
@@ -1904,16 +1905,17 @@ function cleanup_tags_y(& $irec) {
 // Create a pseudo-random UUID, as per RFC4122
 function uuid() {
 	return sprintf(
-		'%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X',
+		//'%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X', // RFC4122 format (with hyphens)
+		'%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X', // PAF format (without hyphens)
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
-		rand(0, 255)&0x3f|0x80, // Set the version to random (0100xxxx)
+		rand(0, 255)&0x3f|0x80, // Set the version to random (10xxxxxx)
 		rand(0, 255),
-		rand(0, 255)&0x0f|0x40, // Set the variant to RFC4122 (10xxxxxx)
+		rand(0, 255)&0x0f|0x40, // Set the variant to RFC4122 (0100xxxx)
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),

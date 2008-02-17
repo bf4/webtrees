@@ -64,7 +64,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 
 	$id = "gedcom_news";
 	$title = "";
-	if(userGedcomAdmin(getUserName()))
+	if(userGedcomAdmin())
 	{
 		$title .= print_help_link('index_gedcom_news_ahelp', 'qm_ah',"", false, true);
 	}
@@ -75,7 +75,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	if($PGV_BLOCKS['print_gedcom_news']['canconfig'])
 	{
 		$username = getUserName();
-		if((($ctype == 'gedcom') && (userGedcomAdmin($username))) || (!empty($username)))
+		if((($ctype == 'gedcom') && (userGedcomAdmin())) || (!empty($username)))
 		{
 			if($ctype == 'gedcom')
 			{

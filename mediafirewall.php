@@ -46,7 +46,7 @@ $debug_verboseLogging = 0;		// set to 1 for extra logging details
 function sendErrorAndExit($type, $line1, $line2 = false) {
 
 	// line2 contains the information that only an admin/editor should see, such as the full path to a file
-	if(!userCanEdit(getUserName())) {  	 
+	if(!userCanEdit()) {  	 
 		$line2 = false;
 	}
 
@@ -313,7 +313,7 @@ if (!file_exists($serverFilename)) {
 
 if (empty($controller->pid)) {
 	// the requested file IS NOT in the gedcom, but it exists (the check for fileExists was above) 
-	if (!userCanEdit(getUserName()) ) {
+	if (!userCanEdit() ) {
 		// only show these files to admin users
 		// bail since current user is not admin
 		// Note: the 404 error status is still in effect. 

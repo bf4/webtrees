@@ -3547,4 +3547,202 @@ function get_event_list() {
 	return $found_facts;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_USERS table
+////////////////////////////////////////////////////////////////////////////////
+
+function create_user($user) {
+	global $DBCONN, $TBLPREFIX;
+
+	$user=$DBCONN->escapeSimple($user);
+	dbquery("INSERT INTO {$TBLPREFIX}users (u_username) VALUES ('{$user}')");
+}
+
+function rename_user($olduser, $newuser) {
+	global $DBCONN, $TBLPREFIX;
+
+	$olduser=$DBCONN->escapeSimple($olduser);
+	$newuser=$DBCONN->escapeSimple($newuser);
+	dbquery("UPDATE {$TBLPREFIX}users SET u_username='{$newuser}' WHERE u_username='{$olduser}'");
+
+	// For databases without foreign key constraints, manually update dependent tables
+	dbquery("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$newuser}' WHERE b_username ='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}favorites SET fv_username='{$newuser}' WHERE fv_username='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$newuser}' WHERE m_from     ='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$newuser}' WHERE m_to       ='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}news      SET n_username ='{$newuser}' WHERE n_username ='{$olduser}'");
+}
+
+function delete_user($user) {
+	global $DBCONN, $TBLPREFIX;
+
+	$user=$DBCONN->escapeSimple($user);
+	dbquery("DELETE FROM {$TBLPREFIX}users WHERE u_username='{$user}'");
+
+	// For databases without foreign key constraints, manually update dependent tables
+	dbquery("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username ='{$user}'");
+	dbquery("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username='{$user}'");
+	dbquery("DELETE FROM {$TBLPREFIX}messages  WHERE m_from     ='{$user}' OR m_to='{$user}'");
+	dbquery("DELETE FROM {$TBLPREFIX}news      WHERE n_username ='{$user}'");
+}
+
+function get_all_users($order='asc', $key1='lastname', $key2='firstname') {
+	global $DBCONN, $TBLPREFIX;
+
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}");
+	while ($row=$res->fetchRow()) {
+		$users[]=$row[0];
+	}
+	$res->free();
+	return $users;
+}
+
+function user_exists($user) {
+	global $DBCONN, $TBLPREFIX;
+
+	static $cache=array();
+	if (array_key_exists($user, $cache)) {
+		return $cache[$user];
+	}
+
+	if (!is_object($DBCONN) || DB::isError($DBCONN))
+		return false;
+
+	$user=$DBCONN->escapeSimple($user);
+	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$user}'", false);
+	// We may call this function before creating the table, so must check for errors.
+	if ($res!=false && !DB::isError($res)) {
+		$row=$res->fetchRow();
+		$res->free();
+		$cache[$user]=$row[0]>0;
+		return $row[0]>0;
+	}
+	$cache[$user]=false;
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// A future version of PGV will have a table PGV_USER_SETTING, which will
+// contain the values currently stored in columns in the table PGV_USERS.
+//
+// Until then, we use this "logical" structure, but with the access functions
+// mapped onto the existing "physical" structure.
+//
+// $parameter is one of the column names in PGV_USERS, without the u_ prefix.
+////////////////////////////////////////////////////////////////////////////////
+
+function get_user_setting($user, $parameter) {
+	global $DBCONN, $TBLPREFIX;
+
+	static $cache=array();
+	if (array_key_exists("{$user}/{$parameter}", $cache))
+		return $cache["{$user}/{$parameter}"];
+
+	if (!is_object($DBCONN) || DB::isError($DBCONN))
+		return false;
+
+	$user=$DBCONN->escapeSimple($user);
+	$sql="SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username='{$user}'";
+	$res=dbquery($sql);
+	if ($res==false)
+		return null;
+	$row=$res->fetchRow();
+	$res->free();
+
+	if ($row==false) {
+		$cache["{$user}/{$parameter}"]=null;
+		return null;
+	} else {
+		$cache["{$user}/{$parameter}"]=$row[0];
+		return $row[0];
+	}
+}
+
+function set_user_setting($user, $parameter, $value) {
+	global $DBCONN, $TBLPREFIX;
+
+	$user =$DBCONN->escapeSimple($user);
+	$value=$DBCONN->escapeSimple($value);
+	// Only write to the DB if the value has changed.
+	if (get_user_setting($user, $parameter)!==$value) {
+		dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user}'");
+	}
+}
+
+function admin_user_exists() {
+	global $DBCONN, $TBLPREFIX;
+
+	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_canadmin='Y'", false);
+	// We may call this function before creating the table, so must check for errors.
+	if ($res!=false && !DB::isError($res)) {
+		$row=$res->fetchRow();
+		$res->free();
+		return $row[0]>0;
+	}
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// A future version of PGV will have a table PGV_USER_GEDCOM_SETTING, which will
+// contain the values currently stored in serialized arrays in columns in the
+// table PGV_USERS.
+//
+// Until then, we use this "logical" structure, but with the access functions
+// mapped onto the existing "physical" structure.
+//
+// $parameter is one of: "gedcomid", "rootid" and "canedit".
+////////////////////////////////////////////////////////////////////////////////
+
+function get_user_gedcom_setting($user, $gedcom, $parameter) {
+	static $cache=array();
+	if (array_key_exists("{$user}/{$gedcom}/{$parameter}", $cache))
+		return $cache["{$user}/{$gedcom}/{$parameter}"];
+
+	$tmp=get_user_setting($user, $parameter);
+	if (!is_array($tmp)) {
+		$cache["{$user}/{$gedcom}/{$parameter}"]=null;
+		return null;
+	}
+	$tmp_array=unserialize($tmp);
+	if (array_key_exists($gedcom, $tmp_array)) {
+		$cache["{$user}/{$gedcom}/{$parameter}"]=$tmp_array[$gedcom];
+		return $tmp_array[$gedcom];
+	} else {
+		$cache["{$user}/{$gedcom}/{$parameter}"]=null;
+		return null;
+	}
+}
+
+function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
+	$tmp=get_user_setting($user, $parameter);
+	if (!is_array($tmp))
+		return null;
+	$tmp_array=unserialize($tmp);
+	if (empty($value)) {
+		// delete the value
+		unset($tmp_array[$gedcom]);
+	} else {
+		// update the value
+		$tmp_array[$gedcom]=$value;
+	}
+	set_user_setting($user, $parameter, serialize($tmp_array));
+}
+
+function get_user_from_gedcom_xref($gedcom, $xref) {
+	global $TBLPREFIX;
+
+	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
+	$user=false;
+	while ($row=$res->fetchRow()) {
+		$tmp_array=unserialize($row[1]);
+		if (array_key_exists($gedcom, $tmp_array) && $tmp_array[$gedcom]==$xref) {
+			$user=$row[0];
+			break;
+		}
+	}
+	$res->free();
+	return $user;
+}
+
 ?>

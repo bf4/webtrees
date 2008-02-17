@@ -80,7 +80,7 @@ ob_start();
 <?php
 
 if (defined('PUN_ADMIN_CONSOLE'))
-	echo '<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT?>style/imports/base_admin.css" />'."\n";
+	echo '<link rel="stylesheet" type="text/css" href="'.PUN_ROOT.'style/imports/base_admin.css" />'."\n";
 
 if (isset($required_fields))
 {

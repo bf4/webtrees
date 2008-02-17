@@ -59,7 +59,7 @@ class punbb_ModuleMenu
 		$menu->addSubmenu($submenu);
 
 		// Site Admin
-		if(userIsAdmin(getUserName()))
+		if(userIsAdmin())
 		{
 			$submenu = new Menu();$submenu->isSeperator();$menu->addSubmenu($submenu);
 

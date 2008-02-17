@@ -63,7 +63,7 @@ if (!isset($ged)) $ged = "";
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 $username = getUserName();
-if (!userGedcomAdmin($username)) {
+if (!userGedcomAdmin()) {
 	header("Location: login.php?url=editgedcoms.php");
 	exit;
 }

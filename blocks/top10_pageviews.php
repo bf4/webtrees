@@ -60,7 +60,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 
 		//-- if the counter file does not exist then don't do anything
 		if (!file_exists($PGV_COUNTER_FILENAME)) {
-			if (userIsAdmin(getUserName())) {
+		if (userIsAdmin()) {
 				$content .= "<span class=\"error\">\n".$pgv_lang["top10_pageviews_msg"]."</span>\n";
 			}
 		}
@@ -77,7 +77,26 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 					if (!empty($id)) $ids[$id] = $count;
 				}
 			}
-
+	print "<div id=\"top10hits\" class=\"block\">\n";
+	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
+	print "<td class=\"blockh1\" >&nbsp;</td>";
+	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
+	print_help_link("index_top10_pageviews_help", "qm");
+	if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
+		$username = getUserName();
+		if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
+			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
+			else $name = $username;
+			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
+		}
+	}
+	print "<b>".$pgv_lang["top10_pageviews"]."</b>";
+	print "</div></td>";
+	print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
+	print "</table>";
+	print "<div class=\"blockcontent\">\n";
+	if ($block) print "<div class=\"small_inner_block\">\n";
 			if (count($ids)>0) {
 				arsort($ids);
 				if ($block) $content .= "<table width=\"90%\">";
@@ -131,7 +150,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 								$i++;
 							}
 							if ($type=="REPO") {
-								if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
+						if ($SHOW_SOURCES>=getUserAccessLevel()) {
 									$content .= "<tr valign=\"top\">";
 									if ($CountSide=="left") {
 										$content .= "<td dir=\"ltr\" align=\"right\">";
@@ -153,7 +172,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 								}
 							}
 							if ($type=="SOUR") {
-								if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
+						if ($SHOW_SOURCES>=getUserAccessLevel()) {
 									$content .= "<tr valign=\"top\">";
 									if ($CountSide=="left") {
 										$content .= "<td dir=\"ltr\" align=\"right\">";

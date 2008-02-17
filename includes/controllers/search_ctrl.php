@@ -333,7 +333,7 @@ class SearchControllerRoot extends BaseController {
 			{
 				if($varName == "action")
 				if($_REQUEST[$varName] == "replace")
-						if(!userCanAccept(getUserName()))
+				if(!userCanAccept())
 				{
 					$this->action = "general";
 					continue;
@@ -390,7 +390,7 @@ class SearchControllerRoot extends BaseController {
 				}
 			}
 			// see if it's an source ID. If it's found and privacy allows it, JUMP!!!!
-			if ($SHOW_SOURCES >= getUserAccessLevel(getUserName())) {
+			if ($SHOW_SOURCES >= getUserAccessLevel()) {
 				if (find_source_record($this->query)) {
 					header("Location: source.php?sid=".$this->query."&ged=".$GEDCOM);
 					exit;
@@ -398,7 +398,7 @@ class SearchControllerRoot extends BaseController {
 			}
 				
 				// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
-			if ($SHOW_SOURCES >= getUserAccessLevel(getUserName())) {
+			if ($SHOW_SOURCES >= getUserAccessLevel()) {
 				if (find_repo_record($this->query)) {
 					header("Location: repo.php?rid=".$this->query."&ged=".$GEDCOM);
 					exit;
@@ -1011,7 +1011,7 @@ class SearchControllerRoot extends BaseController {
 				$skiptags = "_UID";
 
 				// If not admin, also hide searches in RESN tags
-				if (!userIsAdmin(getUserName())) $skiptags .= ", RESN";
+				if (!userIsAdmin()) $skiptags .= ", RESN";
 
 				// Add the optional tags
 				if ($this->tagfilter == "on") $skiptags .= ", _PGVU, FILE, FORM, TYPE, CHAN, SUBM, REFN";
@@ -1644,7 +1644,7 @@ class SearchControllerRoot extends BaseController {
 										print "</a></li></ul></td>";
 
 										/*******************************  Remote Links Per Result *************************************************/
-										if (userCanEdit(getUserName())) {
+										if (userCanEdit()) {
 											print "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$indiName."');\">"."<b>".$pgv_lang["title_search_link"]."</b></a></ul></li></td></tr>\n";
 										}
 									}

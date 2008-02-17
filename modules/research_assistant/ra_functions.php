@@ -399,28 +399,28 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .= '<td align="left"'.$percent.'class="optionbox wrap">'.ra_functions :: print_top_folder($folderid).'</td>';
 		$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["research_assistant"].'" border="0"></img><br />'.$pgv_lang["research_assistant"].'</a></td>';
 		//button 'My Tasks'
-		if (getUserAccessLevel(getUserName())<=$SHOW_MY_TASKS)
+		if (getUserAccessLevel()<=$SHOW_MY_TASKS)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=mytasks"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["my_tasks"].'" border="0"></img><br />'.$pgv_lang["my_tasks"].'</a></td>';
 		//button 'Add Task''
-		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_TASK)
+		if (getUserAccessLevel()<=$SHOW_ADD_TASK)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addtask&amp;folderid='.$folderid.'"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_task"].'" border="0"></img><br />'.$pgv_lang["add_task"].'</a></td>';
 		//button 'Auto Generate Tasks'
-//		if (getUserAccessLevel(getUserName())<=$SHOW_AUTO_GEN_TASK)
+//		if (getUserAccessLevel()<=$SHOW_AUTO_GEN_TASK)
 //			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=genTasks"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["gen_tasks"].'" border="0"></img><br />'.$pgv_lang["gen_tasks"].'</a></td>';
 		//button 'View Folders'
-		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_FOLDERS)
+		if (getUserAccessLevel()<=$SHOW_VIEW_FOLDERS)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=view_folders"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
 		//button 'Add Folder'
-		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_FOLDER )
+		if (getUserAccessLevel()<=$SHOW_ADD_FOLDER )
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addfolder"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
 		//button 'Add Unlinked Source'
-//		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_UNLINKED_SOURCE && userCanEdit(getUserName()) && empty ($folderid))
+//		if (getUserAccessLevel()<=$SHOW_ADD_UNLINKED_SOURCE && userCanEdit() && empty ($folderid))
 //			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
 		//button 'View Probabilities'
-//		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
+//		if (getUserAccessLevel()<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
 //			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=viewProbabilities"><img src="modules/research_assistant/images/view_inferences.gif" alt="'.$pgv_lang["view_probabilities"].'" border="0"></img><br />'.$pgv_lang["view_probabilities"].'</a></td>';
 		//button 'Configure Privacy' for ADMIN ONLY
-//		if(userIsAdmin(getUserName()) && empty ($folderid))
+//		if(userIsAdmin() && empty ($folderid))
 //			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=configurePrivacy"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["configure_privacy"].'" border="0"></img><br />'.$pgv_lang["configure_privacy"].'</a></td>';
 		// Below here is "in folder" relevant information. These are only shown when the user is inside a folder.
 		if (!empty ($folderid)) {
@@ -1928,7 +1928,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 					nl2br($comment["uc_comment"]).
 					'<hr size="1" />';
 					
-			if((userIsAdmin(getUserName())) || (getUserName() == $comment["uc_username"])){
+			if((userIsAdmin()) || (getUserName() == $comment["uc_username"])){
 				$out .= '<a href="javascript:;" onclick="editcomment('.
 							$comment["uc_id"].', \''.$person->getXref().'\'' .	// INSERT commentid
 							')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .

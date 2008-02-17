@@ -25,7 +25,7 @@
  */
 require "config.php";
 
-if (!userCanEdit(getUserName())) {
+if (!userCanEdit()) {
 	header("Location: login.php?url=uploadmedia.php");
 	exit;
 }
@@ -58,7 +58,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 				}
 				else {
 					//-- automatically generate thumbnail
-					if (!userGedcomAdmin(getUsername()) || (!empty($_POST['genthumb'.$i]) && ($_POST['genthumb'.$i]=="yes"))) {
+					if (!userGedcomAdmin() || (!empty($_POST['genthumb'.$i]) && ($_POST['genthumb'.$i]=="yes"))) {
 						$filename = $MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name']);
 						if (!is_dir($MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i])) mkdir($MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i]);
 						$thumbnail = $MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name']);
@@ -107,7 +107,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 		<tr><td colspan="2" class="topbottombar"><?php print $pgv_lang["upload_media"]; ?></td></tr>
 		<?php
 		for($i=1; $i<6; $i++) {
-			if (userGedcomAdmin(getUserName())) {
+			if (userGedcomAdmin()) {
 				print "<tr>";
 					print "<td ";
 					write_align_with_textdir_check("right");
@@ -131,7 +131,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 					print "<input name=\"mediafile".$i."\" type=\"file\" size=60 />";
 				print "</td>";
 			print "</tr>";
-			if (userGedcomAdmin(getUserName())) {
+			if (userGedcomAdmin()) {
 				print "<tr>";
 					print "<td ";
 					write_align_with_textdir_check("right");
@@ -153,7 +153,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 
 			if ($ThumbSupport != "") {
 				$ThumbSupport = substr($ThumbSupport, 2);	// Trim off first ", "
-				if (userGedcomAdmin(getUserName())) {
+				if (userGedcomAdmin()) {
 					print "<tr>";
 						print "<td colspan=\"2\" class=\"center\">";
 							print "<input type=\"checkbox\" name=\"genthumb".$i."\" value=\"yes\" checked/> ";

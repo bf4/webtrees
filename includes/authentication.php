@@ -48,18 +48,19 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * @return bool return true if the username and password credentials match a user in the database return false if they don't
  */
 function authenticateUser($username, $password, $basic=false) {
-	global $TBLPREFIX, $GEDCOM, $pgv_lang;
+	global $GEDCOM, $pgv_lang;
 	checkTableExists();
 	$user = getUser($username);
 	//-- make sure that we have the actual username as it was stored in the DB
 	if ($user!==false) {
 		$username = $user['username'];
 		if (crypt($password, $user["password"])==$user["password"]) {
-	        if (!isset($user["verified"])) $user["verified"] = "";
-	        if (!isset($user["verified_by_admin"])) $user["verified_by_admin"] = "";
-	        if ((($user["verified"] == "yes") and ($user["verified_by_admin"] == "yes")) or ($user["canadmin"] != "")){
-		        $sql = "UPDATE ".$TBLPREFIX."users SET u_loggedin='Y', u_sessiontime='".time()."' WHERE u_username='$username'";
-		        $res = dbquery($sql,false);
+			if (!isset($user["verified"]))
+				$user["verified"] = "";
+			if (!isset($user["verified_by_admin"]))
+				$user["verified_by_admin"] = "";
+			if ((($user["verified"] == "yes") && ($user["verified_by_admin"] == "yes")) || ($user["canadmin"] != "")) {
+				set_user_setting($username, 'loggedin', 'Y');
 
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $username ."<-");
 				//-- reset the user's session
@@ -67,7 +68,8 @@ function authenticateUser($username, $password, $basic=false) {
 				$_SESSION['pgv_user'] = $username;
 				//-- unset the cookie_login session var to show that they have logged in with their password
 				$_SESSION['cookie_login'] = false;
-				if (isset($pgv_lang[$user["language"]])) $_SESSION['CLANGUAGE'] = $user['language'];
+				if (isset($pgv_lang[$user["language"]]))
+					$_SESSION['CLANGUAGE'] = $user['language'];
 				//-- only change the gedcom if the user does not have an gedcom id
 				//-- for the currently active gedcom
 				if (empty($user["gedcomid"][$GEDCOM])) {
@@ -121,15 +123,18 @@ function basicHTTPAuthenticateUser() {
  * @param string $username	optional parameter to logout a specific user
  */
 function userLogout($username = "") {
-	global $TBLPREFIX, $GEDCOM, $LANGUAGE;
+	global $GEDCOM, $LANGUAGE;
 
 	if ($username=="") {
-		if (isset($_SESSION["pgv_user"])) $username = $_SESSION["pgv_user"];
-		else if (isset($_COOKIE["pgv_rem"])) $username = $_COOKIE["pgv_rem"];
-		else return;
+		if (isset($_SESSION["pgv_user"]))
+			$username = $_SESSION["pgv_user"];
+		else
+			if (isset($_COOKIE["pgv_rem"]))
+				$username = $_COOKIE["pgv_rem"];
+			else
+				return;
 	}
-	$sql = "UPDATE ".$TBLPREFIX."users SET u_loggedin='N' WHERE u_username='".$username."'";
-	$res = dbquery($sql,false);
+	set_user_setting($username, 'loggedin', 'N');
 
 	AddToLog("Logout - " . $username);
 
@@ -137,13 +142,16 @@ function userLogout($username = "") {
 		if ($_SESSION['pgv_user']==$username) {
 			$_SESSION['pgv_user'] = "";
 			unset($_SESSION['pgv_user']);
-			if (isset($_SESSION["pgv_counter"])) $tmphits = $_SESSION["pgv_counter"];
-			else $tmphits = -1;
+			if (isset($_SESSION["pgv_counter"]))
+				$tmphits = $_SESSION["pgv_counter"];
+			else
+				$tmphits = -1;
 			@session_destroy();
 			$_SESSION["gedcom"]=$GEDCOM;
 			$_SESSION["show_context_help"]="yes";
 			@setcookie("pgv_rem", "", -1000);
-			if($tmphits>=0) $_SESSION["pgv_counter"]=$tmphits; //set since it was set before so don't get double hits
+			if ($tmphits>=0)
+				$_SESSION["pgv_counter"]=$tmphits; //set since it was set before so don't get double hits
 		}
 	}
 	runHooks('logout', array('username'=>$username));
@@ -156,13 +164,12 @@ function userLogout($username = "") {
  * @param string $username	the username to update the login info for
  */
 function userUpdateLogin($username) {
-	global $TBLPREFIX;
+	if (empty($username))
+		$username = getUserName();
+	if (empty($username))
+		return;
 
-	if (empty($username)) $username = getUserName();
-	if (empty($username)) return;
-
-	$sql = "UPDATE ".$TBLPREFIX."users SET u_sessiontime='".time()."' WHERE u_username='$username'";
-	$res = dbquery($sql);
+	set_user_setting($username, 'sessiontime', time());
 }
 
 /**
@@ -174,63 +181,11 @@ function userUpdateLogin($username) {
  * @param string $order asc or dec
  * @return array returns a sorted array of users
  */
-function getUsers($field = "username", $order = "asc", $sort2 = "firstname") {
-	global $TBLPREFIX, $usersortfields;
-	$sql = "SELECT * FROM ".$TBLPREFIX."users ORDER BY u_".$field." ".strtoupper($order).", u_".$sort2;
-	$res = dbquery($sql);
-
+function getUsers($field='username', $order='asc', $sort2='firstname') {
 	$users = array();
-	if ($res) {
-		while($user_row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$user = array();
-			$user["username"]=$user_row["u_username"];
-			$user["firstname"]=stripslashes($user_row["u_firstname"]);
-			$user["lastname"]=stripslashes($user_row["u_lastname"]);
-			$user["gedcomid"]=unserialize($user_row["u_gedcomid"]);
-			$user["rootid"]=unserialize($user_row["u_rootid"]);
-			$user["password"]=$user_row["u_password"];
-			if ($user_row["u_canadmin"]=='Y') $user["canadmin"]=true;
-			else $user["canadmin"]=false;
-			$user["canedit"]=unserialize($user_row["u_canedit"]);
-			//-- convert old <3.1 access levels to the new 3.2 access levels
-			foreach($user["canedit"] as $key=>$value) {
-				if ($value=="no") $user["canedit"][$key] = "access";
-				if ($value=="yes") $user["canedit"][$key] = "edit";
+	foreach (get_all_users($order, $field, $sort2) as $username) {
+		$users[$username]=getUser($username);
 			}
-			$user["email"] = $user_row["u_email"];
-			$user["verified"] = $user_row["u_verified"];
-			$user["verified_by_admin"] = $user_row["u_verified_by_admin"];
-			$user["language"] = $user_row["u_language"];
-			$user["pwrequested"] = $user_row["u_pwrequested"];
-			$user["reg_timestamp"] = $user_row["u_reg_timestamp"];
-			$user["reg_hashcode"] = $user_row["u_reg_hashcode"];
-			$user["theme"] = $user_row["u_theme"];
-			$user["loggedin"] = $user_row["u_loggedin"];
-			$user["sessiontime"] = $user_row["u_sessiontime"];
-			$user["contactmethod"] = $user_row["u_contactmethod"];
-			if ($user_row["u_visibleonline"]!='N') $user["visibleonline"] = true;
-			else $user["visibleonline"] = false;
-			if ($user_row["u_editaccount"]!='N') $user["editaccount"] = true;
-			else $user["editaccount"] = false;
-			$user["default_tab"] = $user_row["u_defaulttab"];
-			$user["comment"] = $user_row["u_comment"];
-			$user["comment_exp"] = $user_row["u_comment_exp"];
-			$user["sync_gedcom"] = $user_row["u_sync_gedcom"];
-			$user["relationship_privacy"] = $user_row["u_relationship_privacy"];
-			$user["max_relation_path"] = $user_row["u_max_relation_path"];
-//			if ($user_row["u_auto_accept"]!="Y") $user["auto_accept"] = false;
-//			else $user["auto_accept"] = true;
-			if ($user_row["u_auto_accept"]!="N") $user["auto_accept"] = true;
-			else $user["auto_accept"] = false;
-			$ext = runHooks('getuser', $user);
-			if(count($ext) > 0)
-			{
-				$user = array_merge($user, $ext);
-			}
-			$users[$user_row["u_username"]] = $user;
-		}
-	}
-	$res->free();
 	return $users;
 }
 
@@ -246,27 +201,32 @@ function getUserName() {
 	global $ALLOW_REMEMBER_ME, $DBCONN, $logout, $SERVER_URL;
 	//-- this section checks if the session exists and uses it to get the username
 	if (isset($_SESSION)) {
-		if (!empty($_SESSION['pgv_user'])) return $_SESSION['pgv_user'];
+		if (!empty($_SESSION['pgv_user']))
+			return $_SESSION['pgv_user'];
 	}
 	if (isset($HTTP_SESSION_VARS)) {
-		if (!empty($HTTP_SESSION_VARS['pgv_user'])) return $HTTP_SESSION_VARS['pgv_user'];
+		if (!empty($HTTP_SESSION_VARS['pgv_user']))
+			return $HTTP_SESSION_VARS['pgv_user'];
 	}
 	if ($ALLOW_REMEMBER_ME) {
 		$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
-		if(empty($tSERVER_URL)) $tSERVER_URL = $SERVER_URL; 	// cannot assume we had a match.
-		if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false)) $referrer_found=true;
+		if (empty($tSERVER_URL))
+			$tSERVER_URL = $SERVER_URL; 	// cannot assume we had a match.
+		if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false))
+			$referrer_found=true;
 		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
-			if (!is_object($DBCONN)) return $_COOKIE["pgv_rem"];
-			$user = getUser($_COOKIE["pgv_rem"]);
-			if ($user) {
-				if (time() - $user["sessiontime"] < 60*60*24*7) {
-					$_SESSION['pgv_user'] = $_COOKIE["pgv_rem"];
-					$_SESSION['cookie_login'] = true;
+			if (!is_object($DBCONN))
 					return $_COOKIE["pgv_rem"];
+			$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
+			if (is_null($session_time))
+				$session_time=0;
+			if (time() - $session_time < 60*60*24*7) {
+				$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
+				$_SESSION['cookie_login'] = true;
+				return $_COOKIE['pgv_rem'];
 				}
 			}
 		}
-	}
 	return "";
 }
 
@@ -277,12 +237,14 @@ function getUserName() {
  * user has administrative privileges
  * to change the configuration files
  */
-function userIsAdmin($username) {
-	if (empty($username)) return false;
-	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true) return false;
-	$user = getUser($username);
-	if (!$user) return false;
-	return $user["canadmin"];
+function userIsAdmin($username="") {
+	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true)
+		return false;
+
+	if (empty($username))
+		$username=getUserName();
+
+	return get_user_setting($username, 'canadmin')=='Y';
 }
 
 /**
@@ -292,21 +254,23 @@ function userIsAdmin($username) {
  * user has administrative privileges
  * to change the configuration files for the currently active gedcom
  */
-function userGedcomAdmin($username, $ged="") {
+function userGedcomAdmin($username="", $ged="") {
 	global $GEDCOM;
 
-	if (empty($ged)) $ged = $GEDCOM;
-	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true)) return false;
-	if (userIsAdmin($username)) return true;
-	if (empty($username)) return false;
-	$user = getUser($username);
-	if (!$user) return false;
-	if (isset($user["canedit"][$ged])) {
-		if ($user["canedit"][$ged]=="admin") return true;
-		else return false;
+	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
+		return false;
+
+	if (empty($username))
+		$username=getUserName();
+
+	if (get_user_setting($username, 'canadmin')=='Y')
+		return true;
+
+	if (empty($ged))
+		$ged = $GEDCOM;
+
+	return get_user_gedcom_setting($username, $ged, 'canedit')=='admin';
 	}
-	else return false;
-}
 
 /**
  * check if the given user has access privileges on this gedcom
@@ -316,19 +280,17 @@ function userGedcomAdmin($username, $ged="") {
  * @param string $username the username of the user to check
  * @return boolean true if user can access false if they cannot
  */
-function userCanAccess($username) {
+function userCanAccess($username="") {
 	global $GEDCOM;
 
-	if (userIsAdmin($username)) return true;
-	if (empty($username)) return false;
-	$user = getUser($username);
-	if (!$user) return false;
-	if (isset($user["canedit"][$GEDCOM])) {
-		if ($user["canedit"][$GEDCOM]!="none" || $user["canadmin"]) return true;
-		else return false;
+	if (empty($username))
+		$username=getUserName();
+
+	if (get_user_setting($username, 'canadmin')=='Y')
+		return true;
+
+	return get_user_gedcom_setting($username, $GEDCOM, 'canedit')!='none';
 	}
-	else return false;
-}
 
 /**
  * check if the given user has write privileges on this gedcom
@@ -338,21 +300,21 @@ function userCanAccess($username) {
  * @param string $username the username of the user to check
  * @return boolean true if user can edit false if they cannot
  */
-function userCanEdit($username) {
+function userCanEdit($username="") {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
-	if (!$ALLOW_EDIT_GEDCOM) return false;
-	if (userIsAdmin($username)) return true;
-	if (empty($username)) return false;
-	$user = getUser($username);
-	if (!$user) return false;
-	if ($user["canadmin"]) return true;
-	if (isset($user["canedit"][$GEDCOM])) {
-		if ($user["canedit"][$GEDCOM]=="yes" || $user["canedit"][$GEDCOM]=="edit" || $user["canedit"][$GEDCOM]=="admin"|| $user["canedit"][$GEDCOM]=="accept" || $user["canedit"][$GEDCOM]===true) return true;
-		else return false;
+	if (!$ALLOW_EDIT_GEDCOM)
+		return false;
+
+	if (empty($username))
+		$username=getUserName();
+
+	if (get_user_setting($username, 'canadmin')=='Y')
+		return true;
+
+	$tmp=get_user_gedcom_setting($username, $GEDCOM, 'canedit');
+	return $tmp=='admin' || $tmp=='accept' || $tmp=='edit';
 	}
-	else return false;
-}
 
 /**
  * Can user accept changes
@@ -362,36 +324,32 @@ function userCanEdit($username) {
  * @param string $username	the username of the user check privileges
  * @return boolean true if user can accept false if user cannot accept
  */
-function userCanAccept($username) {
+function userCanAccept($username="") {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
-	if ($_SESSION['cookie_login']) return false;
-	if (userIsAdmin($username)) return true;
-	if (!$ALLOW_EDIT_GEDCOM) return false;
-	if (empty($username)) return false;
-	$user = getUser($username);
-	if (!$user) return false;
-	if (isset($user["canedit"][$GEDCOM])) {
-		if ($user["canedit"][$GEDCOM]=="accept") return true;
-		if ($user["canedit"][$GEDCOM]=="admin") return true;
-		else return false;
+	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
+		return false;
+
+	if (empty($username))
+		$username=getUserName();
+
+	if (get_user_setting($username, 'canadmin')=='Y')
+		return true;
+
+	if (!$ALLOW_EDIT_GEDCOM)
+		return false;
+	
+	$tmp=get_user_gedcom_setting($username, $GEDCOM, 'canedit');
+	return $tmp=='admin' || $tmp=='accept';
 	}
-	else return false;
-}
 
 /**
  * Should user's changed automatically be accepted
  * @param string $username	the user name of the user to check
  * @return boolean 		true if the changes should automatically be accepted
  */
-function userAutoAccept($username = "") {
-	if (empty($username)) $username = getUserName();
-	if (empty($username)) return false;
-
-	if (!userCanAccept($username)) return false;
-	$user = getUser($username);
-//	if ($user["auto_accept"]) return true;
-	return $user["auto_accept"];
+function userAutoAccept() {
+	return get_user_setting(getUserName(), 'auto_accept')=='Y';
 }
 
 /**
@@ -401,27 +359,15 @@ function userAutoAccept($username = "") {
  * @return boolean true if an admin user has been defined
  */
 function adminUserExists() {
-	global $TBLPREFIX, $DBCONN, $PGV_ADMIN_EXISTS;
+	static $PGV_ADMIN_EXISTS=null;
 	
-	if (isset($PGV_ADMIN_EXISTS)) return $PGV_ADMIN_EXISTS;
+	if (!is_null($PGV_ADMIN_EXISTS))
+		return $PGV_ADMIN_EXISTS;
 	
 	if (checkTableExists()) {
-		$sql = "SELECT u_username FROM ".$TBLPREFIX."users WHERE u_canadmin='Y'";
-		$res = dbquery($sql);
-
-		if ($res!==false && !DB::isError($res)) {
-			$count = $res->numRows();
-			//-- no need to iterate, we only need the count
-			// while($row =& $res->fetchRow());
-			$res->free();
-			if ($count==0) {
-				$PGV_ADMIN_EXISTS = false;
-				return false;
+		$PGV_ADMIN_EXISTS=admin_user_exists();
+		return $PGV_ADMIN_EXISTS;
 			}
-			$PGV_ADMIN_EXISTS = true;
-			return true;
-		}
-	}
 	return false;
 }
 
@@ -436,7 +382,8 @@ function checkTableExists() {
 	global $TBLPREFIX, $DBCONN, $DBTYPE, $PGV_CHECKED_TABLES;
 
 	//-- make sure we only run this function once
-	if (isset($PGV_CHECKED_TABLES) && $PGV_CHECKED_TABLES) return true;
+	if (isset($PGV_CHECKED_TABLES) && $PGV_CHECKED_TABLES)
+		return true;
 	$PGV_CHECKED_TABLES = true;
 
 	$has_users = false;
@@ -464,7 +411,8 @@ function checkTableExists() {
 
 	$sqlite = ($DBTYPE == 'sqlite');
 
-	if (DB::isError($DBCONN)) return false;
+	if (DB::isError($DBCONN))
+		return false;
 	$data = $DBCONN->getListOf('tables');
 	foreach($data as $indexval => $table) {
 		if (empty($TBLPREFIX) || strpos($table, $TBLPREFIX) === 0) {
@@ -731,59 +679,45 @@ function checkTableExists() {
  * @param string $msg		The log message to write to the log
  */
 function addUser($newuser, $msg = "added") {
-	global $TBLPREFIX, $DBCONN, $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH;
 
 	if (checkTableExists()) {
-//		if (!isset($newuser["relationship_privacy"])) {
-//			if ($USE_RELATIONSHIP_PRIVACY) $newuser["relationship_privacy"] = "Y";
-//			else $newuser["relationship_privacy"] = "N";
-//		}
-//		if (!isset($newuser["max_relation_path"])) $newuser["max_relation_path"] = $MAX_RELATION_PATH_LENGTH;
-//		if (!isset($newuser["auto_accept"])) $newuser["auto_accept"] = "N";
-		$newuser["firstname"] = preg_replace("/\//", "", $newuser["firstname"]);
-		$newuser["lastname"] = preg_replace("/\//", "", $newuser["lastname"]);
-		$sql = "INSERT INTO ".$TBLPREFIX."users VALUES('".$DBCONN->escapeSimple($newuser["username"])."','".$DBCONN->escapeSimple($newuser["password"])."','".$DBCONN->escapeSimple($newuser["firstname"])."','".$DBCONN->escapeSimple($newuser["lastname"])."','".$DBCONN->escapeSimple(serialize($newuser["gedcomid"]))."','".$DBCONN->escapeSimple(serialize($newuser["rootid"]))."'";
-		if ($newuser["canadmin"]) $sql .= ",'Y'";
-		else $sql .= ",'N'";
-		$sql .= ",'".$DBCONN->escapeSimple(serialize($newuser["canedit"]))."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["email"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["verified"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["verified_by_admin"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["language"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["pwrequested"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["reg_timestamp"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["reg_hashcode"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["theme"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["loggedin"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["sessiontime"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["contactmethod"])."'";
-		if ($newuser["visibleonline"]) $sql .= ",'Y'";
-		else $sql .= ",'N'";
-		if ($newuser["editaccount"]) $sql .= ",'Y'";
-		else $sql .= ",'N'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["default_tab"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["comment"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["comment_exp"])."'";
-//		if (isset($newuser["sync_gedcom"])) $sql .= ",'".$DBCONN->escapeSimple($newuser["sync_gedcom"])."'";
-//		else $sql .= ",'N'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["sync_gedcom"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["relationship_privacy"])."'";
-		$sql .= ",'".$DBCONN->escapeSimple($newuser["max_relation_path"])."'";
-//		if (isset($newuser["auto_accept"]) && $newuser["auto_accept"]===true) $sql .= ",'Y'";
-		if ($newuser["auto_accept"]) $sql .= ",'Y'";
-		else $sql .= ",'N'";
-		$sql .= ")";
-		$tmp = dbquery($sql);
-		$res =& $tmp;
+		$user=$newuser['username'];
+		create_user($user);
+		set_user_setting($user, 'password',             $newuser['password']);
+		set_user_setting($user, 'firstname',            preg_replace("/\//", "", $newuser["firstname"]));
+		set_user_setting($user, 'lastname',             preg_replace("/\//", "", $newuser["lastname"]));
+		set_user_setting($user, 'gedcomid',             serialize($newuser['gedcomid']));
+		set_user_setting($user, 'rootid',               serialize($newuser['rootid']));
+		set_user_setting($user, 'canadmin',             $newuser['canadmin'] ? 'Y' : 'N');
+		set_user_setting($user, 'canedit',              serialize($newuser["canedit"]));
+		set_user_setting($user, 'email',                $newuser['email']);
+		set_user_setting($user, 'verified',             $newuser['verified']);
+		set_user_setting($user, 'verified_by_admin',    $newuser['verified_by_admin']);
+		set_user_setting($user, 'language',             $newuser['language']);
+		set_user_setting($user, 'pwrequested',          $newuser['pwrequested']);
+		set_user_setting($user, 'reg_timestamp',        $newuser['reg_timestamp']);
+		set_user_setting($user, 'reg_hashcode',         $newuser['reg_hashcode']);
+		set_user_setting($user, 'theme',                $newuser['theme']);
+		set_user_setting($user, 'loggedin',             $newuser['loggedin']);
+		set_user_setting($user, 'sessiontime',          $newuser['sessiontime']);
+		set_user_setting($user, 'contactmethod',        $newuser['contactmethod']);
+		set_user_setting($user, 'visibleonline',        $newuser['visibleonline'] ? 'Y' : 'N');
+		set_user_setting($user, 'editaccount',          $newuser['editaccount'] ? 'Y' : 'N');
+		set_user_setting($user, 'defaulttab',           $newuser['default_tab']);
+		set_user_setting($user, 'comment',              $newuser['comment']);
+		set_user_setting($user, 'comment_exp',          $newuser['comment_exp']);
+		set_user_setting($user, 'sync_gedcom',          $newuser['sync_gedcom']);
+		set_user_setting($user, 'relationship_privacy', $newuser['relationship_privacy']);
+		set_user_setting($user, 'max_relation_path',    $newuser['max_relation_path']);
+		set_user_setting($user, 'auto_accept',          $newuser['auto_accept'] ? 'Y' : 'N');
+
 		$activeuser = getUserName();
-		if ($activeuser == "") $activeuser = "Anonymous user";
+		if ($activeuser == "")
+			$activeuser = "Anonymous user";
 		AddToLog($activeuser." ".$msg." user -> ".$newuser["username"]." <-");
-		if ($res)
-		{
 			runHooks('adduser', $newuser);
 			return true;
 		}
-	}
 	return false;
 }
 
@@ -799,91 +733,67 @@ function updateUser($username, $newuser, $msg = "updated") {
 	global $TBLPREFIX, $DBCONN, $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH;
 
 	if (checkTableExists()) {
-		$newuser['previous_username'] = $username;
-		$newuser["firstname"] = preg_replace("/\//", "", $newuser["firstname"]);
-		$newuser["lastname"] = preg_replace("/\//", "", $newuser["lastname"]);
-		$sql = "UPDATE ".$TBLPREFIX."users SET u_username='".$DBCONN->escapeSimple($newuser["username"])."', " .
-				"u_password='".$newuser["password"]."', " .
-				"u_firstname='".$DBCONN->escapeSimple($newuser["firstname"])."', " .
-				"u_lastname='".$DBCONN->escapeSimple($newuser["lastname"])."', " .
-				"u_gedcomid='".$DBCONN->escapeSimple(serialize($newuser["gedcomid"]))."'," .
-				"u_rootid='".$DBCONN->escapeSimple(serialize($newuser["rootid"]))."'";
-		if ($newuser["canadmin"]) $sql .= ", u_canadmin='Y'";
-		else $sql .= ", u_canadmin='N'";
-		$sql .= ", u_canedit='".$DBCONN->escapeSimple(serialize($newuser["canedit"]))."'";
-		$sql .= ", u_email='".$DBCONN->escapeSimple($newuser["email"])."'";
-		$sql .= ", u_verified='".$DBCONN->escapeSimple($newuser["verified"])."'";
-		$sql .= ", u_verified_by_admin='".$DBCONN->escapeSimple($newuser["verified_by_admin"])."'";
-		$sql .= ", u_language='".$DBCONN->escapeSimple($newuser["language"])."'";
-		$sql .= ", u_pwrequested='".$DBCONN->escapeSimple($newuser["pwrequested"])."'";
-		$sql .= ", u_reg_timestamp='".$DBCONN->escapeSimple($newuser["reg_timestamp"])."'";
-		$sql .= ", u_reg_hashcode='".$DBCONN->escapeSimple($newuser["reg_hashcode"])."'";
-		$sql .= ", u_theme='".$DBCONN->escapeSimple($newuser["theme"])."'";
-		$sql .= ", u_loggedin='".$DBCONN->escapeSimple($newuser["loggedin"])."'";
-		$sql .= ", u_sessiontime='".$DBCONN->escapeSimple($newuser["sessiontime"])."'";
-		$sql .= ", u_contactmethod='".$DBCONN->escapeSimple($newuser["contactmethod"])."'";
-		if ($newuser["visibleonline"]) $sql .= ", u_visibleonline='Y'";
-		else $sql .= ", u_visibleonline='N'";
-		if ($newuser["editaccount"]) $sql .= ", u_editaccount='Y'";
-		else $sql .= ", u_editaccount='N'";
-		$sql .= ", u_defaulttab='".$DBCONN->escapeSimple($newuser["default_tab"])."'";
-		$sql .= ", u_comment='".$DBCONN->escapeSimple($newuser["comment"])."'";
-		$sql .= ", u_comment_exp='".$DBCONN->escapeSimple($newuser["comment_exp"])."'";
-		$sql .= ", u_sync_gedcom='".$DBCONN->escapeSimple($newuser["sync_gedcom"])."'";
-		$sql .= ", u_relationship_privacy='".$DBCONN->escapeSimple($newuser["relationship_privacy"])."'";
-		$sql .= ", u_max_relation_path='".$DBCONN->escapeSimple($newuser["max_relation_path"])."'";
-		if ($newuser["auto_accept"]) $sql .= ", u_auto_accept='Y'";
-		else $sql .= ", u_auto_accept='N'";
-		$sql .= " WHERE u_username='".$DBCONN->escapeSimple($username)."'";
-		$res = dbquery($sql);
-		$activeuser = getUserName();
-		if ($activeuser == "") $activeuser = "Anonymous user";
-		AddToLog($activeuser." ".$msg." user [old username '".$newuser['previous_username']."'] new username-> ".$newuser["username"]." <-");
-
-		//-- update all reference tables if username changed
-		if ($newuser["username"]!=$username) {
-			$sql = "UPDATE ".$TBLPREFIX."blocks SET b_username='".$DBCONN->escapeSimple($newuser["username"])."' WHERE b_username='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-			$sql = "UPDATE ".$TBLPREFIX."favorites SET fv_username='".$DBCONN->escapeSimple($newuser["username"])."' WHERE fv_username='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-			$sql = "UPDATE ".$TBLPREFIX."messages SET m_from='".$DBCONN->escapeSimple($newuser["username"])."' WHERE m_from='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-			$sql = "UPDATE ".$TBLPREFIX."messages SET m_to='".$DBCONN->escapeSimple($newuser["username"])."' WHERE m_to='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
-			$sql = "UPDATE ".$TBLPREFIX."news SET n_username='".$DBCONN->escapeSimple($newuser["username"])."' WHERE n_username='".$DBCONN->escapeSimple($username)."'";
-			$res = dbquery($sql);
+		if ($username==$newuser['username']) {
+			$user=$username;
+		} else {
+			rename_user($username, $newuser['username']);
+			$user=$newuser['username'];
 		}
-		if($res)
-		{
+		set_user_setting($user, 'password',             $newuser['password']);
+		set_user_setting($user, 'firstname',            preg_replace("/\//", "", $newuser["firstname"]));
+		set_user_setting($user, 'lastname',             preg_replace("/\//", "", $newuser["lastname"]));
+		set_user_setting($user, 'gedcomid',             serialize($newuser['gedcomid']));
+		set_user_setting($user, 'rootid',               serialize($newuser['rootid']));
+		set_user_setting($user, 'canadmin',             $newuser['canadmin'] ? 'Y' : 'N');
+		set_user_setting($user, 'canedit',              serialize($newuser["canedit"]));
+		set_user_setting($user, 'email',                $newuser['email']);
+		set_user_setting($user, 'verified',             $newuser['verified']);
+		set_user_setting($user, 'verified_by_admin',    $newuser['verified_by_admin']);
+		set_user_setting($user, 'language',             $newuser['language']);
+		set_user_setting($user, 'pwrequested',          $newuser['pwrequested']);
+		set_user_setting($user, 'reg_timestamp',        $newuser['reg_timestamp']);
+		set_user_setting($user, 'reg_hashcode',         $newuser['reg_hashcode']);
+		set_user_setting($user, 'theme',                $newuser['theme']);
+		set_user_setting($user, 'loggedin',             $newuser['loggedin']);
+		set_user_setting($user, 'sessiontime',          $newuser['sessiontime']);
+		set_user_setting($user, 'contactmethod',        $newuser['contactmethod']);
+		set_user_setting($user, 'visibleonline',        $newuser['visibleonline'] ? 'Y' : 'N');
+		set_user_setting($user, 'editaccount',          $newuser['editaccount'] ? 'Y' : 'N');
+		set_user_setting($user, 'defaulttab',           $newuser['default_tab']);
+		set_user_setting($user, 'comment',              $newuser['comment']);
+		set_user_setting($user, 'comment_exp',          $newuser['comment_exp']);
+		set_user_setting($user, 'sync_gedcom',          $newuser['sync_gedcom']);
+		set_user_setting($user, 'relationship_privacy', $newuser['relationship_privacy']);
+		set_user_setting($user, 'max_relation_path',    $newuser['max_relation_path']);
+		set_user_setting($user, 'auto_accept',          $newuser['auto_accept'] ? 'Y' : 'N');
+
+		$activeuser = getUserName();
+		if ($activeuser == "")
+			$activeuser = "Anonymous user";
+		AddToLog($activeuser." ".$msg." user [old username '".$username."'] new username-> ".$newuser["username"]." <-");
+
 			runHooks('updateuser', $newuser);
 			return true;
 		}
-	}
 	return false;
 }
 
 /**
  * deletes the user with the given username.
  * @param string $username	the username to delete
- * @param string $msg		a message to write to the log file
  */
-function deleteUser($username, $msg = "deleted") {
-	global $TBLPREFIX, $DBCONN, $users;
+function deleteUser($username) {
+	global $users;
 	unset($users[$username]);
-	$username = $DBCONN->escapeSimple($username);
-	$sql = "DELETE FROM ".$TBLPREFIX."users WHERE u_username='$username'";
-	$res = dbquery($sql);
+
+	delete_user($username);
 
 	$activeuser = getUserName();
-	if ($activeuser == "") $activeuser = "Anonymous user";
-	if (($msg != "changed") && ($msg != "reqested password for") && ($msg != "verified")) AddToLog($activeuser." ".$msg." user -> ".$username." <-");
-	if($res)
-	{
+	if ($activeuser == "")
+		$activeuser = "Anonymous user";
+	AddToLog($activeuser." deleted user -> ".$username." <-");
 		runHooks('deleteuser', array('username'=>$username));
-		return true;
 	}
-	else{return false;}
-}
 
 /**
  * creates a user as reference for a gedcom export
@@ -892,7 +802,8 @@ function deleteUser($username, $msg = "deleted") {
 function create_export_user($export_accesslevel) {
 	GLOBAL $GEDCOM;
 
-	if (getUser("export")) deleteUser("export");
+	if (user_exists('export'))
+		deleteUser('export');
 
 	$newuser = array();
 	$newuser["username"] = "export";
@@ -907,11 +818,17 @@ function create_export_user($export_accesslevel) {
 		$password .= $allow[rand()%strlen($allow)];
 	}
 	$newuser["password"] = $password;
-	if ($export_accesslevel == "admin") $newuser["canadmin"] = true;
-	else $newuser["canadmin"] = false;
-	if ($export_accesslevel == "gedadmin") $newuser["canedit"][$GEDCOM] = "admin";
-	elseif ($export_accesslevel == "user") $newuser["canedit"][$GEDCOM] = "access";
-	else $newuser["canedit"][$GEDCOM] = "none";
+	if ($export_accesslevel == "admin")
+		$newuser["canadmin"] = true;
+	else
+		$newuser["canadmin"] = false;
+	if ($export_accesslevel == "gedadmin")
+		$newuser["canedit"][$GEDCOM] = "admin";
+	else
+		if ($export_accesslevel == "user")
+			$newuser["canedit"][$GEDCOM] = "access";
+		else
+			$newuser["canedit"][$GEDCOM] = "none";
 	$newuser["email"] = "";
 	$newuser["verified"] = "yes";
 	$newuser["verified_by_admin"] = "yes";
@@ -931,7 +848,6 @@ function create_export_user($export_accesslevel) {
 	$newuser["sync_gedcom"] = "N";
 	$newuser["relationship_privacy"] = "N";
 	$newuser["max_relation_path"] = 0;
-//	$newuser["auto_accept"] = "N";
 	$newuser["auto_accept"] = false;
 	addUser($newuser);
 }
@@ -947,157 +863,53 @@ function create_export_user($export_accesslevel) {
 function getUser($username) {
 	global $TBLPREFIX, $users, $REGEXP_DB, $GEDCOMS, $DBCONN, $DBTYPE;
 
-	if (empty($username)) return false;
-	if (isset($users[$username])) return $users[$username];
-	if (DB::isError($DBCONN))	return false; // We can call this function
-	$username = $DBCONN->escapeSimple($username);
-	$sql = "SELECT * FROM ".$TBLPREFIX."users WHERE ";
-	if (stristr($DBTYPE, "mysql")!==false) $sql .= "BINARY ";
-	$sql .= "u_username='".$username."'";
-	$res = dbquery($sql, false);
-
-	if ($res===false || DB::isError($res)) return false;
-	if ($res->numRows()==0) return false;
-	if ($res) {
-		while($user_row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if ($user_row) {
-				$user = array();
-				$user["username"]=$user_row["u_username"];
-				$user["firstname"]=stripslashes($user_row["u_firstname"]);
-				$user["lastname"]=stripslashes($user_row["u_lastname"]);
-				$user["gedcomid"]=unserialize($user_row["u_gedcomid"]);
-				$user["rootid"]=unserialize($user_row["u_rootid"]);
-				$user["password"]=$user_row["u_password"];
-				if ($user_row["u_canadmin"]=='Y') $user["canadmin"]=true;
-				else $user["canadmin"]=false;
-				$user["canedit"]=unserialize($user_row["u_canedit"]);
-				//-- convert old <3.1 access levels to the new 3.2 access levels
-				foreach($user["canedit"] as $key=>$value) {
-					if ($value=="no") $user["canedit"][$key] = "access";
-					if ($value=="yes") $user["canedit"][$key] = "edit";
-				}
-				foreach($GEDCOMS as $ged=>$gedarray) {
-					if (!isset($user["canedit"][$ged])) $user["canedit"][$ged] = "access";
-				}
-				$user["email"] = $user_row["u_email"];
-				$user["verified"] = $user_row["u_verified"];
-				$user["verified_by_admin"] = $user_row["u_verified_by_admin"];
-				$user["language"] = $user_row["u_language"];
-				$user["pwrequested"] = $user_row["u_pwrequested"];
-				$user["reg_timestamp"] = $user_row["u_reg_timestamp"];
-				$user["reg_hashcode"] = $user_row["u_reg_hashcode"];
-				$user["theme"] = $user_row["u_theme"];
-				$user["loggedin"] = $user_row["u_loggedin"];
-				$user["sessiontime"] = $user_row["u_sessiontime"];
-				$user["contactmethod"] = $user_row["u_contactmethod"];
-				if ($user_row["u_visibleonline"]!='N') $user["visibleonline"]=true;
-				else $user["visibleonline"]=false;
-				if ($user_row["u_editaccount"]!='N' || $user["canadmin"]) $user["editaccount"]=true;
-				else $user["editaccount"]=false;
-				$user["default_tab"] = $user_row["u_defaulttab"];
-				$user["comment"] = $user_row["u_comment"];
-				$user["comment_exp"] = $user_row["u_comment_exp"];
-				$user["sync_gedcom"] = $user_row["u_sync_gedcom"];
-				$user["relationship_privacy"] = $user_row["u_relationship_privacy"];
-				$user["max_relation_path"] = $user_row["u_max_relation_path"];
-//				if ($user_row["u_auto_accept"]!='Y') $user["auto_accept"]=false;
-//				else $user["auto_accept"]=true;
-				if ($user_row["u_auto_accept"]!='N') $user["auto_accept"]=true;
-				else $user["auto_accept"]=false;
-				$ext = runHooks('getuser', $user);
-				if(count($ext) > 0)
-				{
-					$user = array_merge($user, $ext);
-				}
-				$users[$user_row["u_username"]] = $user;
-			}
-		}
-		$res->free();
-		if (isset($user)) return $user;
-	}
+	if (!user_exists($username))
 	return false;
-}
 
-/**
- * get a user from a gedcom id
- *
- * finds a user from their gedcom id
- * @param string $id	the gedcom id to to search on
- * @param string $gedcom	the gedcom filename to match
- * @return array 	returns a user array
- */
-function getUserByGedcomId($id, $gedcom) {
-	global $TBLPREFIX, $DBCONN, $users, $REGEXP_DB;
-
-	if (empty($id) || empty($gedcom)) return false;
-
-	$user = false;
-	$id = $DBCONN->escapeSimple($id);
-	$sql = "SELECT * FROM ".$TBLPREFIX."users WHERE ";
-	$sql .= "u_gedcomid LIKE '%".$id."%'";
-	$res = dbquery($sql, false);
-
-	if (DB::isError($res)) return false;
-	if ($res->numRows()==0) return false;
-	if ($res) {
-		while($user_row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if ($user_row) {
-				$gedcomid=unserialize($user_row["u_gedcomid"]);
-				if (isset($gedcomid[$gedcom]) && ($gedcomid[$gedcom]==$id)) {
-					$user = array();
-					$user["username"]=$user_row["u_username"];
-					$user["firstname"]=stripslashes($user_row["u_firstname"]);
-					$user["lastname"]=stripslashes($user_row["u_lastname"]);
-					$user["gedcomid"]=$gedcomid;
-					$user["rootid"]=unserialize($user_row["u_rootid"]);
-					$user["password"]=$user_row["u_password"];
-					if ($user_row["u_canadmin"]=='Y') $user["canadmin"]=true;
-					else $user["canadmin"]=false;
-					$user["canedit"]=unserialize($user_row["u_canedit"]);
+	$user=array(
+		'username'            =>$username,
+		'firstname'           =>stripslashes(get_user_setting($username, 'firstname')),
+		'lastname'            =>stripslashes(get_user_setting($username, 'lastname')),
+		'gedcomid'            =>unserialize(get_user_setting($username, 'gedcomid')),
+		'rootid'              =>unserialize(get_user_setting($username, 'rootid')),
+		'password'            =>get_user_setting($username, 'password'),
+		'canadmin'            =>get_user_setting($username, 'canadmin')=='Y',
+		'canedit'             =>unserialize(get_user_setting($username, 'canedit')),
+		'email'               =>get_user_setting($username, 'email'),
+		'verified'            =>get_user_setting($username, 'verified'),
+		'verified_by_admin'   =>get_user_setting($username, 'verified_by_admin'),
+		'language'            =>get_user_setting($username, 'language'),
+		'pwrequested'         =>get_user_setting($username, 'pwrequested'),
+		'reg_timestamp'       =>get_user_setting($username, 'reg_timestamp'),
+		'reg_hashcode'        =>get_user_setting($username, 'reg_hashcode'),
+		'theme'               =>get_user_setting($username, 'theme'),
+		'loggedin'            =>get_user_setting($username, 'loggedin'),
+		'sessiontime'         =>get_user_setting($username, 'sessiontime'),
+		'contactmethod'       =>get_user_setting($username, 'contactmethod'),
+		'visibleonline'       =>get_user_setting($username, 'visibleonline')=='Y',
+		'editaccount'         =>get_user_setting($username, 'editaccount')=='Y',
+		'default_tab'         =>get_user_setting($username, 'defaulttab'),
+		'comment'             =>get_user_setting($username, 'comment'),
+		'comment_exp'         =>get_user_setting($username, 'comment_exp'),
+		'sync_gedcom'         =>get_user_setting($username, 'sync_gedcom'),
+		'relationship_privacy'=>get_user_setting($username, 'relationship_privacy'),
+		'max_relation_path'   =>get_user_setting($username, 'max_relation_path'),
+		'auto_accept'         =>get_user_setting($username, 'auto_accept')=='Y'
+	);
 					//-- convert old <3.1 access levels to the new 3.2 access levels
-					foreach($user["canedit"] as $key=>$value) {
-						if ($value=="no") $user["canedit"][$key] = "access";
-						if ($value=="yes") $user["canedit"][$key] = "edit";
+	foreach ($user['canedit'] as $key=>$value) {
+		if ($value=='no')
+			$user['canedit'][$key]='access';
+		if ($value=='yes')
+			$user['canedit'][$key]='edit';
 					}
-					$user["email"] = $user_row["u_email"];
-					$user["verified"] = $user_row["u_verified"];
-					$user["verified_by_admin"] = $user_row["u_verified_by_admin"];
-					$user["language"] = $user_row["u_language"];
-					$user["pwrequested"] = $user_row["u_pwrequested"];
-					$user["reg_timestamp"] = $user_row["u_reg_timestamp"];
-					$user["reg_hashcode"] = $user_row["u_reg_hashcode"];
-					$user["theme"] = $user_row["u_theme"];
-					$user["loggedin"] = $user_row["u_loggedin"];
-					$user["sessiontime"] = $user_row["u_sessiontime"];
-					$user["contactmethod"] = $user_row["u_contactmethod"];
-					if ($user_row["u_visibleonline"]!='N') $user["visibleonline"]=true;
-					else $user["visibleonline"]=false;
-					if ($user_row["u_editaccount"]!='N' || $user["canadmin"]) $user["editaccount"]=true;
-					else $user["editaccount"]=false;
-					$user["default_tab"] = $user_row["u_defaulttab"];
-					$user["comment"] = $user_row["u_comment"];
-					$user["comment_exp"] = $user_row["u_comment_exp"];
-					$user["sync_gedcom"] = $user_row["u_sync_gedcom"];
-					$user["relationship_privacy"] = $user_row["u_relationship_privacy"];
-					$user["max_relation_path"] = $user_row["u_max_relation_path"];
-//					if ($user_row["u_auto_accept"]!='Y') $user["auto_accept"]=false;
-//					else $user["auto_accept"]=true;
-					if ($user_row["u_auto_accept"]!='N') $user["auto_accept"]=true;
-					else $user["auto_accept"]=false;
 					$ext = runHooks('getuser', $user);
-					if(count($ext) > 0)
-					{
+	if (count($ext) > 0) {
 						$user = array_merge($user, $ext);
 					}
-					$users[$user_row["u_username"]] = $user;
-				}
-			}
-		}
-		$res->free();
+
 		return $user;
 	}
-	return false;
-}
 
 /**
  * add a message into the log-file
@@ -1110,19 +922,28 @@ function AddToLog($LogString, $savelangerror=false) {
 
 	$wroteLogString = false;
 
-	if ($LOGFILE_CREATE=="none") return;
+	if ($LOGFILE_CREATE=="none")
+		return;
 
 	//-- do not allow code to be written to the log file
 	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
 
-	if (isset($_SERVER['REMOTE_ADDR'])) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
-	else if ($argc>1) $REMOTE_ADDR = "cli";
+	if (isset($_SERVER['REMOTE_ADDR']))
+		$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
+	else
+		if ($argc>1)
+			$REMOTE_ADDR = "cli";
 	if ($LOGFILE_CREATE !== "none" && $savelangerror === false) {
-		if (empty($LOGFILE_CREATE)) $LOGFILE_CREATE="daily";
-		if ($LOGFILE_CREATE=="daily") $logfile = $INDEX_DIRECTORY."pgv-" . date("Ymd") . ".log";
-		if ($LOGFILE_CREATE=="weekly") $logfile = $INDEX_DIRECTORY."pgv-" . date("Ym") . "-week" . date("W") . ".log";
-		if ($LOGFILE_CREATE=="monthly") $logfile = $INDEX_DIRECTORY."pgv-" . date("Ym") . ".log";
-		if ($LOGFILE_CREATE=="yearly") $logfile = $INDEX_DIRECTORY."pgv-" . date("Y") . ".log";
+		if (empty($LOGFILE_CREATE))
+			$LOGFILE_CREATE="daily";
+		if ($LOGFILE_CREATE=="daily")
+			$logfile = $INDEX_DIRECTORY."pgv-" . date("Ymd") . ".log";
+		if ($LOGFILE_CREATE=="weekly")
+			$logfile = $INDEX_DIRECTORY."pgv-" . date("Ym") . "-week" . date("W") . ".log";
+		if ($LOGFILE_CREATE=="monthly")
+			$logfile = $INDEX_DIRECTORY."pgv-" . date("Ym") . ".log";
+		if ($LOGFILE_CREATE=="yearly")
+			$logfile = $INDEX_DIRECTORY."pgv-" . date("Y") . ".log";
 		if (is_writable($INDEX_DIRECTORY)) {
 			$logline = date("d.m.Y H:i:s") . " - " . $REMOTE_ADDR . " - " . $LogString . "\r\n";
 			$fp = fopen($logfile, "a");
@@ -1133,8 +954,10 @@ function AddToLog($LogString, $savelangerror=false) {
 			$wroteLogString = true;
 		}
 	}
-	if ($wroteLogString) return $logline;
-	else return "";
+	if ($wroteLogString)
+		return $logline;
+	else
+		return "";
 }
 
 //----------------------------------- AddToSearchLog
@@ -1142,8 +965,10 @@ function AddToLog($LogString, $savelangerror=false) {
 function AddToSearchLog($LogString, $allgeds) {
 	global $INDEX_DIRECTORY, $SEARCHLOG_CREATE, $GEDCOM, $GEDCOMS, $username;
 
-	if (!isset($allgeds)) return;
-	if (count($allgeds) == 0) return;
+	if (!isset($allgeds))
+		return;
+	if (count($allgeds) == 0)
+		return;
 
 	//-- do not allow code to be written to the log file
 	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
@@ -1154,14 +979,22 @@ function AddToSearchLog($LogString, $allgeds) {
 		include(get_config_file());
 		if ($SEARCHLOG_CREATE != "none") {
 			$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
-			if (empty($SEARCHLOG_CREATE)) $SEARCHLOG_CREATE="daily";
-			if ($SEARCHLOG_CREATE=="daily") $logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ymd") . ".log";
-			if ($SEARCHLOG_CREATE=="weekly") $logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ym") . "-week" . date("W") . ".log";
-			if ($SEARCHLOG_CREATE=="monthly") $logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ym") . ".log";
-			if ($SEARCHLOG_CREATE=="yearly") $logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Y") . ".log";
+			if (empty($SEARCHLOG_CREATE))
+				$SEARCHLOG_CREATE="daily";
+			if ($SEARCHLOG_CREATE=="daily")
+				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ymd") . ".log";
+			if ($SEARCHLOG_CREATE=="weekly")
+				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ym") . "-week" . date("W") . ".log";
+			if ($SEARCHLOG_CREATE=="monthly")
+				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ym") . ".log";
+			if ($SEARCHLOG_CREATE=="yearly")
+				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Y") . ".log";
 			if (is_writable($INDEX_DIRECTORY)) {
 				$logline = "Date / Time: ".date("d.m.Y H:i:s") . " - IP: " . $REMOTE_ADDR . " - User: " .  getUserName() . "<br />";
-				if (count($allgeds) == count($GEDCOMS)) $logline .= "Searchtype: Global<br />"; else $logline .= "Searchtype: Gedcom<br />";
+				if (count($allgeds) == count($GEDCOMS))
+					$logline .= "Searchtype: Global<br />";
+				else
+					$logline .= "Searchtype: Gedcom<br />";
 				$logline .= $LogString . "<br /><br />\r\n";
 				$fp = fopen($logfile, "a");
 				flock($fp, 2);
@@ -1183,17 +1016,24 @@ function AddToChangeLog($LogString, $ged="") {
 	//-- do not allow code to be written to the log file
 	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
 
-	if (empty($ged)) $ged = $GEDCOM;
+	if (empty($ged))
+		$ged = $GEDCOM;
 	$oldged = $GEDCOM;
 	$GEDCOM = $ged;
-	if ($ged!=$oldged) include(get_config_file());
+	if ($ged!=$oldged)
+		include(get_config_file());
 	if ($CHANGELOG_CREATE != "none") {
 		$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
-		if (empty($CHANGELOG_CREATE)) $CHANGELOG_CREATE="daily";
-		if ($CHANGELOG_CREATE=="daily") $logfile = $INDEX_DIRECTORY."/ged-" . $GEDCOM . date("Ymd") . ".log";
-		if ($CHANGELOG_CREATE=="weekly") $logfile = $INDEX_DIRECTORY."/ged-" . $GEDCOM . date("Ym") . "-week" . date("W") . ".log";
-		if ($CHANGELOG_CREATE=="monthly") $logfile = $INDEX_DIRECTORY."/ged-" . $GEDCOM . date("Ym") . ".log";
-		if ($CHANGELOG_CREATE=="yearly") $logfile = $INDEX_DIRECTORY."/ged-" . $GEDCOM . date("Y") . ".log";
+		if (empty($CHANGELOG_CREATE))
+			$CHANGELOG_CREATE="daily";
+		if ($CHANGELOG_CREATE=="daily")
+			$logfile = $INDEX_DIRECTORY."/ged-" . $GEDCOM . date("Ymd") . ".log";
+		if ($CHANGELOG_CREATE=="weekly")
+			$logfile = $INDEX_DIRECTORY."/ged-" . $GEDCOM . date("Ym") . "-week" . date("W") . ".log";
+		if ($CHANGELOG_CREATE=="monthly")
+			$logfile = $INDEX_DIRECTORY."/ged-" . $GEDCOM . date("Ym") . ".log";
+		if ($CHANGELOG_CREATE=="yearly")
+			$logfile = $INDEX_DIRECTORY."/ged-" . $GEDCOM . date("Y") . ".log";
 		if (is_writable($INDEX_DIRECTORY)) {
 			$logline = date("d.m.Y H:i:s") . " - " . $REMOTE_ADDR . " - " . $LogString . "\r\n";
 			$fp = fopen($logfile, "a");
@@ -1205,7 +1045,8 @@ function AddToChangeLog($LogString, $ged="") {
 
 	}
 	$GEDCOM = $oldged;
-	if ($ged!=$oldged) include(get_config_file());
+	if ($ged!=$oldged)
+		include(get_config_file());
 }
 
 //----------------------------------- addMessage
@@ -1216,7 +1057,8 @@ function addMessage($message) {
 	global $PHPGEDVIEW_EMAIL;
 
 	//-- do not allow users to send a message to themselves
-	if ($message["from"]==$message["to"]) return false;
+	if ($message["from"]==$message["to"])
+		return false;
 
 	require_once('includes/functions_mail.php');
 
@@ -1229,12 +1071,15 @@ function addMessage($message) {
 	
 	// Switch to the "from" user's language
 	$oldLanguage = $LANGUAGE;
-	if ($fUser && $LANGUAGE!=$fUser["language"]) loadLanguage($fUser["language"]);
+	if ($fUser && $LANGUAGE!=$fUser["language"])
+		loadLanguage($fUser["language"]);
 
 	//-- setup the message body for the "from" user
 	$email2 = stripslashes($message["body"]);
-	if (isset($message["from_name"])) $email2 = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$email2;
-	if (!empty($message["url"])) $email2 .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
+	if (isset($message["from_name"]))
+		$email2 = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$email2;
+	if (!empty($message["url"]))
+		$email2 .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
 	$email2 .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 	$email2 .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
@@ -1244,12 +1089,15 @@ function addMessage($message) {
 		$from = $message["from"];
 		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".stripslashes($email2);
 		$fromFullName = $message["from"];
-	}
-	else {
-		if ($NAME_REVERSE) $fromFullName = $fUser["lastname"]." ".$fUser["firstname"];
-		else $fromFullName = $fUser["firstname"]." ".$fUser["lastname"];
-		if (!$PGV_SIMPLE_MAIL) $from = hex4email(stripslashes($fromFullName),$CHARACTER_SET). " <".$fUser["email"].">";
-		else $from = $fUser["email"];
+	} else {
+		if ($NAME_REVERSE)
+			$fromFullName = $fUser["lastname"]." ".$fUser["firstname"];
+		else
+			$fromFullName = $fUser["firstname"]." ".$fUser["lastname"];
+		if (!$PGV_SIMPLE_MAIL)
+			$from = hex4email(stripslashes($fromFullName),$CHARACTER_SET). " <".$fUser["email"].">";
+		else
+			$from = $fUser["email"];
 		$email2 = $pgv_lang["message_email2"]."\r\n\r\n".stripslashes($email2);
 
 	}
@@ -1257,36 +1105,44 @@ function addMessage($message) {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
 		if (!$fUser) {
 			$email1 = $pgv_lang["message_email1"];
-			if (!empty($message["from_name"])) $email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
-			else $email1 .= $from."\r\n\r\n".stripslashes($message["body"]);
-		}
-		else {
+			if (!empty($message["from_name"]))
+				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
+			else
+				$email1 .= $from."\r\n\r\n".stripslashes($message["body"]);
+		} else {
 			$email1 = $pgv_lang["message_email1"];
 			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
 		}
 		if (!isset($message["no_from"])) {
 			if (stristr($from, $PHPGEDVIEW_EMAIL)){
-				$admuser = getuser($WEBMASTER_EMAIL);
-				$from = $admuser["email"];
+				$from = get_user_setting($WEBMASTER_EMAIL, 'email');
 			}
-			if (!$fUser) $header2 = $PHPGEDVIEW_EMAIL;
-			else if (isset($to)) $header2 = $to;
-			if (!empty($header2)) pgvMail($from, $header2, $subject2, $email2);
+			if (!$fUser)
+				$header2 = $PHPGEDVIEW_EMAIL;
+			else
+				if (isset($to))
+					$header2 = $to;
+			if (!empty($header2))
+				pgvMail($from, $header2, $subject2, $email2);
 		}
 	}
 
 	//-- Load the "to" users language
-	if ($tUser && $LANGUAGE!=$tUser["language"]) loadLanguage($tUser["language"]);
+	if ($tUser && $LANGUAGE!=$tUser["language"])
+		loadLanguage($tUser["language"]);
 
-	if (isset($message["from_name"])) $message["body"] = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$message["body"];
+	if (isset($message["from_name"]))
+		$message["body"] = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$message["body"];
 	//-- [ phpgedview-Feature Requests-1588353 ] Supress admin IP address in Outgoing PGV Email
 	if (!userIsAdmin($message["from"])) {
-		if (!empty($message["url"])) $message["body"] .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
+		if (!empty($message["url"]))
+			$message["body"] .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
 		$message["body"] .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 		$message["body"] .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
 		$message["body"] .= "LANGUAGE: $LANGUAGE\r\n";
 	}
-	if (!isset($message["created"])) $message["created"] = gmdate ("M d Y H:i:s");
+	if (!isset($message["created"]))
+		$message["created"] = gmdate ("M d Y H:i:s");
 	if ($PGV_STORE_MESSAGES && ($message["method"]!="messaging3" && $message["method"]!="mailto" && $message["method"]!="none")) {
 		$newid = get_next_id("messages", "m_id");
 		$sql = "INSERT INTO ".$TBLPREFIX."messages VALUES ($newid, '".$DBCONN->escapeSimple($message["from"])."','".$DBCONN->escapeSimple($message["to"])."','".$DBCONN->escapeSimple($message["subject"])."','".$DBCONN->escapeSimple($message["body"])."','".$DBCONN->escapeSimple($message["created"])."')";
@@ -1297,10 +1153,11 @@ function addMessage($message) {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
 		if (!$fUser) {
 			$email1 = $pgv_lang["message_email1"];
-			if (!empty($message["from_name"])) $email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
-			else $email1 .= $from."\r\n\r\n".stripslashes($message["body"]);
-		}
-		else {
+			if (!empty($message["from_name"]))
+				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
+			else
+				$email1 .= $from."\r\n\r\n".stripslashes($message["body"]);
+		} else {
 			$email1 = $pgv_lang["message_email1"];
 			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
 		}
@@ -1308,16 +1165,23 @@ function addMessage($message) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 		} else {
-			if ($LANGUAGE!=$tUser["language"]) loadLanguage($tUser["language"]);
-			if ($NAME_REVERSE) $toFullName = $tUser["lastname"]." ".$tUser["firstname"];
-			else $toFullName = $tUser["firstname"]." ".$tUser["lastname"];
-			if (!$PGV_SIMPLE_MAIL) $to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".$tUser["email"].">";
-			else $to = $tUser["email"];
+			if ($LANGUAGE!=$tUser["language"])
+				loadLanguage($tUser["language"]);
+			if ($NAME_REVERSE)
+				$toFullName = $tUser["lastname"]." ".$tUser["firstname"];
+			else
+				$toFullName = $tUser["firstname"]." ".$tUser["lastname"];
+			if (!$PGV_SIMPLE_MAIL)
+				$to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".$tUser["email"].">";
+			else
+				$to = $tUser["email"];
 		}
-		if (!empty($tUser["email"])) pgvMail($to, $from, $subject1, $email1);
+		if (!empty($tUser["email"]))
+			pgvMail($to, $from, $subject1, $email1);
 	}
 
-	if ($LANGUAGE!=$oldLanguage) loadLanguage($oldLanguage);			// restore language settings if needed
+	if ($LANGUAGE!=$oldLanguage)
+		loadLanguage($oldLanguage);			// restore language settings if needed
 
 	return true;
 }
@@ -1330,8 +1194,10 @@ function deleteMessage($message_id) {
 	$sql = "DELETE FROM ".$TBLPREFIX."messages WHERE m_id=".$message_id;
 	$res = dbquery($sql);
 
-	if ($res) return true;
-	else return false;
+	if ($res)
+		return true;
+	else
+		return false;
 }
 
 //----------------------------------- getUserMessages
@@ -1365,15 +1231,19 @@ function addFavorite($favorite) {
 	global $TBLPREFIX, $DBCONN;
 
 	// -- make sure a favorite is added
-	if (empty($favorite["gid"]) && empty($favorite["url"])) return false;
+	if (empty($favorite["gid"]) && empty($favorite["url"]))
+		return false;
 
 	//-- make sure this is not a duplicate entry
 	$sql = "SELECT * FROM ".$TBLPREFIX."favorites WHERE ";
-	if (!empty($favorite["gid"])) $sql .= "fv_gid='".$DBCONN->escapeSimple($favorite["gid"])."' ";
-	if (!empty($favorite["url"])) $sql .= "fv_url='".$DBCONN->escapeSimple($favorite["url"])."' ";
+	if (!empty($favorite["gid"]))
+		$sql .= "fv_gid='".$DBCONN->escapeSimple($favorite["gid"])."' ";
+	if (!empty($favorite["url"]))
+		$sql .= "fv_url='".$DBCONN->escapeSimple($favorite["url"])."' ";
 	$sql .= "AND fv_file='".$DBCONN->escapeSimple($favorite["file"])."' AND fv_username='".$DBCONN->escapeSimple($favorite["username"])."'";
 	$res =& dbquery($sql);
-	if ($res->numRows()>0) return false;
+	if ($res->numRows()>0)
+		return false;
 
 	//-- get the next favorite id number for the primary key
 	$newid = get_next_id("favorites", "fv_id");
@@ -1387,8 +1257,10 @@ function addFavorite($favorite) {
 			"'".$DBCONN->escapeSimple($favorite["note"])."')";
 	$res = dbquery($sql);
 
-	if ($res) return true;
-	else return false;
+	if ($res)
+		return true;
+	else
+		return false;
 }
 
 /**
@@ -1402,8 +1274,10 @@ function deleteFavorite($fv_id) {
 	$sql = "DELETE FROM ".$TBLPREFIX."favorites WHERE fv_id=".$fv_id;
 	$res = dbquery($sql);
 
-	if ($res) return true;
-	else return false;
+	if ($res)
+		return true;
+	else
+		return false;
 }
 
 /**
@@ -1416,12 +1290,14 @@ function getUserFavorites($username) {
 
 	$favorites = array();
 	//-- make sure we don't try to look up favorites for unconfigured sites
-	if (!$CONFIGURED || DB::isError($DBCONN)) return $favorites;
+	if (!$CONFIGURED || DB::isError($DBCONN))
+		return $favorites;
 
 	$sql = "SELECT * FROM ".$TBLPREFIX."favorites WHERE fv_username='".$DBCONN->escapeSimple($username)."'";
 	$res = dbquery($sql);
 
-	if (DB::isError($res)) return $favorites;
+	if (DB::isError($res))
+		return $favorites;
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		if (isset($GEDCOMS[$row["fv_file"]])) {
@@ -1458,27 +1334,34 @@ function getBlocks($username) {
 	$blocks["right"] = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' ORDER BY b_location, b_order";
 	$res = dbquery($sql);
-	if (DB::isError($res)) return $blocks;
+	if (DB::isError($res))
+		return $blocks;
 	if ($res->numRows() > 0) {
 		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			$row = db_cleanup($row);
-			if (!isset($row["b_config"])) $row["b_config"]="";
-			if ($row["b_location"]=="main") $blocks["main"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
-			if ($row["b_location"]=="right") $blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+			if (!isset($row["b_config"]))
+				$row["b_config"]="";
+			if ($row["b_location"]=="main")
+				$blocks["main"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+			if ($row["b_location"]=="right")
+				$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
 		}
-	}
-	else {
+	} else {
 		$user = getUser($username);
 		if ($user) {
 			//-- if no blocks found, check for a default block setting
 			$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
 			$res2 = dbquery($sql);
-			if (DB::isError($res2)) return $blocks;
+			if (DB::isError($res2))
+				return $blocks;
 			while($row =& $res2->fetchRow(DB_FETCHMODE_ASSOC)){
 				$row = db_cleanup($row);
-				if (!isset($row["b_config"])) $row["b_config"]="";
-				if ($row["b_location"]=="main") $blocks["main"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
-				if ($row["b_location"]=="right") $blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+				if (!isset($row["b_config"]))
+					$row["b_config"]="";
+				if ($row["b_location"]=="main")
+					$blocks["main"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+				if ($row["b_location"]=="right")
+					$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
 			}
 			$res2->free();
 		}
@@ -1543,7 +1426,6 @@ function addNews($news) {
 
 	if (!isset($news["date"]))
 		$news["date"] = client_time();
-	//$sql = "CREATE TABLE ".$TBLPREFIX."news (n_id INT NOT NULL auto_increment, n_username VARCHAR(100), n_date INT, n_text TEXT, PRIMARY KEY(n_id))";
 	if (!empty($news["id"])) {
 		// In case news items are added from usermigrate, it will also contain an ID.
 		// So we check first if the ID exists in the database. If not, insert instead of update.
@@ -1552,20 +1434,20 @@ function addNews($news) {
 
 		if ($res->numRows() == 0) {
 			$sql = "INSERT INTO ".$TBLPREFIX."news VALUES (".$news["id"].", '".$DBCONN->escapeSimple($news["username"])."','".$DBCONN->escapeSimple($news["date"])."','".$DBCONN->escapeSimple($news["title"])."','".$DBCONN->escapeSimple($news["text"])."')";
-		}
-		else {
+		} else {
 			$sql = "UPDATE ".$TBLPREFIX."news SET n_date='".$DBCONN->escapeSimple($news["date"])."', n_title='".$DBCONN->escapeSimple($news["title"])."', n_text='".$DBCONN->escapeSimple($news["text"])."' WHERE n_id=".$news["id"];
 		}
 		$res->free();
-	}
-	else {
+	} else {
 		$newid = get_next_id("news", "n_id");
 		$sql = "INSERT INTO ".$TBLPREFIX."news VALUES ($newid, '".$DBCONN->escapeSimple($news["username"])."','".$DBCONN->escapeSimple($news["date"])."','".$DBCONN->escapeSimple($news["title"])."','".$DBCONN->escapeSimple($news["text"])."')";
 	}
 	$res = dbquery($sql);
 
-	if ($res) return true;
-	else return false;
+	if ($res)
+		return true;
+	else
+		return false;
 }
 
 /**
@@ -1580,8 +1462,10 @@ function deleteNews($news_id) {
 	$sql = "DELETE FROM ".$TBLPREFIX."news WHERE n_id=".$news_id;
 	$res = dbquery($sql);
 
-	if ($res) return true;
-	else return false;
+	if ($res)
+		return true;
+	else
+		return false;
 }
 
 /**

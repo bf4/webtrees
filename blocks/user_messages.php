@@ -120,7 +120,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 		$username = getUserName();
 		$usersortfields = array("lastname","firstname");
 		uasort($users, "usersort");
-		if (userIsAdmin($username)) {
+			if (userIsAdmin()) {
 			$content .= "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
 			$content .= "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
 			$content .= "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";

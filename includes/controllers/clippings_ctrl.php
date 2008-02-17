@@ -535,7 +535,7 @@ function download_clipping(){
 			//-- look in the gedcom record for any linked SOUR, NOTE, or OBJE and also add them to the
 			//- clippings cart
 			$gedrec = find_gedcom_record($clipping['id']);
-			if ($SHOW_SOURCES >= getUserAccessLevel(getUserName())) {
+			if ($SHOW_SOURCES >= getUserAccessLevel()) {
 				$st = preg_match_all("/\d SOUR @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 				for ($i = 0; $i < $st; $i++) {
 					// add SOUR

@@ -112,7 +112,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	print_family_header($famid);
 
 	// -- get the new record and parents if in editing show changes mode
-	if ((userCanEdit(getUserName())) && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
+	if ((userCanEdit()) && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
 		$newrec = find_updated_record($famid);
 		$newparents = find_parents_in_record($newrec);
 	}
@@ -275,7 +275,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 
 	$newchildren = array();
 	$oldchildren = array();
-	if (userCanEdit(getUserName())) {
+	if (userCanEdit()) {
 		if ((isset($_REQUEST['show_changes'])&&$_REQUEST['show_changes']=='yes') && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
 			$newrec = find_updated_record($famid);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $newrec, $match, PREG_SET_ORDER);
@@ -432,7 +432,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
    }
    print "</table><br />";
 
-   if (($view != "preview") && ($sosa == 0) && (userCanEdit(getUserName()))) {
+   if (($view != "preview") && ($sosa == 0) && (userCanEdit())) {
 	   print_help_link("add_child_help", "qm", "add_child_to_family");
 		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
 		print "<span style='white-space:nowrap;'>";
@@ -505,7 +505,7 @@ function print_family_facts(&$family, $sosa = 0) {
 			}
 		}
 		// -- new fact link
-		if (($view != "preview") && ($sosa == 0) && (userCanEdit(getUserName()))) {
+		if (($view != "preview") && ($sosa == 0) && (userCanEdit())) {
 			print_add_new_fact($famid, $indifacts, "FAM");
 			// -- new note
 			print "<tr><td class=\"descriptionbox\">";

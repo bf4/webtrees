@@ -53,8 +53,6 @@ class Family extends GedcomRecord {
 	function Family($gedrec, $simple=true) {
 		global $pgv_changes, $GEDCOM;
 
-		parent::GedcomRecord($gedrec);
-		$this->disp = displayDetailsById($this->xref, "FAM");
 		$husbrec = get_sub_record(1, "1 HUSB", $gedrec);
 		if (!empty($husbrec)) {
 			//-- get the husbands ids
@@ -67,6 +65,9 @@ class Family extends GedcomRecord {
 			$wife = get_gedcom_value("WIFE", 1, $wiferec);
 			$this->wife = Person::getInstance($wife, $simple);
 		}
+		//-- load the parents before privatizing the record because the parents may be remote records
+		parent::GedcomRecord($gedrec);
+		$this->disp = displayDetailsById($this->xref, "FAM");
 	}
 
 	/**
@@ -92,7 +93,7 @@ class Family extends GedcomRecord {
 			}
 		}
 		if (empty($gedrec)) {
-			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$gedrec = find_updated_record($pid);
 				$fromfile = true;
 			}
@@ -279,7 +280,7 @@ class Family extends GedcomRecord {
 	function &getUpdatedFamily() {
 		global $GEDCOM, $pgv_changes;
 		if ($this->changed) return $this;
-		if (userCanEdit(getUserName())&&($this->disp)) {
+		if (userCanEdit()&&($this->disp)) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
 				$newrec = find_updated_record($this->xref);
 				if (!empty($newrec)) {

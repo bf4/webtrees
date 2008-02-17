@@ -76,7 +76,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
   $title = print_help_link("index_events_help", "qm","",false, true);
   if ($PGV_BLOCKS["print_upcoming_events"]["canconfig"]) {
     $username = getUserName();
-    if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+    if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
       if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
       else $name = $username;
       $title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";

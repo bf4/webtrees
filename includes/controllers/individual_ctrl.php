@@ -118,12 +118,10 @@ class IndividualControllerRoot extends BaseController {
 				$remoteid = trim($match[2]);
 				include_once('includes/serviceclient_class.php');
 				$service = ServiceClient::getInstance($servid);
-				//$indirec =
+				if ($service != null) {
 				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\r\n1 RFN ".$this->pid, false);
-
-				//$newrec= $service->mergeGedcomRecord($remoteid, "");
-				//print $newrec;
 				$indirec = $newrec;
+			}
 			}
 			else {
 				$indirec = "0 @".$this->pid."@ INDI\r\n";
@@ -1916,7 +1914,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($GOOGLEMAP_ENABLED == "false") {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
-			if (userIsAdmin(getUserName())) {
+	        if (userIsAdmin()) {
 				print "<tr><td align=\"center\" colspan=\"2\">\n";
 				print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 				print "</td></tr>\n";

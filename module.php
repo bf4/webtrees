@@ -102,7 +102,7 @@ switch($modinfo['Module']['type'])
 		 *	1. Test if module is active.
 		 *	2. Only Admins can view an inactive module.
 		 */
-		if((!isset($modinfo['Config']['active']) || $modinfo['Config']['active'] === false) && !userIsAdmin(getUserName()))
+		if((!isset($modinfo['Config']['active']) || $modinfo['Config']['active'] === false) && !userIsAdmin())
 		{
 			header("Location: {$SERVER_URL}index.php");print ' ';exit;
 		}

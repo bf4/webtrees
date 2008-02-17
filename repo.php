@@ -29,7 +29,7 @@ require("config.php");
 require_once 'includes/functions_print_facts.php';
 require_once("includes/functions_print_lists.php");
 
-if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) {
+if ($SHOW_SOURCES<getUserAccessLevel()) {
 	header("Location: index.php");
 	exit;
 }
@@ -87,20 +87,20 @@ print "\n\t<span class=\"name_head\">".PrintReady($name);
 
 if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($rid)" . getLRM();
 print "</span><br />";
-if (userCanEdit(getUserName())) {
+if (userCanEdit()) {
 	if ($view!="preview") {
 		if (isset($pgv_changes[$rid."_".$GEDCOM])) {
 			if (!isset($show_changes)) {
 				print "<a href=\"repo.php?rid=$rid&amp;show_changes=yes\">".$pgv_lang["show_changes"]."</a>"."  ";
 			}
 			else {
-				if (userCanAccept(getUserName())) print "<a href=\"repo.php?rid=$rid&amp;action=accept\">".$pgv_lang["accept_all"]."</a> | ";
+				if (userCanAccept()) print "<a href=\"repo.php?rid=$rid&amp;action=accept\">".$pgv_lang["accept_all"]."</a> | ";
 				print "<a href=\"repo.php?rid=$rid\">".$pgv_lang["hide_changes"]."</a>"."  ";
 			}
 			print_help_link("show_changes_help", "qm");
 			print "<br />";
 		}
-		if ($SHOW_GEDCOM_RECORD || userIsAdmin(getUserName())) {
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin()) {
 			print "<a href=\"javascript:;\" onclick=\"return edit_raw('$rid');\">".$pgv_lang["edit_raw"]."</a>";
 			print_help_link("edit_raw_gedcom_help", "qm");
 			print " | ";
@@ -208,7 +208,7 @@ foreach($repofacts as $indexval => $fact) {
 	}
 }
 //-- new fact link
-if (($view!="preview") &&(userCanEdit(getUserName()))) {
+if (($view!="preview") &&(userCanEdit())) {
 	print_add_new_fact($rid, $repofacts, "REPO");
 }
 print "</table>\n\n";

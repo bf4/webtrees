@@ -30,8 +30,8 @@ $pgv_lang["generate_sitemap"]    	= "צור קבצי מיפוי של האתר";
 // Sitemap pages
 $pgv_lang["selected_item"]          	= "בחר פריטים לשמירה במפת האתר:";
 $pgv_lang["gedcoms_selected"]       	= "קבצי GEDCOM שניתן לשמור במפת האתר:";
-$pgv_lang["sitemaps_generated"]     	= "קיבצי מיפוי של האתר הבאים נוצרו וניתנים להורדה:"; 
-$pgv_lang["sitemaps_placement"]     	= "הצב את כל הקבצים בתקייה הראשית (root) של התקנת ה-PhpGedView שלך.";
+$pgv_lang["sitemaps_generated"]     	= "קובצי מיפוי של האתר הבאים נוצרו וניתנים להורדה:"; 
+$pgv_lang["sitemaps_placement"]     	= "הצב את כל הקבצים בתקיה הראשית (root) של התקנת ה-PhpGedView שלך.";
 $pgv_lang["sm_indi_info"]		= "נתוני אנשים";
 $pgv_lang["sm_family_info"]		= "נתוני משפחה";
 $pgv_lang["sm_individual_list"]		= "רשימת אנשים";

@@ -120,9 +120,10 @@ class FamilyRoot extends BaseController
 				$remoteid = trim($match[2]);
 				include_once('includes/serviceclient_class.php');
 				$service = ServiceClient::getInstance($servid);
-				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\r\n1 RFN ".$this->famid, false);
-				
-				$this->famrec = $newrec;
+				if (!is_null($service)) {
+					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\r\n1 RFN ".$this->famid, false);
+					$this->famrec = $newrec;
+				}
 			}
 		}
 		
@@ -136,7 +137,7 @@ class FamilyRoot extends BaseController
 
 		$this->uname = getUserName();
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && userCanEdit($this->uname) && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
+		if ($this->show_changes=="yes" && userCanEdit() && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->famid);
 			if (empty($newrec)) $newrec = find_family_record($this->famid);
 			$this->difffam = new Family($newrec);
@@ -470,7 +471,7 @@ class FamilyRoot extends BaseController
 				$menu->addSubmenu($submenu);
 			}
 
-			if (userCanAccept(getUserName()))
+			if (userCanAccept())
 			{
 				// edit_fam / accept_all
 				$submenu = new Menu($pgv_lang["undo_all"], "family.php?famid=".$this->famid."&amp;action=undo");
@@ -505,7 +506,7 @@ class FamilyRoot extends BaseController
 		if ($SHOW_GEDCOM_RECORD)
 		{
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($_REQUEST['show_changes'] == 'yes'  && userCanEdit(getUserName()))
+			if ($_REQUEST['show_changes'] == 'yes'  && userCanEdit())
 			{
 				$menu->addLink("javascript:show_gedcom_record('new');");
 			}
@@ -524,7 +525,7 @@ class FamilyRoot extends BaseController
 		{
 				// other / view_gedcom
 				$submenu = new Menu($pgv_lang['view_gedcom']);
-				if ($_REQUEST['show_changes'] == 'yes'  && userCanEdit(getUserName()))
+				if ($_REQUEST['show_changes'] == 'yes'  && userCanEdit())
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				}

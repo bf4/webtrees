@@ -455,7 +455,7 @@ class stats
 
 	function totalUsers()
 	{
-		return count(getUsers());
+		return count(get_all_users());
 	}
 
 	function totalMedia()
@@ -1017,7 +1017,7 @@ class stats
 	function lastEventYear()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_gid, d_type, d_year FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
+		$rows=$this->_runSQL("SELECT d_type, d_year FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
 		$row=$rows[0];
 		return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
 	}

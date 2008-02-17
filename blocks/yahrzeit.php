@@ -65,7 +65,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	$id="yahrzeit";
 	$title = print_help_link('yahrzeit_help', 'qm','',false,true);
 	if ($PGV_BLOCKS['print_yahrzeit']['canconfig'] && (
-		($ctype=='gedcom' && userGedcomAdmin($username)) ||
+		($ctype=='gedcom' && userGedcomAdmin()) ||
 	  ($ctype=='user' && !empty($username)))) {
 		if ($ctype=='gedcom')
 			$name=addslashes($GEDCOM);

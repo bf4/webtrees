@@ -3,7 +3,7 @@
  * File contains var's to glue Help_text for PHPGedView together
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -228,7 +228,8 @@ $pgv_lang["ah15"]	= "convert_ansi2utf_help,ah15_help";
 $pgv_lang["ah16"]	= "help_edit_privacy.php,ah16_help";
 $pgv_lang["ah17"]	= "help_useradmin.php,ah17_help";
 $pgv_lang["ah18"]	= "help_admin.php,ah18_help";
-$pgv_lang["ah19"]	= "addmedia_tool_help,ah19_help";
+//$pgv_lang["ah19"]	= "addmedia_tool_help,ah19_help";
+$pgv_lang["ah19"]	= "";
 $pgv_lang["ah20"]	= "change_indi2id_help,ah20_help";
 $pgv_lang["ah21"]	= "help_editlang.php,ah21_help";
 $pgv_lang["ah22_help"]	= "_Readme.txt";

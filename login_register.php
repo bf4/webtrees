@@ -115,14 +115,11 @@ switch ($action) {
 				$user_new_pw .= $passchars{$index};
 			}
 			
-			//$user_new_pw = md5 (uniqid (rand()));
 			$newuser = getUser($user_name);
 			$olduser = $newuser;
-			//deleteUser($user_name, "reqested new password for");
 			
 			$newuser["password"] = crypt($user_new_pw, $user_new_pw);
 			$newuser["pwrequested"] = "1";
-			//$newuser["reg_timestamp"] = date("U");
 			updateUser($newuser['username'], $newuser, "reqested new password for");
 			
 			// switch language to user settings
@@ -392,9 +389,7 @@ switch ($action) {
 				
 				AddToLog("User registration requested for: ".$user_name);
 				
-				$sql = "SELECT u_username FROM ".$TBLPREFIX."users WHERE u_username LIKE '".$user_name."'";
-				$res = dbquery($sql);
-				if ($res->numRows()>0) {
+				if (user_exists($user_name)) {
 					print "<span class=\"warning\">".print_text("duplicate_username",0,1)."</span><br /><br />";
 					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 				}
@@ -591,8 +586,6 @@ switch ($action) {
 			if (($pw_ok) and ($hc_ok)) {
 				$newuser = $user;
 				$olduser = $user;
-				//deleteUser($user_name, "verified");
-				//storeUsers();
 
  				if ($NAME_REVERSE) $fullName = $newuser["lastname"]." ".$newuser["firstname"];
 				else $fullName = $newuser["firstname"]." ".$newuser["lastname"];

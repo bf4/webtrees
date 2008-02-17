@@ -79,12 +79,14 @@ class Media extends GedcomRecord {
 				$remoteid = trim($match[2]);
 				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
-				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ OBJE\r\n1 RFN ".$pid, false);
-				$gedrec = $newrec;
+				if (!empty($service)) {
+					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ OBJE\r\n1 RFN ".$pid, false);
+					$gedrec = $newrec;
+				}
 			}
 		}
 		if (empty($gedrec)) {
-			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$gedrec = find_updated_record($pid);
 				$fromfile = true;
 			}

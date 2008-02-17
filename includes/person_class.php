@@ -104,7 +104,7 @@ class Person extends GedcomRecord {
 			}
 		}
 		if (empty($indirec)) {
-			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$indirec = find_updated_record($pid);
 				$fromfile = true;
 			}
@@ -558,7 +558,7 @@ class Person extends GedcomRecord {
 	 * @return array	array of Family objects
 	 */
 	function getSpouseFamilies() {
-		global $pgv_lang;
+		global $pgv_lang, $SHOW_LIVING_NAMES;
 		if (!is_null($this->spouseFamilies)) return $this->spouseFamilies;
 		$fams = $this->getSpouseFamilyIds();
 		$families = array();
@@ -567,7 +567,7 @@ class Person extends GedcomRecord {
 				$family = Family::getInstance($famid);
 				// only include family if it is displayable by current user
 				if (!is_null($family)) {
-					if ($family->disp) $families[$famid] = $family;
+					if ($SHOW_LIVING_NAMES || $family->disp) $families[$famid] = $family;
 				}
 				else echo "<span class=\"warning\">".$pgv_lang["unable_to_find_family"]." ".$famid."</span>";
 			}
@@ -624,7 +624,7 @@ class Person extends GedcomRecord {
 	 * @return array	array of Family objects indexed by family id
 	 */
 	function getChildFamilies() {
-		global $pgv_lang;
+		global $pgv_lang, $SHOW_LIVING_NAMES;
 		if (!is_null($this->childFamilies)) return $this->childFamilies;
 		$fams = $this->getChildFamilyIds();
 		$families = array();
@@ -633,7 +633,7 @@ class Person extends GedcomRecord {
 				$family = Family::getInstance($famid);
 				// only include family if it is displayable by current user
 				if (!is_null($family)) {
-					if ($family->disp) $families[$famid] = $family;
+					if ($SHOW_LIVING_NAMES || $family->disp) $families[$famid] = $family;
 				}
 				else echo "<span class=\"warning\">".$pgv_lang["unable_to_find_family"]." ".$famid."</span>";
 			}

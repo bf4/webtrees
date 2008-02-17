@@ -30,7 +30,7 @@
  * load the main configuration and context
  */
 require "config.php";
-if (!userGedcomAdmin(getUserName())) {
+if (!userGedcomAdmin()) {
 	header("Location: login.php?url=admin.php");
 	exit;
 }
@@ -286,7 +286,7 @@ $displayDate = $date->Display(false); ?></li>
 				print " ".format_timestamp(time());
 				print "<br />".$pgv_lang["user_time"];
 				print " ".format_timestamp();
-				if (userIsAdmin(getUserName())) {
+				if (userIsAdmin()) {
 			if ($err_write) {
 				print "<br /><span class=\"error\">";
 				print $pgv_lang["config_still_writable"];
@@ -334,17 +334,17 @@ $displayDate = $date->Display(false); ?></li>
 		<td class="optionbox width50"><?php print_help_link("edit_gedcoms_help", "qm"); ?><a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"];?></a></td>
 		<td class="optionbox width50"><?php print_help_link("help_edit_merge.php", "qm"); ?><a href="edit_merge.php"><?php print $pgv_lang["merge_records"]; ?></a></td>
 	</tr>
-<?php if (userCanEdit(getUserName())) { ?>
+<?php if (userCanEdit()) { ?>
 	<tr>
 		<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_person_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_person"]; ?>" onclick="addnewchild(''); return false;"><?php print $pgv_lang["add_unlinked_person"]; ?></a></td>
 		<td class="optionbox width50"><?php print_help_link("edit_add_unlinked_source_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a></td>
 	</tr>
 <?php } ?>
 	<tr>
-			<td class="optionbox width50"><?php if (userIsAdmin(getUserName())) { print_help_link("help_dir_editor.php", "qm"); print "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
+			<td class="optionbox width50"><?php if (userIsAdmin()) { print_help_link("help_dir_editor.php", "qm"); print "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
 			<td class="optionbox width50"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
 	</tr>
-	<?php if (userIsAdmin(getUserName())) { ?>
+	<?php if (userIsAdmin()) { ?>
 	<tr>
 		<td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_site"]; ?></td>
 	</tr>

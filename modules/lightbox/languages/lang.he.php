@@ -35,13 +35,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 // Added in VERSION 4.1.4 
 
-$pgv_lang["lb_details"]			= "פרטים"; 
-$pgv_lang["lb_detail_info"]			= " ראה את פירטי ישות מדיה זו ... ואופציות מדיה נוספות - דף מציג מדיה";
+$pgv_lang["lb_details"]			= "פרוטים"; 
+$pgv_lang["lb_detail_info"]			= " ראה את פירוטי ישות מדיה זו ... ואופציות מדיה נוספות - דף מציג מדיה";
 $pgv_lang["lb_pause_ss"]			= "הפסק מצגת שקפים"; 
 $pgv_lang["lb_start_ss"]			= "התחל מצגת שקפים"; 
 $pgv_lang["lb_music"]			= "הפעל/כבה מוסיקה"; 
 $pgv_lang["lb_zoom_off"]			= "מנע זום"; 
-$pgv_lang["lb_zoom_on"]			= "זום אופשר ... השתמש בגלגל של העכבר או במקשי ן ו-ם כדי להפעל הגדלה או הקטנה של זום"; 
+$pgv_lang["lb_zoom_on"]			= "זום אופשר ... השתמש בגלגל של העכבר או במקשי ן ו-ם כדי להפעיל הגדלה או הקטנה של זום"; 
 $pgv_lang["lb_close_win"]			= "סגור חלון מדיה - תיבת אור"; 
 
 // VERSION 4.1.3 
@@ -67,7 +67,7 @@ $pgv_lang["lb_ml_thumb_links"]		= "דף מולטימדיה - תמונות ממו
 $pgv_lang["lb_music_file"]			= "פס קול של מצגת שקופיות";
 $pgv_lang["lb_musicFileAdvice"]		= "מיקום קובץ פס קול (השאר ריק עבור שום פס קול)"; 
 $pgv_lang["lb_ss_speed"]			= "מהירות מצגת שקופיות"; 
-$pgv_lang["lb_ss_SpeedAdvice"]		= "משך תיזמון מצגת שקפים בשניות"; 
+$pgv_lang["lb_ss_SpeedAdvice"]		= "משך תזמון מצגת שקפים בשניות"; 
 
 $pgv_lang["lb_transition"]			= "מהירות המעבר מתמונה לתמונה";
 $pgv_lang["lb_normal"]			= "רגיל"; 

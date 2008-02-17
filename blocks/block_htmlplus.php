@@ -121,12 +121,12 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	$out = "";
 	if($config['title'] != '')
 	{
-		if(userGedcomAdmin(getUserName())){
+		if(userGedcomAdmin()){
 			$out .= print_help_link('index_htmlplus_ahelp', 'qm_ah', '', false, true);}else{$out .= print_help_link('index_htmlplus_help', 'qm', '', false, true);}
 			if($PGV_BLOCKS['print_htmlplus_block']['canconfig'])
 			{
 				$username = getUserName();
-				if((($ctype == 'gedcom') && (userGedcomAdmin($username))) || (($ctype == 'user') && (!empty($username))))
+			if((($ctype == 'gedcom') && (userGedcomAdmin())) || (($ctype == 'user') && (!empty($username))))
 				{
 					if($ctype == 'gedcom')
 					{
@@ -150,7 +150,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	if($config['title'] == '' && $PGV_BLOCKS['print_htmlplus_block']['canconfig'])
 	{
 		$username = getUserName();
-		if((($ctype == 'gedcom') && (userGedcomAdmin($username))) || (($ctype == 'user') && (!empty($username))))
+		if((($ctype == 'gedcom') && (userGedcomAdmin())) || (($ctype == 'user') && (!empty($username))))
 		{
 			if($ctype == 'gedcom')
 			{

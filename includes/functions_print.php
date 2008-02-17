@@ -558,7 +558,7 @@ function showBack() {
 	 arrows[3] = new Image();
 	 arrows[3].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"]; ?>";
 
-<?php if (userCanEdit(getUserName())) { ?>
+<?php if (userCanEdit()) { ?>
 function delete_record(pid, linenum, mediaid) {
 	if (!mediaid) mediaid="";
 	 if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) {
@@ -1599,7 +1599,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 	$output = "";
 	if (($view!="preview")&&($_SESSION["show_context_help"])){
 		if ($helpText=="qm_ah"){
-			if (userIsAdmin(getUserName())){
+			if (userIsAdmin()){
 				 $output .= " <a class=\"error help\" tabindex=\"0\" href=\"javascript:// ";
 				 if ($show_desc == "") $output .= $help;
 				 else if ($use_print_text) $output .= print_text($show_desc, 0, 1);

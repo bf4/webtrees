@@ -25,7 +25,7 @@
  */
 
 require "config.php";
-if (!userGedcomAdmin(getUserName())) {
+if (!userGedcomAdmin()) {
 	 header("Location: login.php?url=pgvinfo.php?action=".$action);
 exit;
 }

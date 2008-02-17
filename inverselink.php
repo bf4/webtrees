@@ -54,7 +54,7 @@ else if (empty($linktoid)) $paramok = false;
 print_simple_header($pgv_lang["link_media"]." ".$toitems);
 
 //-- check for admin
-$paramok =  userCanEdit(getUserName());
+$paramok =  userCanEdit();
 if (!empty($linktoid)) $paramok = displayDetails(find_gedcom_record($linktoid));
 
 if ($action == "choose" && $paramok) {

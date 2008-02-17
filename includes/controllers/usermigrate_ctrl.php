@@ -40,7 +40,7 @@ loadLangFile("pgv_confighelp");
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (strstr($_SERVER['SCRIPT_NAME'], "usermigrate_cli.php")) {
-	if (userIsAdmin(getUserName()) || !isset($argc)) {
+	if (userIsAdmin() || !isset($argc)) {
 		header("Location: usermigrate.php");
 		exit;
 	}

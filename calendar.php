@@ -61,7 +61,7 @@ if (preg_match('/^(\d+)-(\d+)$/', $year, $match)) {
 		$match[2]=substr($match[1], 0, strlen($match[1])-strlen($match[2])).$match[2];
 	$ged_date=new GedcomDate("FROM {$cal} {$match[1]} TO {$cal} {$match[2]}");
 	$action='year';
-} else 
+} else
 	// advanced-year "decade/century wildcard"
 	if (preg_match('/^(\d+)(\?+)$/', $year, $match)) {
 		$y1=$match[1].str_replace('?', '0', $match[2]);
@@ -108,15 +108,16 @@ print '<tr><td class="facts_label" colspan="8"><h2>';
 
 switch ($action) {
 case 'today':
-	print $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false).'</td></tr>';
+	print $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false);
 	break;
 case 'calendar':
-	print $pgv_lang['in_this_month'].'<br/>'.$ged_date->Display(false, 'F Y').'</td></tr>';
+	print $pgv_lang['in_this_month'].'<br/>'.$ged_date->Display(false, 'F Y');
 	break;
 case 'year':
-	print $pgv_lang['in_this_year'].'<br/>'.$ged_date->Display(false, 'Y').'</td></tr>';
+	print $pgv_lang['in_this_year'].'<br/>'.$ged_date->Display(false, 'Y');
 	break;
 }
+print '</h2></td></tr>';
 
 if ($view!='preview') {
 	// Calendar form

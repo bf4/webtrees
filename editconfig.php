@@ -154,7 +154,7 @@ if (check_db(true)) {
 			exit;
 		}
 	}
-	if (!userIsAdmin(getUserName())) {
+		if (!userIsAdmin()) {
    		header("Location: login.php?url=editconfig.php");
 		exit;
 	}

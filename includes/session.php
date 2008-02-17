@@ -3,7 +3,7 @@
  * Startup and session logic
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,24 +86,56 @@ $SESSION_HIDE_GOOGLEMAP = "empty";
 
 $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
-// check for worms and bad bots
 $worms = array(
+	'Super_Ale',
+	'Wget',
+	'DataCha',
 	'libwww-perl',
 	'LWP::Simple',
 	'lwp-trivial',
 	'HTTrack'
 	);
+$quitReason = "";
+
+// check for attempt to redirect
+if (eregi("=.*://", rawurldecode($_SERVER["REQUEST_URI"]))) {
+	$quitReason = "Embedded URL detected";
+}
+
+// check for worms and bad bots
+if ($quitReason == "") { 
 foreach ($worms as $worm) {
 	if (eregi($worm, $ua)) {
-		print "Bad Worm! Crawl back into your hole.";
-		exit;
+			$quitReason = "Blocked crawler detected";
+			break;
 		}
 	}
+}
+
+// Do we have a reason to quit now?
+if ($quitReason != "") {
+	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
+		//-- load common functions
+		require_once("includes/functions.php");
+		//-- load db specific functions
+		require_once("includes/functions_db.php");
+		require_once("includes/authentication.php");      // -- load the authentication system
+		AddToLog("MSG>{$quitReason}; script terminated.");
+		AddToLog("UA>{$ua}<");
+		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
+	}
+	sleep(300);			// Delay for 5 minutes before responding to encourage the hacker to go elsewhere
+	header("HTTP/1.0 403 Forbidden");
+	print "Hackers are not welcome here.";
+	exit;
+}
+
 
 // The search list has been reversed.  Whitelist all browsers, and
 // mark everything else as a spider/bot.
 // Java/ Axis/ and PEAR required for GDBI and our own cross site communication.
 $real_browsers = array(
+	'PGVAgent',
 	'MSIE ',
 	'Opera',
 	'Firefox',
@@ -292,35 +324,35 @@ if (!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = "";
 
 //-- list of critical configuration variables
 $CONFIG_VARS = array(
-	"PGV_BASE_DIRECTORY",
-	"PGV_DATABASE",
-	"DBTYPE",
-	"DBHOST",
-	"DBUSER",
-	"DBPASS",
-	"DBNAME",
-	"TBLPREFIX",
-	"INDEX_DIRECTORY",
-	"AUTHENTICATION_MODULE",
-	"USE_REGISTRATION_MODULE",
-	"ALLOW_USER_THEMES",
-	"ALLOW_REMEMBER_ME",
-	"DEFAULT_GEDCOM",
-	"ALLOW_CHANGE_GEDCOM",
-	"LOGFILE_CREATE",
-	"PGV_SESSION_SAVE_PATH",
-	"PGV_SESSION_TIME",
-	"GEDCOMS",
-	"SERVER_URL",
-	"LOGIN_URL",
-	"PGV_MEMORY_LIMIT",
-	"PGV_STORE_MESSAGES",
-	"PGV_SIMPLE_MAIL",
-	"CONFIG_VERSION",
-	"CONFIGURED",
-	"MANUAL_SESSON_START",
-	"REQUIRE_ADMIN_AUTH_REGISTRATION",
-	"COMMIT_COMMAND"
+	'PGV_BASE_DIRECTORY',
+	'PGV_DATABASE',
+	'DBTYPE',
+	'DBHOST',
+	'DBUSER',
+	'DBPASS',
+	'DBNAME',
+	'TBLPREFIX',
+	'INDEX_DIRECTORY',
+	'AUTHENTICATION_MODULE',
+	'USE_REGISTRATION_MODULE',
+	'ALLOW_USER_THEMES',
+	'ALLOW_REMEMBER_ME',
+	'DEFAULT_GEDCOM',
+	'ALLOW_CHANGE_GEDCOM',
+	'LOGFILE_CREATE',
+	'PGV_SESSION_SAVE_PATH',
+	'PGV_SESSION_TIME',
+	'GEDCOMS',
+	'SERVER_URL',
+	'LOGIN_URL',
+	'PGV_MEMORY_LIMIT',
+	'PGV_STORE_MESSAGES',
+	'PGV_SIMPLE_MAIL',
+	'CONFIG_VERSION',
+	'CONFIGURED',
+	'MANUAL_SESSON_START',
+	'REQUIRE_ADMIN_AUTH_REGISTRATION',
+	'COMMIT_COMMAND'
 );
 
 
@@ -392,6 +424,13 @@ while (true) {
 		if (array_key_exists($VAR, $_REQUEST)) break 2;
 	}
 
+	// Check for $LANGUAGE variable override
+	//		Don't let incoming request change to an unsupported or inactive language
+	if (isset($_REQUEST["NEWLANGUAGE"])) {
+		if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
+		if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
+	}
+
 	$configOverride = false;
 	break;
 }
@@ -401,24 +440,20 @@ while (true) {
 
 //-- check if they are trying to hack
 if ($configOverride) {
-	print "Config variable override detected. Possible hacking attempt. Script terminated.\n";
-	if ((!ini_get('register_globals'))||(ini_get('register_globals')=="Off")) {
+	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
 		//-- load common functions
 		require_once("includes/functions.php");
 		//-- load db specific functions
 		require_once("includes/functions_db.php");
 		require_once("includes/authentication.php");      // -- load the authentication system
-		AddToLog("Config variable override detected. Possible hacking attempt. Script terminated.");
-		AddToLog("URI>".$_SERVER["REQUEST_URI"]."<");
+		AddToLog("MSG>Configuration override detected; script terminated.");
+		AddToLog("UA>{$ua}<");
+		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 	}
+	sleep(300);			// Delay for 5 minutes before responding to encourage the hacker to go elsewhere
+	header("HTTP/1.0 403 Forbidden");
+	print "Hackers are not welcome here.";
 	exit;
-}
-
-// Check for $LANGUAGE variable override
-//		Don't let incoming request change to an unsupported or inactive language
-if (isset($_REQUEST["NEWLANGUAGE"])) {
-	if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
-	if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
 }
 
 if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
@@ -456,7 +491,7 @@ if (empty($CONFIG_VERSION)) $CONFIG_VERSION = "2.65";
 if (empty($SERVER_URL)) {
 	$SERVER_URL = "http://".$_SERVER["SERVER_NAME"];
 	if (!empty($_SERVER["SERVER_PORT"]) && $_SERVER["SERVER_PORT"]!=80) $SERVER_URL .= ":".$_SERVER["SERVER_PORT"];
-	$SERVER_URL .= dirname($SCRIPT_NAME);
+	$SERVER_URL .= dirname($SCRIPT_NAME)."/";
 	$SERVER_URL = stripslashes($SERVER_URL);
 }
 if (substr($SERVER_URL,-1)!="/") $SERVER_URL .= "/";	// make SURE that trailing "/" is present

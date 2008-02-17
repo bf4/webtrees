@@ -35,7 +35,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 loadLangFile("sm_lang, sm_help");
 
-if (userIsAdmin(getUserName())) { ?>
+if (userIsAdmin()) { ?>
    <tr>
       <td class="optionbox"><?php print_help_link("SITEMAP_help", "qm", "SITEMAP");?><a href="module.php?mod=sitemap"><?php print $pgv_lang["generate_sitemap"];?></a>
 	  </td>

@@ -74,12 +74,12 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 					}
 				}
 			}
-			if (userCanEdit(getUserName())) {
+		if (userCanEdit()) {
 				$id="review_changes_block";
 				$title = print_help_link("review_changes_help", "qm","",false,true);
 				if ($PGV_BLOCKS["review_changes_block"]["canconfig"]) {
 					$username = getUserName();
-					if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+				if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
 						if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 						else $name = $username;
 						$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
@@ -89,7 +89,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 				$title .= $pgv_lang["review_changes"];
 					
 				$content = "";
-				if (userCanAccept(getUserName())) $content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />\n";
+				if (userCanAccept()) $content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />\n";
 				if ($config["sendmail"]=="yes") {
 					$content .= $pgv_lang["last_email_sent"].format_timestamp($LAST_CHANGE_EMAIL)."<br />\n";
 					$content .= $pgv_lang["next_email_sent"].format_timestamp($LAST_CHANGE_EMAIL+(60*60*24*$config["days"]))."<br /><br />\n";
@@ -115,7 +115,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 							if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
 						}
 						else if ($type=="SOUR") {
-							if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
+						if ($SHOW_SOURCES>=getUserAccessLevel()) {
 								$content .= "<b>".PrintReady(get_source_descriptor($change["gid"]))."</b>&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
 								$content .= "(".$change["gid"].")";
@@ -132,7 +132,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 						if ($block) $content .= "<br />";
 						if ($type=="INDI") $content .= " <a href=\"individual.php?pid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
 						if ($type=="FAM") $content .= " <a href=\"family.php?famid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
-						if (($type=="SOUR") && ($SHOW_SOURCES>=getUserAccessLevel(getUserName()))) $content .= " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
+						if (($type=="SOUR") && ($SHOW_SOURCES>=getUserAccessLevel())) $content .= " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
 					}
 				}
 					

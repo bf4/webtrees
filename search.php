@@ -219,7 +219,7 @@ print_header($pgv_lang["search"]);
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="checkbox" name="showasso" value="on"
-				<?php	
+				<?php
 	if ($controller->showasso == "on") print " checked=\"checked\" "; ?> />
 				<?php print $pgv_lang["search_asso_text"]; ?>
 		</td>
@@ -230,11 +230,11 @@ print_header($pgv_lang["search"]);
 /**************************************************** Search and Replace Search Form ****************************************************/
 if($controller->action == "replace")
 {
-	if(userCanEdit(getUserName()))
+	if(userCanEdit())
 	{
-?>							
+?>
 				<td colspan="3" class="facts_label03" style="text-align: center;">
-					<?php print $pgv_lang["search_replace"]; print_help_link('search_replace_help', 'qm'); ?> 
+					<?php print $pgv_lang["search_replace"]; print_help_link('search_replace_help', 'qm'); ?>
 				</td>
 	</tr>
 	<!-- // search terms -->
@@ -243,7 +243,7 @@ if($controller->action == "replace")
 		<td class="list_value" style="padding: 5px;"><input tabindex="1" id="firstfocus" name="query" value="" type="text"/></td>
 			<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="3">
 			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
-		</td>	
+		</td>
 	</tr>
 	<tr>
 		<td class="list_label" style="padding: 5px;"><?php print $pgv_lang["replace_with"]; ?></td>
@@ -277,7 +277,7 @@ if($controller->action == "replace")
 			<input checked="checked" disabled="disabled" value="yes" name="replacePlaces" type="checkbox"/><?php print $pgv_lang["search_place"]; ?>
 			<input checked="checked" disabled="disabled" value="yes" name="replacePlacesWord" type="checkbox"/><?php print $pgv_lang["search_place_word"]; ?>
 			<br/>
-			
+
 		</td>
 	</tr>
 <?php
@@ -341,7 +341,7 @@ if ($controller->action == "soundex") {
 			<?php print $pgv_lang["search_DM"]; ?>
 		</td>
 	</tr>
-	  
+
 	<!-- Individuals' names to print options (Names with hit, All names) -->
 	<!-- <tr>
 		<td class="list_label">
@@ -545,25 +545,25 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 
 if ($controller->action == "general") {
 	print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
-	if(userCanEdit(getUserName()))
+	if(userCanEdit())
 	{
 		print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
 	}
 	if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
 		if (count($controller->Sites) > 0) {
-				
-		
+
+
 			print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
 		}
 	}
-} 
+}
 else if ($controller->action == "replace")
 {
 	print "<a href='?action=general'>".$pgv_lang["search_general"]."</a> | ";
 	print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
 		if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
 			if (count($controller->Sites) > 0) {
-				
+
 				print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
 			}
 		}
@@ -571,10 +571,10 @@ else if ($controller->action == "replace")
 else
 	if ($controller->action == "soundex") {
 		print "<a href='?action=general'>".$pgv_lang["search_general"]."</a>";
-		if(userCanEdit(getUserName()))
+		if(userCanEdit())
 		{
 			print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
-		}	
+		}
 		if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
 			if (count($controller->Sites) > 0) {
 				print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
@@ -582,17 +582,17 @@ else
 		}
 	}
 	 else
-		if ($controller->action == "multisite") 
+		if ($controller->action == "multisite")
 		{
-			if(userCanEdit(getUserName()))
+			if(userCanEdit())
 			{
 				print "<a href='?action=replace'>".$pgv_lang["search_replace"]."</a> | ";
 			}
-		
+
 			print "<a href='?action=general'>".$pgv_lang["search_general"]."</a> | ";
 			print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a></td></tr>";
 		}
-		
+
 ?>
 		</td>
 	</tr>
@@ -602,11 +602,6 @@ else
 <?php
 
 echo "<br /><br /><br />";
-//-- somewhere the session gedcom gets changed, so we will change it back
-$_SESSION['GEDCOM'] = $GEDCOM;
-print_footer();
-?>
-<?php
 // set the focus on the first field unless multisite
 if ($controller->action != "multisite") {
 ?>
@@ -617,4 +612,7 @@ if ($controller->action != "multisite") {
 	</script>
 <?php
 }
+//-- somewhere the session gedcom gets changed, so we will change it back
+$_SESSION['GEDCOM'] = $GEDCOM;
+print_footer();
 ?>

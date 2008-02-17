@@ -60,11 +60,11 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 			print PrintReady($controller->indi->getName());
 			print "&nbsp;&nbsp;";
  			print PrintReady("(".$controller->pid.")");
-			if (userIsAdmin(getUserName())) {
-				$pgvuser=getUserByGedcomId($controller->pid, $GEDCOM);
+			if (userIsAdmin()) {
+				$pgvuser=get_user_from_gedcom_xref($GEDCOM, $controller->pid);
 				if ($pgvuser!==false) {
   					print "&nbsp;";
-					print printReady("(<a href=\"useradmin.php?action=edituser&username={$pgvuser['username']}\">{$pgvuser['username']}</a>)");
+					print printReady("(<a href=\"useradmin.php?action=edituser&username={$pgvuser}\">{$pgvuser}</a>)");
 				}
 			}
 		?>
@@ -219,7 +219,7 @@ function show_gedcom_record(shownew) {
 	if (shownew=="yes") fromfile='&fromfile=1';
 	var recwin = window.open("gedrecord.php?pid=<?php print $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 }
-<?php if (userCanAccept(getUserName())) { ?>
+<?php if (userCanAccept()) { ?>
 function open_link_remote(pid){
 	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
 	return false;
@@ -310,13 +310,13 @@ function tabswitch(n) {
 		var elt = document.getElementById('door'+i);
 		if (elt) {
 			if (document.getElementById('no_tab'+i)) { // empty ?
-				if (<?php if (userCanEdit(getUserName())) echo 'true'; else echo 'false';?>) {
+				if (<?php if (userCanEdit()) echo 'true'; else echo 'false';?>) {
 					elt.style.display='block';
 					elt.style.opacity='0.4';
 					elt.style.filter='alpha(opacity=40)';
 				}
 				else elt.style.display='none'; // empty and not editable ==> hide
-				//if (i==3 && <?php if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no sources
+				//if (i==3 && <?php if ($SHOW_SOURCES>=getUserAccessLevel()) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no sources
 				if (i==4 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia
 				if (i==7) elt.style.display='none'; // hide researchlog
 				if (i==9 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia (for Album tab)				
@@ -432,7 +432,7 @@ if(empty($SEARCH_SPIDER))
 	print "<div id=\"sources\" class=\"tab_page\" style=\"display:none;\" >\n";
 else
 	print "<div id=\"sources\" class=\"tab_page\" style=\"display:block;\" >\n";
-if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
+if ($SHOW_SOURCES>=getUserAccessLevel()) {
 	print "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span><div id=\"sources_content\">";
 	if (($controller->default_tab==2)||(!empty($SEARCH_SPIDER))) $controller->getTab(2);
 	else {
@@ -529,7 +529,7 @@ if(empty($SEARCH_SPIDER)) {
 		if ($GOOGLEMAP_ENABLED == "false") {
 	        print "<table class=\"facts_table\">\n";
 	        print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
-	        if (userIsAdmin(getUserName())) {
+	        if (userIsAdmin()) {
 	            print "<tr><td align=\"center\" colspan=\"2\">\n";
 	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 	            print "</td></tr>\n";
@@ -588,7 +588,7 @@ if(empty($SEARCH_SPIDER)) {
 				        print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
 				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
 				        print "</td></tr>\n";
-				        if (userIsAdmin(getUserName())) {
+				        if (userIsAdmin()) {
 				            print "<tr><td align=\"left\">\n";
 				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 				            print "</td>\n";

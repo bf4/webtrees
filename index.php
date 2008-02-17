@@ -409,7 +409,7 @@ if (($ctype=="user") and (!$welcome_block_present)) {
 	print "</div>";
 }
 if (($ctype=="gedcom") and (!$gedcom_block_present)) {
-	if (userIsAdmin(getUserName())) {
+	if (userIsAdmin()) {
 		print "<div align=\"center\" style=\"width: 99%;\">";
 		print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=$GEDCOM&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
 		print "</div>";

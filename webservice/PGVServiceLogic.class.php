@@ -3,7 +3,7 @@
  *  PGV SOAP implementation of the genealogy web service
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -262,7 +262,7 @@ class PGVServiceLogic extends GenealogyService
 	*/
 	function postAppendRecord($SID, $gedrec) {
 		if (!empty($gedrec)) {
-			if ((empty($_SESSION['readonly']))&&(userCanEdit(getUserName()))) {
+			if ((empty($_SESSION['readonly']))&&(userCanEdit())) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$xref = append_gedrec($gedrec);
 				if ($xref) {
@@ -292,7 +292,7 @@ class PGVServiceLogic extends GenealogyService
 	function postDeleteRecord($SID, $RID)
 	{
 		if (!empty($RID)) {
-			if (((empty($_SESSION['readonly']))&&(userCanEdit(getUserName())))&&(displayDetailsById($RID))) {
+			if (((empty($_SESSION['readonly']))&&(userCanEdit()))&&(displayDetailsById($RID))) {
 				$success = delete_gedrec($RID);
 				if ($success) {
 					addDebugLog("delete RID=$RID SUCCESS");
@@ -325,7 +325,7 @@ class PGVServiceLogic extends GenealogyService
 		{
 			if (!empty($gedcom))
 			{
-				if (((empty($_SESSION['readonly']))&&(userCanEdit(getUserName())))&&(displayDetailsById($RID)))
+				if (((empty($_SESSION['readonly']))&&(userCanEdit()))&&(displayDetailsById($RID)))
 				{
 					$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedcom);
 					$success = replace_gedrec($RID, $gedrec);
@@ -986,7 +986,7 @@ class PGVServiceLogic extends GenealogyService
 		if ($date->MinJD()<server_jd()-180)
 			return new SOAP_Fault('checkUpdates', 'You cannot retrieve updates for more than 180 days.');
 
-		$changes = get_recent_changes($date->MinJD()]);
+		$changes = get_recent_changes($date->MinJD());
 		$results = array();
 		foreach($changes as $id=>$change) {
 			$results[] = $change['d_gid'];
@@ -1194,7 +1194,7 @@ class PGVServiceLogic extends GenealogyService
 		}
 		else if ($position=='new') {
 			//AddToLog("getXref position=new type=$type readonly=".$_SESSION['readonly']." username=".getUserName());
-			if ((empty($_SESSION['readonly']))&&(userCanEdit(getUserName()))) {
+			if ((empty($_SESSION['readonly']))&&(userCanEdit())) {
 				if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
 					addDebugLog("getXref type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER");
 					//print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";
