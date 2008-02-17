@@ -90,8 +90,7 @@ if (!empty($module) && $module=="randomMedia") $cacheControl[1]["cache"] = 0;
 
 if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$user = getUser($CONTACT_EMAIL);
-	if ($NAME_REVERSE) $author = $user["lastname"]." ".$user["firstname"];
-	else $author = $user["firstname"]." ".$user["lastname"];
+	$author=getUserFullName($CONTACT_EMAIL);
 
 	$feed = new UniversalFeedCreator();
 	$feed->generator = "http://www.phpgedview.net v" . $VERSION . " " . $VERSION_RELEASE;

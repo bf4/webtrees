@@ -42,7 +42,7 @@ $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
  * prints a list of other users who are logged in
  */
 function print_logged_in_users($block = true, $config = "", $side, $index) {
-	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION, $NAME_REVERSE;
+	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION;
 
 	$block = true; // Always restrict this block's height
 
@@ -57,7 +57,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 				userLogout($user["username"]);
 			else {
 				if ((userIsAdmin()) || (($user['visibleonline']) && ($thisuser['visibleonline'])))
-					$loggedusers[] = $user;
+					$loggedusers[$indexval] = $user;
 				else
 					$NumAnonymous++;
 			}
@@ -97,8 +97,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	}
 	uasort($loggedusers, "usersort");
 	foreach ($loggedusers as $indexval => $user) {
-		if ($NAME_REVERSE) $userName = $user["lastname"] . " " . $user["firstname"];
-		else $userName = $user["firstname"] . " " . $user["lastname"];
+		$userName=getUserFullName($indexval);
 		print "<tr><td>";
 		print "<br />" . PrintReady($userName);
 		print " - " . $user["username"];

@@ -715,8 +715,7 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 		else print "\t<td class=\"optionbox wrap\">".$username;
 		if (!empty($user["comment"])) print "<br /><img class=\"adminicon\" align=\"top\" alt=\"".PrintReady(stripslashes($user["comment"]))."\"  title=\"".PrintReady(stripslashes($user["comment"]))."\"  src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\">";
 		print "</td>\n";
-		if ($NAME_REVERSE) $userName = $user["lastname"]. " " .$user["firstname"];
-		else $userName = $user["firstname"]. " " .$user["lastname"];
+		$userName = getUserFullName($username);
 		if ($TEXT_DIRECTION=="ltr") print "\t<td class=\"optionbox wrap\">".$userName. getLRM() . "</td>\n";
 		else                        print "\t<td class=\"optionbox wrap\">".$userName. getRLM() . "</td>\n";
 		print "\t<td class=\"optionbox wrap\">".$pgv_lang["lang_name_".$user["language"]]."<br /><img src=\"".$language_settings[$user["language"]]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$user["language"]]."\" title=\"".$pgv_lang["lang_name_".$user["language"]]."\" /></td>\n";
@@ -1042,8 +1041,7 @@ if ($action == "cleanup") {
 	$users = GetUsers();
 	$ucnt = 0;
 	foreach($users as $key=>$user) {
-		if ($NAME_REVERSE) $userName = $user["lastname"]. " " .$user["firstname"];
-		else $userName = $user["firstname"]. " " .$user["lastname"];
+		$userName = getUserFullName($key);
 		if ($user["sessiontime"] == "0") $datelogin = $user["reg_timestamp"];
 		else $datelogin = $user["sessiontime"];
 		if ((mktime(0, 0, 0, (int)date("m")-$month, (int)date("d"), (int)date("Y")) > $datelogin) && ($user["verified"] == "yes") && ($user["verified_by_admin"] == "yes")) {
@@ -1058,8 +1056,7 @@ if ($action == "cleanup") {
 	// Check unverified users
 	foreach($users as $key=>$user) {
 		if (((date("U") - $user["reg_timestamp"]) > 604800) && ($user["verified"]!="yes")) {
-			if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
-			else $userName = $user["firstname"]." ".$user["lastname"];
+			$userName = getUserFullName($key);
 			?><tr><td class="descriptionbox"><?php print $user["username"]." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unveru"];
 			$ucnt++;
 			?></td><td class="optionbox"><input type="checkbox" checked="checked" name="<?php print "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user["username"]); ?>" value="yes" /></td></tr><?php
@@ -1069,8 +1066,7 @@ if ($action == "cleanup") {
 	// Check users not verified by admin
 	foreach($users as $key=>$user) {
 		if (($user["verified_by_admin"]!="yes") && ($user["verified"] == "yes")) {
-			if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
-			else $userName = $user["firstname"]." ".$user["lastname"];
+			$userName = getUserFullName($key);
 			?><tr><td  class="descriptionbox"><?php print $user["username"]." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unvera"];
 			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user["username"]); ?>" value="yes" /></td></tr><?php
 			$ucnt++;

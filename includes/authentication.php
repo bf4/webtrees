@@ -899,6 +899,20 @@ function getUser($username) {
 	return $user;
 }
 
+// Get the full name for a user
+function getUserFullName($user) {
+	global $NAME_REVERSE;
+
+	$first_name=get_user_setting($user, 'firstname');
+	$last_name =get_user_setting($user, 'lastname' );
+
+	if ($NAME_REVERSE) {
+		return $last_name.' '.$first_name;
+	} else {
+		return $first_name.' '.$last_name;
+	}
+}
+
 /**
  * add a message into the log-file
  * @param string $LogString		the message to add
@@ -1041,7 +1055,7 @@ function AddToChangeLog($LogString, $ged="") {
 //-- stores a new message in the database
 function addMessage($message) {
 	global $TBLPREFIX, $CONTACT_METHOD, $pgv_lang,$CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL, $DBCONN;
-	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array, $NAME_REVERSE, $NAME_REVERSE_array;
+	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array;
 	global $PHPGEDVIEW_EMAIL;
 
 	//-- do not allow users to send a message to themselves
@@ -1078,10 +1092,7 @@ function addMessage($message) {
 		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".stripslashes($email2);
 		$fromFullName = $message["from"];
 	} else {
-		if ($NAME_REVERSE)
-			$fromFullName = $fUser["lastname"]." ".$fUser["firstname"];
-		else
-			$fromFullName = $fUser["firstname"]." ".$fUser["lastname"];
+		$fromFullName = getUserFullName($message['from']);
 		if (!$PGV_SIMPLE_MAIL)
 			$from = hex4email(stripslashes($fromFullName),$CHARACTER_SET). " <".$fUser["email"].">";
 		else
@@ -1155,10 +1166,7 @@ function addMessage($message) {
 		} else {
 			if ($LANGUAGE!=$tUser["language"])
 				loadLanguage($tUser["language"]);
-			if ($NAME_REVERSE)
-				$toFullName = $tUser["lastname"]." ".$tUser["firstname"];
-			else
-				$toFullName = $tUser["firstname"]." ".$tUser["lastname"];
+			$toFullName=getUserFullName($message['to']);
 			if (!$PGV_SIMPLE_MAIL)
 				$to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".$tUser["email"].">";
 			else

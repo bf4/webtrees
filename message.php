@@ -138,8 +138,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 			if (addMessage($message)){
 				$touser = getUser($to);
 				if ($touser) {
-					if ($NAME_REVERSE) $touserName = $touser["lastname"]." ".$touser["firstname"];
-					else $touserName = $touser["firstname"]." ".$touser["lastname"];
+					$touserName = getUserFullName($to);
 					print str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["message_sent"]);
 					print "<br />";
 				}
@@ -192,8 +191,7 @@ if ($action=="compose") {
 	$touser = getUser($to);
 	$lang_temp = "lang_name_".$touser["language"];
 	if ($touser) {
-		if ($NAME_REVERSE) $touserName = $touser["lastname"]." ".$touser["firstname"];
-		else $touserName = $touser["firstname"]." ".$touser["lastname"];
+		$touserName = getUserFullName($to);
 		print "<tr><td></td><td>".str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["sending_to"])."<br />";
 		print str_replace("#USERLANG#", "<b>".$pgv_lang[$lang_temp]."</b>", $pgv_lang["preferred_lang"])."</td></tr>\n";
 	}
