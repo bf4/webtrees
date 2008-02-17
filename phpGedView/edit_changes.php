@@ -48,8 +48,8 @@ print_simple_header($pgv_lang["review_changes"]);
 		var recwin = window.open("gedrecord.php?fromfile=1&pid="+xref, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 	}
 	function showchanges() {
-	   window.location = '<?php print $SCRIPT_NAME; ?>';
-   }
+		window.location = '<?php print $SCRIPT_NAME; ?>';
+	}
 
 	function show_diff(diffurl) {
 		window.opener.location = diffurl;
@@ -157,7 +157,7 @@ else {
 					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('mediaviewer.php?mid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				default:
-				 	$output.="<b>".$factarray[$type]."</b> " . getLRM() . "(".$change["gid"].")" . getLRM() ."<br />";
+					$output.="<b>".$factarray[$type]."</b> " . getLRM() . "(".$change["gid"].")" . getLRM() ."<br />";
 					break;
 				}
 				$output.="<a href=\"javascript:show_gedcom_record('".$change["gid"]."');\">".$pgv_lang["view_gedcom"]."</a> | ";
@@ -182,8 +182,7 @@ else {
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"javascript:;\" onclick=\"return reply('".$change["user"]."','".$pgv_lang["review_changes"]."')\" alt=\"".$pgv_lang["message"]."\">";
 			$cuser = getUser($change["user"]);
 			if ($cuser) {
-				if ($NAME_REVERSE) $cuserName = $cuser["lastname"]." ".$cuser["firstname"];
-				else $cuserName = $cuser["firstname"]." ".$cuser["lastname"];
+				$cuserName = getUserFullName($change["user"]);
 				$output .= PrintReady($cuserName);
 			}
  			$output .= PrintReady("&nbsp;(".$change["user"].")")."</a></td>\n";

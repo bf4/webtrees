@@ -346,7 +346,7 @@ class ClippingsControllerRoot extends BaseController {
 							$filetext .= "0 @SPGV1@ SOUR\r\n";
 							$tuser = getUser($CONTACT_EMAIL);
 							if ($tuser) {
-								$filetext .= "1 AUTH " . $tuser["firstname"] . " " . $tuser["lastname"] . "\r\n";
+								$filetext .= "1 AUTH " . getUserFullName($CONTACT_EMAIL) . "\r\n";
 							}
 							$filetext .= "1 TITL " . $HOME_SITE_TEXT . "\r\n";
 							$filetext .= "1 ABBR " . $HOME_SITE_TEXT . "\r\n";

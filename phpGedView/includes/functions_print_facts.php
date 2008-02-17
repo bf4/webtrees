@@ -78,7 +78,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $SHOW_FACT_ICONS;
 	global $n_chil, $n_gchi, $n_ggch;
-	global $SEARCH_SPIDER, $NAME_REVERSE;
+	global $SEARCH_SPIDER;
 	
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
@@ -475,8 +475,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 		// -- catch all unknown codes here
 		$body = $pgv_lang["unrecognized_code"]." ".$fact;
 		$user=getUser($CONTACT_EMAIL);
-		if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
-		else $userName = $user["firstname"]." ".$user["lastname"];
+		$userName=getUserFullName($CONTACT_EMAIL);
 		if (!$HIDE_GEDCOM_ERRORS) print "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">".$pgv_lang["unrecognized_code"].": $fact</span></td><td class=\"optionbox\">$event<br />".$pgv_lang["unrecognized_code_msg"]." <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL','', '', '$body'); return false;\">".$userName."</a>.</td></tr>";
 	}
 }

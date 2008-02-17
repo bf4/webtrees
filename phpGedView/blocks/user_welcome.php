@@ -34,14 +34,13 @@ $PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
 
 //-- function to print the welcome block
 function print_welcome_block($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $user, $GEDCOM, $NAME_REVERSE;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $user, $GEDCOM;
 
 	print "<div id=\"user_welcome\" class=\"block\">\n";
 	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 	print "<td class=\"blockh1\" >&nbsp;</td>";
 	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
-	else $userName = $user["firstname"]." ".$user["lastname"];
+	$userName=getUserFullName($user['username']);
 	print "<b>".$pgv_lang["welcome"]." ".$userName."</b>";
 	print "</div></td>";
 	print "<td class=\"blockh3\">&nbsp;</td></tr>\n";

@@ -81,7 +81,7 @@ function mod_gallery2_load($uid)
 			$ret = GalleryEmbed::createUser($uid, array(
 				'username'			=> $user['username'],
 				'email'				=> $user['email'],
-				'fullname'			=> "{$user['firstname']} {$user['lastname']}",
+				'fullname'			=> getUserFullName($user['username']),
 				'language'			=> $language_settings[$user['language']]['lang_short_cut'],
 				'hashedpassword'	=> $user['password'],
 				'hashmethod'		=> 'crypt',
