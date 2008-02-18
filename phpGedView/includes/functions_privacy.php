@@ -944,7 +944,7 @@ function getUserAccessLevel() {
 			$cache=$PRIV_NONE;
 		} else {
 			if (userCanAccess()) {
-				return $PRIV_USER;
+				$cache=$PRIV_USER;
 			} else {
 				$cache=$PRIV_PUBLIC;
 			}
