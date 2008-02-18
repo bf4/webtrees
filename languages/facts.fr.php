@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ $factarray["ADR1"]                      = "Adresse 1";
 $factarray["ADR2"]                      = "Adresse 2";
 $factarray["ADOP"]                      = "Adoption";
 $factarray["AFN"]                       = "N° AFN";
-$factarray["AGE"]                       = "Age";
+$factarray["AGE"]                       = "Âge";
 $factarray["AGNC"]                      = "Institution";
 $factarray["ALIA"]                      = "Alias";
 $factarray["ANCE"]                      = "Ancêtres";
@@ -43,10 +43,10 @@ $factarray["ANCI"]                      = "Interêt des ancêtres";
 $factarray["ANUL"]                      = "Déclaration de nullité du mariage";
 $factarray["ASSO"]                      = "Personne associée";
 $factarray["AUTH"]                      = "Auteur";
-$factarray["BAPL"]                      = "Baptême (LDS)";
+$factarray["BAPL"]                      = "Baptême (SDJ)";
 $factarray["BAPM"]                      = "Baptême";
-$factarray["BARM"]                      = "Bar_mitzvah";
-$factarray["BASM"]                      = "Bas_mitzvah";
+$factarray["BARM"]                      = "Bar mitzvah";
+$factarray["BASM"]                      = "Bas mitzvah";
 $factarray["BIRT"]                      = "Naissance";
 $factarray["BLES"]                      = "Bénédiction religieuse";
 $factarray["BLOB"]                      = "Objet binaire";
@@ -63,7 +63,7 @@ $factarray["CHR"]                       = "Baptême religieux enfant";
 $factarray["CHRA"]                      = "Baptême religieux adulte";
 $factarray["CITY"]                      = "Localité";
 $factarray["CONF"]                      = "Confirmation";
-$factarray["CONL"]                      = "Confirmation (LDS)";
+$factarray["CONL"]                      = "Confirmation (SDJ)";
 $factarray["COPR"]                      = "Copyright";
 $factarray["CORP"]                      = "Entreprise";
 $factarray["CREM"]                      = "Incinération";
@@ -77,11 +77,11 @@ $factarray["DEST"]                      = "Destination";
 $factarray["DIV"]                       = "Divorce";
 $factarray["DIVF"]                      = "Divorce prononcé";
 $factarray["DSCR"]                      = "Description";
-$factarray["EDUC"]                      = "Etudes";
-$factarray["EMIG"]                      = "Emigration";
-$factarray["ENDL"]                      = "Dotation (LDS)";
+$factarray["EDUC"]                      = "Études";
+$factarray["EMIG"]                      = "Émigration";
+$factarray["ENDL"]                      = "Dotation (SDJ)";
 $factarray["ENGA"]                      = "Fiançailles";
-$factarray["EVEN"]                      = "Evénement";
+$factarray["EVEN"]                      = "Événement";
 $factarray["FAM"]                       = "Famille";
 $factarray["FAMC"]                      = "Famille des parents";
 $factarray["FAMF"]                      = "Fichier de la famille";
@@ -100,7 +100,7 @@ $factarray["MARC"]                      = "Contrat de mariage";
 $factarray["MARL"]                      = "Autorisation légale de mariage";
 $factarray["MARR"]                      = "Mariage";
 $factarray["MARS"]                      = "Régime matrimonial";
-$factarray["MEDI"]                      = "Type de Media";
+$factarray["MEDI"]                      = "Type de Média";
 $factarray["NAME"]                      = "Nom";
 $factarray["NATI"]                      = "Nationalité";
 $factarray["NATU"]                      = "Naturalisation";
@@ -110,9 +110,9 @@ $factarray["NMR"]                       = "Nombre de mariages";
 $factarray["NOTE"]                      = "Note";
 $factarray["NPFX"]                      = "Préfixe du nom";
 $factarray["NSFX"]                      = "Suffixe du nom";
-$factarray["OBJE"]                      = "Objet MultiMedia";
+$factarray["OBJE"]                      = "Objet MultiMédia";
 $factarray["OCCU"]                      = "Profession";
-$factarray["ORDI"]                      = "Cérémonie (LDS)";
+$factarray["ORDI"]                      = "Cérémonie (SDJ)";
 $factarray["ORDN"]                      = "Ordination";
 $factarray["PAGE"]                      = "Cote";
 $factarray["PEDI"]                      = "Ascendance";
@@ -134,17 +134,17 @@ $factarray["RFN"]                       = "N° enregistrement fichier";
 $factarray["RIN"]                       = "N° enregistrement ID";
 $factarray["ROLE"]                      = "Rôle";
 $factarray["SEX"]                       = "Sexe";
-$factarray["SLGC"]                      = "Scellement enfant (LDS)";
-$factarray["SLGS"]                      = "Scellement conjoint (LDS)";
+$factarray["SLGC"]                      = "Scellement enfant (SDJ)";
+$factarray["SLGS"]                      = "Scellement conjoint (SDJ)";
 $factarray["SOUR"]                      = "Source";
 $factarray["SPFX"]                      = "Préfixe du nom de famille";
 $factarray["SSN"]                       = "Numéro de sécurité sociale";
-$factarray["STAE"]                      = "Etat ou région ou département";
+$factarray["STAE"]                      = "État ou région ou département";
 $factarray["STAT"]                      = "Statut";
 $factarray["SUBM"]                      = "Fournisseur";
 $factarray["SUBN"]                      = "Données fournies";
 $factarray["SURN"]                      = "Nom de famille";
-$factarray["TEMP"]                      = "Temple (LDS)";
+$factarray["TEMP"]                      = "Temple (SDJ)";
 $factarray["TEXT"]                      = "Texte";
 $factarray["TIME"]                      = "Heure";
 $factarray["TITL"]                      = "Titre";
@@ -195,33 +195,33 @@ $factarray["_MILT"]                     = "Service Militaire";
 $factarray["_SEPR"]                     = "Séparé";
 $factarray["_DETS"]                     = "Décès du conjoint";
 $factarray["CITN"]                      = "Citoyenneté";
-$factarray["_FA1"]                      = "Evènement 1";
-$factarray["_FA2"]                      = "Evènement 2";
-$factarray["_FA3"]                      = "Evènement 3";
-$factarray["_FA4"]                      = "Evènement 4";
-$factarray["_FA5"]                      = "Evènement 5";
-$factarray["_FA6"]                      = "Evènement 6";
-$factarray["_FA7"]                      = "Evènement 7";
-$factarray["_FA8"]                      = "Evènement 8";
-$factarray["_FA9"]                      = "Evènement 9";
-$factarray["_FA10"]                     = "Evènement 10";
-$factarray["_FA11"]                     = "Evènement 11";
-$factarray["_FA12"]                     = "Evènement 12";
-$factarray["_FA13"]                     = "Evènement 13";
+$factarray["_FA1"]                      = "Événement 1";
+$factarray["_FA2"]                      = "Événement 2";
+$factarray["_FA3"]                      = "Événement 3";
+$factarray["_FA4"]                      = "Événement 4";
+$factarray["_FA5"]                      = "Événement 5";
+$factarray["_FA6"]                      = "Événement 6";
+$factarray["_FA7"]                      = "Événement 7";
+$factarray["_FA8"]                      = "Événement 8";
+$factarray["_FA9"]                      = "Événement 9";
+$factarray["_FA10"]                     = "Événement 10";
+$factarray["_FA11"]                     = "Événement 11";
+$factarray["_FA12"]                     = "Événement 12";
+$factarray["_FA13"]                     = "Événement 13";
 $factarray["_MREL"]                     = "Lien avec la mère";
 $factarray["_FREL"]                     = "Lien avec le père";
-$factarray["_MSTAT"]                    = "Début Mariage (LDS)";
-$factarray["_MEND"]                     = "Fin Mariage (LDS)";
+$factarray["_MSTAT"]                    = "Début Mariage";
+$factarray["_MEND"]                     = "Fin Mariage";
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"]                       = "Fax";
-$factarray["FACT"]                      = "Evènement";
+$factarray["FACT"]                      = "Événement";
 $factarray["WWW"]                       = "Page Web";
 $factarray["MAP"]                       = "Carte";
 $factarray["LATI"]                      = "Latitude";
 $factarray["LONG"]                      = "Longitude";
 $factarray["FONE"]                      = "Phonétique";
-$factarray["ROMN"]                      = "Alphabet Romain";
+$factarray["ROMN"]                      = "Romain";
 
 // PAF related facts
 $factarray["_NAME"]                     = "Adresse Mailing";
@@ -229,7 +229,7 @@ $factarray["URL"]                       = "URL";
 $factarray["_URL"]                      = "Web URL";
 $factarray["_HEB"]                      = "Hébreu";
 $factarray["_SCBK"]                     = "Album";
-$factarray["_TYPE"]                     = "Type MultiMedia";
+$factarray["_TYPE"]                     = "Type MultiMédia";
 $factarray["_SSHOW"]                    = "Diaporama";
 
 // Rootsmagic
@@ -261,7 +261,7 @@ $factarray["_NLIV"]                     = "Non vivant(e)";
 $factarray["_NMAR"]                     = "Jamais marié(e)";
 $factarray["_PRMN"]                     = "Numéro permanent";
 $factarray["_WEIG"]                     = "Poids";
-$factarray["_YART"]                     = "Yartzeit";
+$factarray["_YART"]                     = "Yahrzeit";
 $factarray["_MARNM"]                    = "Nom après mariage";
 $factarray["_MARNM_SURN"]               = "Nom de famille après mariage";
 $factarray["_STAT"]                     = "Statut Mariage";
@@ -324,7 +324,7 @@ $factarray["_BIRT_COUS"]                = "Naissance cousin(e) germain(e)";
 $factarray["_MARR_COUS"]                = "Mariage cousin(e) germain(e)";
 $factarray["_DEAT_COUS"]                = "Décès cousin(e) germain(e)";
 
-$factarray["_FAMC_EMIG"]                = "Emigration des parents";
+$factarray["_FAMC_EMIG"]                = "Émigration des parents";
 $factarray["_FAMC_RESI"]                = "Domicile des parents";
 
 //-- PGV Only facts

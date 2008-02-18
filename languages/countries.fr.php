@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2008  Christophe Bx, Julien Damon
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -290,5 +290,6 @@ $countries["ZAR"]                       ="Zaïre";
 $countries["ZMB"]                       ="Zambie";
 $countries["ZWE"]                       ="Zimbabwe";
 
-$altCountryNames["CHI"]="Îles de la Manche";
+$altCountryNames["CHI"]					="Îles de la Manche";
+$altCountryNames["TLS"]					="Timor Occidental";
 ?>
