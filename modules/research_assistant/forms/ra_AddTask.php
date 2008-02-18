@@ -131,12 +131,11 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
     			</td>
     			<td class="optionbox" colspan=3> 
     			<select name="Users"> <option value=""></option>
-    			<?php $users = getusers(); 
-    				foreach($users as $username => $user)
-    				{
+    			<?php 
+    				foreach(get_all_users() as $username) {
     					print "<option value=\"$username\">".getUserFullName($username)."</option>";
     				}
-    				?>  		
+    			?>  		
     			</select>
     				
     			</td>

@@ -259,13 +259,10 @@ function um_export($proceed) {
 	// Get user array and create authenticate.php
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
 	$authtext = "<?php\n\n\$users = array();\n\n";
-	$users = GetUsers();
-	foreach ($users as $key=>$user) {
-		$user["firstname"] = $DBCONN->escapeSimple($user["firstname"]);
-		$user["lastname"] = $DBCONN->escapeSimple($user["lastname"]);
-		$user["comment"] = $DBCONN->escapeSimple($user["comment"]);
+	foreach (get_all_users() as $username) {
 		$authtext .= "\$user = array();\n";
-		foreach ($user as $ukey=>$value) {
+		foreach (array('username', 'firstname', 'lastname', 'gedcomid', 'rootid', 'password','canadmin', 'canedit', 'email', 'verified','verified_by_admin', 'language', 'pwrequested', 'reg_timestamp','reg_hashcode', 'theme', 'loggedin', 'sessiontime', 'contactmethod', 'visibleonline', 'editaccount', 'defaulttab','comment', 'comment_exp', 'sync_gedcom', 'relationship_privacy', 'max_relation_path', 'auto_accept') as $ukey) {
+			$value=get_user_setting($username, $ukey);
 			if (!is_array($value)) {
 				$value = preg_replace('/"/', '\\"', $value);
 				$authtext .= "\$user[\"$ukey\"] = '$value';\n";
@@ -277,7 +274,7 @@ function um_export($proceed) {
 				}
 			}
 		}
-		$authtext .= "\$users[\"$key\"] = \$user;\n\n";
+		$authtext .= "\$users[\"$username\"] = \$user;\n\n";
 	}
 	$authtext .= "?".">\n";
 	if (file_exists($INDEX_DIRECTORY."authenticate.php")) {

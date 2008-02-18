@@ -3702,12 +3702,11 @@ function get_user_gedcom_setting($user, $gedcom, $parameter) {
 	if (array_key_exists("{$user}/{$gedcom}/{$parameter}", $cache))
 		return $cache["{$user}/{$gedcom}/{$parameter}"];
 
-	$tmp=get_user_setting($user, $parameter);
-	if (!is_array($tmp)) {
+	$tmp_array=unserialize(get_user_setting($user, $parameter));
+	if (!is_array($tmp_array)) {
 		$cache["{$user}/{$gedcom}/{$parameter}"]=null;
 		return null;
 	}
-	$tmp_array=unserialize($tmp);
 	if (array_key_exists($gedcom, $tmp_array)) {
 		$cache["{$user}/{$gedcom}/{$parameter}"]=$tmp_array[$gedcom];
 		return $tmp_array[$gedcom];
@@ -3718,10 +3717,9 @@ function get_user_gedcom_setting($user, $gedcom, $parameter) {
 }
 
 function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
-	$tmp=get_user_setting($user, $parameter);
-	if (!is_array($tmp))
-		return null;
-	$tmp_array=unserialize($tmp);
+	$tmp_array=unserialize(get_user_setting($user, $parameter));
+	if (!is_array($tmp_array))
+		$tmp_array=array();
 	if (empty($value)) {
 		// delete the value
 		unset($tmp_array[$gedcom]);

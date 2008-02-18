@@ -57,9 +57,8 @@ foreach ($GEDCOMS as $key => $value) {
   $configuredlanguages["gedcom"][$LANGUAGE][$key] = true;
 }
 // Read user configuration and collect language data
-$users = getUsers("username","asc");
-foreach($users as $username=>$user) {
-  $configuredlanguages["users"][$user["language"]][$username] = true;
+foreach(get_all_users() as $user) {
+  $configuredlanguages["users"][get_user_setting($user,'language')][$user] = true;
 }
 
 // Determine whether this language's Active status should be protected

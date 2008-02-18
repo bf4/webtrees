@@ -599,53 +599,56 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 
 	switch ($sort) {
 		case "sortfname":
-			$users = getUsers("firstname","asc", "lastname");
+			$users = get_all_users("asc", "firstname","lastname");
 			break;
 		case "sortlname":
-			$users = getUsers("lastname","asc", "firstname");
+			$users = get_all_users("asc", "lastname","firstname");
 			break;
 		case "sortllgn":
-			$users = getUsers("sessiontime","desc");
+			$users = get_all_users("desc","sessiontime");
 			break;
 		case "sortusername":
-			$users = getUsers("username","asc");
+			$users = get_all_users("asc","username");
 			break;
 		case "sortreg":
-			$users = getUsers("reg_timestamp","desc");
+			$users = get_all_users("desc","reg_timestamp");
 			break;
 		case "sortver":
-			$users = getUsers("verified","asc");
+			$users = get_all_users("asc","verified");
 			break;
 		case "sortveradm":
-			$users = getUsers("verified_by_admin","asc");
+			$users = get_all_users("asc","verified_by_admin");
 			break;
-		default: $users = getUsers("username","asc");
+		default:
+			$users = get_all_users("asc","username");
+			break;
 	}
 
 	// First filter the users, otherwise the javascript to unfold priviledges gets disturbed
-	foreach($users as $username=>$user) {
-		if (!isset($language_settings[$user["language"]])) $user["language"]=$LANGUAGE;
+	foreach($users as $key=>$username) {
+		if (!isset($language_settings[get_user_setting($username, 'language')]))
+			set_user_setting($username, 'language', $LANGUAGE);
 		if ($filter == "warnings") {
-			if (!empty($user["comment_exp"])) {
-				if ((strtotime($user["comment_exp"]) == "-1") || (strtotime($user["comment_exp"]) >= time("U"))) unset($users[$username]);
+			if (get_user_setting($user, 'comment_exp')) {
+				if ((strtotime(get_user_setting($user, 'comment_exp')) == "-1") || (strtotime(get_user_setting($user, 'comment_exp')) >= time("U"))) unset($users[$key]);
 			}
-			else if (((date("U") - $user["reg_timestamp"]) <= 604800) || ($user["verified"]=="yes")) unset($users[$username]);
+			else if (((date("U") - get_user_setting($user, 'reg_timestamp')) <= 604800) || (get_user_setting($user, 'verified')=="yes")) unset($users[$key]);
 		}
 		else if ($filter == "adminusers") {
-			if (!($user["canadmin"])) unset($users[$username]);
+			if (get_user_setting($user, 'canadmin')!='Y') unset($users[$key]);
 		}
 		else if ($filter == "usunver") {
-			if ($user["verified"] == "yes") unset($users[$username]);
+			if (get_user_setting($user,'verified') == "yes") unset($users[$key]);
 		}
 		else if ($filter == "admunver") {
-			if (($user["verified_by_admin"] == "yes") || ($user["verified"] != "yes")) unset($users[$username]);
+			if ((get_user_setting($user,'verified_by_admin') == "yes") || (get_user_setting($user,'verified') != "yes")) unset($users[$key]);
 		}
 		else if ($filter == "language") {
-			if ($user["language"] != $usrlang) unset($users[$username]);
+			if (get_user_setting($user, 'language') != $usrlang) unset($users[$key]);
 		}
 		else if ($filter == "gedadmin") {
-			if (isset($user["canedit"][$ged])) {
-				if ($user["canedit"][$ged] != "admin") unset($users[$username]);
+			if (get_user_gedcom_setting($user, 'canedit', $ged)) {
+				if (get_user_gedcom_setting($user, 'canedit', $ged) != "admin") unset($users[$username]);
 			}
 		}
 	}
@@ -697,28 +700,26 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 	</tr>
 	<?php
 	$k++;
-	foreach($users as $username=>$user) {
-		if (empty($user["language"])) $user["language"]=$LANGUAGE;
-		if (!isset($language_settings[$user["language"]])) $user["language"]=$LANGUAGE;
+	foreach($users as $user) {
 		print "<tr>\n";
 		if ($view != "preview") {
 			print "\t<td class=\"optionbox wrap\">";
-			print "<a href=\"useradmin.php?action=edituser&amp;username=".urlencode($username)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">".$pgv_lang["edit"]."</a></td>\n";
+			print "<a href=\"useradmin.php?action=edituser&amp;username=".urlencode($user)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">".$pgv_lang["edit"]."</a></td>\n";
 			print "\t<td class=\"optionbox wrap\">";
-			if ($username!=getUserName()) print "<a href=\"javascript:;\" onclick=\"return message('".$user["username"]."');\">".$pgv_lang["message"]."</a>";
+			if ($user!=getUserName()) print "<a href=\"javascript:;\" onclick=\"return message('".$user."');\">".$pgv_lang["message"]."</a>";
 			print "</td>\n";
 		}
-		if (!empty($user["comment_exp"])) {
-			if ((strtotime($user["comment_exp"]) != "-1") && (strtotime($user["comment_exp"]) < time("U"))) print "\t<td class=\"optionbox red\">".$username;
-			else print "\t<td class=\"optionbox wrap\">".$username;
+		if (get_user_setting($user, "comment_exp")) {
+			if ((strtotime(get_user_setting($user, "comment_exp")) != "-1") && (strtotime(get_user_setting($user, "comment_exp")) < time("U"))) print "\t<td class=\"optionbox red\">".$user;
+			else print "\t<td class=\"optionbox wrap\">".$user;
 		}
-		else print "\t<td class=\"optionbox wrap\">".$username;
-		if (!empty($user["comment"])) print "<br /><img class=\"adminicon\" align=\"top\" alt=\"".PrintReady(stripslashes($user["comment"]))."\"  title=\"".PrintReady(stripslashes($user["comment"]))."\"  src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\">";
+		else print "\t<td class=\"optionbox wrap\">".$user;
+		if (get_user_setting($user, "comment")) print "<br /><img class=\"adminicon\" align=\"top\" alt=\"".PrintReady(stripslashes(get_user_setting($user, "comment")))."\"  title=\"".PrintReady(stripslashes(get_user_setting($user, "comment")))."\"  src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\">";
 		print "</td>\n";
-		$userName = getUserFullName($username);
+		$userName = getUserFullName($user);
 		if ($TEXT_DIRECTION=="ltr") print "\t<td class=\"optionbox wrap\">".$userName. getLRM() . "</td>\n";
 		else                        print "\t<td class=\"optionbox wrap\">".$userName. getRLM() . "</td>\n";
-		print "\t<td class=\"optionbox wrap\">".$pgv_lang["lang_name_".$user["language"]]."<br /><img src=\"".$language_settings[$user["language"]]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$user["language"]]."\" title=\"".$pgv_lang["lang_name_".$user["language"]]."\" /></td>\n";
+		print "\t<td class=\"optionbox wrap\">".$pgv_lang["lang_name_".get_user_setting($user, 'language')]."<br /><img src=\"".$language_settings[get_user_setting($user, 'language')]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".get_user_setting($user, 'language')]."\" title=\"".$pgv_lang["lang_name_".get_user_setting($user, 'language')]."\" /></td>\n";
 		print "\t<td class=\"optionbox\">";
 		print "<a href=\"javascript: ".$pgv_lang["privileges"]."\" onclick=\"expand_layer('user-geds".$k."'); return false;\"><img id=\"user-geds".$k."_img\" src=\"".$PGV_IMAGE_DIR."/";
 		if ($showprivs == false) print $PGV_IMAGES["plus"]["other"];
@@ -729,15 +730,13 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 		if ($showprivs == false) print "none\">";
 		else print "block\">";
 		print "<ul>";
-		if ($user["canadmin"]) print "<li class=\"warning\">".$pgv_lang["can_admin"]."</li>\n";
+		if (get_user_setting($user, 'canadmin')) print "<li class=\"warning\">".$pgv_lang["can_admin"]."</li>\n";
 		uksort($GEDCOMS, "strnatcasecmp");
 		reset($GEDCOMS);
 		foreach($GEDCOMS as $gedid=>$gedcom) {
-			if (isset($user["canedit"][$gedid])) $vval = $user["canedit"][$gedid];
-			else $vval = "none";
+			$vval = get_user_gedcom_setting($user, $gedid, 'canedit');
 			if ($vval == "") $vval = "none";
-			if (isset($user["gedcomid"][$gedid])) $uged = $user["gedcomid"][$gedid];
-			else $uged = "";
+			$uged = get_user_gedcom_setting($user, $gedid, 'gedcomid');
 			if ($vval=="accept" || $vval=="admin") print "<li class=\"warning\">";
 			else print "<li>";
 			print $pgv_lang[$vval]." ";
@@ -748,32 +747,30 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 		print "</div>";
 		$k++;
 		print "</td>\n";
-		if (((date("U") - $user["reg_timestamp"]) > 604800) && ($user["verified"]!="yes")) print "\t<td class=\"optionbox red\">";
+		if (((date("U") - get_user_setting($user, 'reg_timestamp')) > 604800) && (get_user_setting($user, 'verified')!="yes")) print "\t<td class=\"optionbox red\">";
 		else print "\t<td class=\"optionbox wrap\">";
-		print format_timestamp($user["reg_timestamp"]);
+		print format_timestamp(get_user_setting($user,'reg_timestamp'));
 		print "</td>\n";
 		print "\t<td class=\"optionbox wrap\">";
-		if ($user["reg_timestamp"] > $user["sessiontime"]) {
+		if (get_user_setting($user,'reg_timestamp') > get_user_setting($user,'sessiontime')) {
 			print $pgv_lang["never"];
 		}
 		else {
-			print format_timestamp($user["sessiontime"]);
+			print format_timestamp(get_user_setting($user,'sessiontime'));
 		}
 		print "</td>\n";
 		print "\t<td class=\"optionbox wrap\">";
-		if ($user["verified"]=="yes") print $pgv_lang["yes"];
+		if (get_user_setting($user, 'verified')=="yes") print $pgv_lang["yes"];
 		else print $pgv_lang["no"];
 		print "</td>\n";
 		print "\t<td class=\"optionbox wrap\">";
-		if ($user["verified_by_admin"]=="yes") print $pgv_lang["yes"];
+		if (get_user_setting($user, 'verified_by_admin')=="yes") print $pgv_lang["yes"];
 		else print $pgv_lang["no"];
 		print "</td>\n";
 		if ($view != "preview") {
 			print "\t<td class=\"optionbox wrap\">";
 			if (getUserName()!=$username) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($username)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $username');\">".$pgv_lang["delete"]."</a>";
 			print "</td>\n";
-			//else if (begRTLText($username)) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($username)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('?".$pgv_lang["confirm_user_delete"]." $username');\">".$pgv_lang["delete"]."</a><br />\n";
-			//else print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($username)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('?$username ".$pgv_lang["confirm_user_delete"]." ');\">".$pgv_lang["delete"]."</a><br />\n";
 		}
 		print "</tr>\n";
 	}
@@ -922,14 +919,14 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin_help", "qm", "verified_by_admin"); print $pgv_lang["verified_by_admin"];?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php $tab++; print $tab; ?>" value="yes" checked="checked" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_change_lang_help", "qm", "change_lang");print $pgv_lang["change_lang"];?></td><td class="optionbox wrap" valign="top"><?php
 
-		$user = GetUser(GetUserName());
+		$user_lang = get_user_setting(GetUserName(), 'language');
 		if ($ENABLE_MULTI_LANGUAGE) {
 			$tab++;
 	      	print "<select name=\"user_language\" tabindex=\"".$tab."\" style=\"{ font-size: 9pt; }\">";
 		  	foreach ($pgv_language as $key => $value) {
 			  	if ($language_settings[$key]["pgv_lang_use"]) {
 		      		print "\n\t\t\t<option value=\"$key\"";
-	      			if ($key == $user["language"]) {
+	      			if ($key == $user_lang) {
 			      	    print " selected=\"selected\"";
 	      			}
 			 		print ">" . $pgv_lang[$key] . "</option>";
@@ -1038,51 +1035,52 @@ if ($action == "cleanup") {
 	<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["options"]; ?></td></tr>
 	<?php
 	// Check users not logged in too long
-	$users = GetUsers();
 	$ucnt = 0;
-	foreach($users as $key=>$user) {
-		$userName = getUserFullName($key);
-		if ($user["sessiontime"] == "0") $datelogin = $user["reg_timestamp"];
-		else $datelogin = $user["sessiontime"];
-		if ((mktime(0, 0, 0, (int)date("m")-$month, (int)date("d"), (int)date("Y")) > $datelogin) && ($user["verified"] == "yes") && ($user["verified_by_admin"] == "yes")) {
-			?><tr><td class="descriptionbox"><?php print $user["username"]." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["usr_idle_toolong"];
+	foreach(get_all_users() as $user) {
+		$userName = getUserFullName($user);
+		if (get_user_setting($user,'sessiontime') == "0")
+			$datelogin = get_user_setting($user, 'reg_timestamp');
+		else
+			$datelogin = get_user_setting($user, 'sessiontime');
+		if ((mktime(0, 0, 0, (int)date("m")-$month, (int)date("d"), (int)date("Y")) > $datelogin) && (get_user_setting($user,'verified') == "yes") && (get_user_setting($user, 'verified_by_admin') == "yes")) {
+			?><tr><td class="descriptionbox"><?php print $user." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["usr_idle_toolong"];
 			$date=new GedcomDate(date("d M Y", $datelogin));
 			print $date->Display(false);
 			$ucnt++;
-			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user["username"]); ?>" value="yes" /></td></tr><?php
+			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user); ?>" value="yes" /></td></tr><?php
 		}
 	}
 
 	// Check unverified users
-	foreach($users as $key=>$user) {
-		if (((date("U") - $user["reg_timestamp"]) > 604800) && ($user["verified"]!="yes")) {
-			$userName = getUserFullName($key);
-			?><tr><td class="descriptionbox"><?php print $user["username"]." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unveru"];
+	foreach(get_all_users() as $user) {
+		if (((date("U") - get_user_setting($user,'reg_timestamp')) > 604800) && (get_user_setting($user,'verified')!="yes")) {
+			$userName = getUserFullName($user);
+			?><tr><td class="descriptionbox"><?php print $user." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unveru"];
 			$ucnt++;
-			?></td><td class="optionbox"><input type="checkbox" checked="checked" name="<?php print "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user["username"]); ?>" value="yes" /></td></tr><?php
+			?></td><td class="optionbox"><input type="checkbox" checked="checked" name="<?php print "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user); ?>" value="yes" /></td></tr><?php
 		}
 	}
 
 	// Check users not verified by admin
-	foreach($users as $key=>$user) {
-		if (($user["verified_by_admin"]!="yes") && ($user["verified"] == "yes")) {
-			$userName = getUserFullName($key);
-			?><tr><td  class="descriptionbox"><?php print $user["username"]." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unvera"];
-			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user["username"]); ?>" value="yes" /></td></tr><?php
+	foreach(get_all_users() as $user) {
+		if ((get_user_setting($user,'verified_by_admin')!="yes") && (get_user_setting($user,'verified') == "yes")) {
+			$userName = getUserFullName($user);
+			?><tr><td  class="descriptionbox"><?php print $user." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unvera"];
+			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user); ?>" value="yes" /></td></tr><?php
 			$ucnt++;
 		}
 	}
 
 	// Then check obsolete gedcom rights
 	$gedrights = array();
-	foreach($users as $key=>$user) {
-		foreach($user["canedit"] as $gedid=>$data) {
+	foreach(get_all_users() as $user) {
+		foreach(unserialize(get_user_setting($user, 'canedit')) as $gedid=>$data) {
 			if ((!isset($GEDCOMS[$gedid])) && (!in_array($gedid, $gedrights))) $gedrights[] = $gedid;
 		}
-		foreach($user["gedcomid"] as $gedid=>$data) {
+		foreach(unserialize(get_user_setting($user, 'gedcomid')) as $gedid=>$data) {
 			if ((!isset($GEDCOMS[$gedid])) && (!in_array($gedid, $gedrights))) $gedrights[] = $gedid;
 		}
-		foreach($user["rootid"] as $gedid=>$data) {
+		foreach(unserialize(get_user_setting($user, 'rootid')) as $gedid=>$data) {
 			if ((!isset($GEDCOMS[$gedid])) && (!in_array($gedid, $gedrights))) $gedrights[] = $gedid;
 		}
 	}
@@ -1109,28 +1107,31 @@ if ($action == "cleanup") {
 }
 // NOTE: No table parts
 if ($action == "cleanup2") {
-	$users = getUsers();
-	foreach($users as $key=>$user) {
-		$var = "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user["username"]);
+	foreach(get_all_users() as $user) {
+		$var = "del_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $user);
 		if (isset($$var)) {
-			deleteUser($key);
-			print $pgv_lang["usr_deleted"]; print $user["username"]."<br />";
-		}
-		else {
-			foreach($user["canedit"] as $gedid=>$data) {
+			deleteUser($user);
+			print $pgv_lang["usr_deleted"]; print $user."<br />";
+		} else {
+			foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$data) {
 				$var = "delg_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $gedid);
-				if (isset($$var)) {
-					unset($user["canedit"][$gedid]);
-					print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rights"].$user["username"]."<br />";
-					if (isset($user["rootid"][$gedid])) {
-						unset($user["rootid"][$gedid]);
-						print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rootid"].$user["username"]."<br />";
-					}
-					if (isset($user["gedcomid"][$gedid])) {
-						unset($user["gedcomid"][$gedid]);
-						print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_gedcomid"].$user["username"]."<br />";
-					}
-					updateUser($key, $user, "changed");
+				if (isset($$var) && get_user_gedcom_setting($user, $gedid, 'canedit')) {
+					set_user_gedcom_setting($user, $gedid, 'canedit', null);
+					print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rights"].$user."<br />";
+				}
+			}
+			foreach(unserialize(get_user_setting($user,'rootid')) as $gedid=>$data) {
+				$var = "delg_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $gedid);
+				if (isset($$var) && get_user_gedcom_setting($user, $gedid, 'rootid')) {
+					set_user_gedcom_setting($user, $gedid, 'rootid', null);
+					print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rootid"].$user."<br />";
+				}
+			}
+			foreach(unserialize(get_user_setting($user,'gedcomid')) as $gedid=>$data) {
+				$var = "delg_".preg_replace(array("/\./","/-/","/ /"), array("_","_","_"), $gedid);
+				if (isset($$var) && get_user_gedcom_setting($user, $gedid, 'gedcomid')) {
+					set_user_gedcom_setting($user, $gedid, 'gedcomid', null);
+					print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_gedcomid"].$user."<br />";
 				}
 			}
 		}
@@ -1171,7 +1172,6 @@ if ($action == "cleanup2") {
 	<tr>
       	<td class="optionbox" colspan="3">
 	<?php
-	$users = getUsers();
 	$totusers = 0;			// Total number of users
 	$warnusers = 0;			// Users with warning
 	$applusers = 0;			// Users who have not verified themselves
@@ -1179,19 +1179,18 @@ if ($action == "cleanup2") {
 	$adminusers = 0;		// Administrators
 	$userlang = array();	// Array for user languages
 	$gedadmin = array();	// Array for gedcom admins
-	foreach($users as $username=>$user) {
-		if (empty($user["language"])) $user["language"]=$LANGUAGE;
+	foreach(get_all_users() as $user) {
 		$totusers = $totusers + 1;
-		if (((date("U") - $user["reg_timestamp"]) > 604800) && ($user["verified"]!="yes")) $warnusers++;
+		if (((date("U") - get_user_setting($user,'reg_timestamp')) > 604800) && (get_user_setting($user,'verified')!="yes")) $warnusers++;
 		else {
-			if (!empty($user["comment_exp"])) {
-				if ((strtotime($user["comment_exp"]) != "-1") && (strtotime($user["comment_exp"]) < time("U"))) $warnusers++;
+			if (get_user_setting($user,'comment_exp')) {
+				if ((strtotime(get_user_setting($user,'comment_exp')) != "-1") && (strtotime(get_user_setting($user,'comment_exp')) < time("U"))) $warnusers++;
 			}
 		}
-		if (($user["verified_by_admin"] != "yes") && ($user["verified"] == "yes")) $nverusers++;
-		if ($user["verified"] != "yes") $applusers++;
-		if ($user["canadmin"]) $adminusers++;
-		foreach($user["canedit"] as $gedid=>$rights) {
+		if ((get_user_setting($user,'verified_by_admin') != "yes") && (get_user_setting($user,'verified') == "yes")) $nverusers++;
+		if (get_user_setting($user,'verified') != "yes") $applusers++;
+		if (get_user_setting($user,'canadmin')) $adminusers++;
+		foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$rights) {
 			if ($rights == "admin") {
 				if (isset($GEDCOMS[$gedid])) {
 					if (isset($gedadmin[$GEDCOMS[$gedid]["title"]])) $gedadmin[$GEDCOMS[$gedid]["title"]]["number"]++;
@@ -1203,10 +1202,11 @@ if ($action == "cleanup2") {
 				}
 			}
 		}
-		if (isset($userlang[$pgv_lang["lang_name_".$user["language"]]])) $userlang[$pgv_lang["lang_name_".$user["language"]]]["number"]++;
+		if (isset($userlang[$pgv_lang["lang_name_".get_user_setting($user,'language')]]))
+			$userlang[$pgv_lang["lang_name_".get_user_setting($user,'language')]]["number"]++;
 		else {
-			$userlang[$pgv_lang["lang_name_".$user["language"]]]["langname"] = $user["language"];
-			$userlang[$pgv_lang["lang_name_".$user["language"]]]["number"] = 1;
+			$userlang[$pgv_lang["lang_name_".get_user_setting($user,'language')]]["langname"] = get_user_setting($user,'language');
+			$userlang[$pgv_lang["lang_name_".get_user_setting($user,'language')]]["number"] = 1;
 		}
 	}
 	print "<table class=\"width100 $TEXT_DIRECTION\">";
