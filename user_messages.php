@@ -119,24 +119,22 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			print "</table>\n";
 			print "<input type=\"submit\" value=\"".$pgv_lang["delete_selected_messages"]."\" /><br /><br />\n";
 		}
-		$users = getUsers();
+		$users = get_all_users();
 		if (count($users)>1) {
 			print $pgv_lang["message"]." <select name=\"touser\">\n";
 			$username = getUserName();
-			$usersortfields = array("lastname","firstname");
-			uasort($users, "usersort");
 			if (userIsAdmin()) {
 				print "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
 				print "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
 				print "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
 			}
-			foreach($users as $indexval => $user) {
-				if ($username!=$user["username"] && $user["verified_by_admin"]) {
-					$userName=getUserFullName($indexval);
-					print "<option value=\"".$user["username"]."\"";
+			foreach($users as $user) {
+				if ($username!=$user && get_user_setting($user, 'verified_by_admin')=='yes') {
+					$userName=getUserFullName($user);
+					print "<option value=\"".$user."\"";
 					print ">".PrintReady($userName);
-					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".$user["username"] . getLRM() . "</option>\n";
-					else print " " . getRLM() . " - ".$user["username"]. getRLM() . "</option>\n";
+					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".$user . getLRM() . "</option>\n";
+					else print " " . getRLM() . " - ".$user. getRLM() . "</option>\n";
 				}
 			}
 			print "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
