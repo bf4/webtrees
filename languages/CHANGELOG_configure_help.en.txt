@@ -45,6 +45,7 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+* many variables									18 Nov 2008				w  Removed text like "This sets \$variablename etc"  Doesn't affect translation
 *$pgv_lang["index_gedcom_news_adm_help"]			07 Feb 2008				W
 *$pgv_lang["WELCOME_TEXT_AUTH_MODE_CUST_help"]		07 Feb 2008				W
 *$pgv_lang["add_faq_header_help"]					07 Feb 2008				W
