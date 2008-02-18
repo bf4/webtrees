@@ -568,8 +568,7 @@ if ($action=="update") {
 							<td class="optionbox width20">
 								<select size="1" name="v_new_user_privacy_username">
 								<?php
-								$users = getUsers();
-								foreach($users as $username => $user)
+								foreach(get_all_users() as $username)
 								{
 									print "<option";
 									print " value=\"";

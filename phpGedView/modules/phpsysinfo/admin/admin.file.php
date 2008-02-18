@@ -67,16 +67,6 @@ $article_handler =& xoops_getmodulehandler('article', $GLOBALS["artdirname"]);
 $criteria = new Criteria("art_id", "(".implode(",",array_keys($aids)).")", "IN");
 $articles =& $article_handler->getAll($criteria, array("art_title AS title"), false);
 
-/*
-if(count($uids)>0){
-	$member_handler =& xoops_gethandler('member');
-	$user_criteria = "(".implode(",",array_keys($uids)).")";
-	$users = $member_handler->getUsers( new Criteria('uid', $user_criteria, 'IN'), true);
-}else{
-	$users = null;
-}
-*/
-
 if ( $file_count > $xoopsModuleConfig['articles_perpage']) {
 	include(XOOPS_ROOT_PATH.'/class/pagenav.php');
 	$nav = new XoopsPageNav($file_count, $xoopsModuleConfig['articles_perpage'], $start, "start", 'type='.$type);

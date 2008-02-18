@@ -61,7 +61,6 @@ else $media_mapping = false;
 if ($DBTYPE=='sqlite') {
 
 	print "<br /><br />Collecting user information<br />\n";
-	$users = getUsers();
 
 	print "Dropping users table<br />";
 	$sql = "DROP TABLE ".$TBLPREFIX."users";
@@ -113,18 +112,16 @@ if ($DBTYPE=='sqlite') {
 	cleanup_database();
 
 	print "<br />Storing user information<br />";
-	foreach($users as $username=>$user) {
+	foreach(get_all_users() as $username) {
 		print "Storing <i>".$username."</i> user information<br />";
-		$ct = preg_match('/(.*) (.*)$/', $user['fullname'], $match);
-		if ($ct>0) {
-			$user['firstname'] = trim($match[1]);
-			$user['lastname'] = trim($match[2]);
+		$fullname=get_user_setting($username, 'fullname');
+		if (preg_match('/(.*) (.*)$/', $fullname, $match)) {
+			set_user_setting($username, 'firstname', trim($match[1]));
+			set_user_setting($username, 'lastname',  trim($match[2]));
+		} else {
+			set_user_setting($username, 'firstname', $fullname);
+			set_user_setting($username, 'lastname',  $fullname);
 		}
-		else {
-			$user['firstname'] = $user['fullname'];
-			$user['lastname'] = $user['fullname'];
-		}
-		addUser($user);
 	}
 }
 else {

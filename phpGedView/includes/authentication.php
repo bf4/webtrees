@@ -173,23 +173,6 @@ function userUpdateLogin($username) {
 }
 
 /**
- * return a sorted array of user
- *
- * returns a sorted array of the users in the system
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#users
- * @param string $field the field in the user array to sort on
- * @param string $order asc or dec
- * @return array returns a sorted array of users
- */
-function getUsers($field='username', $order='asc', $sort2='firstname') {
-	$users = array();
-	foreach (get_all_users($order, $field, $sort2) as $username) {
-		$users[$username]=getUser($username);
-	}
-	return $users;
-}
-
-/**
  * get the current username
  *
  * gets the username for the currently active user

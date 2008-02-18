@@ -57,7 +57,7 @@ function GetGEDFromZIP($zipfile, $extract=true) {
 	if ($slpos) $path = substr($zipfile, 0, $slpos+1);
 	else $path = $INDEX_DIRECTORY;
 	// Scan the files and return the first .ged found
-	foreach($list as $key=>$listitem) {
+	foreach ($list as $key=>$listitem) {
 		if (($listitem["status"]="ok") && (strstr(strtolower($listitem["filename"]), ".")==".ged")) {
 			$filename = basename($listitem["filename"]);
 			if ($extract == false) return $filename;
@@ -292,7 +292,7 @@ if ($action=="update") {
 	$ct = preg_match("'/$'", $_POST["NEW_MEDIA_DIRECTORY"]);
 	if ($ct==0) $_POST["NEW_MEDIA_DIRECTORY"] .= "/";
 	if (substr($_POST["NEW_MEDIA_DIRECTORY"],0,2)=="./") $_POST["NEW_MEDIA_DIRECTORY"] = substr($_POST["NEW_MEDIA_DIRECTORY"],2);
-	if(preg_match("/.*[a-zA-Z]{1}:.*/",$_POST["NEW_MEDIA_DIRECTORY"])>0) $errors = true;
+	if (preg_match("/.*[a-zA-Z]{1}:.*/",$_POST["NEW_MEDIA_DIRECTORY"])>0) $errors = true;
 	if (!isFileExternal($_POST["NEW_HOME_SITE_URL"])) $_POST["NEW_HOME_SITE_URL"] = "http://".$_POST["NEW_HOME_SITE_URL"];
 	$_POST["NEW_PEDIGREE_ROOT_ID"] = trim($_POST["NEW_PEDIGREE_ROOT_ID"]);
 	if ($_POST["NEW_DAYS_TO_SHOW_LIMIT"] < 1) $_POST["NEW_DAYS_TO_SHOW_LIMIT"] = 1;
@@ -557,7 +557,7 @@ if ($action=="update") {
 			unlink ($INDEX_DIRECTORY.$FILE."_upcoming.php");
 		}
 	}
-	foreach($_POST as $key=>$value) {
+	foreach ($_POST as $key=>$value) {
 		if ($key != "path") {
 			$key=preg_replace("/NEW_/", "", $key);
 			if ($value=='yes') $$key=true;
@@ -668,13 +668,13 @@ var searchable_tds, searchable_text;
 /* Function that returns all occurances of an element with the tagName "tag" that DO NOT have a parent (up to the root "node") with the same tagName 
 (i.e. div A is a parent node of div B, this function would return only div A)*/
 function getFirstElementsByTagName(node, tag){
-	if(!node || !tag || !node.childNodes) return [];
+	if (!node || !tag || !node.childNodes) return [];
 	var rtn = [];
 	var elms = node.getElementsByTagName(tag);
 	for(var i=0; i<elms.length; i++){
 		var parent = elms[i];
-		while(parent && parent.parentNode && parent.parentNode.tagName.toUpperCase().indexOf(tag) < 0){
-			if(parent.parentNode == node){
+		while (parent && parent.parentNode && parent.parentNode.tagName.toUpperCase().indexOf(tag) < 0){
+			if (parent.parentNode == node){
 				rtn[rtn.length] = elms[i];
 				break;
 			}
@@ -690,15 +690,15 @@ function capture_text(form){
 	var trs = form.getElementsByTagName("TR");		// Get the rows in the form
 	for(var i=0; i<trs.length; i++){				// For each row in the form
 		var tds = getFirstElementsByTagName(trs[i], "TD");// Get the TD's
-		if(tds.length == 2 && tds[0].className.toUpperCase().indexOf("DESCRIPTIONBOX") >= 0){						// If there are exactly 2 TD's
+		if (tds.length == 2 && tds[0].className.toUpperCase().indexOf("DESCRIPTIONBOX") >= 0){						// If there are exactly 2 TD's
 			searchable_tds[searchable_tds.length] = tds[0];	// Save the TD's
 			var text_nodes = ""; // variable for building the searchable text string
 			for(var j=0; j<tds[0].childNodes.length; j++){ // for each child node in the td
-				if(tds[0].childNodes[j].nodeType == 3){ // if the node is a TEXT NODE
+				if (tds[0].childNodes[j].nodeType == 3){ // if the node is a TEXT NODE
 					text_nodes = text_nodes + " " + tds[0].childNodes[j].textContent.toUpperCase(); // append a space and the capitalized text
 				}
 			}
-			if(text_nodes && text_nodes != ""){
+			if (text_nodes && text_nodes != ""){
 				searchable_text[searchable_text.length] = text_nodes; // Save the text, case insensitively
 			}
 		}
@@ -707,10 +707,10 @@ function capture_text(form){
 /* Starting at a given node (or TD,) all parents, up to the form, are expanded & otherwise made visible. */
 function expand_to_the_top(td){
 	var p = td.parentNode;							// Start by expanding the row
-	while(p && p.tagName.toUpperCase() != "FORM"){  // And expand until the parent form is hit
+	while (p && p.tagName.toUpperCase() != "FORM"){  // And expand until the parent form is hit
 		/* Expand current node */
-		if(p.style){								// If this foo has style, we can expand it
-			if(p.tagName.toUpperCase() == "DIV" && p.id != ""){   // If this foo is a div, we can use the available expansion function provided in some other Javascript
+		if (p.style){								// If this foo has style, we can expand it
+			if (p.tagName.toUpperCase() == "DIV" && p.id != ""){   // If this foo is a div, we can use the available expansion function provided in some other Javascript
 				expand_layer(p.id, true);				// Expand it!
 			}
 			else{									// Otherwise
@@ -722,16 +722,16 @@ function expand_to_the_top(td){
 }
 /* Function that SHOWS all rows */
 function show_all(root, first){
-	if(root.childNodes){
+	if (root.childNodes){
     	for(var i=0; i<root.childNodes.length; i++)
     	{
     		show_all(root.childNodes[i], false);
-    		if(root.style){
+    		if (root.style){
     			root.style.display = "";
     		}
     	}
 	}
-	if(first == undefined){
+	if (first == undefined){
 		collapse_divs(root);
 	}
 }
@@ -761,7 +761,7 @@ function hide_divs(root){
 function control_divs(root, boolexpand){
 	var divs = root.getElementsByTagName("div");
 	for(var i=0; i<divs.length; i++){
-		if(divs[i].id != ""){   // If this foo is a div, we can use the available expansion function provided in some other Javascript
+		if (divs[i].id != ""){   // If this foo is a div, we can use the available expansion function provided in some other Javascript
 			expand_layer(divs[i].id, boolexpand);				// Collapse it!
 		}
 	}
@@ -769,9 +769,9 @@ function control_divs(root, boolexpand){
 /* Function that filters editconfig_gedcom.php options */
 function hide_irrelevant(txt){
 	var form = document.getElementById("configform"); 		// find the form we are sifting through
-	if(txt && txt.length > 0 && txt != " "){				// If we have text to search for
+	if (txt && txt.length > 0 && txt != " "){				// If we have text to search for
 		/* Save the TD's and TEXT's that will be searched if they haven't already been saved */
-		if(searchable_tds == undefined){					// If we haven't already collected the searchable TD's & searchable texts
+		if (searchable_tds == undefined){					// If we haven't already collected the searchable TD's & searchable texts
 			capture_text(form);
 		}
 		hide_all(form);							// hide everything we dont want to see (everthing, until we find matches)
@@ -781,7 +781,7 @@ function hide_irrelevant(txt){
 		/* Search each searchable TEXT and see if we have a match */
 		var matches = 0;
 		for(var i=0; i<searchable_tds.length; i++){			// For each searchable TD
-			if(searchable_text[i].indexOf(txt) > -1){					// If the text matches
+			if (searchable_text[i].indexOf(txt) > -1){					// If the text matches
 				expand_to_the_top(searchable_tds[i]);		// Expand this node, and all parent's parent's nodes until we hit the form
 				matches++;
 			}
@@ -799,7 +799,7 @@ function hide_irrelevant(txt){
 /* Function that shows or hides Hebrew calendar options */
 function show_hebrew(){
 	var calendar = document.getElementById("NEW_CALENDAR_FORMAT");
-	if(calendar != undefined)
+	if (calendar != undefined)
 		show_jewish(calendar, "hebrew-cal");
 }
 /* Function that resets the search field and collapses the form divs */
@@ -810,7 +810,7 @@ function clear_gedfilter(){
 }
 /* Function that writes the results to a span under the search field; -1 Means to clear it */
 function display_results(amount_found){
-	if(amount_found == -1)
+	if (amount_found == -1)
 		document.getElementById("gedfilter_results").innerHTML = "";
     else
     	document.getElementById("gedfilter_results").innerHTML = "<?php print $pgv_lang["ged_filter_results"] ?>  " + amount_found;	
@@ -958,7 +958,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 				//print "prefix:$prefix suffix:$suffix";
 				$BLOCK_SIZE = 1024*4;	//-- 4k bytes per read
 				$fcontents = "";
-				while(!feof($fpged)) {
+				while (!feof($fpged)) {
 					$fcontents = fread($fpged, $BLOCK_SIZE);
 					//-- convert mac line endings
 					$fcontents = preg_replace("/\r(\d)/", "\n$1", $fcontents);
@@ -970,7 +970,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 						else {
 							$PEDIGREE_ROOT_ID = $gid;
 							$pos2 = strpos($fcontents, "\n0", $pos1+1);
-							while((!$pos2)&&(!feof($fpged))) {
+							while ((!$pos2)&&(!feof($fpged))) {
 								$fcontents .= fread($fpged, $BLOCK_SIZE);
 								$pos2 = strpos($fcontents, "\n0", $pos1+1);
 							}
@@ -1183,7 +1183,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_general_conf"]."\" onclick
 		<td class="descriptionbox wrap width20"><?php print_help_link("MEDIA_DIRECTORY_help", "qm", "MEDIA_DIRECTORY"); print $pgv_lang["MEDIA_DIRECTORY"];?></td>
 		<td class="optionbox"><input type="text" size="50" name="NEW_MEDIA_DIRECTORY" value="<?php print $MEDIA_DIRECTORY?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MEDIA_DIRECTORY_help');" />
 		<?php
-		if(preg_match("/.*[a-zA-Z]{1}:.*/",$MEDIA_DIRECTORY)>0) print "<span class=\"error\">".$pgv_lang["media_drive_letter"]."</span>\n";
+		if (preg_match("/.*[a-zA-Z]{1}:.*/",$MEDIA_DIRECTORY)>0) print "<span class=\"error\">".$pgv_lang["media_drive_letter"]."</span>\n";
 		?>
 		</td>
 	</tr>
@@ -1967,13 +1967,13 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["useropt_conf"]."\" onclick=\"exp
 			<select name="themeselect" dir="ltr" tabindex="<?php $i++; print $i?>"  onchange="document.configform.NTHEME_DIR.value=document.configform.themeselect.options[document.configform.themeselect.selectedIndex].value;">
 				<?php
 					$themes = get_theme_names();
-					foreach($themes as $indexval => $themedir) {
+					foreach ($themes as $indexval => $themedir) {
 						print "<option value=\"".$themedir["dir"]."\"";
 						if ($themedir["dir"] == $NTHEME_DIR) print " selected=\"selected\"";
 						print ">".$themedir["name"]."</option>\n";
 					}
 				?>
-				<option value="themes/" <?php if($themeselect=="themes//") print "selected=\"selected\""; ?>><?php print $pgv_lang["other_theme"]; ?></option>
+				<option value="themes/" <?php if ($themeselect=="themes//") print "selected=\"selected\""; ?>><?php print $pgv_lang["other_theme"]; ?></option>
 			</select>
 			<input type="text" name="NTHEME_DIR" value="<?php print $NTHEME_DIR?>" size="40" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('THEME_DIR_help');" />
 	<?php
@@ -2025,12 +2025,11 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["contact_conf"]."\" onclick=\"exp
 		<td class="optionbox"><select name="NEW_CONTACT_EMAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('CONTACT_EMAIL_help');">
 		<?php
 			if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = getUserName();
-			$users = getUsers();
-			foreach($users as $indexval => $user) {
-				if ($user["verified_by_admin"]=="yes") {
-					print "<option value=\"".$user["username"]."\"";
-					if ($CONTACT_EMAIL==$user["username"]) print " selected=\"selected\"";
-					print ">".$user["lastname"].", ".$user["firstname"]." - ".$user["username"]."</option>\n";
+			foreach (get_all_users() as $user) {
+				if (get_user_setting($user, 'verified_by_admin')=="yes") {
+					print "<option value=\"".$user."\"";
+					if ($CONTACT_EMAIL==$user) print " selected=\"selected\"";
+					print ">".getUserFullName($user)." - ".$user."</option>\n";
 				}
 			}
 		?>
@@ -2055,14 +2054,12 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["contact_conf"]."\" onclick=\"exp
 		<td class="descriptionbox wrap width20"><?php print_help_link("WEBMASTER_EMAIL_help", "qm", "WEBMASTER_EMAIL"); print $pgv_lang["WEBMASTER_EMAIL"];?></td>
 		<td class="optionbox"><select name="NEW_WEBMASTER_EMAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WEBMASTER_EMAIL_help');">
 		<?php
-			$users = getUsers();
 			if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = getUserName();
-			uasort($users, "usersort");
-			foreach($users as $indexval => $user) {
-				if (userIsAdmin($user["username"])) {
-					print "<option value=\"".$user["username"]."\"";
-					if ($WEBMASTER_EMAIL==$user["username"]) print " selected=\"selected\"";
-					print ">".$user["lastname"].", ".$user["firstname"]." - ".$user["username"]."</option>\n";
+			foreach (get_all_users() as $user) {
+				if (userIsAdmin($user)) {
+					print "<option value=\"".$user."\"";
+					if ($WEBMASTER_EMAIL==$user) print " selected=\"selected\"";
+					print ">".getUserFullName($user)." - ".$user."</option>\n";
 				}
 			}
 		?>
