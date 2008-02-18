@@ -700,7 +700,7 @@ if (!function_exists("showLivingNameByID")) {
  * @return	boolean return true to show the person's name, return false to keep it private
  */
 function showLivingNameByID($pid) {
-	global $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $person_privacy, $user_privacy;
+	global $SHOW_LIVING_NAMES, $person_privacy, $user_privacy;
 
 	if (displayDetailsById($pid)) return true;
 	$username = getUserName();
@@ -740,28 +740,30 @@ if (!function_exists("showFact")) {
  * @return	boolean return true to show the fact, return false to keep it private
  */
 function showFact($fact, $pid, $type='INDI') {
-	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE;
 	global $global_facts, $person_facts, $SHOW_SOURCES;
-
-	$username = getUserName();
 
 	//-- first check the global facts array
 	if (isset($global_facts[$fact]["show"])) {
-		if (getUserAccessLevel()>$global_facts[$fact]["show"]) return false;
+		if (getUserAccessLevel()>$global_facts[$fact]["show"])
+			return false;
 	}
 	//-- check the person facts array
 	if (isset($person_facts[$pid][$fact]["show"])) {
-		if (getUserAccessLevel()>$person_facts[$pid][$fact]["show"]) return false;
+		if (getUserAccessLevel()>$person_facts[$pid][$fact]["show"])
+			return false;
 	}
 	if ($fact=="SOUR") {
-		if ($SHOW_SOURCES<getUserAccessLevel()) return false;
+		if ($SHOW_SOURCES<getUserAccessLevel())
+			return false;
 	}
 	if ($fact!="NAME") {
-		$disp = displayDetailsById($pid, $type);
-		return $disp;
+		return displayDetailsById($pid, $type);
+	} else {
+		if (!displayDetailsById($pid, $type))
+			return showLivingNameById($pid);
+		else
+			return true;
 	}
-	else if (!displayDetailsById($pid, $type)) return showLivingNameById($pid);
-	else return true;
 }
 }
 
@@ -780,10 +782,7 @@ if (!function_exists("showFactDetails")) {
  * @return	boolean return true to show the fact details, return false to keep it private
  */
 function showFactDetails($fact, $pid) {
-	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE;
 	global $global_facts, $person_facts;
-
-	$username = getUserName();
 
 	//-- first check the global facts array
 	if (isset($global_facts[$fact]["details"])) {
@@ -964,23 +963,23 @@ function getUserAccessLevel() {
 function FactEditRestricted($pid, $factrec) {
 	global $GEDCOM, $FAM_ID_PREFIX;
 	
-	$username = getUserName();
-	if (userGedcomAdmin($username)) return false;
+	if (userGedcomAdmin()) {
+		return false;
+	}
 	
-	$ct = preg_match("/2 RESN (.*)/", $factrec, $match);
-	if ($ct > 0) {
+	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "privacy" || $match[1]=="locked") {
-			$user = getUser($username);
-			$myindi = "";
-			if (isset($user["gedcomid"][$GEDCOM])) $myindi = trim($user["gedcomid"][$GEDCOM]);
-			
-			if ($myindi == $pid) return false;
-			if (substr($pid,0,1) == $FAM_ID_PREFIX){
+			$myindi=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
+			if ($myindi == $pid) {
+				return false;
+			}
+			if (substr($pid,0,1) == $FAM_ID_PREFIX) {
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
-				if ($myindi == $parents["HUSB"]) return false;
-				if ($myindi == $parents["WIFE"]) return false;
+				if ($myindi == $parents["HUSB"] || $myindi == $parents["WIFE"]) {
+					return false;
+				}
 			}
 			return true;
 		}
@@ -999,25 +998,26 @@ function FactEditRestricted($pid, $factrec) {
 function FactViewRestricted($pid, $factrec) {
 	global $GEDCOM, $FAM_ID_PREFIX;
 	
-	$username = getUserName();
-	if (userGedcomAdmin($username)) return false;
+	if (userGedcomAdmin()) {
+		return false;
+	}
 	
-	$ct = preg_match("/2 RESN (.*)/", $factrec, $match);
-	if ($ct > 0) {
+	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "confidential") return true;
 		if ($match[1] == "privacy") {
-			$user = getUser($username);
-			$myindi = "";
-			if (isset($user["gedcomid"][$GEDCOM])) $myindi = trim($user["gedcomid"][$GEDCOM]);
-			if ($myindi == $pid) return false;
+			$myindi=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
+			if ($myindi == $pid) {
+				return false;
+			}
 			//-- NOTE: This could lead to a potential bug in GEDCOMS that do not prefix their records with a number
 			//-- it is safer to look up the gedcom record
 			if (substr($pid,0,1) == $FAM_ID_PREFIX){
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
-				if ($myindi == $parents["WIFE"]) return false;
-				if ($myindi == $parents["HUSB"]) return false;
+				if ($myindi == $parents["WIFE"] || $myindi == $parents["HUSB"]) {
+					return false;
+				}
 			}
 			return true;
 		}
