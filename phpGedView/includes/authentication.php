@@ -292,16 +292,15 @@ function userGedcomAdmin($username="", $ged="") {
  * @param string $username the username of the user to check
  * @return boolean true if user can access false if they cannot
  */
-function userCanAccess($username="") {
+function userCanAccess() {
 	global $GEDCOM;
+	static $cache=null;
 
-	if (empty($username))
+	if (is_null($cache)) {
 		$username=getUserName();
-
-	if (get_user_setting($username, 'canadmin')=='Y')
-		return true;
-
-	return get_user_gedcom_setting($username, $GEDCOM, 'canedit')!='none';
+		$cache=get_user_setting($username, 'canadmin')=='Y' || get_user_gedcom_setting($username, $GEDCOM, 'canedit')!='none';
+	}
+	return $cache;
 }
 
 /**
