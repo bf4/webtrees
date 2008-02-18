@@ -3,7 +3,7 @@
  * French FAQ texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007  PGV Development Team
+ * Copyright (C) 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$faqlist["FAQ_000_head"] = "\"FAQ\": Qu'est-ce que c'est?";
-$faqlist["FAQ_000_body"] = "<b>FAQ</b> est l'acronyme de l'expression anglaise <b>F</b>requently <b>A</b>sked <b>Q</b>uestion, c'est-à-dire: une question fréquemment posée.<br /><br />La liste des FAQ est une liste de questions fréquemment posées et leurs réponses.  Dressée par l'équipe de développement de PhpGedView, on l'augmente souvent.";
+$faqlist["FAQ_000_head"] = "\"FAQ\" : Qu'est-ce que c'est?";
+$faqlist["FAQ_000_body"] = "<b>FAQ</b> est l'acronyme de l'expression anglaise <b>F</b>requently <b>A</b>sked <b>Q</b>uestion, c'est-à-dire : une question fréquemment posée.<br /><br />La liste des FAQ est une liste de questions fréquemment posées et leurs réponses.  Dressée par l'équipe de développement de PhpGedView, on l'augmente souvent.";
 
 ?>
