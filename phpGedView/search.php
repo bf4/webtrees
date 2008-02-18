@@ -136,7 +136,7 @@ print_header($pgv_lang["search"]);
 </script>
 
 <h2 class="center"><?php print $controller->getPageTitle(); ?></h2>
-<?php $controller->printResults(); ?>
+<?php $somethingPrinted = $controller->printResults(); ?>
 <!--	/*************************************************** Search Form Outer Table **************************************************/ -->
 <form method="post" name="searchform" onsubmit="return checknames(this);" action="search.php">
 <input type="hidden" name="action" value="<?php print $controller->action; ?>" />
@@ -602,8 +602,8 @@ else
 <?php
 
 echo "<br /><br /><br />";
-// set the focus on the first field unless multisite
-if ($controller->action != "multisite") {
+// set the focus on the first field unless multisite or some search results have been printed
+if (($controller->action != "multisite") && !$somethingPrinted ) {
 ?>
 	<script language="JavaScript" type="text/javascript">
 	<!--
