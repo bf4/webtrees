@@ -69,7 +69,7 @@ if (!empty($uname)) {
 }
 
 $accept_success=false;
-if (userCanAccept($uname)) {
+if (userCanAccept()) {
 	if ($action=="accept") {
 		if ($PGV_DATABASE!="index") {
 			if (accept_changes($pid."_".$GEDCOM)) {
