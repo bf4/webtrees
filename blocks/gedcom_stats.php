@@ -220,10 +220,10 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				</td>
 				<td class="facts_value"><div dir="rtl">
 				<?php
-				if (userGedcomAdmin($username, $GEDCOM)){
-					echo "<a href=\"useradmin.php\">" . count(getUsers()) . "</a>";
+				if (userGedcomAdmin()){
+					echo "<a href=\"useradmin.php\">" . count(get_all_users()) . "</a>";
 				} else {
-					echo count(getUsers());
+					echo count(get_all_users());
 				}?>
 				</div></td>
 			</tr>

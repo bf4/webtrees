@@ -232,14 +232,15 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
     			</td>
     			<td class="optionbox" colspan=3> 
     			<select name="Users"> <option value=""></option>
-    			<?php $users = getusers(); 
-    				foreach($users as $username => $user)
-    				{
+    			<?php
+    				foreach(get_all_users() as $username) {
     					print "<option value=\"$username\"";
-    					if ($username==$task['t_username']) print " selected=\"selected\"";
-						print ">".$user['firstname']." ".$user['lastname']."</option>";
+							if ($username==$task['t_username']) {
+								print " selected=\"selected\"";
+							}
+							print ">".getUserFullName($username)."</option>";
     				}
-    				?>  		
+    			?>  		
     			</select>
     				
     			</td>

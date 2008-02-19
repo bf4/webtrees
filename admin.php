@@ -90,17 +90,19 @@ if (file_exists("img_editconfig.php")) $d_img_module_str = "<a href=\"img_editco
 
 $err_write = file_is_writeable("config.php");
 
-$users = getUsers();
 $verify_msg = false;
 $warn_msg = false;
-foreach($users as $indexval => $user) {
-	if (!$user["verified_by_admin"] && $user["verified"])  {
+foreach(get_all_users() as $user) {
+	if (get_user_setting($user, 'verified_by_admin')!='yes' && get_user_setting($user, 'verified')=='yes')  {
 		$verify_msg = true;
 	}
-	if (!empty($user["comment_exp"])) {
-		if ((strtotime($user["comment_exp"]) != "-1") && (strtotime($user["comment_exp"]) < time("U"))) $warn_msg = true;
+	$comment_exp=get_user_setting($user, 'comment_exp');
+	if (!empty($comment_exp) && (strtotime($comment_exp) != "-1") && (strtotime($comment_exp) < time("U"))) {
+		$warn_msg = true;
 	}
-	if (($verify_msg) && ($warn_msg)) break;
+	if ($verify_msg && $warn_msg) {
+		break;
+	}
 }
 
 ?>

@@ -42,7 +42,7 @@ $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
  * prints a list of other users who are logged in
  */
 function print_logged_in_users($block = true, $config = "", $side, $index) {
-	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION, $NAME_REVERSE;
+	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION;
 
 	$block = true; // Always restrict this block's height
 
@@ -50,12 +50,12 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	$NumAnonymous = 0;
 	$loggedusers = array ();
 	foreach (get_all_users() as $user_id=>$user_name) {
-		if (get_user_setting($user_id, 'loggedin') == "Y") {
+		if (get_user_setting($user_id,'loggedin') == "Y") {
 			if (time() - get_user_setting($user_id, 'sessiontime') > $PGV_SESSION_TIME && $user_name!=$cusername)
-				userLogout($user_name);
+				userLogout($user);
 			else {
-				if ((userIsAdmin()) || (get_user_setting($user_id, 'visibleonline')=='Y'))
-					$loggedusers[$user_id] = $user_name;
+				if (userIsAdmin() || get_user_setting($user_id, 'visibleonline'))
+					$loggedusers[]=$user_id;
 				else
 					$NumAnonymous++;
 			}
@@ -94,15 +94,12 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
 	foreach ($loggedusers as $user_id => $user_name) {
-		if ($NAME_REVERSE)
-			$userName = get_user_setting($user_id, 'lastname').' '.get_user_setting($user_id, 'firstname');
-		else
-			$userName = get_user_setting($user_id, 'firstname').' '.get_user_setting($user_id, 'lastname');
+		$userName=getUserFullName($user_id);
 		print "<tr><td>";
 		print "<br />" . PrintReady($userName);
 		print " - " . $user_name;
-		if (($cusername != $user_name) and ($user["contactmethod"] != "none")) {
-			print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user["username"] . "');\">" . $pgv_lang["message"] . "</a>";
+		if (($cusername != $user_name) && (get_user_setting($user, 'contactmethod') != "none")) {
+			print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_name . "');\">" . $pgv_lang["message"] . "</a>";
 		}
 		print "</td></tr>";
 	}

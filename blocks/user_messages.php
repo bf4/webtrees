@@ -35,7 +35,6 @@ $PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 //-- print user messages
 function print_user_messages($block=true, $config="", $side, $index) {
 		global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES, $usersortfields;
-		global $NAME_REVERSE;
 
 		$usermessages = getUserMessages(getUserName());
 
@@ -100,8 +99,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				print "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
 				print "<td class=\"list_value_wrap\">";
 				if ($tempuser) {
-					if ($NAME_REVERSE) $tempuserName = $tempuser["lastname"]." ".$tempuser["firstname"];
-					else $tempuserName = $tempuser["firstname"]." ".$tempuser["lastname"];
+					$tempuserName=getUserFullName($message["from"]);
 					print PrintReady($tempuserName);
 					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
 					else print " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
@@ -121,25 +119,22 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			print "</table>\n";
 			print "<input type=\"submit\" value=\"".$pgv_lang["delete_selected_messages"]."\" /><br /><br />\n";
 		}
-		$users = getUsers();
+		$users = get_all_users();
 		if (count($users)>1) {
 			print $pgv_lang["message"]." <select name=\"touser\">\n";
 			$username = getUserName();
-			$usersortfields = array("lastname","firstname");
-			uasort($users, "usersort");
 			if (userIsAdmin()) {
 				print "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
 				print "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
 				print "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
 			}
-			foreach($users as $indexval => $user) {
-				if ($username!=$user["username"] && $user["verified_by_admin"]) {
-					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"]; 
-					else $userName = $user["firstname"]." ".$user["lastname"];
-					print "<option value=\"".$user["username"]."\"";
+			foreach($users as $user) {
+				if ($username!=$user && get_user_setting($user, 'verified_by_admin')=='yes') {
+					$userName=getUserFullName($user);
+					print "<option value=\"".$user."\"";
 					print ">".PrintReady($userName);
-					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".$user["username"] . getLRM() . "</option>\n";
-					else print " " . getRLM() . " - ".$user["username"]. getRLM() . "</option>\n";
+					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".$user . getLRM() . "</option>\n";
+					else print " " . getRLM() . " - ".$user. getRLM() . "</option>\n";
 				}
 			}
 			print "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
