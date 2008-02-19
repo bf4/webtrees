@@ -93,18 +93,23 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				$showmsg=preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2",PrintReady($message["subject"]));
 				$showmsg=preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$showmsg);
 				print "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><b>".$showmsg."</b> <img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
-				if (!empty($message["created"])) $time = strtotime($message["created"]);
-				else $time = time();
-				$tempuser = getUser($message["from"]);
+				if (!empty($message["created"])) {
+					$time = strtotime($message["created"]);
+				} else {
+					$time = time();
+				}
 				print "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
 				print "<td class=\"list_value_wrap\">";
-				if ($tempuser) {
-					$tempuserName=getUserFullName($message["from"]);
-					print PrintReady($tempuserName);
-					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
-					else print " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
+				if (user_exists($message["from"])) {
+					print PrintReady(getUserFullName($message["from"]));
+					if ($TEXT_DIRECTION=="ltr") {
+						print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
+					} else {
+						print " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
+					}
+				} else {
+					print "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
 				}
-				else print "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
 				print "</td>\n";
 				print "</tr>\n";
 				print "<tr><td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message$key\" style=\"display: none;\">\n";
@@ -112,8 +117,12 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				$message["body"] = expand_urls($message["body"]);
 
 				print PrintReady($message["body"])."<br /><br />\n";
-				if (preg_match("/RE:/", $message["subject"])==0) $message["subject"]="RE:".$message["subject"];
-				if ($tempuser) print "<a href=\"javascript:;\" onclick=\"reply('".$message["from"]."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
+				if (preg_match("/RE:/", $message["subject"])==0) {
+					$message["subject"]="RE:".$message["subject"];
+				}
+				if (user_exists($message["from"])) {
+					print "<a href=\"javascript:;\" onclick=\"reply('".$message["from"]."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
+				}
 				print "<a href=\"index.php?action=deletemessage&amp;message_id=$key\" onclick=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">".$pgv_lang["delete"]."</a></div></td></tr>\n";
 			}
 			print "</table>\n";
