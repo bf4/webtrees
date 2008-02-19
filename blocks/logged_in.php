@@ -42,21 +42,20 @@ $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
  * prints a list of other users who are logged in
  */
 function print_logged_in_users($block = true, $config = "", $side, $index) {
-	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION, $NAME_REVERSE;
+	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION;
 
 	$block = true; // Always restrict this block's height
 
 	$cusername = getUserName();
 	$thisuser = getUser($cusername);
 	$NumAnonymous = 0;
-	$users = getUsers();
 	$loggedusers = array ();
-	foreach ($users as $indexval => $user) {
-		if ($user["loggedin"] == "Y") {
-			if (time() - $user["sessiontime"] > $PGV_SESSION_TIME && $user["username"] != $cusername)
-				userLogout($user["username"]);
+	foreach (get_all_users() as $user) {
+		if (get_user_setting($user,'loggedin') == "Y") {
+			if (time() - get_user_setting($user, 'sessiontime') > $PGV_SESSION_TIME && $user!=$cusername)
+				userLogout($user);
 			else {
-				if ((userIsAdmin()) || (($user['visibleonline']) && ($thisuser['visibleonline'])))
+				if (userIsAdmin() || get_user_setting($user, 'visibleonline'))
 					$loggedusers[] = $user;
 				else
 					$NumAnonymous++;
@@ -86,15 +85,13 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		$pgv_lang["global_num1"] = $LoginUsers; // Make it visible
 		$content .= "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
-	uasort($loggedusers, "usersort");
-	foreach ($loggedusers as $indexval => $user) {
-		if ($NAME_REVERSE) $userName = $user["lastname"] . " " . $user["firstname"];
-		else $userName = $user["firstname"] . " " . $user["lastname"];
+	foreach ($loggedusers as $user) {
+		$userName=getUserFullName($user);
 		$content .= "<tr><td>";
 		$content .= "<br />" . PrintReady($userName);
 		$content .= " - " . $user["username"];
-		if (($cusername != $user["username"]) and ($user["contactmethod"] != "none")) {
-			$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user["username"] . "');\">" . $pgv_lang["message"] . "</a>";
+		if (($cusername != $user) && (get_user_setting($user, 'contactmethod') != "none")) {
+			$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user . "');\">" . $pgv_lang["message"] . "</a>";
 		}
 		$content .= "</td></tr>";
 	}

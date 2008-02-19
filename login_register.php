@@ -125,8 +125,7 @@ switch ($action) {
 			// switch language to user settings
 			$oldLanguage = $LANGUAGE;
 			if ($LANGUAGE != $newuser["language"]) loadLanguage($newuser["language"]);
-			if ($NAME_REVERSE) $newuserName = $newuser["lastname"]." ".$newuser["firstname"];
-			else $newuserName = $newuser["firstname"]." ".$newuser["lastname"];
+			$newuserName=getUserFullName($user_name);
 			
 			$mail_body = "";
 			$mail_body .= str_replace("#user_fullname#", $newuserName, $pgv_lang["mail04_line01"]) . "\r\n\r\n";
@@ -587,8 +586,7 @@ switch ($action) {
 				$newuser = $user;
 				$olduser = $user;
 
- 				if ($NAME_REVERSE) $fullName = $newuser["lastname"]." ".$newuser["firstname"];
-				else $fullName = $newuser["firstname"]." ".$newuser["lastname"];
+				$fullName=getUserFullName($user_name);
 				
 				$newuser["verified"] = "yes";
 				$newuser["pwrequested"] = "";

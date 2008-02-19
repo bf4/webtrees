@@ -157,7 +157,7 @@ class Person extends GedcomRecord {
 	 * @return string
 	 */
 	function getSortableName($subtag="", $num=1, $starred=true) {
-		global $pgv_lang, $NAME_REVERSE, $UNDERLINE_NAME_QUOTES;
+		global $pgv_lang, $UNDERLINE_NAME_QUOTES;
 		global $unknownNN, $unknownPN, $indilist;
 		if (!$this->canDisplayName()) {
 			if (empty($subtag)) return $pgv_lang["private"];
@@ -203,7 +203,6 @@ class Person extends GedcomRecord {
 			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
 		}
 		if ($nsfx) $surn .= " ".trim($nsfx);
-		//		if ($NAME_REVERSE) return trim($givn.", ".$surn);
 		return trim($surn.", ".$givn);
 	}
 

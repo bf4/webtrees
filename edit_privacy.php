@@ -302,10 +302,10 @@ if ($action=="update") {
 //-->
 </script>
 <form name="editprivacyform" method="post" action="edit_privacy.php">
-	<input type="hidden" name="action" value="update" />
-<?php print "<input type=\"hidden\" name=\"ged\" value=\"".$GEDCOM."\" />\n";
+		<input type="hidden" name="action" value="update" />
+		<?php print "<input type=\"hidden\" name=\"ged\" value=\"".$GEDCOM."\" />\n";
 require_once("js/dhtmlXTabbar.js.htm");
-	?>
+		?>
 	<div id="gedpriv_tabbar" class="dhtmlxTabBar" width="100%" height="500px" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'?>>
 		<div id="gedpriv1" name="<?php echo $pgv_lang["general_privacy"]?>" class="indent" >
 			<fieldset>
@@ -313,92 +313,92 @@ require_once("js/dhtmlXTabbar.js.htm");
 					<?php echo $pgv_lang["general_privacy"]?>
 				</legend>
 				<table class="facts_table">
-					<tr>
+			<tr>
 						<td class="descriptionbox wrap <?php print $TEXT_DIRECTION;?>">
 							<?php print_help_link("SHOW_DEAD_PEOPLE_help", "qm", "SHOW_DEAD_PEOPLE"); print $pgv_lang["SHOW_DEAD_PEOPLE"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_SHOW_DEAD_PEOPLE">
 								<?php write_access_option($SHOW_DEAD_PEOPLE); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("SHOW_LIVING_NAMES_help", "qm", "SHOW_LIVING_NAMES"); print $pgv_lang["SHOW_LIVING_NAMES"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_SHOW_LIVING_NAMES">
 								<?php write_access_option($SHOW_LIVING_NAMES); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("SHOW_SOURCES_help", "qm", "SHOW_SOURCES"); print $pgv_lang["SHOW_SOURCES"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_SHOW_SOURCES">
 								<?php write_access_option($SHOW_SOURCES); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("ENABLE_CLIPPINGS_CART_help", "qm", "ENABLE_CLIPPINGS_CART"); print $pgv_lang["ENABLE_CLIPPINGS_CART"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_ENABLE_CLIPPINGS_CART">
 								<?php write_access_option($ENABLE_CLIPPINGS_CART); ?>
 							</select></td>
-					</tr>
-					<?php if (file_exists("modules/research_assistant.php")) { ?>
-					<tr>
+			</tr>
+			<?php if (file_exists("modules/research_assistant.php")) { ?>
+				<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("SHOW_RESEARCH_ASSISTANT_help", "qm", "SHOW_RESEARCH_ASSISTANT"); print $pgv_lang["SHOW_RESEARCH_ASSISTANT"]; ?></td>
-						<td class="optionbox">
+					<td class="optionbox">
 							<select size="1" name="v_SHOW_RESEARCH_ASSISTANT">
 								<?php write_access_option($SHOW_RESEARCH_ASSISTANT); ?>
 							</select></td>
-					</tr>
-					<?php } ?>
-					<tr>
+				</tr>
+			<?php } ?>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("SHOW_MULTISITE_SEARCH_help", "qm", "SHOW_MULTISITE_SEARCH"); print $pgv_lang["SHOW_MULTISITE_SEARCH"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_SHOW_MULTISITE_SEARCH">
 								<?php write_access_option($SHOW_MULTISITE_SEARCH); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("PRIVACY_BY_YEAR_help", "qm", "PRIVACY_BY_YEAR"); print $pgv_lang["PRIVACY_BY_YEAR"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_PRIVACY_BY_YEAR">
 								<?php write_yes_no($PRIVACY_BY_YEAR); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("PRIVACY_BY_RESN_help", "qm", "PRIVACY_BY_RESN"); print $pgv_lang["PRIVACY_BY_RESN"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_PRIVACY_BY_RESN">
 								<?php write_yes_no($PRIVACY_BY_RESN); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("SHOW_PRIVATE_RELATIONSHIPS_help", "qm", "SHOW_PRIVATE_RELATIONSHIPS"); print $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_SHOW_PRIVATE_RELATIONSHIPS">
 								<?php write_yes_no($SHOW_PRIVATE_RELATIONSHIPS); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("USE_RELATIONSHIP_PRIVACY_help", "qm", "USE_RELATIONSHIP_PRIVACY"); print $pgv_lang["USE_RELATIONSHIP_PRIVACY"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_USE_RELATIONSHIP_PRIVACY">
 								<?php write_yes_no($USE_RELATIONSHIP_PRIVACY); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("MAX_RELATION_PATH_LENGTH_help", "qm", "MAX_RELATION_PATH_LENGTH"); print $pgv_lang["MAX_RELATION_PATH_LENGTH"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_MAX_RELATION_PATH_LENGTH">
 <?php
           for ($y = 1; $y <= 10; $y++) {
@@ -410,37 +410,37 @@ require_once("js/dhtmlXTabbar.js.htm");
           }
 								?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+			<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("CHECK_MARRIAGE_RELATIONS_help", "qm", "CHECK_MARRIAGE_RELATIONS"); print $pgv_lang["CHECK_MARRIAGE_RELATIONS"]; ?></td>
-						<td class="optionbox">
+				<td class="optionbox">
 							<select size="1" name="v_CHECK_MARRIAGE_RELATIONS">
 								<?php write_yes_no($CHECK_MARRIAGE_RELATIONS); ?>
 							</select></td>
-					</tr>
-					<tr>
+			</tr>
+		<tr>
 						<td class="descriptionbox wrap">
 							<?php print_help_link("MAX_ALIVE_AGE_help", "qm", "MAX_ALIVE_AGE"); print $pgv_lang["MAX_ALIVE_AGE"]?></td>
 						<td class="optionbox">
 							<input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE?>" size="5"/></td>
-					</tr>
+		</tr>
 					<tr>
 						<td></td>
 						<td>
 							<input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"]?>
 							" onclick="closeHelp();" /></td>
 					</tr>
-				</table>
+		</table>
 				</fieldset>
-		</div>
+	</div>
 		<div id="gedpriv2" name="<?php echo $pgv_lang["person_privacy"]?>" class="indent" >
 			<fieldset>
 				<legend>
 					<?php echo $pgv_lang["person_privacy"]?>
 				</legend>
-				<table class="facts_table">
-					<tr>
+		<table class="facts_table">
+			<tr>
 						<td class="descriptionbox">
 							<?php print $pgv_lang["id"]; ?></td>
 						<td class="descriptionbox">
@@ -453,7 +453,7 @@ require_once("js/dhtmlXTabbar.js.htm");
 <?php
           if (count($person_privacy) > 0) {
             foreach($person_privacy as $key=>$value) {
-					?>
+		?>
 					<tr>
 						<td class="optionbox">
 							<?php print $key; ?></td>
@@ -465,26 +465,26 @@ require_once("js/dhtmlXTabbar.js.htm");
 							</select></td>
 						<td class="optionbox">
 							<input type="checkbox" name="v_person_privacy_del[<?php print $key; ?>]" value="1" /></td>
-					</tr>
+						</tr>
 <?php
 						}
 					}?>
-					<tr>
-						<td class="optionbox width20">
-							<input type="text" class="pedigree_form" name="v_new_person_privacy_access_ID" id="v_new_person_privacy_access_ID" size="4" />
-<?php
+						<tr>
+							<td class="optionbox width20">
+								<input type="text" class="pedigree_form" name="v_new_person_privacy_access_ID" id="v_new_person_privacy_access_ID" size="4" />
+								<?php
 			 print_findindi_link("v_new_person_privacy_access_ID","");
 			 print_findfamily_link("v_new_person_privacy_access_ID");
 			 print_findsource_link("v_new_person_privacy_access_ID");
 			 print_findmedia_link("v_new_person_privacy_access_ID", "1media");
 							?></td>
 						<td class="descriptionbox"></td>
-						<td class="optionbox">
+							<td class="optionbox">
 							<select size="1" name="v_new_person_privacy_acess_option">
 								<?php write_access_option(""); ?>
 							</select></td>
 						<td class="descriptionbox"></td>
-					</tr>
+						</tr>
 					<tr>
 						<td></td>
 						<td></td>
@@ -501,8 +501,8 @@ require_once("js/dhtmlXTabbar.js.htm");
 				<legend>
 					<?php echo $pgv_lang["user_privacy"]?>
 				</legend>
-				<table class="facts_table">
-					<tr>
+					<table class="facts_table">
+						<tr>
 						<td class="descriptionbox">
 							<?php print $pgv_lang["user_name"]; ?></td>
 						<td class="descriptionbox">
@@ -513,16 +513,16 @@ require_once("js/dhtmlXTabbar.js.htm");
 							<?php print $pgv_lang["show_question"]; ?></td>
 						<td class="descriptionbox">
 							<?php print $pgv_lang["delete"]; ?></td>
-					</tr>
-<?php
+						</tr>
+						<?php
           if (count($user_privacy) > 0) {
             foreach($user_privacy as $key=>$value) {
 	            foreach($value as $id=>$setting) {
-					?>
+						?>
 					<tr class="<?php print $TEXT_DIRECTION; ?>">
-						<td class="optionbox">
+							<td class="optionbox">
 							<?php print $key; ?></td>
-						<td class="optionbox">
+							<td class="optionbox">
 							<?php print $id; ?></td>
 						<td class="optionbox">
 							<?php search_ID_details($id, 2); ?></td>
@@ -533,43 +533,41 @@ require_once("js/dhtmlXTabbar.js.htm");
 						<td class="optionbox">
 							<input type="checkbox" name="v_user_privacy_del[<?php print $key; ?>][<?php print $id; ?>
 							]" value="1" /></td>
-					</tr>
-<?php
+						</tr>
+						<?php
         			}
         		}
-					}?>
-					<tr class="<?php print $TEXT_DIRECTION; ?>">
-						<td class="optionbox width20">
-							<select size="1" name="v_new_user_privacy_username">
-<?php
-                $users = getUsers();
-                foreach($users as $username => $user)
+						}?>
+						<tr class="<?php print $TEXT_DIRECTION; ?>">
+							<td class="optionbox width20">
+								<select size="1" name="v_new_user_privacy_username">
+								<?php
+								foreach(get_all_users() as $username)
                 {
                   print "<option";
                   print " value=\"";
                   print $username;
                   print "\">";
-                  if ($NAME_REVERSE) print $user["lastname"]." ".$user["firstname"];
-                  else print $user["firstname"]." ".$user["lastname"];
+									print getUserFullName($username);
                   print "</option>";
                 }
 								?>
 							</select></td>
-						<td class="optionbox">
-							<input type="text" class="pedigree_form" name="v_new_user_privacy_access_ID" id="v_new_user_privacy_access_ID" size="4" />
-<?php
+							<td class="optionbox">
+								<input type="text" class="pedigree_form" name="v_new_user_privacy_access_ID" id="v_new_user_privacy_access_ID" size="4" />
+								<?php
 			 print_findindi_link("v_new_user_privacy_access_ID","");
 			 print_findfamily_link("v_new_user_privacy_access_ID");
 			 print_findsource_link("v_new_user_privacy_access_ID");
 			 print_findmedia_link("v_new_person_privacy_access_ID", "1media");
 							?></td>
 						<td class="descriptionbox"></td>
-						<td class="optionbox">
+							<td class="optionbox">
 							<select size="1" name="v_new_user_privacy_acess_option">
 								<?php write_access_option(""); ?>
 							</select></td>
 						<td class="descriptionbox"></td>
-					</tr>
+						</tr>
 					<tr>
 						<td></td>
 						<td></td>
@@ -579,7 +577,7 @@ require_once("js/dhtmlXTabbar.js.htm");
 							" onclick="closeHelp();" /></td>
 						<td></td>
 					</tr>
-				</table>
+					</table>
 				</fieldset>
 		</div>
 		<div id="gedpriv4" name="<?php echo $pgv_lang["global_facts"]?>" class="indent" >
@@ -587,8 +585,8 @@ require_once("js/dhtmlXTabbar.js.htm");
 				<legend>
 					<?php echo $pgv_lang["global_facts"]?>
 				</legend>
-				<table class="facts_table">
-					<tr>
+					<table class="facts_table">
+						<tr>
 						<td class="descriptionbox">
 							<?php print $pgv_lang["name_of_fact"]; ?></td>
 						<td class="descriptionbox">
@@ -597,19 +595,19 @@ require_once("js/dhtmlXTabbar.js.htm");
 							<?php print $pgv_lang["accessible_by"]; ?></td>
 						<td class="descriptionbox">
 							<?php print $pgv_lang["delete"]; ?></td>
-					</tr>
-<?php
+						</tr>
+						<?php
           if (count($global_facts) > 0) {
             foreach($global_facts as $tag=>$value) {
 	            foreach($value as $key=>$setting) {
-					?>
-					<tr class="<?php print $TEXT_DIRECTION; ?>">
-						<td class="optionbox">
+						?>
+						<tr class="<?php print $TEXT_DIRECTION; ?>">
+							<td class="optionbox">
 <?php
                 if (isset($factarray[$tag])) print $factarray[$tag];
                 else print $tag;
 							?></td>
-						<td class="optionbox">
+							<td class="optionbox">
 <?php
               if ($key == "show") print $pgv_lang["fact_show"];
               if ($key == "details") print $pgv_lang["fact_details"];
@@ -621,16 +619,16 @@ require_once("js/dhtmlXTabbar.js.htm");
 						<td class="optionbox">
 							<input type="checkbox" name="v_global_facts_del[<?php print $tag; ?>][<?php print $key; ?>
 							]" value="1" /></td>
-					</tr>
-<?php
-            	}
+						</tr>
+						<?php
+						}
 	    			}
 	    		}
-					?>
-					<tr class="<?php print $TEXT_DIRECTION; ?>">
-						<td class="optionbox">
-							<select size="1" name="v_new_global_facts_abbr">
-<?php
+		?>
+						<tr class="<?php print $TEXT_DIRECTION; ?>">
+							<td class="optionbox">
+								<select size="1" name="v_new_global_facts_abbr">
+								<?php
                 print "<option value=\"\">".$pgv_lang["choose"]."</option>";
                 foreach($factarray as $tag=>$label) {
                   print "<option";
@@ -642,8 +640,8 @@ require_once("js/dhtmlXTabbar.js.htm");
                 }
 								?>
 							</select></td>
-						<td class="optionbox">
-							<select size="1" name="v_new_global_facts_choice">
+							<td class="optionbox">
+								<select size="1" name="v_new_global_facts_choice">
 								<option value="details">
 								<?php print $pgv_lang["fact_details"]; ?>
 								</option>
@@ -651,12 +649,12 @@ require_once("js/dhtmlXTabbar.js.htm");
 								<?php print $pgv_lang["fact_show"]; ?>
 								</option>
 							</select></td>
-						<td class="optionbox">
+							<td class="optionbox">
 							<select size="1" name="v_new_global_facts_acess_option">
 								<?php write_access_option(""); ?>
 							</select></td>
 						<td class="descriptionbox"></td>
-					</tr>
+						</tr>
 					<tr>
 						<td></td>
 						<td></td>
@@ -665,7 +663,7 @@ require_once("js/dhtmlXTabbar.js.htm");
 							" onclick="closeHelp();" /></td>
 						<td></td>
 					</tr>
-				</table>
+					</table>
 				</fieldset>
 		</div>
 		<div id="gedpriv5" name="<?php echo $pgv_lang["person_facts"]?>" class="indent" >
@@ -673,8 +671,8 @@ require_once("js/dhtmlXTabbar.js.htm");
 				<legend>
 					<?php echo $pgv_lang["person_facts"]?>
 				</legend>
-				<table class="facts_table">
-					<tr>
+					<table class="facts_table">
+						<tr>
 						<td class="descriptionbox">
 							<?php print $pgv_lang["id"]; ?></td>
 						<td class="descriptionbox">
@@ -687,18 +685,18 @@ require_once("js/dhtmlXTabbar.js.htm");
 							<?php print $pgv_lang["accessible_by"]; ?></td>
 						<td class="descriptionbox">
 							<?php print $pgv_lang["delete"]; ?></td>
-					</tr>
-<?php
+						</tr>
+						<?php
       if (count($person_facts) > 0) {
         foreach($person_facts as $id=>$value) {
             foreach($value as $tag=>$value1) {
 	            foreach($value1 as $key=>$setting) {
-					?>
-					<tr class="<?php print $TEXT_DIRECTION; ?>">
-						<td class="optionbox">
+						?>
+						<tr class="<?php print $TEXT_DIRECTION; ?>">
+							<td class="optionbox">
 							<?php print $id; ?></td>
-						<td class="optionbox">
-<?php
+							<td class="optionbox">
+							<?php
               search_ID_details($id, 2);
 							?></td>
 						<td class="optionbox">
@@ -707,10 +705,10 @@ require_once("js/dhtmlXTabbar.js.htm");
 							?></td>
 						<td class="optionbox">
 <?php
-          if ($key == "show") print $pgv_lang["fact_show"];
-          if ($key == "details") print $pgv_lang["fact_details"];
+							if ($key == "show") print $pgv_lang["fact_show"];
+							if ($key == "details") print $pgv_lang["fact_details"];
 							?></td>
-						<td class="optionbox">
+							<td class="optionbox">
 							<select size="1" name="v_person_facts[<?php print $id; ?>][<?php print $tag; ?> ][
 								<?php print $key; ?> ]">
 								<?php write_access_option($setting); ?>
@@ -719,25 +717,25 @@ require_once("js/dhtmlXTabbar.js.htm");
 							<input type="checkbox" name="v_person_facts_del[<?php print $id; ?>][<?php print $tag; ?> ][
 							<?php print $key; ?>
 							]" value="1" /></td>
-					</tr>
-<?php
-    					}
-    				}
-        	}
+						</tr>
+						<?php
+							}
+			}
+					}
         }
 					?>
-					<tr class="<?php print $TEXT_DIRECTION; ?>">
-						<td class="optionbox">
-							<input type="text" class="pedigree_form" name="v_new_person_facts_access_ID" id="v_new_person_facts_access_ID" size="4" />
-<?php
+						<tr class="<?php print $TEXT_DIRECTION; ?>">
+							<td class="optionbox">
+								<input type="text" class="pedigree_form" name="v_new_person_facts_access_ID" id="v_new_person_facts_access_ID" size="4" />
+								<?php
                 print_findindi_link("v_new_person_facts_access_ID","");
 			 print_findfamily_link("v_new_person_facts_access_ID");
 			 print_findsource_link("v_new_person_facts_access_ID");
 							?></td>
 						<td class="descriptionbox"></td>
-						<td class="optionbox">
-							<select size="1" name="v_new_person_facts_abbr">
-<?php
+							<td class="optionbox">
+								<select size="1" name="v_new_person_facts_abbr">
+								<?php
                 foreach($factarray as $tag=>$label) {
                   print "<option";
                   print " value=\"";
@@ -748,8 +746,8 @@ require_once("js/dhtmlXTabbar.js.htm");
                 }
 								?>
 							</select></td>
-						<td class="optionbox">
-							<select size="1" name="v_new_person_facts_choice">
+							<td class="optionbox">
+								<select size="1" name="v_new_person_facts_choice">
 								<option value="details">
 								<?php print $pgv_lang["fact_details"]; ?>
 								</option>
@@ -757,13 +755,13 @@ require_once("js/dhtmlXTabbar.js.htm");
 								<?php print $pgv_lang["fact_show"]; ?>
 								</option>
 							</select></td>
-						<td class="optionbox">
+							<td class="optionbox">
 							<select size="1" name="v_new_person_facts_acess_option">
 								<?php write_access_option(""); ?>
 							</select></td>
 						<td class="descriptionbox"></td>
-					</tr>
-					<tr>
+						</tr>
+				<tr>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -771,12 +769,12 @@ require_once("js/dhtmlXTabbar.js.htm");
 							<input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"]?>
 							" onclick="closeHelp();" /></td>
 						<td></td>
-					</tr>
-				</table>
+				</tr>
+			</table>
 				</fieldset>
 		</div>
 	</div>
-	<table class="facts_table" border="0">
+		<table class="facts_table" border="0">
 		<tr>
 			<td class="topbottombar">
 				<input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"]?> " onclick="closeHelp();" /> &nbsp;&nbsp;
@@ -784,7 +782,8 @@ require_once("js/dhtmlXTabbar.js.htm");
 				" /><br /></td>
 		</tr>
 	</table>
-</form>
+		</form>
 <?php
 print_footer();
+
 ?>

@@ -1002,6 +1002,7 @@ class SearchControllerRoot extends BaseController {
 		global $SHOW_DEAD_PEOPLE,$SHOW_LIVING_NAMES,$SHOW_SOURCES,$MAX_ALIVE_AGE,$USE_RELATIONSHIP_PRIVACY,$MAX_RELATION_PATH_LENGTH;
 		global $CHECK_MARRIAGE_RELATIONS,$PRIVACY_BY_YEAR,$PRIVACY_BY_RESN,$SHOW_PRIVATE_RELATIONSHIPS,$person_privacy,$user_privacy;
 		global $global_facts,$person_facts;
+		$somethingPrinted = false;	// whether anything printed
 		// ---- section to search and display results on a general keyword search
 		if ($this->action == "general" || $this->action=="replace") {
 			if ((isset ($this->query)) && ($this->query != "")) {
@@ -1364,18 +1365,27 @@ class SearchControllerRoot extends BaseController {
 					foreach ($printindiname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[$v[1]]=array("gid"=>$v[1]);
 					// I removed the "name"=>$v[0] from the $datalist[$v[1]]=array("gid"=>$v[1], "name"=>$v[0]); 
 					// array because it contained an alternate name instead of the expected main name
+					if ( count($datalist) > 0 ) {
+						$somethingPrinted = true;
+					}
 					print_indi_table($datalist, $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					require(get_privacy_file());
 					$datalist = array();
 					foreach ($printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
+					if ( count($datalist) > 0 ) {
+						$somethingPrinted = true;
+					}
 					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					require(get_privacy_file());
 					$datalist = array();
 					foreach ($actualsourcelist as $k=>$v) if ($v["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) $datalist[]=$k;
+					if ( count($datalist) > 0 ) {
+						$somethingPrinted = true;
+					}
 					print_sour_table(array_unique($datalist), $pgv_lang["sources"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				$GEDCOM = $oldged;
@@ -1410,12 +1420,18 @@ class SearchControllerRoot extends BaseController {
 					require(get_privacy_file());
 					$datalist = array();
 					foreach ($this->printname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
+				if ( count($datalist) > 0 ) {
+					$somethingPrinted = true;
+				}
 					print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					require(get_privacy_file());
 					$datalist = array();
 					foreach ($this->printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
+				if ( count($datalist) > 0 ) {
+					$somethingPrinted = true;
+				}
 					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				$GEDCOM = $oldged;
@@ -1588,6 +1604,7 @@ class SearchControllerRoot extends BaseController {
 					if (isset ($this->multisiteResults) && (count($this->multisiteResults) > 0)) {
 						$this->totalResults = 0;
 						$this->multiTotalResults = 0;
+						$somethingPrinted = true;	
 						foreach ($this->multisiteResults as $key => $siteResults) {
 							include_once('includes/serviceclient_class.php');
 							$serviceClient = ServiceClient :: getInstance($key);
@@ -1680,6 +1697,7 @@ class SearchControllerRoot extends BaseController {
 				$this->printPageResultsLinks($this->inputFieldNames, $this->totalResults, $this->multiResultsPerPage);
 			}
 		}
+		return $somethingPrinted;	// whether anything printed
 	}
 
 	/************************************************   Helper Methods ****************************************************************/

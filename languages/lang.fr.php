@@ -33,7 +33,7 @@ $pgv_lang["age_differences"]            = "Voir les écarts d'âge";
 $pgv_lang["date_of_entry"]              = "Date d'entrée dans le document original";
 $pgv_lang["multi_site_search"]          = "Recherche multi-sites";
 $pgv_lang["switch_lifespan"]            = "Montrer le diagramme Ligne de temps";
-$pgv_lang["switch_timeline"]            = "Montrer le diagramme Echelle de temps";
+$pgv_lang["switch_timeline"]            = "Montrer le diagramme Échelle de temps";
 $pgv_lang["differences"]                = "Différences";
 $pgv_lang["charts_block"]               = "Bloc Diagrammes";
 $pgv_lang["charts_block_descr"]         = "Le bloc diagrammes vous permet de placer un diagramme sur la page d'accueil ou sur la page Mon Portail. Vous pouvez configurer le bloc pour montrer les ancêtres, les descendants ou la vue sablier. Vous pouvez également choisir la personne racine du diagramme.";
@@ -44,7 +44,7 @@ $pgv_lang["changedate2"]                = "Début de plage des dates à modifier
 $pgv_lang["search_place_word"]          = "Mots entiers seulement";
 $pgv_lang["invalid_search_input"]       = "Entrez un nom de personne ou de lieu en complément de l'année";
 $pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";
-$pgv_lang["cache_life"]                 = "Fichier Cache";
+$pgv_lang["cache_life"]                 = "Actualisation du fichier antémémoire";
 $pgv_lang["genealogy"]                  = "Généalogie";
 $pgv_lang["activate"]                   = "Activer";
 $pgv_lang["deactivate"]                 = "Désactiver";
@@ -53,13 +53,13 @@ $pgv_lang["stop"]                       = "Arrêter";
 $pgv_lang["random_media_start_slide"]   = "Démarrer le diaporama au chargement de la page ?";
 $pgv_lang["random_media_ajax_controls"] = "Afficher les contrôles AJAX ?";
 $pgv_lang["description"]                = "Description";
-$pgv_lang["current_dir"]                = "Répertoire actif: ";
+$pgv_lang["current_dir"]                = "Répertoire actif : ";
 $pgv_lang["SHOW_ID_NUMBERS"]            = "Afficher le code GEDCOM";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]      = "Afficher les miniatures des individus";
 $pgv_lang["view_img_details"]           = "Voir les détails de l'image";
 $pgv_lang["server_folder"]              = "Nom du dossier sur le serveur";
 $pgv_lang["medialist_recursive"]        = "Voir les sous-répertoires";
-$pgv_lang["media_options"]              = "Options MultiMedia";
+$pgv_lang["media_options"]              = "Options MultiMédia";
 $pgv_lang["confirm_password"]           = "Vous devez confirmer le mot de passe.";
 $pgv_lang["enter_email"]                = "Vous devez entrer une adresse courriel.";
 $pgv_lang["enter_fullname"]             = "Vous devez entrer un prénom et un nom.";
@@ -95,7 +95,7 @@ $pgv_lang["daughter"]                   = "Fille";
 $pgv_lang["welcome_page"]               = "Page d'accueil";
 $pgv_lang["editowndata"]                = "Mon compte";
 $pgv_lang["user_admin"]                 = "Administrer les utilisateurs";
-$pgv_lang["manage_media"]               = "Gestion des objets MultiMedia";
+$pgv_lang["manage_media"]               = "Gestion des objets MultiMédia";
 $pgv_lang["search_general"]             = "Recherche générale";
 $pgv_lang["clipping_privacy"]           = "Respect de la vie privée : certains enregistrements n'ont pu être ajoutés";
 $pgv_lang["chart_new"]                  = "Arbre de la famille";
@@ -106,9 +106,9 @@ $pgv_lang["choose_file_type"]           = "Type du fichier";
 $pgv_lang["add_individual_by_id"]       = "Ajout d'individus par leur code";
 $pgv_lang["advanced_options"]           = "Options avancées";
 $pgv_lang["zip_files"]                  = "Fichiers compressés";
-$pgv_lang["include_media"]              = "Inclure les objets MultiMedia (compressés Zip)";
-$pgv_lang["roman_surn"]                 = "Nom 'Romanisé'";
-$pgv_lang["roman_givn"]                 = "Prénom 'Romanisé'";
+$pgv_lang["include_media"]              = "Inclure les objets MultiMédia (compressés Zip)";
+$pgv_lang["roman_surn"]                 = "Nom romanisé";
+$pgv_lang["roman_givn"]                 = "Prénom romanisé";
 $pgv_lang["include"]                    = "Comprenant:";
 $pgv_lang["page_x_of_y"]                = "Page #GLOBALS[currentPage]# de #GLOBALS[lastPage]#";
 $pgv_lang["options"]                    = "Options";
@@ -116,14 +116,14 @@ $pgv_lang["config_update_ok"]           = "Votre fichier de configuration a ét�
 $pgv_lang["page_size"]                  = "Format de la page";
 $pgv_lang["record_not_found"]           = "Enregistrement GEDCOM non trouvé.";
 $pgv_lang["result_page"]                = "Resultats";
-$pgv_lang["edit_media"]                 = "Editer l'objet MultiMedia";
+$pgv_lang["edit_media"]                 = "Éditer l'objet MultiMédia";
 $pgv_lang["wiki_main_page"]             = "Wiki : page d'accueil";
 $pgv_lang["wiki_users_guide"]           = "Wiki : guide d'utilisation";
 $pgv_lang["wiki_admin_guide"]           = "Wiki : guide d'administration";
 $pgv_lang["no_search_for"]              = "Merci de choisir une option de recherche";
 $pgv_lang["no_search_site"]             = "Merci d'indiquer au moins un site distant.";
 $pgv_lang["search_sites"]               = "Sites de recherche";
-$pgv_lang["site_list"]                  = "Site: ";
+$pgv_lang["site_list"]                  = "Site : ";
 $pgv_lang["site_had"]                   = " contenait les informations suivantes";
 $pgv_lang["label_search_engine_detected"]= "Robot détecté";
 
@@ -140,11 +140,11 @@ $pgv_lang["stat_avg_age_at_death"]      = "Moyenne de l'âge de décès";
 $pgv_lang["stat_longest_life"]          = "Personne ayant vécu le plus longtemps";
 $pgv_lang["stat_most_children"]         = "Record du nombre d'enfants";
 $pgv_lang["stat_average_children"]      = "Moyenne enfants par famille";
-$pgv_lang["stat_events"]                = "Evènements";
-$pgv_lang["stat_media"]                 = "Objets MultiMedia";
+$pgv_lang["stat_events"]                = "Événements";
+$pgv_lang["stat_media"]                 = "Objets MultiMédia";
 $pgv_lang["stat_surnames"]              = "Noms de familles";
 $pgv_lang["stat_users"]                 = "Utilisateurs";
-$pgv_lang["no_family_facts"]            = "Aucun évènement pour cette famille.";
+$pgv_lang["no_family_facts"]            = "Aucun événement pour cette famille.";
 $pgv_lang["stat_males"]                 = "Total hommes";
 $pgv_lang["stat_females"]               = "Total femmes";
 
@@ -171,7 +171,7 @@ $pgv_lang["dec_1st"]                    = "Déc";
 
 $pgv_lang["edit_source"]                = "Modifier source";
 $pgv_lang["familybook_chart"]           = "Livret familial";
-$pgv_lang["family_of"]                  = "Famille de :&nbsp;";
+$pgv_lang["family_of"]                  = "Famille de:&nbsp;";
 $pgv_lang["descent_steps"]              = "Niveaux de descendance";
 
 $pgv_lang["cancel"]                     = "Annuler";
@@ -185,7 +185,7 @@ $pgv_lang["title_search_link"]          = "Ajouter un lien distant local";
 $pgv_lang["label_site_url2"]            = "URL du site";
 //new stuff
 
-$pgv_lang["delete_family_confirm"]      = "Confirmez-vous la suppression de cette famille ? NB: les individus ne seront pas effacés";
+$pgv_lang["delete_family_confirm"]      = "Confirmez-vous la suppression de cette famille ? NB : les individus ne seront pas effacés";
 $pgv_lang["delete_family"]              = "Supprimer cette famille";
 $pgv_lang["add_favorite"]               = "Ajouter un favori";
 $pgv_lang["url"]                        = "URL";
@@ -197,7 +197,7 @@ $pgv_lang["last_email_sent"]            = "Dernière alerte courriel envoyée le
 $pgv_lang["remove_child"]               = "Retirer cet enfant de la famille";
 $pgv_lang["link_new_husb"]              = "Relier à une personne existante comme mari";
 $pgv_lang["link_new_wife"]              = "Relier à une personne existante comme épouse";
-$pgv_lang["address_labels"]             = "Etiquettes adresses";
+$pgv_lang["address_labels"]             = "Étiquettes adresses";
 $pgv_lang["filter_address"]             = "Afficher les adresses contenant:";
 $pgv_lang["address_list"]               = "Liste adresse";
 $pgv_lang["autocomplete"]               = "Autocompletion";
@@ -242,15 +242,15 @@ $pgv_lang["choose_relatives"]           = "Choisir";
 $pgv_lang["relatives_report"]           = "Parenté";
 $pgv_lang["total_living"]               = "Vivants";
 $pgv_lang["total_dead"]                 = "Décédés";
-$pgv_lang["total_not_born"]             = "A naître";
+$pgv_lang["total_not_born"]             = "À naître";
 $pgv_lang["remove_custom_tags"]         = "Supprimer les marqueurs PGV ? (ex. _PGVU, _THUM)";
 $pgv_lang["cookie_login_help"]          = "Vous pouvez demander à rester mémorisé sur ce poste.<br />Vous aurez ainsi l'accès immédiat aux données protégées lors d'une prochaine connexion.<br />Par sécurité, vous devrez vous identifier de nouveau pour utiliser les fonctions d'administration.";
 $pgv_lang["remember_me"]                = "Rester mémorisé sur cet ordinateur";
 $pgv_lang["fams_with_surname"]          = "Familles avec le nom #surname#";
 $pgv_lang["support_contact"]            = "Contact technique";
 $pgv_lang["genealogy_contact"]          = "Contact généalogie";
-$pgv_lang["common_upload_errors"]       = "La cause probable de cette erreur est la taille autorisée par votre hébergeur (valeur PHP par défaut: 2MB). Renseignez-vous auprès de votre hébergeur pour modifier le fichier php.ini, ou utilisez un logiciel FTP pour télécharger votre fichier sur le serveur. Voir la page <a href=\"uploadgedcom.php?action=add_form\">Ajouter un fichier GEDCOM</a>.";
-$pgv_lang["total_memory_usage"]         = "Mémoire utilisée :";
+$pgv_lang["common_upload_errors"]       = "La cause probable de cette erreur est la taille autorisée par votre hébergeur (valeur PHP par défaut : 2MB). Renseignez-vous auprès de votre hébergeur pour modifier le fichier php.ini, ou utilisez un logiciel FTP pour télécharger votre fichier sur le serveur. Voir la page <a href=\"uploadgedcom.php ?action=add_form\">Ajouter un fichier GEDCOM</a>.";
+$pgv_lang["total_memory_usage"]         = "Mémoire utilisée:";
 $pgv_lang["mothers_family_with"]        = "Famille maternelle avec ";
 $pgv_lang["fathers_family_with"]        = "Famille paternelle avec ";
 $pgv_lang["family_with"]                = "Famille avec ";
@@ -278,10 +278,10 @@ $pgv_lang["show_spouses"]               = "Afficher les conjoints";
 $pgv_lang["quick_update_title"]         = "Modification expresse";
 $pgv_lang["quick_update_instructions"]  = "Cette page permet la saisie des principales informations d'une personne : naissance, mariage, décès. Il n'est pas nécessaire de tout saisir : vos modifications seront vérifiées par l'administrateur du site avant leur publication.";
 $pgv_lang["update_name"]                = "Modif nom";
-$pgv_lang["update_fact"]                = "Modif évènement";
+$pgv_lang["update_fact"]                = "Modif événement";
 $pgv_lang["update_fact_restricted"]     = "La modification de cet enregistrement est restreinte ";
 $pgv_lang["update_photo"]               = "Modif photo";
-$pgv_lang["select_fact"]                = "Choisir l'évènement...";
+$pgv_lang["select_fact"]                = "Choisir l'événement...";
 $pgv_lang["update_address"]             = "Modif adresse";
 $pgv_lang["top10_pageviews_descr"]      = "Ce bloc affiche les 10 pages les plus visitées pour ce fichier GEDCOM. Le compteur de visites doit être activé (voir les options de configuration).";
 $pgv_lang["top10_pageviews"]            = "Liste des pages les plus visitées";
@@ -295,11 +295,11 @@ $pgv_lang["indis_charts"]               = "Options pour cet individu";
 $pgv_lang["none"]                       = "Libre";
 $pgv_lang["locked"]                     = "Restreint";
 $pgv_lang["privacy"]                    = "Protégé";
-#pgv_lang["number_sign"]                = "#";
+$pgv_lang["number_sign"]                = "#";
 
 //-- GENERAL HELP MESSAGES
-$pgv_lang["qm"]                         = "?";
-$pgv_lang["qm_ah"]                      = "?";
+$pgv_lang["qm"]                         = " ?";
+$pgv_lang["qm_ah"]                      = " ?";
 $pgv_lang["page_help"]                  = "Aide";
 $pgv_lang["help_for_this_page"]         = "Aide pour cette page";
 $pgv_lang["help_contents"]              = "Sommaire de l'aide";
@@ -372,7 +372,7 @@ $pgv_lang["family_list"]                = "Liste des familles";
 $pgv_lang["source_list"]                = "Liste des sources";
 $pgv_lang["place_list"]                 = "Liste des lieux";
 $pgv_lang["place_list_aft"]             = "Lieux après";
-$pgv_lang["media_list"]                 = "Liste des objets MultiMedia";
+$pgv_lang["media_list"]                 = "Liste des objets MultiMédia";
 $pgv_lang["search"]                     = "Recherche";
 $pgv_lang["clippings_cart"]             = "Extraction de données";
 $pgv_lang["print_preview"]              = "Page imprimable";
@@ -387,8 +387,8 @@ $pgv_lang["back"]                       = "Retour";
 $pgv_lang["aka"]                        = "Nom d'usage";
 $pgv_lang["male"]                       = "Masculin";
 $pgv_lang["female"]                     = "Féminin";
-$pgv_lang["temple"]                     = "Temple (LDS)";
-$pgv_lang["temple_code"]                = "Code du temple (LDS)";
+$pgv_lang["temple"]                     = "Temple (SDJ)";
+$pgv_lang["temple_code"]                = "Code du temple (SDJ)";
 $pgv_lang["status"]                     = "Statut";
 $pgv_lang["source"]                     = "Source";
 $pgv_lang["text"]                       = "Texte";
@@ -413,8 +413,8 @@ $pgv_lang["parents"]                    = "Parents";
 $pgv_lang["siblings"]                   = "Frères et sœurs";
 $pgv_lang["father"]                     = "Père";
 $pgv_lang["mother"]                     = "Mère";
-#pgv_lang["parent"]                     = "Parent";
-#pgv_lang["self"]                       = "Self";
+$pgv_lang["parent"]                     = "Parent";
+$pgv_lang["self"]                       = "Moi-même";
 $pgv_lang["relatives"]                  = "Famille proche";
 $pgv_lang["relatives_events"]           = "Évènements de la famille proche";
 $pgv_lang["historical_facts"]           = "Faits historiques";
@@ -434,7 +434,7 @@ $pgv_lang["link_as_wife"]               = "Relier cette personne à une famille 
 $pgv_lang["no_tab1"]                    = "Aucun fait lié à cet individu.";
 $pgv_lang["no_tab2"]                    = "Aucune note liée à cet individu.";
 $pgv_lang["no_tab3"]                    = "Aucune source liée à cet individu.";
-$pgv_lang["no_tab4"]                    = "Aucun objet MultiMedia lié à cet individu.";
+$pgv_lang["no_tab4"]                    = "Aucun objet MultiMédia lié à cet individu.";
 $pgv_lang["no_tab5"]                    = "Aucun proche lié à cet individu.";
 $pgv_lang["no_tab6"]                    = "Aucune recherche liée à cet individu.";
 $pgv_lang["show_fact_sources"]          = "Voir toutes les sources";
@@ -443,10 +443,10 @@ $pgv_lang["show_fact_notes"]            = "Voir toutes les notes";
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]                = "Informations de la famille";
 $pgv_lang["family_group_info"]          = "Informations sur la famille";
-$pgv_lang["husband"]                    = "Epoux";
-$pgv_lang["wife"]                       = "Epouse";
+$pgv_lang["husband"]                    = "Époux";
+$pgv_lang["wife"]                       = "Épouse";
 $pgv_lang["marriage"]                   = "Mariage";
-$pgv_lang["lds_sealing"]                = "Cérémonie (LDS)";
+$pgv_lang["lds_sealing"]                = "Cérémonie (SDJ)";
 $pgv_lang["marriage_license"]           = "Autorisation légale de mariage";
 $pgv_lang["no_children"]                = "Aucun enfant connu";
 $pgv_lang["childless_family"]           = "Famille sans enfant";
@@ -472,7 +472,7 @@ $pgv_lang["just_source"]                = "Ajouter seulement cette source.";
 $pgv_lang["linked_source"]              = "Ajouter cette source et les individus/familles qui y sont liés.";
 $pgv_lang["person_private"]             = "Respect de la vie privée : les détails personnels sur cet individu ne seront pas inclus.";
 $pgv_lang["family_private"]             = "Respect de la vie privée : les détails personnels sur cette famille ne seront pas inclus.";
-$pgv_lang["download"]                   = "Faire un clic-droit (ctrl-clic sur Macintoch) sur le lien ci-dessous et sélectionnez «Enregistrer la cible sous...» pour télécharger le fichier.";
+$pgv_lang["download"]                   = "Faire un clic-droit (ctrl-clic sur Macintosh) sur le lien ci-dessous et sélectionnez «Enregistrer la cible sous...» pour télécharger le fichier.";
 $pgv_lang["cart_is_empty"]              = "Votre panier est vide.";
 $pgv_lang["id"]                         = "Code";
 $pgv_lang["name_description"]           = "Nom / Description";
@@ -487,12 +487,12 @@ $pgv_lang["source_downloaded_from"]     = "Provenance de cette source";
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]                = "Liens trouvés avec ces lieux";
 $pgv_lang["top_level"]                  = " [sommaire] ";
-$pgv_lang["form"]                       = "Les lieux sont classés dans cet ordre :<br />";
+$pgv_lang["form"]                       = "Les lieux sont classés dans cet ordre:<br />";
 $pgv_lang["default_form"]               = "Ville, Département ou District, Région ou Etat, Pays";
 $pgv_lang["default_form_info"]          = "(par défaut)";
 $pgv_lang["unknown"]                    = "(vide)";
 $pgv_lang["individuals"]                = "Individus";
-$pgv_lang["view_records_in_place"]      = "Afficher tous les évènements pour ce lieu";
+$pgv_lang["view_records_in_place"]      = "Afficher tous les événements pour ce lieu";
 $pgv_lang["place_list2"]                = "Liste des lieux";
 $pgv_lang["show_place_hierarchy"]       = "Voir les lieux classés par niveaux";
 $pgv_lang["show_place_list"]            = "Voir tous les lieux dans une liste";
@@ -500,8 +500,8 @@ $pgv_lang["total_unic_places"]          = "Total lieux uniques";
 
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["external_objects"]           = "Objets externes";
-$pgv_lang["multi_title"]                = "Liste des objets MultiMedia";
-$pgv_lang["media_found"]                = "Objets MultiMedia trouvés";
+$pgv_lang["multi_title"]                = "Liste des objets MultiMédia";
+$pgv_lang["media_found"]                = "Objets MultiMédia trouvés";
 $pgv_lang["view_person"]                = "Afficher la personne";
 $pgv_lang["view_family"]                = "Afficher la famille";
 $pgv_lang["view_source"]                = "Afficher la source";
@@ -511,10 +511,10 @@ $pgv_lang["next"]                       = "Suivant";
 $pgv_lang["next_image"]                 = "Image suivante";
 $pgv_lang["file_not_found"]             = "Fichier non trouvé";
 $pgv_lang["medialist_show"]             = "Afficher";
-$pgv_lang["per_page"]                   = "Objets MultiMedia par page";
-$pgv_lang["media_format"]               = "Format Media";
+$pgv_lang["per_page"]                   = "Objets MultiMédia par page";
+$pgv_lang["media_format"]               = "Format Média";
 $pgv_lang["image_size"]                 = "Taille Image";
-$pgv_lang["media_id"]                   = "Identifiant MultiMedia";
+$pgv_lang["media_id"]                   = "Identifiant MultiMédia";
 $pgv_lang["invalid_id"]                 = "Objet non trouvé dans ce fichier GEDCOM.";
 $pgv_lang["record_updated"]             = "Enregistrement #pid# mis à jour.";
 $pgv_lang["record_not_updated"]         = "Impossible de mettre à jour l'enregistrement #pid#.";
@@ -572,7 +572,7 @@ $pgv_lang["total_fams"]                 = " Familles";
 $pgv_lang["total_indis"]                = " Individus";
 $pgv_lang["notes"]                      = "Notes";
 $pgv_lang["ssourcess"]                  = "Sources";
-$pgv_lang["media"]                      = "Objets MultiMedia";
+$pgv_lang["media"]                      = "Objets MultiMédia";
 $pgv_lang["name_contains"]              = "Le nom contient";
 $pgv_lang["filter"]                     = "Filtre";
 $pgv_lang["find_individual"]            = "Choisir un individu";
@@ -602,8 +602,8 @@ $pgv_lang["day1"]                       = "jour";
 $pgv_lang["month1"]                     = "mois";
 $pgv_lang["year1"]                      = "an";
 $pgv_lang["after_death"]                = "après le décès";
-$pgv_lang["timeline_title"]             = "Echelle de temps";
-$pgv_lang["timeline_chart"]             = "Echelle de temps";
+$pgv_lang["timeline_title"]             = "Échelle de temps";
+$pgv_lang["timeline_chart"]             = "Échelle de temps";
 $pgv_lang["remove_person"]              = "Retirer cette personne";
 $pgv_lang["show_age"]                   = "Afficher le marqueur d'âge";
 $pgv_lang["add_another"]                = "Ajouter une personne au diagramme ";
@@ -735,30 +735,30 @@ $pgv_lang["no_auth_needed"]             = "Pas d'authentification";
 $pgv_lang["file_not_exists"]            = "Le fichier n'existe pas.";
 $pgv_lang["research_assistant"]         = "Assistant de recherches";
 $pgv_lang["utf8_to_ansi"]               = "Convertir ce fichier GEDCOM format UTF-8 en format ANSI (ISO-8859-1) ?";
-$pgv_lang["media_linked"]               = "Cet objet MultiMedia est relié à :";
-$pgv_lang["media_not_linked"]           = "Cet objet MultiMedia n'est relié à aucun enregistrement GEDCOM.";
-$pgv_lang["media_dir_1"]                = "Cet objet MultiMedia est situé sur un serveur externe";
-$pgv_lang["media_dir_2"]                = "Cet objet MultiMedia est situé dans le répertoire media standard";
-$pgv_lang["media_dir_3"]                = "Cet objet MultiMedia est situé dans le répertoire media protégé";
+$pgv_lang["media_linked"]               = "Cet objet MultiMédia est relié à:";
+$pgv_lang["media_not_linked"]           = "Cet objet MultiMédia n'est relié à aucun enregistrement GEDCOM.";
+$pgv_lang["media_dir_1"]                = "Cet objet MultiMédia est situé sur un serveur externe";
+$pgv_lang["media_dir_2"]                = "Cet objet MultiMédia est situé dans le répertoire média standard";
+$pgv_lang["media_dir_3"]                = "Cet objet MultiMédia est situé dans le répertoire média protégé";
 $pgv_lang["thumb_dir_1"]                = "Cette vignette est située sur un serveur externe";
-$pgv_lang["thumb_dir_2"]                = "Cette vignette est située dans le répertoire media standard";
-$pgv_lang["thumb_dir_3"]                = "Cette vignette est située dans le répertoire media protégé";
-$pgv_lang["moveto_2"]                   = "A déplacer vers le répertoire protégé";
-$pgv_lang["moveto_3"]                   = "A déplacer vers le répertoire standard";
-$pgv_lang["move_standard"]              = "A déplacer vers le répertoire standard";
-$pgv_lang["move_protected"]             = "A déplacer vers le répertoire protégé";
-$pgv_lang["move_mediadirs"]             = "Déplacez les répertoires multimedia";
-$pgv_lang["setperms"]                   = "Paramétrez les droits à permissions des répertoires (lecture, écriture)";
+$pgv_lang["thumb_dir_2"]                = "Cette vignette est située dans le répertoire média standard";
+$pgv_lang["thumb_dir_3"]                = "Cette vignette est située dans le répertoire média protégé";
+$pgv_lang["moveto_2"]                   = "Déplacer vers le répertoire protégé";
+$pgv_lang["moveto_3"]                   = "Déplacer vers le répertoire standard";
+$pgv_lang["move_standard"]              = "Déplacer vers le répertoire standard";
+$pgv_lang["move_protected"]             = "Déplacer vers le répertoire protégé";
+$pgv_lang["move_mediadirs"]             = "Déplacer les répertoires MultiMédia";
+$pgv_lang["setperms"]                   = "Paramétrer les droits à permissions des répertoires (lecture, écriture)";
 $pgv_lang["setperms_writable"]          = "Permettre à tout le monde d'y écrire";
 $pgv_lang["setperms_readonly"]          = "N'autoriser que la lecture à tout le monde";
 $pgv_lang["setperms_success"]           = "Les droits à permissions (lecture, écriture) ont été paramétrées";
 $pgv_lang["setperms_failure"]           = "Les droits à permissions (lecture, écriture) n'ont pas été paramétrées";
 $pgv_lang["setperms_time_exceeded"]     = "Le temps d'exécution limite a été atteint.  Essayez la commande une nouvelle fois sur un répertoire plus petit.";
 $pgv_lang["move_time_exceeded"]         = "Le temps d'exécution limite a été atteint.  Essayez la commande une nouvelle fois pour déplacer le reste des fichiers.";
-$pgv_lang["media_firewall_rootdir_no_exist"]= "Le répertoire racine du parefeu des media (Media Firewall) que vous avez indiqué n'existe pas. Vous devez d'abord le créer.";
-$pgv_lang["media_firewall_protected_dir_no_exist"]= "Le répertoire contenant les media protégés n'est pas créé dans le répertoire racine du parefeu des media (Media Firewall).  Créez ce répertoire et rendez-le modifiable par tout le monde.";
-$pgv_lang["media_firewall_protected_dir_not_writable"]	= "Le répertoire contenant les media protégés dans le répertoire racine du parefeu des media n'est pas modifiable par tout le monde. ";
-$pgv_lang["media_firewall_invalid_dir"] = "Erreur: le parefeu des media (Media Firewall) a été lancé depuis un répertoire autre que le répertoire media. ";
+$pgv_lang["media_firewall_rootdir_no_exist"]= "Le répertoire racine du pare-feu des média (Media Firewall) que vous avez indiqué n'existe pas. Vous devez d'abord le créer.";
+$pgv_lang["media_firewall_protected_dir_no_exist"]= "Le répertoire contenant les média protégés n'est pas créé dans le répertoire racine du pare-feu des média (Media Firewall).  Créez ce répertoire et rendez-le modifiable par tout le monde.";
+$pgv_lang["media_firewall_protected_dir_not_writable"]	= "Le répertoire contenant les média protégés dans le répertoire racine du pare-feu des média n'est pas modifiable par tout le monde. ";
+$pgv_lang["media_firewall_invalid_dir"] = "Erreur : le pare-feu des média (Media Firewall) a été lancé depuis un répertoire autre que le répertoire média. ";
 
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]         = "Grand";
@@ -1032,17 +1032,17 @@ $pgv_lang["female_cousin_n"]            = "";
 
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]               = "Confirmez-vous la suppression de cet élément ?";
-$pgv_lang["access_denied"]              = "<b>Accès interdit</b><br />Vous n'avez pas accès cette ressource";
+$pgv_lang["access_denied"]              = "<b>Accès interdit</b><br />Vous n'avez pas accès à cette ressource";
 $pgv_lang["changes_exist"]              = "<span class='warning'>Ce fichier GEDCOM a été modifié</span>&nbsp;&nbsp;";
 $pgv_lang["find_place"]                 = "Choisir un lieu";
 $pgv_lang["close_window"]               = "Fermer la fenêtre";
 $pgv_lang["close_window_without_refresh"]= "Fermer la fenêtre sans rafraîchir";
 $pgv_lang["place_contains"]             = "Le lieu contient";
 $pgv_lang["add"]                        = "Ajouter";
-$pgv_lang["custom_event"]               = "Evénement personnalisé";
+$pgv_lang["custom_event"]               = "Événement personnalisé";
 $pgv_lang["delete_person"]              = "Supprimer la fiche de cet individu";
 $pgv_lang["confirm_delete_person"]      = "Confirmez-vous la suppression de cette fiche ?";
-$pgv_lang["find_media"]                 = "Choisir un objet MultiMedia";
+$pgv_lang["find_media"]                 = "Choisir un objet MultiMédia";
 $pgv_lang["set_link"]                   = "Mettre un lien";
 $pgv_lang["delete_source"]              = "Supprimer cette source";
 $pgv_lang["confirm_delete_source"]      = "Confirmez-vous la suppression de cette source ?";
@@ -1063,7 +1063,7 @@ $pgv_lang["year_anniversary"]           = "#year_var# anniversaire";
 $pgv_lang["today"]                      = "Aujourd'hui";
 $pgv_lang["day"]                        = "Jour";
 $pgv_lang["month"]                      = "Mois";
-$pgv_lang["showcal"]                    = "Montrer les évènements de";
+$pgv_lang["showcal"]                    = "Montrer les événements de";
 $pgv_lang["anniversary"]                = "Anniversaire";
 $pgv_lang["anniversary_calendar"]       = "Calendrier";
 $pgv_lang["sunday"]                     = "Dimanche";
@@ -1078,7 +1078,7 @@ $pgv_lang["viewmonth"]                  = "Anniversaires du mois";
 $pgv_lang["viewyear"]                   = "Anniversaires de l'année";
 $pgv_lang["all_people"]                 = "Toutes les personnes";
 $pgv_lang["living_only"]                = "Les personnes vivantes seulement";
-$pgv_lang["recent_events"]              = "Evénements récents (- 100 ans)";
+$pgv_lang["recent_events"]              = "Événements récents (- 100 ans)";
 $pgv_lang["day_not_set"]                = "Jour absent";
 
 //-- user self registration module
@@ -1105,11 +1105,11 @@ $pgv_lang["mail02_subject"]             = "Nouvelle inscription sur #SERVER_NAME
 
 $pgv_lang["hashcode"]                   = "Code de vérification";
 $pgv_lang["thankyou"]                   = "Bonjour #user_fullname# ...<br />Merci pour votre inscription";
-$pgv_lang["pls_note06"]                 = "Vous allez recevoir un message de confirmation à l'adresse ( #user_email# ).<br /><br />En suivant les instructions de ce message vous pourrez activer votre compte.<br /><br />Si vous n'activez pas votre compte avant sept jours, il sera supprimé<br />(vous pourrez vous enregistrer à nouveau dans ce cas).<br /><br />Pour vous connecter au site, votre nom de connexion et votre mot de passe sont nécessaires.";
-$pgv_lang["pls_note06a"]                = "Vous allez recevoir un message de confirmation à l'adresse ( #user_email# ). En suivant les instructions de ce message vous pourrez activer votre compte. Si vous n'activez pas votre compte avant sept jours, il sera supprimé (vous pourrez vous enregistrer à nouveau dans ce cas). Apres activation de votre compte, vous pourrez vous connecter au site.";
+$pgv_lang["pls_note06"]                 = "Vous allez recevoir un message de confirmation à l'adresse ( #user_email# ).<br /><br />En suivant les instructions de ce message vous pourrez activer votre compte.<br /><br />Si vous n'activez pas votre compte avant sept jours, il sera supprimé (vous pourrez vous enregistrer à nouveau dans ce cas).<br /><br />Pour vous connecter au site, votre nom de connexion et votre mot de passe sont nécessaires.";
+$pgv_lang["pls_note06a"]                = "Vous allez recevoir un message de confirmation à l'adresse ( #user_email# ). En suivant les instructions de ce message vous pourrez activer votre compte. Si vous n'activez pas votre compte avant sept jours, il sera supprimé (vous pourrez vous enregistrer à nouveau dans ce cas). Après activation de votre compte, vous pourrez vous connecter au site.";
 
 $pgv_lang["registernew"]                = "Confirmation du nouveau compte";
-$pgv_lang["user_verify"]                = "Verification de l'utilisateur";
+$pgv_lang["user_verify"]                = "Vérification de l'utilisateur";
 $pgv_lang["send"]                       = "Envoyer";
 
 $pgv_lang["pls_note07"]                 = "Merci d'entrer votre identifiant, votre mot de passe et le code de vérification que vous avez reçu par courriel afin de vérifier votre demande de compte.";
@@ -1122,7 +1122,7 @@ $pgv_lang["mail03_line03a"]             = "L'utilisateur peut maintenant se conn
 $pgv_lang["mail03_subject"]             = "Nouvelle vérification sur #SERVER_NAME#";
 
 $pgv_lang["pls_note09"]                 = "Vous avez été identifié comme un utilisateur inscrit.";
-$pgv_lang["pls_note10"]                 = "L'administrateur a été informé.<br />Vous pourrez vous connecter avec votre identifiant de connexion et votre mot de passe<br />dès qu'il vous en aura donné l'autorisation.";
+$pgv_lang["pls_note10"]                 = "L'administrateur a été informé.<br />Vous pourrez vous connecter avec votre identifiant de connexion et votre mot de passe dès qu'il vous en aura donné l'autorisation.";
 $pgv_lang["pls_note10a"]                = "Vous pouvez maintenant vous connecter avec votre nom de compte et votre mot de passe.";
 $pgv_lang["data_incorrect"]             = "Informations incorrectes!<br />Merci de réessayer!";
 $pgv_lang["user_not_found"]             = "Identification impossible. Merci de réessayer";
@@ -1134,7 +1134,7 @@ $pgv_lang["mail04_line01"]              = "Bonjour #user_fullname# ...";
 $pgv_lang["mail04_line02"]              = "Un nouveau mot de passe a été demandé pour votre compte!";
 $pgv_lang["mail04_line03"]              = "Recommandation:";
 $pgv_lang["mail04_line04"]              = "Cliquez maintenant sur le lien ci-dessous, connectez-vous avec le nouveau mot de passe et, par précaution, changez-le immediatement.";
-$pgv_lang["mail04_line05"]              = "Pour changer votre mot de passe, une fois connecté, cliquez le lien '#pgv_lang[myuserdata]#' dans le menu '#pgv_lang[mygedview]#' et remplissez les champs concernant le mot de passe.";
+$pgv_lang["mail04_line05"]              = "Pour changer votre mot de passe une fois connecté, cliquez le lien '#pgv_lang[myuserdata]#' dans le menu '#pgv_lang[mygedview]#' et remplissez les champs concernant le mot de passe.";
 $pgv_lang["mail04_subject"]             = "Demande d'informations pour #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]                  = "Bonjour...<br /><br />Un message a été envoyé à l'adresse (#user[email]#) avec le nouveau mot de passe.<br /><br />Merci de vérifier votre messagerie car vous devriez recevoir ce message dans les prochaines minutes.<br /><br />Recommandation:<br /><br />Après avoir récupéré ce message, connectez-vous à ce site et changez votre mot de passe pour conserver l'integrité de vos données.";
@@ -1144,10 +1144,10 @@ $pgv_lang["user_theme"]                 = "Mon thème";
 $pgv_lang["mgv"]                        = "Mon portail";
 $pgv_lang["mygedview"]                  = "Mon portail";
 $pgv_lang["passwordlength"]             = "Le mot de passe doit contenir au moins 6 caractères.";
-$pgv_lang["welcome_text_auth_mode_1"]   =	"<b>BIENVENUE</b><br /><br />L'accès à ce site est autorisé à tous les visiteurs ayant un compte.<br />Si vous avez déjà un compte, vous pouvez vous connecter.<br /><br />Sinon, remplissez le formulaire.<br />Après vérification, l'administrateur activera votre compte.<br />Vous recevrez un message d'information.";
-$pgv_lang["welcome_text_auth_mode_2"]   =	"<b>BIENVENUE</b><br /><br />L'accès à ce site est réservé aux utilisateurs <b>autorisés</b>.<br />Si vous avez déjà un compte, vous pouvez vous connecter.<br /><br />Sinon, remplissez le formulaire.<br />Après vérification, l'administrateur acceptera ou refusera votre demande.<br />Vous recevrez un message d'information.";
-$pgv_lang["welcome_text_auth_mode_3"]   =	"<b>BIENVENUE</b><br /><br />L'accès à ce site est réservé aux utilisateurs <b>membres de la famille</b>.<br />Si vous avez déjà un compte, vous pouvez vous connecter.<br /><br />Sinon, remplissez le formulaire.<br />Après vérification, l'administrateur acceptera ou refusera votre demande.<br />Vous recevrez un message d'information.";
-$pgv_lang["welcome_text_cust_head"]     =	"<b>BIENVENUE</b><br /><br />L'accès à ce site est autorisé aux utilisateurs ayant un compte et un mot de passe.<br />";
+$pgv_lang["welcome_text_auth_mode_1"]   =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est autorisé à tous les visiteurs ayant un compte.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur activera votre compte. Vous recevrez un message d'information.";
+$pgv_lang["welcome_text_auth_mode_2"]   =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est réservé aux utilisateurs <u>autorisés</u>.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. >Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur acceptera ou refusera votre demande. Vous recevrez un message d'information.";
+$pgv_lang["welcome_text_auth_mode_3"]   =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est réservé aux utilisateurs <u>membres de la famille</u>.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur acceptera ou refusera votre demande. Vous recevrez un message d'information.";
+$pgv_lang["welcome_text_cust_head"]     =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est autorisé aux utilisateurs ayant un compte et un mot de passe.<br />";
 $pgv_lang["acceptable_use"]             = "<div class=\"largeError\">Attention:</div><div class=\"error\">En renseignant et en soumettant ce formulaire, vous acceptez:<ul><li>de protéger la vie privée des personnes vivantes qui sont renseignées sur notre site;</li><li>et dans la boite textuelle ci-dessous, vous acceptez ou bien d'expliquer avec qui vous avez un lien de parenté, ou alors vous nous communiquez des informations sur une personne qui devrait apparaître sur notre site.</li></ul></div>";
 
 
@@ -1159,19 +1159,19 @@ $pgv_lang["style"]                      = "Style de présentation";
 $pgv_lang["style1"]                     = "Liste";
 $pgv_lang["style2"]                     = "Table";
 $pgv_lang["style3"]                     = "Nuage de mots";
-$pgv_lang["cal_download"]               = "Afficher le bouton de téléchargement des évènements au format hcal ?";
-$pgv_lang["no_events_living"]           = "Aucun évènement pour une personne vivante dans les #pgv_lang[global_num1]# prochains jours.";
-$pgv_lang["no_events_living1"]          = "Aucun évènement pour une personne vivante pour demain.";
-$pgv_lang["no_events_all"]              = "Aucun évènement dans les #pgv_lang[global_num1]# prochains jours.";
-$pgv_lang["no_events_all1"]             = "Aucun évènement pour demain.";
-$pgv_lang["no_events_privacy"]          = "Des évènements existent dans les #pgv_lang[global_num1]# prochains jours, mais leur accès est restreint.";
-$pgv_lang["no_events_privacy1"]         = "Des évènements existent pour demain, mais leur accès est restreint.";
-$pgv_lang["more_events_privacy"]        = "<br />d'autres évènements existent dans les #pgv_lang[global_num1]# prochains jours, mais leur accès est restreint.";
-$pgv_lang["more_events_privacy1"]       = "<br />d'autres évènements existent pour demain, mais leur accès est restreint.";
-$pgv_lang["none_today_living"]          = "Aucun évènement pour une personne vivante pour aujourd'hui.";
-$pgv_lang["none_today_all"]             = "Aucun évènement pour aujourd'hui.";
-$pgv_lang["none_today_privacy"]         = "Des évènements existent pour aujourd'hui, mais leur accès est restreint.";
-$pgv_lang["more_today_privacy"]         = "<br />d'autres évènements existent pour aujourd'hui, mais leur accès est restreint.";
+$pgv_lang["cal_download"]               = "Afficher le bouton de téléchargement des événements au format hcal ?";
+$pgv_lang["no_events_living"]           = "Aucun événement pour une personne vivante dans les #pgv_lang[global_num1]# prochains jours.";
+$pgv_lang["no_events_living1"]          = "Aucun événement pour une personne vivante pour demain.";
+$pgv_lang["no_events_all"]              = "Aucun événement dans les #pgv_lang[global_num1]# prochains jours.";
+$pgv_lang["no_events_all1"]             = "Aucun événement pour demain.";
+$pgv_lang["no_events_privacy"]          = "Des événements existent dans les #pgv_lang[global_num1]# prochains jours, mais leur accès est restreint.";
+$pgv_lang["no_events_privacy1"]         = "Des événements existent pour demain, mais leur accès est restreint.";
+$pgv_lang["more_events_privacy"]        = "<br />d'autres événements existent dans les #pgv_lang[global_num1]# prochains jours, mais leur accès est restreint.";
+$pgv_lang["more_events_privacy1"]       = "<br />d'autres événements existent pour demain, mais leur accès est restreint.";
+$pgv_lang["none_today_living"]          = "Aucun événement pour une personne vivante pour aujourd'hui.";
+$pgv_lang["none_today_all"]             = "Aucun événement pour aujourd'hui.";
+$pgv_lang["none_today_privacy"]         = "Des événements existent pour aujourd'hui, mais leur accès est restreint.";
+$pgv_lang["more_today_privacy"]         = "<br />d'autres événements existent pour aujourd'hui, mais leur accès est restreint.";
 $pgv_lang["chat"]                       = "Discussion";
 $pgv_lang["users_logged_in"]            = "Utilisateurs connectés";
 $pgv_lang["anon_user"]                  = "1 utilisateur anonyme connecté";
@@ -1208,13 +1208,13 @@ $pgv_lang["invalid_email"]              = "Merci de fournir une adresse courriel
 $pgv_lang["enter_subject"]              = "Merci d'entrer l'objet du message.";
 $pgv_lang["enter_body"]                 = "Merci d'entrer un texte de message avant de faire l'envoi.";
 $pgv_lang["confirm_message_delete"]     = "Confirmez-vous la suppression de ce message ? Toute suppression est définitive.";
-$pgv_lang["message_email1"]             = "Le message suivant vous a ete envoye par ";
-$pgv_lang["message_email2"]             = "Vous avez envoye le message suivant a l'utilisateur PhpGedView ";
-$pgv_lang["message_email3"]             = "Vous avez envoye le message suivant a l'administrateur PhpGedView ";
-$pgv_lang["viewing_url"]                = "Ce message a ete envoye depuis l'URL ";
-$pgv_lang["messaging2_help"]            = "Lorsque vous envoyez un message, une copie vous est automatiquement adressee.";
+$pgv_lang["message_email1"]             = "Le message suivant vous a été envoyé par ";
+$pgv_lang["message_email2"]             = "Vous avez envoyé le message suivant à l'utilisateur PhpGedView ";
+$pgv_lang["message_email3"]             = "Vous avez envoyé le message suivant à l'administrateur PhpGedView ";
+$pgv_lang["viewing_url"]                = "Ce message a été envoyé depuis l'URL ";
+$pgv_lang["messaging2_help"]            = "Lorsque vous envoyez un message, une copie vous est automatiquement adressée.";
 $pgv_lang["random_picture"]             = "Une image au hasard";
-$pgv_lang["message_instructions"]       = "<b>Respect de la vie privée :</b> Les informations sur une personne vivante ne seront envoyées qu'aux proches pouvant justifier d'un lien de parenté. <br /><br />Si vous proposez un ajout ou une correction, merci d'indiquer les sources de vos informations.<br /><br />";
+$pgv_lang["message_instructions"]       = "<b>Respect de la vie privée:</b> Les informations sur une personne vivante ne seront envoyées qu'aux proches pouvant justifier d'un lien de parenté.<br /><br />Si vous proposez un ajout ou une correction, merci d'indiquer les sources de vos informations.<br /><br />";
 $pgv_lang["sending_to"]                 = "Ce message va être envoyé à #TO_USER#";
 $pgv_lang["preferred_lang"]             = "Cet utilisateur préfère recevoir les messages en #USERLANG#";
 $pgv_lang["gedcom_created_using"]       = "Fichier GEDCOM créé avec <b>#SOFTWARE# #VERSION#</b>.";
@@ -1231,8 +1231,8 @@ $pgv_lang["stat_earliest_death"]        = "Décès le +ancien";
 $pgv_lang["stat_latest_death"]          = "Décès le +récent";
 $pgv_lang["customize_page"]             = "Personnalisez votre page d'accueil";
 $pgv_lang["customize_gedcom_page"]      = "Personnalisez cette page d'accueil GEDCOM";
-$pgv_lang["upcoming_events_block"]      = "Bloc «Evènements à venir»";
-$pgv_lang["upcoming_events_descr"]      = "Le bloc «Evènements à venir» affiche les anniversaires des 30 prochains jours.";
+$pgv_lang["upcoming_events_block"]      = "Bloc «Prochains anniversaires»";
+$pgv_lang["upcoming_events_descr"]      = "Le bloc «Prochains anniversaires» affiche les anniversaires des 30 prochains jours.";
 $pgv_lang["todays_events_block"]        = "Bloc «Ce jour-là»";
 $pgv_lang["todays_events_descr"]        = "Le bloc «Ce jour-là» affiche les anniversaires du jour. Les utilisateurs identifiés voient les anniversaires des personnes vivantes.";
 $pgv_lang["yahrzeit_block"]             = "Les Yahrzeiten à venir";
@@ -1246,10 +1246,10 @@ $pgv_lang["user_favorites_descr"]       = "Le bloc «Mes favoris» affiche les l
 $pgv_lang["welcome_block"]              = "Bloc «Bienvenue»";
 $pgv_lang["welcome_descr"]              = "Le bloc «Bienvenue» affiche la date, l'heure, et un accès rapide aux principales informations.";
 $pgv_lang["random_media_block"]         = "Bloc «Une image au hasard»";
-$pgv_lang["random_media_descr"]         = "Le bloc «Une image au hasard» affiche un lien au hasard vers un objet MultiMedia de la base.";
-$pgv_lang["random_media_persons_or_all"]= "Montrer seulement les personnes, les évènements, ou tout ?";
+$pgv_lang["random_media_descr"]         = "Le bloc «Une image au hasard» affiche un lien au hasard vers un objet MultiMédia de la base.";
+$pgv_lang["random_media_persons_or_all"]= "Montrer seulement les personnes, les événements, ou tout ?";
 $pgv_lang["random_media_persons"]       = "Personnes";
-$pgv_lang["random_media_events"]        = "Evènements";
+$pgv_lang["random_media_events"]        = "Événements";
 $pgv_lang["gedcom_block"]               = "Bloc «Accueil GEDCOM»";
 $pgv_lang["gedcom_descr"]               = "Le bloc «Accueil GEDCOM» est similaire au bloc «Bienvenue».";
 $pgv_lang["gedcom_favorites_block"]     = "Bloc «Favoris GEDCOM»";
@@ -1284,10 +1284,10 @@ $pgv_lang["gedcom_news"]                = "Nouvelles";
 $pgv_lang["confirm_news_delete"]        = "Confirmez-vous la suppression de cette nouvelle ?";
 $pgv_lang["add_news"]                   = "Ajouter une nouvelle";
 $pgv_lang["no_news"]                    = "Aucune nouvelle.";
-$pgv_lang["edit_news"]                  = "Editer un élément";
+$pgv_lang["edit_news"]                  = "Éditer un élément";
 $pgv_lang["enter_title"]                = "Entrer un titre.";
 $pgv_lang["enter_text"]                 = "Entrer un texte.";
-$pgv_lang["news_saved"]                 = "Elément sauvegardé.";
+$pgv_lang["news_saved"]                 = "Élément sauvegardé.";
 $pgv_lang["article_text"]               = "Texte";
 $pgv_lang["main_section"]               = "Blocs de la section principale";
 $pgv_lang["right_section"]              = "Blocs de la section de droite";
@@ -1312,10 +1312,10 @@ $pgv_lang["show_empty_block"]           = "Toujours afficher ce bloc même s'il 
 $pgv_lang["hide_block_warn"]            = "Si vous cachez un bloc vide, vous ne le pourrez le reconfigurer que lorsqu'il redeviendra visible en n'étant plus vide.";
 $pgv_lang["delete_selected_messages"]   = "Supprimer les messages sélectionnés";
 $pgv_lang["use_blocks_for_default"]     = "Utiliser ce bloc par défaut pour tous les utilisateurs ?";
-$pgv_lang["block_not_configure"]        =	"Ce bloc ne peut pas être configuré.";
+$pgv_lang["block_not_configure"]        = "Ce bloc ne peut pas être configuré.";
 
 //-- validate GEDCOM
-$pgv_lang["add_media_tool"]             = "Utilitaire «Ajout media»";
+$pgv_lang["add_media_tool"]             = "Utilitaire «Ajout média»";
 
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]            = "Sablier";
@@ -1324,7 +1324,7 @@ $pgv_lang["hourglass_chart"]            = "Sablier";
 $pgv_lang["choose_report"]              = "Choisir un rapport";
 $pgv_lang["enter_report_values"]        = "Entrer les paramètres du rapport";
 $pgv_lang["selected_report"]            = "Rapport sélectionné";
-$pgv_lang["select_report"]              = "Selectionner";
+$pgv_lang["select_report"]              = "Sélectionner";
 $pgv_lang["download_report"]            = "Enregistrer le rapport";
 $pgv_lang["reports"]                    = "Rapports";
 $pgv_lang["pdf_reports"]                = "Rapports format PDF";
@@ -1351,8 +1351,8 @@ $pgv_lang["ahnentafel_no_details"]      = " les détails sont inconnus";
 
 //-- Changes report
 $pgv_lang["changes_report"]             = "Rapport des modifications";
-$pgv_lang["changes_pending_tot"]        = "Nombre total des modifications en attente de validation: ";
-$pgv_lang["changes_accepted_tot"]       = "Nombre total des modifications acceptées: ";
+$pgv_lang["changes_pending_tot"]        = "Nombre total des modifications en attente de validation : ";
+$pgv_lang["changes_accepted_tot"]       = "Nombre total des modifications acceptées : ";
 
 //-- Descendancy report
 $pgv_lang["descend_report"]             = "Descendance";
@@ -1364,7 +1364,7 @@ $pgv_lang["of"]                         = "de";
 $pgv_lang["enter_famid"]                = "Code famille";
 $pgv_lang["show_sources"]               = "Montrer les sources ?";
 $pgv_lang["show_notes"]                 = "Montrer les notes ?";
-$pgv_lang["show_basic"]                 = "Montrer les principaux<br />évènements même vides ?";
+$pgv_lang["show_basic"]                 = "Montrer les principaux<br />événements même vides ?";
 $pgv_lang["show_photos"]                = "Montrer les photos ?";
 $pgv_lang["relatives_report_ext"]       = "Parenté élargie";
 $pgv_lang["with"]                       = "avec";
@@ -1400,9 +1400,9 @@ $pgv_lang["merge_same"]                 = "Impossible de fusionner les enregistr
 $pgv_lang["merge_step1"]                = "Fusion : étape 1/3";
 $pgv_lang["merge_step2"]                = "Fusion : étape 2/3";
 $pgv_lang["merge_step3"]                = "Fusion : étape 3/3";
-$pgv_lang["select_gedcom_records"]      = "Selectionner les 2 enregistrements GEDCOM à fusionner. Ils doivent être du même type.";
-$pgv_lang["merge_to"]                   = "Fusion vers :";
-$pgv_lang["merge_from"]                 = "Fusion de :";
+$pgv_lang["select_gedcom_records"]      = "Sélectionner les 2 enregistrements GEDCOM à fusionner. Ils doivent être du même type.";
+$pgv_lang["merge_to"]                   = "Fusion vers:";
+$pgv_lang["merge_from"]                 = "Fusion de:";
 $pgv_lang["merge_facts_same"]           = "Les champs suivants sont identiques dans les 2 enregistrements et seront fusionnés automatiquement";
 $pgv_lang["no_matches_found"]           = "Aucun champ correspondant";
 $pgv_lang["unmatching_facts"]           = "Les champs suivants sont différents. Sélectionner la valeur à conserver.";
@@ -1511,10 +1511,10 @@ $pgv_lang["witness"]                    = "Témoin";
 
 //-- statistics utility
 $pgv_lang["statutci"]                   = "impossible de créer un index";
-$pgv_lang["statnnames"]                 = "nombre de noms    =";
+$pgv_lang["statnnames"]                 = "nombre de noms =";
 $pgv_lang["statnfam"]                   = "nombre de familles =";
-$pgv_lang["statnmale"]                  = "nombre d'individus masculins    =";
-$pgv_lang["statnfemale"]                = "nombre d'individus féminins  =";
+$pgv_lang["statnmale"]                  = "nombre d'individus masculins =";
+$pgv_lang["statnfemale"]                = "nombre d'individus féminins =";
 $pgv_lang["statvars"]                   = "Renseignez les variables suivantes";
 $pgv_lang["statlxa"]                    = "le long de l'axe des x:";
 $pgv_lang["statlya"]                    = "le long de l'axe des x:";
@@ -1569,7 +1569,7 @@ $pgv_lang["alive_in_year"]              = "Vivant cette année-là";
 $pgv_lang["is_alive_in"]                = "Ont vécu en l'an ";
 $pgv_lang["alive"]                      = "Vivant ";
 $pgv_lang["dead"]                       = "Décédé ";
-$pgv_lang["maybe"]                      = "A vérifier ";
+$pgv_lang["maybe"]                      = "À vérifier ";
 $pgv_lang["both_alive"]                 = "Vivants";
 $pgv_lang["both_dead"]                  = "Décédés";
 
@@ -1586,42 +1586,42 @@ $pgv_lang["block_summary_table"]        = "&nbsp;";
 
 //-- Find page
 $pgv_lang["total_places"]               = "Lieux trouvés";
-$pgv_lang["media_contains"]             = "Objet MultiMedia:";
+$pgv_lang["media_contains"]             = "Objet MultiMédia:";
 $pgv_lang["repo_contains"]              = "Dépôt d'archives:";
 $pgv_lang["source_contains"]            = "Source:";
 $pgv_lang["display_all"]                = "Afficher tout";
 
 //-- accesskey navigation
 $pgv_lang["accesskeys"]                 = "Raccourcis clavier";
-#pgv_lang["accesskey_skip_to_content"]  = "C";
-#pgv_lang["accesskey_search"]           = "S";
+$pgv_lang["accesskey_skip_to_content"]  = "C";
+$pgv_lang["accesskey_search"]           = "S";
 $pgv_lang["accesskey_skip_to_content_desc"]= "Contenu";
-#pgv_lang["accesskey_viewing_advice"]   = "0";
+$pgv_lang["accesskey_viewing_advice"]   = "0";
 $pgv_lang["accesskey_viewing_advice_desc"]= "Astuces";
-#pgv_lang["accesskey_home_page"]        = "1";
-#pgv_lang["accesskey_help_content"]     = "2";
-#pgv_lang["accesskey_help_current_page"]= "3";
-#pgv_lang["accesskey_contact"]          = "4";
+$pgv_lang["accesskey_home_page"]        = "1";
+$pgv_lang["accesskey_help_content"]     = "2";
+$pgv_lang["accesskey_help_current_page"]= "3";
+$pgv_lang["accesskey_contact"]          = "4";
 
-#pgv_lang["accesskey_individual_details"]= "I";
-#pgv_lang["accesskey_individual_relatives"]= "R";
-#pgv_lang["accesskey_individual_notes"] = "N";
-#pgv_lang["accesskey_individual_sources"]= "O";
+$pgv_lang["accesskey_individual_details"]= "I";
+$pgv_lang["accesskey_individual_relatives"]= "R";
+$pgv_lang["accesskey_individual_notes"] = "N";
+$pgv_lang["accesskey_individual_sources"]= "O";
 //clash with IE addBookmark but not a likely problem
-#pgv_lang["accesskey_individual_media"] = "A";
-#pgv_lang["accesskey_individual_research_log"]= "L";
-#pgv_lang["accesskey_individual_pedigree"]= "P";
-#pgv_lang["accesskey_individual_descendancy"]= "D";
-#pgv_lang["accesskey_individual_timeline"]= "T";
-#pgv_lang["accesskey_individual_relation_to_me"]= "M";
+$pgv_lang["accesskey_individual_media"] = "A";
+$pgv_lang["accesskey_individual_research_log"]= "L";
+$pgv_lang["accesskey_individual_pedigree"]= "P";
+$pgv_lang["accesskey_individual_descendancy"]= "D";
+$pgv_lang["accesskey_individual_timeline"]= "T";
+$pgv_lang["accesskey_individual_relation_to_me"]= "M";
 //clash with rarely used English Netscape/Mozilla Go menu
-#pgv_lang["accesskey_individual_gedcom"]= "G";
+$pgv_lang["accesskey_individual_gedcom"]= "G";
 
-#pgv_lang["accesskey_family_parents_timeline"]= "P";
-#pgv_lang["accesskey_family_children_timeline"]= "D";
-#pgv_lang["accesskey_family_timeline"]  = "T";
+$pgv_lang["accesskey_family_parents_timeline"]= "P";
+$pgv_lang["accesskey_family_children_timeline"]= "D";
+$pgv_lang["accesskey_family_timeline"]  = "T";
 //clash with rarely used English Netscape/Mozilla English Go menu
-#pgv_lang["accesskey_family_gedcom"]    = "G";
+$pgv_lang["accesskey_family_gedcom"]    = "G";
 
 // FAQ Page
 $pgv_lang["add_faq_header"]             = "En-tête FAQ";
@@ -1631,15 +1631,15 @@ $pgv_lang["add_faq_visibility"]         = "Visibilité FAQ";
 $pgv_lang["no_faq_items"]               = "FAQ vide.";
 $pgv_lang["position_item"]              = "Item no";
 $pgv_lang["faq_list"]                   = "Liste FAQ";
-$pgv_lang["confirm_faq_delete"]         = "Confirmez-vous la suppression de cette information";
+$pgv_lang["confirm_faq_delete"]         = "Confirmez-vous la suppression de cette information ?";
 $pgv_lang["preview"]                    = "Prévisualier";
 $pgv_lang["no_id"]                      = "Indiquez un no de FAQ!";
 
 // Help search
-$pgv_lang["hs_title"]                   = "Aide à la recherche";
+$pgv_lang["hs_title"]                   = "Recherche dans les textes d'aide";
 $pgv_lang["hs_search"]                  = "Recherche";
 $pgv_lang["hs_close"]                   = "Fermer la fenêtre";
-$pgv_lang["hs_results"]                 = "Résultats :";
+$pgv_lang["hs_results"]                 = "Résultats:";
 $pgv_lang["hs_keyword"]                 = "Rechercher";
 $pgv_lang["hs_searchin"]                = "Rechercher dans";
 $pgv_lang["hs_searchuser"]              = "Aide utilisateur";
@@ -1652,11 +1652,11 @@ $pgv_lang["hs_searchsentence"]          = "Phrase exacte";
 $pgv_lang["hs_intruehelp"]              = "Texte d'aide seulement";
 $pgv_lang["hs_inallhelp"]               = "Tout le texte";
 
-// Media import
+// Média import
 $pgv_lang["choose"]                     = "Choisir : ";
 $pgv_lang["account_information"]        = "Informations du compte";
 
-//-- Media item "TYPE" sub-field
+//-- Média item "TYPE" sub-field
 $pgv_lang["TYPE__audio"]                = "Audio";
 $pgv_lang["TYPE__book"]                 = "Livre";
 $pgv_lang["TYPE__card"]                 = "Carte";
@@ -1673,19 +1673,19 @@ $pgv_lang["TYPE__photo"]                = "Photo";
 $pgv_lang["TYPE__tombstone"]            = "Pierre tombale";
 $pgv_lang["TYPE__video"]                = "Vidéo";
 
-//-- Other media suff
+//-- Other média suff
 $pgv_lang["view_slideshow"]             = "Voir en diaporama";
 $pgv_lang["download_image"]             = "Télécharger le fichier";
-$pgv_lang["no_media"]                   = "Aucun objet MultiMedia trouvé";
-$pgv_lang["media_privacy"]              = "Objet MultiMedia est protégé";
-$pgv_lang["relations_heading"]          = "Cette image est liée à :";
+$pgv_lang["no_media"]                   = "Aucun objet MultiMédia trouvé";
+$pgv_lang["media_privacy"]              = "Objet MultiMédia est protégé";
+$pgv_lang["relations_heading"]          = "Cette image est liée à:";
 $pgv_lang["file_size"]                  = "Taille du fichier";
 $pgv_lang["img_size"]                   = "Taille de l'image";
-$pgv_lang["media_broken"]               = "Ce fichier multimedia est défectueux et ne peut pas être mis en surbrillance";
-$pgv_lang["unknown_mime"]               = "Erreur du parefeu des objets multimedia: >Mimetype< pour ce fichier";
+$pgv_lang["media_broken"]               = "Ce fichier MultiMédia est défectueux et ne peut pas être mis en surbrillance";
+$pgv_lang["unknown_mime"]               = "Erreur du pare-feu des objets MultiMédia : >Mimetype< pour ce fichier";
 
 //-- Modules
-$pgv_lang["module_error_unknown_action_v2"]= "Type d'action inconnu: [action].";
+$pgv_lang["module_error_unknown_action_v2"]= "Type d'action inconnu : [action].";
 $pgv_lang["module_error_unknown_type"]  = "Type de module inconnu.";
 
 //-- sortable tables buttons

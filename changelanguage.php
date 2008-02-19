@@ -70,15 +70,18 @@ $configuredlanguages = array();
 // Read GEDCOMS configuration and collect language data
 foreach ($GEDCOMS as $key => $value) {
 	require($value["config"]);
-	if (!isset($configuredlanguages["gedcom"][$LANGUAGE][$key])) $configuredlanguages["gedcom"][$LANGUAGE][$key] = TRUE;
+	if (!isset($configuredlanguages["gedcom"][$LANGUAGE][$key])) {
+		$configuredlanguages["gedcom"][$LANGUAGE][$key] = true;
+	}
 }
 // Restore the current settings
 require($GEDCOMS[$GEDCOM]["config"]);
 
 // Read user configuration and collect language data
-$users = getUsers("username","asc");
-foreach($users as $username=>$user) {
-	if (!isset($configuredlanguages["users"][$user["language"]][$username])) $configuredlanguages["users"][$user["language"]][$username] = TRUE;
+foreach(get_all_users() as $username) {
+	if (!isset($configuredlanguages["users"][get_user_setting($username, 'language')][$username])) {
+		$configuredlanguages["users"][get_user_setting($username, 'language')][$username] = true;
+	}
 }
 
 // Sort the Language table into localized language name order

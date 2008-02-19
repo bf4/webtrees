@@ -34,11 +34,10 @@ $PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
 
 //-- function to print the welcome block
 function print_welcome_block($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $user, $GEDCOM, $NAME_REVERSE;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $user, $GEDCOM;
 
 	$id="user_welcome";
-	if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
-	else $userName = $user["firstname"]." ".$user["lastname"];
+	$userName=getUserFullName($user['username']);
 	$title = $pgv_lang["welcome"]." ".$userName;
 	$content .= "<table class=\"blockcontent\" cellspacing=\"0\" cellpadding=\"0\" style=\" width: 100%; direction:ltr;\"><tr>";
 	$content .= "<td class=\"tab_active_bottom\" colspan=\"3\" ></td></tr><tr>";

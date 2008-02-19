@@ -101,7 +101,7 @@ class UserMigrateControllerRoot extends BaseController {
 			if (file_exists($INDEX_DIRECTORY."messages.dat")) unlink($INDEX_DIRECTORY."messages.dat");
 			if (file_exists($INDEX_DIRECTORY."blocks.dat")) unlink($INDEX_DIRECTORY."blocks.dat");
 			if (file_exists($INDEX_DIRECTORY."favorites.dat")) unlink($INDEX_DIRECTORY."favorites.dat");
-			um_export($proceed);
+			um_export($this->proceed);
 		}
 		
 		if ($this->proceed == "import") {
@@ -289,12 +289,6 @@ class UserMigrateControllerRoot extends BaseController {
 				else $user["visibleonline"] = "N";
 				if ($user["editaccount"] == "1") $user["editaccount"] = "Y";
 				else $user["editaccount"] = "N";
-/* wrong			
-				if ($user["visibleonline"] == "1") $user["visibleonline"] = false;
-				else $user["visibleonline"] = true;
-				if ($user["editaccount"] == "1") $user["editaccount"] = false;
-				else $user["editaccount"] = true;
-*/			
 				//-- make sure fields are set for v4.0 DB
 				if (!isset($user["firstname"])) {
 					if (isset($user["fullname"])) {
@@ -315,7 +309,7 @@ class UserMigrateControllerRoot extends BaseController {
 				if (!isset($user["auto_accept"])) $user["auto_accept"] = 'N';
 				addUser($user, "imported");
 			}
-			$countnew = count(getUsers());
+			$countnew = count(get_all_users());
 			if ($countold == $countnew) {
 				$this->impSuccess = true;
 			}

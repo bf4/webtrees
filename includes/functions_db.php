@@ -3615,10 +3615,11 @@ function user_exists($user) {
 	if ($res!=false && !DB::isError($res)) {
 		$row=$res->fetchRow();
 		$res->free();
-		$cache[$user]=$row[0]>0;
+		if ($row[0]>0) {
+			$cache[$user]=true;
+		}
 		return $row[0]>0;
 	}
-	$cache[$user]=false;
 	return false;
 }
 
@@ -3636,26 +3637,24 @@ function get_user_setting($user, $parameter) {
 	global $DBCONN, $TBLPREFIX;
 
 	static $cache=array();
-	if (array_key_exists("{$user}/{$parameter}", $cache))
-		return $cache["{$user}/{$parameter}"];
+	if (array_key_exists($user, $cache))
+		return $cache[$user]['u_'.$parameter];
 
 	if (!is_object($DBCONN) || DB::isError($DBCONN))
 		return false;
 
 	$user=$DBCONN->escapeSimple($user);
-	$sql="SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username='{$user}'";
+	$sql="SELECT * FROM {$TBLPREFIX}users WHERE u_username='{$user}'";
 	$res=dbquery($sql);
 	if ($res==false)
 		return null;
-	$row=$res->fetchRow();
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
-
 	if ($row==false) {
-		$cache["{$user}/{$parameter}"]=null;
 		return null;
 	} else {
-		$cache["{$user}/{$parameter}"]=$row[0];
-		return $row[0];
+		$cache[$user]=$row;
+		return $row['u_'.$parameter];
 	}
 }
 
@@ -3664,10 +3663,7 @@ function set_user_setting($user, $parameter, $value) {
 
 	$user =$DBCONN->escapeSimple($user);
 	$value=$DBCONN->escapeSimple($value);
-	// Only write to the DB if the value has changed.
-	if (get_user_setting($user, $parameter)!==$value) {
-		dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user}'");
-	}
+	dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user}'");
 }
 
 function admin_user_exists() {
@@ -3699,12 +3695,11 @@ function get_user_gedcom_setting($user, $gedcom, $parameter) {
 	if (array_key_exists("{$user}/{$gedcom}/{$parameter}", $cache))
 		return $cache["{$user}/{$gedcom}/{$parameter}"];
 
-	$tmp=get_user_setting($user, $parameter);
-	if (!is_array($tmp)) {
+	$tmp_array=unserialize(get_user_setting($user, $parameter));
+	if (!is_array($tmp_array)) {
 		$cache["{$user}/{$gedcom}/{$parameter}"]=null;
 		return null;
 	}
-	$tmp_array=unserialize($tmp);
 	if (array_key_exists($gedcom, $tmp_array)) {
 		$cache["{$user}/{$gedcom}/{$parameter}"]=$tmp_array[$gedcom];
 		return $tmp_array[$gedcom];
@@ -3715,10 +3710,9 @@ function get_user_gedcom_setting($user, $gedcom, $parameter) {
 }
 
 function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
-	$tmp=get_user_setting($user, $parameter);
-	if (!is_array($tmp))
-		return null;
-	$tmp_array=unserialize($tmp);
+	$tmp_array=unserialize(get_user_setting($user, $parameter));
+	if (!is_array($tmp_array))
+		$tmp_array=array();
 	if (empty($value)) {
 		// delete the value
 		unset($tmp_array[$gedcom]);

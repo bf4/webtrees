@@ -173,23 +173,6 @@ function userUpdateLogin($username) {
 }
 
 /**
- * return a sorted array of user
- *
- * returns a sorted array of the users in the system
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#users
- * @param string $field the field in the user array to sort on
- * @param string $order asc or dec
- * @return array returns a sorted array of users
- */
-function getUsers($field='username', $order='asc', $sort2='firstname') {
-	$users = array();
-	foreach (get_all_users($order, $field, $sort2) as $username) {
-		$users[$username]=getUser($username);
-			}
-	return $users;
-}
-
-/**
  * get the current username
  *
  * gets the username for the currently active user
@@ -200,14 +183,12 @@ function getUsers($field='username', $order='asc', $sort2='firstname') {
 function getUserName() {
 	global $ALLOW_REMEMBER_ME, $DBCONN, $logout, $SERVER_URL;
 	//-- this section checks if the session exists and uses it to get the username
-	if (isset($_SESSION)) {
-		if (!empty($_SESSION['pgv_user']))
+	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {
 			return $_SESSION['pgv_user'];
-	}
-	if (isset($HTTP_SESSION_VARS)) {
-		if (!empty($HTTP_SESSION_VARS['pgv_user']))
+	} else {
+		if (isset($HTTP_SESSION_VARS) && !empty($HTTP_SESSION_VARS['pgv_user'])) {
 			return $HTTP_SESSION_VARS['pgv_user'];
-	}
+		} else {
 	if ($ALLOW_REMEMBER_ME) {
 		$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
 		if (empty($tSERVER_URL))
@@ -215,8 +196,9 @@ function getUserName() {
 		if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false))
 			$referrer_found=true;
 		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
-			if (!is_object($DBCONN))
-					return $_COOKIE["pgv_rem"];
+					if (!is_object($DBCONN)) {
+						return $_COOKIE["pgv_rem"];
+					} else {	
 			$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
 			if (is_null($session_time))
 				$session_time=0;
@@ -224,10 +206,18 @@ function getUserName() {
 				$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
 				$_SESSION['cookie_login'] = true;
 				return $_COOKIE['pgv_rem'];
+						} else {
+							return "";
+						}
+					}
+				} else {
+					return "";
 				}
-			}
-		}
+			} else {
 	return "";
+}
+		}
+	}
 }
 
 /**
@@ -280,17 +270,16 @@ function userGedcomAdmin($username="", $ged="") {
  * @param string $username the username of the user to check
  * @return boolean true if user can access false if they cannot
  */
-function userCanAccess($username="") {
+function userCanAccess() {
 	global $GEDCOM;
+	static $cache=null;
 
-	if (empty($username))
+	if (is_null($cache)) {
 		$username=getUserName();
-
-	if (get_user_setting($username, 'canadmin')=='Y')
-		return true;
-
-	return get_user_gedcom_setting($username, $GEDCOM, 'canedit')!='none';
+		$cache=get_user_setting($username, 'canadmin')=='Y' || get_user_gedcom_setting($username, $GEDCOM, 'canedit')!='none';
 	}
+	return $cache;
+}
 
 /**
  * check if the given user has write privileges on this gedcom
@@ -911,6 +900,20 @@ function getUser($username) {
 		return $user;
 	}
 
+// Get the full name for a user
+function getUserFullName($user) {
+	global $NAME_REVERSE;
+
+	$first_name=get_user_setting($user, 'firstname');
+	$last_name =get_user_setting($user, 'lastname' );
+
+	if ($NAME_REVERSE) {
+		return $last_name.' '.$first_name;
+	} else {
+		return $first_name.' '.$last_name;
+	}
+}
+
 /**
  * add a message into the log-file
  * @param string $LogString		the message to add
@@ -1053,7 +1056,7 @@ function AddToChangeLog($LogString, $ged="") {
 //-- stores a new message in the database
 function addMessage($message) {
 	global $TBLPREFIX, $CONTACT_METHOD, $pgv_lang,$CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL, $DBCONN;
-	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array, $NAME_REVERSE, $NAME_REVERSE_array;
+	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array;
 	global $PHPGEDVIEW_EMAIL;
 
 	//-- do not allow users to send a message to themselves
@@ -1090,10 +1093,7 @@ function addMessage($message) {
 		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".stripslashes($email2);
 		$fromFullName = $message["from"];
 	} else {
-		if ($NAME_REVERSE)
-			$fromFullName = $fUser["lastname"]." ".$fUser["firstname"];
-		else
-			$fromFullName = $fUser["firstname"]." ".$fUser["lastname"];
+		$fromFullName = getUserFullName($message['from']);
 		if (!$PGV_SIMPLE_MAIL)
 			$from = hex4email(stripslashes($fromFullName),$CHARACTER_SET). " <".$fUser["email"].">";
 		else
@@ -1167,10 +1167,7 @@ function addMessage($message) {
 		} else {
 			if ($LANGUAGE!=$tUser["language"])
 				loadLanguage($tUser["language"]);
-			if ($NAME_REVERSE)
-				$toFullName = $tUser["lastname"]." ".$tUser["firstname"];
-			else
-				$toFullName = $tUser["firstname"]." ".$tUser["lastname"];
+			$toFullName=getUserFullName($message['to']);
 			if (!$PGV_SIMPLE_MAIL)
 				$to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".$tUser["email"].">";
 			else

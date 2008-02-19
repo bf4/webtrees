@@ -196,10 +196,10 @@ $PGV_BLOCKS["print_gedcom_stats"]["config"]		= array(
 	<td class="facts_label">'. $pgv_lang["stat_users"].'</td>
 	<td class="facts_value">
 	<div dir="rtl">';
-			if (userGedcomAdmin($username, $GEDCOM)){
-				$content .= "<a href=\"useradmin.php\">" . count(getUsers()) . "</a>";
+			if (userGedcomAdmin()){
+				$content .= "<a href=\"useradmin.php\">" . count(get_all_users()) . "</a>";
 			} else {
-				$content .= count(getUsers());
+				$content .= count(get_all_users());
 			}
 			$content .= '</div>
 	</td>
