@@ -114,80 +114,95 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 /*      Order by deleted as per Source 'Bug Tracker' note [1856157]
 	$sql = "SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(i_id,'{$GEDCOM_ID_PREFIX}','')+0";
 */
-	$sql = "SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
-		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
-		$rec = remove_custom_tags($rec, $remove);
-		if ($privatize_export == "yes")
-			$rec = privatize_gedcom($rec);
-		if ($convert == "yes")
-			$rec = utf8_decode($rec);
-		fwrite($gedout, $rec);
+		//-- ignore any remote cached records
+		if (preg_match("/S\d+:\w+/", $row[0])==0) {
+			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = remove_custom_tags($rec, $remove);
+			if ($privatize_export == "yes")
+				$rec = privatize_gedcom($rec);
+			if ($convert == "yes")
+				$rec = utf8_decode($rec);
+			fwrite($gedout, $rec);
+		}
 	}
 	$res->free();
 
 /*      Order by deleted as per Source 'Bug Tracker' note [1856157]
 	$sql = "SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(f_id,'{$FAM_ID_PREFIX}','')+0";
 */
-	$sql = "SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
-		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
-		$rec = remove_custom_tags($rec, $remove);
-		if ($privatize_export == "yes")
-			$rec = privatize_gedcom($rec);
-		if ($convert == "yes")
-			$rec = utf8_decode($rec);
-		fwrite($gedout, $rec);
+		//-- ignore any remote cached records
+		if (preg_match("/S\d+:\w+/", $row[0])==0) {
+			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = remove_custom_tags($rec, $remove);
+			if ($privatize_export == "yes")
+				$rec = privatize_gedcom($rec);
+			if ($convert == "yes")
+				$rec = utf8_decode($rec);
+			fwrite($gedout, $rec);
+		}
 	}
 	$res->free();
 
 /*      Order by deleted as per Source 'Bug Tracker' note [1856157]
 	$sql = "SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(s_id,'{$SOURCE_ID_PREFIX}','')+0";
 */
-	$sql = "SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
-		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
-		$rec = remove_custom_tags($rec, $remove);
-		if ($privatize_export == "yes")
-			$rec = privatize_gedcom($rec);
-		if ($convert == "yes")
-			$rec = utf8_decode($rec);
-		fwrite($gedout, $rec);
+		//-- ignore any remote cached records
+		if (preg_match("/S\d+:\w+/", $row[0])==0) {
+			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = remove_custom_tags($rec, $remove);
+			if ($privatize_export == "yes")
+				$rec = privatize_gedcom($rec);
+			if ($convert == "yes")
+				$rec = utf8_decode($rec);
+			fwrite($gedout, $rec);
+		}
 	}
 	$res->free();
 
 /*      Order by deleted as per Source 'Bug Tracker' note [1856157]
 	$sql = "SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_type!='HEAD' AND o_type!='TRLR' ORDER BY REPLACE(o_id,'{$REPO_ID_PREFIX}','')+0";
 */
-	$sql = "SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_type!='HEAD' AND o_type!='TRLR'";
+	$sql = "SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_type!='HEAD' AND o_type!='TRLR'";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
-		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
-		$rec = remove_custom_tags($rec, $remove);
-		if ($privatize_export == "yes")
-			$rec = privatize_gedcom($rec);
-		if ($convert == "yes")
-			$rec = utf8_decode($rec);
-		fwrite($gedout, $rec);
+		//-- ignore any remote cached records
+		if (preg_match("/S\d+:\w+/", $row[0])==0) {
+			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = remove_custom_tags($rec, $remove);
+			if ($privatize_export == "yes")
+				$rec = privatize_gedcom($rec);
+			if ($convert == "yes")
+				$rec = utf8_decode($rec);
+			fwrite($gedout, $rec);
+		}
 	}
 	$res->free();
 
 /*      Order by deleted as per Source 'Bug Tracker' note [1856157]
 	$sql = "SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(m_media,'{$MEDIA_ID_PREFIX}','')+0";
 */
-	$sql = "SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
+	$sql = "SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
-		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
-		$rec = remove_custom_tags($rec, $remove);
-		if ($privatize_export == "yes")
-			$rec = privatize_gedcom($rec);
-		if ($convert == "yes")
-			$rec = utf8_decode($rec);
-		fwrite($gedout, $rec);
+		//-- ignore any remote cached records
+		if (preg_match("/S\d+:\w+/", $row[0])==0) {
+			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = remove_custom_tags($rec, $remove);
+			if ($privatize_export == "yes")
+				$rec = privatize_gedcom($rec);
+			if ($convert == "yes")
+				$rec = utf8_decode($rec);
+			fwrite($gedout, $rec);
+		}
 	}
 	$res->free();
 
