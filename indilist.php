@@ -226,7 +226,10 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 		if ($indi["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
 			if (displayDetailsById($gid)||showLivingNameById($gid)) {
 				foreach($indi["names"] as $indexval => $name) {
-					surname_count($name[2]);
+					// only include married names if required
+					if ($SHOW_MARRIED_NAMES || $name[3]!='C') {
+						surname_count($name[2]);
+					}
 				}
 			}
 			else $indi_hide[$gid."[".$indi["gedfile"]."]"] = 1;
