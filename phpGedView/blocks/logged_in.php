@@ -47,7 +47,6 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	$block = true; // Always restrict this block's height
 
 	$cusername = getUserName();
-	$thisuser = getUser($cusername);
 	$NumAnonymous = 0;
 	$loggedusers = array ();
 	foreach (get_all_users() as $user) {
@@ -55,7 +54,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 			if (time() - get_user_setting($user, 'sessiontime') > $PGV_SESSION_TIME && $user!=$cusername)
 				userLogout($user);
 			else {
-				if (userIsAdmin() || get_user_setting($user, 'visibleonline'))
+				if (userIsAdmin() || get_user_setting($user, 'visibleonline')=='Y')
 					$loggedusers[]=$user;
 				else
 					$NumAnonymous++;

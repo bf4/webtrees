@@ -48,8 +48,7 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 
 	if (!isset($themeformcount)) $themeformcount = 0;
 	$themeformcount++;
-	$uname = getUserName();
-	$user = getUser($uname);
+	$user_theme= get_user_setting(getUserName(), 'theme');
 	isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 	$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
 	
@@ -64,11 +63,10 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 			print "<option value=\"\">".$pgv_lang["change_theme"]."</option>\n";
 			foreach($themes as $indexval => $themedir) {
 					print "<option value=\"".$themedir["dir"]."\"";
-					if ($uname) {
-							if ($themedir["dir"] == $user["theme"]) print " class=\"selected-option\"";
-					}
-					else {
-							 if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
+					if ($user_theme) {
+						if ($themedir["dir"] == $user_theme) print " class=\"selected-option\"";
+					} else {
+						if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
 					}
 					print ">".$themedir["name"]."</option>\n";
 			}
