@@ -1032,10 +1032,9 @@ function print_user_links() {
 	 global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM, $PRIV_USER, $PRIV_PUBLIC, $USE_REGISTRATION_MODULE, $pid;
 	 global $LOGIN_URL, $SEARCH_SPIDER;
 	 $username = getUserName();
-	 $user = getUser($username);
-	 if ($user && !empty($username)) {
+	 if ($username) {
 		  print '<a href="edituser.php" class="link">'.$pgv_lang["logged_in_as"].' ('.$username.')</a><br />';
-		  if ($user["canadmin"] || (userGedcomAdmin($username, $GEDCOM))) print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
+		  if (userGedcomAdmin()) print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
 		  print "<a href=\"index.php?logout=1\" class=\"link\">".$pgv_lang["logout"]."</a>";
 	 } else {
 		  $QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
