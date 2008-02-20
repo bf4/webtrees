@@ -91,9 +91,7 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 	$dFound = ($fp = @fopen($Filename, "r"));
 
 	if (!$dFound) {
-		$dUserName = getUserName();
-		$dUser = getUser($dUserName);
-		$dUserRealName = $dUser["firstname"]." ".$dUser["lastname"];
+		$dUserRealName = getUserFullName(getUserName());;
 		$Language2 = ucfirst($language2);
 
 		switch ($file_type) {
