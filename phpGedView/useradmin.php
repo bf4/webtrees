@@ -625,9 +625,9 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 	}
 
 	// First filter the users, otherwise the javascript to unfold priviledges gets disturbed
-	foreach($users as $key=>$username) {
-		if (!isset($language_settings[get_user_setting($username, 'language')]))
-			set_user_setting($username, 'language', $LANGUAGE);
+	foreach($users as $key=>$user) {
+		if (!isset($language_settings[get_user_setting($user, 'language')]))
+			set_user_setting($user, 'language', $LANGUAGE);
 		if ($filter == "warnings") {
 			if (get_user_setting($user, 'comment_exp')) {
 				if ((strtotime(get_user_setting($user, 'comment_exp')) == "-1") || (strtotime(get_user_setting($user, 'comment_exp')) >= time("U"))) unset($users[$key]);
@@ -769,7 +769,7 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 		print "</td>\n";
 		if ($view != "preview") {
 			print "\t<td class=\"optionbox wrap\">";
-			if (getUserName()!=$username) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($username)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $username');\">".$pgv_lang["delete"]."</a>";
+			if (getUserName()!=$user) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($user)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user');\">".$pgv_lang["delete"]."</a>";
 			print "</td>\n";
 		}
 		print "</tr>\n";
