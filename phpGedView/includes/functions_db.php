@@ -3605,6 +3605,33 @@ function get_all_users($order='asc', $key1='lastname', $key2='firstname') {
 	return $users;
 }
 
+// Get a list of logged-in users
+function get_logged_in_users() {
+	global $DBCONN, $TBLPREFIX;
+
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y'");
+	while ($row=$res->fetchRow()) {
+		$users[]=$row[0];
+	}
+	$res->free();
+	return $users;
+}
+
+// Get a list of logged-in users who haven't been active recently
+function get_idle_users($time) {
+	global $DBCONN, $TBLPREFIX;
+
+	$time=(int)($time);
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y' AND u_sessiontime BETWEEN 1 AND {$time}");
+	while ($row=$res->fetchRow()) {
+		$users[]=$row[0];
+	}
+	$res->free();
+	return $users;
+}
+
 function user_exists($user) {
 	global $DBCONN, $TBLPREFIX;
 
@@ -3708,6 +3735,15 @@ function get_user_gedcom_setting($user, $gedcom, $parameter) {
 		return null;
 	}
 	if (array_key_exists($gedcom, $tmp_array)) {
+		// Convert old PGV3.1 values to PGV3.2 format
+		if ($parameter=='canedit') {
+			if ($tmp_array[$gedcom]=='yes') {
+				$tmp_array[$gedcom]=='edit';
+			}
+			if ($tmp_array[$gedcom]=='no') {
+				$tmp_array[$gedcom]=='access';
+			}
+		}
 		$cache["{$user}/{$gedcom}/{$parameter}"]=$tmp_array[$gedcom];
 		return $tmp_array[$gedcom];
 	} else {

@@ -100,11 +100,6 @@ class MediaControllerRoot extends IndividualController{
 		//   if media firewall is being called from outside the media directory  
 		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @"."0"."@ OBJE");
 
-		//-- check for the user
-		$this->uname = getUserName();
-		if (!empty($this->uname)) {
-			$this->user = getUser($this->uname);
-		}		
 		//-- perform the desired action
 		switch($this->action) {
 			case "addfav":
@@ -119,7 +114,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		
 		if ($this->mediaobject->canDisplayDetails()) {
-			$this->canedit = userCanEdit($this->uname);
+			$this->canedit = userCanEdit();
 		}
 	}
 
@@ -128,13 +123,15 @@ class MediaControllerRoot extends IndividualController{
 	 */
 	function addFavorite() {
 		global $GEDCOM;
-		if (empty($this->uname)) return;
+		if (!getUserName()) {
+			return;
+		}
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
 			$indirec = find_gedcom_record($gid);
 			if ($indirec) {
 				$favorite = array();
-				$favorite["username"] = $this->uname;
+				$favorite["username"] = getUserName();
 				$favorite["gid"] = $gid;
 				$favorite["type"] = "OBJE";
 				$favorite["file"] = $GEDCOM;
@@ -152,7 +149,7 @@ class MediaControllerRoot extends IndividualController{
 	 */
 	function acceptChanges() {
 		global $GEDCOM, $medialist;
-		if (!userCanAccept($this->uname)) return;
+		if (!userCanAccept()) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes="no";
@@ -215,7 +212,7 @@ class MediaControllerRoot extends IndividualController{
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
-		if (userCanEdit($this->uname)) {
+		if (userCanEdit()) {
 			//- plain edit option
 			$submenu = new Menu($pgv_lang["edit"]);
 			$click_link = "";
@@ -279,7 +276,7 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
-			if (userCanAccept($this->uname)) {
+			if (userCanAccept()) {
 				$submenu = new Menu($pgv_lang["undo_all"], "mediaviewer.php?mid=".$this->pid."&amp;action=undo");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -316,7 +313,7 @@ class MediaControllerRoot extends IndividualController{
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && userCanEdit($this->uname))
+			if ($this->show_changes=="yes"  && userCanEdit())
 				$menu->addOnclick("return show_gedcom_record('new');");
 			else
 				$menu->addOnclick("return show_gedcom_record('');");
@@ -331,7 +328,7 @@ class MediaControllerRoot extends IndividualController{
 			$submenu = new Menu($pgv_lang["view_gedcom"]);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && userCanEdit($this->uname)) $submenu->addOnclick("return show_gedcom_record('new');");
+			if ($this->show_changes=="yes"  && userCanEdit()) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
@@ -343,7 +340,7 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->mediaobject->canDisplayDetails() && !empty($this->uname)) {
+		if ($this->mediaobject->canDisplayDetails() && getUserName()) {
 			$submenu = new Menu($pgv_lang["add_to_my_favorites"], "mediaviewer.php?action=addfav&amp;mid=".$this->pid."&amp;gid=".$this->pid);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
@@ -372,7 +369,7 @@ class MediaControllerRoot extends IndividualController{
 
 		$ignore = "TITL,FILE";
 		if ($this->show_changes=='yes') $ignore = '';
-		else if (userGedcomAdmin($this->uname)) $ignore = "TITL";
+		else if (userGedcomAdmin()) $ignore = "TITL";
 		$facts = get_all_subrecords($this->mediaobject->getGedcomRecord(), $ignore);
 		if ($includeFileName) $facts[] = "1 FILE ".$this->mediaobject->getFilename();
 		$facts[] = "1 FORM ".$this->mediaobject->getFiletype();
