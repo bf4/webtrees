@@ -570,7 +570,7 @@ if ($action=="update") {
 	include_once("includes/index_cache.php");
 	clearCache();
 
-	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated by >".getUserName()."<", $FILE);
+	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated by >".getUserName()."<");
 	$gedcomconfname = $FILE."_conf.php";
 	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
 	if (!$errors) {

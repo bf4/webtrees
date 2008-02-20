@@ -184,12 +184,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	$imagemap="<map id=\"fanmap\" name=\"fanmap\">";
 
 	// relationship to me
-	$reltome=false;
-	$username = getUserName();
-	if (!empty($username)) {
-		$tuser=getUser($username);
-		if (!empty($tuser["gedcomid"][$GEDCOM])) $reltome=true;
-	}
+	$myid=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
 
 	// loop to create fan cells
 	while ($gen>=0) {
@@ -318,7 +313,9 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				print "</a>\n";
 				print "<br /><a href=\"pedigree.php?rootid=$pid\" >".$pgv_lang["index_header"]."</a>\n";
 				print "<br /><a href=\"descendancy.php?pid=$pid\" >".$pgv_lang["descend_chart"]."</a>\n";
-				if ($reltome)  print "<br /><a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["relationship_to_me"]."</a>\n";
+				if ($myid) {
+					print "<br /><a href=\"relationship.php?pid1=".$myid."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["relationship_to_me"]."</a>\n";
+				}
 				print "<br /><a href=\"ancestry.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["ancestry_chart"]."</a>\n";
 				print "<br /><a href=\"compact.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["compact_chart"]."</a>\n";
 				print "<br /><a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$PEDIGREE_GENERATIONS&amp;fan_width=$fan_width&amp;fan_style=$fan_style\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["fan_chart"]."</a>\n";
