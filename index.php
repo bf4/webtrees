@@ -112,7 +112,6 @@ if (empty($uname)) {
 	}
 	$ctype="gedcom";
 }
-else $user = getUser($uname);
 
 if (empty($ctype)) $ctype="user";
 

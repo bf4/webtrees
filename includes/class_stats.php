@@ -1141,20 +1141,19 @@ class stats
 ///////////////////////////////////////////////////////////////////////////////
 
 	function contactWebmaster() {
-		global $pgv_lang;
-		global $SUPPORT_METHOD, $WEBMASTER_EMAIL;
+		global $pgv_lang, $SUPPORT_METHOD, $WEBMASTER_EMAIL;
 
-		if ($SUPPORT_METHOD=='none')
+		if ($SUPPORT_METHOD=='none') {
 			return '';
-		$user = getUser($WEBMASTER_EMAIL);
-		if(($user) && ($SUPPORT_METHOD != 'mailto')) {
+		}
+		if (user_exists($WEBMASTER_EMAIL) && ($SUPPORT_METHOD!='mailto')) {
 			$userName=getUserFullName($WEBMASTER_EMAIL);
 			$contact = "<a href=\"javascript:;\" accesskey=\"{$pgv_lang['accesskey_contact']}\" onclick=\"message('{$WEBMASTER_EMAIL}', '{$SUPPORT_METHOD}'); return false;\">{$userName}</a>";
 		} else {
 			$contact = '<a href="mailto:';
-			if($user) {
+			if (user_exists($WEBMASTER_EMAIL)) {
 				$userName=getUserFullName($WEBMASTER_EMAIL);
-				$contact .= "{$user['email']}\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$userName}</a>";
+				$contact .=get_user_setting($WEBMASTER_EMAIL, 'email')."\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$userName}</a>";
 			} else {
 				$contact .= "{$WEBMASTER_EMAIL}\">{$WEBMASTER_EMAIL}</a>";
 			}
@@ -1163,20 +1162,19 @@ class stats
 	}
 
 	function contactGedcom() {
-		global $pgv_lang;
-		global $CONTACT_METHOD, $CONTACT_EMAIL, $SUPPORT_METHOD;
+		global $pgv_lang, $CONTACT_METHOD, $CONTACT_EMAIL, $SUPPORT_METHOD;
 
-		if ($CONTACT_METHOD=='none')
+		if ($CONTACT_METHOD=='none') {
 			return ''; 
-		$user = getUser($CONTACT_EMAIL);
-		if(($user) && ($CONTACT_METHOD != 'mailto')) {
+		}
+		if (user_exists($CONTACT_EMAIL) && ($CONTACT_METHOD!='mailto')) {
 			$userName=getUserFullName($CONTACT_EMAIL);
 			$contact = "<a href=\"javascript:;\" accesskey=\"{$pgv_lang['accesskey_contact']}\" onclick=\"message('{$CONTACT_EMAIL}', '{$SUPPORT_METHOD}'); return false;\">{$userName}</a>";
 		} else {
 			$contact = '<a href="mailto:';
-			if($user) {
+			if (user_exists($CONTACT_EMAIL)) {
 				$userName=getUserFullName($CONTACT_EMAIL);
-				$contact .= "{$user['email']}\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$userName}</a>";
+				$contact .=get_user_setting($CONTACT_EMAIL, 'email')."\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$userName}</a>";
 			} else {
 				$contact .= "{$CONTACT_EMAIL}\">{$CONTACT_EMAIL}</a>";
 			}

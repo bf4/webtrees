@@ -34,19 +34,20 @@ $PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
 
 //-- function to print the welcome block
 function print_welcome_block($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $user, $GEDCOM;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	$id="user_welcome";
 	$userName=getUserFullName($user['username']);
 	$title = $pgv_lang["welcome"]." ".$userName;
 	$content .= "<table class=\"blockcontent\" cellspacing=\"0\" cellpadding=\"0\" style=\" width: 100%; direction:ltr;\"><tr>";
 	$content .= "<td class=\"tab_active_bottom\" colspan=\"3\" ></td></tr><tr>";
-	if ($user["editaccount"]) {
+	if (get_user_setting($user, 'editaccount')=='Y') {
 		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"edituser.php\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["myuserdata"]."\" title=\"".$pgv_lang["myuserdata"]."\" /><br />".$pgv_lang["myuserdata"]."</a></td>";
 	}
-	if (!empty($user["gedcomid"][$GEDCOM])) {
-		$content .= "<td class=\"center details2\" style=\" width: 34%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"pedigree.php?rootid=".$user["gedcomid"][$GEDCOM]."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_pedigree"]."\" title=\"".$pgv_lang["my_pedigree"]."\" /><br />".$pgv_lang["my_pedigree"]."</a></td>";
-		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"individual.php?pid=".$user["gedcomid"][$GEDCOM]."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_indi"]."\" title=\"".$pgv_lang["my_indi"]."\" /><br />".$pgv_lang["my_indi"]."</a>\n</td>";
+	$my_id=get_user_gedcom_settings($user, $GEDCOM, 'gedcomid');
+	if ($my_id) {
+		$content .= "<td class=\"center details2\" style=\" width: 34%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"pedigree.php?rootid={$my_id}\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_pedigree"]."\" title=\"".$pgv_lang["my_pedigree"]."\" /><br />".$pgv_lang["my_pedigree"]."</a></td>";
+		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"individual.php?pid={$my_id}\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_indi"]."\" title=\"".$pgv_lang["my_indi"]."\" /><br />".$pgv_lang["my_indi"]."</a>\n</td>";
 	}
 	$content .= "</tr><tr><td class=\"center\" colspan=\"3\">";
 	$content .= print_help_link("mygedview_customize_help", "qm","",false,true);
@@ -56,7 +57,10 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 	$content .= "</tr></table>"; // blockcontent
 	
 	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
+	if ($block) {
+		include($THEME_DIR."/templates/block_small_temp.php");
+	} else {
+		include($THEME_DIR."/templates/block_main_temp.php");
+	}
 }
 ?>

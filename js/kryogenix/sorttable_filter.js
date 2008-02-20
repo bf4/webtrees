@@ -130,10 +130,14 @@ function table_filter_alive(id) {
 function sortByNextCol(node) {
 	var td = node.parentNode;
 	var tr = td.parentNode;
-	var table = tr.parentNode;
+	var tbody = tr.parentNode;
+	var table = tbody.parentNode;
+	if (table.getElementsByTagName('tbody').length == 0) table = tbody;
+	var thead = table.firstChild;
+	if (table.getElementsByTagName('thead').length == 0) thead = table;
 	for (var c = 0; c < tr.childNodes.length; c++) if (tr.childNodes[c] == td) break;
 	c++; // c is current col => c+1 is hidden sortable col
-	var a = table.rows[0].cells[c].getElementsByTagName("a"); // get hidden col header links
+	var a = thead.rows[0].cells[c].getElementsByTagName("a"); // get hidden col header links
 	if (a.length) ts_resortTable(a[0], c);
 	return false;
 }

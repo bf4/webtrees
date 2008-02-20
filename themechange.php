@@ -27,22 +27,22 @@
 
 require("config.php");
 
-	if (!empty($_POST["mytheme"]) || !empty($_GET["mytheme"])) {
-		if (isset($_POST["mytheme"])) $theme_dir = $_POST["mytheme"];
-		else if (isset($_GET["mytheme"])) $theme_dir = $_GET["mytheme"];
-		$_SESSION["theme_dir"] = "$theme_dir";
-	}
-	$uname = getUserName();
-	if ($uname) {
-		$olduser = getUser($uname);
-		if ($olduser["editaccount"]) {
-			$newuser = array();
-			$newuser = $olduser;
-			$newuser["theme"] = $theme_dir;
-			updateUser($uname, $newuser, "changed");
-			$user = $newuser;
+// Change the theme for this session
+if (!empty($_POST["mytheme"]) || !empty($_GET["mytheme"])) {
+	if (isset($_POST["mytheme"])) {
+		$theme_dir = $_POST["mytheme"];
+	}	else {
+		if (isset($_GET["mytheme"])) {
+			$theme_dir = $_GET["mytheme"];
 		}
 	}
+	$_SESSION["theme_dir"] = "$theme_dir";
+}
+
+// Make the change permanent, if allowed
+if (get_user_setting(getUserName(), 'editaccount')=='Y') {
+	set_user_setting(getUserName(), 'theme', $theme_dir);
+}
 	
 //where do we return ?
 if (isset($_POST["frompage"])) $frompage = $_POST["frompage"];

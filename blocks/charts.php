@@ -45,11 +45,15 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	if (empty($config['details'])) $config['details'] = 'no';
 	if (empty($config["rootId"])) {
 		$username = getUserName();
-		if (empty($username)) $config["rootId"] = $PEDIGREE_ROOT_ID;
-		else {
-			$user = getUser($username);
-			if (!empty($user["gedcom_id"][$GEDCOM])) $config["rootId"] = $user["gedcom_id"][$GEDCOM];
-			else $config["rootId"] = $PEDIGREE_ROOT_ID;
+		if (empty($username)) {
+			$config["rootId"] = $PEDIGREE_ROOT_ID;
+		} else {
+			$my_id=get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+			if ($my_id) {
+				$config["rootId"] = $my_id;
+			} else {
+				$config["rootId"] = $PEDIGREE_ROOT_ID;
+			}
 		}
 	}
 	if (empty($config["details"])) $config["details"] = "no";

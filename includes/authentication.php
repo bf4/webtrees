@@ -82,8 +82,6 @@ function authenticateUser($username, $password, $basic=false) {
 						}
 					}
 				}
-				// pass entire user data insted of just username since we have it already.
-				runHooks('login', array('user'=>$user));
 				return true;
 			}
 		}
@@ -154,7 +152,6 @@ function userLogout($username = "") {
 				$_SESSION["pgv_counter"]=$tmphits; //set since it was set before so don't get double hits
 		}
 	}
-	runHooks('logout', array('username'=>$username));
 }
 
 /**
@@ -704,7 +701,6 @@ function addUser($newuser, $msg = "added") {
 		if ($activeuser == "")
 			$activeuser = "Anonymous user";
 		AddToLog($activeuser." ".$msg." user -> ".$newuser["username"]." <-");
-			runHooks('adduser', $newuser);
 			return true;
 		}
 	return false;
@@ -761,7 +757,6 @@ function updateUser($username, $newuser, $msg = "updated") {
 			$activeuser = "Anonymous user";
 		AddToLog($activeuser." ".$msg." user [old username '".$username."'] new username-> ".$newuser["username"]." <-");
 
-			runHooks('updateuser', $newuser);
 			return true;
 		}
 	return false;
@@ -781,7 +776,6 @@ function deleteUser($username) {
 	if ($activeuser == "")
 		$activeuser = "Anonymous user";
 	AddToLog($activeuser." deleted user -> ".$username." <-");
-		runHooks('deleteuser', array('username'=>$username));
 	}
 
 /**
@@ -891,10 +885,6 @@ function getUser($username) {
 			$user['canedit'][$key]='access';
 		if ($value=='yes')
 			$user['canedit'][$key]='edit';
-					}
-					$ext = runHooks('getuser', $user);
-	if (count($ext) > 0) {
-						$user = array_merge($user, $ext);
 					}
 
 		return $user;

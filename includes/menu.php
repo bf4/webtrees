@@ -494,8 +494,7 @@ class MenuBar
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
 
-		if (!empty($username)) {
-			$user = getUser($username);
+		if ($username) {
 			if (!empty($user["gedcomid"][$GEDCOM])) {
 				//-- my_indi submenu
 				$submenu = new Menu($pgv_lang["my_indi"], "individual.php?pid=".$user["gedcomid"][$GEDCOM]);
@@ -527,14 +526,14 @@ class MenuBar
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			//-- editaccount submenu
-			if ($user["editaccount"]) {
+			if (get_user_setting($username, 'editaccount')) {
 				$submenu = new Menu($pgv_lang["editowndata"], "edituser.php");
 				if (!empty($PGV_IMAGES["mygedview"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
-			if ($user["canadmin"] || (userGedcomAdmin($username, $GEDCOM))){
+			if ((userIsAdmin()) || (userGedcomAdmin())){
 				$menu->addSeperator();
 				//-- admin submenu
 				$submenu = new Menu($pgv_lang["admin"], "admin.php");
@@ -563,7 +562,7 @@ class MenuBar
 					$menu->addSubmenu($submenu);
 				}
 			}
-			else if (userCanEdit($username)) {
+			else if (userCanEdit()) {
 				//-- upload_media submenu
 				 if (is_writable($MEDIA_DIRECTORY) && $MULTI_MEDIA) {
 					$menu->addSeperator();
@@ -739,10 +738,9 @@ class MenuBar
 				$pids[] = $myid;
 				if ($rootid && empty($myid)) {
 					$username = getUserName();
-					if (!empty($username)) {
-						$user = getUser($username);
-						$pids[] = @$user["gedcomid"][$GEDCOM];
-						$pids[] = @$user["rootid"][$GEDCOM];
+					if ($username) {
+						$pids[] = get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+						$pids[] = get_user_gedcom_setting($username, $GEDCOM, 'rootid');
 					}
 				}
 				if ($rootid) {

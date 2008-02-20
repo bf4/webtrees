@@ -89,7 +89,6 @@ $cacheControl[1] = array("cache"=>1);
 if (!empty($module) && $module=="randomMedia") $cacheControl[1]["cache"] = 0;
 
 if(!loadCachedBlock($cacheControl, $rssStyle)){
-	$user = getUser($CONTACT_EMAIL);
 	$author=getUserFullName($CONTACT_EMAIL);
 
 	$feed = new UniversalFeedCreator();

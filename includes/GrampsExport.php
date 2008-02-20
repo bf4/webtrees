@@ -89,7 +89,6 @@ class GrampsExport {
 	function begin_xml() {
 		global $pgv_lang, $factarray;//, $eventsArray, $dom, $ePeople, $this->eFams, $eSources, $ePlaces, $eObject;
 		$user = getUserName();
-		$user = getUser($user);
 
 		$this->dom = new DomDocument("1.0", "UTF-8");
 		$this->dom->formatOutput = true;
@@ -107,11 +106,11 @@ class GrampsExport {
 
 		$eResearcher = $this->dom->createElement("researcher");
 		$eResname = $this->dom->createElement("resname");
-		$etResname = $this->dom->createTextNode($user["firstname"] . " " . $user["lastname"]);
+		$etResname = $this->dom->createTextNode(getUserFullName($user));
 		$etResname = $eResname->appendChild($etResname);
 		$eResname = $eResearcher->appendChild($eResname);
 		$eResemail = $this->dom->createElement("resemail");
-		$etResemail = $this->dom->createTextNode($user["email"]);
+		$etResemail = $this->dom->createTextNode(get_user_setting($user, 'email'));
 		$etResemail = $eResemail->appendChild($etResemail);
 		$eResemail = $eResearcher->appendChild($eResemail);
 		$eResearcher = $eHeader->appendChild($eResearcher);

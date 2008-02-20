@@ -277,7 +277,6 @@ function print_fact(&$eventObj, $noedit=false) {
 */
 		print "<td class=\"optionbox $styleadd wrap\" $align>";
 		//print "<td class=\"facts_value facts_value$styleadd\">";
-		$user = getUser(getUserName());
 		if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
 			if (isset($resn_value)) {
 				print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
@@ -473,7 +472,6 @@ function print_fact(&$eventObj, $noedit=false) {
 	} else {
 		// -- catch all unknown codes here
 		$body = $pgv_lang["unrecognized_code"]." ".$fact;
-		$user=getUser($CONTACT_EMAIL);
 		$userName=getUserFullName($CONTACT_EMAIL);
 		if (!$HIDE_GEDCOM_ERRORS) print "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">".$pgv_lang["unrecognized_code"].": $fact</span></td><td class=\"optionbox\">$event<br />".$pgv_lang["unrecognized_code_msg"]." <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL','', '', '$body'); return false;\">".$userName."</a>.</td></tr>";
 	}

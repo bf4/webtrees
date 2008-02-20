@@ -181,25 +181,29 @@ $success = false;
  * @return boolean
  */
 function checkFactEdit($gedrec) {
-	$username = getUserName();
-	if (userGedcomAdmin()) return true;
+	global $GEDCOM;
+
+	if (userGedcomAdmin()) {
+		return true;
+	}
 	
 	$ct = preg_match("/2 RESN ((privacy)|(locked))/i", $gedrec, $match);
 	if ($ct > 0) {
 		$match[1] = strtolower(trim($match[1]));
-		$user = getUser($username);
-		$myindi = "";
-		if (isset($user["gedcomid"][$GEDCOM])) $myindi = trim($user["gedcomid"][$GEDCOM]);
+		$myindi=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
 		
 		$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 		if ($gt > 0) {
 			$gid = trim($gmatch[1]);
 			$type = trim($gmatch[2]);
-			if ($myindi == $gid) return true;
-			if ($type=='FAM'){
+			if ($myindi == $gid) {
+				return true;
+			}
+			if ($type=='FAM') {
 				$parents = find_parents_in_record($gedrec);
-				if ($myindi == $parents["HUSB"]) return true;
-				if ($myindi == $parents["WIFE"]) return true;
+				if ($myindi == $parents["HUSB"] || $myindi == $parents["WIFE"]) {
+					return true;
+				}
 			}
 		}
 		return false;

@@ -61,13 +61,10 @@ class DescendancyControllerRoot extends BaseController {
 	var $show_changes = "yes";
 	var $action = "";
 	var $pid = "";
-	var $default_tab = 0;
 	var $descPerson = null;
 
 	var $diffindi = null;
 	var $NAME_LINENUM = 1;
-	var $uname = "";
-	var $user = false;
 	var $accept_success = false;
 	var $visibility = "visible";
 	var $position = "relative";
@@ -145,8 +142,6 @@ class DescendancyControllerRoot extends BaseController {
 	$pbwidth = $bwidth+12;
 	$pbheight = $bheight+14;
 
-	$this->default_tab = $GEDCOM_DEFAULT_TAB;
-
 	if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
 	if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
 	if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
@@ -161,13 +156,6 @@ class DescendancyControllerRoot extends BaseController {
 
 	if (strlen($this->name)<30) $this->cellwidth="420";
 	else $this->cellwidth=(strlen($this->name)*14);
-
-	//-- check for the user
-	$this->uname = getUserName();
-	if (!empty($this->uname)) {
-		$this->user = getUser($this->uname);
-		if (!empty($this->user["default_tab"])) $this->default_tab = $this->user["default_tab"];
-	}
 
 	$this->descPerson = Person::getInstance($this->pid);
 

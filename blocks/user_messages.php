@@ -86,18 +86,23 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$showmsg=preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2",PrintReady($message["subject"]));
 			$showmsg=preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$showmsg);
 			$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><b>".$showmsg."</b> <img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
-			if (!empty($message["created"])) $time = strtotime($message["created"]);
-			else $time = time();
-			$tempuser = getUser($message["from"]);
+				if (!empty($message["created"])) {
+					$time = strtotime($message["created"]);
+				} else {
+					$time = time();
+				}
 			$content .= "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
 			$content .= "<td class=\"list_value_wrap\">";
-			if ($tempuser) {
-					$tempuserName=getUserFullName($message["from"]);
-				$content .= PrintReady($tempuserName);
-				if ($TEXT_DIRECTION=="ltr") $content .= " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
-				else $content .= " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
+			if (user_exists($message["from"])) {
+				$content .= PrintReady(getUserFullName($message["from"]));
+				if ($TEXT_DIRECTION=="ltr") {
+					print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
+				} else {
+					print " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
+				}
+			} else {
+				$content .= "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
 			}
-			else $content .= "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
 			$content .= "</td>\n";
 			$content .= "</tr>\n";
 			$content .= "<tr><td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message$key\" style=\"display: none;\">\n";
@@ -116,18 +121,21 @@ function print_user_messages($block=true, $config="", $side, $index) {
 	if (count($users)>1) {
 		$content .= $pgv_lang["message"]." <select name=\"touser\">\n";
 		$username = getUserName();
-			if (userIsAdmin()) {
+		if (userIsAdmin()) {
 			$content .= "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
 			$content .= "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
 			$content .= "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
 		}
-			foreach($users as $user) {
-				if ($username!=$user && get_user_setting($user, 'verified_by_admin')=='yes') {
-					$userName=getUserFullName($user);
-					print "<option value=\"".$user."\"";
-					print ">".PrintReady($userName);
-					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".$user . getLRM() . "</option>\n";
-					else print " " . getRLM() . " - ".$user. getRLM() . "</option>\n";
+		foreach($users as $user) {
+			if ($username!=$user && get_user_setting($user, 'verified_by_admin')=='yes') {
+				$userName=getUserFullName($user);
+				print "<option value=\"".$user."\"";
+				print ">".PrintReady($userName);
+				if ($TEXT_DIRECTION=="ltr") {
+					print " " . getLRM() . " - ".$user . getLRM() . "</option>\n";
+				} else {
+					print " " . getRLM() . " - ".$user. getRLM() . "</option>\n";
+				}
 			}
 		}
 		$content .= "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
@@ -135,7 +143,10 @@ function print_user_messages($block=true, $config="", $side, $index) {
 	$content .= "</form>\n";
 	
 	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
+	if ($block) {
+		include($THEME_DIR."/templates/block_small_temp.php");
+	} else {
+		include($THEME_DIR."/templates/block_main_temp.php");
+	}
 }
 ?>
