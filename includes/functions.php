@@ -2621,63 +2621,6 @@ function remove_custom_tags($gedrec, $remove="no") {
 	return $gedrec;
 }
 
-/**
- * Locate and run any hook files found.
- *
- * @param string $type		the type of hook requested (login|logout|adduser|updateuser|deleteuser|getuser)
- * @param array  $params	array of parameters
- * @return array			array containing any results from the hooks (not currently used)
- * @author					Patrick Kellum
- * @todo					add aditional types, including search.
- */
-function runHooks($type, $params=array())
-{
-	global $THEME_DIR;
-	static $cache = array();
-	// check for cache
-	if (isset($cache[$type])) {
-		$hooks = $cache[$type];
-	} else {
-		// look for core hooks, shouldn't be needed, but may be useful for quick site customizing
-		if (file_exists("hooks/{$type}.php")) {
-			$hooks = array('core'=>"hooks/{$type}.php");
-		} else {
-			$hooks = array();
-		}
-		// look for module hooks
-		if (file_exists("modules")) {
-			$d = dir('modules/');
-			while (false !== ($f = $d->read())) {
-				if ($f === '.' || $f === '..') {
-					continue;
-				}
-				if (is_dir("modules/$f") && file_exists("modules/{$f}/pgvhooks/{$type}.php")) {
-					$hooks[$f] = "modules/{$f}/pgvhooks/{$type}.php";
-				}
-			}
-			$d->close();
-		}
-		// look for theme hooks
-		if (file_exists("{$THEME_DIR}hooks/{$type}.php")) {
-			$hooks['theme'] = "{$THEME_DIR}hooks/{$type}.php";
-		}
-		// cache the results for speed
-		$cache[$type] = $hooks;
-	}
-	// run all found hooks
-	$results = array();
-	foreach ($hooks as $module=>$hook) {
-		include_once $hook;
-		$cl = "mod_{$module}_{$type}";
-		$obj = new $cl();
-		$res = $obj->hook($params);
-		if ($res !== null) {
-			$results = array_merge($results, $res);
-		}
-	}
-	return $results;
-}
-
 function getfilesize($bytes) {
 	if ($bytes>=1099511627776) {
 		return round($bytes/1099511627776, 2)." TB";

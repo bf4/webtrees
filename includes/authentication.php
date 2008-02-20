@@ -72,8 +72,6 @@ function authenticateUser($username, $password, $basic=false) {
 				if ($tmp) {
 					$_SESSION['GEDCOM']=$tmp->ged_gedcom;
 				}
-
-				runHooks('login', array('user'=>$username));
 				return true;
 			}
 		}
@@ -144,7 +142,6 @@ function userLogout($username = "") {
 				$_SESSION["pgv_counter"]=$tmphits; //set since it was set before so don't get double hits
 		}
 	}
-	runHooks('logout', array('username'=>$username));
 }
 
 /**
@@ -681,7 +678,6 @@ function addUser($newuser, $msg = "added") {
 		if ($activeuser == "")
 			$activeuser = "Anonymous user";
 		AddToLog($activeuser." ".$msg." user -> ".$newuser["username"]." <-");
-	runHooks('adduser', array('user'=>$newuser['username']));
 		return true;
 	}
 
@@ -735,7 +731,6 @@ function updateUser($username, $newuser, $msg = "updated") {
 			$activeuser = "Anonymous user";
 		AddToLog($activeuser." ".$msg." user [old username '".$username."'] new username-> ".$newuser["username"]." <-");
 
-		runHooks('updateuser', $newuser);
 		return true;
 	}
 
@@ -753,7 +748,6 @@ function deleteUser($username) {
 	if ($activeuser == "")
 		$activeuser = "Anonymous user";
 	AddToLog($activeuser." deleted user -> ".$username." <-");
-	runHooks('deleteuser', array('username'=>$username));
 }
 
 /**
@@ -856,10 +850,6 @@ function getUser($username) {
 		'max_relation_path'   =>get_user_setting($user_id, 'max_relation_path'),
 		'auto_accept'         =>get_user_setting($user_id, 'auto_accept')=='Y'
 	);
-	$ext=runHooks('getuser', $user);
-	if (count($ext) > 0) {
-		$user=array_merge($user, $ext);
-	}
 
 	return $user;
 }

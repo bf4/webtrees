@@ -125,6 +125,9 @@ try {
 		" CONSTRAINT {$TBLPREFIX}gedcom_setting_fk1 FOREIGN KEY (gset_ged_id) REFERENCES {$TBLPREFIX}gedcom (ged_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
+	// These two indexes should ensure we never need to access the table
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}gedcom_setting_ix1 ON {$TBLPREFIX}gedcom_setting (gset_ged_id, gset_parameter, gset_value)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}gedcom_setting_ix2 ON {$TBLPREFIX}gedcom_setting (gset_parameter, gset_value, gset_ged_id)");
 
 	// Migrate PGV4.x data from gedcoms.php and *_(conf|priv).php
 	global $INDEX_DIRECTORY;
@@ -288,6 +291,9 @@ try {
 		" CONSTRAINT {$TBLPREFIX}user_setting_fk1 FOREIGN KEY (uset_user_id) REFERENCES {$TBLPREFIX}user (user_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
+	// These two indexes should ensure we never need to access the table
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_setting_ix1 ON {$TBLPREFIX}user_setting (uset_user_id, uset_parameter, uset_value)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_setting_ix2 ON {$TBLPREFIX}user_setting (uset_parameter, uset_value, uset_user_id)");
 
 	// Migrate PGV4.x data from gedcoms.php into the new table
 	$columns=array(
@@ -341,6 +347,9 @@ try {
 		" CONSTRAINT {$TBLPREFIX}user_gedcom_setting_fk2 FOREIGN KEY (ugset_ged_id)  REFERENCES {$TBLPREFIX}gedcom (ged_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
+	// These two indexes should ensure we never need to access the table
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_gedcom_setting_ix1 ON {$TBLPREFIX}user_gedcom_setting (ugset_user_id, ugset_ged_id, ugset_parameter, ugset_value)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_gedcom_setting_ix2 ON {$TBLPREFIX}user_gedcom_setting (ugset_parameter, ugset_value, ugset_user_id, ugset_ged_id)");
 
 	// Migrate PGV4.x data from pgv_useres
 	$statement=$DBH->prepare(

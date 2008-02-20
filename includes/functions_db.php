@@ -417,13 +417,21 @@ function load_people($ids, $gedfile='') {
 /**
  * find the gedcom record
  *
+ * This function first checks the caches to see if the record has already
+ * been retrieved from the database.  If it hasn't been retrieved, then query the database and
+ * add it to the cache.
+ * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#other
  * @param string $pid the unique gedcom xref id of the record to retrieve
- * @param string $gedcom the gedcom file containing $pid
+ * @param string $gedfile	[optional] the gedcomfile to search in
+ * @param string $type		[optional] the type of record to find (INDI, FAM, SOUR, etc)
  * @return string the raw gedcom record is returned
  */
-function find_gedcom_record($pid, $gedcom=null) {
-	global $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
+function find_gedcom_record($pid, $gedfile = "", $type="") {
+	global $TBLPREFIX, $GEDCOMS;
+	global $GEDCOM, $indilist, $famlist, $sourcelist, $objectlist, $otherlist, $DBCONN;
 
+	if (empty($pid))
+		return false;
 	if (empty($gedfile))
 		$gedfile = $GEDCOM;
 
@@ -463,8 +471,8 @@ function find_gedcom_record($pid, $gedcom=null) {
 			break;
 	}
 
-	if (is_null($gedcom)) {
-		$gedcom=$GEDCOM;
+	//-- unable to guess the type so look in all the tables
+	if (empty($gedrec)) {
 		$sql = "SELECT o_gedcom, o_file FROM ".$TBLPREFIX."other WHERE o_id LIKE '".$DBCONN->escapeSimple($pid)."' AND o_file=".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"]);
 		$res =& dbquery($sql);
 		if (DB::isError($res))
@@ -3400,7 +3408,7 @@ function get_gedcom_id($gedcom) {
 		$row=$statement->fetchObject();
 		$statement->closeCursor();
 		if ($row) {
-			return $row->user_id;
+			return $row->ged_id;
 		} else {
 			return null;
 		}
@@ -3460,6 +3468,33 @@ function delete_user($user_id) {
 	$DBH->exec("DELETE FROM {$TBLPREFIX}messages  WHERE m_to        NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
 	$DBH->exec("DELETE FROM {$TBLPREFIX}news      WHERE n_username  NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
 	$TOTAL_QUERIES+=7;
+}
+
+// Get a list of logged-in users
+function get_logged_in_users() {
+	global $DBCONN, $TBLPREFIX;
+
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y'");
+	while ($row=$res->fetchRow()) {
+		$users[]=$row[0];
+	}
+	$res->free();
+	return $users;
+}
+
+// Get a list of logged-in users who haven't been active recently
+function get_idle_users($time) {
+	global $DBCONN, $TBLPREFIX;
+
+	$time=(int)($time);
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y' AND u_sessiontime BETWEEN 1 AND {$time}");
+	while ($row=$res->fetchRow()) {
+		$users[]=$row[0];
+	}
+	$res->free();
+	return $users;
 }
 
 function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {

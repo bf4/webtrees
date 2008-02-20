@@ -47,20 +47,24 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	$block = true; // Always restrict this block's height
 
 	$cusername = getUserName();
+
+	// Log out inactive users
+	foreach (get_idle_users(time()-$PGV_SESSION_TIME) as $user) {
+		if ($user!=$cusername) {
+			userLogout($user);
+		}
+	}
+
+	// List active users
 	$NumAnonymous = 0;
 	$loggedusers = array ();
-	foreach (get_all_users() as $user_id=>$user_name) {
-		if (get_user_setting($user_id,'loggedin') == "Y") {
-			if (time() - get_user_setting($user_id, 'sessiontime') > $PGV_SESSION_TIME && $user_name!=$cusername)
-				userLogout($user);
-			else {
-				if (userIsAdmin() || get_user_setting($user_id, 'visibleonline'))
-					$loggedusers[]=$user_id;
-				else
+	foreach (get_logged_in_users() as $user) {
+		if (userIsAdmin() || get_user_setting($user, 'visibleonline')=='Y') {
+			$loggedusers[]=$user;
+		} else {
 					$NumAnonymous++;
 			}
 		}
-	}
 
 	print "<div id=\"logged_in_users\" class=\"block\">\n";
 	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
@@ -72,23 +76,26 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
 	print "</table>";
 	print "<div class=\"blockcontent\">";
-	if ($block)
+	if ($block) {
 		print "<div class=\"small_inner_block\">\n";
+	}
 	print "<table width=\"90%\">";
 	$LoginUsers = count($loggedusers);
 	if (($LoginUsers == 0) and ($NumAnonymous == 0)) {
 		print "<tr><td><b>" . $pgv_lang["no_login_users"] . "</b></td></tr>";
 	}
 	$Advisory = "anon_user";
-	if ($NumAnonymous > 1)
+	if ($NumAnonymous > 1) {
 		$Advisory .= "s";
+	}
 	if ($NumAnonymous > 0) {
 		$pgv_lang["global_num1"] = $NumAnonymous; // Make it visible
 		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
 	$Advisory = "login_user";
-	if ($LoginUsers > 1)
+	if ($LoginUsers > 1) {
 		$Advisory .= "s";
+	}
 	if ($LoginUsers > 0) {
 		$pgv_lang["global_num1"] = $LoginUsers; // Make it visible
 		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
@@ -97,15 +104,16 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		$userName=getUserFullName($user_id);
 		print "<tr><td>";
 		print "<br />" . PrintReady($userName);
-		print " - " . $user_name;
-		if (($cusername != $user_name) && (get_user_setting($user, 'contactmethod') != "none")) {
-			print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_name . "');\">" . $pgv_lang["message"] . "</a>";
+		print " - " . $user;
+		if ($cusername!=$user && get_user_setting($user, 'contactmethod')!="none") {
+			print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user . "');\">" . $pgv_lang["message"] . "</a>";
 		}
 		print "</td></tr>";
 	}
 	print "</table>";
-	if ($block)
+	if ($block) {
 		print "</div>\n";
+	}
 	print "</div>"; // blockcontent
 	print "</div>"; // block
 }
