@@ -53,38 +53,36 @@ if ($to=="all" && !userIsAdmin()) {
 if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_send"]===true)) {
 	$_SESSION["good_to_send"] = false;
 	if (!empty($from_email)) $from = $from_email;
-	$tuser = getUser($from);
-	if (!$tuser) {
+	if (!user_exists($from)) {
 		$mt = preg_match("/(.+)@(.+)/", $from, $match);
-	    if ($mt>0) {
-		    $host = trim($match[2]);
-		    if (function_exists("checkdnsrr")) {
-	            $ip = checkdnsrr($host);
-	            if ($ip === false) {
-		            $host = "www.".$host;
-		            $ip = checkdnsrr($host);
-		            if ($ip === false) {
-			            print "<center><br /><span class=\"error\">".$pgv_lang["invalid_email"]."</span>\n";
-			            print "<br /><br /></center>";
-			            $action="compose";
+		if ($mt>0) {
+			$host = trim($match[2]);
+			if (function_exists("checkdnsrr")) {
+				$ip = checkdnsrr($host);
+				if ($ip === false) {
+					$host = "www.".$host;
+					$ip = checkdnsrr($host);
+					if ($ip === false) {
+						print "<center><br /><span class=\"error\">".$pgv_lang["invalid_email"]."</span>\n";
+						print "<br /><br /></center>";
+						$action="compose";
 						//print_simple_footer();
 						//exit;
 					}
-	            }
-            }
-	    }
-	    else {
-		     print "<center><br /><span class=\"error\">".$pgv_lang["invalid_email"]."</span>\n";
-            print "<br /><br /></center>";
-            $action="compose";
-	    }
+				}
+			}
+		} else {
+			print "<center><br /><span class=\"error\">".$pgv_lang["invalid_email"]."</span>\n";
+			print "<br /><br /></center>";
+			$action="compose";
+		}
 	}
 	//-- check referer for possible spam attack
 	if (!isset($_SERVER['HTTP_REFERER']) || stristr($_SERVER['HTTP_REFERER'],"message.php")===false) {
 		print "<center><br /><span class=\"error\">Invalid page referer.</span>\n";
-        print "<br /><br /></center>";
-        AddToLog('Invalid page referer while trying to send a message.  Possible spam attack.');
-        $action="compose";
+		print "<br /><br /></center>";
+		AddToLog('Invalid page referer while trying to send a message.  Possible spam attack.');
+		$action="compose";
 	}
 	if ($action!="compose") {
 		$toarray = array($to);
@@ -131,15 +129,15 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 			$message["url"] = $url;
 			if ($i>0) $message["no_from"] = true;
 			if (addMessage($message)){
-				$touser = getUser($to);
-				if ($touser) {
-					$touserName = getUserFullName($to);
-					print str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["message_sent"]);
+				if (user_exists($to)) {
+					print str_replace("#TO_USER#", "<b>".getUserFullName($to)."</b>", $pgv_lang["message_sent"]);
 					print "<br />";
+				} else {
+					AddToLog('Invalid TO user.'.$to.' Possible spam attack.');
 				}
-				else AddToLog('Invalid TO user.'.$to.' Possible spam attack.');
+			} else {
+				AddToLog('Unable to send message.  TO:'.$to.' FROM:'.$from);
 			}
-			else AddToLog('Unable to send message.  TO:'.$to.' FROM:'.$from);
 			$i++;
 		}
 	}
@@ -183,9 +181,8 @@ if ($action=="compose") {
 	else print "return checkForm(this);";
 	print "\">\n";
 	print "<table>\n";
-	$touser = getUser($to);
-	$lang_temp = "lang_name_".$touser["language"];
-	if ($touser) {
+	if (user_exists($to)) {
+		$lang_temp = "lang_name_".get_user_setting($to, 'language');
 		$touserName = getUserFullName($to);
 		print "<tr><td></td><td>".str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["sending_to"])."<br />";
 		print str_replace("#USERLANG#", "<b>".$pgv_lang[$lang_temp]."</b>", $pgv_lang["preferred_lang"])."</td></tr>\n";
