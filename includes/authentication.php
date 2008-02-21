@@ -114,18 +114,9 @@ function basicHTTPAuthenticateUser() {
  * logs a user out of the system
  * @param string $username	optional parameter to logout a specific user
  */
-function userLogout($username = "") {
-	global $GEDCOM, $LANGUAGE;
+function userLogout($username) {
+	global $GEDCOM;
 
-	if ($username=="") {
-		if (isset($_SESSION["pgv_user"]))
-			$username = $_SESSION["pgv_user"];
-		else
-			if (isset($_COOKIE["pgv_rem"]))
-				$username = $_COOKIE["pgv_rem"];
-			else
-				return;
-	}
 	set_user_setting($username, 'loggedin', 'N');
 
 	AddToLog("Logout - " . $username);
