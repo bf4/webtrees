@@ -47,19 +47,23 @@ if ($action=="login") {
 	else $password="";
 	if (isset($_POST['remember'])) $remember = $_POST['remember'];
 	else $remember = "no";
-	$auth = authenticateUser($username, $password);
-	if ($auth) {
+	if (authenticateUser($username, $password)) {
 		if (!empty($_POST["useradmin"])) $_SESSION["useradmin"] = $_POST["useradmin"];
 		if (!empty($_POST["usertime"])) {
 			$_SESSION["usertime"]=@strtotime($_POST["usertime"]);
+		} else {
+			$_SESSION["usertime"]=time();
 		}
-		else $_SESSION["usertime"]=time();
 		$_SESSION["timediff"]=time()-$_SESSION["usertime"];
 		$MyUserName = getUserName();
-		$MyUser = $users[$MyUserName];
-		if (isset($MyUser["language"])) {
-		  if (isset($_SESSION['CLANGUAGE']))$_SESSION['CLANGUAGE'] = $MyUser["language"];
-		  else if (isset($HTTP_SESSION_VARS['CLANGUAGE'])) $HTTP_SESSION_VARS['CLANGUAGE'] = $MyUser["language"];
+		$MyLanguage = get_user_setting($MyUserName, 'language');
+		if ($MyLanguage) {
+			if (isset($_SESSION['CLANGUAGE'])) {
+				$_SESSION['CLANGUAGE'] = $MyLanguage;
+			} else {
+				if (isset($HTTP_SESSION_VARS['CLANGUAGE']))
+					$HTTP_SESSION_VARS['CLANGUAGE'] = $MyLanguage;
+			}
 		}
 		session_write_close();
 		
@@ -67,19 +71,23 @@ if ($action=="login") {
 		if (!isset($ged)) $ged = $GEDCOM;
 		
 		//-- section added based on UI feedback
+		// TODO: this block of code will never run, as the url will always have parameters ?pid=I123&ged=xyz.ged appended to it.  Has it ever worked?
 		if (isset($_REQUEST['url'])) $url = $_REQUEST['url'];
 		if ($url == "individual.php") {
 			$pid = "";
-			foreach($MyUser['gedcomid'] as $gedname=>$value) {
-				if (!empty($value)) {
-					$pid = $value;
+			foreach (array_keys($GEDCOMS) as $gedname) {
+				if (get_user_gedcom_setting($MyUserName, $gedname, 'gedcomid')) {
+					$pid = get_user_gedcom_setting($MyUserName, $gedname, 'gedcomid');
 					$ged = $gedname;
 					break;
 				}
 			}
-			if (!empty($pid)) $url = "individual.php?pid=".$pid;
-			//-- user does not have a pid?  Go to mygedview portal
-			else $url = "index.php?ctype=user";
+			if (!empty($pid)) {
+				$url = "individual.php?pid=".$pid;
+			} else {
+				//-- user does not have a pid?  Go to mygedview portal
+				$url = "index.php?ctype=user";
+			}
 		}
 		
 		$urlnew = $SERVER_URL;

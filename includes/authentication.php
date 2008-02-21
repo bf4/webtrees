@@ -48,36 +48,30 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * @return bool return true if the username and password credentials match a user in the database return false if they don't
  */
 function authenticateUser($username, $password, $basic=false) {
-	global $GEDCOM, $pgv_lang;
-	checkTableExists();
-	$user = getUser($username);
-	//-- make sure that we have the actual username as it was stored in the DB
-	if ($user!==false) {
-		$username = $user['username'];
-		if (crypt($password, $user["password"])==$user["password"]) {
-			if (!isset($user["verified"]))
-				$user["verified"] = "";
-			if (!isset($user["verified_by_admin"]))
-				$user["verified_by_admin"] = "";
-			if ((($user["verified"] == "yes") && ($user["verified_by_admin"] == "yes")) || ($user["canadmin"] != "")) {
-				set_user_setting($username, 'loggedin', 'Y');
+	global $GEDCOM, $GEDCOMS, $pgv_lang;
 
+	checkTableExists();
+
+	if (user_exists($username)) {
+		$dbpassword=get_user_password($username);
+		if (crypt($password, $dbpassword)==$dbpassword) {
+			if (get_user_setting($username, 'verified')=='yes' && get_user_setting($username, 'verified_by_admin')=='yes' || get_user_setting($username, 'canadmin')=='Y') {
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $username ."<-");
 				//-- reset the user's session
 				$_SESSION = array();
 				$_SESSION['pgv_user'] = $username;
 				//-- unset the cookie_login session var to show that they have logged in with their password
 				$_SESSION['cookie_login'] = false;
-				if (isset($pgv_lang[$user["language"]]))
-					$_SESSION['CLANGUAGE'] = $user['language'];
+				if (isset($pgv_lang[get_user_setting($username, 'language')]))
+					$_SESSION['CLANGUAGE'] = get_user_setting($username, 'language');
 				//-- only change the gedcom if the user does not have an gedcom id
 				//-- for the currently active gedcom
-				if (empty($user["gedcomid"][$GEDCOM])) {
+				if (get_user_gedcom_setting($username, $GEDCOM, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
-					foreach($user["gedcomid"] as $ged=>$id) {
-						if (!empty($id)) {
-							$_SESSION['GEDCOM']=$ged;
+					foreach (array_keys($GEDCOMS) as $gedcom) {
+						if (get_user_gedcom_setting($username, $gedcom, 'gedcomid')) {
+							$_SESSION['GEDCOM']=$gedcom;
 							break;
 						}
 					}
@@ -668,8 +662,7 @@ function addUser($newuser, $msg = "added") {
 
 	if (checkTableExists()) {
 		$user=$newuser['username'];
-		create_user($user);
-		set_user_setting($user, 'password',             $newuser['password']);
+		create_user($user, $newuser['password']);
 		set_user_setting($user, 'firstname',            preg_replace("/\//", "", $newuser["firstname"]));
 		set_user_setting($user, 'lastname',             preg_replace("/\//", "", $newuser["lastname"]));
 		set_user_setting($user, 'gedcomid',             serialize($newuser['gedcomid']));
