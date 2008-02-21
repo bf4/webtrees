@@ -73,19 +73,18 @@ function mod_gallery2_load($uid)
 	{
 		/* Error! */
 		/* Did we get an error because the user doesn't exist in g2 yet? */
-		$user = getUser($uid);
 		$ret2 = GalleryEmbed::isExternalIdMapped($uid, 'GalleryUser');
 		if($ret2 && $ret2->getErrorCode() & ERROR_MISSING_OBJECT)
 		{
 			/* The user does not exist in G2 yet. Create in now on-the-fly */
 			$ret = GalleryEmbed::createUser($uid, array(
-				'username'			=> $user['username'],
-				'email'				=> $user['email'],
-				'fullname'			=> getUserFullName($user['username']),
-				'language'			=> $language_settings[$user['language']]['lang_short_cut'],
-				'hashedpassword'	=> $user['password'],
+				'username'			=> $uid,
+				'email'				=> get_user_setting($uid, 'email'),
+				'fullname'			=> getUserFullName($uid),
+				'language'			=> $language_settings[get_user_settings($uid, 'language')]['lang_short_cut'],
+				'hashedpassword'	=> get_user_password($uid),
 				'hashmethod'		=> 'crypt',
-				'creationtimestamp'	=> $user['reg_timestamp']
+				'creationtimestamp'	=> get_user_setting($uid, 'reg_timestamp')
 			));
 			if($ret)
 			{

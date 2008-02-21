@@ -217,7 +217,6 @@ function process_form(the_form)
 				</fieldset>
 			</div>
 <?php
-$user = getUser(getUserName());
 if($SERVER_URL[strlen($SERVER_URL) - 1] == '/'){$sep = '';}else{$sep = '/';}
 ?>
 			<div class="inform">
@@ -225,7 +224,7 @@ if($SERVER_URL[strlen($SERVER_URL) - 1] == '/'){$sep = '';}else{$sep = '/';}
 					<legend>Enter Administrator's e-mail</legend>
 					<div class="infldset">
 						<p>The e-mail address of the forum administrator.</p>
-						<label for="req_email"><strong>Administrator's e-mail</strong><br /><input id="req_email" type="text" name="req_email" size="50" maxlength="50" value="<?php print $user['email'];?>" /><br /></label>
+						<label for="req_email"><strong>Administrator's e-mail</strong><br /><input id="req_email" type="text" name="req_email" size="50" maxlength="50" value="<?php print get_user_setting(getUserName(), 'email');?>" /><br /></label>
 					</div>
 				</fieldset>
 			</div>
