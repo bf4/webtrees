@@ -329,12 +329,13 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			print "</a>";
 		} else {
 			if(empty($SEARCH_SPIDER)) {
-				$user = getUser($CONTACT_EMAIL);
-				$userName=getUserFullName($CONTACT_EMAIL);
-				print "<a href=\"javascript:;\" onclick=\"if (confirm('".preg_replace("'<br />'", " ", $pgv_lang["privacy_error"])."\\n\\n".str_replace("#user[fullname]#", $userName, $pgv_lang["clicking_ok"])."')) ";
+				print "<a href=\"javascript:;\" onclick=\"if (confirm('".preg_replace("'<br />'", " ", $pgv_lang["privacy_error"])."\\n\\n".str_replace("#user[fullname]#", getUserFullName($CONTACT_EMAIL), $pgv_lang["clicking_ok"])."')) ";
 				if ($CONTACT_METHOD!="none") {
-					if ($CONTACT_METHOD=="mailto") print "window.location = 'mailto:".$user["email"]."'; ";
-					else print "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); ";
+					if ($CONTACT_METHOD=="mailto") {
+						print "window.location = 'mailto:".get_user_setting($CONTACT_EMAIL, 'email')."'; ";
+					} else {
+						print "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); ";
+					}
 				}
 				// NOTE: Start span namedef-$pid.$personcount.$count
 				// NOTE: Close span namedef-$pid.$personcount.$count

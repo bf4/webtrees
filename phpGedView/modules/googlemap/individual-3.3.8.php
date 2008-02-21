@@ -51,8 +51,9 @@ if (($USE_RIN)&&($indirec==false)) {
 
 $uname = getUserName();
 if (!empty($uname)) {
-	$user = getUser($uname);
-	if (!empty($user["default_tab"])) $default_tab = $user["default_tab"];
+	if (get_user_setting($uname, 'default_tab') {
+		$default_tab = get_user_setting($uname, 'default_tab');
+	}
 	//-- add favorites action
 	if (($action=="addfav")&&(!empty($gid))) {
 			$gid = strtoupper($gid);
@@ -574,14 +575,14 @@ if ($view!="preview") {
 
 	$username = getUserName();
 	if (!empty($username)) {
-		$tuser=getUser($username);
-		if (!empty($tuser["gedcomid"][$GEDCOM])) {
+		$my_id=get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+		if ($my_id) {
 			$submenu = array();
 			$submenu["label"] = $pgv_lang["relationship_to_me"];
 			$submenu["labelpos"] = "right";
 			if (!empty($PGV_IMAGES["relationship"]["small"]))
 				$submenu["icon"] = $PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"];
-			$submenu["link"] = "relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=$pid";
+			$submenu["link"] = "relationship.php?pid1={$my_id}&amp;pid2={$pid}";
 			$submenu["class"] = "submenuitem$ff";
 			$submenu["hoverclass"] = "submenuitem_hover$ff";
 			$menu["items"][] = $submenu;
@@ -656,21 +657,19 @@ if ($view!="preview") {
 	$uname = getUserName();
 	$canedit = userCanEdit();
 	if (!$canedit) {
-		$user = getUser($uname);
-		if (!empty($user["gedcomid"][$GEDCOM])) {
-			if ($pid==$user["gedcomid"][$GEDCOM]) $canedit=true;
-			else {
-				$famids = array_merge(find_sfamily_ids($user["gedcomid"][$GEDCOM]), find_family_ids($user["gedcomid"][$GEDCOM]));
-				foreach($famids as $indexval => $famid) {
-					if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
-					else $famrec = find_record_in_file($famid);
-					if (preg_match("/1 HUSB @$pid@/", $famrec)>0) $canedit=true;
-					if (preg_match("/1 WIFE @$pid@/", $famrec)>0) $canedit=true;
-					if (preg_match("/1 CHIL @$pid@/", $famrec)>0) $canedit=true;
-				}
+		$my_id=get_user_gedcom_setting($uname, $GEDCOM, 'gedcomid');
+		$famids = pgv_array_merge(find_sfamily_ids($my_id), find_family_ids($my_id));
+		$related=false;
+		foreach ($famids as $famid) {
+			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
+			else $famrec = find_updated_record($famid);
+			if (preg_match("/1 (HUSB|WIFE|CHIL) @$pid@/", $famrec)) {
+				$canedit=true;
+				break;
 			}
 		}
 	}
+
 	if ($canedit&&($view!="preview")&&($disp)) {
 		print "</td>\n";
 		print '        <td class="sublinks_cell '.$TEXT_DIRECTION.'">';
