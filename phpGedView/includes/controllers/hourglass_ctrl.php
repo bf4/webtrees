@@ -58,8 +58,6 @@ class HourglassControllerRoot extends BaseController {
 	var $action = "";
 	var $pid = "";
 
-	var $uname = "";
-	var $user = false;
 	var $accept_success = false;
 	var $visibility = "visible";
 	var $position = "relative";
@@ -142,12 +140,6 @@ class HourglassControllerRoot extends BaseController {
 		if ((DisplayDetailsByID($this->pid))||(showLivingNameByID($this->pid))) $this->name = get_person_name($this->pid);
 		else $this->name = $pgv_lang["private"];
 
-		//-- check for the user
-		$this->uname = getUserName();
-		if (!empty($this->uname)) {
-			$this->user = getUser($this->uname);
-			if (!empty($this->user["default_tab"])) $this->default_tab = $this->user["default_tab"];
-		}
 		$this->hourPerson = Person::getInstance($this->pid);
 
 		//Checks how many generations of descendency is for the person for formatting purposes

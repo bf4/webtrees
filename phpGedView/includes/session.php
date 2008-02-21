@@ -977,8 +977,7 @@ if ((!empty($pgv_username))&&(!isset($logout))) {
 		$_SESSION['activity_time'] = time();
 	}
 
-	$tempuser = getUser($pgv_username);
-	$usertheme = $tempuser["theme"];
+	$usertheme = get_user_setting($pgv_username, 'theme');
 	if ((!empty($_POST["user_theme"]))&&(!empty($_POST["oldusername"]))&&($_POST["oldusername"]==$pgv_username)) $usertheme = $_POST["user_theme"];
 	if ((!empty($usertheme)) && (file_exists($usertheme."theme.php")))  {
 		$THEME_DIR = $usertheme;
@@ -990,8 +989,7 @@ if (isset($_SESSION["theme_dir"]))
 	$THEME_DIR = $_SESSION["theme_dir"];
 	if (!empty($pgv_username))
 	{
-		$tempuser = getUser($pgv_username);
-		if ($tempuser["editaccount"]) unset($_SESSION["theme_dir"]);
+		if (get_user_setting($pgv_username, 'editaccount')=='Y') unset($_SESSION["theme_dir"]);
 	}
 }
 

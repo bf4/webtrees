@@ -1203,7 +1203,6 @@ usort($indifacts, "compare_facts");
 
 print "\n\t<table class=\"facts_table\">";
 if (!$disp) {
-		$user = getUser($CONTACT_EMAIL);
    print "<tr><td class=\"facts_value\" colspan=\"2\">";
    print_privacy_error($CONTACT_EMAIL);
    print "</td></tr>";

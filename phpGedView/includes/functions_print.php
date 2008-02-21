@@ -1636,9 +1636,12 @@ function print_privacy_error($username) {
 	 global $pgv_lang, $CONTACT_METHOD, $SUPPORT_METHOD, $WEBMASTER_EMAIL;
 
 	 $method = $CONTACT_METHOD;
-	 if ($username==$WEBMASTER_EMAIL) $method = $SUPPORT_METHOD;
-	 $user = getUser($username);
-	 if (!$user) $method = "mailto";
+	 if ($username==$WEBMASTER_EMAIL) {
+		 $method = $SUPPORT_METHOD;
+	 }
+	 if (!user_exists($username)) {
+		 $method = "mailto";
+	 }
 	 print "<br /><span class=\"error\">".$pgv_lang["privacy_error"]." ";
 	 if ($method=="none") {
 		  print "</span><br />\n";
@@ -1646,12 +1649,12 @@ function print_privacy_error($username) {
 	 }
 	 print $pgv_lang["more_information"];
 	 if ($method=="mailto") {
-		  if (!$user) {
+		  if (!user_exists($username)) {
 			   $email = $username;
 			   $fullname = $username;
 		  } else {
-			   $email = $user["email"];
-			   $userName=getUserFullName($username);
+			   $email = get_user_setting($username, 'email');
+			   $fullname=getUserFullName($username);
 		  }
 		  print " <a href=\"mailto:$email\">".$fullname."</a></span><br />";
 	 } else {
@@ -1935,7 +1938,6 @@ function print_theme_dropdown($style=0) {
 		  if (!isset($themeformcount)) $themeformcount = 0;
 		  $themeformcount++;
 		  $uname = getUserName();
-		  $user = getUser($uname);
 		  isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 		  $frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
 		  if(isset($_REQUEST['mod'])){
@@ -1959,7 +1961,7 @@ function print_theme_dropdown($style=0) {
 			   foreach($themes as $indexval => $themedir) {
 					print "<option value=\"".$themedir["dir"]."\"";
 					if ($uname) {
-						 if ($themedir["dir"] == $user["theme"]) print " class=\"selected-option\"";
+						 if ($themedir["dir"] == get_user_setting($uname, 'theme')) print " class=\"selected-option\"";
 					} else {
 						  if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
 					}
@@ -1984,7 +1986,7 @@ function print_theme_dropdown($style=0) {
 						$submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
 						$submenu["class"] = "favsubmenuitem";
 						if ($uname) {
-							 if ($themedir["dir"] == $user["theme"]) $submenu["class"] = "favsubmenuitem_selected";
+							 if ($themedir["dir"] == get_user_setting($uname, 'theme')) $submenu["class"] = "favsubmenuitem_selected";
 						} else {
 							 if ($themedir["dir"] == $THEME_DIR) $submenu["class"] = "favsubmenuitem_selected";
 						}

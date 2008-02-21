@@ -65,8 +65,6 @@ class IndividualControllerRoot extends BaseController {
 	var $indi = null;
 	var $diffindi = null;
 	var $NAME_LINENUM = 1;
-	var $uname = "";
-	var $user = false;
 	var $accept_success = false;
 	var $visibility = "visible";
 	var $position = "relative";
@@ -128,10 +126,8 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		//-- check for the user
-		$this->uname = getUserName();
-		if (!empty($this->uname)) {
-			$this->user = getUser($this->uname);
-			if ($this->user["default_tab"] != $this->default_tab) $this->default_tab = $this->user["default_tab"];
+		if (getUserName()) {
+			$this->default_tab=get_user_setting(getUserName(), 'defaulttab');
 		}
 
 		//-- check for a cookie telling what the last tab was when they were last
@@ -184,7 +180,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && userCanEdit($this->uname)) {
+		if ($this->show_changes=="yes" && userCanEdit()) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 				 //-- get the changed record from the file
 				$newrec = find_updated_record($this->pid);
@@ -230,18 +226,17 @@ class IndividualControllerRoot extends BaseController {
 
 		//-- only allow editors or users who are editing their own individual or their immediate relatives
 		if ($this->indi->canDisplayDetails()) {
-			$this->canedit = userCanEdit($this->uname);
+			$this->canedit = userCanEdit();
 			if (!$this->canedit && $USE_QUICK_UPDATE) {
-				if (!empty($this->user["gedcomid"][$GEDCOM])) {
-					if ($this->pid==$this->user["gedcomid"][$GEDCOM]) $this->canedit=true;
+				$my_id=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
+				if ($my_id) {
+					if ($this->pid==$my_id) $this->canedit=true;
 					else {
-						$famids = array_merge(find_sfamily_ids($this->user["gedcomid"][$GEDCOM]), find_family_ids($this->user["gedcomid"][$GEDCOM]));
+						$famids = array_merge(find_sfamily_ids($my_id), find_family_ids($my_id));
 						foreach($famids as $indexval => $famid) {
 							if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
 							else $famrec = find_updated_record($famid);
-							if (preg_match("/1 HUSB @$this->pid@/", $famrec)>0) $this->canedit=true;
-							if (preg_match("/1 WIFE @$this->pid@/", $famrec)>0) $this->canedit=true;
-							if (preg_match("/1 CHIL @$this->pid@/", $famrec)>0) $this->canedit=true;
+							if (preg_match("/1 (HUSB|WIFE|CHIL) @$this->pid@/", $famrec)>0) $this->canedit=true;
 						}
 					}
 				}
@@ -264,13 +259,12 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function addFavorite() {
 		global $GEDCOM;
-		if (empty($this->uname)) return;
-		if (!empty($_REQUEST["gid"])) {
+		if (getUserName() && !empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
 			$indirec = find_person_record($gid);
 			if ($indirec) {
 				$favorite = array();
-				$favorite["username"] = $this->uname;
+				$favorite["username"] = getUserName();
 				$favorite["gid"] = $gid;
 				$favorite["type"] = "INDI";
 				$favorite["file"] = $GEDCOM;
@@ -287,7 +281,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function acceptChanges() {
 		global $GEDCOM, $indilist;
-		if (!userCanAccept($this->uname)) return;
+		if (!userCanAccept()) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes="no";
@@ -543,8 +537,8 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if (userCanEdit($this->uname)) {
-			if (userIsAdmin($this->uname) || $this->canShowGedcomRecord()) {
+		if (userCanEdit()) {
+			if (userIsAdmin() || $this->canShowGedcomRecord()) {
 				$submenu = new Menu($pgv_lang["edit_raw"]);
 				$submenu->addOnclick("return edit_raw('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -593,7 +587,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
-			if (userCanAccept($this->uname)) {
+			if (userCanAccept()) {
 				$submenu = new Menu($pgv_lang["undo_all"], "individual.php?pid=".$this->pid."&amp;action=undo");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -633,7 +627,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && userCanEdit($this->uname))
+			if ($this->show_changes=="yes"  && userCanEdit())
 				$menu->addOnclick("return show_gedcom_record('new');");
 			else
 				$menu->addOnclick("return show_gedcom_record('');");
@@ -648,7 +642,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu = new Menu($pgv_lang["view_gedcom"]);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && userCanEdit($this->uname)) $submenu->addOnclick("return show_gedcom_record('new');");
+			if ($this->show_changes=="yes"  && userCanEdit()) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
@@ -660,7 +654,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->indi->canDisplayDetails() && !empty($this->uname)) {
+		if ($this->indi->canDisplayDetails() && getUserName()) {
 			$submenu = new Menu($pgv_lang["add_to_my_favorites"], "individual.php?action=addfav&amp;pid=".$this->pid."&amp;gid=".$this->pid);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
@@ -953,7 +947,6 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		<table class="facts_table">
 		<?php if (!$this->indi->canDisplayDetails()) {
-			$user = getUser($CONTACT_EMAIL);
 			print "<tr><td class=\"facts_value\" colspan=\"2\">";
 			print_privacy_error($CONTACT_EMAIL);
 			print "</td></tr>";
@@ -997,7 +990,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		//-- new fact link
-		if ((!$this->isPrintPreview()) && (userCanEdit($this->uname)) && ($this->indi->canDisplayDetails())) {
+		if ((!$this->isPrintPreview()) && (userCanEdit()) && ($this->indi->canDisplayDetails())) {
 			print_add_new_fact($this->pid, $indifacts, "INDI");
 		}
 		?>
@@ -1060,7 +1053,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 			//-- New Note Link
-			if (!$this->isPrintPreview() && (userCanEdit($this->uname))&&$this->indi->canDisplayDetails()) {
+			if (!$this->isPrintPreview() && (userCanEdit())&&$this->indi->canDisplayDetails()) {
 			?>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_note_help", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
@@ -1375,7 +1368,7 @@ class IndividualControllerRoot extends BaseController {
 					?>
 					<tr>
 						<td class="facts_label">
-							<?php if (userCanEdit($this->uname) && isset($people["children"][1])) {?>
+							<?php if (userCanEdit() && isset($people["children"][1])) {?>
 								<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print $pgv_lang['reorder_children']; ?></a>
 							<?php }?>
 						</td>
@@ -1514,7 +1507,7 @@ class IndividualControllerRoot extends BaseController {
 					?>
 					<tr>
 						<td class="facts_label">
-							<?php if (userCanEdit($this->uname) && isset($people["children"][1])) {?>
+							<?php if (userCanEdit() && isset($people["children"][1])) {?>
 								<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print $pgv_lang['reorder_children']; ?></a>
 							<?php }?>
 						</td>
@@ -1670,7 +1663,7 @@ class IndividualControllerRoot extends BaseController {
 					?>
 					<tr>
 						<td class="facts_label">
-							<?php if (userCanEdit($this->uname) && isset($people["children"][1])) {?>
+							<?php if (userCanEdit() && isset($people["children"][1])) {?>
 								<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print $pgv_lang['reorder_children']; ?></a>
 							<?php }?>
 						</td>
@@ -1753,7 +1746,7 @@ class IndividualControllerRoot extends BaseController {
 				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_as_wife"]; ?></a>
 				</td>
 			</tr>
-			<?php } if (userGedcomAdmin($this->uname)) { ?>
+			<?php } if (userGedcomAdmin()) { ?>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_remote_help", "qm"); ?>

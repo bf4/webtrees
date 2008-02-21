@@ -54,7 +54,7 @@ if (!$controller->family->disp) {
 		<td>
 		<?php
 		print print_family_parents($controller->getFamilyID());
-		if (!$controller->isPrintPreview() && $controller->display && userCanEdit($controller->uname)) {
+		if (!$controller->isPrintPreview() && $controller->display && userCanEdit()) {
 		$husb = $controller->getHusband();
 		if (empty($husb)) { ?>
 			<?php print_help_link("edit_add_parent_help", "qm"); ?>
@@ -100,7 +100,7 @@ if (!$controller->family->disp) {
 					//$menu = $controller->getReportsMenu();
 					//$menu->printMenu();
 					endif; // reports
-					if (userCanEdit($controller->uname) && ($controller->display)) :
+					if (userCanEdit() && ($controller->display)) :
 					?>
 					</td>
 					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">
