@@ -58,42 +58,42 @@ print_simple_header($pgv_lang["quick_update_title"]);
 
 //-- only allow logged in users to access this page
 $uname = getUserName();
-if ((!$ALLOW_EDIT_GEDCOM)||(!$USE_QUICK_UPDATE)||(empty($uname))) {
+if (!$ALLOW_EDIT_GEDCOM || !$USE_QUICK_UPDATE || empty($uname)) {
 	print $pgv_lang["access_denied"];
 	print_simple_footer();
 	exit;
 }
 
-$user = getUser($uname);
-
-if (!isset($action)) $action="";
-if (!isset($closewin)) $closewin=0;
-if (empty($pid)) {
-	if (!empty($user["gedcomid"][$GEDCOM])) $pid = $user["gedcomid"][$GEDCOM];
-	else $pid = "";
+if (!isset($action)) {
+	$action="";
 }
-$pid = clean_input($pid);
+if (!isset($closewin)) {
+	$closewin=0;
+}
+
+$pid=clean_input($pid);
+if (empty($pid)) {
+	$pid=get_user_gedcom_setting($uname, $GEDCOM, 'gedcomid');
+}
 
 //-- only allow editors or users who are editing their own individual or their immediate relatives
-$pass = false;
-if (!empty($user["gedcomid"][$GEDCOM])) {
-	if ($pid==$user["gedcomid"][$GEDCOM]) $pass=true;
-	else {
-		$famids = pgv_array_merge(find_sfamily_ids($user["gedcomid"][$GEDCOM]), find_family_ids($user["gedcomid"][$GEDCOM]));
-		foreach($famids as $indexval => $famid) {
-			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-			else $famrec = find_updated_record($famid);
-			if (preg_match("/1 HUSB @$pid@/", $famrec)>0) $pass=true;
-			if (preg_match("/1 WIFE @$pid@/", $famrec)>0) $pass=true;
-			if (preg_match("/1 CHIL @$pid@/", $famrec)>0) $pass=true;
+if (!userCanEdit()) {
+	$my_id=get_user_gedcom_setting($uname, $GEDCOM, 'gedcomid');
+	$famids = pgv_array_merge(find_sfamily_ids($my_id), find_family_ids($my_id));
+	$related=false;
+	foreach ($famids as $famid) {
+		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
+		else $famrec = find_updated_record($famid);
+		if (preg_match("/1 (HUSB|WIFE|CHIL) @$pid@/", $famrec)) {
+			$related=true;
+			break;
 		}
 	}
-}
-if (empty($pid)) $pass=false;
-if ((!userCanEdit())&&(!$pass)) {
-	print $pgv_lang["access_denied"];
-	print_simple_footer();
-	exit;
+	if (!$related) {
+		print $pgv_lang["access_denied"];
+		print_simple_footer();
+		exit;
+	}
 }
 
 //-- find the latest gedrec for the individual

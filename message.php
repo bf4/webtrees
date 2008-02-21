@@ -53,7 +53,7 @@ if ($to=="all" && !userIsAdmin()) {
 if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_send"]===true)) {
 	$_SESSION["good_to_send"] = false;
 	if (!empty($from_email)) $from = $from_email;
-	if (!user_exists($from)) {
+	if (!get_user_id($from)) {
 		$mt = preg_match("/(.+)@(.+)/", $from, $match);
 		if ($mt>0) {
 			$host = trim($match[2]);
@@ -129,7 +129,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 			$message["url"] = $url;
 			if ($i>0) $message["no_from"] = true;
 			if (addMessage($message)){
-				if (user_exists($to)) {
+				if (get_user_id($to)) {
 					print str_replace("#TO_USER#", "<b>".getUserFullName($to)."</b>", $pgv_lang["message_sent"]);
 					print "<br />";
 				} else {
@@ -181,7 +181,7 @@ if ($action=="compose") {
 	else print "return checkForm(this);";
 	print "\">\n";
 	print "<table>\n";
-	if (user_exists($to)) {
+	if (get_user_id($to)) {
 		$lang_temp = "lang_name_".get_user_setting($to, 'language');
 		$touserName = getUserFullName($to);
 		print "<tr><td></td><td>".str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["sending_to"])."<br />";

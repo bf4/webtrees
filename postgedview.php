@@ -91,7 +91,7 @@
 
 		if (!empty($post_user)) {
 			// need to add the user into gedview - but only if def_create_user says its ok
-			if (!user_exists($post_user) && $def_create_user=="yes") {
+			if (!get_user_id($post_user) && $def_create_user=="yes") {
 				$newuser = array();
 				$newuser["username"]=$post_user;
 				$newuser["firstname"]=$post_firstname;
@@ -124,7 +124,7 @@
 			$admin_ver = get_user_setting($post_user, 'verified_by_admin')=='Y';
 			
 			// is the user there and verified ?
-			if (user_exists($post_user) && $admin_ver=="yes") {
+			if (get_user_id($post_user) && $admin_ver=="yes") {
 				set_user_setting($post_user, 'loggedin',    'Y');
 				set_user_setting($post_user, 'sessiontime', time());
 				AddToLog("Login Successful ->" . $post_user ."<-");

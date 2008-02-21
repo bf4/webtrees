@@ -104,7 +104,7 @@ if ($action=="createuser") {
 		$i++;
 	}
 	if ($pass == TRUE) {
-		if (user_exists($uusername)) {
+		if (get_user_id($uusername)) {
 			print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 		}
 		else if ($pass1==$pass2) {
@@ -226,7 +226,7 @@ if ($action=="edituser2") {
 		$i++;
 	}
 	if ($pass == TRUE) {
-		if (($uusername!=$oldusername)&&(user_exists($uusername))) {
+		if (($uusername!=$oldusername)&&(get_user_id($uusername))) {
 			print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 			$action="edituser";
 			$username=$oldusername;

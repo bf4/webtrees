@@ -100,7 +100,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				}
 				print "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
 				print "<td class=\"list_value_wrap\">";
-				if (user_exists($message["from"])) {
+				if (get_user_id($message["from"])) {
 					print PrintReady(getUserFullName($message["from"]));
 					if ($TEXT_DIRECTION=="ltr") {
 						print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
@@ -120,7 +120,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				if (preg_match("/RE:/", $message["subject"])==0) {
 					$message["subject"]="RE:".$message["subject"];
 				}
-				if (user_exists($message["from"])) {
+				if (get_user_id($message["from"])) {
 					print "<a href=\"javascript:;\" onclick=\"reply('".$message["from"]."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
 				}
 				print "<a href=\"index.php?action=deletemessage&amp;message_id=$key\" onclick=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">".$pgv_lang["delete"]."</a></div></td></tr>\n";

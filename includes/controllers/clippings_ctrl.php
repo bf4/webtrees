@@ -344,7 +344,7 @@ class ClippingsControllerRoot extends BaseController {
 								$this->media_list = $media;	
 							}
 							$filetext .= "0 @SPGV1@ SOUR\r\n";
-							if (user_exists($CONTACT_EMAIL)) {
+							if (get_user_id($CONTACT_EMAIL)) {
 								$filetext .= "1 AUTH " . getUserFullName($CONTACT_EMAIL) . "\r\n";
 							}
 							$filetext .= "1 TITL " . $HOME_SITE_TEXT . "\r\n";

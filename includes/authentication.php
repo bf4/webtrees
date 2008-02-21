@@ -56,6 +56,7 @@ function authenticateUser($username, $password, $basic=false) {
 		$dbpassword=get_user_password($user_id);
 		if (crypt($password, $dbpassword)==$dbpassword) {
 			if (get_user_setting($user_id, 'verified')=='yes' && get_user_setting($user_id, 'verified_by_admin')=='yes' || get_user_setting($user_id, 'canadmin')=='Y') {
+				set_user_setting($username, 'loggedin', 'Y');
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $username ."<-");
 				//-- reset the user's session
 				$_SESSION = array();
@@ -73,6 +74,8 @@ function authenticateUser($username, $password, $basic=false) {
 						if (get_user_gedcom_setting($user_id, $gedcom, 'gedcomid')) {
 							$_SESSION['GEDCOM']=$gedcom;
 							break;
+						}
+					}
 				}
 				return true;
 			}
@@ -112,18 +115,9 @@ function basicHTTPAuthenticateUser() {
  * logs a user out of the system
  * @param string $username	optional parameter to logout a specific user
  */
-function userLogout($username = "") {
-	global $GEDCOM, $LANGUAGE;
+function userLogout($username) {
+	global $GEDCOM;
 
-	if ($username=="") {
-		if (isset($_SESSION["pgv_user"]))
-			$username = $_SESSION["pgv_user"];
-		else
-			if (isset($_COOKIE["pgv_rem"]))
-				$username = $_COOKIE["pgv_rem"];
-			else
-				return;
-	}
 	set_user_setting($username, 'loggedin', 'N');
 
 	AddToLog("Logout - " . $username);
@@ -759,7 +753,7 @@ function deleteUser($username) {
 function create_export_user($export_accesslevel) {
 	GLOBAL $GEDCOM;
 
-	if (user_exists('export'))
+	if (get_user_id('export'))
 		deleteUser('export');
 
 	$newuser = array();
@@ -1021,17 +1015,16 @@ function addMessage($message) {
 
 	require_once('includes/functions_mail.php');
 
-	$fUser = getUser($message["from"]);
-	$tUser = getUser($message["to"]);
-	if (!$tUser) {
+	if (!user_exists($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 	}
 
 	// Switch to the "from" user's language
 	$oldLanguage = $LANGUAGE;
-	if ($fUser && $LANGUAGE!=$fUser["language"])
-		loadLanguage($fUser["language"]);
+	$from_lang=get_user_setting($message["from"], 'language');
+	if ($from_lang && $LANGUAGE!=$from_lang)
+		loadLanguage($from_lang);
 
 	//-- setup the message body for the "from" user
 	$email2 = stripslashes($message["body"]);
@@ -1044,22 +1037,22 @@ function addMessage($message) {
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
 	$subject2 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
 	$from ="";
-	if (!$fUser) {
+	if (!user_exists($message["from"])) {
 		$from = $message["from"];
 		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".stripslashes($email2);
 		$fromFullName = $message["from"];
 	} else {
 		$fromFullName = getUserFullName($message['from']);
 		if (!$PGV_SIMPLE_MAIL)
-			$from = hex4email(stripslashes($fromFullName),$CHARACTER_SET). " <".$fUser["email"].">";
+			$from = hex4email(stripslashes($fromFullName),$CHARACTER_SET). " <".get_user_setting($message["from"], 'email').">";
 		else
-			$from = $fUser["email"];
+			$from = get_user_setting($message["from"], 'email');
 		$email2 = $pgv_lang["message_email2"]."\r\n\r\n".stripslashes($email2);
 
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
-		if (!$fUser) {
+		if (!user_exists($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
@@ -1073,7 +1066,7 @@ function addMessage($message) {
 			if (stristr($from, $PHPGEDVIEW_EMAIL)){
 				$from = get_user_setting(get_user_id($WEBMASTER_EMAIL), 'email');
 			}
-			if (!$fUser)
+			if (!user_exists($message["from"]))
 				$header2 = $PHPGEDVIEW_EMAIL;
 			else
 				if (isset($to))
@@ -1084,8 +1077,9 @@ function addMessage($message) {
 	}
 
 	//-- Load the "to" users language
-	if ($tUser && $LANGUAGE!=$tUser["language"])
-		loadLanguage($tUser["language"]);
+	$to_lang=get_user_setting($message["to"], 'language');
+	if ($to_lang && $LANGUAGE!=$to_lang)
+		loadLanguage($to_lang);
 
 	if (isset($message["from_name"]))
 		$message["body"] = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$message["body"];
@@ -1107,7 +1101,7 @@ function addMessage($message) {
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
-		if (!$fUser) {
+		if (!user_exists($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
@@ -1117,19 +1111,17 @@ function addMessage($message) {
 			$email1 = $pgv_lang["message_email1"];
 			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
 		}
-		if (!$tUser) {
+		if (!user_exists($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 		} else {
-			if ($LANGUAGE!=$tUser["language"])
-				loadLanguage($tUser["language"]);
 			$toFullName=getUserFullName($message['to']);
 			if (!$PGV_SIMPLE_MAIL)
-				$to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".$tUser["email"].">";
+				$to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".get_user_setting($message["to"], 'email').">";
 			else
-				$to = $tUser["email"];
+				$to = get_user_setting($message["to"], 'email');
 		}
-		if (!empty($tUser["email"]))
+		if (get_user_setting($message["to"], 'email'))
 			pgvMail($to, $from, $subject1, $email1);
 	}
 

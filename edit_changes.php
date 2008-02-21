@@ -180,7 +180,7 @@ else {
 			}
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><b>".$pgv_lang[$change["type"]]."</b></td>\n";
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"javascript:;\" onclick=\"return reply('".$change["user"]."','".$pgv_lang["review_changes"]."')\" alt=\"".$pgv_lang["message"]."\">";
-			if (user_exists($change["user"])) {
+			if (get_user_id($change["user"])) {
 				$cuserName = getUserFullName($change["user"]);
 				$output .= PrintReady($cuserName);
 			}
