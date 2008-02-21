@@ -477,9 +477,11 @@ switch ($action) {
 					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail01_subject"]), $mail_body);
 					
 					// switch language to webmaster settings
-					$admuser = getuser($WEBMASTER_EMAIL);
-					if ($LANGUAGE != $admuser["language"]) loadLanguage($admuser["language"]);
-					
+					$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
+					if ($adm_lang && $LANGUAGE!=$adm_lang) {
+						loadLanguage($adm_lang);
+					}
+
 					$mail_body = "";
 					$mail_body .= $pgv_lang["mail02_line01"] . "\r\n\r\n";
 					$mail_body .= str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
