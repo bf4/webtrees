@@ -211,7 +211,7 @@ function sql_mod_function($x,$y) {
 
 	switch ($DBTYPE) {
 	case 'sqlite':
-		return "(($x)-ROUND(($x)/($y)-0.5)*($y))";
+		return "(($x)%($y))";
 	default:
 		return "MOD($x,$y)";
 	}
