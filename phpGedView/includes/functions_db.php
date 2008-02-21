@@ -3555,45 +3555,48 @@ function get_event_list() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Functions to access the PGV_USERS table
+// Functions to access the PGV_USER table
 ////////////////////////////////////////////////////////////////////////////////
 
-function create_user($user) {
+function create_user($username, $password) {
 	global $DBCONN, $TBLPREFIX;
 
-	$user=$DBCONN->escapeSimple($user);
-	dbquery("INSERT INTO {$TBLPREFIX}users (u_username) VALUES ('{$user}')");
+	$username=$DBCONN->escapeSimple($username);
+	$password=$DBCONN->escapeSimple($password);
+	dbquery("INSERT INTO {$TBLPREFIX}users (u_username, u_password) VALUES ('{$username}', '{$password}')");
+
+	return $DBCONN->affectedRows();
 }
 
-function rename_user($olduser, $newuser) {
+function rename_user($old_username, $new_username) {
 	global $DBCONN, $TBLPREFIX;
 
-	$olduser=$DBCONN->escapeSimple($olduser);
-	$newuser=$DBCONN->escapeSimple($newuser);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_username='{$newuser}' WHERE u_username='{$olduser}'");
+	$olduser=$DBCONN->escapeSimple($old_username);
+	$newuser=$DBCONN->escapeSimple($new_username);
+	dbquery("UPDATE {$TBLPREFIX}users SET u_username='{$new_username}' WHERE u_username='{$old_username}'");
 
 	// For databases without foreign key constraints, manually update dependent tables
-	dbquery("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$newuser}' WHERE b_username ='{$olduser}'");
-	dbquery("UPDATE {$TBLPREFIX}favorites SET fv_username='{$newuser}' WHERE fv_username='{$olduser}'");
-	dbquery("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$newuser}' WHERE m_from     ='{$olduser}'");
-	dbquery("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$newuser}' WHERE m_to       ='{$olduser}'");
-	dbquery("UPDATE {$TBLPREFIX}news      SET n_username ='{$newuser}' WHERE n_username ='{$olduser}'");
+	dbquery("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$new_username}' WHERE b_username ='{$old_username}'");
+	dbquery("UPDATE {$TBLPREFIX}favorites SET fv_username='{$new_username}' WHERE fv_username='{$old_username}'");
+	dbquery("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$new_username}' WHERE m_from     ='{$old_username}'");
+	dbquery("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$new_username}' WHERE m_to       ='{$old_username}'");
+	dbquery("UPDATE {$TBLPREFIX}news      SET n_username ='{$new_username}' WHERE n_username ='{$old_username}'");
 }
 
-function delete_user($user) {
+function delete_user($username) {
 	global $DBCONN, $TBLPREFIX;
 
-	$user=$DBCONN->escapeSimple($user);
-	dbquery("DELETE FROM {$TBLPREFIX}users WHERE u_username='{$user}'");
+	$username=$DBCONN->escapeSimple($username);
+	dbquery("DELETE FROM {$TBLPREFIX}users WHERE u_username='{$username}'");
 
 	// For databases without foreign key constraints, manually update dependent tables
-	dbquery("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username ='{$user}'");
-	dbquery("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username='{$user}'");
-	dbquery("DELETE FROM {$TBLPREFIX}messages  WHERE m_from     ='{$user}' OR m_to='{$user}'");
-	dbquery("DELETE FROM {$TBLPREFIX}news      WHERE n_username ='{$user}'");
+	dbquery("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username ='{$username}'");
+	dbquery("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username='{$username}'");
+	dbquery("DELETE FROM {$TBLPREFIX}messages  WHERE m_from     ='{$username}' OR m_to='{$username}'");
+	dbquery("DELETE FROM {$TBLPREFIX}news      WHERE n_username ='{$username}'");
 }
 
-function get_all_users($order='asc', $key1='lastname', $key2='firstname') {
+function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 	global $DBCONN, $TBLPREFIX;
 
 	$users=array();
@@ -3632,32 +3635,56 @@ function get_idle_users($time) {
 	return $users;
 }
 
-function user_exists($user) {
+function user_exists($username) {
 	global $DBCONN, $TBLPREFIX;
-
 	static $cache=array();
-	if (array_key_exists($user, $cache)) {
-		return $cache[$user];
+
+	$username=$DBCONN->escapeSimple($username);
+
+	if (array_key_exists($username, $cache)) {
+		return $cache[$username];
 	}
 
 	if (!is_object($DBCONN) || DB::isError($DBCONN))
 		return false;
 
-	$user=$DBCONN->escapeSimple($user);
-	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$user}'", false);
+	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$username}'", false);
 	// We may call this function before creating the table, so must check for errors.
 	if ($res!=false && !DB::isError($res)) {
 		$row=$res->fetchRow();
 		$res->free();
 		if ($row[0]>0) {
-			$cache[$user]=true;
+			$cache[$username]=true;
 		}
 		return $row[0]>0;
 	}
 	return false;
 }
 
+function set_user_password($username, $password) {
+	global $DBCONN, $TBLPREFIX;
+
+	$username=$DBCONN->escapeSimple($username);
+	$password=$DBCONN->escapeSimple($password);
+	dbquery("UPDATE {$TBLPREFIX}users SET u_password='{$password}' WHERE u_username='{$username}'");
+}
+
+function get_user_password($username) {
+	global $DBCONN, $TBLPREFIX;
+
+	$username=$DBCONN->escapeSimple($username);
+	$res=dbquery("SELECT u_password FROM {$TBLPREFIX}users WHERE u_username='{$username}'");
+	$row=$res->fetchRow();
+	$res->free();
+	if ($row) {
+		return $row[0];
+	} else {
+		return null;
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_USER_SETTING table
 // A future version of PGV will have a table PGV_USER_SETTING, which will
 // contain the values currently stored in columns in the table PGV_USERS.
 //
@@ -3667,18 +3694,18 @@ function user_exists($user) {
 // $parameter is one of the column names in PGV_USERS, without the u_ prefix.
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_setting($user, $parameter) {
+function get_user_setting($username, $parameter) {
 	global $DBCONN, $TBLPREFIX;
 
 	static $cache=array();
-	if (array_key_exists($user, $cache))
-		return $cache[$user]['u_'.$parameter];
+	if (array_key_exists($username, $cache))
+		return $cache[$username]['u_'.$parameter];
 
 	if (!is_object($DBCONN) || DB::isError($DBCONN))
 		return false;
 
-	$user=$DBCONN->escapeSimple($user);
-	$sql="SELECT * FROM {$TBLPREFIX}users WHERE u_username='{$user}'";
+	$username=$DBCONN->escapeSimple($username);
+	$sql="SELECT * FROM {$TBLPREFIX}users WHERE u_username='{$username}'";
 	$res=dbquery($sql);
 	if ($res==false)
 		return null;
@@ -3687,17 +3714,17 @@ function get_user_setting($user, $parameter) {
 	if ($row==false) {
 		return null;
 	} else {
-		$cache[$user]=$row;
+		$cache[$username]=$row;
 		return $row['u_'.$parameter];
 	}
 }
 
-function set_user_setting($user, $parameter, $value) {
+function set_user_setting($username, $parameter, $value) {
 	global $DBCONN, $TBLPREFIX;
 
-	$user =$DBCONN->escapeSimple($user);
-	$value=$DBCONN->escapeSimple($value);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user}'");
+	$username=$DBCONN->escapeSimple($username);
+	$value   =$DBCONN->escapeSimple($value);
+	dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$username}'");
 }
 
 function admin_user_exists() {
@@ -3714,6 +3741,7 @@ function admin_user_exists() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_USER_GEDCOM_SETTING table
 // A future version of PGV will have a table PGV_USER_GEDCOM_SETTING, which will
 // contain the values currently stored in serialized arrays in columns in the
 // table PGV_USERS.
@@ -3724,14 +3752,14 @@ function admin_user_exists() {
 // $parameter is one of: "gedcomid", "rootid" and "canedit".
 ////////////////////////////////////////////////////////////////////////////////
 
-function get_user_gedcom_setting($user, $gedcom, $parameter) {
+function get_user_gedcom_setting($username, $gedcom, $parameter) {
 	static $cache=array();
-	if (array_key_exists("{$user}/{$gedcom}/{$parameter}", $cache))
-		return $cache["{$user}/{$gedcom}/{$parameter}"];
+	if (array_key_exists("{$username}/{$gedcom}/{$parameter}", $cache))
+		return $cache["{$username}/{$gedcom}/{$parameter}"];
 
-	$tmp_array=unserialize(get_user_setting($user, $parameter));
+	$tmp_array=unserialize(get_user_setting($username, $parameter));
 	if (!is_array($tmp_array)) {
-		$cache["{$user}/{$gedcom}/{$parameter}"]=null;
+		$cache["{$username}/{$gedcom}/{$parameter}"]=null;
 		return null;
 	}
 	if (array_key_exists($gedcom, $tmp_array)) {
@@ -3744,16 +3772,16 @@ function get_user_gedcom_setting($user, $gedcom, $parameter) {
 				$tmp_array[$gedcom]=='access';
 			}
 		}
-		$cache["{$user}/{$gedcom}/{$parameter}"]=$tmp_array[$gedcom];
+		$cache["{$username}/{$gedcom}/{$parameter}"]=$tmp_array[$gedcom];
 		return $tmp_array[$gedcom];
 	} else {
-		$cache["{$user}/{$gedcom}/{$parameter}"]=null;
+		$cache["{$username}/{$gedcom}/{$parameter}"]=null;
 		return null;
 	}
 }
 
-function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
-	$tmp_array=unserialize(get_user_setting($user, $parameter));
+function set_user_gedcom_setting($username, $gedcom, $parameter, $value) {
+	$tmp_array=unserialize(get_user_setting($username, $parameter));
 	if (!is_array($tmp_array))
 		$tmp_array=array();
 	if (empty($value)) {
@@ -3763,23 +3791,23 @@ function set_user_gedcom_setting($user, $gedcom, $parameter, $value) {
 		// update the value
 		$tmp_array[$gedcom]=$value;
 	}
-	set_user_setting($user, $parameter, serialize($tmp_array));
+	set_user_setting($username, $parameter, serialize($tmp_array));
 }
 
 function get_user_from_gedcom_xref($gedcom, $xref) {
 	global $TBLPREFIX;
 
 	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
-	$user=false;
+	$username=false;
 	while ($row=$res->fetchRow()) {
 		$tmp_array=unserialize($row[1]);
 		if (array_key_exists($gedcom, $tmp_array) && $tmp_array[$gedcom]==$xref) {
-			$user=$row[0];
+			$username=$row[0];
 			break;
 		}
 	}
 	$res->free();
-	return $user;
+	return $username;
 }
 
 ?>
