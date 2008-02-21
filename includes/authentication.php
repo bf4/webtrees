@@ -48,29 +48,31 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * @return bool return true if the username and password credentials match a user in the database return false if they don't
  */
 function authenticateUser($username, $password, $basic=false) {
-	global $DBH, $TBLPREFIX, $TOTAL_QUERIES, $GEDCOM, $pgv_lang;
-	$user_id = get_user_id($username);
-	//-- make sure that we have the actual username as it was stored in the DB
-	if ($user_id) {
-		if (crypt($password, get_user_password($user_id))==get_user_password($user_id)) {
-			if ((get_user_setting($user_id, 'verified')=="yes" && get_user_setting($user_id, 'verified_by_admin')=="yes") || get_user_setting($user_id, 'canadmin')=='Y') {
-				set_user_setting($user_id, 'loggedin', 'Y');
+	global $GEDCOM, $GEDCOMS, $pgv_lang;
 
+	checkTableExists();
+
+	if ($user_id=get_user_id($username)) {
+		$dbpassword=get_user_password($user_id);
+		if (crypt($password, $dbpassword)==$dbpassword) {
+			if (get_user_setting($user_id, 'verified')=='yes' && get_user_setting($user_id, 'verified_by_admin')=='yes' || get_user_setting($user_id, 'canadmin')=='Y') {
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $username ."<-");
 				//-- reset the user's session
 				$_SESSION = array();
 				$_SESSION['pgv_user'] = $username;
 				//-- unset the cookie_login session var to show that they have logged in with their password
 				$_SESSION['cookie_login'] = false;
-				if (!is_null(get_user_setting($user_id, 'language')))
+				if (isset($pgv_lang[get_user_setting($user_id, 'language')]))
 					$_SESSION['CLANGUAGE'] = get_user_setting($user_id, 'language');
 				//-- only change the gedcom if the user does not have an gedcom id
 				//-- for the currently active gedcom
+				if (get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
-				$tmp=get_gedcom_xref_from_user($user_id, get_gedcom_id($GEDCOM));
-				if ($tmp) {
-					$_SESSION['GEDCOM']=$tmp->ged_gedcom;
+					foreach (array_keys($GEDCOMS) as $gedcom) {
+						if (get_user_gedcom_setting($user_id, $gedcom, 'gedcomid')) {
+							$_SESSION['GEDCOM']=$gedcom;
+							break;
 				}
 				return true;
 			}
@@ -827,7 +829,7 @@ function getUser($username) {
 		'username'            =>$username,
 		'firstname'           =>stripslashes(get_user_setting($user_id, 'firstname')),
 		'lastname'            =>stripslashes(get_user_setting($user_id, 'lastname')),
-		'password'            =>get_user_setting($user_id, 'password'),
+		'password'            =>get_user_password($user_id),
 		'canadmin'            =>get_user_setting($user_id, 'canadmin')=='Y',
 		'email'               =>get_user_setting($user_id, 'email'),
 		'verified'            =>get_user_setting($user_id, 'verified'),

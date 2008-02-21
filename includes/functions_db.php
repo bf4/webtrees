@@ -3442,7 +3442,7 @@ function rename_user($old_username, $new_username) {
 	$statement->execute();
 	++$TOTAL_QUERIES;
 
-	// TEMPORARY: update "old" PGV functions that don't use user_id as the key.
+	// For databases without foreign key constraints, manually update dependent tables
 	$DBH->exec("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$new_username}' WHERE b_username ='{$old_username}'");
 	$DBH->exec("UPDATE {$TBLPREFIX}favorites SET fv_username='{$new_username}' WHERE fv_username='{$old_username}'");
 	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$new_username}' WHERE m_from     ='{$old_username}'");
@@ -3470,6 +3470,26 @@ function delete_user($user_id) {
 	$TOTAL_QUERIES+=7;
 }
 
+function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare(
+		"SELECT user_id, user_name FROM {$TBLPREFIX}user".
+		"	LEFT OUTER JOIN {$TBLPREFIX}user_setting sort1 ON user_id=sort1.uset_user_id AND sort1.uset_parameter=?".
+		"	LEFT OUTER JOIN {$TBLPREFIX}user_setting sort2 ON user_id=sort2.uset_user_id AND sort2.uset_parameter=?".
+		"  ORDER BY sort1.uset_parameter {$order}, sort2.uset_parameter {$order}");
+	$statement->bindValue(1, $key1, PDO::PARAM_STR);
+	$statement->bindValue(2, $key2, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$users=array();
+	while ($row=$statement->fetchObject()) {
+		$users[$row->user_id]=$row->user_name;
+	}
+	$statement->closeCursor();
+	return $users;
+}
+
 // Get a list of logged-in users
 function get_logged_in_users() {
 	global $DBCONN, $TBLPREFIX;
@@ -3494,26 +3514,6 @@ function get_idle_users($time) {
 		$users[]=$row[0];
 	}
 	$res->free();
-	return $users;
-}
-
-function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
-	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
-
-	$statement=$DBH->prepare(
-		"SELECT user_id, user_name FROM {$TBLPREFIX}user".
-		"	LEFT OUTER JOIN {$TBLPREFIX}user_setting sort1 ON user_id=sort1.uset_user_id AND sort1.uset_parameter=?".
-		"	LEFT OUTER JOIN {$TBLPREFIX}user_setting sort2 ON user_id=sort2.uset_user_id AND sort2.uset_parameter=?".
-		"  ORDER BY sort1.uset_parameter {$order}, sort2.uset_parameter {$order}");
-	$statement->bindValue(1, $key1, PDO::PARAM_STR);
-	$statement->bindValue(2, $key2, PDO::PARAM_STR);
-	$statement->execute();
-	++$TOTAL_QUERIES;
-	$users=array();
-	while ($row=$statement->fetchObject()) {
-		$users[$row->user_id]=$row->user_name;
-	}
-	$statement->closeCursor();
 	return $users;
 }
 
@@ -3557,6 +3557,19 @@ function get_user_name($user_id) {
 	$row=$statement->fetchObject();
 	$statement->closeCursor();
 	return $row->user_name;
+}
+
+function set_user_password($user_id, $password) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare("SELECT user_pass FROM {$TBLPREFIX}user WHERE user_id=?");
+
+	$statement->bindValue(1, $user_id, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	return $row->user_pass;
 }
 
 function get_user_password($user_id) {
@@ -3803,7 +3816,7 @@ function get_gedcom_xref_from_user($user_id, $prefered_ged_id) {
 		return $row;
 	} else {
 		return null;
-}
+	}
 }
 
 ?>
