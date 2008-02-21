@@ -575,17 +575,18 @@ function print_sosa_family($famid, $childid, $sosa, $label="", $parid="", $gpari
 function check_rootid($rootid) {
 	global $user, $GEDCOM, $GEDCOM_ID_PREFIX, $PEDIGREE_ROOT_ID, $USE_RIN;
 	// -- if the $rootid is not already there then find the first person in the file and make him the root
-	if (empty($rootid)) {
-		if (!empty($_SESSION['navRoot'])) $rootid = $_SESSION['navRoot'];
-		else {
-		$user = getUser(getUserName());
-		if ((!empty($user["rootid"][$GEDCOM])) && (find_person_record($user["rootid"][$GEDCOM]))) $rootid = $user["rootid"][$GEDCOM];
-		else if ((!empty($user["gedcomid"][$GEDCOM])) && (find_person_record($user["gedcomid"][$GEDCOM]))) $rootid = $user["gedcomid"][$GEDCOM];
-		// -- allow users to overide default id in the config file.
-		if (empty($rootid)) {
-			$PEDIGREE_ROOT_ID = trim($PEDIGREE_ROOT_ID);
-			if ((!empty($PEDIGREE_ROOT_ID)) && (find_person_record($PEDIGREE_ROOT_ID))) $rootid = $PEDIGREE_ROOT_ID;
-			else $rootid = find_first_person();
+	if (!find_person_record($rootid)) {
+		if (find_person_record(get_user_gedcom_setting(getUserName(), $GEDCOM, 'rootid'))) {
+			$rootid=get_user_gedcom_setting(getUserName(), $GEDCOM, 'rootid');
+		} else {
+			if (find_person_record(get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid'))) {
+				$rootid=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
+			} else {
+				if (find_person_record(trim($PEDIGREE_ROOT_ID))) {
+					$rootid=trim($PEDIGREE_ROOT_ID);
+				} else {
+					$rootid=find_first_person();
+				}
 			}
 		}
 	}

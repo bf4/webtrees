@@ -109,11 +109,11 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 
 					$username = getUserName();
 					if (!empty($username)) {
-						 $tuser=getUser($username);
-						 if (!empty($tuser["gedcomid"][$GEDCOM])) {
+					$myid=get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+					if ($myid) {
 	 						  if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
 	 						  else $title = $pid." :".$pgv_lang["relationship_chart"];
-							  $personlinks .= "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
+							  $personlinks .= "<a href=\"relationship.php?pid1={$myid}&amp;pid2=".$pid."&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
 						 }
 					}
 					// NOTE: Zoom
@@ -150,14 +150,14 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 	 							 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
 	 							 else $title = $famid." :".$pgv_lang["familybook_chart"];
 								 $personlinks .= "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
-								if (!empty($spouse)) {
+							if (!empty($spouse)) {
 	 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse->getXref();
 	 								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
 									$personlinks .= "<a href=\"individual.php?pid=".$spouse->getXref()."&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
  									   if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getName());
 									   else $personlinks .= $pgv_lang["private"];
 									   $personlinks .= "</a><br />\n";
-								}
+							}
 							  }
 							/* @var $child Person */
 							foreach($children as $c=>$child) {
@@ -257,8 +257,7 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 		  else {
 			   if ($style==1) {
 					$outBoxAdd .= "class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
-			   }
-			   else {
+			} else {
 					$outBoxAdd .= "class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
 			   }
 			   // NOTE: Zoom
@@ -302,7 +301,7 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 	 //-- check if the persion is visible
 	 if (!$disp) {
 			   //print $pgv_lang["private"];
-	 }
+			}
 			  if (strlen($addname) > 0) {
 				   print "<br />";
 				   // NOTE: Start span addnamedef-$personcount.$pid.$count
@@ -312,8 +311,7 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
  				   print PrintReady($addname)."</span><br />";
 			 }
 		     print "</a>";
-		  }
-		  else {
+		} else {
 			if(empty($SEARCH_SPIDER)) {
 				$user = getUser($CONTACT_EMAIL);
 				$userName=getUserFullName($CONTACT_EMAIL);
@@ -492,8 +490,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		 $old_META_COPYRIGHT = $META_COPYRIGHT;
 		 $old_META_DESCRIPTION = $META_DESCRIPTION;
 		 $old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-		  $cuser = getUser($CONTACT_EMAIL);
-		  if ($cuser) {
+		  if (user_exists($CONTACT_EMAIL)) {
 			  $cuserName=getUserFullName($CONTACT_EMAIL);
 			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
 			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
@@ -707,8 +704,7 @@ function print_simple_header($title) {
 		 $old_META_COPYRIGHT = $META_COPYRIGHT;
 		 $old_META_DESCRIPTION = $META_DESCRIPTION;
 		 $old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-		  $cuser = getUser($CONTACT_EMAIL);
-		  if ($cuser) {
+		  if (user_exists($CONTACT_EMAIL)) {
 			  $cuserName=getUserFullName($CONTACT_EMAIL);
 			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
 			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
@@ -969,39 +965,36 @@ function print_contact_links($style=0) {
 			print "<div class=\"contact_links\">\n";
 			//--only display one message if the contact users are the same
 			if ($CONTACT_EMAIL==$WEBMASTER_EMAIL) {
-				$user = getUser($WEBMASTER_EMAIL);
-				if (($user)&&($SUPPORT_METHOD!="mailto")) {
+				if (user_exists($WEBMASTER_EMAIL) && $SUPPORT_METHOD!="mailto") {
 					$userName=getUserFullName($WEBMASTER_EMAIL);
 					print $pgv_lang["for_all_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$userName."</a><br />\n";
 				} else {
 					print $pgv_lang["for_support"]." <a href=\"mailto:";
-					if ($user) {
+					if (user_exists($WEBMASTER_EMAIL)) {
 						$userName=getUserFullName($WEBMASTER_EMAIL);
-						print $user["email"]."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
+						print get_user_setting($WEBMASTER_EMAIL,'email')."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
 					} else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
 				}
 			} else {
 			//-- display two messages if the contact users are different
-				  $user = getUser($CONTACT_EMAIL);
-				  if (($user)&&($CONTACT_METHOD!="mailto")) {
+				  if (user_exists($CONTACT_EMAIL) && $CONTACT_METHOD!="mailto") {
 					  $userName=getUserFullName($CONTACT_EMAIL);
 					  print $pgv_lang["for_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;\">".$userName."</a><br />\n";
 				  } else {
 					   print $pgv_lang["for_contact"]." <a href=\"mailto:";
-					   if ($user) {
+					  if (user_exists($CONTACT_EMAIL)) {
 					  	$userName=getUserFullName($CONTACT_EMAIL);
-							print $user["email"]."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
+							print get_user_setting($CONTACT_EMAIL,'email')."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
 					   } else print $CONTACT_EMAIL."\">".$CONTACT_EMAIL."</a><br />\n";
 				  }
-				  $user = getUser($WEBMASTER_EMAIL);
-				  if (($user)&&($SUPPORT_METHOD!="mailto")) {
+				  if (user_exists($WEBMASTER_EMAIL) && $SUPPORT_METHOD!="mailto") {
 					  $userName=getUserFullName($WEBMASTER_EMAIL);
 					  print $pgv_lang["for_support"]." <a href=\"javascript:;\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$userName."</a><br />\n";
 				  } else {
 					   print $pgv_lang["for_support"]." <a href=\"mailto:";
-					   if ($user) {
+					  if (user_exists($WEBMASTER_EMAIL)) {
 					  	$userName=getUserFullName($WEBMASTER_EMAIL);
-						   print $user["email"]."\">".$userName."</a><br />\n";
+							print get_user_setting($WEBMASTER_EMAIL,'email')."\">".$userName."</a><br />\n";
 					   } else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
 				  }
 			}
@@ -1011,19 +1004,17 @@ function print_contact_links($style=0) {
 			$menuitems = array();
 			if ($CONTACT_EMAIL==$WEBMASTER_EMAIL) {
 				$submenu = array();
-				$user = getUser($WEBMASTER_EMAIL);
-				if (($user)&&($SUPPORT_METHOD!="mailto")) {
+				if (user_exists($WEBMASTER_EMAIL) && $SUPPORT_METHOD!="mailto") {
 					$userName=getUserFullName($WEBMASTER_EMAIL);
 					$submenu["label"] = $pgv_lang["support_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;";
 					$submenu["link"] = "#";
-				}
-				else {
+				} else {
 					$submenu["label"] = $pgv_lang["support_contact"]." ";
 					$submenu["link"] = "mailto:";
-					if ($user) {
+					if (user_exists($WEBMASTER_EMAIL)) {
 						$userName=getUserFullName($WEBMASTER_EMAIL);
-						$submenu["link"] .= $user["email"];
+						$submenu["link"] .= get_user_setting($WEBMASTER_EMAIL,'email');
 						$submenu["label"] .= $userName;
 					} else {
 						$submenu["link"] .= $WEBMASTER_EMAIL;
@@ -1037,8 +1028,7 @@ function print_contact_links($style=0) {
 	            $menuitems[] = $submenu;
 			} else {
 				$submenu = array();
-				$user = getUser($CONTACT_EMAIL);
-				if (($user)&&($CONTACT_METHOD!="mailto")) {
+				if (user_exists($CONTACT_EMAIL) && $CONTACT_METHOD!="mailto") {
 					$userName=getUserFullName($CONTACT_EMAIL);
 					$submenu["label"] = $pgv_lang["genealogy_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;";
@@ -1046,9 +1036,9 @@ function print_contact_links($style=0) {
 				} else {
 					$submenu["label"] = $pgv_lang["genealogy_contact"]." ";
 					$submenu["link"] = "mailto:";
-					if ($user) {
+					if (user_exists($CONTACT_EMAIL)) {
 						$userName=getUserFullName($CONTACT_EMAIL);
-						$submenu["link"] .= $user["email"];
+						$submenu["link"] .= get_user_setting($CONTACT_EMAIL,'email');
 						$submenu["label"] .= $userName;
 					} else {
 						$submenu["link"] .= $CONTACT_EMAIL;
@@ -1060,8 +1050,7 @@ function print_contact_links($style=0) {
 	            $submenu["hoverclass"] = "submenuitem_hover";
 	            $menuitems[] = $submenu;
 	            $submenu = array();
-				$user = getUser($WEBMASTER_EMAIL);
-				if (($user)&&($SUPPORT_METHOD!="mailto")) {
+				if (user_exists($WEBMASTER_EMAIL) && $SUPPORT_METHOD!="mailto") {
 					$userName=getUserFullName($WEBMASTER_EMAIL);
 					$submenu["label"] = $pgv_lang["support_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;";
@@ -1069,9 +1058,9 @@ function print_contact_links($style=0) {
 				} else {
 					$submenu["label"] = $pgv_lang["support_contact"]." ";
 					$submenu["link"] = "mailto:";
-					if ($user) {
+					if (user_exists($WEBMASTER_EMAIL)) {
 						$userName=getUserFullName($WEBMASTER_EMAIL);
-						$submenu["link"] .= $user["email"];
+						$submenu["link"] .= get_user_setting($WEBMASTER_EMAIL,'email');
 						$submenu["label"] .= $userName;
 					} else {
 						$submenu["link"] .= $WEBMASTER_EMAIL;
