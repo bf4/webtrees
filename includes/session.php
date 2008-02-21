@@ -834,7 +834,9 @@ if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
 	}
 }
 
-if (!isset($pgv_username)) $pgv_username = getUserName();
+if (!isset($pgv_username)) {
+	$pgv_username = getUserName();
+}
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);
@@ -886,7 +888,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 	//-----------------------------------
 	//-- if user wishes to logout this is where we will do it
 	if ((!empty($_REQUEST['logout']))&&($_REQUEST['logout']==1)) {
-		userLogout();
+		userLogout($pgv_username);
 		if ($REQUIRE_AUTHENTICATION) {
 			header("Location: ".$HOME_SITE_URL);
 			exit;

@@ -99,63 +99,67 @@ switch ($action) {
 		if (!empty($_POST['user_name'])) $user_name = $_POST['user_name'];
 		print_header("PhpGedView - " . $pgv_lang["lost_pw_reset"]);
 		print "<div class=\"center\">";
-		$newuser = getUser($user_name);
-		if ($newuser==false || empty($newuser["email"])) {
-			if ($newuser==false) AddToLog("New password requests for user ".$user_name." that does not exist");
-			else AddToLog("Unable to send password to user ".$user_name." because they do not have an email address");
+		if (!user_exists($user_name)) {
+			AddToLog("New password requests for user ".$user_name." that does not exist");
 			print "<span class=\"warning\">";
 			print_text("user_not_found");
 			print "</span><br />";
 		} else {
-			$passchars = "abcdefghijklmnopqrstuvqxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-			$user_new_pw = "";
-			$max = strlen($passchars)-1;
-			for($i=0; $i<8; $i++) {
-				$index = rand(0,$max);
-				$user_new_pw .= $passchars{$index};
+			if (get_user_setting($user_name, 'email')=='') {
+				AddToLog("Unable to send password to user ".$user_name." because they do not have an email address");
+				print "<span class=\"warning\">";
+				print_text("user_not_found");
+				print "</span><br />";
+			} else {
+				$passchars = "abcdefghijklmnopqrstuvqxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+				$user_new_pw = "";
+				$max = strlen($passchars)-1;
+				for($i=0; $i<8; $i++) {
+					$index = rand(0,$max);
+					$user_new_pw .= $passchars{$index};
+				}
+				
+				set_user_password($user_name, crypt($user_new_pw, $user_new_pw));
+				set_user_setting($user_name, 'pwrequested', 1);
+				
+				// switch language to user settings
+				$oldLanguage = $LANGUAGE;
+				if ($LANGUAGE != get_user_setting($user_name, 'language')) {
+					loadLanguage(get_user_setting($user_name, 'language'));
+				}
+				$newuserName=getUserFullName($user_name);
+				
+				$mail_body = "";
+				$mail_body .= str_replace("#user_fullname#", $newuserName, $pgv_lang["mail04_line01"]) . "\r\n\r\n";
+				$mail_body .= $pgv_lang["mail04_line02"] . "\r\n\r\n";
+				$mail_body .= $pgv_lang["username"] . ": " . $user_name . "\r\n";
+				
+				$mail_body .= $pgv_lang["password"] . ": " . $user_new_pw . "\r\n\r\n";
+				$mail_body .= $pgv_lang["mail04_line03"] . "\r\n";
+				$mail_body .= $pgv_lang["mail04_line04"] . "\r\n\r\n";
+				$mail_body .= print_text("mail04_line05", 0, 1) . "\r\n\r\n";
+				
+				if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".$serverURL."\">".$serverURL."</a>";
+				else $mail_body .= $serverURL;
+				
+				require_once('includes/functions_mail.php');
+				pgvMail(get_user_setting($user_name, 'email'), $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
+				
+				?>
+				<table class="center facts_table">
+				<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print str_replace("#user[email]#", $user_name, $pgv_lang["pwreqinfo"]);?></td></tr>
+				</table>
+				<?php
+				AddToLog("Password request was sent to user: ".$user_name);
+	
+				if ($LANGUAGE != $oldLanguage) {
+					loadLanguage($oldLanguage);   // Reset language
+				}
 			}
-			
-			$newuser = getUser($user_name);
-			$olduser = $newuser;
-			
-			$newuser["password"] = crypt($user_new_pw, $user_new_pw);
-			$newuser["pwrequested"] = "1";
-			updateUser($newuser['username'], $newuser, "reqested new password for");
-			
-			// switch language to user settings
-			$oldLanguage = $LANGUAGE;
-			if ($LANGUAGE != $newuser["language"]) loadLanguage($newuser["language"]);
-			$newuserName=getUserFullName($user_name);
-			
-			$mail_body = "";
-			$mail_body .= str_replace("#user_fullname#", $newuserName, $pgv_lang["mail04_line01"]) . "\r\n\r\n";
-			$mail_body .= $pgv_lang["mail04_line02"] . "\r\n\r\n";
-			$mail_body .= $pgv_lang["username"] . ": " . $newuser["username"] . "\r\n";
-			
-			$mail_body .= $pgv_lang["password"] . ": " . $user_new_pw . "\r\n\r\n";
-			$mail_body .= $pgv_lang["mail04_line03"] . "\r\n";
-			$mail_body .= $pgv_lang["mail04_line04"] . "\r\n\r\n";
-			$mail_body .= print_text("mail04_line05", 0, 1) . "\r\n\r\n";
-			
-			if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".$serverURL."\">".$serverURL."</a>";
-			else $mail_body .= $serverURL;
-			
-			require_once('includes/functions_mail.php');
-			pgvMail($newuser["email"], $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
-			
-			?>
-			<table class="center facts_table">
-			<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print str_replace("#user[email]#", $newuser["username"], $pgv_lang["pwreqinfo"]);?></td></tr>
-			</table>
-			<?php
-			AddToLog("Password request was sent to user: ".$user_name);
-
-			if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);   // Reset language
-
 		}
 		print "</div>";
 		break;
-
+	
 	case "register" :
   		$_SESSION["good_to_send"] = true;
 		if (!$USE_REGISTRATION_MODULE) {
@@ -408,7 +412,7 @@ switch ($action) {
 					$user["pwrequested"] = "";
 					$user["reg_timestamp"] = date("U");
 					srand((double)microtime()*1000000);
-					$user["reg_hashcode"] = crypt(rand(), $user_password01);
+					$user["reg_hashcode"] = preg_replace('/[.\/$]/', '_', crypt(rand(), $user_password01));
 					$user["gedcomid"] = array();
 					$user["rootid"] = array();
 					$user["canedit"] = array();
@@ -473,9 +477,11 @@ switch ($action) {
 					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail01_subject"]), $mail_body);
 					
 					// switch language to webmaster settings
-					$admuser = getuser($WEBMASTER_EMAIL);
-					if ($LANGUAGE != $admuser["language"]) loadLanguage($admuser["language"]);
-					
+					$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
+					if ($adm_lang && $LANGUAGE!=$adm_lang) {
+						loadLanguage($adm_lang);
+					}
+
 					$mail_body = "";
 					$mail_body .= $pgv_lang["mail02_line01"] . "\r\n\r\n";
 					$mail_body .= str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
@@ -536,9 +542,12 @@ switch ($action) {
 		if (!isset($user_hashcode)) $user_hashcode = "";
 		
 		// Change to the new user's language
-		$user = getUser($user_name);
 		$oldLanguage = $LANGUAGE;
-		if (isset($user["language"]) && $LANGUAGE!=$user["language"]) loadLanguage($user["language"]);
+		$user_lang=get_user_setting($user_name, 'language');
+		if ($user_lang && $LANGUAGE!=$user_lang) {
+			loadLanguage($user_lang);
+		}
+
 		print_header("PhpGedView - " . $pgv_lang["user_verify"]);
 		print "<div class=\"center\">";
 		?>
@@ -569,9 +578,11 @@ switch ($action) {
 		AddToLog("User attempted to verify hashcode: ".$user_name);
 		
 		// Change to the new user's language
-		$user = getUser($user_name);
 		$oldLanguage = $LANGUAGE;
-		if (isset($user["language"]) && $LANGUAGE!=$user["language"]) loadLanguage($user["language"]);
+		$user_lang=get_user_setting($user_name, 'language');
+		if ($user_lang && $LANGUAGE!=$user_lang) {
+			loadLanguage($user_lang);
+		}
 
 		print_header("PhpGedView - " . $pgv_lang["user_verify"]);# <-- better verification of authentication code
 		print "<div class=\"center\">";
@@ -579,40 +590,37 @@ switch ($action) {
 		print "<tr><td class=\"topbottombar\">".$pgv_lang["user_verify"]."</td></tr>";
 		print "<tr><td class=\"optionbox\">";
 		print str_replace("#user_name#", $user_name, $pgv_lang["pls_note08"]);
-		if ($user!==false) {
-			$pw_ok = ($user["password"] == crypt($user_password, $user["password"]));
-			$hc_ok = ($user["reg_hashcode"] == $user_hashcode);
-			if (($pw_ok) and ($hc_ok)) {
-				$newuser = $user;
-				$olduser = $user;
-
-				$fullName=getUserFullName($user_name);
-				
-				$newuser["verified"] = "yes";
-				$newuser["pwrequested"] = "";
-				$newuser["reg_timestamp"] = date("U");
-				$newuser["hashcode"] = "";
-				if (!$REQUIRE_ADMIN_AUTH_REGISTRATION) $newuser["verified_by_admin"] = "yes";
-
-				updateUser($user_name, $newuser, "verified");
+		if (user_exists($user_name)) {
+			$pw_ok = (get_user_password($user_name) == crypt($user_password, get_user_password($user_name)));
+			$hc_ok = (get_user_setting($user_name, 'reg_hashcode') == $user_hashcode);
+			if (($pw_ok) && ($hc_ok)) {
+				set_user_setting($user_name, 'verified', 'yes');
+				set_user_setting($user_name, 'pwrequested', '');
+				set_user_setting($user_name, 'reg_timestamp', date("U"));
+				set_user_setting($user_name, 'reg_hashcode', '');
+				if (!$REQUIRE_ADMIN_AUTH_REGISTRATION) {
+					set_user_setting($user_name, 'verified_by_admin', 'yes');
+				}
+				AddToLog("User verified: ".$user_name);
 				
 				// switch language to webmaster settings
-				$oldLanguage = $LANGUAGE;
-				$admuser = getuser($WEBMASTER_EMAIL);
-				if ($LANGUAGE != $admuser["language"]) loadLanguage($admuser["language"]);
+				$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
+				if ($adm_lang && $LANGUAGE!=$adm_lang) {
+					loadLanguage($adm_lang);
+				}
 				
 				$mail_body = "";
 				$mail_body .= $pgv_lang["mail03_line01"] . "\r\n\r\n";
-				$mail_body .= str_replace(array("#newuser[username]#", "#newuser[fullname]#"), array($newuser["username"], $fullName), $pgv_lang["mail03_line02"]) . "\r\n\r\n";
+				$mail_body .= str_replace(array("#newuser[username]#", "#newuser[fullname]#"), array($user_name, getUserFullName($user_name)), $pgv_lang["mail03_line02"]) . "\r\n\r\n";
 				if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= $pgv_lang["mail03_line03"] . "\r\n";
 				else $mail_body .= $pgv_lang["mail03_line03a"] . "\r\n";
 				
 				$path = substr($SCRIPT_NAME, 0, strrpos($SCRIPT_NAME, "/"));
 				if ($TEXT_DIRECTION=="rtl") {
 					$mail_body .= "<a href=\"";
-					$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($newuser["username"]) . "\">";
+					$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($user_name) . "\">";
 				}
-				$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($newuser["username"]);
+				$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($user_name);
 				if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 				$mail_body .= "\r\n";
 
