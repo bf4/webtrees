@@ -39,13 +39,9 @@ function check_cookie(&$pun_user)
 		}
 		$ctype="gedcom";
 	}
-	else
+	if (user_exists($uname))
 	{
-		$user = getUser($uname);
-	}
-	if (isset ($user))
-	{
-		$result = $db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.username=\''.$user['username'].'\'') or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.username=\''.$uname.'\'') or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
 		$pun_user = $db->fetch_assoc($result);
 		if (!isset ($pun_user['id']))
 		{
@@ -60,9 +56,9 @@ function check_cookie(&$pun_user)
 			}
 
 			// Add the user
-			$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, save_pass, timezone, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($user['username']).'\', '.$intial_group_id.', \''.$user['password'].'\', \''.$user['email'].'\', 1, 1, 0 , \'English\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.get_remote_address().'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());
+			$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, save_pass, timezone, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($uname).'\', '.$intial_group_id.', \''.get_user_password($uname).'\', \''.get_user_setting($uname, 'email').'\', 1, 1, 0 , \'English\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.get_remote_address().'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());
 			$new_uid = $db->insert_id();
-			$result = $db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.username=\''.$user['username'].'\'') or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
+			$result = $db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.username=\''.$uname.'\'') or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
 			$pun_user = $db->fetch_assoc($result);
 		}
 		// Set a default language if the user selected language no longer exists

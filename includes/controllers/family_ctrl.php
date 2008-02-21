@@ -41,7 +41,6 @@ require_once 'includes/menu.php';
 class FamilyRoot extends BaseController
 {
 	var $user = null;
-	var $uname = '';
 	var $showLivingHusb = true;
 	var $showLivingWife = true;
 	var $parents = '';
@@ -130,7 +129,6 @@ class FamilyRoot extends BaseController
 		$this->display = displayDetailsByID($this->famid, 'FAM');
 		$this->family = new Family($this->famrec);
 
-		$this->uname = getUserName();
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes=="yes" && userCanEdit() && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->famid);
@@ -149,32 +147,25 @@ class FamilyRoot extends BaseController
 			$this->showLivingWife = showLivingNameByID($this->parents['WIFE']);
 		}
 
-		if (!empty($this->uname))
-		{
-			$this->user = getUser($this->uname);
-
-			//-- add favorites action
-			if (($_REQUEST['action'] == 'addfav') && (!empty($_REQUEST['gid'])))
-			{
-				$_REQUEST['gid'] = strtoupper($_REQUEST['gid']);
-				$indirec = find_gedcom_record($_REQUEST['gid']);
-				if ($indirec)
-				{
-					$favorite = array(
-						'username' => $this->uname,
-						'gid' => $_REQUEST['gid'],
-						'type' => 'FAM',
-						'file' => $GEDCOM,
-						'url' => '',
-						'note' => '',
-						'title' => ''
-					);
-					addFavorite($favorite);
-				}
+		//-- add favorites action
+		if ($_REQUEST['action']=='addfav' && !empty($_REQUEST['gid']) && getUserName()) {
+			$_REQUEST['gid'] = strtoupper($_REQUEST['gid']);
+			$indirec = find_gedcom_record($_REQUEST['gid']);
+			if ($indirec) {
+				$favorite = array(
+					'username' => getUserName(),
+					'gid' => $_REQUEST['gid'],
+					'type' => 'FAM',
+					'file' => $GEDCOM,
+					'url' => '',
+					'note' => '',
+					'title' => ''
+				);
+				addFavorite($favorite);
 			}
 		}
 
-		if (userCanAccept($this->uname))
+		if (userCanAccept())
 		{
 			if ($_REQUEST['action'] == 'accept')
 			{
@@ -390,7 +381,7 @@ class FamilyRoot extends BaseController
 
 		// edit_fam menu
 		$menu = new Menu($pgv_lang['edit_fam']);
-		if ($SHOW_GEDCOM_RECORD || userIsAdmin($this->uname)) 
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin()) 
 			$menu->addOnclick('return edit_raw(\''.$this->getFamilyID().'\');');
 		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
@@ -405,7 +396,7 @@ class FamilyRoot extends BaseController
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / edit_raw
-		if ($SHOW_GEDCOM_RECORD || userIsAdmin($this->uname)) {
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin()) {
 			$submenu = new Menu($pgv_lang['edit_raw']);
 			$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
 			if (!empty($PGV_IMAGES["edit_fam"]["small"]))
@@ -540,7 +531,7 @@ class FamilyRoot extends BaseController
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($this->display && !empty($this->uname))
+		if ($this->display && getUserName())
 		{
 				// other / add_to_my_favorites
 				$submenu = new Menu($pgv_lang['add_to_my_favorites'], 'family.php?action=addfav&amp;famid='.$this->getFamilyID().'&amp;gid='.$this->getFamilyID());
