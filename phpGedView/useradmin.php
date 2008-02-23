@@ -51,7 +51,8 @@ foreach (array('action', 'filter', 'sort', 'ged', 'usrlang', 'oldusername', 'use
 if ($action=='deleteuser') {
 	// don't delete ourselves
 	if ($username!=getUserName()) {
-		deleteUser($username);
+		delete_user($username);
+		AddToLog(getUserName()." deleted user -> ".$username." <-");
 	}
 	// User data is cached, so reload the page to ensure we're up to date
 	header("Location: useradmin.php");
@@ -968,7 +969,8 @@ if ($action == "cleanup2") {
 	foreach(get_all_users() as $user) {
 		$var = "del_".str_replace(array(".","-"," "), array("_","_","_"), $user);
 		if (isset($$var)) {
-			deleteUser($user);
+			delete_user($user);
+			AddToLog(getUserName()." deleted user -> ".$user." <-");
 			print $pgv_lang["usr_deleted"]; print $user."<br />";
 		} else {
 			foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$data) {
