@@ -211,7 +211,7 @@ function sql_mod_function($x,$y) {
 
 	switch ($DBTYPE) {
 	case 'sqlite':
-		return "(($x)-ROUND(($x)/($y)-0.5)*($y))";
+		return "(($x)%($y))";
 	default:
 		return "MOD($x,$y)";
 	}
@@ -3630,25 +3630,17 @@ function get_idle_users($time) {
 
 function user_exists($username) {
 	global $DBCONN, $TBLPREFIX;
-	static $cache=array();
-
-	$username=$DBCONN->escapeSimple($username);
-
-	if (array_key_exists($username, $cache)) {
-		return $cache[$username];
-	}
 
 	if (!is_object($DBCONN) || DB::isError($DBCONN))
 		return false;
+
+	$username=$DBCONN->escapeSimple($username);
 
 	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$username}'", false);
 	// We may call this function before creating the table, so must check for errors.
 	if ($res!=false && !DB::isError($res)) {
 		$row=$res->fetchRow();
 		$res->free();
-		if ($row[0]>0) {
-			$cache[$username]=true;
-		}
 		return $row[0]>0;
 	}
 	return false;
@@ -3690,10 +3682,6 @@ function get_user_password($username) {
 function get_user_setting($username, $parameter) {
 	global $DBCONN, $TBLPREFIX;
 
-	static $cache=array();
-	if (array_key_exists($username, $cache))
-		return $cache[$username]['u_'.$parameter];
-
 	if (!is_object($DBCONN) || DB::isError($DBCONN))
 		return false;
 
@@ -3704,11 +3692,10 @@ function get_user_setting($username, $parameter) {
 		return null;
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
-	if ($row==false) {
-		return null;
-	} else {
-		$cache[$username]=$row;
+	if ($row) {
 		return $row['u_'.$parameter];
+	} else {
+		return null;
 	}
 }
 
@@ -3746,13 +3733,8 @@ function admin_user_exists() {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_gedcom_setting($username, $gedcom, $parameter) {
-	static $cache=array();
-	if (array_key_exists("{$username}/{$gedcom}/{$parameter}", $cache))
-		return $cache["{$username}/{$gedcom}/{$parameter}"];
-
 	$tmp_array=unserialize(get_user_setting($username, $parameter));
 	if (!is_array($tmp_array)) {
-		$cache["{$username}/{$gedcom}/{$parameter}"]=null;
 		return null;
 	}
 	if (array_key_exists($gedcom, $tmp_array)) {
@@ -3765,10 +3747,8 @@ function get_user_gedcom_setting($username, $gedcom, $parameter) {
 				$tmp_array[$gedcom]=='access';
 			}
 		}
-		$cache["{$username}/{$gedcom}/{$parameter}"]=$tmp_array[$gedcom];
 		return $tmp_array[$gedcom];
 	} else {
-		$cache["{$username}/{$gedcom}/{$parameter}"]=null;
 		return null;
 	}
 }

@@ -923,14 +923,18 @@ function getUserAccessLevel() {
 	static $cache=null;
 
 	if (is_null($cache)) {
-		if (userGedcomAdmin()) {
-			$cache=$PRIV_NONE;
-		} else {
-			if (userCanAccess()) {
-				$cache=$PRIV_USER;
+		if (getUserName()) {
+			if (userGedcomAdmin()) {
+				$cache=$PRIV_NONE;
 			} else {
-				$cache=$PRIV_PUBLIC;
+				if (userCanAccess()) {
+					$cache=$PRIV_USER;
+				} else {
+					$cache=$PRIV_PUBLIC;
+				}
 }
+		} else {
+			$cache=$PRIV_PUBLIC;
 		}
 	}
 	return $cache;
