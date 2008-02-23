@@ -355,12 +355,7 @@ function adminUserExists() {
  * to the latest version of the database schema.
  */
 function checkTableExists() {
-	global $TBLPREFIX, $DBCONN, $DBTYPE, $PGV_CHECKED_TABLES;
-
-	//-- make sure we only run this function once
-	if (isset($PGV_CHECKED_TABLES) && $PGV_CHECKED_TABLES)
-		return true;
-	$PGV_CHECKED_TABLES = true;
+	global $TBLPREFIX, $DBCONN, $DBTYPE;
 
 	$has_users = false;
 	$has_gedcomid = false;
@@ -735,9 +730,6 @@ function updateUser($username, $newuser, $msg = "updated") {
  * @param string $username	the username to delete
  */
 function deleteUser($username) {
-	global $users;
-	unset($users[$username]);
-
 	delete_user($username);
 
 	$activeuser = getUserName();
@@ -801,53 +793,6 @@ function create_export_user($export_accesslevel) {
 	$newuser["max_relation_path"] = 0;
 	$newuser["auto_accept"] = false;
 	addUser($newuser);
-}
-
-/**
- * get a user array
- *
- * finds a user from the given username and returns a user array of the form
- * defined at {@link http://www.phpgedview.net/devdocs/arrays.php#user}
- * @param string $username the username of the user to return
- * @return array the user array to return
- */
-function getUser($username) {
-	global $TBLPREFIX, $users, $REGEXP_DB, $GEDCOMS, $DBCONN, $DBTYPE;
-
-	$user_id=get_user_id($username);
-
-	if (!$user_id)
-		return false;
-
-	$user=array(
-		'username'            =>$username,
-		'firstname'           =>stripslashes(get_user_setting($user_id, 'firstname')),
-		'lastname'            =>stripslashes(get_user_setting($user_id, 'lastname')),
-		'password'            =>get_user_password($user_id),
-		'canadmin'            =>get_user_setting($user_id, 'canadmin')=='Y',
-		'email'               =>get_user_setting($user_id, 'email'),
-		'verified'            =>get_user_setting($user_id, 'verified'),
-		'verified_by_admin'   =>get_user_setting($user_id, 'verified_by_admin'),
-		'language'            =>get_user_setting($user_id, 'language'),
-		'pwrequested'         =>get_user_setting($user_id, 'pwrequested'),
-		'reg_timestamp'       =>get_user_setting($user_id, 'reg_timestamp'),
-		'reg_hashcode'        =>get_user_setting($user_id, 'reg_hashcode'),
-		'theme'               =>get_user_setting($user_id, 'theme'),
-		'loggedin'            =>get_user_setting($user_id, 'loggedin'),
-		'sessiontime'         =>get_user_setting($user_id, 'sessiontime'),
-		'contactmethod'       =>get_user_setting($user_id, 'contactmethod'),
-		'visibleonline'       =>get_user_setting($user_id, 'visibleonline')=='Y',
-		'editaccount'         =>get_user_setting($user_id, 'editaccount')=='Y',
-		'default_tab'         =>get_user_setting($user_id, 'defaulttab'),
-		'comment'             =>get_user_setting($user_id, 'comment'),
-		'comment_exp'         =>get_user_setting($user_id, 'comment_exp'),
-		'sync_gedcom'         =>get_user_setting($user_id, 'sync_gedcom'),
-		'relationship_privacy'=>get_user_setting($user_id, 'relationship_privacy'),
-		'max_relation_path'   =>get_user_setting($user_id, 'max_relation_path'),
-		'auto_accept'         =>get_user_setting($user_id, 'auto_accept')=='Y'
-	);
-
-	return $user;
 }
 
 // Get the full name for a user
@@ -1292,8 +1237,7 @@ function getBlocks($username) {
 				$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
 		}
 	} else {
-		$user = getUser($username);
-		if ($user) {
+		if (user_exists($username)) {
 			//-- if no blocks found, check for a default block setting
 			$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
 			$res2 = dbquery($sql);

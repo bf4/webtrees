@@ -211,7 +211,7 @@ function sql_mod_function($x,$y) {
 
 	switch ($DBTYPE) {
 	case 'sqlite':
-		return "(($x)-ROUND(($x)/($y)-0.5)*($y))";
+		return "(($x)%($y))";
 	default:
 		return "MOD($x,$y)";
 	}
@@ -3595,7 +3595,7 @@ function get_user_setting($user_id, $parameter) {
 	// We may call this function before creating the table, so must check for errors.
 	try {
 		if (!is_object($DBH)) {
-		return null;
+			return null;
 		}
 
 		static $statement=null;
@@ -3613,12 +3613,12 @@ function get_user_setting($user_id, $parameter) {
 		$statement->closeCursor();
 		if ($row) {
 			return $row->uset_value;
-	} else {
-			return null;
-	}
+		} else {
+				return null;
+		}
 	} catch (PDOException $e) {
 		return null;
-}
+	}
 }
 
 function set_user_setting($user_id, $parameter, $value) {
