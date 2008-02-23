@@ -92,7 +92,34 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 
 	if ($privatize_export == "yes") {
-		create_export_user($privatize_export_level);
+		if (user_exists('export')) {
+			delete_user('export');
+		}
+		create_user('export', md5(rand()));
+		set_user_setting('export', 'relationship_privacy', 'N');
+		set_user_setting('export', 'max_relation_path', '0');
+		set_user_setting('export', 'visibleonline', 'N');
+		set_user_setting('export', 'contactmethod', 'none');
+		switch ($privatize_export_level) {
+		case 'admin':
+			set_user_setting('export', 'canadmin', 'Y');
+			set_user_gedcom_setting('export', $GEDCOM, 'canedit', 'admin');
+		case 'gedadmin':
+			set_user_setting('export', 'canadmin', 'N');
+			set_user_gedcom_setting('export', $GEDCOM, 'canedit', 'admin');
+			break;
+		case 'user':
+			set_user_setting('export', 'canadmin', 'N');
+			set_user_gedcom_setting('export', $GEDCOM, 'canedit', 'access');
+			break;
+		case 'visitor':
+		default:
+			set_user_setting('export', 'canadmin', 'N');
+			set_user_gedcom_setting('export', $GEDCOM, 'canedit', 'none');
+			break;
+		}
+		AddToLog(getUserName()." created dummy user -> export <- with level ".$privatize_export_level);
+		// Temporarily become this user
 		if (isset ($_SESSION)) {
 			$_SESSION["org_user"] = $_SESSION["pgv_user"];
 			$_SESSION["pgv_user"] = "export";
@@ -215,7 +242,8 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if (isset ($HTTP_SESSION_VARS)) {
 			$HTTP_SESSION_VARS["pgv_user"] = $HTTP_SESSION_VARS["org_user"];
 		}
-		deleteUser("export");
+		delete_user('export');
+		AddToLog(getUserName()." deleted dummy user -> export <-");
 	}
 }
 
