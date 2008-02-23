@@ -1460,32 +1460,6 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 }
 
 /**
- * User Name comparison Function
- *
- * This function just needs to call the itemsort function on the fullname
- * field of the array
- * @param array $a first user array
- * @param array $b second user array
- * @return int negative numbers sort $a first, positive sort $b first
- */
-function usersort($a, $b) {
-	global $usersortfields;
-
-	$aname = "";
-	$bname = "";
-	if (!empty($usersortfields)) {
-		foreach ($usersortfields as $ind=>$field) {
-			if (isset($a[$field])) $aname .= $a[$field];
-			if (isset($b[$field])) $bname .= $b[$field];
-		}
-	} else {
-		$aname = $a["lastname"]." ".$a["firstname"];
-		$bname = $b["lastname"]." ".$b["firstname"];
-	}
-	return compareStrings($aname, $bname, true);		// Case-insensitive compare
-}
-
-/**
  * sort arrays or strings
  *
  * this function is called by the uasort PHP function to compare two items and tell which should be
