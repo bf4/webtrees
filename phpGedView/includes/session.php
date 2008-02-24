@@ -135,6 +135,7 @@ if ($quitReason != "") {
 // mark everything else as a spider/bot.
 // Java/ Axis/ and PEAR required for GDBI and our own cross site communication.
 $real_browsers = array(
+	'GENESIS',
 	'PGVAgent',
 	'MSIE ',
 	'Opera',
