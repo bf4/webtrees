@@ -85,7 +85,7 @@ if ($action=='createuser' || $action=='edituser2') {
 			} else {
 				// New user
 				if ($action=='createuser') {
-					create_user($username, $pass1);
+					create_user($username, crypt($pass1));
 					set_user_setting($username, 'reg_timestamp', date('U'));
 					set_user_setting($username, 'sessiontime', '0');
 					AddToLog("User -> {$username} <- created by ".getUserName());
