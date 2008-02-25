@@ -306,6 +306,13 @@ function um_export($proceed) {
 		$authtext .= "\$user = array();\n";
 		foreach (array('username', 'firstname', 'lastname', 'gedcomid', 'rootid', 'password','canadmin', 'canedit', 'email', 'verified','verified_by_admin', 'language', 'pwrequested', 'reg_timestamp','reg_hashcode', 'theme', 'loggedin', 'sessiontime', 'contactmethod', 'visibleonline', 'editaccount', 'defaulttab','comment', 'comment_exp', 'sync_gedcom', 'relationship_privacy', 'max_relation_path', 'auto_accept') as $ukey) {
 			$value=get_user_setting($username, $ukey);
+			// Convert Y/N/yes/no to bools
+			if (in_array($ukey, array('canadmin', 'loggedin', 'visibleonline', 'editaccount', 'sync_gedcom', 'relationship_privacy', 'auto_accept'))) {
+				$value=($value=='Y');
+			}
+			if (in_array($ukey, array('verified', 'verified_by_admin'))) {
+				$value=($value=='yes');
+			}
 			if (!is_array($value)) {
 				$value = preg_replace('/"/', '\\"', $value);
 				$authtext .= "\$user[\"$ukey\"] = '$value';\n";

@@ -626,54 +626,6 @@ function checkTableExists() {
 	return true;
 }
 
-/**
- * Add a new user
- *
- * Adds a new user to the data store
- * @param array $newuser	The new user array to add
- * @param string $msg		The log message to write to the log
- */
-function addUser($newuser, $msg = "added") {
-
-	if (checkTableExists()) {
-		$user=$newuser['username'];
-		create_user($user, $newuser['password']);
-		set_user_setting($user, 'firstname',            preg_replace("/\//", "", $newuser["firstname"]));
-		set_user_setting($user, 'lastname',             preg_replace("/\//", "", $newuser["lastname"]));
-		set_user_setting($user, 'gedcomid',             serialize($newuser['gedcomid']));
-		set_user_setting($user, 'rootid',               serialize($newuser['rootid']));
-		set_user_setting($user, 'canadmin',             $newuser['canadmin'] ? 'Y' : 'N');
-		set_user_setting($user, 'canedit',              serialize($newuser["canedit"]));
-		set_user_setting($user, 'email',                $newuser['email']);
-		set_user_setting($user, 'verified',             $newuser['verified']);
-		set_user_setting($user, 'verified_by_admin',    $newuser['verified_by_admin']);
-		set_user_setting($user, 'language',             $newuser['language']);
-		set_user_setting($user, 'pwrequested',          $newuser['pwrequested']);
-		set_user_setting($user, 'reg_timestamp',        $newuser['reg_timestamp']);
-		set_user_setting($user, 'reg_hashcode',         $newuser['reg_hashcode']);
-		set_user_setting($user, 'theme',                $newuser['theme']);
-		set_user_setting($user, 'loggedin',             $newuser['loggedin']);
-		set_user_setting($user, 'sessiontime',          $newuser['sessiontime']);
-		set_user_setting($user, 'contactmethod',        $newuser['contactmethod']);
-		set_user_setting($user, 'visibleonline',        $newuser['visibleonline'] ? 'Y' : 'N');
-		set_user_setting($user, 'editaccount',          $newuser['editaccount'] ? 'Y' : 'N');
-		set_user_setting($user, 'defaulttab',           $newuser['default_tab']);
-		set_user_setting($user, 'comment',              $newuser['comment']);
-		set_user_setting($user, 'comment_exp',          $newuser['comment_exp']);
-		set_user_setting($user, 'sync_gedcom',          $newuser['sync_gedcom']);
-		set_user_setting($user, 'relationship_privacy', $newuser['relationship_privacy']);
-		set_user_setting($user, 'max_relation_path',    $newuser['max_relation_path']);
-		set_user_setting($user, 'auto_accept',          $newuser['auto_accept'] ? 'Y' : 'N');
-
-		$activeuser = getUserName();
-		if ($activeuser == "")
-			$activeuser = "Anonymous user";
-		AddToLog($activeuser." ".$msg." user -> ".$newuser["username"]." <-");
-		return true;
-	}
-	return false;
-}
-
 // Get the full name for a user
 function getUserFullName($user) {
 	global $NAME_REVERSE;

@@ -46,38 +46,26 @@ if ($CONFIGURED) {
 			print $pgv_lang["welcome_new"]."<br />";
 			if ($action=="createadminuser") {
 				if ($pass1==$pass2) {
-					$user = array();
-					$user["username"]=$username;
-					$user["firstname"]=$firstname;
-					$user["lastname"]=$lastname;
-					$user["password"]=crypt($pass1);
-					$user["canedit"] = array();
-					$user["rootid"] = array();
-					$user["gedcomid"] = array();
-					$user["canadmin"]=true;
-					$user["email"]=$emailadress;
-					$user["verified"] = "yes";
-					$user["verified_by_admin"] = "yes";
-					$user["pwrequested"] = "";
-					$user["theme"] = "";
-					$user["theme"] = "Y";
-					$user["language"] = $LANGUAGE;
-					$user["reg_timestamp"] = date("U");
-					$user["reg_hashcode"] = "";
-					$user["loggedin"] = "Y";
-					$user["sessiontime"] = 0;
-					$user["contactmethod"] = "messaging2";
-					$user["visibleonline"] = true;
-					$user["editaccount"] = true;
-					$user["default_tab"] = 0;
-					$user["comment"] = "";
-					$user["comment_exp"] = "";
-					$user["sync_gedcom"] = "N";
-					$user["relationship_privacy"] = "N";
-					$user["max_relation_path"] = 2;
-					$user["auto_accept"]=false;
-					$au = addUser($user);
-					if ($au) {
+					if (create_user($username, crypt($pass1))) {
+						set_user_setting($username, 'firstname',            $firstname);
+						set_user_setting($username, 'lastname',             $lastname);
+						set_user_setting($username, 'canadmin',             'Y');
+						set_user_setting($username, 'email',                $emailadress);
+						set_user_setting($username, 'verified',             'yes');
+						set_user_setting($username, 'verified_by_admin',    'yes');
+						set_user_setting($username, 'language',             $LANGUAGE);
+						set_user_setting($username, 'reg_timestamp',        date('U'));
+						set_user_setting($username, 'loggedin',             'Y');
+						set_user_setting($username, 'sessiontime',          time());
+						set_user_setting($username, 'contactmethod',        'messaging2');
+						set_user_setting($username, 'visibleonline',        'Y');
+						set_user_setting($username, 'editaccount',          'Y');
+						set_user_setting($username, 'defaulttab',           '0');
+						set_user_setting($username, 'sync_gedcom',          'N');
+						set_user_setting($username, 'relationship_privacy', 'N');
+						set_user_setting($username, 'max_relation_path',    '2');
+						set_user_setting($username, 'auto_accept',          'N');
+						AddToLog(getUserName()." added user -> {$username} <-");
 						print $pgv_lang["user_created"];
 						print "<br />";
 						print "<a href=\"editgedcoms.php\">";
@@ -86,24 +74,21 @@ if ($CONFIGURED) {
 						$_SESSION["pgv_user"]=$username;
 						print_footer();
 						exit;
-					}
-					else {
+					} else {
 						print "<span class=\"error\">";
 						print $pgv_lang["user_create_error"];
 						print "<br /></span>";
 						print_footer();
 						exit;
 					}
-				}
-				else {
+				} else {
 					print "<span class=\"error\">";
 					print $pgv_lang["password_mismatch"];
 					print "<br /></span>";
 					print_footer();
 					exit;
 				}
-			}
-			else {
+			} else {
 				?>
 				<script language="JavaScript" type="text/javascript">
 					function checkform(frm) {
