@@ -300,7 +300,24 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 	 $name = PrintReady($name);
 	 //-- check if the persion is visible
 	 if (!$disp) {
-			   //print $pgv_lang["private"];
+		if (showLivingName($indirec)) {
+			// NOTE: Start span namedef-$personcount.$pid.$count
+			if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
+			else $title = $pid." :".$pgv_lang["indi_info"];
+			print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\"><span id=\"namedef-$boxID\" class=\"name$style\">";
+ 			print PrintReady($name);
+			// NOTE: IMG ID
+			print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+			if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
+			else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
+			else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
+			print "\" class=\"gender_image\" />";
+			if ($SHOW_ID_NUMBERS) {
+				print "</span><span class=\"details$style\">";
+			if ($TEXT_DIRECTION=="ltr") print getLRM() . "($pid)" . getLRM();
+			else print getRLM() . "($pid)" . getRLM();
+				// NOTE: Close span namedef-$personcount.$pid.$count
+				print "</span>";
 			}
 			  if (strlen($addname) > 0) {
 				   print "<br />";
