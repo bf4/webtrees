@@ -269,6 +269,7 @@ class UserMigrateControllerRoot extends BaseController {
 	 */
 	function import() {
 	  global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $DBCONN;
+		global $GEDCOMS, $GEDCOM;
 		
 	    if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
 			$this->impSuccess = false;
@@ -285,8 +286,6 @@ class UserMigrateControllerRoot extends BaseController {
 				return;
 			}
 			foreach($users as $username=>$user) {
-				if ($user["visibleonline"] == "1") $user["visibleonline"] = "Y";
-				else $user["visibleonline"] = "N";
 				if ($user["editaccount"] == "1") $user["editaccount"] = "Y";
 				else $user["editaccount"] = "N";
 				//-- make sure fields are set for v4.0 DB
@@ -307,7 +306,40 @@ class UserMigrateControllerRoot extends BaseController {
 				if (!isset($user["relationship_privacy"])) $user["relationship_privacy"] = 'N';
 				if (!isset($user["max_relation_path"])) $user["max_relation_path"] = '2';
 				if (!isset($user["auto_accept"])) $user["auto_accept"] = 'N';
-				addUser($user, "imported");
+
+				if (create_user($user['username'], $user['password'])) {
+					set_user_setting($user['username'], 'firstname',            $user["firstname"]);
+					set_user_setting($user['username'], 'lastname',             $user["lastname"]);
+					set_user_setting($user['username'], 'email',                $user["email"]);
+					set_user_setting($user['username'], 'theme',                $user["theme"]);
+					set_user_setting($user['username'], 'language',             $user["language"]);
+					set_user_setting($user['username'], 'contactmethod',        $user["contactmethod"]);
+					set_user_setting($user['username'], 'defaulttab',           $user["defaulttab"]);
+					set_user_setting($user['username'], 'comment',              $user["comment"]);
+					set_user_setting($user['username'], 'comment_exp',          $user["comment_exp"]);
+					set_user_setting($user['username'], 'pwrequested',          $user["pwrequested"]);
+					set_user_setting($user['username'], 'reg_timestamp',        $user["reg_timestamp"]);
+					set_user_setting($user['username'], 'reg_hashcode',         $user["reg_hashcode"]);
+					set_user_setting($user['username'], 'loggedin'    ,         $user["loggedin"]);
+					set_user_setting($user['username'], 'sessiontime'    ,      $user["sessiontime"]);
+					set_user_setting($user['username'], 'max_relation_path',    $user["max_relation_path"]);
+					set_user_setting($user['username'], 'sync_gedcom',          $user["sync_gedcom"] ? 'Y' : 'N');
+					set_user_setting($user['username'], 'relationship_privacy', $user["relationship_privacy"] ? 'Y' : 'N');
+					set_user_setting($user['username'], 'auto_accept',          $user["auto_accept"] ? 'Y' : 'N');
+					set_user_setting($user['username'], 'canadmin',             $user["canadmin"] ? 'Y' : 'N');
+					set_user_setting($user['username'], 'visibleonline',        $user["visibleonline"] ? 'Y' : 'N');
+					set_user_setting($user['username'], 'editaccount',          $user["editaccount"] ? 'Y' : 'N');
+					set_user_setting($user['username'], 'verified',             $user["verified"] ? 'yes' : 'no');
+					set_user_setting($user['username'], 'verified_by_admin',    $user["verified_by_admin"] ? 'yes' : 'no');
+					foreach (array('gedcomid', 'rootid', 'canedit') as $var) {
+						if ($user[$var]) {
+							foreach (unserialize(stripslashes($user[$var])) as $gedcom=>$id) {
+								set_user_gedcom_setting($user['username'], $gedcom, $var, $id);
+							}
+						}
+					}
+					AddToLog(getUserName()." added user -> {$username} <-");
+				}
 			}
 			$countnew = count(get_all_users());
 			if ($countold == $countnew) {

@@ -1056,14 +1056,16 @@ if ($action == "cleanup2") {
 		if (get_user_setting($user,'canadmin')=='Y') {
 			$adminusers++;
 		}
-		foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$rights) {
-			if ($rights == "admin") {
-				if (isset($GEDCOMS[$gedid])) {
-					if (isset($gedadmin[$GEDCOMS[$gedid]["title"]])) $gedadmin[$GEDCOMS[$gedid]["title"]]["number"]++;
-					else {
-						$gedadmin[$GEDCOMS[$gedid]["title"]]["name"] = $GEDCOMS[$gedid]["title"];
-						$gedadmin[$GEDCOMS[$gedid]["title"]]["number"] = 1;
-						$gedadmin[$GEDCOMS[$gedid]["title"]]["ged"] = $gedid;
+		if (get_user_setting($user,'canedit')) {
+			foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$rights) {
+				if ($rights == "admin") {
+					if (isset($GEDCOMS[$gedid])) {
+						if (isset($gedadmin[$GEDCOMS[$gedid]["title"]])) $gedadmin[$GEDCOMS[$gedid]["title"]]["number"]++;
+						else {
+							$gedadmin[$GEDCOMS[$gedid]["title"]]["name"] = $GEDCOMS[$gedid]["title"];
+							$gedadmin[$GEDCOMS[$gedid]["title"]]["number"] = 1;
+							$gedadmin[$GEDCOMS[$gedid]["title"]]["ged"] = $gedid;
+						}
 					}
 				}
 			}
