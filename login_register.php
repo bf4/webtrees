@@ -99,7 +99,7 @@ switch ($action) {
 		if (!empty($_POST['user_name'])) $user_name = $_POST['user_name'];
 		print_header("PhpGedView - " . $pgv_lang["lost_pw_reset"]);
 		print "<div class=\"center\">";
-		if (!user_exists($user_name)) {
+		if (!get_user_id($user_name)) {
 			AddToLog("New password requests for user ".$user_name." that does not exist");
 			print "<span class=\"warning\">";
 			print_text("user_not_found");
@@ -392,7 +392,7 @@ switch ($action) {
 				
 				AddToLog("User registration requested for: ".$user_name);
 				
-				if (user_exists($user_name)) {
+				if (get_user_id($user_name)) {
 					print "<span class=\"warning\">".print_text("duplicate_username",0,1)."</span><br /><br />";
 					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 				}
@@ -572,7 +572,7 @@ switch ($action) {
 		print "<tr><td class=\"topbottombar\">".$pgv_lang["user_verify"]."</td></tr>";
 		print "<tr><td class=\"optionbox\">";
 		print str_replace("#user_name#", $user_name, $pgv_lang["pls_note08"]);
-		if (user_exists($user_name)) {
+		if (get_user_id($user_name)) {
 			$pw_ok = (get_user_password($user_name) == crypt($user_password, get_user_password($user_name)));
 			$hc_ok = (get_user_setting($user_name, 'reg_hashcode') == $user_hashcode);
 			if (($pw_ok) && ($hc_ok)) {

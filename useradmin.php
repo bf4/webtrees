@@ -61,7 +61,7 @@ if ($action=='deleteuser') {
 
 // Save new user info to the database
 if ($action=='createuser' || $action=='edituser2') {
-	if (($action=='createuser' || $action=='edituser2' && $username!=$oldusername) && user_exists($username)) {
+	if (($action=='createuser' || $action=='edituser2' && $username!=$oldusername) && get_user_id($username)) {
 		print_header("PhpGedView ".$pgv_lang["user_admin"]);
 		print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 	} else {

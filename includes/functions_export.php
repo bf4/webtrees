@@ -92,8 +92,8 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 
 	if ($privatize_export == "yes") {
-		if (user_exists('export')) {
-			delete_user('export');
+		if ($export_user_id=get_user_id('export')) {
+			delete_user($export_user_id);
 		}
 		$export_user_id=create_user('export', md5(rand()));
 		set_user_setting($export_user_id, 'relationship_privacy', 'N');

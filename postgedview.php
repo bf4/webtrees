@@ -90,7 +90,7 @@
 		if (isset($_COOKIE['post_canedit'])) $post_canedit = $_COOKIE['post_canedit'];
 
 		// need to add the user into gedview - but only if def_create_user says its ok
-		if (!empty($post_user) && !user_exists($post_user) && $def_create_user=="yes") {
+		if (!empty($post_user) && !get_user_id($post_user) && $def_create_user=="yes") {
 			if ($user_id=create_user($post_user, crypt($def_upass))) {
 				set_user_setting($user_id, 'firstname', $post_firstname);
 				set_user_setting($user_id, 'lastname', $post_lastname);
@@ -117,12 +117,12 @@
 		}
 		
 		// is the user there and verified ?
-		if (user_exists($post_user) && get_user_setting($post_user, 'verified_by_admin')=="yes") {
-			set_user_setting($post_user, 'loggedin', 'Y');
-			set_user_setting($post_user, 'sessiontime', time());
+		if ($user_id=get_user_id($post_user) && get_user_setting($user_id, 'verified_by_admin')=="yes") {
+			set_user_setting($user_id, 'loggedin', 'Y');
+			set_user_setting($user_id, 'sessiontime', time());
 			AddToLog("Login Successful ->" . $post_user ."<-");
 				
-			$_SESSION['pgv_user'] = $post_user;
+			$_SESSION['pgv_user'] = $user_id;
 			$url = "index.php";
 			$url.="?".session_name()."=".session_id();
 			$url.="&ctype=gedcom";

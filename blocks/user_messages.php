@@ -100,15 +100,16 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				}
 				print "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
 				print "<td class=\"list_value_wrap\">";
-				if (user_exists($message["from"])) {
-					print PrintReady(getUserFullName($message["from"]));
+				$user_id=get_user_id($message["from"]);
+				if ($user_id) {
+					print PrintReady(getUserFullName($user_id));
 					if ($TEXT_DIRECTION=="ltr") {
-						print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
+						print " " . getLRM() . " - ".htmlspecialchars($user_id).getLRM();
 					} else {
-						print " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
+						print " " . getRLM() . " - ".htmlspecialchars($user_id).getRLM();
 					}
 				} else {
-					print "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
+					print "<a href=\"mailto:".$user_id."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$user_id)."</a>";
 				}
 				print "</td>\n";
 				print "</tr>\n";
@@ -120,30 +121,31 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				if (preg_match("/RE:/", $message["subject"])==0) {
 					$message["subject"]="RE:".$message["subject"];
 				}
-				if (user_exists($message["from"])) {
-					print "<a href=\"javascript:;\" onclick=\"reply('".$message["from"]."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
+				if ($user_id) {
+					print "<a href=\"javascript:;\" onclick=\"reply('".$user_id."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
 				}
 				print "<a href=\"index.php?action=deletemessage&amp;message_id=$key\" onclick=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">".$pgv_lang["delete"]."</a></div></td></tr>\n";
 			}
 			print "</table>\n";
 			print "<input type=\"submit\" value=\"".$pgv_lang["delete_selected_messages"]."\" /><br /><br />\n";
 		}
-		$users = get_all_users();
-		if (count($users)>1) {
+		if (get_user_count()>1) {
 			print $pgv_lang["message"]." <select name=\"touser\">\n";
-			$username = getUserName();
+			$my_user_name = getUserName();
 			if (userIsAdmin()) {
 				print "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
 				print "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
 				print "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
 			}
-			foreach($users as $user) {
-				if ($username!=$user && get_user_setting($user, 'verified_by_admin')=='yes') {
-					$userName=getUserFullName($user);
-					print "<option value=\"".$user."\"";
-					print ">".PrintReady($userName);
-					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".$user . getLRM() . "</option>\n";
-					else print " " . getRLM() . " - ".$user. getRLM() . "</option>\n";
+			foreach(get_all_users() as $user_id=>$user_name) {
+				if ($user_name!=$my_user_name && get_user_setting($user_id, 'verified_by_admin')=='yes') {
+					print "<option value=\"".$user_id."\">".PrintReady(getUserFullName($user_id))." ";
+					if ($TEXT_DIRECTION=="ltr") {
+						print getLRM()." - ".$user_id.getLRM();
+					} else {
+						print getRLM()." - ".$user_id.getRLM();
+					}
+					print "</option>";
 				}
 			}
 			print "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
