@@ -39,7 +39,7 @@ function check_cookie(&$pun_user)
 		}
 		$ctype="gedcom";
 	}
-	if (user_exists($uname))
+	if (get_user_id($uname))
 	{
 		$result = $db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.username=\''.$uname.'\'') or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
 		$pun_user = $db->fetch_assoc($result);

@@ -1146,12 +1146,12 @@ class stats
 		if ($SUPPORT_METHOD=='none') {
 			return '';
 		}
-		if (user_exists($WEBMASTER_EMAIL) && ($SUPPORT_METHOD!='mailto')) {
+		if (get_user_id($WEBMASTER_EMAIL) && ($SUPPORT_METHOD!='mailto')) {
 			$userName=getUserFullName($WEBMASTER_EMAIL);
 			$contact = "<a href=\"javascript:;\" accesskey=\"{$pgv_lang['accesskey_contact']}\" onclick=\"message('{$WEBMASTER_EMAIL}', '{$SUPPORT_METHOD}'); return false;\">{$userName}</a>";
 		} else {
 			$contact = '<a href="mailto:';
-			if (user_exists($WEBMASTER_EMAIL)) {
+			if (get_user_id($WEBMASTER_EMAIL)) {
 				$userName=getUserFullName($WEBMASTER_EMAIL);
 				$contact .=get_user_setting($WEBMASTER_EMAIL, 'email')."\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$userName}</a>";
 			} else {
@@ -1167,12 +1167,12 @@ class stats
 		if ($CONTACT_METHOD=='none') {
 			return ''; 
 		}
-		if (user_exists($CONTACT_EMAIL) && ($CONTACT_METHOD!='mailto')) {
+		if (get_user_id($CONTACT_EMAIL) && ($CONTACT_METHOD!='mailto')) {
 			$userName=getUserFullName($CONTACT_EMAIL);
 			$contact = "<a href=\"javascript:;\" accesskey=\"{$pgv_lang['accesskey_contact']}\" onclick=\"message('{$CONTACT_EMAIL}', '{$SUPPORT_METHOD}'); return false;\">{$userName}</a>";
 		} else {
 			$contact = '<a href="mailto:';
-			if (user_exists($CONTACT_EMAIL)) {
+			if (get_user_id($CONTACT_EMAIL)) {
 				$userName=getUserFullName($CONTACT_EMAIL);
 				$contact .=get_user_setting($CONTACT_EMAIL, 'email')."\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$userName}</a>";
 			} else {

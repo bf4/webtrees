@@ -93,15 +93,15 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				}
 			$content .= "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
 			$content .= "<td class=\"list_value_wrap\">";
-			if (user_exists($message["from"])) {
-				$content .= PrintReady(getUserFullName($message["from"]));
+			$user_id=get_user_id($message["from"]);
+			if ($user_id) {
+				$content .= PrintReady(getUserFullName($user_id));
 				if ($TEXT_DIRECTION=="ltr") {
-					print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
-				} else {
-					print " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
-				}
-			} else {
-				$content .= "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
+					$content .= " " . getLRM() . " - ".htmlspecialchars($user_id) . getLRM();
+					} else {
+					$content .= " " . getRLM() . " - ".htmlspecialchars($user_id) . getRLM();
+					}
+				$content .= "<a href=\"mailto:".$user_id."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$user_id)."</a>";
 			}
 			$content .= "</td>\n";
 			$content .= "</tr>\n";
@@ -117,24 +117,23 @@ function print_user_messages($block=true, $config="", $side, $index) {
 		$content .= "</table>\n";
 		$content .= "<input type=\"submit\" value=\"".$pgv_lang["delete_selected_messages"]."\" /><br /><br />\n";
 	}
-		$users = get_all_users();
-	if (count($users)>1) {
-		$content .= $pgv_lang["message"]." <select name=\"touser\">\n";
-		$username = getUserName();
-		if (userIsAdmin()) {
-			$content .= "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
-			$content .= "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
-			$content .= "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
-		}
-		foreach($users as $user) {
-			if ($username!=$user && get_user_setting($user, 'verified_by_admin')=='yes') {
-				$userName=getUserFullName($user);
-				print "<option value=\"".$user."\"";
-				print ">".PrintReady($userName);
-				if ($TEXT_DIRECTION=="ltr") {
-					print " " . getLRM() . " - ".$user . getLRM() . "</option>\n";
-				} else {
-					print " " . getRLM() . " - ".$user. getRLM() . "</option>\n";
+		if (get_user_count()>1) {
+			$content .= $pgv_lang["message"]." <select name=\"touser\">\n";
+			$my_user_name = getUserName();
+			if (userIsAdmin()) {
+				$content .= "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
+				$content .= "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
+				$content .= "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
+			}
+			foreach(get_all_users() as $user_id=>$user_name) {
+				if ($user_name!=$my_user_name && get_user_setting($user_id, 'verified_by_admin')=='yes') {
+					print "<option value=\"".$user_id."\">".PrintReady(getUserFullName($user_id))." ";
+					if ($TEXT_DIRECTION=="ltr") {
+						print getLRM()." - ".$user_id.getLRM();
+					} else {
+						print getRLM()." - ".$user_id.getRLM();
+					}
+					print "</option>";
 				}
 			}
 		}

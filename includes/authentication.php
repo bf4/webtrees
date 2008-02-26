@@ -52,7 +52,7 @@ function authenticateUser($username, $password, $basic=false) {
 
 	checkTableExists();
 
-	if (user_exists($username)) {
+	if (get_user_id($username)) {
 		$dbpassword=get_user_password($username);
 		if (crypt($password, $dbpassword)==$dbpassword) {
 			if (get_user_setting($username, 'verified')=='yes' && get_user_setting($username, 'verified_by_admin')=='yes' || get_user_setting($username, 'canadmin')=='Y') {
@@ -803,7 +803,7 @@ function addMessage($message) {
 
 	require_once('includes/functions_mail.php');
 
-	if (!user_exists($message["to"])) {
+	if (!get_user_id($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 	}
@@ -825,7 +825,7 @@ function addMessage($message) {
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
 	$subject2 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
 	$from ="";
-	if (!user_exists($message["from"])) {
+	if (!get_user_id($message["from"])) {
 		$from = $message["from"];
 		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".stripslashes($email2);
 		$fromFullName = $message["from"];
@@ -840,7 +840,7 @@ function addMessage($message) {
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
-		if (!user_exists($message["from"])) {
+		if (!get_user_id($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
@@ -854,7 +854,7 @@ function addMessage($message) {
 			if (stristr($from, $PHPGEDVIEW_EMAIL)){
 				$from = get_user_setting($WEBMASTER_EMAIL, 'email');
 			}
-			if (!user_exists($message["from"]))
+			if (!get_user_id($message["from"]))
 				$header2 = $PHPGEDVIEW_EMAIL;
 			else
 				if (isset($to))
@@ -889,7 +889,7 @@ function addMessage($message) {
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
-		if (!user_exists($message["from"])) {
+		if (!get_user_id($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
@@ -899,7 +899,7 @@ function addMessage($message) {
 			$email1 = $pgv_lang["message_email1"];
 			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
 		}
-		if (!user_exists($message["to"])) {
+		if (!get_user_id($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 		} else {
@@ -1080,7 +1080,7 @@ function getBlocks($username) {
 				$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
 		}
 	} else {
-		if (user_exists($username)) {
+		if (get_user_id($username)) {
 			//-- if no blocks found, check for a default block setting
 			$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
 			$res2 = dbquery($sql);

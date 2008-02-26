@@ -478,12 +478,10 @@ class MenuBar
 		
 		$username = getUserName();
 		
-		$link = "index.php?ctype=user";
-		if (!empty($username)) {
-			$user = getUser($username);
-			if (!empty($user["gedcomid"][$GEDCOM])) {
-				$link = "individual.php?pid=".$user["gedcomid"][$GEDCOM];
-			}
+		if (get_user_gedcom_setting($username, $GEDCOM, 'gedcomid')) {
+			$link = "individual.php?pid=".get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+		} else {
+			$link = "index.php?ctype=user";
 		}
 		//-- main menu
 		$menu = new Menu($pgv_lang["mygedview"], $link, "down");

@@ -92,30 +92,30 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 
 	if ($privatize_export == "yes") {
-		if (user_exists('export')) {
-			delete_user('export');
+		if ($export_user_id=get_user_id('export')) {
+			delete_user($export_user_id);
 		}
-		create_user('export', md5(rand()));
-		set_user_setting('export', 'relationship_privacy', 'N');
-		set_user_setting('export', 'max_relation_path', '0');
-		set_user_setting('export', 'visibleonline', 'N');
-		set_user_setting('export', 'contactmethod', 'none');
+		$export_user_id=create_user('export', md5(rand()));
+		set_user_setting($export_user_id, 'relationship_privacy', 'N');
+		set_user_setting($export_user_id, 'max_relation_path', '0');
+		set_user_setting($export_user_id, 'visibleonline', 'N');
+		set_user_setting($export_user_id, 'contactmethod', 'none');
 		switch ($privatize_export_level) {
 		case 'admin':
-			set_user_setting('export', 'canadmin', 'Y');
-			set_user_gedcom_setting('export', $GEDCOM, 'canedit', 'admin');
+			set_user_setting($export_user_id, 'canadmin', 'Y');
+			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'admin');
 		case 'gedadmin':
-			set_user_setting('export', 'canadmin', 'N');
-			set_user_gedcom_setting('export', $GEDCOM, 'canedit', 'admin');
+			set_user_setting($export_user_id, 'canadmin', 'N');
+			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'admin');
 			break;
 		case 'user':
-			set_user_setting('export', 'canadmin', 'N');
-			set_user_gedcom_setting('export', $GEDCOM, 'canedit', 'access');
+			set_user_setting($export_user_id, 'canadmin', 'N');
+			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'access');
 			break;
 		case 'visitor':
 		default:
-			set_user_setting('export', 'canadmin', 'N');
-			set_user_gedcom_setting('export', $GEDCOM, 'canedit', 'none');
+			set_user_setting($export_user_id, 'canadmin', 'N');
+			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'none');
 			break;
 		}
 		AddToLog(getUserName()." created dummy user -> export <- with level ".$privatize_export_level);
@@ -242,7 +242,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if (isset ($HTTP_SESSION_VARS)) {
 			$HTTP_SESSION_VARS["pgv_user"] = $HTTP_SESSION_VARS["org_user"];
 		}
-		delete_user('export');
+		delete_user($export_user_id);
 		AddToLog(getUserName()." deleted dummy user -> export <-");
 	}
 }
