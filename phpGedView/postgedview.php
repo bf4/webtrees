@@ -91,28 +91,29 @@
 
 		// need to add the user into gedview - but only if def_create_user says its ok
 		if (!empty($post_user) && !user_exists($post_user) && $def_create_user=="yes") {
-			create_user($post_user, crypt($def_upass));
-			set_user_setting($post_user, 'firstname', $post_firstname);
-			set_user_setting($post_user, 'lastname', $post_lastname);
-			set_user_setting($post_user, 'relationship_privacy', 'N');
-			set_user_setting($post_user, 'max_relation_path', '0');
-			set_user_setting($post_user, 'auto_accept', 'N');
-			if (($def_canedit == 'edit') || ($post_canedit == 'yes')) {
-				set_user_gedcom_setting($newuser, $def_gedcom, 'canedit',  'edit');
-			} else {
-				set_user_gedcom_setting($newuser, $def_gedcom, 'canedit',  'access');
+			if ($user_id=create_user($post_user, crypt($def_upass))) {
+				set_user_setting($user_id, 'firstname', $post_firstname);
+				set_user_setting($user_id, 'lastname', $post_lastname);
+				set_user_setting($user_id, 'relationship_privacy', 'N');
+				set_user_setting($user_id, 'max_relation_path', '0');
+				set_user_setting($user_id, 'auto_accept', 'N');
+				if (($def_canedit == 'edit') || ($post_canedit == 'yes')) {
+					set_user_gedcom_setting($user_id, $def_gedcom, 'canedit',  'edit');
+				} else {
+					set_user_gedcom_setting($user_id, $def_gedcom, 'canedit',  'access');
+				}
+				set_user_gedcom_setting($user_id, $def_gedcom, 'rootid', $def_rootid);
+				set_user_setting($user_id, 'canadmin', $def_canadmin ? 'Y' : 'N');
+				set_user_setting($user_id, 'email', $post_email);
+				set_user_setting($user_id, 'verified', 'yes');
+				set_user_setting($user_id, 'verified_by_admin', $def_verified_by_admin);
+				set_user_setting($user_id, 'theme', $def_theme);
+				set_user_setting($user_id, 'language', $def_language);
+				set_user_setting($user_id, 'reg_timestamp', date('U'));
+				set_user_setting($user_id, 'contactmethod', $def_contact_method);
+				set_user_setting($user_id, 'visibleonline', $def_canview);
+				AddToLog(getUserName()." added user -> {$post_user} <- in postgedview.php");
 			}
-			set_user_gedcom_setting($newuser, $def_gedcom, 'rootid', $def_rootid);
-			set_user_setting($post_user, 'canadmin', $def_canadmin ? 'Y' : 'N');
-			set_user_setting($post_user, 'email', $post_email);
-			set_user_setting($post_user, 'verified', 'yes');
-			set_user_setting($post_user, 'verified_by_admin', $def_verified_by_admin);
-			set_user_setting($post_user, 'theme', $def_theme);
-			set_user_setting($post_user, 'language', $def_language);
-			set_user_setting($post_user, 'reg_timestamp', date('U'));
-			set_user_setting($post_user, 'contactmethod', $def_contact_method);
-			set_user_setting($post_user, 'visibleonline', $def_canview);
-			AddToLog(getUserName()." added user -> {$username} <- in postgedview.php");
 		}
 		
 		// is the user there and verified ?

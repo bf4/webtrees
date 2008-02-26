@@ -85,14 +85,20 @@ if ($action=='createuser' || $action=='edituser2') {
 			} else {
 				// New user
 				if ($action=='createuser') {
-					create_user($username, crypt($pass1));
-					set_user_setting($username, 'reg_timestamp', date('U'));
-					set_user_setting($username, 'sessiontime', '0');
-					AddToLog("User -> {$username} <- created by ".getUserName());
+					if ($user_id=create_user($username, crypt($pass1))) {
+						set_user_setting($user_id, 'reg_timestamp', date('U'));
+						set_user_setting($user_id, 'sessiontime', '0');
+						AddToLog("User -> {$username} <- created by ".getUserName());
+					} else {
+						AddToLog("User -> {$username} <- was not created by ".getUserName());
+						$user_id=$username;
+					}
+				} else {
+					$user_id=$username;
 				}
 				// Change password
 				if ($action=='edituser2' && !empty($pass1)) {
-					set_user_password($oldusername, 'password', crypt($pass1));
+					set_user_password($user_id, 'password', crypt($pass1));
 					AddToLog("User -> {$oldusername} <- had password changed by ".getUserName());
 				}
 				// Change username
@@ -101,30 +107,30 @@ if ($action=='createuser' || $action=='edituser2') {
 					AddToLog("User -> {$oldusername} <-  renamed to -> {$username} <- by ".getUserName());
 				}
 				// Create/change settings that can be updated in the user's gedcom record?
-				$email_changed=($emailaddress!=get_user_setting($username, 'email'));
-				$newly_verified=($verified_by_admin=='yes' && get_user_setting($username, 'verified_by_admin')!='yes');
+				$email_changed=($emailaddress!=get_user_setting($user_id, 'email'));
+				$newly_verified=($verified_by_admin=='yes' && get_user_setting($user_id, 'verified_by_admin')!='yes');
 				// Create/change other settings
-				set_user_setting($username, 'firstname',            $firstname);
-				set_user_setting($username, 'lastname',             $lastname);
-				set_user_setting($username, 'email',                $emailaddress);
-				set_user_setting($username, 'theme',                $user_theme);
-				set_user_setting($username, 'language',             $user_language);
-				set_user_setting($username, 'contactmethod',        $new_contact_method);
-				set_user_setting($username, 'defaulttab',           $new_default_tab);
-				set_user_setting($username, 'comment',              $new_comment);
-				set_user_setting($username, 'comment_exp',          $new_comment_exp);
-				set_user_setting($username, 'max_relation_path',    $new_max_relation_path);
-				set_user_setting($username, 'sync_gedcom',          ($new_sync_gedcom=='Y') ? 'Y' : 'N');
-				set_user_setting($username, 'relationship_privacy', ($new_relationship_privacy=='Y') ? 'Y' : 'N');
-				set_user_setting($username, 'auto_accept',          ($new_auto_accept=='Y') ? 'Y' : 'N');
-				set_user_setting($username, 'canadmin',             ($canadmin=='Y') ? 'Y' : 'N');
-				set_user_setting($username, 'visibleonline',        ($visibleonline=='Y') ? 'Y' : 'N');
-				set_user_setting($username, 'editaccount',          ($editaccount=='Y') ? 'Y' : 'N');
-				set_user_setting($username, 'verified',             ($verified=='yes') ? 'yes' : 'no');
-				set_user_setting($username, 'verified_by_admin',    ($verified_by_admin=='yes') ? 'yes' : 'no');
+				set_user_setting($user_id, 'firstname',            $firstname);
+				set_user_setting($user_id, 'lastname',             $lastname);
+				set_user_setting($user_id, 'email',                $emailaddress);
+				set_user_setting($user_id, 'theme',                $user_theme);
+				set_user_setting($user_id, 'language',             $user_language);
+				set_user_setting($user_id, 'contactmethod',        $new_contact_method);
+				set_user_setting($user_id, 'defaulttab',           $new_default_tab);
+				set_user_setting($user_id, 'comment',              $new_comment);
+				set_user_setting($user_id, 'comment_exp',          $new_comment_exp);
+				set_user_setting($user_id, 'max_relation_path',    $new_max_relation_path);
+				set_user_setting($user_id, 'sync_gedcom',          ($new_sync_gedcom=='Y') ? 'Y' : 'N');
+				set_user_setting($user_id, 'relationship_privacy', ($new_relationship_privacy=='Y') ? 'Y' : 'N');
+				set_user_setting($user_id, 'auto_accept',          ($new_auto_accept=='Y') ? 'Y' : 'N');
+				set_user_setting($user_id, 'canadmin',             ($canadmin=='Y') ? 'Y' : 'N');
+				set_user_setting($user_id, 'visibleonline',        ($visibleonline=='Y') ? 'Y' : 'N');
+				set_user_setting($user_id, 'editaccount',          ($editaccount=='Y') ? 'Y' : 'N');
+				set_user_setting($user_id, 'verified',             ($verified=='yes') ? 'yes' : 'no');
+				set_user_setting($user_id, 'verified_by_admin',    ($verified_by_admin=='yes') ? 'yes' : 'no');
 				foreach ($GEDCOMS as $GEDCOM=>$ARRAY) {
 					foreach (array('gedcomid', 'rootid', 'canedit') as $var) {
-						set_user_gedcom_setting($username, $GEDCOM, $var, $_REQUEST[$var.$ARRAY['id']]);
+						set_user_gedcom_setting($user_id, $GEDCOM, $var, $_REQUEST[$var.$ARRAY['id']]);
 					}
 				}
 				// If we're verifying a new user, send them a message to let them know
@@ -168,8 +174,8 @@ if ($action=='createuser' || $action=='edituser2') {
 						}
 					}
 				}
-				// User data is cached, so reload the page to ensure we're up to date
-				header("Location: useradmin.php?action=edituser&username={$username}");
+				// Reload the form cleanly, to allow the user to verify their changes
+				header("Location: useradmin.php?action=edituser&username={$user_id}");
 				exit;
 			}
 		}
@@ -311,7 +317,20 @@ if ($action=="edituser") {
 	</tr>
 	<tr>
 	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin_help", "qm", "can_admin"); print $pgv_lang["can_admin"];?></td>
-	<td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php print ++$tab; ?>" value="Y" <?php if (get_user_setting($username, 'canadmin')=='Y') print "checked=\"checked\""; if ($username==getUserName()) print " disabled=\"disabled\""; ?> /></td>
+	<?php
+	// Forms won't send the value of checkboxes if they are disabled :-(  Instead, create a hidden field
+	if ($username==getUserName()) {
+		?>
+		<td class="optionbox wrap"><input type="checkbox" name="dummy" <?php if (get_user_setting($username, 'canadmin')=='Y') print "checked=\"checked\""; ?> disabled="disabled" /></td>
+		<input type="hidden" name="canadmin" value="<?php print get_user_setting($username, 'canadmin'); ?>" />
+		<?php
+	} else {
+		?>
+		<td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php print ++$tab; ?>" value="Y" <?php if (get_user_setting($username, 'canadmin')=='Y') print "checked=\"checked\""; ?> /></td>
+		<?php
+	}
+	?>
+
 	</tr>
 	<tr>
 	<td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm","can_edit"); print $pgv_lang["can_edit"];?></td>
