@@ -52,10 +52,10 @@ function authenticateUser($username, $password, $basic=false) {
 
 	checkTableExists();
 
-	if ($user_id=get_user_id($username)) {
-		$dbpassword=get_user_password($user_id);
+	if (get_user_id($username)) {
+		$dbpassword=get_user_password($username);
 		if (crypt($password, $dbpassword)==$dbpassword) {
-			if (get_user_setting($user_id, 'verified')=='yes' && get_user_setting($user_id, 'verified_by_admin')=='yes' || get_user_setting($user_id, 'canadmin')=='Y') {
+			if (get_user_setting($username, 'verified')=='yes' && get_user_setting($username, 'verified_by_admin')=='yes' || get_user_setting($username, 'canadmin')=='Y') {
 				set_user_setting($username, 'loggedin', 'Y');
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $username ."<-");
 				//-- reset the user's session
@@ -63,15 +63,15 @@ function authenticateUser($username, $password, $basic=false) {
 				$_SESSION['pgv_user'] = $username;
 				//-- unset the cookie_login session var to show that they have logged in with their password
 				$_SESSION['cookie_login'] = false;
-				if (isset($pgv_lang[get_user_setting($user_id, 'language')]))
-					$_SESSION['CLANGUAGE'] = get_user_setting($user_id, 'language');
+				if (isset($pgv_lang[get_user_setting($username, 'language')]))
+					$_SESSION['CLANGUAGE'] = get_user_setting($username, 'language');
 				//-- only change the gedcom if the user does not have an gedcom id
 				//-- for the currently active gedcom
-				if (get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid')=='') {
+				if (get_user_gedcom_setting($username, $GEDCOM, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
 					foreach (array_keys($GEDCOMS) as $gedcom) {
-						if (get_user_gedcom_setting($user_id, $gedcom, 'gedcomid')) {
+						if (get_user_gedcom_setting($username, $gedcom, 'gedcomid')) {
 							$_SESSION['GEDCOM']=$gedcom;
 							break;
 						}
@@ -147,10 +147,12 @@ function userLogout($username) {
  * @param string $username	the username to update the login info for
  */
 function userUpdateLogin($username) {
-	$user_id=get_user_id($username);
-	if ($user_id) {
-		set_user_setting($user_id, 'sessiontime', time());
-}
+	if (empty($username))
+		$username = getUserName();
+	if (empty($username))
+		return;
+
+	set_user_setting($username, 'sessiontime', time());
 }
 
 /**
@@ -165,38 +167,38 @@ function getUserName() {
 	global $ALLOW_REMEMBER_ME, $DBCONN, $logout, $SERVER_URL;
 	//-- this section checks if the session exists and uses it to get the username
 	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {
-			return $_SESSION['pgv_user'];
+		return $_SESSION['pgv_user'];
 	} else {
 		if (isset($HTTP_SESSION_VARS) && !empty($HTTP_SESSION_VARS['pgv_user'])) {
 			return $HTTP_SESSION_VARS['pgv_user'];
 		} else {
-	if ($ALLOW_REMEMBER_ME) {
-		$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
-		if (empty($tSERVER_URL))
-			$tSERVER_URL = $SERVER_URL; 	// cannot assume we had a match.
-		if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false))
-			$referrer_found=true;
-		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
+			if ($ALLOW_REMEMBER_ME) {
+				$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
+				if (empty($tSERVER_URL))
+					$tSERVER_URL = $SERVER_URL; 	// cannot assume we had a match.
+				if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false))
+					$referrer_found=true;
+				if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
 					if (!is_object($DBCONN)) {
-				return $_COOKIE["pgv_rem"];
+						return $_COOKIE["pgv_rem"];
 					} else {	
-			$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
-			if (is_null($session_time))
-				$session_time=0;
-			if (time() - $session_time < 60*60*24*7) {
-				$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
-				$_SESSION['cookie_login'] = true;
-				return $_COOKIE['pgv_rem'];
+						$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
+						if (is_null($session_time))
+							$session_time=0;
+						if (time() - $session_time < 60*60*24*7) {
+							$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
+							$_SESSION['cookie_login'] = true;
+							return $_COOKIE['pgv_rem'];
 						} else {
 							return "";
-			}
-		}
+						}
+					}
 				} else {
 					return "";
-	}
+				}
 			} else {
-	return "";
-}
+				return "";
+			}
 		}
 	}
 }
@@ -214,9 +216,9 @@ function userIsAdmin($username="") {
 
 	if (empty($username))
 		$username=getUserName();
-
-	return get_user_setting(get_user_id($username), 'canadmin')=='Y';
-}
+	
+	return get_user_setting($username, 'canadmin')=='Y';
+	}
 
 /**
  * check if given username is an admin for the current gedcom
@@ -234,15 +236,13 @@ function userGedcomAdmin($username="", $ged="") {
 	if (empty($username))
 		$username=getUserName();
 
-	$user_id=get_user_id($username);
-	if (get_user_setting($user_id, 'canadmin')=='Y')
+	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
 
 	if (empty($ged))
-		$ged=$GEDCOM;
+		$ged = $GEDCOM;
 
-	$ged_id=get_gedcom_id($ged);
-	return get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin';
+	return get_user_gedcom_setting($username, $ged, 'canedit')=='admin';
 }
 
 /**
@@ -259,8 +259,8 @@ function userCanAccess() {
 
 	if (is_null($cache)) {
 		$username=getUserName();
-		$cache=get_user_setting(get_user_id($username), 'canadmin')=='Y' || get_user_gedcom_setting(get_user_id($username), get_gedcom_id($GEDCOM), 'canedit')!='none';
-}
+		$cache=get_user_setting($username, 'canadmin')=='Y' || get_user_gedcom_setting($username, $GEDCOM, 'canedit')!='none';
+	}
 	return $cache;
 }
 
@@ -281,11 +281,10 @@ function userCanEdit($username="") {
 	if (empty($username))
 		$username=getUserName();
 
-	$user_id=get_user_id($username);
-	if (get_user_setting($user_id, 'canadmin')=='Y')
+	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
 
-	$tmp=get_user_gedcom_setting($user_id, $GEDCOM, 'canedit');
+	$tmp=get_user_gedcom_setting($username, $GEDCOM, 'canedit');
 	return $tmp=='admin' || $tmp=='accept' || $tmp=='edit';
 }
 
@@ -306,15 +305,13 @@ function userCanAccept($username="") {
 	if (empty($username))
 		$username=getUserName();
 
-	$user_id=get_user_id($username);
-
-	if (get_user_setting($user_id, 'canadmin')=='Y')
+	if (get_user_setting($username, 'canadmin')=='Y')
 		return true;
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
 	
-	$tmp=get_user_gedcom_setting($user_id, $GEDCOM, 'canedit');
+	$tmp=get_user_gedcom_setting($username, $GEDCOM, 'canedit');
 	return $tmp=='admin' || $tmp=='accept';
 }
 
@@ -324,7 +321,7 @@ function userCanAccept($username="") {
  * @return boolean 		true if the changes should automatically be accepted
  */
 function userAutoAccept() {
-	return get_user_setting(get_user_id(getUserName()), 'auto_accept')=='Y';
+	return get_user_setting(getUserName(), 'auto_accept')=='Y';
 }
 
 /**
@@ -345,7 +342,6 @@ function adminUserExists() {
 	}
 	return false;
 }
-
 
 /**
  * check if the user database tables exist
@@ -627,8 +623,6 @@ function checkTableExists() {
 		$sql = "CREATE INDEX mutex_name ON ".$TBLPREFIX."mutex (mx_name)";
 		$res = dbquery($sql);
 	}
-
-	require 'includes/create_db_schema.php';
 	return true;
 }
 
@@ -797,7 +791,7 @@ function addMessage($message) {
 
 	require_once('includes/functions_mail.php');
 
-	if (!user_exists($message["to"])) {
+	if (!get_user_id($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 	}
@@ -819,7 +813,7 @@ function addMessage($message) {
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
 	$subject2 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
 	$from ="";
-	if (!user_exists($message["from"])) {
+	if (!get_user_id($message["from"])) {
 		$from = $message["from"];
 		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".stripslashes($email2);
 		$fromFullName = $message["from"];
@@ -834,7 +828,7 @@ function addMessage($message) {
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
-		if (!user_exists($message["from"])) {
+		if (!get_user_id($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
@@ -846,9 +840,9 @@ function addMessage($message) {
 		}
 		if (!isset($message["no_from"])) {
 			if (stristr($from, $PHPGEDVIEW_EMAIL)){
-				$from = get_user_setting(get_user_id($WEBMASTER_EMAIL), 'email');
+				$from = get_user_setting($WEBMASTER_EMAIL, 'email');
 			}
-			if (!user_exists($message["from"]))
+			if (!get_user_id($message["from"]))
 				$header2 = $PHPGEDVIEW_EMAIL;
 			else
 				if (isset($to))
@@ -883,7 +877,7 @@ function addMessage($message) {
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
-		if (!user_exists($message["from"])) {
+		if (!get_user_id($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
 				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
@@ -893,7 +887,7 @@ function addMessage($message) {
 			$email1 = $pgv_lang["message_email1"];
 			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
 		}
-		if (!user_exists($message["to"])) {
+		if (!get_user_id($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 		} else {
@@ -1074,7 +1068,7 @@ function getBlocks($username) {
 				$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
 		}
 	} else {
-		if (user_exists($username)) {
+		if (get_user_id($username)) {
 			//-- if no blocks found, check for a default block setting
 			$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
 			$res2 = dbquery($sql);

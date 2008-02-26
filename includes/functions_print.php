@@ -1639,7 +1639,7 @@ function print_privacy_error($username) {
 	 if ($username==$WEBMASTER_EMAIL) {
 		 $method = $SUPPORT_METHOD;
 	 }
-	 if (!user_exists($username)) {
+	 if (!get_user_id($username)) {
 		 $method = "mailto";
 	 }
 	 print "<br /><span class=\"error\">".$pgv_lang["privacy_error"]." ";
@@ -1649,7 +1649,7 @@ function print_privacy_error($username) {
 	 }
 	 print $pgv_lang["more_information"];
 	 if ($method=="mailto") {
-		  if (!user_exists($username)) {
+		  if (!get_user_id($username)) {
 			   $email = $username;
 			   $fullname = $username;
 		  } else {
