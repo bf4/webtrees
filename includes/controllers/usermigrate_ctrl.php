@@ -1,9 +1,9 @@
 <?php
 /**
  * Controller for backup and export
- * Exports users and their data to either SQL queries (Index mode) or 
+ * Exports users and their data to either SQL queries (Index mode) or
  * authenticate.php and xxxxxx.dat files (MySQL mode).
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
  * @author Boudewijn Sjouke	sjouke@users.sourceforge.net
  * @package PhpGedView
  * @subpackage Admin
@@ -65,14 +65,14 @@ class UserMigrateControllerRoot extends BaseController {
 	var $favSuccess = false;
 	var $newsSuccess = false;
 	var $blockSuccess = false;
-	
+
 	/**
 	 * constructor
 	 */
 	function UserMigrateControllerRoot() {
 		parent::BaseController();
 	}
-	
+
 	/**
 	 * Initialize the controller and start the logic
 	 *
@@ -81,7 +81,7 @@ class UserMigrateControllerRoot extends BaseController {
 		global $INDEX_DIRECTORY;
 		if (!isset($_REQUEST['proceed'])) $this->proceed = "backup";
 		else $this->proceed = $_REQUEST['proceed'];
-		
+
 		if ($this->proceed == "backup") $this->backup();
 		else if ($this->proceed == "export") {
 			$i = 0;
@@ -103,12 +103,12 @@ class UserMigrateControllerRoot extends BaseController {
 			if (file_exists($INDEX_DIRECTORY."favorites.dat")) unlink($INDEX_DIRECTORY."favorites.dat");
 			um_export($this->proceed);
 		}
-		
+
 		if ($this->proceed == "import") {
 			$this->import();
 		}
 	}
-	
+
 	/**
 	 * Return the page title
 	 *
@@ -116,11 +116,11 @@ class UserMigrateControllerRoot extends BaseController {
 	 */
 	function getPageTitle() {
 		global $pgv_lang;
-		
+
 		if ($this->proceed == "backup") return $pgv_lang["um_backup"];
 		else return $pgv_lang["um_header"];
 	}
-	
+
 	/**
 	 * generate the backup zip file
 	 *
@@ -130,7 +130,7 @@ class UserMigrateControllerRoot extends BaseController {
 		global $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_ROOTDIR;
 		global $VERSION, $VERSION_RELEASE;
 		$this->flist = array();
-	
+
 		// Backup user information
 		if (isset($_POST["um_usinfo"])) {
 			// If in pure DB mode, we must first create new .dat files and authenticate.php
@@ -140,10 +140,10 @@ class UserMigrateControllerRoot extends BaseController {
 			if (file_exists($INDEX_DIRECTORY."messages.dat")) unlink($INDEX_DIRECTORY."messages.dat");
 			if (file_exists($INDEX_DIRECTORY."blocks.dat")) unlink($INDEX_DIRECTORY."blocks.dat");
 			if (file_exists($INDEX_DIRECTORY."favorites.dat")) unlink($INDEX_DIRECTORY."favorites.dat");
-	
+
 			// Then make the new ones
 			um_export($this->proceed);
-			
+
 			// Make filelist for files to ZIP
 			if (file_exists($INDEX_DIRECTORY."authenticate.php")) $this->flist[] = $INDEX_DIRECTORY."authenticate.php";
 			if (file_exists($INDEX_DIRECTORY."news.dat")) $this->flist[] = $INDEX_DIRECTORY."news.dat";
@@ -151,12 +151,12 @@ class UserMigrateControllerRoot extends BaseController {
 			if (file_exists($INDEX_DIRECTORY."blocks.dat")) $this->flist[] = $INDEX_DIRECTORY."blocks.dat";
 			if (file_exists($INDEX_DIRECTORY."favorites.dat")) $this->flist[] = $INDEX_DIRECTORY."favorites.dat";
 		}
-	
+
 		// Backup config.php
 		if (isset($_POST["um_config"])) {
 			$this->flist[] = "config.php";
 		}
-	
+
 		// Backup gedcoms
 		if (isset($_POST["um_gedcoms"])) {
 			foreach($GEDCOMS as $key=>$gedcom) {
@@ -181,30 +181,30 @@ class UserMigrateControllerRoot extends BaseController {
 			require(get_config_file($GEDCOM));
 			$this->flist[] = $INDEX_DIRECTORY."pgv_changes.php";
 		}
-	
+
 		// Backup gedcom settings
 		if (isset($_POST["um_gedsets"])) {
-	
+
 			// Gedcoms file
 			if (file_exists($INDEX_DIRECTORY."gedcoms.php")) $this->flist[] = $INDEX_DIRECTORY."gedcoms.php";
-	
+
 			foreach($GEDCOMS as $key => $gedcom) {
-	
+
 				// Config files
 				if (file_exists($INDEX_DIRECTORY.$gedcom["gedcom"]."_conf.php")) $this->flist[] = $INDEX_DIRECTORY.$gedcom["gedcom"]."_conf.php";
-				
+
 				// Privacy files
 				if (file_exists($INDEX_DIRECTORY.$gedcom["gedcom"]."_priv.php")) $this->flist[] = $INDEX_DIRECTORY.$gedcom["gedcom"]."_priv.php";
 			}
 		}
-	
+
 		// Backup logfiles and counters
 		if (isset($_POST["um_logs"])) {
 			foreach($GEDCOMS as $key => $gedcom) {
-	
+
 				// Gedcom counters
 				if (file_exists($INDEX_DIRECTORY.$gedcom["gedcom"]."pgv_counters.php")) $this->flist[] = $INDEX_DIRECTORY.$gedcom["gedcom"]."pgv_counters.php";
-	
+
 				// Gedcom searchlogs and changelogs
 				$dir_var = opendir ($INDEX_DIRECTORY);
 				while ($file = readdir ($dir_var)) {
@@ -212,7 +212,7 @@ class UserMigrateControllerRoot extends BaseController {
 				}
 				closedir($dir_var);
 			}
-			
+
 			// PhpGedView logfiles
 			$dir_var = opendir ($INDEX_DIRECTORY);
 			while ($file = readdir ($dir_var)) {
@@ -220,7 +220,7 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 			closedir($dir_var);
 		}
-		
+
 		// backup media files
 		if (isset($_POST["um_media"])) {
 			$dir = dir($MEDIA_DIRECTORY);
@@ -238,7 +238,7 @@ class UserMigrateControllerRoot extends BaseController {
 				}
 			}
 		}
-		
+
 		// Make the zip
 		if (count($this->flist) > 0) {
 			require_once "includes/pclzip.lib.php";
@@ -247,11 +247,11 @@ class UserMigrateControllerRoot extends BaseController {
 			$comment = "Created by PhpGedView ".$VERSION." ".$VERSION_RELEASE." on ".date("r").".";
 			$archive = new PclZip($this->fname);
 			//-- remove ../ from file paths when creating zip
-	        $ct = preg_match("~((\.\./)+)~", $INDEX_DIRECTORY, $match);
-	        $rmpath = "";
-	        if ($ct>0) $rmpath = $match[1];
-	        $this->v_list = $archive->create($this->flist, PCLZIP_OPT_COMMENT, $comment, PCLZIP_OPT_REMOVE_PATH, $rmpath);
-	        if ($this->v_list==0) $this->errorMsg = "Error : ".$archive->errorInfo(true);
+			$ct = preg_match("~((\.\./)+)~", $INDEX_DIRECTORY, $match);
+			$rmpath = "";
+			if ($ct>0) $rmpath = $match[1];
+				$this->v_list = $archive->create($this->flist, PCLZIP_OPT_COMMENT, $comment, PCLZIP_OPT_REMOVE_PATH, $rmpath);
+			if ($this->v_list==0) $this->errorMsg = "Error : ".$archive->errorInfo(true);
 			if (isset($_POST["um_usinfo"])) {
 				// Remove temporary files again
 				if (file_exists($INDEX_DIRECTORY."authenticate.php")) unlink($INDEX_DIRECTORY."authenticate.php");
@@ -260,22 +260,21 @@ class UserMigrateControllerRoot extends BaseController {
 				if (file_exists($INDEX_DIRECTORY."blocks.dat")) unlink($INDEX_DIRECTORY."blocks.dat");
 				if (file_exists($INDEX_DIRECTORY."favorites.dat")) unlink($INDEX_DIRECTORY."favorites.dat");
 			}
-		}	
+		}
 	}
-	
+
 	/**
 	 * Import users etc. from index files
 	 *
 	 */
 	function import() {
-	  global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $DBCONN;
+		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $DBCONN;
 		global $GEDCOMS, $GEDCOM;
-		
-	    if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
+
+		if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
 			$this->impSuccess = false;
 			return;
-	    }
-	    else {	
+		} else {
 			require $INDEX_DIRECTORY."authenticate.php";
 			$countold = count($users);
 			$sql = "DELETE FROM ".$TBLPREFIX."users";
@@ -341,16 +340,15 @@ class UserMigrateControllerRoot extends BaseController {
 					AddToLog(getUserName()." added user -> {$username} <-");
 				}
 			}
-			$countnew = count(get_all_users());
-			if ($countold == $countnew) {
+			if ($countold == get_user_count()) {
 				$this->impSuccess = true;
 			}
 			else {
 				$this->impSuccess = false;
 			}
-	    }
-	  	
-	    if ((file_exists($INDEX_DIRECTORY."messages.dat")) == false) {
+		}
+
+		if ((file_exists($INDEX_DIRECTORY."messages.dat")) == false) {
 			$this->msgSuccess = false;
 		}
 		else {
@@ -377,7 +375,7 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 			$this->msgSuccess = true;
 		}
-		
+
 		if ((file_exists($INDEX_DIRECTORY."favorites.dat")) == false) {
 			$this->favSuccess = false;
 			print $pgv_lang["um_nofav"]."<br /><br />";
@@ -394,7 +392,7 @@ class UserMigrateControllerRoot extends BaseController {
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."favorites.dat"));
 			fclose($fp);
 			$favorites = unserialize($mstring);
-			
+
 			foreach($favorites as $newid => $favorite) {
 				$res = addFavorite($favorite);
 				if (!$res || DB::isError($res)) {
@@ -404,7 +402,7 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 			$this->favSuccess = true;
 		}
-		
+
 		if ((file_exists($INDEX_DIRECTORY."news.dat")) == false) {
 			$this->newsSuccess = false;
 		}
@@ -430,11 +428,11 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 			$this->newsSuccess = true;
 		}
-		
+
 		if ((file_exists($INDEX_DIRECTORY."blocks.dat")) == false) {
 			$this->blockSuccess = false;
 		}
-		else {		
+		else {
 			$sql = "DELETE FROM ".$TBLPREFIX."blocks";
 			$res = dbquery($sql);
 			if (!$res) {
