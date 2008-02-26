@@ -100,15 +100,15 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		$pgv_lang["global_num1"] = $LoginUsers; // Make it visible
 		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
-	foreach ($loggedusers as $user_id => $user_name) {
-		$userName=getUserFullName($user_id);
-		print "<tr><td>";
-		print "<br />" . PrintReady($userName);
-		print " - " . $user;
+	if (getUserName()) {
+		foreach ($loggedusers as $user_id => $user_name) {
+			$userName=getUserFullName($user_id);
+			print "<tr><td><br />".PrintReady($userName)." - ".$user;
 		if ($cusername!=$user && get_user_setting($user, 'contactmethod')!="none") {
 			print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user . "');\">" . $pgv_lang["message"] . "</a>";
 		}
 		print "</td></tr>";
+	}
 	}
 	print "</table>";
 	if ($block) {

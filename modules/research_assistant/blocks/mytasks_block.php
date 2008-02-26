@@ -43,7 +43,7 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 
 	//-- print user messages
 	function print_mytasks($block=true, $config="", $side, $index) {
-			global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $TIME_FORMAT, $PGV_STORE_MESSAGES, $PGV_IMAGES, $usersortfields;
+			global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $TIME_FORMAT, $PGV_STORE_MESSAGES, $PGV_IMAGES;
 			global $TBLPREFIX, $PGV_BLOCKS, $ctype, $GEDCOM;
 
 			if (empty($config)) $config = $PGV_BLOCKS["print_mytasks"]["config"];

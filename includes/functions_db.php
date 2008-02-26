@@ -3490,6 +3490,15 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 	return $users;
 }
 
+function get_user_count() {
+	global $TBLPREFIX;
+
+	$res=dbquery("SELECT count(u_username) FROM {$TBLPREFIX}users");
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
 // Get a list of logged-in users
 function get_logged_in_users() {
 	global $DBCONN, $TBLPREFIX;

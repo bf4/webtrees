@@ -221,9 +221,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_value"><div dir="rtl">
 				<?php
 				if (userGedcomAdmin()){
-					echo "<a href=\"useradmin.php\">" . count(get_all_users()) . "</a>";
+					echo "<a href=\"useradmin.php\">".get_user_count()."</a>";
 				} else {
-					echo count(get_all_users());
+					echo get_user_count();
 				}?>
 				</div></td>
 			</tr>
