@@ -50,7 +50,7 @@ if (get_user_setting($old_username, 'editaccount')!='Y') {
 
 // section to update a user
 if ($action=="edituser2") {
-	if ($username!=$old_username && user_exists($username)) {
+	if ($username!=$old_username && get_user_id($username)) {
 		print_header("PhpGedView ".$pgv_lang["user_admin"]);
 		print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 	} else {

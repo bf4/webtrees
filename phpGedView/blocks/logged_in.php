@@ -49,18 +49,18 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	$cusername = getUserName();
 
 	// Log out inactive users
-	foreach (get_idle_users(time()-$PGV_SESSION_TIME) as $user) {
-		if ($user!=$cusername) {
-			userLogout($user);
+	foreach (get_idle_users(time()-$PGV_SESSION_TIME) as $user_id=>$user_name) {
+		if ($user_id!=$cusername) {
+			userLogout($user_id);
 		}
 	}
 
 	// List active users
 	$NumAnonymous = 0;
 	$loggedusers = array ();
-	foreach (get_logged_in_users() as $user) {
-		if (userIsAdmin() || get_user_setting($user, 'visibleonline')=='Y') {
-			$loggedusers[]=$user;
+	foreach (get_logged_in_users() as $user_id=>$user_name) {
+		if (userIsAdmin() || get_user_setting($user_id, 'visibleonline')=='Y') {
+			$loggedusers[$user_id]=$user_name;
 		} else {
 			$NumAnonymous++;
 		}
@@ -101,11 +101,10 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
 	if (getUserName()) {
-		foreach ($loggedusers as $user) {
-			$userName=getUserFullName($user);
-			print "<tr><td><br />".PrintReady($userName)." - ".$user;
-			if ($cusername!=$user && get_user_setting($user, 'contactmethod')!="none") {
-				print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user . "');\">" . $pgv_lang["message"] . "</a>";
+		foreach ($loggedusers as $user_id=>$user_name) {
+			print "<tr><td><br />".PrintReady(getUserFullName($user_id))." - ".$user_name;
+			if ($cusername!=$user_id && get_user_setting($user_id, 'contactmethod')!="none") {
+				print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_id . "');\">" . $pgv_lang["message"] . "</a>";
 			}
 			print "</td></tr>";
 		}

@@ -3608,7 +3608,7 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 	$users=array();
 	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}");
 	while ($row=$res->fetchRow()) {
-		$users[]=$row[0];
+		$users[$row[0]]=$row[0];
 	}
 	$res->free();
 	return $users;
@@ -3630,7 +3630,7 @@ function get_logged_in_users() {
 	$users=array();
 	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y'");
 	while ($row=$res->fetchRow()) {
-		$users[]=$row[0];
+		$users[$row[0]]=$row[0];
 	}
 	$res->free();
 	return $users;
@@ -3644,7 +3644,7 @@ function get_idle_users($time) {
 	$users=array();
 	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y' AND u_sessiontime BETWEEN 1 AND {$time}");
 	while ($row=$res->fetchRow()) {
-		$users[]=$row[0];
+		$users[$row[0]]=$row[0];
 	}
 	$res->free();
 	return $users;
@@ -3673,22 +3673,8 @@ function get_user_id($username) {
 	return null;
 }
 
-function user_exists($username) {
-	global $DBCONN, $TBLPREFIX;
-
-	if (!is_object($DBCONN) || DB::isError($DBCONN))
-		return false;
-
-	$username=$DBCONN->escapeSimple($username);
-
-	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_username='{$username}'", false);
-	// We may call this function before creating the table, so must check for errors.
-	if ($res!=false && !DB::isError($res)) {
-		$row=$res->fetchRow();
-		$res->free();
-		return $row[0]>0;
-	}
-	return false;
+function user_exists($username) { // This function is now deprecated.
+	return get_user_id($username);
 }
 
 function set_user_password($user_id, $password) {
