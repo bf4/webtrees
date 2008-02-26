@@ -89,57 +89,49 @@
 		if (isset($_COOKIE['post_email'])) $post_email = $_COOKIE['post_email'];
 		if (isset($_COOKIE['post_canedit'])) $post_canedit = $_COOKIE['post_canedit'];
 
-		if (!empty($post_user)) {
-			// need to add the user into gedview - but only if def_create_user says its ok
-			if (!user_exists($post_user) && $def_create_user=="yes") {
-				$newuser = array();
-				$newuser["username"]=$post_user;
-				$newuser["firstname"]=$post_firstname;
-				$newuser["lastname"]=$post_lastname;
-				$newuser["canedit"] = array();
-				if ($def_canedit == "yes") {
-					$newuser["canedit"][$def_gedcom] = "yes";
-				} else {
-					$newuser["canedit"][$def_gedcom] = "";
-				}
-				$newuser["gedcomid"] = array();
-				$newuser["gedcomid"][$def_gedcom] = '';
-				$newuser["rootid"] = array();
-				$newuser["rootid"][$def_gedcom] = $def_rootid;
-				$newuser["canadmin"]=$def_canadmin;
-				$newuser["email"]=$post_email;
-				$newuser["verified"] = "yes";
-				$newuser["verified_by_admin"] = $def_verified_by_admin;
-				$newuser["pwrequested"] = "";
-				$newuser["theme"] = $def_theme;
-				$newuser["language"] = $def_language;
-				$newuser["reg_timestamp"] = date("U");
-				$newuser["reg_hashcode"] = "";
-				$newuser["loggedin"] = "N";
-				$newuser["sessiontime"] = 0;
-				$newuser["contactmethod"] = $def_contact_method;
-				$newuser["password"]=crypt($def_upass);
-				addUser($newuser, "added");	
-			}
-			$admin_ver = get_user_setting($post_user, 'verified_by_admin')=='Y';
-			
-			// is the user there and verified ?
-			if (user_exists($post_user) && $admin_ver=="yes") {
-				set_user_setting($post_user, 'loggedin',    'Y');
-				set_user_setting($post_user, 'sessiontime', time());
-				AddToLog("Login Successful ->" . $post_user ."<-");
-				
-				$_SESSION['pgv_user'] = $post_user;
-				$url = "index.php";
-				$url.="?".session_name()."=".session_id();
-				$url.="&ctype=gedcom";
-				header("Location: $url");
+		// need to add the user into gedview - but only if def_create_user says its ok
+		if (!empty($post_user) && !user_exists($post_user) && $def_create_user=="yes") {
+			create_user($post_user, crypt($def_upass));
+			set_user_setting($post_user, 'firstname', $post_firstname);
+			set_user_setting($post_user, 'lastname', $post_lastname);
+			set_user_setting($post_user, 'relationship_privacy', 'N');
+			set_user_setting($post_user, 'max_relation_path', '0');
+			set_user_setting($post_user, 'auto_accept', 'N');
+			if (($def_canedit == 'edit') || ($post_canedit == 'yes')) {
+				set_user_gedcom_setting($newuser, $def_gedcom, 'canedit',  'edit');
 			} else {
-				$url = "index.php?logout=1";
+				set_user_gedcom_setting($newuser, $def_gedcom, 'canedit',  'access');
 			}
+			set_user_gedcom_setting($newuser, $def_gedcom, 'rootid', $def_rootid);
+			set_user_setting($post_user, 'canadmin', $def_canadmin ? 'Y' : 'N');
+			set_user_setting($post_user, 'email', $post_email);
+			set_user_setting($post_user, 'verified', 'yes');
+			set_user_setting($post_user, 'verified_by_admin', $def_verified_by_admin);
+			set_user_setting($post_user, 'theme', $def_theme);
+			set_user_setting($post_user, 'language', $def_language);
+			set_user_setting($post_user, 'reg_timestamp', date('U'));
+			set_user_setting($post_user, 'contactmethod', $def_contact_method);
+			set_user_setting($post_user, 'visibleonline', $def_canview);
+			AddToLog(getUserName()." added user -> {$username} <- in postgedview.php");
 		}
+		
+		// is the user there and verified ?
+		if (user_exists($post_user) && get_user_setting($post_user, 'verified_by_admin')=="yes") {
+			set_user_setting($post_user, 'loggedin', 'Y');
+			set_user_setting($post_user, 'sessiontime', time());
+			AddToLog("Login Successful ->" . $post_user ."<-");
+				
+			$_SESSION['pgv_user'] = $post_user;
+			$url = "index.php";
+			$url.="?".session_name()."=".session_id();
+			$url.="&ctype=gedcom";
+			header("Location: $url");
+		} else {
+			$url = "index.php?logout=1";
+		}
+	}
 
-		header("Location: $url");
-		exit;
+	header("Location: $url");
+	exit;
 
 ?>

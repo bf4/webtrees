@@ -51,7 +51,8 @@ foreach (array('action', 'filter', 'sort', 'ged', 'usrlang', 'oldusername', 'use
 if ($action=='deleteuser') {
 	// don't delete ourselves
 	if ($username!=getUserName()) {
-		deleteUser($username);
+		delete_user($username);
+		AddToLog(getUserName()." deleted user -> ".$username." <-");
 	}
 	// User data is cached, so reload the page to ensure we're up to date
 	header("Location: useradmin.php");
@@ -84,7 +85,7 @@ if ($action=='createuser' || $action=='edituser2') {
 			} else {
 				// New user
 				if ($action=='createuser') {
-					create_user($username, $pass1);
+					create_user($username, crypt($pass1));
 					set_user_setting($username, 'reg_timestamp', date('U'));
 					set_user_setting($username, 'sessiontime', '0');
 					AddToLog("User -> {$username} <- created by ".getUserName());
@@ -968,7 +969,8 @@ if ($action == "cleanup2") {
 	foreach(get_all_users() as $user) {
 		$var = "del_".str_replace(array(".","-"," "), array("_","_","_"), $user);
 		if (isset($$var)) {
-			deleteUser($user);
+			delete_user($user);
+			AddToLog(getUserName()." deleted user -> ".$user." <-");
 			print $pgv_lang["usr_deleted"]; print $user."<br />";
 		} else {
 			foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$data) {
@@ -1054,14 +1056,16 @@ if ($action == "cleanup2") {
 		if (get_user_setting($user,'canadmin')=='Y') {
 			$adminusers++;
 		}
-		foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$rights) {
-			if ($rights == "admin") {
-				if (isset($GEDCOMS[$gedid])) {
-					if (isset($gedadmin[$GEDCOMS[$gedid]["title"]])) $gedadmin[$GEDCOMS[$gedid]["title"]]["number"]++;
-					else {
-						$gedadmin[$GEDCOMS[$gedid]["title"]]["name"] = $GEDCOMS[$gedid]["title"];
-						$gedadmin[$GEDCOMS[$gedid]["title"]]["number"] = 1;
-						$gedadmin[$GEDCOMS[$gedid]["title"]]["ged"] = $gedid;
+		if (get_user_setting($user,'canedit')) {
+			foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$rights) {
+				if ($rights == "admin") {
+					if (isset($GEDCOMS[$gedid])) {
+						if (isset($gedadmin[$GEDCOMS[$gedid]["title"]])) $gedadmin[$GEDCOMS[$gedid]["title"]]["number"]++;
+						else {
+							$gedadmin[$GEDCOMS[$gedid]["title"]]["name"] = $GEDCOMS[$gedid]["title"];
+							$gedadmin[$GEDCOMS[$gedid]["title"]]["number"] = 1;
+							$gedadmin[$GEDCOMS[$gedid]["title"]]["ged"] = $gedid;
+						}
 					}
 				}
 			}

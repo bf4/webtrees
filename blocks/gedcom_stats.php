@@ -197,9 +197,9 @@ $PGV_BLOCKS["print_gedcom_stats"]["config"]		= array(
 	<td class="facts_value">
 	<div dir="rtl">';
 			if (userGedcomAdmin()){
-				$content .= "<a href=\"useradmin.php\">" . count(get_all_users()) . "</a>";
+				$content .= "<a href=\"useradmin.php\">".get_user_count()."</a>";
 			} else {
-				$content .= count(get_all_users());
+				$content .= get_user_count();
 			}
 			$content .= '</div>
 	</td>

@@ -3551,6 +3551,8 @@ function get_event_list() {
 // Functions to access the PGV_USER table
 ////////////////////////////////////////////////////////////////////////////////
 
+$PGV_USERS_cache=array();
+
 function create_user($username, $password) {
 	global $DBCONN, $TBLPREFIX;
 
@@ -3599,6 +3601,15 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 	}
 	$res->free();
 	return $users;
+}
+
+function get_user_count() {
+	global $TBLPREFIX;
+
+	$res=dbquery("SELECT count(u_username) FROM {$TBLPREFIX}users");
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
 }
 
 // Get a list of logged-in users
@@ -3652,6 +3663,11 @@ function set_user_password($username, $password) {
 	$username=$DBCONN->escapeSimple($username);
 	$password=$DBCONN->escapeSimple($password);
 	dbquery("UPDATE {$TBLPREFIX}users SET u_password='{$password}' WHERE u_username='{$username}'");
+
+	global $PGV_USERS_cache;
+	if (isset($PGV_USERS_cache[$username])) {
+		unset($PGV_USERS_cache[$username]);
+	}
 }
 
 function get_user_password($username) {
@@ -3682,6 +3698,10 @@ function get_user_password($username) {
 function get_user_setting($username, $parameter) {
 	global $DBCONN, $TBLPREFIX;
 
+	global $PGV_USERS_cache;
+	if (isset($PGV_USERS_cache[$username])) {
+		return $PGV_USERS_cache[$username]['u_'.$parameter];	}
+
 	if (!is_object($DBCONN) || DB::isError($DBCONN))
 		return false;
 
@@ -3693,6 +3713,7 @@ function get_user_setting($username, $parameter) {
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
 	if ($row) {
+		$PGV_USERS_cache[$username]=$row;
 		return $row['u_'.$parameter];
 	} else {
 		return null;
@@ -3705,6 +3726,11 @@ function set_user_setting($username, $parameter, $value) {
 	$username=$DBCONN->escapeSimple($username);
 	$value   =$DBCONN->escapeSimple($value);
 	dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$username}'");
+	
+	global $PGV_USERS_cache;
+	if (isset($PGV_USERS_cache[$username])) {
+		unset($PGV_USERS_cache[$username]);
+	}
 }
 
 function admin_user_exists() {
@@ -3765,6 +3791,11 @@ function set_user_gedcom_setting($username, $gedcom, $parameter, $value) {
 		$tmp_array[$gedcom]=$value;
 	}
 	set_user_setting($username, $parameter, serialize($tmp_array));
+	
+	global $PGV_USERS_cache;
+	if (isset($PGV_USERS_cache[$username])) {
+		unset($PGV_USERS_cache[$username]);
+	}
 }
 
 function get_user_from_gedcom_xref($gedcom, $xref) {

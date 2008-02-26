@@ -90,15 +90,15 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		$pgv_lang["global_num1"] = $LoginUsers; // Make it visible
 		$content .= "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
-	foreach ($loggedusers as $user) {
-		$userName=getUserFullName($user);
-		$content .= "<tr><td>";
-		$content .= "<br />" . PrintReady($userName);
-		$content .= " - " . $user["username"];
-		if ($cusername!=$user && get_user_setting($user, 'contactmethod')!="none") {
-			$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user . "');\">" . $pgv_lang["message"] . "</a>";
+	if (getUserName()) {
+		foreach ($loggedusers as $user) {
+			$userName=getUserFullName($user);
+			$content .= "<tr><td><br />".PrintReady($userName)." - ".$user["username"];
+			if ($cusername!=$user && get_user_setting($user, 'contactmethod')!="none") {
+				$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user . "');\">" . $pgv_lang["message"] . "</a>";
+			}
+			$content .= "</td></tr>";
 		}
-		$content .= "</td></tr>";
 	}
 	$content .= "</table>";
 	

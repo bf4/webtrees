@@ -397,48 +397,30 @@ switch ($action) {
 					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 				}
 				else if ($user_password01 == $user_password02) {
-					$user = array();
-					$user["username"] = $user_name;
-					$user["firstname"] = $user_firstname;
-					$user["lastname"] = $user_lastname;
-					if (preg_match("/[\w\.-_]+@[\w\.-_]+/", $user_email)>0) $user["email"] = $user_email;
-					else $user["email"]="";
-					if (!isset($user_language)) $user_language = $LANGUAGE;
-					if (isset($language_settings[$user_language])) $user["language"] = $user_language;
-					else $user_language = "english";
-					$user["verified"] = "";
-					if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $user["verified_by_admin"] = "N";
-					else $user["verified_by_admin"] = "Y";
-					$user["pwrequested"] = "";
-					$user["reg_timestamp"] = date("U");
-					srand((double)microtime()*1000000);
-					$user["reg_hashcode"] = preg_replace('/[.\/$]/', '_', crypt(rand(), $user_password01));
-					$user["gedcomid"] = array();
-					$user["rootid"] = array();
-					$user["canedit"] = array();
-					$user["theme"] = "";
-					$user["loggedin"] = "N";
-					$user["sessiontime"] = 0;
-					$user["contactmethod"] = "messaging2";
-					$user["default_tab"] = $GEDCOM_DEFAULT_TAB;
-					if (!empty($user_gedcomid)) {
-						$user["gedcomid"][$GEDCOM] = $user_gedcomid;
-						$user["rootid"][$GEDCOM] = $user_gedcomid;
-					}
-					$user["password"] = crypt($user_password01, $user_password01);
-					if ((isset($canadmin)) && ($canadmin == "yes")) $user["canadmin"] = true;
-					else $user["canadmin"] = false;
-					$user["visibleonline"] = true;
-					$user["editaccount"] = true;
-					$user["comment"] = "";
-					$user["comment_exp"] = "";
-					$user["sync_gedcom"] = "";
-					if ($USE_RELATIONSHIP_PRIVACY) $user["relationship_privacy"] = "Y";
-					else $user["relationship_privacy"] = "N";
-					$user["max_relation_path"] = $MAX_RELATION_PATH_LENGTH;
-					$user["auto_accept"] = false;
-					$au = addUser($user, "added");
-					if ($au) {
+					if (create_user($user_name, crypt($user_password01))) {
+						set_user_setting($user_name, 'firstname',           $user_firstname);
+						set_user_setting($user_name, 'lastname',            $user_lastname);
+						set_user_setting($user_name, 'email',               $user_email);
+						set_user_setting($user_name, 'language',            $user_language);
+						set_user_setting($user_name, 'verified',            'no');
+						set_user_setting($user_name, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION ? 'no' : 'yes');
+						set_user_setting($user_name, 'reg_timestamp',        date('U'));
+						set_user_setting($user_name, 'reg_hashcode',         preg_replace('/[.\/$]/', '_', crypt(rand(), $user_password01)));
+						set_user_setting($user_name, 'contactmethod',        "messaging2");
+						set_user_setting($user_name, 'defaulttab',           $GEDCOM_DEFAULT_TAB);
+						set_user_setting($user_name, 'visibleonline',        'Y');
+						set_user_setting($user_name, 'editaccount',          'Y');
+						set_user_setting($user_name, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY ? 'Y' : 'N');
+						set_user_setting($user_name, 'max_relation_path',    $MAX_RELATION_PATH_LENGTH);
+						set_user_setting($user_name, 'auto_accept',          'N');
+						set_user_setting($user_name, 'canadmin',             'N');
+						set_user_setting($user_name, 'sync_gedcom',          'N');
+						set_user_setting($user_name, 'loggedin',             'N');
+						set_user_setting($user_name, 'sessiontime',          '0');
+						if (!empty($user_gedcomid)) {
+							set_user_gedcom_setting($user_name, $GEDCOM, 'gedcomid', $user_gedcomid);
+							set_user_gedcom_setting($user_name, $GEDCOM, 'rootid',   $user_gedcomid);
+						}
 						$user_created_ok = true;
 					} else {
 						print "<span class=\"warning\">".print_text("user_create_error",0,1)."<br /></span>";
@@ -463,13 +445,13 @@ switch ($action) {
 					$mail_body .= $pgv_lang["mail01_line04"] . "\r\n\r\n";
 					if ($TEXT_DIRECTION=="rtl") {
 						$mail_body .= "<a href=\"";
-						$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"])."&action=userverify\">";
+						$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_name, 'reg_hashcode'))."&action=userverify\">";
 					}
-					$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"])."&action=userverify";
+					$mail_body .= $serverURL . "/login_register.php?user_name=".urlencode($user_name)."&user_hashcode=".urlencode(get_user_setting($user_name, 'reg_hashcode'))."&action=userverify";
 					if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
 					$mail_body .= "\r\n";
 					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
-					$mail_body .= $pgv_lang["hashcode"] . " " . $user["reg_hashcode"] . "\r\n\r\n";
+					$mail_body .= $pgv_lang["hashcode"] . " " . get_user_setting($user_name, 'reg_hashcode') . "\r\n\r\n";
 					$mail_body .= $pgv_lang["comments"].": " . $user_comments . "\r\n\r\n";
 					$mail_body .= $pgv_lang["mail01_line05"] . "  ";
 					$mail_body .= $pgv_lang["mail01_line06"] . "\r\n";
