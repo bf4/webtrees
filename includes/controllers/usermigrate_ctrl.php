@@ -306,38 +306,38 @@ class UserMigrateControllerRoot extends BaseController {
 				if (!isset($user["max_relation_path"])) $user["max_relation_path"] = '2';
 				if (!isset($user["auto_accept"])) $user["auto_accept"] = 'N';
 
-				if (create_user($user['username'], $user['password'])) {
-					set_user_setting($user['username'], 'firstname',            $user["firstname"]);
-					set_user_setting($user['username'], 'lastname',             $user["lastname"]);
-					set_user_setting($user['username'], 'email',                $user["email"]);
-					set_user_setting($user['username'], 'theme',                $user["theme"]);
-					set_user_setting($user['username'], 'language',             $user["language"]);
-					set_user_setting($user['username'], 'contactmethod',        $user["contactmethod"]);
-					set_user_setting($user['username'], 'defaulttab',           $user["defaulttab"]);
-					set_user_setting($user['username'], 'comment',              $user["comment"]);
-					set_user_setting($user['username'], 'comment_exp',          $user["comment_exp"]);
-					set_user_setting($user['username'], 'pwrequested',          $user["pwrequested"]);
-					set_user_setting($user['username'], 'reg_timestamp',        $user["reg_timestamp"]);
-					set_user_setting($user['username'], 'reg_hashcode',         $user["reg_hashcode"]);
-					set_user_setting($user['username'], 'loggedin'    ,         $user["loggedin"]);
-					set_user_setting($user['username'], 'sessiontime'    ,      $user["sessiontime"]);
-					set_user_setting($user['username'], 'max_relation_path',    $user["max_relation_path"]);
-					set_user_setting($user['username'], 'sync_gedcom',          $user["sync_gedcom"] ? 'Y' : 'N');
-					set_user_setting($user['username'], 'relationship_privacy', $user["relationship_privacy"] ? 'Y' : 'N');
-					set_user_setting($user['username'], 'auto_accept',          $user["auto_accept"] ? 'Y' : 'N');
-					set_user_setting($user['username'], 'canadmin',             $user["canadmin"] ? 'Y' : 'N');
-					set_user_setting($user['username'], 'visibleonline',        $user["visibleonline"] ? 'Y' : 'N');
-					set_user_setting($user['username'], 'editaccount',          $user["editaccount"] ? 'Y' : 'N');
-					set_user_setting($user['username'], 'verified',             $user["verified"] ? 'yes' : 'no');
-					set_user_setting($user['username'], 'verified_by_admin',    $user["verified_by_admin"] ? 'yes' : 'no');
+				if ($user_id=create_user($user['username'], $user['password'])) {
+					set_user_setting($user_id, 'firstname',            $user["firstname"]);
+					set_user_setting($user_id, 'lastname',             $user["lastname"]);
+					set_user_setting($user_id, 'email',                $user["email"]);
+					set_user_setting($user_id, 'theme',                $user["theme"]);
+					set_user_setting($user_id, 'language',             $user["language"]);
+					set_user_setting($user_id, 'contactmethod',        $user["contactmethod"]);
+					set_user_setting($user_id, 'defaulttab',           $user["defaulttab"]);
+					set_user_setting($user_id, 'comment',              $user["comment"]);
+					set_user_setting($user_id, 'comment_exp',          $user["comment_exp"]);
+					set_user_setting($user_id, 'pwrequested',          $user["pwrequested"]);
+					set_user_setting($user_id, 'reg_timestamp',        $user["reg_timestamp"]);
+					set_user_setting($user_id, 'reg_hashcode',         $user["reg_hashcode"]);
+					set_user_setting($user_id, 'loggedin'    ,         $user["loggedin"]);
+					set_user_setting($user_id, 'sessiontime'    ,      $user["sessiontime"]);
+					set_user_setting($user_id, 'max_relation_path',    $user["max_relation_path"]);
+					set_user_setting($user_id, 'sync_gedcom',          $user["sync_gedcom"] ? 'Y' : 'N');
+					set_user_setting($user_id, 'relationship_privacy', $user["relationship_privacy"] ? 'Y' : 'N');
+					set_user_setting($user_id, 'auto_accept',          $user["auto_accept"] ? 'Y' : 'N');
+					set_user_setting($user_id, 'canadmin',             $user["canadmin"] ? 'Y' : 'N');
+					set_user_setting($user_id, 'visibleonline',        $user["visibleonline"] ? 'Y' : 'N');
+					set_user_setting($user_id, 'editaccount',          $user["editaccount"] ? 'Y' : 'N');
+					set_user_setting($user_id, 'verified',             $user["verified"] ? 'yes' : 'no');
+					set_user_setting($user_id, 'verified_by_admin',    $user["verified_by_admin"] ? 'yes' : 'no');
 					foreach (array('gedcomid', 'rootid', 'canedit') as $var) {
 						if ($user[$var]) {
 							foreach (unserialize(stripslashes($user[$var])) as $gedcom=>$id) {
-								set_user_gedcom_setting($user['username'], $gedcom, $var, $id);
+								set_user_gedcom_setting($user_id, $gedcom, $var, $id);
 							}
 						}
 					}
-					AddToLog(getUserName()." added user -> {$username} <-");
+					AddToLog(getUserName()." added user -> {$user['username']} <-");
 				}
 			}
 			if ($countold == get_user_count()) {

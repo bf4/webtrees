@@ -397,29 +397,29 @@ switch ($action) {
 					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 				}
 				else if ($user_password01 == $user_password02) {
-					if (create_user($user_name, crypt($user_password01))) {
-						set_user_setting($user_name, 'firstname',           $user_firstname);
-						set_user_setting($user_name, 'lastname',            $user_lastname);
-						set_user_setting($user_name, 'email',               $user_email);
-						set_user_setting($user_name, 'language',            $user_language);
-						set_user_setting($user_name, 'verified',            'no');
-						set_user_setting($user_name, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION ? 'no' : 'yes');
-						set_user_setting($user_name, 'reg_timestamp',        date('U'));
-						set_user_setting($user_name, 'reg_hashcode',         preg_replace('/[.\/$]/', '_', crypt(rand(), $user_password01)));
-						set_user_setting($user_name, 'contactmethod',        "messaging2");
-						set_user_setting($user_name, 'defaulttab',           $GEDCOM_DEFAULT_TAB);
-						set_user_setting($user_name, 'visibleonline',        'Y');
-						set_user_setting($user_name, 'editaccount',          'Y');
-						set_user_setting($user_name, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY ? 'Y' : 'N');
-						set_user_setting($user_name, 'max_relation_path',    $MAX_RELATION_PATH_LENGTH);
-						set_user_setting($user_name, 'auto_accept',          'N');
-						set_user_setting($user_name, 'canadmin',             'N');
-						set_user_setting($user_name, 'sync_gedcom',          'N');
-						set_user_setting($user_name, 'loggedin',             'N');
-						set_user_setting($user_name, 'sessiontime',          '0');
+					if ($user_id=create_user($user_name, crypt($user_password01))) {
+						set_user_setting($user_id, 'firstname',           $user_firstname);
+						set_user_setting($user_id, 'lastname',            $user_lastname);
+						set_user_setting($user_id, 'email',               $user_email);
+						set_user_setting($user_id, 'language',            $user_language);
+						set_user_setting($user_id, 'verified',            'no');
+						set_user_setting($user_id, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION ? 'no' : 'yes');
+						set_user_setting($user_id, 'reg_timestamp',        date('U'));
+						set_user_setting($user_id, 'reg_hashcode',         preg_replace('/[.\/$]/', '_', crypt(rand(), $user_password01)));
+						set_user_setting($user_id, 'contactmethod',        "messaging2");
+						set_user_setting($user_id, 'defaulttab',           $GEDCOM_DEFAULT_TAB);
+						set_user_setting($user_id, 'visibleonline',        'Y');
+						set_user_setting($user_id, 'editaccount',          'Y');
+						set_user_setting($user_id, 'relationship_privacy', $USE_RELATIONSHIP_PRIVACY ? 'Y' : 'N');
+						set_user_setting($user_id, 'max_relation_path',    $MAX_RELATION_PATH_LENGTH);
+						set_user_setting($user_id, 'auto_accept',          'N');
+						set_user_setting($user_id, 'canadmin',             'N');
+						set_user_setting($user_id, 'sync_gedcom',          'N');
+						set_user_setting($user_id, 'loggedin',             'N');
+						set_user_setting($user_id, 'sessiontime',          '0');
 						if (!empty($user_gedcomid)) {
-							set_user_gedcom_setting($user_name, $GEDCOM, 'gedcomid', $user_gedcomid);
-							set_user_gedcom_setting($user_name, $GEDCOM, 'rootid',   $user_gedcomid);
+							set_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid', $user_gedcomid);
+							set_user_gedcom_setting($user_id, $GEDCOM, 'rootid',   $user_gedcomid);
 						}
 						$user_created_ok = true;
 					} else {
