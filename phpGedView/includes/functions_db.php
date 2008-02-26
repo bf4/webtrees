@@ -3650,6 +3650,29 @@ function get_idle_users($time) {
 	return $users;
 }
 
+// Get the ID for a username
+// (Currently ID is the same as username, but this will change in the future)
+function get_user_id($username) {
+	global $DBCONN, $TBLPREFIX;
+
+	if (!is_object($DBCONN) || DB::isError($DBCONN))
+		return false;
+
+	$username=$DBCONN->escapeSimple($username);
+
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_username='{$username}'", false);
+	// We may call this function before creating the table, so must check for errors.
+	if ($res!=false && !DB::isError($res)) {
+		if ($row=$res->fetchRow()) {
+			$res->free();
+			return $row[0];
+		} else {
+			return null;
+		}
+	}
+	return null;
+}
+
 function user_exists($username) {
 	global $DBCONN, $TBLPREFIX;
 
@@ -3815,10 +3838,12 @@ function get_user_from_gedcom_xref($ged_id, $xref) {
 	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
 	$username=false;
 	while ($row=$res->fetchRow()) {
-		$tmp_array=unserialize($row[1]);
-		if (array_key_exists($ged_id, $tmp_array) && $tmp_array[$ged_id]==$xref) {
-			$username=$row[0];
-			break;
+		if ($row[1]) {
+			$tmp_array=unserialize($row[1]);
+			if (array_key_exists($ged_id, $tmp_array) && $tmp_array[$ged_id]==$xref) {
+				$username=$row[0];
+				break;
+			}
 		}
 	}
 	$res->free();
