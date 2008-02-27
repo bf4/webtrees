@@ -212,15 +212,11 @@ class LifespanControllerRoot extends BaseController {
 			//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
 			//the time line
 
-			//$byear = $this->ModifyYear($_REQUEST["beginYear"],1);
-			//$dyear = $this->ModifyYear($_REQUEST["endYear"],2);
 			$byear = $_REQUEST["beginYear"];
 			$dyear = $_REQUEST["endYear"];
 			//Variables to restrict the person boxes to the year searched.
 			//--Searches for individuals who had an even between the year begin and end years
 			$indis = $this->search_indis_year_range($byear, $dyear);
-				//			print "after query";
-				//			print_execution_stats();
 			//--Populates an array of people that had an event within those years
 					
 			foreach ($indis as $pid => $indi) {
@@ -237,8 +233,6 @@ class LifespanControllerRoot extends BaseController {
 				}
 			}
 			unset($_SESSION['timeline_pids']);
-				//			print "after objects";
-				//			print_execution_stats();
 		}
 		
 		//--Sort the arrar in order of being year

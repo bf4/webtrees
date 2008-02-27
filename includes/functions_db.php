@@ -3389,7 +3389,7 @@ function get_anniversary_events($jd, $facts='') {
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 				// to be cached.  We should store the level1 fact here (or somewhere)
-				if ($row[7]=='@#DJULIAN@')
+				if ($row[8]=='@#DJULIAN@')
 				if ($row[6]<0)
 				$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
 				else
@@ -3463,7 +3463,7 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 			// to be cached.  We should store the level1 fact here (or somewhere)
-			if ($row[7]=='@#DJULIAN@')
+			if ($row[8]=='@#DJULIAN@')
 			if ($row[6]<0)
 			$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
 			else
@@ -3664,6 +3664,12 @@ function get_user_id($username) {
 		}
 	}
 	return null;
+}
+
+// Get the username for a user ID
+// (Currently ID is the same as username, but this will change in the future)
+function get_user_name($user_id) {
+	return $user_id;
 }
 
 function user_exists($username) { // This function is now deprecated.

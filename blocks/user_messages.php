@@ -136,9 +136,8 @@ function print_user_messages($block=true, $config="", $side, $index) {
 					print "</option>";
 				}
 			}
+			$content .= "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
 		}
-		$content .= "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
-	}
 	$content .= "</form>\n";
 	
 	global $THEME_DIR;

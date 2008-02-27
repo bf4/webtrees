@@ -1258,7 +1258,7 @@ class MenuBar
 
 		//-- add contact links to help menu
 		$menu->addSeperator();
-		$menuitems = print_contact_links(1);
+		$menuitems = contact_menus();
 		foreach($menuitems as $menuitem) {
 			$submenu = new Menu($menuitem["label"], $menuitem["link"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
