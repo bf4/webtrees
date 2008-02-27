@@ -57,11 +57,11 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			$LAST_CHANGE_EMAIL = time();
 			write_changes();
 			if ($config["sendmail"]=="yes") {
-				foreach(get_all_users() as $username) {
-					if (userCanAccept($username)) {
+				foreach(get_all_users() as $user_id=>$user_name) {
+					if (userCanAccept($user_id)) {
 						//-- send message
 						$message = array();
-						$message["to"]=$username;
+						$message["to"]=$user_name;
 						$message["from"] = $PHPGEDVIEW_EMAIL;
 						$message["subject"] = $pgv_lang["review_changes_subject"];
 						$message["body"] = $pgv_lang["review_changes_body"];

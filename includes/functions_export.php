@@ -302,10 +302,10 @@ function um_export($proceed) {
 	// Get user array and create authenticate.php
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
 	$authtext = "<?php\n\n\$users = array();\n\n";
-	foreach (get_all_users() as $username) {
+	foreach (get_all_users() as $user_id=>$username) {
 		$authtext .= "\$user = array();\n";
 		foreach (array('username', 'firstname', 'lastname', 'gedcomid', 'rootid', 'password','canadmin', 'canedit', 'email', 'verified','verified_by_admin', 'language', 'pwrequested', 'reg_timestamp','reg_hashcode', 'theme', 'loggedin', 'sessiontime', 'contactmethod', 'visibleonline', 'editaccount', 'defaulttab','comment', 'comment_exp', 'sync_gedcom', 'relationship_privacy', 'max_relation_path', 'auto_accept') as $ukey) {
-			$value=get_user_setting($username, $ukey);
+			$value=get_user_setting($user_id, $ukey);
 			// Convert Y/N/yes/no to bools
 			if (in_array($ukey, array('canadmin', 'loggedin', 'visibleonline', 'editaccount', 'sync_gedcom', 'relationship_privacy', 'auto_accept'))) {
 				$value=($value=='Y');
