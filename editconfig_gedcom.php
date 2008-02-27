@@ -2025,11 +2025,11 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["contact_conf"]."\" onclick=\"exp
 		<td class="optionbox"><select name="NEW_CONTACT_EMAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('CONTACT_EMAIL_help');">
 		<?php
 			if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = getUserName();
-			foreach (get_all_users() as $user) {
-				if (get_user_setting($user, 'verified_by_admin')=="yes") {
-					print "<option value=\"".$user."\"";
-					if ($CONTACT_EMAIL==$user) print " selected=\"selected\"";
-					print ">".getUserFullName($user)." - ".$user."</option>\n";
+			foreach (get_all_users() as $user_id=>$user_name) {
+				if (get_user_setting($user_id, 'verified_by_admin')=="yes") {
+					print "<option value=\"".$user_id."\"";
+					if ($CONTACT_EMAIL==$user_name) print " selected=\"selected\"";
+					print ">".getUserFullName($user_id)." - ".$user_name."</option>\n";
 				}
 			}
 		?>
@@ -2055,11 +2055,11 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["contact_conf"]."\" onclick=\"exp
 		<td class="optionbox"><select name="NEW_WEBMASTER_EMAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WEBMASTER_EMAIL_help');">
 		<?php
 			if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = getUserName();
-			foreach (get_all_users() as $user) {
-				if (userIsAdmin($user)) {
-					print "<option value=\"".$user."\"";
-					if ($WEBMASTER_EMAIL==$user) print " selected=\"selected\"";
-					print ">".getUserFullName($user)." - ".$user."</option>\n";
+			foreach (get_all_users() as $user_id=>$user_name) {
+				if (userIsAdmin($user_id)) {
+					print "<option value=\"".$user_id."\"";
+					if ($WEBMASTER_EMAIL==$user_name) print " selected=\"selected\"";
+					print ">".getUserFullName($user_id)." - ".$user_name."</option>\n";
 				}
 			}
 		?>
