@@ -1062,25 +1062,25 @@ if ($action == "cleanup2") {
 	$adminusers = 0;		// Administrators
 	$userlang = array();	// Array for user languages
 	$gedadmin = array();	// Array for gedcom admins
-	foreach(get_all_users() as $user) {
+	foreach(get_all_users() as $user_id=>$user_name) {
 		$totusers = $totusers + 1;
-		if (((date("U") - get_user_setting($user,'reg_timestamp')) > 604800) && (get_user_setting($user,'verified')!="yes")) $warnusers++;
+		if (((date("U") - get_user_setting($user_id,'reg_timestamp')) > 604800) && (get_user_setting($user_id,'verified')!="yes")) $warnusers++;
 		else {
-			if (get_user_setting($user,'comment_exp')) {
-				if ((strtotime(get_user_setting($user,'comment_exp')) != "-1") && (strtotime(get_user_setting($user,'comment_exp')) < time("U"))) $warnusers++;
+			if (get_user_setting($user_id,'comment_exp')) {
+				if ((strtotime(get_user_setting($user_id,'comment_exp')) != "-1") && (strtotime(get_user_setting($user_id,'comment_exp')) < time("U"))) $warnusers++;
 			}
 		}
-		if ((get_user_setting($user,'verified_by_admin') != "yes") && (get_user_setting($user,'verified') == "yes")) {
+		if ((get_user_setting($user_id,'verified_by_admin') != "yes") && (get_user_setting($user_id,'verified') == "yes")) {
 			$nverusers++;
 		}
-		if (get_user_setting($user,'verified') != "yes") {
+		if (get_user_setting($user_iduser,'verified') != "yes") {
 			$applusers++;
 		}
-		if (get_user_setting($user,'canadmin')=='Y') {
+		if (get_user_setting($user_id,'canadmin')=='Y') {
 			$adminusers++;
 		}
-		if (get_user_setting($user,'canedit')) {
-			foreach(unserialize(get_user_setting($user,'canedit')) as $gedid=>$rights) {
+		if (get_user_setting($user_id,'canedit')) {
+			foreach(unserialize(get_user_setting($user_id,'canedit')) as $gedid=>$rights) {
 				if ($rights == "admin") {
 					if (isset($GEDCOMS[$gedid])) {
 						if (isset($gedadmin[$GEDCOMS[$gedid]["title"]])) $gedadmin[$GEDCOMS[$gedid]["title"]]["number"]++;
@@ -1093,11 +1093,13 @@ if ($action == "cleanup2") {
 				}
 			}
 		}
-		if (isset($userlang[$pgv_lang["lang_name_".get_user_setting($user,'language')]]))
-			$userlang[$pgv_lang["lang_name_".get_user_setting($user,'language')]]["number"]++;
-		else {
-			$userlang[$pgv_lang["lang_name_".get_user_setting($user,'language')]]["langname"] = get_user_setting($user,'language');
-			$userlang[$pgv_lang["lang_name_".get_user_setting($user,'language')]]["number"] = 1;
+		if ($user_lang=get_user_setting($user_id,'language')) {
+			if (isset($userlang[$pgv_lang["lang_name_".$user_lang]]))
+				$userlang[$pgv_lang["lang_name_".$user_lang]]["number"]++;
+			else {
+				$userlang[$pgv_lang["lang_name_".$user_lang]]["langname"] = $user_lang;
+				$userlang[$pgv_lang["lang_name_".$user_lang]]["number"] = 1;
+			}
 		}
 	}
 	print "<table class=\"width100 $TEXT_DIRECTION\">";
