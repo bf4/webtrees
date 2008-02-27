@@ -235,8 +235,8 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			print "<table cellspacing=\"1\" cellpadding=\"1\" border=\"0\">";
 		}
 		if ($config["stat_first_birth"]=="yes") {
-			// NOTE: Get earliest birth year
-			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1 ASC";
+			// NOTE: Get earliest birth year (prefer gregorian to other calendars if both available)
+			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1 ASC, d_type='@#DGREGORIAN' DESC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -262,7 +262,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_last_birth"]=="yes") {
 			// NOTE: Get the latest birth year
-			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='BIRT' AND d_julianday2!=0 ORDER BY d_julianday2 DESC";
+			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='BIRT' AND d_julianday2!=0 ORDER BY d_julianday2 DESC, d_type='@#DGREGORIAN' DESC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -288,7 +288,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_first_death"]=="yes") {
 			// NOTE: Get earliest death year
-			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1 ASC";
+			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1 ASC, d_type='@#DGREGORIAN' DESC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -314,7 +314,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_last_death"]=="yes") {
 			// NOTE: Get the latest death year
-			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='DEAT' AND d_julianday2!=0 ORDER BY d_julianday2 DESC";
+			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='DEAT' AND d_julianday2!=0 ORDER BY d_julianday2 DESC, d_type='@#DGREGORIAN' DESC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
