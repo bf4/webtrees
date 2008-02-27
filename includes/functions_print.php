@@ -1039,6 +1039,72 @@ function print_user_links() {
 	 }
 	 print "<br />";
 }
+
+// Print a link to allow email/messaging contact with a user
+// Optionally specify a method (used for webmaster/genealogy contacts)
+function user_contact_link($user_id, $method=null) {
+	global $pgv_lang;
+
+	if (is_null($method)) {
+		$method=get_user_setting($user_id, 'contactmethod');
+		$access='';
+	} else {
+		$access="accesskey='{$pgv_lang['accesskey_contact']}'";
+	}
+
+	// Webmaster/contact addresses can be an email address as well as a user-id
+	if (strpos($user_id, '@')!==false) {
+		$email=$user_id;
+		$fullname=$user_id;
+		if ($method!='none') {
+			$method='mailto';
+		}
+	} else {
+		$email=get_user_setting($user_id, 'email');
+		$fullname=getUserFullName($user_id);
+	}
+
+	switch ($method) {
+	case 'none':
+		return '';
+	case 'mailto':
+		return "<a href='javascript:;' onclick='message(\"{$user_id}\",\"{$method}\");return false;' {$access}>{$fullname}</a>";
+	default:
+		return "<a href='mailto:{$email}' {$access}>{$fullname}</a>";
+	}
+}
+
+// Print a menu item to allow email/messaging contact with a user
+// Optionally specify a method (used for webmaster/genealogy contacts)
+function user_contact_menu($user_id, $method=null) {
+	global $pgv_lang;
+
+	if (is_null($method)) {
+		$method=get_user_setting($user_id, 'contactmethod');
+	}
+
+	// Webmaster/contact addresses can be an email address as well as a user-id
+	if (strpos($user_id, '@')!==false) {
+		$email=$user_id;
+		$fullname=$user_id;
+		if ($method!='none') {
+			$method='mailto';
+		}
+	} else {
+		$email=get_user_setting($user_id, 'email');
+		$fullname=getUserFullName($user_id);
+	}
+
+	switch ($method) {
+	case 'none':
+		return array();
+	case 'mailto':
+		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>"mailto:{$email}");
+	default:
+		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>'#', 'onclick'=>"message('{$user_id}','{$method}');return false;");
+	}
+}
+
 /**
  * print links for genealogy and technical contacts
  *
@@ -1048,122 +1114,60 @@ function print_user_links() {
 function print_contact_links($style=0) {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	if ($SUPPORT_METHOD=="none" && $CONTACT_METHOD=="none") return array();
-	if ($SUPPORT_METHOD=="none") $WEBMASTER_EMAIL = $CONTACT_EMAIL;
-	if ($CONTACT_METHOD=="none") $CONTACT_EMAIL = $WEBMASTER_EMAIL;
-	switch($style) {
+	// TODO: this really ought to be two separate functions!
+	switch ($style) {
 		case 0:
+			$support_link=user_contact_link($WEBMASTER_EMAIL, $SUPPORT_METHOD);
+			$contact_link=user_contact_link($CONTACT_EMAIL,   $CONTACT_METHOD);
+			if (!$support_link) {
+				$support_link=$contact_link;
+			}
+			if (!$contact_link) {
+				$contact_link=$support_link;
+			}
+			if (!$support_link) {
+				return array();
+			}
 			print "<div class=\"contact_links\">\n";
-			//--only display one message if the contact users are the same
-			if ($CONTACT_EMAIL==$WEBMASTER_EMAIL) {
-				if (get_user_id($WEBMASTER_EMAIL) && $SUPPORT_METHOD!="mailto") {
-					$userName=getUserFullName($WEBMASTER_EMAIL);
-					print $pgv_lang["for_all_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$userName."</a><br />\n";
+			if ($support_link==$contact_link) {
+				if ($support_link) {
+					print $pgv_lang["for_all_contact"]." ".$support_link."<br />";
 				} else {
-					print $pgv_lang["for_support"]." <a href=\"mailto:";
-					if (get_user_id($WEBMASTER_EMAIL)) {
-						$userName=getUserFullName($WEBMASTER_EMAIL);
-						print get_user_setting($WEBMASTER_EMAIL,'email')."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
-					} else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
+					// no contact details specified
 				}
 			} else {
-			//-- display two messages if the contact users are different
-				  if (get_user_id($CONTACT_EMAIL) && $CONTACT_METHOD!="mailto") {
-					  $userName=getUserFullName($CONTACT_EMAIL);
-					  print $pgv_lang["for_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;\">".$userName."</a><br />\n";
-				  } else {
-					  print $pgv_lang["for_contact"]." <a href=\"mailto:";
-					  if (get_user_id($CONTACT_EMAIL)) {
-					  	$userName=getUserFullName($CONTACT_EMAIL);
-							print get_user_setting($CONTACT_EMAIL,'email')."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
-					  } else print $CONTACT_EMAIL."\">".$CONTACT_EMAIL."</a><br />\n";
-				  }
-				  if (get_user_id($WEBMASTER_EMAIL) && $SUPPORT_METHOD!="mailto") {
-					  $userName=getUserFullName($WEBMASTER_EMAIL);
-					  print $pgv_lang["for_support"]." <a href=\"javascript:;\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$userName."</a><br />\n";
-				  } else {
-					  print $pgv_lang["for_support"]." <a href=\"mailto:";
-					  if (get_user_id($WEBMASTER_EMAIL)) {
-					  	$userName=getUserFullName($WEBMASTER_EMAIL);
-							print get_user_setting($WEBMASTER_EMAIL,'email')."\">".$userName."</a><br />\n";
-					  } else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
-				  }
+				print $pgv_lang["for_support"]." ".$support_link."<br />";
+				print $pgv_lang["for_contact"]." ".$contact_link."<br />";
 			}
 			print "</div>\n";
 			break;
 		case 1:
-			$menuitems = array();
-			if ($CONTACT_EMAIL==$WEBMASTER_EMAIL) {
-				$submenu = array();
-				if (get_user_id($WEBMASTER_EMAIL) && $SUPPORT_METHOD!="mailto") {
-					$userName=getUserFullName($WEBMASTER_EMAIL);
-					$submenu["label"] = $pgv_lang["support_contact"]." ".$userName;
-					$submenu["onclick"] = "message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;";
-					$submenu["link"] = "#";
+			$support_link=user_contact_menu($WEBMASTER_EMAIL, $SUPPORT_METHOD);
+			$contact_link=user_contact_menu($CONTACT_EMAIL,   $CONTACT_METHOD);
+			if (!$support_link) {
+				$support_link=$contact_link;
+			}
+			if (!$contact_link) {
+				$contact_link=$support_link;
+			}
+			if (!$support_link) {
+				return array();
+			}
+			$menuitems=array();
+			if ($support_link==$contact_link) {
+				if ($support_link) {
+					$support_link['label']=$pgv_lang['support_contact'].' '.$support_link['label'];
+					$menuitems[]=$support_link;
 				} else {
-					$submenu["label"] = $pgv_lang["support_contact"]." ";
-					$submenu["link"] = "mailto:";
-					if (get_user_id($WEBMASTER_EMAIL)) {
-						$userName=getUserFullName($WEBMASTER_EMAIL);
-						$submenu["link"] .= get_user_setting($WEBMASTER_EMAIL,'email');
-						$submenu["label"] .= $userName;
-					} else {
-						$submenu["link"] .= $WEBMASTER_EMAIL;
-						$submenu["label"] .= $WEBMASTER_EMAIL;
-					}
+					// no contact details specified
 				}
-	      $submenu["label"] = $pgv_lang["support_contact"];
-	      $submenu["labelpos"] = "right";
-	      $submenu["class"] = "submenuitem";
-	      $submenu["hoverclass"] = "submenuitem_hover";
-	      $menuitems[] = $submenu;
 			} else {
-				$submenu = array();
-				if (get_user_id($CONTACT_EMAIL) && $CONTACT_METHOD!="mailto") {
-					$userName=getUserFullName($CONTACT_EMAIL);
-					$submenu["label"] = $pgv_lang["genealogy_contact"]." ".$userName;
-					$submenu["onclick"] = "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;";
-					$submenu["link"] = "#";
-				} else {
-					$submenu["label"] = $pgv_lang["genealogy_contact"]." ";
-					$submenu["link"] = "mailto:";
-					if (get_user_id($CONTACT_EMAIL)) {
-						$userName=getUserFullName($CONTACT_EMAIL);
-						$submenu["link"] .= get_user_setting($CONTACT_EMAIL,'email');
-						$submenu["label"] .= $userName;
-					} else {
-						$submenu["link"] .= $CONTACT_EMAIL;
-						$submenu["label"] .= $CONTACT_EMAIL;
-					}
-				}
-	      $submenu["labelpos"] = "right";
-	      $submenu["class"] = "submenuitem";
-	      $submenu["hoverclass"] = "submenuitem_hover";
-	      $menuitems[] = $submenu;
-	      $submenu = array();
-				if (get_user_id($WEBMASTER_EMAIL) && $SUPPORT_METHOD!="mailto") {
-					$userName=getUserFullName($WEBMASTER_EMAIL);
-					$submenu["label"] = $pgv_lang["support_contact"]." ".$userName;
-					$submenu["onclick"] = "message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;";
-					$submenu["link"] = "#";
-				} else {
-					$submenu["label"] = $pgv_lang["support_contact"]." ";
-					$submenu["link"] = "mailto:";
-					if (get_user_id($WEBMASTER_EMAIL)) {
-						$userName=getUserFullName($WEBMASTER_EMAIL);
-						$submenu["link"] .= get_user_setting($WEBMASTER_EMAIL,'email');
-						$submenu["label"] .= $userName;
-					} else {
-						$submenu["link"] .= $WEBMASTER_EMAIL;
-						$submenu["label"] .= $WEBMASTER_EMAIL;
-					}
-				}
-	      $submenu["labelpos"] = "right";
-	      $submenu["class"] = "submenuitem";
-	      $submenu["hoverclass"] = "submenuitem_hover";
-	      $menuitems[] = $submenu;
-	    }
-      return $menuitems;
+				$support_link['label']=$pgv_lang['support_contact'].' '.$support_link['label'];;
+				$menuitems[]=$support_link;
+				$contact_link['label']=$pgv_lang['genealogy_contact'].' '.$contact_link['label'];;
+				$menuitems[]=$contact_link;
+			}
+			return $menuitems;
 			break;
 	}
 }
