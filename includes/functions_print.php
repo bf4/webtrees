@@ -924,12 +924,13 @@ function print_simple_footer() {
 		  $SCRIPT_NAME = $_SERVER["SCRIPT_NAME"];
 		  $QUERY_STRING = $_SERVER["QUERY_STRING"];
 	 }
-	 print "\n\t<br /><br /><div align=\"center\" style=\"width: 99%;\">";
-	 print_contact_links();
-	 print "\n\t<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"PhpGedView Version $VERSION\" title=\"PhpGedView Version $VERSION\" /></a><br />";
-	 if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
-	 print "</div>";
-	 print "\n\t</body>\n</html>";
+	 print "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
+	 print contact_links();
+	 print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"PhpGedView Version $VERSION\" title=\"PhpGedView Version $VERSION\" /></a><br />";
+	 if ($SHOW_STATS || isset($DEBUG) && $DEBUG==true) {
+		 print_execution_stats();
+	 }
+	 print "</div></body></html>";
 }
 
 /**
@@ -1105,72 +1106,63 @@ function user_contact_menu($user_id, $method=null) {
 	}
 }
 
-/**
- * print links for genealogy and technical contacts
- *
- * this function will print appropriate links based on the preferred contact methods for the genealogy
- * contact user and the technical support contact user
- */
-function print_contact_links($style=0) {
+// print links for genealogy and technical contacts
+//
+// this function will print appropriate links based on the preferred contact methods for the genealogy
+// contact user and the technical support contact user
+
+function print_contact_links() { // This function is used by 3rd party themes.
+	print contact_links();
+}
+
+function contact_links() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
 
-	// TODO: this really ought to be two separate functions!
-	switch ($style) {
-		case 0:
-			$support_link=user_contact_link($WEBMASTER_EMAIL, $SUPPORT_METHOD);
-			$contact_link=user_contact_link($CONTACT_EMAIL,   $CONTACT_METHOD);
-			if (!$support_link) {
-				$support_link=$contact_link;
-			}
-			if (!$contact_link) {
-				$contact_link=$support_link;
-			}
-			if (!$support_link) {
-				return array();
-			}
-			print "<div class=\"contact_links\">\n";
-			if ($support_link==$contact_link) {
-				if ($support_link) {
-					print $pgv_lang["for_all_contact"]." ".$support_link."<br />";
-				} else {
-					// no contact details specified
-				}
-			} else {
-				print $pgv_lang["for_support"]." ".$support_link."<br />";
-				print $pgv_lang["for_contact"]." ".$contact_link."<br />";
-			}
-			print "</div>\n";
-			break;
-		case 1:
-			$support_link=user_contact_menu($WEBMASTER_EMAIL, $SUPPORT_METHOD);
-			$contact_link=user_contact_menu($CONTACT_EMAIL,   $CONTACT_METHOD);
-			if (!$support_link) {
-				$support_link=$contact_link;
-			}
-			if (!$contact_link) {
-				$contact_link=$support_link;
-			}
-			if (!$support_link) {
-				return array();
-			}
-			$menuitems=array();
-			if ($support_link==$contact_link) {
-				if ($support_link) {
-					$support_link['label']=$pgv_lang['support_contact'].' '.$support_link['label'];
-					$menuitems[]=$support_link;
-				} else {
-					// no contact details specified
-				}
-			} else {
-				$support_link['label']=$pgv_lang['support_contact'].' '.$support_link['label'];;
-				$menuitems[]=$support_link;
-				$contact_link['label']=$pgv_lang['genealogy_contact'].' '.$contact_link['label'];;
-				$menuitems[]=$contact_link;
-			}
-			return $menuitems;
-			break;
+	$support_link=user_contact_link($WEBMASTER_EMAIL, $SUPPORT_METHOD);
+	$contact_link=user_contact_link($CONTACT_EMAIL,   $CONTACT_METHOD);
+	if (!$support_link) {
+		$support_link=$contact_link;
+	}
+	if (!$contact_link) {
+		$contact_link=$support_link;
+	}
+	if (!$support_link) {
+		return '';
+	}
+	if ($support_link==$contact_link) {
+		return '<div class="contact_links">'.$pgv_lang['for_all_contact'].' '.$support_link.'</div>';
+	} else {
+		return '<div class="contact_links">'.$pgv_lang['for_support'].' '.$support_link.'<br />'.$pgv_lang['for_contact'].' '.$contact_link.'</div>';
 	}
 }
+
+function contact_menus() {
+	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
+
+	$support_menu=user_contact_menu($WEBMASTER_EMAIL, $SUPPORT_METHOD);
+	$contact_menu=user_contact_menu($CONTACT_EMAIL,   $CONTACT_METHOD);
+	if (!$support_menu) {
+		$support_menu=$contact_menu;
+	}
+	if (!$contact_menu) {
+		$contact_menu=$support_menu;
+	}
+	if (!$support_menu) {
+		return array();
+	}
+	$menuitems=array();
+	if ($support_menu==$contact_menu) {
+		$support_menu['label']=$pgv_lang['support_contact'];
+		$menuitems[]=$support_menu;
+	} else {
+		$support_menu['label']=$pgv_lang['support_contact'];
+		$menuitems[]=$support_menu;
+		$contact_menu['label']=$pgv_lang['genealogy_contact'];
+		$menuitems[]=$contact_menu;
+	}
+	return $menuitems;
+}
+
 //-- print user favorites
 function print_favorite_selector($option=0) {
 	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $indilist, $famlist, $sourcelist, $medialist, $QUERY_STRING, $famid, $sid;

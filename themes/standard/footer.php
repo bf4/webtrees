@@ -3,7 +3,7 @@ if (!isset($without_close)) print "</div> <!-- closing div id=\"content\" -->\n"
 
 print "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
 
-print_contact_links();
+print contact_links();
 
 print "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
 print "\n\t<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" width=\"100\" height=\"45\" border=\"0\" alt=\"PhpGedView Version $VERSION $VERSION_RELEASE - $DBTYPE\" title=\"PhpGedView Version $VERSION $VERSION_RELEASE - $DBTYPE\" /></a><br />";
