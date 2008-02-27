@@ -112,15 +112,15 @@ if ($DBTYPE=='sqlite') {
 	cleanup_database();
 
 	print "<br />Storing user information<br />";
-	foreach(get_all_users() as $username) {
-		print "Storing <i>".$username."</i> user information<br />";
-		$fullname=get_user_setting($username, 'fullname');
+	foreach(get_all_users() as $user_id=>$user_name) {
+		print "Storing <i>".$user_name."</i> user information<br />";
+		$fullname=get_user_setting($user_id, 'fullname');
 		if (preg_match('/(.*) (.*)$/', $fullname, $match)) {
-			set_user_setting($username, 'firstname', trim($match[1]));
-			set_user_setting($username, 'lastname',  trim($match[2]));
+			set_user_setting($user_id, 'firstname', trim($match[1]));
+			set_user_setting($user_id, 'lastname',  trim($match[2]));
 		} else {
-			set_user_setting($username, 'firstname', $fullname);
-			set_user_setting($username, 'lastname',  $fullname);
+			set_user_setting($user_id, 'firstname', $fullname);
+			set_user_setting($user_id, 'lastname',  $fullname);
 		}
 	}
 }

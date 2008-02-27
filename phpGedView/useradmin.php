@@ -504,34 +504,34 @@ if ($action == "listusers") {
 	}
 
 	// First filter the users, otherwise the javascript to unfold priviledges gets disturbed
-	foreach($users as $key=>$user) {
-		if (!isset($language_settings[get_user_setting($user, 'language')]))
-			set_user_setting($user, 'language', $LANGUAGE);
+	foreach($users as $user_id=>$user) {
+		if (!isset($language_settings[get_user_setting($user_id, 'language')]))
+			set_user_setting($user_id, 'language', $LANGUAGE);
 		if ($filter == "warnings") {
-			if (get_user_setting($user, 'comment_exp')) {
-				if ((strtotime(get_user_setting($user, 'comment_exp')) == "-1") || (strtotime(get_user_setting($user, 'comment_exp')) >= time("U"))) unset($users[$key]);
+			if (get_user_setting($user_id, 'comment_exp')) {
+				if ((strtotime(get_user_setting($user_id, 'comment_exp')) == "-1") || (strtotime(get_user_setting($user_id, 'comment_exp')) >= time("U"))) unset($users[$user_id]);
 			}
-			else if (((date("U") - get_user_setting($user, 'reg_timestamp')) <= 604800) || (get_user_setting($user, 'verified')=="yes")) unset($users[$key]);
+			else if (((date("U") - get_user_setting($user_id, 'reg_timestamp')) <= 604800) || (get_user_setting($user, 'verified')=="yes")) unset($users[$user_id]);
 		}
 		else if ($filter == "adminusers") {
-			if (get_user_setting($user, 'canadmin')!='Y') unset($users[$key]);
+			if (get_user_setting($user_id, 'canadmin')!='Y') unset($users[$user_id]);
 		}
 		else if ($filter == "usunver") {
-			if (get_user_setting($user,'verified') == "yes") unset($users[$key]);
+			if (get_user_setting($user_id,'verified') == "yes") unset($users[$user_id]);
 		}
 		else if ($filter == "admunver") {
-			if ((get_user_setting($user,'verified_by_admin') == "yes") || (get_user_setting($user,'verified') != "yes")) {
-				unset($users[$key]);
+			if ((get_user_setting($user_id,'verified_by_admin') == "yes") || (get_user_setting($user_id,'verified') != "yes")) {
+				unset($users[$user_id]);
 			}
 		}
 		else if ($filter == "language") {
-			if (get_user_setting($user, 'language') != $usrlang) {
-				unset($users[$key]);
+			if (get_user_setting($user_id, 'language') != $usrlang) {
+				unset($users[$user_id]);
 			}
 		}
 		else if ($filter == "gedadmin") {
-			if (get_user_gedcom_setting($user, $ged, 'canedit') != "admin") {
-				unset($users[$key]);
+			if (get_user_gedcom_setting($user_id, $ged, 'canedit') != "admin") {
+				unset($users[$user_id]);
 			}
 		}
 	}

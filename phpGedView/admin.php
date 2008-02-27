@@ -92,11 +92,11 @@ $err_write = file_is_writeable("config.php");
 
 $verify_msg = false;
 $warn_msg = false;
-foreach(get_all_users() as $user) {
-	if (get_user_setting($user, 'verified_by_admin')!='yes' && get_user_setting($user, 'verified')=='yes')  {
+foreach(get_all_users() as $user_id=>$user_name) {
+	if (get_user_setting($user_id, 'verified_by_admin')!='yes' && get_user_setting($user_id, 'verified')=='yes')  {
 		$verify_msg = true;
 	}
-	$comment_exp=get_user_setting($user, 'comment_exp');
+	$comment_exp=get_user_setting($user_id, 'comment_exp');
 	if (!empty($comment_exp) && (strtotime($comment_exp) != "-1") && (strtotime($comment_exp) < time("U"))) {
 		$warn_msg = true;
 	}
