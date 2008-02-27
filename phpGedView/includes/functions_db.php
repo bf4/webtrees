@@ -3673,6 +3673,12 @@ function get_user_id($username) {
 	return null;
 }
 
+// Get the username for a user ID
+// (Currently ID is the same as username, but this will change in the future)
+function get_user_name($user_id) {
+	return $user_id;
+}
+
 function user_exists($username) { // This function is now deprecated.
 	return get_user_id($username);
 }
