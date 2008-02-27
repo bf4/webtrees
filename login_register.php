@@ -405,7 +405,7 @@ switch ($action) {
 						set_user_setting($user_id, 'verified',            'no');
 						set_user_setting($user_id, 'verified_by_admin',    $REQUIRE_ADMIN_AUTH_REGISTRATION ? 'no' : 'yes');
 						set_user_setting($user_id, 'reg_timestamp',        date('U'));
-						set_user_setting($user_id, 'reg_hashcode',         preg_replace('/[.\/$]/', '_', crypt(rand(), $user_password01)));
+						set_user_setting($user_id, 'reg_hashcode',         md5(crypt($user_name)));
 						set_user_setting($user_id, 'contactmethod',        "messaging2");
 						set_user_setting($user_id, 'defaulttab',           $GEDCOM_DEFAULT_TAB);
 						set_user_setting($user_id, 'visibleonline',        'Y');

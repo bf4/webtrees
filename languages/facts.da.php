@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Danish Language file for PhpGedView.
  *
@@ -159,9 +159,7 @@ $factarray["STAT:DATE"] = "Ændringsdato for status";
 $factarray["FAMC:WIFE:GIVN"] = "Mors pigenavn";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Bedstefars efternavn";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Bedstemors pigenavn";
-$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Bedstemors fornavn";
-$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Bedstefars fornavn";
-$factarray["FAMS:CHIL:BIRT:PLAC"] = "Barns fødselssted";
+$factarray["FAMS:CHIL:BIRT:PLAC"] = "Barn's Fødsels sted";
 $factarray["MARR:PLAC"] = "Bryllupssted";
 $factarray["BURI:PLAC"] = "Begravelsessted";
 $factarray["BAPM:PLAC"] = "Dåbssted";
@@ -253,7 +251,7 @@ $factarray["_NLIV"] = "Lever ikke";
 $factarray["_NMAR"] = "Aldrig gift";
 $factarray["_PRMN"] = "Permanent nummer";
 $factarray["_WEIG"] = "Vægt";
-$factarray["_YART"] = "Yarhtzeit (Jødisk dødsdag)";
+$factarray["_YART"] = "Yartzeit (Jødisk fødselsdag)";
 $factarray["_MARNM"] = "Vielsesnavn";
 $factarray["_MARNM_SURN"] = "Tilgiftet efternavn";
 $factarray["_STAT"]	= "Civil status";
@@ -289,10 +287,8 @@ $factarray["_MARR_SIBL"] = "En søskendes ægteskab<br />";
 $factarray["_DEAT_SIBL"] = "En søskendes dødsfald<br />";
 
 $factarray["_BIRT_HSIB"] = "En halvsøskendes fødsel<br />";
-$factarray["_DEAT_NEPH"] = "En nevø eller nieces død";
-$factarray["_MARR_NEPH"] = "En nevø eller nieces bryllup";
 $factarray["_MARR_HSIB"] = "En halvsøskendes ægteskab<br />";
-$factarray["_BIRT_NEPH"] = "En nevøs eller nieces fødsel";
+$factarray["_BIRT_NEPH"] = "Fødsel af Nevø eller niece.";
 $factarray["_DEAT_HSIB"] = "En halvsøskendes dødsfald<br />";
 
 $factarray["_DEAT_GPAR"] = "En bedsteforælders dødsfald<br />";
@@ -304,12 +300,11 @@ $factarray["_DEAT_FSIB"] = "En faders søskendes dødsfald<br />";
 $factarray["_BIRT_MSIB"] = "En moders søskendes fødsel<br />";
 $factarray["_MARR_MSIB"] = "En moders søskendes ægteskab<br />";
 $factarray["_DEAT_MSIB"] = "En moders søskendes dødsfald<br />";
-$factarray["_FAMC_RESI"] = "Forældres bosted";
-$factarray["_FAMC_EMIG"] = "Forældres emigrering";
 
 $factarray["_BIRT_COUS"] = "En kusines eller fætters fødsel";
 $factarray["_MARR_COUS"] = "En kusines eller fætters ægteskab";
 $factarray["_DEAT_COUS"] = "En kusines eller fætters dødsfald";
+$factarray["_FAMC_RESI"] = "Forældre bosted";
 
 //-- PGV Only facts
 $factarray["_THUM"]	= "Brug dette billede som miniaturebillede?";

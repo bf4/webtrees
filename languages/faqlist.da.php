@@ -1,9 +1,9 @@
-<?php
+﻿<?php
 /**
  * Danish FAQ file for PhpGedView.
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,21 +20,30 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @author Jens Hyllegaard
- * @created 2007-09-03
+ * @author Jan Boesgaard
+ * @created 2008-02-27
  * @version $Id$
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Du kan ikke tilgå en sprogfil direkte.";
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
 	exit;
 }
 
 //-- Define Danish Frequently Asked Questions
-$faqlist["FAQ_000_head"] = "\"FAQ\": Jeg har hørt om dette, med hvad er det?";
-$faqlist["FAQ_000_body"] = "<b>FAQ</b> er en forkortelse for <b>F</b>requently <b>A</b>sked <b>Q</b>uestion. (Ofte stillet spørgsmål)<br /><br />FAQ\'en viser en liste over spørgsmål (sammen med deres svar) der optræder jævnligt. Den er sammensat af PhpGedView holdet og opdateres jævnligt.";
-$faqlist["FAQ_010_head"] = "Velkommen til #GLOBALS[GEDCOM_TITLE]# FAQ";
-$faqlist["FAQ_022_head"] = "Hvorfor skal jeg registrere mig?";
-$faqlist["FAQ_025_head"] = "Hvor lang tid går der før min registrering er godkendt?";
+$faqlist["FAQ_030_head"] = "HVORDAN SKAL JEG INDSÆTTE DATA? HVAD FORMAT SKAL JEG BRUGE?";
+$faqlist["FAQ_030_body"] = "Her er et par eksempler";
+$faqlist["FAQ_030_body2"] = "for bruger der er blivet godkendt til at REDIGER online.";
+$faqlist["FAQ_030_body3"] = "Du kan også sende dine updatering pr. email";
+$faqlist["FAQ_022_head"] = "HVORFOR SKAL JEG REGISTER?";
+$faqlist["FAQ_025_head"] = "HVOR LANG TID TAGER DET FØR JEG KAN FÅ MIN REGISTERING GODKENDT?";
+$faqlist["FAQ_000_head"] = "\"OSS\": JEG HAR HØRT OM DETTE, MEN HVAD ER DET?";
+$faqlist["FAQ_000_body"] = "<b>OSS</b> Er et synonym for <B>O</b>fte <b>S</b>tillede <b>S</b>pørgsmål<br /><br />OSS list er en list med spørgsmål (Sammen med deres svar) som opstå. Det er bliver oprettet af phpGedview holdet og bliver updateret jævnlig.";
+$faqlist["FAQ_010_head"] = "VELKOMMEN TIL #GLOBALS[GEDCOM_TITLE]# FAQ";
+$faqlist["FAQ_010_body"] = "Din familie medlem på #GLOBALS[GEDCOM_TITLE]# Vil gerne tage denne lejlighed til at velkomme vores 'Kusiner' & 'Fætter' til slægtforskning og håbe på de vil fange de fejl samt mangler der vil være i vores familie. Dette kan nemt blive et Had-Elske Job. Da det tager lang tid, med små gaver. Vi giver dig muligheden til at glæde dig over slægtforskning gennem brug af <a href=\"http://www.phpgedview.net\" target=\"_blank\">phpGedView</a>, oprettet af den talent fulde John Finlay og hans PGV team - Et fantastisk open kode slægtforskning program.";
+$faqlist["FAQ_015_head"] = "HVAD ER FORSKELLEN MELLEM DENNE phpGedView TRÆ OG ANDRE TEKST OG DYNAMISK TRÆ?";
+$faqlist["FAQ_017_head"] = "HVAD ER HOVED FEATURE AF DETTE TRÆ?";
+$faqlist["FAQ_017_body"] = "Med phpGedView kan du:<ul><li>Beholde privat liv for levende personer; Webmaster bestemmer hvem du kan se.</li><li>Glæd dig over de mange muligheder som forskellige chart, reporter eller lister</li><li>Det er et fælles træ; hvor Webmaster giver adgang til alle dem som vil være med til at updatere træ'et.</li></ul>";
+$faqlist["FAQ_020_head"] = "KRÆVER DET EN KONTO FOR ADGANG? HVIS SÅ, HVORDAN FÅ JEG EN KONTO?";
 
 ?>

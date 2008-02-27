@@ -3218,7 +3218,7 @@ function get_anniversary_events($jd, $facts='') {
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 				// to be cached.  We should store the level1 fact here (or somewhere)
-				if ($row[7]=='@#DJULIAN@')
+				if ($row[8]=='@#DJULIAN@')
 					if ($row[6]<0)
 						$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
 					else
@@ -3289,7 +3289,7 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 			// to be cached.  We should store the level1 fact here (or somewhere)
-			if ($row[7]=='@#DJULIAN@')
+			if ($row[8]=='@#DJULIAN@')
 				if ($row[6]<0)
 					$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
 				else
@@ -3568,11 +3568,23 @@ function get_user_name($user_id) {
 	return $row->user_name;
 }
 
+// Get the username for a user ID
+function get_user_name($user_id) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare("SELECT user_name FROM {$TBLPREFIX}user WHERE user_id=?");
+	$statement->bindValue(1, $user_id, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	return $row->user_name;
+}
+
 function set_user_password($user_id, $password) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
 	$statement=$DBH->prepare("SELECT user_pass FROM {$TBLPREFIX}user WHERE user_id=?");
-
 	$statement->bindValue(1, $user_id, PDO::PARAM_STR);
 	$statement->execute();
 	++$TOTAL_QUERIES;
