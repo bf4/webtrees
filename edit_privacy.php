@@ -542,13 +542,13 @@ require_once("js/dhtmlXTabbar.js.htm");
 							<td class="optionbox width20">
 								<select size="1" name="v_new_user_privacy_username">
 								<?php
-								foreach(get_all_users() as $username)
+								foreach(get_all_users() as $user_id=>$user_name)
                 {
                   print "<option";
                   print " value=\"";
-                  print $username;
+									print $user_id;
                   print "\">";
-									print getUserFullName($username);
+									print getUserFullName($user_id);
                   print "</option>";
                 }
 								?>

@@ -78,9 +78,9 @@ foreach ($GEDCOMS as $key => $value) {
 require($GEDCOMS[$GEDCOM]["config"]);
 
 // Read user configuration and collect language data
-foreach(get_all_users() as $username) {
-	if (!isset($configuredlanguages["users"][get_user_setting($username, 'language')][$username])) {
-		$configuredlanguages["users"][get_user_setting($username, 'language')][$username] = true;
+foreach(get_all_users() as $user_id=>$user_name) {
+	if (!isset($configuredlanguages["users"][get_user_setting($user_id, 'language')][$user_id])) {
+		$configuredlanguages["users"][get_user_setting($user_id, 'language')][$user_id] = true;
 	}
 }
 

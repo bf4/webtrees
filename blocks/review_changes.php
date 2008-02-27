@@ -57,18 +57,18 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 				$LAST_CHANGE_EMAIL = time();
 				write_changes();
 				if ($config["sendmail"]=="yes") {
-				foreach(get_all_users() as $username) {
-						if (userCanAccept($username)) {
-							//-- send message
-							$message = array();
-							$message["to"]=$username;
-							$message["from"] = $PHPGEDVIEW_EMAIL;
-							$message["subject"] = $pgv_lang["review_changes_subject"];
-							$message["body"] = $pgv_lang["review_changes_body"];
+				foreach(get_all_users() as $user_id=>$user_name) {
+					if (userCanAccept($user_id)) {
+						//-- send message
+						$message = array();
+						$message["to"]=$user_name;
+						$message["from"] = $PHPGEDVIEW_EMAIL;
+						$message["subject"] = $pgv_lang["review_changes_subject"];
+						$message["body"] = $pgv_lang["review_changes_body"];
 						$message["method"] = get_user_setting($user,'contactmethod');
-							$message["url"] = basename($SCRIPT_NAME)."?".$QUERY_STRING;
-							$message["no_from"] = true;
-							addMessage($message);
+						$message["url"] = basename($SCRIPT_NAME)."?".$QUERY_STRING;
+						$message["no_from"] = true;
+						addMessage($message);
 						}
 					}
 				}

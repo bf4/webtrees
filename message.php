@@ -91,24 +91,24 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 		}
 		if ($to == "never_logged") {
 			$toarray = array();
-			foreach (get_all_users() as $tuser) {
+			foreach (get_all_users() as $user_id=>$user_name) {
 				// SEE Bug [ 1827547 ] Message to inactive users sent to newcomers
-				if (get_user_setting($tuser,'verified_by_admin')=="yes" && get_user_setting($tuser, 'reg_timestamp') > get_user_setting($tuser, 'sessiontime')) {
-					$toarray[] = $tuser;
+				if (get_user_setting($user_id,'verified_by_admin')=="yes" && get_user_setting($user_id, 'reg_timestamp') > get_user_setting($user_id, 'sessiontime')) {
+					$toarray[$user_id] = $user_name;
 				}
 			}
 		}
 		if ($to == "last_6mo") {
 			$toarray = array();
 			$sixmos = 60*60*24*30*6;	//-- timestamp for six months
-			foreach (get_all_users() as $tuser) {
+			foreach (get_all_users() as $user_id=>$user_name) {
 				// SEE Bug [ 1827547 ] Message to inactive users sent to newcomers
-				if (get_user_setting($tuser,'sessiontime')>0 && (time() - get_user_setting($tuser, 'sessiontime') > $sixmos)) {
-					$toarray[] = $tuser;
+				if (get_user_setting($user_id,'sessiontime')>0 && (time() - get_user_setting($user_id, 'sessiontime') > $sixmos)) {
+					$toarray[$user_id] = $user_name;
 				}
 				//-- not verified by registration past 6 months
-				else if (get_user_setting($tuser, 'verified_by_admin')!="yes" && (time() - get_user_setting($tuser, 'reg_timestamp') > $sixmos)) {
-					$toarray[] = $tuser["username"];
+				else if (get_user_setting($user_id, 'verified_by_admin')!="yes" && (time() - get_user_setting($user_id, 'reg_timestamp') > $sixmos)) {
+					$toarray[$user_id] = $user_name;
 				}
 			}
 		}
