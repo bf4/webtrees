@@ -42,46 +42,46 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * This function takes the given <var>$username</var> and <var>$password</var> and authenticates
  * them against the database.  The passwords are encrypted using the crypt() function.
  * The username is stored in the <var>$_SESSION["pgv_user"]</var> session variable.
- * @param string $username the username for the user attempting to login
+ * @param string $user_name the username for the user attempting to login
  * @param string $password the plain text password to test
  * @param boolean $basic true if the userName and password were retrived via Basic HTTP authentication. Defaults to false. At this point, this is only used for logging
- * @return bool return true if the username and password credentials match a user in the database return false if they don't
+ * @return the user_id if sucessful, false otherwise
  */
-function authenticateUser($username, $password, $basic=false) {
+function authenticateUser($user_name, $password, $basic=false) {
 	global $GEDCOM, $GEDCOMS, $pgv_lang;
 
 	checkTableExists();
 
-	if (get_user_id($username)) {
-		$dbpassword=get_user_password($username);
+	if ($user_id=get_user_id($user_name)) {
+		$dbpassword=get_user_password($user_id);
 		if (crypt($password, $dbpassword)==$dbpassword) {
-			if (get_user_setting($username, 'verified')=='yes' && get_user_setting($username, 'verified_by_admin')=='yes' || get_user_setting($username, 'canadmin')=='Y') {
-				set_user_setting($username, 'loggedin', 'Y');
-				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $username ."<-");
+			if (get_user_setting($user_id, 'verified')=='yes' && get_user_setting($user_id, 'verified_by_admin')=='yes' || get_user_setting($user_id, 'canadmin')=='Y') {
+				set_user_setting($user_id, 'loggedin', 'Y');
+				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $user_name ."<-");
 				//-- reset the user's session
 				$_SESSION = array();
-				$_SESSION['pgv_user'] = $username;
+				$_SESSION['pgv_user'] = $user_id;
 				//-- unset the cookie_login session var to show that they have logged in with their password
 				$_SESSION['cookie_login'] = false;
-				if (isset($pgv_lang[get_user_setting($username, 'language')]))
-					$_SESSION['CLANGUAGE'] = get_user_setting($username, 'language');
+				if (isset($pgv_lang[get_user_setting($user_id, 'language')]))
+					$_SESSION['CLANGUAGE'] = get_user_setting($user_id, 'language');
 				//-- only change the gedcom if the user does not have an gedcom id
 				//-- for the currently active gedcom
-				if (get_user_gedcom_setting($username, $GEDCOM, 'gedcomid')=='') {
+				if (get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
 					foreach (array_keys($GEDCOMS) as $gedcom) {
-						if (get_user_gedcom_setting($username, $gedcom, 'gedcomid')) {
+						if (get_user_gedcom_setting($user_id, $gedcom, 'gedcomid')) {
 							$_SESSION['GEDCOM']=$gedcom;
 							break;
 						}
 					}
 				}
-				return true;
+				return $user_id;
 			}
 		}
 	}
-	AddToLog(($basic ? "Basic HTTP Authentication" : "Login") . " Failed ->" . $username ."<-");
+	AddToLog(($basic ? "Basic HTTP Authentication" : "Login") . " Failed ->" . $user_name ."<-");
 	return false;
 }
 
@@ -97,8 +97,8 @@ function authenticateUser($username, $password, $basic=false) {
  */
 function basicHTTPAuthenticateUser() {
 	global $pgv_lang;
-	$username = getUserName();
-	if(empty($username)){ //not logged in.
+	$user_id = getUserId();
+	if (empty($user_id)){ //not logged in.
 		if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])
 				|| (! authenticateUser($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], true))) {
 			header('WWW-Authenticate: Basic realm="' . $pgv_lang["basic_realm"] . '"');
@@ -113,17 +113,17 @@ function basicHTTPAuthenticateUser() {
 
 /**
  * logs a user out of the system
- * @param string $username	optional parameter to logout a specific user
+ * @param string $user_id	logout a specific user
  */
-function userLogout($username) {
+function userLogout($user_id) {
 	global $GEDCOM;
 
-	set_user_setting($username, 'loggedin', 'N');
+	set_user_setting($user_id, 'loggedin', 'N');
 
-	AddToLog("Logout - " . $username);
+	AddToLog("Logout - " . get_user_name($user_id));
 
-	if ((isset($_SESSION['pgv_user']) && ($_SESSION['pgv_user']==$username)) || (isset($_COOKIE['pgv_rem'])&&$_COOKIE['pgv_rem']==$username)) {
-		if ($_SESSION['pgv_user']==$username) {
+	if ((isset($_SESSION['pgv_user']) && ($_SESSION['pgv_user']==$user_id)) || (isset($_COOKIE['pgv_rem'])&&$_COOKIE['pgv_rem']==$user_id)) {
+		if ($_SESSION['pgv_user']==$user_id) {
 			$_SESSION['pgv_user'] = "";
 			unset($_SESSION['pgv_user']);
 			if (isset($_SESSION["pgv_counter"]))
@@ -163,7 +163,14 @@ function userUpdateLogin($username) {
  * 2. then checks the remember cookie
  * @return string 	the username of the user or an empty string if the user is not logged in
  */
+
+// Currently, a User ID is the same as a User Name.  In the future, User IDs will
+// be numeric.  This function is part of the migration process.
 function getUserName() {
+	return get_user_name(getUserId());
+}
+
+function getUserId() {
 	global $ALLOW_REMEMBER_ME, $DBCONN, $logout, $SERVER_URL;
 	//-- this section checks if the session exists and uses it to get the username
 	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {

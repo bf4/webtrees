@@ -49,19 +49,20 @@
  */
 
 	$ModName = $GLOBALS['name'];
-		global $users;
 // get the phpGedView config - our config comes through via cookies
 		require ("config.php");
+		$def_urlcmd = "";
 		$post_firstname = " ";
 		$post_lastname = " ";
 		$post_email = " ";
 		$post_user = "";
 		
 		// create some variables in case they dont get in from the cookie
-		$def_canedit = "no";		
-		$def_canedit = "no";		
+		$def_canedit = "none";		
+		$def_canadmin = "";		
 		$def_theme = " ";
 		$def_rootid = "I1";
+		$def_canview = "";
 		$def_verified = "yes";
 		$def_verified_by_admin = "no";
 		$def_contact_method = "messaging2";
@@ -75,6 +76,7 @@
 		if (isset($_COOKIE['def_canadmin'])) $def_canadmin = $_COOKIE['def_canadmin'];
 		if (isset($_COOKIE['def_theme'])) $def_theme = $_COOKIE['def_theme'];
 		if (isset($_COOKIE['def_rootid'])) $def_rootid = $_COOKIE['def_rootid'];
+		if (isset($_COOKIE['def_canview'])) $def_canview = $_COOKIE['def_canview'];
 		if (isset($_COOKIE['def_verified'])) $def_verified = $_COOKIE['def_verified'];
 		if (isset($_COOKIE['def_verified_by_admin'])) $def_verified_by_admin = $_COOKIE['def_verified_by_admin'];
 		if (isset($_COOKIE['def_contact_method'])) $def_contact_method = $_COOKIE['def_contact_method'];
@@ -89,9 +91,10 @@
 		if (isset($_COOKIE['post_email'])) $post_email = $_COOKIE['post_email'];
 		if (isset($_COOKIE['post_canedit'])) $post_canedit = $_COOKIE['post_canedit'];
 
+
 		// need to add the user into gedview - but only if def_create_user says its ok
-		if (!empty($post_user) && !get_user_id($post_user) && $def_create_user=="yes") {
-			if ($user_id=create_user($post_user, crypt($def_upass))) {
+		if ($post_user && !get_user_id($post_user) && $def_create_user=='yes')) {
+			if ($user_id=create_user($user_id, crypt($def_upass))) {
 				set_user_setting($user_id, 'firstname', $post_firstname);
 				set_user_setting($user_id, 'lastname', $post_lastname);
 				set_user_setting($user_id, 'relationship_privacy', 'N');
@@ -122,17 +125,21 @@
 			set_user_setting($user_id, 'sessiontime', time());
 			AddToLog("Login Successful ->" . $post_user ."<-");
 				
+			if (isset($_GET["id"])){
+				$def_urlcmd = "individual.php?pid=". $_GET["id"]."&ged=". $_GET["ged"]."&";
+			} else {
+				$def_urlcmd = "index.php";
+			}
 			$_SESSION['pgv_user'] = $user_id;
-			$url = "index.php";
+			$url = $def_urlcmd;
 			$url.="?".session_name()."=".session_id();
-			$url.="&ctype=gedcom";
-			header("Location: $url");
+			if ($def_urlcmd == 'index.php'){
+				$url.="&command=user";
+			}
 		} else {
 			$url = "index.php?logout=1";
 		}
-	}
 
 	header("Location: $url");
 	exit;
-
 ?>
