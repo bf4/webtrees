@@ -47,15 +47,14 @@ if ($action=="login") {
 	else $password="";
 	if (isset($_POST['remember'])) $remember = $_POST['remember'];
 	else $remember = "no";
-	if (authenticateUser($username, $password)) {
+	if ($user_id=authenticateUser($username, $password)) {
 		if (!empty($_POST["usertime"])) {
 			$_SESSION["usertime"]=@strtotime($_POST["usertime"]);
 		} else {
 			$_SESSION["usertime"]=time();
 		}
 		$_SESSION["timediff"]=time()-$_SESSION["usertime"];
-		$MyUserName = getUserName();
-		$MyLanguage = get_user_setting($MyUserName, 'language');
+		$MyLanguage = get_user_setting($user_id, 'language');
 		if ($MyLanguage) {
 			if (isset($_SESSION['CLANGUAGE'])) {
 				$_SESSION['CLANGUAGE'] = $MyLanguage;
@@ -75,8 +74,8 @@ if ($action=="login") {
 		if ($url == "individual.php") {
 			$pid = "";
 			foreach (array_keys($GEDCOMS) as $gedname) {
-				if (get_user_gedcom_setting($MyUserName, $gedname, 'gedcomid')) {
-					$pid = get_user_gedcom_setting($MyUserName, $gedname, 'gedcomid');
+				if (get_user_gedcom_setting($user_id, $gedname, 'gedcomid')) {
+					$pid = get_user_gedcom_setting($user_id, $gedname, 'gedcomid');
 					$ged = $gedname;
 					break;
 				}
