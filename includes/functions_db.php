@@ -3555,19 +3555,6 @@ function get_user_id($username) {
 	}
 }
 
-function get_user_name($user_id) {
-	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
-
-	$statement=$DBH->prepare("SELECT user_name FROM {$TBLPREFIX}user WHERE user_id=?");
-
-	$statement->bindValue(1, $user_id, PDO::PARAM_STR);
-	$statement->execute();
-	++$TOTAL_QUERIES;
-	$row=$statement->fetchObject();
-	$statement->closeCursor();
-	return $row->user_name;
-}
-
 // Get the username for a user ID
 function get_user_name($user_id) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
@@ -3578,7 +3565,11 @@ function get_user_name($user_id) {
 	++$TOTAL_QUERIES;
 	$row=$statement->fetchObject();
 	$statement->closeCursor();
-	return $row->user_name;
+	if ($row) {
+		return $row->user_name;
+	} else {
+		return null;
+	}
 }
 
 function set_user_password($user_id, $password) {
