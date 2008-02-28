@@ -1073,7 +1073,7 @@ if ($action == "cleanup2") {
 		if ((get_user_setting($user_id,'verified_by_admin') != "yes") && (get_user_setting($user_id,'verified') == "yes")) {
 			$nverusers++;
 		}
-		if (get_user_setting($user_iduser,'verified') != "yes") {
+		if (get_user_setting($user_id,'verified') != "yes") {
 			$applusers++;
 		}
 		if (get_user_setting($user_id,'canadmin')=='Y') {
