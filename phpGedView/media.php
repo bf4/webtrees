@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a media
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -772,8 +772,6 @@ if (check_media_structure()) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
-		?>
-		<?php
 		for($i=1; $i<6; $i++) {
 			if (!empty($_FILES['mediafile'.$i]["name"]) || !empty($_FILES['thumbnail'.$i]["name"])) {
 				$folderName = "";
@@ -1473,13 +1471,6 @@ if (check_media_structure()) {
 			foreach ($dirs as $indexval => $dir) {
 				if ($dir{0}!=".") {
 				print "<tr>";
-					print "<td class=\"descriptionbox $TEXT_DIRECTION\">";
-						print "<a href=\"media.php?directory=".rawurlencode($directory.$dir."/")."&amp;level=".($level+1).$thumbget."\">";
-						if ($TEXT_DIRECTION=="rtl") print getRLM();
-						print $dir;
-						if ($TEXT_DIRECTION=="rtl") print getRLM();
-						print "</a>";
-					print "</td>";
 					print "<td class=\"optionbox $TEXT_DIRECTION width10\">";
 						// directory options
 						print "<form name=\"blah\" action=\"media.php\" method=\"post\">";
@@ -1497,6 +1488,13 @@ if (check_media_structure()) {
 						// print "<input type=\"submit\" value=\"".$pgv_lang["setperms_readonly"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='setpermsread';\">";
 
 						print "</form>";
+					print "</td>";
+					print "<td class=\"descriptionbox $TEXT_DIRECTION\">";
+						print "<a href=\"media.php?directory=".rawurlencode($directory.$dir."/")."&amp;level=".($level+1).$thumbget."\">";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
+						print $dir;
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
+						print "</a>";
 					print "</td>";
 				print "</tr>";
 				}
