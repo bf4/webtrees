@@ -111,7 +111,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 
 			$content .= PrintReady($message["body"])."<br /><br />\n";
 			if (preg_match("/RE:/", $message["subject"])==0) $message["subject"]="RE:".$message["subject"];
-			if ($tempuser) $content .= "<a href=\"javascript:;\" onclick=\"reply('".$message["from"]."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
+			if ($user_id) $content .= "<a href=\"javascript:;\" onclick=\"reply('".$message["from"]."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
 			$content .= "<a href=\"index.php?action=deletemessage&amp;message_id=$key\" onclick=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">".$pgv_lang["delete"]."</a></div></td></tr>\n";
 		}
 		$content .= "</table>\n";
