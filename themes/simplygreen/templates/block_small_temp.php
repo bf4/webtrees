@@ -28,7 +28,7 @@
  * @version $Id: functions_print.php 2144 2007-11-06 16:53:45Z yalnifj $
  */
 ?>
-<div id="gedcom_welcome" class="block" >
+<div id="<?php print $id; ?>" class="block" >
 	<table class="blockheader" cellpadding="0" cellspacing="0" style="direction:ltr;padding:0;margin:0;">
 		<tr>
 			<td class="blockh1" ></td>

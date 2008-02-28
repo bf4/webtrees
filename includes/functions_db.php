@@ -845,7 +845,7 @@ function get_indi_list() {
 	global $indilist, $GEDCOM, $DBCONN, $GEDCOMS;
 	global $TBLPREFIX, $INDILIST_RETRIEVED;
 
-	if ($INDILIST_RETRIEVED)
+	if (isset($INDILIST_RETRIEVED) && $INDILIST_RETRIEVED)
 		return $indilist;
 	$indilist = array();
 	$sql = "SELECT i_id, i_gedcom, i_name, i_isdead, i_letter, i_surname  FROM {$TBLPREFIX}individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY i_surname";
@@ -884,7 +884,7 @@ function get_asso_list($type = "all", $ipid='') {
 	global $assolist, $GEDCOM;
 	global $TBLPREFIX, $ASSOLIST_RETRIEVED;
 
-	if ($ASSOLIST_RETRIEVED)
+	if (isset($ASSOLIST_RETRIEVED) && $ASSOLIST_RETRIEVED)
 		return $assolist;
 	$assolist = array();
 
@@ -961,7 +961,7 @@ function get_fam_list() {
 	global $famlist, $GEDCOM, $DBCONN, $GEDCOMS;
 	global $TBLPREFIX, $FAMLIST_RETRIEVED;
 
-	if ($FAMLIST_RETRIEVED)
+	if (isset($FAMLIST_RETRIEVED) && $FAMLIST_RETRIEVED)
 		return $famlist;
 	$famlist = array();
 	$sql = "SELECT f_id, f_husb,f_wife, f_chil, f_gedcom, f_numchil FROM {$TBLPREFIX}families WHERE f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 

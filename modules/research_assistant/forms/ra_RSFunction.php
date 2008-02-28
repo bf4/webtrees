@@ -124,7 +124,7 @@ require_once("includes/person_class.php");
 					//these people may already exist and their detials will just be
 					//added again.  If we didn't do this, things might get lost 
 					//in the mix
-					$myindilist[$child->getXref()] = $indilist[$child->getXref()];
+					if (!is_null($child)) $myindilist[$child->getXref()] = $indilist[$child->getXref()];
 				}
 			}
 		}

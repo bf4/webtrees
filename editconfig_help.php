@@ -23,7 +23,13 @@
  * @package PhpGedView
  * @subpackage Admin
  */
-require "config.php";
+
+//-- load up the configuration or the default configuration
+if (file_exists('config.php')) require_once('config.php');
+else require_once('config.dist');
+
+$help = '';
+if (isset($_REQUEST['help'])) $help = $_REQUEST['help'];
 
 loadLangFile("pgv_confighelp, pgv_help");
 

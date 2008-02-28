@@ -44,6 +44,9 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["return_editconfig"]						28 Feb 2008				D
++$pgv_lang["DBPORT"]								20 Feb 2008				A
++$pgv_lang["DBPORT_help"]							20 Feb 2008				A
 +$pgv_lang["theme_options"]         				08 Aug 2007				A   Used for editconfig_gedcom.php
 +$pgv_lang["lang_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
 +$pgv_lang["calendar_conf"]         				08 Aug 2007				A   Used for editconfig_gedcom.php

@@ -51,7 +51,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  *
  * @param boolean $ignore_previous
  *	Whether or not to ignore a previous connection, this parameter is used
- *	mainly for the editconfig.php page when setting everything up.
+ *	mainly for the install.php page when setting everything up.
  * @return boolean
  *	True if database successfully connected, false if there was an error.
  */
@@ -72,11 +72,8 @@ function check_db($ignore_previous=false) {
 			if (isset($_POST['NEW_DBTYPE'])) $DBTYPE = $_POST['NEW_DBTYPE'];
 			if (isset($_POST['NEW_DBUSER'])) $DBUSER = $_POST['NEW_DBUSER'];
 			if (isset($_POST['NEW_DBPASS'])) $DBPASS = $_POST['NEW_DBPASS'];
-			if (isset($_POST['NEW_DBHOST'])) {
-			    preg_match('/(.*):(\d{1,6})$/', $_POST['NEW_DBHOST'], $match);
-			    $DBHOST = $match[1];
-			    $DBPORT = $match[2];
-			}
+			if (isset($_POST['NEW_DBHOST'])) $DBHOST = $_POST['NEW_DBHOST'];
+			if (isset($_POST['NEW_DBPORT'])) $DBPORT = $_POST['NEW_DBPORT'];
 			if (isset($_POST['NEW_DBNAME'])) $DBNAME = $_POST['NEW_DBNAME'];
 			if (isset($_POST['NEW_DBPERSIST'])) $DBPERSIST = $_POST['NEW_DBPERSIST'];
 		}
@@ -108,8 +105,7 @@ function check_db($ignore_previous=false) {
 	}
 
 	//-- protect the username and password on pages other than the Configuration page
-	if (strpos($_SERVER["PHP_SELF"], "editconfig.php") === false
-		&& strpos($_SERVER["PHP_SELF"], "sanity_check.php") === false) {
+	if (strpos($_SERVER["PHP_SELF"], "install.php") === false) {
 		$DBUSER = "";
 		$DBPASS = "";
 	}
@@ -318,6 +314,68 @@ function store_gedcoms() {
 	$IN_STORE_GEDCOMS = false;
 	return true;
 }
+
+/**
+ * Update the site configuration settings
+ * New settings are passed in as an array of key value pairs
+ * The key in the array should be the name of the setting to change
+ * the value should be the new value
+ * $newconfig['CONFIGURED'] = true;
+ *
+ * @param array	$newconfig
+ * @param boolean $return	return the text or try to write the file
+ * @return mixed	returns true on success, or returns an array of error messages on failure
+ */
+function update_site_config($newconfig, $return = false) {
+	global $pgv_lang, $COMMIT_COMMAND;
+	
+	$errors = array();
+	
+	//-- load the configuration file text
+	if (file_exists("config.php")) $configtext = file_get_contents("config.php");
+	else $configtext = file_get_contents("config.dist");
+	
+	foreach($newconfig as $setting=>$value) {
+		if ($value=="yes") $value = "true";
+		if ($value=="no") $value = "false";
+		if ($value===true) $value = "true";
+		if ($value===false) $value = "false";
+		if ($value==='true' || $value==='false')
+			$configtext = preg_replace('/\$'.$setting.'\s*=\s*.*;/', "\$".$setting." = ".$value.";", $configtext);
+		else {
+			//-- cleanup the data
+			$value = strip_tags($value);
+			$configtext = preg_replace('/\$'.$setting.'\s*=\s*".*";/', "\$".$setting." = \"".$value."\";", $configtext);
+		}
+	}
+	
+	//-- check if the configtext is valid PHP
+	$res = @eval($configtext);
+	if ($res===false) {
+		if ($return) return $configtext;
+		 
+		$fp = fopen("config.php", "wb");
+		if (!$fp) {
+			$error['msg'] = $pgv_lang["pgv_config_write_error"];
+			$errors[] = $error;
+		}
+		else {
+			fwrite($fp, $configtext);
+			fclose($fp);
+			$logline = AddToLog("config.php updated by >".getUserName()."<");
+ 			if (!empty($COMMIT_COMMAND)) check_in($logline, "config.php", "");	
+		}
+	}
+	else {
+		$error['msg'] = "There was an error in the generated config.php. ".htmlentities($configtext);
+		$errors[] = $error;
+	}
+	
+	if (count($errors)>0) return $errors;
+	return true;
+}
+
+
 
 /**
  * get a gedcom filename from its database id

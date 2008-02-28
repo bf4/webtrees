@@ -44,6 +44,7 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["help_editconfig.php"]					28 Feb 2008				D
 -$pgv_lang["dir_editor_help"]						23 Sep 2007				D
 +$pgv_lang["link_family_search_help"]				?? ??? 2007				A	Actual change date unknown
 +$pgv_lang["dir_editor_help"]						?? ??? 2007				A	Actual change date unknown

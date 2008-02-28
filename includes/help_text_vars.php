@@ -211,7 +211,7 @@ while (isset($pgv_lang["h$i"])) {
 
 // $pgv_lang["ah1"]	= "how_upgrade_help,ah1_help";
 $pgv_lang["ah1"]	= "";
-$pgv_lang["ah2"]	= "help_editconfig.php,ah2_help";
+$pgv_lang["ah2"]	= "help_install.php,ah2_help";
 $pgv_lang["ah3"]	= "add_upload_gedcom_help,ah3_help";
 $pgv_lang["ah4"]	= "gedcom_configfile_help,ah4_help";
 $pgv_lang["ah5"]	= "default_gedcom_help,ah5_help";

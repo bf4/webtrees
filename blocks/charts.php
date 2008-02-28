@@ -56,19 +56,14 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			}
 		}
 	}
-	if (empty($config["details"])) $config["details"] = "no";
+	
+	$bheight -= 15;
 	if ($config["details"]=="no") {
 		$show_full = 0;
 		// Here we could adjust the block width & height to accommodate larger displays 
 	} else {
 		$show_full = 1;
 		// Here we could adjust the block width & height to accommodate larger displays 
-	}
-	
-	$show_full=0;
-	$bheight -= 15;
-	if ($config["details"]=="yes") {
-		$show_full=1;
 		$bwidth += 40;
 		$bheight += 20;
 	}
@@ -114,12 +109,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			$title .= $name." ".$pgv_lang["tree"];
 			break;
 	}
-	$content =  "<b>".$title."</b>";
-	$content .=  "</div></td>";
-	$content .=  "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-	$content .=  "</table>";
-	$content .=  "<div class=\"blockcontent\">";
-	$content .=  "<div class=\"small_inner_block\">";
+	$content="";
 	if ($show_full==0) {
 		$content .=  "<span class=\"details2\"><center>".$pgv_lang["charts_click_box"]."</center></span><br />";
 	}
@@ -179,13 +169,6 @@ function print_charts_block_config($config) {
 			<?php if (file_exists("includes/treenav_class.php")) { ?>
 			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\"";?>>TreeNav</option>
 			<?php } ?>
-		</select>
-	</td></tr>
-	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["show_details"]; ?></td>
-	<td class="optionbox">
-		<select name="details">
-			<option value="no"<?php if ($config["details"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-			<option value="yes"<?php if ($config["details"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
 		</select>
 	</td></tr>
 	<tr>

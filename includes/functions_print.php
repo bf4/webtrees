@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+require_once("includes/templecodes.php");		//-- load in the LDS temple code translations
 require_once 'includes/functions_charts.php';
 
 /**
@@ -59,7 +60,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
 	 if (!isset($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
 	 // NOTE: Start div out-rand()
-	 if ($pid==false) {
+	 if (empty($pid)) {
 		  print "\n\t\t\t<div id=\"out-".rand()."\" class=\"person_boxNN\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\">";
 		  print "<br />";
 		  print "\n\t\t\t</div>";
@@ -298,66 +299,7 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 	 //-- find additional name
 	 $addname = $person->getAddName();
 	 $name = PrintReady($name);
-	 //-- check if the persion is visible
-	 if (!$disp) {
-		if (showLivingName($indirec)) {
-			// NOTE: Start span namedef-$personcount.$pid.$count
-			if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
-			else $title = $pid." :".$pgv_lang["indi_info"];
-			print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\"><span id=\"namedef-$boxID\" class=\"name$style\">";
- 			print PrintReady($name);
-			// NOTE: IMG ID
-			print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
-			if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-			else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-			else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-			print "\" class=\"gender_image\" />";
-			if ($SHOW_ID_NUMBERS) {
-				print "</span><span class=\"details$style\">";
-			if ($TEXT_DIRECTION=="ltr") print getLRM() . "($pid)" . getLRM();
-			else print getRLM() . "($pid)" . getRLM();
-				// NOTE: Close span namedef-$personcount.$pid.$count
-				print "</span>";
-			}
-			  if (strlen($addname) > 0) {
-				   print "<br />";
-				   // NOTE: Start span addnamedef-$personcount.$pid.$count
-				   // NOTE: Close span addnamedef-$personcount.$pid.$count
-				   if (hasRTLText($addname) && $style=="1") print "<span id=\"addnamedef-$boxID\" class=\"name2\"> ";
-				   else print "<span id=\"addnamedef-$boxID\" class=\"name$style\"> ";
- 				   print PrintReady($addname)."</span><br />";
-			 }
-		     print "</a>";
-		} else {
-			if(empty($SEARCH_SPIDER)) {
-				print "<a href=\"javascript:;\" onclick=\"if (confirm('".preg_replace("'<br />'", " ", $pgv_lang["privacy_error"])."\\n\\n".str_replace("#user[fullname]#", getUserFullName($CONTACT_EMAIL), $pgv_lang["clicking_ok"])."')) ";
-				if ($CONTACT_METHOD!="none") {
-					if ($CONTACT_METHOD=="mailto") {
-						print "window.location = 'mailto:".get_user_setting($CONTACT_EMAIL, 'email')."'; ";
-					} else {
-						print "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); ";
-					}
-				}
-				// NOTE: Start span namedef-$pid.$personcount.$count
-				// NOTE: Close span namedef-$pid.$personcount.$count
-				print "return false;\">";
-			}
-			print "<span id=\"namedef-$boxID\" class=\"name$style\">".$pgv_lang["private"]."</span>";
-			if(empty($SEARCH_SPIDER)) {
-				print "</a>\n";
-			}
-		  }
-		  if ($show_full && (empty($SEARCH_SPIDER))) {
-			  // NOTE: Start span fontdef-$pid.$personcount.$count
-			  // NOTE: Close span fontdef-$pid.$personcount.$count
-			   print "<br /><span id=\"fontdef-$boxID\" class=\"details$style\">";
-			   print $pgv_lang["private"];
-			   print "</span>";
-		  }
-		  // NOTE: Close div out-$pid.$personcount.$count
-		  print "\n\t\t\t</td></tr></table></div>";
-		  return;
-	 }
+
 	 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 	 else $title = $pid." :".$pgv_lang["indi_info"];
 	 // add optional CSS style for each fact
@@ -432,6 +374,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION,$REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
 
+	require_once('includes/menu.php');
 	// If not on allowed list, dump the spider onto the redirect page.
 	// This kills recognized spiders in their tracks.
 	// To stop unrecognized spiders, see META_ROBOTS below.
