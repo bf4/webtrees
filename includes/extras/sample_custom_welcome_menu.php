@@ -83,14 +83,14 @@
 	}
 
 	// Third sub-menu (visible only to users with site Admin rights)
-	if (userIsAdmin()) {
+	if (PGV_USER_IS_ADMIN) {
 		$submenu = new Menu("Custom Menu Item 3", "custom link #2");
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 	}
 
 	// Fourth sub-menu (visible only to users with GEDCOM Admin rights)
-	if (userGedcomAdmin(getUserName(), $GEDCOM)) {
+	if (PGV_USER_GEDCOM_ADMIN) {
 		$submenu = new Menu("Custom Menu Item 4", "custom link #2");
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);

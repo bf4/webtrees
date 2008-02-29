@@ -42,7 +42,7 @@ function loadCachedBlock($block, $index) {
 	if (isset($DEBUG) && $DEBUG==true) return false;
 
 	//-- ignore caching for logged in users
-	if (getUserName()) return false;
+	if (PGV_USER_ID) return false;
 
 	//-- ignore cache when its life is not configured or when its life is zero
 	$cacheLife = 0;
@@ -82,7 +82,7 @@ function saveCachedBlock($block, $index, $content) {
 	if (isset($DEBUG) && $DEBUG==true) return false;
 
 	//-- ignore caching for logged in users
-	if (getUserName()) return false;
+	if (PGV_USER_ID) return false;
 
 	//-- ignore cache when its life is not configured or when its life is zero
 	$cacheLife = 0;
