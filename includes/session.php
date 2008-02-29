@@ -421,19 +421,35 @@ if ($Languages_Default) {					// If Languages not yet configured
 	$language_settings["$LANGUAGE"]["pgv_lang_use"] = true;
 }
 
-$pgv_user_id=getUserId();
+require_once("privacy.php");
+//-- load the privacy file
+require_once(get_privacy_file());
+//-- load the privacy functions
+require_once("includes/functions_privacy.php");
+
+// Define some constants to save calculating the same value repeatedly.
+define('PGV_USER_ID',           getUserId  ());
+define('PGV_USER_NAME',         getUserName());
+define('PGV_USER_IS_ADMIN',     userIsAdmin       (PGV_USER_ID));
+define('PGV_USER_GEDCOM_ADMIN', userGedcomAdmin   (PGV_USER_ID));
+define('PGV_USER_CAN_ACCESS',   userCanAccess     (PGV_USER_ID));
+define('PGV_USER_CAN_EDIT',     userCanEdit       (PGV_USER_ID));
+define('PGV_USER_CAN_ACCEPT',   userCanAccept     (PGV_USER_ID));
+define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
+define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID));
+define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'gedcomid'));
+define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'rootid'));
+if (empty($GEDCOMS)) {
+	define('PGV_GED_ID', null);
+} else {
+	define('PGV_GED_ID', $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']));
+}
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);
 
 // Check for page views exceeding the limit
 CheckPageViews();
-
-require_once("privacy.php");
-//-- load the privacy file
-require_once(get_privacy_file());
-//-- load the privacy functions
-require_once("includes/functions_privacy.php");
 
 if (!isset($SCRIPT_NAME)) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
 
@@ -471,7 +487,7 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 	//-----------------------------------
 	//-- if user wishes to logout this is where we will do it
 	if ((!empty($_REQUEST['logout']))&&($_REQUEST['logout']==1)) {
-		userLogout($pgv_user_id);
+		userLogout(PGV_USER_ID);
 		if ($REQUIRE_AUTHENTICATION) {
 			header("Location: ".$HOME_SITE_URL);
 			exit;
@@ -480,7 +496,7 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 
 
 	if ($REQUIRE_AUTHENTICATION) {
-		if (empty($pgv_user_id)) {
+		if (!PGV_USER_ID) {
 			if ((strstr($SCRIPT_NAME, "login.php")===false)
 					&&(strstr($SCRIPT_NAME, "login_register.php")===false)
 					&&(strstr($SCRIPT_NAME, "client.php")===false)
@@ -519,26 +535,28 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
    }
 
    //-- load any editing changes
-   if (userCanEdit($pgv_user_id)) {
-      if (file_exists($INDEX_DIRECTORY."pgv_changes.php")) require_once($INDEX_DIRECTORY."pgv_changes.php");
-      else $pgv_changes = array();
+	if (PGV_USER_CAN_EDIT && file_exists($INDEX_DIRECTORY."pgv_changes.php")) {
+		require_once($INDEX_DIRECTORY."pgv_changes.php");
+	} else {
+  	$pgv_changes = array();
    }
-   else $pgv_changes = array();
 
-   if (empty($LOGIN_URL)) $LOGIN_URL = "login.php";
+	if (empty($LOGIN_URL)) {
+		$LOGIN_URL = "login.php";
+	}
 
 }
 
 //-- load the user specific theme
-if ($PGV_DB_CONNECTED && (!empty($pgv_user_id))&&(!isset($_REQUEST['logout']))) {
+if ($PGV_DB_CONNECTED && PGV_USER_ID && !isset($_REQUEST['logout'])) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
-		userUpdateLogin($pgv_user_id);
+		userUpdateLogin(PGV_USER_ID);
 		$_SESSION['activity_time'] = time();
 	}
 
-	$usertheme = get_user_setting($pgv_user_id, 'theme');
-	if ((!empty($_POST["user_theme"]))&&(!empty($_POST["oldusername"]))&&($_POST["oldusername"]==$pgv_user_id)) $usertheme = $_POST["user_theme"];
+	$usertheme = get_user_setting(PGV_USER_ID, 'theme');
+	if ((!empty($_POST["user_theme"]))&&(!empty($_POST["oldusername"]))&&($_POST["oldusername"]==PGV_USER_ID)) $usertheme = $_POST["user_theme"];
 	if ((!empty($usertheme)) && (file_exists($usertheme."theme.php")))  {
 		$THEME_DIR = $usertheme;
 	}
@@ -547,9 +565,8 @@ if ($PGV_DB_CONNECTED && (!empty($pgv_user_id))&&(!isset($_REQUEST['logout']))) 
 if (isset($_SESSION["theme_dir"]))
 {
 	$THEME_DIR = $_SESSION["theme_dir"];
-	if (!empty($pgv_user_id))
-	{
-		if (get_user_setting($pgv_user_id, 'editaccount')=='Y') unset($_SESSION["theme_dir"]);
+	if (PGV_USER_ID) {
+		if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') unset($_SESSION["theme_dir"]);
 	}
 }
 

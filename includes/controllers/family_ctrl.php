@@ -135,7 +135,7 @@ class FamilyRoot extends BaseController
 		$this->display = displayDetailsByID($this->famid, 'FAM');
 
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && userCanEdit() && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
+		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->famid);
 			if (empty($newrec)) $newrec = find_family_record($this->famid);
 			$this->difffam = new Family($newrec);
@@ -154,12 +154,12 @@ class FamilyRoot extends BaseController
 		}
 
 		//-- add favorites action
-		if ($_REQUEST['action']=='addfav' && !empty($_REQUEST['gid']) && getUserName()) {
+		if ($_REQUEST['action']=='addfav' && !empty($_REQUEST['gid']) && PGV_USER_NAME) {
 			$_REQUEST['gid'] = strtoupper($_REQUEST['gid']);
 			$indirec = find_gedcom_record($_REQUEST['gid']);
 			if ($indirec) {
 				$favorite = array(
-					'username' => getUserName(),
+					'username' => PGV_USER_NAME,
 					'gid' => $_REQUEST['gid'],
 					'type' => 'FAM',
 					'file' => $GEDCOM,
@@ -171,7 +171,7 @@ class FamilyRoot extends BaseController
 			}
 		}
 
-		if (userCanAccept())
+		if (PGV_USER_CAN_ACCEPT)
 		{
 			if ($_REQUEST['action'] == 'accept')
 			{
@@ -387,7 +387,7 @@ class FamilyRoot extends BaseController
 
 		// edit_fam menu
 		$menu = new Menu($pgv_lang['edit_fam']);
-		if ($SHOW_GEDCOM_RECORD || userIsAdmin()) 
+		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) 
 		$menu->addOnclick('return edit_raw(\''.$this->getFamilyID().'\');');
 		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
@@ -402,7 +402,7 @@ class FamilyRoot extends BaseController
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / edit_raw
-		if ($SHOW_GEDCOM_RECORD || userIsAdmin()) {
+		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
 		$submenu = new Menu($pgv_lang['edit_raw']);
 		$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
 		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
@@ -462,7 +462,7 @@ class FamilyRoot extends BaseController
 				$menu->addSubmenu($submenu);
 			}
 
-			if (userCanAccept())
+			if (PGV_USER_CAN_ACCEPT)
 			{
 				// edit_fam / accept_all
 				$submenu = new Menu($pgv_lang["undo_all"], "family.php?famid=".$this->famid."&amp;action=undo");
@@ -497,7 +497,7 @@ class FamilyRoot extends BaseController
 		if ($SHOW_GEDCOM_RECORD)
 		{
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($_REQUEST['show_changes'] == 'yes'  && userCanEdit())
+			if ($_REQUEST['show_changes'] == 'yes'  && PGV_USER_CAN_EDIT)
 			{
 				$menu->addLink("javascript:show_gedcom_record('new');");
 			}
@@ -516,7 +516,7 @@ class FamilyRoot extends BaseController
 		{
 				// other / view_gedcom
 				$submenu = new Menu($pgv_lang['view_gedcom']);
-				if ($_REQUEST['show_changes'] == 'yes'  && userCanEdit())
+				if ($_REQUEST['show_changes'] == 'yes'  && PGV_USER_CAN_EDIT)
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				}
@@ -528,7 +528,7 @@ class FamilyRoot extends BaseController
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($ENABLE_CLIPPINGS_CART >= getUserAccessLevel())
+		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)
 		{
 				// other / add_to_cart
 				$submenu = new Menu($pgv_lang['add_to_cart'], 'clippings.php?action=add&amp;id='.$this->getFamilyID().'&amp;type=fam');
@@ -537,7 +537,7 @@ class FamilyRoot extends BaseController
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($this->display && getUserName())
+		if ($this->display && PGV_USER_ID)
 		{
 				// other / add_to_my_favorites
 				$submenu = new Menu($pgv_lang['add_to_my_favorites'], 'family.php?action=addfav&amp;famid='.$this->getFamilyID().'&amp;gid='.$this->getFamilyID());

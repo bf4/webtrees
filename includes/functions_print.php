@@ -108,9 +108,9 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 	 				else $title = $pid." :".$pgv_lang["descend_chart"];
 					$personlinks .= "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
 
-					$username = getUserName();
+				$username = PGV_USER_NAME;
 					if (!empty($username)) {
-					$myid=get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+					$myid=PGV_USER_GEDCOM_ID;
 					if ($myid) {
 	 						  if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
 	 						  else $title = $pid." :".$pgv_lang["relationship_chart"];
@@ -554,7 +554,7 @@ function showBack() {
 	 arrows[3] = new Image();
 	 arrows[3].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"]; ?>";
 
-<?php if (userCanEdit()) { ?>
+<?php if (PGV_USER_CAN_EDIT) { ?>
 function delete_record(pid, linenum, mediaid) {
 	if (!mediaid) mediaid="";
 	 if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) {
@@ -897,10 +897,10 @@ function print_lang_form($option=0) {
 function print_user_links() {
 	 global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM, $PRIV_USER, $PRIV_PUBLIC, $USE_REGISTRATION_MODULE, $pid;
 	 global $LOGIN_URL, $SEARCH_SPIDER;
-	 $username = getUserName();
+	 $username = PGV_USER_NAME;
 	 if ($username) {
 		  print '<a href="edituser.php" class="link">'.$pgv_lang["logged_in_as"].' ('.$username.')</a><br />';
-		  if (userGedcomAdmin()) print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
+		  if (PGV_USER_GEDCOM_ADMIN) print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
 		  print "<a href=\"index.php?logout=1\" class=\"link\">".$pgv_lang["logout"]."</a>";
 	 } else {
 		  $QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
@@ -1037,7 +1037,7 @@ function contact_menus() {
 function print_favorite_selector($option=0) {
 	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $indilist, $famlist, $sourcelist, $medialist, $QUERY_STRING, $famid, $sid;
 	global $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
-	$username = getUserName();
+	$username = PGV_USER_NAME;
 	if (!empty($username)) $userfavs = getUserFavorites($username);
 	else {
 		if ($REQUIRE_AUTHENTICATION) return false;
@@ -1569,7 +1569,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 	$output = "";
 	if (($view!="preview")&&($_SESSION["show_context_help"])){
 		if ($helpText=="qm_ah"){
-			if (userIsAdmin()){
+			if (PGV_USER_IS_ADMIN){
 				 $output .= " <a class=\"error help\" tabindex=\"0\" href=\"javascript:// ";
 				 if ($show_desc == "") $output .= $help;
 				 else if ($use_print_text) $output .= print_text($show_desc, 0, 1);
@@ -1784,7 +1784,7 @@ function print_theme_dropdown($style=0) {
 	 if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
 		  if (!isset($themeformcount)) $themeformcount = 0;
 		  $themeformcount++;
-		  $uname = getUserName();
+		  $uname = PGV_USER_NAME;
 		  isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 		  $frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
 		  if(isset($_REQUEST['mod'])){

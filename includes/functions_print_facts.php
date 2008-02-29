@@ -134,7 +134,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($fact=="_BIRT_CHIL" and isset($n_chil)) print "<br />".$pgv_lang["number_sign"].$n_chil++;
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) print "<br />".$pgv_lang["number_sign"].$n_gchi++;
 			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) print "<br />".$pgv_lang["number_sign"].$n_ggch++;
-			if (!$noedit && (userCanEdit())&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
+			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 				$menu = array();
 				$menu["label"] = $pgv_lang["edit"];
 				$menu["labelpos"] = "right";
@@ -208,7 +208,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($SHOW_FACT_ICONS)
 				print $eventObj->Icon().' ';
 			print $label;
-			if (!$noedit && (userCanEdit())&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
+			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 				$menu = array();
 				$menu["label"] = $pgv_lang["edit"];
 				$menu["labelpos"] = "right";
@@ -535,7 +535,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 	$printDone = false;
 	$data = "";
 	$nlevel = $level+1;
-	if ($SHOW_SOURCES<getUserAccessLevel()) return "";
+	if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) return "";
 	// -- Systems not using source records [ 1046971 ]
 	$ct = preg_match_all("/$level SOUR (.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {
@@ -621,7 +621,7 @@ function print_media_links($factrec, $level,$pid='') {
 			if ($res->numRows()>0) {
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
 			}
-			else if (userCanEdit()) {
+			else if (PGV_USER_CAN_EDIT) {
 				$mediarec = find_updated_record($media_id);
 				$row["m_file"] = get_gedcom_value("FILE", 1, $mediarec);
 				$row["m_titl"] = get_gedcom_value("TITL", 1, $mediarec);
@@ -843,7 +843,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $pgv_lang;
 	global $factarray, $view;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
-	if ($SHOW_SOURCES<getUserAccessLevel()) return;
+	if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) return;
 	
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
@@ -873,7 +873,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			if ($level==1) echo "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
 			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);
 			echo $factarray[$factname[1]];
-			if (!$noedit && userCanEdit()&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
+			if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="red" && $view!="preview") {
 				$menu = array();
 				$menu["label"] = $pgv_lang["edit"];
 				$menu["labelpos"] = "right";
@@ -1139,7 +1139,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			if (isset($factarray[$factname])) print $factarray[$factname];
 			else print $factname;
 		}
-		if (!$noedit && userCanEdit()&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="change_old")&&($view!="preview")) {
+		if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old" && $view!="preview") {
 			$menu = array();
 			$menu["label"] = $pgv_lang["edit"];
 			$menu["labelpos"] = "right";
@@ -1421,7 +1421,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 
 	$linenum = 0;
 	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
-	if ($rowm['mm_gid']==$pid && userCanEdit() && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
+	if ($rowm['mm_gid']==$pid && PGV_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
 		$encodedFileName = rawurlencode($rowm["m_file"]);
 		$menu = array();
 		$menu["label"] = $pgv_lang["edit"];

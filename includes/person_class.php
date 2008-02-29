@@ -104,7 +104,7 @@ class Person extends GedcomRecord {
 			}
 		}
 		if (empty($indirec)) {
-			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$indirec = find_updated_record($pid);
 				$fromfile = true;
 			}
@@ -811,7 +811,7 @@ class Person extends GedcomRecord {
 	function &getUpdatedPerson() {
 		global $GEDCOM, $pgv_changes, $GEDCOMS;
 		if ($this->changed) return null;
-		if (userCanEdit(getUserName())&&($this->disp)) {
+		if (PGV_USER_CAN_EDIT && $this->disp) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
 				$newrec = find_updated_record($this->xref);
 				if (!empty($newrec)) {

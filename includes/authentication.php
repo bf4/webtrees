@@ -733,7 +733,7 @@ function AddToSearchLog($LogString, $allgeds) {
 			if ($SEARCHLOG_CREATE=="yearly")
 				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Y") . ".log";
 			if (is_writable($INDEX_DIRECTORY)) {
-				$logline = "Date / Time: ".date("d.m.Y H:i:s") . " - IP: " . $REMOTE_ADDR . " - User: " .  getUserName() . "<br />";
+				$logline = "Date / Time: ".date("d.m.Y H:i:s") . " - IP: " . $REMOTE_ADDR . " - User: " .  PGV_USER_NAME . "<br />";
 				if (count($allgeds) == count($GEDCOMS))
 					$logline .= "Searchtype: Global<br />";
 				else

@@ -254,7 +254,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			$change["gedcom"] = $GEDCOM;
 			$change["type"] = "replace";
 			$change["status"] = "submitted";
-			$change["user"] = getUserName();
+			$change["user"] = PGV_USER_NAME;
 			$change["time"] = time();
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 			$change["undo"] = $gedrec;
@@ -273,7 +273,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			}
 			$pgv_changes[$gid."_".$GEDCOM][] = $change;
 
-		if (userAutoAccept()) {
+		if (PGV_USER_AUTO_ACCEPT) {
 			require_once("includes/functions_import.php");
 			accept_changes($gid."_".$GEDCOM);
 		}
@@ -287,7 +287,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 		if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
 		$action=basename($_SERVER["SCRIPT_NAME"]);
 		if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
-		AddToChangeLog($action." ".$temp." Replacing gedcom record $gid ->" . getUserName() ."<-");
+		AddToChangeLog($action." ".$temp." Replacing gedcom record $gid ->" . PGV_USER_NAME ."<-");
 		return true;
 	}
 	return false;
@@ -312,14 +312,14 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		$change["gedcom"] = $GEDCOM;
 		$change["type"] = "append";
 		$change["status"] = "submitted";
-		$change["user"] = getUserName();
+		$change["user"] = PGV_USER_NAME;
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 		$change["undo"] = $gedrec;
 		if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
 		$pgv_changes[$xref."_".$GEDCOM][] = $change;
 
-		if (userAutoAccept()) {
+		if (PGV_USER_AUTO_ACCEPT) {
 			require_once("includes/functions_import.php");
 			accept_changes($xref."_".$GEDCOM);
 		}
@@ -333,7 +333,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
 		$action=basename($_SERVER["SCRIPT_NAME"]);
 		if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
-		AddToChangeLog($action." ".$temp." Appending new $type record $xref ->" . getUserName() ."<-");
+		AddToChangeLog($action." ".$temp." Appending new $type record $xref ->" . PGV_USER_NAME ."<-");
 		return $xref;
 	}
 	return false;
@@ -357,14 +357,14 @@ function delete_gedrec($gid, $linkpid='') {
 		$change["gedcom"] = $GEDCOM;
 		$change["type"] = "delete";
 		$change["status"] = "submitted";
-		$change["user"] = getUserName();
+		$change["user"] = PGV_USER_NAME;
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 		$change["undo"] = "";
 		if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 		$pgv_changes[$gid."_".$GEDCOM][] = $change;
 
-	if (userAutoAccept()) {
+	if (PGV_USER_AUTO_ACCEPT) {
 		require_once("includes/functions_import.php");
 		accept_changes($gid."_".$GEDCOM);
 	}
@@ -378,7 +378,7 @@ function delete_gedrec($gid, $linkpid='') {
 	if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
 	$action=basename($_SERVER["SCRIPT_NAME"]);
 	if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
-	AddToChangeLog($action." ".$temp." Deleting gedcom record $gid ->" . getUserName() ."<-");
+	AddToChangeLog($action." ".$temp." Deleting gedcom record $gid ->" . PGV_USER_NAME ."<-");
 	return true;
 }
 
@@ -400,7 +400,7 @@ function check_gedcom($gedrec, $chan=true) {
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 	if ($ct==0) {
 		print "ERROR 20: Invalid GEDCOM 5.5 format.\n";
-		AddToChangeLog("ERROR 20: Invalid GEDCOM 5.5 format.->" . getUserName() ."<-");
+		AddToChangeLog("ERROR 20: Invalid GEDCOM 5.5 format.->" . PGV_USER_NAME ."<-");
 		if ($GLOBALS["DEBUG"]) {
 			print "<pre>$gedrec</pre>\n";
 			print debug_print_backtrace();
@@ -416,14 +416,14 @@ function check_gedcom($gedrec, $chan=true) {
 			$newgedrec = substr($gedrec, 0, $pos1);
 			$newgedrec .= "1 CHAN\r\n2 DATE ".strtoupper(date("d M Y"))."\r\n";
 			$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
-			$newgedrec .= "2 _PGVU ".getUserName()."\r\n";
+			$newgedrec .= "2 _PGVU ".PGV_USER_NAME."\r\n";
 			$newgedrec .= substr($gedrec, $pos2);
 			$gedrec = $newgedrec;
 		}
 		else {
 			$newgedrec = "\r\n1 CHAN\r\n2 DATE ".strtoupper(date("d M Y"))."\r\n";
 			$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
-			$newgedrec .= "2 _PGVU ".getUserName();
+			$newgedrec .= "2 _PGVU ".PGV_USER_NAME;
 			$gedrec .= $newgedrec;
 		}
 	}
@@ -530,7 +530,7 @@ function undo_change($cid, $index) {
 			}
 			if (count($pgv_changes[$cid])==0) unset($pgv_changes[$cid]);
 		}
-		AddToChangeLog("Undoing change $cid - $index ".$change["type"]." ->" . getUserName() ."<-");
+		AddToChangeLog("Undoing change $cid - $index ".$change["type"]." ->" . PGV_USER_NAME ."<-");
 		if (!isset($manual_save) || $manual_save==false) write_changes();
 		return true;
 	}
@@ -809,7 +809,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		add_simple_tag("0 LATI", "DEAT");
 		add_simple_tag("0 LONG", "DEAT");
 	}
-	if (userIsAdmin()) {
+	if (PGV_USER_IS_ADMIN) {
 		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";

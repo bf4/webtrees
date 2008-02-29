@@ -393,10 +393,10 @@ function displayDetailsByID($pid, $type = "INDI") {
 	$cache_privacy = true;
 
 	//-- start of user specific privacy checks
-	$username = getUserName();
+	$username = PGV_USER_NAME;
 	if ($username) {
 		if (isset($user_privacy[$username]["all"])) {
-			if ($user_privacy[$username]["all"] >= getUserAccessLevel()) {
+			if ($user_privacy[$username]["all"] >= PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			} else {
@@ -405,7 +405,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			}
 		}
 		if (isset($user_privacy[$username][$pid])) {
-			if ($user_privacy[$username][$pid] >= getUserAccessLevel()) {
+			if ($user_privacy[$username][$pid] >= PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			} else {
@@ -415,7 +415,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 		}
 		
 		if (isset($person_privacy[$pid])) {
-			if ($person_privacy[$pid]>=getUserAccessLevel()) {
+			if ($person_privacy[$pid]>=PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			}
@@ -424,7 +424,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				return false;
 			}
 		}
-		if (userGedcomAdmin()) {
+		if (PGV_USER_GEDCOM_ADMIN) {
 			if ($cache_privacy) $privacy_cache[$pkey] = true;
 			return true;
 		}
@@ -435,7 +435,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			$resn = get_gedcom_value("RESN", 1, $gedrec);
 			if (!empty($resn)) {
 				if ($resn == "confidential") $ret = false;
-				else if ($resn=="privacy" && get_user_gedcom_setting($username, $GEDCOM, 'gedcomid') != $pid) $ret = false;
+				else if ($resn=="privacy" && PGV_USER_GEDCOM_ID != $pid) $ret = false;
 				else $ret = true;
 				if (!$ret) {
 					if ($cache_privacy) $privacy_cache[$pkey] = $ret;
@@ -444,13 +444,13 @@ function displayDetailsByID($pid, $type = "INDI") {
 			}
 		}
 	
-		if (userCanAccess()) {
+		if (PGV_USER_CAN_ACCESS) {
 			if ($type=="INDI") {
 				$isdead = is_dead_id($pid);
 				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($username, 'relationship_privacy')=="Y") {
 					if ($isdead) {
-						if ($SHOW_DEAD_PEOPLE>=getUserAccessLevel()) {
-							if ($PRIVACY_BY_YEAR && $SHOW_DEAD_PEOPLE==getUserAccessLevel()) {
+						if ($SHOW_DEAD_PEOPLE>=PGV_USER_ACCESS_LEVEL) {
+							if ($PRIVACY_BY_YEAR && $SHOW_DEAD_PEOPLE==PGV_USER_ACCESS_LEVEL) {
 								if (!checkPrivacyByYear($pid)) {
 									if ($cache_privacy) $privacy_cache[$pkey] = false;
 									return false;
@@ -463,7 +463,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 							return false;
 						}
 					} else {
-						$my_id=get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+						$my_id=PGV_USER_GEDCOM_ID;
 						if (empty($my_id)) {
 							if ($cache_privacy) $privacy_cache[$pkey] = false;
 							return false;
@@ -477,7 +477,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 						} else {
 						$path_length = $MAX_RELATION_PATH_LENGTH;
 						}
-						$relationship = get_relationship(get_user_gedcom_setting($username, $GEDCOM, 'gedcomid'), $pid, $CHECK_MARRIAGE_RELATIONS, $path_length);
+						$relationship = get_relationship(PGV_USER_GEDCOM_ID, $pid, $CHECK_MARRIAGE_RELATIONS, $path_length);
 						if ($relationship!==false) {
 							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
@@ -488,7 +488,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 					}
 				} else {
 					if ($isdead) {
-						if ($SHOW_DEAD_PEOPLE>=getUserAccessLevel()) {
+						if ($SHOW_DEAD_PEOPLE>=PGV_USER_ACCESS_LEVEL) {
 							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
 						} else {
@@ -496,7 +496,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 							return false;
 						}
 					} else {
-						if ($SHOW_LIVING_NAMES>=getUserAccessLevel()) {
+						if ($SHOW_LIVING_NAMES>=PGV_USER_ACCESS_LEVEL) {
 							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
 						} else {
@@ -511,7 +511,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	
 	//-- check the person privacy array for an exception
 	if (isset($person_privacy[$pid])) {
-		if ($person_privacy[$pid]>=getUserAccessLevel()) {
+		if ($person_privacy[$pid]>=PGV_USER_ACCESS_LEVEL) {
 			if ($cache_privacy) {
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				$privacy_cache[$pkey] = true;
@@ -553,7 +553,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 		
 		$disp = is_dead_id($pid);
 		if ($disp) {
-			if ($SHOW_DEAD_PEOPLE>=getUserAccessLevel()) {
+			if ($SHOW_DEAD_PEOPLE>=PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = true;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
@@ -574,7 +574,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				}
 				return false;
 			}
-			if ($SHOW_LIVING_NAMES>getUserAccessLevel()) {
+			if ($SHOW_LIVING_NAMES>PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = true;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
@@ -597,7 +597,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 		return $display;
     }
 	if ($type=="SOUR") {
-	    if ($SHOW_SOURCES>=getUserAccessLevel()) {
+		if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	    	$disp = true;
 	    	$sourcerec = find_source_record($pid);
 	    	if (!empty($sourcerec)) {
@@ -612,7 +612,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 		}
     }
     if ($type=="REPO") {
-	    if ($SHOW_SOURCES>=getUserAccessLevel()) {
+		if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	    	$privacy_cache[$pkey] = true;
 	    	return true;
 		} else {
@@ -687,24 +687,24 @@ function showLivingNameByID($pid) {
 	global $SHOW_LIVING_NAMES, $person_privacy, $user_privacy;
 
 	if (displayDetailsById($pid)) return true;
-	$username = getUserName();
+	$username = PGV_USER_NAME;
 	if (!empty($username)) {
 		if (isset($user_privacy[$username]["all"])) {
-			if ($user_privacy[$username]["all"] >= getUserAccessLevel()) return true;
+			if ($user_privacy[$username]["all"] >= PGV_USER_ACCESS_LEVEL) return true;
 			else return false;
 		}
 		if (isset($user_privacy[$username][$pid])) {
-			if ($user_privacy[$username][$pid] >= getUserAccessLevel()) return true;
+			if ($user_privacy[$username][$pid] >= PGV_USER_ACCESS_LEVEL) return true;
 			else return false;
 		}
 	}
 
 	if (isset($person_privacy[$pid])) {
-		if ($person_privacy[$pid]>=getUserAccessLevel()) return true;
+		if ($person_privacy[$pid]>=PGV_USER_ACCESS_LEVEL) return true;
 		else return false;
 	}
 
-	if ($SHOW_LIVING_NAMES>=getUserAccessLevel()) return true;
+	if ($SHOW_LIVING_NAMES>=PGV_USER_ACCESS_LEVEL) return true;
 	return false;
 }
 }
@@ -728,16 +728,16 @@ function showFact($fact, $pid, $type='INDI') {
 
 	//-- first check the global facts array
 	if (isset($global_facts[$fact]["show"])) {
-		if (getUserAccessLevel()>$global_facts[$fact]["show"])
+		if (PGV_USER_ACCESS_LEVEL>$global_facts[$fact]["show"])
 			return false;
 	}
 	//-- check the person facts array
 	if (isset($person_facts[$pid][$fact]["show"])) {
-		if (getUserAccessLevel()>$person_facts[$pid][$fact]["show"])
+		if (PGV_USER_ACCESS_LEVEL>$person_facts[$pid][$fact]["show"])
 			return false;
 	}
 	if ($fact=="SOUR") {
-		if ($SHOW_SOURCES<getUserAccessLevel())
+		if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL)
 			return false;
 	}
 	if ($fact!="NAME") {
@@ -770,11 +770,11 @@ function showFactDetails($fact, $pid) {
 
 	//-- first check the global facts array
 	if (isset($global_facts[$fact]["details"])) {
-		if (getUserAccessLevel()>$global_facts[$fact]["details"]) return false;
+		if (PGV_USER_ACCESS_LEVEL>$global_facts[$fact]["details"]) return false;
 	}
 	//-- check the person facts array
 	if (isset($person_facts[$pid][$fact]["details"])) {
-		if (getUserAccessLevel()>$person_facts[$pid][$fact]["details"]) return false;
+		if (PGV_USER_ACCESS_LEVEL>$person_facts[$pid][$fact]["details"]) return false;
 	}
 
 	return showFact($fact, $pid);
@@ -920,24 +920,20 @@ function get_last_private_data($gid) {
  */
 function getUserAccessLevel() {
 	global $PRIV_PUBLIC, $PRIV_NONE, $PRIV_USER;
-	static $cache=null;
 
-	if (is_null($cache)) {
-		if (getUserName()) {
-			if (userGedcomAdmin()) {
-				$cache=$PRIV_NONE;
-			} else {
-				if (userCanAccess()) {
-					$cache=$PRIV_USER;
-				} else {
-					$cache=$PRIV_PUBLIC;
-				}
-}
+	if (getUserId()) {
+		if (userGedcomAdmin()) {
+			return $PRIV_NONE;
 		} else {
-			$cache=$PRIV_PUBLIC;
+			if (userCanAccess()) {
+				return $PRIV_USER;
+			} else {
+				return $PRIV_PUBLIC;
+			}
 		}
+	} else {
+		return $PRIV_PUBLIC;
 	}
-	return $cache;
 }
 
 /**
@@ -951,14 +947,14 @@ function getUserAccessLevel() {
 function FactEditRestricted($pid, $factrec) {
 	global $GEDCOM, $FAM_ID_PREFIX;
 	
-	if (userGedcomAdmin()) {
+	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
 	}
 	
 	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "privacy" || $match[1]=="locked") {
-			$myindi=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
+			$myindi=PGV_USER_GEDCOM_ID;
 			if ($myindi == $pid) {
 				return false;
 			}
@@ -986,7 +982,7 @@ function FactEditRestricted($pid, $factrec) {
 function FactViewRestricted($pid, $factrec) {
 	global $GEDCOM, $FAM_ID_PREFIX;
 	
-	if (userGedcomAdmin()) {
+	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
 	}
 	
@@ -994,7 +990,7 @@ function FactViewRestricted($pid, $factrec) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "confidential") return true;
 		if ($match[1] == "privacy") {
-			$myindi=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
+			$myindi=PGV_USER_GEDCOM_ID;
 			if ($myindi == $pid) {
 				return false;
 			}

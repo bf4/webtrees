@@ -333,7 +333,7 @@ class SearchControllerRoot extends BaseController {
 			{
 				if($varName == "action")
 				if($_REQUEST[$varName] == "replace")
-				if(!userCanAccept())
+				if(!PGV_USER_CAN_ACCEPT)
 				{
 					$this->action = "general";
 					continue;
@@ -390,7 +390,7 @@ class SearchControllerRoot extends BaseController {
 				}
 			}
 			// see if it's an source ID. If it's found and privacy allows it, JUMP!!!!
-			if ($SHOW_SOURCES >= getUserAccessLevel()) {
+			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
 				if (find_source_record($this->query)) {
 					header("Location: source.php?sid=".$this->query."&ged=".$GEDCOM);
 					exit;
@@ -398,7 +398,7 @@ class SearchControllerRoot extends BaseController {
 			}
 				
 				// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
-			if ($SHOW_SOURCES >= getUserAccessLevel()) {
+			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
 				if (find_repo_record($this->query)) {
 					header("Location: repo.php?rid=".$this->query."&ged=".$GEDCOM);
 					exit;
@@ -1012,12 +1012,10 @@ class SearchControllerRoot extends BaseController {
 				$skiptags = "_UID";
 
 				// If not admin, also hide searches in RESN tags
-				if (!userIsAdmin()) $skiptags .= ", RESN";
+				if (!PGV_USER_IS_ADMIN) $skiptags .= ", RESN";
 
 				// Add the optional tags
 				if ($this->tagfilter == "on") $skiptags .= ", _PGVU, FILE, FORM, TYPE, CHAN, SUBM, REFN";
-
-				$userlevel = GetUserAccessLevel();
 
 				// Keep track of what indis are already printed to keep a reliable counter
 				$indi_printed = array ();
@@ -1044,7 +1042,7 @@ class SearchControllerRoot extends BaseController {
 					$skiptagsged = $skiptags;
 					foreach ($global_facts as $gfact => $gvalue) {
 						if (isset ($gvalue["show"])) {
-							if (($gvalue["show"] < $userlevel))
+							if (($gvalue["show"] < PGV_USER_ACCESS_LEVEL))
 							$skiptagsged .= ", ".$gfact;
 						}
 					}
@@ -1060,7 +1058,7 @@ class SearchControllerRoot extends BaseController {
 								$skiptagsged = $skiptags;
 								foreach ($global_facts as $gfact => $gvalue) {
 									if (isset ($gvalue["show"])) {
-										if (($gvalue["show"] < $userlevel))
+										if (($gvalue["show"] < PGV_USER_ACCESS_LEVEL))
 										$skiptagsged .= ", ".$gfact;
 									}
 								}
@@ -1175,7 +1173,7 @@ class SearchControllerRoot extends BaseController {
 					$skiptagsged = $skiptags;
 					foreach ($global_facts as $gfact => $gvalue) {
 						if (isset ($gvalue["show"])) {
-							if (($gvalue["show"] < $userlevel))
+							if (($gvalue["show"] < PGV_USER_ACCESS_LEVEL))
 							$skiptagsged .= ", ".$gfact;
 						}
 					}
@@ -1191,7 +1189,7 @@ class SearchControllerRoot extends BaseController {
 								$skiptagsged = $skiptags;
 								foreach ($global_facts as $gfact => $gvalue) {
 									if (isset ($gvalue["show"])) {
-										if (($gvalue["show"] < $userlevel))
+										if (($gvalue["show"] < PGV_USER_ACCESS_LEVEL))
 										$skiptagsged .= ", ".$gfact;
 									}
 								}
@@ -1279,7 +1277,7 @@ class SearchControllerRoot extends BaseController {
 					$skiptagsged = $skiptags;
 					foreach ($global_facts as $gfact => $gvalue) {
 						if (isset ($gvalue["show"])) {
-							if (($gvalue["show"] < $userlevel))
+							if (($gvalue["show"] < PGV_USER_ACCESS_LEVEL))
 							$skiptagsged .= ", ".$gfact;
 						}
 					}
@@ -1295,7 +1293,7 @@ class SearchControllerRoot extends BaseController {
 								$skiptagsged = $skiptags;
 								foreach ($global_facts as $gfact => $gvalue) {
 									if (isset ($gvalue["show"])) {
-										if (($gvalue["show"] < $userlevel))
+										if (($gvalue["show"] < PGV_USER_ACCESS_LEVEL))
 										$skiptagsged .= ", ".$gfact;
 									}
 								}
@@ -1661,7 +1659,7 @@ class SearchControllerRoot extends BaseController {
 										print "</a></li></ul></td>";
 
 										/*******************************  Remote Links Per Result *************************************************/
-										if (userCanEdit()) {
+										if (PGV_USER_CAN_EDIT) {
 											print "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$indiName."');\">"."<b>".$pgv_lang["title_search_link"]."</b></a></ul></li></td></tr>\n";
 										}
 									}

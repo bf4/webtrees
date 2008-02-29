@@ -86,7 +86,7 @@ class Media extends GedcomRecord {
 			}
 		}
 		if (empty($gedrec)) {
-			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$gedrec = find_updated_record($pid);
 				$fromfile = true;
 			}

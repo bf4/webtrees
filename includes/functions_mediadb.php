@@ -899,7 +899,7 @@ function filterMedia($media, $filter, $acceptExt) {
 	if (empty ($acceptExt) || $acceptExt != "http")
 		$acceptExt = "";
 
-	$isEditor = userCanEdit();
+	$isEditor = PGV_USER_CAN_EDIT;
 
 	while (true) {
 		$isValid = true;
@@ -1414,7 +1414,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print " onchange=\"updateFormat(this.value);\"";
 		print " size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 		// Check for thumbnail generation support
-		if (userGedcomAdmin()) {
+		if (PGV_USER_GEDCOM_ADMIN) {
 		$ThumbSupport = "";
 		if (function_exists("imagecreatefromjpeg") and function_exists("imagejpeg"))
 			$ThumbSupport .= ", JPG";
@@ -1444,7 +1444,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	// File name on server
 	$isExternal = isFileExternal($gedfile);
 	if ($gedfile == "FILE") {
-		if (userGedcomAdmin()) {
+		if (PGV_USER_GEDCOM_ADMIN) {
 		add_simple_tag("1 $gedfile", "", $pgv_lang["server_file"], "", "NOCLOSE");
 		print "<br /><sub>" . $pgv_lang["server_file_advice"];
 		print "<br />" . $pgv_lang["server_file_advice2"] . "</sub></td></tr>";
@@ -1468,7 +1468,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print $pgv_lang["server_file"];
 		print "</td>\n";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
-		if (userGedcomAdmin()) {
+		if (PGV_USER_GEDCOM_ADMIN) {
 				print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName) . "\" size=\"40\"";
 		if ($isExternal)
 			print " />";
@@ -1502,7 +1502,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		}
 		print $pgv_lang["server_folder"] . "</td><td class=\"optionbox wrap\">";
 		//-- don't let regular users change the location of media items
-		if ($action!='update' || userGedcomAdmin()) {
+		if ($action!='update' || PGV_USER_GEDCOM_ADMIN) {
 		$folders = get_media_folders();
 		print "<span dir=\"ltr\"><select name=\"folder_list\" onchange=\"document.newmedia.folder.value=this.options[this.selectedIndex].value;\">\n";
 		foreach ($folders as $f) {
@@ -1513,11 +1513,11 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				print ">$f</option>\n";
 			}
 		}
-			if (userGedcomAdmin()) print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
+			if (PGV_USER_GEDCOM_ADMIN) print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
 		print "</select></span>\n";
 		}
 		else print $folder;
-		if (userGedcomAdmin()) print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
+		if (PGV_USER_GEDCOM_ADMIN) print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
 		else print "<input name=\"folder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 		if ($gedfile == "FILE") {
 			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub></td></tr>";
@@ -1594,7 +1594,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	add_simple_tag("1 $gedprim");
 	
 	//-- don't show _THUM option to regular users
-	if (userGedcomAdmin()) {
+	if (PGV_USER_GEDCOM_ADMIN) {
 		// 2 _THUM
 		if ($gedrec == "")
 			$gedthum = "_THUM";

@@ -1060,8 +1060,7 @@ class GedcomDate {
 		// TODO If feedback is positive, create a GUI option to edit it.
 		global $PUBLIC_DATE_FORMAT;
 		
-		$username=getUserName();
-		if (!empty($PUBLIC_DATE_FORMAT) && $date_fmt==$DATE_FORMAT && empty($username))
+		if (!empty($PUBLIC_DATE_FORMAT) && $date_fmt==$DATE_FORMAT && !PGV_USER_ID)
 			$date_fmt=$PUBLIC_DATE_FORMAT;
 
 		// Allow special processing for different languages
@@ -1251,5 +1250,4 @@ function DefaultDateLocalisation(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	if (isset($pgv_lang[$q2]))
 		$q2=$pgv_lang[$q2];
 }
-
 ?>

@@ -112,7 +112,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	print_family_header($famid);
 
 	// -- get the new record and parents if in editing show changes mode
-	if ((userCanEdit()) && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
+	if (PGV_USER_CAN_EDIT && isset($pgv_changes[$famid . "_" . $GEDCOM])) {
 		$newrec = find_updated_record($famid);
 		$newparents = find_parents_in_record($newrec);
 	}
@@ -275,7 +275,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 
 	$newchildren = array();
 	$oldchildren = array();
-	if (userCanEdit()) {
+	if (PGV_USER_CAN_EDIT) {
 		if ((isset($_REQUEST['show_changes'])&&$_REQUEST['show_changes']=='yes') && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
 			$newrec = find_updated_record($famid);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $newrec, $match, PREG_SET_ORDER);
@@ -432,7 +432,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
    }
    print "</table><br />";
 
-   if (($view != "preview") && ($sosa == 0) && (userCanEdit())) {
+   if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT) {
 	   print_help_link("add_child_help", "qm", "add_child_to_family");
 		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
 		print "<span style='white-space:nowrap;'>";
@@ -505,7 +505,7 @@ function print_family_facts(&$family, $sosa = 0) {
 			}
 		}
 		// -- new fact link
-		if (($view != "preview") && ($sosa == 0) && (userCanEdit())) {
+		if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT) {
 			print_add_new_fact($famid, $indifacts, "FAM");
 			// -- new note
 			print "<tr><td class=\"descriptionbox\">";
@@ -576,11 +576,11 @@ function check_rootid($rootid) {
 	global $user, $GEDCOM, $GEDCOM_ID_PREFIX, $PEDIGREE_ROOT_ID, $USE_RIN;
 	// -- if the $rootid is not already there then find the first person in the file and make him the root
 	if (!find_person_record($rootid)) {
-		if (find_person_record(get_user_gedcom_setting(getUserName(), $GEDCOM, 'rootid'))) {
-			$rootid=get_user_gedcom_setting(getUserName(), $GEDCOM, 'rootid');
+		if (find_person_record(PGV_USER_ROOT_ID)) {
+			$rootid=PGV_USER_ROOT_ID;
 		} else {
-			if (find_person_record(get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid'))) {
-				$rootid=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
+			if (find_person_record(PGV_USER_GEDCOM_ID)) {
+				$rootid=PGV_USER_GEDCOM_ID;
 			} else {
 				if (find_person_record(trim($PEDIGREE_ROOT_ID))) {
 					$rootid=trim($PEDIGREE_ROOT_ID);

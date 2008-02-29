@@ -476,10 +476,8 @@ class MenuBar
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $PEDIGREE_ROOT_ID;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		
-		$username = getUserName();
-		
-		if (get_user_gedcom_setting($username, $GEDCOM, 'gedcomid')) {
-			$link = "individual.php?pid=".get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+		if (PGV_USER_GEDCOM_ID) {
+			$link = "individual.php?pid=".PGV_USER_GEDCOM_ID;
 		} else {
 			$link = "index.php?ctype=user";
 		}
@@ -492,6 +490,7 @@ class MenuBar
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
 
+		$username = PGV_USER_NAME;
 		if ($username) {
 			if (!empty($user["gedcomid"][$GEDCOM])) {
 				//-- my_indi submenu
@@ -531,7 +530,7 @@ class MenuBar
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
-			if ((userIsAdmin()) || (userGedcomAdmin())){
+			if (PGV_USER_GEDCOM_ADMIN){
 				$menu->addSeperator();
 				//-- admin submenu
 				$submenu = new Menu($pgv_lang["admin"], "admin.php");
@@ -560,7 +559,7 @@ class MenuBar
 					$menu->addSubmenu($submenu);
 				}
 			}
-			else if (userCanEdit()) {
+			else if (PGV_USER_CAN_EDIT) {
 				//-- upload_media submenu
 				 if (is_writable($MEDIA_DIRECTORY) && $MULTI_MEDIA) {
 					$menu->addSeperator();
@@ -735,14 +734,13 @@ class MenuBar
 				//-- relationship
 				$pids[] = $myid;
 				if ($rootid && empty($myid)) {
-					$username = getUserName();
-					if ($username) {
-						$pids[] = get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
-						$pids[] = get_user_gedcom_setting($username, $GEDCOM, 'rootid');
+					if (PGV_USER_ID) {
+						$pids[] = PGV_USER_GEDCOM_ID;
+						$pids[] = PGV_USER_ROOT_ID;
 					}
 				}
 				if ($rootid) {
-					foreach (getUserFavorites(getUserName()) as $key=>$favorite) {
+					foreach (getUserFavorites(PGV_USER_NAME) as $key=>$favorite) {
 						$pid = $favorite["gid"];
 						if (displayDetailsById($pid, $favorite["type"])) {
 							if ($favorite["type"]=="INDI" && $favorite["file"]==$GEDCOM) $pids[]=$pid;
@@ -840,7 +838,7 @@ class MenuBar
 		$menuList = array();
 		$menuList["individual"] = $pgv_lang["individual_list"];
 		if (file_exists("famlist.php")) $menuList["family"] = $pgv_lang["family_list"];
-		if (!$surname and file_exists("sourcelist.php") and $SHOW_SOURCES>=getUserAccessLevel()) $menuList["source"] = $pgv_lang["source_list"];
+		if (!$surname and file_exists("sourcelist.php") and $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
 		if (!$surname and file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
 		if (!$surname and file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
 		if (!$surname and file_exists("medialist.php") and $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
@@ -1016,11 +1014,11 @@ class MenuBar
 		// Produce those submenus in localized name order
 
 		//print_r($reports);
-		$username = getUserName();
+		$username = PGV_USER_NAME;
 		foreach($menuList as $file=>$label) {
 			$report = $reports[$file];
 			if (!isset($report["access"])) $report["access"] = $PRIV_PUBLIC;
-			if ($report["access"]>=getUserAccessLevel()) {
+			if ($report["access"]>=PGV_USER_ACCESS_LEVEL) {
 				if (!empty($report["title"][$LANGUAGE])) $label = $report["title"][$LANGUAGE];
 				else $label = implode("", $report["title"]);
 				// indi report
@@ -1056,7 +1054,7 @@ class MenuBar
 			$menu->print_menu = null;
 			return $menu;
 			}
-		if ($ENABLE_CLIPPINGS_CART < getUserAccessLevel()) return null;
+		if ($ENABLE_CLIPPINGS_CART <PGV_USER_ACCESS_LEVEL) return null;
 		//-- main clippings menu item
 		$menu = new Menu($pgv_lang["clippings_cart"], "clippings.php?ged=$GEDCOM", "down");
 		if (!empty($PGV_IMAGES["clippings"]["large"]))
@@ -1132,7 +1130,7 @@ class MenuBar
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 		//-- search_replace sub menu
-		if(userCanEdit(getUserName()))
+		if(PGV_USER_CAN_EDIT)
 		{
 		$submenu = new Menu($pgv_lang["search_replace"], "search.php?ged=$GEDCOM&amp;action=replace");
 		if (!empty($PGV_IMAGES["search"]["small"]))
@@ -1142,7 +1140,7 @@ class MenuBar
 		}
 
 		//-- search_multisite sub menu
-		if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
+		if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
 			$sitelist = get_server_list();
 			if (count($sitelist)>0) {
 				$submenu = new Menu($pgv_lang["multi_site_search"], "search.php?ged=$GEDCOM&amp;action=multisite");
@@ -1250,7 +1248,7 @@ class MenuBar
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
-		if (userGedcomAdmin()) {
+		if (PGV_USER_GEDCOM_ADMIN) {
 			$submenu = new Menu($pgv_lang["wiki_admin_guide"], "http://wiki.phpgedview.net/en/index.php/Administrators_Guide\" target=\"wiki");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);

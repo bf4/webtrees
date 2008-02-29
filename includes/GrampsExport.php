@@ -88,7 +88,7 @@ class GrampsExport {
  */
 	function begin_xml() {
 		global $pgv_lang, $factarray;//, $eventsArray, $dom, $ePeople, $this->eFams, $eSources, $ePlaces, $eObject;
-		$user = getUserName();
+		$user = PGV_USER_NAME;
 
 		$this->dom = new DomDocument("1.0", "UTF-8");
 		$this->dom->formatOutput = true;
