@@ -789,7 +789,7 @@ function printConfigForm(){
 
 	require_once("js/dhtmlXTabbar.js.htm");
 	?>
-	<div id="conf_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="height: 380px">
+	<div id="conf_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="min-width: 450px; height: 380px">
 		<div id="conf_basic" name="<?php print $pgv_lang['basic_site_config'];?>" class="indent" >
 		<table>
 			<tr>
