@@ -859,9 +859,7 @@ if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
 	}
 }
 
-if (!isset($pgv_username)) {
-	$pgv_username = getUserName();
-}
+$pgv_user_id  = getUserId();
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);
@@ -912,7 +910,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 	//-----------------------------------
 	//-- if user wishes to logout this is where we will do it
 	if ((!empty($logout))&&($logout==1)) {
-		userLogout($pgv_username);
+		userLogout($pgv_user_id);
 		if ($REQUIRE_AUTHENTICATION) {
 			header("Location: ".$HOME_SITE_URL);
 			exit;
@@ -921,7 +919,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 
 
 	if ($REQUIRE_AUTHENTICATION) {
-		if (empty($pgv_username)) {
+		if (empty($pgv_user_id)) {
 			if ((strstr($SCRIPT_NAME, "login.php")===false)
 					&&(strstr($SCRIPT_NAME, "login_register.php")===false)
 					&&(strstr($SCRIPT_NAME, "client.php")===false)
@@ -960,7 +958,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
    }
 
    //-- load any editing changes
-   if (userCanEdit($pgv_username)) {
+   if (userCanEdit($pgv_user_id)) {
       if (file_exists($INDEX_DIRECTORY."pgv_changes.php")) require_once($INDEX_DIRECTORY."pgv_changes.php");
       else $pgv_changes = array();
    }
@@ -973,15 +971,15 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 }
 
 //-- load the user specific theme
-if ((!empty($pgv_username))&&(!isset($logout))) {
+if ((!empty($pgv_user_id))&&(!isset($logout))) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
-		userUpdateLogin($pgv_username);
+		userUpdateLogin($pgv_user_id);
 		$_SESSION['activity_time'] = time();
 	}
 
-	$usertheme = get_user_setting($pgv_username, 'theme');
-	if ((!empty($_POST["user_theme"]))&&(!empty($_POST["oldusername"]))&&($_POST["oldusername"]==$pgv_username)) $usertheme = $_POST["user_theme"];
+	$usertheme = get_user_setting($pgv_user_id, 'theme');
+	if ((!empty($_POST["user_theme"]))&&(!empty($_POST["oldusername"]))&&($_POST["oldusername"]==$pgv_user_id)) $usertheme = $_POST["user_theme"];
 	if ((!empty($usertheme)) && (file_exists($usertheme."theme.php")))  {
 		$THEME_DIR = $usertheme;
 	}
@@ -990,9 +988,9 @@ if ((!empty($pgv_username))&&(!isset($logout))) {
 if (isset($_SESSION["theme_dir"]))
 {
 	$THEME_DIR = $_SESSION["theme_dir"];
-	if (!empty($pgv_username))
+	if (!empty($pgv_user_id))
 	{
-		if (get_user_setting($pgv_username, 'editaccount')=='Y') unset($_SESSION["theme_dir"]);
+		if (get_user_setting($pgv_user_id, 'editaccount')=='Y') unset($_SESSION["theme_dir"]);
 	}
 }
 
