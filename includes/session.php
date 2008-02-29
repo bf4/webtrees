@@ -879,7 +879,11 @@ define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
 define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID));
 define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'gedcomid'));
 define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'rootid'));
-define('PGV_GED_ID',            $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']));
+if (empty($GEDCOMS)) {
+	define('PGV_GED_ID', null);
+} else {
+	define('PGV_GED_ID', $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']));
+}
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);

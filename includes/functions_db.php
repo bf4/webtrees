@@ -3733,8 +3733,8 @@ function get_user_setting($user_id, $parameter) {
 
 	$user_id=$DBCONN->escapeSimple($user_id);
 	$sql="SELECT * FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'";
-	$res=dbquery($sql);
-	if ($res==false)
+	$res=dbquery($sql, false);
+	if ($res==false || DB::isError($res))
 		return null;
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
