@@ -126,8 +126,8 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		//-- check for the user
-		if (getUserName()) {
-			$this->default_tab=get_user_setting(getUserName(), 'defaulttab');
+		if (PGV_USER_ID) {
+			$this->default_tab=get_user_setting(PGV_USER_ID, 'defaulttab');
 		}
 
 		//-- check for a cookie telling what the last tab was when they were last
@@ -180,7 +180,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && userCanEdit()) {
+		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 				 //-- get the changed record from the file
 				$newrec = find_updated_record($this->pid);
@@ -226,9 +226,9 @@ class IndividualControllerRoot extends BaseController {
 
 		//-- only allow editors or users who are editing their own individual or their immediate relatives
 		if ($this->indi->canDisplayDetails()) {
-			$this->canedit = userCanEdit();
+			$this->canedit = PGV_USER_CAN_EDIT;
 			if (!$this->canedit && $USE_QUICK_UPDATE) {
-				$my_id=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
+				$my_id=PGV_USER_GEDCOM_ID;
 				if ($my_id) {
 					if ($this->pid==$my_id) $this->canedit=true;
 					else {
@@ -259,12 +259,12 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function addFavorite() {
 		global $GEDCOM;
-		if (getUserName() && !empty($_REQUEST["gid"])) {
+		if (PGV_USER_ID && !empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
 			$indirec = find_person_record($gid);
 			if ($indirec) {
 				$favorite = array();
-				$favorite["username"] = getUserName();
+				$favorite["username"] = PGV_USER_NAME;
 				$favorite["gid"] = $gid;
 				$favorite["type"] = "INDI";
 				$favorite["file"] = $GEDCOM;
@@ -281,7 +281,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function acceptChanges() {
 		global $GEDCOM, $indilist;
-		if (!userCanAccept()) return;
+		if (!PGV_USER_CAN_ACCEPT) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes="no";
@@ -537,8 +537,8 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if (userCanEdit()) {
-			if (userIsAdmin() || $this->canShowGedcomRecord()) {
+		if (PGV_USER_CAN_EDIT) {
+			if (PGV_USER_IS_ADMIN || $this->canShowGedcomRecord()) {
 				$submenu = new Menu($pgv_lang["edit_raw"]);
 				$submenu->addOnclick("return edit_raw('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -587,7 +587,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
-			if (userCanAccept()) {
+			if (PGV_USER_CAN_ACCEPT) {
 				$submenu = new Menu($pgv_lang["undo_all"], "individual.php?pid=".$this->pid."&amp;action=undo");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -609,7 +609,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function canShowOtherMenu() {
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
-		if ($this->indi->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=getUserAccessLevel()))
+		if ($this->indi->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL))
 			return true;
 		return false;
 	}
@@ -627,7 +627,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && userCanEdit())
+			if ($this->show_changes=="yes"  && PGV_USER_CAN_EDIT)
 				$menu->addOnclick("return show_gedcom_record('new');");
 			else
 				$menu->addOnclick("return show_gedcom_record('');");
@@ -642,19 +642,19 @@ class IndividualControllerRoot extends BaseController {
 			$submenu = new Menu($pgv_lang["view_gedcom"]);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && userCanEdit()) $submenu->addOnclick("return show_gedcom_record('new');");
+			if ($this->show_changes=="yes"  && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=getUserAccessLevel()) {
+		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
 			$submenu = new Menu($pgv_lang["add_to_cart"], "clippings.php?action=add&amp;id=".$this->pid."&amp;type=indi");
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->indi->canDisplayDetails() && getUserName()) {
+		if ($this->indi->canDisplayDetails() && PGV_USER_NAME) {
 			$submenu = new Menu($pgv_lang["add_to_my_favorites"], "individual.php?action=addfav&amp;pid=".$this->pid."&amp;gid=".$this->pid);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
@@ -990,7 +990,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		//-- new fact link
-		if ((!$this->isPrintPreview()) && (userCanEdit()) && ($this->indi->canDisplayDetails())) {
+		if ((!$this->isPrintPreview()) && PGV_USER_CAN_EDIT && ($this->indi->canDisplayDetails())) {
 			print_add_new_fact($this->pid, $indifacts, "INDI");
 		}
 		?>
@@ -1053,7 +1053,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 			//-- New Note Link
-			if (!$this->isPrintPreview() && (userCanEdit())&&$this->indi->canDisplayDetails()) {
+			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 			?>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_note_help", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
@@ -1125,7 +1125,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
 			//-- New Source Link
-			if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 			?>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_source_help", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>
@@ -1183,7 +1183,7 @@ class IndividualControllerRoot extends BaseController {
 			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr>\n";
 
 			//-- New Media link
-			if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 		   	?>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
@@ -1215,7 +1215,7 @@ class IndividualControllerRoot extends BaseController {
 		$families = $this->indi->getChildFamilies();
 		if (count($families)==0) {
 			print "<span class=\"subheaders\">".$pgv_lang["relatives"]."</span>";
-			if (/**(!$this->isPrintPreview()) &&**/ (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+			if (/**!$this->isPrintPreview() &&**/ PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 				?>
 				<table class="facts_table">
 					<tr>
@@ -1274,7 +1274,7 @@ class IndividualControllerRoot extends BaseController {
 					$elderdate = $people["husb"]->getBirthDate(false);
 				}
 				else if (!isset($people["newhusb"])) {
-					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+					if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
 					<tr><td class="facts_label"><?php print $pgv_lang["add_father"]; ?></td>
 					<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript <?php print $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'HUSB', '<?php print $famid; ?>');"><?php print $pgv_lang["add_father"]; ?></a></td>
@@ -1305,7 +1305,7 @@ class IndividualControllerRoot extends BaseController {
 					<?php
 				}
 				else if (!isset($people["newwife"])) {
-					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+					if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 						?>
 						<tr><td class="facts_label"><?php print $pgv_lang["add_mother"]; ?></td>
 						<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript:;" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'WIFE', '<?php print $famid; ?>');"><?php print $pgv_lang["add_mother"]; ?></a></td>
@@ -1313,7 +1313,7 @@ class IndividualControllerRoot extends BaseController {
 						<?php
 					}
 				}
-				if ($family->getMarriageRecord()!="" || userCanEdit(getUserName())) {
+				if ($family->getMarriageRecord()!="" || PGV_USER_CAN_EDIT) {
 					$styleadd = "";
 					$date = $family->getMarriageDate();
 					$place = $family->getMarriagePlace();
@@ -1336,7 +1336,7 @@ class IndividualControllerRoot extends BaseController {
 						$date=new GedcomDate($date);
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
 					}
-					else if ($family->getMarriageRecord()=="" && userCanEdit(getUserName())) {
+					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
 					}
 					 ?>
@@ -1364,11 +1364,11 @@ class IndividualControllerRoot extends BaseController {
 					<?php
 					$elderdate = $child->getBirthDate(false);
 				}
-				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
 					<tr>
 						<td class="facts_label">
-							<?php if (userCanEdit() && isset($people["children"][1])) {?>
+							<?php if (PGV_USER_CAN_EDIT && isset($people["children"][1])) {?>
 								<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print $pgv_lang['reorder_children']; ?></a>
 							<?php }?>
 						</td>
@@ -1452,7 +1452,7 @@ class IndividualControllerRoot extends BaseController {
 					</tr>
 					<?php
 				}
-				if ($family->getMarriageRecord()!="" || userCanEdit(getUserName())) {
+				if ($family->getMarriageRecord()!="" || PGV_USER_CAN_EDIT) {
 					$styleadd = "";
 					$date = $family->getMarriageDate();
 					$place = $family->getMarriagePlace();
@@ -1475,7 +1475,7 @@ class IndividualControllerRoot extends BaseController {
 						$date=new GedcomDate($date);
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
 					}
-					else if ($family->getMarriageRecord()=="" && userCanEdit(getUserName())) {
+					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
 					}
 					 ?>
@@ -1503,11 +1503,11 @@ class IndividualControllerRoot extends BaseController {
 					<?php
 					$elderdate = $child->getBirthDate(false);
 				}
-				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
 					<tr>
 						<td class="facts_label">
-							<?php if (userCanEdit() && isset($people["children"][1])) {?>
+							<?php if (PGV_USER_CAN_EDIT && isset($people["children"][1])) {?>
 								<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print $pgv_lang['reorder_children']; ?></a>
 							<?php }?>
 						</td>
@@ -1591,7 +1591,7 @@ class IndividualControllerRoot extends BaseController {
 					<?php
 				}
 				if ($spousetag=="WIFE" && !isset($people["newwife"]) && !isset($people["wife"])) {
-					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+					if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 						?>
 						<tr><td class="facts_label"><?php print $pgv_lang["add_wife"]; ?></td>
 						<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $famid; ?>', 'WIFE');"><?php print $pgv_lang["add_wife_to_family"]; ?></a></td>
@@ -1600,7 +1600,7 @@ class IndividualControllerRoot extends BaseController {
 					}
 				}
 				if ($spousetag=="HUSB" && !isset($people["newhusb"]) && !isset($people["husb"])) {
-					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+					if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 						?>
 						<tr><td class="facts_label"><?php print $pgv_lang["add_husb"]; ?></td>
 						<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $famid; ?>', 'HUSB');"><?php print $pgv_lang["add_husb_to_family"]; ?></a></td>
@@ -1608,7 +1608,7 @@ class IndividualControllerRoot extends BaseController {
 						<?php
 					}
 				}
-				if ($family->getMarriageRecord()!="" || userCanEdit(getUserName())) {
+				if ($family->getMarriageRecord()!="" || PGV_USER_CAN_EDIT) {
 					$styleadd = "";
 					$date = $family->getMarriageDate();
 					$place = $family->getMarriagePlace();
@@ -1631,7 +1631,7 @@ class IndividualControllerRoot extends BaseController {
 						$date=new GedcomDate($date);
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
 					}
-					else if ($family->getMarriageRecord()=="" && userCanEdit(getUserName())) {
+					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
 					}
 					 ?>
@@ -1659,11 +1659,11 @@ class IndividualControllerRoot extends BaseController {
 					<?php
 					$elderdate = $child->getBirthDate(false);
 				}
-				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
 					<tr>
 						<td class="facts_label">
-							<?php if (userCanEdit() && isset($people["children"][1])) {?>
+							<?php if (PGV_USER_CAN_EDIT && isset($people["children"][1])) {?>
 								<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print $pgv_lang['reorder_children']; ?></a>
 							<?php }?>
 						</td>
@@ -1690,7 +1690,7 @@ class IndividualControllerRoot extends BaseController {
 		</script>
 		<br />
 		<?php
-		if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+		if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 		?>
 		<table class="facts_table">
 		<?php if (count($families)>1) { ?>
@@ -1746,7 +1746,7 @@ class IndividualControllerRoot extends BaseController {
 				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_as_wife"]; ?></a>
 				</td>
 			</tr>
-			<?php } if (userGedcomAdmin()) { ?>
+			<?php } if (PGV_USER_GEDCOM_ADMIN) { ?>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_remote_help", "qm"); ?>
@@ -1763,7 +1763,7 @@ class IndividualControllerRoot extends BaseController {
 	function print_research_tab() {
 		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
 		global $LANGUAGE, $lang_short_cut;
-		if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
+		if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
 			if (!$this->indi->canDisplayDetails()) { ?>
 				<table class="facts_table">
 			    <tr><td class="facts_value">
@@ -1796,7 +1796,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($GOOGLEMAP_ENABLED == "false") {
 	        print "<table class=\"facts_table\">\n";
 					print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
-	        if (userIsAdmin()) {
+	        if (PGV_USER_IS_ADMIN) {
 	            print "<tr><td align=\"center\" colspan=\"2\">\n";
 	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 	            print "</td></tr>\n";

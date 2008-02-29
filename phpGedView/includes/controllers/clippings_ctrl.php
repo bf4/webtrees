@@ -87,7 +87,7 @@ class ClippingsControllerRoot extends BaseController {
 			$ENABLE_CLIPPINGS_CART = $PRIV_HIDE;
 		if ($ENABLE_CLIPPINGS_CART === true)
 			$ENABLE_CLIPPING_CART = $PRIV_PUBLIC;
-		if ($ENABLE_CLIPPINGS_CART < getUserAccessLevel()) {
+		if ($ENABLE_CLIPPINGS_CART < PGV_USER_ACCESS_LEVEL) {
 			header("Location: index.php");
 			exit;
 		}
@@ -534,7 +534,7 @@ function download_clipping(){
 			//-- look in the gedcom record for any linked SOUR, NOTE, or OBJE and also add them to the
 			//- clippings cart
 			$gedrec = find_gedcom_record($clipping['id']);
-			if ($SHOW_SOURCES >= getUserAccessLevel()) {
+			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
 				$st = preg_match_all("/\d SOUR @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 				for ($i = 0; $i < $st; $i++) {
 					// add SOUR

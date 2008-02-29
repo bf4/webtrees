@@ -121,7 +121,7 @@ class GedcomRecord {
 		}
 		//-- check if it is a new object not yet in the database
 		if (empty($indirec)) {
-			if (userCanEdit() && isset($pgv_changes[$pid."_".$GEDCOM])) {
+			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$pid."_".$GEDCOM])) {
 				$indirec = find_updated_record($pid);
 				$fromfile = true;
 			}
@@ -312,7 +312,7 @@ class GedcomRecord {
 	function undoChange() {
 		global $GEDCOM, $pgv_changes;
 		require_once('includes/functions_edit.php');
-		if (!userCanAccept()) return false;
+		if (!PGV_USER_CAN_ACCEPT) return false;
 		$cid = $this->xref."_".$GEDCOM;
 		if (!isset($pgv_changes[$cid])) return false;
 		$index = count($pgv_changes[$cid])-1;
@@ -327,7 +327,7 @@ class GedcomRecord {
 	function isMarkedDeleted() {
 		global $pgv_changes, $GEDCOM;
 
-		if (!userCanEdit()) return false;
+		if (!PGV_USER_CAN_EDIT) return false;
 		if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
 			$change = end($pgv_changes[$this->xref."_".$GEDCOM]);
 			if ($change['type']=='delete') return true;
