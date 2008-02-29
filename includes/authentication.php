@@ -146,13 +146,8 @@ function userLogout($user_id) {
  * inactive for the defined session time
  * @param string $username	the username to update the login info for
  */
-function userUpdateLogin($username) {
-	if (empty($username))
-		$username = getUserName();
-	if (empty($username))
-		return;
-
-	set_user_setting($username, 'sessiontime', time());
+function userUpdateLogin($user_id) {
+	set_user_setting($user_id, 'sessiontime', time());
 }
 
 /**
@@ -217,14 +212,14 @@ function getUserId() {
  * user has administrative privileges
  * to change the configuration files
  */
-function userIsAdmin($username="") {
+function userIsAdmin($user_id=null) {
 	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true)
 		return false;
 
-	if (empty($username))
-		$username=getUserName();
+	if (is_null($user_id))
+		$user_id=getUserId();
 
-	return get_user_setting($username, 'canadmin')=='Y';
+	return get_user_setting($user_id, 'canadmin')=='Y';
 }
 
 /**
@@ -234,22 +229,22 @@ function userIsAdmin($username="") {
  * user has administrative privileges
  * to change the configuration files for the currently active gedcom
  */
-function userGedcomAdmin($username="", $ged="") {
+function userGedcomAdmin($user_id=null, $ged="") {
 	global $GEDCOM;
 
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
 
-	if (empty($username))
-		$username=getUserName();
+	if (is_null($user_id))
+		$user_id=getUserId();
 
-	if (get_user_setting($username, 'canadmin')=='Y')
+	if (get_user_setting($user_id, 'canadmin')=='Y')
 		return true;
 
 	if (empty($ged))
 		$ged = $GEDCOM;
 
-	return get_user_gedcom_setting($username, $ged, 'canedit')=='admin';
+	return get_user_gedcom_setting($user_id, $ged, 'canedit')=='admin';
 	}
 
 /**
@@ -265,8 +260,8 @@ function userCanAccess() {
 	static $cache=null;
 
 	if (is_null($cache)) {
-		$username=getUserName();
-		$cache=get_user_setting($username, 'canadmin')=='Y' || get_user_gedcom_setting($username, $GEDCOM, 'canedit')!='none';
+		$user_id=getUserId();
+		$cache=get_user_setting($user_id, 'canadmin')=='Y' || get_user_gedcom_setting($user_id, $GEDCOM, 'canedit')!='none';
 	}
 	return $cache;
 }
@@ -279,19 +274,19 @@ function userCanAccess() {
  * @param string $username the username of the user to check
  * @return boolean true if user can edit false if they cannot
  */
-function userCanEdit($username="") {
+function userCanEdit($user_id=null) {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
 
-	if (empty($username))
-		$username=getUserName();
+	if (is_null($user_id))
+		$user_id=getUserId();
 
-	if (get_user_setting($username, 'canadmin')=='Y')
+	if (get_user_setting($user_id, 'canadmin')=='Y')
 		return true;
 
-	$tmp=get_user_gedcom_setting($username, $GEDCOM, 'canedit');
+	$tmp=get_user_gedcom_setting($user_id, $GEDCOM, 'canedit');
 	return $tmp=='admin' || $tmp=='accept' || $tmp=='edit';
 	}
 
@@ -303,22 +298,22 @@ function userCanEdit($username="") {
  * @param string $username	the username of the user check privileges
  * @return boolean true if user can accept false if user cannot accept
  */
-function userCanAccept($username="") {
+function userCanAccept($user_id=null) {
 	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
 
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
 
-	if (empty($username))
-		$username=getUserName();
+	if (is_null($user_id))
+		$user_id=getUserId();
 
-	if (get_user_setting($username, 'canadmin')=='Y')
+	if (get_user_setting($user_id, 'canadmin')=='Y')
 		return true;
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
 	
-	$tmp=get_user_gedcom_setting($username, $GEDCOM, 'canedit');
+	$tmp=get_user_gedcom_setting($user_id, $GEDCOM, 'canedit');
 	return $tmp=='admin' || $tmp=='accept';
 	}
 
@@ -328,7 +323,7 @@ function userCanAccept($username="") {
  * @return boolean 		true if the changes should automatically be accepted
  */
 function userAutoAccept() {
-	return get_user_setting(getUserName(), 'auto_accept')=='Y';
+	return get_user_setting(getUserId(), 'auto_accept')=='Y';
 }
 
 /**

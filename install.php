@@ -1022,7 +1022,6 @@ function printAdminUserForm() {
 			<?php
 	}
 	else {
-		$users = get_all_users();
 		?>
 		The following administrative users already exist:
 		<table>
@@ -1031,12 +1030,12 @@ function printAdminUserForm() {
 		<td class="topbottombar"><?php print $pgv_lang["lastname"];?></td>
 		<td class="topbottombar"><?php print $pgv_lang["emailadress"];?></td>
 		</tr>
-		<?php foreach($users as $username=>$user) {
-		if (userIsAdmin($username)) {?>
-		<tr><td class="optionbox"><?php print $username;?></td>
-		<td class="optionbox"><?php print get_user_setting($username, "firstname");?></td>
-		<td class="optionbox"><?php print get_user_setting($username, "lastname");?></td>
-		<td class="optionbox"><?php print get_user_setting($username, "email");?></td>
+		<?php foreach(get_all_users() as $user_id=>$user_name) {
+		if (userIsAdmin($user_id)) {?>
+		<tr><td class="optionbox"><?php print $user_name;?></td>
+		<td class="optionbox"><?php print get_user_setting($user_id, "firstname");?></td>
+		<td class="optionbox"><?php print get_user_setting($user_id, "lastname");?></td>
+		<td class="optionbox"><?php print get_user_setting($user_id, "email");?></td>
 		</tr>
 		<?php }
 		 } ?>
