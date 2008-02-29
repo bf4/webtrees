@@ -3559,15 +3559,19 @@ function get_user_id($username) {
 function get_user_name($user_id) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("SELECT user_name FROM {$TBLPREFIX}user WHERE user_id=?");
-	$statement->bindValue(1, $user_id, PDO::PARAM_STR);
-	$statement->execute();
-	++$TOTAL_QUERIES;
-	$row=$statement->fetchObject();
-	$statement->closeCursor();
-	if ($row) {
-		return $row->user_name;
-	} else {
+	try {
+		$statement=$DBH->prepare("SELECT user_name FROM {$TBLPREFIX}user WHERE user_id=?");
+		$statement->bindValue(1, $user_id, PDO::PARAM_STR);
+		$statement->execute();
+		++$TOTAL_QUERIES;
+		$row=$statement->fetchObject();
+		$statement->closeCursor();
+		if ($row) {
+			return $row->user_name;
+		} else {
+			return null;
+		}
+	} catch (PDOException $e) {
 		return null;
 	}
 }

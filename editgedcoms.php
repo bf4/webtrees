@@ -62,7 +62,7 @@ if (!isset($ged)) $ged = "";
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-$username = getUserName();
+$user_id = getUserId();
 if (!userGedcomAdmin()) {
 	header("Location: login.php?url=editgedcoms.php");
 	exit;
@@ -103,7 +103,7 @@ print "<br /><br />";
 // Default gedcom choice
 print "<br />";
 if (count($GEDCOMS)>0) {
-	if (userIsAdmin($username)) {
+	if (userIsAdmin($user_id)) {
 		print_help_link("default_gedcom_help", "qm");
 		print $pgv_lang["DEFAULT_GEDCOM"]."&nbsp;";
 		print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
@@ -122,7 +122,7 @@ print_help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help', 'qm');
 print '<a href="editgedcoms.php?check_download=true">'.$pgv_lang['SECURITY_CHECK_GEDCOM_DOWNLOADABLE']."</a>\n";
 // Print table heading
 print "<table class=\"gedcom_table\">";
-if (userIsAdmin($username)) {
+if (userIsAdmin($user_id)) {
 	print "<tr><td class=\"list_label\">";
 	print_help_link("help_addgedcom.php", "qm");
 	print "<a href=\"editconfig_gedcom.php?source=add_form\">".$pgv_lang["add_gedcom"]."</a>";
@@ -132,7 +132,7 @@ print "<td class=\"list_label\">";
 print_help_link("help_uploadgedcom.php", "qm");
 print "<a href=\"editconfig_gedcom.php?source=upload_form\">".$pgv_lang["upload_gedcom"]."</a>";
 print "</td>";
-if (userIsAdmin($username)) {
+if (userIsAdmin($user_id)) {
 	print "<td class=\"list_label\">";
 	print_help_link("help_addnewgedcom.php", "qm");
 	print "<a href=\"editconfig_gedcom.php?source=add_new_form\">".$pgv_lang["add_new_gedcom"]."</a>";
@@ -147,7 +147,7 @@ $GedCount = 0;
 
 // Print the table of available GEDCOMs
 	foreach($GEDCOMS as $gedc=>$gedarray) {
-		if (userGedcomAdmin($username, $gedc)) {
+		if (userGedcomAdmin($user_id, $gedc)) {
 			if (empty($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = $gedc;
 
 			// Row 0: Separator line
@@ -378,7 +378,7 @@ if (isset($GEDCOMS[$current_ged]) && file_exists($GEDCOMS[$current_ged]["config"
 print "</form>";
 if (count($GEDCOMS)>2) {
 	print "<table class=\"gedcom_table\">";
-	if (userIsAdmin($username)) {
+	if (userIsAdmin($user_id)) {
 		print "<tr><td class=\"list_label\">";
 		print_help_link("help_addgedcom.php", "qm");
 		print "<a href=\"editconfig_gedcom.php?source=add_form\">".$pgv_lang["add_gedcom"]."</a>";
@@ -389,7 +389,7 @@ if (count($GEDCOMS)>2) {
 	print_help_link("help_uploadgedcom.php", "qm");
 	print "<a href=\"editconfig_gedcom.php?source=upload_form\">".$pgv_lang["upload_gedcom"]."</a>";
 	print "</td>";
-	if (userIsAdmin($username)) {
+	if (userIsAdmin($user_id)) {
 		print "<td class=\"list_label\">";
 		print_help_link("help_addnewgedcom.php", "qm");
 		print "<a href=\"editconfig_gedcom.php?source=add_new_form\">".$pgv_lang["add_new_gedcom"]."</a>";

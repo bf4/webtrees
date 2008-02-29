@@ -521,8 +521,7 @@ function import_record($indirec, $update) {
 		} // foreach fact to insert
 	} // if facts to insert
 	else {
-		// A record with no facts?  Delete it.
-		var_dump($indirec);
+		// A record with no facts.
 	}
 }
 
