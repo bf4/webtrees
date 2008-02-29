@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage admin
- * @version $Id: session.php 2564 2008-02-17 10:13:23Z fisharebest $
+ * @version $Id$
  */
 
 /*
