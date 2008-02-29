@@ -1696,7 +1696,7 @@ function write_file() {
 	//-- write the gedcom file
 	if (!is_writable($GEDCOMS[$GEDCOM]["path"])) {
 		print "ERROR 5: GEDCOM file is not writable.  Unable to complete request.\n";
-		AddToChangeLog("ERROR 5: GEDCOM file is not writable.  Unable to complete request. ->" . getUserName() ."<-");
+		AddToChangeLog("ERROR 5: GEDCOM file is not writable.  Unable to complete request. ->" . PGV_USER_NAME ."<-");
 		return false;
 	}
 	//-- only allow one thread to write the file at a time
@@ -1707,20 +1707,20 @@ function write_file() {
 	$fp = fopen($GEDCOMS[$GEDCOM]["path"], "wb");
 	if ($fp===false) {
 		print "ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request.\n";
-		AddToChangeLog("ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request. ->" . getUserName() ."<-");
+		AddToChangeLog("ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request. ->" . PGV_USER_NAME ."<-");
 		return false;
 	}
 	$fl = @flock($fp, LOCK_EX);
 	if (!$fl) {
 //		print "ERROR 7: Unable to obtain file lock.\n";
-		AddToChangeLog("ERROR 7: Unable to obtain file lock. ->" . getUserName() ."<-");
+		AddToChangeLog("ERROR 7: Unable to obtain file lock. ->" . PGV_USER_NAME ."<-");
 //		fclose($fp);
 //		return false;
 	}
 	$fw = fwrite($fp, $fcontents);
 	if ($fw===false) {
 		print "ERROR 7: Unable to write to GEDCOM file.\n";
-		AddToChangeLog("ERROR 7: Unable to write to GEDCOM file. ->" . getUserName() ."<-");
+		AddToChangeLog("ERROR 7: Unable to write to GEDCOM file. ->" . PGV_USER_NAME ."<-");
 		$fl = @flock($fp, LOCK_UN);
 		fclose($fp);
 		return false;
@@ -1729,7 +1729,7 @@ function write_file() {
 	fclose($fp);
 	//-- always release the mutex
 	$mutex->Release();
-	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated by >".getUserName()."<");
+	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated by >".PGV_USER_NAME."<");
  	if (!empty($COMMIT_COMMAND)) check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
 
 	return true;;
@@ -1845,7 +1845,7 @@ function accept_changes($cid) {
 			unset ($_SESSION["recent_changes"]["user"][$GEDCOM]);
 		if (isset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]))
 			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
-		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database ->" . getUserName() . "<-");
+		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database ->" . PGV_USER_NAME . "<-");
 		if (!empty ($COMMIT_COMMAND))
 			check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
 		if (isset ($change["linkpid"]))

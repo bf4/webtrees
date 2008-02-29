@@ -40,12 +40,12 @@ loadLangFile("pgv_confighelp");
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (strstr($_SERVER['SCRIPT_NAME'], "usermigrate_cli.php")) {
-	if (userIsAdmin() || !isset($argc)) {
+	if (PGV_USER_IS_ADMIN || !isset($argc)) {
 		header("Location: usermigrate.php");
 		exit;
 	}
 }
-else if (!userIsAdmin(getUserName())) {
+else if (!PGV_USER_IS_ADMIN) {
 	header("Location: login.php?url=usermigrate.php");
 	exit;
 }
@@ -337,7 +337,7 @@ class UserMigrateControllerRoot extends BaseController {
 							}
 						}
 					}
-					AddToLog(getUserName()." added user -> {$user['username']} <-");
+					AddToLog(PGV_USER_NAME." added user -> {$user['username']} <-");
 				}
 			}
 			if ($countold == get_user_count()) {

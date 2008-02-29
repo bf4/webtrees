@@ -39,6 +39,7 @@ if (!isset($LOGIN_URL)) $LOGIN_URL = "";
 if (!isset($COMMIT_COMMAND)) $COMMIT_COMMAND="";
 if ($CONFIGURED) {
 	if (check_db(true)) {
+		require_once 'includes/create_db_schema.php';
 		//-- check if no users have been defined and create the main admin user
 		if (!adminUserExists()) {
 			require_once 'includes/create_db_schema.php';

@@ -114,7 +114,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		
 		if ($this->mediaobject->canDisplayDetails()) {
-			$this->canedit = userCanEdit();
+			$this->canedit = PGV_USER_CAN_EDIT;
 		}
 	}
 
@@ -123,7 +123,7 @@ class MediaControllerRoot extends IndividualController{
 	 */
 	function addFavorite() {
 		global $GEDCOM;
-		if (!getUserName()) {
+		if (!PGV_USER_ID) {
 			return;
 		}
 		if (!empty($_REQUEST["gid"])) {
@@ -131,7 +131,7 @@ class MediaControllerRoot extends IndividualController{
 			$indirec = find_gedcom_record($gid);
 			if ($indirec) {
 				$favorite = array();
-				$favorite["username"] = getUserName();
+				$favorite["username"] = PGV_USER_NAME;
 				$favorite["gid"] = $gid;
 				$favorite["type"] = "OBJE";
 				$favorite["file"] = $GEDCOM;
@@ -149,7 +149,7 @@ class MediaControllerRoot extends IndividualController{
 	 */
 	function acceptChanges() {
 		global $GEDCOM, $medialist;
-		if (!userCanAccept()) return;
+		if (!PGV_USER_CAN_ACCEPT) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes="no";
@@ -212,7 +212,7 @@ class MediaControllerRoot extends IndividualController{
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
-		if (userCanEdit()) {
+		if (PGV_USER_CAN_EDIT) {
 			//- plain edit option
 			$submenu = new Menu($pgv_lang["edit"]);
 			$click_link = "";
@@ -224,14 +224,14 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			
-			if ($SHOW_GEDCOM_RECORD || userIsAdmin()) {
+			if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
 				$submenu = new Menu($pgv_lang["edit_raw"]);
 				$submenu->addOnclick("return edit_raw('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
 			//- end plain edit option
-			if (userGedcomAdmin()) {
+			if (PGV_USER_GEDCOM_ADMIN) {
 				//- remove object option
 				$submenu = new Menu($pgv_lang["remove_object"]);
 				$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);
@@ -276,7 +276,7 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
-			if (userCanAccept()) {
+			if (PGV_USER_CAN_ACCEPT) {
 				$submenu = new Menu($pgv_lang["undo_all"], "mediaviewer.php?mid=".$this->pid."&amp;action=undo");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -294,7 +294,7 @@ class MediaControllerRoot extends IndividualController{
 	 */
 	function canShowOtherMenu() {
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
-		if ($this->mediaobject->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=getUserAccessLevel()))
+		if ($this->mediaobject->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL))
 			return true;
 		return false;
 	}
@@ -313,7 +313,7 @@ class MediaControllerRoot extends IndividualController{
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && userCanEdit())
+			if ($this->show_changes=="yes"  && PGV_USER_CAN_EDIT)
 				$menu->addOnclick("return show_gedcom_record('new');");
 			else
 				$menu->addOnclick("return show_gedcom_record('');");
@@ -328,19 +328,19 @@ class MediaControllerRoot extends IndividualController{
 			$submenu = new Menu($pgv_lang["view_gedcom"]);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && userCanEdit()) $submenu->addOnclick("return show_gedcom_record('new');");
+			if ($this->show_changes=="yes"  && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->mediaobject->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=getUserAccessLevel()) {
+		if ($this->mediaobject->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
 			$submenu = new Menu($pgv_lang["add_to_cart"], "clippings.php?action=add&amp;id=".$this->pid."&amp;type=obje");
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if ($this->mediaobject->canDisplayDetails() && getUserName()) {
+		if ($this->mediaobject->canDisplayDetails() && PGV_USER_ID) {
 			$submenu = new Menu($pgv_lang["add_to_my_favorites"], "mediaviewer.php?action=addfav&amp;mid=".$this->pid."&amp;gid=".$this->pid);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
@@ -369,7 +369,7 @@ class MediaControllerRoot extends IndividualController{
 
 		$ignore = "TITL,FILE";
 		if ($this->show_changes=='yes') $ignore = '';
-		else if (userGedcomAdmin()) $ignore = "TITL";
+		else if (PGV_USER_GEDCOM_ADMIN) $ignore = "TITL";
 		$facts = get_all_subrecords($this->mediaobject->getGedcomRecord(), $ignore);
 		if ($includeFileName) $facts[] = "1 FILE ".$this->mediaobject->getFilename();
 		$facts[] = "1 FORM ".$this->mediaobject->getFiletype();

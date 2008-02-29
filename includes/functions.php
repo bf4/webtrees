@@ -299,7 +299,7 @@ function store_gedcoms() {
 		fwrite($fp, $gedcomtext);
 		fclose($fp);
 		if (!empty($COMMIT_COMMAND))
-			check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
+			check_in("store_gedcoms() ->" . PGV_USER_NAME ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
 	$mutex->Release();
 	$IN_STORE_GEDCOMS = false;
@@ -830,7 +830,7 @@ function find_parents($famid) {
 
 	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
-		if (userCanEdit()) {
+		if (PGV_USER_CAN_EDIT) {
 			$famrec = find_updated_record($famid);
 			if (empty($famrec))
 				return false;
@@ -882,7 +882,7 @@ function find_children($famid, $me='') {
 
 	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
-		if (userCanEdit()) {
+		if (PGV_USER_CAN_EDIT) {
 			$famrec = find_updated_record($famid);
 			if (empty($famrec))
 				return false;
@@ -1906,7 +1906,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 
 	$pid1 = strtoupper($pid1);
 	$pid2 = strtoupper($pid2);
-	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && userCanEdit())
+	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
 		$indirec = find_updated_record($pid2);
 	else
 		$indirec = find_person_record($pid2);
@@ -1926,7 +1926,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$famids[$i]=$match[$i][1];
 		}
 		foreach ($famids as $indexval => $fam) {
-			if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
+			if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
 				$famrec = find_updated_record($fam);
 			else
 				$famrec = find_family_record($fam);
@@ -1976,7 +1976,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$numfams = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
 		for ($j=0; $j<$numfams; $j++) {
 			// Get the family record
-			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && userCanEdit())
+			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
 				$famrec = find_updated_record($fmatch[$j][1]);
 			else
 				$famrec = find_family_record($fmatch[$j][1]);
@@ -1985,7 +1985,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $cmatch, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				// Get each child's record
-				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && userCanEdit())
+				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
 					$childrec = find_updated_record($cmatch[$i][1]);
 				else
 					$childrec = find_person_record($cmatch[$i][1]);
@@ -2076,7 +2076,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				$childh = 3;
 
 				//-- generate heuristic values based of the birthdates of the current node and p2
-				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && userCanEdit())
+				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
 					$indirec = find_updated_record($node["pid"]);
 				else
 					$indirec = find_person_record($node["pid"]);
@@ -2154,7 +2154,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
+					if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
 						$famrec = find_updated_record($fam);
 					else
 						$famrec = find_family_record($fam);
@@ -2232,7 +2232,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit())
+					if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
 						$famrec = find_updated_record($fam);
 					else
 						$famrec = find_family_record($fam);
@@ -2372,7 +2372,7 @@ function write_changes() {
 	$mutex->Release();
 
  	if (!empty($COMMIT_COMMAND)) {
-		$logline = AddToLog("pgv_changes.php updated by >".getUserName()."<");
+		$logline = AddToLog("pgv_changes.php updated by >".PGV_USER_NAME."<");
  		check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
  	}
 	return true;
@@ -2554,7 +2554,7 @@ function get_report_list($force=false) {
 	$fp = @fopen($INDEX_DIRECTORY."/reports.dat", "w");
 	@fwrite($fp, serialize($files));
 	@fclose($fp);
-	$logline = AddToLog("reports.dat updated by >".getUserName()."<");
+	$logline = AddToLog("reports.dat updated by >".PGV_USER_NAME."<");
  	if (!empty($COMMIT_COMMAND)) check_in($logline, "reports.dat", $INDEX_DIRECTORY);
 
 	return $files;
@@ -3202,14 +3202,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin()) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit()) {
+			if (DB::isError($DBCONN) || !adminUserExists() || PGV_USER_CAN_EDIT) {
 				include($file);
 			}
 		}
@@ -3250,14 +3250,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || userGedcomAdmin()) {
+			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || userCanEdit()) {
+			if (DB::isError($DBCONN) || !adminUserExists() || PGV_USER_CAN_EDIT) {
 				include($file);
 			}
 		}
