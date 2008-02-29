@@ -83,17 +83,93 @@ $pgv_lang["install_step_8"] = "Get Started";
 $pgv_lang["install_wizard"] = "Installation Wizard";
 $pgv_lang["basic_site_config"] = "Basic Settings";
 $pgv_lang["adv_site_config"] = "Advanced Settings";
-$pgv_lang["config_not_saved"] = "*Configuration has <br />not yet been saved";
+$pgv_lang["config_not_saved"] = "*Your settings will not<br />be saved until step 8";
 $pgv_lang["download_config"] = "Download config.php";
+$pgv_lang["site_unavailable"] = "Site is currently unavailable";
+$pgv_lang["to_manage_users"] = "To manage users, use the <a href=\"useradmin.php\">User Administration</a> page.";
 
 header("Content-Type: text/html; charset=$CHARACTER_SET");
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"></link>
+<title><?php print $pgv_lang["install_wizard"]; ?></title>
+<link rel="stylesheet" href="<?php print $stylesheet ?>" type="text/css"></link>
+<style type="text/css">
+.imenu {
+	font-size: 12pt;
+}
+.pass {
+	color: green;
+}
+</style>
+<script language="JavaScript" type="text/javascript">
+<!--
+	var helpWin;
+	function helpPopup(which) {
+		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+		else helpWin.location = 'editconfig_help.php?help='+which;
+		return false;
+	}
+	function getHelp(which) {
+		if ((helpWin)&&(!helpWin.closed)) helpWin.location='editconfig_help.php?help='+which;
+	}
+	function closeHelp() {
+		if (helpWin) helpWin.close();
+	}
+	function changeDBtype(dbselect) {
+		if (dbselect.options[dbselect.selectedIndex].value=='sqlite') {
+			document.configform.NEW_DBNAME.value='./index/phpgedview.db';
+		}
+		else {
+			document.configform.NEW_DBNAME.value='phpgedview';
+		}
+	}
+	function checkForm(frm) {
+		if (window.validate) return validate(frm);
+		return true;
+	}
+	//-->
+</script>
+</head>
+<body id="body">
+<br />
+<table class="list_table person_boxNN width70" cellspacing="0" cellpadding="5">
+<?php
+
+//-- don't allow configuration if the DB is down but the site is configured
+if ($CONFIGURED && DB::isError($DBCONN)) {
+	?>
+	<tr>
+		<td class="center">
+			<img src="<?php print $THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
+		</td>
+	</tr>
+	<tr>
+		<td class="optionbox center">
+			<br /><br />
+			<h2><?php print $pgv_lang["site_unavailable"] ?></h2>
+			<br /><br /><br />
+			
+			<!-- <?php print $DBCONN->getMessage() . " " . $DBCONN->getUserInfo(); ?> -->
+		</td>
+	</tr>
+	</table>
+	</body>
+	</html>
+	<?php
+	exit();
+}
 
 $total_steps = 8;
 $step = 1;
 if (isset($_REQUEST['step'])) $step = $_REQUEST['step'];
 else {
 	if ($PGV_DB_CONNECTED) $step = 3;
-	if (adminUserExists()) $step = 7;
+	if (adminUserExists()) $step = 8;
 }
 if (isset($_REQUEST['prev'])) $step--;
 if (!isset($_SESSION['install_step'])) $_SESSION['install_step'] = 1;
@@ -351,51 +427,7 @@ if ($step>$total_steps) $step = $total_steps;
 $title = $pgv_lang["install_step_".$step];
 $errormsg = "";
 
-
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"></link>
-<title><?php print $pgv_lang["install_wizard"]; ?></title>
-<link rel="stylesheet" href="<?php print $stylesheet ?>" type="text/css"></link>
-<style type="text/css">
-.imenu {
-	font-size: 12pt;
-}
-.pass {
-	color: green;
-}
-</style>
-<script language="JavaScript" type="text/javascript">
-<!--
-	var helpWin;
-	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-		else helpWin.location = 'editconfig_help.php?help='+which;
-		return false;
-	}
-	function getHelp(which) {
-		if ((helpWin)&&(!helpWin.closed)) helpWin.location='editconfig_help.php?help='+which;
-	}
-	function closeHelp() {
-		if (helpWin) helpWin.close();
-	}
-	function changeDBtype(dbselect) {
-		if (dbselect.options[dbselect.selectedIndex].value=='sqlite') {
-			document.configform.NEW_DBNAME.value='./index/phpgedview.db';
-		}
-		else {
-			document.configform.NEW_DBNAME.value='phpgedview';
-		}
-	}
-	//-->
-</script>
-</head>
-<body id="body">
-<br />
-<table class="list_table person_boxNN width70" cellspacing="0" cellpadding="5">
 	<tr>
 		<td>
 		<h2><?php print $pgv_lang["install_wizard"]; ?></h2>
@@ -427,7 +459,7 @@ $errormsg = "";
 		</td>
 		<td class="optionbox" style="white-space: normal">
 		<h3 class="center"><?php print $title; ?></h3>
-		<form action="install.php" method="post" onsubmit="if (validate) return validate(this);">
+		<form action="install.php" method="post" onsubmit="return checkForm(this);">
 		<input type="hidden" name="step" value="<?php print $step ?>" /> 
 		<?php
 			if (count($errors)>0) {
@@ -473,11 +505,18 @@ $errormsg = "";
 			
 			?>
 		<br/><br />
+		<div style="float: right;">
+			<?php if ($step<$total_steps && $success) {?>
+			<input type="submit" id="next_button" name="next" value="<?php print $pgv_lang['next'] ?>" />
+			<script type="text/javascript">
+			<!--
+				document.getElementById("next_button").focus();
+			//-->
+			</script>
+			<?php } ?>
+		</div>
 		<div style="float: left;">
 			<?php if ($step>1) {?><input type="submit" name="prev" value="<?php print $pgv_lang['prev'] ?>" /><?php } ?>
-		</div>
-		<div style="float: right;">
-			<?php if ($step<$total_steps && $success) {?><input type="submit" name="next" value="<?php print $pgv_lang['next'] ?>" /><?php } ?>
 		</div>
 		</form>
 		</td>
@@ -1041,8 +1080,8 @@ function printAdminUserForm() {
 		 } ?>
 		</table>
 		<br />
-		To manage users, use the <a href="useradmin.php">User Administration</a> page.
 		<?php
+		print $pgv_lang['to_manage_users'];
 	}
 	return true;
 }
