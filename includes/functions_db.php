@@ -2272,6 +2272,7 @@ function get_indi_alpha() {
 	}
 	$res->free();
 
+	uasort($indialpha, "stringsort");
 	return $indialpha;
 }
 
