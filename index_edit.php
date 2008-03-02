@@ -4,7 +4,7 @@
  * to keep bookmarks, see a list of upcoming events, etc.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,7 +141,7 @@ if (file_exists("modules")) {
 //					"gedcom", include in Index page only
 $SortedBlocks = array();
 foreach($PGV_BLOCKS as $key => $BLOCK) {
-	if (!isset($BLOCK["type"])) $BLOCK["type"] = "both";
+	if (empty($BLOCK["type"])) $BLOCK["type"] = "both";
 	if (($BLOCK["type"]=="both") or ($BLOCK["type"]==$ctype)) {
 		$SortedBlocks[$key] = $BLOCK["name"];
 	}
