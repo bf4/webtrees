@@ -867,6 +867,16 @@ require_once(get_privacy_file());
 //-- load the privacy functions
 require_once("includes/functions_privacy.php");
 
+//-----------------------------------
+//-- if user wishes to logout this is where we will do it
+if ((!empty($logout))&&($logout==1)) {
+	userLogout(getUserId());
+	if ($REQUIRE_AUTHENTICATION) {
+		header("Location: ".$HOME_SITE_URL);
+		exit;
+	}
+}
+
 // Define some constants to save calculating the same value repeatedly.
 define('PGV_USER_ID',           getUserId  ());
 define('PGV_USER_NAME',         getUserName());
@@ -922,17 +932,6 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 		}
 		unset($scriptList);
 	}
-
-	//-----------------------------------
-	//-- if user wishes to logout this is where we will do it
-	if ((!empty($logout))&&($logout==1)) {
-		userLogout(PGV_USER_ID);
-		if ($REQUIRE_AUTHENTICATION) {
-			header("Location: ".$HOME_SITE_URL);
-			exit;
-		}
-	}
-
 
 	if ($REQUIRE_AUTHENTICATION) {
 		if (!PGV_USER_ID) {
