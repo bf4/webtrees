@@ -1025,12 +1025,14 @@ function print_lang_form($option=0) {
  * this function will print login/logout links and other links based on user privileges
  */
 function print_user_links() {
-	 global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM, $PRIV_USER, $PRIV_PUBLIC, $USE_REGISTRATION_MODULE, $pid;
+	 global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM;
 	 global $LOGIN_URL, $SEARCH_SPIDER;
-	 $username = PGV_USER_NAME;
-	 if ($username) {
-		  print '<a href="edituser.php" class="link">'.$pgv_lang["logged_in_as"].' ('.$username.')</a><br />';
-		  if (PGV_USER_GEDCOM_ADMIN) print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
+
+	 if (PGV_USER_ID) {
+		  print '<a href="edituser.php" class="link">'.$pgv_lang["logged_in_as"].' ('.PGV_USER_NAME.')</a><br />';
+			if (PGV_USER_GEDCOM_ADMIN) {
+				print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
+			}
 		  print "<a href=\"index.php?logout=1\" class=\"link\">".$pgv_lang["logout"]."</a>";
 	 } else {
 		  $QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
