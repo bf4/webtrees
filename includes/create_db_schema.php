@@ -203,8 +203,8 @@ try {
 		" priv_id        {$AUTONUM_TYPE},".
 		" priv_ged_id    INTEGER      NOT NULL,".
 		" priv_user_id   INTEGER      NULL,".
-		" priv_xref      VARCHAR(255) NULL,".
-		" priv_tag       VARCHAR(255) NULL,".
+		" priv_xref      VARCHAR(32)  NULL,".
+		" priv_fact      VARCHAR(15)  NULL,".
 		" priv_type      ENUM ('show', 'details') NULL,".
 		" priv_value     INTEGER      NOT NULL,".
 		" CONSTRAINT {$TBLPREFIX}privacy_pk  PRIMARY KEY (priv_id),".
@@ -213,7 +213,7 @@ try {
 		") {$STORAGE} {$COLLATION}"
 	);
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix1 ON {$TBLPREFIX}privacy (priv_xref, priv_ged_id)");
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix2 ON {$TBLPREFIX}privacy (priv_tag)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix2 ON {$TBLPREFIX}privacy (priv_fact)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix3 ON {$TBLPREFIX}privacy (priv_type)");
 
 	// Migrate PGV4.x data from *_priv.php
@@ -222,11 +222,11 @@ try {
 		require $INDEX_DIRECTORY.'gedcoms.php';
 		if (isset($GEDCOMS) && is_array($GEDCOMS)) {
 			$statement1=$DBH->prepare(
-				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_tag, priv_type, priv_value)".
+				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_fact, priv_type, priv_value)".
 				"	SELECT ged_id, NULL, ?, ?, ?, ? FROM {$TBLPREFIX}gedcom".
 				"  WHERE ged_gedcom=?");
 			$statement2=$DBH->prepare(
-				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_tag, priv_type, priv_value)".
+				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_fact, priv_type, priv_value)".
 				"	SELECT ged_id, user_id, ?, NULL, NULL, ? FROM {$TBLPREFIX}gedcom, {$TBLPREFIX}user".
 				"  WHERE ged_gedcom=? AND user_name=?");
 			foreach ($GEDCOMS as $GEDCOM) {
@@ -399,12 +399,11 @@ try {
 	$DBH->exec(
 		"CREATE TABLE {$TBLPREFIX}record (".
 		" rec_id      {$AUTONUM_TYPE},".
-		" rec_ged_id  INTEGER      NOT NULL,".
-		" rec_xref    VARCHAR(255) NULL,". // I123, etc.
-		" rec_type    VARCHAR(20)  NULL,". // SOUR/INDI/FAM/etc.
-		" rec_gedcom  TEXT         NULL,". // Temporary until the fact/event table is created
+		" rec_ged_id  INTEGER     NOT NULL,".
+		" rec_xref    VARCHAR(32) NULL,". // I123, etc.
+		" rec_type    VARCHAR(15) NULL,". // SOUR/INDI/FAM/etc.
 		" CONSTRAINT {$TBLPREFIX}record_pk  PRIMARY KEY (rec_id),".
-		" CONSTRAINT {$TBLPREFIX}record_fk1 FOREIGN KEY (rec_ged_id) REFERENCES {$TBLPREFIX}gedcom (ged_id)".
+		" CONSTRAINT {$TBLPREFIX}record_fk1 FOREIGN KEY (rec_ged_id) REFERENCES {$TBLPREFIX}gedcom (ged_id) ON CASCADE DELETE".
 		") {$STORAGE} {$COLLATION}"
 	);
 	$DBH->exec("CREATE UNIQUE INDEX {$TBLPREFIX}record_ix1 ON {$TBLPREFIX}record (rec_xref, rec_ged_id, rec_type)");
@@ -420,12 +419,12 @@ try {
 		"CREATE TABLE {$TBLPREFIX}fact (".
 		" fact_id      {$AUTONUM_TYPE},".
 		" fact_rec_id  INTEGER      NOT NULL,".
-		" fact_type    VARCHAR(15)  NOT NULL,". // The 1 XXXX
-		" fact_value   VARCHAR(255) NULL,".     // The 1 EVENT YYY ZZZZZ
-		" fact_resn    VARCHAR(255) NULL,". // The 2 RESN value
+		" fact_type    VARCHAR(15)  NOT NULL,". // BIRT, MARR, etc.
+		" fact_value   VARCHAR(255) NULL,".     // Any text after the fact_type, e.g. "Y"
+		" fact_resn    ENUM ('locked', 'confidential', 'privacy') NULL,". // Any 2 RESN value
 		" fact_date    VARCHAR(255) NULL,". // The 2 DATE value
 		" fact_plac    VARCHAR(255) NULL,". // The 2 PLAC value
-		" fact_gedcom  TEXT         NULL,". // Any remaining 2 XXXX attributes
+		" fact_gedcom  TEXT         NULL,". // The gedcom text
 		" fact_created INTEGER      NULL,".
 		" fact_deleted INTEGER      NULL,".
 		" CONSTRAINT {$TBLPREFIX}fact_pk  PRIMARY KEY (fact_id),".
@@ -442,20 +441,29 @@ try {
 
 ////////////////////////////////////////////////////////////////////////////////
 // TABLE: LINK
+// Note that "linker" and "linkee" are transititive dependencies on other
+// fields, hence this table is not properly normalised.  We include them for
+// performance reasons, as this table is used to determine relationship privacy.
+// The linkee is NULL because the record may not exist (yet/ever), and so will
+// need to be populated later.
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
 	"CREATE TABLE {$TBLPREFIX}link (".
 	" link_id      {$AUTONUM_TYPE},".
-	" link_fact_id INTEGER      NOT NULL,".
-	" link_type    VARCHAR(20)  NOT NULL,". // SOUR/INDI/FAM/etc.
-	" link_xref    VARCHAR(255) NOT NULL,". // I123, etc.
+	" link_fact_id INTEGER     NOT NULL,".
+	" link_type    VARCHAR(15) NOT NULL,". // SOUR/INDI/FAM/etc.
+	" link_xref    VARCHAR(32) NOT NULL,". // I123, etc.
+	" link_rec_id1 INTEGER     NOT NULL,". // linker
+	" link_rec_id2 INTEGER     NULL,".     // linkee
 	" CONSTRAINT {$TBLPREFIX}link_pk  PRIMARY KEY (link_id),".
 	" CONSTRAINT {$TBLPREFIX}link_fk1 FOREIGN KEY (link_fact_id) REFERENCES {$TBLPREFIX}fact (fact_id) ON DELETE CASCADE".
 	") {$STORAGE} {$COLLATION}"
 	);
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix1 ON {$TBLPREFIX}link (link_fact_id, link_type, link_xref)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix2 ON {$TBLPREFIX}link (link_type, link_fact_id, link_xref)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix3 ON {$TBLPREFIX}link (link_rec_id2, link_type, link_rec_id1)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix4 ON {$TBLPREFIX}link (link_rec_id1, link_type, link_rec_id2)");
 } catch (PDOException $e) {
 }
 
@@ -467,7 +475,7 @@ try {
 		"CREATE TABLE {$TBLPREFIX}name (".
 		" name_id      {$AUTONUM_TYPE},".
 		" name_fact_id INTEGER      NOT NULL,".
-		" name_type    VARCHAR(20)  NOT NULL,". // e.g. NAME/_MARNM/FONE/TITL/ABBR
+		" name_type    VARCHAR(15)  NOT NULL,". // e.g. NAME/_MARNM/FONE/TITL/ABBR
 		" name_full    VARCHAR(255) NOT NULL,". // e.g. Lord John /de Vere/ IV
 		" name_sort1   VARCHAR(32)  NOT NULL,". // e.g. Vere
 		" name_sort2   VARCHAR(32)  NOT NULL,". // e.g. John

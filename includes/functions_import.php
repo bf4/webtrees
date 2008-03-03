@@ -400,9 +400,9 @@ function import_record($indirec, $update) {
 	static $statement_ins_link=null;
 	static $statement_ins_name=null;
 	if (is_null($statement_ins_rec)) {
-		$statement_ins_rec=$DBH->prepare("INSERT INTO {$TBLPREFIX}record (rec_ged_id, rec_xref, rec_type, rec_gedcom) VALUES (?, ?, ?, ?)");
+		$statement_ins_rec=$DBH->prepare("INSERT INTO {$TBLPREFIX}record (rec_ged_id, rec_xref, rec_type) VALUES (?, ?, ?)");
 		$statement_ins_fact=$DBH->prepare("INSERT INTO {$TBLPREFIX}fact (fact_rec_id, fact_type, fact_value, fact_resn, fact_date, fact_plac, fact_gedcom) VALUES (?, ?, ?, ?, ?, ?, ?)");
-		$statement_ins_link=$DBH->prepare("INSERT INTO {$TBLPREFIX}link (link_fact_id, link_type, link_xref) VALUES (?, ?, ?)");
+		$statement_ins_link=$DBH->prepare("INSERT INTO {$TBLPREFIX}link (link_fact_id, link_type, link_xref, link_rec_id1) VALUES (?, ?, ?, ?)");
 		$statement_ins_name=$DBH->prepare("INSERT INTO {$TBLPREFIX}name (name_fact_id, name_type, name_full, name_sort1, name_sort2, name_list1, name_list2) VALUES (?, ?, ?, ?, ?, ?, ?)");
 	}
 
@@ -410,7 +410,6 @@ function import_record($indirec, $update) {
 	$statement_ins_rec->bindValue(1, $GEDCOMS[$GEDCOM]['id'], PDO::PARAM_INT);
 	$statement_ins_rec->bindValue(2, $gid,                    PDO::PARAM_STR);
 	$statement_ins_rec->bindValue(3, $type,                   PDO::PARAM_STR);
-	$statement_ins_rec->bindValue(4, $indirec,                PDO::PARAM_STR);
 	$statement_ins_rec->execute();
 	$rec_id=$DBH->lastInsertId();
 
@@ -425,7 +424,7 @@ function import_record($indirec, $update) {
 			$statement_ins_fact->bindValue(3, $value, PDO::PARAM_STR);
 
 			// Extract the RESN value into its own field
-			if (preg_match('/\n2 +RESN +(.*)/', $level2, $resn_match)) {
+			if (preg_match('/\n2 +RESN +(locked|confidential|privacy)/', $level2, $resn_match)) {
 				$level2=str_replace($resn_match[0], '', $level2);
 				$statement_ins_fact->bindValue(4, $resn_match[1], PDO::PARAM_STR);
 			} else {
@@ -457,6 +456,7 @@ function import_record($indirec, $update) {
 			// Store the links from this fact
 			if (preg_match_all("/^\d+ +(\w+) +@([^@#\n][^@\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
 				$statement_ins_link->bindValue(1, $fact_id, PDO::PARAM_INT);
+				$statement_ins_link->bindValue(4, $rec_id,  PDO::PARAM_INT);
 				foreach ($matches as $match) {
 					$statement_ins_link->bindValue(2, $match[1], PDO::PARAM_STR);
 					$statement_ins_link->bindValue(3, $match[2], PDO::PARAM_STR);
@@ -520,12 +520,21 @@ function import_record($indirec, $update) {
 			} // foreach name to insert
 		} // foreach fact to insert
 	} // if facts to insert
-	else {
-		// A record with no facts.
+
+	// Update any links to or from this record
+	static $statement_upd1_link=null;
+	static $statement_upd2_link=null;
+	if (is_null($statement_upd1_link)) {
+		$statement_upd1_link=$DBH->prepare("UPDATE {$TBLPREFIX}link SET link_rec_id2=(SELECT r2.rec_id FROM {$TBLPREFIX}record r1, {$TBLPREFIX}record r2, {$TBLPREFIX}fact WHERE r1.rec_id=fact_rec_id AND fact_id=link_fact_id AND r1.rec_ged_id=r2.rec_ged_id AND r2.rec_xref=link_xref) WHERE link_xref=? AND link_rec_id2 IS NULL");
+		$statement_upd2_link=$DBH->prepare("UPDATE {$TBLPREFIX}link SET link_rec_id2=(SELECT r2.rec_id FROM {$TBLPREFIX}record r1, {$TBLPREFIX}record r2, {$TBLPREFIX}fact WHERE r1.rec_id=fact_rec_id AND fact_id=link_fact_id AND r1.rec_ged_id=r2.rec_ged_id AND r2.rec_xref=link_xref AND fact_rec_id=?) WHERE link_rec_id2 IS NULL");
 	}
+	$statement_upd1_link->bindValue(1, $gid,    PDO::PARAM_STR);
+	$statement_upd2_link->bindValue(1, $rec_id, PDO::PARAM_INT);
+	$statement_upd1_link->execute();
+	$statement_upd2_link->execute();
 }
 
-// TODO this is temporary - need better name handling. A class?
+// TODO this is temporary - this is where we'll handle "spanish" double surnames
 function extract_name_bits($tag, $namerec) {
 	// NPFX
 	if (preg_match('/2 NPFX (.*)/', $namerec, $match))

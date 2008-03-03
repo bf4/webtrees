@@ -494,7 +494,7 @@ function find_gedcom_record($pid, $gedfile = "", $type="") {
 			$gedrec = find_media_record($pid, $gedfile);
 			//-- why are we looking in the media_mapping table here?
 			if (empty($gedrec)) {
-				$sql1 = "select mm_gedrec, mm_gedfile from ".$TBLPREFIX."media_mapping where mm_gid='".$DBCONN->escapeSimple($pid)."' AND mm_gedfile=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
+				$sql1 = "select mm_gedrec, mm_gedfile from ".$TBLPREFIX."media_mapping where mm_gid='".$DBCONN->escapeSimple($pid)."' AND mm_gedfile=".PGV_GED_ID;
 				$res1 = dbquery($sql1);
 				if (!DB::isError($res1) && $res1!==false) {
 					if ($res1->numRows() != 0){
@@ -508,28 +508,6 @@ function find_gedcom_record($pid, $gedfile = "", $type="") {
 			}
 	}
 	return $gedrec;
-/*
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=$DBH->prepare("SELECT rec_gedcom FROM {$TBLPREFIX}record WHERE rec_xref LIKE ? ESCAPE '@' AND rec_ged_id=?");
-	}
-
-	// Escape SQL wildcards - we are only using LIKE for case insensitivity
-	$xref=str_replace(array("@","_", "%"), array("@@", "@_", "@%"), $xref);
-
-	$statement->bindValue(1, $xref,                   PDO::PARAM_STR);
-	$statement->bindValue(2, $GEDCOMS[$GEDCOM]['id'], PDO::PARAM_INT);
-	$statement->execute();
-	$row=$statement->fetchObject();
-	$statement->closeCursor();
-
-	if ($row===false) {
-		return '';
-	} else {
-		return $row->rec_gedcom;
-	}
- */
 }
 
 /**
@@ -657,7 +635,7 @@ function find_media_record($rid, $gedfile='') {
  */
 function find_first_person() {
 	global $GEDCOM, $TBLPREFIX, $GEDCOMS, $DBCONN;
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY i_id";
+	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." ORDER BY i_id";
 	$res = dbquery($sql,false,1);
 	$row = $res->fetchRow();
 	$res->free();
@@ -702,7 +680,7 @@ function update_isdead($gid, $indi) {
 function reset_isdead() {
 	global $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
 
-	$sql = "UPDATE ".$TBLPREFIX."individuals SET i_isdead=-1 WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+	$sql = "UPDATE ".$TBLPREFIX."individuals SET i_isdead=-1 WHERE i_file=".PGV_GED_ID;
 	dbquery($sql);
 }
 
@@ -719,7 +697,7 @@ function get_source_add_title_list() {
 
 	$sourcelist = array();
 
- 	$sql = "SELECT s_id, s_file, s_file as s_name, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}record WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND ((rec_gedcom LIKE '% _HEB %') OR (rec_gedcom LIKE '% ROMN %'));";
+ 	$sql = "SELECT s_id, s_file, s_file as s_name, s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID." AND ((s_gedcom LIKE '% _HEB %') OR (s_gedcom LIKE '% ROMN %'));";
 
 	$res = dbquery($sql);
 
@@ -727,10 +705,10 @@ function get_source_add_title_list() {
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$source = array();
 		$row = db_cleanup($row);
-		$ct = preg_match("/\d ROMN (.*)/", $row["rec_gedcom"], $match);
- 		if ($ct==0) $ct = preg_match("/\d _HEB (.*)/", $row["rec_gedcom"], $match);
+		$ct = preg_match("/\d ROMN (.*)/", $row["s_gedcom"], $match);
+ 		if ($ct==0) $ct = preg_match("/\d _HEB (.*)/", $row["s_gedcom"], $match);
 		$source["name"] = $match[1];
-		$source["gedcom"] = $row["rec_gedcom"];
+		$source["gedcom"] = $row["s_gedcom"];
 		$source["gedfile"] = $row["s_file"];
 		$sourcelist[$row["s_id"]] = $source;
 	}
@@ -752,16 +730,16 @@ function get_source_list() {
 
 	$sourcelist = array();
 
-	$sql = "SELECT s_id, s_name, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}record WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY s_name";
+	$sql = "SELECT s_id, s_name, s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID." ORDER BY s_name";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$source = array();
 		$source["name"] = $row["s_name"];
-		$source["gedcom"] = $row["rec_gedcom"];
+		$source["gedcom"] = $row["s_gedcom"];
 		$row = db_cleanup($row);
-		$source["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+		$source["gedfile"] = PGV_GED_ID;
 		$sourcelist[$row["s_id"]] = $source;
 	}
 	$res->free();
@@ -776,24 +754,24 @@ function get_repo_list() {
 
 	$repolist = array();
 
-	$sql = "SELECT rec_xref, rec_gedcom FROM {$TBLPREFIX}record WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_type='REPO'";
+	$sql = "SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file=".PGV_GED_ID." AND o_type='REPO'";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$repo = array();
-		$tt = preg_match("/1 NAME (.*)/", $row["rec_gedcom"], $match);
+		$tt = preg_match("/1 NAME (.*)/", $row["o_gedcom"], $match);
 		if ($tt == "0")
-			$name = $row["rec_xref"];
+			$name = $row["o_id"];
 		else
 			$name = $match[1];
 		$repo["name"] = $name;
-		$repo["id"] = $row["rec_xref"];
-		$repo["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+		$repo["id"] = $row["o_id"];
+		$repo["gedfile"] = PGV_GED_ID;
 		$repo["type"] = 'REPO';
-		$repo["gedcom"] = $row["rec_gedcom"];
+		$repo["gedcom"] = $row["o_gedcom"];
 		$row = db_cleanup($row);
-		$repolist[$row["rec_xref"]]= $repo;
+		$repolist[$row["o_id"]]= $repo;
 	}
 	$res->free();
 	asort($repolist); // sort by repo name
@@ -807,22 +785,22 @@ function get_repo_id_list() {
 
 	$repo_id_list = array();
 
-	$sql = "SELECT rec_xref, rec_gedcom FROM {$TBLPREFIX}record WHERE rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_type='REPO' ORDER BY rec_xref";
+	$sql = "SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file=".PGV_GED_ID." AND o_type='REPO' ORDER BY o_id";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$repo = array();
-		$tt = preg_match("/1 NAME (.*)/", $row["rec_gedcom"], $match);
+		$tt = preg_match("/1 NAME (.*)/", $row["o_gedcom"], $match);
 		if ($tt>0)
 			$repo["name"] = $match[1];
 		else
 			$repo["name"] = "";
-		$repo["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+		$repo["gedfile"] = PGV_GED_ID;
 		$repo["type"] = 'REPO';
-		$repo["gedcom"] = $row["rec_gedcom"];
+		$repo["gedcom"] = $row["o_gedcom"];
 		$row = db_cleanup($row);
-		$repo_id_list[$row["rec_xref"]] = $repo;
+		$repo_id_list[$row["o_id"]] = $repo;
 	}
 	$res->free();
 	return $repo_id_list;
@@ -841,22 +819,22 @@ function get_repo_add_title_list() {
 
 	$repolist = array();
 
- 	$sql = "SELECT rec_xref, rec_ged_id, rec_gedcom FROM {$TBLPREFIX}record WHERE rec_type='REPO' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND ((rec_gedcom LIKE '% _HEB %') OR (rec_gedcom LIKE '% ROMN %'));";
+ 	$sql = "SELECT o_id, o_file, o_file as o_name, o_type, o_gedcom FROM ".$TBLPREFIX."other WHERE o_type='REPO' AND o_file=".PGV_GED_ID." AND ((o_gedcom LIKE '% _HEB %') OR (o_gedcom LIKE '% ROMN %'));";
 
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$repo = array();
-		$repo["gedcom"] = $row["rec_gedcom"];
-		$ct = preg_match("/\d ROMN (.*)/", $row["rec_gedcom"], $match);
- 		if ($ct==0) $ct = preg_match("/\d _HEB (.*)/", $row["rec_gedcom"], $match);
+		$repo["gedcom"] = $row["o_gedcom"];
+		$ct = preg_match("/\d ROMN (.*)/", $row["o_gedcom"], $match);
+ 		if ($ct==0) $ct = preg_match("/\d _HEB (.*)/", $row["o_gedcom"], $match);
 		$repo["name"] = $match[1];
-		$repo["id"] = $row["rec_xref"];
-		$repo["gedfile"] = $row["rec_ged_id"];
-		$repo["type"] = 'REPO';
+		$repo["id"] = $row["o_id"];
+		$repo["gedfile"] = $row["o_file"];
+		$repo["type"] = $row["o_type"];
 		$row = db_cleanup($row);
-		$repolist[$row["rec_xref"]] = $repo;
+		$repolist[$row["o_id"]] = $repo;
 
 	}
 	$res->free();
@@ -871,28 +849,28 @@ function get_indi_list() {
 	if ($INDILIST_RETRIEVED)
 		return $indilist;
 	$indilist = array();
-	$sql = "SELECT i_id, rec_gedcom, i_name, i_isdead, i_letter, i_surname  FROM {$TBLPREFIX}individuals, {$TBLPREFIX}record WHEERE i_file=rec_ged_id AND i_id=rec_xref WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY i_surname";
+	$sql = "SELECT i_id, i_gedcom, i_name, i_isdead, i_letter, i_surname  FROM {$TBLPREFIX}individuals WHERE i_file=".PGV_GED_ID." ORDER BY i_surname";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$indi = array();
-		$indi["gedcom"] = $row["rec_gedcom"];
+		$indi["gedcom"] = $row["i_gedcom"];
 		$row = db_cleanup($row);
 		$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "A"));
 		$indi["isdead"] = $row["i_isdead"];
-		$indi["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+		$indi["gedfile"] = PGV_GED_ID;
 		$indilist[$row["i_id"]] = $indi;
 	}
 	$res->free();
 
-	$sql = "SELECT n_gid, n_name, n_letter, n_surname, n_type FROM {$TBLPREFIX}names WHERE n_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY n_surname";
+	$sql = "SELECT n_gid, n_name, n_letter, n_surname, n_type FROM {$TBLPREFIX}names WHERE n_file=".PGV_GED_ID." ORDER BY n_surname";
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
-		if (isset($indilist[$row["n_gid"]]) && ($indilist[$row["n_gid"]]["gedfile"]==$GEDCOMS[$GEDCOM]["id"])) {
+		if (isset($indilist[$row["n_gid"]]) && ($indilist[$row["n_gid"]]["gedfile"]==PGV_GED_ID)) {
 			$indilist[$row["n_gid"]]["names"][] = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
 		}
 	}
@@ -913,7 +891,7 @@ function get_asso_list($type = "all", $ipid='') {
 
 	$oldged = $GEDCOM;
 	if (($type == "all") || ($type == "fam")) {
-		$sql = "SELECT f_id, f_file, rec_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND rec_gedcom ";
+		$sql = "SELECT f_id, f_file, f_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families WHERE f_gedcom ";
 		if (!empty($pid))
 			$sql .= "LIKE '% ASSO @$ipid@%'";
 		else
@@ -925,7 +903,7 @@ function get_asso_list($type = "all", $ipid='') {
 			$asso = array();
 			$asso["type"] = "fam";
 			$pid2 = $row["f_id"]."[".$row["f_file"]."]";
-			$asso["gedcom"] = $row["rec_gedcom"];
+			$asso["gedcom"] = $row["f_gedcom"];
 			$asso["gedfile"] = $row["f_file"];
 			// Get the family names
 			$GEDCOM = get_gedcom_from_id($row["f_file"]);
@@ -943,7 +921,7 @@ function get_asso_list($type = "all", $ipid='') {
 				}
 			}
 			$asso["name"] = $name;
-			$ca = preg_match_all("/\d ASSO @(.*)@/", $row["rec_gedcom"], $match, PREG_SET_ORDER);
+			$ca = preg_match_all("/\d ASSO @(.*)@/", $row["f_gedcom"], $match, PREG_SET_ORDER);
 			for ($i=0; $i<$ca; $i++) {
 				$pid = $match[$i][1]."[".$row["f_file"]."]";
 				$assolist[$pid][$pid2] = $asso;
@@ -954,7 +932,7 @@ function get_asso_list($type = "all", $ipid='') {
 	}
 
 	if (($type == "all") || ($type == "indi")) {
-		$sql = "SELECT i_id, i_file, rec_gedcom FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_file-rec_ged_id AND i_id=rec_xref AND rec_gedcom ";
+		$sql = "SELECT i_id, i_file, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_gedcom ";
 		if (!empty($pid))
 			$sql .= "LIKE '% ASSO @$ipid@%'";
 		else
@@ -966,10 +944,10 @@ function get_asso_list($type = "all", $ipid='') {
 			$asso = array();
 			$asso["type"] = "indi";
 			$pid2 = $row["i_id"]."[".$row["i_file"]."]";
-			$asso["gedcom"] = $row["rec_gedcom"];
+			$asso["gedcom"] = $row["i_gedcom"];
 			$asso["gedfile"] = $row["i_file"];
-			$asso["name"] = get_indi_names($row["rec_gedcom"]);
-			$ca = preg_match_all("/\d ASSO @(.*)@/", $row["rec_gedcom"], $match, PREG_SET_ORDER);
+			$asso["name"] = get_indi_names($row["i_gedcom"]);
+			$ca = preg_match_all("/\d ASSO @(.*)@/", $row["i_gedcom"], $match, PREG_SET_ORDER);
 			for ($i=0; $i<$ca; $i++) {
 				$pid = $match[$i][1]."[".$row["i_file"]."]";
 				$assolist[$pid][$pid2] = $asso;
@@ -993,13 +971,13 @@ function get_fam_list() {
 	if ($FAMLIST_RETRIEVED)
 		return $famlist;
 	$famlist = array();
-	$sql = "SELECT f_id, f_husb,f_wife, f_chil, rec_gedcom, f_numchil FROM {$TBLPREFIX}families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND  f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+	$sql = "SELECT f_id, f_husb,f_wife, f_chil, f_gedcom, f_numchil FROM {$TBLPREFIX}families WHERE f_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
 	$ct = $res->numRows();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$fam = array();
-		$fam["gedcom"] = $row["rec_gedcom"];
+		$fam["gedcom"] = $row["f_gedcom"];
 		$row = db_cleanup($row);
 		$hname = get_sortable_name($row["f_husb"]);
 		$wname = get_sortable_name($row["f_wife"]);
@@ -1018,13 +996,36 @@ function get_fam_list() {
 		$fam["HUSB"] = $row["f_husb"];
 		$fam["WIFE"] = $row["f_wife"];
 		$fam["CHIL"] = $row["f_chil"];
-		$fam["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+		$fam["gedfile"] = PGV_GED_ID;
 		$fam["numchil"] = $row["f_numchil"];
 		$famlist[$row["f_id"]] = $fam;
 	}
 	$res->free();
 	$FAMLIST_RETRIEVED = true;
 	return $famlist;
+}
+
+//-- get the otherlist from the datastore
+function get_other_list() {
+	global $otherlist, $GEDCOM, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX;
+
+	$otherlist = array();
+
+	$sql = "SELECT o_id, o_type, o_gedcom FROM {$TBLPREFIX}other WHERE o_file=".PGV_GED_ID;
+	$res = dbquery($sql);
+
+	$ct = $res->numRows();
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+		$source = array();
+		$source["gedcom"] = $row["o_gedcom"];
+		$row = db_cleanup($row);
+		$source["type"] = $row["o_type"];
+		$source["gedfile"] = PGV_GED_ID;
+		$otherlist[$row["o_id"]]= $source;
+	}
+	$res->free();
+	return $otherlist;
 }
 
 //-- search through the gedcom records for individuals
@@ -1051,29 +1052,29 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 			$term = "LIKE";
 	//-- if the query is a string
 	if (!is_array($query)) {
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
+		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE (";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
-			$sql .= "rec_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR rec_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
+			$sql .= "i_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR i_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
 		else
-			$sql .= "rec_gedcom $term '".$DBCONN->escapeSimple($query)."')";
+			$sql .= "i_gedcom $term '".$DBCONN->escapeSimple($query)."')";
 	} else {
 		//-- create a more complicated query if it is an array
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
+		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE (";
 		$i=0;
 		foreach ($query as $indexval => $q) {
 			if ($i>0)
 				$sql .= " $ANDOR ";
 			if (has_utf8($q))
-				$sql .= "(rec_gedcom $term '".$DBCONN->escapeSimple(str2upper($q))."' OR rec_gedcom $term '".$DBCONN->escapeSimple(str2lower($q))."')";
+				$sql .= "(i_gedcom $term '".$DBCONN->escapeSimple(str2upper($q))."' OR i_gedcom $term '".$DBCONN->escapeSimple(str2lower($q))."')";
 			else
-				$sql .= "(rec_gedcom $term '".$DBCONN->escapeSimple($q)."')";
+				$sql .= "(i_gedcom $term '".$DBCONN->escapeSimple($q)."')";
 			$i++;
 		}
 		$sql .= ")";
 	}
 	if (!$allgeds)
-		$sql .= " AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql .= " AND i_file=".PGV_GED_ID;
 
 	if ((is_array($allgeds)) && (count($allgeds) != 0)) {
 		$sql .= " AND (";
@@ -1136,12 +1137,12 @@ function search_indis_names($query, $allgeds=false) {
 
 	$myindilist = array();
 	if (empty($query))
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref";
+		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals";
 	else
 		if (!is_array($query))
-			$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_name $term '".$DBCONN->escapeSimple($query)."'";
+			$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE i_name $term '".$DBCONN->escapeSimple($query)."'";
 		else {
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND (";
+			$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE (";
 			$i=0;
 			foreach ($query as $indexval => $q) {
 				if (!empty($q)) {
@@ -1154,7 +1155,7 @@ function search_indis_names($query, $allgeds=false) {
 			$sql .= ")";
 		}
 	if (!$allgeds)
-		$sql .= " AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql .= " AND i_file=".PGV_GED_ID;
 	$res = dbquery($sql, false);
 	if (!DB::isError($res)) {
 		while ($row = $res->fetchRow()){
@@ -1178,9 +1179,9 @@ function search_indis_names($query, $allgeds=false) {
 
 	//-- search the names table too
 	if (!is_array($query))
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_id=n_gid AND i_file=n_file AND n_name $term '".$DBCONN->escapeSimple($query)."'";
+		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_name $term '".$DBCONN->escapeSimple($query)."'";
 	else {
-		$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals,{$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_id=n_gid AND i_file=n_file AND (";
+		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND (";
 		$i=0;
 		foreach ($query as $indexval => $q) {
 			if (!empty($q)) {
@@ -1193,7 +1194,7 @@ function search_indis_names($query, $allgeds=false) {
 		$sql .= ")";
 	}
 	if (!$allgeds)
-		$sql .= " AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql .= " AND i_file=".PGV_GED_ID;
 	$res = dbquery($sql, false);
 
 	if (!DB::isError($res)) {
@@ -1316,11 +1317,11 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 		$parr = array(soundex(trim($place)));
 
 		if (empty($place) || !empty($firstname) || !empty($lastname)) {
-			$sql = "SELECT i_id, rec_gedcom, i_name, i_isdead, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals, {$TBLPREFIX}record";
+			$sql = "SELECT i_id, i_gedcom, i_name, i_isdead, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
 			if (!empty($place)) {
 				$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
 			}
-			$sql .= " WHERE sx_i_id = i_id AND sx_file = i_file AND i_file_rec_file AND i_id=rec_xref AND ";
+			$sql .= " WHERE sx_i_id = i_id AND sx_file = i_file AND ";
 			if (!empty($place)) {
 				$sql .= "pl_file = i_file AND i_file = p_file AND pl_gid = i_id AND pl_p_id = p_id AND ";
 			}
@@ -1403,7 +1404,7 @@ function get_recent_changes($jd=0, $allgeds=false) {
 
 	$sql = "SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
 	if (!$allgeds)
-		$sql .= " AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
+		$sql .= " AND d_file=".PGV_GED_ID." ";
 	$sql .= " ORDER BY d_julianday1 DESC";
 
 	$changes = array();
@@ -1434,7 +1435,7 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $GEDCOMS;
 	$myindilist = array();
 
-	$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_id=d_gid AND i_file=d_file AND i_id=rec_xref AND i_file=rec_ged_id ";
+	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals WHERE i_id=d_gid AND i_file=d_file ";
 	if (!empty($day))
 		$sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
 	if (!empty($month))
@@ -1460,7 +1461,7 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 		$sql .= ") ";
 	}
 	if (!$allgeds)
-		$sql .= "AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
+		$sql .= "AND d_file=".PGV_GED_ID." ";
 	$sql .= "ORDER BY d_year DESC, d_mon DESC, d_day DESC";
 	$res = dbquery($sql);
 
@@ -1472,14 +1473,14 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 				$myindilist[$row[0]."[".$row[2]."]"]["gedfile"] = $row[2];
 				$myindilist[$row[0]."[".$row[2]."]"]["gedcom"] = $row[3];
 				$myindilist[$row[0]."[".$row[2]."]"]["isdead"] = $row[4];
-				if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == $GEDCOMS[$GEDCOM]['id'])
+				if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == PGV_GED_ID)
 					$indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
 			} else {
 				$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
 				$myindilist[$row[0]]["gedfile"] = $row[2];
 				$myindilist[$row[0]]["gedcom"] = $row[3];
 				$myindilist[$row[0]]["isdead"] = $row[4];
-				if ($myindilist[$row[0]]["gedfile"] == $GEDCOMS[$GEDCOM]['id'])
+				if ($myindilist[$row[0]]["gedfile"] == PGV_GED_ID)
 					$indilist[$row[0]] = $myindilist[$row[0]];
 			}
 		}
@@ -1503,7 +1504,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 	global $USE_RTL_FUNCTIONS, $year;
 	$myindilist = array();
 
-	$sql = "SELECT i_id, i_name, i_file, rec_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals, {$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=d_gid AND i_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
+	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals WHERE i_id=d_gid AND i_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -1523,7 +1524,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 		$sql .= ") ";
 	}
 	if (!$allgeds)
-		$sql .= "AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
+		$sql .= "AND d_file=".PGV_GED_ID." ";
 	$sql .= "ORDER BY d_julianday1";
 	$res = dbquery($sql);
 
@@ -1536,7 +1537,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 					$myindilist[$row[0]."[".$row[2]."]"]["gedfile"] = $row[2];
 					$myindilist[$row[0]."[".$row[2]."]"]["gedcom"] = $row[3];
 					$myindilist[$row[0]."[".$row[2]."]"]["isdead"] = $row[4];
-					if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == $GEDCOMS[$GEDCOM]['id'])
+					if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == PGV_GED_ID)
 						$indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
 				}
 			} else {
@@ -1545,7 +1546,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 					$myindilist[$row[0]]["gedfile"] = $row[2];
 					$myindilist[$row[0]]["gedcom"] = $row[3];
 					$myindilist[$row[0]]["isdead"] = $row[4];
-					if ($myindilist[$row[0]]["gedfile"] == $GEDCOMS[$GEDCOM]['id'])
+					if ($myindilist[$row[0]]["gedfile"] == PGV_GED_ID)
 						$indilist[$row[0]] = $myindilist[$row[0]];
 				}
 			}
@@ -1567,21 +1568,21 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 			$term='LIKE';
 	$myfamlist = array();
 	if (!is_array($query))
-		$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND (rec_gedcom $term '".$DBCONN->escapeSimple($query)."')";
+		$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (f_gedcom $term '".$DBCONN->escapeSimple($query)."')";
 	else {
-		$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND (";
+		$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (";
 		$i=0;
 		foreach ($query as $indexval => $q) {
 			if ($i>0)
 				$sql .= " $ANDOR ";
-			$sql .= "(rec_gedcom $term '".$DBCONN->escapeSimple($q)."')";
+			$sql .= "(f_gedcom $term '".$DBCONN->escapeSimple($q)."')";
 			$i++;
 		}
 		$sql .= ")";
 	}
 
 	if (!$allgeds)
-		$sql .= " AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql .= " AND f_file=".PGV_GED_ID;
 
 	if ((is_array($allgeds)) && (count($allgeds) != 0)) {
 		$sql .= " AND (";
@@ -1649,7 +1650,7 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 function search_fams_names($query, $ANDOR="AND", $allnames=false, $gedcnt=1) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN;
 	$myfamlist = array();
-	$sql = "SELECT f_id, f_husb, f_wife, f_file, rec_gedcom, f_numchil FROM ".$TBLPREFIX."families, {$TBLPREFIX}record WHERE f_id=rec_xref AND f_file=rec_ged_id AND (";
+	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (";
 	$i=0;
 	foreach ($query as $indexval => $q) {
 		if ($i>0)
@@ -1739,7 +1740,7 @@ function search_fams_members($query, $allgeds=false, $ANDOR="AND", $allnames=fal
 	}
 
 	if (!$allgeds)
-		$sql .= " AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql .= " AND f_file=".PGV_GED_ID;
 
 	if ((is_array($allgeds)) && (count($allgeds) != 0)) {
 		$sql .= " AND (";
@@ -1807,28 +1808,28 @@ function search_sources($query, $allgeds=false, $ANDOR="AND") {
 		else
 			$term='LIKE';
 	if (!is_array($query)) {
-		$sql = "SELECT s_id, s_name, s_file, rec_gedcom FROM ".$TBLPREFIX."sources, {$TBLPREFIX}record WHERE s_id=rec_xref AND s_file=rec_ged_id AND ";
+		$sql = "SELECT s_id, s_name, s_file, s_gedcom FROM ".$TBLPREFIX."sources WHERE ";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
-			$sql .= "(rec_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR rec_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
+			$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR s_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
 		else
-			$sql .= "rec_gedcom $term '".$DBCONN->escapeSimple($query)."'";
+			$sql .= "s_gedcom $term '".$DBCONN->escapeSimple($query)."'";
 	} else {
-		$sql = "SELECT s_id, s_name, s_file, rec_gedcom FROM ".$TBLPREFIX."sources WHERE (";
+		$sql = "SELECT s_id, s_name, s_file, s_gedcom FROM ".$TBLPREFIX."sources WHERE (";
 		$i=0;
 		foreach ($query as $indexval => $q) {
 			if ($i>0)
 				$sql .= " $ANDOR ";
 			if (has_utf8($q))
-				$sql .= "(rec_gedcom $term '".$DBCONN->escapeSimple(str2upper($q))."' OR rec_gedcom $term '".$DBCONN->escapeSimple(str2lower($q))."')";
+				$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple(str2upper($q))."' OR s_gedcom $term '".$DBCONN->escapeSimple(str2lower($q))."')";
 			else
-				$sql .= "(rec_gedcom $term '".$DBCONN->escapeSimple($q)."')";
+				$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple($q)."')";
 			$i++;
 		}
 		$sql .= ")";
 	}
 	if (!$allgeds)
-		$sql .= " AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql .= " AND s_file=".PGV_GED_ID;
 
 	if ((is_array($allgeds)) && (count($allgeds) != 0)) {
 		$sql .= " AND (";
@@ -1871,7 +1872,7 @@ function search_sources_dates($day="", $month="", $year="", $fact="", $allgeds=f
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
 	$mysourcelist = array();
 
-	$sql = "SELECT s_id, s_name, s_file, rec_gedcom, d_gid FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."sources, {$TBLPREFIX}recrods WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_id=d_gid AND s_file=d_file ";
+	$sql = "SELECT s_id, s_name, s_file, s_gedcom, d_gid FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."sources WHERE s_id=d_gid AND s_file=d_file ";
 	if (!empty($day))
 		$sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
 	if (!empty($month))
@@ -1881,7 +1882,7 @@ function search_sources_dates($day="", $month="", $year="", $fact="", $allgeds=f
 	if (!empty($fact))
 		$sql .= "AND d_fact='".$DBCONN->escapeSimple(str2upper($fact))."' ";
 	if (!$allgeds)
-		$sql .= "AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
+		$sql .= "AND d_file=".PGV_GED_ID." ";
 	$sql .= "GROUP BY s_id ORDER BY d_year, d_month, d_day DESC";
 
 	$res = dbquery($sql);
@@ -1906,6 +1907,124 @@ function search_sources_dates($day="", $month="", $year="", $fact="", $allgeds=f
 	return $mysourcelist;
 }
 
+//-- search through the gedcom records for sources
+function search_other($query, $allgeds=false, $type="", $ANDOR="AND") {
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $DBTYPE, $GEDCOMS;
+	$mysourcelist = array();
+	if (stristr($DBTYPE, "mysql")!==false)
+		$term = "REGEXP";
+	else
+		if (stristr($DBTYPE, "pgsql")!==false)
+			$term = "~*";
+		else
+			$term='LIKE';
+	if (!is_array($query)) {
+		$sql = "SELECT o_id, o_type, o_file, o_gedcom FROM ".$TBLPREFIX."other WHERE ";
+		//-- make sure that MySQL matches the upper and lower case utf8 characters
+		if (has_utf8($query))
+			$sql .= "(o_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR o_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
+		else
+			$sql .= "o_gedcom $term '".$DBCONN->escapeSimple($query)."'";
+	} else {
+		$sql = "SELECT o_id, o_type, o_file, o_gedcom FROM ".$TBLPREFIX."other WHERE (";
+		$i=0;
+		foreach ($query as $indexval => $q) {
+			if ($i>0)
+				$sql .= " $ANDOR ";
+			if (has_utf8($q))
+				$sql .= "(o_gedcom $term '".$DBCONN->escapeSimple(str2upper($q))."' OR o_gedcom $term '".$DBCONN->escapeSimple(str2lower($q))."')";
+			else
+				$sql .= "(o_gedcom $term '".$DBCONN->escapeSimple($q)."')";
+			$i++;
+		}
+		$sql .= ")";
+	}
+	if (!$allgeds)
+		$sql .= " AND o_file=".PGV_GED_ID;
+
+	if ((is_array($allgeds)) && (count($allgeds) != 0)) {
+		$sql .= " AND (";
+		for ($i=0; $i<count($allgeds); $i++) {
+			$sql .= "o_file=".$DBCONN->escapeSimple($GEDCOMS[$allgeds[$i]]["id"]);
+			if ($i < count($allgeds)-1)
+				$sql .= " OR ";
+		}
+		$sql .= ")";
+	}
+
+	$res = dbquery($sql, false);
+
+	if (!DB::isError($res)) {
+		while ($row =& $res->fetchRow()){
+			$row = db_cleanup($row);
+			if (count($allgeds) > 1) {
+				$mysourcelist[$row[0]."[".$row[2]."]"]["type"] = $row[1];
+				$mysourcelist[$row[0]."[".$row[2]."]"]["gedfile"] = $row[2];
+				$mysourcelist[$row[0]."[".$row[2]."]"]["gedcom"] = $row[3];
+			} else {
+				$mysourcelist[$row[0]]["type"] = $row[1];
+				$mysourcelist[$row[0]]["gedfile"] = $row[2];
+				$mysourcelist[$row[0]]["gedcom"] = $row[3];
+			}
+		}
+		$res->free();
+	}
+	return $mysourcelist;
+}
+
+/**
+ * Search the dates table for other records that had events on the given day
+ *
+ * @author	yalnifj
+ * @param	boolean $allgeds setting if all gedcoms should be searched, default is false
+ * @return	array $myfamlist array with all individuals that matched the query
+ */
+function search_other_dates($day="", $month="", $year="", $fact="", $allgeds=false) {
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+	$myrepolist = array();
+
+	$sql = "SELECT o_id, o_file, o_type, o_gedcom, d_gid FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."other WHERE o_id=d_gid AND o_file=d_file ";
+	if (!empty($day))
+		$sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
+	if (!empty($month))
+		$sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
+	if (!empty($year))
+		$sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
+	if (!empty($fact))
+		$sql .= "AND d_fact='".$DBCONN->escapeSimple(str2upper($fact))."' ";
+	if (!$allgeds)
+		$sql .= "AND d_file=".PGV_GED_ID." ";
+	$sql .= "GROUP BY o_id ORDER BY d_year, d_month, d_day DESC";
+
+	$res = dbquery($sql);
+
+	if (!DB::isError($res)) {
+		$gedold = $GEDCOM;
+		while ($row =& $res->fetchRow()){
+			$row = db_cleanup($row);
+			$tt = preg_match("/1 NAME (.*)/", $row[2], $match);
+			if ($tt == "0")
+				$name = $row[0];
+			else
+				$name = $match[1];
+			if ($allgeds) {
+				$myrepolist[$row[0]."[".$row[1]."]"]["name"] = $name;
+				$myrepolist[$row[0]."[".$row[1]."]"]["gedfile"] = $row[1];
+				$myrepolist[$row[0]."[".$row[1]."]"]["type"] = $row[2];
+				$myrepolist[$row[0]."[".$row[1]."]"]["gedcom"] = $row[3];
+			} else {
+				$myrepolist[$row[0]]["name"] = $name;
+				$myrepolist[$row[0]]["gedfile"] = $row[1];
+				$myrepolist[$row[0]]["type"] = $row[2];
+				$myrepolist[$row[0]]["gedcom"] = $row[3];
+			}
+		}
+		$GEDCOM = $gedold;
+		$res->free();
+	}
+	return $myrepolist;
+}
+
 /**
  * get place parent ID
  * @param array $parent
@@ -1918,7 +2037,7 @@ function get_place_parent_id($parent, $level) {
 	$parent_id=0;
 	for ($i=0; $i<$level; $i++) {
 		$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]));
-		$psql = "SELECT p_id FROM ".$TBLPREFIX."places WHERE p_level=".$i." AND p_parent_id=$parent_id AND p_place LIKE '".$escparent."' AND p_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY p_place";
+		$psql = "SELECT p_id FROM ".$TBLPREFIX."places WHERE p_level=".$i." AND p_parent_id=$parent_id AND p_place LIKE '".$escparent."' AND p_file=".PGV_GED_ID." ORDER BY p_place";
 		$res = dbquery($psql);
 		$row =& $res->fetchRow();
 		$res->free();
@@ -1941,10 +2060,10 @@ function get_place_list() {
 
 	// --- find all of the place in the file
 	if ($level==0)
-		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=0 AND p_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY p_place";
+		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=0 AND p_file=".PGV_GED_ID." ORDER BY p_place";
 	else {
 		$parent_id = get_place_parent_id($parent, $level);
-		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=$level AND p_parent_id=$parent_id AND p_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY p_place";
+		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=$level AND p_parent_id=$parent_id AND p_file=".PGV_GED_ID." ORDER BY p_place";
 	}
 	$res = dbquery($sql);
 
@@ -1968,7 +2087,7 @@ function get_place_positions($parent, $level='') {
 		$p_id = get_place_parent_id($parent, $level);
 	else {
 		//-- we don't know the level so get the any matching place
-		$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places WHERE p_place LIKE '".$DBCONN->escapeSimple($parent)."' AND p_file=pl_file AND p_id=pl_p_id AND p_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places WHERE p_place LIKE '".$DBCONN->escapeSimple($parent)."' AND p_file=pl_file AND p_id=pl_p_id AND p_file=".PGV_GED_ID;
 		$res = dbquery($sql);
 		while ($row =& $res->fetchRow()) {
 			$positions[] = $row[0];
@@ -1976,7 +2095,7 @@ function get_place_positions($parent, $level='') {
 		$res->free();
 		return $positions;
 	}
-	$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks WHERE pl_p_id=$p_id AND pl_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+	$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks WHERE pl_p_id=$p_id AND pl_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow()) {
@@ -1990,7 +2109,7 @@ function get_place_positions($parent, $level='') {
 function find_place_list($place) {
 	global $GEDCOM, $TBLPREFIX, $placelist, $DBCONN, $GEDCOMS;
 
-	$sql = "SELECT p_id, p_place, p_parent_id  FROM ".$TBLPREFIX."places WHERE p_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY p_parent_id, p_id";
+	$sql = "SELECT p_id, p_place, p_parent_id  FROM ".$TBLPREFIX."places WHERE p_file=".PGV_GED_ID." ORDER BY p_parent_id, p_id";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow()) {
@@ -2021,16 +2140,16 @@ function get_media_list() {
 	$ct = 0;
 	if (!isset($medialinks))
 		$medialinks = array();
-	$sqlmm = "SELECT mm_gid, mm_media FROM ".$TBLPREFIX."media_mapping WHERE mm_gedfile = ".$GEDCOMS[$GEDCOM]["id"]." ORDER BY mm_id ASC";
+	$sqlmm = "SELECT mm_gid, mm_media FROM ".$TBLPREFIX."media_mapping WHERE mm_gedfile = ".PGV_GED_ID." ORDER BY mm_id ASC";
 	$resmm =@ dbquery($sqlmm);
 	while ($rowmm =& $resmm->fetchRow(DB_FETCHMODE_ASSOC)){
-		$sqlm = "SELECT m_id, m_titl, rec_gedcom, m_file FROM {$TBLPREFIX}media, {$TBLPREFIX}record WHERE m_media=rec_xref AND m_file=rec_ged_id AND m_media='{$rowmm['mm_media']}' AND m_gedfile={$GEDCOMS[$GEDCOM]['id']}"; 
+		$sqlm = "SELECT m_id, m_titl, m_gedrec, m_file FROM {$TBLPREFIX}media WHERE m_media='{$rowmm['mm_media']}' AND m_gedfile=".PGV_GED_ID;
 		$resm =@ dbquery($sqlm);
 		while ($rowm =& $resm->fetchRow(DB_FETCHMODE_ASSOC)){
 			$filename = check_media_depth($rowm["m_file"], "NOTRUNC");
 			$thumbnail = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $filename);
 			$title = $rowm["m_titl"];
-			$mediarec = $rowm["rec_gedcom"];
+			$mediarec = $rowm["m_gedrec"];
 			$level = $mediarec{0};
 			$isprim="N";
 			$isthumb="N";
@@ -2078,25 +2197,16 @@ function get_media_list() {
  * @return array	an array of all letters
  */
 function get_indi_alpha() {
-	global $DBH, $TBLPREFIX, $GEDCOMS, $GEDCOM, $SHOW_MARRIED_NAMES, $TOTAL_QUERIES;
-	static $statement=null;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	if (is_null($statement)) {
-		if ($SHOW_MARRIED_NAMES) {
-			$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=? GROUP BY 1 ORDER BY letter='@', letter");
-			} else {
-			$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND name_type!='_MARNM' AND rec_ged_id=? GROUP BY 1 ORDER BY letter='@', letter");
-				}
-			}
+	$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=".PGV_GED_ID." GROUP BY 1 ORDER BY letter='@', letter");
 
 	$initials=array();
-
-	$statement->bindValue(1, $GEDCOMS[$GEDCOM]['id'], PDO::PARAM_INT);
 	$statement->execute();
 	++$TOTAL_QUERIES;
 	while ($row=$statement->fetchObject()) {
-		$initials[]=$row->letter;
-		}
+		$initials[$row->letter]=$row->letter;
+	}
 
 	return $initials;
 }
@@ -2117,7 +2227,7 @@ function get_fam_alpha() {
 		foreach ($danishTo as $k=>$v)
 			$famalpha[$v] = $v;
 
-	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_file=rec_ged_id AND i_id=rec_xref AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
+	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2146,7 +2256,7 @@ function get_fam_alpha() {
 	}
 	$res->free();
 
-	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names, {$TBLPREFIX}record WHERE rec_ged_id=n_file AND rec_xref=n_gid AND n_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
+	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names, ".$TBLPREFIX."individuals WHERE i_file=n_file AND i_id=n_gid AND n_file=".PGV_GED_ID." AND i_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2175,7 +2285,7 @@ function get_fam_alpha() {
 	}
 	$res->free();
 
-	$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND (f_husb='' OR f_wife='')";
+	$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID." AND (f_husb='' OR f_wife='')";
 	$res = dbquery($sql);
 
 	if ($res->numRows()>0) {
@@ -2214,7 +2324,7 @@ function get_alpha_indis($letter) {
 
 	$checkDictSort = true;
 
-	$sql = "SELECT i_id, rec_gedcom, i_name, i_letter,i_surname, i_isdead FROM {$TBLPREFIX}individuals, {$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND ";
+	$sql = "SELECT i_id, i_gedcom, i_name, i_letter,i_surname, i_isdead FROM {$TBLPREFIX}individuals WHERE ";
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
 		if ($letter == "Ø")
 			$text = "OE";
@@ -2286,7 +2396,7 @@ function get_alpha_indis($letter) {
 	//-- add some optimization if the surname is set to speed up the lists
 	if (!empty($surname))
 		$sql .= "AND i_surname LIKE '%".$DBCONN->escapeSimple($surname)."%' ";
-	$sql .= "AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY i_name";
+	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY i_name";
 	$res = dbquery($sql);
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2295,8 +2405,8 @@ function get_alpha_indis($letter) {
 				$indi = array();
 				$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], 'P'));
 				$indi["isdead"] = $row["i_isdead"];
-				$indi["gedcom"] = $row["rec_gedcom"];
-				$indi["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+				$indi["gedcom"] = $row["i_gedcom"];
+				$indi["gedfile"] = PGV_GED_ID;
 				$tindilist[$row["i_id"]] = $indi;
 				//-- cache the item in the $indilist for improved speed
 				$indilist[$row["i_id"]] = $indi;
@@ -2307,7 +2417,7 @@ function get_alpha_indis($letter) {
 
 	$checkDictSort = true;
 
-	$sql = "SELECT i_id, i_name, i_file, i_isdead, rec_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names,{$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=n_gid AND i_file=n_file AND ";
+	$sql = "SELECT i_id, i_name, i_file, i_isdead, i_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND ";
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
 		if ($letter == "Ø")
 			$text = "OE";
@@ -2380,7 +2490,7 @@ function get_alpha_indis($letter) {
 		$sql .= "AND n_surname LIKE '%".$DBCONN->escapeSimple($surname)."%' ";
 	if (!$SHOW_MARRIED_NAMES)
 		$sql .= "AND n_type!='C' ";
-	$sql .= "AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY i_name";
+	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY i_name";
 	$res = dbquery($sql);
 	if (!DB::isError($res)) {
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2390,7 +2500,7 @@ function get_alpha_indis($letter) {
 				$indi = array();
 				$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"), array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
 				$indi["isdead"] = $row["i_isdead"];
-				$indi["gedcom"] = $row["rec_gedcom"];
+				$indi["gedcom"] = $row["i_gedcom"];
 				$indi["gedfile"] = $row["i_file"];
 				//-- cache the item in the $indilist for improved speed
 				$indilist[$row["i_id"]] = $indi;
@@ -2421,8 +2531,8 @@ function get_alpha_indis($letter) {
 function get_surname_indis($surname) {
 	global $TBLPREFIX, $GEDCOM, $indilist, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
 	$tindilist = array();
-	$sql = "SELECT i_id, i_isdead, i_file, rec_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals, {$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
-	$sql .= "AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+	$sql = "SELECT i_id, i_isdead, i_file, i_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql .= "AND i_file=".PGV_GED_ID;
 	$sql .= " ORDER BY i_surname";
 	$res = dbquery($sql);
 
@@ -2431,7 +2541,7 @@ function get_surname_indis($surname) {
 		$indi = array();
 		$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"));
 		$indi["isdead"] = $row["i_isdead"];
-		$indi["gedcom"] = $row["rec_gedcom"];
+		$indi["gedcom"] = $row["i_gedcom"];
 		$indi["gedfile"] = $row["i_file"];
 		$indi["numchil"] = "";
 		$indilist[$row["i_id"]] = $indi;
@@ -2453,7 +2563,7 @@ function get_surname_indis($surname) {
 	if ($sqlHusb) {
 		$sql = "SELECT f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE (";
 		$sql .= substr($sqlHusb, 0, -4);		// get rid of final " OR "
-		$sql .= ") AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql .= ") AND f_file=".PGV_GED_ID;
 		$res = dbquery($sql);
 		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$gid = $row["f_husb"];
@@ -2466,7 +2576,7 @@ function get_surname_indis($surname) {
 	if ($sqlWife) {
 		$sql = "SELECT f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE (";
 		$sql .= substr($sqlWife, 0, -4);		// get rid of final " OR "
-		$sql .= ") AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+		$sql .= ") AND f_file=".PGV_GED_ID;
 		$res = dbquery($sql);
 		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$gid = $row["f_wife"];
@@ -2476,10 +2586,10 @@ function get_surname_indis($surname) {
 		$res->free();
 	}
 
-	$sql = "SELECT i_id, i_name, i_file, i_isdead, rec_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names, {$TBLPREFIX}record WHERE i_id=rec_xref AND i_file=rec_ged_id AND i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql = "SELECT i_id, i_name, i_file, i_isdead, i_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	if (!$SHOW_MARRIED_NAMES)
 		$sql .= "AND n_type!='C' ";
-	$sql .= "AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ORDER BY n_surname";
+	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY n_surname";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2496,7 +2606,7 @@ function get_surname_indis($surname) {
 			//do not add main name first name beginning letter for alternate names
 			$indi["names"] = array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]),array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"));
 			$indi["isdead"] = $row["i_isdead"];
-			$indi["gedcom"] = $row["rec_gedcom"];
+			$indi["gedcom"] = $row["i_gedcom"];
 			$indi["gedfile"] = $row["i_file"];
 			$indilist[$row["i_id"]] = $indi;
 			$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
@@ -2535,7 +2645,7 @@ function get_alpha_fams($letter) {
 		$surnames = array();
 		for ($i=0; $i<$ct; $i++) {
 			$famid = $match[$i][1];
-			$famrec = find_gedcom_record($famid);
+			$famrec = find_family_record($famid);
 			if ($famlist[$famid]["husb"]==$gid) {
 				$HUSB = $famlist[$famid]["husb"];
 				$WIFE = $famlist[$famid]["wife"];
@@ -2585,7 +2695,7 @@ function get_alpha_fams($letter) {
 			if (!empty($hname)) {
 				$wname = get_sortable_name($WIFE);
 				if (hasRTLText($hname)) {
-					$indirec = find_gedcom_record($WIFE);
+					$indirec = find_person_record($WIFE);
 					if (isset($indilist[$WIFE]["names"])) {
 						foreach ($indilist[$WIFE]["names"] as $n=>$namearray) {
 							if (hasRTLText($namearray[0])) {
@@ -2612,7 +2722,7 @@ function get_alpha_fams($letter) {
 	//-- handle the special case for @N.N. when families don't have any husb or wife
 	//-- SHOULD WE SHOW THE UNDEFINED? MA
 	if ($letter=="@") {
-		$sql = "SELECT f_id, rec_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families, {$TBLPREFIX}record WHERE f_file=rec_ged_id AND f_id=rec_file_xerf AND (f_husb='' OR f_wife='') AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+		$sql = "SELECT f_id, f_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families WHERE (f_husb='' OR f_wife='') AND f_file=".PGV_GED_ID;
 		$res = dbquery($sql);
 
 		if ($res->numRows()>0) {
@@ -2632,8 +2742,8 @@ function get_alpha_fams($letter) {
 				$fam["HUSB"] = $row["f_husb"];
 				$fam["WIFE"] = $row["f_wife"];
 				$fam["CHIL"] = $row["f_chil"];
-				$fam["gedcom"] = $row["rec_gedcom"];
-				$fam["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+				$fam["gedcom"] = $row["f_gedcom"];
+				$fam["gedfile"] = PGV_GED_ID;
 				$fam["surnames"] = array("@N.N.");
 				$tfamlist[$row["f_id"]] = $fam;
 				//-- cache the items in the lists for improved speed
@@ -2669,6 +2779,7 @@ function get_surname_fams($surname) {
 			$famids[] = $famid;
 		}
 	}
+	load_families($famids);
 
 	foreach ($myindilist as $gid=>$indi) {
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
@@ -2694,7 +2805,7 @@ function get_surname_fams($surname) {
 			if (!empty($hname)) {
 				$wname = get_sortable_name($WIFE);
 				if (hasRTLText($hname)) {
-					$indirec = find_gedcom_record($WIFE);
+					$indirec = find_person_record($WIFE);
 					if (isset($indilist[$WIFE])) {
 						foreach ($indilist[$WIFE]["names"] as $n=>$namearray) {
 							if (hasRTLText($namearray[0])) {
@@ -2716,7 +2827,7 @@ function get_surname_fams($surname) {
 	//-- handle the special case for @N.N. when families don't have any husb or wife
 	//-- SHOULD WE SHOW THE UNDEFINED?
 	if ($surname=="@N.N.") {
-		$sql = "SELECT f_id, rec_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families, {$TBLPREFIX}record WHERE f_file=rec_ged_id AND f_id=rec_xref AND (f_husb='' OR f_wife='') AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+		$sql = "SELECT f_id, f_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families WHERE (f_husb='' OR f_wife='') AND f_file=".PGV_GED_ID;
 		$res = dbquery($sql);
 
 		if ($res->numRows()>0) {
@@ -2732,8 +2843,8 @@ function get_surname_fams($surname) {
 				$fam["HUSB"] = $row["f_husb"];
 				$fam["WIFE"] = $row["f_wife"];
 				$fam["CHIL"] = $row["f_chil"];
-				$fam["gedcom"] = $row["rec_gedcom"];
-				$fam["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+				$fam["gedcom"] = $row["f_gedcom"];
+				$fam["gedfile"] = PGV_GED_ID;
 				$tfamlist[$row["f_id"]] = $fam;
 				//-- cache the items in the lists for improved speed
 				$famlist[$row["f_id"]] = $fam;
@@ -2748,7 +2859,7 @@ function get_surname_fams($surname) {
 function find_rin_id($rin) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
 
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_rin='$rin' AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
+	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_rin='$rin' AND i_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2771,8 +2882,7 @@ function delete_gedcom($ged) {
 
 	dbquery("DELETE FROM {$TBLPREFIX}gedcom WHERE ged_id=".$DBCONN->escapeSimple($dbged));
 	// If the DB doesn't support foreign key constraints, we must do it ourself :-(
-	dbquery("DELETE FROM {$TBLPREFIX}record WHERE rec_ged_id=".$DBCONN->escapeSimple($dbged));
-	//dbquery("DELETE FROM {$TBLPREFIX}record WHERE rec_ged_id   NOT IN (SELECT ged_id  FROM {$TBLPREFIX}gedcom)");
+	dbquery("DELETE FROM {$TBLPREFIX}record WHERE rec_ged_id   NOT IN (SELECT ged_id  FROM {$TBLPREFIX}gedcom)");
 	dbquery("DELETE FROM {$TBLPREFIX}fact   WHERE fact_rec_id  NOT IN (SELECT rec_id  FROM {$TBLPREFIX}record)");
 	dbquery("DELETE FROM {$TBLPREFIX}link   WHERE link_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}fact)");
 	dbquery("DELETE FROM {$TBLPREFIX}name   WHERE name_fact_id NOT IN (SELECT fact_id FROM {$TBLPREFIX}fact)");
@@ -2799,16 +2909,25 @@ function delete_gedcom($ged) {
 	$sql = "DELETE FROM ".$TBLPREFIX."media_mapping WHERE mm_gedfile=".$DBCONN->escapeSimple($dbged);
 	$res = dbquery($sql);
 
+	$sql = "DELETE FROM ".$TBLPREFIX."names WHERE n_file=".$DBCONN->escapeSimple($dbged);
+	$res = dbquery($sql);
+
 	$sql = "DELETE FROM ".$TBLPREFIX."news WHERE n_username='".$DBCONN->escapeSimple($ged)."'";
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM ".$TBLPREFIX."nextid WHERE ni_gedfile=".$DBCONN->escapeSimple($dbged);
 	$res = dbquery($sql);
 
+	$sql = "DELETE FROM ".$TBLPREFIX."other WHERE o_file=".$DBCONN->escapeSimple($dbged);
+	$res = dbquery($sql);
+
 	$sql = "DELETE FROM ".$TBLPREFIX."placelinks WHERE pl_file=".$DBCONN->escapeSimple($dbged);
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM ".$TBLPREFIX."places WHERE p_file=".$DBCONN->escapeSimple($dbged);
+	$res = dbquery($sql);
+
+	$sql = "DELETE FROM ".$TBLPREFIX."sources WHERE s_file=".$DBCONN->escapeSimple($dbged);
 	$res = dbquery($sql);
 
 	if (isset($pgv_changes)) {
@@ -2844,18 +2963,18 @@ function get_list_size($list, $filter="") {
 
 	switch($list) {
 		case "indilist":
-			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type='INDI' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(i_file) FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND rec_gedcom $term '$filter'";
+				$sql .= " AND i_gedcom $term '$filter'";
 			$res = dbquery($sql);
 			$row =& $res->fetchRow();
 			$res->free();
 			return $row[0];
 		break;
 		case "famlist":
-			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type='FAM' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(f_file) FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND rec_gedcom $term '$filter'";
+				$sql .= " AND f_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2863,9 +2982,9 @@ function get_list_size($list, $filter="") {
 			return $row[0];
 		break;
 		case "sourcelist":
-			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type='SOUR' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(s_file) FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND rec_gedcom $term '$filter'";
+				$sql .= " AND s_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2873,9 +2992,9 @@ function get_list_size($list, $filter="") {
 			return $row[0];
 		break;
 		case "objectlist": // media object
-			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type='OBJE' AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND rec_gedcom $term '$filter'";
+				$sql .= " AND m_gedrec $term '$filter'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2883,9 +3002,9 @@ function get_list_size($list, $filter="") {
 			return $row[0];
 		break;
 		case "otherlist": // REPO
-			$sql = "SELECT count(1) FROM {$TBLPREFIX}record WHERE rec_type NOT IN ('HEAD','TRLR','INDI','FAM','SOUR','OBJE') AND rec_ged_id=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
+			$sql = "SELECT count(o_file) FROM ".$TBLPREFIX."other WHERE o_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND rec_gedcom $term '$filter'";
+				$sql .= " AND o_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2905,7 +3024,7 @@ function get_top_surnames($num) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
 
 	$surnames = array();
-	$sql = "SELECT COUNT(i_surname) AS count, i_surname FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." GROUP BY i_surname ORDER BY count DESC";
+	$sql = "SELECT COUNT(i_surname) AS count, i_surname FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." GROUP BY i_surname ORDER BY count DESC";
 	$res = dbquery($sql, true, $num+1);
 
 	if (!DB::isError($res)) {
@@ -2919,7 +3038,7 @@ function get_top_surnames($num) {
 		}
 		$res->free();
 	}
-	$sql = "SELECT COUNT(n_surname) AS count, n_surname FROM ".$TBLPREFIX."names WHERE n_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND n_type!='C' GROUP BY n_surname ORDER BY count DESC";
+	$sql = "SELECT COUNT(n_surname) AS count, n_surname FROM ".$TBLPREFIX."names WHERE n_file=".PGV_GED_ID." AND n_type!='C' GROUP BY n_surname ORDER BY count DESC";
 	$res = dbquery($sql, true, $num+1);
 
 	if (!DB::isError($res)) {
@@ -2975,7 +3094,7 @@ function get_server_list(){
 	$sitelist = array();
 
 	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
-		$sql = "SELECT s_id ,s_name, rec_gedcom FROM {$TBLPREFIX}sources, {$TBLPREFIX}record WHERE s_id=rec_xref AND s_file=rec_ged_id AND s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." AND rec_gedcom LIKE '%1 _DBID%' ORDER BY s_name";
+		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_gedcom LIKE '%1 _DBID%' ORDER BY s_name";
 		$res = dbquery($sql, false);
 		if (DB::isError($res))
 			return $sitelist;
@@ -2984,9 +3103,9 @@ function get_server_list(){
 		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			$source = array();
 			$source["name"] = $row["s_name"];
-			$source["gedcom"] = $row["rec_gedcom"];
+			$source["gedcom"] = $row["s_gedcom"];
 			$row = db_cleanup($row);
-			$source["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
+			$source["gedfile"] = PGV_GED_ID;
 			$sitelist[$row["s_id"]] = $source;
 			$sourcelist[$row["s_id"]] = $source;
 		}
@@ -3068,7 +3187,7 @@ function delete_fact($linenum, $pid, $gedrec) {
  */
 function get_remote_id($rfn) {
 global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
-	$sql = "SELECT r_gid FROM ".$TBLPREFIX."remotelinks WHERE r_linkid='".$DBCONN->escapeSimple($rfn)."' AND r_file=".$GEDCOMS[$GEDCOM]['id'];
+	$sql = "SELECT r_gid FROM ".$TBLPREFIX."remotelinks WHERE r_linkid='".$DBCONN->escapeSimple($rfn)."' AND r_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
 	if ($res->numRows()>0) {
@@ -3209,10 +3328,12 @@ function get_anniversary_events($jd, $facts='') {
 			$where.=" AND d_fact IN ({$incl_facts})";
 		}
 		// Only get events from the current gedcom
-		$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
+		$where.=" AND d_file=".PGV_GED_ID;
 
 		// Now fetch these anniversaries
-		$sql="SELECT d_gid, rec_gedcom, rec_type, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}record {$where} AND d_gid=rec_xref AND d_file=rec_ged_id ORDER BY d_day ASC, d_year DESC";
+		$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+		$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+		foreach (array($ind_sql, $fam_sql) as $sql) {
 			$res=dbquery($sql);
 			while ($row=&$res->fetchRow()) {
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
@@ -3247,6 +3368,7 @@ function get_anniversary_events($jd, $facts='') {
 			}
 			$res->free();
 		}
+	}
 	return $found_facts;
 }
 
@@ -3280,10 +3402,12 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 		$where.=" AND d_fact IN ({$incl_facts})";
 	}
 	// Only get events from the current gedcom
-	$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
+	$where.=" AND d_file=".PGV_GED_ID;
 
 	// Now fetch these events
-	$sql="SELECT d_gid, rec_gedcom, rec_type, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}record {$where} AND d_gid=rec_xref AND d_file=rec_ged_id ORDER BY d_julianday1";
+	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
+	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
+	foreach (array($ind_sql, $fam_sql) as $sql) {
 		$res=dbquery($sql);
 		while ($row=&$res->fetchRow()) {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
@@ -3317,6 +3441,7 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 				}
 		}
 		$res->free();
+	}
 	return $found_facts;
 }
 
@@ -3366,7 +3491,7 @@ function get_event_list() {
 		$fp = fopen($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php", "wb");
 		fwrite($fp, serialize($found_facts));
 		fclose($fp);
-		$logline = AddToLog($GEDCOM."_upcoming.php updated by >".getUserName()."<");
+		$logline = AddToLog($GEDCOM."_upcoming.php updated by >".PGV_USER_NAME."<");
 		if (!empty($COMMIT_COMMAND))
 			check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
 	}
@@ -3833,6 +3958,69 @@ function get_gedcom_xref_from_user($user_id, $prefered_ged_id) {
 	} else {
 		return null;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// These functions generate WHERE clauses based on the privacy settings
+////////////////////////////////////////////////////////////////////////////////
+
+function where_record_privacy() {
+	global $TBLPREFIX, $PRIVACY_BY_RESN, $HIDE_LIVE_PEOPLE;
+
+	// Site admins can see everything
+	if (PGV_USER_CAN_ADMIN) {
+		return 'TRUE';
+	}
+
+	// Gedcom admins can see everything except:
+	// records blocked by xref
+	// records blocked by user_id
+	if (PGV_USER_GEDCOM_ADMIN) {
+		return "rec_xref NOT IN (SELECT priv_xref FROM {$TBLPREFIX}privacy WHERE priv_ged_id=ged_id AND (priv_user_id=".PGV_USER_ID." OR priv_xref=rec_xref) AND priv_value<".PGV_USER_ACCESS_LEVEL.")";
+	}
+
+	// Logged in users can see everything except:
+	// records blocked by xref
+	// records blocked by user_id
+	// records with RESN confidential
+	// records blocked by relationship privacy limits
+	// ...
+	if (PGV_USER_CAN_ACCESS) {
+		if ($PRIVACY_BY_RESN) {
+			$resn=" AND rec_id NOT IN (SELECT fact_rec_id FROM {$TBLPREFIX}facts WHERE fact_type='RESN' AND fact_value='confidential')";
+		} else {
+			$resn='';
+		}
+		if ($USE_RELATIONSHIP_PRIVACY && PGV_USER_GEDCOM_ID) {
+			$path_len=get_user_gedcom_setting(PGV_USER_ID, 'max_relation_path');
+			if ($path_len<1) {
+				$path_len=$MAX_RELATIONSHIP_PATH;
+			}
+			$rela=
+				" AND rec_id IN (SELECT link_rec_id1 FROM {$TBLPREFIX}links WHERE link_rec_id2=".PGV_USER_GEDCOM_ID.")";
+		} else {
+			$rela='';
+		}
+		return "rec_xref NOT IN (SELECT priv_xref FROM {$TBLPREFIX}privacy WHERE priv_ged_id=ged_id AND (priv_user_id=".PGV_USER_ID." OR priv_xref=rec_xref) AND priv_value<".PGV_USER_ACCESS_LEVEL.")".$resn.$rela;
+	}
+
+	// Visitors can see everything except:
+	// records blocked by xref
+	// individuals without a death
+	// records with RESN confidential or RESN privacy
+	// ...
+	if ($PRIVACY_BY_RESN) {
+		$resn=" AND rec_id NOT IN (SELECT fact_rec_id FROM {$TBLPREFIX}facts WHERE fact_type='RESN' AND fact_value IN ('privacy, 'confidential'))";
+	} else {
+		$resn='';
+	}
+	if ($HIDE_LIVE_PEOPLE) {
+		$dead=" AND (rec_type!='INDI' OR rec_id IN (SELECT fact_rec_id FROM {$TBLPREFIX}facts WHERE fact_type='DEAT'))";
+	} else {
+		$dead='';
+	}
+	return "rec_xref NOT IN (SELECT priv_xref FROM {$TBLPREFIX}privacy WHERE priv_ged_id=ged_id AND priv_xref=rec_xref AND priv_value<".PGV_USER_ACCESS_LEVEL.")".$resn.$dead;
+
 }
 
 ?>
