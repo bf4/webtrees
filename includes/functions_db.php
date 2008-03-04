@@ -3021,37 +3021,18 @@ function get_list_size($list, $filter="") {
  * @return array
  */
 function get_top_surnames($num) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare("SELECT UPPER(name_list1) AS surn, COUNT(rec_id) AS count_surn FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND name_list1!='@N.N.' AND name_type!='_MARNM' AND rec_type='INDI' AND rec_ged_id=".PGV_GED_ID." GROUP BY UPPER(name_list1) HAVING count_surn>1 ORDER BY count_surn DESC");
 
 	$surnames = array();
-	$sql = "SELECT COUNT(i_surname) AS count, i_surname FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." GROUP BY i_surname ORDER BY count DESC";
-	$res = dbquery($sql, true, $num+1);
-
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow()) {
-			if (isset($surnames[str2upper($row[1])]["match"]))
-				$surnames[str2upper($row[1])]["match"] += $row[0];
-			else {
-				$surnames[str2upper($row[1])]["name"] = $row[1];
-				$surnames[str2upper($row[1])]["match"] = $row[0];
-			}
-		}
-		$res->free();
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	while ($num-- && $row=$statement->fetchObject()) {
+		$surnames[]=array("name"=>$row->surn, "match"=>(int)$row->count_surn);
 	}
-	$sql = "SELECT COUNT(n_surname) AS count, n_surname FROM ".$TBLPREFIX."names WHERE n_file=".PGV_GED_ID." AND n_type!='C' GROUP BY n_surname ORDER BY count DESC";
-	$res = dbquery($sql, true, $num+1);
+	$statement->closeCursor();
 
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow()) {
-			if (isset($surnames[str2upper($row[1])]["match"]))
-				$surnames[str2upper($row[1])]["match"] += $row[0];
-			else {
-				$surnames[str2upper($row[1])]["name"] = $row[1];
-				$surnames[str2upper($row[1])]["match"] = $row[0];
-			}
-		}
-		$res->free();
-	}
 	return $surnames;
 }
 
@@ -3616,38 +3597,44 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 }
 
 function get_user_count() {
-	global $TBLPREFIX;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$res=dbquery("SELECT count(u_username) FROM {$TBLPREFIX}users");
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	$statement=$DBH->prepare("SELECT count(user_id) AS user_count FROM {$TBLPREFIX}user");
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	return $row->user_count;
 }
 
 // Get a list of logged-in users
 function get_logged_in_users() {
-	global $DBCONN, $TBLPREFIX;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
+	$statement=$DBH->prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user, {$TBLPREFIX}user_setting WHERE user_id=uset_user_id AND uset_parameter='loggedin' AND uset_value='Y'");
+	$statement->execute();
+	++$TOTAL_QUERIES;
 	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y'");
-	while ($row=$res->fetchRow()) {
-		$users[]=$row[0];
+	while ($row=$statement->fetchObject()) {
+		$users[$row->user_id]=$row->user_name;
 	}
-	$res->free();
+	$statement->closeCursor();
 	return $users;
 }
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
-	global $DBCONN, $TBLPREFIX;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
 	$time=(int)($time);
+	$statement=$DBH->prepare("SELECT user_id, user_name FROM {$TBLPREFIX}user, {$TBLPREFIX}user_setting us1 , {$TBLPREFIX}user_setting us2 WHERE user_id=us1.uset_user_id AND user_id=us2.uset_user_id AND us1.uset_parameter='loggedin' AND us1.uset_value='Y' AND us2.uset_parameter='sessiontime' AND us2.uset_value BETWEEN 1 AND {$time}");
+	$statement->execute();
+	++$TOTAL_QUERIES;
 	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y' AND u_sessiontime BETWEEN 1 AND {$time}");
-	while ($row=$res->fetchRow()) {
-		$users[]=$row[0];
+	while ($row=$statement->fetchObject()) {
+		$users[$row->user_id]=$row->user_name;
 	}
-	$res->free();
+	$statement->closeCursor();
 	return $users;
 }
 
@@ -3658,12 +3645,12 @@ function get_user_id($username) {
 	try {
 		if (!is_object($DBH)) {
 			return null;
-	}
+		}
 
 		static $statement=null;
 		if (is_null($statement)) {
 			$statement=$DBH->prepare("SELECT user_id FROM {$TBLPREFIX}user WHERE user_name=?");
-}
+		}
 
 		$statement->bindValue(1, $username, PDO::PARAM_STR);
 		$statement->execute();

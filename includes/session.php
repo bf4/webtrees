@@ -124,8 +124,6 @@ if ($quitReason != "") {
 		AddToLog("UA>{$ua}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 	}
-	$delay = rand(10,300);
-	sleep($delay);			// Delay between 10 sec and 5 minutes before responding to encourage the hacker to go elsewhere
 	header("HTTP/1.0 403 Forbidden");
 	print "Hackers are not welcome here.";
 	exit;
@@ -452,8 +450,6 @@ if ($configOverride) {
 		AddToLog("UA>{$ua}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 	}
-	$delay = rand(10,300);
-	sleep($delay);			// Delay between 10 sec and 5 minutes before responding to encourage the hacker to go elsewhere
 	header("HTTP/1.0 403 Forbidden");
 	print "Hackers are not welcome here.";
 	exit;

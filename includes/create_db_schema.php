@@ -403,7 +403,7 @@ try {
 		" rec_xref    VARCHAR(32) NULL,". // I123, etc.
 		" rec_type    VARCHAR(15) NULL,". // SOUR/INDI/FAM/etc.
 		" CONSTRAINT {$TBLPREFIX}record_pk  PRIMARY KEY (rec_id),".
-		" CONSTRAINT {$TBLPREFIX}record_fk1 FOREIGN KEY (rec_ged_id) REFERENCES {$TBLPREFIX}gedcom (ged_id) ON CASCADE DELETE".
+		" CONSTRAINT {$TBLPREFIX}record_fk1 FOREIGN KEY (rec_ged_id) REFERENCES {$TBLPREFIX}gedcom (ged_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
 	$DBH->exec("CREATE UNIQUE INDEX {$TBLPREFIX}record_ix1 ON {$TBLPREFIX}record (rec_xref, rec_ged_id, rec_type)");
@@ -487,6 +487,7 @@ try {
 	);
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix1 ON {$TBLPREFIX}name (name_type)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix2 ON {$TBLPREFIX}name (name_sort1, name_sort2, name_type)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix3 ON {$TBLPREFIX}name (name_list1, name_type)");
 } catch (PDOException $e) {
 }
 
