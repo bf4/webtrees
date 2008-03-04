@@ -145,7 +145,6 @@ $worms = array(
 			AddToLog("UA>{$ua}<");
 			AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 		}
-		sleep(300);			// Delay for 5 minutes before responding to encourage the hacker to go elsewhere
 		header("HTTP/1.0 403 Forbidden");
 		print "Hackers are not welcome here.";
 		exit;

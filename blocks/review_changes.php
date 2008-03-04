@@ -65,7 +65,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 						$message["from"] = $PHPGEDVIEW_EMAIL;
 						$message["subject"] = $pgv_lang["review_changes_subject"];
 						$message["body"] = $pgv_lang["review_changes_body"];
-						$message["method"] = get_user_setting($user,'contactmethod');
+						$message["method"] = get_user_setting($user_id,'contactmethod');
 						$message["url"] = basename($SCRIPT_NAME)."?".$QUERY_STRING;
 						$message["no_from"] = true;
 						addMessage($message);

@@ -586,7 +586,9 @@ if(empty($SEARCH_SPIDER)) {
 				        else print "<td align=\"left\">\n";
 				        print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
 				        print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
-				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
+				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+						print "<a href=\"javascript:map.setMapType(G_PHYSICAL_MAP)\">".$pgv_lang["gm_physical"]."</a>\n";
+
 				        print "</td></tr>\n";
 				        if (userIsAdmin()) {
 				            print "<tr><td align=\"left\">\n";

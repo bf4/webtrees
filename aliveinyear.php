@@ -150,8 +150,6 @@ $tindilist = array();
  */
 $indialpha = get_indi_alpha();
 
-uasort($indialpha, "stringsort");
-
 if (isset($alpha) && !isset($indialpha["$alpha"])) unset($alpha);
 
 if (count($indialpha) > 0) {

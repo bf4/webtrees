@@ -241,6 +241,7 @@ $i = 0;
     <tr>
         <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_TYPE_help", "qm", "GOOGLEMAP_MAP_TYPE"); print $pgv_lang["gm_map_type"];?></td>
         <td class="optionbox"><select name="NEW_GOOGLEMAP_MAP_TYPE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_MAP_TYPE_help');">
+                <option value="G_PHYSICAL_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_PHYSICAL_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_physical"];?></option>
                 <option value="G_NORMAL_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_NORMAL_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_map"];?></option>
                 <option value="G_SATELLITE_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_SATELLITE_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_satellite"];?></option>
                 <option value="G_HYBRID_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_HYBRID_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_hybrid"];?></option>

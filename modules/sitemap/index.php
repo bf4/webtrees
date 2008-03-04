@@ -113,7 +113,6 @@ if ($action=="sendFiles") {
 
     if (isset($indi_lists)) {
         $indialpha = get_indi_alpha();
-        uasort($indialpha, "stringsort");
 
         if (count($indialpha) > 0) {
 	        foreach($indialpha as $letter=>$list) {

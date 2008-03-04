@@ -193,7 +193,7 @@
         var pointArray = [];
         if (GBrowserIsCompatible()) {
             map = new GMap2(document.getElementById("map_pane"));
-            map.addControl(new GSmallMapControl());
+            map.addControl(new GLargeMapControl());
             map.addControl(new GScaleControl()) ;
             map.setCenter(new GLatLng( 0.0, 0.0), 0, maptype );
             mapready = 1;
