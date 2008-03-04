@@ -36,6 +36,7 @@ $pgv_lang["gm_redraw_map"]          = "Redraw map";
 $pgv_lang["gm_map"]                 = "Map";
 $pgv_lang["gm_satellite"]           = "Satellite";
 $pgv_lang["gm_hybrid"]              = "Hybrid";
+$pgv_lang["gm_physical"]            = "Physical";
 
 // Configuration texts
 $pgv_lang["gm_manage"]              = "Manage GoogleMap configuration";

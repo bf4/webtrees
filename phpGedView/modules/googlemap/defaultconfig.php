@@ -29,7 +29,7 @@ $GOOGLEMAP_ENABLED = "false";          // Enable or disable Googlemap
 
 $GOOGLEMAP_API_KEY = "Fill in your key here. Request key from http://www.google.com/apis/maps/";
 
-$GOOGLEMAP_MAP_TYPE = "G_NORMAL_MAP";  // possible values: G_NORMAL_MAP, G_SATELLITE_MAP or G_HYBRID_MAP.
+$GOOGLEMAP_MAP_TYPE = "G_NORMAL_MAP";  // possible values: G_PHYSICAL_MAP, G_NORMAL_MAP, G_SATELLITE_MAP or G_HYBRID_MAP.
 
 $GOOGLEMAP_MIN_ZOOM = "2";              // min zoom level
 $GOOGLEMAP_MAX_ZOOM = "13";             // max zoom level

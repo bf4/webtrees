@@ -236,7 +236,7 @@ if (file_exists("modules/lightbox/album.php")) {
 		if ($LB_AL_HEAD_LINKS!="none") { $LB_AL_HEAD_LINKS = "text"; }
 		if ($LB_AL_THUMB_LINKS!="none") { $LB_AL_THUMB_LINKS = "text"; }
 		if ($LB_ML_THUMB_LINKS!="none") { $LB_ML_THUMB_LINKS = "text"; }
-	}		
+	}
 	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
 }else{
 ?>
@@ -557,7 +557,9 @@ if(empty($SEARCH_SPIDER)) {
 				        else print "<td align=\"left\">\n";
 				        print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
 				        print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
-				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
+				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+						print "<a href=\"javascript:map.setMapType(G_PHYSICAL_MAP)\">".$pgv_lang["gm_physical"]."</a>\n";
+
 				        print "</td></tr>\n";
 				        if (userIsAdmin()) {
 				            print "<tr><td align=\"left\">\n";
@@ -601,7 +603,7 @@ if(empty($SEARCH_SPIDER)) {
 <?php
 if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >\n";
-	
+
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 
 		// The following is temporary, until the handling of the Lightbox Help system
