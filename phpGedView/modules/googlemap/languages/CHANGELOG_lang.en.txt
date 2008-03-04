@@ -35,6 +35,7 @@ VERSION 4.1.2 and earlier
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["gm_physical"]                           03 March, 2006          Google Map terrain map type
 +$pgv_lang["gm_level"]                              26 July, 2006           A, new feature
 +$pgv_lang["gm_pp_none"]                            26 July, 2006           A, new feature
 +$pgv_lang["gm_pp_n_pr_po_b"]                       26 July, 2006           A, new feature
