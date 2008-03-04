@@ -36,6 +36,7 @@ $pgv_lang['gm_redraw_map']              = "Actualiser";
 $pgv_lang["gm_map"]                     = "Plan/Carte";
 $pgv_lang["gm_satellite"]               = "Satellite";
 $pgv_lang["gm_hybrid"]                  = "Mixte";
+$pgv_lang["gm_physical"]                = "Relief";
 
 // Configuration texts
 $pgv_lang["gm_manage"]                  = "Configuration Googlemap";
