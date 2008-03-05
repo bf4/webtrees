@@ -2314,13 +2314,13 @@ function print_parents_age($pid, $bdate) {
 	// father
 	$spouse = $family->getHusband();
 	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
+		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), new Gedcomdate($bdate));
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
 	}
 	// mother
 	$spouse = $family->getWife();
 	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
+		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), new Gedcomdate($bdate));
 		// [ 1749591 ] Highlight maternal death
 		if ($spouse->getDeathDate(false)) {
 			$child_bdate=new GedcomDate($bdate);
