@@ -3786,7 +3786,11 @@ function admin_user_exists() {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
-	$tmp_array=unserialize(get_user_setting($user_id, $parameter));
+	$tmp=get_user_setting($user_id, $parameter);
+	if (!is_string($tmp)) {
+		return null;
+	}
+	$tmp_array=unserialize($tmp);
 	if (!is_array($tmp_array)) {
 		return null;
 	}
@@ -3807,9 +3811,15 @@ function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
 }
 
 function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
-	$tmp_array=unserialize(get_user_setting($user_id, $parameter));
-	if (!is_array($tmp_array))
+	$tmp=get_user_setting($user_id, $parameter);
+	if (is_string($tmp)) {
+		$tmp_array=unserialize($tmp);
+		if (!is_array($tmp_array)) {
+			$tmp_array=array();
+		}
+	} else {
 		$tmp_array=array();
+	}
 	if (empty($value)) {
 		// delete the value
 		unset($tmp_array[$ged_id]);
