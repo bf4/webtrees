@@ -149,7 +149,7 @@ function getIndiBDIcalEvent($indi){
 	if($indi->isDead()){
 		return;
 	}
-	$birthDate = $indi->getBirthDate();
+	$birthDate = $indi->getBirthDate(false);
 	if($birthDate ==""){
 		return;
 	}

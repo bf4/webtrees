@@ -150,10 +150,10 @@ $tindilist = array();
  */
 $indialpha = get_indi_alpha();
 
-if (isset($alpha) && !isset($indialpha["$alpha"])) unset($alpha);
+if (isset($alpha) && !in_array($alpha, $indialpha)) unset($alpha);
 
 if (count($indialpha) > 0) {
-	foreach($indialpha as $letter=>$list) {
+	foreach($indialpha as $letter) {
 		if (empty($alpha)) {
 			if (!empty($surname)) {
 				$alpha = get_first_letter(strip_prefix($surname));
@@ -367,12 +367,12 @@ else {
 			if ($indi["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
 				$ret = check_alive($indi["gedcom"], $year);
 				if ($ret==0) {
-	            	foreach($indi["names"] as $indexval => $namearray) {
-		            	$names[] = array($namearray[0], $namearray[1], $namearray[2], $namearray[3], $gid);
-	            	}
-	            	$total_living++;
-            	}
-            	else if ($ret<0) $indi_dead++;
+					foreach($indi["names"] as $indexval => $namearray) {
+						$names[] = array($namearray[0], $namearray[1], $namearray[2], $namearray[3], $gid);
+					}
+					$total_living++;
+				}
+				else if ($ret<0) $indi_dead++;
 				else $indi_unborn++;
 			}
 		}

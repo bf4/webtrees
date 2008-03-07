@@ -39,8 +39,6 @@
  * @subpackage Lists
  */
 
-global $SEARCH_SPIDER;
-
 require("config.php");
 require_once("includes/functions_print_lists.php");
 print_header($pgv_lang["individual_list"]);
@@ -107,7 +105,7 @@ $tindilist = array();
 
 $indialpha = get_indi_alpha();
 
-if (isset($alpha) && !isset($indialpha["$alpha"])) {
+if (isset($alpha) && !in_array($alpha, $indialpha)) {
 	$alpha="";
 }
 
@@ -125,7 +123,7 @@ if (empty($surname_sublist)) {
  * still not get indexed through here, and will have to be caught by 
  * the close relatives on the individual.php or family.php page.
  */
-if (!(empty($SEARCH_SPIDER))) {
+if ($SEARCH_SPIDER) {
 	$googleSplit = 900;
 	if (isset($alpha)) {
 		$show_count = count(get_alpha_indis($alpha));
@@ -145,10 +143,8 @@ if (!(empty($SEARCH_SPIDER))) {
 }
 
 if (count($indialpha) > 0) {
-	if (empty($SEARCH_SPIDER)) {
-		print_help_link("alpha_help", "qm", "alpha_index");
-	}
-	foreach ($indialpha as $letter=>$list) {
+	print_help_link("alpha_help", "qm", "alpha_index");
+	foreach ($indialpha as $letter) {
 		if (empty($alpha)) {
 			if (!empty($surname)) {
 				$alpha = get_first_letter(strip_prefix($surname));
@@ -159,7 +155,7 @@ if (count($indialpha) > 0) {
 				$startalpha = $letter;
 				$alpha = $letter;
 			}
-			if (!empty($SEARCH_SPIDER)) { // we say we want only 26+ letters and all for spiders.
+			if ($SEARCH_SPIDER) { // we say we want only 26+ letters and all for spiders.
 				print "<a href=\"indilist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;ged=".$GEDCOM."\">";
 			} else {
 				print "<a href=\"indilist.php?alpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."\">";
@@ -176,7 +172,7 @@ if (count($indialpha) > 0) {
 		}
 	}
 	if ($pass == true) {
-		if (!empty($SEARCH_SPIDER)) { // we want only 26+ letters and full list for spiders.
+		if ($SEARCH_SPIDER) { // we want only 26+ letters and full list for spiders.
 
 			if (isset($alpha) && $alpha == "@") {
 				print "<a href=\"indilist.php?alpha=@&amp;ged=".$GEDCOM."&amp;surname_sublist=no&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
@@ -195,7 +191,7 @@ if (count($indialpha) > 0) {
 			$pass = false;
 		}
 	}
-	if (!empty($SEARCH_SPIDER)) { // we want only 26+ letters and full list for spiders.
+	if ($SEARCH_SPIDER) { // we want only 26+ letters and full list for spiders.
 		if ($show_all=="yes") {
 			print "<a href=\"indilist.php?show_all=yes&amp;ged=".$GEDCOM."&amp;surname_sublist=no\"><span class=\"warning\">".$pgv_lang["all"]."</span></a>\n";
 		} else {
@@ -222,7 +218,7 @@ if ($expalpha=="(" || $expalpha=="[" || $expalpha=="?" || $expalpha=="/" || $exp
 
 print "<br /><br />";
 
-if (empty($SEARCH_SPIDER)) {
+if (!$SEARCH_SPIDER) {
 	if (isset($alpha) && $alpha != "@") {
 		if ($surname_sublist=="yes") {
 			print_help_link("skip_sublist_help", "qm", "skip_surnames");
@@ -234,7 +230,7 @@ if (empty($SEARCH_SPIDER)) {
 	}
 }
 
-if (empty($SEARCH_SPIDER)) {
+if (!$SEARCH_SPIDER) {
 	print_help_link("name_list_help", "qm");
 	print "<br /><br />";
 }
@@ -540,9 +536,9 @@ if (isset($names)) {
 }
 
 print "</div>\n";
-if (empty($SEARCH_SPIDER)) {
-	print_footer();
-} else {
+if ($SEARCH_SPIDER) {
 	print "</div>\n</body>\n</html>\n";
+} else {
+	print_footer();
 }
 ?>
