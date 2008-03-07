@@ -475,19 +475,19 @@ try {
 		"CREATE TABLE {$TBLPREFIX}name (".
 		" name_id      {$AUTONUM_TYPE},".
 		" name_fact_id INTEGER      NOT NULL,".
-		" name_type    VARCHAR(15)  NOT NULL,". // e.g. NAME/_MARNM/FONE/TITL/ABBR
-		" name_full    VARCHAR(255) NOT NULL,". // e.g. Lord John /de Vere/ IV
-		" name_sort1   VARCHAR(32)  NOT NULL,". // e.g. Vere
-		" name_sort2   VARCHAR(32)  NOT NULL,". // e.g. John
-		" name_list1   VARCHAR(255) NOT NULL,". // e.g. de Vere
-		" name_list2   VARCHAR(255) NOT NULL,". // e.g. Lord John IV
+		" name_type    VARCHAR(15)  NOT NULL,".
+		" name_full    VARCHAR(255) NOT NULL,".
+		" name_npfx    VARCHAR(255) NOT NULL,".
+		" name_givn    VARCHAR(255) NOT NULL,".
+		" name_spfx    VARCHAR(255) NOT NULL,".
+		" name_surn    VARCHAR(255) NOT NULL,".
+		" name_nsfx    VARCHAR(255) NOT NULL,".
 		" CONSTRAINT {$TBLPREFIX}name_pk  PRIMARY KEY (name_id),".
 		" CONSTRAINT {$TBLPREFIX}name_fk1 FOREIGN KEY (name_fact_id) REFERENCES {$TBLPREFIX}fact (fact_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix1 ON {$TBLPREFIX}name (name_type)");
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix2 ON {$TBLPREFIX}name (name_sort1, name_sort2, name_type)");
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix3 ON {$TBLPREFIX}name (name_list1, name_type)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix2 ON {$TBLPREFIX}name (name_surn, name_type, name_givn)");
 } catch (PDOException $e) {
 }
 

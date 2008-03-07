@@ -112,11 +112,7 @@ if ($action=="sendFiles") {
     }
 
     if (isset($indi_lists)) {
-        $indialpha = get_indi_alpha();
-        uasort($indialpha, "stringsort");
-
-        if (count($indialpha) > 0) {
-	        foreach($indialpha as $letter=>$list) {
+	        foreach (get_indi_alpha() as $letter) {
 		        if ($letter != "@") {
                     print "   <url>\n";
 			        print "      <loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;show_all=no&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
@@ -126,7 +122,6 @@ if ($action=="sendFiles") {
 		        }
 	        }
         }
-    }
     print "</urlset>";
     exit;
 }

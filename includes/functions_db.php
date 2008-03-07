@@ -2199,101 +2199,42 @@ function get_media_list() {
 function get_indi_alpha() {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("SELECT SUBSTR(name_sort1, 1, 1) AS letter FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=".PGV_GED_ID." GROUP BY 1 ORDER BY letter='@', letter");
-
-	$initials=array();
-	$statement->execute();
 	++$TOTAL_QUERIES;
-	while ($row=$statement->fetchObject()) {
-		$initials[$row->letter]=$row->letter;
-	}
+	return $DBH->query(
+		"SELECT UPPER(SUBSTR(name_surn, 1, 1)) AS letter ".
+		"FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record ".
+		"WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=".PGV_GED_ID." ".
+		"GROUP BY 1 ".
+		"ORDER BY letter='@', letter"
+	)->fetchAll(PDO::FETCH_COLUMN);
+}
 
-	return $initials;
+// Get all the surnames that start with a given letter
+function get_indi_surnames($alpha) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	++$TOTAL_QUERIES;
+	return $DBH->query(
+		"SELECT UPPER(name_surn) AS surn ".
+		"FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record ".
+		"WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=".PGV_GED_ID." AND name_surn LIKE '{$alpha}%'".
+		"GROUP BY 1 ".
+		"ORDER BY 1"
+	)->fetchAll(PDO::FETCH_COLUMN);
 }
 
 //-- get the first character in the list
 function get_fam_alpha() {
-	global $TBLPREFIX, $GEDCOM, $LANGUAGE, $famalpha, $DBCONN, $GEDCOMS;
-	global $MULTI_LETTER_ALPHABET;
-	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$famalpha = array();
-
-	$danishex = array("OE", "AE", "AA");
-	$danishFrom = array("AA", "AE", "OE");
-	$danishTo = array("Å", "Æ", "Ø");
-	// Force danish letters in the top list [ 1579889 ]
-	if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-		foreach ($danishTo as $k=>$v)
-			$famalpha[$v] = $v;
-
-	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = str2upper($row["alpha"]);
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-			$letter = str_replace($danishFrom, $danishTo, $letter);
-		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-		if ($inArray===false) {
-			if ((ord(substr($letter, 0, 1)) & 0x80)==0x00)
-				$letter = substr($letter, 0, 1);
-		}
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$position = strpos($UCDiacritWhole, $letter);
-			if ($position!==false) {
-				$position = $position >> 1;
-				$letter = substr($UCDiacritStrip, $position, 1);
-			} else {
-				$position = strpos($LCDiacritWhole, $letter);
-				if ($position!==false) {
-					$position = $position >> 1;
-					$letter = substr($LCDiacritStrip, $position, 1);
-				}
-			}
-		}
-		$famalpha[$letter] = $letter;
-	}
-	$res->free();
-
-	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names, ".$TBLPREFIX."individuals WHERE i_file=n_file AND i_id=n_gid AND n_file=".PGV_GED_ID." AND i_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = str2upper($row["alpha"]);
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-			$letter = str_replace($danishFrom, $danishTo, $letter);
-		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-		if ($inArray===false) {
-			if ((ord(substr($letter, 0, 1)) & 0x80)==0x00)
-				$letter = substr($letter, 0, 1);
-		}
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$position = strpos($UCDiacritWhole, $letter);
-			if ($position!==false) {
-				$position = $position >> 1;
-				$letter = substr($UCDiacritStrip, $position, 1);
-			} else {
-				$position = strpos($LCDiacritWhole, $letter);
-				if ($position!==false) {
-					$position = $position >> 1;
-					$letter = substr($LCDiacritStrip, $position, 1);
-				}
-			}
-		}
-		$famalpha[$letter] = $letter;
-	}
-	$res->free();
-
-	$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID." AND (f_husb='' OR f_wife='')";
-	$res = dbquery($sql);
-
-	if ($res->numRows()>0) {
-		$famalpha["@"] = "@";
-	}
-	$res->free();
-
-	return $famalpha;
+	++$TOTAL_QUERIES;
+	return $DBH->query(
+		"SELECT UPPER(SUBSTR(name_surn, 1, 1)) AS letter ".
+		"FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record, {$TBLPREFIX}link ".
+		"WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND rec_type='INDI' AND rec_ged_id=".PGV_GED_ID." AND rec_id=link_linkee AND link_type IN ('HUSB','WIFE') ".
+		"GROUP BY 1 ".
+		"ORDER BY letter='@', letter"
+	)->fetchAll(PDO::FETCH_COLUMN);
 }
 
 /**
@@ -3023,7 +2964,7 @@ function get_list_size($list, $filter="") {
 function get_top_surnames($num) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("SELECT UPPER(name_list1) AS surn, COUNT(rec_id) AS count_surn FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND name_list1!='@N.N.' AND name_type!='_MARNM' AND rec_type='INDI' AND rec_ged_id=".PGV_GED_ID." GROUP BY UPPER(name_list1) HAVING count_surn>1 ORDER BY count_surn DESC");
+	$statement=$DBH->prepare("SELECT UPPER(name_surn) AS surn, COUNT(rec_id) AS count_surn FROM {$TBLPREFIX}name, {$TBLPREFIX}fact, {$TBLPREFIX}record WHERE name_fact_id=fact_id AND fact_rec_id=rec_id AND name_surn!='@N.N.' AND name_type!='_MARNM' AND rec_type='INDI' AND rec_ged_id=".PGV_GED_ID." GROUP BY surn HAVING count_surn>1 ORDER BY count_surn DESC");
 
 	$surnames = array();
 	$statement->execute();

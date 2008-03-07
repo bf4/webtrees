@@ -150,12 +150,10 @@ $tindilist = array();
  */
 $indialpha = get_indi_alpha();
 
-uasort($indialpha, "stringsort");
-
-if (isset($alpha) && !isset($indialpha["$alpha"])) unset($alpha);
+if (isset($alpha) && !in_array($alpha, $indialpha)) unset($alpha);
 
 if (count($indialpha) > 0) {
-	foreach($indialpha as $letter=>$list) {
+	foreach($indialpha as $letter) {
 		if (empty($alpha)) {
 			if (!empty($surname)) {
 				$alpha = get_first_letter(strip_prefix($surname));

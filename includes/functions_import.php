@@ -119,7 +119,7 @@ function import_record($indirec, $update) {
 
 	//-- check for a _UID, if the record doesn't have one, add one
 	if ($GENERATE_UIDS && $type != "HEAD" && $type != "TRLR" && preg_match("/1 _UID /", $indirec) == 0) {
-		$indirec = trim($indirec) . "\r\n1 _UID " . uuid();
+		$indirec = trim($indirec) . "\n1 _UID " . uuid();
 	}
 	//-- uncomment to replace existing _UID, normally we want them to stay the same
 	//	else {
@@ -381,7 +381,7 @@ function import_record($indirec, $update) {
 							$ct = preg_match("/1 DATE (.*)/", $indirec, $match);
 							if ($ct == 0) {
 								$indirec = trim($indirec);
-								$indirec .= "\r\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
+								$indirec .= "\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
 							}
 						}
 						if ($gid=="") $gid = $type;
@@ -392,7 +392,7 @@ function import_record($indirec, $update) {
 
 	//-- if this is not an update then write it to the new gedcom file
 	if (!$update && !empty ($fpnewged) && !(empty ($indirec)))
-		fwrite($fpnewged, trim($indirec) . "\r\n");
+		fwrite($fpnewged, trim($indirec) . "\n");
 
 	// Prepare the SQL insert statements
 	static $statement_ins_rec =null;
@@ -403,7 +403,7 @@ function import_record($indirec, $update) {
 		$statement_ins_rec=$DBH->prepare("INSERT INTO {$TBLPREFIX}record (rec_ged_id, rec_xref, rec_type) VALUES (?, ?, ?)");
 		$statement_ins_fact=$DBH->prepare("INSERT INTO {$TBLPREFIX}fact (fact_rec_id, fact_type, fact_value, fact_resn, fact_date, fact_plac, fact_gedcom) VALUES (?, ?, ?, ?, ?, ?, ?)");
 		$statement_ins_link=$DBH->prepare("INSERT INTO {$TBLPREFIX}link (link_fact_id, link_type, link_xref, link_rec_id1) VALUES (?, ?, ?, ?)");
-		$statement_ins_name=$DBH->prepare("INSERT INTO {$TBLPREFIX}name (name_fact_id, name_type, name_full, name_sort1, name_sort2, name_list1, name_list2) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$statement_ins_name=$DBH->prepare("INSERT INTO {$TBLPREFIX}name (name_fact_id, name_type, name_full, name_npfx, name_givn, name_spfx, name_surn, name_nsfx) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 	}
 
 	// Store the gedcom record
@@ -414,10 +414,10 @@ function import_record($indirec, $update) {
 	$rec_id=$DBH->lastInsertId();
 
 	// Split the record into facts and store each one
-	if (preg_match_all('/\n1 +(\w+) +(.*)((\n(?:[2-9] |[1-9][0-9] ).*)*)/', $indirec, $fact_matches, PREG_SET_ORDER)) {
+	if (preg_match_all('/\n1 +(\w+) *(.*)((?:\n[2-9] .*)*)/', $indirec, $fact_matches, PREG_SET_ORDER)) {
 		$statement_ins_fact->bindValue(1, $rec_id, PDO::PARAM_INT);
 		foreach ($fact_matches as $fact_match) {
-			list($gedrec, $tag, $value, $level2)=$fact_match;
+			list($gedfact, $tag, $value, $level2)=$fact_match;
 
 			// TODO: Translate 1 EVEN/2 TYPE XXXX into 1 XXXX for known tags
 			$statement_ins_fact->bindValue(2, $tag,   PDO::PARAM_STR);
@@ -454,7 +454,7 @@ function import_record($indirec, $update) {
 			$fact_id=$DBH->lastInsertId();
 
 			// Store the links from this fact
-			if (preg_match_all("/^\d+ +(\w+) +@([^@#\n][^@\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
+			if (preg_match_all("/\n\d+ +(\w+) +@([^@#\n][^@\n]*)@/", $gedfact, $matches, PREG_SET_ORDER)) {
 				$statement_ins_link->bindValue(1, $fact_id, PDO::PARAM_INT);
 				$statement_ins_link->bindValue(4, $rec_id,  PDO::PARAM_INT);
 				foreach ($matches as $match) {
@@ -469,11 +469,11 @@ function import_record($indirec, $update) {
 			switch ($type) {
 			case 'INDI':
 				if ($tag=='NAME' || $tag=='_HNM') {
-					$names[]=extract_name_bits($tag, $gedrec);
+					$names[]=extract_name_components($tag, $value, $level2);
 					// Custom sub-tags such as _MARNM and _AKA mostly come from FTM as it only supports one NAME record.
 					if (preg_match_all('/^2 (_\w+|FONE|ROMN|NICK) +(.+)/m', $level2, $submatches, PREG_SET_ORDER)) {
 						foreach ($submatches as $submatch) {
-							$names[]=extract_name_bits($submatch[1], $submatch[0]);
+							$names[]=extract_name_components($submatch[1], $submatch[2], '');
 						}
 					}
 				}
@@ -483,40 +483,40 @@ function import_record($indirec, $update) {
 				break;
 			case 'SOUR':
 				if ($tag=='TITL' || $tag=='ABBR') {
-					$names[]=array($tag, $value, $value, '', $value, '');
+					$names[]=array('type'=>$tag, 'NAME'=>$value, 'NPFX'=>'', 'GIVN'=>'', 'SPFX'=>'', 'SURN'=>'', 'NSFX'=>'');
 				}
 				break;
 			case 'OBJE':
-				if (preg_match('/^\d TITL +(.*)/m', $gedrec, $name_match)) {
-					$names[]=array($tag, $name_match[1], $name_match[1], '', $name_match[1], '');
-				} else {
-					if (preg_match('/^\d FILE +(.*)/m', $gedrec, $name_match)) {
-						$names[]=array($tag, $name_match[1], $name_match[1], '', $name_match[1], '');
-					}
+				if (preg_match('/^\d (TITL|FILE) +(.*)/m', $gedfact, $name_match)) {
+					$names[]=array('type'=>$name_match[1], 'NAME'=>$name_match[2], 'NPFX'=>'', 'GIVN'=>'', 'SPFX'=>'', 'SURN'=>'', 'NSFX'=>'');
 				}
 				break;
 			case 'REPO':
 			case 'SUBM':
 				if ($tag=='NAME') {
-					$names[]=array($tag, $value, $value, '', $value, '');
+					$names[]=array('type'=>$tag, 'NAME'=>$value, 'NPFX'=>'', 'GIVN'=>'', 'SPFX'=>'', 'SURN'=>'', 'NSFX'=>'');
 				}
 				break;
 			case 'SUBN':
 				if ($tag=='FAMF') {
-					$names[]=array($tag, $value, $value, '', $value, '');
+					$names[]=array('type'=>$tag, 'NAME'=>$value, 'NPFX'=>'', 'GIVN'=>'', 'SPFX'=>'', 'SURN'=>'', 'NSFX'=>'');
 				}
 				break;
 			} // Extract names
 			foreach ($names as $name) {
-				$statement_ins_name->bindValue(1, $fact_id, PDO::PARAM_INT);
-				$statement_ins_name->bindValue(2, $name[0], PDO::PARAM_STR);
-				$statement_ins_name->bindValue(3, $name[1], PDO::PARAM_STR);
-				$statement_ins_name->bindValue(4, $name[2], PDO::PARAM_STR);
-				$statement_ins_name->bindValue(5, $name[3], PDO::PARAM_STR);
-				$statement_ins_name->bindValue(6, $name[4], PDO::PARAM_STR);
-				$statement_ins_name->bindValue(7, $name[5], PDO::PARAM_STR);
-				$statement_ins_name->execute();
-				// TODO: Create soundex codes for the name.
+				// Split comma separated lists of surnames into multiple records
+				foreach (preg_split('/ *, */', $name['SURN']) as $sub_surn) {
+					$statement_ins_name->bindValue(1, $fact_id, PDO::PARAM_INT);
+					$statement_ins_name->bindValue(2, $name['type'], PDO::PARAM_STR);
+					$statement_ins_name->bindValue(3, $name['NAME'], PDO::PARAM_STR);
+					$statement_ins_name->bindValue(4, $name['NPFX'], PDO::PARAM_STR);
+					$statement_ins_name->bindValue(5, $name['GIVN'], PDO::PARAM_STR);
+					$statement_ins_name->bindValue(6, $name['SPFX'], PDO::PARAM_STR);
+					$statement_ins_name->bindValue(7, $sub_surn,     PDO::PARAM_STR);
+					$statement_ins_name->bindValue(8, $name['NSFX'], PDO::PARAM_STR);
+					$statement_ins_name->execute();
+					// TODO: Create soundex codes for the name.
+				}
 			} // foreach name to insert
 		} // foreach fact to insert
 	} // if facts to insert
@@ -534,59 +534,77 @@ function import_record($indirec, $update) {
 	$statement_upd2_link->execute();
 }
 
-// TODO this is temporary - this is where we'll handle "spanish" double surnames
-function extract_name_bits($tag, $namerec) {
-	// NPFX
-	if (preg_match('/2 NPFX (.*)/', $namerec, $match))
-		$npfx=trim($match[1]);
-	else
-		$npfx='';
-	// GIVN
-	if (preg_match('/2 GIVN (.*)/', $namerec, $match))
-		$givn=preg_replace('/[, ]+/', ' ', $match[1]);
-	else
-		if (preg_match("/\d +{$tag} +([^\/\r\n]*)/", $namerec, $match))
-			$givn=preg_replace('/^'.addcslashes($npfx, '/').' /i', '', $match[1]);
-		else
-			$givn='';
-	$givn=preg_replace('/^[._?]+$/', '', trim($givn));
-	if (empty($givn))
-		$givn= '@P.N.';
-	// NICK
-	if (preg_match('/2 NICK (.*)/', $namerec, $match))
-		$nick=trim($match[1]);
-	else
-		$nick='';
-	// SPFX
-	if (preg_match('/2 SPFX (.*)/', $namerec, $match))
-		$spfx=trim($match[1]);
-	else
-		$spfx='';
-	// SURN
-	if (preg_match('/2 SURN (.*)/', $namerec, $match))
-		$surn=$match[1];
-	else
-		if (preg_match("/\d +{$tag} +[^\/\r\n]*\/([^\/\r\n]*)/", $namerec, $match))
-			$surn=preg_replace('/^'.addcslashes($spfx, '/').' /i', '', $match[1]);
-		else
-			$surn='';
-	$surn=preg_replace('/^[._?]+$/', '', trim($surn));
-	if (empty($surn)) {
-		$surn='@N.N.';
-		$spfx='';
+// Extract the components of a name, for indexing in the PGV_NAME table
+function extract_name_components($tag, $value, $level2) {
+	$components=array('type'=>$tag);
+
+	$components['type']=$tag;
+	$components['NAME']=$value;
+
+	// If name components were specified, use them.
+	foreach (array('NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX') as $subtag) {
+		if (preg_match('/\n2 {$subtag} +(.*)/', $level2, $match)) {
+			$components[$subtag]=$match[1];
+		} else {
+			$components[$subtag]='';
+		}
 	}
-	// NSFX
-	if (preg_match('/2 NSFX (.*)/', $namerec, $match))
-		$nsfx=trim($match[1]);
-	else
-		if (preg_match("/\d +{$tag} +.*\/.*\/(.*)/", $namerec, $match))
-			$nsfx=trim($match[1]);
-		else
-			$nsfx='';
-	// Combine the components into a full name
-	$tmp1=trim($npfx.' '.$givn);
-	$tmp2=trim($spfx.' '.$surn);
-	return array($tag, trim("{$tmp1} /{$tmp2}/ {$nsfx}"), $surn, $givn, $tmp2, trim("{$tmp1} {$nsfx}"));
+	// Treat ??? as unknown
+	if (preg_match('/^(_+|\?+|-+|\.+)$/', $components['GIVN'])) {
+		$components['GIVN']=''
+	}
+	if (preg_match('/^(_+|\?+|-+|\.+)$/', $components['SURN'])) {
+		$components['SURN']=''
+	}
+	if ($components['GIVN'] && $components['SURN']) {
+		return $components;
+	}
+
+	// No components specified, so calculate them from the name
+	list($p1, $p2, $p3)=explode('/', $components['NAME'].'//');
+	if (preg_match('/^( *(?:[a-z]{2,3}) +)+(.+)$/', $p2, $match)) {
+		$components['SPFX']=trim($match[1]);
+		$components['SURN']=trim($match[2]);
+	} else {
+		$components['SPFX']='';
+		$components['SURN']=trim($p2);
+	}
+	if (preg_match('/^( *(?:Adm|Amb|Brig|Can|Capt|Chan|Chapln|Cmdr|Col|Cpl|Cpt|Dr|Gen|Gov|Hon|Lady|Lt|Mr|Mrs|Ms|Msgr|Pfc|Pres|Prof|Pvt|Rabbi|Rep|Rev|Sen|Sgt|Sir|Sr|Sra|Srta|Ven)\.? +)+(.*)$/i', $p1, $match)) {
+		$components['NPFX']=trim($match[1]);
+		$p1=$match[2];
+	} else {
+		$components['NPFX']='';
+	}
+	if (preg_match('/^(.*)( +(?:ii|iii|iv|v|vi|vii|vii|viii|ix|x|[js]r\.?)+ *$/i', $p3, $match)) {
+		$p3=$match[1];
+		$components['NSFX']=trim($match[2]);
+	} else {
+		$components['NSFX']='';
+	}
+
+	global $NAME_REVERSE;
+	if ($NAME_REVERSE) {
+		$components['GIVN']=$p3;
+	} else {
+		$components['GIVN']=$p1;
+	}
+
+		// Treat ??? as unknown
+	if (preg_match('/^(_+|\?+|-+|\.+)$/', $components['GIVN'])) {
+		$components['GIVN']=''
+	}
+	if (preg_match('/^(_+|\?+|-+|\.+)$/', $components['SURN'])) {
+		$components['SURN']=''
+	}
+	// Use PGV's own "unknown" markers
+	if (empty($components['SURN'])) {
+		$components['SURN']='@N.N';
+	}
+	if (empty($components['GIVN'])) {
+		$components['GIVN']='@P.N';
+	}
+
+	return $components;
 }
 
 /**
@@ -788,7 +806,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 			$media_count++;
 			//-- if this is not an update then write it to the new gedcom file
 			if (!$update && !empty ($fpnewged))
-				fwrite($fpnewged, trim($objrec) . "\r\n");
+				fwrite($fpnewged, trim($objrec) . "\n");
 			//print "LINE ".__LINE__;
 		} else {
 			//-- already added so update the local id
@@ -898,7 +916,7 @@ function update_media($gid, $indirec, $update = false) {
 	//-- go through all of the lines and replace any local
 	//--- OBJE to referenced OBJEs
 	$newrec = "";
-	$lines = preg_split("/[\r\n]+/", trim($indirec));
+	$lines = preg_split("/\n+/", trim($indirec));
 	$ct_lines = count($lines);
 	$inobj = false;
 	$processed = false;
@@ -917,7 +935,7 @@ function update_media($gid, $indirec, $update = false) {
 				$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
 				$count++;
 				// NOTE: Add the new media object to the record
-				//$newrec .= $objlevel . " OBJE @" . $m_media . "@\r\n";
+				//$newrec .= $objlevel . " OBJE @" . $m_media . "@\n";
 				$newrec .= $objref;
 
 				// NOTE: Set the details for the next media record
@@ -928,21 +946,21 @@ function update_media($gid, $indirec, $update = false) {
 					// NOTE: Set object level
 					$objlevel = $level;
 					$inobj = true;
-					$objrec = $line . "\r\n";
+					$objrec = $line . "\n";
 			} 
 			else if (preg_match("/[1-9]\sOBJE/", $line, $match)) {
 				// NOTE: Set the details for the next media record
 				$objlevel = $level;
 				$inobj = true;
-				$objrec = $line . "\r\n";
+				$objrec = $line . "\n";
 			} else {
 				$ct = preg_match("/(\d+)\s(\w+)(.*)/", $line, $match);
 				if ($ct > 0) {
 					if ($inobj)
-						$objrec .= $line . "\r\n";
-					else $newrec .= $line . "\r\n";
+						$objrec .= $line . "\n";
+					else $newrec .= $line . "\n";
 				}
-				else $newrec .= $line . "\r\n";
+				else $newrec .= $line . "\n";
 			}
 		}
 	}
@@ -960,9 +978,9 @@ function update_media($gid, $indirec, $update = false) {
 	else $newrec = $indirec;
 	
 	if ($keepmedia) {
-		$newrec = trim($newrec)."\r\n";
+		$newrec = trim($newrec)."\n";
 		foreach($old_linked_media as $i=>$row) {
-			$newrec .= trim($row[1])."\r\n";
+			$newrec .= trim($row[1])."\n";
 		}
 	}
 	
@@ -1794,7 +1812,7 @@ function accept_changes($cid) {
 			}
 			else if ($change["type"]=="append") {
 				$pos1 = strpos($fcontents, "\n0 TRLR");
-				$fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n0 TRLR";
+				$fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\n0 TRLR";
 			}
 			else if ($change["type"]=="replace") {
 				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
@@ -1804,13 +1822,13 @@ function accept_changes($cid) {
 						$fcontents = substr($fcontents, 0, $pos1+1)."0 TRLR";
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
 					}
-					else $fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n".substr($fcontents, $pos2+1);
+					else $fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\n".substr($fcontents, $pos2+1);
 				}
 				else {
 					//-- attempted to replace a record that doesn't exist
 					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Replaced gedcom record $gid was not found in the gedcom file.");
 					$pos1 = strpos($fcontents, "\n0 TRLR");
-					$fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n0 TRLR";
+					$fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\n0 TRLR";
 					AddToLog("Gedcom record $gid was appended back to the GEDCOM file.");
 				}
 			}
@@ -1961,17 +1979,17 @@ function cleanup_tags_y(& $irec) {
 		"MARC","MARL","MARS","BIRT","CHR","DEAT","BURI","CREM","ADOP","DSCR",
 		"BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG",
 		"IMMI","CENS","PROB","WILL","GRAD","RETI");
-	$irec .= "\r\n1";
+	$irec .= "\n1";
 	$ft = preg_match_all("/1\s(\w+)\s/", $irec, $match);
 	for ($i = 0; $i < $ft; $i++) {
 		$sfact = $match[1][$i];
 		$sfact = trim($sfact);
 		if (in_array($sfact, $cleanup_facts)) {
-			$srchstr = "/1\s" . $sfact . "\sY\r\n2/";
-			$replstr = "1 " . $sfact . "\r\n2";
-			$srchstr2 = "/1\s" . $sfact . "(.{0,1})\r\n2/";
-			$srchstr = "/1\s" . $sfact . "\sY\r\n2/";
-			$srchstr3 = "/1\s" . $sfact . "\sY\r\n1/";
+			$srchstr = "/1\s" . $sfact . "\sY\n2/";
+			$replstr = "1 " . $sfact . "\n2";
+			$srchstr2 = "/1\s" . $sfact . "(.{0,1})\n2/";
+			$srchstr = "/1\s" . $sfact . "\sY\n2/";
+			$srchstr3 = "/1\s" . $sfact . "\sY\n1/";
 			$irec = preg_replace($srchstr, $replstr, $irec);
 			if (preg_match($srchstr2, $irec)) {
 				$irec = preg_replace($srchstr3, "1", $irec);
@@ -2026,7 +2044,7 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	do
 	{
 		$nt = get_sub_record($level, $level . " NOTE", $objrec, $n);
-		if($nt != "") $note = $note . trim($nt)."\r\n";
+		if($nt != "") $note = $note . trim($nt)."\n";
 		$n++;
 	}while($nt != "");
 	//- get and concatenate PRIM subrecords
@@ -2036,7 +2054,7 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	do
 	{
 		$pm = get_sub_record($level, $level . " _PRIM", $objrec, $n);
-		if($pm != "") $prim = $prim . trim($pm)."\r\n";
+		if($pm != "") $prim = $prim . trim($pm)."\n";
 		$n++;
 	}while($pm != "");
 	//- get and concatenate THUM subrecords
@@ -2048,12 +2066,12 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 		$tm = get_sub_record($level, $level . " _THUM", $objrec, $n);
 		if($tm != ""){
 			//- call image cropping function ($tm contains thum data)
-			$thum = $thum . trim($tm)."\r\n";
+			$thum = $thum . trim($tm)."\n";
 		}
 		$n++;
 	}while($tm != "");
 	//- add object reference
-	$objmed = addslashes($objlevel . ' OBJE @' . $m_media . "@\r\n" . $note . $prim . $thum);
+	$objmed = addslashes($objlevel . ' OBJE @' . $m_media . "@\n" . $note . $prim . $thum);
 	
 	//- return the object media reference
 	return $objmed;
