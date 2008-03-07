@@ -551,10 +551,10 @@ function extract_name_components($tag, $value, $level2) {
 	}
 	// Treat ??? as unknown
 	if (preg_match('/^(_+|\?+|-+|\.+)$/', $components['GIVN'])) {
-		$components['GIVN']=''
+		$components['GIVN']='';
 	}
 	if (preg_match('/^(_+|\?+|-+|\.+)$/', $components['SURN'])) {
-		$components['SURN']=''
+		$components['SURN']='';
 	}
 	if ($components['GIVN'] && $components['SURN']) {
 		return $components;
@@ -575,7 +575,7 @@ function extract_name_components($tag, $value, $level2) {
 	} else {
 		$components['NPFX']='';
 	}
-	if (preg_match('/^(.*)( +(?:ii|iii|iv|v|vi|vii|vii|viii|ix|x|[js]r\.?)+ *$/i', $p3, $match)) {
+	if (preg_match('/^(.*)( +(?:ii|iii|iv|v|vi|vii|vii|viii|ix|x|[js]r\.?)+) *$/i', $p3, $match)) {
 		$p3=$match[1];
 		$components['NSFX']=trim($match[2]);
 	} else {
@@ -591,10 +591,10 @@ function extract_name_components($tag, $value, $level2) {
 
 		// Treat ??? as unknown
 	if (preg_match('/^(_+|\?+|-+|\.+)$/', $components['GIVN'])) {
-		$components['GIVN']=''
+		$components['GIVN']='';
 	}
 	if (preg_match('/^(_+|\?+|-+|\.+)$/', $components['SURN'])) {
-		$components['SURN']=''
+		$components['SURN']='';
 	}
 	// Use PGV's own "unknown" markers
 	if (empty($components['SURN'])) {
