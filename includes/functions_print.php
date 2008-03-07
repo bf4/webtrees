@@ -1669,32 +1669,35 @@ function print_privacy_error($username) {
  * @param boolean $output	return the text instead of printing it
  */
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
-	global $SHOW_CONTEXT_HELP, $pgv_lang,$view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
 
-	if ($PGV_USE_HELPIMG) $sentense = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["help"]["small"]."\" class=\"icon\" width=\"15\" height=\"15\" alt=\"\" />";
-	else $sentense = $pgv_lang[$helpText];
-	$output = "";
-	if (($view!="preview")&&($_SESSION["show_context_help"])){
-		if ($helpText=="qm_ah"){
-			if (PGV_USER_IS_ADMIN){
-				 $output .= " <a class=\"error help\" tabindex=\"0\" href=\"javascript:// ";
-				 if ($show_desc == "") $output .= $help;
-				 else if ($use_print_text) $output .= print_text($show_desc, 0, 1);
-				 else if (stristr($pgv_lang[$show_desc], "\"")) $output .= preg_replace('/\"/','\'',$pgv_lang[$show_desc]);
-				 else  $output .= strip_tags($pgv_lang[$show_desc]);
-				 $output .= "\" onclick=\"helpPopup('$help'); return false;\">".$sentense."</a> \n";
+	$output='';
+	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
+		$output.=' <a class="help" tabindex="0" href="javascript:// ';
+		if ($show_desc) {
+			if ($use_print_text) {
+				$output.=print_text($show_desc, 0, 1);
+			} else {
+				if (stristr($pgv_lang[$show_desc], "\"")) {
+					$output.=preg_replace('/\"/','\'',$pgv_lang[$show_desc]);
+				}	else {
+					$output.=strip_tags($pgv_lang[$show_desc]);
+				}
 			}
+		} else {
+			$output.=$help;
 		}
-		else {
-			$output .= " <a class=\"help\" tabindex=\"0\" href=\"javascript:// ";
-			if ($show_desc == "") $output .= $help;
-			else if ($use_print_text) $output .= print_text($show_desc, 0, 1);
-			else if (stristr($pgv_lang[$show_desc], "\"")) $output .= preg_replace('/\"/','\'',$pgv_lang[$show_desc]);
-			else  $output .= strip_tags($pgv_lang[$show_desc]);
-			$output .= "\" onclick=\"helpPopup('$help'); return false;\">".$sentense."</a> \n";
+		$output.="\" onclick=\"helpPopup('$help'); return false;\">";
+		if ($PGV_USE_HELPIMG) {
+			$output.='<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" /></a>';
+		} else {
+			$output.=$pgv_lang[$helpText].'</a>';
 		}
 	}
-	if (!$return) print $output;
+
+	if (!$return) {
+		print $output;
+	}
 	return $output;
 }
 
