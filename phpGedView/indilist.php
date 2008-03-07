@@ -208,13 +208,6 @@ if (count($indialpha) > 0) {
 		$alpha = $startalpha;
 	}
 }
-//print_help_link("alpha_help", "qm");
-
-//-- escaped letter for regular expressions
-$expalpha = $alpha;
-if ($expalpha=="(" || $expalpha=="[" || $expalpha=="?" || $expalpha=="/" || $expalpha=="*" || $expalpha=="+" || $expalpha==')') {
-	$expalpha = "\\".$expalpha;
-}
 
 print "<br /><br />";
 
@@ -228,9 +221,6 @@ if (!$SEARCH_SPIDER) {
 			print "<a href=\"indilist.php?alpha=$alpha&amp;surname_sublist=yes&amp;show_all=$show_all\">".$pgv_lang["show_surnames"]."</a>";
 		}
 	}
-}
-
-if (!$SEARCH_SPIDER) {
 	print_help_link("name_list_help", "qm");
 	print "<br /><br />";
 }
