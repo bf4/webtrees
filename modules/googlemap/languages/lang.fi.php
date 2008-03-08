@@ -40,6 +40,7 @@ $pgv_lang["gm_redraw_map"]          = "Näytä kartta uudelleen";
 $pgv_lang["gm_map"]                 = "Kartta";
 $pgv_lang["gm_satellite"]           = "Satelliitti";
 $pgv_lang["gm_hybrid"]              = "Hybridi";
+$pgv_lang["gm_physical"]            = "Maasto";
 
 // Configuration texts
 $pgv_lang["gm_manage"]              = "Hallitse GoogleKartta konfiguraatiota";
