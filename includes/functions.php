@@ -3205,7 +3205,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || PGV_USER_CAN_EDIT) {
+			if (DB::isError($DBCONN) || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
 				include($file);
 			}
 		}
