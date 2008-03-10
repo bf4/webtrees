@@ -102,7 +102,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				}
 				// Change password
 				if ($action=='edituser2' && !empty($pass1)) {
-					set_user_password($user_id, 'password', crypt($pass1));
+					set_user_password($user_id, crypt($pass1));
 					AddToLog("User -> {$oldusername} <- had password changed by ".getUserName());
 				}
 				// Change username

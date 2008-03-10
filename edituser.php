@@ -75,7 +75,7 @@ if ($action=="edituser2") {
 				// Change password
 				if (!empty($pass1)) {
 					AddToLog("User {$old_username} changed password");
-					set_user_password($old_username, 'password', crypt($pass1));
+					set_user_password($old_username, crypt($pass1));
 				}
 				// Change username
 				if ($username!=$old_username) {

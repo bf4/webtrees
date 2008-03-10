@@ -2,13 +2,13 @@
     PhpGedView
 
     Version 4.1
-    Copyright 2005 John Finlay and others
+    Copyright (c) 2005 to 2008 John Finlay and others
 
     This and other information can be found online at
     http://www.PhpGedView.net
 
     The installation instructions can also be found in the wiki at:
-	http://wiki.phpgedview.net/en/index.php/Installation_Guide
+	http://wiki.phpgedview.net/en/index.php?title=Installation_Guide
 
     # $Id$
 =======================================================
@@ -120,7 +120,7 @@ http://www.phpgedview.net/faq.php for more information about large GEDCOMs.
 QUICK INSTALLATION
 
 These instructions can also be found in the wiki at:
-http://wiki.phpgedview.net/en/index.php/Installation_Guide
+http://wiki.phpgedview.net/en/index.php?title=Installation_Guide
 
 Follow the instructions in this section to install PhpGedView if you are
 already familiar with the program or are familiar with installing other PHP 
@@ -162,7 +162,7 @@ Optional Steps
 INSTALLATION
 
 These instructions can also be found in the wiki at:
-http://wiki.phpgedview.net/en/index.php/Installation_Guide
+http://wiki.phpgedview.net/en/index.php?title=Installation_Guide
 
 Follow these instructions if you are not familiar with PhpGedView or 
 installing PHP applications.

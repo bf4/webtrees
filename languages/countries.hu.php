@@ -89,7 +89,7 @@ $countries["CAN"]="Kanada";
 	$countries["CAP"]="Cape Colony";
 $countries["CCK"]="Kókusz-szigetek";
 $countries["CHE"]="Svájc";
-$countries["CHI"]="Csatorna-sziget";
+	$countries["CHI"]="Channel Islands";
 $countries["CHL"]="Chile";
 $countries["CHN"]="Kína";
 $countries["CIV"]="Côte d'Ivoire";
@@ -115,7 +115,7 @@ $countries["DOM"]="Dominikai Köztársaság";
 $countries["DZA"]="Algéria";
 $countries["ECU"]="Ecuador";
 $countries["EGY"]="Egyiptom";
-	$countries["EIR"]="Eire";
+$countries["EIR"]="Eire";
 $countries["ENG"]="Anglia";
 $countries["ERI"]="Eritrea";
 $countries["ESH"]="Nyugat Szahara";
@@ -178,7 +178,7 @@ $countries["LBR"]="Libéria";
 $countries["LBY"]="Líbia";
 $countries["LCA"]="Szent Lucia";
 $countries["LIE"]="Liechtenstein";
-$countries["LKA"]="Srí Lanka";
+$countries["LKA"]="SríLanka";
 $countries["LSO"]="Lesotho";
 $countries["LTU"]="Észtország";
 $countries["LUX"]="Luxemburg";
@@ -188,7 +188,7 @@ $countries["MAR"]="Marokkó";
 $countries["MCO"]="Monaco";
 $countries["MDA"]="Moldva";
 $countries["MDG"]="Madagaszkár";
-$countries["MDV"]="Moldva";
+	$countries["MDV"]="Maldives";
 $countries["MEX"]="Mexikó";
 $countries["MHL"]="Marshall-szigetek";
 $countries["MKD"]="Macedónia";
@@ -259,9 +259,9 @@ $countries["SMR"]="San Marino";
 $countries["SOM"]="Szomália";
 $countries["SPM"]="St. Pierre és Miquelon";
 $countries["STP"]="Sao Tome és Principe";
-	$countries["SUN"]="U.S.S.R. (Soviet Union)";
+$countries["SUN"]="U.S.S.R. (Soviet Union)";
 $countries["SUR"]="Suriname";
-$countries["SVK"]="Szlovákia";
+$countries["SVK"]="Szlovákia (Szlovák Köztársaság)";
 $countries["SVN"]="Szlovénia";
 $countries["SWE"]="Svédország";
 $countries["SWZ"]="Szváziföld";
@@ -303,32 +303,13 @@ $countries["WSM"]="Szamoa";
 $countries["YEM"]="Jemen";
 $countries["YUG"]="Jugoszlávia";
 $countries["ZAF"]="Dél-Afrika";
-	$countries["ZAR"]="Zaire";
+$countries["ZAR"]="Zaire";
 $countries["ZMB"]="Zambia";
 $countries["ZWE"]="Zimbabwe";
+$countries["???"]="Ismeretlen";
 
-/*
- * The following table lists alternate names for various Chapman codes.
- * It will be used when country names have to be converted to Chapman codes.
- * You do not have to list all the possibilities in all page languages.  This
- * will be done automatically by the country-to-Chapman conversion routine.
- *
- * Because the list, and its contents, are specific to each language, the 
- * Translator Tool won't let you work on the list directly.  The list will
- * have to be updated and amended manually.
- *
- * Suppose Chapman code "XYZ" represents the same country, and that country 
- * had the names "Name1", "Name2", "Name3" in its history.  It is now known
- * as "Current name".  You can list the various names like this:
- *
- * $countries["XYZ"]="Current name";
- * $altCountryName["XYZ"]="Name1; Name2; Name3";
- *
- * The Chapman-to-country conversion will always use the $countries list of
- * the current page language, no matter what the original country name was.
- * 
- */
 $altCountryNames["CCK"]="Keeling-szigetek";
 $altCountryNames["CIV"]="Elefántcsontpart";
 $altCountryNames["FLK"]="Malvin-szigetek";
+
 ?>
