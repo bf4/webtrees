@@ -2302,9 +2302,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
  * Print age of parents
  *
  * @param string $pid	child ID
- * @param string $bdate	child birthdate
+ * @param string $birth_date	child birthdate
  */
-function print_parents_age($pid, $bdate) {
+function print_parents_age($pid, $birth_date) {
 	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if (!$SHOW_PARENTS_AGE) return "";
 	$person = Person::getInstance($pid);
@@ -2317,7 +2317,7 @@ function print_parents_age($pid, $bdate) {
 	// father
 	$spouse = $family->getHusband();
 	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), new Gedcomdate($bdate));
+		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), $birth_date);
 		if ($age) {
 			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
 		}
@@ -2325,20 +2325,15 @@ function print_parents_age($pid, $bdate) {
 	// mother
 	$spouse = $family->getWife();
 	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), new Gedcomdate($bdate));
+		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), $birth_date);
 		if ($age) {
 			// [ 1749591 ] Highlight maternal death
-			if ($spouse->getDeathDate(false)) {
-				$child_bdate=new GedcomDate($bdate);
-				$mother_ddate=new GedcomDate($spouse->getDeathDate(false));
-				if ($mother_ddate->date1->minJD>0
-				&& $child_bdate->date1->minJD>0
-				&& $mother_ddate->date1->minJD < $child_bdate->date1->minJD+90) {
-					$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
-				}
+			$mother_ddate=new GedcomDate($spouse->getDeathDate(false));
+			if ($mother_ddate->MinJD() && $birth_date->MinJD() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
+				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
 			}
+			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
 		}
-		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
 	}
 	print "</span>";
 }
@@ -2376,7 +2371,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 		if ($fact && $pid) {
 			// age of parents at child birth
 			if ($fact=="BIRT")
-				print_parents_age($pid, $match[1]);
+				print_parents_age($pid, $date);
 			// age at event
 			else if ($fact!="CHAN") {
 				if (!$indirec)
