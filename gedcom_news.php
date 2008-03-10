@@ -59,7 +59,6 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$config['flag'] = 0;
 	}
 
-	$uname = getUserName();
 	$usernews = getUserNews($GEDCOM);
 
 	print "<div id=\"gedcom_news\" class=\"block\">\n"
@@ -67,26 +66,17 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		.'<td class="blockh1">&nbsp;</td>'
 		.'<td class="blockh2"><div class="blockhc">'
 	;
-	if(userGedcomAdmin())
-	{
+	if(PGV_USER_GEDCOM_ADMIN) {
 		print_help_link('index_gedcom_news_ahelp', 'qm_ah');
-	}
-	else
-	{
+	} else {
 		print_help_link('index_gedcom_news_help', 'qm');
 	}
-	if($PGV_BLOCKS['print_gedcom_news']['canconfig'])
-	{
-		$username = getUserName();
-		if((($ctype == 'gedcom') && (userGedcomAdmin())) || (!empty($username)))
-		{
-			if($ctype == 'gedcom')
-			{
+	if ($PGV_BLOCKS['print_gedcom_news']['canconfig']) {
+		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+			if ($ctype=="gedcom") {
 				$name = preg_replace("/'/", "\'", $GEDCOM);
-			}
-			else
-			{
-				$name = $username;
+			} else {
+				$name = PGV_USER_NAME;
 			}
 			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
 				."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>\n"
@@ -165,7 +155,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		print PrintReady($newsText)."<br />\n";
 		
 		// Print Admin options for this News item
-		if(userGedcomAdmin($uname)) {
+		if(PGV_USER_GEDCOM_ADMIN) {
 			print "<hr size=\"1\" />"
 				."<a href=\"javascript:;\" onclick=\"editnews('{$key}'); return false;\">{$pgv_lang['edit']}</a> | "
 				."<a href=\"index.php?action=deletenews&amp;news_id={$key}&amp;ctype={$ctype}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
@@ -177,7 +167,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		print "</div>\n";
 	}
 	$printedAddLink = false;
-	if(userGedcomAdmin($uname))
+	if(PGV_USER_GEDCOM_ADMIN)
 	{
 		print "<a href=\"javascript:;\" onclick=\"addnews('".preg_replace("/'/", "\'", $GEDCOM)."'); return false;\">".$pgv_lang["add_news"]."</a>";
 		$printedAddLink = true;

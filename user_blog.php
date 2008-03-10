@@ -39,8 +39,7 @@ $PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
 function print_user_news($block=true, $config="", $side, $index) {
 		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
 
-		$uname = getUserName();
-		$usernews = getUserNews($uname);
+		$usernews = getUserNews(PGV_USER_NAME);
 
 		print "<div id=\"user_news\" class=\"block\">\n";
 		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
@@ -84,7 +83,7 @@ function print_user_news($block=true, $config="", $side, $index) {
 				print "</div><br />\n";
 		}
 		if ($block) print "</div>\n";
-		if (!empty($uname)) print "<br /><a href=\"javascript:;\" onclick=\"addnews('$uname'); return false;\">".$pgv_lang["add_journal"]."</a>\n";
+		if (PGV_USER_ID) print "<br /><a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_NAME."'); return false;\">".$pgv_lang["add_journal"]."</a>\n";
 		print "</div>\n";
 		print "</div>";
 }

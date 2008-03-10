@@ -54,10 +54,12 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		print "<div class=\"blockcontent\">";
 		if ($block) print "<div class=\"small_inner_block\">\n";
 		if (count($userfavs)==0) {
-				if (userGedcomAdmin()) print_text("no_favorites");
-				else print_text("no_gedcom_favorites");
-		}
-		else {
+			if (PGV_USER_GEDCOM_ADMIN) {
+				print_text("no_favorites");
+			} else {
+				print_text("no_gedcom_favorites");
+			}
+		} else {
 			print "<table width=\"100%\" class=\"$TEXT_DIRECTION\">";
 			if ($block) $style = 1;
 			else $style = 2;
@@ -67,7 +69,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 				print "<tr><td>";
 				if ($favorite["type"]=="URL") {
 					print "<div id=\"boxurl".$key.".0\" class=\"person_box\">\n";
-					if ($ctype=="user" || userGedcomAdmin()) print $removeFavourite;
+					if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) print $removeFavourite;
 					print "<a href=\"".$favorite["url"]."\"><b>".PrintReady($favorite["title"])."</b></a>";
 					print "<br />".PrintReady($favorite["note"]);
 					print "</div>\n";
@@ -80,28 +82,28 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 							else if (preg_match("/1 SEX M/", $indirec)>0) print "";
 							else print "NN";
 							print "\">\n";
-							if ($ctype=="user" || userGedcomAdmin()) print $removeFavourite;
+							if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) print $removeFavourite;
 							print_pedigree_person($favorite["gid"], $style, 1, $key);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 						if ($favorite["type"]=="FAM") {
 							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
-							if ($ctype=="user" || userGedcomAdmin()) print $removeFavourite;
+							if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) print $removeFavourite;
 							print_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, "", false);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 						if ($favorite["type"]=="SOUR") {
 							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
-							if ($ctype=="user" || userGedcomAdmin()) print $removeFavourite;
+							if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) print $removeFavourite;
 							print_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], false);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 						if ($favorite["type"]=="OBJE") {
 							print "<div id=\"box".$favorite["gid"].".0\">\n";
-							if ($ctype=="user" || userIsAdmin()) print $removeFavourite;
+							if ($ctype=="user" || PGV_USER_IS_ADMIN) print $removeFavourite;
 							print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
 							print PrintReady($favorite["note"]);
 						}
@@ -111,7 +113,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 			}
 			print "</table>\n";
 		}
-		if (userGedcomAdmin()) { ?>
+		if (PGV_USER_GEDCOM_ADMIN) { ?>
 			<script language="JavaScript" type="text/javascript">
 			<!--
 			var pastefield;

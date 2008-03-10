@@ -59,8 +59,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
   else $allowDownload = "yes";
 
   // Don't permit calendar download if not logged in
-  $username = getUserName();
-  if (empty($username)) $allowDownload = "no";
+  if (!PGV_USER_ID) $allowDownload = "no";
 
   //-- Start output
   print "<div id=\"on_this_day_events\" class=\"block\">";
@@ -68,12 +67,13 @@ function print_todays_events($block=true, $config="", $side, $index) {
   print "<td class=\"blockh1\" >&nbsp;</td>";
   print "<td class=\"blockh2\" ><div class=\"blockhc\">";
   print_help_link("index_onthisday_help", "qm");
-  $username = getUserName();
   if ($PGV_BLOCKS["print_todays_events"]["canconfig"]) {
-    $username = getUserName();
-    if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
-      if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
-      else $name = $username;
+    if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+			if ($ctype=="gedcom") {
+				$name = preg_replace("/'/", "\'", $GEDCOM);
+			} else {
+				$name = PGV_USER_NAME;
+			}
       print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
       print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
     }

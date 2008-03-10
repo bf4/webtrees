@@ -40,14 +40,18 @@ $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>-1);
 function print_login_block($block = true, $config="", $side, $index) {
 		global $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $ALLOW_REMEMBER_ME;
 
-		$uname = getUserName();
-		if (!empty($uname)) return;
+		if (PGV_USER_ID) {
+			return;
+		}
 		print "<div id=\"login_block\" class=\"block\">\n";
 		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 		print "<td class=\"blockh1\" >&nbsp;</td>";
 		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-		if ($USE_REGISTRATION_MODULE) print_help_link("index_login_register_help", "qm");
-		else print_help_link("index_login_help", "qm");
+		if ($USE_REGISTRATION_MODULE) {
+			print_help_link("index_login_register_help", "qm");
+		} else {
+			print_help_link("index_login_help", "qm");
+		}
 		print "<b>".$pgv_lang["login"]."</b>";
 		print "</div></td>";
 		print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
