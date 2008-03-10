@@ -65,7 +65,7 @@ if ($CONFIGURED) {
 						set_user_setting($user_id, 'relationship_privacy', 'N');
 						set_user_setting($user_id, 'max_relation_path',    '2');
 						set_user_setting($user_id, 'auto_accept',          'N');
-						AddToLog(getUserName()." added user -> {$username} <-");
+						AddToLog("added user ->{$username}<-");
 						print $pgv_lang["user_created"];
 						print "<br />";
 						print "<a href=\"editgedcoms.php\">";
@@ -139,7 +139,7 @@ if ($CONFIGURED) {
 				exit;
 			}
 		}
-		if (!userIsAdmin()) {
+		if (!PGV_USER_IS_ADMIN) {
 			header("Location: login.php?url=editconfig.php");
 			exit;
 		}
@@ -288,7 +288,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 					if ($end_found) fwrite($fp, $file_array[$x]);
 				}
 				fclose($fp);
-				$logline = AddToLog("Language settings file, lang_settings.php, updated by >".getUserName()."<");
+				$logline = AddToLog("Language settings file, lang_settings.php, updated");
 				if (!empty($COMMIT_COMMAND)) check_in($logline, $Filename, $INDEX_DIRECTORY);	
 			}
 			else $error = "lang_config_write_error";
@@ -312,7 +312,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 			else {
 				fwrite($fp, $configtext);
 				fclose($fp);
-				$logline = AddToLog("config.php updated by >".getUserName()."<");
+				$logline = AddToLog("config.php updated");
 				if (!empty($COMMIT_COMMAND)) check_in($logline, "config.php", "");	
 				if ($CONFIGURED) print "<script language=\"JavaScript\" type=\"text/javascript\">\nwindow.location = 'editconfig.php';\n</script>\n";
 			}

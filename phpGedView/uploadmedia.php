@@ -25,7 +25,7 @@
  */
 require "config.php";
 
-if (!userCanEdit()) {
+if (!PGV_USER_CAN_EDIT) {
 	header("Location: login.php?url=uploadmedia.php");
 	exit;
 }
@@ -51,14 +51,14 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 				$_POST["folder".$i] = str_replace("//", "/", $_POST["folder".$i]);
 				if ($_POST["folder".$i] == "/") $_POST["folder".$i] = "";
 				
-				AddToLog("Media file ".$MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name'])." uploaded by >".getUserName()."<");
+				AddToLog("Media file ".$MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name'])." uploaded");
 				$thumbgenned = false;
 				if (!move_uploaded_file($_FILES['mediafile'.$i]['tmp_name'], $MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name']))) {
 					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES['mediafile'.$i]['error']]."<br />";
 				}
 				else {
 					//-- automatically generate thumbnail
-					if (!userGedcomAdmin() || (!empty($_POST['genthumb'.$i]) && ($_POST['genthumb'.$i]=="yes"))) {
+					if (!PGV_USER_GEDCOM_ADMIN || (!empty($_POST['genthumb'.$i]) && ($_POST['genthumb'.$i]=="yes"))) {
 						$filename = $MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name']);
 						if (!is_dir($MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i])) mkdir($MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i]);
 						$thumbnail = $MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name']);
@@ -72,7 +72,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 					if (!move_uploaded_file($_FILES['thumbnail'.$i]['tmp_name'], $MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['thumbnail'.$i]['name']))) {
 						$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES['thumbnail'.$i]['error']]."<br />";
 					}
-					AddToLog("Media thumbnail ".$MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['thumbnail'.$i]['name'])." uploaded by >".getUserName()."<");
+					AddToLog("Media thumbnail ".$MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['thumbnail'.$i]['name'])." uploaded");
 				}
 				if (!empty($error)) print "<span class=\"error\">".$error."</span><br />\n";
 				else {
@@ -107,7 +107,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 		<tr><td colspan="2" class="topbottombar"><?php print $pgv_lang["upload_media"]; ?></td></tr>
 		<?php
 		for($i=1; $i<6; $i++) {
-			if (userGedcomAdmin()) {
+			if (PGV_USER_GEDCOM_ADMIN) {
 				print "<tr>";
 					print "<td ";
 					write_align_with_textdir_check("right");
@@ -131,7 +131,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 					print "<input name=\"mediafile".$i."\" type=\"file\" size=60 />";
 				print "</td>";
 			print "</tr>";
-			if (userGedcomAdmin()) {
+			if (PGV_USER_GEDCOM_ADMIN) {
 				print "<tr>";
 					print "<td ";
 					write_align_with_textdir_check("right");
@@ -153,7 +153,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 
 			if ($ThumbSupport != "") {
 				$ThumbSupport = substr($ThumbSupport, 2);	// Trim off first ", "
-				if (userGedcomAdmin()) {
+				if (PGV_USER_GEDCOM_ADMIN) {
 					print "<tr>";
 						print "<td colspan=\"2\" class=\"center\">";
 							print "<input type=\"checkbox\" name=\"genthumb".$i."\" value=\"yes\" checked/> ";

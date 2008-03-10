@@ -101,8 +101,7 @@ if (!isset($action)) $action="";
 
 //-- make sure that they have user status before they can use this page
 //-- otherwise have them login again
-$uname = getUserName();
-if (empty($uname)) {
+if (!PGV_USER_ID) {
 	if (!empty($ctype)) {
 		if ($ctype=="user") {
 			header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
@@ -112,9 +111,11 @@ if (empty($uname)) {
 	$ctype="gedcom";
 }
 
-if (empty($ctype)) $ctype="user";
+if (empty($ctype)) {
+	$ctype="user";
+}
 
-if (!empty($uname)) {
+if (PGV_USER_ID) {
 	//-- add favorites action
 	if (($action=="addfav")&&(!empty($gid))) {
 		$gid = strtoupper($gid);
@@ -131,7 +132,7 @@ if (!empty($uname)) {
 				$favtype = $GEDCOM;
 				$_SESSION['clearcache'] = true;
 			}
-			else $favtype=$uname;
+			else $favtype=PGV_USER_NAME;
 			$favorite["username"] = $favtype;
 			$favorite["gid"] = $gid;
 			$favorite["type"] = trim($match[2]);
@@ -154,7 +155,7 @@ if (!empty($uname)) {
 			$favtype = $GEDCOM;
 			$_SESSION['clearcache'] = true;
 		}
-		else $favtype=$uname;
+		else $favtype=PGV_USER_NAME;
 		$favorite["username"] = $favtype;
 		$favorite["gid"] = "";
 		$favorite["type"] = "URL";
@@ -187,7 +188,7 @@ if (!empty($uname)) {
 
 //-- get the blocks list
 if ($ctype=="user") {
-	$ublocks = getBlocks($uname);
+	$ublocks = getBlocks(PGV_USER_NAME);
 	if ((count($ublocks["main"])==0) && (count($ublocks["right"])==0)) {
 		$ublocks["main"][] = array("print_todays_events", "");
 		$ublocks["main"][] = array("print_user_messages", "");
@@ -403,11 +404,11 @@ print "</td></tr></table><br />";		// Close off that table
 if (($ctype=="user") and (!$welcome_block_present)) {
 	print "<div align=\"center\" style=\"width: 99%;\">";
 	print_help_link("mygedview_customize_help", "qm");
-	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".getUserName()."&amp;ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
+	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&amp;ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
 	print "</div>";
 }
 if (($ctype=="gedcom") and (!$gedcom_block_present)) {
-	if (userIsAdmin()) {
+	if (PGV_USER_IS_ADMIN) {
 		print "<div align=\"center\" style=\"width: 99%;\">";
 		print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=$GEDCOM&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
 		print "</div>";

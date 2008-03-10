@@ -64,7 +64,7 @@ function add_banned_ip($ip) {
 	else {
 		fwrite($fp, $bannedtext);
 		fclose($fp);
-		$logline = AddToLog("banned.php updated by >".getUserName()."<");
+		$logline = AddToLog("banned.php updated");
  		if (!empty($COMMIT_COMMAND)) check_in($logline, "banned.php", $INDEX_DIRECTORY);	
 	}
 }
@@ -100,7 +100,7 @@ function add_search_engine_ip($ip) {
 	else {
 		fwrite($fp, $searchtext);
 		fclose($fp);
-		$logline = AddToLog("search_engines.php updated by >".getUserName()."<");
+		$logline = AddToLog("search_engines.php updated");
  		if (!empty($COMMIT_COMMAND)) check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
 	}
 }
@@ -138,7 +138,7 @@ function delete_banned_ip($ip) {
 	else {
 		fwrite($fp, $bannedtext);
 		fclose($fp);
-		$logline = AddToLog("banned.php updated by >".getUserName()."<");
+		$logline = AddToLog("banned.php updated");
  		if (!empty($COMMIT_COMMAND)) check_in($logline, "banned.php", $INDEX_DIRECTORY);	
 	}
 }
@@ -176,7 +176,7 @@ function delete_search_engine_ip($ip) {
 	else {
 		fwrite($fp, $searchtext);
 		fclose($fp);
-		$logline = AddToLog("search_engines.php updated by >".getUserName()."<");
+		$logline = AddToLog("search_engines.php updated");
  		if (!empty($COMMIT_COMMAND)) check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
 	}
 }
@@ -185,10 +185,10 @@ function delete_search_engine_ip($ip) {
  // print_simple_header("Manage Servers");
 print_header($pgv_lang["administration"]);
 //-- only allow gedcom admins here
-if (!userGedcomAdmin()) {
+if (!PGV_USER_GEDCOM_ADMIN) {
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!userGedcomAdmin()) print "<br />".$pgv_lang["user_cannot_edit"];
+	if (!PGV_USER_GEDCOM_ADMIN) print "<br />".$pgv_lang["user_cannot_edit"];
 	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".$pgv_lang["close_window"]."\" onclick=\"window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
 	print_simple_footer();
 	exit;

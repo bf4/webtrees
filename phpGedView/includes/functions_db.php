@@ -3548,7 +3548,7 @@ function get_event_list() {
 		$fp = fopen($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php", "wb");
 		fwrite($fp, serialize($found_facts));
 		fclose($fp);
-		$logline = AddToLog($GEDCOM."_upcoming.php updated by >".PGV_USER_NAME."<");
+		$logline = AddToLog($GEDCOM."_upcoming.php updated");
 		if (!empty($COMMIT_COMMAND))
 			check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
 	}

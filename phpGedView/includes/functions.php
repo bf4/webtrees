@@ -375,16 +375,15 @@ function file_is_writeable($file) {
  * @see http://us2.php.net/manual/en/function.set-error-handler.php
  */
 function pgv_error_handler($errno, $errstr, $errfile, $errline) {
-	global $LAST_ERROR, $ERROR_LEVEL;
+	global $ERROR_LEVEL;
 
 	if ((error_reporting() > 0)&&($errno<2048)) {
-		$LAST_ERROR = $errstr." in ".$errfile." on line ".$errline;
 		if ($ERROR_LEVEL==0)
 			return;
 		if (stristr($errstr,"by reference")==true)
 			return;
-		$msg = "\n<br />ERROR ".$errno.": ".$errstr."<br />\n";
-		print $msg;
+		$fmt_msg="\n<br />ERROR {$errno}: {$errstr}<br />\n";
+		$log_msg="ERROR {$errno}: {$errstr}; ";
 		if (($errno<16)&&(function_exists("debug_backtrace"))&&(strstr($errstr, "headers already sent by")===false)) {
 			$backtrace = array();
 			if (function_exists('debug_backtrace'))
@@ -393,18 +392,26 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 			if ($ERROR_LEVEL==1)
 				$num = 1;
 			for ($i=0; $i<$num; $i++) {
-				print $i;
-				if ($i==0)
-					print " Error occurred on ";
-				else
-					print " called from ";
-				if (isset($backtrace[$i]["line"]) && isset($backtrace[$i]["file"]))
-					print "line <b>".$backtrace[$i]["line"]."</b> of file <b>".basename($backtrace[$i]["file"])."</b>";
-				if ($i<$num-1)
-					print " in function <b>".$backtrace[$i+1]["function"]."</b>";
-				print "<br />\n";
+				if ($i==0) {
+					$fmt_msg.="0 Error occurred on ";
+					$log_msg.="0 Error occurred on ";
+				} else {
+					$fmt_msg.="{$i} called from ";
+					$log_msg.="{$i} called from ";
+				}
+				if (isset($backtrace[$i]["line"]) && isset($backtrace[$i]["file"])) {
+					$fmt_msg.="line <b>{$backtrace[$i]['line']}</b> of file <b>".basename($backtrace[$i]['file'])."</b>";
+					$log_msg.="line {$backtrace[$i]['line']} of file ".basename($backtrace[$i]['file']);
+				}
+				if ($i<$num-1) {
+					$fmt_msg.=" in function <b>".$backtrace[$i+1]['function']."</b>";
+					$log_msg.=" in function ".$backtrace[$i+1]['function'];
+				}
+				$fmt_msg.="<br />\n";
 			}
 		}
+		echo $fmt_msg;
+		AddToLog($log_msg);
 		if ($errno==1)
 			die();
 	}
@@ -2368,7 +2375,7 @@ function write_changes() {
 	$mutex->Release();
 
  	if (!empty($COMMIT_COMMAND)) {
-		$logline = AddToLog("pgv_changes.php updated by >".PGV_USER_NAME."<");
+		$logline = AddToLog("pgv_changes.php updated");
  		check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
  	}
 	return true;
@@ -2550,7 +2557,7 @@ function get_report_list($force=false) {
 	$fp = @fopen($INDEX_DIRECTORY."/reports.dat", "w");
 	@fwrite($fp, serialize($files));
 	@fclose($fp);
-	$logline = AddToLog("reports.dat updated by >".PGV_USER_NAME."<");
+	$logline = AddToLog("reports.dat updated");
  	if (!empty($COMMIT_COMMAND)) check_in($logline, "reports.dat", $INDEX_DIRECTORY);
 
 	return $files;

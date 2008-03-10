@@ -29,7 +29,7 @@
 require("config.php");
 
 // Must be an admin user to use this module
-if (!userGedcomAdmin()) {
+if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=gedcheck.php");
 	exit;
 }

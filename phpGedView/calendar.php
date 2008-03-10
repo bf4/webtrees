@@ -184,8 +184,7 @@ if ($view!='preview') {
 	print "<option value=\"all\"";
 	if ($filterof == "all") print " selected=\"selected\"";
 	print ">".$pgv_lang["all_people"]."</option>";
-	$username=getUserName();
-	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
+	if (!$HIDE_LIVE_PEOPLE || PGV_USER_ID) {
 		print "<option value=\"living\"";
 		if ($filterof == "living") print " selected=\"selected\"";
 		print ">".$pgv_lang["living_only"]."</option>";

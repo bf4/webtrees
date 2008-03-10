@@ -40,8 +40,8 @@ if (!empty($_POST["mytheme"]) || !empty($_GET["mytheme"])) {
 }
 
 // Make the change permanent, if allowed
-if (get_user_setting(getUserName(), 'editaccount')=='Y') {
-	set_user_setting(getUserName(), 'theme', $theme_dir);
+if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
+	set_user_setting(PGV_USER_ID, 'theme', $theme_dir);
 }
 	
 //where do we return ?

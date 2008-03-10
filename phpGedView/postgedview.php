@@ -115,7 +115,7 @@
 				set_user_setting($user_id, 'reg_timestamp', date('U'));
 				set_user_setting($user_id, 'contactmethod', $def_contact_method);
 				set_user_setting($user_id, 'visibleonline', $def_canview);
-				AddToLog(getUserName()." added user -> {$post_user} <- in postgedview.php");
+				AddToLog("Added user ->{$post_user}<- in postgedview.php");
 			}
 		}
 		
@@ -123,7 +123,7 @@
 		if ($user_id=get_user_id($post_user) && get_user_setting($user_id, 'verified_by_admin')=="yes") {
 			set_user_setting($user_id, 'loggedin', 'Y');
 			set_user_setting($user_id, 'sessiontime', time());
-			AddToLog("Login Successful ->" . $post_user ."<-");
+			AddToLog("Login Successful ->{$post_user}<-");
 				
 			if (isset($_GET["id"])){
 				$def_urlcmd = "individual.php?pid=". $_GET["id"]."&ged=". $_GET["ged"]."&";

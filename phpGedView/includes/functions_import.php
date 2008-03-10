@@ -1553,7 +1553,7 @@ function write_file() {
 	fclose($fp);
 	//-- always release the mutex
 	$mutex->Release();
-	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated by >".PGV_USER_NAME."<");
+	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated");
  	if (!empty($COMMIT_COMMAND)) check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
 
 	return true;;
@@ -1669,7 +1669,7 @@ function accept_changes($cid) {
 			unset ($_SESSION["recent_changes"]["user"][$GEDCOM]);
 		if (isset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]))
 			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
-		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database ->" . PGV_USER_NAME . "<-");
+		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database");
 		if (!empty ($COMMIT_COMMAND))
 			check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
 		if (isset ($change["linkpid"]))

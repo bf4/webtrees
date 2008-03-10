@@ -28,7 +28,7 @@
 require_once("config.php");
 require_once("includes/functions_edit.php");
 
-if (!userIsAdmin()) {
+if (!PGV_USER_IS_ADMIN) {
 	header("Location: login.php?url=dir_editor.php");
 	exit;
 }
