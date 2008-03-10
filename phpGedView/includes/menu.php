@@ -1102,16 +1102,16 @@ class MenuBar
 
 		//-- add wiki links
 		$menu->addSeperator();
-		$submenu = new Menu($pgv_lang["wiki_main_page"], "http://wiki.phpgedview.net/\" target=\"wiki");
+		$submenu = new Menu($pgv_lang["wiki_main_page"], "http://wiki.phpgedview.net/en/index.php?title=Main_Page\" target=\"_blank");
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
-		$submenu = new Menu($pgv_lang["wiki_users_guide"], "http://wiki.phpgedview.net/en/index.php/Users_Guide\" target=\"wiki");
+		$submenu = new Menu($pgv_lang["wiki_users_guide"], "http://wiki.phpgedview.net/en/index.php?title=Users_Guide\" target=\"_blank");
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
 		if (PGV_USER_GEDCOM_ADMIN) {
-			$submenu = new Menu($pgv_lang["wiki_admin_guide"], "http://wiki.phpgedview.net/en/index.php/Administrators_Guide\" target=\"wiki");
+			$submenu = new Menu($pgv_lang["wiki_admin_guide"], "http://wiki.phpgedview.net/en/index.php?title=Administrators_Guide\" target=\"_blank");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
