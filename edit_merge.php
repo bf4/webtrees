@@ -39,8 +39,7 @@ if (empty($keep2)) $keep2=array();
 print_header($pgv_lang["merge_records"]);
 
 //-- make sure they have accept access privileges
-$uname = getUserName();
-if (!userCanAccept()) {
+if (!PGV_USER_CAN_ACCEPT) {
 	print "<span class=\"error\">".$pgv_lang["access_denied"]."</span>";
 	print_footer();
 	exit;

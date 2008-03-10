@@ -1,9 +1,9 @@
 <?php
 /**
- * Hungarian Language file
+ * Hungarian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author István Pető
- * @author Gábor Hrotkó
+ * @author PGV Developers
+ * @author Hrotkó Gábor <roti@al.pmmf.hu>
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -38,12 +38,12 @@ $factarray["ADDR"] = "Lakcím";
 $factarray["ADR1"] = "Lakcím 1";
 $factarray["ADR2"] = "Lakcím 2";
 $factarray["ADOP"] = "Örökbefogadás";
-$factarray["AFN"]  = "Ősi Álomány Szám (angol AFN)";
+$factarray["AFN"]  = "Ősi Állomány Szám (angol AFN)";
 $factarray["AGE"]  = "Életkor";
 $factarray["AGNC"] = "Képviselet";
 $factarray["ALIA"] = "Úgyis mint";
 $factarray["ANCE"] = "Ősök";
-$factarray["ANCI"] = "Ancestors Interest";
+$factarray["ANCI"] = "Ősök érdeklődése";
 $factarray["ANUL"] = "Házasság felbontása";
 $factarray["ASSO"] = "Kapcsolódó személyek";
 $factarray["AUTH"] = "Szerző";
@@ -58,13 +58,13 @@ $factarray["BURI"] = "Temetés";
 $factarray["CALN"] = "Gyűjtemény azonosító";
 $factarray["CAST"] = "Szociális/társadalmi státusz";
 $factarray["CAUS"] = "A halál oka";
-$factarray["CEME"]  = "Temetö";
+$factarray["CEME"]  = "Temető";
 $factarray["CENS"] = "Összeírás";
 $factarray["CHAN"] = "Utolsó módosítás";
 $factarray["CHAR"] = "Kódkészlet";
 $factarray["CHIL"] = "Gyermek";
 $factarray["CHR"]  = "Katolikus Keresztelés";
-$factarray["CHRA"] = "Felnőttkori keresztség";
+$factarray["CHRA"] = "Felnőtt kori keresztség";
 $factarray["CITY"] = "Város";
 $factarray["CONF"] = "Konfirmáció";
 $factarray["CONL"] = "UNSZ-konfirmáció";
@@ -102,7 +102,7 @@ $factarray["MARB"] = "Eljegyzés kihirdetése";
 $factarray["MARC"] = "Házassági szerződés";
 $factarray["MARL"] = "Házassági engedély";
 $factarray["MARR"] = "Házasság";
-$factarray["MARS"] = "Házasság előtti szerzõdés";
+$factarray["MARS"] = "Házasság előtti szerződés";
 $factarray["MEDI"] = "Médiatípus";
 $factarray["NAME"] = "Név";
 $factarray["NATI"] = "Nemzetiség";
@@ -157,9 +157,9 @@ $factarray["EMAIL"] = "Email-cím";
 $factarray["_TODO"] = "Tennivalók";
 $factarray["_UID"]  = "Általános azonosító";
 $factarray["_PGVU"] = "Utoljára módosította";
-$factarray["SERV"] = "Remote Server";
+$factarray["SERV"] = "Távoli szerver";
 $factarray["_GEDF"] = "GEDCOM Állomány";
-$factarray["_PRIM"] = "Kijelőlt kép";
+$factarray["_PRIM"] = "Kijelölt kép";
 $factarray["_THUM"] = "Használjuk ezt a képet bélyegképként?";
 	 
 // These facts are specific to GEDCOM exports from Family Tree Maker
@@ -197,8 +197,8 @@ $factarray["LONG"] 	= "Hosszúsági fok";
 $factarray["FONE"] 	= "Fonetikus";
 $factarray["ROMN"] 	= "Katolizált";
 $factarray["_HEB"] 	= "Héber";
-$factarray["_SCBK"] = "Gyüjtö könyv";
-$factarray["_TYPE"] = "Média tipus";
+$factarray["_SCBK"] = "Gyűjtő könyv";
+$factarray["_TYPE"] = "Média típus";
 $factarray["_SSHOW"] = "Dia vetítés";
 
 // Rootsmagic
@@ -221,7 +221,7 @@ $factarray["_EYEC"] 	= "Szemszín";
 $factarray["_FNRL"]	= "Temetés";
 $factarray["_HAIR"]	= "Hajszín";
 $factarray["_HEIG"] 	= "Magasság";
-$factarray["_HOL"]  = "Tüzáldozat";
+$factarray["_HOL"]  	= "Tűzáldozat";
 $factarray["_INTE"]	= "Interred";
 $factarray["_MARI"]	= "Házassági szándék";
 $factarray["_MBON"]	= "Marriage bond";
@@ -234,15 +234,16 @@ $factarray["_PRMN"]	= "Ideiglenes szám";
 $factarray["_WEIG"] 	= "Testsúly";
 $factarray["_YART"]	= "Jarzeit";
 $factarray["_MARNM"]	= "Házasult név";
+$factarray["_MARNM_SURN"] = "Házasult vezetéknév";
 $factarray["_STAT"]	= "Házassági státusz";
 $factarray["COMM"]	= "Megjegyzés";
 $factarray["MARR_CIVIL"] = "Polgári esküvő";
 $factarray["MARR_RELIGIOUS"] = "Egyházi esküvő";
 $factarray["MARR_PARTNERS"] = "Élettársi kapcsolat";
-$factarray["MARR_UNKNOWN"] = "Házassági tipus nem ismert";
+$factarray["MARR_UNKNOWN"] = "Házassági típus nem ismert";
 $factarray["_HNM"] = "Héber Név";
 $factarray["_DEAT_SPOU"] = "Házastárs halála";
-$factarray["_BIRT_CHIL"] = "Gyerkmek születése";
+$factarray["_BIRT_CHIL"] = "Gyermek születése";
 $factarray["_MARR_CHIL"] = "Gyermek házassága";
 $factarray["_DEAT_CHIL"] = "Gyermek halála";
 $factarray["_BIRT_GCHI"] = "Unoka születése";
@@ -258,15 +259,15 @@ $factarray["_DEAT_SIBL"] = "Testvér halála";
 $factarray["_BIRT_HSIB"] = "Féltestvér születése";
 $factarray["_MARR_HSIB"] = "Féltestvér házassága";
 $factarray["_DEAT_HSIB"] = "Féltestvér halála";
-$factarray["_DEAT_GPAR"] = "Nagyszülö halála";
+$factarray["_DEAT_GPAR"] = "Nagyszülő halála";
 $factarray["_BIRT_FSIB"] = "Apa testvére születése";
 $factarray["_MARR_FSIB"] = "Apa testvére házassága";
 $factarray["_DEAT_FSIB"] = "Apa testvére halála";
 $factarray["_BIRT_MSIB"] = "Anya testvére születése";
-$factarray["_MARR_MSIB"] = "Anya tesvére házassága";
+$factarray["_MARR_MSIB"] = "Anya testvére házassága";
 $factarray["_DEAT_MSIB"] = "Anya testvére halála";
-$factarray["_BIRT_COUS"] = "Elsö unokatestvér születése";
-$factarray["_MARR_COUS"] = "Elsö unokatestvér házassága";
-$factarray["_DEAT_COUS"] = "Elsö unokatestvér halála";
+$factarray["_BIRT_COUS"] = "Első unokatestvér születése";
+$factarray["_MARR_COUS"] = "Első unokatestvér házassága";
+$factarray["_DEAT_COUS"] = "Első unokatestvér halála";
 
 ?>

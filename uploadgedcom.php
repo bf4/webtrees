@@ -53,7 +53,7 @@ require_once "includes/functions_export.php";
 
 loadLangFile("pgv_confighelp");
 
-if (!userGedcomAdmin()) {
+if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=uploadgedcom.php");
 	exit;
 }
@@ -110,7 +110,7 @@ else if ($check == "add") {
 			"0 TRLR";
 			fwrite($fp, $newgedcom);
 			fclose($fp);
-			$logline = AddToLog($GEDFILENAME." updated by >".getUserName()."<");
+			$logline = AddToLog($GEDFILENAME." updated");
 			if (!empty ($COMMIT_COMMAND))
 			check_in($logline, $GEDFILENAME, $INDEX_DIRECTORY);
 			$verify = "validate_form";
@@ -1144,7 +1144,7 @@ if ($stage == 1) {
 		print "<span class=\"error\">Unable to copy updated GEDCOM file ".$INDEX_DIRECTORY.basename($GEDCOM_FILE).".new to ".$GEDCOM_FILE."</span><br />";
 	} else {
 		@unlink($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new");
-		$logline = AddToLog($GEDCOM_FILE." updated by >".getUserName()."<");
+		$logline = AddToLog($GEDCOM_FILE." updated");
 		if (!empty ($COMMIT_COMMAND))
 		check_in($logline, $GEDCOM_FILE, $INDEX_DIRECTORY);
 	}

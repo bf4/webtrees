@@ -379,24 +379,23 @@ class MenuBar
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
-			$my_id=get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
-			if ($my_id) {
+			if (PGV_USER_GEDCOM_ID) {
 				//-- quick_update submenu
 				$submenu = new Menu($pgv_lang["quick_update_title"], "#");
-				$submenu->addOnclick("return quickEdit('".$my_id."');");
+				$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."');");
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 				//-- my_pedigree submenu
-				$submenu = new Menu($pgv_lang["my_pedigree"], "pedigree.php?rootid=".$my_id);
+				$submenu = new Menu($pgv_lang["my_pedigree"], "pedigree.php?rootid=".PGV_USER_GEDCOM_ID);
 				if (!empty($PGV_IMAGES["pedigree"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
 				//$submenu->addIcon($PGV_IMAGE_DIR."/small/pedigree.gif");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 				//-- my_indi submenu
-				$submenu = new Menu($pgv_lang["my_indi"], "individual.php?pid=".$my_id);
+				$submenu = new Menu($pgv_lang["my_indi"], "individual.php?pid=".PGV_USER_GEDCOM_ID);
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -1102,16 +1101,16 @@ class MenuBar
 
 		//-- add wiki links
 		$menu->addSeperator();
-		$submenu = new Menu($pgv_lang["wiki_main_page"], "http://wiki.phpgedview.net/\" target=\"wiki");
+		$submenu = new Menu($pgv_lang["wiki_main_page"], "http://wiki.phpgedview.net/en/index.php?title=Main_Page\" target=\"_blank");
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
-		$submenu = new Menu($pgv_lang["wiki_users_guide"], "http://wiki.phpgedview.net/en/index.php/Users_Guide\" target=\"wiki");
+		$submenu = new Menu($pgv_lang["wiki_users_guide"], "http://wiki.phpgedview.net/en/index.php?title=Users_Guide\" target=\"_blank");
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 
 		if (PGV_USER_GEDCOM_ADMIN) {
-			$submenu = new Menu($pgv_lang["wiki_admin_guide"], "http://wiki.phpgedview.net/en/index.php/Administrators_Guide\" target=\"wiki");
+			$submenu = new Menu($pgv_lang["wiki_admin_guide"], "http://wiki.phpgedview.net/en/index.php?title=Administrators_Guide\" target=\"_blank");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}

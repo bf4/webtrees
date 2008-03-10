@@ -43,13 +43,11 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config["rootId"])) {
-		$username = getUserName();
-		if (empty($username)) {
+		if (!PGV_USER_ID) {
 			$config["rootId"] = $PEDIGREE_ROOT_ID;
 		} else {
-			$my_id=get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
-			if ($my_id) {
-				$config["rootId"] = $my_id;
+			if (PGV_USER_GEDCOM_ID) {
+				$config["rootId"] = PGV_USER_GEDCOM_ID;
 			} else {
 				$config["rootId"] = $PEDIGREE_ROOT_ID;
 			}
@@ -85,10 +83,12 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
 	print_help_link("index_charts_help", "qm");
 	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
-		$username = getUserName();
-		if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
-			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
-			else $name = $username;
+		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+			if ($ctype=="gedcom") {
+				$name = preg_replace("/'/", "\'", $GEDCOM);
+			} else {
+				$name = PGV_USER_NAME;
+			}
 			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
 			print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 		}

@@ -2,10 +2,10 @@
 /*=================================================
    charset=utf-8
    Project:         phpGedView
-   File:            lang.en.php
+   File:            lang.sv.php
    Author:          Johan Borkhuis
    Translator:      Matti Valve 
-   Comments:        English Language file for Google map module
+   Comments:        Swedish Language file for Google map module
 ===================================================*/
 
 
@@ -17,4 +17,5 @@ $pgv_lang['gm_redraw_map']          = "Visa kartan på nytt";
 $pgv_lang["gm_map"]                 = "Karta";
 $pgv_lang["gm_satellite"]           = "Satellit";
 $pgv_lang["gm_hybrid"]              = "Hybrid";
+$pgv_lang["gm_physical"]            = "Terräng";
 ?>

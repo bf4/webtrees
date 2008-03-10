@@ -21,8 +21,8 @@ Gloucestershire (GLS)
 Greater London (LND)
 Greater Manchester (GTM) 1974+
 Hampshire (HAM)
-Hereford & Worcester (HWR) 1974+
-Herefordshire (HEF) -1974
+Hereford & Worcester (HWR) 1974-1998
+Herefordshire (HEF) -1974/1998+
 Hertfordshire (HRT)
 Humberside (HUM) 1974+
 Huntingdonshire (HUN) -1974
@@ -41,7 +41,7 @@ Northamptonshire (NTH)
 Northumberland (NBL)
 Nottinghamshire (NTT)
 Oxfordshire (OXF)
-Rutlandshire (RUT) -1974
+Rutland (RUT) -1974/1997+
 Shropshire (SAL)
 Somerset (SOM)
 South Yorkshire (SYK) 1974+
@@ -57,5 +57,5 @@ West Sussex (SXW) 1974+
 West Yorkshire (WYK) 1974+
 Westmorland (WES) -1974
 Wiltshire (WIL)
-Worcestershire (WOR) -1974
+Worcestershire (WOR) -1974/1998+
 Yorkshire (YKS) -1974

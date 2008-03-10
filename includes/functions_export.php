@@ -118,7 +118,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'none');
 			break;
 		}
-		AddToLog(PGV_USER_NAME." created dummy user -> export <- with level ".$privatize_export_level);
+		AddToLog("created dummy user -> export <- with level ".$privatize_export_level);
 		// Temporarily become this user
 		if (isset ($_SESSION)) {
 			$_SESSION["org_user"] = $_SESSION["pgv_user"];
@@ -243,7 +243,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 			$HTTP_SESSION_VARS["pgv_user"] = $HTTP_SESSION_VARS["org_user"];
 		}
 		delete_user($export_user_id);
-		AddToLog(PGV_USER_NAME." deleted dummy user -> export <-");
+		AddToLog("deleted dummy user -> export <-");
 	}
 }
 
@@ -334,7 +334,7 @@ function um_export($proceed) {
 		if ($fp) {
 			fwrite($fp, $authtext);
 			fclose($fp);
-			$logline = AddToLog("authenticate.php updated by >".PGV_USER_NAME."<");
+			$logline = AddToLog("authenticate.php updated");
  			if (!empty($COMMIT_COMMAND)) check_in($logline, "authenticate.php", $INDEX_DIRECTORY);
 			if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." authenticate.php<br /><br />";
 		} else
@@ -368,7 +368,7 @@ function um_export($proceed) {
 			if ($fp) {
 				fwrite($fp, $mstring);
 				fclose($fp);
-				$logline = AddToLog("messages.dat updated by >".PGV_USER_NAME."<");
+				$logline = AddToLog("messages.dat updated");
  				if (!empty($COMMIT_COMMAND)) check_in($logline, "messages.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." messages.dat<br /><br />";
 			} else
@@ -407,7 +407,7 @@ function um_export($proceed) {
 			if ($fp) {
 				fwrite($fp, $mstring);
 				fclose($fp);
-				$logline = AddToLog("favorites.dat updated by >".PGV_USER_NAME."<");
+				$logline = AddToLog("favorites.dat updated");
  				if (!empty($COMMIT_COMMAND)) check_in($logline, "favorites.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." favorites.dat<br /><br />";
 			} else
@@ -441,7 +441,7 @@ function um_export($proceed) {
 			if ($fp) {
 				fwrite($fp, $mstring);
 				fclose($fp);
-				$logline = AddToLog("news.dat updated by >".PGV_USER_NAME."<");
+				$logline = AddToLog("news.dat updated");
  				if (!empty($COMMIT_COMMAND)) check_in($logline, "news.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." news.dat<br /><br />";
 			} else
@@ -477,7 +477,7 @@ function um_export($proceed) {
 			if ($fp) {
 				fwrite($fp, $mstring);
 				fclose($fp);
-				$logline = AddToLog("blocks.dat updated by >".PGV_USER_NAME."<");
+				$logline = AddToLog("blocks.dat updated");
  				if (!empty($COMMIT_COMMAND)) check_in($logline, "blocks.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." blocks.dat<br /><br />";
 			} else

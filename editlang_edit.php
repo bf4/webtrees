@@ -32,8 +32,7 @@ if (file_exists( "rs_functions.php")) require  "rs_functions.php";
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-$uname = getUserName();
-if (empty($uname)) {
+if (!PGV_USER_IS_ADMIN) {
 	print "Please close this window and do a Login in the former window first...";
 	exit;
 }

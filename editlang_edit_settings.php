@@ -42,8 +42,7 @@ if ($action == "cancel") {
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-$uname = getUserName();
-if (empty($uname)) {
+if (!PGV_USER_IS_ADMIN) {
   print "Please close this window and do a Login in the former window first...";
   exit;
 }
@@ -587,7 +586,7 @@ if ($action == "save" or $action=="toggleActive") {
       fwrite($fp, "\r\n");
       fwrite($fp, "?>");
       fclose($fp);
-	  $logline = AddToLog("lang_settings.php updated by >".getUserName()."<");
+	  $logline = AddToLog("lang_settings.php updated");
  	  if (!empty($COMMIT_COMMAND)) check_in($logline, $Filename, $INDEX_DIRECTORY);	
     } else $error = "lang_config_write_error";
   } else $error = "lang_set_file_read_error";

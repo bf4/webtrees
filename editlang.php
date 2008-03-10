@@ -39,8 +39,7 @@ $lang_shortcut = $language_settings[$language2]["lang_short_cut"];
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
-$uname = getUserName();
-if (empty($uname)) {
+if (!PGV_USER_IS_ADMIN) {
 	header("Location: login.php?url=editlang.php");
 	exit;
 }

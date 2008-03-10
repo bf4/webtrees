@@ -183,9 +183,6 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	// imagemap
 	$imagemap="<map id=\"fanmap\" name=\"fanmap\">";
 
-	// relationship to me
-	$myid=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
-
 	// loop to create fan cells
 	while ($gen>=0) {
 		// clean current generation area
@@ -313,8 +310,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				print "</a>\n";
 				print "<br /><a href=\"pedigree.php?rootid=$pid\" >".$pgv_lang["index_header"]."</a>\n";
 				print "<br /><a href=\"descendancy.php?pid=$pid\" >".$pgv_lang["descend_chart"]."</a>\n";
-				if ($myid) {
-					print "<br /><a href=\"relationship.php?pid1=".$myid."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["relationship_to_me"]."</a>\n";
+				if (PGV_USER_GEDCOM_ID) {
+					print "<br /><a href=\"relationship.php?pid1=".PGV_USER_GEDCOM_ID."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["relationship_to_me"]."</a>\n";
 				}
 				print "<br /><a href=\"ancestry.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["ancestry_chart"]."</a>\n";
 				print "<br /><a href=\"compact.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["compact_chart"]."</a>\n";

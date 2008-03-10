@@ -61,15 +61,14 @@ if (isset($_REQUEST['name'])) $name = $_REQUEST['name'];
 
 //-- make sure that they have user status before they can use this page
 //-- otherwise have them login again
-$uname = getUserName();
-if (empty($uname) || empty($name)) {
+if (!PGV_USER_ID) {
 	print_simple_header("");
 	print $pgv_lang["access_denied"];
 	print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"self.close();\">".$pgv_lang["close_window"]."</a></div>\n";
 	print_simple_footer();
 	exit;
 }
-if (!userIsAdmin()) $setdefault=false;
+if (!PGV_USER_IS_ADMIN) $setdefault=false;
 
 if (!isset($action)) $action="";
 if (!isset($ctype)) $ctype="user";
@@ -164,7 +163,7 @@ $SortedBlocks = array_flip($SortedBlocks);
 
 //-- get the blocks list
 if ($ctype=="user") {
-	$ublocks = getBlocks($uname);
+	$ublocks = getBlocks(PGV_USER_NAME);
 	if (($action=="reset") || ((count($ublocks["main"])==0) && (count($ublocks["right"])==0))) {
 		$ublocks["main"] = array();
 		$ublocks["main"][] = array("print_todays_events", "");
@@ -558,7 +557,7 @@ else {
 	print "</div></td></tr>";
 	print "<tr><td class=\"topbottombar\" colspan=\"7\">";
 
-	if ((userIsAdmin())&&($ctype=='user')) {
+	if (PGV_USER_IS_ADMIN && $ctype=='user') {
 		print $pgv_lang["use_blocks_for_default"]."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
 	}
 
@@ -574,7 +573,7 @@ else {
 	print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"select_options(); save_form();\" />\n";
 	print "&nbsp;&nbsp;";
 	print "<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
-	if (userGedcomAdmin() && $ctype!="user") {
+	if (PGV_USER_GEDCOM_ADMIN && $ctype!="user") {
 		print "<br />";
 		print_help_link("clear_cache_help", "qm");
 		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".preg_replace("/'/", "\'", $name)."';\" />";

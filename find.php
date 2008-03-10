@@ -292,7 +292,7 @@ switch ($type) {
 	}
 
 	// Show repo and hide the rest
-	if ($type == "repo" && $SHOW_SOURCES>=getUserAccessLevel()) {
+	if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 		print "<div align=\"center\">";
 		print "<form name=\"filterrepo\" method=\"post\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
@@ -313,7 +313,7 @@ switch ($type) {
 	}
 
 	// Show source and hide the rest
-	if ($type == "source" && $SHOW_SOURCES>=getUserAccessLevel()) {
+	if ($type == "source" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 		print "<div align=\"center\">";
 		print "<form name=\"filtersource\" method=\"post\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
@@ -743,7 +743,7 @@ if ($action=="filter") {
 			print "</td></tr>";
 		}
 		print "</table>";
-		if (userCanEdit()) {
+		if (PGV_USER_CAN_EDIT) {
 			print_help_link("edit_add_unlinked_source_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a>
 		<?php
 		}

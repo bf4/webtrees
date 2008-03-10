@@ -150,7 +150,7 @@
 		
 		if ($t==5){
 			echo "<b><br />" . $tt . "</b><br /><br />";
-		}else if ( ($t!=5) && (userCanAccess()) ){
+		}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){
 			echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $numm . ")";
 		}else{
 			echo "<b><br />" . $tt . "</b><br /><br />";	

@@ -29,7 +29,7 @@ require("config.php");
 require_once 'includes/functions_print_facts.php';
 require_once("includes/functions_print_lists.php");
 
-if ($SHOW_SOURCES<getUserAccessLevel()) {
+if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) {
 	header("Location: index.php");
 	exit;
 }
@@ -45,7 +45,7 @@ $rid = clean_input($rid);
 global $PGV_IMAGES;
 
 $accept_success=false;
-if (userCanAccept(getUserName())) {
+if (PGV_USER_CAN_ACCEPT) {
 	if ($action=="accept") {
 		require_once("includes/functions_import.php");
 		if (accept_changes($rid."_".$GEDCOM)) {
@@ -87,20 +87,20 @@ print "\n\t<span class=\"name_head\">".PrintReady($name);
 
 if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($rid)" . getLRM();
 print "</span><br />";
-if (userCanEdit()) {
+if (PGV_USER_CAN_EDIT) {
 	if ($view!="preview") {
 		if (isset($pgv_changes[$rid."_".$GEDCOM])) {
 			if (!isset($show_changes)) {
 				print "<a href=\"repo.php?rid=$rid&amp;show_changes=yes\">".$pgv_lang["show_changes"]."</a>"."  ";
 			}
 			else {
-				if (userCanAccept()) print "<a href=\"repo.php?rid=$rid&amp;action=accept\">".$pgv_lang["accept_all"]."</a> | ";
+				if (PGV_USER_CAN_ACCEPT) print "<a href=\"repo.php?rid=$rid&amp;action=accept\">".$pgv_lang["accept_all"]."</a> | ";
 				print "<a href=\"repo.php?rid=$rid\">".$pgv_lang["hide_changes"]."</a>"."  ";
 			}
 			print_help_link("show_changes_help", "qm");
 			print "<br />";
 		}
-		if ($SHOW_GEDCOM_RECORD || userIsAdmin()) {
+		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
 			print "<a href=\"javascript:;\" onclick=\"return edit_raw('$rid');\">".$pgv_lang["edit_raw"]."</a>";
 			print_help_link("edit_raw_gedcom_help", "qm");
 			print " | ";
@@ -217,7 +217,7 @@ foreach($repofacts as $indexval => $fact) {
 	}
 }
 //-- new fact link
-if (($view!="preview") &&(userCanEdit())) {
+if (($view!="preview") && PGV_USER_CAN_EDIT) {
 	print_add_new_fact($rid, $repofacts, "REPO");
 }
 print "</table>\n\n";
@@ -243,15 +243,15 @@ if ($view!="preview" &&(empty($SEARCH_SPIDER))) {
 		print_help_link("show_repo_gedcom_help", "qm");
 		print "</span></td>";
 	}
-	if($SHOW_GEDCOM_RECORD && ($ENABLE_CLIPPINGS_CART>=getUserAccessLevel())){
+	if ($SHOW_GEDCOM_RECORD && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL){
 		print "</tr>\n\t\t<tr>";
 	}
-	if ($ENABLE_CLIPPINGS_CART>=getUserAccessLevel()) {
+	if ($ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
 		print "<td align=\"center\" valign=\"top\"><span class=\"link\"><a href=\"clippings.php?action=add&amp;id=$rid&amp;type=repository\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]."\" border=\"0\" alt=\"\" /><br />".$pgv_lang["add_to_cart"]."</a>";
 		print_help_link("add_repository_clip_help", "qm");
 		print "</span></td>";
 	}
-	if(!$SHOW_GEDCOM_RECORD && ($ENABLE_CLIPPINGS_CART<getUserAccessLevel())){
+	if(!$SHOW_GEDCOM_RECORD && ($ENABLE_CLIPPINGS_CART<PGV_USER_ACCESS_LEVEL)){
 		print "<td>&nbsp;</td>";
 	}
 	print "</tr></table>";
