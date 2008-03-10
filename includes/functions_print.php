@@ -1071,9 +1071,9 @@ function user_contact_link($user_id, $method=null) {
 	case 'none':
 		return '';
 	case 'mailto':
-		return "<a href='javascript:;' onclick='message(\"{$user_id}\",\"{$method}\");return false;' {$access}>{$fullname}</a>";
-	default:
 		return "<a href='mailto:{$email}' {$access}>{$fullname}</a>";
+	default:
+		return "<a href='javascript:;' onclick='message(\"{$user_id}\",\"{$method}\");return false;' {$access}>{$fullname}</a>";
 	}
 }
 
