@@ -57,8 +57,7 @@ if ($TEXT_DIRECTION=="rtl") $align="left";
 print_simple_header($pgv_lang["quick_update_title"]);
 
 //-- only allow logged in users to access this page
-$uname = getUserName();
-if (!$ALLOW_EDIT_GEDCOM || !$USE_QUICK_UPDATE || empty($uname)) {
+if (!$ALLOW_EDIT_GEDCOM || !$USE_QUICK_UPDATE || !PGV_USER_ID) {
 	print $pgv_lang["access_denied"];
 	print_simple_footer();
 	exit;
@@ -73,13 +72,12 @@ if (!isset($closewin)) {
 
 $pid=clean_input($pid);
 if (empty($pid)) {
-	$pid=get_user_gedcom_setting($uname, $GEDCOM, 'gedcomid');
+	$pid=PGV_USER_GEDCOM_ID;
 }
 
 //-- only allow editors or users who are editing their own individual or their immediate relatives
-if (!userCanEdit()) {
-	$my_id=get_user_gedcom_setting($uname, $GEDCOM, 'gedcomid');
-	$famids = pgv_array_merge(find_sfamily_ids($my_id), find_family_ids($my_id));
+if (!PGV_USER_CAN_EDIT) {
+	$famids = pgv_array_merge(find_sfamily_ids(PGV_USER_GEDCOM_ID), find_family_ids(PGV_USER_GEDCOM_ID));
 	$related=false;
 	foreach ($famids as $famid) {
 		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
@@ -122,7 +120,7 @@ if ((!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
 
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!userCanEdit()) print "<br />".$pgv_lang["user_cannot_edit"];
+	if (!PGV_USER_CAN_EDIT) print "<br />".$pgv_lang["user_cannot_edit"];
 	if (!$ALLOW_EDIT_GEDCOM) print "<br />".$pgv_lang["gedcom_editing_disabled"];
 	if (!$disp) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
@@ -258,7 +256,7 @@ if ($action=="update") {
 	print "<h2>".$pgv_lang["quick_update_title"]."</h2>\n";
 	print "<b>".PrintReady(get_person_name($pid))."</b><br /><br />";
 	
-	AddToChangeLog("Quick update attempted for $pid by >".getUserName()."<");
+	AddToChangeLog("Quick update attempted for $pid by >".PGV_USER_NAME."<");
 
 	$updated = false;
 	$error = "";
@@ -1153,7 +1151,7 @@ if ($action=="update") {
 
 	if ($updated && empty($error)) {
 		print $pgv_lang["update_successful"]."<br />";
-		AddToChangeLog("Quick update for $pid by >".getUserName()."<");
+		AddToChangeLog("Quick update for $pid by >".PGV_USER_NAME."<");
 		//print "<pre>$gedrec</pre>";
 		if ($oldgedrec!=$gedrec) replace_gedrec($pid, $gedrec, $update_CHAN);
 	}
@@ -2772,7 +2770,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<?php
 	$i++;
 }
-if (UserIsAdmin()) {
+if (PGV_USER_IS_ADMIN) {
 	print "<table class=\"facts_table width80\">\n";
 	print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap>";
 	print_help_link("no_update_CHAN_help", "qm");

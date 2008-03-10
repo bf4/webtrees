@@ -32,7 +32,7 @@ require_once 'includes/functions_edit.php';
 loadLangFile('pgv_confighelp');
 
 // Only admin users can access this page
-if (!userIsAdmin()) {
+if (!PGV_USER_IS_ADMIN) {
 	$loginURL = "$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING);
 	header("Location: $loginURL");
 	exit;
@@ -54,9 +54,10 @@ if (empty($ged)) {
 // Delete a user
 if ($action=='deleteuser') {
 	// don't delete ourselves
-	if ($username!=getUserName()) {
-		delete_user($username);
-		AddToLog(getUserName()." deleted user -> ".$username." <-");
+	$user_id=get_user_id($username);
+	if ($user_id!=PGV_USER_ID) {
+		delete_user($user_id);
+		AddToLog("deleted user ->{$username}<-");
 	}
 	// User data is cached, so reload the page to ensure we're up to date
 	header("Location: useradmin.php");
@@ -92,9 +93,9 @@ if ($action=='createuser' || $action=='edituser2') {
 					if ($user_id=create_user($username, crypt($pass1))) {
 						set_user_setting($user_id, 'reg_timestamp', date('U'));
 						set_user_setting($user_id, 'sessiontime', '0');
-						AddToLog("User -> {$username} <- created by ".getUserName());
+						AddToLog("User ->{$username}<- created");
 					} else {
-						AddToLog("User -> {$username} <- was not created by ".getUserName());
+						AddToLog("User ->{$username}<- was not created");
 						$user_id=get_user_id($username);
 					}
 				} else {
@@ -103,12 +104,12 @@ if ($action=='createuser' || $action=='edituser2') {
 				// Change password
 				if ($action=='edituser2' && !empty($pass1)) {
 					set_user_password($user_id, crypt($pass1));
-					AddToLog("User -> {$oldusername} <- had password changed by ".getUserName());
+					AddToLog("User ->{$oldusername}<- had password changed");
 				}
 				// Change username
 				if ($action=='edituser2' && $username!=$oldusername) {
 					rename_user($oldusername, $username);
-					AddToLog("User -> {$oldusername} <-  renamed to -> {$username} <- by ".getUserName());
+					AddToLog("User ->{$oldusername}<- renamed to ->{$username}<-");
 				}
 				// Create/change settings that can be updated in the user's gedcom record?
 				$email_changed=($emailaddress!=get_user_setting($user_id, 'email'));
@@ -151,7 +152,7 @@ if ($action=='createuser' || $action=='edituser2') {
 						$message=array();
 						$message["to"]=$username;
 						$headers="From: ".$PHPGEDVIEW_EMAIL;
-						$message["from"]=getUserName();
+						$message["from"]=PGV_USER_NAME;
 						$message["subject"]=str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_subject"]);
 						$message["body"]=str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_message"]);
 						$message["created"]="";
@@ -650,7 +651,7 @@ if ($action == "listusers") {
 		print "</td>\n";
 		if ($view != "preview") {
 			print "\t<td class=\"optionbox wrap\">";
-			if (getUserName()!=$user_id) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($user_id)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user_id');\">".$pgv_lang["delete"]."</a>";
+			if (PGV_USER_ID!=$user_id) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($user_id)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user_id');\">".$pgv_lang["delete"]."</a>";
 			print "</td>\n";
 		}
 		print "</tr>\n";
@@ -801,7 +802,7 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_verbyadmin_help", "qm", "verified_by_admin"); print $pgv_lang["verified_by_admin"];?></td><td class="optionbox wrap"><input type="checkbox" name="verified_by_admin" tabindex="<?php print ++$tab; ?>" value="yes" checked="checked" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_change_lang_help", "qm", "change_lang");print $pgv_lang["change_lang"];?></td><td class="optionbox wrap" valign="top"><?php
 
-		$user_lang = get_user_setting(GetUserName(), 'language');
+		$user_lang = get_user_setting(PGV_USER_ID, 'language');
 		if ($ENABLE_MULTI_LANGUAGE) {
 			$tab++;
 			print "<select name=\"user_language\" tabindex=\"".$tab."\" style=\"{ font-size: 9pt; }\">";
@@ -867,7 +868,7 @@ if ($action == "createform") {
 				</select>
 			</td>
 		</tr>
-		<?php if (userIsAdmin()) { ?>
+		<?php if (PGV_USER_IS_ADMIN) { ?>
 		<tr>
 			<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_help", "qm", "comment"); print $pgv_lang["comment"];?></td>
 			<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php print ++$tab; ?>" ></textarea></td>
@@ -990,7 +991,7 @@ if ($action == "cleanup2") {
 		$var = "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_id);
 		if (isset($$var)) {
 			delete_user($user_id);
-			AddToLog(getUserName()." deleted user -> ".$user_name." <-");
+			AddToLog("deleted user ->{$user_name}<-");
 			print $pgv_lang["usr_deleted"]; print $user_name."<br />";
 		} else {
 			foreach(unserialize(get_user_setting($user_id,'canedit')) as $gedid=>$data) {

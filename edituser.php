@@ -36,21 +36,20 @@ if (!isset($action)) {
 }
 
 // cannot edit account using a cookie login - login with password first
-$old_username=getUserName();
-if (empty($old_username)||$_SESSION["cookie_login"]) {
+if (!PGV_USER_ID || $_SESSION["cookie_login"]) {
 	header("Location: login.php?url=edituser.php");
 	exit;
 }
 
 // prevent users with editing account disabled from being able to edit their account
-if (get_user_setting($old_username, 'editaccount')!='Y') {
+if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {
 	header("Location: index.php?ctype=user");
 	exit;
 }
 
 // section to update a user
 if ($action=="edituser2") {
-	if ($username!=$old_username && get_user_id($username)) {
+	if ($username!=PGV_USER_NAME && get_user_id($username)) {
 		print_header("PhpGedView ".$pgv_lang["user_admin"]);
 		print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 	} else {
@@ -74,50 +73,27 @@ if ($action=="edituser2") {
 			} else {
 				// Change password
 				if (!empty($pass1)) {
-					AddToLog("User {$old_username} changed password");
-					set_user_password($old_username, crypt($pass1));
+					AddToLog("User changed password");
+					set_user_password(PGV_USER_ID, crypt($pass1));
 				}
 				// Change username
-				if ($username!=$old_username) {
-					AddToLog("User renamed from {$old_username} to ->{$username} <-");
-					rename_user($old_username, $username);
+				if ($username!=PGV_USER_NAME) {
+					AddToLog("User renamed to ->{$username}<-");
+					rename_user(PGV_USER_NAME, $username);
 					$_SESSION['pgv_user']=$username;
 				}
 				// Change other settings
-				$sync_data_changed=false;
-				$firstname=stripslashes($firstname);
-				$lastname=stripslashes($lastname);
-				if ($firstname!=get_user_setting($username, 'firstname')) {
-					set_user_setting($username, 'firstname', $firstname);
-					//$sync_data_changed=true;
-				}
-				if ($lastname!=get_user_setting($username, 'lastname')) {
-					set_user_setting($username, 'lastname', $lastname);
-					//$sync_data_changed=true;
-				}
-				if ($user_email!=get_user_setting($username, 'email')) {
-					set_user_setting($username, 'email', $user_email);
-					$sync_data_changed=true;
-				}
-				if ($user_theme!=get_user_setting($username, 'theme')) {
-					set_user_setting($username, 'theme', $user_theme);
-				}
-				if ($user_language!=get_user_setting($username, 'language')) {
-					set_user_setting($username, 'language', $user_language);
-				}
-				if ($new_contact_method!=get_user_setting($username, 'contactmethod')) {
-					set_user_setting($username, 'contactmethod', $new_contact_method);
-				}
+				set_user_setting($username, 'firstname', stripslashes($firstname));
+				set_user_setting($username, 'lastname', stripslashes($lastname));
+				$sync_data_changed=($user_email!=get_user_setting($username, 'email'));
+				set_user_setting($username, 'email', $user_email);
+				set_user_setting($username, 'theme', $user_theme);
+				set_user_setting($username, 'language', $user_language);
+				set_user_setting($username, 'contactmethod', $new_contact_method);
 				$new_visibleonline=isset($new_visibleonline) ? 'Y' : 'N';
-				if ($new_visibleonline!=get_user_setting($username, 'visibleonline')) {
-					set_user_setting($username, 'visibleonline', $new_visibleonline);
-				}
-				if ($new_default_tab!=get_user_setting($username, 'defaulttab')) {
-					set_user_setting($username, 'defaulttab', $new_default_tab);
-				}
-				if ($rootid!=get_user_gedcom_setting($username, $GEDCOM, 'rootid')) {
-					set_user_gedcom_setting($username, $GEDCOM, 'rootid', $rootid);
-				}
+				set_user_setting($username, 'visibleonline', $new_visibleonline);
+				set_user_setting($username, 'defaulttab', $new_default_tab);
+				set_user_gedcom_setting($username, $GEDCOM, 'rootid', $rootid);
 
 				//-- update Gedcom record with new email address
 				if ($sync_data_changed && get_user_setting($username, 'sync_gedcom')=='Y') {
@@ -128,11 +104,11 @@ if ($action=="edituser2") {
 							$indirec=find_person_record($myid);
 							if ($indirec) {
 								if (preg_match("/\d _?EMAIL/", $indirec)) {
-									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$user["email"], $indirec);
-									replace_gedrec($gedid, $indirec);
+									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$user_email, $indirec);
+									replace_gedrec($myid, $indirec);
 								} else {
-									$indirec.="\r\n1 EMAIL ".$user["email"];
-									replace_gedrec($gedid, $indirec);
+									$indirec.="\r\n1 EMAIL ".$user_email;
+									replace_gedrec($myid, $indirec);
 								}
 							}
 						}
@@ -201,22 +177,21 @@ print "<div class=\"center\">\n";
 <table class="list_table <?php print $TEXT_DIRECTION; ?>">
 	<tr><td class="topbottombar" colspan="2"><h2><?php print $pgv_lang["editowndata"];?></h2></td></tr>
 	<tr><td class="topbottombar" colspan="2"><input type="submit" tabindex="<?php print ++$tab; ?>" value="<?php print $pgv_lang["update_myaccount"]; ?>" /></td></tr>
-	<tr><td class="descriptionbox width20 wrap"><?php print_help_link("edituser_username_help", "qm");print $pgv_lang["username"];?></td><td class="optionbox"><input type="text" name="username" tabindex="<?php print ++$tab; ?>" value="<?php print $old_username;?>" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_firstname_help", "qm");print $pgv_lang["firstname"];?></td><td class="optionbox"><input type="text" name="firstname" tabindex="<?php print ++$tab; ?>" value="<?php print get_user_setting($old_username, 'firstname');?>" /></td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_lastname_help", "qm");print $pgv_lang["lastname"];?></td><td class="optionbox"><input type="text" name="lastname" tabindex="<?php print ++$tab; ?>" value="<?php print get_user_setting($old_username, 'lastname');?>" /></td></tr>
+	<tr><td class="descriptionbox width20 wrap"><?php print_help_link("edituser_username_help", "qm");print $pgv_lang["username"];?></td><td class="optionbox"><input type="text" name="username" tabindex="<?php print ++$tab; ?>" value="<?php print PGV_USER_NAME;?>" /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_firstname_help", "qm");print $pgv_lang["firstname"];?></td><td class="optionbox"><input type="text" name="firstname" tabindex="<?php print ++$tab; ?>" value="<?php print get_user_setting(PGV_USER_ID, 'firstname');?>" /></td></tr>
+	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_lastname_help", "qm");print $pgv_lang["lastname"];?></td><td class="optionbox"><input type="text" name="lastname" tabindex="<?php print ++$tab; ?>" value="<?php print get_user_setting(PGV_USER_ID, 'lastname');?>" /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_gedcomid_help", "qm");print $pgv_lang["gedcomid"];?></td><td class="optionbox">
 		<?php
-			$my_id=get_user_gedcom_setting($old_username, $GEDCOM, 'gedcomid');
-			if (!empty($my_id)) {
+			if (PGV_USER_GEDCOM_ID) {
 				print "<ul>";
-				print_list_person($my_id, array(get_person_name($my_id), $GEDCOM));
+				print_list_person(PGV_USER_GEDCOM_ID, array(get_person_name(PGV_USER_GEDCOM_ID), $GEDCOM));
 				print "</ul>";
 			} else {
 				print "&nbsp;";
 			}
 		?>
 	</td></tr>
-	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_rootid_help", "qm"); print $pgv_lang["rootid"];?></td><td class="optionbox"><input type="text" name="rootid" id="rootid" tabindex="<?php print ++$tab; ?>" value="<?php print get_user_gedcom_setting($old_username, $GEDCOM, 'rootid'); ?>" />
+	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_rootid_help", "qm"); print $pgv_lang["rootid"];?></td><td class="optionbox"><input type="text" name="rootid" id="rootid" tabindex="<?php print ++$tab; ?>" value="<?php print PGV_USER_ROOT_ID; ?>" />
 	<?php print_findindi_link("rootid",""); ?>
 	</td></tr>
 	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_password_help", "qm"); print $pgv_lang["password"];?></td><td class="optionbox"><input type="password" name="pass1" tabindex="<?php print ++$tab; ?>" /><br /><?php print $pgv_lang["leave_blank"];?></td></tr>
@@ -225,7 +200,7 @@ print "<div class=\"center\">\n";
 	if ($ENABLE_MULTI_LANGUAGE) {
 		$tab++;
 		print "<select name=\"user_language\" tabindex=\"".$tab."\" style=\"{ font-size: 9pt; }\">";
-		$my_lang=get_user_setting($old_username, 'language');
+		$my_lang=get_user_setting(PGV_USER_ID, 'language');
 		foreach ($pgv_language as $key=> $value) {
 			if ($language_settings[$key]["pgv_lang_use"]) {
 				print "<option value=\"$key\"";
@@ -239,14 +214,14 @@ print "<div class=\"center\">\n";
 	}
 	else print "&nbsp;";
     ?></td></tr>
-    <tr><td class="descriptionbox wrap"><?php print_help_link("edituser_email_help", "qm"); print $pgv_lang["emailadress"];?></td><td class="optionbox" valign="top"><input type="text" name="user_email" tabindex="<?php print ++$tab; ?>" value="<?php print get_user_setting($old_username, 'email'); ?>" size="50" /></td></tr>
+    <tr><td class="descriptionbox wrap"><?php print_help_link("edituser_email_help", "qm"); print $pgv_lang["emailadress"];?></td><td class="optionbox" valign="top"><input type="text" name="user_email" tabindex="<?php print ++$tab; ?>" value="<?php print get_user_setting(PGV_USER_ID, 'email'); ?>" size="50" /></td></tr>
     <?php if ($ALLOW_USER_THEMES) { ?>
     <tr><td class="descriptionbox wrap"><?php print_help_link("edituser_user_theme_help", "qm"); print $pgv_lang["user_theme"];?></td><td class="optionbox" valign="top">
     	<select name="user_theme" tabindex="<?php print ++$tab; ?>">
     	<option value=""><?php print $pgv_lang["site_default"]; ?></option>
 				<?php
 					$themes=get_theme_names();
-					$my_theme=get_user_setting($old_username, 'theme');
+					$my_theme=get_user_setting(PGV_USER_ID, 'theme');
 					foreach($themes as $indexval=> $themedir) {
 						print "<option value=\"".$themedir["dir"]."\"";
 						if ($themedir["dir"]==$my_theme) {
@@ -262,30 +237,30 @@ print "<div class=\"center\">\n";
 		<td class="descriptionbox wrap"><?php print_help_link("edituser_user_contact_help", "qm"); print $pgv_lang["user_contact_method"];?></td>
 		<td class="optionbox"><select name="new_contact_method" tabindex="<?php print ++$tab; ?>">
 		<?php if ($PGV_STORE_MESSAGES) { ?>
-				<option value="messaging" <?php if (get_user_setting($old_username, 'contactmethod')=='messaging') print "selected=\"selected\""; ?>><?php print $pgv_lang["messaging"];?></option>
-				<option value="messaging2" <?php if (get_user_setting($old_username, 'contactmethod')=='messaging2') print "selected=\"selected\""; ?>><?php print $pgv_lang["messaging2"];?></option>
+				<option value="messaging" <?php if (get_user_setting(PGV_USER_ID, 'contactmethod')=='messaging') print "selected=\"selected\""; ?>><?php print $pgv_lang["messaging"];?></option>
+				<option value="messaging2" <?php if (get_user_setting(PGV_USER_ID, 'contactmethod')=='messaging2') print "selected=\"selected\""; ?>><?php print $pgv_lang["messaging2"];?></option>
 		<?php } else { ?>
-				<option value="messaging3" <?php if (get_user_setting($old_username, 'contactmethod')=='messaging3') print "selected=\"selected\""; ?>><?php print $pgv_lang["messaging3"];?></option>
+				<option value="messaging3" <?php if (get_user_setting(PGV_USER_ID, 'contactmethod')=='messaging3') print "selected=\"selected\""; ?>><?php print $pgv_lang["messaging3"];?></option>
 		<?php } ?>
-				<option value="mailto" <?php if (get_user_setting($old_username, 'contactmethod')=='mailto') print "selected=\"selected\""; ?>><?php print $pgv_lang["mailto"];?></option>
-				<option value="none" <?php if (get_user_setting($old_username, 'contactmethod')=='none') print "selected=\"selected\""; ?>><?php print $pgv_lang["no_messaging"];?></option>
+				<option value="mailto" <?php if (get_user_setting(PGV_USER_ID, 'contactmethod')=='mailto') print "selected=\"selected\""; ?>><?php print $pgv_lang["mailto"];?></option>
+				<option value="none" <?php if (get_user_setting(PGV_USER_ID, 'contactmethod')=='none') print "selected=\"selected\""; ?>><?php print $pgv_lang["no_messaging"];?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
       <td class="descriptionbox wrap"><?php print_help_link("useradmin_visibleonline_help", "qm"); print $pgv_lang["visibleonline"];?></td>
-      <td class="optionbox"><input type="checkbox" name="new_visibleonline" tabindex="<?php print ++$tab; ?>" value="yes" <?php if (get_user_setting($old_username, 'visibleonline')=='Y') print "checked=\"checked\""; ?> /></td>
+      <td class="optionbox"><input type="checkbox" name="new_visibleonline" tabindex="<?php print ++$tab; ?>" value="yes" <?php if (get_user_setting(PGV_USER_ID, 'visibleonline')=='Y') print "checked=\"checked\""; ?> /></td>
     </tr>
     <tr>
 		<td class="descriptionbox wrap"><?php print_help_link("edituser_user_default_tab_help", "qm"); print $pgv_lang["user_default_tab"];?></td>
 		<td class="optionbox"><select name="new_default_tab" tabindex="<?php print ++$tab; ?>">
-				<option value="0" <?php if (get_user_setting($old_username, 'defaulttab')==0) print "selected=\"selected\""; ?>><?php print $pgv_lang["personal_facts"];?></option>
-				<option value="1" <?php if (get_user_setting($old_username, 'defaulttab')==1) print "selected=\"selected\""; ?>><?php print $pgv_lang["notes"];?></option>
-				<option value="2" <?php if (get_user_setting($old_username, 'defaulttab')==2) print "selected=\"selected\""; ?>><?php print $pgv_lang["ssourcess"];?></option>
-				<option value="3" <?php if (get_user_setting($old_username, 'defaulttab')==3) print "selected=\"selected\""; ?>><?php print $pgv_lang["media"];?></option>
-				<option value="4" <?php if (get_user_setting($old_username, 'defaulttab')==4) print "selected=\"selected\""; ?>><?php print $pgv_lang["relatives"];?></option>
-				<option value="-1" <?php if (get_user_setting($old_username, 'defaulttab')==-1) print "selected=\"selected\""; ?>><?php print $pgv_lang["all"];?></option>
-				<option value="-2" <?php if (get_user_setting($old_username, 'defaulttab')==-2) print "selected=\"selected\""; ?>><?php print $pgv_lang["lasttab"];?></option>
+				<option value="0" <?php if (get_user_setting(PGV_USER_ID, 'defaulttab')==0) print "selected=\"selected\""; ?>><?php print $pgv_lang["personal_facts"];?></option>
+				<option value="1" <?php if (get_user_setting(PGV_USER_ID, 'defaulttab')==1) print "selected=\"selected\""; ?>><?php print $pgv_lang["notes"];?></option>
+				<option value="2" <?php if (get_user_setting(PGV_USER_ID, 'defaulttab')==2) print "selected=\"selected\""; ?>><?php print $pgv_lang["ssourcess"];?></option>
+				<option value="3" <?php if (get_user_setting(PGV_USER_ID, 'defaulttab')==3) print "selected=\"selected\""; ?>><?php print $pgv_lang["media"];?></option>
+				<option value="4" <?php if (get_user_setting(PGV_USER_ID, 'defaulttab')==4) print "selected=\"selected\""; ?>><?php print $pgv_lang["relatives"];?></option>
+				<option value="-1" <?php if (get_user_setting(PGV_USER_ID, 'defaulttab')==-1) print "selected=\"selected\""; ?>><?php print $pgv_lang["all"];?></option>
+				<option value="-2" <?php if (get_user_setting(PGV_USER_ID, 'defaulttab')==-2) print "selected=\"selected\""; ?>><?php print $pgv_lang["lasttab"];?></option>
 			</select>
 		</td>
 	</tr>

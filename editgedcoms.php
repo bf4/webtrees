@@ -88,7 +88,7 @@ if (($action=="setdefault") && isset($default_ged)) {
 		$DEFAULT_GEDCOM = urldecode($_POST["default_ged"]);
 		fwrite($fp, $configtext);
 		fclose($fp);
-		$logline = AddToLog("gedcoms.php updated by >".PGV_USER_NAME."<");
+		$logline = AddToLog("gedcoms.php updated");
  		if (!empty($COMMIT_COMMAND)) check_in($logline, "gedcoms.php", $INDEX_DIRECTORY);
 	}
 }

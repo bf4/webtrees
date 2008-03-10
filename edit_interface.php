@@ -181,27 +181,24 @@ $success = false;
  * @return boolean
  */
 function checkFactEdit($gedrec) {
-	global $GEDCOM;
-
-	if (userGedcomAdmin()) {
+	if (PGV_USER_GEDCOM_ADMIN) {
 		return true;
 	}
 	
 	$ct = preg_match("/2 RESN ((privacy)|(locked))/i", $gedrec, $match);
 	if ($ct > 0) {
 		$match[1] = strtolower(trim($match[1]));
-		$myindi=get_user_gedcom_setting(getUserName(), $GEDCOM, 'gedcomid');
 		
 		$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 		if ($gt > 0) {
 			$gid = trim($gmatch[1]);
 			$type = trim($gmatch[2]);
-			if ($myindi == $gid) {
+			if (PGV_USER_GEDCOM_ID == $gid) {
 				return true;
 			}
 			if ($type=='FAM') {
 				$parents = find_parents_in_record($gedrec);
-				if ($myindi == $parents["HUSB"] || $myindi == $parents["WIFE"]) {
+				if (PGV_USER_GEDCOM_ID == $parents["HUSB"] || PGV_USER_GEDCOM_ID == $parents["WIFE"]) {
 					return true;
 				}
 			}
@@ -253,12 +250,12 @@ else {
 	$disp = true;
 }
 
-if ((!userCanEdit())||(!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
+if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	//print "pid: $pid<br />";
 	//print "gedrec: $gedrec<br />";
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!userCanEdit()) print "<br />".$pgv_lang["user_cannot_edit"];
+	if (!PGV_USER_CAN_EDIT) print "<br />".$pgv_lang["user_cannot_edit"];
 	if (!$ALLOW_EDIT_GEDCOM) print "<br />".$pgv_lang["gedcom_editing_disabled"];
 	if (!$disp) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
@@ -354,7 +351,7 @@ case 'editraw':
 		print_specialchar_link("newgedrec",true);
 		print "<br />\n";
 		print "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"60\" dir=\"ltr\">".$gedrec."</textarea>\n<br />";
-		if (UserIsAdmin()) {
+		if (PGV_USER_IS_ADMIN) {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 			print_help_link("no_update_CHAN_help", "qm");
@@ -387,7 +384,7 @@ case 'edit':
 
 	print "<table class=\"facts_table\">";
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
-	if (UserIsAdmin()) {
+	if (PGV_USER_IS_ADMIN) {
 		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
@@ -429,7 +426,7 @@ case 'add':
 
 	create_add_form($fact);
 
-	if (UserIsAdmin()) {
+	if (PGV_USER_IS_ADMIN) {
 		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";

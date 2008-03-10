@@ -70,7 +70,7 @@ if (!empty($uname)) {
 }
 
 $accept_success=false;
-if (userCanAccept()) {
+if (PGV_USER_CAN_ACCEPT) {
 	if ($action=="accept") {
 		if ($PGV_DATABASE!="index") {
 			if (accept_changes($pid."_".$GEDCOM)) {
@@ -775,7 +775,7 @@ if ($view!="preview") {
 			$submenu["class"] = "submenuitem$ff";
 			$submenu["hoverclass"] = "submenuitem_hover$ff";
 			$menu["items"][] = $submenu;
-			if (userCanAccept()) {
+			if (PGV_USER_CAN_ACCEPT) {
 				$submenu = array();
 				$submenu["label"] = $pgv_lang["accept_all"];
 				$submenu["labelpos"] = "right";
@@ -793,7 +793,7 @@ if ($view!="preview") {
 		print_menu($menu);
 	}
 
-	if ($disp && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=getUserAccessLevel())) {
+	if ($disp && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL)) {
 		print '        </td><td class="sublinks_cell '.$TEXT_DIRECTION.'">';
 		$menu = array();
 		$menu["label"] = $pgv_lang["other"];
@@ -829,7 +829,7 @@ if ($view!="preview") {
 			$submenu["hoverclass"] = "submenuitem_hover$ff";
 			$menu["items"][] = $submenu;
 		}
-		if ($disp && $ENABLE_CLIPPINGS_CART>=getUserAccessLevel()) {
+		if ($disp && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
 			$submenu = array();
 			$submenu["label"] = $pgv_lang["add_to_cart"];
 			$submenu["labelpos"] = "right";
@@ -1158,7 +1158,7 @@ if ($view!="preview") {
    <tr>
 		  <td id="pagetab0" class="tab_cell_active" onclick="return switch_tab(0);"><a href="#" onclick="return switch_tab(0);"><?php print $pgv_lang["personal_facts"]?></a></td>
 		  <td id="pagetab1" class="tab_cell_inactive" onclick="return switch_tab(1);"><a href="#" onclick="return switch_tab(1);"><?php print $pgv_lang["notes"]?></a></td>
-		  <?php if ($SHOW_SOURCES>=getUserAccessLevel()) { ?>
+		  <?php if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) { ?>
 			<td id="pagetab2" class="tab_cell_inactive" onclick="return switch_tab(2);"><a href="#" onclick="return switch_tab(2);"><?php print $pgv_lang["ssourcess"]?></a></td>
 		  <?php }
 		  if ($MULTI_MEDIA == TRUE){?>
@@ -1168,14 +1168,14 @@ if ($view!="preview") {
 		  <?php if (file_exists("modules/googlemap.php")) { ?>
 		  <td id="pagetab5" class="tab_cell_inactive" onclick="return switch_tab(5);"><a href="#" onclick="return switch_tab(5);"><?php print $pgv_lang["googlemap"]?></a></td>
 		  <?php } ?>
-		  <?php if (file_exists("modules/researchlog.php") && ($SHOW_RESEARCH_LOG>=getUserAccessLevel())) { ?>
+		  <?php if (file_exists("modules/researchlog.php") && ($SHOW_RESEARCH_LOG>=PGV_USER_ACCESS_LEVEL)) { ?>
 		  <td id="pagetab6" class="tab_cell_inactive" onclick="return switch_tab(6);"><a href="#" onclick="return switch_tab(6);"><?php print $pgv_lang["research_log"]?></a></td>
 		  <?php } ?>
 		</tr>
 		<tr>
 		  <td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
 		  <td id="pagetab1bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
-		  <?php if ($SHOW_SOURCES>=getUserAccessLevel()) { ?>
+		  <?php if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) { ?>
 		  <td id="pagetab2bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
 		  <?php } if ($MULTI_MEDIA == TRUE){?>
 		  <td id="pagetab3bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
@@ -1184,7 +1184,7 @@ if ($view!="preview") {
           <?php if (file_exists("modules/googlemap.php")) { ?>
 		  <td id="pagetab5bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
 		  <?php }?>
-		  <?php if (file_exists("modules/researchlog.php") && ($SHOW_RESEARCH_LOG>=getUserAccessLevel())) { ?>
+		  <?php if (file_exists("modules/researchlog.php") && ($SHOW_RESEARCH_LOG>=PGV_USER_ACCESS_LEVEL)) { ?>
 		  <td id="pagetab6bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
 		  <?php }?>
 		  <td class="tab_inactive_bottom_right"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" /></td>
@@ -1298,7 +1298,7 @@ print "</div>\n";
 
 //--------------------------------Start 3rd tab individual page
 //--- Sources
-if ($SHOW_SOURCES>=getUserAccessLevel()) {
+if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 print "\n\t<div id=\"sources\" class=\"tab_page\" style=\"position: $position; display: $display; top: auto; left: auto; visibility: $visibility; z-index: 2; \">";
 	if ($view=="preview") print "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span>";
 	print "\n\t<table class=\"facts_table\">";
@@ -1932,7 +1932,7 @@ if (file_exists("modules/googlemap.php")) {
 
 //--------------------------------Start 7th tab individual page
 //--- Research Log
-if (file_exists("modules/researchlog.php") && ($SHOW_RESEARCH_LOG>=getUserAccessLevel())) {
+if (file_exists("modules/researchlog.php") && ($SHOW_RESEARCH_LOG>=PGV_USER_ACCESS_LEVEL)) {
 	print "\n\t<div id=\"researchlog\" class=\"tab_page\" style=\"position: $position; display: $display; top: auto; left: auto; visibility: $visibility; z-index: 2; \">";
 	if ($view=="preview") print "<span class=\"subheaders\">".$pgv_lang["research_log"]."</span>";
 	if (!$disp) {

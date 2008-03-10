@@ -36,7 +36,7 @@
  
  	//**********************************************************************************************
  	// If the user doesnt have access then take them to the index.
- 	if ($SHOW_RESEARCH_ASSISTANT < getUserAccessLevel()){
+ 	if ($SHOW_RESEARCH_ASSISTANT < PGV_USER_ACCESS_LEVEL){
  		header("Location: index.php");
  		exit;
  	}
@@ -55,12 +55,12 @@
 	  		if ($_REQUEST['type']=='task') {
 	  			$cid = get_next_id("comments", "c_id");
 	  			$sql = 	"INSERT INTO ".$TBLPREFIX."comments (c_id, c_t_id, c_u_username, c_body, c_datetime) ";
-				$sql .=	"VALUES ($cid, '".$DBCONN->escapeSimple($_REQUEST['id'])."', '".getUserName()."', '".$DBCONN->escapeSimple($_POST['body'])."', '".time()."')";
+				$sql .=	"VALUES ($cid, '".$DBCONN->escapeSimple($_REQUEST['id'])."', '".PGV_USER_NAME."', '".$DBCONN->escapeSimple($_POST['body'])."', '".time()."')";
 	  		}
 	  		else {
 	  			$cid = get_next_id("user_comments", "uc_id");
 	  			$sql = "INSERT INTO ".$TBLPREFIX."user_comments (uc_id,uc_username,uc_comment,uc_datetime,uc_p_id,uc_f_id) ";
-	  			$sql .= "VALUES ($cid, '".getUserName();
+	  			$sql .= "VALUES ($cid, '".PGV_USER_NAME;
 	  			$sql .= "','".$DBCONN->escapeSimple($_POST['body']).
 	  				"','".time().
 	  				"','".$DBCONN->escapeSimple($_REQUEST['id']).
@@ -72,7 +72,7 @@
 	  	
  		// If we are EDITing, do an UPDATE statement.
 	  	else {
-	  		verify_user(getUserName());
+	  		verify_user(PGV_USER_ID);
 	  		if ($_REQUEST['type']=='task') {
 		  		$sql = "UPDATE ".$TBLPREFIX."comments SET c_body='".$DBCONN->escapeSimple($_POST['body'])."' WHERE c_id='$_REQUEST[commentid]'";
 	  		}
@@ -87,7 +87,7 @@
 	//**********************************************************************************************
 	// If nothing is being submitted then check if the user is EDITing an existing COMMENT.
 	else if(isset($_REQUEST['commentid']) && $_REQUEST['commentid'] != ""){
-		verify_user(getUserName());
+		verify_user(PGV_USER_ID);
 		$sql = "SELECT c_body FROM ".$TBLPREFIX."comments WHERE c_id='$_REQUEST[commentid]'";
 	  	$res = dbquery($sql);
 		while($comment =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -100,7 +100,7 @@
 	//**********************************************************************************************
 	// If nothing is being submitted then check if the user is EDITing an existing COMMENT.
 	else if(isset($_REQUEST['ucommentid']) && $_REQUEST['ucommentid'] != ""){
-		verify_user(getUserName());
+		verify_user(PGV_USER_ID);
 		$sql = "SELECT uc_comment FROM ".$TBLPREFIX."user_comments WHERE uc_id='$_REQUEST[ucommentid]'";
 	  	$res = dbquery($sql);
 		while($comment =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -180,8 +180,8 @@
 	 * 
 	 * @return true if the user can edit the comment, false otherwise.
 	 */
-	function verify_user($user){
-		if(userIsAdmin($user)){
+	function verify_user($user_id){
+		if(userIsAdmin($user_id)){
 			return;
 		}
 		

@@ -52,12 +52,16 @@ function authenticateUser($user_name, $password, $basic=false) {
 
 	checkTableExists();
 
+	// If we were already logged in, log out first
+	if (PGV_USER_ID) {
+		userLogout(PGV_USER_ID);
+	}
+
 	if ($user_id=get_user_id($user_name)) {
 		$dbpassword=get_user_password($user_id);
 		if (crypt($password, $dbpassword)==$dbpassword) {
 			if (get_user_setting($user_id, 'verified')=='yes' && get_user_setting($user_id, 'verified_by_admin')=='yes' || get_user_setting($user_id, 'canadmin')=='Y') {
 				set_user_setting($user_id, 'loggedin', 'Y');
-				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $user_name ."<-");
 				//-- reset the user's session
 				$_SESSION = array();
 				$_SESSION['pgv_user'] = $user_id;
@@ -77,6 +81,7 @@ function authenticateUser($user_name, $password, $basic=false) {
 						}
 					}
 				}
+				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful");
 				return $user_id;
 			}
 		}
@@ -120,7 +125,7 @@ function userLogout($user_id) {
 
 	set_user_setting($user_id, 'loggedin', 'N');
 
-	AddToLog("Logout - " . get_user_name($user_id));
+	AddToLog("Logout");
 
 	if ((isset($_SESSION['pgv_user']) && ($_SESSION['pgv_user']==$user_id)) || (isset($_COOKIE['pgv_rem'])&&$_COOKIE['pgv_rem']==$user_id)) {
 		if ($_SESSION['pgv_user']==$user_id) {
@@ -646,7 +651,7 @@ function getUserFullName($user) {
  * add a message into the log-file
  * @param string $LogString		the message to add
  * @param boolean $savelangerror
- * @return string returns the log line if successfully inserted into the log
+ * @return string returns the log line if successfully inserted into the log (used for CVS/SVN commit messages)
  */
 function AddToLog($LogString, $savelangerror=false) {
 	global $INDEX_DIRECTORY, $LOGFILE_CREATE, $argc;
@@ -655,9 +660,6 @@ function AddToLog($LogString, $savelangerror=false) {
 
 	if ($LOGFILE_CREATE=="none")
 		return;
-
-	//-- do not allow code to be written to the log file
-	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
 
 	if (isset($_SERVER['REMOTE_ADDR']))
 		$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
@@ -676,7 +678,11 @@ function AddToLog($LogString, $savelangerror=false) {
 		if ($LOGFILE_CREATE=="yearly")
 			$logfile = $INDEX_DIRECTORY."pgv-" . date("Y") . ".log";
 		if (is_writable($INDEX_DIRECTORY)) {
-			$logline = date("d.m.Y H:i:s") . " - " . $REMOTE_ADDR . " - " . $LogString . "\r\n";
+			$logline=
+				date("d.m.Y H:i:s")." - ".
+				$REMOTE_ADDR." - ".
+				(getUserId() ? getUserName() : 'Anonymous')." - ".
+				htmlspecialchars($LogString) . "\r\n"; // Prevent HTML being inserted
 			$fp = fopen($logfile, "a");
 			flock($fp, 2);
 			fputs($fp, $logline);

@@ -121,8 +121,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	if($ENABLE_RSS) {
 		// basic auth is broken in all apps besides browsers, so I am disabling it for now.
 		/*if (empty($auth) || $auth != "basic"){
-			$username = getUserName();
-			if(empty($username)){ //not logged in.
+			if(!PGV_USER_ID){ //not logged in.
 				$item = new FeedItem();
 				$item->title = $pgv_lang["login"];
 				$authURL= $syndURL . "&auth=basic";

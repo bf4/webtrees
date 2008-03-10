@@ -48,7 +48,7 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 
 	if (!isset($themeformcount)) $themeformcount = 0;
 	$themeformcount++;
-	$user_theme= get_user_setting(getUserName(), 'theme');
+	$user_theme= get_user_setting(PGV_USER_ID, 'theme');
 	isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 	$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
 	

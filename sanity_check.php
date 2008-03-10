@@ -119,7 +119,7 @@ if (count($errors)>0) {
 }
 
 //-- if we have a good configuration only allow admins to this page
-if ($CONFIGURED && adminUserExists() && !userIsAdmin()) exit;
+if ($CONFIGURED && adminUserExists() && !PGV_USER_IS_ADMIN) exit;
 
 if (!file_is_writable("config.php")) 
 {

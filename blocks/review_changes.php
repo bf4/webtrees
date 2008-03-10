@@ -73,17 +73,19 @@ function review_changes_block($block = true, $config="", $side, $index) {
 				}
 			}
 		}
-		if (userCanEdit()) {
+		if (PGV_USER_CAN_EDIT) {
 			print "<div id=\"review_changes_block\" class=\"block\">\n";
 			print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 			print "<td class=\"blockh1\" >&nbsp;</td>";
 			print "<td class=\"blockh2\" ><div class=\"blockhc\">";
 			print_help_link("review_changes_help", "qm");
 			if ($PGV_BLOCKS["review_changes_block"]["canconfig"]) {
-				$username = getUserName();
-				if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
-					if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
-					else $name = $username;
+				if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+					if ($ctype=="gedcom") {
+						$name = preg_replace("/'/", "\'", $GEDCOM);
+					} else {
+						$name = PGV_USER_NAME;
+					}
 					print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 					print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 				}
@@ -120,7 +122,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 						if ($TEXT_DIRECTION=="rtl") print getRLM();
 					}
 					else if ($type=="SOUR") {
-						if ($SHOW_SOURCES>=getUserAccessLevel()) {
+						if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 							print "<b>".PrintReady(get_source_descriptor($change["gid"]))."</b>&nbsp;";
 							if ($TEXT_DIRECTION=="rtl") print getRLM();
 							print "(".$change["gid"].")";
@@ -137,7 +139,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					if ($block) print "<br />";
 					if ($type=="INDI") print " <a href=\"individual.php?pid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
 					if ($type=="FAM") print " <a href=\"family.php?famid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
-					if (($type=="SOUR") && ($SHOW_SOURCES>=getUserAccessLevel())) print " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
+					if (($type=="SOUR") && ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL)) print " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a>\n<br />";
 				}
 			}
 			if ($block) print "</div>\n";

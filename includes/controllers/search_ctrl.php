@@ -270,14 +270,6 @@ class SearchControllerRoot extends BaseController {
 			$this->mygender = "";
 		}
 
-		// Print out all of $this's variables
-		//		$this->printVars($varNames);
-		//		print "sgeds: ";
-		//		print_r($this->sgeds);
-		//		print "<br/>";
-		//		print "gedNames: ";
-		//		print_r($this->gedNames);
-
 		$this->inputFieldNames[] = "action";
 		$this->inputFieldNames[] = "isPostBack";
 		$this->inputFieldNames[] = "resultsPerPage";
@@ -442,7 +434,6 @@ class SearchControllerRoot extends BaseController {
 				if ((isset ($this->srindi)) && (count($this->sgeds) > 0)) {
 					$this->myindilist = search_indis($this->query, $this->sgeds);
 				}
-				//print count($this->myindilist);
 
 				// Search the fams
 				if ((isset ($this->srfams)) && (count($this->sgeds) > 0)) {
@@ -698,7 +689,6 @@ class SearchControllerRoot extends BaseController {
 		// Strip the extra 'OR' at the end of the sql query
 		$sql = substr($sql, 0, strlen($sql) - 3);
 		$sql .= ")";
-		//					echo $sql; // debug
 		$res = dbquery($sql);
 			
 		//Stores results in printname[]
@@ -755,17 +745,14 @@ class SearchControllerRoot extends BaseController {
 			$this->myindilist = array ();
 			if (count($this->sgeds) > 0) {
 				// Start the search
-				//$oldged = $GEDCOM;
 				$this->printname = array ();
 				$this->printfamname = array ();
 				$res = search_indis_soundex($this->soundex, $this->lastname, $this->firstname, $this->place, $this->sgeds);
 				if ($res!==false) {
 					while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 						$indilist[$row['i_id']]["gedcom"] = $row['i_gedcom'];
-						//$indilist[$row['i_id']]["names"] = get_indi_names($row['i_gedcom']);
 						$indilist[$row['i_id']]["isdead"] = $row['i_isdead'];
 						$indilist[$row['i_id']]["gedfile"] = $row['i_file'];
-						//$namearray = $indilist[$row['i_id']]["names"];
 						$save = true;
 						if ((!empty ($this->place)) || (!empty ($this->year))) {
 							$indirec = $row['i_gedcom'];
@@ -794,7 +781,6 @@ class SearchControllerRoot extends BaseController {
 													while ($z < count($parr) && $savep == false) {
 														if ($arr1[$y] == $parr[$z])
 														$savep = true;
-														//															if ($savep == true) print $key."  Search pl: ".$places[$p][$pp]." (".$arr1[$y]."), hit on ".$this->place." (".$parr[$z].")<br />"; //--- debug
 														$z ++;
 													}
 													$y ++;
@@ -817,7 +803,6 @@ class SearchControllerRoot extends BaseController {
 							}
 						}
 						if ($save === true) {
-							//								print "Added ".sortable_name_from_name($namearray[0]);
 							$this->printname[] = array (sortable_name_from_name($row["i_name"]), $row["i_id"], get_gedcom_from_id($row["i_file"]), "");
 							//								break; // leave out if we want all names from one indi shown
 						}
@@ -826,7 +811,6 @@ class SearchControllerRoot extends BaseController {
 				}
 			}
 		}
-		//$GEDCOM = $oldged;
 
 		// check the result on required characters
 		if (isset ($barr)) {
@@ -895,7 +879,6 @@ class SearchControllerRoot extends BaseController {
 		uasort($this->printname, "itemsort");
 		reset($this->printname);
 	}
-	//}
 
 	/**
 	 *
@@ -903,7 +886,6 @@ class SearchControllerRoot extends BaseController {
 	function MultiSiteSearch() {
 		global $REGEXP_DB;
 		require_once ('includes/serviceclient_class.php');
-		//		AddToLog("is_multisite search");
 
 		if (!empty ($this->Sites) && count($this->Sites) > 0) {
 			$this->myindilist = array ();
@@ -911,7 +893,6 @@ class SearchControllerRoot extends BaseController {
 			if (!empty ($this->multiquery) && ($this->subaction == "basic")) {
 				// Find out if the string is longer then one char if dont perform the search
 				if (strlen($this->multiquery) > 1) {
-					//					AddToLog('Basic query: '.$this->multiquery);
 					$my_query = $this->multiquery;
 					// Now see if there is a query left after the cleanup
 					if (trim($my_query) != "") {
@@ -928,66 +909,48 @@ class SearchControllerRoot extends BaseController {
 
 			} else
 			if (($this->subaction == "advanced") && (!empty ($this->myname) || !empty ($this->mybirthdate) || !empty ($this->mybirthplace) || !empty ($this->deathdate) || !empty ($this->mydeathplace) || !empty ($this->mygender))) {
-				//					AddToLog('Advanced query');
 				//Building the query string up
 				$my_query = '';
 				if (!empty ($this->myname)) {
 					$my_query .= "NAME=".$this->myname;
-					//						AddToLog('NAME: '.$this->myname);
 				}
 				if (!empty ($this->mybirthdate)) {
 					if ($my_query != '')
 					$my_query .= '&';
 					$my_query .= "BIRTHDATE=".$this->mybirthdate;
-					//						AddToLog('BIRTHDATE: '.$this->mybirthdate);
 				}
 				if (!empty ($this->mybirthplace)) {
 					if ($my_query != '')
 					$my_query .= '&';
 					$my_query .= "BIRTHPLACE=".$this->mybirthplace;
-					//						AddToLog('BIRTHPLACE: '.$this->mybirthplace);
 				}
 				if (!empty ($this->deathdate)) {
 					if ($my_query != '')
 					$my_query .= '&';
 					$my_query .= "DEATHDATE=".$this->deathdate;
-					//						AddToLog('DEATHDATE: '.$this->deathdate);
 				}
 				if (!empty ($this->mydeathplace)) {
 					if ($my_query != '')
 					$my_query .= '&';
 					$my_query."DEATHPLACE=".$this->mydeathplace;
-					//						AddToLog('DEATHPLACE: '.$this->mydeathplace);
 				}
 				if (!empty ($this->mygender)) {
 					if ($my_query != '')
 					$my_query .= '&';
 					$my_query .= "GENDER=".$this->mygender;
-					//						AddToLog('GENDER: '.$this->mygender);
 				}
 			}
 
 			if (!empty ($my_query)) {
-				//				AddToLog("Query: ".$my_query);
 				$this->multisiteResults = array ();
 				// loop through the selected site to search
 				$i = 0;
 				foreach ($this->Sites as $key => $site) {
 					$vartemp = "server".$i;
 					if (isset ($_REQUEST["$vartemp"])) {
-						//						AddToLog('Site: '.$site['name']);
-						//print "<br />".$key;
 						$serviceClient = ServiceClient :: getInstance($key);
-						//print $serviceClient;
 						$result = $serviceClient->search($my_query);
-						//print_r($result);
-						//print "<br/>";
-						//if (!isset($result->totalResults)) print_r($result);
 						$this->multisiteResults[$key] = $result;
-						//					if(count($result->persons)> 0)
-						//					{
-						//						AddToLog('Total results: '.$result->totalResults);
-						//					}
 					}
 					$i ++;
 				}
@@ -1407,8 +1370,6 @@ class SearchControllerRoot extends BaseController {
 		if ($this->action == "soundex") {
 			if ($this->soundex == "DaitchM")
 			DMsoundex("", "closecache");
-			// 	$this->query = "";	// Stop function PrintReady from doing strange things to accented names
-			//-- [start] new code for sortable tables
 			print "<br />";
 			print "\n\t<div class=\"center\">\n";
 			global $GEDCOMS;
@@ -1434,143 +1395,6 @@ class SearchControllerRoot extends BaseController {
 			}
 			$GEDCOM = $oldged;
 			print "</div>";
-			//-- [end] new code for sortable tables
-			/** DEPRECATED
-			if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (isset ($this->printname))) {
-			print "<div class=\"center\"><br />";
-			//set the total results and only get the results for this page
-			$totalIndiResults = count($this->printname);
-			$this->totalResults = $totalIndiResults;
-
-			// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
-			if ($this->resultsPerPage >= 1 && $this->totalResults > $this->resultsPerPage) {
-			$this->printPageResultsLinks($this->inputFieldNames, $this->totalResults, $this->resultsPerPage);
-			}
-			print "\n\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>\n\t\t";
-			$i = 0;
-			$ct = count($this->printname);
-			if ($ct > 0) {
-			//			init_list_counters();
-			$oldged = $GEDCOM;
-			$curged = $GEDCOM;
-			$extrafams = false;
-			if (count($this->printfamname) > 0)
-			$extrafams = true;
-			if ($extrafams) {
-			print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
-			print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["families"]."</td>";
-			} else
-			print "<td colspan=\"2\" class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
-			print "</tr><tr>\n\t\t<td class=\"list_value_wrap\"><ul>";
-
-			///***************************************************** PAGING HERE **********************************************************************
-
-			$this->printname = $this->getPagedResults($this->printname, $this->resultsPerPage);
-			$this->indiResultsPrinted = count($this->printname);
-			foreach ($this->printname as $key => $pvalue) {
-			$GEDCOM = $pvalue[2];
-			if ($GEDCOM != $curged) {
-			include (get_privacy_file());
-			$curged = $GEDCOM;
-			}
-			print_list_person($pvalue[1], array (check_NN($pvalue[0]), $pvalue[2]), "", $pvalue[3]);
-			$indiprinted[$pvalue[1]."[".$pvalue[2]."]"] = 1;
-			print "\n";
-			if (!$extrafams) {
-			$i++;
-			if ($i == floor($this->indiResultsPrinted / 2) && $this->indiResultsPrinted > 9)
-			print "\n\t\t</ul></td>\n\t\t<td class=\"list_value_wrap\"><ul>";
-			}
-			}
-			$GEDCOM = $oldged;
-			if ($GEDCOM != $curged) {
-			include (get_privacy_file());
-			$curged = $GEDCOM;
-			}
-			print "\n\t\t</ul></td>";
-
-			// Start printing the associated fams
-			if ($extrafams) {
-			uasort($this->printfamname, "itemsort");
-			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
-			if (isset ($this->printfamname))
-			$famCount = count($this->printfamname);
-			else
-			$famCount = 0;
-
-			//***************************************************** PAGING HERE **********************************************************************
-
-			//set the total results and only get the results for this page
-			$totalFamResults = count($this->printfamname);
-			if ($totalFamResults > $this->totalResults)
-			$this->totalResults = $totalFamResults;
-			$this->printfamname = $this->getPagedResults($this->printfamname, $this->resultsPerPage);
-			$this->famResultsPrinted = count($this->printfamname);
-			foreach ($this->printfamname as $pkey => $pvalue) {
-			$GEDCOM = $pvalue[2];
-			if ($GEDCOM != $curged) {
-			include (get_privacy_file());
-			$curged = $GEDCOM;
-			}
-			print_list_family($pvalue[1], array ($pvalue[0], $pvalue[2]), "", $pvalue[3]);
-			print "\n";
-			}
-			print "\n\t\t</ul>&nbsp;</td>";
-			$GEDCOM = $oldged;
-			if ($GEDCOM != $curged) {
-			include (get_privacy_file());
-			$curged = $GEDCOM;
-			}
-			}
-
-			// start printing the table footer
-			print "\n\t\t</tr>\n\t";
-			if ($this->totalResults > 0) {
-			print "<tr><td ";
-			if ((!$extrafams) && ($ct > 9))
-			print "colspan=\"2\">";
-			else
-			print ">";
-			print $pgv_lang["total_names"]." ";
-			if ($this->resultsPerPage >= $totalIndiResults)
-			print $totalIndiResults;
-			else
-			if ($totalIndiResults > 0) {
-			print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-			print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." ".$pgv_lang["of"]." ".$totalIndiResults;
-			}
-			if (count($this->indi_private) > 0)
-			print "  (".$pgv_lang["private"]." ".count($this->indi_private).")";
-			if (count($this->indi_hide) > 0)
-			print "  --  ".$pgv_lang["hidden"]." ".count($this->indi_hide);
-			if (count($this->indi_private) > 0 || count($this->indi_hide) > 0)
-			print_help_link("privacy_error_help", "qm");
-			print "</td>";
-			if ($extrafams) {
-			print "<td>".$pgv_lang["total_fams"]." ";
-			if ($this->resultsPerPage >= $totalFamResults)
-			print $totalFamResults;
-			else
-			if ($this->resultsPerPage >= $totalFamResults) {
-			print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-			print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." ".$pgv_lang["of"]." ".$totalFamResults;
-			}
-			if (count($this->fam_private) > 0)
-			print "  (".$pgv_lang["private"]." ".count($this->fam_private).")";
-			if (count($this->fam_hide) > 0)
-			print "  --  ".$pgv_lang["hidden"]." ".count($this->fam_hide);
-			if (count($this->fam_private) > 0 || count($this->fam_hide) > 0)
-			print_help_link("privacy_error_help", "qm");
-			print "</td>";
-			}
-			print "</tr>";
-			}
-
-			} else
-			print "<td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i></td></tr>\n\t\t";
-			print "</table></div>";
-			}
-			**/
 
 			// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
 			if ($this->resultsPerPage >= 1 && $this->totalResults > $this->resultsPerPage) {
@@ -1593,7 +1417,6 @@ class SearchControllerRoot extends BaseController {
 				$this->multiResultsPerPage = $this->resultsPerPage / $sitesChecked;
 
 				if (!empty ($this->Sites) && count($this->Sites) > 0) {
-					//AddToLog('About to diplay results');
 					$no_results_found = false;
 					// Start output here, because from the indi's we may have printed some fams which need the column header.
 					print "<br />";
@@ -1681,7 +1504,6 @@ class SearchControllerRoot extends BaseController {
 					}
 					if (!$no_results_found && $this->multiTotalResults == 0 && (isset ($this->multiquery) || isset ($this->name) || isset ($this->birthdate) || isset ($this->birthplace) || isset ($this->deathdate) || isset ($this->deathplace) || isset ($this->gender))) {
 						print "<table align=\"center\" \><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".$pgv_lang["no_results"]."</i></b></font><br /></td></tr></table>";
-						//					AddToLog('No results to display');
 					}
 				}
 			} else

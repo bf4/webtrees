@@ -44,7 +44,7 @@ if (empty($to)) {
 	print_simple_footer();
 	exit;
 }
-if ($to=="all" && !userIsAdmin()) {
+if ($to=="all" && !PGV_USER_IS_ADMIN) {
 	print "<span class=\"error\">".$pgv_lang["no_to_user"]."</span><br />";
 	print_simple_footer();
 	exit;
@@ -172,12 +172,11 @@ if ($action=="compose") {
 		}
 	</script>
 	<?php
-	$username = getUserName();
-	if (empty($username)) {
+	if (!PGV_USER_ID) {
 		print "<br /><br />".$pgv_lang["message_instructions"];
 	}
 	print "<br /><form name=\"messageform\" method=\"post\" action=\"message.php\" onsubmit=\"t = new Date(); document.messageform.time.value=t.toUTCString(); ";
-	if (empty($username)) print "return validateEmail(document.messageform.from_email);";
+	if (!PGV_USER_ID) print "return validateEmail(document.messageform.from_email);";
 	else print "return checkForm(this);";
 	print "\">\n";
 	print "<table>\n";
@@ -188,14 +187,14 @@ if ($action=="compose") {
 		print str_replace("#USERLANG#", "<b>".$pgv_lang[$lang_temp]."</b>", $pgv_lang["preferred_lang"])."</td></tr>\n";
 	}
 
-	if (empty($username)){
+	if (!PGV_USER_ID){
 		print "<tr><td valign=\"top\" width=\"15%\" align=\"right\">".$pgv_lang["message_from_name"]."</td>";
 		print "<td><input type=\"text\" name=\"from_name\" size=\"40\" value=\"$from_name\" /></td></tr><tr><td valign=\"top\" align=\"right\">".$pgv_lang["message_from"]."</td><td><input type=\"text\" name=\"from_email\" size=\"40\" value=\"$from_email\" /><br />".$pgv_lang["provide_email"]."<br /><br /></td></tr>\n";
 	}
 	print "<tr><td align=\"right\">".$pgv_lang["message_subject"]."</td>";
 	print "<td>";
-	if (!empty($username)){
-		print "<input type=\"hidden\" name=\"from\" value=\"$username\" />\n";
+	if (PGV_USER_ID){
+		print "<input type=\"hidden\" name=\"from\" value=\"".PGV_USER_NAME."\" />\n";
 	}
 	print "<input type=\"hidden\" name=\"action\" value=\"send\" />\n";
 	print "<input type=\"hidden\" name=\"to\" value=\"$to\" />\n";

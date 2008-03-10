@@ -37,7 +37,7 @@
  
  	//**********************************************************************************************
  	// If the user doesnt have access then take them to the index.
- 	if ($SHOW_RESEARCH_ASSISTANT < getUserAccessLevel()){
+ 	if ($SHOW_RESEARCH_ASSISTANT < PGV_USER_ACCESS_LEVEL){
  		header("Location: index.php");
  		exit;
  	}

@@ -93,7 +93,7 @@ $reports = get_report_list();
 if (!empty($report)) {
 	$r = basename($report);
 	if (!isset($reports[$r]["access"])) $action = "choose";
-	else if ($reports[$r]["access"]<getUserAccessLevel()) $action = "choose";
+	else if ($reports[$r]["access"]<PGV_USER_ACCESS_LEVEL) $action = "choose";
 }
 
 //-- choose a report to run
@@ -110,9 +110,8 @@ if ($action=="choose") {
 	print "<tr><td class=\"descriptionbox wrap width33 vmiddle\">".$pgv_lang["select_report"]."</td>";
 	print "<td class=\"optionbox\">";
 	print "<select name=\"report\">\n";
-	$username = getUserName();
 	foreach($reports as $file=>$report) {
-		if ($report["access"]>=getUserAccessLevel())
+		if ($report["access"]>=PGV_USER_ACCESS_LEVEL)
 			print "<option value=\"".$report["file"]."\">".$report["title"][$LANGUAGE]."</option>\n";
 	}
 	print "</select></td></tr>\n";
@@ -180,7 +179,7 @@ function paste_id(value) {
 		$firstrun = 0;
 		if (!isset($report_array["inputs"])) $report_array["inputs"] = array();
 		foreach($report_array["inputs"] as $indexval => $input) {
-			if ((($input["name"] == "sources") && ($SHOW_SOURCES>=getUserAccessLevel())) || ($input["name"] != "sources")) {
+			if ((($input["name"] == "sources") && ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL)) || ($input["name"] != "sources")) {
 				if (($input["name"] != "photos") || ($MULTI_MEDIA)) {
 					// url forced default value ?
 					if (isset($_REQUEST[$input["name"]])) {

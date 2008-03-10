@@ -112,7 +112,7 @@ print_header($pgv_lang["search"]);
 					message = false;
 				if(message)
 				{
-					<?php if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) { ?>
+					<?php if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) { ?>
 					if(gender.length < 1)
 					{
 						alert("<?php print $pgv_lang["invalid_search_multisite_input"]?>");
@@ -228,10 +228,9 @@ print_header($pgv_lang["search"]);
 
 }
 /**************************************************** Search and Replace Search Form ****************************************************/
-if($controller->action == "replace")
+if ($controller->action == "replace")
 {
-	if(userCanEdit())
-	{
+	if (PGV_USER_CAN_EDIT) {
 ?>
 				<td colspan="3" class="facts_label03" style="text-align: center;">
 					<?php print $pgv_lang["search_replace"]; print_help_link('search_replace_help', 'qm'); ?>
@@ -545,11 +544,10 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 
 if ($controller->action == "general") {
 	print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
-	if(userCanEdit())
-	{
+	if(PGV_USER_CAN_EDIT) {
 		print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
 	}
-	if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
+	if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
 		if (count($controller->Sites) > 0) {
 
 
@@ -561,7 +559,7 @@ else if ($controller->action == "replace")
 {
 	print "<a href='?action=general'>".$pgv_lang["search_general"]."</a> | ";
 	print "<a href='?action=soundex'>".$pgv_lang["search_soundex"]."</a>";
-		if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
+		if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
 			if (count($controller->Sites) > 0) {
 
 				print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
@@ -571,11 +569,11 @@ else if ($controller->action == "replace")
 else
 	if ($controller->action == "soundex") {
 		print "<a href='?action=general'>".$pgv_lang["search_general"]."</a>";
-		if(userCanEdit())
+		if(PGV_USER_CAN_EDIT)
 		{
 			print " | <a href='?action=replace'>".$pgv_lang["search_replace"]."</a>";
 		}
-		if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {
+		if ($SHOW_MULTISITE_SEARCH >= PGV_USER_ACCESS_LEVEL) {
 			if (count($controller->Sites) > 0) {
 				print " | <a href='?action=multisite'>".$pgv_lang["multi_site_search"]."</a></td></tr>";
 			}
@@ -584,7 +582,7 @@ else
 	 else
 		if ($controller->action == "multisite")
 		{
-			if(userCanEdit())
+			if(PGV_USER_CAN_EDIT)
 			{
 				print "<a href='?action=replace'>".$pgv_lang["search_replace"]."</a> | ";
 			}

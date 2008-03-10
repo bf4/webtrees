@@ -30,7 +30,7 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (empty($action)) $action = "";
 if (isset($_REQUEST['source'])) $source = $_REQUEST['source'];
 if (empty($source)) $source="";		// Set when loaded from uploadgedcom.php
-if (!userGedcomAdmin()) {
+if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: editgedcoms.php");
 	exit;
 }
@@ -138,7 +138,7 @@ if (isset($GEDCOMPATH)) {
 		// NOTE: When uploading a file check if it doesn't exist yet
 		if ($action=="replace" || (!isset($GEDCOMS[$GEDFILENAME]) && !file_exists($upload_path.$GEDFILENAME))) {
 			if (move_uploaded_file($_FILES['GEDCOMPATH']['tmp_name'], $upload_path.$GEDFILENAME)) {
-				AddToLog("Gedcom ".$path.$GEDFILENAME." uploaded by >".getUserName()."<");
+				AddToLog("Gedcom ".$path.$GEDFILENAME." uploaded");
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
 			}
 			else {
@@ -516,7 +516,7 @@ if ($action=="update") {
 
 
 	if (($NEW_USE_MEDIA_FIREWALL=='yes') && !$USE_MEDIA_FIREWALL) {
-		AddToLog("Media Firewall enabled by >".getUserName()."<");
+		AddToLog("Media Firewall enabled");
 
 		if (!$errors) {
 			// create/modify an htaccess file in the main media directory
@@ -541,7 +541,7 @@ if ($action=="update") {
 		}
 
 	} elseif (($NEW_USE_MEDIA_FIREWALL=='no') && $USE_MEDIA_FIREWALL) {
-		AddToLog("Media Firewall disabled by >".getUserName()."<");
+		AddToLog("Media Firewall disabled");
 
 		if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
 			$httext = implode('', file($MEDIA_DIRECTORY.".htaccess"));
@@ -579,7 +579,7 @@ if ($action=="update") {
 	include_once("includes/index_cache.php");
 	clearCache();
 
-	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated by >".getUserName()."<");
+	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated");
 	$gedcomconfname = $FILE."_conf.php";
 	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
 	if (!$errors) {
@@ -2033,7 +2033,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["contact_conf"]."\" onclick=\"exp
 		<td class="descriptionbox wrap width20"><?php print_help_link("CONTACT_EMAIL_help", "qm", "CONTACT_EMAIL"); print $pgv_lang["CONTACT_EMAIL"];?></td>
 		<td class="optionbox"><select name="NEW_CONTACT_EMAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('CONTACT_EMAIL_help');">
 		<?php
-			if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = getUserName();
+			if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = PGV_USER_NAME;
 			foreach (get_all_users() as $user_id=>$user_name) {
 				if (get_user_setting($user_id, 'verified_by_admin')=="yes") {
 					print "<option value=\"".$user_id."\"";
@@ -2063,7 +2063,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["contact_conf"]."\" onclick=\"exp
 		<td class="descriptionbox wrap width20"><?php print_help_link("WEBMASTER_EMAIL_help", "qm", "WEBMASTER_EMAIL"); print $pgv_lang["WEBMASTER_EMAIL"];?></td>
 		<td class="optionbox"><select name="NEW_WEBMASTER_EMAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WEBMASTER_EMAIL_help');">
 		<?php
-			if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = getUserName();
+			if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = PGV_USER_NAME;
 			foreach (get_all_users() as $user_id=>$user_name) {
 				if (userIsAdmin($user_id)) {
 					print "<option value=\"".$user_id."\"";
