@@ -2318,20 +2318,24 @@ function print_parents_age($pid, $bdate) {
 	$spouse = $family->getHusband();
 	if ($spouse && showFact("BIRT", $spouse->getXref())) {
 		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), new Gedcomdate($bdate));
-		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
+		if ($age) {
+			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
+		}
 	}
 	// mother
 	$spouse = $family->getWife();
 	if ($spouse && showFact("BIRT", $spouse->getXref())) {
 		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), new Gedcomdate($bdate));
-		// [ 1749591 ] Highlight maternal death
-		if ($spouse->getDeathDate(false)) {
-			$child_bdate=new GedcomDate($bdate);
-			$mother_ddate=new GedcomDate($spouse->getDeathDate(false));
-			if ($mother_ddate->date1->minJD>0
-			&& $child_bdate->date1->minJD>0
-			&& $mother_ddate->date1->minJD < $child_bdate->date1->minJD+90) {
-				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+		if ($age) {
+			// [ 1749591 ] Highlight maternal death
+			if ($spouse->getDeathDate(false)) {
+				$child_bdate=new GedcomDate($bdate);
+				$mother_ddate=new GedcomDate($spouse->getDeathDate(false));
+				if ($mother_ddate->date1->minJD>0
+				&& $child_bdate->date1->minJD>0
+				&& $mother_ddate->date1->minJD < $child_bdate->date1->minJD+90) {
+					$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+				}
 			}
 		}
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
