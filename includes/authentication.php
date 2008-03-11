@@ -682,7 +682,7 @@ function AddToLog($LogString, $savelangerror=false) {
 				date("d.m.Y H:i:s")." - ".
 				$REMOTE_ADDR." - ".
 				(getUserId() ? getUserName() : 'Anonymous')." - ".
-				htmlspecialchars($LogString) . "\r\n"; // Prevent HTML being inserted
+				$LogString."\r\n";
 			$fp = fopen($logfile, "a");
 			flock($fp, 2);
 			fputs($fp, $logline);
