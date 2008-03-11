@@ -39,8 +39,7 @@ $PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
 function print_user_news($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
 
-	$uname = getUserName();
-	$usernews = getUserNews($uname);
+		$usernews = getUserNews(PGV_USER_NAME);
 
 	$id="user_news";
 	$title = print_help_link("mygedview_myjournal_help", "qm","",false,true);

@@ -73,14 +73,16 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 					}
 				}
 			}
-		if (userCanEdit()) {
+		if (PGV_USER_CAN_EDIT) {
 				$id="review_changes_block";
 				$title = print_help_link("review_changes_help", "qm","",false,true);
 				if ($PGV_BLOCKS["review_changes_block"]["canconfig"]) {
-					$username = getUserName();
-				if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
-						if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
-						else $name = $username;
+				if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+					if ($ctype=="gedcom") {
+						$name = preg_replace("/'/", "\'", $GEDCOM);
+					} else {
+						$name = PGV_USER_NAME;
+					}
 						$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 						$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 					}
@@ -114,7 +116,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 							if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
 						}
 						else if ($type=="SOUR") {
-						if ($SHOW_SOURCES>=getUserAccessLevel()) {
+						if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 								$content .= "<b>".PrintReady(get_source_descriptor($change["gid"]))."</b>&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
 								$content .= "(".$change["gid"].")";

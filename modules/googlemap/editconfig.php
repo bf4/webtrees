@@ -91,7 +91,7 @@ print_header($pgv_lang["configure_googlemap"]);
 
 print "<span class=\"subheaders\">".$pgv_lang["configure_googlemap"]."</span>";
 
-if (!userIsAdmin()) {
+if (!PGV_USER_IS_ADMIN) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
     print "</td></tr></table>\n";
@@ -137,7 +137,7 @@ if ($action=="update" && !isset($security_user)) {
         else {
             fwrite($fp, $configtext);
             fclose($fp);
-            $logline = AddToLog("Googlemap config updated by >".getUserName()."<");
+            $logline = AddToLog("Googlemap config updated");
             // read the config file again, to set the vars
             require("modules/googlemap/config.php");
         }

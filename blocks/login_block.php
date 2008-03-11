@@ -40,8 +40,9 @@ $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>-1);
 function print_login_block($block = true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $ALLOW_REMEMBER_ME;
 
-	$uname = getUserName();
-	if (!empty($uname)) return;
+		if (PGV_USER_ID) {
+			return;
+		}
 	$id="login_block";
 	$title = "";
 	if ($USE_REGISTRATION_MODULE) $title .= print_help_link("index_login_register_help", "qm", "", false, true);

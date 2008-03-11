@@ -337,7 +337,7 @@ class UserMigrateControllerRoot extends BaseController {
 							}
 						}
 					}
-					AddToLog(PGV_USER_NAME." added user -> {$user['username']} <-");
+					AddToLog("added user -> {$user['username']} <-");
 				}
 			}
 			if ($countold == get_user_count()) {

@@ -26,7 +26,7 @@
 require("config.php");
 require("includes/functions_edit.php");
 
-if (!userGedcomAdmin()) {
+if (!PGV_USER_GEDCOM_ADMIN) {
 	header('Location: index.php');
 }
 

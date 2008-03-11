@@ -72,7 +72,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 
 		
 		// Configuration
-        if (userIsAdmin()) {
+        if (PGV_USER_IS_ADMIN) {
 			if ($LB_AL_HEAD_LINKS == "both") {	
 	            print "<td class=\"width20 center wrap\" valign=\"top\">";
 	            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig&pid=" . $pid . "\">";

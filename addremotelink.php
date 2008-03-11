@@ -38,7 +38,7 @@ if ($controller->canAccess()) {
 	//print "gedrec: $gedrec<br />";
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!userGedcomAdmin()) print "<br />".$pgv_lang["user_cannot_edit"];
+	if (!PGV_USER_GEDCOM_ADMIN) print "<br />".$pgv_lang["user_cannot_edit"];
 	if (!$ALLOW_EDIT_GEDCOM) print "<br />".$pgv_lang["gedcom_editing_disabled"];
 	if (!$disp) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];

@@ -31,7 +31,7 @@ require("googlemap.php"); // gives access to googlemap functions
 loadLangFile("gm_lang, gm_help");
 
 // Must be an admin user to use this module
-if (!userGedcomAdmin()) {
+if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=placelist.php");
 	exit;
 }

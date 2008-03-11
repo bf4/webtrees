@@ -109,7 +109,7 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 	}
 	
 	include $INDEX_DIRECTORY.$GEDCOM."_ra_priv.php";
-	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated by >".getUserName()."<");
+	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
  	$gedcomprivname = $GEDCOM."_ra_priv.php";
  	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);	
 

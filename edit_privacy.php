@@ -31,7 +31,7 @@ require_once("includes/gedcomrecord.php");
 loadLangFile("pgv_confighelp, pgv_help");
 
 if (empty($ged)) $ged = $GEDCOM;
-if ((!userGedcomAdmin(getUserName(), $ged))||(empty($ged))) {
+if (!userGedcomAdmin(PGV_USER_ID, $ged) || empty($ged)) {
 	header("Location: editgedcoms.php");
 	exit;
 }
@@ -278,7 +278,7 @@ if ($action=="update") {
 	}
 	// NOTE: load the new variables
 	include $INDEX_DIRECTORY.$GEDCOM."_priv.php";
-	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated by >".getUserName()."<");
+	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
  	$gedcomprivname = $GEDCOM."_priv.php";
  	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 

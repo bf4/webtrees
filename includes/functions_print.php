@@ -941,9 +941,9 @@ function user_contact_link($user_id, $method=null) {
 	case 'none':
 		return '';
 	case 'mailto':
-		return "<a href='javascript:;' onclick='message(\"{$user_id}\",\"{$method}\");return false;' {$access}>{$fullname}</a>";
-	default:
 		return "<a href='mailto:{$email}' {$access}>{$fullname}</a>";
+	default:
+		return "<a href='javascript:;' onclick='message(\"{$user_id}\",\"{$method}\");return false;' {$access}>{$fullname}</a>";
 			}
 					}
 
@@ -2153,10 +2153,10 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
  * Print age of parents
  *
  * @param string $pid	child ID
- * @param string $bdate	child birthdate
+ * @param string $birth_date	child birthdate
  * @param boolean $return	whether to print the data or return a string
  */
-function print_parents_age(&$person, $bdate, $return=false) {
+function print_parents_age(&$person, $birth_date, $return=false) {
 	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if (!$SHOW_PARENTS_AGE) return "";
 	$data = "";
@@ -2166,24 +2166,26 @@ function print_parents_age(&$person, $bdate, $return=false) {
 	$family = array_shift($families);
 	if (!$family) return "";
 	$data .= " <span class=\"age\">";
-	//-- father
+	// father
 	$spouse = $family->getHusband();
-	if (!is_null($spouse) && !is_null($spouse->getBirthDate())) {
-		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), new Gedcomdate($bdate));
-		$data .= "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />".$age;
-	}
-	//-- mother
-	$spouse = $family->getWife();
-	if (!is_null($spouse) && !is_null($spouse->getBirthDate())) {
-		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), new Gedcomdate($bdate));
-		if ($spouse->getDeathDate(false)) {
-			$child_bdate = new GedcomDate($bdate);
-			$mother_ddate=$spouse->getDeathDate(false);
-			// highlight death of mother < 90 days
-			if ($mother_ddate->date1->minJD>0 && $mother_ddate->date1->minJD-$child_bdate->MinJD()<90)
-				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+	if (!is_null($spouse) && !is_null($spouse->getBirthDate(false)) && showFact("BIRT", $spouse->getXref())) {
+		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(false), $birth_date);
+		if ($age) {
+			$data .= "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />".$age;
 		}
-		$data .= "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />".$age;
+	}
+	// mother
+	$spouse = $family->getWife();
+	if (!is_null($spouse) && !is_null($spouse->getBirthDate(false)) && showFact("BIRT", $spouse->getXref())) {
+		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(false), $birth_date);
+		if ($age) {
+			// [ 1749591 ] Highlight maternal death
+			$mother_ddate=$spouse->getDeathDate(false);
+			if ($mother_ddate->MinJD() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
+				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+			}
+			$data .= "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />".$age;
+		}
 	}
 	$data .= "</span>";
 	if (!$return) print $data;
@@ -2227,7 +2229,7 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false, $return=false) 
 		if (!is_null($person) && $person->getType()=='INDI') {
 			// age of parents at child birth
 			if ($fact=="BIRT")
-				$data .= print_parents_age($person, $match[1], true);
+				$data .= print_parents_age($person, $date, true);
 			// age at event
 			else if ($fact!="CHAN") {
 				$birth_date=$person->getBirthDate(false);

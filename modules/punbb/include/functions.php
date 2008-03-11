@@ -46,12 +46,9 @@ function check_cookie(&$pun_user)
 		if (!isset ($pun_user['id']))
 		{
 			// Insert the new user into the database. We do this now to get the last inserted id for later use.
-			if(userIsAdmin())
-			{
+			if (PGV_USER_IS_ADMIN) {
 				$intial_group_id = PUN_ADMIN;
-			}
-			else
-			{
+			} else {
 				$intial_group_id = $pun_config['o_default_user_group'];
 			}
 

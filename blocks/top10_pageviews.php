@@ -47,10 +47,12 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 		$id = "top10hits";
 		$title = print_help_link("index_top10_pageviews_help", "qm", "", false, true);
 		if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
-			$username = getUserName();
-			if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
-				if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
-				else $name = $username;
+			if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+				if ($ctype=="gedcom") {
+					$name = preg_replace("/'/", "\'", $GEDCOM);
+				} else {
+					$name = PGV_USER_NAME;
+				}
 				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 				$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 			}
@@ -60,7 +62,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 
 		//-- if the counter file does not exist then don't do anything
 		if (!file_exists($PGV_COUNTER_FILENAME)) {
-		if (userIsAdmin()) {
+		if (PGV_USER_IS_ADMIN) {
 				$content .= "<span class=\"error\">\n".$pgv_lang["top10_pageviews_msg"]."</span>\n";
 			}
 		}
@@ -83,10 +85,12 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
 	print_help_link("index_top10_pageviews_help", "qm");
 	if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
-		$username = getUserName();
-		if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
-			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
-			else $name = $username;
+		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+			if ($ctype=="gedcom") {
+				$name = preg_replace("/'/", "\'", $GEDCOM);
+			} else {
+				$name = PGV_USER_NAME;
+			}
 			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 		}
@@ -150,7 +154,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 								$i++;
 							}
 							if ($type=="REPO") {
-						if ($SHOW_SOURCES>=getUserAccessLevel()) {
+						if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 									$content .= "<tr valign=\"top\">";
 									if ($CountSide=="left") {
 										$content .= "<td dir=\"ltr\" align=\"right\">";
@@ -172,7 +176,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 								}
 							}
 							if ($type=="SOUR") {
-						if ($SHOW_SOURCES>=getUserAccessLevel()) {
+						if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 									$content .= "<tr valign=\"top\">";
 									if ($CountSide=="left") {
 										$content .= "<td dir=\"ltr\" align=\"right\">";

@@ -27,7 +27,7 @@
  */
 
 require 'config.php';
-if (!userIsAdmin()) {
+if (!PGV_USER_IS_ADMIN) {
 	header('Location: index.php');
 	exit;
 }

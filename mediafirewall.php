@@ -46,7 +46,7 @@ $debug_verboseLogging = 0;		// set to 1 for extra logging details
 function sendErrorAndExit($type, $line1, $line2 = false) {
 
 	// line2 contains the information that only an admin/editor should see, such as the full path to a file
-	if(!userCanEdit()) {  	 
+	if(!PGV_USER_CAN_EDIT) {  	 
 		$line2 = false;
 	}
 
@@ -73,14 +73,18 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 			imagestring($im, 2, 5, 30, $line2, $tc);
 		}
 
-		// Note: any error status (such as 404) is still in effect 
+		// if we are using mod rewrite, there will be no error status.  be sure to set it
+		header('HTTP/1.0 404 Not Found');
+		header('Status: 404 Not Found');
 		header('Content-Type: image/'.$type);
 		$imSendFunc = 'image'.$type;
 		$imSendFunc($im);
 		imagedestroy($im);
 	} else {
 		// output a standard html string
-		// Note: any error status (such as 404) is still in effect 
+		// if we are using mod rewrite, there will be no error status.  be sure to set it
+		header('HTTP/1.0 404 Not Found');
+		header('Status: 404 Not Found');
 		echo "<html><body>\n";
 		echo "<!-- filler space so IE will display the custom 404 error -->";
 		echo "<!-- filler space so IE will display the custom 404 error -->";
@@ -341,7 +345,7 @@ if ($type && function_exists("applyWatermark")) {
 	// if this is not a thumbnail, or WATERMARK_THUMB is true
 	if (!$isThumb || $WATERMARK_THUMB ) {
 		// if the user's priv's justify it...
-		if (getUserAccessLevel() > $SHOW_NO_WATERMARK ) {
+		if (PGV_USER_ACCESS_LEVEL > $SHOW_NO_WATERMARK ) {
 			// add a watermark
 			$usewatermark = true;
 		}
@@ -378,7 +382,7 @@ if ($usewatermark) {
 $mimetype = $controller->mediaobject->getMimetype();
 
 // setup the etag.  use enough info so that if anything important changes, the etag won't match
-$etag_string = basename($serverFilename).$filetime.getUserAccessLevel().$SHOW_NO_WATERMARK; 
+$etag_string = basename($serverFilename).$filetime.PGV_USER_ACCESS_LEVEL.$SHOW_NO_WATERMARK; 
 $etag = dechex(crc32($etag_string));
 
 // parse IF_MODIFIED_SINCE header from client
@@ -422,7 +426,7 @@ if ($debug_mediafirewall) {
 	echo  '<tr><td>expireHeader</td><td>'.$expireHeader.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>protocol</td><td>'.$protocol.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>SHOW_NO_WATERMARK</td><td>'.$SHOW_NO_WATERMARK.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>getUserAccessLevel()</td><td>'.getUserAccessLevel().'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>PGV_USER_ACCESS_LEVEL</td><td>'.PGV_USER_ACCESS_LEVEL.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>usewatermark</td><td>'.$usewatermark.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>generatewatermark</td><td>'.$generatewatermark.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>watermarkfile</td><td>'.$watermarkfile.'</td><td>&nbsp;</td></tr>';

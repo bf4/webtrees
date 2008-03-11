@@ -1,5 +1,8 @@
 <?php
-if(!userIsAdmin()){header('Location: index.php');exit;}
+if (!PGV_USER_IS_ADMIN) {
+	header('Location: index.php');
+	exit;
+}
 
 // phpSysInfo - A PHP System Information Script
 // http://phpsysinfo.sourceforge.net/

@@ -86,10 +86,12 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		$id="top10surnames";
 		$title = print_help_link("index_common_names_help", "qm","",false,true);
 		if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
-			$username = getUserName();
-			if ((($ctype=="gedcom")&&(userGedcomAdmin())) || (($ctype=="user")&&(!empty($username)))) {
-				if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
-				else $name = $username;
+			if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+				if ($ctype=="gedcom") {
+					$name = preg_replace("/'/", "\'", $GEDCOM);
+				} else {
+					$name = PGV_USER_NAME;
+				}
 				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 				$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 			}

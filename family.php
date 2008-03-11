@@ -54,7 +54,7 @@ if (!$controller->family->disp) {
 		<td>
 		<?php
 		print print_family_parents($controller->getFamilyID());
-		if (!$controller->isPrintPreview() && $controller->display && userCanEdit()) {
+		if (!$controller->isPrintPreview() && $controller->display && PGV_USER_CAN_EDIT) {
 		$husb = $controller->getHusband();
 		if (empty($husb)) { ?>
 			<?php print_help_link("edit_add_parent_help", "qm"); ?>
@@ -108,7 +108,7 @@ if (!$controller->family->disp) {
 					$menu = $controller->getEditMenu();
 					$menu->printMenu();
 					endif; // edit_fam
-					if ($controller->display && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART >= getUserAccessLevel())) :
+					if ($controller->display && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)) :
 					?>
 					</td>
 					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">

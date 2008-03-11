@@ -32,7 +32,7 @@ loadLangFile("pgv_confighelp");
 
 global $PGV_IMAGES, $faqs;
 
-if (userGedcomAdmin()) $canconfig = true;
+if (PGV_USER_GEDCOM_ADMIN) $canconfig = true;
 else $canconfig = false;
 if (!isset($action)) $action = "show";
 if (!isset($adminedit) && $canconfig) $adminedit = true;

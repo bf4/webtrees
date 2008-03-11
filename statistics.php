@@ -339,7 +339,7 @@ global $pgv_lang;
 	fwrite($FP, serialize($key2ind));
 	fwrite($FP, '}');
 	fclose($FP);
-	$logline = AddToLog($GEDCOM."_statistiek.php updated by >".getUserName()."<");
+	$logline = AddToLog($GEDCOM."_statistiek.php updated");
  	if (!empty($COMMIT_COMMAND)) check_in($logline, $GEDCOM."_statistiek.php", $INDEX_DIRECTORY);
 }
 

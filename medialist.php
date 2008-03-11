@@ -67,10 +67,8 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 
 // LBox  ================================================================================
 
-$isEditUser = userCanEdit();		// -- Determines whether to show file names
-
 //-- automatically generate an image
-if (userIsAdmin() && $action=="generate" && !empty($file) && !empty($thumb)) {
+if (PGV_USER_IS_ADMIN && $action=="generate" && !empty($file) && !empty($thumb)) {
 	generate_thumbnail($file, $thumb);
 }
 if ($search == "yes") {
@@ -88,7 +86,7 @@ if ($search == "yes") {
 	    print " ";
 
 	    // Display when user has Edit rights or when object belongs to current GEDCOM
-	    $disp = $isEditUser || $media["GEDFILE"]==$GEDCOMS[$GEDCOM]["id"];
+	    $disp = PGV_USER_CAN_EDIT || $media["GEDFILE"]==$GEDCOMS[$GEDCOM]["id"];
 	    // Display when Media objects aren't restricted by global privacy
 	    $disp &= displayDetailsById($media["XREF"], "OBJE");
 	    // Display when this Media object isn't restricted
@@ -313,7 +311,7 @@ if ($ct>0){
 
 	    $name = trim($media["TITL"]);
 //		$name1 = addslashes($media["TITL"]);
-		$showFile = $isEditUser;
+		$showFile = PGV_USER_CAN_EDIT;
 		if ($name=="") {
 			//$showFile = false;
 			if ($isExternal) $name = "URL";
@@ -345,7 +343,7 @@ if ($ct>0){
 		
 //LBox --------  added for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php"  )) {
-			if ( userCanEdit()  ) {
+			if (PGV_USER_CAN_EDIT) {
 			
 				if ($LB_ML_THUMB_LINKS != "none") {
 					print "<table border=0><tr>";

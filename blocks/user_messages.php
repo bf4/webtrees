@@ -36,7 +36,7 @@ $PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 function print_user_messages($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
 
-	$usermessages = getUserMessages(getUserName());
+		$usermessages = getUserMessages(PGV_USER_NAME);
 
 	$id="user_messages";
 	$title = print_help_link("mygedview_message_help", "qm", "", false, true);
@@ -119,14 +119,13 @@ function print_user_messages($block=true, $config="", $side, $index) {
 	}
 		if (get_user_count()>1) {
 			$content .= $pgv_lang["message"]." <select name=\"touser\">\n";
-			$my_user_name = getUserName();
-			if (userIsAdmin()) {
+			if (PGV_USER_IS_ADMIN) {
 				$content .= "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
 				$content .= "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
 				$content .= "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
 			}
 			foreach(get_all_users() as $user_id=>$user_name) {
-				if ($user_name!=$my_user_name && get_user_setting($user_id, 'verified_by_admin')=='yes') {
+				if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes') {
 					print "<option value=\"".$user_id."\">".PrintReady(getUserFullName($user_id))." ";
 					if ($TEXT_DIRECTION=="ltr") {
 						print getLRM()." - ".$user_id.getLRM();
