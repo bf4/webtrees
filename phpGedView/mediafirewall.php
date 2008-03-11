@@ -73,14 +73,18 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 			imagestring($im, 2, 5, 30, $line2, $tc);
 		}
 
-		// Note: any error status (such as 404) is still in effect 
+		// if we are using mod rewrite, there will be no error status.  be sure to set it
+		header('HTTP/1.0 404 Not Found');
+		header('Status: 404 Not Found');
 		header('Content-Type: image/'.$type);
 		$imSendFunc = 'image'.$type;
 		$imSendFunc($im);
 		imagedestroy($im);
 	} else {
 		// output a standard html string
-		// Note: any error status (such as 404) is still in effect 
+		// if we are using mod rewrite, there will be no error status.  be sure to set it
+		header('HTTP/1.0 404 Not Found');
+		header('Status: 404 Not Found');
 		echo "<html><body>\n";
 		echo "<!-- filler space so IE will display the custom 404 error -->";
 		echo "<!-- filler space so IE will display the custom 404 error -->";
