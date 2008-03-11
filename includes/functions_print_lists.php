@@ -433,10 +433,15 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Number of children
 		if ($tiny) {
 			echo "<td class=\"list_value_wrap\">";
-			if(!empty($SEARCH_SPIDER))
-				echo $person->getNumberOfChildren();
-			else
-				echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\" name=\"".$person->getNumberOfChildren()."\">".$person->getNumberOfChildren()."</a>";
+			if (showFactDetails('NCHI', $person->getXref(), 'INDI')) {
+				if($SEARCH_SPIDER) {
+					echo $person->getNumberOfChildren();
+				} else {
+					echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\" name=\"".$person->getNumberOfChildren()."\">".$person->getNumberOfChildren()."</a>";
+				}
+			} else {
+				echo '&nbsp;';
+			}
 			echo "</td>";
 		}
 		//-- Death date
@@ -776,10 +781,15 @@ function print_fam_table($datalist, $legend="") {
 		//-- Number of children
 		if ($tiny) {
 			echo "<td class=\"list_value_wrap\">";
-			if(!empty($SEARCH_SPIDER))
-				echo $family->getNumberOfChildren();
-			else
-				echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\" name=\"".$family->getNumberOfChildren()."\">".$family->getNumberOfChildren()."</a>";
+			if (showFactDetails('NCHI', $family->getXref(), 'FAM')) {
+				if($SEARCH_SPIDER) {
+					echo $family->getNumberOfChildren();
+				} else {
+					echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\" name=\"".$family->getNumberOfChildren()."\">".$family->getNumberOfChildren()."</a>";
+				}
+			} else {
+				echo '&nbsp;';
+			}
 			echo "</td>";
 		}
 		//-- Last change
