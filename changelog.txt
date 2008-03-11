@@ -23,7 +23,8 @@ Version 4.1.4
  - Added [ 1749591 ] Highlight maternal death (opus27)
  - Fixed [ 1840934 ] Associate Individual FACT/EVEN TYPE text (opus27)
  - Fixed [ 1834996 ] Sitemap module uses incorrect $SERVER_URL value (canajun2eh)
-
+ - Added [ 1890383 ] Media Firewall - use mod_rewrite when available (ljm)
+ 
 Version 4.1.3 2007.11.16
  - Fixed [ 1822946 ] Missing reference to port number in $SERVER_URL (yalnifj)
  - Fixed [ 1586584 ] Minimal theme - Icons on some Indi page tabs (canajun2eh)
