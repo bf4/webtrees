@@ -5,7 +5,7 @@
  * This block will print a users messages
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,124 +34,125 @@ $PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 
 //-- print user messages
 function print_user_messages($block=true, $config="", $side, $index) {
-		global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
+	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
 
 		$usermessages = getUserMessages(PGV_USER_NAME);
 
-		print "<div id=\"user_messages\" class=\"block\">\n";
-		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-		print "<td class=\"blockh1\" >&nbsp;</td>";
-		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-		print_help_link("mygedview_message_help", "qm");
-		print "<b>".$pgv_lang["my_messages"]."&nbsp;&nbsp;";
-		if ($TEXT_DIRECTION=="rtl") print getRLM();
-		print "(".count($usermessages).")";
-		if ($TEXT_DIRECTION=="rtl") print getRLM();
-		print "</b>";
-		print "</div></td>";
-		print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-		print "</table>";
-		print "<div class=\"blockcontent\">";
-		if ($block) print "<div class=\"small_inner_block\">\n";
-		print "<form name=\"messageform\" action=\"\" onsubmit=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">\n";
-		if (count($usermessages)==0) {
-			print $pgv_lang["no_messages"]."<br />";
-		}
-		else {
-			?>
+	$id="user_messages";
+	$title = print_help_link("mygedview_message_help", "qm", "", false, true);
+	$title .= $pgv_lang["my_messages"]."&nbsp;&nbsp;";
+	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
+	$title .= "(".count($usermessages).")";
+	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
+
+	$content = "";
+	$content .= "<form name=\"messageform\" action=\"\" onsubmit=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">";
+	if (count($usermessages)==0) {
+		$content .= $pgv_lang["no_messages"]."<br />";
+	} else {
+		$content .= '
 			<script language="JavaScript" type="text/javascript">
 			<!--
 				function select_all() {
-					<?php
-					foreach($usermessages as $key=>$message) {
-						if (isset($message["id"])) $key = $message["id"];
-						?>
-						var cb = document.getElementById("cb_message<?php print $key; ?>");
+					';
+		foreach($usermessages as $key=>$message) {
+			if (isset($message["id"])) $key = $message["id"];
+			$content .= '
+						var cb = document.getElementById("cb_message'.$key.'");
 						if (cb) {
 							if (!cb.checked) cb.checked = true;
 							else cb.checked = false;
 						}
-						<?php
-					}
-					?>
-					return false;
-				}
+						';
+		}
+		$content .= '
+				return false;
+			}
 			//-->
 			</script>
-			<?php
-			print "<input type=\"hidden\" name=\"action\" value=\"deletemessage\" />\n";
-			print "<table class=\"list_table\"><tr>\n";
-			print "<td class=\"list_label\">".$pgv_lang["delete"]."<br /><a href=\"javascript:;\" onclick=\"return select_all();\">".$pgv_lang["all"]."</a></td>\n";
-			print "<td class=\"list_label\">".$pgv_lang["message_subject"]."</td>\n";
-			print "<td class=\"list_label\">".$pgv_lang["date_created"]."</td>\n";
-			print "<td class=\"list_label\">".$pgv_lang["message_from"]."</td>\n";
-			print "</tr>\n";
-			foreach($usermessages as $key=>$message) {
-				if (isset($message["id"])) $key = $message["id"];
-				print "<tr>";
-				print "<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message$key\" name=\"message_id[]\" value=\"$key\" /></td>\n";
-				$showmsg=preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2",PrintReady($message["subject"]));
-				$showmsg=preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$showmsg);
-				print "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><b>".$showmsg."</b> <img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
-				if (!empty($message["created"])) {
-					$time = strtotime($message["created"]);
+		';
+		$content .= "<input type=\"hidden\" name=\"action\" value=\"deletemessage\" />";
+		$content .= "<table class=\"list_table\"><tr>";
+		$content .= "<td class=\"list_label\">".$pgv_lang["delete"]."<br /><a href=\"javascript:;\" onclick=\"return select_all();\">".$pgv_lang["all"]."</a></td>";
+		$content .= "<td class=\"list_label\">".$pgv_lang["message_subject"]."</td>";
+		$content .= "<td class=\"list_label\">".$pgv_lang["date_created"]."</td>";
+		$content .= "<td class=\"list_label\">".$pgv_lang["message_from"]."</td>";
+		$content .= "</tr>";
+		foreach($usermessages as $key=>$message) {
+			if (isset($message["id"])) $key = $message["id"];
+			$content .= "<tr>";
+			$content .= "<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message$key\" name=\"message_id[]\" value=\"$key\" /></td>";
+			$showmsg=preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2",PrintReady($message["subject"]));
+			$showmsg=preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$showmsg);
+			$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><b>".$showmsg."</b> <img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" title=\"\" /></a></td>";
+			if (!empty($message["created"])) {
+				$time = strtotime($message["created"]);
+			} else {
+				$time = time();
+			}
+			$content .= "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>";
+			$content .= "<td class=\"list_value_wrap\">";
+			$user_id=get_user_id($message["from"]);
+			if ($user_id) {
+				$content .= PrintReady(getUserFullName($user_id));
+				if ($TEXT_DIRECTION=="ltr") {
+					$content .= " " . getLRM() . " - ".htmlspecialchars($user_id) . getLRM();
 				} else {
-					$time = time();
+					$content .= " " . getRLM() . " - ".htmlspecialchars($user_id) . getRLM();
 				}
-				print "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
-				print "<td class=\"list_value_wrap\">";
-				$user_id=get_user_id($message["from"]);
-				if ($user_id) {
-					print PrintReady(getUserFullName($user_id));
-					if ($TEXT_DIRECTION=="ltr") {
-						print " " . getLRM() . " - ".htmlspecialchars($user_id).getLRM();
-					} else {
-						print " " . getRLM() . " - ".htmlspecialchars($user_id).getRLM();
-					}
-				} else {
-					print "<a href=\"mailto:".$user_id."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$user_id)."</a>";
-				}
-				print "</td>\n";
-				print "</tr>\n";
-				print "<tr><td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message$key\" style=\"display: none;\">\n";
-				$message["body"] = nl2br(htmlspecialchars($message["body"]));
-				$message["body"] = expand_urls($message["body"]);
+			} else {
+				$content .= "<a href=\"mailto:".$user_id."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$user_id)."</a>";
+			}
+			$content .= "</td>";
+			$content .= "</tr>";
+			$content .= "<tr><td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message$key\" style=\"display: none;\">";
+			$message["body"] = nl2br(htmlspecialchars($message["body"]));
+			$message["body"] = expand_urls($message["body"]);
 
-				print PrintReady($message["body"])."<br /><br />\n";
-				if (preg_match("/RE:/", $message["subject"])==0) {
-					$message["subject"]="RE:".$message["subject"];
-				}
-				if ($user_id) {
-					print "<a href=\"javascript:;\" onclick=\"reply('".$user_id."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
-				}
-				print "<a href=\"index.php?action=deletemessage&amp;message_id=$key\" onclick=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">".$pgv_lang["delete"]."</a></div></td></tr>\n";
+			$content .= PrintReady($message["body"])."<br /><br />";
+			if (preg_match("/RE:/", $message["subject"])==0) {
+				$message["subject"]="RE:".$message["subject"];
 			}
-			print "</table>\n";
-			print "<input type=\"submit\" value=\"".$pgv_lang["delete_selected_messages"]."\" /><br /><br />\n";
+			if ($user_id) {
+				$content .= "<a href=\"javascript:;\" onclick=\"reply('".$user_id."', '".$message["subject"]."'); return false;\">".$pgv_lang["reply"]."</a> | ";
+			}
+			$content .= "<a href=\"index.php?action=deletemessage&amp;message_id=$key\" onclick=\"return confirm('".$pgv_lang["confirm_message_delete"]."');\">".$pgv_lang["delete"]."</a></div></td></tr>";
 		}
-		if (get_user_count()>1) {
-			print $pgv_lang["message"]." <select name=\"touser\">\n";
-			if (PGV_USER_IS_ADMIN) {
-				print "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>\n";
-				print "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>\n";
-				print "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
-			}
-			foreach(get_all_users() as $user_id=>$user_name) {
-				if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes') {
-					print "<option value=\"".$user_id."\">".PrintReady(getUserFullName($user_id))." ";
-					if ($TEXT_DIRECTION=="ltr") {
-						print getLRM()." - ".$user_id.getLRM();
-					} else {
-						print getRLM()." - ".$user_id.getRLM();
-					}
-					print "</option>";
-				}
-			}
-			print "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
+		$content .= "</table>";
+		$content .= "<input type=\"submit\" value=\"".$pgv_lang["delete_selected_messages"]."\" /><br /><br />";
+	}
+	if (get_user_count()>1) {
+		$content .= $pgv_lang["message"]." <select name=\"touser\">";
+		if (PGV_USER_IS_ADMIN) {
+			$content .= "<option value=\"all\">".$pgv_lang["broadcast_all"]."</option>";
+			$content .= "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>";
+			$content .= "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>";
 		}
-		print "</form>\n";
-		if ($block) print "</div>\n";
-		print "</div>"; // blockcontent
-		print "</div>"; // block
+		foreach(get_all_users() as $user_id=>$user_name) {
+			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes') {
+				$content .= "<option value=\"".$user_id."\">".PrintReady(getUserFullName($user_id))." ";
+				if ($TEXT_DIRECTION=="ltr") {
+					$content .= getLRM()." - ".$user_id.getLRM();
+				} else {
+					$content .= getRLM()." - ".$user_id.getRLM();
+				}
+				$content .= "</option>";
+			}
+		}
+		$content .= "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />";
+	}
+	$content .= "</form>";
+
+	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
+	print '<td class="blockh1">&nbsp;</td>';
+	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
+	print '<td class="blockh3">&nbsp;</td>';
+	print '</tr></table><div class="blockcontent">';
+	if ($block) {
+		print '<div class="small_inner_block">'.$content.'</div>';
+	} else {
+		print $content;
+	}
+	print '</div></div>';
 }
 ?>
