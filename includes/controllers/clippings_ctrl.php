@@ -270,9 +270,11 @@ class ClippingsControllerRoot extends BaseController {
 										$ft = preg_match_all("/\d FILE (.*)/", $record, $match, PREG_SET_ORDER);
 										for ($k = 0; $k < $ft; $k++) {
 											$filename = extract_filename(trim($match[$k][1]));
-											$media[$mediacount] = $MEDIA_DIRECTORY.$filename;
+											if (file_exists($MEDIA_DIRECTORY.$filename)) {
+												$media[$mediacount] = $MEDIA_DIRECTORY.$filename;
+												$mediacount++;
+											}
 											$filename = substr($match[$k][1], strrpos($match[$k][1], "\\"));
-											$mediacount++;
 											$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
 										}
 										$filetext .= trim($record) . "\r\n";
@@ -310,8 +312,10 @@ class ClippingsControllerRoot extends BaseController {
 											$ft = preg_match_all("/\d FILE (.*)/", $record, $match, PREG_SET_ORDER);
 											for ($k = 0; $k < $ft; $k++) {
 												$filename = extract_filename($match[$k][1]);
-												$media[$mediacount] = $MEDIA_DIRECTORY.$filename;
-												$mediacount++;
+												if (file_exists($MEDIA_DIRECTORY.$filename)) {
+													$media[$mediacount] = $MEDIA_DIRECTORY.$filename;
+													$mediacount++;
+												}
 												$record = preg_replace("@(\d FILE )" . addslashes($match[$k][1]) . "@", "$1" . $filename, $record);
 											}
 
@@ -330,9 +334,11 @@ class ClippingsControllerRoot extends BaseController {
 												$ft = preg_match_all("/\d FILE (.*)/", $record, $match, PREG_SET_ORDER);
 												for ($k = 0; $k < $ft; $k++) {
 													$filename = extract_filename(trim($match[$k][1]));
-													$media[$mediacount] = $MEDIA_DIRECTORY.$filename;
+													if (file_exists($MEDIA_DIRECTORY.$filename)) {
+														$media[$mediacount] = $MEDIA_DIRECTORY.$filename;
+														$mediacount++;
+													}
 													$filename = substr($match[$k][1], strrpos($match[$k][1], "\\"));
-													$mediacount++;
 													$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
 												}
 												$filetext .= trim($record) . "\r\n";
@@ -460,10 +466,7 @@ function download_clipping(){
 		
 	if ($IncludeMedia == "yes" || $Zip == "yes")
 	{
-//		print $IncludeMedia;
-//		print $Zip;
-		
-		header("Content-Type: application/zip");			
+		header("Content-Type: application/zip");
 		header("Content-Disposition: attachment; filename=clipping.zip");
 		$this->zip_cart();
 	}
