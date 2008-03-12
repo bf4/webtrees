@@ -5,7 +5,7 @@
  * This block will print a list of today's events
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,11 +62,8 @@ function print_todays_events($block=true, $config="", $side, $index) {
   if (!PGV_USER_ID) $allowDownload = "no";
 
   //-- Start output
-  print "<div id=\"on_this_day_events\" class=\"block\">";
-  print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-  print "<td class=\"blockh1\" >&nbsp;</td>";
-  print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-  print_help_link("index_onthisday_help", "qm");
+  $id ="on_this_day_events";
+  $title = print_help_link("index_onthisday_help", "qm","",false,true);
   if ($PGV_BLOCKS["print_todays_events"]["canconfig"]) {
     if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
@@ -74,33 +71,37 @@ function print_todays_events($block=true, $config="", $side, $index) {
 			} else {
 				$name = PGV_USER_NAME;
 			}
-      print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-      print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
+      $title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+      $title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
     }
   }
-  print "<b>".$pgv_lang["on_this_day"]."</b>";
-  print "</div></td>";
-  print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-  print "</table>";
+  $title .= $pgv_lang["on_this_day"];
 
-  print "<div class=\"blockcontent\" >";
-  if ($block) print "<div class=\"small_inner_block\">\n";
-
+  $content = "";
 	switch ($infoStyle) {
 	case "style1":
 		// Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
-		print print_events_list($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
+		$content .= print_events_list($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 		break;
 	case "style2":
-  	// Style 2: New format, tables, big text, etc.  Not too good on right side of page
+		// Style 2: New format, tables, big text, etc.  Not too good on right side of page
+		ob_start();
 		print_events_table($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes');
+		$content .= ob_get_clean();
 		break;
 	}
 
-	if ($block)
-		print "</div>\n";
-  print "</div>"; // blockcontent
-  print "</div>"; // block
+	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
+	print '<td class="blockh1">&nbsp;</td>';
+	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
+	print '<td class="blockh3">&nbsp;</td>';
+	print '</tr></table><div class="blockcontent">';
+	if ($block) {
+		print '<div class="small_inner_block">'.$content.'</div>';
+	} else {
+		print $content;
+	}
+	print '</div></div>';
 }
 
 function print_todays_events_config($config) {
@@ -117,47 +118,47 @@ function print_todays_events_config($config) {
 	print $pgv_lang["living_or_all"];
 	?>
 	</td><td class="optionbox">
-   	<select name="filter">
-    	<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-    	<option value="living"<?php if ($config["filter"]=="living") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
-  	</select>
-  	</td></tr>
+		<select name="filter">
+			<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			<option value="living"<?php if ($config["filter"]=="living") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+		</select>
+	</td></tr>
 
-  	<tr><td class="descriptionbox wrap width33">
-  	<?php
-  	print_help_link("basic_or_all_help", "qm");
-  	print $pgv_lang["basic_or_all"];
-  	?>
-  	</td><td class="optionbox">
-  	<select name="onlyBDM">
-    	<option value="no"<?php if ($config["onlyBDM"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-    	<option value="yes"<?php if ($config["onlyBDM"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
-  	</select>
-  	</td></tr>
+	<tr><td class="descriptionbox wrap width33">
+	<?php
+	print_help_link("basic_or_all_help", "qm");
+	print $pgv_lang["basic_or_all"];
+	?>
+	</td><td class="optionbox">
+		<select name="onlyBDM">
+			<option value="no"<?php if ($config["onlyBDM"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			<option value="yes"<?php if ($config["onlyBDM"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+		</select>
+	</td></tr>
 
-  	<tr><td class="descriptionbox wrap width33">
-  	<?php
- 	print_help_link("style_help", "qm");
-  	print $pgv_lang["style"]."</td>";
-  	?>
-  	<td class="optionbox">
-  	<select name="infoStyle">
-    	<option value="style1"<?php if ($config["infoStyle"]=="style1") print " selected=\"selected\"";?>><?php print $pgv_lang["style1"]; ?></option>
-    	<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
-  	</select>
-  	</td></tr>
+	<tr><td class="descriptionbox wrap width33">
+	<?php
+	print_help_link("style_help", "qm");
+	print $pgv_lang["style"]."</td>";
+	?>
+	<td class="optionbox">
+		<select name="infoStyle">
+			<option value="style1"<?php if ($config["infoStyle"]=="style1") print " selected=\"selected\"";?>><?php print $pgv_lang["style1"]; ?></option>
+			<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
+		</select>
+	</td></tr>
 
-  	<tr><td class="descriptionbox wrap width33">
-  	<?php
- 	print_help_link("cal_dowload_help", "qm");
-  	print $pgv_lang["cal_download"]."</td>";
-  	?>
-  	<td class="optionbox">
-  	<select name="allowDownload">
-    	<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
-    	<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-  	</select>
-  	</td></tr>
+	<tr><td class="descriptionbox wrap width33">
+	<?php
+	print_help_link("cal_dowload_help", "qm");
+	print $pgv_lang["cal_download"]."</td>";
+	?>
+	<td class="optionbox">
+		<select name="allowDownload">
+			<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+		</select>
+	</td></tr>
   <?php
 
 	// Cache file life is not configurable by user:  anything other than 1 day doesn't make sense

@@ -5,7 +5,7 @@
  * This block will print a list of the users who are currently logged in
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,23 +64,13 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		}
 	}
 
-	print "<div id=\"logged_in_users\" class=\"block\">\n";
-	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-	print "<td class=\"blockh1\" >&nbsp;</td>";
-	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	print_help_link("index_loggedin_help", "qm");
-	print "<b>" . $pgv_lang["users_logged_in"] . "</b>";
-	print "</div></td>";
-	print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
-	print "</table>";
-	print "<div class=\"blockcontent\">";
-	if ($block) {
-		print "<div class=\"small_inner_block\">\n";
-	}
-	print "<table width=\"90%\">";
+	$id = "logged_in_users";
+	$title = print_help_link("index_loggedin_help", "qm", "", false, true);
+	$title .= $pgv_lang["users_logged_in"];
+	$content = "<table width=\"90%\">";
 	$LoginUsers = count($loggedusers);
 	if (($LoginUsers == 0) and ($NumAnonymous == 0)) {
-		print "<tr><td><b>" . $pgv_lang["no_login_users"] . "</b></td></tr>";
+		$content .= "<tr><td><b>" . $pgv_lang["no_login_users"] . "</b></td></tr>";
 	}
 	$Advisory = "anon_user";
 	if ($NumAnonymous > 1) {
@@ -88,7 +78,7 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	}
 	if ($NumAnonymous > 0) {
 		$pgv_lang["global_num1"] = $NumAnonymous; // Make it visible
-		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
+		$content .= "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
 	$Advisory = "login_user";
 	if ($LoginUsers > 1) {
@@ -96,22 +86,29 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	}
 	if ($LoginUsers > 0) {
 		$pgv_lang["global_num1"] = $LoginUsers; // Make it visible
-		print "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
+		$content .= "<tr><td><b>" . print_text($Advisory, 0, 1) . "</b></td></tr>";
 	}
-	if (getUserName()) {
+	if (PGV_USER_ID) {
 		foreach ($loggedusers as $user_id=>$user_name) {
-			print "<tr><td><br />".PrintReady(getUserFullName($user_id))." - ".$user_name;
+			$content .= "<tr><td><br />".PrintReady(getUserFullName($user_id))." - ".$user_name;
 			if (PGV_USER_ID!=$user_id && get_user_setting($user_id, 'contactmethod')!="none") {
-				print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_id . "');\">" . $pgv_lang["message"] . "</a>";
+				$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user_id . "');\">" . $pgv_lang["message"] . "</a>";
 			}
-			print "</td></tr>";
+			$content .= "</td></tr>";
 		}
 	}
-	print "</table>";
+	$content .= "</table>";
+
+	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
+	print '<td class="blockh1">&nbsp;</td>';
+	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
+	print '<td class="blockh3">&nbsp;</td>';
+	print '</tr></table><div class="blockcontent">';
 	if ($block) {
-		print "</div>\n";
+		print '<div class="small_inner_block">'.$content.'</div>';
+	} else {
+		print $content;
 	}
-	print "</div>"; // blockcontent
-	print "</div>"; // block
+	print '</div></div>';
 }
 ?>

@@ -5,7 +5,7 @@
  * This block allows users to have their own blog
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,54 +37,66 @@ $PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
  *
  */
 function print_user_news($block=true, $config="", $side, $index) {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
 
-		$usernews = getUserNews(PGV_USER_NAME);
+	$usernews = getUserNews(PGV_USER_ID);
 
-		print "<div id=\"user_news\" class=\"block\">\n";
-		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-		print "<td class=\"blockh1\" >&nbsp;</td>";
-		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-		print_help_link("mygedview_myjournal_help", "qm");
-		print "<b>".$pgv_lang["my_journal"]."</b>";
-		print "</div></td>";
-		print "<td class=\"blockh3\">&nbsp;</td></tr>";
-		print "</table>";
-		print "<div class=\"blockcontent\">";
-		if ($block) print "<div class=\"small_inner_block, $TEXT_DIRECTION\">\n";
-		if (count($usernews)==0) print $pgv_lang["no_journal"];
-		foreach($usernews as $key=>$news) {
-				$day = date("j", $news["date"]);
-				$mon = date("M", $news["date"]);
-				$year = date("Y", $news["date"]);
-				print "<div class=\"person_box\">\n";
-				$ct = preg_match("/#(.+)#/", $news["title"], $match);
-				if ($ct>0) {
-						if (isset($pgv_lang[$match[1]])) $news["title"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["title"]);
-				}
-				print "<span class=\"news_title\">".PrintReady($news["title"])."</span><br />\n";
-				print "<span class=\"news_date\">".format_timestamp($news["date"])."</span><br /><br />\n";
-				$ct = preg_match("/#(.+)#/", $news["text"], $match);
-				if ($ct>0) {
-						if (isset($pgv_lang[$match[1]])) $news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);
-				}
-				$ct = preg_match("/#(.+)#/", $news["text"], $match);
-				if ($ct>0) {
-						if (isset($pgv_lang[$match[1]])) $news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);
-						if (isset($$match[1])) $news["text"] = preg_replace("/$match[0]/", $$match[1], $news["text"]);
-				}
-				$trans = get_html_translation_table(HTML_SPECIALCHARS);
-				$trans = array_flip($trans);
-				$news["text"] = strtr($news["text"], $trans);
-				$news["text"] = nl2br($news["text"]);
-				print PrintReady($news["text"])."<br /><br />\n";
-				print "<a href=\"javascript:;\" onclick=\"editnews('$key'); return false;\">".$pgv_lang["edit"]."</a> | ";
-				print "<a href=\"index.php?action=deletenews&amp;news_id=$key&amp;ctype=$ctype\" onclick=\"return confirm('".$pgv_lang["confirm_journal_delete"]."');\">".$pgv_lang["delete"]."</a><br />";
-				print "</div><br />\n";
+	$id="user_news";
+	$title = print_help_link("mygedview_myjournal_help", "qm","",false,true);
+	$title .= $pgv_lang["my_journal"];
+	$content = "";
+	if (count($usernews)==0) {
+		$content .= $pgv_lang["no_journal"].' ';
+	}
+	foreach($usernews as $key=>$news) {
+		$day = date("j", $news["date"]);
+		$mon = date("M", $news["date"]);
+		$year = date("Y", $news["date"]);
+		$content .= "<div class=\"person_box\">";
+		$ct = preg_match("/#(.+)#/", $news["title"], $match);
+		if ($ct>0) {
+			if (isset($pgv_lang[$match[1]])) {
+				$news["title"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["title"]);
+			}
 		}
-		if ($block) print "</div>\n";
-		if (PGV_USER_ID) print "<br /><a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_NAME."'); return false;\">".$pgv_lang["add_journal"]."</a>\n";
-		print "</div>\n";
-		print "</div>";
+		$content .= "<span class=\"news_title\">".PrintReady($news["title"])."</span><br />";
+		$content .= "<span class=\"news_date\">".format_timestamp($news["date"])."</span><br /><br />";
+		if (preg_match("/#(.+)#/", $news["text"], $match)) {
+			if (isset($pgv_lang[$match[1]])) {
+				$news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);
+			}
+		}
+		if (preg_match("/#(.+)#/", $news["text"], $match)) {
+			if (isset($pgv_lang[$match[1]])) {
+				$news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);
+			}
+			if (isset($$match[1])) {
+				$news["text"] = preg_replace("/$match[0]/", $$match[1], $news["text"]);
+			}
+		}
+		$trans = get_html_translation_table(HTML_SPECIALCHARS);
+		$trans = array_flip($trans);
+		$news["text"] = strtr($news["text"], $trans);
+		$news["text"] = nl2br($news["text"]);
+		$content .= PrintReady($news["text"])."<br /><br />";
+		$content .= "<a href=\"javascript:;\" onclick=\"editnews('$key'); return false;\">".$pgv_lang["edit"]."</a> | ";
+		$content .= "<a href=\"index.php?action=deletenews&amp;news_id=$key&amp;ctype=$ctype\" onclick=\"return confirm('".$pgv_lang["confirm_journal_delete"]."');\">".$pgv_lang["delete"]."</a><br />";
+		$content .= "</div><br />";
+	}
+	if (PGV_USER_ID) {
+		$content .= "<br /><a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_ID."'); return false;\">".$pgv_lang["add_journal"]."</a>";
+	}
+
+	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
+	print '<td class="blockh1">&nbsp;</td>';
+	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
+	print '<td class="blockh3">&nbsp;</td>';
+	print '</tr></table><div class="blockcontent">';
+	if ($block) {
+		print '<div class="small_inner_block">'.$content.'</div>';
+	} else {
+		print $content;
+	}
+	print '</div></div>';
 }
 ?>

@@ -5,7 +5,7 @@
  * This block will print basic information and links for the user.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,29 +36,35 @@ $PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
 function print_welcome_block($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
-	print "<div id=\"user_welcome\" class=\"block\">";
-	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
-	print "<td class=\"blockh1\" >&nbsp;</td>";
-	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	print "<b>".$pgv_lang["welcome"]." ".getUserFullName(PGV_USER_ID)."</b>";
-	print "</div></td>";
-	print "<td class=\"blockh3\">&nbsp;</td></tr>";
-	print "</table>";
-	print "<table class=\"blockcontent\" cellspacing=\"0\" cellpadding=\"0\" style=\" width: 100%; direction:ltr;\"><tr>";
-	print "<td class=\"tab_active_bottom\" colspan=\"3\" ></td></tr><tr>";
+	$id="user_welcome";
+	$title = $pgv_lang["welcome"]." ".getUserFullName(PGV_USER_ID);
+	
+	$content = "<table class=\"blockcontent\" cellspacing=\"0\" cellpadding=\"0\" style=\" width: 100%; direction:ltr;\"><tr>";
+	$content .= "<td class=\"tab_active_bottom\" colspan=\"3\" ></td></tr><tr>";
 	if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
-		print "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"edituser.php\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["myuserdata"]."\" title=\"".$pgv_lang["myuserdata"]."\" /><br />".$pgv_lang["myuserdata"]."</a></td>";
+		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"edituser.php\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["myuserdata"]."\" title=\"".$pgv_lang["myuserdata"]."\" /><br />".$pgv_lang["myuserdata"]."</a></td>";
 	}
 	if (PGV_USER_GEDCOM_ID) {
-		print "<td class=\"center details2\" style=\" width: 34%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"pedigree.php?rootid=".PGV_USER_GEDCOM_ID."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_pedigree"]."\" title=\"".$pgv_lang["my_pedigree"]."\" /><br />".$pgv_lang["my_pedigree"]."</a></td>";
-		print "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"individual.php?pid=".PGV_USER_GEDCOM_ID."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_indi"]."\" title=\"".$pgv_lang["my_indi"]."\" /><br />".$pgv_lang["my_indi"]."</a>\n</td>";
+		$content .= "<td class=\"center details2\" style=\" width: 34%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"pedigree.php?rootid=".PGV_USER_GEDCOM_ID."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_pedigree"]."\" title=\"".$pgv_lang["my_pedigree"]."\" /><br />".$pgv_lang["my_pedigree"]."</a></td>";
+		$content .= "<td class=\"center details2\" style=\" width: 33%; clear: none; vertical-align: top; margin-top: 2px;\"><a href=\"individual.php?pid=".PGV_USER_GEDCOM_ID."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"".$pgv_lang["my_indi"]."\" title=\"".$pgv_lang["my_indi"]."\" /><br />".$pgv_lang["my_indi"]."</a></td>";
 	}
-	print "</tr><tr><td class=\"center\" colspan=\"3\">";
-	print_help_link("mygedview_customize_help", "qm");
-	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&amp;ctype=user', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
-	print "\n<br />".format_timestamp()."\n";
-	print "</td>\n";
-	print "</tr></table>"; // blockcontent
-	print "</div>"; // block
+	$content .= "</tr><tr><td class=\"center\" colspan=\"3\">";
+	$content .= print_help_link("mygedview_customize_help", "qm","",false,true);
+	$content .= "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&amp;ctype=user', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>";
+	$content .= "<br />".format_timestamp();
+	$content .= "</td>";
+	$content .= "</tr></table>";
+
+	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
+	print '<td class="blockh1">&nbsp;</td>';
+	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
+	print '<td class="blockh3">&nbsp;</td>';
+	print '</tr></table><div class="blockcontent">';
+	if ($block) {
+		print '<div class="small_inner_block">'.$content.'</div>';
+	} else {
+		print $content;
+	}
+	print '</div></div>';
 }
 ?>
