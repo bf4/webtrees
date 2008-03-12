@@ -246,7 +246,7 @@ else {
 $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;
 require($gedcom_config);
-if (!isset($_POST["GEDCOMLANG"])) $GEDCOMLANG = $LANGUAGE;
+if (!isset($_POST["GEDCOMLANG"])) $_POST["GEDCOMLANG"] = $LANGUAGE;
 $LANGUAGE = $USERLANG;
 $error_msg = "";
 
@@ -943,7 +943,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 			foreach ($pgv_language as $key=>$value) {
 			if ($language_settings[$key]["pgv_lang_use"]) {
 					print "\n\t\t\t<option value=\"$key\"";
-					if ($GEDCOMLANG==$key) print " selected=\"selected\"";
+					if ($_POST["GEDCOMLANG"]==$key) print " selected=\"selected\"";
 					print ">".$pgv_lang[$key]."</option>";
 				}
 			}
