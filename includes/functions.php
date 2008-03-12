@@ -2844,6 +2844,10 @@ function CheckPageViews() {
 	if ($MAX_VIEW_TIME == 0 || $MAX_VIEWS == 0 || !empty($SEARCH_SPIDER))
 		return;
 
+	// The media firewall should not be throttled
+	if (strpos($_SERVER["SCRIPT_NAME"],"mediafirewall") > -1)
+		return;
+
 	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {
 		$_SESSION["pageviews"]["number"] ++;
 		if ($_SESSION["pageviews"]["number"] < $MAX_VIEWS)
