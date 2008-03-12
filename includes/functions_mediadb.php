@@ -1123,7 +1123,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	if ($truncate == "NOTRUNC")
 		$truncate = "FRONT"; // **** temporary over-ride *****
 
-	if (strpos($_SERVER["SCRIPT_FILENAME"],"mediafirewall") > -1) {
+	if (strpos($_SERVER["SCRIPT_NAME"],"mediafirewall") > -1) {
 		// no extraneous output while displaying images
 		$noise = "QUIET";
 	}

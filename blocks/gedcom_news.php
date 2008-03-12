@@ -5,7 +5,7 @@
  * This block allows administrators to enter news items for the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ $PGV_BLOCKS['print_gedcom_news']['config']		= array(
 	'cache'=>7,
 	'limit' => 'nolimit',
 	'flag' => 0
-	);
+);
 
 /**
  * Prints a gedcom news/journal
@@ -45,31 +45,25 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $VERSION, $PGV_BLOCKS;
 
-	if(empty($config))
-	{
+	if(empty($config)) {
 		$config = $PGV_BLOCKS['print_gedcom_news']['config'];
 	}
-	if ($config['flag'] == 0)
-	{
+	if ($config['flag'] == 0) {
 		$config['limit'] = 'nolimit';
 	}
-	if (isset($_REQUEST['gedcom_news_archive']))
-	{
+	if (isset($_REQUEST['gedcom_news_archive'])) {
 		$config['limit'] = 'nolimit';
 		$config['flag'] = 0;
 	}
 
 	$usernews = getUserNews($GEDCOM);
 
-	print "<div id=\"gedcom_news\" class=\"block\">\n"
-		.'<table class="blockheader" cellspacing="0" cellpadding="0" style="direction:ltr;"><tr>'
-		.'<td class="blockh1">&nbsp;</td>'
-		.'<td class="blockh2"><div class="blockhc">'
-	;
+	$id = "gedcom_news";
+	$title = "";
 	if(PGV_USER_GEDCOM_ADMIN) {
-		print_help_link('index_gedcom_news_ahelp', 'qm_ah');
+		$title .= print_help_link('index_gedcom_news_ahelp', 'qm_ah',"", false, true);
 	} else {
-		print_help_link('index_gedcom_news_help', 'qm');
+		$title .= print_help_link('index_gedcom_news_help', 'qm', "", false, true);
 	}
 	if ($PGV_BLOCKS['print_gedcom_news']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
@@ -78,47 +72,35 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 			} else {
 				$name = PGV_USER_NAME;
 			}
-			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
-				."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>\n"
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
+			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>\n"
 			;
 		}
 	}
-	print "<b>{$pgv_lang['gedcom_news']}</b>"
-		."</div></td>"
-		."<td class=\"blockh3\">&nbsp;</td></tr>"
-		."</table>"
-		."<div class=\"blockcontent\">"
-	;
-	if($block)
-	{
-		print "<div class=\"small_inner_block, {$TEXT_DIRECTION}\">\n";
-	}
+	$title .= $pgv_lang['gedcom_news'];
+	$content = "";
 	if(count($usernews) == 0)
 	{
-		print $pgv_lang['no_news'].'<br />';
+		$content .= $pgv_lang['no_news'].'<br />';
 	}
 	$c = 0;
 	$td = time();
 	foreach($usernews as $key=>$news)
 	{
-		if ($config['limit'] == 'count')
-		{
-			if ($c >= $config['flag'])
-			{
+		if ($config['limit'] == 'count') {
+			if ($c >= $config['flag']) {
 				break;
 			}
 			$c++;
 		}
-		if ($config['limit'] == 'date')
-		{
-			if (floor(($td - $news['date']) / 86400) > $config['flag'])
-			{
+		if ($config['limit'] == 'date') {
+			if (floor(($td - $news['date']) / 86400) > $config['flag']) {
 				break;
 			}
 		}
-//		print "<div class=\"person_box\" id=\"{$news['anchor']}\">\n";
-		print "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
-		
+		//		print "<div class=\"person_box\" id=\"{$news['anchor']}\">\n";
+		$content .= "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
+
 		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News title
 		$newsTitle = print_text($news['title'], 0, 2);
 		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
@@ -127,8 +109,8 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 				$newsTitle = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsTitle);
 			}
 		}
-		print "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n"
-			."<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
+		$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
+		$content .= "<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
 			
 		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News text
 		$newsText = print_text($news['text'], 0, 2);
@@ -152,34 +134,38 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$trans = array_flip($trans);
 		$newsText = strtr($newsText, $trans);
 		$newsText = nl2br($newsText);
-		print PrintReady($newsText)."<br />\n";
-		
+		$content .= PrintReady($newsText)."<br />\n";
+
 		// Print Admin options for this News item
 		if(PGV_USER_GEDCOM_ADMIN) {
-			print "<hr size=\"1\" />"
-				."<a href=\"javascript:;\" onclick=\"editnews('{$key}'); return false;\">{$pgv_lang['edit']}</a> | "
-				."<a href=\"index.php?action=deletenews&amp;news_id={$key}&amp;ctype={$ctype}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
+			$content .= "<hr size=\"1\" />"
+			."<a href=\"javascript:;\" onclick=\"editnews('{$key}'); return false;\">{$pgv_lang['edit']}</a> | "
+			."<a href=\"index.php?action=deletenews&amp;news_id={$key}&amp;ctype={$ctype}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
 		}
-		print "</div>\n";
-	}
-	if($block)
-	{
-		print "</div>\n";
+		$content .= "</div>\n";
 	}
 	$printedAddLink = false;
-	if(PGV_USER_GEDCOM_ADMIN)
-	{
-		print "<a href=\"javascript:;\" onclick=\"addnews('".preg_replace("/'/", "\'", $GEDCOM)."'); return false;\">".$pgv_lang["add_news"]."</a>";
+	if (PGV_USER_GEDCOM_ADMIN) {
+		$content .= "<a href=\"javascript:;\" onclick=\"addnews('".preg_replace("/'/", "\'", $GEDCOM)."'); return false;\">".$pgv_lang["add_news"]."</a>";
 		$printedAddLink = true;
 	}
-	if ($config['limit'] == 'date' || $config['limit'] == 'count')
-	{
-		if ($printedAddLink) print "&nbsp;&nbsp;|&nbsp;&nbsp;";
-		print_help_link("gedcom_news_archive_help", "qm");
-		print "<a href=\"index.php?gedcom_news_archive=yes&amp;ctype={$ctype}\">".$pgv_lang['gedcom_news_archive']."</a><br />";
+	if ($config['limit'] == 'date' || $config['limit'] == 'count') {
+		if ($printedAddLink) $content .= "&nbsp;&nbsp;|&nbsp;&nbsp;";
+		$content .= print_help_link("gedcom_news_archive_help", "qm", "", false, true);
+		$content .= "<a href=\"index.php?gedcom_news_archive=yes&amp;ctype={$ctype}\">".$pgv_lang['gedcom_news_archive']."</a><br />";
 	}
-	print "</div>\n</div>"
-	;
+
+	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
+	print '<td class="blockh1">&nbsp;</td>';
+	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
+	print '<td class="blockh3">&nbsp;</td>';
+	print '</tr></table><div class="blockcontent">';
+	if ($block) {
+		print '<div class="small_inner_block">'.$content.'</div>';
+	} else {
+		print $content;
+	}
+	print '</div></div>';
 }
 
 function print_gedcom_news_config($config)
@@ -195,11 +181,11 @@ function print_gedcom_news_config($config)
 	print_help_link("gedcom_news_limit_help", "qm");
 	print $pgv_lang['gedcom_news_limit'].'</td>';
 	$output = '<td class="optionbox">'
-		.'<select name="limit">'
-		.'<option value="nolimit"'.($config['limit'] == 'nolimit'?' selected="selected"':'').">{$pgv_lang['gedcom_news_limit_nolimit']}</option>\n"
-		.'<option value="date"'.($config['limit'] == 'date'?' selected="selected"':'').">{$pgv_lang['gedcom_news_limit_date']}</option>\n"
-		.'<option value="count"'.($config['limit'] == 'count'?' selected="selected"':'').">{$pgv_lang['gedcom_news_limit_count']}</option>\n"
-		.'</select></td></tr>'
+	.'<select name="limit">'
+	.'<option value="nolimit"'.($config['limit'] == 'nolimit'?' selected="selected"':'').">{$pgv_lang['gedcom_news_limit_nolimit']}</option>\n"
+	.'<option value="date"'.($config['limit'] == 'date'?' selected="selected"':'').">{$pgv_lang['gedcom_news_limit_date']}</option>\n"
+	.'<option value="count"'.($config['limit'] == 'count'?' selected="selected"':'').">{$pgv_lang['gedcom_news_limit_count']}</option>\n"
+	.'</select></td></tr>'
 	;
 	print $output;
 
@@ -207,19 +193,18 @@ function print_gedcom_news_config($config)
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link("gedcom_news_flag_help", "qm");
 	print $pgv_lang['gedcom_news_flag'].'</td>';
-	$output = '<td class="optionbox"><input type="text" name="flag" size="4" maxlength="4" value="' 
-		.$config['flag']
-		.'"></td></tr>'
-	;
+	$output = '<td class="optionbox"><input type="text" name="flag" size="4" maxlength="4" value="'
+	.$config['flag']
+	.'"></td></tr>';
 	print $output;
-	
+
 	// Cache file life
 	if ($ctype=="gedcom") {
-  		print "<tr><td class=\"descriptionbox wrap width33\">";
-			print_help_link("cache_life_help", "qm");
-			print $pgv_lang["cache_life"];
+		print "<tr><td class=\"descriptionbox wrap width33\">";
+		print_help_link("cache_life_help", "qm");
+		print $pgv_lang["cache_life"];
 		print "</td><td class=\"optionbox\">";
-			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
 		print "</td></tr>";
 	}
 }

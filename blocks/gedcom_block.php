@@ -5,7 +5,7 @@
  * This block prints basic information about the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,25 +36,28 @@ $PGV_BLOCKS["print_gedcom_block"]["config"]		= array("cache"=>0);
 function print_gedcom_block($block = true, $config="", $side, $index) {
 	global $hits, $pgv_lang, $GEDCOM, $GEDCOMS, $SHOW_COUNTER;
 
-
-	print "<div id=\"gedcom_welcome\" class=\"block\" >\n";
-	print "<table class=\"blockheader\" cellpadding=\"0\" cellspacing=\"0\" style=\"direction:ltr;padding:0;margin:0;\"><tr>";
-	print "<td class=\"blockh1\" ></td>";
-	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	print PrintReady("<b>".$GEDCOMS[$GEDCOM]["title"]."</b>");
-	print "</div></td>";
-	print "<td class=\"blockh3\"></td></tr></table>\n";
-	print "<div class=\"blockcontent\">";
-	print "<div class=\"center\">";
-	print "<br />".format_timestamp()."<br />\n";
+	$id = "gedcom_welcome";
+	$title = PrintReady($GEDCOMS[$GEDCOM]["title"]);
+	$content = "<div class=\"center\">";
+	$content .= "<br />".format_timestamp()."<br />\n";
 	if ($SHOW_COUNTER)
-		print $pgv_lang["hit_count"]."  ".$hits."<br />\n";
-	print "\n<br />";
+		$content .=  $pgv_lang["hit_count"]."  ".$hits."<br />\n";
+	$content .=  "\n<br />";
 	if (PGV_USER_GEDCOM_ADMIN) {
-		print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".preg_replace("/'/", "\'", $GEDCOM)."&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1'); return false;\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
+		$content .=  "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".preg_replace("/'/", "\'", $GEDCOM)."&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1'); return false;\">".$pgv_lang["customize_gedcom_page"]."</a><br />\n";
 	}
-	print "</div>";
-	print "</div>\n";
-	print "</div>";
+	$content .=  "</div>";
+	
+	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
+	print '<td class="blockh1">&nbsp;</td>';
+	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
+	print '<td class="blockh3">&nbsp;</td>';
+	print '</tr></table><div class="blockcontent">';
+	//if ($block) {
+		//print '<div class="small_inner_block">'.$content.'</div>';
+	//} else {
+		print $content;
+	//}
+	print '</div></div>';
 }
 ?>
