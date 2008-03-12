@@ -91,7 +91,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 				$name = PGV_USER_NAME;
 			}
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
-			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 		}
 	}
 	$name = $person->getName();
@@ -143,7 +143,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$content .= ob_get_clean();
 		$content .= "</td>";
 	}
-	$content .= "</tr></table>\n";
+	$content .= "</tr></table>";
 	$content .= '<script type="text/javascript">
 		<!--
 		if (sizeLines) sizeLines();
@@ -173,11 +173,11 @@ function print_charts_block_config($config) {
 	</td></tr>
 	<tr>
 		<td class="descriptionbox wrap width33"><?php print $pgv_lang["show_details"]; ?></td>
-		<td class="optionbox">
-			<select name="details">
+	<td class="optionbox">
+		<select name="details">
 				<option value="no" <?php if ($config["details"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang['no'] ?></option>
 				<option value="yes" <?php if ($config["details"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang['yes'] ?></option>
-			</select>
+		</select>
 		</td>
 	</tr>
 	<tr>
@@ -186,9 +186,9 @@ function print_charts_block_config($config) {
 			<input type="text" name="rootId" id="rootId" value="<?php print $config["rootId"]?>" size="5" />
 			<?php print_findindi_link("rootId","");
 			if (!empty($config["rootId"])) {
-				print "\n<span class=\"list_item\">".get_person_name($config["rootId"]);
+				print "<span class=\"list_item\">".get_person_name($config["rootId"]);
 				print_first_major_fact($config["rootId"]);
-				print "</span>\n";
+				print "</span>";
 			}
 			?>
 		</td>

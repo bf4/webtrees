@@ -5,7 +5,7 @@
  * This block will print advanced HTML text with keyword support entered by an admin
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,9 +60,9 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	$SHOW_ID_NUMBERS
 	;
 	// config sanity check
-	if(empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if(!isset($config[$k])){$config[$k] = $v;}}}
+	if (empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
 
-	if(!isset($HTML_BLOCK_COUNT)){$HTML_BLOCK_COUNT = 0;}$HTML_BLOCK_COUNT++;
+	if (!isset($HTML_BLOCK_COUNT)){$HTML_BLOCK_COUNT = 0;}$HTML_BLOCK_COUNT++;
 
 	/*
 	 * Select GEDCOM
@@ -72,14 +72,14 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	{
 		case '__current__':{break;}
 		case '':{break;}
-		case '__default__':{if($DEFAULT_GEDCOM == ''){foreach($GEDCOMS as $gedid=>$ged){$GEDCOM = $gedid;break;}}else{$GEDCOM = $DEFAULT_GEDCOM;}break;}
-		default:{if(check_for_import($config['gedcom'])){$GEDCOM = $config['gedcom'];}break;}
+		case '__default__':{if ($DEFAULT_GEDCOM == ''){foreach($GEDCOMS as $gedid=>$ged){$GEDCOM = $gedid;break;}}else{$GEDCOM = $DEFAULT_GEDCOM;}break;}
+		default:{if (check_for_import($config['gedcom'])){$GEDCOM = $config['gedcom'];}break;}
 	}
 
 	/*
 	 * Initiate the stats object.
 	 */
-	if($config['compat'] == 1)
+	if ($config['compat'] == 1)
 	{
 		include_once 'includes/class_stats_compat.php';
 		$stats = new stats_compat($GEDCOM);
@@ -105,7 +105,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	 */
 	list($new_tags, $new_values) = $stats->getTags("{$config['title']} {$config['html']}");
 	// Title
-	if(strstr($config['title'], '#')){$config['title'] = str_replace($new_tags, $new_values, $config['title']);}
+	if (strstr($config['title'], '#')){$config['title'] = str_replace($new_tags, $new_values, $config['title']);}
 	// Content
 	$config['html'] = str_replace($new_tags, $new_values, $config['html']);
 
@@ -118,52 +118,50 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	 * Start Of Output
 	 */
 	$id = "html_block{$HTML_BLOCK_COUNT}";
-	$out = "";
-	if($config['title'] != '')
-	{
+	$title = "";
+	if ($config['title'] != '') {
 		if (PGV_USER_GEDCOM_ADMIN) {
-			$out .= print_help_link('index_htmlplus_ahelp', 'qm_ah', '', false, true);}else{$out .= print_help_link('index_htmlplus_help', 'qm', '', false, true);}
-			if($PGV_BLOCKS['print_htmlplus_block']['canconfig'])
-			{
-				if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
-					if ($ctype=="gedcom") {
-						$name = preg_replace("/'/", "\'", $GEDCOM);
-					} else {
-						$name = PGV_USER_NAME;
-					}
-					$out .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
-					."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>\n"
-					;
+			$title .= print_help_link('index_htmlplus_ahelp', 'qm_ah', '', false, true);
+		} else {
+			$title .= print_help_link('index_htmlplus_help', 'qm', '', false, true);
+		}
+		if ($PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
+			if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+				if ($ctype=="gedcom") {
+					$name = preg_replace("/'/", "\'", $GEDCOM);
+				} else {
+					$name = PGV_USER_NAME;
 				}
+				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
+				."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>"
+				;
 			}
-			$out .= $config['title'];
+		}
+		$title .= $config['title'];
 	}
-	$title = $out;
 
-	$out = "";
-	$out .= $config['html'];
-	if($config['title'] == '' && $PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
+	$content = $config['html'];
+	if ($config['title'] == '' && $PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
 				$name = preg_replace("/'/", "\'", $GEDCOM);
 			} else {
 				$name = PGV_USER_NAME;
 			}
-			$out .= "<br />"
+			$content .= "<br />"
 			.print_help_link('index_htmlplus_ahelp', 'qm_ah', '', false, true)
 			."<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=500,scrollbars=1,resizable=1'); return false;\">"
-			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" title=\"{$pgv_lang['config_block']}\" /></a>\n"
+			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" title=\"{$pgv_lang['config_block']}\" /></a>"
 			;
 		}
 	}
 
-	$content = $out;
-	
 	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
-
-	return true;
+	if ($block) {
+		include($THEME_DIR."/templates/block_small_temp.php");
+	} else {
+		include($THEME_DIR."/templates/block_main_temp.php");
+	}
 }
 
 function print_htmlplus_block_config($config)
@@ -184,12 +182,12 @@ function print_htmlplus_block_config($config)
 	$d = dir('blocks/');
 	while(false !== ($entry = $d->read()))
 	{
-		if(strstr($entry, 'block_htmlplus_'))
+		if (strstr($entry, 'block_htmlplus_'))
 		{
 			$tpl = file("blocks/{$entry}");
 			$info = array_shift($tpl);
 			$bits = explode('|', $info);
-			if(count($bits) != 2)
+			if (count($bits) != 2)
 			{
 				$bits = array($entry, '');
 			}
@@ -203,66 +201,67 @@ function print_htmlplus_block_config($config)
 	}
 	$d->close();
 	// config sanity check
-	if(empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if(!isset($config[$k])){$config[$k] = $v;}}}
+	if (empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
 	// title
 	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
-	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
+	print "<tr><td class=\"descriptionbox wrap width33\">"
 	.print_help_link('index_htmlplus_title_help', 'qm_ah', '', false, true)
-	."{$factarray['TITL']}</td>\n"
-	."\t<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td>\n</tr>\n"
+	."{$factarray['TITL']}</td>"
+	."<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td></tr>"
 	;
 	// templates
-	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
+	print "<tr><td class=\"descriptionbox wrap width33\">"
 	.print_help_link('index_htmlplus_template_help', 'qm_ah', '', false, true)
-	."{$pgv_lang['htmlplus_block_templates']}</td>\n"
-	."\t<td class=\"optionbox\">\n"
-	."\t\t<select name=\"template\" onChange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">\n"
-	."\t\t\t<option value=\"\">{$pgv_lang['htmlplus_block_custom']}</option>\n"
+	."{$pgv_lang['htmlplus_block_templates']}</td>"
+	."<td class=\"optionbox\">"
+	."<select name=\"template\" onChange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">"
+	."<option value=\"\">{$pgv_lang['htmlplus_block_custom']}</option>"
 	;
-	foreach($templates as $tpl)
-	{
-		print "\t\t\t<option value=\"{$tpl['template']}\">{$tpl['title']}</option>\n";
+	foreach($templates as $tpl) {
+		print "<option value=\"{$tpl['template']}\">{$tpl['title']}</option>";
 	}
-	print "\t\t</select>\n"
-	."\t</td>\n</tr>\n"
+	print "</select>"
+	."</td></tr>"
 	;
 	// gedcom
 	if (count($GEDCOMS) > 1) {
-		if($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
-		if($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
-		print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
+		if ($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
+		if ($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
+		print "<tr><td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_gedcom_help', 'qm_ah', '', false, true)
-		."{$pgv_lang['htmlplus_block_gedcom']}</td>\n"
-		."\t<td class=\"optionbox\">\n"
-		."\t\t<select name=\"gedcom\">\n"
-		."\t\t\t<option value=\"__current__\"{$sel_current}>{$pgv_lang['htmlplus_block_current']}</option>\n"
-		."\t\t\t<option value=\"__default__\"{$sel_default}>{$pgv_lang['htmlplus_block_default']}</option>\n"
+		."{$pgv_lang['htmlplus_block_gedcom']}</td>"
+		."<td class=\"optionbox\">"
+		."<select name=\"gedcom\">"
+		."<option value=\"__current__\"{$sel_current}>{$pgv_lang['htmlplus_block_current']}</option>"
+		."<option value=\"__default__\"{$sel_default}>{$pgv_lang['htmlplus_block_default']}</option>"
 		;
-		foreach($GEDCOMS as $ged)
-		{
-			if($ged['gedcom'] == $config['gedcom']){$sel = ' selected="selected"';}else{$sel = '';}
-			print "\t\t\t<option value=\"{$ged['gedcom']}\"{$sel}>{$ged['title']}</option>\n";
+		foreach($GEDCOMS as $ged) {
+			if ($ged['gedcom'] == $config['gedcom']) {
+				$sel = ' selected="selected"';
+			} else {
+				$sel = '';
+			}
+			print "<option value=\"{$ged['gedcom']}\"{$sel}>{$ged['title']}</option>";
 		}
-		print "\t\t</select>\n"
-		."\t</td>\n</tr>\n"
+		print "</select>"
+		."</td></tr>"
 		;
 	}
 	// html
-	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
+	print "<tr><td class=\"descriptionbox wrap width33\">"
 	.print_help_link('index_htmlplus_content_help', 'qm_ah', '', false, true)
-	."{$pgv_lang['htmlplus_block_content']}<br />\n<br />\n"
-	//		."\t\t<input type =\"button\" value=\"{$pgv_lang['htmlplus_block_taglist']}\" onclick=\"window.open('stats_tag_list.php', '_blank', 'top=50,left=10,width=600,height=600,scrollbars=1,resizable=1');\" />\n"
-	."\t</td>\n"
-	."\t<td class=\"optionbox\">"
-	."\t\t<textarea name=\"html\" rows=\"10\" cols=\"80\">{$config['html']}</textarea>\n"
-	."\t</td>\n</tr>\n"
+	."{$pgv_lang['htmlplus_block_content']}<br /><br />"
+	."</td>"
+	."<td class=\"optionbox\">"
+	."<textarea name=\"html\" rows=\"10\" cols=\"80\">{$config['html']}</textarea>"
+	."</td></tr>"
 	;
 	// compatibility mode
-	if($config['compat'] == 1){$compat = ' checked="CHECKED"';}else{$compat = '';}
-	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
+	if ($config['compat'] == 1){$compat = ' checked="CHECKED"';}else{$compat = '';}
+	print "<tr><td class=\"descriptionbox wrap width33\">"
 	.print_help_link('index_htmlplus_compat_help', 'qm_ah', '', false, true)
-	."{$pgv_lang['htmlplus_block_compat']}</td>\n"
-	."\t<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td>\n</tr>\n"
+	."{$pgv_lang['htmlplus_block_compat']}</td>"
+	."<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td></tr>"
 	;
 	// Cache file life
 	if ($ctype=="gedcom") {

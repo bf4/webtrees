@@ -5,7 +5,7 @@
  * This is the RSS block
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,39 +42,37 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	$title = print_help_link("rss_feed_help", "qm","",false,true);
 	$title .= $pgv_lang["rss_feeds"];
 	$content = "<div class=\"center\">";
-	$content .= "<form method=\"post\" action=\"\" name=\"rssform\">\n";
+	$content .= "<form method=\"post\" action=\"\" name=\"rssform\">";
 	$content .= "<br />";
-	$content .= "\n\t<select name=\"rssStyle\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
-	$content .= "\n\t\t<option value=\"ATOM\" selected=\"selected\">ATOM 1.0</option>";
-	$content .= "\n\t\t<option value=\"RSS2.0\">RSS 2.0</option>";
-	$content .= "\n\t\t<option value=\"RSS1.0\">RSS 1.0</option>";
-	$content .= "\n\t\t<option value=\"ATOM0.3\">ATOM 0.3</option>";
-	$content .= "\n\t\t<option value=\"RSS0.91\">RSS 0.91</option>";
-	$content .= "\n\t\t<option value=\"HTML\">HTML</option>";
-	$content .= "\n\t\t<option value=\"JS\">JavaScript</option>";
-	$content .= "\n\t</select>";
-	$content .= "\n\t<select name=\"module\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
-	$content .= "\n\t\t<option value=\"\">" . $pgv_lang["all"] . "</option>";
-	$content .= "\n\t\t<option value=\"today\">" . $pgv_lang["on_this_day"] . " </option>";
-	$content .= "\n\t\t<option value=\"upcoming\">" . $pgv_lang["upcoming_events"] . "</option>";
-	$content .= "\n\t\t<option value=\"gedcomStats\">" . $pgv_lang["gedcom_stats"] . "</option>";
-	$content .= "\n\t\t<option value=\"gedcomNews\">" . $pgv_lang["gedcom_news"] . "</option>";
-	$content .= "\n\t\t<option value=\"top10Surnames\">" . $pgv_lang["block_top10"] . "</option>";
-	$content .= "\n\t\t<option value=\"recentChanges\">" . $pgv_lang["recent_changes"] . "</option>";
-	$content .= "\n\t\t<option value=\"randomMedia\">" . $pgv_lang["random_picture"] . "</option>";
-	$content .= "\n\t</select>";
-	//$content .= "\n\t<select name=\"auth\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
-	//$content .= "\n\t\t<option value=\"\">" . $pgv_lang["no_auth_needed"] . "</option>";
-	//$content .= "\n\t\t<option value=\"basic\">" . $pgv_lang["basic_auth"] . "</option>";
-	////$content .= "\n\t\t<option value=\"digest\">" . $pgv_lang["digest_auth"] . "</option>";
-	//$content .= "\n\t</select>";
+	$content .= "<select name=\"rssStyle\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
+	$content .= "<option value=\"ATOM\" selected=\"selected\">ATOM 1.0</option>";
+	$content .= "<option value=\"RSS2.0\">RSS 2.0</option>";
+	$content .= "<option value=\"RSS1.0\">RSS 1.0</option>";
+	$content .= "<option value=\"ATOM0.3\">ATOM 0.3</option>";
+	$content .= "<option value=\"RSS0.91\">RSS 0.91</option>";
+	$content .= "<option value=\"HTML\">HTML</option>";
+	$content .= "<option value=\"JS\">JavaScript</option>";
+	$content .= "</select>";
+	$content .= "<select name=\"module\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
+	$content .= "<option value=\"\">" . $pgv_lang["all"] . "</option>";
+	$content .= "<option value=\"today\">" . $pgv_lang["on_this_day"] . " </option>";
+	$content .= "<option value=\"upcoming\">" . $pgv_lang["upcoming_events"] . "</option>";
+	$content .= "<option value=\"gedcomStats\">" . $pgv_lang["gedcom_stats"] . "</option>";
+	$content .= "<option value=\"gedcomNews\">" . $pgv_lang["gedcom_news"] . "</option>";
+	$content .= "<option value=\"top10Surnames\">" . $pgv_lang["block_top10"] . "</option>";
+	$content .= "<option value=\"recentChanges\">" . $pgv_lang["recent_changes"] . "</option>";
+	$content .= "<option value=\"randomMedia\">" . $pgv_lang["random_picture"] . "</option>";
+	$content .= "</select>";
 	$content .= " <a id=\"rss_button\" href=\"rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "\"><img class=\"icon\" src=\"images/feed-icon16x16.png\" alt=\"RSS\" title=\"RSS\" /></a>";
-	$content .= "</form></div>\n";
+	$content .= "</form></div>";
 	$content .= "<div class=\"center\">";
 	$content .= "</div>";
 
 	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
+	if ($block) {
+		include($THEME_DIR."/templates/block_small_temp.php");
+	} else {
+		include($THEME_DIR."/templates/block_main_temp.php");
+	}
 }
 ?>

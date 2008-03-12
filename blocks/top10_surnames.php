@@ -5,7 +5,7 @@
  * This block will show the top 10 surnames that occur most frequently in the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	else {
 		$surnames = get_top_surnames($config["num"]);
 
-// Insert from the "Add Names" list if not already in there
+		// Insert from the "Add Names" list if not already in there
 		if ($COMMON_NAMES_ADD != "") {
 			$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
 			if (count($addnames)==0) $addnames[] = $COMMON_NAMES_ADD;
@@ -68,7 +68,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			}
 		}
 
-// Remove names found in the "Remove Names" list
+		// Remove names found in the "Remove Names" list
 		if ($COMMON_NAMES_REMOVE != "") {
 			$delnames = preg_split("/[,;] /", $COMMON_NAMES_REMOVE);
 			if (count($delnames)==0) $delnames[] = $COMMON_NAMES_REMOVE;
@@ -78,7 +78,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			}
 		}
 
-// Sort the list and save for future reference
+		// Sort the list and save for future reference
 		uasort($surnames, "top_surname_sort");
 		$_SESSION["top10"][$GEDCOM] = $surnames;
 	}
@@ -93,7 +93,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 					$name = PGV_USER_NAME;
 				}
 				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-				$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
+				$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 			}
 		}
 		$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
@@ -103,10 +103,13 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		ob_start();
 		print_surn_table(array_slice($surnames, 0, $config["num"]));
 		$content = ob_get_clean();
-		
-		global $THEME_DIR;
-		if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-		else include($THEME_DIR."/templates/block_main_temp.php");
+	}
+
+	global $THEME_DIR;
+	if ($block) {
+		include($THEME_DIR."/templates/block_small_temp.php");
+	} else {
+		include($THEME_DIR."/templates/block_main_temp.php");
 	}
 }
 

@@ -5,7 +5,7 @@
  * This block allows administrators to enter news items for the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,16 +45,13 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $VERSION, $PGV_BLOCKS;
 
-	if(empty($config))
-	{
+	if(empty($config)) {
 		$config = $PGV_BLOCKS['print_gedcom_news']['config'];
 	}
-	if ($config['flag'] == 0)
-	{
+	if ($config['flag'] == 0) {
 		$config['limit'] = 'nolimit';
 	}
-	if (isset($_REQUEST['gedcom_news_archive']))
-	{
+	if (isset($_REQUEST['gedcom_news_archive'])) {
 		$config['limit'] = 'nolimit';
 		$config['flag'] = 0;
 	}
@@ -90,18 +87,14 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	$td = time();
 	foreach($usernews as $key=>$news)
 	{
-		if ($config['limit'] == 'count')
-		{
-			if ($c >= $config['flag'])
-			{
+		if ($config['limit'] == 'count') {
+			if ($c >= $config['flag']) {
 				break;
 			}
 			$c++;
 		}
-		if ($config['limit'] == 'date')
-		{
-			if (floor(($td - $news['date']) / 86400) > $config['flag'])
-			{
+		if ($config['limit'] == 'date') {
+			if (floor(($td - $news['date']) / 86400) > $config['flag']) {
 				break;
 			}
 		}
@@ -152,21 +145,22 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$content .= "</div>\n";
 	}
 	$printedAddLink = false;
-	if(PGV_USER_GEDCOM_ADMIN)
-	{
+	if (PGV_USER_GEDCOM_ADMIN) {
 		$content .= "<a href=\"javascript:;\" onclick=\"addnews('".preg_replace("/'/", "\'", $GEDCOM)."'); return false;\">".$pgv_lang["add_news"]."</a>";
 		$printedAddLink = true;
 	}
-	if ($config['limit'] == 'date' || $config['limit'] == 'count')
-	{
+	if ($config['limit'] == 'date' || $config['limit'] == 'count') {
 		if ($printedAddLink) $content .= "&nbsp;&nbsp;|&nbsp;&nbsp;";
 		$content .= print_help_link("gedcom_news_archive_help", "qm", "", false, true);
 		$content .= "<a href=\"index.php?gedcom_news_archive=yes&amp;ctype={$ctype}\">".$pgv_lang['gedcom_news_archive']."</a><br />";
 	}
 
 	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
+	if ($block) {
+		include($THEME_DIR."/templates/block_small_temp.php");
+	} else {
+		include($THEME_DIR."/templates/block_main_temp.php");
+	}
 }
 
 function print_gedcom_news_config($config)

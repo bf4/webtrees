@@ -5,7 +5,7 @@
  * This block will print a list of the users who are currently logged in
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,9 +60,9 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 		if (PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline')=='Y') {
 			$loggedusers[$user_id]=$user_name;
 		} else {
-					$NumAnonymous++;
-			}
+			$NumAnonymous++;
 		}
+	}
 
 	$id = "logged_in_users";
 	$title = print_help_link("index_loggedin_help", "qm", "", false, true);
@@ -100,7 +100,10 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	$content .= "</table>";
 	
 	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
+	if ($block) {
+		include($THEME_DIR."/templates/block_small_temp.php");
+	} else {
+		include($THEME_DIR."/templates/block_main_temp.php");
+	}
 }
 ?>

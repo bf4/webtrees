@@ -5,7 +5,7 @@
  * This block prints a form that will allow a user to login
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,36 +48,35 @@ function print_login_block($block = true, $config="", $side, $index) {
 	if ($USE_REGISTRATION_MODULE) $title .= print_help_link("index_login_register_help", "qm", "", false, true);
 	else $title .= print_help_link("index_login_help", "qm", "", false, true);
 	$title .= $pgv_lang["login"];
-	$content = "<div class=\"center\"><form method=\"post\" action=\"$LOGIN_URL\" name=\"loginform\" onsubmit=\"t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;\">\n";
-	$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php?ctype=$ctype&amp;\" />\n";
+	$content = "<div class=\"center\"><form method=\"post\" action=\"$LOGIN_URL\" name=\"loginform\" onsubmit=\"t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;\">";
+	$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php?ctype=$ctype&amp;\" />";
 	$content .= "<input type=\"hidden\" name=\"ged\" value=\"";
 	if (isset($GEDCOM)) $content .= $GEDCOM; 
 	$content .= "\" />";
 	$content .= "<input type=\"hidden\" name=\"pid\" value=\"";
 	if (isset($pid)) $content .= $pid; 
 	$content .= "\" />";
-	$content .= "<input type=\"hidden\" name=\"usertime\" value=\"\" />\n";
-	$content .= "<input type=\"hidden\" name=\"action\" value=\"login\" />\n";
+	$content .= "<input type=\"hidden\" name=\"usertime\" value=\"\" />";
+	$content .= "<input type=\"hidden\" name=\"action\" value=\"login\" />";
 	$content .= "<table>";
 	$content .= "<tr><td ";
 	$content .= write_align_with_textdir_check("right", true);
-	$content .= ">".$pgv_lang["username"]."</td><td><input type=\"text\" name=\"username\" size=\"15\" class=\"formField\" /></td></tr>\n";
+	$content .= ">".$pgv_lang["username"]."</td><td><input type=\"text\" name=\"username\" size=\"15\" class=\"formField\" /></td></tr>";
 	$content .= "<tr><td ";
 	$content .= write_align_with_textdir_check("right", true);
-	$content .= ">".$pgv_lang["password"]."</td><td><input type=\"password\" name=\"password\" size=\"15\" class=\"formField\" /></td></tr>\n";
+	$content .= ">".$pgv_lang["password"]."</td><td><input type=\"password\" name=\"password\" size=\"15\" class=\"formField\" /></td></tr>";
 	if ($ALLOW_REMEMBER_ME) {
 		$content .= "<tr><td>".$pgv_lang["remember_me"]."</td><td><input type=\"checkbox\" name=\"remember\" value=\"yes\" class=\"formField\" ";
 		if (!empty($_COOKIE["pgv_rem"])) $content .= "checked=\"checked\" ";
 		$content .= "/>";
 		$content .= print_help_link("remember_me_help", "qm", "", false, true);
-		$content .= "</td></tr>\n";
+		$content .= "</td></tr>";
 	}
 	$content .= "<tr><td colspan=\"2\" class=\"center\">";
 	$content .= "<input type=\"submit\" value=\"".$pgv_lang["login"]."\" />&nbsp;";
-	//$content .= "<input type=\"submit\" value=\"".$pgv_lang["admin"]."\" onclick=\"document.loginform.url.value='admin.php'\" />";
-	$content .= "</td></tr>\n";
-	$content .= "</table>\n";
-	$content .= "</form></div>\n";
+	$content .= "</td></tr>";
+	$content .= "</table>";
+	$content .= "</form></div>";
 	$content .= "<div class=\"center\">";
 	if ($USE_REGISTRATION_MODULE){
 		$content .= $pgv_lang["no_account_yet"];
@@ -98,7 +97,10 @@ function print_login_block($block = true, $config="", $side, $index) {
 	$content .= "</div><br />";
 
 	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
+	if ($block) {
+		include($THEME_DIR."/templates/block_small_temp.php");
+	} else {
+		include($THEME_DIR."/templates/block_main_temp.php");
+	}
 }
 ?>
