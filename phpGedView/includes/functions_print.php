@@ -1906,31 +1906,34 @@ function print_menu($menu, $parentmenu="") {
 //-------------------------------------------------------------------------------------------------------------
 // switches between left and rigth align on chosen text direction
 //-------------------------------------------------------------------------------------------------------------
-function write_align_with_textdir_check($t_dir)
+function write_align_with_textdir_check($t_dir, $return=false)
 {
   global $TEXT_DIRECTION;
+  $out = "";
   if ($t_dir == "left")
   {
 	 if ($TEXT_DIRECTION == "ltr")
 	 {
-	   print " style=\"text-align:left; \" ";
+	   $out .= " style=\"text-align:left; \" ";
 	 }
 	 else
 	 {
-	   print " style=\"text-align:right; \" ";
+	   $out .= " style=\"text-align:right; \" ";
 	 }
   }
   else
   {
 	 if ($TEXT_DIRECTION == "ltr")
 	 {
-	   print " style=\"text-align:right; \" ";
+	   $out .= " style=\"text-align:right; \" ";
 	 }
 	 else
 	 {
-	   print " style=\"text-align:left; \" ";
+	   $out .= " style=\"text-align:left; \" ";
 	 }
   }
+  if ($return) return $out;
+  print $out;
 }
 //-- print theme change dropdown box
 function print_theme_dropdown($style=0) {
