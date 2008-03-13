@@ -284,11 +284,11 @@ if ($MULTI_MEDIA) {
 				print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
 				print '<td class="blockh3">&nbsp;</td>';
 				print '</tr></table><div class="blockcontent">';
-				if ($block) {
-					print '<div class="small_inner_block">'.$content.'</div>';
-				} else {
+				//if ($block) {
+					//print '<div class="small_inner_block">'.$content.'</div>';
+				//} else {
 					print $content;
-				}
+				//}
 				print '</div></div>';
 			}
 				else print $content;
