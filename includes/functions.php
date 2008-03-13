@@ -1997,6 +1997,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 					$dct = preg_match("/2 DATE .*(\d\d\d\d)/", $birthrec, $bmatch);
 					if ($dct>0)
 						$byear2 = $bmatch[1]-25;
+						if ($byear2>2100) $byear2-=3760; // Crude conversion from jewish to gregorian
 				}
 			}
 		}
@@ -2089,6 +2090,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 					$dct = preg_match("/2 DATE .*(\d\d\d\d)/", $birthrec, $match);
 					if ($dct>0)
 						$byear1 = $match[1];
+						if ($byear1>2100) $byear1-=3760; // Crude conversion from jewish to gregorian
 				}
 				if (($byear1!=-1)&&($byear2!=-1)) {
 					$yeardiff = $byear1-$byear2;
@@ -2317,6 +2319,150 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		print "-->\n";
 	}
 	return $resnode;
+}
+
+// Calculate the relationship between two individuals.
+// Return false if unrelated, or a structure like this if they are:
+//
+// array(4) {
+//   ["path"]=>
+//   array(3) {
+//     [0]=>
+//     string(2) "I1"
+//     [1]=>
+//     string(2) "I2"
+//     [2]=>
+//     string(3) "I27"
+//   }
+//   ["length"]=>
+//   int(2)
+//   ["pid"]=>
+//   string(3) "I27"
+//   ["relations"]=>
+//   array(3) {
+//     [0]=>
+//     string(4) "self"
+//     [1]=>
+//     string(6) "father"
+//     [2]=>
+//     string(5) "child"
+//   }
+// }
+//
+// This is a new/experimental version of get_relationship().  It is not used by any live
+// code.  It is here to allow certain users to test it.
+function get_relationship_new($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
+	global $pgv_changes, $GEDCOM, $TBLPREFIX, $DBCONN;
+	static $RELA=null;
+	static $PATHS=null;
+
+	// Read all the relationships into a memory cache
+	if (is_null($RELA)) {
+		$RELA=array();
+		$families=&$DBCONN->getAssoc("SELECT f_id, f_husb, f_wife, TRIM(TRAILING ';' FROM f_chil) as f_chil FROM {$TBLPREFIX}families WHERE f_file=".PGV_GED_ID);
+		foreach ($families as $f_id=>$family) {
+			// Include pending changes
+			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".$GEDCOM])) {
+				$famrec=find_updated_record($f_id);
+				$families[$f_id][0]=(preg_match('/1 HUSB @(.*)@/', $famrec, $match)) ? $match[1] : '';
+				$families[$f_id][1]=(preg_match('/1 WIFE @(.*)@/', $famrec, $match)) ? $match[1] : '';
+				$families[$f_id][2]=(preg_match_all('/1 CHIL @(.*)@/', $famrec, $match)) ? $match[1] : array();
+			} else {
+				if ($families[$f_id][2]) {
+					$families[$f_id][2]=explode(';', $families[$f_id][2]);
+				} else {
+					$families[$f_id][2]=array();
+				}
+			}
+		}
+		// Convert gedcom family structure into relationships between individuals
+		foreach ($families as $f_id=>$family) {
+			if (count($family[2])>1) {
+				foreach ($family[2] as $child1) {
+					foreach ($family[2] as $child2) {
+						if ($child1!=$child2) {
+							$RELA[$child1][$child2]=array($f_id, 'sibling');
+						}
+					}
+				}
+			}
+			if ($family[0]) {
+				foreach ($family[2] as $child) {
+					$RELA[$family[0]][$child]=array($f_id, 'child');
+					$RELA[$child][$family[0]]=array($f_id, 'father');
+				}
+			}
+			if ($family[1]) {
+				foreach ($family[2] as $child) {
+					$RELA[$family[1]][$child]=array($f_id, 'child');
+					$RELA[$child][$family[1]]=array($f_id, 'mother');
+				}
+			}
+			if ($followspouse && $family[0] && $family[1]) {
+				$RELA[$family[0]][$family[1]]=array($f_id, 'spouse');
+				$RELA[$family[1]][$family[0]]=array($f_id, 'spouse');
+			}
+		}
+		unset($families);
+		// $PATHS[n] = relationship paths of length n, for n>0
+		// Just create n=1 for now.  Create longer ones as we need them.
+		$PATHS=array();
+		foreach ($RELA as $person1=>$relatives) {
+			foreach ($relatives as $person2=>$relationship) {
+				$PATHS[1][$person1][$person2]=array(0=>array($person1, $person2), 1=>array('self', $relationship[1]), 2=>$person2, 3=>$relationship[0]);
+			}
+		}
+	}
+
+	// If $pid1 doesn't exist, give up here
+	if (!isset($PATHS[1][$pid1])) {
+		return false;
+	}
+
+	// Search for paths of lengths 1,2,3,...
+	for ($n=1; ; ++$n) {
+		// Nothing found within the required path length
+		if ($maxlength && $maxlength<$n) {
+			return false;
+		}
+		// If we haven't yet looked at paths of length n, do it now
+		if (!isset($PATHS[$n][$pid1])) {
+			$added=false;
+			// For each path, extend it to all the next level of relatives
+			foreach ($PATHS[$n-1][$pid1] as $p2=>$node) {
+				foreach ($RELA[$p2] as $p3=>$rela) {
+					if (!in_array($p3, $node[0]) && $rela[0]!=$node[3]) {
+						$newnode=$node;
+						$newnode[0][]=$p3;
+						$newnode[1][]=$rela[1];
+						$newnode[2]=$p3;
+						$newnode[3]=$rela[0];
+						$PATHS[$n][$pid1][$p3]=$newnode;
+						$added=true;
+					}
+				}
+			}
+
+			// We can't extend any path any further
+			if (!$added) {
+				return false;
+			}
+		}
+		
+		// Does a path of length n exist?
+		if (isset($PATHS[$n][$pid1][$pid2])) {
+			if ($path_to_find) {
+				--$path_to_find;
+			} else {
+				$node=$PATHS[$n][$pid1][$pid2];
+				$node['path']=$node[0];
+				$node['relations']=$node[1];
+				$node['pid']=$pid2;
+				$node['length']=$n;
+				return $node;
+			}
+		}
+	}
 }
 
 /**
