@@ -1527,40 +1527,50 @@ function print_simple_fact($indirec, $fact, $pid) {
  * @param int $nlevel	the level of the note record
  * @param string $nrec	the note record to print
  * @param bool $textOnly	Don't print the "Note: " introduction
+ * @param boolean $return	Print the data or return the data
  * @return boolean
  */
-function print_note_record($text, $nlevel, $nrec, $textOnly=false) {
+function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false) {
 	global $pgv_lang;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_NOTES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_SOURCES, $EXPAND_NOTES;
+	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
 	$text .= get_cont($nlevel, $nrec);
 	$text = str_replace("~~", "<br />", $text);
 	$text = trim(expand_urls(stripLRMRLM($text)));
+	$data = "";
 	if (!empty($text)) {
 		$text = PrintReady($text);
 		if ($textOnly) {
-			print $text;
-			return true;
+			if (!$return) {
+				print $text;
+				return true;
+			}
+			else return $text;
 		}
 		$brpos = strpos($text, "<br />");
-		print "\n\t\t<br /><span class=\"label\">";
+		$data .= "\n\t\t<br /><span class=\"label\">";
 		if ($brpos !== false) {
 			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
-			print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 		}
-		print $pgv_lang["note"].": </span><span class=\"field\">";
+		$data .= $pgv_lang["note"].": </span><span class=\"field\">";
 		if ($brpos !== false) {
-			print substr($text, 0, $brpos);
-			print "<span id=\"$elementID\"";
-			if ($EXPAND_NOTES) print " style=\"display:block\"";
-			print " class=\"note_details\">";
-			print substr($text, $brpos + 6);
-			print "</span>";
+			$data .= substr($text, 0, $brpos);
+			$data .= "<span id=\"$elementID\"";
+			if ($EXPAND_NOTES) $data .= " style=\"display:block\"";
+			$data .= " class=\"note_details\">";
+			$data .= substr($text, $brpos + 6);
+			$data .= "</span>";
 		} else {
-			print $text;
+			$data .= $text;
 		}
-		return true;
+		if (!$return) {
+			print $data;
+			return true;
+		}
+		else return $data;
 	}
 	return false;
 }
@@ -1571,9 +1581,10 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false) {
  * @param int $level		The level of the factrecord
  * @param bool $textOnly	Don't print the "Note: " introduction
  */
-function print_fact_notes($factrec, $level, $textOnly=false) {
+function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	global $pgv_lang;
 	global $factarray;
+	$data = "";
 	$printDone = false;
 	$nlevel = $level+1;
 	$ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
@@ -1587,34 +1598,38 @@ function print_fact_notes($factrec, $level, $textOnly=false) {
 		$closeSpan = false;
 		if ($nt==0) {
 			//-- print embedded note records
-			$closeSpan = print_note_record($match[$j][1], $nlevel, $nrec, $textOnly);
+			$closeSpan = print_note_record($match[$j][1], $nlevel, $nrec, $textOnly, true);
+			$data .= $closeSpan;
 		} else {
 			if (displayDetailsByID($nmatch[1], "NOTE")) {
 				//-- print linked note records
 				$noterec = find_gedcom_record($nmatch[1]);
 				$nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);
-				$closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec, $textOnly);
+				$closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec, $textOnly, true);
+				$data .= $closeSpan;
 				if (!$textOnly) {
 					if (preg_match("/1 SOUR/", $noterec)>0) {
-						print "<br />\n";
-						print_fact_sources($noterec, 1);
+						$data .= "<br />\n";
+						$data .= print_fact_sources($noterec, 1, true);
 					}
 				}
 		  	}
 		}
 		if (!$textOnly) {
 			if (preg_match("/$nlevel SOUR/", $factrec)>0) {
-				print "<div class=\"indent\">";
-				print_fact_sources($nrec, $nlevel);
-				print "</div>";
+				$data .= "<div class=\"indent\">";
+				$data .= print_fact_sources($nrec, $nlevel, true);
+				$data .= "</div>";
 			}
 		}
 		if($closeSpan){
-			print "</span>";
+			$data .= "</span>";
 		}
 		$printDone = true;
 	}
-	if ($printDone) print "<br />"; 
+	if ($printDone) $data .= "<br />"; 
+	if (!$return) print $data;
+	else return $data;
 }
 /**
  * print a gedcom title linked to the gedcom portal
