@@ -3,7 +3,7 @@
  * Spanish FAQ texts for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ $faqlist["FAQ_015_head"] = "¿QUÉ DIFERENCIA HAY ENTRE ESTE ÁRBOL EN PhpGedVie
 // $faqlist["FAQ_030_NAMES"] = "<strong>NAMES</strong>: Entering of names is pretty straight-forward via the form and help is provided. The INDI ENTRY BOX should already have expanded name fields. If not, both it and the places box expand by clicking the corresponding + sign.";
 // $faqlist["FAQ_030_PREFIX"] = "Name <u>PREFIXes</u> are usually titles or honorifics such as Dr, Rabbi, Hon, Judge, etc.  Ordinary honorifics such as Mr, Mrs, Ms, Mstr should not be entered.";
 // $faqlist["FAQ_030_GIVN"] = "<u>GIVN</u> - Given names are the first and middle names usually selected at birth.  When name changes occur after birth, these additional names can be entered separately after the person has been recorded in the database.  They can also be entered as AKA (also known as) names.<br /><br />We normally expect people to be called by the first of their given names.  When this is not the case, you should indicate which of the given names is the preferred one by putting an asterisk in front.  For example, <i>John James *Mitchell Jones</i> indicates that this person is called \"Mitchell\".  In this case, \"Mitchell\" is not a nickname, although \"Mitch\" could be.";
-// $faqlist["FAQ_030_GIVN2"] = "We enter the given name with an initial uppercase letter. The rest of the name is entered in lower case letters";
+// $faqlist["FAQ_030_GIVN2"] = " We enter the given name with an initial uppercase letter. The rest of the name is entered in lower case letters";
 // $faqlist["FAQ_030_SURNAME"] = "<u>SURNAME</u> is the family or last name. This is the <u>birth name</u> for a married person, and not the surname assumed after marriage. See <i>married name</i> below. When name changes occur after birth, these additional names can be entered separately after the person has been recorded in the database.  They can also be entered as AKA (also known as) names.";
 // $faqlist["FAQ_030_SURNAME2"] = "We enter the SURNAME with an initial uppercase letter. The rest of the name is entered in lower case letters";
 // $faqlist["FAQ_030_SUFFIX"] = "Name <u>SUFFIXes</u> are Jr, Sr, III, etc.";

@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -290,6 +290,10 @@ $factarray["_BIRT_GCHI"] = "Nacimiento de un nieto";
 $factarray["_MARR_GCHI"] = "Matrimonio de un nieto";
 $factarray["_DEAT_GCHI"] = "Defunción de un nieto";
 
+$factarray["_BIRT_GGCH"] = "Nacimiento de un bisnieto";
+$factarray["_MARR_GGCH"] = "Matrimonio de un bisnieto";
+$factarray["_DEAT_GGCH"] = "Defunción de un bisnieto";
+
 $factarray["_MARR_FATH"] = "Matrimonio del padre";
 $factarray["_DEAT_FATH"] = "Defunción del padre";
 
@@ -309,6 +313,8 @@ $factarray["_MARR_NEPH"] = "Matrimonio de un sobrino o una sobrina";
 $factarray["_DEAT_NEPH"] = "Defunción de un sobrino o una sobrina";
 
 $factarray["_DEAT_GPAR"] = "Defunción de un abuelo";
+
+$factarray["_DEAT_GGPA"] = "Defunción de un bisabuelo";
 
 $factarray["_BIRT_FSIB"] = "Nacimiento de un tío paterno";
 $factarray["_MARR_FSIB"] = "Matrimonio de un tío paterno";
