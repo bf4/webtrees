@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,23 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Usted no puede acceder a este archivo de idioma directamente.";
 	exit;
 }
+
+//Config Parameters -------------------------------------
+// Added in VERSION 4.1.4 
+
+$pgv_lang["lb_details"]			= "Detalles";
+$pgv_lang["lb_detail_info"]		= "Ver los detalles de este objeto ...  Y otras opciones de objetos - Página del visor de objetos";
+$pgv_lang["lb_pause_ss"]		= "Pausar la presentación";
+$pgv_lang["lb_start_ss"]		= "Comenzar la presentación";
+$pgv_lang["lb_music"]			= "Activar/descativar música";
+$pgv_lang["lb_zoom_off"]		= "Desactivar el zoom";
+$pgv_lang["lb_zoom_on"]			= "Zoom activado ... Use la rueda o las teclas i y o para acercar y alejar";
+$pgv_lang["lb_close_win"]		= "Cerrar la ventana de Lightbox";
+
+
+
+
+// VERSION 4.1.3 
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]			= "Configuración del Álbum Lightbox";
@@ -86,7 +103,7 @@ $pgv_lang["lb_edit_details"] 	= "Editar detalles";
 $pgv_lang["lb_view_details"] 	= "Ver detalles";
 $pgv_lang["lb_edit_media"] 		= "Editar los detalles de este objeto audiovisual";
 $pgv_lang["lb_delete_media"] 	= "Eliminar este objeto audiovisual - Sólo borra el vínculo a esta persona - No borra el archivo audiovisual ni otros vínculos";
-$pgv_lang["lb_view_media"] 		= "Ver los detalles de este objeto audiovisual.\nMas otas opciones de objetos - Página del visor de objetos";
+$pgv_lang["lb_view_media"] 		= "Ver los detalles de este objeto audiovisual.\nMás otras opciones de objetos - Página del visor de objetos";
 $pgv_lang["lb_add_media"] 		= "Agregar un nuevo objeto audiovisual";
 $pgv_lang["lb_add_media_full"] 	= "Agregar un nuevo objeto audiovisual a esta persona";
 $pgv_lang["lb_link_media"] 		= "Vincular a un objeto audiovisual existente";
@@ -98,8 +115,10 @@ $pgv_lang["turn_edit_OFF"] 		= "Desactivar el modo de edición";
 
 $pgv_lang["lb_source_avail"] 	= "Hay información de la fuente - Haga clic aquí.";
 
-$pgv_lang["lb_private"] 		= "Imagen vinculada a <br /> una persona privada";
+$pgv_lang["lb_private"] 		= "Imagen vinculada a <br> una persona privada";
 $pgv_lang["lb_view_source_tip"] = "Ver fuente : ";
 $pgv_lang["lb_view_details_tip"] = "Ver detalles del objeto : ";
+
+
 
 ?>
