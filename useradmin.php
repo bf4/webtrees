@@ -274,8 +274,7 @@ if ($action=="edituser") {
 		?>
 		<tr>
 		<td><?php print $GEDCOM;?>:&nbsp;&nbsp;</td>
-		<td><input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="
-		<?php
+		<td><input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
 		$pid=get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid');
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $GEDCOM);
@@ -297,8 +296,7 @@ if ($action=="edituser") {
 		?>
 		<tr>
 		<td><?php print $GEDCOM;?>:&nbsp;&nbsp;</td>
-		<td> <input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="
-		<?php
+		<td> <input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
 		$pid=get_user_gedcom_setting($user_id, $GEDCOM, 'rootid');
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $GEDCOM);
@@ -742,11 +740,10 @@ if ($action == "createform") {
 			?>
 			<tr>
 			<td><?php print $GEDCOM;?>:&nbsp;&nbsp;</td>
-			<td><input type="text" name="<?php print $varname;?>" id="<?php print $varname;?>" tabindex="<?php print ++$tab; ?>" value="
-			<?php
-			print "\" />\n";
+			<td><input type="text" name="<?php print $varname;?>" id="<?php print $varname;?>" tabindex="<?php print ++$tab; ?>" value="<?php
+			print "\" />";
 			print_findindi_link($varname, "", false, false, $GEDCOM);
-			print "</td></tr>\n";
+			print "</td></tr>";
 		}
 		?>
 		</table>
@@ -759,8 +756,7 @@ if ($action == "createform") {
 			?>
 			<tr>
 			<td><?php print $GEDCOM;?>:&nbsp;&nbsp;</td>
-			<td><input type="text" name="<?php print $varname;?>" id="<?php print $varname;?>" tabindex="<?php print ++$tab; ?>" value="
-			<?php
+			<td><input type="text" name="<?php print $varname;?>" id="<?php print $varname;?>" tabindex="<?php print ++$tab; ?>" value="<?php
 			print "\" />\n";
 			print_findindi_link($varname, "", false, false, $GEDCOM);
 			print "</td></tr>\n";
