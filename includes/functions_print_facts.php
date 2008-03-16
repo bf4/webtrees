@@ -586,7 +586,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 				$data .= "<span class=\"label\">".$factarray["PUBL"].": </span>";
 				$data .= $text;
 			}
-			printSourceStructure(getSourceStructure($srec));
+			$data .= printSourceStructure(getSourceStructure($srec));
 			$data .= "<div class=\"indent\">";
 			print_media_links($srec, $nlevel);
 			print_fact_notes($srec, $nlevel);
@@ -943,7 +943,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 					print_help_link("RESN_help", "qm");
 				}
 				if ($source) {
-					printSourceStructure(getSourceStructure($srec));
+					print printSourceStructure(getSourceStructure($srec));
 					print "<div class=\"indent\">";
 					print_media_links($srec, $nlevel);
 					print_fact_notes($srec, $nlevel);
@@ -974,36 +974,37 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 function printSourceStructure($textSOUR) {
 	global $pgv_lang, $factarray;
 
+	$data='';
 	if ($textSOUR["PAGE"]!="") {
-		print "\n\t\t\t<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
+		$data.="<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
 	}
 
 	if ($textSOUR["EVEN"]!="") {
-		print "<br /><span class=\"label\">".$factarray["EVEN"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["EVEN"])."</span>";
+		$data.="<br /><span class=\"label\">".$factarray["EVEN"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["EVEN"])."</span>";
 		if ($textSOUR["ROLE"]!="") {
-			print "\n\t\t\t<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["ROLE"])."</span>";
+			$data.="<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["ROLE"])."</span>";
 		}
 	}
 
 	if ($textSOUR["DATE"]!="" || count($textSOUR["TEXT"])!=0) {
-		// print "<br /><span class=\"label\">".$factarray["DATA"]."</span>";
+		// $data.="<br /><span class=\"label\">".$factarray["DATA"]."</span>";
 		if ($textSOUR["DATE"]!="") {
 			$date=new GedcomDate($textSOUR["DATE"]);
-			print "\n\t\t\t<br />&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["date_of_entry"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
+			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["date_of_entry"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
 		}
 		foreach($textSOUR["TEXT"] as $text) {
-			print "\n\t\t\t<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
 		}
 	}
 
 	if ($textSOUR["QUAY"]!="") {
-		print "\n\t\t\t<br /><span class=\"label\">".$factarray["QUAY"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["QUAY"])."</span>";
+		$data.="<br /><span class=\"label\">".$factarray["QUAY"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["QUAY"])."</span>";
 	}
 
 	foreach($textSOUR["TEXT2"] as $text) {
-		print "\n\t\t\t<br /><span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+		$data.="<br /><span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
 	}
-
+	return $data;
 }
 
 /**
