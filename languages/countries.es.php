@@ -46,7 +46,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 $countries["ABW"]="Aruba";
-// $countries["ACA"]="Acadia";
+$countries["ACA"]="Acadia";
 $countries["AFG"]="Afganistán";
 $countries["AGO"]="Angola";
 $countries["AIA"]="Anguila";
@@ -87,10 +87,10 @@ $countries["BWA"]="Botsuana";
 $countries["BWI"]="Indias Occidentales Británicas";
 $countries["CAF"]="República Centro-africana";
 $countries["CAN"]="Canadá";
-// $countries["CAP"]="Cape Colony";
+$countries["CAP"]="Colonia del Cabo";
 $countries["CCK"]="Islas Cocos";
 $countries["CHE"]="Suiza";
-// $countries["CHI"]="Channel Islands";
+$countries["CHI"]="Islas del Canal";
 $countries["CHL"]="Chile";
 $countries["CHN"]="China";
 $countries["CIV"]="Costa de Marfil";
@@ -159,7 +159,7 @@ $countries["IOT"]="Territorio Británico del Océano Índico";
 $countries["IRL"]="Irlanda";
 $countries["IRN"]="Irán";
 $countries["IRQ"]="Irak";
-$countries["ISL"]="Iselandia";
+$countries["ISL"]="Islandia";
 $countries["ISR"]="Israel";
 $countries["ITA"]="Italia";
 $countries["JAM"]="Jamaica";
@@ -297,17 +297,17 @@ $countries["VGB"]="Islas Vírgenes Británicas";
 $countries["VIR"]="Islas Vírgenes Estadounidenses";
 $countries["VNM"]="Viet Nam";
 $countries["VUT"]="Vanuatu";
-// $countries["WAF"]="West Africa";
+$countries["WAF"]="África occidental";
 $countries["WLF"]="Wallis y Futuna";
 $countries["WLS"]="Gales";
 $countries["WSM"]="Samoa";
-$countries["YEM"]="Wales";
+$countries["YEM"]="Yemén";
 $countries["YUG"]="Yugoslavia";
 $countries["ZAF"]="Sudáfrica";
 $countries["ZAR"]="Zaire";
 $countries["ZMB"]="Zambia";
 $countries["ZWE"]="Zimbabue";
-$countries["???"]="";
+$countries["???"]="Desconocido";
 
 /*
  * The following table lists alternate names for various Chapman codes.
@@ -330,16 +330,18 @@ $countries["???"]="";
  * the current page language, no matter what the original country name was.
  * 
  */
+$altCountryNames["CHI"]="Islas Anglonormandas";
 $altCountryNames["COD"]="Zaire";
 $altCountryNames["DEU"]="Alemania Oriental; Alemania Occidental";
 $altCountryNames["FLK"]="Islas Falkland";
 $altCountryNames["GBR"]="Gran Bretaña";
 $altCountryNames["LKA"]="Ceilán";
+$altCountryNames["MEX"]="Estados Unidos Mexicanos; EE.UU.MM.";
 $altCountryNames["MMR"]="Birmania";
 $altCountryNames["NLD"]="Holanda";
 $altCountryNames["SUN"]="Unión Soviética";
 $altCountryNames["TLS"]="Timor Oriental";
-$altCountryNames["USA"]="Estados Unidos";
+$altCountryNames["USA"]="Estados Unidos; Estados Unidos de América; EE.UU.AA.";
 $altCountryNames["VAT"]="Santa Sede";
 $altCountryNames["WSM"]="Samoa Occidental";
 

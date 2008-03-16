@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,18 +37,18 @@ $pgv_lang["remove_all_files"]		= "Borrar todos los archivos no esenciales";
 $pgv_lang["warn_file_delete"]		= "Este archivo contiene información importante como ajustes de idioma o datos de los cambios pendientes.  ¿Está seguro de que desea borrar este archivo?";
 $pgv_lang["deleted_files"]          = "Archivos borrados:";
 $pgv_lang["index_dir_cleanup_inst"]	= "Para borrar un archivo del directorio de índice, arrástrelo a la basura o marque su casilla de selección.  Haga clic en el botón de borrar para eliminar permanentemente los archivos de la basura.<br /><br />Los archivos marcados con <img src=\"./images/RESN_confidential.gif\" /> se requieren para el correcto funcionamiento y no pueden eliminarse.<br />Los archivos marcados con <img src=\"./images/RESN_locked.gif\" /> tienen ajustes importantes o datos de cambios pendientes y sólo debería borrarlos si está seguro de lo que hace.<br /><br />";
-$pgv_lang["index_dir_cleanup"]		= "Limpieza del directorio de ínidice";
+$pgv_lang["index_dir_cleanup"]		= "Limpieza del directorio de índice";
 $pgv_lang["clear_cache_succes"]		= "Los archivos recordados se han borrado.";
 $pgv_lang["clear_cache"]			= "Limpiar los archivos de recuerdo";
 $pgv_lang["sanity_err0"]			= "Errores:";
-$pgv_lang["sanity_err1"]			= "Necesita tener PHP versión 4.3 o superior.";
+$pgv_lang["sanity_err1"]			= "Necesita tener PHP versión 4.3.5 o superior.";
 $pgv_lang["sanity_err2"]			= "El archivo o directorio <i>#GLOBALS[whichFile]#</i> no existe. Verifique por favor que el archivo o directorio existe, su nombre está escrito correctamente y que los permisos de lectura son correctos.";
 $pgv_lang["sanity_err3"]			= "No se pudo subir el archivo <i>#GLOBALS[whichFile]#</i> correctamente. Intente por favor subirlo de nuevo.";
 $pgv_lang["sanity_err4"]			= "El archivo <i>config.php</i> está corrompido.";
 $pgv_lang["sanity_err5"]			= "No se puede escribir en el archivo <i>config.php</i>.";
 $pgv_lang["sanity_err6"]			= "No se puede escribir el directorio <i>#GLOBALS[INDEX_DIRECTORY]#</i>.";
 $pgv_lang["sanity_warn0"]			= "Advertencias:";
-$pgv_lang["sanity_warn1"]			= "No se puede escribir en el directorio <i>#GLOBALS[MEDIA_DIRECTORY]#</i>.  No podrá subir archivos audiovisuales o generar miniaturas in PhpGedView.";
+$pgv_lang["sanity_warn1"]			= "No se puede escribir en el directorio <i>#GLOBALS[MEDIA_DIRECTORY]#</i>.  No podrá subir archivos audiovisuales o generar miniaturas en PhpGedView.";
 $pgv_lang["sanity_warn2"]			= "El directorio <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> no se puede escribir.  No podrá subir miniaturas ni generarlas con PhpGedView.";
 $pgv_lang["sanity_warn3"]			= "No existe la biblioteca de manejo de imágenes GD. PhpGedView funcionará a pesar de ello, pero algunas funciones, como la generación de miniaturas y el diagrama en círculo, no funcionarán sin la biblioteca GD.  Consulte por favor <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> (en inglés) para más información.";
 $pgv_lang["sanity_warn4"]			= "No existe la biblioteca XML Parser. PhpGedView funcionará a pesar de ello, pero algunas de las funciones, como la generación de informes y los servicios web, no funcionarán sin la biblioteca XML Parser. Consulte por favor <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> (en inglés) para más información.";
@@ -113,7 +113,7 @@ $pgv_lang["access"]						= "Acceso";
 $pgv_lang["add_gedcom"] 				= "Añadir otro GEDCOM";
 $pgv_lang["add_new_gedcom"] 			= "Crear un nuevo GEDCOM";
 $pgv_lang["add_new_language"]			= "Agregar archivos y definiciones para un nuevo idioma";
-$pgv_lang["add_user"]					= "Agregar nuevo Usuario";
+$pgv_lang["add_user"]					= "Agregar un nuevo usuario";
 $pgv_lang["admin_gedcom"]				= "Administrar GEDCOM";
 $pgv_lang["admin_gedcoms"]				= "Haga clic aquí para administrar los archivos GEDCOMS.";
 $pgv_lang["admin_geds"]					= "Administración de Datos y de archivos GEDCOM";
@@ -152,6 +152,7 @@ $pgv_lang["create_user"]						= "Crear Usuario";
 $pgv_lang["current_users"]						= "Lista de Usuarios";
 $pgv_lang["daily"]								= "Diariamente";
 $pgv_lang["dataset_exists"] 					= "Un archivo GEDCOM con este nombre ya ha sido importado en esta Base de datos.";
+$pgv_lang["unsync_warning"] 					= "Este archivo GEDCOM <em>not</em> está sincronizado con la base de datos.  Puede que no contenga la última versión de sus datos.  Para reimportar a partir de la base de datos en vez de a partir del archivo, descargue el archivo a partir de la base de datos y vuelva a subir el archivo resultante.";
 $pgv_lang["date_registered"]					= "Fecha de Registro";
 $pgv_lang["day_before_month"]					= "Día antes del mes (DD MM YYYY)";
 $pgv_lang["DEFAULT_GEDCOM"]						= "GEDCOM por defecto";
@@ -189,8 +190,9 @@ $pgv_lang["gedcom_not_imported"]				= "Este Gedcom no ha sido importado todavía
 $pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"] 				= "Configuración de Manejo de Imágenes";
+$pgv_lang["autoContinue"]						= "Pulsar automáticamente el botón «Continuar»";
 $pgv_lang["import_complete"]					= "Importación completa";
-$pgv_lang["import_marr_names"]					= "Importar nombres de casada";
+$pgv_lang["import_marr_names"]					= "Calcular nombres de casada";
 $pgv_lang["import_options"]						= "Opciones de importación";
 $pgv_lang["import_progress"]					= "Progreso de la importación...";
 $pgv_lang["import_statistics"]					= "Estadísticas de la importación";
@@ -302,7 +304,7 @@ $pgv_lang["usr_unset_rootid"]					= "Cancelando derechos de administrador de ";
 $pgv_lang["valid_gedcom"]						= "Se detectó un GEDCOM válido. No se requiere 'Limpieza'.";
 $pgv_lang["validate_gedcom"]					= "Validar GEDCOM";
 $pgv_lang["verified"]							= "Usuario autoverificado";
-$pgv_lang["verified_by_admin"]					= "Usuario aprobado Admin.:";
+$pgv_lang["verified_by_admin"]					= "Usuario aprobado por Admin.";
 $pgv_lang["verify_gedcom"]						= "Verificar el GEDCOM";
 $pgv_lang["verify_upload_instructions"]			= "Se ha encontrado un archivo GEDCOM con el mismo nombre. Si elige continuar, el viejo archivo GEDCOM será reemplazado por el archivo que subió y el proceso de Importación comenzará de nuevo.  Si elije cancelar, el viejo GEDCOM permanecerá intacto.";
 $pgv_lang["view_changelog"]						= "Ver el archivo changelog.txt";
@@ -312,7 +314,7 @@ $pgv_lang["visibleonline"]						= "Visible para los demás usuarios cuando esté
 $pgv_lang["visitor"]							= "Visitante";
 $pgv_lang["warn_users"]							= "Usuarios con avisos";
 $pgv_lang["weekly"]								= "Semanalmente";
-$pgv_lang["welcome_new"]						= "Bienvenido a su nuevo sitio PhpGedView. Dado que está viendo esta página, ha instalado PhpGedView con éxito y puede comenzar a configurarlo en la forma que desee.<br />";
+$pgv_lang["welcome_new"]						= "Bienvenido a su nuevo sitio PhpGedView. Dado que está viendo esta página, ha instalado PhpGedView con éxito y puede comenzar a configurarlo en la forma que desee.<br>";
 $pgv_lang["yearly"]								= "Anualmente";
 $pgv_lang["admin_OK_subject"]					= "Aprobación de la cuenta en #SERVER_NAME#";
 $pgv_lang["admin_OK_message"]					= "El administrador del sitio PhpGedView #SERVER_NAME# ha aprobado su solicitud de cuenta.  Ya puede entrar de forma identificada accediendo al siguiente vínculo:\r\n\r\n#SERVER_NAME#\r\n";
