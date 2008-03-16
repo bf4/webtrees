@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,9 +39,10 @@ $pgv_lang["gm_redraw_map"]          = "Redibujar mapa";
 $pgv_lang["gm_map"]                 = "Mapa";
 $pgv_lang["gm_satellite"]           = "Satélite";
 $pgv_lang["gm_hybrid"]              = "Híbrido";
+$pgv_lang["gm_physical"]            = "Relieve";
 
 // Configuration texts
-$pgv_lang["gm_manage"]              = "Idioma";
+$pgv_lang["gm_manage"]              = "Gestionar la configuración de GoogleMap";
 $pgv_lang["configure_googlemap"]    = "Configuración de GoogleMap";
 $pgv_lang["gm_admin_error"]         = "Página sólo para administradores";
 $pgv_lang["gm_db_error"]            = "No se encontró la tabla placelocation en la base de datos";
@@ -83,7 +84,7 @@ $pgv_lang["pl_import_gedcom"]       = "Importar del GEDCOM actual";
 $pgv_lang["pl_import_all_gedcom"]   = "Importar de todos los GEDCOM";
 $pgv_lang["pl_import_file"]         = "Importar del archivo";
 $pgv_lang["pl_export_file"]         = "Exportar la vista actual a un archivo";
-$pgv_lang["pl_export_all_file"]     = "Exportar todas las posicione a un archivo";
+$pgv_lang["pl_export_all_file"]     = "Exportar todas las posiciones a un archivo";
 $pgv_lang["pl_north_short"]         = "N";
 $pgv_lang["pl_south_short"]         = "S";
 $pgv_lang["pl_east_short"]          = "E";

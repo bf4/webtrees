@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ $pgv_lang["switch_timeline"]		= "Mostrar cronograma";
 $pgv_lang["differences"]			= "Diferencias";
 $pgv_lang["charts_block"]			= "Bloque de diagramas";
 $pgv_lang["charts_block_descr"]		= "El bloque de Diagramas le permite colocar un diagrama en la página de bienvenida o en la del portal MiGedView.  Puede configurar que el bloque muestre ascendientes, descendientes o reloj de arena.  También puede elegir la persona raíz para el diagrama.";
+$pgv_lang["charts_click_box"]		= "Haga clic en cualquiera de las cajas para obtener más información acerca de la persona.";
 $pgv_lang["chart_type"]				= "Tipo de diagrama";
 $pgv_lang["changedate1"]			= "Fin del intervalo de fechas de cambio";
 $pgv_lang["changedate2"]			= "Comienzo del intervalo de fechas de cambio";
@@ -139,7 +140,7 @@ $pgv_lang["broadcast_not_logged_6mo"]	= "Enviar mensaje a los usuarios que no se
 $pgv_lang["broadcast_never_logged_in"]	= "Enviar un mensaje a los usuarios que nunca se han conectado";
 $pgv_lang["stats_to_show"]			= "Seleccione las estadísticas a mostrar en este bloque";
 $pgv_lang["stat_avg_age_at_death"]	= "Edad media de fallecimiento";
-$pgv_lang["stat_longest_life"]		= "Persona que vivió mas tiempo";
+$pgv_lang["stat_longest_life"]		= "Persona que vivió más tiempo";
 $pgv_lang["stat_most_children"]		= "Pareja con más hijos";
 $pgv_lang["stat_average_children"]	= "Media de hijos por pareja";
 $pgv_lang["stat_events"]			= "Total eventos";
@@ -439,6 +440,8 @@ $pgv_lang["no_tab3"]				= "No hay citas de fuentes para esta persona.";
 $pgv_lang["no_tab4"]				= "No hay objetos audiovisuales para esta persona.";
 $pgv_lang["no_tab5"]				= "No hay parientes cercanos de esta persona.";
 $pgv_lang["no_tab6"]				= "No hay diario de investigación conectado a esta persona";
+$pgv_lang["show_fact_sources"]		= "Mostrar todas las fuentes";
+$pgv_lang["show_fact_notes"]		= "Mostrar todas las notas";
 
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]			= "Información de familia";
@@ -448,7 +451,7 @@ $pgv_lang["wife"]					= "Esposa";
 $pgv_lang["marriage"]				= "Matrimonio:";
 $pgv_lang["lds_sealing"]			= "Sellamiento SUD:";
 $pgv_lang["marriage_license"]		= "Licencia matrimonial:";
-$pgv_lang["no_children"]			= "Sin Hijos";
+$pgv_lang["no_children"]			= "No constan hijos";
 $pgv_lang["childless_family"]		= "Esta familia no tuvo hijos";
 $pgv_lang["parents_timeline"]		= "Mostrar la pareja en un cronograma";
 
@@ -479,7 +482,7 @@ $pgv_lang["name_description"]		= "Nombre / Descripción";
 $pgv_lang["remove"] 				= "Vaciar";
 $pgv_lang["empty_cart"] 			= "Vaciar carrito";
 $pgv_lang["download_now"]			= "Descargar ahora";
-$pgv_lang["download_file"]			= "Descargar archivo";
+$pgv_lang["download_file"]			= "Descargar archivo #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "La información de esta persona se descargó desde:";
 $pgv_lang["family_downloaded_from"] = "La información de esta familia se descargó desde:";
 $pgv_lang["source_downloaded_from"] = "La información de esta fuente se descargó desde:";
@@ -632,6 +635,14 @@ $pgv_lang["cal_hebrew_and_gregorian"] = "Hebreo y Gregoriano";
 $pgv_lang["cal_hijri"]                = "Hijri";
 $pgv_lang["cal_arabic"]               = "Árabe";
 
+// some religious dates
+$pgv_lang["easter"]     = "Pascua";
+$pgv_lang["ascension"]  = "Ascensión";
+$pgv_lang["pentecost"]  = "Pentecostés";
+$pgv_lang["assumption"] = "Asunción";
+$pgv_lang["all_saints"] = "Todos los santos";
+$pgv_lang["christmas"]  = "Navidad";
+
 // am/pm suffixes for 12 hour clocks
 // $pgv_lang["a.m."]         = "am";
 // $pgv_lang["p.m."]         = "pm";
@@ -744,7 +755,7 @@ $pgv_lang["setperms"]				= "Fijar permisos para los archivos de objetos";
 $pgv_lang["setperms_writable"]		= "Dar al mundo permiso de escritura";
 $pgv_lang["setperms_readonly"]		= "Dar al mundo sólo permiso de lectura";
 $pgv_lang["setperms_success"]		= "Permisos fijados";
-$pgv_lang["setperms_failure"]		= "Permisos no fijadso";
+$pgv_lang["setperms_failure"]		= "Permisos no fijados";
 $pgv_lang["setperms_time_exceeded"]	= "Se sobrepasó el límite de tiempo de ejecución.  Intente realizar el proceso en un directorio más pequeño.";
 $pgv_lang["move_time_exceeded"]		= "Se sobrepasó el límite de tiempo de ejecución.  Intente el proceso de nuevo para trasladar el resto de los archivos.";
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "El directorio raíz que indicó para el cortafuegos de objetos audiovisuales no existe.  Debe crearlo antes.";
@@ -761,15 +772,14 @@ $pgv_lang["no_link_found"]			= "No se encontró ninguna relación entre estas do
 $pgv_lang["sibling"]				= "Hermano";
 $pgv_lang["follow_spouse"]			= "Verificar parentesco por matrimonio.";
 $pgv_lang["timeout_error"]			= "Fuera de tiempo antes de que se encontrase un parentesco.";
-$pgv_lang["son-in-law"]				= "Yerno";  // the husband of your daughter
-$pgv_lang["daughter-in-law"]		= "Nuera"; // the wife of your son
 $pgv_lang["grandchild"]				= "Nieto/a";
 $pgv_lang["grandson"]				= "Nieto";
 $pgv_lang["granddaughter"]			= "Nieta";
+$pgv_lang["greatgrandchild"]		= "Bisnieto/a";
+$pgv_lang["greatgrandson"]			= "Bisnieto";
+$pgv_lang["greatgranddaughter"]		= "Bisnieta";
 $pgv_lang["brother"]				= "Hermano";
 $pgv_lang["sister"] 				= "Hermana";
-$pgv_lang["brother-in-law"]		= "Cuñado";
-$pgv_lang["sister-in-law"]			= "Cuñada";
 $pgv_lang["aunt"]					= "Tía";
 $pgv_lang["uncle"]				= "Tío";
 $pgv_lang["nephew"]				= "Sobrino";
@@ -777,7 +787,6 @@ $pgv_lang["niece"]				= "Sobrina";
 $pgv_lang["firstcousin"]			= "Primo/a hermano/a";
 $pgv_lang["femalecousin"]			= "Prima";
 $pgv_lang["malecousin"]				= "Primo";
-$pgv_lang["cousin-in-law"]			= "Primo político";
 $pgv_lang["relationship_to_me"] 	= "Parentesco conmigo";
 $pgv_lang["rela_husb"]				= "Parentesco con el esposo";
 $pgv_lang["rela_wife"]				= "Parentesco con la esposa";
@@ -796,6 +805,7 @@ $pgv_lang["brother_in_law"]		    = "cuñado";
 $pgv_lang["sister_in_law"]		    = "cuñada";
 $pgv_lang["son_in_law"]		        = "yerno";
 $pgv_lang["daughter_in_law"]		= "nuera";
+$pgv_lang["cousin_in_law"]			= "Primo político";
 
 $pgv_lang["step_son"]		        = "hijastro";
 $pgv_lang["step_daughter"]	    	= "hijastra";
@@ -1099,7 +1109,7 @@ $pgv_lang["mail02_subject"] 		= "Nuevo registro en #SERVER_NAME#";
 $pgv_lang["hashcode"]				= "Código de verificación:";
 $pgv_lang["thankyou"]				= "Hola #user_fullname# ...<br />Gracias por registrarse";
 $pgv_lang["pls_note06"] 			= "Ahora enviaremos un correo de confirmación a la dirección <b>#user_email#</b>. Debe verificar su solicitud de cuenta siguiendo las instrucciones que se dan en ese correo.  Si no confirma su solicitud de cuenta en siete días, su solicitud se rechazará automáticamente.  Tendrá que hacer una nueva solicitud.<br /><br />Después de haber seguido las instrucciones del correo de confirmación, el administrador aún habrá de aprobar la solicitud antes de que puede utilizarse su cuenta.<br /><br />Para entrar a este sitio, necesitará conocer su nombre de usuario y su contraseña.<br /><br />";
-$pgv_lang["pls_note06a"] 			= "Ahora recibirá un mensaje de correo electrónico para confirmar su dirección de correo <b>#user_email#</b>. Siga las instrucciones en ese mensaje de correo para completar la verificación y activar su cuenta. Si no lo hace antes de siete días, se borrará su solicitud automáticamente.  En ese caso, tendrá que repetir el proceso con una nueva solicitud.<br /><br />Cuando haya seguido los pasos indicados en ese mensaje de correo, podrá entrar. Para entrar, necesitará hacer uso de su usuario y su contraseña.<br /><br />";
+$pgv_lang["pls_note06a"] 			= "Ahora recibirá un mensaje de correo electrónico para confirmar su dirección de correo <b>#user_email#</b>. Siga las instrucciones en ese mensaje de correo para completar la verificación y activar su cuenta. Si no lo hace antes de siete días, se borrará su solicitud automáticamente.  En ese caso, tendrá que repetir el proceso con una nueva solicitud.<br><br />Cuando haya seguido los pasos indicados en ese mensaje de correo, podrá entrar. Para entrar, necesitará hacer uso de su usuario y su contraseña.<br /><br />";
 
 $pgv_lang["registernew"]			= "Nueva confirmación de Cuenta";
 $pgv_lang["user_verify"]			= "Verificación de usuario";
@@ -1589,7 +1599,7 @@ $pgv_lang["accesskeys"]				= "Atajos de teclado";
 $pgv_lang["accesskey_skip_to_content"]	= "C";
 $pgv_lang["accesskey_search"]	= "S";
 $pgv_lang["accesskey_skip_to_content_desc"]	= "Saltar al Contenido";
-// $pgv_lang["accesskey_viewing_advice"]	= "0";
+$pgv_lang["accesskey_viewing_advice"]	= "0";
 $pgv_lang["accesskey_viewing_advice_desc"]	= "Consejos de visualización";
 $pgv_lang["accesskey_home_page"]	= "1";
 $pgv_lang["accesskey_help_content"]	= "2";
@@ -1617,6 +1627,7 @@ $pgv_lang["accesskey_family_timeline"]	= "T";
 $pgv_lang["accesskey_family_gedcom"]	= "G";
 
 // FAQ Page
+$pgv_lang["faq_page"] = "Preguntas frecuentes";
 $pgv_lang["add_faq_header"] = "Encabezado de la Pregunta Frecuente";
 $pgv_lang["add_faq_body"] = "Cuerpo de la Pregunta Frecuente";
 $pgv_lang["add_faq_order"] = "Posición de la Pregunta Frecuente";
@@ -1629,7 +1640,7 @@ $pgv_lang["preview"] =  "Vista preliminar";
 $pgv_lang["no_id"] = "¡No se ha indicado un ID de Pregunta Frecuente!";
 
 // Help search
-$pgv_lang["hs_title"] 			= "Texto de ayuda a la búsqueda";
+$pgv_lang["hs_title"] 			= "Buscar en los textos de ayuda";
 $pgv_lang["hs_search"] 			= "Buscar";
 $pgv_lang["hs_close"] 			= "Cerrar ventana";
 $pgv_lang["hs_results"] 		= "Resultados encontrados:";
@@ -1669,7 +1680,7 @@ $pgv_lang["TYPE__video"] = "Vídeo";
 //-- Other media suff
 $pgv_lang["view_slideshow"] 		= "Ver como presentación";
 $pgv_lang["download_image"]			= "Descargar arhivo";
-$pgv_lang["no_media"]				= "No se encontraron objetos audiovisuales";
+$pgv_lang["no_media"]				= "No se encontró el objeto audiovisual";
 $pgv_lang["media_privacy"]			= "Las retricciones de privacidad no le permiten ver este elemento";
 $pgv_lang["relations_heading"]		= "La imagen está relacionada con:";
 $pgv_lang["file_size"]				= "Tamaño del archivo";
