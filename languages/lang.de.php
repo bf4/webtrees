@@ -32,7 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$pgv_lang["age_differences"]		= "Altersdifferenzen zeigen";
+$pgv_lang["age_differences"]		= "Datendifferenzen zeigen";
 $pgv_lang["date_of_entry"]			= "Datum des Eintrages in der ursprünglichen Quelle";
 $pgv_lang["multi_site_search"] 		= "Webseiten durchsuchen";
 $pgv_lang["switch_lifespan"]		= "Lebenspannen-Diagramm zeigen";
