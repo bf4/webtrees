@@ -45,6 +45,8 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["SHOW_AGE_DIFF"]							17 Mar 2008				W
+*$pgv_lang["SHOW_AGE_DIFF_help"]					17 Mar 2008				W
 *$pgv_lang["USE_MEDIA_FIREWALL_help"]				09 Mar 2008				w	Correct Wiki link
 * many variables									18 Feb 2008				w	Removed text like "This sets \$variablename etc"  Doesn't affect translation
 *$pgv_lang["index_gedcom_news_adm_help"]			07 Feb 2008				W
