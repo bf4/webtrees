@@ -26,12 +26,12 @@
  * @version $Id$
  */
 
+require_once 'includes/person_class.php';
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
 }
-
-require_once 'includes/person_class.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -634,7 +634,7 @@ function print_media_links($factrec, $level,$pid='') {
 			$thumbnail = thumbnail_file($mainMedia, true, false, $pid);
 			$isExternal = isFileExternal($row["m_file"]);
 			$mediaTitle = $row["m_titl"];
-
+			
 			// Determine the size of the mediafile
 			$imgsize = findImageSize($mainMedia);
 			$imgwidth = $imgsize[0]+40;
@@ -643,8 +643,17 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($objectNum > 0) print "<br clear=\"all\" />";
 				print "<table><tr><td>";
 				if ($isExternal || media_exists($thumbnail)) {
-					if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
-					else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+				
+//LBox --------  change for Lightbox Album --------------------------------------------
+					if (file_exists("modules/lightbox/album.php")) {
+						$name = trim($row["m_titl"]);
+						print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" title=\"" . $media_id . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+// ---------------------------------------------------------------------------------------------
+					}elseif ($USE_MEDIA_VIEWER) {
+						print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+					}else{
+						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+					}
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"". PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" /></a>";
@@ -1464,8 +1473,16 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-				if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
-				else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+//LBox --------  change for Lightbox Album --------------------------------------------
+				if (file_exists("modules/lightbox/album.php")) {
+					$name = trim($rowm["m_titl"]);
+					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+// ---------------------------------------------------------------------------------------------
+				}elseif ($USE_MEDIA_VIEWER) {
+					print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
+				}else{
+					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+				}
 			}
 			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";

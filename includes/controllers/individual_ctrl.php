@@ -382,9 +382,16 @@ class IndividualControllerRoot extends BaseController {
 					$imgheight = $imgsize[1]+150;
 					//Gets the Media View Link Information and Concatinate
 					$mid = $firstmediarec['mid'];
+					
+//LBox --------  change for Lightbox Album --------------------------------------------
+					if (file_exists("modules/lightbox/album.php")) {
+						$name1 = trim($firstmediarec["file"]);
+						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . "\">" . "\n";
+// ---------------------------------------------------------------------------------------------
 
-					if (!$USE_MEDIA_VIEWER && $imgsize) $result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
-					else {
+					}elseif (!$USE_MEDIA_VIEWER && $imgsize) {
+						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
+					}else{
 						$mediaviewlink = "mediaviewer.php?mid=".$mid;
 						$result .= "<a href=\"".$mediaviewlink."\">";
 					}
