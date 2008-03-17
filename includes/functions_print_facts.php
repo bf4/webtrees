@@ -5,7 +5,7 @@
  * Various printing functions used to print fact records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1492,8 +1492,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle));
-		else print "<i>".PrintReady(htmlspecialchars($mediaTitle));
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
+		else print "<i>".PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $rowm["m_gedrec"]);
