@@ -26,12 +26,12 @@
  * @version $Id$
  */
 
-require_once 'includes/person_class.php';
-
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
 }
+
+require_once 'includes/person_class.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -645,7 +645,7 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($isExternal || media_exists($thumbnail)) {
 				
 //LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php")) {
+					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 						$name = trim($row["m_titl"]);
 						print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" title=\"" . $media_id . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
@@ -1474,7 +1474,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
 //LBox --------  change for Lightbox Album --------------------------------------------
-				if (file_exists("modules/lightbox/album.php")) {
+					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 					$name = trim($rowm["m_titl"]);
 					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
