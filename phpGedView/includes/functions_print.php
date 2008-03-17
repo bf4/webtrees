@@ -285,9 +285,18 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			$imgsize = findImageSize($object["file"]);
 			$imgwidth = $imgsize[0]+50;
 			$imgheight = $imgsize[1]+150;
+			
+//LBox --------  change for Lightbox Album --------------------------------------------
+			if (file_exists("modules/lightbox/album.php")) {
+				$name3 = trim($object["file"]);
+				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_1]\" title=\"" . $object['mid'] . "\">" . "\n";
+// ---------------------------------------------------------------------------------------------
 
-			if (!empty($object['mid']) && $USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
-			else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
+			}elseif (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
+				print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
+			}else{
+				print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
+			}
 
 			print "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
 			if (!$show_full) print " style=\"display: none;\"";
