@@ -36,7 +36,7 @@ $pgv_lang["keep_media_help"]			= "~#pgv_lang[keep_media]#~<br /><br />Should exi
 $pgv_lang["USE_MEDIA_VIEWER"]			= "השתמש במציג מדיה"; 
 $pgv_lang["USE_MEDIA_VIEWER_help"]		= "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />When this option is <b>#pgv_lang[yes]#</b>, clicking on images will produce the Media Viewer page.  This page shows the details of the image.  If you have sufficient rights, you can also edit these details.<br /><br />When this option is <b>#pgv_lang[no]#</b>, clicking on images will produce a full-size image in a new window.<br />";
 $pgv_lang["USE_MEDIA_FIREWALL"]		= "השתמש בחומת אש של מדיה";
-$pgv_lang["USE_MEDIA_FIREWALL_help"]		= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />See the Wiki for a description of how to use the Media Firewall. <a href=\"http://wiki.phpgedview.net/en/index.php/Media_Firewall\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php/Media_Firewall</a><br />";
+$pgv_lang["USE_MEDIA_FIREWALL_help"]	= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />See the Wiki for a description of how to use the Media Firewall. <a href=\"http://wiki.phpgedview.net/en/index.php?title=Media_Firewall\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php?title=Media_Firewall</a><br />";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR"]		= "ספריית השורש בחומת האש של מדיה";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]	= "~#pgv_lang[MEDIA_FIREWALL_ROOTDIR]#~<br /><br />Directory in which the protected Media directory can be created.  #pgv_lang[MEDIA_FIREWALL_ROOTDIR_note]#<br />";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]	= "כאשר שדה זה ריק, משתמשים בתיקיית <b>#GLOBALS[INDEX_DIRECTORY]#</b>."; 
@@ -241,8 +241,8 @@ $pgv_lang["LINK_ICONS"]				= "הופעת תיבות קישור בתיבת התר
 $pgv_lang["LINK_ICONS_help"]			= "~#pgv_lang[LINK_ICONS]#~<br /><br />Allows the user to select links to other charts and close relatives of the person.<br /><br />Set to <b>#pgv_lang[disabled]#</b> to disable this feature.  Set to <b>#pgv_lang[mouseover]#</b> to popup the links when the user mouses over the icon in the box.  Set to <b>#pgv_lang[click]#</b> to popup the links when the user clicks on the icon in the box.<br />";
 $pgv_lang["ABBREVIATE_CHART_LABELS"]	= "קצר תגים בתרשימים";
 $pgv_lang["ABBREVIATE_CHART_LABELS_help"] 	= "~#pgv_lang[ABBREVIATE_CHART_LABELS]#~<br /><br />This option controls whether or not to abbreviate labels like \"Birth\" on charts with just the first letter like \"B\".<br />";
-$pgv_lang["SHOW_AGE_DIFF"]			= "הראה הפרשי גילים"; 
-$pgv_lang["SHOW_AGE_DIFF_help"]		= "~#pgv_lang[SHOW_AGE_DIFF]#~<br /><br />This option controls whether or not to show age differences between spouses and between children on close relatives tab.<br />";
+$pgv_lang["SHOW_AGE_DIFF"]			= "הראה הפרשי תאריכים"; 
+$pgv_lang["SHOW_AGE_DIFF_help"]		= "~#pgv_lang[SHOW_AGE_DIFF]#~<br /><br />This option controls whether or not the Close Relatives tab should show differences between birth dates of spouses, between marriage date and birth date of first child, and between birth dates of children.<br />";
 $pgv_lang["SHOW_PARENTS_AGE"]		= "הראה את גיל ההורים ליד תאריך הלידה של הילד";
 $pgv_lang["SHOW_PARENTS_AGE_help"]		= "~#pgv_lang[SHOW_PARENTS_AGE]#~<br /><br />This option controls whether or not to show age of father and mother next to child's birthdate on charts.<br />";
 $pgv_lang["SHOW_RELATIVES_EVENTS"]      	= "הראה מאורעות של קרובים על הדף האישי";
