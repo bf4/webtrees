@@ -227,6 +227,7 @@ if ($action!="choose") {
 					}
 					
 					replace_gedrec($gid1, $newgedrec);
+					if ($SYNC_GEDCOM_FILE) write_file();
 					write_changes();
 					print "<br /><a href=\"edit_merge.php?action=choose\">".$pgv_lang["merge_more"]."</a><br />\n";
 					print "<br /><br /><br />\n";
