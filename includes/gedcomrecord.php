@@ -240,22 +240,32 @@ class GedcomRecord {
 
 	/**
 	 * get the URL to link to this record
-	 * This method should be overriden in child sub-classes
 	 * @string a url that can be used to link to this person
 	 */
-	function getLinkUrl() {
-		$url = "gedrecord.php?pid=".$this->xref; // no class yet for NOTE record
+	function getLinkUrl($link='gedcomrecord.php?pid=') {
+		global $GEDCOM;
+
+		$url = $link.urlencode($this->getXref()).'&amp;ged='.urlencode($GEDCOM);
 		if ($this->isRemote()) {
-			$parts = preg_split("/:/", $this->rfn);
-			$servid = $parts[0];
-			$aliaid = $parts[1];
-			$servrec = find_gedcom_record($servid);
-			if (empty($servrec)) $servrec = find_updated_record($servid);
-			if (!empty($servrec)) {
-				$surl = get_gedcom_value("URL", 1, $servrec);
-				$url = dirname($surl);
-				$gedcom = get_gedcom_value("_DBID", 1, $servrec);
-				if (!empty($gedcom)) $url.="?ged=".$gedcom;
+			list($servid, $aliaid)=explode(':', $this->rfn);
+			if ($aliaid && $servid) {
+				require_once 'includes/serviceclient_class.php';
+				$serviceClient = ServiceClient::getInstance($servid);
+				if ($serviceClient) {
+					$surl = $serviceClient->getURL();
+					$url = $link.urlencode($aliaid);
+					if ($serviceClient->getType()=='remote') {
+						if (!empty($surl)) {
+							$url = dirname($surl).'/'.$url;
+						}
+					} else {
+						$url = $surl.$url;
+					}
+					$gedcom = $serviceClient->getGedfile();
+					if ($gedcom) {
+						$url.='&amp;ged='.urlencode($gedcom);
+					}
+				}
 			}
 		}
 		return $url;
