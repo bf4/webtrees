@@ -2706,39 +2706,45 @@ function print_findindi_link($element_id, $indiname, $asString=false, $multiple=
 	print $out;
 }
 
-function print_findplace_link($element_id, $ged='') {
+function print_findplace_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = $pgv_lang["find_place"];
 	if (isset($PGV_IMAGES["place"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["place"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	print " <a href=\"javascript:;\" onclick=\"findPlace(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
-	print $Link;
-	print "</a>";
+	$out = " <a href=\"javascript:;\" onclick=\"findPlace(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
+	$out .= $Link;
+	$out .= "</a>";
+	if ($asString) return $out;
+	print $out;
 }
 
-function print_findfamily_link($element_id, $ged='') {
+function print_findfamily_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = $pgv_lang["find_family"];
 	if (isset($PGV_IMAGES["family"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["family"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	print " <a href=\"javascript:;\" onclick=\"findFamily(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
-	print $Link;
-	print "</a>";
+	$out = " <a href=\"javascript:;\" onclick=\"findFamily(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
+	$out .= $Link;
+	$out .= "</a>";
+	if ($asString) return $out;
+	print $out;
 }
 
-function print_specialchar_link($element_id,$vert) {
+function print_specialchar_link($element_id, $vert, $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$text = $pgv_lang["find_specialchar"];
 	if (isset($PGV_IMAGES["keyboard"]["button"])) $Link = "<img id=\"".$element_id."_spec\" name=\"".$element_id."_spec\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["keyboard"]["button"]."\"  alt=\"".$text."\"  title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	print " <a href=\"javascript:;\" onclick=\"findSpecialChar(document.getElementById('".$element_id."')); updatewholename(); return false;\">";
-	print $Link;
-	print "</a>";
+	$out = " <a href=\"javascript:;\" onclick=\"findSpecialChar(document.getElementById('".$element_id."')); updatewholename(); return false;\">";
+	$out .= $Link;
+	$out .= "</a>";
+	if ($asString) return $out;
+	print $out;
 }
 
 function print_autopaste_link($element_id, $choices, $concat=1, $name=1, $submit=0) {
@@ -2766,20 +2772,22 @@ function print_findsource_link($element_id, $sourcename="", $asString=false, $ge
 	$out = " <a href=\"javascript:;\" onclick=\"findSource(document.getElementById('".$element_id."'), document.getElementById('".$sourcename."'), '".$ged."'); findtype='source'; return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
-	if($asString) return $out;
+	if ($asString) return $out;
 	print $out;
 }
 
-function print_findrepository_link($element_id, $ged='') {
+function print_findrepository_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
 	$text = $pgv_lang["find_repository"];
 	if (isset($PGV_IMAGES["repository"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	print " <a href=\"javascript:;\" onclick=\"findRepository(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
-	print $Link;
-	print "</a>";
+	$out = " <a href=\"javascript:;\" onclick=\"findRepository(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
+	$out .= $Link;
+	$out .= "</a>";
+	if ($asString) return $out;
+	print $out;
 }
 
 function print_findmedia_link($element_id, $choose="", $ged='', $asString=false) {
