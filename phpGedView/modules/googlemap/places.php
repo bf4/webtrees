@@ -94,13 +94,13 @@ function place_id_to_hierarchy($id) {
 // NB This function exists in both places.php and places_edit.php
 function getHighestIndex() {
 	global $TBLPREFIX;
-	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE TRUE";
+	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1=1";
 	$res=dbquery($sql);
 	$row=&$res->fetchRow();
 	$res->free();
 	if (empty($row[0]))
 		return 0;
- 	else
+	else
 		return $row[0];
 }
 
@@ -264,8 +264,8 @@ if ($action=="ImportGedcom") {
 			$res = dbquery($psql);
 			$row =& $res->fetchRow();
 			$res->free();
+			$sql="";
 			if ($i < count($parent)-1) {
-				$sql="";
 				// Create higher-level places, if necessary
 				if (empty($row[0])) {
 					$highestIndex++;
@@ -305,10 +305,10 @@ if ($action=="ImportFile") {
 		if (file_exists($path)) {
 			$dir = dir($path);
 			while (false !== ($entry = $dir->read())) {
-		   		if ($entry!="." && $entry!=".." && $entry!=".svn") {
-		   			if (is_dir($path."/".$entry)) findFiles($path."/".$entry); 
-		   			else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
-		   		}
+				if ($entry!="." && $entry!=".." && $entry!=".svn") {
+					if (is_dir($path."/".$entry)) findFiles($path."/".$entry); 
+					else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
+				}
 			}
 			$dir->close();
 		}
@@ -360,8 +360,7 @@ if ($action=="ImportFile") {
 
 if ($action=="ImportFile2") {
 	if (isset($_POST["cleardatabase"])) {
-		$sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE TRUE";
-		$res = dbquery($sql);
+		dbquery("DELETE FROM {$TBLPREFIX}placelocation WHERE 1=1");
 	}
 	if (!empty($_FILES["placesfile"]["tmp_name"])) $lines = file($_FILES["placesfile"]["tmp_name"]);
 	else if (!empty($_REQUEST['localfile'])) $lines = file("modules/googlemap/extra".$_REQUEST['localfile']);
@@ -464,25 +463,16 @@ if ($action=="ImportFile2") {
 				$parent_id = $row[0];
 				if ((isset($_POST["overwritedata"])) && ($i+1 == count($parent))) {
 					$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."',pl_zoom='".$place["zoom"]."',pl_icon='".$place["icon"]."' where pl_id=$parent_id";
-            		if ($DBTYPE == "pgsql")
-                        $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
-                    else
-    					$res = dbquery($sql, true, 1);
+					$res = dbquery($sql);
 				}
 				else {
 					if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
 						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
-                		if ($DBTYPE == "pgsql")
-                            $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
-                        else
-	       					$res = dbquery($sql, true, 1);
+						$res = dbquery($sql);
 					}
 					if (empty($row[4]) && !empty($place['icon'])) {
 						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."' where pl_id=$parent_id";
-                 		if ($DBTYPE == "pgsql")
-                            $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
-                        else
-                            $res = dbquery($sql, true, 1);
+						$res = dbquery($sql);
 					}
 				}
 			}
@@ -497,10 +487,7 @@ if ($action=="DeleteRecord") {
 	if ($res->numRows()==0) {
 		$res->free();
 		$sql="DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($deleteRecord);
-   		if ($DBTYPE == "pgsql")
-            $res=dbquery($sql, true); /* postgres does not support LIMIT or OFFSET on DELETE, UPDATE or INSERT */ 
-        else
-	       	$res=dbquery($sql, true, 1);
+		$res=dbquery($sql);
 	} else {
 		print "<table class=\"facts_table\"><tr><td class=\"optionbox\">{$pgv_lang['pl_delete_error']}</td></tr></table>";
 	}
