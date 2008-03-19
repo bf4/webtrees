@@ -124,9 +124,7 @@ switch ($action) {
 				
 				// switch language to user settings
 				$oldLanguage = $LANGUAGE;
-				if ($LANGUAGE != get_user_setting($user_name, 'language')) {
-					loadLanguage(get_user_setting($user_name, 'language'));
-				}
+				if ($LANGUAGE != get_user_setting($user_name, 'language')) loadLanguage(get_user_setting($user_name, 'language'));
 				$newuserName=getUserFullName($user_name);
 				
 				$mail_body = "";
@@ -152,9 +150,7 @@ switch ($action) {
 				<?php
 				AddToLog("Password request was sent to user: ".$user_name);
 	
-				if ($LANGUAGE != $oldLanguage) {
-					loadLanguage($oldLanguage);   // Reset language
-				}
+				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);   // Reset language
 			}
 		}
 		print "</div>";
@@ -460,9 +456,7 @@ switch ($action) {
 					
 					// switch language to webmaster settings
 					$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
-					if ($adm_lang && $LANGUAGE!=$adm_lang) {
-						loadLanguage($adm_lang);
-					}
+					if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang);
 
 					$mail_body = "";
 					$mail_body .= $pgv_lang["mail02_line01"] . "\r\n\r\n";
@@ -526,9 +520,7 @@ switch ($action) {
 		// Change to the new user's language
 		$oldLanguage = $LANGUAGE;
 		$user_lang=get_user_setting($user_name, 'language');
-		if ($user_lang && $LANGUAGE!=$user_lang) {
-			loadLanguage($user_lang);
-		}
+		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
 
 		print_header("PhpGedView - " . $pgv_lang["user_verify"]);
 		print "<div class=\"center\">";
@@ -560,11 +552,9 @@ switch ($action) {
 		AddToLog("User attempted to verify hashcode: ".$user_name);
 		
 		// Change to the new user's language
-		$oldLanguage = $LANGUAGE;
 		$user_lang=get_user_setting($user_name, 'language');
-		if ($user_lang && $LANGUAGE!=$user_lang) {
-			loadLanguage($user_lang);
-		}
+		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
+		$oldLanguage = $LANGUAGE;
 
 		print_header("PhpGedView - " . $pgv_lang["user_verify"]);# <-- better verification of authentication code
 		print "<div class=\"center\">";
@@ -587,9 +577,7 @@ switch ($action) {
 				
 				// switch language to webmaster settings
 				$adm_lang=get_user_setting($WEBMASTER_EMAIL, 'language');
-				if ($adm_lang && $LANGUAGE!=$adm_lang) {
-					loadLanguage($adm_lang);
-				}
+				if ($adm_lang && $LANGUAGE!=$adm_lang) loadLanguage($adm_lang);
 				
 				$mail_body = "";
 				$mail_body .= $pgv_lang["mail03_line01"] . "\r\n\r\n";
