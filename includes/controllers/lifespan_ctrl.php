@@ -4,7 +4,7 @@
  * Controller for the timeline chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	PGV Development Team
+ * Copyright (C) 2002 to 2008	PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -481,13 +481,14 @@ class LifespanControllerRoot extends BaseController {
 
 				$eventinformation = Array();
 				$eventspacing = Array();
-				foreach($unparsedEvents as $index=>$val)
-				{
-					if(preg_match('/2 DATE/',$val[1]))
-					{
+				foreach($unparsedEvents as $index=>$val) {
+					if(preg_match('/2 DATE/',$val[1])) {
 						$date = get_gedcom_value("DATE",2,$val[1]);
-						$ft = preg_match("/1\s(\w+)(.*)/", $val[1], $match);
-						if ($ft>0) $fact = $match[1];
+						$ft = preg_match("/1\s(\w+) *(.*)/", $val[1], $match);
+						if ($ft>0) {
+							$fact = $match[1];
+							$data = $match[2]=='Y' ? '' : ': '.$match[2];
+						}
 						$date_arr = new GedcomDate($date);
 						$date_arr = $date_arr->MinDate();
 						$date_arr = $date_arr->convert_to_cal('gregorian');
@@ -502,10 +503,15 @@ class LifespanControllerRoot extends BaseController {
 						}
 						$place = get_gedcom_value("PLAC", 2, $val[1]);
 						$trans = $fact;
-						if (isset($factarray[$fact])) $trans = $factarray[$fact];
-						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];  
-						if (isset($eventinformation[$evntwdth])) $eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".strip_tags($date)." ".$place;
-						else $eventinformation[$evntwdth]= $trans."<br />\n".strip_tags($date)." ".$place;
+						if (isset($factarray[$fact])) {
+							$trans = $factarray[$fact];
+						} else
+							if (isset($pgv_lang[$fact]))
+								$trans = $pgv_lang[$fact];  
+						if (isset($eventinformation[$evntwdth]))
+							$eventinformation[$evntwdth] .= "<br />\n".$trans.$data."<br />\n".strip_tags($date)." ".$place;
+						else
+							$eventinformation[$evntwdth]= $trans.$data."<br />\n".strip_tags($date)." ".$place;
 					}
 						
 				}
@@ -520,7 +526,7 @@ class LifespanControllerRoot extends BaseController {
 					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 					" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 					foreach($eventinformation as $evtwidth=>$val){
-						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
+						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 					}
 					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName()).":  $lifespan </a></td>" .
@@ -534,7 +540,7 @@ class LifespanControllerRoot extends BaseController {
 						echo "\n<div style=\"text-align: left; position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 						"  background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 						foreach($eventinformation as $evtwidth=>$val){
-							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
+							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 						}
 						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName())."</a></td>" .
