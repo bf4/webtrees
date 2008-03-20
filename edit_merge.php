@@ -58,6 +58,10 @@ if ($action!="choose") {
 		else $gedrec2 = find_updated_record($gid2);
 		$GEDCOM=$ged;
 
+		// Ensure line endings are the same, otherwise we can't match records
+		$gedrec1=preg_replace('/[\r\n]+/', "\n", $gedrec1);
+		$gedrec2=preg_replace('/[\r\n]+/', "\n", $gedrec2);
+
 		if (empty($gedrec1) || empty($gedrec2)) {
 			print "<span class=\"error\">".$pgv_lang["unable_to_find_record"]."</span>\n";
 			$action="choose";
@@ -227,6 +231,7 @@ if ($action!="choose") {
 					}
 					
 					replace_gedrec($gid1, $newgedrec);
+					if ($SYNC_GEDCOM_FILE) write_file();
 					write_changes();
 					print "<br /><a href=\"edit_merge.php?action=choose\">".$pgv_lang["merge_more"]."</a><br />\n";
 					print "<br /><br /><br />\n";

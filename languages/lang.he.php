@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$pgv_lang["age_differences"]		= "הראה הפרשי גילים";
+$pgv_lang["age_differences"]		= "הראה הפרשי תאריכים";
 $pgv_lang["date_of_entry"]			= "תאריך רישום במקור האוריגינלי";
 $pgv_lang["multi_site_search"] 		= "חיפוש רב אתרים";
 $pgv_lang["switch_lifespan"]		= "הראה תרשים תוחלת חיים"; 

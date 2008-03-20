@@ -295,6 +295,12 @@ if ($ctype=="user") {
 else {
 	print_header($GEDCOMS[$GEDCOM]["title"]);
 }
+
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');
+}	
+
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--

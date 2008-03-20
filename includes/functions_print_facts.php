@@ -5,7 +5,7 @@
  * Various printing functions used to print fact records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -634,7 +634,7 @@ function print_media_links($factrec, $level,$pid='') {
 			$thumbnail = thumbnail_file($mainMedia, true, false, $pid);
 			$isExternal = isFileExternal($row["m_file"]);
 			$mediaTitle = $row["m_titl"];
-
+			
 			// Determine the size of the mediafile
 			$imgsize = findImageSize($mainMedia);
 			$imgwidth = $imgsize[0]+40;
@@ -643,8 +643,17 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($objectNum > 0) print "<br clear=\"all\" />";
 				print "<table><tr><td>";
 				if ($isExternal || media_exists($thumbnail)) {
-					if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
-					else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+				
+//LBox --------  change for Lightbox Album --------------------------------------------
+					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
+						$name = trim($row["m_titl"]);
+						print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" title=\"" . $media_id . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+// ---------------------------------------------------------------------------------------------
+					}elseif ($USE_MEDIA_VIEWER) {
+						print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+					}else{
+						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+					}
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"". PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" /></a>";
@@ -1464,8 +1473,16 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-				if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
-				else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+//LBox --------  change for Lightbox Album --------------------------------------------
+					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
+					$name = trim($rowm["m_titl"]);
+					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+// ---------------------------------------------------------------------------------------------
+				}elseif ($USE_MEDIA_VIEWER) {
+					print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
+				}else{
+					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+				}
 			}
 			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
@@ -1475,8 +1492,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle));
-		else print "<i>".PrintReady(htmlspecialchars($mediaTitle));
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
+		else print "<i>".PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $rowm["m_gedrec"]);

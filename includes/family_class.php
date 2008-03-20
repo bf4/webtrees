@@ -431,28 +431,7 @@ class Family extends GedcomRecord {
 	 * @string a url that can be used to link to this family
 	 */
 	function getLinkUrl() {
-		global $GEDCOM;
-
-		$url = "family.php?famid=".$this->getXref()."&amp;ged=".$GEDCOM;
-		if ($this->isRemote()) {
-			$parts = preg_split("/:/", $this->rfn);
-			if (count($parts)==2) {
-				$servid = $parts[0];
-				$aliaid = $parts[1];
-				if (!empty($servid)&&!empty($aliaid)) {
-					$servrec = find_gedcom_record($servid);
-					if (empty($servrec)) $servrec = find_updated_record($servid);
-					if (!empty($servrec)) {
-						$surl = get_gedcom_value("URL", 1, $servrec);
-						$url = "family.php?famid=".$aliaid;
-						if (!empty($surl)) $url = dirname($surl)."/".$url;
-						$gedcom = get_gedcom_value("_DBID", 1, $servrec);
-						if (!empty($gedcom)) $url.="&amp;ged=".$gedcom;
-					}
-				}
-			}
-		}
-		return $url;
+		return parent::getLinkUrl('family.php?famid=');
 	}
 }
 ?>

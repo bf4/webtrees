@@ -98,27 +98,27 @@ foreach($sourcefacts as $indexval => $fact) {
 	$fact = trim($fact);
 	if (!empty($fact)) {
 		if ($fact=="NOTE") {
-			print_main_notes($factrec, 1, $sid, $linenum);
+			print_main_notes($factrec, 1, $controller->sid, $linenum);
 		}
 		else {
-			print_fact($factrec, $sid, $linenum);
+			print_fact($factrec, $controller->sid, $linenum);
 		}
 	}
 }
 // Print media
-print_main_media($sid);
+print_main_media($controller->sid);
 
 //-- new fact link
 if ((!$controller->isPrintPreview())&&($controller->userCanEdit())) {
-	print_add_new_fact($sid, $sourcefacts, "SOUR");
+	print_add_new_fact($controller->sid, $sourcefacts, "SOUR");
 		// -- new media
 	print "<tr><td class=\"descriptionbox\">";
 	print_help_link("add_media_help", "qm", "add_media_lbl");
 	print $pgv_lang["add_media_lbl"] . "</td>";
 	print "<td class=\"optionbox\">";
-	print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('addmedia.php?action=showmediaform&amp;linktoid=$sid', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
+	print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('addmedia.php?action=showmediaform&amp;linktoid=$controller->sid', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
 	print "<br />\n";
-	print '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$sid.'&amp;linkto=source\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["link_to_existing_media"].'</a>';
+	print '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->sid.'&amp;linkto=source\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["link_to_existing_media"].'</a>';
 	print "</td></tr>\n";
 
 }
