@@ -1881,6 +1881,20 @@ function compare_date_descending($a, $b) {
 	$result = compare_date($a, $b);
 	return (0 - $result);
 }
+/**
+ * Compare dates for facts in GedcomRec objects (or derived classes)
+ *
+ * fact to interrogate in global $sortby eg "MARR"
+ */
+function compare_date_gedcomrec($a, $b) {
+	global $sortby;
+
+	$tag = "BIRT";
+	if (!empty($sortby)) $tag = $sortby;
+	$adate = get_sub_record(1, "1 $tag", $a->getGedcomRecord());
+	$bdate = get_sub_record(1, "1 $tag", $b->getGedcomRecord());
+	return compare_facts_date($adate, $bdate);
+}
 
 function gedcomsort($a, $b) {
 	$aname = str2upper($a["title"]);

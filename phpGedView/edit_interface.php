@@ -2193,7 +2193,7 @@ case 'reorder_fams':
 			$fams = $person->getSpouseFamilies();
 			if ((!empty($option))&&($option=="bymarriage")) {
 				$sortby = "MARR";
-				uasort($fams, "compare_date");
+				uasort($fams, "compare_date_gedcomrec");
 			}
 			$i=0;
 			foreach($fams as $famid=>$family) {
