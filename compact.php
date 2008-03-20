@@ -3,7 +3,7 @@
  * Compact pedigree tree
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,14 @@ else {
 }
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
+
+// LBox =====================================================================================
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');
+}	
+// ==========================================================================================
+
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"${cellwidth}px\" valign=\"top\">\n\t\t";
@@ -316,7 +324,7 @@ function print_td_person($n) {
 		$indi=Person::getInstance($pid);
 		$name=$indi->getName();
 		$addname=$indi->getAddName();
-
+		
 		if (($showthumbs) && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
 			$object = find_highlighted_object($pid, $indi->gedrec);
 			if (!empty($object["thumb"])) {
@@ -328,8 +336,17 @@ function print_td_person($n) {
 				$imgsize = findImageSize($object["file"]);
 				$imgwidth = $imgsize[0]+50;
 				$imgheight = $imgsize[1]+150;
-				$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
+//LBox --------  change for Lightbox Album --------------------------------------------
+				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" title=\"" . $object["mid"] . "\">" . "\n";
+					//$text .= " ><a href=\"mediaviewer.php?mid=".$object["mid"]."\">";
+				}else{
+// ---------------------------------------------------------------------------------------------
+					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
+//LBox --------  change for Lightbox Album --------------------------------------------
+				}
+// ---------------------------------------------------------------------------------------------
+				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".$name." b ".$indi->getBirthDate(false)."\" ";
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}

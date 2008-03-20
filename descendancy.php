@@ -3,7 +3,7 @@
  * Parses gedcom file and displays a descendancy tree.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,16 @@
 require_once("includes/controllers/descendancy_ctrl.php");
 
 // -- print html header information
-print_header($controller->name." ".$pgv_lang["descend_chart"]);?>
+print_header($controller->name." ".$pgv_lang["descend_chart"]);
 
+// LBox =====================================================================================
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');
+}	
+// ==========================================================================================
 
+?>
 <table class="list_table <?php print $TEXT_DIRECTION?>"><tr><td width="<?php print $controller->cellwidth?>px" valign="top">
 <h2><?php print $pgv_lang["descend_chart"].":<br />".PrintReady($controller->name)."</h2>";
 //print "\n\t<h2>".$pgv_lang["descend_chart"].":<br />".$controller->name."</h2>";?>
