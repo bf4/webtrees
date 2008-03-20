@@ -6,7 +6,7 @@
  * back to here.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  * Author: Mike Elliott (coloredpixels)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -44,9 +44,9 @@ print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http:/
 print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n\t";
 print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t";
 
-print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
+print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\" />";
 if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) 
-	print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
+	print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
 print "<meta name=\"robots\" content=\"noindex,follow\" />\n\t";
 print "<meta name=\"generator\" content=\"PhpGedView v$VERSION - http://www.phpgedview.net\" />\n";
 print "<title>".$pgv_lang['label_search_engine_detected']."</title>\n";
