@@ -116,12 +116,10 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	}
 	$content .= '
 	<script language="JavaScript" type="text/javascript">
-	<!--
 	var pastefield;
 	function paste_id(value) {
 		pastefield.value=value;
 	}
-	//-->
 	</script>
 	<br />';
 	$content .= print_help_link("index_add_favorites_help", "qm","",false,true);

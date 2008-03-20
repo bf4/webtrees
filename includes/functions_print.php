@@ -5,7 +5,7 @@
  * Various printing functions used by all scripts and included by the functions.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -237,8 +237,8 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 
 					if (empty($whichChart)) $title="";
 					else {
-	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang[$whichChart].": ".$whichID;
-	 					else $title = $whichID." :".$pgv_lang[$whichChart];
+					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang[$whichChart].": ".$whichID;
+					else $title = $whichID." :".$pgv_lang[$whichChart];
  					}
 					$icons .= "<a href=\"$click_link\" title=\"$title\"";
 					// NOTE: Zoom
@@ -287,13 +287,21 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 			   $imgwidth = $imgsize[0]+50;
 			   $imgheight = $imgsize[1]+150;
 
-				if (!empty($object['mid']) && $USE_MEDIA_VIEWER) $thumbnail .= "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
-				else $thumbnail .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
+//LBox --------  change for Lightbox Album --------------------------------------------
+			if (file_exists("modules/lightbox/album.php")) {
+				$name3 = trim($object["file"]);
+				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . "\">" . "\n";
+// ---------------------------------------------------------------------------------------------
+			}elseif (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
+				$thumbnail .=  "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
+			}else{
+				$thumbnail .=  "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
+			}
 
-			   $thumbnail .= "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
-			   if (!$show_full) $thumbnail .= " style=\"display: none;\"";
-			   if ($imgsize) $thumbnail .= " /></a>\n";
-			   else $thumbnail .= " />\n";
+			$thumbnail .=  "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
+			if (!$show_full) $thumbnail .=  " style=\"display: none;\"";
+			if ($imgsize) $thumbnail .=  " /></a>\n";
+			else $thumbnail .=  " />\n";
 		  }
 	 }
 	 //-- find additional name
@@ -410,7 +418,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
 	print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t\t";
 	if( $FAVICON ) {
-	   print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\"></link>\n\t\t";
+		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
 	}
 
 	if (empty($META_TITLE)) $metaTitle = " - PhpGedView";
@@ -431,14 +439,14 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		}
 		//print "<link href=\"" . $SERVER_URL . "rss.php?ged=$GEDCOM&amp;auth=basic\" rel=\"alternate\" type=\"$applicationType\" title=\"$GEDCOM_TITLE - " . $pgv_lang["authenticated_feed"] . "\" />\n\t";
 	}
-	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
-	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
+	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\" />";
+	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
 	if ($use_alternate_styles) {
 		if ($BROWSERTYPE != "other") {
-			print "<link rel=\"stylesheet\" href=\"".$THEME_DIR.$BROWSERTYPE.".css\" type=\"text/css\" media=\"all\"></link>\n\t";
+			print "<link rel=\"stylesheet\" href=\"".$THEME_DIR.$BROWSERTYPE.".css\" type=\"text/css\" media=\"all\" />";
 		}
 	}
-	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\"></link>\n\t";
+	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\" />";
 	if ($BROWSERTYPE == "msie") print "<style type=\"text/css\">\nFORM { margin-top: 0px; margin-bottom: 0px; }\n</style>\n";
 	print "<!-- PhpGedView v$VERSION -->\n";
 	if (isset($changelanguage))
@@ -653,13 +661,13 @@ function print_simple_header($title) {
 	 print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
 	 print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t\t";
 	if( $FAVICON ) {
-	   print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\"></link>\n\t\t";
+		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
 	}
 	if (empty($META_TITLE)) $metaTitle = " - PhpGedView";
 	else $metaTitle = " - ".$META_TITLE." - PhpGedView";
 	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>\n\t";
-	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\"></link>\n\t";
-	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
+	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" >";
+	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
 	$old_META_AUTHOR = $META_AUTHOR;
 		 $old_META_PUBLISHER = $META_PUBLISHER;
 		 $old_META_COPYRIGHT = $META_COPYRIGHT;
@@ -799,7 +807,7 @@ function print_simple_footer() {
 	 print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"PhpGedView Version $VERSION\" title=\"PhpGedView Version $VERSION\" /></a><br />";
 	 if ($SHOW_STATS || isset($DEBUG) && $DEBUG==true) {
 		 print_execution_stats();
-}
+	}
 	 print "</div></body></html>";
 }
 
@@ -1640,13 +1648,15 @@ function print_text($help, $level=0, $noprint=0){
 	 if ($sentence===false) {
 		  if ($noprint == 2) {
 			  $sentence = $help;
-	  	  }
-	  	  else if (isset($pgv_lang[$help])) $sentence = $pgv_lang[$help];
+		} else {
+			if (isset($pgv_lang[$help]))
+				$sentence = $pgv_lang[$help];
 		  else {
 			if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
 		  	$sentence = $pgv_lang["help_not_exist"];
 		  }
 	 }
+	}
 	 $mod_sentence = "";
 	 $replace = "";
 	 $replace_text = "";
@@ -2409,7 +2419,6 @@ function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM",
  * If the fact already exists in the second array, delete it from the first one.
  */
 function CheckFactUnique($uniquefacts, $recfacts, $type) {
-
 	 foreach($recfacts as $indexval => $factarray) {
 	 	$fact=false;
 	 	if (is_object($factarray)) {
@@ -2582,12 +2591,11 @@ function print_findfamily_link($element_id, $ged='', $asString=false) {
 	$out = " <a href=\"javascript:;\" onclick=\"findFamily(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
-	
 	if ($asString) return $out;
 	print $out;
 }
 
-function print_specialchar_link($element_id,$vert,$asString=false) {
+function print_specialchar_link($element_id, $vert, $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	$text = $pgv_lang["find_specialchar"];
@@ -2596,7 +2604,6 @@ function print_specialchar_link($element_id,$vert,$asString=false) {
 	$out = " <a href=\"javascript:;\" onclick=\"findSpecialChar(document.getElementById('".$element_id."')); updatewholename(); return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
-	
 	if ($asString) return $out;
 	print $out;
 }
@@ -2640,8 +2647,7 @@ function print_findrepository_link($element_id, $ged='', $asString=false) {
 	$out = " <a href=\"javascript:;\" onclick=\"findRepository(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
-	
-	if($asString) return $out;
+	if ($asString) return $out;
 	print $out;
 }
 
@@ -2695,8 +2701,7 @@ function get_lds_glance($indirec) {
 }
 
 /**
- *		This function produces a hexadecimal dump of the input string
- *		for debugging purposes
+ * This function produces a hexadecimal dump of the input string for debugging purposes
  */
 
 function DumpString($input) {

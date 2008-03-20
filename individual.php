@@ -274,7 +274,7 @@ function tempObj(tab, oXmlHttp) {
 				ResizeMap();
 			}
 			//-- initialize lightbox tabs
-			if (tabid[tab]=='lightbox2') {
+			if (tabid[tab]=='lightbox2' || tabid[tab]=='facts' || tabid[tab]=='media' || tabid[tab]=='relatives') {
 				CB_Init();
 			}
 			loadedTabs[tab] = true;

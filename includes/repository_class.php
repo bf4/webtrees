@@ -59,7 +59,7 @@ class Repository extends GedcomRecord {
 			if (isset($repolist[$pid]['object'])) return $repolist[$pid]['object'];
 		}
 
-		$repositoryrec = find_repository_record($pid);
+		$repositoryrec = find_repo_record($pid);
 		if (empty($repositoryrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
 			if ($ct>0) {
@@ -220,33 +220,7 @@ class Repository extends GedcomRecord {
 	 * @string a url that can be used to link to this repository
 	 */
 	function getLinkUrl() {
-		global $GEDCOM;
-
-		$url = "repo.php?rid=".$this->getXref()."&amp;ged=".$GEDCOM;
-		if ($this->isRemote()) {
-			$parts = preg_split("/:/", $this->rfn);
-			if (count($parts)==2) {
-				$servid = $parts[0];
-				$aliaid = $parts[1];
-				if (!empty($servid)&&!empty($aliaid)) {
-					require_once 'includes/serviceclient_class.php';
-					$serviceClient = ServiceClient::getInstance($servid);
-					if (!empty($serviceClient)) {
-						$surl = $serviceClient->getURL();
-						$url = "repo.php?rid=".$aliaid;
-						if ($serviceClient->getType()=="remote") {
-							if (!empty($surl)) $url = dirname($surl)."/".$url;
-						}
-						else {
-							$url = $surl.$url;
-						}
-						$gedcom = $serviceClient->getGedfile();
-						if (!empty($gedcom)) $url.="&amp;ged=".$gedcom;
-					}
-				}
-			}
-		}
-		return $url;
+		return parent::getLinkUrl('repo.php?rid=');
 	}
 }
 ?>

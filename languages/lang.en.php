@@ -33,7 +33,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 $pgv_lang['tree']					= "Tree";
 
-$pgv_lang["age_differences"]		= "Show Age Differences";
+$pgv_lang["age_differences"]		= "Show Date Differences";
 $pgv_lang["date_of_entry"]			= "Date of entry in original source";
 $pgv_lang["multi_site_search"] 		= "Multi Site Search";
 $pgv_lang["switch_lifespan"]		= "Show Lifespan chart";

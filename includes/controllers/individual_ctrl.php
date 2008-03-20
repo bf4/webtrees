@@ -383,9 +383,16 @@ class IndividualControllerRoot extends BaseController {
 					$imgheight = $imgsize[1]+150;
 					//Gets the Media View Link Information and Concatinate
 					$mid = $firstmediarec['mid'];
+					
+//LBox --------  change for Lightbox Album --------------------------------------------
+					if (file_exists("modules/lightbox/album.php")) {
+						$name1 = trim($firstmediarec["file"]);
+						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . "\">" . "\n";
+// ---------------------------------------------------------------------------------------------
 
-					if (!$USE_MEDIA_VIEWER && $imgsize) $result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
-					else {
+					}elseif (!$USE_MEDIA_VIEWER && $imgsize) {
+						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
+					}else{
 						$mediaviewlink = "mediaviewer.php?mid=".$mid;
 						$result .= "<a href=\"".$mediaviewlink."\">";
 					}
@@ -1258,7 +1265,7 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
 		<input id="checkbox_elder" type="checkbox" onclick="toggleByClassName('DIV', 'elderdate');" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
-		<label for="checkbox_elder"><?php print $pgv_lang['age_differences'] ?></label>
+		<label for="checkbox_elder"><?php print_help_link("age_differences_help", "qm"); print $pgv_lang['age_differences'] ?></label>
 		</td></tr></table>
 		<?php
 		}

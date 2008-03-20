@@ -241,6 +241,34 @@ if ($MULTI_MEDIA) {
 				if ($block) $content .= " align=\"center\" class=\"details1\"";
 				else $content .= " class=\"details2\"";
 			$mediaid = $medialist[$value]["XREF"];
+			
+//LBox --------  change for Lightbox Album --------------------------------------------
+?><script>
+/*
+function openPic(filename, width, height) {
+		height=height+50;
+		screenW = screen.width;
+	 	screenH = screen.height;
+	 	if (width>screenW-100) width=screenW-100;
+	 	if (height>screenH-110) height=screenH-120;
+		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) 
+			win02 = window.open('imageview.php?filename='+filename,'win02','top=50,left=150,height='+height+',width='+width+',scrollbars=1,resizable=1');
+			// win03.resizeTo(winWidth 2,winHeight 30);
+		else window.open(unescape(filename),'win02','top=50,left=150,height='+height+',width='+width+',scrollbars=1,resizable=1');
+		win02.focus();
+	}
+*/
+</script><?php
+
+			if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+				// $content .= " ><a href=\"javascript:;\" onclick=\"return openPic('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
+				// $content .= " ><a href=\"javascript:;\" onclick=\"return openImage('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
+				// $content .= "><a href=\"" . $medialist[$value]["FILE"] . "\" rel=\"clearbox[general_4]\" title=\"" . $mediaid . "\">" . "\n";
+				$content .= " ><a href=\"mediaviewer.php?mid=".$mediaid."\">";
+				}else
+// ---------------------------------------------------------------------------------------------
+
+
 			if ($USE_MEDIA_VIEWER) {
 					$content .= " ><a href=\"mediaviewer.php?mid=".$mediaid."\">";
 			}

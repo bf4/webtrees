@@ -3,7 +3,7 @@
  * Various functions used by the Edit interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -464,6 +464,7 @@ function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
 				$glevel = $gedlines[$i]{0};
 				$i++;
 				while((isset($gedlines[$i]))&&(strlen($gedlines[$i])<4 || $gedlines[$i]{0}>$glevel)) $i++;
+				$i--;
 			}
 			else $n++;
 		}

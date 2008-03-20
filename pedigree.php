@@ -37,6 +37,11 @@ if ($controller->isPrintPreview()) print "<h2>".str_replace("#PEDIGREE_GENERATIO
 else print "<h2>".$pgv_lang["index_header"].":";
 print "<br />".PrintReady($controller->getPersonName())."</h2>";
 
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include_once('modules/lightbox/lb_config.php');
+	include_once('modules/lightbox/functions/lb_call_js.php');
+}	
+
 // -- print the form to change the number of displayed generations
 if (!$controller->isPrintPreview()) {
 	?>
