@@ -204,8 +204,12 @@ class Person extends GedcomRecord {
 			$givn = $unknownPN[$lang];
 		}
 		else if ($starred) {
-			if ($UNDERLINE_NAME_QUOTES) $givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
+			if ($UNDERLINE_NAME_QUOTES) {
+				$givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
+				$surn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $surn);
+			}
 			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
+			$surn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $surn);
 		}
 		if ($nsfx) $surn .= " ".trim($nsfx);
 		return trim($surn.", ".$givn);
