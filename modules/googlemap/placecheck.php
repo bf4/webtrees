@@ -5,6 +5,7 @@
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 Nigel Osborne nigelo@users.sourceforge.net
+ * Modifications Copyright (C) 2008 Greg Roach
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,26 +97,27 @@ print "<tr><td class='descriptionbox'>".$pgv_lang['placecheck_top']."</td>";
 print "<td class='optionbox'><select name='country'>";
 print "<option value='XYZ'selected='selected'>".$pgv_lang['placecheck_select1']."</option>";
 print "<option value='XYZ'>".$pgv_lang["all"]."</option>";
-$query="SELECT pl_place, pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=0 ORDER BY pl_place ASC";
-$result=mysql_query($query);
-while ($row=mysql_fetch_array($result, MYSQL_NUM))
-	print "<option value='$row[0]'".($row[0]==$country?" selected='selected'":"").">$row[0]</option>";
+$query="SELECT pl_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_level=0 ORDER BY pl_place";
+foreach ($DBCONN->getAssoc($query) as $id=>$place) {
+	print "<option value='{$place}'";
+	if ($place==$country) {
+		print " selected='selected'";
+		$par_id=$id;
+	}
+	print ">{$place}</option>";
+}
 print "</select></td></tr>";
 
 //Option box to select level one place within the selected top level
 if ($country!='XYZ') {
-	$query1="SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_place LIKE '$country' ";
-	$result1=mysql_query($query1);
-	$row1=mysql_fetch_array($result1);
-	$par_id=$row1[0];
 	print "<tr><td class='descriptionbox'>".$pgv_lang['placecheck_one']."</td>";
 	print "<td class='optionbox'><select name='state'>";
 	print "<option value='XYZ' selected='selected'>".$pgv_lang['placecheck_select2']."</option>";
 	print "<option value='XYZ'>".$pgv_lang["all"]."</option>";
-	$query2="SELECT pl_place, pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=1 AND pl_parent_id='$par_id' ORDER BY pl_place ASC";
-	$result2=mysql_query($query2);
-	while ($row2=mysql_fetch_array($result2, MYSQL_NUM))
-		print "<option value='$row2[0]'".($row2[0]==$state?" selected='selected'":"").">$row2[0]</option>";
+	$query="SELECT pl_place FROM {$TBLPREFIX}placelocation WHERE pl_parent_id={$par_id} ORDER BY pl_place";
+	foreach ($DBCONN->getCol($query) as $place) {
+		print "<option value='{$place}'".($place==$state?" selected='selected'":"").">{$place}</option>";
+	}
 	print "</select></td></tr>";
 }
 print "</table>";
