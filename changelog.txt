@@ -10,6 +10,7 @@
 
 
 Version 4.1.4
+ - Added [ 1907082 ] Configuration option to remove gender icon on charts (canajun2eh)
  - Fixed [ 1915381 ] Media tab: "delete" deletes too much (canajun2eh)
  - Changed Improved reports: Pedigree, BDM, Birth, Marriage, Death (canajun2eh)
  - Added [ 1850735 ] Statistics : use Google Chart API (opus27)
