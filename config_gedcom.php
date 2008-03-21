@@ -1,14 +1,14 @@
 <?php
 /**
- * Default Gedcom configuration file
+ * Default GEDCOM configuration file
  *
- * The variables in this file are the Gedcom configuration variables, this file defines the default
+ * The variables in this file are the GEDCOM configuration variables, this file defines the default
  * settings. Site administrators may edit these settings online through the editconfig_gedcom.php
- * file.  Once edited, a new file specific to the gedcom is stored in the $INDEX_DIRECTORY
- * names gedcom.ged_conf.php.
+ * file.  Once edited, a new file named gedcom.ged_conf.php that is specific to the GEDCOM is stored 
+ * in the $INDEX_DIRECTORY.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
