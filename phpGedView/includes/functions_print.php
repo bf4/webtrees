@@ -48,7 +48,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
-	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
+	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE, $PEDIGREE_SHOW_GENDER;
 	global $SEARCH_SPIDER;
 
 	if ($style != 2) $style=1;
@@ -314,16 +314,19 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			else $title = $pid." :".$pgv_lang["indi_info"];
 			print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\"><span id=\"namedef-$boxID\" class=\"name$style\">";
 			print PrintReady($name);
-			// NOTE: IMG ID
-			print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
-			if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-			else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-			else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-			print "\" class=\"gender_image\" />";
+			if ($PEDIGREE_SHOW_GENDER) {
+				// NOTE: IMG ID
+				print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+				if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
+				else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
+				else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
+				print "\" class=\"gender_image\" />";
+			} print "&nbsp;";
+			print "</span>";
 			if ($SHOW_ID_NUMBERS) {
-				print "</span><span class=\"details$style\">";
-			if ($TEXT_DIRECTION=="ltr") print getLRM() . "($pid)" . getLRM();
-			else print getRLM() . "($pid)" . getRLM();
+				print "<span class=\"details$style\">";
+				if ($TEXT_DIRECTION=="ltr") print getLRM() . "($pid)" . getLRM();
+				else print getRLM() . "($pid)" . getRLM();
 				// NOTE: Close span namedef-$personcount.$pid.$count
 				print "</span>";
 			}
@@ -388,12 +391,14 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	// NOTE: Close span namedef-$pid.$personcount.$count
 	print "</span>";
 	print "<span class=\"name$style\">";
-	// NOTE: IMG ID
-	print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
-	if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-	else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-	else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-	print "\" class=\"gender_image\" />";
+	if ($PEDIGREE_SHOW_GENDER) {
+		// NOTE: IMG ID
+		print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+		if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
+		else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
+		else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
+		print "\" class=\"gender_image\" />";
+	} else print "&nbsp;";
 	print "</span>\r\n";
 	if ($SHOW_ID_NUMBERS) {
 		if ($TEXT_DIRECTION=="ltr") print "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";

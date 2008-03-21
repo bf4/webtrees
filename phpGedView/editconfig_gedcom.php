@@ -372,6 +372,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$MULTI_MEDIA\s*=\s*.*;/', "\$MULTI_MEDIA = ".$boolarray[$_POST["NEW_MULTI_MEDIA"]].";", $configtext);
 	$configtext = preg_replace('/\$NAME_FROM_GEDCOM\s*=\s*.*;/', "\$NAME_FROM_GEDCOM = ".$boolarray[$_POST["NEW_NAME_FROM_GEDCOM"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_FULL_DETAILS\s*=\s*.*;/', "\$PEDIGREE_FULL_DETAILS = ".$boolarray[$_POST["NEW_PEDIGREE_FULL_DETAILS"]].";", $configtext);
+	$configtext = preg_replace('/\$PEDIGREE_SHOW_GENDER\s*=\s*.*;/', "\$PEDIGREE_SHOW_GENDER = ".$boolarray[$_POST["NEW_PEDIGREE_SHOW_GENDER"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_LAYOUT\s*=\s*.*;/', "\$PEDIGREE_LAYOUT = ".$boolarray[$_POST["NEW_PEDIGREE_LAYOUT"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_ROOT_ID\s*=\s*".*";/', "\$PEDIGREE_ROOT_ID = \"".$_POST["NEW_PEDIGREE_ROOT_ID"]."\";", $configtext);
 	$configtext = preg_replace('/\$POSTAL_CODE\s*=\s*.*;/', "\$POSTAL_CODE = ".$boolarray[$_POST["NEW_POSTAL_CODE"]].";", $configtext);
@@ -1432,44 +1433,6 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_names_conf"]."\" onclick=\
 <div id="layout-options2" style="display: none">
 <table class="facts_table">
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("PEDIGREE_FULL_DETAILS_help", "qm", "PEDIGREE_FULL_DETAILS"); print $pgv_lang["PEDIGREE_FULL_DETAILS"];?></td>
-		<td class="optionbox"><select name="NEW_PEDIGREE_FULL_DETAILS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PEDIGREE_FULL_DETAILS_help');">
-				<option value="yes" <?php if ($PEDIGREE_FULL_DETAILS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$PEDIGREE_FULL_DETAILS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("ABBREVIATE_CHART_LABELS_help", "qm", "ABBREVIATE_CHART_LABELS"); print $pgv_lang["ABBREVIATE_CHART_LABELS"];?></td>
-		<td class="optionbox"><select name="NEW_ABBREVIATE_CHART_LABELS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ABBREVIATE_CHART_LABELS_help');">
-				<option value="yes" <?php if ($ABBREVIATE_CHART_LABELS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$ABBREVIATE_CHART_LABELS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_PARENTS_AGE_help", "qm", "SHOW_PARENTS_AGE"); print $pgv_lang["SHOW_PARENTS_AGE"];?></td>
-		<td class="optionbox"><select name="NEW_SHOW_PARENTS_AGE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_PARENTS_AGE_help');">
-				<option value="yes" <?php if ($SHOW_PARENTS_AGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$SHOW_PARENTS_AGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_LDS_AT_GLANCE_help", "qm", "SHOW_LDS_AT_GLANCE"); print $pgv_lang["SHOW_LDS_AT_GLANCE"];?></td>
-		<td class="optionbox"><select name="NEW_SHOW_LDS_AT_GLANCE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_LDS_AT_GLANCE_help');">
-				<option value="yes" <?php if ($SHOW_LDS_AT_GLANCE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$SHOW_LDS_AT_GLANCE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("CHART_BOX_TAGS_help", "qm", "CHART_BOX_TAGS"); print $pgv_lang["CHART_BOX_TAGS"];?></td>
-		<td class="optionbox">
-			<input type="text" size="50" name="NEW_CHART_BOX_TAGS" value="<?php print $CHART_BOX_TAGS?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('CHART_BOX_TAGS_help');" />
-		</td>
-	</tr>
-	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_MARRIED_NAMES_help", "qm", "SHOW_MARRIED_NAMES"); print $pgv_lang["SHOW_MARRIED_NAMES"];?></td>
 		<td class="optionbox"><select name="NEW_SHOW_MARRIED_NAMES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_MARRIED_NAMES_help');">
 				<option value="yes" <?php if ($SHOW_MARRIED_NAMES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -1683,6 +1646,52 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_hide_conf"]."\" onclick=\"
 				<option value="yes" <?php if ($SHOW_EMPTY_BOXES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$SHOW_EMPTY_BOXES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("ABBREVIATE_CHART_LABELS_help", "qm", "ABBREVIATE_CHART_LABELS"); print $pgv_lang["ABBREVIATE_CHART_LABELS"];?></td>
+		<td class="optionbox"><select name="NEW_ABBREVIATE_CHART_LABELS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ABBREVIATE_CHART_LABELS_help');">
+				<option value="yes" <?php if ($ABBREVIATE_CHART_LABELS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$ABBREVIATE_CHART_LABELS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("PEDIGREE_FULL_DETAILS_help", "qm", "PEDIGREE_FULL_DETAILS"); print $pgv_lang["PEDIGREE_FULL_DETAILS"];?></td>
+		<td class="optionbox"><select name="NEW_PEDIGREE_FULL_DETAILS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PEDIGREE_FULL_DETAILS_help');">
+				<option value="yes" <?php if ($PEDIGREE_FULL_DETAILS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$PEDIGREE_FULL_DETAILS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("PEDIGREE_SHOW_GENDER_help", "qm", "PEDIGREE_SHOW_GENDER"); print $pgv_lang["PEDIGREE_SHOW_GENDER"];?></td>
+		<td class="optionbox"><select name="NEW_PEDIGREE_SHOW_GENDER" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PEDIGREE_SHOW_GENDER_help');">
+				<option value="yes" <?php if ($PEDIGREE_SHOW_GENDER) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$PEDIGREE_SHOW_GENDER) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_PARENTS_AGE_help", "qm", "SHOW_PARENTS_AGE"); print $pgv_lang["SHOW_PARENTS_AGE"];?></td>
+		<td class="optionbox"><select name="NEW_SHOW_PARENTS_AGE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_PARENTS_AGE_help');">
+				<option value="yes" <?php if ($SHOW_PARENTS_AGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SHOW_PARENTS_AGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_LDS_AT_GLANCE_help", "qm", "SHOW_LDS_AT_GLANCE"); print $pgv_lang["SHOW_LDS_AT_GLANCE"];?></td>
+		<td class="optionbox"><select name="NEW_SHOW_LDS_AT_GLANCE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_LDS_AT_GLANCE_help');">
+				<option value="yes" <?php if ($SHOW_LDS_AT_GLANCE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SHOW_LDS_AT_GLANCE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("CHART_BOX_TAGS_help", "qm", "CHART_BOX_TAGS"); print $pgv_lang["CHART_BOX_TAGS"];?></td>
+		<td class="optionbox">
+			<input type="text" size="50" name="NEW_CHART_BOX_TAGS" value="<?php print $CHART_BOX_TAGS?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('CHART_BOX_TAGS_help');" />
 		</td>
 	</tr>
 	<tr>
