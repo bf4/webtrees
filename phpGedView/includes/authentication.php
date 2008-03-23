@@ -125,7 +125,7 @@ function userLogout($user_id) {
 
 	set_user_setting($user_id, 'loggedin', 'N');
 
-	AddToLog("Logout");
+	AddToLog("Logout ".getUserName($user_id));
 
 	if ((isset($_SESSION['pgv_user']) && ($_SESSION['pgv_user']==$user_id)) || (isset($_COOKIE['pgv_rem'])&&$_COOKIE['pgv_rem']==$user_id)) {
 		if ($_SESSION['pgv_user']==$user_id) {
