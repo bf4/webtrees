@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,7 +129,12 @@ function warnuser(cbox) {
 		$dir = dir($INDEX_DIRECTORY);
 
 		$path = $INDEX_DIRECTORY; // snag our path
+		$entryList = array();
 		while (false !== ($entry = $dir->read())) {
+			$entryList[] = $entry;
+		}
+		sort($entryList);
+		foreach($entryList as $entry) {
 			//echo $entry."\n";
 			if($entry{0} != '.'){
 				if(isset($GEDCOMS[$entry]))
