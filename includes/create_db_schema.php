@@ -205,8 +205,8 @@ try {
 		" priv_user_id   INTEGER      NULL,".
 		" priv_xref      VARCHAR(32)  NULL,".
 		" priv_fact      VARCHAR(15)  NULL,".
-		" priv_type      ENUM ('show', 'details') NULL,".
-		" priv_value     INTEGER      NOT NULL,".
+		" priv_show      INTEGER      NOT NULL,".
+		" priv_details   INTEGER      NOT NULL,".
 		" CONSTRAINT {$TBLPREFIX}privacy_pk  PRIMARY KEY (priv_id),".
 		" CONSTRAINT {$TBLPREFIX}privacy_fk1 FOREIGN KEY (priv_ged_id)  REFERENCES {$TBLPREFIX}gedcom (ged_id) ON DELETE CASCADE,".
 		" CONSTRAINT {$TBLPREFIX}privacy_fk2 FOREIGN KEY (priv_user_id) REFERENCES {$TBLPREFIX}user  (user_id) ON DELETE CASCADE".
@@ -222,12 +222,12 @@ try {
 		require $INDEX_DIRECTORY.'gedcoms.php';
 		if (isset($GEDCOMS) && is_array($GEDCOMS)) {
 			$statement1=$DBH->prepare(
-				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_fact, priv_type, priv_value)".
+				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_fact, priv_show, priv_detail)".
 				"	SELECT ged_id, NULL, ?, ?, ?, ? FROM {$TBLPREFIX}gedcom".
 				"  WHERE ged_gedcom=?");
 			$statement2=$DBH->prepare(
-				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_fact, priv_type, priv_value)".
-				"	SELECT ged_id, user_id, ?, NULL, NULL, ? FROM {$TBLPREFIX}gedcom, {$TBLPREFIX}user".
+				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_fact, priv_show, priv_detail)".
+				"	SELECT ged_id, user_id, ?, NULL, ?, NULL FROM {$TBLPREFIX}gedcom, {$TBLPREFIX}user".
 				"  WHERE ged_gedcom=? AND user_name=?");
 			foreach ($GEDCOMS as $GEDCOM) {
 				if (file_exists($GEDCOM['privacy'])) {
@@ -237,8 +237,8 @@ try {
 					foreach ($person_privacy as $key1=>$value1) {
 						$statement1->bindValue(1, $key1,   PDO::PARAM_STR);
 						$statement1->bindValue(2, null,    PDO::PARAM_NULL);
-						$statement1->bindValue(3, null,    PDO::PARAM_NULL);
-						$statement1->bindValue(4, $value1, PDO::PARAM_INT);
+						$statement1->bindValue(3, $value1, PDO::PARAM_INT);
+						$statement1->bindValue(4, null,    PDO::PARAM_NULL);
 						$statement1->execute();
 					}
 					foreach ($user_privacy as $key1=>$value1) {
@@ -251,20 +251,30 @@ try {
 					}
 					foreach ($global_facts as $key1=>$value1) {
 						foreach ($value1 as $key2=>$value2) {
-							$statement1->bindValue(1, null,    PDO::PARAM_NULL);
-							$statement1->bindValue(2, $key1,   PDO::PARAM_STR);
-							$statement1->bindValue(3, $key2,   PDO::PARAM_STR);
-							$statement1->bindValue(4, $value2, PDO::PARAM_INT);
+							$statement1->bindValue(1, null,  PDO::PARAM_NULL);
+							$statement1->bindValue(2, $key1, PDO::PARAM_STR);
+							if ($key2=='show') {
+								$statement1->bindValue(3, $value2, PDO::PARAM_STR);
+								$statement1->bindValue(4, null,    PDO::PARAM_NULL);
+							} else {
+								$statement1->bindValue(3, null,    PDO::PARAM_NULL);
+								$statement1->bindValue(4, $value2, PDO::PARAM_INT);
+							}
 							$statement1->execute();
 						}
 					}
 					foreach ($person_facts as $key1=>$value1) {
 						foreach ($value1 as $key2=>$value2) {
 							foreach ($value2 as $key3=>$value3) {
-								$statement1->bindValue(1, $key1,   PDO::PARAM_STR);
-								$statement1->bindValue(2, $key2,   PDO::PARAM_STR);
-								$statement1->bindValue(3, $key3,   PDO::PARAM_STR);
-								$statement1->bindValue(4, $value2, PDO::PARAM_INT);
+								$statement1->bindValue(1, $key1, PDO::PARAM_STR);
+								$statement1->bindValue(2, $key2, PDO::PARAM_STR);
+								if ($key3=='show') {
+									$statement1->bindValue(3, $value3, PDO::PARAM_STR);
+									$statement1->bindValue(4, null,    PDO::PARAM_NULL);
+								} else {
+									$statement1->bindValue(3, null,    PDO::PARAM_NULL);
+									$statement1->bindValue(4, $value3, PDO::PARAM_STR);
+								}
 								$statement1->execute();
 							}
 						}
