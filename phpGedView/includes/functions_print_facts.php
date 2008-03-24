@@ -588,8 +588,10 @@ function print_fact_sources($factrec, $level, $return=false) {
 			}
 			$data .= printSourceStructure(getSourceStructure($srec));
 			$data .= "<div class=\"indent\">";
+			ob_start();
 			print_media_links($srec, $nlevel);
-			print_fact_notes($srec, $nlevel);
+			$data .= ob_get_clean();
+			$data .= print_fact_notes($srec, $nlevel, false, true);
 			$data .= "</div>";
 			$data .= "</div>";
 			
