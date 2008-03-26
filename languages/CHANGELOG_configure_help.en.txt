@@ -45,6 +45,7 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["ABBREVIATE_CHART_LABELS_help"]			26 Mar 2008				W
 *$pgv_lang["PEDIGREE_FULL_DETAILS"]					21 Mar 2008				w
 *$pgv_lang["PEDIGREE_FULL_DETAILS_help"]			21 Mar 2008				w
 +$pgv_lang["PEDIGREE_SHOW_GENDER"]					21 Mar 2008				A
