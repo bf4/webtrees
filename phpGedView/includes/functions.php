@@ -3325,7 +3325,7 @@ if (!empty($COMMIT_COMMAND)) {
 function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut;
-	global $pgv_lang, $countries, $altCountryNames, $faqlist;
+	global $pgv_lang, $countries, $altCountryNames, $faqlist, $factAbbrev;
 	
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
 
@@ -3443,7 +3443,7 @@ function loadLangFile($fileListNames="") {
  *
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang;
+	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang, $factAbbrev;
 	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;

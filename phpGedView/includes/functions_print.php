@@ -1504,14 +1504,17 @@ function print_favorite_selector($option=0) {
  * @param string $pid the id of the individual to print, required to check privacy
  */
 function print_simple_fact($indirec, $fact, $pid) {
-	global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS;
+	global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS, $factAbbrev;
 	$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","OBJE","CHAN","_SEPR","RESI", "DATA", "MAP");
 	$factrec = get_sub_record(1, "1 $fact", $indirec);
 	if ((empty($factrec))||(FactViewRestricted($pid, $factrec))) return;
 	$label = "";
 	if (isset($pgv_lang[$fact])) $label = $pgv_lang[$fact];
 	else if (isset($factarray[$fact])) $label = $factarray[$fact];
-	if ($ABBREVIATE_CHART_LABELS) $label = get_first_letter($label);
+	if ($ABBREVIATE_CHART_LABELS) {
+		if (isset($factAbbrev[$fact])) $label = $factAbbrev[$fact];
+		else $label = get_first_letter($label);
+	}
 // RFE [ 1229233 ] "DEAT" vs "DEAT Y"
 // The check $factrec != "1 DEAT" will not show any records that only have 1 DEAT in them
 	if (trim($factrec) != "1 DEAT"){
