@@ -50,10 +50,6 @@ class Person extends GedcomRecord {
 	var $drec = "";
 	var $best = false;
 	var $dest = false;
-	var $bdate2 = "";
-	var $ddate2 = "";
-	var $brec2 = "";
-	var $drec2 = "";
 	var $fams = null;
 	var $famc = null;
 	var $spouseFamilies = null;
@@ -299,11 +295,6 @@ class Person extends GedcomRecord {
 		$this->ddate = get_gedcom_value("DATE", 2, $this->drec, '', false);
 		$this->dplace = get_gedcom_value("PLAC", 2, $this->drec, '', false);
 		$this->bplace = get_gedcom_value("PLAC", 2, $this->brec, '', false);
-		//-- 2nd record with alternate date (hebrew...)
-		$this->brec2 = trim(get_sub_record(1, "1 BIRT", $this->gedrec, 2));
-		$this->drec2 = trim(get_sub_record(1, "1 DEAT", $this->gedrec, 2));
-		$this->bdate2 = get_gedcom_value("DATE", 2, $this->brec2, '', false);
-		$this->ddate2 = get_gedcom_value("DATE", 2, $this->drec2, '', false);
 		//-- if no birthdate look for christening
 		if (empty($this->bdate)) $this->bdate = get_gedcom_value("CHR:DATE", 1, $this->gedrec, '', false);
 		if (empty($this->bplace)) $this->bplace = get_gedcom_value("CHR:PLAC", 1, $this->gedrec, '', false);
@@ -439,6 +430,48 @@ class Person extends GedcomRecord {
 		$ddate=$ddate->MinDate();
 		if ($cal) $ddate=$ddate->convert_to_cal($cal);
 		return $ddate->y;
+	}
+
+	// Get all the dates/places for births/deaths - for the INDI lists
+	function getAllBirthDates() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+				if ($array=$this->getAllEventAttributes($event, 'DATE')) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+	function getAllBirthPlaces() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+				if ($array=$this->getAllEventAttributes($event, 'PLAC')) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+	function getAllDeathDates() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+				if ($array=$this->getAllEventAttributes($event, 'DATE')) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+	function getAllDeathPlaces() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+				if ($array=$this->getAllEventAttributes($event, 'PLAC')) {
+					return $array;
+				}
+			}
+		}
+		return array();
 	}
 
 	/**
