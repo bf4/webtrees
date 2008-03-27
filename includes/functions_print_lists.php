@@ -401,7 +401,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Birth date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		if ($birth_dates=$person->getAllBirthDates()) {
-			foreach ($birth_dates as $birth_date) {
+			foreach ($birth_dates as $num=>$birth_date) {
 				if ($num) {
 					echo '<div>', $birth_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else {
@@ -461,7 +461,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		if ($death_dates=$person->getAllDeathDates()) {
-			foreach ($death_dates as $death_date) {
+			foreach ($death_dates as $num=>$death_date) {
 				if ($num) {
 					echo '<div>', $death_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else {
@@ -784,7 +784,7 @@ function print_fam_table($datalist, $legend="") {
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		if ($marriage_dates=$family->getAllMarriageDates()) {
-			foreach ($marriage_dates as $marriage_date) {
+			foreach ($marriage_dates as $num=>$marriage_date) {
 				if ($num) {
 					echo '<div>', $marriage_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else {
