@@ -413,24 +413,31 @@ class GedcomRecord {
 	// This is used to display multiple events on the individual/family lists.
 	// Multiple events can exist because of uncertainty in dates, dates in different
 	// calendars, place-names in both latin and hebrew character sets, etc.
-	function getAllEventAttributes($event, $attribute) {
-		$attributes=array();
-		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $event_recs)) {
-			foreach ($event_recs[1] as $event_rec) {
-				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^2 *{$attribute} +(.*)/m", $event_rec, $attribute_recs)) {
-					foreach ($attribute_recs[1] as $attribute_rec) {
-						switch($attribute) {
-						case 'DATE':
-							$attributes[]=new GedcomDate($attribute_rec);
-							break;
-						default:
-							$attributes[]=$attribute_rec;
-						}
+	function getAllEventDates($event) {
+		$dates=array();
+		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
+			foreach ($events[1] as $event_rec) {
+				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^2 DATE +(.*)/m", $event_rec, $ged_dates)) {
+					foreach ($ged_dates[1] as $ged_date) {
+						$dates[]=new GedcomDate($ged_date);
 					}
 				}
 			}
 		}
-		return $attributes;
+		return $dates;
+	}
+	function getAllEventPlaces($event) {
+		$places=array();
+		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
+			foreach ($events[1] as $event_rec) {
+				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.*)/m", $event_rec, $ged_places)) {
+					foreach ($ged_places[1] as $ged_place) {
+						$places[]=$ged_place;
+					}
+				}
+			}
+		}
+		return $places;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

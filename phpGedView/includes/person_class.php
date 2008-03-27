@@ -436,7 +436,7 @@ class Person extends GedcomRecord {
 	function getAllBirthDates() {
 		if ($this->canDisplayDetails()) {
 			foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
-				if ($array=$this->getAllEventAttributes($event, 'DATE')) {
+				if ($array=$this->getAllEventDates($event)) {
 					return $array;
 				}
 			}
@@ -446,7 +446,7 @@ class Person extends GedcomRecord {
 	function getAllBirthPlaces() {
 		if ($this->canDisplayDetails()) {
 			foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
-				if ($array=$this->getAllEventAttributes($event, 'PLAC')) {
+				if ($array=$this->getAllEventPlaces($event)) {
 					return $array;
 				}
 			}
@@ -456,7 +456,7 @@ class Person extends GedcomRecord {
 	function getAllDeathDates() {
 		if ($this->canDisplayDetails()) {
 			foreach (array('DEAT', 'BURI', 'CREM') as $event) {
-				if ($array=$this->getAllEventAttributes($event, 'DATE')) {
+				if ($array=$this->getAllEventDates($event)) {
 					return $array;
 				}
 			}
@@ -466,7 +466,7 @@ class Person extends GedcomRecord {
 	function getAllDeathPlaces() {
 		if ($this->canDisplayDetails()) {
 			foreach (array('DEAT', 'BURI', 'CREM') as $event) {
-				if ($array=$this->getAllEventAttributes($event, 'PLAC')) {
+				if ($array=$this->getAllEventPlaces($event)) {
 					return $array;
 				}
 			}
