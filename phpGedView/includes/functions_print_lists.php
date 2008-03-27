@@ -403,9 +403,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($birth_dates=$person->getAllBirthDates()) {
 			foreach ($birth_dates as $birth_date) {
 				if ($num) {
-					echo '<br/>', $birth_date->Display(!$SEARCH_SPIDER);
+					echo '<div>', $birth_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else {
-					echo str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER));
+					echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
 				}
 			}
 		} else {
@@ -463,9 +463,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($death_dates=$person->getAllDeathDates()) {
 			foreach ($death_dates as $death_date) {
 				if ($num) {
-					echo '<br/>', $death_date->Display(!$SEARCH_SPIDER);
+					echo '<div>', $death_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else {
-					echo str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER));
+					echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
 				}
 			}
 		} else {
@@ -786,9 +786,9 @@ function print_fam_table($datalist, $legend="") {
 		if ($marriage_dates=$family->getAllMarriageDates()) {
 			foreach ($marriage_dates as $marriage_date) {
 				if ($num) {
-					echo '<br/>', $marriage_date->Display(!$SEARCH_SPIDER);
+					echo '<div>', $marriage_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else {
-					echo str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER));
+					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
 				}
 			}
 		} else {
