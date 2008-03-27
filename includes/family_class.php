@@ -43,8 +43,6 @@ class Family extends GedcomRecord {
 	var $marr_type = null;
 	var $marr_est = false; // estimate
 	var $div_rec = null;
-	var $marr_rec2 = null;
-	var $marr_date2 = null;
 	var $children_loaded = false;
 	var $numChildren = false;
 
@@ -327,9 +325,6 @@ class Family extends GedcomRecord {
 		$this->marr_date = get_gedcom_value("DATE", 2, $this->marr_rec, '', false);
 		$this->marr_type = get_gedcom_value("TYPE", 2, $this->marr_rec, '', false);
 		$this->div_rec = trim(get_sub_record(1, "1 DIV", $this->gedrec));
-		//-- 2nd record with alternate date (hebrew...)
-		$this->marr_rec2 = trim(get_sub_record(1, "1 MARR", $this->gedrec, 2));
-		$this->marr_date2 = get_gedcom_value("DATE", 2, $this->marr_rec2, '', false);
 	}
 
 	/**
@@ -424,6 +419,28 @@ class Family extends GedcomRecord {
 	 */
 	function getDivorcePlace() {
 		return get_gedcom_value("PLAC", 2, $this->getDivorceRecord());
+	}
+
+	// Get all the dates/places for marriages - for the FAM lists
+	function getAllMarriageDates() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('MARR') as $event) {
+				if ($array=$this->getAllEventAttributes($event, 'DATE')) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+	function getAllMarriagePlaces() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('MARR') as $event) {
+				if ($array=$this->getAllEventAttributes($event, 'PLAC')) {
+					return $array;
+				}
+			}
+		}
+		return array();
 	}
 
 	/**

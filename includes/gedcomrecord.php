@@ -409,6 +409,30 @@ class GedcomRecord {
 		return "";
 	}
 
+	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
+	// This is used to display multiple events on the individual/family lists.
+	// Multiple events can exist because of uncertainty in dates, dates in different
+	// calendars, place-names in both latin and hebrew character sets, etc.
+	function getAllEventAttributes($event, $attribute) {
+		$attributes=array();
+		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $event_recs)) {
+			foreach ($event_recs[1] as $event_rec) {
+				if (!FactViewRestricted($this->xref, $event_rec[0]) && preg_match_all("/^2 *{$attribute} *(.*)/m", $event_rec, $attribute_recs)) {
+					foreach ($attribute_recs[1] as $attribute_rec) {
+						switch($attribute) {
+						case 'DATE':
+							$attributes[]=new GedcomDate($attribute_rec);
+							break;
+						default:
+							$attributes[]=$attribute_rec;
+						}
+					}
+				}
+			}
+		}
+		return $attributes;
+	}
+
 	//////////////////////////////////////////////////////////////////////////////
 	// Get the last-change timestamp for this record - optionally wrapped in a
 	// link to ourself.
