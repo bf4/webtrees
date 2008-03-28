@@ -1702,6 +1702,7 @@ function print_privacy_error($username) {
  */
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
+	global $TEXT_DIRECTION;
 
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
@@ -1723,7 +1724,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 		if ($PGV_USE_HELPIMG) {
 			$output.='<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" /></a>';
 		} else {
-			$output.=$pgv_lang[$helpText].'</a>';
+			$output.=$pgv_lang[$helpText].'&nbsp;&nbsp;</a>';
 		}
 	}
 
