@@ -39,12 +39,16 @@ $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>-1);
  */
 function print_login_block($block = true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $ALLOW_REMEMBER_ME;
+	global $TEXT_DIRECTION;
 
 	if (PGV_USER_ID) {
 		return;
 	}
 	$id="login_block";
 	$title = "";
+	
+	$i = 0;			// Initialize tab index
+	
 	if ($USE_REGISTRATION_MODULE) $title .= print_help_link("index_login_register_help", "qm", "", false, true);
 	else $title .= print_help_link("index_login_help", "qm", "", false, true);
 	$title .= $pgv_lang["login"];
@@ -58,43 +62,89 @@ function print_login_block($block = true, $config="", $side, $index) {
 	$content .= "\" />";
 	$content .= "<input type=\"hidden\" name=\"usertime\" value=\"\" />";
 	$content .= "<input type=\"hidden\" name=\"action\" value=\"login\" />";
-	$content .= "<table>";
+	$content .= "<table class=\"center tabs_table\">";
+	
+	// Row 1: Userid
+	$i++;
 	$content .= "<tr><td ";
 	$content .= write_align_with_textdir_check("right", true);
-	$content .= ">".$pgv_lang["username"]."</td><td><input type=\"text\" name=\"username\" size=\"15\" class=\"formField\" /></td></tr>";
+	$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
+	$content .= print_help_link("username_help", "qm", "username", false, true);
+	$content .= $pgv_lang["username"]."</td>";
+	$content .= "<td ";
+	$content .= write_align_with_textdir_check("left", true);
+	$content .= " class=\"{$TEXT_DIRECTION}\"><input type=\"text\" tabindex=\"{$i}\" name=\"username\"  size=\"20\" class=\"formField\" />";
+	$content .= "</td></tr>";
+	
+	// Row 2: Password
+	$i++;
 	$content .= "<tr><td ";
 	$content .= write_align_with_textdir_check("right", true);
-	$content .= ">".$pgv_lang["password"]."</td><td><input type=\"password\" name=\"password\" size=\"15\" class=\"formField\" /></td></tr>";
+	$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
+	$content .= print_help_link("password_help", "qm", "password", false, true);
+	$content .= $pgv_lang["password"]."</td>";
+	$content .= "<td ";
+	$content .= write_align_with_textdir_check("left", true);
+	$content .= " class=\"{$TEXT_DIRECTION}\"><input type=\"password\" tabindex=\"{$i}\" name=\"password\"  size=\"20\" class=\"formField\" />";
+	$content .= "</td></tr>";
+	
+	// Row 3: "Remember me" option
 	if ($ALLOW_REMEMBER_ME) {
-		$content .= "<tr><td>".$pgv_lang["remember_me"]."</td><td><input type=\"checkbox\" name=\"remember\" value=\"yes\" class=\"formField\" ";
+		$i++;
+		$content .= "<tr><td ";
+		$content .= write_align_with_textdir_check("right", true);
+		$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
+		$content .= print_help_link("remember_me_help", "qm", "", false, true);
+		$content .= $pgv_lang["remember_me"]."</td>";
+		$content .= "<td ";
+		$content .= write_align_with_textdir_check("left", true);
+		$content .= " class=\"{$TEXT_DIRECTION}\"><input type=\"checkbox\" tabindex=\"{$i}\" name=\"remember\" value=\"yes\" class=\"formField\" ";
 		if (!empty($_COOKIE["pgv_rem"])) $content .= "checked=\"checked\" ";
 		$content .= "/>";
-		$content .= print_help_link("remember_me_help", "qm", "", false, true);
 		$content .= "</td></tr>";
 		}
+
+	// Row 4: "Login" link
+	$i++;
 	$content .= "<tr><td colspan=\"2\" class=\"center\">";
-	$content .= "<input type=\"submit\" value=\"".$pgv_lang["login"]."\" />&nbsp;";
+	$content .= "<input type=\"submit\" tabindex=\"{$i}\" value=\"".$pgv_lang["login"]."\" />&nbsp;";
 	$content .= "</td></tr>";
-	$content .= "</table>";
-	$content .= "</form></div>";
-	$content .= "<div class=\"center\">";
+
 	if ($USE_REGISTRATION_MODULE) {
-		$content .= $pgv_lang["no_account_yet"];
-		$content .= "<br />";
-		$content .= "<a href=\"login_register.php?action=register\">";
+
+		// Row 5: "Request Account" link
+		$i++;
+		$content .= "<tr><td ";
+		$content .= write_align_with_textdir_check("right", true);
+		$content .= " class=\"{$TEXT_DIRECTION} wrap width50\"><br />";
+		$content .= print_help_link("new_user_help", "qm", "", false, true);
+		$content .= $pgv_lang["no_account_yet"]."</td>";
+		$content .= "<td ";
+		$content .= write_align_with_textdir_check("left", true);
+		$content .= " class=\"{$TEXT_DIRECTION}\"><br />";
+		$content .= "<a href=\"login_register.php?action=register\" tabindex=\"{$i}\">";
 		$content .= $pgv_lang["requestaccount"];
 		$content .= "</a>";
-		$content .= print_help_link("new_user_help", "qm", "", false, true);
+		$content .= "</td></tr>";
 
-		$content .= "<br /><br />";
-		$content .= $pgv_lang["lost_password"];
-		$content .= "<br />";
-		$content .= "<a href=\"login_register.php?action=pwlost\">";
+		// Row 6: "Lost Password" link
+		$i++;
+		$content .= "<tr><td ";
+		$content .= write_align_with_textdir_check("right", true);
+		$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
+		$content .= print_help_link("new_password_help", "qm", "", false, true);
+		$content .= $pgv_lang["lost_password"]."</td>";
+		$content .= "<td ";
+		$content .= write_align_with_textdir_check("left", true);
+		$content .= " class=\"{$TEXT_DIRECTION}\">";
+		$content .= "<a href=\"login_register.php?action=pwlost\" tabindex=\"{$i}\">";
 		$content .= $pgv_lang["requestpassword"];
 		$content .= "</a>";
-		$content .= print_help_link("new_password_help", "qm", "", false, true);
+		$content .= "</td></tr>";
 	}
-	$content .= "</div><br />";
+	
+	$content .= "</table>";
+	$content .= "</form></div>";
 
 	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
 	print '<td class="blockh1">&nbsp;</td>';
