@@ -30,7 +30,7 @@ $PGV_BLOCKS["print_login_block"]["name"]		= $pgv_lang["login_block"];
 $PGV_BLOCKS["print_login_block"]["descr"]		= "login_descr";
 $PGV_BLOCKS["print_login_block"]["type"]		= "gedcom";
 $PGV_BLOCKS["print_login_block"]["canconfig"]	= false;
-$PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>-1);
+$PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>0);
 
 /**
  * Print Login Block
