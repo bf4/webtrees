@@ -217,28 +217,29 @@ function need_date_cleanup()
 	global $fcontents;
 	$ct = preg_match_all ("/\n\d DATE[^\d]+(\d\d\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d)/",$fcontents,$matches, PREG_SET_ORDER);
 	if($ct>0) {
-		//print_r($matches);
 			return $matches[0];
 		}
 	else
 	{
 			$ct = preg_match_all ("/\n\d DATE[^\d]+(\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d\d\d)/",$fcontents,$matches, PREG_SET_ORDER);
 		if($ct>0) {
-			//print_r($matches);
+			// The user needs to choose between DMY and MDY
 			$matches[0]["choose"] = true;
 			return $matches[0];
 		}
 		else {
 			$ct = preg_match_all ("/\n\d DATE ([^\d]+) [0-9]{1,2}, (\d\d\d\d)/",$fcontents,$matches, PREG_SET_ORDER);
 			if($ct>0) {
-				//print_r($matches);
 				return $matches[0];
 			}
 			else {
 				$ct = preg_match_all("/\n\d DATE (\d\d)[^\s]([^\d]+)[^\s](\d\d\d\d)/", $fcontents, $matches, PREG_SET_ORDER);
 				if($ct>0) {
-					//print_r($matches);
 					return $matches[0];
+				} else {
+					if (preg_match_all("/^\d DATE (BET|FROM) \d\d? (AND|TO) \d\d? \w\w\w \d\d\d\d/m", $fcontents, $matches, PREG_SET_ORDER)) {
+						return $matches[0];
+					}
 				}
 			}
 		}
@@ -295,6 +296,9 @@ function date_cleanup($dayfirst=1)
 		$fcontents=preg_replace("/2 DATE (.*)(0?[1-9]|1[0-2]) (\d\d?) (\d\d\d\d)/e", "'2 DATE $1$3 '.changemonth('$2').' $4'", $fcontents);
 		$fcontents=preg_replace("/2 DATE (.*)(0?[1-9]|1[0-2]) (\d\d?) (\d\d\d\d)/e", "'2 DATE $1$3 '.changemonth('$2').' $4'", $fcontents);
 	}
+
+	// Convert "BET 1 AND 11 JUN 1900" to "BET 1 JUN 1900 AND 11 JUN 1900"
+	$fcontents=preg_replace("/^(\d DATE) (BET|FROM) (\d\d?) (AND|TO) (\d\d?) (\w\w\w \d\d\d\d)/m", '$1 $2 $3 $6 $4 $5 $6', $fcontents);
 	return true;
 }
 
