@@ -36,14 +36,6 @@ html {
 	caption-side: left;
 	display: table;
 }
-.blockh1 {
-	background-image: url(images/right3.gif);
-	width: 6px;
-}
-.blockh3 {
-	background-image: url(images/right1B.gif);
-	width: 28px;
-}
 .blockhc {
 	padding-left: 15px;
 	padding-right: 5px;
@@ -60,3 +52,15 @@ html {
 	padding-left: 5pt;
 	padding-right: 0pt;
 }
+.blockh1 {
+	background-image: url(images/right1B.gif);
+}
+
+.blockh3 {
+	background-image: url(images/right3.gif);
+}
+
+#login_block .blockh1 {
+	background-image: url(images/rightR.gif);
+}
+

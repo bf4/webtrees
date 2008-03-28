@@ -192,6 +192,7 @@ ul {
 	background-repeat: no-repeat;
 	width: 26px;
 	height: 24px;
+	margin: 0;
 }
 
 .blockh2 {
@@ -209,6 +210,7 @@ ul {
 	background-repeat: no-repeat;
 	width: 8px;
 	height: 24px;
+	margin: 0;
 }
 
 .blockhc {
