@@ -784,10 +784,9 @@ th {
 	padding: 5px;
 }
 
-.icon {
+.icon, .adminicon {
 	border: none;
-	padding-top: 1pt;
-	padding-left: 3pt;
+	padding-left: 0pt;
 	padding-right: 5pt;
 }
 

@@ -407,8 +407,10 @@ a:hover .nameZoom {
 	padding: 5px;
 }
 
-.icon {
+.icon, .adminicon {
 	border: none;
+	padding-left: 0pt;
+	padding-right: 5pt;
 }
 
 .link {

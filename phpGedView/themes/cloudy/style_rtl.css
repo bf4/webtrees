@@ -54,3 +54,9 @@ html {
 .door dd {
 	float: right;
 }
+
+.icon, .adminicon {
+	border: none;
+	padding-left: 5pt;
+	padding-right: 0pt;
+}

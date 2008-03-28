@@ -17,3 +17,17 @@ body {
 .door dd {
 	float: right;
 }
+
+.icon {
+	display: none;
+	border: none;
+	padding-left: 5pt;
+	padding-right: 0pt;
+}
+
+.adminicon {
+	border: none;
+	padding-left: 5pt;
+	padding-right: 0pt;
+}
+
