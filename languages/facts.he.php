@@ -336,4 +336,24 @@ $factarray["SERV"]  = "שרת מרוחק";
 $factarray["_GEDF"] = "קובץ GEDCOM";
 $factarray["_HIST"] = "היסטוריה"; 
 
+/*-- Fact abbreviations for use in Chart boxes.  
+ *		Use these abbreviations in cases where the standard method of using the first
+ *		letter of the spelled-out name results in an undesirable abbreviation or where
+ *		you want to produce a different result (eg: "x" instead of "M" for "Married").
+ *
+ *		You can abbreviate any Fact label this way.  The list of abbreviations is
+ *		open-ended.
+ *
+ *		These abbreviations are user-customizable. Just put them into file "extra.xx.php".
+ *		The length of these abbreviations is not restricted to 1 letter.
+ */
+ 
+/*-- The following lines have been commented out.  They should serve as examples. 
+ 
+$factAbbrev["BIRT"]		= "B";
+$factAbbrev["MARR"]		= "M";
+$factAbbrev["DEAT"]		= "D";
+
+ */
+
 ?>
