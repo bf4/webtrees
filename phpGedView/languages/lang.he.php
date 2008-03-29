@@ -526,7 +526,7 @@ $pgv_lang["record_added"]		= "רשומת ה-#xref# הוספה בהצלחה לק�
 $pgv_lang["record_not_added"]	= "לא ניתן להוסיף את רשומת ה-#xref# לקובץ ה-GEDCOM."; 
 
 //-- SEARCH FILE MESSAGES
-$pgv_lang["soundex_search"] 		= "- חפש לפי האיות שאתה משער (סאונדקס)";
+$pgv_lang["soundex_search"] 		= "חפש לפי האיות שאתה משער (סאונדקס)";
 $pgv_lang["sources"]		= "מקורות";
 $pgv_lang["lastname_search"]		= "משפחה";
 $pgv_lang["search_place"]		= "מקום";
