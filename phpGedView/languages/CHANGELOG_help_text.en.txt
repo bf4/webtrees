@@ -45,6 +45,7 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["accesskey_viewing_advice_help"]			29 Mar 2008				w	"research_log" --> "research_assistant"
 +$pgv_lang["age_differences_help"]					17 Mar 2008				A
 *$pgv_lang["link_remote_help"]						09 Mar 2008				w	Correct Wiki link
 -$pgv_lang["addmedia_tool_help"]					15 Feb 2008				D
