@@ -304,7 +304,7 @@ class Person extends GedcomRecord {
 		//-- if no death estimate from birth
 		if (empty($this->ddate) && !empty($this->bdate)) {
 			$pdate=new GedcomDate($this->bdate);
-			if ($pdate->MinJD() != 0) {
+			if ($pdate->isOK()) {
 				$pdate=$pdate->AddYears($MAX_ALIVE_AGE, 'BEF');
 				$pdate=$pdate->MinDate();
 				$this->dest = true;
@@ -316,7 +316,7 @@ class Person extends GedcomRecord {
 		//-- if no birth estimate from death
 		if (empty($this->bdate) && !empty($this->ddate)) {
 			$pdate=new GedcomDate($this->ddate);
-			if ($pdate->MinJD() != 0) {
+			if ($pdate->isOK()) {
 				$pdate=$pdate->AddYears(-$MAX_ALIVE_AGE, 'AFT');
 				$pdate=$pdate->MinDate();
 				$this->best = true;
@@ -523,7 +523,7 @@ class Person extends GedcomRecord {
 		if ($elderdate) {
 			$p1 = new GedcomDate($elderdate);
 			$p2 = new GedcomDate($this->getBirthDate(false));
-			if ($p1->MinJD() && $p2->MinJD()) {
+			if ($p1->isOK() && $p2->isOK()) {
 				$gap = $p2->MinJD()-$p1->MinJD(); // days
 				$label .= "<div class=\"elderdate age $TEXT_DIRECTION\">";
 				// warning if negative gap : wrong order

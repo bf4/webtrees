@@ -2367,7 +2367,7 @@ function print_parents_age($pid, $birth_date) {
 		if ($age) {
 			// [ 1749591 ] Highlight maternal death
 			$mother_ddate=new GedcomDate($spouse->getDeathDate(false));
-			if ($mother_ddate->MinJD() && $birth_date->MinJD() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
+			if ($mother_ddate->isOK() && $birth_date->isOK() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
 				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
 			}
 			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";

@@ -1241,6 +1241,11 @@ class GedcomDate {
 			else
 				return 0;
 	}
+
+	// Check whether a gedcom date contains usable calendar date(s).
+	function isOK() {
+		return $this->MinJD() && $this->MaxJD();
+	}
 }
 
 // Localise a date.  This is a default function, and may be overridden in extras.xx.php
