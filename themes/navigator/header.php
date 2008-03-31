@@ -1,8 +1,6 @@
 <?php global $SEARCH_SPIDER, $TEXT_DIRECTION, $GEDCOM; ?>
 <?php
 $menubar = new MenuBar();
-$username = getUserName();
-$user = getUser($username);
 
 include_once('js/prototype.js.htm');
 include_once('js/scriptaculous.js.htm');

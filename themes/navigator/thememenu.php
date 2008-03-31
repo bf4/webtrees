@@ -34,6 +34,8 @@ $pgv_lang["my_charts"] = "My Charts";
 $pgv_lang["my_tree"] = "My Tree";
 $pgv_lang["surnames"] = "Surnames";
 
+require_once 'includes/menu.php';
+
 // -- overide default menu bar
 class NavMenuBar extends MenuBar {
 	var $defaultMenus = array("getHomeMenu","getTreeMenu","getGedcomMenu","getMygedviewMenu","getAdminMenu","getSurnameMenu","getChartsMenu","getListsMenu",
@@ -44,9 +46,11 @@ class NavMenuBar extends MenuBar {
 	
 	function NavMenuBar() {
 		//parent::MenuBar();
-		$username = getUserName();
-		if (empty($username)) $this->defaultMenus = $this->visitorDefaultMenus;
-		else $this->loggedIn = true;
+		if (!PGV_USER_ID) {
+			$this->defaultMenus = $this->visitorDefaultMenus;
+		} else {
+			$this->loggedIn = true;
+		}
 	}
 	
 	function handleAjax() {
@@ -174,9 +178,8 @@ class NavMenuBar extends MenuBar {
 	
 	function getTreeMenu() {
 		global $PGV_IMAGE_DIR,$PGV_IMAGES,$pgv_lang;
-		$username = getUserName();
 		$content = '';
-		if (!empty($username)) {
+		if (PGV_USER_ID) {
 			$content = '<li class="menuitem" style="font-weight: bold;">
 			<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"].'" class="icon" alt="'.$pgv_lang["trees"].'" title="'.$pgv_lang["trees"].'" />
 			<a href="#" onclick="highlightMenu(document.getElementById(\'navlist\'), this); loadNav1(\'treelinks\'); return false;">'.$pgv_lang["trees"].'</a></li>';
@@ -213,15 +216,12 @@ class NavMenuBar extends MenuBar {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $PEDIGREE_ROOT_ID;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		
-		$username = getUserName();
-		if (empty($username)) return null;
+		if (!PGV_USER_ID) return null;
 		
-		$link = "index.php?command=user";
-		if (!empty($username)) {
-			$user = getUser($username);
-			if (!empty($user["gedcomid"][$GEDCOM])) {
-				$link = "individual.php?pid=".$user["gedcomid"][$GEDCOM];
-			}
+		if (PGV_USER_GEDCOM_ID) {
+			$link = "individual.php?pid=".PGV_USER_GEDCOM_ID;
+		} else {
+			$link = "index.php?command=user";
 		}
 		//-- main menu
 		$menu = new Menu($pgv_lang["mgv"], $link, "down");
@@ -232,11 +232,9 @@ class NavMenuBar extends MenuBar {
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		$menu->addAccesskey($pgv_lang["mgv"]);
 
-		$user = getUser($username);
-		$ged = $GEDCOM;
-		if (empty($user["gedcomid"][$ged])) {
+		if (!PGV_USER_GEDCOM_ID) {
 			foreach($GEDCOMS as $ged=>$gedarray) {
-				if (!empty($user["gedcomid"][$ged])) break;
+				if (get_user_gedcom_setting(PGV_USER_ID, $ged, 'gedcomid')) break;
 			}
 		}
 		//-- mygedview submenu
@@ -246,22 +244,22 @@ class NavMenuBar extends MenuBar {
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 		
-		if (!empty($user["gedcomid"][$ged])) {
-				$submenu = new Menu($pgv_lang["my_tree"], "treenav.php?rootid=".$user["gedcomid"][$ged]."&amp;ged=".$ged);
+		if (get_user_gedcom_setting(PGV_USER_ID, $ged, 'gedcomid')) {
+				$submenu = new Menu($pgv_lang["my_tree"], "treenav.php?rootid=".get_user_gedcom_setting(PGV_USER_ID, $ged, 'gedcomid')."&amp;ged=".$ged);
 				if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				$submenu->addOnclick("document.getElementById('midcontent2').style.width='0px'; topnav.newRoot('".$user["gedcomid"][$ged]."', topnav.innerPort, '".htmlentities($ged)."'); return false;");
+				$submenu->addOnclick("document.getElementById('midcontent2').style.width='0px'; topnav.newRoot('".get_user_gedcom_setting(PGV_USER_ID, $ged, 'gedcomid')."', topnav.innerPort, '".htmlentities($ged)."'); return false;");
 				$menu->addSubmenu($submenu);
 				
 				//-- my_indi submenu
-				$submenu = new Menu($pgv_lang["my_indi"], "individual.php?pid=".$user["gedcomid"][$ged]."&amp;ged=".$ged);
+				$submenu = new Menu($pgv_lang["my_indi"], "individual.php?pid=".get_user_gedcom_setting(PGV_USER_ID, $ged, 'gedcomid')."&amp;ged=".$ged);
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 				
-				$charts = $this->getChartsMenu($PEDIGREE_ROOT_ID,$user['gedcomid'][$ged],$ged);
+				$charts = $this->getChartsMenu($PEDIGREE_ROOT_ID,get_user_gedcom_setting(PGV_USER_ID, $ged, 'gedcomid'),$ged);
 				$charts->labelpos = 'right';
 				$charts->addClass('submenuitem', 'submenuitem_hover', 'submenu');
 				$charts->addFlyout('right');
@@ -270,7 +268,7 @@ class NavMenuBar extends MenuBar {
 				
 				//-- quick_update submenu
 				$submenu = new Menu($pgv_lang["quick_update_title"], "#");
-				$submenu->addOnclick("return quickEdit('".$user["gedcomid"][$ged]."', '', '$ged');");
+				$submenu->addOnclick("return quickEdit('".get_user_gedcom_setting(PGV_USER_ID, $ged, 'gedcomid')."', '', '$ged');");
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -278,14 +276,14 @@ class NavMenuBar extends MenuBar {
 				$menu->addSeperator();
 			}
 		//-- editaccount submenu
-		if ($user["editaccount"]) {
+		if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
 			$submenu = new Menu($pgv_lang["editowndata"], "edituser.php?ged=".$ged);
 			if (!empty($PGV_IMAGES["mygedview"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		if (userCanEdit($username)) {
+		if (PGV_USER_CAN_EDIT) {
 			//-- upload_media submenu
 			 if (is_writable($MEDIA_DIRECTORY) && $MULTI_MEDIA) {
 				$menu->addSeperator();
@@ -305,9 +303,7 @@ class NavMenuBar extends MenuBar {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $PEDIGREE_ROOT_ID;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		
-		$username = getUserName();
-		if (empty($username)) return null;
-		$user = getUser($username);
+		if (!PGV_USER_ID) return null;
 		
 		//-- main menu
 		$menu = new Menu($pgv_lang["admin"], "admin.php", "down");
@@ -316,7 +312,7 @@ class NavMenuBar extends MenuBar {
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		$menu->addAccesskey($pgv_lang["admin"]);
 		
-		if (userIsAdmin($username) || (userGedcomAdmin($username, $GEDCOM))){
+		if (PGV_USER_GEDCOM_ADMIN){
 			//-- admin submenu
 			$submenu = new Menu($pgv_lang["admin"], "admin.php");
 			if (!empty($PGV_IMAGES["admin"]["small"]))
@@ -366,12 +362,11 @@ class NavMenuBar extends MenuBar {
 	 * @return Menu 	the menu item
 	 */
 	function &getClippingsMenu() {
-		$menu = null;
-		$username = getUserName();
-		if (!empty($username)) {
-			$menu = parent::getClippingsMenu();
+		if (PGV_USER_ID) {
+			return parent::getClippingsMenu();
+		} else {
+			return null;
 		}
-		return $menu;
 	}
 }
 if (!empty($_REQUEST['navAjax'])) {
