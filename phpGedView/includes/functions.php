@@ -1718,7 +1718,7 @@ function compare_facts_date($arec, $brec) {
 	$adate = new GedcomDate($amatch[1]);
 	$bdate = new GedcomDate($bmatch[1]);
 	// If either date can't be parsed, don't sort.
-	if ($adate->MinJD()==0 || $bdate->MinJD()==0) {
+	if (!$adate->isOK() || !$bdate->isOK()) {
 		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
 			return $match1[1]-$match2[1];
 		}
