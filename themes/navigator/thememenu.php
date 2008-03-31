@@ -232,6 +232,7 @@ class NavMenuBar extends MenuBar {
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		$menu->addAccesskey($pgv_lang["mgv"]);
 
+		$ged=$GEDCOM;
 		if (!PGV_USER_GEDCOM_ID) {
 			foreach($GEDCOMS as $ged=>$gedarray) {
 				if (get_user_gedcom_setting(PGV_USER_ID, $ged, 'gedcomid')) break;
