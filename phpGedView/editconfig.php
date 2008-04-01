@@ -190,7 +190,10 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	}
 	$configtext = preg_replace('/\$DBHOST\s*=\s*".*";/', "\$DBHOST = \"".$_POST["NEW_DBHOST"]."\";", $configtext);
 	$configtext = preg_replace('/\$DBUSER\s*=\s*".*";/', "\$DBUSER = \"".$_POST["NEW_DBUSER"]."\";", $configtext);
-	if (!empty($_POST["NEW_DBPASS"])) $configtext = preg_replace('/\$DBPASS\s*=\s*".*";/', "\$DBPASS = \"".$_POST["NEW_DBPASS"]."\";", $configtext);
+	if (!empty($_POST["NEW_DBPASS"])) {
+		$tempPW = str_replace(array("\\", "\'", "\"", "\$"), array("\\\\", "\\\"", "\\\$"), $_POST["NEW_DBPASS"]);		// add escape codes before storing PW
+		$configtext = preg_replace('/\$DBPASS\s*=\s*".*";/', "\$DBPASS = \"{$tempPW}\";", $configtext);
+	}
 	$configtext = preg_replace('/\$DBNAME\s*=\s*".*";/', "\$DBNAME = \"".$_POST["NEW_DBNAME"]."\";", $configtext);
 	$configtext = preg_replace('/\$DBPERSIST\s*=\s*.*;/', "\$DBPERSIST = ".$boolarray[$_POST["NEW_DBPERSIST"]].";", $configtext);
 	$configtext = preg_replace('/\$TBLPREFIX\s*=\s*".*";/', "\$TBLPREFIX = \"".$_POST["NEW_TBLPREFIX"]."\";", $configtext);
@@ -417,7 +420,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBPASS_help", "qm", "DBPASS"); print $pgv_lang["DBPASS"];?></td>
-		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="<?php print $DBPASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /><br /><span style="color: red;"><?php print_text("enter_db_pass");?></span></td>
+		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="<?php print $DBPASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /><!-- <br /><span style="color: red;"><?php print_text("enter_db_pass");?></span> --></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBNAME_help", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>

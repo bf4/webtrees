@@ -10,6 +10,7 @@
 
 
 Version 4.1.4
+ - Fixed [ 1929511 ] Some special characters in DB password cause errors (canajun2eh)
  - Added Allow customizable Fact name abbreviations in charts (canajun2eh)
  - fixed [ 1923586 ] Sort log file lists (canajun2eh)
  - Added [ 1907082 ] Configuration option to remove gender icon on charts (canajun2eh)
