@@ -1077,16 +1077,6 @@ class GedcomDate {
 		else
 			$d2=$this->date2->Format($date_fmt);
 		$q3='';
-		// some religious dates [ 1843618 ]
-		/**if ($this->date1->y && $this->date1->m && $this->date1->d && !$d2) {
-			if (abs(GregorianDate::EasterJD($this->date1->y)       -$this->MinJD())<2) $q3=$pgv_lang["easter"];
-			if (abs(GregorianDate::EasterJD($this->date1->y)+39    -$this->MinJD())<2) $q3=$pgv_lang["ascension"];
-			if (abs(GregorianDate::EasterJD($this->date1->y)+49    -$this->MinJD())<2) $q3=$pgv_lang["pentecost"];
-			if (abs(GregorianDate::YMDtoJD($this->date1->y, 08, 15)-$this->MinJD())<2) $q3=$pgv_lang["assumption"];
-			if (abs(GregorianDate::YMDtoJD($this->date1->y, 11, 01)-$this->MinJD())<2) $q3=$pgv_lang["all_saints"];
-			if (abs(GregorianDate::YMDtoJD($this->date1->y, 12, 25)-$this->MinJD())<2) $q3=$pgv_lang["christmas"];
-			if ($q3) $q3="[$q3]";
-		}**/
 		// Localise the date
 		$func($q1, $d1, $q2, $d2, $q3);
 		// Convert to other calendars, if requested
@@ -1154,13 +1144,16 @@ class GedcomDate {
 		else
 			return $this->date2;
 	}
-	function  MinJD() {
+	function MinJD() {
 		$tmp=$this->MinDate();
 		return $tmp->minJD;
 	}
-	function  MaxJD() {
+	function MaxJD() {
 		$tmp=$this->MaxDate();
 		return $tmp->maxJD;
+	}
+	function JD() {
+		return floor(($this->MinJD()+$this->MaxJD())/2);
 	}
 
 	// Offset this date by N years, and round to the whole year
@@ -1202,7 +1195,7 @@ class GedcomDate {
 	// BEF/AFT sort as the day before/after.
 	function Compare(&$a, &$b) {
 		// Incomplete dates can't be sorted
-		if (!is_object($a) || !is_object($b) || $a->MinJD()==0 || $b->MinJD()==0)
+		if (!is_object($a) || !is_object($b) || !$a->isOK() || !$b->isOK())
 			return 0;
 		// Get min/max JD for each date.
 		switch ($a->qual1) {
@@ -1245,6 +1238,19 @@ class GedcomDate {
 	// Check whether a gedcom date contains usable calendar date(s).
 	function isOK() {
 		return $this->MinJD() && $this->MaxJD();
+	}
+
+	// Calculate the gregorian year for a date.  This should NOT be used internally
+	// within PGV - we should keep the code "calendar neutral" to allow support for
+	// jewish/arabic users.  This is only for interfacing with external entities,
+	// such as the ancestry.com search interface or the dated fact icons.
+	function gregorianYear() {
+		if ($this->isOK()) {
+			list($y)=GregorianDate::JDtoYMD($this->JD());
+			return $y;
+		} else {
+			return 0;
+		}
 	}
 }
 

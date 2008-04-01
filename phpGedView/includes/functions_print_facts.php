@@ -1599,9 +1599,7 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 		$fact_image = "";
 		if (preg_match('/2 DATE (.+)/', $factrec, $match)) {
 			$factdate = new GedcomDate($match[1]);
-			$factdate = $factdate->MinDate();
-			$factdate = $factdate->convert_to_cal('gregorian');
-			$factyear = $factdate->y;
+			$factyear = $factdate->gregorianYear();
 		} else
 			$factyear=0;
 		$joe = null;
@@ -1616,9 +1614,10 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 		// Does not catch the date if it is attached to the source of the fact
 		// (ratid entered OCCU) or if the fact comes from a family record. (MARR)
 		if ($factyear == 0 && !is_null($joe)) {
-			$fallback = $joe->getBirthYear();
-			if(!empty($fallback))
-				$factyear = $fallback;
+			$fallback=$joe->getBirthDate(true);
+			$fallback=$fallback->gregorianYear();
+			if($fallback)
+				$factyear=$fallback;
 		}
 
 		// converting from scalar to array string.
