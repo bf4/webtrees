@@ -179,7 +179,6 @@ $pgv_lang["media_file_moved"]			= "Mediafiler borttagna.";
 $pgv_lang["media_file_not_moved"]	= "Mediafil kunde inte flyttas.";
 $pgv_lang["media_file_not_renamed"]	= "Mediafil kunde inte flyttas eller döpas om.";
 $pgv_lang["media_thumb_exists"]		= "Media-miniatyr existerar redan.";
-$pgv_lang["multi_site_search"] 		= "Flersajtssökning";
 $pgv_lang["multiple_gedcoms"]		= "Denna fil är länkad till en databas på denna server. Den kan inte raderas flyttas eller döpas om förrän dessa länkar är borttagna.";
 $pgv_lang["must_provide"]		= "Du måste tillhandahålla";
 $pgv_lang["name_search"]			= "Namn: ";
