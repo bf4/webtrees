@@ -646,6 +646,7 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 else $GEDCOMS=array();
 
 //-- connect to the database
+$DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS);		// remove escape codes before using PW
 check_db();
 
 if (isset($_REQUEST["GEDCOM"])){
