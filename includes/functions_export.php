@@ -459,7 +459,6 @@ function um_export($proceed) {
 	$sql = "SELECT * FROM ".$TBLPREFIX."blocks ORDER BY b_location, b_order";
 	$res = dbquery($sql);
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
 		$blocks = array();
 		$blocks["username"] = $row["b_username"];
 		$blocks["location"] = $row["b_location"];
