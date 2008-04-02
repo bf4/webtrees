@@ -1614,7 +1614,7 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 		// Does not catch the date if it is attached to the source of the fact
 		// (ratid entered OCCU) or if the fact comes from a family record. (MARR)
 		if ($factyear == 0 && !is_null($joe)) {
-			$fallback=$joe->getBirthDate(true);
+			$fallback=new GedcomDate($joe->getBirthDate(true));
 			$fallback=$fallback->gregorianYear();
 			if($fallback)
 				$factyear=$fallback;
