@@ -408,7 +408,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 					echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
 				}
 			}
-			$birt_by_decade[floor($birth_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
+			if ($birth_dates[0]->gregorianYear()>=1550) {
+				$birt_by_decade[floor($birth_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
+			}
 		} else {
 			echo '&nbsp;';
 			$birth_dates[0]=new GedcomDate('');
@@ -465,7 +467,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 					echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
 				}
 			}
-			$deat_by_decade[floor($death_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
+			if ($death_dates[0]->gregorianYear()>=1550) {
+				$deat_by_decade[floor($death_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
+			}
 		} else {
 			echo '&nbsp;';
 			$death_dates[0]=new GedcomDate('');
@@ -724,7 +728,9 @@ function print_fam_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap\">";
 		$hdate=new GedcomDate($husb->GetBirthDate());
 		if ($hdate->isOK()) {
-			$birt_by_decade[floor($hdate->gregorianYear()/10)*10] .= $husb->getSex();
+			if ($hdate->gregorianYear()>=1550) {
+				$birt_by_decade[floor($hdate->gregorianYear()/10)*10] .= $husb->getSex();
+			}
 			if ($mdate->isOK()) {
 				$hage =GedcomDate::GetAgeYears($hdate, $mdate);
 				print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
@@ -767,7 +773,9 @@ function print_fam_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap\">";
 		$wdate=new GedcomDate($wife->GetBirthDate());
 		if ($wdate->isOK()) {
-			$birt_by_decade[floor($wdate->gregorianYear()/10)*10] .= $wife->getSex();
+			if ($wdate->gregorianYear()>=1550) {
+				$birt_by_decade[floor($wdate->gregorianYear()/10)*10] .= $wife->getSex();
+			}
 			if ($mdate->isOK()) {
 				$wage =GedcomDate::GetAgeYears($wdate, $mdate);
 				print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
@@ -789,7 +797,9 @@ function print_fam_table($datalist, $legend="") {
 					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
 				}
 			}
-			$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
+			if ($marriage_dates[0]->gregorianYear()>=1550) {
+				$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
+			}
 		} else {
 			echo '&nbsp;';
 		}
