@@ -3,7 +3,7 @@
  * Russian Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Eugene Fedorov, Natalia Anikeeva
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -404,7 +404,7 @@ $pgv_lang["person1"]			= "Лицо 1";
 $pgv_lang["person2"]			= "Лицо 2";
 $pgv_lang["no_link_found"]		= "Родство между двумя персонами не найдено.";
 $pgv_lang["sibling"]			= "Брат/сестра";
-$pgv_lang["follow_spouse"]		= "Контролируй родство по браку.";
+$pgv_lang["follow_spouse"]		= "Контролируй родство по браку";
 $pgv_lang["timeout_error"]		= "Определить максимальное время поиска для нахождения родственных отношений.";
 $pgv_lang["son"]			= "Сын";
 $pgv_lang["step5"]				= "Шаг 5 из 5";

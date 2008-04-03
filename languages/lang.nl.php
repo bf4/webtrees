@@ -3,7 +3,7 @@
  * Dutch texts
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -474,7 +474,7 @@ $pgv_lang["person1"]					= "Persoon 1";
 $pgv_lang["person2"]					= "Persoon 2";
 $pgv_lang["no_link_found"]				= "Geen (andere) verbinding tussen de twee personen gevonden.";
 $pgv_lang["sibling"]					= "Broer/zus";
-$pgv_lang["follow_spouse"]				= "Controleer verwantschap via partners.";
+$pgv_lang["follow_spouse"]				= "Controleer verwantschap via partners";
 $pgv_lang["timeout_error"]				= "Maximale zoektijd overschreden voordat een relatie werd gevonden.";
 $pgv_lang["son"]						= "Zoon";
 $pgv_lang["aunt"]						= "Tante";
