@@ -168,6 +168,7 @@ $pgv_lang["historical_facts"]		= "Historiska fakta";
 $pgv_lang["partner"] 				= "Partner";
 $pgv_lang["child"]				= "Barn";
 $pgv_lang["spouse"]				= "Maka/Make";
+$pgv_lang["spouses"] 				= "Makar";
 $pgv_lang["foster"]				= "Fosterbarn";
 $pgv_lang["sealing"]			= "Försegling";
 $pgv_lang["challenged"]			= "Ifrågasatt";
@@ -321,7 +322,7 @@ $pgv_lang["total_sources"]		= "Totalt antal källor";
 $pgv_lang["invalid_gedformat"]	= "Felaktigt GEDCOM 5.5 format";
 $pgv_lang["exec_time"]			= "Exekveringstid:";
 $pgv_lang["unable_to_create_index"]	= "Kan inte att skapa indexfil.  Se till så att du har skrivrättigheter i PhpGedView-katalogen.  Rättigheterna kan återställas efter att indexfilerna har skapats och skrivits färdigt.";
-$pgv_lang["changes_present"]	= "Deb nuvarande GEDCOM-filen har ändringar som inte är accepterade. Om du fortsätter med importen kommer dessa ändringar att skrivas till databasen. Du bör kolla dessa ändringar innan du fortsätter med importen.";
+$pgv_lang["changes_present"]	= "Den nuvarande GEDCOM-filen har ändringar som inte är accepterade. Om du fortsätter med importen kommer dessa ändringar att skrivas till databasen. Du bör kolla dessa ändringar innan du fortsätter med importen.";
 $pgv_lang["sec"]				= "sek.";
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
 $pgv_lang["total_fams"]			= "Totalt antal familjer";
@@ -350,7 +351,7 @@ $pgv_lang["find_specialchar"]	= "Hitta specialbokstäver";
 $pgv_lang["magnify"]			= "Förstora";
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]				= "Ålder";
-$pgv_lang["days"]					= "Dagar";
+$pgv_lang["days"]					= "dagar";
 $pgv_lang["months"]					= "månader";
 $pgv_lang["years"]					= "år";
 $pgv_lang["day1"]					= "dag";
@@ -622,7 +623,7 @@ $pgv_lang["mail01_line05"]		= "Om du inte begärde ett konto kan du radera medde
 $pgv_lang["mail01_line06"]		= "Du kommer inte få några fler mail från detta systemet efterom kontot kommer att raderas inom sju dagar om ingen verifiering görs.";
 $pgv_lang["mail01_subject"]		= "Din registrering på #SERVER_NAME#";
 $pgv_lang["mail02_line01"]		= "Hej administratör...";
-$pgv_lang["mail02_line02"]		= "En ny användare gjorde en ny användarregistrering på (#SERVER_NAME#)";
+$pgv_lang["mail02_line02"]		= "En ny användare gjorde en ny användarregistrering på #SERVER_NAME#";
 $pgv_lang["mail02_line03"]		= "Användaren fick ett e-postmeddelande med den nödvändiga datan för att kunna verifiera sitt konto.";
 $pgv_lang["mail02_line04"]		= "Så snart användaren har gjort sin verifiering kommer du att informeras via e-post. Du kan nu slutföra processen genom att aktivera användarnamnet. Den nya användaren kan inte logga in förrän du har aktiverat kontot.";
 $pgv_lang["mail02_line04a"]		= "Du kommer att bli informerad via epost när den användaren som ansökt om kontot har verifierat sig själv. Efter verifikation kommer användaren att kunna logga in utan att du behöver göra något.";
@@ -666,6 +667,7 @@ $pgv_lang["welcome_text_auth_mode_1"]	=	"<center><b>Välkommen till denna geneal
 $pgv_lang["welcome_text_auth_mode_2"]	=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten endast för <u>auktoriserade</u> användare.<br /><br />Om du redan har ett konto kan du logga in på denna sida. Om du inte har ett konto ännu, kan du ansöka om ett genom att klicka på länken på denna sida.<br /><br />Efter att vi verifierat din information, kommer administratören att gogkänna eller avslå din begäran. Du kommer att få ett e-postmeddelande om din begäran godkänns.";
 $pgv_lang["welcome_text_auth_mode_3"]	=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten <u>endast för familjemedlemmar</u>. Om du redan har ett konto kan du logga in på denna sida. Om du inte har ett konto ännu, kan du ansöka om ett genom att klicka på länken på denna sida.<br /><br />Efter att vi verifierat din information, kommer administratören antingen godkänna eller avslå din begäran. Du kommer att få ett e-postmeddelande när kontot godkänns.";
 $pgv_lang["welcome_text_cust_head"]		=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten för användare som har ett användarkonto och lösenord för denna websajt.<br />";
+$pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Notera:</div><div class=\"error\">genom att fylla i och skicka in detta formulär, samtycker du till att:<ul><li>skydda integriteten för de nu levande personer som nämns på denna sajt </li><li>och i textrutan nedan förklara med vem du är släkt eller ge oss information om någon som borde vara med på på var sajt.</li></ul></div>";
 //-- mygedview page
 $pgv_lang["welcome"]				= "Välkommen";
 $pgv_lang["upcoming_events"]		= "Kommande händelser";
