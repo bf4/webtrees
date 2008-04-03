@@ -3,7 +3,7 @@
  * Swedish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Patrik Hansson
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -440,7 +440,7 @@ $pgv_lang["person1"]			= "Person 1";
 $pgv_lang["person2"]			= "Person 2";
 $pgv_lang["no_link_found"]		= "Ingen (annan) koppling mellan de två personerna kunde hittas.";
 $pgv_lang["sibling"]			= "Syskon";
-$pgv_lang["follow_spouse"]		= "Kontrollera förhållanden via giftermål.";
+$pgv_lang["follow_spouse"]		= "Kontrollera förhållanden via giftermål";
 $pgv_lang["timeout_error"]		= "Skriptet tog för lång tid innan någon relation kunde hittas.";
 $pgv_lang["son"]				= "Son";
 $pgv_lang["daughter"]			= "Dotter";

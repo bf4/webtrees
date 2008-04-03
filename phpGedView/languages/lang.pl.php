@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2007  PG8 Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -453,7 +453,7 @@ $pgv_lang["person1"]				= "Pierwsza osoba";
 $pgv_lang["person2"]				= "Druga osoba";
 $pgv_lang["no_link_found"]			= "Nie znaleziono powiązania między tymi osobami.";
 $pgv_lang["sibling"]				= "Rodzeństwo";
-$pgv_lang["follow_spouse"]			= "Sprawdź pokrewieństwo przez małżeństwo.";
+$pgv_lang["follow_spouse"]			= "Sprawdź pokrewieństwo przez małżeństwo";
 $pgv_lang["timeout_error"]			= "Przekroczono limit czasu przed zakończeniem poszukiwania.";
 $pgv_lang["son"]				= "Syn";
 $pgv_lang["aunt"]				= "Ciotka";

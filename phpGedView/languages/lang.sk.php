@@ -3,7 +3,7 @@
  * Slovak Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -492,7 +492,7 @@ $pgv_lang["person1"]			= "Osoba 1";
 $pgv_lang["person2"]			= "Osoba 2";
 $pgv_lang["no_link_found"]		= "Medzi týmito dvomi osobami nebol nájdený žiadny (ďalší) vzťah.";
 $pgv_lang["sibling"]			= "Súrodenec";
-$pgv_lang["follow_spouse"]		= "Skontrolovať príbuzenstvo svadbou.";
+$pgv_lang["follow_spouse"]		= "Skontrolovať príbuzenstvo svadbou";
 $pgv_lang["timeout_error"]		= "Vykonávanie skriptu bolo ukončené pred dokončením vyhľadávania.";
 $pgv_lang["son"]			= "Syn";
 $pgv_lang["daughter"]			= "Dcéra";

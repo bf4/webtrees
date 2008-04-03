@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  Jaakko Sarell and Matti Valve
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @translator Matti Valve
+ * @author Jaakko Sarell and Matti Valve
  * @version $Id$
  */
 
@@ -704,7 +704,7 @@ $pgv_lang["person1"]		= "Henkilö 1";
 $pgv_lang["person2"]		= "Henkilö 2";
 $pgv_lang["no_link_found"]		= "Sukuyhteyttä näiden kahden henkilön välillä ei löydy.";
 $pgv_lang["sibling"]			= "Sisarus";
-$pgv_lang["follow_spouse"]		= "Tarkista sukulaisuus myös avioliiton kautta.";
+$pgv_lang["follow_spouse"]		= "Tarkista sukulaisuus myös avioliiton kautta";
 $pgv_lang["timeout_error"]		= "Aika loppui - sukulaisuutta ei vielä löytynyt";
 $pgv_lang["son"]			= "Poika";
 $pgv_lang["daughter"]		= "Tytär";

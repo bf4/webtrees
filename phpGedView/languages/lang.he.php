@@ -3,7 +3,7 @@
  * Hebrew Language Help-file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @translator Meliza
  * @package PhpGedView
  * @subpackage Languages
+ * @author Meliza Amity
  * @version $Id$
  */
 
@@ -770,7 +770,7 @@ $pgv_lang["person1"]		= "אדם א'";
 $pgv_lang["person2"]		= "אדם ב'";
 $pgv_lang["no_link_found"]		= "לא נמצא קשר (אחר) בין שני האנשים.";
 $pgv_lang["sibling"]		= "אח/אחות";
-$pgv_lang["follow_spouse"]		= "בדוק קירבת נישואין.";
+$pgv_lang["follow_spouse"]		= "בדוק קירבת נישואין";
 $pgv_lang["timeout_error"]		= "החיפוש ארך יותר מידי זמן.";
 $pgv_lang["son_in_law"]		= "חתן";  // the husband of your daughter
 $pgv_lang["daughter_in_law"]	= "כלה"; // the wife of your son
