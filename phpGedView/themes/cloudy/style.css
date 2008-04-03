@@ -222,6 +222,10 @@ ul {
 }
 
 #login_block .blockh1 {
+	background-image: url(images/left1G.gif);
+}
+
+#logout_block .blockh1 {
 	background-image: url(images/left1R.gif);
 }
 
