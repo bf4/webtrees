@@ -10,6 +10,8 @@
 
 
 Version 4.1.4
+ - Added Login block changes to Logout block once user is logged in (canajun2eh)
+ - Fixed Welcome page in IE: blocks on right side are all fixed height (canajun2eh)
  - Fixed [1924688] SVN 2755 V4.1.4 Incorrect display of Indi page with IE (fisharebest)
  - Fixed [1912085] Syntax Error in downloadbackup.php (fisharebest)
  - Fixed [1907585] RSS Error
