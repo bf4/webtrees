@@ -3,7 +3,7 @@
  * Lithuanian Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Arturas Sleinius
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -339,7 +339,7 @@ $pgv_lang["relationship_chart"] 	= "Ryšių diagrama";
 $pgv_lang["person1"]				= "Asmuo 1";
 $pgv_lang["person2"]				= "Asmuo 2";
 $pgv_lang["no_link_found"]			= "Ryšys tarp dviejų asmenų nenustatytas arba yra kitoks nei čia tikrinama. ";
-$pgv_lang["follow_spouse"]			= "Tikrinti santuokinį ryšį.";
+$pgv_lang["follow_spouse"]			= "Tikrinti santuokinį ryšį";
 $pgv_lang["timeout_error"]			= "Progama per ilgai ieško ryšio todel jos veikimas nutraukiamas";
 $pgv_lang["son"]					= "Sūnus";
 $pgv_lang["daughter"]				= "Dukra";

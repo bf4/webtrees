@@ -563,6 +563,13 @@ if ($verify == "validate_form") {
 		$l_datecleanup = false;
 		$l_isansi = false;
 		$fp = fopen($GEDCOMS[$GEDFILENAME]["path"], "r");
+
+		// TODO - there are two problems with this next block of code.  Firstly, by
+		// checking the file in chunks (rather than complete records), we won't spot
+		// any problem that spans chunk boundaries.  Secondly, the date checking
+		// stops after the first error.  If the first error is not an ambiguous date
+		// then we won't ask the user to choose between DMY and YMD.
+
 		//-- read the gedcom and test it in 8KB chunks
 		while (!feof($fp)) {
 			$fcontents = fread($fp, 1024 * 8);

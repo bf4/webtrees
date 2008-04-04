@@ -3,7 +3,7 @@
  * Latin American Spanish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Eduardo Cociña
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -378,7 +378,7 @@ $pgv_lang["person1"]	= "Persona 1";
 $pgv_lang["person2"]	= "Persona 2";
 $pgv_lang["no_link_found"]	= "No se encontró ninguna (otra) relación entre estas dos personas.";
 $pgv_lang["sibling"]	= "Hermano";
-$pgv_lang["follow_spouse"]	= "Controlar parentesco por matrimonio.";
+$pgv_lang["follow_spouse"]	= "Controlar parentesco por matrimonio";
 $pgv_lang["timeout_error"]	= "Tiempo vencido antes de encontrar un parentesco.";
 $pgv_lang["son"]	= "Hijo";
 $pgv_lang["daughter"]	= "Hija";

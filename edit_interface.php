@@ -1846,8 +1846,11 @@ case 'reorder_children':
 			$children = array();
 			foreach ($family->getChildren() as $k=>$child) {
 				$bdate = new GedcomDate($child->getBirthDate());
-				$sortkey = $bdate->MinJD();
-				if (!$sortkey) $sortkey = 1e8; // birth date missing => sort last
+				if ($bdate->isOK()) {
+					$sortkey = $bdate->MinJD();
+				} else {
+					$sortkey = 1e8; // birth date missing => sort last
+				}
 				$children[$child->getXref()] = $sortkey;
 			}
 			if ((!empty($option))&&($option=="bybirth")) {
@@ -2193,7 +2196,7 @@ case 'reorder_fams':
 			$fams = $person->getSpouseFamilies();
 			if ((!empty($option))&&($option=="bymarriage")) {
 				$sortby = "MARR";
-				uasort($fams, "compare_date");
+				uasort($fams, "compare_date_gedcomrec");
 			}
 			$i=0;
 			foreach($fams as $famid=>$family) {

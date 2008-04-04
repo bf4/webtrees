@@ -260,7 +260,7 @@ function print_list_repository($key, $value, $useli=true) {
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE;
 
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
@@ -400,20 +400,26 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Birth date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$bdate=new GedcomDate($person->getBirthDate(false));
-		print str_replace('<a', '<a name="'.$bdate->MinJD().'"', $bdate->Display(empty($SEARCH_SPIDER)));
-		$byear = $person->getBirthYear(false, 'gregorian');
-		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $person->getSex();
-		//-- Birth 2nd date ?
-		if (!empty($person->bdate2)) {
-			$bdate2=new GedcomDate($person->bdate2);
-			print '<br />'.$bdate2->Display(empty($SEARCH_SPIDER));
+		if ($birth_dates=$person->getAllBirthDates()) {
+			foreach ($birth_dates as $num=>$birth_date) {
+				if ($num) {
+					echo '<div>', $birth_date->Display(!$SEARCH_SPIDER), '</div>';
+				} else {
+					echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
+				}
+			}
+			if ($birth_dates[0]->gregorianYear()>=1550) {
+				$birt_by_decade[floor($birth_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
+			}
+		} else {
+			echo '&nbsp;';
+			$birth_dates[0]=new GedcomDate('');
 		}
 		echo "</td>";
 		//-- Birth anniversary
 		if ($tiny) {
 			echo "<td class=\"list_value_wrap rela\">";
-			$bage =GedcomDate::GetAgeYears($bdate);
+			$bage =GedcomDate::GetAgeYears($birth_dates[0]);
 			if (empty($bage))
 				echo "&nbsp;";
 			else
@@ -421,15 +427,22 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "</td>";
 		}
 		//-- Birth place
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
-		if(!empty($SEARCH_SPIDER)) {
-			echo PrintReady($person->getPlaceShort($person->getBirthPlace()));
+		echo '<td class="list_value_wrap">';
+		if ($birth_places=$person->getAllBirthPlaces()) {
+			foreach ($birth_places as $birth_place) {
+				if ($SEARCH_SPIDER) {
+					echo $person->getPlaceShort($birth_place), ' ';
+				} else {
+					echo '<div align="', get_align($birth_place), '">';
+					echo '<a href="', $person->getPlaceUrl($birth_place), '" class="list_item" title="', $birth_place.'">';
+					echo PrintReady($person->getPlaceShort($birth_place)), '</a>';
+					echo '</div>';
+				}
+			}
+		} else {
+			echo '&nbsp;';
 		}
-		else {
-			echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\" title=\"".$person->getBirthPlace()."\">"
-			.PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
-		}
-		echo "&nbsp;</td>";
+		echo '</td>';
 		//-- Number of children
 		if ($tiny) {
 			echo "<td class=\"list_value_wrap\">";
@@ -446,47 +459,59 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$ddate=new GedcomDate($person->getDeathDate(false));
-		print str_replace('<a', '<a name="'.$ddate->MaxJD().'"', $ddate->Display(empty($SEARCH_SPIDER)));
-		$dyear = $person->getDeathYear(false, 'gregorian');
-		if (is_numeric($dyear) && $dyear>0) $deat_by_decade[max(1570, floor($dyear/10)*10)] .= $person->getSex();
-		//-- Death 2nd date ?
-		if (!empty($person->ddate2)) {
-			$ddate2=new GedcomDate($person->ddate2);
-			print '<br />'.$ddate2->Display(empty($SEARCH_SPIDER));
+		if ($death_dates=$person->getAllDeathDates()) {
+			foreach ($death_dates as $num=>$death_date) {
+				if ($num) {
+					echo '<div>', $death_date->Display(!$SEARCH_SPIDER), '</div>';
+				} else {
+					echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
+				}
+			}
+			if ($death_dates[0]->gregorianYear()>=1550) {
+				$deat_by_decade[floor($death_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
+			}
+		} else {
+			echo '&nbsp;';
+			$death_dates[0]=new GedcomDate('');
 		}
-		print "</td>";
+		echo "</td>";
 		//-- Death anniversary
 		if ($tiny) {
 			print "<td class=\"list_value_wrap rela\">";
-			if ($person->isDead() && !$person->dest && $bdate->MinJD()>0)
-				echo "<span class=\"age\">".GedcomDate::GetAgeYears($ddate)."</span>";
+			if ($death_dates[0]->isOK())
+				echo "<span class=\"age\">".GedcomDate::GetAgeYears($death_dates[0])."</span>";
 			else
 				echo "&nbsp;";
 			print '</td>';
 		}
 		//-- Age at death
 		print "<td class=\"list_value_wrap\">";
-		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0) {
-			$age = GedcomDate::GetAgeYears($bdate, $ddate);
-			//$age_jd = $ddate->MaxJD()-$bdate->MinJD();
-			$age_jd = $ddate->MinJD()-$bdate->MinJD();
+		if ($birth_dates[0]->isOK() && $death_dates[0]->isOK()) {
+			$age = GedcomDate::GetAgeYears($birth_dates[0], $death_dates[0]);
+			$age_jd = $death_dates[0]->MinJD()-$birth_dates[0]->MinJD();
 			echo "<a name=\"".$age_jd."\" title=\"".$age_jd."\" class=\"list_item age\">".$age."</a>";
-			if (is_numeric($age)) $deat_by_age[min(105, $age)] .= $person->getSex();
-		}
-		else
+			$deat_by_age[min($MAX_ALIVE_AGE, $age)] .= $person->getSex();
+		} else {
 			echo '<a name="-1">&nbsp;</a>';
+		}
 		echo "</td>";
 		//-- Death place
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
-		if(!empty($SEARCH_SPIDER)) {
-			echo PrintReady($person->getPlaceShort($person->getDeathPlace()));
+		echo '<td class="list_value_wrap">';
+		if ($death_places=$person->getAllDeathPlaces()) {
+			foreach ($death_places as $death_place) {
+				if ($SEARCH_SPIDER) {
+					echo $person->getPlaceShort($death_place), ' ';
+				} else {
+					echo '<div align="', get_align($death_place), '">';
+					echo '<a href="', $person->getPlaceUrl($death_place), '" class="list_item" title="', $death_place.'">';
+					echo PrintReady($person->getPlaceShort($death_place)), '</a>';
+					echo '</div>';
+				}
+			}
+		} else {
+			echo '&nbsp;';
 		}
-		else {
-			echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\" title=\"".$person->getDeathPlace()."\">"
-			.PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
-		}
-		echo "&nbsp;</td>";
+		echo '</td>';
 		//-- Last change
 		if ($tiny && $SHOW_LAST_CHANGE)
 			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$person->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
@@ -496,7 +521,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Filtering by birth date
 		echo "<td style=\"display:none\">";
-		if (!$person->disp || GedcomDate::Compare($bdate, $d100y)>0)
+		if (!$person->disp || GedcomDate::Compare($birth_dates[0], $d100y)>0)
 			echo "Y100";
 		else
 			echo "YES";
@@ -504,7 +529,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Filtering by death date
 		echo "<td style=\"display:none\">";
 		if ($person->isDead()) {
-			if (GedcomDate::Compare($ddate, $d100y)>0)
+			if (GedcomDate::Compare($death_dates[0], $d100y)>0)
 				echo "Y100";
 			else
 				echo "YES";
@@ -571,7 +596,7 @@ function print_indi_table($datalist, $legend="", $option="") {
  */
 function print_fam_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE;
 
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
@@ -698,19 +723,23 @@ function print_fam_table($datalist, $legend="") {
 		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
-		//-- Husb BIRT
-		$byear = $husb->getBirthYear(false, 'gregorian');
-		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $husb->getSex();
+		$mdate=new GedcomDate($family->getMarriageDate());
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
-		$mdate=new GedcomDate($family->getMarriageDate());
 		$hdate=new GedcomDate($husb->GetBirthDate());
-		$hage =GedcomDate::GetAgeYears($hdate, $mdate);
-		if (empty($hage))
-			print "&nbsp;";
-		else {
-			print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
-			if (is_numeric($hage)) $marr_by_age[min(105, $hage)] .= $husb->getSex();
+		if ($hdate->isOK()) {
+			if ($hdate->gregorianYear()>=1550) {
+				$birt_by_decade[floor($hdate->gregorianYear()/10)*10] .= $husb->getSex();
+			}
+			if ($mdate->isOK()) {
+				$hage =GedcomDate::GetAgeYears($hdate, $mdate);
+				print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
+				$marr_by_age[min($MAX_ALIVE_AGE, $hage)] .= $husb->getSex();
+			} else {
+				echo '&nbsp;';
+			}
+		} else {
+			echo '&nbsp;';
 		}
 		echo "</td>";
 		//-- Wife ID
@@ -740,44 +769,61 @@ function print_fam_table($datalist, $legend="") {
 		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
-		//-- Wife BIRT
-		$byear = $wife->getBirthYear(false, 'gregorian');
-		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $wife->getSex();
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
 		$wdate=new GedcomDate($wife->GetBirthDate());
-		$wage =GedcomDate::GetAgeYears($wdate, $mdate);
-		if (empty($wage))
+		if ($wdate->isOK()) {
+			if ($wdate->gregorianYear()>=1550) {
+				$birt_by_decade[floor($wdate->gregorianYear()/10)*10] .= $wife->getSex();
+			}
+			if ($mdate->isOK()) {
+				$wage =GedcomDate::GetAgeYears($wdate, $mdate);
+				print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
+				$marr_by_age[min($MAX_ALIVE_AGE, $wage)] .= $wife->getSex();
+			} else {
+				print "&nbsp;";
+			}
+		} else {
 			print "&nbsp;";
-		else {
-			print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
-			if (is_numeric($wage)) $marr_by_age[min(105, $wage)] .= $wife->getSex();
 		}
 		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a name="'.$mdate->MinJD().'" title="'.$mdate->MinJD().'"', $mdate->Display(empty($SEARCH_SPIDER)));
-		$myear = $family->getMarriageYear(false, 'gregorian');
-		if (is_numeric($myear) && $myear>0) $marr_by_decade[max(1570, floor($myear/10)*10)] .= $husb->getSex().$wife->getSex();
-		//-- Marriage 2nd date ?
-		if (!empty($family->marr_date2)) {
-			$mdate2=new GedcomDate($family->marr_date2);
-			print '<br />'.$mdate2->Display(empty($SEARCH_SPIDER));
+		if ($marriage_dates=$family->getAllMarriageDates()) {
+			foreach ($marriage_dates as $num=>$marriage_date) {
+				if ($num) {
+					echo '<div>', $marriage_date->Display(!$SEARCH_SPIDER), '</div>';
+				} else {
+					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
+				}
+			}
+			if ($marriage_dates[0]->gregorianYear()>=1550) {
+				$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
+			}
+		} else {
+			echo '&nbsp;';
 		}
 		echo "</td>";
 		//-- Marriage anniversary
 		if ($tiny)
 			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($mdate)."</span></td>";
 		//-- Marriage place
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
-		if(!empty($SEARCH_SPIDER)) {
-			echo PrintReady($family->getPlaceShort($family->getMarriagePlace()));
+		echo '<td class="list_value_wrap">';
+		if ($marriage_places=$family->getAllMarriagePlaces()) {
+			foreach ($marriage_places as $marriage_place) {
+				if ($SEARCH_SPIDER) {
+					echo $family->getPlaceShort($marriage_place), ' ';
+				} else {
+					echo '<div align="', get_align($marriage_place), '">';
+					echo '<a href="', $family->getPlaceUrl($marriage_place), '" class="list_item" title="', $marriage_place.'">';
+					echo PrintReady($family->getPlaceShort($marriage_place)), '</a>';
+					echo '</div>';
+				}
+			}
+		} else {
+			echo '&nbsp;';
 		}
-		else {
-			echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\" title=\"".$family->getMarriagePlace()."\">"
-			.PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
-		}
-		echo "&nbsp;</td>";
+		echo '</td>';
 		//-- Number of children
 		if ($tiny) {
 			echo "<td class=\"list_value_wrap\">";
@@ -797,7 +843,7 @@ function print_fam_table($datalist, $legend="") {
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$family->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
-		if (!$family->disp || $mdate->MinJD()==0)
+		if (!$family->disp || !$mdate->isOK())
 			echo "U";
 		else
 			if (GedcomDate::Compare($mdate, $d100y)>0)
@@ -1652,7 +1698,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
  * @param string $title
  */
 function print_chart_by_age($data, $title) {
-	global $pgv_lang;
+	global $pgv_lang, $MAX_ALIVE_AGE;
 
 	$count = 0;
 	$vmax = 0;
@@ -1670,8 +1716,8 @@ function print_chart_by_age($data, $title) {
 	$chart_url .= "&chtt=".urlencode($title); // title
 	$chart_url .= "&chxt=x,y,r";
 	$chart_url .= "&chxl=0:|"; // label
-	for ($age=0; $age<105; $age+=5) $chart_url .= $age."|||||"; // x axis
-	$chart_url .= ">||"; // age>=105
+	for ($age=0; $age<$MAX_ALIVE_AGE; $age+=5) $chart_url .= $age."|||||"; // x axis
+	$chart_url .= ">||"; // age>=$MAX_ALIVE_AGE
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
 	$step = $vmax;

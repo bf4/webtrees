@@ -74,7 +74,7 @@ if (preg_match('/^(\d+)-(\d+)$/', $year, $match)) {
 		$ged_date=new GedcomDate("{$cal} {$day} {$month} {$year}");
 		$year=$ged_date->date1->y; // need negative year for year entry field.
 	}
-$cal_date=$ged_date->date1;
+$cal_date=&$ged_date->date1;
 $cal=urlencode($cal);
 
 // Invalid month?  Pick a sensible one.

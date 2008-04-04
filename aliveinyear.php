@@ -39,24 +39,24 @@ function check_alive($indirec, $year) {
 	$deathrec = get_sub_record(1, "1 DEAT", $indirec);
 	if (preg_match("/\d DATE (.*)/", $deathrec, $match)) {
 		$ddate = new GedcomDate($match[1]);
-		$ddate = $ddate->MaxDate();
-		$ddate = $ddate->convert_to_cal('gregorian');
-		if ($year>$ddate->y)
+		$dyear=$ddate->gregorianYear();
+		if ($year>$dyear) {
 			return -1;
+		}
 	}
 
 	// Born after year?
 	$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 	if (preg_match("/\d DATE (.*)/", $birthrec, $match)) {
 		$bdate = new GedcomDate($match[1]);
-		$bdate = $bdate->MinDate();
-		$bdate = $bdate->convert_to_cal('gregorian');
-		if ($year<$bdate->y)
+		$byear=$bdate->gregorianYear();
+		if ($year<$byear) {
 			return 1;
+		}
 	}
 
 	// Born before year and died after year
-	if (isset($bdate) && isset($ddate) && $year>=$bdate->y && $year<=$ddate->y)
+	if (isset($byear) && isset($dyear) && $year>=$byear && $year<=$dyear)
 			return 0;
 
 	// If no death record than check all dates;
@@ -65,19 +65,22 @@ function check_alive($indirec, $year) {
 	foreach($subrecs as $ind=>$subrec)
 		if (preg_match("/\d DATE (.*)/", $subrec, $match)) {
 			$date = new GedcomDate($match[1]);
-			$date = $date->MinDate();
-			$date = $date->convert_to_cal('gregorian');
-			if ($date->y > 0)
-				$years[] = $date->y;
+			$datey= $date->gregorianYear();
+			if ($datey) {
+				$years[] = $datey;
+			}
 		}
 
 	// Events both before and after year
-	if (count($years)>1 && $year>=$years[0] && $year<=$years[count($years)-1])
+	if (count($years)>1 && $year>=$years[0] && $year<=$years[count($years)-1]) {
 		return 0;
+	}
 
-	foreach($years as $ind=>$year1)
-		if (($year1-$year) > $MAX_ALIVE_AGE)
+	foreach($years as $ind=>$year1) {
+		if (($year1-$year) > $MAX_ALIVE_AGE) {
 			return -1;
+		}
+	}
 
 	return 0;
 }

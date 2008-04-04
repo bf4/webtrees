@@ -5,7 +5,7 @@
  * Set the root person using the $pid variable
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,14 @@ if ($controller->view=="preview") {
 }
 	
 $controller->setupJavascript();
-	
+
+// LBox =====================================================================================
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');
+}	
+// ==========================================================================================
+
 $gencount=0;
 if ($view!="preview") {
 ?>

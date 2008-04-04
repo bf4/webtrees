@@ -3,7 +3,7 @@
  * Controller for the Individual Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1209,7 +1209,11 @@ class IndividualControllerRoot extends BaseController {
 
 	function print_relatives_tab() {
 		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
-		global $pgv_changes, $GEDCOM;
+		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
+		
+		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
+		$ABBREVIATE_CHART_LABELS = false;		// Override GEDCOM configuration
+		
 		if (!$this->isPrintPreview()) {
 		?>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
@@ -1341,7 +1345,9 @@ class IndividualControllerRoot extends BaseController {
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($date) {
 						$date=new GedcomDate($date);
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false);
+//						if (!empty($place)) echo " -- ".$family->getPlaceShort($place);
+						if (!empty($place)) echo " -- ".$place;
 					}
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
@@ -1480,7 +1486,9 @@ class IndividualControllerRoot extends BaseController {
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($date) {
 						$date=new GedcomDate($date);
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false);
+//						if (!empty($place)) echo " -- ".$family->getPlaceShort($place);
+						if (!empty($place)) echo " -- ".$place;
 					}
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
@@ -1636,7 +1644,9 @@ class IndividualControllerRoot extends BaseController {
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($date) {
 						$date=new GedcomDate($date);
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false);
+//						if (!empty($place)) echo " -- ".$family->getPlaceShort($place);
+						if (!empty($place)) echo " -- ".$place;
 					}
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
@@ -1765,6 +1775,8 @@ class IndividualControllerRoot extends BaseController {
 		<?php } ?>
 		<br />
 		<?php
+		
+	$ABBREVIATE_CHART_LABELS = $saved_ABBREVIATE_CHART_LABELS;		// Restore GEDCOM configuration
 	}
 
 	function print_research_tab() {

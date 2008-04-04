@@ -5,7 +5,7 @@
  * Set the root person using the $pid variable
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -384,6 +384,14 @@ function print_family_book($pid, $descent)
 
 // -- print html header information
 print_header(PrintReady($name)." ".$pgv_lang["familybook_chart"]);
+
+// LBox =====================================================================================
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');
+}	
+// ==========================================================================================
+
 if ($view=="preview") {
 	print "<h2 style=\"text-align: center\">".$pgv_lang["familybook_chart"].":&nbsp;&nbsp;&nbsp;".PrintReady($name)."</h2>";
 } else { 

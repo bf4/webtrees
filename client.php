@@ -524,7 +524,7 @@ else if ($action=="getchanges") {
 	else {
 		$lastdate = new GedcomDate($date);
 		
-		if ($lastdate->MinJD()==0) {
+		if (!$lastdate->isOK()) {
 			addDebugLog($action." ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.");
 			print "ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.\n";
 		} else {

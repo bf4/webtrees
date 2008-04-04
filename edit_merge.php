@@ -5,7 +5,7 @@
  * This page will allow you to merge 2 gedcom records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 
 require("config.php");
 require("includes/functions_edit.php");
+require("includes/functions_import.php");
 
 if (empty($action)) $action="choose";
 if (empty($gid1)) $gid1="";

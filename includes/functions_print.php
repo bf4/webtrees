@@ -48,7 +48,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
-	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
+	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE, $PEDIGREE_SHOW_GENDER;
 	global $SEARCH_SPIDER;
 
 	if ($style != 2) $style=1;
@@ -314,16 +314,19 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			else $title = $pid." :".$pgv_lang["indi_info"];
 			print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\"><span id=\"namedef-$boxID\" class=\"name$style\">";
 			print PrintReady($name);
-			// NOTE: IMG ID
-			print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
-			if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-			else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-			else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-			print "\" class=\"gender_image\" />";
+			if ($PEDIGREE_SHOW_GENDER) {
+				// NOTE: IMG ID
+				print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+				if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
+				else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
+				else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
+				print "\" class=\"gender_image\" />";
+			} print "&nbsp;";
+			print "</span>";
 			if ($SHOW_ID_NUMBERS) {
-				print "</span><span class=\"details$style\">";
-			if ($TEXT_DIRECTION=="ltr") print getLRM() . "($pid)" . getLRM();
-			else print getRLM() . "($pid)" . getRLM();
+				print "<span class=\"details$style\">";
+				if ($TEXT_DIRECTION=="ltr") print getLRM() . "($pid)" . getLRM();
+				else print getRLM() . "($pid)" . getRLM();
 				// NOTE: Close span namedef-$personcount.$pid.$count
 				print "</span>";
 			}
@@ -388,12 +391,14 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	// NOTE: Close span namedef-$pid.$personcount.$count
 	print "</span>";
 	print "<span class=\"name$style\">";
-	// NOTE: IMG ID
-	print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
-	if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-	else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-	else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-	print "\" class=\"gender_image\" />";
+	if ($PEDIGREE_SHOW_GENDER) {
+		// NOTE: IMG ID
+		print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+		if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
+		else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
+		else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
+		print "\" class=\"gender_image\" />";
+	} else print "&nbsp;";
 	print "</span>\r\n";
 	if ($SHOW_ID_NUMBERS) {
 		if ($TEXT_DIRECTION=="ltr") print "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
@@ -1499,14 +1504,17 @@ function print_favorite_selector($option=0) {
  * @param string $pid the id of the individual to print, required to check privacy
  */
 function print_simple_fact($indirec, $fact, $pid) {
-	global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS;
+	global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS, $factAbbrev;
 	$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","OBJE","CHAN","_SEPR","RESI", "DATA", "MAP");
 	$factrec = get_sub_record(1, "1 $fact", $indirec);
 	if ((empty($factrec))||(FactViewRestricted($pid, $factrec))) return;
 	$label = "";
 	if (isset($pgv_lang[$fact])) $label = $pgv_lang[$fact];
 	else if (isset($factarray[$fact])) $label = $factarray[$fact];
-	if ($ABBREVIATE_CHART_LABELS) $label = get_first_letter($label);
+	if ($ABBREVIATE_CHART_LABELS) {
+		if (isset($factAbbrev[$fact])) $label = $factAbbrev[$fact];
+		else $label = get_first_letter($label);
+	}
 // RFE [ 1229233 ] "DEAT" vs "DEAT Y"
 // The check $factrec != "1 DEAT" will not show any records that only have 1 DEAT in them
 	if (trim($factrec) != "1 DEAT"){
@@ -1694,6 +1702,7 @@ function print_privacy_error($username) {
  */
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
+	global $TEXT_DIRECTION;
 
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
@@ -1715,7 +1724,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 		if ($PGV_USE_HELPIMG) {
 			$output.='<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" /></a>';
 		} else {
-			$output.=$pgv_lang[$helpText].'</a>';
+			$output.=$pgv_lang[$helpText].'&nbsp;&nbsp;</a>';
 		}
 	}
 
@@ -2358,7 +2367,7 @@ function print_parents_age($pid, $birth_date) {
 		if ($age) {
 			// [ 1749591 ] Highlight maternal death
 			$mother_ddate=new GedcomDate($spouse->getDeathDate(false));
-			if ($mother_ddate->MinJD() && $birth_date->MinJD() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
+			if ($mother_ddate->isOK() && $birth_date->isOK() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
 				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
 			}
 			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";

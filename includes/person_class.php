@@ -50,10 +50,6 @@ class Person extends GedcomRecord {
 	var $drec = "";
 	var $best = false;
 	var $dest = false;
-	var $bdate2 = "";
-	var $ddate2 = "";
-	var $brec2 = "";
-	var $drec2 = "";
 	var $fams = null;
 	var $famc = null;
 	var $spouseFamilies = null;
@@ -204,8 +200,12 @@ class Person extends GedcomRecord {
 			$givn = $unknownPN[$lang];
 		}
 		else if ($starred) {
-			if ($UNDERLINE_NAME_QUOTES) $givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
+			if ($UNDERLINE_NAME_QUOTES) {
+				$givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
+				$surn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $surn);
+			}
 			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
+			$surn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $surn);
 		}
 		if ($nsfx) $surn .= " ".trim($nsfx);
 		return trim($surn.", ".$givn);
@@ -295,11 +295,6 @@ class Person extends GedcomRecord {
 		$this->ddate = get_gedcom_value("DATE", 2, $this->drec, '', false);
 		$this->dplace = get_gedcom_value("PLAC", 2, $this->drec, '', false);
 		$this->bplace = get_gedcom_value("PLAC", 2, $this->brec, '', false);
-		//-- 2nd record with alternate date (hebrew...)
-		$this->brec2 = trim(get_sub_record(1, "1 BIRT", $this->gedrec, 2));
-		$this->drec2 = trim(get_sub_record(1, "1 DEAT", $this->gedrec, 2));
-		$this->bdate2 = get_gedcom_value("DATE", 2, $this->brec2, '', false);
-		$this->ddate2 = get_gedcom_value("DATE", 2, $this->drec2, '', false);
 		//-- if no birthdate look for christening
 		if (empty($this->bdate)) $this->bdate = get_gedcom_value("CHR:DATE", 1, $this->gedrec, '', false);
 		if (empty($this->bplace)) $this->bplace = get_gedcom_value("CHR:PLAC", 1, $this->gedrec, '', false);
@@ -309,7 +304,7 @@ class Person extends GedcomRecord {
 		//-- if no death estimate from birth
 		if (empty($this->ddate) && !empty($this->bdate)) {
 			$pdate=new GedcomDate($this->bdate);
-			if ($pdate->MinJD() != 0) {
+			if ($pdate->isOK()) {
 				$pdate=$pdate->AddYears($MAX_ALIVE_AGE, 'BEF');
 				$pdate=$pdate->MinDate();
 				$this->dest = true;
@@ -321,7 +316,7 @@ class Person extends GedcomRecord {
 		//-- if no birth estimate from death
 		if (empty($this->bdate) && !empty($this->ddate)) {
 			$pdate=new GedcomDate($this->ddate);
-			if ($pdate->MinJD() != 0) {
+			if ($pdate->isOK()) {
 				$pdate=$pdate->AddYears(-$MAX_ALIVE_AGE, 'AFT');
 				$pdate=$pdate->MinDate();
 				$this->best = true;
@@ -437,6 +432,48 @@ class Person extends GedcomRecord {
 		return $ddate->y;
 	}
 
+	// Get all the dates/places for births/deaths - for the INDI lists
+	function getAllBirthDates() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+				if ($array=$this->getAllEventDates($event)) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+	function getAllBirthPlaces() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+				if ($array=$this->getAllEventPlaces($event)) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+	function getAllDeathDates() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+				if ($array=$this->getAllEventDates($event)) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+	function getAllDeathPlaces() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+				if ($array=$this->getAllEventPlaces($event)) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+
 	/**
 	 * get the sex
 	 * @return string 	return M, F, or U
@@ -486,7 +523,7 @@ class Person extends GedcomRecord {
 		if ($elderdate) {
 			$p1 = new GedcomDate($elderdate);
 			$p2 = new GedcomDate($this->getBirthDate(false));
-			if ($p1->MinJD() && $p2->MinJD()) {
+			if ($p1->isOK() && $p2->isOK()) {
 				$gap = $p2->MinJD()-$p1->MinJD(); // days
 				$label .= "<div class=\"elderdate age $TEXT_DIRECTION\">";
 				// warning if negative gap : wrong order

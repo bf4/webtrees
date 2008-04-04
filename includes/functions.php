@@ -1722,7 +1722,7 @@ function compare_facts_date($arec, $brec) {
 	$adate = new GedcomDate($amatch[1]);
 	$bdate = new GedcomDate($bmatch[1]);
 	// If either date can't be parsed, don't sort.
-	if ($adate->MinJD()==0 || $bdate->MinJD()==0) {
+	if (!$adate->isOK() || !$bdate->isOK()) {
 		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
 			return $match1[1]-$match2[1];
 		}
@@ -1884,6 +1884,20 @@ function compare_date($a, $b) {
 function compare_date_descending($a, $b) {
 	$result = compare_date($a, $b);
 	return (0 - $result);
+}
+/**
+ * Compare dates for facts in GedcomRec objects (or derived classes)
+ *
+ * fact to interrogate in global $sortby eg "MARR"
+ */
+function compare_date_gedcomrec($a, $b) {
+	global $sortby;
+
+	$tag = "BIRT";
+	if (!empty($sortby)) $tag = $sortby;
+	$adate = get_sub_record(1, "1 $tag", $a->getGedcomRecord());
+	$bdate = get_sub_record(1, "1 $tag", $b->getGedcomRecord());
+	return compare_facts_date($adate, $bdate);
 }
 
 function gedcomsort($a, $b) {
@@ -3315,7 +3329,7 @@ if (!empty($COMMIT_COMMAND)) {
 function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut;
-	global $pgv_lang, $countries, $altCountryNames, $faqlist;
+	global $pgv_lang, $countries, $altCountryNames, $faqlist, $factAbbrev;
 	
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
 
@@ -3433,7 +3447,7 @@ function loadLangFile($fileListNames="") {
  *
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang;
+	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang, $factAbbrev;
 	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;

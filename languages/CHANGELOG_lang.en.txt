@@ -45,6 +45,7 @@ VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["follow_spouse"]							3 April 2008			p
 *$pgv_lang["age_differences"]						17 Mar 2008				W
 +$pgv_lang["charts_click_box"]						1 Feb 2008				A
 +$pgv_lang["greatgrandchild"]						15 Dec 2007				A

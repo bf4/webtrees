@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,13 +51,16 @@ if (!isset($logfilename)) $logfilename = "";
 $file_nr = 0;
 $dir_var = opendir ($INDEX_DIRECTORY);
 $dir_array = array();
-while ($file = readdir ($dir_var))
-{
-	if ((strpos($file, ".log") > 0) && (strstr($file, "pgv-") !== false )){$dir_array[$file_nr] = $file; $file_nr++;}
+while ($file = readdir ($dir_var)) {
+	if (substr($file,-4)==".log" && substr($file,0,4)== "pgv-") {
+		$dir_array[$file_nr] = $file; 
+		$file_nr++;
+	}
 }
 closedir($dir_var);
 $d_logfile_str = "&nbsp;";
 if (count($dir_array)>0) {
+	sort($dir_array);
 	$d_logfile_str = "<form name=\"logform\" action=\"admin.php\" method=\"post\">";
 	$d_logfile_str .= $pgv_lang["view_logs"] . ": ";
 	$d_logfile_str .= "\n<select name=\"logfilename\">\n";

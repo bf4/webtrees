@@ -3,7 +3,7 @@
  * Swedish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Patrik Hansson
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,10 @@ $pgv_lang["multi_site_search"] 		= "Multisajtsökning";
 $pgv_lang["differences"]			= "Skillnader";
 $pgv_lang["charts_block"]			= "Diagramområde";
 $pgv_lang["charts_block_descr"]		= "Diagramområde tillåter dig att placera ett diagram på välkomst eller min Gedview portal-sidan. Du kan konfigurera området för att visa anträd, stamträd eller timglasdiagrammet. Du kan också välja startperson.";
+$pgv_lang["charts_click_box"]		= "Klicka på någon av rutorna för att få mer information om personen.";
 $pgv_lang["chart_type"]				= "Diagramtyp";
+$pgv_lang["changedate1"]			= "Slutet på datumområdet för andringsdatam";
+$pgv_lang["changedate2"]			= "Start för datumområde för ändringsdatum";
 $pgv_lang["switch_lifespan"]		= "Visa ";
 $pgv_lang["switch_timeline"]		= "Visa tidslinjediagram";
 $pgv_lang["qm"]					= "?";
@@ -165,6 +168,7 @@ $pgv_lang["historical_facts"]		= "Historiska fakta";
 $pgv_lang["partner"] 				= "Partner";
 $pgv_lang["child"]				= "Barn";
 $pgv_lang["spouse"]				= "Maka/Make";
+$pgv_lang["spouses"] 				= "Makar";
 $pgv_lang["foster"]				= "Fosterbarn";
 $pgv_lang["sealing"]			= "Försegling";
 $pgv_lang["challenged"]			= "Ifrågasatt";
@@ -179,6 +183,8 @@ $pgv_lang["no_tab3"]			= "Det finns ingen källcitat om denna person.";
 $pgv_lang["no_tab4"]			= "Det finns ingen mediaobjekt för denna person.";
 $pgv_lang["no_tab5"]			= "Det finns inga nära släktingar till denna person.";
 $pgv_lang["no_tab6"]			= "Det finns inte någon forskningsloggar kopplade till denna person. ";
+$pgv_lang["show_fact_sources"]		= "Visa alla källor";
+$pgv_lang["show_fact_notes"]		= "Visa alla anteckningar";
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "Familjeinformation";
 $pgv_lang["family_group_info"]	= "Familjens gruppinformation";
@@ -316,7 +322,7 @@ $pgv_lang["total_sources"]		= "Totalt antal källor";
 $pgv_lang["invalid_gedformat"]	= "Felaktigt GEDCOM 5.5 format";
 $pgv_lang["exec_time"]			= "Exekveringstid:";
 $pgv_lang["unable_to_create_index"]	= "Kan inte att skapa indexfil.  Se till så att du har skrivrättigheter i PhpGedView-katalogen.  Rättigheterna kan återställas efter att indexfilerna har skapats och skrivits färdigt.";
-$pgv_lang["changes_present"]	= "Deb nuvarande GEDCOM-filen har ändringar som inte är accepterade. Om du fortsätter med importen kommer dessa ändringar att skrivas till databasen. Du bör kolla dessa ändringar innan du fortsätter med importen.";
+$pgv_lang["changes_present"]	= "Den nuvarande GEDCOM-filen har ändringar som inte är accepterade. Om du fortsätter med importen kommer dessa ändringar att skrivas till databasen. Du bör kolla dessa ändringar innan du fortsätter med importen.";
 $pgv_lang["sec"]				= "sek.";
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
 $pgv_lang["total_fams"]			= "Totalt antal familjer";
@@ -345,7 +351,7 @@ $pgv_lang["find_specialchar"]	= "Hitta specialbokstäver";
 $pgv_lang["magnify"]			= "Förstora";
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]				= "Ålder";
-$pgv_lang["days"]					= "Dagar";
+$pgv_lang["days"]					= "dagar";
 $pgv_lang["months"]					= "månader";
 $pgv_lang["years"]					= "år";
 $pgv_lang["day1"]					= "dag";
@@ -381,6 +387,7 @@ $pgv_lang["cal_jewish_and_gregorian"] = "Judisk och Gregoriansk";
 $pgv_lang["cal_hebrew_and_gregorian"] = "Hebreisk och Gregoriansk";
 $pgv_lang["cal_hijri"]                = "Hijri";
 $pgv_lang["cal_arabic"]               = "Arabisk";
+$pgv_lang["easter"]     = "Påsk";
 
 //-- MONTH NAMES
 $pgv_lang["jan"]				= "Januari";
@@ -434,7 +441,7 @@ $pgv_lang["person1"]			= "Person 1";
 $pgv_lang["person2"]			= "Person 2";
 $pgv_lang["no_link_found"]		= "Ingen (annan) koppling mellan de två personerna kunde hittas.";
 $pgv_lang["sibling"]			= "Syskon";
-$pgv_lang["follow_spouse"]		= "Kontrollera förhållanden via giftermål.";
+$pgv_lang["follow_spouse"]		= "Kontrollera förhållanden via giftermål";
 $pgv_lang["timeout_error"]		= "Skriptet tog för lång tid innan någon relation kunde hittas.";
 $pgv_lang["son"]				= "Son";
 $pgv_lang["daughter"]			= "Dotter";
@@ -443,10 +450,6 @@ $pgv_lang["grandson"]				= "sonson";
 $pgv_lang["granddaughter"]			= "dotterdotter";
 $pgv_lang["brother"]			= "Bror";
 $pgv_lang["sister"]				= "Syster";
-$pgv_lang["brother-in-law"]		= "Svåger";
-$pgv_lang["sister-in-law"]			= "Svägerska";
-$pgv_lang["son-in-law"]				= "Svärson";
-$pgv_lang["daughter-in-law"]		= "Svärdotter";
 $pgv_lang["aunt"]					= "Faster/moster";
 $pgv_lang["uncle"]				= "Farbror/morbror";
 $pgv_lang["firstcousin"]			= "Kusin";
@@ -620,7 +623,7 @@ $pgv_lang["mail01_line05"]		= "Om du inte begärde ett konto kan du radera medde
 $pgv_lang["mail01_line06"]		= "Du kommer inte få några fler mail från detta systemet efterom kontot kommer att raderas inom sju dagar om ingen verifiering görs.";
 $pgv_lang["mail01_subject"]		= "Din registrering på #SERVER_NAME#";
 $pgv_lang["mail02_line01"]		= "Hej administratör...";
-$pgv_lang["mail02_line02"]		= "En ny användare gjorde en ny användarregistrering på (#SERVER_NAME#)";
+$pgv_lang["mail02_line02"]		= "En ny användare gjorde en ny användarregistrering på #SERVER_NAME#";
 $pgv_lang["mail02_line03"]		= "Användaren fick ett e-postmeddelande med den nödvändiga datan för att kunna verifiera sitt konto.";
 $pgv_lang["mail02_line04"]		= "Så snart användaren har gjort sin verifiering kommer du att informeras via e-post. Du kan nu slutföra processen genom att aktivera användarnamnet. Den nya användaren kan inte logga in förrän du har aktiverat kontot.";
 $pgv_lang["mail02_line04a"]		= "Du kommer att bli informerad via epost när den användaren som ansökt om kontot har verifierat sig själv. Efter verifikation kommer användaren att kunna logga in utan att du behöver göra något.";
@@ -664,6 +667,7 @@ $pgv_lang["welcome_text_auth_mode_1"]	=	"<center><b>Välkommen till denna geneal
 $pgv_lang["welcome_text_auth_mode_2"]	=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten endast för <u>auktoriserade</u> användare.<br /><br />Om du redan har ett konto kan du logga in på denna sida. Om du inte har ett konto ännu, kan du ansöka om ett genom att klicka på länken på denna sida.<br /><br />Efter att vi verifierat din information, kommer administratören att gogkänna eller avslå din begäran. Du kommer att få ett e-postmeddelande om din begäran godkänns.";
 $pgv_lang["welcome_text_auth_mode_3"]	=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten <u>endast för familjemedlemmar</u>. Om du redan har ett konto kan du logga in på denna sida. Om du inte har ett konto ännu, kan du ansöka om ett genom att klicka på länken på denna sida.<br /><br />Efter att vi verifierat din information, kommer administratören antingen godkänna eller avslå din begäran. Du kommer att få ett e-postmeddelande när kontot godkänns.";
 $pgv_lang["welcome_text_cust_head"]		=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten för användare som har ett användarkonto och lösenord för denna websajt.<br />";
+$pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Notera:</div><div class=\"error\">genom att fylla i och skicka in detta formulär, samtycker du till att:<ul><li>skydda integriteten för de nu levande personer som nämns på denna sajt </li><li>och i textrutan nedan förklara med vem du är släkt eller ge oss information om någon som borde vara med på på var sajt.</li></ul></div>";
 //-- mygedview page
 $pgv_lang["welcome"]				= "Välkommen";
 $pgv_lang["upcoming_events"]		= "Kommande händelser";
@@ -829,7 +833,6 @@ $pgv_lang["config_update_ok"]			= "Lyckad uppdatering av konfigurationsfil.";
 $pgv_lang["add_media_tool"]			= "Verktyg för att lägga till media";
 $pgv_lang["media_linked"]			= "Detta mediaobjekt länkat till följande:";
 $pgv_lang["media_not_linked"]		= "Detta mediaobjekt är inte länkat till någon GEDCOM-post.";
-$pgv_lang["deleted_files"]          = "Raderade filer:";
 $pgv_lang["media_dir_1"]			= "Mediaobjektet finns på en extern server";
 $pgv_lang["media_dir_2"]			= "Mediaobjektet finns i den vanliga mediamappen";
 $pgv_lang["media_dir_3"]			= "Mediaobjektet finns i den skyddad mediamappen";
@@ -841,6 +844,12 @@ $pgv_lang["moveto_3"]				= "Flytta till den vanliga mappen";
 $pgv_lang["move_standard"]			= "Flytta till vanliga";
 $pgv_lang["move_protected"]			= "Flytta till skyddade";
 $pgv_lang["move_mediadirs"]			= "Flytta mediamappar";
+$pgv_lang["setperms"]				= "Sätt mediarättigheter";
+$pgv_lang["setperms_writable"]		= "Ge skrivrättigheter till alla";
+$pgv_lang["setperms_readonly"]		= "Sätt skrivskyddad för alla";
+$pgv_lang["setperms_success"]		= "Rättigheter satta";
+$pgv_lang["setperms_failure"]		= "Rättigheter är inte satta";
+$pgv_lang["setperms_time_exceeded"]	= "Körtidens gräns är nådd. Försök att köra kommandot igen på en mindre katalog.";
 $pgv_lang["move_time_exceeded"]	= "Exekveringstidsgränsen nåddes. Utför kommandot igen för att flytta resten av filerna.";
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "Mediabrandväggens rootmapp finns inte. Du måste skapa den först.";
 $pgv_lang["media_firewall_protected_dir_no_exist"]		= "Den skyddade mediamappen kunde inte skapas i mediabrandväggens rootmapp. Skapa denna mapp och gör den skrivbar för alla.";
@@ -1022,9 +1031,6 @@ $pgv_lang["stat_18_ard"]		= "ålder i förhållande till dödsår.";
 $pgv_lang["stat_19_arm"]		= "ålder vid vigsel.";
 $pgv_lang["stat_20_arm1"]		= "ålder vid första vigseln.";
 $pgv_lang["stat_21_nok"]		= "antal barn.";
-$pgv_lang["stat_gmx"]			= " kontrollera axelvärden för månad";
-$pgv_lang["stat_gax"]			= " kontrollera axelvärden för åldrar";
-$pgv_lang["stat_gnx"]			= " kontrollera axelvärden för antal";
 $pgv_lang["stat_200_none"]		= "alla (eller tom)";
 $pgv_lang["stat_201_num"]		= "antal";
 $pgv_lang["stat_202_perc"]		= "procent";
@@ -1134,6 +1140,7 @@ $pgv_lang["account_information"] = "Kontoinformation";
 $pgv_lang["stepbrother"]		= "Styvbror";
 $pgv_lang["fams_charts"]		= "Valmöjligheter för familjer";
 $pgv_lang["indis_charts"]		= "Val för personer";
+$pgv_lang["none"]					= "Inga";
 $pgv_lang["locked"]				= "Ändra inte";
 $pgv_lang["privacy"]			= "integritet";
 $pgv_lang["number_sign"]			= "#";

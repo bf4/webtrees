@@ -5,7 +5,7 @@
  * ($rootid=1, father=2, mother=3 ...)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,14 @@ require_once("includes/controllers/ancestry_ctrl.php");
 
 // -- print html header information
 print_header($controller->name . " " . $pgv_lang["ancestry_chart"]);
+
+// LBox =====================================================================================
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');
+}	
+// ==========================================================================================
+
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$controller->cellwidth."px\" valign=\"top\">\n\t\t";
 if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ancestry_chart"]) . ":";
 else print "<h2>" . $pgv_lang["ancestry_chart"] . ":";
