@@ -872,7 +872,8 @@ require_once("includes/functions_privacy.php");
 if ((!empty($logout))&&($logout==1)) {
 	userLogout(getUserId());
 	if ($REQUIRE_AUTHENTICATION) {
-		header("Location: ".$HOME_SITE_URL);
+//		header("Location: ".$HOME_SITE_URL);
+		header("Location: {$SERVER_URL}");
 		exit;
 	}
 }
