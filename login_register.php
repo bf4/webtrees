@@ -119,7 +119,7 @@ switch ($action) {
 					$user_new_pw .= $passchars{$index};
 				}
 				
-				set_user_password($user_name, crypt($user_new_pw, $user_new_pw));
+				set_user_password($user_name, crypt($user_new_pw));
 				set_user_setting($user_name, 'pwrequested', 1);
 				
 				// switch language to user settings
