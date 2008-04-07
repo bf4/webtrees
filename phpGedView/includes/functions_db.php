@@ -271,8 +271,6 @@ function load_families($ids, $gedfile='') {
 
 	if (empty($gedfile))
 		$gedfile = $GEDCOM;
-	if (!is_int($gedfile))
-		$gedfile = get_gedcom_from_id($gedfile);
 
 	$sql = "SELECT f_gedcom, f_file, f_husb, f_wife, f_id, f_numchil FROM ".$TBLPREFIX."families WHERE f_id IN (";
 	//-- don't load up families who are already loaded
@@ -331,8 +329,6 @@ function find_person_record($pid, $gedfile="") {
 	if (empty($gedfile))
 		$gedfile = $GEDCOM;
 
-	if (!is_int($gedfile))
-		$gedfile = get_gedcom_from_id($gedfile);
 	//-- first check the indilist cache
 	// cache is unreliable for use with different gedcoms in user favorites (sjouke)
 	if ((isset($indilist[$pid]["gedcom"]))&&isset($indilist[$pid]["gedfile"])&&($indilist[$pid]["gedfile"]==$GEDCOMS[$gedfile]["id"]))
@@ -377,8 +373,6 @@ function load_people($ids, $gedfile='') {
 	$myindilist = array();
 	if (empty($gedfile))
 		$gedfile = $GEDCOM;
-	if (!is_int($gedfile))
-		$gedfile = get_gedcom_from_id($gedfile);
 
 	$sql = "SELECT i_gedcom, i_name, i_isdead, i_file, i_id FROM ".$TBLPREFIX."individuals WHERE i_id IN (";
 	//-- don't load up people who are already loaded
