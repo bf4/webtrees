@@ -3464,6 +3464,44 @@ function get_gedcom_id($gedcom) {
 	}
 }
 
+function get_all_gedcoms() {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare("SELECT ged_id, ged_gedcom FROM {$TBLPREFIX}gedcom ORDER BY ged_gedcom");
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$gedcoms=array();
+	while ($row=$statement->fetchObject()) {
+		$gedcoms[$row->ged_id]=$row->ged_gedcom;
+	}
+	$statement->closeCursor();
+	return $gedcoms;
+}
+
+function get_gedcom_from_id($ged_id) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare("SELECT ged_gedcom FROM {$TBLPREFIX}gedcom WHERE ged_id=?");
+	$statement->bindValue(1, $ged_id, PDO::PARAM_INT);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	return $row->ged_gedcom;
+}
+
+function get_id_from_gedcom($ged_gedcom) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement=$DBH->prepare("SELECT ged_id FROM {$TBLPREFIX}gedcom WHERE ged_gedcom=?");
+	$statement->bindValue(1, $ged_gedcom, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	return $row->ged_id;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER table
 ////////////////////////////////////////////////////////////////////////////////
@@ -3507,8 +3545,8 @@ function delete_user($user_id) {
 	++$TOTAL_QUERIES;
 
 	// For databases without foreign key constraints, manually update dependent tables
-	$DBH->exec("DELETE FROM {$TBLPREFIX}user_settings WHERE uset_user_id NOT IN (SELECT user_id FROM {$TBLPREFIX}user)");
-	$DBH->exec("DELETE FROM {$TBLPREFIX}user_gedcom_settings WHERE ugset_user_id NOT IN (SELECT user_id FROM {$TBLPREFIX}user)");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}user_setting WHERE uset_user_id NOT IN (SELECT user_id FROM {$TBLPREFIX}user)");
+	$DBH->exec("DELETE FROM {$TBLPREFIX}user_gedcom_setting WHERE ugset_user_id NOT IN (SELECT user_id FROM {$TBLPREFIX}user)");
 	$DBH->exec("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username  NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
 	$DBH->exec("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
 	$DBH->exec("DELETE FROM {$TBLPREFIX}messages  WHERE m_from      NOT IN (SELECT user_name FROM {$TBLPREFIX}user)");
@@ -3787,7 +3825,7 @@ function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
 		$row=$statement->fetchObject();
 		$statement->closeCursor();
 		if ($row) {
-			return $row->uset_value;
+			return $row->ugset_value;
 		} else {
 			return null;
 		}
@@ -3822,7 +3860,7 @@ function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
 		$statement1->execute();
 		++$TOTAL_QUERIES;
 	} else {
-		$tmp=get_user_setting($user_id, $parameter);
+		$tmp=get_user_gedcom_setting($user_id, $ged_id, $parameter);
 		if (is_null($tmp)) {
 			// insert
 			$statement2->bindValue(1, $user_id,   PDO::PARAM_INT);
