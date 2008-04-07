@@ -180,7 +180,7 @@ if ($action=='createuser' || $action=='edituser2') {
 					}
 				}
 				// Reload the form cleanly, to allow the user to verify their changes
-				header("Location: useradmin.php?action=edituser&username={$user_id}");
+				header("Location: useradmin.php?action=edituser&username={$username}");
 				exit;
 			}
 		}
@@ -649,7 +649,7 @@ if ($action == "listusers") {
 		print "</td>\n";
 		if ($view != "preview") {
 			print "\t<td class=\"optionbox wrap\">";
-			if (PGV_USER_ID!=$user_id) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($user_id)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user_id');\">".$pgv_lang["delete"]."</a>";
+			if (PGV_USER_ID!=$user_id) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($user_name)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user_id');\">".$pgv_lang["delete"]."</a>";
 			print "</td>\n";
 		}
 		print "</tr>\n";
@@ -919,11 +919,11 @@ if ($action == "cleanup") {
 		else
 			$datelogin = get_user_setting($user_id, 'sessiontime');
 		if ((mktime(0, 0, 0, (int)date("m")-$month, (int)date("d"), (int)date("Y")) > $datelogin) && (get_user_setting($user_id,'verified') == "yes") && (get_user_setting($user_id, 'verified_by_admin') == "yes")) {
-			?><tr><td class="descriptionbox"><?php print $user_id." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["usr_idle_toolong"];
+			?><tr><td class="descriptionbox"><?php print $user_name." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["usr_idle_toolong"];
 			$date=new GedcomDate(date("d M Y", $datelogin));
 			print $date->Display(false);
 			$ucnt++;
-			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_id); ?>" value="yes" /></td></tr><?php
+			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_name); ?>" value="yes" /></td></tr><?php
 		}
 	}
 
@@ -931,9 +931,9 @@ if ($action == "cleanup") {
 	foreach(get_all_users() as $user_id=>$user_name) {
 		if (((date("U") - get_user_setting($user_id,'reg_timestamp')) > 604800) && (get_user_setting($user_id,'verified')!="yes")) {
 			$userName = getUserFullName($user_id);
-			?><tr><td class="descriptionbox"><?php print $user_id." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unveru"];
+			?><tr><td class="descriptionbox"><?php print $user_name." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unveru"];
 			$ucnt++;
-			?></td><td class="optionbox"><input type="checkbox" checked="checked" name="<?php print "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_id); ?>" value="yes" /></td></tr><?php
+			?></td><td class="optionbox"><input type="checkbox" checked="checked" name="<?php print "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_name); ?>" value="yes" /></td></tr><?php
 		}
 	}
 
@@ -941,8 +941,8 @@ if ($action == "cleanup") {
 	foreach(get_all_users() as $user_id=>$user_name) {
 		if ((get_user_setting($user_id,'verified_by_admin')!="yes") && (get_user_setting($user_id,'verified') == "yes")) {
 			$userName = getUserFullName($user_id);
-			?><tr><td  class="descriptionbox"><?php print $user_id." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unvera"];
-			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_id); ?>" value="yes" /></td></tr><?php
+			?><tr><td  class="descriptionbox"><?php print $user_name." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["del_unvera"];
+			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_name); ?>" value="yes" /></td></tr><?php
 			$ucnt++;
 		}
 	}
@@ -984,7 +984,7 @@ if ($action == "cleanup") {
 // NOTE: No table parts
 if ($action == "cleanup2") {
 	foreach(get_all_users() as $user_id=>$user_name) {
-		$var = "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_id);
+		$var = "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_name);
 		if (isset($$var)) {
 			delete_user($user_id);
 			AddToLog("deleted user ->{$user_name}<-");
