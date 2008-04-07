@@ -183,6 +183,7 @@ $pgv_lang["gedcom_not_imported"]				= "Denne GEDCOM-fil er endnu ikke importeret
 $pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"]		= "Ret indstillinger for billedbehandling";
+$pgv_lang["autoContinue"]						= "Automatisk tryk <<Fortsæt>> knappen";
 $pgv_lang["import_complete"]	= "Importeringen er færdig";
 $pgv_lang["import_marr_names"]		= "Importér vielsesnavn";
 $pgv_lang["import_options"]		= "Indstillinger for importering";

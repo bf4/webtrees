@@ -111,6 +111,7 @@ class Person extends GedcomRecord {
 			}
 		}
 		//if (empty($indirec)) return null;
+		if (empty($indirec)) $indirec = "0 @".$pid."@ INDI\r\n";
 		$person = new Person($indirec, $simple);
 		if (!empty($fromfile)) $person->setChanged(true);
 		//-- update the cache

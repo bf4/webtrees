@@ -464,8 +464,12 @@ if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
 	}
 }
 
-if (!empty($_SERVER["PHP_SELF"])) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
-else if (!empty($_SERVER["SCRIPT_NAME"])) $SCRIPT_NAME=$_SERVER["SCRIPT_NAME"];
+if (!empty($_SERVER["PHP_SELF"]))
+	$SCRIPT_NAME=$_SERVER["PHP_SELF"];
+else
+	if (!empty($_SERVER["SCRIPT_NAME"]))
+		$SCRIPT_NAME=$_SERVER["SCRIPT_NAME"];
+
 $SCRIPT_NAME = preg_replace("~/+~", "/", $SCRIPT_NAME);
 if (!empty($_SERVER["QUERY_STRING"])) $QUERY_STRING = $_SERVER["QUERY_STRING"];
 else $QUERY_STRING="";
@@ -609,7 +613,7 @@ foreach($_REQUEST as $key=>$value) {
 			exit;
 		}
 		//-- don't let any html in
-		if (!empty($value)) ${$key} = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $value);
+		if (!empty($value)) $_REQUEST[$key] = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $value);
 	}
 	else {
 		foreach($value as $key1=>$val) {
@@ -621,7 +625,7 @@ foreach($_REQUEST as $key=>$value) {
 					exit;
 				}
 				//-- don't let any html in
-				if (!empty($val)) ${$key}[$key1] = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $val);
+				if (!empty($val)) $_REQUEST[$key][$key1] = preg_replace(array("/</","/>/"), array("&lt;","&gt;"), $val);
 			}
 		}
 	}
@@ -847,9 +851,9 @@ if(empty($SEARCH_SPIDER)) {
 }
 
 if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
-	if ((isset($changelanguage))&&($changelanguage=="yes")) {
-		if (!empty($NEWLANGUAGE) && isset($pgv_language[$NEWLANGUAGE])) {
-			$LANGUAGE=$NEWLANGUAGE;
+	if ((isset($_REQUEST['changelanguage']))&&($_REQUEST['changelanguage']=="yes")) {
+		if (!empty($_REQUEST['NEWLANGUAGE']) && isset($pgv_language[$_REQUEST['NEWLANGUAGE']])) {
+			$LANGUAGE=$_REQUEST['NEWLANGUAGE'];
 			unset($_SESSION["upcoming_events"]);
 			unset($_SESSION["todays_events"]);
 		}
@@ -938,7 +942,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 					&&(strstr($SCRIPT_NAME, "genservice.php")===false)
 					&&(strstr($SCRIPT_NAME, "help_text.php")===false)
 					&&(strstr($SCRIPT_NAME, "message.php")===false)) {
-				if (!empty($auth) && $auth=="basic") { //if user is attempting basic authentication //TODO: Update if degest auth is ever implemented
+				if (!empty($_REQUEST['auth']) && $_REQUEST['auth']=="basic") { //if user is attempting basic authentication //TODO: Update if degest auth is ever implemented
 						basicHTTPAuthenticateUser();
 				} else {
 					$url = basename($_SERVER["PHP_SELF"])."?".$QUERY_STRING;
@@ -985,7 +989,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 }
 
 //-- load the user specific theme
-if (PGV_USER_ID && !isset($logout)) {
+if (PGV_USER_ID && !isset($_REQUEST['logout'])) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin(PGV_USER_ID);

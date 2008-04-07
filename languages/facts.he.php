@@ -3,7 +3,7 @@
  * Defines an array of GEDCOM codes and the Hebrew name facts that they represent.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author Meliza
  * @package PhpGedView
  * @subpackage Languages
+ * @author Meliza 
  * @version $Id$
  */
 
@@ -334,7 +334,6 @@ $factarray["_THUM"] = "השתמש בתמונה זו כתמונה ממוזערת?
 $factarray["_PGVU"] = "ע\"י"; 
 $factarray["SERV"]  = "שרת מרוחק";
 $factarray["_GEDF"] = "קובץ GEDCOM";
-$factarray["_HIST"] = "היסטוריה"; 
 
 /*-- Fact abbreviations for use in Chart boxes.  
  *		Use these abbreviations in cases where the standard method of using the first

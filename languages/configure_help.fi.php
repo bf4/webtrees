@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
+ * @author Matti Valve and Jani Miettinen
  * @version $Id$
  */
 
@@ -34,14 +35,12 @@ $pgv_lang["COMMIT_COMMAND"] 			= "Versiontarkistusjärjestelmä";
 $pgv_lang["SHOW_MULTISITE_SEARCH_help"]	= "~#pgv_lang[SHOW_MULTISITE_SEARCH]#~<br /><br />Usean sijaintipaikan haku sallii käyttäjien etsiä useilta eri PhpGedView webbisivuilta, jotka olet määritellyt Sijaintipaikka Ylläpitoalueella tai joihin on tehty kaukolinkitys. Tämä valinta vaikuttaa onko Usean sijaintipaikan haku toiminto käytettävissä kaikille tai vain todennetuille käyttäjille.<br />";
 $pgv_lang["SHOW_MULTISITE_SEARCH"]		= "Näytä usean sijaintipaikan haku";
 $pgv_lang["DBPERSIST"]					= "Käytä jatkuvia tietokantayhteyksiä ";
-//$pgv_lang["LANG_SELECTION"] 			= "Tuetut kielet";
 $pgv_lang["MEDIA_ID_PREFIX"]		= "Median ID etuliite";
 $pgv_lang["FAM_ID_PREFIX"]		= "Perheen ID etuliite";
 $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Automaattisesti kehitetyt pikkukuvat ";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Kehitettyjen pikkukuvien leveys";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Kun ohjelma kehittää automaattisesti pukkukuva, niin se käyttää tätä leveyttä(pikseleinä). Vakiona asetus on 100.";
 $pgv_lang["SHOW_SOURCES"]			= "Näytä lähde";
-//$pgv_lang["ALLOW_REMEMBER_ME"]		= "Näytä <b>Muista minut</b> valinta Kirjautumissivulla";
 $pgv_lang["UNDERLINE_NAME_QUOTES"]		= "Alleviivaa nimet lainausmerkeissä";
 $pgv_lang["GEDCOM_DEFAULT_TAB"]			= "Vakio välilehti näytettäessä henkilön sivu";
 $pgv_lang["SHOW_MARRIED_NAMES"]			= "Näytä avionimet henkilöluettelossa";
@@ -77,20 +76,6 @@ $pgv_lang["ged_config"]			= "Konfiguraatio tiedosto";
 $pgv_lang["ged_search"]			= "HakuLoki tiedostot";
 $pgv_lang["ged_change"]			= "Muutosloki tiedosto";
 $pgv_lang["ged_privacy"]		= "Yksityisyys tiedosto";
-///$pgv_lang["gedcom_adm_head"]	= "GEDCOM hallinto";
-///$pgv_lang["ged_download"]		= "Lataa";
-///$pgv_lang["sqlite"]			= "SQLite";
-///$pgv_lang["pgsql"]			= "PostgreSQL";
-///$pgv_lang["sybase"]			= "Sybase";
-///$pgv_lang["admin_gedcoms"]		= "Klikkaa tässä hallitaksesi GEDCOMeja";
-///$pgv_lang["oci8"]			= "Oracle 7+";
-///$pgv_lang["mysql"]			= "MySQL";
-///$pgv_lang["mysqli"]			= "MySQL 4.1+ ja PHP 5";
-///$pgv_lang["mssql"]			= "Microsoft SQL palvelin";
-///$pgv_lang["msql"]			= "Mini SQL";
-///$pgv_lang["ifx"]			= "Informix";
-///$pgv_lang["ibase"]			= "InterBase";
-///$pgv_lang["fbsql"]			= "FrontBase";
 $pgv_lang["dbase"]			= "dBase";
 $pgv_lang["ZOOM_BOXES"]			= "Lähennä laatikot kaaviossa";
 $pgv_lang["disabled"]			= "Estetty";
@@ -103,9 +88,7 @@ $pgv_lang["DBHOST"]			= "Tietokannan palvelin";
 $pgv_lang["DBUSER"]			= "Tietokannan Tunnussana";
 $pgv_lang["DBPASS"]			= "Tietokannan salasana";
 $pgv_lang["DBNAME"]			= "Tietokannan nimi";
-//$pgv_lang["TBLPREFIX"]			= "Tietokantataulun etuliite";
 
-//$pgv_lang["ALLOW_CHANGE_GEDCOM"]	= "Salli GEDCOM:n vaihto";
 $pgv_lang["upload_path"]			= "Lähetys polku";
 $pgv_lang["upload_path_help"]		= "~#pgv_lang[upload_path]#~<br /><br />Tästä polusta löytyy GEDCOM tiedosto jonka haluat lähettää. Asettaaksesi polun paina <b>Selaa</b> ja valitse sinun GEDCOM tiedosto ja paina <b>Avaa</b>.";
 $pgv_lang["gedcom_path"]			= "GEDCOm palvelimen polku ja nimi";
@@ -120,12 +103,9 @@ $pgv_lang["HIDE_LIVE_PEOPLE"]		= "Salli yksityisyys";
 $pgv_lang["MEDIA_DIRECTORY"]		= "Multimedia kansio";
 $pgv_lang["THEME_DIR"]			= "Teema kansio";
 $pgv_lang["TIME_LIMIT"]			= "PHP aikaraja";
-//$pgv_lang["SERVER_URL"]			= "PhpGedView URL";
 $pgv_lang["LOGIN_URL"]			= "Kirjautumis URL";
 $pgv_lang["SHOW_COUNTER"]		= "Näytä osumalaskurit";
-//$pgv_lang["ALLOW_USER_THEMES"]		= "Salli käyttäjien valita itselleen oma teema";
 $pgv_lang["LOGFILE_CREATE"]		= "Arkistoi likotiedostot";
-//$pgv_lang["PGV_MEMORY_LIMIT"]		= "Muistiraja";
 $pgv_lang["MAX_VIEW_RATE"]		= "Sivujen näyttömäärän maksimiraja";
 $pgv_lang["META_AUTHOR"]		= "Tekijän META tagi";
 $pgv_lang["META_PUBLISHER"]		= "Julkaisijan META tagi";
@@ -136,41 +116,8 @@ $pgv_lang["META_KEYWORDS"]		= "Avainsana META tagi";
 $pgv_lang["ENABLE_RSS"]				= "Salli RSS";
 $pgv_lang["RSS_FORMAT"]				= "RSS Formaatti";
 $pgv_lang["upload_to_index"]		= "Lähetä tiedosto index kansioon:";
-//$pgv_lang["can_admin"]			= "Käyttäjä voi ylläpitä"; //2 ä-tä lopussa?
-//$pgv_lang["can_edit"]			= "Käyttäjä voi muokata";
-///$pgv_lang["user_relationship_priv"]	= "Rajoitettu pääsy liittyvään ihmiseen";
-///$pgv_lang["sync_gedcom"]		= "Synkronoidaan käyttäjä asetukset GEDCOM datan kanssa";
-///$pgv_lang["access"]				= "Pääsy";
-//$pgv_lang["config_help"]		= "Apua asetuksiin";
-//$pgv_lang["add_user"]			= "Lisää uusi käyttäjä";
-//$pgv_lang["current_users"]		= "Nykyinen käyttäjälista";
-//$pgv_lang["leave_blank"]		= "Jätä salasana tyhjäksi jos et halua muuttaa sitä.";
-///$pgv_lang["click_here_to_continue"]	= "Klikkaa tässä jatkaaksesi.";
-//$pgv_lang["messaging2"]			= "Sisäiset viestit ja sähköposti";
-//$pgv_lang["messaging3"]			= "PhpGedView lähettää sähköposteja ilman säilytystä";
-//$pgv_lang["no_messaging"]		= "Ei mitään yhteystapaa";
-///$pgv_lang["no_logs"]			= "Estä lokien keräys";
-///$pgv_lang["admin_verification_waiting"] = "Käyttäjätilit odottavat ylläpidon varmennusta";
-///$pgv_lang["admin_user_warnings"]		= "Yhdellä tai useammalla tilillä on varoitus";
-///$pgv_lang["DEFAULT_GEDCOM"]		= "Vakio GEDCOM";
-///$pgv_lang["yearly"]			= "Vuosittainen";
-//$pgv_lang["weekly"]			= "Viikottainen";
 $pgv_lang["download_gedconf"]		= "Lataa GEDCOM konfiguraatio";
-///$pgv_lang["download_here"]		= "Klikkaa tähän ladataksesi tiedoston.";
 $pgv_lang["save_config"] 		= "Tallenna konfiguraatio";
-///$pgv_lang["LANGUAGE_DEFAULT"]		= "Et ole määritellyt kieliä joita sivustosi tukee.<br />PhpGedView käyttää oletus asetusta.";
-///$pgv_lang["monthly"]			= "Kuukausittainen";
-///$pgv_lang["PEDIGREE_FULL_DETAILS"]	= "Näytä synnyin ja kuolin tiedot suku- ja jälkeläistauluissa";
-///$pgv_lang["PRIV_NONE"]				= "Näytä vain pääkäyttäjille";
-///$pgv_lang["save_changed_settings"]		= "Tallenna muutokset";
-///$pgv_lang["download_file"]		= "Lataa tiedosto";
-///$pgv_lang["confirm_gedcom_delete"]	= "Oletko varma että haluat poistaa tämän GEDCOM:n";
-///$pgv_lang["daily"]			= "Päivittäin";
-//$pgv_lang["privileges"]			= "Etuoikeudet";
-//$pgv_lang["date_registered"]	= "Rekisteröintipäivä";
-//$pgv_lang["last_login"]			= "Viimeksi kirjautunut";
-//$pgv_lang["show_phpinfo"]		= "Näytä PHPInfosivu";
-///$pgv_lang["mailto"]			= "Mailto-linkki";
 
 //-- edit privacy messages
 $pgv_lang["edit_privacy"]			= "Muokkaa yksityisyyttä";
@@ -189,21 +136,18 @@ $pgv_lang["edit_lang_utility"]		= "Kielitiedoston editointi työkalu";
 $pgv_lang["language_to_edit"]		= "Editoitava kieli";
 $pgv_lang["language_to_edit_help"]		= "#pgv_lang[edit_lang_utility]# >> <b>#pgv_lang[language_to_edit]#</b><br /><br /> Tästä pudotusvalikosta voit valita kielen, jolla haluat <b>editoida</b> viestejä.";
 $pgv_lang["file_to_edit"]		= "Editoitavan kielitiedoston tyyppi";
-///$pgv_lang["file_to_edit_help"]			= "#pgv_lang[edit_lang_utility]# >> <b>#pgv_lang[file_to_edit]#</b><br /><br />Tästä pudotusvalikosta voit valita minkä tyyppistä kielitiedostoa haluat editoida.<br /><br />Vaihtoehdot ovat:<br />lang.xx.php<br />facts.xx.php<br />configure_help.xx.php<br />help_text.xx.php<br /><br />, missä xx vastaa kielikoodia ja asettuu automaattisesti.<br />";
 $pgv_lang["check"]			= "Tarkista";
 $pgv_lang["lang_save"]			= "Talleta";
 $pgv_lang["contents"]			= "Sisältö";
 $pgv_lang["listing"]			= "Listata";
 $pgv_lang["no_content"]			= "Ei sisältöä";
 $pgv_lang["editlang"]			= "Editoi";
-///$pgv_lang["cancel"]			= "Peruuta";
 $pgv_lang["savelang"]			= "Talleta";
 $pgv_lang["original_message"]		= "Alkuperäinen teksti";
 $pgv_lang["message_to_edit"]		= "Editoitava teksti";
 $pgv_lang["changed_message"]		= "Muutettu sisältö";
 $pgv_lang["message_empty_warning"]	= "-> Varoitus!!! Tämä viesti on tyhjä #LANGUAGE_FILE# <-";
 $pgv_lang["language_to_export"]		= "Vietävä kieli";
-///$pgv_lang["language_to_export_help"]	= "#pgv_lang[export_lang_utility]# >> <b>#pgv_lang[language_to_export]#</b><br /><br />Tästä pudotusvalikosta voit valita sen kielen, jonka viestit haluat <b>viedä</b>.";
 $pgv_lang["export_lang_utility"]	= "Kielitiedoston vienti työkalu";
 $pgv_lang["export"]			= "Vie";
 $pgv_lang["export_ok"]			= "Ohje viestit vietiin";
@@ -288,38 +232,6 @@ $pgv_lang["no_open"]	= "V I R H E !!!<br /><br />Ei pysty avaamaan tiedostoa <b>
 $pgv_lang["users_langs"]			= "Käyttäjien kielet";
 $pgv_lang["configured_languages"]		= "Käytettävät kielet";
 
-///$pgv_lang["gedcom_not_imported"]	= "Tätä GEDCOM:a ei ole vielä tuotu.";
-///$pgv_lang["users_admin"]			= "Paikan Ylläpitäjiä";
-//$pgv_lang["users_unver_admin"]		= "Ylläpidon vahvistamatta";
-//$pgv_lang["users_unver"]			= "Käyttäjän vahvistamatta";
-///$pgv_lang["users_total"]			= "Käyttäjiä kaikenkaikkiaan";
-
-///$pgv_lang["system_time"]		= "Nykyinen järjestelmäaika:";
-//$pgv_lang["hide_translated_help"]		= "#pgv_lang[edit_lang_utility]# >> <b>#pgv_lang[hide_translated]#</b><br /><br /> Mikäli vastaat kyllä, näkyvät vain ne valitsemasi kielen viestit joita ei ole käännetty eli joita ei vielä ole valitsemassasi kielitiedostossa.<br />Kun viesti on käännetty tätä ei enää näytetä luettelossa.";
-
-///$pgv_lang["never"]				= "Ei koskaan";
-///$pgv_lang["warn_users"]				= "Käyttäjät, joilla varoitus";
-//$pgv_lang["users_gedadmin"]			= "GEDCOM ylläpitäjät";
-//$pgv_lang["cleanup_users"]			= "Siivoa käyttäjät";
-//$pgv_lang["usr_no_cleanup"]			= "Ei löytynyt mitään siivottavaa";
-//$pgv_lang["back_useradmin"]			= "Takaisin käyttäjien hallintaan";
-//$pgv_lang["del_gedrights"]			= "GEDCOM ei ole enään aktiivinen, poista käyttäjän asetuksista";
-//$pgv_lang["usr_idle_toolong"]		= "Käyttäjän tili on ollut liian pitkään käyttämätön:";
-//$pgv_lang["del_unvera"]				= "Ylläpito ei ole vahvistanut käyttäjää.";
-//$pgv_lang["del_proceed"]			= "Jatka";
-//$pgv_lang["del_unveru"]				= "Käyttäjä ai ole vahvistanut 7 päivässä.";
-//$pgv_lang["usr_deleted"]			= "Poistetut käyttäjät:";
-//$pgv_lang["message_to_all"]			= "Lähetä viesti kaikille käyttäjille";
-//$pgv_lang["message"]				= "Viesti";
-//$pgv_lang["searchtype"]				= "Haku tyyppi";
-//$pgv_lang["query"]					= "Kysely";
-//$pgv_lang["type"]					= "Tyyppi";
-///$pgv_lang["date_time"]				= "Päivä ja aika";
-///$pgv_lang["ip_address"]				= "IP osoite";
-
-///$pgv_lang["add_new_lang_help"]			= "<b>#pgv_lang[add_new_language]#</b><br /><br />Tällä valinnalla voit lisätä uuden kielen PhpGedView-ohjelmaan.<br />Voit tehdä uuden kielen standardiasetukset kuten: kielikoodi, kielen suunta, viikon alkamispäivä tälle kielelle, aika-asetukset, aakkoset jne.<br /><br />Lisäohjeita PhpGedView-ohjelman tukemista kielen asetuksista saat valittuasi kielen ja näpäytettyäsi \" Lisää uusi kieli\" painiketta.<br />Uuden kielen asetusikkunassa on lisää kysymysmerkkejä, joita näpäyttämällä saat lisäohjeita.";
-///$pgv_lang["lang_configure_help"]	= "Tällä sivulla valitaan käyttäjien käytössä olevat kielet. Asetukset voidaan tehdä esimerkiksi niin, että vain saksa ja suomi ovat käytettävissä. Tämä voi olla hyödyllistä mikäli et pysty kommunikoimaan käyttäjien kanssa esimerkiksi unkariksi.<br /><br />Tällä sivulla voit myös muuttaa tiettyjä PhpGedView-ohjelman ominaisuuksia, jotka riipuvat valitusta kielestä. Täällä voit määrittää esimerkiksi kuinka PhpGedView muotoilee päivämäärä- ja aikakentät.";
-
 //-- User Migration Tool messages
 $pgv_lang["um_header"] = "Käyttäjä tietojen integrointi työkalu";
 $pgv_lang["um_creating"] = "Tekee";
@@ -369,13 +281,5 @@ $pgv_lang["delete_faq_item_help"] = "~#pgv_lang[delete_faq_item]#~<br />Tämä v
 $pgv_lang["moveup_faq_item"] = "Siirrä UKK yksikkö ylös";
 $pgv_lang["movedown_faq_item"] = "Siirrä UKK yksikkö alas";
 $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />Maksimi aika, joka on tuonnille sallittu käyttää, käsitellessä GEDCOM tiedostoa.";
-///$pgv_lang["advanced_conf"]		= "Laajennetut Konfiguraatioasetukset";
-///$pgv_lang["standard_conf"]		= "Vakio Konfiguraatio Asetukset";
-///$pgv_lang["configure"]			= "Konfiguroi PhpGedView";
-///$pgv_lang["default_user"]		= "Tee oletus pääkäyttäjä";
-///$pgv_lang["about_user"]			= "Sinun täytyy ensin tehdä ylin pääkäyttäjä. Tällä käyttäjällä on oikeus päivittää konfiguraatio tiedostot, nähdä yksityistä tietoa ja tehdä muita käyttäjiä.";
-///$pgv_lang["configure_head"]		= "PhpGedView konfiguraatio";
-
-// Media items
 
 ?>
