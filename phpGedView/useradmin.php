@@ -39,7 +39,7 @@ if (!PGV_USER_IS_ADMIN) {
 }
 
 // Extract GET/POST variables
-foreach (array('action', 'filter', 'sort', 'ged', 'usrlang', 'oldusername', 'username', 'lastname', 'pass1', 'pass2','emailaddress', 'user_theme', 'user_language', 'new_contact_method','new_default_tab', 'new_comment', 'new_comment_exp', 'new_max_relation_path', 'new_sync_gedcom', 'new_relationship_privacy', 'new_auto_accept', 'canadmin', 'visibleonline', 'editaccount', 'verified', 'verified_by_admin') as $var) {
+foreach (array('action', 'filter', 'sort', 'ged', 'usrlang', 'oldusername', 'username', 'firstname', 'lastname', 'pass1', 'pass2','emailaddress', 'user_theme', 'user_language', 'new_contact_method','new_default_tab', 'new_comment', 'new_comment_exp', 'new_max_relation_path', 'new_sync_gedcom', 'new_relationship_privacy', 'new_auto_accept', 'canadmin', 'visibleonline', 'editaccount', 'verified', 'verified_by_admin') as $var) {
 	if (isset($_REQUEST[$var])) {
 		$$var=$_REQUEST[$var];
 	} else {
@@ -135,7 +135,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				set_user_setting($user_id, 'verified_by_admin',    ($verified_by_admin=='yes') ? 'yes' : 'no');
 				foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
 					foreach (array('gedcomid', 'rootid', 'canedit') as $var) {
-						set_user_gedcom_setting($user_id, $ged_gedcom, $var, $_POST[$var.$ged_id]);
+						set_user_gedcom_setting($user_id, $ged_id, $var, $_POST[$var.$ged_id]);
 					}
 				}
 				// If we're verifying a new user, send them a message to let them know
@@ -162,16 +162,25 @@ if ($action=='createuser' || $action=='edituser2') {
 				}
 				//-- update Gedcom record with new email address
 				if ($email_changed && $new_sync_gedcom=='Y') {
-					foreach(get_all_gedcoms() as $ged_id=>$ged_gedcom) {
-						include_once("includes/functions_edit.php");
-						$indirec=find_person_record($_POST['gedcomid'.$ged_id], $ged_gedcom);
-						if ($indirec) {
-							if (preg_match("/\d _?EMAIL/", $indirec)) {
-								$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$user_email, $indirec);
-								replace_gedrec($ged_gedcom, $indirec);
-							} else {
-								$indirec.="\r\n1 EMAIL ".$user_email;
-								replace_gedrec($ged_gedcom, $indirec);
+					foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+						$myid=get_user_gedcom_setting($username, $ged_id, 'gedcomid');
+						if ($myid) {
+							include_once "includes/functions_edit.php";
+							$indirec=find_updated_record($myid, $ged_gedcom);
+							if (!$indirec) {
+								$indirec=find_person_record($myid, $ged_gedcom);
+							}
+							if ($indirec) {
+								$OLDGEDCOM=$GEDCOM;
+								$GEDCOM=$ged_gedcom;
+								if (preg_match("/\d _?EMAIL/", $indirec)) {
+									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$emailaddress, $indirec);
+									replace_gedrec($ged_gedcom, $indirec);
+								} else {
+									$indirec.="\r\n1 EMAIL ".$emailaddress;
+									replace_gedrec($ged_gedcom, $indirec);
+								}
+								$GEDCOM=$OLDGEDCOM;
 							}
 						}
 					}
@@ -272,7 +281,7 @@ if ($action=="edituser") {
 		<tr>
 		<td><?php print $ged_gedcom;?>:&nbsp;&nbsp;</td>
 		<td><input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
-		$pid=get_user_gedcom_setting($user_id, $ged_gedcom, 'gedcomid');
+		$pid=get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $ged_gedcom);
 		if ($pid) {
@@ -295,7 +304,7 @@ if ($action=="edituser") {
 		<tr>
 		<td><?php print $ged_gedcom;?>:&nbsp;&nbsp;</td>
 		<td> <input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
-		$pid=get_user_gedcom_setting($user_id, $ged_gedcom, 'rootid');
+		$pid=get_user_gedcom_setting($user_id, $ged_id, 'rootid');
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $ged_gedcom);
 		if ($pid) {
@@ -342,19 +351,19 @@ if ($action=="edituser") {
 		$tab++;
 		print "<select name=\"{$varname}\" id=\"{$varname}\" tabindex=\"{$tab}\">\n";
 		print "<option value=\"none\"";
-		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="none") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=="none") print " selected=\"selected\"";
 		print ">".$pgv_lang["none"]."</option>\n";
 		print "<option value=\"access\"";
-		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="access") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=="access") print " selected=\"selected\"";
 		print ">".$pgv_lang["access"]."</option>\n";
 		print "<option value=\"edit\"";
-		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="edit") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=="edit") print " selected=\"selected\"";
 		print ">".$pgv_lang["edit"]."</option>\n";
 		print "<option value=\"accept\"";
-		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="accept") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=="accept") print " selected=\"selected\"";
 		print ">".$pgv_lang["accept"]."</option>\n";
 		print "<option value=\"admin\"";
-		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="admin") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=="admin") print " selected=\"selected\"";
 		print ">".$pgv_lang["admin_gedcom"]."</option>\n";
 		print "</select>\n";
 		print "</td></tr>";
@@ -612,9 +621,9 @@ if ($action == "listusers") {
 			print "<li class=\"warning\">".$pgv_lang["can_admin"]."</li>\n";
 		}
 		foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
-			$vval = get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit');
+			$vval = get_user_gedcom_setting($user_id, $ged_id, 'canedit');
 			if ($vval == "") $vval = "none";
-			$uged = get_user_gedcom_setting($user_id, $ged_gedcom, 'gedcomid');
+			$uged = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
 			if ($vval=="accept" || $vval=="admin") print "<li class=\"warning\">";
 			else print "<li>";
 			print $pgv_lang[$vval]." ";
@@ -1072,7 +1081,7 @@ if ($action == "cleanup2") {
 			$adminusers++;
 		}
 		foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
-			if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=='admin') {
+			if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin') {
 				if (isset($gedadmin[$GEDCOMS[$ged_gedcom]["title"]])) {
 					$gedadmin[$GEDCOMS[$ged_gedcom]["title"]]["number"]++;
 				} else {

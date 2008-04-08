@@ -3714,10 +3714,6 @@ function get_user_name($user_id) {
 	return $user_id;
 }
 
-function user_exists($username) { // This function is now deprecated.
-	return get_user_id($username);
-}
-
 function set_user_password($user_id, $password) {
 	global $DBCONN, $TBLPREFIX;
 
@@ -3820,6 +3816,8 @@ function admin_user_exists() {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
+	$ged_gedcom=get_gedcom_from_id($ged_id);
+
 	$tmp=get_user_setting($user_id, $parameter);
 	if (!is_string($tmp)) {
 		return null;
@@ -3828,23 +3826,25 @@ function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
 	if (!is_array($tmp_array)) {
 		return null;
 	}
-	if (array_key_exists($ged_id, $tmp_array)) {
+	if (array_key_exists($ged_gedcom, $tmp_array)) {
 		// Convert old PGV3.1 values to PGV3.2 format
 		if ($parameter=='canedit') {
-			if ($tmp_array[$ged_id]=='yes') {
-				$tmp_array[$ged_id]=='edit';
+			if ($tmp_array[$ged_gedcom]=='yes') {
+				$tmp_array[$ged_gedcom]=='edit';
 			}
-			if ($tmp_array[$ged_id]=='no') {
-				$tmp_array[$ged_id]=='access';
+			if ($tmp_array[$ged_gedcom]=='no') {
+				$tmp_array[$ged_gedcom]=='access';
 			}
 		}
-		return $tmp_array[$ged_id];
+		return $tmp_array[$ged_gedcom];
 	} else {
 		return null;
 	}
 }
 
 function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
+	$ged_gedcom=get_gedcom_from_id($ged_id);
+
 	$tmp=get_user_setting($user_id, $parameter);
 	if (is_string($tmp)) {
 		$tmp_array=unserialize($tmp);
@@ -3856,10 +3856,10 @@ function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
 	}
 	if (empty($value)) {
 		// delete the value
-		unset($tmp_array[$ged_id]);
+		unset($tmp_array[$ged_gedcom]);
 	} else {
 		// update the value
-		$tmp_array[$ged_id]=$value;
+		$tmp_array[$ged_gedcom]=$value;
 	}
 	set_user_setting($user_id, $parameter, serialize($tmp_array));
 	
@@ -3872,12 +3872,14 @@ function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
 function get_user_from_gedcom_xref($ged_id, $xref) {
 	global $TBLPREFIX;
 
+	$ged_gedcom=get_gedcom_from_id($ged_id);
+
 	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
 	$username=false;
 	while ($row=$res->fetchRow()) {
 		if ($row[1]) {
 			$tmp_array=unserialize($row[1]);
-			if (array_key_exists($ged_id, $tmp_array) && $tmp_array[$ged_id]==$xref) {
+			if (array_key_exists($ged_gedcom, $tmp_array) && $tmp_array[$ged_gedcom]==$xref) {
 				$username=$row[0];
 				break;
 			}

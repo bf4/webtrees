@@ -97,12 +97,17 @@ if ($action=="edituser2") {
 
 				//-- update Gedcom record with new email address
 				if ($sync_data_changed && get_user_setting($username, 'sync_gedcom')=='Y') {
-					foreach (array_keys($GEDCOMS) as $GEDCOM) {
-						$myid=get_user_gedcom_setting($username, $GEDCOM, 'gedcomid');
+					foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+						$myid=get_user_gedcom_setting($username, $ged_id, 'gedcomid');
 						if ($myid) {
-							include_once("includes/functions_edit.php");
-							$indirec=find_person_record($myid);
+							include_once "includes/functions_edit.php";
+							$indirec=find_updated_record($myid, $ged_gedcom);
+							if (!$indirec) {
+								$indirec=find_person_record($myid, $ged_gedcom);
+							}
 							if ($indirec) {
+								$OLDGEDCOM=$GEDCOM;
+								$GEDCOM=$ged_gedcom;
 								if (preg_match("/\d _?EMAIL/", $indirec)) {
 									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$user_email, $indirec);
 									replace_gedrec($myid, $indirec);
@@ -110,6 +115,7 @@ if ($action=="edituser2") {
 									$indirec.="\r\n1 EMAIL ".$user_email;
 									replace_gedrec($myid, $indirec);
 								}
+								$GEDCOM=$OLDGEDCOM;
 							}
 						}
 					}
