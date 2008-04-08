@@ -48,7 +48,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * @return the user_id if sucessful, false otherwise
  */
 function authenticateUser($user_name, $password, $basic=false) {
-	global $GEDCOM, $GEDCOMS, $pgv_lang;
+	global $GEDCOM, $pgv_lang;
 
 	checkTableExists();
 
@@ -74,9 +74,9 @@ function authenticateUser($user_name, $password, $basic=false) {
 				if (get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
-					foreach (array_keys($GEDCOMS) as $gedcom) {
-						if (get_user_gedcom_setting($user_id, $gedcom, 'gedcomid')) {
-							$_SESSION['GEDCOM']=$gedcom;
+					foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+						if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
+							$_SESSION['GEDCOM']=$ged_gedcom;
 							break;
 						}
 					}
@@ -748,7 +748,7 @@ function AddToSearchLog($LogString, $allgeds) {
 //----------------------------------- AddToChangeLog
 //-- requires a string to add into the changelog-file
 function AddToChangeLog($LogString, $ged="") {
-	global $INDEX_DIRECTORY, $CHANGELOG_CREATE, $GEDCOM, $GEDCOMS, $username, $SEARCHLOG_CREATE;
+	global $INDEX_DIRECTORY, $CHANGELOG_CREATE, $GEDCOM, $username, $SEARCHLOG_CREATE;
 
 	//-- do not allow code to be written to the log file
 	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);

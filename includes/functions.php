@@ -53,7 +53,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  */
 function check_db($ignore_previous=false) {
 	global $DBTYPE, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
-	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX;
+	global $INDEX_DIRECTORY, $BUILDING_INDEX;
 
 	if (!$ignore_previous) {
 		if ((is_object($DBCONN)) && (!DB::isError($DBCONN)))
@@ -1020,7 +1020,7 @@ function find_record_in_file($gid) {
  * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
  */
 function find_updated_record($gid, $gedfile="") {
-	global $GEDCOMS, $GEDCOM, $pgv_changes;
+	global $GEDCOM, $pgv_changes;
 
 	if (empty($gedfile))
 		$gedfile = $GEDCOM;
@@ -2578,7 +2578,7 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
  * @return bool true if successful false if there was an error
  */
 function write_changes() {
-	global $GEDCOMS, $GEDCOM, $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
+	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
 
 	//-- only allow 1 thread to write changes at a time
 	$mutex = new Mutex("pgv_changes");
