@@ -71,12 +71,12 @@ function authenticateUser($user_name, $password, $basic=false) {
 					$_SESSION['CLANGUAGE'] = get_user_setting($user_id, 'language');
 				//-- only change the gedcom if the user does not have an gedcom id
 				//-- for the currently active gedcom
-				if (get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid')=='') {
+				if (get_user_gedcom_setting($user_id, PGV_GED_ID, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
-					foreach (array_keys($GEDCOMS) as $gedcom) {
-						if (get_user_gedcom_setting($user_id, $gedcom, 'gedcomid')) {
-							$_SESSION['GEDCOM']=$gedcom;
+					foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+						if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
+							$_SESSION['GEDCOM']=$ged_gedcom;
 							break;
 						}
 					}

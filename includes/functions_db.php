@@ -3429,35 +3429,6 @@ function create_gedcom($gedcom) {
 	return $DBH->lastInsertId();
 }
 
-function get_gedcom_id($gedcom) {
-	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
-
-	// We may call this function before creating the table, so must ignore errors.
-	try {
-		if (!is_object($DBH)) {
-			return null;
-		}
-
-		static $statement=null;
-		if (is_null($statement)) {
-			$statement=$DBH->prepare("SELECT ged_id FROM {$TBLPREFIX}gedcom WHERE ged_gedcom=?");
-}
-
-		$statement->bindValue(1, $gedcom, PDO::PARAM_STR);
-		$statement->execute();
-		++$TOTAL_QUERIES;
-		$row=$statement->fetchObject();
-		$statement->closeCursor();
-		if ($row) {
-			return $row->ged_id;
-		} else {
-			return null;
-		}
-	} catch (PDOException $e) {
-		return null;
-	}
-}
-
 function get_all_gedcoms() {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
@@ -3487,14 +3458,31 @@ function get_gedcom_from_id($ged_id) {
 function get_id_from_gedcom($ged_gedcom) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("SELECT ged_id FROM {$TBLPREFIX}gedcom WHERE ged_gedcom=?");
-	$statement->bindValue(1, $ged_gedcom, PDO::PARAM_STR);
-	$statement->execute();
-	++$TOTAL_QUERIES;
-	$row=$statement->fetchObject();
-	$statement->closeCursor();
-	return $row->ged_id;
+	// We may call this function before creating the table, so must ignore errors.
+	try {
+		if (!is_object($DBH)) {
+			return null;
+		}
+
+		static $statement=null;
+		if (is_null($statement)) {
+			$statement=$DBH->prepare("SELECT ged_id FROM {$TBLPREFIX}gedcom WHERE ged_gedcom=?");
+		}
+		$statement->bindValue(1, $gedcom, PDO::PARAM_STR);
+		$statement->execute();
+		++$TOTAL_QUERIES;
+		$row=$statement->fetchObject();
+		$statement->closeCursor();
+		if ($row) {
+			return $row->ged_id;
+		} else {
+			return null;
+		}
+	} catch (PDOException $e) {
+		return null;
+	}
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER table

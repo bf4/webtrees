@@ -164,7 +164,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				if ($email_changed && $new_sync_gedcom=='Y') {
 					foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
 						include_once("includes/functions_edit.php");
-						$indirec=find_person_record($_REQUEST['gedcomid'.$ged_id], $ged_gedcom);
+						$indirec=find_person_record($_POST['gedcomid'.$ged_id], $ged_gedcom);
 						if ($indirec) {
 							if (preg_match("/\d _?EMAIL/", $indirec)) {
 								$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$user_email, $indirec);
@@ -644,7 +644,7 @@ if ($action == "listusers") {
 		print "</td>\n";
 		if ($view != "preview") {
 			print "\t<td class=\"optionbox wrap\">";
-			if (PGV_USER_ID!=$user_id) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($user_name)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user_id');\">".$pgv_lang["delete"]."</a>";
+			if (PGV_USER_ID!=$user_id) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($user_name)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user_name');\">".$pgv_lang["delete"]."</a>";
 			print "</td>\n";
 		}
 		print "</tr>\n";
@@ -940,9 +940,8 @@ if ($action == "cleanup") {
 			?></td><td class="optionbox"><input type="checkbox" name="<?php print "del_".$user_id; ?>" value="yes" /></td></tr><?php
 			$ucnt++;
 		}
-	}
+	}?>
 
-	?>
 	<tr><td class="topbottombar" colspan="2">
 	<?php
 	if ($ucnt >0) {
