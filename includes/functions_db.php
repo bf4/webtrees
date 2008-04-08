@@ -3582,12 +3582,26 @@ function get_gedcom_from_id($ged_id) {
 	return $ged_id;
 }
 
-function get_id_from_gedcom($ged_gedcom) {
+function get_id_from_gedcom($ged_name) {
 	global $GEDCOMS;
 
-	return $GEDCOMS[$ged_gedcom]['id'];
+	return $GEDCOMS[$ged_name]['id'];
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_GEDCOM_SETTING table
+// A future version of PGV will have a table PGV_GEDCOM_SETTING, which will
+// contain the values currently stored the array $GEDCOMS[].
+//
+// Until then, we use this "logical" structure, but with the access functions
+// mapped onto the existing "physical" structure.
+////////////////////////////////////////////////////////////////////////////////
+
+get_gedcom_setting($ged_id, $parameter) {
+	global $GEDCOMS;
+	return $GEDCOMS[get_gedcom_from_id($ged_id)][$parameter];
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER table
@@ -3816,7 +3830,7 @@ function admin_user_exists() {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
-	$ged_gedcom=get_gedcom_from_id($ged_id);
+	$ged_name=get_gedcom_from_id($ged_id);
 
 	$tmp=get_user_setting($user_id, $parameter);
 	if (!is_string($tmp)) {
@@ -3826,24 +3840,24 @@ function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
 	if (!is_array($tmp_array)) {
 		return null;
 	}
-	if (array_key_exists($ged_gedcom, $tmp_array)) {
+	if (array_key_exists($ged_name, $tmp_array)) {
 		// Convert old PGV3.1 values to PGV3.2 format
 		if ($parameter=='canedit') {
-			if ($tmp_array[$ged_gedcom]=='yes') {
-				$tmp_array[$ged_gedcom]=='edit';
+			if ($tmp_array[$ged_name]=='yes') {
+				$tmp_array[$ged_name]=='edit';
 			}
-			if ($tmp_array[$ged_gedcom]=='no') {
-				$tmp_array[$ged_gedcom]=='access';
+			if ($tmp_array[$ged_name]=='no') {
+				$tmp_array[$ged_name]=='access';
 			}
 		}
-		return $tmp_array[$ged_gedcom];
+		return $tmp_array[$ged_name];
 	} else {
 		return null;
 	}
 }
 
 function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
-	$ged_gedcom=get_gedcom_from_id($ged_id);
+	$ged_name=get_gedcom_from_id($ged_id);
 
 	$tmp=get_user_setting($user_id, $parameter);
 	if (is_string($tmp)) {
@@ -3856,10 +3870,10 @@ function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
 	}
 	if (empty($value)) {
 		// delete the value
-		unset($tmp_array[$ged_gedcom]);
+		unset($tmp_array[$ged_name]);
 	} else {
 		// update the value
-		$tmp_array[$ged_gedcom]=$value;
+		$tmp_array[$ged_name]=$value;
 	}
 	set_user_setting($user_id, $parameter, serialize($tmp_array));
 	
@@ -3872,14 +3886,14 @@ function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
 function get_user_from_gedcom_xref($ged_id, $xref) {
 	global $TBLPREFIX;
 
-	$ged_gedcom=get_gedcom_from_id($ged_id);
+	$ged_name=get_gedcom_from_id($ged_id);
 
 	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
 	$username=false;
 	while ($row=$res->fetchRow()) {
 		if ($row[1]) {
 			$tmp_array=unserialize($row[1]);
-			if (array_key_exists($ged_gedcom, $tmp_array) && $tmp_array[$ged_gedcom]==$xref) {
+			if (array_key_exists($ged_name, $tmp_array) && $tmp_array[$ged_name]==$xref) {
 				$username=$row[0];
 				break;
 			}
