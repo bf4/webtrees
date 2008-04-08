@@ -74,9 +74,9 @@ function authenticateUser($user_name, $password, $basic=false) {
 				if (get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
-					foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 						if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
-							$_SESSION['GEDCOM']=$ged_gedcom;
+							$_SESSION['GEDCOM']=$ged_name;
 							break;
 						}
 					}

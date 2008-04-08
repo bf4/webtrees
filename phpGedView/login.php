@@ -73,10 +73,10 @@ if ($action=="login") {
 		if (isset($_REQUEST['url'])) $url = $_REQUEST['url'];
 		if ($url == "individual.php") {
 			$pid = "";
-			foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
 					$pid = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
-					$ged = $ged_gedcom;
+					$ged = $ged_name;
 					break;
 				}
 			}
