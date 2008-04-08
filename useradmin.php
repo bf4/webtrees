@@ -162,7 +162,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				}
 				//-- update Gedcom record with new email address
 				if ($email_changed && $new_sync_gedcom=='Y') {
-					foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+					foreach(get_all_gedcoms() as $ged_id=>$ged_gedcom) {
 						include_once("includes/functions_edit.php");
 						$indirec=find_person_record($_POST['gedcomid'.$ged_id], $ged_gedcom);
 						if ($indirec) {
@@ -276,6 +276,7 @@ if ($action=="edituser") {
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $ged_gedcom);
 		if ($pid) {
+			$GEDCOM=$ged_gedcom; // library functions use global variable instead of parameter.
 			print "\n<span class=\"list_item\"><a href=\"individual.php?pid={$pid}&ged={$ged_gedcom}\">".PrintReady(get_person_name($pid))."</a>";
 			print_first_major_fact($pid);
 			print "</span>\n";
@@ -298,6 +299,7 @@ if ($action=="edituser") {
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $ged_gedcom);
 		if ($pid) {
+			$GEDCOM=$ged_gedcom; // library functions use global variable instead of parameter.
 			print "\n<span class=\"list_item\"><a href=\"individual.php?pid={$pid}&ged={$ged_gedcom}\">".PrintReady(get_person_name($pid))."</a>";
 			print_first_major_fact($pid);
 			print "</span>\n";

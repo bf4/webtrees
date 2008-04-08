@@ -282,23 +282,20 @@ function get_person_name($pid, $checkUnknown=true) {
 		//$name = get_name_in_record($indirec);
 		//-- SEE bug [ 1830176 ] get_name_in_record() incorrect results
 		$name = get_gedcom_value("NAME", 1, $indirec, '', false);
-	}
-	else {
+	} else {
 		//-- first check if the person is in the cache
 		if ((isset($indilist[$pid]["names"][0][0]))&&($indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]["id"])) {
 			$name = $indilist[$pid]["names"][0][0];
-		}
-		else {
+		} else {
 			//-- cache missed, so load the person into the cache with the find_person_record function
 			//-- and get the name from the cache again
 			$gedrec = find_person_record($pid);
-			if (empty($gedrec)) $gedrec = find_updated_record($pid);
+			if (empty($gedrec)) {
+				$gedrec = find_updated_record($pid);
+			}
 			if (!empty($gedrec)) {
-				if (isset($indilist[$pid]["names"])) $name = $indilist[$pid]["names"][0][0];
-				else {
-					$names = get_indi_names($gedrec);
-					$name = $names[0][0];
-				}
+				$names = get_indi_names($gedrec);
+				$name = $names[0][0];
 			}
 		}
 	}
