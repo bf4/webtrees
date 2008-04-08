@@ -3598,7 +3598,7 @@ function get_id_from_gedcom($ged_name) {
 // mapped onto the existing "physical" structure.
 ////////////////////////////////////////////////////////////////////////////////
 
-get_gedcom_setting($ged_id, $parameter) {
+function get_gedcom_setting($ged_id, $parameter) {
 	global $GEDCOMS;
 	return $GEDCOMS[get_gedcom_from_id($ged_id)][$parameter];
 }
