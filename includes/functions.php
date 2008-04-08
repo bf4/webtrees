@@ -303,24 +303,6 @@ function store_gedcoms() {
 }
 
 /**
- * get a gedcom filename from its database id
- * @param int $ged_id	The gedcom database id to get the filename for
- * @return string
- */
-function get_gedcom_from_id($ged_id) {
-	global $GEDCOMS;
-
-	if (isset($GEDCOMS[$ged_id]))
-		return $ged_id;
-	foreach ($GEDCOMS as $ged=>$gedarray) {
-		if ($gedarray["id"]==$ged_id)
-			return $ged;
-	}
-
-	return $ged;
-}
-
-/**
  * Check if a person is dead
  *
  * For the given XREF id, this function will return true if the person is dead
