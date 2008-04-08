@@ -84,15 +84,15 @@ if (!function_exists('get_file_scalar_definitions')) {
 ////////////////////////////////////////////////////////////////////////////////
 // TABLE: GEDCOM
 // (ged_id) is the DB key.
-// (ged_gedcom) is the user-friendly key.
+// (ged_name) is the user-friendly key.
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
 		"CREATE TABLE {$TBLPREFIX}gedcom (".
-		" ged_id     {$AUTONUM_TYPE},".
-		" ged_gedcom VARCHAR(255) NOT NULL,".
+		" ged_id   {$AUTONUM_TYPE},".
+		" ged_name VARCHAR(255) NOT NULL,".
 		" CONSTRAINT {$TBLPREFIX}gedcom_pk PRIMARY KEY (ged_id),".
-		" CONSTRAINT {$TBLPREFIX}gedcom_uk UNIQUE      (ged_gedcom)".
+		" CONSTRAINT {$TBLPREFIX}gedcom_uk UNIQUE      (ged_name)".
 		") {$STORAGE} {$COLLATION}"
 	);
 
@@ -101,7 +101,7 @@ try {
 	if (isset($INDEX_DIRECTORY) && file_exists($INDEX_DIRECTORY.'gedcoms.php')) {
 		require $INDEX_DIRECTORY.'gedcoms.php';
 		if (isset($GEDCOMS) && is_array($GEDCOMS)) {
-			$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}gedcom (ged_id, ged_gedcom) VALUES (?, ?)");
+			$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}gedcom (ged_id, ged_name) VALUES (?, ?)");
 			foreach ($GEDCOMS as $GEDCOM) {
 				$statement->bindValue(1, $GEDCOM['id'],     PDO::PARAM_INT);
 				$statement->bindValue(2, $GEDCOM['gedcom'], PDO::PARAM_STR);
@@ -224,11 +224,11 @@ try {
 			$statement1=$DBH->prepare(
 				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_fact, priv_show, priv_detail)".
 				"	SELECT ged_id, NULL, ?, ?, ?, ? FROM {$TBLPREFIX}gedcom".
-				"  WHERE ged_gedcom=?");
+				"  WHERE ged_name=?");
 			$statement2=$DBH->prepare(
 				"INSERT INTO {$TBLPREFIX}privacy (priv_ged_id, priv_user_id, priv_xref, priv_fact, priv_show, priv_detail)".
 				"	SELECT ged_id, user_id, ?, NULL, ?, NULL FROM {$TBLPREFIX}gedcom, {$TBLPREFIX}user".
-				"  WHERE ged_gedcom=? AND user_name=?");
+				"  WHERE ged_name=? AND user_name=?");
 			foreach ($GEDCOMS as $GEDCOM) {
 				if (file_exists($GEDCOM['privacy'])) {
 					require $GEDCOM['privacy'];
@@ -365,7 +365,7 @@ try {
 	$statement=$DBH->prepare(
 		"INSERT INTO {$TBLPREFIX}user_gedcom_setting (ugset_user_id, ugset_ged_id, ugset_parameter, ugset_value)".
 		" SELECT ?, ged_id, ?, ? FROM {$TBLPREFIX}gedcom".
-		"  WHERE ged_gedcom=?"
+		"  WHERE ged_name=?"
 	);
 
 	foreach (array('gedcomid', 'rootid', 'canedit') as $column) {

@@ -3421,7 +3421,7 @@ function get_event_list() {
 function create_gedcom($gedcom) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}gedcom (ged_gedcom) VALUES (?)");
+	$statement=$DBH->prepare("INSERT INTO {$TBLPREFIX}gedcom (ged_name) VALUES (?)");
 	$statement->bindValue(1, $gedcom, PDO::PARAM_STR);
 	$statement->execute();
 	++$TOTAL_QUERIES;
@@ -3432,12 +3432,12 @@ function create_gedcom($gedcom) {
 function get_all_gedcoms() {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("SELECT ged_id, ged_gedcom FROM {$TBLPREFIX}gedcom ORDER BY ged_gedcom");
+	$statement=$DBH->prepare("SELECT ged_id, ged_name FROM {$TBLPREFIX}gedcom ORDER BY ged_name");
 	$statement->execute();
 	++$TOTAL_QUERIES;
 	$gedcoms=array();
 	while ($row=$statement->fetchObject()) {
-		$gedcoms[$row->ged_id]=$row->ged_gedcom;
+		$gedcoms[$row->ged_id]=$row->ged_name;
 	}
 	$statement->closeCursor();
 	return $gedcoms;
@@ -3446,16 +3446,16 @@ function get_all_gedcoms() {
 function get_gedcom_from_id($ged_id) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("SELECT ged_gedcom FROM {$TBLPREFIX}gedcom WHERE ged_id=?");
+	$statement=$DBH->prepare("SELECT ged_name FROM {$TBLPREFIX}gedcom WHERE ged_id=?");
 	$statement->bindValue(1, $ged_id, PDO::PARAM_INT);
 	$statement->execute();
 	++$TOTAL_QUERIES;
 	$row=$statement->fetchObject();
 	$statement->closeCursor();
-	return $row->ged_gedcom;
+	return $row->ged_name;
 }
 
-function get_id_from_gedcom($ged_gedcom) {
+function get_id_from_gedcom($ged_name) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
 	// We may call this function before creating the table, so must ignore errors.
@@ -3466,7 +3466,7 @@ function get_id_from_gedcom($ged_gedcom) {
 
 		static $statement=null;
 		if (is_null($statement)) {
-			$statement=$DBH->prepare("SELECT ged_id FROM {$TBLPREFIX}gedcom WHERE ged_gedcom=?");
+			$statement=$DBH->prepare("SELECT ged_id FROM {$TBLPREFIX}gedcom WHERE ged_name=?");
 		}
 		$statement->bindValue(1, $gedcom, PDO::PARAM_STR);
 		$statement->execute();
@@ -3479,6 +3479,37 @@ function get_id_from_gedcom($ged_gedcom) {
 			return null;
 		}
 	} catch (PDOException $e) {
+		return null;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_GEDCOM_SETTING table
+////////////////////////////////////////////////////////////////////////////////
+
+get_gedcom_setting($ged_id, $parameter) {
+	global $GEDCOMS;
+	return $GEDCOMS[get_gedcom_from_id($ged_id)][$parameter];
+
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	static $statement=null;
+	if (is_null($statement)) {
+		$statement=$DBH->prepare(
+			"SELECT gset_value FROM {$TBLPREFIX}gedcom_setting WHERE gset_ged_id=? AND gset_parameter=?"
+		);
+	}
+
+	$statement->bindValue(1, $ged_id,    PDO::PARAM_INT);
+	$statement->bindValue(2, $parameter, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+	$row=$statement->fetchObject();
+	$statement->closeCursor();
+	if ($row) {
+		return $row->gset_value;
+	} else {
 		return null;
 	}
 }

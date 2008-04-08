@@ -10,6 +10,7 @@
 
 
 Version 4.1.5
+ - Fixed: wrong gedcom record updated when syncing email changes to gedcom (fisharebest)
  - [ 1921974 ] SVN2756 Wrong names in search list for several GEDCOMs (fisharebest)
  - Fixed: weak randomly-generated passwords (fisharebest)
  - Fixed Logout sometimes goes to PGV site in SourceForge (canajun2eh)
