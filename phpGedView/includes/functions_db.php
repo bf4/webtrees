@@ -3550,6 +3550,46 @@ function get_event_list() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_GEDCOM table
+// A future version of PGV will have a table PGV_GEDCOM, which will
+// contain the values currently stored the array $GEDCOMS[].
+//
+// Until then, we use this "logical" structure, but with the access functions
+// mapped onto the existing "physical" structure.
+////////////////////////////////////////////////////////////////////////////////
+
+function get_all_gedcoms() {
+	global $GEDCOMS;
+
+	$gedcoms=array();
+	foreach ($GEDCOMS as $key=>$value) {
+		$gedcoms[$value['id']]=$key;
+	}
+	asort($gedcoms);
+	return $gedcoms;
+}
+
+function get_gedcom_from_id($ged_id) {
+	global $GEDCOMS;
+
+	if (isset($GEDCOMS[$ged_id]))
+		return $ged_id;
+	foreach ($GEDCOMS as $ged=>$gedarray) {
+		if ($gedarray['id']==$ged_id)
+			return $ged;
+	}
+
+	return $ged_id;
+}
+
+function get_id_from_gedcom($ged_gedcom) {
+	global $GEDCOMS;
+
+	return $GEDCOMS[$ged_gedcom]['id'];
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_USER table
 ////////////////////////////////////////////////////////////////////////////////
 

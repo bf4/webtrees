@@ -133,9 +133,9 @@ if ($action=='createuser' || $action=='edituser2') {
 				set_user_setting($user_id, 'editaccount',          ($editaccount=='Y') ? 'Y' : 'N');
 				set_user_setting($user_id, 'verified',             ($verified=='yes') ? 'yes' : 'no');
 				set_user_setting($user_id, 'verified_by_admin',    ($verified_by_admin=='yes') ? 'yes' : 'no');
-				foreach ($GEDCOMS as $GEDCOM=>$ARRAY) {
+				foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
 					foreach (array('gedcomid', 'rootid', 'canedit') as $var) {
-						set_user_gedcom_setting($user_id, $GEDCOM, $var, $_REQUEST[$var.$ARRAY['id']]);
+						set_user_gedcom_setting($user_id, $ged_gedcom, $var, $_POST[$var.$ged_id]);
 					}
 				}
 				// If we're verifying a new user, send them a message to let them know
@@ -162,19 +162,16 @@ if ($action=='createuser' || $action=='edituser2') {
 				}
 				//-- update Gedcom record with new email address
 				if ($email_changed && $new_sync_gedcom=='Y') {
-					foreach($GEDCOMS as $GEDCOM=>$ARRAY) {
-						$varname = 'gedcomid'.$ARRAY['id'];
-						if ($_REQUEST[$varname]) {
-							include_once("includes/functions_edit.php");
-							$indirec=find_person_record($_REQUEST[$varname]);
-							if ($indirec) {
-								if (preg_match("/\d _?EMAIL/", $indirec)) {
-									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$user_email, $indirec);
-									replace_gedrec($GEDCOM, $indirec);
-								} else {
-									$indirec.="\r\n1 EMAIL ".$user_email;
-									replace_gedrec($GEDCOM, $indirec);
-								}
+					foreach(get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+						include_once("includes/functions_edit.php");
+						$indirec=find_person_record($_POST['gedcomid'.$ged_id], $ged_gedcom);
+						if ($indirec) {
+							if (preg_match("/\d _?EMAIL/", $indirec)) {
+								$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$user_email, $indirec);
+								replace_gedrec($ged_gedcom, $indirec);
+							} else {
+								$indirec.="\r\n1 EMAIL ".$user_email;
+								replace_gedrec($ged_gedcom, $indirec);
 							}
 						}
 					}
@@ -269,17 +266,18 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php print $TEXT_DIRECTION; ?>">
 	<?php
-	foreach($GEDCOMS as $GEDCOM=>$ARRAY) {
-		$varname='gedcomid'.$ARRAY['id'];
+	foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+		$varname='gedcomid'.$ged_id;
 		?>
 		<tr>
-		<td><?php print $GEDCOM;?>:&nbsp;&nbsp;</td>
+		<td><?php print $ged_gedcom;?>:&nbsp;&nbsp;</td>
 		<td><input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
-		$pid=get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid');
+		$pid=get_user_gedcom_setting($user_id, $ged_gedcom, 'gedcomid');
 		print $pid."\" />";
-		print_findindi_link($varname, "", false, false, $GEDCOM);
+		print_findindi_link($varname, "", false, false, $ged_gedcom);
 		if ($pid) {
-			print "\n<span class=\"list_item\"><a href=\"individual.php?pid={$pid}&ged={$GEDCOM}\">".PrintReady(get_person_name($pid))."</a>";
+			$GEDCOM=$ged_gedcom; // library functions use global variable instead of parameter.
+			print "\n<span class=\"list_item\"><a href=\"individual.php?pid={$pid}&ged={$ged_gedcom}\">".PrintReady(get_person_name($pid))."</a>";
 			print_first_major_fact($pid);
 			print "</span>\n";
 		}
@@ -291,17 +289,18 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php print $TEXT_DIRECTION;?>">
 	<?php
-	foreach($GEDCOMS as $GEDCOM=>$ARRAY) {
-		$varname='rootid'.$ARRAY['id'];
+	foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+		$varname='rootid'.$ged_id;
 		?>
 		<tr>
-		<td><?php print $GEDCOM;?>:&nbsp;&nbsp;</td>
+		<td><?php print $ged_gedcom;?>:&nbsp;&nbsp;</td>
 		<td> <input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
-		$pid=get_user_gedcom_setting($user_id, $GEDCOM, 'rootid');
+		$pid=get_user_gedcom_setting($user_id, $ged_gedcom, 'rootid');
 		print $pid."\" />";
-		print_findindi_link($varname, "", false, false, $GEDCOM);
+		print_findindi_link($varname, "", false, false, $ged_gedcom);
 		if ($pid) {
-			print "\n<span class=\"list_item\"><a href=\"individual.php?pid={$pid}&ged={$GEDCOM}\">".PrintReady(get_person_name($pid))."</a>";
+			$GEDCOM=$ged_gedcom; // library functions use global variable instead of parameter.
+			print "\n<span class=\"list_item\"><a href=\"individual.php?pid={$pid}&ged={$ged_gedcom}\">".PrintReady(get_person_name($pid))."</a>";
 			print_first_major_fact($pid);
 			print "</span>\n";
 		}
@@ -337,25 +336,25 @@ if ($action=="edituser") {
 	<td class="optionbox wrap">
 	<table class="<?php print $TEXT_DIRECTION; ?>">
 	<?php
-	foreach($GEDCOMS as $GEDCOM=>$ARRAY) {
-		$varname = 'canedit'.$ARRAY['id'];
-		print "<tr><td>$GEDCOM:&nbsp;&nbsp;</td><td>";
+	foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+		$varname = 'canedit'.$ged_id;
+		print "<tr><td>$ged_gedcom:&nbsp;&nbsp;</td><td>";
 		$tab++;
 		print "<select name=\"{$varname}\" id=\"{$varname}\" tabindex=\"{$tab}\">\n";
 		print "<option value=\"none\"";
-		if (get_user_gedcom_setting($user_id, $GEDCOM, 'canedit')=="none") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="none") print " selected=\"selected\"";
 		print ">".$pgv_lang["none"]."</option>\n";
 		print "<option value=\"access\"";
-		if (get_user_gedcom_setting($user_id, $GEDCOM, 'canedit')=="access") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="access") print " selected=\"selected\"";
 		print ">".$pgv_lang["access"]."</option>\n";
 		print "<option value=\"edit\"";
-		if (get_user_gedcom_setting($user_id, $GEDCOM, 'canedit')=="edit") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="edit") print " selected=\"selected\"";
 		print ">".$pgv_lang["edit"]."</option>\n";
 		print "<option value=\"accept\"";
-		if (get_user_gedcom_setting($user_id, $GEDCOM, 'canedit')=="accept") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="accept") print " selected=\"selected\"";
 		print ">".$pgv_lang["accept"]."</option>\n";
 		print "<option value=\"admin\"";
-		if (get_user_gedcom_setting($user_id, $GEDCOM, 'canedit')=="admin") print " selected=\"selected\"";
+		if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=="admin") print " selected=\"selected\"";
 		print ">".$pgv_lang["admin_gedcom"]."</option>\n";
 		print "</select>\n";
 		print "</td></tr>";
@@ -612,17 +611,15 @@ if ($action == "listusers") {
 		if (get_user_setting($user_id, 'canadmin')=='Y') {
 			print "<li class=\"warning\">".$pgv_lang["can_admin"]."</li>\n";
 		}
-		uksort($GEDCOMS, "strnatcasecmp");
-		reset($GEDCOMS);
-		foreach($GEDCOMS as $gedid=>$gedcom) {
-			$vval = get_user_gedcom_setting($user_id, $gedid, 'canedit');
+		foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+			$vval = get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit');
 			if ($vval == "") $vval = "none";
-			$uged = get_user_gedcom_setting($user_id, $gedid, 'gedcomid');
+			$uged = get_user_gedcom_setting($user_id, $ged_gedcom, 'gedcomid');
 			if ($vval=="accept" || $vval=="admin") print "<li class=\"warning\">";
 			else print "<li>";
 			print $pgv_lang[$vval]." ";
-			if ($uged != "") print "<a href=\"individual.php?pid=".$uged."&amp;ged=".$gedid."\">".$gedid."</a></li>\n";
-			else print $gedid."</li>\n";
+			if ($uged != "") print "<a href=\"individual.php?pid=".$uged."&amp;ged=".$ged_gedcom."\">".$ged_gedcom."</a></li>\n";
+			else print $ged_gedcom."</li>\n";
 		}
 		print "</ul>";
 		print "</div>";
@@ -735,14 +732,14 @@ if ($action == "createform") {
 
 		<table class="<?php print $TEXT_DIRECTION; ?>">
 		<?php
-		foreach($GEDCOMS as $GEDCOM=>$ARRAY) {
-			$varname='gedcomid'.$ARRAY['id'];
+		foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+			$varname='gedcomid'.$ged_id;
 			?>
 			<tr>
-			<td><?php print $GEDCOM;?>:&nbsp;&nbsp;</td>
+			<td><?php print $ged_gedcom;?>:&nbsp;&nbsp;</td>
 			<td><input type="text" name="<?php print $varname;?>" id="<?php print $varname;?>" tabindex="<?php print ++$tab; ?>" value="<?php
 			print "\" />";
-			print_findindi_link($varname, "", false, false, $GEDCOM);
+			print_findindi_link($varname, "", false, false, $ged_gedcom);
 			print "</td></tr>";
 		}
 		?>
@@ -751,14 +748,14 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_rootid_help", "qm","rootid"); print $pgv_lang["rootid"];?></td><td class="optionbox wrap">
 		<table class="<?php print $TEXT_DIRECTION; ?>">
 		<?php
-		foreach($GEDCOMS as $GEDCOM=>$ARRAY) {
-			$varname='rootid'.$ARRAY['id'];
+		foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+			$varname='rootid'.$ged_id;
 			?>
 			<tr>
-			<td><?php print $GEDCOM;?>:&nbsp;&nbsp;</td>
+			<td><?php print $ged_gedcom;?>:&nbsp;&nbsp;</td>
 			<td><input type="text" name="<?php print $varname;?>" id="<?php print $varname;?>" tabindex="<?php print ++$tab; ?>" value="<?php
 			print "\" />\n";
-			print_findindi_link($varname, "", false, false, $GEDCOM);
+			print_findindi_link($varname, "", false, false, $ged_gedcom);
 			print "</td></tr>\n";
 		}
 		print "</table>";
@@ -769,8 +766,8 @@ if ($action == "createform") {
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin_help", "qm","can_admin"); print $pgv_lang["can_admin"];?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php print ++$tab; ?>" value="Y" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm","can_edit");print $pgv_lang["can_edit"];?></td><td class="optionbox wrap">
 		<?php
-		foreach($GEDCOMS as $GEDCOM=>$ARRAY) {
-			$varname='canedit'.$ARRAY['id'];
+		foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+			$varname='canedit'.$ged_id;
 			$tab++;
 			print "<select name=\"$varname\" tabindex=\"".$tab."\">\n";
 			print "<option value=\"none\"";
@@ -783,7 +780,7 @@ if ($action == "createform") {
 			print ">".$pgv_lang["accept"]."</option>\n";
 			print "<option value=\"admin\"";
 			print ">".$pgv_lang["admin_gedcom"]."</option>\n";
-			print "</select> $GEDCOM<br />\n";
+			print "</select> $ged_gedcom<br />\n";
 		}
 		?>
 		</td></tr>
@@ -970,6 +967,7 @@ if ($action == "cleanup") {
 		print "<tr><td class=\"warning\">";
 		print $pgv_lang["usr_no_cleanup"]."</td></tr>";
 	}?>
+
 	<tr><td class="topbottombar" colspan="2">
 	<?php
 	if ($ucnt >0) {
@@ -993,7 +991,7 @@ if ($action == "cleanup2") {
 			foreach(unserialize(get_user_setting($user_id,'canedit')) as $gedid=>$data) {
 				$var = "delg_".str_replace(array(".","-"," "), array("_","_","_"), $gedid);
 				if (isset($$var) && get_user_gedcom_setting($user_id, $gedid, 'canedit')) {
-					set_user_gedcom_setting($user_id, $gedid, 'canedit', 'none');
+					set_user_gedcom_setting($user_id, $gedid, 'canedit', null);
 					print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rights"].$user_name."<br />";
 				}
 			}
@@ -1073,17 +1071,14 @@ if ($action == "cleanup2") {
 		if (get_user_setting($user_id,'canadmin')=='Y') {
 			$adminusers++;
 		}
-		if (get_user_setting($user_id,'canedit')) {
-			foreach(unserialize(get_user_setting($user_id,'canedit')) as $gedid=>$rights) {
-				if ($rights == "admin") {
-					if (isset($GEDCOMS[$gedid])) {
-						if (isset($gedadmin[$GEDCOMS[$gedid]["title"]])) $gedadmin[$GEDCOMS[$gedid]["title"]]["number"]++;
-						else {
-							$gedadmin[$GEDCOMS[$gedid]["title"]]["name"] = $GEDCOMS[$gedid]["title"];
-							$gedadmin[$GEDCOMS[$gedid]["title"]]["number"] = 1;
-							$gedadmin[$GEDCOMS[$gedid]["title"]]["ged"] = $gedid;
-						}
-					}
+		foreach (get_all_gedcoms() as $ged_id=>$ged_gedcom) {
+			if (get_user_gedcom_setting($user_id, $ged_gedcom, 'canedit')=='admin') {
+				if (isset($gedadmin[$GEDCOMS[$ged_gedcom]["title"]])) {
+					$gedadmin[$GEDCOMS[$ged_gedcom]["title"]]["number"]++;
+				} else {
+					$gedadmin[$GEDCOMS[$ged_gedcom]["title"]]["name"] = $GEDCOMS[$ged_gedcom]["title"];
+					$gedadmin[$GEDCOMS[$ged_gedcom]["title"]]["number"] = 1;
+					$gedadmin[$GEDCOMS[$ged_gedcom]["title"]]["ged"] = $ged_gedcom;
 				}
 			}
 		}
