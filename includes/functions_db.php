@@ -3488,7 +3488,7 @@ function get_id_from_gedcom($ged_name) {
 // Functions to access the PGV_GEDCOM_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
 
-get_gedcom_setting($ged_id, $parameter) {
+function get_gedcom_setting($ged_id, $parameter) {
 	global $GEDCOMS;
 	return $GEDCOMS[get_gedcom_from_id($ged_id)][$parameter];
 

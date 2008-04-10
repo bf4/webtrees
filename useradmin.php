@@ -1035,12 +1035,13 @@ if ($action == "cleanup2") {
 		}
 		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 			if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin') {
-				if (isset($gedadmin[$GEDCOMS[$ged_name]["title"]])) {
-					$gedadmin[$GEDCOMS[$ged_name]["title"]]["number"]++;
+				$title=get_gedcom_setting($ged_id, 'title');
+				if (isset($gedadmin[$title])) {
+					$gedadmin[$title]["number"]++;
 				} else {
-					$gedadmin[$GEDCOMS[$ged_name]["title"]]["name"] = $GEDCOMS[$ged_name]["title"];
-					$gedadmin[$GEDCOMS[$ged_name]["title"]]["number"] = 1;
-					$gedadmin[$GEDCOMS[$ged_name]["title"]]["ged"] = $ged_name;
+					$gedadmin[$title]["name"] = $title;
+					$gedadmin[$title]["number"] = 1;
+					$gedadmin[$title]["ged"] = $ged_name;
 				}
 			}
 		}

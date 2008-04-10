@@ -194,10 +194,13 @@ else {
 	}
 }
 
-if ($ctype=="user") print_simple_header($pgv_lang["mygedview"]);
-else print_simple_header($GEDCOMS[$GEDCOM]["title"]);
+if ($ctype=="user") {
+	print_simple_header($pgv_lang["mygedview"]);
+} else {
+	print_simple_header(get_gedcom_setting(PGV_GED_ID, 'title'));
+}
 
-$GEDCOM_TITLE = PrintReady($GEDCOMS[$GEDCOM]["title"]);  // needed in $pgv_lang["rss_descr"]
+$GEDCOM_TITLE=PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));  // needed in $pgv_lang["rss_descr"]
 
 ?>
 <script language="JavaScript" type="text/javascript">
