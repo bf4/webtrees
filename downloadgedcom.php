@@ -4,7 +4,7 @@
  * Allow an admin user to download the entire gedcom	file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ if ($action == "download") {
 	$fp=fopen('php://output', 'w');
 	switch ($filetype) {
 	case 'gedcom':
-		header("Content-Disposition: attachment; filename={$ged}; size=".filesize($GEDCOMS[$GEDCOM]["path"]));
+		header("Content-Disposition: attachment; filename={$ged}");
 		print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $fp);
 		break;
 	case 'gramps':

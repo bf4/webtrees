@@ -122,9 +122,9 @@ function warnuser(cbox) {
 
 		$locked_with_warning = array("lang_settings.php","pgv_changes.php");
 		//-- lock the GEDCOM and settings files
-		foreach($GEDCOMS as $key=>$val){
-			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",$val{"privacy"});
-			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",$val{"config"});
+		foreach(get_all_gedcoms() as $ged_id=>$ged_name){
+			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",get_gedcom_setting($ged_id, 'privacy'));
+			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",get_gedcom_setting($ged_id, 'config'));
 		}
 		$dir = dir($INDEX_DIRECTORY);
 
@@ -134,17 +134,15 @@ function warnuser(cbox) {
 			$entryList[] = $entry;
 		}
 		sort($entryList);
-		foreach($entryList as $entry) {
+		foreach ($entryList as $entry) {
 			//echo $entry."\n";
-			if($entry{0} != '.'){
-				if(isset($GEDCOMS[$entry]))
-				{
-					$val = $GEDCOMS[$entry];
+			if ($entry{0} != '.') {
+				if ($ged_id=get_id_from_gedcom($entry)) {
 					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
 					print "<img src=\"./images/RESN_confidential.gif\" />&nbsp;&nbsp;";
 					print "<span class=\"name2\">".$entry."</span>";
-					print "&nbsp;&nbsp;{$pgv_lang["associated_files"]}<i>&nbsp;&nbsp;".str_replace($path,"",$val{"privacy"});
-					print "&nbsp;&nbsp;".str_replace($path,"",$val{"config"})."</i>";
+					print "&nbsp;&nbsp;{$pgv_lang["associated_files"]}<i>&nbsp;&nbsp;".str_replace($path,"",get_gedcom_setting($ged_id, 'privacy'));
+					print "&nbsp;&nbsp;".str_replace($path,"",get_gedcom_setting($ged_id, 'config'))."</i>";
 				}
 				else if (in_array($entry, $locked_by_context)) {
 					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";

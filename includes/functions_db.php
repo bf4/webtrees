@@ -8,7 +8,7 @@
  * cache arrays are checked first before querying the database.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3585,7 +3585,11 @@ function get_gedcom_from_id($ged_id) {
 function get_id_from_gedcom($ged_name) {
 	global $GEDCOMS;
 
-	return $GEDCOMS[$ged_name]['id'];
+	if (array_key_exists($ged_name, $GEDCOMS)) {
+		return $GEDCOMS[$ged_name]['id'];
+	} else {
+		return null;
+	}
 }
 
 
@@ -3600,7 +3604,12 @@ function get_id_from_gedcom($ged_name) {
 
 function get_gedcom_setting($ged_id, $parameter) {
 	global $GEDCOMS;
-	return $GEDCOMS[get_gedcom_from_id($ged_id)][$parameter];
+	$ged_id=get_gedcom_from_id($ged_id);
+	if (array_key_exists($ged_id, $GEDCOMS) && array_key_exists($parameter, $GEDCOMS[$ged_id])) {
+		return $GEDCOMS[get_gedcom_from_id($ged_id)][$parameter];
+	} else {
+		return null;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////

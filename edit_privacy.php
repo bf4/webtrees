@@ -3,7 +3,7 @@
  * Edit Privacy Settings
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,7 +101,6 @@ function write_yes_no($checkVar) {
  * @param string $outputVar	error message style
  */
 function search_ID_details($checkVar, $outputVar) {
-	global $GEDCOMS, $GEDCOM;
 	global $pgv_lang;
 
 	$indirec = find_gedcom_record($checkVar);
@@ -158,7 +157,7 @@ print_header($pgv_lang["privacy_header"]);
 <table class="facts_table <?php print $TEXT_DIRECTION ?>">
 	<tr>
 		<td colspan="2" class="facts_label"><?php
-			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".$GEDCOMS[$ged]["title"]. "</h2>";
+			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".get_gedcom_setting($ged, 'title'). "</h2>";
 			print "(" . getLRM() . $PRIVACY_MODULE.")";
 			print "<br /><br /><a href=\"editgedcoms.php\"><b>";
 			print $pgv_lang["lang_back_manage_gedcoms"];

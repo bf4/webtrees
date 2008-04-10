@@ -4,7 +4,7 @@
  * and other common errors.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2006-2007 Greg Roach fisharebest@users.sourceforge.net
+ * Copyright (C) 2006-2008 Greg Roach, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,9 @@ print_header($pgv_lang["gedcheck"].' - '.$GEDCOM);
 // Scan all the gedcom directories for gedcom files
 ////////////////////////////////////////////////////////////////////////////////
 $all_dirs=array($INDEX_DIRECTORY=>"");
-foreach ($GEDCOMS as $value)
-	$all_dirs[dirname($value["path"])."/"]="";
+foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	$all_dirs[dirname(get_gedcom_setting($ged_id, 'path'))."/"]="";
+}
 
 $all_geds=array();
 foreach ($all_dirs as $key=>$value) {
@@ -169,9 +170,9 @@ $PGV_LINK=array(
 $target=($openinnew==1 ? " target='_new'" : '');
 function pgv_href($tag, $xref, $name="")
 {
-	global $PGV_LINK, $target, $ged, $GEDCOMS;
+	global $PGV_LINK, $target, $ged;
 	$text=($name=="" ? "$tag $xref" : "$name ($xref)");
-	if (isset($PGV_LINK[$tag]) && isset($GEDCOMS[$ged]))
+	if (isset($PGV_LINK[$tag]) && get_id_from_gedcom($ged))
 		return '<a href='.$PGV_LINK[$tag].str_replace('@','',$xref)."&ged=$ged"."$target>$text</a>";
 	else
 		return "$tag $xref";
@@ -1142,7 +1143,7 @@ unset($gedfile);
 ////////////////////////////////////////////////////////////////////////////////
 // If the gedcom has been imported, do semantic checks with the PGV API
 ////////////////////////////////////////////////////////////////////////////////
-if (isset($GEDCOMS[$ged])) {
+if (get_gedcom_setting($ged, 'imported')===true) {
 	$GEDCOM=$ged;
 	$indi_list=get_indi_list();
 	$fam_list =get_fam_list();

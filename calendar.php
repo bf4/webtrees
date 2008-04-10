@@ -5,7 +5,7 @@
  * Displays events on a daily, monthly, or yearly calendar.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2007 to 2008  Greg Roach and others, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -509,7 +509,7 @@ if ($view=="preview") {
 	$filtertext=implode(' - ', $filters);
 	if (!empty($filters))
 		$filtertext="({$pgv_lang['filter']}: {$filtertext})";
-	print "<br />{$GEDCOMS[$GEDCOM]['title']} {$filtertext}";
+	echo '<br />', get_gedcom_setting(PGV_GED_ID, 'title'), ' ', $filtertext;
 }
 print "</table>";
 print "</div><br />";
