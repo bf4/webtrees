@@ -5,7 +5,7 @@
  *  Allow a user the ability to add links to people from other servers and other gedcoms.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008, PGV Development Team, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,12 +84,11 @@ if ($action=="addlink") {
 	$relation_type = $_POST["cbRelationship"];
 
 	$is_remote = $_POST["location"];
-	if($is_remote=="remote") {
-		if(empty($_POST["txtURL"])) {
+	if ($is_remote=="remote") {
+		if (empty($_POST["txtURL"])) {
 			$serverID = $_POST["cbExistingServers"];
 			//print $_POST["cbExistingServers"];
-		}
-		else {
+		} else {
 			if (isset($_POST["txtURL"])) $server_name = $_POST["txtURL"];
 			else $server_name = "";
 			if (isset($_POST["txtGID"]))$gedcom_id = $_POST["txtGID"];
@@ -105,7 +104,7 @@ if ($action=="addlink") {
 			$gedcom_string.= "2 _USER ".$username."\r\n";
 			$gedcom_string.= "2 _PASS ".$password."\r\n";
 			//-- only allow admin users to see password
-			$gedcom_string.= "2 RESN Confidential\r\n";
+			$gedcom_string.= "2 RESN confidential\r\n";
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
 			if (PEAR::isError($sid)) {
@@ -113,21 +112,22 @@ if ($action=="addlink") {
 				print_r($sid);
 			}
 			if (!empty($sid)) {
-				$title = $service->getServiceTitle();
-				$gedcom_string.= "1 TITL ".$title."\r\n";
+				$gedcom_string.= "1 TITL ".$service->getServiceTitle()."\r\n";
 				$serverID = append_gedrec($gedcom_string);
+			} else {
+				print "<span class=\"error\">failed to authenticate to remote site</span>";
 			}
-			else print "<span class=\"error\">failed to authenticate to remote site</span>";
 		}
-	}
-	else {
+	} else {
 		$gedcom_id = $_POST["cbGedcomId"];
 		$server_name = $SERVER_URL;
 
 		$gedcom_string = "0 @new@ SOUR\r\n";
-		$title = $server_name;
-		if (isset($GEDCOMS[$gedcom_id])) $title = $GEDCOMS[$gedcom_id]["title"];
-		$gedcom_string.= "1 TITL ".$title."\r\n";
+		if (get_gedcom_setting($gedcom_id, 'title')) {
+			$gedcom_string.= "1 TITL ".get_gedcom_setting($gedcom_id, 'title')."\r\n";
+		} else {
+			$gedcom_string.= "1 TITL ".$server_name."\r\n";
+		}
 		$gedcom_string.= "1 URL ".$SERVER_URL."\r\n";
 		$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
 		$gedcom_string.= "2 _BLOCK false\r\n";
@@ -263,11 +263,10 @@ if ($action=="addlink") {
 					if ($pos2===false) $indirec = substr($indirec, 0, $pos1+1);
 					else $indirec= substr($indirec, 0, $pos1+1).substr($indirec, $pos2+1);
 				}
-				//print "{".$indirec."}";
 				$indirec = $serviceClient->mergeGedcomRecord($link_pid, $indirec, true, true);
+			} else {
+				print "Unable to find server";
 			}
-			else print "Unable to find server";
-			//$answer2 = replace_gedrec($pid, $indirec);
 		}
 		print "<b>".$pgv_lang["link_success"]."</b>";
 		$success = true;
@@ -399,8 +398,11 @@ function checkform(frm){
 			</div>
 			<div id="localContent" style="display:none;">
 				<select id="cbGedcomId" name="cbGedcomId">
-					<?php foreach($GEDCOMS as $ged){?>
-						<option><?php print $ged["gedcom"];?></option><?php }?>
+					<?php
+						foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+							echo '<option>', $ged_name, '</option>';
+						}
+					?>
 				</select><br />
 			</div>
 		</td>

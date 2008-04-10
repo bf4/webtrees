@@ -8,7 +8,7 @@
  * Requires SQL mode.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008, John Finlay and others, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -284,7 +284,7 @@ if ($action=="newentry") {
 			//-- do not allow it to be moved or renamed if it is
 			if (!isset($oldFilename)) $oldFilename = $filename;
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
+			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
 			$res = dbquery($sql);
 			$onegedcom = true;
 			if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
@@ -439,7 +439,7 @@ if ($action == "update") {
 	//-- check if the file is used in more than one gedcom
 	//-- do not allow it to be moved or renamed if it is
 	$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-	$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
+	$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
 	$res = dbquery($sql);
 	$onegedcom = true;
 	if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))

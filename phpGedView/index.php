@@ -4,7 +4,7 @@
  * to keep bookmarks, see a list of upcoming events, etc.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -291,9 +291,8 @@ if ($action=="ajax") {
 if ($ctype=="user") {
 	$helpindex = "index_myged_help";
 	print_header($pgv_lang["mygedview"]);
-}
-else {
-	print_header($GEDCOMS[$GEDCOM]["title"]);
+} else {
+	print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
 }
 
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {

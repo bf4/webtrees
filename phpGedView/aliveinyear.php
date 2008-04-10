@@ -2,6 +2,8 @@
 /**
  * Individual List
  *
+ * Copyright (c) 2008, PGV Development Team, all rights reserved.
+ *
  * The individual list shows all individuals from a chosen gedcom file. The list is
  * setup in two sections. The alphabet bar and the details.
  *
@@ -203,7 +205,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	$indi_alive = 0;
 	foreach($indilist as $gid=>$indi) {
 		//-- make sure that favorites from other gedcoms are not shown
-		if ($indi["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
+		if ($indi["gedfile"]==PGV_GED_ID) {
 			if (displayDetailsById($gid)||showLivingNameById($gid)) {
 				$ret = check_alive($indi["gedcom"], $year);
 				if ($ret==0) {
@@ -367,7 +369,7 @@ else {
 		$total_living = 0;
 		foreach($tindilist as $gid => $indi) {
 			//-- make sure that favorites from other gedcoms are not shown
-			if ($indi["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
+			if ($indi["gedfile"]==PGV_GED_ID) {
 				$ret = check_alive($indi["gedcom"], $year);
 				if ($ret==0) {
 					foreach($indi["names"] as $indexval => $namearray) {
