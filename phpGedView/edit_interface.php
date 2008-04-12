@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -608,9 +608,7 @@ case 'addnewsource':
 		}
 	//-->
 	</script>
-	<b><?php print $pgv_lang["create_source"];
-	$tabkey = 1;
-	 ?></b>
+	<b><?php print $pgv_lang['create_source']; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onSubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addsourceaction" />
 		<input type="hidden" name="pid" value="newsour" />
@@ -639,7 +637,7 @@ case 'addnewsource':
 			<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm"); print $factarray["CALN"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php print $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
 		</table>
-			<?php print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"];?>" border="0" width="11" height="11" alt="" title="" />
+			<?php print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
 			<?php print $pgv_lang["source_events"]; ?></a>
 			<div id="events" style="display: none;">
 			<table class="facts_table">
@@ -1051,7 +1049,6 @@ case 'addchildaction':
 			$gedrec = $family->gedrec;
 			$done = false;
 			foreach($family->getChildren() as $key=>$child) {
-				//print $xref." ".$newchild->getBirthYear()." <==> ".$child->getXref()." ".$child->getBirthYear()."<br />";
 				if ($newchild->getBirthYear() && $newchild->getBirthYear() < $child->getBirthYear()) {
 					// new child is older : insert before
 					$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
@@ -1845,9 +1842,9 @@ case 'reorder_children':
 			if ($family->getUpdatedFamily()) $family = $family->getUpdatedFamily();
 			$children = array();
 			foreach ($family->getChildren() as $k=>$child) {
-				$bdate = new GedcomDate($child->getBirthDate());
+				$bdate = $child->getEstimatedBirthDate();
 				if ($bdate->isOK()) {
-					$sortkey = $bdate->MinJD();
+					$sortkey = $bdate->JD();
 				} else {
 					$sortkey = 1e8; // birth date missing => sort last
 				}
@@ -1882,9 +1879,9 @@ case 'reorder_children':
 	);
 // ]]>
 </script>
-		<button type="submit"><?php print $pgv_lang["save"];?></button>
-		<button type="submit" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();"><?php print $pgv_lang["sort_by_birth"];?></button>
-		<button type="submit" onclick="window.close();"><?php print $pgv_lang["cancel"];?></button>
+		<button type="submit"><?php print $pgv_lang["save"]; ?></button>
+		<button type="submit" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();"><?php print $pgv_lang["sort_by_birth"]; ?></button>
+		<button type="submit" onclick="window.close();"><?php print $pgv_lang["cancel"]; ?></button>
 	</form>
 	<?php
 	break;
@@ -1943,14 +1940,14 @@ case 'changefamily':
 	<?php print $pgv_lang["change_family_instr"]; ?>
 	<form name="changefamform" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="changefamily_update" />
-		<input type="hidden" name="famid" value="<?php print $famid;?>" />
+		<input type="hidden" name="famid" value="<?php print $famid; ?>" />
 		<table class="width50 <?php print $TEXT_DIRECTION; ?>">
 			<tr><td colspan="3" class="topbottombar"><?php print $pgv_lang["change_family_members"]; ?></td></tr>
 			<tr>
 			<?php
 			if (!is_null($father)) {
 			?>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $father->getLabel(); ?></b><input type="hidden" name="HUSB" value="<?php print $father->getXref();?>" /></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $father->getLabel(); ?></b><input type="hidden" name="HUSB" value="<?php print $father->getXref(); ?>" /></td>
 				<td id="HUSBName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($father->getName()); ?></td>
 			<?php
 			}
@@ -1970,7 +1967,7 @@ case 'changefamily':
 			<?php
 			if (!is_null($mother)) {
 			?>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $mother->getLabel(); ?></b><input type="hidden" name="WIFE" value="<?php print $mother->getXref();?>" /></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $mother->getLabel(); ?></b><input type="hidden" name="WIFE" value="<?php print $mother->getXref(); ?>" /></td>
 				<td id="WIFEName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($mother->getName()); ?></td>
 			<?php
 			}
@@ -1992,7 +1989,7 @@ case 'changefamily':
 				if (!is_null($child)) {
 				?>
 			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $child->getLabel(); ?></b><input type="hidden" name="CHIL<?php print $i; ?>" value="<?php print $child->getXref();?>" /></td>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $child->getLabel(); ?></b><input type="hidden" name="CHIL<?php print $i; ?>" value="<?php print $child->getXref(); ?>" /></td>
 				<td id="CHILName<?php print $i; ?>" class="optionbox wrap"><?php print PrintReady($child->getName()); ?></td>
 				<td class="optionbox wrap <?php print $TEXT_DIRECTION; ?>">
 					<a href="javascript:;" id="childrem<?php print $i; ?>" style="display: block;" onclick="document.changefamform.CHIL<?php print $i; ?>.value=''; document.getElementById('CHILName<?php print $i; ?>').innerHTML=''; this.style.display='none'; return false;"><?php print $pgv_lang["remove"]; ?></a>
@@ -2223,9 +2220,9 @@ case 'reorder_fams':
 	);
 // ]]>
 </script>
-		<button type="submit"><?php print $pgv_lang["save"];?></button>
-		<button type="submit" onclick="document.reorder_form.action.value='reorder_fams'; document.reorder_form.submit();"><?php print $pgv_lang["sort_by_marriage"];?></button>
-		<button type="submit" onclick="window.close();"><?php print $pgv_lang["cancel"];?></button>
+		<button type="submit"><?php print $pgv_lang["save"]; ?></button>
+		<button type="submit" onclick="document.reorder_form.action.value='reorder_fams'; document.reorder_form.submit();"><?php print $pgv_lang["sort_by_marriage"]; ?></button>
+		<button type="submit" onclick="window.close();"><?php print $pgv_lang["cancel"]; ?></button>
 	</form>
 	<?php
 	break;
