@@ -3,7 +3,7 @@
  * Class file for a person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,14 +59,25 @@ class Person extends GedcomRecord {
 	var $file = "";
 	var $age = null;
 	var $isdead = -1;
+
+	// Cached results from various functions.
+	// These should become private when we move to PHP5.  Do not use them from outside this class.
+	var $_getBirthDate=null;
+	var $_getBirthPlace=null;
+	var $_getAllBirthDates=null;
+	var $_getAllBirthPlaces=null;
+	var $_getEstimatedBirthDate=null;
+	var $_getDeathDate=null;
+	var $_getDeathPlace=null;
+	var $_getAllDeathDates=null;
+	var $_getAllDeathPlaces=null;
+	var $_getEstimatedDeathDate=null;
 	
 	/**
 	 * Constructor for person object
 	 * @param string $gedrec	the raw individual gedcom record
 	 */
 	function Person($gedrec,$simple=true) {
-		global $MAX_ALIVE_AGE;
-
 		parent::GedcomRecord($gedrec, $simple);
 
 		$st = preg_match("/1 SEX (.*)/", $this->gedrec, $smatch);
@@ -435,44 +446,129 @@ class Person extends GedcomRecord {
 
 	// Get all the dates/places for births/deaths - for the INDI lists
 	function getAllBirthDates() {
-		if ($this->canDisplayDetails()) {
-			foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
-				if ($array=$this->getAllEventDates($event)) {
-					return $array;
+		if (is_null($this->_getAllBirthDates)) {
+			if ($this->canDisplayDetails()) {
+				foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+					if ($this->_getAllBirthDates=$this->getAllEventDates($event)) {
+						break;
+					}
 				}
+			} else {
+				$this->_getAllBirthDates=array();
 			}
 		}
-		return array();
+		return $this->_getAllBirthDates;
 	}
 	function getAllBirthPlaces() {
-		if ($this->canDisplayDetails()) {
-			foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
-				if ($array=$this->getAllEventPlaces($event)) {
-					return $array;
+		if (is_null($this->_getAllBirthPlaces)) {
+			if ($this->canDisplayDetails()) {
+				foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+					if ($this->_getAllBirthPlaces=$this->getAllEventPlaces($event)) {
+						break;
+					}
 				}
+			} else {
+				$this->_getAllBirthPlaces=array();
 			}
 		}
-		return array();
+		return $this->_getAllBirthPlaces;
 	}
 	function getAllDeathDates() {
-		if ($this->canDisplayDetails()) {
-			foreach (array('DEAT', 'BURI', 'CREM') as $event) {
-				if ($array=$this->getAllEventDates($event)) {
-					return $array;
+		if (is_null($this->_getAllDeathDates)) {
+			if ($this->canDisplayDetails()) {
+				foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+					if ($this->_getAllDeathDates=$this->getAllEventDates($event)) {
+						break;
+					}
 				}
+			} else {
+				$this->_getAllDeathDates=array();
 			}
 		}
-		return array();
+		return $this->_getAllDeathDates;
 	}
 	function getAllDeathPlaces() {
-		if ($this->canDisplayDetails()) {
-			foreach (array('DEAT', 'BURI', 'CREM') as $event) {
-				if ($array=$this->getAllEventPlaces($event)) {
-					return $array;
+		if (is_null($this->_getAllDeathPlaces)) {
+			if ($this->canDisplayDetails()) {
+				foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+					if ($this->_getAllDeathPlaces=$this->getAllEventPlaces($event)) {
+						break;
+					}
+				}
+			} else {
+				$this->_getAllDeathPlaces=array();
+			}
+		}
+		return $this->_getAllDeathPlaces;
+	}
+
+	// Generate an estimate for birth/death dates, based on dates of parents/children/spouses
+	function getEstimatedBirthDate() {
+		if (is_null($this->_getEstimatedBirthDate)) {
+			if ($this->getAllBirthDates()) {
+				$this->_getEstimatedBirthDate=$this->_getAllBirthDates[0];
+			} else {
+				$min=array();
+				$max=array();
+				$tmp=new GedcomDate($this->getDeathDate(false));
+				if ($tmp->MinJD()) {
+					global $MAX_ALIVE_AGE;
+					$min[]=$tmp->MinJD()-$MAX_ALIVE_AGE*365;
+					$max[]=$tmp->MaxJD();
+				}
+				foreach ($this->getChildFamilies() as $family) {
+					foreach ($family->getChildren() as $child) {
+						$tmp=new GedcomDate($child->getBirthDate(false));
+						if ($tmp->MinJD()) {
+							$min[]=$tmp->MaxJD()-365*($this->getSex()=='F'?45:65);
+							$max[]=$tmp->MinJD()-365*15;
+						}
+					}
+				}
+				foreach ($this->getSpouseFamilies() as $family) {
+					$tmp=new GedcomDate($family->getMarriageDate());
+					if ($tmp->MinJD()) {
+						$min[]=$tmp->MaxJD()-365*45;
+						$max[]=$tmp->MinJD()-365*15;
+					}
+					if ($spouse=$family->getSpouse($this)) {
+							$tmp=new GedcomDate($spouse->getBirthDate(false));
+						if ($tmp->MinJD()) {
+							$min[]=$tmp->MaxJD()-365*25;
+							$max[]=$tmp->MinJD()+365*25;
+						}
+					}
+				}
+				if ($min && $max) {
+					list($y)=GregorianDate::JDtoYMD(floor((max($min)+min($max))/2));
+					$this->_getEstimatedBirthDate=new GedcomDate("EST {$y}");
+				} else {
+					$this->_getEstimatedBirthDate=new GedcomDate('');
 				}
 			}
 		}
-		return array();
+		return $this->_getEstimatedBirthDate;
+	}
+	function getEstimatedDeathDate() {
+		if (is_null($this->_getEstimatedDeathDate)) {
+			if ($this->getAllDeathDates()) {
+				$this->_getEstimatedDeathDate=$this->_getAllDeathDates[0];
+			} else {
+				$tmp=$this->getEstimatedBirthDate();
+				if ($tmp->MinJD()) {
+					global $MAX_ALIVE_AGE;
+					$tmp2=$tmp->AddYears($MAX_ALIVE_AGE, 'bef');
+					if ($tmp2->MaxJD()<server_jd()) {
+						$this->_getEstimatedDeathDate=(PHP_VERSION<5) ? $tmp2 : clone($tmp2);
+					} else {
+						$this->_getEstimatedDeathDate=new GedcomDate('');
+					}
+				} else {
+					$this->_getEstimatedDeathDate=new GedcomDate('');
+				}
+			}
+		}
+		return $this->_getEstimatedDeathDate;
 	}
 
 	/**

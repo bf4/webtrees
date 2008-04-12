@@ -4,7 +4,7 @@
  * Controller for the timeline chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team
+ * Copyright (C) 2002 to 2008, PGV Development Team, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -518,8 +518,8 @@ class LifespanControllerRoot extends BaseController {
 				//We need to get starred $value->getName() names within <span class=\"starredname\"> and </span> to print in the 'zoom-box' (<span> ...</span> below) on the same line as the rest of the name. 
 				//How?   Now these names print on other data on the next line.
 				
-				$bdate=new GedcomDate($value->getBirthDate());
-				$ddate=new GedcomDate($value->getDeathDate());
+				$bdate=$value->getEstimatedBirthDate();
+				$ddate=$value->getEstimatedDeathDate();
 				if ($width > ($minlength +110)) {
 					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 					" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";

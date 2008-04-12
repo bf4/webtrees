@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - Functions File.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008, John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1575,14 +1575,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
 										'</td>
 									</tr>';
-										$bdatea = new GedcomDate($person->getBirthDate());
+										$bdatea = $person->getEstimatedBirthDate();
 										$bdatea = $bdatea->MinDate();
 										$bdatea = $bdatea->convert_to_cal('gregorian');
 										$bdate  = $bdatea->Format('Y');
 										$bdate .= ($bdatea->m) ? $bdatea->Format('m') : '00';
 										$bdate .= ($bdatea->d) ? $bdatea->Format('d') : '00';
 
-										$ddatea = new GedcomDate($person->getDeathDate());
+										$ddatea = $person->getEstimatedDeathDate();
 										$ddatea = $ddatea->MinDate();
 										$ddatea = $ddatea->convert_to_cal('gregorian');
 										$ddate  = $ddatea->Format('Y');
@@ -2144,3 +2144,4 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		return $indirec;
 	}
 }
+?>
