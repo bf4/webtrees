@@ -101,6 +101,7 @@ $SHOW_MARRIED_NAMES = false;			// -- Option to show the married name for females
 
 $SHOW_ID_NUMBERS = true;				// -- Show gedcom id numbers on charts next to  names
 $SHOW_LAST_CHANGE = true;				// -- Show gedcom record last change on lists
+$SHOW_EST_LIST_DATES = false;  // -- Show estimated birth/death dates on individual lists
 $SHOW_PEDIGREE_PLACES = "9";			// -- What level to show the birth and death places next to the birth and death dates on the pedigree and descendency charts.
 
 $MULTI_MEDIA = true;            		// -- if you have no multi-media files, set this to false

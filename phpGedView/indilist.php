@@ -238,7 +238,7 @@ if ($surname_sublist=="yes" && $show_all=="yes") {
 	$indi_hide=array();
 	foreach ($indilist as $gid=>$indi) {
 		//-- make sure that favorites from other gedcoms are not shown
-		if ($indi["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
+		if ($indi["gedfile"]==PGV_GED_ID) {
 			if (displayDetailsById($gid) || showLivingNameById($gid)) {
 				foreach ($indi["names"] as $indexval => $name) {
 					// only include married names if required
@@ -337,7 +337,7 @@ if ($surname_sublist=="yes" && $show_all=="yes") {
 			$names = array();
 			foreach ($tindilist as $gid => $indi) {
 				//-- make sure that favorites from other gedcoms are not shown
-				if ($indi["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
+				if ($indi["gedfile"]==PGV_GED_ID) {
 					foreach ($indi["names"] as $indexval => $namearray) {
 						if ($SHOW_MARRIED_NAMES || $namearray[3]!='C') {
 							$names[] = array($namearray[0], $namearray[1], $namearray[2], $namearray[3], $gid);

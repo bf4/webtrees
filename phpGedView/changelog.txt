@@ -10,6 +10,7 @@
 
 
 Version 4.1.5
+ - Added: Option to show estimated birth/death dates on indi lists
  - Fixed [ 1939774 ] MyGedView Portal Menu Showing even for Non-Logged In Users (canajun2eh)
  - Fixed: wrong gedcom record updated when syncing email changes to gedcom (fisharebest)
  - [ 1921974 ] SVN2756 Wrong names in search list for several GEDCOMs (fisharebest)

@@ -263,7 +263,7 @@ function print_list_repository($key, $value, $useli=true) {
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES;
 
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
@@ -415,7 +415,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$birt_by_decade[floor($birth_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
 			}
 		} else {
-			echo '&nbsp;';
+			if ($SHOW_EST_LIST_DATES) {
+				$birth_date=$person->getEstimatedBirthDate();
+				echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
+			} else {
+				echo '&nbsp;';
+			}
 			$birth_dates[0]=new GedcomDate('');
 		}
 		echo "</td>";
@@ -474,7 +479,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$deat_by_decade[floor($death_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
 			}
 		} else {
-			echo '&nbsp;';
+			if ($SHOW_EST_LIST_DATES) {
+				$death_date=$person->getEstimatedDeathDate();
+				echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
+			} else {
+				echo '&nbsp;';
+			}
 			$death_dates[0]=new GedcomDate('');
 		}
 		echo "</td>";
