@@ -2291,7 +2291,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// ID age
 			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
 				$tmp=new Person($gedrec);
-				$birth_date=new GedcomDate($tmp->getBirthDate(false));
+				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
 				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
 				if (!empty($age))
@@ -2355,7 +2355,7 @@ function print_parents_age($pid, $birth_date) {
 	// father
 	$spouse = $family->getHusband();
 	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), $birth_date);
+		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), $birth_date);
 		if ($age) {
 			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
 		}
@@ -2363,10 +2363,10 @@ function print_parents_age($pid, $birth_date) {
 	// mother
 	$spouse = $family->getWife();
 	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate(false)), $birth_date);
+		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), $birth_date);
 		if ($age) {
 			// [ 1749591 ] Highlight maternal death
-			$mother_ddate=new GedcomDate($spouse->getDeathDate(false));
+			$mother_ddate=$spouse->getDeathDate();
 			if ($mother_ddate->isOK() && $birth_date->isOK() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
 				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
 			}
@@ -2415,8 +2415,8 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 				if (!$indirec)
 					$indirec=find_person_record($pid);
 				$person=new Person($indirec);
-				$birth_date=new GedcomDate($person->getBirthDate(false));
-				$death_date=new GedcomDate($person->getDeathDate(false));
+				$birth_date=$person->getBirthDate();
+				$death_date=$person->getDeathDate();
 				if (GedcomDate::Compare($date, $death_date)<=0 || $fact=='DEAT') {
 					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);

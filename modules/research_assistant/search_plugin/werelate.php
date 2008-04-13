@@ -82,9 +82,11 @@ function autosearch_process() {
 	$pid = "";
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
 	$person = Person::getInstance($pid);
-		if (!is_object($person)) return "";
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+	if (!is_object($person)) return "";
+	$bdate=$person->getEstimatedBirthDate();
+	$ddate=$person->getEstimatedDeathDate();
+	$byear=$bdate->gregorianYear();
+	$dyear=$ddate->gregorianYear();
 	
 	$url = "http://www.werelate.org/search?";
 	

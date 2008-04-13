@@ -149,12 +149,10 @@ function getIndiBDIcalEvent($indi){
 	if($indi->isDead()){
 		return;
 	}
-	$birthDate = $indi->getBirthDate(false);
-	if($birthDate ==""){
+	$birthDate = $indi->getBirthDate();
+	if (!$birthDate->isOK()){
 		return;
 	}
-	$birthDate=new GedcomDate($birthDate);
-
 	$summary = $indi->getName() ."'s Birthday";
 	$place = $indi->getBirthPlace();
 	$description = "Born on " . $birthDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . $indi->getAbsoluteLinkUrl();

@@ -36,7 +36,7 @@ require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/person_class.php';
 
 function compare_people($a, $b) {
-	return ($a->getBirthYear() - $b->getBirthYear());
+	return GedcomDate::Compare($a->getEstimatedBirthDate(), $b->getEstimatedBirthDate());
 }
 
 
@@ -191,12 +191,12 @@ class LifespanControllerRoot extends BaseController {
 					$this->pids[$key] = $value;
 					$person = Person::getInstance($value);
 							
-					if (!is_null($person)) {
-						$byear = $person->getBirthYear();
-						$dyear = $person->getDeathYear();
+					if ($person) {
+						$bdate = $person->getEstimatedBirthDate();
+						$ddate = $person->getEstimatedDeathDate();
 							
 						//--Checks to see if the details of that person can be viewed
-						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
+						if ($bdate->isOK() && $ddate->isOK() && $person->canDisplayDetails()) {
 							$this->people[] = $person;
 						}
 					}
@@ -212,21 +212,19 @@ class LifespanControllerRoot extends BaseController {
 			//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
 			//the time line
 
-			$byear = $_REQUEST["beginYear"];
-			$dyear = $_REQUEST["endYear"];
 			//Variables to restrict the person boxes to the year searched.
 			//--Searches for individuals who had an even between the year begin and end years
-			$indis = $this->search_indis_year_range($byear, $dyear);
+			$indis = $this->search_indis_year_range($_REQUEST["beginYear"], $_REQUEST["endYear"]);
 			//--Populates an array of people that had an event within those years
 					
 			foreach ($indis as $pid => $indi) {
 				if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
 					$person = Person::getInstance($pid);
-					if (!is_null($person)) {
-						$byear = $person->getBirthYear();
-						$dyear = $person->getDeathYear();
+					if ($person) {
+						$bdate = $person->getEstimatedBirthDate();
+						$ddate = $person->getEstimatedDeathDate();
 						//--Checks to see if the details of that person can be viewed
-						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
+						if ($bdate->isOK() && $ddate->isOK() && $person->canDisplayDetails()) {
 							$this->people[] = $person;
 						}
 					}
@@ -242,13 +240,17 @@ class LifespanControllerRoot extends BaseController {
 		//If there is people in the array posted back this if occurs
 		if (isset ($this->people[0])) {
 			//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
-			$this->timelineMaxYear = $this->people[0]->getDeathYear();
-			$this->timelineMinYear = $this->people[0]->getBirthYear();
+			$bdate = $this->people[0]->getEstimatedBirthDate();
+			$ddate = $this->people[0]->getEstimatedDeathDate();
+			$this->timelineMinYear = $bdate->gregorianYear();
+			$this->timelineMaxYear = $ddate->gregorianYear();
 			foreach ($this->people as $key => $value) {
-				if ($this->timelineMaxYear < $value->getDeathYear())
-					$this->timelineMaxYear = $value->getDeathYear();
-				if ($this->timelineMinYear > $value->getBirthYear())
-					$this->timelineMinYear = $value->getBirthYear();
+				$bdate = $value->getEstimatedBirthDate();
+				$ddate = $value->getEstimatedDeathDate();
+				if ($this->timelineMaxYear < $ddate->gregorianYear())
+					$this->timelineMaxYear = $ddate->gregorianYear();
+				if ($this->timelineMinYear > $bdate->gregorianYear())
+					$this->timelineMinYear = $bdate->gregorianYear();
 			}
 			
 			if($this->timelineMaxYear > $this->currentYear){
@@ -409,8 +411,10 @@ class LifespanControllerRoot extends BaseController {
 				
 			//set start position and size of person-box according to zoomfactor
 			/* @var $value Person */
-				$birthYear = $value->getBirthYear();
-				$deathYear = $value->getDeathYear();
+				$bdate=$value->getEstimatedBirthDate();
+				$ddate=$value->getEstimatedDeathDate();
+				$birthYear = $bdate->gregorianYear();
+				$deathYear = $ddate->gregorianYear();
 				if($deathYear > date("Y")){
 					$deathYear = date("Y");	
 				}
