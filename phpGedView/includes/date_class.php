@@ -3,7 +3,7 @@
  * Classes for Gedcom Date/Calendar functionality.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 Greg Roach
+ * Copyright (C) 2007-2008 Greg Roach
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -961,6 +961,14 @@ class GedcomDate {
 					}
 				}
 			}
+		}
+	}
+
+	// Need to "deep-clone" nested objects
+	function __clone() {
+		$this->date1=clone $this->date1;
+		if (is_object($this->date2)) {
+			$this->date2=clone $this->date2;
 		}
 	}
 
