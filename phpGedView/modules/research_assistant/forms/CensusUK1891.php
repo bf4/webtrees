@@ -449,7 +449,8 @@ return false;}return true;}
 			if (is_null($person)) continue;
 			if(!empty($person))
 			{
-				$bdate = $person->getBirthYear();
+				$bdate=$person>getEstimatedBirthDate();
+				$bdate=$bdate->gregorianYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
 			
 			$censusAge = $rows[$number]["Age"];
@@ -474,8 +475,9 @@ return false;}return true;}
 				foreach($spouseFams as $sFamKey => $sFamValue)
 				{
 					$spouse = $sFamValue->getSpouse($person);
-					$deathYear = $spouse->getDeathYear();
-					if($spouse->getDeathYear())	$diff = $deathYear - 1891;
+					$deathDate = $spouse->getEstimatedDeathDate();
+					$deathYear = $deathDate->gregorianYear();
+					if ($deathYear) $diff = $deathYear - 1891;
 						if($diff)
 						{
 							if($diff > 1 || $diff < 0)

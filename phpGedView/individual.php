@@ -91,38 +91,29 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 							$col=0;
 						}
 					}
-			//-- - put the birth info in this section
-			$birthrec = $controller->indi->getBirthRecord(false);
-			$deathrec = $controller->indi->getDeathRecord(false);
-			if ((!empty($birthrec)) || (!empty($deathrec)) || $SHOW_LDS_AT_GLANCE) {
-				print "<td width=\"10\"><br /></td>\n";
+			// Display summary birth/death info.  Note this info can come from various BIRT/CHR/BAPM/etc. records
+			$birtdate=$controller->indi->getBirthDate();
+			$birtplac=$controller->indi->getBirthPlace();
+			$deatdate=$controller->indi->getDeathDate();
+			$deatplac=$controller->indi->getDeathPlace();
+			if ($birtdate->isOK() || $birtplac || $deatdate->isOK() || $deatdate || $SHOW_LDS_AT_GLANCE) {
 				++$col;
-				?>
-				<td valign="top" colspan="<?php print $maxcols-$col; ?>">
-				<?php if (!empty($birthrec) && showFactDetails("BIRT", $controller->pid) && !FactViewRestricted($controller->pid, $birthrec)) { ?>
-					<span class="label"><?php print $factarray["BIRT"].":"; ?></span>
-					<span class="field">
-						<?php print_fact_date($birthrec); ?>
-						<?php print_fact_place($birthrec); ?>
-					</span><br />
-				<?php } ?>
-				<?php
-				// RFE [ 1229233 ] "DEAT" vs "DEAT Y"
-				// The check $deathrec != "1 DEAT" will not show any records that only have 1 DEAT in them
-				if ((!empty($deathrec)) && (trim($deathrec) != "1 DEAT") && showFactDetails("DEAT", $controller->pid) && !FactViewRestricted($controller->pid, $deathrec)) {
-			?>
-				<span class="label"><?php print $factarray["DEAT"].":"; ?></span>
-				<span class="field">
-				<?php
-					print_fact_date($deathrec);
-					print_fact_place($deathrec);
-				?>
-				</span><br />
-			<?php }
-				if ($SHOW_LDS_AT_GLANCE) print "<b>".get_lds_glance($controller->indi->getGedcomRecord())."</b>";
-			?>
-			</td>
-			<?php } ?>
+				echo '<td width="10"><br /></td>';
+				echo '<td valign="top" colspan="', $maxcols-$col, '">';
+				if ($birtdate->isOK() || $birtplac) {
+					echo '<span class="label">', $factarray['BIRT'].':', '</span> ';
+					echo '<span class="field">', $birtdate->Display(false), ' -- ', $birtplac, '</span><br />';
+				}
+				if ($deatdate->isOK() || $deatdate) {
+					echo '<span class="label">', $factarray['DEAT'].':','</span> ';
+					echo '<span class="field">', $deatdate->Display(false), ' -- ', $deatplac, '</span><br />';
+				}
+				if ($SHOW_LDS_AT_GLANCE) {
+					echo '<b>', get_lds_glance($controller->indi->getGedcomRecord()), '</b>';
+				}
+				echo '</td>';
+			}
+		?>
 		</tr>
 		</table>
 		<?php

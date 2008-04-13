@@ -1271,7 +1271,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate(false);
+					$elderdate = $people["newhusb"]->getBirthDate();
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1282,7 +1282,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate(false);
+					$elderdate = $people["husb"]->getBirthDate();
 				}
 				else if (!isset($people["newhusb"])) {
 					if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
@@ -1358,7 +1358,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php
 				}
 				//-- children
-				$elderdate = $family->getMarriageDate();
+				$elderdate = new GedcomDate($family->getMarriageDate());
 				foreach($people["children"] as $key=>$child) {
 					$label = $child->getLabel();
 					if ($label[0]=='+')
@@ -1375,7 +1375,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate(false);
+					$elderdate = $child->getBirthDate();
 				}
 				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
@@ -1430,7 +1430,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate(false);
+					$elderdate = $people["newhusb"]->getBirthDate();
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1441,7 +1441,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate(false);
+					$elderdate = $people["husb"]->getBirthDate();
 				}
 				$styleadd = "";
 				if (isset($people["newwife"])) {
@@ -1499,7 +1499,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php
 				}
 				//-- children
-				$elderdate = $family->getMarriageDate();
+				$elderdate = new GedcomDate($family->getMarriageDate());
 				foreach($people["children"] as $key=>$child) {
 					$label = $child->getLabel();
 					if ($label[0]=='+')
@@ -1516,7 +1516,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate(false);
+					$elderdate = $child->getBirthDate();
 				}
 				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
@@ -1570,7 +1570,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate(false);
+					$elderdate = $people["newhusb"]->getBirthDate();
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1581,7 +1581,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate(false);
+					$elderdate = $people["husb"]->getBirthDate();
 				}
 				$styleadd = "";
 				if (isset($people["newwife"])) {
@@ -1657,7 +1657,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php
 				}
 				//-- children
-				$elderdate = $family->getMarriageDate();
+				$elderdate = new GedcomDate($family->getMarriageDate());
 				foreach($people["children"] as $key=>$child) {
 					$label = $child->getLabel();
 					if ($label[0]=='+')
@@ -1674,7 +1674,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate(false);
+					$elderdate = $child->getBirthDate();
 				}
 				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>

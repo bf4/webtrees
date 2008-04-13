@@ -1091,18 +1091,16 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		{
 			$MissingReturn[] = array("SEX", $pgv_lang["All"]);
 		}
-		if ($person->getBirthRecord(false) != "") //check for missing birth info
-		{
-
-		} else {
+		$birtdate=$person->getBirthDate();
+		$birtplac=$person->getBirthPlace();
+		if (!$birtplac || !$birtdate->isOK()) { //check for missing birth info
 			$probFacts = singleInference($perId,"BIRT");
 			$MissingReturn[] = array("BIRT", $pgv_lang["All"],$probFacts);
 
 		}
-		if ($person->getDeathRecord(false) != "" || !$person->isDead()) //check for missing death info
-		{
-
-		} else {
+		$deatdate=$person->getDeathDate();
+		$deatplac=$person->getDeathPlace();
+		if ((!$deatplac || !$deatdate->isOK()) && $person->isDead()) { //check for missing death info
 			$probFacts = singleInference($perId,"DEAT");
 			$MissingReturn[] = array("DEAT", $pgv_lang["All"], $probFacts);
 	
@@ -1527,8 +1525,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (!is_object($person)) return "";
 		$givennames = $person->getGivenNames();
 		$lastname = $person->getSurname();
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+		$bdate = $person->getEstimatedBirthDate();
+		$ddate = $person->getEstimatedDeathDate();
+		$byear = $bdate->gregorianYear();
+		$dyear = $ddate->gregorianYear();
 
 		if (isset ($_REQUEST['action']) && $_REQUEST['action'] == 'ra_addtask')
 			$this->auto_add_task($person, $_POST['folder']);

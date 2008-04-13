@@ -39,13 +39,15 @@ function autosearch_options()
 	$pid = "";
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
 	$person = Person::getInstance($pid);
-		if (!is_object($person)) return "";
-		$givennames = $person->getGivenNames();
-		$lastname = $person->getSurname();
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
-		$dloc = $person->getDeathPlace();
-		$bloc = $person->getBirthPlace();
+	if (!is_object($person)) return "";
+	$givennames = $person->getGivenNames();
+	$lastname = $person->getSurname();
+	$bdate=$person->getEstimatedBirthDate();
+	$ddate=$person->getEstimatedDeathDate();
+	$byear=$bdate->gregorianYear();
+	$dyear=$ddate->gregorianYear();
+	$dloc = $person->getDeathPlace();
+	$bloc = $person->getBirthPlace();
 		
 	$to_return ="<form name='ancsearch' action='module.php' target=\"_blank\" method='post'> 
 						<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />
@@ -95,11 +97,13 @@ function autosearch_process() {
 	$pid = "";
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
 	$person = Person::getInstance($pid);
-		if (!is_object($person)) return "";
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
-		$dloc = $person->getDeathPlace();
-		$bloc = $person->getBirthPlace();
+	if (!is_object($person)) return "";
+	$bdate=$person->getEstimatedBirthDate();
+	$ddate=$person->getEstimatedDeathDate();
+	$byear=$bdate->gregorianYear();
+	$dyear=$ddate->gregorianYear();
+	$dloc = $person->getDeathPlace();
+	$bloc = $person->getBirthPlace();
 	$url = "http://www.genealogy.com/cgi-bin/wizard_search.cgi?MN=";
 	
 	if(isset($_REQUEST['surname'])){

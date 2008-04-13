@@ -346,7 +346,9 @@ function print_td_person($n) {
 //LBox --------  change for Lightbox Album --------------------------------------------
 				}
 // ---------------------------------------------------------------------------------------------
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".$name." b ".$indi->getBirthDate(false)."\" ";
+				$birth_date=$indi->getBirthDate();
+				$death_date=$indi->getDeathDate();
+				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".$name.' '.$birth_date->Display(false).' - '.$death_date->Display(false).'" ';
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}
@@ -365,8 +367,8 @@ function print_td_person($n) {
 		$text .= "<br />";
 		if ($indi->canDisplayDetails()) {
 			$text.="<span class='details1'>";
-			$birth=new GedcomDate($indi->getBirthDate(false));
-			$death=new GedcomDate($indi->getDeathDate(false));
+			$birth=$indi->getBirthDate();
+			$death=$indi->getDeathDate();
 			$text.=$birth->date1->Format('Y');
 			$text.='-';
 			$text.=$death->date1->Format('Y');

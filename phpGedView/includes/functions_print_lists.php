@@ -72,8 +72,11 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 		if (begRTLText($value[0])) $listDir = "rtl";
 		else $listDir = "ltr";
 		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]." - ".$person->getBirthYear()))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
-		else print "<a href=\"individual.php?pid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
+		if ($findid == true) {
+			print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
+		} else {
+			print "<a href=\"individual.php?pid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
+		}
 		if ($SHOW_ID_NUMBERS){
 			print "&nbsp;&nbsp;";
 			if ($listDir=="rtl") print getRLM();
@@ -726,7 +729,7 @@ function print_fam_table($datalist, $legend="") {
 		$mdate=new GedcomDate($family->getMarriageDate());
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
-		$hdate=new GedcomDate($husb->GetBirthDate());
+		$hdate=$husb->getBirthDate();
 		if ($hdate->isOK()) {
 			if ($hdate->gregorianYear()>=1550) {
 				$birt_by_decade[floor($hdate->gregorianYear()/10)*10] .= $husb->getSex();
@@ -771,7 +774,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
-		$wdate=new GedcomDate($wife->GetBirthDate());
+		$wdate=$wife->getBirthDate();
 		if ($wdate->isOK()) {
 			if ($wdate->gregorianYear()>=1550) {
 				$birt_by_decade[floor($wdate->gregorianYear()/10)*10] .= $wife->getSex();
