@@ -290,8 +290,9 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthDate() {
 		if (is_null($this->_getBirthDate)) {
-			list($this->_getBirthDate)=$this->getAllBirthDates();
-			if (is_null($this->_getBirthDate)) {
+			if ($this->getAllBirthDates()) {
+				list($this->_getBirthDate)=$this->getAllBirthDates();
+			} else {
 				$this->_getBirthDate=new GedcomDate(''); // always return a date object
 			}
 		}
@@ -304,8 +305,9 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthPlace() {
 		if (is_null($this->_getBirthPlace)) {
-			list($this->_getBirthPlace)=$this->getAllBirthPlaces();
-			if (is_null($this->_getBirthPlace)) {
+			if ($this->getAllBirthPlaces()) {
+				list($this->_getBirthPlace)=$this->getAllBirthPlaces();
+			} else {
 				$this->_getBirthPlace='';
 			}
 		}
@@ -318,8 +320,9 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathDate() {
 		if (is_null($this->_getDeathDate)) {
-			list($this->_getBirthDate)=$this->getAllBirthDates();
-			if (is_null($this->_getDeathDate)) {
+			if ($this->getAllDeathDates()) {
+				list($this->_getDeathDate)=$this->getAllDeathDates();
+			} else {
 				$this->_getDeathDate=new GedcomDate(''); // always return a date object
 			}
 		}
@@ -332,8 +335,9 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathPlace() {
 		if (is_null($this->_getDeathPlace)) {
-			list($this->_getDeathPlace)=$this->getAllDeathPlaces();
-			if (is_null($this->_getDeathPlace)) {
+			if ($this->getAllDeathPlaces()) {
+				list($this->_getDeathPlace)=$this->getAllDeathPlaces();
+			} else {
 				$this->_getDeathPlace='';
 			}
 		}
