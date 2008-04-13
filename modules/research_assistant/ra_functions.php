@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - Functions File.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008, John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1091,18 +1091,16 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		{
 			$MissingReturn[] = array("SEX", $pgv_lang["All"]);
 		}
-		if ($person->getBirthRecord(false) != "") //check for missing birth info
-		{
-
-		} else {
+		$birtdate=$person->getBirthDate();
+		$birtplac=$person->getBirthPlace();
+		if (!$birtplac || !$birtdate->isOK()) { //check for missing birth info
 			$probFacts = singleInference($perId,"BIRT");
 			$MissingReturn[] = array("BIRT", $pgv_lang["All"],$probFacts);
 
 		}
-		if ($person->getDeathRecord(false) != "" || !$person->isDead()) //check for missing death info
-		{
-
-		} else {
+		$deatdate=$person->getDeathDate();
+		$deatplac=$person->getDeathPlace();
+		if ((!$deatplac || !$deatdate->isOK()) && $person->isDead()) { //check for missing death info
 			$probFacts = singleInference($perId,"DEAT");
 			$MissingReturn[] = array("DEAT", $pgv_lang["All"], $probFacts);
 	
@@ -1527,8 +1525,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (!is_object($person)) return "";
 		$givennames = $person->getGivenNames();
 		$lastname = $person->getSurname();
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+		$bdate = $person->getEstimatedBirthDate();
+		$ddate = $person->getEstimatedDeathDate();
+		$byear = $bdate->gregorianYear();
+		$dyear = $ddate->gregorianYear();
 
 		if (isset ($_REQUEST['action']) && $_REQUEST['action'] == 'ra_addtask')
 			$this->auto_add_task($person, $_POST['folder']);
@@ -1575,14 +1575,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
 										'</td>
 									</tr>';
-										$bdatea = new GedcomDate($person->getBirthDate());
+										$bdatea = $person->getEstimatedBirthDate();
 										$bdatea = $bdatea->MinDate();
 										$bdatea = $bdatea->convert_to_cal('gregorian');
 										$bdate  = $bdatea->Format('Y');
 										$bdate .= ($bdatea->m) ? $bdatea->Format('m') : '00';
 										$bdate .= ($bdatea->d) ? $bdatea->Format('d') : '00';
 
-										$ddatea = new GedcomDate($person->getDeathDate());
+										$ddatea = $person->getEstimatedDeathDate();
 										$ddatea = $ddatea->MinDate();
 										$ddatea = $ddatea->convert_to_cal('gregorian');
 										$ddate  = $ddatea->Format('Y');
@@ -2144,3 +2144,4 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		return $indirec;
 	}
 }
+?>

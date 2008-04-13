@@ -3,7 +3,7 @@
  * Class used to access records and data on a remote server
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -673,30 +673,6 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	}
 	
 	/**
-	 * Merges two people together
-	 * --not used
-	 function MergePeople($Person1,$Person2){
-		$PersonName1=$Person1->getName();
-		$PersonSex1=$Person1->getSex();
-		$PersonBirth1=$Person1->getBirthDate();
-		$PersonDeath1=$Person1->getDeathDate();
-		$PersonName2=$Person2->getName();
-		$PersonSex2=$Person2->getSex();
-		$PersonBirth2=$Person2->getBirthDate();
-		$PersonDeath2=$Person2->getDeathDate();
-		if (empty($PersonName1)){$PersonName1=$PersonName2;}
-		elseif(empty($PersonName2)){}
-		if (empty($PersonSex1)){$PersonSex1=$Person2;}
-		elseif (empty($PersonSex2)){}
-		if (empty($PersonBirth1)){$PersonBirth1=$PersonBirth2;}
-		elseif(empty($PersonBirth2)){}
-		if (empty($PersonDeath1)){$PersonDeath1=$PersonDeath2;}
-		elseif(empty($PersonDeath2)){}
-		return $Person1;
-	 }
-	 */
-
-	/**
 	 * Compares to see if two people are the same, and it returns true if they are, but
 	 * false if they are not. It only compares the name, sex birthdate, and deathdate
 	 * of the person
@@ -704,65 +680,53 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	 function ComparePeople(&$Person1,&$Person2){
 		$PersonName1=$Person1->getName();
 		$PersonSex1=$Person1->getSex();
-		$PersonBirth1=$Person1->getBirthDate();
-		$PersonDeath1=$Person1->getDeathDate();
+		$PersonBirth1=$Person1->getEstimatedBirthDate();
+		$PersonDeath1=$Person1->getEstimatedDeathDate();
 
 		$PersonName2=$Person2->getName();
 		$PersonSex2=$Person2->getSex();
-		$PersonBirth2=$Person2->getBirthDate();
-		$PersonDeath2=$Person2->getDeathDate();
+		$PersonBirth2=$Person2->getEstimatedBirthDate();
+		$PersonDeath2=$Person2->getEstimatedDeathDate();
 
 		$count=0;
 		$Probabilty=0;
-		//print "<br/>".$PersonName1." == ".$PersonName2;
-		//print "<br/>".$PersonBirth1." == ".$PersonBirth2;
-		//print "<br/>".$PersonDeath1." == ".$PersonDeath2;
-		//print "<br/>".$PersonSex1." == ".$PersonSex2;
 		if (!empty($PersonName1)&&!empty($PersonName2)){
 			$lev = levenshtein(str2lower($PersonName1), str2lower($PersonName2));
-			//print "Levenshtein = $lev ";
 			if($lev<4){
 				$Probabilty+=2;
-			}
-			else
+			} else
 				$Probabilty-=2;
 			$count+=2;
 		}
-		if (!empty($PersonSex1)&&!empty($PersonSex2)){
-			if($PersonSex1==$PersonSex2){
-				//print "same sex ";
-				$Probabilty+=1;
-			}
-			else {
-				//print "not same sex ";
-				$Probabilty-=2;
-			}
-			$count++;
-		}
-		if (!empty($PersonBirth1)&&!empty($PersonBirth2)){
-			if($PersonBirth1==$PersonBirth2){
-				//print "same birth ";
-				$Probabilty+=1;
-			}
-			else {
-				//print "not same birth ";
-				$Probabilty-=1;
+		$sex_prob=array('UU'=>0, 'UF'=>0, 'UM'=>0, 'MU'=>0, 'FU'=>0, 'MM'=>1, 'FF'=>1,'MF'=>-2, 'FM'=>-2);
+		$Probability+=$sex_prob[$PersonSex1.$PersonSex2];
+		$count++;
+
+		if ($PersonBirth1->isOK() && $PersonBirth2->isOK()) {
+			$diff=abs($PersonBirth1->JD() - $PersonBirth2->JD());
+			if ($diff==0) {
+				$Probability+=2;
+			} elseif ($diff<366) {
+				$Probability+=1;
+			} else {
+				$Probability-=1;
 			}
 			$count++;
 		}
-		if (!empty($PersonDeath1)&&!empty($PersonDeath2)){
-			if($PersonDeath1==$PersonDeath2){
-				//print "same death ";
-				$Probabilty+=1;
-			}
-			else {
-				//print "not same death ";
-				$Probabilty-=1;
+
+		if ($PersonDeath1->isOK() && $PersonDeath2->isOK()) {
+			$diff=abs($PersonDeath1->JD() - $PersonDeath2->JD());
+			if ($diff==0) {
+				$Probability+=2;
+			} elseif ($diff<366) {
+				$Probability+=1;
+			} else {
+				$Probability-=1;
 			}
 			$count++;
 		}
+
 		$prob=$Probabilty/$count;
-		//print "<br/>Probabilty same person % is ".$prob."=".$Probabilty."/".$count." ID 1 ".$Person1->getXref()." ID 2 ".$Person2->getXref();
 		if($prob<0.5){
 			return false;
 		}

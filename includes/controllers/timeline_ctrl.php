@@ -106,9 +106,8 @@ class TimelineControllerRoot extends BaseController {
 				//-- setup string of valid pids for links
 				$this->pidlinks .= "pids[]=".$indi->getXref()."&amp;";
 				$bdate = $indi->getBirthDate();
-				if (!empty($bdate)) {
-					$date = new GedcomDate($bdate);
-					$date = $date->MinDate();
+				if ($bdate->isOK()) {
+					$date = $bdate->MinDate();
 					$date = $date->convert_to_cal('gregorian');
 					if ($date->y) {
 						$this->birthyears [$indi->getXref()] = $date->y;
@@ -247,7 +246,7 @@ class TimelineControllerRoot extends BaseController {
 				print "--";
 				print $gdate->Display(false);
 				$indi=Person::GetInstance($factitem["pid"]); // TODO we already have this object somewhere....
-				$birth_date=new GedcomDate($indi->getBirthDate());
+				$birth_date=$indi->getEstimatedBirthDate();
 				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $gdate), false);
 				if (!empty($age))
 					print " ({$pgv_lang['age']} {$age})";

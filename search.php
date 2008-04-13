@@ -4,7 +4,7 @@
  * Searches based on user query.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -194,7 +194,7 @@ print_header($pgv_lang["search"]);
 	<!-- Choice to Exclude non-genealogical data -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print $pgv_lang["search_tagfilter"]; ?>
+			<?php print_help_link("search_exclude_tags_help", "qm"); print $pgv_lang["search_tagfilter"]; ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="radio" name="tagfilter" value="on"
@@ -215,7 +215,7 @@ print_header($pgv_lang["search"]);
 	<!-- Choice to show related persons/families (associates) -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
-			<?php print $pgv_lang["search_asso_label"]; ?>
+			<?php print_help_link("search_include_ASSO_help", "qm"); print $pgv_lang["search_asso_label"]; ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
 			<input type="checkbox" name="showasso" value="on"

@@ -118,7 +118,11 @@ function getTitle(){
 		$out = "";
 		while($people =& $res->fetchRow()){
 			$person = Person::getInstance($people[0]);
-			if (!is_null($person)) $out .= '<a href="individual.php?pid='.$people[0].'">'.PrintReady($person->getName()." - ".$person->getBirthYear()) . '</a><br />';
+			if (!is_null($person)) {
+				$bdate=$person>getEstimatedBirthDate();
+				$byear=$bdate->gregorianYear();
+				$out .= '<a href="individual.php?pid='.$people[0].'">'.PrintReady($person->getName()." - ".$byear.'</a><br />';
+			}
 		}
 
 		return $out;
