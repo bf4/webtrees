@@ -2359,7 +2359,7 @@ function format_parents_age($pid) {
 					switch ($parent->getSex()) {
 					case 'F':
 						// Highlight mothers who die in childbirth or shortly afterwards
-						if ($deathdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()+90) {
+						if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()+90) {
 							$class='parentdeath';
 							$title=$factarray['_DEAT_MOTH'];
 						} else {
@@ -2368,7 +2368,7 @@ function format_parents_age($pid) {
 						break;
 					case 'M':
 						// Highlight fathers who die before the birth
-						if ($deathdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()) {
+						if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()) {
 							$class='parentdeath';
 							$title=$factarray['_DEAT_FATH'];
 						} else {
