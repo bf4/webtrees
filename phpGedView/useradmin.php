@@ -139,26 +139,34 @@ if ($action=='createuser' || $action=='edituser2') {
 					}
 				}
 				// If we're verifying a new user, send them a message to let them know
-				if ($newly_verified) {
-					if ($verified_by_admin=='yes' && $action=='edituser2') {
-						if ($LANGUAGE != $user_language) {
-							loadLanguage($user_language);
-						}
-						if (substr($SERVER_URL, -1)=="/") {
-							$serverURL=substr($SERVER_URL,0,-1);
-						} else {
-							$serverURL=$SERVER_URL;
-						}
-						$message=array();
-						$message["to"]=$username;
-						$headers="From: ".$PHPGEDVIEW_EMAIL;
-						$message["from"]=PGV_USER_NAME;
-						$message["subject"]=str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_subject"]);
-						$message["body"]=str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_message"]);
-						$message["created"]="";
-						$message["method"]="messaging2";
-						addMessage($message);
+				if ($newly_verified && $action=='edituser2') {
+					if ($LANGUAGE != $user_language) {
+						loadLanguage($user_language);
 					}
+					if (substr($SERVER_URL, -1)=="/") {
+						$serverURL=substr($SERVER_URL,0,-1);
+					} else {
+						$serverURL=$SERVER_URL;
+					}
+					$message=array();
+					$message["to"]=$username;
+					$headers="From: ".$PHPGEDVIEW_EMAIL;
+					$message["from"]=PGV_USER_NAME;
+					$message["subject"]=str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_subject"]);
+					$message["body"]=str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_message"]);
+					$message["created"]="";
+					$message["method"]="messaging2";
+					addMessage($message);
+					// and send a copy to the admin
+					$message=array();
+					$message["to"]=PGV_USER_NAME;
+					$headers="From: ".$PHPGEDVIEW_EMAIL;
+					$message["from"]=$username; // fake the from address - so the admin can "reply" to it.
+					$message["subject"]=str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_subject"]);
+					$message["body"]=str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_message"]);
+					$message["created"]="";
+					$message["method"]="messaging2";
+					addMessage($message);
 				}
 				//-- update Gedcom record with new email address
 				if ($email_changed && $new_sync_gedcom=='Y') {
