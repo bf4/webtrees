@@ -3,7 +3,7 @@
  * Class file for a person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -489,17 +489,19 @@ class Person extends GedcomRecord {
 
 	/**
 	 * get the person's sex image
+	 * NOTE: It would have been nice if we'd called the images sexM, sexF and sexU
 	 * @return string 	<img ... />
 	 */
-	function getSexImage($style='') {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
-		if ($this->getSex()=="M") $s = "sex";
-		else if ($this->getSex()=="F") $s = "sexf";
-		else $s = "sexn";
-		$temp = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$s]["small"]."\" alt=\"\" class=\"gender_image\"";
-		if (!empty($style)) $temp .= " style=\"$style\"";
-		$temp .= " />";
-		return $temp;
+	function getSexImage() {
+		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		switch ($this->getSex()) {
+		case 'M':
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" />';
+		case 'F':
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" />';
+		default:
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexn']['small'].'" class="gender_image" />';
+		}
 	}
 
 	/**
