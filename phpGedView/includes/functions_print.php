@@ -5,7 +5,7 @@
  * Various printing functions used by all scripts and included by the functions.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserverd
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2337,43 +2337,62 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	}
 }
 /**
- * Print age of parents
+ * Format age of parents in HTML
  *
  * @param string $pid	child ID
- * @param string $birth_date	child birthdate
  */
-function print_parents_age($pid, $birth_date) {
-	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	if (!$SHOW_PARENTS_AGE) return "";
-	$person = Person::getInstance($pid);
-	$families = $person->getChildFamilies();
-	// dont show age of parents if more than one family (ADOPtion)
-	if (count($families)>1) return "";
-	$family = current($families);
-	if (!$family) return "";
-	print " <span class=\"age\">";
-	// father
-	$spouse = $family->getHusband();
-	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), $birth_date);
-		if ($age) {
-			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
-		}
-	}
-	// mother
-	$spouse = $family->getWife();
-	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), $birth_date);
-		if ($age) {
-			// [ 1749591 ] Highlight maternal death
-			$mother_ddate=$spouse->getDeathDate();
-			if ($mother_ddate->isOK() && $birth_date->isOK() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
-				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+function parents_age($pid) {
+	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE;
+
+	$html='';
+	if ($SHOW_PARENTS_AGE) {
+		$person=Person::getInstance($pid);
+		$families=$person->getChildFamilies();
+		// Multiple sets of parents (e.g. adoption) cause complications, so ignore.
+		$birth_date=$person->getBirthDate();
+		if ($birth_date->isOK() && count($families)==1) {
+			$family=current($families);
+			// Allow for same-sex parents
+			foreach (array($family->getHusband(), $family->getWife()) as $parent) {
+				if ($parent && $age=GedcomDate::GetAgeYears($parent->getBirthDate(), $person->getBirthDate())) {
+					$deatdate=$parent->getDeathDate();
+					$class='';
+					switch ($parent->getSex()) {
+					case 'F':
+						// Highlight mothers who die in childbirth or shortly afterwards
+						if ($deatdate->MinJD()<$birth_date->MinJD()+90) {
+							$class='parentdeath';
+							$title=$factarray['_DEAT_MOTH'];
+						} else {
+							$title=$pgv_lang['mother'];
+						}
+						break;
+					case 'M':
+						// Highlight fathers who die before the birth
+						if ($deatdate->MinJD()<$birth_date->MinJD()) {
+							$class='parentdeath';
+							$title=$factarray['_DEAT_FATH'];
+						} else {
+							$title=$pgv_lang['father'];
+						}
+						break;
+					default:
+						$title=$pgv_lang['parent'];
+						break;
+					}
+					if ($class) {
+						$html.=' <span class="'.$class.'" title="'.$title.'">'.$parent->getSexImage().$age.'</span>';
+					} else {
+						$html.=' <span title="'.$title.'">'.$parent->getSexImage().$age.'</span>';
+					}
+				}
 			}
-			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
+			if ($html) {
+				$html='<span class="age">'.$html.'</span>';
+			}
 		}
 	}
-	print "</span>";
+	return $html;
 }
 /**
  * print fact DATE TIME
@@ -2408,8 +2427,9 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 		}
 		if ($fact && $pid) {
 			// age of parents at child birth
-			if ($fact=="BIRT")
-				print_parents_age($pid, $date);
+			if ($fact=="BIRT") {
+				 echo parents_age($pid);
+			}
 			// age at event
 			else if ($fact!="CHAN") {
 				if (!$indirec)
