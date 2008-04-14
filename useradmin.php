@@ -140,7 +140,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				}
 				// If we're verifying a new user, send them a message to let them know
 				if ($newly_verified) {
-					if ($verified_by_admin=='Y' && $action=='edituser2') {
+					if ($verified_by_admin=='yes' && $action=='edituser2') {
 						if ($LANGUAGE != $user_language) {
 							loadLanguage($user_language);
 						}
