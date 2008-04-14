@@ -6,7 +6,7 @@
  * about the GEDCOM.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -584,13 +584,7 @@ class stats
 				return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
 			}
 			case 'place':
-			{
-				ob_start();
-				print_fact_place(get_sub_record(1, "1 {$birth_death}", find_person_record($row['d_gid'])), true, true, true);
-				$place=ob_get_contents();
-				ob_end_clean();
-				return $place;
-			}
+				return format_fact_place(get_sub_record(1, "1 {$birth_death}", find_person_record($row['d_gid'])), true, true, true);
 		}
 	}
 
@@ -909,13 +903,7 @@ class stats
 				return "<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
 			}
 			case 'place':
-			{
-				ob_start();
-				print_fact_place(get_sub_record(1, "1 {$row['fact']}", find_gedcom_record($row['id'])), true, true, true);
-				$place=ob_get_contents();
-				ob_end_clean();
-				return $place;
-			}
+				return format_fact_place(get_sub_record(1, "1 {$row['fact']}", find_gedcom_record($row['id'])), true, true, true);
 		}
 	}
 
