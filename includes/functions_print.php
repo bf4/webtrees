@@ -5,7 +5,7 @@
  * Various printing functions used by all scripts and included by the functions.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserverd
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserverd.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2592,29 +2592,30 @@ function format_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
  *
  * @param string $key	indi pid
  */
-function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
+function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
 
+	$html='';
 	$indirec = find_person_record($key);
 	if (!$indirec) $indirec = find_family_record($key);
 	foreach ($majorfacts as $indexval => $fact) {
 		$factrec = get_sub_record(1, "1 $fact", $indirec);
 		if (strlen($factrec)>7 and showFact("$fact", $key) and !FactViewRestricted($key, $factrec)) {
-			echo '<span dir="', $TEXT_DIRECTION, '"><br /><i>';
+			$html.='<span dir="'.$TEXT_DIRECTION.'"><br /><i>';
 			if (isset($pgv_lang[$fact])) {
-				echo $pgv_lang[$fact];
+				$html.=$pgv_lang[$fact];
 			} else {
 				if (isset($factarray[$fact])) {
-					echo $factarray[$fact];
+					$html.=$factarray[$fact];
 				} else {
-					echo $fact;
+					$html.=$fact;
 				}
 			}
-			echo ' ', format_fact_date($factrec), format_fact_place($factrec), '</i></span>';
+			$html.=' '.format_fact_date($factrec).format_fact_place($factrec).'</i></span>';
 			break;
 		}
 	}
-	return $fact;
+	return $html;
 }
 
 /**

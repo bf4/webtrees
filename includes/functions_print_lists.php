@@ -88,10 +88,8 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 		if (!$disp) {
 			print "<br /><i>".$pgv_lang["private"]."</i>";
 			$indi_private[$key."[".$GEDCOM."]"] = 1;
-		}
-		else {
-			print_first_major_fact($key, array("BIRT", "CHR", "BAPM", "BAPL", "ADOP"));
-			print_first_major_fact($key, array("DEAT", "BURI"));
+		} else {
+			echo format_first_major_fact($key, array('BIRT', 'CHR', 'BAPM', 'BAPL', 'ADOP')), format_first_major_fact($key, array('DEAT', 'BURI'));
 		}
 		print "</a>";
 		if (($asso != "") && ($disp)) {
@@ -163,8 +161,7 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 			$fam_private[$key."[".$GEDCOM."]"] = 1;
 		}
 		else {
-			print_first_major_fact($key, array("MARR"));
-			print_first_major_fact($key, array("DIV"));
+			echo format_first_major_fact($key, array("MARR")), format_first_major_fact($key, array("DIV"));
 		}
 		print "</a>";
 		if ($asso != "") {
@@ -1850,7 +1847,7 @@ function load_behaviour() {
 			element.onmouseover = function() { // show helptext
 				helptext = this.title;
 				if (helptext=='') helptext = this.value;
-				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".$pgv_lang["sort_column"]."'"?>;
+				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".$pgv_lang["sort_column"]."'"; ?>;
 				this.title = helptext; if (document.all) return; // IE = title
 				this.value = helptext; this.title = ''; // Firefox = value
 				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");

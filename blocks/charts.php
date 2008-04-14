@@ -5,7 +5,7 @@
  * This block prints pedigree, descendency, or hourglass charts for the chosen person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -169,11 +169,11 @@ function print_charts_block_config($config) {
 	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["chart_type"]; ?></td>
 	<td class="optionbox">
 		<select name="type">
-			<option value="pedigree"<?php if ($config["type"]=="pedigree") print " selected=\"selected\"";?>><?php print $pgv_lang["index_header"]; ?></option>
-			<option value="descendants"<?php if ($config["type"]=="descendants") print " selected=\"selected\"";?>><?php print $pgv_lang["descend_chart"]; ?></option>
-			<option value="hourglass"<?php if ($config["type"]=="hourglass") print " selected=\"selected\"";?>><?php print $pgv_lang["hourglass_chart"]; ?></option>
+			<option value="pedigree"<?php if ($config["type"]=="pedigree") print " selected=\"selected\""; ?>><?php print $pgv_lang["index_header"]; ?></option>
+			<option value="descendants"<?php if ($config["type"]=="descendants") print " selected=\"selected\""; ?>><?php print $pgv_lang["descend_chart"]; ?></option>
+			<option value="hourglass"<?php if ($config["type"]=="hourglass") print " selected=\"selected\""; ?>><?php print $pgv_lang["hourglass_chart"]; ?></option>
 			<?php if (file_exists("includes/treenav_class.php")) { ?>
-			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\"";?>>TreeNav</option>
+			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\""; ?>>TreeNav</option>
 			<?php } ?>
 		</select>
 	</td></tr>
@@ -181,20 +181,23 @@ function print_charts_block_config($config) {
 		<td class="descriptionbox wrap width33"><?php print $pgv_lang["show_details"]; ?></td>
 	<td class="optionbox">
 		<select name="details">
-				<option value="no" <?php if ($config["details"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang['no'] ?></option>
-				<option value="yes" <?php if ($config["details"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang['yes'] ?></option>
+				<option value="no" <?php if ($config["details"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang['no']; ?></option>
+				<option value="yes" <?php if ($config["details"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang['yes']; ?></option>
 		</select>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width33"><?php print $pgv_lang["root_person"]; ?></td>
 		<td class="optionbox">
-			<input type="text" name="rootId" id="rootId" value="<?php print $config["rootId"]?>" size="5" />
-			<?php print_findindi_link("rootId","");
-			if (!empty($config["rootId"])) {
-				print "<span class=\"list_item\">".get_person_name($config["rootId"]);
-				print_first_major_fact($config["rootId"]);
-				print "</span>";
+			<input type="text" name="rootId" id="rootId" value="<?php print $config['rootId']; ?>" size="5" />
+			<?php
+			print_findindi_link('rootId','');
+			if ($config['rootId']) {
+				echo
+					'<span class="list_item">',
+					get_person_name($config['rootId']),
+					format_first_major_fact($config['rootId']),
+					'</span>';
 			}
 			?>
 		</td>
