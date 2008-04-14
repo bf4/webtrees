@@ -72,7 +72,7 @@ $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
 				if ($details!="Y" && $details!="N") print PrintReady($details);
 			}
 			else print PrintReady($details);
-			print_fact_date($factrec, false, false, $fact, $pid, $indirec);
+			echo format_fact_date($factrec, false, false, $fact, $pid, $indirec);
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVFS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
