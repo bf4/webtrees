@@ -966,9 +966,11 @@ class GedcomDate {
 
 	// Need to "deep-clone" nested objects
 	function __clone() {
-		$this->date1=clone $this->date1;
-		if (is_object($this->date2)) {
-			$this->date2=clone $this->date2;
+		if (PHP_VERSION>=5) {
+			$this->date1=clone $this->date1;
+			if (is_object($this->date2)) {
+				$this->date2=clone $this->date2;
+			}
 		}
 	}
 
