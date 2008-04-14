@@ -104,7 +104,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 					echo '<span class="label">', $factarray['BIRT'].':', '</span> ';
 					echo '<span class="field">', $birtdate->Display(false), ' -- ', $birtplac, '</span><br />';
 				}
-				if ($deatdate->isOK() || $deatdate) {
+				if ($deatdate->isOK() || $deatplac) {
 					echo '<span class="label">', $factarray['DEAT'].':','</span> ';
 					echo '<span class="field">', $deatdate->Display(false), ' -- ', $deatplac, '</span><br />';
 				}
