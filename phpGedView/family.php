@@ -35,6 +35,14 @@ if (!$controller->family->disp) {
 	print_footer();
 	exit;
 }
+
+// LB added for Lightbox viewer ==============================================================
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include_once('modules/lightbox/lb_config.php');
+	include_once('modules/lightbox/functions/lb_call_js.php');
+}	
+// LB ======================================================================================
+
 ?>
 <?php if ($controller->family->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
