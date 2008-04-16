@@ -1404,13 +1404,15 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		//-- Build array of currently defined values for this Media Fact
 		foreach ($pgv_lang as $varname => $typeValue) {
 			if (substr($varname, 0, 6) == "TYPE__") {
-				$type[strtolower(substr($varname, 6))] = $typeValue;
+				if ($varname != "TYPE__other") $type[strtolower(substr($varname, 6))] = $typeValue;
 			}
 		}
 		//-- Sort the array into a meaningful order
 		array_flip($type);
 		asort($type);
 		array_flip($type);
+		//-- Add "Other" at the end of the list
+		$type["other"] = $pgv_lang["TYPE__other"];
 		//-- Build the selector for the Media "TYPE" Fact
 		print "<select tabindex=\"".$tabkey."\" name=\"text[]\">";
 		print "<option selected=\"selected\" value=\"\"> ".$pgv_lang["choose"]." </option>";
