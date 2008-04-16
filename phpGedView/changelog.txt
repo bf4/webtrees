@@ -10,6 +10,7 @@
 
 
 Version 4.1.5
+ - Added: Add "Painting" and "Other" to supported media types (canajun2eh)
  - Fixed: [ 1943975 ] uploadmedia.php : undefined index "folder1" (canajun2eh)
  - Fixed: [ 1941658 ] Account Approval Email not sent to Admin (fisharebest)
  - Fixed: Move "maternal-death" style to stylesheet (fisharebest)

@@ -1674,6 +1674,8 @@ $pgv_lang["TYPE__newspaper"] = "Newspaper";
 $pgv_lang["TYPE__photo"] = "Photo";
 $pgv_lang["TYPE__tombstone"] = "Tombstone";
 $pgv_lang["TYPE__video"] = "Video";
+$pgv_lang["TYPE__painting"] = "Painting";
+$pgv_lang["TYPE__other"] = "Other";
 
 //-- Other media suff
 $pgv_lang["view_slideshow"] 		= "View as slideshow";
