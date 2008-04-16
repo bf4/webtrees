@@ -682,6 +682,7 @@ function print_media_links($factrec, $level,$pid='') {
 					$mediaType = $match[1];
 					$varName = "TYPE__".strtolower($mediaType);
 					if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
+					else $mediaType = $pgv_lang["TYPE__other"];
 					print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
 				}
 				//print "</span>";
@@ -1521,6 +1522,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			$mediaType = trim($match[1]);
 			$varName = "TYPE__".strtolower($mediaType);
 			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
+			else $mediaType = $pgv_lang["TYPE__other"];
 			print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
 		}
 		print "</span>";
