@@ -1788,7 +1788,6 @@ function sort_facts(&$arr) {
 	}
 
 	//-- add extra codes for the next pass of sorting
-	//TODO in the 4.2 branch this can be stored in the Event object
 	//-- add a fake date for the date sorting based on the previous fact that came before
 	$lastDate = "";
 	for ($i=0; $i<count($arr); $i++) {

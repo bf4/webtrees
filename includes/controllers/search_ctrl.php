@@ -433,6 +433,7 @@ class SearchControllerRoot extends BaseController {
 				// Search the indi's
 				if ((isset ($this->srindi)) && (count($this->sgeds) > 0)) {
 					$this->myindilist = search_indis($this->query, $this->sgeds);
+//					uasort($this->myindilist, "itemsort");
 				}
 
 				// Search the fams
@@ -442,7 +443,7 @@ class SearchControllerRoot extends BaseController {
 					// This way we include hits on family names.
 					// If indi's are not searched yet, we have to search them first
 					if (!isset ($this->srindi))
-					$this->myindilist = search_indis($this->query, $this->sgeds);
+						$this->myindilist = search_indis($this->query, $this->sgeds);
 					$famquery = array ();
 					$cntgeds = count($this->sgeds);
 					if ($cntgeds==1) $ged = $GEDCOMS[$this->sgeds[0]]["id"];

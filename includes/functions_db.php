@@ -1079,6 +1079,8 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 		}
 		$sql .= ")";
 	}
+	//-- do some sorting in the DB, it won't be as good as the PHP sorting
+	$sql .= " ORDER BY i_surname, i_name";
 	$res = dbquery($sql, false);
 
 	$gedold = $GEDCOM;
