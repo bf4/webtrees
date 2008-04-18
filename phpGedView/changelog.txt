@@ -10,6 +10,7 @@
 
 
 Version 4.1.5
+ - Fixed [ 1941544 ] Yahrzeiten Block in IE7 gives an Error (opus27)
  - Added: Add "Painting" and "Other" to supported media types (canajun2eh)
  - Fixed: [ 1943975 ] uploadmedia.php : undefined index "folder1" (canajun2eh)
  - Fixed: [ 1941658 ] Account Approval Email not sent to Admin (fisharebest)
@@ -22,8 +23,7 @@ Version 4.1.5
  - Fixed: weak randomly-generated passwords (fisharebest)
  - Fixed Logout sometimes goes to PGV site in SourceForge (canajun2eh)
 
-
-Version 4.1.4
+Version 4.1.4 2008-04-04
  - Added Login block changes to Logout block once user is logged in (canajun2eh)
  - Fixed Welcome page in IE: blocks on right side are all fixed height (canajun2eh)
  - Fixed [1924688] SVN 2755 V4.1.4 Incorrect display of Indi page with IE (fisharebest)
@@ -104,7 +104,7 @@ Version 4.1.4
  - Fixed [ 1892008 ] Media Firewall should not trigger rate limiter (ljm)
  - Partially Fixed [ 1891976 ] Media Firewall incompatible with clippings cart (ljm)
  
-Version 4.1.3 2007.11.16
+Version 4.1.3 2007-11-16
  - Fixed [ 1822946 ] Missing reference to port number in $SERVER_URL (yalnifj)
  - Fixed [ 1586584 ] Minimal theme - Icons on some Indi page tabs (canajun2eh)
  - Fixed [ 1549501 ] Quick Edit - Name editing rarely works (yalnifj)
