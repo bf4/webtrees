@@ -10,6 +10,7 @@
 
 
 Version 4.1.5
+ - Added: Add "Painting" and "Other" to supported sortable media types on Lightbox-Album page(windmillway)
  - Fixed [ 1941544 ] Yahrzeiten Block in IE7 gives an Error (opus27)
  - Added: Add "Painting" and "Other" to supported media types (canajun2eh)
  - Fixed: [ 1943975 ] uploadmedia.php : undefined index "folder1" (canajun2eh)
