@@ -269,7 +269,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
 	//-- init chart data
-	for ($age=0; $age<120; $age++) $deat_by_age[$age]="";
+	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $deat_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $deat_by_decade[$year]="";
 	//-- fieldset
