@@ -630,13 +630,22 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	print "<div id=\"lightbox2_content\"> \n";
 	if ($mediacnt!=0) {
 		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-
-			if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
-				$controller->getTab(7) ;
-
+		
+			// LB Fix if no googlemaps ========================================================
+			if (file_exists("modules/googlemap/googlemap.php")) {
+				if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
+					$controller->getTab(7) ;
+				}else{
+					loading_message();
+				}
 			}else{
-				loading_message();
+				if (($controller->default_tab==6)||(!empty($SEARCH_SPIDER))) {
+					$controller->getTab(6) ;
+				}else{
+					loading_message();
+				}
 			}
+			// LB Fix if no googlemaps ========================================================
 		}
 	}
 
