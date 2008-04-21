@@ -143,7 +143,6 @@ if ($WELCOME_TEXT_AUTH_MODE!="0") {
 	loadLangFile("pgv_help");
 	print "<table class=\"center width60 ".$TEXT_DIRECTION."\"><tr><td>";
 	if (empty($help_message) || !isset($help_message)) {
-		if (!empty($GEDCOM)) require($INDEX_DIRECTORY.$GEDCOM."_conf.php");
 		switch ($WELCOME_TEXT_AUTH_MODE){
 			case "1":
 				$help_message = "welcome_text_auth_mode_1";
@@ -181,10 +180,10 @@ $i = 0;		// initialize tab index
 	?>
 	<form name="loginform" method="post" action="<?php print $LOGIN_URL; ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
 		<input type="hidden" name="action" value="login" />
-		<input type="hidden" name="url" value="<?php print $url; ?>" />
-		<input type="hidden" name="ged" value="<?php if (isset($ged)) print $ged; else print $GEDCOM; ?>" />
-		<input type="hidden" name="pid" value="<?php if (isset($pid)) print $pid; ?>" />
-		<input type="hidden" name="type" value="<?php print $type; ?>" />
+		<input type="hidden" name="url" value="<?php print htmlentities($url); ?>" />
+		<input type="hidden" name="ged" value="<?php if (isset($ged)) print print htmlentities($ged); else print print htmlentities($GEDCOM); ?>" />
+		<input type="hidden" name="pid" value="<?php if (isset($pid)) print print htmlentities($pid); ?>" />
+		<input type="hidden" name="type" value="<?php print print htmlentities($type); ?>" />
 		<input type="hidden" name="usertime" value="" />
 		<?php
 		if (!empty($message)) print "<span class='error'><br /><b>$message</b><br /><br /></span>\r\n";
