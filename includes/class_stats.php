@@ -558,10 +558,7 @@ class stats
 			case 'full':
 			{
 				if (displayDetailsById($row['d_gid'])) {
-					ob_start();
-					print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-					$indi=ob_get_contents();
-					ob_end_clean();
+					$indi=format_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', 'span');
 				} else {
 					$indi=$pgv_lang['privacy_error'];
 				}
@@ -663,10 +660,7 @@ class stats
 			{
 				if(displayDetailsById($row['id']))
 				{
-					ob_start();
-					print_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', false);
-					$indi = ob_get_contents();
-					ob_end_clean();
+					$indi=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
 				}
 				else
 				{
@@ -868,10 +862,7 @@ class stats
 			case 'full':
 			{
 				if (displayDetailsById($row['id'])) {
-					ob_start();
-					print_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', false);
-					$indi=ob_get_contents();
-					ob_end_clean();
+					$indi=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
 				} else {
 					$indi=$pgv_lang['privacy_error'];
 				}
