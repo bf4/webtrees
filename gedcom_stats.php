@@ -5,7 +5,7 @@
  * This block prints statistical information for the currently active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,12 +27,12 @@
  * @subpackage Blocks
  */
 
-require_once("includes/functions_print_lists.php");
+require_once 'includes/functions_print_lists.php';
 
-$PGV_BLOCKS["print_gedcom_stats"]["name"]		= $pgv_lang["gedcom_stats_block"];
-$PGV_BLOCKS["print_gedcom_stats"]["descr"]		= "gedcom_stats_descr";
-$PGV_BLOCKS["print_gedcom_stats"]["canconfig"]	= true;
-$PGV_BLOCKS["print_gedcom_stats"]["config"]		= array(
+$PGV_BLOCKS["print_gedcom_stats"]["name"]     =$pgv_lang["gedcom_stats_block"];
+$PGV_BLOCKS["print_gedcom_stats"]["descr"]    ="gedcom_stats_descr";
+$PGV_BLOCKS["print_gedcom_stats"]["canconfig"]=true;
+$PGV_BLOCKS["print_gedcom_stats"]["config"]   =array(
 	"cache"=>1,
 	"show_common_surnames"=>"yes",
 	"stat_indi"=>"yes",
@@ -232,9 +232,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			if (!$block){
 				$content .= '<td class="facts_value">';
 				if (displayDetailsById($row["d_gid"])) {
-					ob_start();
-					print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
+					$content.=format_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", 'span');
+				} else {
+					$content.='&nbsp;';
 				}
 				$content .= '</td>';
 			}
@@ -261,9 +261,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			if (!$block){
 				$content .= '<td class="facts_value">';
 				if (displayDetailsById($row["d_gid"])) {
-					ob_start();
-					print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
+					$content.=format_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", 'span');
+				} else {
+					$content.='&nbsp;';
 				}
 				$content .= '</td>';
 			}
@@ -290,9 +290,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			if (!$block){
 				$content .= '<td class="facts_value">';
 				if (displayDetailsById($row["d_gid"])) {
-					ob_start();
-					print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
+					$content.=format_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", 'span');
+				} else {
+					$content.='&nbsp;';
 				}
 				$content .= '</td>';
 			}
@@ -319,9 +319,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			if (!$block){
 				$content .= '<td class="facts_value">';
 				if (displayDetailsById($row["d_gid"])) {
-					ob_start();
-					print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
+					$content.=format_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", 'span');
+				} else {
+					$content.='&nbsp;';
 				}
 				$content .= '</td>';
 			}
@@ -346,9 +346,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			if (!$block){
 				$content .= '<td class="facts_value">';
 				if (displayDetailsById($row[1])) {
-					ob_start();
-					print_list_person($row[1], array(get_person_name($row[1]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
+					$content.=format_list_person($row[1], array(get_person_name($row[1]), $GEDCOM), false, "", 'span');
+				} else {
+					$content.='&nbsp;';
 				}
 				$content .='</td>';
 			}
@@ -471,9 +471,9 @@ function print_gedcom_stats_config($config) {
 	?><tr><td class="descriptionbox wrap width33"> <?php print $pgv_lang["gedcom_stats_show_surnames"]; ?></td>
 <td class="optionbox"><select name="show_common_surnames">
 <option value="yes"
-<?php if ($config["show_common_surnames"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+<?php if ($config["show_common_surnames"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
 <option value="no"
-<?php if ($config["show_common_surnames"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+<?php if ($config["show_common_surnames"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
 </select></td>
 </tr>
 <tr>
