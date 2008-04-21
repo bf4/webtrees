@@ -2,6 +2,23 @@
 /**
  * Patriarch List
  *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2008 PhpGedView Development Team.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
  * The individual list shows all individuals from a chosen gedcom file. The list is
  * setup in two sections. The alphabet bar and the details.
  *
@@ -37,11 +54,11 @@
  * @subpackage Lists
  */
 
-require("config.php");
-require_once("includes/functions_print_lists.php");
+require 'config.php';
+require_once 'includes/functions_print_lists.php';
+
 $patrilist = array();
 $patrialpha = array();
-
 
 function indi2roots() {
 	global $ct,$patrilist,$patrialpha;
@@ -80,7 +97,7 @@ function indi2roots() {
 		if ($famc == "") {
 			$orignum ++;
 			$orignames["$key"]["name"]=$value;
-		 	$orignames["$key"]["gedfile"]=$value2;
+			$orignames["$key"]["gedfile"]=$value2;
 		}
 		$i++;
 	}
@@ -109,11 +126,11 @@ function indi2roots() {
 		if ($tmpletter!=$oldletter) $oldletter=$tmpletter;
 		if ((!isset($alpha)) || ($alpha = $tmpletter)) {
 			$orignames["$key"]["name"]=$value;
-		 	$orignames["$key"]["gedfile"]=$value2;
+			$orignames["$key"]["gedfile"]=$value2;
 			$letter=$tmpletter;
 			if (!isset($patrialpha[$letter])) {
-	 			$patrialpha[$letter]["letter"]= "$letter";
-	 			$patrialpha[$letter]["gid"]= "$key";
+				$patrialpha[$letter]["letter"]= "$letter";
+				$patrialpha[$letter]["gid"]= "$key";
 			}
 			else $patrialpha[$letter]["gid"].= ",$key";
 		}
@@ -282,11 +299,11 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	$indi_hide=array();
 	foreach($tpatrilist as $gid=>$fam) {
     if ($fam["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
-			if (displayDetailsById($gid)||showLivingNameById($gid)) {          //-- MA @@@@
-				extract_surname($fam["name"]);                                 //-- MA @@@@
+			if (displayDetailsById($gid)||showLivingNameById($gid)) {
+				extract_surname($fam["name"]);
 			}
 			else $indi_hide[$gid."[".$fam["gedfile"]."]"] = 1;
-	    }
+		}
 	}
 	$i = 0;
 	uasort($surnames, "itemsort");
@@ -363,7 +380,7 @@ else {
 		print "</td></tr><tr>\n";
 		print "<td class=\"list_value\"><ul>\n";
 		foreach($surnames as $k => $surname) {
-			print_list_person($surname["gid"], array($surname["name"], get_gedcom_from_id($surname["gedfile"])));
+			echo format_list_person($surname["gid"], array($surname["name"], get_gedcom_from_id($surname["gedfile"])));
 			$i++;
 			if ($i==floor($count/2)) print "</ul></td><td class=\"list_value\"><ul>\n";
 		}

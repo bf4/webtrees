@@ -28,13 +28,10 @@
  * @version $Id$
  */
 
-/**
- * load config file
- */
-require("config.php");
+require 'config.php';
 
-require_once("includes/functions_print_lists.php");
-require_once("includes/functions_edit.php");
+require_once 'includes/functions_print_lists.php';
+require_once 'includes/functions_edit.php';
 
 if (empty($ged)) $ged = $GEDCOM;
 $GEDCOM = $ged;
@@ -107,11 +104,11 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 		window.opener.paste_id(id);
 		window.close();
 	}
-	
+
 	function paste_id(value) {
 		pastefield.value = value;
 	}
-	
+
 	function paste_char(value,lang,mag) {
 		pastefield.value += value;
 		language_filter = lang;
@@ -143,7 +140,7 @@ if (!isset($m_file)) $m_file="";
 // NOTE: Store the entered data
 if ($action=="newentry") {
 	if (empty($level)) $level = 1;
-	
+
 	$error = "";
 	$mediaFile = "";
 	$thumbFile = "";
@@ -157,21 +154,21 @@ if ($action=="newentry") {
 		$folderName = dirname($folderName)."/";
 		$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
 
-		if (!empty($folderName)) { 
+		if (!empty($folderName)) {
 			$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
 			// if using the media firewall, automatically upload new files to the protected media directory
-			$serverFolderName = ($USE_MEDIA_FIREWALL) ? get_media_firewall_path($folderName) : $folderName; 
+			$serverFolderName = ($USE_MEDIA_FIREWALL) ? get_media_firewall_path($folderName) : $folderName;
 			// make sure the dir exists
 			@mkdirs($serverFolderName);
 		}
-		if (!empty($thumbFolderName)) { 
+		if (!empty($thumbFolderName)) {
 			// determine thumbdir and make sure it exists
-			$serverThumbFolderName = ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) ? get_media_firewall_path($thumbFolderName) : $thumbFolderName; 
+			$serverThumbFolderName = ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) ? get_media_firewall_path($thumbFolderName) : $thumbFolderName;
 			@mkdirs($serverThumbFolderName);
 		}
 
 		$error = "";
-		
+
 		// Determine file name on server
 		if (PGV_USER_GEDCOM_ADMIN && !empty($text[0])) {
 			$parts = pathinfo($text[0]);
@@ -200,7 +197,7 @@ if ($action=="newentry") {
 			if ($fileExists) {
 				$error .= $pgv_lang["media_exists"]."&nbsp;&nbsp;".$newFile."<br />";
 			} else {
-				if (!move_uploaded_file($_FILES["mediafile"]["tmp_name"], filename_decode($newFile))) { 
+				if (!move_uploaded_file($_FILES["mediafile"]["tmp_name"], filename_decode($newFile))) {
 					// the file cannot be copied
 					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["mediafile"]["error"]]."<br />";
 				} else {
@@ -215,7 +212,7 @@ if ($action=="newentry") {
 			if ($thumExists) {
 				$error .= $pgv_lang["media_thumb_exists"]."&nbsp;&nbsp;".$newThum."<br />";
 			} else {
-				if (!move_uploaded_file($_FILES["thumbnail"]["tmp_name"], filename_decode($newThum))) { 
+				if (!move_uploaded_file($_FILES["thumbnail"]["tmp_name"], filename_decode($newThum))) {
 					// the file cannot be copied
 					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["thumbnail"]["error"]]."<br />";
 				} else {
@@ -225,7 +222,7 @@ if ($action=="newentry") {
 		}
 		if ($error=="" && empty($_FILES["mediafile"]["name"]) && !empty($_FILES["thumbnail"]["name"])) {
 			// Copy user-supplied thumbnail file into the main destination directory
-			if (!copy(filename_decode($serverThumbFolderName.$mediaFile), filename_decode($serverFolderName.$mediaFile))) { 
+			if (!copy(filename_decode($serverThumbFolderName.$mediaFile), filename_decode($serverFolderName.$mediaFile))) {
 				// the file cannot be copied
 				$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["thumbnail"]["error"]]."<br />";
 			} else {
@@ -290,7 +287,7 @@ if ($action=="newentry") {
 			if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
 				$onegedcom = false;
 			$res->free();
-			
+
 			// Handle Admin request to rename or move media file
 			if ($filename!=$oldFilename) {
 				$parts = pathinfo($filename);
@@ -308,7 +305,7 @@ if ($action=="newentry") {
 			$oldFolder = check_media_depth($oldFolder."y.z", "BACK");
 			$oldFolder = dirname($oldFolder)."/";
 			$_SESSION["upload_folder"] = $folder; // store standard media folder in session
-			
+
 			$finalResult = true;
 			if ($filename!=$oldFilename || $folder!=$oldFolder) {
 				if (!$onegedcom) {
@@ -342,7 +339,7 @@ if ($action=="newentry") {
 						if ($isMain) $okMain = @rename(filename_decode($oldMainFile), filename_decode($newMainFile));
 						if ($isThum) $okThum = @rename(filename_decode($oldThumFile), filename_decode($newThumFile));
 					}
-                	
+
 					// Build text to tell Admin about the success or failure of the requested operation
 					$GLOBALS["oldMediaName"] = $oldFilename;
 					$GLOBALS["newMediaName"] = $filename;
@@ -353,7 +350,7 @@ if ($action=="newentry") {
 					$mediaAction = 0;
 					if ($filename!=$oldFilename) $mediaAction = 1;
 					if ($folder!=$oldFolder) $mediaAction = $mediaAction + 2;
-                	
+
 					if (!$isMain) {
 						print_text("main_media_fail0");
 					} else {
@@ -362,24 +359,24 @@ if ($action=="newentry") {
 							$finalResult = false;
 							print "<span class=\"largeError\">";
 							print_text("main_media_fail".$mediaAction);
-							print "</span>"; 
+							print "</span>";
 						}
 					}
 					print "<br />";
-        			
+
 					if (!$isThum) {
 						print_text("thumb_media_fail0");
 					} else {
-						if ($okThum) print_text("thumb_media_ok".$mediaAction); 
+						if ($okThum) print_text("thumb_media_ok".$mediaAction);
 						else {
 							$finalResult = false;
 							print "<span class=\"largeError\">";
 							print_text("thumb_media_fail".$mediaAction);
-							print "</span>"; 
+							print "</span>";
 						}
 					}
 					print "<br />";
-					
+
 					unset($GLOBALS["oldMediaName"]);
 					unset($GLOBALS["newMediaName"]);
 					unset($GLOBALS["oldMediaFolder"]);
@@ -388,18 +385,18 @@ if ($action=="newentry") {
 					unset($GLOBALS["newThumbFolder"]);
 				}
 			}
-			
+
 			// Insert the 1 FILE xxx record into the arrays used by function handle_updates()
- 			$glevels = array_merge(array("1"), $glevels);
- 			$tag = array_merge(array("FILE"), $tag);
- 			$islink = array_merge(array(0), $islink);
- 			$text = array_merge(array($folder.$filename), $text);
-    		
+			$glevels = array_merge(array("1"), $glevels);
+			$tag = array_merge(array("FILE"), $tag);
+			$islink = array_merge(array(0), $islink);
+			$text = array_merge(array($folder.$filename), $text);
+
 			$mediaFile = $filename;
 			$folderName = $folder;
 		}
 	}
-	
+
 	if ($finalResult && $mediaFile!="") {
 		// NOTE: Build the gedcom record
 		// NOTE: Level 0
@@ -410,7 +407,7 @@ if ($action=="newentry") {
 		else $newged .= "1 FILE ".$folderName.$mediaFile."\r\n";
 
 		$newged = handle_updates($newged);
-		
+
 		require_once 'includes/media_class.php';
 		$media_obje = new Media($newged);
 		$mediaid = Media::in_obje_list($media_obje);
@@ -445,10 +442,10 @@ if ($action == "update") {
 	if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
 		$onegedcom = false;
 	$res->free();
-	
+
 	$isExternal = isFileExternal($oldFilename) || isFileExternal($filename);
 	$finalResult = true;
-		
+
 	// Handle Admin request to rename or move media file
 	if (!$isExternal) {
 		if ($filename!=$oldFilename) {
@@ -458,7 +455,7 @@ if ($action == "update") {
 				$filename .= ".".$parts["extension"];
 			}
 		}
-		if (!isset($folder) && isset($oldFolder)) $folder = $oldFolder; 
+		if (!isset($folder) && isset($oldFolder)) $folder = $oldFolder;
 		if (substr($folder,-1)!="/") $folder .= "/";
 		if ($folder=="/") $folder = "";
 		$folder = check_media_depth($folder."y.z", "BACK");
@@ -468,7 +465,7 @@ if ($action == "update") {
 		$oldFolder = check_media_depth($oldFolder."y.z", "BACK");
 		$oldFolder = dirname($oldFolder)."/";
 	}
-		
+
 	if ($filename!=$oldFilename || $folder!=$oldFolder) {
 		if (!$onegedcom) {
 			print "<span class=\"largeError\">".$pgv_lang["multiple_gedcoms"]."<br /><br /><b>";
@@ -501,7 +498,7 @@ if ($action == "update") {
 				if ($isMain) $okMain = @rename(filename_decode($oldMainFile), filename_decode($newMainFile));
 				if ($isThum) $okThum = @rename(filename_decode($oldThumFile), filename_decode($newThumFile));
 			}
-			
+
 			// Build text to tell Admin about the success or failure of the requested operation
 			$GLOBALS["oldMediaName"] = $oldFilename;
 			$GLOBALS["newMediaName"] = $filename;
@@ -512,7 +509,7 @@ if ($action == "update") {
 			$mediaAction = 0;
 			if ($filename!=$oldFilename) $mediaAction = 1;
 			if ($folder!=$oldFolder) $mediaAction = $mediaAction + 2;
-        	
+
 			if (!$isMain) {
 				print_text("main_media_fail0");
 			} else {
@@ -521,24 +518,24 @@ if ($action == "update") {
 					$finalResult = false;
 					print "<span class=\"largeError\">";
 					print_text("main_media_fail".$mediaAction);
-					print "</span>"; 
+					print "</span>";
 				}
 			}
 			print "<br />";
-        	
+
 			if (!$isThum) {
 				print_text("thumb_media_fail0");
 			} else {
-				if ($okThum) print_text("thumb_media_ok".$mediaAction); 
+				if ($okThum) print_text("thumb_media_ok".$mediaAction);
 				else {
 					$finalResult = false;
 					print "<span class=\"largeError\">";
 					print_text("thumb_media_fail".$mediaAction);
-					print "</span>"; 
+					print "</span>";
 				}
 			}
 			print "<br />";
-			
+
 			unset($GLOBALS["oldMediaName"]);
 			unset($GLOBALS["newMediaName"]);
 			unset($GLOBALS["oldMediaFolder"]);
@@ -547,21 +544,21 @@ if ($action == "update") {
 			unset($GLOBALS["newThumbFolder"]);
 		}
 	}
-	
+
 	if ($finalResult) {
- 		$_SESSION["upload_folder"] = $folder; // store standard media folder in session
+		$_SESSION["upload_folder"] = $folder; // store standard media folder in session
 
 		// Insert the 1 FILE xxx record into the arrays used by function handle_updates()
- 		$glevels = array_merge(array("1"), $glevels);
- 		$tag = array_merge(array("FILE"), $tag);
- 		$islink = array_merge(array(0), $islink);
- 		$text = array_merge(array($folder.$filename), $text);
- 		
+		$glevels = array_merge(array("1"), $glevels);
+		$tag = array_merge(array("FILE"), $tag);
+		$islink = array_merge(array(0), $islink);
+		$text = array_merge(array($folder.$filename), $text);
+
 		$newrec = "0 @$pid@ OBJE\r\n";
 		$newrec = handle_updates($newrec);
 		//print("[".$newrec."]");
 		//-- look for the old record media in the file
-		//-- if the old media record does not exist that means it was 
+		//-- if the old media record does not exist that means it was
 		//-- generated at import and we need to append it
 		//$oldrec = find_record_in_file($pid);
 		//if (!empty($oldrec)) {
@@ -570,7 +567,7 @@ if ($action == "update") {
 		//	$pid = append_gedrec($newrec);
 		//	if ($pid) AddToChangeLog("Media ID ".$pid." successfully added.");
 		//}
-    	
+
 		if ($pid && $linktoid!="") {
 			$link = linkMedia($pid, $linktoid, $level);
 			if ($link) {
@@ -605,7 +602,7 @@ if ($action=="showmedia") {
 			print "<td class=\"list_value\"><a href=\"addmedia.php?action=edit&m_id=".$media["ID"]."\">edit</a></td>";
 			print "<td class=\"list_value\">".$media["TITL"]."</td>";
 			print "<td class=\"list_value\">";
-			print_list_person($media["INDI"], array(get_person_name($media["INDI"]), $GEDCOM));
+			echo format_list_person($media['INDI'], array(get_person_name($media["INDI"]), $GEDCOM), false, '', 'div');
 			print "</td>";
 			print "<td class=\"list_value\">".$media["FILE"]."</td>";
 			print "<td class=\"list_value\">".$media["_PRIM"]."</td>";
