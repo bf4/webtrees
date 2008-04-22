@@ -62,8 +62,8 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
  			print PrintReady("(".$controller->pid.")");
 			if (PGV_USER_IS_ADMIN) {
 				$pgvuser=get_user_from_gedcom_xref($GEDCOM, $controller->pid);
-				if ($pgvuser!==false) {
-  					print "&nbsp;";
+				if ($pgvuser) {
+  				print "&nbsp;";
 					print printReady("(<a href=\"useradmin.php?action=edituser&username={$pgvuser}\">{$pgvuser}</a>)");
 				}
 			}
