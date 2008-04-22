@@ -38,7 +38,7 @@ $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	);
 	
 function print_charts_block($block = true, $config="", $side, $index) {
-	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID;
+	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID;
 	global $show_full, $bwidth, $bheight;
 	
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
