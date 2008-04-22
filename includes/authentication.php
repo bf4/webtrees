@@ -12,7 +12,7 @@
  * $Id$
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ function authenticateUser($user_name, $password, $basic=false) {
 					$_SESSION['CLANGUAGE'] = get_user_setting($user_id, 'language');
 				//-- only change the gedcom if the user does not have an gedcom id
 				//-- for the currently active gedcom
-				if (get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid')=='') {
+				if (get_user_gedcom_setting($user_id, PGV_GED_ID, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
 					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
