@@ -954,11 +954,8 @@ class stats
 			default:
 			case 'full':
 			{
-				if(displayDetailsById($row['f_id']) && displayDetailsById($row[$sex_field])) {
-					ob_start();
-					print_list_family($row['f_id'], array(get_person_name($row[$sex_field]), $this->_gedcom['gedcom']), false, '', false);
-					$fam=ob_get_contents();
-					ob_end_clean();
+				if (displayDetailsById($row['f_id']) && displayDetailsById($row[$sex_field])) {
+					$fam=format_list_family($row['f_id'], array(get_person_name($row[$sex_field]), $this->_gedcom['gedcom']), false, '', 'span');
 				} else {
 					$fam=$pgv_lang['privacy_error'];
 				}
@@ -1026,10 +1023,7 @@ class stats
 			{
 				if(displayDetailsById($row['id'], 'FAM'))
 				{
-					ob_start();
-					print_list_family($row['id'], array(get_family_descriptor($row['id']), $this->_gedcom['gedcom']), false, '', false);
-					$fam = ob_get_contents();
-					ob_end_clean();
+					$fam=format_list_family($row['id'], array(get_family_descriptor($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
 				}
 				else
 				{

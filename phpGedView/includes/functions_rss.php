@@ -214,8 +214,7 @@ function getGedcomStats() {
 		}
 	}
 
-	//TODO: print_list_family is not sutible for use here due to its output of HTML
-	/*if (!isset($config["stat_most_chil"]) || $config["stat_most_chil"]=="yes") {
+	if (!isset($config["stat_most_chil"]) || $config["stat_most_chil"]=="yes") {
 		//-- most children
 		$sql = "SELECT f_numchil, f_id FROM ".$TBLPREFIX."families WHERE f_file='".$GEDCOMS[$GEDCOM]["id"]."' ORDER BY f_numchil DESC";
 		//print $sql;
@@ -226,10 +225,10 @@ function getGedcomStats() {
 			$res->free();
 			$data .= $pgv_lang["stat_most_children"] . $row[0];
 			if (displayDetailsById($row[1], "FAM")) {
-				print_list_family($row[1], array(get_family_descriptor($row[1]), $GEDCOM), false, "", false);
+				$data.=format_list_family($row[1], array(get_family_descriptor($row[1]), $GEDCOM), false, '', 'span');
 			}
 		}
-	}*/
+	}
 
 	if (!isset($config["stat_avg_chil"]) || $config["stat_avg_chil"]=="yes") {
 		//-- avg number of children
