@@ -335,19 +335,19 @@ class stats
 		{
 			default:
 			case 'all':
-				$per=round(100 * $total / (get_list_size('indilist') + get_list_size('famlist') + get_list_size('sourcelist') + get_list_size('otherlist')), 2);
+				$per=round(100 * $total / ($this->totalIndividuals() + $this->totalFamilies() + $this->totalSources() + $this->totalOtherRecords()), 2);
 				break;
 			case 'individual':
-				$per=round(100 * $total / get_list_size('indilist'), 2);
+				$per=round(100 * $total / $this->totalIndividuals(), 2);
 				break;
 			case 'family':
-				$per=round(100 * $total / get_list_size('famlist'), 2);
+				$per=round(100 * $total / $this->totalFamilies(), 2);
 				break;
 			case 'source':
-				$per=round(100 * $total / get_list_size('sourcelist'), 2);
+				$per=round(100 * $total / $this->totalSources(), 2);
 				break;
 			case 'other':
-				$per=round(100 * $total / get_list_size('otherlist'), 2);
+				$per=round(100 * $total / $this->totalOtherRecords(), 2);
 				break;
 		}
 		return $per;
@@ -355,42 +355,50 @@ class stats
 
 	function totalIndividuals()
 	{
-		return get_list_size('indilist');
+		global $TBLPREFIX;
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
 
 	function totalIndividualsPercentage()
 	{
-		return $this->_getPercentage(get_list_size('indilist'), 'all', 2);
+		return $this->_getPercentage($this->totalIndividuals(), 'all', 2);
 	}
 
 	function totalFamilies()
 	{
-		return get_list_size('famlist');
+		global $TBLPREFIX;
+		$rows=$this->_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
 
 	function totalFamiliesPercentage()
 	{
-		return $this->_getPercentage(get_list_size('famlist'), 'all', 2);
+		return $this->_getPercentage($this->totalFamilies(), 'all', 2);
 	}
 
 	function totalSources()
 	{
-		return get_list_size('sourcelist');
+		global $TBLPREFIX;
+		$rows=$this->_runSQL("SELECT COUNT(s_id) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
 
 	function totalSourcesPercentage()
 	{
-		return $this->_getPercentage(get_list_size('sourcelist'), 'all', 2);
+		return $this->_getPercentage($this->totalSources(), 'all', 2);
 	}
 
 	function totalOtherRecords()
 	{
-		return get_list_size('otherlist');
+		global $TBLPREFIX;
+		$rows=$this->_runSQL("SELECT COUNT(o_id) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
 
 	function totalOtherPercentage()
 	{
-		return $this->_getPercentage(get_list_size('otherlist'), 'all', 2);
+		return $this->_getPercentage($this->totalOtherRecords(), 'all', 2);
 	}
 
 	function totalSurnames()
