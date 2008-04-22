@@ -64,15 +64,14 @@ function format_list_person($key, $value, $findid=false, $asso="", $tag='li') {
 	$html='';
 	$disp = $person->canDisplayDetails();
 	if ($person->canDisplayName()) {
-		if (begRTLText($value[0])) $listDir = "rtl";
-		else $listDir = "ltr";
+		$listDir=begRTLText($value[0]) ? 'rtl' : 'ltr';
 		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
-		if ($findid == true) {
+		if ($findid) {
 			$html.='<a href="javascript:;" onclick="pasteid(\''.$key.'\', \''.preg_replace("/(['\"])/", "\\$1", PrintReady($value[0])).'\'); return false;" class="list_item"><b>'.$value[0].'</b>';
 		} else {
 			$html.='<a href="individual.php?pid='.$key.'&amp;ged='.$value[1].'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
 		}
-		if ($SHOW_ID_NUMBERS) {
+		if ($SHOW_ID_NUMBERS && $key) {
 			if ($listDir=='rtl') {
 				$html.=' '.getRLM().'('.$key.')'.getRLM();
 			} else {
@@ -121,7 +120,7 @@ function format_list_person($key, $value, $findid=false, $asso="", $tag='li') {
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
+function format_list_family($key, $value, $findid=false, $asso="", $tag='li') {
 	global $pgv_lang, $pass, $fam_private, $fam_hide, $fam_total, $SHOW_ID_NUMBERS;
 	global $GEDCOM, $TEXT_DIRECTION;
 	$GEDCOM = $value[1];
@@ -139,29 +138,31 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 		$showLivingHusb=showLivingNameByID($parents["HUSB"]);
 		$showLivingWife=showLivingNameByID($parents["WIFE"]);
 	}
+	$html='';
 	if ($showLivingWife && $showLivingHusb) {
-		if (begRTLText($value[0])) $listDir = "rtl";
-		else $listDir = "ltr";
-		if ($useli) $tag = "li";
-		else $tag = "span";
-		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."'); return false;\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
-		else print "<a href=\"family.php?famid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
-		if ($SHOW_ID_NUMBERS) {
-			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print getRLM();
-			print "(".$key.")";
-			if ($listDir=="rtl") print getRLM();
-			print "&nbsp;&nbsp;";
+		$listDir=begRTLText($value[0]) ? 'rtl' : 'ltr';
+		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
+		if ($findid) {
+			$html.='<a href="javascript:;" onclick="pasteid(\''.$key.'\'); return false;" class="list_item"><b>'.PrintReady($value[0]).'</b>';
+		}	else {
+			$html.='<a href="family.php?famid='.$key.'&amp;ged='.$value[1].'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
 		}
+		if ($SHOW_ID_NUMBERS && $key) {
+			if ($listDir=='rtl') {
+				$html.=' '.getRLM().'('.$key.')'.getRLM();
+			} else {
+				$html.=' ('.$key.')';
+			}
+		}
+
 		if (!$display) {
-			print "<br /><i>".$pgv_lang["private"]."</i>";
+			$html.="<br /><i>".$pgv_lang["private"]."</i>";
 			$fam_private[$key."[".$GEDCOM."]"] = 1;
+		} else {
+			$html.=format_first_major_fact($key, array("MARR"));
+			$html.=format_first_major_fact($key, array("DIV"));
 		}
-		else {
-			echo format_first_major_fact($key, array("MARR")), format_first_major_fact($key, array("DIV"));
-		}
-		print "</a>";
+		$html.="</a>";
 		if ($asso != "") {
 			$p1 = strpos($asso,"[");
 			$p2 = strpos($asso,"]");
@@ -171,17 +172,21 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 			$GEDCOM = $ged;
 			$name = get_person_name($key);
 			$GEDCOM = $oldged;
-			print " <a href=\"individual.php?pid=$indikey&amp;ged=$ged\" title=\"$name\" class=\"list_item\">";
-			print "&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="ltr") print "(".$pgv_lang["associate"]."&nbsp;&nbsp;".$indikey.")</a>";
-			else print getRLM() . "(" . getRLM() .$pgv_lang["associate"]." &nbsp;&nbsp;".$indikey.getRLM() . ")" . getRLM() . "</span></a>";
+			$html.=' <a href="individual.php?pid='.$indikey.'&amp;ged='.$ged.'" title="'.$name.'" class="list_item">';
+			$html.='&nbsp;&nbsp;';
+			if ($TEXT_DIRECTION=="ltr") {
+				$html.='('.$pgv_lang['associate'].'&nbsp;&nbsp;'.$indikey.')</a>';
+			} else {
+				$html.=getRLM().'('.getRLM().$pgv_lang['associate'].'&nbsp;&nbsp;'.$indikey.getRLM().')'.getRLM().'</span></a>';
+			}
 		}
-		print "</".$tag.">";
-	}															//begin re-added by pluntke
-	if (!$showLivingWife || !$showLivingHusb) {				   	//fixed THIS line (changed && to ||)
-		$pass = TRUE;
+		$html.='</'.$tag.'>';
+	}
+	if (!$showLivingWife || !$showLivingHusb) {
+		$pass=true;
 		$fam_hide[$key."[".$GEDCOM."]"] = 1;
-	}															//end re-added by pluntke
+	}
+	return $html;
 }
 
 /**
@@ -193,28 +198,31 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_source($key, $value, $useli=true) {
+function format_list_source($key, $value, $tag='li') {
 	global $source_total, $source_hide, $SHOW_ID_NUMBERS, $GEDCOM;
 
 	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
-	if (!isset($source_total)) $source_total=array();
-	$source_total[$key."[".$GEDCOM."]"] = 1;
-	if (displayDetailsByID($key, "SOUR")) {
-		if (begRTLText($value["name"])) $listDir = "rtl";
-		else $listDir = "ltr";
-		if ($useli) $tag = "li";
-		else $tag = "span";
-		print "\n\t\t\t<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		print "\n\t\t\t<a href=\"source.php?sid=$key&amp;ged=".get_gedcom_from_id($value["gedfile"])."\" class=\"list_item\"><b>".PrintReady($value["name"])."</b>";
-		if ($SHOW_ID_NUMBERS) {
-			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print getRLM() . "(".$key.")" . getRLM();
-			else print getLRM() . "(".$key.")" . getLRM();
-		}
-		print "</a>\n";
-		print "</".$tag.">\n";
+	if (!isset($source_total)) {
+		$source_total=array();
 	}
-	else $source_hide[$key."[".$GEDCOM."]"] = 1;
+	$source_total[$key."[".$GEDCOM."]"] = 1;
+	$html='';
+	if (displayDetailsByID($key, "SOUR")) {
+		$listDir=begRTLText($value['name']) ? 'rtl' : 'ltr';
+		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
+		$html.='<a href="source.php?sid='.$key.'&amp;ged='.get_gedcom_from_id($value['gedfile']).'" class="list_item"><b>'.PrintReady($value['name']).'</b>';
+		if ($SHOW_ID_NUMBERS && $key) {
+			if ($listDir=='rtl') {
+				$html.=' '.getRLM().'('.$key.')'.getRLM();
+			} else {
+				$html.=' ('.$key.')';
+			}
+		}
+		$html.='</a></'.$tag.'>';
+	} else {
+		$source_hide[$key.'['.$GEDCOM.']'] = 1;
+	}
+	return $html;
 }
 
 /**
@@ -225,29 +233,33 @@ function print_list_source($key, $value, $useli=true) {
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_repository($key, $value, $useli=true) {
+function format_list_repository($key, $value, $tag='li') {
 	global $repo_total, $repo_hide, $SHOW_ID_NUMBERS, $GEDCOM;
 
-	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
-	if (!isset($repo_total)) $repo_total=array();
-	$repo_total[$key."[".$GEDCOM."]"] = 1;
-	if (displayDetailsByID($key, "REPO")) {
-		if (begRTLText($value["name"])) $listDir = "rtl";
-		else $listDir = "ltr";
-		if ($useli) $tag = "li";
-		else $tag = "span";
-		print "\n\t\t\t<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		$id = $value["id"];
-		print "<a href=\"repo.php?rid=$id\" class=\"list_item\">";
-		print PrintReady($value["name"]);
-		if ($SHOW_ID_NUMBERS) {
-			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print getRLM() . "(".$id.")" . getRLM();
-			else print getLRM() . "(".$id.")" . getLRM();
-		}
-		print "</a></".$tag.">\n";
+	$GEDCOM = get_gedcom_from_id($value['gedfile']);
+	if (!isset($repo_total)) {
+		$repo_total=array();
 	}
-	else $repo_hide[$key."[".$GEDCOM."]"] = 1;
+	$repo_total[$key.'['.$GEDCOM.']'] = 1;
+	$html='';
+	if (displayDetailsByID($key, 'REPO')) {
+		$listDir=begRTLText($value[0]) ? 'rtl' : 'ltr';
+		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
+		$id = $value['id'];
+		$html.='<a href="repo.php?rid='.$id.'" class="list_item">';
+		$html.=PrintReady($value['name']);
+		if ($SHOW_ID_NUMBERS && $key) {
+			if ($listDir=='rtl') {
+				$html.=' '.getRLM().'('.$key.')'.getRLM();
+			} else {
+				$html.=' ('.$key.')';
+			}
+		}
+		$html.='</a></'.$tag.'>';
+	} else {
+		$repo_hide[$key.'['.$GEDCOM.']'] = 1;
+	}
+	return $html;
 }
 
 /**

@@ -396,11 +396,11 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 </td>
 <td class="facts_value">';
 			if (displayDetailsById($row[1], "FAM")) {
-				ob_start();
-				print_list_family($row[1], array(get_family_descriptor($row[1]), $GEDCOM), false, "", false);
-				$content .= ob_get_clean();
+				$content.=format_list_family($row[1], array(get_family_descriptor($row[1]), $GEDCOM), false, '', 'span');
+			} else {
+				$content.='&nbsp;';
 			}
-			$content .= '</td>
+			$content.='</td>
 </tr>';
 		}
 	}

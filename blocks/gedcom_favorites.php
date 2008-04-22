@@ -82,18 +82,14 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 					if ($favorite["type"]=="FAM") {
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
 						if ($ctype=="user" || userGedcomAdmin()) $content .= $removeFavourite;
-						ob_start();
-						print_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, "", false);
-						$content .= ob_get_clean();
+						$content .= format_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, '', 'span');
 						$content .= PrintReady($favorite["note"]);
 						$content .= "</div>\n";
 					}
 					if ($favorite["type"]=="SOUR") {
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
 						if ($ctype=="user" || userGedcomAdmin()) $content .= $removeFavourite;
-						ob_start();
-						print_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], false);
-						$content .= ob_get_clean();
+						$content.=format_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], 'span');
 						$content .= PrintReady($favorite["note"]);
 						$content .= "</div>\n";
 					}

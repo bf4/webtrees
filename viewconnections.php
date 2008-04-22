@@ -108,7 +108,7 @@ foreach($Links as $pid=>$indi){
 <?php
 foreach($famLinks as $famPid=>$fam){
 	$fullname = check_NN($fam["name"]);
-	print_list_family($famPid, array($fullname, $GEDCOM));
+	echo format_list_family($famPid, array($fullname, $GEDCOM));
 }
 ?>
 </ul>
