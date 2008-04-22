@@ -48,21 +48,23 @@ if ($MULTI_MEDIA) {
 		"filter_tiff" =>"yes",
 		"filter_wav"  =>"no",
 
-		"filter_audio"      =>"no",
-		"filter_book"       =>"yes",
-		"filter_card"       =>"yes",
+		"filter_audio"		=>"no",
+		"filter_book"		=>"yes",
+		"filter_card"		=>"yes",
 		"filter_certificate"=>"yes",
-		"filter_document"   =>"yes",
-		"filter_electronic" =>"yes",
-		"filter_fiche"      =>"yes",
-		"filter_film"       =>"yes",
-		"filter_magazine"   =>"yes",
-		"filter_manuscript" =>"yes",
-		"filter_map"        =>"yes",
-		"filter_newspaper"  =>"yes",
-		"filter_photo"      =>"yes",
-		"filter_tombstone"  =>"yes",
-		"filter_video"      =>"no"
+		"filter_document"	=>"yes",
+		"filter_electronic"	=>"yes",
+		"filter_fiche"		=>"yes",
+		"filter_film"		=>"yes",
+		"filter_magazine"	=>"yes",
+		"filter_manuscript"	=>"yes",
+		"filter_map"		=>"yes",
+		"filter_newspaper"	=>"yes",
+		"filter_other"		=>"yes",
+		"filter_painting"	=>"yes",
+		"filter_photo"		=>"yes",
+		"filter_tombstone"	=>"yes",
+		"filter_video"		=>"no"
 	);
 
 	require_once 'includes/functions_print_facts.php';
@@ -360,6 +362,8 @@ function openPic(filename, width, height) {
 			$config["filter_tombstone"]		= "yes";
 			$config["filter_video"]			= "no";
 		}
+		if (!isset($config["filter_other"])) $config["filter_other"] = "yes";
+		if (!isset($config["filter_painting"])) $config["filter_painting"] = "yes";
 	
 		print "<tr><td class=\"descriptionbox wrap width33\">";
 				print_help_link("random_media_persons_or_all_help", "qm");
@@ -431,13 +435,15 @@ function openPic(filename, width, height) {
 				//-- Build array of currently defined values for the Media Type
 				foreach ($pgv_lang as $varname => $typeValue) {
 					if (substr($varname, 0, 6) == "TYPE__") {
-						$type[strtolower(substr($varname, 6))] = $typeValue;
+						if ($varname != "TYPE__other") $type[strtolower(substr($varname, 6))] = $typeValue;
 					}
 				}
 				//-- Sort the array into a meaningful order
 				array_flip($type);
 				asort($type);
 				array_flip($type);
+				//-- Add "Other" at the end
+				$type["other"] = $pgv_lang["TYPE__other"];
 				//-- Build the list of checkboxes
 				$i = 0;
 				foreach ($type as $typeName => $typeValue) {

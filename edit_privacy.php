@@ -112,30 +112,24 @@ function search_ID_details($checkVar, $outputVar) {
 			$pid = $match[1];
 			$type = trim($match[2]);
 		}
-		if ($type=="INDI") {
-			$name = get_person_name($pid);
-			print "\n<span class=\"list_item\">".PrintReady($name);
-			print_first_major_fact($pid);
-			print "</span>\n";
+		switch ($type) {
+		case 'INDI':
+			echo '<span class="list_item">', PrintReady(get_person_name($pid)), format_first_major_fact($pid), '</span>';
+			break;
+		case 'SOUR':
+			echo '<span class="list_item">', PrintReady(get_source_descriptor($pid)), '</span>';
+			break;
+		case 'FAM':
+			echo '<span class="list_item">', PrintReady(get_family_descriptor($pid)), '</span>';
+			break;
+		case 'REPO':
+			echo '<span class="list_item">', PrintReady(get_repo_descriptor($pid)), '</span>';
+			break;
+		default:
+			echo $type, ' ', $pid;
+			break;
 		}
-		else if ($type=="SOUR") {
-			$name = get_source_descriptor($pid);
-			print "\n<span class=\"list_item\">".PrintReady($name);
-			print "</span>\n";
-		}
-		else if ($type=="FAM") {
-			$name = get_family_descriptor($pid);
-			print "\n<span class=\"list_item\">".PrintReady($name);
-			print "</span>\n";
-		}
-		else if ($type=="REPO") {
-			$name = get_repo_descriptor($pid);
-			print "\n<span class=\"list_item\">".PrintReady($name);
-			print "</span>\n";
-		}
-		else print "$type $pid";
-	}
-	else {
+	} else {
 		print "<span class=\"error\">";
 		if ($outputVar == 1) {
 			print $pgv_lang["unable_to_find_privacy_indi"];
@@ -154,14 +148,14 @@ $PRIVACY_MODULE = get_privacy_file();
 
 print_header($pgv_lang["privacy_header"]);
 ?>
-<table class="facts_table <?php print $TEXT_DIRECTION ?>">
+<table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
 		<td colspan="2" class="facts_label"><?php
 			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".get_gedcom_setting($ged, 'title'). "</h2>";
 			print "(" . getLRM() . $PRIVACY_MODULE.")";
 			print "<br /><br /><a href=\"editgedcoms.php\"><b>";
 			print $pgv_lang["lang_back_manage_gedcoms"];
-			print "</b></a><br /><br />";?>
+			print "</b></a><br /><br />"; ?>
 		</td>
 	</tr>
 </table>
@@ -329,7 +323,7 @@ if ($action=="update") {
 		?>
 	<table class="facts_table">
 			<tr>
-				<td class="topbottombar <?php print $TEXT_DIRECTION;?>">
+				<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 		<?php
 				print "<a href=\"javascript: ".$pgv_lang["general_privacy"]."\" onclick=\"expand_layer('general-privacy-options');return false\"><img id=\"general-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";
 		print_help_link("general_privacy_help", "qm", "general_privacy");
@@ -344,7 +338,7 @@ if ($action=="update") {
 		<div id="general-privacy-options" style="display: block">
 		<table class="facts_table">
 			<tr>
-				<td class="descriptionbox wrap width20 <?php print $TEXT_DIRECTION;?>"><?php print_help_link("SHOW_DEAD_PEOPLE_help", "qm", "SHOW_DEAD_PEOPLE"); print $pgv_lang["SHOW_DEAD_PEOPLE"]; ?>
+				<td class="descriptionbox wrap width20 <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("SHOW_DEAD_PEOPLE_help", "qm", "SHOW_DEAD_PEOPLE"); print $pgv_lang["SHOW_DEAD_PEOPLE"]; ?>
 				</td>
 				<td class="optionbox">
 					<select size="1" name="v_SHOW_DEAD_PEOPLE"><?php write_access_option($SHOW_DEAD_PEOPLE); ?></select>
@@ -446,9 +440,9 @@ if ($action=="update") {
 			</tr>
 
 		<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("MAX_ALIVE_AGE_help", "qm", "MAX_ALIVE_AGE"); print $pgv_lang["MAX_ALIVE_AGE"]?>
+		<td class="descriptionbox wrap"><?php print_help_link("MAX_ALIVE_AGE_help", "qm", "MAX_ALIVE_AGE"); print $pgv_lang["MAX_ALIVE_AGE"]; ?>
 		</td>
-		<td class="optionbox"><input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE?>" size="5"/>
+		<td class="optionbox"><input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE; ?>" size="5"/>
 		</td>
 		</tr>
 		</table>
@@ -460,9 +454,9 @@ if ($action=="update") {
 		?>
 		<table class="facts_table">
 			<tr>
-				<td class="topbottombar <?php print $TEXT_DIRECTION;?>">
+				<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-		print "<a href=\"javascript: ".$pgv_lang["person_privacy"]."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";?><?php print_help_link("person_privacy_help", "qm", "person_privacy");?>
+		print "<a href=\"javascript: ".$pgv_lang["person_privacy"]."\" onclick=\"expand_layer('person-privacy-options');return false\"><img id=\"person-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?><?php print_help_link("person_privacy_help", "qm", "person_privacy"); ?>
 					<a href="javascript: <?php print $pgv_lang["person_privacy"]; ?>" onclick="expand_layer('person-privacy-options');return false"><b><?php print $pgv_lang["person_privacy"]; ?></b></a>
 					</td>
 		</tr>
@@ -528,10 +522,10 @@ if ($action=="update") {
 							</td>
 						</tr>
 						<?php
-						}?>
+						} ?>
 					</table>
 					<?php
-					}?>
+					} ?>
 		</div>
 
 	<?php //--------------user_privacy--------------------------------------------------------------------------
@@ -540,9 +534,9 @@ if ($action=="update") {
 		?>
 	<table class="facts_table">
 		<tr>
-			<td class="topbottombar <?php print $TEXT_DIRECTION;?>">
+			<td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 				<?php
-				print "<a href=\"javascript: ".$pgv_lang["user_privacy"]."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";?><?php print_help_link("user_privacy_help", "qm", "user_privacy");?>
+				print "<a href=\"javascript: ".$pgv_lang["user_privacy"]."\" onclick=\"expand_layer('user-privacy-options');return false\"><img id=\"user-privacy-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?><?php print_help_link("user_privacy_help", "qm", "user_privacy"); ?>
 		<a href="javascript: <?php print $pgv_lang["user_privacy"]; ?>" onclick="expand_layer('user-privacy-options');return false"><b><?php print $pgv_lang["user_privacy"]; ?></b></a>
 					</td>
 		</tr>
@@ -629,19 +623,19 @@ if ($action=="update") {
 
 						<?php
 						}
-						}?>
+						} ?>
 					</table>
 					<?php
-					}?>
+					} ?>
 	</div>
 	<?php //-------------global_facts------------------------------------------------------------------------
 
 		// NOTE: Global Settings header bar
 		?>
-	<table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION;?>">
+	<table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 		<?php
-		print "<a href=\"javascript: ".$pgv_lang["global_facts"]."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";?>
-				<?php print_help_link("global_facts_help", "qm", "global_facts");?>
+		print "<a href=\"javascript: ".$pgv_lang["global_facts"]."\" onclick=\"expand_layer('global-facts-options');return false\"><img id=\"global-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				<?php print_help_link("global_facts_help", "qm", "global_facts"); ?>
 		<a href="javascript: <?php print $pgv_lang["global_facts"]; ?>" onclick="expand_layer('global-facts-options');return false"><b><?php print $pgv_lang["global_facts"]; ?></b></a></td>
 			</tr>
 		</table>
@@ -732,10 +726,10 @@ if ($action=="update") {
 	<?php //-------------person_facts------------------------------------------------------------------------
 			// NOTE: Person Facts header bar
 		?>
-	<table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION;?>">
+	<table class="facts_table"><tr><td class="topbottombar <?php print $TEXT_DIRECTION; ?>">
 		<?php
-		print "<a href=\"javascript: ".$pgv_lang["person_facts"]."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> ";?>
-				<?php print_help_link("person_facts_help", "qm", "person_facts");?>
+		print "<a href=\"javascript: ".$pgv_lang["person_facts"]."\" onclick=\"expand_layer('person-facts-options');return false\"><img id=\"person-facts-options_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a> "; ?>
+				<?php print_help_link("person_facts_help", "qm", "person_facts"); ?>
 		<a href="javascript: <?php print $pgv_lang["person_facts"]; ?>" onclick="expand_layer('person-facts-options');return false"><b><?php print $pgv_lang["person_facts"]; ?></b></a></td>
 			</tr>
 		</table>
@@ -838,13 +832,13 @@ if ($action=="update") {
 				?>
 			</table>
 			<?php
-			}?>
+			} ?>
 		</div>
 		<table class="facts_table" border="0">
 	<tr><td class="topbottombar">
-	<input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"]?>" onclick="closeHelp();" />
+	<input type="submit" tabindex="<?php $i++; print $i; ?>" value="<?php print $pgv_lang["save_config"]; ?>" onclick="closeHelp();" />
 	&nbsp;&nbsp;
-	<input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"]?>" /><br />
+	<input type="reset" tabindex="<?php $i++; print $i; ?>" value="<?php print $pgv_lang["reset"]; ?>" /><br />
 	</td></tr>
 	</table>
 		</form>

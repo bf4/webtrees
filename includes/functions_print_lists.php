@@ -6,7 +6,7 @@
  * used on the indilist, famlist, find, and search pages.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,10 +32,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once("includes/person_class.php");
+require_once 'includes/person_class.php';
 
 /**
- * print a person in a list
+ * format a person for display in a list
  *
  * This function will print a
  * clickable link to the individual.php
@@ -46,7 +46,7 @@ require_once("includes/person_class.php");
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
+function format_list_person($key, $value, $findid=false, $asso="", $tag='li') {
 	global $pgv_lang, $pass, $indi_private, $indi_hide, $indi_total;
 	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 
@@ -57,46 +57,40 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 	if (!isset($indi_total)) $indi_total=array();
 	$indi_total[$key."[".$GEDCOM."]"] = 1;
 
-	$tag = "span";
-	if ($useli) $tag = "li";
-
 	$person = Person::getInstance($key);
 	if (is_null($person)) {
-		print "<".$tag.">";
-		print "<span class=\"error\">".$pgv_lang["unable_to_find_record"]." ".$key."</span>";
-		print "</".$tag.">";
-		return;
+		return '<'.$tag.' span class="error">'.$pgv_lang['unable_to_find_record'].' '.$key.'</'.$tag.'>';
 	}
+	$html='';
 	$disp = $person->canDisplayDetails();
 	if ($person->canDisplayName()) {
 		if (begRTLText($value[0])) $listDir = "rtl";
 		else $listDir = "ltr";
-		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
+		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
 		if ($findid == true) {
-			print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
+			$html.='<a href="javascript:;" onclick="pasteid(\''.$key.'\', \''.preg_replace("/(['\"])/", "\\$1", PrintReady($value[0])).'\'); return false;" class="list_item"><b>'.$value[0].'</b>';
 		} else {
-			print "<a href=\"individual.php?pid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
+			$html.='<a href="individual.php?pid='.$key.'&amp;ged='.$value[1].'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
 		}
-		if ($SHOW_ID_NUMBERS){
-			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print getRLM();
-			print "(".$key.")";
-			if ($listDir=="rtl") print getRLM();
-			print "&nbsp;&nbsp;";
+		if ($SHOW_ID_NUMBERS) {
+			if ($listDir=='rtl') {
+				$html.=' '.getRLM().'('.$key.')'.getRLM();
+			} else {
+				$html.=' ('.$key.')';
+			}
 		}
 
 		if (!$disp) {
-			print "<br /><i>".$pgv_lang["private"]."</i>";
-			$indi_private[$key."[".$GEDCOM."]"] = 1;
+			$html.='<br /><i>'.$pgv_lang['private'].'</i>';
+			$indi_private[$key.'['.$GEDCOM.']'] = 1;
+		} else {
+			$html.=format_first_major_fact($key, array('BIRT', 'CHR', 'BAPM', 'BAPL', 'ADOP'));
+			$html.=format_first_major_fact($key, array('DEAT', 'BURI'));
 		}
-		else {
-			print_first_major_fact($key, array("BIRT", "CHR", "BAPM", "BAPL", "ADOP"));
-			print_first_major_fact($key, array("DEAT", "BURI"));
-		}
-		print "</a>";
-		if (($asso != "") && ($disp)) {
-			$p1 = strpos($asso,"[");
-			$p2 = strpos($asso,"]");
+		$html.='</a>';
+		if (($asso != '') && ($disp)) {
+			$p1 = strpos($asso,'[');
+			$p2 = strpos($asso,']');
 			$ged = substr($asso,$p1+1,$p2-$p1-1);
 			if ($ged>=1) $ged = get_gedcom_from_id($ged);
 			$key = substr($asso,0,$p1);
@@ -104,17 +98,19 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 			$GEDCOM = $ged;
 			$name = get_person_name($key);
 			$GEDCOM = $oldged;
-			print " <a href=\"individual.php?pid=$key&amp;ged=$ged\" title=\"$name\" class=\"list_item\">";
-			print "&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="ltr") print "(".$pgv_lang["associate"]."&nbsp;&nbsp;".$key.")";
-  			else print getRLM() . "(" . getRLM() .$pgv_lang["associate"]."&nbsp;&nbsp;".$key. getRLM() . ")" . getRLM() . "</span></a>";
+			$html.=' <a href="individual.php?pid='.$key.'&amp;ged='.$ged.'" title="'.$name.'" class="list_item">';
+			if ($TEXT_DIRECTION=="ltr") {
+				$html.=' ('.$pgv_lang['associate'].' '.$key.')';
+			} else {
+				$html.=' '.getRLM().'('.$pgv_lang['associate'].' '.$key.')'.getRLM().'</a>';
+			}
 		}
-		print "</".$tag.">";
+		$html.='</'.$tag.'>';
+	} else {
+		$pass=true;
+		$indi_hide[$key.'['.$GEDCOM.']'] = 1;
 	}
-	else {
-		$pass = TRUE;
-		$indi_hide[$key."[".$GEDCOM."]"] = 1;
-	}
+	return $html;
 }
 
 /**
@@ -163,8 +159,7 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 			$fam_private[$key."[".$GEDCOM."]"] = 1;
 		}
 		else {
-			print_first_major_fact($key, array("MARR"));
-			print_first_major_fact($key, array("DIV"));
+			echo format_first_major_fact($key, array("MARR")), format_first_major_fact($key, array("DIV"));
 		}
 		print "</a>";
 		if ($asso != "") {
@@ -263,16 +258,16 @@ function print_list_repository($key, $value, $useli=true) {
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES;
 
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-	require_once("js/sorttable.js.htm");
-	require_once("includes/person_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/person_class.php';
 	//-- init chart data
-	for ($age=0; $age<120; $age++) $deat_by_age[$age]="";
+	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $deat_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $deat_by_decade[$year]="";
 	//-- fieldset
@@ -415,7 +410,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$birt_by_decade[floor($birth_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
 			}
 		} else {
-			echo '&nbsp;';
+			if ($SHOW_EST_LIST_DATES) {
+				$birth_date=$person->getEstimatedBirthDate();
+				echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
+			} else {
+				echo '&nbsp;';
+			}
 			$birth_dates[0]=new GedcomDate('');
 		}
 		echo "</td>";
@@ -474,7 +474,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$deat_by_decade[floor($death_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
 			}
 		} else {
-			echo '&nbsp;';
+			if ($SHOW_EST_LIST_DATES) {
+				$death_date=$person->getEstimatedDeathDate();
+				echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
+			} else {
+				echo '&nbsp;';
+			}
 			$death_dates[0]=new GedcomDate('');
 		}
 		echo "</td>";
@@ -605,8 +610,8 @@ function print_fam_table($datalist, $legend="") {
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-	require_once("js/sorttable.js.htm");
-	require_once("includes/family_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/family_class.php';
 	//-- init chart data
 	for ($age=0; $age<120; $age++) $marr_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
@@ -935,8 +940,8 @@ function print_sour_table($datalist, $legend="") {
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
-	require_once("js/sorttable.js.htm");
-	require_once("includes/source_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/source_class.php';
 
 	if ($legend == "") $legend = $pgv_lang["sources"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -1071,8 +1076,8 @@ function print_repo_table($datalist, $legend="") {
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
-	require_once("js/sorttable.js.htm");
-	require_once("includes/repository_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/repository_class.php';
 
 	if ($legend == "") $legend = $pgv_lang["repos_found"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -1141,8 +1146,8 @@ function print_media_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
-	require_once("js/sorttable.js.htm");
-	require_once("includes/media_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/media_class.php';
 
 	if ($legend == "") $legend = $pgv_lang["media"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -1319,8 +1324,8 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 function print_changes_table($datalist) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-	require_once("js/sorttable.js.htm");
-	require_once("includes/gedcomrecord.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -1429,8 +1434,8 @@ function print_changes_table($datalist) {
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $SERVER_URL;
-	require_once("js/sorttable.js.htm");
-	require_once("includes/gedcomrecord.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	print "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -1840,7 +1845,7 @@ function load_behaviour() {
 			element.onmouseover = function() { // show helptext
 				helptext = this.title;
 				if (helptext=='') helptext = this.value;
-				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".$pgv_lang["sort_column"]."'"?>;
+				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".$pgv_lang["sort_column"]."'"; ?>;
 				this.title = helptext; if (document.all) return; // IE = title
 				this.value = helptext; this.title = ''; // Firefox = value
 				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");

@@ -59,7 +59,7 @@ $LOGIN_URL = "";								//-- the URL to use to go to the login page, use this va
 $MAX_VIEWS = "20";								//-- the maximum number of page views per xx seconds per session
 $MAX_VIEW_TIME = "1";							//-- the number of seconds in which the maximum number of views must not be reached
 $PGV_MEMORY_LIMIT = "32M";						//-- the maximum amount of memory that PGV should be allowed to consume
-$ALLOW_REMEMBER_ME = true;						//-- whether the users have the option of being remembered on the current computer
+$ALLOW_REMEMBER_ME = false;						//-- whether the users have the option of being remembered on the current computer
 $CONFIG_VERSION = "4.0";						//-- the version this config file goes to
 
 $DIRECTORY_MODE = "ldap";						//-- User info stored in db or ldap directory

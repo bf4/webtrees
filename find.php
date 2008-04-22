@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a family id, person id
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,9 @@
  * @version $Id$
  */
 
-require("config.php");
-require_once("includes/functions_print_lists.php");
+require 'config.php';
+require_once 'includes/functions_print_lists.php';
+
 if (!isset($type)) $type = "indi";
 if (!isset($filter)) $filter="";
 else $filter = trim($filter);
@@ -70,7 +71,7 @@ if (empty($language_filter)) {
 	else $language_filter=$lang_short_cut[$LANGUAGE];
 }
 if (!isset($magnify)) $magnify=false;
-require("includes/specialchars.php");
+require 'includes/specialchars.php';
 
 // End variables for Find Special Character
 
@@ -136,7 +137,7 @@ switch ($type) {
 		if (document.forms[0].subclick) button = document.forms[0].subclick.value;
 		else button = "";
 		if (frm.filter.value.length<2&button!="all") {
-			alert("<?php print $pgv_lang["search_more_chars"]?>");
+			alert("<?php print $pgv_lang["search_more_chars"]; ?>");
 			frm.filter.focus();
 			return false;
 		}
@@ -389,16 +390,16 @@ if ($action=="filter") {
 			foreach($printname as $pkey => $pvalue) {
 				$GEDCOM = $pvalue[2];
 				if ($GEDCOM != $curged) {
-					include(get_privacy_file());
+					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
-				print_list_person($pvalue[1], array(check_NN($pvalue[0]), $pvalue[2]), true);
+				echo format_list_person($pvalue[1], array(check_NN($pvalue[0]), $pvalue[2]), true);
 				print "\n";
 			}
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				include(get_privacy_file());
+				include get_privacy_file();
 				$curged = $GEDCOM;
 			}
 			print "</tr>";
@@ -455,7 +456,7 @@ if ($action=="filter") {
 							$found = true;
 							break;
 						}
-				    }
+					}
 					if (!$found) $printname[] = array(check_NN($value["name"][0]), $key, get_gedcom_from_id($value["gedfile"]));
 				}
 				$ctf = count($printname);
@@ -469,7 +470,7 @@ if ($action=="filter") {
 			foreach($printname as $pkey => $pvalue) {
 				$GEDCOM = $pvalue[2];
 				if ($GEDCOM != $curged) {
-					include(get_privacy_file());
+					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
 				print_list_family($pvalue[1], array($pvalue[0], $pvalue[2]), true);
@@ -478,7 +479,7 @@ if ($action=="filter") {
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				include(get_privacy_file());
+				include get_privacy_file();
 				$curged = $GEDCOM;
 			}
 			print "</tr>\n";
@@ -620,17 +621,17 @@ if ($action=="filter") {
 								if (isset($pgv_changes[$indi."_".$GEDCOM])) $indirec = find_updated_record($indi);
 								else $indirec = find_gedcom_record($indi);
 								if ($type_record=="INDI") {
-						            print " <br /><a href=\"individual.php?pid=".$indi."\"> ".$pgv_lang["view_person"]." - ".PrintReady(get_person_name($indi))."</a>";
+									print " <br /><a href=\"individual.php?pid=".$indi."\"> ".$pgv_lang["view_person"]." - ".PrintReady(get_person_name($indi))."</a>";
 								}
 								else if ($type_record=="FAM") {
-						           	print "<br /> <a href=\"family.php?famid=".$indi."\"> ".$pgv_lang["view_family"]." - ".PrintReady(get_family_descriptor($indi))."</a>";
+									print "<br /> <a href=\"family.php?famid=".$indi."\"> ".$pgv_lang["view_family"]." - ".PrintReady(get_family_descriptor($indi))."</a>";
 								}
 								else if ($type_record=="SOUR") {
-						            	print "<br /> <a href=\"source.php?sid=".$indi."\"> ".$pgv_lang["view_source"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
+									print "<br /> <a href=\"source.php?sid=".$indi."\"> ".$pgv_lang["view_source"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
 								}
 								//-- no reason why we might not get media linked to media. eg stills from movie clip, or differents resolutions of the same item
 								else if ($type_record=="OBJE") {
-						            	//print "<br /> <a href=\"media.php?gid=".$indi."\"> ".$pgv_lang["view_object"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
+									//print "<br /> <a href=\"media.php?gid=".$indi."\"> ".$pgv_lang["view_object"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
 								}
 							}
 						}
@@ -695,11 +696,11 @@ if ($action=="filter") {
 			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
 			foreach ($repolist as $key => $value) {
 				$id = $value["id"];
-			    print "<li><a href=\"javascript:;\" onclick=\"pasteid('$id');\"><span class=\"list_item\">".PrintReady(get_repo_descriptor($key))."&nbsp;&nbsp;&nbsp;";
-			    if ($TEXT_DIRECTION=="rtl") print getRLM();
-			    print "(".$key.")";
-			    if ($TEXT_DIRECTION=="rtl") print getRLM();
-			    print "</span></a></li>";
+					print "<li><a href=\"javascript:;\" onclick=\"pasteid('$id');\"><span class=\"list_item\">".PrintReady(get_repo_descriptor($key))."&nbsp;&nbsp;&nbsp;";
+					if ($TEXT_DIRECTION=="rtl") print getRLM();
+					print "(".$key.")";
+					if ($TEXT_DIRECTION=="rtl") print getRLM();
+					print "</span></a></li>";
 			}
 			print "</ul></td></tr>";
 			print "<tr><td class=\"list_label\">".$pgv_lang["repos_found"]." ".$ctrepo;
@@ -726,13 +727,13 @@ if ($action=="filter") {
 			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
 			foreach ($mysourcelist as $key => $value) {
 				print "<li>";
-			    print "<a href=\"javascript:;\" onclick=\"pasteid('$key', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value["name"]))."'); return false;\"><span class=\"list_item\">".PrintReady($value["name"])."</span></a>\n";
-			    print "</li>\n";
+				print "<a href=\"javascript:;\" onclick=\"pasteid('$key', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value["name"]))."'); return false;\"><span class=\"list_item\">".PrintReady($value["name"])."</span></a>\n";
+				print "</li>\n";
 			}
 			print "</ul></td></tr>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				include(get_privacy_file());
+				include get_privacy_file();
 				$curged = $GEDCOM;
 			}
 			if ($cts > 0) print "<tr><td class=\"list_label\">".$pgv_lang["total_sources"]." ".$cts."</td></tr>";
@@ -788,7 +789,7 @@ print "</div>"; // Close div that centers table
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-	document.filter<?php print $type;?>.filter.focus();
+	document.filter<?php print $type; ?>.filter.focus();
 //-->
 </script>
 <?php

@@ -3,7 +3,7 @@
  * Used by AJAX to load the expanded view inside person boxes
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
 				if ($details!="Y" && $details!="N") print PrintReady($details);
 			}
 			else print PrintReady($details);
-			print_fact_date($factrec, false, false, $fact, $pid, $indirec);
+			echo format_fact_date($factrec, false, false, $fact, $pid, $indirec);
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVFS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
@@ -90,7 +90,7 @@ $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
 				if ($spouse!=="") print " - ";
 				print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"]."]</a>\n";
 			}
-			print_fact_place($factrec, true, true);
+			echo format_fact_place($factrec, true, true);
 		}
-	  }
+	 }
 ?>

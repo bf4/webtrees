@@ -1792,7 +1792,6 @@ function sort_facts(&$arr) {
 	}
 
 	//-- add extra codes for the next pass of sorting
-	//TODO in the 4.2 branch this can be stored in the Event object
 	//-- add a fake date for the date sorting based on the previous fact that came before
 	$lastDate = "";
 	for ($i=0; $i<count($arr); $i++) {
@@ -2694,7 +2693,7 @@ function filename_encode($filename) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Remove empty/duplicate values from a URL query string
+// Remove duplicate values from a URL query string
 ////////////////////////////////////////////////////////////////////////////////
 function normalize_query_string($query) {
 	$components=array();
@@ -2705,8 +2704,7 @@ function normalize_query_string($query) {
 		}
 	$new_query='';
 	foreach ($components as $key=>$data)
-		if (!empty($data))
-			$new_query.=(empty($new_query)?'?':'&amp;').$key.'='.$data;
+		$new_query.=(empty($new_query)?'?':'&amp;').$key.'='.$data;
 
 	return $new_query;
 }

@@ -75,20 +75,21 @@ class IndividualControllerRoot extends BaseController {
 	var $SEX_COUNT = 0;
 	var $sexarray = array();
 	var $tabarray = array("facts","notes","sources","media","relatives","research","map","lightbox");
-
+	
 	/**
 	 * constructor
 	 */
 	function IndividualControllerRoot() {
 		parent::BaseController();
 	}
+
 	/**
 	 * Initialization function
 	 */
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
 		global $USE_QUICK_UPDATE, $pid;
-
+		
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
 		
@@ -387,9 +388,9 @@ class IndividualControllerRoot extends BaseController {
 					if (file_exists("modules/lightbox/album.php")) {
 						$name1 = trim($firstmediarec["file"]);
 						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . "\">" . "\n";
+					}else
 // ---------------------------------------------------------------------------------------------
-
-					}elseif (!$USE_MEDIA_VIEWER && $imgsize) {
+					if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
 					}else{
 						$mediaviewlink = "mediaviewer.php?mid=".$mid;
@@ -912,7 +913,19 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function getTab($tab) {
-		$tabType = $this->tabarray[$tab];
+	
+// LB Fix for no googlemaps ==========================================================================
+
+		if (file_exists("modules/googlemap/defaultconfig.php")) { 
+			$tab_array = array("facts","notes","sources","media","relatives","research","map","lightbox");
+		}else{
+			$tab_array = array("facts","notes","sources","media","relatives","research","lightbox");
+		}
+		$tabType = $tab_array[$tab];
+
+//		$tabType = $this->tabarray[$tab];
+// ================================================================================================
+
 		switch($tabType) {
 			case "facts":
 				$this->print_facts_tab();
@@ -1810,8 +1823,11 @@ class IndividualControllerRoot extends BaseController {
 	    global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 	    global $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
-		include_once('modules/googlemap/googlemap.php');
-
+		// LB Fix if no googlemaps ========================================================
+		if (file_exists("modules/googlemap/googlemap.php")) {
+			include_once('modules/googlemap/googlemap.php');
+		}
+		// LB Fix in no googlemaps ========================================================
 		if ($GOOGLEMAP_ENABLED == "false") {
 	        print "<table class=\"facts_table\">\n";
 					print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
@@ -1841,8 +1857,12 @@ class IndividualControllerRoot extends BaseController {
 		                    $famids[] = $family->getXref();
 		                }
 										$this->indi->add_family_facts(false);
+						// LB Fix if no googlemaps ========================================================
+						if (file_exists("modules/googlemap/googlemap.php")) {
 		                build_indiv_map($this->getIndiFacts(), $famids);
-			}
+						}
+						// LB Fix if no googlemaps ========================================================
+		}
 	}
 
 // -----------------------------------------------------------------------------

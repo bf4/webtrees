@@ -105,7 +105,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 					echo '<span class="label">', $factarray['BIRT'].':', '</span> ';
 					echo '<span class="field">', $birtdate->Display(false), ' -- ', $birtplac, '</span><br />';
 				}
-				if ($deatdate->isOK() || $deatdate) {
+				if ($deatdate->isOK() || $deatplac) {
 					echo '<span class="label">', $factarray['DEAT'].':','</span> ';
 					echo '<span class="field">', $deatdate->Display(false), ' -- ', $deatplac, '</span><br />';
 				}
@@ -631,13 +631,22 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	print "<div id=\"lightbox2_content\"> \n";
 	if ($mediacnt!=0) {
 		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-
-			if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
-				$controller->getTab(7) ;
-
+		
+			// LB Fix if no googlemaps ========================================================
+			if (file_exists("modules/googlemap/googlemap.php")) {
+				if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
+					$controller->getTab(7) ;
+				}else{
+					loading_message();
+				}
 			}else{
-				loading_message();
+				if (($controller->default_tab==6)||(!empty($SEARCH_SPIDER))) {
+					$controller->getTab(6) ;
+				}else{
+					loading_message();
+				}
 			}
+			// LB Fix if no googlemaps ========================================================
 		}
 	}
 

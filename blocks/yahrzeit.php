@@ -135,7 +135,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			}
 		break;
 	case "style2": // Table style
-		$content .= file_get_contents('js/sorttable.js.htm');
+		require_once("js/sorttable.js.htm");
 		require_once("includes/gedcomrecord.php");
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 		$content .= "<table id=\"{$table_id}\" class=\"sortable list_table center\">";

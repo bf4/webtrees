@@ -38,6 +38,7 @@ function ts_makeSortable(table) {
 	for (var i=0;i<firstRow.cells.length;i++) {
 		var cell = firstRow.cells[i];
 		var txt = ts_getInnerText(cell);
+		if (cell.className.match(/\bsorttable_nosort\b/)) continue // PGV: skip this col
 		if (cell.getElementsByTagName("img") && cell.nodeName.toLowerCase()=="th") txt = cell.innerHTML; // PGV: allow icon as text
 		if (txt=="") continue; // PGV: do not process empty cols
 		cell.innerHTML = '<a href="javascript:;" class="sortheader" '+

@@ -3,7 +3,7 @@
  * Class that defines a media object
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2008	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -251,7 +251,7 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getMediatype() {
-		$mediaType = get_gedcom_value("FORM:TYPE", 2, $this->gedrec);
+		$mediaType = strtolower(get_gedcom_value("FORM:TYPE", 2, $this->gedrec));
 		return $mediaType;
 	}
 

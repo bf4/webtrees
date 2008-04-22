@@ -1079,6 +1079,8 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 		}
 		$sql .= ")";
 	}
+	//-- do some sorting in the DB, it won't be as good as the PHP sorting
+	$sql .= " ORDER BY i_surname, i_name";
 	$res = dbquery($sql, false);
 
 	$gedold = $GEDCOM;
@@ -3531,21 +3533,21 @@ function create_user($username, $password) {
 	return $DBH->lastInsertId();
 }
 
-function rename_user($old_username, $new_username) {
+function rename_user($user_id, $new_username) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	$statement=$DBH->prepare("UPDATE {$TBLPREFIX}users SET user_name=? WHERE user_name=?");
-	$statement->bindValue(1, $new_user_name, PDO::PARAM_STR);
-	$statement->bindValue(2, $old_user_name, PDO::PARAM_STR);
+	$statement=$DBH->prepare("UPDATE {$TBLPREFIX}user SET user_name=? WHERE user_id=?");
+	$statement->bindValue(1, $new_username, PDO::PARAM_STR);
+	$statement->bindValue(2, $user_id,      PDO::PARAM_INT);
 	$statement->execute();
 	++$TOTAL_QUERIES;
 
 	// For databases without foreign key constraints, manually update dependent tables
-	$DBH->exec("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$new_username}' WHERE b_username ='{$old_username}'");
-	$DBH->exec("UPDATE {$TBLPREFIX}favorites SET fv_username='{$new_username}' WHERE fv_username='{$old_username}'");
-	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$new_username}' WHERE m_from     ='{$old_username}'");
-	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$new_username}' WHERE m_to       ='{$old_username}'");
-	$DBH->exec("UPDATE {$TBLPREFIX}news      SET n_username ='{$new_username}' WHERE n_username ='{$old_username}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$new_username}' WHERE b_username ='{$user_id}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}favorites SET fv_username='{$new_username}' WHERE fv_username='{$user_id}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$new_username}' WHERE m_from     ='{$user_id}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$new_username}' WHERE m_to       ='{$user_id}'");
+	$DBH->exec("UPDATE {$TBLPREFIX}news      SET n_username ='{$new_username}' WHERE n_username ='{$user_id}'");
 	$TOTAL_QUERIES+=5;
 	}
 

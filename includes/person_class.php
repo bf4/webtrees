@@ -3,7 +3,7 @@
  * Class file for a person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -290,8 +290,9 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthDate() {
 		if (is_null($this->_getBirthDate)) {
-			list($this->_getBirthDate)=$this->getAllBirthDates();
-			if (is_null($this->_getBirthDate)) {
+			if ($this->getAllBirthDates()) {
+				list($this->_getBirthDate)=$this->getAllBirthDates();
+			} else {
 				$this->_getBirthDate=new GedcomDate(''); // always return a date object
 			}
 		}
@@ -304,8 +305,9 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthPlace() {
 		if (is_null($this->_getBirthPlace)) {
-			list($this->_getBirthPlace)=$this->getAllBirthPlaces();
-			if (is_null($this->_getBirthPlace)) {
+			if ($this->getAllBirthPlaces()) {
+				list($this->_getBirthPlace)=$this->getAllBirthPlaces();
+			} else {
 				$this->_getBirthPlace='';
 			}
 		}
@@ -318,8 +320,9 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathDate() {
 		if (is_null($this->_getDeathDate)) {
-			list($this->_getBirthDate)=$this->getAllBirthDates();
-			if (is_null($this->_getDeathDate)) {
+			if ($this->getAllDeathDates()) {
+				list($this->_getDeathDate)=$this->getAllDeathDates();
+			} else {
 				$this->_getDeathDate=new GedcomDate(''); // always return a date object
 			}
 		}
@@ -332,8 +335,9 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathPlace() {
 		if (is_null($this->_getDeathPlace)) {
-			list($this->_getDeathPlace)=$this->getAllDeathPlaces();
-			if (is_null($this->_getDeathPlace)) {
+			if ($this->getAllDeathPlaces()) {
+				list($this->_getDeathPlace)=$this->getAllDeathPlaces();
+			} else {
 				$this->_getDeathPlace='';
 			}
 		}
@@ -485,17 +489,19 @@ class Person extends GedcomRecord {
 
 	/**
 	 * get the person's sex image
+	 * NOTE: It would have been nice if we'd called the images sexM, sexF and sexU
 	 * @return string 	<img ... />
 	 */
-	function getSexImage($style='') {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
-		if ($this->getSex()=="M") $s = "sex";
-		else if ($this->getSex()=="F") $s = "sexf";
-		else $s = "sexn";
-		$temp = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$s]["small"]."\" alt=\"\" class=\"gender_image\"";
-		if (!empty($style)) $temp .= " style=\"$style\"";
-		$temp .= " />";
-		return $temp;
+	function getSexImage() {
+		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		switch ($this->getSex()) {
+		case 'M':
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" />';
+		case 'F':
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" />';
+		default:
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexn']['small'].'" class="gender_image" />';
+		}
 	}
 
 	/**

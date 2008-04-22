@@ -5,7 +5,7 @@
  * Various printing functions used by all scripts and included by the functions.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserverd.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1016,7 +1016,8 @@ function print_lang_form($option=0) {
 			$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
 			foreach ($vars as $var) {
 				$parts = preg_split("/=/", $var);
-				print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
+//				print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
+				print "\n\t\t<input type=\"hidden\" name=\"".htmlentities(urldecode($parts[0]))."\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
 			}
 			print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
 			print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
@@ -1528,12 +1529,11 @@ function print_simple_fact($indirec, $fact, $pid) {
 		// 1 DEAT Y with no DATE => print YES
 		// 1 DEAT N is not allowed
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
-		/*-- handled by print_fact_date()
+		/*-- handled by format_fact_date()
 		 * if (get_sub_record(2, "2 DATE", $factrec)=="") {
 			if (strtoupper(trim(substr($factrec,6,2)))=="Y") print $pgv_lang["yes"];
 		}*/
-		print_fact_date($factrec, false, false, $fact, $pid, $indirec);
-		print_fact_place($factrec);
+		echo format_fact_date($factrec, false, false, $fact, $pid, $indirec), format_fact_place($factrec);
 	}
 	print "<br />\n";
 }
@@ -2337,43 +2337,62 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	}
 }
 /**
- * Print age of parents
+ * Format age of parents in HTML
  *
  * @param string $pid	child ID
- * @param string $birth_date	child birthdate
  */
-function print_parents_age($pid, $birth_date) {
-	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	if (!$SHOW_PARENTS_AGE) return "";
-	$person = Person::getInstance($pid);
-	$families = $person->getChildFamilies();
-	// dont show age of parents if more than one family (ADOPtion)
-	if (count($families)>1) return "";
-	$family = current($families);
-	if (!$family) return "";
-	print " <span class=\"age\">";
-	// father
-	$spouse = $family->getHusband();
-	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), $birth_date);
-		if ($age) {
-			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
-		}
-	}
-	// mother
-	$spouse = $family->getWife();
-	if ($spouse && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), $birth_date);
-		if ($age) {
-			// [ 1749591 ] Highlight maternal death
-			$mother_ddate=$spouse->getDeathDate();
-			if ($mother_ddate->isOK() && $birth_date->isOK() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
-				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+function format_parents_age($pid) {
+	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE;
+
+	$html='';
+	if ($SHOW_PARENTS_AGE) {
+		$person=Person::getInstance($pid);
+		$families=$person->getChildFamilies();
+		// Multiple sets of parents (e.g. adoption) cause complications, so ignore.
+		$birth_date=$person->getBirthDate();
+		if ($birth_date->isOK() && count($families)==1) {
+			$family=current($families);
+			// Allow for same-sex parents
+			foreach (array($family->getHusband(), $family->getWife()) as $parent) {
+				if ($parent && $age=GedcomDate::GetAgeYears($parent->getBirthDate(), $person->getBirthDate())) {
+					$deatdate=$parent->getDeathDate();
+					$class='';
+					switch ($parent->getSex()) {
+					case 'F':
+						// Highlight mothers who die in childbirth or shortly afterwards
+						if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()+90) {
+							$class='parentdeath';
+							$title=$factarray['_DEAT_MOTH'];
+						} else {
+							$title=$pgv_lang['mother'];
+						}
+						break;
+					case 'M':
+						// Highlight fathers who die before the birth
+						if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()) {
+							$class='parentdeath';
+							$title=$factarray['_DEAT_FATH'];
+						} else {
+							$title=$pgv_lang['father'];
+						}
+						break;
+					default:
+						$title=$pgv_lang['parent'];
+						break;
+					}
+					if ($class) {
+						$html.=' <span class="'.$class.'" title="'.$title.'">'.$parent->getSexImage().$age.'</span>';
+					} else {
+						$html.=' <span title="'.$title.'">'.$parent->getSexImage().$age.'</span>';
+					}
+				}
 			}
-			print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
+			if ($html) {
+				$html='<span class="age">'.$html.'</span>';
+			}
 		}
 	}
-	print "</span>";
+	return $html;
 }
 /**
  * print fact DATE TIME
@@ -2385,33 +2404,38 @@ function print_parents_age($pid, $birth_date) {
  * @param string $pid		optional person ID (to print age)
  * @param string $indirec	optional individual record (to print age)
  */
-function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid=false, $indirec=false) {
+function format_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid=false, $indirec=false) {
 	global $factarray, $pgv_lang, $SEARCH_SPIDER;
 
+	$html='';
 	// Recorded age
-	$fact_age=get_gedcom_value("AGE", 2, $factrec);
+	$fact_age=get_gedcom_value('AGE', 2, $factrec);
 	if (empty($fact_age))
-		$fact_age=get_gedcom_value("DATE:AGE", 2, $factrec);
-	$husb_age=get_gedcom_value("HUSB:AGE", 2, $factrec);
-	$wife_age=get_gedcom_value("WIFE:AGE", 2, $factrec);
+		$fact_age=get_gedcom_value('DATE:AGE', 2, $factrec);
+	$husb_age=get_gedcom_value('HUSB:AGE', 2, $factrec);
+	$wife_age=get_gedcom_value('WIFE:AGE', 2, $factrec);
 
 	// Calculated age
-	if (preg_match("/2 DATE (.+)/", $factrec, $match)) {
+	if (preg_match('/2 DATE (.+)/', $factrec, $match)) {
 		$date=new GedcomDate($match[1]);
-		print " ".$date->Display($anchor && (empty($SEARCH_SPIDER)));
+		$html.=' '.$date->Display($anchor && !$SEARCH_SPIDER);
 		// time
 		if ($time) {
-			$timerec = get_sub_record(2, "2 TIME", $factrec);
-			if (empty($timerec)) $timerec = get_sub_record(2, "2 DATE", $factrec);
-			$tt = preg_match("/[2-3] TIME (.*)/", $timerec, $tmatch);
-			if ($tt>0) print " - <span class=\"date\">".$tmatch[1]."</span>";
+			$timerec=get_sub_record(2, '2 TIME', $factrec);
+			if (empty($timerec)) {
+				$timerec=get_sub_record(2, '2 DATE', $factrec);
+			}
+			if (preg_match('/[2-3] TIME (.*)/', $timerec, $tmatch)) {
+				$html.=' - <span class="date">'.$tmatch[1].'</span>';
+			}
 		}
 		if ($fact && $pid) {
 			// age of parents at child birth
-			if ($fact=="BIRT")
-				print_parents_age($pid, $date);
+			if ($fact=='BIRT') {
+				$html.=format_parents_age($pid);
+			}
 			// age at event
-			else if ($fact!="CHAN") {
+			else if ($fact!='CHAN') {
 				if (!$indirec)
 					$indirec=find_person_record($pid);
 				$person=new Person($indirec);
@@ -2426,31 +2450,35 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
 						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!= $age ||
 						    !empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
-							print " ({$pgv_lang['age']} ".get_age_at_event($age, false).")";
+							$html.=' ('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
 					}
 				}
 				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>0) {
 					// After death, print time since death
 					$age=GedcomDate::GetAgeGedcom($death_date, $date);
 					if (!empty($age))
-						print " (".get_age_at_event($age, true)." ".$pgv_lang['after_death'].")";
+						$html.=' ('.get_age_at_event($age, true).' '.$pgv_lang['after_death'].')';
 				}
 			}
 		}
-	}
-	else {
+	} else {
 		// 1 DEAT Y with no DATE => print YES
 		// 1 DEAT N is not allowed
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
-		$factrec = str_replace("\r\nPGV_OLD\r\n", "", $factrec);
-		$factrec = str_replace("\r\nPGV_NEW\r\n", "", $factrec);
-		$factdetail = preg_split("/ /", trim($factrec));
-		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == "Y") print $pgv_lang["yes"];
+		$factrec = str_replace("\r\nPGV_OLD\r\n", '', $factrec);
+		$factrec = str_replace("\r\nPGV_NEW\r\n", '', $factrec);
+		$factdetail = preg_split('/ /', trim($factrec));
+		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == 'Y') {
+			$html.=$pgv_lang['yes'];
+		}
 	}
 	// print gedcom ages
-	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age)
-		if (!empty($age))
-			print " <span class=\"label\">{$label}</span>: ".get_age_at_event($age, false);
+	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
+		if (!empty($age)) {
+			$html.=' <span class="label">'.$label.'</span>: '.get_age_at_event($age, false);
+		}
+	}
+	return $html;
 }
 /**
  * print fact PLACe TEMPle STATus
@@ -2460,126 +2488,135 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
  * @param boolean $sub		option to print place subrecords
  * @param boolean $lds		option to print LDS TEMPle and STATus
  */
-function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
+function format_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $factarray, $SEARCH_SPIDER;
-	$out = false;
+
+	$html='';
+
 	$ct = preg_match("/2 PLAC (.*)/", $factrec, $match);
 	if ($ct>0) {
-		print " ";
+		$html.=' ';
 		$levels = preg_split("/,/", $match[1]);
 		if ($anchor && (empty($SEARCH_SPIDER))) {
 			$place = trim($match[1]);
 			// reverse the array so that we get the top level first
 			$levels = array_reverse($levels);
-			print "<a href=\"placelist.php?action=show&amp;";
+			$html.='<a href="placelist.php?action=show&amp;';
 			foreach($levels as $pindex=>$ppart) {
 				// routine for replacing ampersands
 				$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
-				print "parent[$pindex]=".PrintReady($ppart)."&amp;";
+				$html.='parent['.$pindex.']='.PrintReady($ppart).'&amp;';
 			}
-			print "level=".count($levels);
-			print "\"> ".PrintReady($place)."</a>";
-		}
-		else {
-			if (empty($SEARCH_SPIDER)) print " -- ";
+			$html.='level='.count($levels);
+			$html.='"> '.PrintReady($place).'</a>';
+		} else {
+			if (!$SEARCH_SPIDER) {
+				$html.=' -- ';
+			}
 			for ($level=0; $level<$SHOW_PEDIGREE_PLACES; $level++) {
 				if (!empty($levels[$level])) {
-					if ($level>0) print ", ";
-					print PrintReady($levels[$level]);
+					if ($level>0) {
+						$html.=", ";
+					}
+					$html.=PrintReady($levels[$level]);
 				}
 			}
 		}
 	}
 	$ctn=0;
 	if ($sub) {
-		$placerec = get_sub_record(2, "2 PLAC", $factrec);
+		$placerec = get_sub_record(2, '2 PLAC', $factrec);
 		if (!empty($placerec)) {
-			$cts = preg_match("/\d ROMN (.*)/", $placerec, $match);
+			$cts = preg_match('/\d ROMN (.*)/', $placerec, $match);
 			if ($cts>0) {
-//				if ($ct>0) print "<br />\n";
-				if ($ct>0) print " - ";
-				print " ".PrintReady($match[1]);
+				if ($ct>0) {
+					$html.=" - ";
+				}
+				$html.=' '.PrintReady($match[1]);
 			}
-			$cts = preg_match("/\d _HEB (.*)/", $placerec, $match);
+			$cts = preg_match('/\d _HEB (.*)/', $placerec, $match);
 			if ($cts>0) {
-//				if ($ct>0) print "<br />\n";
-				if ($ct>0) print " - ";
-				print " ".PrintReady($match[1]);
+				if ($ct>0) {
+					$html.=' - ';
+				}
+				$html.=' '.PrintReady($match[1]);
 			}
 			$map_lati="";
-			$cts = preg_match("/\d LATI (.*)/", $placerec, $match);
+			$cts = preg_match('/\d LATI (.*)/', $placerec, $match);
 			if ($cts>0) {
 				$map_lati=$match[1];
-				print "<br /><span class=\"label\">".$factarray["LATI"].": </span>".$map_lati;
+				$html.='<br /><span class="label">'.$factarray['LATI'].': </span>'.$map_lati;
 			}
 			$map_long="";
-			$cts = preg_match("/\d LONG (.*)/", $placerec, $match);
+			$cts = preg_match('/\d LONG (.*)/', $placerec, $match);
 			if ($cts>0) {
 				$map_long=$match[1];
-				print " <span class=\"label\">".$factarray["LONG"].": </span>".$map_long;
+				$html.=' <span class="label">'.$factarray['LONG'].': </span>'.$map_long;
 			}
 			if ($map_lati and $map_long) {
 				$map_lati=trim(strtr($map_lati,"NSEW,�"," - -. ")); // S5,6789 ==> -5.6789
 				$map_long=trim(strtr($map_long,"NSEW,�"," - -. ")); // E3.456� ==> 3.456
-				print " <a target=\"_BLANK\" href=\"http://www.mapquest.com/maps/map.adp?searchtype=address&formtype=latlong&latlongtype=decimal&latitude=".$map_lati."&longitude=".$map_long."\"><img src=\"images/mapq.gif\" border=\"0\" alt=\"Mapquest &copy;\" title=\"Mapquest &copy;\" /></a>";
-				print " <a target=\"_BLANK\" href=\"http://maps.google.com/maps?q=".$map_lati.",".$map_long."\"><img src=\"images/bubble.gif\" border=\"0\" alt=\"Google Maps &copy;\" title=\"Google Maps &copy;\" /></a>";
-				print " <a target=\"_BLANK\" href=\"http://www.multimap.com/map/browse.cgi?lat=".$map_lati."&lon=".$map_long."&scale=&icon=x\"><img src=\"images/multim.gif\" border=\"0\" alt=\"Multimap &copy;\" title=\"Multimap &copy;\" /></a>";
-				print " <a target=\"_BLANK\" href=\"http://www.terraserver.com/imagery/image_gx.asp?cpx=".$map_long."&cpy=".$map_lati."&res=30&provider_id=340\"><img src=\"images/terrasrv.gif\" border=\"0\" alt=\"TerraServer &copy;\" title=\"TerraServer &copy;\" /></a>";
+				$html.=' <a target="_BLANK" href="http://www.mapquest.com/maps/map.adp?searchtype=address&amp;formtype=latlong&amp;latlongtype=decimal&amp;latitude='.$map_lati.'&amp;longitude='.$map_long.'"><img src="images/mapq.gif" border="0" alt="Mapquest &copy;" title="Mapquest &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="http://maps.google.com/maps?q='.$map_lati.",".$map_long.'"><img src="images/bubble.gif" border="0" alt="Google Maps &copy;" title="Google Maps &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="http://www.multimap.com/map/browse.cgi?lat='.$map_lati.'&amp;lon='.$map_long.'&amp;scale=&amp;icon=x"><img src="images/multim.gif" border="0" alt="Multimap &copy;" title="Multimap &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="http://www.terraserver.com/imagery/image_gx.asp?cpx='.$map_long.'&amp;cpy='.$map_lati.'&amp;res=30&amp;provider_id=340"><img src="images/terrasrv.gif" border="0" alt="TerraServer &copy;" title="TerraServer &copy;" /></a>';
 			}
-			$ctn = preg_match("/\d NOTE (.*)/", $placerec, $match);
-			if ($ctn>0) {
+			if (preg_match('/\d NOTE (.*)/', $placerec, $match)) {
+				$ob_start();
 				print_fact_notes($placerec, 3);
-				$out = true;
+				$html.=ob_get_contents();
+				ob_end_clean();
 			}
 		}
 	}
 	if ($lds) {
-		$ct = preg_match("/2 TEMP (.*)/", $factrec, $match);
-		if ($ct>0) {
-			$tcode = trim($match[1]);
-			if (array_key_exists($tcode, $TEMPLE_CODES))
-				print "<br/>".$pgv_lang["temple"].": ".$TEMPLE_CODES[$tcode];
-			else
-				print "<br/>".$pgv_lang["temple_code"].$tcode;
+		if (preg_match('/2 TEMP (.*)/', $factrec, $match)) {
+			$tcode=trim($match[1]);
+			if (array_key_exists($tcode, $TEMPLE_CODES)) {
+				$html.='<br/>'.$pgv_lang['temple'].': '.$TEMPLE_CODES[$tcode];
+			} else {
+				$html.='<br/>'.$pgv_lang['temple_code'].$tcode;
+			}
 		}
-		$ct = preg_match("/2 STAT (.*)/", $factrec, $match);
-		if ($ct>0) {
-			print "<br />".$pgv_lang["status"].": ".trim($match[1]);
-			if (preg_match("/3 DATE (.*)/", $factrec, $match)) {
+		if (preg_match('/2 STAT (.*)/', $factrec, $match)) {
+			$html.='<br />'.$pgv_lang['status'].': '.trim($match[1]);
+			if (preg_match('/3 DATE (.*)/', $factrec, $match)) {
 				$date=new GedcomDate($match[1]);
-				print ", ".$factarray["STAT:DATE"].": ".$date->Display(false);
+				$html.=', '.$factarray['STAT:DATE'].': '.$date->Display(false);
 			}
 		}
 	}
+	return $html;
 }
 /**
  * print first major fact for an Individual
  *
  * @param string $key	indi pid
  */
-function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
+function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
 
+	$html='';
 	$indirec = find_person_record($key);
 	if (!$indirec) $indirec = find_family_record($key);
 	foreach ($majorfacts as $indexval => $fact) {
 		$factrec = get_sub_record(1, "1 $fact", $indirec);
 		if (strlen($factrec)>7 and showFact("$fact", $key) and !FactViewRestricted($key, $factrec)) {
-			print "<span dir=\"$TEXT_DIRECTION\">";
-			echo "<br /><i>";
-			//print " -- <i>";
-			if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
-			else if (isset($factarray[$fact])) print $factarray[$fact];
-			else print $fact;
-			print " ";
-			print_fact_date($factrec);
-			print_fact_place($factrec);
-			print "</i>";
-			print "</span>";
+			$html.='<span dir="'.$TEXT_DIRECTION.'"><br /><i>';
+			if (isset($pgv_lang[$fact])) {
+				$html.=$pgv_lang[$fact];
+			} else {
+				if (isset($factarray[$fact])) {
+					$html.=$factarray[$fact];
+				} else {
+					$html.=$fact;
+				}
+			}
+			$html.=' '.format_fact_date($factrec).format_fact_place($factrec).'</i></span>';
 			break;
 		}
 	}
-	return $fact;
+	return $html;
 }
 
 /**

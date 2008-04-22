@@ -375,15 +375,17 @@ class MediaControllerRoot extends IndividualController{
 		$facts[] = "1 FORM ".$this->mediaobject->getFiletype();
 		$mediaType = $this->mediaobject->getMediatype();
 		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = "1 TYPE ".$pgv_lang["TYPE__".$mediaType];
+		else $facts[] = "1 TYPE ".$pgv_lang["TYPE__other"];
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes=="yes")) {
 			$newrec = find_updated_record($this->pid);
 			$newfacts = get_all_subrecords($newrec);
 			$newmedia = new Media($newrec);
-			if ($includeFileName) $newfacts[] = "1 FILE ".$newmedia->getFilename();
+			if ($includeFileName) $newfacts[] = "1 TYPE ".$pgv_lang["TYPE__".$mediaType];
 			$newfacts[] = "1 FORM ".$newmedia->getFiletype();
 			$mediaType = $newmedia->getMediatype();
-			if (isset($pgv_lang["TYPE__".$mediaType])) $newfacts[] = "1 TYPE ".$pgv_lang["TYPE__".$mediaType];
+			if (isset($pgv_lang["TYPE__".$mediaType])) $newfacts[] = "1 TYPE ".$mediaType;
+			else $newfacts[] = "1 TYPE ".$pgv_lang["TYPE__other"];
 			//print_r($newfacts);
 			//-- loop through new facts and add them to the list if they are any changes
 			//-- compare new and old facts of the Personal Fact and Details tab 1

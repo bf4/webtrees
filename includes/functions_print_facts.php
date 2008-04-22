@@ -307,7 +307,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 			}
 			// -- find date for each fact
-			print_fact_date($factrec, true, true, $fact, $pid, $indirec);
+			echo format_fact_date($factrec, true, true, $fact, $pid, $indirec);
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
@@ -347,7 +347,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 					//-- strip // from ALIA tag for FTM generated gedcoms
 					print preg_replace("'/'", "", $event)."<br />";
 				}
-				/* -- see the print_fact_date function where this is handled
+				/* -- see the format_fact_date function where this is handled
 				else if ($event=="Y") {
 					if (get_sub_record(2, "2 DATE", $factrec)=="") {
 						print $pgv_lang["yes"]."<br />";
@@ -376,7 +376,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			$ct = preg_match("/2 DESC (.*)/", $factrec, $match);
 			if ($ct>0) print PrintReady($match[1]);
 				// -- print PLACe, TEMPle and STATus
-				print_fact_place($factrec, true, true, true);
+				echo format_fact_place($factrec, true, true, true);
 				if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || (!empty($event)&&$fact!="ADDR")) print "<br />\n";
 				// -- print BURIal -> CEMEtery
 				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
@@ -682,6 +682,7 @@ function print_media_links($factrec, $level,$pid='') {
 					$mediaType = $match[1];
 					$varName = "TYPE__".strtolower($mediaType);
 					if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
+					else $mediaType = $pgv_lang["TYPE__other"];
 					print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
 				}
 				//print "</span>";
@@ -1521,6 +1522,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			$mediaType = trim($match[1]);
 			$varName = "TYPE__".strtolower($mediaType);
 			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
+			else $mediaType = $pgv_lang["TYPE__other"];
 			print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
 		}
 		print "</span>";
