@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,20 +27,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Create an ordinal suffix for a number.
-////////////////////////////////////////////////////////////////////////////////
-function ordinal_suffix_en($n) {
-	if ($n==1 || $n==21 || $n==31)
-		return 'st';
-	if ($n==2 || $n==22)
-		return 'nd';
-	if ($n==3 || $n==23)
-		return 'rd';
-  return 'th';
-}
-
-function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2) {
+/*
+ * The following routine is designed to produce text to describe the relationship 
+ * between two people.  It's a direct copy of the corresponding English routine, except
+ * that the output is NOT converted to lower-case.
+ */
+function getRelationshipText_de($relationshipDescription, $node, $pid1, $pid2) {
 	global $pgv_lang, $lang_short_cut, $LANGUAGE;
 	$started = false;
 	$finished = false;
@@ -144,7 +136,7 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2) {
 	
 
 	if ($relationshipDescription != false) {
-		return strtolower($relationshipDescription);
+		return $relationshipDescription;
 	}
 	return false;
 }
