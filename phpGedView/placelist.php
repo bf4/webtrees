@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,16 @@ else print_header($pgv_lang["place_list2"]);
 print "\n\t<div class=\"center\">";
 if ($display=="hierarchy") print "<h2>".$pgv_lang["place_list"]."</h2>\n\t";
 else print "<h2>".$pgv_lang["place_list2"]."</h2>\n\t";
+
+// Make sure the "parent" array has no holes
+if (isset($parent) && is_array($parent)) {
+	$parentKeys = array_keys($parent);
+	$highKey = max($parentKeys);
+	for ($j=0; $j<=$highKey; $j++) {
+		if (!isset($parent[$j])) $parent[$j] = "";
+	}
+	ksort($parent, SORT_NUMERIC);
+}
 
 if (!isset($parent)) $parent=array();
 else {

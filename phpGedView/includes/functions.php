@@ -2689,14 +2689,14 @@ function filename_encode($filename) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Remove duplicate values from a URL query string
+// Remove empty and duplicate values from a URL query string
 ////////////////////////////////////////////////////////////////////////////////
 function normalize_query_string($query) {
 	$components=array();
 	foreach (preg_split('/(^\?|\&(amp;)*)/', $query, -1, PREG_SPLIT_NO_EMPTY) as $component)
 		if (strpos($component, '=')!==false) {
 			list ($key, $data)=explode('=', $component, 2);
-			$components[$key]=$data;
+			if (!empty($data)) $components[$key]=$data;
 		}
 	$new_query='';
 	foreach ($components as $key=>$data)
