@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a media
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -266,7 +266,7 @@ print_header($pgv_lang["manage_media"]);
 			return true;
 		}
 		else if (frm.filter.value.length < 2) {
-			alert("<?php print $pgv_lang["search_more_chars"]?>");
+			alert("<?php print $pgv_lang["search_more_chars"]; ?>");
 			frm.filter.focus();
 			return false;
 		}
@@ -277,8 +277,8 @@ print_header($pgv_lang["manage_media"]);
 		value = folder.value;
 		if (value.substr(value.length-1,1) == "/") value = value.substr(0, value.length-1);
 		result = value.split("/");
-		if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS;?>) {
-			alert('<?php print $pgv_lang["max_media_depth"] ;?>');
+		if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
+			alert('<?php print $pgv_lang["max_media_depth"]; ?>');
 			folder.focus();
 			return false;
 		}
@@ -298,17 +298,17 @@ print_header($pgv_lang["manage_media"]);
 	<input type="hidden" name="all" value="true" />
 	<input type="hidden" name="subclick" />
 	<table class="fact_table center width100 <?php print $TEXT_DIRECTION; ?>">
-	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"];?></td></tr>
+	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
 	<!-- // NOTE: Filter options -->
-	<tr><td class="descriptionbox wrap width25"><?php print_help_link("filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
-	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if(isset($filter)) print $filter; ?>"/><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="reset" value="<?php print $pgv_lang["reset"];?>" onclick="this.form.subclick.value=this.name" /></td>
+	<tr><td class="descriptionbox wrap width25"><?php print_help_link("filter_help","qm","filter"); print $pgv_lang["filter"]; ?></td>
+	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if(isset($filter)) print $filter; ?>"/><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"]; ?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="reset" value="<?php print $pgv_lang["reset"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Upload media files -->
-	<td class="descriptionbox wrap width25"><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"];?></td>
-	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".$pgv_lang["upload_media"]."</a>";?></td></tr>
+	<td class="descriptionbox wrap width25"><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"]; ?></td>
+	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".$pgv_lang["upload_media"]."</a>"; ?></td></tr>
 
 	<!-- // NOTE: Show thumbnails -->
-	<tr><td class="descriptionbox wrap width25"><?php print_help_link("show_thumb_help","qm", "show_thumbnail");?><?php print $pgv_lang["show_thumbnail"];?></td>
+	<tr><td class="descriptionbox wrap width25"><?php print_help_link("show_thumb_help","qm", "show_thumbnail"); ?><?php print $pgv_lang["show_thumbnail"]; ?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) print "checked=\"checked\""; ?> onclick="submit();" /></td>
 
 	<!-- // NOTE: Add media -->
@@ -535,7 +535,7 @@ if (check_media_structure()) {
 		$res = dbquery($sql);
 		$onegedcom = true;
 		while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if ($row['m_gedfile']!=$GEDCOMS[$GEDCOM]['id']) $onegedcom = false;
+			if ($row['m_gedfile']!=PGV_GED_ID) $onegedcom = false;
 		}
 		$res->free();
 		if (!$onegedcom) {
@@ -1041,7 +1041,7 @@ if (check_media_structure()) {
 					if ($k>$MEDIA_DIRECTORY_LEVELS) break;
 				}
 				if ($match) {
-					if ($row["m_gedfile"]!=$GEDCOMS[$GEDCOM]["id"]) $onegedcom = false;
+					if ($row["m_gedfile"]!=PGV_GED_ID) $onegedcom = false;
 					else $xrefs[] = $row["m_media"];
 				}
 			}
