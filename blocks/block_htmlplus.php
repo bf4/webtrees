@@ -47,7 +47,6 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	$ctype,
 	$factarray,
 	$GEDCOM,
-	$GEDCOMS,
 	$HTML_BLOCK_COUNT,
 	$PGV_BLOCKS,
 	$PGV_IMAGE_DIR,
@@ -68,12 +67,26 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	 * Select GEDCOM
 	 */
 	$CURRENT_GEDCOM = $GEDCOM;
-	switch($config['gedcom'])
-	{
-		case '__current__':{break;}
-		case '':{break;}
-		case '__default__':{if ($DEFAULT_GEDCOM == ''){foreach($GEDCOMS as $gedid=>$ged){$GEDCOM = $gedid;break;}}else{$GEDCOM = $DEFAULT_GEDCOM;}break;}
-		default:{if (check_for_import($config['gedcom'])){$GEDCOM = $config['gedcom'];}break;}
+	switch($config['gedcom']) {
+	case '__current__':
+		break;
+	case '':
+		break;
+	case '__default__':
+		if ($DEFAULT_GEDCOM == '') {
+			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+				$GEDCOM = $ged_name;
+				break;
+			}
+		} else {
+			$GEDCOM = $DEFAULT_GEDCOM;
+		}
+		break;
+	default:
+		if (check_for_import($config['gedcom'])) {
+			$GEDCOM = $config['gedcom'];
+		}
+		break;
 	}
 
 	/*
@@ -180,7 +193,6 @@ function print_htmlplus_block_config($config)
 	$LANGUAGE,
 	$language_settings,
 	$GEDCOM,
-	$GEDCOMS,
 	$DEFAULT_GEDCOM
 	;
 	$templates = array();
@@ -229,7 +241,7 @@ function print_htmlplus_block_config($config)
 	."</td></tr>"
 	;
 	// gedcom
-	if (count($GEDCOMS) > 1) {
+	if (count(get_all_gedcoms()) > 1) {
 		if ($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
 		if ($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
 		print "<tr><td class=\"descriptionbox wrap width33\">"
@@ -240,13 +252,13 @@ function print_htmlplus_block_config($config)
 		."<option value=\"__current__\"{$sel_current}>{$pgv_lang['htmlplus_block_current']}</option>"
 		."<option value=\"__default__\"{$sel_default}>{$pgv_lang['htmlplus_block_default']}</option>"
 		;
-		foreach($GEDCOMS as $ged) {
-			if ($ged['gedcom'] == $config['gedcom']) {
+		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+			if ($ged_name==$config['gedcom']) {
 				$sel = ' selected="selected"';
 			} else {
 				$sel = '';
 			}
-			print "<option value=\"{$ged['gedcom']}\"{$sel}>{$ged['title']}</option>";
+			echo '<option value="', $ged_name, '"', $sel, '>', get_gedcom_setting($ged_id, 'title'), '</option>';
 		}
 		print "</select>"
 		."</td></tr>"

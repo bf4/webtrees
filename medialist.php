@@ -3,7 +3,7 @@
  * Displays a list of the multimedia objects
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,10 +30,6 @@ require_once('includes/functions_print_facts.php');
 // LBox -------------------------------------------------------
 loadLangFile("lb_lang");
 // LBox --------------------------------------------------------
-
-global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
-global $GEDCOM, $GEDCOMS;
-global $currentPage, $lastPage ;
 
 // $LB_SS_SPEED = "5";	
 
@@ -86,7 +82,7 @@ if ($search == "yes") {
 	    print " ";
 
 	    // Display when user has Edit rights or when object belongs to current GEDCOM
-	    $disp = PGV_USER_CAN_EDIT || $media["GEDFILE"]==$GEDCOMS[$GEDCOM]["id"];
+	    $disp = PGV_USER_CAN_EDIT || $media["GEDFILE"]==PGV_GED_ID;
 	    // Display when Media objects aren't restricted by global privacy
 	    $disp &= displayDetailsById($media["XREF"], "OBJE");
 	    // Display when this Media object isn't restricted
@@ -140,7 +136,7 @@ if ($search == "yes") {
     <?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
 		<tr>
 			<td class="list_label" colspan="2">
-				<label for="subdirs"><?php print $pgv_lang["medialist_recursive"] ?></label>
+				<label for="subdirs"><?php print $pgv_lang["medialist_recursive"]; ?></label>
 				&nbsp;<input type="checkbox" id="subdirs" name="subdirs" <?php if (!$currentdironly) { ?>checked="checked"<?php } ?> />
 			</td>
 		</tr>
