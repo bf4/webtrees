@@ -38,11 +38,13 @@ require_once 'includes/functions_print_lists.php';
 class stats
 {
 	var $_gedcom;
+	var $_server_url; // Absolute URL for generating external links.  e.g. in RSS feeds
 	var $_compat=false;
 
-	function stats($gedcom)
+	function stats($gedcom, $server_url='')
 	{
 		$this->_setGedcom($gedcom);
+		$this->_server_url=$server_url;
 	}
 
 	function _setGedcom($gedcom)
@@ -289,7 +291,7 @@ class stats
 		}
 		if(!$highlight){return '';}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" class=\"gedcom_highlight\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" class=\"gedcom_highlight\" /></a>";
 	}
 
 	function gedcomHighlightLeft()
@@ -305,7 +307,7 @@ class stats
 			return '';
 		}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" class=\"gedcom_highlight\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" class=\"gedcom_highlight\" /></a>";
 	}
 
 	function gedcomHighlightRight()
@@ -321,7 +323,7 @@ class stats
 			return '';
 		}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" class=\"gedcom_highlight\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" class=\"gedcom_highlight\" /></a>";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -564,20 +566,17 @@ class stats
 		{
 			default:
 			case 'full':
-			{
 				if (displayDetailsById($row['d_gid'])) {
-					$indi=format_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', 'span');
+					$result=format_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', 'span');
 				} else {
-					$indi=$pgv_lang['privacy_error'];
+					$result=$pgv_lang['privacy_error'];
 				}
-				return $indi;
-			}
+				break;
 			case 'year':
-			{
-				return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
-			}
+				$date=new GedcomDate($row['d_type'].' '.$row['d_year']);
+				$result=$date->Display(true);
+				break;
 			case 'name':
-			{
 				$id='';
 				if ($SHOW_ID_NUMBERS) {
 					if ($listDir=='rtl') {
@@ -586,11 +585,13 @@ class stats
 						$id="&nbsp;&nbsp;({$row['d_gid']})";
 					}
 				}
-				return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-			}
+				$result="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
+				break;
 			case 'place':
-				return format_fact_place(get_sub_record(1, "1 {$birth_death}", find_person_record($row['d_gid'])), true, true, true);
+				$result=format_fact_place(get_sub_record(1, "1 {$birth_death}", find_person_record($row['d_gid'])), true, true, true);
+				break;
 		}
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
 	//
@@ -627,7 +628,7 @@ class stats
 
 	function _longlifeQuery($type='full', $sex='F')
 	{
-		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;;
+		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;
 		$sex_search = ' 1=1';
 		if($sex == 'F')
 		{
@@ -665,38 +666,28 @@ class stats
 		{
 			default:
 			case 'full':
-			{
-				if(displayDetailsById($row['id']))
-				{
-					$indi=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+				if (displayDetailsById($row['id'])) {
+					$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+				} else {
+					$result= $pgv_lang['privacy_error'];
 				}
-				else
-				{
-					$indi = $pgv_lang['privacy_error'];
-				}
-				return $indi;
-			}
+				break;
 			case 'age':
-			{
-				return floor($row['age']/365.25);
-			}
+				$result=floor($row['age']/365.25);
+				break;
 			case 'name':
-			{
 				$id = '';
-				if($SHOW_ID_NUMBERS)
-				{
-					if($listDir == 'rtl')
-					{
+				if ($SHOW_ID_NUMBERS) {
+					if ($listDir == 'rtl') {
 						$id = "&nbsp;&nbsp;".getRLM()."({$row['id']})".getRLM();
-					}
-					else
-					{
+					} else {
 						$id = "&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				return "<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
-			}
+				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
+				break;
 		}
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
 	function _topTenOldest($type='list', $sex='BOTH')
@@ -738,11 +729,11 @@ class stats
 		{
 			if($type == 'list')
 			{
-				$top10[]="\t<li><a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]</li>\n";
+				$top10[]="\t<li><a href=\"{$this->_server_url}individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]</li>\n";
 			}
 			else
 			{
-				$top10[]="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]";
+				$top10[]="<a href=\"{$this->_server_url}individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]";
 			}
 		}
 		if($type == 'list')
@@ -760,6 +751,7 @@ class stats
 		{
 			return "<ul>\n{$top10}</ul>\n";
 		}
+		// Statstics are used by RSS feeds, etc., so need absolute URLs.
 		return $top10;
 	}
 
@@ -852,7 +844,8 @@ class stats
 			.' SELECT'
 				.' d_gid AS id,'
 				.' d_year AS year,'
-				.' d_fact AS fact'
+				.' d_fact AS fact,'
+				.' d_type AS type'
 			.' FROM'
 				." {$TBLPREFIX}dates"
 			.' WHERE'
@@ -868,25 +861,23 @@ class stats
 		{
 			default:
 			case 'full':
-			{
 				if (displayDetailsById($row['id'])) {
-					$indi=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+					$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
 				} else {
-					$indi=$pgv_lang['privacy_error'];
+					$result=$pgv_lang['privacy_error'];
 				}
-				return $indi;
-			}
+				break;
 			case 'year':
-			{
-				return "<a href=\"calendar.php?action=year&amp;year={$row['year']}&amp;cal={$row['fact']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['year']}</a>";
-			}
+				$date=new GedcomDate($row['type'].' '.$row['year']);
+				$result=$date->Display(true);
 			case 'type':
-			{
-				if(isset($eventTypes[$row['fact']])){return $eventTypes[$row['fact']];}
-				return '';
-			}
+				if(isset($eventTypes[$row['fact']])) {
+					$result=$eventTypes[$row['fact']];
+				} else {
+					$result='';
+				}
+				break;
 			case 'name':
-			{
 				$id = '';
 				if($SHOW_ID_NUMBERS)
 				{
@@ -899,11 +890,13 @@ class stats
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				return "<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
-			}
+				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
+				break;
 			case 'place':
-				return format_fact_place(get_sub_record(1, "1 {$row['fact']}", find_gedcom_record($row['id'])), true, true, true);
+				$result=format_fact_place(get_sub_record(1, "1 {$row['fact']}", find_gedcom_record($row['id'])), true, true, true);
+				break;
 		}
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
 	function firstEvent(){return $this->_eventQuery('full', 'ASC');}
@@ -961,23 +954,20 @@ class stats
 		{
 			default:
 			case 'full':
-			{
 				if (displayDetailsById($row['f_id']) && displayDetailsById($row[$sex_field])) {
-					$fam=format_list_family($row['f_id'], array(get_person_name($row[$sex_field]), $this->_gedcom['gedcom']), false, '', 'span');
+					$result=format_list_family($row['f_id'], array(get_person_name($row[$sex_field]), $this->_gedcom['gedcom']), false, '', 'span');
 				} else {
-					$fam=$pgv_lang['privacy_error'];
+					$result=$pgv_lang['privacy_error'];
 				}
-				return $fam;
-			}
+				break;;
 			case 'name':
-			{
-				return "<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['f_id']).'</a>';
-			}
+				$result="<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['f_id']).'</a>';
+				break;
 			case 'age':
-			{
-				return floor($row['age']/365.25);
-			}
+				$result=floor($row['age']/365.25);
+				break;
 		}
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
 	//
@@ -1028,26 +1018,22 @@ class stats
 		{
 			default:
 			case 'full':
-			{
 				if(displayDetailsById($row['id'], 'FAM'))
 				{
-					$fam=format_list_family($row['id'], array(get_family_descriptor($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+					$result=format_list_family($row['id'], array(get_family_descriptor($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+				} else {
+					$result = $pgv_lang['privacy_error'];
 				}
-				else
-				{
-					$fam = $pgv_lang['privacy_error'];
-				}
-				return $fam;
-			}
+				break;
 			case 'size':
-			{
-				return $row['tot'];
-			}
+				$result=$row['tot'];
+				break;
 			case 'name':
-			{
-				return "<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['id']).'</a>';
-			}
+				$result="<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['id']).'</a>';
+				break;
 		}
+		// Statstics are used by RSS feeds, etc., so need absolute URLs.
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
 	function _topTenFamilyQuery($type='list')
@@ -1069,11 +1055,11 @@ class stats
 		{
 			if($type == 'list')
 			{
-				$top10[] = "\t<li><a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['id'])."</a> [{$row['tot']} {$pgv_lang['children']}]</li>\n";
+				$top10[] = "\t<li><a href=\"{$this->_server_url}family.php?famid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['id'])."</a> [{$row['tot']} {$pgv_lang['children']}]</li>\n";
 			}
 			else
 			{
-				$top10[] = "<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['id'])."</a> [{$row['tot']} {$pgv_lang['children']}]";
+				$top10[] = "<a href=\"{$this->_server_url}family.php?famid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['id'])."</a> [{$row['tot']} {$pgv_lang['children']}]";
 			}
 		}
 		if($type == 'list')
@@ -1137,11 +1123,11 @@ class stats
 				}
 				if($type == 'list')
 				{
-					$common[] = "\t<li><a href=\"indilist.php?surname=".urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name'])."</a>{$tot}</li>\n";
+					$common[] = "\t<li><a href=\"{$this->_server_url}indilist.php?surname=".urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name'])."</a>{$tot}</li>\n";
 				}
 				else
 				{
-					$common[] = '<a href="indilist.php?surname='.urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name'])."</a>{$tot}";
+					$common[] = '<a href="'.$this->_server_url.'indilist.php?surname='.urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name'])."</a>{$tot}";
 				}
 			}
 			if($type == 'list')

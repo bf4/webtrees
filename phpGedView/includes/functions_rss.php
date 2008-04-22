@@ -3,7 +3,7 @@
  * Various functions used to generate the PhpGedView RSS feed.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ function getUpcomingEvents() {
 	$startjd=client_jd()+1;
 	$endjd=client_jd()+$daysprint;
 
-  $daytext=print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
+	$daytext=print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 	$daytext = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $daytext);
 	$daytext = strip_tags($daytext, '<a><ul><li><b><span>');
 	$dataArray[2]  = $daytext;
@@ -111,7 +111,7 @@ function getTodaysEvents() {
 	if (isset($config["onlyBDM"])) $onlyBDM = $config["onlyBDM"];  // "yes" or "no"
 	else $onlyBDM = "no";
 
-  $daytext=print_events_list(client_jd(), client_jd(), $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
+	$daytext=print_events_list(client_jd(), client_jd(), $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
 	$daytext = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $daytext);
 	$daytext = strip_tags($daytext, '<a><ul><li><b><span>');
 	$dataArray[2]  = $daytext;
@@ -163,101 +163,41 @@ function getGedcomStats() {
 		}
 	}
 
-	$data .= " <br />\n";
+	$stats=new stats($GEDCOM, $SERVER_URL);
+
+	$data .= " <br />";
 	if (!isset($config["stat_indi"]) || $config["stat_indi"]=="yes"){
-		$data .= "<a href=\"" . $SERVER_URL . "indilist.php?surname_sublist=no\">" . get_list_size("indilist"). "</a> - " .$pgv_lang["stat_individuals"]."<br />";
+		$data .= $stats->totalIndividuals()." - " .$pgv_lang["stat_individuals"]."<br />";
 	}
 	if (!isset($config["stat_fam"]) || $config["stat_fam"]=="yes"){
-		$data .= "<a href=\"" .$SERVER_URL . "famlist.php\">" . get_list_size("famlist"). "</a> - ".$pgv_lang["stat_families"]."<br />";
+		$data .= $stats->totalFamilies()." - ".$pgv_lang["stat_families"]."<br />";
 	}
 	if (!isset($config["stat_sour"]) || $config["stat_sour"]=="yes"){
-		$data .= "<a href=\"" . $SERVER_URL . "sourcelist.php\">" . get_list_size("sourcelist")."</a> - ".$pgv_lang["stat_sources"]."<br /> ";
+		$data .= $stats->totalSources()." - ".$pgv_lang["stat_sources"]."<br /> ";
 	}
 	if (!isset($config["stat_other"]) || $config["stat_other"]=="yes"){
-		$data .= get_list_size("otherlist")." - ".$pgv_lang["stat_other"]."<br />";
+		$data .= $stats->totalOtherRecords()." - ".$pgv_lang["stat_other"]."<br />";
 	}
-
 	if (!isset($config["stat_first_birth"]) || $config["stat_first_birth"]=="yes") {
-		// NOTE: Get earliest birth year
-		$sql = "select min(d_year) as lowyear from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'BIRT' and d_year != '0' and d_type is null";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$data .= $pgv_lang["stat_earliest_birth"]." - ".$row["lowyear"]."<br />\n";
+		$data .= $pgv_lang["stat_earliest_birth"]." - ".$stats->firstBirthYear()."<br />";
 	}
 	if (!isset($config["stat_last_birth"]) || $config["stat_last_birth"]=="yes") {
-		// NOTE: Get the latest birth year
-		$sql = "select max(d_year) as highyear from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'BIRT' and d_type is null";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$data .= $pgv_lang["stat_latest_birth"] . " - " .$row["highyear"]."<br />\n";
+		$data .= $pgv_lang["stat_latest_birth"]." - ".$stats->lastBirthYear()."<br />";
 	}
-
 	if (!isset($config["stat_long_life"]) || $config["stat_long_life"]=="yes") {
-		//-- get the person who lived the longest
-		$sql = "select death.d_year-birth.d_year as age, death.d_gid from ".$TBLPREFIX."dates as death, ".$TBLPREFIX."dates as birth where birth.d_gid=death.d_gid AND death.d_file='".$GEDCOMS[$GEDCOM]["id"]."' and birth.d_file=death.d_file AND birth.d_fact='BIRT' and death.d_fact='DEAT' AND birth.d_year>0 and death.d_year>0 and birth.d_type is null and death.d_type is null ORDER BY age DESC";
-		$tempsql = dbquery($sql, true, 1);
-		$res =& $tempsql;
-		$row =& $res->fetchRow();
-		$res->free();
-		$data .= $pgv_lang["stat_longest_life"]. " - " . $row[0]."<br />\n";
+		$data .= $pgv_lang["stat_longest_life"]." - ".$stats->LongestLifeAge()."<br />";
 	}
 	if (!isset($config["stat_avg_life"]) || $config["stat_avg_life"]=="yes") {
-		//-- avg age at death
-		$sql = "select avg(death.d_year-birth.d_year) as age from ".$TBLPREFIX."dates as death, ".$TBLPREFIX."dates as birth where birth.d_gid=death.d_gid AND death.d_file='".$GEDCOMS[$GEDCOM]["id"]."' and birth.d_file=death.d_file AND birth.d_fact='BIRT' and death.d_fact='DEAT' AND birth.d_year>0 and death.d_year>0 and birth.d_type is null and death.d_type is null";
-		$tempsql = dbquery($sql, false);
-		if (!DB::isError($tempsql)) {
-			$res =& $tempsql;
-			$row =& $res->fetchRow();
-			$data .= $pgv_lang["stat_avg_age_at_death"] . " - " .sprintf("%d", $row["0"]) . "<br />\n";
-		}
+		$data .= $pgv_lang["stat_avg_age_at_death"]." - ".$stats->averageLifespan()."<br />";
 	}
-
 	if (!isset($config["stat_most_chil"]) || $config["stat_most_chil"]=="yes") {
-		//-- most children
-		$sql = "SELECT f_numchil, f_id FROM ".$TBLPREFIX."families WHERE f_file='".$GEDCOMS[$GEDCOM]["id"]."' ORDER BY f_numchil DESC";
-		//print $sql;
-		$tempsql = dbquery($sql, true, 10);
-		if (!DB::isError($tempsql)) {
-			$res =& $tempsql;
-			$row =& $res->fetchRow();
-			$res->free();
-			$data .= $pgv_lang["stat_most_children"] . $row[0];
-			if (displayDetailsById($row[1], "FAM")) {
-				$data.=format_list_family($row[1], array(get_family_descriptor($row[1]), $GEDCOM), false, '', 'span');
-			}
-		}
+		$data .= $pgv_lang["stat_most_children"] . $stats->largestFamilySize().' - '.$stats->largestFamily()."<br />";
 	}
-
 	if (!isset($config["stat_avg_chil"]) || $config["stat_avg_chil"]=="yes") {
-		//-- avg number of children
-		$sql = "SELECT avg(f_numchil) from ".$TBLPREFIX."families WHERE f_file='".$GEDCOMS[$GEDCOM]["id"]."'";
-		$tempsql = dbquery($sql, false);
-		if (!DB::isError($tempsql)) {
-			$res =& $tempsql;
-			$row =& $res->fetchRow();
-			$data .= $pgv_lang["stat_average_children"]. " - " . sprintf("%.2f", $row["0"]) . "<br />\n";
-		}
+		$data .= $pgv_lang["stat_average_children"]." - ".$stats->averageChildren()."<br />";
 	}
-
-
-
 	if (!isset($config["show_common_surnames"]) || $config["show_common_surnames"]=="yes") {
-		$surnames = get_common_surnames_index($GEDCOM);
-		if (count($surnames)>0) {
-			$data .="<b>" . $pgv_lang["common_surnames"]."</b><br />";
-			$i=0;
-			foreach($surnames as $indexval => $surname) {
-				if ($i>0) $data .= ", ";
-				if (in_array(ord(substr($surname["name"], 0, 2)),$RTLOrd)) {
-					//if (ord(substr($surname["name"], 0, 2),$RTLOrd)){}
-					$data .= "<a href=\"" . $SERVER_URL ."indilist.php?surname=".rawurlencode($surname["name"])."\">".$surname["name"]."</a>";
-				}
-				else $data .= "<a href=\"" . $SERVER_URL ."indilist.php?surname=".$surname["name"]."\">".$surname["name"]."</a>";
-				$i++;
-			}
-		}
+		$data .="<b>".$pgv_lang["common_surnames"]."</b><br />".$stats->commonSurnames();
 	}
 
 	$data = strip_tags($data, '<a><br><b>');
@@ -411,7 +351,7 @@ function getTop10Surnames() {
 function getRecentChanges() {
 	global $pgv_lang, $factarray, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $REGEXP_DB, $DEBUG, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
-    global $objectlist, $SERVER_URL;
+	global $objectlist, $SERVER_URL;
 
 	if ($ctype=="user") $filter = "living";
 	else $filter = "all";
