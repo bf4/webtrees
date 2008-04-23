@@ -88,10 +88,10 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	if ($ct>0) {
 		$softrec = get_sub_record(1, "1 SOUR", $head);
 		$tt= preg_match("/2 NAME (.*)/", $softrec, $tmatch);
-		if ($tt>0) $title = printReady(trim($tmatch[1]));
-		else $title = trim($match[1]);
-		if (!empty($title)) {
-			$text = str_replace(array("#SOFTWARE#", "#CREATED_SOFTWARE#"), $title, $pgv_lang["gedcom_created_using"]);
+		if ($tt>0) $software = printReady(trim($tmatch[1]));
+		else $software = trim($match[1]);
+		if (!empty($software)) {
+			$text = str_replace(array("#SOFTWARE#", "#CREATED_SOFTWARE#"), $software, $pgv_lang["gedcom_created_using"]);
 			$tt = preg_match("/2 VERS (.*)/", $softrec, $tmatch);
 			if ($tt>0) $version = printReady(trim($tmatch[1]));
 			else $version="";
@@ -102,7 +102,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	$ct=preg_match("/1 DATE (.+)/", $head, $match);
 	if ($ct>0) {
 		$date = new GedcomDate($match[1]);
-		if (empty($title)) $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
+		if (empty($software)) $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
 		else $text = $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on2"]);
 		$content .= $text;
 	}
