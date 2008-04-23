@@ -10,7 +10,10 @@
 
 
 Version 4.1.5
- = Fixed: [ 1949549 ] GEDCOM Stats block: incorrect block title (canajun2eh)
+ - Fixed: [ 1933760 ] SVN 2799 use of function id_type (fisharebest)
+ - Fixed: Remove dependencies on record prefixes (fisharebest)
+ - Fixed: Extra checks against reusing record IDs (fisharebest)
+ - Fixed: [ 1949549 ] GEDCOM Stats block: incorrect block title (canajun2eh)
  - Fixed: Use stats class to calculate stats (fisharebest)
  - Fixed: Stats block counting records from other gedcoms (fisharebest)
  - Fixed: [ 1942593 ] Relationship Chart nth Cousin Calculation Issue (canajun2eh)

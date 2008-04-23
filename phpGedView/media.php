@@ -1097,7 +1097,7 @@ if (check_media_structure()) {
 				$links = get_media_relations($xref);
 				foreach($links as $pid=>$type) {
 					if (isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_updated_record($pid);
-					else $gedrec = find_gedcom_record($pid, '', $type);
+					else $gedrec = find_gedcom_record($pid);
 					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
 					if (replace_gedrec($pid, $gedrec, true, $xref)) {
 						print_text("record_updated");

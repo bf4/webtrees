@@ -89,7 +89,7 @@ function gedcom_header($gedfile, $CRLF="\r\n")
 
 function print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
 	global $GEDCOMS, $GEDCOM, $VERSION, $VERSION_RELEASE, $pgv_lang, $CHARACTER_SET;
-	global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
+	global $TBLPREFIX;
 
 	if ($privatize_export == "yes") {
 		if ($export_user_id=get_user_id('export')) {
@@ -138,9 +138,6 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	$head = remove_custom_tags($head, $remove);
 	fwrite($gedout, $head);
 
-/*      Order by deleted as per Source 'Bug Tracker' note [1856157]
-	$sql = "SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(i_id,'{$GEDCOM_ID_PREFIX}','')+0";
-*/
 	$sql = "SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
@@ -157,9 +154,6 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-/*      Order by deleted as per Source 'Bug Tracker' note [1856157]
-	$sql = "SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(f_id,'{$FAM_ID_PREFIX}','')+0";
-*/
 	$sql = "SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
@@ -176,9 +170,6 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-/*      Order by deleted as per Source 'Bug Tracker' note [1856157]
-	$sql = "SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(s_id,'{$SOURCE_ID_PREFIX}','')+0";
-*/
 	$sql = "SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
@@ -195,9 +186,6 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-/*      Order by deleted as per Source 'Bug Tracker' note [1856157]
-	$sql = "SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_type!='HEAD' AND o_type!='TRLR' ORDER BY REPLACE(o_id,'{$REPO_ID_PREFIX}','')+0";
-*/
 	$sql = "SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_type!='HEAD' AND o_type!='TRLR'";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
@@ -214,9 +202,6 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-/*      Order by deleted as per Source 'Bug Tracker' note [1856157]
-	$sql = "SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(m_media,'{$MEDIA_ID_PREFIX}','')+0";
-*/
 	$sql = "SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {

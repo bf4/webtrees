@@ -690,7 +690,7 @@ function print_sosa_family($famid, $childid, $sosa, $label="", $parid="", $gpari
  * @return string $rootid validated root ID
  */
 function check_rootid($rootid) {
-	global $user, $GEDCOM, $GEDCOM_ID_PREFIX, $PEDIGREE_ROOT_ID, $USE_RIN;
+	global $PEDIGREE_ROOT_ID, $USE_RIN;
 	// -- if the $rootid is not already there then find the first person in the file and make him the root
 	if (!find_person_record($rootid)) {
 		if (find_person_record(PGV_USER_ROOT_ID)) {
@@ -711,14 +711,9 @@ function check_rootid($rootid) {
 	if ($USE_RIN) {
 		$indirec = find_person_record($rootid);
 		if ($indirec == false) $rootid = find_rin_id($rootid);
-	} else {
-		if (preg_match("/[A-Za-z]+/", $rootid) == 0) {
-			$GEDCOM_ID_PREFIX = trim($GEDCOM_ID_PREFIX);
-			$rootid = $GEDCOM_ID_PREFIX . $rootid;
-		}
 	}
 
-	return strtoupper($rootid);
+	return $rootid;
 }
 
 /**

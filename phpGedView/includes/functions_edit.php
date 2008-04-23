@@ -1097,7 +1097,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
-	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
+	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
 
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
@@ -1208,10 +1208,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	case 'ADDR':
 		$rows=4;
 		$cols=40;
-		break;
-	case 'REPO':
-		$rows=1;
-		$cols=strlen($REPO_ID_PREFIX) + 4;
 		break;
 	default:
 		$rows=1;
