@@ -128,7 +128,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_other"].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalOtherRecords().'</div></td></tr>';
 	}
 	if ($config["stat_events"]=="yes") {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_events"].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalUsers().'</div></td></tr>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_events"].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalEvents().'</div></td></tr>';
 	}
 	if ($config["stat_users"]=="yes") {
 		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_users"].'</td><td class="facts_value"><div dir="rtl">';
