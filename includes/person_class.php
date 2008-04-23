@@ -84,12 +84,12 @@ class Person extends GedcomRecord {
 	 * @return Person	returns an instance of a person object
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $indilist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		if (isset($indilist[$pid])
-			&& isset($indilist[$pid]['gedfile'])
-			&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($indilist[$pid]['object'])) return $indilist[$pid]['object'];
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Check the cache first
+		if (isset($gedcom_record_cache[$pid][$ged_id])) {
+			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
 		$indirec = find_person_record($pid);
@@ -112,20 +112,21 @@ class Person extends GedcomRecord {
 				$fromfile = true;
 			}
 		}
-		//if (empty($indirec)) return null;
-		if (empty($indirec)) $indirec = "0 @".$pid."@ INDI\r\n";
+		if (empty($indirec)) return null;
+
 		$person = new Person($indirec, $simple);
 		if (!empty($fromfile)) $person->setChanged(true);
 		//-- update the cache
-		if ($person->isRemote()) {
+		if ($person->isRemote() && $ged_id==PGV_GED_ID) {
+			global $indilist;
 			$indilist[$pid]['gedcom'] = $person->gedrec;
 			$indilist[$pid]['names'] = get_indi_names($person->gedrec);
 			$indilist[$pid]["isdead"] = is_dead($person->gedrec);
-			$indilist[$pid]["gedfile"] = $GEDCOMS[$GEDCOM]['id'];
+			$indilist[$pid]["gedfile"] = $ged_id;
 			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
 		}
-		$indilist[$pid]['object'] = &$person;
-		if (!isset($indilist[$pid]['gedfile'])) $indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
+		// Store the record in the cache
+		$gedcom_record_cache[$pid][$ged_id]=&$person;
 		return $person;
 	}
 

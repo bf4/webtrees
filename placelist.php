@@ -355,9 +355,9 @@ if ($level > 0) {
 		if (count($myfamlist) > 1) uasort($myfamlist, "stringsort");
 		if (count($mysourcelist) > 1) uasort($mysourcelist, "stringsort");
 		// Print each of the tables
-		print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$title);
-		print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$title);
-		print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$title);
+		print_indi_table(array_keys($myindilist),   $pgv_lang["individuals"]." @ ".$title);
+		print_fam_table (array_keys($myfamlist),    $pgv_lang["families"   ]." @ ".$title);
+		print_sour_table(array_keys($mysourcelist), $pgv_lang["sources"    ]." @ ".$title);
 	}
 }
 

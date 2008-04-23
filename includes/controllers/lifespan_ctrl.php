@@ -133,12 +133,10 @@ class LifespanControllerRoot extends BaseController {
 		if (isset ($_REQUEST['newpid'])) {
 			$newpid = clean_input($_REQUEST['newpid']);
 			$person = Person::getInstance($newpid);
-			if (is_null($person)) {
+			if (is_null($person) && $GEDCOM_ID_PREFIX) {
 				//-- allow the user to enter the id without the "I" prefix
-				if (stristr($newpid, $GEDCOM_ID_PREFIX) === false) {
-					$newpid = $GEDCOM_ID_PREFIX.$newpid;
-					$person = Person::getInstance($newpid);
-				}
+				$newpid = $GEDCOM_ID_PREFIX.$newpid;
+				$person = Person::getInstance($newpid);
 			}
 			//-- make sure we have the id from the gedcom record
 			else $newpid = $person->getXref();

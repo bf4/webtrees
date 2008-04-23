@@ -269,7 +269,7 @@ function format_list_repository($key, $value, $tag='li') {
  * @param string $legend optional legend of the fieldset
  */
 function print_indi_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES;
 
 	if (count($datalist)<1) return;
@@ -348,12 +348,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$dateY = date("Y");
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$person = null;
-			if (strpos($key, $GEDCOM_ID_PREFIX)!==false) $person = Person::getInstance($key); // from placelist
-			if (is_null($person)) $person = Person::getInstance($value); // from ancestry chart and search
+			$person = Person::getInstance($value);
 			if (!is_null($person)) $name = $person->getSortableName(); //-- for search results
-		}
-		else {
+		} else {
 			$gid = $key;
 			if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
@@ -687,11 +684,8 @@ function print_fam_table($datalist, $legend="") {
 	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$family = Family::getInstance($key); // from placelist
-			if (is_null($family)) $family = Family::getInstance($value); // from ancestry chart
-			unset($value);
-		}
-		else {
+			$family=Family::getInstance($value);
+		} else {
 			$gid = "";
 			if (isset($value["gid"])) $gid = $value["gid"];
 			if (isset($value["gedcom"])) $family = new Family($value["gedcom"]);
@@ -717,11 +711,7 @@ function print_fam_table($datalist, $legend="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink("_blank").'</td>';
 		//-- Husband name(s)
-		if (isset($value["name"])) {
-			$partners = explode(" + ", $value["name"]); // "husb + wife"
-			$name = check_NN($partners[0]);
-		}
-		else $name = $husb->getSortableName();
+		$name = $husb->getSortableName();
 		$tdclass = "list_value_wrap";
 		if (!$husb->isDead()) $tdclass .= " alive";
 		if (!$husb->getChildFamilyIds()) $tdclass .= " patriarch";
@@ -766,8 +756,7 @@ function print_fam_table($datalist, $legend="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
-		if (isset($value["name"])) $name = check_NN($partners[1]);
-		else $name = $wife->getSortableName();
+		$name = $wife->getSortableName();
 		$tdclass = "list_value_wrap";
 		if (!$wife->isDead()) $tdclass .= " alive";
 		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";

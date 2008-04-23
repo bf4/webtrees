@@ -56,10 +56,12 @@ class Source extends GedcomRecord {
 	 * @param string $pid	the ID of the source to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $sourcelist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		if (isset($sourcelist[$pid]) && $sourcelist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($sourcelist[$pid]['object'])) return $sourcelist[$pid]['object'];
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Check the cache first
+		if (isset($gedcom_record_cache[$pid][$ged_id])) {
+			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
 		$sourcerec = find_source_record($pid);
@@ -83,7 +85,8 @@ class Source extends GedcomRecord {
 		if (empty($sourcerec)) return null;
 		$source = new Source($sourcerec, $simple);
 		if (!empty($fromfile)) $source->setChanged(true);
-		$sourcelist[$pid]['object'] = &$source;
+		// Store the object in the cache
+		$gedcom_record_cache[$pid][$ged_id]=&$source;
 		return $source;
 	}
 
