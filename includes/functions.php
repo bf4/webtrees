@@ -3187,15 +3187,19 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		break;
 	}
 
+	//-- make sure this number has not already been used
+	if ($num>=2147483647 || $num<=0) { // Popular databases are only 32 bits (signed)
+		$num=1;
+	}
+	while (find_gedcom_record($prefix.$num) || find_updated_record($prefix.$num)) {
+		++$num;
+		if ($num>=2147483647 || $num<=0) { // Popular databases are only 32 bits (signed)
+			$num=1;
+		}
+	}
+
 	//-- the key is the prefix and the number
 	$key = $prefix.$num;
-
-	//-- make sure this number has not already been used by an
-	//- item awaiting approval
-	while (isset($pgv_changes[$key."_".$GEDCOM])) {
-		$num++;
-		$key = $prefix.$num;
-	}
 
 	//-- during the import we won't update the database at this time so return now
 	if ($use_cache && isset($MAX_IDS[$type])) {
@@ -3225,27 +3229,14 @@ function has_utf8($string) {
 
 /**
  * Determine the type of ID
- * NOTE: Be careful when using this function as not all GEDCOMS have ID
- * prefixes.  Many GEDCOMS just use numbers like 100, 101, etc without
- * the I, F, etc prefixes.
  * @param string $id
  */
 function id_type($id) {
-	global $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX;
-
-	if (strpos($id, $GEDCOM_ID_PREFIX)===0)
-		return "INDI";
-	if (strpos($id, $FAM_ID_PREFIX)===0)
-		return "FAM";
-	if (strpos($id, $SOURCE_ID_PREFIX)===0)
-		return "SOUR";
-	if (strpos($id, $REPO_ID_PREFIX)===0)
-		return "REPO";
-	if (strpos($id, $MEDIA_ID_PREFIX)===0)
-		return "OBJE";
-	if (strpos($id, "M")===0)
-		return "OBJE";
-	return "";
+	if (preg_match('/^0 @.*@ (\w+)/', find_gedcom_record($id), $match)) {
+		return $match[1];
+	} else {
+		return null;
+	}
 }
 
 //-- only declare this function when it is necessary

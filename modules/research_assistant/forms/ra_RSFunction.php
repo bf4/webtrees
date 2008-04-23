@@ -66,8 +66,8 @@ require_once("includes/person_class.php");
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB:FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE:FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		
-//		$indilist = get_indi_list();
-// 		$famlist = get_fam_list();
+		$indilist = get_indi_list();
+ 		$famlist = get_fam_list();
 		//Create an array to put our data in
 		$myindilist = array();
 		//Create a family array to put our family data in

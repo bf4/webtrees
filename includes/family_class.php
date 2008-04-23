@@ -69,10 +69,12 @@ class Family extends GedcomRecord {
 	 * @param string $pid	the ID of the family to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $famlist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		if (isset($famlist[$pid]['gedfile']) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Check the cache first
+		if (isset($gedcom_record_cache[$pid][$ged_id])) {
+			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
 		$gedrec = find_family_record($pid);
@@ -95,8 +97,8 @@ class Family extends GedcomRecord {
 		if (empty($gedrec)) return null;
 		$object = new Family($gedrec, $simple);
 		if (!empty($fromfile)) $object->setChanged(true);
-		$famlist[$pid]['object'] = &$object;
-		if (!isset($famlist[$pid]['gedfile'])) $famlist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
+		// Store the object in the cache
+		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
 	}
 

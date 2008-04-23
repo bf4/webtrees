@@ -53,10 +53,12 @@ class Repository extends GedcomRecord {
 	 * @param string $pid	the ID of the repository to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $repolist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		if (isset($repolist[$pid]) && $repolist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($repolist[$pid]['object'])) return $repolist[$pid]['object'];
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Check the cache first
+		if (isset($gedcom_record_cache[$pid][$ged_id])) {
+			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
 		$repositoryrec = find_repo_record($pid);
@@ -80,7 +82,8 @@ class Repository extends GedcomRecord {
 		if (empty($repositoryrec)) return null;
 		$repository = new Repository($repositoryrec, $simple);
 		if (!empty($fromfile)) $repository->setChanged(true);
-		$repolist[$pid]['object'] = &$repository;
+		// Store the object in the cache
+		$gedcom_record_cache[$pid][$ged_id]=&$repository;
 		return $repository;
 	}
 

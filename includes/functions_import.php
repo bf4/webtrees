@@ -620,7 +620,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
  * @return string	an updated record
  */
 function update_media($gid, $indirec, $update = false) {
-	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $MEDIA_ID_PREFIX, $media_count, $found_ids;
+	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $media_count, $found_ids;
 	global $zero_level_media, $fpnewged, $objelist, $MAX_IDS, $keepmedia;
 
 	if (!isset ($media_count))
@@ -1566,7 +1566,7 @@ function write_file() {
  * @param string $cid The change id of the record to accept
  */
 function accept_changes($cid) {
-	global $pgv_changes, $GEDCOM, $TBLPREFIX, $FILE, $DBCONN, $GEDCOMS, $MEDIA_ID_PREFIX;
+	global $pgv_changes, $GEDCOM, $TBLPREFIX, $FILE, $DBCONN, $GEDCOMS;
 	global $COMMIT_COMMAND, $INDEX_DIRECTORY, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
 
 	if (isset ($pgv_changes[$cid])) {
