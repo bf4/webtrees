@@ -791,7 +791,7 @@ function showFactDetails($fact, $pid) {
  * @return string the privatized gedcom record
  */
 function privatize_gedcom($gedrec) {
-	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
+	global $pgv_lang, $factarray, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
 	
 	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
@@ -892,6 +892,9 @@ function privatize_gedcom($gedrec) {
 				$ct = preg_match("/1 (\w+)/", $sub, $match);
 				if ($ct > 0) $type = trim($match[1]);
 				else $type="";
+				if (($type=='FACT' || $type=='EVEN') && preg_match('/2 TYPE (\w+)/', $sub, $match) && array_key_exists($match[1], $factarray)) {
+					$type=$match[1];
+				}
 				if (FactViewRestricted($gid, $sub)==false && showFact($type, $gid) && showFactDetails($type, $gid)) $newrec .= $sub;
 				else {
 					$pgv_private_records[$gid] .= $sub;
