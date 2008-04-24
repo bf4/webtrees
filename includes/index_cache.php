@@ -36,7 +36,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * @return boolean  returns false if the block could not be loaded from cache
  */
 function loadCachedBlock($block, $index) {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOMS, $GEDCOM;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
 	
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
@@ -76,7 +76,7 @@ function loadCachedBlock($block, $index) {
  * @return boolean  returns false if the block could not be saved to cache
  */
 function saveCachedBlock($block, $index, $content) {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOMS, $GEDCOM;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
 	
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
@@ -117,7 +117,7 @@ function saveCachedBlock($block, $index, $content) {
  * clears the cache files
  */
 function clearCache() {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOMS, $GEDCOM;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
 	
 	foreach($lang_short_cut as $key=>$value) {
 		$fname = $INDEX_DIRECTORY."/cache/".$value."/".$GEDCOM;

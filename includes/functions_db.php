@@ -229,7 +229,7 @@ function sql_mod_function($x,$y) {
  * @return string the raw gedcom record is returned
  */
 function find_family_record($pid, $gedfile='') {
-	global $TBLPREFIX, $DBTYPE, $GEDCOM, $DBCONN, $famlist;
+	global $TBLPREFIX, $DBCONN, $famlist;
 
 	if (!$pid) {
 		return null;
@@ -313,7 +313,7 @@ function load_families($ids) {
  * @return string the raw gedcom record is returned
  */
 function find_person_record($pid, $gedfile='') {
-	global $TBLPREFIX, $DBTYPE, $GEDCOM, $DBCONN, $indilist;
+	global $TBLPREFIX, $DBCONN, $indilist;
 
 	if (!$pid) {
 		return null;
@@ -398,8 +398,7 @@ function load_people($ids) {
  * @return string the raw gedcom record is returned
  */
 function find_gedcom_record($pid, $gedfile='') {
-	global $TBLPREFIX, $DBTYPE, $GEDCOM, $DBCONN;
-	global $indilist, $famlist, $sourcelist, $objectlist, $otherlist;
+	global $TBLPREFIX, $DBTYPE, $DBCONN, $indilist, $famlist, $sourcelist, $objectlist, $otherlist;
 
 	if (!$pid) {
 		return null;
@@ -472,7 +471,7 @@ function find_gedcom_record($pid, $gedfile='') {
  * @return string the raw gedcom record is returned
  */
 function find_source_record($pid, $gedfile="") {
-	global $TBLPREFIX, $DBTYPE, $GEDCOM, $DBCONN, $sourcelist;
+	global $TBLPREFIX, $DBCONN, $sourcelist;
 
 	if (!$pid) {
 		return null;
@@ -515,7 +514,7 @@ function find_source_record($pid, $gedfile="") {
  * @param string $gedfile	the gedcom file id
  */
 function find_repo_record($pid, $gedfile="") {
-	global $TBLPREFIX, $DBTYPE, $GEDCOM, $DBCONN, $repolist;
+	global $TBLPREFIX, $DBCONN, $repolist;
 
 	if (!$pid) {
 		return null;
@@ -606,7 +605,8 @@ function find_media_record($pid, $gedfile='') {
  * @return string the gedcom xref id of the first person in the gedcom
  */
 function find_first_person() {
-	global $GEDCOM, $TBLPREFIX, $GEDCOMS, $DBCONN;
+	global $TBLPREFIX;
+
 	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." ORDER BY i_id";
 	$res = dbquery($sql,false,1);
 	$row = $res->fetchRow();
@@ -630,6 +630,7 @@ function find_first_person() {
  */
 function update_isdead($gid, $indi) {
 	global $TBLPREFIX, $indilist, $DBCONN;
+
 	$isdead = 0;
 	if (isset($indi["gedcom"])) {
 		$isdead = is_dead($indi["gedcom"]);
@@ -650,7 +651,7 @@ function update_isdead($gid, $indi) {
  * items will be recalculated.
  */
 function reset_isdead() {
-	global $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
+	global $TBLPREFIX;
 
 	$sql = "UPDATE ".$TBLPREFIX."individuals SET i_isdead=-1 WHERE i_file=".PGV_GED_ID;
 	dbquery($sql);
@@ -664,8 +665,7 @@ function reset_isdead() {
  * @return array the array of source-titles
  */
 function get_source_add_title_list() {
-	global $sourcelist, $GEDCOM, $GEDCOMS;
-	global $TBLPREFIX, $DBCONN;
+	global $sourcelist, $TBLPREFIX;
 
 	$sourcelist = array();
 
@@ -697,8 +697,7 @@ function get_source_add_title_list() {
  * @return array the array of sources
  */
 function get_source_list() {
-	global $sourcelist, $GEDCOM, $GEDCOMS;
-	global $TBLPREFIX, $DBCONN;
+	global $sourcelist, $TBLPREFIX;
 
 	$sourcelist = array();
 
@@ -721,8 +720,7 @@ function get_source_list() {
 
 //-- get the repositorylist from the datastore
 function get_repo_list() {
-	global $repolist, $GEDCOM, $GEDCOMS;
-	global $TBLPREFIX, $DBCONN;
+	global $repolist, $TBLPREFIX;
 
 	$repolist = array();
 
@@ -752,8 +750,7 @@ function get_repo_list() {
 
 //-- get the repositorylist from the datastore
 function get_repo_id_list() {
-	global $GEDCOM, $GEDCOMS;
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$repo_id_list = array();
 
@@ -786,8 +783,7 @@ function get_repo_id_list() {
  * @return array the array of repository-titles
  */
 function get_repo_add_title_list() {
-	global $GEDCOM, $GEDCOMS;
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$repolist = array();
 
@@ -815,7 +811,6 @@ function get_repo_add_title_list() {
 
 //-- get the indilist from the datastore
 function get_indi_list() {
-	global $indilist, $GEDCOM, $DBCONN, $GEDCOMS;
 	global $TBLPREFIX, $INDILIST_RETRIEVED;
 
 	if ($INDILIST_RETRIEVED)
@@ -854,8 +849,7 @@ function get_indi_list() {
 
 //-- get the assolist from the datastore
 function get_asso_list($type = "all", $ipid='') {
-	global $assolist, $GEDCOM;
-	global $TBLPREFIX, $ASSOLIST_RETRIEVED;
+	global $assolist, $GEDCOM, $TBLPREFIX, $ASSOLIST_RETRIEVED;
 
 	if ($ASSOLIST_RETRIEVED)
 		return $assolist;
@@ -937,8 +931,7 @@ function get_asso_list($type = "all", $ipid='') {
 
 //-- get the famlist from the datastore
 function get_fam_list() {
-	global $famlist, $GEDCOM, $DBCONN, $GEDCOMS;
-	global $TBLPREFIX, $FAMLIST_RETRIEVED;
+	global $famlist, $TBLPREFIX, $FAMLIST_RETRIEVED;
 
 	if ($FAMLIST_RETRIEVED)
 		return $famlist;
@@ -979,8 +972,7 @@ function get_fam_list() {
 
 //-- get the otherlist from the datastore
 function get_other_list() {
-	global $otherlist, $GEDCOM, $DBCONN, $GEDCOMS;
-	global $TBLPREFIX;
+	global $otherlist, $TBLPREFIX;
 
 	$otherlist = array();
 
@@ -1014,6 +1006,7 @@ function get_other_list() {
  */
 function search_indis($query, $allgeds=false, $ANDOR="AND") {
 	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $DBTYPE, $GEDCOMS;
+
 	$myindilist = array();
 	if (stristr($DBTYPE, "mysql")!==false)
 		$term = "REGEXP";
@@ -1088,7 +1081,7 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 
 //-- search through the gedcom records for individuals
 function search_indis_names($query, $allgeds=false) {
-	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
+	global $TBLPREFIX, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE;
 
 	if (stristr($DBTYPE, "mysql")!==false)
 		$term = "REGEXP";
@@ -1374,7 +1367,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
  * @param	int $jd, leave empty to include all
  */
 function get_recent_changes($jd=0, $allgeds=false) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX;
 
 	$sql = "SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
 	if (!$allgeds)
@@ -1406,7 +1399,8 @@ function get_recent_changes($jd=0, $allgeds=false) {
  * @return	array $myindilist array with all individuals that matched the query
  */
 function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=false, $ANDOR="AND") {
-	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $indilist, $DBCONN;
+
 	$myindilist = array();
 
 	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals WHERE i_id=d_gid AND i_file=d_file ";
@@ -1474,8 +1468,8 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
  * @return	array $myindilist array with all individuals that matched the query
  */
 function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="AND") {
-	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $GEDCOMS;
-	global $USE_RTL_FUNCTIONS, $year;
+	global $TBLPREFIX, $indilist, $DBCONN, $USE_RTL_FUNCTIONS, $year;
+
 	$myindilist = array();
 
 	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals WHERE i_id=d_gid AND i_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
@@ -1533,6 +1527,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 //-- search through the gedcom records for families
 function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $DBTYPE, $GEDCOMS;
+
 	if (stristr($DBTYPE, "mysql")!==false)
 		$term = "REGEXP";
 	else
@@ -1623,6 +1618,7 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 //-- search through the gedcom records for families
 function search_fams_names($query, $ANDOR="AND", $allnames=false, $gedcnt=1) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN;
+
 	$myfamlist = array();
 	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (";
 	$i=0;
@@ -1698,6 +1694,7 @@ function search_fams_names($query, $ANDOR="AND", $allnames=false, $gedcnt=1) {
  */
 function search_fams_members($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $GEDCOMS;
+
 	$myfamlist = array();
 	if (!is_array($query))
 		$sql = "SELECT f_id, f_husb, f_wife, f_file FROM ".$TBLPREFIX."families WHERE (f_husb='$query' OR f_wife='$query' OR f_chil LIKE '%$query;%')";
@@ -1773,6 +1770,7 @@ function search_fams_members($query, $allgeds=false, $ANDOR="AND", $allnames=fal
 //-- search through the gedcom records for sources
 function search_sources($query, $allgeds=false, $ANDOR="AND") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $DBTYPE, $GEDCOMS;
+
 	$mysourcelist = array();
 	if (stristr($DBTYPE, "mysql")!==false)
 		$term = "REGEXP";
@@ -1844,6 +1842,7 @@ function search_sources($query, $allgeds=false, $ANDOR="AND") {
  */
 function search_sources_dates($day="", $month="", $year="", $fact="", $allgeds=false) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+
 	$mysourcelist = array();
 
 	$sql = "SELECT s_id, s_name, s_file, s_gedcom, d_gid FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."sources WHERE s_id=d_gid AND s_file=d_file ";
@@ -1884,6 +1883,7 @@ function search_sources_dates($day="", $month="", $year="", $fact="", $allgeds=f
 //-- search through the gedcom records for sources
 function search_other($query, $allgeds=false, $type="", $ANDOR="AND") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $DBTYPE, $GEDCOMS;
+
 	$mysourcelist = array();
 	if (stristr($DBTYPE, "mysql")!==false)
 		$term = "REGEXP";
@@ -1955,6 +1955,7 @@ function search_other($query, $allgeds=false, $type="", $ANDOR="AND") {
  */
 function search_other_dates($day="", $month="", $year="", $fact="", $allgeds=false) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+
 	$myrepolist = array();
 
 	$sql = "SELECT o_id, o_file, o_type, o_gedcom, d_gid FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."other WHERE o_id=d_gid AND o_file=d_file ";
@@ -2006,7 +2007,7 @@ function search_other_dates($day="", $month="", $year="", $fact="", $allgeds=fal
  * @return int
  */
 function get_place_parent_id($parent, $level) {
-	global $DBCONN, $TBLPREFIX, $GEDCOM, $GEDCOMS;
+	global $DBCONN, $TBLPREFIX;
 
 	$parent_id=0;
 	for ($i=0; $i<$level; $i++) {
@@ -2029,8 +2030,7 @@ function get_place_parent_id($parent, $level) {
  * we are at.
  */
 function get_place_list() {
-	global $numfound, $level, $parent;
-	global $GEDCOM, $TBLPREFIX, $placelist, $DBCONN, $GEDCOMS;
+	global $numfound, $level, $parent, $TBLPREFIX, $placelist;
 
 	// --- find all of the place in the file
 	if ($level==0)
@@ -2055,7 +2055,7 @@ function get_place_list() {
  * @return array
  */
 function get_place_positions($parent, $level='') {
-	global $positions, $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+	global $positions, $TBLPREFIX, $DBCONN;
 
 	if ($level!='')
 		$p_id = get_place_parent_id($parent, $level);
@@ -2081,7 +2081,7 @@ function get_place_positions($parent, $level='') {
 
 //-- find all of the places
 function find_place_list($place) {
-	global $GEDCOM, $TBLPREFIX, $placelist, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $placelist;
 
 	$sql = "SELECT p_id, p_place, p_parent_id  FROM ".$TBLPREFIX."places WHERE p_file=".PGV_GED_ID." ORDER BY p_parent_id, p_id";
 	$res = dbquery($sql);
@@ -2109,7 +2109,8 @@ function find_place_list($place) {
 
 //-- find all of the media
 function get_media_list() {
-	global $GEDCOM, $TBLPREFIX, $medialist, $ct, $GEDCOMS, $MEDIA_DIRECTORY;
+	global $TBLPREFIX, $medialist, $ct, $MEDIA_DIRECTORY;
+
 	$ct = 0;
 	if (!isset($medialinks))
 		$medialinks = array();
@@ -2158,8 +2159,7 @@ function get_media_list() {
  * @return array	an array of all letters
  */
 function get_indi_alpha() {
-	global $TBLPREFIX, $GEDCOM, $LANGUAGE, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
-	global $MULTI_LETTER_ALPHABET;
+	global $TBLPREFIX, $LANGUAGE, $SHOW_MARRIED_NAMES, $MULTI_LETTER_ALPHABET;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
 
 	$indialpha = array();
@@ -2239,8 +2239,7 @@ function get_indi_alpha() {
 
 //-- get the first character in the list
 function get_fam_alpha() {
-	global $TBLPREFIX, $GEDCOM, $LANGUAGE, $famalpha, $DBCONN, $GEDCOMS;
-	global $MULTI_LETTER_ALPHABET;
+	global $TBLPREFIX, $LANGUAGE, $famalpha, $MULTI_LETTER_ALPHABET;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
 
 	$famalpha = array();
@@ -2331,8 +2330,7 @@ function get_fam_alpha() {
  * @see http://www.phpgedview.net/devdocs/arrays.php#indilist
  */
 function get_alpha_indis($letter) {
-	global $TBLPREFIX, $GEDCOM, $LANGUAGE, $indilist, $surname, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
-	global $MULTI_LETTER_ALPHABET;
+	global $TBLPREFIX, $LANGUAGE, $indilist, $surname, $SHOW_MARRIED_NAMES, $DBCONN, $MULTI_LETTER_ALPHABET;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
 
 	$tindilist = array();
@@ -2555,7 +2553,8 @@ function get_alpha_indis($letter) {
  * @see http://www.phpgedview.net/devdocs/arrays.php#indilist
  */
 function get_surname_indis($surname) {
-	global $TBLPREFIX, $GEDCOM, $indilist, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $indilist, $SHOW_MARRIED_NAMES, $DBCONN;
+
 	$tindilist = array();
 	$sql = "SELECT i_id, i_isdead, i_file, i_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	$sql .= "AND i_file=".PGV_GED_ID;
@@ -2652,7 +2651,7 @@ function get_surname_indis($surname) {
  * @see http://www.phpgedview.net/devdocs/arrays.php#famlist
  */
 function get_alpha_fams($letter) {
-	global $TBLPREFIX, $GEDCOM, $famlist, $indilist, $LANGUAGE, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $famlist, $indilist, $LANGUAGE, $SHOW_MARRIED_NAMES;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
 
 	$danishex = array("OE", "AE", "AA");
@@ -2790,7 +2789,8 @@ function get_alpha_fams($letter) {
  * @see http://www.phpgedview.net/devdocs/arrays.php#indilist
  */
 function get_surname_fams($surname) {
-	global $TBLPREFIX, $GEDCOM, $famlist, $indilist, $DBCONN, $SHOW_MARRIED_NAMES, $GEDCOMS;
+	global $TBLPREFIX, $famlist, $indilist, $SHOW_MARRIED_NAMES;
+
 	$tfamlist = array();
 	$temp = $SHOW_MARRIED_NAMES;
 	$SHOW_MARRIED_NAMES = false;
@@ -2883,7 +2883,7 @@ function get_surname_fams($surname) {
 
 //-- function to find the gedcom id for the given rin
 function find_rin_id($rin) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX;
 
 	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_rin='$rin' AND i_file=".PGV_GED_ID;
 	$res = dbquery($sql);
@@ -2967,7 +2967,7 @@ function delete_gedcom($ged) {
  * @return int
  */
 function get_list_size($list, $filter="") {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $DBTYPE;
+	global $TBLPREFIX, $DBTYPE;
 
 	if ($filter) {
 		if (stristr($DBTYPE, "mysql")!==false)
@@ -3039,7 +3039,7 @@ function get_list_size($list, $filter="") {
  * @return array
  */
 function get_top_surnames($num) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX;
 
 	$surnames = array();
 	$sql = "SELECT COUNT(i_surname) AS count, i_surname FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." GROUP BY i_surname ORDER BY count DESC";
@@ -3106,8 +3106,7 @@ function get_next_id($table, $field) {
  * get a list of remote servers
  */
 function get_server_list(){
- 	global $GEDCOM, $GEDCOMS;
-	global $TBLPREFIX, $DBCONN, $sitelist, $sourcelist;
+ 	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $sitelist, $sourcelist;
 
 	$sitelist = array();
 
@@ -3159,6 +3158,7 @@ function get_faq_data($id='') {
 
 function delete_fact($linenum, $pid, $gedrec) {
 	global $linefix, $pgv_lang;
+
 	if (!empty($linenum)) {
 		if ($linenum==0) {
 			if (delete_gedrec($pid))
@@ -3204,7 +3204,8 @@ function delete_fact($linenum, $pid, $gedrec) {
  * @return gid Stub ID that contains the RFN number. Returns false if it didn't find anything
  */
 function get_remote_id($rfn) {
-global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
+	global $TBLPREFIX, $DBCONN;
+
 	$sql = "SELECT r_gid FROM ".$TBLPREFIX."remotelinks WHERE r_linkid='".$DBCONN->escapeSimple($rfn)."' AND r_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
@@ -3224,7 +3225,7 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 // $facts - restrict the search to just these facts or leave blank for all
 ////////////////////////////////////////////////////////////////////////////////
 function get_anniversary_events($jd, $facts='') {
-	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
+	global $TBLPREFIX;
 
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
@@ -3398,7 +3399,7 @@ function get_anniversary_events($jd, $facts='') {
 // $facts - restrict the search to just these facts or leave blank for all
 ////////////////////////////////////////////////////////////////////////////////
 function get_calendar_events($jd1, $jd2, $facts='') {
-	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
+	global $TBLPREFIX;
 
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
