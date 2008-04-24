@@ -689,7 +689,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 		$PersonDeath2=$Person2->getEstimatedDeathDate();
 
 		$count=0;
-		$Probabilty=0;
+		$Probability=0;
 		if (!empty($PersonName1)&&!empty($PersonName2)){
 			$lev = levenshtein(str2lower($PersonName1), str2lower($PersonName2));
 			if($lev<4){
