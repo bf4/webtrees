@@ -811,7 +811,7 @@ function get_repo_add_title_list() {
 
 //-- get the indilist from the datastore
 function get_indi_list() {
-	global $TBLPREFIX, $INDILIST_RETRIEVED;
+	global $indilist, $TBLPREFIX, $INDILIST_RETRIEVED;
 
 	if ($INDILIST_RETRIEVED)
 		return $indilist;
