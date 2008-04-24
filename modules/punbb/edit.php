@@ -197,7 +197,7 @@ else if (isset($_POST['preview']))
 
 ?>
 <div class="blockform">
-	<h2><?php echo $lang_post['Edit post'] ?></h2>
+	<h2><span><?php echo $lang_post['Edit post'] ?></span></h2>
 	<div class="box">
 		<form id="edit" method="post" action="<?php genurl("edit.php?id={$id}&amp;action=edit", true, true)?>" onsubmit="return process_form(this)">
 			<div class="inform">
