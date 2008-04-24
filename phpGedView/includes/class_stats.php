@@ -270,7 +270,7 @@ class stats
 	function gedcomUpdated()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='CHAN' ORDER BY d_julianday2 DESC", 1);
+		$rows=$this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='CHAN' ORDER BY d_julianday2 DESC, d_type", 1);
 		if (isset($rows[0])) {
 			$date=new GedcomDate("{$rows[0]['d_day']} {$rows[0]['d_month']} {$rows[0]['d_year']}");
 			return $date->Display(false);
@@ -559,7 +559,7 @@ class stats
 				." d_fact='{$birth_death}' AND"
 				." d_julianday1!=0"
 			.' ORDER BY'
-				." d_julianday1 {$life_dir}"
+				." d_julianday1 {$life_dir}, d_type"
 		, 1);
 		$row=$rows[0];
 		switch($type)
@@ -854,7 +854,7 @@ class stats
 				." d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND"
 				.' d_julianday1!=0'
 			.' ORDER BY'
-				." d_julianday1 {$direction}"
+				." d_julianday1 {$direction}, d_type"
 		, 1);
 		$row=$rows[0];
 		switch($type)
