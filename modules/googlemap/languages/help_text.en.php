@@ -139,4 +139,8 @@ $pgv_lang["GOOGLEMAP_PH"]             	= "Use Googlemap for Place Hierarchy";
 $pgv_lang["GOOGLEMAP_PH_help"]        	= "Using this option the functionality of the Googlemap for Place Hierarchy can be enabled or disabled. For show is needed to enable Googlemap module also. Before using is recomended to insert all places into the Googlemap tables.";
 $pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Type of place markers in Place Hierarchy";
 $pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "Here you can specify what type of marker be able to use (standard or flag). If place has no flag, use standard marker.";
+$pgv_lang["GM_DISP_SHORT_PLACE"]		= "Display short placenames?";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "Here you can choose between two types of displaing places names in hierarchy. If set Yes the place was short name or actual level name. If No place have full name.";
+$pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Use mouse wheel for zoom?";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "Here you can specify if the mouse wheel is enebled for zooming.";
 ?>

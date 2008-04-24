@@ -25,7 +25,7 @@
  * @subpackage GoogleMap
  * @see config.php
  * @version $Id: editconfig.php,v$
- * $Id$
+ * $Id: editconfig.php 2900 2008-04-24 13:36:11Z kosherjava
  */
 
 //-- security check, only allow access from module.php
@@ -119,9 +119,12 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$GM_DEFAULT_TOP_VALUE\s*=\s*".*";/', "\$GM_DEFAULT_TOP_VALUE = \"".$_POST["NEW_DEFAULT_TOP_LEVEL"]."\";", $configtext);
     $configtext = preg_replace('/\$GM_MAX_NOF_LEVELS\s*=\s*".*";/', "\$GM_MAX_NOF_LEVELS = \"".$_POST["NEW_LEVEL_COUNT"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_COORD\s*=\s*".*";/', "\$GOOGLEMAP_COORD = \"".$_POST["NEW_GOOGLEMAP_COORD"]."\";", $configtext);
+	//wooc place hierarchy
 	$configtext = preg_replace('/\$GOOGLEMAP_PLACE_HIERARCHY\s*=\s*".*";/', "\$GOOGLEMAP_PLACE_HIERARCHY = \"".$_POST["NEW_GOOGLEMAP_PLACE_HIERARCHY"]."\";", $configtext);
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_MARKER\s*=\s*".*";/', "\$GOOGLEMAP_PH_MARKER = \"".$_POST["NEW_GOOGLEMAP_PH_MARKER"]."\";", $configtext);
-	
+	$configtext = preg_replace('/\$GM_DISP_SHORT_PLACE\s*=\s*".*";/', "\$GM_DISP_SHORT_PLACE = \"".$_POST["NEW_GM_DISP_SHORT_PLACE"]."\";", $configtext);
+	$configtext = preg_replace('/\$GOOGLEMAP_PH_WHEEL\s*=\s*".*";/', "\$GOOGLEMAP_PH_WHEEL = \"".$_POST["NEW_GOOGLEMAP_PH_WHEEL"]."\";", $configtext);
+
     for($i = 1; $i <= 9; $i++) {
         $configtext = preg_replace('/\$GM_PREFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_PREFIX['.$i.'] = "'.$_POST["NEW_NAME_PREFIX_".$i].'";', $configtext);
         $configtext = preg_replace('/\$GM_POSTFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_POSTFIX['.$i.'] = "'.$_POST["NEW_NAME_POSTFIX_".$i].'";', $configtext);
@@ -259,19 +262,13 @@ $i = 0;
             <input type="text" name="NEW_GOOGLEMAP_YSIZE" value="<?php print $GOOGLEMAP_YSIZE;?>" size="10" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_MAP_SIZE_help');" />
         </td>
     </tr>
-        <tr>
-        <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_COORD_help", "qm", "GOOGLEMAP_COORD"); print $pgv_lang["googlemap_coord"];?></td>
-        <td class="optionbox"><select name="NEW_GOOGLEMAP_COORD" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_COORD_help');">
-                <option value="false" <?php if ($GOOGLEMAP_COORD=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-                <option value="true" <?php if ($GOOGLEMAP_COORD=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-            </select>
-    </tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_help", "qm", "GOOGLEMAP_PH"); print $pgv_lang["gm_place_hierarchy"];?></td>
         <td class="optionbox"><select name="NEW_GOOGLEMAP_PLACE_HIERARCHY" tabindex="<?php $i++; print $i?>;">
                 <option value="false" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
                 <option value="true" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
             </select>
+		</td>
     </tr>
 	<tr>
         <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_MARKER_help", "qm", "GOOGLEMAP_PH_MARKER"); print $pgv_lang["gm_ph_marker_type"];?></td>
@@ -279,6 +276,31 @@ $i = 0;
                 <option value="G_DEFAULT_ICON" <?php if ($GOOGLEMAP_PH_MARKER=="G_DEFAULT_ICON") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_standard_marker"];?></option>
                 <option value="G_FLAG" <?php if ($GOOGLEMAP_PH_MARKER=="G_FLAG") print "selected=\"selected\""; ?>><?php print $pgv_lang["pl_flag"];?></option>
             </select>
+		</td>
+    </tr>
+	<tr>
+		<td class="descriptionbox"><?php print_help_link("GM_DISP_SHORT_PLACE_help", "qm", "GM_DISP_SHORT_PLACE"); print $pgv_lang["gm_ph_placenames"];?></td>
+        <td class="optionbox"><select name="NEW_GM_DISP_SHORT_PLACE" tabindex="<?php $i++; print $i?>;">
+                <option value="false" <?php if ($GM_DISP_SHORT_PLACE=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+                <option value="true" <?php if ($GM_DISP_SHORT_PLACE=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+            </select>
+		</td>
+    </tr>
+	<tr>
+		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_WHEEL_help", "qm", "GOOGLEMAP_PH_WHEEL"); print $pgv_lang["gm_ph_wheel"];?></td>
+        <td class="optionbox"><select name="NEW_GOOGLEMAP_PH_WHEEL" tabindex="<?php $i++; print $i?>;">
+                <option value="false" <?php if ($GOOGLEMAP_PH_WHEEL=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+                <option value="true" <?php if ($GOOGLEMAP_PH_WHEEL=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+            </select>
+		</td>
+    </tr>
+	<tr>
+        <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_COORD_help", "qm", "GOOGLEMAP_COORD"); print $pgv_lang["googlemap_coord"];?></td>
+        <td class="optionbox"><select name="NEW_GOOGLEMAP_COORD" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_COORD_help');">
+                <option value="false" <?php if ($GOOGLEMAP_COORD=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+                <option value="true" <?php if ($GOOGLEMAP_COORD=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+            </select>
+		</td>
     </tr>
     <tr>
         <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_ZOOM_help", "qm", "GOOGLEMAP_MAP_ZOOM"); print $pgv_lang["gm_map_zoom"];?></td>

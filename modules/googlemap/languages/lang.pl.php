@@ -54,6 +54,8 @@ $pgv_lang["gm_place_hierarchy"]		= "Użyj Googlemap do wyświetlania hierarchii 
 $pgv_lang["gm_ph_marker_type"]		= "Typ znacznika miejsca w hierarchii miejsc";
 $pgv_lang["gm_standard_marker"]		= "Standardowy";
 $pgv_lang["gm_no_coord"]			= "To miejsce nie ma ustawionych współrzędnych";
+$pgv_lang["gm_ph_placenames"]		= "Czy wyświetlić skrócone nazwy miejsc?";
+$pgv_lang["gm_ph_wheel"]			= "Użyć rolki myszki do przybliżania/oddalania?";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edytuj położenie geograficzne miejsc";
