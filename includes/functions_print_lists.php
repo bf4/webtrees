@@ -362,12 +362,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		/* @var $person Person */
 		if (is_null($person)) continue;
-		$name = $person->getSortableName();
 		if ($person->type !== "INDI") continue;
 		if (!$person->canDisplayName()) {
 			$hidden++;
 			continue;
 		}
+		$name = $person->getSortableName();
 		if (empty($name)) continue;
 		//-- place filtering
 		if ($option=="BIRT_PLAC" && strstr($person->getBirthPlace(), $filter)===false) continue;

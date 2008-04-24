@@ -325,7 +325,7 @@ function is_dead_id($pid) {
 			if (empty($gedrec))
 				return true;
 		}
-		if ($indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
+		if (isset($indilist[$pid]["isdead"]) && $indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
 			if (!isset($indilist[$pid]["isdead"]))
 				$indilist[$pid]["isdead"] = -1;
 			if ($indilist[$pid]["isdead"]==-1)
