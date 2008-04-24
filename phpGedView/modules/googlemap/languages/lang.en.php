@@ -34,9 +34,9 @@ $pgv_lang["gm_disabled"]            = "GoogleMap module disabled";
 
 $pgv_lang["gm_redraw_map"]          = "Redraw map";
 $pgv_lang["gm_map"]                 = "Map";
+$pgv_lang["gm_physical"]            = "Terrain";
 $pgv_lang["gm_satellite"]           = "Satellite";
 $pgv_lang["gm_hybrid"]              = "Hybrid";
-$pgv_lang["gm_physical"]            = "Terrain";
 
 // Configuration texts
 $pgv_lang["gm_manage"]              = "Manage GoogleMap configuration";
@@ -69,10 +69,15 @@ $pgv_lang["gm_pp_po_pr_b_n"]        = "Postfix, prefix, both, normal";
 $pgv_lang["gm_pp_pr_po_n_b"]        = "Prefix, postfix, normal, both";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Postfix, prefix, normal, both";
 $pgv_lang["googlemap_coord"]        = "Display Map Co-ordinates";
-
+//wooc place hierarchy
+$pgv_lang["gm_place_hierarchy"]  	= "Use Googlemap for Place Hierarchy";
+$pgv_lang["gm_ph_marker_type"]		= "Type of place markers in Place Hierarchy";
+$pgv_lang["gm_standard_marker"]		= "Standard";
+$pgv_lang["gm_no_coord"]			= "This place has no coordinates";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edit geographic place locations";
+$pgv_lang["pl_no_places_found"]     = "No places found";
 $pgv_lang["pl_zoom_factor"]         = "Zoom factor";
 $pgv_lang["pl_place_icon"]          = "Icon";
 $pgv_lang["pl_edit"]                = "Edit geographic location";
@@ -91,7 +96,6 @@ $pgv_lang["pl_places_filename"]     = "File containing places (CSV)";
 $pgv_lang["pl_clean_db"]            = "Clear all place-locations before import?";
 $pgv_lang["pl_update_only"]         = "Update existing places only?";
 $pgv_lang["pl_overwrite_data"]      = "Overwrite location-data with data from file?";
-$pgv_lang["pl_no_places_found"]     = "No places found";
 $pgv_lang["pl_use_this_value"]      = "Use this value";
 $pgv_lang["pl_precision"]           = "Precision";
 $pgv_lang["pl_country"]             = "Country";
@@ -130,5 +134,5 @@ $pgv_lang["placecheck_unique"]		= "Total unique places";
 $pgv_lang["placecheck_zoom"]        = "Zoom=";
 $pgv_lang["placecheck_options"]     = "PlaceCheck List Options";
 $pgv_lang["placecheck_filter_text"] = "List filtering options";
-$pgv_lang["placecheck_match"] 		= "Include fully matched places -";
+$pgv_lang["placecheck_match"] 		= "Include fully matched places: ";
 ?>

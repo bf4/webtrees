@@ -91,7 +91,7 @@ print_header($pgv_lang["configure_googlemap"]);
 
 print "<span class=\"subheaders\">".$pgv_lang["configure_googlemap"]."</span>";
 
-if (!PGV_USER_IS_ADMIN) {
+if (!userIsAdmin(getUserName())) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
     print "</td></tr></table>\n";
@@ -119,7 +119,9 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$GM_DEFAULT_TOP_VALUE\s*=\s*".*";/', "\$GM_DEFAULT_TOP_VALUE = \"".$_POST["NEW_DEFAULT_TOP_LEVEL"]."\";", $configtext);
     $configtext = preg_replace('/\$GM_MAX_NOF_LEVELS\s*=\s*".*";/', "\$GM_MAX_NOF_LEVELS = \"".$_POST["NEW_LEVEL_COUNT"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_COORD\s*=\s*".*";/', "\$GOOGLEMAP_COORD = \"".$_POST["NEW_GOOGLEMAP_COORD"]."\";", $configtext);
-
+	$configtext = preg_replace('/\$GOOGLEMAP_PLACE_HIERARCHY\s*=\s*".*";/', "\$GOOGLEMAP_PLACE_HIERARCHY = \"".$_POST["NEW_GOOGLEMAP_PLACE_HIERARCHY"]."\";", $configtext);
+	$configtext = preg_replace('/\$GOOGLEMAP_PH_MARKER\s*=\s*".*";/', "\$GOOGLEMAP_PH_MARKER = \"".$_POST["NEW_GOOGLEMAP_PH_MARKER"]."\";", $configtext);
+	
     for($i = 1; $i <= 9; $i++) {
         $configtext = preg_replace('/\$GM_PREFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_PREFIX['.$i.'] = "'.$_POST["NEW_NAME_PREFIX_".$i].'";', $configtext);
         $configtext = preg_replace('/\$GM_POSTFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_POSTFIX['.$i.'] = "'.$_POST["NEW_NAME_POSTFIX_".$i].'";', $configtext);
@@ -241,10 +243,10 @@ $i = 0;
     <tr>
         <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_TYPE_help", "qm", "GOOGLEMAP_MAP_TYPE"); print $pgv_lang["gm_map_type"];?></td>
         <td class="optionbox"><select name="NEW_GOOGLEMAP_MAP_TYPE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_MAP_TYPE_help');">
-                <option value="G_PHYSICAL_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_PHYSICAL_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_physical"];?></option>
                 <option value="G_NORMAL_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_NORMAL_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_map"];?></option>
                 <option value="G_SATELLITE_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_SATELLITE_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_satellite"];?></option>
                 <option value="G_HYBRID_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_HYBRID_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_hybrid"];?></option>
+				<option value="G_PHYSICAL_MAP" <?php if ($GOOGLEMAP_MAP_TYPE=="G_PHYSICAL_MAP") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_physical"];?></option>
             </select>
         </td>
     </tr>
@@ -262,6 +264,20 @@ $i = 0;
         <td class="optionbox"><select name="NEW_GOOGLEMAP_COORD" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_COORD_help');">
                 <option value="false" <?php if ($GOOGLEMAP_COORD=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
                 <option value="true" <?php if ($GOOGLEMAP_COORD=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+            </select>
+    </tr>
+	<tr>
+		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_help", "qm", "GOOGLEMAP_PH"); print $pgv_lang["gm_place_hierarchy"];?></td>
+        <td class="optionbox"><select name="NEW_GOOGLEMAP_PLACE_HIERARCHY" tabindex="<?php $i++; print $i?>;">
+                <option value="false" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+                <option value="true" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+            </select>
+    </tr>
+	<tr>
+        <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_MARKER_help", "qm", "GOOGLEMAP_PH_MARKER"); print $pgv_lang["gm_ph_marker_type"];?></td>
+        <td class="optionbox"><select name="NEW_GOOGLEMAP_PH_MARKER" tabindex="<?php $i++; print $i?>;">
+                <option value="G_DEFAULT_ICON" <?php if ($GOOGLEMAP_PH_MARKER=="G_DEFAULT_ICON") print "selected=\"selected\""; ?>><?php print $pgv_lang["gm_standard_marker"];?></option>
+                <option value="G_FLAG" <?php if ($GOOGLEMAP_PH_MARKER=="G_FLAG") print "selected=\"selected\""; ?>><?php print $pgv_lang["pl_flag"];?></option>
             </select>
     </tr>
     <tr>
