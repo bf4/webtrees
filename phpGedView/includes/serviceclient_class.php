@@ -761,7 +761,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist;
-		global $TBLPREFIX, $GEDCOMS, $pgv_changes;
+		global $TBLPREFIX, $pgv_changes;
 if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 		$FILE = $GEDCOM;
 		if (!$isStub) {

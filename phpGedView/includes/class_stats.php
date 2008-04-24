@@ -529,7 +529,7 @@ class stats
 
 	function totalMedia()
 	{
-		global $GEDCOMS, $GEDCOM, $TBLPREFIX, $MULTI_MEDIA;
+		global $TBLPREFIX, $MULTI_MEDIA;
 		if ($MULTI_MEDIA==true) {
 			$rows=$this->_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_gedcom['id']}'");
 			return $rows[0]['tot'];

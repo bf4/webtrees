@@ -822,7 +822,7 @@ class Person extends GedcomRecord {
 	 * @return Person
 	 */
 	function &getUpdatedPerson() {
-		global $GEDCOM, $pgv_changes, $GEDCOMS;
+		global $GEDCOM, $pgv_changes;
 		if ($this->changed) return null;
 		if (PGV_USER_CAN_EDIT && $this->disp) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {

@@ -299,7 +299,7 @@ if (!function_exists("displayDetailsByID")) {
  * @return boolean
  */
 function checkPrivacyByYear($pid) {
-	global $MAX_ALIVE_AGE, $GEDCOMS, $GEDCOM, $indilist;
+	global $MAX_ALIVE_AGE;
 	
 	$cyear = date("Y");
 	$indirec = find_person_record($pid);

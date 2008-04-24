@@ -700,7 +700,7 @@ function AddToLog($LogString, $savelangerror=false) {
 //----------------------------------- AddToSearchLog
 //-- requires a string to add into the searchlog-file
 function AddToSearchLog($LogString, $allgeds) {
-	global $INDEX_DIRECTORY, $SEARCHLOG_CREATE, $GEDCOM, $GEDCOMS, $username;
+	global $INDEX_DIRECTORY, $SEARCHLOG_CREATE, $GEDCOM, $username;
 
 	if (!isset($allgeds))
 		return;
@@ -728,7 +728,7 @@ function AddToSearchLog($LogString, $allgeds) {
 				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Y") . ".log";
 			if (is_writable($INDEX_DIRECTORY)) {
 				$logline = "Date / Time: ".date("d.m.Y H:i:s") . " - IP: " . $REMOTE_ADDR . " - User: " .  PGV_USER_NAME . "<br />";
-				if (count($allgeds) == count($GEDCOMS))
+				if (count($allgeds) == count(get_all_gedcoms()))
 					$logline .= "Searchtype: Global<br />";
 				else
 					$logline .= "Searchtype: Gedcom<br />";
@@ -1015,7 +1015,7 @@ function deleteFavorite($fv_id) {
  * @param string $username		the username to get the favorites for
  */
 function getUserFavorites($username) {
-	global $TBLPREFIX, $GEDCOMS, $DBCONN, $CONFIGURED;
+	global $TBLPREFIX, $DBCONN, $CONFIGURED;
 
 	$favorites = array();
 	//-- make sure we don't try to look up favorites for unconfigured sites
@@ -1029,7 +1029,7 @@ function getUserFavorites($username) {
 		return $favorites;
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
-		if (isset($GEDCOMS[$row["fv_file"]])) {
+		if (get_id_from_gedcom($row["fv_file"])) { // If gedcom exists
 			$favorite = array();
 			$favorite["id"] = $row["fv_id"];
 			$favorite["username"] = $row["fv_username"];
@@ -1056,7 +1056,7 @@ function getUserFavorites($username) {
  * @return array	an array of the blocks.  The two main indexes in the array are "main" and "right"
  */
 function getBlocks($username) {
-	global $TBLPREFIX, $GEDCOMS, $DBCONN;
+	global $TBLPREFIX, $DBCONN;
 
 	$blocks = array();
 	$blocks["main"] = array();
