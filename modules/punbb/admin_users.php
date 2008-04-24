@@ -111,7 +111,7 @@ if (isset($_GET['show_users']))
 {
 	$ip = $_GET['show_users'];
 
-	if (!preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $ip))
+	if (!@preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $ip))
 		message('The supplied IP address is not correctly formatted.');
 
 
@@ -257,7 +257,7 @@ else if (isset($_POST['find_user']))
 	$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
 	while (list($key, $input) = @each($form))
 	{
-		if ($input != '')
+		if ($input != '' && in_array($key, array('username', 'email', 'title', 'realname', 'url', 'jabber', 'icq', 'msn', 'aim', 'yahoo', 'location', 'signature', 'admin_note')))
 			$conditions[] = 'u.'.$db->escape($key).' '.$like_command.' \''.$db->escape(str_replace('*', '%', $input)).'\'';
 	}
 
@@ -267,7 +267,7 @@ else if (isset($_POST['find_user']))
 		$conditions[] = 'u.num_posts<'.$posts_less;
 
 	if ($user_group != 'all')
-		$conditions[] = 'u.group_id='.$db->escape($user_group);
+		$conditions[] = 'u.group_id='.intval($user_group);
 
 	if (empty($conditions))
 		message('You didn\'t enter any search terms.');

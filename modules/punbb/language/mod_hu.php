@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id$
+ * @version $Id: mod_hu.php 1863 2007-10-09 23:01:33Z yalnifj $
  * @author Patrick Kellum
  */
 $pgv_lang['mod_punbb'] = 'Üzeneti Forum';

@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id$
+ * @version $Id: mod_de.php 2031 2007-10-25 21:26:03Z yalnifj $
  * @author Alexander [ali3n]
  */
 $pgv_lang['mod_punbb'] = 'Nachrichten Forum';

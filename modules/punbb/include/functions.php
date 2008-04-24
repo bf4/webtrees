@@ -27,7 +27,7 @@
 //
 function check_cookie(&$pun_user)
 {
-	global $db, $pun_config, $cookie_name, $cookie_seed;
+	global $db, $db_type, $pun_config, $cookie_name, $cookie_seed;
 	$now = time();
 	$uname = getUserName();
 	if (empty($uname)) {
@@ -147,7 +147,22 @@ function check_cookie(&$pun_user)
 		{
 			// Update the online list
 			if (!$pun_user['logged'])
-				$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$now.')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+			{
+				$pun_user['logged'] = $now;
+
+				// With MySQL/MySQLi, REPLACE INTO avoids a user having two rows in the online table
+				switch ($db_type)
+				{
+					case 'mysql':
+					case 'mysqli':
+						$db->query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+						break;
+
+					default:
+						$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+						break;
+				}
+			}
 			else
 			{
 				// Special case: We've timed out, but no other user has browsed the forums since we timed out
@@ -173,7 +188,7 @@ function check_cookie(&$pun_user)
 //
 function set_default_user()
 {
-	global $db, $pun_user, $pun_config;
+	global $db, $db_type, $pun_user, $pun_config;
 
 	$remote_addr = get_remote_address();
 
@@ -186,7 +201,22 @@ function set_default_user()
 
 	// Update online list
 	if (!$pun_user['logged'])
-		$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged) VALUES(1, \''.$db->escape($remote_addr).'\', '.time().')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+	{
+		$pun_user['logged'] = time();
+
+		// With MySQL/MySQLi, REPLACE INTO avoids a user having two rows in the online table
+		switch ($db_type)
+		{
+			case 'mysql':
+			case 'mysqli':
+				$db->query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged) VALUES(1, \''.$db->escape($remote_addr).'\', '.$pun_user['logged'].')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+				break;
+
+			default:
+				$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged) VALUES(1, \''.$db->escape($remote_addr).'\', '.$pun_user['logged'].')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+				break;
+		}
+	}
 	else
 		$db->query('UPDATE '.$db->prefix.'online SET logged='.time().' WHERE ident=\''.$db->escape($remote_addr).'\'') or error('Unable to update online list', __FILE__, __LINE__, $db->error());
 
@@ -209,7 +239,10 @@ function pun_setcookie($user_id, $password_hash, $expire)
 	// Enable sending of a P3P header by removing // from the following line (try this if login is failing in IE6)
 //	@header('P3P: CP="CUR ADM"');
 
-	setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path, $cookie_domain, $cookie_secure);
+	if (version_compare(PHP_VERSION, '5.2.0', '>='))
+		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path, $cookie_domain, $cookie_secure, true);
+	else
+		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path.'; HttpOnly', $cookie_domain, $cookie_secure);
 }
 
 
@@ -390,13 +423,13 @@ function generate_profile_menu($page = '')
 
 
 //
-// Update posts, topics, last_post, last_post_id and last_poster for a forum (redirect topics are not included)
+// Update posts, topics, last_post, last_post_id and last_poster for a forum
 //
 function update_forum($forum_id)
 {
 	global $db;
 
-	$result = $db->query('SELECT COUNT(id), SUM(num_replies) FROM '.$db->prefix.'topics WHERE moved_to IS NULL AND forum_id='.$forum_id) or error('Unable to fetch forum topic count', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT COUNT(id), SUM(num_replies) FROM '.$db->prefix.'topics WHERE forum_id='.$forum_id) or error('Unable to fetch forum topic count', __FILE__, __LINE__, $db->error());
 	list($num_topics, $num_posts) = $db->fetch_row($result);
 
 	$num_posts = $num_posts + $num_topics;		// $num_posts is only the sum of all replies (we have to add the topic posts)
@@ -409,7 +442,7 @@ function update_forum($forum_id)
 		$db->query('UPDATE '.$db->prefix.'forums SET num_topics='.$num_topics.', num_posts='.$num_posts.', last_post='.$last_post.', last_post_id='.$last_post_id.', last_poster=\''.$db->escape($last_poster).'\' WHERE id='.$forum_id) or error('Unable to update last_post/last_post_id/last_poster', __FILE__, __LINE__, $db->error());
 	}
 	else	// There are no topics
-		$db->query('UPDATE '.$db->prefix.'forums SET num_topics=0, num_posts=0, last_post=NULL, last_post_id=NULL, last_poster=NULL WHERE id='.$forum_id) or error('Unable to update last_post/last_post_id/last_poster', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'forums SET num_topics='.$num_topics.', num_posts='.$num_posts.', last_post=NULL, last_post_id=NULL, last_poster=NULL WHERE id='.$forum_id) or error('Unable to update last_post/last_post_id/last_poster', __FILE__, __LINE__, $db->error());
 }
 
 
@@ -821,6 +854,21 @@ function maintenance_message()
 	$tpl_maint = trim(file_get_contents(PUN_ROOT.'include/template/maintenance.tpl'));
 
 
+	// START SUBST - <pun_include "*">
+	while (preg_match('#<pun_include "([^/\\\\]*?)\.(php[45]?|inc|html?|txt)">#', $tpl_maint, $cur_include))
+	{
+		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2]))
+			error('Unable to process user include '.htmlspecialchars($cur_include[0]).' from template maintenance.tpl. There is no such file in folder /include/user/');
+
+		ob_start();
+		include PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2];
+		$tpl_temp = ob_get_contents();
+		$tpl_maint = str_replace($cur_include[0], $tpl_temp, $tpl_maint);
+	    ob_end_clean();
+	}
+	// END SUBST - <pun_include "*">
+
+
 	// START SUBST - <pun_content_direction>
 	$tpl_maint = str_replace('<pun_content_direction>', $lang_common['lang_direction'], $tpl_maint);
 	// END SUBST - <pun_content_direction>
@@ -836,7 +884,7 @@ function maintenance_message()
 
 ?>
 <title><?php echo pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Maintenance'] ?></title>
-<link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo PUN_ROOT . 'style/' . $pun_user['style'] . '.css' ?>" />
 <?php
 
 	$tpl_temp = trim(ob_get_contents());
@@ -859,21 +907,6 @@ function maintenance_message()
 	$db->end_transaction();
 
 
-	// START SUBST - <pun_include "*">
-	while (preg_match('#<pun_include "([^/\\\\]*?)">#', $tpl_maint, $cur_include))
-	{
-		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;pun_include "'.htmlspecialchars($cur_include[1]).'"&gt; from template maintenance.tpl. There is no such file in folder /include/user/');
-
-		ob_start();
-		include PUN_ROOT.'include/user/'.$cur_include[1];
-		$tpl_temp = ob_get_contents();
-		$tpl_maint = str_replace($cur_include[0], $tpl_temp, $tpl_maint);
-	    ob_end_clean();
-	}
-	// END SUBST - <pun_include "*">
-
-
 	// Close the db connection (and free up any result data)
 	$db->close();
 
@@ -888,11 +921,15 @@ function redirect($destination_url, $message)
 {
 	global $db, $pun_config, $lang_common, $pun_user;
 
-	if ($destination_url == '')
-		$destination_url = 'index.php';
+	// Prefix with o_base_url (unless it's there already)
+	if (strpos($destination_url, $pun_config['o_base_url']) !== 0)
+		$destination_url = $pun_config['o_base_url'].'/'.$destination_url;
 
+	// Do a little spring cleaning
+	$destination_url = preg_replace('/([\r\n])|(%0[ad])|(;[\s]*data[\s]*:)/i', '', $destination_url);
+	
 	$destination_url = genurl($destination_url, true);
-
+	
 	// If the delay is 0 seconds, we might as well skip the redirect all together
 	if ($pun_config['o_redirect_delay'] == '0')
 		header('Location: '.str_replace('&amp;', '&', $destination_url));
@@ -900,6 +937,21 @@ function redirect($destination_url, $message)
 
 	// Load the redirect template
 	$tpl_redir = trim(file_get_contents(PUN_ROOT.'include/template/redirect.tpl'));
+
+
+	// START SUBST - <pun_include "*">
+	while (preg_match('#<pun_include "([^/\\\\]*?)\.(php[45]?|inc|html?|txt)">#', $tpl_redir, $cur_include))
+	{
+		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2]))
+			error('Unable to process user include '.htmlspecialchars($cur_include[0]).' from template redirect.tpl. There is no such file in folder /include/user/');
+
+		ob_start();
+		include PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2];
+		$tpl_temp = ob_get_contents();
+		$tpl_redir = str_replace($cur_include[0], $tpl_temp, $tpl_redir);
+	    ob_end_clean();
+	}
+	// END SUBST - <pun_include "*">
 
 
 	// START SUBST - <pun_content_direction>
@@ -954,21 +1006,6 @@ function redirect($destination_url, $message)
 	// END SUBST - <pun_footer>
 
 
-	// START SUBST - <pun_include "*">
-	while (preg_match('#<pun_include "([^/\\\\]*?)">#', $tpl_redir, $cur_include))
-	{
-		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;pun_include "'.htmlspecialchars($cur_include[1]).'"&gt; from template redirect.tpl. There is no such file in folder /include/user/');
-
-		ob_start();
-		include PUN_ROOT.'include/user/'.$cur_include[1];
-		$tpl_temp = ob_get_contents();
-		$tpl_redir = str_replace($cur_include[0], $tpl_temp, $tpl_redir);
-	    ob_end_clean();
-	}
-	// END SUBST - <pun_include "*">
-
-
 	// Close the db connection (and free up any result data)
 	$db->close();
 
@@ -995,6 +1032,22 @@ function error($message, $file, $line, $db_error = false)
 		ob_start('ob_gzhandler');
 
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?> / Error</title>
+<style type="text/css">
+<!--
+BODY {MARGIN: 10% 20% auto 20%; font: 10px Verdana, Arial, Helvetica, sans-serif}
+#errorbox {BORDER: 1px solid #B84623}
+H2 {MARGIN: 0; COLOR: #FFFFFF; BACKGROUND-COLOR: #B84623; FONT-SIZE: 1.1em; PADDING: 5px 4px}
+#errorbox DIV {PADDING: 6px 5px; BACKGROUND-COLOR: #F1F1F1}
+-->
+</style>
+</head>
+<body>
+
 <div id="errorbox">
 	<h2>An error was encountered</h2>
 	<div>
@@ -1088,10 +1141,14 @@ function display_saved_queries()
 //
 function unregister_globals()
 {
+	$register_globals = @ini_get('register_globals');
+	if ($register_globals === "" || $register_globals === "0" || strtolower($register_globals) === "off")
+		return;
+
 	// Prevent script.php?GLOBALS[foo]=bar
 	if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS']))
 		exit('I\'ll have a steak sandwich and... a steak sandwich.');
-
+	
 	// Variables that shouldn't be unset
 	$no_unset = array('GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
 
@@ -1100,7 +1157,10 @@ function unregister_globals()
 	foreach ($input as $k => $v)
 	{
 		if (!in_array($k, $no_unset) && isset($GLOBALS[$k]))
+		{
 			unset($GLOBALS[$k]);
+			unset($GLOBALS[$k]);	// Double unset to circumvent the zend_hash_del_key_or_index hole in PHP <4.4.3 and <5.1.4
+		}
 	}
 }
 
