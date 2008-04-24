@@ -10,6 +10,10 @@
 
 
 Version 4.1.5
+ - Fixed: [ 1947687 ] [4.1.4] Edit link in Quick Update does not work (fisharebest)
+ - Fixed: [ 1946362 ] SVN 2867 - Quick Update Links to wrong GEDCOM (fisharebest)
+ - Fixed: [ 1950235 ] SVN2887- Search Bug (fisharebest)
+ - Fixed: [ 1950232 ] PGSQL: Syntax-error in functions_db.php (fisharebest)
  - Fixed: FACT/TYPE not being checked for privacy rules when editing raw gedcom (fisharebest)
  - Fixed: [ 1933760 ] SVN 2799 use of function id_type (fisharebest)
  - Fixed: Remove dependencies on record prefixes (fisharebest)
