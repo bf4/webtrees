@@ -23,13 +23,13 @@
 ************************************************************************/
 
 
-// This script updates the forum database from version 1.2.* to 1.2.16.
+// This script updates the forum database from version 1.2.* to 1.2.17.
 // Copy this file to the forum root directory and run it. Then remove it from
 // the root directory.
 
 
-$update_from = array('1.2', '1.2.1', '1.2.2', '1.2.3', '1.2.4', '1.2.5', '1.2.6', '1.2.7', '1.2.8', '1.2.9', '1.2.10', '1.2.11', '1.2.12', '1.2.13', '1.2.14', '1.2.15');
-$update_to = '1.2.16';
+$update_from = array('1.2', '1.2.1', '1.2.2', '1.2.3', '1.2.4', '1.2.5', '1.2.6', '1.2.7', '1.2.8', '1.2.9', '1.2.10', '1.2.11', '1.2.12', '1.2.13', '1.2.14', '1.2.15', '1.2.16');
+$update_to = '1.2.17';
 
 define('PUN_MOD_NAME', basename(dirname(dirname(__FILE__))));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require_once PUN_ROOT.'include/pgv.php';
@@ -105,7 +105,7 @@ if (!isset($_POST['form_sent']))
 <div class="blockform">
 	<h2><span>PunBB Update</span></h2>
 	<div class="box">
-		<form method="post" action="index.php?mod=punbb&amp;pgvaction=extras/12_to_1216_update" onsubmit="this.start.disabled=true">
+		<form method="post" action="index.php?mod=punbb&amp;pgvaction=extras/12_to_1217_update" onsubmit="this.start.disabled=true">
 			<div><input type="hidden" name="form_sent" value="1" /></div>
 			<div class="inform">
 				<p style="font-size: 1.1em">This script will update your current PunBB <?php echo $cur_version ?> forum database to PunBB <?php echo $update_to ?>. The update procedure might take anything from a second to a few minutes depending on the speed of the server and the size of the forum database. Don't forget to make a backup of the database before continuing.</p>
