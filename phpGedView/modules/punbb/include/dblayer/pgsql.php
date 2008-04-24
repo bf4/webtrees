@@ -217,7 +217,7 @@ class DBLayer
 
 	function escape($str)
 	{
-		return pg_escape_string($str);
+		return is_array($str) ? '' : pg_escape_string($str);
 	}
 
 

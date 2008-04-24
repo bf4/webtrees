@@ -23,16 +23,23 @@
 ************************************************************************/
 
 
-// This script updates the forum database from version 1.2.* to 1.2.11.
+// This script updates the forum database from version 1.2.* to 1.2.16.
 // Copy this file to the forum root directory and run it. Then remove it from
 // the root directory.
 
 
-$update_from = array('1.2', '1.2.1', '1.2.2', '1.2.3', '1.2.4', '1.2.5', '1.2.6', '1.2.7', '1.2.8', '1.2.9', '1.2.10', '1.2.11');
-$update_to = '1.2.12';
+$update_from = array('1.2', '1.2.1', '1.2.2', '1.2.3', '1.2.4', '1.2.5', '1.2.6', '1.2.7', '1.2.8', '1.2.9', '1.2.10', '1.2.11', '1.2.12', '1.2.13', '1.2.14', '1.2.15');
+$update_to = '1.2.16';
 
+define('PUN_MOD_NAME', basename(dirname(dirname(__FILE__))));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
+require_once PUN_ROOT.'include/pgv.php';
 
-define('PUN_ROOT', './');
+if (! PGV_USER_IS_ADMIN) {
+	echo '<p>PunBB requires updates to be applied before you can continue using it. Please in form your PhpGedView site administrator to run the following PunBB upgrade script: <a href="'.genurl('index').'">'.genurl('index').'</a></p>';
+	echo '<p>Go back to PhpGedView <a href="index.php">here</a>.</p>';
+	exit;
+}
+
 @include PUN_ROOT.'config.php';
 
 // If PUN isn't defined, config.php is missing or corrupt or we are outside the root directory
@@ -65,7 +72,10 @@ $result1 = $db->query('SELECT cur_version FROM '.$db->prefix.'options');
 $result2 = $db->query('SELECT conf_value FROM '.$db->prefix.'config WHERE conf_name=\'o_cur_version\'');
 $cur_version = ($result1) ? $db->result($result1) : (($result2 && $db->num_rows($result2)) ? $db->result($result2) : 'beta');
 
-if (!in_array($cur_version, $update_from))
+if ( version_compare($cur_version, $update_to, 'eq') ) {
+	echo 'It appears that you have already updated your PunBB database to match the source code. You can now go back to the <a href="'.genurl('index.php', true, false).'">PunBB Forum</a>.';
+	exit;
+} else if (!in_array($cur_version, $update_from))
 	error('Version mismatch. This script updates version '.implode(', ', $update_from).' to version '.$update_to.'. The database \''.$db_name.'\' doesn\'t seem to be running a supported version.', __FILE__, __LINE__);
 
 
@@ -85,7 +95,7 @@ if (!isset($_POST['form_sent']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>PunBB Update</title>
-<link rel="stylesheet" type="text/css" href="style/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT ?>style/Oxygen.css" />
 </head>
 <body>
 
@@ -95,7 +105,7 @@ if (!isset($_POST['form_sent']))
 <div class="blockform">
 	<h2><span>PunBB Update</span></h2>
 	<div class="box">
-		<form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" onsubmit="this.start.disabled=true">
+		<form method="post" action="index.php?mod=punbb&amp;pgvaction=extras/12_to_1216_update" onsubmit="this.start.disabled=true">
 			<div><input type="hidden" name="form_sent" value="1" /></div>
 			<div class="inform">
 				<p style="font-size: 1.1em">This script will update your current PunBB <?php echo $cur_version ?> forum database to PunBB <?php echo $update_to ?>. The update procedure might take anything from a second to a few minutes depending on the speed of the server and the size of the forum database. Don't forget to make a backup of the database before continuing.</p>
@@ -123,6 +133,14 @@ else
 		$db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES(\'o_additional_navlinks\', NULL)') or error('Unable to alter DB structure.', __FILE__, __LINE__, $db->error());
 	}
 
+	// We need to add a unique index to avoid users having multiple rows in the online table
+	if ($db_type == 'mysql' || $db_type == 'mysqli')
+	{
+		$result = $db->query('SHOW INDEX FROM '.$db->prefix.'online') or error('Unable to check DB structure.', __FILE__, __LINE__, $db->error());
+
+		if ($db->num_rows($result) == 1)
+			$db->query('ALTER TABLE '.$db->prefix.'online ADD UNIQUE INDEX '.$db->prefix.'online_user_id_ident_idx(user_id,ident)') or error('Unable to alter DB structure.', __FILE__, __LINE__, $db->error());
+	}
 
 	// This feels like a good time to synchronize the forums
 	$result = $db->query('SELECT id FROM '.$db->prefix.'forums') or error('Unable to fetch forum info.', __FILE__, __LINE__, $db->error());
@@ -155,7 +173,7 @@ else
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>PunBB Update</title>
-<link rel="stylesheet" type="text/css" href="style/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT ?>style/Oxygen.css" />
 </head>
 <body>
 
@@ -167,6 +185,7 @@ else
 	<div class="box">
 		<div class="inbox">
 			<p>Update successful! Your forum database has now been updated to version <?php echo $update_to ?>. You should now remove this script from the forum root directory and follow the rest of the instructions in the documentation.</p>
+			<p>You can now go back to the <a href="<?php echo genurl('index.php', true, true) ?>">PunBB Forum</a>.</p>
 		</div>
 	</div>
 </div>

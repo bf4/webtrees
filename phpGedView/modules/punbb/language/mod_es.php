@@ -24,7 +24,7 @@
  * @translator: Julio Sánchez Fernández
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id$
+ * @version $Id: mod_es.php 2231 2007-11-21 20:30:49Z fisharebest $
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {

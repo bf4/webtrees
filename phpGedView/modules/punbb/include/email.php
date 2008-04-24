@@ -77,8 +77,8 @@ function pun_mail($to, $subject, $message, $from = '')
 
 	$headers = 'From: '.$from."\r\n".'Date: '.date('r')."\r\n".'MIME-Version: 1.0'."\r\n".'Content-transfer-encoding: 8bit'."\r\n".'Content-type: text/plain; charset='.$lang_common['lang_encoding']."\r\n".'X-Mailer: PunBB Mailer';
 
-	// Make sure all linebreaks are CRLF in message
-	$message = str_replace("\n", "\r\n", pun_linebreaks($message));
+	// Make sure all linebreaks are CRLF in message (and strip out any NULL bytes)
+	$message = str_replace(array("\n", "\0"), array("\r\n", ''), pun_linebreaks($message));
 
 	if ($pun_config['o_smtp_host'] != '')
 		smtp_mail($to, $subject, $message, $headers);

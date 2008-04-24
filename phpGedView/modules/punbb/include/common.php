@@ -38,8 +38,7 @@ require_once PUN_ROOT.'include/pgv.php';
 require PUN_ROOT.'include/functions.php';
 
 // Reverse the effect of register_globals
-if (@ini_get('register_globals'))
-	unregister_globals();
+unregister_globals();
 
 
 @include PUN_ROOT.'config.php';
@@ -103,6 +102,14 @@ if (!defined('PUN_CONFIG_LOADED'))
 	require PUN_ROOT.'cache/cache_config.php';
 }
 
+// Check the database version is the same as the source code version
+$sourcecode_version = '1.2.16';
+if ( version_compare( $pun_config['o_cur_version'], $sourcecode_version, "<") ) {
+	// the source code has been updated and we need to run the update script in order to update the database
+	require_once PUN_ROOT.'include/pgv.php';
+
+	header('Location: ' . genurl('index.php?mod=punbb&pgvaction=extras/12_to_1216_update'));
+}
 
 // Enable output buffering
 if (!defined('PUN_DISABLE_BUFFERING'))
