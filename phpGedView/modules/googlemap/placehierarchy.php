@@ -1,0 +1,351 @@
+<?php
+/**
+ * Displays a place hierachy
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+  * @author £ukasz Wileñski Apr 2008
+ * @package PhpGedView
+ * @subpackage Googlemap
+ * @version $Id 0.8: placehierarchy.php 2008-04-20 18:46:09Z wooc$
+ */
+
+if (file_exists('modules/googlemap/defaultconfig.php')) {
+	require("modules/googlemap/defaultconfig.php");
+	require "modules/googlemap/googlemap.php";
+}	
+
+function get_place_list_loc($parent_id, $inactive=false) {
+	global $TBLPREFIX, $DBCONN;
+	if ($inactive)
+		$sql="SELECT pl_id,pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
+	else
+		$sql="SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
+	
+	$res=dbquery($sql);
+	$placelist2=array();
+	while ($row=&$res->fetchRow())
+		$placelist2[]=array("place_id"=>$row[0], "place"=>$row[1], "lati"=>$row[2], "long"=>$row[3], "icon"=>$row[4]);
+	$res->free();
+	return $placelist2;
+}
+
+function place_id_to_hierarchy($id) {
+	global $DBCONN, $TBLPREFIX, $pgv_lang;
+	$arr=array();
+	while ($id!=0) {
+		$sql="SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($id);
+		$res=dbquery($sql);
+		$row=&$res->fetchRow();
+		$res->free();
+		$arr=array($id=>$row[1])+$arr;
+		$id=$row[0];
+	}
+	return $arr;
+}
+
+function get_placeid($place) {
+	global $DBCONN, $TBLPREFIX;
+	$parent = explode (",", $place);
+	$parent = array_reverse($parent);
+	$place_id = 0;
+	for($i=0; $i<count($parent); $i++) {
+		$parent[$i] = trim($parent[$i]);
+		$placelist = create_possible_place_names($parent[$i], $i+1);
+		foreach ($placelist as $key => $placename) {
+			$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
+			$psql = "SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place LIKE '{$escparent}' ORDER BY pl_place";
+			$res = dbquery($psql);
+			$row =& $res->fetchRow();
+			$res->free();
+			if (!empty($row[0])) break;
+		}
+		if (empty($row[0])) break;
+		$place_id = $row[0];
+	}
+	return $place_id;
+}
+
+function set_levelm($level, $parent) {
+	if (!isset($levelm)) {
+		$levelm=0;
+	}
+	$fullplace = "";
+	for ($i=1; $i<=$level; $i++) {
+		if ($parent[$level-$i]!="")
+			$fullplace .= $parent[$level-$i].", ";
+		else 
+			$fullplace .= "Unknown, ";
+	}
+	$fullplace = substr($fullplace,0,-2);
+	$levelm = get_placeid($fullplace);
+	return $levelm;
+}
+
+function create_map($numfound, $level, $levelm) {
+	global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION, $pgv_lang;
+	// create the map
+	//<!-- start of map display -->
+	print "\n<br /><br />\n";
+	print "<table class=\"width80\"><tr valign=\"top\"><td class=\"center\"><div id=\"place_map\" style=\"width: ".($GOOGLEMAP_XSIZE)."px; height: ".($GOOGLEMAP_YSIZE*0.8)."px;\"></div>";
+	print "<table style=\"width: ".($GOOGLEMAP_XSIZE)."px\">";
+	if ($TEXT_DIRECTION=="ltr") print "<td align=\"left\">";
+	else print "<td align=\"right\">";
+	print "<a href=\"javascript:";
+	if ($numfound>1)
+		print "place_map.setCenter(bounds.getCenter(),place_map.getBoundsZoomLevel(bounds));";
+	else if ($level==1)
+		print "place_map.setCenter(bounds.getCenter(),place_map.getBoundsZoomLevel(bounds)-8);";
+	else if ($level==2)
+		print "place_map.setCenter(bounds.getCenter(),place_map.getBoundsZoomLevel(bounds)-5);";
+	else
+		print "place_map.setCenter(bounds.getCenter(),place_map.getBoundsZoomLevel(bounds)-4);";
+	print "\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
+	print "<td>&nbsp;</td>\n";
+	if ($TEXT_DIRECTION=="ltr") print "<td align=\"right\">\n";
+	else print "<td align=\"left\">\n";
+	print "<a href=\"javascript:place_map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+	print "<a href=\"javascript:place_map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+	print "<a href=\"javascript:place_map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+	print "<a href=\"javascript:place_map.setMapType(G_PHYSICAL_MAP)\">".$pgv_lang["gm_physical"]."</a>\n";
+	print "</td>\n";
+	if (userIsAdmin(getUserName())) {
+		print "<tr><td align=\"left\">\n";
+		print "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
+		print "</td>\n";
+		print "<td align=\"center\">\n";
+		print "<a href=\"module.php?mod=googlemap&pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+		print "</td>\n";
+		print "<td align=\"right\">\n";
+		print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>"; 
+		print "</td></tr>\n";
+	}
+	print "</table>\n";
+}
+
+function check_were_am_i($numls, $levelm) {
+	$where_am_i=place_id_to_hierarchy($levelm);
+	$i=$numls+1;
+	if (!isset($levelo)) {
+		$levelo[0]=0;
+	}
+	foreach (array_reverse($where_am_i, true) as $id=>$place2) {
+		$levelo[$i]=$id;
+		$i--;
+	}
+	return $levelo;
+}
+
+function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $lastlevel=false){
+	global $GOOGLEMAP_COORD, $GOOGLEMAP_PH_MARKER, $pgv_lang;
+	if (($place2['lati'] == NULL) || ($place2['long'] == NULL) || (($place2['lati'] == "0") && ($place2['long'] == "0"))) {
+		echo "var point = new GLatLng(0,0);\n";
+		if ($lastlevel)
+			echo "var marker = createMarker(point, \"<a href='?level=".$level.$linklevels."'>";
+		else {
+			echo "var marker = createMarker(point, \"<a href='?level=".($level+1).$linklevels."&amp;parent[{$level}]=";
+			if ($place2["place"] == "Unknown") echo "'>";
+			else echo urlencode($place2["place"])."'>";
+		}
+		if (($place2["icon"] == NULL) || ($place2["icon"] == "")) {
+			echo "&nbsp;";
+		} else {
+			echo "<img src=\'".$place2["icon"]."'><br />";
+		}
+		if ($lastlevel) {
+			if ($place2["place"] == "Unknown") echo "&nbsp;<br />"./*$pgv_lang["unknown"].*/substr($placelevels,2)."</a>";
+			else echo "&nbsp;<br />"./*PrintReady($place2["place"]).*/substr($placelevels,2)."</a>";
+		}
+		else {
+			if ($place2["place"] == "Unknown") echo "&nbsp;<br />".$pgv_lang["unknown"].$placelevels."</a>";
+			else echo "&nbsp;<br />".PrintReady($place2["place"]).$placelevels."</a>";
+		}
+		echo "<br /><br />".$pgv_lang["gm_no_coord"];
+		if (userIsAdmin(getUserName())) 
+			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=".$levelm."&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
+		echo "\");\n";
+	}
+	else {
+		$lati = str_replace("N","",$place2['lati']);
+		$lati = str_replace("S","-",$lati);
+		$long = str_replace("E","",$place2['long']);
+		$long = str_replace("W","-",$long);
+		// flags by kiwi_pgv
+		if (($place2["icon"] == NULL) || ($place2["icon"] == "") || ($GOOGLEMAP_PH_MARKER != "G_FLAG")) {
+			echo "var icon_type = new GIcon(G_DEFAULT_ICON);\n";
+		} else {
+			echo "var icon_type = new GIcon();\n";
+			echo "    icon_type.image = \"".$place2['icon']."\";\n";
+			echo "    icon_type.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+			//echo "    icon_type.iconSize = new GSize(25, 15);\n";
+			echo "    icon_type.shadowSize = new GSize(35, 45);\n";
+			echo "    icon_type.iconAnchor = new GPoint(1, 45);\n";
+			echo "    icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
+		}
+		echo "var point = new GLatLng({$lati},{$long});\n";
+		if ($lastlevel)
+			echo "var marker = createMarker(point, \"<a href='?level=".$level.$linklevels."'>";
+		else {
+			echo "var marker = createMarker(point, \"<a href='?level=".($level+1).$linklevels."&amp;parent[{$level}]=";
+			if ($place2["place"] == "Unknown") echo "'>";
+			else echo urlencode($place2["place"])."'>";
+		}
+		if (($place2["icon"] == NULL) || ($place2["icon"] == "")) {
+			echo "&nbsp;";
+		} else {
+			echo "<img src=\'".$place2["icon"]."'><br />";
+		}
+		if ($lastlevel) {
+			if ($place2["place"] == "Unknown") echo "&nbsp;<br />"./*$pgv_lang["unknown"].*/substr($placelevels,2)."</a>";
+			else echo "&nbsp;<br />"./*PrintReady($place2["place"]).*/substr($placelevels,2)."</a>";
+		}
+		else {
+			if ($place2["place"] == "Unknown") echo "&nbsp;<br />".$pgv_lang["unknown"].$placelevels."</a>";
+			else echo "&nbsp;<br />".PrintReady($place2["place"]).$placelevels."</a>";
+		}
+		if ($GOOGLEMAP_COORD == "false"){
+			echo "\", icon_type);\n";
+		}
+		else {
+			echo "<br /><br />".$place2['lati'].", ".$place2['long']."\", icon_type);\n";
+		}
+	}
+	echo "place_map.addOverlay(marker);\n";
+	echo "bounds.extend(point);\n";
+}
+
+function map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelevels) {
+	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GM_MAX_NOF_LEVELS, $pgv_lang;
+	?>
+	<!-- Start of map scripts -->
+	<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php print $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
+	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	// <![CDATA[
+	if (window.attachEvent) {
+		window.attachEvent("onunload", function() {
+			GUnload();      // Internet Explorer
+		});
+	} else {
+		window.addEventListener("unload", function() {
+			GUnload(); // Firefox and standard browsers
+		}, false);
+	}
+	if (GBrowserIsCompatible()) {
+	// Creates a marker whose info window displays the given name
+	function createMarker(point, name, icon)
+	{
+		var marker = new GMarker(point, icon);
+		// Show this markers name in the info window when it is clicked
+		var html = name;
+		GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml(html);});
+		return marker;
+	};
+	// create the map
+	var place_map = new GMap2(document.getElementById("place_map"));
+	var bounds = new GLatLngBounds();
+	<?php
+	if ($numfound<2 && ($level==1 || !(isset($levelo[($level-1)])))){
+		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
+		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+5);\n";
+	}
+	else if ($numfound<2 && !isset($levelo[($level-2)])){
+		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
+		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+6);\n";
+	}
+	else if ($level==2){
+		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
+		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+8);\n";
+	}
+	else if ($numfound<2 && $level>1){
+		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
+		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+10);\n";
+	}
+	else 
+		echo "place_map.setCenter(new GLatLng(0,0),1);\n";
+	?>
+	place_map.addControl(new GSmallMapControl());
+	place_map.enableScrollWheelZoom();
+	//create markers
+	<?php
+	echo "place_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
+	if ($numfound==0 && $level>0) {
+		if (isset($levelo[($level-1)])) {
+			$placelist2=get_place_list_loc($levelo[($level-1)]);
+			foreach ($placelist2 as $place2) {
+				if (isset($levelo[$level])) {
+					if ($place2['place_id']==$levelo[$level])
+						print_gm_markers($place2, $level, $levelo[($level-1)], $linklevels, $placelevels, true);
+				}
+			}
+		}
+	}
+	else {
+		$break = false;
+		$placelist2=get_place_list_loc($levelm);
+		if (!empty($placelist2)) {
+			foreach ($placelist2 as $place2) {
+				print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels);
+			}
+		}
+		else {
+			$placelist2=get_place_list_loc($levelm, true);
+			foreach ($placelist2 as $place2) {
+				if ($place2["place"]!="Unknown" || (($place2['lati'] != NULL) && ($place2['long'] != NULL))) {
+					print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels);
+				}
+				else {
+					$placelevels = ", ".$pgv_lang["unknown"].$placelevels;
+					$linklevels .= "&amp;parent[".$level."]=";
+					$break=true; 
+					break;
+				}
+			}
+			if ($break && $level>0){
+				for ($i=1;$i<$GM_MAX_NOF_LEVELS;$i++)
+				if (isset($levelo[($level-$i)])) {
+					$placelist2=get_place_list_loc($levelo[($level-$i)], true);
+					foreach ($placelist2 as $place2) {
+						if ($place2["place"]!="Unknown" || (($place2['lati'] != NULL) && ($place2['long'] != NULL))) {
+							if (isset ($levelo[$level-$i+1]) && $place2['place_id']==$levelo[$level-$i+1])
+								print_gm_markers($place2, $level+1, $levelm, $linklevels, $placelevels, true);
+						}
+					}
+				}
+			}
+		}
+	}
+	?>
+	//end markers
+	place_map.setCenter(bounds.getCenter());
+	<?php
+	if ($numfound>1)
+		echo "place_map.setZoom(place_map.getBoundsZoomLevel(bounds));\n";
+	?>} else {
+      alert("Sorry, the Google Maps API is not compatible with this browser");
+	}
+    // This Javascript is based on code provided by the
+    // Blackpool Community Church Javascript Team
+    // http://www.commchurch.freeserve.co.uk/   
+    // http://econym.googlepages.com/index.htm
+	//]]>
+	//version 0.8
+	</script>
+	<?php
+}
+?>
