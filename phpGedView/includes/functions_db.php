@@ -229,7 +229,7 @@ function sql_mod_function($x,$y) {
  * @return string the raw gedcom record is returned
  */
 function find_family_record($pid, $gedfile='') {
-	global $TBLPREFIX, $DBCONN, $famlist;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $famlist;
 
 	if (!$pid) {
 		return null;
@@ -238,7 +238,7 @@ function find_family_record($pid, $gedfile='') {
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
-		$ged_id=PGV_GED_ID;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
 	// Try the cache files first.
@@ -313,7 +313,7 @@ function load_families($ids) {
  * @return string the raw gedcom record is returned
  */
 function find_person_record($pid, $gedfile='') {
-	global $TBLPREFIX, $DBCONN, $indilist;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $indilist;
 
 	if (!$pid) {
 		return null;
@@ -322,7 +322,7 @@ function find_person_record($pid, $gedfile='') {
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
-		$ged_id=PGV_GED_ID;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
 	// Try the cache files first.
@@ -398,7 +398,7 @@ function load_people($ids) {
  * @return string the raw gedcom record is returned
  */
 function find_gedcom_record($pid, $gedfile='') {
-	global $TBLPREFIX, $DBTYPE, $DBCONN, $indilist, $famlist, $sourcelist, $objectlist, $otherlist;
+	global $TBLPREFIX, $GEDCOM, $DBTYPE, $DBCONN, $indilist, $famlist, $sourcelist, $objectlist, $otherlist;
 
 	if (!$pid) {
 		return null;
@@ -407,7 +407,7 @@ function find_gedcom_record($pid, $gedfile='') {
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
-		$ged_id=PGV_GED_ID;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
 	// Try the cache files first.
@@ -471,7 +471,7 @@ function find_gedcom_record($pid, $gedfile='') {
  * @return string the raw gedcom record is returned
  */
 function find_source_record($pid, $gedfile="") {
-	global $TBLPREFIX, $DBCONN, $sourcelist;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $sourcelist;
 
 	if (!$pid) {
 		return null;
@@ -480,7 +480,7 @@ function find_source_record($pid, $gedfile="") {
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
-		$ged_id=PGV_GED_ID;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
 	// Try the cache files first.
@@ -514,7 +514,7 @@ function find_source_record($pid, $gedfile="") {
  * @param string $gedfile	the gedcom file id
  */
 function find_repo_record($pid, $gedfile="") {
-	global $TBLPREFIX, $DBCONN, $repolist;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $repolist;
 
 	if (!$pid) {
 		return null;
@@ -523,7 +523,7 @@ function find_repo_record($pid, $gedfile="") {
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
-		$ged_id=PGV_GED_ID;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
 	// Try the cache files first.
@@ -560,7 +560,7 @@ function find_repo_record($pid, $gedfile="") {
  * @param string $rid	the record id
  */
 function find_media_record($pid, $gedfile='') {
-	global $TBLPREFIX, $DBCONN, $objectlist, $MULTI_MEDIA;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $objectlist, $MULTI_MEDIA;
 
 	if (!$pid || !$MULTI_MEDIA) {
 		return null;
@@ -569,7 +569,7 @@ function find_media_record($pid, $gedfile='') {
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
-		$ged_id=PGV_GED_ID;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
 	// Try the cache files first.
