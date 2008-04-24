@@ -181,9 +181,9 @@ $i = 0;		// initialize tab index
 	<form name="loginform" method="post" action="<?php print $LOGIN_URL; ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
 		<input type="hidden" name="action" value="login" />
 		<input type="hidden" name="url" value="<?php print htmlentities($url); ?>" />
-		<input type="hidden" name="ged" value="<?php if (isset($ged)) print print htmlentities($ged); else print print htmlentities($GEDCOM); ?>" />
-		<input type="hidden" name="pid" value="<?php if (isset($pid)) print print htmlentities($pid); ?>" />
-		<input type="hidden" name="type" value="<?php print print htmlentities($type); ?>" />
+		<input type="hidden" name="ged" value="<?php if (isset($ged)) print htmlentities($ged); else print htmlentities($GEDCOM); ?>" />
+		<input type="hidden" name="pid" value="<?php if (isset($pid)) print htmlentities($pid); ?>" />
+		<input type="hidden" name="type" value="<?php print htmlentities($type); ?>" />
 		<input type="hidden" name="usertime" value="" />
 		<?php
 		if (!empty($message)) print "<span class='error'><br /><b>$message</b><br /><br /></span>\r\n";
