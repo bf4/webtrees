@@ -140,4 +140,8 @@ $pgv_lang["GOOGLEMAP_PH"]				= "Użyj Googlemap do wyświetlania hierarchii miej
 $pgv_lang["GOOGLEMAP_PH_help"]			= "Jeśli zostanie wybrane Tak, hierarchia miejsc będzie wyświetlana za pomocą Googlemap, w przeciwnym razie będzie wyświetlana standardowo. Dla wyświetlania wymagana jest jeszcze opcja włączenia modułu Googlemap. Przed włączeniem zaleca się wprowadzenie wszystkich miejsc do tablicy Googlemap.";
 $pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Typ znacznika miejsca w hierarchii miejsc";
 $pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "Tutaj możesz określić czy do wyświetlania miejsc w hierarchii będzie użyty standardowy znacznik czy przypisana flaga (jeśli brak przypisanej flagi, będzie wyświetlony standardowy znacznik).";
+$pgv_lang["GM_DISP_SHORT_PLACE"]		= "Wyświetlić skrócone nazwy miejsc?";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "Tutaj możesz określić czy miejsca wyświetlane w hierarchii będą miały wyświetlone pełne nazwy czy tylko będzie wyświetlona nazwa aktualnego poziomu/miejsca.";
+$pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Użyć rolki myszki do przybliżania/oddalania?";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "Możesz określić czy rolka myszki będzie używana do przybliżania lub oddalania mapy.";
 ?>

@@ -152,7 +152,7 @@ if ($display=="hierarchy") {
 
 	print_help_link("ppp_levels_help", "qm");
 
-	if ($use_googlemap) 
+	if ($use_googlemap)
 		create_map($numfound, $level, $levelm);
 	else {
 		// show clickable map if found
@@ -285,7 +285,7 @@ if ($display=="hierarchy") {
 	for($j=0; $j<$level; $j++) {
 		$linklevels .= "&amp;parent[$j]=".urlencode($parent[$j]);
 		if ($use_googlemap)
-			if ($parent[$j]=="")
+			if (trim($parent[$j])=="")
 				$placelevels = ", ".$pgv_lang["unknown"].$placelevels;
 			else
 				$placelevels = ", ".$parent[$j].$placelevels;
@@ -388,7 +388,7 @@ if ($level > 0) {
 		print "<br />";
 
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
-		$title = PrintReady(substr($title, 0, -2))." "; 
+		$title = PrintReady(substr($title, 0, -2))." ";
 		// Sort each of the tables by Name
 		if (count($myindilist) > 1) uasort($myindilist, "stringsort");
 		if (count($myfamlist) > 1) uasort($myfamlist, "stringsort");
