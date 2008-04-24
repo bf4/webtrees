@@ -354,18 +354,15 @@ function print_indi_table($datalist, $legend="", $option="") {
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$person = Person::getInstance($value);
-			if (!is_null($person)) $name = $person->getSortableName(); //-- for search results
 		} else {
 			$gid = $key;
 			if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
 			$person = Person::getInstance($gid);
-			if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
-			else $name = $person->getSortableName();
-			if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		}
 		/* @var $person Person */
 		if (is_null($person)) continue;
+		$name = $person->getSortableName();
 		if ($person->type !== "INDI") continue;
 		if (!$person->canDisplayName()) {
 			$hidden++;
