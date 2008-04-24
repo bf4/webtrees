@@ -32,16 +32,16 @@ $pgv_lang["GOOGLEMAP_CONFIG"]           = "Configure Google-map";
 $pgv_lang["GOOGLEMAP_CONFIG_help"]      = "~#pgv_lang[GOOGLEMAP_CONFIG]#~<br /><br />Configure all aspects of the Google Map module here.";
 
 $pgv_lang["GOOGLEMAP_ENABLE"]           = "Enable Google-map";
-$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Using this option the functionality of the Googlemap can be enabled or disabled.<br/>When disabled the Map-tab on the individual page is still shown, but will be left empty. The configuration link for administrators is still available.";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Using this option the functionality of the Googlemap can be enabled or disabled.<br/>When disabled the Map-tab on the individual page is still shown, but will be left empty. The configuration link for administrators is still available. When disabled the Place Hierarchy has standard show";
 
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Google-map API key";
 $pgv_lang["GOOGLEMAP_API_KEY_help"]     = "~#pgv_lang[GOOGLEMAP_API_KEY]#~<br /><br />Insert your Google Map API key here.  You can request a key here: <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\">http://www.google.com/apis/maps/</a>";
 
 $pgv_lang["GOOGLEMAP_MAP_TYPE"]         = "Google-map type";
-$pgv_lang["GOOGLEMAP_MAP_TYPE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_TYPE]#~<br /><br />The type of map that will be shown by default. This can be Map, Satellite or Hybrid.";
+$pgv_lang["GOOGLEMAP_MAP_TYPE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_TYPE]#~<br /><br />The type of map that will be shown by default. This can be Map, Satellite, Hybrid or Terrain.";
 
 $pgv_lang["GOOGLEMAP_MAP_SIZE"]         = "Google-map size";
-$pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />The size of the map (in pixels) as shown on the Individual page.";
+$pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />The size of the map (in pixels) as shown on the Individual and Place Hierarchy pages.";
 
 $pgv_lang["GOOGLEMAP_MAP_ZOOM"]         = "Google-map zoom factor";
 $pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimum and maximum zoom factor for the Google map. 1 is the full map, 15 is single house. Note that 15 is only available in certain areas.";
@@ -134,4 +134,9 @@ $pgv_lang["PLACECHECK_FILTER_help"]  	= "~#pgv_lang[PLACECHECK_FILTER]#~<br /><b
 $pgv_lang["PLACECHECK_MATCH"]       	= "Include matched places";
 $pgv_lang["PLACECHECK_MATCH_help"]  	= "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br />By default the list does NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables.<br/>Fully matched means all levels exist in both the gedcom file and the GoogleMap tables; and the GoogleMap places have coordinates for every level.<br/><br/>Check this block to include those matched places";
 
+//wooc Options for Place Hierarchy display
+$pgv_lang["GOOGLEMAP_PH"]             	= "Use Googlemap for Place Hierarchy";
+$pgv_lang["GOOGLEMAP_PH_help"]        	= "Using this option the functionality of the Googlemap for Place Hierarchy can be enabled or disabled. For show is needed to enable Googlemap module also. Before using is recomended to insert all places into the Googlemap tables.";
+$pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Type of place markers in Place Hierarchy";
+$pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "Here you can specify what type of marker be able to use (standard or flag). If place has no flag, use standard marker.";
 ?>

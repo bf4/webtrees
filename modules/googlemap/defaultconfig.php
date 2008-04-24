@@ -49,6 +49,10 @@ $GM_DEFAULT_TOP_VALUE = "";             // Default value, inserted when no locat
 
 $GOOGLEMAP_COORD = "false";          	// Enable or disable Display Map Co-ordinates
 
+//Place Hierarchy - wooc
+$GOOGLEMAP_PLACE_HIERARCHY = "true";   // Enable or disable Display Map in place herarchy
+$GOOGLEMAP_PH_MARKER = "G_FLAG";	   // Type of marker to be used in place herarchy, possible values: G_FLAG = Flag, G_DEFAULT_ICON = Standard icon
+
 // Configuration-options per location-level
 $GM_MARKER_COLOR[1] = "Red";            // Marker to be used
 $GM_MARKER_SIZE[1] = "Large";           // "Small" or "Large"
