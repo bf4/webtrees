@@ -91,7 +91,9 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 		}
 	}
-	$name = $person->getName();
+	if ($person) {
+		$name=$person->getName();
+	}
 	switch($config['type']) {
 		case 'pedigree':
 			$title .= $name." ".$pgv_lang["index_header"];
