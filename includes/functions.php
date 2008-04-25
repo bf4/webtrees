@@ -3250,7 +3250,7 @@ function id_type($id) {
 function check_in($logline, $filename, $dirname, $bInsert = false) {
 	global $COMMIT_COMMAND;
 	$bRetSts = false;
-	if (($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND='cvs') && $logline && $filename) {
+	if (($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
 		$cwd = getcwd();
 		if ($dirname) {
 			chdir($dirname);
