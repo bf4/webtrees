@@ -430,7 +430,7 @@ function find_gedcom_record($pid, $gedfile='') {
 		"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id='{$pid}' AND i_file={$ged_id} UNION ALL ".
 		"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id='{$pid}' AND f_file={$ged_id} UNION ALL ".
 		"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id='{$pid}' AND s_file={$ged_id} UNION ALL ".
-		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media='{$pid}' AND m_file={$ged_id} UNION ALL ".
+		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media='{$pid}' AND m_gedfile={$ged_id} UNION ALL ".
 		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id='{$pid}' AND o_file={$ged_id}"
 	);
 	$row=$res->fetchRow();
@@ -447,7 +447,7 @@ function find_gedcom_record($pid, $gedfile='') {
 		"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id {$like} '{$pid}' ESCAPE '@' AND i_file={$ged_id} UNION ALL ".
 		"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id {$like} '{$pid}' ESCAPE '@' AND f_file={$ged_id} UNION ALL ".
 		"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id {$like} '{$pid}' ESCAPE '@' AND s_file={$ged_id} UNION ALL ".
-		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media {$like} '{$pid}' ESCAPE '@' AND m_file={$ged_id} UNION ALL ".
+		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media {$like} '{$pid}' ESCAPE '@' AND m_gedfile={$ged_id} UNION ALL ".
 		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id {$like} '{$pid}' ESCAPE '@' AND o_file={$ged_id}"
 	);
 	$row=$res->fetchRow();
