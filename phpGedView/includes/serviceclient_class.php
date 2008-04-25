@@ -693,9 +693,9 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 		if (!empty($PersonName1)&&!empty($PersonName2)){
 			$lev = levenshtein(str2lower($PersonName1), str2lower($PersonName2));
 			if($lev<4){
-				$Probabilty+=2;
+				$Probability+=2;
 			} else
-				$Probabilty-=2;
+				$Probability-=2;
 			$count+=2;
 		}
 		$sex_prob=array('UU'=>0, 'UF'=>0, 'UM'=>0, 'MU'=>0, 'FU'=>0, 'MM'=>1, 'FF'=>1,'MF'=>-2, 'FM'=>-2);
@@ -726,7 +726,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 			$count++;
 		}
 
-		$prob=$Probabilty/$count;
+		$prob=$Probability/$count;
 		if($prob<0.5){
 			return false;
 		}
