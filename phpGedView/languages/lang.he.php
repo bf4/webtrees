@@ -1655,11 +1655,11 @@ $pgv_lang["hs_intruehelp"]		= "טכסט עזרה בלבד";
 $pgv_lang["hs_inallhelp"]		= "כל הטכסט";
 
 // Media import
-$pgv_lang["choose"] 		= "בחר: ";
+$pgv_lang["choose"] 			= "בחר: ";
 $pgv_lang["account_information"] 	= "נתוני קוד משתמש";
 
 //-- Media item "TYPE" sub-field
-$pgv_lang["TYPE__audio"] 		= "אודיו";
+$pgv_lang["TYPE__audio"] 			= "אודיו";
 $pgv_lang["TYPE__book"] 			= "ספר";
 $pgv_lang["TYPE__card"] 			= "כרטיס";
 $pgv_lang["TYPE__certificate"] 		= "תעודה";
@@ -1671,12 +1671,14 @@ $pgv_lang["TYPE__magazine"] 		= "כתב עת";
 $pgv_lang["TYPE__manuscript"] 		= "כתב-יד";
 $pgv_lang["TYPE__map"] 			= "מפה";
 $pgv_lang["TYPE__newspaper"] 		= "עיתון";
-$pgv_lang["TYPE__photo"] 		= "צילום";
+$pgv_lang["TYPE__photo"] 			= "צילום";
 $pgv_lang["TYPE__tombstone"] 		= "מצבה";
-$pgv_lang["TYPE__video"] 		= "וידאו";
+$pgv_lang["TYPE__video"] 			= "וידאו";
+$pgv_lang["TYPE__painting"] 			= "תמונה"; 
+$pgv_lang["TYPE__other"] 			= "אחר"; 
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] 		= "התבונן כמצגת שקופיות"; 
+$pgv_lang["view_slideshow"] 			= "התבונן כמצגת שקופיות"; 
 $pgv_lang["download_image"]		= "הורד קובץ";
 $pgv_lang["no_media"]			= "לא נמצאה מדיה";
 $pgv_lang["media_privacy"]		= "הגבלות פרטיות מונעות ממך לראות פריט זה"; 

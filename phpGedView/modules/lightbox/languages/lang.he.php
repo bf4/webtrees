@@ -35,11 +35,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 // Added in VERSION 4.1.4 
 
-$pgv_lang["lb_details"]			= "פרוטים"; 
+$pgv_lang["lb_details"]			= "פירוטים"; 
 $pgv_lang["lb_detail_info"]			= " ראה את פירוטי ישות מדיה זו ... ואופציות מדיה נוספות - דף מציג מדיה";
 $pgv_lang["lb_pause_ss"]			= "הפסק מצגת שקפים"; 
 $pgv_lang["lb_start_ss"]			= "התחל מצגת שקפים"; 
-$pgv_lang["lb_music"]			= "הפעל/כבה מוסיקה"; 
+$pgv_lang["lb_music"]				= "הפעל/כבה מוסיקה"; 
 $pgv_lang["lb_zoom_off"]			= "מנע זום"; 
 $pgv_lang["lb_zoom_on"]			= "זום אופשר ... השתמש בגלגל של העכבר או במקשי ן ו-ם כדי להפעיל הגדלה או הקטנה של זום"; 
 $pgv_lang["lb_close_win"]			= "סגור חלון מדיה - תיבת אור"; 
