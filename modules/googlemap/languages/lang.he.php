@@ -34,9 +34,9 @@ $pgv_lang["gm_disabled"]            	= "מודול GoogleMap נוטרל";
 
 $pgv_lang["gm_redraw_map"]          	= "צייר מפה מחדש";
 $pgv_lang["gm_map"]                 	= "מפה";
+$pgv_lang["gm_physical"]            	= "פיסית"; 
 $pgv_lang["gm_satellite"]           	= "לוויין";
 $pgv_lang["gm_hybrid"]              	= "משולבת";
-$pgv_lang["gm_physical"]            	= "פיסית"; 
 
 // Configuration texts
 $pgv_lang["gm_manage"]              	= "נהל תצורת GoogleMap";
@@ -68,11 +68,19 @@ $pgv_lang["gm_pp_pr_po_b_n"]      	= "תחילית, סיומת, שניהם, נו
 $pgv_lang["gm_pp_po_pr_b_n"]      	= "סיומת, תחילית, שניהם, נורמאלי";
 $pgv_lang["gm_pp_pr_po_n_b"]        	= "תחילית, סיומת, נורמאלי, שניהם";
 $pgv_lang["gm_pp_po_pr_n_b"]        	= "סיומת, תחילית, נורמאלי, שניהם";
-$pgv_lang["googlemap_coord"]        	= "הצג קואורדינטות של המפה";  
+$pgv_lang["googlemap_coord"]        	= "הצג קואורדינטות של המפה"; 
 
+//wooc place hierarchy
+$pgv_lang["gm_place_hierarchy"]         = "השתמש ב-Googlemap עבור היררכית המקומות"; 
+$pgv_lang["gm_ph_marker_type"]        = "סוג מראי מקומות בהיררכית המקומות"; 
+$pgv_lang["gm_standard_marker"]       = "רגיל"; 
+$pgv_lang["gm_no_coord"]                   = "למקום הזה אין קואורדינטות"; 
+$pgv_lang["gm_ph_placenames"]        = "הצג שמות מקוצרים של מקומות?"; 
+$pgv_lang["gm_ph_wheel"]                   = "השתמש בגלגל העכבר לזום?";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   	= "ערוך מיקומים גיאוגרפיים";
+$pgv_lang["pl_no_places_found"]     	= "לא נמצאו מקומות";
 $pgv_lang["pl_zoom_factor"]         	= "מקדם זום";
 $pgv_lang["pl_place_icon"]          	= "צלמית";
 $pgv_lang["pl_edit"]                		= "ערוך מיקום גיאוגרפי";
@@ -91,7 +99,6 @@ $pgv_lang["pl_places_filename"]     	= "הקובץ כולל מיקומים (CSV)
 $pgv_lang["pl_clean_db"]            	= "האם לנקות את כל המיקומים לפני ייבוא?";
 $pgv_lang["pl_update_only"]         	= "עדכן רק מקומות קיימים?";
 $pgv_lang["pl_overwrite_data"]      	= "העלה נתונים מקובץ על גבי נתוני מיקומים קיימים?";
-$pgv_lang["pl_no_places_found"]     	= "לא נמצאו מקומות";
 $pgv_lang["pl_use_this_value"]      	= "השתמש בערך הזה";
 $pgv_lang["pl_precision"]           	= "דיוק";
 $pgv_lang["pl_country"]             	= "ארץ";
@@ -129,5 +136,5 @@ $pgv_lang["'placecheck_unique"]	= "סה\"כ מקומות ייחודיים";
 $pgv_lang["placecheck_zoom"]         	= "זום=";
 $pgv_lang["placecheck_options"]     	= "אופציות של רשימת בדיקת מקום";
 $pgv_lang["placecheck_filter_text"] 	= "תציג אופציות של הפילטר";
-$pgv_lang["placecheck_match"] 	= "כלול מקומות עם התאמה מלאה -";
+$pgv_lang["placecheck_match"] 	= "כלול מקומות עם התאמה מלאה: ";
 ?>
