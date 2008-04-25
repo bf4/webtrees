@@ -10,6 +10,8 @@
 
 
 Version 4.1.5
+ - Added: Standardised interface to CMS applications such as joomla, drupal, postnuke, etc. (fisharebest)
+ - Fixed: [ 1951591 ] Error in Hebrew Date Editing (fisharebest)
  - Fixed: [ 1951335 ] Privacy Warning on View GEDCOM for Media Even for Admin (fisharebest)
  - Fixed: [ 1950986 ] Remote Link - Person to Person, SVN 2899 (fisharebest)
  - Fixed: [ 1947687 ] [4.1.4] Edit link in Quick Update does not work (fisharebest)
