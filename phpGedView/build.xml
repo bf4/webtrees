@@ -195,6 +195,7 @@
 		<zip destfile="${lang.dir}.zip" basedir="${lang.dir}" update="true" />
 		<zip destfile="${places.dir}.zip" basedir="${places.dir}" update="true" />
 		<zip destfile="${themes.dir}.zip" basedir="${themes.dir}" update="true" />
+		<zip destfile="${modules.dir}.zip" basedir="${modules.dir}" update="true" />
 		<zip destfile="${demo.dir}.zip" basedir="${demo.dir}" update="true" />
 		
 	</target>
