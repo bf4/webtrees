@@ -427,9 +427,8 @@ class stats
 	function totalSurnames()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} GROUP BY i_surname", 1);
-		if(!isset($rows[0])){return '';}
-		return count($rows);
+		$rows=$this->_runSQL("SELECT COUNT(DISTINCT i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
 
 	function totalEvents()
