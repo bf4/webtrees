@@ -422,7 +422,7 @@ a {
 }
 
 .topheader {
-	color: gray;
+	color: #808080;
 	margin: 0;
 	white-space: nowrap;
 }
@@ -850,7 +850,7 @@ th {
 }
 
 .parentdeath {
-	border: thin solid grey;
+	border: thin solid #808080;
 	padding: 1px;
 }
 

@@ -219,7 +219,7 @@ class DBLayer
 
 	function escape($str)
 	{
-		return sqlite_escape_string($str);
+		return is_array($str) ? '' : sqlite_escape_string($str);
 	}
 
 

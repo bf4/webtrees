@@ -515,7 +515,7 @@ function remove_subline($oldrecord, $linenum) {
  * @return boolean	true if undo successful
  */
 function undo_change($cid, $index) {
-	global $fcontents, $pgv_changes, $GEDCOMS, $GEDCOM, $manual_save;
+	global $fcontents, $pgv_changes, $GEDCOM, $manual_save;
 
 	if (isset($pgv_changes[$cid])) {
 		$changes = $pgv_changes[$cid];

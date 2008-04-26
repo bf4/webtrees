@@ -272,6 +272,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES;
 
+	if ($option=="MARR_PLAC") return;
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
@@ -283,6 +284,10 @@ function print_indi_table($datalist, $legend="", $option="") {
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $deat_by_decade[$year]="";
 	//-- fieldset
+	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") {
+		$filter=$legend;
+		$legend=$factarray[substr($option,0,4)]." @ ".$legend;
+	}
 	if ($legend == "") $legend = $pgv_lang["individuals"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
@@ -349,23 +354,24 @@ function print_indi_table($datalist, $legend="", $option="") {
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$person = Person::getInstance($value);
-			if (!is_null($person)) $name = $person->getSortableName(); //-- for search results
 		} else {
 			$gid = $key;
 			if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
 			$person = Person::getInstance($gid);
-			if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
-			else $name = $person->getSortableName();
-			if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		}
 		/* @var $person Person */
 		if (is_null($person)) continue;
+		if ($person->type !== "INDI") continue;
 		if (!$person->canDisplayName()) {
 			$hidden++;
 			continue;
 		}
+		$name = $person->getSortableName();
 		if (empty($name)) continue;
+		//-- place filtering
+		if ($option=="BIRT_PLAC" && strstr($person->getBirthPlace(), $filter)===false) continue;
+		if ($option=="DEAT_PLAC" && strstr($person->getDeathPlace(), $filter)===false) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -611,10 +617,11 @@ function print_indi_table($datalist, $legend="", $option="") {
  * @param array $datalist contain families that were extracted from the database.
  * @param string $legend optional legend of the fieldset
  */
-function print_fam_table($datalist, $legend="") {
+function print_fam_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE;
 
+	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
@@ -626,6 +633,10 @@ function print_fam_table($datalist, $legend="") {
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $marr_by_decade[$year]="";
 	//-- fieldset
+	if ($option=="MARR_PLAC") {
+		$filter=$legend;
+		$legend=$factarray["MARR"]." @ ".$legend;
+	}
 	if ($legend == "") $legend = $pgv_lang["families"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
@@ -692,6 +703,7 @@ function print_fam_table($datalist, $legend="") {
 			else $family = Family::getInstance($gid);
 		}
 		if (is_null($family)) continue;
+		if ($family->type !== "FAM") continue;
 		//-- Retrieve husband and wife
 		$husb = $family->getHusband();
 		if (is_null($husb)) $husb = new Person('');
@@ -701,6 +713,8 @@ function print_fam_table($datalist, $legend="") {
 			$hidden++;
 			continue;
 		}
+		//-- place filtering
+		if ($option=="MARR_PLAC" && strstr($family->getMarriagePlace(), $filter)===false) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";

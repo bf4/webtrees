@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id$
+ * @version $Id: mod_tr.php 2322 2007-11-28 22:11:00Z canajun2eh $
  * @author Patrick Kellum
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
  */

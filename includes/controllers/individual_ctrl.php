@@ -1874,7 +1874,7 @@ class IndividualControllerRoot extends BaseController {
 	function print_lightbox_tab() {
 		global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_lang, $pgv_changes, $factarray, $view;
-		global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
+		global $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
 		global $typ2b, $edit ;	

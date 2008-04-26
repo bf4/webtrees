@@ -23,7 +23,7 @@
 ************************************************************************/
 
 // The PunBB version this script installs
-$punbb_version = '1.2.12';
+$punbb_version = '1.2.17';
 
 
 define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
@@ -72,7 +72,7 @@ if (!isset($_POST['form_sent']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>PunBB Installation</title>
-<link rel="stylesheet" type="text/css" href="style/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT ?>style/Oxygen.css" />
 <script type="text/javascript">
 <!--
 function process_form(the_form)
@@ -1431,7 +1431,7 @@ else
 
 
 	/// Display config.php and give further instructions
-	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(md5(time()), -8)."';\n\ndefine('PUN', 1);\n\n?>";
+	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(sha1(uniqid(rand(), true)), 0, 16)."';\n\ndefine('PUN', 1);";
 
 
 ?>
@@ -1441,7 +1441,7 @@ else
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>PunBB Installation</title>
-<link rel="stylesheet" type="text/css" href="modules/<?php print PUN_MOD_NAME?>/style/Oxygen.css" />
+<link rel="stylesheet" type="text/css" href="modules/<?php print PUN_ROOT ?>/style/Oxygen.css" />
 </head>
 <body>
 

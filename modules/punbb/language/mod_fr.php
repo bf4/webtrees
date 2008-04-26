@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id$
+ * @version $Id: mod_fr.php 2410 2007-12-07 18:36:43Z canajun2eh $
  * @author Patrick Kellum
  * @translator Alain Bouquet [vizar]
  */

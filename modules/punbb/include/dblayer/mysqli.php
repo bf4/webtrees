@@ -159,7 +159,7 @@ class DBLayer
 
 	function escape($str)
 	{
-		return mysqli_real_escape_string($this->link_id, $str);
+		return is_array($str) ? '' : mysqli_real_escape_string($this->link_id, $str);
 	}
 
 

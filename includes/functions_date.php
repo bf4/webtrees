@@ -130,10 +130,6 @@ function default_edit_to_gedcom_date($datestr)
 	foreach (array('apx','cir') as $keyword)
 		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", 'ABT', $datestr);
 
-	// Add calendar escapes where the user forgot
-	$datestr=preg_replace('/(?<!@#DHEBREW@)((\d\d? *)?(TSH|CSH|KSL|TVT|SHV|NSN|IYR|SVN|TMZ|AAV|ELL))/i', '@#DHEBREW@ $1', $datestr);
-	$datestr=preg_replace('/(?<!@#DFRENCH R@)((\d\d? *)?(VEND|BRUM|FRIM|NIVO|PLUV|VENT|GERM|FLOR|PRAI|MESS|THER|FRUC|COMP))/i', '@#DFRENCH R@ $1', $datestr);
-
 	return $datestr;
 }
 

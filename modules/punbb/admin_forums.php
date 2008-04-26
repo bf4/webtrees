@@ -137,10 +137,10 @@ else if (isset($_POST['update_positions']))
 
 	while (list($forum_id, $disp_position) = @each($_POST['position']))
 	{
-		if (!preg_match('#^\d+$#', $disp_position))
+		if (!@preg_match('#^\d+$#', $disp_position))
 			message('Position must be a positive integer value.');
 
-		$db->query('UPDATE '.$db->prefix.'forums SET disp_position='.$disp_position.' WHERE id='.$forum_id) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'forums SET disp_position='.$disp_position.' WHERE id='.intval($forum_id)) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
 	}
 
 	// Regenerate the quickjump cache
@@ -186,9 +186,9 @@ else if (isset($_GET['edit_forum']))
 			$result = $db->query('SELECT g_id, g_read_board, g_post_replies, g_post_topics FROM '.$db->prefix.'groups WHERE g_id!='.PUN_ADMIN) or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 			while ($cur_group = $db->fetch_assoc($result))
 			{
-				$read_forum_new = ($cur_group['g_read_board'] == '1') ? isset($_POST['read_forum_new'][$cur_group['g_id']]) ? $_POST['read_forum_new'][$cur_group['g_id']] : '0' : $_POST['read_forum_old'][$cur_group['g_id']];
-				$post_replies_new = isset($_POST['post_replies_new'][$cur_group['g_id']]) ? $_POST['post_replies_new'][$cur_group['g_id']] : '0';
-				$post_topics_new = isset($_POST['post_topics_new'][$cur_group['g_id']]) ? $_POST['post_topics_new'][$cur_group['g_id']] : '0';
+				$read_forum_new = ($cur_group['g_read_board'] == '1') ? isset($_POST['read_forum_new'][$cur_group['g_id']]) ? '1' : '0' : intval($_POST['read_forum_old'][$cur_group['g_id']]);
+				$post_replies_new = isset($_POST['post_replies_new'][$cur_group['g_id']]) ? '1' : '0';
+				$post_topics_new = isset($_POST['post_topics_new'][$cur_group['g_id']]) ? '1' : '0';
 
 				// Check if the new settings differ from the old
 				if ($read_forum_new != $_POST['read_forum_old'][$cur_group['g_id']] || $post_replies_new != $_POST['post_replies_old'][$cur_group['g_id']] || $post_topics_new != $_POST['post_topics_old'][$cur_group['g_id']])
@@ -386,8 +386,13 @@ generate_admin_menu('forums');
 <?php
 
 	$result = $db->query('SELECT id, cat_name FROM '.$db->prefix.'categories ORDER BY disp_position') or error('Unable to fetch category list', __FILE__, __LINE__, $db->error());
-	while ($cur_cat = $db->fetch_assoc($result))
-		echo "\t\t\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'">'.pun_htmlspecialchars($cur_cat['cat_name']).'</option>'."\n";
+	if ($db->num_rows($result) > 0)
+	{
+		while ($cur_cat = $db->fetch_assoc($result))
+			echo "\t\t\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'">'.pun_htmlspecialchars($cur_cat['cat_name']).'</option>'."\n";
+	}
+	else
+		echo "\t\t\t\t\t\t\t\t\t".'<option value="0" disabled="disabled">No categories exist</option>'."\n";
 
 ?>
 										</select>
@@ -400,7 +405,15 @@ generate_admin_menu('forums');
 				</div>
 			</form>
 		</div>
+<?php
 
+// Display all the categories and forums
+$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.disp_position FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id ORDER BY c.disp_position, c.id, f.disp_position') or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
+
+if ($db->num_rows($result) > 0)
+{
+
+?>
 		<h2 class="block2"><span>Edit forums</span></h2>
 		<div class="box">
 			<form id="edforum" method="post" action="<?php genurl('admin_forums.php?action=edit', true, true)?>">
@@ -408,9 +421,6 @@ generate_admin_menu('forums');
 <?php
 
 $tabindex_count = 4;
-
-// Display all the categories and forums
-$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.disp_position FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id ORDER BY c.disp_position, c.id, f.disp_position') or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
 
 $cur_category = 0;
 while ($cur_forum = $db->fetch_assoc($result))
@@ -450,6 +460,11 @@ while ($cur_forum = $db->fetch_assoc($result))
 				<p class="submitend"><input type="submit" name="update_positions" value="Update positions" tabindex="<?php echo $tabindex_count ?>" /></p>
 			</form>
 		</div>
+<?php
+
+}
+
+?>
 	</div>
 	<div class="clearer"></div>
 </div>

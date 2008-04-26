@@ -38,8 +38,7 @@ require_once PUN_ROOT.'include/pgv.php';
 require PUN_ROOT.'include/functions.php';
 
 // Reverse the effect of register_globals
-if (@ini_get('register_globals'))
-	unregister_globals();
+unregister_globals();
 
 
 @include PUN_ROOT.'config.php';
@@ -73,8 +72,9 @@ if (get_magic_quotes_gpc())
 	$_COOKIE = stripslashes_array($_COOKIE);
 }
 
-// Seed the random number generator
-mt_srand((double)microtime()*1000000);
+// Seed the random number generator (PHP <4.2.0 only)
+if (version_compare(PHP_VERSION, '4.2.0', '<'))
+	mt_srand((double)microtime()*1000000);
 
 // If a cookie name is not specified in config.php, we use the default (punbb_cookie)
 if (empty($cookie_name))
@@ -103,6 +103,14 @@ if (!defined('PUN_CONFIG_LOADED'))
 	require PUN_ROOT.'cache/cache_config.php';
 }
 
+// Check the database version is the same as the source code version
+$sourcecode_version = '1.2.17';
+if ( version_compare( $pun_config['o_cur_version'], $sourcecode_version, "<") ) {
+	// the source code has been updated and we need to run the update script in order to update the database
+	require_once PUN_ROOT.'include/pgv.php';
+
+	header('Location: ' . genurl('index.php?mod=punbb&pgvaction=extras/12_to_1217_update'));
+}
 
 // Enable output buffering
 if (!defined('PUN_DISABLE_BUFFERING'))

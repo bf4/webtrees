@@ -329,7 +329,7 @@ function is_dead_id($pid) {
 			if (empty($gedrec))
 				return true;
 		}
-		if ($indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
+		if (isset($indilist[$pid]["isdead"]) && $indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
 			if (!isset($indilist[$pid]["isdead"]))
 				$indilist[$pid]["isdead"] = -1;
 			if ($indilist[$pid]["isdead"]==-1)
@@ -1619,6 +1619,7 @@ function compare_facts_type($arec, $brec) {
 			"FCOM",
 			"CONF",
 			"BARM", "BASM",
+			"SSN",
 			"EDUC",
 			"GRAD",
 			"_DEG",
@@ -1658,7 +1659,7 @@ function compare_facts_type($arec, $brec) {
 			"CITN",
 			"CAST",
 			"RELI",
-			"SSN", "IDNO",
+			"IDNO",
 			"TEMP",
 			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
 			"AFN", "REFN", "_PRMN", "REF", "RIN",
@@ -3243,39 +3244,39 @@ function id_type($id) {
 	}
 }
 
-//-- only declare this function when it is necessary
-if (!empty($COMMIT_COMMAND)) {
-	/**
- 	* check file in
- 	* @param string $logline	Log message
- 	* @param string $filename	Filename
- 	* @param string $dirname	Directory
- 	* @param boolean $bInsert	Insert Log message
- 	* @return boolean			whether the file was checked in
- 	*/
-	function check_in($logline, $filename, $dirname, $bInsert = false) {
-		global $COMMIT_COMMAND;
-		$bRetSts = false;
-		if (!empty($COMMIT_COMMAND)) {
-			$cwd = getcwd();
-			if (!empty($dirname))
-				chdir($dirname);
-			$cmdline = $COMMIT_COMMAND." commit -m \"{$logline}\" \"{$filename}\"";
-			$output = "";
-			$retval = "";
-			exec($cmdline, $output, $retval);
-			if (!empty($output)) {
-				if ($bInsert)
-					AddToChangeLog($logline);
-				$outputstring = implode('\n', $output);
-				AddToChangeLog("System Output :".$outputstring.", Return Value :".$retval);
-				$bRetSts = true;
-			}
-			if (!empty($dirname))
-				chdir($cwd);
+/**
+ * check file in
+ * @param  string  $logline  Log message
+ * @param  string  $filename Filename
+ * @param  string  $dirname  Directory
+ * @param  boolean $bInsert  Insert Log message
+ * @return boolean whether the file was checked in
+ */
+function check_in($logline, $filename, $dirname, $bInsert = false) {
+	global $COMMIT_COMMAND;
+	$bRetSts = false;
+	if (($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
+		$cwd = getcwd();
+		if ($dirname) {
+			chdir($dirname);
 		}
-		return $bRetSts;
+		$cmdline= $COMMIT_COMMAND.' commit -m '.escapeshellarg($logline).' '.escapeshellarg($filename);
+		$output = '';
+		$retval = '';
+		exec($cmdline, $output, $retval);
+		if (!empty($output)) {
+			if ($bInsert) {
+				AddToChangeLog($logline);
+			}
+			$outputstring = implode(' ', $output);
+			AddToChangeLog('System Output :'.$outputstring.', Return Value :'.$retval);
+			$bRetSts = true;
+		}
+		if ($dirname) {
+			chdir($cwd);
+		}
 	}
+	return $bRetSts;
 }
 
 /**

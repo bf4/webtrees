@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id$
+ * @version $Id: mod_he.php 2031 2007-10-25 21:26:03Z yalnifj $
  * @author Patrick Kellum
  * @translation Meliza Amity
  */
