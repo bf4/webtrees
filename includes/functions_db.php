@@ -3023,7 +3023,8 @@ function get_list_size($list, $filter="") {
 			if ($filter)
 				$sql .= " AND m_gedrec $term '$filter'";
 			$res = dbquery($sql);
-
+			//-- prevent failure if DB tables are lost
+			if (DB::isError($res)) return 0;
 			$row =& $res->fetchRow();
 			$res->free();
 			return $row[0];
