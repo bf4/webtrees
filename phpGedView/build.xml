@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="PGVBuild" basedir="." default="zip">
 	<property name="proj.name" value="PhpGedView" />
-	<property name="pgv.version" value="4.1.6" />
+	<property name="pgv.version" value="4.1.5" />
 	<property name="dist.dir" value="../../distribution" />
-	<property name="all.dir"
-		value="${dist.dir}/${proj.name}-all-${pgv.version}" />
-	<property name="basic.dir"
-		value="${dist.dir}/${proj.name}-basic-${pgv.version}" />
-	<property name="lang.dir"
-		value="${dist.dir}/PGV-Languages-${pgv.version}" />
-	<property name="places.dir"
-		value="${dist.dir}/PGV-Places-${pgv.version}" />
-	<property name="themes.dir"
-		value="${dist.dir}/PGV-Themes-${pgv.version}" />
-	<property name="modules.dir"
-		value="${dist.dir}/PGV-Modules-${pgv.version}" />
+	<property name="all.dir" value="${dist.dir}/${proj.name}-all-${pgv.version}" />
+	<property name="basic.dir" value="${dist.dir}/${proj.name}-basic-${pgv.version}" />
+	<property name="lang.dir" value="${dist.dir}/PGV-Languages-${pgv.version}" />
+	<property name="places.dir" value="${dist.dir}/PGV-Places-${pgv.version}" />
+	<property name="themes.dir" value="${dist.dir}/PGV-Themes-${pgv.version}" />
+	<property name="modules-all.dir" value="${dist.dir}/PGV-Modules-All-${pgv.version}" />
+
+	<property name="module-cms-interface.dir" value="${dist.dir}/PGV-Module-cms-interface-${pgv.version}" />
+	<property name="module-fckeditor.dir" value="${dist.dir}/PGV-Module-fckeditor-${pgv.version}" />
+	<property name="module-gallery2.dir" value="${dist.dir}/PGV-Module-gallery2-${pgv.version}" />
+	<property name="module-googlemap.dir" value="${dist.dir}/PGV-Module-googlemap-${pgv.version}" />
+	<property name="module-lightbox.dir" value="${dist.dir}/PGV-Module-lightbox-${pgv.version}" />
+	<property name="module-phpsysinfo.dir" value="${dist.dir}/PGV-Module-phpsysinfo-${pgv.version}" />
+	<property name="module-punbb.dir" value="${dist.dir}/PGV-Module-punbb-${pgv.version}" />
+	<property name="module-research-assistant.dir" value="${dist.dir}/PGV-Module-research-assistant-${pgv.version}" />
+	<property name="module-sitemap.dir" value="${dist.dir}/PGV-Module-sitemap-${pgv.version}" />
+	<property name="module-slideshow.dir" value="${dist.dir}/PGV-Module-slideshow-${pgv.version}" />
+	<property name="module-wordsearch.dir" value="${dist.dir}/PGV-Module-wordsearch-${pgv.version}" />
 
 	<property name="demo.base.dir" value="${dist.dir}/DemoBase" />
-	<property name="demo.dir"
-		value="${dist.dir}/PGVDemo-${pgv.version}" />
+	<property name="demo.dir" value="${dist.dir}/PGV-Demo-${pgv.version}" />
 
 	<fileset id="basic.langs" dir="./languages">
 		<include name="*.de.*" />
@@ -61,13 +66,42 @@
 
 	<target name="clean">
 		<!--  delete any existing directories -->
-		<delete dir="${all.dir}" failonerror="false" />
-		<delete dir="${basic.dir}" failonerror="false" />
-		<delete dir="${lang.dir}" failonerror="false" />
-		<delete dir="${places.dir}" failonerror="false" />
-		<delete dir="${themes.dir}" failonerror="false" />
-		<delete dir="${modules.dir}" failonerror="false" />
-		<delete dir="${demo.dir}" failonerror="false" />
+		<delete dir ="${all.dir}" failonerror="false" />
+		<delete file="${all.dir}.zip" failonerror="false" />
+		<delete dir ="${basic.dir}" failonerror="false" />
+		<delete file="${basic.dir}.zip" failonerror="false" />
+		<delete dir ="${lang.dir}" failonerror="false" />
+		<delete file="${lang.dir}.zip" failonerror="false" />
+		<delete dir ="${places.dir}" failonerror="false" />
+		<delete file="${places.dir}.zip" failonerror="false" />
+		<delete dir ="${themes.dir}" failonerror="false" />
+		<delete file="${themes.dir}.zip" failonerror="false" />
+		<delete dir ="${modules-all.dir}" failonerror="false" />
+		<delete file="${modules-all.dir}.zip" failonerror="false" />
+		<delete dir ="${demo.dir}" failonerror="false" />
+		<delete file="${demo.dir}.zip" failonerror="false" />
+		<delete dir ="${module-cms-interface.dir}" failonerror="false" />
+		<delete file="${module-cms-interface.dir}.zip" failonerror="false" />
+		<delete dir ="${module-fckeditor.dir}" failonerror="false" />
+		<delete file="${module-fckeditor.dir}.zip" failonerror="false" />
+		<delete dir ="${module-gallery2.dir}" failonerror="false" />
+		<delete file="${module-gallery2.dir}.zip" failonerror="false" />
+		<delete dir ="${module-googlemap.dir}" failonerror="false" />
+		<delete file="${module-googlemap.dir}.zip" failonerror="false" />
+		<delete dir ="${module-lightbox.dir}" failonerror="false" />
+		<delete file="${module-lightbox.dir}.zip" failonerror="false" />
+		<delete dir ="${module-phpsysinfo.dir}" failonerror="false" />
+		<delete file="${module-phpsysinfo.dir}.zip" failonerror="false" />
+		<delete dir ="${module-punbb.dir}" failonerror="false" />
+		<delete file="${module-punbb.dir}.zip" failonerror="false" />
+		<delete dir ="${module-research-assistant.dir}" failonerror="false" />
+		<delete file="${module-research-assistant.dir}.zip" failonerror="false" />
+		<delete dir ="${module-sitemap.dir}" failonerror="false" />
+		<delete file="${module-sitemap.dir}.zip" failonerror="false" />
+		<delete dir ="${module-slideshow.dir}" failonerror="false" />
+		<delete file="${module-slideshow.dir}.zip" failonerror="false" />
+		<delete dir ="${module-wordsearch.dir}" failonerror="false" />
+		<delete file="${module-wordsearch.dir}.zip" failonerror="false" />
 	</target>
 
 	<defaultexcludes add="**/*.cache" />
@@ -145,10 +179,98 @@
 		</copy>
 	</target>
 
-	<target name="package-modules">
+	<target name="package-modules-all">
 		<!-- modules -->
-		<copy todir="${modules.dir}">
+		<copy todir="${modules-all.dir}">
 			<fileset dir="./modules">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-cms-interface">
+		<copy todir="${module-cms-interface.dir}">
+			<fileset dir="./modules/cms_interface">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-fckeditor">
+		<copy todir="${module-fckeditor.dir}">
+			<fileset dir="./modules/FCKeditor">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-gallery2">
+		<copy todir="${module-gallery2.dir}">
+			<fileset dir="./modules/gallery2">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-googlemap">
+		<copy todir="${module-googlemap.dir}">
+			<fileset dir="./modules/googlemap">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-lightbox">
+		<copy todir="${module-lightbox.dir}">
+			<fileset dir="./modules/lightbox">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-phpsysinfo">
+		<copy todir="${module-phpsysinfo.dir}">
+			<fileset dir="./modules/punbb">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-punbb">
+		<copy todir="${module-punbb.dir}">
+			<fileset dir="./modules/punbb">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-research-assistant">
+		<copy todir="${module-research-assistant.dir}">
+			<fileset dir="./modules/research_assistant">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-sitemap">
+		<copy todir="${module-sitemap.dir}">
+			<fileset dir="./modules/sitemap">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-slideshow">
+		<copy todir="${module-slideshow.dir}">
+			<fileset dir="./modules/slideshow">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-wordsearch">
+		<copy todir="${module-wordsearch.dir}">
+			<fileset dir="./modules/wordsearch">
 				<include name="**/**" />
 			</fileset>
 		</copy>
@@ -176,7 +298,7 @@
 			</fileset>
 		</copy>
 		<copy todir="${demo.dir}/democd/sites/modules">
-			<fileset dir="${modules.dir}/lightbox">
+			<fileset dir="${modules-all.dir}/lightbox">
 				<include name="**/**" />
 			</fileset>
 		</copy>
@@ -185,7 +307,7 @@
 	</target>
 
 	<target name="package"
-		depends="package-all, package-basic, package-lang, package-themes, package-modules, package-places, package-demo">
+		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-cms-interface, package-module-fckeditor, package-module-gallery2, package-module-googlemap, package-module-lightbox, package-module-phpsysinfo, package-module-punbb, package-module-research-assistant, package-module-sitemap, package-module-slideshow, package-module-wordsearch">
 		<!--  default target which does everything -->
 	</target>
 	
@@ -195,8 +317,19 @@
 		<zip destfile="${lang.dir}.zip" basedir="${lang.dir}" update="true" />
 		<zip destfile="${places.dir}.zip" basedir="${places.dir}" update="true" />
 		<zip destfile="${themes.dir}.zip" basedir="${themes.dir}" update="true" />
-		<zip destfile="${modules.dir}.zip" basedir="${modules.dir}" update="true" />
+		<zip destfile="${modules-all.dir}.zip" basedir="${modules-all.dir}" update="true" />
 		<zip destfile="${demo.dir}.zip" basedir="${demo.dir}" update="true" />
+		<zip destfile="${module-cms-interface.dir}.zip" basedir="${module-cms-interface.dir}" update="true" />
+		<zip destfile="${module-fckeditor.dir}.zip" basedir="${module-fckeditor.dir}" update="true" />
+		<zip destfile="${module-gallery2.dir}.zip" basedir="${module-gallery2.dir}" update="true" />
+		<zip destfile="${module-googlemap.dir}.zip" basedir="${module-googlemap.dir}" update="true" />
+		<zip destfile="${module-lightbox.dir}.zip" basedir="${module-lightbox.dir}" update="true" />
+		<zip destfile="${module-phpsysinfo.dir}.zip" basedir="${module-phpsysinfo.dir}" update="true" />
+		<zip destfile="${module-punbb.dir}.zip" basedir="${module-punbb.dir}" update="true" />
+		<zip destfile="${module-research-assistant.dir}.zip" basedir="${module-research-assistant.dir}" update="true" />
+		<zip destfile="${module-sitemap.dir}.zip" basedir="${module-sitemap.dir}" update="true" />
+		<zip destfile="${module-slideshow.dir}.zip" basedir="${module-slideshow.dir}" update="true" />
+		<zip destfile="${module-wordsearch.dir}.zip" basedir="${module-wordsearch.dir}" update="true" />
 		
 	</target>
 </project>
