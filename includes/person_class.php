@@ -224,7 +224,7 @@ class Person extends GedcomRecord {
 		if (!$this->canDisplayName()) return $pgv_lang["private"];
 		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
 		$ct = preg_match("~/(.*)/~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
-		$name = trim($match[1]);
+		if ($ct) $name = trim($match[1]);
 		if (empty($name)) return $pgv_lang["unknown"];
 		return $name;
 	}
@@ -237,7 +237,7 @@ class Person extends GedcomRecord {
 		if (!$this->canDisplayName()) return $pgv_lang["private"];
 		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
 		$ct = preg_match("~^([^\s]*)~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
-		$name = trim($match[1]);
+		if ($ct) $name = trim($match[1]);
 		if (empty($name)) return $pgv_lang["unknown"];
 		return $name;
 	}
