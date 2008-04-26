@@ -1071,9 +1071,13 @@ function getBlocks($username) {
 			if (!isset($row["b_config"]))
 				$row["b_config"]="";
 			if ($row["b_location"]=="main")
-				$blocks["main"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+				// Were earlier versions of wrongly adding slashes to quotes in serialized data?
+				// Unfortunately, we can't use stripslashes() as this breaks valid data.
+				// Instead, use @unserialize to skip any errors.
+				// TODO: try both with and without stripslashes and see which works ???
+				$blocks["main"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
 			if ($row["b_location"]=="right")
-				$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+				$blocks["right"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
 		}
 	} else {
 		if (get_user_id($username)) {
@@ -1087,9 +1091,9 @@ function getBlocks($username) {
 				if (!isset($row["b_config"]))
 					$row["b_config"]="";
 				if ($row["b_location"]=="main")
-					$blocks["main"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+					$blocks["main"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
 				if ($row["b_location"]=="right")
-					$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+					$blocks["right"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
 			}
 			$res2->free();
 		}
