@@ -190,88 +190,88 @@
 
 	<target name="package-module-cms-interface">
 		<copy todir="${module-cms-interface.dir}">
-			<fileset dir="./modules/cms_interface">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="cms_interface*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-fckeditor">
 		<copy todir="${module-fckeditor.dir}">
-			<fileset dir="./modules/FCKeditor">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="FCKeditor*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-gallery2">
 		<copy todir="${module-gallery2.dir}">
-			<fileset dir="./modules/gallery2">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="gallery2*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-googlemap">
 		<copy todir="${module-googlemap.dir}">
-			<fileset dir="./modules/googlemap">
-				<include name="**/**" />
+			<fileset dir="./modules">
+				<include name="googlemap*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-lightbox">
 		<copy todir="${module-lightbox.dir}">
-			<fileset dir="./modules/lightbox">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="lightbox*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-phpsysinfo">
 		<copy todir="${module-phpsysinfo.dir}">
-			<fileset dir="./modules/punbb">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="phpsysinfo*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-punbb">
 		<copy todir="${module-punbb.dir}">
-			<fileset dir="./modules/punbb">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="punbb*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-research-assistant">
 		<copy todir="${module-research-assistant.dir}">
-			<fileset dir="./modules/research_assistant">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="research_assistant*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-sitemap">
 		<copy todir="${module-sitemap.dir}">
-			<fileset dir="./modules/sitemap">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="sitemap*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-slideshow">
 		<copy todir="${module-slideshow.dir}">
-			<fileset dir="./modules/slideshow">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="slideshow*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="package-module-wordsearch">
 		<copy todir="${module-wordsearch.dir}">
-			<fileset dir="./modules/wordsearch">
-				<include name="**/**" />
+			<fileset dir="./modules/">
+				<include name="wordsearch*/**" />
 			</fileset>
 		</copy>
 	</target>
