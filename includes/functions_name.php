@@ -934,6 +934,7 @@ function smart_utf8_decode($in_str)
  * @return array	The array of individual names
  */
 function get_indi_names($indirec, $import=false) {
+	global $NAME_REVERSE;
 	$names = array();
 	//-- get all names
 	$namerec = get_sub_record(1, "1 NAME", $indirec, 1);
@@ -942,6 +943,12 @@ function get_indi_names($indirec, $import=false) {
 		$j = 1;
 		while(!empty($namerec)) {
 			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
+			$name = preg_replace('/\/\//','/@N.N./', $name); // Missing SURN=>@N.N.
+			if ($NAME_REVERSE) { // Missing GIVN=>@P.N.
+				$name=preg_replace('/\/$/', '/ @P.N./', $name);
+			} else {
+				$name=preg_replace('/^\//', '@P.N. /', $name);
+			}
 			$surname = extract_surname($name, false);
 			if (empty($surname)) $surname = "@N.N.";
 			//-- all ____ names get changed to @N.N.

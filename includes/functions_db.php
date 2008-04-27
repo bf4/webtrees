@@ -252,6 +252,9 @@ function find_family_record($pid, $gedfile='') {
 		"SELECT f_gedcom, f_husb, f_wife, f_numchil FROM {$TBLPREFIX}families ".
 		"WHERE f_id='{$escpid}' AND f_file={$ged_id}"
 	);
+	if (DB::isError($res)) {
+		return "";
+	}
 	$row=$res->fetchRow();
 	$res->free();
 
@@ -336,6 +339,7 @@ function find_person_record($pid, $gedfile='') {
 		"SELECT i_gedcom, i_isdead  FROM {$TBLPREFIX}individuals ".
 		"WHERE i_id='{$escpid}' AND i_file={$ged_id}"
 	);
+	if (DB::isError($res)) return "";
 	$row=$res->fetchRow();
 		$res->free();
 
@@ -433,6 +437,10 @@ function find_gedcom_record($pid, $gedfile='') {
 		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media='{$pid}' AND m_gedfile={$ged_id} UNION ALL ".
 		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id='{$pid}' AND o_file={$ged_id}"
 	);
+	if (DB::isError($res)) {
+		debug_print_backtrace();
+		return "";
+	}
 	$row=$res->fetchRow();
 	$res->free();
 	if ($row) {
@@ -493,6 +501,7 @@ function find_source_record($pid, $gedfile="") {
 	$res=dbquery(
 		"SELECT s_gedcom, s_name FROM {$TBLPREFIX}sources WHERE s_id='{$pid}' AND s_file={$ged_id}"
 	);
+	if (DB::isError($res)) return "";
 	$row=$res->fetchRow();
 		$res->free();
 
@@ -2900,7 +2909,8 @@ function get_list_size($list, $filter="") {
 			if ($filter)
 				$sql .= " AND m_gedrec $term '$filter'";
 			$res = dbquery($sql);
-
+			//-- prevent failure if DB tables are lost
+			if (DB::isError($res)) return 0;
 			$row =& $res->fetchRow();
 			$res->free();
 			return $row[0];
