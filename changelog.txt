@@ -9,7 +9,10 @@
 =====================================================================
 
 
-Version 4.1.5
+Version 4.1.6
+ - Fixed: [ 1952654 ] 4.1.6 2931 Fatal error familysearch.php on line 160 (fisharebest)
+
+Version 4.1.5 2008-04-27
  - Fixed: [ 1952284 ] Unknown names print without the (unknown) text (fisharebest)
  - Fixed: [ 1952073 ] SVN 2918 - STATS, bad SURN numbers (fisharebest)
  - Added: Standardised interface to CMS applications such as joomla, drupal, postnuke, etc. (fisharebest)
