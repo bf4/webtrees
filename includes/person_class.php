@@ -405,7 +405,7 @@ class Person extends GedcomRecord {
 
 	// Generate an estimate for birth/death dates, based on dates of parents/children/spouses
 	function getEstimatedBirthDate() {
-		if (true || is_null($this->_getEstimatedBirthDate)) {
+		if (is_null($this->_getEstimatedBirthDate)) {
 			foreach ($this->getAllBirthDates() as $date) {
 				if ($date->isOK()) {
 					$this->_getEstimatedBirthDate=$date;
