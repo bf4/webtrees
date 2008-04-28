@@ -144,7 +144,7 @@ if ($search == "yes") {
 		<tr>
 			<td class="list_label" colspan="2">
 				<?php print_help_link("simple_filter_help","qm"); print $pgv_lang["filter"]; ?>
-				&nbsp;<input id="filter" name="filter" value="<?php print PrintReady($filter); ?>"/>
+				&nbsp;<input id="filter" name="filter" value="<?php print htmlentities(PrintReady($filter)); ?>"/>
 			</td>
 		</tr>
 		<tr>
