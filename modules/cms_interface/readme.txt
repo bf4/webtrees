@@ -57,7 +57,9 @@ To run PhpGedView from within Joomla, you need the "phpGedView component".
 The home page for this is:
 http://extensions.joomla.org/component/option,com_mtree/task,viewlink/link_id,517/Itemid,35/
 Until this component is updated, you need to apply an update to one of the files.
-This is found in /modules/cms_interface/joomla
+This is found in /modules/cms_interface/joomla. It should be copied over
+the existing file in your joomla/components/com_phpgedview/ folder
+
 
 ================================================================================
 DRUPAL
