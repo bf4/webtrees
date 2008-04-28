@@ -74,6 +74,14 @@ $pgv_lang["gm_pp_pr_po_n_b"]        = "Etuliite, jälkiliite, normal, kumpikin";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Jälkiliite, etuliite, normal, kumpikin";
 $pgv_lang["googlemap_coord"]        = "Näytä kartta koordinaatit";
 
+//wooc place hierarchy
+$pgv_lang["gm_place_hierarchy"]         = "Käytä Googlemappia paikkahierarkiaa varten"; 
+$pgv_lang["gm_ph_marker_type"]        = "Paikkahierarkian paikkamerkkien tyyppi";
+$pgv_lang["gm_standard_marker"]       = "Vakio"; 
+$pgv_lang["gm_no_coord"]                   = "Tällä paikalla ei ole koordinaatteja"; 
+$pgv_lang["gm_ph_placenames"]        = "Näytetäänkö lyhyet paikannimet?"; 
+$pgv_lang["gm_ph_wheel"]                   = "Käytetäänkö hiiren vieritysrullaa zoomauksessa?"; 
+
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Muokkaa sijainti paikka tietoja";
 $pgv_lang["pl_no_places_found"]     = "Ei paikkoja lyötynyt";
