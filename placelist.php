@@ -35,6 +35,11 @@ function case_in_array($value, $array) {
 	return false;
 }
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['display'])) $display = $_REQUEST['display'];
+if (isset($_REQUEST['parent'])) $parent = $_REQUEST['parent'];
+
+
 if (empty($action)) $action = "find";
 if (empty($display)) $display = "hierarchy";
 
@@ -131,12 +136,12 @@ if ($display=="hierarchy") {
 				foreach($levels as $pindex=>$ppart) {
 					$ppart = urlencode($ppart);
 					$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
-					print "&amp;parent[$j]=".$ppart;
+					print "&amp;parent[$j]=".urlencode($ppart);
 				}
 			}
  			print "\">";
  			if (trim($parent[$i])=="") print $pgv_lang["unknown"];
-			else print PrintReady($parent[$i]);
+			else print PrintReady(htmlentities($parent[$i]));
 			print "</a>";
  			if ($i>0) print ", ";
  			else if (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$i])) || ($TEXT_DIRECTION=="ltr" &&  !hasRtLText($parent[$i])))  print ", ";
@@ -207,7 +212,7 @@ if ($display=="hierarchy") {
 				$mapname = str_replace("Åº","z",$mapname);
 				$mapname = str_replace("Ä‡","c",$mapname);
 				$mapname = str_replace("Å„","n",$mapname);
-				$mapname = strtr($mapname,"ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
+				$mapname = strtr($mapname,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
 				$imgfile = "places/".$country."/".$mapname.".gif";
 			}
 			if (file_exists($imgfile) and file_exists($mapfile)) {
@@ -321,7 +326,7 @@ if ($display=="hierarchy") {
 		print "&amp;parent[$level]=".urlencode($value)."\" class=\"list_item\">";
 
 		if (trim($value)=="") print $pgv_lang["unknown"];
-		else print PrintReady($value);
+		else print PrintReady(htmlentities($value));
 		print "</a></li>\n";
 		if ($ct1 > 20){
 			if ($i == floor($ct1 / 3)) print "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
