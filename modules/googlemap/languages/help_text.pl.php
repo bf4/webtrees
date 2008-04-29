@@ -142,6 +142,8 @@ $pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Typ znacznika miejsca w hierarchii miejsc";
 $pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "Tutaj możesz określić czy do wyświetlania miejsc w hierarchii będzie użyty standardowy znacznik czy przypisana flaga (jeśli brak przypisanej flagi, będzie wyświetlony standardowy znacznik).";
 $pgv_lang["GM_DISP_SHORT_PLACE"]		= "Wyświetlić skrócone nazwy miejsc?";
 $pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "Tutaj możesz określić czy miejsca wyświetlane w hierarchii będą miały wyświetlone pełne nazwy czy tylko będzie wyświetlona nazwa aktualnego poziomu/miejsca.";
+$pgv_lang["GM_DISP_COUNT"]				= "Czy wyświetlić liczbę osób i rodzin połączonych z danym miejscem?";
+$pgv_lang["GM_DISP_COUNT_help"]			= "Możesz określić czy liczba osób i rodzin powiązana z danym miejscem będzie wyświetlana. Przy dużej ilości osób i miejsc zaleca się wyłączenie tej opcji.";
 $pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Użyć rolki myszki do przybliżania/oddalania?";
 $pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "Możesz określić czy rolka myszki będzie używana do przybliżania lub oddalania mapy.";
 ?>
