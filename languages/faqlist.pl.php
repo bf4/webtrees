@@ -35,7 +35,7 @@ $faqlist["FAQ_000_head"] = "\"FAQ\": SŁYSZAŁEM(AM) O TYM, ALE CO TO JEST?";
 $faqlist["FAQ_000_body"] = "<b>FAQ</b> to angielski skrót od <b>F</b>requently <b>A</b>sked <b>Q</b>uestion - Często Zadawane Pytania.<br /><br />Lista FAQ to zbiór zawierający często zadawane pytania i odpowiedzi na nie. Lista jest przygotowywana i regularnie aktualizowana przez zespół PhpGedView.";
 
 $faqlist["FAQ_010_head"] = "WITAMY W FAQ NA TEMAT #GLOBALS[GEDCOM_TITLE]#";
-$faqlist["FAQ_010_body"] = "Członkowie rodziny strony #GLOBALS[GEDCOM_TITLE]# chcieliby serdecznie powitać wszystkich kuzynów i zachęcić ich do złapania bakcyla poszukiwania przodków. Ta pasja może się szybko przerodzić w zamiłowanie - i znienawidzenie - ponieważ pożera niewiarygodne ilości czasu, ale rezultaty są oszałamiające. Dajemy wam okazję czerpania radości z genealogii za pomocą <a href=\"http://www.phpgedview.net\" target=\"_blank\">PhpGedView</a>, programu stworzonego dzięki wybitnym umiejętnościom programistycznym Johna Finlay\'a i jego zespołu tworzącego PGV - wspaniały darmowy (open source) system genealogiczny.";
+$faqlist["FAQ_010_body"] = "Członkowie rodziny strony #GLOBALS[GEDCOM_TITLE]# chcieliby serdecznie powitać wszystkich kuzynów i zachęcić ich do złapania bakcyla poszukiwania przodków. Ta pasja może się szybko przerodzić w zamiłowanie - i znienawidzenie - ponieważ pożera niewiarygodne ilości czasu, ale rezultaty są oszałamiające. Dajemy wam okazję czerpania radości z genealogii za pomocą <a href=\"http://www.phpgedview.net\" target=\"_blank\">PhpGedView</a>, programu stworzonego dzięki wybitnym umiejętnościom programistycznym Johna Finlay'a i jego zespołu tworzącego PGV - wspaniały darmowy (open source) system genealogiczny.";
 
 $faqlist["FAQ_015_head"] = "CO WYRÓŻNIA PhpGedView NA TLE INNYCH DRZEW TEKSTOWYCH I DYNAMICZNYCH?";
 $faqlist["FAQ_015_body"] = "Tekstowe i dynamiczne drzewa pokazują drzewo genealogiczne w różny sposób, jednak zwykle nie można ich konfigurować, modyfikować lub dostosowywać do własnych potrzeb. Tylko administrator strony może dokonywać aktualizacji. PhpGedView jest drzewem interaktywnym. Każdy członek rodziny w drzewie może aktualizować, dodawać i modyfikować bliskie mu gałęzie drzewa (wymagana jest uprzednia rejestracja).";
@@ -50,7 +50,7 @@ $faqlist["FAQ_020_body3"] = "<ol><li>Nowi użytkownicy powinni być krewnymi lub
 $faqlist["FAQ_020_body4"] = "Nowe konto musi zostać zatwierdzone przez administratora strony. Zwykle zajmuje to od kilku minut do 24 godzin.";
 
 $faqlist["FAQ_022_head"] = "DLACZEGO MAM SIĘ REJESTROWAĆ?";
-$faqlist["FAQ_022_body"] = "Tylko zarejestrowani użytkownicy widzą imiona i nazwiska osób żyjących. Jeśli nie jesteś zarejestrowany(a), zobaczysz tylko napis \"Prywatne\" zamiast ich danych.";
+$faqlist["FAQ_022_body"] = "Tylko zarejestrowani użytkownicy widzą imiona i nazwiska osób żyjących. Dla osób niezarejestrowanych, wyświetlony zostanie tylko napis \"Prywatne\" zamiast tych danych.";
 
 $faqlist["FAQ_025_head"] = "JAK DŁUGO ZAJMUJE ZATWIERDZENIE REJESTRACJI?";
 $faqlist["FAQ_025_body"] = "Nowe konto musi zostać zatwierdzone przez administratora strony. Zwykle zajmuje to od kilku minut do 24 godzin.";

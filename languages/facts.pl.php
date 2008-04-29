@@ -23,9 +23,10 @@
  * @author Michael Paluchowski, http://genealogy.nethut.pl
  * @author Tymoteusz Motylewski www.motylewscy.com
  * @author Katarzyna Adamska <adamska_k AT wp DOT pl>
+ * @author �ukasz Wile�ski
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id$
+ * @version $Id:
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -33,26 +34,26 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-// -- Tabela fakt�w GedCom
+// -- Tabela faktów GedCom
 $factarray["ABBR"] 	= "Skrót";
 $factarray["ADDR"] 	= "Adres";
 $factarray["ADR1"] 	= "Adres 1";
 $factarray["ADR2"] 	= "Adres 2";
 $factarray["ADOP"] 	= "Adopcja";
 $factarray["AFN"] 	= "Numer pliku genealogicznego (AFN)";
-$factarray["AGE"] 	= "Wiek";
+$factarray["AGE"] 	= "W wieku";
 $factarray["AGNC"] 	= "Agencja";
 $factarray["ALIA"] 	= "Znany(a) także jako";
 $factarray["ANCE"] 	= "Przodkowie";
 $factarray["ANCI"] 	= "Udział przodków";
 $factarray["ANUL"] 	= "Unieważnienie";
-$factarray["ASSO"] 	= "Połączenie";
-$factarray["AUTH"] 	= "Autor(ka)";
+$factarray["ASSO"] 	= "Powiązanie";
+$factarray["AUTH"] 	= "Autor";
 $factarray["BAPL"] 	= "Chrzest mormoński";
 $factarray["BAPM"] 	= "Chrzest";
 $factarray["BARM"] 	= "Bar micwa";
 $factarray["BASM"] 	= "Bas micwa";
-$factarray["BIRT"] 	= "Urodzenie";
+$factarray["BIRT"] 	= "Urodziny";
 $factarray["BLES"] 	= "Błogosławieństwo";
 $factarray["BLOB"] 	= "Obiekt binarny";
 $factarray["BURI"] 	= "Pogrzeb";
@@ -96,7 +97,7 @@ $factarray["FILE"] 	= "Plik zewnętrzny";
 $factarray["FORM"] 	= "Format";
 $factarray["GIVN"] 	= "Imiona";
 $factarray["GRAD"] 	= "Ukończenie szkoły";
-$factarray["HUSB"]  	= "Mąż";
+$factarray["HUSB"]  = "Mąż";
 $factarray["IDNO"] 	= "Numer identyfikacyjny";
 $factarray["IMMI"] 	= "Imigracja";
 $factarray["LEGA"] 	= "Legatariusz / Zapisobiorca";
@@ -106,7 +107,7 @@ $factarray["MARL"] 	= "Akt ślubu";
 $factarray["MARR"] 	= "Ślub";
 $factarray["MARS"] 	= "Ugoda małżeńska";
 $factarray["MEDI"] 	= "Typ multimediów";
-$factarray["NAME"] 	= "Imię i nazwisko";
+$factarray["NAME"] 	= "Nazwisko i imię";
 $factarray["NATI"] 	= "Narodowość";
 $factarray["NATU"] 	= "Naturalizacja";
 $factarray["NCHI"] 	= "Liczba dzieci";
@@ -179,7 +180,10 @@ $factarray["FAMC:HUSB:GIVN"] = "Imię ojca";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Miejsce urodzenia małżonka";
 $factarray["FAMC:WIFE:GIVN"] = "Imię matki";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Imię dziadka stryjecznego";
-$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Imię babki ciotecznej";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Imię babci ciotecznej";
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Imię dziadka wujecznego";
+$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Imię babci stryjecznej";
+$factarray["FAMS:CHIL:BIRT:PLAC"] = "Miejsce urodzin dziecka";
 $factarray["BIRT:PLAC"] = "Miejsce urodzenia";
 $factarray["DEAT:PLAC"] = "Miejsce śmierci";
 $factarray["CHR:PLAC"] = "Miejsce chrztu";
@@ -189,10 +193,10 @@ $factarray["MARR:PLAC"] = "Miejsce ślubu";
 $factarray["_THUM"] 	= "Czy użyć tego zdjęcia do miniaturki?";
 
 // Fakty specyficzne dla eksportu GedCom z programu Family Tree Maker
-$factarray["_MDCL"] 	= "Medyczny";
+$factarray["_MDCL"] 	= "Służba medyczna";
 $factarray["_DEG"] 	= "Stopień";
 $factarray["_MILT"] 	= "Służba wojskowa";
-$factarray["_SEPR"] 	= "W separacji";
+$factarray["_SEPR"] 	= "Separacja";
 $factarray["_DETS"] 	= "Śmierć jednego z małżonków";
 $factarray["CITN"] 	= "Obywatelstwo";
 $factarray["_FA1"]	= "Fakt 1";
@@ -213,7 +217,7 @@ $factarray["_FREL"]	= "Związek z ojcem";
 $factarray["_MSTAT"]	= "Status na początku małżeństwa";
 $factarray["_MEND"]	= "Status na końcu małżeństwa";
 
-// Fakty zwi�zane z GedCom 5.5.1 
+// Fakty związane z GedCom 5.5.1 
 $factarray["FAX"] 	= "Fax";
 $factarray["FACT"] 	= "Fakt";
 $factarray["WWW"] 	= "Strona WWW";
@@ -253,47 +257,56 @@ $factarray["_INTE"]	= "Pochowany(a)";
 $factarray["_MARI"]	= "Zapowiedzi";
 $factarray["_MBON"]	= "Intercyza";
 $factarray["_MEDC"]	= "Stan zdrowia";
-$factarray["_MILI"]	= "Wojskowe";
+$factarray["_MILI"]	= "Służba wojskowa";
 $factarray["_NMR"]	= "Nieżonaty/niezamężna";
 $factarray["_NLIV"]	= "Nie żyje";
 $factarray["_NMAR"]	= "Nigdy nie żonaty/zamężna";
 $factarray["_PRMN"]	= "Stały numer";
 $factarray["_WEIG"]	= "Waga";
-$factarray["_YART"]	= "Yartzeit";
+$factarray["_YART"]	= "Nadchodzące wydarzenie";
 $factarray["_MARNM"]	= "Po ślubie";
 $factarray["_MARNM_SURN"] = "Nazwisko po ślubie";
 $factarray["_STAT"]	= "Stan cywilny";
 $factarray["MARR_RELIGIOUS"] 	= "Ślub kościelny";
 $factarray["MARR_PARTNERS"] 	= "Zarejestrowane partnerstwo";
 $factarray["MARR_UNKNOWN"] 	= "Małżeństwo nieznanego typu";
-$factarray["_DEAT_GPAR"] 	= "Śmierć babki/dziadka";
-$factarray["_BIRT_FSIB"] = "Urodzenie brata/siostry ojca";
+$factarray["_DEAT_GPAR"] 	= "Śmierć babci/dziadka";
+$factarray["_DEAT_GGPA"] = "Śmierć pradziadka/prababci";
+$factarray["_BIRT_FSIB"] = "Narodziny brata/siostry ojca";
 $factarray["_MARR_FSIB"] = "Ślub brata/siostry ojca";
 $factarray["_DEAT_FSIB"] = "Śmierć brata/siostry ojca";
-$factarray["_BIRT_MSIB"] = "Urodzenie brata/siostry matki";
+$factarray["_BIRT_MSIB"] = "Narodziny brata/siostry matki";
 $factarray["_MARR_MSIB"] = "Ślub brata/siostry matki";
 $factarray["_DEAT_MSIB"] = "Śmierć brata/siostry matki";
-$factarray["_BIRT_COUS"] = "Urodzenie pierwszego kuzyna/kuzynki";
+$factarray["_BIRT_COUS"] = "Narodziny pierwszego kuzyna/kuzynki";
 $factarray["_MARR_COUS"] = "Ślub pierwszego kuzyna/kuzynki";
 $factarray["_DEAT_COUS"] = "Śmierć pierwszego kuzyna/kuzynki";
+$factarray["_FAMC_EMIG"] = "Emigracja rodziców";
+$factarray["_FAMC_RESI"] = "Miejsce zamieszkania rodziców";
 $factarray["_HNM"] 		= "Nazwisko hebrajskie";
 $factarray["_DEAT_SPOU"] 	= "Śmierć małżonka";
-$factarray["_BIRT_SIBL"] 	= "Urodzenie brata/siostry";
+$factarray["_BIRT_SIBL"] 	= "Narodziny brata/siostry";
 $factarray["_MARR_SIBL"] = "Ślub brata/siostry";
 $factarray["_DEAT_SIBL"] = "Śmierć brata/siostry";
-$factarray["_BIRT_HSIB"] = "Urodzenie brata przyrodniego/siostry przyrodniej";
+$factarray["_BIRT_HSIB"] = "Narodziny brata przyrodniego/siostry przyrodniej";
 $factarray["_MARR_HSIB"] = "Ślub brata przyrodniego/siostry przyrodniej";
 $factarray["_DEAT_HSIB"] = "Śmierć brata przyrodniego/siostry przyrodniej";
+$factarray["_BIRT_NEPH"] = "Narodziny siostrzeńca/bratanka lub siostrzenicy/bratanicy";
+$factarray["_MARR_NEPH"] = "Ślub siostrzeńca/bratanka lub siostrzenicy/bratanicy";
+$factarray["_DEAT_NEPH"] = "Śmierć siostrzeńca/bratanka lub siostrzenicy/bratanicy";
 $factarray["_DEAT_MOTH"] 	= "Śmierć matki";
 $factarray["_MARR_MOTH"] 	= "Ślub matki";
 $factarray["_DEAT_FATH"] 	= "Śmierć ojca";
 $factarray["_MARR_FATH"] 	= "Ślub ojca";
 $factarray["_DEAT_GCHI"] 	= "Śmierć wnuka/wnuczki";
+$factarray["_BIRT_GGCH"] = "Urodziny prawnuka";
+$factarray["_MARR_GGCH"] = "Ślub prawnuka";
+$factarray["_DEAT_GGCH"] = "Śmierć prawnuka";
 $factarray["_MARR_GCHI"] 	= "Ślub wnuka/wnuczki";
 $factarray["_BIRT_GCHI"] 	= "Narodziny wnuka/wnuczki";
 $factarray["_DEAT_CHIL"] 	= "Śmierć dziecka";
 $factarray["_MARR_CHIL"] 	= "Ślub dziecka";
-$factarray["_BIRT_CHIL"] 	= "Urodzenie dziecka";
+$factarray["_BIRT_CHIL"] 	= "Narodziny dziecka";
 $factarray["MARR_CIVIL"] 	= "Ślub cywilny";
 $factarray["COMM"]		= "Komentarz";
 

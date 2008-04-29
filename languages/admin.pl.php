@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,10 @@
  * @author Michael Paluchowski, http://genealogy.nethut.pl
  * @author Tymoteusz Motylewski www.motylewscy.com
  * @author Katarzyna Adamska <adamska_k AT wp DOT pl>
+ * @author Łukasz Wileński
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id$
+ * @version $Id:
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -129,6 +130,7 @@ $pgv_lang["create_user"]		= "Utwórz użytkownika";
 $pgv_lang["current_users"]						= "Lista użytkowników";
 $pgv_lang["daily"]								= "Codziennie";
 $pgv_lang["dataset_exists"]			= "Plik GEDCOM o tej nazwie został już zaimportowany do bazy danych.";
+$pgv_lang["unsync_warning"] 					= "Ten plik GEDCOM <em>nie</em> jest zsynchronizowany z bazą danych. Może nie zawierać ostatnich zmian. Powinieneś wgrać jeszcze raz.";
 $pgv_lang["date_registered"]					= "Data rejestracji";
 $pgv_lang["day_before_month"]		= "Dzień przed miesiącem (DD MM RRRR)";
 $pgv_lang["DEFAULT_GEDCOM"]						= "Domyślny plik GEDCOM";
@@ -138,7 +140,6 @@ $pgv_lang["del_proceed"]						= "Dalej";
 $pgv_lang["del_unvera"]							= "Użytkownik nie został zatwierdzony przez administratora.";
 $pgv_lang["del_unveru"]							= "Użytkownik nie potwierdził zgłoszenia w ciągu 7 dni.";
 $pgv_lang["do_not_change"]		= "Nie zmieniaj";
-$pgv_lang["download_file"]						= "Pobierz plik";
 $pgv_lang["download_gedcom"]			= "Pobierz plik GEDCOM";
 $pgv_lang["download_here"]						= "Kliknij tutaj aby pobrać plik.";
 $pgv_lang["download_note"]		= "Uwaga: Przetworzenie dużych plików  GEDCOM przed pobraniem może zająć dużo czasu. Jeśli połączenie wygaśnie zanim pobieranie zostanie zakończone, możesz nie zakończyć pobierania poprawnie.<br /><br />Aby upewnić się, że pobieranie zakończyło się pomyślnie, sprawdź czy jego ostatnia linia to <b>0&nbsp;TRLR</b>. Pliki GEDCOM to pliki tekstowe; możesz użyć dowolnego edytora tekstu do przejrzenia pliku, ale <u>nie</u> zapisuj pobranego pliku GEDCOM po tym, jak go przejrzysz.<br /><br />Przeważnie pobieranie pliku GEDCOM powinno zająć tyle samo czasu, co jego importowanie.";
@@ -167,6 +168,7 @@ $pgv_lang["gedcom_not_imported"]				= "Ten plik GEDCOM nie został jeszcze zaimp
 $pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"]	= "Zmień konfigurację manipulacji obrazami";
+$pgv_lang["autoContinue"]						= "Kontynuuj automatycznie";
 $pgv_lang["import_complete"]			= "Import zakończony";
 $pgv_lang["import_marr_names"]		= "Importuj nazwiska po ślubie";
 $pgv_lang["import_options"]		= "Opcje importu";
@@ -214,7 +216,6 @@ $pgv_lang["mysqli"]								= "MySQL 4.1+ i PHP 5";
 $pgv_lang["never"]								= "nigdy";
 $pgv_lang["no_logs"]							= "Wyłącz logowanie";
 $pgv_lang["no_messaging"]						= "Brak kontaktu";
-$pgv_lang["none"]					= "brak";
 $pgv_lang["oci8"]								= "Oracle 7+";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;wizyt na stronie w ciągu&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Sprawdzanie poprawności pliku GEDCOM...";
@@ -347,4 +348,10 @@ $pgv_lang["date_time"]				= "Data i godzina";
 $pgv_lang["log_message"]			= "Wpis loga";
 $pgv_lang["searchtype"]				= "Typ wyszukiwania";
 $pgv_lang["query"]					= "Zapytanie";
+$pgv_lang["associated_files"]		= "Powiązane pliki:";
+$pgv_lang["remove_all_files"]		= "Usuń wszystkie niepotrzebne pliki";
+$pgv_lang["warn_file_delete"]		= "Ten plik zawiera ważne informcje takie jak ustawienia języka lub zmiany danych jeszcze nie zatwierdzone. Czy jesteś pewien by go usunąć?";
+$pgv_lang["deleted_files"]          = "Usunięte pliki:";
+$pgv_lang["index_dir_cleanup_inst"]	= "Aby usunąc plik lub podkatalog z katalogu Index przesuń go do kosza lub zaznacz. Kliknij przycisk Usuń aby trwale usunąć wybrane pliki.<br /><br />Pliki zaznaczone <img src=\"./images/RESN_confidential.gif\" /> są wymaganymi do prawidłowego działania i nie mogą być usunięte.<br />Pliki zaznaczone <img src=\"./images/RESN_locked.gif\" /> zawierają ważne ustawienia oraz zmiany nie zatwierdzone jeszcze przez administratora. Bez absolutnej pewności nie usuwaj ich.<br /><br />";
+$pgv_lang["index_dir_cleanup"]		= "Wyczyść katalog Index";
 ?>
