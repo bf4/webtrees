@@ -25,7 +25,7 @@
  * @subpackage GoogleMap
  * @see config.php
  * @version $Id: editconfig.php,v$
- * $Id: editconfig.php 2900 2008-04-24 13:36:11Z kosherjava
+ * $Id: editconfig.php 2698 2008-04-23 21:38:56Z wooc$
  */
 
 //-- security check, only allow access from module.php
@@ -92,6 +92,7 @@ print_header($pgv_lang["configure_googlemap"]);
 print "<span class=\"subheaders\">".$pgv_lang["configure_googlemap"]."</span>";
 
 if (!userIsAdmin(getUserName())) {
+//if (!PGV_USER_IS_ADMIN) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
     print "</td></tr></table>\n";
@@ -124,6 +125,7 @@ if ($action=="update" && !isset($security_user)) {
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_MARKER\s*=\s*".*";/', "\$GOOGLEMAP_PH_MARKER = \"".$_POST["NEW_GOOGLEMAP_PH_MARKER"]."\";", $configtext);
 	$configtext = preg_replace('/\$GM_DISP_SHORT_PLACE\s*=\s*".*";/', "\$GM_DISP_SHORT_PLACE = \"".$_POST["NEW_GM_DISP_SHORT_PLACE"]."\";", $configtext);
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_WHEEL\s*=\s*".*";/', "\$GOOGLEMAP_PH_WHEEL = \"".$_POST["NEW_GOOGLEMAP_PH_WHEEL"]."\";", $configtext);
+	$configtext = preg_replace('/\$GM_DISP_COUNT\s*=\s*".*";/', "\$GM_DISP_COUNT = \"".$_POST["NEW_GM_DISP_COUNT"]."\";", $configtext);
 
     for($i = 1; $i <= 9; $i++) {
         $configtext = preg_replace('/\$GM_PREFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_PREFIX['.$i.'] = "'.$_POST["NEW_NAME_PREFIX_".$i].'";', $configtext);
@@ -283,6 +285,14 @@ $i = 0;
         <td class="optionbox"><select name="NEW_GM_DISP_SHORT_PLACE" tabindex="<?php $i++; print $i?>;">
                 <option value="false" <?php if ($GM_DISP_SHORT_PLACE=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
                 <option value="true" <?php if ($GM_DISP_SHORT_PLACE=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+            </select>
+		</td>
+    </tr>
+	<tr>
+		<td class="descriptionbox"><?php print_help_link("GM_DISP_COUNT_help", "qm", "GM_DISP_COUNT"); print $pgv_lang["gm_ph_count"];?></td>
+        <td class="optionbox"><select name="NEW_GM_DISP_COUNT" tabindex="<?php $i++; print $i?>;">
+                <option value="false" <?php if ($GM_DISP_COUNT=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+                <option value="true" <?php if ($GM_DISP_COUNT=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
             </select>
 		</td>
     </tr>
