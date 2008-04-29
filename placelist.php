@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Lists
- * @version $Id: 1234 placelist.php 2008-04-20 18:46:09Z wooc$
+ * @version $Id$
  */
 
 require("config.php");
