@@ -23,10 +23,10 @@
  * @author Michael Paluchowski, http://genealogy.nethut.pl
  * @author Tymoteusz Motylewski www.motylewscy.com
  * @author Katarzyna Adamska <adamska_k AT wp DOT pl>
- * @author Łukasz Wileński
+ * @author Łukasz Wileński <wooc@users.sourceforge.net>
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id:
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {

@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@
  * @author Michael Paluchowski, http://genealogy.nethut.pl
  * @author Tymoteusz Motylewski www.motylewscy.com
  * @author Katarzyna Adamska <adamska_k AT wp DOT pl>
- * @author £ukasz WileÒski
+ * @author ≈Åukasz Wile≈Ñski <wooc@users.sourceforge.net>
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id:
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
