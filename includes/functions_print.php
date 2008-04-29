@@ -1016,8 +1016,7 @@ function print_lang_form($option=0) {
 			$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
 			foreach ($vars as $var) {
 				$parts = preg_split("/=/", $var);
-//				print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
-				print "\n\t\t<input type=\"hidden\" name=\"".htmlentities(urldecode($parts[0]))."\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
+				print "\n\t\t<input type=\"hidden\" name=\"".$parts[0]."\" value=\"".$parts[1]."\" />";
 			}
 			print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
 			print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
