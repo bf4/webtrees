@@ -190,9 +190,9 @@ function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $
 	if (($place2['lati'] == NULL) || ($place2['long'] == NULL) || (($place2['lati'] == "0") && ($place2['long'] == "0"))) {
 		echo "var point = new GLatLng(0,0);\n";
 		if ($lastlevel)
-			echo "var marker = createMarker(point, \"<div class='iwstyle'><a href='?level=".$level.$linklevels."'>";
+			echo "var marker = createMarker(point, \"<a href='?level=".$level.$linklevels."'>";
 		else {
-			echo "var marker = createMarker(point, \"<div class='iwstyle'><a href='?level=".($level+1).$linklevels."&amp;parent[{$level}]=";
+			echo "var marker = createMarker(point, \"<a href='?level=".($level+1).$linklevels."&amp;parent[{$level}]=";
 			if ($place2["place"] == "Unknown") echo "'>";
 			else echo urlencode($place2["place"])."'>";
 		}
@@ -219,12 +219,12 @@ function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady($place2["place"]).$placelevels;
 				else echo PrintReady($place2["place"]);
 		}
-		echo "<br /></a><br />";
+		echo "</a><br />";
 		if ($GM_DISP_COUNT != "false") print_how_many_people($placename);
 		echo "<br /><br />".$pgv_lang["gm_no_coord"];
 		if (userIsAdmin(getUserName())) 
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=".$levelm."&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
-		echo "</div>\");\n";
+		echo "\");\n";
 	}
 	else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
@@ -272,7 +272,7 @@ function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady($place2["place"]).$placelevels;
 				else echo PrintReady($place2["place"]);
 		}
-		echo "<br /></a><br />";
+		echo "</a><br />";
 		if ($GM_DISP_COUNT != "false") print_how_many_people($placename);
 		if ($GOOGLEMAP_COORD == "false"){
 			echo "</div>\", icon_type);\n";
@@ -394,7 +394,7 @@ function map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelev
 	if ($numfound>1)
 		echo "place_map.setZoom(place_map.getBoundsZoomLevel(bounds));\n";
 	?>
-	GEvent.addListener(place_map,"infowindowclose", function());
+	GEvent.addListener(place_map,"infowindowclose", function() {});
 	} else {
       alert("Sorry, the Google Maps API is not compatible with this browser");
 	}
@@ -403,7 +403,7 @@ function map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelev
     // http://www.commchurch.freeserve.co.uk/   
     // http://econym.googlepages.com/index.htm
 	//]]>
-	//version 0.9.5
+	//version 0.9.6
 	</script>
 	<?php
 }
