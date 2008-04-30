@@ -130,8 +130,8 @@ class LifespanControllerRoot extends BaseController {
 		
 
 		//--new pid
-		if (isset ($_REQUEST['newpid'])) {
-			$newpid = clean_input($_REQUEST['newpid']);
+		$newpid=safe_GET('newpid', PGV_REGEX_XREF);
+		if ($newpid) {
 			$person = Person::getInstance($newpid);
 			if (is_null($person) && $GEDCOM_ID_PREFIX) {
 				//-- allow the user to enter the id without the "I" prefix
@@ -142,125 +142,127 @@ class LifespanControllerRoot extends BaseController {
 			else $newpid = $person->getXref();
 		}
 		
-		if (isset($_REQUEST['clear'])) unset($_SESSION['timeline_pids']);
-		else {
-		if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
-			if (!empty ($newpid))
-				$this->pids[] = $newpid;
-		
-		//-- pids array
-		if (isset ($_REQUEST['pids'])) {
-			$this->pids = $_REQUEST['pids'];
-			if (!empty ($newpid))
-				$this->pids[] = $newpid;
-		}
-
-		//-- gets the immediate family for the individual being added if the include immediate family checkbox is checked.
-		if(isset ($_REQUEST['addFamily'])){
-			if (isset($newpid)) $this->addFamily($newpid);
-		}
-		
-		$remove = "";
-		if (!empty ($_REQUEST['remove']))
-			$remove = $_REQUEST['remove'];
-		
-		//-- always start with someone on the chart
-		if (count($this->pids)==0) {
-			$this->pids[] = $this->addFamily(check_rootid(""));
-		}
-		
-		//-- limit to a certain place
-		if (!empty($_REQUEST['place'])) {
-			$place_pids = get_place_positions($_REQUEST['place']);
-			if (count($place_pids)>0) {
-				$this->pids = $place_pids;
-			}
-		}
-		
-		//-- store the people in the session	
-		$_SESSION['timeline_pids'] = $this->pids;
-		
-		if (empty ($_REQUEST['beginYear']) || empty ($_REQUEST['endYear'])) {
-		//-- cleanup user input
-		$this->pids = array_unique($this->pids);  //removes duplicates
-			foreach ($this->pids as $key => $value) {
-				if ($value != $remove) {
-					$value = clean_input($value);
-					$this->pids[$key] = $value;
-					$person = Person::getInstance($value);
-							
-					if ($person) {
-						$bdate = $person->getEstimatedBirthDate();
-						$ddate = $person->getEstimatedDeathDate();
-							
-						//--Checks to see if the details of that person can be viewed
-						if ($bdate->isOK() && $ddate->isOK() && $person->canDisplayDetails()) {
-							$this->people[] = $person;
-						}
-					}
-				}
-			}
-		}
-		
-
-		//--Finds if the begin year and end year textboxes are not empty
-		else {
-			//-- reset the people array when doing a year range search
-			$this->people = array();
-			//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
-			//the time line
-
-			//Variables to restrict the person boxes to the year searched.
-			//--Searches for individuals who had an even between the year begin and end years
-			$indis = $this->search_indis_year_range($_REQUEST["beginYear"], $_REQUEST["endYear"]);
-			//--Populates an array of people that had an event within those years
-					
-			foreach ($indis as $pid => $indi) {
-				if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
-					$person = Person::getInstance($pid);
-					if ($person) {
-						$bdate = $person->getEstimatedBirthDate();
-						$ddate = $person->getEstimatedDeathDate();
-						//--Checks to see if the details of that person can be viewed
-						if ($bdate->isOK() && $ddate->isOK() && $person->canDisplayDetails()) {
-							$this->people[] = $person;
-						}
-					}
-				}
-			}
+		if (safe_GET('clear', '1')=='1') {
 			unset($_SESSION['timeline_pids']);
-		}
-		
-		//--Sort the arrar in order of being year
-		uasort($this->people, "compare_people");
-			//		print "after sort";
-			//		print_execution_stats();
-		//If there is people in the array posted back this if occurs
-		if (isset ($this->people[0])) {
-			//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
-			$bdate = $this->people[0]->getEstimatedBirthDate();
-			$ddate = $this->people[0]->getEstimatedDeathDate();
-			$this->timelineMinYear = $bdate->gregorianYear();
-			$this->timelineMaxYear = $ddate->gregorianYear();
-			foreach ($this->people as $key => $value) {
-				$bdate = $value->getEstimatedBirthDate();
-				$ddate = $value->getEstimatedDeathDate();
-				if ($this->timelineMaxYear < $ddate->gregorianYear())
-					$this->timelineMaxYear = $ddate->gregorianYear();
-				if ($this->timelineMinYear > $bdate->gregorianYear())
-					$this->timelineMinYear = $bdate->gregorianYear();
+		} else {
+			if (isset($_SESSION['timeline_pids']))
+				$this->pids = $_SESSION['timeline_pids'];
+
+			if (!empty ($newpid))
+				$this->pids[] = $newpid;
+			
+			//-- pids array
+			$pids=safe_GET('pids', PGV_REGEX_XREF);
+			if ($pids) {
+				$this->pids = $pids;
+				if (!empty ($newpid))
+					$this->pids[] = $newpid;
+			}
+	
+			//-- gets the immediate family for the individual being added if the include immediate family checkbox is checked.
+			if(isset ($_REQUEST['addFamily'])){
+				if (isset($newpid)) $this->addFamily($newpid);
 			}
 			
-			if($this->timelineMaxYear > $this->currentYear){
-				$this->timelineMaxYear = $this->currentYear;	
+			$remove = "";
+			if (!empty ($_REQUEST['remove']))
+				$remove = $_REQUEST['remove'];
+			
+			//-- always start with someone on the chart
+			if (count($this->pids)==0) {
+				$this->pids[] = $this->addFamily(check_rootid(""));
 			}
-
-		} 
-		else {
-			// Sets the default timeline length
-			$this->timelineMinYear = date("Y") - 101;
-			$this->timelineMaxYear = date("Y");
-		}
+			
+			//-- limit to a certain place
+			if (!empty($_REQUEST['place'])) {
+				$place_pids = get_place_positions($_REQUEST['place']);
+				if (count($place_pids)>0) {
+					$this->pids = $place_pids;
+				}
+			}
+			
+			//-- store the people in the session	
+			$_SESSION['timeline_pids'] = $this->pids;
+			
+			if (empty ($_REQUEST['beginYear']) || empty ($_REQUEST['endYear'])) {
+			//-- cleanup user input
+			$this->pids = array_unique($this->pids);  //removes duplicates
+				foreach ($this->pids as $key => $value) {
+					if ($value != $remove) {
+						$value = clean_input($value);
+						$this->pids[$key] = $value;
+						$person = Person::getInstance($value);
+								
+						if ($person) {
+							$bdate = $person->getEstimatedBirthDate();
+							$ddate = $person->getEstimatedDeathDate();
+								
+							//--Checks to see if the details of that person can be viewed
+							if ($bdate->isOK() && $person->canDisplayDetails()) {
+								$this->people[] = $person;
+							}
+						}
+					}
+				}
+			}
+			
+	
+			//--Finds if the begin year and end year textboxes are not empty
+			else {
+				//-- reset the people array when doing a year range search
+				$this->people = array();
+				//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
+				//the time line
+	
+				//Variables to restrict the person boxes to the year searched.
+				//--Searches for individuals who had an even between the year begin and end years
+				$indis = $this->search_indis_year_range($_REQUEST["beginYear"], $_REQUEST["endYear"]);
+				//--Populates an array of people that had an event within those years
+						
+				foreach ($indis as $pid => $indi) {
+					if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
+						$person = Person::getInstance($pid);
+						if ($person) {
+							$bdate = $person->getEstimatedBirthDate();
+							$ddate = $person->getEstimatedDeathDate();
+							//--Checks to see if the details of that person can be viewed
+							if ($bdate->isOK() && $person->canDisplayDetails()) {
+								$this->people[] = $person;
+							}
+						}
+					}
+				}
+				unset($_SESSION['timeline_pids']);
+			}
+			
+			//--Sort the arrar in order of being year
+			uasort($this->people, "compare_people");
+				//		print "after sort";
+				//		print_execution_stats();
+			//If there is people in the array posted back this if occurs
+			if (isset ($this->people[0])) {
+				//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
+				$bdate = $this->people[0]->getEstimatedBirthDate();
+				$ddate = $this->people[0]->getEstimatedDeathDate();
+				$this->timelineMinYear=$bdate->gregorianYear();
+				$this->timelineMaxYear=$ddate->gregorianYear() ? $ddate->gregorianYear() : date('Y');
+				foreach ($this->people as $key => $value) {
+					$bdate = $value->getEstimatedBirthDate();
+					$ddate = $value->getEstimatedDeathDate();
+					$this->timelineMinYear=min($this->timelineMinYear, $bdate->gregorianYear());
+					$this->timelineMaxYear=max($this->timelineMaxYear, $ddate->gregorianYear() ? $ddate->gregorianYear() : date('Y'));
+				}
+				
+				if($this->timelineMaxYear > $this->currentYear){
+					$this->timelineMaxYear = $this->currentYear;	
+				}
+	
+			} 
+			else {
+				// Sets the default timeline length
+				$this->timelineMinYear = date("Y") - 101;
+				$this->timelineMaxYear = date("Y");
+			}
 		}
 	}
 	
@@ -412,10 +414,7 @@ class LifespanControllerRoot extends BaseController {
 				$bdate=$value->getEstimatedBirthDate();
 				$ddate=$value->getEstimatedDeathDate();
 				$birthYear = $bdate->gregorianYear();
-				$deathYear = $ddate->gregorianYear();
-				if($deathYear > date("Y")){
-					$deathYear = date("Y");	
-				}
+				$deathYear = $ddate->gregorianYear() ? $ddate->gregorianYear() : date('Y');
 
 				$width = ($deathYear - $birthYear) * $this->zoomfactor;
 				$height = 2 * $this->zoomfactor;
@@ -593,7 +592,6 @@ class LifespanControllerRoot extends BaseController {
 			}
 		}
 	}
-
 }
 // -- end of class
 //-- load a user extended class if one exists

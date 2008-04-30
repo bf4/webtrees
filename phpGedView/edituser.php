@@ -44,33 +44,29 @@ if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {
 // Load language variables
 loadLangFile('pgv_confighelp, pgv_admin, pgv_editor');
 	
-// Extract form variables
-$form_action        =array_key_exists('form_action',         $_POST) ? $_POST['form_action'        ] : '';
-$form_username      =array_key_exists('form_username',       $_POST) ? $_POST['form_username'      ] : '';
-$form_pass1         =array_key_exists('form_pass1',          $_POST) ? $_POST['form_pass1'         ] : '';
-$form_pass2         =array_key_exists('form_pass2',          $_POST) ? $_POST['form_pass2'         ] : '';
-$form_firstname     =array_key_exists('form_firstname',      $_POST) ? $_POST['form_firstname'     ] : '';
-$form_lastname      =array_key_exists('form_lastname',       $_POST) ? $_POST['form_lastname'      ] : '';
-$form_email         =array_key_exists('form_email',          $_POST) ? $_POST['form_email'         ] : '';
-$form_theme         =array_key_exists('form_theme',          $_POST) ? $_POST['form_theme'         ] : '';
-$form_language      =array_key_exists('form_language',       $_POST) ? $_POST['form_language'      ] : '';
-$form_contact_method=array_key_exists('form_contact_method', $_POST) ? $_POST['form_contact_method'] : '';
-$form_rootid        =array_key_exists('form_rootid',         $_POST) ? $_POST['form_rootid'        ] : '';
-$form_default_tab   =array_key_exists('form_default_tab',    $_POST) ? $_POST['form_default_tab'   ] : '';
-$form_sync_gedcom   =array_key_exists('form_sync_gedcom',    $_POST) ? 'Y' : 'N';
-$form_visible_online=array_key_exists('form_visible_online', $_POST) ? 'Y' : 'N';
+// Valid values for form variables
+$ALL_ACTIONS=array('update');
+$ALL_CONTACT_METHODS=array('messaging', 'messaging2', 'messaging3', 'mailto', 'none');
+$ALL_DEFAULT_TABS=array(0=>'personal_facts', 1=>'notes', 2=>'ssourcess', 3=>'media', 4=>'relatives', -1=>'all', -2=>'lasttab');
+$ALL_THEMES_DIRS=array();
+foreach (get_theme_names() as $theme) {
+	$ALL_THEME_DIRS[]=$theme['dir'];
+}
 
-// Validate form variables
-$ALL_CONTACT_METHODS=array(
-	'messaging', 'messaging2', 'messaging3', 'mailto', 'none'
-);
-$ALL_DEFAULT_TABS=array(
-	0=>'personal_facts', 1=>'notes', 2=>'ssourcess', 3=>'media', 4=>'relatives', -1=>'all', -2=>'lasttab'
-);
-$form_theme         =$form_theme=='' || is_dir($form_theme)                 ? $form_theme          : $THEME_DIR;
-$form_contact_method=in_array($form_contact_method, $ALL_CONTACT_METHODS)   ? $form_contact_method : $CONTACT_METHOD;
-$form_default_tab   =array_key_exists($form_default_tab, $ALL_DEFAULT_TABS) ? $form_default_tab    : $GEDCOM_DEFAULT_TAB;
-$form_language      =array_key_exists($form_language, $pgv_language)        ? $form_language       : $LANGUAGE;
+// Extract form variables
+$form_action        =safe_POST('form_action'   );
+$form_username      =safe_POST('form_username' );
+$form_firstname     =safe_POST('form_firstname');
+$form_lastname      =safe_POST('form_lastname' );
+$form_pass1         =safe_POST('form_pass1',          PGV_REGEX_PASSWORD);
+$form_pass2         =safe_POST('form_pass2',          PGV_REGEX_PASSWORD);
+$form_email         =safe_POST('form_email',          PGV_REGEX_EMAIL,               'email@example.com');
+$form_rootid        =safe_POST('form_rootid',         PGV_REGEX_XREF,                PGV_USER_ROOT_ID   );
+$form_theme         =safe_POST('form_theme',          $ALL_THEME_DIRS,               $THEME_DIR         );
+$form_language      =safe_POST('form_language',       array_keys($pgv_language),     $LANGUAGE          );
+$form_contact_method=safe_POST('form_contact_method', $ALL_CONTACT_METHODS,          $CONTACT_METHOD    );
+$form_default_tab   =safe_POST('form_default_tab',    array_keys($ALL_DEFAULT_TABS), $GEDCOM_DEFAULT_TAB);
+$form_visible_online=safe_POST('form_visible_online', 'Y', 'N');
 
 // Respond to form action
 if ($form_action=='update') {
@@ -108,7 +104,6 @@ if ($form_action=='update') {
 			set_user_setting(PGV_USER_ID, 'language',      $form_language);
 			set_user_setting(PGV_USER_ID, 'contactmethod', $form_contact_method);
 			set_user_setting(PGV_USER_ID, 'visibleonline', $form_visible_online);
-			set_user_setting(PGV_USER_ID, 'sync_gedcom',   $form_sync_gedcom);
 			set_user_setting(PGV_USER_ID, 'defaulttab',    $form_default_tab);
 			set_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid', $form_rootid);
 

@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,6 +104,90 @@ function check_db($ignore_previous=false) {
 		$DBPASS = "";
 	}
 	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Extract, sanitise and validate FORM (POST) variables
+////////////////////////////////////////////////////////////////////////////////
+function safe_POST($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+	if (is_array($regex)) {
+		$regex='(?:'.join('|', $regex).')';
+	}
+	if (array_key_exists($var, $_POST)) {
+		// If the variable is an array, check all elements
+		if (is_array($_POST[$var])) {
+			foreach ($_POST[$var] as $tmp) {
+				if (!preg_match('~^'.$regex.'$~', $tmp)) {
+					return $default;
+				}
+			}
+			return $_POST[$var];
+		} else {
+			if (preg_match('~^'.$regex.'$~', $_POST[$var])) {
+				return $_POST[$var];
+			} else {
+				return $default;
+			}
+		}
+	} else {
+		return $default;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Extract, sanitise and validate URL (GET) variables
+////////////////////////////////////////////////////////////////////////////////
+function safe_GET($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+	if (is_array($regex)) {
+		$regex='(?:'.join('|', $regex).')';
+	}
+	if (array_key_exists($var, $_GET)) {
+		// If the variable is an array, check all elements
+		if (is_array($_GET[$var])) {
+			foreach ($_GET[$var] as $tmp) {
+				if (!preg_match('~^'.$regex.'$~', $tmp)) {
+					return $default;
+				}
+			}
+			return $_GET[$var];
+		} else {
+			if (preg_match('~^'.$regex.'$~', $_GET[$var])) {
+				return $_GET[$var];
+			} else {
+				return $default;
+			}
+		}
+	} else {
+		return $default;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Extract, sanitise and validate COOKIE variables
+////////////////////////////////////////////////////////////////////////////////
+function safe_COOKIE($var, $regex, $default=null) {
+	if (is_array($regex)) {
+		$regex='(?:'.join('|', $regex).')';
+	}
+	if (array_key_exists($var, $_COOKIE)) {
+		// If the variable is an array, check all elements
+		if (is_array($_COOKIE[$var])) {
+			foreach ($_COOKIE[$var] as $tmp) {
+				if (!preg_match('~^'.$regex.'$~', $tmp)) {
+					return $default;
+				}
+			}
+			return $_COOKIE[$var];
+		} else {
+			if (preg_match('~^'.$regex.'$~', $_COOKIE[$var])) {
+				return $_COOKIE[$var];
+			} else {
+				return $default;
+			}
+		}
+	} else {
+		return $default;
+	}
 }
 
 /**

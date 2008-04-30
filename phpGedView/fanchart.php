@@ -3,7 +3,7 @@
  * Displays a fan chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -417,13 +417,13 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	ImageDestroy($image);
 }
 
-// -- args
-if (isset($_REQUEST['fan_style'])) $fan_style = $_REQUEST['fan_style'];
-if (empty($fan_style)) $fan_style = 0;
-if ($fan_style==0) $fan_style = 3;
-if (empty($_REQUEST['PEDIGREE_GENERATIONS'])) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
-else $PEDIGREE_GENERATIONS = $_REQUEST['PEDIGREE_GENERATIONS'];
+// Extract form parameters
+$rootid   =safe_GET('rootid',    PGV_REGEX_XREF, PGV_USER_GEDCOM_ID);
+$fan_style=safe_GET('fan_style', '[234]', '3');
+$fan_width=safe_GET('fan_width',  PGV_REGEX_INTEGER, '100');
+$PEDIGREE_GENERATIONS=safe_GET('PEDIGREE_GENERATIONS',PGV_REGEX_INTEGER, $DEFAULT_PEDIGREE_GENERATIONS);
 
+// Validate form parameters
 if ($PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
 	$PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
 	$max_generation = true;
@@ -434,16 +434,9 @@ if ($PEDIGREE_GENERATIONS < $MIN_FANCHART_GENERATIONS) {
 	$PEDIGREE_GENERATIONS = $MIN_FANCHART_GENERATIONS;
 	$min_generation = true;
 }
-$OLD_PGENS = $PEDIGREE_GENERATIONS;
 
-$rootid = "";
-if (!empty($_REQUEST['rootid'])) $rootid = $_REQUEST['rootid'];
-$rootid = clean_input($rootid);
 $rootid = check_rootid($rootid);
 
-// -- size of the chart
-$fan_width = "100";
-if (!empty($_REQUEST['fan_width'])) $fan_width = $_REQUEST['fan_width'];
 $fan_width=max($fan_width, 50);
 $fan_width=min($fan_width, 300);
 
@@ -517,11 +510,10 @@ if ($view != "preview") {
 	print_help_link("PEDIGREE_GENERATIONS_help", "qm");
 	print $pgv_lang["generations"]."</td>";
 	print "<td class=\"optionbox\">";
-//	print "<input type=\"text\" name=\"PEDIGREE_GENERATIONS\" size=\"3\" value=\"$OLD_PGENS\" /> ";
 	print "<select name=\"PEDIGREE_GENERATIONS\">";
 	for ($i=$MIN_FANCHART_GENERATIONS; $i<=$MAX_PEDIGREE_GENERATIONS; $i++) {
 	print "<option value=\"".$i."\"" ;
-	if ($i == $OLD_PGENS) print "selected=\"selected\" ";
+	if ($i == $PEDIGREE_GENERATIONS) print "selected=\"selected\" ";
 		print ">".$i."</option>";
 	}
 	print "</select>";
