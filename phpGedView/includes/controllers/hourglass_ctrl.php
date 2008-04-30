@@ -91,7 +91,7 @@ class HourglassControllerRoot extends BaseController {
 	 */
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
-		global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION;
+		global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $show_full;
 
 		// Extract parameters from from
 		$this->pid        =safe_GET('pid',         PGV_REGEX_XREF);
@@ -104,6 +104,9 @@ class HourglassControllerRoot extends BaseController {
 		if (empty($this->pid)) {
 			$this->show_full=1;
 		}
+
+		// This is passed as a global.  A parameter would be better...
+		$show_full=$this->show_full;
 
 		// Validate parameters
 		$this->generations=min($this->generations, $MAX_DESCENDANCY_GENERATIONS);
