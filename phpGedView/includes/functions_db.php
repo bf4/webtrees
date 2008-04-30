@@ -2679,14 +2679,16 @@ function get_alpha_fams($letter) {
 		$surnames = array();
 		for ($i=0; $i<$ct; $i++) {
 			$famid = $match[$i][1];
-			$famrec = find_family_record($famid);
-			if ($famlist[$famid]["husb"]==$gid) {
-				$HUSB = $famlist[$famid]["husb"];
-				$WIFE = $famlist[$famid]["wife"];
+
+			$family=Family::getInstance($famid);
+			if ($family->getHusbId()==$gid) {
+				$HUSB=$family->getHusbId();
+				$WIFE=$family->getWifeId();
 			} else {
-				$HUSB = $famlist[$famid]["wife"];
-				$WIFE = $famlist[$famid]["husb"];
+				$HUSB=$family->getWifeId();
+				$WIFE=$family->getHusbId();
 			}
+
 			$hname="";
 			$surnames = array();
 			foreach ($indi["names"] as $indexval => $namearray) {
@@ -2741,7 +2743,7 @@ function get_alpha_fams($letter) {
 					}
 				}
 				$name = $hname ." + ". $wname;
-				if ($famlist[$famid]["wife"]==$gid)
+				if ($family->getWifeId()==$gid)
 					$name = $wname ." + ". $hname; // force husb first
 				$famlist[$famid]["name"] = $name;
 				if (!isset($famlist[$famid]["surnames"])||count($famlist[$famid]["surnames"])==0)
