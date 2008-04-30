@@ -62,18 +62,21 @@ class TimelineControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
+		global $GEDCOM_ID_PREFIX;
+
 		$this->baseyear = date("Y");
 		//-- new pid
-		if (isset($_REQUEST['newpid'])) {
-			$newpid = clean_input($_REQUEST['newpid']);
+		$newpid=safe_GET('newpid', PGV_REGEX_XREF);
+		if ($newpid) {
 			$indirec = find_person_record($newpid);
 			if (empty($indirec)) {
-				if (stristr($newpid, "I")===false) $newpid = "I".$newpid;
+				if (stristr($newpid, $GEDCOM_ID_PREFIX)===false) $newpid = "I".$newpid;
 			}
 		}
 		
-		if (isset($_REQUEST['clear'])) unset($_SESSION['timeline_pids']);
-		else {
+		if (safe_GET('clear', '1')=='1') {
+			unset($_SESSION['timeline_pids']);
+		} else {
 			if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
 			//-- pids array
 			if (isset($_REQUEST['pids'])){
@@ -87,8 +90,7 @@ class TimelineControllerRoot extends BaseController {
 		}
 		if (!empty($newpid) && !in_array($newpid, $this->pids)) $this->pids[] = $newpid;
 		if (count($this->pids)==0) $this->pids[] = check_rootid("");
-		$remove = "";
-		if (!empty($_REQUEST['remove'])) $remove = $_REQUEST['remove'];
+		$remove = safe_GET('remove', PGV_REGEX_XREF);
 		//-- cleanup user input
 		$newpids = array();
 		foreach($this->pids as $key=>$value) {

@@ -160,13 +160,11 @@ class LifespanControllerRoot extends BaseController {
 			}
 	
 			//-- gets the immediate family for the individual being added if the include immediate family checkbox is checked.
-			if(isset ($_REQUEST['addFamily'])){
+			if (safe_GET('addFamily', 'yes')=='yes'){
 				if (isset($newpid)) $this->addFamily($newpid);
 			}
 			
-			$remove = "";
-			if (!empty ($_REQUEST['remove']))
-				$remove = $_REQUEST['remove'];
+			$remove = safe_GET('remove', PGV_REGEX_XREF);
 			
 			//-- always start with someone on the chart
 			if (count($this->pids)==0) {
@@ -174,8 +172,9 @@ class LifespanControllerRoot extends BaseController {
 			}
 			
 			//-- limit to a certain place
-			if (!empty($_REQUEST['place'])) {
-				$place_pids = get_place_positions($_REQUEST['place']);
+			$searchplace=safe_GET('place');
+			if (!empty($searchplace)) {
+				$place_pids = get_place_positions($searchplace);
 				if (count($place_pids)>0) {
 					$this->pids = $place_pids;
 				}
@@ -184,7 +183,9 @@ class LifespanControllerRoot extends BaseController {
 			//-- store the people in the session	
 			$_SESSION['timeline_pids'] = $this->pids;
 			
-			if (empty ($_REQUEST['beginYear']) || empty ($_REQUEST['endYear'])) {
+			$beginYear  =safe_GET('beginYear', PGV_REGEX_INTEGER);
+			$endYear    =safe_GET('endYear',   PGV_REGEX_INTEGER);
+			if (empty($beginYear) || empty ($endYear)) {
 			//-- cleanup user input
 			$this->pids = array_unique($this->pids);  //removes duplicates
 				foreach ($this->pids as $key => $value) {
@@ -216,11 +217,11 @@ class LifespanControllerRoot extends BaseController {
 	
 				//Variables to restrict the person boxes to the year searched.
 				//--Searches for individuals who had an even between the year begin and end years
-				$indis = $this->search_indis_year_range($_REQUEST["beginYear"], $_REQUEST["endYear"]);
+				$indis = $this->search_indis_year_range($beginYear, $endYear);
 				//--Populates an array of people that had an event within those years
 						
 				foreach ($indis as $pid => $indi) {
-					if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
+					if (empty($searchplace) || in_array($pid, $this->pids)) {
 						$person = Person::getInstance($pid);
 						if ($person) {
 							$bdate = $person->getEstimatedBirthDate();
