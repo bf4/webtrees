@@ -3,7 +3,7 @@
  * Compact pedigree tree
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,23 +26,20 @@
 require("config.php");
 require_once("includes/functions_charts.php");
 
-// -- args
-$rootid = "";
-if (!empty($_REQUEST['rootid'])) $rootid = $_REQUEST['rootid'];
-$rootid = clean_input($rootid);
+// Extract form variables
+$rootid    =safe_GET('rootid' ,    PGV_REGEX_XREF, PGV_USER_GEDCOM_ID);
+$showids   =safe_GET('showids' ,   '1', '0');
+$showthumbs=safe_GET('showthumbs', '1', '0');
+
+// Validate form variables
 $rootid = check_rootid($rootid);
-$showids = 0;
-if (!empty($_REQUEST['showids'])) $showids = $_REQUEST['showids'];
-$showthumbs = 0;
-if (!empty($_REQUEST['showthumbs'])) $showthumbs = $_REQUEST['showthumbs'];
 
 $person = Person::getInstance($rootid);
 
 if ($person->canDisplayName()) {
 	$name = get_person_name($rootid);
 	$addname = get_add_person_name($rootid);
-}
-else {
+} else {
 	$name = $pgv_lang["private"];
 	$addname = "";
 }
@@ -101,10 +98,9 @@ if ($view != "preview") {
 		print $pgv_lang["SHOW_ID_NUMBERS"];
 		print "</td>\n";
 		print "<td class=\"optionbox\">\n";
-		print "<input name=\"showids\" type=\"checkbox\" value='".$showids."'";
+		print "<input name=\"showids\" type=\"checkbox\" value=\"1\"";
 		if ($showids) print " checked=\"checked\"";
-		print " onclick=\"document.people.showids.value='".(!$showids)."';\" />";
-		print "</td>\n</tr>\n";
+		print "></td>\n</tr>\n";
 	}
 
 	if ($SHOW_HIGHLIGHT_IMAGES) {
@@ -114,10 +110,9 @@ if ($view != "preview") {
 		print $pgv_lang["SHOW_HIGHLIGHT_IMAGES"];
 		print "</td>\n";
 		print "<td class=\"optionbox\">\n";
-		print "<input name=\"showthumbs\" type=\"checkbox\" value='".$showthumbs."'";
+		print "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
 		if ($showthumbs) print " checked=\"checked\"";
-		print " onclick=\"document.people.showthumbs.value='".(!$showthumbs)."';\" />";
-		print "</td>\n</tr>\n";
+		print "></td>\n</tr>\n";
 	}
 
 	print "</table>";
@@ -348,7 +343,7 @@ function print_td_person($n) {
 // ---------------------------------------------------------------------------------------------
 				$birth_date=$indi->getBirthDate();
 				$death_date=$indi->getDeathDate();
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".$name.' '.$birth_date->Display(false).' - '.$death_date->Display(false).'" ';
+				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".$name.' '.strip_tags(html_entity_decode(($birth_date->Display(false).' - '.$death_date->Display(false)))).'" ';
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}

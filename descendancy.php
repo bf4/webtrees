@@ -3,7 +3,7 @@
  * Parses gedcom file and displays a descendancy tree.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,9 +38,9 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 // ==========================================================================================
 
 ?>
-<table class="list_table <?php print $TEXT_DIRECTION?>"><tr><td width="<?php print $controller->cellwidth?>px" valign="top">
+<table class="list_table <?php print $TEXT_DIRECTION; ?>"><tr><td width="<?php print $controller->cellwidth; ?>px" valign="top">
 <h2><?php print $pgv_lang["descend_chart"].":<br />".PrintReady($controller->name)."</h2>";
-//print "\n\t<h2>".$pgv_lang["descend_chart"].":<br />".$controller->name."</h2>";?>
+//print "\n\t<h2>".$pgv_lang["descend_chart"].":<br />".$controller->name."</h2>"; ?>
 
 <script type="text/javascript">
 <!--
@@ -57,7 +57,7 @@ if ($view!="preview") {
 	$show_famlink = true;
 ?>
 	</td><td><form method="get" name="people" action="?">
-	<table class="<?php print "list_table".$TEXT_DIRECTION ?>">
+	<table class="<?php print "list_table".$TEXT_DIRECTION; ?>">
 	
 		<!-- NOTE: rootid -->
 	<tr><td class="descriptionbox">
@@ -66,7 +66,7 @@ if ($view!="preview") {
 	print $pgv_lang["root_person"]."&nbsp;</td>";
 	?>
 	<td class="optionbox vmiddle">
-	<input class="pedigree_form" type="text" id="pid" name="pid" size="3" value="<?php print $controller->pid ?>" />
+	<input class="pedigree_form" type="text" id="pid" name="pid" size="3" value="<?php print $controller->pid; ?>" />
 	<?php	print_findindi_link("pid",""); ?>
 	</td>
 
@@ -74,8 +74,8 @@ if ($view!="preview") {
 	<td class="descriptionbox">
 	<?php
 	print_help_link("box_width_help", "qm");
-	print $pgv_lang["box_width"] . "&nbsp;</td>";?>
-	<td class="optionbox vmiddle"><input type="text" size="3" name="box_width" value="<?php print $controller->box_width ?>" />
+	print $pgv_lang["box_width"] . "&nbsp;</td>"; ?>
+	<td class="optionbox vmiddle"><input type="text" size="3" name="box_width" value="<?php print $controller->box_width; ?>" />
 	<b>%</b>
 	</td>
 
@@ -83,7 +83,7 @@ if ($view!="preview") {
 	<td rowspan="2" class="descriptionbox">
 	<!-- //	print_help_link("chart_style_help", "qm"); -->
 	<?php
-	print $pgv_lang["displ_layout_conf"];?>
+	print $pgv_lang["displ_layout_conf"]; ?>
 	</td>
 	<td rowspan="2" class="optionbox vmiddle">
 
@@ -105,7 +105,7 @@ if ($view!="preview") {
 
 	<!-- // NOTE: submit -->
 	<td rowspan="2" class="topbottombar">
-	<input type="submit" value="<?php print $pgv_lang["view"] ?>" />
+	<input type="submit" value="<?php print $pgv_lang["view"]; ?>" />
 	</td></tr>
 
 	<!-- // NOTE: generations -->
@@ -128,18 +128,12 @@ if ($view!="preview") {
 	</td>
 	<!-- // NOTE: show full -->
 	<td class="descriptionbox">
-	<input type="hidden" name="show_full" value="<?php print $controller->show_full ?>" />
 	<?php print_help_link("show_full_help", "qm");
 	print $pgv_lang["show_details"];
 	?>
 	</td>
 	<td class="optionbox vmiddle">
-	<input type="checkbox" value="
-	<?php
-	if ($controller->show_full) print "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';";
-	else print "0\" onclick=\"document.people.show_full.value='1';";
-	?>"
-	/>
+	<input type="checkbox" name="show_full" value="1" <?php if ($controller->show_full) echo 'checked="checked"'; ?> />
 	</td></tr>
 
 	</table>

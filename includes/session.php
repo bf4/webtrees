@@ -34,6 +34,14 @@ $VERSION = "4.1.6";
 $VERSION_RELEASE = "";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
+// Regular expressions for validating user input, etc.
+define('PGV_REGEX_XREF',      '[A-Za-z0-9:-]+');
+define('PGV_REGEX_INTEGER',   '[0-9]+');
+define('PGV_REGEX_BYTES',     '[0-9]+[bBkKmMgG]?');
+define('PGV_REGEX_PASSWORD',  '.{6,}');
+define('PGV_REGEX_NOSCRIPT',  '[^\s<>"&%{};]+');
+define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
+
 function isAlphaNum($value) {
         return preg_match('/^[a-zA-Z0-9]+$/', $value);
     }

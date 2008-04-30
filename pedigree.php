@@ -6,7 +6,7 @@
  * with id = $rootid in the GEDCOM file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,8 +58,6 @@ if (!$controller->isPrintPreview()) {
 	if ($controller->min_generation) print "<span class=\"error\">".$pgv_lang["min_generation"]."</span>";
 	?>
 	<form name="people" method="get" action="pedigree.php">
-		<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
-		<input type="hidden" name="talloffset" value="<?php print $controller->talloffset; ?>" />
 		<table class="pedigree_table <?php print $TEXT_DIRECTION; ?>" width="225">
 			<tr>
 				<td colspan="2" class="topbottombar" style="text-align:center; ">
@@ -85,7 +83,7 @@ if (!$controller->isPrintPreview()) {
 					<?php
 						for ($i=3; $i<=$MAX_PEDIGREE_GENERATIONS; $i++) {
 							print "<option value=\"".$i."\"" ;
-							if ($i == $controller->OLD_PGENS) print "selected=\"selected\" ";
+							if ($i == $controller->PEDIGREE_GENERATIONS) print "selected=\"selected\" ";
 							print ">".$i."</option>";
 						}
 					?>
@@ -98,8 +96,8 @@ if (!$controller->isPrintPreview()) {
 					<?php print $pgv_lang["orientation"]; ?>
 				</td>
 				<td class="optionbox">
-					<input type="radio" name="talloffset" value="0" <?php if (!$controller->talloffset) print " checked=\"checked\" "; ?> onclick="document.people.talloffset.value='1';" /> <?php print $pgv_lang["portrait"]; ?>
-					<br /><input type="radio" name="talloffset" value="1" <?php if ($controller->talloffset) print "checked=\"checked\" "; ?> onclick="document.people.talloffset.value='0';" /><?php print $pgv_lang["landscape"]; ?>
+					<input type="radio" name="talloffset" value="0" <?php if (!$controller->talloffset) echo ' checked="checked"'; echo ' />',  $pgv_lang["portrait"]; ?>
+					<br /><input type="radio" name="talloffset" value="1" <?php if ($controller->talloffset) echo ' checked="checked"'; echo ' />', $pgv_lang["landscape"]; ?>
 					<br />
 				</td>
 			</tr>
@@ -109,7 +107,7 @@ if (!$controller->isPrintPreview()) {
 					<?php print $pgv_lang["show_details"]; ?>
 				</td>
 				<td class="optionbox">
-					<input type="checkbox" value="<?php if ($controller->show_full) print "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';"; else print "0\" onclick=\"document.people.show_full.value='1';"; ?>" />
+					<input type="checkbox" name="show_full" value="1" <?php echo $controller->show_full ? 'checked="checked"' : ''; ?>" />
 				</td>
 			</tr>
 			<tr>
@@ -199,7 +197,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 			if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) $did++;
 			print "\n\t\t\t\t</td><td valign=\"middle\">";
 			if ($view!="preview") {
-				print "<a href=\"pedigree.php?PEDIGREE_GENERATIONS=".$controller->OLD_PGENS."&amp;rootid=".$controller->treeid[$did]."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\" ";
+				print "<a href=\"pedigree.php?PEDIGREE_GENERATIONS=".$controller->PEDIGREE_GENERATIONS."&amp;rootid=".$controller->treeid[$did]."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\" ";
 				if ($TEXT_DIRECTION=="rtl") {
 					print "onmouseover=\"swap_image('arrow$i',0);\" onmouseout=\"swap_image('arrow$i',0);\">";
 					print "<img id=\"arrow$i\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" />";
@@ -255,7 +253,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 				if($controller->rootid!=$husb) $spid=$family->getHusband();
 				else $spid=$family->getWife();
 				if (!empty($spid)) {
-					print "\n\t\t\t\t<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->OLD_PGENS&amp;rootid=".$spid->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
+					print "\n\t\t\t\t<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->PEDIGREE_GENERATIONS&amp;rootid=".$spid->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
 					if ($spid->canDisplayName()) {
 						$name = $spid->getName();
 						$name = rtrim($name);
@@ -270,7 +268,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 			
 				$children = $family->getChildren();
 				foreach($children as $ind2=>$child) {
-					print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->OLD_PGENS&amp;rootid=".$child->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
+					print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->PEDIGREE_GENERATIONS&amp;rootid=".$child->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
 					if ($child->canDisplayName()) {
 						$name = $child->getName();
 						$name = rtrim($name);
@@ -291,7 +289,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 				if (count($children)>1) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
 				foreach($children as $ind2=>$child) {
 					if (!$controller->rootPerson->equals($child) && !is_null($child)) {
-						print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->OLD_PGENS&amp;rootid=".$child->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
+						print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->PEDIGREE_GENERATIONS&amp;rootid=".$child->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
 						if ($child->canDisplayName()) {
 							$name = $child->getName();
 							$name = rtrim($name);

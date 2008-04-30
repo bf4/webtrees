@@ -3,7 +3,7 @@
  * Controller for the Hourglass Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ class HourglassControllerRoot extends BaseController {
 	var $total_names = 0;
 	var $SEX_COUNT = 0;
 	var $sexarray = array();
-	var $show_full = 1;
+	var $show_full = 0;
 	var $show_spouse = 0;
 	var $generations;
 	var $dgenerations;
@@ -89,14 +89,29 @@ class HourglassControllerRoot extends BaseController {
 	/**
 	 * Initialization function
 	 */
-	function init($rootid='', $show_full=1, $generations=3) {
+	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 		global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION;
 
+		// Extract parameters from from
+		$this->pid        =safe_GET('pid',         PGV_REGEX_XREF);
+		$this->show_full  =safe_GET('show_full',   '1', '0');
+		$this->show_spouse=safe_GET('show_spouse', '1', '0');
+		$this->generations=safe_GET('generations', PGV_REGEX_INTEGER, 3);
+		$this->box_width  =safe_GET('box_width',   PGV_REGEX_INTEGER, '100');
+
+		// Set defaults
+		if (empty($this->pid)) {
+			$this->show_full=1;
+		}
+
+		// Validate parameters
+		$this->generations=min($this->generations, $MAX_DESCENDANCY_GENERATIONS);
+		$this->generations=max($this->generations, 2);
+		$this->box_width=max($this->box_width, 50);
+		$this->box_width=min($this->box_width, 300);
 
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
-		if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
-		if (!empty($rootid)) $this->pid = $rootid;
 
 		//-- flip the arrows for RTL languages
 		if ($TEXT_DIRECTION=="rtl") {
@@ -108,35 +123,19 @@ class HourglassControllerRoot extends BaseController {
 		if (file_exists($PGV_IMAGE_DIR."/".$PGV_IMAGES['larrow']['other'])) {
 			$temp = getimagesize($PGV_IMAGE_DIR."/".$PGV_IMAGES['larrow']['other']);
 			$this->arrwidth = $temp[0];
-			$this->arrheight = $temp[1];
+			$this->arrheight= $temp[1];
 		}
 
-		//Checks query strings to see if they exist else assign a default value
-		if (isset($_REQUEST["show_full"])) $this->show_full = $_REQUEST["show_full"];
-		else $this->show_full = $show_full;
-		if (isset($_REQUEST["show_spouse"])) $this->show_spouse=$_REQUEST["show_spouse"];
-		else $this->show_spouse=0;
-		if (isset($_REQUEST["generations"])) $this->generations=$_REQUEST["generations"];
-		else $this->generations = $generations;
-		if ($this->generations > $MAX_DESCENDANCY_GENERATIONS) $this->generations = $MAX_DESCENDANCY_GENERATIONS;
-		if (!isset($this->view)) $this->view="";
-
 		// -- Sets the sizes of the boxes
-		if (isset($_REQUEST["box_width"])) $this->box_width=$_REQUEST["box_width"];
-		else $this->box_width=100;
-		if (empty($this->box_width)) $this->box_width = "100";
-		$this->box_width=max($this->box_width, 50);
-		$this->box_width=min($this->box_width, 300);
-		// If show details is unchecked it makes the boxes smaller
 		if (!$this->show_full) $bwidth *= $this->box_width / 150;
 		else $bwidth*=$this->box_width/100;
 
 		if (!$this->show_full) $bheight = (int)($bheight / 2);
 		$bhalfheight = (int)($bheight / 2);
 
-		// -- root id
-		if (!isset($this->pid)) $this->pid="";
+		// Validate parameters
 		$this->pid=check_rootid($this->pid);
+
 		if ((DisplayDetailsByID($this->pid))||(showLivingNameByID($this->pid))) $this->name = get_person_name($this->pid);
 		else $this->name = $pgv_lang["private"];
 
@@ -530,7 +529,7 @@ class HourglassControllerRoot extends BaseController {
 	 */
 	function setupJavascript() {
 		global $bhalfheight;
-		?>
+?>
 <script language="JavaScript" type="text/javascript">
 <!--
 	var pastefield;
@@ -579,7 +578,7 @@ class HourglassControllerRoot extends BaseController {
 			var pid = vlines[i].id.substr(vlines[i].id.indexOf("_")+1);
 			var hline = document.getElementById("table_"+pid);
 			var hline2 = document.getElementById("table2_"+pid);
-			var newHeight = Math.abs(hline.offsetHeight - (hline2.offsetTop + <?php print $bhalfheight+2 ?>));
+			var newHeight = Math.abs(hline.offsetHeight - (hline2.offsetTop + <?php print $bhalfheight+2;1?>));
 			vlines[i].style.height=newHeight+'px';
 		}
 		
@@ -588,7 +587,7 @@ class HourglassControllerRoot extends BaseController {
 			var pid = vlines[i].id.substr(vlines[i].id.indexOf("_")+1);
 			var hline = document.getElementById("table_"+pid);
 			var hline2 = document.getElementById("table2_"+pid);
-			vlines[i].style.height=(hline.offsetTop+hline2.offsetTop + <?php print $bhalfheight+2 ?>)+'px';
+			vlines[i].style.height=(hline.offsetTop+hline2.offsetTop + <?php print $bhalfheight+2; ?>)+'px';
 		}
 		
 		vlines = document.getElementsByName("pvline");

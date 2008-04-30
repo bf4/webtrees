@@ -3,7 +3,7 @@
  * Controller for the Descendancy Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,36 +102,31 @@ class DescendancyControllerRoot extends BaseController {
 	 */
 	function init() {
 	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
-	global $show_full;
 
 	$this->sexarray["M"] = $pgv_lang["male"];
 	$this->sexarray["F"] = $pgv_lang["female"];
 	$this->sexarray["U"] = $pgv_lang["unknown"];
 
-	//set arguments
-	if (isset($_REQUEST["show_full"])) $this->show_full = $_REQUEST["show_full"];
-	else $this->show_full = 1;
-	$show_full = $this->show_full;
-	if (!empty($_REQUEST["chart_style"])) $this->chart_style = $_REQUEST["chart_style"];
-	else $this->chart_style = 0;
-	if (!empty($_REQUEST["generations"])) $this->generations = $_REQUEST["generations"];
-	else $this->generations = 2;
-	if ($this->generations > $MAX_DESCENDANCY_GENERATIONS) $this->generations = $MAX_DESCENDANCY_GENERATIONS;
+	// Extract parameters from form
+	$this->show_full  =safe_GET('show_full',   '1',               '0');
+	$this->chart_style=safe_GET('chart_style', '[0123]',          '0');
+	$this->generations=safe_GET('generations', PGV_REGEX_INTEGER, '2');
+	$this->box_width  =safe_GET('box_width',   PGV_REGEX_INTEGER, '100');
+	$this->pid        =safe_GET('pid',         PGV_REGEX_XREF);
+
+	// Set defaults
+	if (empty($this->pid)) {
+		$this->show_full=1;
+	}
+
 	if (!isset($this->view)) $this->view="";
 	if (!isset($this->personcount)) $this->personcount = 1;
 
-	// -- size of the boxes
-	if (!isset($_REQUEST["box_width"])) $this->box_width = "100";
-	else $this->box_width = $_REQUEST["box_width"];
-	if (empty($this->box_width)) $this->box_width = "100";
-	$this->box_width=max($this->box_width, 50);
-	$this->box_width=min($this->box_width, 300);
 	$this->Dbwidth*=$this->box_width/100;
 
 	if (!$this->show_full) {
 		$bwidth *= $this->box_width / 150;
-	}
-	else {
+	} else {
 		$bwidth*=$this->box_width/100;
 	}
 
@@ -142,14 +137,15 @@ class DescendancyControllerRoot extends BaseController {
 	$pbwidth = $bwidth+12;
 	$pbheight = $bheight+14;
 
-	if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
-	if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
-	if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
+	$this->show_changes=safe_GET('show_changes');
+	$this->action      =safe_GET('action');
 
-	// -- root id
-	if (!isset($this->pid)) $this->pid="";
-	$this->pid = clean_input($this->pid);
+	// Validate form variables
 	$this->pid=check_rootid($this->pid);
+	$this->box_width=max($this->box_width, 50);
+	$this->box_width=min($this->box_width, 300);
+	$this->generations = min($this->generations, $MAX_DESCENDANCY_GENERATIONS);
+	$this->generations = max($this->generations, 2);
 
 	if ((DisplayDetailsByID($this->pid))||(showLivingNameByID($this->pid))) $this->name = get_person_name($this->pid);
 	else $this->name = $pgv_lang["private"];

@@ -2,7 +2,7 @@
 /**
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,6 @@ class PedigreeControllerRoot extends BaseController {
 	var $show_full;
 	var $talloffset;
 	var $PEDIGREE_GENERATIONS;
-	var $OLD_PGENS;
 	var $max_generation = false;
 	var $min_generation = false;
 	var $pbwidth;
@@ -77,35 +76,30 @@ class PedigreeControllerRoot extends BaseController {
 		if ($this->isPrintPreview()) {
 			$this->show_famlink = false;
 		}
-		
-		if (!isset($_REQUEST['show_full'])) $this->show_full=$PEDIGREE_FULL_DETAILS;
-		else $this->show_full = $_REQUEST['show_full'];
-		if ($this->show_full=="") $this->show_full = 0;
-		$show_full = $this->show_full;
-		
-		if (!isset($_REQUEST['talloffset'])) $this->talloffset = (int)$PEDIGREE_LAYOUT;
-		else $this->talloffset = $_REQUEST['talloffset'];
-		if ($this->talloffset=="") $this->talloffset = 0;
-		$talloffset = $this->talloffset;
-		
-		if (empty($_REQUEST['PEDIGREE_GENERATIONS'])) $this->PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
-		else $this->PEDIGREE_GENERATIONS=$_REQUEST['PEDIGREE_GENERATIONS'];
-		
+
+		$this->rootid=safe_GET('rootid', PGV_REGEX_XREF);
+		$this->show_full=safe_GET('show_full', '1', '0');
+		$this->talloffset=safe_GET('talloffset', '1', '0');
+		$this->PEDIGREE_GENERATIONS=safe_GET('PEDIGREE_GENERATIONS', PGV_REGEX_INTEGER, $DEFAULT_PEDIGREE_GENERATIONS);
+
+		// Set defaults
+		if (empty($this->rootid)) {
+			$this->show_full=1;
+			$this->talloffset=1; // landscape
+		}
+
+		// Validate parameters
 		if ($this->PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
 			$this->PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
-			$this->max_generation = TRUE;
+			$this->max_generation = true;
 		}
-		
+	
 		if ($this->PEDIGREE_GENERATIONS < 3) {
 			$this->PEDIGREE_GENERATIONS = 3;
-			$this->min_generation = TRUE;
+			$this->min_generation = true;
 		}
-		$this->OLD_PGENS = $this->PEDIGREE_GENERATIONS;
-		
-		if (!isset($_REQUEST['rootid'])) $this->rootid="";
-		else $this->rootid = $_REQUEST['rootid'];
-		$this->rootid = clean_input($this->rootid);
-		$this->rootid = check_rootid($this->rootid);
+
+		$this->rootid=check_rootid($this->rootid);
 		
 		$this->rootPerson = Person::getInstance($this->rootid);
 		if (is_null($this->rootPerson)) $this->rootPerson = new Person('');
