@@ -79,9 +79,7 @@ class TimelineControllerRoot extends BaseController {
 		} else {
 			if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
 			//-- pids array
-			if (isset($_REQUEST['pids'])){
-				$this->pids = $_REQUEST['pids'];
-			}
+			$this->pids=safe_GET('pids', PGV_REGEX_XREF, array());
 		}
 		if (!is_array($this->pids)) $this->pids = array();
 		else {
@@ -148,11 +146,12 @@ class TimelineControllerRoot extends BaseController {
 			}
 		}
 		$_SESSION['timeline_pids'] = $this->pids;
-		if (empty($_REQUEST['scale'])) {
+		$scale=safe_GET('scale', PGV_REGEX_INTEGER); 
+		if (empty($scale)) {
 			$this->scale = round(($this->topyear-$this->baseyear)/20 * count($this->indifacts)/4);
 			if ($this->scale<6) $this->scale = 6;
 		}
-		else $this->scale = $_REQUEST['scale'];
+		else $this->scale = $scale;
 		if ($this->scale<2) $this->scale=2;
 		$this->baseyear -= 5;
 		$this->topyear += 5;

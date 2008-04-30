@@ -101,7 +101,7 @@ class DescendancyControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
+	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $show_full;
 
 	$this->sexarray["M"] = $pgv_lang["male"];
 	$this->sexarray["F"] = $pgv_lang["female"];
@@ -118,6 +118,9 @@ class DescendancyControllerRoot extends BaseController {
 	if (empty($this->pid)) {
 		$this->show_full=1;
 	}
+
+	// This is passed as a global.  A parameter would be better...
+	$show_full=$this->show_full;
 
 	if (!isset($this->view)) $this->view="";
 	if (!isset($this->personcount)) $this->personcount = 1;

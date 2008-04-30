@@ -92,21 +92,25 @@ class AncestryControllerRoot extends BaseController {
 		global $DEFAULT_PEDIGREE_GENERATIONS, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $OLD_PGENS, $box_width, $Dbwidth, $Dbheight;
 		global $show_full;
 
-		// -- args
-		if (isset($_REQUEST["show_full"])) $this->show_full = $_REQUEST["show_full"];
-		else $this->show_full = 1;
-		$show_full = $this->show_full;
+		// Extract form parameters
+		$this->rootid        =safe_GET('rootid',       PGV_REGEX_XREF);
+		$this->show_full     =safe_GET('show_full',    '1', '0');
+		$this->show_cousins  =safe_GET('show_cousins', '1', '0');
+		$this->chart_style   =safe_GET('chart_style',  '[0123]', '0');
+		$this->chart_style   =safe_GET('chart_style',  '[0123]', '0');
+		$PEDIGREE_GENERATIONS=safe_GET('PEDIGREE_GENERATIONS', PGV_REGEX_INTEGER, $DEFAULT_PEDIGREE_GENERATIONS);
+		$box_width           =safe_GET('box_width',            PGV_REGEX_INTEGER, 100);
 
-		if (isset($_REQUEST["chart_style"])) $this->chart_style = $_REQUEST["chart_style"];
-		else $this->chart_style = 0;
-		if (isset($_REQUEST["show_cousins"])) $this->show_cousins = $_REQUEST["show_cousins"];
-		else $this->show_cousins = 0;
-		//if (!isset($this->chart_style)) $this->chart_style = 0;
-		//if ($this->chart_style=="") $this->chart_style = 0;
-		//if (!isset($this->show_cousins)) $this->show_cousins = 0;
-		//if ($this->show_cousins == "") $this->show_cousins = 0;
-		if ((!isset($PEDIGREE_GENERATIONS)) || ($PEDIGREE_GENERATIONS == "")) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
+		// Set defaults
+		if (empty($this->rootid)) {
+			$this->show_full=1;
+		}
 
+		// This is passed as a global.  A parameter would be better...
+		$show_full=$this->show_full;
+
+
+		// Validate form parameters
 		if ($PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
 			$PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
 			$this->max_generation = true;
@@ -118,16 +122,9 @@ class AncestryControllerRoot extends BaseController {
 		}
 		$OLD_PGENS = $PEDIGREE_GENERATIONS;
 
-		if (empty($_REQUEST["rootid"])){
-			if (!isset($this->rootid)) $this->rootid = "";
-			$this->rootid = clean_input($this->rootid);
-			$this->rootid = check_rootid($this->rootid);
-		}
-		else $this->rootid = $_REQUEST["rootid"];
+		$this->rootid = check_rootid($this->rootid);
 
 		// -- size of the boxes
-		if (isset($_REQUEST['box_width'])) $box_width = $_REQUEST['box_width'];
-		if (empty($box_width)) $box_width = "100";
 		$box_width=max($box_width, 50);
 		$box_width=min($box_width, 300);
 		$Dbwidth*=$box_width/100;
