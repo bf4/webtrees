@@ -2698,7 +2698,7 @@ function filename_encode($filename) {
 ////////////////////////////////////////////////////////////////////////////////
 function normalize_query_string($query) {
 	$components=array();
-	foreach (preg_split('/(^\?|\&(amp;)*)/', $query, -1, PREG_SPLIT_NO_EMPTY) as $component)
+	foreach (preg_split('/(^\?|\&(amp;)*)/', urldecode($query), -1, PREG_SPLIT_NO_EMPTY) as $component)
 		if (strpos($component, '=')!==false) {
 			list ($key, $data)=explode('=', $component, 2);
 			if (!empty($data)) $components[$key]=$data;

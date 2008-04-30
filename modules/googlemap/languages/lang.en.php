@@ -75,6 +75,7 @@ $pgv_lang["gm_ph_marker_type"]		= "Type of place markers in Place Hierarchy";
 $pgv_lang["gm_standard_marker"]		= "Standard";
 $pgv_lang["gm_no_coord"]			= "This place has no coordinates";
 $pgv_lang["gm_ph_placenames"]		= "Display short placenames?";
+$pgv_lang["gm_ph_count"]			= "Display indis and families count?";
 $pgv_lang["gm_ph_wheel"]			= "Use mouse wheel for zoom?";
 
 // Texts used on the Places location page

@@ -10,6 +10,8 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1954352 ] Placename Issue On Language Change For Some Themes (canajun2eh)
+ - Fixed: [ 1952626 ] Place Hierarchy with GoogleMap - Umlauts in Place Name (canajun2eh)
  - Fixed: [ 1952654 ] 4.1.6 2931 Fatal error familysearch.php on line 160 (fisharebest)
 
 Version 4.1.5 2008-04-27

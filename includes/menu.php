@@ -122,6 +122,26 @@ class Menu
 		$this->submenus[] = $submenu;
 	}
 
+	// Get the menu as a simple list - for accessible interfaces, search engines and CSS menus
+	function getMenuAsList() {
+		if ($this->seperator) {
+			return '<div class="hr"></div>'; // The <hr/> tag is difficult to style
+		}
+		if (!$this->link) {
+			return '';
+		}
+		$html='<a href="'.$this->link.'">'.$this->label.'</a>';
+		if ($this->submenus) {
+			$html.='<ul>';
+			foreach ($this->submenus as $submenu) {
+				$html.=$submenu->getMenuAsList();
+			}
+			$html.='</ul>';
+		}
+
+		return '<li>'.$html.'</li>';
+	}
+
 	function getMenu()
 	{
 		global

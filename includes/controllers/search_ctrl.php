@@ -138,7 +138,7 @@ class SearchControllerRoot extends BaseController {
 				$this->query="";
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
-				$this->myquery = $this->query;
+				$this->myquery = htmlentities($this->query);
 			}
 		}
 		if (isset ($_REQUEST["replace"])) {

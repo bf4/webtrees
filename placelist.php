@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Lists
- * @version $Id 0.8: placelist.php 2008-04-20 18:46:09Z wooc$
+ * @version $Id$
  */
 
 require("config.php");
@@ -34,6 +34,10 @@ function case_in_array($value, $array) {
 	}
 	return false;
 }
+
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['display'])) $display = $_REQUEST['display'];
+if (isset($_REQUEST['parent'])) $parent = $_REQUEST['parent'];
 
 if (empty($action)) $action = "find";
 if (empty($display)) $display = "hierarchy";
@@ -129,7 +133,7 @@ if ($display=="hierarchy") {
 				$levels = preg_split ("/,/", trim($parent[$j]));
 				// Routine for replacing ampersands
 				foreach($levels as $pindex=>$ppart) {
-					$ppart = urlencode($ppart);
+					$ppart = rawurlencode($ppart);
 					$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
 					print "&amp;parent[$j]=".$ppart;
 				}
@@ -179,35 +183,28 @@ if ($display=="hierarchy") {
 			$mapfile = "places/".$country."/".$country.".".$lang_short_cut[$LANGUAGE].".htm";
 			if (!file_exists($mapfile)) $mapfile = "places/".$country."/".$country.".htm";
 			if ($level>1) {
-				$state = smart_utf8_decode($parent[1]);
+				//$state = smart_utf8_decode($parent[1]);
+				$state = $parent[1];
 				$mapname .= "_".$state;
 				if ($level>2) {
-					$county = smart_utf8_decode($parent[2]);
+					//$county = smart_utf8_decode($parent[2]);
+					$county = $parent[2];
 					$mapname .= "_".$county;
 					$areaname = str_replace("'","\'",$parent[2]);
 				}
 				else {
 					$areaname = str_replace("'","\'",$parent[1]);
 				}
-				$mapname = str_replace("Ä˜","E",$mapname);
-				$mapname = str_replace("Ã“","O",$mapname);
-				$mapname = str_replace("Ä„","A",$mapname);
-				$mapname = str_replace("Åš","S",$mapname);
-				$mapname = str_replace("Å","L",$mapname);
-				$mapname = str_replace("Å»","Z",$mapname);
-				$mapname = str_replace("Å¹","Z",$mapname);
-				$mapname = str_replace("Ä†","C",$mapname);
-				$mapname = str_replace("Åƒ","N",$mapname);
-				$mapname = str_replace("Ä™","e",$mapname);
-				$mapname = str_replace("Ã³","o",$mapname);
-				$mapname = str_replace("Ä…","a",$mapname);
-				$mapname = str_replace("Å›","s",$mapname);
-				$mapname = str_replace("Å‚","l",$mapname);
-				$mapname = str_replace("Å¼","z",$mapname);
-				$mapname = str_replace("Åº","z",$mapname);
-				$mapname = str_replace("Ä‡","c",$mapname);
-				$mapname = str_replace("Å„","n",$mapname);
-				$mapname = strtr($mapname,"ŠŒšœŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİßàáâãäåæçèéêëìíîïğñòóôõöøùúûüıÿ' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
+
+				// Transform certain two-byte UTF-8 letters with diacritics
+				// to their 1-byte ASCII analogues without diacritics
+				$mapname = str_replace(array("Ä˜", "Ã“", "Ä„", "Åš", "Å", "Å»", "Å¹", "Ä†", "Åƒ", "Ä™", "Ã³", "Ä…", "Å›", "Å‚", "Å¼", "Åº", "Ä‡", "Å„"), array("E", "O", "A", "S", "L", "Z", "Z", "C", "N", "e", "o", "a", "s", "l", "z", "z", "c", "n"), $mapname);
+
+				//$mapname = strtr($mapname,"ŠŒšœŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİßàáâãäåæçèéêëìíîïğñòóôõöøùúûüıÿ' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
+				$mapname = str_replace(array("Å ", "Å’", "Å½", "Å¡", "Å“", "Å¾", "Å¸", "Â¥", "Âµ", "Ã€", "Ã", "Ã‚", "Ãƒ", "Ã„", "Ã…", "Ã†", "Ã‡", "Ãˆ", "Ã‰", "ÃŠ", "Ã‹", "ÃŒ", "Ã", "Ã", "Ã", "Ã", "Ã‘", "Ã’", "Ã“", "Ã”", "Ã•", "Ã–", "Ã˜", "Ã™", "Ãš", "Ã›", "Ãœ", "Ã", "ÃŸ", "Ã ", "Ã¡", "Ã¢", "Ã£", "Ã¤", "Ã¥", "Ã¦", "Ã§", "Ã¨", "Ã©", "Ãª", "Ã«", "Ã¬", "Ã­", "Ã®", "Ã¯", "Ã°", "Ã±", "Ã²", "Ã³", "Ã´", "Ãµ", "Ã¶", "Ã¸", "Ã¹", "Ãº", "Ã»", "Ã¼", "Ã½", "Ã¿"), array("S", "O", "Z", "s", "o", "z", "Y", "Y", "u", "A", "A", "A", "A", "A", "A", "A", "C", "E", "E", "E", "E", "I", "I", "I", "I", "D", "N", "O", "O", "O", "O", "O", "O", "U", "U", "U", "U", "Y", "s", "a", "a", "a", "a", "a", "a", "a", "c", "e", "e", "e", "e", "i", "i", "i", "i", "o", "n", "o", "o", "o", "o", "o", "o", "u", "u", "u", "u", "y", "y"), $mapname);
+				// Transform apostrophes and blanks to dashes
+				$mapname = str_replace(array("'", " "), "-", $mapname);
+
 				$imgfile = "places/".$country."/".$mapname.".gif";
 			}
 			if (file_exists($imgfile) and file_exists($mapfile)) {
