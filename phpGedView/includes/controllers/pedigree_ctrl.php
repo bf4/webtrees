@@ -88,6 +88,9 @@ class PedigreeControllerRoot extends BaseController {
 			$this->talloffset=1; // landscape
 		}
 
+		// This is passed as a global.  A parameter would be better...
+		$show_full=$this->show_full;
+
 		// Validate parameters
 		if ($this->PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
 			$this->PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
