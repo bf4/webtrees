@@ -347,6 +347,7 @@ case 'editraw':
 		print "<form method=\"post\" action=\"edit_interface.php\">\n";
 		print "<input type=\"hidden\" name=\"action\" value=\"updateraw\" />\n";
 		print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
+		print "<input id=\"savebutton2\" type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 		print_specialchar_link("newgedrec",true);
 		print "<br />\n";
 		print "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"60\" dir=\"ltr\">".$gedrec."</textarea>\n<br />";
