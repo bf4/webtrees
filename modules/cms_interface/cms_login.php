@@ -22,7 +22,7 @@
 //
 // @author Greg Roach
 // @package PhpGedView
-// @version $Id:$
+// @version $Id$
 
 require '../../config.php';
 
@@ -48,7 +48,7 @@ $cms_password =array_key_exists('cms_password',  $_REQUEST) ? $_REQUEST['cms_pas
 // This module can also *CREATE* user accounts where they do not already exist.
 // To enable this, set $CMS_AUTO_ADD_USERS to true.  Use at your own risk.
 // Configuration options
-$CMS_AUTO_ADD_USERS        =true;
+$CMS_AUTO_ADD_USERS        =false;
 $CMS_USER_ACCESS_LEVEL     ='access'; // none/access/edit/accept/admin
 $CMS_USER_VERIFIED         ='yes';
 $CMS_USER_VERIFIED_BY_ADMIN='yes';
