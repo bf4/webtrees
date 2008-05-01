@@ -65,12 +65,8 @@ class AncestryControllerRoot extends BaseController {
 	var $position = "relative";
 	var $display = "block";
 	var $view;
-	var $max_generation;
 	var $show_cousins;
 	var $rootid;
-	var $min_generation;
-	//var	$Dbwidth;
-	//var $Dbheight;
 	var $name;
 	var $addname;
 	var $OLD_PGENS;

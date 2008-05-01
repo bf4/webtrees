@@ -44,8 +44,6 @@ class PedigreeControllerRoot extends BaseController {
 	var $show_full;
 	var $talloffset;
 	var $PEDIGREE_GENERATIONS;
-	var $max_generation = false;
-	var $min_generation = false;
 	var $pbwidth;
 	var $pbheight;
 	var $treeid;
@@ -128,7 +126,6 @@ class PedigreeControllerRoot extends BaseController {
 		if ($this->PEDIGREE_GENERATIONS==3) {
 			$baseyoffset+=$this->pbheight*1.6;
 		}
-		if (($this->max_generation == TRUE)||($this->min_generation == TRUE)) $baseyoffset+=20;
 		
 		// -- this next section will create and position the DIV layers for the pedigree tree
 		$this->curgen = 1;			// -- variable to track which generation the algorithm is currently working on

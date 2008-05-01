@@ -457,8 +457,6 @@ if ($view != "preview") {
 	//-->
 	</script>
 	<?php
-	if (isset($max_generation) == true) print "<span class=\"error\">" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["max_generation"]) . "</span>";
-	if (isset($min_generation) == true) print "<span class=\"error\">" . $pgv_lang["min_generation"] . "</span>";
 	print "\n\t</td><td><form name=\"people\" method=\"get\" action=\"?\">";
 	print "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>";
 
