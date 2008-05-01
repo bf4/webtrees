@@ -475,7 +475,7 @@ class MenuBar
 	 * @return Menu 	the menu item
 	 */
 	function &getChartsMenu($rootid='',$myid='') {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER, $PEDIGREE_FULL_DETAILS;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
@@ -486,7 +486,7 @@ class MenuBar
 		//-- main charts menu item
 		$link = "pedigree.php";
 		if ($rootid) {
-			$link .= "?rootid=".$rootid;
+			$link .= "?rootid={$rootid}&show_full={$PEDIGREE_FULL_DETAILS}";
 			$menu = new Menu($pgv_lang["charts"], $link);
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -516,13 +516,14 @@ class MenuBar
 		asort($menuList);
 
 		// Produce the submenus in localized name order
+		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 		
 		foreach($menuList as $menuType => $menuName) {
 			switch ($menuType) {
 			case "pedigree":
 				//-- pedigree
 				$link = "pedigree.php";
-				if ($rootid) $link .= "?rootid=".$rootid;
+				if ($rootid) $link .= "?rootid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["pedigree_chart"], $link);
 				if (!empty($PGV_IMAGES["pedigree"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -533,7 +534,7 @@ class MenuBar
 			case "descendancy":
 				//-- descendancy
 				$link = "descendancy.php";
-				if ($rootid) $link .= "?pid=".$rootid;
+				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["descend_chart"], $link);
 				if (!empty($PGV_IMAGES["descendant"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["descendant"]["small"]);
@@ -544,7 +545,7 @@ class MenuBar
 			case "ancestry":
 				//-- ancestry
 				$link = "ancestry.php";
-				if ($rootid) $link .= "?rootid=".$rootid;
+				if ($rootid) $link .= "?rootid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["ancestry_chart"], $link);
 				if (!empty($PGV_IMAGES["ancestry"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["ancestry"]["small"]);
@@ -577,7 +578,7 @@ class MenuBar
 			case "hourglass":
 				//-- hourglass
 				$link = "hourglass.php";
-				if ($rootid) $link .= "?pid=".$rootid;
+				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["hourglass_chart"], $link);
 				if (!empty($PGV_IMAGES["hourglass"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["hourglass"]["small"]);
@@ -588,7 +589,7 @@ class MenuBar
 			case "familybook":
 				//-- familybook
 				$link = "familybook.php";
-				if ($rootid) $link .= "?pid=".$rootid;
+				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["familybook_chart"], $link);
 				if (!empty($PGV_IMAGES["fambook"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["fambook"]["small"]);
