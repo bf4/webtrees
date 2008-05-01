@@ -356,8 +356,6 @@ $pgv_lang["landscape"]				= "Landscape";
 $pgv_lang["start_at_parents"]		= "Start at parents";
 $pgv_lang["charts"] 				= "Charts";
 $pgv_lang["lists"]					= "Lists";
-$pgv_lang["max_generation"] 		= "The maximum number of pedigree generations is #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"] 		= "The minimum number of pedigree generations is 3.";
 $pgv_lang["box_width"] 				= "Box width";
 
 //-- FUNCTIONS FILE MESSAGES

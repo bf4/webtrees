@@ -53,10 +53,6 @@ if (!$controller->isPrintPreview()) {
 	}
 	//-->
 	</script>
-	<?php
-	if ($controller->max_generation) print "<span class=\"error\">".str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["max_generation"])."</span>";
-	if ($controller->min_generation) print "<span class=\"error\">".$pgv_lang["min_generation"]."</span>";
-	?>
 	<form name="people" method="get" action="pedigree.php">
 		<table class="pedigree_table <?php print $TEXT_DIRECTION; ?>" width="225">
 			<tr>
