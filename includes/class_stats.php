@@ -49,6 +49,7 @@ class stats
 	var $_server_url; // Absolute URL for generating external links.  e.g. in RSS feeds
 	var $_compat=false;
 	var $_not_allowed = false;
+	var $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'photo', 'tombstone', 'video', 'other');
 
 	function stats($gedcom, $server_url='')
 	{
@@ -559,17 +560,69 @@ class stats
 		return get_user_count();
 	}
 
-	function totalMedia()
+	function totalAdmins()
+	{
+		global $TBLPREFIX;
+		$rows = $this->_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin='Y'", 1);
+		if(!isset($rows[0])){return 0;}
+		return $rows[0]['tot'];
+	}
+
+	function totalNonAdmins()
+	{
+		global $TBLPREFIX;
+		$rows = $this->_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin!='Y'", 1);
+		if(!isset($rows[0])){return 0;}
+		return $rows[0]['tot'];
+	}
+
+	function _totalMediaType($type='all')
 	{
 		global $TBLPREFIX, $MULTI_MEDIA;
-		if ($MULTI_MEDIA==true) {
-			$rows=$this->_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_gedcom['id']}'", 1);
-			if(!isset($rows[0])){return '';}
-			return $rows[0]['tot'];
-		} else {
-			return '';
+		if(!$MULTI_MEDIA){return 0;}
+		if(!in_array($type, $this->_media_types) && $type != 'all' && $type != 'unknown'){return 0;}
+		$like = '';
+		if($type != 'all')
+		{
+			if($type != 'unknown')
+			{
+				$like = " AND m_gedrec LIKE '%3 TYPE {$type}%'";
+			}
+			else
+			{
+				// There has to be a better way then this :(
+				$nolike = array();
+				foreach($this->_media_types as $t)
+				{
+					$nolike[] = "m_gedrec NOT LIKE '%3 TYPE {$t}%'";
+				}
+				$nolike = join(' AND ', $nolike);
+				$like = " AND ({$nolike})";
+			}
 		}
+		$rows = $this->_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_gedcom['id']}'{$like}", 1);
+		if(!isset($rows[0])){return 0;}
+		return $rows[0]['tot'];
 	}
+
+	function totalMedia(){return $this->_totalMediaType('all');}
+	function totalMediaAudio(){return $this->_totalMediaType('audio');}
+	function totalMediaBook(){return $this->_totalMediaType('book');}
+	function totalMediaCard(){return $this->_totalMediaType('card');}
+	function totalMediaCertificate(){return $this->_totalMediaType('certificate');}
+	function totalMediaDocument(){return $this->_totalMediaType('document');}
+	function totalMediaElectronic(){return $this->_totalMediaType('electronic');}
+	function totalMediaMagazine(){return $this->_totalMediaType('magazine');}
+	function totalMediaManuscript(){return $this->_totalMediaType('manuscript');}
+	function totalMediaMap(){return $this->_totalMediaType('map');}
+	function totalMediaFiche(){return $this->_totalMediaType('fiche');}
+	function totalMediaFilm(){return $this->_totalMediaType('film');}
+	function totalMediaNewspaper(){return $this->_totalMediaType('newspaper');}
+	function totalMediaPhoto(){return $this->_totalMediaType('photo');}
+	function totalMediaTombstone(){return $this->_totalMediaType('tombstone');}
+	function totalMediaVideo(){return $this->_totalMediaType('video');}
+	function totalMediaOther(){return $this->_totalMediaType('other');}
+	function totalMediaUnknown(){return $this->_totalMediaType('unknown');}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Birth & Death                                                             //
@@ -577,7 +630,7 @@ class stats
 
 	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT')
 	{
-		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;
+		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE;
 		if($birth_death == 'BIRT')
 		{
 			$query_field = STATS_BIRTH;
@@ -596,32 +649,59 @@ class stats
 			$dmod = 'MAX';
 			$life_dir = 'DESC';
 		}
-		// Testing new style
-		$rows=$this->_runSQL(''
-			.' SELECT'
-				.' d2.d_year,'
-				.' d2.d_type,'
-				.' d2.d_fact,'
-				.' d2.d_gid'
-			.' FROM'
-				." {$TBLPREFIX}dates AS d2"
-			.' WHERE'
-				." d2.d_file={$this->_gedcom['id']} AND"
-				." d2.d_fact IN ({$query_field}) AND"
-				.' d2.d_julianday1=('
+		switch($DBTYPE)
+		{
+			// Testing new style
+			default:
+			{
+				$rows=$this->_runSQL(''
 					.' SELECT'
-						." {$dmod}(d1.d_julianday1)"
+						.' d2.d_year,'
+						.' d2.d_type,'
+						.' d2.d_fact,'
+						.' d2.d_gid'
 					.' FROM'
-						." {$TBLPREFIX}dates AS d1"
+						." {$TBLPREFIX}dates AS d2"
 					.' WHERE'
-						." d1.d_file={$this->_gedcom['id']} AND"
-						." d1.d_fact IN ({$query_field}) AND"
-						.' d1.d_julianday1!=0'
-				.' )'
-			.' ORDER BY'
-				." d_julianday1 {$life_dir}, d_type"
-			.';'
-		);
+						." d2.d_file={$this->_gedcom['id']} AND"
+						." d2.d_fact IN ({$query_field}) AND"
+						.' d2.d_julianday1=('
+							.' SELECT'
+								." {$dmod}(d1.d_julianday1)"
+							.' FROM'
+								." {$TBLPREFIX}dates AS d1"
+							.' WHERE'
+								." d1.d_file={$this->_gedcom['id']} AND"
+								." d1.d_fact IN ({$query_field}) AND"
+								.' d1.d_julianday1!=0'
+						.' )'
+					.' ORDER BY'
+						." d_julianday1 {$life_dir}, d_type"
+				);
+				break;
+			}
+			// MySQL 4.0 can't handle nested queries, so we use the old style. Of course this hits the performance of PHP4 users a tiny bit, but it's the best we can do.
+			case 'mysql':
+			{
+				$rows=$this->_runSQL(''
+					.' SELECT'
+						.' d_year,'
+						.' d_type,'
+						.' d_fact,'
+						.' d_gid'
+					.' FROM'
+						." {$TBLPREFIX}dates"
+					.' WHERE'
+						." d_file={$this->_gedcom['id']} AND"
+						." d_fact IN ({$query_field}) AND"
+						.' d_julianday1!=0'
+					.' ORDER BY'
+						." d_julianday1 {$life_dir},"
+						.' d_type ASC'
+				, 1);
+				break;
+			}
+		}
 		if(!isset($rows[0])){return '';}
 		$row=$rows[0];
 		switch($type)
@@ -1371,6 +1451,10 @@ class stats
 	function usersLoggedInTotal(){return $this->_usersLoggedInTotal('all');}
 	function usersLoggedInTotalAnon(){return $this->_usersLoggedInTotal('anon');}
 	function usersLoggedInTotalVisible(){return $this->_usersLoggedInTotal('visible');}
+
+	function userID(){return getUserId();}
+	function userName(){return getUserName();}
+	function userFullName(){return getUserFullName(getUserId());}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Contact                                                                   //
