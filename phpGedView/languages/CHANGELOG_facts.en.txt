@@ -40,6 +40,53 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
+
+VERSION 4.1.6
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-------------------------------------------------------------------------------------------
++$factarray["_BURI_SPOU"]							30 April 2008			A
++$factarray["_CREM_SPOU"]							30 April 2008			A
++$factarray["_BURI_CHIL"]							30 April 2008			A
++$factarray["_CREM_CHIL"]							30 April 2008			A
++$factarray["_BURI_GCHI"]							30 April 2008			A
++$factarray["_CREM_GCHI"]							30 April 2008			A
++$factarray["_BURI_GGCH"]							30 April 2008			A
++$factarray["_CREM_GGCH"]							30 April 2008			A
++$factarray["_BURI_FATH"]							30 April 2008			A
++$factarray["_CREM_FATH"]							30 April 2008			A
++$factarray["_BURI_MOTH"]							30 April 2008			A
++$factarray["_CREM_MOTH"]							30 April 2008			A
+*$factarray["_BIRT_SIBL"]							30 April 2008			w	"of a" -> "of"
+*$factarray["_MARR_SIBL"]							30 April 2008			w	"of a" -> "of"
+*$factarray["_DEAT_SIBL"]							30 April 2008			w	"of a" -> "of"
++$factarray["_BURI_SIBL"]							30 April 2008			A
++$factarray["_CREM_SIBL"]							30 April 2008			A
+*$factarray["_BIRT_HSIB"]							30 April 2008			w	"of a" -> "of"
+*$factarray["_MARR_HSIB"]							30 April 2008			w	"of a" -> "of"
+*$factarray["_DEAT_HSIB"]							30 April 2008			w	"of a" -> "of"
++$factarray["_BURI_HSIB"]							30 April 2008			A
++$factarray["_CREM_HSIB"]							30 April 2008			A
++$factarray["_BURI_NEPH"]							30 April 2008			A
++$factarray["_CREM_NEPH"]							30 April 2008			A
++$factarray["_BURI_GPAR"]							30 April 2008			A
++$factarray["_CREM_GPAR"]							30 April 2008			A
++$factarray["_BURI_GGPA"]							30 April 2008			A
++$factarray["_CREM_GGPA"]							30 April 2008			A
+*$factarray["_BIRT_FSIB"]							30 April 2008			w	"of a" -> "of"
+*$factarray["_MARR_FSIB"]							30 April 2008			w	"of a" -> "of"
+*$factarray["_DEAT_FSIB"]							30 April 2008			w	"of a" -> "of"
++$factarray["_BURI_FSIB"]							30 April 2008			A
++$factarray["_CREM_FSIB"]							30 April 2008			A
+*$factarray["_BIRT_MSIB"]							30 April 2008			w	"of a" -> "of"
+*$factarray["_MARR_MSIB"]							30 April 2008			w	"of a" -> "of"
+*$factarray["_DEAT_MSIB"]							30 April 2008			w	"of a" -> "of"
++$factarray["_BURI_MSIB"]							30 April 2008			A
++$factarray["_CREM_MSIB"]							30 April 2008			A
++$factarray["_BURI_COUS"]							30 April 2008			A
++$factarray["_CREM_COUS"]							30 April 2008			A
+
+
 VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments

@@ -1009,14 +1009,15 @@ class Person extends GedcomRecord {
 			$spouse = $family->getHusband();
 			if ($sosa==1) $fact="_DEAT_FATH"; else if ($sosa<4) $fact="_DEAT_GPAR"; else $fact="_DEAT_GGPA";
 			if ($spouse && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
+				$relation = substr($fact, -4);
 				foreach (array('DEAT','BURI','CREM') as $event) {
 					foreach ($spouse->getAllEvents($event) as $srec) {
 						$sdate=new GedcomDate(get_gedcom_value("DATE", 2, $srec, '', false));
 						if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
 							if ($event=='DEAT') {
-								$srec=preg_replace('/^1 .*/', "1 {$fact} ", $srec);
+								$srec=preg_replace('/^1 .*/', "1 _{$event}_{$relation} ", $srec);
 							} else {
-								$srec=preg_replace('/^1 .*/', "1 {$fact} ".$factarray[$event], $srec);
+								$srec=preg_replace('/^1 .*/', "1 _{$event}_{$relation} ".$factarray[$event], $srec);
 							}
 							// recorded as ASSOciate ? [ 1690092 ]
 							$srec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
@@ -1031,14 +1032,15 @@ class Person extends GedcomRecord {
 			$spouse = $family->getWife();
 			if ($sosa==1) $fact="_DEAT_MOTH"; else if ($sosa<4) $fact="_DEAT_GPAR"; else $fact="_DEAT_GGPA";
 			if ($spouse and strstr($SHOW_RELATIVES_EVENTS, $fact)) {
+				$relation = substr($fact, -4);
 				foreach (array('DEAT','BURI','CREM') as $event) {
 					foreach ($spouse->getAllEvents($event) as $srec) {
 						$sdate=new GedcomDate(get_gedcom_value("DATE", 2, $srec, '', false));
 						if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
 							if ($event=='DEAT') {
-								$srec=preg_replace('/^1 .*/', "1 {$fact} ", $srec);
+								$srec=preg_replace('/^1 .*/', "1 _{$event}_{$relation} ", $srec);
 							} else {
-								$srec=preg_replace('/^1 .*/', "1 {$fact} ".$factarray[$event], $srec);
+								$srec=preg_replace('/^1 .*/', "1 _{$event}_{$relation} ".$factarray[$event], $srec);
 							}
 							// recorded as ASSOciate ? [ 1690092 ]
 							$srec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
@@ -1290,14 +1292,15 @@ class Person extends GedcomRecord {
 		// add spouse death
 		$fact = "_DEAT_SPOU";
 		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
+			$relation = substr($fact, -4);
 			foreach (array('DEAT','BURI','CREM') as $event) {
 				foreach ($spouse->getAllEvents($event) as $srec) {
 					$sdate=new GedcomDate(get_gedcom_value("DATE", 2, $srec, '', false));
 					if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
 						if ($event=='DEAT') {
-							$srec=preg_replace('/^1 .*/', "1 {$fact} ", $srec);
+							$srec=preg_replace('/^1 .*/', "1 _{$event}_{$relation} ", $srec);
 						} else {
-							$srec=preg_replace('/^1 .*/', "1 {$fact} ".$factarray[$event], $srec);
+							$srec=preg_replace('/^1 .*/', "1 _{$event}_{$relation} ".$factarray[$event], $srec);
 						}
 						// recorded as ASSOciate ? [ 1690092 ]
 						$srec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
