@@ -31,7 +31,7 @@ require_once("includes/functions_charts.php");
 
 // Extract form variables
 $pid        =safe_GET_xref('pid');
-$show_full  =safe_GET('show_full',     '1', $PEDIGREE_FULL_DETAILS);
+$show_full  =safe_GET('show_full',     '1', '0');
 $show_spouse=safe_GET('show_spouse',   '1', '0');
 $descent    =safe_GET_integer('descent',       0, 9, 5);
 $generations=safe_GET_integer('generations',   2, $MAX_DESCENDANCY_GENERATIONS, 2);

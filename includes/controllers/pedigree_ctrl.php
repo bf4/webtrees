@@ -76,13 +76,13 @@ class PedigreeControllerRoot extends BaseController {
 		}
 
 		$this->rootid    =safe_GET_xref('rootid');
-		$this->show_full =safe_GET('show_full', '1', $PEDIGREE_FULL_DETAILS);
+		$this->show_full =safe_GET('show_full', '1', '0');
 		$this->talloffset=safe_GET('talloffset', '1', '0');
 		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 3, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
 		// Set defaults
 		if (empty($this->rootid)) {
-			$this->show_full=1;
+			$this->show_full=$PEDIGREE_FULL_DETAILS;
 			$this->talloffset=1; // landscape
 		}
 

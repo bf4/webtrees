@@ -90,7 +90,7 @@ class AncestryControllerRoot extends BaseController {
 
 		// Extract form parameters
 		$this->rootid        =safe_GET_xref('rootid');
-		$this->show_full     =safe_GET('show_full',    '1', $PEDIGREE_FULL_DETAILS);
+		$this->show_full     =safe_GET('show_full',    '1', '0');
 		$this->show_cousins  =safe_GET('show_cousins', '1', '0');
 		$this->chart_style   =safe_GET_integer('chart_style',          0, 3, 0);
 		$box_width           =safe_GET_integer('box_width',            50, 300, 100);
@@ -98,7 +98,7 @@ class AncestryControllerRoot extends BaseController {
 
 		// Set defaults
 		if (empty($this->rootid)) {
-			$this->show_full=1;
+			$this->show_full=$PEDIGREE_FULL_DETAILS;
 		}
 
 		// This is passed as a global.  A parameter would be better...
