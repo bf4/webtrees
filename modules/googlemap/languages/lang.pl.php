@@ -3,7 +3,7 @@
    charset=utf-8
    Project:         phpGedView
    File:            lang.pl.php
-   Author:          Ixen Gerthannes
+   Author:          Łukasz Wileński
    Comments:        Polish Language file for Google map module
 ===================================================*/
 
@@ -53,7 +53,7 @@ $pgv_lang["googlemap_coord"]        = "Wyświetl współrzędne";
 $pgv_lang["gm_place_hierarchy"]		= "Użyj Googlemap do wyświetlania hierarchii miejsc";
 $pgv_lang["gm_ph_marker_type"]		= "Typ znacznika miejsca w hierarchii miejsc";
 $pgv_lang["gm_standard_marker"]		= "Standardowy";
-$pgv_lang["gm_no_coord"]			= "To miejsce nie ma ustawionych współrzędnych";
+$pgv_lang["gm_no_coord"]			= "Miejsce ma nieustawione współrzędne";
 $pgv_lang["gm_ph_placenames"]		= "Czy wyświetlić skrócone nazwy miejsc?";
 $pgv_lang["gm_ph_count"]			= "Czy wyświetlić liczbę osób i rodzin połączonych z danym miejscem?";
 $pgv_lang["gm_ph_wheel"]			= "Użyć rolki myszki do przybliżania/oddalania?";
