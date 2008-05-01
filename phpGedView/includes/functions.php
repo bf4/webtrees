@@ -107,86 +107,85 @@ function check_db($ignore_previous=false) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Extract, sanitise and validate FORM (POST) variables
+// Extract, sanitise and validate FORM (POST), URL (GET) and COOKIE variables.
+//
+// Request variables should ALWAYS be accessed through these functions, to
+// protect against XSS (cross-site-scripting) attacks.
+//
+// $var     - The variable to check
+// $regex   - Regular expression to validate the variable (or an array of
+//            regular expressions).  A number of common regexes are defined in
+//            session.php as constants PGV_REGEX_*.  If no value is specified,
+//            the default blocks all characters that could introduce scripts.
+// $default - A value to use if $var is undefined or invalid.
+//
+// You should always know whether your variables are coming from GET or POST,
+// and always use the correct function.
+//
+// NOTE: when using checkboxes, $var is either set (checked) or unset (not
+// checked).  This lets us use the syntax safe_GET('my_checkbox', 'yes', 'no')
+//
+// NOTE: when using listboxes, $regex can be an array of valid values.  For
+// example, you can use safe_POST('lang', array_keys($pgv_language), $LANGUAGE)
+// to validate against a list of valid languages and supply a sensible default.
 ////////////////////////////////////////////////////////////////////////////////
+
 function safe_POST($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
-	if (is_array($regex)) {
-		$regex='(?:'.join('|', $regex).')';
-	}
-	if (array_key_exists($var, $_POST)) {
-		// If the variable is an array, check all elements
-		if (is_array($_POST[$var])) {
-			foreach ($_POST[$var] as $tmp) {
-				if (!preg_match('~^'.$regex.'$~', $tmp)) {
-					return $default;
-				}
-			}
-			return $_POST[$var];
-		} else {
-			if (preg_match('~^'.$regex.'$~', $_POST[$var])) {
-				return $_POST[$var];
-			} else {
-				return $default;
-			}
-		}
-	} else {
-		return $default;
-	}
+	return safe_REQUEST($_POST, $var, $regex, $default);
 }
-
-////////////////////////////////////////////////////////////////////////////////
-// Extract, sanitise and validate URL (GET) variables
-////////////////////////////////////////////////////////////////////////////////
 function safe_GET($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+	return safe_REQUEST($_GET, $var, $regex, $default);
+}
+function safe_COOKIE($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+	return safe_REQUEST($_COOKIE, $var, $regex, $default);
+}
+
+function safe_GET_integer($var, $min, $max, $default) {
+	$num=safe_GET($var, PGV_REGEX_INTEGER, $default);
+	$num=max($num, $min);
+	$num=min($num, $max);
+	return (int)$num;
+}
+function safe_POST_integer($var, $min, $max, $default) {
+	$num=safe_POST($var, PGV_REGEX_INTEGER, $default);
+	$num=max($num, $min);
+	$num=min($num, $max);
+	return (int)$num;
+}
+
+function safe_GET_xref($var, $default=null) {
+	return safe_GET($var, PGV_REGEX_XREF, $default);
+}
+function safe_POST_xref($var, $default=null) {
+	return safe_POST($var, PGV_REGEX_XREF, $default);
+}
+
+function safe_REQUEST($arr, $var, $regex, $default) {
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
-	if (array_key_exists($var, $_GET)) {
-		// If the variable is an array, check all elements
-		if (is_array($_GET[$var])) {
-			foreach ($_GET[$var] as $tmp) {
-				if (!preg_match('~^'.$regex.'$~', $tmp)) {
-					return $default;
-				}
-			}
-			return $_GET[$var];
-		} else {
-			if (preg_match('~^'.$regex.'$~', $_GET[$var])) {
-				return $_GET[$var];
-			} else {
-				return $default;
-			}
-		}
+	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.$regex.'$~', $arr[$var])) {
+		return $arr[$var];
 	} else {
 		return $default;
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Extract, sanitise and validate COOKIE variables
-////////////////////////////////////////////////////////////////////////////////
-function safe_COOKIE($var, $regex, $default=null) {
-	if (is_array($regex)) {
-		$regex='(?:'.join('|', $regex).')';
-	}
-	if (array_key_exists($var, $_COOKIE)) {
-		// If the variable is an array, check all elements
-		if (is_array($_COOKIE[$var])) {
-			foreach ($_COOKIE[$var] as $tmp) {
-				if (!preg_match('~^'.$regex.'$~', $tmp)) {
-					return $default;
+function preg_match_recursive($regex, $var) {
+	if (is_scalar($var)) {
+		return preg_match($regex, $var);
+	} else {
+		if (is_array($var)) {
+			foreach ($var as $k=>$v) {
+				if (!is_numeric($k) || !preg_match_recursive($regex, $v)) {
+					return false;
 				}
 			}
-			return $_COOKIE[$var];
+			return true;
 		} else {
-			if (preg_match('~^'.$regex.'$~', $_COOKIE[$var])) {
-				return $_COOKIE[$var];
-			} else {
-				return $default;
-			}
+			// Neither scalar nor array.  Object?
+			return false;
 		}
-	} else {
-		return $default;
 	}
 }
 

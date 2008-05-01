@@ -93,13 +93,12 @@ class AncestryControllerRoot extends BaseController {
 		global $show_full;
 
 		// Extract form parameters
-		$this->rootid        =safe_GET('rootid',       PGV_REGEX_XREF);
+		$this->rootid        =safe_GET_xref('rootid');
 		$this->show_full     =safe_GET('show_full',    '1', '0');
 		$this->show_cousins  =safe_GET('show_cousins', '1', '0');
-		$this->chart_style   =safe_GET('chart_style',  '[0123]', '0');
-		$this->chart_style   =safe_GET('chart_style',  '[0123]', '0');
-		$PEDIGREE_GENERATIONS=safe_GET('PEDIGREE_GENERATIONS', PGV_REGEX_INTEGER, $DEFAULT_PEDIGREE_GENERATIONS);
-		$box_width           =safe_GET('box_width',            PGV_REGEX_INTEGER, 100);
+		$this->chart_style   =safe_GET_integer('chart_style',          0, 3, 0);
+		$box_width           =safe_GET_integer('box_width',            50, 300, 100);
+		$PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 2, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
 		// Set defaults
 		if (empty($this->rootid)) {
@@ -109,24 +108,12 @@ class AncestryControllerRoot extends BaseController {
 		// This is passed as a global.  A parameter would be better...
 		$show_full=$this->show_full;
 
-
-		// Validate form parameters
-		if ($PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
-			$PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
-			$this->max_generation = true;
-		}
-
-		if ($PEDIGREE_GENERATIONS < 2) {
-			$PEDIGREE_GENERATIONS = 2;
-			$thmin_generation = true;
-		}
 		$OLD_PGENS = $PEDIGREE_GENERATIONS;
 
+		// Validate form parameters
 		$this->rootid = check_rootid($this->rootid);
 
 		// -- size of the boxes
-		$box_width=max($box_width, 50);
-		$box_width=min($box_width, 300);
 		$Dbwidth*=$box_width/100;
 		$bwidth=$Dbwidth;
 		if (!$this->show_full) {

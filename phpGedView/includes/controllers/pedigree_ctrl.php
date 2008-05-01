@@ -77,10 +77,10 @@ class PedigreeControllerRoot extends BaseController {
 			$this->show_famlink = false;
 		}
 
-		$this->rootid=safe_GET('rootid', PGV_REGEX_XREF);
-		$this->show_full=safe_GET('show_full', '1', '0');
+		$this->rootid    =safe_GET_xref('rootid');
+		$this->show_full =safe_GET('show_full', '1', '0');
 		$this->talloffset=safe_GET('talloffset', '1', '0');
-		$this->PEDIGREE_GENERATIONS=safe_GET('PEDIGREE_GENERATIONS', PGV_REGEX_INTEGER, $DEFAULT_PEDIGREE_GENERATIONS);
+		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 3, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
 		// Set defaults
 		if (empty($this->rootid)) {
@@ -92,16 +92,6 @@ class PedigreeControllerRoot extends BaseController {
 		$show_full=$this->show_full;
 
 		// Validate parameters
-		if ($this->PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
-			$this->PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
-			$this->max_generation = true;
-		}
-	
-		if ($this->PEDIGREE_GENERATIONS < 3) {
-			$this->PEDIGREE_GENERATIONS = 3;
-			$this->min_generation = true;
-		}
-
 		$this->rootid=check_rootid($this->rootid);
 		
 		$this->rootPerson = Person::getInstance($this->rootid);

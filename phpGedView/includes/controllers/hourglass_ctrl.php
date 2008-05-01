@@ -94,11 +94,11 @@ class HourglassControllerRoot extends BaseController {
 		global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $show_full;
 
 		// Extract parameters from from
-		$this->pid        =safe_GET('pid',         PGV_REGEX_XREF);
+		$this->pid        =safe_GET_xref('pid');
 		$this->show_full  =safe_GET('show_full',   '1', '0');
 		$this->show_spouse=safe_GET('show_spouse', '1', '0');
-		$this->generations=safe_GET('generations', PGV_REGEX_INTEGER, 3);
-		$this->box_width  =safe_GET('box_width',   PGV_REGEX_INTEGER, '100');
+		$this->generations=safe_GET_integer('generations', 2, $MAX_DESCENDANCY_GENERATIONS, 3);
+		$this->box_width  =safe_GET_integer('box_width',   50, 300, 100);
 
 		// Set defaults
 		if (empty($this->pid)) {
@@ -107,12 +107,6 @@ class HourglassControllerRoot extends BaseController {
 
 		// This is passed as a global.  A parameter would be better...
 		$show_full=$this->show_full;
-
-		// Validate parameters
-		$this->generations=min($this->generations, $MAX_DESCENDANCY_GENERATIONS);
-		$this->generations=max($this->generations, 2);
-		$this->box_width=max($this->box_width, 50);
-		$this->box_width=min($this->box_width, 300);
 
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
 

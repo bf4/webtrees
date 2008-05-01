@@ -108,11 +108,11 @@ class DescendancyControllerRoot extends BaseController {
 	$this->sexarray["U"] = $pgv_lang["unknown"];
 
 	// Extract parameters from form
-	$this->show_full  =safe_GET('show_full',   '1',               '0');
-	$this->chart_style=safe_GET('chart_style', '[0123]',          '0');
-	$this->generations=safe_GET('generations', PGV_REGEX_INTEGER, '2');
-	$this->box_width  =safe_GET('box_width',   PGV_REGEX_INTEGER, '100');
-	$this->pid        =safe_GET('pid',         PGV_REGEX_XREF);
+	$this->pid        =safe_GET_xref('pid');
+	$this->show_full  =safe_GET('show_full', '1', '0');
+	$this->chart_style=safe_GET_integer('chart_style', 0, 3, 0);
+	$this->generations=safe_GET_integer('generations', 2, $MAX_DESCENDANCY_GENERATIONS, 2);
+	$this->box_width  =safe_GET_integer('box_width',   50, 300, 100);
 
 	// Set defaults
 	if (empty($this->pid)) {
@@ -145,10 +145,6 @@ class DescendancyControllerRoot extends BaseController {
 
 	// Validate form variables
 	$this->pid=check_rootid($this->pid);
-	$this->box_width=max($this->box_width, 50);
-	$this->box_width=min($this->box_width, 300);
-	$this->generations = min($this->generations, $MAX_DESCENDANCY_GENERATIONS);
-	$this->generations = max($this->generations, 2);
 
 	if ((DisplayDetailsByID($this->pid))||(showLivingNameByID($this->pid))) $this->name = get_person_name($this->pid);
 	else $this->name = $pgv_lang["private"];

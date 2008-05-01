@@ -27,7 +27,7 @@ require("config.php");
 require_once("includes/functions_charts.php");
 
 // Extract form variables
-$rootid    =safe_GET('rootid' ,    PGV_REGEX_XREF, PGV_USER_GEDCOM_ID);
+$rootid    =safe_GET_xref('rootid');
 $showids   =safe_GET('showids' ,   '1', '0');
 $showthumbs=safe_GET('showthumbs', '1', '0');
 

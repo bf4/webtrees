@@ -30,23 +30,17 @@ require("config.php");
 require_once("includes/functions_charts.php");
 
 // Extract form variables
-$pid        =safe_GET('pid', PGV_REGEX_XREF);
-$show_full  =safe_GET('show_full',     '[01]', $PEDIGREE_FULL_DETAILS);
-$descent    =safe_GET('descent',       '[0-9]', '5');
+$pid        =safe_GET_xref('pid');
+$show_full  =safe_GET('show_full',     '1', '0');
 $show_spouse=safe_GET('show_spouse',   '1', '0');
-$generations=safe_GET('generations',   PGV_REGEX_INTEGER, '2');
-$box_width  =safe_GET('box_width',     PGV_REGEX_INTEGER, '100');
+$descent    =safe_GET_integer('descent',       0, 9, 5);
+$generations=safe_GET_integer('generations',   2, $MAX_DESCENDANCY_GENERATIONS, 2);
+$box_width  =safe_GET_integer('box_width',     50, 300, 100);
 
 // Set default value on start
 if (empty($pid)) {
-	$show_full=1;
+	$show_full=$PEDIGREE_FULL_DETAILS;
 }
-
-// Validate parameters
-$box_width=min($box_width, 300);
-$box_width=max($box_width, 50);
-$generations=min($generations, $MAX_DESCENDANCY_GENERATIONS);
-$generations=max($generations, 2);
 
 // -- size of the boxes
 if (!$show_full) $bwidth = ($bwidth / 1.5);
@@ -58,7 +52,6 @@ if ($show_full==false) {
 $bhalfheight = (int) ($bheight / 2);
 
 // -- root id
-if (!isset($pid)) $pid="";
 $pid=check_rootid($pid);
 if ((DisplayDetailsByID($pid))||(showLivingNameByID($pid))) $name = get_person_name($pid);
 else $name = $pgv_lang["private"];
