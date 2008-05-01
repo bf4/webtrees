@@ -418,27 +418,13 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 }
 
 // Extract form parameters
-$rootid   =safe_GET('rootid',    PGV_REGEX_XREF, PGV_USER_GEDCOM_ID);
-$fan_style=safe_GET('fan_style', '[234]', '3');
-$fan_width=safe_GET('fan_width',  PGV_REGEX_INTEGER, '100');
-$PEDIGREE_GENERATIONS=safe_GET('PEDIGREE_GENERATIONS',PGV_REGEX_INTEGER, $DEFAULT_PEDIGREE_GENERATIONS);
+$rootid   =safe_GET_xref('rootid');
+$fan_style=safe_GET_integer('fan_style',  2,  4,  3);
+$fan_width=safe_GET_integer('fan_width',  50, 300, 100);
+$PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 3, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
 // Validate form parameters
-if ($PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
-	$PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
-	$max_generation = true;
-}
-
-$MIN_FANCHART_GENERATIONS = 3;
-if ($PEDIGREE_GENERATIONS < $MIN_FANCHART_GENERATIONS) {
-	$PEDIGREE_GENERATIONS = $MIN_FANCHART_GENERATIONS;
-	$min_generation = true;
-}
-
 $rootid = check_rootid($rootid);
-
-$fan_width=max($fan_width, 50);
-$fan_width=min($fan_width, 300);
 
 if ((DisplayDetailsByID($rootid)) || (showLivingNameByID($rootid))) {
 	$name = get_person_name($rootid);

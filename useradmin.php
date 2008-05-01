@@ -76,7 +76,7 @@ $new_contact_method      =safe_POST('new_contact_method',       $ALL_CONTACT_MET
 $new_default_tab         =safe_POST('new_default_tab',          array_keys($ALL_DEFAULT_TABS), $GEDCOM_DEFAULT_TAB);
 $new_comment             =safe_POST('new_comment'               );
 $new_comment_exp         =safe_POST('new_comment_exp'           );
-$new_max_relation_path   =safe_POST('new_max_relation_path',    PGV_REGEX_INTEGER, $MAX_RELATION_PATH_LENGTH);
+$new_max_relation_path   =safe_POST_integer('new_max_relation_path', 1, $MAX_RELATION_PATH_LENGTH, 2);
 $new_sync_gedcom         =safe_POST('new_sync_gedcom',          'Y',   'N');
 $new_relationship_privacy=safe_POST('new_relationship_privacy', 'Y',   'N');
 $new_auto_accept         =safe_POST('new_auto_accept',          'Y',   'N');
@@ -173,8 +173,8 @@ if ($action=='createuser' || $action=='edituser2') {
 				set_user_setting($user_id, 'verified',             $verified);
 				set_user_setting($user_id, 'verified_by_admin',    $verified_by_admin);
 				foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-					set_user_gedcom_setting($user_id, $ged_id, 'gedcomid', safe_POST('gedcomid'.$ged_id, PGV_REGEX_XREF));
-					set_user_gedcom_setting($user_id, $ged_id, 'rootid',   safe_POST('rootid'.$ged_id,   PGV_REGEX_XREF));
+					set_user_gedcom_setting($user_id, $ged_id, 'gedcomid', safe_POST_xref('gedcomid'.$ged_id));
+					set_user_gedcom_setting($user_id, $ged_id, 'rootid',   safe_POST_xref('rootid'.$ged_id));
 					set_user_gedcom_setting($user_id, $ged_id, 'canedit',  safe_POST('canedit'.$ged_id,  $ALL_EDIT_OPTIONS));
 				}
 				// If we're verifying a new user, send them a message to let them know

@@ -130,7 +130,7 @@ class LifespanControllerRoot extends BaseController {
 		
 
 		//--new pid
-		$newpid=safe_GET('newpid', PGV_REGEX_XREF);
+		$newpid=safe_GET_xref('newpid');
 		if ($newpid) {
 			$person = Person::getInstance($newpid);
 			if (is_null($person) && $GEDCOM_ID_PREFIX) {
@@ -152,7 +152,7 @@ class LifespanControllerRoot extends BaseController {
 				$this->pids[] = $newpid;
 			
 			//-- pids array
-			$pids=safe_GET('pids', PGV_REGEX_XREF);
+			$pids=safe_GET_xref('pids');
 			if ($pids) {
 				$this->pids = $pids;
 				if (!empty ($newpid))
@@ -164,7 +164,7 @@ class LifespanControllerRoot extends BaseController {
 				if (isset($newpid)) $this->addFamily($newpid);
 			}
 			
-			$remove = safe_GET('remove', PGV_REGEX_XREF);
+			$remove = safe_GET_xref('remove');
 			
 			//-- always start with someone on the chart
 			if (count($this->pids)==0) {
@@ -183,9 +183,9 @@ class LifespanControllerRoot extends BaseController {
 			//-- store the people in the session	
 			$_SESSION['timeline_pids'] = $this->pids;
 			
-			$beginYear  =safe_GET('beginYear', PGV_REGEX_INTEGER);
-			$endYear    =safe_GET('endYear',   PGV_REGEX_INTEGER);
-			if (empty($beginYear) || empty ($endYear)) {
+			$beginYear  =safe_GET_integer('beginYear', 0, date('Y')+100, 0);
+			$endYear    =safe_GET_integer('endYear',   0, date('Y')+100, 0);
+			if ($beginYear==0 || $endYear==0) {
 			//-- cleanup user input
 			$this->pids = array_unique($this->pids);  //removes duplicates
 				foreach ($this->pids as $key => $value) {
