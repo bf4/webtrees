@@ -34,8 +34,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 // Helper defines
-define('STATS_BIRTH', "'BIRT', 'CHR', 'BAPM'");
-define('STATS_DEATH', "'DEAT', 'BURI', 'CREM'");
+define('STATS_BIRTH', "'BIRT','CHR','BAPM'");
+define('STATS_DEATH', "'DEAT','BURI','CREM'");
 define('STATS_MARRIAGE', "'MARR'");
 
 require_once 'includes/functions_print_lists.php';
@@ -50,6 +50,9 @@ class stats
 	var $_compat=false;
 	var $_not_allowed = false;
 	var $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'photo', 'tombstone', 'video', 'other');
+	// For Google charts simple encoding
+	var $_encoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var $_xencoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.';
 
 	function stats($gedcom, $server_url='')
 	{
@@ -162,10 +165,23 @@ class stats
 		 */
 		for ($i=0; $i < $c; $i++)
 		{
+			$full_tag = $tags[$i];
+			// Added for new parameter support
+			$params = explode(':', $tags[$i]);
+			if(count($params) > 1)
+			{
+				$tags[$i] = array_shift($params);
+			}
+			else
+			{
+				$params = null;
+			}
+			// Skip non-tags and non-allowed tags
 			if(!array_search($tags[$i], $funcs) || $tags[$i][0] == '_' || in_array($tags[$i], $this->_not_allowed)){continue;}
+			// Generate the replacement value for the tag
 			if (method_exists($this, $tags[$i])) {
-				$new_tags[]="#{$tags[$i]}#";
-				$new_values[]=$this->$tags[$i]();
+				$new_tags[]="#{$full_tag}#";
+				$new_values[]=$this->$tags[$i]($params);
 				unset($tags[$i]);
 			}
 		}
@@ -425,51 +441,110 @@ class stats
 		return $this->_getPercentage($this->totalOtherRecords(), 'all', 2);
 	}
 
-	function totalSurnames()
+	function totalSurnames($params = null)
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(DISTINCT i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_gedcom['id']);
+		if($params !== null)
+		{
+			$dis = '';
+			$surnames = array();
+			foreach($params as $surname){$surnames[] = "i_surname='{$surname}'";}
+			$surnames = join(' OR ', $surnames);
+			$opt = " AND ({$surnames}) ";
+		}
+		else
+		{
+			$dis = ' DISTINCT ';
+			$opt = '';
+		}
+		$rows = $this->_runSQL("SELECT COUNT({$dis}i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']}{$opt}");
 		return $rows[0]['tot'];
 	}
 
-	function totalEvents()
+	function totalEvents($params = null)
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact!='CHAN' AND d_gid!='HEAD'", 1);
+		if($params !== null)
+		{
+			$types = array();
+			$no_types = array();
+			foreach($params as $type)
+			{
+				if($type{0} == '!')
+				{
+					$type = substr($type, 1);
+					$no_types[] = "'{$type}'";
+				}
+				else
+				{
+					$types[] = "'{$type}'";
+				}
+			}
+			$opt = array();
+			if(count($types))
+			{
+				$opt[] = ' AND d_fact IN ('.join(',', $types).') ';
+			}
+			if(count($no_types))
+			{
+				$opt[] = ' AND d_fact NOT IN ('.join(',', $no_types).') ';
+			}
+			$opt = join('', $opt);
+			$dis = ' DISTINCT ';
+		}
+		else
+		{
+			$opt = '';
+			$dis = '';
+		}
+		$rows = $this->_runSQL("SELECT {$dis}COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}", 1);
 		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
 
 	function totalEventsBirth()
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT DISTINCT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact IN ('BIRT', 'CHR', 'BAPM')", 1);
-		if(!isset($rows[0])){return '';}
-		return $rows[0]['tot'];
+		$facts = explode(',', STATS_BIRTH);
+		$c = count($facts);
+		for($i = 0; $i < $c; $i++)
+		{
+			$facts[$i] = str_replace('\'', '', $facts[$i]);
+		}
+		return $this->totalEvents($facts);
 	}
 
 	function totalEventsDeath()
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT DISTINCT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact IN ('DEAT', 'BURI', 'CREM')", 1);
-		if(!isset($rows[0])){return '';}
-		return $rows[0]['tot'];
+		$facts = explode(',', STATS_DEATH);
+		$c = count($facts);
+		for($i = 0; $i < $c; $i++)
+		{
+			$facts[$i] = str_replace('\'', '', $facts[$i]);
+		}
+		return $this->totalEvents($facts);
 	}
 
 	function totalEventsMarriage()
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='MARR'", 1);
-		if(!isset($rows[0])){return '';}
-		return $rows[0]['tot'];
+		$facts = explode(',', STATS_MARRIAGE);
+		$c = count($facts);
+		for($i = 0; $i < $c; $i++)
+		{
+			$facts[$i] = str_replace('\'', '', $facts[$i]);
+		}
+		return $this->totalEvents($facts);
 	}
 
 	function totalEventsOther()
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact NOT IN ('BIRT', 'CHR', 'BAPM', 'DEAT', 'BURI', 'CREM', 'MARR', 'CHAN') AND d_gid!='HEAD'", 1);
-		if(!isset($rows[0])){return '';}
-		return $rows[0]['tot'];
+		$facts = array_merge(explode(',', STATS_BIRTH), explode(',', STATS_DEATH), explode(',', STATS_MARRIAGE));
+		$no_facts = array();
+		foreach($facts as $fact)
+		{
+			$fact = '!'.str_replace('\'', '', $fact);
+			$no_facts[] = $fact;
+		}
+		return $this->totalEvents($no_facts);
 	}
 
 	function totalSexMales()
@@ -513,6 +588,23 @@ class stats
 		return $this->_getPercentage($this->totalSexUnknown(), 'individual');
 	}
 
+	function chartSex($params=null)
+	{
+		global $pgv_lang;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '350x100';}
+		if(isset($params[1]) && $params[1] != ''){$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
+		if(isset($params[2]) && $params[2] != ''){$color_male = strtolower($params[2]);}else{$color_male = 'add8e6';}
+		if(isset($params[3]) && $params[3] != ''){$color_unknown = strtolower($params[3]);}else{$color_unknown = '000000';}
+		$sizes = explode('x', $size);
+		$tot_f = $this->totalSexFemalesPercentage();
+		$tot_m = $this->totalSexMalesPercentage();
+		$tot_u = $this->totalSexUnknownPercentage();
+		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
+		$chl = urlencode("Total unknown|{$pgv_lang['stat_females']}|{$pgv_lang['stat_males']}");
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
+	}
+
 	function totalLiving()
 	{
 		global $TBLPREFIX;
@@ -553,6 +645,23 @@ class stats
 	{
 		global $TBLPREFIX;
 		return $this->_getPercentage($this->totalMortalityUnknown(), 'individual');
+	}
+
+	function chartMortality($params=null)
+	{
+		global $pgv_lang;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '350x100';}
+		if(isset($params[1]) && $params[1] != ''){$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
+		if(isset($params[2]) && $params[2] != ''){$color_dead = strtolower($params[2]);}else{$color_dead = 'cccccc';}
+		if(isset($params[3]) && $params[3] != ''){$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
+		$sizes = explode('x', $size);
+		$tot_l = $this->totalLivingPercentage();
+		$tot_d = $this->totalDeceasedPercentage();
+		$tot_u = $this->totalMortalityUnknownPercentage();
+		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
+		$chl = urlencode("Total unknown|{$pgv_lang['total_living']}|{$pgv_lang['total_dead']}");
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
 	}
 
 	function totalUsers()
@@ -623,6 +732,38 @@ class stats
 	function totalMediaVideo(){return $this->_totalMediaType('video');}
 	function totalMediaOther(){return $this->_totalMediaType('other');}
 	function totalMediaUnknown(){return $this->_totalMediaType('unknown');}
+
+	function chartMedia($params=null)
+	{
+		global $pgv_lang;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '450x200';}
+		if(isset($params[1]) && $params[1] != ''){$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+		if(isset($params[2]) && $params[2] != ''){$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+		$sizes = explode('x', $size);
+		$tot = $this->_totalMediaType('all');
+		$chd = $this->_array_to_extended_encoding(array(
+			round(100 * $this->_totalMediaType('audio') / $tot, 0),
+			round(100 * $this->_totalMediaType('book') / $tot, 0),
+			round(100 * $this->_totalMediaType('card') / $tot, 0),
+			round(100 * $this->_totalMediaType('certificate') / $tot, 0),
+			round(100 * $this->_totalMediaType('document') / $tot, 0),
+			round(100 * $this->_totalMediaType('electronic') / $tot, 0),
+			round(100 * $this->_totalMediaType('magazine') / $tot, 0),
+			round(100 * $this->_totalMediaType('manuscript') / $tot, 0),
+			round(100 * $this->_totalMediaType('map') / $tot, 0),
+			round(100 * $this->_totalMediaType('fiche') / $tot, 0),
+			round(100 * $this->_totalMediaType('film') / $tot, 0),
+			round(100 * $this->_totalMediaType('newspaper') / $tot, 0),
+			round(100 * $this->_totalMediaType('photo') / $tot, 0),
+			round(100 * $this->_totalMediaType('tombstone') / $tot, 0),
+			round(100 * $this->_totalMediaType('video') / $tot, 0),
+			round(100 * $this->_totalMediaType('other') / $tot, 0),
+			round(100 * $this->_totalMediaType('unknown') / $tot, 0)
+		));
+		$chl = urlencode("{$pgv_lang['TYPE__audio']}|{$pgv_lang['TYPE__book']}|{$pgv_lang['TYPE__card']}|{$pgv_lang['TYPE__certificate']}|{$pgv_lang['TYPE__document']}|{$pgv_lang['TYPE__electronic']}|{$pgv_lang['TYPE__fiche']}|{$pgv_lang['TYPE__film']}|{$pgv_lang['TYPE__magazine']}|{$pgv_lang['TYPE__manuscript']}|{$pgv_lang['TYPE__map']}|{$pgv_lang['TYPE__newspaper']}|{$pgv_lang['TYPE__photo']}|{$pgv_lang['TYPE__tombstone']}|{$pgv_lang['TYPE__video']}|{$pgv_lang['TYPE__other']}|{$pgv_lang['unknown']}");
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Birth & Death                                                             //
@@ -833,18 +974,22 @@ class stats
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function _topTenOldest($type='list', $sex='BOTH')
+	function _topTenOldest($type='list', $sex='BOTH', $params=null)
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$sex_search = ' 1=1';
 		if($sex == 'F')
 		{
-			$sex_search = " i_gedcom LIKE '%1 SEX F%'";
+			$sex_search = " AND i_gedcom LIKE '%1 SEX F%'";
 		}
 		elseif($sex == 'M')
 		{
-			$sex_search = " i_gedcom LIKE '%1 SEX M%'";
+			$sex_search = " AND i_gedcom LIKE '%1 SEX M%'";
 		}
+		else
+		{
+			$sex_search = '';
+		}
+		if($params !== null && isset($params[0])){$total = $params[0];}else{$total = 10;}
 		$rows=$this->_runSQL(''
 			.' SELECT'
 				.' death.d_julianday2-birth.d_julianday1 AS age,'
@@ -862,14 +1007,14 @@ class stats
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
-				.' death.d_julianday1!=0 AND'
+				.' death.d_julianday1!=0'
 				.$sex_search
 			.' ORDER BY'
 				.' age DESC'
-		, 10);
+		, $total);
 		if(!isset($rows[0])){return '';}
 		$top10=array();
-		for($c = 0; $c < 10; $c++)
+		for($c = 0; $c < $total; $c++)
 		{
 			if($type == 'list')
 			{
@@ -902,14 +1047,17 @@ class stats
 	function _averageLifespanQuery($sex='BOTH')
 	{
 		global $TBLPREFIX;
-		$sex_search = ' 1=1';
 		if($sex == 'F')
 		{
-			$sex_search = " i_gedcom LIKE '%1 SEX F%'";
+			$sex_search = " AND i_gedcom LIKE '%1 SEX F%'";
 		}
 		elseif($sex == 'M')
 		{
-			$sex_search = " i_gedcom LIKE '%1 SEX M%'";
+			$sex_search = " AND i_gedcom LIKE '%1 SEX M%'";
+		}
+		else
+		{
+			$sex_search = '';
 		}
 		$rows=$this->_runSQL(''
 			.' SELECT'
@@ -927,7 +1075,7 @@ class stats
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
-				.' death.d_julianday1!=0 AND'
+				.' death.d_julianday1!=0'
 				.$sex_search
 		, 1);
 		if(!isset($rows[0])){return '';}
@@ -941,8 +1089,8 @@ class stats
 	function longestLifeAge(){return $this->_longlifeQuery('age', 'BOTH');}
 	function longestLifeName(){return $this->_longlifeQuery('name', 'BOTH');}
 
-	function topTenOldest(){return $this->_topTenOldest('nolist', 'BOTH');}
-	function topTenOldestList(){return $this->_topTenOldest('list', 'BOTH');}
+	function topTenOldest($params=null){return $this->_topTenOldest('nolist', 'BOTH', $params);}
+	function topTenOldestList($params=null){return $this->_topTenOldest('list', 'BOTH', $params);}
 
 	function averageLifespan(){return $this->_averageLifespanQuery('BOTH');}
 
@@ -952,8 +1100,8 @@ class stats
 	function longestLifeFemaleAge(){return $this->_longlifeQuery('age', 'F');}
 	function longestLifeFemaleNmae(){return $this->_longlifeQuery('name', 'F');}
 
-	function topTenOldestFemale(){return $this->_topTenOldest('nolist', 'F');}
-	function topTenOldestFemaleList(){return $this->_topTenOldest('list', 'F');}
+	function topTenOldestFemale($params=null){return $this->_topTenOldest('nolist', 'F', $params);}
+	function topTenOldestFemaleList($params=null){return $this->_topTenOldest('list', 'F', $params);}
 
 	function averageLifespanFemale(){return $this->_averageLifespanQuery('F');}
 
@@ -963,8 +1111,8 @@ class stats
 	function longestLifeMaleAge(){return $this->_longlifeQuery('age', 'M');}
 	function longestLifeMaleNmae(){return $this->_longlifeQuery('name', 'M');}
 
-	function topTenOldestMale(){return $this->_topTenOldest('nolist', 'M');}
-	function topTenOldestMaleList(){return $this->_topTenOldest('list', 'M');}
+	function topTenOldestMale($params=null){return $this->_topTenOldest('nolist', 'M', $params);}
+	function topTenOldestMaleList($params=null){return $this->_topTenOldest('list', 'M', $params);}
 
 	function averageLifespanMale(){return $this->_averageLifespanQuery('M');}
 
@@ -1206,9 +1354,10 @@ class stats
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function _topTenFamilyQuery($type='list')
+	function _topTenFamilyQuery($type='list', $params=null)
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		if($params !== null && isset($params[0])){$total = $params[0];}else{$total = 10;}
 		$rows=$this->_runSQL(''
 			.' SELECT'
 				.' f_numchil AS tot,'
@@ -1219,10 +1368,10 @@ class stats
 				." f_file={$this->_gedcom['id']}"
 			.' ORDER BY'
 				.' tot DESC'
-		, 10);
+		, $total);
 		if(!isset($rows[0])){return '';}
 		$top10 = array();
-		for($c = 0; $c < 10; $c++)
+		for($c = 0; $c < $total; $c++)
 		{
 			if($type == 'list')
 			{
@@ -1256,8 +1405,42 @@ class stats
 	function largestFamilySize(){return $this->_familyQuery('size');}
 	function largestFamilyName(){return $this->_familyQuery('name');}
 
-	function topTenLargestFamily(){return $this->_topTenFamilyQuery('nolist');}
-	function topTenLargestFamilyList(){return $this->_topTenFamilyQuery('list');}
+	function topTenLargestFamily($params=null){return $this->_topTenFamilyQuery('nolist', $params);}
+	function topTenLargestFamilyList($params=null){return $this->_topTenFamilyQuery('list', $params);}
+
+	function chartLargestFamilies($params=null)
+	{
+		global $TBLPREFIX, $pgv_lang;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '800x100';}
+		if(isset($params[1]) && $params[1] != ''){$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+		if(isset($params[2]) && $params[2] != ''){$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+		if(isset($params[3]) && $params[3] != ''){$total = strtolower($params[3]);}else{$total = 10;}
+		$sizes = explode('x', $size);
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' f_numchil AS tot,'
+				.' f_id AS id'
+			.' FROM'
+				." {$TBLPREFIX}families"
+			.' WHERE'
+				." f_file={$this->_gedcom['id']}"
+			.' ORDER BY'
+				.' tot DESC'
+		, $total);
+		if(!isset($rows[0])){return '';}
+		$tot = 0; foreach($rows as $indexval=>$row){$tot += $row['tot'];}
+		$chd = '';
+		$chl = array();
+		for($i = 0; $i < $total; $i++)
+		{
+			$per = round(100 * $rows[$i]['tot'] / $tot, 0);
+			$chd .= $this->_encoding[$per];
+			$chl[] = urlencode(get_family_descriptor($rows[$i]['id']));
+		}
+		$chl = join('|', $chl);
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=s:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
+	}
 
 	function averageChildren()
 	{
@@ -1271,10 +1454,11 @@ class stats
 // Surnames                                                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _commonSurnamesQuery($type='list', $show_tot=false)
+	function _commonSurnamesQuery($type='list', $show_tot=false, $params=null)
 	{
 		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
-		$surnames = get_common_surnames($COMMON_NAMES_THRESHOLD);
+		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
+		$surnames = get_common_surnames($threshold);
 		if(count($surnames) > 0)
 		{
 			$common = array();
@@ -1313,10 +1497,35 @@ class stats
 		return '';
 	}
 
-	function commonSurnames(){return $this->_commonSurnamesQuery('nolist', false);}
-	function commonSurnamesTotals(){return $this->_commonSurnamesQuery('nolist', true);}
-	function commonSurnamesList(){return $this->_commonSurnamesQuery('list', false);}
-	function commonSurnamesListTotals(){return $this->_commonSurnamesQuery('list', true);}
+	function commonSurnames($params=null){return $this->_commonSurnamesQuery('nolist', false, $params);}
+	function commonSurnamesTotals($params=null){return $this->_commonSurnamesQuery('nolist', true, $params);}
+	function commonSurnamesList($params=null){return $this->_commonSurnamesQuery('list', false, $params);}
+	function commonSurnamesListTotals($params=null){return $this->_commonSurnamesQuery('list', true, $params);}
+
+	function chartCommonSurnames($params=null)
+	{
+		global $pgv_lang, $COMMON_NAMES_THRESHOLD;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '350x100';}
+		if(isset($params[1]) && $params[1] != ''){$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+		if(isset($params[2]) && $params[2] != ''){$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+		if(isset($params[3]) && $params[3] != ''){$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
+		$sizes = explode('x', $size);
+		$surnames = get_common_surnames($threshold);
+		if(count($surnames) <= 0){return '';}
+		$tot = 0;
+		foreach($surnames as $indexval=>$surname){$tot += $surname['match'];}
+		$chd = '';
+		$chl = array();
+		foreach($surnames as $indexval=>$surname)
+		{
+			$per = round(100 * $surname['match'] / $tot, 0);
+			$chd .= $this->_array_to_extended_encoding($per);
+			$chl[] = $surname['name'];
+		}
+		$chl = urlencode(join('|', $chl));
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Users                                                                     //
@@ -1505,6 +1714,20 @@ class stats
 			return $eventTypes[$type];
 		}
 		return false;
+	}
+
+	// http://bendodson.com/news/google-extended-encoding-made-easy/
+	function _array_to_extended_encoding($a)
+	{
+		if(!is_array($a)){$a = array($a);}
+		$encoding = '';
+		foreach($a as $value)
+		{
+			$first = floor($value / 64);
+			$second = $value % 64;
+			$encoding .= $this->_xencoding[$first].$this->_xencoding[$second];
+		}
+		return $encoding;
 	}
 
 	function _runSQL($sql, $count=0)
