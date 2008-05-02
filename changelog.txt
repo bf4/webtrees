@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Lightbox: Various CSS errors corrected (windmillway)
  - Fixed: [ 1955259 ] Pedigree Link from Tree shows without detail by default (canajun2eh)
  - Fixed: [ 1952553 ] SVN 2931 - Related facts - wrong titles of events on INDI (canajun2eh)
  - Fixed: [ 1954352 ] Placename Issue On Language Change For Some Themes (canajun2eh)
