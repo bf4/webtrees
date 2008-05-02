@@ -1971,73 +1971,22 @@ function write_align_with_textdir_check($t_dir, $return=false)
 }
 //-- print theme change dropdown box
 function print_theme_dropdown($style=0) {
-	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
-	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
-		if (!isset($themeformcount)) $themeformcount = 0;
-		$themeformcount++;
-		$uname = PGV_USER_NAME;
-		isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
-		$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
-		if(isset($_REQUEST['mod'])){
-			if(!strstr("?", $frompage))
-			{
-					if(!strstr("%3F", $frompage)) ;
-					else $frompage.="?";
-			}
-			if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
-		}
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
 
-		$themes = get_theme_names();
-		print "<div class=\"theme_form\">\n";
-		$module = "";
+	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
+		echo '<div class="theme_form">';
+		$theme_menu=MenuBar::getThemeMenu();
 		switch ($style) {
-			case 0:
-			print "<form action=\"themechange.php\" name=\"themeform$themeformcount\" method=\"post\">";
-			print "<input type=\"hidden\" name=\"frompage\" value=\"".urlencode($frompage)."\" />";
-			print "<select name=\"mytheme\" class=\"header_select\" onchange=\"document.themeform$themeformcount.submit();\">";
-			print "<option value=\"\">".$pgv_lang["change_theme"]."</option>\n";
-			foreach($themes as $indexval => $themedir) {
-				print "<option value=\"".$themedir["dir"]."\"";
-				if ($uname) {
-					if ($themedir["dir"] == get_user_setting($uname, 'theme')) print " class=\"selected-option\"";
-				} else {
-					if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
-				}
-				print ">".$themedir["name"]."</option>\n";
-			}
-			print "</select></form>";
+		case 0:
+			echo $theme_menu->getMenuAsDropdown();
 			break;
 		case 1:
-			$menu = array();
-			$menu["label"] = $pgv_lang["change_theme"];
-			$menu["labelpos"] = "left";
-			$menu["link"] = "#";
-			$menu["class"] = "thememenuitem";
-			$menu["hoverclass"] = "thememenuitem_hover";
-			$menu["flyout"] = "down";
-			$menu["submenuclass"] = "themesubmenu";
-			$menu["items"] = array();
-			foreach($themes as $indexval => $themedir) {
-				$submenu = array();
-				$submenu["label"] = $themedir["name"];
-				$submenu["labelpos"] = "right";
-				$submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
-				$submenu["class"] = "favsubmenuitem";
-				if ($uname) {
-					if ($themedir["dir"] == get_user_setting($uname, 'theme')) $submenu["class"] = "favsubmenuitem_selected";
-				} else {
-					if ($themedir["dir"] == $THEME_DIR) $submenu["class"] = "favsubmenuitem_selected";
-				}
-				$submenu["hoverclass"] = "favsubmenuitem_hover";
-				$menu["items"][] = $submenu;
-			}
-			print_menu($menu);
+			echo $theme_menu->getMenu();
 			break;
 		}
-		print "</div>\n";
-	}
-	else {
-		print "&nbsp;";
+		echo '</div>';
+	} else {
+		echo '&nbsp;';
 	}
 }
 
