@@ -38,7 +38,7 @@ $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	);
 	
 function print_charts_block($block = true, $config="", $side, $index) {
-	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID;
+	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
 	global $show_full, $bwidth, $bheight;
 	
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
@@ -62,6 +62,8 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$show_full = 1;
 		// Here we could adjust the block width & height to accommodate larger displays 
 	}
+
+	$PEDIGREE_FULL_DETAILS = $show_full;		// Override GEDCOM configuration (but only for the Charts block)
 	
 	if ($config['type']!='treenav') {
 		include_once("includes/controllers/hourglass_ctrl.php");
@@ -108,7 +110,8 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			$title .= $name." ".$pgv_lang["tree"];
 			break;
 	}
-	$content="";
+	$content = "";
+	$content .= "<script src=\"phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 	if ($show_full==0) {
 		$content .=  "<span class=\"details2\"><center>".$pgv_lang["charts_click_box"]."</center></span><br />";
 	}

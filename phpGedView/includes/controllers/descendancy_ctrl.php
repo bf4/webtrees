@@ -109,7 +109,7 @@ class DescendancyControllerRoot extends BaseController {
 
 	// Extract parameters from form
 	$this->pid        =safe_GET_xref('pid');
-	$this->show_full  =safe_GET('show_full', '1', '0');
+	$this->show_full  =safe_GET('show_full', '1', $PEDIGREE_FULL_DETAILS);
 	$this->chart_style=safe_GET_integer('chart_style', 0, 3, 0);
 	$this->generations=safe_GET_integer('generations', 2, $MAX_DESCENDANCY_GENERATIONS, 2);
 	$this->box_width  =safe_GET_integer('box_width',   50, 300, 100);
