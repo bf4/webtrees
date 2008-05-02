@@ -41,7 +41,7 @@ $pgv_lang["GOOGLEMAP_MAP_TYPE"]         = "Google-map type";
 $pgv_lang["GOOGLEMAP_MAP_TYPE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_TYPE]#~<br /><br />The type of map that will be shown by default. This can be Map, Satellite, Hybrid or Terrain.";
 
 $pgv_lang["GOOGLEMAP_MAP_SIZE"]         = "Google-map size";
-$pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />The size of the map (in pixels) as shown on the Individual and Place Hierarchy pages.";
+$pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />The size of the map (in pixels) as shown on the Individual pages.";
 
 $pgv_lang["GOOGLEMAP_MAP_ZOOM"]         = "Google-map zoom factor";
 $pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimum and maximum zoom factor for the Google map. 1 is the full map, 15 is single house. Note that 15 is only available in certain areas.";
@@ -136,13 +136,15 @@ $pgv_lang["PLACECHECK_MATCH_help"]  	= "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br 
 
 //wooc Options for Place Hierarchy display
 $pgv_lang["GOOGLEMAP_PH"]             	= "Use Googlemap for Place Hierarchy";
-$pgv_lang["GOOGLEMAP_PH_help"]        	= "Using this option the functionality of the Googlemap for Place Hierarchy can be enabled or disabled. For show is needed to enable Googlemap module also. Before using is recomended to insert all places into the Googlemap tables.";
+$pgv_lang["GOOGLEMAP_PH_help"]        	= "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Using this option the functionality of the Googlemap for Place Hierarchy can be enabled or disabled. For show is needed to enable Googlemap module also. Before using is recomended to insert all places into the Googlemap tables.";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE"]		= "Size of Place Hierarchy map (in pixels)";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"]	= "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />The size of the map (in pixels) as shown on the Place Hierarchy pages.";
 $pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Type of place markers in Place Hierarchy";
-$pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "Here you can specify what type of marker be able to use (standard or flag). If place has no flag, use standard marker.";
-$pgv_lang["GM_DISP_SHORT_PLACE"]		= "Display short placenames?";
-$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "Here you can choose between two types of displaing places names in hierarchy. If set Yes the place was short name or actual level name. If No place have full name.";
-$pgv_lang["GM_DISP_COUNT"]				= "Display indis and families counts?";
-$pgv_lang["GM_DISP_COUNT_help"]			= "Here you can specify if the counts of indis and families connected to the place is displayed. Now if GEDCOM file contains many people is recomended to turn it off.";
-$pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Use mouse wheel for zoom?";
-$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "Here you can specify if the mouse wheel is enebled for zooming.";
+$pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "~#pgv_lang[GOOGLEMAP_PH_MARKER]#~<br /><br />Here you can specify what type of marker be able to use (standard or flag). If place has no flag, use standard marker.";
+$pgv_lang["GM_DISP_SHORT_PLACE"]		= "Display short placenames";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "~#pgv_lang[GM_DISP_SHORT_PLACE]#~<br /><br />Here you can choose between two types of displaing places names in hierarchy. If set Yes the place was short name or actual level name. If No place have full name.";
+$pgv_lang["GM_DISP_COUNT"]				= "Display indis and families counts";
+$pgv_lang["GM_DISP_COUNT_help"]			= "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Here you can specify if the counts of indis and families connected to the place is displayed. Now if GEDCOM file contains many people is recomended to turn it off.";
+$pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Use mouse wheel for zoom";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Here you can specify if the mouse wheel is enebled for zooming.";
 ?>

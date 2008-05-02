@@ -71,12 +71,13 @@ $pgv_lang["gm_pp_po_pr_n_b"]        = "Postfix, prefix, normal, both";
 $pgv_lang["googlemap_coord"]        = "Display Map Co-ordinates";
 //wooc place hierarchy
 $pgv_lang["gm_place_hierarchy"]  	= "Use Googlemap for Place Hierarchy";
+$pgv_lang["gm_ph_map_size"]			= "Size of Place Hierarchy map (in pixels)";
 $pgv_lang["gm_ph_marker_type"]		= "Type of place markers in Place Hierarchy";
 $pgv_lang["gm_standard_marker"]		= "Standard";
 $pgv_lang["gm_no_coord"]			= "This place has no coordinates";
-$pgv_lang["gm_ph_placenames"]		= "Display short placenames?";
-$pgv_lang["gm_ph_count"]			= "Display indis and families count?";
-$pgv_lang["gm_ph_wheel"]			= "Use mouse wheel for zoom?";
+$pgv_lang["gm_ph_placenames"]		= "Display short placenames";
+$pgv_lang["gm_ph_count"]			= "Display indis and families count";
+$pgv_lang["gm_ph_wheel"]			= "Use mouse wheel for zoom";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edit geographic place locations";
