@@ -51,12 +51,13 @@ $pgv_lang["gm_pp_po_pr_n_b"]        = "Przyrostek, przedrostek, normalny, oba";
 $pgv_lang["googlemap_coord"]        = "Wyświetl współrzędne";
 //wooc place hierarchy
 $pgv_lang["gm_place_hierarchy"]		= "Użyj Googlemap do wyświetlania hierarchii miejsc";
+$pgv_lang["gm_ph_map_size"]			= "Wielkość mapy w hierarchii miejsc (w pikselach)";
 $pgv_lang["gm_ph_marker_type"]		= "Typ znacznika miejsca w hierarchii miejsc";
 $pgv_lang["gm_standard_marker"]		= "Standardowy";
 $pgv_lang["gm_no_coord"]			= "Miejsce ma nieustawione współrzędne";
-$pgv_lang["gm_ph_placenames"]		= "Czy wyświetlić skrócone nazwy miejsc?";
-$pgv_lang["gm_ph_count"]			= "Czy wyświetlić liczbę osób i rodzin połączonych z danym miejscem?";
-$pgv_lang["gm_ph_wheel"]			= "Użyć rolki myszki do przybliżania/oddalania?";
+$pgv_lang["gm_ph_placenames"]		= "Wyświetl skrócone nazwy miejsc";
+$pgv_lang["gm_ph_count"]			= "Wyświetl liczbę osób i rodzin połączonych z danym miejscem";
+$pgv_lang["gm_ph_wheel"]			= "Użyj rolki myszki do przybliżania/oddalania";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edytuj położenie geograficzne miejsc";

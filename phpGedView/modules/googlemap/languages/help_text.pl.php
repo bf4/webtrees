@@ -42,7 +42,7 @@ $pgv_lang["GOOGLEMAP_MAP_TYPE"]         = "Typ mapy";
 $pgv_lang["GOOGLEMAP_MAP_TYPE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_TYPE]#~<br /><br />Wybierz domyślny typ mapy. Dostępne typy map: zwykła Mapa, Satelitarna, Hybrydowa i Terenowa.";
 
 $pgv_lang["GOOGLEMAP_MAP_SIZE"]         = "Rozmiar mapy";
-$pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />Rozmiar mapy w pikselach. Mapa wyświetlana na stronie osoby lub hierarchii miejsc będzie miała podany rozmiar.";
+$pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />Rozmiar mapy w pikselach. Mapa wyświetlana na stronie osoby będzie miała podany rozmiar.";
 
 $pgv_lang["GOOGLEMAP_MAP_ZOOM"]         = "Współczynnik powiększenia";
 $pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimalny i maksymalny współczynnik powiększenia dla  mapy Google. 1 - cała mapa, 15 - pojedyńcze domy. Współczynnik 15 dostępny jest tylko w pewnych miejscach.";
@@ -137,13 +137,15 @@ $pgv_lang["PLACECHECK_MATCH_help"]  	= "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br 
 
 //wooc Options for Place Hierarchy display
 $pgv_lang["GOOGLEMAP_PH"]				= "Użyj Googlemap do wyświetlania hierarchii miejsc";
-$pgv_lang["GOOGLEMAP_PH_help"]			= "Jeśli zostanie wybrane Tak, hierarchia miejsc będzie wyświetlana za pomocą Googlemap, w przeciwnym razie będzie wyświetlana standardowo. Dla wyświetlania wymagana jest jeszcze opcja włączenia modułu Googlemap. Przed włączeniem zaleca się wprowadzenie wszystkich miejsc do tablicy Googlemap.";
+$pgv_lang["GOOGLEMAP_PH_help"]			= "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Jeśli zostanie wybrane Tak, hierarchia miejsc będzie wyświetlana za pomocą Googlemap, w przeciwnym razie będzie wyświetlana standardowo. Dla wyświetlania wymagana jest jeszcze opcja włączenia modułu Googlemap. Przed włączeniem zaleca się wprowadzenie wszystkich miejsc do tablicy Googlemap.";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE"]		= "Wielkość mapy w hierarchii miejsc (w pikselach)";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"]	= "~#pgv_lang[GOOGLEMAP_PH_MAP_SIZE]#~<br /><br />Rozmiar mapy w pikselach. Mapa wyświetlana na stronie hierarchii miejsc będzie miała podany rozmiar.";
 $pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Typ znacznika miejsca w hierarchii miejsc";
-$pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "Tutaj możesz określić czy do wyświetlania miejsc w hierarchii będzie użyty standardowy znacznik czy przypisana flaga (jeśli brak przypisanej flagi, będzie wyświetlony standardowy znacznik).";
-$pgv_lang["GM_DISP_SHORT_PLACE"]		= "Wyświetlić skrócone nazwy miejsc?";
-$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "Tutaj możesz określić czy miejsca wyświetlane w hierarchii będą miały wyświetlone pełne nazwy czy tylko będzie wyświetlona nazwa aktualnego poziomu/miejsca.";
-$pgv_lang["GM_DISP_COUNT"]				= "Czy wyświetlić liczbę osób i rodzin połączonych z danym miejscem?";
-$pgv_lang["GM_DISP_COUNT_help"]			= "Możesz określić czy liczba osób i rodzin powiązana z danym miejscem będzie wyświetlana. Przy dużej ilości osób i miejsc zaleca się wyłączenie tej opcji.";
-$pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Użyć rolki myszki do przybliżania/oddalania?";
-$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "Możesz określić czy rolka myszki będzie używana do przybliżania lub oddalania mapy.";
+$pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "~#pgv_lang[GOOGLEMAP_PH_MARKER]#~<br /><br />Tutaj możesz określić czy do wyświetlania miejsc w hierarchii będzie użyty standardowy znacznik czy przypisana flaga (jeśli brak przypisanej flagi, będzie wyświetlony standardowy znacznik).";
+$pgv_lang["GM_DISP_SHORT_PLACE"]		= "Wyświetl skrócone nazwy miejsc";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "~#pgv_lang[GM_DISP_SHORT_PLACE]#~<br /><br />Tutaj możesz określić czy miejsca wyświetlane w hierarchii będą miały wyświetlone pełne nazwy czy tylko będzie wyświetlona nazwa aktualnego poziomu/miejsca.";
+$pgv_lang["GM_DISP_COUNT"]				= "Wyświetl liczbę osób i rodzin połączonych z danym miejscem";
+$pgv_lang["GM_DISP_COUNT_help"]			= "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Możesz określić czy liczba osób i rodzin powiązana z danym miejscem będzie wyświetlana. Przy dużej ilości osób i miejsc zaleca się wyłączenie tej opcji.";
+$pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Użyj rolki myszki do przybliżania/oddalania";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Możesz określić czy rolka myszki będzie używana do przybliżania lub oddalania mapy.";
 ?>
