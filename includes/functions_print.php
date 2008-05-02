@@ -973,64 +973,25 @@ function print_execution_stats() {
 
 //-- print a form to change the language
 function print_lang_form($option=0) {
-	global $ENABLE_MULTI_LANGUAGE, $pgv_lang, $pgv_language, $flagsfile, $LANGUAGE, $language_settings;
-	global $LANG_FORM_COUNT;
-	global $SCRIPT_NAME, $QUERY_STRING;
+	global $ENABLE_MULTI_LANGUAGE;
+
 	if ($ENABLE_MULTI_LANGUAGE) {
-		if (empty($LANG_FORM_COUNT)) $LANG_FORM_COUNT=1;
-		else $LANG_FORM_COUNT++;
-
-		//-- determine which languages are actually being used
-		$used_langs = array();
-		foreach ($pgv_language as $key=>$value) {
-			if ($language_settings[$key]["pgv_lang_use"]) {
-				$used_langs[$key] = $value;
-			}
-		}
 		//-- don't show the form if there is only one language enabled
-		if (count($used_langs)<2) return;
+		$language_menu=MenuBar::getLanguageMenu();
+		if (count($language_menu->submenus)<2) {
+			return;
+		}
 
-		print "\n\t<div class=\"lang_form\">\n";
+		print '<div class="lang_form">';
 		switch($option) {
 		case 1:
-			//-- flags option
-			$i = 0;
-			foreach ($used_langs as $key=>$value)
-			{
-				if (($key != $LANGUAGE) and ($language_settings[$key]["pgv_lang_use"]))
-				{
-					$i ++;
-					$flagid = "flag" . $i;
-					print "<a href=\"$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;changelanguage=yes&amp;NEWLANGUAGE=$key")."\">";
-					print "<img src=\"" . $flagsfile[$key] . "\" class=\"dimflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" onmouseover=\"change_class('".$flagid."','brightflag');\" onmouseout=\"change_class('".$flagid."','dimflag');\" id='".$flagid."' /></a>\n";
-				}
-				else
-				{
-					if ($language_settings[$key]["pgv_lang_use"]) print "<img src=\"" . $flagsfile[$key] . "\" class=\"activeflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" />\n";
-				}
-			}
+			echo $language_menu->getMenuAsIcons();
 			break;
 		default:
-			print "<form name=\"langform$LANG_FORM_COUNT\" action=\"$SCRIPT_NAME";
-			print "\" method=\"get\">";
-			$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
-			foreach ($vars as $var) {
-				$parts = preg_split("/=/", $var);
-				print "\n\t\t<input type=\"hidden\" name=\"".$parts[0]."\" value=\"".$parts[1]."\" />";
-			}
-			print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
-			print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
-			foreach ($used_langs as $key=>$value) {
-				if ($language_settings[$key]["pgv_lang_use"]) {
-					print "\n\t\t\t<option value=\"$key\" ";
-					if ($LANGUAGE == $key) print " selected=\"selected\" class=\"selected-option\"";
-					print ">".$pgv_lang[$key]."</option>";
-				}
-			}
-			print "</select>\n</form>\n";
+			echo $language_menu->getMenuAsDropdown();
 			break;
 		}
-		print "</div>";
+		print '</div>';
 	}
 }
 /**
