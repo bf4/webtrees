@@ -21,8 +21,8 @@
  *
  * @package PhpGedView
  * @subpackage Googlemap
- * $Id: placehierarchy.php 2972 2008-05-02 14:56:16Z wooc $
- * @author £ukasz WileÒski Apr 2008
+ * @author ≈Åukasz Wile≈Ñski <wooc@users.sourceforge.net>
+ * $Id$
  */
 
 if (file_exists('modules/googlemap/defaultconfig.php')) {
