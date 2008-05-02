@@ -86,17 +86,17 @@ margin-top: 0px;
 
 .prvpic img
 {
-background-color: none; 
+/* background-color: none; */
 border-style: dotted;
 border: 0px;
-border-color: none;
+/* border-color: none; */
 padding: 0px;
 }
 
 .pic
 {
 /* background-color: #777777; */
-background-color: none;
+/* background-color: none; */
 border-style: solid;
 border: 0px;
 border-color: #ffffff;
@@ -137,7 +137,8 @@ float: right;
 }
 
 li.li_norm{
-border: 2px solid transparent; 
+/* border: 2px solid transparent; */
+border: 2px; 
 }
 
 li.li_new {
