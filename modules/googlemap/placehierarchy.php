@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Googlemap
- * @version $Id: placehierarchy.php 2972 2008-05-02 14:56:16Z wooc $
+ * $Id: placehierarchy.php 2972 2008-05-02 14:56:16Z wooc $
  * @author £ukasz Wileñski Apr 2008
  */
 
