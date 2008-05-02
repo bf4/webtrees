@@ -158,6 +158,23 @@ class Menu
 		}
 	}
 
+	// Get the menu as a list of icons
+	function getMenuAsIcons() {
+		if ($this->seperator || !$this->link && !$this->submenus) {
+			return '';
+		}
+		$icons=array();
+		if ($this->icon) {
+			$icons[]='<a href="'.$this->link.'"><img onmouseover="this.className=\''.$this->hoverclass.'\'" onmouseout="this.className=\''.$this->class.'\'" class="'.$this->class.'" src="'.$this->icon.'" alt="'.$this->label.'" title="'.$this->label.'"></a>';
+		}
+		if ($this->submenus) {
+			foreach ($this->submenus as $submenu) {
+				$icons[]=$submenu->getMenuAsIcons();
+			}
+		}
+		return join(' ', $icons);
+	}
+
 	function getMenu()
 	{
 		global
@@ -1176,6 +1193,7 @@ class MenuBar
 		$menu->addSubmenu($submenu);
 		return $menu;
 	}
+	
 	/**
 	 * get the menu with links change to each theme
 	 * @return Menu 	the menu item
@@ -1215,6 +1233,44 @@ class MenuBar
 				$menu->addSubMenu($submenu);
 			}
 			return $menu;
+		} else {
+			return new Menu('', '');
+		}
+	}
+	/**
+	 * get the menu with links change to each language
+	 * @return Menu 	the menu item
+	 */
+	function &getLanguageMenu() {
+		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $language_settings, $flagsfile, $QUERY_STRING, $SCRIPT_NAME;
+
+		if (PGV_USER_ID) {
+			$current=$LANGUAGE;
+		} else {
+			$current=get_user_setting(PGV_USER_ID, 'language');
+		}
+
+		if ($ENABLE_MULTI_LANGUAGE) {
+			$menu=new Menu($pgv_lang['change_lang']);
+			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu');
+			$menu->print_menu = null;
+			foreach ($language_settings as $lang=>$language) {
+				if ($language['pgv_lang_use']) {
+					$submenu=new Menu($language['pgv_lang'], $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang));
+					if ($lang==$current) {
+						$submenu->addClass('activeflag', 'brightflag');
+					} else {
+						$submenu->addClass('dimflag', 'brightflag');
+					}
+					$submenu->addIcon($flagsfile[$lang]);
+					$menu->addSubMenu($submenu);
+				}
+			}
+			if (count($menu->submenus)>1) {
+				return $menu;
+			} else {
+				return new Menu('', '');
+			}
 		} else {
 			return new Menu('', '');
 		}
