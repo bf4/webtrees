@@ -22,7 +22,7 @@
   * @author £ukasz Wileñski Apr 2008
  * @package PhpGedView
  * @subpackage Googlemap
- * @version $Id
+ * @version $Id: placehierarchy.php 2972 2008-05-02 14:56:16Z wooc $
  */
 
 if (file_exists('modules/googlemap/defaultconfig.php')) {
@@ -311,7 +311,7 @@ function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady($place2["place"]).$placelevels;
 				else echo PrintReady($place2["place"]);
 		}
-		echo "</a>";
+		echo "<br /></a><br />";
 		if ($GM_DISP_COUNT != "false") print_how_many_people($placename);
 		if ($GOOGLEMAP_COORD == "false"){
 			echo "</div>\", icon_type);\n";
