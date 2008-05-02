@@ -19,10 +19,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
-  * @author £ukasz Wileñski Apr 2008
  * @package PhpGedView
  * @subpackage Googlemap
  * @version $Id: placehierarchy.php 2972 2008-05-02 14:56:16Z wooc $
+ * @author £ukasz Wileñski Apr 2008
  */
 
 if (file_exists('modules/googlemap/defaultconfig.php')) {
