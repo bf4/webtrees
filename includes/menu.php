@@ -142,6 +142,22 @@ class Menu
 		return '<li>'.$html.'</li>';
 	}
 
+	// Get the menu as a dropdown form element
+	function getMenuAsDropdown() {
+		if ($this->seperator || !$this->link && !$this->submenus) {
+			return '';
+		}
+		if ($this->submenus) {
+			$options='<option value="'.$this->link.'">'.$this->label.'</option>';
+			foreach ($this->submenus as $submenu) {
+				$options.=$submenu->getMenuAsDropdown();
+			}
+			return '<select onchange="document.location=this.value;">'.$options.'</select>';
+		} else {
+			return '<option value="'.$this->link.'">'.htmlspecialchars($this->label).'</option>';
+		}
+	}
+
 	function getMenu()
 	{
 		global
@@ -1159,6 +1175,49 @@ class MenuBar
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 		return $menu;
+	}
+	/**
+	 * get the menu with links change to each theme
+	 * @return Menu 	the menu item
+	 */
+	function &getThemeMenu() {
+		global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME, $pgv_lang;
+
+		$current=$THEME;
+		$themes=get_theme_names();
+		foreach ($themes as $theme) {
+			if ($theme['dir']==get_user_setting(PGV_USER_ID, 'theme')) {
+				$current=$theme['name'];
+			}
+		}
+
+		if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
+			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
+			$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
+			if(isset($_REQUEST['mod'])){
+				if(!strstr("?", $frompage))
+				{
+						if(!strstr("%3F", $frompage)) ;
+						else $frompage.="?";
+				}
+				if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
+			}
+			$menu=new Menu($pgv_lang['change_theme']);
+			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu');
+			$menu->print_menu = null;
+			foreach ($themes as $theme) {
+				$submenu=new Menu($theme['name'], 'themechange.php?frompage='.urlencode($frompage).'&amp;mytheme='.urlencode($theme['dir']));
+				if ($theme['name']==$current) {
+					$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
+				} else {
+					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+				}
+				$menu->addSubMenu($submenu);
+			}
+			return $menu;
+		} else {
+			return new Menu('', '');
+		}
 	}
 }
 
