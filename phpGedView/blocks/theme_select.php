@@ -5,7 +5,7 @@
  * This block will print a form that allows the visitor to change the theme
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,60 +39,9 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 	$id="theme_select";
 	$title = $pgv_lang["change_theme"];
 	$title .= print_help_link("change_theme", "qm","",false,true);
-	$content = "<div class=\"center\"><br />";
 
-	if (!isset($themeformcount)) $themeformcount = 0;
-	$themeformcount++;
-	$user_theme= get_user_setting(PGV_USER_ID, 'theme');
-	isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
-	$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
-	
-	$themes = get_theme_names();
-	$content .= "<div class=\"theme_form\">";
-	$style=0;
-	switch ($style) {
-	case 0:
-		$content .= "<form action=\"themechange.php\" name=\"themeform$themeformcount\" method=\"post\">";
-		$content .= "<input type=\"hidden\" name=\"frompage\" value=\"".urlencode($frompage)."\" />";
-		$content .= "<select name=\"mytheme\" class=\"header_select\" onchange=\"document.themeform$themeformcount.submit();\">";
-		$content .= "<option value=\"\">".$pgv_lang["change_theme"]."</option>";
-		foreach($themes as $indexval => $themedir) {
-			$content .= "<option value=\"".$themedir["dir"]."\"";
-			if ($user_theme) {
-				if ($themedir["dir"] == $user_theme) $content .= " class=\"selected-option\"";
-			} else {
-				if ($themedir["dir"] == $THEME_DIR) $content .= " class=\"selected-option\"";
-			}
-			$content .= ">".$themedir["name"]."</option>";
-		}
-		$content .= "</select></form>";
-		break;
-	case 1:
-		$menu = array();
-		$menu["label"] = $pgv_lang["change_theme"];
-		$menu["labelpos"] = "left";
-		$menu["link"] = "#";
-		$menu["class"] = "thememenuitem";
-		$menu["hoverclass"] = "thememenuitem_hover";
-		$menu["flyout"] = "down";
-		$menu["submenuclass"] = "favsubmenu";
-		$menu["items"] = array();
-		foreach($themes as $indexval => $themedir) {
-			$submenu = array();
-			$submenu["label"] = $themedir["name"];
-			$submenu["labelpos"] = "right";
-			$submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
-			$submenu["class"] = "favsubmenuitem";
-			$submenu["hoverclass"] = "favsubmenuitem_hover";
-			$menu["items"][] = $submenu;
-		}
-		ob_start();
-		print_menu($menu);
-		$content .= ob_get_clean();
-		break;
-	}
-	$content .= "</div>";
-	$content .= "<br /></div>";
+	$theme_menu=MenuBar::getThemeMenu();
+	$content='<div class="center theme_form"><br />'.$theme_menu->getMenuAsDropdown().'<br /<br /></div>';
 	
 	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
 	print '<td class="blockh1">&nbsp;</td>';
