@@ -39,7 +39,7 @@ define('PGV_REGEX_XREF',      '[A-Za-z0-9:-]+');
 define('PGV_REGEX_INTEGER',   '-?\d+');
 define('PGV_REGEX_BYTES',     '[0-9]+[bBkKmMgG]?');
 define('PGV_REGEX_PASSWORD',  '.{6,}');
-define('PGV_REGEX_NOSCRIPT',  '[^\s<>"&%{};]+');
+define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
 define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
 
 function isAlphaNum($value) {
