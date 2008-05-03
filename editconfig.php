@@ -34,9 +34,8 @@ require_once "sanity_check.php";
 
 if (!defined("DB_ERROR")) require_once('DB.php');
 
-if (empty($action)) $action="";
-if (!isset($LOGIN_URL)) $LOGIN_URL = "";
-if (!isset($COMMIT_COMMAND)) $COMMIT_COMMAND="";
+$action=safe_POST('action', PGV_REGEX_ALPHA);
+
 if ($CONFIGURED) {
 	if (check_db(true)) {
 		//-- check if no users have been defined and create the main admin user
@@ -45,12 +44,18 @@ if ($CONFIGURED) {
 			print "<span class=\"subheaders\">".$pgv_lang["configure"]."</span><br />";
 			print $pgv_lang["welcome_new"]."<br />";
 			if ($action=="createadminuser") {
-				if ($pass1==$pass2) {
+				$username =safe_POST('username');
+				$firstname=safe_POST('firstname');
+				$lastname =safe_POST('lastname');
+				$pass1    =safe_POST('pass1', PGV_REGEX_PASSWORD);
+				$pass2    =safe_POST('pass2', PGV_REGEX_PASSWORD);
+				$email    =safe_POST('email', PGV_REGEX_EMAIL);
+				if ($pass1 && $pass1==$pass2) {
 					if ($user_id=create_user($username, crypt($pass1))) {
 						set_user_setting($user_id, 'firstname',            $firstname);
 						set_user_setting($user_id, 'lastname',             $lastname);
 						set_user_setting($user_id, 'canadmin',             'Y');
-						set_user_setting($user_id, 'email',                $emailadress);
+						set_user_setting($user_id, 'email',                $email);
 						set_user_setting($user_id, 'verified',             'yes');
 						set_user_setting($user_id, 'verified_by_admin',    'yes');
 						set_user_setting($user_id, 'language',             $LANGUAGE);
@@ -130,7 +135,7 @@ if ($CONFIGURED) {
 					<tr><td align="right"><?php print $pgv_lang["lastname"];?></td><td><input type="text" name="lastname" /></td></tr>
 					<tr><td align="right"><?php print $pgv_lang["password"];?></td><td><input type="password" name="pass1" /></td></tr>
 					<tr><td align="right"><?php print $pgv_lang["confirm"];?></td><td><input type="password" name="pass2" /></td></tr>
-					<tr><td align="right"><?php print $pgv_lang["emailadress"];?></td><td><input type="text" name="emailadress" size="45" /></td></tr>
+					<tr><td align="right"><?php print $pgv_lang["emailadress"];?></td><td><input type="text" name="email" size="45" /></td></tr>
 				</table>
 				<input type="submit" value="<?php print $pgv_lang["create_user"]; ?>" />
 				</form>
@@ -163,72 +168,54 @@ if (count($warnings)>0 || count($errors)>0) {
 	if (count($errors)>0) exit;
 }
 if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DBUSER'])) {
-	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
-	$boolarray = array();
-	$boolarray["yes"]="true";
-	$boolarray["no"]="false";
-	$boolarray[false]="false";
-	$boolarray[true]="true";
 	print $pgv_lang["performing_update"];
 	print "<br />";
 	$configtext = implode('', file("config.php"));
 	print $pgv_lang["config_file_read"];
-	print "<br />\n";
+	print "<br />";
 	$NEW_SERVER_URL = trim($NEW_SERVER_URL);
 	if (!isFileExternal($NEW_SERVER_URL)) $NEW_SERVER_URL = "http://".$NEW_SERVER_URL;
 	if (preg_match("'/$'", $NEW_SERVER_URL)==0) $NEW_SERVER_URL .= "/";
 	$_POST["NEW_INDEX_DIRECTORY"] = preg_replace('/\\\/','/',$_POST["NEW_INDEX_DIRECTORY"]);
-	if (preg_match('/\$DBTYPE\s*=\s*".*";/', $configtext)>0) {
-		$configtext = preg_replace('/\$DBTYPE\s*=\s*".*";/', "\$DBTYPE = \"".$_POST["NEW_DBTYPE"]."\";", $configtext);
-	}
-	else {
-		$configtext = preg_replace('/\$DBHOST/', "\$DBTYPE = \"".$_POST["NEW_DBTYPE"]."\";\r\n\$DBHOST", $configtext);
-	}
-	if ($CONFIG_VERSION<4) {
-		$configtext = preg_replace('/\$TBLPREFIX/', "\$DBPERSIST = false;\r\n\$TBLPREFIX", $configtext);
-		$configtext = preg_replace('/\$CONFIG_VERSION\s*=\s*".*";/', "\$CONFIG_VERSION = \"4.0\";", $configtext);
-	}
-	$configtext = preg_replace('/\$DBHOST\s*=\s*".*";/', "\$DBHOST = \"".$_POST["NEW_DBHOST"]."\";", $configtext);
-	$configtext = preg_replace('/\$DBUSER\s*=\s*".*";/', "\$DBUSER = \"".$_POST["NEW_DBUSER"]."\";", $configtext);
-	if (!empty($_POST["NEW_DBPASS"])) {
-		$tempPW = str_replace(array("\\", "\'", "\"", "\$"), array("\\\\", "\\\"", "\\\$"), $_POST["NEW_DBPASS"]);		// add escape codes before storing PW
-		$configtext = preg_replace('/\$DBPASS\s*=\s*".*";/', "\$DBPASS = \"{$tempPW}\";", $configtext);
-	}
-	$configtext = preg_replace('/\$DBNAME\s*=\s*".*";/', "\$DBNAME = \"".$_POST["NEW_DBNAME"]."\";", $configtext);
-	$configtext = preg_replace('/\$DBPERSIST\s*=\s*.*;/', "\$DBPERSIST = ".$boolarray[$_POST["NEW_DBPERSIST"]].";", $configtext);
-	$configtext = preg_replace('/\$TBLPREFIX\s*=\s*".*";/', "\$TBLPREFIX = \"".$_POST["NEW_TBLPREFIX"]."\";", $configtext);
-	$configtext = preg_replace('/\$ALLOW_CHANGE_GEDCOM\s*=\s*.*;/', "\$ALLOW_CHANGE_GEDCOM = ".$boolarray[$_POST["NEW_ALLOW_CHANGE_GEDCOM"]].";", $configtext);
-	$configtext = preg_replace('/\$USE_REGISTRATION_MODULE\s*=\s*.*;/', "\$USE_REGISTRATION_MODULE = ".$boolarray[$_POST["NEW_USE_REGISTRATION_MODULE"]].";", $configtext);
-	$configtext = preg_replace('/\$REQUIRE_ADMIN_AUTH_REGISTRATION\s*=\s*.*;/', "\$REQUIRE_ADMIN_AUTH_REGISTRATION = ".$boolarray[$_POST["NEW_REQUIRE_ADMIN_AUTH_REGISTRATION"]].";", $configtext);
-	$configtext = preg_replace('/\$PGV_SIMPLE_MAIL\s*=\s*.*;/', "\$PGV_SIMPLE_MAIL = ".$boolarray[$_POST["NEW_PGV_SIMPLE_MAIL"]].";", $configtext);
-	$configtext = preg_replace('/\$PGV_STORE_MESSAGES\s*=\s*.*;/', "\$PGV_STORE_MESSAGES = ".$boolarray[$_POST["NEW_PGV_STORE_MESSAGES"]].";", $configtext);
-	$configtext = preg_replace('/\$ALLOW_USER_THEMES\s*=\s*.*;/', "\$ALLOW_USER_THEMES = ".$boolarray[$_POST["NEW_ALLOW_USER_THEMES"]].";", $configtext);
-	$configtext = preg_replace('/\$ALLOW_REMEMBER_ME\s*=\s*.*;/', "\$ALLOW_REMEMBER_ME = ".$boolarray[$_POST["NEW_ALLOW_REMEMBER_ME"]].";", $configtext);
-	$configtext = preg_replace('/\$INDEX_DIRECTORY\s*=\s*".*";/', "\$INDEX_DIRECTORY = \"".$_POST["NEW_INDEX_DIRECTORY"]."\";", $configtext);
-	$configtext = preg_replace('/\$LOGFILE_CREATE\s*=\s*".*";/', "\$LOGFILE_CREATE = \"".$_POST["NEW_LOGFILE_CREATE"]."\";", $configtext);
-	$configtext = preg_replace('/\$PGV_SESSION_SAVE_PATH\s*=\s*".*";/', "\$PGV_SESSION_SAVE_PATH = \"".$_POST["NEW_PGV_SESSION_SAVE_PATH"]."\";", $configtext);
-	$configtext = preg_replace('/\$PGV_SESSION_TIME\s*=\s*".*";/', "\$PGV_SESSION_TIME = \"".$_POST["NEW_PGV_SESSION_TIME"]."\";", $configtext);
-	$configtext = preg_replace('/\$MAX_VIEWS\s*=\s*".*";/', "\$MAX_VIEWS = \"".$_POST["NEW_MAX_VIEWS"]."\";", $configtext);
-	$configtext = preg_replace('/\$MAX_VIEW_TIME\s*=\s*".*";/', "\$MAX_VIEW_TIME = \"".$_POST["NEW_MAX_VIEW_TIME"]."\";", $configtext);
-	$configtext = preg_replace('/\$SERVER_URL\s*=\s*".*";/', "\$SERVER_URL = \"".$_POST["NEW_SERVER_URL"]."\";", $configtext);
-	$configtext = preg_replace('/\$COMMIT_COMMAND\s*=\s*".*";/', "\$COMMIT_COMMAND = \"".$_POST["NEW_COMMIT_COMMAND"]."\";", $configtext);
-	if (preg_match('/\$DBTYPE\s*=\s*".*";/', $configtext)>0) {
-		$configtext = preg_replace('/\$LOGIN_URL\s*=\s*".*";/', "\$LOGIN_URL = \"".$_POST["NEW_LOGIN_URL"]."\";", $configtext);
-	}
-	else {
-		$configtext = preg_replace('/\$PGV_MEMORY_LIMIT/', "\$LOGIN_URL = \"".$_POST["NEW_LOGIN_URL"]."\";\r\n\$PGV_MEMORY_LIMIT", $configtext);
-	}
-	$configtext = preg_replace('/\$PGV_MEMORY_LIMIT\s*=\s*".*";/', "\$PGV_MEMORY_LIMIT = \"".$_POST["NEW_PGV_MEMORY_LIMIT"]."\";", $configtext);
-	$DBHOST = $_POST["NEW_DBHOST"];
-	$DBTYPE = $_POST["NEW_DBTYPE"];
-	$DBUSER = $_POST["NEW_DBUSER"];
-	$DBNAME = $_POST["NEW_DBNAME"];
-	if (!empty($_POST["NEW_DBPASS"])) $DBPASS = $_POST["NEW_DBPASS"];
+
+	update_config($configtext, 'CONFIG_VERSION', $CONFIG_VERSION); // No longer used?
+	update_config($configtext, 'TBLPREFIX',             safe_POST('NEW_TBLPREFIX'));
+	update_config($configtext, 'INDEX_DIRECTORY',       safe_POST('NEW_INDEX_DIRECTORY'));
+	update_config($configtext, 'LOGFILE_CREATE',        safe_POST('NEW_LOGFILE_CREATE'));
+	update_config($configtext, 'PGV_SESSION_SAVE_PATH', safe_POST('NEW_PGV_SESSION_SAVE_PATH'));
+	update_config($configtext, 'PGV_SESSION_TIME',      safe_POST('NEW_PGV_SESSION_TIME'));
+	update_config($configtext, 'MAX_VIEWS',             safe_POST('NEW_MAX_VIEWS'));
+	update_config($configtext, 'MAX_VIEW_TIME',         safe_POST('NEW_MAX_VIEW_TIMES'));
+	update_config($configtext, 'SERVER_URL',            safe_POST('NEW_SERVER_URL'));
+	update_config($configtext, 'COMMIT_COMMAND',        safe_POST('NEW_COMMIT_COMMAND'));
+	update_config($configtext, 'LOGIN_URL',             safe_POST('NEW_LOGIN_URL'));
+	update_config($configtext, 'PGV_MEMORY_LIMIT',      safe_POST('NEW_PGV_MEMORY_LIMIT'));
+	update_config($configtext, 'DBPERSIST',                       safe_POST_bool('NEW_DBPERSIST'));
+	update_config($configtext, 'ALLOW_CHANGE_GEDCOM',             safe_POST_bool('NEW_ALLOW_CHANGE_GEDCOM'));
+	update_config($configtext, 'USE_REGISTRATION_MODULE',         safe_POST_bool('NEW_USE_REGISTRATION_MODULE'));
+	update_config($configtext, 'REQUIRE_ADMIN_AUTH_REGISTRATION', safe_POST_bool('NEW_REQUIRE_ADMIN_AUTH_REGISTRATION'));
+	update_config($configtext, 'PGV_SIMPLE_MAIL',                 safe_POST_bool('NEW_PGV_SIMPLE_MAIL'));
+	update_config($configtext, 'PGV_STORE_MESSAGES',              safe_POST_bool('NEW_PGV_STORE_MESSAGES'));
+	update_config($configtext, 'ALLOW_USER_THEMES',               safe_POST_bool('NEW_ALLOW_USER_THEMES'));
+	update_config($configtext, 'ALLOW_REMEMBER_ME',               safe_POST_bool('NEW_ALLOW_REMEMBER_ME'));
+
+	$DBTYPE = safe_POST('NEW_DBTYPE');
+	$DBHOST = safe_POST('NEW_DBHOST');
+	$DBNAME = safe_POST('NEW_DBNAME');
+	$DBUSER = safe_POST('NEW_DBUSER');
+	// Passwords can contain otherwise dangerous characters.
+	// Therefore we must never echo it back to the screen.
+	$DBPASS = safe_POST('NEW_DBPASS', '.*', $DBPASS);
 
 	//-- make sure the database configuration is set properly
 	if (check_db(true)) {
-		$configtext = preg_replace('/\$CONFIGURED\s*=\s*.*;/', "\$CONFIGURED = true;", $configtext);
 		$CONFIGURED = true;
+		update_config($configtext, 'CONFIGURED', $CONFIGURED);
+		update_config($configtext, 'DBTYPE', $DBTYPE);
+		update_config($configtext, 'DBHOST', $DBHOST);
+		update_config($configtext, 'DBNAME', $DBNAME);
+		update_config($configtext, 'DBUSER', $DBUSER);
+		update_config($configtext, 'DBPASS', $DBPASS);
 	}
 
 	// Save the languages the user has chosen to have active on the website
@@ -311,24 +298,19 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 				print "<span class=\"error\">";
 				print $pgv_lang["pgv_config_write_error"];
 				print "<br /></span>\n";
-			}
-			else {
+			} else {
 				fwrite($fp, $configtext);
 				fclose($fp);
 				$logline = AddToLog("config.php updated");
 				if (!empty($COMMIT_COMMAND)) check_in($logline, "config.php", "");	
-				if ($CONFIGURED) print "<script language=\"JavaScript\" type=\"text/javascript\">\nwindow.location = 'editconfig.php';\n</script>\n";
+				if ($CONFIGURED) {
+					print "<script language=\"JavaScript\" type=\"text/javascript\">\nwindow.location = 'editconfig.php';\n</script>\n";
+				}
 			}
+		} else {
+			print "<span class=\"error\">There was an error in the generated config.php.</span>".htmlentities($configtext);
 		}
-		else print "<span class=\"error\">There was an error in the generated config.php.</span>".htmlentities($configtext);
-		foreach($_POST as $key=>$value) {
-			$key=preg_replace("/NEW_/", "", $key);
-			if ($value=='yes') $$key=true;
-			else if ($value=='no') $$key=false;
-			else $$key=$value;
-		}
-	}
-	else {
+	} else {
 		$_SESSION["config.php"]=$configtext;
 		print "<br /><br /><a href=\"config_download.php?file=config.php\">";
 		print $pgv_lang["download_here"];
@@ -420,7 +402,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBPASS_help", "qm", "DBPASS"); print $pgv_lang["DBPASS"];?></td>
-		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="<?php print $DBPASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /><!-- <br /><span style="color: red;"><?php print_text("enter_db_pass");?></span> --></td>
+		<td class="optionbox"><input type="text" name="NEW_DBPASS" value="" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /><!-- <br /><span style="color: red;"><?php print_text("enter_db_pass");?></span> --></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBNAME_help", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>
