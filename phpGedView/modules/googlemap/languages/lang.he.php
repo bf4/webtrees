@@ -72,10 +72,12 @@ $pgv_lang["googlemap_coord"]        	= "הצג קואורדינטות של המ�
 
 //wooc place hierarchy
 $pgv_lang["gm_place_hierarchy"]         = "השתמש ב-Googlemap עבור היררכית המקומות"; 
+$pgv_lang["gm_ph_map_size"]	  = "גודל מפה של היררכיית מקומות (בפיקסלים)";
 $pgv_lang["gm_ph_marker_type"]        = "סוג מראי מקומות בהיררכית המקומות"; 
 $pgv_lang["gm_standard_marker"]       = "רגיל"; 
 $pgv_lang["gm_no_coord"]                   = "למקום הזה אין קואורדינטות"; 
 $pgv_lang["gm_ph_placenames"]        = "הצג שמות מקוצרים של מקומות?"; 
+$pgv_lang["gm_ph_count"]                   =  "הצג ספירה של אנשים ומשפחות?"; 
 $pgv_lang["gm_ph_wheel"]                   = "השתמש בגלגל העכבר לזום?";
 
 // Texts used on the Places location page
