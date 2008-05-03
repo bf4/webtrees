@@ -153,6 +153,13 @@ function safe_POST_integer($var, $min, $max, $default) {
 	return (int)$num;
 }
 
+function safe_GET_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True)') {
+	return !is_null(safe_GET($var, $true));
+}
+function safe_POST_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True)') {
+	return !is_null(safe_POST($var, $true));
+}
+
 function safe_GET_xref($var, $default=null) {
 	return safe_GET($var, PGV_REGEX_XREF, $default);
 }
@@ -186,6 +193,23 @@ function preg_match_recursive($regex, $var) {
 			// Neither scalar nor array.  Object?
 			return false;
 		}
+	}
+}
+
+// Update the variable definitions in a PHP config file, such as config.php
+function update_config(&$text, $var, $value) {
+	// NULL values probably wouldn't hurt, but empty strings are probably better
+	if (is_null($value)) {
+		$value='';
+	}
+	$regex='/^[ \t]*[$]'.$var.'[ \t]*=.*;[ \t]*/m';
+	$assign='$'.$var.'='.var_export($value, true).'; ';
+	if (preg_match($regex, $text)) {
+		// Variable found in file - update it
+		$text=preg_replace($regex, $assign, $text);
+	} else {
+		// Variable not found in file - insert it
+		$text=preg_replace('/^(.*[\r\n]+)([ \t]*[$].*)$/s', '$1'.$assign." // new config variable\n".'$2',$text);
 	}
 }
 

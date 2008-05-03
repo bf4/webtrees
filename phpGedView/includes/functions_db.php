@@ -3783,8 +3783,12 @@ function get_user_setting($user_id, $parameter) {
 function set_user_setting($user_id, $parameter, $value) {
 	global $DBCONN, $TBLPREFIX;
 
+	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
+		return;
+	}
+
 	$user_id=$DBCONN->escapeSimple($user_id);
-	$value   =$DBCONN->escapeSimple($value);
+	$value  =$DBCONN->escapeSimple($value);
 	dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user_id}'");
 	
 	global $PGV_USERS_cache;
