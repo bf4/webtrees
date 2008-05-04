@@ -1553,19 +1553,25 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}
 		}
 		//print "<br />\n";
-		$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
-		if (empty($prim)) $prim = get_gedcom_value("_PRIM", 1, $rowm["m_gedrec"]);
-		if (!empty($prim)) {
-			print "<span class=\"label\">".$factarray["_PRIM"].":</span> ";
-		if ($prim=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
-		print "<br />\n";
+		//-- don't show _PRIM option to regular users
+		if (PGV_USER_GEDCOM_ADMIN) {
+			$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
+			if (empty($prim)) $prim = get_gedcom_value("_PRIM", 1, $rowm["m_gedrec"]);
+			if (!empty($prim)) {
+				print "<span class=\"label\">".$factarray["_PRIM"].":</span> ";
+				if ($prim=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
+				print "<br />\n";
+			}
 		}
-		$thum = get_gedcom_value("_THUM", 2, $rowm["mm_gedrec"]);
-		if (empty($thum)) $thum = get_gedcom_value("_THUM", 1, $rowm["m_gedrec"]);
-		if (!empty($thum)) {
-			print "<span class=\"label\">".$factarray["_THUM"].":</span> ";
-		if ($thum=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
-		print "<br />\n";
+		//-- don't show _THUM option to regular users
+		if (PGV_USER_GEDCOM_ADMIN) {
+			$thum = get_gedcom_value("_THUM", 2, $rowm["mm_gedrec"]);
+			if (empty($thum)) $thum = get_gedcom_value("_THUM", 1, $rowm["m_gedrec"]);
+			if (!empty($thum)) {
+				print "<span class=\"label\">".$factarray["_THUM"].":</span> ";
+				if ($thum=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
+				print "<br />\n";
+			}
 		}
 		print_fact_notes($rowm["m_gedrec"], 1);
 		print_fact_notes($rowm["mm_gedrec"], 2);
