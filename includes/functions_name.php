@@ -929,7 +929,7 @@ function smart_utf8_decode($in_str)
 }
 
 /**
- * get an array of names from an indivdual record
+ * get an array of names from an individual record
  * @param string $indirec	The raw individual gedcom record
  * @return array	The array of individual names
  */
@@ -943,16 +943,13 @@ function get_indi_names($indirec, $import=false) {
 		$j = 1;
 		while(!empty($namerec)) {
 			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
-			$name = preg_replace('/\/\//','/@N.N./', $name); // Missing SURN=>@N.N.
-			if ($NAME_REVERSE) { // Missing GIVN=>@P.N.
-				$name=preg_replace('/\/$/', '/ @P.N./', $name);
-			} else {
-				$name=preg_replace('/^\//', '@P.N. /', $name);
-			}
+			$name = preg_replace('/\/\//','/@N.N./', $name);	// Missing SURN -> @N.N.
+			$name = preg_replace('/^\//', '@P.N. /', $name);	// Missing GIVN	-> @P.N.
 			$surname = extract_surname($name, false);
 			if (empty($surname)) $surname = "@N.N.";
-			//-- all ____ names get changed to @N.N.
+			//-- all ____  names get changed to @N.N.
 			if (preg_match("/^_+$/", $surname)>0) $surname="@N.N.";
+			//-- remove these characters so that they do not get selected as the first letter
 			$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 			if (empty($lname)) $lname = $surname;
 			$letter = get_first_letter($lname, $import);
