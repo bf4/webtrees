@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Show highlight and thumbnail Media options only to Admin users (canajun2eh)
  - Fixed: [ 1956830 ] (unknown) when name exists 
  - Fixed: Place Hierarchy: Small change to align "bubble" background for themes Simplygreen, Simplyblue and Simplyred. (windmillway)
  - Fixed: Lightbox: Various CSS errors corrected (windmillway)
