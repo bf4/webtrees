@@ -609,7 +609,7 @@ function build_indiv_map($indifacts, $famids) {
 					print "markers.push(Marker{$j});\n";
 					print "map.addOverlay(Marker{$j});\n";
 					$markers[$j]["index"] = $indexcounter;
-					$markers[$j]["tabindex"] = -1;
+					$markers[$j]["tabindex"] = 0;
 					$indexcounter = $indexcounter + 1;
 				} else {
 					$tabcounter = 0;
@@ -671,7 +671,9 @@ function build_indiv_map($indifacts, $famids) {
 								print "\n";
 								print "];\n";
 								print "GEvent.addListener(Marker{$j}_{$markersindex}, \"click\", function(tabToSelect) {\n";
+								print "if (tabToSelect>0) \n";
 								print "Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info, {selectedTab: tabToSelect});\n";
+								print "else Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info);\n";
 								print "});\n";
 								print "markers.push(Marker{$j}_{$markersindex});\n";
 								print "map.addOverlay(Marker{$j}_{$markersindex});\n";
@@ -733,7 +735,9 @@ function build_indiv_map($indifacts, $famids) {
 					print "\n";
 					print "];\n";
 					print "GEvent.addListener(Marker{$j}_{$markersindex}, \"click\", function(tabToSelect) {\n";
+					print "if (tabToSelect>0) \n";
 					print "Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info, {selectedTab: tabToSelect});\n";
+					print "else Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info);\n";
 					print "});\n";
 					print "markers.push(Marker{$j}_{$markersindex});\n";
 					print "map.addOverlay(Marker{$j}_{$markersindex});\n";
