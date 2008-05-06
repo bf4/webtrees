@@ -168,31 +168,48 @@ function safe_POST_xref($var, $default=null) {
 }
 
 function safe_REQUEST($arr, $var, $regex, $default) {
+	// local function, within safe_REQUEST
+	function preg_match_recursive($regex, $var) {
+		if (is_scalar($var)) {
+			return preg_match($regex, $var);
+		} else {
+			if (is_array($var)) {
+				foreach ($var as $k=>$v) {
+					if (!is_numeric($k) || !preg_match_recursive($regex, $v)) {
+						return false;
+					}
+				}
+				return true;
+			} else {
+				// Neither scalar nor array.  Object?
+				return false;
+			}
+		}
+	}
+	// local function, within safe_REQUEST
+	function trim_recursive($var) {
+		if (is_scalar($var)) {
+			return trim($var);
+		} else {
+			if (is_array($var)) {
+				foreach ($var as $k=>$v) {
+					$var[$k]=trim_recursive($v);
+				}
+				return $var;
+			} else {
+				// Neither scalar nor array.  Object?
+				return $var;
+			}
+		}
+	}
+
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
 	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.$regex.'$~', $arr[$var])) {
-		return $arr[$var];
+		return trim_recursive($arr[$var]);
 	} else {
 		return $default;
-	}
-}
-
-function preg_match_recursive($regex, $var) {
-	if (is_scalar($var)) {
-		return preg_match($regex, $var);
-	} else {
-		if (is_array($var)) {
-			foreach ($var as $k=>$v) {
-				if (!is_numeric($k) || !preg_match_recursive($regex, $v)) {
-					return false;
-				}
-			}
-			return true;
-		} else {
-			// Neither scalar nor array.  Object?
-			return false;
-		}
 	}
 }
 
