@@ -65,7 +65,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"CAUS" =>array("DEAT"),
 	"CALN" =>array("REPO"),
 	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag
-	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS"),
+	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS","_TODO"),
 	"TEMP" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
 	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS","SSN"),
 	"STAT" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
@@ -80,7 +80,8 @@ $level2_tags=array( // The order of the $keys is significant
 	"FAMC" =>array("ADOP","SLGC"),
 	"FILE" =>array("OBJE"),
 	"_PRIM"=>array("OBJE"),
-	"EVEN" =>array("DATA")
+	"EVEN" =>array("DATA"),
+	"_PGVU"=>array("_TODO")
 );
 $STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
 
@@ -1342,6 +1343,19 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 		print "</select>\n";
 	}
+	else if ($fact=="_PGVU") {
+		$text=strtolower($value);
+		print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" >\n";
+		print '<option value=""';
+		if (''==$text) print ' selected="selected"';
+		print ">-</option>\n";
+		foreach (get_all_users() as $user_id=>$user_name) {
+			print "<option value=\"". $user_id . "\"";
+			if ($user_id==$text) print " selected=\"selected\"";
+			print ">" . $user_name . "</option>\n";
+		}
+		print "</select>\n";
+	}
 	else if ($fact=="RESN") {
 		?>
 		<script type="text/javascript">
@@ -2180,8 +2194,15 @@ function insert_missing_subtags($level1tag)
 	
 	foreach ($level2_tags as $key=>$value) {
 		if (in_array($level1tag, $value) && !in_array($key, $tags)) {
-			if ($key=="TYPE") add_simple_tag("2 TYPE ".$type_val);
-			else add_simple_tag("2 ".$key);
+			if ($key=="TYPE") {
+				add_simple_tag("2 TYPE ".$type_val);
+			} else {
+				if ($level1tag=='_TODO' && $key=='DATE') {
+					add_simple_tag("2 ".$key." ".strtoupper(date('d F Y')));
+				} else {
+					add_simple_tag("2 ".$key);
+				}
+			}
 			switch ($key) { // Add level 3/4 tags as appropriate
 				case "PLAC":
 					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
@@ -2218,7 +2239,7 @@ function insert_missing_subtags($level1tag)
 		}
 	}
 	// Do something (anything!) with unrecognised custom tags
-	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID')
+	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && $level1tag!='_TODO')
 		foreach (array('DATE', 'PLAC', 'ADDR', 'AGNC', 'TYPE', 'AGE') as $tag)
 			if (!in_array($tag, $tags)) {
 				add_simple_tag("2 {$tag}");

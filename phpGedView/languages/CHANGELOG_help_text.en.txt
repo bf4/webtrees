@@ -41,6 +41,15 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.6
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
++$pgv_lang["todo_help"]                 06 May      2008    A
++$pgv_lang["todo_show_other_help"]      06 May      2008    A
++$pgv_lang["todo_show_unassigned_help"] 06 May      2008    A
++$pgv_lang["todo_show_future_help"]     06 May      2008    A
+
 VERSION 4.1.5
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
