@@ -610,7 +610,7 @@ return false;}return true;}
 			}
 			if(!empty($person))
 			{
-				$bdate=$person>getEstimatedBirthDate();
+				$bdate=$person->getEstimatedBirthDate();
 				$bdate=$bdate->gregorianYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
 			
