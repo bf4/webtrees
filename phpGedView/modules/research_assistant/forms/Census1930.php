@@ -617,7 +617,7 @@ return false;}return true;}
 			$person = Person::getInstance($rows[$number]["personid"]);
 			if(!empty($person))
 			{
-				$bdate=$person>getEstimatedBirthDate();
+				$bdate=$person->getEstimatedBirthDate();
 				$bdate=$bdate->gregorianYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
 			

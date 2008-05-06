@@ -539,7 +539,7 @@ $out .= '</tr>
 			if (is_null($person)) continue;
 			if(!empty($person))
 			{
-				$bdate=$person>getEstimatedBirthDate();
+				$bdate=$person->getEstimatedBirthDate();
 				$bdate=$bdate->gregorianYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
 			
