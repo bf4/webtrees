@@ -69,8 +69,8 @@ class TimelineControllerRoot extends BaseController {
 		$newpid=safe_GET_xref('newpid');
 		if ($newpid) {
 			$indirec = find_person_record($newpid);
-			if (empty($indirec)) {
-				if (stristr($newpid, $GEDCOM_ID_PREFIX)===false) $newpid = "I".$newpid;
+			if (empty($indirec) && $GEDCOM_ID_PREFIX) {
+				if (stristr($newpid, $GEDCOM_ID_PREFIX)===false) $newpid = $GEDCOM_ID_PREFIX.$newpid;
 			}
 		}
 		
