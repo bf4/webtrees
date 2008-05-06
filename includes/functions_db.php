@@ -2557,14 +2557,16 @@ function get_alpha_fams($letter) {
 		$surnames = array();
 		for ($i=0; $i<$ct; $i++) {
 			$famid = $match[$i][1];
-			$famrec = find_family_record($famid);
-			if ($famlist[$famid]["husb"]==$gid) {
-				$HUSB = $famlist[$famid]["husb"];
-				$WIFE = $famlist[$famid]["wife"];
+
+			$family=Family::getInstance($famid);
+			if ($family->getHusbId()==$gid) {
+				$HUSB=$family->getHusbId();
+				$WIFE=$family->getWifeId();
 			} else {
-				$HUSB = $famlist[$famid]["wife"];
-				$WIFE = $famlist[$famid]["husb"];
+				$HUSB=$family->getWifeId();
+				$WIFE=$family->getHusbId();
 			}
+
 			$hname="";
 			$surnames = array();
 			foreach ($indi["names"] as $indexval => $namearray) {
@@ -2619,7 +2621,7 @@ function get_alpha_fams($letter) {
 					}
 				}
 				$name = $hname ." + ". $wname;
-				if ($famlist[$famid]["wife"]==$gid)
+				if ($family->getWifeId()==$gid)
 					$name = $wname ." + ". $hname; // force husb first
 				$famlist[$famid]["name"] = $name;
 				if (!isset($famlist[$famid]["surnames"])||count($famlist[$famid]["surnames"])==0)
@@ -3100,12 +3102,16 @@ function get_remote_id($rfn) {
 // Used on the on-this-day/upcoming blocks and the day/month calendar views.
 // $jd    - the julian day
 // $facts - restrict the search to just these facts or leave blank for all
+// $ged_id - the id of the gedcom to search
 ////////////////////////////////////////////////////////////////////////////////
-function get_anniversary_events($jd, $facts='') {
+function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
+	if ($facts!='_TODO') {
+		$skipfacts.='_TODO';
+	}
 
 	$found_facts=array();
 	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JewishDate($jd), new HijriDate($jd)) as $anniv) {
@@ -3224,7 +3230,7 @@ function get_anniversary_events($jd, $facts='') {
 			$where.=" AND d_fact IN ({$incl_facts})";
 		}
 		// Only get events from the current gedcom
-		$where.=" AND d_file=".PGV_GED_ID;
+		$where.=" AND d_file=".$ged_id;
 
 		// Now fetch these anniversaries
 		$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
@@ -3274,12 +3280,16 @@ function get_anniversary_events($jd, $facts='') {
 // TODO: Used by the recent-changes block and the calendar year view.
 // $jd1, $jd2 - the range of julian day
 // $facts - restrict the search to just these facts or leave blank for all
+// $ged_id    - the id of the gedcom to search
 ////////////////////////////////////////////////////////////////////////////////
-function get_calendar_events($jd1, $jd2, $facts='') {
+function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
+	if ($facts!='_TODO') {
+		$skipfacts.='_TODO';
+	}
 
 	$found_facts=array();
 
@@ -3298,7 +3308,7 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 		$where.=" AND d_fact IN ({$incl_facts})";
 	}
 	// Only get events from the current gedcom
-	$where.=" AND d_file=".PGV_GED_ID;
+	$where.=" AND d_file=".$ged_id;
 
 	// Now fetch these events
 	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";

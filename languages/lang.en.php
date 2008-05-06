@@ -356,8 +356,6 @@ $pgv_lang["landscape"]				= "Landscape";
 $pgv_lang["start_at_parents"]		= "Start at parents";
 $pgv_lang["charts"] 				= "Charts";
 $pgv_lang["lists"]					= "Lists";
-$pgv_lang["max_generation"] 		= "The maximum number of pedigree generations is #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"] 		= "The minimum number of pedigree generations is 3.";
 $pgv_lang["box_width"] 				= "Box width";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -1237,6 +1235,12 @@ $pgv_lang["upcoming_events_block"]	= "Upcoming Events";
 $pgv_lang["upcoming_events_descr"]	= "The Upcoming Events block shows anniversaries of events that will occur in the near future.  You can configure the amount of detail shown, and the administrator can configure how far into the future this block will look.";
 $pgv_lang["todays_events_block"]	= "On This Day";
 $pgv_lang["todays_events_descr"]	= "The On This Day, in Your History... block shows anniversaries of events for today.  You can configure the amount of detail shown.";
+$pgv_lang["todo_block"] = "&quot;To Do&quot; tasks";
+$pgv_lang["todo_descr"] = "The &quot;To Do&quot; block lists all outstanding _TODO facts in your gedcom.";
+$pgv_lang["todo_show_other"]     = "Show other users tasks";
+$pgv_lang["todo_show_unassigned"]= "Show unassigned tasks";
+$pgv_lang["todo_show_future"]    = "Show future tasks";
+$pgv_lang["todo_nothing"]        = "There are no &quot;To Do&quot; tasks.";
 $pgv_lang["yahrzeit_block"]			= "Upcoming Yahrzeiten";
 $pgv_lang["yahrzeit_descr"]			= "The Upcoming Yahrzeiten block shows anniversaries of death dates that will occur in the near future.  You can configure the period shown, and the Administrator can configure how far into the future this block will look.";
 $pgv_lang["logged_in_users_block"]	= "Logged In Users";

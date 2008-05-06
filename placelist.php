@@ -278,7 +278,10 @@ if ($display=="hierarchy") {
 
 	//-- create a string to hold the variable links
 	$linklevels="";
-	if ($use_googlemap) $placelevels="";
+	if ($use_googlemap) {
+		$placelevels="";
+		$place_names=array();
+	}
 	for($j=0; $j<$level; $j++) {
 		$linklevels .= "&amp;parent[$j]=".urlencode($parent[$j]);
 		if ($use_googlemap)
@@ -319,6 +322,7 @@ if ($display=="hierarchy") {
 
 		if (trim($value)=="") print $pgv_lang["unknown"];
 		else print PrintReady($value);
+		if ($use_googlemap) $place_names[$i]=trim($value);
 		print "</a></li>\n";
 		if ($ct1 > 20){
 			if ($i == floor($ct1 / 3)) print "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
@@ -470,8 +474,7 @@ else {
 	print $pgv_lang["form"].$pgv_lang["default_form"]."  ".$pgv_lang["default_form_info"];
 	print_help_link("ppp_default_form_help", "qm");
 }
-
 print "<br /><br /></div>";
 print_footer();
-if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelevels);
+if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelevels, $place_names);
 ?>

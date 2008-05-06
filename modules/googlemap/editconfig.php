@@ -122,6 +122,8 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$GOOGLEMAP_COORD\s*=\s*".*";/', "\$GOOGLEMAP_COORD = \"".$_POST["NEW_GOOGLEMAP_COORD"]."\";", $configtext);
 	//wooc place hierarchy
 	$configtext = preg_replace('/\$GOOGLEMAP_PLACE_HIERARCHY\s*=\s*".*";/', "\$GOOGLEMAP_PLACE_HIERARCHY = \"".$_POST["NEW_GOOGLEMAP_PLACE_HIERARCHY"]."\";", $configtext);
+	$configtext = preg_replace('/\$GOOGLEMAP_PH_XSIZE\s*=\s*".*";/', "\$GOOGLEMAP_PH_XSIZE = \"".$_POST["NEW_GOOGLEMAP_PH_XSIZE"]."\";", $configtext);
+    $configtext = preg_replace('/\$GOOGLEMAP_PH_YSIZE\s*=\s*".*";/', "\$GOOGLEMAP_PH_YSIZE = \"".$_POST["NEW_GOOGLEMAP_PH_YSIZE"]."\";", $configtext);
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_MARKER\s*=\s*".*";/', "\$GOOGLEMAP_PH_MARKER = \"".$_POST["NEW_GOOGLEMAP_PH_MARKER"]."\";", $configtext);
 	$configtext = preg_replace('/\$GM_DISP_SHORT_PLACE\s*=\s*".*";/', "\$GM_DISP_SHORT_PLACE = \"".$_POST["NEW_GM_DISP_SHORT_PLACE"]."\";", $configtext);
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_WHEEL\s*=\s*".*";/', "\$GOOGLEMAP_PH_WHEEL = \"".$_POST["NEW_GOOGLEMAP_PH_WHEEL"]."\";", $configtext);
@@ -271,6 +273,15 @@ $i = 0;
                 <option value="true" <?php if ($GOOGLEMAP_PLACE_HIERARCHY=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
             </select>
 		</td>
+	</tr>
+	<tr>
+        <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_MAP_SIZE_help", "qm", "GOOGLEMAP_PH_MAP_SIZE"); print $pgv_lang["gm_ph_map_size"];?></td>
+        <td class="optionbox">
+            <?php print $pgv_lang["gm_map_size_x"]; ?>
+            <input type="text" name="NEW_GOOGLEMAP_PH_XSIZE" value="<?php print $GOOGLEMAP_PH_XSIZE;?>" size="10" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_PH_MAP_SIZE_help');" />
+            <?php print $pgv_lang["gm_map_size_y"]; ?>
+            <input type="text" name="NEW_GOOGLEMAP_PH_YSIZE" value="<?php print $GOOGLEMAP_PH_YSIZE;?>" size="10" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_PH_MAP_SIZE_help');" />
+        </td>
     </tr>
 	<tr>
         <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_MARKER_help", "qm", "GOOGLEMAP_PH_MARKER"); print $pgv_lang["gm_ph_marker_type"];?></td>

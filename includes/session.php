@@ -34,6 +34,16 @@ $VERSION = "5.0.0";
 $VERSION_RELEASE = "";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
+// Regular expressions for validating user input, etc.
+define('PGV_REGEX_XREF',      '[A-Za-z0-9:-]+');
+define('PGV_REGEX_INTEGER',   '-?\d+');
+define('PGV_REGEX_ALPHA',     '[a-zA-Z]+');
+define('PGV_REGEX_ALPHANUM',  '[a-zA-Z0-9]+');
+define('PGV_REGEX_BYTES',     '[0-9]+[bBkKmMgG]?');
+define('PGV_REGEX_PASSWORD',  '.{6,}');
+define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
+define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
+
 function isAlphaNum($value) {
         return preg_match('/^[a-zA-Z0-9]+$/', $value);
     }
@@ -80,7 +90,7 @@ function gen_spider_session_name($bot_name, $bot_language) {
 // rest of the file.
 
 global $SEARCH_SPIDER;
-$SEARCH_SPIDER = false;		// set empty at start
+$SEARCH_SPIDER = false;  // set empty at start
 global $SESSION_HIDE_GOOGLEMAP;
 $SESSION_HIDE_GOOGLEMAP = "empty";
 
@@ -206,7 +216,7 @@ if(!$real) {
 			$y++;
 			if ($y > 70) break;
 		}
-		else if ($bot_name{$x} == ' ')	{
+		else if ($bot_name{$x} == ' ') {
 			if($valid_char) {
 				$spider_name{$y} = ' ';
 				$valid_char = false;
@@ -214,7 +224,7 @@ if(!$real) {
 				if ($y > 70) break;
 			}
 		}
-		else if ($bot_name{$x} == '.')	{
+		else if ($bot_name{$x} == '.') {
 			if($valid_char) {
 				$spider_name{$y} = '.';
 				$valid_char = true;
@@ -222,25 +232,25 @@ if(!$real) {
 				if ($y > 70) break;
 			}
 		}
-		else if ($bot_name{$x} == ':')	{
+		else if ($bot_name{$x} == ':') {
 			$spider_name{$y} = ':';
 			$valid_char = true;
 			$y++;
 			if ($y > 70) break;
 		}
-		else if ($bot_name{$x} == '/')	{
+		else if ($bot_name{$x} == '/') {
 			$spider_name{$y} = '/';
 			$valid_char = true;
 			$y++;
 			if ($y > 70) break;
 		}
-		else if ($bot_name{$x} == '-')	{
+		else if ($bot_name{$x} == '-') {
 			$spider_name{$y} = '-';
 			$valid_char = true;
 			$y++;
 			if ($y > 70) break;
 		}
-		else if ($bot_name{$x} == '_')	{
+		else if ($bot_name{$x} == '_') {
 			$spider_name{$y} = '_';
 			$valid_char = true;
 			$y++;
@@ -297,9 +307,9 @@ if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
 		if (count($arrayIP) > 1) {
 			for($i=1; $i < count($arrayIP); $i++) {
 				if($i == (count($arrayIP)))
-		 			$ipRegEx .= "\d{0,3}";
-	 			else
-	 				$ipRegEx .= "\d{0,3}".$arrayIP[$i];
+					$ipRegEx .= "\d{0,3}";
+				else
+					$ipRegEx .= "\d{0,3}".$arrayIP[$i];
 			}
 		}
 		//checks the remote ip address against each ip regex
@@ -310,7 +320,7 @@ if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
 			$bot_session = gen_spider_session_name($bot_name, "");
 			session_id($bot_session);
 			break;
- 		}
+		}
 	}
 }
 
@@ -357,13 +367,13 @@ $CONFIG_VARS = array(
 
 
 //-- Detect and report Windows or OS/2 Server environment
-//		Windows and OS/2 use the semi-colon as a separator in the "include_path",
-//				*NIX uses a colon
-//		Windows and OS/2 use the ISO character set in the server-side file system,
-//				*NIX and PhpGedView use UTF-8.  Consequently, PGV needs to translate
-//				from UTF-8 to ISO when handing a file/folder name to Windows and OS/2,
-//				and all file/folder names received from Windows and OS/2 must be
-//				translated from ISO to UTF-8 before they can be processed by PGV.
+//  Windows and OS/2 use the semi-colon as a separator in the "include_path",
+//    *NIX uses a colon
+//  Windows and OS/2 use the ISO character set in the server-side file system,
+//    *NIX and PhpGedView use UTF-8.  Consequently, PGV needs to translate
+//    from UTF-8 to ISO when handing a file/folder name to Windows and OS/2,
+//    and all file/folder names received from Windows and OS/2 must be
+//    translated from ISO to UTF-8 before they can be processed by PGV.
 $WIN32 = false;
 if(substr(PHP_OS, 0, 3) == 'WIN') $WIN32 = true;
 if(substr(PHP_OS, 0, 4) == 'OS/2') $WIN32 = true;
@@ -385,10 +395,10 @@ if (version_compare(phpversion(), '5.1')<0)
 require_once( "includes/lang_settings_std.php");
 $Languages_Default = true;
 if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-	$DefaultSettings = $language_settings;		// Save default settings, so we can merge properly
+	$DefaultSettings = $language_settings;  // Save default settings, so we can merge properly
 	require_once($INDEX_DIRECTORY . "lang_settings.php");
-	$ConfiguredSettings = $language_settings;	// Save configured settings, same reason
-	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings);	// Copy new langs into config
+	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
+	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
 	// Now copy new language settings into existing configuration
 	foreach ($DefaultSettings as $lang => $settings) {
 		foreach ($settings as $key => $value) {
@@ -396,7 +406,7 @@ if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_D
 		}
 	}
 	unset($DefaultSettings);
-	unset($ConfiguredSettings);		// We don't need these any more
+	unset($ConfiguredSettings);  // We don't need these any more
 	$Languages_Default = false;
 }
 
@@ -407,11 +417,11 @@ foreach ($language_settings as $key => $value) {
 }
 
 /**
- *		Check for configuration variable override.
+ *  Check for configuration variable override.
  *
- *		Each incoming URI is checked to see whether it contains any mention of
- *		certain critical global variables that should not be changed, or that
- *		can only be changed within limits.
+ *  Each incoming URI is checked to see whether it contains any mention of
+ *  certain critical global variables that should not be changed, or that
+ *  can only be changed within limits.
  */
 
 while (true) {
@@ -425,7 +435,7 @@ while (true) {
 	}
 
 	// Check for $LANGUAGE variable override
-	//		Don't let incoming request change to an unsupported or inactive language
+	//  Don't let incoming request change to an unsupported or inactive language
 	if (isset($_REQUEST["NEWLANGUAGE"])) {
 		if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
 		if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
@@ -497,7 +507,7 @@ if (empty($SERVER_URL)) {
 	$SERVER_URL .= dirname($SCRIPT_NAME)."/";
 	$SERVER_URL = stripslashes($SERVER_URL);
 }
-if (substr($SERVER_URL,-1)!="/") $SERVER_URL .= "/";	// make SURE that trailing "/" is present
+if (substr($SERVER_URL,-1)!="/") $SERVER_URL .= "/"; // make SURE that trailing "/" is present
 if (!isset($ALLOW_REMEMBER_ME)) $ALLOW_REMEMBER_ME = false;
 if (!isset($PGV_SIMPLE_MAIL)) $PGV_SIMPLE_MAIL = false;
 if (!isset($DBPERSIST)) $DBPERSIST = false;
@@ -565,7 +575,7 @@ if(!empty($SEARCH_SPIDER)) {
 			$outstr = preg_replace('/\s\s+/', ' ', $SEARCH_SPIDER); // trim trailing whitespace
 			// Don't allow ' - ' because that is the log seperator
 			$outstr = preg_replace('/ - /', ' ', $outstr);
- 			AddToLog("Returning search engine last seen ".$_SESSION['spider_count']." times on ".$_SESSION['last_spider_date']." from ".$_SESSION['last_spider_ip']." ->".$outstr."<-");
+			AddToLog("Returning search engine last seen ".$_SESSION['spider_count']." times on ".$_SESSION['last_spider_date']." from ".$_SESSION['last_spider_ip']." ->".$outstr."<-");
 			$_SESSION['last_spider_date'] = $spiderdate;
 			$spidercount = 1;
 		}
@@ -579,13 +589,13 @@ if(!empty($SEARCH_SPIDER)) {
 }
 
 if((!empty($SEARCH_SPIDER)) && (!empty($_SESSION['pgv_user'])) && ($_SESSION['pgv_user'] != "")) {
-	$_SESSION['pgv_user'] = "";	// Don't allow search engine into user/admin mode.
+	$_SESSION['pgv_user'] = ""; // Don't allow search engine into user/admin mode.
 }
 
 if(!empty($SEARCH_SPIDER)) {
 	// FIX SANITIZE: What other data do we need to reset back to anonymous default?
 	// overkill to force a disk flush
-	$_SESSION['CLANGUAGE'] = "";	// Force language to gedcom default language.
+	$_SESSION['CLANGUAGE'] = ""; // Force language to gedcom default language.
 	session_write_close();
 	session_start();
 }
@@ -595,9 +605,9 @@ if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
 if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
 if($SESSION_HIDE_GOOGLEMAP == "empty") {
 	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
- 		$SESSION_HIDE_GOOGLEMAP = "true";
+		$SESSION_HIDE_GOOGLEMAP = "true";
 	else 
- 		$SESSION_HIDE_GOOGLEMAP = "false";
+		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
 //-- import the post, get, and cookie variable into the scope on new versions of php
@@ -650,7 +660,7 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 else $GEDCOMS=array();
 
 //-- connect to the database
-$DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS);		// remove escape codes before using PW
+$DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
 check_db();
 
 if (isset($_REQUEST["GEDCOM"])){
@@ -681,10 +691,10 @@ $INDILIST_RETRIEVED = false;
 $FAMLIST_RETRIEVED = false;
 
 // privacy constants moved from privacy.php
-$PRIV_HIDE = -1;	//  Global constant privacy level to hide the item to all users including the admin
-$PRIV_PUBLIC = 2;	//  Global constant privacy level that allows non-authenticated public visitors to view the marked information
-$PRIV_USER = 1;	//  Global constant privacy level that only allows authenticated users to access the marked information
-$PRIV_NONE = 0;	//  Global constant privacy level that only allows admin users to access the marked information
+$PRIV_HIDE = -1; //  Global constant privacy level to hide the item to all users including the admin
+$PRIV_PUBLIC = 2; //  Global constant privacy level that allows non-authenticated public visitors to view the marked information
+$PRIV_USER = 1; //  Global constant privacy level that only allows authenticated users to access the marked information
+$PRIV_NONE = 0; //  Global constant privacy level that only allows admin users to access the marked information
 
 /**
  * Load GEDCOM configuration
@@ -707,8 +717,8 @@ require_once("includes/authentication.php");      // -- load the authentication 
   * Remote IP Address Banning
   */
  if (file_exists($INDEX_DIRECTORY."banned.php")) {
- 	require($INDEX_DIRECTORY."banned.php");
- 	//loops through each ip in banned.php
+	require($INDEX_DIRECTORY."banned.php");
+	//loops through each ip in banned.php
 	foreach($banned as $key=>$value) {
 		//creates a regex foreach ip
 		$ipRegEx = '';
@@ -717,18 +727,18 @@ require_once("includes/authentication.php");      // -- load the authentication 
 		if (count($arrayIP) > 1) {
 			for($i=1; $i < count($arrayIP); $i++) {
 				if($i == (count($arrayIP)))
-		 			$ipRegEx .= "\d{0,3}";
-	 			else
-	 				$ipRegEx .= "\d{0,3}".$arrayIP[$i];
+					$ipRegEx .= "\d{0,3}";
+				else
+					$ipRegEx .= "\d{0,3}".$arrayIP[$i];
 			}
 		}
 		//checks the remote ip address against each ip regex
 		if (preg_match('/^'.$ipRegEx.'/', $_SERVER['REMOTE_ADDR'])) {
 			//adds a message to the log and exits with an Access Denied header
- 			AddToLog("genservice.php blocked IP Address: ".$_SERVER['REMOTE_ADDR']." by regex: ".$ipRegEx);
- 			header("HTTP/1.1 403 Access Denied");
- 			exit;
- 		}
+			AddToLog("genservice.php blocked IP Address: ".$_SERVER['REMOTE_ADDR']." by regex: ".$ipRegEx);
+			header("HTTP/1.1 403 Access Denied");
+			exit;
+		}
 	}
  }
 
@@ -747,64 +757,64 @@ require_once("includes/functions_date.php");
 if (empty($PEDIGREE_GENERATIONS)) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
 
 /* Re-build the various language-related arrays
- *		Note:
- *		This code existed in both lang_settings_std.php and in lang_settings.php.
- *		It has been removed from both files and inserted here, where it belongs.
+ *  Note:
+ *  This code existed in both lang_settings_std.php and in lang_settings.php.
+ *  It has been removed from both files and inserted here, where it belongs.
  */
-$languages 				= array();
-$pgv_lang_use 			= array();
-$pgv_lang 				= array();
-$lang_short_cut 		= array();
-$lang_langcode 			= array();
-$pgv_language 			= array();
-$confighelpfile 		= array();
-$helptextfile 			= array();
-$flagsfile 				= array();
-$factsfile 				= array();
-$adminfile 				= array();
-$editorfile				= array();
-$countryfile			= array();
-$faqlistfile			= array();
-$extrafile				= array();
-$factsarray 			= array();
-$pgv_lang_name 			= array();
-$ALPHABET_upper			= array();
-$ALPHABET_lower			= array();
-$MULTI_LETTER_ALPHABET	= array();
-$DICTIONARY_SORT		= array();
-$DATE_FORMAT_array		= array();
-$TIME_FORMAT_array		= array();
-$WEEK_START_array		= array();
-$TEXT_DIRECTION_array	= array();
-$NAME_REVERSE_array		= array();
+$languages             = array();
+$pgv_lang_use          = array();
+$pgv_lang              = array();
+$lang_short_cut        = array();
+$lang_langcode         = array();
+$pgv_language          = array();
+$confighelpfile        = array();
+$helptextfile          = array();
+$flagsfile             = array();
+$factsfile             = array();
+$adminfile             = array();
+$editorfile            = array();
+$countryfile           = array();
+$faqlistfile           = array();
+$extrafile             = array();
+$factsarray            = array();
+$pgv_lang_name         = array();
+$ALPHABET_upper        = array();
+$ALPHABET_lower        = array();
+$MULTI_LETTER_ALPHABET = array();
+$DICTIONARY_SORT       = array();
+$DATE_FORMAT_array     = array();
+$TIME_FORMAT_array     = array();
+$WEEK_START_array      = array();
+$TEXT_DIRECTION_array  = array();
+$NAME_REVERSE_array    = array();
 
 foreach ($language_settings as $key => $value) {
-	$languages[$key] 			= $value["pgv_langname"];
-	$pgv_lang_use[$key]			= $value["pgv_lang_use"];
-	$pgv_lang[$key]				= $value["pgv_lang"];
-	$lang_short_cut[$key]		= $value["lang_short_cut"];
-	$lang_langcode[$key]		= $value["langcode"];
-	$pgv_language[$key]			= $value["pgv_language"];
-	$confighelpfile[$key]		= $value["confighelpfile"];
-	$helptextfile[$key]			= $value["helptextfile"];
-	$flagsfile[$key]			= $value["flagsfile"];
-	$factsfile[$key]			= $value["factsfile"];
-	$adminfile[$key]			= $value["adminfile"];
-	$editorfile[$key]			= $value["editorfile"];
-	$countryfile[$key]			= $value["countryfile"];
-	$faqlistfile[$key]			= $value["faqlistfile"];
-	$extrafile[$key]			= $value["extrafile"];
-	$ALPHABET_upper[$key]		= $value["ALPHABET_upper"];
-	$ALPHABET_lower[$key]		= $value["ALPHABET_lower"];
+	$languages[$key]             = $value["pgv_langname"];
+	$pgv_lang_use[$key]          = $value["pgv_lang_use"];
+	$pgv_lang[$key]              = $value["pgv_lang"];
+	$lang_short_cut[$key]        = $value["lang_short_cut"];
+	$lang_langcode[$key]         = $value["langcode"];
+	$pgv_language[$key]          = $value["pgv_language"];
+	$confighelpfile[$key]        = $value["confighelpfile"];
+	$helptextfile[$key]          = $value["helptextfile"];
+	$flagsfile[$key]             = $value["flagsfile"];
+	$factsfile[$key]             = $value["factsfile"];
+	$adminfile[$key]             = $value["adminfile"];
+	$editorfile[$key]            = $value["editorfile"];
+	$countryfile[$key]           = $value["countryfile"];
+	$faqlistfile[$key]           = $value["faqlistfile"];
+	$extrafile[$key]             = $value["extrafile"];
+	$ALPHABET_upper[$key]        = $value["ALPHABET_upper"];
+	$ALPHABET_lower[$key]        = $value["ALPHABET_lower"];
 	$MULTI_LETTER_ALPHABET[$key] = $value["MULTI_LETTER_ALPHABET"];
-	$DICTIONARY_SORT[$key]		= $value["DICTIONARY_SORT"];
-	$DATE_FORMAT_array[$key]	= $value["DATE_FORMAT"];
-	$TIME_FORMAT_array[$key]	= $value["TIME_FORMAT"];;
-	$WEEK_START_array[$key]		= $value["WEEK_START"];
-	$TEXT_DIRECTION_array[$key]	= $value["TEXT_DIRECTION"];
-	$NAME_REVERSE_array[$key]	= $value["NAME_REVERSE"];
+	$DICTIONARY_SORT[$key]       = $value["DICTIONARY_SORT"];
+	$DATE_FORMAT_array[$key]     = $value["DATE_FORMAT"];
+	$TIME_FORMAT_array[$key]     = $value["TIME_FORMAT"];;
+	$WEEK_START_array[$key]      = $value["WEEK_START"];
+	$TEXT_DIRECTION_array[$key]  = $value["TEXT_DIRECTION"];
+	$NAME_REVERSE_array[$key]    = $value["NAME_REVERSE"];
 
-	$pgv_lang["lang_name_$key"]	= $value["pgv_lang"];
+	$pgv_lang["lang_name_$key"]  = $value["pgv_lang"];
 }
 
 /**
@@ -818,7 +828,8 @@ foreach ($language_settings as $key => $value) {
  *    revert back to the language they first saw when arriving at the site according to
  *    rule 1.
  */
-if ((!empty($logout))&&($logout==1)) unset($_SESSION["CLANGUAGE"]);		// user is about to log out
+$logout=safe_GET_bool('logout');
+if ($logout) unset($_SESSION["CLANGUAGE"]);  // user is about to log out
 
 if (($ENABLE_MULTI_LANGUAGE)&&(empty($_SESSION["CLANGUAGE"]))&&(empty($SEARCH_SPIDER))) {
 	if (isset($HTTP_ACCEPT_LANGUAGE)) $accept_langs = $HTTP_ACCEPT_LANGUAGE;
@@ -860,7 +871,7 @@ if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
 	}
 }
 
-require_once("includes/templecodes.php");		//-- load in the LDS temple code translations
+require_once("includes/templecodes.php");  //-- load in the LDS temple code translations
 
 require_once("privacy.php");
 //-- load the privacy file
@@ -870,10 +881,9 @@ require_once("includes/functions_privacy.php");
 
 //-----------------------------------
 //-- if user wishes to logout this is where we will do it
-if ((!empty($logout))&&($logout==1)) {
+if ($logout) {
 	userLogout(getUserId());
 	if ($REQUIRE_AUTHENTICATION) {
-//		header("Location: ".$HOME_SITE_URL);
 		header("Location: {$SERVER_URL}");
 		exit;
 	}
@@ -964,7 +974,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 	}
 
    // -- setup session information for tree clippings cart features
-   if ((!isset($_SESSION['cart'])) || (!empty($_SESSION['last_spider_name']))) {	// reset cart everytime for spiders
+   if ((!isset($_SESSION['cart'])) || (!empty($_SESSION['last_spider_name']))) { // reset cart everytime for spiders
      $_SESSION['cart'] = array();
    }
    $cart = $_SESSION['cart'];
@@ -978,7 +988,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 	if (PGV_USER_CAN_EDIT && file_exists($INDEX_DIRECTORY."pgv_changes.php")) {
 		require_once($INDEX_DIRECTORY."pgv_changes.php");
 	} else {
-  	$pgv_changes = array();
+		$pgv_changes = array();
 	}
 
 	if (empty($LOGIN_URL)) {
@@ -990,7 +1000,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 }
 
 //-- load the user specific theme
-if (PGV_USER_ID && !isset($_REQUEST['logout'])) {
+if (PGV_USER_ID && !$logout) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin(PGV_USER_ID);
@@ -1021,9 +1031,9 @@ else {
 
 require_once("hitcount.php"); //--load the hit counter
 
-if ($Languages_Default) {					// If Languages not yet configured
-	$pgv_lang_use["english"] = false;		//   disable English
-	$pgv_lang_use["$LANGUAGE"] = true;		//     and enable according to Browser pref.
+if ($Languages_Default) {            // If Languages not yet configured
+	$pgv_lang_use["english"] = false;  //  disable English
+	$pgv_lang_use["$LANGUAGE"] = true; //  and enable according to Browser pref.
 	$language_settings["english"]["pgv_lang_use"] = false;
 	$language_settings["$LANGUAGE"]["pgv_lang_use"] = true;
 }

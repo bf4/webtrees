@@ -278,53 +278,80 @@ $factarray["MARR_UNKNOWN"]   = "סוג הנישואין אינו ידוע";
 $factarray["_HNM"]    = "שם עברי";
 
 // Pseudo-facts for relatives
-$factarray["_DEAT_SPOU"] = "פטירת אחד מבני הזוג";
+$factarray["_DEAT_SPOU"] = "פטירת בן/בת זוג"; 
+$factarray["_BURI_SPOU"] = "קבורת בן/בת זוג"; 
+$factarray["_CREM_SPOU"] = "שריפת בן/בת זוג"; 
 
-$factarray["_BIRT_CHIL"] = "לידת בן או בת";
-$factarray["_MARR_CHIL"] = "נישואי בן או בת";
-$factarray["_DEAT_CHIL"] = "פטירת בן או בת";
+$factarray["_BIRT_CHIL"] = "לידת בן/בת";
+$factarray["_MARR_CHIL"] = "נישואי בן/בת";
+$factarray["_DEAT_CHIL"] = "פטירת בן/בת";
+$factarray["_BURI_CHIL"] = "קבורת בן/בת"; 
+$factarray["_CREM_CHIL"] = "שריפת בן/בת"; 
 
 $factarray["_BIRT_GCHI"] = "לידת נכד/ה";
 $factarray["_MARR_GCHI"] = "נישואי נכד/ה";
 $factarray["_DEAT_GCHI"] = "פטירת נכד/ה";
+$factarray["_BURI_GCHI"] = "קבורת נכד/ה"; 
+$factarray["_CREM_GCHI"] = "שריפת נכד/ה"; 
 
-$factarray["_BIRT_GGCH"] = "לידת שלש או שלשה";
-$factarray["_MARR_GGCH"] = "נישואי שלש או שלשה"; 
-$factarray["_DEAT_GGCH"] = "פטירת שלש או שלשה";
+$factarray["_BIRT_GGCH"] = "לידת שלש/ה";
+$factarray["_MARR_GGCH"] = "נישואי שלש/ה"; 
+$factarray["_DEAT_GGCH"] = "פטירת שלש/ה";
+$factarray["_BURI_GGCH"] = "קבורת שלש/ה"; 
+$factarray["_CREM_GGCH"] = "שריפת שלש/ה"; 
 
 $factarray["_MARR_FATH"] = "נישואי אב";
 $factarray["_DEAT_FATH"] = "פטירת אב";
+$factarray["_BURI_FATH"] = "קבורת אב"; 
+$factarray["_CREM_FATH"] = "שריפת אב"; 
 
 $factarray["_MARR_MOTH"] = "נישואי אם";
 $factarray["_DEAT_MOTH"] = "פטירת אם";
+$factarray["_BURI_MOTH"] = "קבורת אם"; 
+$factarray["_CREM_MOTH"] = "שריפת אם"; 
 
-$factarray["_BIRT_SIBL"] = "לידת אח או אחות";
+$factarray["_BIRT_SIBL"] = "לידת אח/ות";
 $factarray["_MARR_SIBL"] = "נישואי אח/ות";
-$factarray["_DEAT_SIBL"] = "פטירת אח או אחות";
+$factarray["_DEAT_SIBL"] = "פטירת אח/ות";
+$factarray["_BURI_SIBL"] = "קבורת אח/ות";
+$factarray["_CREM_SIBL"] = "שריפת אח/ות";
 
 $factarray["_BIRT_HSIB"] = "לידת אח/ות למחצה";
 $factarray["_MARR_HSIB"] = "נישואי אח/ות למחצה";
 $factarray["_DEAT_HSIB"] = "פטירת אח/ות למחצה";
+$factarray["_BURI_HSIB"] = "קבורת אח/ות למחצה";
+$factarray["_CREM_HSIB"] = "שריפת אח/ות למחצה";
 
-$factarray["_BIRT_NEPH"] = "לידת אחיין או אחיינית"; 
-$factarray["_MARR_NEPH"] = "נישואי אחיין או אחיינית"; 
-$factarray["_DEAT_NEPH"] = "פטירת אחיין או אחיינית";
+$factarray["_BIRT_NEPH"] = "לידת אחיין/אחיינית"; 
+$factarray["_MARR_NEPH"] = "נישואי אחיין/אחיינית"; 
+$factarray["_DEAT_NEPH"] = "פטירת אחיין/אחיינית";
+$factarray["_BURI_NEPH"] = "קבורת אחיין/אחיינית"; 
+$factarray["_CREM_NEPH"] = "שריפת אחיין/אחיינית"; 
+$factarray["_DEAT_GPAR"] = "פטירת סבא/סבתא";
+$factarray["_BURI_GPAR"] = "קבורת סבא/סבתא";
+$factarray["_CREM_GPAR"] = "שריפת סבא/סבתא"; 
 
-$factarray["_DEAT_GPAR"] = "פטירת סבא או סבתא";
+$factarray["_DEAT_GGPA"] = "פטירת סבא רבא/סבתא רבתא";
+$factarray["_BURI_GGPA"] = "קבורת סבא רבא/סבתא רבתא"; 
+$factarray["_CREM_GGPA"] = "שריפת סבא רבא/סבתא רבתא";
 
-$factarray["_DEAT_GGPA"] = "פטירת סבא רבא או סבתא רבתא";
+$factarray["_BIRT_FSIB"] = "לידת אח/ות האב";
+$factarray["_MARR_FSIB"] = "נישואי אח/ות האב";
+$factarray["_DEAT_FSIB"] = "פטירת אח/ות האב";
+$factarray["_BURI_FSIB"] = "קבורת אח/ות האב";
+$factarray["_CREM_FSIB"] = "שריפת אח/ות האב";
 
-$factarray["_BIRT_FSIB"] = "לידת אח או אחות האב";
-$factarray["_MARR_FSIB"] = "נישואי אח/ות של האב";
-$factarray["_DEAT_FSIB"] = "פטירת אח או אחות האב";
+$factarray["_BIRT_MSIB"] = "לידת אח/ות האם";
+$factarray["_MARR_MSIB"] = "נישואי אח/ות האם";
+$factarray["_DEAT_MSIB"] = "פטירת אח/אחות האם";
+$factarray["_BURI_MSIB"] = "קבורת אח/ות האם"; 
+$factarray["_CREM_MSIB"] = "שריפת אח/ות האם"; 
 
-$factarray["_BIRT_MSIB"] = "לידת אח או אחות האם";
-$factarray["_MARR_MSIB"] = "נישואי אח/ות של האם";
-$factarray["_DEAT_MSIB"] = "פטירת אח או אחות האם";
-
-$factarray["_BIRT_COUS"] = "לידת בן דוד מדרגה ראשונה";
-$factarray["_MARR_COUS"] = "נישואי בן דוד מדרגה ראשונה";
-$factarray["_DEAT_COUS"] = "פטירת בן דוד מדרגה ראשונה";
+$factarray["_BIRT_COUS"] = "לידת דודן/דודנית מדרגה ראשונה";
+$factarray["_MARR_COUS"] = "נישואי דודן/דודנית מדרגה ראשונה";
+$factarray["_DEAT_COUS"] = "פטירת דודן/דודנית מדרגה ראשונה";
+$factarray["_BURI_COUS"] = "קבורת דודן/דודנית מדרגה ראשונה"; 
+$factarray["_CREM_COUS"] = "שריפת דודן/דודנית מדרגה ראשונה"; 
 
 $factarray["_FAMC_EMIG"] = "הגירת הורים";
 $factarray["_FAMC_RESI"] = "מגורי הורים";

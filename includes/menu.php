@@ -3,7 +3,7 @@
  * System for generating menus.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,10 +127,15 @@ class Menu
 		if ($this->seperator) {
 			return '<div class="hr"></div>'; // The <hr/> tag is difficult to style
 		}
-		if (!$this->link) {
+		if ($this->link) {
+			if ($this->link=='#') {
+				$html=$this->label;
+			} else {
+				$html='<a href="'.$this->link.'">'.$this->label.'</a>';
+			}
+		} else {
 			return '';
 		}
-		$html='<a href="'.$this->link.'">'.$this->label.'</a>';
 		if ($this->submenus) {
 			$html.='<ul>';
 			foreach ($this->submenus as $submenu) {
@@ -140,6 +145,39 @@ class Menu
 		}
 
 		return '<li>'.$html.'</li>';
+	}
+
+	// Get the menu as a dropdown form element
+	function getMenuAsDropdown() {
+		if ($this->seperator || !$this->link && !$this->submenus) {
+			return '';
+		}
+		if ($this->submenus) {
+			$options='<option value="'.$this->link.'">'.$this->label.'</option>';
+			foreach ($this->submenus as $submenu) {
+				$options.=$submenu->getMenuAsDropdown();
+			}
+			return '<select onchange="document.location=this.value;">'.$options.'</select>';
+		} else {
+			return '<option value="'.$this->link.'">'.$this->label.'</option>';
+		}
+	}
+
+	// Get the menu as a list of icons
+	function getMenuAsIcons() {
+		if ($this->seperator || !$this->link && !$this->submenus) {
+			return '';
+		}
+		$icons=array();
+		if ($this->icon) {
+			$icons[]='<a href="'.$this->link.'"><img onmouseover="this.className=\''.$this->hoverclass.'\'" onmouseout="this.className=\''.$this->class.'\'" class="'.$this->class.'" src="'.$this->icon.'" alt="'.$this->label.'" title="'.$this->label.'"></a>';
+		}
+		if ($this->submenus) {
+			foreach ($this->submenus as $submenu) {
+				$icons[]=$submenu->getMenuAsIcons();
+			}
+		}
+		return join(' ', $icons);
 	}
 
 	function getMenu()
@@ -475,7 +513,7 @@ class MenuBar
 	 * @return Menu 	the menu item
 	 */
 	function &getChartsMenu($rootid='',$myid='') {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER, $PEDIGREE_FULL_DETAILS;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
@@ -486,7 +524,7 @@ class MenuBar
 		//-- main charts menu item
 		$link = "pedigree.php";
 		if ($rootid) {
-			$link .= "?rootid=".$rootid;
+			$link .= "?rootid={$rootid}&show_full={$PEDIGREE_FULL_DETAILS}";
 			$menu = new Menu($pgv_lang["charts"], $link);
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -516,13 +554,14 @@ class MenuBar
 		asort($menuList);
 
 		// Produce the submenus in localized name order
+		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 		
 		foreach($menuList as $menuType => $menuName) {
 			switch ($menuType) {
 			case "pedigree":
 				//-- pedigree
 				$link = "pedigree.php";
-				if ($rootid) $link .= "?rootid=".$rootid;
+				if ($rootid) $link .= "?rootid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["pedigree_chart"], $link);
 				if (!empty($PGV_IMAGES["pedigree"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -533,7 +572,7 @@ class MenuBar
 			case "descendancy":
 				//-- descendancy
 				$link = "descendancy.php";
-				if ($rootid) $link .= "?pid=".$rootid;
+				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["descend_chart"], $link);
 				if (!empty($PGV_IMAGES["descendant"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["descendant"]["small"]);
@@ -544,7 +583,7 @@ class MenuBar
 			case "ancestry":
 				//-- ancestry
 				$link = "ancestry.php";
-				if ($rootid) $link .= "?rootid=".$rootid;
+				if ($rootid) $link .= "?rootid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["ancestry_chart"], $link);
 				if (!empty($PGV_IMAGES["ancestry"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["ancestry"]["small"]);
@@ -577,7 +616,7 @@ class MenuBar
 			case "hourglass":
 				//-- hourglass
 				$link = "hourglass.php";
-				if ($rootid) $link .= "?pid=".$rootid;
+				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["hourglass_chart"], $link);
 				if (!empty($PGV_IMAGES["hourglass"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["hourglass"]["small"]);
@@ -588,7 +627,7 @@ class MenuBar
 			case "familybook":
 				//-- familybook
 				$link = "familybook.php";
-				if ($rootid) $link .= "?pid=".$rootid;
+				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["familybook_chart"], $link);
 				if (!empty($PGV_IMAGES["fambook"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["fambook"]["small"]);
@@ -1157,6 +1196,172 @@ class MenuBar
 			$submenu = new Menu($pgv_lang["show_context_help"], "$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;show_context_help=yes"));
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
+		return $menu;
+	}
+	
+	/**
+	 * get the menu with links change to each theme
+	 * @return Menu 	the menu item
+	 */
+	function &getThemeMenu() {
+		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME, $pgv_lang;
+
+		$current=$THEME;
+		$themes=get_theme_names();
+		foreach ($themes as $theme) {
+			if ($theme['dir']==get_user_setting(PGV_USER_ID, 'theme')) {
+				$current=$theme['name'];
+			}
+		}
+
+		if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES && !$SEARCH_SPIDER) {
+			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
+			$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
+			if(isset($_REQUEST['mod'])){
+				if(!strstr("?", $frompage))
+				{
+						if(!strstr("%3F", $frompage)) ;
+						else $frompage.="?";
+				}
+				if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
+			}
+			$menu=new Menu($pgv_lang['change_theme']);
+			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu');
+			$menu->print_menu = null;
+			foreach ($themes as $theme) {
+				$submenu=new Menu($theme['name'], 'themechange.php?frompage='.urlencode($frompage).'&amp;mytheme='.urlencode($theme['dir']));
+				if ($theme['name']==$current) {
+					$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
+				} else {
+					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+				}
+				$menu->addSubMenu($submenu);
+			}
+			return $menu;
+		} else {
+			return new Menu('', '');
+		}
+	}
+	/**
+	 * get the menu with links to change language
+	 * @return Menu 	the menu item
+	 */
+	function &getLanguageMenu() {
+		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $language_settings, $flagsfile, $QUERY_STRING, $SCRIPT_NAME;
+
+		if (PGV_USER_ID) {
+			$current=$LANGUAGE;
+		} else {
+			$current=get_user_setting(PGV_USER_ID, 'language');
+		}
+
+		if ($ENABLE_MULTI_LANGUAGE) {
+			$menu=new Menu($pgv_lang['change_lang']);
+			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu');
+			$menu->print_menu = null;
+			foreach ($language_settings as $lang=>$language) {
+				if ($language['pgv_lang_use']) {
+					$submenu=new Menu($language['pgv_lang'], $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang));
+					if ($lang==$current) {
+						$submenu->addClass('activeflag', 'brightflag');
+					} else {
+						$submenu->addClass('dimflag', 'brightflag');
+					}
+					$submenu->addIcon($flagsfile[$lang]);
+					$menu->addSubMenu($submenu);
+				}
+			}
+			if (count($menu->submenus)>1) {
+				return $menu;
+			} else {
+				return new Menu('', '');
+			}
+		} else {
+			return new Menu('', '');
+		}
+	}
+	/**
+	 * get the menu with links to the user/gedcom favourites
+	 * @return Menu 	the menu item
+	 */
+	function &getFavouritesMenu() {
+		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $SCRIPT_NAME;
+		global $controller; // Pages with a controller can be added to the favourites
+
+		if (PGV_USER_ID || !$REQUIRE_AUTHENTICATION) {
+			$menu=new Menu($pgv_lang['favorites']);
+			$menu->addClass('favmenuitem', 'favmenuitem_hover', 'favsubmenu');
+			$menu->print_menu = null;
+			// User favourites
+			$userfavs=getUserFavorites(PGV_USER_ID);
+			if ($userfavs || PGV_USER_ID) {
+				$submenu=new Menu('<strong>'.$pgv_lang['my_favorites'].'</strong>');
+				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+				$menu->addSubMenu($submenu);
+				if (PGV_USER_ID && isset($controller)) {
+					$submenu=new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav'));
+					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+					$menu->addSubMenu($submenu);
+				}
+				foreach ($userfavs as $fav) {
+					$OLD_GEDCOM=$GEDCOM;
+					$GEDCOM=$fav['file'];
+					switch($fav['type']) {
+					case 'URL':
+						$submenu=new Menu(PrintReady($fav['title']), $fav['url']);
+						$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+						$menu->addSubMenu($submenu);
+						break;
+					case 'INDI':
+					case 'FAM':
+					case 'SOUR':
+					case 'OBJE':
+						if (displayDetailsById($fav['gid'], $fav['type'])) {
+							$obj=GedcomRecord::getInstance($fav['gid']);
+							if ($obj) {
+								$submenu=new Menu(PrintReady($obj->getName()), $obj->getLinkUrl());
+								$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+								$menu->addSubMenu($submenu);
+							}
+						}
+						break;
+					}
+					$GEDCOM=$OLD_GEDCOM;
+				}
+			}
+			// Gedcom favourites
+			$gedfavs=getUserFavorites($GEDCOM);
+			if ($gedfavs) {
+				$submenu=new Menu('<strong>'.$pgv_lang['gedcom_favorites'].'</strong>');
+				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+				$menu->addSubMenu($submenu);
+				foreach ($gedfavs as $fav) {
+					$OLD_GEDCOM=$GEDCOM;
+					$GEDCOM=$fav['file'];
+					switch($fav['type']) {
+					case 'URL':
+						$submenu=new Menu(PrintReady($fav['title']), $fav['url']);
+						$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+						$menu->addSubMenu($submenu);
+						break;
+					case 'INDI':
+					case 'FAM':
+					case 'SOUR':
+					case 'OBJE':
+						if (displayDetailsById($fav['gid'], $fav['type'])) {
+							$obj=GedcomRecord::getInstance($fav['gid']);
+							if ($obj) {
+								$submenu=new Menu(PrintReady($obj->getName()), $obj->getLinkUrl());
+								$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
+								$menu->addSubMenu($submenu);
+							}
+						}
+						break;
+					}
+					$GEDCOM=$OLD_GEDCOM;
+				}
+			}
+		}
 		return $menu;
 	}
 }

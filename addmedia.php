@@ -127,7 +127,7 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 if (empty($action)) $action="showmediaform";
 
 if (isset($filename)) {
-	$filename = stripslashes($filename);
+	$filename = stripslashes(trim($filename));
 } else {
 	$filename = "";
 }
@@ -148,7 +148,7 @@ if ($action=="newentry") {
 		// NOTE: Check for file upload
 		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		$folderName = "";
-		if (!empty($_POST["folder"])) $folderName = $_POST["folder"];
+		if (!empty($_POST["folder"])) $folderName = trim($_POST["folder"]);
 		// Validate and correct folder names
 		$folderName = check_media_depth($folderName."/y.z", "BACK");
 		$folderName = dirname($folderName)."/";
@@ -171,7 +171,7 @@ if ($action=="newentry") {
 
 		// Determine file name on server
 		if (PGV_USER_GEDCOM_ADMIN && !empty($text[0])) {
-			$parts = pathinfo($text[0]);
+			$parts = pathinfo(trim($text[0]));
 			$mediaFile = $parts["basename"];
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
 				if (!empty($_FILES["mediafile"]["name"])) {
@@ -456,6 +456,7 @@ if ($action == "update") {
 			}
 		}
 		if (!isset($folder) && isset($oldFolder)) $folder = $oldFolder;
+		$folder = trim($folder);
 		if (substr($folder,-1)!="/") $folder .= "/";
 		if ($folder=="/") $folder = "";
 		$folder = check_media_depth($folder."y.z", "BACK");

@@ -5,7 +5,7 @@
  * Set the root person using the $pid variable
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@
  * @version $Id$
  */
 require_once("includes/controllers/hourglass_ctrl.php");
-if (isset($_REQUEST['show_full'])) $show_full = $_REQUEST['show_full'];
 $controller->init();
 
 // -- print html header information
@@ -55,38 +54,35 @@ if ($view!="preview") {
 ?>
 <!--	// NOTE: Start form and table -->
 	</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">
-	<input type="hidden" name="show_full" value="<?php print $controller->show_full ?>" />
 	<table><tr>
 	
 		<!-- // NOTE: Root ID -->
 	<td class="descriptionbox">
 	<?php print_help_link("desc_rootid_help", "qm");	
-	print $pgv_lang["root_person"] . "</td>";?>
+	print $pgv_lang["root_person"] . "</td>"; ?>
 	<td class="optionbox">
-	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $controller->pid ?>"	/>
-	<?php print_findindi_link("pid","");?>
+	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $controller->pid; ?>"	/>
+	<?php print_findindi_link("pid",""); ?>
 	</td>
 	
 	<!-- // NOTE: Show Details -->
 	<td class="descriptionbox">
 	<?php print_help_link("show_full_help", "qm");
-	print $pgv_lang["show_details"]?>
+	print $pgv_lang["show_details"]; ?>
 	</td>
 	<td class="optionbox">
-	<input type="checkbox" value="<?php 
-		if ($controller->show_full) print "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';";
-	else print "0\" onclick=\"document.people.show_full.value='1';";?>" />
+	<input type="checkbox" value="1" name="show_full" <?php if ($controller->show_full) echo 'checked="checked"'; ?> />
 	</td>
 	
 	<!-- // NOTE: Submit button -->
 	<td rowspan="3" class="topbottombar vmiddle">
-	<input type="submit" value="<?php print $pgv_lang["view"] ?>" />
+	<input type="submit" value="<?php print $pgv_lang["view"]; ?>" />
 	</td></tr>
 	
 	<!-- // NOTE: Generations -->
 	<tr><td class="descriptionbox" >
 	<?php print_help_link("desc_generations_help", "qm");
-	print $pgv_lang["generations"]?>
+	print $pgv_lang["generations"]; ?>
 	</td>
 	<td class="optionbox">
 	<select name="generations">
@@ -103,7 +99,7 @@ if ($view!="preview") {
 	<!-- // NOTE: Show spouses -->
 	<td class="descriptionbox">
 	<?php print_help_link("show_spouse_help", "qm");
-	print $pgv_lang["show_spouses"]?>
+	print $pgv_lang["show_spouses"]; ?>
 	</td>
 	<td class="optionbox">
 	<input type="checkbox" value="1" name="show_spouse"
@@ -114,9 +110,9 @@ if ($view!="preview") {
 	<!-- // NOTE: Box width -->
 	<tr><td class="descriptionbox">
 	<?php print_help_link("box_width_help", "qm");
-	print $pgv_lang["box_width"]?>
+	print $pgv_lang["box_width"]; ?>
 	</td>
-	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php print $controller->box_width;?>" />
+	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php print $controller->box_width; ?>" />
 	<b>%</b>
 	</td>
 	
@@ -134,12 +130,12 @@ if ($view!="preview") {
 <!-- // descendancy -->
 <td valign="middle">
 <?php
-$controller->print_descendency($controller->pid, 1);?>
+$controller->print_descendency($controller->pid, 1); ?>
 </td>
 <!-- // pedigree -->
 <td valign="middle">
 <?php
-$controller->print_person_pedigree($controller->pid, 1);?>
+$controller->print_person_pedigree($controller->pid, 1); ?>
 </td>
 </tr></table>
 </div>

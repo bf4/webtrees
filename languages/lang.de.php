@@ -233,8 +233,6 @@ $pgv_lang["start_at_parents"]			= "Bei den Eltern beginnen";
 $pgv_lang["charts"]						= "Diagramme";
 $pgv_lang["lists"]						= "Listen";
 $pgv_lang["welcome_page"]				= "Begrüßungs-Seite";
-$pgv_lang["max_generation"]				= "Die maximale Anzahl von Generationen beträgt #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"]				= "Die minimale Anzahl von Generationen beträgt 3.";
 $pgv_lang["box_width"]					= "Box Breite";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]		= "Kann die Familie mit folgender ID nicht finden:";

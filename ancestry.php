@@ -56,9 +56,6 @@ if ($view != "preview") {
 	}
 	//-->
 	</script>
-	<?php if (isset($controller->max_generation) == true) 
-	print "<span class=\"error\">" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["max_generation"]) . "</span>";
-	if (isset($min_generation) == true) print "<span class=\"error\">" . $pgv_lang["min_generation"] . "</span>";?>
 	</td><td><form name="people" id="people" method="get" action="?">
 	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
 	<input type="hidden" name="show_cousins" value="<?php print $controller->show_cousins; ?>" />

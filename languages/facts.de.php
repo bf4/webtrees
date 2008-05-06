@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -281,53 +281,81 @@ $factarray["MARR_UNKNOWN"] = "Art der Ehe unbekannt";
 $factarray["_HNM"] = "Hebräischer Name";
 
 // Pseudo-facts for relatives
-$factarray["_DEAT_SPOU"] = "Tod des Ehegattens";
+$factarray["_DEAT_SPOU"] = "Ehegatte: Tod";
+$factarray["_BURI_SPOU"] = "Ehegatte: Beerdigung";
+$factarray["_CREM_SPOU"] = "Ehegatte: Einäscherung";
 
-$factarray["_BIRT_CHIL"] = "Geburt von Kind";
-$factarray["_MARR_CHIL"] = "Ehe von Kind";
-$factarray["_DEAT_CHIL"] = "Tod von Kind";
+$factarray["_BIRT_CHIL"] = "Kind: Geburt";
+$factarray["_MARR_CHIL"] = "Kind: Ehe";
+$factarray["_DEAT_CHIL"] = "Kind: Tod";
+$factarray["_BURI_CHIL"] = "Kind: Beerdigung";
+$factarray["_CREM_CHIL"] = "Kind: Einäscherung";
 
-$factarray["_BIRT_GCHI"] = "Geburt von Enkel";
-$factarray["_MARR_GCHI"] = "Ehe von Enkel";
-$factarray["_DEAT_GCHI"] = "Tod von Enkel";
+$factarray["_BIRT_GCHI"] = "Enkel: Geburt";
+$factarray["_MARR_GCHI"] = "Enkel: Ehe";
+$factarray["_DEAT_GCHI"] = "Enkel: Tod";
+$factarray["_BURI_GCHI"] = "Enkel: Beerdigung";
+$factarray["_CREM_GCHI"] = "Enkel: Einäscherung";
 
-$factarray["_BIRT_GGCH"] = "Geburt von Ur-Enkel";
-$factarray["_MARR_GGCH"] = "Ehe von Ur-Enkel";
-$factarray["_DEAT_GGCH"] = "Tod von Ur-Enkel";
+$factarray["_BIRT_GGCH"] = "Urenkel: Geburt";
+$factarray["_MARR_GGCH"] = "Urenkel: Ehe";
+$factarray["_DEAT_GGCH"] = "Urenkel: Tod";
+$factarray["_BURI_GGCH"] = "Urenkel: Beerdigung";
+$factarray["_CREM_GGCH"] = "Urenkel: Einäscherung";
 
-$factarray["_MARR_FATH"] = "Ehe des Vaters";
-$factarray["_DEAT_FATH"] = "Tod des Vaters";
+$factarray["_MARR_FATH"] = "Vater: Ehe";
+$factarray["_DEAT_FATH"] = "Vater: Tod";
+$factarray["_BURI_FATH"] = "Vater: Beerdigung";
+$factarray["_CREM_FATH"] = "Vater: Einäscherung";
 
-$factarray["_MARR_MOTH"] = "Ehe der Mutter";
-$factarray["_DEAT_MOTH"] = "Tod der Mutter";
+$factarray["_MARR_MOTH"] = "Mutter: Ehe";
+$factarray["_DEAT_MOTH"] = "Mutter: Tod";
+$factarray["_BURI_MOTH"] = "Mutter: Beerdigung";
+$factarray["_CREM_MOTH"] = "Mutter: Einäscherung";
 
-$factarray["_BIRT_SIBL"] = "Geburt von Geschwister";
-$factarray["_MARR_SIBL"] = "Ehe von Geschwister";
-$factarray["_DEAT_SIBL"] = "Tod von Geschwister";
+$factarray["_BIRT_SIBL"] = "Geschwister: Geburt";
+$factarray["_MARR_SIBL"] = "Geschwister: Ehe";
+$factarray["_DEAT_SIBL"] = "Geschwister: Tod";
+$factarray["_BURI_SIBL"] = "Geschwister: Beerdigung";
+$factarray["_CREM_SIBL"] = "Geschwister: Einäscherung";
 
-$factarray["_BIRT_HSIB"] = "Geburt von Halbgeschwister";
-$factarray["_MARR_HSIB"] = "Ehe von Halbgeschwister";
-$factarray["_DEAT_HSIB"] = "Tod von Halbgeschwister";
+$factarray["_BIRT_HSIB"] = "Halbgeschwister: Geburt";
+$factarray["_MARR_HSIB"] = "Halbgeschwister: Ehe";
+$factarray["_DEAT_HSIB"] = "Halbgeschwister: Tod";
+$factarray["_BURI_HSIB"] = "Halbgeschwister: Beerdigung";
+$factarray["_CREM_HSIB"] = "Halbgeschwister: Einäscherung";
 
-$factarray["_BIRT_NEPH"] = "Geburt von Neffe oder Nichte";
-$factarray["_MARR_NEPH"] = "Ehe von Neffe oder Nichte";
-$factarray["_DEAT_NEPH"] = "Tod von Neffe oder Nichte";
+$factarray["_BIRT_NEPH"] = "Neffe oder Nichte: Geburt";
+$factarray["_MARR_NEPH"] = "Neffe oder Nichte: Ehe";
+$factarray["_DEAT_NEPH"] = "Neffe oder Nichte: Tod";
+$factarray["_BURI_NEPH"] = "Neffe oder Nichte: Beerdigung";
+$factarray["_CREM_NEPH"] = "Neffe oder Nichte: Einäscherung";
 
-$factarray["_DEAT_GPAR"] = "Tod von Großeltern";
+$factarray["_DEAT_GPAR"] = "Großeltern: Tod";
+$factarray["_BURI_GPAR"] = "Großeltern: Beerdigung";
+$factarray["_CREM_GPAR"] = "Großeltern: Einäscherung";
 
-$factarray["_DEAT_GGPA"] = "Tod von Ur-Großeltern";
+$factarray["_DEAT_GGPA"] = "Urgroßeltern: Tod";
+$factarray["_BURI_GGPA"] = "Urgroßeltern: Beerdigung";
+$factarray["_CREM_GGPA"] = "Urgroßeltern: Einäscherung";
 
-$factarray["_BIRT_FSIB"] = "Geburt von Vaters Geschwister";
-$factarray["_MARR_FSIB"] = "Ehe von Vaters Geschwister";
-$factarray["_DEAT_FSIB"] = "Tod von Vaters Geschwister";
+$factarray["_BIRT_FSIB"] = "Vaters Geschwister: Geburt";
+$factarray["_MARR_FSIB"] = "Vaters Geschwister: Ehe";
+$factarray["_DEAT_FSIB"] = "Vaters Geschwister: Tod";
+$factarray["_BURI_FSIB"] = "Vaters Geschwister: Beerdigung";
+$factarray["_CREM_FSIB"] = "Vaters Geschwister: Einäscherung";
 
-$factarray["_BIRT_MSIB"] = "Geburt von Mutters Geschwister";
-$factarray["_MARR_MSIB"] = "Ehe von Mutters Geschwister";
-$factarray["_DEAT_MSIB"] = "Tod von Mutters Geschwister";
+$factarray["_BIRT_MSIB"] = "Mutters Geschwister: Geburt";
+$factarray["_MARR_MSIB"] = "Mutters Geschwister: Ehe";
+$factarray["_DEAT_MSIB"] = "Mutters Geschwister: Tod";
+$factarray["_BURI_MSIB"] = "Mutters Geschwister: Beerdigung";
+$factarray["_CREM_MSIB"] = "Mutters Geschwister: Einäscherung";
 
-$factarray["_BIRT_COUS"] = "Geburt eines Cousins";
-$factarray["_MARR_COUS"] = "Ehe eines Cousins";
-$factarray["_DEAT_COUS"] = "Tod eines Cousins";
+$factarray["_BIRT_COUS"] = "Cousin: Geburt";
+$factarray["_MARR_COUS"] = "Cousin: Ehe";
+$factarray["_DEAT_COUS"] = "Cousin: Tod";
+$factarray["_BURI_COUS"] = "Cousin: Beerdigung";
+$factarray["_CREM_COUS"] = "Cousin: Einäscherung";
 
 $factarray["_FAMC_EMIG"] = "Auswanderung der Eltern";
 $factarray["_FAMC_RESI"] = "Wohnort der Eltern";

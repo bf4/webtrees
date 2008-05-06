@@ -3,7 +3,7 @@
  * Allow visitor to change the theme
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,27 +25,23 @@
  * @version $Id$
  */
 
-require("config.php");
+require 'config.php';
 
-// Change the theme for this session
-if (!empty($_POST["mytheme"]) || !empty($_GET["mytheme"])) {
-	if (isset($_POST["mytheme"])) {
-		$theme_dir = $_POST["mytheme"];
-	}	else {
-		if (isset($_GET["mytheme"])) {
-			$theme_dir = $_GET["mytheme"];
+// Extract request variables
+$mytheme =safe_GET('mytheme');
+$frompage=safe_GET('frompage', PGV_REGEX_NOSCRIPT, 'index.php');
+
+// Only change to a valid theme
+foreach (get_theme_names() as $theme) {
+	if ($theme['dir']==$mytheme) {
+		$_SESSION['theme_dir']=$mytheme;
+		// Make the change permanent, if allowed
+		if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
+			set_user_setting(PGV_USER_ID, 'theme', $mytheme);
 		}
 	}
-	$_SESSION["theme_dir"] = "$theme_dir";
 }
 
-// Make the change permanent, if allowed
-if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
-	set_user_setting(PGV_USER_ID, 'theme', $theme_dir);
-}
-	
-//where do we return ?
-if (isset($_POST["frompage"])) $frompage = $_POST["frompage"];
-else if (isset($_GET["frompage"])) $frompage = $_GET["frompage"];
-header("Location: ".urldecode($frompage));
+// Go back to where we came from
+header('Location: '.$frompage);
 ?>

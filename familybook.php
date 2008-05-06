@@ -5,7 +5,7 @@
  * Set the root person using the $pid variable
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,29 +28,21 @@
 
 require("config.php");
 require_once("includes/functions_charts.php");
-// -- args
-$view="";
-if (!empty($_REQUEST['view'])) $view = $_REQUEST['view'];
-$pid = "";
-if (!empty($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-$pid = clean_input($pid);
-$descent=5;
-if (isset($_REQUEST['descent'])) $descent=$_REQUEST['descent'];
 
-$show_full=$PEDIGREE_FULL_DETAILS;
-if (isset($_REQUEST['show_full'])) $show_full=$_REQUEST['show_full'];
-$show_spouse=0;
-if (isset($_REQUEST['show_spouse'])) $show_spouse=$_REQUEST['show_spouse'];
-$generations = 2;
-if (isset($_REQUEST['generations'])) $generations = $_REQUEST['generations'];
+// Extract form variables
+$pid        =safe_GET_xref('pid');
+$show_full  =safe_GET('show_full',     '1', $PEDIGREE_FULL_DETAILS);
+$show_spouse=safe_GET('show_spouse',   '1', '0');
+$descent    =safe_GET_integer('descent',       0, 9, 5);
+$generations=safe_GET_integer('generations',   2, $MAX_DESCENDANCY_GENERATIONS, 2);
+$box_width  =safe_GET_integer('box_width',     50, 300, 100);
 
-if ($generations > $MAX_DESCENDANCY_GENERATIONS) $generations = $MAX_DESCENDANCY_GENERATIONS;
+// Set default value on start
+if (empty($pid)) {
+	$show_full=$PEDIGREE_FULL_DETAILS;
+}
 
 // -- size of the boxes
-$box_width = "100";
-if (!empty($_REQUEST['box_width']))  $box_width = $_REQUEST['box_width'];
-$box_width=max($box_width, 50);
-$box_width=min($box_width, 300);
 if (!$show_full) $bwidth = ($bwidth / 1.5);
 $bwidth = (int) ($bwidth * $box_width/100);
 
@@ -60,7 +52,6 @@ if ($show_full==false) {
 $bhalfheight = (int) ($bheight / 2);
 
 // -- root id
-if (!isset($pid)) $pid="";
 $pid=check_rootid($pid);
 if ((DisplayDetailsByID($pid))||(showLivingNameByID($pid))) $name = get_person_name($pid);
 else $name = $pgv_lang["private"];

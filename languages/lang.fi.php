@@ -217,8 +217,8 @@ $pgv_lang["start_at_parents"]		= "Aloita vanhemmista";
 $pgv_lang["charts"]			= "Kaaviot";
 $pgv_lang["lists"]			= "Luettelot";
 $pgv_lang["welcome_page"]		= "Tervetulosivu";
-$pgv_lang["max_generation"]		= "Esipolvien maksimimäärä taulussa on #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"]		= "Esipolvien minimimäärä taulussa on 3.";
+//$pgv_lang["max_generation"]		= "Esipolvien maksimimäärä taulussa on #PEDIGREE_GENERATIONS#.";
+//$pgv_lang["min_generation"]		= "Esipolvien minimimäärä taulussa on 3.";
 $pgv_lang["box_width"] 		= "Leveys";
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Ei löydy perhettä, jonka ID on";

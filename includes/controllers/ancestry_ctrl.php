@@ -65,12 +65,8 @@ class AncestryControllerRoot extends BaseController {
 	var $position = "relative";
 	var $display = "block";
 	var $view;
-	var $max_generation;
 	var $show_cousins;
 	var $rootid;
-	var $min_generation;
-	//var	$Dbwidth;
-	//var $Dbheight;
 	var $name;
 	var $addname;
 	var $OLD_PGENS;
@@ -92,44 +88,28 @@ class AncestryControllerRoot extends BaseController {
 		global $DEFAULT_PEDIGREE_GENERATIONS, $PEDIGREE_GENERATIONS, $MAX_PEDIGREE_GENERATIONS, $OLD_PGENS, $box_width, $Dbwidth, $Dbheight;
 		global $show_full;
 
-		// -- args
-		if (isset($_REQUEST["show_full"])) $this->show_full = $_REQUEST["show_full"];
-		else $this->show_full = 1;
-		$show_full = $this->show_full;
+		// Extract form parameters
+		$this->rootid        =safe_GET_xref('rootid');
+		$this->show_full     =safe_GET('show_full',    '1', $PEDIGREE_FULL_DETAILS);
+		$this->show_cousins  =safe_GET('show_cousins', '1', '0');
+		$this->chart_style   =safe_GET_integer('chart_style',          0, 3, 0);
+		$box_width           =safe_GET_integer('box_width',            50, 300, 100);
+		$PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 2, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
-		if (isset($_REQUEST["chart_style"])) $this->chart_style = $_REQUEST["chart_style"];
-		else $this->chart_style = 0;
-		if (isset($_REQUEST["show_cousins"])) $this->show_cousins = $_REQUEST["show_cousins"];
-		else $this->show_cousins = 0;
-		//if (!isset($this->chart_style)) $this->chart_style = 0;
-		//if ($this->chart_style=="") $this->chart_style = 0;
-		//if (!isset($this->show_cousins)) $this->show_cousins = 0;
-		//if ($this->show_cousins == "") $this->show_cousins = 0;
-		if ((!isset($PEDIGREE_GENERATIONS)) || ($PEDIGREE_GENERATIONS == "")) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
-
-		if ($PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
-			$PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
-			$this->max_generation = true;
+		// Set defaults
+		if (empty($this->rootid)) {
+			$this->show_full=$PEDIGREE_FULL_DETAILS;
 		}
 
-		if ($PEDIGREE_GENERATIONS < 2) {
-			$PEDIGREE_GENERATIONS = 2;
-			$thmin_generation = true;
-		}
+		// This is passed as a global.  A parameter would be better...
+		$show_full=$this->show_full;
+
 		$OLD_PGENS = $PEDIGREE_GENERATIONS;
 
-		if (empty($_REQUEST["rootid"])){
-			if (!isset($this->rootid)) $this->rootid = "";
-			$this->rootid = clean_input($this->rootid);
-			$this->rootid = check_rootid($this->rootid);
-		}
-		else $this->rootid = $_REQUEST["rootid"];
+		// Validate form parameters
+		$this->rootid = check_rootid($this->rootid);
 
 		// -- size of the boxes
-		if (isset($_REQUEST['box_width'])) $box_width = $_REQUEST['box_width'];
-		if (empty($box_width)) $box_width = "100";
-		$box_width=max($box_width, 50);
-		$box_width=min($box_width, 300);
 		$Dbwidth*=$box_width/100;
 		$bwidth=$Dbwidth;
 		if (!$this->show_full) {

@@ -536,19 +536,25 @@ print "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}: </span>";
 $where_am_i=place_id_to_hierarchy($parent);
 foreach (array_reverse($where_am_i, true) as $id=>$place) {
 	if ($id==$parent)
-		print PrintReady($place);
-	else
+		if ($place != "Unknown")
+			print PrintReady($place);
+		else 
+			print $pgv_lang["unknown"];
+	else {
 // phre7d 2008-901-23 modified for persistant display of inactive records
-		print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">".PrintReady($place)."</a>";
+		print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">";
+		if ($place != "Unknown")
+			print PrintReady($place)."</a>";
+		else 
+			print $pgv_lang["unknown"]."</a>";
+	}
 	print " - ";
 }
 // phre7d 2008-901-23 modified for persistant display of inactive records	
 print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0&display=$display\">{$pgv_lang['top_level']}</a>";
 // phre7d 2008-901-23 modified for persistant display of inactive records	
 print "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&parent=$parent&display=$display\">";
-print "<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"]."  - <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
-// phre7d 2008-901-23 modified for persistant display of inactive records
-// if (isset($display)) print " checked=\"checked\"";
+print "<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"].": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
 if ($display == 'inactive') print " checked=\"checked\"";
 print ">";
 print "   <input type=\"submit\" value=\"".$pgv_lang["view"]."\"   >";
@@ -570,8 +576,12 @@ print "{$pgv_lang['pl_edit']}</th></tr>";
 if (count($placelist) == 0)
 	print "<tr><td colspan=\"7\" class=\"facts_value\">{$pgv_lang['pl_no_places_found']}</td></tr>";
 foreach ($placelist as $place) {
-// phre7d 2008-901-23 modified for persistant display of inactive records	
-	print "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}&display={$display}\">".PrintReady($place["place"])."</a></td>";
+	// phre7d 2008-901-23 modified for persistant display of inactive records	
+	print "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}&display={$display}\">";
+	if ($place["place"] != "Unknown")
+			print PrintReady($place["place"])."</a></td>";
+		else 
+			print $pgv_lang["unknown"]."</a></td>";
 	print "<td class=\"optionbox\">{$place['lati']}</td>";
 	print "<td class=\"optionbox\">{$place['long']}</td>";
 	print "<td class=\"optionbox\">{$place['zoom']}</td>";

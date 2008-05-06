@@ -44,7 +44,7 @@ require_once 'includes/functions_charts.php';
  */
 function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
-	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $show_full, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
+	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
@@ -56,7 +56,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	flush();
 	if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
-	if (!isset($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
+	if (!isset($show_full) || is_null($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
 	// NOTE: Start div out-rand()
 	if ($pid==false) {
 		print "\n\t\t\t<div id=\"out-".rand()."\" class=\"person_boxNN\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\">";
@@ -973,64 +973,25 @@ function print_execution_stats() {
 
 //-- print a form to change the language
 function print_lang_form($option=0) {
-	global $ENABLE_MULTI_LANGUAGE, $pgv_lang, $pgv_language, $flagsfile, $LANGUAGE, $language_settings;
-	global $LANG_FORM_COUNT;
-	global $SCRIPT_NAME, $QUERY_STRING;
+	global $ENABLE_MULTI_LANGUAGE;
+
 	if ($ENABLE_MULTI_LANGUAGE) {
-		if (empty($LANG_FORM_COUNT)) $LANG_FORM_COUNT=1;
-		else $LANG_FORM_COUNT++;
-
-		//-- determine which languages are actually being used
-		$used_langs = array();
-		foreach ($pgv_language as $key=>$value) {
-			if ($language_settings[$key]["pgv_lang_use"]) {
-				$used_langs[$key] = $value;
-			}
-		}
 		//-- don't show the form if there is only one language enabled
-		if (count($used_langs)<2) return;
+		$language_menu=MenuBar::getLanguageMenu();
+		if (count($language_menu->submenus)<2) {
+			return;
+		}
 
-		print "\n\t<div class=\"lang_form\">\n";
+		print '<div class="lang_form">';
 		switch($option) {
 		case 1:
-			//-- flags option
-			$i = 0;
-			foreach ($used_langs as $key=>$value)
-			{
-				if (($key != $LANGUAGE) and ($language_settings[$key]["pgv_lang_use"]))
-				{
-					$i ++;
-					$flagid = "flag" . $i;
-					print "<a href=\"$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;changelanguage=yes&amp;NEWLANGUAGE=$key")."\">";
-					print "<img src=\"" . $flagsfile[$key] . "\" class=\"dimflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" onmouseover=\"change_class('".$flagid."','brightflag');\" onmouseout=\"change_class('".$flagid."','dimflag');\" id='".$flagid."' /></a>\n";
-				}
-				else
-				{
-					if ($language_settings[$key]["pgv_lang_use"]) print "<img src=\"" . $flagsfile[$key] . "\" class=\"activeflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" />\n";
-				}
-			}
+			echo $language_menu->getMenuAsIcons();
 			break;
 		default:
-			print "<form name=\"langform$LANG_FORM_COUNT\" action=\"$SCRIPT_NAME";
-			print "\" method=\"get\">";
-			$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
-			foreach ($vars as $var) {
-				$parts = preg_split("/=/", $var);
-				print "\n\t\t<input type=\"hidden\" name=\"".$parts[0]."\" value=\"".$parts[1]."\" />";
-			}
-			print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
-			print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
-			foreach ($used_langs as $key=>$value) {
-				if ($language_settings[$key]["pgv_lang_use"]) {
-					print "\n\t\t\t<option value=\"$key\" ";
-					if ($LANGUAGE == $key) print " selected=\"selected\" class=\"selected-option\"";
-					print ">".$pgv_lang[$key]."</option>";
-				}
-			}
-			print "</select>\n</form>\n";
+			echo $language_menu->getMenuAsDropdown();
 			break;
 		}
-		print "</div>";
+		print '</div>';
 	}
 }
 /**
@@ -1971,73 +1932,22 @@ function write_align_with_textdir_check($t_dir, $return=false)
 }
 //-- print theme change dropdown box
 function print_theme_dropdown($style=0) {
-	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
-	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
-		if (!isset($themeformcount)) $themeformcount = 0;
-		$themeformcount++;
-		$uname = PGV_USER_NAME;
-		isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
-		$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
-		if(isset($_REQUEST['mod'])){
-			if(!strstr("?", $frompage))
-			{
-					if(!strstr("%3F", $frompage)) ;
-					else $frompage.="?";
-			}
-			if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
-		}
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES;
 
-		$themes = get_theme_names();
-		print "<div class=\"theme_form\">\n";
-		$module = "";
+	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
+		echo '<div class="theme_form">';
+		$theme_menu=MenuBar::getThemeMenu();
 		switch ($style) {
-			case 0:
-			print "<form action=\"themechange.php\" name=\"themeform$themeformcount\" method=\"post\">";
-			print "<input type=\"hidden\" name=\"frompage\" value=\"".urlencode($frompage)."\" />";
-			print "<select name=\"mytheme\" class=\"header_select\" onchange=\"document.themeform$themeformcount.submit();\">";
-			print "<option value=\"\">".$pgv_lang["change_theme"]."</option>\n";
-			foreach($themes as $indexval => $themedir) {
-				print "<option value=\"".$themedir["dir"]."\"";
-				if ($uname) {
-					if ($themedir["dir"] == get_user_setting($uname, 'theme')) print " class=\"selected-option\"";
-				} else {
-					if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
-				}
-				print ">".$themedir["name"]."</option>\n";
-			}
-			print "</select></form>";
+		case 0:
+			echo $theme_menu->getMenuAsDropdown();
 			break;
 		case 1:
-			$menu = array();
-			$menu["label"] = $pgv_lang["change_theme"];
-			$menu["labelpos"] = "left";
-			$menu["link"] = "#";
-			$menu["class"] = "thememenuitem";
-			$menu["hoverclass"] = "thememenuitem_hover";
-			$menu["flyout"] = "down";
-			$menu["submenuclass"] = "themesubmenu";
-			$menu["items"] = array();
-			foreach($themes as $indexval => $themedir) {
-				$submenu = array();
-				$submenu["label"] = $themedir["name"];
-				$submenu["labelpos"] = "right";
-				$submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
-				$submenu["class"] = "favsubmenuitem";
-				if ($uname) {
-					if ($themedir["dir"] == get_user_setting($uname, 'theme')) $submenu["class"] = "favsubmenuitem_selected";
-				} else {
-					if ($themedir["dir"] == $THEME_DIR) $submenu["class"] = "favsubmenuitem_selected";
-				}
-				$submenu["hoverclass"] = "favsubmenuitem_hover";
-				$menu["items"][] = $submenu;
-			}
-			print_menu($menu);
+			echo $theme_menu->getMenu();
 			break;
 		}
-		print "</div>\n";
-	}
-	else {
-		print "&nbsp;";
+		echo '</div>';
+	} else {
+		echo '&nbsp;';
 	}
 }
 
@@ -2434,7 +2344,7 @@ function format_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pi
 				$html.=format_parents_age($pid);
 			}
 			// age at event
-			else if ($fact!='CHAN') {
+			else if ($fact!='CHAN' && $fact!='_TODO') {
 				if (!$indirec)
 					$indirec=find_person_record($pid);
 				$person=new Person($indirec);

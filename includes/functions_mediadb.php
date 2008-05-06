@@ -4,7 +4,7 @@
  * Various functions used by the media DB interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005 Peter Dyson, John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1441,9 +1441,9 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	$isExternal = isFileExternal($gedfile);
 	if ($gedfile == "FILE") {
 		if (PGV_USER_GEDCOM_ADMIN) {
-		add_simple_tag("1 $gedfile", "", $pgv_lang["server_file"], "", "NOCLOSE");
-		print "<br /><sub>" . $pgv_lang["server_file_advice"];
-		print "<br />" . $pgv_lang["server_file_advice2"] . "</sub></td></tr>";
+			add_simple_tag("1 $gedfile", "", $pgv_lang["server_file"], "", "NOCLOSE");
+			print "<br /><sub>" . $pgv_lang["server_file_advice"];
+			print "<br />" . $pgv_lang["server_file_advice2"] . "</sub></td></tr>";
 		}
 		$fileName = "";
 		$folder = "";
@@ -1470,14 +1470,13 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				print " />";
 			else
 				print " /><br /><sub>" . $pgv_lang["server_file_advice"] . "</sub>";
-		}
-		else {
-			$thumbnail = thumbnail_file($fileName, true, false, $pid);
+		} else {
+/*			$thumbnail = thumbnail_file($fileName, true, false, $pid);
 			if (!empty($thumbnail)) {
 				print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 				if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 				print " alt=\"\" title=\"\" />";
-			}
+			} */
 			print $fileName;
 			print "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName) . "\" size=\"40\" />";
 		}
@@ -1578,16 +1577,19 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 	add_simple_tag("3 $gedtitl");
 
-	// 2 _PRIM
-	if ($gedrec == "")
-		$gedprim = "_PRIM";
-	else {
-		//		$gedprim = get_sub_record(1, "_PRIM", $gedrec);
-		$gedprim = get_first_tag(1, "_PRIM", $gedrec);
-		if (empty ($gedprim))
+	//-- don't show _PRIM option to regular users
+	if (PGV_USER_GEDCOM_ADMIN) {
+		// 2 _PRIM
+		if ($gedrec == "")
 			$gedprim = "_PRIM";
+		else {
+			//		$gedprim = get_sub_record(1, "_PRIM", $gedrec);
+			$gedprim = get_first_tag(1, "_PRIM", $gedrec);
+			if (empty ($gedprim))
+				$gedprim = "_PRIM";
+		}
+		add_simple_tag("1 $gedprim");
 	}
-	add_simple_tag("1 $gedprim");
 	
 	//-- don't show _THUM option to regular users
 	if (PGV_USER_GEDCOM_ADMIN) {
