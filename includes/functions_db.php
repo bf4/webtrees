@@ -3233,10 +3233,11 @@ function get_remote_id($rfn) {
 ////////////////////////////////////////////////////////////////////////////////
 // Get a list of events whose anniversary occured on a given julian day.
 // Used on the on-this-day/upcoming blocks and the day/month calendar views.
-// $jd    - the julian day
-// $facts - restrict the search to just these facts or leave blank for all
+// $jd     - the julian day
+// $facts  - restrict the search to just these facts or leave blank for all
+// $ged_id - the id of the gedcom to search
 ////////////////////////////////////////////////////////////////////////////////
-function get_anniversary_events($jd, $facts='') {
+function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
 	// If no facts specified, get all except these
@@ -3359,7 +3360,7 @@ function get_anniversary_events($jd, $facts='') {
 			$where.=" AND d_fact IN ({$incl_facts})";
 		}
 		// Only get events from the current gedcom
-		$where.=" AND d_file=".PGV_GED_ID;
+		$where.=" AND d_file=".$ged_id;
 
 		// Now fetch these anniversaries
 		$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
@@ -3408,9 +3409,10 @@ function get_anniversary_events($jd, $facts='') {
 // Get a list of events which occured during a given date range.
 // TODO: Used by the recent-changes block and the calendar year view.
 // $jd1, $jd2 - the range of julian day
-// $facts - restrict the search to just these facts or leave blank for all
+// $facts     - restrict the search to just these facts or leave blank for all
+// $ged_id    - the id of the gedcom to search
 ////////////////////////////////////////////////////////////////////////////////
-function get_calendar_events($jd1, $jd2, $facts='') {
+function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
 	// If no facts specified, get all except these
@@ -3433,7 +3435,7 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 		$where.=" AND d_fact IN ({$incl_facts})";
 	}
 	// Only get events from the current gedcom
-	$where.=" AND d_file=".PGV_GED_ID;
+	$where.=" AND d_file=".$ged_id;
 
 	// Now fetch these events
 	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
