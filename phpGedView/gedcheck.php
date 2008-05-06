@@ -70,17 +70,18 @@ $levels=array(
 );
 
 // Default values
-if (!isset($ged))
-	if (isset($GEDCOM) && in_array($GEDCOM, $all_geds))
-		$ged=$GEDCOM;                                  // Current gedcom
-	else {
-		$tmp=array_keys($all_geds);
-		$ged=$tmp[0];                                  // First gedcom in directory
-	}
-if (!isset($err_level))     $err_level=$error;     // Higher numbers are more picky.
-if (!isset($openinnew))     $openinnew=0;          // Open links in same/new tab/window
-if (!isset($context_lines)) $context_lines=2;      // Lines of context to display
-if (!isset($showall))       $showall=0;            // Show details of records with no problems
+if (isset($GEDCOM) && array_key_exists($GEDCOM, $all_geds))
+	$default_ged=$GEDCOM;       // Current gedcom
+else {
+	$tmp=array_keys($all_geds);
+	$default_ged=$tmp[0];       // First gedcom in directory
+}
+
+$ged          =safe_POST('ged', array_keys($all_geds), $default_ged);
+$err_level    =safe_POST('err_level',    '[0-3]', $error); // Higher numbers are more picky.
+$openinnew    =safe_POST('openinnew',    '[01]',  '0');    // Open links in same/new tab/window
+$context_lines=safe_POST('context_lines','[0-5]', '2');    // Lines of context to display
+$showall      =safe_POST('showall',      '[01]',  '0');    // Show details of records with no problems
  
 print "<form method='post' name='gedcheck' action='gedcheck.php'>\n";
 print "<table class='list_table, $TEXT_DIRECTION'>\n";
