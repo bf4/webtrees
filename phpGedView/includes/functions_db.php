@@ -3241,7 +3241,10 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
 	// If no facts specified, get all except these
-	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT,_TODO";
+	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
+	if ($facts!='_TODO') {
+		$skipfacts.='_TODO';
+	}
 
 	$found_facts=array();
 	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JewishDate($jd), new HijriDate($jd)) as $anniv) {
@@ -3416,7 +3419,10 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
 
 	// If no facts specified, get all except these
-	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT,_TODO";
+	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
+	if ($facts!='_TODO') {
+		$skipfacts.='_TODO';
+	}
 
 	$found_facts=array();
 

@@ -1349,7 +1349,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		print '<option value=""';
 		if (''==$text) print ' selected="selected"';
 		print ">-</option>\n";
-		foreach (get_all_users() as $user_id=>$user_name) {
+		foreach (get_all_users('asc', 'username') as $user_id=>$user_name) {
 			print "<option value=\"". $user_id . "\"";
 			if ($user_id==$text) print " selected=\"selected\"";
 			print ">" . $user_name . "</option>\n";
@@ -2196,12 +2196,12 @@ function insert_missing_subtags($level1tag)
 		if (in_array($level1tag, $value) && !in_array($key, $tags)) {
 			if ($key=="TYPE") {
 				add_simple_tag("2 TYPE ".$type_val);
+			} elseif ($level1tag=='_TODO' && $key=='DATE') {
+				add_simple_tag("2 ".$key." ".strtoupper(date('d F Y')));
+			} elseif ($level1tag=='_TODO' && $key=='_PGVU') {
+				add_simple_tag("2 ".$key." ".PGV_USER_NAME);
 			} else {
-				if ($level1tag=='_TODO' && $key=='DATE') {
-					add_simple_tag("2 ".$key." ".strtoupper(date('d F Y')));
-				} else {
-					add_simple_tag("2 ".$key);
-				}
+				add_simple_tag("2 ".$key);
 			}
 			switch ($key) { // Add level 3/4 tags as appropriate
 				case "PLAC":
