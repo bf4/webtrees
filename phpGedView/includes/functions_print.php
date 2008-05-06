@@ -2344,7 +2344,7 @@ function format_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pi
 				$html.=format_parents_age($pid);
 			}
 			// age at event
-			else if ($fact!='CHAN') {
+			else if ($fact!='CHAN' && $fact!='_TODO') {
 				if (!$indirec)
 					$indirec=find_person_record($pid);
 				$person=new Person($indirec);
