@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: New block to display _TODO items
  - Fixed: [ 1947080 ] mediafirewall - fix auto-generated .htaccess file when PGV is in the root directory
  - Changed: Show highlight and thumbnail Media options only to Admin users (canajun2eh)
  - Fixed: [ 1956830 ] (unknown) when name exists 
