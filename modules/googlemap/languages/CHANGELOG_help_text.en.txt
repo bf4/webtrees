@@ -22,6 +22,19 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
+VERSION 4.1.6
+
+?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
+----------------------------------------------------------------------------------------
++$pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]		7 May 2008           A, new feature
++$pgv_lang["GOOGLEMAP_PH_help"]					1 May 2008           A, new feature
++$pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"]		1 May 2008           A, new feature
++$pgv_lang["GOOGLEMAP_PH_MARKER_help"]			1 May 2008           A, new feature
++$pgv_lang["GM_DISP_SHORT_PLACE_help"]			1 May 2008           A, new feature
++$pgv_lang["GM_DISP_COUNT_help"]				1 May 2008           A, new feature
++$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]			1 May 2008           A, new feature
+
+
 VERSION 4.1.3
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments

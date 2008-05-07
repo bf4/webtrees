@@ -27,14 +27,15 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["gm_ph_controls"]				7 May 2008           A, new feature
 +$pgv_lang["gm_place_hierarchy"]			1 May 2008           A, new feature
 +$pgv_lang["gm_ph_map_size"]				1 May 2008           A, new feature
 +$pgv_lang["gm_ph_marker_type"]				1 May 2008           A, new feature
 +$pgv_lang["gm_standard_marker"]			1 May 2008           A, new feature
-+$pgv_lang["gm_no_coord"]				1 May 2008           A, new feature
++$pgv_lang["gm_no_coord"]					1 May 2008           A, new feature
 +$pgv_lang["gm_ph_placenames"]				1 May 2008           A, new feature
-+$pgv_lang["gm_ph_count"]				1 May 2008           A, new feature
-+$pgv_lang["gm_ph_wheel"]				1 May 2008           A, new feature
++$pgv_lang["gm_ph_count"]					1 May 2008           A, new feature
++$pgv_lang["gm_ph_wheel"]					1 May 2008           A, new feature
 
 VERSION 4.1.3
 

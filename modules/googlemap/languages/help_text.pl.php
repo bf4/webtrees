@@ -148,4 +148,6 @@ $pgv_lang["GM_DISP_COUNT"]				= "Wyświetl liczbę osób i rodzin połączonych 
 $pgv_lang["GM_DISP_COUNT_help"]			= "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Możesz określić czy liczba osób i rodzin powiązana z danym miejscem będzie wyświetlana. Przy dużej ilości osób i miejsc zaleca się wyłączenie tej opcji.";
 $pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Użyj rolki myszki do przybliżania/oddalania";
 $pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Możesz określić czy rolka myszki będzie używana do przybliżania lub oddalania mapy.";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS"]		= "Ukryj kontrolki mapy";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]	= "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />Możesz określić czy kontrolki mapy (np. wybór typu mapy) będą ukryte dopóki nie najedziesz myszką na mapę.";
 ?>
