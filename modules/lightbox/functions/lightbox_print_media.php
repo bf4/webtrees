@@ -56,6 +56,7 @@ if ($t==1) {
 	$typ2b   = "(";
 	$typ2b  .= " (m_gedrec LIKE '%TYPE photo%')       OR ";
 	$typ2b  .= " (m_gedrec LIKE '%TYPE map%')         OR ";
+		$typ2b  .= " (m_gedrec LIKE '%TYPE painting%')    OR ";
 	$typ2b  .= " (m_gedrec LIKE '%TYPE tombstone%')      ";
 	$typ2b  .= ")";
 }
@@ -84,7 +85,8 @@ if ($t==4){
 	$typ2b  .= " (m_gedrec NOT LIKE '%TYPE %')        OR ";
 	$typ2b  .= " (m_gedrec LIKE     '%TYPE book%')    OR ";
 	$typ2b  .= " (m_gedrec LIKE     '%TYPE audio%')   OR ";
-	$typ2b  .= " (m_gedrec LIKE     '%TYPE video%')      ";
+		$typ2b  .= " (m_gedrec LIKE     '%TYPE video%')   OR ";
+		$typ2b  .= " (m_gedrec LIKE     '%TYPE other%')      ";
 	$typ2b  .= ")";
 }
 if ($t==5){
@@ -301,7 +303,7 @@ foreach($current_objes as $media_id=>$value) {
 
 				// BH added "if" qualifiers for time $t ----------------------------------------
 					if ($t==1 && $ct>0 ) {
-						$typ2a  = ( (eregi("TYPE photo",$row['m_gedrec']) || eregi("TYPE map",$row['m_gedrec']) || eregi("TYPE tombstone",$row['m_gedrec'])) && !eregi(".pdf",$row['m_file']) );
+						$typ2a  = ( (eregi("TYPE photo",$row['m_gedrec']) || eregi("TYPE painting",$row['m_gedrec']) || eregi("TYPE map",$row['m_gedrec']) || eregi("TYPE tombstone",$row['m_gedrec'])) && !eregi(".pdf",$row['m_file']) );
 					}
 					if ($t==2 && $ct>0 ) {
 						$typ2a  = ( (eregi("TYPE card",$row['m_gedrec']) || eregi("TYPE certificate",$row['m_gedrec']) || eregi("TYPE document",$row['m_gedrec']) || eregi("TYPE magazine",$row['m_gedrec']) || eregi("TYPE manuscript",$row['m_gedrec']) || eregi("TYPE newspaper",$row['m_gedrec'])) ) ;
@@ -310,7 +312,7 @@ foreach($current_objes as $media_id=>$value) {
 						$typ2a  = ( (eregi("TYPE electronic",$row['m_gedrec']) || eregi("TYPE film",$row['m_gedrec']) || eregi("TYPE fiche",$row['m_gedrec'])) );
 					}
 					if ($t==4 && $ct>0 ) {
-						$typ2a  = ( !eregi("TYPE",$row['m_gedrec']) || eregi("TYPE book",$row['m_gedrec']) || eregi("TYPE audio",$row['m_gedrec']) || eregi("TYPE video",$row['m_gedrec']) );
+						$typ2a  = ( !eregi("TYPE",$row['m_gedrec']) || eregi("TYPE other",$row['m_gedrec']) || eregi("TYPE book",$row['m_gedrec']) || eregi("TYPE audio",$row['m_gedrec']) || eregi("TYPE video",$row['m_gedrec']) );
 					}
 
 					if ( $typ2a ) {

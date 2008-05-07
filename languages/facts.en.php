@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -277,52 +277,80 @@ $factarray["_HNM"] = "Hebrew Name";
 
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"] = "Death of spouse";
+$factarray["_BURI_SPOU"] = "Burial of spouse";
+$factarray["_CREM_SPOU"] = "Cremation of spouse";
 
 $factarray["_BIRT_CHIL"] = "Birth of a child";
 $factarray["_MARR_CHIL"] = "Marriage of a child";
 $factarray["_DEAT_CHIL"] = "Death of a child";
+$factarray["_BURI_CHIL"] = "Burial of a child";
+$factarray["_CREM_CHIL"] = "Cremation of a child";
 
 $factarray["_BIRT_GCHI"] = "Birth of a grandchild";
 $factarray["_MARR_GCHI"] = "Marriage of a grandchild";
 $factarray["_DEAT_GCHI"] = "Death of a grandchild";
+$factarray["_BURI_GCHI"] = "Burial of a grandchild";
+$factarray["_CREM_GCHI"] = "Cremation of a grandchild";
 
 $factarray["_BIRT_GGCH"] = "Birth of a great-grandchild";
 $factarray["_MARR_GGCH"] = "Marriage of a great-grandchild";
 $factarray["_DEAT_GGCH"] = "Death of a great-grandchild";
+$factarray["_BURI_GGCH"] = "Burial of a great-grandchild";
+$factarray["_CREM_GGCH"] = "Cremation of a great-grandchild";
 
 $factarray["_MARR_FATH"] = "Marriage of father";
 $factarray["_DEAT_FATH"] = "Death of father";
+$factarray["_BURI_FATH"] = "Burial of father";
+$factarray["_CREM_FATH"] = "Cremation of father";
 
 $factarray["_MARR_MOTH"] = "Marriage of mother";
 $factarray["_DEAT_MOTH"] = "Death of mother";
+$factarray["_BURI_MOTH"] = "Burial of mother";
+$factarray["_CREM_MOTH"] = "Cremation of mother";
 
-$factarray["_BIRT_SIBL"] = "Birth of a sibling";
-$factarray["_MARR_SIBL"] = "Marriage of a sibling";
-$factarray["_DEAT_SIBL"] = "Death of a sibling";
+$factarray["_BIRT_SIBL"] = "Birth of sibling";
+$factarray["_MARR_SIBL"] = "Marriage of sibling";
+$factarray["_DEAT_SIBL"] = "Death of sibling";
+$factarray["_BURI_SIBL"] = "Burial of sibling";
+$factarray["_CREM_SIBL"] = "Cremation of sibling";
 
-$factarray["_BIRT_HSIB"] = "Birth of a half-sibling";
-$factarray["_MARR_HSIB"] = "Marriage of a half-sibling";
-$factarray["_DEAT_HSIB"] = "Death of a half-sibling";
+$factarray["_BIRT_HSIB"] = "Birth of half-sibling";
+$factarray["_MARR_HSIB"] = "Marriage of half-sibling";
+$factarray["_DEAT_HSIB"] = "Death of half-sibling";
+$factarray["_BURI_HSIB"] = "Burial of half-sibling";
+$factarray["_CREM_HSIB"] = "Cremation of half-sibling";
 
 $factarray["_BIRT_NEPH"] = "Birth of a nephew or niece";
 $factarray["_MARR_NEPH"] = "Marriage of a nephew or niece";
 $factarray["_DEAT_NEPH"] = "Death of a nephew or niece";
+$factarray["_BURI_NEPH"] = "Burial of a nephew or niece";
+$factarray["_CREM_NEPH"] = "Cremation of a nephew or niece";
 
 $factarray["_DEAT_GPAR"] = "Death of a grand-parent";
+$factarray["_BURI_GPAR"] = "Burial of a grand-parent";
+$factarray["_CREM_GPAR"] = "Cremation of a grand-parent";
 
 $factarray["_DEAT_GGPA"] = "Death of a great-grand-parent";
+$factarray["_BURI_GGPA"] = "Burial of a great-grand-parent";
+$factarray["_CREM_GGPA"] = "Cremation of a great-grand-parent";
 
-$factarray["_BIRT_FSIB"] = "Birth of a father's sibling";
-$factarray["_MARR_FSIB"] = "Marriage of a father's sibling";
-$factarray["_DEAT_FSIB"] = "Death of a father's sibling";
+$factarray["_BIRT_FSIB"] = "Birth of father's sibling";
+$factarray["_MARR_FSIB"] = "Marriage of father's sibling";
+$factarray["_DEAT_FSIB"] = "Death of father's sibling";
+$factarray["_BURI_FSIB"] = "Burial of father's sibling";
+$factarray["_CREM_FSIB"] = "Cremation of father's sibling";
 
-$factarray["_BIRT_MSIB"] = "Birth of a mother's sibling";
-$factarray["_MARR_MSIB"] = "Marriage of a mother's sibling";
-$factarray["_DEAT_MSIB"] = "Death of a mother's sibling";
+$factarray["_BIRT_MSIB"] = "Birth of mother's sibling";
+$factarray["_MARR_MSIB"] = "Marriage of mother's sibling";
+$factarray["_DEAT_MSIB"] = "Death of mother's sibling";
+$factarray["_BURI_MSIB"] = "Burial of mother's sibling";
+$factarray["_CREM_MSIB"] = "Cremation of mother's sibling";
 
 $factarray["_BIRT_COUS"] = "Birth of a first cousin";
 $factarray["_MARR_COUS"] = "Marriage of a first cousin";
 $factarray["_DEAT_COUS"] = "Death of a first cousin";
+$factarray["_BURI_COUS"] = "Burial of a first cousin";
+$factarray["_CREM_COUS"] = "Cremation of a first cousin";
 
 $factarray["_FAMC_EMIG"] = "Emigration of parents";
 $factarray["_FAMC_RESI"] = "Residence of parents";
@@ -332,5 +360,25 @@ $factarray["_THUM"]	= "Use this image as the thumbnail?";
 $factarray["_PGVU"]	= "by"; // last changed by
 $factarray["SERV"] = "Remote Server";
 $factarray["_GEDF"] = "GEDCOM File";
+
+/*-- Fact abbreviations for use in Chart boxes.  
+ *		Use these abbreviations in cases where the standard method of using the first
+ *		letter of the spelled-out name results in an undesirable abbreviation or where
+ *		you want to produce a different result (eg: "x" instead of "M" for "Married").
+ *
+ *		You can abbreviate any Fact label this way.  The list of abbreviations is
+ *		open-ended.
+ *
+ *		These abbreviations are user-customizable. Just put them into file "extra.xx.php".
+ *		The length of these abbreviations is not restricted to 1 letter.
+ */
+ 
+/*-- The following lines have been commented out.  They should serve as examples. 
+ 
+$factAbbrev["BIRT"]		= "B";
+$factAbbrev["MARR"]		= "M";
+$factAbbrev["DEAT"]		= "D";
+
+ */
 
 ?>

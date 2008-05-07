@@ -4,7 +4,7 @@
  * and other common errors.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2006-2007 Greg Roach fisharebest@users.sourceforge.net
+ * Copyright (C) 2006-2008 Greg Roach, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,9 @@ print_header($pgv_lang["gedcheck"].' - '.$GEDCOM);
 // Scan all the gedcom directories for gedcom files
 ////////////////////////////////////////////////////////////////////////////////
 $all_dirs=array($INDEX_DIRECTORY=>"");
-foreach ($GEDCOMS as $value)
-	$all_dirs[dirname($value["path"])."/"]="";
+foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+	$all_dirs[dirname(get_gedcom_setting($ged_id, 'path'))."/"]="";
+}
 
 $all_geds=array();
 foreach ($all_dirs as $key=>$value) {
@@ -69,17 +70,18 @@ $levels=array(
 );
 
 // Default values
-if (!isset($ged))
-	if (isset($GEDCOM) && in_array($GEDCOM, $all_geds))
-		$ged=$GEDCOM;                                  // Current gedcom
+if (isset($GEDCOM) && array_key_exists($GEDCOM, $all_geds))
+	$default_ged=$GEDCOM;       // Current gedcom
 	else {
 		$tmp=array_keys($all_geds);
-		$ged=$tmp[0];                                  // First gedcom in directory
+	$default_ged=$tmp[0];       // First gedcom in directory
 	}
-if (!isset($err_level))     $err_level=$error;     // Higher numbers are more picky.
-if (!isset($openinnew))     $openinnew=0;          // Open links in same/new tab/window
-if (!isset($context_lines)) $context_lines=2;      // Lines of context to display
-if (!isset($showall))       $showall=0;            // Show details of records with no problems
+
+$ged          =safe_POST('ged', array_keys($all_geds), $default_ged);
+$err_level    =safe_POST('err_level',    '[0-3]', $error); // Higher numbers are more picky.
+$openinnew    =safe_POST('openinnew',    '[01]',  '0');    // Open links in same/new tab/window
+$context_lines=safe_POST('context_lines','[0-5]', '2');    // Lines of context to display
+$showall      =safe_POST('showall',      '[01]',  '0');    // Show details of records with no problems
  
 print "<form method='post' name='gedcheck' action='gedcheck.php'>\n";
 print "<table class='list_table, $TEXT_DIRECTION'>\n";
@@ -169,9 +171,9 @@ $PGV_LINK=array(
 $target=($openinnew==1 ? " target='_new'" : '');
 function pgv_href($tag, $xref, $name="")
 {
-	global $PGV_LINK, $target, $ged, $GEDCOMS;
+	global $PGV_LINK, $target, $ged;
 	$text=($name=="" ? "$tag $xref" : "$name ($xref)");
-	if (isset($PGV_LINK[$tag]) && isset($GEDCOMS[$ged]))
+	if (isset($PGV_LINK[$tag]) && get_id_from_gedcom($ged))
 		return '<a href='.$PGV_LINK[$tag].str_replace('@','',$xref)."&ged=$ged"."$target>$text</a>";
 	else
 		return "$tag $xref";
@@ -1142,7 +1144,7 @@ unset($gedfile);
 ////////////////////////////////////////////////////////////////////////////////
 // If the gedcom has been imported, do semantic checks with the PGV API
 ////////////////////////////////////////////////////////////////////////////////
-if (isset($GEDCOMS[$ged])) {
+if (get_gedcom_setting($ged, 'imported')===true) {
 	$GEDCOM=$ged;
 	$indi_list=get_indi_list();
 	$fam_list =get_fam_list();

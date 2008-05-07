@@ -24,8 +24,14 @@
  * @version $Id$
  */
 
+require('config.php');
+if (!PGV_USER_GEDCOM_ADMIN) {
+	header("Location: login.php?url=admin.php");
+	exit;
+}
+
 $search = @$HTTP_GET_VARS["search"];
-print "<title>PhpGedView : changelog ($search)</title>\n";
+print "<title>PhpGedView : changelog (".htmlentities($search).")</title>\n";
 
 $text = file_get_contents("changelog.txt");
 $wait = @file_get_contents("changelog.local.txt");

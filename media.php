@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a media
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -266,7 +266,7 @@ print_header($pgv_lang["manage_media"]);
 			return true;
 		}
 		else if (frm.filter.value.length < 2) {
-			alert("<?php print $pgv_lang["search_more_chars"]?>");
+			alert("<?php print $pgv_lang["search_more_chars"]; ?>");
 			frm.filter.focus();
 			return false;
 		}
@@ -535,7 +535,7 @@ if (check_media_structure()) {
 		$res = dbquery($sql);
 		$onegedcom = true;
 		while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if ($row['m_gedfile']!=$GEDCOMS[$GEDCOM]['id']) $onegedcom = false;
+			if ($row['m_gedfile']!=PGV_GED_ID) $onegedcom = false;
 		}
 		$res->free();
 		if (!$onegedcom) {
@@ -1041,7 +1041,7 @@ if (check_media_structure()) {
 					if ($k>$MEDIA_DIRECTORY_LEVELS) break;
 				}
 				if ($match) {
-					if ($row["m_gedfile"]!=$GEDCOMS[$GEDCOM]["id"]) $onegedcom = false;
+					if ($row["m_gedfile"]!=PGV_GED_ID) $onegedcom = false;
 					else $xrefs[] = $row["m_media"];
 				}
 			}
@@ -1097,7 +1097,7 @@ if (check_media_structure()) {
 				$links = get_media_relations($xref);
 				foreach($links as $pid=>$type) {
 					if (isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_updated_record($pid);
-					else $gedrec = find_gedcom_record($pid, '', $type);
+					else $gedrec = find_gedcom_record($pid);
 					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
 					if (replace_gedrec($pid, $gedrec, true, $xref)) {
 						print_text("record_updated");

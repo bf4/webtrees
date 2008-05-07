@@ -88,26 +88,12 @@ class GedcomRecord {
 	 * @return GedcomRecord
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $indilist, $famlist, $sourcelist, $repolist, $otherlist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		//-- first check for the object in the cache
-		if (isset($indilist[$pid]) && $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($indilist[$pid]['object'])) return $indilist[$pid]['object'];
-		}
-		if (isset($famlist[$pid]) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
-		}
-		if (isset($sourcelist[$pid]) && $sourcelist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($sourcelist[$pid]['object'])) return $sourcelist[$pid]['object'];
-		}
-		if (isset($repolist[$pid]) && $repolist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($repolist[$pid]['object'])) return $repolist[$pid]['object'];
-		}
-		if (isset($objectlist[$pid]) && $objectlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($objectlist[$pid]['object'])) return $objectlist[$pid]['object'];
-		}
-		if (isset($otherlist[$pid]) && $otherlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($otherlist[$pid]['object'])) return $otherlist[$pid]['object'];
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Check the cache first
+		if (isset($gedcom_record_cache[$pid][$ged_id])) {
+			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
 		//-- look for the gedcom record
@@ -140,39 +126,35 @@ class GedcomRecord {
 			if ($type=="INDI") {
 				$record = new Person($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
-				$indilist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else if ($type=="FAM") {
 				$record = new Family($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
-				$famlist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else if ($type=="SOUR") {
 				$record = new Source($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
-				$sourcelist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else if ($type=="REPO") {
 				$record = new Repository($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
-				$repolist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else if ($type=="OBJE") {
 				$record = new Media($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
-				$objectlist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else {
 				$record = new GedcomRecord($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
-				$otherlist[$pid]['object'] = &$record;
 				return $record;
 			}
+			// Store the object in the cache
+			$gedcom_record_cache[$pid][$ged_id]=&$record;
 		}
 		return null;
 	}
@@ -415,6 +397,52 @@ class GedcomRecord {
 		return "";
 	}
 	
+		// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
+	// This is used to display multiple events on the individual/family lists.
+	// Multiple events can exist because of uncertainty in dates, dates in different
+	// calendars, place-names in both latin and hebrew character sets, etc.
+	// It also allows us to combine dates/places from different events in the summaries.
+	function getAllEventDates($event) {
+		$dates=array();
+		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
+			foreach ($events[1] as $event_rec) {
+				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^2 DATE +(.+)/m", $event_rec, $ged_dates)) {
+					foreach ($ged_dates[1] as $ged_date) {
+						$dates[]=new GedcomDate($ged_date);
+					}
+				}
+			}
+		}
+		return $dates;
+	}
+	function getAllEventPlaces($event) {
+		$places=array();
+		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
+			foreach ($events[1] as $event_rec) {
+				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event_rec, $ged_places)) {
+					foreach ($ged_places[1] as $ged_place) {
+						$places[]=$ged_place;
+					}
+				}
+			}
+		}
+		return $places;
+	}
+
+	// Get all the events of a type.
+	// TODO: event handling needs to be tidied up - with the event class from PGV4.2 ??
+	function getAllEvents($event) {
+		$event_recs=array();
+		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
+			foreach ($events[0] as $event_rec) {
+				if (!FactViewRestricted($this->xref, $event_rec)) {
+					$event_recs[]=$event_rec;
+				}
+			}	
+		}
+		return $event_recs;
+	}
+
 	/**
 	 * Get the first Event for the given Fact type
 	 *
@@ -423,9 +451,11 @@ class GedcomRecord {
 	 */
 	function &getFactByType($factType) {
 		$this->parseFacts();
+		if (empty($this->facts)) return null;
 		foreach($this->facts as $f=>$fact) {
 			if ($fact->getTag()==$factType) return $fact;
 		}
+		return null;
 	}
 
 	/**
@@ -557,11 +587,11 @@ class GedcomRecord {
 		if (preg_match('/^(\d\d):(\d\d):(\d\d)$/', get_gedcom_value('DATE:TIME', 2, $chan->getGedComRecord(), '', false).':00', $match)) {
 			$t=mktime($match[1], $match[2], $match[3]);
 			$sort=$d->MinJD().$match[1].$match[2].$match[3];
+			$text=strip_tags($d->Display(false, "{$DATE_FORMAT} -", array()).date(" {$TIME_FORMAT}", $t));
 		} else {
-			$t=mktime(0,0,0);
 			$sort=$d->MinJD().'000000';
+			$text=strip_tags($d->Display(false, "{$DATE_FORMAT}", array()));
 		}
-		$text=strip_tags($d->Display(false, "{$DATE_FORMAT} -", array()).date(" {$TIME_FORMAT}", $t));
 		if ($add_url)
 			$text='<a name="'.$sort.'" href="'.$this->getLinkUrl().'">'.$text.'</a>';
 		return $text;

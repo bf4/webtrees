@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  Jaakko Sarell and Matti Valve
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @author Jaakko Sarell
- * @translator Matti Valve
+ * @author Jaakko Sarell and Matti Valve
  * @version $Id$
  */
 
@@ -161,7 +160,6 @@ $factarray["_UID"]		= "Yleistunniste";
 $factarray["_PGVU"]	= "Muuttanut";
 $factarray["SERV"] 	= "Etäpalvelin";
 $factarray["_GEDF"] 	= "GEDCOM-tiedosto";
-$factarray["_HIST"] = "Historia";
 $factarray["_PRIM"]	= "Korostettu kuva";
 $factarray["_DBID"] = "Linkitetyn tietokannan ID";
 $factarray["STAT:DATE"] = "Tilanmuutostieto";
@@ -295,17 +293,11 @@ $factarray["_FAMC_RESI"] = "Vanhempien asuinpaikka";
 $factarray["FAMC:MARR:PLAC"] 	= "Vanhempien hääpaikka";
 $factarray["FAMC:HUSB:OCCU"] = "Isän ammatti";
 $factarray[":BIRT:PLAC"] = "Syntymäpaikka";
-//$factarray["FAMC:HUSB:OCCU"] 	= "Father's Occupation";
-//$factarray[":BIRT:PLAC"] 		= "Birthplace";
 $factarray["FAMS:MARR:PLAC"] 	= "Hääpaikka";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Puolison kuolinpaikka";
 $factarray["FAMC:HUSB:GIVN"] = "Isän etunimi";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Puolison syntymäpaikka";
 $factarray["FAMC:WIFE:GIVN"] = "Äidin etunimi";
-//$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Spouse's Death Place";
-//$factarray["FAMC:HUSB:GIVN"] = "Father's Given Name";
-//$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Spouse's Birth Place";
-//$factarray["FAMC:WIFE:GIVN"] = "Mother's Given Name";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Isänisän etunimi";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Äidinäidin etunimi";
 $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Äidinisän etunimi";

@@ -6,7 +6,7 @@
  * about the GEDCOM.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,15 +33,32 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// Helper defines
+define('STATS_BIRTH', "'BIRT','CHR','BAPM'");
+define('STATS_DEATH', "'DEAT','BURI','CREM'");
+define('STATS_MARRIAGE', "'MARR'");
+
 require_once 'includes/functions_print_lists.php';
+
+// Methods not allowed to be used in a statistic
+define('STATS_NOT_ALLOWED', 'stats,getAllTags,getTags');
+
 class stats
 {
 	var $_gedcom;
+	var $_server_url; // Absolute URL for generating external links.  e.g. in RSS feeds
 	var $_compat=false;
+	var $_not_allowed = false;
+	var $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'photo', 'tombstone', 'video', 'other');
+	// For Google charts simple encoding
+	var $_encoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var $_xencoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.';
 
-	function stats($gedcom)
+	function stats($gedcom, $server_url='')
 	{
+		$this->_not_allowed = explode(',', STATS_NOT_ALLOWED);
 		$this->_setGedcom($gedcom);
+		$this->_server_url=$server_url;
 	}
 
 	function _setGedcom($gedcom)
@@ -51,7 +68,7 @@ class stats
 	}
 
 	/**
-	 * Return an array of all supported tags and an example ot its output.
+	 * Return an array of all supported tags and an example of its output.
 	 */
 	function getAllTags()
 	{
@@ -60,9 +77,7 @@ class stats
 		$c=count($methods);
 		for ($i=0; $i < $c; $i++)
 		{
-			if ($methods[$i][0]=='_' || $methods[$i]=='stats' || $methods[$i]=='getAllTags' || $methods[$i]=='getTags') {
-				continue;
-			}
+			if($methods[$i][0] == '_' || in_array($methods[$i], $this->_not_allowed)){continue;}
 			$examples[$methods[$i]]=$this->$methods[$i]();
 			if (stristr($methods[$i], 'percentage') || $methods[$i]=='averageChildren') {
 				$examples[$methods[$i]] .='%';
@@ -73,6 +88,58 @@ class stats
 		}
 		ksort($examples);
 		return $examples;
+	}
+
+	/**
+	 * Return a string of all supported tags and an example of its output in table row form.
+	 */
+	function getAllTagsTable()
+	{
+		$examples=array();
+		$methods=get_class_methods($this);
+		$c=count($methods);
+		for ($i=0; $i < $c; $i++)
+		{
+			if(in_array($methods[$i], $this->_not_allowed) || $methods[$i][0] == '_' || $methods[$i] == 'getAllTagsTable' || $methods[$i] == 'getAllTagsText'){continue;} // Include this method name to prevent bad stuff happining
+			$examples[$methods[$i]]=$this->$methods[$i]();
+			if (stristr($methods[$i], 'percentage') || $methods[$i]=='averageChildren') {
+				$examples[$methods[$i]] .='%';
+			}
+			if (stristr($methods[$i], 'highlight')) {
+				$examples[$methods[$i]]=str_replace(array(' align="left"', ' align="right"'), '', $examples[$methods[$i]]);
+			}
+		}
+		$out = '';
+		foreach($examples as $tag=>$v)
+		{
+			$out .= "\t<tr class=\"vevent\">"
+				."<td class=\"list_value_wrap\" align=\"right\" valign=\"top\" style=\"padding:3px\">{$tag}</td>"
+				."<td class=\"list_value_wrap\" align=\"left\" valign=\"top\">{$v}</td>"
+				."</tr>\n"
+			;
+		}
+		return $out;
+	}
+
+	/**
+	 * Return a string of all supported tags in plain text.
+	 */
+	function getAllTagsText()
+	{
+		$examples=array();
+		$methods=get_class_methods($this);
+		$c=count($methods);
+		for ($i=0; $i < $c; $i++)
+		{
+			if(in_array($methods[$i], $this->_not_allowed) || $methods[$i][0] == '_' || $methods[$i] == 'getAllTagsTable' || $methods[$i] == 'getAllTagsText'){continue;} // Include this method name to prevent bad stuff happining
+			$examples[$methods[$i]] = $methods[$i];
+		}
+		$out = '';
+		foreach($examples as $tag=>$v)
+		{
+			$out .= "{$tag}<br />\n";
+		}
+		return $out;
 	}
 
 	/*
@@ -88,11 +155,9 @@ class stats
 		$new_values=array();
 		$c=count($tags);
 
-		if ($this->_compat) {
-			static $funcs=null;
-			if (!is_array($funcs)) {
-				$funcs=get_class_methods($this);
-			}
+		static $funcs=null;
+		if (!is_array($funcs)) {
+			$funcs=get_class_methods($this);
 		}
 
 		/*
@@ -100,14 +165,23 @@ class stats
 		 */
 		for ($i=0; $i < $c; $i++)
 		{
-			if ($this->_compat) {
-				if (!array_search($tags[$i], $funcs)) {
-					continue;
-				}
+			$full_tag = $tags[$i];
+			// Added for new parameter support
+			$params = explode(':', $tags[$i]);
+			if(count($params) > 1)
+			{
+				$tags[$i] = array_shift($params);
 			}
+			else
+			{
+				$params = null;
+			}
+			// Skip non-tags and non-allowed tags
+			if(!array_search($tags[$i], $funcs) || $tags[$i][0] == '_' || in_array($tags[$i], $this->_not_allowed)){continue;}
+			// Generate the replacement value for the tag
 			if (method_exists($this, $tags[$i])) {
-				$new_tags[]="#{$tags[$i]}#";
-				$new_values[]=$this->$tags[$i]();
+				$new_tags[]="#{$full_tag}#";
+				$new_values[]=$this->$tags[$i]($params);
 				unset($tags[$i]);
 			}
 		}
@@ -234,7 +308,7 @@ class stats
 	function gedcomUpdated()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='CHAN' ORDER BY d_julianday2 DESC", 1);
+		$rows=$this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='CHAN' ORDER BY d_julianday2 DESC, d_type", 1);
 		if (isset($rows[0])) {
 			$date=new GedcomDate("{$rows[0]['d_day']} {$rows[0]['d_month']} {$rows[0]['d_year']}");
 			return $date->Display(false);
@@ -245,17 +319,17 @@ class stats
 	function gedcomHighlight()
 	{
 		$highlight=false;
-		if (file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.jpg")) {
+		if(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.jpg"))
+		{
 			$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.jpg";
-		} else
-			if (file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.png")) {
-				$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.png";
-			}
-		if (!$highlight) {
-			return '';
 		}
+		elseif(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.png"))
+		{
+			$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.png";
+		}
+		if(!$highlight){return '';}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" class=\"gedcom_highlight\" /></a>";
 	}
 
 	function gedcomHighlightLeft()
@@ -271,7 +345,7 @@ class stats
 			return '';
 		}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" class=\"gedcom_highlight\" /></a>";
 	}
 
 	function gedcomHighlightRight()
@@ -287,99 +361,197 @@ class stats
 			return '';
 		}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" class=\"gedcom_highlight\" /></a>";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Totals                                                                    //
 ///////////////////////////////////////////////////////////////////////////////
 
+	function _getPercentage($total, $type)
+	{
+		$per=null;
+		switch($type)
+		{
+			default:
+			case 'all':
+				$per=round(100 * $total / ($this->totalIndividuals() + $this->totalFamilies() + $this->totalSources() + $this->totalOtherRecords()), 2);
+				break;
+			case 'individual':
+				$per=round(100 * $total / $this->totalIndividuals(), 2);
+				break;
+			case 'family':
+				$per=round(100 * $total / $this->totalFamilies(), 2);
+				break;
+			case 'source':
+				$per=round(100 * $total / $this->totalSources(), 2);
+				break;
+			case 'other':
+				$per=round(100 * $total / $this->totalOtherRecords(), 2);
+				break;
+		}
+		return $per;
+	}
+
 	function totalIndividuals()
 	{
-		return get_list_size('indilist');
+		global $TBLPREFIX;
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
 
 	function totalIndividualsPercentage()
 	{
-		return $this->_getPercentage(get_list_size('indilist'), 'all', 2);
+		return $this->_getPercentage($this->totalIndividuals(), 'all', 2);
 	}
 
 	function totalFamilies()
 	{
-		return get_list_size('famlist');
+		global $TBLPREFIX;
+		$rows=$this->_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
-	
+
 	function totalFamiliesPercentage()
 	{
-		return $this->_getPercentage(get_list_size('famlist'), 'all', 2);
+		return $this->_getPercentage($this->totalFamilies(), 'all', 2);
 	}
 
 	function totalSources()
 	{
-		return get_list_size('sourcelist');
+		global $TBLPREFIX;
+		$rows=$this->_runSQL("SELECT COUNT(s_id) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
-	
+
 	function totalSourcesPercentage()
 	{
-		return $this->_getPercentage(get_list_size('sourcelist'), 'all', 2);
+		return $this->_getPercentage($this->totalSources(), 'all', 2);
 	}
 
 	function totalOtherRecords()
 	{
-		return get_list_size('otherlist');
+		global $TBLPREFIX;
+		$rows=$this->_runSQL("SELECT COUNT(o_id) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_gedcom['id']);
+		return $rows[0]['tot'];
 	}
-	
+
 	function totalOtherPercentage()
 	{
-		return $this->_getPercentage(get_list_size('otherlist'), 'all', 2);
+		return $this->_getPercentage($this->totalOtherRecords(), 'all', 2);
 	}
 
-	function totalSurnames()
+	function totalSurnames($params = null)
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} GROUP BY i_surname");
-		return count($rows);
+		if($params !== null)
+		{
+			$dis = '';
+			$surnames = array();
+			foreach($params as $surname){$surnames[] = "i_surname='{$surname}'";}
+			$surnames = join(' OR ', $surnames);
+			$opt = " AND ({$surnames}) ";
+		}
+		else
+		{
+			$dis = ' DISTINCT ';
+			$opt = '';
+		}
+		$rows = $this->_runSQL("SELECT COUNT({$dis}i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']}{$opt}");
+		return $rows[0]['tot'];
 	}
 
-	function totalEvents()
+	function totalEvents($params = null)
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact!='CHAN' AND d_gid!='HEAD'");
+		if($params !== null)
+		{
+			$types = array();
+			$no_types = array();
+			foreach($params as $type)
+			{
+				if($type{0} == '!')
+				{
+					$type = substr($type, 1);
+					$no_types[] = "'{$type}'";
+				}
+				else
+				{
+					$types[] = "'{$type}'";
+				}
+			}
+			$opt = array();
+			if(count($types))
+			{
+				$opt[] = ' AND d_fact IN ('.join(',', $types).') ';
+			}
+			if(count($no_types))
+			{
+				$opt[] = ' AND d_fact NOT IN ('.join(',', $no_types).') ';
+			}
+			$opt = join('', $opt);
+			$dis = ' DISTINCT ';
+		}
+		else
+		{
+			$opt = '';
+			$dis = '';
+		}
+		$rows = $this->_runSQL("SELECT {$dis}COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}", 1);
+		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
 
 	function totalEventsBirth()
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT'");
-		return $rows[0]['tot'];
+		$facts = explode(',', STATS_BIRTH);
+		$c = count($facts);
+		for($i = 0; $i < $c; $i++)
+		{
+			$facts[$i] = str_replace('\'', '', $facts[$i]);
+		}
+		return $this->totalEvents($facts);
 	}
 
 	function totalEventsDeath()
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT'");
-		return $rows[0]['tot'];
+		$facts = explode(',', STATS_DEATH);
+		$c = count($facts);
+		for($i = 0; $i < $c; $i++)
+		{
+			$facts[$i] = str_replace('\'', '', $facts[$i]);
+		}
+		return $this->totalEvents($facts);
 	}
 
 	function totalEventsMarriage()
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='MARR'");
-		return $rows[0]['tot'];
+		$facts = explode(',', STATS_MARRIAGE);
+		$c = count($facts);
+		for($i = 0; $i < $c; $i++)
+		{
+			$facts[$i] = str_replace('\'', '', $facts[$i]);
+		}
+		return $this->totalEvents($facts);
 	}
 
 	function totalEventsOther()
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact!='BIRT' AND d_fact!='DEAT' AND d_fact!='MARR' AND d_fact!='CHAN' AND d_gid!='HEAD'");
-		return $rows[0]['tot'];
+		$facts = array_merge(explode(',', STATS_BIRTH), explode(',', STATS_DEATH), explode(',', STATS_MARRIAGE));
+		$no_facts = array();
+		foreach($facts as $fact)
+		{
+			$fact = '!'.str_replace('\'', '', $fact);
+			$no_facts[] = $fact;
+		}
+		return $this->totalEvents($no_facts);
 	}
 
 	function totalSexMales()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_gedcom LIKE '%1 SEX M%'");
+		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_gedcom LIKE '%1 SEX M%'", 1);
+		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
 	function totalSexMalesPercentage()
@@ -391,7 +563,8 @@ class stats
 	function totalSexFemales()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_gedcom LIKE '%1 SEX F%'");
+		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_gedcom LIKE '%1 SEX F%'", 1);
+		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
 
@@ -404,7 +577,8 @@ class stats
 	function totalSexUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')");
+		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')", 1);
+		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
 
@@ -414,10 +588,28 @@ class stats
 		return $this->_getPercentage($this->totalSexUnknown(), 'individual');
 	}
 
+	function chartSex($params=null)
+	{
+		global $pgv_lang;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '350x100';}
+		if(isset($params[1]) && $params[1] != ''){$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
+		if(isset($params[2]) && $params[2] != ''){$color_male = strtolower($params[2]);}else{$color_male = 'add8e6';}
+		if(isset($params[3]) && $params[3] != ''){$color_unknown = strtolower($params[3]);}else{$color_unknown = '000000';}
+		$sizes = explode('x', $size);
+		$tot_f = $this->totalSexFemalesPercentage();
+		$tot_m = $this->totalSexMalesPercentage();
+		$tot_u = $this->totalSexUnknownPercentage();
+		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
+		$chl = urlencode("Total unknown|{$pgv_lang['stat_females']}|{$pgv_lang['stat_males']}");
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
+	}
+
 	function totalLiving()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=0");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=0", 1);
+		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
 
@@ -430,7 +622,8 @@ class stats
 	function totalDeceased()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=1");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=1", 1);
+		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
 
@@ -443,7 +636,8 @@ class stats
 	function totalMortalityUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=-1");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=-1", 1);
+		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
 
@@ -453,721 +647,799 @@ class stats
 		return $this->_getPercentage($this->totalMortalityUnknown(), 'individual');
 	}
 
+	function chartMortality($params=null)
+	{
+		global $pgv_lang;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '350x100';}
+		if(isset($params[1]) && $params[1] != ''){$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
+		if(isset($params[2]) && $params[2] != ''){$color_dead = strtolower($params[2]);}else{$color_dead = 'cccccc';}
+		if(isset($params[3]) && $params[3] != ''){$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
+		$sizes = explode('x', $size);
+		$tot_l = $this->totalLivingPercentage();
+		$tot_d = $this->totalDeceasedPercentage();
+		$tot_u = $this->totalMortalityUnknownPercentage();
+		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
+		$chl = urlencode("Total unknown|{$pgv_lang['total_living']}|{$pgv_lang['total_dead']}");
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
+	}
+
 	function totalUsers()
 	{
 		return get_user_count();
 	}
 
-	function totalMedia()
-	{
-		global $GEDCOMS, $GEDCOM, $TBLPREFIX, $MULTI_MEDIA;
-		if ($MULTI_MEDIA==true) {
-			$rows=$this->_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_gedcom['id']}'");
-			return $rows[0]['tot'];
-		} else {
-			return '';
-		}
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Births                                                                    //
-///////////////////////////////////////////////////////////////////////////////
-
-	function firstBirth()
-	{
-		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		$row=$rows[0];
-		if (displayDetailsById($row['d_gid'])) {
-			ob_start();
-			print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-			$indi=ob_get_contents();
-			ob_end_clean();
-		} else {
-			$indi=$pgv_lang['privacy_error'];
-		}
-		return $indi;
-	}
-
-	function firstBirthYear()
+	function totalAdmins()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_year, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		$row=$rows[0];
-		return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
+		$rows = $this->_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin='Y'", 1);
+		if(!isset($rows[0])){return 0;}
+		return $rows[0]['tot'];
 	}
 
-	function firstBirthName()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		$row=$rows[0];
-		$id='';
-		if ($SHOW_ID_NUMBERS) {
-			if ($listDir=='rtl') {
-				$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-			} else {
-				$id="&nbsp;&nbsp;({$row['d_gid']})";
-			}
-		}
-		return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-	}
-
-	function firstBirthPlace()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		$row=$rows[0];
-		ob_start();
-		print_fact_place(new Event(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid']))), true, true, true);
-		$place=ob_get_contents();
-		ob_end_clean();
-		return $place;
-	}
-
-	function lastBirth()
-	{
-		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		if (displayDetailsById($row['d_gid'])) {
-			ob_start();
-			print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-			$indi=ob_get_contents();
-			ob_end_clean();
-		} else {
-			$indi=$pgv_lang['privacy_error'];
-		}
-		return $indi;
-	}
-
-	function lastBirthYear()
+	function totalNonAdmins()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_year, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
+		$rows = $this->_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin!='Y'", 1);
+		if(!isset($rows[0])){return 0;}
+		return $rows[0]['tot'];
 	}
 
-	function lastBirthName()
+	function _totalMediaType($type='all')
 	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		$id='';
-		if ($SHOW_ID_NUMBERS) {
-			if ($listDir=='rtl') {
-				$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-			} else {
-				$id="&nbsp;&nbsp;({$row['d_gid']})";
+		global $TBLPREFIX, $MULTI_MEDIA;
+		if(!$MULTI_MEDIA){return 0;}
+		if(!in_array($type, $this->_media_types) && $type != 'all' && $type != 'unknown'){return 0;}
+		$like = '';
+		if($type != 'all')
+		{
+			if($type != 'unknown')
+			{
+				$like = " AND m_gedrec LIKE '%3 TYPE {$type}%'";
 			}
-		}
-		return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-	}
-
-	function lastBirthPlace()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='BIRT' ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		ob_start();
-		print_fact_place(new Event(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid']))), true, true, true);
-		$place=ob_get_contents();
-		ob_end_clean();
-		return $place;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Deaths                                                                    //
-///////////////////////////////////////////////////////////////////////////////
-
-	function firstDeath()
-	{
-		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		if ($rows && $row=$rows[0]) {
-			if (displayDetailsById($row['d_gid'])) {
-				ob_start();
-				print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-				$indi=ob_get_contents();
-				ob_end_clean();
-			} else {
-				$indi=$pgv_lang['privacy_error'];
-			}
-			return $indi;
-		} else {
-			return '';
-		}
-	}
-
-	function firstDeathYear()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_year, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		if ($rows && $row=$rows[0]) {
-			return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
-		} else {
-			return '';
-		}
-	}
-
-	function firstDeathName()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		if ($rows && $row=$rows[0]) {
-			$id='';
-			if ($SHOW_ID_NUMBERS) {
-				if ($listDir=='rtl') {
-					$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-				} else {
-					$id="&nbsp;&nbsp;({$row['d_gid']})";
+			else
+			{
+				// There has to be a better way then this :(
+				$nolike = array();
+				foreach($this->_media_types as $t)
+				{
+					$nolike[] = "m_gedrec NOT LIKE '%3 TYPE {$t}%'";
 				}
+				$nolike = join(' AND ', $nolike);
+				$like = " AND ({$nolike})";
 			}
-			return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-		} else {
-			return '';
 		}
+		$rows = $this->_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_gedcom['id']}'{$like}", 1);
+		if(!isset($rows[0])){return 0;}
+		return $rows[0]['tot'];
 	}
 
-	function firstDeathPlace()
+	function totalMedia(){return $this->_totalMediaType('all');}
+	function totalMediaAudio(){return $this->_totalMediaType('audio');}
+	function totalMediaBook(){return $this->_totalMediaType('book');}
+	function totalMediaCard(){return $this->_totalMediaType('card');}
+	function totalMediaCertificate(){return $this->_totalMediaType('certificate');}
+	function totalMediaDocument(){return $this->_totalMediaType('document');}
+	function totalMediaElectronic(){return $this->_totalMediaType('electronic');}
+	function totalMediaMagazine(){return $this->_totalMediaType('magazine');}
+	function totalMediaManuscript(){return $this->_totalMediaType('manuscript');}
+	function totalMediaMap(){return $this->_totalMediaType('map');}
+	function totalMediaFiche(){return $this->_totalMediaType('fiche');}
+	function totalMediaFilm(){return $this->_totalMediaType('film');}
+	function totalMediaNewspaper(){return $this->_totalMediaType('newspaper');}
+	function totalMediaPhoto(){return $this->_totalMediaType('photo');}
+	function totalMediaTombstone(){return $this->_totalMediaType('tombstone');}
+	function totalMediaVideo(){return $this->_totalMediaType('video');}
+	function totalMediaOther(){return $this->_totalMediaType('other');}
+	function totalMediaUnknown(){return $this->_totalMediaType('unknown');}
+
+	function chartMedia($params=null)
 	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		if ($rows && $row=$rows[0]) {
-			ob_start();
-			print_fact_place(new Event(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid']))), true, true, true);
-			$place=ob_get_contents();
-			ob_end_clean();
-			return $place;
-		} else {
-			return '';
-		}
+		global $pgv_lang;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '450x200';}
+		if(isset($params[1]) && $params[1] != ''){$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+		if(isset($params[2]) && $params[2] != ''){$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+		$sizes = explode('x', $size);
+		$tot = $this->_totalMediaType('all');
+		$chd = $this->_array_to_extended_encoding(array(
+			round(100 * $this->_totalMediaType('audio') / $tot, 0),
+			round(100 * $this->_totalMediaType('book') / $tot, 0),
+			round(100 * $this->_totalMediaType('card') / $tot, 0),
+			round(100 * $this->_totalMediaType('certificate') / $tot, 0),
+			round(100 * $this->_totalMediaType('document') / $tot, 0),
+			round(100 * $this->_totalMediaType('electronic') / $tot, 0),
+			round(100 * $this->_totalMediaType('magazine') / $tot, 0),
+			round(100 * $this->_totalMediaType('manuscript') / $tot, 0),
+			round(100 * $this->_totalMediaType('map') / $tot, 0),
+			round(100 * $this->_totalMediaType('fiche') / $tot, 0),
+			round(100 * $this->_totalMediaType('film') / $tot, 0),
+			round(100 * $this->_totalMediaType('newspaper') / $tot, 0),
+			round(100 * $this->_totalMediaType('photo') / $tot, 0),
+			round(100 * $this->_totalMediaType('tombstone') / $tot, 0),
+			round(100 * $this->_totalMediaType('video') / $tot, 0),
+			round(100 * $this->_totalMediaType('other') / $tot, 0),
+			round(100 * $this->_totalMediaType('unknown') / $tot, 0)
+		));
+		$chl = urlencode("{$pgv_lang['TYPE__audio']}|{$pgv_lang['TYPE__book']}|{$pgv_lang['TYPE__card']}|{$pgv_lang['TYPE__certificate']}|{$pgv_lang['TYPE__document']}|{$pgv_lang['TYPE__electronic']}|{$pgv_lang['TYPE__fiche']}|{$pgv_lang['TYPE__film']}|{$pgv_lang['TYPE__magazine']}|{$pgv_lang['TYPE__manuscript']}|{$pgv_lang['TYPE__map']}|{$pgv_lang['TYPE__newspaper']}|{$pgv_lang['TYPE__photo']}|{$pgv_lang['TYPE__tombstone']}|{$pgv_lang['TYPE__video']}|{$pgv_lang['TYPE__other']}|{$pgv_lang['unknown']}");
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
 	}
 
-	function lastDeath()
+///////////////////////////////////////////////////////////////////////////////
+// Birth & Death                                                             //
+///////////////////////////////////////////////////////////////////////////////
+
+	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT')
 	{
-		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' ORDER BY d_julianday2 DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			if (displayDetailsById($row['d_gid'])) {
-				ob_start();
-				print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-				$indi=ob_get_contents();
-				ob_end_clean();
-			} else {
-				$indi=$pgv_lang['privacy_error'];
+		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE;
+		if($birth_death == 'BIRT')
+		{
+			$query_field = STATS_BIRTH;
+		}
+		else
+		{
+			$birth_death = 'DEAT';
+			$query_field = STATS_DEATH;
+		}
+		if($life_dir == 'ASC')
+		{
+			$dmod = 'MIN';
+		}
+		else
+		{
+			$dmod = 'MAX';
+			$life_dir = 'DESC';
+		}
+		switch($DBTYPE)
+		{
+			// Testing new style
+			default:
+			{
+				$rows=$this->_runSQL(''
+					.' SELECT'
+						.' d2.d_year,'
+						.' d2.d_type,'
+						.' d2.d_fact,'
+						.' d2.d_gid'
+					.' FROM'
+						." {$TBLPREFIX}dates AS d2"
+					.' WHERE'
+						." d2.d_file={$this->_gedcom['id']} AND"
+						." d2.d_fact IN ({$query_field}) AND"
+						.' d2.d_julianday1=('
+							.' SELECT'
+								." {$dmod}(d1.d_julianday1)"
+							.' FROM'
+								." {$TBLPREFIX}dates AS d1"
+							.' WHERE'
+								." d1.d_file={$this->_gedcom['id']} AND"
+								." d1.d_fact IN ({$query_field}) AND"
+								.' d1.d_julianday1!=0'
+						.' )'
+					.' ORDER BY'
+						." d_julianday1 {$life_dir}, d_type"
+				);
+				break;
 			}
-			return $indi;
-		} else {
-			return '';
+			// MySQL 4.0 can't handle nested queries, so we use the old style. Of course this hits the performance of PHP4 users a tiny bit, but it's the best we can do.
+			case 'mysql':
+			{
+				$rows=$this->_runSQL(''
+					.' SELECT'
+						.' d_year,'
+						.' d_type,'
+						.' d_fact,'
+						.' d_gid'
+					.' FROM'
+						." {$TBLPREFIX}dates"
+					.' WHERE'
+						." d_file={$this->_gedcom['id']} AND"
+						." d_fact IN ({$query_field}) AND"
+						.' d_julianday1!=0'
+					.' ORDER BY'
+						." d_julianday1 {$life_dir},"
+						.' d_type ASC'
+				, 1);
+				break;
+			}
 		}
-	}
-
-	function lastDeathYear()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_year, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' ORDER BY d_julianday2 DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
-		} else {
-			return '';
-		}
-	}
-
-	function lastDeathName()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' ORDER BY d_julianday2 DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			$id='';
-			if ($SHOW_ID_NUMBERS) {
-				if ($listDir=='rtl') {
-					$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
+		if(!isset($rows[0])){return '';}
+		$row=$rows[0];
+		switch($type)
+		{
+			default:
+			case 'full':
+				if (displayDetailsById($row['d_gid'])) {
+					$result=format_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', 'span');
 				} else {
-					$id="&nbsp;&nbsp;({$row['d_gid']})";
+					$result=$pgv_lang['privacy_error'];
 				}
-			}
-			return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-		} else {
-			return '';
+				break;
+			case 'year':
+				$date=new GedcomDate($row['d_type'].' '.$row['d_year']);
+				$result=$date->Display(true);
+				break;
+			case 'name':
+				$id='';
+				if ($SHOW_ID_NUMBERS) {
+					if ($listDir=='rtl') {
+						$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
+					} else {
+						$id="&nbsp;&nbsp;({$row['d_gid']})";
+					}
+				}
+				$result="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
+				break;
+			case 'place':
+				$result=format_fact_place(Person::getInstance($row['d_gid'])->getFactByType($row['d_fact']), true, true, true);
+				break;
 		}
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function lastDeathPlace()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='DEAT' ORDER BY d_julianday2 DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			ob_start();
-			print_fact_place(new Event(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid']))), true, true, true);
-			$place=ob_get_contents();
-			ob_end_clean();
-			return $place;
-		} else {
-			return '';
-		}
-	}
+	//
+	// Birth
+	//
+
+	function firstBirth(){return $this->_mortalityQuery('full', 'ASC', 'BIRT');}
+	function firstBirthYear(){return $this->_mortalityQuery('year', 'ASC', 'BIRT');}
+	function firstBirthName(){return $this->_mortalityQuery('name', 'ASC', 'BIRT');}
+	function firstBirthPlace(){return $this->_mortalityQuery('place', 'ASC', 'BIRT');}
+
+	function lastBirth(){return $this->_mortalityQuery('full', 'DESC', 'BIRT');}
+	function lastBirthYear(){return $this->_mortalityQuery('year', 'DESC', 'BIRT');}
+	function lastBirthName(){return $this->_mortalityQuery('name', 'DESC', 'BIRT');}
+	function lastBirthPlace(){return $this->_mortalityQuery('place', 'DESC', 'BIRT');}
+
+	//
+	// Death
+	//
+
+	function firstDeath(){return $this->_mortalityQuery('full', 'ASC', 'DEAT');}
+	function firstDeathYear(){return $this->_mortalityQuery('year', 'ASC', 'DEAT');}
+	function firstDeathName(){return $this->_mortalityQuery('name', 'ASC', 'DEAT');}
+	function firstDeathPlace(){return $this->_mortalityQuery('place', 'ASC', 'DEAT');}
+
+	function lastDeath(){return $this->_mortalityQuery('full', 'DESC', 'DEAT');}
+	function lastDeathYear(){return $this->_mortalityQuery('year', 'DESC', 'DEAT');}
+	function lastDeathName(){return $this->_mortalityQuery('name', 'DESC', 'DEAT');}
+	function lastDeathPlace(){return $this->_mortalityQuery('place', 'DESC', 'DEAT');}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lifespan                                                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
+	function _longlifeQuery($type='full', $sex='F')
+	{
+		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;
+		$sex_search = ' 1=1';
+		if($sex == 'F')
+		{
+			$sex_search = " i_gedcom LIKE '%1 SEX F%'";
+		}
+		elseif($sex == 'M')
+		{
+			$sex_search = " i_gedcom LIKE '%1 SEX M%'";
+		}
+
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' death.d_gid AS id,'
+				.' death.d_julianday2-birth.d_julianday1 AS age'
+			.' FROM'
+				." {$TBLPREFIX}dates AS death,"
+				." {$TBLPREFIX}dates AS birth,"
+				." {$TBLPREFIX}individuals AS indi"
+			.' WHERE'
+				.' indi.i_id=birth.d_gid AND'
+				.' birth.d_gid=death.d_gid AND'
+				." death.d_file={$this->_gedcom['id']} AND"
+				.' birth.d_file=death.d_file AND'
+				.' birth.d_file=indi.i_file AND'
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
+				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
+				.' birth.d_julianday1!=0 AND'
+				.' death.d_julianday1!=0 AND'
+				.$sex_search
+			.' ORDER BY'
+				.' age DESC'
+		, 1);
+		if(!isset($rows[0])){return '';}
+		$row = $rows[0];
+		switch($type)
+		{
+			default:
+			case 'full':
+				if (displayDetailsById($row['id'])) {
+					$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+				} else {
+					$result= $pgv_lang['privacy_error'];
+				}
+				break;
+			case 'age':
+				$result=floor($row['age']/365.25);
+				break;
+			case 'name':
+				$id = '';
+				if ($SHOW_ID_NUMBERS) {
+					if ($listDir == 'rtl') {
+						$id = "&nbsp;&nbsp;".getRLM()."({$row['id']})".getRLM();
+					} else {
+						$id = "&nbsp;&nbsp;({$row['id']})";
+					}
+				}
+				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
+				break;
+		}
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
+	}
+
+	function _topTenOldest($type='list', $sex='BOTH', $params=null)
+	{
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		if($sex == 'F')
+		{
+			$sex_search = " AND i_gedcom LIKE '%1 SEX F%'";
+		}
+		elseif($sex == 'M')
+		{
+			$sex_search = " AND i_gedcom LIKE '%1 SEX M%'";
+		}
+		else
+		{
+			$sex_search = '';
+		}
+		if($params !== null && isset($params[0])){$total = $params[0];}else{$total = 10;}
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' death.d_julianday2-birth.d_julianday1 AS age,'
+				.' death.d_gid'
+			.' FROM'
+				." {$TBLPREFIX}dates AS death,"
+				." {$TBLPREFIX}dates AS birth,"
+				." {$TBLPREFIX}individuals AS indi"
+			.' WHERE'
+				.' indi.i_id=birth.d_gid AND'
+				.' birth.d_gid=death.d_gid AND'
+				." death.d_file={$this->_gedcom['id']} AND"
+				.' birth.d_file=death.d_file AND'
+				.' birth.d_file=indi.i_file AND'
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
+				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
+				.' birth.d_julianday1!=0 AND'
+				.' death.d_julianday1!=0'
+				.$sex_search
+			.' ORDER BY'
+				.' age DESC'
+		, $total);
+		if(!isset($rows[0])){return '';}
+		$top10=array();
+		for($c = 0; $c < $total; $c++)
+		{
+			if($type == 'list')
+			{
+				$top10[]="\t<li><a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($rows[$c]['d_gid'])."</a> [".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]</li>\n";
+			}
+			else
+			{
+				$top10[]="<a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($rows[$c]['d_gid'])."</a> [".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]";
+			}
+		}
+		if($type == 'list')
+		{
+			$top10=join("\n", $top10);
+		}
+		else
+		{
+			$top10=join('; ', $top10);
+		}
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		if($type == 'list')
+		{
+			return "<ul>\n{$top10}</ul>\n";
+		}
+		// Statstics are used by RSS feeds, etc., so need absolute URLs.
+		return $top10;
+	}
+
+	function _averageLifespanQuery($sex='BOTH')
+	{
+		global $TBLPREFIX;
+		if($sex == 'F')
+		{
+			$sex_search = " AND i_gedcom LIKE '%1 SEX F%'";
+		}
+		elseif($sex == 'M')
+		{
+			$sex_search = " AND i_gedcom LIKE '%1 SEX M%'";
+		}
+		else
+		{
+			$sex_search = '';
+		}
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' AVG(death.d_julianday2-birth.d_julianday1) AS age'
+			.' FROM'
+				." {$TBLPREFIX}dates AS death,"
+				." {$TBLPREFIX}dates AS birth,"
+				." {$TBLPREFIX}individuals AS indi"
+			.' WHERE'
+				.' indi.i_id=birth.d_gid AND'
+				.' birth.d_gid=death.d_gid AND'
+				." death.d_file={$this->_gedcom['id']} AND"
+				.' birth.d_file=death.d_file AND'
+				.' birth.d_file=indi.i_file AND'
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
+				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
+				.' birth.d_julianday1!=0 AND'
+				.' death.d_julianday1!=0'
+				.$sex_search
+		, 1);
+		if(!isset($rows[0])){return '';}
+		$row=$rows[0];
+		return floor($row['age']/365.25);
+	}
+
 	// Both Sexes
 
-	function longestLife()
-	{
-		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			if (displayDetailsById($row['d_gid'])) {
-				ob_start();
-				print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-				$indi=ob_get_contents();
-				ob_end_clean();
-			} else {
-				$indi=$pgv_lang['privacy_error'];
-			}
-			return $indi;
-		} else {
-			return '';
-		}
-	}
+	function longestLife(){return $this->_longlifeQuery('full', 'BOTH');}
+	function longestLifeAge(){return $this->_longlifeQuery('age', 'BOTH');}
+	function longestLifeName(){return $this->_longlifeQuery('name', 'BOTH');}
 
-	function longestLifeAge()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 ORDER BY age DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			return floor($row['age']/365.25);
-		} else {
-			return '';
-		}
-	}
+	function topTenOldest($params=null){return $this->_topTenOldest('nolist', 'BOTH', $params);}
+	function topTenOldestList($params=null){return $this->_topTenOldest('list', 'BOTH', $params);}
 
-	function longestLifeName()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0  ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			$id='';
-			if ($SHOW_ID_NUMBERS) {
-				if ($listDir=='rtl') {
-					$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-				} else {
-					$id="&nbsp;&nbsp;({$row['d_gid']})";
-				}
-			}
-			return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-		} else {
-			return '';
-		}
-	}
-
-	function topTenOldest()
-	{
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 ORDER BY age DESC", 10);
-		$top10=array();
-		foreach ($rows as $row) {
-			$top10[]="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]";
-		}
-		$top10=join("; ", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
-		return $top10;
-	}
-
-	function topTenOldestList()
-	{
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 ORDER BY age DESC", 10);
-		$top10=array();
-		foreach ($rows as $row) {
-			$top10[]="\t<li><a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]</li>";
-		}
-		$top10=join("\n", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
-		return "<ul>\n{$top10}</ul>\n";
-	}
-
-	function averageLifespan()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT AVG(death.d_julianday2-birth.d_julianday1) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0", 1);
-		$row=$rows[0];
-		return floor($row['age']/365.25);
-	}
-
-	// Male Only
-
-	function longestLifeMale()
-	{
-		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
-		$row=$rows[0];
-		if (displayDetailsById($row['d_gid'])) {
-			ob_start();
-			print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-			$indi=ob_get_contents();
-			ob_end_clean();
-		} else {
-			$indi=$pgv_lang['privacy_error'];
-		}
-		return $indi;
-	}
-
-	function longestLifeMaleAge()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 1);
-		$row=$rows[0];
-		return floor($row['age']/365.25);
-	}
-
-	function longestLifeMaleName()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
-		$row=$rows[0];
-		$id='';
-		if ($SHOW_ID_NUMBERS) {
-			if ($listDir=='rtl') {
-				$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-			} else {
-				$id="&nbsp;&nbsp;({$row['d_gid']})";
-			}
-		}
-		return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-	}
-
-	function topTenOldestMale()
-	{
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 10);
-		$top10=array();
-		foreach ($rows as $row) {
-			$top10[]="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]";
-		}
-		$top10=join("; ", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
-		return $top10;
-	}
-
-	function topTenOldestMaleList()
-	{
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 10);
-		$top10=array();
-		foreach ($rows as $row) {
-			$top10[]="\t<li><a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]</li>";
-		}
-		$top10=join("\n", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
-		return "<ul>\n{$top10}</ul>\n";
-	}
-
-	function averageLifespanMale()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT AVG(death.d_julianday2-birth.d_julianday1) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX M%'", 1);
-		$row=$rows[0];
-		return floor($row['age']/365.25);
-	}
+	function averageLifespan(){return $this->_averageLifespanQuery('BOTH');}
 
 	// Female Only
 
-	function longestLifeFemale()
-	{
-		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
-		$row=$rows[0];
-		if (displayDetailsById($row['d_gid'])) {
-			ob_start();
-			print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-			$indi=ob_get_contents();
-			ob_end_clean();
-		} else {
-			$indi=$pgv_lang['privacy_error'];
-		}
-		return $indi;
-	}
+	function longestLifeFemale(){return $this->_longlifeQuery('full', 'F');}
+	function longestLifeFemaleAge(){return $this->_longlifeQuery('age', 'F');}
+	function longestLifeFemaleNmae(){return $this->_longlifeQuery('name', 'F');}
 
-	function longestLifeFemaleAge()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 1);
-		$row=$rows[0];
-		return floor($row['age']/365.25);
-	}
+	function topTenOldestFemale($params=null){return $this->_topTenOldest('nolist', 'F', $params);}
+	function topTenOldestFemaleList($params=null){return $this->_topTenOldest('list', 'F', $params);}
 
-	function longestLifeFemaleName()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY death.d_julianday2-birth.d_julianday1 DESC", 1);
-		$row=$rows[0];
-		$id='';
-		if ($SHOW_ID_NUMBERS) {
-			if ($listDir=='rtl') {
-				$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-			} else {
-				$id="&nbsp;&nbsp;({$row['d_gid']})";
-			}
-		}
-		return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-	}
+	function averageLifespanFemale(){return $this->_averageLifespanQuery('F');}
 
-	function topTenOldestFemale()
-	{
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 10);
-		$top10=array();
-		foreach ($rows as $row) {
-			$top10[]="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]";
-		}
-		$top10=join("; ", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
-		return $top10;
-	}
+	// Male Only
 
-	function topTenOldestFemaleList()
-	{
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 10);
-		$top10=array();
-		foreach ($rows as $row) {
-			$top10[]="\t<li><a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [".floor($row['age']/365.25)." {$pgv_lang['years']}]</li>";
-		}
-		$top10=join("\n", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
-		return "<ul>\n{$top10}</ul>\n";
-	}
+	function longestLifeMale(){return $this->_longlifeQuery('full', 'M');}
+	function longestLifeMaleAge(){return $this->_longlifeQuery('age', 'M');}
+	function longestLifeMaleNmae(){return $this->_longlifeQuery('name', 'M');}
 
-	function averageLifespanFemale()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT AVG(death.d_julianday2-birth.d_julianday1) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file={$this->_gedcom['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0 AND i_gedcom LIKE '%1 SEX F%'", 1);
-		$row=$rows[0];
-		return floor($row['age']/365.25);
-	}
+	function topTenOldestMale($params=null){return $this->_topTenOldest('nolist', 'M', $params);}
+	function topTenOldestMaleList($params=null){return $this->_topTenOldest('list', 'M', $params);}
 
+	function averageLifespanMale(){return $this->_averageLifespanQuery('M');}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Events                                                                    //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function firstEvent()
+	function _eventQuery($type='full', $direction='ASC', $facts=STATS_BIRTH)
+	{
+		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;
+		$eventTypes = array(
+			'BIRT'=>$pgv_lang['htmlplus_block_birth'],
+			'DEAT'=>$pgv_lang['htmlplus_block_death'],
+			'MARR'=>$pgv_lang['htmlplus_block_marrage'],
+			'ADOP'=>$pgv_lang['htmlplus_block_adoption'],
+			'BURI'=>$pgv_lang['htmlplus_block_burial'],
+			'CENS'=>$pgv_lang['htmlplus_block_census']
+		);
+
+		if($direction != 'ASC'){$direction = 'DESC';}
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' d_gid AS id,'
+				.' d_year AS year,'
+				.' d_fact AS fact,'
+				.' d_type AS type'
+			.' FROM'
+				." {$TBLPREFIX}dates"
+			.' WHERE'
+				." d_file={$this->_gedcom['id']} AND"
+				." d_gid!='HEAD' AND"
+				." d_fact IN ({$facts}) AND"
+				.' d_julianday1!=0'
+			.' ORDER BY'
+				." d_julianday1 {$direction}, d_type"
+		, 1);
+		if(!isset($rows[0])){return '';}
+		$row=$rows[0];
+		switch($type)
+		{
+			default:
+			case 'full':
+				if (displayDetailsById($row['id']))
+				{
+					switch($row['fact'])
+					{
+						default:
+						case 'BIRT':
+						case 'CHR':
+						case 'BAPM':
+						case 'DEAT':
+						case 'BURI':
+						case 'CREM':
+						{
+							$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+							break;
+						}
+						case 'MARR':
+						{
+							$result=format_list_family($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+							break;
+						}
+					}
+				}
+				else
+				{
+					$result=$pgv_lang['privacy_error'];
+				}
+				break;
+			case 'year':
+			{
+				$date=new GedcomDate($row['type'].' '.$row['year']);
+				$result=$date->Display(true);
+			}
+			case 'type':
+				if(isset($eventTypes[$row['fact']])) {
+					$result=$eventTypes[$row['fact']];
+				} else {
+					$result='';
+				}
+				break;
+			case 'name':
+				$id = '';
+				if($SHOW_ID_NUMBERS)
+				{
+					if($listDir == 'rtl')
+					{
+						$id="&nbsp;&nbsp;" . getRLM() . "({$row['id']})" . getRLM();
+					}
+					else
+					{
+						$id="&nbsp;&nbsp;({$row['id']})";
+					}
+				}
+				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
+				break;
+			case 'place':
+				$result=format_fact_place(Person::getInstance($row['id'])->getFactByType($row['fact']), true, true, true);
+				break;
+		}
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
+	}
+
+	function firstEvent(){return $this->_eventQuery('full', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function firstEventYear(){return $this->_eventQuery('year', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function firstEventType(){return $this->_eventQuery('type', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function firstEventName(){return $this->_eventQuery('name', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function firstEventPlace(){return $this->_eventQuery('place', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+
+	function lastEvent(){return $this->_eventQuery('full', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function lastEventYear(){return $this->_eventQuery('year', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function lastEventType(){return $this->_eventQuery('type', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function lastEventName(){return $this->_eventQuery('name', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function lastEventPlace(){return $this->_eventQuery('place', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+
+///////////////////////////////////////////////////////////////////////////////
+// Marriage                                                                  //
+///////////////////////////////////////////////////////////////////////////////
+
+	/*
+	 * Query the database for marriage tags.
+	 */
+	function _marriageQuery($type='full', $age_dir='ASC', $sex='F')
 	{
 		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND d_julianday1!=0 ORDER BY d_julianday1", 1);
+		if($sex == 'F'){$sex_field = 'f_wife';}else{$sex_field = 'f_husb';}
+		if($age_dir != 'ASC'){$age_dir = 'DESC';}
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' fam.f_id,'
+				." fam.{$sex_field},"
+				.' married.d_julianday2-birth.d_julianday1 AS age'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_gedcom['id']}"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_gedcom['id']}"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_gedcom['id']}"
+			.' WHERE'
+				.' birth.d_gid = indi.i_id AND'
+				.' married.d_gid = fam.f_id AND'
+				." indi.i_id = fam.{$sex_field} AND"
+				." fam.f_file = {$this->_gedcom['id']} AND"
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
+				." married.d_fact = 'MARR' AND"
+				.' birth.d_julianday1 != 0 AND'
+				.' married.d_julianday1 != 0 AND'
+				." i_gedcom LIKE '%1 SEX {$sex}%'"
+			.' ORDER BY'
+				." married.d_julianday2-birth.d_julianday1 {$age_dir}"
+		, 1);
+		if(!isset($rows[0])){return '';}
 		$row=$rows[0];
-		if (displayDetailsById($row['d_gid'])) {
-			ob_start();
-			print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-			$indi=ob_get_contents();
-			ob_end_clean();
-		} else {
-			$indi=$pgv_lang['privacy_error'];
+		switch($type)
+		{
+			default:
+			case 'full':
+				if (displayDetailsById($row['f_id']) && displayDetailsById($row[$sex_field])) {
+					$result=format_list_family($row['f_id'], array(get_person_name($row[$sex_field]), $this->_gedcom['gedcom']), false, '', 'span');
+				} else {
+					$result=$pgv_lang['privacy_error'];
+				}
+				break;;
+			case 'name':
+				$result="<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['f_id']).'</a>';
+				break;
+			case 'age':
+				$result=floor($row['age']/365.25);
+				break;
 		}
-		return $indi;
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function firstEventYear()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_year, d_type FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		$row=$rows[0];
-		return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
-	}
+	//
+	// Female only
+	//
 
-	function firstEventType()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_fact  FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		$row=$rows[0];
-		$event=$this->_getEventType($row['d_fact']);
-		if ($event==false) {
-			return '';
-		}
-		return $event;
-	}
+	function youngestMarriageFemale(){return $this->_marriageQuery('full', 'ASC', 'F');}
+	function youngestMarriageFemaleName(){return $this->_marriageQuery('name', 'ASC', 'F');}
+	function youngestMarriageFemaleAge(){return $this->_marriageQuery('age', 'ASC', 'F');}
 
-	function firstEventName()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		$row=$rows[0];
-		$id='';
-		if ($SHOW_ID_NUMBERS) {
-			if ($listDir=='rtl') {
-				$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-			} else {
-				$id="&nbsp;&nbsp;({$row['d_gid']})";
-			}
-		}
-		return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-	}
+	function oldestMarriageFemale(){return $this->_marriageQuery('full', 'DESC', 'F');}
+	function oldestMarriageFemaleName(){return $this->_marriageQuery('name', 'DESC', 'F');}
+	function oldestMarriageFemaleAge(){return $this->_marriageQuery('age', 'DESC', 'F');}
 
-	function firstEventPlace()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_gid, d_fact FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') AND d_julianday1!=0 ORDER BY d_julianday1", 1);
-		$row=$rows[0];
-		ob_start();
-		print_fact_place(new Event(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid']))), true, true, true);
-		$place=ob_get_contents();
-		ob_end_clean();
-		return $place;
-	}
+	//
+	// Male only
+	//
 
-	function lastEvent()
-	{
-		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		if (displayDetailsById($row['d_gid'])) {
-			ob_start();
-			print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
-			$indi=ob_get_contents();
-			ob_end_clean();
-		} else {
-			$indi=$pgv_lang['privacy_error'];
-		}
-		return $indi;
-	}
+	function youngestMarriageMale(){return $this->_marriageQuery('full', 'ASC', 'M');}
+	function youngestMarriageMaleName(){return $this->_marriageQuery('name', 'ASC', 'M');}
+	function youngestMarriageMaleAge(){return $this->_marriageQuery('age', 'ASC', 'M');}
 
-	function lastEventYear()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_type, d_year FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		return "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;cal={$row['d_type']}&amp;ged={$this->_gedcom['gedcom']}\">{$row['d_year']}</a>";
-	}
-
-	function lastEventType()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_fact FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		$event=$this->_getEventType($row['d_fact']);
-		if ($event==false) {
-			return '';
-		}
-		return $event;
-	}
-
-	function lastEventName()
-	{
-		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
-		$rows=$this->_runSQL("SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		$id='';
-		if ($SHOW_ID_NUMBERS) {
-			if ($listDir=='rtl') {
-				$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
-			} else {
-				$id="&nbsp;&nbsp;({$row['d_gid']})";
-			}
-		}
-		return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
-	}
-
-	function lastEventPlace()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_gid, d_fact FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_gid!='HEAD' AND d_fact IN ('BIRT', 'DEAT', 'MARR', 'ADOP', 'BURI') ORDER BY d_julianday2 DESC", 1);
-		$row=$rows[0];
-		ob_start();
-		print_fact_place(new Event(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid']))), true, true, true);
-		$place=ob_get_contents();
-		ob_end_clean();
-		return $place;
-	}
+	function oldestMarriageMale(){return $this->_marriageQuery('full', 'DESC', 'M');}
+	function oldestMarriageMaleName(){return $this->_marriageQuery('name', 'DESC', 'M');}
+	function oldestMarriageMaleAge(){return $this->_marriageQuery('age', 'DESC', 'M');}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Family Size                                                               //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function largestFamily()
+	function _familyQuery($type='full')
 	{
 		global $TBLPREFIX, $pgv_lang;
-		$rows=$this->_runSQL("SELECT f_numchil, f_id FROM {$TBLPREFIX}families WHERE f_file={$this->_gedcom['id']} ORDER BY f_numchil DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			if (displayDetailsById($row['f_id'], 'FAM')) {
-				ob_start();
-				print_list_family($row['f_id'], array(get_family_descriptor($row['f_id']), $this->_gedcom['gedcom']), false, '', false);
-				$fam=ob_get_contents();
-				ob_end_clean();
-			} else {
-				$fam=$pgv_lang['privacy_error'];
-			}
-			return $fam;
-		} else {
-			return '';
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' f_numchil AS tot,'
+				.' f_id AS id'
+			.' FROM'
+				." {$TBLPREFIX}families"
+			.' WHERE'
+				." f_file={$this->_gedcom['id']}"
+			.' ORDER BY'
+				.' tot DESC'
+		, 1);
+		if(!isset($rows[0])){return '';}
+		$row = $rows[0];
+		switch($type)
+		{
+			default:
+			case 'full':
+				if(displayDetailsById($row['id'], 'FAM'))
+				{
+					$result=format_list_family($row['id'], array(get_family_descriptor($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+				} else {
+					$result = $pgv_lang['privacy_error'];
+				}
+				break;
+			case 'size':
+				$result=$row['tot'];
+				break;
+			case 'name':
+				$result="<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['id']).'</a>';
+				break;
 		}
+		// Statstics are used by RSS feeds, etc., so need absolute URLs.
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function largestFamilySize()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT f_numchil, f_id FROM {$TBLPREFIX}families WHERE f_file={$this->_gedcom['id']} ORDER BY f_numchil DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			return $row['f_numchil'];
-		} else {
-			return '';
-		}
-	}
-
-	function largestFamilyName()
-	{
-		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT f_numchil, f_id FROM {$TBLPREFIX}families WHERE f_file={$this->_gedcom['id']} ORDER BY f_numchil DESC", 1);
-		if ($rows && $row=$rows[0]) {
-			return "<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['f_id']).'</a>';
-		} else {
-			return '';
-		}
-	}
-
-	function topTenLargestFamily()
+	function _topTenFamilyQuery($type='list', $params=null)
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT f_numchil, f_id FROM {$TBLPREFIX}families WHERE f_file={$this->_gedcom['id']} ORDER BY f_numchil DESC", 10);
-		$top10=array();
-		foreach ($rows as $row) {
-			$top10[]="<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['f_id'])."</a> [{$row['f_numchil']} {$pgv_lang['children']}]";
+		if($params !== null && isset($params[0])){$total = $params[0];}else{$total = 10;}
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' f_numchil AS tot,'
+				.' f_id AS id'
+			.' FROM'
+				." {$TBLPREFIX}families"
+			.' WHERE'
+				." f_file={$this->_gedcom['id']}"
+			.' ORDER BY'
+				.' tot DESC'
+		, $total);
+		if(!isset($rows[0])){return '';}
+		$top10 = array();
+		for($c = 0; $c < $total; $c++)
+		{
+			if($type == 'list')
+			{
+				$top10[] = "\t<li><a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($rows[$c]['id'])."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
+			}
+			else
+			{
+				$top10[] = "<a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($rows[$c]['id'])."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
+			}
 		}
-		$top10=join("; ", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		if($type == 'list')
+		{
+			$top10=join("\n", $top10);
+		}
+		else
+		{
+			$top10 = join('; ', $top10);
+		}
+		if($TEXT_DIRECTION == 'rtl')
+		{
+			$top10 = str_replace(array('[', ']', '(', ')', '+'), array('&rlm;[', '&rlm;]', '&rlm;(', '&rlm;)', '&rlm;+'), $top10);
+		}
+		if($type == 'list')
+		{
+			return "<ul>\n{$top10}</ul>\n";
 		}
 		return $top10;
 	}
 
-	function topTenLargestFamilyList()
+	function largestFamily(){return $this->_familyQuery('full');}
+	function largestFamilySize(){return $this->_familyQuery('size');}
+	function largestFamilyName(){return $this->_familyQuery('name');}
+
+	function topTenLargestFamily($params=null){return $this->_topTenFamilyQuery('nolist', $params);}
+	function topTenLargestFamilyList($params=null){return $this->_topTenFamilyQuery('list', $params);}
+
+	function chartLargestFamilies($params=null)
 	{
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		$rows=$this->_runSQL("SELECT f_numchil, f_id FROM {$TBLPREFIX}families WHERE f_file={$this->_gedcom['id']} ORDER BY f_numchil DESC", 10);
-		$top10=array();
-		foreach ($rows as $row) {
-			$top10[]="\t<li><a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['f_id'])."</a> [{$row['f_numchil']} {$pgv_lang['children']}]</li>";
+		global $TBLPREFIX, $pgv_lang;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '800x100';}
+		if(isset($params[1]) && $params[1] != ''){$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+		if(isset($params[2]) && $params[2] != ''){$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+		if(isset($params[3]) && $params[3] != ''){$total = strtolower($params[3]);}else{$total = 10;}
+		$sizes = explode('x', $size);
+		$rows=$this->_runSQL(''
+			.' SELECT'
+				.' f_numchil AS tot,'
+				.' f_id AS id'
+			.' FROM'
+				." {$TBLPREFIX}families"
+			.' WHERE'
+				." f_file={$this->_gedcom['id']}"
+			.' ORDER BY'
+				.' tot DESC'
+		, $total);
+		if(!isset($rows[0])){return '';}
+		$tot = 0; foreach($rows as $indexval=>$row){$tot += $row['tot'];}
+		$chd = '';
+		$chl = array();
+		for($i = 0; $i < $total; $i++)
+		{
+			$per = round(100 * $rows[$i]['tot'] / $tot, 0);
+			$chd .= $this->_encoding[$per];
+			$chl[] = urlencode(get_family_descriptor($rows[$i]['id']));
 		}
-		$top10=join("\n", $top10);
-		if ($TEXT_DIRECTION=='rtl') {
-			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
-		}
-		return "<ul>\n{$top10}</ul>\n";
+		$chl = join('|', $chl);
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=s:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
 	}
 
 	function averageChildren()
@@ -1179,20 +1451,226 @@ class stats
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Surnames                                                                  //
+///////////////////////////////////////////////////////////////////////////////
+
+	function _commonSurnamesQuery($type='list', $show_tot=false, $params=null)
+	{
+		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
+		$surnames = get_common_surnames($threshold);
+		if(count($surnames) > 0)
+		{
+			$common = array();
+			foreach($surnames as $indexval=>$surname)
+			{
+				$tot = '';
+				if($show_tot)
+				{
+					if($TEXT_DIRECTION == 'rtl')
+					{
+						$tot = " &rlm;[{$surname['match']}&rlm;]";
+					}
+					else
+					{
+						$tot = " [{$surname['match']}]";
+					}
+				}
+				if($type == 'list')
+				{
+					$common[] = "\t<li><a href=\"{$this->_server_url}indilist.php?surname=".urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name'])."</a>{$tot}</li>\n";
+				}
+				else
+				{
+					$common[] = '<a href="'.$this->_server_url.'indilist.php?surname='.urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name'])."</a>{$tot}";
+				}
+			}
+			if($type == 'list')
+			{
+				return "<ul>\n".join("\n", $common)."</ul>\n";
+			}
+			else
+			{
+				return join(', ', $common);
+			}
+		}
+		return '';
+	}
+
+	function commonSurnames($params=null){return $this->_commonSurnamesQuery('nolist', false, $params);}
+	function commonSurnamesTotals($params=null){return $this->_commonSurnamesQuery('nolist', true, $params);}
+	function commonSurnamesList($params=null){return $this->_commonSurnamesQuery('list', false, $params);}
+	function commonSurnamesListTotals($params=null){return $this->_commonSurnamesQuery('list', true, $params);}
+
+	function chartCommonSurnames($params=null)
+	{
+		global $pgv_lang, $COMMON_NAMES_THRESHOLD;
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$size = strtolower($params[0]);}else{$size = '350x100';}
+		if(isset($params[1]) && $params[1] != ''){$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+		if(isset($params[2]) && $params[2] != ''){$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+		if(isset($params[3]) && $params[3] != ''){$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
+		$sizes = explode('x', $size);
+		$surnames = get_common_surnames($threshold);
+		if(count($surnames) <= 0){return '';}
+		$tot = 0;
+		foreach($surnames as $indexval=>$surname){$tot += $surname['match'];}
+		$chd = '';
+		$chl = array();
+		foreach($surnames as $indexval=>$surname)
+		{
+			$per = round(100 * $surname['match'] / $tot, 0);
+			$chd .= $this->_array_to_extended_encoding($per);
+			$chl[] = $surname['name'];
+		}
+		$chl = urlencode(join('|', $chl));
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" />";
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Users                                                                     //
+///////////////////////////////////////////////////////////////////////////////
+
+	function _usersLoggedIn($type='nolist')
+	{
+		global $PGV_SESSION_TIME, $pgv_lang;
+		// Log out inactive users
+		foreach(get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name)
+		{
+			if($user_id != PGV_USER_ID)
+			{
+				userLogout($user_id);
+			}
+		}
+
+		$content = '';
+
+		// List active users
+		$NumAnonymous = 0;
+		$loggedusers = array ();
+		$x = get_logged_in_users();
+		foreach($x as $user_id=>$user_name)
+		{
+			if(PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y')
+			{
+				$loggedusers[$user_id] = $user_name;
+			}
+			else
+			{
+				$NumAnonymous++;
+			}
+		}
+		$LoginUsers = count($loggedusers);
+		if(($LoginUsers == 0) and ($NumAnonymous == 0))
+		{
+			return $pgv_lang['no_login_users'];
+		}
+		$Advisory = 'anon_user';
+		if($NumAnonymous > 1){$Advisory .= 's';}
+		if($NumAnonymous > 0)
+		{
+			$pgv_lang['global_num1'] = $NumAnonymous; // Make it visible
+			$content .= '<b>'.print_text($Advisory, 0, 1).'</b>';
+		}
+		$Advisory = 'login_user';
+		if($LoginUsers > 1){$Advisory .= 's';}
+		if($LoginUsers > 0)
+		{
+			$pgv_lang['global_num1'] = $LoginUsers; // Make it visible
+			if($NumAnonymous)
+			{
+				if($type == 'list')
+				{
+					$content .= "<br /><br />\n";
+				}
+				else
+				{
+					$content .= " {$pgv_lang['and']} ";
+				}
+			}
+			if($type == 'list')
+			{
+				$content .= '<b>'.print_text($Advisory, 0, 1)."</b>\n<ul>\n";
+			}
+			else
+			{
+				$content .= '<b>'.print_text($Advisory, 0, 1)."</b>: ";
+			}
+		}
+		if(PGV_USER_ID)
+		{
+			foreach($loggedusers as $user_id=>$user_name)
+			{
+				if($type == 'list')
+				{
+					$content .= "\t<li>".PrintReady(getUserFullName($user_id))." - {$user_name}";
+				}
+				else
+				{
+					$content .= PrintReady(getUserFullName($user_id))." - {$user_name}";
+				}
+				if(PGV_USER_ID != $user_id && get_user_setting($user_id, 'contactmethod') != 'none')
+				{
+					if($type == 'list')
+					{
+						$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">{$pgv_lang['message']}</a>";
+					}
+					else
+					{
+						$content .= " <a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">{$pgv_lang['message']}</a>";
+					}
+				}
+				if($type == 'list')
+				{
+					$content .= "</li>\n";
+				}
+			}
+		}
+		if($type == 'list')
+		{
+			$content .= '</ul>';
+		}
+		return $content;
+	}
+
+	function _usersLoggedInTotal($type='all')
+	{
+		global $PGV_SESSION_TIME;
+
+		foreach(get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name)
+		{
+			if($user_id != PGV_USER_ID){userLogout($user_id);}
+		}
+
+		$anon = 0;
+		$visible = 0;
+		$x = get_logged_in_users();
+		foreach($x as $user_id=>$user_name)
+		{
+			if(PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y'){$visible++;}else{$anon++;}
+		}
+		if($type == 'anon'){return $anon;}
+		elseif($type == 'visible'){return $visible;}
+		else{return $visible + $anon;}
+	}
+
+	function usersLoggedIn(){return $this->_usersLoggedIn('nolist');}
+	function usersLoggedInList(){return $this->_usersLoggedIn('list');}
+
+	function usersLoggedInTotal(){return $this->_usersLoggedInTotal('all');}
+	function usersLoggedInTotalAnon(){return $this->_usersLoggedInTotal('anon');}
+	function usersLoggedInTotalVisible(){return $this->_usersLoggedInTotal('visible');}
+
+	function userID(){return getUserId();}
+	function userName(){return getUserName();}
+	function userFullName(){return getUserFullName(getUserId());}
+
+///////////////////////////////////////////////////////////////////////////////
 // Contact                                                                   //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function contactWebmaster() {
-		global $SUPPORT_METHOD, $WEBMASTER_EMAIL;
-
-		return user_contact_link($WEBMASTER_EMAIL, $SUPPORT_METHOD);
-	}
-
-	function contactGedcom() {
-		global  $CONTACT_METHOD, $CONTACT_EMAIL;
-
-		return user_contact_link($CONTACT_EMAIL, $CONTACT_METHOD);
-	}
+	function contactWebmaster(){return user_contact_link($GLOBALS['WEBMASTER_EMAIL'], $GLOBALS['SUPPORT_METHOD']);}
+	function contactGedcom(){return user_contact_link($GLOBALS['CONTACT_EMAIL'], $GLOBALS['CONTACT_METHOD']);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Date & Time                                                               //
@@ -1215,28 +1693,12 @@ class stats
 	function browserTimezone() {return date('T', client_time());}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Misc.                                                                     //
-///////////////////////////////////////////////////////////////////////////////
-
-	function commonSurnames()
-	{
-		$surnames=get_common_surnames_index($this->_gedcom['gedcom']);
-		if (count($surnames) > 0) {
-			$common=array();
-			foreach ($surnames as $indexval=>$surname) {
-				if (stristr($surname['name'], '@N.N')===false) {
-					$common[]='<a href="indilist.php?surname='.urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name']).'</a>';
-				}
-			}
-			return join(', ', $common);
-		}
-		return '';
-	}
-
-///////////////////////////////////////////////////////////////////////////////
 // Tools                                                                     //
 ///////////////////////////////////////////////////////////////////////////////
 
+	/*
+	 * Leave for backwards compatability? Anybody using this?
+	 */
 	function _getEventType($type)
 	{
 		global $pgv_lang;
@@ -1254,50 +1716,56 @@ class stats
 		return false;
 	}
 
-	function _getPercentage($total, $type)
+	// http://bendodson.com/news/google-extended-encoding-made-easy/
+	function _array_to_extended_encoding($a)
 	{
-		$per=null;
-		switch($type)
+		if(!is_array($a)){$a = array($a);}
+		$encoding = '';
+		foreach($a as $value)
 		{
-			default:
-			case 'all':
-				$per=round(100 * $total / (get_list_size('indilist') + get_list_size('famlist') + get_list_size('sourcelist') + get_list_size('otherlist')), 2);
-				break;
-			case 'individual':
-				$per=round(100 * $total / get_list_size('indilist'), 2);
-				break;
-			case 'family':
-				$per=round(100 * $total / get_list_size('famlist'), 2);
-				break;
-			case 'source':
-				$per=round(100 * $total / get_list_size('sourcelist'), 2);
-				break;
-			case 'other':
-				$per=round(100 * $total / get_list_size('otherlist'), 2);
-				break;
+			$first = floor($value / 64);
+			$second = $value % 64;
+			$encoding .= $this->_xencoding[$first].$this->_xencoding[$second];
 		}
-		return $per;
+		return $encoding;
 	}
 
 	function _runSQL($sql, $count=0)
 	{
-		static $cache=array();
-		$id=md5($sql)."_{$count}";
-		if (isset($cache[$id])) {
+		global $DBTYPE;
+		static $cache = array();
+		$id = md5($sql)."_{$count}";
+		if(isset($cache[$id]))
+		{
 			return $cache[$id];
 		}
-		$rows=array();
-		$tempsql=dbquery($sql, true, $count);
-		if (!DB::isError($tempsql)) {
+		// If we alter the SQL for a specific database for LIMIT reasons, clear the $count so we don't alter it more later
+		switch($DBTYPE)
+		{
+			case 'mssql':
+			case 'sybase':
+			{
+				if($count > 0)
+				{
+					$sql = preg_replace('/^([\s(])*SELECT/i', "SELECT TOP {$count}", $sql);
+					$count = 0;
+				}
+				break;
+			}
+		}
+		$rows = array();
+		$tempsql = dbquery($sql, true, $count);
+		if(!DB::isError($tempsql))
+		{
 			$res=& $tempsql;
-			while ($row=& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				$rows[]=$row;
+			while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC))
+			{
+				$rows[] = $row;
 			}
 			$res->free();
-			$cache[$id]=$rows;
+			$cache[$id] = $rows;
 			return $rows;
 		}
-		return null;
+		return false;
 	}
 }
-?>

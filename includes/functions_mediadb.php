@@ -4,7 +4,7 @@
  * Various functions used by the media DB interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005 Peter Dyson, John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,10 +29,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
 }
-
-//-- Setup array of media types
-$MEDIATYPE = array("a11","acb","adc","adf","afm","ai","aiff","aif","amg","anm","ans","apd","asf","au","avi","awm","bga","bmp","bob","bpt","bw","cal","cel","cdr","cgm","cmp","cmv","cmx","cpi","cur","cut","cvs","cwk","dcs","dib","dmf","dng","doc","dsm","dxf","dwg","emf","enc","eps","fac","fax","fit","fla","flc","fli","fpx","ftk","ged","gif","gmf","hdf","iax","ica","icb","ico","idw","iff","img","jbg","jbig","jfif","jpe","jpeg","jp2","jpg","jtf","jtp","lwf","mac","mid","midi","miff","mki","mmm",".mod","mov","mp2","mp3","mpg","mpt","msk","msp","mus","mvi","nap","ogg","pal","pbm","pcc","pcd","pcf","pct","pcx","pdd","pdf","pfr","pgm","pic","pict","pk","pm3","pm4","pm5","png","ppm","ppt","ps","psd","psp","pxr","qt","qxd","ras","rgb","rgba","rif","rip","rla","rle","rpf","rtf","scr","sdc","sdd","sdw","sgi","sid","sng","swf","tga","tiff","tif","txt","text","tub","ul","vda","vis","vob","vpg","vst","wav","wdb","win","wk1","wks","wmf","wmv","wpd","wxf","wp4","wp5","wp6","wpg","wpp","xbm","xls","xpm","xwd","yuv","zgm");
-$BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsignore", ".svn", "watermark");
 
 /*
  *******************************
@@ -1350,7 +1346,7 @@ function get_media_folders() {
  * @param int    $line		The line number in the GEDCOM record where this media item belongs
  */
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
-	global $GEDCOM, $pgv_lang, $TEXT_DIRECTION, $MEDIA_ID_PREFIX, $GEDCOMS, $WORD_WRAPPED_NOTES;
+	global $GEDCOM, $pgv_lang, $TEXT_DIRECTION, $GEDCOMS, $WORD_WRAPPED_NOTES;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH;
 
@@ -1474,14 +1470,13 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			print " />";
 		else
 			print " /><br /><sub>" . $pgv_lang["server_file_advice"] . "</sub>";
-			}
-			else {
-				$thumbnail = thumbnail_file($fileName, true, false, $pid);
+		} else {
+/*			$thumbnail = thumbnail_file($fileName, true, false, $pid);
 				if (!empty($thumbnail)) {
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"\" title=\"\" />";
-				}
+			} */
 				print $fileName;
 			print "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName) . "\" size=\"40\" />";
 			}
@@ -1582,6 +1577,8 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 	add_simple_tag("3 $gedtitl");
 
+	//-- don't show _PRIM option to regular users
+	if (PGV_USER_GEDCOM_ADMIN) {
 	// 2 _PRIM
 	if ($gedrec == "")
 		$gedprim = "_PRIM";
@@ -1592,6 +1589,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$gedprim = "_PRIM";
 	}
 	add_simple_tag("1 $gedprim");
+	}
 	
 	//-- don't show _THUM option to regular users
 	if (PGV_USER_GEDCOM_ADMIN) {
@@ -1868,11 +1866,11 @@ function get_media_relations($mid){
 
 	$media = array();
 
-	$dbq = "SELECT mm_gid, mm_gid_type FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
+	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
 		if ($row[0] != $mid){
-			$media[$row[0]] = $row[1];
+			$media[$row[0]] = id_type($row[0]);
 		}
 	}
 	$medialist[$keyMediaList]['LINKS'] = $media;

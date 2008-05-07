@@ -53,18 +53,12 @@ class Family extends GedcomRecord {
 	function Family($gedrec, $simple=true) {
 		global $pgv_changes, $GEDCOM;
 
-		$husbrec = get_sub_record(1, "1 HUSB", $gedrec);
-		if (!empty($husbrec)) {
 			//-- get the husbands ids
-			$husb = get_gedcom_value("HUSB", 1, $husbrec);
-			$this->husb = Person::getInstance($husb, $simple);
-		}
-		$wiferec = get_sub_record(1, "1 WIFE", $gedrec);
-		if (!empty($wiferec)) {
+		$husb = get_gedcom_value("HUSB", 1, $gedrec);
+		if (!empty($husb)) $this->husb = Person::getInstance($husb, $simple);
 			//-- get the wifes ids
-			$wife = get_gedcom_value("WIFE", 1, $wiferec);
-			$this->wife = Person::getInstance($wife, $simple);
-		}
+		$wife = get_gedcom_value("WIFE", 1, $gedrec);
+		if (!empty($wife)) $this->wife = Person::getInstance($wife, $simple);
 		//-- load the parents before privatizing the record because the parents may be remote records
 		parent::GedcomRecord($gedrec);
 		$this->disp = displayDetailsById($this->xref, "FAM");
@@ -75,10 +69,12 @@ class Family extends GedcomRecord {
 	 * @param string $pid	the ID of the family to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $famlist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		if (isset($famlist[$pid]['gedfile']) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Check the cache first
+		if (isset($gedcom_record_cache[$pid][$ged_id])) {
+			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
 		$gedrec = find_family_record($pid);
@@ -101,8 +97,8 @@ class Family extends GedcomRecord {
 		if (empty($gedrec)) return null;
 		$object = new Family($gedrec, $simple);
 		if (!empty($fromfile)) $object->setChanged(true);
-		$famlist[$pid]['object'] = &$object;
-		if (!isset($famlist[$pid]['gedfile'])) $famlist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
+		// Store the object in the cache
+		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
 	}
 
@@ -441,6 +437,27 @@ class Family extends GedcomRecord {
 		return $drec->getPlace();
 	}
 
+// Get all the dates/places for marriages - for the FAM lists
+	function getAllMarriageDates() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('MARR') as $event) {
+				if ($array=$this->getAllEventDates($event)) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
+	function getAllMarriagePlaces() {
+		if ($this->canDisplayDetails()) {
+			foreach (array('MARR') as $event) {
+				if ($array=$this->getAllEventPlaces($event)) {
+					return $array;
+				}
+			}
+		}
+		return array();
+	}
 	/**
 	 * get the URL to link to this family
 	 * @string a url that can be used to link to this family

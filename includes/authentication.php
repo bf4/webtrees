@@ -12,7 +12,7 @@
  * $Id$
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * @return the user_id if sucessful, false otherwise
  */
 function authenticateUser($user_name, $password, $basic=false) {
-	global $GEDCOM, $GEDCOMS, $pgv_lang;
+	global $GEDCOM, $pgv_lang;
 
 	checkTableExists();
 
@@ -71,12 +71,12 @@ function authenticateUser($user_name, $password, $basic=false) {
 					$_SESSION['CLANGUAGE'] = get_user_setting($user_id, 'language');
 				//-- only change the gedcom if the user does not have an gedcom id
 				//-- for the currently active gedcom
-				if (get_user_gedcom_setting($user_id, $GEDCOM, 'gedcomid')=='') {
+				if (get_user_gedcom_setting($user_id, PGV_GED_ID, 'gedcomid')=='') {
 					//-- if the user is not in the currently active gedcom then switch them
 					//-- to the first gedcom for which they have an ID
-					foreach (array_keys($GEDCOMS) as $gedcom) {
-						if (get_user_gedcom_setting($user_id, $gedcom, 'gedcomid')) {
-							$_SESSION['GEDCOM']=$gedcom;
+					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+						if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
+							$_SESSION['GEDCOM']=$ged_name;
 							break;
 						}
 					}
@@ -125,7 +125,7 @@ function userLogout($user_id) {
 
 	set_user_setting($user_id, 'loggedin', 'N');
 
-	AddToLog("Logout");
+	AddToLog("Logout ".getUserName($user_id));
 
 	if ((isset($_SESSION['pgv_user']) && ($_SESSION['pgv_user']==$user_id)) || (isset($_COOKIE['pgv_rem'])&&$_COOKIE['pgv_rem']==$user_id)) {
 		if ($_SESSION['pgv_user']==$user_id) {
@@ -712,7 +712,7 @@ function AddToLog($LogString, $savelangerror=false) {
 //----------------------------------- AddToSearchLog
 //-- requires a string to add into the searchlog-file
 function AddToSearchLog($LogString, $allgeds) {
-	global $INDEX_DIRECTORY, $SEARCHLOG_CREATE, $GEDCOM, $GEDCOMS, $username;
+	global $INDEX_DIRECTORY, $SEARCHLOG_CREATE, $GEDCOM, $username;
 
 	if (!isset($allgeds))
 		return;
@@ -740,7 +740,7 @@ function AddToSearchLog($LogString, $allgeds) {
 				$logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Y") . ".log";
 			if (is_writable($INDEX_DIRECTORY)) {
 				$logline = "Date / Time: ".date("d.m.Y H:i:s") . " - IP: " . $REMOTE_ADDR . " - User: " .  PGV_USER_NAME . "<br />";
-				if (count($allgeds) == count($GEDCOMS))
+				if (count($allgeds) == count(get_all_gedcoms()))
 					$logline .= "Searchtype: Global<br />";
 				else
 					$logline .= "Searchtype: Gedcom<br />";
@@ -760,7 +760,7 @@ function AddToSearchLog($LogString, $allgeds) {
 //----------------------------------- AddToChangeLog
 //-- requires a string to add into the changelog-file
 function AddToChangeLog($LogString, $ged="") {
-	global $INDEX_DIRECTORY, $CHANGELOG_CREATE, $GEDCOM, $GEDCOMS, $username, $SEARCHLOG_CREATE;
+	global $INDEX_DIRECTORY, $CHANGELOG_CREATE, $GEDCOM, $username, $SEARCHLOG_CREATE;
 
 	//-- do not allow code to be written to the log file
 	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
@@ -1027,7 +1027,7 @@ function deleteFavorite($fv_id) {
  * @param string $username		the username to get the favorites for
  */
 function getUserFavorites($username) {
-	global $TBLPREFIX, $GEDCOMS, $DBCONN, $CONFIGURED;
+	global $TBLPREFIX, $DBCONN, $CONFIGURED;
 
 	$favorites = array();
 	//-- make sure we don't try to look up favorites for unconfigured sites
@@ -1041,7 +1041,7 @@ function getUserFavorites($username) {
 		return $favorites;
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
-		if (isset($GEDCOMS[$row["fv_file"]])) {
+		if (get_id_from_gedcom($row["fv_file"])) { // If gedcom exists
 			$favorite = array();
 			$favorite["id"] = $row["fv_id"];
 			$favorite["username"] = $row["fv_username"];
@@ -1068,7 +1068,7 @@ function getUserFavorites($username) {
  * @return array	an array of the blocks.  The two main indexes in the array are "main" and "right"
  */
 function getBlocks($username) {
-	global $TBLPREFIX, $GEDCOMS, $DBCONN;
+	global $TBLPREFIX, $DBCONN;
 
 	$blocks = array();
 	$blocks["main"] = array();
@@ -1083,9 +1083,13 @@ function getBlocks($username) {
 			if (!isset($row["b_config"]))
 				$row["b_config"]="";
 			if ($row["b_location"]=="main")
-				$blocks["main"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+				// Were earlier versions of wrongly adding slashes to quotes in serialized data?
+				// Unfortunately, we can't use stripslashes() as this breaks valid data.
+				// Instead, use @unserialize to skip any errors.
+				// TODO: try both with and without stripslashes and see which works ???
+				$blocks["main"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
 			if ($row["b_location"]=="right")
-				$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+				$blocks["right"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
 		}
 	} else {
 		if (get_user_id($username)) {
@@ -1099,9 +1103,9 @@ function getBlocks($username) {
 				if (!isset($row["b_config"]))
 					$row["b_config"]="";
 				if ($row["b_location"]=="main")
-					$blocks["main"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+					$blocks["main"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
 				if ($row["b_location"]=="right")
-					$blocks["right"][$row["b_order"]] = array($row["b_name"], unserialize($row["b_config"]));
+					$blocks["right"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
 			}
 			$res2->free();
 		}

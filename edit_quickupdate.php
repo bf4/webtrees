@@ -63,10 +63,6 @@ if (!$ALLOW_EDIT_GEDCOM || !$USE_QUICK_UPDATE || !PGV_USER_ID) {
 	exit;
 }
 
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['closewid'])) $closewid = $_REQUEST['closewid'];
-if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-
 if (!isset($action)) {
 	$action="";
 }
@@ -74,6 +70,11 @@ if (!isset($closewin)) {
 	$closewin=0;
 }
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['closewid'])) $closewid = $_REQUEST['closewid'];
+if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+if (!isset($action)) $action="";
+if (!isset($closewin)) $closewin=0;
 $pid=clean_input($pid);
 if (empty($pid)) {
 	$pid=PGV_USER_GEDCOM_ID;
@@ -1824,7 +1825,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	}
 	if (!empty($spid)) {
 		if (displayDetailsById($spid) && showLivingNameById($spid)) {
-			print "<a href=\"#\" onclick=\"return quickEdit('".$spid."');\">";
+			print "<a href=\"#\" onclick=\"return quickEdit('".$spid."','','{$GEDCOM}');\">";
 			$name = PrintReady(get_person_name($spid));
 			if ($SHOW_ID_NUMBERS) $name .= " (".$spid.")";
 			$name .= " [".$pgv_lang["edit"]."]";
@@ -2054,7 +2055,7 @@ $chil = find_children_in_record($famrec);
 					if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 					$name .= " [".$pgv_lang["edit"]."]";
 					if ($disp||showLivingNameById($child)) {
-						print "<a href=\"#\" onclick=\"return quickEdit('".$child."');\">";
+						print "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
 						print PrintReady($name);
 						print "</a>";
 					}
@@ -2416,7 +2417,7 @@ for($j=1; $j<=count($cfams); $j++) {
 			if ($ct>0) $child_surname = $match[1];
 			if ($fsex=="F") $label = $pgv_lang["mother"];
 			print $label." ";
-			print "<a href=\"#\" onclick=\"return quickEdit('".$parents["HUSB"]."');\">";
+			print "<a href=\"#\" onclick=\"return quickEdit('".$parents["HUSB"]."','','{$GEDCOM}');\">";
 			$name = get_person_name($parents["HUSB"]);
 			if ($SHOW_ID_NUMBERS) $name .= " (".$parents["HUSB"].")";
 			$name .= " [".$pgv_lang["edit"]."]";
@@ -2520,7 +2521,7 @@ for($j=1; $j<=count($cfams); $j++) {
 			$msex = get_gedcom_value("SEX", 1, $motherrec, '', false);
 			if ($msex=="M") $label = $pgv_lang["father"];
 			print $label." ";
-			print "<a href=\"#\" onclick=\"return quickEdit('".$parents["WIFE"]."');\">";
+			print "<a href=\"#\" onclick=\"return quickEdit('".$parents["WIFE"]."','','{$GEDCOM}');\">";
 			$name = get_person_name($parents["WIFE"]);
 			if ($SHOW_ID_NUMBERS) $name .= " (".$parents["WIFE"].")";
 			$name .= " [".$pgv_lang["edit"]."]";
@@ -2730,7 +2731,7 @@ $chil = find_children_in_record($famrec, $pid);
 					if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 					$name .= " [".$pgv_lang["edit"]."]";
 					if ($disp||showLivingNameById($child)) {
-						print "<a href=\"#\" onclick=\"return quickEdit('".$child."');\">";
+						print "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
 						print PrintReady($name);
 						print "</a>";
 					}

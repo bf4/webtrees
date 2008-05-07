@@ -6,7 +6,7 @@
  * age -> periodes of 10 years (different for 0-1,1-5,5-10,10-20 etc)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -337,7 +337,7 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	$titleLength = strpos($mytitle."\n", "\n");
 	$title = substr($mytitle, 0, $titleLength);
 	print "<center>";
-	print "<img src=\"imageflush.php?image_type=png&amp;image_name=$tempVarName\" width=\"$imageSize[0]\" height=\"$imageSize[1]\" border=\"0\" alt=\"$title\" title=\"$title\"/>";
+	print "<img src=\"imageflush.php?image_type=png&amp;image_name=$tempVarName&amp;width=$imageSize[0]&amp;height=$imageSize[1]\" width=\"$imageSize[0]\" height=\"$imageSize[1]\" border=\"0\" alt=\"$title\" title=\"$title\"/>";
 	print "</center><br /><br />";
 }
 

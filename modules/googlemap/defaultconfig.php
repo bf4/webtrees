@@ -49,6 +49,16 @@ $GM_DEFAULT_TOP_VALUE = "";             // Default value, inserted when no locat
 
 $GOOGLEMAP_COORD = "false";          	// Enable or disable Display Map Co-ordinates
 
+//Place Hierarchy - wooc
+$GOOGLEMAP_PLACE_HIERARCHY = "true";	// Enable or disable Display Map in place herarchy
+$GOOGLEMAP_PH_XSIZE = "500";			// X-size of Place Hierarchy Google map
+$GOOGLEMAP_PH_YSIZE = "350";			// Y-size of Place Hierarchy Google map
+$GOOGLEMAP_PH_MARKER = "G_FLAG";		// Type of marker to be used in place herarchy, possible values: G_FLAG = Flag, G_DEFAULT_ICON = Standard icon
+$GM_DISP_SHORT_PLACE = "false";			// Display full place name or only the actual level name
+$GM_DISP_COUNT = "false";				// Display the count of individuals and families connected to the place
+$GOOGLEMAP_PH_WHEEL = "false";			// Use mouse wheel for zooming
+
+
 // Configuration-options per location-level
 $GM_MARKER_COLOR[1] = "Red";            // Marker to be used
 $GM_MARKER_SIZE[1] = "Large";           // "Small" or "Large"

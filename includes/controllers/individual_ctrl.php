@@ -3,7 +3,7 @@
  * Controller for the Individual Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -388,9 +388,9 @@ class IndividualControllerRoot extends BaseController {
 					if (file_exists("modules/lightbox/album.php")) {
 						$name1 = trim($firstmediarec["file"]);
 						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . "\">" . "\n";
+					}else
 // ---------------------------------------------------------------------------------------------
-
-					}elseif (!$USE_MEDIA_VIEWER && $imgsize) {
+					if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
 					}else{
 						$mediaviewlink = "mediaviewer.php?mid=".$mid;

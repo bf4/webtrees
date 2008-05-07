@@ -3,7 +3,7 @@
  * Name Specific Functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,68 +102,6 @@ function get_common_surnames($min) {
 	if (empty($topsurns) && $min>2) $topsurns = get_common_surnames($min/2);
 	uasort($topsurns, "itemsort");
 	return $topsurns;
-}
-
-/**
- * Get the name from the raw gedcom record.  Use the level 2 XXXX parts in
- * preference to the 1 NAME.  Replace missing GIVN/SURN with "unknown"
- * placeholders.
- *
- * @param string $indirec the raw gedcom record to get the name from
- */
-function get_name_in_record($indirec) {
-	// NPFX
-	if (preg_match('/2 NPFX (.*)/', $indirec, $match))
-		$npfx=trim($match[1]);
-	else
-		$npfx='';
-	// GIVN
-	if (preg_match('/2 GIVN (.*)/', $indirec, $match))
-		$givn=preg_replace('/[, ]+/', ' ', $match[1]);
-	else
-		if (preg_match('/1 NAME ([^\/\r\n]*)/', $indirec, $match))
-			$givn=preg_replace('/^'.addcslashes($npfx, '/').' /i', '', $match[1]);
-		else
-			$givn='';
-	$givn=preg_replace('/^[._?]+$/', '', trim($givn));
-	if (empty($givn))
-		$givn= '@P.N.';
-	// NICK
-	if (preg_match('/2 NICK (.*)/', $indirec, $match))
-		$nick=trim($match[1]);
-	else
-		$nick='';
-	// SPFX
-	if (preg_match('/2 SPFX (.*)/', $indirec, $match))
-		$spfx=trim($match[1]);
-	else
-		$spfx='';
-	// SURN
-	if (preg_match('/2 SURN (.*)/', $indirec, $match))
-		$surn=$match[1];
-	else
-		if (preg_match('/1 NAME [^\/\r\n]*\/([^\/\r\n]*)/', $indirec, $match))
-			$surn=preg_replace('/^'.addcslashes($spfx, '/').' /i', '', $match[1]);
-		else
-			$surn='';
-	$surn=preg_replace('/^[._?]+$/', '', trim($surn));
-	if (empty($surn)) {
-		$surn='@N.N.';
-		$spfx='';
-	}
-	// NSFX
-	if (preg_match('/2 NSFX (.*)/', $indirec, $match))
-		$nsfx=trim($match[1]);
-	else
-		if (preg_match('/1 NAME .*\/.*\/(.*)/', $indirec, $match))
-			$nsfx=trim($match[1]);
-		else
-			$nsfx='';
-	// Combine the components into a full name
-	if (false && !empty($nick))
-		return trim(trim($npfx.' '.$givn.' "'.$nick.'"').' /'.trim($spfx.' '.$surn).'/ '.$nsfx);
-	else
-		return trim(trim($npfx.' '.$givn).' /'.trim($spfx.' '.$surn).'/ '.$nsfx);
 }
 
 /**
@@ -279,29 +217,24 @@ function get_person_name($pid, $checkUnknown=true) {
 	if ($NAME_FROM_GEDCOM) {
 		$indirec = find_person_record($pid);
 		if (!$indirec) $indirec = find_updated_record($pid);
-		//$name = get_name_in_record($indirec);
-		//-- SEE bug [ 1830176 ] get_name_in_record() incorrect results
 		$name = get_gedcom_value("NAME", 1, $indirec, '', false);
-	}
-	else {
+	} else {
 		//-- first check if the person is in the cache
 		if ((isset($indilist[$pid]["names"][0][0]))&&($indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]["id"])) {
 			$name = $indilist[$pid]["names"][0][0];
-		}
-		else {
+		} else {
 			//-- cache missed, so load the person into the cache with the find_person_record function
 			//-- and get the name from the cache again
 			$gedrec = find_person_record($pid);
-			if (empty($gedrec)) $gedrec = find_updated_record($pid);
+			if (empty($gedrec)) {
+				$gedrec = find_updated_record($pid);
+			}
 			if (!empty($gedrec)) {
-				if (isset($indilist[$pid]["names"])) $name = $indilist[$pid]["names"][0][0];
-				else {
 					$names = get_indi_names($gedrec);
 					$name = $names[0][0];
 				}
 			}
 		}
-	}
 
 	if ($NAME_REVERSE) $name = reverse_name($name);
 	
@@ -996,11 +929,12 @@ function smart_utf8_decode($in_str)
 }
 
 /**
- * get an array of names from an indivdual record
+ * get an array of names from an individual record
  * @param string $indirec	The raw individual gedcom record
  * @return array	The array of individual names
  */
 function get_indi_names($indirec, $import=false) {
+	global $NAME_REVERSE;
 	$names = array();
 	//-- get all names
 	$namerec = get_sub_record(1, "1 NAME", $indirec, 1);
@@ -1008,11 +942,14 @@ function get_indi_names($indirec, $import=false) {
 	else {
 		$j = 1;
 		while(!empty($namerec)) {
-			$name = get_name_in_record($namerec);
+			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
+			$name = preg_replace('/\/\//','/@N.N./', $name);	// Missing SURN -> @N.N.
+			$name = preg_replace('/^\//', '@P.N. /', $name);	// Missing GIVN	-> @P.N.
 			$surname = extract_surname($name, false);
 			if (empty($surname)) $surname = "@N.N.";
 			//-- all ____ names get changed to @N.N.
 			if (preg_match("/^_+$/", $surname)>0) $surname="@N.N.";
+			//-- remove these characters so that they do not get selected as the first letter
 			$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 			if (empty($lname)) $lname = $surname;
 			$letter = get_first_letter($lname, $import);

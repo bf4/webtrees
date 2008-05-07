@@ -6,7 +6,7 @@
  * used on the indilist, famlist, find, and search pages.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,10 +32,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once("includes/person_class.php");
+require_once 'includes/person_class.php';
 
 /**
- * print a person in a list
+ * format a person for display in a list
  *
  * This function will print a
  * clickable link to the individual.php
@@ -46,7 +46,7 @@ require_once("includes/person_class.php");
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
+function format_list_person($key, $value, $findid=false, $asso="", $tag='li') {
 	global $pgv_lang, $pass, $indi_private, $indi_hide, $indi_total;
 	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 
@@ -57,43 +57,39 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 	if (!isset($indi_total)) $indi_total=array();
 	$indi_total[$key."[".$GEDCOM."]"] = 1;
 
-	$tag = "span";
-	if ($useli) $tag = "li";
-
 	$person = Person::getInstance($key);
 	if (is_null($person)) {
-		print "<".$tag.">";
-		print "<span class=\"error\">".$pgv_lang["unable_to_find_record"]." ".$key."</span>";
-		print "</".$tag.">";
-		return;
+		return '<'.$tag.' span class="error">'.$pgv_lang['unable_to_find_record'].' '.$key.'</'.$tag.'>';
 	}
+	$html='';
 	$disp = $person->canDisplayDetails();
 	if ($person->canDisplayName()) {
-		if (begRTLText($value[0])) $listDir = "rtl";
-		else $listDir = "ltr";
-		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]." - ".$person->getBirthYear()))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
-		else print "<a href=\"individual.php?pid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
-		if ($SHOW_ID_NUMBERS){
-			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print getRLM();
-			print "(".$key.")";
-			if ($listDir=="rtl") print getRLM();
-			print "&nbsp;&nbsp;";
+		$listDir=begRTLText($value[0]) ? 'rtl' : 'ltr';
+		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
+		if ($findid) {
+			$html.='<a href="javascript:;" onclick="pasteid(\''.$key.'\', \''.preg_replace("/(['\"])/", "\\$1", PrintReady($value[0])).'\'); return false;" class="list_item"><b>'.$value[0].'</b>';
+		} else {
+			$html.='<a href="individual.php?pid='.$key.'&amp;ged='.$value[1].'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
+		}
+		if ($SHOW_ID_NUMBERS && $key) {
+			if ($listDir=='rtl') {
+				$html.=' '.getRLM().'('.$key.')'.getRLM();
+			} else {
+				$html.=' ('.$key.')';
+			}
 		}
 
 		if (!$disp) {
-			print "<br /><i>".$pgv_lang["private"]."</i>";
-			$indi_private[$key."[".$GEDCOM."]"] = 1;
+			$html.='<br /><i>'.$pgv_lang['private'].'</i>';
+			$indi_private[$key.'['.$GEDCOM.']'] = 1;
+		} else {
+			$html.=format_first_major_fact($key, array('BIRT', 'CHR', 'BAPM', 'BAPL', 'ADOP'));
+			$html.=format_first_major_fact($key, array('DEAT', 'BURI'));
 		}
-		else {
-			print_first_major_fact($key, array("BIRT", "CHR", "BAPM", "BAPL", "ADOP"));
-			print_first_major_fact($key, array("DEAT", "BURI"));
-		}
-		print "</a>";
-		if (($asso != "") && ($disp)) {
-			$p1 = strpos($asso,"[");
-			$p2 = strpos($asso,"]");
+		$html.='</a>';
+		if (($asso != '') && ($disp)) {
+			$p1 = strpos($asso,'[');
+			$p2 = strpos($asso,']');
 			$ged = substr($asso,$p1+1,$p2-$p1-1);
 			if ($ged>=1) $ged = get_gedcom_from_id($ged);
 			$key = substr($asso,0,$p1);
@@ -101,17 +97,19 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 			$GEDCOM = $ged;
 			$name = get_person_name($key);
 			$GEDCOM = $oldged;
-			print " <a href=\"individual.php?pid=$key&amp;ged=$ged\" title=\"$name\" class=\"list_item\">";
-			print "&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="ltr") print "(".$pgv_lang["associate"]."&nbsp;&nbsp;".$key.")";
-  			else print getRLM() . "(" . getRLM() .$pgv_lang["associate"]."&nbsp;&nbsp;".$key. getRLM() . ")" . getRLM() . "</span></a>";
+			$html.=' <a href="individual.php?pid='.$key.'&amp;ged='.$ged.'" title="'.$name.'" class="list_item">';
+			if ($TEXT_DIRECTION=="ltr") {
+				$html.=' ('.$pgv_lang['associate'].' '.$key.')';
+			} else {
+				$html.=' '.getRLM().'('.$pgv_lang['associate'].' '.$key.')'.getRLM().'</a>';
 		}
-		print "</".$tag.">";
 	}
-	else {
-		$pass = TRUE;
-		$indi_hide[$key."[".$GEDCOM."]"] = 1;
+		$html.='</'.$tag.'>';
+	} else {
+		$pass=true;
+		$indi_hide[$key.'['.$GEDCOM.']'] = 1;
 	}
+	return $html;
 }
 
 /**
@@ -122,7 +120,7 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
+function format_list_family($key, $value, $findid=false, $asso="", $tag='li') {
 	global $pgv_lang, $pass, $fam_private, $fam_hide, $fam_total, $SHOW_ID_NUMBERS;
 	global $GEDCOM, $TEXT_DIRECTION;
 	$GEDCOM = $value[1];
@@ -140,30 +138,31 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 		$showLivingHusb=showLivingNameByID($parents["HUSB"]);
 		$showLivingWife=showLivingNameByID($parents["WIFE"]);
 	}
+	$html='';
 	if ($showLivingWife && $showLivingHusb) {
-		if (begRTLText($value[0])) $listDir = "rtl";
-		else $listDir = "ltr";
-		if ($useli) $tag = "li";
-		else $tag = "span";
-		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."'); return false;\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
-		else print "<a href=\"family.php?famid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
-		if ($SHOW_ID_NUMBERS) {
-			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print getRLM();
-			print "(".$key.")";
-			if ($listDir=="rtl") print getRLM();
-			print "&nbsp;&nbsp;";
+		$listDir=begRTLText($value[0]) ? 'rtl' : 'ltr';
+		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
+		if ($findid) {
+			$html.='<a href="javascript:;" onclick="pasteid(\''.$key.'\'); return false;" class="list_item"><b>'.PrintReady($value[0]).'</b>';
+		}	else {
+			$html.='<a href="family.php?famid='.$key.'&amp;ged='.$value[1].'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
 		}
+		if ($SHOW_ID_NUMBERS && $key) {
+			if ($listDir=='rtl') {
+				$html.=' '.getRLM().'('.$key.')'.getRLM();
+			} else {
+				$html.=' ('.$key.')';
+		}
+		}
+
 		if (!$display) {
-			print "<br /><i>".$pgv_lang["private"]."</i>";
+			$html.="<br /><i>".$pgv_lang["private"]."</i>";
 			$fam_private[$key."[".$GEDCOM."]"] = 1;
+		} else {
+			$html.=format_first_major_fact($key, array("MARR"));
+			$html.=format_first_major_fact($key, array("DIV"));
 		}
-		else {
-			print_first_major_fact($key, array("MARR"));
-			print_first_major_fact($key, array("DIV"));
-		}
-		print "</a>";
+		$html.="</a>";
 		if ($asso != "") {
 			$p1 = strpos($asso,"[");
 			$p2 = strpos($asso,"]");
@@ -173,17 +172,21 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 			$GEDCOM = $ged;
 			$name = get_person_name($key);
 			$GEDCOM = $oldged;
-			print " <a href=\"individual.php?pid=$indikey&amp;ged=$ged\" title=\"$name\" class=\"list_item\">";
-			print "&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="ltr") print "(".$pgv_lang["associate"]."&nbsp;&nbsp;".$indikey.")</a>";
-			else print getRLM() . "(" . getRLM() .$pgv_lang["associate"]." &nbsp;&nbsp;".$indikey.getRLM() . ")" . getRLM() . "</span></a>";
+			$html.=' <a href="individual.php?pid='.$indikey.'&amp;ged='.$ged.'" title="'.$name.'" class="list_item">';
+			$html.='&nbsp;&nbsp;';
+			if ($TEXT_DIRECTION=="ltr") {
+				$html.='('.$pgv_lang['associate'].'&nbsp;&nbsp;'.$indikey.')</a>';
+			} else {
+				$html.=getRLM().'('.getRLM().$pgv_lang['associate'].'&nbsp;&nbsp;'.$indikey.getRLM().')'.getRLM().'</span></a>';
+			}
 		}
-		print "</".$tag.">";
-	}															//begin re-added by pluntke
-	if (!$showLivingWife || !$showLivingHusb) {				   	//fixed THIS line (changed && to ||)
-		$pass = TRUE;
+		$html.='</'.$tag.'>';
+	}
+	if (!$showLivingWife || !$showLivingHusb) {
+		$pass=true;
 		$fam_hide[$key."[".$GEDCOM."]"] = 1;
-	}															//end re-added by pluntke
+	}
+	return $html;
 }
 
 /**
@@ -195,28 +198,31 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_source($key, $value, $useli=true) {
+function format_list_source($key, $value, $tag='li') {
 	global $source_total, $source_hide, $SHOW_ID_NUMBERS, $GEDCOM;
 
 	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
-	if (!isset($source_total)) $source_total=array();
-	$source_total[$key."[".$GEDCOM."]"] = 1;
-	if (displayDetailsByID($key, "SOUR")) {
-		if (begRTLText($value["name"])) $listDir = "rtl";
-		else $listDir = "ltr";
-		if ($useli) $tag = "li";
-		else $tag = "span";
-		print "\n\t\t\t<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		print "\n\t\t\t<a href=\"source.php?sid=$key&amp;ged=".get_gedcom_from_id($value["gedfile"])."\" class=\"list_item\"><b>".PrintReady($value["name"])."</b>";
-		if ($SHOW_ID_NUMBERS) {
-			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print getRLM() . "(".$key.")" . getRLM();
-			else print getLRM() . "(".$key.")" . getLRM();
-		}
-		print "</a>\n";
-		print "</".$tag.">\n";
+	if (!isset($source_total)) {
+		$source_total=array();
 	}
-	else $source_hide[$key."[".$GEDCOM."]"] = 1;
+	$source_total[$key."[".$GEDCOM."]"] = 1;
+	$html='';
+	if (displayDetailsByID($key, "SOUR")) {
+		$listDir=begRTLText($value['name']) ? 'rtl' : 'ltr';
+		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
+		$html.='<a href="source.php?sid='.$key.'&amp;ged='.get_gedcom_from_id($value['gedfile']).'" class="list_item"><b>'.PrintReady($value['name']).'</b>';
+		if ($SHOW_ID_NUMBERS && $key) {
+			if ($listDir=='rtl') {
+				$html.=' '.getRLM().'('.$key.')'.getRLM();
+			} else {
+				$html.=' ('.$key.')';
+		}
+	}
+		$html.='</a></'.$tag.'>';
+	} else {
+		$source_hide[$key.'['.$GEDCOM.']'] = 1;
+	}
+	return $html;
 }
 
 /**
@@ -227,29 +233,33 @@ function print_list_source($key, $value, $useli=true) {
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_repository($key, $value, $useli=true) {
+function format_list_repository($key, $value, $tag='li') {
 	global $repo_total, $repo_hide, $SHOW_ID_NUMBERS, $GEDCOM;
 
-	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
-	if (!isset($repo_total)) $repo_total=array();
-	$repo_total[$key."[".$GEDCOM."]"] = 1;
-	if (displayDetailsByID($key, "REPO")) {
-		if (begRTLText($value["name"])) $listDir = "rtl";
-		else $listDir = "ltr";
-		if ($useli) $tag = "li";
-		else $tag = "span";
-		print "\n\t\t\t<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		$id = $value["id"];
-		print "<a href=\"repo.php?rid=$id\" class=\"list_item\">";
-		print PrintReady($value["name"]);
-		if ($SHOW_ID_NUMBERS) {
-			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print getRLM() . "(".$id.")" . getRLM();
-			else print getLRM() . "(".$id.")" . getLRM();
-		}
-		print "</a></".$tag.">\n";
+	$GEDCOM = get_gedcom_from_id($value['gedfile']);
+	if (!isset($repo_total)) {
+		$repo_total=array();
 	}
-	else $repo_hide[$key."[".$GEDCOM."]"] = 1;
+	$repo_total[$key.'['.$GEDCOM.']'] = 1;
+	$html='';
+	if (displayDetailsByID($key, 'REPO')) {
+		$listDir=begRTLText($value[0]) ? 'rtl' : 'ltr';
+		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
+		$id = $value['id'];
+		$html.='<a href="repo.php?rid='.$id.'" class="list_item">';
+		$html.=PrintReady($value['name']);
+		if ($SHOW_ID_NUMBERS && $key) {
+			if ($listDir=='rtl') {
+				$html.=' '.getRLM().'('.$key.')'.getRLM();
+			} else {
+				$html.=' ('.$key.')';
+		}
+	}
+		$html.='</a></'.$tag.'>';
+	} else {
+		$repo_hide[$key.'['.$GEDCOM.']'] = 1;
+	}
+	return $html;
 }
 
 /**
@@ -257,59 +267,62 @@ function print_list_repository($key, $value, $useli=true) {
  *
  * @param array $datalist contain individuals that were extracted from the database.
  * @param string $legend optional legend of the fieldset
- * @param string $option optional filtering option
  */
 function print_indi_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX, $GEDCOM;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES;
 
+	if ($option=="MARR_PLAC") return;
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
-	if ($option=="MARR_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-	require_once("js/sorttable.js.htm");
-	require_once("includes/person_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/person_class.php';
 	//-- init chart data
-	for ($age=0; $age<120; $age++) $deat_by_age[$age]="";
+	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $deat_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $deat_by_decade[$year]="";
 	//-- fieldset
+	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") {
+		$filter=$legend;
+		$legend=$factarray[substr($option,0,4)]." @ ".$legend;
+	}
 	if ($legend == "") $legend = $pgv_lang["individuals"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
-	print "<fieldset><legend>".$legend."</legend>";
+	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	echo "<div id=\"".$table_id."-table\">";
 	//-- filter buttons
 	$person = new Person("");
-	print "<button type=\"button\" class=\"SEX_M\" title=\"".$pgv_lang["button_SEX_M"]."\" >";
-	$person->sex = "M"; print $person->getSexImage()."&nbsp;</button> ";
-	print "<button type=\"button\" class=\"SEX_F\" title=\"".$pgv_lang["button_SEX_F"]."\" >";
-	$person->sex = "F"; print $person->getSexImage()."&nbsp;</button> ";
-	print "<button type=\"button\" class=\"SEX_U\" title=\"".$pgv_lang["button_SEX_U"]."\" >";
-	$person->sex = "U"; print $person->getSexImage()."&nbsp;</button> ";
-	print " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
-	print "<button type=\"button\" class=\"alive_in_year\" title=\"".$pgv_lang["button_alive_in_year"]."\" >";
-	print $pgv_lang["alive_in_year"]."</button> ";
-	print "<button type=\"button\" class=\"DEAT_N\" title=\"".$pgv_lang["button_DEAT_N"]."\" >";
-	print $pgv_lang["alive"]."</button> ";
-	print "<button type=\"button\" class=\"DEAT_Y\" title=\"".$pgv_lang["button_DEAT_Y"]."\" >";
-	print $pgv_lang["dead"]."</button> ";
-	print "<button type=\"button\" class=\"TREE_R\" title=\"".$pgv_lang["button_TREE_R"]."\" >";
-	print $pgv_lang["roots"]."</button> ";
-	print "<button type=\"button\" class=\"TREE_L\" title=\"".$pgv_lang["button_TREE_L"]."\" >";
-	print $pgv_lang["leaves"]."</button> ";
-	print "<br />";
-	print "<button type=\"button\" class=\"BIRT_YES\" title=\"".$pgv_lang["button_BIRT_YES"]."\" >";
-	print $factarray["BIRT"]."&gt;100</button> ";
-	print "<button type=\"button\" class=\"BIRT_Y100\" title=\"".$pgv_lang["button_BIRT_Y100"]."\" >";
-	print $factarray["BIRT"]."&lt;=100</button> ";
-	print "<button type=\"button\" class=\"DEAT_YES\" title=\"".$pgv_lang["button_DEAT_YES"]."\" >";
-	print $factarray["DEAT"]."&gt;100</button> ";
-	print "<button type=\"button\" class=\"DEAT_Y100\" title=\"".$pgv_lang["button_DEAT_Y100"]."\" >";
-	print $factarray["DEAT"]."&lt;=100</button> ";
-	print "<button type=\"button\" class=\"reset\" title=\"".$pgv_lang["button_reset"]."\" >";
-	print $pgv_lang["reset"]."</button> ";
+	echo "<button type=\"button\" class=\"SEX_M\" title=\"".$pgv_lang["button_SEX_M"]."\" >";
+	$person->sex = "M"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo "<button type=\"button\" class=\"SEX_F\" title=\"".$pgv_lang["button_SEX_F"]."\" >";
+	$person->sex = "F"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo "<button type=\"button\" class=\"SEX_U\" title=\"".$pgv_lang["button_SEX_U"]."\" >";
+	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
+	echo "<button type=\"button\" class=\"alive_in_year\" title=\"".$pgv_lang["button_alive_in_year"]."\" >";
+	echo $pgv_lang["alive_in_year"]."</button> ";
+	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".$pgv_lang["button_DEAT_N"]."\" >";
+	echo $pgv_lang["alive"]."</button> ";
+	echo "<button type=\"button\" class=\"DEAT_Y\" title=\"".$pgv_lang["button_DEAT_Y"]."\" >";
+	echo $pgv_lang["dead"]."</button> ";
+	echo "<button type=\"button\" class=\"TREE_R\" title=\"".$pgv_lang["button_TREE_R"]."\" >";
+	echo $pgv_lang["roots"]."</button> ";
+	echo "<button type=\"button\" class=\"TREE_L\" title=\"".$pgv_lang["button_TREE_L"]."\" >";
+	echo $pgv_lang["leaves"]."</button> ";
+	echo "<br />";
+	echo "<button type=\"button\" class=\"BIRT_YES\" title=\"".$pgv_lang["button_BIRT_YES"]."\" >";
+	echo $factarray["BIRT"]."&gt;100</button> ";
+	echo "<button type=\"button\" class=\"BIRT_Y100\" title=\"".$pgv_lang["button_BIRT_Y100"]."\" >";
+	echo $factarray["BIRT"]."&lt;=100</button> ";
+	echo "<button type=\"button\" class=\"DEAT_YES\" title=\"".$pgv_lang["button_DEAT_YES"]."\" >";
+	echo $factarray["DEAT"]."&gt;100</button> ";
+	echo "<button type=\"button\" class=\"DEAT_Y100\" title=\"".$pgv_lang["button_DEAT_Y100"]."\" >";
+	echo $factarray["DEAT"]."&lt;=100</button> ";
+	echo "<button type=\"button\" class=\"reset\" title=\"".$pgv_lang["button_reset"]."\" >";
+	echo $pgv_lang["reset"]."</button> ";
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<thead><tr>";
@@ -338,47 +351,33 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$n = 0;
 	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	$dateY = date("Y");
-	$today_jd = GregorianToJD(date('m'), date('d'), date('Y'));
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$person = null;
-			if (strpos($key, $GEDCOM_ID_PREFIX)!==false) $person = Person::getInstance($key); // from placelist
-			if (is_null($person)) $person = Person::getInstance($value); // from ancestry chart and search
-			if (!is_null($person)) $name = $person->getSortableName(); //-- for search results
-		}
-		else {
+			$person = Person::getInstance($value);
+		} else {
 			$gid = $key;
 			if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
 			$person = Person::getInstance($gid);
-			if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
-			else $name = $person->getSortableName();
-			if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		}
 		/* @var $person Person */
 		if (is_null($person)) continue;
+		if ($person->type !== "INDI") continue;
 		if (!$person->canDisplayName()) {
 			$hidden++;
 			continue;
 		}
+		$name = $person->getSortableName();
+		if (empty($name)) continue;
 		//-- place filtering
 		if ($option=="BIRT_PLAC" && strstr($person->getBirthPlace(), $filter)===false) continue;
 		if ($option=="DEAT_PLAC" && strstr($person->getDeathPlace(), $filter)===false) continue;
 		//-- Counter
-		print "<tr>";
-		print "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		echo "<tr>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- Gedcom ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$person->getXrefLink().'</td>';
-		//-- SOSA
-		if ($option=="sosa") {
-			print "<td class=\"list_value_wrap\">";
-			$sosa = $key;
-			$rootid = $datalist[1];
-			print "<a href=\"relationship.php?pid1=".$rootid."&amp;pid2=".$person->xref."\"".
-			" class=\"list_item name2\">".$sosa."</a>";
-			print "</td>";
-		}
+			echo '<td class="list_value_wrap rela">'.$person->getXrefLink("_blank").'</td>';
 		//-- Indi name(s)
 		$tdclass = "list_value_wrap";
 		if (!$person->isDead()) $tdclass .= " alive";
@@ -389,10 +388,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 		foreach ($name_subtags as $k=>$subtag) {
 			for ($num=1; $num<9; $num++) {
 				$addname = $person->getSortableName($subtag, $num);
-				if (!empty($addname) && $addname!=$name) print "<br /><a title=\"".$subtag."\" href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 				if (empty($addname)) break;
 			}
 		}
+		// Indi parents
+		if ($person->xref) print $person->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- GIVN
 		echo "<td style=\"display:none\">";
@@ -411,36 +412,61 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "</td>";
 		}
 		//-- Birth date
-		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$bdate=$person->getBirthDate(false);
-		if (!empty($bdate)) print str_replace('<a', '<a name="'.$bdate->MinJD().'"', $bdate->Display(empty($SEARCH_SPIDER)));
-		$byear = $person->getBirthYear(false, 'gregorian');
-		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $person->getSex();
-		//-- Birth 2nd date ?
-		if (!empty($person->bdate2)) {
-			$bdate2=$person->bdate2;
-			print '<br />'.$bdate2->Display(empty($SEARCH_SPIDER));
+		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
+		if ($birth_dates=$person->getAllBirthDates()) {
+			foreach ($birth_dates as $num=>$birth_date) {
+				if ($num) {
+					echo '<div>', $birth_date->Display(!$SEARCH_SPIDER), '</div>';
+				} else {
+					echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
 		}
-		print "</td>";
+			}
+			if ($birth_dates[0]->gregorianYear()>=1550) {
+				$birt_by_decade[floor($birth_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
+			}
+		} else {
+			if ($SHOW_EST_LIST_DATES) {
+				$birth_date=$person->getEstimatedBirthDate();
+				echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
+			} else {
+				echo '&nbsp;';
+			}
+			$birth_dates[0]=new GedcomDate('');
+		}
+		echo "</td>";
 		//-- Birth anniversary
-		if ($tiny)
-			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($bdate)."</span></td>";
+		if ($tiny) {
+			echo "<td class=\"list_value_wrap rela\">";
+			$bage =GedcomDate::GetAgeYears($birth_dates[0]);
+			if (empty($bage))
+				echo "&nbsp;";
+			else
+				echo "<span class=\"age\">".$bage."</span>";
+			echo "</td>";
+		}
 		//-- Birth place
-		print "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
-		if(!empty($SEARCH_SPIDER)) {
-			print PrintReady($person->getPlaceShort($person->getBirthPlace()));
+		echo '<td class="list_value_wrap">';
+		if ($birth_places=$person->getAllBirthPlaces()) {
+			foreach ($birth_places as $birth_place) {
+				if ($SEARCH_SPIDER) {
+					echo $person->getPlaceShort($birth_place), ' ';
+				} else {
+					echo '<div align="', get_align($birth_place), '">';
+					echo '<a href="', $person->getPlaceUrl($birth_place), '" class="list_item" title="', $birth_place.'">';
+					echo PrintReady($person->getPlaceShort($birth_place)), '</a>';
+					echo '</div>';
 		}
-		else {
-			print "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\" title=\"".$person->getBirthPlace()."\">"
-			.PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
 		}
-		print "&nbsp;</td>";
+		} else {
+			echo '&nbsp;';
+		}
+		echo '</td>';
 		//-- Number of children
 		if ($tiny) {
-			print "<td class=\"list_value_wrap\">";
+			echo "<td class=\"list_value_wrap\">";
 			if (showFactDetails('NCHI', $person->getXref(), 'INDI')) {
 				if($SEARCH_SPIDER) {
-				print $person->getNumberOfChildren();
+					echo $person->getNumberOfChildren();
 				} else {
 					echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\" name=\"".$person->getNumberOfChildren()."\">".$person->getNumberOfChildren()."</a>";
 				}
@@ -450,66 +476,83 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "</td>";
 		}
 		//-- Death date
-		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$ddate=$person->getDeathDate(false);
-		print str_replace('<a', '<a name="'.$ddate->MaxJD().'"', $ddate->Display(empty($SEARCH_SPIDER)));
-		$dyear = $person->getDeathYear(false, 'gregorian');
-		if (is_numeric($dyear) && $dyear>0) $deat_by_decade[max(1570, floor($dyear/10)*10)] .= $person->getSex();
-		//-- Death 2nd date ?
-		if (!empty($person->ddate2)) {
-			$ddate2=$person->ddate2;
-			print '<br />'.$ddate2->Display(empty($SEARCH_SPIDER));
+		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
+		if ($death_dates=$person->getAllDeathDates()) {
+			foreach ($death_dates as $num=>$death_date) {
+				if ($num) {
+					echo '<div>', $death_date->Display(!$SEARCH_SPIDER), '</div>';
+				} else {
+					echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
 		}
-		print "</td>";
+			}
+			if ($death_dates[0]->gregorianYear()>=1550) {
+				$deat_by_decade[floor($death_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
+			}
+		} else {
+			if ($SHOW_EST_LIST_DATES) {
+				$death_date=$person->getEstimatedDeathDate();
+				echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
+			} else {
+				echo '&nbsp;';
+			}
+			$death_dates[0]=new GedcomDate('');
+		}
+		echo "</td>";
 		//-- Death anniversary
 		if ($tiny) {
 			print "<td class=\"list_value_wrap rela\">";
-			if ($person->isDead() && !$person->dest) {
-				echo "<span class=\"age\">".GedcomDate::GetAgeYears($ddate)."</span>";
-			} else
+			if ($death_dates[0]->isOK())
+				echo "<span class=\"age\">".GedcomDate::GetAgeYears($death_dates[0])."</span>";
+			else
 				echo "&nbsp;";
 			print '</td>';
 		}
 		//-- Age at death
 		print "<td class=\"list_value_wrap\">";
-		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0) {
-			$age = GedcomDate::GetAgeYears($bdate, $ddate);
-			//$age_jd = $ddate->MaxJD()-$bdate->MinJD();
-			$age_jd = $ddate->MinJD()-$bdate->MinJD();
+		if ($birth_dates[0]->isOK() && $death_dates[0]->isOK()) {
+			$age = GedcomDate::GetAgeYears($birth_dates[0], $death_dates[0]);
+			$age_jd = $death_dates[0]->MinJD()-$birth_dates[0]->MinJD();
 			echo "<a name=\"".$age_jd."\" title=\"".$age_jd."\" class=\"list_item age\">".$age."</a>";
-			if (is_numeric($age)) $deat_by_age[min(105, $age)] .= $person->getSex();
-		}
-		else
+			$deat_by_age[max(0,min($MAX_ALIVE_AGE, $age))] .= $person->getSex();
+		} else {
 			echo '<a name="-1">&nbsp;</a>';
+		}
 		echo "</td>";
 		//-- Death place
-		print "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
-		if(!empty($SEARCH_SPIDER)) {
-			print PrintReady($person->getPlaceShort($person->getDeathPlace()));
+		echo '<td class="list_value_wrap">';
+		if ($death_places=$person->getAllDeathPlaces()) {
+			foreach ($death_places as $death_place) {
+				if ($SEARCH_SPIDER) {
+					echo $person->getPlaceShort($death_place), ' ';
+				} else {
+					echo '<div align="', get_align($death_place), '">';
+					echo '<a href="', $person->getPlaceUrl($death_place), '" class="list_item" title="', $death_place.'">';
+					echo PrintReady($person->getPlaceShort($death_place)), '</a>';
+					echo '</div>';
 		}
-		else {
-			print "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\" title=\"".$person->getDeathPlace()."\">"
-			.PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
 		}
-		print "&nbsp;</td>";
+		} else {
+			echo '&nbsp;';
+		}
+		echo '</td>';
 		//-- Last change
 		if ($tiny && $SHOW_LAST_CHANGE)
 			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$person->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		//-- Sorting by gender
-		print "<td style=\"display:none\">";
-		print $person->getSex();
-		print "</td>";
+		echo "<td style=\"display:none\">";
+		echo $person->getSex();
+		echo "</td>";
 		//-- Filtering by birth date
 		echo "<td style=\"display:none\">";
-		if (!$person->disp || GedcomDate::Compare($bdate, $d100y)>0)
+		if (!$person->disp || GedcomDate::Compare($birth_dates[0], $d100y)>0)
 			echo "Y100";
 		else
 			echo "YES";
 		echo "</td>";
 		//-- Filtering by death date
-		print "<td style=\"display:none\">";
+		echo "<td style=\"display:none\">";
 		if ($person->isDead()) {
-			if (GedcomDate::Compare($ddate, $d100y)>0)
+			if (GedcomDate::Compare($death_dates[0], $d100y)>0)
 				echo "Y100";
 			else
 				echo "YES";
@@ -531,6 +574,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
 	echo "<td class=\"list_label\">"; // NAME
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
@@ -549,7 +593,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<td style=\"display:none\">BIRT</td>";
 	echo "<td style=\"display:none\">DEAT</td>";
 	echo "<td style=\"display:none\">TREE</td>";
-	echo "</tr></tfoot>";
+	echo "</tr>";
 	echo "</tfoot>";
 	echo "</table>\n";
 	echo "</div>";
@@ -572,24 +616,27 @@ function print_indi_table($datalist, $legend="", $option="") {
  *
  * @param array $datalist contain families that were extracted from the database.
  * @param string $legend optional legend of the fieldset
- * @param string $option optional filtering option
  */
 function print_fam_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE;
 
+	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
-	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-	require_once("js/sorttable.js.htm");
-	require_once("includes/family_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/family_class.php';
 	//-- init chart data
 	for ($age=0; $age<120; $age++) $marr_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $marr_by_decade[$year]="";
 	//-- fieldset
+	if ($option=="MARR_PLAC") {
+		$filter=$legend;
+		$legend=$factarray["MARR"]." @ ".$legend;
+	}
 	if ($legend == "") $legend = $pgv_lang["families"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
@@ -633,7 +680,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<th style=\"display:none\">WIFE:GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
-	if ($tiny) echo "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
 	if ($tiny) 	echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
 	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
@@ -648,17 +695,15 @@ function print_fam_table($datalist, $legend="", $option="") {
 	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$family = Family::getInstance($key); // from placelist
-			if (is_null($family)) $family = Family::getInstance($value); // from ancestry chart
-			unset($value);
-		}
-		else {
+			$family=Family::getInstance($value);
+		} else {
 			$gid = "";
 			if (isset($value["gid"])) $gid = $value["gid"];
 			if (isset($value["gedcom"])) $family = new Family($value["gedcom"]);
 			else $family = Family::getInstance($gid);
 		}
 		if (is_null($family)) continue;
+		if ($family->type !== "FAM") continue;
 		//-- Retrieve husband and wife
 		$husb = $family->getHusband();
 		if (is_null($husb)) $husb = new Person('');
@@ -675,16 +720,12 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- Family ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$family->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">'.$family->getXrefLink("_blank").'</td>';
 		//-- Husband ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink("_blank").'</td>';
 		//-- Husband name(s)
-		if (isset($value["name"])) {
-			$partners = explode(" + ", $value["name"]); // "husb + wife"
-			$name = check_NN($partners[0]);
-		}
-		else $name = $husb->getSortableName();
+		$name = $husb->getSortableName();
 		$tdclass = "list_value_wrap";
 		if (!$husb->isDead()) $tdclass .= " alive";
 		if (!$husb->getChildFamilyIds()) $tdclass .= " patriarch";
@@ -698,36 +739,38 @@ function print_fam_table($datalist, $legend="", $option="") {
 				if (empty($addname)) break;
 			}
 		}
+		// Husband parents
+		if ($husb->xref) echo $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Husb GIVN
 		echo "<td style=\"display:none\">";
 		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
-		//-- Husb BIRT
-		$byear = $husb->getBirthYear(false, 'gregorian');
-		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $husb->getSex();
+		$mdate=new GedcomDate($family->getMarriageDate());
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
-		$mdate=$family->getMarriageDate();
-		$hdate=$husb->GetBirthDate();
-		if (is_null($hdate) || is_null($mdate))
-			print "&nbsp;";
-		else
+		$hdate=$husb->getBirthDate();
+		if ($hdate->isOK()) {
+			if ($hdate->gregorianYear()>=1550) {
+				$birt_by_decade[floor($hdate->gregorianYear()/10)*10] .= $husb->getSex();
+			}
+			if ($mdate->isOK()) {
 			$hage =GedcomDate::GetAgeYears($hdate, $mdate);
-		if (empty($hage))
-			print "&nbsp;";
-		else {
 			print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
-			if (is_numeric($hage)) $marr_by_age[min(105, $hage)] .= $husb->getSex();
+				$marr_by_age[min($MAX_ALIVE_AGE, $hage)] .= $husb->getSex();
+			} else {
+				echo '&nbsp;';
+			}
+		} else {
+			echo '&nbsp;';
 		}
 		echo "</td>";
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
-		if (isset($value["name"])) $name = check_NN($partners[1]);
-		else $name = $wife->getSortableName();
+		$name = $wife->getSortableName();
 		$tdclass = "list_value_wrap";
 		if (!$wife->isDead()) $tdclass .= " alive";
 		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";
@@ -741,53 +784,69 @@ function print_fam_table($datalist, $legend="", $option="") {
 				if (empty($addname)) break;
 			}
 		}
+		// Wife parents
+		if ($wife->xref) echo $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Wife GIVN
 		echo "<td style=\"display:none\">";
 		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
-		//-- Wife BIRT
-		$byear = $wife->getBirthYear(false, 'gregorian');
-		if (is_numeric($byear) && $byear>0) $birt_by_decade[max(1570, floor($byear/10)*10)] .= $wife->getSex();
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
-		$wdate=$wife->GetBirthDate();
-		if (is_null($wdate) || is_null($mdate))
-			print "&nbsp;";
-		else
+		$wdate=$wife->getBirthDate();
+		if ($wdate->isOK()) {
+			if ($wdate->gregorianYear()>=1550) {
+				$birt_by_decade[floor($wdate->gregorianYear()/10)*10] .= $wife->getSex();
+			}
+			if ($mdate->isOK()) {
 			$wage =GedcomDate::GetAgeYears($wdate, $mdate);
-		if (empty($wage))
-			print "&nbsp;";
-		else {
 			print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
-			if (is_numeric($wage)) $marr_by_age[min(105, $wage)] .= $wife->getSex();
+				$marr_by_age[min($MAX_ALIVE_AGE, $wage)] .= $wife->getSex();
+			} else {
+				print "&nbsp;";
+			}
+		} else {
+			print "&nbsp;";
 		}
 		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a name="'.$mdate->MinJD().'" title="'.$mdate->MinJD().'"', $mdate->Display(empty($SEARCH_SPIDER)));
-		$myear = $family->getMarriageYear(false, 'gregorian');
-		if (is_numeric($myear) && $myear>0) $marr_by_decade[max(1570, floor($myear/10)*10)] .= $husb->getSex().$wife->getSex();
-		//-- Marriage 2nd date ?
-		if (!empty($family->marr_date2)) {
-			$mdate2=$family->marr_date2;
-			print '<br />'.$mdate2->Display(empty($SEARCH_SPIDER));
+		if ($marriage_dates=$family->getAllMarriageDates()) {
+			foreach ($marriage_dates as $num=>$marriage_date) {
+				if ($num) {
+					echo '<div>', $marriage_date->Display(!$SEARCH_SPIDER), '</div>';
+				} else {
+					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
+				}
+			}
+			if ($marriage_dates[0]->gregorianYear()>=1550) {
+				$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
+			}
+		} else {
+			echo '&nbsp;';
 		}
 		echo "</td>";
 		//-- Marriage anniversary
 		if ($tiny)
 			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($mdate)."</span></td>";
 		//-- Marriage place
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
-		if(!empty($SEARCH_SPIDER)) {
-			echo PrintReady($family->getPlaceShort($family->getMarriagePlace()));
+		echo '<td class="list_value_wrap">';
+		if ($marriage_places=$family->getAllMarriagePlaces()) {
+			foreach ($marriage_places as $marriage_place) {
+				if ($SEARCH_SPIDER) {
+					echo $family->getPlaceShort($marriage_place), ' ';
+				} else {
+					echo '<div align="', get_align($marriage_place), '">';
+					echo '<a href="', $family->getPlaceUrl($marriage_place), '" class="list_item" title="', $marriage_place.'">';
+					echo PrintReady($family->getPlaceShort($marriage_place)), '</a>';
+					echo '</div>';
 		}
-		else {
-			echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\" title=\"".$family->getMarriagePlace()."\">"
-			.PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
 		}
-		echo "&nbsp;</td>";
+		} else {
+			echo '&nbsp;';
+		}
+		echo '</td>';
 		//-- Number of children
 		if ($tiny) {
 			echo "<td class=\"list_value_wrap\">";
@@ -807,7 +866,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$family->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
-		if (!$family->disp || $mdate->MinJD()==0)
+		if (!$family->disp || !$mdate->isOK())
 			echo "U";
 		else
 			if (GedcomDate::Compare($mdate, $d100y)>0)
@@ -846,6 +905,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
 	echo "<td class=\"list_label\">"; // HUSB:NAME
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_fams"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
@@ -895,8 +955,8 @@ function print_sour_table($datalist, $legend="") {
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
-	require_once("js/sorttable.js.htm");
-	require_once("includes/source_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/source_class.php';
 
 	if ($legend == "") $legend = $pgv_lang["sources"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -904,13 +964,12 @@ function print_sour_table($datalist, $legend="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<thead><tr>";
-	echo "<td class=\"sorttable_nosort\"></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">SOUR</th>";
+	echo "<tr>";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">SOUR</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	$t2 = false; echo "<td class=\"list_label t2\">".$factarray["TITL"]."2</td>";
 	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">REPO</th>";
 	//-- only show the count of linked records if the DB is sufficiently small to handle the load
 	$show_details = (get_list_size("indilist")<1000);
 	if ($tiny && $show_details) {
@@ -919,9 +978,8 @@ function print_sour_table($datalist, $legend="") {
 		echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
 	}
 	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "</tr></thead>\n";
+	echo "</tr>\n";
 	//-- table body
-	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 	foreach ($datalist as $key => $value) {
@@ -966,12 +1024,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($source->getAuth())."\">";
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
 		echo "&nbsp;</td>";
-		//-- REPO
-		if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->getRepo()."</a>";
-			echo "</td>";
-		}
+
 		if ($tiny && $show_details) { // $source->countSourceXXXX() is very slow.
 			//-- Linked INDIs
 			echo "<td class=\"list_value_wrap\">";
@@ -991,9 +1044,8 @@ function print_sour_table($datalist, $legend="") {
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$source->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		echo "</tr>\n";
 	}
-	echo "</tbody>\n";
 	//-- table footer
-	echo "<tfoot><tr>";
+	echo "<tr class=\"sortbottom\">";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
@@ -1009,7 +1061,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<td></td>";
 	}
 	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
-	echo "</tr></tfoot>";
+	echo "</tr>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
 	//-- hide TITLE2 col if empty
@@ -1039,8 +1091,8 @@ function print_repo_table($datalist, $legend="") {
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
-	require_once("js/sorttable.js.htm");
-	require_once("includes/repository_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/repository_class.php';
 
 	if ($legend == "") $legend = $pgv_lang["repos_found"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -1048,16 +1100,14 @@ function print_repo_table($datalist, $legend="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<thead><tr>";
-	echo "<td class=\"sorttable_nosort\"></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">REPO</th>";
+	echo "<tr>";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">REPO</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
 	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "</tr></thead>\n";
+	echo "</tr>\n";
 	//-- table body
-	echo "<tbody>\n";
-	$hidden = 0;
 	$n = 0;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
@@ -1072,10 +1122,6 @@ function print_repo_table($datalist, $legend="") {
 			else $repo = Repository::getInstance($gid);
 		}
 		if (is_null($repo)) continue;
-		if (!$repo->canDisplayDetails()) {
-			$hidden++;
-			continue;
-		}
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -1100,18 +1146,6 @@ function print_repo_table($datalist, $legend="") {
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$repo->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		echo "</tr>\n";
 	}
-	echo "</tbody>\n";
-	//-- table footer
-	echo "<tfoot><tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	echo "<td class=\"list_label\">";
-	echo $pgv_lang["total_repositories"]." : ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
-	echo "</td>";
-	echo "<td></td>";
-	if ($SHOW_LAST_CHANGE) echo "<td></td>";
-	echo "</tr></tfoot>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -1127,8 +1161,8 @@ function print_media_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
-	require_once("js/sorttable.js.htm");
-	require_once("includes/media_class.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/media_class.php';
 
 	if ($legend == "") $legend = $pgv_lang["media"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -1136,17 +1170,16 @@ function print_media_table($datalist, $legend="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<thead><tr>";
-	echo "<td class=\"sorttable_nosort\"></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">OBJE</th>";
+	echo "<tr>";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">OBJE</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "</tr></thead>\n";
+	echo "</tr>\n";
 	//-- table body
-	echo "<tbody>\n";
 	$n = 0;
 	foreach ($datalist as $key => $value) {
 		$media = new Media($value["GEDCOM"]);
@@ -1188,7 +1221,6 @@ function print_media_table($datalist, $legend="") {
 			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$media->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		echo "</tr>\n";
 	}
-	echo "</tbody>\n";
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -1305,23 +1337,22 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
  * @param array $datalist contain records that were extracted from the database.
  */
 function print_changes_table($datalist) {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-	require_once("js/sorttable.js.htm");
-	require_once("includes/gedcomrecord.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<thead><tr>";
+	echo "<tr>";
 	//echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">".$pgv_lang["id"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	echo "<th style=\"display:none\">GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["CHAN"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["_PGVU"]."</th>";
-	echo "</tr></thead>\n";
+	echo "</tr>\n";
 	//-- table body
-	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 	$NMAX = 1000;
@@ -1347,7 +1378,15 @@ function print_changes_table($datalist) {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$record->getXrefLink().'</td>';
 		//-- Record name(s)
-		if ($record->type=="FAM") $name = $record->getSortableName(true);
+		if ($record->type=="FAM") {
+			$name=$record->getSortableName(true);
+			$exp = explode("<br />", $name);
+			$husb = $record->getHusband();
+			if ($husb) $exp[0].= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
+			$wife = $record->getWife();
+			if ($wife) $exp[1].= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
+			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
+		}
 		else $name = $record->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
@@ -1362,6 +1401,7 @@ function print_changes_table($datalist) {
 					if (empty($addname)) break;
 				}
 			}
+			if ($record->xref) print $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
 		if ($record->type=="SOUR" || $record->type=="REPO") {
 			$name_subtags = array("_HEB", "ROMN");
@@ -1382,13 +1422,13 @@ function print_changes_table($datalist) {
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$record->LastChangeUser(empty($SEARCH_SPIDER))."</td>";
 		echo "</tr>\n";
 	}
-	echo "</tbody>\n";
 	//-- table footer
-	echo "<tfoot><tr>";
+	echo "<tr class=\"sortbottom\">";
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_names"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	if ($n>=$NMAX) echo "<br /><span class=\"warning\">".$pgv_lang["recent_changes"]." &gt; ".$NMAX."</span>";
@@ -1396,7 +1436,7 @@ function print_changes_table($datalist) {
 	echo "<td style=\"display:none\">GIVN</td>";
 	echo "<td></td>";
 	echo "<td></td>";
-	echo "</tr></tfoot>";
+	echo "</tr>";
 	echo "</table>\n";
 }
 
@@ -1406,73 +1446,80 @@ function print_changes_table($datalist) {
  * @see http://microformats.org/
  *
  * @param array $datalist contain records that were extracted from the database.
- * @param int $nextdays optional days count
- * @param string $option optional filtering option
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $SERVER_URL;
-	require_once("js/sorttable.js.htm");
-	require_once("includes/gedcomrecord.php");
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	//-- table header
-	print "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	print "<thead><tr>";
-	//echo "<td></td>";
-	//if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">".$pgv_lang["id"]."</th>";
-	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
-	print "<th style=\"display:none\">GIVN</th>";
-	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
-	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
-	print "</tr></thead>\n";
-	//-- table body
-	print "<tbody>\n";
-	$hidden = 0;
-	$n = 0;
+
+	// Did we have any output?  Did we skip anything?
+	$output = 0;
+	$filter = 0;
+	$private = 0;
 
 	// Which types of name do we display for an INDI
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-	if ($SHOW_MARRIED_NAMES)
-		$name_subtags[] = "_MARNM";
+	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 
 	foreach(get_event_list() as $key => $value) {
-		if ($value['jd']<$startjd || $value['jd']>$endjd)
-			continue;
+		if ($value['jd']<$startjd || $value['jd']>$endjd) continue;
 		//-- only birt/marr/deat ?
-		if (!empty($events) && strpos($events, $value['fact'])===false)
-			continue;
+		if (!empty($events) && strpos($events, $value['fact'])===false) continue;
 
 		//-- get gedcom record - it may have been deleted since we cached the event
 		$record = GedcomRecord::getInstance($value['id']);
-		if (is_null($record))
-			continue;
+		if (is_null($record)) continue;
 		//-- only living people ?
 		if ($only_living) {
-			if ($record->type=="INDI" && $record->isDead())
+			if ($record->type=="INDI" && $record->isDead()) {
+				$filter ++;
 				continue;
+			}
 			if ($record->type=="FAM") {
 				$husb = $record->getHusband();
-				if (is_null($husb) || $husb->isDead())
+				if (is_null($husb) || $husb->isDead()) {
+					$filter ++;
 					continue;
+				}
 				$wife = $record->getWife();
-				if (is_null($wife) || $wife->isDead())
+				if (is_null($wife) || $wife->isDead()) {
+					$filter ++;
 					continue;
 			}
+		}
 		}
 
 		// Privacy
 		if (!$record->canDisplayDetails() || !showFactDetails($value['fact'], $value['id']) || FactViewRestricted($value['id'], $value['factrec'])) {
-			$hidden++;
+			$private ++;
 			continue;
 		}
 		//-- Counter
-		$n++;
+		$output ++;
+		if ($output==1) {
+			//-- First table row:  start table headers, etc. first
+			print "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+			print "<tr>";
+			print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+			print "<th style=\"display:none\">GIVN</th>";
+			print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
+			print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
+			print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
+			print "</tr>\n";
+		}
+
 		print "<tr class=\"vevent\">"; // hCalendar:vevent
 		//-- Record name(s)
-		if ($record->type=="FAM")
+		if ($record->type=="FAM") {
 			$name=$record->getSortableName(true);
-		else
-			$name=$record->getSortableName();
+			$exp = explode("<br />", $name);
+			$husb = $record->getHusband();
+			if ($husb) $exp[0].= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
+			$wife = $record->getWife();
+			if ($wife) $exp[1].= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
+			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
+		} else $name = $record->getSortableName();
 		$url=$record->getLinkUrl();
 
 		print "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
@@ -1482,31 +1529,29 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			foreach ($name_subtags as $subtag) {
 				for ($num=1; ; ++$num) {
 					$addname = $record->getSortableName($subtag, $num);
-					if (empty($addname))
-						break;
-					else
-						if ($addname!=$name)
-							print "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					if (empty($addname)) break;
+					else {
+						if ($addname!=$name) print "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					}
 				}
 			}
+			if ($record->xref) print $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
 		print "</td>";
 		//-- GIVN
-		echo "<td style=\"display:none\">";
+		print "<td style=\"display:none\">";
 		$exp = explode(",", str_replace('<', ',', $name).",");
-		echo $exp[1];
-		echo "</td>";
+		print $exp[1];
+		print "</td>";
 		//-- Event date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a name="'.$value['date']->MinJD().'"', $value['date']->Display(empty($SEARCH_SPIDER)));
+		print str_replace('<a', '<a name="'.$value['jd'].'"', $value['date']->Display(empty($SEARCH_SPIDER)));
 		print "</td>";
 		//-- Anniversary
 		print "<td class=\"list_value_wrap rela\">";
 		$anniv = $value['anniv'];
-		if ($anniv==0)
-			print '<a name="-1">&nbsp;</a>';
-		else
-			print "<a name=\"{$anniv}\">{$anniv}</a>";
+		if ($anniv==0) print '<a name="-1">&nbsp;</a>';
+		else print "<a name=\"{$anniv}\">{$anniv}</a>";
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
 			print "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
@@ -1520,30 +1565,62 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 
 		print "</tr>\n";
 	}
-	print "</tbody>\n";
+	if ($output!=0) {
 	//-- table footer
-	print "<tfoot><tr>";
-	//echo "<td></td>";
-	//if ($SHOW_ID_NUMBERS) echo "<td></td>";
+	print "<tr class=\"sortbottom\">";
 	print "<td class=\"list_label\">";
-	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-	print $pgv_lang["stat_events"].": ".$n;
-	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
-	print "</td>";
-	print "<td style=\"display:none\">GIVN</td>";
-	print "<td>";
+		print "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">&nbsp;&nbsp;".substr($pgv_lang["parents"],0,-1)."</label><br />";
+		print "</td><td class=\"list_label\" colspan=\"3\">";
+		print $pgv_lang["stat_events"].": ".$output;
 	if ($allow_download) {
 		$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);
 		global $whichFile;
 		$whichFile = "hCal-events.ics";
 		$title = print_text("download_file",0,1);
-		if ($n) print "<a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
+			print "<br /><a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
 	}
 	print "</td>";
 	print "<td></td>";
 	print "<td></td>";
-	print "</tr></tfoot>";
+	print "</tr>";
 	print "</table>\n";
+}
+
+	// Print a final summary message about restricted/filtered facts
+	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days 
+
+	$summary = "";
+	
+	if ($endjd==client_jd()) {
+		// We're dealing with the Today's Events block
+		if ($private!=0) {
+			// We lost some output due to Privacy restrictions
+			if ($output!=0) $summary = "more_today_privacy";
+			else $summary = "none_today_privacy";
+		} else if ($filter!=0) {
+			// We lost some output due to filtering for living people
+			if ($output==0) $summary = "none_today_living";
+		} else if ($output==0) $summary = "none_today_all";		
+	} else {
+		// We're dealing with the Upcoming Events block
+		if ($private!=0) {
+			// We lost some output due to Privacy restrictions
+			if ($output!=0) $summary = "more_events_privacy";
+			else $summary = "no_events_privacy";
+		} else if ($filter!=0) {
+			// We lost some output due to filtering for living people
+			if ($output==0) $summary = "no_events_living";
+		} else if ($output==0) $summary = "no_events_all";
+		// If we're only looking at tomorrow, change the messages to refer 
+		// to tomorrow instead of "the next 1 days"
+		if ($summary!="" && $endjd==$startjd) $summary .= "1";
+	}
+	if ($summary!="") {
+		print "<b>";
+		print_text($summary);
+		print "</b>";
+	}
+
 }
 
 /**
@@ -1551,42 +1628,41 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
  *
  * This performs the same function as print_events_table(), but formats the output differently.
  */
-function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false) {
+function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $sort_by_name=false) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 
 	// Did we have any output?  Did we skip anything?
-	$output=false;
-	$filter=false;
-	$private=false;
+	$output = 0;
+	$filter = 0;
+	$private = 0;
 
 	$return='';
 
-	foreach(get_event_list() as $key => $value) {
-		if ($value['jd']<$startjd || $value['jd']>$endjd)
-			continue;
+	$filtered_events=array();
+
+	foreach(get_event_list() as $value) {
+		if ($value['jd']<$startjd || $value['jd']>$endjd) continue;
 		//-- only birt/marr/deat ?
-		if (!empty($events) && strpos($events, $value['fact'])===false)
-			continue;
+		if (!empty($events) && strpos($events, $value['fact'])===false) continue;
 
 		//-- get gedcom record - it may have been deleted since we cached the event
 		$record = GedcomRecord::getInstance($value['id']);
-		if (is_null($record))
-			continue;
+		if (is_null($record)) continue;
 		//-- only living people ?
 		if ($only_living) {
 			if ($record->type=="INDI" && $record->isDead()) {
-				$filter=true;
+				$filter ++;
 				continue;
 			}
 			if ($record->type=="FAM") {
 				$husb = $record->getHusband();
 				if (is_null($husb) || $husb->isDead()) {
-					$filter=true;
+					$filter ++;
 					continue;
 				}
 				$wife = $record->getWife();
 				if (is_null($wife) || $wife->isDead()) {
-					$filter=true;
+					$filter ++;
 					continue;
 				}
 			}
@@ -1594,66 +1670,65 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 		// Privacy
 		if (!$record->canDisplayDetails() || !showFactDetails($value['fact'], $value['id']) || FactViewRestricted($value['id'], $value['factrec'])) {
-			$private=true;
+			$private ++;
 			continue;
 		}
-		$output=true;
+		$output ++;
 
-		$name=$record->getSortableName();
-		$url=$record->getLinkUrl();
-
-		$return.="<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		$value['name']=$record->getSortableName();
+		$value['url']=$record->getLinkUrl();
 		if ($record->type=="INDI")
-			$return.=$record->getSexImage();
+			$value['sex']=$record->getSexImage();
+		else
+			$value['sex']='';
+		$filtered_events[]=$value;
+	}
+
+	// Now we've filtered the list, we can sort by name, if required
+	if ($sort_by_name) uasort($filtered_events, 'event_sort');
+
+	foreach($filtered_events as $value) {
+		$return.="<a href=\"".$value['url']."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
 		$return.="<div class=\"indent\">";
 		$return.=$factarray[$value['fact']].' - '.$value['date']->Display(true);
-		if ($value['anniv']!=0)
-			$return.=" (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
-		if (!empty($value['plac']))
-			$return.=" - <a href=\"".GedcomRecord::getPlaceUrl($value['plac'])."\">".$value['plac']."</a>";
+		if ($value['anniv']!=0) $return .= " (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
+		if (!empty($value['plac'])) $return .= " - <a href=\"".GedcomRecord::getPlaceUrl($value['plac'])."\">".$value['plac']."</a>";
 		$return.="</div>";
 	}
 
 	// Print a final summary message about restricted/filtered facts
-	$pgv_lang["global_num1"]=$endjd-$startjd+1; // TODO: This doesn't work as expected??
-	$return.="<b>";
-	if ($private)
-		if ($output)
-			if ($endjd==client_jd())
-				$return.=print_text ("more_today_privacy", 0, 1);
-			else
-				if ($startjd==$endjd)
-					$return.=print_text ("more_events_privacy1", 0, 1);
-				else
-					$return.=print_text ("more_events_privacy", 0, 1);
-		else
-			if ($endjd==client_jd())
-				$return.=print_text ("none_today_privacy", 0, 1);
-			else
-				if ($startjd==$endjd)
-					$return.=print_text ("no_events_privacy1", 0, 1);
-				else
-					$return.=print_text ("no_events_privacy", 0, 1);
-	else
-		if (!$output)
-			if ($filter)
-				if ($endjd==client_jd())
-					$return.=print_text ("none_today_living", 0, 1);
-				else
-					if ($startjd==$endjd)
-						$return.=print_text ("no_events_living1", 0, 1);
-					else
-						$return.=print_text ("no_events_living", 0, 1);
-			else
-				if ($endjd==client_jd())
-					$return.=print_text ("none_today_all", 0, 1);
-				else
-					if ($startjd==$endjd)
-						$return.=print_text ("no_events_all1", 0, 1);
-					else
-						$return.=print_text ("no_events_all", 0, 1);
+	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days 
 
+	$summary = "";
+	
+	if ($endjd==client_jd()) {
+		// We're dealing with the Today's Events block
+		if ($private!=0) {
+			// We lost some output due to Privacy restrictions
+			if ($output!=0) $summary = "more_today_privacy";
+			else $summary = "none_today_privacy";
+		} else if ($filter!=0) {
+			// We lost some output due to filtering for living people
+			if ($output==0) $summary = "none_today_living";
+		} else if ($output==0) $summary = "none_today_all";		
+	} else {
+		// We're dealing with the Upcoming Events block
+		if ($private!=0) {
+			// We lost some output due to Privacy restrictions
+			if ($output!=0) $summary = "more_events_privacy";
+			else $summary = "no_events_privacy";
+		} else if ($filter!=0) {
+			// We lost some output due to filtering for living people
+			if ($output==0) $summary = "no_events_living";
+		} else if ($output==0) $summary = "no_events_all";
+		if ($summary!="" && $endjd==$startjd) $summary .= "1";
+	}
+	if ($summary!="") {
+		$return .= "<b>";
+		$return .= print_text($summary, 0, 1);
 	$return.="</b>";
+	}
+
 	return $return;
 }
 
@@ -1664,7 +1739,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
  * @param string $title
  */
 function print_chart_by_age($data, $title) {
-	global $pgv_lang;
+	global $pgv_lang, $MAX_ALIVE_AGE;
 
 	$count = 0;
 	$vmax = 0;
@@ -1682,8 +1757,8 @@ function print_chart_by_age($data, $title) {
 	$chart_url .= "&chtt=".urlencode($title); // title
 	$chart_url .= "&chxt=x,y,r";
 	$chart_url .= "&chxl=0:|"; // label
-	for ($age=0; $age<105; $age+=5) $chart_url .= $age."|||||"; // x axis
-	$chart_url .= ">||"; // age>=105
+	for ($age=0; $age<$MAX_ALIVE_AGE; $age+=5) $chart_url .= $age."|||||"; // x axis
+	$chart_url .= ">||"; // age>=$MAX_ALIVE_AGE
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
 	$step = $vmax;
@@ -1803,7 +1878,7 @@ function load_behaviour() {
 			element.onmouseover = function() { // show helptext
 				helptext = this.title;
 				if (helptext=='') helptext = this.value;
-				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".$pgv_lang["sort_column"]."'"?>;
+				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".$pgv_lang["sort_column"]."'"; ?>;
 				this.title = helptext; if (document.all) return; // IE = title
 				this.value = helptext; this.title = ''; // Firefox = value
 				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");

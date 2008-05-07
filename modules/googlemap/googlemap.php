@@ -30,27 +30,6 @@ if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/conf
 
 loadLangFile("gm_lang");
 
-//-- handle hide/show of googlemap based on session setting
-global $SESSION_HIDE_GOOGLEMAP;
-$SESSION_HIDE_GOOGLEMAP = "empty";
-if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
-	if(stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
-		$SESSION_HIDE_GOOGLEMAP = "true";
-	}
-	if(stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
-		$SESSION_HIDE_GOOGLEMAP = "false";
-	}
-}
-// change the session values and store if needed.
-if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
-if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
-if($SESSION_HIDE_GOOGLEMAP == "empty") {
-	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
- 		$SESSION_HIDE_GOOGLEMAP = "true";
-	else 
- 		$SESSION_HIDE_GOOGLEMAP = "false";
-}
-
 // functions copied from print_fact_place
 function print_fact_place_map($factrec) {
 	$ct = preg_match("/2 PLAC (.*)/", $factrec, $match);
@@ -630,7 +609,7 @@ function build_indiv_map($indifacts, $famids) {
 					print "markers.push(Marker{$j});\n";
 					print "map.addOverlay(Marker{$j});\n";
 					$markers[$j]["index"] = $indexcounter;
-					$markers[$j]["tabindex"] = -1;
+					$markers[$j]["tabindex"] = 0;
 					$indexcounter = $indexcounter + 1;
 				} else {
 					$tabcounter = 0;
@@ -692,7 +671,9 @@ function build_indiv_map($indifacts, $famids) {
 								print "\n";
 								print "];\n";
 								print "GEvent.addListener(Marker{$j}_{$markersindex}, \"click\", function(tabToSelect) {\n";
+								print "if (tabToSelect>0) \n";
 								print "Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info, {selectedTab: tabToSelect});\n";
+								print "else Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info);\n";
 								print "});\n";
 								print "markers.push(Marker{$j}_{$markersindex});\n";
 								print "map.addOverlay(Marker{$j}_{$markersindex});\n";
@@ -754,7 +735,9 @@ function build_indiv_map($indifacts, $famids) {
 					print "\n";
 					print "];\n";
 					print "GEvent.addListener(Marker{$j}_{$markersindex}, \"click\", function(tabToSelect) {\n";
+					print "if (tabToSelect>0) \n";
 					print "Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info, {selectedTab: tabToSelect});\n";
+					print "else Marker{$j}_{$markersindex}.openInfoWindowTabsHtml(Marker{$j}_{$markersindex}Info);\n";
 					print "});\n";
 					print "markers.push(Marker{$j}_{$markersindex});\n";
 					print "map.addOverlay(Marker{$j}_{$markersindex});\n";

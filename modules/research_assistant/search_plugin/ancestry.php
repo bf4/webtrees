@@ -44,8 +44,10 @@ function autosearch_options()
 	//set values
 		$givennames = $person->getGivenNames();
 		$lastname = $person->getSurname();
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+		$bdate=$person->getEstimatedBirthDate();
+		$ddate=$person->getEstimatedDeathDate();
+		$byear=$bdate->gregorianYear();
+		$dyear=$ddate->gregorianYear();
 	
 	// generate html with values using pgvlang compatability see research_assitant/languages/lang.en.php
 	$to_return ="<form name='ancsearch' action='module.php' target=\"_blank\" method='post'> 
@@ -87,8 +89,10 @@ function autosearch_process() {
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
 	$person = Person::getInstance($pid);
 		if (!is_object($person)) return "";
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+	$bdate=$person->getEstimatedBirthDate();
+	$ddate=$person->getEstimatedDeathDate();
+	$byear=$bdate->gregorianYear();
+	$dyear=$ddate->gregorianYear();
 	
 	//url of our search site
 	$url = "http://search.ancestry.com/cgi-bin/sse.dll?";

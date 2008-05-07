@@ -34,6 +34,15 @@ $VERSION = "4.2";
 $VERSION_RELEASE = "alpha";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
+// Regular expressions for validating user input, etc.
+define('PGV_REGEX_XREF',      '[A-Za-z0-9:-]+');
+define('PGV_REGEX_INTEGER',   '-?\d+');
+define('PGV_REGEX_ALPHA',     '[a-zA-Z]+');
+define('PGV_REGEX_ALPHANUM',  '[a-zA-Z0-9]+');
+define('PGV_REGEX_BYTES',     '[0-9]+[bBkKmMgG]?');
+define('PGV_REGEX_PASSWORD',  '.{6,}');
+define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
+define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);
 @ini_set('display_errors', '1');
@@ -371,7 +380,8 @@ foreach ($language_settings as $key => $value) {
  *    revert back to the language they first saw when arriving at the site according to
  *    rule 1.
  */
-if ((!empty($logout))&&($logout==1)) unset($_SESSION["CLANGUAGE"]);		// user is about to log out
+$logout=safe_GET_bool('logout');
+if ($logout) unset($_SESSION["CLANGUAGE"]);  // user is about to log out
 
 if (($ENABLE_MULTI_LANGUAGE)&&(empty($_SESSION["CLANGUAGE"]))&&(empty($SEARCH_SPIDER))) {
    if (isset($HTTP_ACCEPT_LANGUAGE)) $accept_langs = $HTTP_ACCEPT_LANGUAGE;
@@ -413,12 +423,7 @@ if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
 	}
 }
 
-if ($Languages_Default) {					// If Languages not yet configured
-	$pgv_lang_use["english"] = false;		//   disable English
-	$pgv_lang_use["$LANGUAGE"] = true;		//     and enable according to Browser pref.
-	$language_settings["english"]["pgv_lang_use"] = false;
-	$language_settings["$LANGUAGE"]["pgv_lang_use"] = true;
-}
+require_once("includes/templecodes.php");  //-- load in the LDS temple code translations
 
 require_once("privacy.php");
 //-- load the privacy file
@@ -428,10 +433,10 @@ require_once("includes/functions_privacy.php");
 
 //-----------------------------------
 //-- if user wishes to logout this is where we will do it
-if ((!empty($_REQUEST['logout']))&&($_REQUEST['logout']==1)) {
+if ($logout) {
 	userLogout(getUserId());
 	if ($REQUIRE_AUTHENTICATION) {
-		header("Location: ".$HOME_SITE_URL);
+		header("Location: {$SERVER_URL}");
 		exit;
 	}
 }
@@ -448,7 +453,7 @@ define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
 define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID));
 define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'gedcomid'));
 define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'rootid'));
-if (empty($GEDCOMS)) {
+if (empty($GEDCOMS) || DB::isError($DBCONN)) {
 	define('PGV_GED_ID', null);
 } else {
 	define('PGV_GED_ID', $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']));
@@ -577,4 +582,10 @@ else {
 
 require_once("hitcount.php"); //--load the hit counter
 
+if ($Languages_Default) {            // If Languages not yet configured
+	$pgv_lang_use["english"] = false;  //  disable English
+	$pgv_lang_use["$LANGUAGE"] = true; //  and enable according to Browser pref.
+	$language_settings["english"]["pgv_lang_use"] = false;
+	$language_settings["$LANGUAGE"]["pgv_lang_use"] = true;
+}
 ?>

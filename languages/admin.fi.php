@@ -3,7 +3,7 @@
  * Finnish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @translator Matti Valve 
+ * @author Matti Valve 
  * @version $Id$
  */
 
@@ -71,7 +71,6 @@ $pgv_lang["created_placelinks_fail"]	= "<i>Paikkalinkit</i>-taulua ei voitu luod
 $pgv_lang["created_media_fail"]	= "<i>Media</i>-taulua ei voitu luoda.";
 $pgv_lang["created_media_mapping_fail"] = "<i>Mediamuodostustaulua</i> ei voi luoda.";
 $pgv_lang["no_thumb_dir"]		= " pienoiskuvahakemistoa ei ole enkä voinut sitä luoda";
-//$pgv_lang["move_to"]		= "Siirrä hakemistoon -->";
 $pgv_lang["folder_created"]		= "Hakemisto luotu";
 $pgv_lang["folder_no_create"]		= "Hakemistoa ei voitu luoda";
 $pgv_lang["security_no_create"]	= "Turvallisuusvaroitus tiedostoa index.php ei ole hakemistossa ";
@@ -88,7 +87,6 @@ $pgv_lang["add_gedcom"]		= "Lisää uusi GEDCOM tiedostoon";
 $pgv_lang["add_user"]					= "Lisää uusi käyttäjä";
 $pgv_lang["add_new_language"]			= "Lisää tiedostot ja asetukset uudelle kielelle";
 $pgv_lang["add_new_gedcom"]	= "Luo uusi GEDCOM-tiedosto";
-//$pgv_lang["admin_approved"]		= "Hallinnointija on vahvistanut tilisi palvelimella #SERVER_NAME#.";
 $pgv_lang["admin_gedcom"]		= "Ylläpito";
 $pgv_lang["admin_gedcoms"]				= "Klikkaa tässä hallitaksesi GEDCOMeja";
 $pgv_lang["admin_geds"]		= "Data- ja GEDCOM-ylläpito";
@@ -137,11 +135,9 @@ $pgv_lang["del_unveru"]							= "Käyttäjä ei ole vahvistanut 7 päivässä.";
 $pgv_lang["del_proceed"]						= "Jatka";
 $pgv_lang["default_user"]						= "Tee oletus pääkäyttäjä";
 $pgv_lang["do_not_change"]		= "Älä muuta";
-//$pgv_lang["download_file"]						= "Lataa tiedosto";
 $pgv_lang["download_gedcom"]	= "Lataa koneesta GEDCOM-tiedosto";
 $pgv_lang["download_here"]						= "Klikkaa tähän ladataksesi tiedoston.";
 $pgv_lang["download_note"]		= "HUOMAA: Suurten GEDCOM-tiedostojen käsittely saattaa viedä pikän ajan ennen niiden latausta. Jos PHP ilmoittaa ajan loppuneen ennenkuin lataus on viety loppuun, saattaa olla, että lataus ei ole täydellinen.<br /><br />Voit tarkastaa ladatun GEDCOM-tiedoston etsimällä rivi <b>0&nbsp;TRLR</b> tiedoston lopusta varmistaaksesi latauksen onnistumisen.<br /><br />Yleensä latausaika saattaa olla yhtä pitkä kuin tuontiaika GEDCOM-tiedostollesi.";
-//$pgv_lang["duplicate_username"] 	= "Tämä käyttäjätunnus on jo olemassa. Palaa ja valitse toinen käyttäjätunnus.";
 $pgv_lang["editaccount"]		= "Salli tämän käyttäjän editoida käyttäjätiliään.";
 $pgv_lang["empty_dataset"]		= "Haluatko poistaa vanhat tiedot ja korvata ne näillä uusilla?";
 $pgv_lang["enable_disable_lang"]				= "Asettele tuetut kielet";
@@ -167,6 +163,7 @@ $pgv_lang["gedcom_not_imported"]				= "Tätä GEDCOM:a ei ole vielä tuotu.";
 $pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"] 	= "Editoi kuvankäsittelyn asetuksia";
+$pgv_lang["autoContinue"]						= "Paina automaattisesti «Continue»-painiketta.";
 $pgv_lang["import_complete"]		= "Tuonti onnistui";
 $pgv_lang["import_marr_names"]	= "Tuo avioniomet";
 $pgv_lang["import_options"]		= "Tuo vaihtoehdot";
@@ -216,7 +213,6 @@ $pgv_lang["mysql"]								= "MySQL";
 $pgv_lang["mssql"]								= "Microsoft SQL palvelin";
 $pgv_lang["msql"]								= "Mini SQL";
 $pgv_lang["monthly"]							= "Kuukausittainen";
-//$pgv_lang["none"]			= "Ei mitään";
 $pgv_lang["oci8"]								= "Oracle 7+";
 $pgv_lang["page_views"]							= "&nbsp;&nbsp;sivun näyttö &nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Suoritetaan GEDCOM validointi, valitse tarvittavat vaihtoehdot ja klikkaa \"Siivoa\".";
@@ -295,7 +291,6 @@ $pgv_lang["welcome_new"]						= "Tervetuloa sinun uudelle PhpGedView internet si
 $pgv_lang["admin_OK_message"]					= "PhpGedView sivuston #SERVER_NAME# ylläpitäjä on hyväksynyt anomuksesi tunnukselle. Voit kirjautua sivustolle käyttäen seuraavaa linkkiä:\r\n\r\n#SERVER_NAME#\r\n";
 $pgv_lang["yearly"]								= "Vuosittainen";
 $pgv_lang["admin_OK_subject"]					= "Tunnus anomus #SERVER_NAME#";
-//$pgv_lang["you_may_login"]		= " Voit kirjautua PhpGedView verkkopaikkaan alla olevan linkin avulla.";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     = "Gedcom-tarkastaja";
@@ -329,7 +324,6 @@ $pgv_lang["icelandic"]         = "Islanti";
 $pgv_lang["paternal"]          = "Isän puolelta";
 $pgv_lang["portuguese"]        = "Portugali";
 $pgv_lang["spanish"]           = "Espanja";
-//$pgv_lang["before"]       = "ennen";                  // More specific errors, for stage 2
 $pgv_lang["clear_cache_succes"]		= "Tiedostot välimuistista on poistettu.";
 $pgv_lang["clear_cache"]			= "Poista tiedostot välimuistista.";
 $pgv_lang["sanity_err0"]			= "Virheet:";

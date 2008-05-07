@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -314,7 +314,6 @@ else {
 //------------------------------------------------------------------------------
 switch ($action) {
 case 'delete':
-	global $MEDIA_ID_PREFIX;
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (!empty($linenum)) {
 		if ($linenum===0) {
@@ -348,6 +347,7 @@ case 'editraw':
 		print "<form method=\"post\" action=\"edit_interface.php\">\n";
 		print "<input type=\"hidden\" name=\"action\" value=\"updateraw\" />\n";
 		print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
+		print "<input id=\"savebutton2\" type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 		print_specialchar_link("newgedrec",true);
 		print "<br />\n";
 		print "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"60\" dir=\"ltr\">".$gedrec."</textarea>\n<br />";
@@ -359,7 +359,7 @@ case 'editraw':
 			print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 			print $pgv_lang["no_update_CHAN"]."<br />\n";
 			$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
-			print_fact_date($event, false, true);
+			format_fact_date($event, false, true);
 			print "</td></tr>\n";
 			print "</table>";
 		}
@@ -392,7 +392,7 @@ case 'edit':
 		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		print $pgv_lang["no_update_CHAN"]."<br />\n";
 		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
-		print_fact_date($event, false, true);
+		format_fact_date($event, false, true);
 		print "</td></tr>\n";
 		}
 	print "</table>";
@@ -434,7 +434,7 @@ case 'add':
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		print $pgv_lang["no_update_CHAN"]."<br />\n";
-		print_fact_date(new Event(get_sub_record(1, "1 CHAN", $gedrec)), false, true);
+		echo format_fact_date(get_sub_record(1, "1 CHAN", $gedrec), false, true);
 		print "</td></tr>\n";
 	}
 	print "</table>";
@@ -610,9 +610,7 @@ case 'addnewsource':
 		}
 	//-->
 	</script>
-	<b><?php print $pgv_lang["create_source"];
-	$tabkey = 1;
-	 ?></b>
+	<b><?php print $pgv_lang['create_source']; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onSubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addsourceaction" />
 		<input type="hidden" name="pid" value="newsour" />
@@ -636,7 +634,7 @@ case 'addnewsource':
 			<td class="optionbox wrap"><textarea tabindex="<?php print $tabkey; ?>" name="PUBL" id="PUBL" rows="5" cols="60"></textarea><br /><?php print_specialchar_link("PUBL",true); ?></td></tr>
 			<?php $tabkey++; ?>
 			<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_help", "qm"); print $factarray["REPO"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php print $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="<?php print (strlen($REPO_ID_PREFIX) + 4); ?>" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
+			<td class="optionbox wrap"><input tabindex="<?php print $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
 			<?php $tabkey++; ?>
 			<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm"); print $factarray["CALN"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php print $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
@@ -1053,8 +1051,7 @@ case 'addchildaction':
 			$gedrec = $family->gedrec;
 			$done = false;
 			foreach($family->getChildren() as $key=>$child) {
-				//print $xref." ".$newchild->getBirthYear()." <==> ".$child->getXref()." ".$child->getBirthYear()."<br />";
-				if ($newchild->getBirthYear() && $newchild->getBirthYear() < $child->getBirthYear()) {
+				if (GedcomDate::Compare($newchild->getBirthDate(), $child->getBirthDate())<0) {
 					// new child is older : insert before
 					$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
 																"1 CHIL @$xref@\r\n1 CHIL @".$child->getXref()."@",
@@ -1847,9 +1844,12 @@ case 'reorder_children':
 			if ($family->getUpdatedFamily()) $family = $family->getUpdatedFamily();
 			$children = array();
 			foreach ($family->getChildren() as $k=>$child) {
-				$bdate = new GedcomDate($child->getBirthDate());
-				$sortkey = $bdate->MinJD();
-				if (!$sortkey) $sortkey = 1e8; // birth date missing => sort last
+				$bdate = $child->getEstimatedBirthDate();
+				if ($bdate->isOK()) {
+					$sortkey = $bdate->JD();
+				} else {
+					$sortkey = 1e8; // birth date missing => sort last
+				}
 				$children[$child->getXref()] = $sortkey;
 			}
 			if ((!empty($option))&&($option=="bybirth")) {
@@ -2195,7 +2195,7 @@ case 'reorder_fams':
 			$fams = $person->getSpouseFamilies();
 			if ((!empty($option))&&($option=="bymarriage")) {
 				$sortby = "MARR";
-				uasort($fams, "compare_date");
+				uasort($fams, "compare_date_gedcomrec");
 			}
 			$i=0;
 			foreach($fams as $famid=>$family) {

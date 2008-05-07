@@ -81,7 +81,7 @@ function getHighestIndex() {
 	global $TBLPREFIX;
 	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1=1";
 	$res=dbquery($sql);
-	$row=&$res->fetchRow();
+	$row = $res->fetchRow();
 	$res->free();
 	if (empty($row[0]))
 		return 0;

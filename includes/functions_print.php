@@ -5,7 +5,7 @@
  * Various printing functions used by all scripts and included by the functions.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserverd.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once("includes/templecodes.php");		//-- load in the LDS temple code translations
 require_once 'includes/functions_charts.php';
 
 /**
@@ -44,254 +43,253 @@ require_once 'includes/functions_charts.php';
  * @param int $count	on some charts it is important to keep a count of how many boxes were printed
  */
 function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
-	 global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
-	 global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $show_full, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
-	 global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
-	 global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
-	 global $chart_style, $box_width, $generations, $show_spouse, $show_full;
-	 global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
-	 global $SEARCH_SPIDER;
-	 global $THEME_DIR;
+	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
+	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
+	global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
+	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
+	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE, $PEDIGREE_SHOW_GENDER;
+	global $SEARCH_SPIDER, $THEME_DIR;
 
-	 if ($style != 2) $style=1;
+	if ($style != 2) $style=1;
 
-	 flush();
-	 if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
-	 if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
-	 if (!isset($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
-	 // NOTE: Start div out-rand()
-	 if (empty($pid)) {
-		  print "\n\t\t\t<div id=\"out-".rand()."\" class=\"person_boxNN\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\">";
-		  print "<br />";
-		  print "\n\t\t\t</div>";
-		  return false;
-	 }
-	 if ($count==0) $count = rand();
-	 $lbwidth = $bwidth*.75;
-	 if ($lbwidth < 150) $lbwidth = 150;
-	 
-	 $person = Person::getInstance($pid);
-	 
-$personlinks = "";
-$icons = "";
-$classfacts = "";
-$genderImage = "";
-$BirthDeath = "";
-$outBoxAdd = "";
-$thumbnail = "";
-$showid = "";
-$iconsStyleAdd = "float: right; ";
-if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
-	 
-	 $isF = "NN";
-	 if ($person->getSex()=="F") $isF="F";
-	 else if ($person->getSex()=="M") $isF="";
-	 
-	 $disp = $person->canDisplayDetails();
-	 $boxID = $pid.".".$personcount.".".$count;
-	 $mouseAction1 = "onmouseover=\"clear_family_box_timeout('".$boxID."');\" onmouseout=\"family_box_timeout('".$boxID."');\"";
-	 $mouseAction2 = " onmouseover=\"expandbox('".$boxID."', $style); return false;\" onmouseout=\"restorebox('".$boxID."', $style); return false;\"";
-	 $mouseAction3 = " onmousedown=\"expandbox('".$boxID."', $style); return false;\" onmouseup=\"restorebox('".$boxID."', $style); return false;\"";
-	 $mouseAction4 = " onclick=\"expandbox('".$boxID."', $style); return false;\"";
-	 if ($person->canDisplayName()) {
-		  if ($show_famlink && (empty($SEARCH_SPIDER))) {
-			   if ($LINK_ICONS!="disabled") {
-					//-- draw a box for the family popup
-					// NOTE: Start div I.$pid.$personcount.$count.links
-					$personlinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td class=\"details1\">";
-					// NOTE: Zoom
-	 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
-	 				else $title = $pid." :".$pgv_lang["pedigree_chart"];
-					$personlinks .= "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>\n";
+	flush();
+	if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
+	if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
+	if (!isset($show_full) || is_null($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
+	// NOTE: Start div out-rand()
+	if ($pid==false) {
+		print "\n\t\t\t<div id=\"out-".rand()."\" class=\"person_boxNN\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\">";
+		print "<br />";
+		print "\n\t\t\t</div>";
+		return false;
+	}
+	if ($count==0) $count = rand();
+	$lbwidth = $bwidth*.75;
+	if ($lbwidth < 150) $lbwidth = 150;
 
-	 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
-	 				else $title = $pid." :".$pgv_lang["descend_chart"];
-					$personlinks .= "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
+	$person = Person::getInstance($pid);
+
+	$personlinks = "";
+	$icons = "";
+	$classfacts = "";
+	$genderImage = "";
+	$BirthDeath = "";
+	$outBoxAdd = "";
+	$thumbnail = "";
+	$showid = "";
+	$iconsStyleAdd = "float: right; ";
+	if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
+
+	$isF = "NN";
+	if ($person->getSex()=="F") $isF="F";
+	else if ($person->getSex()=="M") $isF="";
+
+	$disp = $person->canDisplayDetails();
+	$boxID = $pid.".".$personcount.".".$count;
+	$mouseAction1 = "onmouseover=\"clear_family_box_timeout('".$boxID."');\" onmouseout=\"family_box_timeout('".$boxID."');\"";
+	$mouseAction2 = " onmouseover=\"expandbox('".$boxID."', $style); return false;\" onmouseout=\"restorebox('".$boxID."', $style); return false;\"";
+	$mouseAction3 = " onmousedown=\"expandbox('".$boxID."', $style); return false;\" onmouseup=\"restorebox('".$boxID."', $style); return false;\"";
+	$mouseAction4 = " onclick=\"expandbox('".$boxID."', $style); return false;\"";
+	if ($person->canDisplayName()) {
+		if ($show_famlink && (empty($SEARCH_SPIDER))) {
+			if ($LINK_ICONS!="disabled") {
+				//-- draw a box for the family popup
+				// NOTE: Start div I.$pid.$personcount.$count.links
+				$personlinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td class=\"details1\">";
+				// NOTE: Zoom
+				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
+				else $title = $pid." :".$pgv_lang["pedigree_chart"];
+				$personlinks .= "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>\n";
+
+				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
+				else $title = $pid." :".$pgv_lang["descend_chart"];
+				$personlinks .= "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
 
 				$username = PGV_USER_NAME;
-					if (!empty($username)) {
+				if (!empty($username)) {
 					$myid=PGV_USER_GEDCOM_ID;
 					if ($myid) {
-	 						  if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
-	 						  else $title = $pid." :".$pgv_lang["relationship_chart"];
-							  $personlinks .= "<a href=\"relationship.php?pid1={$myid}&amp;pid2=".$pid."&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
-						 }
+						if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
+						else $title = $pid." :".$pgv_lang["relationship_chart"];
+						$personlinks .= "<a href=\"relationship.php?pid1={$myid}&amp;pid2=".$pid."&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
 					}
-					// NOTE: Zoom
-					if (file_exists("ancestry.php")) {
-	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
-	 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
-						$personlinks .= "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
-					}
-					if (file_exists("compact.php")) {
-	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
-	 					else $title = $pid." :".$pgv_lang["compact_chart"];
-						$personlinks .= "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
-					}
-					if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
-	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
-	 					else $title = $pid." :".$pgv_lang["fan_chart"];
-						$personlinks .= "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
-					}
-					if (file_exists("hourglass.php")) {
-	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
-	 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
-						$personlinks .= "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
-					}
+				}
+				// NOTE: Zoom
+				if (file_exists("ancestry.php")) {
+					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
+					else $title = $pid." :".$pgv_lang["ancestry_chart"];
+					$personlinks .= "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
+				}
+				if (file_exists("compact.php")) {
+					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
+					else $title = $pid." :".$pgv_lang["compact_chart"];
+					$personlinks .= "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
+				}
+				if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
+					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
+					else $title = $pid." :".$pgv_lang["fan_chart"];
+					$personlinks .= "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
+				}
+				if (file_exists("hourglass.php")) {
+					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
+					else $title = $pid." :".$pgv_lang["hourglass_chart"];
+					$personlinks .= "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
+				}
 					
-					$fams = $person->getSpouseFamilies();
-					/* @var $family Family */
-					foreach($fams as $famid=>$family) {
-						if (!is_null($family)) {
-							$spouse = $family->getSpouse($person);
-							 	
-							$children = $family->getChildren();
-							$num = count($children);
-							  if ((!empty($spouse))||($num>0)) {
-	 							 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
-	 							 else $title = $famid." :".$pgv_lang["familybook_chart"];
-								 $personlinks .= "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
+				$fams = $person->getSpouseFamilies();
+				/* @var $family Family */
+				foreach($fams as $famid=>$family) {
+					if (!is_null($family)) {
+						$spouse = $family->getSpouse($person);
+							
+						$children = $family->getChildren();
+						$num = count($children);
+						if ((!empty($spouse))||($num>0)) {
+							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
+							else $title = $famid." :".$pgv_lang["familybook_chart"];
+							$personlinks .= "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
 							if (!empty($spouse)) {
-	 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse->getXref();
-	 								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
-									$personlinks .= "<a href=\"individual.php?pid=".$spouse->getXref()."&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
- 									   if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getName());
-									   else $personlinks .= $pgv_lang["private"];
-									   $personlinks .= "</a><br />\n";
+								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse->getXref();
+								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
+								$personlinks .= "<a href=\"individual.php?pid=".$spouse->getXref()."&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
+								if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getName());
+								else $personlinks .= $pgv_lang["private"];
+								$personlinks .= "</a><br />\n";
 							}
-							  }
-							/* @var $child Person */
-							foreach($children as $c=>$child) {
-								$cpid = $child->getXref();
-	 							   if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
-	 							   else $title = $cpid." :".$pgv_lang["indi_info"];
-								   $personlinks .= "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
- 								if ($child->canDisplayName()) $personlinks .= PrintReady($child->getName());
-								   else $personlinks .= $pgv_lang["private"];
-								   $personlinks .= "<br /></a>";
-							  }
-						 }
+						}
+						/* @var $child Person */
+						foreach($children as $c=>$child) {
+							$cpid = $child->getXref();
+							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
+							else $title = $cpid." :".$pgv_lang["indi_info"];
+							$personlinks .= "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
+							if ($child->canDisplayName()) $personlinks .= PrintReady($child->getName());
+							else $personlinks .= $pgv_lang["private"];
+							$personlinks .= "<br /></a>";
+						}
 					}
-					$personlinks .= "</td></tr></table>\n\t\t";
-			   }
-			   // NOTE: Start div out-$pid.$personcount.$count
-			   if ($style==1) $outBoxAdd .= " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden; z-index:'-1';\"";
-			   else $outBoxAdd .= " style=\"padding: 2px;\"";
-			   // NOTE: Zoom
-			   if (($ZOOM_BOXES!="disabled")&&(!$show_full)) {
-					if ($ZOOM_BOXES=="mouseover") $outBoxAdd .= $mouseAction2;
-					if ($ZOOM_BOXES=="mousedown") $outBoxAdd .= $mouseAction3;
-					if (($ZOOM_BOXES=="click")&&($view!="preview")) $outBoxAdd .= $mouseAction4;
-			   }
-			   //-- links and zoom icons
-			   // NOTE: Start div icons-$personcount.$pid.$count
-			   if ($show_full) $iconsStyleAdd .= " display: block;";
-			   else $iconsStyleAdd .= " display: none;";
-			   //print "\">";
-			   // NOTE: Zoom
-			   if (($ZOOM_BOXES!="disabled")&&($show_full)) {
-					$icons .= "<a href=\"javascript:;\"";
-					if ($ZOOM_BOXES=="mouseover") $icons .= $mouseAction2;
-					if ($ZOOM_BOXES=="mousedown") $icons .= $mouseAction3;
-					if ($ZOOM_BOXES=="click") $icons .= $mouseAction4;
-					$icons .= "><img id=\"iconz-$boxID\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]."\" width=\"25\" height=\"25\" border=\"0\" alt=\"".$pgv_lang["zoom_box"]."\" title=\"".$pgv_lang["zoom_box"]."\" /></a>";
-			   }
-			   if ($LINK_ICONS!="disabled") {
-					$click_link="javascript:;";
-					$whichChart="";
-					if (preg_match("/pedigree.php/", $SCRIPT_NAME)>0) {
-						$click_link="pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM";
-						$whichChart="pedigree_chart";
-						$whichID=$pid;
-					}
+				}
+				$personlinks .= "</td></tr></table>\n\t\t";
+			}
+			// NOTE: Start div out-$pid.$personcount.$count
+			if ($style==1) $outBoxAdd .= " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden; z-index:'-1';\"";
+			else $outBoxAdd .= " style=\"padding: 2px;\"";
+			// NOTE: Zoom
+			if (($ZOOM_BOXES!="disabled")&&(!$show_full)) {
+				if ($ZOOM_BOXES=="mouseover") $outBoxAdd .= $mouseAction2;
+				if ($ZOOM_BOXES=="mousedown") $outBoxAdd .= $mouseAction3;
+				if (($ZOOM_BOXES=="click")&&($view!="preview")) $outBoxAdd .= $mouseAction4;
+			}
+			//-- links and zoom icons
+			// NOTE: Start div icons-$personcount.$pid.$count
+			if ($show_full) $iconsStyleAdd .= " display: block;";
+			else $iconsStyleAdd .= " display: none;";
+			//print "\">";
+			// NOTE: Zoom
+			if (($ZOOM_BOXES!="disabled")&&($show_full)) {
+				$icons .= "<a href=\"javascript:;\"";
+				if ($ZOOM_BOXES=="mouseover") $icons .= $mouseAction2;
+				if ($ZOOM_BOXES=="mousedown") $icons .= $mouseAction3;
+				if ($ZOOM_BOXES=="click") $icons .= $mouseAction4;
+				$icons .= "><img id=\"iconz-$boxID\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]."\" width=\"25\" height=\"25\" border=\"0\" alt=\"".$pgv_lang["zoom_box"]."\" title=\"".$pgv_lang["zoom_box"]."\" /></a>";
+			}
+			if ($LINK_ICONS!="disabled") {
+				$click_link="javascript:;";
+				$whichChart="";
+				if (preg_match("/pedigree.php/", $SCRIPT_NAME)>0) {
+					$click_link="pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM";
+					$whichChart="pedigree_chart";
+					$whichID=$pid;
+				}
 
-					if (preg_match("/hourglass.php/", $SCRIPT_NAME)>0) {
-						$click_link="hourglass.php?pid=$pid&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
-						$whichChart="hourglass_chart";
-						$whichID=$pid;
-					}
+				if (preg_match("/hourglass.php/", $SCRIPT_NAME)>0) {
+					$click_link="hourglass.php?pid=$pid&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$whichChart="hourglass_chart";
+					$whichID=$pid;
+				}
 
-					if (preg_match("/ancestry.php/", $SCRIPT_NAME)>0) {
-						$click_link="ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM";
-						$whichChart="ancestry_chart";
-						$whichID=$pid;
-					}
+				if (preg_match("/ancestry.php/", $SCRIPT_NAME)>0) {
+					$click_link="ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$whichChart="ancestry_chart";
+					$whichID=$pid;
+				}
 
-					if (preg_match("/descendancy.php/", $SCRIPT_NAME)>0) {
-						$click_link="descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
-						$whichChart="descend_chart";
-						$whichID=$pid;
-					}
+				if (preg_match("/descendancy.php/", $SCRIPT_NAME)>0) {
+					$click_link="descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$whichChart="descend_chart";
+					$whichID=$pid;
+				}
 
-					if ((preg_match("/family.php/", $SCRIPT_NAME)>0)&&!empty($famid)) {
-						$click_link="family.php?famid=$famid&amp;ged=$GEDCOM";
-						$whichChart="familybook_chart";
-						$whichID=$famid;
-					}
+				if ((preg_match("/family.php/", $SCRIPT_NAME)>0)&&!empty($famid)) {
+					$click_link="family.php?famid=$famid&amp;ged=$GEDCOM";
+					$whichChart="familybook_chart";
+					$whichID=$famid;
+				}
 
-					if (preg_match("/individual.php/", $SCRIPT_NAME)>0) {
-						$click_link="individual.php?pid=$pid&amp;ged=$GEDCOM";
-						$whichChart="indi_info";
-						$whichID=$pid;
-					}
+				if (preg_match("/individual.php/", $SCRIPT_NAME)>0) {
+					$click_link="individual.php?pid=$pid&amp;ged=$GEDCOM";
+					$whichChart="indi_info";
+					$whichID=$pid;
+				}
 
-					if (empty($whichChart)) $title="";
-					else {
+				if (empty($whichChart)) $title="";
+				else {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang[$whichChart].": ".$whichID;
 					else $title = $whichID." :".$pgv_lang[$whichChart];
- 					}
-					$icons .= "<a href=\"$click_link\" title=\"$title\"";
-					// NOTE: Zoom
-					if ($LINK_ICONS=="mouseover") $icons .= "onmouseover=\"show_family_box('".$boxID."', '";
-					if ($LINK_ICONS=="click") $icons .= "onclick=\"toggle_family_box('".$boxID."', '";
-					if ($style==1) $icons .= "box$pid";
-					else $icons .= "relatives";
-					$icons .= "');";
-					$icons .= " return false;\" ";
-					// NOTE: Zoom
-					$icons .= "onmouseout=\"family_box_timeout('".$boxID."');";
-					$icons .= " return false;\"";
-					if (($click_link=="#")&&($LINK_ICONS!="click")) $icons .= "onclick=\"return false;\"";
-					$icons .= "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" width=\"25\" border=\"0\" vspace=\"0\" hspace=\"0\" alt=\"".$pgv_lang["person_links"]."\" title=\"".$pgv_lang["person_links"]."\" /></a>";
-			   }
-		  }
-		  else {
-			   if ($style==1) {
-					$outBoxAdd .= "class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
+				}
+				$icons .= "<a href=\"$click_link\" title=\"$title\"";
+				// NOTE: Zoom
+				if ($LINK_ICONS=="mouseover") $icons .= "onmouseover=\"show_family_box('".$boxID."', '";
+				if ($LINK_ICONS=="click") $icons .= "onclick=\"toggle_family_box('".$boxID."', '";
+				if ($style==1) $icons .= "box$pid";
+				else $icons .= "relatives";
+				$icons .= "');";
+				$icons .= " return false;\" ";
+				// NOTE: Zoom
+				$icons .= "onmouseout=\"family_box_timeout('".$boxID."');";
+				$icons .= " return false;\"";
+				if (($click_link=="#")&&($LINK_ICONS!="click")) $icons .= "onclick=\"return false;\"";
+				$icons .= "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" width=\"25\" border=\"0\" vspace=\"0\" hspace=\"0\" alt=\"".$pgv_lang["person_links"]."\" title=\"".$pgv_lang["person_links"]."\" /></a>";
+			}
+		}
+		else {
+			if ($style==1) {
+				$outBoxAdd .= "class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
 			} else {
-					$outBoxAdd .= "class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
-			   }
-			   // NOTE: Zoom
-			   if (($ZOOM_BOXES!="disabled")&&(empty($SEARCH_SPIDER))) {
-					if ($ZOOM_BOXES=="mouseover") $outBoxAdd .= $mouseAction2;
-					if ($ZOOM_BOXES=="mousedown") $outBoxAdd .= $mouseAction3;
-					if (($ZOOM_BOXES=="click")&&($view!="preview")) $outBoxAdd .= $mouseAction4;
-			   }
-		  }
-	 }
-	 else {
-		  if ($style==1) $outBoxAdd .= "class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
-		  else $outBoxAdd .= "class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
-	 }
-	 //-- find the name
-	 $name = $person->getName();
-	 if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
-	 	  $object = $person->findHighlightedMedia();
-		  if (!empty($object["thumb"])) {
-			   $size = findImageSize($object["thumb"]);
-			   $class = "pedigree_image_portrait";
-			   if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
-			   if($TEXT_DIRECTION == "rtl") $class .= "_rtl";
-			   // NOTE: IMG ID
-			   $imgsize = findImageSize($object["file"]);
-			   $imgwidth = $imgsize[0]+50;
-			   $imgheight = $imgsize[1]+150;
+				$outBoxAdd .= "class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
+			}
+			// NOTE: Zoom
+			if (($ZOOM_BOXES!="disabled")&&(empty($SEARCH_SPIDER))) {
+				if ($ZOOM_BOXES=="mouseover") $outBoxAdd .= $mouseAction2;
+				if ($ZOOM_BOXES=="mousedown") $outBoxAdd .= $mouseAction3;
+				if (($ZOOM_BOXES=="click")&&($view!="preview")) $outBoxAdd .= $mouseAction4;
+			}
+		}
+	}
+	else {
+		if ($style==1) $outBoxAdd .= "class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
+		else $outBoxAdd .= "class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
+	}
+	//-- find the name
+	$name = $person->getName();
+	if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
+		$object = $person->findHighlightedMedia();
+		if (!empty($object["thumb"])) {
+			$size = findImageSize($object["thumb"]);
+			$class = "pedigree_image_portrait";
+			if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
+			if($TEXT_DIRECTION == "rtl") $class .= "_rtl";
+			// NOTE: IMG ID
+			$imgsize = findImageSize($object["file"]);
+			$imgwidth = $imgsize[0]+50;
+			$imgheight = $imgsize[1]+150;
 
-//LBox --------  change for Lightbox Album --------------------------------------------
+			//LBox --------  change for Lightbox Album --------------------------------------------
 			if (file_exists("modules/lightbox/album.php")) {
 				$name3 = trim($object["file"]);
 				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . "\">" . "\n";
-// ---------------------------------------------------------------------------------------------
+				// ---------------------------------------------------------------------------------------------
 			}elseif (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
 				$thumbnail .=  "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
 			}else{
@@ -302,59 +300,59 @@ if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
 			if (!$show_full) $thumbnail .=  " style=\"display: none;\"";
 			if ($imgsize) $thumbnail .=  " /></a>\n";
 			else $thumbnail .=  " />\n";
-		  }
-	 }
-	 //-- find additional name
-	 $addname = $person->getAddName();
-	 $name = PrintReady($name);
-
-	 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
-	 else $title = $pid." :".$pgv_lang["indi_info"];
-	 // add optional CSS style for each fact
-	 $indirec = $person->getGedcomRecord();
-	 $cssfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","CAST","DSCR","EDUC","IDNO",
-	 "NATI","NCHI","NMR","OCCU","PROP","RELI","RESI","SSN","TITL","BAPL","CONL","ENDL","SLGC","_MILI");
-	 foreach($cssfacts as $indexval => $fact) {
-		  $ct = preg_match("/1 $fact/", $indirec, $nmatch);
-		  if ($ct>0) $classfacts .= " $fact";
-	 }
-	 $genderImage = " ".$person->getSexImage('', "box-$boxID-gender");
-	 if ($SHOW_ID_NUMBERS) {
-			if ($TEXT_DIRECTION=="ltr") $showid .= "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
-			else $showid .= "<span class=\"details$style\">" . getRLM() . "($pid)" . getRLM() . " </span>";
-	 }
-	 if (strlen($addname) > 0) {
-		  if (hasRTLText($addname) && $style=="1") $addname  = "<br /><span id=\"addnamedef-$boxID\" class=\"name2\"> ".PrintReady($addname)."</span><br />";
-		  $addname = "<br /><span id=\"addnamedef-$boxID\" class=\"name$style\"> ".PrintReady($addname)."</span><br />";
-	 }
-	if ($SHOW_LDS_AT_GLANCE) {
-		 $addname .= "<span class=\"details$style\">".get_lds_glance($indirec)."</span>";
-	 }
-	 
-	 if ($show_full) {
-		 $birthEvent = $person->getBirthEvent();
-		 
-		 if (!empty($birthEvent)) {
-		 	if ($birthEvent->canShow()) $BirthDeath .= $birthEvent->print_simple_fact(true);
-		 }
-		 //-- section to display optional tags in the boxes
-		 if (!empty($CHART_BOX_TAGS)) {
-			 $opt_tags = preg_split("/[, ]+/", $CHART_BOX_TAGS);
-			 foreach($opt_tags as $indexval => $tag) {
-				 if (!empty($tag)&&($tag!="BURI")&&($tag!="CREM")) {
-				 	if (showFact($tag, $pid)) $BirthDeath .= print_simple_fact($indirec, $tag, $pid, true);
-			 	}
-			 }
-		 }
-	
-		 $deathEvent = $person->getDeathEvent();
-		 if (!empty($deathEvent)) {
-		 	if ($deathEvent->canShow()) $BirthDeath .= $deathEvent->print_simple_fact(true);
-		 }
-		 foreach (array("BURI", "CREM") as $indexval => $tag) {
-		 	if (strpos($CHART_BOX_TAGS, $tag)!==false && showFact($tag, $pid)) $BirthDeath .= print_simple_fact($indirec, $tag, $pid, true);
 		}
-	 }
+	}
+	//-- find additional name
+	$addname = $person->getAddName();
+	$name = PrintReady($name);
+
+	if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
+	else $title = $pid." :".$pgv_lang["indi_info"];
+	// add optional CSS style for each fact
+	$indirec = $person->getGedcomRecord();
+	$cssfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","CAST","DSCR","EDUC","IDNO",
+	 "NATI","NCHI","NMR","OCCU","PROP","RELI","RESI","SSN","TITL","BAPL","CONL","ENDL","SLGC","_MILI");
+	foreach($cssfacts as $indexval => $fact) {
+		$ct = preg_match("/1 $fact/", $indirec, $nmatch);
+		if ($ct>0) $classfacts .= " $fact";
+	}
+	$genderImage = " ".$person->getSexImage('', "box-$boxID-gender");
+	if ($SHOW_ID_NUMBERS) {
+		if ($TEXT_DIRECTION=="ltr") $showid .= "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
+		else $showid .= "<span class=\"details$style\">" . getRLM() . "($pid)" . getRLM() . " </span>";
+	}
+	if (strlen($addname) > 0) {
+		if (hasRTLText($addname) && $style=="1") $addname  = "<br /><span id=\"addnamedef-$boxID\" class=\"name2\"> ".PrintReady($addname)."</span><br />";
+		$addname = "<br /><span id=\"addnamedef-$boxID\" class=\"name$style\"> ".PrintReady($addname)."</span><br />";
+	}
+	if ($SHOW_LDS_AT_GLANCE) {
+		$addname .= "<span class=\"details$style\">".get_lds_glance($indirec)."</span>";
+	}
+
+	if ($show_full) {
+		$birthEvent = $person->getBirthEvent();
+			
+		if (!empty($birthEvent)) {
+			if ($birthEvent->canShow()) $BirthDeath .= $birthEvent->print_simple_fact(true);
+		}
+		//-- section to display optional tags in the boxes
+		if (!empty($CHART_BOX_TAGS)) {
+			$opt_tags = preg_split("/[, ]+/", $CHART_BOX_TAGS);
+			foreach($opt_tags as $indexval => $tag) {
+				if (!empty($tag)&&($tag!="BURI")&&($tag!="CREM")) {
+					if (showFact($tag, $pid)) $BirthDeath .= print_simple_fact($indirec, $tag, $pid, true);
+				}
+			}
+		}
+
+		$deathEvent = $person->getDeathEvent();
+		if (!empty($deathEvent)) {
+			if ($deathEvent->canShow()) $BirthDeath .= $deathEvent->print_simple_fact(true);
+		}
+		foreach (array("BURI", "CREM") as $indexval => $tag) {
+			if (strpos($CHART_BOX_TAGS, $tag)!==false && showFact($tag, $pid)) $BirthDeath .= print_simple_fact($indirec, $tag, $pid, true);
+		}
+	}
 	include($THEME_DIR."/templates/personbox_template.php");
 }
 
@@ -388,14 +386,14 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	// To stop unrecognized spiders, see META_ROBOTS below.
 	if(!empty($SEARCH_SPIDER)) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
-		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		     (strstr($SCRIPT_NAME, "/login.php")) ||
-		     (strstr($SCRIPT_NAME, "/family.php")) ||
-		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		     (strstr($SCRIPT_NAME, "/source.php")) ||
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
+		(strstr($SCRIPT_NAME, "/indilist.php")) ||
+		(strstr($SCRIPT_NAME, "/login.php")) ||
+		(strstr($SCRIPT_NAME, "/family.php")) ||
+		(strstr($SCRIPT_NAME, "/famlist.php")) ||
+		(strstr($SCRIPT_NAME, "/help_text.php")) ||
+		(strstr($SCRIPT_NAME, "/source.php")) ||
+		(strstr($SCRIPT_NAME, "/search_engine.php")) ||
+		(strstr($SCRIPT_NAME, "/index.php"))) ) {
 			header("Location: search_engine.php");
 			exit;
 		}
@@ -404,15 +402,15 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 
 	// Determine browser type
 	if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
-		$BROWSERTYPE = "opera";
+	$BROWSERTYPE = "opera";
 	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
-		$BROWSERTYPE = "netscape";
+	$BROWSERTYPE = "netscape";
 	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
-		$BROWSERTYPE = "mozilla";
+	$BROWSERTYPE = "mozilla";
 	else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
-		$BROWSERTYPE = "msie";
+	$BROWSERTYPE = "msie";
 	else
-		$BROWSERTYPE = "other";
+	$BROWSERTYPE = "other";
 
 	print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
 	print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
@@ -450,65 +448,65 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	if ($BROWSERTYPE == "msie") print "<style type=\"text/css\">\nFORM { margin-top: 0px; margin-bottom: 0px; }\n</style>\n";
 	print "<!-- PhpGedView v$VERSION -->\n";
 	if (isset($changelanguage))
-		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
+	$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
 	else
-		$query_string = $QUERY_STRING;
+	$query_string = $QUERY_STRING;
 	if ($view!="preview") {
-		 $old_META_AUTHOR = $META_AUTHOR;
-		 $old_META_PUBLISHER = $META_PUBLISHER;
-		 $old_META_COPYRIGHT = $META_COPYRIGHT;
-		 $old_META_DESCRIPTION = $META_DESCRIPTION;
-		 $old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-		  if (get_user_id($CONTACT_EMAIL)) {
-			  $cuserName=getUserFullName($CONTACT_EMAIL);
-			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
-			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
-			  if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
-		  }
-		  if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".$META_AUTHOR."\" />\n";
-		  if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".$META_PUBLISHER."\" />\n";
-		  if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".$META_COPYRIGHT."\" />\n";
-		  print "<meta name=\"keywords\" content=\"".$META_KEYWORDS;
-		  if ($META_SURNAME_KEYWORDS) {
-		  	$surnames = get_common_surnames_index($GEDCOM);
-		  	foreach($surnames as $surname=>$count) if (!empty($surname)) print ", $surname";
-	  	  }
-		  print "\" />\n";
-		  if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
-		  if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
-		  if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", $META_DESCRIPTION)."\" />\n";
-		  if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", $META_PAGE_TOPIC)."\" />\n";
-	 	  if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"$META_AUDIENCE\" />\n";
-	 	  if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"$META_PAGE_TYPE\" />\n";
+		$old_META_AUTHOR = $META_AUTHOR;
+		$old_META_PUBLISHER = $META_PUBLISHER;
+		$old_META_COPYRIGHT = $META_COPYRIGHT;
+		$old_META_DESCRIPTION = $META_DESCRIPTION;
+		$old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
+		if (get_user_id($CONTACT_EMAIL)) {
+			$cuserName=getUserFullName($CONTACT_EMAIL);
+			if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
+			if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
+			if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
+		}
+		if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".$META_AUTHOR."\" />\n";
+		if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".$META_PUBLISHER."\" />\n";
+		if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".$META_COPYRIGHT."\" />\n";
+		print "<meta name=\"keywords\" content=\"".$META_KEYWORDS;
+		if ($META_SURNAME_KEYWORDS) {
+			$surnames = get_common_surnames_index($GEDCOM);
+			foreach($surnames as $surname=>$count) if (!empty($surname)) print ", $surname";
+		}
+		print "\" />\n";
+		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
+		if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
+		if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", $META_DESCRIPTION)."\" />\n";
+		if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", $META_PAGE_TOPIC)."\" />\n";
+		if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"$META_AUDIENCE\" />\n";
+		if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"$META_PAGE_TYPE\" />\n";
 
-		  // Restrict good search engine spiders to the index page and the individual.php pages.
-		  // Quick and dirty hack that will still leave some url only links in Google.
-		  // Also ignored by crawlers like wget, so other checks have to be done too.
-		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
-		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		     (strstr($SCRIPT_NAME, "/family.php")) ||
-		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		     (strstr($SCRIPT_NAME, "/source.php")) ||
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		     (strstr($SCRIPT_NAME, "/index.php")) ) {
+		// Restrict good search engine spiders to the index page and the individual.php pages.
+		// Quick and dirty hack that will still leave some url only links in Google.
+		// Also ignored by crawlers like wget, so other checks have to be done too.
+		if((strstr($SCRIPT_NAME, "/individual.php")) ||
+		(strstr($SCRIPT_NAME, "/indilist.php")) ||
+		(strstr($SCRIPT_NAME, "/family.php")) ||
+		(strstr($SCRIPT_NAME, "/famlist.php")) ||
+		(strstr($SCRIPT_NAME, "/help_text.php")) ||
+		(strstr($SCRIPT_NAME, "/source.php")) ||
+		(strstr($SCRIPT_NAME, "/search_engine.php")) ||
+		(strstr($SCRIPT_NAME, "/index.php")) ) {
 			// empty case is to index,follow anyways.
-	 	  	if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
+			if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
 			print "<meta name=\"robots\" content=\"$META_ROBOTS\" />\n";
-		  }
-		  else {
+		}
+		else {
 			print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
-		  }
-	 	  if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"$META_REVISIT\" />\n";
-		  print "<meta name=\"generator\" content=\"PhpGedView v$VERSION - http://www.phpgedview.net\" />\n";
-		 $META_AUTHOR = $old_META_AUTHOR;
-		 $META_PUBLISHER = $old_META_PUBLISHER;
-		 $META_COPYRIGHT = $old_META_COPYRIGHT;
-		 $META_DESCRIPTION = $old_META_DESCRIPTION;
-		 $META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
+		}
+		if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"$META_REVISIT\" />\n";
+		print "<meta name=\"generator\" content=\"PhpGedView v$VERSION - http://www.phpgedview.net\" />\n";
+		$META_AUTHOR = $old_META_AUTHOR;
+		$META_PUBLISHER = $old_META_PUBLISHER;
+		$META_COPYRIGHT = $old_META_COPYRIGHT;
+		$META_DESCRIPTION = $old_META_DESCRIPTION;
+		$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
 	}
 	else {
-?>
+		?>
 <script language="JavaScript" type="text/javascript">
 <!--
 function hidePrint() {
@@ -529,7 +527,7 @@ function showBack() {
 }
 //-->
 </script>
-<?php
+		<?php
 }
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -593,28 +591,29 @@ function message(username, method, url, subject) {
 var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>';
 //-->
 </script>
-<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+<script
+	src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
-	 print $head;
-	 print "</head>\n\t<body id=\"body\"";
-	 if ($view=="preview") print " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
-	 print " onload=\"";
-	 if (!empty($ONLOADFUNCTION)) print $ONLOADFUNCTION;
-	 if ($TEXT_DIRECTION=="rtl") {
-		print " maxscroll = document.documentElement.scrollLeft;";
- 	}
- 	 print "\"";
-	 print ">\n\t";
-	 print "<!-- begin header section -->\n";
-	 if ($view!="preview") {
-		  include($headerfile);
-		  include($toplinks);
-	 }
-	 else {
-		  include($print_headerfile);
-	 }
-	 print "<!-- end header section -->\n";
-	 print "<!-- begin content section -->\n";
+print $head;
+print "</head>\n\t<body id=\"body\"";
+if ($view=="preview") print " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
+print " onload=\"";
+if (!empty($ONLOADFUNCTION)) print $ONLOADFUNCTION;
+if ($TEXT_DIRECTION=="rtl") {
+	print " maxscroll = document.documentElement.scrollLeft;";
+}
+print "\"";
+print ">\n\t";
+print "<!-- begin header section -->\n";
+if ($view!="preview") {
+	include($headerfile);
+	include($toplinks);
+}
+else {
+	include($print_headerfile);
+}
+print "<!-- end header section -->\n";
+print "<!-- begin content section -->\n";
 }
 /**
  * print simple HTML header
@@ -628,38 +627,38 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>'
  * @param boolean $use_alternate_styles
  */
 function print_simple_header($title) {
-	 global $pgv_lang;
-	 global $HOME_SITE_URL;
-	 global $HOME_SITE_TEXT, $SEARCH_SPIDER;
-	 global $view, $rtl_stylesheet;
-	 global $CHARACTER_SET, $VERSION, $PGV_IMAGE_DIR;
-	 global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage;
-	 global $FAVICON, $stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile, $SCRIPT_NAME;
-	 global $TEXT_DIRECTION, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD,$PGV_IMAGES;
-	 global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
+	global $pgv_lang;
+	global $HOME_SITE_URL;
+	global $HOME_SITE_TEXT, $SEARCH_SPIDER;
+	global $view, $rtl_stylesheet;
+	global $CHARACTER_SET, $VERSION, $PGV_IMAGE_DIR;
+	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage;
+	global $FAVICON, $stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile, $SCRIPT_NAME;
+	global $TEXT_DIRECTION, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD,$PGV_IMAGES;
+	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
 
 	// If not on allowed list, dump the spider onto the redirect page.
 	// This kills recognized spiders in their tracks.
 	// To stop unrecognized spiders, see META_ROBOTS below.
 	if(!empty($SEARCH_SPIDER)) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
-		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		     (strstr($SCRIPT_NAME, "/family.php")) ||
-		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		     (strstr($SCRIPT_NAME, "/source.php")) ||
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
+		(strstr($SCRIPT_NAME, "/indilist.php")) ||
+		(strstr($SCRIPT_NAME, "/family.php")) ||
+		(strstr($SCRIPT_NAME, "/famlist.php")) ||
+		(strstr($SCRIPT_NAME, "/help_text.php")) ||
+		(strstr($SCRIPT_NAME, "/source.php")) ||
+		(strstr($SCRIPT_NAME, "/search_engine.php")) ||
+		(strstr($SCRIPT_NAME, "/index.php"))) ) {
 			header("Location: search_engine.php");
 			exit;
 		}
 	}
 	$GEDCOM_TITLE = "";
 	if (!empty($GEDCOMS[$GEDCOM]["title"])) $GEDCOM_TITLE = $GEDCOMS[$GEDCOM]["title"];
-	 header("Content-Type: text/html; charset=$CHARACTER_SET");
-	 print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
-	 print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
-	 print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t\t";
+	header("Content-Type: text/html; charset=$CHARACTER_SET");
+	print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+	print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
+	print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t\t";
 	if( $FAVICON ) {
 		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
 	}
@@ -669,66 +668,66 @@ function print_simple_header($title) {
 	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" >";
 	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
 	$old_META_AUTHOR = $META_AUTHOR;
-		 $old_META_PUBLISHER = $META_PUBLISHER;
-		 $old_META_COPYRIGHT = $META_COPYRIGHT;
-		 $old_META_DESCRIPTION = $META_DESCRIPTION;
-		 $old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-		  if (get_user_id($CONTACT_EMAIL)) {
-			  $cuserName=getUserFullName($CONTACT_EMAIL);
-			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
-			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
-			  if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
-		  }
-		  if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".$META_AUTHOR."\" />\n";
-		  if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".$META_PUBLISHER."\" />\n";
-		  if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".$META_COPYRIGHT."\" />\n";
-		  print "<meta name=\"keywords\" content=\"".$META_KEYWORDS;
-		  if ($META_SURNAME_KEYWORDS) {
-			  $surnames = get_common_surnames_index($GEDCOM);
-			  foreach($surnames as $surname=>$count) print ", $surname";
-	  	  }
-		  print "\" />\n";
-		  if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
-		  if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
-		  if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", $META_DESCRIPTION)."\" />\n";
-		  if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", $META_PAGE_TOPIC)."\" />\n";
-	 	  if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"$META_AUDIENCE\" />\n";
-	 	  if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"$META_PAGE_TYPE\" />\n";
-
-		  // Restrict good search engine spiders to the index page and the individual.php pages.
-		  // Quick and dirty hack that will still leave some url only links in Google.
-		  // Also ignored by crawlers like wget, so other checks have to be done too.
-		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
-		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		     (strstr($SCRIPT_NAME, "/family.php")) ||
-		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		     (strstr($SCRIPT_NAME, "/source.php")) ||
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		     (strstr($SCRIPT_NAME, "/index.php")) ) {
-			// empty case is to index,follow anyways.
-	 	  	if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
-			print "<meta name=\"robots\" content=\"$META_ROBOTS\" />\n";
-		  }
-		  else {
-			print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
-		  }
-	 	  if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"$META_REVISIT\" />\n";
-		  print "<meta name=\"generator\" content=\"PhpGedView v$VERSION - http://www.phpgedview.net\" />\n";
-		 $META_AUTHOR = $old_META_AUTHOR;
-		 $META_PUBLISHER = $old_META_PUBLISHER;
-		 $META_COPYRIGHT = $old_META_COPYRIGHT;
-		 $META_DESCRIPTION = $old_META_DESCRIPTION;
-		 $META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
-?>
-	<style type="text/css">
-	<!--
-	.largechars {
-		font-size: 18px;
+	$old_META_PUBLISHER = $META_PUBLISHER;
+	$old_META_COPYRIGHT = $META_COPYRIGHT;
+	$old_META_DESCRIPTION = $META_DESCRIPTION;
+	$old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
+	if (get_user_id($CONTACT_EMAIL)) {
+		$cuserName=getUserFullName($CONTACT_EMAIL);
+		if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
+		if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
+		if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
 	}
-	-->
-	</style>
-	 <script language="JavaScript" type="text/javascript">
+	if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".$META_AUTHOR."\" />\n";
+	if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".$META_PUBLISHER."\" />\n";
+	if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".$META_COPYRIGHT."\" />\n";
+	print "<meta name=\"keywords\" content=\"".$META_KEYWORDS;
+	if ($META_SURNAME_KEYWORDS) {
+		$surnames = get_common_surnames_index($GEDCOM);
+		foreach($surnames as $surname=>$count) print ", $surname";
+	}
+	print "\" />\n";
+	if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
+	if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
+	if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", $META_DESCRIPTION)."\" />\n";
+	if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", $META_PAGE_TOPIC)."\" />\n";
+	if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"$META_AUDIENCE\" />\n";
+	if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"$META_PAGE_TYPE\" />\n";
+
+	// Restrict good search engine spiders to the index page and the individual.php pages.
+	// Quick and dirty hack that will still leave some url only links in Google.
+	// Also ignored by crawlers like wget, so other checks have to be done too.
+	if((strstr($SCRIPT_NAME, "/individual.php")) ||
+	(strstr($SCRIPT_NAME, "/indilist.php")) ||
+	(strstr($SCRIPT_NAME, "/family.php")) ||
+	(strstr($SCRIPT_NAME, "/famlist.php")) ||
+	(strstr($SCRIPT_NAME, "/help_text.php")) ||
+	(strstr($SCRIPT_NAME, "/source.php")) ||
+	(strstr($SCRIPT_NAME, "/search_engine.php")) ||
+	(strstr($SCRIPT_NAME, "/index.php")) ) {
+		// empty case is to index,follow anyways.
+		if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
+		print "<meta name=\"robots\" content=\"$META_ROBOTS\" />\n";
+	}
+	else {
+		print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
+	}
+	if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"$META_REVISIT\" />\n";
+	print "<meta name=\"generator\" content=\"PhpGedView v$VERSION - http://www.phpgedview.net\" />\n";
+	$META_AUTHOR = $old_META_AUTHOR;
+	$META_PUBLISHER = $old_META_PUBLISHER;
+	$META_COPYRIGHT = $old_META_COPYRIGHT;
+	$META_DESCRIPTION = $old_META_DESCRIPTION;
+	$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
+	?>
+<style type="text/css">
+<!--
+.largechars {
+	font-size: 18px;
+}
+-->
+</style>
+<script language="JavaScript" type="text/javascript">
 	 <!--
 	 /* set these vars so that the session can be passed to new windows */
 	 <?php print "sessionid = \"".session_id()."\";\n"; ?>
@@ -760,55 +759,56 @@ function message(username, method, url, subject) {
 }
 	 //-->
 	 </script>
-	 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+<script
+	src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 	 <?php
 	 print "</head>\n\t<body style=\"margin: 5px;\"";
 	 print " onload=\"loadHandler();\">\n\t";
 }
 // -- print the html to close the page
 function print_footer() {
-	 global $without_close, $pgv_lang, $view, $buildindex, $pgv_changes, $VERSION_RELEASE, $DBTYPE;
-	 global $VERSION, $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
-	 global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
+	global $without_close, $pgv_lang, $view, $buildindex, $pgv_changes, $VERSION_RELEASE, $DBTYPE;
+	global $VERSION, $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
+	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
 
-	 if (!isset($footer_count)) $footer_count = 1;
-	 else $footer_count++;
-	 print "<!-- begin footer -->\n";
-	 if ($view!="preview") {
-		  include($footerfile);
-	 }
-	 else {
-		  include($print_footerfile);
-		  print "\n\t<div id=\"backprint\" style=\"text-align: center; width: 95%\"><br />";
-		  $backlink = $SCRIPT_NAME."?".get_query_string();
-		  if (!$printlink) {
-			   print "\n\t<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">".$pgv_lang["print"]."</a><br />";
-			   print "\n\t <a id=\"printlinktwo\"	  href=\"javascript:;\" onclick=\"window.location='".$backlink."'; return false;\">".$pgv_lang["cancel_preview"]."</a><br />";
-		  }
-		  $printlink = true;
-		  print "</div>";
-	 }
-	 if (function_exists("load_behaviour")) load_behaviour();  // @see function_print_lists.php
-	 print "\n\t</body>\n</html>";
+	if (!isset($footer_count)) $footer_count = 1;
+	else $footer_count++;
+	print "<!-- begin footer -->\n";
+	if ($view!="preview") {
+		include($footerfile);
+	}
+	else {
+		include($print_footerfile);
+		print "\n\t<div id=\"backprint\" style=\"text-align: center; width: 95%\"><br />";
+		$backlink = $SCRIPT_NAME."?".get_query_string();
+		if (!$printlink) {
+			print "\n\t<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">".$pgv_lang["print"]."</a><br />";
+			print "\n\t <a id=\"printlinktwo\"	  href=\"javascript:;\" onclick=\"window.location='".$backlink."'; return false;\">".$pgv_lang["cancel_preview"]."</a><br />";
+		}
+		$printlink = true;
+		print "</div>";
+	}
+	if (function_exists("load_behaviour")) load_behaviour();  // @see function_print_lists.php
+	print "\n\t</body>\n</html>";
 }
 // -- print the html to close the page
 function print_simple_footer() {
-	 global $pgv_lang;
-	 global $start_time, $buildindex;
-	 global $VERSION, $SHOW_STATS;
-	 global $SCRIPT_NAME, $QUERY_STRING;
-	 global $PGV_IMAGE_DIR, $PGV_IMAGES;
-	 if (empty($SCRIPT_NAME)) {
-		  $SCRIPT_NAME = $_SERVER["SCRIPT_NAME"];
-		  $QUERY_STRING = $_SERVER["QUERY_STRING"];
-	 }
-	 print "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
-	 print contact_links();
-	 print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"PhpGedView Version $VERSION\" title=\"PhpGedView Version $VERSION\" /></a><br />";
-	 if ($SHOW_STATS || isset($DEBUG) && $DEBUG==true) {
-		 print_execution_stats();
+	global $pgv_lang;
+	global $start_time, $buildindex;
+	global $VERSION, $SHOW_STATS;
+	global $SCRIPT_NAME, $QUERY_STRING;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	if (empty($SCRIPT_NAME)) {
+		$SCRIPT_NAME = $_SERVER["SCRIPT_NAME"];
+		$QUERY_STRING = $_SERVER["QUERY_STRING"];
 	}
-	 print "</div></body></html>";
+	print "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
+	print contact_links();
+	print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"PhpGedView Version $VERSION\" title=\"PhpGedView Version $VERSION\" /></a><br />";
+	if ($SHOW_STATS || isset($DEBUG) && $DEBUG==true) {
+		print_execution_stats();
+	}
+	print "</div></body></html>";
 }
 
 /**
@@ -837,65 +837,65 @@ function print_execution_stats() {
 
 //-- print a form to change the language
 function print_lang_form($option=0) {
-	 global $ENABLE_MULTI_LANGUAGE, $pgv_lang, $pgv_language, $flagsfile, $LANGUAGE, $language_settings;
-	 global $LANG_FORM_COUNT;
-	 global $SCRIPT_NAME, $QUERY_STRING;
-	 if ($ENABLE_MULTI_LANGUAGE) {
-		  if (empty($LANG_FORM_COUNT)) $LANG_FORM_COUNT=1;
-		  else $LANG_FORM_COUNT++;
-		  
-		  //-- determine which languages are actually being used
-		  $used_langs = array();
-		  foreach ($pgv_language as $key=>$value) {
-		  	if ($language_settings[$key]["pgv_lang_use"]) {
-		  		$used_langs[$key] = $value;
-		  	}
-		  }
-		  //-- don't show the form if there is only one language enabled
-		  if (count($used_langs)<2) return;
-		  
-		  print "\n\t<div class=\"lang_form\">\n";
-		  switch($option) {
-			   case 1:
-			   //-- flags option
-			   $i = 0;
-			   foreach ($used_langs as $key=>$value)
-			   {
+	global $ENABLE_MULTI_LANGUAGE, $pgv_lang, $pgv_language, $flagsfile, $LANGUAGE, $language_settings;
+	global $LANG_FORM_COUNT;
+	global $SCRIPT_NAME, $QUERY_STRING;
+	if ($ENABLE_MULTI_LANGUAGE) {
+		if (empty($LANG_FORM_COUNT)) $LANG_FORM_COUNT=1;
+		else $LANG_FORM_COUNT++;
+
+		//-- determine which languages are actually being used
+		$used_langs = array();
+		foreach ($pgv_language as $key=>$value) {
+			if ($language_settings[$key]["pgv_lang_use"]) {
+				$used_langs[$key] = $value;
+			}
+		}
+		//-- don't show the form if there is only one language enabled
+		if (count($used_langs)<2) return;
+
+		print "\n\t<div class=\"lang_form\">\n";
+		switch($option) {
+			case 1:
+				//-- flags option
+				$i = 0;
+				foreach ($used_langs as $key=>$value)
+				{
 				 if (($key != $LANGUAGE) and ($language_settings[$key]["pgv_lang_use"]))
 				 {
-					$i ++;
-					$flagid = "flag" . $i;
-					print "<a href=\"$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;changelanguage=yes&amp;NEWLANGUAGE=$key")."\">";
-					print "<img src=\"" . $flagsfile[$key] . "\" class=\"dimflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" onmouseover=\"change_class('".$flagid."','brightflag');\" onmouseout=\"change_class('".$flagid."','dimflag');\" id='".$flagid."' /></a>\n";
+				 	$i ++;
+				 	$flagid = "flag" . $i;
+				 	print "<a href=\"$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;changelanguage=yes&amp;NEWLANGUAGE=$key")."\">";
+				 	print "<img src=\"" . $flagsfile[$key] . "\" class=\"dimflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" onmouseover=\"change_class('".$flagid."','brightflag');\" onmouseout=\"change_class('".$flagid."','dimflag');\" id='".$flagid."' /></a>\n";
 				 }
 				 else
 				 {
-					if ($language_settings[$key]["pgv_lang_use"]) print "<img src=\"" . $flagsfile[$key] . "\" class=\"activeflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" />\n";
+				 	if ($language_settings[$key]["pgv_lang_use"]) print "<img src=\"" . $flagsfile[$key] . "\" class=\"activeflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" />\n";
 				 }
-			   }
-			   break;
-			   default:
-					print "<form name=\"langform$LANG_FORM_COUNT\" action=\"$SCRIPT_NAME";
-					print "\" method=\"get\">";
-					$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
-					foreach ($vars as $var) {
-						$parts = preg_split("/=/", $var);
-						print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
+				}
+				break;
+			default:
+				print "<form name=\"langform$LANG_FORM_COUNT\" action=\"$SCRIPT_NAME";
+				print "\" method=\"get\">";
+				$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
+				foreach ($vars as $var) {
+					$parts = preg_split("/=/", $var);
+					print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
+				}
+				print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
+				print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
+				foreach ($used_langs as $key=>$value) {
+					if ($language_settings[$key]["pgv_lang_use"]) {
+						print "\n\t\t\t<option value=\"$key\" ";
+						if ($LANGUAGE == $key) print " selected=\"selected\" class=\"selected-option\"";
+						print ">".$pgv_lang[$key]."</option>";
 					}
-					print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
-					print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
-					foreach ($used_langs as $key=>$value) {
-						 if ($language_settings[$key]["pgv_lang_use"]) {
-							  print "\n\t\t\t<option value=\"$key\" ";
-							  if ($LANGUAGE == $key) print " selected=\"selected\" class=\"selected-option\"";
-							  print ">".$pgv_lang[$key]."</option>";
-						 }
-					}
-					print "</select>\n</form>\n";
-			   break;
-		  }
-		  print "</div>";
-	 }
+				}
+				print "</select>\n</form>\n";
+				break;
+		}
+		print "</div>";
+	}
 }
 /**
  * print user links
@@ -903,22 +903,22 @@ function print_lang_form($option=0) {
  * this function will print login/logout links and other links based on user privileges
  */
 function print_user_links() {
-	 global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM;
-	 global $LOGIN_URL, $SEARCH_SPIDER;
+	global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM;
+	global $LOGIN_URL, $SEARCH_SPIDER;
 
-	 if (PGV_USER_ID) {
-		  print '<a href="edituser.php" class="link">'.$pgv_lang["logged_in_as"].' ('.PGV_USER_NAME.')</a><br />';
-			if (PGV_USER_GEDCOM_ADMIN) {
-				print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
-			}
-		  print "<a href=\"index.php?logout=1\" class=\"link\">".$pgv_lang["logout"]."</a>";
-	 } else {
-		  $QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
-		  if (empty($SEARCH_SPIDER)) {
-		  	print "<a href=\"$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME).normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM"))."\" class=\"link\">".$pgv_lang["login"]."</a>";
-		  }
-	 }
-	 print "<br />";
+	if (PGV_USER_ID) {
+		print '<a href="edituser.php" class="link">'.$pgv_lang["logged_in_as"].' ('.PGV_USER_NAME.')</a><br />';
+		if (PGV_USER_GEDCOM_ADMIN) {
+			print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
+		}
+		print "<a href=\"index.php?logout=1\" class=\"link\">".$pgv_lang["logout"]."</a>";
+	} else {
+		$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
+		if (empty($SEARCH_SPIDER)) {
+			print "<a href=\"$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME).normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM"))."\" class=\"link\">".$pgv_lang["login"]."</a>";
+		}
+	}
+	print "<br />";
 }
 
 // Print a link to allow email/messaging contact with a user
@@ -929,40 +929,9 @@ function user_contact_link($user_id, $method=null) {
 	if (is_null($method)) {
 		$method=get_user_setting($user_id, 'contactmethod');
 		$access='';
-				} else {
+	} else {
 		$access="accesskey='{$pgv_lang['accesskey_contact']}'";
-				}
-
-	// Webmaster/contact addresses can be an email address as well as a user-id
-	if (strpos($user_id, '@')!==false) {
-		$email=$user_id;
-		$fullname=$user_id;
-		if ($method!='none') {
-			$method='mailto';
-				  }
-				  } else {
-		$email=get_user_setting($user_id, 'email');
-		$fullname=getUserFullName($user_id);
-				  }
-
-	switch ($method) {
-	case 'none':
-		return '';
-	case 'mailto':
-		return "<a href='mailto:{$email}' {$access}>{$fullname}</a>";
-	default:
-		return "<a href='javascript:;' onclick='message(\"{$user_id}\",\"{$method}\");return false;' {$access}>{$fullname}</a>";
-			}
-					}
-
-// Print a menu item to allow email/messaging contact with a user
-// Optionally specify a method (used for webmaster/genealogy contacts)
-function user_contact_menu($user_id, $method=null) {
-	global $pgv_lang;
-
-	if (is_null($method)) {
-		$method=get_user_setting($user_id, 'contactmethod');
-				}
+	}
 
 	// Webmaster/contact addresses can be an email address as well as a user-id
 	if (strpos($user_id, '@')!==false) {
@@ -971,19 +940,50 @@ function user_contact_menu($user_id, $method=null) {
 		if ($method!='none') {
 			$method='mailto';
 		}
-			} else {
+	} else {
 		$email=get_user_setting($user_id, 'email');
 		$fullname=getUserFullName($user_id);
-					}
+	}
 
 	switch ($method) {
-	case 'none':
-		return array();
-	case 'mailto':
-		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>"mailto:{$email}");
-	default:
-		return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>'#', 'onclick'=>"message('{$user_id}','{$method}');return false;");
-				}
+		case 'none':
+			return '';
+		case 'mailto':
+			return "<a href='mailto:{$email}' {$access}>{$fullname}</a>";
+		default:
+			return "<a href='javascript:;' onclick='message(\"{$user_id}\",\"{$method}\");return false;' {$access}>{$fullname}</a>";
+	}
+}
+
+// Print a menu item to allow email/messaging contact with a user
+// Optionally specify a method (used for webmaster/genealogy contacts)
+function user_contact_menu($user_id, $method=null) {
+	global $pgv_lang;
+
+	if (is_null($method)) {
+		$method=get_user_setting($user_id, 'contactmethod');
+	}
+
+	// Webmaster/contact addresses can be an email address as well as a user-id
+	if (strpos($user_id, '@')!==false) {
+		$email=$user_id;
+		$fullname=$user_id;
+		if ($method!='none') {
+			$method='mailto';
+		}
+	} else {
+		$email=get_user_setting($user_id, 'email');
+		$fullname=getUserFullName($user_id);
+	}
+
+	switch ($method) {
+		case 'none':
+			return array();
+		case 'mailto':
+			return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>"mailto:{$email}");
+		default:
+			return array('label'=>$fullname, 'labelpos'=>'right', 'class'=>'submenuitem', 'hoverclass'=>'submenuitem_hover', 'link'=>'#', 'onclick'=>"message('{$user_id}','{$method}');return false;");
+	}
 }
 
 // print links for genealogy and technical contacts
@@ -1011,10 +1011,10 @@ function contact_links() {
 	}
 	if ($support_link==$contact_link) {
 		return '<div class="contact_links">'.$pgv_lang['for_all_contact'].' '.$support_link.'</div>';
-				} else {
+	} else {
 		return '<div class="contact_links">'.$pgv_lang['for_support'].' '.$support_link.'<br />'.$pgv_lang['for_contact'].' '.$contact_link.'</div>';
-					}
-				}
+	}
+}
 
 function contact_menus() {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
@@ -1029,7 +1029,7 @@ function contact_menus() {
 	}
 	if (!$support_menu) {
 		return array();
-}
+	}
 	$menuitems=array();
 	if ($support_menu==$contact_menu) {
 		$support_menu['label']=$pgv_lang['support_contact'];
@@ -1059,7 +1059,7 @@ function print_favorite_selector($option=0) {
 	if ((empty($username))&&(count($gedcomfavs)==0)) return;
 
 	if(!empty($SEARCH_SPIDER)) {
-	    return; // show no favorites, because they taint every page that is indexed.
+		return; // show no favorites, because they taint every page that is indexed.
 	}
 
 	if ($option == 2) {
@@ -1097,7 +1097,7 @@ function print_favorite_selector($option=0) {
 				$GEDCOM = $favorite["file"];
 				$submenu = array();
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//					$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
+					//					$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
 					$submenu["link"] = $favorite["url"];
 					$submenu["label"] = PrintReady($favorite["title"]);
 					$submenu["labelpos"] = "right";
@@ -1112,7 +1112,7 @@ function print_favorite_selector($option=0) {
 							$submenu["link"] = "individual.php?pid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 							$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
-	 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
+								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							unset($indilist[$pid]);
@@ -1121,7 +1121,7 @@ function print_favorite_selector($option=0) {
 							$submenu["link"] = "family.php?famid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 							$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
-	 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
+								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							unset($famlist[$pid]);
@@ -1130,7 +1130,7 @@ function print_favorite_selector($option=0) {
 							$submenu["link"] = "source.php?sid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 							$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
-	 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
+								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							unset($sourcelist[$pid]);
@@ -1141,7 +1141,7 @@ function print_favorite_selector($option=0) {
 								$submenu["link"] = "mediaviewer.php?mid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 								$submenu["label"] = PrintReady($media->getTitle());
 								if ($SHOW_ID_NUMBERS) {
-		 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
+									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
 								if (isset($medialist[$pid])) unset($medialist[$pid]);
@@ -1165,8 +1165,8 @@ function print_favorite_selector($option=0) {
 				$submenu["class"] = "favsubmenuitem";
 				$submenu["hoverclass"] = "favsubmenuitem_hover";
 				$menu["items"][] = $submenu;
-		   }
-		   if (count($gedcomfavs)>0) {
+			}
+			if (count($gedcomfavs)>0) {
 				$menu["items"][]="separator";
 				$submenu = array();
 				$submenu["label"] = "<b>".$pgv_lang["gedcom_favorites"]."</b>";
@@ -1181,7 +1181,7 @@ function print_favorite_selector($option=0) {
 					$pid = $favorite["gid"];
 					$submenu = array();
 					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//						$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
+						//						$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
 						$submenu["link"] = $favorite["url"];
 						$submenu["label"] = PrintReady($favorite["title"]);
 						$submenu["labelpos"] = "right";
@@ -1196,25 +1196,25 @@ function print_favorite_selector($option=0) {
 								$submenu["link"] = "individual.php?pid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 								$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
-	 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
+									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
+								}
 							}
 							if ($favorite["type"]=="FAM") {
 								$submenu["link"] = "family.php?famid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 								$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
-	 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
+									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
+								}
 							}
 							if ($favorite["type"]=="SOUR") {
 								$submenu["link"] = "source.php?sid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 								$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
-	 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
+									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
+								}
 							}
 							$submenu["labelpos"] = "right";
 							$submenu["class"] = "favsubmenuitem";
@@ -1225,188 +1225,147 @@ function print_favorite_selector($option=0) {
 				}
 				$pid = $mypid;
 				$GEDCOM = $mygedcom;
-		  	}
-		  	if (isset($returnmenu)) {
-		  		return $menu;
-		  	}
-		  	else print_menu($menu);
+			}
+			if (isset($returnmenu)) {
+				return $menu;
+			}
+			else print_menu($menu);
 			break;
 		default:
-			   print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
-			   print "\" method=\"post\" onsubmit=\"return false;\">";
-			   print "\n\t\t<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}".normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$pid}&amp;pid={$pid}")."';\">";
-				print "\n\t\t\t<option value=\"\">".$pgv_lang["favorites"]."</option>\n";
+			print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
+			print "\" method=\"post\" onsubmit=\"return false;\">";
+			print "\n\t\t<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}".normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$pid}&amp;pid={$pid}")."';\">";
+			print "\n\t\t\t<option value=\"\">".$pgv_lang["favorites"]."</option>\n";
 			if (!empty($username)) {
 				if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
 					print "\n\t\t\t<optgroup label=\"".$pgv_lang["my_favorites"]."\">";
 				}
-					$mygedcom = $GEDCOM;
-					$current_gedcom = $GEDCOM;
-					$mypid = $pid;
+				$mygedcom = $GEDCOM;
+				$current_gedcom = $GEDCOM;
+				$mypid = $pid;
 				if (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false) {
 					print "<option value=\"add\">- ".$pgv_lang["add_to_my_favorites"]." -</option>\n";
 				}
-					foreach($userfavs as $key=>$favorite) {
-						 $current_gedcom = $GEDCOM;
-						$GEDCOM = $favorite["file"];
-						$pid = $favorite["gid"];
-						if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//							print "\n\t\t\t\t<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
-							print "\n\t\t\t\t<option value=\"".$favorite["url"]."\">".PrintReady($favorite["title"]);
-							print "</option>";
-						}
-						else {
-							if (displayDetailsById($pid, $favorite["type"])) {
-								$indirec = find_gedcom_record($pid);
-								$name = $pgv_lang["unknown"];
-								if ($favorite["type"]=="INDI") {
-									$name = strip_tags(PrintReady(get_person_name($pid)));
+				foreach($userfavs as $key=>$favorite) {
+					$current_gedcom = $GEDCOM;
+					$GEDCOM = $favorite["file"];
+					$pid = $favorite["gid"];
+					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+						//							print "\n\t\t\t\t<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
+						print "\n\t\t\t\t<option value=\"".$favorite["url"]."\">".PrintReady($favorite["title"]);
+						print "</option>";
+					}
+					else {
+						if (displayDetailsById($pid, $favorite["type"])) {
+							$indirec = find_gedcom_record($pid);
+							$name = $pgv_lang["unknown"];
+							if ($favorite["type"]=="INDI") {
+								$name = strip_tags(PrintReady(get_person_name($pid)));
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 									else $name .= getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
 								print "\n\t\t\t\t<option value=\"individual.php?pid=";
-								   unset($indilist[$pid]);
-								}
-								if ($favorite["type"]=="FAM") {
-									$name = strip_tags(PrintReady(get_family_descriptor($pid)));
-									if (strlen($name)>50) $name = substr($name, 0, 50);
+								unset($indilist[$pid]);
+							}
+							if ($favorite["type"]=="FAM") {
+								$name = strip_tags(PrintReady(get_family_descriptor($pid)));
+								if (strlen($name)>50) $name = substr($name, 0, 50);
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
 								print "\n\t\t\t\t<option value=\"family.php?famid=";
-								   unset($famlist[$pid]);
-								}
-								if ($favorite["type"]=="SOUR") {
-									$name = strip_tags(PrintReady(get_source_descriptor($pid)));
-									if (strlen($name)>50) $name = substr($name, 0, 50);
+								unset($famlist[$pid]);
+							}
+							if ($favorite["type"]=="SOUR") {
+								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
+								if (strlen($name)>50) $name = substr($name, 0, 50);
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
 								print "\n\t\t\t\t<option value=\"source.php?sid=";
-								   unset($sourcelist[$pid]);
-								}
-								if ($favorite["type"]=="OBJE") {
-									$media = Media::getInstance($pid);
-									if (!is_null($media)) {
-										$name = strip_tags(PrintReady($media->getTitle()));
-										if (strlen($name)>50) $name = substr($name, 0, 50);
-										if ($SHOW_ID_NUMBERS) {
-											if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-											else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-										}
-										print "\n\t\t\t\t<option value=\"mediaviewer.php?mid=";
-										unset($sourcelist[$pid]);
-									}
-								}
-							print $favorite["gid"]."&amp;ged=".$GEDCOM."\">".$name."</option>";
+								unset($sourcelist[$pid]);
 							}
+							if ($favorite["type"]=="OBJE") {
+								$media = Media::getInstance($pid);
+								if (!is_null($media)) {
+									$name = strip_tags(PrintReady($media->getTitle()));
+									if (strlen($name)>50) $name = substr($name, 0, 50);
+									if ($SHOW_ID_NUMBERS) {
+										if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
+										else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+									}
+									print "\n\t\t\t\t<option value=\"mediaviewer.php?mid=";
+									unset($sourcelist[$pid]);
+								}
+							}
+							print $favorite["gid"]."&amp;ged=".$GEDCOM."\">".$name."</option>";
 						}
 					}
-					if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
-						print "\n\t\t\t</optgroup>";
-					}
-					$GEDCOM = $mygedcom;
-					$pid = $mypid;
-			   }
-			   if (count($gedcomfavs)>0) {
+				}
+				if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
+					print "\n\t\t\t</optgroup>";
+				}
+				$GEDCOM = $mygedcom;
+				$pid = $mypid;
+			}
+			if (count($gedcomfavs)>0) {
 				print "\n\t\t\t<optgroup label=\"".$pgv_lang["gedcom_favorites"]."\">\n";
-					$mygedcom = $GEDCOM;
+				$mygedcom = $GEDCOM;
+				$current_gedcom = $GEDCOM;
+				$mypid = $pid;
+				foreach($gedcomfavs as $key=>$favorite) {
 					$current_gedcom = $GEDCOM;
-					$mypid = $pid;
-					foreach($gedcomfavs as $key=>$favorite) {
-						$current_gedcom = $GEDCOM;
-						$GEDCOM = $favorite["file"];
-						$pid = $favorite["gid"];
-						if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//							print "\n\t\t\t\t<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
-							print "\n\t\t\t\t<option value=\"".$favorite["url"]."\">".PrintReady($favorite["title"]);
-							print "</option>";
-						}
-						else {
+					$GEDCOM = $favorite["file"];
+					$pid = $favorite["gid"];
+					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+						//							print "\n\t\t\t\t<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
+						print "\n\t\t\t\t<option value=\"".$favorite["url"]."\">".PrintReady($favorite["title"]);
+						print "</option>";
+					}
+					else {
 						$indirec = find_gedcom_record($pid);
 						$name = $pgv_lang["unknown"];
 						if (displayDetailsById($pid, $favorite["type"])) {
 							if ($favorite["type"]=="INDI") {
 								$name = strip_tags(PrintReady(get_person_name($pid)));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							print "\n\t\t\t\t<option value=\"individual.php?pid=";
+								if ($SHOW_ID_NUMBERS) {
+									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
+									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+								}
+								print "\n\t\t\t\t<option value=\"individual.php?pid=";
 							}
 							if ($favorite["type"]=="FAM") {
 								$name = strip_tags(PrintReady(get_family_descriptor($pid)));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							print "\n\t\t\t\t<option value=\"family.php?famid=";
+								if ($SHOW_ID_NUMBERS) {
+									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
+									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+								}
+								print "\n\t\t\t\t<option value=\"family.php?famid=";
 							}
 							if ($favorite["type"]=="SOUR") {
 								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+								if ($SHOW_ID_NUMBERS) {
+									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
+									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+								}
+								print "\n\t\t\t\t<option value=\"source.php?sid=";
 							}
-							print "\n\t\t\t\t<option value=\"source.php?sid=";
-						}
-						print $favorite["gid"]."&amp;ged=$GEDCOM\">".$name."</option>";
-						}
+							print $favorite["gid"]."&amp;ged=$GEDCOM\">".$name."</option>";
 						}
 					}
+				}
 				print "\n\t\t\t</optgroup>";
-					$GEDCOM = $mygedcom;
-					$pid = $mypid;
-			   }
-			   print "</select>\n\t</form>\n";
-			   break;
-	 }
-	 print "</div>\n";
-}
-
-/**
- * print a simple form of the fact
- *
- * function to print the details of a fact in a simple format
- * @param string $indirec the gedcom record to get the fact from
- * @param string $fact the fact to print
- * @param string $pid the id of the individual to print, required to check privacy
- * @deprecated 	use Event->print_simple_fact
-function print_simple_fact($indirec, $fact, $pid) {
-	global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS;
-	$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","OBJE","CHAN","_SEPR","RESI", "DATA", "MAP");
-	$factrec = get_sub_record(1, "1 $fact", $indirec);
-	if ((empty($factrec))||(FactViewRestricted($pid, $factrec))) return;
-	$label = "";
-	if (isset($pgv_lang[$fact])) $label = $pgv_lang[$fact];
-	else if (isset($factarray[$fact])) $label = $factarray[$fact];
-	if ($ABBREVIATE_CHART_LABELS) $label = get_first_letter($label);
-// RFE [ 1229233 ] "DEAT" vs "DEAT Y"
-// The check $factrec != "1 DEAT" will not show any records that only have 1 DEAT in them
-	if (trim($factrec) != "1 DEAT"){
-	   print "<span class=\"details_label\">".$label."</span> ";
+				$GEDCOM = $mygedcom;
+				$pid = $mypid;
+			}
+			print "</select>\n\t</form>\n";
+			break;
 	}
-	if (showFactDetails($fact, $pid)) {
-		if (!in_array($fact, $emptyfacts)) {
-			$ct = preg_match("/1 $fact(.*)/", $factrec, $match);
-			if ($ct>0) print PrintReady(trim($match[1]));
-		}
-		// 1 DEAT Y with no DATE => print YES
-		// 1 DEAT N is not allowed
-		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
-		/*-- handled by print_fact_date()
-		 * if (get_sub_record(2, "2 DATE", $factrec)=="") {
-			if (strtoupper(trim(substr($factrec,6,2)))=="Y") print $pgv_lang["yes"];
-		}
-		print_fact_date($factrec, false, false, $fact, $pid, $indirec);
-		print_fact_place($factrec);
-	}
-	print "<br />\n";
+	print "</div>\n";
 }
-*/
 
 /**
  * print a note record
@@ -1501,7 +1460,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 						$data .= print_fact_sources($noterec, 1, true);
 					}
 				}
-		  	}
+			}
 		}
 		if (!$textOnly) {
 			if (preg_match("/$nlevel SOUR/", $factrec)>0) {
@@ -1515,7 +1474,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 		}
 		$printDone = true;
 	}
-	if ($printDone) $data .= "<br />"; 
+	if ($printDone) $data .= "<br />";
 	if (!$return) print $data;
 	else return $data;
 }
@@ -1527,41 +1486,41 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
  * @author John Finlay
  */
 function print_gedcom_title_link($InHeader=FALSE) {
-	 global $GEDCOMS, $GEDCOM, $GEDCOM_TITLE;
-	 if ((count($GEDCOMS)==0)||(empty($GEDCOM))) return;
-	 print "<a href=\"index.php?ctype=gedcom\" class=\"gedcomtitle\">".PrintReady($GEDCOM_TITLE, $InHeader)."</a>";
+	global $GEDCOMS, $GEDCOM, $GEDCOM_TITLE;
+	if ((count($GEDCOMS)==0)||(empty($GEDCOM))) return;
+	print "<a href=\"index.php?ctype=gedcom\" class=\"gedcomtitle\">".PrintReady($GEDCOM_TITLE, $InHeader)."</a>";
 }
 
 //-- function to print a privacy error with contact method
 function print_privacy_error($username) {
-	 global $pgv_lang, $CONTACT_METHOD, $SUPPORT_METHOD, $WEBMASTER_EMAIL;
+	global $pgv_lang, $CONTACT_METHOD, $SUPPORT_METHOD, $WEBMASTER_EMAIL;
 
-	 $method = $CONTACT_METHOD;
-	 if ($username==$WEBMASTER_EMAIL) {
-		 $method = $SUPPORT_METHOD;
-	 }
-	 if (!get_user_id($username)) {
-		 $method = "mailto";
-	 }
-	 print "<br /><span class=\"error\">".$pgv_lang["privacy_error"]." ";
-	 if ($method=="none") {
-		  print "</span><br />\n";
-		  return;
-	 }
-	 print $pgv_lang["more_information"];
-	 if ($method=="mailto") {
-		  if (!get_user_id($username)) {
-			   $email = $username;
-			   $fullname = $username;
-		  } else {
-			   $email = get_user_setting($username, 'email');
-			   $fullname=getUserFullName($username);
-		  }
-		  print " <a href=\"mailto:$email\">".$fullname."</a></span><br />";
-	 } else {
-		 $userName=getUserFullName($username);
-		 print " <a href=\"javascript:;\" onclick=\"message('$username','$method'); return false;\">".$userName."</a></span><br />";
-	 }
+	$method = $CONTACT_METHOD;
+	if ($username==$WEBMASTER_EMAIL) {
+		$method = $SUPPORT_METHOD;
+	}
+	if (!get_user_id($username)) {
+		$method = "mailto";
+	}
+	print "<br /><span class=\"error\">".$pgv_lang["privacy_error"]." ";
+	if ($method=="none") {
+		print "</span><br />\n";
+		return;
+	}
+	print $pgv_lang["more_information"];
+	if ($method=="mailto") {
+		if (!get_user_id($username)) {
+			$email = $username;
+			$fullname = $username;
+		} else {
+			$email = get_user_setting($username, 'email');
+			$fullname=getUserFullName($username);
+		}
+		print " <a href=\"mailto:$email\">".$fullname."</a></span><br />";
+	} else {
+		$userName=getUserFullName($username);
+		print " <a href=\"javascript:;\" onclick=\"message('$username','$method'); return false;\">".$userName."</a></span><br />";
+	}
 }
 
 /* Function to print popup help boxes
@@ -1585,8 +1544,8 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 					$output.=preg_replace('/\"/','\'',$pgv_lang[$show_desc]);
 				}	else {
 					$output.=strip_tags($pgv_lang[$show_desc]);
+				}
 			}
-		}
 		} else {
 			$output.=$help;
 		}
@@ -1594,8 +1553,8 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 		if ($PGV_USE_HELPIMG) {
 			$output.='<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['help']['small'].'" class="icon" width="15" height="15" alt="" /></a>';
 		} else {
-			$output.=$pgv_lang[$helpText].'</a>';
-	}
+			$output.=$pgv_lang[$helpText].'&nbsp;&nbsp;</a>';
+		}
 	}
 
 	if (!$return) {
@@ -1631,76 +1590,76 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
  * @param int $noprint		The switch if the text needs to be printed or returned
  */
 function print_text($help, $level=0, $noprint=0){
-	 global $pgv_lang, $factarray, $faqlist, $VERSION, $VERSION_RELEASE, $COMMON_NAMES_THRESHOLD;
-	 global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $LANGUAGE;
-	 global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
-	 global $repeat, $thumbnail, $xref, $pid;
-	 if (!isset($_SESSION["DEBUG_LANG"])) $DEBUG_LANG = "no";
-	 else $DEBUG_LANG = $_SESSION["DEBUG_LANG"];
-	 if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable called: ".$help."<br /><br />";
-	 $sentence = false;
-	 if ($level>0) {
-		  $value = false;
-		  eval("if (isset(\$$help)) \$value = \$$help;");
-		  if ($value===false) return false;
-		  $sentence = $value;
-	 }
-	 if ($sentence===false) {
-		  if ($noprint == 2) {
-			  $sentence = $help;
+	global $pgv_lang, $factarray, $faqlist, $VERSION, $VERSION_RELEASE, $COMMON_NAMES_THRESHOLD;
+	global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $LANGUAGE;
+	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
+	global $repeat, $thumbnail, $xref, $pid;
+	if (!isset($_SESSION["DEBUG_LANG"])) $DEBUG_LANG = "no";
+	else $DEBUG_LANG = $_SESSION["DEBUG_LANG"];
+	if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable called: ".$help."<br /><br />";
+	$sentence = false;
+	if ($level>0) {
+		$value = false;
+		eval("if (isset(\$$help)) \$value = \$$help;");
+		if ($value===false) return false;
+		$sentence = $value;
+	}
+	if ($sentence===false) {
+		if ($noprint == 2) {
+			$sentence = $help;
 		} else {
 			if (isset($pgv_lang[$help]))
-				$sentence = $pgv_lang[$help];
-		  else {
-			if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
-		  	$sentence = $pgv_lang["help_not_exist"];
-		  }
+			$sentence = $pgv_lang[$help];
+			else {
+				if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
+				$sentence = $pgv_lang["help_not_exist"];
+			}
 	 }
 	}
-	 $mod_sentence = "";
-	 $replace = "";
-	 $replace_text = "";
-	 $sub = "";
-	 $pos1 = 0;
-	 $pos2 = 0;
-	 $ct = preg_match_all("/#([a-zA-Z0-9_.\-\[\]]+)#/", $sentence, $match, PREG_SET_ORDER);
-	 for($i=0; $i<$ct; $i++) {
-		  $value = "";
-		  $newreplace = preg_replace(array("/\[/","/\]/"), array("['","']"), $match[$i][1]);
-		  if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Embedded variable: ".$match[$i][1]."<br /><br />";
-		  $value = print_text($newreplace, $level+1);
-		  if ($value!==false) $sentence = str_replace($match[$i][0], $value, $sentence);
-		  else if ($noprint==0 && $level==0) $sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
-	 }
-	 // ------ Replace paired ~  by tag_start and tag_end (those vars contain CSS classes)
-	 while (stristr($sentence, "~") == TRUE){
-		  $pos1 = strpos($sentence, "~");
-		  $mod_sentence = substr_replace($sentence, " ", $pos1, 1);
-		  if (stristr($mod_sentence, "~")){		// If there's a second one:
-			  $pos2 = strpos($mod_sentence, "~");
-			  $replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
-			  $replace_text = "<span class=\"helpstart\">".str2upper($replace)."</span>";
-			  $sentence = str_replace("~".$replace."~", $replace_text, $sentence);
-		  } else break;
-	 }
-	 if ($noprint>0) return $sentence;
-	 if ($level>0) return $sentence;
-	 print $sentence;
+	$mod_sentence = "";
+	$replace = "";
+	$replace_text = "";
+	$sub = "";
+	$pos1 = 0;
+	$pos2 = 0;
+	$ct = preg_match_all("/#([a-zA-Z0-9_.\-\[\]]+)#/", $sentence, $match, PREG_SET_ORDER);
+	for($i=0; $i<$ct; $i++) {
+		$value = "";
+		$newreplace = preg_replace(array("/\[/","/\]/"), array("['","']"), $match[$i][1]);
+		if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Embedded variable: ".$match[$i][1]."<br /><br />";
+		$value = print_text($newreplace, $level+1);
+		if ($value!==false) $sentence = str_replace($match[$i][0], $value, $sentence);
+		else if ($noprint==0 && $level==0) $sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
+	}
+	// ------ Replace paired ~  by tag_start and tag_end (those vars contain CSS classes)
+	while (stristr($sentence, "~") == TRUE){
+		$pos1 = strpos($sentence, "~");
+		$mod_sentence = substr_replace($sentence, " ", $pos1, 1);
+		if (stristr($mod_sentence, "~")){		// If there's a second one:
+			$pos2 = strpos($mod_sentence, "~");
+			$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
+			$replace_text = "<span class=\"helpstart\">".str2upper($replace)."</span>";
+			$sentence = str_replace("~".$replace."~", $replace_text, $sentence);
+		} else break;
+	}
+	if ($noprint>0) return $sentence;
+	if ($level>0) return $sentence;
+	print $sentence;
 }
 function print_help_index($help){
-	 global $pgv_lang;
-	 $sentence = $pgv_lang[$help];
-	 $mod_sentence = "";
-	 $replace = "";
-	 $replace_text = "";
-	 $sub = "";
-	 $pos1 = 0;
-	 $pos2 = 0;
-	 $admcol=false;
-	 $ch=0;
-	 $help_sorted = array();
-	 $var="";
-	 while (stristr($sentence, "#") == TRUE){
+	global $pgv_lang;
+	$sentence = $pgv_lang[$help];
+	$mod_sentence = "";
+	$replace = "";
+	$replace_text = "";
+	$sub = "";
+	$pos1 = 0;
+	$pos2 = 0;
+	$admcol=false;
+	$ch=0;
+	$help_sorted = array();
+	$var="";
+	while (stristr($sentence, "#") == TRUE){
 		$pos1 = strpos($sentence, "#");
 		$mod_sentence = substr_replace($sentence, " ", $pos1, 1);
 		$pos2 = strpos($mod_sentence, "#");
@@ -1719,21 +1678,21 @@ function print_help_index($help){
 			$admcol=true;
 			$ch++;
 		}
-		   $replace_text = "<a href=\"help_text.php?help=".$items[0]."\">".$var."</a><br />";
-		   $help_sorted[$replace_text] = $var;
-		   $sentence = str_replace("#".$replace."#", $replace_text, $sentence);
-	 }
-	 uasort($help_sorted, "stringsort");
-	 if ($ch==0) $ch=count($help_sorted);
-	 else $ch +=$ch;
-	 if ($ch>0) print "<table width=\"100%\"><tr><td style=\"vertical-align: top;\"><ul>";
-	 $i=0;
-	 foreach ($help_sorted as $k => $help_item){
+		$replace_text = "<a href=\"help_text.php?help=".$items[0]."\">".$var."</a><br />";
+		$help_sorted[$replace_text] = $var;
+		$sentence = str_replace("#".$replace."#", $replace_text, $sentence);
+	}
+	uasort($help_sorted, "stringsort");
+	if ($ch==0) $ch=count($help_sorted);
+	else $ch +=$ch;
+	if ($ch>0) print "<table width=\"100%\"><tr><td style=\"vertical-align: top;\"><ul>";
+	$i=0;
+	foreach ($help_sorted as $k => $help_item){
 		print "<li>".$k."</li>";
 		$i++;
 		if ($i==ceil($ch/2)) print "</ul></td><td style=\"vertical-align: top;\"><ul>";
-	 }
-	 if ($ch>0) print "</ul></td></tr></table>";
+	}
+	if ($ch>0) print "</ul></td></tr></table>";
 }
 /**
  * prints a JavaScript popup menu
@@ -1766,103 +1725,103 @@ function print_menu($menu, $parentmenu="") {
 //-------------------------------------------------------------------------------------------------------------
 function write_align_with_textdir_check($t_dir, $return=false)
 {
-  global $TEXT_DIRECTION;
-  $out = "";
-  if ($t_dir == "left")
-  {
+	global $TEXT_DIRECTION;
+	$out = "";
+	if ($t_dir == "left")
+	{
 	 if ($TEXT_DIRECTION == "ltr")
 	 {
-	   $out .= " style=\"text-align:left; \" ";
+	 	$out .= " style=\"text-align:left; \" ";
 	 }
 	 else
 	 {
-	   $out .= " style=\"text-align:right; \" ";
+	 	$out .= " style=\"text-align:right; \" ";
 	 }
-  }
-  else
-  {
+	}
+	else
+	{
 	 if ($TEXT_DIRECTION == "ltr")
 	 {
-	   $out .= " style=\"text-align:right; \" ";
+	 	$out .= " style=\"text-align:right; \" ";
 	 }
 	 else
 	 {
-	   $out .= " style=\"text-align:left; \" ";
+	 	$out .= " style=\"text-align:left; \" ";
 	 }
-  }
-  if ($return) return $out;
-  print $out;
+	}
+	if ($return) return $out;
+	print $out;
 }
 //-- print theme change dropdown box
 function print_theme_dropdown($style=0) {
-	 global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
-	 if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
-		  if (!isset($themeformcount)) $themeformcount = 0;
-		  $themeformcount++;
-		  $uname = PGV_USER_NAME;
-		  isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
-		  $frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
-		  if(isset($_REQUEST['mod'])){
-		  	if(!strstr("?", $frompage))
-		  	{
-		  		if(!strstr("%3F", $frompage)) ;
-		  		else $frompage.="?";
-		  	}
-		  	if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
-		  }
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
+	if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES) {
+		if (!isset($themeformcount)) $themeformcount = 0;
+		$themeformcount++;
+		$uname = PGV_USER_NAME;
+		isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
+		$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
+		if(isset($_REQUEST['mod'])){
+			if(!strstr("?", $frompage))
+			{
+				if(!strstr("%3F", $frompage)) ;
+				else $frompage.="?";
+			}
+			if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
+		}
 
-		  $themes = get_theme_names();
-		  print "<div class=\"theme_form\">\n";
-		  $module = "";
-		  switch ($style) {
-			   case 0:
-			   print "<form action=\"themechange.php\" name=\"themeform$themeformcount\" method=\"post\">";
-			   print "<input type=\"hidden\" name=\"frompage\" value=\"".urlencode($frompage)."\" />";
-			   print "<select name=\"mytheme\" class=\"header_select\" onchange=\"document.themeform$themeformcount.submit();\">";
-			   print "<option value=\"\">".$pgv_lang["change_theme"]."</option>\n";
-			   foreach($themes as $indexval => $themedir) {
+		$themes = get_theme_names();
+		print "<div class=\"theme_form\">\n";
+		$module = "";
+		switch ($style) {
+			case 0:
+				print "<form action=\"themechange.php\" name=\"themeform$themeformcount\" method=\"post\">";
+				print "<input type=\"hidden\" name=\"frompage\" value=\"".urlencode($frompage)."\" />";
+				print "<select name=\"mytheme\" class=\"header_select\" onchange=\"document.themeform$themeformcount.submit();\">";
+				print "<option value=\"\">".$pgv_lang["change_theme"]."</option>\n";
+				foreach($themes as $indexval => $themedir) {
 					print "<option value=\"".$themedir["dir"]."\"";
 					if ($uname) {
-						 if ($themedir["dir"] == get_user_setting($uname, 'theme')) print " class=\"selected-option\"";
+						if ($themedir["dir"] == get_user_setting($uname, 'theme')) print " class=\"selected-option\"";
 					} else {
-						  if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
+						if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
 					}
 					print ">".$themedir["name"]."</option>\n";
-			   }
-			   print "</select></form>";
-			   break;
-			   case 1:
-					$menu = array();
-					$menu["label"] = $pgv_lang["change_theme"];
-					$menu["labelpos"] = "left";
-					$menu["link"] = "#";
-					$menu["class"] = "thememenuitem";
-					$menu["hoverclass"] = "thememenuitem_hover";
-					$menu["flyout"] = "down";
-					$menu["submenuclass"] = "themesubmenu";
-					$menu["items"] = array();
-					foreach($themes as $indexval => $themedir) {
-						$submenu = array();
-						$submenu["label"] = $themedir["name"];
-						$submenu["labelpos"] = "right";
-						$submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
-						$submenu["class"] = "favsubmenuitem";
-						if ($uname) {
-							 if ($themedir["dir"] == get_user_setting($uname, 'theme')) $submenu["class"] = "favsubmenuitem_selected";
-						} else {
-							 if ($themedir["dir"] == $THEME_DIR) $submenu["class"] = "favsubmenuitem_selected";
-						}
-						$submenu["hoverclass"] = "favsubmenuitem_hover";
-						$menu["items"][] = $submenu;
+				}
+				print "</select></form>";
+				break;
+			case 1:
+				$menu = array();
+				$menu["label"] = $pgv_lang["change_theme"];
+				$menu["labelpos"] = "left";
+				$menu["link"] = "#";
+				$menu["class"] = "thememenuitem";
+				$menu["hoverclass"] = "thememenuitem_hover";
+				$menu["flyout"] = "down";
+				$menu["submenuclass"] = "themesubmenu";
+				$menu["items"] = array();
+				foreach($themes as $indexval => $themedir) {
+					$submenu = array();
+					$submenu["label"] = $themedir["name"];
+					$submenu["labelpos"] = "right";
+					$submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
+					$submenu["class"] = "favsubmenuitem";
+					if ($uname) {
+						if ($themedir["dir"] == get_user_setting($uname, 'theme')) $submenu["class"] = "favsubmenuitem_selected";
+					} else {
+						if ($themedir["dir"] == $THEME_DIR) $submenu["class"] = "favsubmenuitem_selected";
 					}
-					print_menu($menu);
-			   break;
-		  }
-		  print "</div>\n";
-	 }
-	 else {
-		  print "&nbsp;";
-	 }
+					$submenu["hoverclass"] = "favsubmenuitem_hover";
+					$menu["items"][] = $submenu;
+				}
+				print_menu($menu);
+				break;
+		}
+		print "</div>\n";
+	}
+	else {
+		print "&nbsp;";
+	}
 }
 
 /**
@@ -1888,27 +1847,47 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	//$text = preg_replace(array("/&/","/</","/>/"), array("&amp;","&lt;","&gt;"), $text);
 	//-- make sure we didn't double convert &amp; to &amp;amp;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);
-    if ($trim) $text = trim($text);
-    //-- if we are on the search page body, then highlight any search hits
-    //		In this routine, we will assume that the input string doesn't contain any
-    //		\x01 or \x02 characters.  We'll represent the <span class="search_hit"> by \x01
-    //		and </span> by \x02.  We will translate these \x01 and \x02 into their true
-    //		meaning at the end.
-    //
-    //		This special handling is required in case the user has submitted a multiple
-    //		argument search, in which the second or later arguments can be found in the
-    //		<span> or </span> strings.
-    if ($HighlightOK) {
-			if (isset($query)) {
-				$queries = explode(" ", $query);
+	if ($trim) $text = trim($text);
+	//-- if we are on the search page body, then highlight any search hits
+	//		In this routine, we will assume that the input string doesn't contain any
+	//		\x01 or \x02 characters.  We'll represent the <span class="search_hit"> by \x01
+	//		and </span> by \x02.  We will translate these \x01 and \x02 into their true
+	//		meaning at the end.
+	//
+	//		This special handling is required in case the user has submitted a multiple
+	//		argument search, in which the second or later arguments can be found in the
+	//		<span> or </span> strings.
+	if ($HighlightOK) {
+		if (isset($query)) {
+			$queries = explode(" ", $query);
+			$newtext = $text;
+			$hasallhits = true;
+			foreach($queries as $index=>$query1) {
+				$query1esc=addcslashes($query1, '/');
+				if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
+					$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+				}
+				else if (@preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+					$nlen = strlen($query1);
+					$npos = strpos(str2upper($text), str2upper($query1));
+					$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+					$newtext = substr_replace($newtext, "\x01", $npos, 0);
+				}
+				else $hasallhits = false;
+			}
+			if ($hasallhits) $text = $newtext;
+		}
+		if (isset($action) && ($action === "soundex")) {
+			if (isset($firstname)) {
+				$queries = explode(" ", $firstname);
 				$newtext = $text;
 				$hasallhits = true;
 				foreach($queries as $index=>$query1) {
 					$query1esc=addcslashes($query1, '/');
-					if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
+					if (preg_match("/(".$query1esc.")/i", $text)) {
 						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 					}
-					else if (@preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+					else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
 						$nlen = strlen($query1);
 						$npos = strpos(str2upper($text), str2upper($query1));
 						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
@@ -1918,82 +1897,62 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 				}
 				if ($hasallhits) $text = $newtext;
 			}
-			if (isset($action) && ($action === "soundex")) {
-				if (isset($firstname)) {
-					$queries = explode(" ", $firstname);
-					$newtext = $text;
-					$hasallhits = true;
-					foreach($queries as $index=>$query1) {
-						$query1esc=addcslashes($query1, '/');
-						if (preg_match("/(".$query1esc.")/i", $text)) {
-							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
-						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
-							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
-							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-							$newtext = substr_replace($newtext, "\x01", $npos, 0);
-						}
-						else $hasallhits = false;
+			if (isset($lastname)) {
+				$queries = explode(" ", $lastname);
+				$newtext = $text;
+				$hasallhits = true;
+				foreach($queries as $index=>$query1) {
+					$query1esc=addcslashes($query1, '/');
+					if (preg_match("/(".$query1esc.")/i", $text)) {
+						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 					}
-					if ($hasallhits) $text = $newtext;
-				}
-				if (isset($lastname)) {
-					$queries = explode(" ", $lastname);
-					$newtext = $text;
-					$hasallhits = true;
-					foreach($queries as $index=>$query1) {
-						$query1esc=addcslashes($query1, '/');
-						if (preg_match("/(".$query1esc.")/i", $text)) {
-							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
-						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
-							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
-							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-							$newtext = substr_replace($newtext, "\x01", $npos, 0);
-						}
-						else $hasallhits = false;
+					else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+						$nlen = strlen($query1);
+						$npos = strpos(str2upper($text), str2upper($query1));
+						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+						$newtext = substr_replace($newtext, "\x01", $npos, 0);
 					}
-					if ($hasallhits) $text = $newtext;
+					else $hasallhits = false;
 				}
-				if (isset($place)) {
-					$queries = explode(" ", $place);
-					$newtext = $text;
-					$hasallhits = true;
-					foreach($queries as $index=>$query1) {
-						$query1esc=addcslashes($query1, '/');
-						if (preg_match("/(".$query1esc.")/i", $text)) {
-							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
-						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
-							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
-							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-							$newtext = substr_replace($newtext, "\x01", $npos, 0);
-						}
-						else $hasallhits = false;
-					}
-					if ($hasallhits) $text = $newtext;
-				}
-				if (isset($year)) {
-					$queries = explode(" ", $year);
-					$newtext = $text;
-					$hasallhits = true;
-					foreach($queries as $index=>$query1) {
-						$query1=addcslashes($query1, '/');
-						if (preg_match("/(".$query1.")/i", $text)) {
-							$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-						}
-						else $hasallhits = false;
-					}
-					if ($hasallhits) $text = $newtext;
-				}
+				if ($hasallhits) $text = $newtext;
 			}
-			// All the "Highlight start" and "Highlight end" flags are set:
-			//		Delay the final clean-up and insertion of proper <span> and </span>
-			//		until parentheses, braces, and brackets have been processed
-    }
+			if (isset($place)) {
+				$queries = explode(" ", $place);
+				$newtext = $text;
+				$hasallhits = true;
+				foreach($queries as $index=>$query1) {
+					$query1esc=addcslashes($query1, '/');
+					if (preg_match("/(".$query1esc.")/i", $text)) {
+						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+					}
+					else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+						$nlen = strlen($query1);
+						$npos = strpos(str2upper($text), str2upper($query1));
+						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+						$newtext = substr_replace($newtext, "\x01", $npos, 0);
+					}
+					else $hasallhits = false;
+				}
+				if ($hasallhits) $text = $newtext;
+			}
+			if (isset($year)) {
+				$queries = explode(" ", $year);
+				$newtext = $text;
+				$hasallhits = true;
+				foreach($queries as $index=>$query1) {
+					$query1=addcslashes($query1, '/');
+					if (preg_match("/(".$query1.")/i", $text)) {
+						$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
+					}
+					else $hasallhits = false;
+				}
+				if ($hasallhits) $text = $newtext;
+			}
+		}
+		// All the "Highlight start" and "Highlight end" flags are set:
+		//		Delay the final clean-up and insertion of proper <span> and </span>
+		//		until parentheses, braces, and brackets have been processed
+	}
 
 	// Look for strings enclosed in parentheses, braces, or brackets.
 	//
@@ -2026,7 +1985,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 					$newText .= getLRM() . $thisChar . $tempText. $tempChar . getLRM();
 				} else {
 					$newText .= getRLM() . $thisChar . $tempText. $tempChar . getRLM();
-	 			   			}
+				}
 			} else {
 				$newText .= $thisChar;
 			}
@@ -2034,10 +1993,10 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 		$text = $newText;
 	}
 
-    // Parentheses, braces, and brackets have been processed:
-    //		Finish processing of "Highlight Start and "Highlight end"
+	// Parentheses, braces, and brackets have been processed:
+	//		Finish processing of "Highlight Start and "Highlight end"
 	$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
-    return $text;
+	return $text;
 }
 /**
  * print ASSO RELA information
@@ -2066,28 +2025,28 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 		$pid2 = $match[$i][1];
 		// get RELAtionship field
 		$assorec = get_sub_record($level, "$level ASSO ", $factrec, $i+1);
-//		if (substr($_SERVER["SCRIPT_NAME"],1) == "pedigree.php") {
-			$rct = preg_match("/\d RELA (.*)/", $assorec, $rmatch);
-			if ($rct>0) {
-				// RELAtionship name in user language
-				$key = strtolower(trim($rmatch[1]));
-	            $cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
-                if ($cr > 0) {
-                    $rela = get_sosa_name($relamatch[0][1]);
-                }
-                else
-                {
-				    if (isset($pgv_lang["$key"])) $rela = $pgv_lang[$key];
-				    else $rela = $rmatch[1];
-                }
-				$p = strpos($rela, "(=");
-				if ($p>0) $rela = trim(substr($rela, 0, $p));
-				if ($pid2==$pid) print "<span class=\"details_label\">";
-				print " {$rela}: ";
-				if ($pid2==$pid) print "</span>";
+		//		if (substr($_SERVER["SCRIPT_NAME"],1) == "pedigree.php") {
+		$rct = preg_match("/\d RELA (.*)/", $assorec, $rmatch);
+		if ($rct>0) {
+			// RELAtionship name in user language
+			$key = strtolower(trim($rmatch[1]));
+			$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
+			if ($cr > 0) {
+				$rela = get_sosa_name($relamatch[0][1]);
 			}
-			else $rela = $factarray["RELA"]; // default
-//		}
+			else {
+				if (isset($pgv_lang[$key])) $rela = $pgv_lang[$key];
+				else if (isset($factarray[strtoupper($key)])) $rela = $factarray[strtoupper($key)];
+				else $rela = $rmatch[1];
+			}
+			$p = strpos($rela, "(=");
+			if ($p>0) $rela = trim(substr($rela, 0, $p));
+			if ($pid2==$pid) print "<span class=\"details_label\">";
+			print " {$rela}: ";
+			if ($pid2==$pid) print "</span>";
+		}
+		else $rela = $factarray["RELA"]; // default
+		//		}
 
 		// ASSOciate ID link
 		$gedrec = find_gedcom_record($pid2);
@@ -2102,7 +2061,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$addname = "";
 			}
 			print "<a href=\"individual.php?pid=$pid2&amp;ged=$GEDCOM\">" . PrintReady($name);
-//			if (!empty($addname)) print "<br />" . PrintReady($addname);
+			//			if (!empty($addname)) print "<br />" . PrintReady($addname);
 			if (!empty($addname)) print " - " . PrintReady($addname);
 			if ($SHOW_ID_NUMBERS) {
 				print "&nbsp;&nbsp;";
@@ -2114,11 +2073,11 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// ID age
 			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
 				$tmp=new Person($gedrec);
-				$birth_date=$tmp->getBirthDate(false);
+				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
 				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
 				if (!empty($age))
-					print " ({$pgv_lang['age']} {$age})";
+				print " ({$pgv_lang['age']} {$age})";
 			}
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview") {
@@ -2139,8 +2098,8 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			print "<a href=\"family.php?famid=$pid2\">";
 			if ($TEXT_DIRECTION == "ltr") print getLRM(); else print " " . getRLM();
 			print "[".$pgv_lang["view_family"];
-  			if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($pid2)" . getLRM();
-  			if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>\n"; else print getRLM() . "]</a>\n";
+			if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($pid2)" . getLRM();
+			if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>\n"; else print getRLM() . "]</a>\n";
 		}
 		else {
 			print $pgv_lang["unknown"];
@@ -2160,46 +2119,62 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	}
 }
 /**
- * Print age of parents
+ * Format age of parents in HTML
  *
  * @param string $pid	child ID
- * @param string $birth_date	child birthdate
- * @param boolean $return	whether to print the data or return a string
  */
-function print_parents_age(&$person, $birth_date, $return=false) {
-	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	if (!$SHOW_PARENTS_AGE) return "";
-	$data = "";
-	$families = $person->getChildFamilies();
-	// dont show age of parents if more than one family (ADOPtion)
-	if (count($families)>1) return "";
-	$family = array_shift($families);
-	if (!$family) return "";
-	$data .= " <span class=\"age\">";
-	// father
-	$spouse = $family->getHusband();
-	if (!is_null($spouse) && !is_null($spouse->getBirthDate(false)) && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(false), $birth_date);
-		if ($age) {
-			$data .= "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />".$age;
-		}
-	}
-	// mother
-	$spouse = $family->getWife();
-	if (!is_null($spouse) && !is_null($spouse->getBirthDate(false)) && showFact("BIRT", $spouse->getXref())) {
-		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(false), $birth_date);
-		if ($age) {
-			// [ 1749591 ] Highlight maternal death
-			$mother_ddate=$spouse->getDeathDate(false);
-			if ($mother_ddate->MinJD() && $mother_ddate->MinJD() < $birth_date->MinJD()+90) {
-				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+function format_parents_age($pid) {
+	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE;
+
+	$html='';
+	if ($SHOW_PARENTS_AGE) {
+		$person=Person::getInstance($pid);
+		$families = $person->getChildFamilies();
+		// Multiple sets of parents (e.g. adoption) cause complications, so ignore.
+		$birth_date=$person->getBirthDate();
+		if ($birth_date->isOK() && count($families)==1) {
+			$family=current($families);
+			// Allow for same-sex parents
+			foreach (array($family->getHusband(), $family->getWife()) as $parent) {
+				if ($parent && $age=GedcomDate::GetAgeYears($parent->getBirthDate(), $person->getBirthDate())) {
+					$deatdate=$parent->getDeathDate();
+					$class='';
+					switch ($parent->getSex()) {
+						case 'F':
+							// Highlight mothers who die in childbirth or shortly afterwards
+							if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()+90) {
+								$class='parentdeath';
+								$title=$factarray['_DEAT_MOTH'];
+							} else {
+								$title=$pgv_lang['mother'];
+							}
+							break;
+						case 'M':
+							// Highlight fathers who die before the birth
+							if ($deatdate->isOK() && $deatdate->MinJD()<$birth_date->MinJD()) {
+								$class='parentdeath';
+								$title=$factarray['_DEAT_FATH'];
+							} else {
+								$title=$pgv_lang['father'];
+							}
+							break;
+						default:
+							$title=$pgv_lang['parent'];
+							break;
+					}
+					if ($class) {
+						$html.=' <span class="'.$class.'" title="'.$title.'">'.$parent->getSexImage().$age.'</span>';
+					} else {
+						$html.=' <span title="'.$title.'">'.$parent->getSexImage().$age.'</span>';
+					}
+				}
 			}
-			$data .= "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />".$age;
+			if ($html) {
+				$html='<span class="age">'.$html.'</span>';
+			}
 		}
 	}
-	$data .= "</span>";
-	if (!$return) print $data;
-	else return $data;
+	return $html;
 }
 /**
  * print fact DATE TIME
@@ -2207,41 +2182,44 @@ function print_parents_age(&$person, $birth_date, $return=false) {
  * @param Event $eventObj	Event to print the date for
  * @param boolean $anchor	option to print a link to calendar
  * @param boolean $time		option to print TIME value
- * @param boolean $return	option to print or return the data
  */
-function print_fact_date(&$eventObj, $anchor=false, $time=false, $return=false) {
+function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	global $factarray, $pgv_lang, $SEARCH_SPIDER;
 
 	if (!is_object($eventObj)) pgv_error_handler(2, "Must use Event object", __FILE__, __LINE__);
 	$factrec = $eventObj->getGedcomRecord();
 
-	$data = "";
+	$html='';
 	// Recorded age
-	$fact_age=get_gedcom_value("AGE", 2, $factrec);
+	$fact_age=get_gedcom_value('AGE', 2, $factrec);
 	if (empty($fact_age))
-		$fact_age=get_gedcom_value("DATE:AGE", 2, $factrec);
-	$husb_age=get_gedcom_value("HUSB:AGE", 2, $factrec);
-	$wife_age=get_gedcom_value("WIFE:AGE", 2, $factrec);
+	$fact_age=get_gedcom_value('DATE:AGE', 2, $factrec);
+	$husb_age=get_gedcom_value('HUSB:AGE', 2, $factrec);
+	$wife_age=get_gedcom_value('WIFE:AGE', 2, $factrec);
 
 	// Calculated age
-	if (preg_match("/2 DATE (.+)/", $factrec, $match)) {
+	if (preg_match('/2 DATE (.+)/', $factrec, $match)) {
 		$date=new GedcomDate($match[1]);
-		$data .= " ".$date->Display($anchor && (empty($SEARCH_SPIDER)));
+		$html.=' '.$date->Display($anchor && !$SEARCH_SPIDER);
 		// time
 		if ($time) {
-			$timerec = get_sub_record(2, "2 TIME", $factrec);
-			if (empty($timerec)) $timerec = get_sub_record(2, "2 DATE", $factrec);
-			$tt = preg_match("/[2-3] TIME (.*)/", $timerec, $tmatch);
-			if ($tt>0) $data .= " - <span class=\"date\">".$tmatch[1]."</span>";
+			$timerec=get_sub_record(2, '2 TIME', $factrec);
+			if (empty($timerec)) {
+				$timerec=get_sub_record(2, '2 DATE', $factrec);
+			}
+			if (preg_match('/[2-3] TIME (.*)/', $timerec, $tmatch)) {
+				$html.=' - <span class="date">'.$tmatch[1].'</span>';
+			}
 		}
 		$fact = $eventObj->getTag();
 		$person = $eventObj->getParentObject();
 		if (!is_null($person) && $person->getType()=='INDI') {
 			// age of parents at child birth
-			if ($fact=="BIRT")
-				$data .= print_parents_age($person, $date, true);
+			if ($fact=='BIRT') {
+				$html .= format_parents_age($person->getXref());
+			}
 			// age at event
-			else if ($fact!="CHAN") {
+			else if ($fact!='CHAN' && $fact!='_TODO') {
 				$birth_date=$person->getBirthDate(false);
 				$death_date=$person->getDeathDate(false);
 				if (GedcomDate::Compare($date, $death_date)<0 || $fact=='DEAT') {
@@ -2250,35 +2228,38 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false, $return=false) 
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
 						if (!empty($fact_age) && $fact_age!=$age ||
-						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!= $age ||
-						    !empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
-							$data .= " ({$pgv_lang['age']} ".get_age_at_event($age, false).")";
+						empty($fact_age) && empty($husb_age) && empty($wife_age) ||
+						!empty($husb_age) && $person->getSex()=='M' && $husb_age!= $age ||
+						!empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
+						$html.=' ('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
 					}
 				}
 				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>0) {
 					// After death, print time since death
 					$age=GedcomDate::GetAgeGedcom($death_date, $date);
 					if (!empty($age))
-						$data .= " (".get_age_at_event($age, true)." ".$pgv_lang['after_death'].")";
+					$html.=' ('.get_age_at_event($age, true).' '.$pgv_lang['after_death'].')';
 				}
 			}
 		}
-	}
-	else {
+	} else {
 		// 1 DEAT Y with no DATE => print YES
 		// 1 DEAT N is not allowed
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
-		$factdetail = preg_split("/ /", trim($factrec));
-		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == "Y") $data .= $pgv_lang["yes"];
+		$factrec = str_replace("\r\nPGV_OLD\r\n", '', $factrec);
+		$factrec = str_replace("\r\nPGV_NEW\r\n", '', $factrec);
+		$factdetail = preg_split('/ /', trim($factrec));
+		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == 'Y') {
+			$html.=$pgv_lang['yes'];
+		}
 	}
 	// print gedcom ages
-	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age)
-		if (!empty($age))
-			$data .= " <span class=\"label\">{$label}</span>: ".get_age_at_event($age, false);
-	
-	if (!$return) print $data;
-	else return $data;
+	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
+		if (!empty($age)) {
+			$html.=' <span class="label">'.$label.'</span>: '.get_age_at_event($age, false);
+		}
+	}
+	return $html;
 }
 /**
  * print fact PLACe TEMPle STATus
@@ -2287,131 +2268,133 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false, $return=false) 
  * @param boolean $anchor	option to print a link to placelist
  * @param boolean $sub		option to print place subrecords
  * @param boolean $lds		option to print LDS TEMPle and STATus
- * @param boolean $return	whether to print the data or return a string
  */
-function print_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false, $return=false) {
+function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $factarray, $SEARCH_SPIDER;
+	if ($eventObj==null) return '';
 	if (!is_object($eventObj)) {
 		pgv_error_handler("2", "Object was not sent in, please use Event object", __FILE__, __LINE__);
 		$factrec = $eventObj;
 	}
 	else $factrec = $eventObj->getGedcomRecord();
-	$data = "";
+	$html='';
 	$out = false;
 	$ct = preg_match("/2 PLAC (.*)/", $factrec, $match);
 	if ($ct>0) {
-		print " ";
+		$html.=' ';
 		$levels = preg_split("/,/", $match[1]);
 		if ($anchor && (empty($SEARCH_SPIDER))) {
 			$place = trim($match[1]);
 			// reverse the array so that we get the top level first
 			$levels = array_reverse($levels);
-			$data .= "<a href=\"placelist.php?action=show&amp;";
+			$html.='<a href="placelist.php?action=show&amp;';
 			foreach($levels as $pindex=>$ppart) {
-				 // routine for replacing ampersands
-				 $ppart = preg_replace("/amp\%3B/", "", trim($ppart));
-				 $data .= "parent[$pindex]=".PrintReady($ppart)."&amp;";
+				// routine for replacing ampersands
+				$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
+				$html.='parent['.$pindex.']='.PrintReady($ppart).'&amp;';
 			}
-			$data .= "level=".count($levels);
-			$data .= "\"> ".PrintReady($place)."</a>";
-		}
-		else {
-			if (empty($SEARCH_SPIDER)) $data .= " -- ";
+			$html.='level='.count($levels);
+			$html.='"> '.PrintReady($place).'</a>';
+		} else {
+			if (!$SEARCH_SPIDER) {
+				$html.=' -- ';
+			}
 			for ($level=0; $level<$SHOW_PEDIGREE_PLACES; $level++) {
 				if (!empty($levels[$level])) {
-					if ($level>0) $data .= ", ";
-					$data .= PrintReady($levels[$level]);
+					if ($level>0) {
+						$html.=", ";
+					}
+					$html.=PrintReady($levels[$level]);
 				}
 			}
 		}
 	}
 	$ctn=0;
 	if ($sub) {
-		$placerec = get_sub_record(2, "2 PLAC", $factrec);
+		$placerec = get_sub_record(2, '2 PLAC', $factrec);
 		if (!empty($placerec)) {
-			$cts = preg_match("/\d ROMN (.*)/", $placerec, $match);
+			$cts = preg_match('/\d ROMN (.*)/', $placerec, $match);
 			if ($cts>0) {
-				if ($ct>0) $data .= " - ";
-				$data .= " ".PrintReady($match[1]);
+				if ($ct>0) {
+					$html.=" - ";
+				}
+				$html.=' '.PrintReady($match[1]);
 			}
-			$cts = preg_match("/\d _HEB (.*)/", $placerec, $match);
+			$cts = preg_match('/\d _HEB (.*)/', $placerec, $match);
 			if ($cts>0) {
-				if ($ct>0) $data .= " - ";
-				$data .= " ".PrintReady($match[1]);
+				if ($ct>0) {
+					$html.=' - ';
+				}
+				$html.=' '.PrintReady($match[1]);
 			}
 			$map_lati="";
-			$cts = preg_match("/\d LATI (.*)/", $placerec, $match);
+			$cts = preg_match('/\d LATI (.*)/', $placerec, $match);
 			if ($cts>0) {
 				$map_lati=$match[1];
-				$data .= "<br /><span class=\"label\">".$factarray["LATI"].": </span>".$map_lati;
+				$html.='<br /><span class="label">'.$factarray['LATI'].': </span>'.$map_lati;
 			}
 			$map_long="";
-			$cts = preg_match("/\d LONG (.*)/", $placerec, $match);
+			$cts = preg_match('/\d LONG (.*)/', $placerec, $match);
 			if ($cts>0) {
 				$map_long=$match[1];
-				$data .= " <span class=\"label\">".$factarray["LONG"].": </span>".$map_long;
+				$html.=' <span class="label">'.$factarray['LONG'].': </span>'.$map_long;
 			}
 			if ($map_lati and $map_long) {
 				$map_lati=trim(strtr($map_lati,"NSEW,�"," - -. ")); // S5,6789 ==> -5.6789
 				$map_long=trim(strtr($map_long,"NSEW,�"," - -. ")); // E3.456� ==> 3.456
-				$data .= " <a target=\"_BLANK\" href=\"http://www.mapquest.com/maps/map.adp?searchtype=address&formtype=latlong&latlongtype=decimal&latitude=".$map_lati."&longitude=".$map_long."\"><img src=\"images/mapq.gif\" border=\"0\" alt=\"Mapquest &copy;\" title=\"Mapquest &copy;\" /></a>";
-				$data .= " <a target=\"_BLANK\" href=\"http://maps.google.com/maps?q=".$map_lati.",".$map_long."\"><img src=\"images/bubble.gif\" border=\"0\" alt=\"Google Maps &copy;\" title=\"Google Maps &copy;\" /></a>";
-				$data .= " <a target=\"_BLANK\" href=\"http://www.multimap.com/map/browse.cgi?lat=".$map_lati."&lon=".$map_long."&scale=&icon=x\"><img src=\"images/multim.gif\" border=\"0\" alt=\"Multimap &copy;\" title=\"Multimap &copy;\" /></a>";
-				$data .= " <a target=\"_BLANK\" href=\"http://www.terraserver.com/imagery/image_gx.asp?cpx=".$map_long."&cpy=".$map_lati."&res=30&provider_id=340\"><img src=\"images/terrasrv.gif\" border=\"0\" alt=\"TerraServer &copy;\" title=\"TerraServer &copy;\" /></a>";
+				$html.=' <a target="_BLANK" href="http://www.mapquest.com/maps/map.adp?searchtype=address&amp;formtype=latlong&amp;latlongtype=decimal&amp;latitude='.$map_lati.'&amp;longitude='.$map_long.'"><img src="images/mapq.gif" border="0" alt="Mapquest &copy;" title="Mapquest &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="http://maps.google.com/maps?q='.$map_lati.",".$map_long.'"><img src="images/bubble.gif" border="0" alt="Google Maps &copy;" title="Google Maps &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="http://www.multimap.com/map/browse.cgi?lat='.$map_lati.'&amp;lon='.$map_long.'&amp;scale=&amp;icon=x"><img src="images/multim.gif" border="0" alt="Multimap &copy;" title="Multimap &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="http://www.terraserver.com/imagery/image_gx.asp?cpx='.$map_long.'&amp;cpy='.$map_lati.'&amp;res=30&amp;provider_id=340"><img src="images/terrasrv.gif" border="0" alt="TerraServer &copy;" title="TerraServer &copy;" /></a>';
 			}
-			$ctn = preg_match("/\d NOTE (.*)/", $placerec, $match);
-			if ($ctn>0) {
-				$data .= print_fact_notes($placerec, 3, false, true);
-				$out = true;
+			if (preg_match('/\d NOTE (.*)/', $placerec, $match)) {
+				$ob_start();
+				print_fact_notes($placerec, 3);
+				$html.=ob_get_contents();
+				ob_end_clean();
 			}
 		}
 	}
 	if ($lds) {
-		$ct = preg_match("/2 TEMP (.*)/", $factrec, $match);
-		if ($ct>0) {
+		if (preg_match('/2 TEMP (.*)/', $factrec, $match)) {
 			$tcode = trim($match[1]);
-			if (array_key_exists($tcode, $TEMPLE_CODES))
-				$data .= "<br/>".$pgv_lang["temple"].": ".$TEMPLE_CODES[$tcode];
-			else
-				$data .= "<br/>".$pgv_lang["temple_code"].$tcode;
+			if (array_key_exists($tcode, $TEMPLE_CODES)) {
+				$html.='<br/>'.$pgv_lang['temple'].': '.$TEMPLE_CODES[$tcode];
+			} else {
+				$html.='<br/>'.$pgv_lang['temple_code'].$tcode;
+			}
 		}
-		$ct = preg_match("/2 STAT (.*)/", $factrec, $match);
-		if ($ct>0) {
-			$data .= "<br />".$pgv_lang["status"].": ".trim($match[1]);
-			if (preg_match("/3 DATE (.*)/", $factrec, $match)) {
+		if (preg_match('/2 STAT (.*)/', $factrec, $match)) {
+			$html.='<br />'.$pgv_lang['status'].': '.trim($match[1]);
+			if (preg_match('/3 DATE (.*)/', $factrec, $match)) {
 				$date=new GedcomDate($match[1]);
-				$data .= ", ".$factarray["STAT:DATE"].": ".$date->Display(false);
+				$html.=', '.$factarray['STAT:DATE'].': '.$date->Display(false);
 			}
 		}
 	}
-	if (!$return) print $data;
-	else return $data;
+	return $html;
 }
 /**
  * print first major fact for an Individual
  *
  * @param string $key	indi pid
  */
-function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
+function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
 
+	$html='';
 	$person = GedcomRecord::getInstance($key);
 	if (is_null($person)) return;
 	foreach ($majorfacts as $indexval => $fact) {
 		$event = $person->getFactByType($fact);
 		if (!is_null($event) && $event->hasDatePlace() && $event->canShow()) {
-			print "<span dir=\"$TEXT_DIRECTION\">";
-			echo "<br /><i>";
-			print $event->getLabel();
-			print " ";
-			print_fact_date($event);
-			print_fact_place($event);
-			print "</i>";
-			print "</span>";
+			$html.='<span dir="'.$TEXT_DIRECTION.'"><br /><i>';
+			$html .= $event->getLabel();
+			$html.=' '.format_fact_date($event).format_fact_place($event).'</i></span>';
 			break;
 		}
 	}
-	return $fact;
+	return $html;
 }
 
 /**
@@ -2419,27 +2402,27 @@ function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM",
  * If the fact already exists in the second array, delete it from the first one.
  */
 function CheckFactUnique($uniquefacts, $recfacts, $type) {
-	 foreach($recfacts as $indexval => $factarray) {
-	 	$fact=false;
-	 	if (is_object($factarray)) {
-	 		/* @var $factarray Event */
-	 		$fact = $factarray->getTag();	
-	 	}
-	 	else {
+	foreach($recfacts as $indexval => $factarray) {
+		$fact=false;
+		if (is_object($factarray)) {
+			/* @var $factarray Event */
+			$fact = $factarray->getTag();
+		}
+		else {
 			if (($type == "SOUR") || ($type == "REPO")) $factrec = $factarray[0];
 			if (($type == "FAM") || ($type == "INDI")) $factrec = $factarray[1];
-	 	
-		$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
-		if ($ft>0) {
-			$fact = trim($match[1]);
+			 
+			$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
+			if ($ft>0) {
+				$fact = trim($match[1]);
 			}
-	 	}
-	 	if ($fact!==false) {
+		}
+		if ($fact!==false) {
 			$key = array_search($fact, $uniquefacts);
 			if ($key !== false) unset($uniquefacts[$key]);
 		}
-	 }
-	 return $uniquefacts;
+	}
+	return $uniquefacts;
 }
 
 /**
@@ -2455,28 +2438,28 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
 
 	switch ($type) {
-	case "INDI":
-		$addfacts   =preg_split("/[, ;:]+/", $INDI_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
-		$uniquefacts=preg_split("/[, ;:]+/", $INDI_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
-		$quickfacts =preg_split("/[, ;:]+/", $INDI_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
-		break;
-	case "FAM":
-		$addfacts   =preg_split("/[, ;:]+/", $FAM_FACTS_ADD,     -1, PREG_SPLIT_NO_EMPTY);
-		$uniquefacts=preg_split("/[, ;:]+/", $FAM_FACTS_UNIQUE,  -1, PREG_SPLIT_NO_EMPTY);
-		$quickfacts =preg_split("/[, ;:]+/", $FAM_FACTS_QUICK,   -1, PREG_SPLIT_NO_EMPTY);
-		break;
-	case "SOUR":
-		$addfacts   =preg_split("/[, ;:]+/", $SOUR_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
-		$uniquefacts=preg_split("/[, ;:]+/", $SOUR_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
-		$quickfacts =preg_split("/[, ;:]+/", $SOUR_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
-		break;
-	case "REPO":
-		$addfacts   =preg_split("/[, ;:]+/", $REPO_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
-		$uniquefacts=preg_split("/[, ;:]+/", $REPO_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
-		$quickfacts =preg_split("/[, ;:]+/", $REPO_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
-		break;
-	default:
-		return;
+		case "INDI":
+			$addfacts   =preg_split("/[, ;:]+/", $INDI_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
+			$uniquefacts=preg_split("/[, ;:]+/", $INDI_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+			$quickfacts =preg_split("/[, ;:]+/", $INDI_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
+			break;
+		case "FAM":
+			$addfacts   =preg_split("/[, ;:]+/", $FAM_FACTS_ADD,     -1, PREG_SPLIT_NO_EMPTY);
+			$uniquefacts=preg_split("/[, ;:]+/", $FAM_FACTS_UNIQUE,  -1, PREG_SPLIT_NO_EMPTY);
+			$quickfacts =preg_split("/[, ;:]+/", $FAM_FACTS_QUICK,   -1, PREG_SPLIT_NO_EMPTY);
+			break;
+		case "SOUR":
+			$addfacts   =preg_split("/[, ;:]+/", $SOUR_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
+			$uniquefacts=preg_split("/[, ;:]+/", $SOUR_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+			$quickfacts =preg_split("/[, ;:]+/", $SOUR_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
+			break;
+		case "REPO":
+			$addfacts   =preg_split("/[, ;:]+/", $REPO_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
+			$uniquefacts=preg_split("/[, ;:]+/", $REPO_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+			$quickfacts =preg_split("/[, ;:]+/", $REPO_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
+			break;
+		default:
+			return;
 	}
 	$addfacts=array_merge(CheckFactUnique($uniquefacts, $usedfacts, $type), $addfacts);
 	$quickfacts=array_intersect($quickfacts, $addfacts);
@@ -2489,7 +2472,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	print "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">\n";
 	print "<select id=\"newfact\" name=\"newfact\">\n";
 	foreach($addfacts as $indexval => $fact) {
-  		print PrintReady("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>\n");
+		print PrintReady("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>\n");
 	}
 	if (($type == "INDI") || ($type == "FAM")) print "<option value=\"EVEN\">".$pgv_lang["custom_event"]." [EVEN]</option>\n";
 	if (!empty($_SESSION["clipboard"])) {

@@ -5,7 +5,7 @@
  * To learn more about CSS visit http: //www.w3.org/TR/REC-CSS2/
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007 John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ ul {
 }
 
 .blockcontent {
+	overflow: auto;
 	margin-left: auto;
 	border: 1pt solid #999;
 	margin-right: 5px;
@@ -192,6 +193,7 @@ ul {
 	background-repeat: no-repeat;
 	width: 26px;
 	height: 24px;
+	margin: 0;
 }
 
 .blockh2 {
@@ -209,6 +211,7 @@ ul {
 	background-repeat: no-repeat;
 	width: 8px;
 	height: 24px;
+	margin: 0;
 }
 
 .blockhc {
@@ -220,6 +223,10 @@ ul {
 }
 
 #login_block .blockh1 {
+	background-image: url(images/left1G.gif);
+}
+
+#logout_block .blockh1 {
 	background-image: url(images/left1R.gif);
 }
 
@@ -416,7 +423,7 @@ a {
 }
 
 .topheader {
-	color: gray;
+	color: #808080;
 	margin: 0;
 	white-space: nowrap;
 }
@@ -784,10 +791,9 @@ th {
 	padding: 5px;
 }
 
-.icon {
+.icon, .adminicon {
 	border: none;
-	padding-top: 1pt;
-	padding-left: 3pt;
+	padding-left: 0pt;
 	padding-right: 5pt;
 }
 
@@ -842,6 +848,11 @@ th {
 
 .age {
 	font-size: 9px;
+}
+
+.parentdeath {
+	border: thin solid #808080;
+	padding: 1px;
 }
 
 .source_citations {

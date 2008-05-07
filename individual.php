@@ -62,7 +62,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
  			print PrintReady("(".$controller->pid.")");
 			if (PGV_USER_IS_ADMIN) {
 				$pgvuser=get_user_from_gedcom_xref($GEDCOM, $controller->pid);
-				if ($pgvuser!==false) {
+				if ($pgvuser) {
   					print "&nbsp;";
 					print printReady("(<a href=\"useradmin.php?action=edituser&username={$pgvuser}\">{$pgvuser}</a>)");
 				}
@@ -104,8 +104,8 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				<?php if (!empty($birthEvent) && $birthEvent->canShowDetails()) { ?>
 					<span class="label"><?php print $birthEvent->getLabel().":"; ?></span>
 					<span class="field">
-						<?php print_fact_date($birthEvent); ?>
-						<?php print_fact_place($birthEvent); ?>
+						<?php format_fact_date($birthEvent); ?>
+						<?php format_fact_place($birthEvent); ?>
 					</span><br />
 				<?php } ?>
 				<?php
@@ -116,8 +116,8 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				<span class="label"><?php print $factarray["DEAT"].":"; ?></span>
 				<span class="field">
 				<?php
-					print_fact_date($deathEvent);
-					print_fact_place($deathEvent);
+					format_fact_date($deathEvent);
+					format_fact_place($deathEvent);
 				?>
 				</span><br />
 			<?php }

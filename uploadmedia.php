@@ -3,7 +3,7 @@
  * Allow admin users to upload media files using a web interface.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,6 +119,8 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 						print "<input type=\"text\" name=\"folder".$i."\" size=60 />";
 					print "</td>";
 				print "</tr>";
+			} else {
+				print "<input type=\"hidden\" name=\"folder{$i}\" value=\"\" />";
 			}
 			print "<tr>";
 				print "<td ";

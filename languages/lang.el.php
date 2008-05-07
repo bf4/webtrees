@@ -3,7 +3,7 @@
  * Greek Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Nicholas G. Antimisiaris
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -401,7 +401,7 @@ $pgv_lang["person1"]							= "Άτομο 1";
 $pgv_lang["person2"]							= "Άτομο 2";
 $pgv_lang["no_link_found"]						= "Καμμία (άλλη) διασύνδεση ανάμεσα στα δύο άτομα δεν βρέθηκε.";
 $pgv_lang["sibling"]							= "Αδέλφια";
-$pgv_lang["follow_spouse"]						= "Έλεγχος συγγένειας από γάμο.";
+$pgv_lang["follow_spouse"]						= "Έλεγχος συγγένειας από γάμο";
 $pgv_lang["timeout_error"]						= "Ο μέγιστος επιτρεπόμενος χρόνος εκτέλεσης της διαδικασίας έχει ξεπεραστεί πριν βρεθεί κάποια συγγένεια.";
 $pgv_lang["son"]								= "Υιός";
 $pgv_lang["daughter"]							= "Θυγατέρα";

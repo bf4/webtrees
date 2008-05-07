@@ -62,23 +62,24 @@ class TimelineControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
+		global $GEDCOM_ID_PREFIX;
+
 		$this->baseyear = date("Y");
 		//-- new pid
-		if (isset($_REQUEST['newpid'])) {
-			$newpid = clean_input($_REQUEST['newpid']);
+		$newpid=safe_GET_xref('newpid');
+		if ($newpid) {
 			$indirec = find_person_record($newpid);
-			if (empty($indirec)) {
-				if (stristr($newpid, "I")===false) $newpid = "I".$newpid;
+			if (empty($indirec) && $GEDCOM_ID_PREFIX) {
+				if (stristr($newpid, $GEDCOM_ID_PREFIX)===false) $newpid = $GEDCOM_ID_PREFIX.$newpid;
 			}
 		}
 		
-		if (isset($_REQUEST['clear'])) unset($_SESSION['timeline_pids']);
-		else {
+		if (safe_GET('clear', '1')=='1') {
+			unset($_SESSION['timeline_pids']);
+		} else {
 			if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
 			//-- pids array
-			if (isset($_REQUEST['pids'])){
-				$this->pids = $_REQUEST['pids'];
-			}
+			$this->pids=safe_GET_xref('pids');
 		}
 		if (!is_array($this->pids)) $this->pids = array();
 		else {
@@ -87,8 +88,7 @@ class TimelineControllerRoot extends BaseController {
 		}
 		if (!empty($newpid) && !in_array($newpid, $this->pids)) $this->pids[] = $newpid;
 		if (count($this->pids)==0) $this->pids[] = check_rootid("");
-		$remove = "";
-		if (!empty($_REQUEST['remove'])) $remove = $_REQUEST['remove'];
+		$remove = safe_GET_xref('remove');
 		//-- cleanup user input
 		$newpids = array();
 		foreach($this->pids as $key=>$value) {
@@ -106,9 +106,8 @@ class TimelineControllerRoot extends BaseController {
 				//-- setup string of valid pids for links
 				$this->pidlinks .= "pids[]=".$indi->getXref()."&amp;";
 				$bdate = $indi->getBirthDate();
-				if (!empty($bdate)) {
-					$date = new GedcomDate($bdate);
-					$date = $date->MinDate();
+				if ($bdate->isOK()) {
+					$date = $bdate->MinDate();
 					$date = $date->convert_to_cal('gregorian');
 					if ($date->y) {
 						$this->birthyears [$indi->getXref()] = $date->y;
@@ -147,11 +146,12 @@ class TimelineControllerRoot extends BaseController {
 			}
 		}
 		$_SESSION['timeline_pids'] = $this->pids;
-		if (empty($_REQUEST['scale'])) {
+		$scale=safe_GET_integer('scale', 0, 200, 0); 
+		if ($scale==0) {
 			$this->scale = round(($this->topyear-$this->baseyear)/20 * count($this->indifacts)/4);
 			if ($this->scale<6) $this->scale = 6;
 		}
-		else $this->scale = $_REQUEST['scale'];
+		else $this->scale = $scale;
 		if ($this->scale<2) $this->scale=2;
 		$this->baseyear -= 5;
 		$this->topyear += 5;
@@ -247,7 +247,7 @@ class TimelineControllerRoot extends BaseController {
 					print "--";
 				print $gdate->Display(false);
 					$indi=Person::GetInstance($factitem["pid"]); // TODO we already have this object somewhere....
-					$birth_date=new GedcomDate($indi->getBirthDate());
+				$birth_date=$indi->getEstimatedBirthDate();
 				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $gdate), false);
 					if (!empty($age))
 						print " ({$pgv_lang['age']} {$age})";

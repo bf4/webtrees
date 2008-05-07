@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,13 +51,16 @@ if (!isset($logfilename)) $logfilename = "";
 $file_nr = 0;
 $dir_var = opendir ($INDEX_DIRECTORY);
 $dir_array = array();
-while ($file = readdir ($dir_var))
-{
-	if ((strpos($file, ".log") > 0) && (strstr($file, "pgv-") !== false )){$dir_array[$file_nr] = $file; $file_nr++;}
+while ($file = readdir ($dir_var)) {
+	if (substr($file,-4)==".log" && substr($file,0,4)== "pgv-") {
+		$dir_array[$file_nr] = $file; 
+		$file_nr++;
+	}
 }
 closedir($dir_var);
 $d_logfile_str = "&nbsp;";
 if (count($dir_array)>0) {
+	sort($dir_array);
 	$d_logfile_str = "<form name=\"logform\" action=\"admin.php\" method=\"post\">";
 	$d_logfile_str .= $pgv_lang["view_logs"] . ": ";
 	$d_logfile_str .= "\n<select name=\"logfilename\">\n";
@@ -78,13 +81,13 @@ if (count($dir_array)>0) {
 	$d_logfile_str .= "<input type=\"button\" name=\"logfile\" value=\" &gt; \" onclick=\"window.open('printlog.php?logfile='+document.logform.logfilename.options[document.logform.logfilename.selectedIndex].value, '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\" />";
 	$d_logfile_str .= "</form>";
 }
-/*
+
 $usermanual_filename = "docs/english/PGV-manual-en.html";
 $d_LangName = "lang_name_" . "english";
 $doc_lang = $pgv_lang[$d_LangName];
 $new_usermanual_filename = "docs/" . $languages[$LANGUAGE] . "/PGV-manual-" . $language_settings[$LANGUAGE]["lang_short_cut"] . ".html";
 if (file_exists($new_usermanual_filename)){$usermanual_filename = $new_usermanual_filename; $d_LangName = "lang_name_" . $languages[$LANGUAGE]; $doc_lang = $pgv_lang[$d_LangName];}
-*/
+
 $d_img_module_str = "&nbsp;";
 if (file_exists("img_editconfig.php")) $d_img_module_str = "<a href=\"img_editconfig.php?action=edit\">".$pgv_lang["img_admin_settings"]."</a><br />";
 
@@ -104,8 +107,7 @@ foreach(get_all_users() as $user_id=>$user_name) {
 		break;
 	}
 }
-// [START] New code for dhtmlXTabbar
-require_once("js/dhtmlXTabbar.js.htm");
+
 ?>
 <script type="text/javascript">
 <!--
@@ -114,168 +116,7 @@ function showchanges() {
 }
 //-->
 </script>
-
-<h4 class="error"><?php print $pgv_lang["adminMenu_caution"]; ?></h4>
-<div id="admin_tabbar" class="dhtmlxTabBar" width="800px" height="400px" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'?> >
-	<div id="admin_tab_info" name="<?php print $pgv_lang["admin_info"]; ?>" class="indent" >
-		<fieldset>
-			<legend><?php print " {$pgv_lang["adminMenu_progname"]} "; ?>
-			</legend>
-			<ul>
-				<li>
-				<label><?php print " {$pgv_lang["adminMenu_version"]} "; ?>
-				</label>
-				<?php echo $VERSION . " " . $VERSION_RELEASE ?></li>
-				<li>
-				<?php print_help_link("changelog_help", "qm"); ?>
-				<a href="changelog.php" target="manual" title="<?php print $pgv_lang["view_changelog"]; ?>">
-					<?php print_text("changelog"); ?></a></li>
-				<li>
-				<?php print_help_link("readmefile_help", "qm"); ?>
-				<a href="readme.txt" target="manual" title="<?php print $pgv_lang["view_readme"]; ?>">
-					<?php print $pgv_lang["readme_documentation"];?></a></li>
-				<li>
-				<?php print_help_link("config_help_help", "qm"); ?>
-				<a href="pgvinfo.php?action=confighelp">
-					<?php print $pgv_lang["config_help"];?></a></li>
-				<li>
-				<?php print_help_link("registry_help", "qm"); ?>
-				<a href="http://phpgedview.sourceforge.net/registry.php" target="_blank">
-					<?php print $pgv_lang["pgv_registry"];?></a></li>
-			</ul>
-		</fieldset>
-		<fieldset>
-			<legend><?php print " {$pgv_lang["adminMenu_server"]} "; ?>
-			</legend>
-			<ul>
-				<li>
-				<img src="images/small/time_server.gif" alt="<?php echo $pgv_lang["system_time"]?>" title="<?php echo $pgv_lang["system_time"]?> " />
-				<?php $date=new GedcomDate(date('j M Y'));
-$displayDate = $date->Display(false); ?></li>
-				<li>
-				<?php print_help_link("phpinfo_help", "qm"); ?>
-				<a href="pgvinfo.php?action=phpinfo" title="<?php print $pgv_lang["show_phpinfo"]; ?>">
-					<?php print $pgv_lang["phpinfo"];?></a></li>
-			</ul>
-		</fieldset>
-		<fieldset>
-			<legend><?php print " {$pgv_lang["adminMenu_browser"]} "; ?>
-			</legend>
-			<ul>
-				<li>
-				<img src="images/small/time_desktop.gif" alt="<?php echo $pgv_lang["user_time"]?>" title="<?php echo $pgv_lang["user_time"]?> " />
-				<?php $date=new GedcomDate(date('j M Y', client_time()));
-$displayDate = $date->Display(false); ?></li>
-			</ul>
-	</fieldset>
-	</div>
-	<?php if (userIsAdmin(getUserName())) {?>
-	<div id="admin_tab_site" name="<?php print $pgv_lang["admin_site"]; ?>">
-		<fieldset>
-			<legend><?php print " {$pgv_lang["adminMenu_users"]} "; ?>
-			</legend>
-			<ul>
-				<li>
-				<?php print_help_link("um_tool_help", "qm"); ?>
-				<a href="usermigrate.php?proceed=migrate">
-					<?php print $pgv_lang["um_header"];?></a></li>
-				<li>
-				<?php print_help_link("help_useradmin.php", "qm"); ?>
-				<a href="useradmin.php">
-					<?php print $pgv_lang["user_admin"];?></a></li>
-				<li>
-				<?php print_help_link("um_bu_help", "qm"); ?>
-				<a href="usermigrate.php?proceed=backup">
-					<?php print $pgv_lang["um_backup"];?></a></li>
-			</ul>
-		</fieldset>
-		<fieldset>
-			<legend><?php print " {$pgv_lang["adminMenu_languages"]} "; ?>
-			</legend>
-			<ul>
-				<li>
-				<?php print_help_link("help_changelanguage.php", "qm"); ?>
-				<a href="changelanguage.php?action=editold">
-					<?php print $pgv_lang["enable_disable_lang"];?></a></li>
-				<?php
-				if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-					print "<br /><span class=\"error\">";
-					print $pgv_lang["LANGUAGE_DEFAULT"];
-					print "</span>";
-				}?>
-				<li>
-					<?php print_help_link("add_new_language_help", "qm"); ?>
-					<a href="changelanguage.php?action=addnew">
-						<?php print $pgv_lang["add_new_language"];?></a></li>
-				<li>
-					<?php print_help_link("help_editlang.php", "qm"); ?>
-					<a href="editlang.php">
-						<?php print $pgv_lang["translator_tools"];?></a></li>
-			</ul>
-		</fieldset>
-		<fieldset>
-			<legend><?php print " {$pgv_lang["adminMenu_servers"]} "; ?>
-			</legend>
-			<ul>
-				<li>
-					<a href=""><?php print $pgv_lang["adminMenu_spiders"]; ?></a></li>
-				<li>
-					<a href=""><?php print $pgv_lang["adminMenu_block"]; ?></a></li>
-				<li>
-					<a href=""><?php print $pgv_lang["adminMenu_remotes"]; ?></a></li>
-			</ul>
-		</fieldset>
-		<fieldset>
-			<legend><?php print " {$pgv_lang["adminMenu_logs"]} "; ?>
-			</legend>
-			<?php print $d_logfile_str; ?>
-		</fieldset>
-	</div>
-	<?php }
-	print "<div id=\"admin_tab_ged\" name=\"{$pgv_lang["admin_geds"]}\">";
-		print "<ul>";
-			print "<li>";
-				print_help_link("edit_gedcoms_help", "qm");
-				print "<a href=\"editgedcoms.php\">{$pgv_lang["manage_gedcoms"]}</a>";
-			print "</li>";
-			print "<li>";
-				print_help_link("help_edit_merge.php", "qm");
-				print "<a href=\"edit_merge.php\">{$pgv_lang["merge_records"]}</a>";
-			print "</li>";
-			if (userCanEdit(getUserName())) {
-				print "<li>";
-					print_help_link("edit_add_unlinked_person_help", "qm");
-					print "<a href=\"javascript: {$pgv_lang["add_unlinked_person"]}\" onclick=\"addnewchild(''); return false;\">{$pgv_lang["add_unlinked_person"]}</a>";
-				print "</li>";
-				print "<li>";
-					print_help_link("edit_add_unlinked_source_help", "qm");
-					print "<a href=\"javascript: {$pgv_lang["add_unlinked_source"]}\" onclick=\"addnewsource(''); return false;\">{$pgv_lang["add_unlinked_source"]}</a>";
-				print "</li>";
-			}
-			if (userIsAdmin(getUserName())) {
-				print "<li>";
-					print_help_link("help_dir_editor.php", "qm");
-					print "<a href=\"dir_editor.php\">{$pgv_lang["index_dir_cleanup"]}</a>";
-				print "</li>";
-			}
-			if ($d_pgv_changes != "") {
-				print "<li>";
-					print $d_pgv_changes;
-				print "</li>";
-			}
-		print "</ul>";
-	print "</div>";
-	?>
-	<div id="admin_tab_mod" name="<?php print $pgv_lang["adminMenu_modules"]; ?>">
-		<fieldset>
-			<legend><?php print " {$pgv_lang["adminMenu_googlemap"]} "; ?>
-			</legend>
-			<a href=""><?php print $pgv_lang["adminMenu_googlemap"]; ?></a>
-		</fieldset>
-	</div>
-</div>
 <?php
-// [END] New code for dhtmlXTabbar
 ?>
 	<table class="center <?php print $TEXT_DIRECTION ?> width90">
 		<tr>

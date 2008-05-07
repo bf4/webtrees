@@ -3,7 +3,7 @@
  * Used by AJAX to load the expanded view inside person boxes
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,10 @@
  * @version $Id$
  */
 require_once("config.php");
-require_once("includes/person_class.php");
 
-$pid = $_REQUEST['pid'];
+$pid = "";
+if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+$pid = clean_input($pid);
 $person = Person::getInstance($pid);
 if (!$person->canDisplayDetails()) return $pgv_lang['private'];
 
@@ -53,7 +54,7 @@ foreach($subfacts as $indexval => $event) {
 					 print "</span> ";
 		$details = $event->getDetail();
 				if ($details!="Y" && $details!="N") print PrintReady($details);
-		print_fact_date($event, false, false, $fact, $pid, $person->getGedcomRecord());
+		echo format_fact_date($event, false, false, $fact, $pid, $person->getGedcomRecord());
 			//-- print spouse name for marriage events
 		$famid = $event->getFamilyId();
 		$spouseid = $event->getSpouseId();
@@ -69,7 +70,7 @@ foreach($subfacts as $indexval => $event) {
 		if (!empty($famid)) {
 			print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"]."]</a>\n";
 		}
-		print_fact_place($event, true, true);
+		echo format_fact_place($event, true, true);
 	  }
 }
 ?>

@@ -4,7 +4,7 @@
  * Controller for the timeline chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	PGV Development Team
+ * Copyright (C) 2002 to 2008, PGV Development Team, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,41 +130,41 @@ class LifespanControllerRoot extends BaseController {
 		
 
 		//--new pid
-		if (isset ($_REQUEST['newpid'])) {
-			$newpid = clean_input($_REQUEST['newpid']);
+		$newpid=safe_GET_xref('newpid');
+		if ($newpid) {
 			$person = Person::getInstance($newpid);
-			if (is_null($person)) {
+			if (is_null($person) && $GEDCOM_ID_PREFIX) {
 				//-- allow the user to enter the id without the "I" prefix
-				if (stristr($newpid, $GEDCOM_ID_PREFIX) === false) {
 					$newpid = $GEDCOM_ID_PREFIX.$newpid;
 					$person = Person::getInstance($newpid);
 				}
-			}
 			//-- make sure we have the id from the gedcom record
 			else $newpid = $person->getXref();
 		}
 		
-		if (isset($_REQUEST['clear'])) unset($_SESSION['timeline_pids']);
-		else {
-		if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
+		if (safe_GET('clear', '1')=='1') {
+			unset($_SESSION['timeline_pids']);
+		} else {
+			if (isset($_SESSION['timeline_pids']))
+				$this->pids = $_SESSION['timeline_pids'];
+
 			if (!empty ($newpid))
 				$this->pids[] = $newpid;
 		
 		//-- pids array
-		if (isset ($_REQUEST['pids'])) {
-			$this->pids = $_REQUEST['pids'];
+			$pids=safe_GET_xref('pids');
+			if ($pids) {
+				$this->pids = $pids;
 			if (!empty ($newpid))
 				$this->pids[] = $newpid;
 		}
 
 		//-- gets the immediate family for the individual being added if the include immediate family checkbox is checked.
-		if(isset ($_REQUEST['addFamily'])){
+			if (safe_GET('addFamily', 'yes')=='yes'){
 			if (isset($newpid)) $this->addFamily($newpid);
 		}
 		
-		$remove = "";
-		if (!empty ($_REQUEST['remove']))
-			$remove = $_REQUEST['remove'];
+			$remove = safe_GET_xref('remove');
 		
 		//-- always start with someone on the chart
 		if (count($this->pids)==0) {
@@ -172,8 +172,9 @@ class LifespanControllerRoot extends BaseController {
 		}
 		
 		//-- limit to a certain place
-		if (!empty($_REQUEST['place'])) {
-			$place_pids = get_place_positions($_REQUEST['place']);
+			$searchplace=safe_GET('place');
+			if (!empty($searchplace)) {
+				$place_pids = get_place_positions($searchplace);
 			if (count($place_pids)>0) {
 				$this->pids = $place_pids;
 			}
@@ -182,7 +183,9 @@ class LifespanControllerRoot extends BaseController {
 		//-- store the people in the session	
 		$_SESSION['timeline_pids'] = $this->pids;
 		
-		if (empty ($_REQUEST['beginYear']) || empty ($_REQUEST['endYear'])) {
+			$beginYear  =safe_GET_integer('beginYear', 0, date('Y')+100, 0);
+			$endYear    =safe_GET_integer('endYear',   0, date('Y')+100, 0);
+			if ($beginYear==0 || $endYear==0) {
 		//-- cleanup user input
 		$this->pids = array_unique($this->pids);  //removes duplicates
 			foreach ($this->pids as $key => $value) {
@@ -191,12 +194,12 @@ class LifespanControllerRoot extends BaseController {
 					$this->pids[$key] = $value;
 					$person = Person::getInstance($value);
 							
-					if (!is_null($person)) {
-						$byear = $person->getBirthYear();
-						$dyear = $person->getDeathYear();
+					if ($person) {
+							$bdate = $person->getEstimatedBirthDate();
+							$ddate = $person->getEstimatedDeathDate();
 							
 						//--Checks to see if the details of that person can be viewed
-						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
+							if ($bdate->isOK() && $person->canDisplayDetails()) {
 							$this->people[] = $person;
 						}
 					}
@@ -212,21 +215,19 @@ class LifespanControllerRoot extends BaseController {
 			//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
 			//the time line
 
-			$byear = $_REQUEST["beginYear"];
-			$dyear = $_REQUEST["endYear"];
 			//Variables to restrict the person boxes to the year searched.
 			//--Searches for individuals who had an even between the year begin and end years
-			$indis = $this->search_indis_year_range($byear, $dyear);
+				$indis = $this->search_indis_year_range($beginYear, $endYear);
 			//--Populates an array of people that had an event within those years
 					
 			foreach ($indis as $pid => $indi) {
-				if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
+					if (empty($searchplace) || in_array($pid, $this->pids)) {
 					$person = Person::getInstance($pid);
-					if (!is_null($person)) {
-						$byear = $person->getBirthYear();
-						$dyear = $person->getDeathYear();
+						if ($person) {
+							$bdate = $person->getEstimatedBirthDate();
+							$ddate = $person->getEstimatedDeathDate();
 						//--Checks to see if the details of that person can be viewed
-						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
+							if ($bdate->isOK() && $person->canDisplayDetails()) {
 							$this->people[] = $person;
 						}
 					}
@@ -242,13 +243,15 @@ class LifespanControllerRoot extends BaseController {
 		//If there is people in the array posted back this if occurs
 		if (isset ($this->people[0])) {
 			//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
-			$this->timelineMaxYear = $this->people[0]->getDeathYear();
-			$this->timelineMinYear = $this->people[0]->getBirthYear();
+				$bdate = $this->people[0]->getEstimatedBirthDate();
+				$ddate = $this->people[0]->getEstimatedDeathDate();
+				$this->timelineMinYear=$bdate->gregorianYear();
+				$this->timelineMaxYear=$ddate->gregorianYear() ? $ddate->gregorianYear() : date('Y');
 			foreach ($this->people as $key => $value) {
-				if ($this->timelineMaxYear < $value->getDeathYear())
-					$this->timelineMaxYear = $value->getDeathYear();
-				if ($this->timelineMinYear > $value->getBirthYear())
-					$this->timelineMinYear = $value->getBirthYear();
+					$bdate = $value->getEstimatedBirthDate();
+					$ddate = $value->getEstimatedDeathDate();
+					$this->timelineMinYear=min($this->timelineMinYear, $bdate->gregorianYear());
+					$this->timelineMaxYear=max($this->timelineMaxYear, $ddate->gregorianYear() ? $ddate->gregorianYear() : date('Y'));
 			}
 			
 			if($this->timelineMaxYear > $this->currentYear){
@@ -409,11 +412,10 @@ class LifespanControllerRoot extends BaseController {
 				
 			//set start position and size of person-box according to zoomfactor
 			/* @var $value Person */
-				$birthYear = $value->getBirthYear();
-				$deathYear = $value->getDeathYear();
-				if($deathYear > date("Y")){
-					$deathYear = date("Y");	
-				}
+				$bdate=$value->getEstimatedBirthDate();
+				$ddate=$value->getEstimatedDeathDate();
+				$birthYear = $bdate->gregorianYear();
+				$deathYear = $ddate->gregorianYear() ? $ddate->gregorianYear() : date('Y');
 
 				$width = ($deathYear - $birthYear) * $this->zoomfactor;
 				$height = 2 * $this->zoomfactor;
@@ -502,19 +504,20 @@ class LifespanControllerRoot extends BaseController {
 						if (isset($eventinformation[$evntwdth])) $eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
 						else $eventinformation[$evntwdth]= $trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
 					}
+						
 				}
 
 				//TODO 
 				//We need to get starred $value->getName() names within <span class=\"starredname\"> and </span> to print in the 'zoom-box' (<span> ...</span> below) on the same line as the rest of the name. 
 				//How?   Now these names print on other data on the next line.
 				
-				$bdate=$value->getBirthDate();
-				$ddate=$value->getDeathDate();
+				$bdate=$value->getEstimatedBirthDate();
+				$ddate=$value->getEstimatedDeathDate();
 				if ($width > ($minlength +110)) {
 					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 					" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 					foreach($eventinformation as $evtwidth=>$val){
-						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
+						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 					}
 					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false,'',NULL, false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName()).":  $lifespan </a></td>" .
@@ -528,7 +531,7 @@ class LifespanControllerRoot extends BaseController {
 						echo "\n<div style=\"text-align: left; position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 						"  background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 						foreach($eventinformation as $evtwidth=>$val){
-							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
+							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 						}
 						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false,'',NULL, false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName())."</a></td>" .

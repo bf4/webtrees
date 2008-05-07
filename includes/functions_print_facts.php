@@ -304,7 +304,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 			}
 			// -- find date for each fact
-			print_fact_date($eventObj, true, true);
+			echo format_fact_date($eventObj, true, true);
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
@@ -344,7 +344,7 @@ function print_fact(&$eventObj, $noedit=false) {
 					//-- strip // from ALIA tag for FTM generated gedcoms
 					print preg_replace("'/'", "", $event)."<br />";
 				}
-				/* -- see the print_fact_date function where this is handled
+				/* -- see the format_fact_date function where this is handled
 				else if ($event=="Y") {
 					if (get_sub_record(2, "2 DATE", $factrec)=="") {
 						print $pgv_lang["yes"]."<br />";
@@ -373,7 +373,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			$ct = preg_match("/2 DESC (.*)/", $factrec, $match);
 			if ($ct>0) print PrintReady($match[1]);
 				// -- print PLACe, TEMPle and STATus
-				print_fact_place($eventObj, true, true, true);
+				echo format_fact_place($eventObj, true, true, true);
 				if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || (!empty($event)&&$fact!="ADDR")) print "<br />\n";
 				// -- print BURIal -> CEMEtery
 				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
@@ -587,8 +587,10 @@ function print_fact_sources($factrec, $level, $return=false) {
 			}
 			$data .= printSourceStructure(getSourceStructure($srec));
 			$data .= "<div class=\"indent\">";
+			ob_start();
 			print_media_links($srec, $nlevel);
-			print_fact_notes($srec, $nlevel);
+			$data .= ob_get_clean();
+			$data .= print_fact_notes($srec, $nlevel, false, true);
 			$data .= "</div>";
 			$data .= "</div>";
 			
@@ -679,6 +681,7 @@ function print_media_links($factrec, $level,$pid='') {
 					$mediaType = $match[1];
 					$varName = "TYPE__".strtolower($mediaType);
 					if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
+					else $mediaType = $pgv_lang["TYPE__other"];
 					print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
 				}
 				//print "</span>";
@@ -801,10 +804,7 @@ function print_address_structure($factrec, $level) {
 		if ($level>1) $resultText .= "</div>\n";
 		$resultText .= "<br />";
 		// Here we can examine the resultant text and remove empty tags
-		if ($level>1) echo "\n\t\t<span class=\"label\">".$factarray["ADDR"].": </span><br /><div class=\"indent\">";
-		echo "<a href=\"http://maps.google.com/maps?q=".urlencode(str_replace("<br />\n", ",", $resultText))."\">$resultText</a>";
-		if ($level>1) echo "</div>\n";
-		echo "<br />";
+		print $resultText;
 	}
 	$resultText = "";
 	$resultText .= "<table>";
@@ -1538,6 +1538,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			$mediaType = trim($match[1]);
 			$varName = "TYPE__".strtolower($mediaType);
 			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
+			else $mediaType = $pgv_lang["TYPE__other"];
 			print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
 		}
 		print "</span>";
@@ -1568,6 +1569,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}
 		}
 		//print "<br />\n";
+		//-- don't show _PRIM option to regular users
+		if (PGV_USER_GEDCOM_ADMIN) {
 		$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
 		if (empty($prim)) $prim = get_gedcom_value("_PRIM", 1, $rowm["m_gedrec"]);
 		if (!empty($prim)) {
@@ -1575,12 +1578,16 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if ($prim=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
 		print "<br />\n";
 		}
+		}
+		//-- don't show _THUM option to regular users
+		if (PGV_USER_GEDCOM_ADMIN) {
 		$thum = get_gedcom_value("_THUM", 2, $rowm["mm_gedrec"]);
 		if (empty($thum)) $thum = get_gedcom_value("_THUM", 1, $rowm["m_gedrec"]);
 		if (!empty($thum)) {
 			print "<span class=\"label\">".$factarray["_THUM"].":</span> ";
 		if ($thum=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
 		print "<br />\n";
+		}
 		}
 		print_fact_notes($rowm["m_gedrec"], 1);
 		print_fact_notes($rowm["mm_gedrec"], 2);

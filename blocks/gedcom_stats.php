@@ -5,7 +5,7 @@
  * This block prints statistical information for the currently active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
  * @subpackage Blocks
  */
 
-require_once("includes/functions_print_lists.php");
+require_once 'includes/functions_print_lists.php';
 
 $PGV_BLOCKS["print_gedcom_stats"]["name"]		= $pgv_lang["gedcom_stats_block"];
 $PGV_BLOCKS["print_gedcom_stats"]["descr"]		= "gedcom_stats_descr";
@@ -56,7 +56,7 @@ $PGV_BLOCKS["print_gedcom_stats"]["config"]		= array(
 //-- function to print the gedcom statistics block
 
 function print_gedcom_stats($block = true, $config="", $side, $index) {
-	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
+	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
 	global $top10_block_present, $TBLPREFIX;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
@@ -80,16 +80,18 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	}
 	$title .= $pgv_lang["gedcom_stats"];
 
-	$content = "<b><a href=\"index.php?ctype=gedcom\">".PrintReady($GEDCOMS[$GEDCOM]["title"])."</a></b><br />\n";
+	$stats=new stats($GEDCOM);
+
+	$content = "<b><a href=\"index.php?ctype=gedcom\">".get_gedcom_setting(PGV_GED_ID, 'title')."</a></b><br />\n";
 	$head = find_gedcom_record("HEAD");
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 	if ($ct>0) {
 		$softrec = get_sub_record(1, "1 SOUR", $head);
 		$tt= preg_match("/2 NAME (.*)/", $softrec, $tmatch);
-		if ($tt>0) $title = printReady(trim($tmatch[1]));
-		else $title = trim($match[1]);
-		if (!empty($title)) {
-			$text = str_replace(array("#SOFTWARE#", "#CREATED_SOFTWARE#"), $title, $pgv_lang["gedcom_created_using"]);
+		if ($tt>0) $software = printReady(trim($tmatch[1]));
+		else $software = trim($match[1]);
+		if (!empty($software)) {
+			$text = str_replace(array("#SOFTWARE#", "#CREATED_SOFTWARE#"), $software, $pgv_lang["gedcom_created_using"]);
 			$tt = preg_match("/2 VERS (.*)/", $softrec, $tmatch);
 			if ($tt>0) $version = printReady(trim($tmatch[1]));
 			else $version="";
@@ -100,7 +102,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	$ct=preg_match("/1 DATE (.+)/", $head, $match);
 	if ($ct>0) {
 		$date = new GedcomDate($match[1]);
-		if (empty($title)) $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
+		if (empty($software)) $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
 		else $text = $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on2"]);
 		$content .= $text;
 	}
@@ -108,100 +110,32 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	$content .= "<br />\n";
 	$content .= "<table><tr><td valign=\"top\" class=\"width20\"><table cellspacing=\"1\" cellpadding=\"0\">";
 	if ($config["stat_indi"]=="yes") {
-		$content .= '
-<tr>
-<td class="facts_label">'.$pgv_lang["stat_individuals"].'</td>
-<td class="facts_value">
-<div dir="rtl">
-	<a href="indilist.php?surname_sublist=no&amp;ged='.$GEDCOM.'">'.get_list_size("indilist").'</a>
-</div>
-</td>
-</tr>';
+		$content.='<tr><td class="facts_label">'.$pgv_lang["stat_individuals"].'</td><td class="facts_value"><div dir="rtl"><a href="indilist.php?surname_sublist=no&amp;ged='.$GEDCOM.'">'.$stats->totalIndividuals().'</a></div></td></tr>';
 	}
 	if ($config["stat_surname"]=="yes") {
-		//-- total unique surnames
-		$sql = "SELECT i_surname FROM ".$TBLPREFIX."individuals WHERE i_file='".$GEDCOMS[$GEDCOM]["id"]."' GROUP BY i_surname";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
-		$surname_count = $res->numRows();
-		$res->free();
-		$content .= '
-<tr>
-<td class="facts_label">'.$pgv_lang["stat_surnames"].'</td>
-<td class="facts_value">
-<div dir="rtl"><a
-	href="indilist.php?surname_sublist=yes&amp;ged='.$GEDCOM.'">'.$surname_count.'</a>
-</div>
-</td>
-</tr>';
+		$content .= '<tr><td class="facts_label">'.$pgv_lang["stat_surnames"].'</td><td class="facts_value"><div dir="rtl"><a href="indilist.php?surname_sublist=yes&amp;ged='.$GEDCOM.'">'.$stats->totalSurnames().'</a></div></td></tr>';
 	}
 	if ($config["stat_fam"]=="yes") {
-		$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_families"].'</td>
-<td class="facts_value">
-<div dir="rtl"><a href="famlist.php">'. get_list_size("famlist").'</a>
-</div>
-</td>
-</tr>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_families"].'</td><td class="facts_value"><div dir="rtl"><a href="famlist.php">'.$stats->totalFamilies().'</a></div></td></tr>';
 	}
 	if ($config["stat_sour"]=="yes") {
-		$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_sources"].'</td>
-<td class="facts_value">
-<div dir="rtl"><a href="sourcelist.php">'. get_list_size("sourcelist").'</a>
-</div>
-</td>
-</tr>';
-	}
-	if ($config["stat_media"]=="yes") {
-		if ($MULTI_MEDIA==true) {
-			$media_count = get_list_size('objectlist');
-			$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_media"].'</td>
-<td class="facts_value">
-<div dir="rtl"><a href="medialist.php">'. $media_count.'</a></div>
-</td>
-</tr>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_sources"].'</td><td class="facts_value"><div dir="rtl"><a href="sourcelist.php">'.$stats->totalSources().'</a></div></td></tr>';
 		}
+	if ($config["stat_media"]=="yes" && $MULTI_MEDIA==true) {
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_media"].'</td><td class="facts_value"><div dir="rtl"><a href="medialist.php">'.$stats->totalMedia().'</a></div></td></tr>';
 	}
 	if ($config["stat_other"]=="yes") {
-		$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_other"].'</td>
-<td class="facts_value">
-<div dir="rtl">'. get_list_size("otherlist").'</div>
-</td>
-</tr>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_other"].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalOtherRecords().'</div></td></tr>';
 	}
 	if ($config["stat_events"]=="yes") {
-		//-- total events
-		$sql = "SELECT COUNT(d_file) FROM ".$TBLPREFIX."dates WHERE d_file='".$GEDCOMS[$GEDCOM]["id"]."'";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
-		$row =& $res->fetchRow();
-		$event_count = $row[0];
-		$res->free();
-		$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_events"].'</td>
-<td class="facts_value">
-<div dir="rtl">'. $event_count.'</div>
-</td>
-</tr>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_events"].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalEvents().'</div></td></tr>';
 	}
 	if ($config["stat_users"]=="yes") {
-		$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_users"].'</td>
-<td class="facts_value">
-<div dir="rtl">';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_users"].'</td><td class="facts_value"><div dir="rtl">';
 			if (PGV_USER_GEDCOM_ADMIN){
-			$content .= "<a href=\"useradmin.php\">".get_user_count()."</a>";
+			$content .= "<a href=\"useradmin.php\">".$stats->totalUsers()."</a>";
 		} else {
-			$content .= get_user_count();
+			$content .= $stats->totalUsers();
 		}
 		$content .= '</div>
 </td>
@@ -213,220 +147,63 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		$content .= "<table cellspacing=\"1\" cellpadding=\"1\" border=\"0\">";
 	}
 	if ($config["stat_first_birth"]=="yes") {
-		// NOTE: Get earliest birth year (prefer gregorian to other calendars if both available)
-		$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1 ASC, d_type='@#DGREGORIAN' DESC";
-		$tempsql = dbquery($sql, true, 1);
-		$res =& $tempsql;
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$ct = $res->numRows();
-		$res->free();
-		if ($ct > 0) {
-			$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_earliest_birth"].'</td>
-<td class="facts_value">
-<div dir="rtl">
-	<a href="calendar.php?action=year&amp;year='. $row["year"].'">'.
-			$row["year"].'</a></div>
-</td>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_earliest_birth"].'</td><td class="facts_value"><div dir="rtl">'.$stats->firstBirthYear().'</div></td>';
 			if (!$block){
-				$content .= '<td class="facts_value">';
-				if (displayDetailsById($row["d_gid"])) {
-					ob_start();
-					print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
-				}
-				$content .= '</td>';
+			$content .= '<td class="facts_value">'.$stats->firstBirth().'</td>';
 			}
 			$content .= '</tr>';
 		}
-	}
 	if ($config["stat_last_birth"]=="yes") {
-		// NOTE: Get the latest birth year
-		$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='BIRT' AND d_julianday2!=0 ORDER BY d_julianday2 DESC, d_type='@#DGREGORIAN' DESC";
-		$tempsql = dbquery($sql, true, 1);
-		$res =& $tempsql;
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$ct = $res->numRows();
-		$res->free();
-		if ($ct>0) {
-			$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_latest_birth"].'</td>
-<td class="facts_value">
-<div dir="rtl">
-	<a href="calendar.php?action=year&amp;year='. $row["year"] .'">'.
-			$row["year"].'</a></div>
-</td>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_latest_birth"].'</td><td class="facts_value"><div dir="rtl"'.$stats->lastBirthYear().'</div></td>';
 			if (!$block){
-				$content .= '<td class="facts_value">';
-				if (displayDetailsById($row["d_gid"])) {
-					ob_start();
-					print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
-				}
-				$content .= '</td>';
+			$content .= '<td class="facts_value">'.$stats->lastBirth().'</td>';
 			}
 			$content .= '</tr>';
 		}
-	}
 	if ($config["stat_first_death"]=="yes") {
-		// NOTE: Get earliest death year
-		$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1 ASC, d_type='@#DGREGORIAN' DESC";
-		$tempsql = dbquery($sql, true, 1);
-		$res =& $tempsql;
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$ct = $res->numRows();
-		$res->free();
-		if ($ct > 0) {
-			$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_earliest_death"].'</td>
-<td class="facts_value">
-<div dir="rtl"><a
-	href="calendar.php?action=year&amp;year='. $row["year"].'">'.
-			$row["year"].'</a></div>
-</td>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_earliest_death"].'</td><td class="facts_value"><div dir="rtl">'.$stats->firstDeathYear().'</div></td>';
 			if (!$block){
-				$content .= '<td class="facts_value">';
-				if (displayDetailsById($row["d_gid"])) {
-					ob_start();
-					print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
-				}
-				$content .= '</td>';
+			$content .= '<td class="facts_value">'.$stats->firstDeath().'</td>';
 			}
 			$content .= '</tr>';
 		}
-	}
 	if ($config["stat_last_death"]=="yes") {
-		// NOTE: Get the latest death year
-		$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='DEAT' AND d_julianday2!=0 ORDER BY d_julianday2 DESC, d_type='@#DGREGORIAN' DESC";
-		$tempsql = dbquery($sql, true, 1);
-		$res =& $tempsql;
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$ct = $res->numRows();
-		$res->free();
-		if ($ct > 0) {
-			$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_latest_death"] .'</td>
-<td class="facts_value">
-<div dir="rtl"><a
-	href="calendar.php?action=year&amp;year='. $row["year"].'">'.
-			$row["year"].'</a></div>
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_latest_death"] .'</td><td class="facts_value"><div dir="rtl">'.$stats->lastDeathYear().'</div>
 </td>';
 			if (!$block){
-				$content .= '<td class="facts_value">';
-				if (displayDetailsById($row["d_gid"])) {
-					ob_start();
-					print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
-				}
-				$content .= '</td>';
+			$content .= '<td class="facts_value">'.$stats->lastDeath().'</td>';
 			}
 			$content .='</tr>';
 		}
-	}
 	if ($config["stat_long_life"]=="yes") {
-		//-- get the person who lived the longest
-		$sql="SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$GEDCOMS[$GEDCOM]['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_year!=0 ORDER BY age DESC";
-		$tempsql = dbquery($sql, true, 1);
-		$res =& $tempsql;
-		$row =& $res->fetchRow();
-		$ct = $res->numRows();
-		$res->free();
-		if ($ct>0) {
-			$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_longest_life"].'</td>
-<td class="facts_value">
-<div dir="rtl">'. floor($row[0]/365.25).'</div>
-</td>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_longest_life"].'</td><td class="facts_value"><div dir="rtl">'.$stats->LongestLifeAge().'</div></td>';
 			if (!$block){
-				$content .= '<td class="facts_value">';
-				if (displayDetailsById($row[1])) {
-					ob_start();
-					print_list_person($row[1], array(get_person_name($row[1]), $GEDCOM), false, "", false);
-					$content .= ob_get_clean();
-				}
-				$content .='</td>';
+			$content .= '<td class="facts_value">'.$stats->LongestLife().'</td>';
 			}
 			$content .= '</tr>';
 		}
-	}
 	if ($config["stat_avg_life"]=="yes") {
-		//-- avg age at death
-		$sql="SELECT AVG(death.d_julianday1-birth.d_julianday1) AS AGE FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$GEDCOMS[$GEDCOM]['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0";
-		$tempsql = dbquery($sql, false);
-		if (!DB::isError($tempsql)) {
-			$res =& $tempsql;
-			$row =& $res->fetchRow();
-			$ct = $res->numRows();
-			$res->free();
-			if ($ct>0 && $row[0]>0) {
-				$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_avg_age_at_death"].'</td>
-<td class="facts_value">
-<div dir="rtl">'. sprintf("%d", floor($row[0]/365.25)).'</div>
-</td>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_avg_age_at_death"].'</td><td class="facts_value"><div dir="rtl">'.$stats->averageLifespan().'</div></td>';
 				if (!$block) {
 					$content .= '<td class="facts_value">&nbsp;</td>';
 				}
 				$content .= '</tr>';
 			}
-		}
-	}
 
 	if ($config["stat_most_chil"]=="yes" && !$block) {
-		//-- most children
-		$sql = "SELECT f_numchil, f_id FROM ".$TBLPREFIX."families WHERE f_file='".$GEDCOMS[$GEDCOM]["id"]."' ORDER BY f_numchil DESC";
-		//print $sql;
-		$tempsql = dbquery($sql, true, 10);
-		if (!DB::isError($tempsql)) {
-			$res =& $tempsql;
-			$row =& $res->fetchRow();
-			$res->free();
-			$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_most_children"].'</td>
-<td class="facts_value">
-<div dir="rtl">'. $row["0"].'</div>
-</td>
-<td class="facts_value">';
-			if (displayDetailsById($row[1], "FAM")) {
-				ob_start();
-				print_list_family($row[1], array(get_family_descriptor($row[1]), $GEDCOM), false, "", false);
-				$content .= ob_get_clean();
-			}
-			$content .= '</td>
-</tr>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_most_children"].'</td><td class="facts_value"><div dir="rtl">'.$stats->largestFamilySize().'</div></td>';
+		if (!$block) {
+			$content .= '<td class="facts_value">'.$stats->largestFamily().'</td>';
 		}
+		$content .= '</tr>';
 	}
 	if ($config["stat_avg_chil"]=="yes") {
-		//-- avg number of children
-		$sql = "SELECT avg(1.00 * f_numchil) from ".$TBLPREFIX."families WHERE f_file='".$GEDCOMS[$GEDCOM]["id"]."'";
-		$tempsql = dbquery($sql, false);
-		if (!DB::isError($tempsql)) {
-			$res =& $tempsql;
-			$row =& $res->fetchRow();
-			$ct = $res->numRows();
-			$res->free();
-			if ($ct>0) {
-				$content .= '
-<tr>
-<td class="facts_label">'. $pgv_lang["stat_average_children"].'</td>
-<td class="facts_value">
-<div dir="rtl">'. sprintf("%.2f", $row["0"]).'</div>
-</td>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_average_children"].'</td><td class="facts_value"><div dir="rtl">'.$stats->averageChildren().'</div></td>';
 				if (!$block) {
 					$content .= '<td class="facts_value">&nbsp;</td>';
 				}
 				$content .= '</tr>';
 			}
-		}
-	}
 	$content .= "</table>";
 	$content .= "</td></tr></table>";
 	// NOTE: Print the most common surnames

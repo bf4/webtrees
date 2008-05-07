@@ -8,7 +8,7 @@
  * Requires SQL mode.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008, John Finlay and others, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,13 +28,10 @@
  * @version $Id$
  */
 
-/**
- * load config file
- */
-require("config.php");
+require 'config.php';
 
-require_once("includes/functions_print_lists.php");
-require_once("includes/functions_edit.php");
+require_once 'includes/functions_print_lists.php';
+require_once 'includes/functions_edit.php';
 
 if (empty($ged)) $ged = $GEDCOM;
 $GEDCOM = $ged;
@@ -130,7 +127,7 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 if (empty($action)) $action="showmediaform";
 
 if (isset($filename)) {
-	$filename = stripslashes($filename);
+	$filename = stripslashes(trim($filename));
 } else {
 	$filename = "";
 }
@@ -151,7 +148,7 @@ if ($action=="newentry") {
 		// NOTE: Check for file upload
 		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		$folderName = "";
-		if (!empty($_POST["folder"])) $folderName = $_POST["folder"];
+		if (!empty($_POST["folder"])) $folderName = trim($_POST["folder"]);
 		// Validate and correct folder names
 		$folderName = check_media_depth($folderName."/y.z", "BACK");
 		$folderName = dirname($folderName)."/";
@@ -174,7 +171,7 @@ if ($action=="newentry") {
 		
 		// Determine file name on server
 		if (PGV_USER_GEDCOM_ADMIN && !empty($text[0])) {
-			$parts = pathinfo($text[0]);
+			$parts = pathinfo(trim($text[0]));
 			$mediaFile = $parts["basename"];
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
 				if (!empty($_FILES["mediafile"]["name"])) {
@@ -284,7 +281,7 @@ if ($action=="newentry") {
 			//-- do not allow it to be moved or renamed if it is
 			if (!isset($oldFilename)) $oldFilename = $filename;
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
+			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
 			$res = dbquery($sql);
 			$onegedcom = true;
 			if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
@@ -439,7 +436,7 @@ if ($action == "update") {
 	//-- check if the file is used in more than one gedcom
 	//-- do not allow it to be moved or renamed if it is
 	$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-	$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
+	$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
 	$res = dbquery($sql);
 	$onegedcom = true;
 	if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
@@ -459,6 +456,7 @@ if ($action == "update") {
 			}
 		}
 		if (!isset($folder) && isset($oldFolder)) $folder = $oldFolder; 
+		$folder = trim($folder);
 		if (substr($folder,-1)!="/") $folder .= "/";
 		if ($folder=="/") $folder = "";
 		$folder = check_media_depth($folder."y.z", "BACK");
@@ -605,7 +603,7 @@ if ($action=="showmedia") {
 			print "<td class=\"list_value\"><a href=\"addmedia.php?action=edit&m_id=".$media["ID"]."\">edit</a></td>";
 			print "<td class=\"list_value\">".$media["TITL"]."</td>";
 			print "<td class=\"list_value\">";
-			print_list_person($media["INDI"], array(get_person_name($media["INDI"]), $GEDCOM));
+			echo format_list_person($media['INDI'], array(get_person_name($media["INDI"]), $GEDCOM), false, '', 'div');
 			print "</td>";
 			print "<td class=\"list_value\">".$media["FILE"]."</td>";
 			print "<td class=\"list_value\">".$media["_PRIM"]."</td>";

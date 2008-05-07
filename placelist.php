@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  */
 
 require("config.php");
-require_once("includes/gedcomrecord.php");
+if (file_exists('modules/googlemap/placehierarchy.php')) require("modules/googlemap/placehierarchy.php");
 require_once("includes/functions_print_lists.php");
 function case_in_array($value, $array) {
 	foreach($array as $key=>$val) {
@@ -34,8 +34,17 @@ function case_in_array($value, $array) {
 	return false;
 }
 
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+if (isset($_REQUEST['display'])) $display = $_REQUEST['display'];
+if (isset($_REQUEST['parent'])) $parent = $_REQUEST['parent'];
+
 if (empty($action)) $action = "find";
 if (empty($display)) $display = "hierarchy";
+
+if (!isset($GOOGLEMAP_ENABLED) || $GOOGLEMAP_ENABLED == "false" || (!isset($GOOGLEMAP_PLACE_HIERARCHY) || $GOOGLEMAP_PLACE_HIERARCHY == "false")) {
+	$use_googlemap = false;
+}
+else $use_googlemap = true;
 
 if ($display=="hierarchy") print_header($pgv_lang["place_list"]);
 else print_header($pgv_lang["place_list2"]);
@@ -43,6 +52,16 @@ else print_header($pgv_lang["place_list2"]);
 print "\n\t<div class=\"center\">";
 if ($display=="hierarchy") print "<h2>".$pgv_lang["place_list"]."</h2>\n\t";
 else print "<h2>".$pgv_lang["place_list2"]."</h2>\n\t";
+
+// Make sure the "parent" array has no holes
+if (isset($parent) && is_array($parent)) {
+	$parentKeys = array_keys($parent);
+	$highKey = max($parentKeys);
+	for ($j=0; $j<=$highKey; $j++) {
+		if (!isset($parent[$j])) $parent[$j] = "";
+	}
+	ksort($parent, SORT_NUMERIC);
+}
 
 if (!isset($parent)) $parent=array();
 else {
@@ -60,6 +79,10 @@ if (!isset($level)) {
 
 if ($level>count($parent)) $level = count($parent);
 if ($level<count($parent)) $level = 0;
+
+if ($use_googlemap) {
+	$levelm = set_levelm($level, $parent);
+}
 
 //-- extract the place form encoded in the gedcom
 $header = find_gedcom_record("HEAD");
@@ -109,7 +132,7 @@ if ($display=="hierarchy") {
 				$levels = preg_split ("/,/", trim($parent[$j]));
 				// Routine for replacing ampersands
 				foreach($levels as $pindex=>$ppart) {
-					$ppart = urlencode($ppart);
+					$ppart = rawurlencode($ppart);
 					$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
 					print "&amp;parent[$j]=".$ppart;
 				}
@@ -122,7 +145,9 @@ if ($display=="hierarchy") {
  			else if (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$i])) || ($TEXT_DIRECTION=="ltr" &&  !hasRtLText($parent[$i])))  print ", ";
 			if (empty($num_place)) $num_place=$parent[$i];
 		}
+		if ($use_googlemap) $levelo=check_were_am_i($numls, $levelm);
 	}
+	else if ($use_googlemap) $levelo[0]=0;
 	print "<a href=\"?level=0\">";
 	//-- place and page text orientation is the same -> top level added at the end of the place text
 	if ($level==0 || ($numls>=0 && (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="ltr" && !hasRtLText($parent[$numls]))))) print $pgv_lang["top_level"];
@@ -130,6 +155,9 @@ if ($display=="hierarchy") {
 
 	print_help_link("ppp_levels_help", "qm");
 
+	if ($use_googlemap)
+		create_map($numfound, $level, $levelm);
+	else {
 	// show clickable map if found
 	print "\n\t<br /><br />\n\t<table class=\"width90\"><tr><td class=\"center\">";
 	if ($level>=1 and $level<=3) {
@@ -139,7 +167,6 @@ if ($display=="hierarchy") {
 		if (strlen($country)!=3) {
 			// search country code using current language countries table
 			require("languages/countries.en.php");
-			// changed $LANGUAGE to $deflang (the language set for the current gedcom)	// eikland
 			if (file_exists("languages/countries.".$lang_short_cut[$deflang].".php")) require("languages/countries.".$lang_short_cut[$deflang].".php");
 			foreach ($countries as $countrycode => $countryname) {
 				if (strtoupper($countryname) == $country) {
@@ -156,22 +183,32 @@ if ($display=="hierarchy") {
 		if (!file_exists($mapfile)) $mapfile = "places/".$country."/".$country.".htm";
 
 		if ($level>1) {
-			$state = smart_utf8_decode($parent[1]);
+				//$state = smart_utf8_decode($parent[1]);
+				$state = $parent[1];
 			$mapname .= "_".$state;
 			if ($level>2) {
-				$county = smart_utf8_decode($parent[2]);
+					//$county = smart_utf8_decode($parent[2]);
+					$county = $parent[2];
 				$mapname .= "_".$county;
 				$areaname = str_replace("'","\'",$parent[2]);
 			}
 			else {
 				$areaname = str_replace("'","\'",$parent[1]);
 			}
-			$mapname = strtr($mapname,"ŠŒšœŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİßàáâãäåæçèéêëìíîïğñòóôõöøùúûüıÿ' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
+
+				// Transform certain two-byte UTF-8 letters with diacritics
+				// to their 1-byte ASCII analogues without diacritics
+				$mapname = str_replace(array("Ä˜", "Ã“", "Ä„", "Åš", "Å", "Å»", "Å¹", "Ä†", "Åƒ", "Ä™", "Ã³", "Ä…", "Å›", "Å‚", "Å¼", "Åº", "Ä‡", "Å„"), array("E", "O", "A", "S", "L", "Z", "Z", "C", "N", "e", "o", "a", "s", "l", "z", "z", "c", "n"), $mapname);
+
+				//$mapname = strtr($mapname,"ŠŒšœŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİßàáâãäåæçèéêëìíîïğñòóôõöøùúûüıÿ' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
+				$mapname = str_replace(array("Å ", "Å’", "Å½", "Å¡", "Å“", "Å¾", "Å¸", "Â¥", "Âµ", "Ã€", "Ã", "Ã‚", "Ãƒ", "Ã„", "Ã…", "Ã†", "Ã‡", "Ãˆ", "Ã‰", "ÃŠ", "Ã‹", "ÃŒ", "Ã", "Ã", "Ã", "Ã", "Ã‘", "Ã’", "Ã“", "Ã”", "Ã•", "Ã–", "Ã˜", "Ã™", "Ãš", "Ã›", "Ãœ", "Ã", "ÃŸ", "Ã ", "Ã¡", "Ã¢", "Ã£", "Ã¤", "Ã¥", "Ã¦", "Ã§", "Ã¨", "Ã©", "Ãª", "Ã«", "Ã¬", "Ã­", "Ã®", "Ã¯", "Ã°", "Ã±", "Ã²", "Ã³", "Ã´", "Ãµ", "Ã¶", "Ã¸", "Ã¹", "Ãº", "Ã»", "Ã¼", "Ã½", "Ã¿"), array("S", "O", "Z", "s", "o", "z", "Y", "Y", "u", "A", "A", "A", "A", "A", "A", "A", "C", "E", "E", "E", "E", "I", "I", "I", "I", "D", "N", "O", "O", "O", "O", "O", "O", "U", "U", "U", "U", "Y", "s", "a", "a", "a", "a", "a", "a", "a", "c", "e", "e", "e", "e", "i", "i", "i", "i", "o", "n", "o", "o", "o", "o", "o", "o", "u", "u", "u", "u", "y", "y"), $mapname);
+				// Transform apostrophes and blanks to dashes
+				$mapname = str_replace(array("'", " "), "-", $mapname);
+
 			$imgfile = "places/".$country."/".$mapname.".gif";
 		}
 		if (file_exists($imgfile) and file_exists($mapfile)) {
 			include ($mapfile);
-//			changed $mapname to $areaname for alt and title to show the area full name and not just area code	// eikland
 			print "<img src='".$imgfile."' usemap='#".$mapname."' border='0' alt='".$areaname."' title='".$areaname."' />";
 			?>
 			<script type="text/javascript" src="strings.js"></script>
@@ -191,7 +228,7 @@ if ($display=="hierarchy") {
 				var search = txt;
 				if (places_accept.in_array(search)) return(location.href = '?level=2<?php print "&parent[0]=".urlencode($parent[0])."&parent[1]="?>'+search);
 				// search without optional code [California]
-				txt = txt.replace(/(\/)/,' ('); // case: finnish/swedish ==> finnish (swedish
+					txt = txt.replace(/(\/)/,' ('); // case: finnish/swedish ==> finnish (swedish)
 				p=txt.indexOf(' (');
 				if (p>1) search=txt.substring(0,p);
 				else return;
@@ -236,11 +273,22 @@ if ($display=="hierarchy") {
 			print "</td><td style=\"margin-left:15; vertical-align: top;\">";
 		}
 	}
+	}
+	print "<td class=\"center\" valign=\"top\">";
 
 	//-- create a string to hold the variable links
 	$linklevels="";
+	if ($use_googlemap) {
+		$placelevels="";
+		$place_names=array();
+	}
 	for($j=0; $j<$level; $j++) {
 		$linklevels .= "&amp;parent[$j]=".urlencode($parent[$j]);
+		if ($use_googlemap)
+			if (trim($parent[$j])=="")
+				$placelevels = ", ".$pgv_lang["unknown"].$placelevels;
+			else
+				$placelevels = ", ".$parent[$j].$placelevels;
 	}
 	$i=0;
 	$ct1=count($placelist);
@@ -274,6 +322,7 @@ if ($display=="hierarchy") {
 
 		if (trim($value)=="") print $pgv_lang["unknown"];
 		else print PrintReady($value);
+		if ($use_googlemap) $place_names[$i]=trim($value);
 		print "</a></li>\n";
 		if ($ct1 > 20){
 			if ($i == floor($ct1 / 3)) print "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
@@ -313,52 +362,42 @@ if ($display=="hierarchy") {
 
 if ($level > 0) {
 	if ($action=="show") {
-		//-- place filtering
-		echo "<div>";
-		echo "<form action=\"?\">";
-		foreach ($_GET as $k=>$v) {
-			if ($k=="filter") continue;
-			if (is_array($v)) foreach ($v as $k2=>$v2) echo "<input type=\"hidden\" name=\"".$k."[{$k2}]\" value=\"".$v2."\" />";
-			else echo "<input type=\"hidden\" name=\"".$k."\" value=\"".$v."\" />";
-		}
-		if (!isset($_GET["filter"])) $_GET["filter"]="all";
-		foreach (array("BIRT", "MARR", "DEAT", "all") as $k=>$v) {
-			echo "&nbsp;&nbsp;<input type=\"radio\" name=\"filter\" onclick=\"submit()\"";
-			if ($_GET["filter"]==$v) echo " checked=\"checked\"";
-			echo " value=\"".$v."\" />";
-			if ($v=="all") echo $pgv_lang[$v];
-			else echo $factarray[$v];
-		}
-		echo "</form>";
-		echo "</div>";
-		if ($_GET["filter"]=="all") $option="";
-		else $option=$_GET["filter"]."_PLAC";
-		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
-		$title = substr($title, 0, -2);
+		// -- array of names
+		$myindilist = array();
+		$mysourcelist = array();
+		$myfamlist = array();
+
 		$positions = get_place_positions($parent, $level);
-		sort($positions);
-		print_indi_table($positions, $title, $option);
-		print_fam_table($positions, $title, $option);
-		/**
+		for($i=0; $i<count($positions); $i++) {
+			$gid = $positions[$i];
+			$indirec=find_gedcom_record($gid);
+			$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
+			if ($ct>0) {
+				$type = trim($match[2]);
+				if ($type == "INDI") {
+					$myindilist["$gid"] = get_sortable_name($gid);
+				}
+				else if ($type == "FAM") {
+					$myfamlist["$gid"] = get_sortable_family_descriptor($gid);
+				}
+				else if ($type == "SOUR") {
+					$mysourcelist["$gid"] = get_source_descriptor($gid);
+				}
+			}
+		}
+
+		print "<br />";
+
+		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
 		$title = PrintReady(substr($title, 0, -2))." "; 
 		// Sort each of the tables by Name
 		if (count($myindilist) > 1) uasort($myindilist, "stringsort");
 		if (count($myfamlist) > 1) uasort($myfamlist, "stringsort");
 		if (count($mysourcelist) > 1) uasort($mysourcelist, "stringsort");
 		// Print each of the tables
-		print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$title);
-		print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$title);
-		print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$title);
-		**/
-		//-- page title
-		if ($_GET["filter"]!="all") $title = $factarray[$_GET["filter"]]." @ ".$title;
-		?>
-		<script language="JavaScript" type="text/javascript">
-		<!--
-			document.title = "<?php print $title; ?>";
-		//-->
-		</script>
-		<?php
+		print_indi_table(array_keys($myindilist),   $pgv_lang["individuals"]." @ ".$title);
+		print_fam_table (array_keys($myfamlist),    $pgv_lang["families"   ]." @ ".$title);
+		print_sour_table(array_keys($mysourcelist), $pgv_lang["sources"    ]." @ ".$title);
 	}
 }
 
@@ -438,4 +477,5 @@ else {
 
 print "<br /><br /></div>";
 print_footer();
+if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelevels, $place_names);
 ?>

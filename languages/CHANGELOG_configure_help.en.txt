@@ -40,29 +40,28 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
-VERSION 4.2
+
+VERSION 4.1.5
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
-----------------------------------------------------------------------------------------
--$pgv_lang["return_editconfig"]						28 Feb 2008				D
-+$pgv_lang["DBPORT"]								20 Feb 2008				A
-+$pgv_lang["DBPORT_help"]							20 Feb 2008				A
-+$pgv_lang["theme_options"]         				08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["lang_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["calendar_conf"]         				08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["name_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["surname_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["visibility_conf"]         				08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["lists_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["charts_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["help_conf"]          					08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["facts_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
+-------------------------------------------------------------------------------------------
+*$pgv_lang["MEDIA_DIRECTORY_help"]					17 Apr 2008				W
+*$pgv_lang["CALENDAR_FORMAT_help"]					17 Apr 2008				f	&nsbp; --> &nbsp; in one place
++$pgv_lang["SHOW_EST_LIST_DATES_help"]				13 Apr 2008				A
++$pgv_lang["SHOW_EST_LIST_DATES"]					13 Apr 2008				A
 
 
 VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["ABBREVIATE_CHART_LABELS_help"]			26 Mar 2008				W
+*$pgv_lang["PEDIGREE_FULL_DETAILS"]					21 Mar 2008				w
+*$pgv_lang["PEDIGREE_FULL_DETAILS_help"]			21 Mar 2008				w
++$pgv_lang["PEDIGREE_SHOW_GENDER"]					21 Mar 2008				A
++$pgv_lang["PEDIGREE_SHOW_GENDER_help"]				21 Mar 2008				A
+*$pgv_lang["USE_RELATIONSHIP_PRIVACY_help"]			20 Mar 2008				W
+*$pgv_lang["MAX_RELATION_PATH_LENGTH_help"]			20 Mar 2008				W
 *$pgv_lang["SHOW_AGE_DIFF"]							17 Mar 2008				W
 *$pgv_lang["SHOW_AGE_DIFF_help"]					17 Mar 2008				W
 *$pgv_lang["USE_MEDIA_FIREWALL_help"]				09 Mar 2008				w	Correct Wiki link
@@ -73,6 +72,7 @@ VERSION 4.1.4
 *$pgv_lang["add_faq_body_help"]						07 Feb 2008				W
 +$pgv_lang["add_faq_HTML"]							07 Feb 2008				A
 *$pgv_lang["date_format_help"]						07 Dec 2007				f  change <br> to <br />
+
 
 
 VERSION 4.1.3
@@ -104,10 +104,10 @@ VERSION 4.1.3
 +$pgv_lang["ged_filter_results"]					29 Oct 2007				A   Used for editconfig_gedcom_help.php
 +$pgv_lang["SHOW_LEVEL2_NOTES"]						28 Oct 2007				A
 +$pgv_lang["SHOW_LEVEL2_NOTES_help"]				28 Oct 2007				A
-+$pgv_lang["SHOW_AGE_DIFF"]            			 23 Oct 2007      A
-+$pgv_lang["SHOW_AGE_DIFF_help"] 						 23 Oct 2007      A
-+$pgv_lang["EXPAND_NOTES"] 									 23 Oct 2007      A
-+$pgv_lang["EXPAND_NOTES_help"]			 				23 Oct 2007      A
++$pgv_lang["SHOW_AGE_DIFF"]							23 Oct 2007				A
++$pgv_lang["SHOW_AGE_DIFF_help"]					23 Oct 2007				A
++$pgv_lang["EXPAND_NOTES"]							23 Oct 2007				A
++$pgv_lang["EXPAND_NOTES_help"]						23 Oct 2007				A
 
 VERSION 4.1.2
 

@@ -787,6 +787,9 @@ function printConfigForm(){
 	if (isset($_SESSION['install_config']['MAX_VIEWS'])) $MAX_VIEWS = $_SESSION['install_config']['MAX_VIEWS'];
 	if (isset($_SESSION['install_config']['MAX_VIEW_TIME'])) $MAX_VIEW_TIME = $_SESSION['install_config']['MAX_VIEW_TIME'];
 
+	$oldmemorylimit = @ini_get('memory_limit');
+	if ($oldmemorylimit > $PGV_MEMORY_LIMIT) $PGV_MEMORY_LIMIT = $oldmemorylimit;
+	
 	require_once("js/dhtmlXTabbar.js.htm");
 	?>
 	<div id="conf_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="min-width: 450px; height: 380px">

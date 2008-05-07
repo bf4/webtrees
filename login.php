@@ -48,7 +48,6 @@ if ($action=="login") {
 	if (isset($_POST['remember'])) $remember = $_POST['remember'];
 	else $remember = "no";
 	if ($user_id=authenticateUser($username, $password)) {
-		if (!empty($_POST["useradmin"])) $_SESSION["useradmin"] = $_POST["useradmin"];
 		if (!empty($_POST["usertime"])) {
 			$_SESSION["usertime"]=@strtotime($_POST["usertime"]);
 		} else {
@@ -74,10 +73,10 @@ if ($action=="login") {
 		if (isset($_REQUEST['url'])) $url = $_REQUEST['url'];
 		if ($url == "individual.php") {
 			$pid = "";
-			foreach (array_keys($GEDCOMS) as $gedname) {
-				if (get_user_gedcom_setting($user_id, $gedname, 'gedcomid')) {
-					$pid = get_user_gedcom_setting($user_id, $gedname, 'gedcomid');
-					$ged = $gedname;
+			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+				if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
+					$pid = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
+					$ged = $ged_name;
 					break;
 				}
 			}
@@ -98,11 +97,6 @@ if ($action=="login") {
 
 		$url .= "&ged=".$ged; 
 		$url = str_replace(array(".php&amp;", ".php&"), ".php?", $url);
-		
-		// Special handling for link to useradmin.php from e-mail to admin
-		if (!empty($_POST["useradmin"])) {
-			$url .= "&action=edituser&username=".$_POST["useradmin"];
-		}
 		
 		header("Location: ".$url);
 		exit;
@@ -149,7 +143,6 @@ if ($WELCOME_TEXT_AUTH_MODE!="0") {
 	loadLangFile("pgv_help");
 	print "<table class=\"center width60 ".$TEXT_DIRECTION."\"><tr><td>";
 	if (empty($help_message) || !isset($help_message)) {
-		if (!empty($GEDCOM)) require($INDEX_DIRECTORY.$GEDCOM."_conf.php");
 		switch ($WELCOME_TEXT_AUTH_MODE){
 			case "1":
 				$help_message = "welcome_text_auth_mode_1";
@@ -187,13 +180,12 @@ $i = 0;		// initialize tab index
 	?>
 	<form name="loginform" method="post" action="<?php print $LOGIN_URL; ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
 		<input type="hidden" name="action" value="login" />
-		<input type="hidden" name="url" value="<?php print $url; ?>" />
-		<input type="hidden" name="ged" value="<?php if (isset($ged)) print $ged; else print $GEDCOM; ?>" />
-		<input type="hidden" name="pid" value="<?php if (isset($pid)) print $pid; ?>" />
-		<input type="hidden" name="type" value="<?php print $type; ?>" />
+		<input type="hidden" name="url" value="<?php print htmlentities($url); ?>" />
+		<input type="hidden" name="ged" value="<?php if (isset($ged)) print htmlentities($ged); else print htmlentities($GEDCOM); ?>" />
+		<input type="hidden" name="pid" value="<?php if (isset($pid)) print htmlentities($pid); ?>" />
+		<input type="hidden" name="type" value="<?php print htmlentities($type); ?>" />
 		<input type="hidden" name="usertime" value="" />
 		<?php
-		if (!empty($useradmin)) print "<input type='hidden' name='useradmin' value='$useradmin' />\r\n";
 		if (!empty($message)) print "<span class='error'><br /><b>$message</b><br /><br /></span>\r\n";
 		?>
 		<!--table-->

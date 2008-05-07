@@ -3,7 +3,7 @@
  * UI for online updating of the config file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -296,6 +296,7 @@ $GedCount = 0;
 			$d_logfile_str  = "<form name=\"logform\" action=\"editgedcoms.php\" method=\"post\">";
 			$d_logfile_str .= "\n<select name=\"logfilename\">\n";
 			if(isset($dir_array)) {
+				sort($dir_array);
 				$ct = count($dir_array);
 				for($x = 0; $x < $file_nr; $x++)
 				{
@@ -348,6 +349,7 @@ $GedCount = 0;
 			$d_logfile_str  = "<form name=\"logform2\" action=\"editgedcoms.php\" method=\"post\">";
 			$d_logfile_str .= "\n<select name=\"logfilename\">\n";
 			if(isset($dir_array)) {
+				sort($dir_array);
 				$ct = count($dir_array);
 				for($x = 0; $x < $file_nr; $x++)
 				{

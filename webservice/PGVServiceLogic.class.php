@@ -980,7 +980,7 @@ class PGVServiceLogic extends GenealogyService
 	{
 		$date = new GedcomDate($lastUpdate);
 
-		if ($date->MinJD()==0)
+		if (!$date->isOK())
 			return new SOAP_Fault('perform_update_check','Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.');
 
 		if ($date->MinJD()<server_jd()-180)

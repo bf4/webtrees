@@ -3,7 +3,7 @@
  * Displays a fan chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -412,40 +412,19 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	unset($_SESSION[$image_name]);		// statisticsplot.php uses this to hold a file name to send to browser
 	$image_title=preg_replace("~<.*>~", "", $name) . " " . $pgv_lang["fan_chart"];
 	echo "\r\n<p align=\"center\" >";
-	echo "<img src=\"imageflush.php?image_type=png&amp;image_name=$image_name\" width=\"$fanw\" height=\"$fanh\" border=\"0\" alt=\"$image_title\" title=\"$image_title\" usemap=\"#fanmap\" />";
+	echo "<img src=\"imageflush.php?image_type=png&amp;image_name=$image_name&height=$fanh&width=$fanw\" width=\"$fanw\" height=\"$fanh\" border=\"0\" alt=\"$image_title\" title=\"$image_title\" usemap=\"#fanmap\" />";
 	echo "\r\n</p>\r\n";
 	ImageDestroy($image);
 }
 
-// -- args
-if (isset($_REQUEST['fan_style'])) $fan_style = $_REQUEST['fan_style'];
-if (empty($fan_style)) $fan_style = 0;
-if ($fan_style==0) $fan_style = 3;
-if (empty($_REQUEST['PEDIGREE_GENERATIONS'])) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
-else $PEDIGREE_GENERATIONS = $_REQUEST['PEDIGREE_GENERATIONS'];
+// Extract form parameters
+$rootid   =safe_GET_xref('rootid');
+$fan_style=safe_GET_integer('fan_style',  2,  4,  3);
+$fan_width=safe_GET_integer('fan_width',  50, 300, 100);
+$PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 3, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
-if ($PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
-	$PEDIGREE_GENERATIONS = $MAX_PEDIGREE_GENERATIONS;
-	$max_generation = true;
-}
-
-$MIN_FANCHART_GENERATIONS = 3;
-if ($PEDIGREE_GENERATIONS < $MIN_FANCHART_GENERATIONS) {
-	$PEDIGREE_GENERATIONS = $MIN_FANCHART_GENERATIONS;
-	$min_generation = true;
-}
-$OLD_PGENS = $PEDIGREE_GENERATIONS;
-
-$rootid = "";
-if (!empty($_REQUEST['rootid'])) $rootid = $_REQUEST['rootid'];
-$rootid = clean_input($rootid);
+// Validate form parameters
 $rootid = check_rootid($rootid);
-
-// -- size of the chart
-$fan_width = "100";
-if (!empty($_REQUEST['fan_width'])) $fan_width = $_REQUEST['fan_width'];
-$fan_width=max($fan_width, 50);
-$fan_width=min($fan_width, 300);
 
 if ((DisplayDetailsByID($rootid)) || (showLivingNameByID($rootid))) {
 	$name = get_person_name($rootid);
@@ -478,8 +457,6 @@ if ($view != "preview") {
 	//-->
 	</script>
 	<?php
-	if (isset($max_generation) == true) print "<span class=\"error\">" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["max_generation"]) . "</span>";
-	if (isset($min_generation) == true) print "<span class=\"error\">" . $pgv_lang["min_generation"] . "</span>";
 	print "\n\t</td><td><form name=\"people\" method=\"get\" action=\"?\">";
 	print "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>";
 
@@ -517,11 +494,10 @@ if ($view != "preview") {
 	print_help_link("PEDIGREE_GENERATIONS_help", "qm");
 	print $pgv_lang["generations"]."</td>";
 	print "<td class=\"optionbox\">";
-//	print "<input type=\"text\" name=\"PEDIGREE_GENERATIONS\" size=\"3\" value=\"$OLD_PGENS\" /> ";
 	print "<select name=\"PEDIGREE_GENERATIONS\">";
 	for ($i=$MIN_FANCHART_GENERATIONS; $i<=$MAX_PEDIGREE_GENERATIONS; $i++) {
 	print "<option value=\"".$i."\"" ;
-	if ($i == $OLD_PGENS) print "selected=\"selected\" ";
+	if ($i == $PEDIGREE_GENERATIONS) print "selected=\"selected\" ";
 		print ">".$i."</option>";
 	}
 	print "</select>";

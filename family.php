@@ -5,7 +5,7 @@
  * You must supply a $famid value with the identifier for the family.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,16 @@ if (!$controller->family->disp) {
 	print_footer();
 	exit;
 }
+
+// LB added for Lightbox viewer ==============================================================
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include_once('modules/lightbox/lb_config.php');
+	include_once('modules/lightbox/functions/lb_call_js.php');
+}	
+// LB ======================================================================================
+
+$PEDIGREE_FULL_DETAILS = "1";		// Override GEDCOM configuration 
+
 ?>
 <?php if ($controller->family->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">

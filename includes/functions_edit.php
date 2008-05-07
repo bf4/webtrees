@@ -65,7 +65,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"CAUS" =>array("DEAT"),
 	"CALN" =>array("REPO"),
 	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag
-	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS"),
+	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS","_TODO"),
 	"TEMP" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
 	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS","SSN"),
 	"STAT" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
@@ -80,7 +80,8 @@ $level2_tags=array( // The order of the $keys is significant
 	"FAMC" =>array("ADOP","SLGC"),
 	"FILE" =>array("OBJE"),
 	"_PRIM"=>array("OBJE"),
-	"EVEN" =>array("DATA")
+	"EVEN" =>array("DATA"),
+	"_PGVU"=>array("_TODO")
 );
 $STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
 
@@ -515,7 +516,7 @@ function remove_subline($oldrecord, $linenum) {
  * @return boolean	true if undo successful
  */
 function undo_change($cid, $index) {
-	global $fcontents, $pgv_changes, $GEDCOMS, $GEDCOM, $manual_save;
+	global $fcontents, $pgv_changes, $GEDCOM, $manual_save;
 
 	if (isset($pgv_changes[$cid])) {
 		$changes = $pgv_changes[$cid];
@@ -816,10 +817,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		print $pgv_lang["no_update_CHAN"]."<br />\n";
-		if (isset($famrec)) {
-			$event = new Event(get_sub_record(1, "1 CHAN", $famrec));
-			print_fact_date($event, false, true);
-		}
+		if (isset($famrec)) echo format_fact_date(get_sub_record(1, "1 CHAN", $famrec), false, true);
 		print "</td></tr>\n";
 	}
 	print "</table>\n";
@@ -1100,9 +1098,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
-	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
+	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
-	global $LANGUAGE, $lang_short_cut;
 
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
@@ -1212,10 +1209,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	case 'ADDR':
 		$rows=4;
 		$cols=40;
-		break;
-	case 'REPO':
-		$rows=1;
-		$cols=strlen($REPO_ID_PREFIX) + 4;
 		break;
 	default:
 		$rows=1;
@@ -1350,6 +1343,19 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 		print "</select>\n";
 	}
+	else if ($fact=="_PGVU") {
+		$text=strtolower($value);
+		print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" >\n";
+		print '<option value=""';
+		if (''==$text) print ' selected="selected"';
+		print ">-</option>\n";
+		foreach (get_all_users('asc', 'username') as $user_id=>$user_name) {
+			print "<option value=\"". $user_id . "\"";
+			if ($user_id==$text) print " selected=\"selected\"";
+			print ">" . $user_name . "</option>\n";
+		}
+		print "</select>\n";
+	}
 	else if ($fact=="RESN") {
 		?>
 		<script type="text/javascript">
@@ -1408,13 +1414,15 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		//-- Build array of currently defined values for this Media Fact
 		foreach ($pgv_lang as $varname => $typeValue) {
 			if (substr($varname, 0, 6) == "TYPE__") {
-				$type[strtolower(substr($varname, 6))] = $typeValue;
+				if ($varname != "TYPE__other") $type[strtolower(substr($varname, 6))] = $typeValue;
 			}
 		}
 		//-- Sort the array into a meaningful order
 		array_flip($type);
 		asort($type);
 		array_flip($type);
+		//-- Add "Other" at the end of the list
+		$type["other"] = $pgv_lang["TYPE__other"];
 		//-- Build the selector for the Media "TYPE" Fact
 		print "<select tabindex=\"".$tabkey."\" name=\"text[]\">";
 		print "<option selected=\"selected\" value=\"\"> ".$pgv_lang["choose"]." </option>";
@@ -1470,7 +1478,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
 			//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
 			print " ".$readOnly." />\n";
-				if (($cols>20 || $fact=="NPFX") && $readOnly=="") print_specialchar_link($element_id, false);
 		}
 		// split PLAC
 		if ($fact=="PLAC" && $readOnly=="") {
@@ -1485,7 +1492,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				print_place_subfields($element_id);
 			}
 		}
-			}
+		else if (($cols>20 || $fact=="NPFX") && $readOnly=="") print_specialchar_link($element_id, false);
 		}
 	// MARRiage TYPE : hide text field and show a selection list
 	if ($fact=="TYPE" and $tags[0]=="MARR") {
@@ -2209,8 +2216,15 @@ function insert_missing_subtags($level1tag)
 	
 	foreach ($level2_tags as $key=>$value) {
 		if (in_array($level1tag, $value) && !in_array($key, $tags)) {
-			if ($key=="TYPE") add_simple_tag("2 TYPE ".$type_val);
-			else add_simple_tag("2 ".$key);
+			if ($key=="TYPE") {
+				add_simple_tag("2 TYPE ".$type_val);
+			} elseif ($level1tag=='_TODO' && $key=='DATE') {
+					add_simple_tag("2 ".$key." ".strtoupper(date('d F Y')));
+			} elseif ($level1tag=='_TODO' && $key=='_PGVU') {
+				add_simple_tag("2 ".$key." ".PGV_USER_NAME);
+				} else {
+					add_simple_tag("2 ".$key);
+			}
 			switch ($key) { // Add level 3/4 tags as appropriate
 				case "PLAC":
 					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
@@ -2247,7 +2261,7 @@ function insert_missing_subtags($level1tag)
 		}
 	}
 	// Do something (anything!) with unrecognised custom tags
-	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID')
+	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && $level1tag!='_TODO')
 		foreach (array('DATE', 'PLAC', 'ADDR', 'AGNC', 'TYPE', 'AGE') as $tag)
 			if (!in_array($tag, $tags)) {
 				add_simple_tag("2 {$tag}");

@@ -43,9 +43,10 @@ function autosearch_options()
 		if (!is_object($person)) return "";
 		$givennames = $person->getGivenNames();
 		$lastname = $person->getSurname();
-		$byear = $person->getBirthYear();
 		$gender = $person->getSex();
 		$seximg = $person->getSexImage();
+	$bdate=$person->getEstimatedBirthDate();
+	$byear=$bdate->gregorianYear();
 		
 	$to_return ="<form name='ancsearch' action='module.php' target=\"_blank\" method='post'> 
 						<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />

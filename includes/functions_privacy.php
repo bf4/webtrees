@@ -299,7 +299,7 @@ if (!function_exists("displayDetailsByID")) {
  * @return boolean
  */
 function checkPrivacyByYear($pid) {
-	global $MAX_ALIVE_AGE, $GEDCOMS, $GEDCOM, $indilist;
+	global $MAX_ALIVE_AGE;
 	
 	$cyear = date("Y");
 	$indirec = find_person_record($pid);
@@ -790,7 +790,7 @@ function showFactDetails($fact, $pid) {
  * @return string the privatized gedcom record
  */
 function privatize_gedcom($gedrec) {
-	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
+	global $pgv_lang, $factarray, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
 	
 	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
@@ -891,6 +891,9 @@ function privatize_gedcom($gedrec) {
 				$ct = preg_match("/1 (\w+)/", $sub, $match);
 				if ($ct > 0) $type = trim($match[1]);
 				else $type="";
+				if (($type=='FACT' || $type=='EVEN') && preg_match('/2 TYPE (\w+)/', $sub, $match) && array_key_exists($match[1], $factarray)) {
+					$type=$match[1];
+				}
 				if (FactViewRestricted($gid, $sub)==false && showFact($type, $gid) && showFactDetails($type, $gid)) $newrec .= $sub;
 				else {
 					$pgv_private_records[$gid] .= $sub;
@@ -945,8 +948,6 @@ function getUserAccessLevel() {
  * @return int		Allowed or not allowed
  */
 function FactEditRestricted($pid, $factrec) {
-	global $GEDCOM, $FAM_ID_PREFIX;
-	
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
 	}
@@ -958,7 +959,7 @@ function FactEditRestricted($pid, $factrec) {
 			if ($myindi == $pid) {
 				return false;
 			}
-			if (substr($pid,0,1) == $FAM_ID_PREFIX){
+			if (id_type($pid)=='FAM') {
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["HUSB"] || $myindi == $parents["WIFE"]) {
@@ -980,8 +981,6 @@ function FactEditRestricted($pid, $factrec) {
  * @return int		Allowed or not allowed
  */
 function FactViewRestricted($pid, $factrec) {
-	global $GEDCOM, $FAM_ID_PREFIX;
-	
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
 	}
@@ -994,9 +993,7 @@ function FactViewRestricted($pid, $factrec) {
 			if ($myindi == $pid) {
 				return false;
 			}
-			//-- NOTE: This could lead to a potential bug in GEDCOMS that do not prefix their records with a number
-			//-- it is safer to look up the gedcom record
-			if (substr($pid,0,1) == $FAM_ID_PREFIX){
+			if (id_type($pid)=='FAM') {
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["WIFE"] || $myindi == $parents["HUSB"]) {

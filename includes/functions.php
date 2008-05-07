@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,15 +45,11 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
 
 // ************************************************* START OF INITIALIZATION FUNCTIONS ********************************* //
 /**
- * Initialize and check the database.
+ * initialize and check the database
  *
- * This will create a database connection and return false if any errors occurred.
- *
- * @param boolean $ignore_previous
- *	Whether or not to ignore a previous connection, this parameter is used
- *	mainly for the install.php page when setting everything up.
- * @return boolean
- *	True if database successfully connected, false if there was an error.
+ * this function will create a database connection and return false if any errors occurred
+ * @param boolean $ignore_previous	whether or not to ignore a previous connection , this parameter is used mainly for the editconfig.php page when setting everything up
+ * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
 	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN;
@@ -112,15 +108,134 @@ function check_db($ignore_previous=false) {
 	return true;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Extract, sanitise and validate FORM (POST), URL (GET) and COOKIE variables.
+//
+// Request variables should ALWAYS be accessed through these functions, to
+// protect against XSS (cross-site-scripting) attacks.
+//
+// $var     - The variable to check
+// $regex   - Regular expression to validate the variable (or an array of
+//            regular expressions).  A number of common regexes are defined in
+//            session.php as constants PGV_REGEX_*.  If no value is specified,
+//            the default blocks all characters that could introduce scripts.
+// $default - A value to use if $var is undefined or invalid.
+//
+// You should always know whether your variables are coming from GET or POST,
+// and always use the correct function.
+//
+// NOTE: when using checkboxes, $var is either set (checked) or unset (not
+// checked).  This lets us use the syntax safe_GET('my_checkbox', 'yes', 'no')
+//
+// NOTE: when using listboxes, $regex can be an array of valid values.  For
+// example, you can use safe_POST('lang', array_keys($pgv_language), $LANGUAGE)
+// to validate against a list of valid languages and supply a sensible default.
+////////////////////////////////////////////////////////////////////////////////
+
+function safe_POST($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+	return safe_REQUEST($_POST, $var, $regex, $default);
+}
+function safe_GET($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+	return safe_REQUEST($_GET, $var, $regex, $default);
+}
+function safe_COOKIE($var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
+	return safe_REQUEST($_COOKIE, $var, $regex, $default);
+}
+
+function safe_GET_integer($var, $min, $max, $default) {
+	$num=safe_GET($var, PGV_REGEX_INTEGER, $default);
+	$num=max($num, $min);
+	$num=min($num, $max);
+	return (int)$num;
+}
+function safe_POST_integer($var, $min, $max, $default) {
+	$num=safe_POST($var, PGV_REGEX_INTEGER, $default);
+	$num=max($num, $min);
+	$num=min($num, $max);
+	return (int)$num;
+}
+
+function safe_GET_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True)') {
+	return !is_null(safe_GET($var, $true));
+}
+function safe_POST_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True)') {
+	return !is_null(safe_POST($var, $true));
+}
+
+function safe_GET_xref($var, $default=null) {
+	return safe_GET($var, PGV_REGEX_XREF, $default);
+}
+function safe_POST_xref($var, $default=null) {
+	return safe_POST($var, PGV_REGEX_XREF, $default);
+}
+
+function safe_REQUEST($arr, $var, $regex, $default) {
+	if (is_array($regex)) {
+		$regex='(?:'.join('|', $regex).')';
+	}
+	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.$regex.'$~', $arr[$var])) {
+		return trim_recursive($arr[$var]);
+	} else {
+		return $default;
+	}
+}
+
+function preg_match_recursive($regex, $var) {
+	if (is_scalar($var)) {
+		return preg_match($regex, $var);
+	} else {
+		if (is_array($var)) {
+			foreach ($var as $k=>$v) {
+				if (!is_numeric($k) || !preg_match_recursive($regex, $v)) {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			// Neither scalar nor array.  Object?
+			return false;
+		}
+	}
+}
+
+function trim_recursive($var) {
+	if (is_scalar($var)) {
+		return trim($var);
+	} else {
+		if (is_array($var)) {
+			foreach ($var as $k=>$v) {
+				$var[$k]=trim_recursive($v);
+			}
+			return $var;
+		} else {
+			// Neither scalar nor array.  Object?
+			return $var;
+		}
+	}
+}
+
+// Update the variable definitions in a PHP config file, such as config.php
+function update_config(&$text, $var, $value) {
+	// NULL values probably wouldn't hurt, but empty strings are probably better
+	if (is_null($value)) {
+		$value='';
+	}
+	$regex='/^[ \t]*[$]'.$var.'[ \t]*=.*;[ \t]*/m';
+	$assign='$'.$var.'='.var_export($value, true).'; ';
+	if (preg_match($regex, $text)) {
+		// Variable found in file - update it
+		$text=preg_replace($regex, $assign, $text);
+	} else {
+		// Variable not found in file - insert it
+		$text=preg_replace('/^(.*[\r\n]+)([ \t]*[$].*)$/s', '$1'.$assign." // new config variable\n".'$2',$text);
+	}
+}
+
 /**
- * Get Gedcom configuration file.
+ * get gedcom configuration file
  *
- * This function returns the path to the currently active GEDCOM configuration
- * file.
- *
- * @param string $ged Gedcom file to check.
- *
- * @return string Path to gedcom.ged_conf.php configuration file.
+ * this function returns the path to the currently active GEDCOM configuration file
+ * @return string path to gedcom.ged_conf.php configuration file
  */
 function get_config_file($ged="") {
 	global $GEDCOMS, $GEDCOM;
@@ -146,13 +261,11 @@ function get_config_file($ged="") {
 }
 
 /**
- * Get the version of the privacy file.
+ * Get the version of the privacy file
  *
- * Opens the given privacy file and returns the privacy version from the file.
- *
- * @param string $privfile The path to the privacy file.
- *
- * @return string The privacy file version number.
+ * This function opens the given privacy file and returns the privacy version from the file
+ * @param string $privfile the path to the privacy file
+ * @return string the privacy file version number
  */
 function get_privacy_file_version($privfile) {
 	$privversion = "0";
@@ -170,11 +283,10 @@ function get_privacy_file_version($privfile) {
 }
 
 /**
- * Get the path to the privacy file.
+ * Get the path to the privacy file
  *
- * Get the path to the privacy file for the currently active GEDCOM.
- *
- * @return string Path to the privacy file.
+ * Get the path to the privacy file for the currently active GEDCOM
+ * @return string path to the privacy file
  */
 function get_privacy_file() {
 	global $GEDCOMS, $GEDCOM, $REQUIRED_PRIVACY_VERSION;
@@ -375,26 +487,6 @@ function update_site_config($newconfig, $return = false) {
 	return true;
 }
 
-
-
-/**
- * get a gedcom filename from its database id
- * @param int $ged_id	The gedcom database id to get the filename for
- * @return string
- */
-function get_gedcom_from_id($ged_id) {
-	global $GEDCOMS;
-
-	if (isset($GEDCOMS[$ged_id]))
-		return $ged_id;
-	foreach($GEDCOMS as $ged=>$gedarray) {
-		if ($gedarray["id"]==$ged_id)
-			return $ged;
-	}
-
-	return $ged;
-}
-
 /**
  * Check if a person is dead
  *
@@ -418,7 +510,7 @@ function is_dead_id($pid) {
 			if (empty($gedrec))
 				return true;
 		}
-		if ($indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
+		if (isset($indilist[$pid]["isdead"]) && $indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
 			if (!isset($indilist[$pid]["isdead"]))
 				$indilist[$pid]["isdead"] = -1;
 			if ($indilist[$pid]["isdead"]==-1)
@@ -1113,7 +1205,7 @@ function find_record_in_file($gid) {
  * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
  */
 function find_updated_record($gid, $gedfile="") {
-	global $GEDCOMS, $GEDCOM, $pgv_changes;
+	global $GEDCOM, $pgv_changes;
 
 	if (empty($gedfile))
 		$gedfile = $GEDCOM;
@@ -1553,16 +1645,26 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
  * @return int negative numbers sort $a first, positive sort $b first
  */
 function itemsort($a, $b) {
-	if (is_object($a)) $aname = $a->getName();
-	else if (isset($a["name"])) $aname = sortable_name_from_name($a["name"]);
-	else if (isset($a["names"])) $aname = sortable_name_from_name($a["names"][0][0]);
-	else if (is_array($a)) $aname = sortable_name_from_name(array_shift($a));
-	else $aname=$a;
-	if (is_object($b)) $bname = $b->getName();
-	else if (isset($b["name"])) $bname = sortable_name_from_name($b["name"]);
-	else if (isset($b["names"])) $bname = sortable_name_from_name($b["names"][0][0]);
-	else if (is_array($b)) $bname = sortable_name_from_name(array_shift($b));
-	else $bname=$b;
+	if (isset($a["name"]))
+		$aname = sortable_name_from_name($a["name"]);
+	else
+		if (isset($a["names"]))
+			$aname = sortable_name_from_name($a["names"][0][0]);
+		else
+			if (is_array($a))
+				$aname = sortable_name_from_name(array_shift($a));
+	else
+		$aname=$a;
+	if (isset($b["name"]))
+		$bname = sortable_name_from_name($b["name"]);
+	else
+		if (isset($b["names"]))
+			$bname = sortable_name_from_name($b["names"][0][0]);
+		else
+			if (is_array($b))
+				$bname = sortable_name_from_name(array_shift($b));
+	else
+		$bname=$b;
 
 	$aname = strip_prefix($aname);
 	$bname = strip_prefix($bname);
@@ -1698,6 +1800,7 @@ function compare_facts_type($arec, $brec) {
 			"FCOM",
 			"CONF",
 			"BARM", "BASM",
+			"SSN",
 			"EDUC",
 			"GRAD",
 			"_DEG",
@@ -1737,7 +1840,7 @@ function compare_facts_type($arec, $brec) {
 			"CITN",
 			"CAST",
 			"RELI",
-			"SSN", "IDNO",
+			"IDNO",
 			"TEMP",
 			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
 			"AFN", "REFN", "_PRMN", "REF", "RIN",
@@ -1783,7 +1886,7 @@ function compare_facts_date($arec, $brec) {
 	$adate = new GedcomDate($amatch[1]);
 	$bdate = new GedcomDate($bmatch[1]);
 	// If either date can't be parsed, don't sort.
-	if ($adate->MinJD()==0 || $bdate->MinJD()==0) {
+	if (!$adate->isOK() || !$bdate->isOK()) {
 		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
 			return $match1[1]-$match2[1];
 		}
@@ -1932,6 +2035,20 @@ function compare_date($a, $b) {
 function compare_date_descending($a, $b) {
 	$result = compare_date($a, $b);
 	return (0 - $result);
+}
+/**
+ * Compare dates for facts in GedcomRec objects (or derived classes)
+ *
+ * fact to interrogate in global $sortby eg "MARR"
+ */
+function compare_date_gedcomrec($a, $b) {
+	global $sortby;
+
+	$tag = "BIRT";
+	if (!empty($sortby)) $tag = $sortby;
+	$adate = get_sub_record(1, "1 $tag", $a->getGedcomRecord());
+	$bdate = get_sub_record(1, "1 $tag", $b->getGedcomRecord());
+	return compare_facts_date($adate, $bdate);
 }
 
 function gedcomsort($a, $b) {
@@ -2634,7 +2751,7 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
  * @return bool true if successful false if there was an error
  */
 function write_changes() {
-	global $GEDCOMS, $GEDCOM, $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
+	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
 
 	//-- only allow 1 thread to write changes at a time
 	$mutex = new Mutex("pgv_changes");
@@ -2746,18 +2863,17 @@ function filename_encode($filename) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Remove empty/duplicate values from a URL query string
+// Remove empty and duplicate values from a URL query string
 ////////////////////////////////////////////////////////////////////////////////
 function normalize_query_string($query) {
 	$components=array();
-	foreach (preg_split('/(^\?|\&(amp;)*)/', $query, -1, PREG_SPLIT_NO_EMPTY) as $component)
+	foreach (preg_split('/(^\?|\&(amp;)*)/', urldecode($query), -1, PREG_SPLIT_NO_EMPTY) as $component)
 		if (strpos($component, '=')!==false) {
 			list ($key, $data)=explode('=', $component, 2);
-			$components[$key]=$data;
+			if (!empty($data)) $components[$key]=$data;
 		}
 	$new_query='';
 	foreach ($components as $key=>$data)
-		if (!empty($data))
 			$new_query.=(empty($new_query)?'?':'&amp;').$key.'='.$data;
 
 	return $new_query;
@@ -3245,15 +3361,19 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		break;
 	}
 
-	//-- the key is the prefix and the number
-	$key = $prefix.$num;
-
-	//-- make sure this number has not already been used by an
-	//- item awaiting approval
-	while(isset($pgv_changes[$key."_".$GEDCOM])) {
-		$num++;
-		$key = $prefix.$num;
+	//-- make sure this number has not already been used
+	if ($num>=2147483647 || $num<=0) { // Popular databases are only 32 bits (signed)
+		$num=1;
 	}
+	while (find_gedcom_record($prefix.$num) || find_updated_record($prefix.$num)) {
+		++$num;
+		if ($num>=2147483647 || $num<=0) { // Popular databases are only 32 bits (signed)
+			$num=1;
+		}
+	}
+
+	//-- the key is the prefix and the number
+		$key = $prefix.$num;
 
 	//-- during the import we won't update the database at this time so return now
 	if ($use_cache && isset($MAX_IDS[$type])) {
@@ -3283,31 +3403,16 @@ function has_utf8($string) {
 
 /**
  * Determine the type of ID
- * NOTE: Be careful when using this function as not all GEDCOMS have ID
- * prefixes.  Many GEDCOMS just use numbers like 100, 101, etc without
- * the I, F, etc prefixes.
  * @param string $id
  */
 function id_type($id) {
-	global $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX;
-
-	if (strpos($id, $GEDCOM_ID_PREFIX)===0)
-		return "INDI";
-	if (strpos($id, $FAM_ID_PREFIX)===0)
-		return "FAM";
-	if (strpos($id, $SOURCE_ID_PREFIX)===0)
-		return "SOUR";
-	if (strpos($id, $REPO_ID_PREFIX)===0)
-		return "REPO";
-	if (strpos($id, $MEDIA_ID_PREFIX)===0)
-		return "OBJE";
-	if (strpos($id, "M")===0)
-		return "OBJE";
-	return "";
+	if (preg_match('/^0 @.*@ (\w+)/', find_gedcom_record($id), $match)) {
+		return $match[1];
+	} else {
+		return null;
+	}
 }
 
-//-- only declare this function when it is necessary
-if (!empty($COMMIT_COMMAND)) {
 /**
  * check file in
  * @param string $logline	Log message
@@ -3319,26 +3424,28 @@ if (!empty($COMMIT_COMMAND)) {
 function check_in($logline, $filename, $dirname, $bInsert = false) {
 	global $COMMIT_COMMAND;
 	$bRetSts = false;
-		if (!empty($COMMIT_COMMAND)) {
+	if (($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
         	$cwd = getcwd();
-			if(! empty($dirname))
+		if ($dirname) {
 				chdir($dirname);
-			$cmdline = $COMMIT_COMMAND." commit -m \"{$logline}\" \"{$filename}\"";
-        	$output = "";
-        	$retval = "";
+		}
+		$cmdline= $COMMIT_COMMAND.' commit -m '.escapeshellarg($logline).' '.escapeshellarg($filename);
+		$output = '';
+		$retval = '';
 	        exec($cmdline, $output, $retval);
 			if (!empty($output)) {
-		        if($bInsert)
+			if ($bInsert) {
 			        AddToChangeLog($logline);
-        		$outputstring = implode('\n', $output);
-	        	AddToChangeLog("System Output :".$outputstring.", Return Value :".$retval);
+			}
+			$outputstring = implode(' ', $output);
+			AddToChangeLog('System Output :'.$outputstring.', Return Value :'.$retval);
 				$bRetSts = true;
         	}
-			if(! empty($dirname))
+		if ($dirname) {
 				chdir($cwd);
         }
-	return $bRetSts;
 }
+	return $bRetSts;
 }
 
 /**
@@ -3363,7 +3470,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut;
-	global $pgv_lang, $countries, $altCountryNames, $faqlist;
+	global $pgv_lang, $countries, $altCountryNames, $faqlist, $factAbbrev;
 	
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
 
@@ -3481,7 +3588,7 @@ function loadLangFile($fileListNames="") {
  *
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang;
+	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang, $factAbbrev;
 	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;

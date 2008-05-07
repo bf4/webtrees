@@ -60,6 +60,8 @@ if ($MULTI_MEDIA) {
 		"filter_manuscript" =>"yes",
 		"filter_map"        =>"yes",
 		"filter_newspaper"  =>"yes",
+		"filter_other"		=>"yes",
+		"filter_painting"	=>"yes",
 		"filter_photo"      =>"yes",
 		"filter_tombstone"  =>"yes",
 		"filter_video"      =>"no"
@@ -70,7 +72,7 @@ if ($MULTI_MEDIA) {
 	//-- function to display a random picture from the gedcom
 	function print_random_media($block = true, $config="", $side, $index) {
 		global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
-		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES, $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX;
+		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
 		global $PGV_BLOCKS, $ctype, $action;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
@@ -307,10 +309,17 @@ function openPic(filename, width, height) {
 			$content .= "</div>"; // random_picture_content
 			$content .= "</div>"; // random_picture_container
 				if ($action!="ajax") {
-					$content .= "</div>"; // random_picture_content
-		
-				global $THEME_DIR;
-				include($THEME_DIR."/templates/block_main_temp.php");
+				print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
+				print '<td class="blockh1">&nbsp;</td>';
+				print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
+				print '<td class="blockh3">&nbsp;</td>';
+				print '</tr></table><div class="blockcontent">';
+				//if ($block) {
+					//print '<div class="small_inner_block">'.$content.'</div>';
+				//} else {
+					print $content;
+				//}
+				print '</div></div>';
 				}
 				else print $content;
 		}
@@ -353,6 +362,8 @@ function openPic(filename, width, height) {
 			$config["filter_tombstone"]		= "yes";
 			$config["filter_video"]			= "no";
 		}
+		if (!isset($config["filter_other"])) $config["filter_other"] = "yes";
+		if (!isset($config["filter_painting"])) $config["filter_painting"] = "yes";
 	
 		print "<tr><td class=\"descriptionbox wrap width33\">";
 				print_help_link("random_media_persons_or_all_help", "qm");
@@ -424,13 +435,15 @@ function openPic(filename, width, height) {
 				//-- Build array of currently defined values for the Media Type
 				foreach ($pgv_lang as $varname => $typeValue) {
 					if (substr($varname, 0, 6) == "TYPE__") {
-						$type[strtolower(substr($varname, 6))] = $typeValue;
+						if ($varname != "TYPE__other") $type[strtolower(substr($varname, 6))] = $typeValue;
 					}
 				}
 				//-- Sort the array into a meaningful order
 				array_flip($type);
 				asort($type);
 				array_flip($type);
+				//-- Add "Other" at the end
+				$type["other"] = $pgv_lang["TYPE__other"];
 				//-- Build the list of checkboxes
 				$i = 0;
 				foreach ($type as $typeName => $typeValue) {

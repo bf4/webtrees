@@ -301,8 +301,8 @@ class Event {
 			$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","OBJE","CHAN","_SEPR","RESI", "DATA", "MAP");
 			if (!in_array($this->tag, $emptyfacts))
 				$data .= PrintReady($this->detail);
-			if (!$this->dest) $data .= print_fact_date($this, false, false, true);
-			$data .= print_fact_place($this, false, false, false, true);
+			if (!$this->dest) $data .= format_fact_date($this, false, false, true);
+			$data .= format_fact_place($this, false, false, false, true);
 		}
 		$data .= "<br />\n";
 		if (!$return) print $data;

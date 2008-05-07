@@ -49,11 +49,35 @@ VERSION 4.2
 +$pgv_lang["nephew"]								13 May 2007				A
 +$pgv_lang["niece"]									13 May 2007				A
 
+VERSION 4.1.6
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
+*$pgv_lang["todo_descr"]							07 May 2008				pw
+*$pgv_lang["todo_show_other"]						07 May 2006				p
++$pgv_lang["todo_block"]              06 May        2008    A
++$pgv_lang["todo_descr"]              06 May        2008    A
++$pgv_lang["todo_show_other"]         06 May        2008    A
++$pgv_lang["todo_show_unassigned"]    06 May        2008    A
++$pgv_lang["todo_show_future"]        06 May        2008    A
++$pgv_lang["todo_nothing"]            06 May        2008    A
+-$pgv_lang["max_generation"]          01 May        2008    D
+-$pgv_lang["min_generation"]          01 May        2008    D
+
+
+VERSION 4.1.5
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
++$pgv_lang["TYPE__painting"]						16 April 2008			A
++$pgv_lang["TYPE__other"]							16 April 2008			A
+
 
 VERSION 4.1.4
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["follow_spouse"]							3 April 2008			p
 *$pgv_lang["age_differences"]						17 Mar 2008				W
 +$pgv_lang["charts_click_box"]						1 Feb 2008				A
 +$pgv_lang["greatgrandchild"]						15 Dec 2007				A

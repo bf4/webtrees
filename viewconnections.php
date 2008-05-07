@@ -7,7 +7,7 @@
  *  Allows a user the ability to remove the link.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008 PhpGedView Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@
  * @subpackage Charts
  * @version $Id$
  */
-require('config.php');
-require_once("includes/functions_print_lists.php");
+require 'config.php';
+require_once 'includes/functions_print_lists.php';
 
 print_simple_header('View Connections');
 
@@ -93,7 +93,7 @@ if (!empty($_REQUEST["selectedServer"])){
 <ul>
 <?php
 foreach($Links as $pid=>$indi){
-  print_list_person($pid, array($indi["names"][0][0], $GEDCOM));
+	echo format_list_person($pid, array($indi["names"][0][0], $GEDCOM));
 }
 ?>
 </ul>
@@ -108,7 +108,7 @@ foreach($Links as $pid=>$indi){
 <?php
 foreach($famLinks as $famPid=>$fam){
   $fullname = check_NN($fam["name"]);
-  print_list_family($famPid, array($fullname, $GEDCOM));
+	echo format_list_family($famPid, array($fullname, $GEDCOM));
 }
 ?>
 </ul>

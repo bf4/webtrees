@@ -42,7 +42,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  * Prints a block allowing the user review all changes pending approval
  */
 function review_changes_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $pgv_lang, $GEDCOM, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $pgv_changes, $LAST_CHANGE_EMAIL, $ALLOW_EDIT_GEDCOM, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
 

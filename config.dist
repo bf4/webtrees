@@ -57,10 +57,10 @@ $PGV_SESSION_SAVE_PATH = "";					//-- Path to save PHP session Files -- DO NOT M
 $PGV_SESSION_TIME = "7200";						//-- number of seconds to wait before an inactive session times out
 $SERVER_URL = "";								//-- the URL used to access this server
 $LOGIN_URL = "";								//-- the URL to use to go to the login page, use this value if you want to redirect to a different site when users login, useful for switching from http to https
-$MAX_VIEWS = "100";								//-- the maximum number of page views per xx seconds per session
-$MAX_VIEW_TIME = "0";							//-- the number of seconds in which the maximum number of views must not be reached
+$MAX_VIEWS = "20";								//-- the maximum number of page views per xx seconds per session
+$MAX_VIEW_TIME = "1";							//-- the number of seconds in which the maximum number of views must not be reached
 $PGV_MEMORY_LIMIT = "32M";						//-- the maximum amount of memory that PGV should be allowed to consume
-$ALLOW_REMEMBER_ME = true;						//-- whether the users have the option of being remembered on the current computer
+$ALLOW_REMEMBER_ME = false;						//-- whether the users have the option of being remembered on the current computer
 $CONFIG_VERSION = "4.0";						//-- the version this config file goes to
 
 $COMMIT_COMMAND = "";						//-- Choices are empty string, cvs or svn

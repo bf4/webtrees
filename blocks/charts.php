@@ -5,7 +5,7 @@
  * This block prints pedigree, descendency, or hourglass charts for the chosen person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	);
 	
 function print_charts_block($block = true, $config="", $side, $index) {
-	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID;
+	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
 	global $show_full, $bwidth, $bheight;
 	
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
@@ -55,16 +55,15 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		}
 	}
 	
-	$bheight -= 15;
 	if ($config["details"]=="no") {
 		$show_full = 0;
 		// Here we could adjust the block width & height to accommodate larger displays 
 	} else {
 		$show_full = 1;
 		// Here we could adjust the block width & height to accommodate larger displays 
-		$bwidth += 40;
-		$bheight += 20;
 	}
+	
+	$PEDIGREE_FULL_DETAILS = $show_full;		// Override GEDCOM configuration (but only for the Charts block)
 	
 	if ($config['type']!='treenav') {
 		include_once("includes/controllers/hourglass_ctrl.php");
@@ -94,7 +93,9 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 		}
 	}
+	if ($person) {
 	$name = $person->getName();
+	}
 	switch($config['type']) {
 		case 'pedigree':
 			$title .= $name." ".$pgv_lang["index_header"];
@@ -110,6 +111,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			break;
 	}
 	$content="";
+	$content .= "<script src=\"phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 	if ($show_full==0) {
 		$content .=  "<span class=\"details2\"><center>".$pgv_lang["charts_click_box"]."</center></span><br />";
 	}
@@ -175,20 +177,23 @@ function print_charts_block_config($config) {
 		<td class="descriptionbox wrap width33"><?php print $pgv_lang["show_details"]; ?></td>
 	<td class="optionbox">
 		<select name="details">
-				<option value="no" <?php if ($config["details"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang['no'] ?></option>
-				<option value="yes" <?php if ($config["details"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang['yes'] ?></option>
+				<option value="no" <?php if ($config["details"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang['no']; ?></option>
+				<option value="yes" <?php if ($config["details"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang['yes']; ?></option>
 		</select>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width33"><?php print $pgv_lang["root_person"]; ?></td>
 		<td class="optionbox">
-			<input type="text" name="rootId" id="rootId" value="<?php print $config["rootId"]?>" size="5" />
-			<?php print_findindi_link("rootId","");
-			if (!empty($config["rootId"])) {
-				print "<span class=\"list_item\">".get_person_name($config["rootId"]);
-				print_first_major_fact($config["rootId"]);
-				print "</span>";
+			<input type="text" name="rootId" id="rootId" value="<?php print $config['rootId']; ?>" size="5" />
+			<?php
+			print_findindi_link('rootId','');
+			if ($config['rootId']) {
+				echo
+					'<span class="list_item">',
+					get_person_name($config['rootId']),
+					format_first_major_fact($config['rootId']),
+					'</span>';
 			}
 			?>
 		</td>

@@ -2,6 +2,8 @@
 /**
  * Individual List
  *
+ * Copyright (c) 2008, PGV Development Team, all rights reserved.
+ *
  * The individual list shows all individuals from a chosen gedcom file. The list is
  * setup in two sections. The alphabet bar and the details.
  *
@@ -22,8 +24,8 @@
  * @version $Id$
  */
 
-require("config.php");
-require_once("includes/functions_print_lists.php");
+require 'config.php';
+require_once 'includes/functions_print_lists.php';
 
 /**
  * is the person alive in the given year
@@ -39,24 +41,24 @@ function check_alive($indirec, $year) {
 	$deathrec = get_sub_record(1, "1 DEAT", $indirec);
 	if (preg_match("/\d DATE (.*)/", $deathrec, $match)) {
 		$ddate = new GedcomDate($match[1]);
-		$ddate = $ddate->MaxDate();
-		$ddate = $ddate->convert_to_cal('gregorian');
-		if ($year>$ddate->y)
+		$dyear=$ddate->gregorianYear();
+		if ($year>$dyear) {
 					return -1;
 				}
+	}
 
 	// Born after year?
 	$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 	if (preg_match("/\d DATE (.*)/", $birthrec, $match)) {
 		$bdate = new GedcomDate($match[1]);
-		$bdate = $bdate->MinDate();
-		$bdate = $bdate->convert_to_cal('gregorian');
-		if ($year<$bdate->y)
+		$byear=$bdate->gregorianYear();
+		if ($year<$byear) {
 					return 1;
 				}
+	}
 
 	// Born before year and died after year
-	if (isset($bdate) && isset($ddate) && $year>=$bdate->y && $year<=$ddate->y)
+	if (isset($byear) && isset($dyear) && $year>=$byear && $year<=$dyear)
 			return 0;
 
 	// If no death record than check all dates;
@@ -65,19 +67,22 @@ function check_alive($indirec, $year) {
 	foreach($subrecs as $ind=>$subrec)
 		if (preg_match("/\d DATE (.*)/", $subrec, $match)) {
 			$date = new GedcomDate($match[1]);
-			$date = $date->MinDate();
-			$date = $date->convert_to_cal('gregorian');
-			if ($date->y > 0)
-				$years[] = $date->y;
+			$datey= $date->gregorianYear();
+			if ($datey) {
+				$years[] = $datey;
+			}
 	}
 
 	// Events both before and after year
-	if (count($years)>1 && $year>=$years[0] && $year<=$years[count($years)-1])
+	if (count($years)>1 && $year>=$years[0] && $year<=$years[count($years)-1]) {
 			return 0;
+	}
 
-	foreach($years as $ind=>$year1)
-		if (($year1-$year) > $MAX_ALIVE_AGE)
+	foreach($years as $ind=>$year1) {
+		if (($year1-$year) > $MAX_ALIVE_AGE) {
 			return -1;
+		}
+	}
 
 	return 0;
 }
@@ -200,7 +205,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	$indi_alive = 0;
 	foreach($indilist as $gid=>$indi) {
 		//-- make sure that favorites from other gedcoms are not shown
-		if ($indi["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
+		if ($indi["gedfile"]==PGV_GED_ID) {
 			if (displayDetailsById($gid)||showLivingNameById($gid)) {
 				$ret = check_alive($indi["gedcom"], $year);
 				if ($ret==0) {
@@ -364,7 +369,7 @@ else {
 		$total_living = 0;
 		foreach($tindilist as $gid => $indi) {
 			//-- make sure that favorites from other gedcoms are not shown
-			if ($indi["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) {
+			if ($indi["gedfile"]==PGV_GED_ID) {
 				$ret = check_alive($indi["gedcom"], $year);
 				if ($ret==0) {
 					foreach($indi["names"] as $indexval => $namearray) {
@@ -383,7 +388,7 @@ else {
 		$i=0;
 		foreach($names as $indexval => $namearray) {
 			$name = check_NN(sortable_name_from_name($namearray[0]));
-			print_list_person($namearray[4], array($name, $GEDCOM));
+			echo format_list_person($namearray[4], array($name, $GEDCOM));
 			$i++;
 			if ($i==ceil($count/2) && $count>8) print "</ul></td><td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>\n";
 		}
@@ -479,7 +484,7 @@ else {
 			$gid = $namearray["gid"];
 			$name = $namearray["name"];
 			$indi = $tindilist[$gid];
-			print_list_person($gid, array($name, get_gedcom_from_id($indi["gedfile"])));
+			echo format_list_person($gid, array($name, get_gedcom_from_id($indi["gedfile"])));
 			$i++;
 			if ($i==ceil($count/2) && $count>8) print "</ul></td><td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>\n";
 		}

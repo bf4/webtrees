@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a family id, person id
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,9 @@
  * @version $Id$
  */
 
-require("config.php");
-require_once("includes/functions_print_lists.php");
+require 'config.php';
+require_once 'includes/functions_print_lists.php';
+
 if (!isset($type)) $type = "indi";
 if (!isset($filter)) $filter="";
 else $filter = trim($filter);
@@ -70,7 +71,7 @@ if (empty($language_filter)) {
 	else $language_filter=$lang_short_cut[$LANGUAGE];
 }
 if (!isset($magnify)) $magnify=false;
-require("includes/specialchars.php");
+require 'includes/specialchars.php';
 
 // End variables for Find Special Character
 
@@ -136,7 +137,7 @@ switch ($type) {
 		if (document.forms[0].subclick) button = document.forms[0].subclick.value;
 		else button = "";
 		if (frm.filter.value.length<2&button!="all") {
-			alert("<?php print $pgv_lang["search_more_chars"]?>");
+			alert("<?php print $pgv_lang["search_more_chars"]; ?>");
 			frm.filter.focus();
 			return false;
 		}
@@ -389,16 +390,16 @@ if ($action=="filter") {
 			foreach($printname as $pkey => $pvalue) {
 				$GEDCOM = $pvalue[2];
 				if ($GEDCOM != $curged) {
-					include(get_privacy_file());
+					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
-				print_list_person($pvalue[1], array(check_NN($pvalue[0]), $pvalue[2]), true);
+				echo format_list_person($pvalue[1], array(check_NN($pvalue[0]), $pvalue[2]), true);
 				print "\n";
 			}
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				include(get_privacy_file());
+				include get_privacy_file();
 				$curged = $GEDCOM;
 			}
 			print "</tr>";
@@ -469,16 +470,15 @@ if ($action=="filter") {
 			foreach($printname as $pkey => $pvalue) {
 				$GEDCOM = $pvalue[2];
 				if ($GEDCOM != $curged) {
-					include(get_privacy_file());
+					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
-				print_list_family($pvalue[1], array($pvalue[0], $pvalue[2]), true);
-				print "\n";
+				echo format_list_family($pvalue[1], array($pvalue[0], $pvalue[2]), true);
 			}
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				include(get_privacy_file());
+				include get_privacy_file();
 				$curged = $GEDCOM;
 			}
 			print "</tr>\n";
@@ -732,7 +732,7 @@ if ($action=="filter") {
 			print "</ul></td></tr>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				include(get_privacy_file());
+				include get_privacy_file();
 				$curged = $GEDCOM;
 			}
 			if ($cts > 0) print "<tr><td class=\"list_label\">".$pgv_lang["total_sources"]." ".$cts."</td></tr>";

@@ -42,8 +42,10 @@ function autosearch_options()
 		if (!is_object($person)) return "";
 		$givennames = $person->getGivenNames();
 		$lastname = $person->getSurname();
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+	$bdate=$person->getEstimatedBirthDate();
+	$ddate=$person->getEstimatedDeathDate();
+	$byear=$bdate->gregorianYear();
+	$dyear=$ddate->gregorianYear();
 		
 	$to_return ="<form name='ancsearch' action='module.php' target=\"_blank\" method='post'> 
 						<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />
@@ -84,8 +86,10 @@ function autosearch_process() {
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
 	$person = Person::getInstance($pid);
 		if (!is_object($person)) return "";
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+	$bdate=$person->getEstimatedBirthDate();
+	$ddate=$person->getEstimatedDeathDate();
+	$byear=$bdate->gregorianYear();
+	$dyear=$ddate->gregorianYear();
 	
 	$url = "http://search.ancestry.co.uk/cgi-bin/sse.dll?";
 	

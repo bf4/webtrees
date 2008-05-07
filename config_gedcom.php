@@ -1,14 +1,14 @@
 <?php
 /**
- * Default Gedcom configuration file
+ * Default GEDCOM configuration file
  *
- * The variables in this file are the Gedcom configuration variables, this file defines the default
+ * The variables in this file are the GEDCOM configuration variables, this file defines the default
  * settings. Site administrators may edit these settings online through the editconfig_gedcom.php
- * file.  Once edited, a new file specific to the gedcom is stored in the $INDEX_DIRECTORY
- * names gedcom.ged_conf.php.
+ * file.  Once edited, a new file named gedcom.ged_conf.php that is specific to the GEDCOM is stored 
+ * in the $INDEX_DIRECTORY.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,8 @@ $SOURCE_ID_PREFIX = "S";					// -- This is the prefix prepend to newly generated
 $REPO_ID_PREFIX = "R";					// -- This is the prefix prepend to newly generated repository records
 $FAM_ID_PREFIX = "F";					// -- This is the prefix prepend to newly generated family records
 $MEDIA_ID_PREFIX = "M";					// -- This is the prefix prepend to newly generated media records
-$PEDIGREE_FULL_DETAILS = true;			// -- Show the birth and death details of an individual on the pedigree tree
+$PEDIGREE_FULL_DETAILS = true;			// -- Show the birth and death details of an individual on charts
+$PEDIGREE_SHOW_GENDER = true;			// -- Show the gender of an individual by means of an icon on charts
 $PEDIGREE_LAYOUT = true;					// -- Set to true for Landscape mode, false for portrait mode
 $SHOW_EMPTY_BOXES = true;				// -- Show empty boxes on charts if the person is unknown
 $ZOOM_BOXES = "click";				// -- When should pedigree boxes zoom.  Values are "disabled", "mouseover", "click"
@@ -100,6 +101,7 @@ $SHOW_MARRIED_NAMES = false;			// -- Option to show the married name for females
 
 $SHOW_ID_NUMBERS = true;				// -- Show gedcom id numbers on charts next to  names
 $SHOW_LAST_CHANGE = true;				// -- Show gedcom record last change on lists
+$SHOW_EST_LIST_DATES = false;  // -- Show estimated birth/death dates on individual lists
 $SHOW_PEDIGREE_PLACES = "9";			// -- What level to show the birth and death places next to the birth and death dates on the pedigree and descendency charts.
 
 $MULTI_MEDIA = true;            		// -- if you have no multi-media files, set this to false

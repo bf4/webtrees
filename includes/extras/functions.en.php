@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,8 +40,7 @@ function ordinal_suffix_en($n) {
   return 'th';
 }
 
-function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
-{
+function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2) {
     global $pgv_lang, $lang_short_cut, $LANGUAGE;
     $started = false;
     $finished = false;
@@ -54,24 +53,19 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
 	$lastRelationshipIsSpouse = false;
 
     // sanity check - helps to prevent the possibility of recursing too deeply
-    if($pid1 == $pid2)
-        return false;
+	if ($pid1 == $pid2) return false;
 
-    foreach($node["path"] as $index=>$pid)
-    {
+	foreach ($node["path"] as $index=>$pid) {
         // only start looking for relationships from the first pid passed in
-        if($pid == $pid1)
-        {
+		if ($pid == $pid1) {
             $started = true;
 			continue;
         }
 
-        if($started)
-        {
+		if ($started) {
 			$lastRelationshipIsSpouse = false;
             // look to see if we can find a relationship
-            switch( $node["relations"][$index])
-			{
+			switch ($node["relations"][$index]) {
 			    case "self":
 				    break;
 
@@ -108,8 +102,7 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
 			}
         }
 
-        if($pid == $pid2)
-        {
+		if ($pid == $pid2) {
             // we have found the second individual - look no further
             $finished = true;
             break;
@@ -117,8 +110,7 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
         
     }
     // sanity check
-    if(!$started || !$finished)
-    {
+	if (!$started || !$finished) {
         // passed in pid's are not found in the array!!!
         return false;
     }
@@ -130,56 +122,28 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
 	if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
 
     //checks for nth cousin n times removed
-    if ($numberOfSpouses == 0 && $numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger != $generationsOlder))
-    {
-        $degree = $generationsOlder;
-        if ($mf=="F")
-        {
-            if(isset($pgv_lang["female_cousin_" . $degree]))
-            {
-                $relationshipDescription = $pgv_lang["female_cousin_" . $degree];
-            }
-        }
-        else
-        {
-            // treat unknown gender as male
-            if(isset($pgv_lang["male_cousin_" . $degree]))
-            {
-                $relationshipDescription = $pgv_lang["male_cousin_" . $degree];
-            }
-        }
-		if($relationshipDescription != false)
-		{
+	if ($numberOfSpouses == 0 && $numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger != $generationsOlder)) {
+		$degree = min($generationsOlder, $generationsYounger);
+
+		if ($mf=="F") $relName = "female_cousin_" . $degree;
+		else $relName = "male_cousin_" . $degree;
+
+		if (isset($pgv_lang[$relName])) $relationshipDescription = $pgv_lang[$relName];
+
+		if ($relationshipDescription != false) {
 			$removed = $generationsOlder-$generationsYounger;
+			if ($removed != 0) {
 			// relationship description should already be set for the Nth cousin
-			if($removed > 0)
-			{
-			    if(isset($pgv_lang["removed_ascending_" . $removed]))
-				{
-		    		$relationshipDescription = $relationshipDescription . $pgv_lang["removed_ascending_" . $removed];
-		    	}
-				else
-				{
-					$relationshipDescription = false;
-				}
-			}
-			else if($removed < 0)
-			{
-				if(isset($pgv_lang["removed_descending_" . -$removed]))
-				{
-		    		$relationshipDescription = $relationshipDescription . $pgv_lang["removed_descending_" . -$removed];
-		    	}
-				else
-				{
-					$relationshipDescription = false;
-				}
+				if ($removed > 0) $relRemoved = "removed_ascending_" . $removed;
+				else $relRemoved = "removed_descending_" . -$removed;
+
+				if (isset($pgv_lang[$relRemoved])) $relationshipDescription .= $pgv_lang[$relRemoved];
 			}
 		}
     }
 	
 
-    if($relationshipDescription != false)
-	{
+	if ($relationshipDescription != false) {
 	    return  strtolower($relationshipDescription);
 	}
 	return false;

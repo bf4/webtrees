@@ -576,10 +576,14 @@ $title_string .= $pgv_lang["relationship_chart"];
 // -- print html header information
 print_header($title_string);
 if (!empty($pid1)) {
-	if (preg_match("/[A-Za-z]+/", $pid1)==0) $pid1 = $GEDCOM_ID_PREFIX.$pid1;
 	//-- check if the id is valid
-	$indirec = find_person_record($pid1);
-	if (empty($indirec)) $pid1 = "";
+	$indirec = Person::getInstance($pid1);
+	if (!$indirec && $GEDCOM_ID_PREFIX) {
+		// Allow user to specify person without the prefix
+		$pid1=$GEDCOM_ID_PREFIX.$pid1;
+		$indirec=Person::getInstance($pid1);
+	}
+	if (!$indirec) $pid1 = "";
 	if ((!displayDetailsByID($pid1))&&(!showLivingNameByID($pid1))) $title_string .= ": ".$pgv_lang["private"];
 	else $title_string .= ":<br />".get_person_name($pid1);
 	if (!empty($_SESSION["pid1"]) && ($_SESSION["pid1"]!=$pid1)) {
@@ -588,10 +592,14 @@ if (!empty($pid1)) {
 	}
 }
 if (!empty($pid2)) {
-	if (preg_match("/[A-Za-z]+/", $pid2)==0) $pid2 = $GEDCOM_ID_PREFIX.$pid2;
 	//-- check if the id is valid
 	$indirec = find_person_record($pid2);
-	if (empty($indirec)) $pid2 = "";
+	if (!$indirec && $GEDCOM_ID_PREFIX) {
+		// Allow user to specify person without the prefix
+		$pid2=$GEDCOM_ID_PREFIX.$pid2;
+		$indirec = find_person_record($pid2);
+	}
+	if (!$indirec) $pid2 = "";
 	if ((!displayDetailsByID($pid2))&&(!showLivingNameByID($pid2))) $title_string .= " - " . $pgv_lang["private"]." ";
 	else $title_string .= " ".$pgv_lang["and"]." ".get_person_name($pid2)." ";
 	if (!empty($_SESSION["pid2"]) && ($_SESSION["pid2"]!=$pid2)) {

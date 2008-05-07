@@ -3,7 +3,7 @@
  * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,6 +74,7 @@ $pgv_lang["main_media_fail0"]		= "Das Medien-Objekt <b>#GLOBALS[oldMediaFolder]#
 $pgv_lang["main_media_fail1"]		= "Das Medien-Objekt <b>#GLOBALS[oldMediaName]#</b> konnte nicht auf <b>#GLOBALS[newMediaName]#</b> umbenannt werden.";
 $pgv_lang["main_media_fail2"]		= "Das Medien-Objekt <b>#GLOBALS[oldMediaName]#</b> konnte nicht von <b>#GLOBALS[oldMediaFolder]#</b> nach <b>#GLOBALS[newMediaFolder]#</b> verlegt werden.";
 $pgv_lang["main_media_fail3"]		= "Das Medien-Objekt konnte nicht von <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> nach <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b> verlegt und umbenannt werden.";
+$pgv_lang["resn_disabled"]				= "Um diese Wahl in Kraft zu setzen, muss die <b>#pgv_lang[PRIVACY_BY_RESN]#</b> Option auch eingeschaltet werden.";
 $pgv_lang["thumb_media_ok1"]		= "Das Miniaturbild <b>#GLOBALS[oldMediaName]#</b> wurde auf <b>#GLOBALS[newMediaName]#</b> umbenannt.";
 $pgv_lang["thumb_media_ok2"]		= "Das Miniaturbild <b>#GLOBALS[oldMediaName]#</b> wurde von <b>#GLOBALS[oldThumbFolder]#</b> nach <b>#GLOBALS[newThumbFolder]#</b> verlegt.";
 $pgv_lang["thumb_media_ok3"]		= "Das Miniaturbild wurde von <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> nach <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b> verlegt und umbenannt.";

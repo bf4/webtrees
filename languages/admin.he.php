@@ -38,7 +38,7 @@ $pgv_lang["deleted_files"]          		= "קבצים שנמחקו:";
 $pgv_lang["index_dir_cleanup_inst"]		= "כדי למחוק קובץ או ספרית משנה מתיקיית אינדקס גרור אותו לפח האשפה או בחר את תיבת הסימון שלו. לחץ על כפתור מחק כדי להסיר לצמיתות את הקבצים המסומנים.<br /><br />קבצים שמסומנים ע\"י <img src=\"./images/RESN_confidential.gif\" />  נחוצים לפעולה תקינה ולא ניתן למחוק אותם.<br />קבצים מסומנים ע\"י <img src=\"./images/RESN_locked.gif\" /> כוללים הגדרות חשובות או נתוני שינויים ממתינים ואותם יש למחוק רק אם אתה בטוח שאתה יודע מה שאתה עושה.<br /><br />"; 
 $pgv_lang["index_dir_cleanup"]		= "תיקיית אינדקס לניקוי"; 
 $pgv_lang["clear_cache_succes"]		= "קובצי cache הוסרו."; 
-$pgv_lang["clear_cache"]			= "נקה קובצי cache "; 
+$pgv_lang["clear_cache"]			= "cache נקה קובצי"; 
 $pgv_lang["sanity_err0"]			= "שגיאות:"; 
 $pgv_lang["sanity_err1"]			= "אתה צריך מהדורת PHP 4.3.5 או גבוהה יותר."; 
 $pgv_lang["sanity_err2"]			= "קובץ או תיקייה <i>#GLOBALS[whichFile]#</i> אינו קיים. בדוק שהקובץ או התיקייה קיימים, ששמו נכון ושיש הרשאות קריאה."; 

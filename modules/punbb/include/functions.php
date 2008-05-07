@@ -120,7 +120,7 @@ function check_cookie(&$pun_user)
 		// If user authorisation failed
 		if (!isset($pun_user['id']) || md5($cookie_seed.$pun_user['password']) !== $cookie['password_hash'])
 		{
-			pun_setcookie(0, random_pass(8), $expire);
+			pun_setcookie(1, md5(uniqid(rand(), true)), $expire);
 			set_default_user();
 
 			return;
@@ -366,14 +366,14 @@ function generate_navlinks()
 				$links[] = '<li id="navsearch"><a href="'.genurl('search.php').'">'.$lang_common['Search'].'</a>';
 
 			$links[] = '<li id="navprofile"><a href="'.genurl('profile.php?id='.$pun_user['id']).'">'.$lang_common['Profile'].'</a>';
-//			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
+//			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'&amp;csrf_token='.sha1($pun_user['id'].sha1(get_remote_address())).'">'.$lang_common['Logout'].'</a>';
 		}
 		else
 		{
 			$links[] = '<li id="navsearch"><a href="'.genurl('search.php').'">'.$lang_common['Search'].'</a>';
 			$links[] = '<li id="navprofile"><a href="'.genurl('profile.php?id='.$pun_user['id']).'">'.$lang_common['Profile'].'</a>';
 			$links[] = '<li id="navadmin"><a href="'.genurl('admin_index.php').'">'.$lang_common['Admin'].'</a>';
-//			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
+//			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'&amp;csrf_token='.sha1($pun_user['id'].sha1(get_remote_address())).'">'.$lang_common['Logout'].'</a>';
 		}
 	}
 
@@ -921,8 +921,8 @@ function redirect($destination_url, $message)
 {
 	global $db, $pun_config, $lang_common, $pun_user;
 
-	// Prefix with o_base_url (unless it's there already)
-	if (strpos($destination_url, $pun_config['o_base_url']) !== 0)
+	// Prefix with o_base_url (unless there's already a valid URI)
+	if (strpos($destination_url, 'http://') !== 0 && strpos($destination_url, 'https://') !== 0 && strpos($destination_url, '/') !== 0)
 		$destination_url = $pun_config['o_base_url'].'/'.$destination_url;
 
 	// Do a little spring cleaning

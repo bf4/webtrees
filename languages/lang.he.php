@@ -3,7 +3,7 @@
  * Hebrew Language Help-file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @translator Meliza
  * @package PhpGedView
  * @subpackage Languages
+ * @author Meliza Amity
  * @version $Id$
  */
 
@@ -356,8 +356,8 @@ $pgv_lang["landscape"]		= "תצוגה מרווחת";
 $pgv_lang["start_at_parents"]		= "התחל מההורים";
 $pgv_lang["charts"] 			= "תרשימים";
 $pgv_lang["lists"] 			= "רשימות";
-$pgv_lang["max_generation"]		= "המספר המכסימלי של דורות באילן יוחסין הוא #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"]		= "המספר המינימאלי של דורות באילן יוחסין הוא 3.";
+//$pgv_lang["max_generation"]		= "המספר המכסימלי של דורות באילן יוחסין הוא #PEDIGREE_GENERATIONS#.";
+//$pgv_lang["min_generation"]		= "המספר המינימאלי של דורות באילן יוחסין הוא 3.";
 $pgv_lang["box_width"] 		= "רוחב התיבה";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -526,7 +526,7 @@ $pgv_lang["record_added"]		= "רשומת ה-#xref# הוספה בהצלחה לק�
 $pgv_lang["record_not_added"]	= "לא ניתן להוסיף את רשומת ה-#xref# לקובץ ה-GEDCOM."; 
 
 //-- SEARCH FILE MESSAGES
-$pgv_lang["soundex_search"] 		= "- חפש לפי האיות שאתה משער (סאונדקס)";
+$pgv_lang["soundex_search"] 		= "חפש לפי האיות שאתה משער (סאונדקס)";
 $pgv_lang["sources"]		= "מקורות";
 $pgv_lang["lastname_search"]		= "משפחה";
 $pgv_lang["search_place"]		= "מקום";
@@ -769,15 +769,15 @@ $pgv_lang["relationship_chart"]	= "קירבה משפחתית";
 $pgv_lang["person1"]		= "אדם א'";
 $pgv_lang["person2"]		= "אדם ב'";
 $pgv_lang["no_link_found"]		= "לא נמצא קשר (אחר) בין שני האנשים.";
-$pgv_lang["sibling"]		= "אח/אחות";
-$pgv_lang["follow_spouse"]		= "בדוק קירבת נישואין.";
+$pgv_lang["sibling"]		= "אח/ות";
+$pgv_lang["follow_spouse"]		= "בדוק קירבה דרך נישואין"; 
 $pgv_lang["timeout_error"]		= "החיפוש ארך יותר מידי זמן.";
 $pgv_lang["son_in_law"]		= "חתן";  // the husband of your daughter
 $pgv_lang["daughter_in_law"]	= "כלה"; // the wife of your son
 $pgv_lang["grandchild"]		= "נכד/ה";
 $pgv_lang["grandson"]		= "נכד";
 $pgv_lang["granddaughter"]	= "נכדה";
-$pgv_lang["greatgrandchild"]	= "שלש או שלשה"; 
+$pgv_lang["greatgrandchild"]	= "שלש/ה"; 
 $pgv_lang["greatgrandson"]	= "שלש";
 $pgv_lang["greatgranddaughter"]	= "שלשה"; 
 $pgv_lang["brother"]		= "אח";
@@ -788,10 +788,10 @@ $pgv_lang["aunt"]			= "דודה";
 $pgv_lang["uncle"]		= "דוד";
 $pgv_lang["nephew"]		= "אחיינית";
 $pgv_lang["niece"]		= "אחיין"; 
-$pgv_lang["firstcousin"]		= "בן דוד מדרגה ראשונה";
-$pgv_lang["femalecousin"]		= "בת דודה";
-$pgv_lang["malecousin"]		= "בן דוד";
-$pgv_lang["cousin_in_law"]		= "בן דוד דרך נישואין";
+$pgv_lang["firstcousin"]		= "דודן/דודנית מדרגה ראשונה";
+$pgv_lang["femalecousin"]		= "דודנית";
+$pgv_lang["malecousin"]		= "דודן";
+$pgv_lang["cousin_in_law"]		= "דודן/דודנית דרך נישואין";
 $pgv_lang["relationship_to_me"]	= "קירבה אלי";
 $pgv_lang["rela_husb"]		= "קירבה לבעל";
 $pgv_lang["rela_wife"]		= "קירבה לאישה";
@@ -1655,11 +1655,11 @@ $pgv_lang["hs_intruehelp"]		= "טכסט עזרה בלבד";
 $pgv_lang["hs_inallhelp"]		= "כל הטכסט";
 
 // Media import
-$pgv_lang["choose"] 		= "בחר: ";
+$pgv_lang["choose"] 			= "בחר: ";
 $pgv_lang["account_information"] 	= "נתוני קוד משתמש";
 
 //-- Media item "TYPE" sub-field
-$pgv_lang["TYPE__audio"] 		= "אודיו";
+$pgv_lang["TYPE__audio"] 			= "אודיו";
 $pgv_lang["TYPE__book"] 			= "ספר";
 $pgv_lang["TYPE__card"] 			= "כרטיס";
 $pgv_lang["TYPE__certificate"] 		= "תעודה";
@@ -1671,12 +1671,14 @@ $pgv_lang["TYPE__magazine"] 		= "כתב עת";
 $pgv_lang["TYPE__manuscript"] 		= "כתב-יד";
 $pgv_lang["TYPE__map"] 			= "מפה";
 $pgv_lang["TYPE__newspaper"] 		= "עיתון";
-$pgv_lang["TYPE__photo"] 		= "צילום";
+$pgv_lang["TYPE__photo"] 			= "צילום";
 $pgv_lang["TYPE__tombstone"] 		= "מצבה";
-$pgv_lang["TYPE__video"] 		= "וידאו";
+$pgv_lang["TYPE__video"] 			= "וידאו";
+$pgv_lang["TYPE__painting"] 			= "תמונה"; 
+$pgv_lang["TYPE__other"] 			= "אחר"; 
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] 		= "התבונן כמצגת שקופיות"; 
+$pgv_lang["view_slideshow"] 			= "התבונן כמצגת שקופיות"; 
 $pgv_lang["download_image"]		= "הורד קובץ";
 $pgv_lang["no_media"]			= "לא נמצאה מדיה";
 $pgv_lang["media_privacy"]		= "הגבלות פרטיות מונעות ממך לראות פריט זה"; 

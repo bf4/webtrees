@@ -138,7 +138,7 @@ class SearchControllerRoot extends BaseController {
 				$this->query="";
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
-				$this->myquery = $this->query;
+				$this->myquery = htmlentities($this->query);
 			}
 		}
 		if (isset ($_REQUEST["replace"])) {
@@ -433,6 +433,7 @@ class SearchControllerRoot extends BaseController {
 				// Search the indi's
 				if ((isset ($this->srindi)) && (count($this->sgeds) > 0)) {
 					$this->myindilist = search_indis($this->query, $this->sgeds);
+//					uasort($this->myindilist, "itemsort");
 				}
 
 				// Search the fams

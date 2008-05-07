@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Modules
- * @version $Id: album_page_RTL2.css 2334 2007-11-30 16:53:23Z windmillway $
+ * @version $Id: album_page_RTL2.css 2979 2008-05-02 13:52:56Z windmillway $
  */
  
 /* lightbox_plus.css version 3.00  29/06/2007  */
@@ -86,17 +86,17 @@ margin-top: 0px;
 
 .prvpic img
 {
-background-color: none; 
+/* background-color: none; */
 border-style: dotted;
 border: 0px;
-border-color: none;
+/* border-color: none; */
 padding: 0px;
 }
 
 .pic
 {
 /* background-color: #777777; */
-background-color: none;
+/* background-color: none; */
 border-style: solid;
 border: 0px;
 border-color: #ffffff;
@@ -136,7 +136,8 @@ float: right;
 }
 
 li.li_norm{
-border: 2px solid transparent; 
+/* border: 2px solid transparent; */
+border: 2px; 
 }
 
 li.li_new {

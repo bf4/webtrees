@@ -3,7 +3,7 @@
  * Class that defines a media object
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2008	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,10 +65,12 @@ class Media extends GedcomRecord {
 	 * @param string $pid	the ID of the media to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $objectlist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		if (isset($objectlist[$pid]['gedfile']) && $objectlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($objectlist[$pid]['object'])) return $objectlist[$pid]['object'];
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Check the cache first
+		if (isset($gedcom_record_cache[$pid][$ged_id])) {
+			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
 		$gedrec = find_media_record($pid);
@@ -94,7 +96,8 @@ class Media extends GedcomRecord {
 		if (empty($gedrec)) return null;
 		$obje = new Media($gedrec, $simple);
 		if (!empty($fromfile)) $obje->setChanged(true);
-		$objectlist[$pid]['object'] = &$obje;
+		// Store the object in the cache
+		$gedcom_record_cache[$pid][$ged_id]=&$obje;
 		return $obje;
 	}
 
@@ -252,7 +255,7 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getMediatype() {
-		$mediaType = get_gedcom_value("FORM:TYPE", 2, $this->gedrec);
+		$mediaType = strtolower(get_gedcom_value("FORM:TYPE", 2, $this->gedrec));
 		return $mediaType;
 	}
 

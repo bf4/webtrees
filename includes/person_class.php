@@ -3,7 +3,7 @@
  * Class file for a person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,13 +59,24 @@ class Person extends GedcomRecord {
 	var $age = null;
 	var $isdead = -1;
 
+	// Cached results from various functions.
+	// These should become private when we move to PHP5.  Do not use them from outside this class.
+	var $_getBirthDate=null;
+	var $_getBirthPlace=null;
+	var $_getAllBirthDates=null;
+	var $_getAllBirthPlaces=null;
+	var $_getEstimatedBirthDate=null;
+	var $_getDeathDate=null;
+	var $_getDeathPlace=null;
+	var $_getAllDeathDates=null;
+	var $_getAllDeathPlaces=null;
+	var $_getEstimatedDeathDate=null;
+	
 	/**
 	 * Constructor for person object
 	 * @param string $gedrec	the raw individual gedcom record
 	 */
 	function Person($gedrec,$simple=true) {
-		global $MAX_ALIVE_AGE;
-
 		parent::GedcomRecord($gedrec, $simple);
 
 		$st = preg_match("/1 SEX (.*)/", $this->gedrec, $smatch);
@@ -81,12 +92,12 @@ class Person extends GedcomRecord {
 	 * @return Person	returns an instance of a person object
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $indilist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		if (isset($indilist[$pid])
-		&& isset($indilist[$pid]['gedfile'])
-		&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($indilist[$pid]['object'])) return $indilist[$pid]['object'];
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		// Check the cache first
+		if (isset($gedcom_record_cache[$pid][$ged_id])) {
+			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
 		$indirec = find_person_record($pid);
@@ -109,20 +120,21 @@ class Person extends GedcomRecord {
 				$fromfile = true;
 			}
 		}
-		//if (empty($indirec)) return null;
-		if (empty($indirec)) $indirec = "0 @".$pid."@ INDI\r\n";
+		if (empty($indirec)) return null;
+
 		$person = new Person($indirec, $simple);
 		if (!empty($fromfile)) $person->setChanged(true);
 		//-- update the cache
-		if ($person->isRemote()) {
+		if ($person->isRemote() && $ged_id==PGV_GED_ID) {
+			global $indilist;
 			$indilist[$pid]['gedcom'] = $person->gedrec;
 			$indilist[$pid]['names'] = get_indi_names($person->gedrec);
 			$indilist[$pid]["isdead"] = is_dead($person->gedrec);
-			$indilist[$pid]["gedfile"] = $GEDCOMS[$GEDCOM]['id'];
+			$indilist[$pid]["gedfile"] = $ged_id;
 			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
 		}
-		$indilist[$pid]['object'] = &$person;
-		if (!isset($indilist[$pid]['gedfile'])) $indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
+		// Store the record in the cache
+		$gedcom_record_cache[$pid][$ged_id]=&$person;
 		return $person;
 	}
 
@@ -200,8 +212,12 @@ class Person extends GedcomRecord {
 			$givn = $unknownPN[$lang];
 		}
 		else if ($starred) {
-			if ($UNDERLINE_NAME_QUOTES) $givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
+			if ($UNDERLINE_NAME_QUOTES) {
+				$givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
+				$surn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $surn);
+			}
 			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
+			$surn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $surn);
 		}
 		if ($nsfx) $surn .= " ".trim($nsfx);
 		return trim($surn.", ".$givn);
@@ -216,7 +232,7 @@ class Person extends GedcomRecord {
 		if (!$this->canDisplayName()) return $pgv_lang["private"];
 		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
 		$ct = preg_match("~/(.*)/~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
-		$name = trim($match[1]);
+		if ($ct) $name = trim($match[1]);
 		if (empty($name)) return $pgv_lang["unknown"];
 		return $name;
 	}
@@ -229,7 +245,7 @@ class Person extends GedcomRecord {
 		if (!$this->canDisplayName()) return $pgv_lang["private"];
 		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
 		$ct = preg_match("~^([^\s]*)~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
-		$name = trim($match[1]);
+		if ($ct) $name = trim($match[1]);
 		if (empty($name)) return $pgv_lang["unknown"];
 		return $name;
 	}
@@ -468,6 +484,140 @@ class Person extends GedcomRecord {
 		return $ddate->date1->y;
 	}
 
+	// Get all the dates/places for births/deaths - for the INDI lists
+	function getAllBirthDates() {
+		if (is_null($this->_getAllBirthDates)) {
+			if ($this->canDisplayDetails()) {
+				foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+					if ($this->_getAllBirthDates=$this->getAllEventDates($event)) {
+						break;
+					}
+				}
+			} else {
+				$this->_getAllBirthDates=array();
+			}
+		}
+		return $this->_getAllBirthDates;
+	}
+	function getAllBirthPlaces() {
+		if (is_null($this->_getAllBirthPlaces)) {
+			if ($this->canDisplayDetails()) {
+				foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+					if ($this->_getAllBirthPlaces=$this->getAllEventPlaces($event)) {
+						break;
+					}
+				}
+			} else {
+				$this->_getAllBirthPlaces=array();
+			}
+		}
+		return $this->_getAllBirthPlaces;
+	}
+	function getAllDeathDates() {
+		if (is_null($this->_getAllDeathDates)) {
+			if ($this->canDisplayDetails()) {
+				foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+					if ($this->_getAllDeathDates=$this->getAllEventDates($event)) {
+						break;
+					}
+				}
+			} else {
+				$this->_getAllDeathDates=array();
+			}
+		}
+		return $this->_getAllDeathDates;
+	}
+	function getAllDeathPlaces() {
+		if (is_null($this->_getAllDeathPlaces)) {
+			if ($this->canDisplayDetails()) {
+				foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+					if ($this->_getAllDeathPlaces=$this->getAllEventPlaces($event)) {
+						break;
+					}
+				}
+			} else {
+				$this->_getAllDeathPlaces=array();
+			}
+		}
+		return $this->_getAllDeathPlaces;
+	}
+
+	// Generate an estimate for birth/death dates, based on dates of parents/children/spouses
+	function getEstimatedBirthDate() {
+		if (is_null($this->_getEstimatedBirthDate)) {
+			foreach ($this->getAllBirthDates() as $date) {
+				if ($date->isOK()) {
+					$this->_getEstimatedBirthDate=$date;
+					break;
+				}
+			}
+			if (is_null($this->_getEstimatedBirthDate)) {
+				$min=array();
+				$max=array();
+				$tmp=$this->getDeathDate();
+				if ($tmp->MinJD()) {
+					global $MAX_ALIVE_AGE;
+					$min[]=$tmp->MinJD()-$MAX_ALIVE_AGE*365;
+					$max[]=$tmp->MaxJD();
+				}
+				foreach ($this->getChildFamilies() as $family) {
+					foreach ($family->getChildren() as $child) {
+						$tmp=$child->getBirthDate();
+						if ($tmp->MinJD()) {
+							$min[]=$tmp->MaxJD()-365*($this->getSex()=='F'?45:65);
+							$max[]=$tmp->MinJD()-365*15;
+						}
+					}
+				}
+				foreach ($this->getSpouseFamilies() as $family) {
+					$tmp=new GedcomDate($family->getMarriageDate());
+					if ($tmp->MinJD()) {
+						$min[]=$tmp->MaxJD()-365*45;
+						$max[]=$tmp->MinJD()-365*15;
+					}
+					if ($spouse=$family->getSpouse($this)) {
+							$tmp=$spouse->getBirthDate();
+						if ($tmp->MinJD()) {
+							$min[]=$tmp->MaxJD()-365*25;
+							$max[]=$tmp->MinJD()+365*25;
+						}
+					}
+				}
+				if ($min && $max) {
+					list($y)=GregorianDate::JDtoYMD(floor((max($min)+min($max))/2));
+					$this->_getEstimatedBirthDate=new GedcomDate("EST {$y}");
+				} else {
+					$this->_getEstimatedBirthDate=new GedcomDate(''); // always return a date object
+				}
+			}
+		}
+		return $this->_getEstimatedBirthDate;
+	}
+	function getEstimatedDeathDate() {
+		if (is_null($this->_getEstimatedDeathDate)) {
+			foreach ($this->getAllDeathDates() as $date) {
+				if ($date->isOK()) {
+					$this->_getEstimatedDeathDate=$date;
+					break;
+				}
+			}
+			if (is_null($this->_getEstimatedDeathDate)) {
+				$tmp=$this->getEstimatedBirthDate();
+				if ($tmp->MinJD()) {
+					global $MAX_ALIVE_AGE;
+					$tmp2=$tmp->AddYears($MAX_ALIVE_AGE, 'bef');
+					if ($tmp2->MaxJD()<server_jd()) {
+						$this->_getEstimatedDeathDate=$tmp2;
+					} else {
+						$this->_getEstimatedDeathDate=new GedcomDate(''); // always return a date object
+					}
+				} else {
+					$this->_getEstimatedDeathDate=new GedcomDate(''); // always return a date object
+				}
+			}
+		}
+		return $this->_getEstimatedDeathDate;
+	}
 	/**
 	 * get the sex
 	 * @return string 	return M, F, or U
@@ -480,15 +630,16 @@ class Person extends GedcomRecord {
 	 * get the person's sex image
 	 * @return string 	<img ... />
 	 */
-	function getSexImage($style='') {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
-		if ($this->getSex()=="M") $s = "sex";
-		else if ($this->getSex()=="F") $s = "sexf";
-		else $s = "sexn";
-		$temp = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$s]["small"]."\" alt=\"\" class=\"gender_image\"";
-		if (!empty($style)) $temp .= " style=\"$style\"";
-		$temp .= " />";
-		return $temp;
+	function getSexImage() {
+		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		switch ($this->getSex()) {
+		case 'M':
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" />';
+		case 'F':
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" />';
+		default:
+			return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexn']['small'].'" class="gender_image" />';
+		}
 	}
 
 	/**
@@ -514,11 +665,10 @@ class Person extends GedcomRecord {
 		global $pgv_lang, $TEXT_DIRECTION;
 		$label = "";
 		$gap = 0;
-		if ($elderdate) {
-			$p1 = $elderdate;
-			$p2 = $this->getBirthDate(false);
-			if ($p1->MinJD() && $p2->MinJD()) {
-				$gap = $p2->MinJD()-$p1->MinJD(); // days
+		if (is_object($elderdate) && $elderdate->isOK()) {
+			$p2 = $this->getBirthDate();
+			if ($p2->isOK()) {
+				$gap = $p2->MinJD()-$elderdate->MinJD(); // days
 				$label .= "<div class=\"elderdate age $TEXT_DIRECTION\">";
 				// warning if negative gap : wrong order
 				if ($gap<0 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
@@ -809,7 +959,7 @@ class Person extends GedcomRecord {
 	 * @return Person
 	 */
 	function &getUpdatedPerson() {
-		global $GEDCOM, $pgv_changes, $GEDCOMS;
+		global $GEDCOM, $pgv_changes;
 		if ($this->changed) return null;
 		if (PGV_USER_CAN_EDIT && $this->disp) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
