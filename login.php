@@ -2,10 +2,8 @@
 /**
  * Login Page.
  *
- * Provides links for administrators to get to other administrative areas of the site
- *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,51 +26,46 @@
  * @version $Id$
  */ 
 
-require "config.php";
-$message="";
-if (!isset($_REQUEST['action'])) {
-	$action="";
-	$username="";
-	$password="";
-}
-else $action = $_REQUEST['action'];
+require 'config.php';
 
-if (!isset($_REQUEST['type'])) $type = "full";
-else $type = $_REQUEST['type'];
+// Extract query parameters
+$url     =safe_POST('url', PGV_REGEX_URL);
+$type    =safe_POST('type', array('full', 'simple'));
+$action  =safe_POST('action');
+$username=safe_POST('username');
+$password=safe_POST('password');
+$remember=safe_POST('remember', 'yes','no');
+$usertime=safe_POST('usertime');
+$pid     =safe_POST('pid');
+$ged     =safe_POST('ged', get_all_gedcoms(), $GEDCOM);
+$help_message=safe_GET('help_messge');
 
-if ($action=="login") {
-	if (isset($_POST['username'])) $username = strip_tags($_POST['username']);
-	else $username="";
-	if (isset($_POST['password'])) $password = $_POST['password'];
-	else $password="";
-	if (isset($_POST['remember'])) $remember = $_POST['remember'];
-	else $remember = "no";
+// Some variables can come from the URL as well as the form
+if (!$url)    $url =safe_GET('url', PGV_REGEX_URL);
+if (!$type)   $type=safe_GET('type', array('full', 'simple'), 'full');
+if (!$action) $type=safe_GET('action');
+
+$message='';
+
+if ($action=='login') {
 	if ($user_id=authenticateUser($username, $password)) {
-		if (!empty($_POST["usertime"])) {
-			$_SESSION["usertime"]=@strtotime($_POST["usertime"]);
+		if ($usertime) {
+			$_SESSION['usertime']=@strtotime($usertime);
 		} else {
-			$_SESSION["usertime"]=time();
+			$_SESSION['usertime']=time();
 		}
-		$_SESSION["timediff"]=time()-$_SESSION["usertime"];
+		$_SESSION['timediff']=time()-$_SESSION['usertime'];
 		$MyLanguage = get_user_setting($user_id, 'language');
 		if ($MyLanguage) {
 			if (isset($_SESSION['CLANGUAGE'])) {
 				$_SESSION['CLANGUAGE'] = $MyLanguage;
-			} else {
-				if (isset($HTTP_SESSION_VARS['CLANGUAGE']))
-					$HTTP_SESSION_VARS['CLANGUAGE'] = $MyLanguage;
 			}
 		}
 		session_write_close();
 		
-		
-		if (!isset($ged)) $ged = $GEDCOM;
-		
 		//-- section added based on UI feedback
 		// TODO: this block of code will never run, as the url will always have parameters ?pid=I123&ged=xyz.ged appended to it.  Has it ever worked?
-		if (isset($_REQUEST['url'])) $url = $_REQUEST['url'];
-		if ($url == "individual.php") {
-			$pid = "";
+		if ($url=='individual.php') {
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
 					$pid = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
@@ -80,7 +73,7 @@ if ($action=="login") {
 					break;
 				}
 			}
-			if (!empty($pid)) {
+			if ($pid) {
 				$url = "individual.php?pid=".$pid;
 			} else {
 				//-- user does not have a pid?  Go to mygedview portal
@@ -100,10 +93,10 @@ if ($action=="login") {
 		
 		header("Location: ".$url);
 		exit;
+	} else {
+		$message = $pgv_lang["no_login"];
 	}
-	else $message = $pgv_lang["no_login"];
-}
-else {
+} else {
 	$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
 	$tLOGIN_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $LOGIN_URL);
 	if (empty($url)) {
@@ -176,7 +169,7 @@ else {
 		print "</td></tr></table><br /><br />\n";
 	}
 }
-$i = 0;		// initialize tab index
+$tab=0;		// initialize tab index
 	?>
 	<form name="loginform" method="post" action="<?php print $LOGIN_URL; ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
 		<input type="hidden" name="action" value="login" />
@@ -190,52 +183,47 @@ $i = 0;		// initialize tab index
 		?>
 		<!--table-->
 		<table class="center facts_table width50">
-		  <tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["login"]?></td></tr>
-		  <tr>
-		    <td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("username_help", "qm", "username"); print $pgv_lang["username"]?></td>
-		    <td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" tabindex="<?php $i++; print $i?>" name="username" value="<?php print htmlentities($username);?>" size="20" class="formField" /></td>
-		  </tr>
-		  <tr>
-		    <td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("password_help", "qm", "password"); print $pgv_lang["password"]?></td>
-		    <td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" tabindex="<?php $i++; print $i?>" name="password" size="20" class="formField" /></td>
-		  </tr>
-		  <?php if ($ALLOW_REMEMBER_ME) { ?>
-		  <tr>
-		  	<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("remember_me_help", "qm", "remember_me");?><label for="remember"><?php print $pgv_lang["remember_me"];?></label></td>
-		    <td class="optionbox <?php print $TEXT_DIRECTION; ?> "><input type="checkbox" tabindex="<?php $i++; print $i?>" id="remember" name="remember" value="yes" <?php if (!empty($_COOKIE["pgv_rem"])) print "checked=\"checked\""; ?> class="formField" /></td>
-		  </tr>
-		  <?php } ?>
-		  <tr>
-		    <td class="topbottombar" colspan="2">
-		    <?php
-		        if ($SHOW_CONTEXT_HELP) {
-		          if ($REQUIRE_AUTHENTICATION) {
-		            print_help_link("login_buttons_aut_help", "qm", "login");
-		          }
-		          else {
-		            print_help_link("login_buttons_help", "qm", "login");
-		          }
-		        }
-		    ?>
-		      <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["login"]; ?>" />&nbsp;
-		      <?php
-		      	/* - commented out based on UI feedback		      	  
-		      <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["admin"]; ?>" onclick="document.loginform.url.value='admin.php';" />
-				*/ ?>
-		    </td>
-		  </tr>
+			<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["login"]; ?></td></tr>
+			<tr>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("username_help", "qm", "username"); print $pgv_lang["username"]; ?></td>
+				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" tabindex="<?php echo ++$tab; ?>" name="username" value="<?php print htmlentities($username); ?>" size="20" class="formField" /></td>
+			</tr>
+			<tr>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("password_help", "qm", "password"); print $pgv_lang["password"]; ?></td>
+				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" tabindex="<?php echo ++$tab; ?>" name="password" size="20" class="formField" /></td>
+			</tr>
+			<?php if ($ALLOW_REMEMBER_ME) { ?>
+			<tr>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("remember_me_help", "qm", "remember_me"); ?><label for="remember"><?php print $pgv_lang["remember_me"]; ?></label></td>
+				<td class="optionbox <?php print $TEXT_DIRECTION; ?> "><input type="checkbox" tabindex="<?php echo ++$tab; ?>" id="remember" name="remember" value="yes" <?php if (!empty($_COOKIE["pgv_rem"])) print "checked=\"checked\""; ?> class="formField" /></td>
+			</tr>
+			<?php } ?>
+			<tr>
+				<td class="topbottombar" colspan="2">
+					<?php
+					if ($SHOW_CONTEXT_HELP) {
+						if ($REQUIRE_AUTHENTICATION) {
+							print_help_link("login_buttons_aut_help", "qm", "login");
+						} else {
+							print_help_link("login_buttons_help", "qm", "login");
+						}
+					}
+					?>
+					<input type="submit" tabindex="<?php echo ++$tab; ?>" value="<?php print $pgv_lang["login"]; ?>" />&nbsp;
+				</td>
+			</tr>
 		</table>
 </form><br /><br />
 <?php
 $sessname = session_name();
 if (!isset($_COOKIE[$sessname])) print "<span class=\"error\">".$pgv_lang["cookie_help"]."</span><br /><br />";
-if ($USE_REGISTRATION_MODULE) {?>
+if ($USE_REGISTRATION_MODULE) { ?>
 	<table class="center facts_table width50">
-	<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["account_information"];?></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_user_help", "qm", "requestaccount"); print $pgv_lang["no_account_yet"];?></td>
-	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php print $pgv_lang["requestaccount"];?></a></td></tr>
-	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_password_help", "qm", "lost_password"); print $pgv_lang["lost_password"];?></td>
-	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php print $pgv_lang["requestpassword"];?></a></td></tr>
+	<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["account_information"]; ?></td></tr>
+	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_user_help", "qm", "requestaccount"); print $pgv_lang["no_account_yet"]; ?></td>
+	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=register"><?php print $pgv_lang["requestaccount"]; ?></a></td></tr>
+	<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("new_password_help", "qm", "lost_password"); print $pgv_lang["lost_password"]; ?></td>
+	<td class="optionbox <?php print $TEXT_DIRECTION; ?> wrap"><a href="login_register.php?action=pwlost"><?php print $pgv_lang["requestpassword"]; ?></a></td></tr>
 	<tr><td class="topbottombar ltr" colspan="2">&nbsp;</td></tr>
 	</table>
 <?php

@@ -171,7 +171,7 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
-	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.$regex.'$~', $arr[$var])) {
+	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.addcslashes($regex,'~').'$~', $arr[$var])) {
 		return trim_recursive($arr[$var]);
 	} else {
 		return $default;
