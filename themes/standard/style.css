@@ -640,6 +640,7 @@ a:hover .nameZoom {
 }
 
 .block {
+	overflow: auto;
 	background-color: #d6e0ea;
 	color: black;
 	border: solid #9ca3d4 1px;

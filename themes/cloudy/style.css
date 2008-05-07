@@ -57,6 +57,7 @@ ul {
 }
 
 .blockcontent {
+	overflow: auto;
 	margin-left: auto;
 	border: 1pt solid #999;
 	margin-right: 5px;
