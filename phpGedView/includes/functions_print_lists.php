@@ -1452,73 +1452,75 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	//-- table header
-	print "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	print "<tr>";
-	//print "<td></td>";
-	//if ($SHOW_ID_NUMBERS) print "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
-	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
-	print "<th style=\"display:none\">GIVN</th>";
-	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
-	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
-	print "</tr>\n";
-	//-- table body
-	$hidden = 0;
-	$n = 0;
+
+	// Did we have any output?  Did we skip anything?
+	$output = 0;
+	$filter = 0;
+	$private = 0;
 
 	// Which types of name do we display for an INDI
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-	if ($SHOW_MARRIED_NAMES)
-		$name_subtags[] = "_MARNM";
+	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 
 	foreach(get_event_list() as $key => $value) {
-		if ($value['jd']<$startjd || $value['jd']>$endjd)
-			continue;
+		if ($value['jd']<$startjd || $value['jd']>$endjd) continue;
 		//-- only birt/marr/deat ?
-		if (!empty($events) && strpos($events, $value['fact'])===false)
-			continue;
+		if (!empty($events) && strpos($events, $value['fact'])===false) continue;
 
 		//-- get gedcom record - it may have been deleted since we cached the event
 		$record = GedcomRecord::getInstance($value['id']);
-		if (is_null($record))
-			continue;
+		if (is_null($record)) continue;
 		//-- only living people ?
 		if ($only_living) {
-			if ($record->type=="INDI" && $record->isDead())
+			if ($record->type=="INDI" && $record->isDead()) {
+				$filter ++;
 				continue;
+			}
 			if ($record->type=="FAM") {
 				$husb = $record->getHusband();
-				if (is_null($husb) || $husb->isDead())
+				if (is_null($husb) || $husb->isDead()) {
+					$filter ++;
 					continue;
+				}
 				$wife = $record->getWife();
-				if (is_null($wife) || $wife->isDead())
+				if (is_null($wife) || $wife->isDead()) {
+					$filter ++;
 					continue;
+				}
 			}
 		}
 
 		// Privacy
 		if (!$record->canDisplayDetails() || !showFactDetails($value['fact'], $value['id']) || FactViewRestricted($value['id'], $value['factrec'])) {
-			$hidden++;
+			$private ++;
 			continue;
 		}
 		//-- Counter
-		$n++;
+		$output ++;
+		if ($output==1) {
+			//-- First table row:  start table headers, etc. first
+			print "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+			print "<tr>";
+			print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+			print "<th style=\"display:none\">GIVN</th>";
+			print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
+			print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
+			print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
+			print "</tr>\n";
+		}
+
 		print "<tr class=\"vevent\">"; // hCalendar:vevent
 		//-- Record name(s)
 		if ($record->type=="FAM") {
-			$name=$record->getSortableName(true);
+			$name = $record->getSortableName(true);
 			$exp = explode("<br />", $name);
 			$husb = $record->getHusband();
-			if ($husb) $exp[0].= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
+			if ($husb) $exp[0] .= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 			$wife = $record->getWife();
-			if ($wife) $exp[1].= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
+			if ($wife) $exp[1] .= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
 			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
-		}
-		else {
-			$name=$record->getSortableName();
-		}
-		$url=$record->getLinkUrl();
+		} else $name = $record->getSortableName();
+		$url = $record->getLinkUrl();
 
 		print "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		print "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
@@ -1527,21 +1529,20 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			foreach ($name_subtags as $subtag) {
 				for ($num=1; ; ++$num) {
 					$addname = $record->getSortableName($subtag, $num);
-					if (empty($addname))
-						break;
-					else
-						if ($addname!=$name)
-							print "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					if (empty($addname)) break;
+					else {
+						if ($addname!=$name) print "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					}
 				}
 			}
 			if ($record->xref) print $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
 		print "</td>";
 		//-- GIVN
-		echo "<td style=\"display:none\">";
+		print "<td style=\"display:none\">";
 		$exp = explode(",", str_replace('<', ',', $name).",");
-		echo $exp[1];
-		echo "</td>";
+		print $exp[1];
+		print "</td>";
 		//-- Event date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		print str_replace('<a', '<a name="'.$value['jd'].'"', $value['date']->Display(empty($SEARCH_SPIDER)));
@@ -1549,10 +1550,8 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		//-- Anniversary
 		print "<td class=\"list_value_wrap rela\">";
 		$anniv = $value['anniv'];
-		if ($anniv==0)
-			print '<a name="-1">&nbsp;</a>';
-		else
-			print "<a name=\"{$anniv}\">{$anniv}</a>";
+		if ($anniv==0) print '<a name="-1">&nbsp;</a>';
+		else print "<a name=\"{$anniv}\">{$anniv}</a>";
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
 			print "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
@@ -1566,30 +1565,62 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 
 		print "</tr>\n";
 	}
-	//-- table footer
-	print "<tr class=\"sortbottom\">";
-	//print "<td></td>";
-	//if ($SHOW_ID_NUMBERS) print "<td></td>";
-	print "<td class=\"list_label\">";
-	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
-	print $pgv_lang["stat_events"].": ".$n;
-	if ($hidden) print "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
-	print "</td>";
-	print "<td style=\"display:none\">GIVN</td>";
-	print "<td>";
-	if ($allow_download) {
-		$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);
-		global $whichFile;
-		$whichFile = "hCal-events.ics";
-		$title = print_text("download_file",0,1);
-		if ($n) print "<a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
+	if ($output!=0) {
+		//-- table footer
+		print "<tr class=\"sortbottom\">";
+		print "<td class=\"list_label\">";
+		print "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">&nbsp;&nbsp;".substr($pgv_lang["parents"],0,-1)."</label><br />";
+		print "</td><td class=\"list_label\" colspan=\"3\">";
+		print $pgv_lang["stat_events"].": ".$output;
+		if ($allow_download) {
+			$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);
+			global $whichFile;
+			$whichFile = "hCal-events.ics";
+			$title = print_text("download_file",0,1);
+			print "<br /><a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
+		}
+		print "</td>";
+		print "<td></td>";
+		print "<td></td>";
+		print "</tr>";
+		print "</table>\n";
 	}
-	print "</td>";
-	print "<td></td>";
-	print "<td></td>";
-	print "</tr>";
-	print "</table>\n";
+
+	// Print a final summary message about restricted/filtered facts
+	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days 
+
+	$summary = "";
+	
+	if ($endjd==client_jd()) {
+		// We're dealing with the Today's Events block
+		if ($private!=0) {
+			// We lost some output due to Privacy restrictions
+			if ($output!=0) $summary = "more_today_privacy";
+			else $summary = "none_today_privacy";
+		} else if ($filter!=0) {
+			// We lost some output due to filtering for living people
+			if ($output==0) $summary = "none_today_living";
+		} else if ($output==0) $summary = "none_today_all";		
+	} else {
+		// We're dealing with the Upcoming Events block
+		if ($private!=0) {
+			// We lost some output due to Privacy restrictions
+			if ($output!=0) $summary = "more_events_privacy";
+			else $summary = "no_events_privacy";
+		} else if ($filter!=0) {
+			// We lost some output due to filtering for living people
+			if ($output==0) $summary = "no_events_living";
+		} else if ($output==0) $summary = "no_events_all";
+		// If we're only looking at tomorrow, change the messages to refer 
+		// to tomorrow instead of "the next 1 days"
+		if ($summary!="" && $endjd==$startjd) $summary .= "1";
+	}
+	if ($summary!="") {
+		print "<b>";
+		print_text($summary);
+		print "</b>";
+	}
+
 }
 
 /**
@@ -1601,40 +1632,37 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 
 	// Did we have any output?  Did we skip anything?
-	$output=false;
-	$filter=false;
-	$private=false;
+	$output = 0;
+	$filter = 0;
+	$private = 0;
 
-	$return='';
+	$return = '';
 
-	$filtered_events=array();
+	$filtered_events = array();
 
 	foreach(get_event_list() as $value) {
-		if ($value['jd']<$startjd || $value['jd']>$endjd)
-			continue;
+		if ($value['jd']<$startjd || $value['jd']>$endjd) continue;
 		//-- only birt/marr/deat ?
-		if (!empty($events) && strpos($events, $value['fact'])===false)
-			continue;
+		if (!empty($events) && strpos($events, $value['fact'])===false) continue;
 
 		//-- get gedcom record - it may have been deleted since we cached the event
 		$record = GedcomRecord::getInstance($value['id']);
-		if (is_null($record))
-			continue;
+		if (is_null($record)) continue;
 		//-- only living people ?
 		if ($only_living) {
 			if ($record->type=="INDI" && $record->isDead()) {
-				$filter=true;
+				$filter ++;
 				continue;
 			}
 			if ($record->type=="FAM") {
 				$husb = $record->getHusband();
 				if (is_null($husb) || $husb->isDead()) {
-					$filter=true;
+					$filter ++;
 					continue;
 				}
 				$wife = $record->getWife();
 				if (is_null($wife) || $wife->isDead()) {
-					$filter=true;
+					$filter ++;
 					continue;
 				}
 			}
@@ -1642,75 +1670,65 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 		// Privacy
 		if (!$record->canDisplayDetails() || !showFactDetails($value['fact'], $value['id']) || FactViewRestricted($value['id'], $value['factrec'])) {
-			$private=true;
+			$private ++;
 			continue;
 		}
-		$output=true;
+		$output ++;
 
-		$value['name']=$record->getSortableName();
-		$value['url']=$record->getLinkUrl();
+		$value['name'] = $record->getSortableName();
+		$value['url'] = $record->getLinkUrl();
 		if ($record->type=="INDI")
-			$value['sex']=$record->getSexImage();
+			$value['sex'] = $record->getSexImage();
 		else
-			$value['sex']='';
-		$filtered_events[]=$value;
+			$value['sex'] = '';
+		$filtered_events[] = $value;
 	}
 
 	// Now we've filtered the list, we can sort by name, if required
-	if ($sort_by_name)
-		uasort($filtered_events, 'event_sort');
+	if ($sort_by_name) uasort($filtered_events, 'event_sort');
 
 	foreach($filtered_events as $value) {
-		$return.="<a href=\"".$value['url']."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
-		$return.="<div class=\"indent\">";
-		$return.=$factarray[$value['fact']].' - '.$value['date']->Display(true);
-		if ($value['anniv']!=0)
-			$return.=" (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
-		if (!empty($value['plac']))
-			$return.=" - <a href=\"".GedcomRecord::getPlaceUrl($value['plac'])."\">".$value['plac']."</a>";
-		$return.="</div>";
+		$return .= "<a href=\"".$value['url']."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
+		$return .= "<div class=\"indent\">";
+		$return .= $factarray[$value['fact']].' - '.$value['date']->Display(true);
+		if ($value['anniv']!=0) $return .= " (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
+		if (!empty($value['plac'])) $return .= " - <a href=\"".GedcomRecord::getPlaceUrl($value['plac'])."\">".$value['plac']."</a>";
+		$return .= "</div>";
 	}
 
 	// Print a final summary message about restricted/filtered facts
-	$pgv_lang["global_num1"]=$endjd-$startjd+1; // TODO: This doesn't work as expected??
-	$return.="<b>";
-	if ($private)
-		if ($output)
-			if ($endjd==client_jd())
-				$return.=print_text ("more_today_privacy", 0, 1);
-			else
-				if ($startjd==$endjd)
-					$return.=print_text ("more_events_privacy1", 0, 1);
-				else
-					$return.=print_text ("more_events_privacy", 0, 1);
-		else
-			if ($endjd==client_jd())
-				$return.=print_text ("none_today_privacy", 0, 1);
-			else
-				if ($startjd==$endjd)
-					$return.=print_text ("no_events_privacy1", 0, 1);
-				else
-					$return.=print_text ("no_events_privacy", 0, 1);
-	else
-		if (!$output)
-			if ($filter)
-				if ($endjd==client_jd())
-					$return.=print_text ("none_today_living", 0, 1);
-				else
-					if ($startjd==$endjd)
-						$return.=print_text ("no_events_living1", 0, 1);
-					else
-						$return.=print_text ("no_events_living", 0, 1);
-			else
-				if ($endjd==client_jd())
-					$return.=print_text ("none_today_all", 0, 1);
-				else
-					if ($startjd==$endjd)
-						$return.=print_text ("no_events_all1", 0, 1);
-					else
-						$return.=print_text ("no_events_all", 0, 1);
+	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days 
 
-	$return.="</b>";
+	$summary = "";
+	
+	if ($endjd==client_jd()) {
+		// We're dealing with the Today's Events block
+		if ($private!=0) {
+			// We lost some output due to Privacy restrictions
+			if ($output!=0) $summary = "more_today_privacy";
+			else $summary = "none_today_privacy";
+		} else if ($filter!=0) {
+			// We lost some output due to filtering for living people
+			if ($output==0) $summary = "none_today_living";
+		} else if ($output==0) $summary = "none_today_all";		
+	} else {
+		// We're dealing with the Upcoming Events block
+		if ($private!=0) {
+			// We lost some output due to Privacy restrictions
+			if ($output!=0) $summary = "more_events_privacy";
+			else $summary = "no_events_privacy";
+		} else if ($filter!=0) {
+			// We lost some output due to filtering for living people
+			if ($output==0) $summary = "no_events_living";
+		} else if ($output==0) $summary = "no_events_all";
+		if ($summary!="" && $endjd==$startjd) $summary .= "1";
+	}
+	if ($summary!="") {
+		$return .= "<b>";
+		$return .= print_text($summary, 0, 1);
+		$return .= "</b>";
+	}
+
 	return $return;
 }
 
