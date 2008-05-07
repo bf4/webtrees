@@ -289,6 +289,7 @@ $countries["ZAF"]                       ="Afrique du Sud";
 $countries["ZAR"]                       ="Zaïre";
 $countries["ZMB"]                       ="Zambie";
 $countries["ZWE"]                       ="Zimbabwe";
+$countries["???"]						="Inconnu";
 
 $altCountryNames["CHI"]					="Îles de la Manche";
 $altCountryNames["TLS"]					="Timor Occidental";
