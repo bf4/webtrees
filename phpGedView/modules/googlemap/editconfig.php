@@ -127,6 +127,7 @@ if ($action=="update" && !isset($security_user)) {
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_MARKER\s*=\s*".*";/', "\$GOOGLEMAP_PH_MARKER = \"".$_POST["NEW_GOOGLEMAP_PH_MARKER"]."\";", $configtext);
 	$configtext = preg_replace('/\$GM_DISP_SHORT_PLACE\s*=\s*".*";/', "\$GM_DISP_SHORT_PLACE = \"".$_POST["NEW_GM_DISP_SHORT_PLACE"]."\";", $configtext);
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_WHEEL\s*=\s*".*";/', "\$GOOGLEMAP_PH_WHEEL = \"".$_POST["NEW_GOOGLEMAP_PH_WHEEL"]."\";", $configtext);
+		$configtext = preg_replace('/\$GOOGLEMAP_PH_CONTROLS\s*=\s*".*";/', "\$GOOGLEMAP_PH_CONTROLS = \"".$_POST["NEW_GOOGLEMAP_PH_CONTROLS"]."\";", $configtext);
 	$configtext = preg_replace('/\$GM_DISP_COUNT\s*=\s*".*";/', "\$GM_DISP_COUNT = \"".$_POST["NEW_GM_DISP_COUNT"]."\";", $configtext);
 
     for($i = 1; $i <= 9; $i++) {
@@ -312,6 +313,14 @@ $i = 0;
         <td class="optionbox"><select name="NEW_GOOGLEMAP_PH_WHEEL" tabindex="<?php $i++; print $i?>;">
                 <option value="false" <?php if ($GOOGLEMAP_PH_WHEEL=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
                 <option value="true" <?php if ($GOOGLEMAP_PH_WHEEL=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+            </select>
+		</td>
+    </tr>
+	<tr>
+		<td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PH_CONTROLS_help", "qm", "GOOGLEMAP_PH_CONTROLS"); print $pgv_lang["gm_ph_controls"];?></td>
+        <td class="optionbox"><select name="NEW_GOOGLEMAP_PH_CONTROLS" tabindex="<?php $i++; print $i?>;">
+                <option value="false" <?php if ($GOOGLEMAP_PH_CONTROLS=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+                <option value="true" <?php if ($GOOGLEMAP_PH_CONTROLS=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
             </select>
 		</td>
     </tr>

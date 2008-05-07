@@ -147,4 +147,6 @@ $pgv_lang["GM_DISP_COUNT"]				= "Display indis and families counts";
 $pgv_lang["GM_DISP_COUNT_help"]			= "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Here you can specify if the counts of indis and families connected to the place is displayed. Now if GEDCOM file contains many people is recomended to turn it off.";
 $pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Use mouse wheel for zoom";
 $pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Here you can specify if the mouse wheel is enebled for zooming.";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS"]		= "Hide map controls";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]	= "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />This option allow to hide map controls (i.e. the map type choice) if mouse is outside the map.";
 ?>
