@@ -36,7 +36,7 @@ function get_place_list_loc($parent_id, $inactive=false) {
 		$sql="SELECT pl_id,pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
 	else
 		$sql="SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
-	
+
 	$res=dbquery($sql);
 	$placelist2=array();
 	while ($row=&$res->fetchRow())
@@ -90,7 +90,7 @@ function set_levelm($level, $parent) {
 	for ($i=1; $i<=$level; $i++) {
 		if ($parent[$level-$i]!="")
 			$fullplace .= $parent[$level-$i].", ";
-		else 
+		else
 			$fullplace .= "Unknown, ";
 	}
 	$fullplace = substr($fullplace,0,-2);
@@ -225,7 +225,7 @@ function print_how_many_people($place_name) {
 			}
 		}
 	}
-	echo "<br /><br />".$pgv_lang["stat_individuals"].": ".$place_count_indi.", ".$pgv_lang["stat_families"].": ".$place_count_fam;
+	echo "<br />".$pgv_lang["stat_individuals"].": ".$place_count_indi.", ".$pgv_lang["stat_families"].": ".$place_count_fam;
 }
 
 function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $lastlevel=false){
@@ -247,7 +247,7 @@ function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $
 			if ($place2["place"] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo substr($placelevels,2);
 				else echo $pgv_lang["unknown"];
-			else 
+			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo substr($placelevels,2);
 				else echo PrintReady($place2["place"]);
 		}
@@ -256,14 +256,14 @@ function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $
 			if ($place2["place"] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo $pgv_lang["unknown"].$placelevels;
 				else echo $pgv_lang["unknown"];
-			else 
+			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady($place2["place"]).$placelevels;
 				else echo PrintReady($place2["place"]);
 		}
 		echo "</a>";
 		if ($GM_DISP_COUNT != "false") print_how_many_people($placename);
-		echo "<br /><br />".$pgv_lang["gm_no_coord"];
-		if (userIsAdmin(getUserName())) 
+		echo "<br />".$pgv_lang["gm_no_coord"];
+		if (userIsAdmin(getUserName()))
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=".$levelm."&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
 		echo "</div>\");\n";
 	}
@@ -298,7 +298,7 @@ function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $
 			if ($place2["place"] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo substr($placelevels,2);
 				else echo $pgv_lang["unknown"];
-			else 
+			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo substr($placelevels,2);
 				else echo PrintReady($place2["place"]);
 		}
@@ -307,11 +307,11 @@ function print_gm_markers($place2, $level, $levelm, $linklevels, $placelevels, $
 			if ($place2["place"] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo $pgv_lang["unknown"].$placelevels;
 				else echo $pgv_lang["unknown"];
-			else 
+			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady($place2["place"]).$placelevels;
 				else echo PrintReady($place2["place"]);
 		}
-		echo "<br /></a><br />";
+		echo "</a><br />";
 		if ($GM_DISP_COUNT != "false") print_how_many_people($placename);
 		if ($GOOGLEMAP_COORD == "false"){
 			echo "</div>\", icon_type);\n";
@@ -372,7 +372,7 @@ function map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelev
 		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
 		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+10);\n";
 	}
-	else 
+	else
 		echo "place_map.setCenter(new GLatLng(0,0),1);\n";
 	?>
 	place_map.addControl(new GSmallMapControl());
@@ -440,7 +440,7 @@ function map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelev
 	}
     // This Javascript is based on code provided by the
     // Blackpool Community Church Javascript Team
-    // http://www.commchurch.freeserve.co.uk/   
+    // http://www.commchurch.freeserve.co.uk/
     // http://econym.googlepages.com/index.htm
 	//]]>
 	//version 0.9.9
