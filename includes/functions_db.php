@@ -3243,7 +3243,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
 	if ($facts!='_TODO') {
-		$skipfacts.='_TODO';
+		$skipfacts.=',_TODO';
 	}
 
 	$found_facts=array();
@@ -3421,7 +3421,7 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
 	if ($facts!='_TODO') {
-		$skipfacts.='_TODO';
+		$skipfacts.=',_TODO';
 	}
 
 	$found_facts=array();
