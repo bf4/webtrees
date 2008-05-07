@@ -44,14 +44,16 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["todo_block"]              06 May        2008    A
-+$pgv_lang["todo_descr"]              06 May        2008    A
-+$pgv_lang["todo_show_other"]         06 May        2008    A
-+$pgv_lang["todo_show_unassigned"]    06 May        2008    A
-+$pgv_lang["todo_show_future"]        06 May        2008    A
-+$pgv_lang["todo_nothing"]            06 May        2008    A
--$pgv_lang["max_generation"]          01 May        2008    D
--$pgv_lang["min_generation"]          01 May        2008    D
+*$pgv_lang["todo_descr"]							07 May 2008				pw
+*$pgv_lang["todo_show_other"]						07 May 2006				p
++$pgv_lang["todo_block"]							06 May 2008				A
++$pgv_lang["todo_descr"]							06 May 2008				A
++$pgv_lang["todo_show_other"]						06 May 2008				A
++$pgv_lang["todo_show_unassigned"]					06 May 2008				A
++$pgv_lang["todo_show_future"]						06 May 2008				A
++$pgv_lang["todo_nothing"]							06 May 2008				A
+-$pgv_lang["max_generation"]						01 May 2008				D
+-$pgv_lang["min_generation"]						01 May 2008				D
 
 
 VERSION 4.1.5
