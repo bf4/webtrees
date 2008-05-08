@@ -421,7 +421,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 $rootid   =safe_GET_xref('rootid');
 $fan_style=safe_GET_integer('fan_style',  2,  4,  3);
 $fan_width=safe_GET_integer('fan_width',  50, 300, 100);
-$PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 3, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
+$PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 2, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
 // Validate form parameters
 $rootid = check_rootid($rootid);
@@ -495,7 +495,7 @@ if ($view != "preview") {
 	print $pgv_lang["generations"]."</td>";
 	print "<td class=\"optionbox\">";
 	print "<select name=\"PEDIGREE_GENERATIONS\">";
-	for ($i=$MIN_FANCHART_GENERATIONS; $i<=$MAX_PEDIGREE_GENERATIONS; $i++) {
+	for ($i=2; $i<=$MAX_PEDIGREE_GENERATIONS; $i++) {
 	print "<option value=\"".$i."\"" ;
 	if ($i == $PEDIGREE_GENERATIONS) print "selected=\"selected\" ";
 		print ">".$i."</option>";
