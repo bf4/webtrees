@@ -91,8 +91,7 @@ print_header($pgv_lang["configure_googlemap"]);
 
 print "<span class=\"subheaders\">".$pgv_lang["configure_googlemap"]."</span>";
 
-if (!userIsAdmin(getUserName())) {
-//if (!PGV_USER_IS_ADMIN) {
+if (!PGV_USER_IS_ADMIN) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
     print "</td></tr></table>\n";
