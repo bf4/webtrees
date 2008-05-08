@@ -277,26 +277,26 @@ $factarray["_HNM"]                      = "Nom hébreu";
 
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"]                = "Décès du conjoint";
-$factarray["_BURI_SPOU"] = "Enterrement de l\'épouse";
-$factarray["_CREM_SPOU"] = "Crémation de l\'épouse";
+$factarray["_BURI_SPOU"] = "Enterrement du conjoint";
+$factarray["_CREM_SPOU"] = "Crémation du conjoint";
 
-$factarray["_BIRT_CHIL"]                = "Naissance d'un enfant";
-$factarray["_MARR_CHIL"]                = "Mariage d'un enfant";
-$factarray["_DEAT_CHIL"]                = "Décès d'un enfant";
-$factarray["_BURI_CHIL"] = "Enterrement d\'un enfant";
-$factarray["_CREM_CHIL"] = "Crémation d\'un enfant";
+$factarray["_BIRT_CHIL"]                = "Naissance d'enfant";
+$factarray["_MARR_CHIL"]                = "Mariage d'enfant";
+$factarray["_DEAT_CHIL"]                = "Décès d'enfant";
+$factarray["_BURI_CHIL"] = "Enterrement d'enfant";
+$factarray["_CREM_CHIL"] = "Crémation d'enfant";
 
-$factarray["_BIRT_GCHI"]                = "Naissance d'un petit-enfant";
-$factarray["_MARR_GCHI"]                = "Mariage d'un petit-enfant";
-$factarray["_DEAT_GCHI"]                = "Décès d'un petit-enfant";
-$factarray["_BURI_GCHI"] = "Enterrement d\'un petit fils ou d\'une petite fille";
-$factarray["_CREM_GCHI"] = "Crémation d\'un petit fils ou d\'une petite fille";
+$factarray["_BIRT_GCHI"]                = "Naissance de petit-enfant";
+$factarray["_MARR_GCHI"]                = "Mariage de petit-enfant";
+$factarray["_DEAT_GCHI"]                = "Décès de petit-enfant";
+$factarray["_BURI_GCHI"] = "Enterrement de petit-enfant";
+$factarray["_CREM_GCHI"] = "Crémation de petit-enfant";
 
-$factarray["_BIRT_GGCH"]                = "Naissance d'un arrière-petit-enfant";
-$factarray["_MARR_GGCH"]                = "Mariage d'un arrière-petit-enfant";
-$factarray["_DEAT_GGCH"]                = "Décès d'un arrière-petit-enfant";
-$factarray["_BURI_GGCH"] = "Enterrement d\'un arrière petit enfant";
-$factarray["_CREM_GGCH"] = "Crémation d\'un arrière petit enfant";
+$factarray["_BIRT_GGCH"]                = "Naissance d'arrière-petit-enfant";
+$factarray["_MARR_GGCH"]                = "Mariage d'arrière-petit-enfant";
+$factarray["_DEAT_GGCH"]                = "Décès d'arrière-petit-enfant";
+$factarray["_BURI_GGCH"] = "Enterrement d'arrière petit enfant";
+$factarray["_CREM_GGCH"] = "Crémation d'arrière petit enfant";
 
 $factarray["_MARR_FATH"]                = "Mariage du père";
 $factarray["_DEAT_FATH"]                = "Décès du père";
@@ -308,49 +308,49 @@ $factarray["_DEAT_MOTH"]                = "Décès de la mère";
 $factarray["_BURI_MOTH"] = "Enterrement de la mère";
 $factarray["_CREM_MOTH"] = "Crémation de la mère";
 
-$factarray["_BIRT_SIBL"]                = "Naissance frère/sœur";
-$factarray["_MARR_SIBL"]                = "Mariage d\'un frère/sœur";
-$factarray["_DEAT_SIBL"]                = "Décès frère/sœur";
-$factarray["_BURI_SIBL"] = "Enterrement d\'un frère ou d\'une soeur";
-$factarray["_CREM_SIBL"] = "Crémation d\'un frère ou d\'une soeur";
+$factarray["_BIRT_SIBL"]                = "Naissance de frère/sœur";
+$factarray["_MARR_SIBL"]                = "Mariage de frère/sœur";
+$factarray["_DEAT_SIBL"]                = "Décès de frère/sœur";
+$factarray["_BURI_SIBL"] = "Enterrement de frère/sœur";
+$factarray["_CREM_SIBL"] = "Crémation de frère/sœur";
 
-$factarray["_BIRT_HSIB"]                = "Naissance demi-frère/sœur";
-$factarray["_MARR_HSIB"]                = "Mariage demi-frère/sœur";
-$factarray["_DEAT_HSIB"]                = "Décès demi-frère/sœur";
-$factarray["_BURI_HSIB"] = "Enterrement d\'un demi-frère ou d\'une demi-soeur";
-$factarray["_CREM_HSIB"] = "Crémation d\'un demi-frère ou d\'une demi-soeur";
+$factarray["_BIRT_HSIB"]                = "Naissance de demi-frère/sœur";
+$factarray["_MARR_HSIB"]                = "Mariage de demi-frère/sœur";
+$factarray["_DEAT_HSIB"]                = "Décès de demi-frère/sœur";
+$factarray["_BURI_HSIB"] = "Enterrement de demi-frère/sœur";
+$factarray["_CREM_HSIB"] = "Crémation de demi-frère/sœur";
 
-$factarray["_BIRT_NEPH"]                = "Naissance neveu/nièce";
-$factarray["_MARR_NEPH"]                = "Mariage neveu/nièce";
-$factarray["_DEAT_NEPH"]                = "Décès neveu/nièce";
-$factarray["_BURI_NEPH"] = "Enterrement d\'un neveu ou d\'une nièce";
-$factarray["_CREM_NEPH"] = "Crémation d\'un neveu ou d\'une nièce";
+$factarray["_BIRT_NEPH"]                = "Naissance de neveu/nièce";
+$factarray["_MARR_NEPH"]                = "Mariage de neveu/nièce";
+$factarray["_DEAT_NEPH"]                = "Décès de neveu/nièce";
+$factarray["_BURI_NEPH"] = "Enterrement de neveu/nièce";
+$factarray["_CREM_NEPH"] = "Crémation de neveu/nièce";
 
-$factarray["_DEAT_GPAR"]                = "Décès d'un grand-parent";
-$factarray["_BURI_GPAR"] = "Enterrement d\'un grand-parent";
-$factarray["_CREM_GPAR"] = "Crémation d\'un grand-parent";
+$factarray["_DEAT_GPAR"]                = "Décès de grand-parent";
+$factarray["_BURI_GPAR"] = "Enterrement de grand-parent";
+$factarray["_CREM_GPAR"] = "Crémation de grand-parent";
 
-$factarray["_DEAT_GGPA"]                = "Décès d'un arrière-grand-parent";
-$factarray["_BURI_GGPA"] = "Enterrement d\'un arrière grand-parent";
-$factarray["_CREM_GGPA"] = "Crémation d\'un arrière grand-parent";
+$factarray["_DEAT_GGPA"]                = "Décès d'arrière-grand-parent";
+$factarray["_BURI_GGPA"] = "Enterrement d'arrière grand-parent";
+$factarray["_CREM_GGPA"] = "Crémation d'arrière grand-parent";
 
-$factarray["_BIRT_FSIB"]                = "Naissance frère/sœur du père";
-$factarray["_MARR_FSIB"]                = "Mariage frère/sœur du père";
-$factarray["_DEAT_FSIB"]                = "Décès frère/sœur du père";
-$factarray["_BURI_FSIB"] = "Enterrement d\'un frère ou d\\\'une soeur du père";
-$factarray["_CREM_FSIB"] = "Crémation d\'un frère ou d\\\\\\\'une soeur du père";
+$factarray["_BIRT_FSIB"]                = "Naissance de frère/sœur du père";
+$factarray["_MARR_FSIB"]                = "Mariage de frère/sœur du père";
+$factarray["_DEAT_FSIB"]                = "Décès de frère/sœur du père";
+$factarray["_BURI_FSIB"] = "Enterrement de frère/sœur du père";
+$factarray["_CREM_FSIB"] = "Crémation de frère/sœur du père";
 
-$factarray["_BIRT_MSIB"]                = "Naissance frère/sœur de la mère";
-$factarray["_MARR_MSIB"]                = "Mariage frère/sœur de la mère";
-$factarray["_DEAT_MSIB"]                = "Décès frère/sœur de la mère";
-$factarray["_BURI_MSIB"] = "Enterrement d\'un frère ou d\'une soeur de la mère";
-$factarray["_CREM_MSIB"] = "Crémation d\'un frère ou d\'une soeur de la mère";
+$factarray["_BIRT_MSIB"]                = "Naissance de frère/sœur de la mère";
+$factarray["_MARR_MSIB"]                = "Mariage de frère/sœur de la mère";
+$factarray["_DEAT_MSIB"]                = "Décès de frère/sœur de la mère";
+$factarray["_BURI_MSIB"] = "Enterrement de frère/sœur de la mère";
+$factarray["_CREM_MSIB"] = "Crémation de frère/sœur de la mère";
 
-$factarray["_BIRT_COUS"]                = "Naissance cousin(e) germain(e)";
-$factarray["_MARR_COUS"]                = "Mariage cousin(e) germain(e)";
-$factarray["_DEAT_COUS"]                = "Décès cousin(e) germain(e)";
-$factarray["_BURI_COUS"] = "Enterrement d\'un cousin germain";
-$factarray["_CREM_COUS"] = "Crémation d\'un cousin germain";
+$factarray["_BIRT_COUS"]                = "Naissance de cousin germain";
+$factarray["_MARR_COUS"]                = "Mariage de cousin germain";
+$factarray["_DEAT_COUS"]                = "Décès de cousin germain";
+$factarray["_BURI_COUS"] = "Enterrement de cousin germain";
+$factarray["_CREM_COUS"] = "Crémation de cousin germain";
 
 $factarray["_FAMC_EMIG"]                = "Émigration des parents";
 $factarray["_FAMC_RESI"]                = "Domicile des parents";
