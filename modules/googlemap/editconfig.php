@@ -127,7 +127,7 @@ if ($action=="update" && !isset($security_user)) {
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_MARKER\s*=\s*".*";/', "\$GOOGLEMAP_PH_MARKER = \"".$_POST["NEW_GOOGLEMAP_PH_MARKER"]."\";", $configtext);
 	$configtext = preg_replace('/\$GM_DISP_SHORT_PLACE\s*=\s*".*";/', "\$GM_DISP_SHORT_PLACE = \"".$_POST["NEW_GM_DISP_SHORT_PLACE"]."\";", $configtext);
 	$configtext = preg_replace('/\$GOOGLEMAP_PH_WHEEL\s*=\s*".*";/', "\$GOOGLEMAP_PH_WHEEL = \"".$_POST["NEW_GOOGLEMAP_PH_WHEEL"]."\";", $configtext);
-		$configtext = preg_replace('/\$GOOGLEMAP_PH_CONTROLS\s*=\s*".*";/', "\$GOOGLEMAP_PH_CONTROLS = \"".$_POST["NEW_GOOGLEMAP_PH_CONTROLS"]."\";", $configtext);
+	$configtext = preg_replace('/\$GOOGLEMAP_PH_CONTROLS\s*=\s*".*";/', "\$GOOGLEMAP_PH_CONTROLS = \"".$_POST["NEW_GOOGLEMAP_PH_CONTROLS"]."\";", $configtext);
 	$configtext = preg_replace('/\$GM_DISP_COUNT\s*=\s*".*";/', "\$GM_DISP_COUNT = \"".$_POST["NEW_GM_DISP_COUNT"]."\";", $configtext);
 
     for($i = 1; $i <= 9; $i++) {

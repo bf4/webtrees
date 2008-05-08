@@ -1,10 +1,10 @@
 <?php
 /*=================================================
    charset=utf-8
-   Project:         phpGedView
-   File:            lang.pl.php
-   Author:          Łukasz Wileński
-   Comments:        Polish Language file for Google map module
+   Project:		phpGedView
+   File:		lang.pl.php
+   Author:		Łukasz Wileński
+   Comments:	Polish Language file for Google map module
 ===================================================*/
 
 
@@ -110,10 +110,10 @@ $pgv_lang["placecheck_select2"]		= "Wybierz następny poziom...";
 $pgv_lang["placecheck_key"]			= "Kod koloru użytego poniżej";
 $pgv_lang["placecheck_key1"]		= "to miejsce i te współrzędne nie istnieją w tablicach miejsc GoogleMap";
 $pgv_lang["placecheck_key2"]		= "to miejsce istnieje w tablicach miejsc GoogleMap, ale nie ma współrzędnych";
-$pgv_lang["placecheck_key3"]		= "ten poziom jest pusty w Twoim pliku GEDCOM. Powinien być dodany do<br/>tablic miejsc GoogleMap jako \"nieznany\" z współrzędnymi z<br/>poziomu powyżej zanim dodasz jakiekolwiek miejsce do następnego poziomu";
-$pgv_lang["placecheck_key4"]		= "ten poziom jest pusty w Twoim pliku GEDCOM, ale istnieje jako 'nieznany'<br/>w tablicach miejsc GoogleMap wraz ze wsółrzędnymi. Nie wymagana jest edycja<br/>dopóki ten poziom nie będzie wprowadzony";
+$pgv_lang["placecheck_key3"]		= "ten poziom jest pusty w Twoim pliku GEDCOM. Powinien być dodany do<br />tablic miejsc GoogleMap jako \"nieznany\" z współrzędnymi z<br />poziomu powyżej zanim dodasz jakiekolwiek miejsce do następnego poziomu";
+$pgv_lang["placecheck_key4"]		= "ten poziom jest pusty w Twoim pliku GEDCOM, ale istnieje jako 'nieznany'<br />w tablicach miejsc GoogleMap wraz ze wsółrzędnymi. Nie wymagana jest edycja<br />dopóki ten poziom nie będzie wprowadzony";
 $pgv_lang["placecheck_head"]		= "Lista miejsc dla pliku GEDCOM";
-$pgv_lang["placecheck_gedheader"]	= "Dane z pliku GEDCOM<br/>(tag 2 PLAC)";
+$pgv_lang["placecheck_gedheader"]	= "Dane z pliku GEDCOM<br />(tag 2 PLAC)";
 $pgv_lang["placecheck_gm_header"]	= "Tablica miejsc GoogleMap";
 $pgv_lang["placecheck_unique"]		= "Liczba unikalnych miejsc";
 $pgv_lang["placecheck_zoom"]        = "Zoom=";
