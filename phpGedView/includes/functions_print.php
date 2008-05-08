@@ -2471,7 +2471,7 @@ function format_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 				$html.=' <a target="_BLANK" href="http://www.terraserver.com/imagery/image_gx.asp?cpx='.$map_long.'&amp;cpy='.$map_lati.'&amp;res=30&amp;provider_id=340"><img src="images/terrasrv.gif" border="0" alt="TerraServer &copy;" title="TerraServer &copy;" /></a>';
 			}
 			if (preg_match('/\d NOTE (.*)/', $placerec, $match)) {
-				$ob_start();
+				ob_start();
 				print_fact_notes($placerec, 3);
 				$html.=ob_get_contents();
 				ob_end_clean();
