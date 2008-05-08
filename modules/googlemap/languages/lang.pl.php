@@ -84,6 +84,7 @@ $pgv_lang["pl_overwrite_data"]      = "Nadpisać dane lokalizacji danymi z pliku
 $pgv_lang["pl_use_this_value"]      = "Użyj tej wartości";
 $pgv_lang["pl_precision"]           = "Precyzja współrzędnych";
 $pgv_lang["pl_country"]             = "Kraj";
+$pgv_lang["pl_countries"]			= "Państwa";
 $pgv_lang["pl_state"]               = "Województwo";
 $pgv_lang["pl_city"]                = "Miejscowość";
 $pgv_lang["pl_neighborhood"]        = "Sąsiedztwo";

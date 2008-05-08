@@ -60,6 +60,7 @@ if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 
 print_simple_header($pgv_lang["flags_edit"]);
 
+//if (empty($file)) $file="POL";
 $country = array();
 $rep = opendir('./places/flags/');
 while ($file = readdir($rep)) {
@@ -151,20 +152,21 @@ function getHelp(which) {
         $countryList = array();
         $placesDir = scandir('./places/');
         for ($i = 0; $i < count($country); $i++) {
-            if (count(preg_grep('/'.$country[$i].'[^.]/', $placesDir)) != 0) {
+			if (count(preg_grep('/'.$country[$i].'/', $placesDir)) != 0) {
+			//if (count(preg_grep('/'.$country[$i].'[^.]/', $placesDir)) != 0) {
                 $rep = opendir('./places/'.$country[$i].'/');
                 while ($file = readdir($rep)) {
                     if (stristr($file, "flags")) {
                         $countryList[] = $country[$i];
                     }
-                }
-                closedir($rep);
-            }
-        }
-        $_SESSION['flags_countrylist'] = serialize($countryList);
-    } else {
-        $countryList = unserialize($_SESSION['flags_countrylist']);
-    }
+				}
+				closedir($rep);
+			}
+		}
+		$_SESSION['flags_countrylist'] = serialize($countryList);
+	} else {
+		$countryList = unserialize($_SESSION['flags_countrylist']);
+	}
 ?>
 
 
@@ -177,7 +179,7 @@ function getHelp(which) {
             <td class="optionbox" colspan="4">
                 <?php print_help_link("PLE_FLAGS_help", "qm", "PLE_FLAGS");?>
                 <select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
-                    <option value="Countries">Countries</option>
+                    <option value="Countries"><?php print $pgv_lang["pl_countries"]; ?></option>
 <?php               for ($i = 0; $i < count($countryList); $i++) {
                         print "                    <option value=\"".$countryList[$i]."\"";
                         if ($countrySelected == $countryList[$i]) print " selected=\"selected\" ";
@@ -192,12 +194,13 @@ function getHelp(which) {
     $j = 1;
     for ($i = 0; $i < count($flags); $i++) {
         if ($countrySelected == "Countries") {
-            $tempstr = "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"";
-            if (array_key_exists( $country[$i], $countries) )
-                $tempstr .=$countries[$country[$i]];
-            else
-                $tempstr .= $flags[$i];
-            print $tempstr."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";            }
+			$tempstr = "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"";
+			if (array_key_exists( $country[$i], $countries) )
+				$tempstr .=$countries[$country[$i]];
+			else
+				$tempstr .= $flags[$i];
+			print $tempstr."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
+		}
         else {
             print "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/".$countrySelected."/flags/".$flags[$i].".gif\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
         }
