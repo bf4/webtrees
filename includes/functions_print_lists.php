@@ -629,7 +629,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/family_class.php';
 	//-- init chart data
-	for ($age=0; $age<120; $age++) $marr_by_age[$age]="";
+	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $marr_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $marr_by_decade[$year]="";
 	//-- fieldset
@@ -758,7 +758,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			if ($mdate->isOK()) {
 				$hage =GedcomDate::GetAgeYears($hdate, $mdate);
 				print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
-				$marr_by_age[min($MAX_ALIVE_AGE, $hage)] .= $husb->getSex();
+				$marr_by_age[max(0,min($MAX_ALIVE_AGE, $hage))] .= $husb->getSex();
 			} else {
 				echo '&nbsp;';
 			}
@@ -802,7 +802,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			if ($mdate->isOK()) {
 				$wage =GedcomDate::GetAgeYears($wdate, $mdate);
 				print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
-				$marr_by_age[min($MAX_ALIVE_AGE, $wage)] .= $wife->getSex();
+				$marr_by_age[max(0,min($MAX_ALIVE_AGE, $wage))] .= $wife->getSex();
 			} else {
 				print "&nbsp;";
 			}
