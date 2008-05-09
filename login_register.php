@@ -59,7 +59,7 @@ if (!isset($url)) $url = "index.php";
 
 switch ($action) {
 	case "pwlost" :
-		print_header("PhpGedView - " . $pgv_lang["lost_pw_reset"]);
+		print_header($pgv_lang['lost_pw_reset']);
 		?>
 		<script language="JavaScript" type="text/javascript">
 		<!--
@@ -97,7 +97,7 @@ switch ($action) {
 		$QUERY_STRING = "";
 		$user_name="";
 		if (!empty($_POST['user_name'])) $user_name = $_POST['user_name'];
-		print_header("PhpGedView - " . $pgv_lang["lost_pw_reset"]);
+		print_header($pgv_lang['lost_pw_reset']);
 		print "<div class=\"center\">";
 		if (!get_user_id($user_name)) {
 			AddToLog("New password requests for user ".$user_name." that does not exist");
@@ -221,7 +221,7 @@ switch ($action) {
 		
 		if ($user_name_false == false && $user_password01_false == false && $user_password02_false == false && $user_firstname_false == false && $user_lastname_false == false && $user_email_false == false && $user_language_false == false && $user_comments_false == false && $password_mismatch == false && $user_password_length == false) $action = "registernew";
 		else {
-			print_header("PhpGedView - " . $pgv_lang["requestaccount"]);
+			print_header($pgv_lang['requestaccount']);
 			// Empty user array in case any details might be left
 			// and faulty users are requested and created
 			$user = array();
@@ -370,7 +370,7 @@ switch ($action) {
 			
 		$QUERY_STRING = "";
 		if (isset($user_name)) {
-		print_header("PhpGedView - " . $pgv_lang["registernew"]);
+		print_header($pgv_lang['registernew']);
 			print "<div class=\"center\">";
 			$alphabet = getAlphabet();
 			$alphabet .= "_-. ";
@@ -522,7 +522,7 @@ switch ($action) {
 		$user_lang=get_user_setting($user_name, 'language');
 		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
 
-		print_header("PhpGedView - " . $pgv_lang["user_verify"]);
+		print_header($pgv_lang['user_verify']);
 		print "<div class=\"center\">";
 		?>
 		<form name="verifyform" method="post" action="" onsubmit="t = new Date(); document.verifyform.time.value=t.toUTCString();">
@@ -556,7 +556,7 @@ switch ($action) {
 		if ($user_lang && $LANGUAGE!=$user_lang) loadLanguage($user_lang);
 		$oldLanguage = $LANGUAGE;
 
-		print_header("PhpGedView - " . $pgv_lang["user_verify"]);# <-- better verification of authentication code
+		print_header($pgv_lang['user_verify']); // <-- better verification of authentication code
 		print "<div class=\"center\">";
 		print "<table class=\"center facts_table wrap ".$TEXT_DIRECTION."\">";
 		print "<tr><td class=\"topbottombar\">".$pgv_lang["user_verify"]."</td></tr>";

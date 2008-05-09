@@ -513,11 +513,15 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	global $HOME_SITE_URL, $HOME_SITE_TEXT, $SERVER_URL;
 	global $BROWSERTYPE, $SEARCH_SPIDER;
 	global $view, $cart;
-	global $CHARACTER_SET, $VERSION, $PGV_IMAGE_DIR, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
+	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
 	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage,$theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION,$REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
+
+	// None of the standard themes need these, but custom ones might still use them.
+	$VERSION=PGV_VERSION;
+	$VERSION_RELEASE=PGV_VERSION_RELEASE;
 
 	// If not on allowed list, dump the spider onto the redirect page.
 	// This kills recognized spiders in their tracks.
@@ -584,7 +588,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	}
 	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\" />";
 	if ($BROWSERTYPE == "msie") print "<style type=\"text/css\">\nFORM { margin-top: 0px; margin-bottom: 0px; }\n</style>\n";
-	print "<!-- PhpGedView v$VERSION -->\n";
+	echo '<!-- ', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, ' -->';
 	if (isset($changelanguage))
 		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
 	else
@@ -636,7 +640,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 			print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
 		}
 		if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"$META_REVISIT\" />\n";
-		print "<meta name=\"generator\" content=\"PhpGedView v$VERSION - http://www.phpgedview.net\" />\n";
+		echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - http://www.phpgedview.net" />';
 		$META_AUTHOR = $old_META_AUTHOR;
 		$META_PUBLISHER = $old_META_PUBLISHER;
 		$META_COPYRIGHT = $old_META_COPYRIGHT;
@@ -768,7 +772,7 @@ function print_simple_header($title) {
 	global $HOME_SITE_URL;
 	global $HOME_SITE_TEXT, $SEARCH_SPIDER;
 	global $view, $rtl_stylesheet;
-	global $CHARACTER_SET, $VERSION, $PGV_IMAGE_DIR;
+	global $CHARACTER_SET, $PGV_IMAGE_DIR;
 	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage;
 	global $FAVICON, $stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile, $SCRIPT_NAME;
 	global $TEXT_DIRECTION, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD,$PGV_IMAGES;
@@ -850,7 +854,7 @@ function print_simple_header($title) {
 		print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
 	}
 	if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"$META_REVISIT\" />\n";
-	print "<meta name=\"generator\" content=\"PhpGedView v$VERSION - http://www.phpgedview.net\" />\n";
+	echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - http://www.phpgedview.net" />';
 	$META_AUTHOR = $old_META_AUTHOR;
 	$META_PUBLISHER = $old_META_PUBLISHER;
 	$META_COPYRIGHT = $old_META_COPYRIGHT;
@@ -903,9 +907,13 @@ function message(username, method, url, subject) {
 }
 // -- print the html to close the page
 function print_footer() {
-	global $without_close, $pgv_lang, $view, $buildindex, $pgv_changes, $VERSION_RELEASE, $DBTYPE;
-	global $VERSION, $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
+	global $without_close, $pgv_lang, $view, $buildindex, $pgv_changes, $DBTYPE;
+	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
+
+	// None of the standard themes need these, but custom ones might still use them.
+	$VERSION=PGV_VERSION;
+	$VERSION_RELEASE=PGV_VERSION_RELEASE;
 
 	if (!isset($footer_count)) $footer_count = 1;
 	else $footer_count++;
@@ -931,7 +939,7 @@ function print_footer() {
 function print_simple_footer() {
 	global $pgv_lang;
 	global $start_time, $buildindex;
-	global $VERSION, $SHOW_STATS;
+	global $SHOW_STATS;
 	global $SCRIPT_NAME, $QUERY_STRING;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if (empty($SCRIPT_NAME)) {
@@ -940,7 +948,7 @@ function print_simple_footer() {
 	}
 	print "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
 	print contact_links();
-	print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"PhpGedView Version $VERSION\" title=\"PhpGedView Version $VERSION\" /></a><br />";
+	print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT."\" title=\"".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT."\" /></a><br />";
 	if ($SHOW_STATS || isset($DEBUG) && $DEBUG==true) {
 		print_execution_stats();
 	}
@@ -1721,17 +1729,28 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
  * @param int $noprint		The switch if the text needs to be printed or returned
  */
 function print_text($help, $level=0, $noprint=0){
-	global $pgv_lang, $factarray, $faqlist, $VERSION, $VERSION_RELEASE, $COMMON_NAMES_THRESHOLD;
+	global $pgv_lang, $factarray, $faqlist, $COMMON_NAMES_THRESHOLD;
 	global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $LANGUAGE;
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
+
 	if (!isset($_SESSION["DEBUG_LANG"])) $DEBUG_LANG = "no";
 	else $DEBUG_LANG = $_SESSION["DEBUG_LANG"];
 	if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable called: ".$help."<br /><br />";
 	$sentence = false;
 	if ($level>0) {
+		// Map legacy global variables (e.g. $VERSION) onto their replacement constants (e.g. PGV_VERSION)
+		// We can delete this once all the language files have been updated.
+		if ((preg_match('/^([A-Z_]+)$/', $help, $match) || preg_match('/^GLOBALS\[\'([A-Z_])\'\]+$/', $help, $match)) && defined('PGV_'.$match[1])) {
+			$help='PGV_'.$match[1];
+		}
 		$value = false;
-		eval("if (isset(\$$help)) \$value = \$$help;");
+		// Only allow access to constants prefixed by PGV_
+		if (substr($help, 0, 4)=='PGV_' && defined($help)) {
+			$value=constant($help);
+		} else {
+			eval("if (isset(\$$help)) \$value = \$$help;");
+		}
 		if ($value===false) return false;
 		$sentence = $value;
 	}

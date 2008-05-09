@@ -43,7 +43,7 @@ $PGV_BLOCKS['print_gedcom_news']['config']		= array(
  */
 function print_gedcom_news($block = true, $config='', $side, $index)
 {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $VERSION, $PGV_BLOCKS;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $PGV_BLOCKS;
 
 	if(empty($config)) {
 		$config = $PGV_BLOCKS['print_gedcom_news']['config'];

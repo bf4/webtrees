@@ -467,7 +467,7 @@ if(empty($SEARCH_SPIDER)) {
 	print "<div id=\"researchlog_content\">\n";
 
 	if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
-		if ($VERSION<4.1) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>\n";
+		if (version_compare(PGV_VERSION, '4.1')<0) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>\n";
 		print "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
 		if ($controller->default_tab==5) $controller->getTab(5);
 		else loading_message();

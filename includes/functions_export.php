@@ -34,11 +34,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  */
 function gedcom_header($gedfile, $CRLF="\r\n")
 {
-	global $CHARACTER_SET, $GEDCOMS, $VERSION, $VERSION_RELEASE, $pgv_lang, $TBLPREFIX;
+	global $CHARACTER_SET, $GEDCOMS, $pgv_lang, $TBLPREFIX;
 
 	// Default values for a new header
 	$HEAD="0 HEAD{$CRLF}";
-	$SOUR="1 SOUR PhpGedView{$CRLF}2 NAME PhpGedView Online Genealogy{$CRLF}2 VERS {$VERSION} {$VERSION_RELEASE}{$CRLF}";
+	$SOUR="1 SOUR PhpGedView{$CRLF}2 NAME ".PGV_PHPGEDVIEW."{$CRLF}2 VERS ".PGV_VERSION_TEXT."{$CRLF}";
 	$DEST="1 DEST DISKETTE{$CRLF}";
 	$DATE="1 DATE ".strtoupper(date("d M Y")).$CRLF."2 TIME ".date("H:i:s").$CRLF;
 	$GEDC="1 GEDC{$CRLF}2 VERS 5.5.1{$CRLF}2 FORM Lineage-Linked{$CRLF}";
@@ -88,7 +88,7 @@ function gedcom_header($gedfile, $CRLF="\r\n")
 }
 
 function print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
-	global $GEDCOMS, $GEDCOM, $VERSION, $VERSION_RELEASE, $pgv_lang, $CHARACTER_SET;
+	global $GEDCOMS, $GEDCOM, $pgv_lang, $CHARACTER_SET;
 	global $TBLPREFIX;
 
 	if ($privatize_export == "yes") {
@@ -233,7 +233,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 }
 
 function print_gramps($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
-	global $GEDCOMS, $GEDCOM, $VERSION, $VERSION_RELEASE, $pgv_lang;
+	global $GEDCOMS, $GEDCOM, $pgv_lang;
 	global $TBLPREFIX;
 	global $CRLF;
 

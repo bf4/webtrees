@@ -82,7 +82,7 @@ class ClippingsControllerRoot extends BaseController {
 	//----------------beginning of function definitions for ClippingsControllerRoot
 	function init() {
 		global $action, $PRIV_HIDE, $PRIV_PUBLIC, $ENABLE_CLIPPINGS_CART, $SCRIPT_NAME, $remove, $pgv_lang, $SERVER_URL, $CONTACT_EMAIL, $HOME_SITE_TEXT, $HOME_SITE_URL, $MEDIA_DIRECTORY, $others, $cart, $item, $type, $GEDCOM, $id, $filetype, $convert, $IncludeMedia, $Zip;
-		global $VERSION, $VERSION_RELEASE, $CHARACTER_SET,$dom;
+		global $CHARACTER_SET,$dom;
 
 		if (!isset ($ENABLE_CLIPPINGS_CART))
 			$ENABLE_CLIPPINGS_CART = $PRIV_HIDE;
@@ -233,7 +233,7 @@ class ClippingsControllerRoot extends BaseController {
 							$media = array ();
 							$mediacount = 0;
 							$ct = count($cart);
-							$filetext = "0 HEAD\r\n1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n1 DEST DISKETTE\r\n1 DATE " . date("j M Y") . "\r\n2 TIME " . date("H:i:s") . "\r\n";
+							$filetext = "0 HEAD\r\n1 SOUR ".PGV_PHPGEDVIEW."\r\n2 NAME ".PGV_PHPGEDVIEW."\r\n2 VERS ".PGV_VERSION_TEXT."\r\n1 DEST DISKETTE\r\n1 DATE " . date("j M Y") . "\r\n2 TIME " . date("H:i:s") . "\r\n";
 							$filetext .= "1 GEDC\r\n2 VERS 5.5\r\n2 FORM LINEAGE-LINKED\r\n1 CHAR $CHARACTER_SET\r\n";
 							$head = find_gedcom_record("HEAD");
 							$placeform = trim(get_sub_record(1, "1 PLAC", $head));
@@ -407,7 +407,7 @@ class ClippingsControllerRoot extends BaseController {
  */	
 function zip_cart()
 {
-	global $filetype,$INDEX_DIRECTORY,$pgv_lang,$VERSION,$VERSION_RELEASE,$IncludeMedia;
+	global $filetype,$INDEX_DIRECTORY,$pgv_lang,$IncludeMedia;
 		switch ($filetype) {
 	case 'gedcom':
 		{
@@ -430,7 +430,7 @@ function zip_cart()
 		fclose($fp);
 		$zipName = "clippings".rand(0, 1500).".zip";
 		$fname = $INDEX_DIRECTORY.$zipName;
-		$comment = "Created by PhpGedView ".$VERSION." ".$VERSION_RELEASE." on ".date("d M Y").".";
+		$comment = "Created by ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT." on ".date("d M Y").".";
 		$archive = new PclZip($fname);
 		// add the ged/gramps file to the root of the zip file (strip off the index_directory)
 		$this->media_list[]= array (PCLZIP_ATT_FILE_NAME => $INDEX_DIRECTORY.$tempFileName, PCLZIP_ATT_FILE_NEW_FULL_NAME => $tempFileName);

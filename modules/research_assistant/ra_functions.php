@@ -1519,8 +1519,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 		global $indilist;
 		global $factarray;
-		global $VERSION;
-		
 		
 		if (!is_object($person)) return "";
 		$givennames = $person->getGivenNames();

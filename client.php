@@ -61,8 +61,8 @@ else if (!check_for_import($GEDCOM)) {
 	exit;
 }
 else if ($action=='version') {
-	addDebugLog($action." SUCCESS\n$VERSION $VERSION_RELEASE\n");
-	print "SUCCESS\n$VERSION $VERSION_RELEASE\n";
+	addDebugLog($action." SUCCESS\n".PGV_VERSION_TEXT."\n");
+	print "SUCCESS\n".PGV_VERSION_TEXT."\n";
 }
 else if ($action=='connect') {
 	if (!empty($username)) {
