@@ -35,6 +35,12 @@ define('PGV_VERSION',         '4.1.6');
 define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
 
+// Make the version information available to user text (like FAQ and Advanced HTML) and to the Help files
+// Neither of these have any sort of access to constants, and we need to keep this stuff for historical reasons
+$VERSION = PGV_VERSION;
+$VERSION_RELEASE = PGV_VERSION_RELEASE;
+
+
 // Don't try to use old privacy files
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
