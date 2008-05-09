@@ -287,7 +287,7 @@ function get_privacy_file_version($privfile) {
  * @return string path to the privacy file
  */
 function get_privacy_file() {
-	global $GEDCOMS, $GEDCOM, $REQUIRED_PRIVACY_VERSION;
+	global $GEDCOMS, $GEDCOM;
 
 	$privfile = "privacy.php";
 	if (count($GEDCOMS)==0) {
@@ -307,9 +307,9 @@ function get_privacy_file() {
 				$privfile = "privacy.php";
 		}
 	}
-	$privversion = get_privacy_file_version($privfile);
-	if ($privversion<$REQUIRED_PRIVACY_VERSION)
+	if (version_compare(get_privacy_file_version($privfile), PGV_REQUIRED_PRIVACY_VERSION)<0) {
 		$privfile = "privacy.php";
+	}
 
 	return $privfile;
 }

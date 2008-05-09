@@ -29,8 +29,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require("config.php");
-require("includes/functions_print_lists.php");
+require 'config.php';
+require 'includes/functions_print_lists.php';
+require 'includes/class_stats.php';
 
 $time = client_time();
 $day = date("j", $time);
@@ -213,7 +214,7 @@ function getGedcomStats() {
  * @TODO prepend relative URL's in news items with $SERVER_URL
  */
 function getGedcomNews() {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $VERSION, $SERVER_URL;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $SERVER_URL;
 
 	$usernews = getUserNews($GEDCOM);
 

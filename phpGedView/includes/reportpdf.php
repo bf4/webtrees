@@ -44,7 +44,7 @@ class PGVReport extends PGVReportBase {
 	var $pdf;
 	
 	function setup($pw, $ph, $pageSize, $o, $m, $showGenText=true) {
-		global $pgv_lang, $VERSION;
+		global $pgv_lang;
 		parent::setup($pw, $ph, $pageSize, $o, $m, $showGenText);
 		
 		if (empty($this->pageFormat)) {		//-- send a custom size
@@ -59,7 +59,7 @@ class PGVReport extends PGVReportBase {
 		
 		if ($showGenText) {
 			$element = new PGVRCellPDF(0,10, "C", "");
-			$element->addText("$pgv_lang[generated_by] PhpGedView $VERSION");
+			$element->addText("$pgv_lang[generated_by] ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT);
 			$element->setUrl("http://www.phpgedview.net/");
 			$this->pdf->addFooter($element);
 		}

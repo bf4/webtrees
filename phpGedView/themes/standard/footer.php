@@ -6,7 +6,7 @@ print "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
 print contact_links();
 
 print "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
-print "\n\t<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" width=\"100\" height=\"45\" border=\"0\" alt=\"PhpGedView Version $VERSION $VERSION_RELEASE - $DBTYPE\" title=\"PhpGedView Version $VERSION $VERSION_RELEASE - $DBTYPE\" /></a><br />";
+print '<br /><a href="http://www.phpgedview.net" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" width="100" height="45" border="0" alt="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.'" title="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.'" /></a><br />';
 print "\n\t<br />";
 print_help_link("preview_help", "qm");
 print "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_lang["print_preview"]."</a>";

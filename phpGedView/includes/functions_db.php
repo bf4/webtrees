@@ -3574,7 +3574,7 @@ function get_id_from_gedcom($ged_name) {
 	global $GEDCOMS;
 
 	if (array_key_exists($ged_name, $GEDCOMS)) {
-		return $GEDCOMS[$ged_name]['id'];
+		return (int)$GEDCOMS[$ged_name]['id']; // Cast to (int) for safe use in SQL
 	} else {
 		return null;
 	}

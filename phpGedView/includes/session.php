@@ -29,10 +29,14 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-//-- version of PhpGedView  (Let's keep this in an obvious place -- not buried in code)
-$VERSION = "4.1.6";
-$VERSION_RELEASE = "";
-$REQUIRED_PRIVACY_VERSION = "3.1";
+// Identify ourself
+define('PGV_PHPGEDVIEW',      'PhpGedView');
+define('PGV_VERSION',         '4.1.6');
+define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
+define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
+
+// Don't try to use old privacy files
+define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
 define('PGV_REGEX_XREF',      '[A-Za-z0-9:-]+');
@@ -653,7 +657,7 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 		if (empty($GEDCOMS[$key]["pgv_ver"])) $GEDCOMS[$key]["pgv_ver"] = $VERSION;
 
 		// Force the gedcom to be re-imported if the code has been significantly upgraded
-		if (substr($GEDCOMS[$key]["pgv_ver"], 0, 3) != substr($VERSION, 0, 3))
+		if (substr($GEDCOMS[$key]["pgv_ver"], 0, 3) != substr(PGV_VERSION, 0, 3))
 			$GEDCOMS[$key]["imported"] = false;
 	}
 }
@@ -890,6 +894,8 @@ if ($logout) {
 }
 
 // Define some constants to save calculating the same value repeatedly.
+define('PGV_GEDCOM',            $GEDCOM);
+define('PGV_GED_ID',            get_id_from_gedcom(PGV_GEDCOM));
 define('PGV_USER_ID',           getUserId  ());
 define('PGV_USER_NAME',         getUserName());
 define('PGV_USER_IS_ADMIN',     userIsAdmin       (PGV_USER_ID));
@@ -899,13 +905,11 @@ define('PGV_USER_CAN_EDIT',     userCanEdit       (PGV_USER_ID));
 define('PGV_USER_CAN_ACCEPT',   userCanAccept     (PGV_USER_ID));
 define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
 define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID));
-define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'gedcomid'));
-define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'rootid'));
-if (empty($GEDCOMS) || DB::isError($DBCONN)) {
-	define('PGV_GED_ID', null);
-} else {
-	define('PGV_GED_ID', $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']));
-}
+define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
+define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
+
+// Only site administrators should see debugging output.
+define('PGV_DEBUG', PGV_USER_IS_ADMIN && safe_GET_bool('debug'));
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);

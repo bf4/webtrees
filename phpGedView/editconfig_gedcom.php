@@ -101,10 +101,7 @@ function write_access_option($checkVar) {
   print ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
 }
 
-
 loadLangFile("pgv_confighelp, pgv_help");
-
-if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 
 // Remove slashes
 if (isset($_POST["NEW_COMMON_NAMES_ADD"])) $_POST["NEW_COMMON_NAMES_ADD"] = stripslashes($_POST["NEW_COMMON_NAMES_ADD"]);
@@ -230,10 +227,9 @@ if (isset($ged)) {
 		$gedcom_config = "config_gedcom.php";
 		$gedcom_privacy = "privacy.php";
 		$gedcom_id = "";
-		$pgv_ver=$VERSION;
+		$pgv_ver=PGV_VERSION;
 	}
-}
-else {
+} else {
 	$GEDCOMPATH = "";
 	$gedcom_title = "";
 	$gedcom_config = "config_gedcom.php";
@@ -241,7 +237,7 @@ else {
 	$gedcom_id = "";
 	$path = "";
 	$GEDFILENAME = "";
-	$pgv_ver=$VERSION;
+	$pgv_ver=PGV_VERSION;
 }
 $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;

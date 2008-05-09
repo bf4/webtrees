@@ -122,9 +122,7 @@ function showchanges() {
 		<tr>
 			<td colspan="2" class="topbottombar">
 			<?php
-				print "<h2>PhpGedView v" . $VERSION . " " . $VERSION_RELEASE . "<br />";
-				print $pgv_lang["administration"];
-				print "</h2>";
+				echo '<h2>', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, '<br />', $pgv_lang['administration'], '</h2>';
 				print $pgv_lang["system_time"];
 				print " ".format_timestamp(time());
 				print "<br />".$pgv_lang["user_time"];

@@ -106,11 +106,11 @@ if ($action=='deleteuser') {
 // Save new user info to the database
 if ($action=='createuser' || $action=='edituser2') {
 	if (($action=='createuser' || $action=='edituser2' && $username!=$oldusername) && get_user_id($username)) {
-		print_header("PhpGedView ".$pgv_lang["user_admin"]);
+		print_header($pgv_lang['user_admin']);
 		print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 	} else {
 		if ($pass1!=$pass2) {
-			print_header("PhpGedView ".$pgv_lang["user_admin"]);
+			print_header($pgv_lang['user_admin']);
 			print "<span class=\"error\">".$pgv_lang["password_mismatch"]."</span><br />";
 		} else {
 			$alphabet=getAlphabet()."_-. ";
@@ -124,7 +124,7 @@ if ($action=='createuser' || $action=='edituser2') {
 				$i++;
 			}
 			if (!$pass) {
-				print_header("PhpGedView ".$pgv_lang["user_admin"]);
+				print_header($pgv_lang['user_admin']);
 				print "<span class=\"error\">".$pgv_lang["invalid_username"]."</span><br />";
 			} else {
 				// New user
@@ -239,7 +239,7 @@ if ($action=='createuser' || $action=='edituser2') {
 		}
 	}
 } else {
-	print_header("PhpGedView ".$pgv_lang["user_admin"]);
+	print_header($pgv_lang['user_admin']);
 }
 
 // Print the form to edit a user
