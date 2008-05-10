@@ -37,7 +37,7 @@ $pgv_lang["switch_timeline"]            = "Montrer le diagramme Échelle de temp
 $pgv_lang["differences"]                = "Différences";
 $pgv_lang["charts_block"]               = "Bloc Diagrammes";
 $pgv_lang["charts_block_descr"]         = "Le bloc diagrammes vous permet de placer un diagramme sur la page d'accueil ou sur la page Mon Portail. Vous pouvez configurer le bloc pour montrer les ancêtres, les descendants ou la vue sablier. Vous pouvez également choisir la personne racine du diagramme.";
-$pgv_lang["charts_click_box"]           = "Cliquez sur le boite de votre choix afin d'obtenir plus d'informations sur cette personne.";
+$pgv_lang["charts_click_box"]           = "Cliquez sur la boîte de votre choix afin d'obtenir plus d'informations.";
 $pgv_lang["chart_type"]                 = "Type de diagramme";
 $pgv_lang["changedate1"]                = "Fin de plage des dates à modifier";
 $pgv_lang["changedate2"]                = "Début de plage des dates à modifier";
@@ -1148,7 +1148,7 @@ $pgv_lang["welcome_text_auth_mode_1"]   =	"<center><b>Bienvenue à ce site gén�
 $pgv_lang["welcome_text_auth_mode_2"]   =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est réservé aux utilisateurs <u>autorisés</u>.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. >Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur acceptera ou refusera votre demande. Vous recevrez un message d'information.";
 $pgv_lang["welcome_text_auth_mode_3"]   =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est réservé aux utilisateurs <u>membres de la famille</u>.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur acceptera ou refusera votre demande. Vous recevrez un message d'information.";
 $pgv_lang["welcome_text_cust_head"]     =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est autorisé aux utilisateurs ayant un compte et un mot de passe.<br />";
-$pgv_lang["acceptable_use"]             = "<div class=\"largeError\">Attention:</div><div class=\"error\">En renseignant et en soumettant ce formulaire, vous acceptez:<ul><li>de protéger la vie privée des personnes vivantes qui sont renseignées sur notre site;</li><li>et dans la boite textuelle ci-dessous, vous acceptez ou bien d'expliquer avec qui vous avez un lien de parenté, ou alors vous nous communiquez des informations sur une personne qui devrait apparaître sur notre site.</li></ul></div>";
+$pgv_lang["acceptable_use"]             = "<div class=\"largeError\">Attention:</div><div class=\"error\">En renseignant et en soumettant ce formulaire, vous acceptez:<ul><li>de protéger la vie privée des personnes vivantes qui sont renseignées sur notre site;</li><li>et dans la boîte textuelle ci-dessous, vous acceptez ou bien d'expliquer avec qui vous avez un lien de parenté, ou alors vous nous communiquez des informations sur une personne qui devrait apparaître sur notre site.</li></ul></div>";
 
 
 //-- mygedview page
