@@ -1235,8 +1235,8 @@ class Person extends GedcomRecord {
 							else if ($rela=="daughter") $rela2="son_in_law";
 							else if ($rela=="brother" or $rela=="halfbrother") $rela2="sister_in_law";
 							else if ($rela=="sister" or $rela=="halfsister") $rela2="brother_in_law";
-							else if ($rela=="uncle") $rela2="aunt";
-							else if ($rela=="aunt") $rela2="uncle";
+							else if ($rela=="uncle") $rela2="aunt_in_law";
+							else if ($rela=="aunt") $rela2="uncle_in_law";
 							else if (strstr($rela, "cousin")) $rela2="cousin_in_law";
 							else $rela2="spouse";
 							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($spid)."@";

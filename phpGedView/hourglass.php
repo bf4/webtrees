@@ -54,6 +54,7 @@ if ($view!="preview") {
 ?>
 <!--	// NOTE: Start form and table -->
 	</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">
+	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
 	<table><tr>
 	
 		<!-- // NOTE: Root ID -->
@@ -71,7 +72,11 @@ if ($view!="preview") {
 	print $pgv_lang["show_details"]; ?>
 	</td>
 	<td class="optionbox">
-	<input type="checkbox" value="1" name="show_full" <?php if ($controller->show_full) echo 'checked="checked"'; ?> />
+	<input type="checkbox" value="
+	<?php
+	if ($controller->show_full) print "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';";
+	else print "0\" onclick=\"document.people.show_full.value='1';";?>"
+	/>
 	</td>
 	
 	<!-- // NOTE: Submit button -->
@@ -124,7 +129,11 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Close table header -->
 	</td></tr></table>
-<?php } ?>
+<?php 
+	if ($show_full==0) {
+		echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
+	}
+} ?>
 <div id="hourglass_chart<?php if ($TEXT_DIRECTION=="rtl") print "_rtl"; ?>" <?php if ($controller->isPrintPreview()) print " style=\"top: 1px;\""; else print "style=\"width:98%; direction:".$TEXT_DIRECTION."; z-index:1;\""; ?> >
 <table cellspacing="0" cellpadding="0" border="0"><tr>
 <!-- // descendancy -->

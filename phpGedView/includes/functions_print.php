@@ -52,11 +52,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	global $SEARCH_SPIDER;
 
 	if ($style != 2) $style=1;
+	if (empty($show_full)) $show_full = 0;
 
 	flush();
 	if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
-	if (!isset($show_full) || is_null($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
 	// NOTE: Start div out-rand()
 	if ($pid==false) {
 		print "\n\t\t\t<div id=\"out-".rand()."\" class=\"person_boxNN\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\">";
@@ -89,11 +89,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				// NOTE: Zoom
 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
 				else $title = $pid." :".$pgv_lang["pedigree_chart"];
-				print "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>\n";
+				print "<a href=\"pedigree.php?rootid=$pid&show_full=$PEDIGREE_FULL_DETAILS&PEDIGREE_GENERATIONS=$OLD_PGENS&talloffset=$talloffset&ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>\n";
 
 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
 				else $title = $pid." :".$pgv_lang["descend_chart"];
-				print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
+				print "<br /><a href=\"descendancy.php?pid=$pid&show_full=$PEDIGREE_FULL_DETAILS&generations=$generations&box_width=$box_width&ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
 
 				$username = PGV_USER_NAME;
 				if (!empty($username)) {
@@ -101,29 +101,29 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					if ($myid) {
 						if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
 						else $title = $pid." :".$pgv_lang["relationship_chart"];
-						print "<a href=\"relationship.php?pid1={$myid}&amp;pid2=".$pid."&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
+						print "<a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&pid1=$myid&pid2=$pid&show_full=$PEDIGREE_FULL_DETAILS&pretty=2&followspouse=1&ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
 					}
 				}
 				// NOTE: Zoom
 				if (file_exists("ancestry.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
-					print "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
+					print "<a href=\"ancestry.php?rootid=$pid&show_full=$PEDIGREE_FULL_DETAILS&chart_style=$chart_style&PEDIGREE_GENERATIONS=$OLD_PGENS&box_width=$box_width&ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
 				}
 				if (file_exists("compact.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["compact_chart"];
-					print "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
+					print "<a href=\"compact.php?rootid=$pid&ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
 				}
 				if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["fan_chart"];
-					print "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
+					print "<a href=\"fanchart.php?rootid=$pid&PEDIGREE_GENERATIONS=$OLD_PGENS&ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
 				}
 				if (file_exists("hourglass.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
-					print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
+					print "<a href=\"hourglass.php?pid=$pid&show_full=$PEDIGREE_FULL_DETAILS&chart_style=$chart_style&PEDIGREE_GENERATIONS=$OLD_PGENS&box_width=$box_width&ged=$GEDCOM&show_spouse=$show_spouse\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
 				}
 				$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
 				for ($i=0; $i<$ct; $i++) {
@@ -138,7 +138,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 						if ((!empty($spouse))||($num>0)) {
 							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
 							else $title = $famid." :".$pgv_lang["familybook_chart"];
-							print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
+							print "<a href=\"family.php?famid=$famid&show_full=1&ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
 							if (!empty($spouse)) {
 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse;
 								else $title = $spouse." :".$pgv_lang["indi_info"];
@@ -194,31 +194,31 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				$click_link="javascript:;";
 				$whichChart="";
 				if (preg_match("/pedigree.php/", $SCRIPT_NAME)>0) {
-					$click_link="pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM";
+					$click_link="pedigree.php?rootid=$pid&show_full=$PEDIGREE_FULL_DETAILS&PEDIGREE_GENERATIONS=$OLD_PGENS&talloffset=$talloffset&ged=$GEDCOM";
 					$whichChart="pedigree_chart";
 					$whichID=$pid;
 				}
 
 				if (preg_match("/hourglass.php/", $SCRIPT_NAME)>0) {
-					$click_link="hourglass.php?pid=$pid&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$click_link="hourglass.php?pid=$pid&show_full=$PEDIGREE_FULL_DETAILS&generations=$generations&box_width=$box_width&ged=$GEDCOM";
 					$whichChart="hourglass_chart";
 					$whichID=$pid;
 				}
 
 				if (preg_match("/ancestry.php/", $SCRIPT_NAME)>0) {
-					$click_link="ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$click_link="ancestry.php?rootid=$pid&show_full=$PEDIGREE_FULL_DETAILS&chart_style=$chart_style&PEDIGREE_GENERATIONS=$OLD_PGENS&box_width=$box_width&ged=$GEDCOM";
 					$whichChart="ancestry_chart";
 					$whichID=$pid;
 				}
 
 				if (preg_match("/descendancy.php/", $SCRIPT_NAME)>0) {
-					$click_link="descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$click_link="descendancy.php?&show_full=$PEDIGREE_FULL_DETAILS&pid=$pid&agenerations=$generations&box_width=$box_width&ged=$GEDCOM";
 					$whichChart="descend_chart";
 					$whichID=$pid;
 				}
 
 				if ((preg_match("/family.php/", $SCRIPT_NAME)>0)&&!empty($famid)) {
-					$click_link="family.php?famid=$famid&amp;ged=$GEDCOM";
+					$click_link="family.php?famid=$famid&show_full=1&ged=$GEDCOM";
 					$whichChart="familybook_chart";
 					$whichID=$famid;
 				}
@@ -518,10 +518,6 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION,$REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
-
-	// None of the standard themes need these, but custom ones might still use them.
-	$VERSION=PGV_VERSION;
-	$VERSION_RELEASE=PGV_VERSION_RELEASE;
 
 	// If not on allowed list, dump the spider onto the redirect page.
 	// This kills recognized spiders in their tracks.
@@ -911,10 +907,6 @@ function print_footer() {
 	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
 
-	// None of the standard themes need these, but custom ones might still use them.
-	$VERSION=PGV_VERSION;
-	$VERSION_RELEASE=PGV_VERSION_RELEASE;
-
 	if (!isset($footer_count)) $footer_count = 1;
 	else $footer_count++;
 	print "<!-- begin footer -->\n";
@@ -1209,7 +1201,7 @@ function print_favorite_selector($option=0) {
 					if (displayDetailsById($pid, $favorite["type"])) {
 						$indirec = find_gedcom_record($pid);
 						if ($favorite["type"]=="INDI") {
-							$submenu["link"] = "individual.php?pid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+							$submenu["link"] = "individual.php?pid=".$favorite["gid"]."&ged=$GEDCOM";
 							$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1218,7 +1210,7 @@ function print_favorite_selector($option=0) {
 							unset($indilist[$pid]);
 						}
 						if ($favorite["type"]=="FAM") {
-							$submenu["link"] = "family.php?famid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+							$submenu["link"] = "family.php?famid=".$favorite["gid"]."&show_full=1&ged=$GEDCOM";
 							$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1293,7 +1285,7 @@ function print_favorite_selector($option=0) {
 						if (displayDetailsById($pid, $favorite["type"])) {
 							$indirec = find_gedcom_record($pid);
 							if ($favorite["type"]=="INDI") {
-								$submenu["link"] = "individual.php?pid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+								$submenu["link"] = "individual.php?pid=".$favorite["gid"]."&ged=$GEDCOM";
 								$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1301,7 +1293,7 @@ function print_favorite_selector($option=0) {
 							}
 							}
 							if ($favorite["type"]=="FAM") {
-								$submenu["link"] = "family.php?famid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+								$submenu["link"] = "family.php?famid=".$favorite["gid"]."&show_full=1&ged=$GEDCOM";
 								$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1309,7 +1301,7 @@ function print_favorite_selector($option=0) {
 							}
 							}
 							if ($favorite["type"]=="SOUR") {
-								$submenu["link"] = "source.php?sid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+								$submenu["link"] = "source.php?sid=".$favorite["gid"]."&ged=$GEDCOM";
 								$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1372,7 +1364,7 @@ function print_favorite_selector($option=0) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
-								print "\n\t\t\t\t<option value=\"family.php?famid=";
+								print "\n\t\t\t\t<option value=\"family.php?show_full=1&famid=";
 								unset($famlist[$pid]);
 							}
 							if ($favorite["type"]=="SOUR") {
@@ -1440,7 +1432,7 @@ function print_favorite_selector($option=0) {
 								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
-							print "\n\t\t\t\t<option value=\"family.php?famid=";
+							print "\n\t\t\t\t<option value=\"family.php?show_full=1&famid=";
 							}
 							if ($favorite["type"]=="SOUR") {
 								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
@@ -2165,6 +2157,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
  */
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
+	global $PEDIGREE_FULL_DETAILS;
 	// get ASSOciate(s) ID(s)
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$ct; $i++) {
@@ -2226,6 +2219,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if (!empty($age))
 					print " ({$pgv_lang['age']} {$age})";
 			}
+/*
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview") {
 				if ($type=='FAM') {
@@ -2233,16 +2227,17 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
-						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) print " - <a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&pid1=$pid1&pid2=$pid2&followspouse=1&ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
 						$pid1 = $parents["WIFE"];
-						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) print " - <a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&pid1=$pid1&pid2=$pid2&followspouse=1&ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
 					}
 				}
-				else if ($pid!=$pid2) print " - <a href=\"relationship.php?pid1=$pid&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "]</a>";
+				else if ($pid!=$pid2) print " - <a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&pid1=$pid&pid2=$pid2&followspouse=1&ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
+*/
 		}
 		else if (strstr($gedrec, "@ FAM")!==false) {
-			print "<a href=\"family.php?famid=$pid2\">";
+			print "<a href=\"family.php?show_full=1&famid=$pid2\">";
 			if ($TEXT_DIRECTION == "ltr") print getLRM(); else print " " . getRLM();
 			print "[".$pgv_lang["view_family"];
 			if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($pid2)" . getLRM();

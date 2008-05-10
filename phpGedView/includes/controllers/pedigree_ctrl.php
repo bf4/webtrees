@@ -76,15 +76,9 @@ class PedigreeControllerRoot extends BaseController {
 		}
 
 		$this->rootid    =safe_GET_xref('rootid');
-		$this->show_full =safe_GET('show_full', '1', '0');
-		$this->talloffset=safe_GET('talloffset', '1', '0');
+		$this->show_full =safe_GET('show_full', array('0', '1'), $PEDIGREE_FULL_DETAILS);
+		$this->talloffset=safe_GET('talloffset', array('0', '1'), '0');
 		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 3, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
-
-		// Set defaults
-		if (empty($this->rootid)) {
-			$this->show_full=$PEDIGREE_FULL_DETAILS;
-			$this->talloffset=$PEDIGREE_LAYOUT ? 1 : 0; // landscape
-		}
 
 		// This is passed as a global.  A parameter would be better...
 		$show_full=$this->show_full;

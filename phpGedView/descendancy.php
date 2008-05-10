@@ -38,7 +38,7 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 // ==========================================================================================
 
 ?>
-<table class="list_table <?php print $TEXT_DIRECTION; ?>"><tr><td width="<?php print $controller->cellwidth; ?>px" valign="top">
+<table><tr><td valign="top">
 <h2><?php print $pgv_lang["descend_chart"].":<br />".PrintReady($controller->name)."</h2>";
 //print "\n\t<h2>".$pgv_lang["descend_chart"].":<br />".$controller->name."</h2>"; ?>
 
@@ -56,7 +56,8 @@ $gencount=0;
 if ($view!="preview") {
 	$show_famlink = true;
 ?>
-	</td><td><form method="get" name="people" action="?">
+	</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">
+	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
 	<table class="<?php print "list_table".$TEXT_DIRECTION; ?>">
 	
 		<!-- NOTE: rootid -->
@@ -133,7 +134,11 @@ if ($view!="preview") {
 	?>
 	</td>
 	<td class="optionbox vmiddle">
-	<input type="checkbox" name="show_full" value="1" <?php if ($controller->show_full) echo 'checked="checked"'; ?> />
+	<input type="checkbox" value="
+	<?php
+	if ($controller->show_full) print "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';";
+	else print "0\" onclick=\"document.people.show_full.value='1';";?>"
+	/>
 	</td></tr>
 
 	</table>
@@ -145,6 +150,9 @@ if (is_null($controller->descPerson)) {
 	print "<span class=\"error\">".$pgv_lang["record_not_found"]."</span>";
 }
 $controller->generations -= 1; // [ 1757792 ] Charts : wrong generations count
+if ($show_full==0) {
+	echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
+}
 //-- list
 if ($controller->chart_style==0) {
 	echo "<ul style=\"list-style: none; display: block;\" id=\"descendancy_chart".($TEXT_DIRECTION=="rtl" ? "_rtl" : "")."\">";

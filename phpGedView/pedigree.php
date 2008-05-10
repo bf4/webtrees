@@ -54,6 +54,7 @@ if (!$controller->isPrintPreview()) {
 	//-->
 	</script>
 	<form name="people" method="get" action="pedigree.php">
+	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
 		<table class="pedigree_table <?php print $TEXT_DIRECTION; ?>" width="225">
 			<tr>
 				<td colspan="2" class="topbottombar" style="text-align:center; ">
@@ -103,7 +104,11 @@ if (!$controller->isPrintPreview()) {
 					<?php print $pgv_lang["show_details"]; ?>
 				</td>
 				<td class="optionbox">
-					<input type="checkbox" name="show_full" value="1" <?php echo $controller->show_full ? 'checked="checked"' : ''; ?>" />
+					<input type="checkbox" value="
+					<?php
+					if ($controller->show_full) print "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';";
+					else print "0\" onclick=\"document.people.show_full.value='1';";?>"
+					/>
 				</td>
 			</tr>
 			<tr>
@@ -113,7 +118,11 @@ if (!$controller->isPrintPreview()) {
 			</tr>
 		</table>
 	</form>
-<?php } ?>
+<?php 
+	if ($show_full==0) {
+		echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
+	}
+} ?>
 </div>
 <div id="pedigree_chart<?php if ($TEXT_DIRECTION=="rtl") print "_rtl"; ?>" <?php if ($controller->isPrintPreview()) print " style=\"top: 1px;\""; else print "style=\"z-index: 1;\""; ?> >
 <?php

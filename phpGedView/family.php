@@ -43,7 +43,8 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 }	
 // LB ======================================================================================
 
-$PEDIGREE_FULL_DETAILS = "1";		// Override GEDCOM configuration 
+$PEDIGREE_FULL_DETAILS = "1";		// Override GEDCOM configuration
+$show_full = "1"; 
 
 ?>
 <?php if ($controller->family->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
