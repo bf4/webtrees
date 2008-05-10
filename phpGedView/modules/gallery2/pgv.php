@@ -82,17 +82,31 @@ function mod_gallery2_load($uid)
 				'email'				=> get_user_setting($uid, 'email'),
 				'fullname'			=> getUserFullName($uid),
 				'language'			=> $language_settings[get_user_settings($uid, 'language')]['lang_short_cut'],
-				'hashedpassword'	=> get_user_password($uid),
-				'hashmethod'		=> 'crypt',
-				'creationtimestamp'	=> get_user_setting($uid, 'reg_timestamp')
+				'hashedpassword'		=> get_user_password($uid),
+				'hashmethod'			=> 'crypt',
+				'creationtimestamp'		=> get_user_setting($uid, 'reg_timestamp')
 			));
 			if($ret)
 			{
 				/* An error during user creation. Not good, print an error or do whatever is appropriate
 				 * in your emApp when an error occurs
 				 */
-				print "{$pgv_lang['mod_gallery2_error_user_create']}<br />\n".$ret->getAsHtml();
-				exit;
+				list($ret3, $g2u) = GalleryCoreApi::fetchUserByUserName($user['username']);
+				if($ret3)
+				{
+					print "{$pgv_lang['mod_gallery2_error_user_create']}<br />\n".$ret->getAsHtml();
+					exit;
+				}
+				else
+				{
+					/* Add missing External ID Map entry and continue.
+					 */
+					$ret4 = GalleryCoreApi::addMapEntry('ExternalIdMap', array(
+						'externalId' => $uid,
+						'entityType' => 'GalleryUser',
+						'entityId' => $g2u->getId()
+					));
+				}
 			}
 		}
 		else
@@ -128,4 +142,3 @@ function mod_gallery2_load($uid)
 		}
 	}
 }
-?>
