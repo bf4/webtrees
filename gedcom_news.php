@@ -121,13 +121,22 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 			}
 		}
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
-		if($ct > 0) {
-			if(isset($pgv_lang[$match[1]])) {
-				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $newsText);
-			}
+		if ($ct > 0) {
 			$varname = $match[1];
-			if(isset($$varname)) {
-				$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+			if (isset($pgv_lang[$varname])) {
+				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$varname], $newsText);
+			} else {
+				if (defined('PGV_'.$varname)) {
+					// e.g. global $VERSION is now constant PGV_VERSION
+					$varname='PGV_'.$varname;
+				}
+				if (defined($varname)) {
+					$newsText = preg_replace("/{$match[0]}/", constant($varname), $newsText);
+				} else {
+					if (isset($$varname)) {
+						$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+					}
+				}
 			}
 		}
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
