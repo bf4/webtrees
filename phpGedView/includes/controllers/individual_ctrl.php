@@ -996,10 +996,10 @@ class IndividualControllerRoot extends BaseController {
 			$n_gchi=1;
 			$n_ggch=1;
 			foreach ($indifacts as $key => $value) {
-				if (stristr($value[1], "1 DEAT")) $yetdied=true;
-				if (stristr($value[1], "1 CREM")) $yetdied=true;
-				if (stristr($value[1], "1 BURI")) $yetdied=true;
-				if (preg_match("/1 _PGVFS @(.*)@/", $value[1], $match)>0) {
+				if (preg_match('/^1 (BURI|CREM|DEAT)/m', $value[1])) {
+					$yetdied=true;
+				}
+				if (preg_match("/^1 _PGVFS @(.*)@/m", $value[1], $match)>0) {
 					// do not show family events after death
 					if (!$yetdied) {
 						print_fact($value[1],trim($match[1]),$value[0], $this->indi->getGedcomRecord());
@@ -1225,7 +1225,7 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $PEDIGREE_FULL_DETAILS, $show_full;
-
+		
 		$saved_PEDIGREE_FULL_DETAILS = $PEDIGREE_FULL_DETAILS;
 		if (isset($show_full)) $saved_show_full = $show_full;
 		$PEDIGREE_FULL_DETAILS = 1;		// Override GEDCOM default
