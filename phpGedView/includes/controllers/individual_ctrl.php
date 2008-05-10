@@ -997,6 +997,7 @@ class IndividualControllerRoot extends BaseController {
 			$n_ggch=1;
 			foreach ($indifacts as $key => $value) {
 				if (stristr($value[1], "1 DEAT")) $yetdied=true;
+				if (stristr($value[1], "1 CREM")) $yetdied=true;
 				if (stristr($value[1], "1 BURI")) $yetdied=true;
 				if (preg_match("/1 _PGVFS @(.*)@/", $value[1], $match)>0) {
 					// do not show family events after death
