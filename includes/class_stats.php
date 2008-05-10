@@ -222,6 +222,18 @@ class stats
 						$new_values[]=$GLOBALS[$x];
 						unset($tags[$i]);
 					}
+					// CONSTANTS
+					else if (substr($x, 0, 4)=='PGV_' & defined($x)) {
+						$new_tags[]="#{$x}#";
+						$new_values[]=constant($x);
+						unset($tags[$i]);
+					}
+					// OLD GLOBALS THAT ARE NOW CONSTANTS
+					else if (defined('PGV_'.$x)) {
+						$new_tags[]="#PGV_{$x}#";
+						$new_values[]=constant('PGV_'.$x);
+						unset($tags[$i]);
+					}
 				}
 		return array($new_tags, $new_values);
 	}
@@ -742,6 +754,10 @@ class stats
 		if(isset($params[2]) && $params[2] != ''){$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		$sizes = explode('x', $size);
 		$tot = $this->_totalMediaType('all');
+		// Beware divide by zero
+		if ($tot==0) {
+			$tot=1;
+		}
 		$chd = $this->_array_to_extended_encoding(array(
 			round(100 * $this->_totalMediaType('audio') / $tot, 0),
 			round(100 * $this->_totalMediaType('book') / $tot, 0),
