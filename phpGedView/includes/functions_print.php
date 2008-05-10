@@ -1740,7 +1740,6 @@ function print_text($help, $level=0, $noprint=0){
 	$sentence = false;
 	if ($level>0) {
 		// Map legacy global variables (e.g. $VERSION) onto their replacement constants (e.g. PGV_VERSION)
-		// We can delete this once all the language files have been updated.
 		if ((preg_match('/^([A-Z_]+)$/', $help, $match) || preg_match('/^GLOBALS\[\'([A-Z_])\'\]+$/', $help, $match)) && defined('PGV_'.$match[1])) {
 			$help='PGV_'.$match[1];
 		}
@@ -1758,10 +1757,12 @@ function print_text($help, $level=0, $noprint=0){
 		if ($noprint == 2) {
 			$sentence = $help;
 		} else {
-			if (isset($pgv_lang[$help]))
+			if (isset($pgv_lang[$help])) {
 				$sentence = $pgv_lang[$help];
-			else {
-				if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
+			} else {
+				if ($DEBUG_LANG == "yes") {
+					print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
+				}
 				$sentence = $pgv_lang["help_not_exist"];
 			}
 		}
