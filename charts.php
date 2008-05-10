@@ -113,7 +113,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	$content = "";
 	$content .= "<script src=\"phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 	if ($show_full==0) {
-		$content .=  "<span class=\"details2\"><center>".$pgv_lang["charts_click_box"]."</center></span><br />";
+		$content .= '<span class="details2"><center>'.$pgv_lang['charts_click_box'].'</center></span><br />';
 	}
 	$content .= '<table cellspacing="0" cellpadding="0" border="0"><tr>';
 	if ($config['type']=='descendants' || $config['type']=='hourglass') {
