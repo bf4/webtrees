@@ -826,6 +826,11 @@ else {
 }
 ?>
 </div>
+<?php
+if ($show_full==0) {
+	echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
+}
+?>
 <div id="relationship_chart<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl";?>" style="position:relative; z-index:1; width:98%;">
 <?php
 $maxyoffset = $Dbaseyoffset;

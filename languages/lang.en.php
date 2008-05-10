@@ -802,6 +802,8 @@ $pgv_lang["brother_in_law"]		    = "Brother-in-law";
 $pgv_lang["sister_in_law"]		    = "Sister-in-law";
 $pgv_lang["son_in_law"]		        = "Son-in-law";
 $pgv_lang["daughter_in_law"]		= "Daughter-in-law";
+$pgv_lang["uncle_in_law"]			= "Uncle-in-law";
+$pgv_lang["aunt_in_law"]			= "Aunt-in-law";
 $pgv_lang["cousin_in_law"]			= "Cousin-in-law";
 
 $pgv_lang["step_son"]		        = "step son";
