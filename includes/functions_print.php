@@ -425,53 +425,47 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		// NOTE: Start div inout2-$pid.$personcount.$count
 		// if ($show_full) print "\n<div id=\"inout2-$boxID\" style=\"display: block;\">\n";
 		if ($show_full) {
-			print "\n<div id=\"inout2-$boxID\" ";
-			print " style=\"display: block;\">\n";
-			$birttag = "BIRT";
-			$bpos1 = strpos($indirec, "1 BIRT");
-			if ($bpos1) {
-				if (showFact($birttag, $pid)) print_simple_fact($indirec, $birttag, $pid);
-			}
-			//-- no birth check for christening or baptism
-			else {
-				$bpos1 = strpos($indirec, "1 CHR");
-				if ($bpos1) {
-					$birttag = "CHR";
-					if (showFact($birttag, $pid)) print_simple_fact($indirec, $birttag, $pid);
-				} else {
-					$bpos1 = strpos($indirec, "1 BAPM");
-					if ($bpos1) {
-						$birttag = "BAPM";
-						if (showFact($birttag, $pid)) print_simple_fact($indirec, $birttag, $pid);
+			echo '<div id="inout2-', $boxID,'" style="display: block;">';
+
+			$opt_tags=preg_split('/\W/', $CHART_BOX_TAGS, 0, PREG_SPLIT_NO_EMPTY);
+
+			// Show BIRT or equivalent event
+			foreach (explode('|', PGV_EVENTS_BIRT) as $birttag) {
+				if (showFact($birttag, $pid) && !in_array($birttag, $opt_tags) && preg_match('/^1 '.$birttag.'\b(?! Y)/m', $indirec)) {
+					print_simple_fact($indirec, $birttag, $pid);
+					if (in_array($birttag, $opt_tags)) {
+						unset ($opt_tags[array_search($birttag, $opt_tags)]);
 					}
-				}
-			}
-			//-- section to display optional tags in the boxes
-			if (!empty($CHART_BOX_TAGS)) {
-				$opt_tags = preg_split("/[, ]+/", $CHART_BOX_TAGS);
-				foreach($opt_tags as $indexval => $tag) {
-					if (!empty($tag)&&($tag!="BURI")&&($tag!="CREM")) {
-						if (showFact($tag, $pid)) print_simple_fact($indirec, $tag, $pid);
-					}
+					break;
 				}
 			}
 
-			$bpos1 = strpos($indirec, "1 DEAT");
-			if ($bpos1) {
-				if (showFact("DEAT", $pid)) {
-					print_simple_fact($indirec, "DEAT", $pid);
+			// Show optional events (before death)
+			foreach ($opt_tags as $key=>$tag) {
+				if (showFact($tag, $pid) && !preg_match('/^('.PGV_EVENTS_DEAT.')$/', $tag)) {
+					print_simple_fact($indirec, $tag, $pid);
+					unset ($opt_tags[$key]);
 				}
 			}
-			else if (strpos($indirec, "1 BURI")) {
-				if (showFact("BURI", $pid)) {
-					print_simple_fact($indirec, "BURI", $pid);
-				}
 
+			// Show DEAT or equivalent event
+			foreach (explode('|', PGV_EVENTS_DEAT) as $deattag) {
+				if (showFact($deattag, $pid) && preg_match('/^1 '.$deattag.'\b/m', $indirec)) {
+					print_simple_fact($indirec, $deattag, $pid);
+					if (in_array($deattag, $opt_tags)) {
+						unset ($opt_tags[array_search($deattag, $opt_tags)]);
+					}
+					break;
+				}
 			}
-			foreach (array("BURI", "CREM") as $indexval => $tag) {
-				if (strpos($CHART_BOX_TAGS, $tag)!==false && showFact($tag, $pid)) print_simple_fact($indirec, $tag, $pid);
+
+			// Show remaining optional events (after death)
+			foreach ($opt_tags as $tag) {
+				if (showFact($tag, $pid)) {
+					print_simple_fact($indirec, $tag, $pid);
+				}
 			}
-			print "</div>\n";
+			echo '</div>';
 		}
 
 		// NOTE: Close div inout2-$pid.$personcount.$count

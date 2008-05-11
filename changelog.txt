@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: Allow _BRTM and other events as substitutes for BIRT/MARR/DIV/DEAT
  - Fixed: [ 1953881 ] 4.1.5rel ... FAm events not showing in Personal facts tab (fisharebest)
  - Fixed: Charts block needs horizontal scroll bar (canajun2eh)
  - Fixed: [ 1958447 ] 4.1.5 "On This Day" block needs simple message (canajun2eh)

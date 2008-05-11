@@ -49,6 +49,17 @@ define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
 define('PGV_REGEX_URL',       '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
 define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
 
+// UTF8 representation of various characters
+define('PGV_UTF8_BOM', "\xEF\xBB\xBF"); // U+FEFF
+define('PGV_UTF8_LRM', "\xE2\x80\x8E"); // U+200E
+define('PGV_UTF8_RLM', "\xE2\x80\x8F"); // U+200F
+
+// Alternatives to BMD events for lists, charts, etc.
+define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|BAPL|ADOP');
+define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
+define('PGV_EVENTS_MARR', 'MARR|MARB|MARC|MARS');
+define('PGV_EVENTS_DIV',  'DIV|ANUL');
+
 function isAlphaNum($value) {
         return preg_match('/^[a-zA-Z0-9]+$/', $value);
     }

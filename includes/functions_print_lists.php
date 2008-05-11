@@ -83,8 +83,8 @@ function format_list_person($key, $value, $findid=false, $asso="", $tag='li') {
 			$html.='<br /><i>'.$pgv_lang['private'].'</i>';
 			$indi_private[$key.'['.$GEDCOM.']'] = 1;
 		} else {
-			$html.=format_first_major_fact($key, array('BIRT', 'CHR', 'BAPM', 'BAPL', 'ADOP'));
-			$html.=format_first_major_fact($key, array('DEAT', 'BURI'));
+			$html.=format_first_major_fact($key, explode('|', PGV_EVENTS_BIRT));
+			$html.=format_first_major_fact($key, explode('|', PGV_EVENTS_DEAT));
 		}
 		$html.='</a>';
 		if (($asso != '') && ($disp)) {
@@ -159,8 +159,8 @@ function format_list_family($key, $value, $findid=false, $asso="", $tag='li') {
 			$html.="<br /><i>".$pgv_lang["private"]."</i>";
 			$fam_private[$key."[".$GEDCOM."]"] = 1;
 		} else {
-			$html.=format_first_major_fact($key, array("MARR"));
-			$html.=format_first_major_fact($key, array("DIV"));
+			$html.=format_first_major_fact($key, explode('|', PGV_EVENTS_MARR));
+			$html.=format_first_major_fact($key, explode('|', PGV_EVENTS_DIV));
 		}
 		$html.="</a>";
 		if ($asso != "") {
