@@ -1224,11 +1224,9 @@ class IndividualControllerRoot extends BaseController {
 	function print_relatives_tab() {
 		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
-		global $PEDIGREE_FULL_DETAILS, $show_full;
-		
-		$saved_PEDIGREE_FULL_DETAILS = $PEDIGREE_FULL_DETAILS;
-		if (isset($show_full)) $saved_show_full = $show_full;
-		$PEDIGREE_FULL_DETAILS = 1;		// Override GEDCOM default
+		global $show_full;
+
+		if (isset($show_full)) $saved_show_full = $show_full;		// We always want to see full details here
 		$show_full = 1;
 				
 		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
@@ -1797,7 +1795,6 @@ class IndividualControllerRoot extends BaseController {
 		<?php
 		
 	$ABBREVIATE_CHART_LABELS = $saved_ABBREVIATE_CHART_LABELS;		// Restore GEDCOM configuration
-	$PEDIGREE_FULL_DETAILS = $saved_PEDIGREE_FULL_DETAILS;
 	unset($show_full);
 	if (isset($saved_show_full)) $show_full = $saved_show_full;
 	}
