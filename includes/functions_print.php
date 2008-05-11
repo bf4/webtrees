@@ -919,8 +919,11 @@ function print_footer() {
 		$printlink = true;
 		print "</div>";
 	}
-	if (function_exists("load_behaviour")) load_behaviour();  // @see function_print_lists.php
-	print "\n\t</body>\n</html>";
+	if (function_exists("load_behaviour")) {
+		load_behaviour();  // @see function_print_lists.php
+	}
+	echo google_analytics();
+	echo '</body></html>';
 }
 // -- print the html to close the page
 function print_simple_footer() {
@@ -940,6 +943,15 @@ function print_simple_footer() {
 		print_execution_stats();
 	}
 	print "</div></body></html>";
+}
+
+// Generate code for google analytics
+function google_analytics() {
+	if (defined('PGV_GOOGLE_ANALYTICS')) {
+		return '<script type="text/javascript">var gaJsHost=(("https:"==document.location.protocol)?"https://ssl.":"http://www.");document.write(unescape("%3Cscript src=\'"+gaJsHost+"google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));</script><script type="text/javascript">var pageTracker=_gat._getTracker("'.PGV_GOOGLE_ANALYTICS.'");pageTracker._initData();pageTracker._trackPageview();</script>';
+	} else {
+		return '';
+	}
 }
 
 /**

@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: Built-in generation of Google Analytics tracking code (fisharebest)
  - Added: Allow _BRTM and other events as substitutes for BIRT/MARR/DIV/DEAT
  - Fixed: [ 1953881 ] 4.1.5rel ... FAm events not showing in Personal facts tab (fisharebest)
  - Fixed: Charts block needs horizontal scroll bar (canajun2eh)
