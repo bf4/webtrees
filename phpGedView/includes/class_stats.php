@@ -33,11 +33,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-// Helper defines
-define('STATS_BIRTH', "'BIRT','CHR','BAPM'");
-define('STATS_DEATH', "'DEAT','BURI','CREM'");
-define('STATS_MARRIAGE', "'MARR'");
-
 require_once 'includes/functions_print_lists.php';
 
 // Methods not allowed to be used in a statistic
@@ -516,40 +511,22 @@ class stats
 
 	function totalEventsBirth()
 	{
-		$facts = explode(',', STATS_BIRTH);
-		$c = count($facts);
-		for($i = 0; $i < $c; $i++)
-		{
-			$facts[$i] = str_replace('\'', '', $facts[$i]);
-		}
-		return $this->totalEvents($facts);
+		return $this->totalEvents(explode('|',PGV_EVENTS_BIRT));
 	}
 
 	function totalEventsDeath()
 	{
-		$facts = explode(',', STATS_DEATH);
-		$c = count($facts);
-		for($i = 0; $i < $c; $i++)
-		{
-			$facts[$i] = str_replace('\'', '', $facts[$i]);
-		}
-		return $this->totalEvents($facts);
+		return $this->totalEvents(explode('|',PGV_EVENTS_DEAT));
 	}
 
 	function totalEventsMarriage()
 	{
-		$facts = explode(',', STATS_MARRIAGE);
-		$c = count($facts);
-		for($i = 0; $i < $c; $i++)
-		{
-			$facts[$i] = str_replace('\'', '', $facts[$i]);
-		}
-		return $this->totalEvents($facts);
+		return $this->totalEvents(explode('|',PGV_EVENTS_MARR));
 	}
 
 	function totalEventsOther()
 	{
-		$facts = array_merge(explode(',', STATS_BIRTH), explode(',', STATS_DEATH), explode(',', STATS_MARRIAGE));
+		$facts = array_merge(explode('|', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT));
 		$no_facts = array();
 		foreach($facts as $fact)
 		{
@@ -790,12 +767,12 @@ class stats
 		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE;
 		if($birth_death == 'BIRT')
 		{
-			$query_field = STATS_BIRTH;
+			$query_field = "'".str_replace('|', "','", PGV_EVENTS_BIRT)."'";
 		}
 		else
 		{
 			$birth_death = 'DEAT';
-			$query_field = STATS_DEATH;
+			$query_field = "'".str_replace('|', "','", PGV_EVENTS_DEAT)."'";
 		}
 		if($life_dir == 'ASC')
 		{
@@ -1136,7 +1113,7 @@ class stats
 // Events                                                                    //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _eventQuery($type='full', $direction='ASC', $facts=STATS_BIRTH)
+	function _eventQuery($type, $direction, $facts)
 	{
 		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir;
 		$eventTypes = array(
@@ -1147,6 +1124,8 @@ class stats
 			'BURI'=>$pgv_lang['htmlplus_block_burial'],
 			'CENS'=>$pgv_lang['htmlplus_block_census']
 		);
+
+		$fact_query = "IN ('".str_replace('|', "','", $facts)."')";
 
 		if($direction != 'ASC'){$direction = 'DESC';}
 		$rows=$this->_runSQL(''
@@ -1160,7 +1139,7 @@ class stats
 			.' WHERE'
 				." d_file={$this->_gedcom['id']} AND"
 				." d_gid!='HEAD' AND"
-				." d_fact IN ({$facts}) AND"
+				." d_fact {$fact_query} AND"
 				.' d_julianday1!=0'
 			.' ORDER BY'
 				." d_julianday1 {$direction}, d_type"
@@ -1171,30 +1150,13 @@ class stats
 		{
 			default:
 			case 'full':
-				if (displayDetailsById($row['id']))
-				{
-					switch($row['fact'])
-					{
-						default:
-						case 'BIRT':
-						case 'CHR':
-						case 'BAPM':
-						case 'DEAT':
-						case 'BURI':
-						case 'CREM':
-						{
-							$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
-							break;
-						}
-						case 'MARR':
-						{
-							$result=format_list_family($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
-							break;
-						}
+				if (displayDetailsById($row['id'])) {
+					if (preg_match('/^('.PGV_EVENTS_MARR.')$/', $row['fact'])) {
+						$result=format_list_family($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+					} else {
+						$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
 					}
-				}
-				else
-				{
+				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
 				break;
@@ -1232,17 +1194,36 @@ class stats
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function firstEvent(){return $this->_eventQuery('full', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-	function firstEventYear(){return $this->_eventQuery('year', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-	function firstEventType(){return $this->_eventQuery('type', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-	function firstEventName(){return $this->_eventQuery('name', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-	function firstEventPlace(){return $this->_eventQuery('place', 'ASC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-
-	function lastEvent(){return $this->_eventQuery('full', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-	function lastEventYear(){return $this->_eventQuery('year', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-	function lastEventType(){return $this->_eventQuery('type', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-	function lastEventName(){return $this->_eventQuery('name', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
-	function lastEventPlace(){return $this->_eventQuery('place', 'DESC', STATS_BIRTH.', '.STATS_DEATH.', '.STATS_MARRIAGE.", 'ADOP'");}
+	function firstEvent() {
+		return $this->_eventQuery('full', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function firstEventYear() {
+		return $this->_eventQuery('year', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function firstEventType() {
+		return $this->_eventQuery('type', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function firstEventName() {
+		return $this->_eventQuery('name', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function firstEventPlace() {
+		return $this->_eventQuery('place', 'ASC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function lastEvent() {
+		return $this->_eventQuery('full', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function lastEventYear() {
+		return $this->_eventQuery('year', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function lastEventType() {
+		return $this->_eventQuery('type', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function lastEventName() {
+		return $this->_eventQuery('name', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
+	function lastEventPlace() {
+		return $this->_eventQuery('place', 'DESC', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Marriage                                                                  //

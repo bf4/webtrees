@@ -349,7 +349,7 @@ class Person extends GedcomRecord {
 	function getAllBirthDates() {
 		if (is_null($this->_getAllBirthDates)) {
 			if ($this->canDisplayDetails()) {
-				foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+				foreach (explode('|', PGV_EVENTS_BIRT) as $event) {
 					if ($this->_getAllBirthDates=$this->getAllEventDates($event)) {
 						break;
 					}
@@ -363,7 +363,7 @@ class Person extends GedcomRecord {
 	function getAllBirthPlaces() {
 		if (is_null($this->_getAllBirthPlaces)) {
 			if ($this->canDisplayDetails()) {
-				foreach (array('BIRT', 'CHR', 'BAPM') as $event) {
+				foreach (explode('|', PGV_EVENTS_BIRT) as $event) {
 					if ($this->_getAllBirthPlaces=$this->getAllEventPlaces($event)) {
 						break;
 					}
@@ -377,7 +377,7 @@ class Person extends GedcomRecord {
 	function getAllDeathDates() {
 		if (is_null($this->_getAllDeathDates)) {
 			if ($this->canDisplayDetails()) {
-				foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+				foreach (explode('|', PGV_EVENTS_DEAT) as $event) {
 					if ($this->_getAllDeathDates=$this->getAllEventDates($event)) {
 						break;
 					}
@@ -391,7 +391,7 @@ class Person extends GedcomRecord {
 	function getAllDeathPlaces() {
 		if (is_null($this->_getAllDeathPlaces)) {
 			if ($this->canDisplayDetails()) {
-				foreach (array('DEAT', 'BURI', 'CREM') as $event) {
+				foreach (explode('|', PGV_EVENTS_DEAT) as $event) {
 					if ($this->_getAllDeathPlaces=$this->getAllEventPlaces($event)) {
 						break;
 					}
@@ -575,7 +575,7 @@ class Person extends GedcomRecord {
 		if (!is_null($this->spouseFamilies)) return $this->spouseFamilies;
 		$fams = $this->getSpouseFamilyIds();
 		$families = array();
-		foreach($fams as $key=>$famid) {
+		foreach($fams as $famid) {
 			if (!empty($famid)) {
 				$family = Family::getInstance($famid);
 				// only include family if it is displayable by current user
@@ -641,7 +641,7 @@ class Person extends GedcomRecord {
 		if (!is_null($this->childFamilies)) return $this->childFamilies;
 		$fams = $this->getChildFamilyIds();
 		$families = array();
-		foreach($fams as $key=>$famid) {
+		foreach($fams as $famid) {
 			if (!empty($famid)) {
 				$family = Family::getInstance($famid);
 				// only include family if it is displayable by current user
@@ -692,7 +692,7 @@ class Person extends GedcomRecord {
 	function getStepFamilies() {
 		$families = array();
 		$fams = $this->getChildFamilies();
-		foreach($fams as $key=>$family) {
+		foreach($fams as $family) {
 			if (!is_null($family)) {
 				$father = $family->getHusband();
 				if (!is_null($father)) {
@@ -766,7 +766,7 @@ class Person extends GedcomRecord {
 		$childfams = $this->getChildFamilies();
 		$mother = $family->getWife();
 		$father = $family->getHusband();
-		foreach($childfams as $key=>$fam) {
+		foreach($childfams as $fam) {
 			if (!$fam->equals($family)) {
 				$wife = $fam->getWife();
 				$husb = $fam->getHusband();
@@ -1116,8 +1116,7 @@ class Person extends GedcomRecord {
 		if ($option=="3") $option="_MSIB";
 		if (strstr($SHOW_RELATIVES_EVENTS, $option)===false) return;
 
-		$children = $family->getChildren();
-		foreach($children as $key=>$child) {
+		foreach($family->getChildren() as $child) {
 			$spid = $child->getXref();
 			if ($spid!=$except) {
 				$childrec =$child->getGedcomRecord();
@@ -1169,81 +1168,95 @@ class Person extends GedcomRecord {
 					if ($sex=="M") $rela="nephew";
 				}
 				// add child birth
-				$fact = "_BIRT".$option;
+				$fact='_BIRT'.$option;
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
-					$srec = get_sub_record(1, "1 BIRT", $childrec);
-					if (!$srec) $srec = get_sub_record(1, "1 CHR", $childrec);
-					$sdate = get_sub_record(2, "2 DATE", $srec);
-					$sgdate=new GedcomDate(get_gedcom_value("DATE", 2, $srec, '', false));
-					if ($fact=="_BIRT_CHIL" || $sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
-						$factrec = "1 ".$fact;
-						if (strstr($srec, "1 CHR")) $factrec .= " ".$factarray["CHR"];
-						$factrec .= "\n".trim($sdate);
-						if (!showFact("BIRT", $spid)) $factrec .= "\n2 RESN privacy";
-						$factrec .= "\n2 ASSO @".$spid."@";
-						$factrec .= "\n3 RELA ".$rela;
-						// add parents on grandchildren, cousin or nephew's birth
-						if ($option=="_GCHI" or $option=="_GGCH" or $option=="_COUS" or $option=="_NEPH") {
-							if ($family->getHusbId()) {
-								$factrec .= "\n2 ASSO @".$family->getHusbId()."@";
-								$factrec .= "\n3 RELA father";
+					foreach (explode('|', PGV_EVENTS_BIRT) as $ev) {
+						$srec=get_sub_record(1, '1 '.$ev, $childrec);
+						if ($srec) {
+							$sgdate=new GedcomDate(get_gedcom_value('DATE', 2, $srec, '', false));
+							if ($fact=='_BIRT_CHIL' || $sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
+								$factrec = '1 '.$fact;
+								if ($ev!='BIRT') {
+									$factrec.=' '.$factarray[$ev];
+								}
+								$factrec.="\n".get_sub_record(2, '2 DATE', $srec);
+								if (!showFact($ev, $spid)) {
+									$factrec.='\n2 RESN privacy';
+								}
+								$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
+								// add parents on grandchildren, cousin or nephew's birth
+								if ($option=='_GCHI' || $option=='_GGCH' || $option=='_COUS' || $option=='_NEPH') {
+									if ($family->getHusbId()) {
+										$factrec.="\n2 ASSO @".$family->getHusbId()."@\n3 RELA father";
+									}
+									if ($family->getWifeId()) {
+										$factrec.="\n2 ASSO @".$family->getWifeId()."@\n3 RELA mother";
+									}
+								}
+								$factrec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
+								$this->indifacts[]=array(0, $factrec);
 							}
-							if ($family->getWifeId()) {
-								$factrec .= "\n2 ASSO @".$family->getWifeId()."@";
-								$factrec .= "\n3 RELA mother";
-							}
+							break;
 						}
-						// recorded as ASSOciate ? [ 1690092 ]
-						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
-						$this->indifacts[]=array(0, $factrec);
 					}
 				}
 				// add child death
-				$fact = "_DEAT".$option;
+				$fact='_DEAT'.$option;
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
-					$srec = get_sub_record(1, "1 DEAT", $childrec);
-					if (!$srec) $srec = get_sub_record(1, "1 BURI", $childrec);
-					$sdate = get_sub_record(2, "2 DATE", $srec);
-					$sgdate=new GedcomDate(get_gedcom_value("DATE", 2, $srec, '', false));
-					if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
-						$factrec = "1 ".$fact;
-						if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
-						$factrec .= "\n".trim($sdate);
-						if (!showFact("DEAT", $spid)) $factrec .= "\n2 RESN privacy";
-						$factrec .= "\n2 ASSO @".$spid."@";
-						$factrec .= "\n3 RELA ".$rela;
-						// recorded as ASSOciate ? [ 1690092 ]
-						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
-						$this->indifacts[]=array(0, $factrec);
+					foreach (explode('|', PGV_EVENTS_DEAT) as $ev) {
+						$srec=get_sub_record(1, '1 '.$ev, $childrec);
+						if ($srec) {
+							$sgdate=new GedcomDate(get_gedcom_value('DATE', 2, $srec, '', false));
+							if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
+								$factrec='1 '.$fact;
+								if ($ev!='DEAT') {
+									$factrec.=' '.$factarray[$ev];
+								}
+								$factrec.="\n".get_sub_record(2, '2 DATE', $srec);
+								if (!showFact($ev, $spid)) {
+									$factrec.='\n2 RESN privacy';
+								}
+								$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
+								$factrec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
+								$this->indifacts[]=array(0, $factrec);
+							}
+							break;
+						}
 					}
 				}
 				// add child marriage
-				$fact = "_MARR".$option;
+				$fact='_MARR'.$option;
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
 						$childrec = $sfamily->getGedcomRecord();
-						$srec = get_sub_record(1, "1 MARR", $childrec);
-						$sdate = get_sub_record(2, "2 DATE", $srec);
-						$sgdate=new GedcomDate(get_gedcom_value("DATE", 2, $srec, '', false));
-						if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
-							$factrec = "1 ".$fact;
-							$factrec .= "\n".trim($sdate);
-							if (!showFact("MARR", $sfamid)) $factrec .= "\n2 RESN privacy";
-							$factrec .= "\n2 ASSO @".$spid."@";
-							$factrec .= "\n3 RELA ".$rela;
-							if ($rela=="son") $rela2="daughter_in_law";
-							else if ($rela=="daughter") $rela2="son_in_law";
-							else if ($rela=="brother" or $rela=="halfbrother") $rela2="sister_in_law";
-							else if ($rela=="sister" or $rela=="halfsister") $rela2="brother_in_law";
-							else if ($rela=="uncle") $rela2="aunt_in_law";
-							else if ($rela=="aunt") $rela2="uncle_in_law";
-							else if (strstr($rela, "cousin")) $rela2="cousin_in_law";
-							else $rela2="spouse";
-							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($spid)."@";
-							$factrec .= "\n3 RELA ".$rela2;
-							// recorded as ASSOciate ? [ 1690092 ]
-							$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
-							$this->indifacts[]=array(0, $factrec);
+						foreach (explode('|', PGV_EVENTS_MARR) as $ev) {
+							$srec=get_sub_record(1, '1 '.$ev, $childrec);
+							if ($srec) {
+								$sgdate=new GedcomDate(get_gedcom_value('DATE', 2, $srec, '', false));
+								if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
+									$factrec='1 '.$fact;
+									if ($ev!='MARR') {
+										$factrec.=' '.$factarray[$ev];
+									}
+									$factrec.="\n".get_sub_record(2, '2 DATE', $srec);
+									if (!showFact($ev, $spid)) {
+										$factrec.='\n2 RESN privacy';
+									}
+									$factrec.="\n2 ASSO @".$spid."@\n3 RELA ".$rela;
+									if ($rela=='son') $rela2='daughter_in_law';
+									else if ($rela=='daughter') $rela2='son_in_law';
+									else if ($rela=='brother' || $rela=='halfbrother') $rela2='sister_in_law';
+									else if ($rela=='sister' || $rela=='halfsister') $rela2='brother_in_law';
+									else if ($rela=='uncle') $rela2='aunt_in_law';
+									else if ($rela=='aunt') $rela2='uncle_in_law';
+									else if (strstr($rela, 'cousin')) $rela2='cousin_in_law';
+									else $rela2='spouse';
+									$factrec.="\n2 ASSO @".$sfamily->getSpouseId($spid)."@\n3 RELA ".$rela2;
+									$factrec.="\n".get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
+									$this->indifacts[]=array(0, $factrec);
+								}
+								break;
+							}
 						}
 					}
 				}
@@ -1288,23 +1301,20 @@ class Person extends GedcomRecord {
 		global $SHOW_RELATIVES_EVENTS, $factarray;
 
 		// do not show if divorced
-		if (strstr($famrec, "1 DIV")) return;
-		// add spouse death
-		$fact = "_DEAT_SPOU";
-		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
-			$relation = substr($fact, -4);
-			foreach (array('DEAT','BURI','CREM') as $event) {
+		if (preg_match('/^1 ('.PGV_EVENTS_DIV.')\b/m', $famrec)) {
+			return;
+		}
+		// add spouse death - here we show all of DEAT/BURI/CREM, unlike other
+		// relatives that only get the first one.
+		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, '_DEAT_SPOU')) {
+			foreach (explode('|', PGV_EVENTS_DEAT) as $event) {
 				foreach ($spouse->getAllEvents($event) as $srec) {
-					$sdate=new GedcomDate(get_gedcom_value("DATE", 2, $srec, '', false));
+					$sdate=new GedcomDate(get_gedcom_value('DATE', 2, $srec, '', false));
 					if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
-						if ($event=='DEAT') {
-							$srec=preg_replace('/^1 .*/', "1 _{$event}_{$relation} ", $srec);
-						} else {
-							$srec=preg_replace('/^1 .*/', "1 _{$event}_{$relation} ".$factarray[$event], $srec);
-						}
-						// recorded as ASSOciate ? [ 1690092 ]
-						$srec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
-						$this->indifacts[]=array(0, $srec."\n2 ASSO @".$spouse->getXref()."@\n3 RELA spouse");
+						$srec=preg_replace('/^1 .*/', "1 _{$event}_SPOU ", $srec);
+						$srec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
+						$srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA spouse";
+						$this->indifacts[]=array(0, $srec);
 					}
 				}
 			}
@@ -1524,13 +1534,13 @@ class Person extends GedcomRecord {
 		}
 		$newfamids = $diff->getChildFamilyIds();
 		if (is_null($this->famc)) $this->getChildFamilyIds();
-		foreach($newfamids as $key=>$id) {
+		foreach($newfamids as $id) {
 			if (!in_array($id, $this->famc)) $this->famc[]=$id;
 		}
 
 		$newfamids = $diff->getSpouseFamilyIds();
 		if (is_null($this->fams)) $this->getSpouseFamilyIds();
-		foreach($newfamids as $key=>$id) {
+		foreach($newfamids as $id) {
 			if (!in_array($id, $this->fams)) $this->fams[]=$id;
 		}
 	}
