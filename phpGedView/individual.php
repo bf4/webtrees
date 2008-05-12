@@ -261,10 +261,12 @@ function tempObj(tab, oXmlHttp) {
 				ResizeMap();
 				ResizeMap();
 			}
-			//-- initialize lightbox tabs
-			if (tabid[tab]=='lightbox2' || tabid[tab]=='facts' || tabid[tab]=='media' || tabid[tab]=='relatives') {
-				CB_Init();
-			}
+			//-- initialize lightbox tabs if lightbox installed
+			<?php if (file_exists("modules/lightbox/album.php")) { ?>
+				if (tabid[tab]=='lightbox2' || tabid[tab]=='facts' || tabid[tab]=='media' || tabid[tab]=='relatives') {
+					CB_Init();
+				}
+			<?php } ?>
 			loadedTabs[tab] = true;
 		}
 	};
