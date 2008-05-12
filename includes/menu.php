@@ -531,16 +531,20 @@ class MenuBar
 	 */
 	function &getMygedviewMenu() {
 		global $GEDCOMS, $MEDIA_DIRECTORY, $MULTI_MEDIA;
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $PEDIGREE_FULL_DETAILS;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		
-		if (PGV_USER_GEDCOM_ID) {
-			$link = "individual.php?pid=".PGV_USER_GEDCOM_ID;
-		} else {
-			$link = "index.php?ctype=user";
+		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
+
+		$username = PGV_USER_NAME;
+		if (!$username) {
+			$menu = new Menu("", "", "");
+			$menu->print_menu = null;
+			return $menu;
 		}
+		
 		//-- main menu
-		$menu = new Menu($pgv_lang["mygedview"], $link, "down");
+		$menu = new Menu($pgv_lang["mygedview"], "index.php?ctype=user", "down");
 		if (!empty($PGV_IMAGES["mygedview"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["large"]);
 		else if (!empty($PGV_IMAGES["gedcom"]["large"]))
@@ -555,7 +559,7 @@ class MenuBar
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			//-- editaccount submenu
-			if (get_user_setting(PGV_USER_ID, 'editaccount')) {
+		if (get_user_setting($username, 'editaccount')) {
 				$submenu = new Menu($pgv_lang["editowndata"], "edituser.php");
 				if (!empty($PGV_IMAGES["mygedview"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
@@ -571,7 +575,7 @@ class MenuBar
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			//-- my_pedigree submenu
-			$submenu = new Menu($pgv_lang["my_pedigree"], "pedigree.php?rootid=".PGV_USER_GEDCOM_ID);
+			$submenu = new Menu($pgv_lang["my_pedigree"], "pedigree.php?rootid=".PGV_USER_GEDCOM_ID."&show_full=".$showFull);
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
 			//$submenu->addIcon($PGV_IMAGE_DIR."/small/pedigree.gif");
@@ -639,11 +643,15 @@ class MenuBar
 			$menu->print_menu = null;
 			return $menu;
 		}
+		
 		$ged = $GEDCOM;
+
+		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
+
 		//-- main charts menu item
 		$link = "pedigree.php?ged=".$ged;
 		if ($rootid) {
-			$link .= "?rootid={$rootid}&show_full={$PEDIGREE_FULL_DETAILS}";
+			$link .= "?rootid={$rootid}&show_full={$showFull}";
 			$menu = new Menu($pgv_lang["charts"], $link);
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -673,8 +681,6 @@ class MenuBar
 		asort($menuList);
 
 		// Produce the submenus in localized name order
-		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
-		
 		foreach($menuList as $menuType => $menuName) {
 			switch ($menuType) {
 			case "pedigree":

@@ -80,10 +80,6 @@ if (!isset($level)) {
 if ($level>count($parent)) $level = count($parent);
 if ($level<count($parent)) $level = 0;
 
-if ($use_googlemap) {
-	$levelm = set_levelm($level, $parent);
-}
-
 //-- extract the place form encoded in the gedcom
 $header = find_gedcom_record("HEAD");
 $hasplaceform = strpos($header, "1 PLAC");
@@ -145,9 +141,7 @@ if ($display=="hierarchy") {
  			else if (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$i])) || ($TEXT_DIRECTION=="ltr" &&  !hasRtLText($parent[$i])))  print ", ";
 			if (empty($num_place)) $num_place=$parent[$i];
 		}
-		if ($use_googlemap) $levelo=check_were_am_i($numls, $levelm);
 	}
-	else if ($use_googlemap) $levelo[0]=0;
 	print "<a href=\"?level=0\">";
 	//-- place and page text orientation is the same -> top level added at the end of the place text
 	if ($level==0 || ($numls>=0 && (($TEXT_DIRECTION=="rtl" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="ltr" && !hasRtLText($parent[$numls]))))) print $pgv_lang["top_level"];
@@ -156,7 +150,7 @@ if ($display=="hierarchy") {
 	print_help_link("ppp_levels_help", "qm");
 
 	if ($use_googlemap)
-		create_map($numfound, $level, $levelm);
+		create_map();
 	else {
 	// show clickable map if found
 	print "\n\t<br /><br />\n\t<table class=\"width90\"><tr><td class=\"center\">";
@@ -199,8 +193,6 @@ if ($display=="hierarchy") {
 				// Transform certain two-byte UTF-8 letters with diacritics
 				// to their 1-byte ASCII analogues without diacritics
 				$mapname = str_replace(array("Ä˜", "Ã“", "Ä„", "Åš", "Å", "Å»", "Å¹", "Ä†", "Åƒ", "Ä™", "Ã³", "Ä…", "Å›", "Å‚", "Å¼", "Åº", "Ä‡", "Å„"), array("E", "O", "A", "S", "L", "Z", "Z", "C", "N", "e", "o", "a", "s", "l", "z", "z", "c", "n"), $mapname);
-
-				//$mapname = strtr($mapname,"ŠŒšœŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİßàáâãäåæçèéêëìíîïğñòóôõöøùúûüıÿ' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
 				$mapname = str_replace(array("Å ", "Å’", "Å½", "Å¡", "Å“", "Å¾", "Å¸", "Â¥", "Âµ", "Ã€", "Ã", "Ã‚", "Ãƒ", "Ã„", "Ã…", "Ã†", "Ã‡", "Ãˆ", "Ã‰", "ÃŠ", "Ã‹", "ÃŒ", "Ã", "Ã", "Ã", "Ã", "Ã‘", "Ã’", "Ã“", "Ã”", "Ã•", "Ã–", "Ã˜", "Ã™", "Ãš", "Ã›", "Ãœ", "Ã", "ÃŸ", "Ã ", "Ã¡", "Ã¢", "Ã£", "Ã¤", "Ã¥", "Ã¦", "Ã§", "Ã¨", "Ã©", "Ãª", "Ã«", "Ã¬", "Ã­", "Ã®", "Ã¯", "Ã°", "Ã±", "Ã²", "Ã³", "Ã´", "Ãµ", "Ã¶", "Ã¸", "Ã¹", "Ãº", "Ã»", "Ã¼", "Ã½", "Ã¿"), array("S", "O", "Z", "s", "o", "z", "Y", "Y", "u", "A", "A", "A", "A", "A", "A", "A", "C", "E", "E", "E", "E", "I", "I", "I", "I", "D", "N", "O", "O", "O", "O", "O", "O", "U", "U", "U", "U", "Y", "s", "a", "a", "a", "a", "a", "a", "a", "c", "e", "e", "e", "e", "i", "i", "i", "i", "o", "n", "o", "o", "o", "o", "o", "o", "u", "u", "u", "u", "y", "y"), $mapname);
 				// Transform apostrophes and blanks to dashes
 				$mapname = str_replace(array("'", " "), "-", $mapname);
@@ -276,7 +268,7 @@ if ($display=="hierarchy") {
 	}
 	print "<td class=\"center\" valign=\"top\">";
 
-	//-- create a string to hold the variable links
+	//-- create a string to hold the variable links and place names
 	$linklevels="";
 	if ($use_googlemap) {
 		$placelevels="";
@@ -296,7 +288,7 @@ if ($display=="hierarchy") {
 	// -- print the array
 	foreach ($placelist as $key => $value) {
 		if ($i==0) {
-			print "\n\t<br />\n\t<table class=\"list_table $TEXT_DIRECTION\"";
+			print "\n\t<table class=\"list_table $TEXT_DIRECTION\"";
 			if ($TEXT_DIRECTION=="rtl") print " dir=\"rtl\"";
 			print ">\n\t\t<tr>\n\t\t<td class=\"list_label\" ";
 			if ($ct1 > 20) print "colspan=\"3\"";
@@ -304,7 +296,7 @@ if ($display=="hierarchy") {
 			print ">&nbsp;";
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["place"]["small"]."\" border=\"0\" title=\"".$pgv_lang["search_place"]."\" alt=\"".$pgv_lang["search_place"]."\" />&nbsp;&nbsp;";
 			if ($level>0) {
-				print " ".$pgv_lang["place_list_aft"]." ";
+				print " ".$pgv_lang["place_list_aft"].": ";
 				print PrintReady($num_place);
 			}
 			else print $pgv_lang["place_list"];
@@ -360,14 +352,13 @@ if ($display=="hierarchy") {
 
 }
 
+$positions = get_place_positions($parent, $level);
 if ($level > 0) {
 	if ($action=="show") {
 		// -- array of names
 		$myindilist = array();
 		$mysourcelist = array();
 		$myfamlist = array();
-
-		$positions = get_place_positions($parent, $level);
 		for($i=0; $i<count($positions); $i++) {
 			$gid = $positions[$i];
 			$indirec=find_gedcom_record($gid);
@@ -477,5 +468,5 @@ else {
 
 print "<br /><br /></div>";
 print_footer();
-if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $levelm, $levelo, $linklevels, $placelevels, $place_names);
+if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names);
 ?>

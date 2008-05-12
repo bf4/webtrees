@@ -788,14 +788,17 @@ function print_footer() {
 		$printlink = true;
 		print "</div>";
 	}
-	if (function_exists("load_behaviour")) load_behaviour();  // @see function_print_lists.php
-	print "\n\t</body>\n</html>";
+	if (function_exists("load_behaviour")) {
+		load_behaviour();  // @see function_print_lists.php
+	}
+	echo google_analytics();
+	echo '</body></html>';
 }
 // -- print the html to close the page
 function print_simple_footer() {
 	global $pgv_lang;
 	global $start_time, $buildindex;
-	global $VERSION, $SHOW_STATS;
+	global $SHOW_STATS;
 	global $SCRIPT_NAME, $QUERY_STRING;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if (empty($SCRIPT_NAME)) {
@@ -804,11 +807,20 @@ function print_simple_footer() {
 	}
 	print "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
 	print contact_links();
-	print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"PhpGedView Version $VERSION\" title=\"PhpGedView Version $VERSION\" /></a><br />";
+	print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT."\" title=\"".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT."\" /></a><br />";
 	if ($SHOW_STATS || isset($DEBUG) && $DEBUG==true) {
 		print_execution_stats();
 	}
 	print "</div></body></html>";
+}
+
+// Generate code for google analytics
+function google_analytics() {
+	if (defined('PGV_GOOGLE_ANALYTICS')) {
+		return '<script type="text/javascript">var gaJsHost=(("https:"==document.location.protocol)?"https://ssl.":"http://www.");document.write(unescape("%3Cscript src=\'"+gaJsHost+"google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));</script><script type="text/javascript">var pageTracker=_gat._getTracker("'.PGV_GOOGLE_ANALYTICS.'");pageTracker._initData();pageTracker._trackPageview();</script>';
+	} else {
+		return '';
+	}
 }
 
 /**
@@ -1590,7 +1602,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
  * @param int $noprint		The switch if the text needs to be printed or returned
  */
 function print_text($help, $level=0, $noprint=0){
-	global $pgv_lang, $factarray, $faqlist, $VERSION, $VERSION_RELEASE, $COMMON_NAMES_THRESHOLD;
+	global $pgv_lang, $factarray, $faqlist, $COMMON_NAMES_THRESHOLD;
 	global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $LANGUAGE;
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
@@ -1599,8 +1611,17 @@ function print_text($help, $level=0, $noprint=0){
 	if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable called: ".$help."<br /><br />";
 	$sentence = false;
 	if ($level>0) {
+		// Map legacy global variables (e.g. $VERSION) onto their replacement constants (e.g. PGV_VERSION)
+		if ((preg_match('/^([A-Z_]+)$/', $help, $match) || preg_match('/^GLOBALS\[\'([A-Z_])\'\]+$/', $help, $match)) && defined('PGV_'.$match[1])) {
+			$help='PGV_'.$match[1];
+		}
 		$value = false;
+		// Only allow access to constants prefixed by PGV_
+		if (substr($help, 0, 4)=='PGV_' && defined($help)) {
+			$value=constant($help);
+		} else {
 		eval("if (isset(\$$help)) \$value = \$$help;");
+		}
 		if ($value===false) return false;
 		$sentence = $value;
 	}
@@ -1608,10 +1629,12 @@ function print_text($help, $level=0, $noprint=0){
 		if ($noprint == 2) {
 			$sentence = $help;
 		} else {
-			if (isset($pgv_lang[$help]))
+			if (isset($pgv_lang[$help])) {
 			$sentence = $pgv_lang[$help];
-			else {
-				if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
+			} else {
+				if ($DEBUG_LANG == "yes") {
+					print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
+				}
 				$sentence = $pgv_lang["help_not_exist"];
 			}
 	 }

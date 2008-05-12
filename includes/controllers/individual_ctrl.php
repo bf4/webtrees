@@ -1044,6 +1044,7 @@ class IndividualControllerRoot extends BaseController {
 			$n_ggch=1;
 			foreach ($indifacts as $key => $value) {
 				if ($value->getTag() == "DEAT") $yetdied = true;
+				if ($value->getTag() == "CREM") $yetdied = true;
 				if ($value->getTag() == "BURI") $yetdied = true;
 				
 				if (!is_null($value->getFamilyId())) {	
@@ -1260,7 +1261,15 @@ class IndividualControllerRoot extends BaseController {
 
 	function print_relatives_tab() {
 		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
-		global $pgv_changes, $GEDCOM;
+		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
+		global $show_full;
+
+		if (isset($show_full)) $saved_show_full = $show_full;		// We always want to see full details here
+		$show_full = 1;
+				
+		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
+		$ABBREVIATE_CHART_LABELS = false;		// Override GEDCOM configuration
+		
 		if (!$this->isPrintPreview()) {
 		?>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
@@ -1876,6 +1885,10 @@ class IndividualControllerRoot extends BaseController {
 		<?php } ?>
 		<br />
 		<?php
+		
+	$ABBREVIATE_CHART_LABELS = $saved_ABBREVIATE_CHART_LABELS;		// Restore GEDCOM configuration
+	unset($show_full);
+	if (isset($saved_show_full)) $show_full = $saved_show_full;
 	}
 
 	function print_research_tab() {
@@ -1909,8 +1922,11 @@ class IndividualControllerRoot extends BaseController {
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 		global $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
+		// LB Fix if no googlemaps ========================================================
+		if (file_exists("modules/googlemap/googlemap.php")) {
 		include_once('modules/googlemap/googlemap.php');
-
+		}
+		// LB Fix in no googlemaps ========================================================
 		if ($GOOGLEMAP_ENABLED == "false") {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
@@ -1940,8 +1956,11 @@ class IndividualControllerRoot extends BaseController {
 				$famids[] = $family->getXref();
 			}
 			$this->indi->add_family_facts(false);
+						// LB Fix if no googlemaps ========================================================
+						if (file_exists("modules/googlemap/googlemap.php")) {
 			build_indiv_map($this->getIndiFacts(), $famids);
 		}
+						// LB Fix if no googlemaps ========================================================
 	}
 	
 	function print_tree_tab() {
@@ -1958,7 +1977,7 @@ class IndividualControllerRoot extends BaseController {
 	function print_lightbox_tab() {
 		global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_lang, $pgv_changes, $factarray, $view;
-		global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
+		global $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
 		global $typ2b, $edit ;	

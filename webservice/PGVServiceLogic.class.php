@@ -183,12 +183,11 @@ class PGVServiceLogic extends GenealogyService
 	 */
 	function postServiceInfo()
 	{
-		//global the gedcom list and versions info
-		global $GEDCOMS, $VERSION, $VERSION_RELEASE;
+		global $GEDCOMS;
 		//addDebugLog("in getServiceInfo ".$GEDCOMS);
 		$return['compression'] = $this->getCompressionLibs();
 		$return['apiVersion'] = $this->service_version;
-		$return['server'] = 'PhpGedView ' . $VERSION . ' ' . $VERSION_RELEASE;
+		$return['server'] = PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT;
 
 		$gedcomlist = array();
 		$i = 0;

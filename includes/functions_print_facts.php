@@ -361,8 +361,11 @@ function print_fact(&$eventObj, $noedit=false) {
 				else if (strstr("_EMAIL", $fact)) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
 				}
-				else if (strstr("FAX PHON FILE", $fact." ")) print getLRM(). $event." " . getLRM();
-				else if (!strstr("ADDR _RATID ", $fact." ") && $event!="Y") print PrintReady($event." ");
+				else if (strstr('FAX PHON FILE ', $fact.' ')) print getLRM(). $event.' ' . getLRM();
+				else if ($event!='Y') {
+					if (!strstr('ADDR _RATID _DEAT _CREM _BURI ', substr($fact,0,5).' ')) echo PrintReady($event);
+					echo ' ';
+				}
 				$temp = trim(get_cont(2, $factrec), "\r\n");
 				if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
 					if ($WORD_WRAPPED_NOTES) print " ";

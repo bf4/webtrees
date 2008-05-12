@@ -155,10 +155,10 @@ function safe_POST_integer($var, $min, $max, $default) {
 	return (int)$num;
 }
 
-function safe_GET_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True)') {
+function safe_GET_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True|on)') {
 	return !is_null(safe_GET($var, $true));
 }
-function safe_POST_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True)') {
+function safe_POST_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True|on)') {
 	return !is_null(safe_POST($var, $true));
 }
 
@@ -173,7 +173,7 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
-	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.$regex.'$~', $arr[$var])) {
+	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.addcslashes($regex,'~').'$~', $arr[$var])) {
 		return trim_recursive($arr[$var]);
 	} else {
 		return $default;
@@ -289,7 +289,7 @@ function get_privacy_file_version($privfile) {
  * @return string path to the privacy file
  */
 function get_privacy_file() {
-	global $GEDCOMS, $GEDCOM, $REQUIRED_PRIVACY_VERSION;
+	global $GEDCOMS, $GEDCOM;
 
 	$privfile = "privacy.php";
 	if (count($GEDCOMS)==0) {
@@ -309,9 +309,9 @@ function get_privacy_file() {
 				$privfile = "privacy.php";
 		}
 	}
-	$privversion = get_privacy_file_version($privfile);
-	if ($privversion<$REQUIRED_PRIVACY_VERSION)
+	if (version_compare(get_privacy_file_version($privfile), PGV_REQUIRED_PRIVACY_VERSION)<0) {
 		$privfile = "privacy.php";
+	}
 
 	return $privfile;
 }

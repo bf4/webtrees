@@ -99,7 +99,7 @@ foreach ($assokeys as $indexval => $key) {
 }
 natsort($assorela);
 
-print_simple_header("Edit Interface $VERSION");
+print_simple_header('Edit Interface');
 
 ?>
 <script type="text/javascript">

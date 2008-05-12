@@ -78,6 +78,7 @@ $pgv_lang["gm_no_coord"]			= "This place has no coordinates";
 $pgv_lang["gm_ph_placenames"]		= "Display short placenames";
 $pgv_lang["gm_ph_count"]			= "Display indis and families count";
 $pgv_lang["gm_ph_wheel"]			= "Use mouse wheel for zoom";
+$pgv_lang["gm_ph_controls"]			= "Hide map controls";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edit geographic place locations";
@@ -103,6 +104,7 @@ $pgv_lang["pl_overwrite_data"]      = "Overwrite location-data with data from fi
 $pgv_lang["pl_use_this_value"]      = "Use this value";
 $pgv_lang["pl_precision"]           = "Precision";
 $pgv_lang["pl_country"]             = "Country";
+$pgv_lang["pl_countries"]			= "Countries";
 $pgv_lang["pl_state"]               = "State";
 $pgv_lang["pl_city"]                = "City";
 $pgv_lang["pl_neighborhood"]        = "Neighborhood";

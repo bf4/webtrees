@@ -1,10 +1,10 @@
 <?php
 /*=================================================
    charset=utf-8
-   Project:         phpGedView
-   File:            lang.pl.php
-   Author:          Łukasz Wileński
-   Comments:        Polish Language file for Google map module
+   Project:		phpGedView
+   File:		lang.pl.php
+   Author:		Łukasz Wileński
+   Comments:	Polish Language file for Google map module
 ===================================================*/
 
 
@@ -54,10 +54,11 @@ $pgv_lang["gm_place_hierarchy"]		= "Użyj Googlemap do wyświetlania hierarchii 
 $pgv_lang["gm_ph_map_size"]			= "Wielkość mapy w hierarchii miejsc (w pikselach)";
 $pgv_lang["gm_ph_marker_type"]		= "Typ znacznika miejsca w hierarchii miejsc";
 $pgv_lang["gm_standard_marker"]		= "Standardowy";
-$pgv_lang["gm_no_coord"]			= "Miejsce ma nieustawione współrzędne";
+$pgv_lang["gm_no_coord"]			= "Miejsce nie ma ustawionych współrzędnych";
 $pgv_lang["gm_ph_placenames"]		= "Wyświetl skrócone nazwy miejsc";
 $pgv_lang["gm_ph_count"]			= "Wyświetl liczbę osób i rodzin połączonych z danym miejscem";
 $pgv_lang["gm_ph_wheel"]			= "Użyj rolki myszki do przybliżania/oddalania";
+$pgv_lang["gm_ph_controls"]			= "Ukryj kontrolki mapy";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edytuj położenie geograficzne miejsc";
@@ -83,6 +84,7 @@ $pgv_lang["pl_overwrite_data"]      = "Nadpisać dane lokalizacji danymi z pliku
 $pgv_lang["pl_use_this_value"]      = "Użyj tej wartości";
 $pgv_lang["pl_precision"]           = "Precyzja współrzędnych";
 $pgv_lang["pl_country"]             = "Kraj";
+$pgv_lang["pl_countries"]			= "Państwa";
 $pgv_lang["pl_state"]               = "Województwo";
 $pgv_lang["pl_city"]                = "Miejscowość";
 $pgv_lang["pl_neighborhood"]        = "Sąsiedztwo";
@@ -109,10 +111,10 @@ $pgv_lang["placecheck_select2"]		= "Wybierz następny poziom...";
 $pgv_lang["placecheck_key"]			= "Kod koloru użytego poniżej";
 $pgv_lang["placecheck_key1"]		= "to miejsce i te współrzędne nie istnieją w tablicach miejsc GoogleMap";
 $pgv_lang["placecheck_key2"]		= "to miejsce istnieje w tablicach miejsc GoogleMap, ale nie ma współrzędnych";
-$pgv_lang["placecheck_key3"]		= "ten poziom jest pusty w Twoim pliku GEDCOM. Powinien być dodany do<br/>tablic miejsc GoogleMap jako \"nieznany\" z współrzędnymi z<br/>poziomu powyżej zanim dodasz jakiekolwiek miejsce do następnego poziomu";
-$pgv_lang["placecheck_key4"]		= "ten poziom jest pusty w Twoim pliku GEDCOM, ale istnieje jako 'nieznany'<br/>w tablicach miejsc GoogleMap wraz ze wsółrzędnymi. Nie wymagana jest edycja<br/>dopóki ten poziom nie będzie wprowadzony";
+$pgv_lang["placecheck_key3"]		= "ten poziom jest pusty w Twoim pliku GEDCOM. Powinien być dodany do<br />tablic miejsc GoogleMap jako \"nieznany\" z współrzędnymi z<br />poziomu powyżej zanim dodasz jakiekolwiek miejsce do następnego poziomu";
+$pgv_lang["placecheck_key4"]		= "ten poziom jest pusty w Twoim pliku GEDCOM, ale istnieje jako 'nieznany'<br />w tablicach miejsc GoogleMap wraz ze wsółrzędnymi. Nie wymagana jest edycja<br />dopóki ten poziom nie będzie wprowadzony";
 $pgv_lang["placecheck_head"]		= "Lista miejsc dla pliku GEDCOM";
-$pgv_lang["placecheck_gedheader"]	= "Dane z pliku GEDCOM<br/>(tag 2 PLAC)";
+$pgv_lang["placecheck_gedheader"]	= "Dane z pliku GEDCOM<br />(tag 2 PLAC)";
 $pgv_lang["placecheck_gm_header"]	= "Tablica miejsc GoogleMap";
 $pgv_lang["placecheck_unique"]		= "Liczba unikalnych miejsc";
 $pgv_lang["placecheck_zoom"]        = "Zoom=";

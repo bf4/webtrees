@@ -29,10 +29,14 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-//-- version of PhpGedView
-$VERSION = "4.2";
-$VERSION_RELEASE = "alpha";
-$REQUIRED_PRIVACY_VERSION = "3.1";
+// Identify ourself
+define('PGV_PHPGEDVIEW',      'PhpGedView');
+define('PGV_VERSION',         '4.1.6');
+define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
+define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
+
+// Don't try to use old privacy files
+define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
 define('PGV_REGEX_XREF',      '[A-Za-z0-9:-]+');
@@ -42,6 +46,7 @@ define('PGV_REGEX_ALPHANUM',  '[a-zA-Z0-9]+');
 define('PGV_REGEX_BYTES',     '[0-9]+[bBkKmMgG]?');
 define('PGV_REGEX_PASSWORD',  '.{6,}');
 define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
+define('PGV_REGEX_URL',       '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
 define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);
@@ -50,28 +55,6 @@ define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
 
 //-- required for running PHP in CGI Mode on Windows
 if (!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = "";
-
-//-- Detect and report Windows or OS/2 Server environment
-//		Windows and OS/2 use the semi-colon as a separator in the "include_path",
-//				*NIX uses a colon
-//		Windows and OS/2 use the ISO character set in the server-side file system,
-//				*NIX and PhpGedView use UTF-8.  Consequently, PGV needs to translate
-//				from UTF-8 to ISO when handing a file/folder name to Windows and OS/2,
-//				and all file/folder names received from Windows and OS/2 must be
-//				translated from ISO to UTF-8 before they can be processed by PGV.
-$WIN32 = false;
-if(substr(PHP_OS, 0, 3) == 'WIN') $WIN32 = true;
-if(substr(PHP_OS, 0, 4) == 'OS/2') $WIN32 = true;
-if(substr(PHP_OS, 0, 7) == 'NetWare') $WIN32 = true;
-if($WIN32) $seperator=";"; else $seperator = ":";
-//-- append our 'includes/' path to the include_path ini setting for ease of use.
-$ini_include_path = @ini_get('include_path');
-$includes_dir = dirname(@realpath(__FILE__));
-$includes_dir .= $seperator.dirname($includes_dir);
-@ini_set('include_path', ".{$seperator}{$includes_dir}{$seperator}{$ini_include_path}");
-unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
-
-set_magic_quotes_runtime(0);
 
 //-- list of critical configuration variables
 $CONFIG_VARS = array(
@@ -105,6 +88,57 @@ $CONFIG_VARS = array(
 	'REQUIRE_ADMIN_AUTH_REGISTRATION',
 	'COMMIT_COMMAND'
 );
+
+
+//-- Detect and report Windows or OS/2 Server environment
+//  Windows and OS/2 use the semi-colon as a separator in the "include_path",
+//    *NIX uses a colon
+//  Windows and OS/2 use the ISO character set in the server-side file system,
+//    *NIX and PhpGedView use UTF-8.  Consequently, PGV needs to translate
+//    from UTF-8 to ISO when handing a file/folder name to Windows and OS/2,
+//    and all file/folder names received from Windows and OS/2 must be
+//    translated from ISO to UTF-8 before they can be processed by PGV.
+$WIN32 = false;
+if(substr(PHP_OS, 0, 3) == 'WIN') $WIN32 = true;
+if(substr(PHP_OS, 0, 4) == 'OS/2') $WIN32 = true;
+if(substr(PHP_OS, 0, 7) == 'NetWare') $WIN32 = true;
+if($WIN32) $seperator=";"; else $seperator = ":";
+//-- append our 'includes/' path to the include_path ini setting for ease of use.
+$ini_include_path = @ini_get('include_path');
+$includes_dir = dirname(@realpath(__FILE__));
+$includes_dir .= $seperator.dirname($includes_dir);
+@ini_set('include_path', ".{$seperator}{$includes_dir}{$seperator}{$ini_include_path}");
+unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
+
+set_magic_quotes_runtime(0);
+
+if (version_compare(phpversion(), '4.3.5')<0)
+	die ("<html>\n<body><b style=\"color: red;\">PhpGedView requires PHP version 4.3.5 or later.</b><br /><br />\nYour server is running PHP version ".phpversion().".  Please ask your server's Administrator to upgrade the PHP installation.</body></html>");
+
+//-- load file for language settings
+require_once( "includes/lang_settings_std.php");
+$Languages_Default = true;
+if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
+	$DefaultSettings = $language_settings;  // Save default settings, so we can merge properly
+	require_once($INDEX_DIRECTORY . "lang_settings.php");
+	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
+	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
+	// Now copy new language settings into existing configuration
+	foreach ($DefaultSettings as $lang => $settings) {
+		foreach ($settings as $key => $value) {
+			if (!isset($language_settings[$lang][$key])) $language_settings[$lang][$key] = $value;
+		}
+	}
+	unset($DefaultSettings);
+	unset($ConfiguredSettings);  // We don't need these any more
+	$Languages_Default = false;
+}
+
+//-- build array of active languages (required for config override check)
+$pgv_lang_use = array();
+foreach ($language_settings as $key => $value) {
+	$pgv_lang_use[$key] = $value["pgv_lang_use"];
+}
 
 /**
  *		Check for configuration variable override.

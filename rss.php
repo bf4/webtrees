@@ -92,7 +92,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$author=getUserFullName($CONTACT_EMAIL);
 
 	$feed = new UniversalFeedCreator();
-	$feed->generator = "http://www.phpgedview.net v" . $VERSION . " " . $VERSION_RELEASE;
+	$feed->generator = "http://www.phpgedview.net ".PGV_VERSION_TEXT;
 	$feed->title = $GEDCOMS[$GEDCOM]["title"];
 	$feed->language = $lang_short_cut[$LANGUAGE]; //$lang_langcode[$LANGUAGE];
 	$feed->descriptionHtmlSyndicated = true;

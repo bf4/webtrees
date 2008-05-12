@@ -57,6 +57,7 @@ $GOOGLEMAP_PH_MARKER = "G_FLAG";		// Type of marker to be used in place herarchy
 $GM_DISP_SHORT_PLACE = "false";			// Display full place name or only the actual level name
 $GM_DISP_COUNT = "false";				// Display the count of individuals and families connected to the place
 $GOOGLEMAP_PH_WHEEL = "false";			// Use mouse wheel for zooming
+$GOOGLEMAP_PH_CONTROLS = "true";		// Hide map controls when mouse is out
 
 
 // Configuration-options per location-level

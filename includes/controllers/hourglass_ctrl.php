@@ -95,15 +95,10 @@ class HourglassControllerRoot extends BaseController {
 
 		// Extract parameters from from
 		$this->pid        =safe_GET_xref('pid');
-		$this->show_full  =safe_GET('show_full',   '1', $PEDIGREE_FULL_DETAILS);
-		$this->show_spouse=safe_GET('show_spouse', '1', '0');
+		$this->show_full  =safe_GET('show_full',   array('0', '1'), $PEDIGREE_FULL_DETAILS);
+		$this->show_spouse=safe_GET('show_spouse', array('0', '1'), '0');
 		$this->generations=safe_GET_integer('generations', 2, $MAX_DESCENDANCY_GENERATIONS, 3);
 		$this->box_width  =safe_GET_integer('box_width',   50, 300, 100);
-
-		// Set defaults
-		if (empty($this->pid)) {
-			$this->show_full=$PEDIGREE_FULL_DETAILS;
-		}
 
 		// This is passed as a global.  A parameter would be better...
 		$show_full=$this->show_full;

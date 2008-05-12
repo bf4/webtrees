@@ -29,8 +29,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require("config.php");
-require("includes/functions_print_lists.php");
+require 'config.php';
+require 'includes/functions_print_lists.php';
+require 'includes/class_stats.php';
 
 $time = client_time();
 $day = date("j", $time);
@@ -213,7 +214,7 @@ function getGedcomStats() {
  * @TODO prepend relative URL's in news items with $SERVER_URL
  */
 function getGedcomNews() {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $VERSION, $SERVER_URL;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $SERVER_URL;
 
 	$usernews = getUserNews($GEDCOM);
 
@@ -243,9 +244,22 @@ function getGedcomNews() {
 		}
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $newsText = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsText);
 			$varname = $match[1];
-			if (isset($$varname)) $newsText = preg_replace("/$match[0]/", $$varname, $newsText);
+			if (isset($pgv_lang[$varname])) {
+				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$varname], $newsText);
+			} else {
+				if (defined('PGV_'.$varname)) {
+					// e.g. global $VERSION is now constant PGV_VERSION
+					$varname='PGV_'.$varname;
+				}
+				if (defined($varname)) {
+					$newsText = preg_replace("/{$match[0]}/", constant($varname), $newsText);
+				} else {
+					if (isset($$varname)) {
+						$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+					}
+				}
+			}
 		}
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
 		$trans = array_flip($trans);
