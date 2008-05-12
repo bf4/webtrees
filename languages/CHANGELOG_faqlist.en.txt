@@ -36,6 +36,11 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
+VERSION 4.1.6
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
+*$faqlist["FAQ_030_SURNAME2"]						12 May 2008				f (added leading space)
++$faqlist["FAQ_030_NAMES2"]							12 May 2008				A
 
 VERSION 4.1.1
 

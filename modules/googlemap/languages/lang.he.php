@@ -71,14 +71,15 @@ $pgv_lang["gm_pp_po_pr_n_b"]        	= "סיומת, תחילית, נורמאלי
 $pgv_lang["googlemap_coord"]        	= "הצג קואורדינטות של המפה"; 
 
 //wooc place hierarchy
-$pgv_lang["gm_place_hierarchy"]         = "השתמש ב-Googlemap עבור היררכית המקומות"; 
-$pgv_lang["gm_ph_map_size"]	  = "גודל מפה של היררכיית מקומות (בפיקסלים)";
-$pgv_lang["gm_ph_marker_type"]        = "סוג מראי מקומות בהיררכית המקומות"; 
-$pgv_lang["gm_standard_marker"]       = "רגיל"; 
-$pgv_lang["gm_no_coord"]                   = "למקום הזה אין קואורדינטות"; 
-$pgv_lang["gm_ph_placenames"]        = "הצג שמות מקוצרים של מקומות?"; 
-$pgv_lang["gm_ph_count"]                   =  "הצג ספירה של אנשים ומשפחות?"; 
-$pgv_lang["gm_ph_wheel"]                   = "השתמש בגלגל העכבר לזום?";
+$pgv_lang["gm_place_hierarchy"]	= "השתמש ב-Googlemap עבור היררכית המקומות"; 
+$pgv_lang["gm_ph_map_size"]	= "גודל מפה של היררכיית מקומות (בפיקסלים)";
+$pgv_lang["gm_ph_marker_type"]	= "סוג מראי מקומות בהיררכית המקומות"; 
+$pgv_lang["gm_standard_marker"]	= "רגיל"; 
+$pgv_lang["gm_no_coord"]		= "למקום הזה אין קואורדינטות"; 
+$pgv_lang["gm_ph_placenames"]	= "הצג שמות מקוצרים של מקומות?"; 
+$pgv_lang["gm_ph_count"]		=  "הצג ספירה של אנשים ומשפחות?"; 
+$pgv_lang["gm_ph_wheel"]		= "השתמש בגלגל העכבר לזום?";
+$pgv_lang["gm_ph_controls"]		= "החבא בקרת מפה";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   	= "ערוך מיקומים גיאוגרפיים";
@@ -104,6 +105,7 @@ $pgv_lang["pl_overwrite_data"]      	= "העלה נתונים מקובץ על ג
 $pgv_lang["pl_use_this_value"]      	= "השתמש בערך הזה";
 $pgv_lang["pl_precision"]           	= "דיוק";
 $pgv_lang["pl_country"]             	= "ארץ";
+$pgv_lang["pl_countries"]		= "ארצות";
 $pgv_lang["pl_state"]               		= "מדינה";
 $pgv_lang["pl_city"]                		= "עיר";
 $pgv_lang["pl_neighborhood"]        	= "שכונה";
