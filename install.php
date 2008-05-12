@@ -497,6 +497,8 @@ $errormsg = "";
 					$success = printAdminUserForm();
 					break;
 				case 8:
+					include_once('blocks/getting_started.php');
+					getting_started_block(false,"",0,0);
 					break;
 				default:	// case 1
 					$success = checkEnvironment();

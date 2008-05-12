@@ -3812,7 +3812,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
  */
 function isFileExternal($file) { 
 	return strpos($file, '://') !== false;
-} 
+}
 
 // optional extra file
 if (file_exists( "includes/functions.extra.php"))

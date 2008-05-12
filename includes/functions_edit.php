@@ -119,7 +119,7 @@ function get_next_xref($gid, $type='INDI') {
 		case "OTHER":
 			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
 			break;
-		}
+	}
 	$res = dbquery($sql, true, 1);
 	if ($res->numRows()>0) {
 		$row = $res->fetchRow();
@@ -157,7 +157,7 @@ function get_prev_xref($gid, $type='INDI') {
 		case "OTHER":
 			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
 			break;
-		}
+	}
 	$res = dbquery($sql, true, 1);
 	if ($res->numRows()>0) {
 		$row = $res->fetchRow();
@@ -170,7 +170,7 @@ function get_prev_xref($gid, $type='INDI') {
 
 /**
  * Check if the given gedcom record has changed since the last session access
- * This is used to check if the gedcom record changed between the time the user 
+ * This is used to check if the gedcom record changed between the time the user
  * loaded the individual page and the time they clicked on a link to edit
  * the data.
  *
@@ -250,29 +250,29 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			}
 		}
 
-			$change = array();
-			$change["gid"] = $gid;
-			$change["gedcom"] = $GEDCOM;
-			$change["type"] = "replace";
-			$change["status"] = "submitted";
-			$change["user"] = PGV_USER_NAME;
-			$change["time"] = time();
-			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-			$change["undo"] = $gedrec;
-			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
-			else {
-				$lastchange = end($pgv_changes[$gid."_".$GEDCOM]);
-				if (!empty($lastchange)) {
-					//-- append recods should continue to be marked as append
-					if ($lastchange["type"]=="append") $change["type"] = "append";
-					//-- delete records will be added back in when they are accepted
-					//-- but we should add a warning to the log
-					else if ($lastchange["type"]=="delete") {
-						AddToLog("Possible GEDCOM corruption: Attempting to replace GEDCOM record $gid which has already been marked for deletion.");
-					}
+		$change = array();
+		$change["gid"] = $gid;
+		$change["gedcom"] = $GEDCOM;
+		$change["type"] = "replace";
+		$change["status"] = "submitted";
+		$change["user"] = PGV_USER_NAME;
+		$change["time"] = time();
+		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
+		$change["undo"] = $gedrec;
+		if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
+		else {
+			$lastchange = end($pgv_changes[$gid."_".$GEDCOM]);
+			if (!empty($lastchange)) {
+				//-- append recods should continue to be marked as append
+				if ($lastchange["type"]=="append") $change["type"] = "append";
+				//-- delete records will be added back in when they are accepted
+				//-- but we should add a warning to the log
+				else if ($lastchange["type"]=="delete") {
+					AddToLog("Possible GEDCOM corruption: Attempting to replace GEDCOM record $gid which has already been marked for deletion.");
 				}
 			}
-			$pgv_changes[$gid."_".$GEDCOM][] = $change;
+		}
+		$pgv_changes[$gid."_".$GEDCOM][] = $change;
 
 		if (PGV_USER_AUTO_ACCEPT) {
 			require_once("includes/functions_import.php");
@@ -353,17 +353,17 @@ function delete_gedrec($gid, $linkpid='') {
 
 	$undo = find_gedcom_record($gid);
 	if (empty($undo)) return false;
-		$change = array();
-		$change["gid"] = $gid;
-		$change["gedcom"] = $GEDCOM;
-		$change["type"] = "delete";
-		$change["status"] = "submitted";
-		$change["user"] = PGV_USER_NAME;
-		$change["time"] = time();
-		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-		$change["undo"] = "";
-		if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
-		$pgv_changes[$gid."_".$GEDCOM][] = $change;
+	$change = array();
+	$change["gid"] = $gid;
+	$change["gedcom"] = $GEDCOM;
+	$change["type"] = "delete";
+	$change["status"] = "submitted";
+	$change["user"] = PGV_USER_NAME;
+	$change["time"] = time();
+	if (!empty($linkpid)) $change["linkpid"] = $linkpid;
+	$change["undo"] = "";
+	if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
+	$pgv_changes[$gid."_".$GEDCOM][] = $change;
 
 	if (PGV_USER_AUTO_ACCEPT) {
 		require_once("includes/functions_import.php");
@@ -391,7 +391,7 @@ function check_gedcom($gedrec, $chan=true) {
 
 	if ($USE_RTL_FUNCTIONS) {
 		//-- replace any added ltr processing codes
-//		$gedrec = preg_replace(array("/".html_entity_decode(getRLM(),ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $gedrec);
+		//		$gedrec = preg_replace(array("/".html_entity_decode(getRLM(),ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $gedrec);
 		// Because of a bug in PHP 4, the above generates a run-time error message and does nothing.
 		// see:  http://bugs.php.net/bug.php?id=25670
 		// HTML entity &rlm; is the 3-byte UTF8 character 0xE2808F
@@ -449,7 +449,7 @@ function check_gedcom($gedrec, $chan=true) {
  * @param string $oldrecord	the parent record to remove the subrecord from
  * @param string $tag	the GEDCOM subtag to start deleting at
  * @param string $gid	[optional] gid can be used to limit to @gid@
- * @param int $num		[optional] num specifies which multiple of the tag to remove, set to -1 to remove all 
+ * @param int $num		[optional] num specifies which multiple of the tag to remove, set to -1 to remove all
  * @return string		returns the oldrecord minus the subrecord(s)
  */
 function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
@@ -471,7 +471,7 @@ function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
 		}
 		else $newrec .= $gedlines[$i]."\n";
 	}
-	
+
 	return trim($newrec);
 }
 
@@ -503,7 +503,7 @@ function remove_subline($oldrecord, $linenum) {
 		}
 	}
 	else return $oldrecord;
-	
+
 	$newrec = trim($newrec);
 	return $newrec;
 }
@@ -569,119 +569,119 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// When adding a new child, specify the pedigree
 	if ($nextaction=='addchildaction')
-		add_simple_tag("0 PEDI");
+	add_simple_tag("0 PEDI");
 
 	// Populate the standard NAME field and subfields
 	$name_fields=array();
 	foreach ($STANDARD_NAME_FACTS as $tag)
-		$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
+	$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
 
 	$new_marnm='';
 	// Inherit surname from parents, spouse or child
 	if (empty($namerec)) {
 		// We'll need the parent's name to set the child's surname
 		if (isset($pgv_changes[$famid."_".$GEDCOM]))
-			$famrec=find_updated_record($famid);
+		$famrec=find_updated_record($famid);
 		else
-			$famrec=find_family_record($famid);
+		$famrec=find_family_record($famid);
 		if (empty($famrec))
-			$famrec = find_record_in_file($famid);
+		$famrec = find_record_in_file($famid);
 		$parents=find_parents_in_record($famrec);
 		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB']));
 		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE']));
 		// We'll need the spouse/child's name to set the spouse/parent's surname
 		if (isset($pgv_changes[$pid."_".$GEDCOM]))
-			$prec=find_updated_record($pid);
+		$prec=find_updated_record($pid);
 		else
-			$prec=find_person_record($pid);
+		$prec=find_person_record($pid);
 		if (empty($prec))
-			$prec = find_record_in_file($pid);
+		$prec = find_record_in_file($pid);
 		$indi_name=get_gedcom_value('NAME', 0, $prec);
 		// Different cultures do surnames differently
 		switch ($SURNAME_TRADITION) {
-		case 'spanish':
-			//Mother: Maria /AAAA BBBB/
-			//Father: Jose  /CCCC DDDD/
-			//Child:  Pablo /CCCC AAAA/
-			switch ($nextaction) {
-			case 'addchildaction':
-				if (preg_match('/\/(\S+)\s+\S+\//', $mother_name, $matchm) &&
-				    preg_match('/\/(\S+)\s+\S+\//', $father_name, $matchf))
-				$name_fields['SURN']=$matchf[1].' '.$matchm[1];
+			case 'spanish':
+				//Mother: Maria /AAAA BBBB/
+				//Father: Jose  /CCCC DDDD/
+				//Child:  Pablo /CCCC AAAA/
+				switch ($nextaction) {
+					case 'addchildaction':
+						if (preg_match('/\/(\S+)\s+\S+\//', $mother_name, $matchm) &&
+						preg_match('/\/(\S+)\s+\S+\//', $father_name, $matchf))
+						$name_fields['SURN']=$matchf[1].' '.$matchm[1];
+						break;
+					case 'addnewparentaction':
+						if ($famtag=='HUSB' && preg_match('/\/(\S+)\s+\S+\//', $indi_name, $match))
+						$name_fields['SURN']=$match[1].' ';
+						if ($famtag=='WIFE' && preg_match('/\/\S+\s+(\S+)\//', $indi_name, $match))
+						$name_fields['SURN']=$match[1].' ';
+						break;
+				}
 				break;
-			case 'addnewparentaction':
-				if ($famtag=='HUSB' && preg_match('/\/(\S+)\s+\S+\//', $indi_name, $match))
-					$name_fields['SURN']=$match[1].' ';
-				if ($famtag=='WIFE' && preg_match('/\/\S+\s+(\S+)\//', $indi_name, $match))
-					$name_fields['SURN']=$match[1].' ';
-				break;
-			}
-			break;
-		case 'portuguese':
-			//Mother: Maria /AAAA BBBB/
-			//Father: Jose  /CCCC DDDD/
-			//Child:  Pablo /BBBB DDDD/
-			switch ($nextaction) {
-			case 'addchildaction':
-				if (preg_match('/\/\S+\s+(\S+)\//', $mother_name, $matchm) &&
+					case 'portuguese':
+						//Mother: Maria /AAAA BBBB/
+						//Father: Jose  /CCCC DDDD/
+						//Child:  Pablo /BBBB DDDD/
+						switch ($nextaction) {
+							case 'addchildaction':
+								if (preg_match('/\/\S+\s+(\S+)\//', $mother_name, $matchm) &&
 				    preg_match('/\/\S+\s+(\S+)\//', $father_name, $matchf))
-				$name_fields['SURN']=$matchf[1].' '.$matchm[1];
-				break;
-			case 'addnewparentaction':
-				if ($famtag=='HUSB' && preg_match('/\/\S+\s+(\S+)\//', $indi_name, $match))
-					$name_fields['SURN']=' '.$match[1];
-				if ($famtag=='WIFE' && preg_match('/\/(\S+)\s+\S+\//', $indi_name, $match))
-					$name_fields['SURN']=' '.$match[1];
-				break;
-			}
-			break;
-		case 'icelandic':
-			// Sons get their father's given name plus "sson"
-			// Daughters get their mother's given name plus "sdottir"
-			switch ($nextaction) {
-			case 'addchildaction':
-				if ($sextag=='M' && preg_match('/(\S+)\s+\/.*\//', $father_name, $match))
-					$name_fields['SURN']=preg_replace('/s$/', '', $match[1]).'sson';
-				if ($sextag=='F' && preg_match('/(\S+)\s+\/.*\//', $mother_name, $match))
-					$name_fields['SURN']=preg_replace('/s$/', '', $match[1]).'sdottir';
-				break;
-			case 'addnewparentaction':
-				if ($famtag=='HUSB' && preg_match('/(\S+)sson\s+\/.*\//i', $indi_name, $match))
-					$name_fields['GIVN']=$match[1];
-				if ($famtag=='WIFE' && preg_match('/(\S+)sdottir\s+\/.*\//i', $indi_name, $match))
-					$name_fields['GIVN']=$match[1];
-				break;
-			}
-			break;
-		case 'paternal':
-			// Father gives his surname to his wife and children
-			switch ($nextaction) {
-			case 'addspouseaction':
-				if ($famtag=='WIFE' && preg_match('/\/(.*)\//', $indi_name, $match))
-					$new_marnm=$match[1];
-				break;
-			case 'addchildaction':
-				if (preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $father_name, $match)) {
-					$name_fields['SPFX']=trim($match[1]);
-					$name_fields['SURN']=$match[2];
-				}
-				break;
-			case 'addnewparentaction':
-				if ($famtag=='HUSB' && preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $indi_name, $match)) {
-					$name_fields['SPFX']=trim($match[1]);
-					$name_fields['SURN']=$match[2];
-				}
-				break;
-			}
-			break;
+				    $name_fields['SURN']=$matchf[1].' '.$matchm[1];
+				    break;
+							case 'addnewparentaction':
+								if ($famtag=='HUSB' && preg_match('/\/\S+\s+(\S+)\//', $indi_name, $match))
+								$name_fields['SURN']=' '.$match[1];
+								if ($famtag=='WIFE' && preg_match('/\/(\S+)\s+\S+\//', $indi_name, $match))
+								$name_fields['SURN']=' '.$match[1];
+								break;
+						}
+						break;
+							case 'icelandic':
+								// Sons get their father's given name plus "sson"
+								// Daughters get their mother's given name plus "sdottir"
+								switch ($nextaction) {
+									case 'addchildaction':
+										if ($sextag=='M' && preg_match('/(\S+)\s+\/.*\//', $father_name, $match))
+										$name_fields['SURN']=preg_replace('/s$/', '', $match[1]).'sson';
+										if ($sextag=='F' && preg_match('/(\S+)\s+\/.*\//', $mother_name, $match))
+										$name_fields['SURN']=preg_replace('/s$/', '', $match[1]).'sdottir';
+										break;
+									case 'addnewparentaction':
+										if ($famtag=='HUSB' && preg_match('/(\S+)sson\s+\/.*\//i', $indi_name, $match))
+										$name_fields['GIVN']=$match[1];
+										if ($famtag=='WIFE' && preg_match('/(\S+)sdottir\s+\/.*\//i', $indi_name, $match))
+										$name_fields['GIVN']=$match[1];
+										break;
+								}
+								break;
+									case 'paternal':
+										// Father gives his surname to his wife and children
+										switch ($nextaction) {
+											case 'addspouseaction':
+												if ($famtag=='WIFE' && preg_match('/\/(.*)\//', $indi_name, $match))
+												$new_marnm=$match[1];
+												break;
+											case 'addchildaction':
+												if (preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $father_name, $match)) {
+													$name_fields['SPFX']=trim($match[1]);
+													$name_fields['SURN']=$match[2];
+												}
+												break;
+											case 'addnewparentaction':
+												if ($famtag=='HUSB' && preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $indi_name, $match)) {
+													$name_fields['SPFX']=trim($match[1]);
+													$name_fields['SURN']=$match[2];
+												}
+												break;
+										}
+										break;
 		}
 	}
 
 	// Make sure there are two slashes in the name
 	if (!preg_match('/\//', $name_fields['NAME']))
-		$name_fields['NAME'].=' /';
+	$name_fields['NAME'].=' /';
 	if (!preg_match('/\/.*\//', $name_fields['NAME']))
-		$name_fields['NAME'].='/';
+	$name_fields['NAME'].='/';
 
 	// Populate any missing 2 XXXX fields from the 1 NAME field
 	$npfx_accept=implode('|', $NPFX_accept);
@@ -695,43 +695,43 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		if (empty($name_fields['NSFX'])) $name_fields['NSFX']=$name_bits[10];
 		// Don't automatically create an empty NICK - it is an "advanced" field.
 		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m',$namerec))
-			$name_fields['NICK']=$name_bits[6];
+		$name_fields['NICK']=$name_bits[6];
 	}
 
 	// Edit the standard name fields
 	foreach($name_fields as $tag=>$value)
-		add_simple_tag("0 $tag $value");
+	add_simple_tag("0 $tag $value");
 
 	// Get the advanced name fields
 	$adv_name_fields=array();
 	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_NAME_FACTS, $match))
-		foreach ($match[1] as $tag)
-			$adv_name_fields[$tag]='';
+	foreach ($match[1] as $tag)
+	$adv_name_fields[$tag]='';
 	// This is a custom tag, but PGV uses it extensively.
 	if ($SURNAME_TRADITION=='paternal' || preg_match('/2 _MARNM/', $namerec))
-		$adv_name_fields['_MARNM']='';
+	$adv_name_fields['_MARNM']='';
 
 	foreach ($adv_name_fields as $tag=>$dummy) {
 		// Edit existing tags
 		if (preg_match_all("/2 $tag (.+)/", $namerec, $match))
-			foreach ($match[1] as $value) {
-				if ($tag=='_MARNM') {
-					$mnsct = preg_match('/\/(.+)\//', $value, $match2);
-					$marnm_surn = "";
-					if ($mnsct>0) $marnm_surn = $match2[1];
-					add_simple_tag("2 _MARNM ".$value);
-					add_simple_tag("2 _MARNM_SURN ".$marnm_surn);
-				} else {
-					add_simple_tag("2 $tag $value");
-				}
+		foreach ($match[1] as $value) {
+			if ($tag=='_MARNM') {
+				$mnsct = preg_match('/\/(.+)\//', $value, $match2);
+				$marnm_surn = "";
+				if ($mnsct>0) $marnm_surn = $match2[1];
+				add_simple_tag("2 _MARNM ".$value);
+				add_simple_tag("2 _MARNM_SURN ".$marnm_surn);
+			} else {
+				add_simple_tag("2 $tag $value");
 			}
-			// Allow a new row to be entered if there was no row provided
-			if (count($match[1])==0 && empty($name_fields[$tag]) || $tag!='_HEB' && $tag!='NICK')
-				if ($tag=='_MARNM') {
-					add_simple_tag("0 _MARNM");
-					add_simple_tag("0 _MARNM_SURN $new_marnm");
-				} else
-					add_simple_tag("0 $tag");
+		}
+		// Allow a new row to be entered if there was no row provided
+		if (count($match[1])==0 && empty($name_fields[$tag]) || $tag!='_HEB' && $tag!='NICK')
+		if ($tag=='_MARNM') {
+			add_simple_tag("0 _MARNM");
+			add_simple_tag("0 _MARNM_SURN $new_marnm");
+		} else
+		add_simple_tag("0 $tag");
 	}
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
@@ -783,8 +783,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		add_simple_tag("0 DATE", "BIRT");
 		add_simple_tag("0 PLAC", "BIRT");
 		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-			foreach ($match[1] as $tag)
-				add_simple_tag("0 $tag", 'BIRT');
+		foreach ($match[1] as $tag)
+		add_simple_tag("0 $tag", 'BIRT');
 		add_simple_tag("0 MAP", "BIRT");
 		add_simple_tag("0 LATI", "BIRT");
 		add_simple_tag("0 LONG", "BIRT");
@@ -795,8 +795,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			add_simple_tag("0 DATE", "MARR");
 			add_simple_tag("0 PLAC", "MARR");
 			if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-				foreach ($match[1] as $tag)
-					add_simple_tag("0 $tag", 'MARR');
+			foreach ($match[1] as $tag)
+			add_simple_tag("0 $tag", 'MARR');
 			add_simple_tag("0 MAP", "MARR");
 			add_simple_tag("0 LATI", "MARR");
 			add_simple_tag("0 LONG", "MARR");
@@ -805,8 +805,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		add_simple_tag("0 DATE", "DEAT");
 		add_simple_tag("0 PLAC", "DEAT");
 		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-			foreach ($match[1] as $tag)
-				add_simple_tag("3 $tag", 'DEAT');
+		foreach ($match[1] as $tag)
+		add_simple_tag("3 $tag", 'DEAT');
 		add_simple_tag("0 MAP", "DEAT");
 		add_simple_tag("0 LATI", "DEAT");
 		add_simple_tag("0 LONG", "DEAT");
@@ -835,8 +835,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 	print "</form>\n";
 	?>
-	<script type="text/javascript" src="autocomplete.js"></script>
-	<script type="text/javascript">
+<script
+	type="text/javascript" src="autocomplete.js"></script>
+<script type="text/javascript">
 	<!--
 	//	copy php arrays into js arrays
 	var npfx_accept = new Array(<?php foreach ($NPFX_accept as $indexval => $npfx) print "'".$npfx."',"; print "''";?>);
@@ -1117,8 +1118,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	@list($level, $fact, $value) = explode(" ", $tag);
 
 	if ($fact=="LATI" || $fact=="LONG") {
-	?>
-	<script type="text/javascript">
+		?>
+<script type="text/javascript">
 	<!--
 	function valid_lati_long(field, pos, neg) {
 		// valid LATI or LONG according to Gedcom standard
@@ -1159,7 +1160,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	//-->
 	</script>
-	<?php
+		<?php
 	}
 
 	// element name : used to POST data
@@ -1182,38 +1183,38 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// rows & cols
 	switch ($fact) {
-	case 'FORM':
-		$rows=1;
-		$cols=5;
-		break;
-	case 'LATI': case 'LONG': case 'NPFX': case 'SPFX': case 'NSFX':
-		$rows=1;
-		$cols=12;
-		break;
-	case 'DATE': case 'TIME': case 'TYPE':
-		$rows=1;
-		$cols=20;
-		break;
-	case 'GIVN': case 'SURN': case '_MARNM':
-		$rows=1;
-		$cols=25;
-		break;
-	case '_UID':
-		$rows=1;
-		$cols=50;
-		break;
-	case 'TEXT': case 'PUBL': case 'NOTE':
-		$rows=10;
-		$cols=70;
-		break;
-	case 'ADDR':
-		$rows=4;
-		$cols=40;
-		break;
-	default:
-		$rows=1;
-		$cols=($islink ? 10 : 40);
-		break;
+		case 'FORM':
+			$rows=1;
+			$cols=5;
+			break;
+		case 'LATI': case 'LONG': case 'NPFX': case 'SPFX': case 'NSFX':
+			$rows=1;
+			$cols=12;
+			break;
+		case 'DATE': case 'TIME': case 'TYPE':
+			$rows=1;
+			$cols=20;
+			break;
+		case 'GIVN': case 'SURN': case '_MARNM':
+			$rows=1;
+			$cols=25;
+			break;
+		case '_UID':
+			$rows=1;
+			$cols=50;
+			break;
+		case 'TEXT': case 'PUBL': case 'NOTE':
+			$rows=10;
+			$cols=70;
+			break;
+		case 'ADDR':
+			$rows=4;
+			$cols=40;
+			break;
+		default:
+			$rows=1;
+			$cols=($islink ? 10 : 40);
+			break;
 	}
 
 	// label
@@ -1222,8 +1223,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($fact=="MAP" || $fact=="LATI" || $fact=="LONG") print " style=\"display:none;\"";
 	print " >\n";
 	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG")
-			print "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
-	else	print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+	print "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
+	else print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 
 	// help link
 	if (!in_array($fact, $emptyfacts)) {
@@ -1259,7 +1260,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	// value
 	print "<td class=\"optionbox wrap\">\n";
 	if ($GLOBALS["DEBUG"]) print $tag."<br />\n";
-
+	
 	// retrieve linked NOTE
 	if ($fact=="NOTE" and $islink) {
 		$noteid = $value;
@@ -1298,8 +1299,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	else if ($fact=="ADOP") {
 		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
 		foreach (array("BOTH"=>$factarray["HUSB"]."+".$factarray["WIFE"],
-		               "HUSB"=>$factarray["HUSB"],
-		               "WIFE"=>$factarray["WIFE"]) as $k=>$v) {
+			               "HUSB"=>$factarray["HUSB"],
+			               "WIFE"=>$factarray["WIFE"]) as $k=>$v) {
 			print "<option value='$k'";
 			if ($value==$k)
 				print " selected";
@@ -1310,10 +1311,10 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	else if ($fact=="PEDI") {
 		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
 		foreach (array(""       =>$pgv_lang["unknown"],
-		               "birth"  =>$factarray["BIRT"],
-		               "adopted"=>$pgv_lang["adopted"],
-		               "foster" =>$pgv_lang["foster"],
-									 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
+			               "birth"  =>$factarray["BIRT"],
+			               "adopted"=>$pgv_lang["adopted"],
+			               "foster" =>$pgv_lang["foster"],
+										 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
 			print "<option value='$k'";
 			if (str2lower($value)==$k)
 				print " selected";
@@ -1359,21 +1360,21 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	else if ($fact=="RESN") {
 		?>
 		<script type="text/javascript">
-		<!--
-		function update_RESN_img(resn_val) {
-			document.getElementById("RESN_none").style.display="none";
-			document.getElementById("RESN_locked").style.display="none";
-			document.getElementById("RESN_privacy").style.display="none";
-			document.getElementById("RESN_confidential").style.display="none";
-			document.getElementById("RESN_"+resn_val).style.display="inline";
-			if (resn_val=='none') resn_val='';
-			document.getElementById("<?php print $element_id?>").value=resn_val;
-		}
-		//-->
-		</script>
+			<!--
+			function update_RESN_img(resn_val) {
+				document.getElementById("RESN_none").style.display="none";
+				document.getElementById("RESN_locked").style.display="none";
+				document.getElementById("RESN_privacy").style.display="none";
+				document.getElementById("RESN_confidential").style.display="none";
+				document.getElementById("RESN_"+resn_val).style.display="inline";
+				if (resn_val=='none') resn_val='';
+				document.getElementById("<?php print $element_id?>").value=resn_val;
+			}
+			//-->
+			</script>
 		<?php
 		if (!$PRIVACY_BY_RESN && $level==1) {
-			// warn user that level 1 RESN tags have no effect when PRIVACY_BY_RESN is false 
+			// warn user that level 1 RESN tags have no effect when PRIVACY_BY_RESN is false
 			print "<small>".$pgv_lang["resn_disabled"]."</small>";
 		}
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />\n";
@@ -1442,7 +1443,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if (isset($PGV_IMAGES["edit_indi"]["small"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" />";
 		else print "<span class=\"age\">[".$pgv_lang["edit_name"]."]</span>";
 		print "</a>";
-	} else {
+	} 
+	else {
 		// textarea
 		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value))."</textarea><br />\n";
 		else {
@@ -1468,128 +1470,128 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				}
 			}
 			else {
-			// text
-			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
-			if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
-			// onKeyUp should suffice.  Why the others?
-			if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
-			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
-			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
-			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
-			//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
-			print " ".$readOnly." />\n";
-		}
-		// split PLAC
-		if ($fact=="PLAC" && $readOnly=="") {
-			print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
-			print_specialchar_link($element_id, false);
-			print_findplace_link($element_id);
-			print "</div>\n";
-			print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
-			if ($SPLIT_PLACES) {
-				if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
-				setup_place_subfields($element_id);
-				print_place_subfields($element_id);
+				// text
+				print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
+				if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
+				// onKeyUp should suffice.  Why the others?
+				if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
+				if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
+				if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
+				if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
+				//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
+				print " ".$readOnly." />\n";
 			}
-		}
-		else if (($cols>20 || $fact=="NPFX") && $readOnly=="") print_specialchar_link($element_id, false);
-		}
-	// MARRiage TYPE : hide text field and show a selection list
-	if ($fact=="TYPE" and $tags[0]=="MARR") {
-		print "<script type='text/javascript'>";
-		print "document.getElementById('".$element_id."').style.display='none'";
-		print "</script>";
-		print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."_sel\" onchange=\"document.getElementById('".$element_id."').value=this.value;\" >\n";
-		foreach (array("Unknown", "Civil", "Religious", "Partners") as $indexval => $key) {
-			if ($key=="Unknown") print "<option value=\"\"";
-			else print "<option value=\"".$key."\"";
-			$a=strtolower($key);
-			$b=strtolower($value);
-			if (@strpos($a, $b)!==false or @strpos($b, $a)!==false) print " selected=\"selected\"";
-			print ">".$factarray["MARR_".strtoupper($key)]."</option>\n";
-		}
-		print "</select>";
-	}
-
-	// popup links
-	if ($readOnly=="") {
-		if ($fact=="DATE") print_calendar_popup($element_id);
-		if ($fact=="FAMC") print_findfamily_link($element_id, "");
-		if ($fact=="FAMS") print_findfamily_link($element_id, "");
-		if ($fact=="ASSO") print_findindi_link($element_id, get_person_name($value));
-		if ($fact=="FILE") print_findmedia_link($element_id, "0file");
-		if ($fact=="SOUR") {
-			print_findsource_link($element_id);
-			print_addnewsource_link($element_id);
-			//print_autopaste_link($element_id, array("S1", "S2"), false, false, true);
-			//-- checkboxes to apply '1 SOUR' to BIRT/MARR/DEAT as '2 SOUR'
-			if ($level==1) {
-				echo "<br />";
-				echo "<input type=\"hidden\" id=\"SOUR_BIRT\" name=\"SOUR_BIRT\" value=\"\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_MARR\" name=\"SOUR_MARR\" value=\"\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_FAM\" name=\"SOUR_FAM\" value=\"\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_DEAT\" name=\"SOUR_DEAT\" value=\"\" />";
-				if (strpos($bdm, "B")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" name=\"SOUR_INDI\" checked=\"checked\" value=\"Y\" />";
-					echo $pgv_lang['individual'];
-					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_BIRT.value='Y'; else SOUR_BIRT.value='';\" />";
-					echo $factarray["BIRT"];
-				}
-				if (strpos($bdm, "M")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_MARR.value='Y'; else SOUR_MARR.value='';\" />";
-					echo $factarray["MARR"];
-					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_FAM.value='Y'; else SOUR_FAM.value='';\" />";
-					echo $pgv_lang["family"];
-				}
-				if (strpos($bdm, "D")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_DEAT.value='Y'; else SOUR_DEAT.value='';\" />";
-					echo $factarray["DEAT"];
+			// split PLAC
+			if ($fact=="PLAC" && $readOnly=="") {
+				print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
+				print_specialchar_link($element_id, false);
+				print_findplace_link($element_id);
+				print "</div>\n";
+				print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
+				if ($SPLIT_PLACES) {
+					if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
+					setup_place_subfields($element_id);
+					print_place_subfields($element_id);
 				}
 			}
+			else if (($cols>20 || $fact=="NPFX") && $readOnly=="") print_specialchar_link($element_id, false);
 		}
-		if ($fact=="REPO") {
-			print_findrepository_link($element_id);
-			print_addnewrepository_link($element_id);
+		// MARRiage TYPE : hide text field and show a selection list
+		if ($fact=="TYPE" and $tags[0]=="MARR") {
+			print "<script type='text/javascript'>";
+			print "document.getElementById('".$element_id."').style.display='none'";
+			print "</script>";
+			print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."_sel\" onchange=\"document.getElementById('".$element_id."').value=this.value;\" >\n";
+			foreach (array("Unknown", "Civil", "Religious", "Partners") as $indexval => $key) {
+				if ($key=="Unknown") print "<option value=\"\"";
+				else print "<option value=\"".$key."\"";
+				$a=strtolower($key);
+				$b=strtolower($value);
+				if (@strpos($a, $b)!==false or @strpos($b, $a)!==false) print " selected=\"selected\"";
+				print ">".$factarray["MARR_".strtoupper($key)]."</option>\n";
+			}
+			print "</select>";
 		}
-		if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
-		if ($fact=="OBJE" && !$value) {
-			print '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&amp;linktoid='.$linkToID.'&amp;level='.$level.'\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
-			$value = "new";
+
+		// popup links
+		if ($readOnly=="") {
+			if ($fact=="DATE") print_calendar_popup($element_id);
+			if ($fact=="FAMC") print_findfamily_link($element_id, "");
+			if ($fact=="FAMS") print_findfamily_link($element_id, "");
+			if ($fact=="ASSO") print_findindi_link($element_id, get_person_name($value));
+			if ($fact=="FILE") print_findmedia_link($element_id, "0file");
+			if ($fact=="SOUR") {
+				print_findsource_link($element_id);
+				print_addnewsource_link($element_id);
+				//print_autopaste_link($element_id, array("S1", "S2"), false, false, true);
+				//-- checkboxes to apply '1 SOUR' to BIRT/MARR/DEAT as '2 SOUR'
+				if ($level==1) {
+					echo "<br />";
+					echo "<input type=\"hidden\" id=\"SOUR_BIRT\" name=\"SOUR_BIRT\" value=\"\" />";
+					echo "<input type=\"hidden\" id=\"SOUR_MARR\" name=\"SOUR_MARR\" value=\"\" />";
+					echo "<input type=\"hidden\" id=\"SOUR_FAM\" name=\"SOUR_FAM\" value=\"\" />";
+					echo "<input type=\"hidden\" id=\"SOUR_DEAT\" name=\"SOUR_DEAT\" value=\"\" />";
+					if (strpos($bdm, "B")!==false) {
+						echo "&nbsp;<input type=\"checkbox\" name=\"SOUR_INDI\" checked=\"checked\" value=\"Y\" />";
+						echo $pgv_lang['individual'];
+						echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_BIRT.value='Y'; else SOUR_BIRT.value='';\" />";
+						echo $factarray["BIRT"];
+					}
+					if (strpos($bdm, "M")!==false) {
+						echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_MARR.value='Y'; else SOUR_MARR.value='';\" />";
+						echo $factarray["MARR"];
+						echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_FAM.value='Y'; else SOUR_FAM.value='';\" />";
+						echo $pgv_lang["family"];
+					}
+					if (strpos($bdm, "D")!==false) {
+						echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_DEAT.value='Y'; else SOUR_DEAT.value='';\" />";
+						echo $factarray["DEAT"];
+					}
+				}
+			}
+			if ($fact=="REPO") {
+				print_findrepository_link($element_id);
+				print_addnewrepository_link($element_id);
+			}
+			if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
+			if ($fact=="OBJE" && !$value) {
+				print '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&amp;linktoid='.$linkToID.'&amp;level='.$level.'\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
+				$value = "new";
+			}
 		}
+
+		// current value
+		if ($TEXT_DIRECTION=="ltr") {
+			if ($fact=="DATE") {
+				$date=new GedcomDate($value);
+				print $date->Display(false);
+			}
+			if ($fact=="ASSO" and $value) print " ".PrintReady(get_person_name($value))." (".$value.")";
+			if ($fact=="SOUR" and $value) print " ".PrintReady(get_source_descriptor($value))." (".$value.")";
+		} else {
+			if ($fact=="DATE") {
+				$date=new GedcomDate($value);
+				print getRLM().$date->Display(false).getRLM();
+			}
+			if ($fact=="ASSO" and $value) print " " . getRLM() . PrintReady(get_person_name($value))." (".$value.")" . getRLM();
+			if ($fact=="SOUR" and $value) print " " . getRLM() .PrintReady(get_source_descriptor($value)). getRLM() . "&nbsp;&nbsp;" . getLRM() . "(".$value.")" . getLRM();
+		}
+
+		// pastable values
+		if ($readOnly=="") {
+			if ($fact=="NPFX") {
+				$text = $pgv_lang["autocomplete"];
+				if (isset($PGV_IMAGES["autocomplete"]["button"])) $Link = "<img id=\"".$element_id."_spec\" name=\"".$element_id."_spec\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["autocomplete"]["button"]."\"  alt=\"".$text."\"  title=\"".$text."\" border=\"0\" align=\"middle\" />";
+				else $Link = $text;
+				print "&nbsp;".$Link;
+			}
+			if ($fact=="SPFX") print_autopaste_link($element_id, $SPFX_accept);
+			if ($fact=="NSFX") print_autopaste_link($element_id, $NSFX_accept);
+			if ($fact=="FORM") print_autopaste_link($element_id, $FILE_FORM_accept, false, false);
+		}
+
+		if ($noClose != "NOCLOSE") print "</td></tr>\n";
 	}
-
-	// current value
-	if ($TEXT_DIRECTION=="ltr") {
-		if ($fact=="DATE") {
-			$date=new GedcomDate($value);
-			print $date->Display(false);
-		}
-		if ($fact=="ASSO" and $value) print " ".PrintReady(get_person_name($value))." (".$value.")";
-		if ($fact=="SOUR" and $value) print " ".PrintReady(get_source_descriptor($value))." (".$value.")";
-	} else {
-		if ($fact=="DATE") {
-			$date=new GedcomDate($value);
-			print getRLM().$date->Display(false).getRLM();
-		}
-		if ($fact=="ASSO" and $value) print " " . getRLM() . PrintReady(get_person_name($value))." (".$value.")" . getRLM();
-		if ($fact=="SOUR" and $value) print " " . getRLM() .PrintReady(get_source_descriptor($value)). getRLM() . "&nbsp;&nbsp;" . getLRM() . "(".$value.")" . getLRM();
-	}
-
-	// pastable values
-	if ($readOnly=="") {
-		if ($fact=="NPFX") {
-			$text = $pgv_lang["autocomplete"];
-			if (isset($PGV_IMAGES["autocomplete"]["button"])) $Link = "<img id=\"".$element_id."_spec\" name=\"".$element_id."_spec\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["autocomplete"]["button"]."\"  alt=\"".$text."\"  title=\"".$text."\" border=\"0\" align=\"middle\" />";
-			else $Link = $text;
-			print "&nbsp;".$Link;
-		}
-		if ($fact=="SPFX") print_autopaste_link($element_id, $SPFX_accept);
-		if ($fact=="NSFX") print_autopaste_link($element_id, $NSFX_accept);
-		if ($fact=="FORM") print_autopaste_link($element_id, $FILE_FORM_accept, false, false);
-	}
-
-	if ($noClose != "NOCLOSE") print "</td></tr>\n";
-
 	$tabkey++;
 	return $element_id;
 }
@@ -1785,7 +1787,7 @@ function updateSOUR($inputRec, $levelOverride="no") {
 	global $glevelsRest, $tagRest, $islinkRest, $textRest;
 
 	if (count($tagSOUR)==0) return $inputRec;		// No update required
-	
+
 	// Save original interface update arrays before replacing them with the xxxSOUR ones
 	$glevelsSave = $glevels;
 	$tagSave = $tag;
@@ -1796,9 +1798,9 @@ function updateSOUR($inputRec, $levelOverride="no") {
 	$tag = $tagSOUR;
 	$islink = $islinkSOUR;
 	$text = $textSOUR;
-	
+
 	$myRecord = handle_updates($inputRec, $levelOverride);		// Now do the update
-	
+
 	// Restore the original interface update arrays (just in case ...)
 	$glevels = $glevelsSave;
 	$tag = $tagSave;
@@ -1821,7 +1823,7 @@ function updateRest($inputRec, $levelOverride="no") {
 	global $glevelsRest, $tagRest, $islinkRest, $textRest;
 
 	if (count($tagRest)==0) return $inputRec;		// No update required
-	
+
 	// Save original interface update arrays before replacing them with the xxxRest ones
 	$glevelsSave = $glevels;
 	$tagSave = $tag;
@@ -1832,9 +1834,9 @@ function updateRest($inputRec, $levelOverride="no") {
 	$tag = $tagRest;
 	$islink = $islinkRest;
 	$text = $textRest;
-	
+
 	$myRecord = handle_updates($inputRec, $levelOverride);		// Now do the update
-	
+
 	// Restore the original interface update arrays (just in case ...)
 	$glevels = $glevelsSave;
 	$tag = $tagSave;
@@ -1869,7 +1871,7 @@ function updateRest($inputRec, $levelOverride="no") {
  */
 function handle_updates($newged, $levelOverride="no") {
 	global $glevels, $islink, $tag, $uploaded_files, $text, $NOTE, $WORD_WRAPPED_NOTES;
-	
+
 	if ($levelOverride=="no" || count($glevels)==0) $levelAdjust = 0;
 	else $levelAdjust = $levelOverride - $glevels[0];
 
@@ -1904,7 +1906,6 @@ function handle_updates($newged, $levelOverride="no") {
 			}
 		}
 
-//		if (!empty($text[$j])) {
 		if (trim($text[$j])!='') {
 			$pass = true;
 		}
@@ -1934,7 +1935,6 @@ function handle_updates($newged, $levelOverride="no") {
 
 		//-- if the value is not empty or it has sub lines
 		//--- then write the line to the gedcom record
-		//if ((($text[trim($j)]!="")||($pass==true)) && (strlen($text[$j]) > 0)) {
 		//-- we have to let some emtpy text lines pass through... (DEAT, BIRT, etc)
 		if ($pass==true) {
 			$newline = $glevels[$j]+$levelAdjust." ".$tag[$j];
@@ -1955,6 +1955,7 @@ function handle_updates($newged, $levelOverride="no") {
 }
 
 
+
 /**
  * check the given date that was input by a user and convert it
  * to proper gedcom date if possible
@@ -1967,9 +1968,9 @@ function check_input_date($datestr) {
 	// Convert from natural language to gedcom format
 	$conversion_function="edit_to_gedcom_date_{$lang_short_cut[$LANGUAGE]}";
 	if (function_exists($conversion_function))
-		$datestr=$conversion_function($datestr);
+	$datestr=$conversion_function($datestr);
 	else
-		$datestr=default_edit_to_gedcom_date($datestr);
+	$datestr=default_edit_to_gedcom_date($datestr);
 
 	return trim($datestr);
 }
@@ -2061,7 +2062,7 @@ function create_add_form($fact) {
 		}
 		add_simple_tag("1 ".$fact);
 		insert_missing_subtags($tags[0]);
-		//-- handle the special SOURce case for level 1 sources [ 1759246 ] 
+		//-- handle the special SOURce case for level 1 sources [ 1759246 ]
 		if ($fact=="SOUR") {
 			add_simple_tag("2 PAGE");
 			add_simple_tag("3 TEXT");
@@ -2119,7 +2120,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		'MAP' =>array('LATI', 'LONG')
 	);
 	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-		$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
+	$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
 
 	// Loop on existing tags :
 	while (true) {
@@ -2149,9 +2150,9 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 				// Allow the user to edit the date in his/her own natural language
 				$conversion_function="gedcom_to_edit_date_{$lang_short_cut[$LANGUAGE]}";
 				if (function_exists($conversion_function))
-					$text=$conversion_function($text);
+				$text=$conversion_function($text);
 				else
-					$text=default_gedcom_to_edit_date($text);
+				$text=default_gedcom_to_edit_date($text);
 			}
 			$subrecord = $level." ".$type." ".$text;
 			if ($inSource && $type=="DATE") add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
@@ -2161,27 +2162,27 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		// Get a list of tags present at the next level
 		$subtags=array();
 		for ($ii=$i+1; isset($gedlines[$ii]) && preg_match('/^\s*(\d+)\s+(\S+)/', $gedlines[$ii], $mm) && $mm[1]>$level; ++$ii)
-			if ($mm[1]==$level+1)
-				$subtags[]=$mm[2];
+		if ($mm[1]==$level+1)
+		$subtags[]=$mm[2];
 
 		// Insert missing tags
 		if (!empty($expected_subtags[$type]))
-			foreach ($expected_subtags[$type] as $subtag)
-				if (!in_array($subtag, $subtags)) {
-					if (!$inSource || $subtag!="DATA") {
-					add_simple_tag(($level+1).' '.$subtag);
-					}
-					if (!empty($expected_subtags[$subtag]))
-						foreach ($expected_subtags[$subtag] as $subsubtag)
-							if ($inSource && $subsubtag=="DATE") add_simple_tag(($level+2).' '.$subsubtag, "", $pgv_lang["date_of_entry"]);
-							else add_simple_tag(($level+2).' '.$subsubtag);
-				}
+		foreach ($expected_subtags[$type] as $subtag)
+		if (!in_array($subtag, $subtags)) {
+			if (!$inSource || $subtag!="DATA") {
+				add_simple_tag(($level+1).' '.$subtag);
+			}
+			if (!empty($expected_subtags[$subtag]))
+			foreach ($expected_subtags[$subtag] as $subsubtag)
+			if ($inSource && $subsubtag=="DATE") add_simple_tag(($level+2).' '.$subsubtag, "", $pgv_lang["date_of_entry"]);
+			else add_simple_tag(($level+2).' '.$subsubtag);
+		}
 
 		// Awkward special cases
 		if ($level==2 && $type=='DATE' && in_array($level1type, $date_and_time) && !in_array('TIME', $subtags))
-			add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
+		add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
 		if ($level==2 && $type=='STAT' && in_array($level1type, $templefacts) && !in_array('DATE', $subtags))
-			add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
+		add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
 
 		$i++;
 		if (isset($gedlines[$i])) {
@@ -2213,23 +2214,23 @@ function insert_missing_subtags($level1tag)
 		$type_val = substr($level1tag,5);
 		$level1tag = "MARR";
 	}
-	
+
 	foreach ($level2_tags as $key=>$value) {
 		if (in_array($level1tag, $value) && !in_array($key, $tags)) {
 			if ($key=="TYPE") {
 				add_simple_tag("2 TYPE ".$type_val);
 			} elseif ($level1tag=='_TODO' && $key=='DATE') {
-					add_simple_tag("2 ".$key." ".strtoupper(date('d F Y')));
+				add_simple_tag("2 ".$key." ".strtoupper(date('d F Y')));
 			} elseif ($level1tag=='_TODO' && $key=='_PGVU') {
 				add_simple_tag("2 ".$key." ".PGV_USER_NAME);
-				} else {
-					add_simple_tag("2 ".$key);
+			} else {
+				add_simple_tag("2 ".$key);
 			}
 			switch ($key) { // Add level 3/4 tags as appropriate
 				case "PLAC":
 					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-						foreach ($match[1] as $tag)
-							add_simple_tag("3 $tag");
+					foreach ($match[1] as $tag)
+					add_simple_tag("3 $tag");
 					add_simple_tag("3 MAP");
 					add_simple_tag("4 LATI");
 					add_simple_tag("4 LONG");
@@ -2243,11 +2244,11 @@ function insert_missing_subtags($level1tag)
 					break;
 				case "STAT":
 					if (in_array($level1tag, $templefacts))
-						add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
+					add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
 					break;
 				case "DATE":
 					if (in_array($level1tag, $date_and_time))
-						add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
+					add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
 					break;
 				case "HUSB":
 				case "WIFE":
@@ -2255,26 +2256,26 @@ function insert_missing_subtags($level1tag)
 					break;
 				case "FAMC":
 					if ($level1tag=='ADOP')
-						add_simple_tag("3 ADOP BOTH");
+					add_simple_tag("3 ADOP BOTH");
 					break;
 			}
 		}
 	}
 	// Do something (anything!) with unrecognised custom tags
 	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && $level1tag!='_TODO')
-		foreach (array('DATE', 'PLAC', 'ADDR', 'AGNC', 'TYPE', 'AGE') as $tag)
-			if (!in_array($tag, $tags)) {
-				add_simple_tag("2 {$tag}");
-				if ($tag=='PLAC') {
-					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-						foreach ($match[1] as $atag)
-							add_simple_tag("3 $atag");
-					add_simple_tag("3 MAP");
-					add_simple_tag("4 LATI");
-					add_simple_tag("4 LONG");
+	foreach (array('DATE', 'PLAC', 'ADDR', 'AGNC', 'TYPE', 'AGE') as $tag)
+	if (!in_array($tag, $tags)) {
+		add_simple_tag("2 {$tag}");
+		if ($tag=='PLAC') {
+			if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+			foreach ($match[1] as $atag)
+			add_simple_tag("3 $atag");
+			add_simple_tag("3 MAP");
+			add_simple_tag("4 LATI");
+			add_simple_tag("4 LONG");
 
-				}
-			}
+		}
+	}
 }
 
 /**
