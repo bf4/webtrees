@@ -410,10 +410,12 @@ class MenuBar
 	 */
 	function &getMygedviewMenu() {
 		global $GEDCOMS, $MEDIA_DIRECTORY, $MULTI_MEDIA;
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $PEDIGREE_FULL_DETAILS;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
+		$showLayout = ($PEDIGREE_LAYOUT) ? 1 : 0;
 
 		$username = PGV_USER_NAME;
 		if (!$username) {
@@ -454,7 +456,7 @@ class MenuBar
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			//-- my_pedigree submenu
-			$submenu = new Menu($pgv_lang["my_pedigree"], "pedigree.php?rootid=".PGV_USER_GEDCOM_ID."&show_full=".$showFull);
+			$submenu = new Menu($pgv_lang["my_pedigree"], "pedigree.php?rootid=".PGV_USER_GEDCOM_ID."&show_full={$showFull}&talloffset={$showLayout}");
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
 			//$submenu->addIcon($PGV_IMAGE_DIR."/small/pedigree.gif");
@@ -515,7 +517,9 @@ class MenuBar
 	 * @return Menu 	the menu item
 	 */
 	function &getChartsMenu($rootid='',$myid='') {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER, $PEDIGREE_FULL_DETAILS;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
+		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
+
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
@@ -524,11 +528,12 @@ class MenuBar
 		}
 
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
+		$showLayout = ($PEDIGREE_LAYOUT) ? 1 : 0;
 
 		//-- main charts menu item
-		$link = "pedigree.php";
+		$link = "pedigree.php?&show_full={$showFull}&talloffset={$showLayout}";
 		if ($rootid) {
-			$link .= "?rootid={$rootid}&show_full={$showFull}";
+			$link .= "&rootid={$rootid}";
 			$menu = new Menu($pgv_lang["charts"], $link);
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -562,8 +567,8 @@ class MenuBar
 			switch ($menuType) {
 			case "pedigree":
 				//-- pedigree
-				$link = "pedigree.php";
-				if ($rootid) $link .= "?rootid={$rootid}&show_full={$showFull}";
+				$link = "pedigree.php?show_full={$showFull}&talloffset={$showLayout}";
+				if ($rootid) $link .= "&rootid={$rootid}";
 				$submenu = new Menu($pgv_lang["pedigree_chart"], $link);
 				if (!empty($PGV_IMAGES["pedigree"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
