@@ -144,9 +144,9 @@ class HourglassControllerRoot extends BaseController {
 		}
 		//-- perform the desired action
 		switch($this->action) {
-			case "addfav":
+/*			case "addfav":
 				$this->addFavorite();
-				break;
+				break; */
 			case "accept":
 				$this->acceptChanges();
 				break;
