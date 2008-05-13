@@ -55,6 +55,9 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		}
 	}
 	
+	// Override GEDCOM configuration temporarily	
+	if (isset($show_full)) $saveShowFull = $show_full;
+	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
 	if ($config["details"]=="no") {
 		$show_full = 0;
 		// Here we could adjust the block width & height to accommodate larger displays 
@@ -62,8 +65,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$show_full = 1;
 		// Here we could adjust the block width & height to accommodate larger displays 
 	}
-
-	$PEDIGREE_FULL_DETAILS = $show_full;		// Override GEDCOM configuration (but only for the Charts block)
+	$PEDIGREE_FULL_DETAILS = $show_full;
 	
 	if ($config['type']!='treenav') {
 		include_once("includes/controllers/hourglass_ctrl.php");
@@ -163,6 +165,11 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		print $content;
 	}
 	print '</div></div>';
+	
+	// Restore GEDCOM configuration
+	unset($show_full);
+	if (isset($saveShowFull)) $show_full = $saveShowFull;
+	$PEDIGREE_FULL_DETAILS = $savePedigreeFullDetails;
 }
 
 function print_charts_block_config($config) {

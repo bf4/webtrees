@@ -35,6 +35,13 @@ $PGV_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);
 //-- print user favorites
 function print_user_favorites($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype, $indilist, $sourcelist;
+	global $show_full, $PEDIGREE_FULL_DETAILS;
+
+	// Override GEDCOM configuration temporarily	
+	if (isset($show_full)) $saveShowFull = $show_full;
+	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
+	$show_full = 1;
+	$PEDIGREE_FULL_DETAILS = 1;
 
 	$userfavs = getUserFavorites(PGV_USER_NAME);
 	if (!is_array($userfavs)) $userfavs = array();
@@ -51,11 +58,15 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 		$content .= print_text("no_favorites",0,1);
 	}
 	else {
-		$content .= "<table width=\"100%\" class=\"$TEXT_DIRECTION\">";
 		$mygedcom = $GEDCOM;
 		$current_gedcom = $GEDCOM;
-		if ($block) $style = 1;
-		else $style = 2;
+		if ($block) {
+			$style = 1;		// 1 means "regular box"
+			$content .= "<table width=\"99%\" class=\"$TEXT_DIRECTION\">";
+		} else {
+			$style = 2;		// 2 means "wide box"
+			$content .= "<table width=\"75%\" class=\"center $TEXT_DIRECTION\">";
+		}
 		foreach($userfavs as $key=>$favorite) {
 			if (isset($favorite["id"])) $key=$favorite["id"];
 			$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype=$ctype&amp;action=deletefav&amp;fv_id=".$key."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />";
@@ -155,5 +166,10 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 		print $content;
 	}
 	print '</div></div>';
+	
+	// Restore GEDCOM configuration
+	unset($show_full);
+	if (isset($saveShowFull)) $show_full = $saveShowFull;
+	$PEDIGREE_FULL_DETAILS = $savePedigreeFullDetails;
 }
 ?>
