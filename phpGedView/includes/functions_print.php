@@ -2171,12 +2171,17 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 		$level = substr($match[$i][0],0,1);
 		$pid2 = $match[$i][1];
 		// get RELAtionship field
+		$autoRela = false;		// Indicates that the RELA information was automatically generated
 		$assorec = get_sub_record($level, "$level ASSO ", $factrec, $i+1);
 //		if (substr($_SERVER["SCRIPT_NAME"],1) == "pedigree.php") {
 			$rct = preg_match("/\d RELA (.*)/", $assorec, $rmatch);
 			if ($rct>0) {
 				// RELAtionship name in user language
 				$key = strtolower(trim($rmatch[1]));
+				if (substr($key,0,1)=='*') {
+					$autoRela = true;
+					$key = substr($key,1);
+				}
 				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
 				if ($cr > 0) {
 					$rela = get_sosa_name($relamatch[0][1]);
@@ -2188,9 +2193,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				}
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
-				if ($pid2==$pid) print "<span class=\"details_label\">";
+//				if ($pid2==$pid) print "<span class=\"details_label\">";
 				print " {$rela}: ";
-				if ($pid2==$pid) print "</span>";
+//				if ($pid2==$pid) print "</span>";
 			}
 			else $rela = $factarray["RELA"]; // default
 //		}
@@ -2226,9 +2231,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if (!empty($age))
 					print " ({$pgv_lang['age']} {$age})";
 			}
-/*
+
 			// RELAtionship calculation : for a family print relationship to both spouses
-			if ($view!="preview") {
+			if ($view!="preview" && !$autoRela) {
 				if ($type=='FAM') {
 					$famrec = find_family_record($pid);
 					if ($famrec) {
@@ -2241,7 +2246,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				}
 				else if ($pid!=$pid2) print " - <a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&pid1=$pid&pid2=$pid2&followspouse=1&ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
-*/
+
 		}
 		else if (strstr($gedrec, "@ FAM")!==false) {
 			print "<a href=\"family.php?show_full=1&famid=$pid2\">";
