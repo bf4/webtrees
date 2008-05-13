@@ -32,10 +32,10 @@ if (!empty($lang)) {
 	$changelanguage = "yes";
 	$NEWLANGUAGE = $lang;
 }
-require("includes/feedcreator.class.php");
-require("includes/functions_rss.php");
-require("config.php");
-require("includes/index_cache.php");
+require 'config.php';
+require 'includes/feedcreator.class.php';
+require 'includes/functions_rss.php';
+require 'includes/index_cache.php';
 
 $feedCacheName = "fullFeed";
 
