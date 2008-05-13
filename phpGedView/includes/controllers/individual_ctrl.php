@@ -386,10 +386,11 @@ class IndividualControllerRoot extends BaseController {
 					
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")) {
-						$name1 = trim($firstmediarec["file"]);
-						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . "\">" . "\n";
+						$name = $this->indi->getName();
+						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
 					}else
 // ---------------------------------------------------------------------------------------------
+
 					if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
 					}else{
