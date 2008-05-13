@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Added $GEDCOM global missed out in SVN 3050 (windmillway)
  - Changed: Show persons name as Lightbox title (instead of file) name when viewing various Charts (windmillway)
  - Fixed: [ 1961705 ] Pedigree chart in portrait despite pref setting (canajun2eh)
  - Fixed: [ 1961288 ] [4.1.5] indi page tab script error if lightbox module not installed (windmillway)
