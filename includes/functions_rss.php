@@ -29,9 +29,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require 'config.php';
-require 'includes/functions_print_lists.php';
-require 'includes/class_stats.php';
+require_once 'includes/functions_print_lists.php';
+require_once 'includes/class_stats.php';
 
 $time = client_time();
 $day = date("j", $time);
@@ -732,7 +731,7 @@ function getRandomMedia() {
 		}
 		//if ($block) {
 			$randomMedia .= "<img src=\"".$medialist[$value]["THUMB"]."\" border=\"0\" class=\"thumbnail\"";
-			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
+			if ($isExternal) $randomMedia .=  " width=\"".$THUMBNAIL_WIDTH."\"";
 			$randomMedia .= " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
 		/*} else {
 			print "<img src=\"".$medialist[$value]["FILE"]."\" border=\"0\" class=\"thumbnail\" ";
