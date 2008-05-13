@@ -169,9 +169,6 @@ class Menu
 			return '';
 		}
 		$icons=array();
-		if ($this->icon) {
-			$icons[]='<a href="'.$this->link.'"><img onmouseover="this.className=\''.$this->hoverclass.'\'" onmouseout="this.className=\''.$this->class.'\'" class="'.$this->class.'" src="'.$this->icon.'" alt="'.$this->label.'" title="'.$this->label.'"></a>';
-		}
 		if ($this->submenus) {
 			foreach ($this->submenus as $submenu) {
 				$icons[]=$submenu->getMenuAsIcons();
@@ -1254,7 +1251,9 @@ class MenuBar
 	 * @return Menu 	the menu item
 	 */
 	function &getLanguageMenu() {
-		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $language_settings, $flagsfile, $QUERY_STRING, $SCRIPT_NAME;
+		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $language_settings, $flagsfile, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+
+		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (PGV_USER_ID) {
 			$current=$LANGUAGE;
@@ -1263,13 +1262,17 @@ class MenuBar
 		}
 
 		if ($ENABLE_MULTI_LANGUAGE) {
-			$menu=new Menu($pgv_lang['change_lang']);
-			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu');
+			$menu=new Menu($pgv_lang['change_lang'], '#', 'down');
+			if (!empty($PGV_IMAGES['gedcom']['large'])) {
+				$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
+			}
+			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+
 			$menu->print_menu = null;
 			foreach ($language_settings as $lang=>$language) {
 				if ($language['pgv_lang_use']) {
 					$submenu=new Menu($language['pgv_lang'], $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang));
-					if ($lang==$current) {
+					if ($lang==$LANGUAGE) {
 						$submenu->addClass('activeflag', 'brightflag');
 					} else {
 						$submenu->addClass('dimflag', 'brightflag');
@@ -1292,12 +1295,16 @@ class MenuBar
 	 * @return Menu 	the menu item
 	 */
 	function &getFavouritesMenu() {
-		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $SCRIPT_NAME;
+		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 		global $controller; // Pages with a controller can be added to the favourites
+		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (PGV_USER_ID || !$REQUIRE_AUTHENTICATION) {
-			$menu=new Menu($pgv_lang['favorites']);
-			$menu->addClass('favmenuitem', 'favmenuitem_hover', 'favsubmenu');
+			$menu=new Menu($pgv_lang['favorites'], '#', 'down');
+			if (!empty($PGV_IMAGES['gedcom']['large'])) {
+				$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
+			}
+			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 			$menu->print_menu = null;
 			// User favourites
 			$userfavs=getUserFavorites(PGV_USER_ID);
