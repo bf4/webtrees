@@ -28,10 +28,7 @@
  * @subpackage Lists
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
-	exit;
-}
+if(stristr($_SERVER['SCRIPT_NAME'], basename(__FILE__))!==false){print 'You cannot access an include file directly.';exit;}
 
 require_once 'includes/functions_print_lists.php';
 
@@ -42,7 +39,6 @@ class stats
 {
 	var $_gedcom;
 	var $_server_url; // Absolute URL for generating external links.  e.g. in RSS feeds
-	var $_compat=false;
 	var $_not_allowed = false;
 	var $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'photo', 'tombstone', 'video', 'other');
 	// For Google charts simple encoding
@@ -143,22 +139,22 @@ class stats
 	function getTags($text)
 	{
 		global $pgv_lang, $factarray;
+		static $funcs;
 
-		$ct=preg_match_all("/#(.+)#/U", "{$text}", $match);
-		$tags=$match[1];
-		$new_tags=array();
-		$new_values=array();
-		$c=count($tags);
+		// Retrive all class methods
+		isset($funcs) or $funcs = get_class_methods($this);
 
-		static $funcs=null;
-		if (!is_array($funcs)) {
-			$funcs=get_class_methods($this);
-		}
+		// Extract all tags from the provided text
+		$ct = preg_match_all("/#(.+)#/U", (string)$text, $match);
+		$tags = $match[1];
+		$c = count($tags);
+		$new_tags = array(); // tag to replace
+		$new_values = array(); // value to replace it with
 
 		/*
 		 * Parse block tags.
 		 */
-		for ($i=0; $i < $c; $i++)
+		for($i=0; $i < $c; $i++)
 		{
 			$full_tag = $tags[$i];
 			// Added for new parameter support
@@ -171,65 +167,65 @@ class stats
 			{
 				$params = null;
 			}
-			// Skip non-tags and non-allowed tags
-			if(!array_search($tags[$i], $funcs) || $tags[$i][0] == '_' || in_array($tags[$i], $this->_not_allowed)){continue;}
-			// Generate the replacement value for the tag
-			if (method_exists($this, $tags[$i])) {
-				$new_tags[]="#{$full_tag}#";
-				$new_values[]=$this->$tags[$i]($params);
-				unset($tags[$i]);
-			}
-		}
 
-		/*
-		 * Parse language variables.
-		 */
-		foreach ($tags as $i=>$x) {
-			// help link
-			if (substr($x, 0, 5)=='help:') {
-				$new_tags[]="#{$x}#";
-				$new_values[]=print_help_link(substr($x, 5), 'qm', '', false, true);
-				unset($tags[$i]);
+			// Skip non-tags and non-allowed tags
+			if($tags[$i][0] == '_' || in_array($tags[$i], $this->_not_allowed)){continue;}
+
+			// Generate the replacement value for the tag
+			if(method_exists($this, $tags[$i]))
+			{
+				$new_tags[] = "#{$full_tag}#";
+				$new_values[] = $this->$tags[$i]($params);
 			}
+			elseif($tags[$i] == 'help')
+			{
+				// re-merge, just in case
+				$new_tags[] = "#{$full_tag}#";
+				$new_values[] = print_help_link(join(':', $params), 'qm', '', false, true);
+			}
+			/*
+			 * Parse language variables.
+			 */
 			// pgv_lang - long
-			if (substr($x, 0, 5)=='lang:' && isset($pgv_lang[substr($x, 5)])) {
-				$new_tags[]="#{$x}#";
-				$new_values[]=print_text($pgv_lang[substr($x, 5)], 0, 2);
-				unset($tags[$i]);
+			elseif($tags[$i] == 'lang')
+			{
+				// re-merge, just in case
+				$params = join(':', $params);
+				$new_tags[] = "#{$full_tag}#";
+				$new_values[] = print_text($pgv_lang[$params], 0, 2);
 			}
 			// pgv_lang
-			else
-				if (isset($pgv_lang[$x])) {
-					$new_tags[]="#{$x}#";
-					$new_values[]=print_text($pgv_lang[$x], 0, 2);
-					unset($tags[$i]);
-				}
-				// factarray
-				else
-					if (isset($factarray[$x])) {
-						$new_tags[]="#{$x}#";
-						$new_values[]=$factarray[$x];
-						unset($tags[$i]);
-					}
-					// GLOBALS
-					else if (isset($GLOBALS[$x])) {
-						$new_tags[]="#{$x}#";
-						$new_values[]=$GLOBALS[$x];
-						unset($tags[$i]);
-					}
-					// CONSTANTS
-					else if (substr($x, 0, 4)=='PGV_' & defined($x)) {
-						$new_tags[]="#{$x}#";
-						$new_values[]=constant($x);
-						unset($tags[$i]);
-					}
-					// OLD GLOBALS THAT ARE NOW CONSTANTS
-					else if (defined('PGV_'.$x)) {
-						$new_tags[]="#PGV_{$x}#";
-						$new_values[]=constant('PGV_'.$x);
-						unset($tags[$i]);
-					}
-				}
+			elseif(isset($pgv_lang[$tags[$i]]))
+			{
+				$new_tags[] = "#{$full_tag}#";
+				$new_values[] = print_text($pgv_lang[$tags[$i]], 0, 2);
+			}
+			// factarray
+			elseif(isset($factarray[$tags[$i]]))
+			{
+				$new_tags[] = "#{$full_tag}#";
+				$new_values[] = $factarray[$tags[$i]];
+			}
+			// GLOBALS
+			elseif(isset($GLOBALS[$tags[$i]]))
+			{
+				$new_tags[] = "#{$full_tag}#";
+				$new_values[] = $GLOBALS[$tags[$i]];
+			}
+			// CONSTANTS
+			elseif(substr($tags[$i], 0, 4) == 'PGV_' & defined($tags[$i]))
+			{
+				$new_tags[] = "#{$full_tag}#";
+				$new_values[] = constant($tags[$i]);
+			}
+			// OLD GLOBALS THAT ARE NOW CONSTANTS
+			elseif(defined("PGV_{$tags[$i]}"))
+			{
+				$new_tags[] = "#PGV_{$tags[$i]}#";
+				$new_values[] = constant("PGV_{$tags[$i]}");
+			}
+		}
+		unset($tags);
 		return array($new_tags, $new_values);
 	}
 
