@@ -2,7 +2,7 @@
 /**
  * French Language file for PhpGedView.
  *
- * PhpGedView: Genealogy Viewer
+ * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
@@ -35,8 +35,8 @@ $pgv_lang["warn_file_delete"]           = "Ce fichier contient des informations 
 $pgv_lang["deleted_files"]              = "Fichiers supprimés :";
 $pgv_lang["index_dir_cleanup_inst"]     = "Pour supprimer un fichier ou un sous-répertoire du répertoire «index» il vous suffit de le déplacer dans la corbeille ou de cocher la case correspondante. Cliquez sur le bouton Supprimer pour supprimer définitivement les fichiers indiqués.<br /><br />Les fichiers qui sont identifiés par des <img src=\"./images/RESN_confidential.gif\" /> sont nécessaires pour le bon fonctionnement du logiciel et ne peuvent pas être supprimés.<br />Les fichiers qui sont identifiés par <img src=\"./images/RESN_locked.gif\" /> contiennent des paramètres importants ou des données en attente de modification et ne doivent être supprimés que si vous êtes certain de ce que vous faites.<br /><br />";
 $pgv_lang["index_dir_cleanup"]          = "Nettoyer le répertoire «index»";
-$pgv_lang["clear_cache_succes"]         = "Fichiers antémémoire supprimés.";
-$pgv_lang["clear_cache"]                = "Vider l'antémémoire";
+$pgv_lang["clear_cache_succes"]         = "Fichiers supprimés du cache.";
+$pgv_lang["clear_cache"]                = "Vider le cache";
 $pgv_lang["sanity_err0"]                = "Erreurs :";
 $pgv_lang["sanity_err1"]                = "Ce programme nécessite PHP version 4.3 ou supérieure.";
 $pgv_lang["sanity_err2"]                = "Fichier ou répertoire non trouvé : <i>#GLOBALS[whichFile]#</i>. Vérifier son existence et ses droits d'accès.";
@@ -187,6 +187,7 @@ $pgv_lang["gedcom_not_imported"]        = "Ce fichier GEDCOM n'a pas encore ét�
 $pgv_lang["ibase"]                      = "InterBase";
 $pgv_lang["ifx"]                        = "Informix";
 $pgv_lang["img_admin_settings"]         = "Configuration de l'éditeur d'images";
+$pgv_lang["autoContinue"]               = "Cliquer automatiquement sur le bouton «Continuer»";
 $pgv_lang["import_complete"]            = "Import terminé";
 $pgv_lang["import_marr_names"]          = "Ajouter les noms des maris";
 $pgv_lang["import_options"]             = "Options d'importation";

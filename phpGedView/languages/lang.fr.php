@@ -44,7 +44,7 @@ $pgv_lang["changedate2"]                = "Début de plage des dates à modifier
 $pgv_lang["search_place_word"]          = "Mots entiers seulement";
 $pgv_lang["invalid_search_input"]       = "Entrez un nom de personne ou de lieu en complément de l'année";
 $pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";
-$pgv_lang["cache_life"]                 = "Actualisation du fichier antémémoire";
+$pgv_lang["cache_life"]                 = "Vider le cache";
 $pgv_lang["genealogy"]                  = "Généalogie";
 $pgv_lang["activate"]                   = "Activer";
 $pgv_lang["deactivate"]                 = "Désactiver";
@@ -354,8 +354,6 @@ $pgv_lang["landscape"]                  = "Paysage";
 $pgv_lang["start_at_parents"]           = "Retour aux parents";
 $pgv_lang["charts"]                     = "Diagrammes";
 $pgv_lang["lists"]                      = "Listes";
-$pgv_lang["max_generation"]             = "Le nombre maximum de générations est #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"]             = "Le nombre minimum de générations est 3.";
 $pgv_lang["box_width"]                  = "Largeur de boîte";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -730,7 +728,7 @@ $pgv_lang["no_login"]                   = "Authentification de l'utilisateur imp
 $pgv_lang["basic_realm"]                = "Authentification PhpGedView";
 $pgv_lang["basic_auth_failure"]         = "Entrer un login et un mot de passe pour accéder à cette ressource";
 $pgv_lang["basic_auth"]                 = "Authentification simple";
-$pgv_lang["digest_auth"]				= "Authentification HTTP Digest";
+$pgv_lang["digest_auth"]                = "Authentification HTTP Digest";
 $pgv_lang["no_auth_needed"]             = "Pas d'authentification";
 $pgv_lang["file_not_exists"]            = "Le fichier n'existe pas.";
 $pgv_lang["research_assistant"]         = "Assistant de recherches";
@@ -1235,6 +1233,12 @@ $pgv_lang["upcoming_events_block"]      = "Bloc «Prochains anniversaires»";
 $pgv_lang["upcoming_events_descr"]      = "Le bloc «Prochains anniversaires» affiche les anniversaires des 30 prochains jours.";
 $pgv_lang["todays_events_block"]        = "Bloc «Ce jour-là»";
 $pgv_lang["todays_events_descr"]        = "Le bloc «Ce jour-là» affiche les anniversaires du jour. Les utilisateurs identifiés voient les anniversaires des personnes vivantes.";
+$pgv_lang["todo_block"]                 = "Bloc «Tâches à faire»";
+$pgv_lang["todo_descr"]                 = "Le bloc «Tâches à faire» affiche la liste des enregistrements _TODO.du fichier GEDCOM.";
+$pgv_lang["todo_show_other"]            = "Voir les «Tâches à faire» des autres utilisateurs";
+$pgv_lang["todo_show_unassigned"]       = "Voir les «Tâches à faire» non attribuées";
+$pgv_lang["todo_show_future"]           = "Voir les «Tâches à faire» futures";
+$pgv_lang["todo_nothing"]               = "La liste «Tâches à faire».est vide";
 $pgv_lang["yahrzeit_block"]             = "Les Yahrzeiten à venir";
 $pgv_lang["yahrzeit_descr"]             = "Le bloc des Yahrzeiten à venir affiche les anniversaires des décès qui vont arriver dans un futur proche. Vous pouvez configurer la période qui est affichée, et l'administrateur peut configurer la date jusqu'à laquelle ce bloc doit aller chercher ces anniversaires.";
 $pgv_lang["logged_in_users_block"]      = "Bloc «Utilisateurs connectés»";
@@ -1486,7 +1490,7 @@ $pgv_lang["authenticated_feed"]         = "Flux d'authentification";
 //-- ASSOciates RELAtionship
 // After any change in the following list, please check $assokeys in edit_interface.php
 $pgv_lang["attendant"]                  = "Préposé";
-$pgv_lang["attending"]                  = "Présent";
+$pgv_lang["attending"]                  = "Présent(e)";
 $pgv_lang["best_man"]                   = "Garçon d'honneur";
 $pgv_lang["bridesmaid"]                 = "Demoiselle d'honneur";
 $pgv_lang["buyer"]                      = "Acheteur";
@@ -1652,11 +1656,11 @@ $pgv_lang["hs_searchsentence"]          = "Phrase exacte";
 $pgv_lang["hs_intruehelp"]              = "Texte d'aide seulement";
 $pgv_lang["hs_inallhelp"]               = "Tout le texte";
 
-// Média import
+// Media import
 $pgv_lang["choose"]                     = "Choisir : ";
 $pgv_lang["account_information"]        = "Informations du compte";
 
-//-- Média item "TYPE" sub-field
+//-- Media item "TYPE" sub-field
 $pgv_lang["TYPE__audio"]                = "Audio";
 $pgv_lang["TYPE__book"]                 = "Livre";
 $pgv_lang["TYPE__card"]                 = "Carte";
@@ -1672,10 +1676,10 @@ $pgv_lang["TYPE__newspaper"]            = "Journal";
 $pgv_lang["TYPE__photo"]                = "Photo";
 $pgv_lang["TYPE__tombstone"]            = "Pierre tombale";
 $pgv_lang["TYPE__video"]                = "Vidéo";
-$pgv_lang["TYPE__painting"] = "Peinture";
-$pgv_lang["TYPE__other"] = "Autre";
+$pgv_lang["TYPE__painting"]             = "Peinture";
+$pgv_lang["TYPE__other"]                = "Autre";
 
-//-- Other média suff
+//-- Other media suff
 $pgv_lang["view_slideshow"]             = "Voir en diaporama";
 $pgv_lang["download_image"]             = "Télécharger le fichier";
 $pgv_lang["no_media"]                   = "Aucun objet MultiMédia trouvé";
