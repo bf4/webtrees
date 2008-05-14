@@ -1864,10 +1864,11 @@ class IndividualControllerRoot extends BaseController {
 		                foreach($families as $famid=>$family) {
 		                    $famids[] = $family->getXref();
 		                }
-										$this->indi->add_family_facts(false);
+						$this->indi->add_family_facts(false);
 						// LB Fix if no googlemaps ========================================================
 						if (file_exists("modules/googlemap/googlemap.php")) {
-		                build_indiv_map($this->getIndiFacts(), $famids);
+							create_indiv_buttons();
+							build_indiv_map($this->getIndiFacts(), $famids);
 						}
 						// LB Fix if no googlemaps ========================================================
 		}
