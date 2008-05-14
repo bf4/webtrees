@@ -402,7 +402,6 @@ function get_last_string($hay, $need){
 function check_bom(){
 	global $language_settings, $pgv_lang;
 	$check = false;
-	$BOM = chr(239).chr(187).chr(191);
 	$fileList = array("pgv_language", "confighelpfile", "helptextfile", "factsfile", "adminfile", "editorfile", "countryfile");
 
 	foreach ($language_settings as $key => $language) {
@@ -416,11 +415,11 @@ function check_bom(){
 					print "</span>";
 				} else {
 					$str = file_get_contents($language[$fileName]);
-					if (strlen($str)>3 && substr($str,0,3) == $BOM) {
+					if (strpos($str, PGV_UTF8_BOM)===0) {
 						$check = true;
 						print "<span class=\"warning\">".$pgv_lang["bom_found"].substr($language[$fileName], 10).".</span>";
 						print "<br />";
-						$writetext = substr($str,3);
+						$writetext = substr($str, strlen(PGV_UTF8_BOM));
 						if (!$handle = @fopen($language[$fileName], "w")){
 							print "<span class=\"warning\">";
 							print str_replace("#lang_filename#", substr($language[$fileName], 10), $pgv_lang["no_open"]) . "<br /><br />";

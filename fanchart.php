@@ -392,7 +392,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	echo "\r\n$imagemap";
 
 	// PGV banner ;-)
-	ImageStringUp($image, 1, $fanw-10, $fanh/3, "www.phpgedview.net", $color);
+	ImageStringUp($image, 1, $fanw-10, $fanh/3, PGV_PHPGEDVIEW_URL, $color);
 
 	// here we cannot send image to browser ('header already sent')
 	// and we dont want to use a tmp file

@@ -3,7 +3,7 @@
  * Startup and session logic
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,13 @@ define('PGV_PHPGEDVIEW',      'PhpGedView');
 define('PGV_VERSION',         '4.1.6');
 define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
+define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
+define('PGV_PHPGEDVIEW_WIKI', 'http://wiki.phpgedview.net');
 
-// Don't try to use old privacy files
+// Environmental requirements
+define('PGV_REQUIRED_PHP_VERSION',     '4.3.5');
+define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not currently enforced
+define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not currently enforced
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
@@ -404,8 +409,9 @@ unset($ini_include_path, $includes_dir); // destroy some variables for security 
 
 set_magic_quotes_runtime(0);
 
-if (version_compare(phpversion(), '4.3.5')<0)
-	die ("<html>\n<body><b style=\"color: red;\">PhpGedView requires PHP version 4.3.5 or later.</b><br /><br />\nYour server is running PHP version ".phpversion().".  Please ask your server's Administrator to upgrade the PHP installation.</body></html>");
+if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
+	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.phpversion().'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+}
 
 //-- load file for language settings
 require_once( "includes/lang_settings_std.php");

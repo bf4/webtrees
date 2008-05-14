@@ -41,9 +41,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 function need_BOM_cleanup() {
 	global $fcontents;
 
-	$BOM = chr(0xEF).chr(0xBB).chr(0xBF);
-	if (substr($fcontents,0,3)==$BOM) return true;
-	else return false;
+	return strpos($fcontents, PGV_UTF8_BOM)===0;
 }
 
 /**
@@ -56,9 +54,8 @@ function need_BOM_cleanup() {
 function BOM_cleanup() {
 	global $fcontents;
 
-	$BOM = chr(0xEF).chr(0xBB).chr(0xBF);
-	if (substr($fcontents,0,3)==$BOM) {
-		$fcontents = substr($fcontents, 3);
+	if (strpos($fcontents, PGV_UTF8_BOM)===0) {
+		$fcontents=substr($fcontents, strlen(PGV_UTF8_BOM));
 		return true;
 	}
 	return false;
@@ -76,12 +73,8 @@ function BOM_cleanup() {
 function need_head_cleanup() {
 	global $fcontents;
 
-	$BOM = chr(0xEF).chr(0xBB).chr(0xBF);
-	$pos1 = strpos($fcontents, "0 HEAD");
-	if ($pos1==0) return false;
 	// Don't report BOM as data preceding 0 HEAD
-	if ($pos1==3 && substr($fcontents,0,3)==$BOM) return false;
-	else return true;
+	return strpos($fcontents, '0 HEAD')!==0 && strpos($fcontents, PGV_UTF8_BOM.'0 HEAD')!==0;
 }
 
 /**
