@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -322,10 +322,8 @@ if ($action=="add") {
 		if (GBrowserIsCompatible()) {
 			map = new GMap2(document.getElementById("map_pane"));
 			map.addControl(new GSmallMapControl());
-			map.addControl(new GMapTypeControl());
 			map.addControl(new GScaleControl()) ;
 			GEvent.addListener(map, 'click', function(overlay, point) {
-
 				if (overlay) {  //probably not needed in this case
 								//map.removeOverlay(overlay);
 				} else if (point) {
@@ -649,7 +647,7 @@ function paste_char(value,lang,mag) {
 	<table class="facts_table">
 	<tr>
 		<td class="optionbox" colspan="2">
-		<center><div id="map_pane" style="width: 550px; height: 300px"></div></center>
+		<center><div id="map_pane" style="width: 100%; height: 300px"></div></center>
 	</tr>
 	<tr>
 		<td class="optionbox" colspan="2">

@@ -5,7 +5,7 @@
  * Display all of the information about an individual
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ loadLangFile("gm_lang");	// Load GoogleMap language file
 
 global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
-global $SEARCH_SPIDER;
+global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 
 print_header($controller->getPageTitle());
 
@@ -255,6 +255,21 @@ function tempObj(tab, oXmlHttp) {
 			if (tabid[tab]=='googlemap') {
 				if (!loadedTabs[tab]) {
 					loadMap();
+					<?php if ($GOOGLEMAP_PH_CONTROLS != "false") {?>
+					// hide controls
+					GEvent.addListener(map,'mouseout',function()
+					{
+						map.hideControls();
+					});
+					// show controls
+					GEvent.addListener(map,'mouseover',function()
+					{
+						map.showControls();
+					});
+					GEvent.trigger(map,'mouseout');
+					<?php
+					}
+					?>
 					map.setMapType(GOOGLEMAP_MAP_TYPE);
 				}
 				SetMarkersAndBounds();
@@ -541,20 +556,8 @@ if(empty($SEARCH_SPIDER)) {
 				        print "<tr><td valign=\"top\">\n";
 				        print "<div id=\"googlemap_left\">\n";
 				        print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
-				        print "<div id=\"map_pane\" style=\"height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+				        print "<div id=\"map_pane\" style=\"border: 1px solid gray; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
 				        print "<table width=\"100%\"><tr>\n";
-				        if ($TEXT_DIRECTION=="ltr") print "<td align=\"left\">";
-				        else print "<td align=\"right\">";
-				        print "<a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
-				        print "<td>&nbsp;</td>\n";
-				        if ($TEXT_DIRECTION=="ltr") print "<td align=\"right\">\n";
-				        else print "<td align=\"left\">\n";
-				        print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
-				        print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
-				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
-						print "<a href=\"javascript:map.setMapType(G_PHYSICAL_MAP)\">".$pgv_lang["gm_physical"]."</a>\n";
-
-				        print "</td></tr>\n";
 				        if (PGV_USER_IS_ADMIN) {
 				            print "<tr><td align=\"left\">\n";
 				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
@@ -570,7 +573,7 @@ if(empty($SEARCH_SPIDER)) {
 				        print "</div>\n";
 				        print "</td>\n";
 				        print "<td valign=\"top\" width=\"33%\">\n";
-		print "<div id=\"googlemap_content\">\n";
+						print "<div id=\"googlemap_content\">\n";
 				        setup_map();
 				        if ($controller->default_tab==6) {
 				        	$controller->getTab(6);
