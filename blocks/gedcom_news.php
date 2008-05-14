@@ -43,7 +43,7 @@ $PGV_BLOCKS['print_gedcom_news']['config']		= array(
  */
 function print_gedcom_news($block = true, $config='', $side, $index)
 {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $VERSION, $PGV_BLOCKS;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $PGV_BLOCKS;
 
 	if(empty($config)) {
 		$config = $PGV_BLOCKS['print_gedcom_news']['config'];
@@ -121,13 +121,22 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 			}
 		}
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
-		if($ct > 0) {
-			if(isset($pgv_lang[$match[1]])) {
-				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $newsText);
-			}
+		if ($ct > 0) {
 			$varname = $match[1];
-			if(isset($$varname)) {
-				$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+			if (isset($pgv_lang[$varname])) {
+				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$varname], $newsText);
+			} else {
+				if (defined('PGV_'.$varname)) {
+					// e.g. global $VERSION is now constant PGV_VERSION
+					$varname='PGV_'.$varname;
+				}
+				if (defined($varname)) {
+					$newsText = preg_replace("/{$match[0]}/", constant($varname), $newsText);
+				} else {
+					if (isset($$varname)) {
+						$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+					}
+				}
 			}
 		}
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);

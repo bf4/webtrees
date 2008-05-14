@@ -79,7 +79,7 @@ class PGVReportBase {
 	var $title = "";
 	
 	function setup($pw, $ph, $pageSize, $o, $m, $showGenText=true) {
-		global $pgv_lang, $VERSION, $vars, $pageSizes;
+		global $pgv_lang, $vars, $pageSizes;
 
 		// Determine the page dimensions
 		$this->pageFormat = strtoupper($pageSize);

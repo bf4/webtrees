@@ -182,10 +182,10 @@ function safe_POST_integer($var, $min, $max, $default) {
 	return (int)$num;
 }
 
-function safe_GET_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True)') {
+function safe_GET_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True|on)') {
 	return !is_null(safe_GET($var, $true));
 }
-function safe_POST_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True)') {
+function safe_POST_bool($var, $true='(y|Y|1|yes|YES|Yes|true|TRUE|True|on)') {
 	return !is_null(safe_POST($var, $true));
 }
 
@@ -200,7 +200,7 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
-	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.$regex.'$~', $arr[$var])) {
+	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.addcslashes($regex,'~').'$~', $arr[$var])) {
 		return trim_recursive($arr[$var]);
 	} else {
 		return $default;
@@ -255,6 +255,23 @@ function update_config(&$text, $var, $value) {
 	} else {
 		// Variable not found in file - insert it
 		$text=preg_replace('/^(.*[\r\n]+)([ \t]*[$].*)$/s', '$1'.$assign." // new config variable\n".'$2',$text);
+	}
+}
+
+// Convert a file upload PHP error code into user-friendly text
+function file_upload_error_text($error_code) {
+	global $pgv_lang;
+
+	switch ($error_code) {
+	case UPLOAD_ERR_OK:         return $pgv_lang['file_success'];
+	case UPLOAD_ERR_INI_SIZE:
+	case UPLOAD_ERR_FORM_SIZE:  return $pgv_lang['file_too_big'];
+	case UPLOAD_ERR_PARTIAL:    return $pgv_lang['file_partial'];
+	case UPLOAD_ERR_NO_FILE:    return $pgv_lang['file_missing'];
+	case UPLOAD_ERR_NO_TMP_DIR: return 'Missing PHP temporary directory';
+	case UPLOAD_ERR_CANT_WRITE: return 'PHP failed to write to disk';
+	case UPLOAD_ERR_EXTENSION:  return 'PHP blocked file by extension';
+	default:                    return 'Unknown file upload error:'.$error_code.'. Please report this as a bug.';
 	}
 }
 
@@ -316,7 +333,7 @@ function get_privacy_file_version($privfile) {
  * @return string path to the privacy file
  */
 function get_privacy_file() {
-	global $GEDCOMS, $GEDCOM, $REQUIRED_PRIVACY_VERSION;
+	global $GEDCOMS, $GEDCOM;
 
 	$privfile = "privacy.php";
 	if (count($GEDCOMS)==0) {
@@ -336,9 +353,9 @@ function get_privacy_file() {
 				$privfile = "privacy.php";
 		}
 	}
-	$privversion = get_privacy_file_version($privfile);
-	if ($privversion<$REQUIRED_PRIVACY_VERSION)
+	if (version_compare(get_privacy_file_version($privfile), PGV_REQUIRED_PRIVACY_VERSION)<0) {
 		$privfile = "privacy.php";
+	}
 
 	return $privfile;
 }

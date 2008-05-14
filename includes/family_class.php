@@ -420,7 +420,7 @@ class Family extends GedcomRecord {
 	// Get all the dates/places for marriages - for the FAM lists
 	function getAllMarriageDates() {
 		if ($this->canDisplayDetails()) {
-			foreach (array('MARR') as $event) {
+			foreach (explode('|', PGV_EVENTS_MARR) as $event) {
 				if ($array=$this->getAllEventDates($event)) {
 					return $array;
 				}
@@ -430,7 +430,7 @@ class Family extends GedcomRecord {
 	}
 	function getAllMarriagePlaces() {
 		if ($this->canDisplayDetails()) {
-			foreach (array('MARR') as $event) {
+			foreach (explode('|', PGV_EVENTS_MARR) as $event) {
 				if ($array=$this->getAllEventPlaces($event)) {
 					return $array;
 				}

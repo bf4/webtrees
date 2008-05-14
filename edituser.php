@@ -71,7 +71,7 @@ $form_visible_online=safe_POST('form_visible_online', 'Y', 'N');
 // Respond to form action
 if ($form_action=='update') {
 	if ($form_username!=PGV_USER_NAME && get_user_id($form_username)) {
-		print_header('PhpGedView '.$pgv_lang['user_admin']);
+		print_header($pgv_lang['user_admin']);
 		echo '<span class="error">', $pgv_lang['duplicate_username'], '</span><br />';
 	} else {
 		$alphabet=getAlphabet().'_-. ';
@@ -85,7 +85,7 @@ if ($form_action=='update') {
 			$i++;
 		}
 		if (!$pass) {
-			print_header('PhpGedView '.$pgv_lang['user_admin']);
+			print_header($pgv_lang['user_admin']);
 			echo '<span class="error">', $pgv_lang['invalid_username'], '</span><br />';
 		} else {
 			// Change password
@@ -150,7 +150,7 @@ if ($form_action=='update') {
 		}
 	}
 } else {
-	print_header('PhpGedView '.$pgv_lang['user_admin']);
+	print_header($pgv_lang['user_admin']);
 }
 
 // Form validation

@@ -305,6 +305,7 @@ function print_td_person($n) {
 	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES;
 	global $showids, $showthumbs;
+	global $GEDCOM;
 
 	$text = "";
 	$pid = $treeid[$n];
@@ -333,8 +334,7 @@ function print_td_person($n) {
 				$imgheight = $imgsize[1]+150;
 //LBox --------  change for Lightbox Album --------------------------------------------
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" title=\"" . $object["mid"] . "\">" . "\n";
-					//$text .= " ><a href=\"mediaviewer.php?mid=".$object["mid"]."\">";
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
 				}else{
 // ---------------------------------------------------------------------------------------------
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";

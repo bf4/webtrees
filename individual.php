@@ -138,16 +138,17 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 			echo("This is a local individual.");*/
 	}
 	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
+		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 	?>
 	</td><td class="<?php echo $TEXT_DIRECTION; ?> noprint" valign="top">
 		<div class="accesskeys">
-			<a class="accesskeys" href="<?php print "pedigree.php?rootid=$pid";?>" title="<?php print $pgv_lang["pedigree_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_pedigree"]; ?>"><?php print $pgv_lang["pedigree_chart"] ?></a>
-			<a class="accesskeys" href="<?php print "descendancy.php?pid=$pid";?>" title="<?php print $pgv_lang["descend_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_descendancy"]; ?>"><?php print $pgv_lang["descend_chart"] ?></a>
+			<a class="accesskeys" href="<?php print "pedigree.php?rootid=$pid&show_full=$showFull";?>" title="<?php print $pgv_lang["pedigree_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_pedigree"]; ?>"><?php print $pgv_lang["pedigree_chart"] ?></a>
+			<a class="accesskeys" href="<?php print "descendancy.php?pid=$pid&show_full=$showFull";?>" title="<?php print $pgv_lang["descend_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_descendancy"]; ?>"><?php print $pgv_lang["descend_chart"] ?></a>
 			<a class="accesskeys" href="<?php print "timeline.php?pids[]=$pid";?>" title="<?php print $pgv_lang["timeline_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_timeline"]; ?>"><?php print $pgv_lang["timeline_chart"] ?></a>
 			<?php
 				if (PGV_USER_GEDCOM_ID) {
 			?>
-			<a class="accesskeys" href="<?php print "relationship.php?pid1=".PGV_USER_GEDCOM_ID."&amp;pid2=".$controller->pid;?>" title="<?php print $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php print $pgv_lang["relationship_to_me"] ?></a>
+			<a class="accesskeys" href="<?php print "relationship.php?show_full=$showFull&pid1=".PGV_USER_GEDCOM_ID."&pid2=".$controller->pid;?>" title="<?php print $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php print $pgv_lang["relationship_to_me"] ?></a>
 			<?php 	}
 			if ($controller->canShowGedcomRecord()) {
 			?>
@@ -260,10 +261,12 @@ function tempObj(tab, oXmlHttp) {
 				ResizeMap();
 				ResizeMap();
 			}
-			//-- initialize lightbox tabs
-			if (tabid[tab]=='lightbox2' || tabid[tab]=='facts' || tabid[tab]=='media' || tabid[tab]=='relatives') {
-				CB_Init();
-			}
+			//-- initialize lightbox tabs if lightbox installed
+			<?php if (file_exists("modules/lightbox/album.php")) { ?>
+				if (tabid[tab]=='lightbox2' || tabid[tab]=='facts' || tabid[tab]=='media' || tabid[tab]=='relatives') {
+					CB_Init();
+				}
+			<?php } ?>
 			loadedTabs[tab] = true;
 		}
 	};
@@ -467,7 +470,7 @@ if(empty($SEARCH_SPIDER)) {
 	print "<div id=\"researchlog_content\">\n";
 
 	if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
-		if ($VERSION<4.1) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>\n";
+		if (version_compare(PGV_VERSION, '4.1')<0) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>\n";
 		print "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
 		if ($controller->default_tab==5) $controller->getTab(5);
 		else loading_message();

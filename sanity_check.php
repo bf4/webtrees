@@ -15,7 +15,7 @@
 * If any of the checks fail the appropriate error or warning message will be displayed.
 *  
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2007  John Finlay and Others
+* Copyright (C) 2002 to 2008  John Finlay and Others.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,8 @@
 global $errors, $warnings, $pgv_lang;
 $errors = array();
 $warnings = array();
-if (version_compare(phpversion(), '4.3.5')<0) 
-{
+
+if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
 	$errors[] = "<span class=\"error\">".$pgv_lang["sanity_err1"]."</span>";
 }
 

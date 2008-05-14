@@ -31,16 +31,12 @@ require_once("includes/functions_charts.php");
 
 // Extract form variables
 $pid        =safe_GET_xref('pid');
-$show_full  =safe_GET('show_full',     '1', $PEDIGREE_FULL_DETAILS);
+$show_full  =safe_GET('show_full',     array('0', '1'), $PEDIGREE_FULL_DETAILS);
 $show_spouse=safe_GET('show_spouse',   '1', '0');
 $descent    =safe_GET_integer('descent',       0, 9, 5);
 $generations=safe_GET_integer('generations',   2, $MAX_DESCENDANCY_GENERATIONS, 2);
 $box_width  =safe_GET_integer('box_width',     50, 300, 100);
 
-// Set default value on start
-if (empty($pid)) {
-	$show_full=$PEDIGREE_FULL_DETAILS;
-}
 
 // -- size of the boxes
 if (!$show_full) $bwidth = ($bwidth / 1.5);
@@ -495,7 +491,11 @@ if ($view!="preview") {
 
 	<!-- // NOTE: Close table header -->
 	</td></tr></table>
-<?php } ?>
+<?php 
+	if ($show_full==0) {
+		echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
+	}
+} ?>
 <div id="familybook_chart<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl"; ?>" style="<?php if ($view=="preview") print "top: 1px;"; else print "width:98%; direction:".$TEXT_DIRECTION."; z-index:1;";?>" >
 <?php
 

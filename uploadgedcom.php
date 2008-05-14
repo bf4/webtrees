@@ -1340,7 +1340,7 @@ if ($stage == 1) {
 	// NOTE: Finished Links
 	cleanup_database();
 	$GEDCOMS[$ged]["imported"] = true;
-	$GEDCOMS[$ged]["pgv_ver" ] = $VERSION;
+	$GEDCOMS[$ged]["pgv_ver" ] = PGV_VERSION;
 	store_gedcoms();
 	print "</td></tr>";
 	

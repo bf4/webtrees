@@ -799,6 +799,7 @@ a:hover .nameZoom {
 }
 
 .block {
+	overflow: auto;
 	background-image: url("14wy20.jpg");
 	border: solid #98753d 1px;
 	border-right: solid #98753d 3px;

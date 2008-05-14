@@ -61,8 +61,8 @@ else if (!check_for_import($GEDCOM)) {
 	exit;
 }
 else if ($action=='version') {
-	addDebugLog($action." SUCCESS\n$VERSION $VERSION_RELEASE\n");
-	print "SUCCESS\n$VERSION $VERSION_RELEASE\n";
+	addDebugLog($action." SUCCESS\n".PGV_VERSION_TEXT."\n");
+	print "SUCCESS\n".PGV_VERSION_TEXT."\n";
 }
 else if ($action=='connect') {
 	if (!empty($username)) {
@@ -489,10 +489,9 @@ else if ($action=='getxref') {
 }
 else if ($action=="uploadmedia") {
 	$error="";
-	$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 	if (isset($_FILES['mediafile'])) {
 		if (!move_uploaded_file($_FILES['mediafile']['tmp_name'], $MEDIA_DIRECTORY.$_FILES['mediafile']['name'])) {
-			$error .= "ERROR 19: ".$pgv_lang["upload_error"]." ".$upload_errors[$_FILES['mediafile']['error']];
+			$error .= "ERROR 19: ".$pgv_lang["upload_error"]." ".file_upload_error_text($_FILES['mediafile']['error']);
 		}
 		else if (!isset($_FILES['thumbnail'])) {
 			$filename = $MEDIA_DIRECTORY.$_FILES['mediafile']['name'];
@@ -503,7 +502,7 @@ else if ($action=="uploadmedia") {
 	}
 	if (isset($_FILES['thumbnail'])) {
 		if (!move_uploaded_file($_FILES['thumbnail']['tmp_name'], $MEDIA_DIRECTORY."thumbs/".$_FILES['thumbnail']['name'])) {
-			$error .= "\nERROR 19: ".$pgv_lang["upload_error"]." ".$upload_errors[$_FILES['thumbnail']['error']];
+			$error .= "\nERROR 19: ".$pgv_lang["upload_error"]." ".file_upload_error_text($_FILES['thumbnail']['error']);
 		}
 	}
 	if (!empty($error)) {

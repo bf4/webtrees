@@ -51,7 +51,7 @@ class PGVReport extends PGVReportBase {
 	var $printedfootnotes = array();
 
 	function setup($pw, $ph, $pageSize, $o, $m, $showGenText=true) {
-		global $pgv_lang, $VERSION;
+		global $pgv_lang;
 		parent::setup($pw, $ph, $pageSize, $o, $m, $showGenText);
 
 		$this->headerElements = array();
@@ -61,8 +61,8 @@ class PGVReport extends PGVReportBase {
 
 		if ($showGenText) {
 			$element = new PGVRCellHTML(0,10, "C", "");
-			$element->addText("$pgv_lang[generated_by] PhpGedView $VERSION");
-			$element->setUrl("http://www.phpgedview.net/");
+			$element->addText("$pgv_lang[generated_by] ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT);
+			$element->setUrl(PGV_PHPGEDVIEW_URL);
 			$this->footerElements[] = $element;
 		}
 	}

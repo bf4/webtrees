@@ -36,7 +36,6 @@ if (isset($_SESSION["cookie_login"]) && $_SESSION["cookie_login"]==true) {
 }
 
 print_header($pgv_lang["upload_media"]);
-$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 ?>
 <center>
 <?php
@@ -54,7 +53,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 				AddToLog("Media file ".$MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name'])." uploaded");
 				$thumbgenned = false;
 				if (!move_uploaded_file($_FILES['mediafile'.$i]['tmp_name'], $MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name']))) {
-					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES['mediafile'.$i]['error']]."<br />";
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES['mediafile'.$i]['error'])."<br />";
 				}
 				else {
 					//-- automatically generate thumbnail
@@ -70,7 +69,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 				if (!$thumbgenned) {
 					if (!is_dir($MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i])) mkdir($MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i]);
 					if (!move_uploaded_file($_FILES['thumbnail'.$i]['tmp_name'], $MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['thumbnail'.$i]['name']))) {
-						$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES['thumbnail'.$i]['error']]."<br />";
+						$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES['thumbnail'.$i]['error'])."<br />";
 					}
 					AddToLog("Media thumbnail ".$MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['thumbnail'.$i]['name'])." uploaded");
 				}

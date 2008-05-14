@@ -772,8 +772,6 @@ $pgv_lang["no_link_found"]		= "לא נמצא קשר (אחר) בין שני הא�
 $pgv_lang["sibling"]		= "אח/ות";
 $pgv_lang["follow_spouse"]		= "בדוק קירבה דרך נישואין"; 
 $pgv_lang["timeout_error"]		= "החיפוש ארך יותר מידי זמן.";
-$pgv_lang["son_in_law"]		= "חתן";  // the husband of your daughter
-$pgv_lang["daughter_in_law"]	= "כלה"; // the wife of your son
 $pgv_lang["grandchild"]		= "נכד/ה";
 $pgv_lang["grandson"]		= "נכד";
 $pgv_lang["granddaughter"]	= "נכדה";
@@ -782,8 +780,6 @@ $pgv_lang["greatgrandson"]	= "שלש";
 $pgv_lang["greatgranddaughter"]	= "שלשה"; 
 $pgv_lang["brother"]		= "אח";
 $pgv_lang["sister"]		= "אחות";
-$pgv_lang["brother_in_law"]		= "גיס";
-$pgv_lang["sister_in_law"]		= "גיסה";
 $pgv_lang["aunt"]			= "דודה";
 $pgv_lang["uncle"]		= "דוד";
 $pgv_lang["nephew"]		= "אחיינית";
@@ -806,7 +802,14 @@ $pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s היא %2\$s של %3\$
 
 $pgv_lang["mother_in_law"]		= "חמות"; 
 $pgv_lang["father_in_law"]		= "חם";
-$pgv_lang["step_son"]		= "בן חורג";
+$pgv_lang["brother_in_law"]		= "גיס";
+$pgv_lang["sister_in_law"]		= "גיסה";
+$pgv_lang["son_in_law"]		= "חתן";  // the husband of your daughter
+$pgv_lang["daughter_in_law"]		= "כלה"; // the wife of your son
+$pgv_lang["uncle_in_law"]		= "דוד לפ נישואין";  //Uncle-in-law";
+$pgv_lang["aunt_in_law"]		= "דודה לפי נישואין"; //Aunt-in-law"; 
+
+$pgv_lang["step_son"]			= "בן חורג";
 $pgv_lang["step_daughter"]	    	= "בת חורגת";
 
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
@@ -1230,40 +1233,46 @@ $pgv_lang["stat_other"]		= "רשומות אחרות";
 $pgv_lang["stat_earliest_birth"] 	= "שנת הלידה המוקדמת ביותר";
 $pgv_lang["stat_latest_birth"] 		= "שנת הלידה המאוחרת ביותר";
 $pgv_lang["stat_earliest_death"] 	= "שנת הפטירה המוקדמת ביותר"; 
-$pgv_lang["stat_latest_death"] 		= "שנת הפטירה המאוחרת ביותר"; 
-$pgv_lang["customize_page"]		="MyGedView התאם אישית את הפורטל";
+$pgv_lang["stat_latest_death"] 	= "שנת הפטירה המאוחרת ביותר"; 
+$pgv_lang["customize_page"]		= "MyGedView התאם אישית את הפורטל";
 $pgv_lang["customize_gedcom_page"]	= "התאם אישית את דף ברוכים הבאים הזה";
-$pgv_lang["upcoming_events_block"]	="אירועים קרובים";
-$pgv_lang["upcoming_events_descr"]	="אזור אירועים קרובים מראה רשימה של אירועים שיתרחשו בקרוב. תוכל לקבוע את כמות הנתונים שתראה, והמנהלן יכול לקבוע את תחום הזמן הקובע לאזור.";
-$pgv_lang["todays_events_block"]		="ביום הזה";
-$pgv_lang["todays_events_descr"]		="אזור ביום הזה - בהיסטוריה שלך ... מראה רשימה של אירועים שהתרחשו היום. אם אין אירועים, תוכל לקבוע את כמות הנתונים שתראה.";
-$pgv_lang["yahrzeit_block"]			="ימי שנה קרובים";
-$pgv_lang["yahrzeit_descr"]		="אזור ימי שנה קרובים מראה רשימה של פטירות לפי תאריך עברי שיתרחשו בקרוב. תוכל לקבוע את התקופה שתראה, והמנהלן יכול לקבוע את תחום הזמן הקובע לאזור.";
-$pgv_lang["logged_in_users_block"]		="משתמשים מחוברים";
+$pgv_lang["upcoming_events_block"]	= "אירועים קרובים";
+$pgv_lang["upcoming_events_descr"]= "אזור אירועים קרובים מראה רשימה של אירועים שיתרחשו בקרוב. תוכל לקבוע את כמות הנתונים שתראה, והמנהלן יכול לקבוע את תחום הזמן הקובע לאזור.";
+$pgv_lang["todays_events_block"]	= "ביום הזה";
+$pgv_lang["todays_events_descr"]	= "אזור ביום הזה - בהיסטוריה שלך ... מראה רשימה של אירועים שהתרחשו היום. אם אין אירועים, תוכל לקבוע את כמות הנתונים שתראה.";
+$pgv_lang["todo_block"] 		= "&quot;משימות - To Do &quot; לביצוע"; 
+$pgv_lang["todo_descr"] 		= "אזור &quot;משימות - To Do&quot; מציג את כל עובדות <span dir=\"ltr\">_TODO</span> שעדיין לא טופלו בקובץ ה-GEDCOM שלך.";
+$pgv_lang["todo_show_other"]     	= "הראה מטלות של משתמשים אחרים";
+$pgv_lang["todo_show_unassigned"]	= "הראה מטלות לא משוייכות"; 
+$pgv_lang["todo_show_future"]    	= "הראה מטלות עתידיות";
+$pgv_lang["todo_nothing"]        	= "אין &quot;משימות - To Do&quot; לביצוע.";
+$pgv_lang["yahrzeit_block"]		= "ימי שנה קרובים";
+$pgv_lang["yahrzeit_descr"]		= "אזור ימי שנה קרובים מראה רשימה של פטירות לפי תאריך עברי שיתרחשו בקרוב. תוכל לקבוע את התקופה שתראה, והמנהלן יכול לקבוע את תחום הזמן הקובע לאזור.";
+$pgv_lang["logged_in_users_block"]	="משתמשים מחוברים";
 $pgv_lang["logged_in_users_descr"]	="אזור משתמשים מחוברים מראה רשימה של המשתמשים המחוברים עכשיו לאתר.";
-$pgv_lang["user_messages_block"]		="הודעות המשתמש";
-$pgv_lang["user_messages_descr"]		="אזור הודעות המשתמש מראה רשימה של הודעות שנשלחו למשתמש פעיל.";
-$pgv_lang["user_favorites_block"]		="מועדפים של משתמש";
-$pgv_lang["user_favorites_descr"]		="אזור מועדפים של המשתמש מראה למשתמש רשימה של האנשים המועדפים שלו בתוך מאגר המידע כך שיוכל לעבור בקלות בעזרת הקישור אל נתוניהם.";
+$pgv_lang["user_messages_block"]	="הודעות המשתמש";
+$pgv_lang["user_messages_descr"]	="אזור הודעות המשתמש מראה רשימה של הודעות שנשלחו למשתמש פעיל.";
+$pgv_lang["user_favorites_block"]	="מועדפים של משתמש";
+$pgv_lang["user_favorites_descr"]	="אזור מועדפים של המשתמש מראה למשתמש רשימה של האנשים המועדפים שלו בתוך מאגר המידע כך שיוכל לעבור בקלות בעזרת הקישור אל נתוניהם.";
 $pgv_lang["welcome_block"]		="ברוכים הבאים של המשתמש";
 $pgv_lang["welcome_descr"]		="אזור ברוכים הבאים של המשתמש מראה למשתמש את היום והזמן הנוכחיים, קישורים מהירים לעדכון נתוני קוד המשתמש וקישור לתרשים אילן היוחסין שלו וקישור להתאמת דף הפורטל MyGedView.";
-$pgv_lang["random_media_block"]		="מדיה אקראית";
-$pgv_lang["random_media_descr"]		="אזור מדיה אקראית מראה בצורה אקראית תמונה או פריט מדיה אחר ממאגר הנתונים הפעיל ומציג אותו למשתמש.<br /><br />המנהלן קובע אם האזור יראה פרטי מדיה הקשורים או לאנשים או למאורעות.";
+$pgv_lang["random_media_block"]	="מדיה אקראית";
+$pgv_lang["random_media_descr"]	="אזור מדיה אקראית מראה בצורה אקראית תמונה או פריט מדיה אחר ממאגר הנתונים הפעיל ומציג אותו למשתמש.<br /><br />המנהלן קובע אם האזור יראה פרטי מדיה הקשורים או לאנשים או למאורעות.";
 $pgv_lang["random_media_persons_or_all"] 	= "הראה רק אנשים, מאורעות, או הכול?";
 $pgv_lang["random_media_persons"]	= "אנשים";
-$pgv_lang["random_media_events"]		= "מאורעות";
+$pgv_lang["random_media_events"]	= "מאורעות";
 $pgv_lang["gedcom_block"]		="GEDCOM ברוכים הבאים";
 $pgv_lang["gedcom_descr"]		="אזור GEDCOM ברוכים הבאים פועלת בצורה דומה לאזור ברוכים הבאים של המשתמש. הוא מברך את המבקר לאתר ומראה את הכותרת של מאגר הנתונים הפעיל ואת היום והשעה הנוכחיים.";
 $pgv_lang["gedcom_favorites_block"]	="מועדפי GEDCOM";
 $pgv_lang["gedcom_favorites_descr"]	="אזור מועדפי GEDCOM מאפשר למנהלן האתר לציין אנשים במאגר הנתונים כך שכולם ימצאו אותם בקלות. זו דרך להדגיש את האנשים החשובים בהיסטורית משפחתך.";
-$pgv_lang["gedcom_stats_block"]		="סטטיסטיקות GEDCOM";
-$pgv_lang["gedcom_stats_descr"]		="אזור סטטיסטיקות GEDCOM מראה למבקרים נתונים בסיסיים על מאגר הנתונים, כמו למשל מתי הוא נוצר וכמה אנשים נכללים בו.<br /><br />הוא כולל רשימה של שמות משפחה שכיחים. ניתן לעצב את האזור לא להראות את רשימת השמות השכיחים וניתן להגדיר את ה-GEDCOM להסיר או להוסיף שמות מהרשימה. ניתן לקבוע את הסף להופעה ברשימה בהגדרת התצורה של קובץ ה-GEDCOM.";
+$pgv_lang["gedcom_stats_block"]	="סטטיסטיקות GEDCOM";
+$pgv_lang["gedcom_stats_descr"]	="אזור סטטיסטיקות GEDCOM מראה למבקרים נתונים בסיסיים על מאגר הנתונים, כמו למשל מתי הוא נוצר וכמה אנשים נכללים בו.<br /><br />הוא כולל רשימה של שמות משפחה שכיחים. ניתן לעצב את האזור לא להראות את רשימת השמות השכיחים וניתן להגדיר את ה-GEDCOM להסיר או להוסיף שמות מהרשימה. ניתן לקבוע את הסף להופעה ברשימה בהגדרת התצורה של קובץ ה-GEDCOM.";
 $pgv_lang["gedcom_stats_show_surnames"] = "הראה שמות משפחה שכיחים?";
 $pgv_lang["portal_config_intructions"]	="#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />תוכל לבצע התאמה אישית לדף ע\"י הצבת אזורים על הדף לפי רצונך.<br /><br />הדף מחולק לשני חלקים, החלק ה<b>ראשי</b> והחלק ה<b>ימני</b>. האזורים בחלק ה<b>ראשי</b> גדולים יותר ומופיעים מתחת לכותרת של הדף. החלק ה<b>ימני</b> מתחיל מימין לכותרת ויורד כלפי מטה בצד הימני של הדף.<br /><br />לכל חלק יש רשימת האזורים שלו, שיוצגו על הדף בסדר שהם רשומים. ניתן להוסיף, להוריד ולשנות את הסדר של האזורים לפי רצונך.<br /><br />אם אחת הרשימות של האזורים ריקה, האזורים הנותרים תופסים את כל רוחב הדף.<br /><br />";
 $pgv_lang["login_block"]		="התחברות";
 $pgv_lang["login_descr"]		="אזור התחברות מקבל קוד משתמש וסיסמא עבור התחברות משתמשים לאתר.";
-$pgv_lang["theme_select_block"]         	= "בחירת עיצוב";
-$pgv_lang["theme_select_descr"]         	= "האזור לבחירת עיצוב מציג את תיבת הבחירה גם אם שינוי העיצוב אינו פעיל.";
+$pgv_lang["theme_select_block"]	= "בחירת עיצוב";
+$pgv_lang["theme_select_descr"]      	= "האזור לבחירת עיצוב מציג את תיבת הבחירה גם אם שינוי העיצוב אינו פעיל.";
 $pgv_lang["block_top10_title"]          	= "עשרת השמות  השכיחים";
 $pgv_lang["block_top10"]                	= "עשרת השמות  השכיחים ";
 $pgv_lang["block_top10_descr"]    	= "האזור מציג טבלה של 10 שמות המשפחה השכיחים במאגר הנתונים. ניתן לשנות את המספר של שמות המשפחה. ניתן לקבוע הגדרות בתצורת ה-GEDCOM כך ששמות מסוימים לא יופיעו ברשימה.";
@@ -1276,16 +1285,16 @@ $pgv_lang["gedcom_news_limit_date"]	= "גיל הכניסה";
 $pgv_lang["gedcom_news_limit_count"]	= "מספר כניסות";
 $pgv_lang["gedcom_news_flag"]	= "גבול:";
 $pgv_lang["gedcom_news_archive"] 	= "הצג ארכיון";
-$pgv_lang["user_news_block"]		= "יומן המשתמש";
-$pgv_lang["user_news_descr"]		= "אזור יומן המשתמש מאפשר למשתמש לשמור הערות או כניסות יומן בתוך המערכת.";
+$pgv_lang["user_news_block"]	= "יומן המשתמש";
+$pgv_lang["user_news_descr"]	= "אזור יומן המשתמש מאפשר למשתמש לשמור הערות או כניסות יומן בתוך המערכת.";
 $pgv_lang["my_journal"]		= "היומן שלי";
 $pgv_lang["no_journal"]		= "לא יצרת שום פריט יומן.";
 $pgv_lang["confirm_journal_delete"]	= "האם באמת למחוק את כניסת היומן הזו?";
 $pgv_lang["add_journal"]		= "הוסף כניסת יומן חדשה";
-$pgv_lang["gedcom_news"]	= "חדשות";
+$pgv_lang["gedcom_news"]		= "חדשות";
 $pgv_lang["confirm_news_delete"]	= "האם באמת למחוק את כניסת החדשות הזו?";
 $pgv_lang["add_news"]		= "הוסף מאמר חדשות";
-$pgv_lang["no_news"]		= "לא הגשת מאמרי חדשות.";
+$pgv_lang["no_news"]			= "לא הגשת מאמרי חדשות.";
 $pgv_lang["edit_news"]		= "הוסף/ערוך כניסת יומן/חדשות";
 $pgv_lang["enter_title"]		= "נא הכנס כותרת.";
 $pgv_lang["enter_text"]		= "נא מלא טכסט עבור כניסת חדשות או יומן זו.";
@@ -1333,26 +1342,26 @@ $pgv_lang["pdf_reports"]            	= "דו\"חות PDF";
 $pgv_lang["html_reports"]          	= "דו\"חות HTML";
 
 //-- Ahnentafel report
-$pgv_lang["ahnentafel_report"]		= "דו\"ח Ahnentafel";
-$pgv_lang["ahnentafel_header"]		= "דו\"ח Ahnentafel עבור ";
+$pgv_lang["ahnentafel_report"]	= "דו\"ח Ahnentafel";
+$pgv_lang["ahnentafel_header"]	= "דו\"ח Ahnentafel עבור ";
 $pgv_lang["ahnentafel_generation"]	= "דור ";
 $pgv_lang["ahnentafel_pronoun_m"]	= "הוא ";
 $pgv_lang["ahnentafel_pronoun_f"]	= "היא ";
 $pgv_lang["ahnentafel_born_m"]	= "נולד";		// male
-$pgv_lang["ahnentafel_born_f"]		= "נולדה";		// female
+$pgv_lang["ahnentafel_born_f"]	= "נולדה";		// female
 $pgv_lang["ahnentafel_christened_m"] 	= "הוטבל";		// male
 $pgv_lang["ahnentafel_christened_f"] 	= "הוטבלה";	// female
 $pgv_lang["ahnentafel_married_m"]	= "התחתן";	// male
 $pgv_lang["ahnentafel_married_f"]	= "התחתנה";	// female
 $pgv_lang["ahnentafel_died_m"]	= "נפתר";		// male
-$pgv_lang["ahnentafel_died_f"]		= "נפתרה";	// female
+$pgv_lang["ahnentafel_died_f"]	= "נפתרה";	// female
 $pgv_lang["ahnentafel_buried_m"]	= "נקבר";		// male
 $pgv_lang["ahnentafel_buried_f"]	= "נקברה";		// female
-$pgv_lang["ahnentafel_place"]		= " ב-";		// place name follows this
+$pgv_lang["ahnentafel_place"]	= " ב-";		// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " אבל הפרטים אינם ידועים";
 
 //-- Changes report
-$pgv_lang["changes_report"]	= "דו\"ח שינויים"; 
+$pgv_lang["changes_report"]		= "דו\"ח שינויים"; 
 $pgv_lang["changes_pending_tot"]	= "סה\"כ שינויים ממתינים: "; 
 $pgv_lang["changes_accepted_tot"]	= "סה\"כ שינויים שהתקבלו: ";
 
@@ -1371,7 +1380,7 @@ $pgv_lang["show_photos"]		= "הראה תמונות?";
 $pgv_lang["relatives_report_ext"]	= "דו\"ח קרובים מורחב";
 $pgv_lang["with"]			= "עם";
 $pgv_lang["on"]			= "ב-";			// for precise dates
-$pgv_lang["in"]			= "ב-";			// for imprecise dates
+$pgv_lang["in"]				= "ב-";			// for imprecise dates
 $pgv_lang["individual_report"]		= "דו\"ח אישי";
 $pgv_lang["enter_pid"]		= "הכנס קוד זיהוי אישי";
 $pgv_lang["generated_by"]		= "נוצר ע\"י";
@@ -1388,37 +1397,37 @@ $pgv_lang["marr_report"]		= "דו\"ח תאריך ומקום נישואין";
 $pgv_lang["marrplace"]		= "מקום הנישואין מכיל";
 $pgv_lang["marrdate1"]		= "התחלת תחום תאריכי נישואין";
 $pgv_lang["marrdate2"]		= "סיום תחום תאריכי נישואין";
-$pgv_lang["sort_by"]		= "מיין לפי";
+$pgv_lang["sort_by"]			= "מיין לפי";
 
-$pgv_lang["cleanup"]		= "ניקיון";
+$pgv_lang["cleanup"]			= "ניקיון";
 
 //-- CONFIGURE (extra) messgaes for programs patriarch, slklist and statistics
 $pgv_lang["dynasty_list"]		= "סקירה כללית של משפחות";
 $pgv_lang["patriarch_list"]		= "רשימת ראשי בית-אב";
-$pgv_lang["statistics"]		= "סטטיסטיקות";
+$pgv_lang["statistics"]			= "סטטיסטיקות";
 
 //-- Merge Records
-$pgv_lang["merge_same"]                   	= "הרשומות אינן מסוג זהה. לא ניתן למזג רשומות מסוגים שונים.";
+$pgv_lang["merge_same"]                   = "הרשומות אינן מסוג זהה. לא ניתן למזג רשומות מסוגים שונים.";
 $pgv_lang["merge_step1"]                	= "שלב מיזוג 1 מתוך 3";
 $pgv_lang["merge_step2"]                	= "שלב מיזוג 2 מתוך 3";
 $pgv_lang["merge_step3"]                	= "שלב מיזוג 3 מתוך 3";
 $pgv_lang["select_gedcom_records"] 	= "בחר שתי רשומות GEDCOM למיזוג. הרשומות חייבות להיות מאותו סוג.";
 $pgv_lang["merge_to"]                        	= "מזג לקוד זיהוי:";
-$pgv_lang["merge_from"]                        	= "מזג מקוד זיהוי:";
+$pgv_lang["merge_from"]                    	= "מזג מקוד זיהוי:";
 $pgv_lang["merge_facts_same"]        	= "העובדות הבאות זהות בשתי הרשומות וימוזגו בצורה אוטומטית.";
 $pgv_lang["no_matches_found"]        	= "אין עובדות מתאימות";
 $pgv_lang["unmatching_facts"]        	= "העובדות הבאות אינן זהות. בחר את המידע שברצונך לשמור.";
-$pgv_lang["record"]                               	= "רשומה";
+$pgv_lang["record"]   			= "רשומה";
 $pgv_lang["adding"]        		= "מוסיף";
 $pgv_lang["updating_linked"]        	= "מעדכן רשומה קשורה";
-$pgv_lang["merge_more"]                       	= "מזג רשומות נוספות.";
+$pgv_lang["merge_more"]		= "מזג רשומות נוספות.";
 $pgv_lang["same_ids"]                        	= "הכנסת קוד זיהוי זהה. לא ניתן למזג רשומה זהה.";
 
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"] 		= "תרשים שושלת";
 $pgv_lang["gen_ancestry_chart"]  	= "תרשים שושלת של #PEDIGREE_GENERATIONS# דורות";
 $pgv_lang["chart_style"]    	     	= "סגנון תרשים";
-$pgv_lang["chart_list"]		= "רשימה";
+$pgv_lang["chart_list"]			= "רשימה";
 $pgv_lang["chart_booklet"]   		= "ספרון";
 $pgv_lang["show_cousins"]		= "הראה בני דוד";
 // 1st generation
@@ -1442,7 +1451,7 @@ $pgv_lang["sosa_15"]		= "סבתא רבתא";
 $pgv_lang["sosa_16"]               	= "N/A";
 $pgv_lang["sosa_17"]               	= "N/A";
 $pgv_lang["sosa_18"]               	= "N/A";
-$pgv_lang["sosa_19"]             	= "N/A";
+$pgv_lang["sosa_19"]             		= "N/A";
 $pgv_lang["sosa_20"]               	= "N/A";
 $pgv_lang["sosa_21"]               	= " רבתא";
 $pgv_lang["sosa_22"]               	= " רבא";
@@ -1451,7 +1460,7 @@ $pgv_lang["sosa_24"]               	= "N/A";
 $pgv_lang["sosa_25"]               	= "N/A";
 $pgv_lang["sosa_26"]               	= "N/A";
 $pgv_lang["sosa_27"]               	= "N/A";
-$pgv_lang["sosa_28"]               	 = "N/A";
+$pgv_lang["sosa_28"]               	= "N/A";
 $pgv_lang["sosa_29"]               	= "N/A";
 $pgv_lang["sosa_30"]               	= "N/A";
 $pgv_lang["sosa_31"]               	= "N/A";
@@ -1467,7 +1476,7 @@ $pgv_lang["sosa_maternal_female_n_generations"]	= "סבתא רבתא מדרגה 
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]		= "תרשים קומפקטי";
-$pgv_lang["fan_chart"]		= "תרשים מניפה";
+$pgv_lang["fan_chart"]			= "תרשים מניפה";
 $pgv_lang["gen_fan_chart"]    		= "תרשים מניפה של #PEDIGREE_GENERATIONS# דורות";
 $pgv_lang["fan_width"]		= "רוחב";
 $pgv_lang["gd_library"]		= "בעיית קונפיגורציה של שרת ה-PHP: תיקיית GD 2.x דרושה כדי להשתמש בפונקציות התמונה.";
@@ -1481,7 +1490,7 @@ $pgv_lang["rss_descr"]		= "חדשות וקישורים מאתר ה-#GEDCOM_TITLE
 $pgv_lang["rss_logo_descr"]		= "ההזנה נוצרה ע\"י PhpGedView";
 $pgv_lang["rss_feeds"]		= "הזנות RSS";
 $pgv_lang["no_feed_title"]		= "ההזנה אינה זמינה";
-$pgv_lang["no_feed"]		= "אין הזנת RSS זמינה לאתר ה-PhpGedView הזה";
+$pgv_lang["no_feed"]			= "אין הזנת RSS זמינה לאתר ה-PhpGedView הזה";
 $pgv_lang["feed_login"]		= "אם לך יש קוד משתמש באתר PhpGedView זה, תוכל להתחבר לשרת <a href=\"#AUTH_URL#\"> log in</a> ע\"י שימוש באימות בסיסי של HTTP כדי לראות נתונים פרטיים";
 $pgv_lang["authenticated_feed"]	= "הזנה מאושרת";
 
@@ -1505,11 +1514,11 @@ $pgv_lang["priest"] 			= "כומר";
 $pgv_lang["rabbi"] 			= "רב";
 $pgv_lang["registry_officer"] 		= "ממונה על רישום";
 $pgv_lang["seller"] 			= "מוכר";
-$pgv_lang["servant"] 		= "משרת";
+$pgv_lang["servant"] 			= "משרת";
 $pgv_lang["twin"] 			= "תאום/תאומה";
 $pgv_lang["twin_brother"] 		= "אח תאום";
 $pgv_lang["twin_sister"] 		= "אחות תאומה";
-$pgv_lang["witness"] 		= "עד";
+$pgv_lang["witness"] 			= "עד";
 
 //-- statistics utility
 $pgv_lang["statutci"]			= "לא ניתן ליצור אינדקס";
@@ -1517,7 +1526,7 @@ $pgv_lang["statnnames"]                	= "מספר שמות    =";
 $pgv_lang["statnfam"]                  	= "מספר משפחות  =";
 $pgv_lang["statnmale"]                	= "מספר גברים   =";
 $pgv_lang["statnfemale"]              	= "מספר נשים    =";
-$pgv_lang["statvars"]		= "מלא את הערכים הבאים עבור התרשים";
+$pgv_lang["statvars"]			= "מלא את הערכים הבאים עבור התרשים";
 $pgv_lang["statlxa"]			= "לאורך ציר ה-x:";
 $pgv_lang["statlya"]			= "לאורך ציר ה-y:";
 $pgv_lang["statlza"]			= "לאורך ציר ה-z:";
@@ -1533,19 +1542,19 @@ $pgv_lang["stat_18_ard"]		= "גיל ביחס לשנת פטירה";
 $pgv_lang["stat_19_arm"]		= "גיל בשנת הנישואין";
 $pgv_lang["stat_20_arm1"]		= "גיל בנישואין הראשונים";
 $pgv_lang["stat_21_nok"]		= "מספר ילדים";
-$pgv_lang["stat_200_none"]	= "הכול (או ריק)";
+$pgv_lang["stat_200_none"]		= "הכול (או ריק)";
 $pgv_lang["stat_201_num"]		= "ספרות";
-$pgv_lang["stat_202_perc"]	= "אחוז";
-$pgv_lang["stat_300_none"]	= "כלום";
+$pgv_lang["stat_202_perc"]		= "אחוז";
+$pgv_lang["stat_300_none"]		= "כלום";
 $pgv_lang["stat_301_mf"]		= "מגדר";
 $pgv_lang["stat_302_cgp"]		= "תקופות - סמן הערכים של תקופות על ציר ה-x";
 $pgv_lang["statmess1"]		 = "<b>הכניסות הבאות מתייחסות לפרמטרי ציר ה-X וציר ה-Y של התרשים שמעל</b>";
-$pgv_lang["statar_xgp"]			 = "גבולות ציר ה-X (תקופות):"; 
-$pgv_lang["statar_xgl"]			 = "גבולות ציר ה-X (גילים):"; 
-$pgv_lang["statar_xgm"]			 = "גבולות ציר ה-X (חודשים):"; 
-$pgv_lang["statar_xga"]			 = "גבולות ציר ה-X (מספרים):"; 
-$pgv_lang["statar_zgp"]			 = "גבולות ציר ה-X (תקופות):";
-$pgv_lang["statreset"]		= "ברירת מחדל";
+$pgv_lang["statar_xgp"]		 = "גבולות ציר ה-X (תקופות):"; 
+$pgv_lang["statar_xgl"]		 = "גבולות ציר ה-X (גילים):"; 
+$pgv_lang["statar_xgm"]		 = "גבולות ציר ה-X (חודשים):"; 
+$pgv_lang["statar_xga"]		 = "גבולות ציר ה-X (מספרים):"; 
+$pgv_lang["statar_zgp"]		 = "גבולות ציר ה-X (תקופות):";
+$pgv_lang["statreset"]			= "ברירת מחדל";
 $pgv_lang["statsubmit"]		= "הצג תרשים";
 
 //-- statisticsplot utility
@@ -1554,15 +1563,15 @@ $pgv_lang["stpl"]			= "...";
 $pgv_lang["stplGDno"]		= "ספרית Graphics Display אינה מותקנת על השרת. פנה למנהלן המערכת";
 $pgv_lang["stpljpgraphno"]	 	= "מודולי JPgraph אינם קיימים בPhpGedView.  ניתן להוריד אותם מ-http://www.aditus.nu/jpgraph/jpdownload.php<br /> ולהעתיק אותם לתיקית משנה <i>/jpgraph/</i> על השרת."; 
 $pgv_lang["stplinfo"]			= "נתוני תרשים:";
-$pgv_lang["stpltype"]		= "סוג:";
-$pgv_lang["stplnoim"]		= "לא מיושם:";
+$pgv_lang["stpltype"]			= "סוג:";
+$pgv_lang["stplnoim"]			= "לא מיושם:";
 $pgv_lang["stplmf"]			= " / מגדר";
 $pgv_lang["stplipot"]			= " / תקופת זמן";
-$pgv_lang["stplgzas"]		= "גבולות ציר z:";
+$pgv_lang["stplgzas"]			= "גבולות ציר z:";
 $pgv_lang["stplmonth"]		= "חודש";
 $pgv_lang["stplnumbers"]		= "ספרות";
 $pgv_lang["stplage"]			= "גיל";
-$pgv_lang["stplperc"]		= "אחוז";
+$pgv_lang["stplperc"]			= "אחוז";
 $pgv_lang["stplnumof"]		= "מונים "; 
 $pgv_lang["stplmarrbirth"]		= "חודשים מהחתונה להולדת הילד הראשון"; 
 
@@ -1595,50 +1604,50 @@ $pgv_lang["display_all"]		= "הצג הכול";
 
 //-- accesskey navigation
 $pgv_lang["accesskeys"]				= "קיצורי לוח המקשים";
-$pgv_lang["accesskey_skip_to_content"]			= "ת"; //C
-$pgv_lang["accesskey_search"]				= "ח"; //S
-$pgv_lang["accesskey_skip_to_content_desc"]	 	= "דלג לתוכן";
-$pgv_lang["accesskey_viewing_advice"]			= "0";
-$pgv_lang["accesskey_viewing_advice_desc"]		= "עצת הסתכלות";
+$pgv_lang["accesskey_skip_to_content"]		= "ת"; //C
+$pgv_lang["accesskey_search"]			= "ח"; //S
+$pgv_lang["accesskey_skip_to_content_desc"]	= "דלג לתוכן";
+$pgv_lang["accesskey_viewing_advice"]		= "0";
+$pgv_lang["accesskey_viewing_advice_desc"]	= "עצת הסתכלות";
 $pgv_lang["accesskey_home_page"]			= "1";
-$pgv_lang["accesskey_help_content"]			= "2";
+$pgv_lang["accesskey_help_content"]		= "2";
 $pgv_lang["accesskey_help_current_page"]		= "3";
 $pgv_lang["accesskey_contact"]			= "4";
 
-$pgv_lang["accesskey_individual_details"]			= "ע"; //I
+$pgv_lang["accesskey_individual_details"]		= "ע"; //I
 $pgv_lang["accesskey_individual_relatives"]		= "מ"; //R
-$pgv_lang["accesskey_individual_notes"]			= "ה"; //N
+$pgv_lang["accesskey_individual_notes"]		= "ה"; //N
 $pgv_lang["accesskey_individual_sources"]		= "ק"; //O
 
-$pgv_lang["accesskey_individual_media"]			= "ד"; //A clash with IE addBookmark but not a likely problem
-$pgv_lang["accesskey_individual_research_log"]		= "י"; //L
+$pgv_lang["accesskey_individual_media"]		= "ד"; //A clash with IE addBookmark but not a likely problem
+$pgv_lang["accesskey_individual_research_log"]	= "י"; //L
 $pgv_lang["accesskey_individual_pedigree"]		= "א"; //P
-$pgv_lang["accesskey_individual_descendancy"]		= "צ"; //D
+$pgv_lang["accesskey_individual_descendancy"]	= "צ"; //D
 $pgv_lang["accesskey_individual_timeline"]		= "ו"; //T
-$pgv_lang["accesskey_individual_relation_to_me"]		= "ר"; //M
+$pgv_lang["accesskey_individual_relation_to_me"]	= "ר"; //M
 
 $pgv_lang["accesskey_individual_gedcom"]		= "ג"; //G clash with rarely used Netscape/Mozilla Go menu
 
-$pgv_lang["accesskey_family_parents_timeline"]		= "א"; //P
-$pgv_lang["accesskey_family_children_timeline"]		= "צ"; //D
-$pgv_lang["accesskey_family_timeline"]			= "ו"; //T
+$pgv_lang["accesskey_family_parents_timeline"]	= "א"; //P
+$pgv_lang["accesskey_family_children_timeline"]	= "צ"; //D
+$pgv_lang["accesskey_family_timeline"]		= "ו"; //T
 
-$pgv_lang["accesskey_family_gedcom"]			= "ג"; //G clash with rarely used English Netscape/Mozilla English Go menu
+$pgv_lang["accesskey_family_gedcom"]		= "ג"; //G clash with rarely used English Netscape/Mozilla English Go menu
 
 // FAQ Page
 $pgv_lang["add_faq_header"] 	= "כותרת ה-FAQ";
-$pgv_lang["add_faq_body"] 	= "גוף ה-FAQ";
-$pgv_lang["add_faq_order"] 	= "מיקום ה-FAQ";
+$pgv_lang["add_faq_body"] 		= "גוף ה-FAQ";
+$pgv_lang["add_faq_order"] 		= "מיקום ה-FAQ";
 $pgv_lang["add_faq_visibility"] 	= "היכן ה-FAQ פעיל"; 
 $pgv_lang["no_faq_items"] 		= "רשימת ה-FAQ-ים ריקה.";
 $pgv_lang["position_item"] 		= "מיקום ישות";
-$pgv_lang["faq_list"] 		= "רשימת שאלות נפוצות (FAQ)";
-$pgv_lang["confirm_faq_delete"] = "האם הנך בטוח שברצונך למחוק כניסת ה-FAQ הזה";
-$pgv_lang["preview"] 	=  "הצגה מוקדמת";
-$pgv_lang["no_id"] 		= "קוד זיהוי של FAQ לא מפורט!";
+$pgv_lang["faq_list"] 			= "רשימת שאלות נפוצות (FAQ)";
+$pgv_lang["confirm_faq_delete"] 	= "האם הנך בטוח שברצונך למחוק כניסת ה-FAQ הזה";
+$pgv_lang["preview"] 			=  "הצגה מוקדמת";
+$pgv_lang["no_id"] 			= "קוד זיהוי של FAQ לא מפורט!";
 
 // Help search
-$pgv_lang["hs_title"] 		= "חפש טכסט עזרה";
+$pgv_lang["hs_title"] 			= "חפש טכסט עזרה";
 $pgv_lang["hs_search"] 		= "חפש";
 $pgv_lang["hs_close"] 		= "סגור חלון";
 $pgv_lang["hs_results"] 		= "נמצאו תוצאות:";
@@ -1646,8 +1655,8 @@ $pgv_lang["hs_keyword"] 		= "חפש את";
 $pgv_lang["hs_searchin"]		= "חפש ב-";
 $pgv_lang["hs_searchuser"]		= "עזרה למשתמשים";
 $pgv_lang["hs_searchmodules"]	= "עזרה במודולים";
-$pgv_lang["hs_searchconfig"]	= "עזרה למנהלנים";
-$pgv_lang["hs_searchhow"]	= "סוג חיפוש";
+$pgv_lang["hs_searchconfig"]		= "עזרה למנהלנים";
+$pgv_lang["hs_searchhow"]		= "סוג חיפוש";
 $pgv_lang["hs_searchall"]		= "כל המילים";
 $pgv_lang["hs_searchany"]		= "מילה כלשהיא";
 $pgv_lang["hs_searchsentence"]	= "ביטוי מדויק";
@@ -1699,7 +1708,7 @@ $pgv_lang["button_BIRT_YES"] 		= "הראה אנשים שנולדו לפני יו
 $pgv_lang["button_DEAT_H"] 		= "הראה זוגות שבהם רק בן הזוג נפטר.";
 $pgv_lang["button_DEAT_N"] 		= "הראה אנשים חיים או זוגות שבהם שני בני הזוג חיים."; 
 $pgv_lang["button_DEAT_W"] 		= "הראה זוגות שבהם רק בת הזוג נפטרה.";
-$pgv_lang["button_DEAT_Y"] 		= "הראה אנשים שנפטרו או זוגות שבהם שני בני הזוג נפטרו.";
+$pgv_lang["button_DEAT_Y"] 			= "הראה אנשים שנפטרו או זוגות שבהם שני בני הזוג נפטרו.";
 $pgv_lang["button_DEAT_Y100"] 		= "הראה אנשים שנפטרו ב-100 השנים האחרונות.";
 $pgv_lang["button_DEAT_YES"] 		= "הראה אנשים שנפטרו לפני יותר מ-100 שנה.";
 $pgv_lang["button_MARR_DIV"] 		= "הראה זוגות שהתגרשו.";
@@ -1711,6 +1720,6 @@ $pgv_lang["button_SEX_F"] 			= "הראה רק נקבות.";
 $pgv_lang["button_SEX_M"] 			= "הראה רק זכרים.";
 $pgv_lang["button_SEX_U"] 			= "הראה רק אנשים שמינם בלתי ידוע.";
 $pgv_lang["button_TREE_L"] 			= "הראה זוגות או אנשי &laquo;עלים&raquo;. מדובר באנשים שחיים אבל אין להם ילדים רשומים במאגר הנתונים.";
-$pgv_lang["button_TREE_R"] 			= "הראה זוגות או אנשי &laquo;שורשים&raquo; ניתן גם לכנות את האנשים הללו &laquo;פטריארכים&raquo;.מדובר באנשים שהוריהם אינם במאגר הנתונים.";
+$pgv_lang["button_TREE_R"] 		= "הראה זוגות או אנשי &laquo;שורשים&raquo; ניתן גם לכנות את האנשים הללו &laquo;פטריארכים&raquo;.מדובר באנשים שהוריהם אינם במאגר הנתונים.";
 $pgv_lang["sort_column"] 			= "מיין לפי טור זה.";
 ?>

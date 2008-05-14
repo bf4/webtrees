@@ -37,14 +37,14 @@ $pgv_lang["switch_timeline"]            = "Montrer le diagramme Échelle de temp
 $pgv_lang["differences"]                = "Différences";
 $pgv_lang["charts_block"]               = "Bloc Diagrammes";
 $pgv_lang["charts_block_descr"]         = "Le bloc diagrammes vous permet de placer un diagramme sur la page d'accueil ou sur la page Mon Portail. Vous pouvez configurer le bloc pour montrer les ancêtres, les descendants ou la vue sablier. Vous pouvez également choisir la personne racine du diagramme.";
-$pgv_lang["charts_click_box"]           = "Cliquez sur le boite de votre choix afin d'obtenir plus d'informations sur cette personne.";
+$pgv_lang["charts_click_box"]           = "Cliquez sur la boîte de votre choix afin d'obtenir plus d'informations.";
 $pgv_lang["chart_type"]                 = "Type de diagramme";
 $pgv_lang["changedate1"]                = "Fin de plage des dates à modifier";
 $pgv_lang["changedate2"]                = "Début de plage des dates à modifier";
 $pgv_lang["search_place_word"]          = "Mots entiers seulement";
 $pgv_lang["invalid_search_input"]       = "Entrez un nom de personne ou de lieu en complément de l'année";
 $pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";
-$pgv_lang["cache_life"]                 = "Actualisation du fichier antémémoire";
+$pgv_lang["cache_life"]                 = "Vider le cache";
 $pgv_lang["genealogy"]                  = "Généalogie";
 $pgv_lang["activate"]                   = "Activer";
 $pgv_lang["deactivate"]                 = "Désactiver";
@@ -354,8 +354,6 @@ $pgv_lang["landscape"]                  = "Paysage";
 $pgv_lang["start_at_parents"]           = "Retour aux parents";
 $pgv_lang["charts"]                     = "Diagrammes";
 $pgv_lang["lists"]                      = "Listes";
-$pgv_lang["max_generation"]             = "Le nombre maximum de générations est #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"]             = "Le nombre minimum de générations est 3.";
 $pgv_lang["box_width"]                  = "Largeur de boîte";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -730,7 +728,7 @@ $pgv_lang["no_login"]                   = "Authentification de l'utilisateur imp
 $pgv_lang["basic_realm"]                = "Authentification PhpGedView";
 $pgv_lang["basic_auth_failure"]         = "Entrer un login et un mot de passe pour accéder à cette ressource";
 $pgv_lang["basic_auth"]                 = "Authentification simple";
-#pgv_lang["digest_auth"]                = "Digest Authentication"; //not used in code yet
+$pgv_lang["digest_auth"]                = "Authentification HTTP Digest";
 $pgv_lang["no_auth_needed"]             = "Pas d'authentification";
 $pgv_lang["file_not_exists"]            = "Le fichier n'existe pas.";
 $pgv_lang["research_assistant"]         = "Assistant de recherches";
@@ -946,47 +944,47 @@ $pgv_lang["n_x_maternal_aunt_bm"]       = "%2\$d x ";
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "cousin germain";
-$pgv_lang["male_cousin_2"]              = "cousin issu de germain";
-$pgv_lang["male_cousin_3"]              = "cousin issu d'issu de germain";
-$pgv_lang["male_cousin_4"]              = "";
-$pgv_lang["male_cousin_5"]              = "";
-$pgv_lang["male_cousin_6"]              = "";
-$pgv_lang["male_cousin_7"]              = "";
-$pgv_lang["male_cousin_8"]              = "";
-$pgv_lang["male_cousin_9"]              = "";
-$pgv_lang["male_cousin_10"]             = "";
-$pgv_lang["male_cousin_11"]             = "";
-$pgv_lang["male_cousin_12"]             = "";
-$pgv_lang["male_cousin_13"]             = "";
-$pgv_lang["male_cousin_14"]             = "";
-$pgv_lang["male_cousin_15"]             = "";
-$pgv_lang["male_cousin_16"]             = "";
-$pgv_lang["male_cousin_17"]             = "";
-$pgv_lang["male_cousin_18"]             = "";
-$pgv_lang["male_cousin_19"]             = "";
-$pgv_lang["male_cousin_20"]             = "";
-$pgv_lang["male_cousin_n"]              = "";
+$pgv_lang["male_cousin_2"]              = "cousin parenté au troisième degré (issu de germain)";
+$pgv_lang["male_cousin_3"]              = "cousin parenté au quatrième degré";
+$pgv_lang["male_cousin_4"]              = "cousin parenté au cinquième degré";
+$pgv_lang["male_cousin_5"]              = "cousin parenté au sixième degré";
+$pgv_lang["male_cousin_6"]              = "cousin parenté au septième degré";
+$pgv_lang["male_cousin_7"]              = "cousin parenté au huitième degré";
+$pgv_lang["male_cousin_8"]              = "cousin parenté au neuvième degré";
+$pgv_lang["male_cousin_9"]              = "cousin parenté au dixième degré";
+$pgv_lang["male_cousin_10"]             = "cousin parenté au onzième degré";
+$pgv_lang["male_cousin_11"]             = "cousin parenté au douzième degré";
+$pgv_lang["male_cousin_12"]             = "cousin parenté au treizième degré";
+$pgv_lang["male_cousin_13"]             = "cousin parenté au 14ième degré";
+$pgv_lang["male_cousin_14"]             = "cousin parenté au 15ième degré";
+$pgv_lang["male_cousin_15"]             = "cousin parenté au 16ième degré";
+$pgv_lang["male_cousin_16"]             = "cousin parenté au 17ième degré";
+$pgv_lang["male_cousin_17"]             = "cousin parenté au 18ième degré";
+$pgv_lang["male_cousin_18"]             = "cousin parenté au 19ième degré";
+$pgv_lang["male_cousin_19"]             = "cousin parenté au 20ième degré";
+$pgv_lang["male_cousin_20"]             = "cousin parenté au 21ième degré";
+$pgv_lang["male_cousin_n"]              = "cousin parenté au (%n+1)ième degré";
 $pgv_lang["female_cousin_1"]            = "cousine germaine";
-$pgv_lang["female_cousin_2"]            = "cousine issue de germaine";
-$pgv_lang["female_cousin_3"]            = "cousine issue d'issue de germaine";
-$pgv_lang["female_cousin_4"]            = "";
-$pgv_lang["female_cousin_5"]            = "";
-$pgv_lang["female_cousin_6"]            = "";
-$pgv_lang["female_cousin_7"]            = "";
-$pgv_lang["female_cousin_8"]            = "";
-$pgv_lang["female_cousin_9"]            = "";
-$pgv_lang["female_cousin_10"]           = "";
-$pgv_lang["female_cousin_11"]           = "";
-$pgv_lang["female_cousin_12"]           = "";
-$pgv_lang["female_cousin_13"]           = "";
-$pgv_lang["female_cousin_14"]           = "";
-$pgv_lang["female_cousin_15"]           = "";
-$pgv_lang["female_cousin_16"]           = "";
-$pgv_lang["female_cousin_17"]           = "";
-$pgv_lang["female_cousin_18"]           = "";
-$pgv_lang["female_cousin_19"]           = "";
-$pgv_lang["female_cousin_20"]           = "";
-$pgv_lang["female_cousin_n"]            = "";
+$pgv_lang["female_cousin_2"]            = "cousine parentée au troisième degré (issue de germaine)";
+$pgv_lang["female_cousin_3"]            = "cousine parentée au quatrième degré";
+$pgv_lang["female_cousin_4"]            = "cousine parentée au cinquième degré";
+$pgv_lang["female_cousin_5"]            = "cousine parentée au sixième degré";
+$pgv_lang["female_cousin_6"]            = "cousine parentée au septième degré";
+$pgv_lang["female_cousin_7"]            = "cousine parentée au huitième degré";
+$pgv_lang["female_cousin_8"]            = "cousine parentée au neuvième degré";
+$pgv_lang["female_cousin_9"]            = "cousine parentée au dixième degré";
+$pgv_lang["female_cousin_10"]           = "cousine parentée au onzième degré";
+$pgv_lang["female_cousin_11"]           = "cousine parentée au douzième degré";
+$pgv_lang["female_cousin_12"]           = "cousine parentée au treizième degré";
+$pgv_lang["female_cousin_13"]           = "cousine parentée au 14ième degré";
+$pgv_lang["female_cousin_14"]           = "cousine parentée au 15ième degré";
+$pgv_lang["female_cousin_15"]           = "cousine parentée au 16ième degré";
+$pgv_lang["female_cousin_16"]           = "cousine parentée au 17ième degré";
+$pgv_lang["female_cousin_17"]           = "cousine parentée au 18ième degré";
+$pgv_lang["female_cousin_18"]           = "cousine parentée au 19ième degré";
+$pgv_lang["female_cousin_19"]           = "cousine parentée au 20ième degré";
+$pgv_lang["female_cousin_20"]           = "cousine parentée au 21ième degré";
+$pgv_lang["female_cousin_n"]            = "cousine parentée au (%n+1)ième degré";
 
 // Only referenced from english specific functions
 #pgv_lang["removed_ascending_1"]        = " once removed ascending";
@@ -1148,7 +1146,7 @@ $pgv_lang["welcome_text_auth_mode_1"]   =	"<center><b>Bienvenue à ce site gén�
 $pgv_lang["welcome_text_auth_mode_2"]   =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est réservé aux utilisateurs <u>autorisés</u>.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. >Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur acceptera ou refusera votre demande. Vous recevrez un message d'information.";
 $pgv_lang["welcome_text_auth_mode_3"]   =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est réservé aux utilisateurs <u>membres de la famille</u>.<br /><br />Si vous avez déjà un compte, vous pouvez vous connecter. Sinon, remplissez le formulaire.<br /><br />Après vérification, l'administrateur acceptera ou refusera votre demande. Vous recevrez un message d'information.";
 $pgv_lang["welcome_text_cust_head"]     =	"<center><b>Bienvenue à ce site généalogique.</b></center><br />L'accès à ce site est autorisé aux utilisateurs ayant un compte et un mot de passe.<br />";
-$pgv_lang["acceptable_use"]             = "<div class=\"largeError\">Attention:</div><div class=\"error\">En renseignant et en soumettant ce formulaire, vous acceptez:<ul><li>de protéger la vie privée des personnes vivantes qui sont renseignées sur notre site;</li><li>et dans la boite textuelle ci-dessous, vous acceptez ou bien d'expliquer avec qui vous avez un lien de parenté, ou alors vous nous communiquez des informations sur une personne qui devrait apparaître sur notre site.</li></ul></div>";
+$pgv_lang["acceptable_use"]             = "<div class=\"largeError\">Attention:</div><div class=\"error\">En renseignant et en soumettant ce formulaire, vous acceptez:<ul><li>de protéger la vie privée des personnes vivantes qui sont renseignées sur notre site;</li><li>et dans la boîte textuelle ci-dessous, vous acceptez ou bien d'expliquer avec qui vous avez un lien de parenté, ou alors vous nous communiquez des informations sur une personne qui devrait apparaître sur notre site.</li></ul></div>";
 
 
 //-- mygedview page
@@ -1235,6 +1233,12 @@ $pgv_lang["upcoming_events_block"]      = "Bloc «Prochains anniversaires»";
 $pgv_lang["upcoming_events_descr"]      = "Le bloc «Prochains anniversaires» affiche les anniversaires des 30 prochains jours.";
 $pgv_lang["todays_events_block"]        = "Bloc «Ce jour-là»";
 $pgv_lang["todays_events_descr"]        = "Le bloc «Ce jour-là» affiche les anniversaires du jour. Les utilisateurs identifiés voient les anniversaires des personnes vivantes.";
+$pgv_lang["todo_block"]                 = "Bloc «Tâches à faire»";
+$pgv_lang["todo_descr"]                 = "Le bloc «Tâches à faire» affiche la liste des enregistrements _TODO.du fichier GEDCOM.";
+$pgv_lang["todo_show_other"]            = "Voir les «Tâches à faire» des autres utilisateurs";
+$pgv_lang["todo_show_unassigned"]       = "Voir les «Tâches à faire» non attribuées";
+$pgv_lang["todo_show_future"]           = "Voir les «Tâches à faire» futures";
+$pgv_lang["todo_nothing"]               = "La liste «Tâches à faire».est vide";
 $pgv_lang["yahrzeit_block"]             = "Les Yahrzeiten à venir";
 $pgv_lang["yahrzeit_descr"]             = "Le bloc des Yahrzeiten à venir affiche les anniversaires des décès qui vont arriver dans un futur proche. Vous pouvez configurer la période qui est affichée, et l'administrateur peut configurer la date jusqu'à laquelle ce bloc doit aller chercher ces anniversaires.";
 $pgv_lang["logged_in_users_block"]      = "Bloc «Utilisateurs connectés»";
@@ -1486,7 +1490,7 @@ $pgv_lang["authenticated_feed"]         = "Flux d'authentification";
 //-- ASSOciates RELAtionship
 // After any change in the following list, please check $assokeys in edit_interface.php
 $pgv_lang["attendant"]                  = "Préposé";
-$pgv_lang["attending"]                  = "Présent";
+$pgv_lang["attending"]                  = "Présent(e)";
 $pgv_lang["best_man"]                   = "Garçon d'honneur";
 $pgv_lang["bridesmaid"]                 = "Demoiselle d'honneur";
 $pgv_lang["buyer"]                      = "Acheteur";
@@ -1652,11 +1656,11 @@ $pgv_lang["hs_searchsentence"]          = "Phrase exacte";
 $pgv_lang["hs_intruehelp"]              = "Texte d'aide seulement";
 $pgv_lang["hs_inallhelp"]               = "Tout le texte";
 
-// Média import
+// Media import
 $pgv_lang["choose"]                     = "Choisir : ";
 $pgv_lang["account_information"]        = "Informations du compte";
 
-//-- Média item "TYPE" sub-field
+//-- Media item "TYPE" sub-field
 $pgv_lang["TYPE__audio"]                = "Audio";
 $pgv_lang["TYPE__book"]                 = "Livre";
 $pgv_lang["TYPE__card"]                 = "Carte";
@@ -1672,8 +1676,10 @@ $pgv_lang["TYPE__newspaper"]            = "Journal";
 $pgv_lang["TYPE__photo"]                = "Photo";
 $pgv_lang["TYPE__tombstone"]            = "Pierre tombale";
 $pgv_lang["TYPE__video"]                = "Vidéo";
+$pgv_lang["TYPE__painting"]             = "Peinture";
+$pgv_lang["TYPE__other"]                = "Autre";
 
-//-- Other média suff
+//-- Other media suff
 $pgv_lang["view_slideshow"]             = "Voir en diaporama";
 $pgv_lang["download_image"]             = "Télécharger le fichier";
 $pgv_lang["no_media"]                   = "Aucun objet MultiMédia trouvé";

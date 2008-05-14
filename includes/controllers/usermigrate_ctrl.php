@@ -128,7 +128,6 @@ class UserMigrateControllerRoot extends BaseController {
 	function backup() {
 		global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $MEDIA_DIRECTORY, $SYNC_GEDCOM_FILE;
 		global $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_ROOTDIR;
-		global $VERSION, $VERSION_RELEASE;
 		$this->flist = array();
 
 		// Backup user information
@@ -244,7 +243,7 @@ class UserMigrateControllerRoot extends BaseController {
 			require_once "includes/pclzip.lib.php";
 			$this->buname = date("YmdHis").".zip";
 			$this->fname = $INDEX_DIRECTORY.$this->buname;
-			$comment = "Created by PhpGedView ".$VERSION." ".$VERSION_RELEASE." on ".date("r").".";
+			$comment = "Created by ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT." on ".date("r").".";
 			$archive = new PclZip($this->fname);
 			//-- remove ../ from file paths when creating zip
 			$ct = preg_match("~((\.\./)+)~", $INDEX_DIRECTORY, $match);

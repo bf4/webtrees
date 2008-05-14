@@ -146,7 +146,6 @@ if ($action=="newentry") {
 	$thumbFile = "";
 	if (!empty($_FILES['mediafile']["name"]) || !empty($_FILES['thumbnail']["name"])) {
 		// NOTE: Check for file upload
-		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		$folderName = "";
 		if (!empty($_POST["folder"])) $folderName = trim($_POST["folder"]);
 		// Validate and correct folder names
@@ -199,7 +198,7 @@ if ($action=="newentry") {
 			} else {
 				if (!move_uploaded_file($_FILES["mediafile"]["tmp_name"], filename_decode($newFile))) {
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["mediafile"]["error"]]."<br />";
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile"]["error"])."<br />";
 				} else {
 					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
 				}
@@ -214,7 +213,7 @@ if ($action=="newentry") {
 			} else {
 				if (!move_uploaded_file($_FILES["thumbnail"]["tmp_name"], filename_decode($newThum))) {
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["thumbnail"]["error"]]."<br />";
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 				} else {
 					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
 				}
@@ -224,7 +223,7 @@ if ($action=="newentry") {
 			// Copy user-supplied thumbnail file into the main destination directory
 			if (!copy(filename_decode($serverThumbFolderName.$mediaFile), filename_decode($serverFolderName.$mediaFile))) {
 				// the file cannot be copied
-				$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["thumbnail"]["error"]]."<br />";
+				$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 			} else {
 				AddToLog("Media file {$folderName}{$mediaFile} uploaded");
 			}

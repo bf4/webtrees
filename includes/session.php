@@ -3,7 +3,7 @@
  * Startup and session logic
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,10 +29,19 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-//-- version of PhpGedView  (Let's keep this in an obvious place -- not buried in code)
-$VERSION = "5.0.0";
-$VERSION_RELEASE = "";
-$REQUIRED_PRIVACY_VERSION = "3.1";
+// Identify ourself
+define('PGV_PHPGEDVIEW',      'PhpGedView');
+define('PGV_VERSION',         '5.0');
+define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
+define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
+define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
+define('PGV_PHPGEDVIEW_WIKI', 'http://wiki.phpgedview.net');
+
+// Environmental requirements
+define('PGV_REQUIRED_PHP_VERSION',     '5.2');
+define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not currently enforced
+define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not currently enforced
+define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
 define('PGV_REGEX_XREF',      '[A-Za-z0-9:-]+');
@@ -42,7 +51,19 @@ define('PGV_REGEX_ALPHANUM',  '[a-zA-Z0-9]+');
 define('PGV_REGEX_BYTES',     '[0-9]+[bBkKmMgG]?');
 define('PGV_REGEX_PASSWORD',  '.{6,}');
 define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
+define('PGV_REGEX_URL',       '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
 define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
+
+// UTF8 representation of various characters
+define('PGV_UTF8_BOM', "\xEF\xBB\xBF"); // U+FEFF
+define('PGV_UTF8_LRM', "\xE2\x80\x8E"); // U+200E
+define('PGV_UTF8_RLM', "\xE2\x80\x8F"); // U+200F
+
+// Alternatives to BMD events for lists, charts, etc.
+define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|BAPL|ADOP');
+define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
+define('PGV_EVENTS_MARR', 'MARR|MARB|MARC|MARS');
+define('PGV_EVENTS_DIV',  'DIV|ANUL');
 
 function isAlphaNum($value) {
         return preg_match('/^[a-zA-Z0-9]+$/', $value);
@@ -388,8 +409,9 @@ unset($ini_include_path, $includes_dir); // destroy some variables for security 
 
 set_magic_quotes_runtime(0);
 
-if (version_compare(phpversion(), '5.1')<0)
-	die ("<html>\n<body><b style=\"color: red;\">PhpGedView requires PHP version 5.1 or later.</b><br /><br />\nYour server is running PHP version ".phpversion().".  Please ask your server's Administrator to upgrade the PHP installation.</body></html>");
+if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
+	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.phpversion().'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+}
 
 //-- load file for language settings
 require_once( "includes/lang_settings_std.php");
@@ -653,7 +675,7 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 		if (empty($GEDCOMS[$key]["pgv_ver"])) $GEDCOMS[$key]["pgv_ver"] = $VERSION;
 
 		// Force the gedcom to be re-imported if the code has been significantly upgraded
-		if (substr($GEDCOMS[$key]["pgv_ver"], 0, 3) != substr($VERSION, 0, 3))
+		if (substr($GEDCOMS[$key]["pgv_ver"], 0, 3) != substr(PGV_VERSION, 0, 3))
 			$GEDCOMS[$key]["imported"] = false;
 	}
 }
@@ -890,6 +912,8 @@ if ($logout) {
 }
 
 // Define some constants to save calculating the same value repeatedly.
+define('PGV_GEDCOM',            $GEDCOM);
+define('PGV_GED_ID',            get_id_from_gedcom(PGV_GEDCOM));
 define('PGV_USER_ID',           getUserId  ());
 define('PGV_USER_NAME',         getUserName());
 define('PGV_USER_IS_ADMIN',     userIsAdmin       (PGV_USER_ID));
@@ -899,13 +923,11 @@ define('PGV_USER_CAN_EDIT',     userCanEdit       (PGV_USER_ID));
 define('PGV_USER_CAN_ACCEPT',   userCanAccept     (PGV_USER_ID));
 define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
 define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID));
-define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'gedcomid'));
-define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'rootid'));
-if (empty($GEDCOMS) || DB::isError($DBCONN)) {
-	define('PGV_GED_ID', null);
-} else {
-	define('PGV_GED_ID', $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']));
-}
+define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
+define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
+
+// Only site administrators should see debugging output.
+define('PGV_DEBUG', PGV_USER_IS_ADMIN && safe_GET_bool('debug'));
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);

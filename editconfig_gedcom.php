@@ -101,10 +101,7 @@ function write_access_option($checkVar) {
   print ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
 }
 
-
 loadLangFile("pgv_confighelp, pgv_help");
-
-if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 
 // Remove slashes
 if (isset($_POST["NEW_COMMON_NAMES_ADD"])) $_POST["NEW_COMMON_NAMES_ADD"] = stripslashes($_POST["NEW_COMMON_NAMES_ADD"]);
@@ -142,17 +139,7 @@ if (isset($GEDCOMPATH)) {
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
 			}
 			else {
-				$upload_errors = array(
-					UPLOAD_ERR_OK        =>print_text("file_success",0,1),
-					UPLOAD_ERR_INI_SIZE  =>print_text("file_too_big",0,1),
-					UPLOAD_ERR_FORM_SIZE =>print_text("file_too_big",0,1),
-					UPLOAD_ERR_PARTIAL   =>print_text("file_partial",0,1),
-					UPLOAD_ERR_NO_FILE   =>print_text("file_missing",0,1),
-					UPLOAD_ERR_NO_TMP_DIR=>"Missing PHP temporary directory",
-					UPLOAD_ERR_CANT_WRITE=>"PHP failed to write to disk",
-					UPLOAD_ERR_EXTENSION =>"PHP blocked file by extension"
-				);
-				$error = print_text("upload_error",0,1)."<br />".$upload_errors[$_FILES['GEDCOMPATH']['error']];
+				$error = print_text("upload_error",0,1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
 		}
@@ -165,8 +152,7 @@ if (isset($GEDCOMPATH)) {
 				//print $bakfile." ".$GEDCOMPATH;
 			}
 			else {
-				$upload_errors = array(print_text("file_success",0,1), print_text("file_too_big",0,1), print_text("file_too_big",0,1),print_text("file_partial",0,1), print_text("file_missing",0,1));
-				$error = print_text("upload_error",0,1)."<br />".$upload_errors[$_FILES['GEDCOMPATH']['error']];
+				$error = print_text("upload_error",0,1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
 		}
@@ -230,10 +216,9 @@ if (isset($ged)) {
 		$gedcom_config = "config_gedcom.php";
 		$gedcom_privacy = "privacy.php";
 		$gedcom_id = "";
-		$pgv_ver=$VERSION;
+		$pgv_ver=PGV_VERSION;
 	}
-}
-else {
+} else {
 	$GEDCOMPATH = "";
 	$gedcom_title = "";
 	$gedcom_config = "config_gedcom.php";
@@ -241,7 +226,7 @@ else {
 	$gedcom_id = "";
 	$path = "";
 	$GEDFILENAME = "";
-	$pgv_ver=$VERSION;
+	$pgv_ver=PGV_VERSION;
 }
 $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;

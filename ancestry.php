@@ -38,7 +38,7 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 }	
 // ==========================================================================================
 
-print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$controller->cellwidth."px\" valign=\"top\">\n\t\t";
+print "\n\t<table><tr><td valign=\"top\">\n\t\t";
 if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ancestry_chart"]) . ":";
 else print "<h2>" . $pgv_lang["ancestry_chart"] . ":";
 print "<br />".PrintReady($controller->name);
@@ -56,7 +56,7 @@ if ($view != "preview") {
 	}
 	//-->
 	</script>
-	</td><td><form name="people" id="people" method="get" action="?">
+	</td><td width="50px">&nbsp;</td><td><form name="people" id="people" method="get" action="?">
 	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
 	<input type="hidden" name="show_cousins" value="<?php print $controller->show_cousins; ?>" />
 	<table class="list_table <?php print $TEXT_DIRECTION; ?>">
@@ -148,7 +148,8 @@ if ($view != "preview") {
 	<td class="descriptionbox">
 	<?php
 	print_help_link("show_full_help", "qm");
-	print $pgv_lang["show_details"]; ?>
+	print $pgv_lang["show_details"]; 
+	?>
 	</td>
 	<td class="optionbox vmiddle">
 	<input type="checkbox" value="
@@ -164,6 +165,9 @@ if ($view != "preview") {
 </td></tr></table>
 
 <?php
+if ($show_full==0) {
+	echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
+}
 //-- list
 if ($controller->chart_style==0) {
 	$pidarr=array();

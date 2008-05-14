@@ -73,7 +73,7 @@ if ($action == "download" && $zip == "yes") {
 		break;
 	}
 	fclose($gedout);
-	$comment = "Created by PhpGedView " . $VERSION . " " . $VERSION_RELEASE . " on " . date("r") . ".";
+	$comment = "Created by ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT." on " . date("r") . ".";
 	$archive = new PclZip(filename_decode($zipfile));
 	$v_list = $archive->create(filename_decode($gedname), PCLZIP_OPT_COMMENT, $comment, PCLZIP_OPT_REMOVE_PATH, filename_decode($temppath));
 	if ($v_list == 0)
