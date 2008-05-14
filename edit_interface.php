@@ -829,13 +829,12 @@ case 'update':
 	if (count($_FILES)>0) {
 		if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
 		$uploaded_files = array();
-		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		if (substr($folder,0,1) == "/") $folder = substr($folder,1);
 		if (substr($folder,-1,1) != "/") $folder .= "/";
 		foreach($_FILES as $upload) {
 			if (!empty($upload['tmp_name'])) {
 				if (!move_uploaded_file($upload['tmp_name'], $MEDIA_DIRECTORY.$folder.basename($upload['name']))) {
-					$error .= "<br />".$pgv_lang["upload_error"]."<br />".$upload_errors[$upload['error']];
+					$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($upload['error']);
 					$uploaded_files[] = "";
 				}
 				else {

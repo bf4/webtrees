@@ -229,6 +229,23 @@ function update_config(&$text, $var, $value) {
 	}
 }
 
+// Convert a file upload PHP error code into user-friendly text
+function file_upload_error_text($error_code) {
+	global $pgv_lang;
+
+	switch ($error_code) {
+	case UPLOAD_ERR_OK:         return $pgv_lang['file_success'];
+	case UPLOAD_ERR_INI_SIZE:
+	case UPLOAD_ERR_FORM_SIZE:  return $pgv_lang['file_too_big'];
+	case UPLOAD_ERR_PARTIAL:    return $pgv_lang['file_partial'];
+	case UPLOAD_ERR_NO_FILE:    return $pgv_lang['file_missing'];
+	case UPLOAD_ERR_NO_TMP_DIR: return 'Missing PHP temporary directory';
+	case UPLOAD_ERR_CANT_WRITE: return 'PHP failed to write to disk';
+	case UPLOAD_ERR_EXTENSION:  return 'PHP blocked file by extension';
+	default:                    return 'Unknown file upload error:'.$error_code.'. Please report this as a bug.';
+	}
+}
+
 /**
  * get gedcom configuration file
  *
