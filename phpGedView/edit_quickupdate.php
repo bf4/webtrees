@@ -403,9 +403,8 @@ if ($action=="update") {
 
 	//-- check for photo update
 	if (!empty($_FILES["FILE"]['tmp_name'])) {
-		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		if (!move_uploaded_file($_FILES['FILE']['tmp_name'], $MEDIA_DIRECTORY.basename($_FILES['FILE']['name']))) {
-			$error .= "<br />".$pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES['FILE']['error']];
+			$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES['FILE']['error']);
 		}
 		else {
 			$filename = $MEDIA_DIRECTORY.basename($_FILES['FILE']['name']);

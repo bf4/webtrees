@@ -139,17 +139,7 @@ if (isset($GEDCOMPATH)) {
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
 			}
 			else {
-				$upload_errors = array(
-					UPLOAD_ERR_OK        =>print_text("file_success",0,1),
-					UPLOAD_ERR_INI_SIZE  =>print_text("file_too_big",0,1),
-					UPLOAD_ERR_FORM_SIZE =>print_text("file_too_big",0,1),
-					UPLOAD_ERR_PARTIAL   =>print_text("file_partial",0,1),
-					UPLOAD_ERR_NO_FILE   =>print_text("file_missing",0,1),
-					UPLOAD_ERR_NO_TMP_DIR=>"Missing PHP temporary directory",
-					UPLOAD_ERR_CANT_WRITE=>"PHP failed to write to disk",
-					UPLOAD_ERR_EXTENSION =>"PHP blocked file by extension"
-				);
-				$error = print_text("upload_error",0,1)."<br />".$upload_errors[$_FILES['GEDCOMPATH']['error']];
+				$error = print_text("upload_error",0,1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
 		}
@@ -162,8 +152,7 @@ if (isset($GEDCOMPATH)) {
 				//print $bakfile." ".$GEDCOMPATH;
 			}
 			else {
-				$upload_errors = array(print_text("file_success",0,1), print_text("file_too_big",0,1), print_text("file_too_big",0,1),print_text("file_partial",0,1), print_text("file_missing",0,1));
-				$error = print_text("upload_error",0,1)."<br />".$upload_errors[$_FILES['GEDCOMPATH']['error']];
+				$error = print_text("upload_error",0,1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
 		}

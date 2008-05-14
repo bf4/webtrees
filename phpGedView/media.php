@@ -768,7 +768,6 @@ if (check_media_structure()) {
 	if ($action == "upload") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		for($i=1; $i<6; $i++) {
 			if (!empty($_FILES['mediafile'.$i]["name"]) || !empty($_FILES['thumbnail'.$i]["name"])) {
 				$folderName = "";
@@ -821,7 +820,7 @@ if (check_media_structure()) {
 					// Copy main media file into the destination directory
 					if (!move_uploaded_file($_FILES["mediafile".$i]["tmp_name"], filename_decode($folderName.$mediaFile))) {
 						// the file cannot be copied
-						$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["mediafile".$i]["error"]]."<br />";
+						$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile".$i]["error"])."<br />";
 					} else {
 						// Set file permission to read/write for everybody
 //						@chmod(filename_decode($folderName.$mediaFile), 0644);
@@ -832,7 +831,7 @@ if (check_media_structure()) {
 					// Copy user-supplied thumbnail file into the destination directory
 					if (!move_uploaded_file($_FILES["thumbnail".$i]["tmp_name"], filename_decode($thumbFolderName.$mediaFile))) {
 						// the file cannot be copied
-						$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["thumbnail".$i]["error"]]."<br />";
+						$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
 					} else {
 						// Set file permission to read/write for everybody
 //						@chmod(filename_decode($thumbFolderName.$mediaFile), 0644);
@@ -843,7 +842,7 @@ if (check_media_structure()) {
 					// Copy user-supplied thumbnail file into the main destination directory
 					if (!copy(filename_decode($thumbFolderName.$mediaFile), filename_decode($folderName.$mediaFile))) {
 						// the file cannot be copied
-						$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["thumbnail".$i]["error"]]."<br />";
+						$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
 					} else {
 						// Set file permission to read/write for everybody
 //						@chmod(filename_decode($folderName.$mediaFile), 0644);
