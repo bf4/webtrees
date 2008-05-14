@@ -92,80 +92,116 @@ function newConnection() {
 	return session_name()."\t".session_id()."\n";
 }
 
-//-- gets the next person in the gedcom, if we reach the end then
-//-- returns false
-function get_next_xref($gid, $type='INDI') {
-	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
+//-- gets the first record in the gedcom
+function get_first_xref($type, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
 
-	switch($type) {
-		case "INDI":
-			$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(i_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(i_id,2)";
-			break;
-		case "FAM":
-			$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(f_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(f_id,2)";
-			break;
-		case "SOUR":
-			$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(s_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(s_id,2)";
-			break;
-		case "REPO":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-		case "NOTE":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-		case "OBJE":
-			$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(m_media,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(m_media,2)";
-			break;
-		case "OTHER":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-		}
-	$res = dbquery($sql, true, 1);
-	if ($res->numRows()>0) {
-		$row = $res->fetchRow();
-		$res->free();
-		$xref = $row[0];
-		return $xref;
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		break;
+	case "FAM":
+		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
+		break;
+	case "SOUR":
+		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
+		break;
+	case "OBJE":
+		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
+		break;
+	default:
+		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
+		break;
 	}
-	return "";
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
 }
 
-//-- gets the previous person in the gedcom, if we reach the start then
-//-- returns the last record
-function get_prev_xref($gid, $type='INDI') {
-	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
+//-- gets the last record in the gedcom
+function get_last_xref($type, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
 
-	switch($type) {
-		case "INDI":
-			$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(i_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(i_id,2) DESC";
-			break;
-		case "FAM":
-			$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(f_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(f_id,2) DESC";
-			break;
-		case "SOUR":
-			$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(s_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(s_id,2) DESC";
-			break;
-		case "REPO":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-		case "NOTE":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-		case "OBJE":
-			$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(m_media,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(m_media,2) DESC";
-			break;
-		case "OTHER":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-		}
-	$res = dbquery($sql, true, 1);
-	if ($res->numRows()>0) {
-		$row = $res->fetchRow();
-		$res->free();
-		$xref = $row[0];
-		return $xref;
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		break;
+	case "FAM":
+		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
+		break;
+	case "SOUR":
+		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
+		break;
+	case "OBJE":
+		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
+		break;
+	default:
+		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
+		break;
 	}
-	return "";
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the next person in the gedcom
+function get_next_xref($pid, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	$type=id_type($pid);
+	$pid=$DBCONN->escapeSimple($pid);
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id>'{$pid}'";
+		break;
+	case "FAM":
+		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id>'{$pid}'";
+		break;
+	case "SOUR":
+		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id>'{$pid}'";
+		break;
+	case "OBJE":
+		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media>'{$pid}'";
+		break;
+	default:
+		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id>'{$pid}' AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the previous person in the gedcom
+function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	$type=id_type($pid);
+	$pid=$DBCONN->escapeSimple($pid);
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id<'{$pid}'";
+		break;
+	case "FAM":
+		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id<'{$pid}'";
+		break;
+	case "SOUR":
+		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id<'{$pid}'";
+		break;
+	case "OBJE":
+		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media<'{$pid}'";
+		break;
+	default:
+		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id<'{$pid}' AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
 }
 
 /**
