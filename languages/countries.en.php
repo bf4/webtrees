@@ -1,4 +1,4 @@
-hp
+<?php
 /**
  * see http://unstats.un.org/unsd/methods/m49/m49alpha.htm
  * see http://www.foreignword.com/countries/  for a comprehensive list, with translations
