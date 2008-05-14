@@ -8,7 +8,7 @@
  * When $action is 'delete' the gedcom record with $xref is removed from the file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,66 +29,71 @@
  * @version $Id$
  */
 
-require "config.php";
+require 'config.php';
+require_once 'includes/functions_edit.php';
 
-require "includes/functions_edit.php";
 header("Content-Type: text/plain; charset=$CHARACTER_SET");
 
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+$READ_ONLY = ((isset($_SESSION['readonly']))&&($_SESSION['readonly']==true)) ? 1 : 0;
 
-$pgv_user = getUserName();
-$READ_ONLY = 0;
-if ((isset($_SESSION["readonly"]))&&($_SESSION["readonly"]==true)) $READ_ONLY = 1;
-if (!empty($_REQUEST["GEDCOM"])) {
-	if (!isset($GEDCOMS[$_REQUEST["GEDCOM"]])) {
-		addDebugLog("ERROR 21: Invalid GEDCOM specified.  Remember that the GEDCOM is case sensitive.");
-		print "ERROR 21: Invalid GEDCOM specified.  Remember that the GEDCOM is case sensitive.\n";
-		exit;
-	}
-}
-if (empty($action)) {
-	addDebugLog("ERROR 1: No action specified.");
-	print "ERROR 1: No action specified.\n";
-}
-else if (count($GEDCOMS)==0) {
+// Make sure there is at least one gedcom.
+if (count(get_all_gedcoms())==0) {
 	addDebugLog($action." ERROR 21: No Gedcoms available on this site.");
 	print "ERROR 21: No Gedcoms available on this site.\n";
 	exit;
 }
-else if (!check_for_import($GEDCOM)) {
+
+$gedcom=safe_GET('GEDCOM');
+if ($gedcom) {
+	if (!in_array($gedcom, get_all_gedcoms())) {
+		addDebugLog("ERROR 21: Invalid GEDCOM specified.  Remember that the GEDCOM is case sensitive.");
+		print "ERROR 21: Invalid GEDCOM specified.  Remember that the GEDCOM is case sensitive.\n";
+		exit;
+	}
+	$GEDCOM=$gedcom;
+}
+$GED_ID=get_id_from_gedcom($GEDCOM);
+
+if (!check_for_import($GEDCOM)) {
 	addDebugLog($action." ERROR 22: Gedcom [$GEDCOM] needs to be imported.");
 	print "ERROR 22: Gedcom [$GEDCOM] needs to be imported.\n";
 	exit;
 }
-else if ($action=='version') {
+
+$action=safe_GET('action');
+
+// The following actions can be performed without being connected.
+switch ($action) {
+case '':
+	addDebugLog("ERROR 1: No action specified.");
+	print "ERROR 1: No action specified.\n";
+	exit;
+case 'version':
 	addDebugLog($action." SUCCESS\n".PGV_VERSION_TEXT."\n");
 	print "SUCCESS\n".PGV_VERSION_TEXT."\n";
-}
-else if ($action=='connect') {
-	if (!empty($username)) {
-		$userStat = authenticateUser($username,$password);
-		if (!$userStat) {
-			addDebugLog($action." username=$username ERROR 10: Username and password key failed to authenticate.");
-			print "ERROR 10: Username and password key failed to authenticate.\n";
-		}
-		else {
-			$stat = newConnection();
+	exit;
+case 'connect':
+	$username=safe_GET('username');
+	if ($username) {
+		$password=safe_GET('password');
+		$user_id=authenticateUser($username, $password);
+		if ($user_id) {
+			$stat=newConnection();
 			if ($stat!==false) {
 				addDebugLog($action." username=$username SUCCESS\n".$stat);
 				print "SUCCESS\n".$stat;
 			}
-			$_SESSION['connected']=$username;
-			$canedit = userCanEdit($username);
+			$_SESSION['connected']=$user_id;
+			$canedit=userCanEdit($user_id);
 			if (!$canedit) {
 				AddToLog('Read-Only Client connection from '.$username);
 			}
-			/*else {
-				print "ERROR 11: Username $username does not have write permissions.\n";
-			}*/
+		} else {
+			addDebugLog($action." username=$username ERROR 10: Username and password key failed to authenticate.");
+			print "ERROR 10: Username and password key failed to authenticate.\n";
 		}
-	}
-	else {
-		$stat = newConnection();
+	} else {
+		$stat=newConnection();
 		if ($stat!==false) {
 			addDebugLog($action." SUCCESS\n".$stat);
 			print "SUCCESS\n".$stat;
@@ -96,404 +101,303 @@ else if ($action=='connect') {
 		AddToLog('Read-Only Anonymous Client connection.');
 		$_SESSION['connected']='Anonymous';
 		$_SESSION['readonly']=1;
-		//print "ERROR 9: Could not connect to GEDCOM.  No username specified.\n";
 	}
-	if (!empty($readonly)) $_SESSION['readonly']=1;
-}
-else if ($action=='listgedcoms') {
+	exit;
+case 'listgedcoms':
 	$out_msg = "SUCCESS\n";
-	foreach($GEDCOMS as $ged=>$gedarray) {
-		$out_msg .= "$ged\t".$gedarray["title"]."\n";
+	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+		$out_msg.="$gedcom\t".get_gedcom_setting($ged_id, 'title')."\n";
 	}
 	addDebugLog($action." ".$out_msg);
 	print $out_msg;
-}
-else if (empty($_SESSION['connected'])){
-	addDebugLog($action." ERROR 12: use 'connect' action to initiate a session.");
-	print "ERROR 12: use 'connect' action to initiate a session.\n";
-}
-else if ($action=='get') {
-	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
-	if (!empty($xref)) {
-		$xrefs = preg_split("/[;, ]/", $xref);
-		$success = true;
-		$gedrecords="";
-		foreach($xrefs as $indexval => $xref1) {
-			$gedrec = "";
-			$xref1 = trim($xref1);
-			$xref1 = clean_input($xref1);
-			if (!empty($xref1)) {
-				if (isset($pgv_changes[$xref1."_".$GEDCOM])) $gedrec = find_updated_record($xref1);
-				if (empty($gedrec)) $gedrec = find_gedcom_record($xref1);
-				if (!empty($gedrec)) {
-					$gedrec = trim($gedrec);
-					preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
-					$type = trim($match[2]);
-					if (displayDetails($gedrec)) $gedrecords = $gedrecords . "\n".trim($gedrec);
-					else {
-						//-- do not have full access to this record, so privatize it
-						$gedrec = privatize_gedcom($gedrec);
-						$gedrecords = $gedrecords . "\n".trim($gedrec);
-						//$success=false;
-						//print "ERROR 18: Access denied for individual xref:$xref1.\n";
-					}
-				}
-				else {
-					// finding nothing is not an error
-				}
-			}
-		} //-- end for loop
-		if ($success) {
-			if (empty($_REQUEST['keepfile'])) {
-				$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
-				for($i=0; $i<$ct; $i++) {
-					$mediaurl = $SERVER_URL.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
-					$gedrecords = str_replace($match[$i][1], $mediaurl, $gedrecords);
-				}
-			}
-			addDebugLog($action." xref=$xref ".$gedrecords);
-			print "SUCCESS\n".trim($gedrecords);
-		}
+	exit;
+default:
+	// All other actions require an authenticated connection
+	if (empty($_SESSION['connected'])){
+		addDebugLog($action." ERROR 12: use 'connect' action to initiate a session.");
+		print "ERROR 12: use 'connect' action to initiate a session.\n";
+		exit;
 	}
-	else {
+	break;
+}
+
+// The following actions can only be performed when connected
+switch ($action) {
+case 'get':
+	$xref=safe_GET('xref', PGV_REGEX_XREF.'([ ,;]+'.PGV_REGEX_XREF.')*');
+	if ($xref) {
+		$xrefs = preg_split("/[;, ]/", $xref, 0, PREG_SPLIT_NO_EMPTY);
+		$gedrecords="";
+		foreach ($xrefs as $xref1) {
+			$gedrec=find_updated_record($xref1);
+			if (!$gedrec) {
+				$gedrec=find_gedcom_record($xref1);
+			}
+			if ($gedrec) {
+				preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
+				$type = trim($match[2]);
+				if (!displayDetails($gedrec)) {
+					//-- do not have full access to this record, so privatize it
+					$gedrec=privatize_gedcom($gedrec);
+				}
+				$gedrecords.="\n".$gedrec;
+			}
+		}
+		if (!safe_GET('keepfile')) {
+			$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
+			for($i=0; $i<$ct; $i++) {
+				$mediaurl = $SERVER_URL.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
+				$gedrecords = str_replace($match[$i][1], $mediaurl, $gedrecords);
+			}
+		}
+		addDebugLog($action." xref=$xref ".$gedrecords);
+		print "SUCCESS\n".$gedrecords;
+	} else {
 		addDebugLog($action." ERROR 3: No gedcom id specified.  Please specify a xref.");
 		print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 	}
-}
-else if ($action=='getvar') {
-	if (isset($_REQUEST['var'])) $var = $_REQUEST['var'];
+	exit;
+case 'getvar':
+	$var=safe_GET('var', '[A-Za-z0-9_]+');
 	$public_vars = array("READ_ONLY","CHARACTER_SET","GEDCOM","PEDIGREE_ROOT_ID");
-	if (!empty($var) && (in_array($var, $public_vars)) && isset($$var)) {
+	if ($var && in_array($var, $public_vars) && isset($$var)) {
 		addDebugLog($action." var=$var SUCCESS\n".$$var);
 		print "SUCCESS\n".$$var;
-	}
-	else if ((!empty($pgv_user))&&(!empty($var))&&(isset($$var))&&(!in_array($var, $CONFIG_VARS))) {
+	} else if (PGV_USER_ID && $var && isset($$var) && !in_array($var, $CONFIG_VARS)) {
 		addDebugLog($action." var=$var SUCCESS\n".$$var);
 		print "SUCCESS\n".$$var;
-	}
-	else {
+	} else {
 		addDebugLog($action." var=$var ERROR 13: Invalid variable specified.  Please provide a variable.");
 		print "ERROR 13: Invalid variable specified.\n";
 	}
-}
-else if ($action=='update') {
-	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
-	if (!empty($xref)) {
-		if (isset($_REQUEST['gedrec'])) $gedrec = $_REQUEST['gedrec'];
-		if (empty($gedrec)) $gedrec = trim($HTTP_RAW_POST_DATA);
-		if (!empty($gedrec)) {
-			if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))&&(displayDetails($gedrec))) {
+	exit;
+case 'update':
+	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	if ($xref) {
+		$gedrec=safe_GET('gedrec', '.*'); // raw data may contain any characters
+		if ($gedrec) {
+			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetails($gedrec)) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$success = replace_gedrec($xref, $gedrec);
 				if ($success) {
 					addDebugLog($action." xref=$xref gedrec=$gedrec SUCCESS");
 					print "SUCCESS\n";
 				}
-			}
-			else {
+			} else {
 				addDebugLog($action." xref=$xref ERROR 11: No write privileges for this record.");
 				print "ERROR 11: No write privileges for this record.\n";
 			}
-		}
-		else {
+		} else {
 			addDebugLog($action." xref=$xref ERROR 8: No gedcom record provided.  Unable to process request.");
 			print "ERROR 8: No gedcom record provided.  Unable to process request.\n";
 		}
-	}
-	else {
+	} else {
 		addDebugLog($action." ERROR 3: No gedcom id specified.  Please specify a xref.");
 		print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 	}
-}
-else if ($action=='append') {
-	if (isset($_REQUEST['gedrec'])) $gedrec = $_REQUEST['gedrec'];
-	if (empty($gedrec)) $gedrec = trim($HTTP_RAW_POST_DATA);
-	if (!empty($gedrec)) {
-		if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))) {
+	exit;
+case 'append':
+	$gedrec=safe_GET('gedrec', '.*'); // raw data may contain any characters
+	if ($gedrec) {
+		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
 			$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 			$xref = append_gedrec($gedrec);
 			if ($xref) {
 				addDebugLog($action." gedrec=$gedrec SUCCESS\n$xref");
 				print "SUCCESS\n$xref\n";
 			}
-		}
-		else {
+		} else {
 			addDebugLog($action." gedrec=$gedrec ERROR 11: No write privileges for this record.");
 			print "ERROR 11: No write privileges for this record.\n";
 		}
-	}
-	else {
+	} else {
 		addDebugLog($action." ERROR 8: No gedcom record provided.  Unable to process request.");
 		print "ERROR 8: No gedcom record provided.  Unable to process request.\n";
 	}
-}
-else if ($action=='delete') {
-	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
-	if (!empty($xref)) {
-		if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))&&(displayDetailsById($xref))) {
+	exit;
+case 'delete':
+	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	if ($xref) {
+		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($xref)) {
 			$success = delete_gedrec($xref);
 			if ($success) {
 				addDebugLog($action." xref=$xref SUCCESS");
 				print "SUCCESS\n";
 			}
-		}
-		else {
+		} else {
 			addDebugLog($action." xref=$xref ERROR 11: No write privileges for this record.");
 			print "ERROR 11: No write privileges for this record.\n";
 		}
-	}
-	else {
+	} else {
 		addDebugLog($action." ERROR 3: No gedcom id specified.  Please specify a xref.");
 		print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 	}
-}
-else if ($action=='getnext') {
-	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
-	$myindilist = get_indi_list();
-	$gedrec="";
-	if (!empty($xref)) {
-		$xref1 = get_next_xref($xref);
-		if (isset($pgv_changes[$xref1."_".$GEDCOM])) $gedrec = @find_updated_record($xref1);
-		if (empty($gedrec)) $gedrec = @find_gedcom_record($xref1);
+	exit;
+case 'getnext':
+	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	if ($xref) {
+		$xref1 = get_next_xref($xref, $GED_ID);
+		$gedrec = find_updated_record($xref1);
+		if (!$gedrec) {
+			$gedrec = find_gedcom_record($xref1);
+		}
 		if (!displayDetails($gedrec)) {
 			//-- do not have full access to this record, so privatize it
 			$gedrec = privatize_gedcom($gedrec);
 		}
 		addDebugLog($action." xref=$xref SUCCESS\n".trim($gedrec));
 		print "SUCCESS\n".trim($gedrec);
-	}
-	else {
+	} else {
 		addDebugLog($action." ERROR 3: No gedcom id specified.  Please specify a xref.");
 		print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 	}
-}
-else if ($action=='getprev') {
-	if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
-	$myindilist = get_indi_list();
-	$gedrec="";
-	if (!empty($xref)) {
-		$xref1 = get_prev_xref($xref);
-		if (isset($pgv_changes[$xref1."_".$GEDCOM])) $gedrec = @find_updated_record($xref1);
-		if (empty($gedrec)) $gedrec = @find_gedcom_record($xref1);
+	exit;
+case 'getprev':
+	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	if ($xref) {
+		$xref1 = get_prev_xref($xref, $GED_ID);
+		$gedrec = find_updated_record($xref1);
+		if (!$gedrec) {
+			$gedrec = find_gedcom_record($xref1);
+		}
 		if (!displayDetails($gedrec)) {
 			//-- do not have full access to this record, so privatize it
 			$gedrec = privatize_gedcom($gedrec);
 		}
 		addDebugLog($action." xref=$xref SUCCESS\n".trim($gedrec));
 		print "SUCCESS\n".trim($gedrec);
-	}
-	else {
+	} else {
 		addDebugLog($action." ERROR 3: No gedcom id specified.  Please specify a xref.");
 		print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 	}
-}
-else if ($action=='search') {
-	if (isset($_REQUEST['query'])) $query = $_REQUEST['query'];
-	if (!empty($query)) {
+	exit;
+case 'search':
+	$query=safe_GET('query');
+	if ($query) {
 		$sindilist = search_indis($query);
 		uasort($sindilist, "itemsort");
-		$msg_out = "SUCCESS\n";
+		print "SUCCESS\n";
+		addDebugLog($action." query=$query SUCCESS");
 		foreach($sindilist as $xref=>$indi) {
-			if (displayDetailsById($xref)) $msg_out .= "$xref\n";
+			if (displayDetailsById($xref)) {
+				print	"$xref\n";
+			}
 		}
-		addDebugLog($action." query=$query ".$msg_out);
-		print $msg_out;
-	}
-	else {
+	} else {
 		addDebugLog($action." ERROR 15: No query specified.  Please specify a query.");
 		print "ERROR 15: No query specified.  Please specify a query.\n";
 	}
-}
-else if ($action=='soundex') {
-	if (isset($_REQUEST['lastname'])) $lastname = $_REQUEST['lastname'];
-	if (isset($_REQUEST['firstname'])) $firstname = $_REQUEST['firstname'];
-	if (isset($_REQUEST['place'])) $place = $_REQUEST['$place'];
-	if (isset($_REQUEST['soundex'])) $soundex = $_REQUEST['$soundex'];
+	exit;
+case 'soundex':
+	$lastname=safe_GET('lastname');
+	$firstname=safe_GET('firstname');
+	$place=safe_GET('place');
+	$soundex=safe_GET('soundex', '\w+', 'Russell');
 	
-	if(empty($soundex)) $soundex = "Russell";
-	if ((!empty($lastname))||(!empty($firstname))) {
+	if ($lastname || $firstname) {
 		$res = search_indis_soundex($soundex, $lastname, $firstname, $place);
-		$msg_out = "SUCCESS\n";
+		print "SUCCESS\n";
+		addDebugLog($action." lastname=$lastname firstname=$firstname SUCCESS");
 		// -- only get the names who match soundex
-		while($value = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$indilist[$row[4]]["gedcom"] = $row['i_gedcom'];
-			$indilist[$row[4]]["names"] = get_indi_names($row['i_gedcom']);
-			$indilist[$row[4]]["isdead"] = $row['i_isdead'];
-			$indilist[$row[4]]["gedfile"] = $row['i_file'];
-			if (displayDetailsById($xref)) $msg_out .= "$xref\n";
+		while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			if (displayDetailsById($row['i_id'])) {
+				print $row['i_id']."\n";
+			}
 		}
-		addDebugLog($action." lastname=$lastname firstname=$firstname ".$msg_out);
-		print $msg_out;
-	}
-	else {
+	} else {
 		addDebugLog($action." ERROR 16: No names specified.  Please specify a firstname or a lastname.");
 		print "ERROR 16: No names specified.  Please specify a firstname or a lastname.\n";
 	}
-}
-else if ($action=='getxref') {
-	if (isset($_REQUEST['position'])) $position = $_REQUEST['position'];
-	if (isset($_REQUEST['type'])) $type = $_REQUEST['type'];
-	if (empty($position)) $position='first';
-	if (empty($type)) $type='INDI';
-	if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
+	exit;
+case 'getxref':
+	$position=safe_GET('position', array('first','last','next','prev','new'));
+	$type=safe_GET('type', array('INDI','FAM','SOUR','REPO','NOTE','OBJE','OTHER'));
+	$xref=safe_GET('xref', PGV_REGEX_XREF);
+
+	if ($position=='next' && !$xref) {
+		$position='first';
+	}
+	if ($position=='prev' && !$xref) {
+		$position='last';
+	}
+
+	if (!$position || !$type) {
 		addDebugLog($action." type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER");
-		print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";
+		print "ERROR 18: Invalid \$type or \$position specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";
 		exit;
 	}
-	
-	if ($position=='first') {
-		switch($type) {
-			case "INDI":
-				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
-				break;
-			case "FAM":
-				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
-				break;
-			case "SOUR":
-				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
-				break;
-			case "REPO":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
-				break;
-			case "NOTE":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
-				break;
-			case "OBJE":
-				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
-				break;
-			case "OTHER":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
-				break;
-		}
-		$res = dbquery($sql, true, 1);
-		$row = $res->fetchRow();
-		$res->free();
-		$xref = $row[0];
+	switch ($position) {
+	case 'first':
+		$xref=get_first_xref($type, $GED_ID);
 		addDebugLog($action." type=$type position=$position SUCCESS\n$xref");
 		print "SUCCESS\n$xref\n";
-	}
-	else if ($position=='last') {
-		switch($type) {
-			case "INDI":
-				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
-				break;
-			case "FAM":
-				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
-				break;
-			case "SOUR":
-				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
-				break;
-			case "REPO":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
-				break;
-			case "NOTE":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
-				break;
-			case "OBJE":
-				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
-				break;
-			case "OTHER":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
-				break;
-		}
-		$sql .= " DESC";
-		$res = dbquery($sql, true, 1);
-		$row = $res->fetchRow();
-		$res->free();
-		$xref = $row[0];
+		break;
+	case 'last':
+		$xref=get_last_xref($type, $GED_ID);
 		addDebugLog($action." type=$type position=$position SUCCESS\n$xref");
 		print "SUCCESS\n$xref\n";
-	}
-	else if ($position=='next') {
-		if (!empty($xref)) {
-			$xref1 = get_next_xref($xref, $type);
-			if ($xref1!==false) {
-				addDebugLog($action." type=$type position=$position xref=$xref SUCCESS\n$xref1");
-				print "SUCCESS\n$xref1\n";
-			}
-		}
-		else {
-			addDebugLog($action." type=$type position=$position ERROR 3: No gedcom id specified.  Please specify a xref.");
-			print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
-		}
-	}
-	else if ($position=='prev') {
-		if (!empty($xref)) {
-			$xref1 = get_prev_xref($xref, $type);
-			if ($xref1!==false) {
-				addDebugLog($action." type=$type position=$position xref=$xref SUCCESS\n$xref1");
-				print "SUCCESS\n$xref1\n";
-			}
-		}
-		else {
-			addDebugLog($action." type=$type position=$position ERROR 3: No gedcom id specified.  Please specify a xref.");
-			print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
-		}
-	}
-	else if ($position=='all') {
-		$msg_out = "SUCCESS\n";
+		break;
+	case 'next':
+		$xref=get_next_xref($xref, $GED_ID);
+		addDebugLog($action." type=$type position=$position SUCCESS\n$xref");
+		print "SUCCESS\n$xref\n";
+		break;
+	case 'prev':
+		$xref=get_prev_xref($xref, $GED_ID);
+		addDebugLog($action." type=$type position=$position SUCCESS\n$xref");
+		print "SUCCESS\n$xref\n";
+		break;
+	case 'all':
 		switch($type) {
 			case "INDI":
-				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
+				$sql="SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_file={$GED_ID} ORDER BY i_id";
 				break;
 			case "FAM":
-				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
+				$sql="SELECT f_id FROM {$TBLPREFIX}families WHERE f_file={$GED_ID} ORDER BY f_id";
 				break;
 			case "SOUR":
-				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
-				break;
-			case "REPO":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
-				break;
-			case "NOTE":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
+				$sql="SELECT s_id FROM {$TBLPREFIX}sources WHERE s_file={$GED_ID} ORDER BY s_id";
 				break;
 			case "OBJE":
-				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
+				$sql="SELECT m_media FROM {$TBLPREFIX}media WHERE m_gedfile={$GED_ID} ORDER BY m_media";
 				break;
 			case "OTHER":
-				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
+				$sql="SELECT o_id FROM {$TBLPREFIX}other WHERE o_file={$GED_ID} AND o_type NOT IN ('REPO', 'NOTE') ORDER BY o_id";
+				break;
+			default:
+				$sql="SELECT o_id FROM {$TBLPREFIX}other WHERE o_file={$GED_ID} AND o_type='{$type}' ORDER BY o_id";
 				break;
 		}
 		$res = dbquery($sql);
+		print "SUCCESS\n";
 		while ($row = $res->fetchRow()) {		
-			$msg_out .= "$row[0]\n";
+			print "$row[0]\n";
 		}
 		$res->free();
 		addDebugLog($action." type=$type position=$position ".$msg_out);
 		print $msg_out;
-	}
-	else if ($position=='new') {
-		if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))) {
-			if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE")))) {
-				addDebugLog($action." type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE");
-				print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE\n";
-				exit;
-			}
+		break;
+	case 'new':
+		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
 			$gedrec = "0 @REF@ $type";
 			$xref = append_gedrec($gedrec);
 			if ($xref) {
 				addDebugLog($action." type=$type position=$position SUCCESS\n$xref");
 				print "SUCCESS\n$xref\n";
 			}
-		}
-		else {
+		} else {
 			addDebugLog($action." type=$type position=$position ERROR 11: No write privileges for this record.");
 			print "ERROR 11: No write privileges for this record.\n";
 		}
+		break;
 	}
-	else {
-		addDebugLog($action." type=$type position=$position ERROR 17: Unknown position reference.  Valid values are first, last, prev, next.");
-		print "ERROR 17: Unknown position reference.  Valid values are first, last, prev, next.\n";
-	}
-}
-else if ($action=="uploadmedia") {
+	exit;
+case 'uploadmedia':
 	$error="";
 	if (isset($_FILES['mediafile'])) {
 		if (!move_uploaded_file($_FILES['mediafile']['tmp_name'], $MEDIA_DIRECTORY.$_FILES['mediafile']['name'])) {
 			$error .= "ERROR 19: ".$pgv_lang["upload_error"]." ".file_upload_error_text($_FILES['mediafile']['error']);
-		}
-		else if (!isset($_FILES['thumbnail'])) {
+		} else if (!isset($_FILES['thumbnail'])) {
 			$filename = $MEDIA_DIRECTORY.$_FILES['mediafile']['name'];
 			$thumbnail = $MEDIA_DIRECTORY."thumbs/".$_FILES['mediafile']['name'];
 			generate_thumbnail($filename, $thumbnail);
@@ -508,40 +412,29 @@ else if ($action=="uploadmedia") {
 	if (!empty($error)) {
 		addDebugLog($action." $error");
 		print $error."\n";
-	}
-	else {
+	} else {
 		addDebugLog($action." SUCCESS");
 		print "SUCCESS\n";
 	}
-}
-else if ($action=="getchanges") {
-	if (isset($_REQUEST['date'])) $date = $_REQUEST['date'];
-	if (empty($date)) {
+	exit;
+case 'getchanges':
+	$lastdate = new GedcomDate(safe_GET('date', '\d\d \w\w\w \d\d\d\d'));
+	if ($lastdate->isOK()) {
+		if ($lastdate->MinJD()<server_jd()-180) {
+			addDebugLog($action." ERROR 24: You cannot retrieve updates for more than 180 days.");
+			print "ERROR 24: You cannot retrieve updates for more than 180 days.\n";
+		} else {
+			print "SUCCESS\n";
+			foreach(get_recent_changes($lastdate->MinJD()) as $change) {
+				print $change['d_gid']."\n";
+			}
+		}
+	} else {
 		addDebugLog($action." ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.");
 		print "ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.\n";
 	}
-	else {
-		$lastdate = new GedcomDate($date);
-		
-		if (!$lastdate->isOK()) {
-			addDebugLog($action." ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.");
-			print "ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.\n";
-		} else {
-			print "SUCCESS\n";
-			if ($lastdate->MinJD()<server_jd()-180) {
-				addDebugLog($action." ERROR 24: You cannot retrieve updates for more than 180 days.");
-				print "ERROR 24: You cannot retrieve updates for more than 180 days.\n";
-			} else {
-				$changes = get_recent_changes($lastdate->MinJD());
-				$results = array();
-				foreach($changes as $id=>$change) {
-					print $change['d_gid']."\n";
-				}
-			}
-		}
-	}
-}
-else {
+	exit;
+default:
 	addDebugLog($action." ERROR 2: Unable to process request.  Unknown action.");
 	print "ERROR 2: Unable to process request.  Unknown action.\n";
 }
