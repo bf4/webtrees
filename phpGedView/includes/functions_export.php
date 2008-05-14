@@ -38,7 +38,7 @@ function gedcom_header($gedfile, $CRLF="\r\n")
 
 	// Default values for a new header
 	$HEAD="0 HEAD{$CRLF}";
-	$SOUR="1 SOUR PhpGedView{$CRLF}2 NAME ".PGV_PHPGEDVIEW."{$CRLF}2 VERS ".PGV_VERSION_TEXT."{$CRLF}";
+	$SOUR="1 SOUR ".PGV_PHPGEDVIEW."{$CRLF}2 NAME ".PGV_PHPGEDVIEW."{$CRLF}2 VERS ".PGV_VERSION_TEXT."{$CRLF}";
 	$DEST="1 DEST DISKETTE{$CRLF}";
 	$DATE="1 DATE ".strtoupper(date("d M Y")).$CRLF."2 TIME ".date("H:i:s").$CRLF;
 	$GEDC="1 GEDC{$CRLF}2 VERS 5.5.1{$CRLF}2 FORM Lineage-Linked{$CRLF}";

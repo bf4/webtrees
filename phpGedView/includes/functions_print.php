@@ -551,8 +551,8 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
 	}
 
-	if (empty($META_TITLE)) $metaTitle = " - PhpGedView";
-	else $metaTitle = " - ".$META_TITLE." - PhpGedView";
+	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
+	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
 	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>";
 	$GEDCOM_TITLE = "";
 	if (!empty($GEDCOMS[$GEDCOM]["title"])) $GEDCOM_TITLE = $GEDCOMS[$GEDCOM]["title"];
@@ -630,7 +630,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 			print "<meta name=\"robots\" content=\"noindex,nofollow\" />";
 		}
 		if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"$META_REVISIT\" />";
-		echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - http://www.phpgedview.net" />';
+		echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - '.PGV_PHPGEDVIEW_URL.'" />';
 		$META_AUTHOR = $old_META_AUTHOR;
 		$META_PUBLISHER = $old_META_PUBLISHER;
 		$META_COPYRIGHT = $old_META_COPYRIGHT;
@@ -795,8 +795,8 @@ function print_simple_header($title) {
 	if( $FAVICON ) {
 		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
 	}
-	if (empty($META_TITLE)) $metaTitle = " - PhpGedView";
-	else $metaTitle = " - ".$META_TITLE." - PhpGedView";
+	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
+	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
 	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>";
 	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" >";
 	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
@@ -846,7 +846,7 @@ function print_simple_header($title) {
 		print "<meta name=\"robots\" content=\"noindex,nofollow\" />";
 	}
 	if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"$META_REVISIT\" />";
-	echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - http://www.phpgedview.net" />';
+	echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - '.PGV_PHPGEDVIEW_URL.'" />';
 	$META_AUTHOR = $old_META_AUTHOR;
 	$META_PUBLISHER = $old_META_PUBLISHER;
 	$META_COPYRIGHT = $old_META_COPYRIGHT;
@@ -942,7 +942,7 @@ function print_simple_footer() {
 	}
 	print "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
 	print contact_links();
-	print "<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT."\" title=\"".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT."\" /></a><br />";
+	print '<a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" title="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" /></a><br />';
 	if ($SHOW_STATS || isset($DEBUG) && $DEBUG==true) {
 		print_execution_stats();
 	}
@@ -2831,8 +2831,6 @@ function get_lds_glance($indirec) {
  */
 
 function DumpString($input) {
-	global $LRM, $RLM;
-
 	if (empty($input)) return false;
 
 	$UTF8 = array();
@@ -2915,7 +2913,7 @@ function DumpString($input) {
 			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= getLRM() . " ";
 			else $thisLine .= getLRM() . $UTF8[$i];
 		}
-		print str_replace(array(" ", $LRM, $RLM), array("&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
+		print str_replace(array(" ", PGV_UTF8_LRM, PGV_UTF8_RLM), array("&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
 
 		// Line 3:  First hexadecimal byte
 		$thisLine = "Byte 1 ";
