@@ -81,7 +81,10 @@ class PedigreeControllerRoot extends BaseController {
 		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 3, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
 		// This is passed as a global.  A parameter would be better...
-		$show_full=$this->show_full;
+		$this->show_full = ($this->show_full) ? 1 : 0;		// Make SURE this is an integer
+		$this->talloffset = ($this->talloffset) ? 1 : 0;
+		$show_full = $this->show_full;
+		$talloffset = $this->talloffset;
 
 		// Validate parameters
 		$this->rootid=check_rootid($this->rootid);
