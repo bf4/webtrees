@@ -169,6 +169,9 @@ class Menu
 			return '';
 		}
 		$icons=array();
+		if ($this->icon) {
+			$icons[]='<a href="'.$this->link.'"><img onmouseover="this.className=\''.$this->hoverclass.'\'" onmouseout="this.className=\''.$this->class.'\'" class="'.$this->class.'" src="'.$this->icon.'" alt="'.$this->label.'" title="'.$this->label.'"></a>';
+		}
 		if ($this->submenus) {
 			foreach ($this->submenus as $submenu) {
 				$icons[]=$submenu->getMenuAsIcons();
@@ -1263,9 +1266,6 @@ class MenuBar
 
 		if ($ENABLE_MULTI_LANGUAGE) {
 			$menu=new Menu($pgv_lang['change_lang'], '#', 'down');
-			if (!empty($PGV_IMAGES['gedcom']['large'])) {
-				$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
-			}
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 
 			$menu->print_menu = null;
