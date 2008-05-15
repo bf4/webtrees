@@ -45,7 +45,11 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$pgv_lang["sanity_err1"]             14 May 2008           W (Replace value with constant)
++$pgv_lang["file_no_temp_dir"]						15 May 2008				A
++$pgv_lang["file_cant_write"]						15 May 2008				A
++$pgv_lang["file_bad_extension"]					15 May 2008				A
++$pgv_lang["file_unkown_err"]						15 May 2008				A
+*$pgv_lang["sanity_err1"]							14 May 2008				W (Replace value with constant)
 
 VERSION 4.1.4
 

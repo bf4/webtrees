@@ -239,10 +239,12 @@ function file_upload_error_text($error_code) {
 	case UPLOAD_ERR_FORM_SIZE:  return $pgv_lang['file_too_big'];
 	case UPLOAD_ERR_PARTIAL:    return $pgv_lang['file_partial'];
 	case UPLOAD_ERR_NO_FILE:    return $pgv_lang['file_missing'];
-	case UPLOAD_ERR_NO_TMP_DIR: return 'Missing PHP temporary directory';
-	case UPLOAD_ERR_CANT_WRITE: return 'PHP failed to write to disk';
-	case UPLOAD_ERR_EXTENSION:  return 'PHP blocked file by extension';
-	default:                    return 'Unknown file upload error:'.$error_code.'. Please report this as a bug.';
+	case UPLOAD_ERR_NO_TMP_DIR: return $pgv_lang['file_no_temp_dir'];
+	case UPLOAD_ERR_CANT_WRITE: return $pgv_lang['file_cant_write'];
+	case UPLOAD_ERR_EXTENSION:  return $pgv_lang['file_bad_extension'];
+	default:
+								$pgv_lang['global_num1'] = $error_code;		// Make this available to print_text()
+								return print_text('file_unknown_err', 0, 1);
 	}
 }
 
