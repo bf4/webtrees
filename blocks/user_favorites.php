@@ -61,8 +61,8 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 		$mygedcom = $GEDCOM;
 		$current_gedcom = $GEDCOM;
 		if ($block) {
-			$style = 1;		// 1 means "regular box"
-			$content .= "<table width=\"99%\" class=\"$TEXT_DIRECTION\">";
+			$style = 2;		// 1 means "regular box", 2 means "wide box"
+			$content .= "<table width=\"99%\" class=\"center $TEXT_DIRECTION\">";
 		} else {
 			$style = 2;		// 2 means "wide box"
 			$content .= "<table width=\"75%\" class=\"center $TEXT_DIRECTION\">";
@@ -131,6 +131,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	}
 	</script>
 	<br />';
+	$uniqueID = floor(microtime() * 1000000);
 	$content .= print_help_link("index_add_favorites_help", "qm","",false,true);
 	$content .= "<b><a href=\"javascript: ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
 	$content .= "<br /><div id=\"add_user_fav\" style=\"display: none;\">";
@@ -140,16 +141,18 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= "<input type=\"hidden\" name=\"favtype\" value=\"user\" />";
 	$content .= "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />";
 	$content .= "<table border=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
-	$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid\" size=\"3\" value=\"\" />";
+	$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
-	$content .= print_findindi_link("gid","",true);
-	$content .= print_findfamily_link("gid",'',true);
-	$content .= print_findsource_link("gid",'',true);
+	$content .= print_findindi_link("gid{$uniqueID}","",true);
+	$content .= print_findfamily_link("gid{$uniqueID}",'',true);
+	$content .= print_findsource_link("gid{$uniqueID}",'',true);
+
 	$content .= "<br />".$pgv_lang["add_fav_or_enter_url"];
 	$content .= "<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
 	$content .= "<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
-	$content .= "</td><td>";
-	$content .= "".$pgv_lang["add_fav_enter_note"];
+	if ($block) $content .= '<br /><br />';
+	else $content .= '</td><td>';
+	$content .= $pgv_lang["add_fav_enter_note"];
 	$content .= "<br /><textarea name=\"favnote\" rows=\"6\" cols=\"40\"></textarea>";
 	$content .= "</td></tr></table>";
 	$content .= "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" style=\"font-size: 8pt; \" />";
