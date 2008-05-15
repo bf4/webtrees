@@ -58,10 +58,10 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		else $content .= print_text("no_gedcom_favorites",0,1);
 	} else {
 		if ($block) {
-			$style = 1;		// 1 means "regular box"
-			$content .= "<table width=\"99%\" class=\"$TEXT_DIRECTION\">";
+			$style = 2;		// 1 means "regular box", 2 means "wide box"
+			$content .= "<table width=\"99%\" class=\"center $TEXT_DIRECTION\">";
 		} else {
-			$style = 2;		// 2 means "wide box"
+			$style = 2;
 			$content .= "<table width=\"75%\" class=\"center $TEXT_DIRECTION\">";
 		}
 		foreach($userfavs as $key=>$favorite) {
@@ -121,15 +121,14 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	if (userGedcomAdmin()) { 
 	$content .= '
 		<script language="JavaScript" type="text/javascript">
-		<!--
 		var pastefield;
 		function paste_id(value) {
 			pastefield.value=value;
 		}
-		//-->
 		</script>
 		<br />
 		';
+		$uniqueID = floor(microtime() * 1000000);
 		$content .= print_help_link("index_add_favorites_help", "qm", "", false, true);
 		$content .= "<b><a href=\"javascript:// ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
 		$content .= "<br /><div id=\"add_ged_fav\" style=\"display: none;\">\n";
@@ -139,10 +138,12 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n";
 		$content .= "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
 		$content .= "<table border=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
-		$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid\" size=\"3\" value=\"\" />";
-		$content .= print_findindi_link("gid","",true);
-		$content .= print_findfamily_link("gid","",true);
-		$content .= print_findsource_link("gid","",true);
+		$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
+
+		$content .= print_findindi_link("gid{$uniqueID}","",true);
+		$content .= print_findfamily_link("gid{$uniqueID}","",true);
+		$content .= print_findsource_link("gid{$uniqueID}","",true);
+
 		$content .= "\n<br />".$pgv_lang["add_fav_or_enter_url"];
 		$content .= "\n<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
 		$content .= "\n<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
