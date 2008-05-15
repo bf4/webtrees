@@ -598,7 +598,7 @@ $pgv_lang["index_gedcom_news_adm_help"]		= "Im Textbereich dieses Blocks können
 $pgv_lang["USE_MEDIA_VIEWER"]			= "Diabetrachter benutzen";
 $pgv_lang["USE_MEDIA_VIEWER_help"]		= "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />Wenn <b>#pgv_lang[yes]#</b> gewählt ist, wird durch das Klicken auf Bildern die Diabetrachter-Seite gezeigt.  Diese Seite enthält Einzelheiten über das Bild, und falls erlaubt, können die Einzelheiten auch bearbeitet werden.<br /><br />Wenn <b>#pgv_lang[no]#</b> gewählt ist, wird das Bild in voller Größe gezeigt, wenn Sie auf dem Miniaturbild klicken.<br />";
 $pgv_lang["USE_MEDIA_FIREWALL"]			= "Medien-Feuerwand benutzen";
-$pgv_lang["USE_MEDIA_FIREWALL_help"]	= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />Die Medien-Feuerwand ist im Wikipedia beschrieben. <a href=\"http://wiki.phpgedview.net/en/index.php?title=Media_Firewalll\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php?title=Media_Firewall</a><br />";
+$pgv_lang["USE_MEDIA_FIREWALL_help"]	= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />Die Medien-Feuerwand ist im Wikipedia beschrieben. <a href=\"#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=Media_Firewall\" target=\"_blank\">#PGV_PHPGEDVIEW_WIKI#</a><br />";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR"]			= "Medien-Feuerwand Hauptverzeichnis";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]	= "~#pgv_lang[MEDIA_FIREWALL_ROOTDIR]#~<br /><br />Verzeichnis, worin das geschützte Medien-Verzeichnis erstellt werden kann.  #pgv_lang[MEDIA_FIREWALL_ROOTDIR_note]#<br />";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]	= "Der leere Eintrag bedeutet, dass das <b>#GLOBALS[INDEX_DIRECTORY]#</b> Verzeichnis benutzt wird.";
