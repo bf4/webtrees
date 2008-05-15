@@ -3382,6 +3382,8 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 				else
 					$year_regex="0*".$row[6];
 				$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
+				// Since we'll probably use this record later (in an indi list, etc.), insert it into the cache
+				global $gedcom_record_cache; $gedcom_record_cache[$row[0]][$ged_id]=$row[2]=='INDI' ? new Person($row[1]) : new Family($row[1]);
 				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 						$date=new GedcomDate($match[1]);
@@ -3460,6 +3462,8 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 			else
 				$year_regex="0*".$row[6];
 			$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
+			// Since we'll probably use this record later (in an indi list, etc.), insert it into the cache
+			global $gedcom_record_cache; $gedcom_record_cache[$row[0]][$ged_id]=$row[2]=='INDI' ? new Person($row[1]) : new Family($row[1]);
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 					$date=new GedcomDate($match[1]);
@@ -3500,39 +3504,10 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
  * This routine does not check the Privacy of the events in the list.  That check has
  * to be done by the routine that makes use of the event list.
  */
-function get_event_list() {
-	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG, $DAYS_TO_SHOW_LIMIT, $COMMIT_COMMAND;
-
-	if (!isset($DAYS_TO_SHOW_LIMIT))
-		$DAYS_TO_SHOW_LIMIT = 30;
-
-	// Look for cached Facts data
-	if ((file_exists($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"))&&(!isset($DEBUG)||($DEBUG==false))) {
-		$modtime = filemtime($INDEX_DIRECTORY.$GEDCOM."_upcoming.php");
-		$mday = date("d", $modtime);
-		if ($mday==date('j')) {
-			$fp = fopen($INDEX_DIRECTORY.$GEDCOM."_upcoming.php", "rb");
-			$fcache = fread($fp, filesize($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"));
-			fclose($fp);
-			return unserialize($fcache);
-		}
-	}
-
+function get_events_list($jd1, $jd2, $events='') {
 	$found_facts=array();
-	// Cache dates for a day either side of the range "today to today+N".
-	// This is because users may be in different time zones (and on different
-	// days) to the server.
-	for ($jd=server_jd()-1; $jd<=server_jd()+1+$DAYS_TO_SHOW_LIMIT; ++$jd)
-		$found_facts=array_merge($found_facts, get_anniversary_events($jd));
-
-	// Cache the Facts data just found
-	if (is_writable($INDEX_DIRECTORY)) {
-		$fp = fopen($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php", "wb");
-		fwrite($fp, serialize($found_facts));
-		fclose($fp);
-		$logline = AddToLog($GEDCOM."_upcoming.php updated");
-		if (!empty($COMMIT_COMMAND))
-			check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
+	for ($jd=$jd1; $jd<=$jd2; ++$jd) {
+		$found_facts=array_merge($found_facts, get_anniversary_events($jd, $events));
 	}
 	return $found_facts;
 }
