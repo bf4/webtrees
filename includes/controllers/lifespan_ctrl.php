@@ -191,7 +191,7 @@ class LifespanControllerRoot extends BaseController {
 				$indis = search_indis_year_range($beginYear, $endYear);
 				//--Populates an array of people that had an event within those years
 						
-				foreach ($indis as $pid => $indi) {
+				foreach ($indis as $pid) {
 					if (empty($searchplace) || in_array($pid, $this->pids)) {
 						$person = Person::getInstance($pid);
 						if ($person) {

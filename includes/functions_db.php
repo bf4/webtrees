@@ -1654,26 +1654,28 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 function search_indis_year_range($startyear, $endyear) {
 	// TODO: This function should use Julian-days, rather than gregorian years, to allow
 	// the lifespan chart, etc., to use other calendars.
-	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
+	global $TBLPREFIX;
 
-	if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
-	else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
-	else $term='LIKE';
+	$startjd=GregorianDate::YMDtoJD($startyear, 1, 1);
+	$endjd  =GregorianDate::YMDtoJD($endyear+1, 1, 1)-1;
 
-	$sql = "SELECT date1.d_gid, date1.d_file, MIN(date1.d_year) as birth, MAX(date2.d_year) as death ";
-	$sql .= "FROM ".$TBLPREFIX."dates as date1, ".$TBLPREFIX."dates as date2, ".$TBLPREFIX."individuals ";
-	$sql .= "WHERE date1.d_gid=date2.d_gid AND date1.d_gid=i_id AND date1.d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND date1.d_file='".$GEDCOMS[$GEDCOM]['id']."' ";
-	$sql .= "AND date1.d_file=date2.d_file AND date1.d_file=i_file AND date1.d_year>=".$DBCONN->escapeSimple($startyear)." AND date2.d_year<=".$DBCONN->escapeSimple($endyear)." AND date2.d_year!=0 GROUP BY d_gid";
-	$res = dbquery($sql);
-	//print $sql;
-	$myids = array();
-	while($row =& $res->fetchRow()){
-		$myids[] = $row[0];
+	$sql=
+		"SELECT d_gid ".
+		"FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals ".
+		"WHERE i_file=".PGV_GED_ID." ".
+		"  AND i_file=d_file ".
+		"  AND i_id=d_gid ".
+		"  AND d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL','_TODO') ".
+		"  AND d_julianday1!=0 ".
+		"GROUP BY d_gid ".
+		"HAVING MAX(d_julianday2) > {$startjd} AND MIN(d_julianday1) < {$endjd}";
+	$res=dbquery($sql);
+	$indis=array();
+	while ($row=$res->fetchRow()) {
+		$indis[]=$row[0];
 	}
-	$res->free();
-	//var_dump($myids);
-	$myindilist = load_people($myids);
-	return $myindilist;
+	load_people($indis);
+	return $indis;
 }
 	
 //-- search through the gedcom records for families
