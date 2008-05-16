@@ -74,7 +74,7 @@ function need_head_cleanup() {
 	global $fcontents;
 
 	// Don't report BOM as data preceding 0 HEAD
-	return strpos($fcontents, '0 HEAD')!==0 && strpos($fcontents, PGV_UTF8_BOM.'0 HEAD')!==0;
+	return strpos($fcontents, '0 HEAD')>0 && strpos($fcontents, PGV_UTF8_BOM.'0 HEAD')!==0;
 }
 
 /**
