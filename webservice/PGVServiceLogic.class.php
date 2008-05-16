@@ -1156,9 +1156,10 @@ class PGVServiceLogic extends GenealogyService
 			return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 		}
 		else if ($position=='next') {
+			// TODO: $xref can never be set?  This code looks like it was just copied from client.php
 			if (!empty($xref)) {
-				$xref1 = get_next_xref($xref, $type);
-				if ($xref1!==false) {
+				$xref1 = get_next_xref($xref);
+				if ($xref1) {
 					addDebugLog("getXref type=$type position=$position xref=$xref SUCCESS\n$xref1");
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 				}
@@ -1170,9 +1171,10 @@ class PGVServiceLogic extends GenealogyService
 			}
 		}
 		else if ($position=='prev') {
+			// TODO: $xref can never be set?  This code looks like it was just copied from client.php
 			if (!empty($xref)) {
-				$xref1 = get_prev_xref($xref, $type);
-				if ($xref1!==false) {
+				$xref1 = get_prev_xref($xref);
+				if ($xref1) {
 					addDebugLog("getXref type=$type position=$position xref=$xref SUCCESS\n$xref1");
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 				}

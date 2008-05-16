@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,6 +150,10 @@ $pgv_lang["file_missing"]			= "No file was received. Please upload again.";
 $pgv_lang["file_partial"]			= "File was only partially uploaded, please try again";
 $pgv_lang["file_success"]			= "File successfully uploaded";
 $pgv_lang["file_too_big"]			= "Uploaded file exceeds the allowed size";
+$pgv_lang["file_no_temp_dir"]		= "Missing PHP temporary directory";
+$pgv_lang["file_cant_write"]		= "PHP failed to write to disk";
+$pgv_lang["file_bad_extension"]		= "PHP blocked file by extension";
+$pgv_lang["file_unkown_err"]		= "Unknown file upload error code #pgv_lang[global_num1]#. Please report this as a bug.";
 $pgv_lang["folder"]		 			= "Folder on server";
 $pgv_lang["gedcom_editing_disabled"]	= "Editing this GEDCOM has been disabled by the administrator.";
 $pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";

@@ -547,6 +547,7 @@ require_once("includes/functions.php");
 require_once("includes/menu.php");
 //-- set the error handler
 $OLD_HANDLER = set_error_handler("pgv_error_handler");
+//$OLD_HANDLER = set_error_handler(create_function('$x, $y', 'throw new Exception($y, $x);'), E_ALL & ~E_NOTICE);
 //-- load db specific functions
 require_once("includes/functions_db.php");
 

@@ -217,6 +217,118 @@ function sql_mod_function($x,$y) {
 	}
 }
 
+//-- gets the first record in the gedcom
+function get_first_xref($type, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		break;
+	case "FAM":
+		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
+		break;
+	case "SOUR":
+		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
+		break;
+	case "OBJE":
+		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
+		break;
+	default:
+		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the last record in the gedcom
+function get_last_xref($type, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		break;
+	case "FAM":
+		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
+		break;
+	case "SOUR":
+		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
+		break;
+	case "OBJE":
+		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
+		break;
+	default:
+		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the next person in the gedcom
+function get_next_xref($pid, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	$type=id_type($pid);
+	$pid=$DBCONN->escapeSimple($pid);
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id>'{$pid}'";
+		break;
+	case "FAM":
+		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id>'{$pid}'";
+		break;
+	case "SOUR":
+		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id>'{$pid}'";
+		break;
+	case "OBJE":
+		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media>'{$pid}'";
+		break;
+	default:
+		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id>'{$pid}' AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the previous person in the gedcom
+function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	$type=id_type($pid);
+	$pid=$DBCONN->escapeSimple($pid);
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id<'{$pid}'";
+		break;
+	case "FAM":
+		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id<'{$pid}'";
+		break;
+	case "SOUR":
+		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id<'{$pid}'";
+		break;
+	case "OBJE":
+		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media<'{$pid}'";
+		break;
+	default:
+		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id<'{$pid}' AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
 /**
  * find the gedcom record for a family
  *
@@ -1533,6 +1645,34 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 	return $myindilist;
 }
 
+/**
+ * Search for individuals who had dates within the given year ranges
+ * @param int $startyear	the starting year
+ * @param int $endyear		The ending year
+ * @return array
+ */
+function search_indis_year_range($startyear, $endyear) {
+	// TODO: This function should use Julian-days, rather than gregorian years, to allow
+	// the lifespan chart, etc., to use other calendars.
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$startjd=GregorianDate::YMDtoJD($startyear, 1, 1);
+	$endjd  =GregorianDate::YMDtoJD($endyear+1, 1, 1)-1;
+
+	++$TOTAL_QUERIES;
+	$res=$DBH->query(
+		"SELECT rec_xref ".
+		"FROM {$TBLPREFIX}record, {$TBLPREFIX}fact AS birth, {$TBLPREFIX}fact AS death ".
+		"WHERE rec_id=birth.fact_rec_id AND rec_id=death.fact_rec_id ".
+		"  AND rec_ged_id=".PGV_GED_ID." ".
+		"  AND rec_type='INDI' ".
+		"  AND birth.fact_jd1<={$endjd}   AND birth.fact_type NOT IN ('CHAN','_TODO')".
+		"  AND death.fact_jd2>={$startjd} AND death.fact_type NOT IN ('CHAN','_TODO')".
+		"GROUP BY rec_xref"
+	);
+	return $res->fetchAll(PDO::FETCH_COLUMN);
+}
+	
 //-- search through the gedcom records for families
 function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $DBTYPE, $GEDCOMS;
@@ -3249,6 +3389,8 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 				else
 					$year_regex="0*".$row[6];
 				$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
+				// Since we'll probably use this record later (in an indi list, etc.), insert it into the cache
+				global $gedcom_record_cache; $gedcom_record_cache[$row[0]][$ged_id]=$row[2]=='INDI' ? new Person($row[1]) : new Family($row[1]);
 				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 						$date=new GedcomDate($match[1]);
@@ -3327,6 +3469,8 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 			else
 				$year_regex="0*".$row[6];
 			$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
+			// Since we'll probably use this record later (in an indi list, etc.), insert it into the cache
+			global $gedcom_record_cache; $gedcom_record_cache[$row[0]][$ged_id]=$row[2]=='INDI' ? new Person($row[1]) : new Family($row[1]);
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 					$date=new GedcomDate($match[1]);
@@ -3367,39 +3511,10 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
  * This routine does not check the Privacy of the events in the list.  That check has
  * to be done by the routine that makes use of the event list.
  */
-function get_event_list() {
-	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG, $DAYS_TO_SHOW_LIMIT, $COMMIT_COMMAND;
-
-	if (!isset($DAYS_TO_SHOW_LIMIT))
-		$DAYS_TO_SHOW_LIMIT = 30;
-
-	// Look for cached Facts data
-	if ((file_exists($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"))&&(!isset($DEBUG)||($DEBUG==false))) {
-		$modtime = filemtime($INDEX_DIRECTORY.$GEDCOM."_upcoming.php");
-		$mday = date("d", $modtime);
-		if ($mday==date('j')) {
-			$fp = fopen($INDEX_DIRECTORY.$GEDCOM."_upcoming.php", "rb");
-			$fcache = fread($fp, filesize($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"));
-			fclose($fp);
-			return unserialize($fcache);
-		}
-	}
-
+function get_events_list($jd1, $jd2, $events='') {
 	$found_facts=array();
-	// Cache dates for a day either side of the range "today to today+N".
-	// This is because users may be in different time zones (and on different
-	// days) to the server.
-	for ($jd=server_jd()-1; $jd<=server_jd()+1+$DAYS_TO_SHOW_LIMIT; ++$jd)
-		$found_facts=array_merge($found_facts, get_anniversary_events($jd));
-
-	// Cache the Facts data just found
-	if (is_writable($INDEX_DIRECTORY)) {
-		$fp = fopen($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php", "wb");
-		fwrite($fp, serialize($found_facts));
-		fclose($fp);
-		$logline = AddToLog($GEDCOM."_upcoming.php updated");
-		if (!empty($COMMIT_COMMAND))
-			check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
+	for ($jd=$jd1; $jd<=$jd2; ++$jd) {
+		$found_facts=array_merge($found_facts, get_anniversary_events($jd, $events));
 	}
 	return $found_facts;
 }
@@ -3448,17 +3563,14 @@ function get_gedcom_from_id($ged_id) {
 function get_id_from_gedcom($ged_name) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	// We may call this function before creating the table, so must ignore errors.
-	try {
-		if (!is_object($DBH)) {
-			return null;
-		}
 
+	try {
 		static $statement=null;
 		if (is_null($statement)) {
+			if (!is_object($DBH)) throw(new PDOException);
 			$statement=$DBH->prepare("SELECT ged_id FROM {$TBLPREFIX}gedcom WHERE ged_name=?");
 		}
-		$statement->bindValue(1, $gedcom, PDO::PARAM_STR);
+		$statement->bindValue(1, $ged_name, PDO::PARAM_STR);
 		$statement->execute();
 		++$TOTAL_QUERIES;
 		$row=$statement->fetchObject();
@@ -3623,14 +3735,10 @@ function get_idle_users($time) {
 function get_user_id($username) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	// We may call this function before creating the table, so must ignore errors.
 	try {
-		if (!is_object($DBH)) {
-			return null;
-		}
-
 		static $statement=null;
 		if (is_null($statement)) {
+			if (!is_object($DBH)) throw(new PDOException);
 			$statement=$DBH->prepare("SELECT user_id FROM {$TBLPREFIX}user WHERE user_name=?");
 		}
 
@@ -3654,6 +3762,7 @@ function get_user_name($user_id) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
 	try {
+		if (!is_object($DBH)) throw(new PDOException);
 		$statement=$DBH->prepare("SELECT user_name FROM {$TBLPREFIX}user WHERE user_id=?");
 		$statement->bindValue(1, $user_id, PDO::PARAM_STR);
 		$statement->execute();
@@ -3702,14 +3811,10 @@ function get_user_password($user_id) {
 function get_user_setting($user_id, $parameter) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	// We may call this function before creating the table, so must check for errors.
 	try {
-		if (!is_object($DBH)) {
-			return null;
-		}
-
 		static $statement=null;
 		if (is_null($statement)) {
+			if (!is_object($DBH)) throw(new PDOException);
 			$statement=$DBH->prepare(
 				"SELECT uset_value FROM {$TBLPREFIX}user_setting WHERE uset_user_id=? AND uset_parameter=?"
 			);
@@ -3780,12 +3885,7 @@ function set_user_setting($user_id, $parameter, $value) {
 function admin_user_exists() {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	// We may call this function before creating the table, so must check for errors.
 	try {
-		if (!is_object($DBH)) {
-			return false;
-	}
-	
 		$statement=$DBH->prepare(
 			"SELECT COUNT(1) AS num FROM {$TBLPREFIX}user_setting WHERE uset_parameter='canadmin' AND uset_value='Y'"
 		);
@@ -3795,8 +3895,8 @@ function admin_user_exists() {
 		$statement->closeCursor();
 		return $row->num > 0;
 	} catch (PDOException $e) {
-	return false;
-}
+		return false;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3806,14 +3906,10 @@ function admin_user_exists() {
 function get_user_gedcom_setting($user_id, $ged_id, $parameter) {
 	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
-	// We may call this function before creating the table, so must check for errors.
 	try {
-		if (!is_object($DBH)) {
-			return null;
-		}
-
 		static $statement=null;
 		if (is_null($statement)) {
+			if (!is_object($DBH)) throw(new PDOException);
 			$statement=$DBH->prepare(
 				"SELECT ugset_value FROM {$TBLPREFIX}user_gedcom_setting".
 				" WHERE ugset_user_id=? AND ugset_ged_id=? AND ugset_parameter=?"
@@ -3927,6 +4023,66 @@ function get_gedcom_xref_from_user($user_id, $prefered_ged_id) {
 	} else {
 		return null;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_EDIT table
+////////////////////////////////////////////////////////////////////////////////
+
+function create_edit() {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$DBH->exec("INSERT INTO {$TBLPREFIX}edit (edit_user_id) VALUES (".PGV_USER_ID.")");
+	++$TOTAL_QUERIES;
+
+	return $DBH->lastInsertId();
+}
+
+function get_all_edits() {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	++$TOTAL_QUERIES;
+	return $DBH->query(
+		"SELECT rec_ged_id AS ged_id, rec_id, fact_id, created_by, deleted_by ".
+		"FROM {$TBLPREFIX}record, {$TBLPREFIX}fact ".
+		"WHERE rec_id=fact_rec_id AND (created_by IS NOT NULL OR deleted_by IS NOT NULL) ".
+		"ORDER BY ged_id, rec_id, fact_id, created_by"
+	)->fetchAll();
+}
+
+function accept_edit($edit_id) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	// Can't accept deletions of unaccepted facts or  insertions of deleted facts
+	$statement=$DBH->prepare("SELECT COUNT(1) AS blocks FROM {$TBLPREFIX}fact WHERE created_by=? AND deleted_by IS NOT NULL");
+	$statement->bindValue(1, $edit_id, PDO::PARAM_INT);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+
+
+	$DBH->exec("INSERT INTO {$TBLPREFIX}edit (edit_user_id) VALUES (".PGV_USER_ID.")");
+	++$TOTAL_QUERIES;
+
+	return $DBH->lastInsertId();
+}
+
+function undo_edit($edit_id) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$DBH->exec("INSERT INTO {$TBLPREFIX}edit (edit_user_id) VALUES (".PGV_USER_ID.")");
+	++$TOTAL_QUERIES;
+
+	return $DBH->lastInsertId();
+}
+
+function create_user2($username, $password) {
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
+
+	$statement->bindValue(2, $password, PDO::PARAM_STR);
+	$statement->execute();
+	++$TOTAL_QUERIES;
+
+	return $DBH->lastInsertId();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

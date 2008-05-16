@@ -401,15 +401,15 @@ function import_record($indirec, $update) {
 	static $statement_ins_name=null;
 	if (is_null($statement_ins_rec)) {
 		$statement_ins_rec=$DBH->prepare("INSERT INTO {$TBLPREFIX}record (rec_ged_id, rec_xref, rec_type) VALUES (?, ?, ?)");
-		$statement_ins_fact=$DBH->prepare("INSERT INTO {$TBLPREFIX}fact (fact_rec_id, fact_type, fact_value, fact_resn, fact_date, fact_plac, fact_gedcom) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$statement_ins_rec->bindValue(1, PGV_GED_ID, PDO::PARAM_INT);
+		$statement_ins_fact=$DBH->prepare("INSERT INTO {$TBLPREFIX}fact (fact_rec_id, fact_type, fact_value, fact_resn, fact_plac, fact_date, fact_jd1, fact_jd2, fact_day1, fact_day2, fact_mon1, fact_mon2, fact_year1, fact_year2, fact_cal1, fact_cal2, fact_gedcom) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$statement_ins_link=$DBH->prepare("INSERT INTO {$TBLPREFIX}link (link_fact_id, link_type, link_xref, link_rec_id1) VALUES (?, ?, ?, ?)");
 		$statement_ins_name=$DBH->prepare("INSERT INTO {$TBLPREFIX}name (name_fact_id, name_type, name_full, name_npfx, name_givn, name_spfx, name_surn, name_nsfx) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 	}
 
 	// Store the gedcom record
-	$statement_ins_rec->bindValue(1, $GEDCOMS[$GEDCOM]['id'], PDO::PARAM_INT);
-	$statement_ins_rec->bindValue(2, $gid,                    PDO::PARAM_STR);
-	$statement_ins_rec->bindValue(3, $type,                   PDO::PARAM_STR);
+	$statement_ins_rec->bindValue(2, $gid,  PDO::PARAM_STR);
+	$statement_ins_rec->bindValue(3, $type, PDO::PARAM_STR);
 	$statement_ins_rec->execute();
 	$rec_id=$DBH->lastInsertId();
 
@@ -417,39 +417,82 @@ function import_record($indirec, $update) {
 	if (preg_match_all('/\n1 +(\w+) *(.*)((?:\n[2-9] .*)*)/', $indirec, $fact_matches, PREG_SET_ORDER)) {
 		$statement_ins_fact->bindValue(1, $rec_id, PDO::PARAM_INT);
 		foreach ($fact_matches as $fact_match) {
+			if ($level2) {
+				// Remove Y from nonempty "1 XXXX" facts
+				if ($value=='Y') {
+					$value='';
+				}
+			} else {
+				// Add Y to empty "1 XXXX" facts
+				if (!$value) {
+					$value='Y';
+				}
+			}
 			list($gedfact, $tag, $value, $level2)=$fact_match;
 
-			// TODO: Translate 1 EVEN/2 TYPE XXXX into 1 XXXX for known tags
+			// Translate 1 EVEN/2 TYPE XXXX into 1 XXXX for known tags
+			if (($tag=='FACT' || $tag=='EVEN') && preg_match('/\n2 TYPE (\w+)/', $level2, $fact_match) && array_key_exists($fact_match[1], $factarray)) {
+				$tag=$fact_match[1];
+			}
 			$statement_ins_fact->bindValue(2, $tag,   PDO::PARAM_STR);
-			$statement_ins_fact->bindValue(3, $value, PDO::PARAM_STR);
+			$statement_ins_fact->bindValue(3, $value, $value ? PDO::PARAM_STR : PDO::PARAM_NULL);
 
 			// Extract the RESN value into its own field
 			if (preg_match('/\n2 +RESN +(locked|confidential|privacy)/', $level2, $resn_match)) {
-				$level2=str_replace($resn_match[0], '', $level2);
 				$statement_ins_fact->bindValue(4, $resn_match[1], PDO::PARAM_STR);
 			} else {
-				$statement_ins_fact->bindValue(4, '', PDO::PARAM_STR);
-			}
-
-			// Extract the DATE value into its own field
-			if (preg_match('/\n2 +DATE +(.*)/', $level2, $resn_match)) {
-				$level2=str_replace($resn_match[0], '', $level2);
-				$statement_ins_fact->bindValue(5, $resn_match[1], PDO::PARAM_STR);
-			} else {
-				$statement_ins_fact->bindValue(5, '', PDO::PARAM_STR);
+				$statement_ins_fact->bindValue(4, null, PDO::PARAM_NULL);
 			}
 
 			// Extract the PLAC value into its own field
 			// TODO: deal with MAP/LATI/LONG subtags
-			if (preg_match('/\n2 +PLAC +(.*)/',$level2, $resn_match)) {
-				$level2=str_replace($resn_match[0], '', $level2);
-				$statement_ins_fact->bindValue(6, $resn_match[1], PDO::PARAM_STR);
+			if (preg_match('/\n2 +PLAC +(.*)/',$level2, $plac_match)) {
+				$statement_ins_fact->bindValue(5, $plac_match[1], PDO::PARAM_STR);
 			} else {
-				$statement_ins_fact->bindValue(6, '', PDO::PARAM_STR);
+				$statement_ins_fact->bindValue(5, null, PDO::PARAM_NULL);
+			}
+
+			// Extract the DATE value into its own fields
+			if (preg_match('/\n2 +DATE +(.*)/', $level2, $date_match)) {
+				$statement_ins_fact->bindValue(6, $date_match[1], PDO::PARAM_STR);
+				$date=new GedcomDate($date_match[1]);
+				if ($date->isOK()) {
+					$statement_ins_fact->bindValue(7, $date->MinJD(), PDO::PARAM_INT);
+					$statement_ins_fact->bindValue(8, $date->MaxJD(), PDO::PARAM_INT);
+				} else {
+					$statement_ins_fact->bindValue(7, null, PDO::PARAM_NULL);
+					$statement_ins_fact->bindValue(8, null, PDO::PARAM_NULL);
+				}
+				if ($date->date1) {
+					$statement_ins_fact->bindValue(9,  $date->date1->d, PDO::PARAM_INT);
+					$statement_ins_fact->bindValue(11, $date->date1->m, PDO::PARAM_INT);
+					$statement_ins_fact->bindValue(13, $date->date1->y, PDO::PARAM_INT);
+					$statement_ins_fact->bindValue(15, $date->date1->CALENDAR_ESCAPE, PDO::PARAM_STR);
+				} else {
+					$statement_ins_fact->bindValue(9,  null, PDO::PARAM_NULL);
+					$statement_ins_fact->bindValue(11, null, PDO::PARAM_NULL);
+					$statement_ins_fact->bindValue(13, null, PDO::PARAM_NULL);
+					$statement_ins_fact->bindValue(15, null, PDO::PARAM_NULL);
+				}
+				if ($date->date2) {
+					$statement_ins_fact->bindValue(10, $date->date2->d, PDO::PARAM_INT);
+					$statement_ins_fact->bindValue(12, $date->date2->m, PDO::PARAM_INT);
+					$statement_ins_fact->bindValue(14, $date->date2->y, PDO::PARAM_INT);
+					$statement_ins_fact->bindValue(16, $date->date2->CALENDAR_ESCAPE, PDO::PARAM_STR);
+				} else {
+					$statement_ins_fact->bindValue(10, null, PDO::PARAM_NULL);
+					$statement_ins_fact->bindValue(12, null, PDO::PARAM_NULL);
+					$statement_ins_fact->bindValue(14, null, PDO::PARAM_NULL);
+					$statement_ins_fact->bindValue(16, null, PDO::PARAM_NULL);
+				}
+			} else {
+				for ($i=6; $i<=16; ++$i) {
+					$statement_ins_fact->bindValue($i, null, PDO::PARAM_NULL);
+				}
 			}
 
 			$level2=substr($level2, 1); // Remove leading \n;
-			$statement_ins_fact->bindValue(7, $level2, PDO::PARAM_STR);
+			$statement_ins_fact->bindValue(17, $level2, PDO::PARAM_STR);
 			$statement_ins_fact->execute();
 			$fact_id=$DBH->lastInsertId();
 
@@ -1996,7 +2039,7 @@ function cleanup_tags_y(& $irec) {
 			}
 		}
 	}
-	$irec = substr($irec, 0, -3);
+	$irec = substr($irec, 0, -2);
 }
 
 // Create a pseudo-random UUID, as per RFC4122

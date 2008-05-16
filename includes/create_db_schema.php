@@ -432,8 +432,18 @@ try {
 		" fact_type    VARCHAR(15)  NOT NULL,". // BIRT, MARR, etc.
 		" fact_value   VARCHAR(255) NULL,".     // Any text after the fact_type, e.g. "Y"
 		" fact_resn    ENUM ('locked', 'confidential', 'privacy') NULL,". // Any 2 RESN value
-		" fact_date    VARCHAR(255) NULL,". // The 2 DATE value
-		" fact_plac    VARCHAR(255) NULL,". // The 2 PLAC value
+		" fact_plac    VARCHAR(255) NULL,". // Any 2 PLAC value
+		" fact_date    VARCHAR(255) NULL,". // Any 2 DATE value
+		" fact_jd1     INTEGER      NULL,". // The start of the date (range)
+		" fact_jd2     INTEGER      NULL,". // The end of the date (range)
+		" fact_day1    TINYINT      NULL,".
+		" fact_day2    TINYINT      NULL,".
+		" fact_mon1    TINYINT      NULL,".
+		" fact_mon2    TINYINT      NULL,".
+		" fact_year1   SMALLINT     NULL,".
+		" fact_year2   SMALLINT     NULL,".
+		" fact_cal1    ENUM ('@#DGREGORIAN@', '@#DJULIAN@', '@#DFRENCH R@', '@#DHEBREW@', '@#DROMAN', '@#DHIJRI@') NULL,".
+		" fact_cal2    ENUM ('@#DGREGORIAN@', '@#DJULIAN@', '@#DFRENCH R@', '@#DHEBREW@', '@#DROMAN', '@#DHIJRI@') NULL,".
 		" fact_gedcom  TEXT         NULL,". // The gedcom text
 		" fact_created INTEGER      NULL,".
 		" fact_deleted INTEGER      NULL,".

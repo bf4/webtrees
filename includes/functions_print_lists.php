@@ -1462,14 +1462,8 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 
-	foreach(get_event_list() as $key => $value) {
-		if ($value['jd']<$startjd || $value['jd']>$endjd) continue;
-		//-- only birt/marr/deat ?
-		if (!empty($events) && strpos($events, $value['fact'])===false) continue;
-
-		//-- get gedcom record - it may have been deleted since we cached the event
+	foreach (get_events_list($startjd, $endjd, $events) as $value) {
 		$record = GedcomRecord::getInstance($value['id']);
-		if (is_null($record)) continue;
 		//-- only living people ?
 		if ($only_living) {
 			if ($record->type=="INDI" && $record->isDead()) {
@@ -1640,14 +1634,8 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 	$filtered_events = array();
 
-	foreach(get_event_list() as $value) {
-		if ($value['jd']<$startjd || $value['jd']>$endjd) continue;
-		//-- only birt/marr/deat ?
-		if (!empty($events) && strpos($events, $value['fact'])===false) continue;
-
-		//-- get gedcom record - it may have been deleted since we cached the event
+	foreach (get_events_list($startjd, $endjd, $events) as $value) {
 		$record = GedcomRecord::getInstance($value['id']);
-		if (is_null($record)) continue;
 		//-- only living people ?
 		if ($only_living) {
 			if ($record->type=="INDI" && $record->isDead()) {
