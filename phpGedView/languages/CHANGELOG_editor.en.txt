@@ -41,6 +41,16 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.6
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
++$pgv_lang["file_no_temp_dir"]						15 May 2008				A
++$pgv_lang["file_cant_write"]						15 May 2008				A
++$pgv_lang["file_bad_extension"]					15 May 2008				A
++$pgv_lang["file_unkown_err"]						15 May 2008				A
+
+
 VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
