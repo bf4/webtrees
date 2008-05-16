@@ -86,35 +86,6 @@ class LifespanControllerRoot extends BaseController {
 	}
 	
 	/**
-	 * Search for individuals who had dates within the given year ranges
-	 * @param int $startyear	the starting year
-	 * @param int $endyear		The ending year
-	 * @return array
-	 */
-	function search_indis_year_range($startyear, $endyear) {
-		global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
-	
-		if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
-		else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
-		else $term='LIKE';
-	
-		$sql = "SELECT date1.d_gid, date1.d_file, MIN(date1.d_year) as birth, MAX(date2.d_year) as death ";
-		$sql .= "FROM ".$TBLPREFIX."dates as date1, ".$TBLPREFIX."dates as date2, ".$TBLPREFIX."individuals ";
-		$sql .= "WHERE date1.d_gid=date2.d_gid AND date1.d_gid=i_id AND date1.d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND date1.d_file='".$GEDCOMS[$GEDCOM]['id']."' ";
-		$sql .= "AND date1.d_file=date2.d_file AND date1.d_file=i_file AND date1.d_year>=".$DBCONN->escapeSimple($startyear)." AND date2.d_year<=".$DBCONN->escapeSimple($endyear)." AND date2.d_year!=0 GROUP BY d_gid";
-		$res = dbquery($sql);
-		//print $sql;
-		$myids = array();
-		while($row =& $res->fetchRow()){
-			$myids[] = $row[0];
-		}
-		$res->free();
-		//var_dump($myids);
-		$myindilist = load_people($myids);
-		return $myindilist;
-	}
-	
-	/**
 	 * Initialization function
 	 */
 	function init() {
@@ -217,7 +188,7 @@ class LifespanControllerRoot extends BaseController {
 	
 				//Variables to restrict the person boxes to the year searched.
 				//--Searches for individuals who had an even between the year begin and end years
-				$indis = $this->search_indis_year_range($beginYear, $endYear);
+				$indis = search_indis_year_range($beginYear, $endYear);
 				//--Populates an array of people that had an event within those years
 						
 				foreach ($indis as $pid => $indi) {
