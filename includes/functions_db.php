@@ -217,6 +217,118 @@ function sql_mod_function($x,$y) {
 	}
 }
 
+//-- gets the first record in the gedcom
+function get_first_xref($type, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		break;
+	case "FAM":
+		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
+		break;
+	case "SOUR":
+		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
+		break;
+	case "OBJE":
+		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
+		break;
+	default:
+		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the last record in the gedcom
+function get_last_xref($type, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		break;
+	case "FAM":
+		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
+		break;
+	case "SOUR":
+		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
+		break;
+	case "OBJE":
+		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
+		break;
+	default:
+		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the next person in the gedcom
+function get_next_xref($pid, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	$type=id_type($pid);
+	$pid=$DBCONN->escapeSimple($pid);
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id>'{$pid}'";
+		break;
+	case "FAM":
+		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id>'{$pid}'";
+		break;
+	case "SOUR":
+		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id>'{$pid}'";
+		break;
+	case "OBJE":
+		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media>'{$pid}'";
+		break;
+	default:
+		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id>'{$pid}' AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the previous person in the gedcom
+function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	$type=id_type($pid);
+	$pid=$DBCONN->escapeSimple($pid);
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id<'{$pid}'";
+		break;
+	case "FAM":
+		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id<'{$pid}'";
+		break;
+	case "SOUR":
+		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id<'{$pid}'";
+		break;
+	case "OBJE":
+		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media<'{$pid}'";
+		break;
+	default:
+		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id<'{$pid}' AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
 /**
  * find the gedcom record for a family
  *
@@ -1533,6 +1645,37 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 	return $myindilist;
 }
 
+/**
+ * Search for individuals who had dates within the given year ranges
+ * @param int $startyear	the starting year
+ * @param int $endyear		The ending year
+ * @return array
+ */
+function search_indis_year_range($startyear, $endyear) {
+	// TODO: This function should use Julian-days, rather than gregorian years, to allow
+	// the lifespan chart, etc., to use other calendars.
+	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
+
+	if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
+	else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
+	else $term='LIKE';
+
+	$sql = "SELECT date1.d_gid, date1.d_file, MIN(date1.d_year) as birth, MAX(date2.d_year) as death ";
+	$sql .= "FROM ".$TBLPREFIX."dates as date1, ".$TBLPREFIX."dates as date2, ".$TBLPREFIX."individuals ";
+	$sql .= "WHERE date1.d_gid=date2.d_gid AND date1.d_gid=i_id AND date1.d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND date1.d_file='".$GEDCOMS[$GEDCOM]['id']."' ";
+	$sql .= "AND date1.d_file=date2.d_file AND date1.d_file=i_file AND date1.d_year>=".$DBCONN->escapeSimple($startyear)." AND date2.d_year<=".$DBCONN->escapeSimple($endyear)." AND date2.d_year!=0 GROUP BY d_gid";
+	$res = dbquery($sql);
+	//print $sql;
+	$myids = array();
+	while($row =& $res->fetchRow()){
+		$myids[] = $row[0];
+	}
+	$res->free();
+	//var_dump($myids);
+	$myindilist = load_people($myids);
+	return $myindilist;
+}
+	
 //-- search through the gedcom records for families
 function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $DBTYPE, $GEDCOMS;
