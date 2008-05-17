@@ -233,18 +233,13 @@ ul {
 #index_small_blocks .person_box , #index_small_blocks .person_boxNN , #index_small_blocks .person_boxF {
 	margin: 0;
 	padding: 0;
-	border: 0pt solid white;
+	border: none;
 	height: auto;
 }
 
 #index_small_blocks .name1 {
 	font: bold 10px tahoma, arial, helvetica, sans-serif;
 	color: #003399;
-}
-
-#index_small_blocks .person_box img, #index_small_blocks .person_boxF img, #index_small_blocks .person_boxNN img {
-	display: none;
-	visibility: hidden;
 }
 
 /* exclude thumbs */
