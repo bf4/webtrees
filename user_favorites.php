@@ -35,7 +35,7 @@ $PGV_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);
 //-- print user favorites
 function print_user_favorites($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype, $indilist, $sourcelist;
-	global $show_full, $PEDIGREE_FULL_DETAILS;
+	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
 	// Override GEDCOM configuration temporarily	
 	if (isset($show_full)) $saveShowFull = $show_full;
@@ -54,19 +54,21 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 
 	$content = "";
+	if ($block) {
+		$style = 2;		// 1 means "regular box", 2 means "wide box"
+		$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "100%";	// IE needs to have room for vertical scroll bar inside the box
+		$cellSpacing = "1px";
+	} else {
+		$style = 2;
+		$tableWidth = "100%";
+		$cellSpacing = "3px";
+	}
 	if (count($userfavs)==0) {
 		$content .= print_text("no_favorites",0,1);
-	}
-	else {
+	} else {
 		$mygedcom = $GEDCOM;
 		$current_gedcom = $GEDCOM;
-		if ($block) {
-			$style = 2;		// 1 means "regular box", 2 means "wide box"
-			$content .= "<table width=\"99%\" class=\"center $TEXT_DIRECTION\">";
-		} else {
-			$style = 2;		// 2 means "wide box"
-			$content .= "<table width=\"75%\" class=\"center $TEXT_DIRECTION\">";
-		}
+		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
 		foreach($userfavs as $key=>$favorite) {
 			if (isset($favorite["id"])) $key=$favorite["id"];
 			$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype=$ctype&amp;action=deletefav&amp;fv_id=".$key."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />";
@@ -130,7 +132,8 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 		pastefield.value=value;
 	}
 	</script>
-	<br />';
+	<br />
+	';
 	$uniqueID = floor(microtime() * 1000000);
 	$content .= print_help_link("index_add_favorites_help", "qm","",false,true);
 	$content .= "<b><a href=\"javascript: ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
@@ -140,7 +143,8 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />";
 	$content .= "<input type=\"hidden\" name=\"favtype\" value=\"user\" />";
 	$content .= "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />";
-	$content .= "<table border=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
+	$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
+	$content .= "<tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
 	$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
 	$content .= print_findindi_link("gid{$uniqueID}","",true);
@@ -150,10 +154,10 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= "<br />".$pgv_lang["add_fav_or_enter_url"];
 	$content .= "<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
 	$content .= "<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
-	if ($block) $content .= '<br /><br />';
-	else $content .= '</td><td>';
+	if ($block) $content .= "\n</td></tr><tr><td><br />";
+	else $content .= "\n</td><td>";
 	$content .= $pgv_lang["add_fav_enter_note"];
-	$content .= "<br /><textarea name=\"favnote\" rows=\"6\" cols=\"40\"></textarea>";
+	$content .= "<br /><textarea name=\"favnote\" rows=\"6\" cols=\"50\"></textarea>";
 	$content .= "</td></tr></table>";
 	$content .= "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" style=\"font-size: 8pt; \" />";
 	$content .= "</form></div>";

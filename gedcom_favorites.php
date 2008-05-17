@@ -34,7 +34,7 @@ $PGV_BLOCKS["print_gedcom_favorites"]["config"]   = array("cache"=>7);
 //-- print gedcom favorites
 function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $sourcelist, $TEXT_DIRECTION;
-	global $show_full, $PEDIGREE_FULL_DETAILS;
+	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
 	// Override GEDCOM configuration temporarily	
 	if (isset($show_full)) $saveShowFull = $show_full;
@@ -53,17 +53,20 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 	
 	$content = "";
+	if ($block) {
+		$style = 2;		// 1 means "regular box", 2 means "wide box"
+		$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "100%";	// IE needs to have room for vertical scroll bar inside the box
+		$cellSpacing = "1px";
+	} else {
+		$style = 2;
+		$tableWidth = "100%";
+		$cellSpacing = "3px";
+	}
 	if (count($userfavs)==0) {
 		if (userGedcomAdmin()) $content .= print_text("no_favorites",0,1);
 		else $content .= print_text("no_gedcom_favorites",0,1);
 	} else {
-		if ($block) {
-			$style = 2;		// 1 means "regular box", 2 means "wide box"
-			$content .= "<table width=\"99%\" class=\"center $TEXT_DIRECTION\">";
-		} else {
-			$style = 2;
-			$content .= "<table width=\"75%\" class=\"center $TEXT_DIRECTION\">";
-		}
+		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
 		foreach($userfavs as $key=>$favorite) {
 			if (isset($favorite["id"])) $key=$favorite["id"];
 			$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype=$ctype&amp;action=deletefav&amp;fv_id=".$key."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />\n";
@@ -114,6 +117,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 					}
 				}
 			}
+			$content .= "</div>";
 			$content .= "</td></tr>\n";
 		}
 		$content .= "</table>\n";
@@ -137,7 +141,8 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
 		$content .= "<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n";
 		$content .= "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
-		$content .= "<table border=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
+		$content .= "<table width=\"{$tableWidth}\" style=\"border:none\" cellspacing=\"{$cellSpacing}\" class=\"center $TEXT_DIRECTION\">";
+		$content .= "<tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
 		$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
 		$content .= print_findindi_link("gid{$uniqueID}","",true);
@@ -147,9 +152,10 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "\n<br />".$pgv_lang["add_fav_or_enter_url"];
 		$content .= "\n<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
 		$content .= "\n<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
-		$content .= "\n</td><td>";
+		if ($block) $content .= "\n</td></tr><tr><td><br />";
+		else $content .= "\n</td><td>";
 		$content .= "\n".$pgv_lang["add_fav_enter_note"];
-		$content .= "\n<br /><textarea name=\"favnote\" rows=\"6\" cols=\"40\"></textarea>";
+		$content .= "\n<br /><textarea name=\"favnote\" rows=\"6\" cols=\"50\"></textarea>";
 		$content .= "</td></tr></table>\n";
 		$content .= "\n<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" style=\"font-size: 8pt; \" />";
 		$content .= "\n</form></div>\n";
