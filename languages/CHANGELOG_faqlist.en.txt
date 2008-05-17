@@ -39,10 +39,14 @@ occur in the respective language files.
 VERSION 4.1.6
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$faqlist["FAQ_030_NAMES2"]							15 May 2008				W
+*$faqlist["FAQ_030_GIVEN"]							17 May 2008				W
++$faqlist["FAQ_030_GIVEN1"]						17 May 2008				A
+*$faqlist["FAQ_030_NAMES2"]						17 May 2008				w
+*$faqlist["FAQ_030_HEBNAME"]						16 May 2008				w
+*$faqlist["FAQ_030_NAMES2"]						15 May 2008				W
 *$faqlist["FAQ_010_body"]							14 May 2008				W (replace URL with CONSTANT)
 *$faqlist["FAQ_030_SURNAME2"]						12 May 2008				f (added leading space)
-+$faqlist["FAQ_030_NAMES2"]							12 May 2008				A
++$faqlist["FAQ_030_NAMES2"]						12 May 2008				A
 
 VERSION 4.1.1
 
