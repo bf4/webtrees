@@ -286,10 +286,14 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			$imgsize = findImageSize($object["file"]);
 			$imgwidth = $imgsize[0]+50;
 			$imgheight = $imgsize[1]+150;
-			
+		
 //LBox --------  change for Lightbox Album --------------------------------------------
 			if (file_exists("modules/lightbox/album.php")) {
-				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">";
+
+                $rmve = array('<span class="starredname">', '</span>');								
+                $nme = str_replace($rmve, "" ,$name);
+//				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">";
+				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady($nme) . "\">";
 // ---------------------------------------------------------------------------------------------
 
 			}elseif (!empty($object['mid']) && $USE_MEDIA_VIEWER) {

@@ -387,7 +387,11 @@ class IndividualControllerRoot extends BaseController {
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")) {
 						$name = $this->indi->getName();
-						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+						
+                        $rmve = array('<span class="starredname">', '</span>');								
+                        $nme = str_replace($rmve, "" ,$name);						
+//						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . ":" . $GEDCOM . ":" . PrintReady($nme) . "\">" . "\n";
 					}else
 // ---------------------------------------------------------------------------------------------
 
