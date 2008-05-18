@@ -60,48 +60,58 @@ function mod_gallery2_load($uid)
 {
 	global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo, $pgv_lang;
 
-	if($SERVER_URL[strlen($SERVER_URL) - 1] == '/'){$sep = '';}else{$sep = '/';}
+	// Rebuild the url, just to be sure we have a clean one
+	$bits = parse_url($SERVER_URL);
+	if(isset($bits['query'])){$bits['query'] = "&{$bits['query']}";}else{$bits['query'] = '';}
+	if(isset($bits['fragment'])){$bits['fragment'] = "#{$bits['fragment']}";}else{$bits['fragment'] = '';}
+	$url = "{$bits['scheme']}://{$bits['host']}/index.php?mod=gallery2{$bits['query']}{$bits['fragment']}";
 
-	$ret = GalleryEmbed::init(array(
-		'embedUri'			=> "{$SERVER_URL}{$sep}index.php?mod=gallery2",
-		'g2Uri'				=> G2EmbedDiscoveryUtilities::normalizeG2Uri($modinfo['Gallery2']['path']),
+	$init = GalleryEmbed::init(array(
+		'embedUri'		=> G2EmbedDiscoveryUtilities::normalizeEmbedUri($url),
+		'g2Uri'			=> G2EmbedDiscoveryUtilities::normalizeG2Uri($modinfo['Gallery2']['path']),
 		'activeUserId'		=> $uid,
 		'activeLanguage'	=> $language_settings[$LANGUAGE]['lang_short_cut'],
 		'apiVersion'		=> array(1, 1)
 	));
-	if($ret)
+	// Check for error when initialising the gallery
+	if($init)
 	{
-		/* Error! */
-		/* Did we get an error because the user doesn't exist in g2 yet? */
-		$ret2 = GalleryEmbed::isExternalIdMapped($uid, 'GalleryUser');
-		if($ret2 && $ret2->getErrorCode() & ERROR_MISSING_OBJECT)
+		// Did we get an error because the user isn't mapped in g2 yet?
+		$is_mapped = GalleryEmbed::isExternalIdMapped($uid, 'GalleryUser');
+		if($is_mapped && $is_mapped->getErrorCode() & ERROR_MISSING_OBJECT)
 		{
 			/* The user does not exist in G2 yet. Create in now on-the-fly */
-			$ret = GalleryEmbed::createUser($uid, array(
+			$language = get_user_setting($uid, 'language');
+			if($language)
+			{
+				$lang = $language_settings[$language]['lang_short_cut'];
+			}
+			else
+			{
+				$lang = 'en';
+			}
+			$create_user = GalleryEmbed::createUser($uid, array(
 				'username'			=> $uid,
 				'email'				=> get_user_setting($uid, 'email'),
 				'fullname'			=> getUserFullName($uid),
-				'language'			=> $language_settings[get_user_settings($uid, 'language')]['lang_short_cut'],
+				'language'			=> $lang,
 				'hashedpassword'		=> get_user_password($uid),
 				'hashmethod'			=> 'crypt',
 				'creationtimestamp'		=> get_user_setting($uid, 'reg_timestamp')
 			));
-			if($ret)
+			if($create_user)
 			{
-				/* An error during user creation. Not good, print an error or do whatever is appropriate
-				 * in your emApp when an error occurs
-				 */
-				list($ret3, $g2u) = GalleryCoreApi::fetchUserByUserName($user['username']);
-				if($ret3)
+				// Could not create the user, is it because the user already exists in g2?
+				list($not_mapped, $g2u) = GalleryCoreApi::fetchUserByUserName(get_user_setting($uid, 'username'));
+				if($not_mapped)
 				{
-					print "{$pgv_lang['mod_gallery2_error_user_create']}<br />\n".$ret->getAsHtml();
+					print "{$pgv_lang['mod_gallery2_error_user_create']}<br />\n".$not_mapped->getAsHtml();
 					exit;
 				}
+				// Yes, the user already exists, let's go ahead and map them so we won't have this problem in the future
 				else
 				{
-					/* Add missing External ID Map entry and continue.
-					 */
-					$ret4 = GalleryCoreApi::addMapEntry('ExternalIdMap', array(
+					$add_map = GalleryCoreApi::addMapEntry('ExternalIdMap', array(
 						'externalId' => $uid,
 						'entityType' => 'GalleryUser',
 						'entityId' => $g2u->getId()
@@ -111,34 +121,42 @@ function mod_gallery2_load($uid)
 		}
 		else
 		{
-			/* The error we got wasn't due to a missing user, it was a real error */
-			if($ret2)
+			// The error we got wasn't due to a missing user, it was a real error
+			if($is_mapped)
 			{
-				print "{$pgv_lang['mod_gallery2_error_user_check']}<br />\n".$ret2->getAsHtml();
+				print "{$pgv_lang['mod_gallery2_error_user_check']}<br />\n".$is_mapped->getAsHtml()."<br />\n";
 			}
-			print "{$pgv_lang['mod_gallery2_error_init']}<br />\n".$ret->getAsHtml();
+			print "{$pgv_lang['mod_gallery2_error_init']}<br />\n".$init->getAsHtml();
 			exit;
 		}
+		// Initialize again to clear up a bug where it seems to remember the last logged in user, very bad when the last user was an admin ^_^
+		$init = GalleryEmbed::init(array(
+			'embedUri'		=> G2EmbedDiscoveryUtilities::normalizeEmbedUri($url),
+			'g2Uri'			=> G2EmbedDiscoveryUtilities::normalizeG2Uri($modinfo['Gallery2']['path']),
+			'activeUserId'		=> $uid,
+			'activeLanguage'	=> $language_settings[$LANGUAGE]['lang_short_cut'],
+			'apiVersion'		=> array(1, 1)
+		));
 	}
-	//GalleryCapabilities::set('showSidebarBlocks', false);
 
 	// if admin, we need to add them to the admin group if not already added
 	if(userIsAdmin($uid) == 'Y')
 	{
-		list($ret, $user) = GalleryCoreApi::loadEntityByExternalId($uid, 'GalleryUser');
-		if($ret){print $ret->wrap(__FILE__, __LINE__);exit;}
-		list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
-		if($ret){print $ret->wrap(__FILE__, __LINE__);exit;}
-		list($ret, $group) = $module->getParameter('id.adminGroup');
-		if($ret){print $ret->wrap(__FILE__, __LINE__);exit;}
-		/* First check if the user is not already a member of the group */
-		list($ret, $membership) = GalleryCoreApi::fetchGroupsForUser($user->getId());
-		if($ret){print $ret->wrap(__FILE__, __LINE__);exit;}
-		/* Only add user to group if not already done so */
-		if(!isset($membership[$group]))
+		// This should be much faster the in the past after the first time loading for admins
+		list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
+		if(!$isAdmin)
 		{
-			$ret = GalleryCoreApi::addUserToGroup($user->getId(), $group);
-			if($ret){print $ret->wrap(__FILE__, __LINE__);exit;}
+			// Load G2 user
+			list($ret, $user) = GalleryCoreApi::loadEntityByExternalId($uid, 'GalleryUser');
+			if($ret){return;}
+			// Load the module plugin system
+			list($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
+			if($ret){return;}
+			// Get the id of the admin group
+			list($ret, $group) = $module->getParameter('id.adminGroup');
+			if($ret){return;}
+			// Add the user to the group
+			GalleryCoreApi::addUserToGroup($user->getId(), $group);
 		}
 	}
 }
