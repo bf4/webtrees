@@ -535,7 +535,7 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 			}
 		}
 		echo $fmt_msg;
-		AddToLog($log_msg);
+		if (function_exists('AddToLog')) AddToLog($log_msg);
 		if ($errno==1)
 			die();
 	}
