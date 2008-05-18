@@ -56,11 +56,11 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content = "";
 	if ($block) {
 		$style = 2;		// 1 means "regular box", 2 means "wide box"
-		$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "100%";	// IE needs to have room for vertical scroll bar inside the box
+		$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "99%";	// IE needs to have room for vertical scroll bar inside the box
 		$cellSpacing = "1px";
 	} else {
 		$style = 2;
-		$tableWidth = "100%";
+		$tableWidth = "99%";
 		$cellSpacing = "3px";
 	}
 	if (count($userfavs)==0) {
