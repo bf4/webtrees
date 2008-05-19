@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1966611 ] 4.1.5 - Edit Geographic Place Location - escapes, flag (wooc)
  - Fixed: [ 1965647 ] Starred Given Names in Charts including compact chart. (windmillway)
  - Changed: Added $GEDCOM global missed out in SVN 3050 (windmillway)
  - Fixed: RSS feeds/random media bug.  RSS duplicate include files.  (fisharebest)
