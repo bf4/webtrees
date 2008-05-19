@@ -41,9 +41,9 @@ $ged     =safe_POST('ged', get_all_gedcoms(), $GEDCOM);
 $help_message=safe_GET('help_messge');
 
 // Some variables can come from the URL as well as the form
-if (!$url)    $url =safe_GET('url', PGV_REGEX_URL);
-if (!$type)   $type=safe_GET('type', array('full', 'simple'), 'full');
-if (!$action) $type=safe_GET('action');
+if (!$url)    $url   =safe_GET('url', PGV_REGEX_URL);
+if (!$type)   $type  =safe_GET('type', array('full', 'simple'), 'full');
+if (!$action) $action=safe_GET('action');
 
 $message='';
 
