@@ -384,27 +384,22 @@ class IndividualControllerRoot extends BaseController {
 					//Gets the Media View Link Information and Concatinate
 					$mid = $firstmediarec['mid'];
 					
-//LBox --------  change for Lightbox Album --------------------------------------------
+					//LBox --------  addition for Lightbox Album --------------------------------------------
+					$name = $this->indi->getName();
 					if (file_exists("modules/lightbox/album.php")) {
-						$name = $this->indi->getName();
-						
-                        $rmve = array('<span class="starredname">', '</span>');								
-                        $nme = str_replace($rmve, "" ,$name);						
-//						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
-						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . ":" . $GEDCOM . ":" . PrintReady($nme) . "\">" . "\n";
+						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . ":" . $GEDCOM . ":" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 					}else
-// ---------------------------------------------------------------------------------------------
-
+					//Lbox -----------------------------------------------------------------------------------------
+					
 					if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
 					}else{
 						$mediaviewlink = "mediaviewer.php?mid=".$mid;
 						$result .= "<a href=\"".$mediaviewlink."\">";
 					}
-
-					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
+					//LBox ---- $result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
+					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(strip_tags($name))."\" />";
 					$result .= "</a>";
-
 					return $result;
 				}
 			}

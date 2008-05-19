@@ -287,22 +287,18 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			$imgwidth = $imgsize[0]+50;
 			$imgheight = $imgsize[1]+150;
 		
-//LBox --------  change for Lightbox Album --------------------------------------------
+			//LBox --------  change for Lightbox Album --------------------------------------------
 			if (file_exists("modules/lightbox/album.php")) {
-
-                $rmve = array('<span class="starredname">', '</span>');								
-                $nme = str_replace($rmve, "" ,$name);
-//				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">";
-				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady($nme) . "\">";
-// ---------------------------------------------------------------------------------------------
-
-			}elseif (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
+				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady(htmlspecialchars($name)) . "\">";
+			}else
+			// ---------------------------------------------------------------------------------------------
+			
+			if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
 				print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
 			}else{
 				print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 			}
-
-			print "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
+			print "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".strip_tags($name)."\" ";
 			if (!$show_full) print " style=\"display: none;\"";
 			if ($imgsize) print " /></a>";
 			else print " />";

@@ -334,7 +334,7 @@ function print_td_person($n) {
 				$imgheight = $imgsize[1]+150;
 //LBox --------  change for Lightbox Album --------------------------------------------
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . Printready(strip_tags($name)) . "\">" . "\n";
 				}else{
 // ---------------------------------------------------------------------------------------------
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
@@ -343,14 +343,14 @@ function print_td_person($n) {
 // ---------------------------------------------------------------------------------------------
 				$birth_date=$indi->getBirthDate();
 				$death_date=$indi->getDeathDate();
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".$name.' '.strip_tags(html_entity_decode(($birth_date->Display(false).' - '.$death_date->Display(false)))).'" ';
+				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".strip_tags($name).' '.strip_tags(html_entity_decode(($birth_date->Display(false).' - '.$death_date->Display(false)))).'" ';
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}
 		}
 
 		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" title=\"$title\"> ";
-		$text .= PrintReady($name);
+		$text .= PrintReady(htmlspecialchars($name));
 		if ($addname) $text .= "<br />" . PrintReady($addname);
 		$text .= "</a>";
 		if ($showids) {
