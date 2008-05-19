@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1965647 ] Starred Given Names in Charts including compact chart. (windmillway)
  - Changed: Added $GEDCOM global missed out in SVN 3050 (windmillway)
  - Fixed: RSS feeds/random media bug.  RSS duplicate include files.  (fisharebest)
  - Changed: Show persons name as Lightbox title (instead of file) name when viewing various Charts (windmillway)
