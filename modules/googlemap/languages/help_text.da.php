@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Danish Language file for PhpGedView.
  *

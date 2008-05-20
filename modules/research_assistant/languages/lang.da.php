@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * phpGedView Research Assistant Tool - Form Loader Engine.
  *
@@ -32,7 +32,7 @@ $png["autosearch_ssurname"] = "Inkludér ægtefælles efternavn:";
 $pgv_lang["autosearch_sgivennames"] = "Inkludér ægtefælles fornavn(e):";
 $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com plugin";
 
-gv_lang["add_task_inst"]              = "Hvis der endnu ikke er oprettet en opgave til dine forskningsresultater, bør du oprette opgaven først, og derefter vælge at gemme og færdiggøre opgaven.";\
+$pgv_lang["add_task_inst"]              = "Hvis der endnu ikke er oprettet en opgave til dine forskningsresultater, bør du oprette opgaven først, og derefter vælge at gemme og færdiggøre opgaven.";
 $pgv_lang["complete_task_inst"] = "Vælg en opgave fra den nedenstående opgaveliste for at færdiggøre opgaven og indtast så dine resultater:";
 $pgv_lang["enter_results"]              = "Indtast resultater";
 $pgv_lang["auto_gen_inst"]              = "Nogle programmer lader dig indtaste forskningsopgaver som TODO emner i din GEDCOM fil. Denne indstilling vil søge i din GEDCOM fil og automatisk konvertere alle TODO emner til en forskingsopgave.";
