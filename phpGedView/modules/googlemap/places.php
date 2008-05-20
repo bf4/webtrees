@@ -517,7 +517,7 @@ function edit_place_location(placeid) {
 }
 
 function add_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=670,height=550,resizable=1,scrollbars=1');
 	return false;
 }
 
