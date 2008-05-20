@@ -726,7 +726,6 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>'
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
 	echo $head, '</head>';
-	flush(); // Allow the browser to start fetching linked components right away
 	echo '<body id="body"';
 	if ($view=='preview') {
 		echo ' onbeforeprint="hidePrint();" onafterprint="showBack();"';
@@ -746,7 +745,6 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>'
 		include($print_headerfile);
 	}
 	echo '<!-- end header section --><!-- begin content section -->';
-	flush(); // Allow the browser to render the header while we're still generating the content
 }
 /**
  * print simple HTML header
@@ -895,7 +893,6 @@ function message(username, method, url, subject) {
 	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 	<?php
 	echo '</head>';
-	flush(); // Allow the browser to start fetching linked components right away
 	echo '<body style="margin:5px;" onload="loadHandler();">';
 }
 // -- print the html to close the page
@@ -906,7 +903,6 @@ function print_footer() {
 
 	if (!isset($footer_count)) $footer_count = 1;
 	else $footer_count++;
-	flush(); // Don't let a slow footer delay rendering of the main page
 	print "<!-- begin footer -->";
 	if ($view!="preview") {
 		include($footerfile);
@@ -925,7 +921,6 @@ function print_footer() {
 	if (function_exists("load_behaviour")) {
 		load_behaviour();  // @see function_print_lists.php
 	}
-	flush(); // Don't wait for external site before starting to render our own.
 	echo google_analytics();
 	echo '</body></html>';
 }
