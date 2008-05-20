@@ -25,46 +25,46 @@ $text['title']          = 'Informacja o systemie';
 
 $text['vitals']         = 'Stan systemu';
 $text['hostname']       = 'Nazwa kanoniczna hosta';
-$text['ip']             = 'IP nas³uchuj±cy';
-$text['kversion']       = 'Wersja j±dra';
-$text['dversion']       = 'Distro Name';
-$text['uptime']         = 'Uptime';
-$text['users']          = 'Obecnych u¿ytkownków';
-$text['loadavg']        = 'Obci±¿enia ¶rednie';
+$text['ip']             = 'IP nasÅ‚uchujÄ…cy';
+$text['kversion']       = 'Wersja jÄ…dra';
+$text['dversion']       = 'Nazwa systemu';
+$text['uptime']         = 'WÅ‚Ä…czony';
+$text['users']          = 'Obecnych uÅ¼ytkownikÃ³w';
+$text['loadavg']        = 'ObciÄ…Å¼enia Å›rednie';
 
-$text['hardware']       = 'Informacja o sprzêcie';
+$text['hardware']       = 'Informacja o sprzÄ™cie';
 $text['numcpu']         = 'Procesory';
 $text['cpumodel']       = 'Model';
-$text['cpuspeed']       = 'Cz&#281;stotliwo&#347;&#263;';
-$text['busspeed']       = 'BUS Speed';
-$text['cache']          = 'Cache Size';
+$text['cpuspeed']       = 'CzÄ™stotliwoÅ›Ä‡';
+$text['busspeed']       = 'SzybkoÅ›Ä‡ BUS';
+$text['cache']          = 'Rozmiar Cache';
 $text['bogomips']       = 'System Bogomips';
 
-$text['pci']            = 'Urz±dzenia PCI';
-$text['ide']            = 'Urz±dzenia IDE';
-$text['scsi']           = 'Urz±dzenia SCSI';
-$text['usb']            = 'Urz±dzenia USB';
+$text['pci']            = 'UrzÄ…dzenia PCI';
+$text['ide']            = 'UrzÄ…dzenia IDE';
+$text['scsi']           = 'UrzÄ…dzenia SCSI';
+$text['usb']            = 'UrzÄ…dzenia USB';
 
-$text['netusage']       = 'Sieæ';
-$text['device']         = 'Urz±dzenie';
+$text['netusage']       = 'SieÄ‡';
+$text['device']         = 'UrzÄ…dzenie';
 $text['received']       = 'Odebrano';
-$text['sent']           = 'Wys³ano';
-$text['errors']         = 'B³êdow/Porzuconych';
+$text['sent']           = 'WysÅ‚ano';
+$text['errors']         = 'BÅ‚Ä™dy/Porzucone';
 
-$text['memusage']       = 'Obci±¿enie pamiêci';
-$text['phymem']         = 'Pamiêæ fizyczna';
-$text['swap']           = 'Pamiêæ Swap';
+$text['memusage']       = 'ObciÄ…Å¼enie pamiÄ™ci';
+$text['phymem']         = 'PamiÄ™Ä‡ fizyczna';
+$text['swap']           = 'PamiÄ™Ä‡ Swap';
 
-$text['fs']             = 'Zamontowane systemy plików';
+$text['fs']             = 'Zamontowane systemy plikÃ³w';
 $text['mount']          = 'Punkt montowania';
 $text['partition']      = 'Partycja';
 
-$text['percent']        = 'Procentowo zajête';
+$text['percent']        = 'ZajÄ™ta pojemnoÅ›Ä‡ w %';
 $text['type']           = 'Typ';
 $text['free']           = 'Wolne';
-$text['used']           = 'Zajête';
+$text['used']           = 'ZajÄ™te';
 $text['size']           = 'Rozmiar';
-$text['totals']         = 'Ca³kowite';
+$text['totals']         = 'CaÅ‚kowite';
 
 $text['kb']             = 'KB';
 $text['mb']             = 'MB';
@@ -75,11 +75,11 @@ $text['none']           = 'brak';
 $text['capacity']       = 'Rozmiar';
 
 $text['template']       = 'Szablon';
-$text['language']       = 'Jêzyk';
-$text['submit']         = 'Wy¶lij';
+$text['language']       = 'JÄ™zyk';
+$text['submit']         = 'WyÅ›lij';
 $text['created']        = 'Utworzone przez';
 $text['locale']         = 'pl_PL'; 
-$text['gen_time']       = " %e %b %Y o godzinie %T";
+$text['gen_time']       = " %d.%m.%Y o godzinie %H:%M";
 
 $text['days']           = 'dni';
 $text['hours']          = 'godzin';
@@ -87,21 +87,21 @@ $text['minutes']        = 'minut';
 
 $text['sensors']        = 'Czujniki (lm_sensors)';
 $text['temperature']    = 'Temperatura';
-$text['voltage']        = 'Napiêcia';
+$text['voltage']        = 'NapiÄ™cia';
 $text['fans']           = 'Wiatraczki';
-$text['s_value']        = 'Warto¶æ';
+$text['s_value']        = 'WartoÅ›Ä‡';
 $text['s_min']          = 'Min';
-$text['s_max']          = 'Max';
-$text['s_div']          = 'Div';
-$text['hysteresis']     = 'Hystereza';
+$text['s_max']          = 'Maks';
+$text['s_div']          = 'Åšrednia';
+$text['hysteresis']     = 'Histereza';
 $text['s_limit']        = 'Limit';
 $text['s_label']        = 'Nazwa';
 $text['degree_mark']    = '&ordm;C';
 $text['voltage_mark']   = 'V';
 $text['rpm_mark']       = 'RPM';
 
-$text['app']		= 'Kernel + applications';
-$text['buffers']	= 'Buffers';
-$text['cached']		= 'Cached';
+$text['app']		= 'Kernel + applikacje';
+$text['buffers']	= 'Bufory';
+$text['cached']		= 'Cache';
 
 ?>
