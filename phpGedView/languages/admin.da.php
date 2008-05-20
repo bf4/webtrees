@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Danish texts
  *
@@ -349,7 +349,7 @@ $pgv_lang["ADVANCED_PLAC_FACTS"] = "Avancerede fakta om stednavne";
 $pgv_lang["associated_files"]		= "Tilknyttede filer:";
 $pgv_lang["remove_all_files"]		= "Fjern alle unødvendige filer";
 $pgv_lang["deleted_files"]          = "Slettede filer:";
-$pgv_lang["index_dir_cleanup_inst"]	= "For at slette en fil eller undermappe fra Index mappen, skal du trække den til skraldespanden eller vælge dens afkrydsningsboks. Klik på Slet knappen for at fjerne de valgte filer permanent.<br /><br />Filer der er markeret med <img src=\\\"./images/RESN_confidential.gif\\\" /> er påkrævet for korrekt afvikling og kan ikke fjernes.<br />Filer markeret med <img src=\\\"./images/RESN_locked.gif\\\" /> har vigtige indstillinger eller ventende data og bør kun slettes hvis du er sikker på at du ved hvad du gør.<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "For at slette en fil eller undermappe fra Index mappen, skal du trække den til skraldespanden eller vælge dens afkrydsningsboks. Klik på Slet knappen for at fjerne de valgte filer permanent.<br /><br />Filer der er markeret med <img src=\"./images/RESN_confidential.gif\" /> er påkrævet for korrekt afvikling og kan ikke fjernes.<br />Filer markeret med <img src=\"./images/RESN_locked.gif\" /> har vigtige indstillinger eller ventende data og bør kun slettes hvis du er sikker på at du ved hvad du gør.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Ryd op i Index mappen";
 $pgv_lang["warn_file_delete"]		= "Denne fil indeholder vigtige oplysninger såsom sprogindstillinger eller ventende ændringsdata. Er du sikker på at du ønsker at slette denne fil?";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Avancerede fakta om navne";

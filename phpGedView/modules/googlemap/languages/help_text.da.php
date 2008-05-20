@@ -1,9 +1,9 @@
-<?php
+﻿<?php
 /**
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,11 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   exit;
 }
 
+$pgv_lang["GOOGLEMAP_CONFIG"]           = "Konfigurér Google-map";
+$pgv_lang["GOOGLEMAP_CONFIG_help"]      = "~#pgv_lang[GOOGLEMAP_CONFIG]#~<br /><br />Konfigurér alle områder af Google-map modulet her.";
+
 $pgv_lang["GOOGLEMAP_ENABLE"]           = "Aktiver Google-map";
-$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Denne funktion kan aktivere eller deaktivere brugen af Googlemap.<br/>Når den er deaktiveret vil Kort-fanen på individ siden stadig vises, men vil være tom. Konfigurationslinket for administratorer vil stadig være tilgængelig.";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Denne funktion kan aktivere eller deaktivere brugen af Googlemap.<br/>Når den er deaktiveret vil Kort-fanen på individ siden stadig vises, men vil være tom. Konfigurationslinket for administratorer vil stadig være tilgængelig. Når den er deaktiveret vil stedhieraki vises som normalt";
 
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Google-map API nøgle";
 $pgv_lang["GOOGLEMAP_API_KEY_help"]     = "~#pgv_lang[GOOGLEMAP_API_KEY]#~<br /><br />Indsæt din Google Map API nøgle her.  Du kan bede om en nøgle her: <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\">http://www.google.com/apis/maps/</a>";
@@ -86,6 +89,8 @@ $pgv_lang["GOOGLEMAP_COORD"]           = "Vis kort koordinater";
 $pgv_lang["GOOGLEMAP_COORD_help"]      = "~#pgv_lang[GOOGLEMAP_COORD]#~<br /><br />Denne indstilling afgør om der vises længde- og breddegrad på det popup vindue der er tilknyttet kortmarkører";
 
 // Help texts for places_edit.php
+$pgv_lang["PLE_EDIT"]                   = "Redigér Googlemap steder";
+$pgv_lang["PLE_EDIT_help"]              = "Her kan du tilføje, redigere eller slette Googlemap stedoplysninger.";
 
 $pgv_lang["PLE_PLACES"]                 = "Indtast stednavn";
 $pgv_lang["PLE_PLACES_help"]            = "Her kan du indtaste eller ændre navnet på stedet.";
@@ -107,6 +112,7 @@ $pgv_lang["PLE_FLAGS_help"]             = "Ved at bruge nedrulningsmenuen er det
 
 $pgv_lang["PLIF_FILENAME"]              = "Indtast filnavn";
 $pgv_lang["PLIF_FILENAME_help"]         = "Indtast navnet på den fil der indeholder steder i CSV format.";
+$pgv_lang["PLIF_LOCALFILE_help"]        = "Vælg en fil på listen over filer der allerede er på serveren, der indeholder stedplaceringer i CSV formatet.";
 
 $pgv_lang["PLIF_CLEAN"]                 = "Tøm placelocation database";
 $pgv_lang["PLIF_CLEAN_help"]            = "Når denne funktion vælges vil databasen blive tømt. Dette betyder at kun de steder der er gemt i denne tabel vil blive slettet. Dette vil ikke ændre noget i GEDCOM filen.";
@@ -119,5 +125,29 @@ $pgv_lang["PLIF_OVERWRITE_help"]        = "Overskriv sted-data i databasen med d
 
 $pgv_lang["PLE_ACTIVE"]             = "Vis inaktive steder";
 $pgv_lang["PLE_ACTIVE_help"]        = "<strong>Vis steder i GoogleMaps tabellen der ikke bruges af nogen aktuel GEDCOM.</strong><br/><br/>Denne visning er som standard sat til kun at vise de steder der findes både i dine GEDCOM filer og i dine GoogleMap tabeller.<br/><br/>Når denne indstilling er valgt, og der klikkes på \"Vis\", vil listen over steder vise ALLE steder på dette niveau.<br/><br/>Dette er gjort for at øge hastigheden på listen, når der er importeret store stedlister, men hvor ikke alle bruges.<br/><br/>BEMÆRK - hvis denne indstilling er valgt, kan det tage et par minutter at vise den komplette liste";
+
+// Help text for placecheck.php
+$pgv_lang["GOOGLEMAP_PLACECHECK"]       = "Stedkontrol værktøj";
+$pgv_lang["GOOGLEMAP_PLACECHECK_help"]  = "~#pgv_lang[GOOGLEMAP_PLACECHECK]#~<br /><br /><strong>Dette værktøj</strong> giver en måde hvorpå du kan sammenligne steder i gedcomfilen med overensstemmende indgange i googlemaps 'placelocations' tabel.<br /><br /><strong>Visning</strong> kan opsættes for en specifik gedcomfil; for et specifikt land i den fil og for et specifikt område (f.eks stat eller amt) i det land.<br /><br /><strong>Steder</strong>er vist alfabetisk så mindre stavefejl hurtigt kan opdages og rettes.<br /><br /><strong>Ud</strong> fra resultaterne af sammenligningen kan du klikke på stednavne for en af følgende tre muligheder:<br /><br /><strong>1 - </strong>For steder i gedcomfilen vil du blive ført til Stedhieraki visningen. Her kan du se alle poster der linker til det sted.<br /><br /><strong>2 - </strong>For steder der eksisterer i gedcomfilen, men ikke i googlemap-tabellen (markeret med rødt), vil du se googlemap \"Tilføj sted\" skærmen.<br /><br /><strong>3 - </strong>For steder der eksisterer både i gedcomfilen og i googlemap-tabellen (muligvis uden koordinater) vil du se googlemap \"rediger sted\" skærmen. Her kan du redigere alle dele af stedposten for googlemapvisningen.<br /><br /><strong>Holdes</strong> musen over et sted i googlemap-tabel kolonnerne vil det aktuelt satte zoomniveau vises.";
+$pgv_lang["PLACECHECK_FILTER"]          = "Stedkontrol - vis filter indstillinger";
+$pgv_lang["PLACECHECK_FILTER_help"]     = "~#pgv_lang[PLACECHECK_FILTER]#~<br /><br />Denne sektion indholder indstillinger til at begrænse eller udvide mængden af viste steder.<br /><br />Der planlægges at tilføje flere indstillinger i fremtiden.";
+$pgv_lang["PLACECHECK_MATCH"]           = "Inkluder sammenkørte steder";
+$pgv_lang["PLACECHECK_MATCH_help"]      = "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br />Som standard viser listen IKKE steder der er korrekt sammenkørt mellem GEDCOM-filen og GoogleMap-tabellerne.<br />Sammenkørte betyder at alle niveauer eksisterer i både gedcomfilen og i GoogleMap-tabellerne; og at GoogleMap stederne har koordinater for hvert niveau.<br /><br />Markér dette felt for at inkludere disse sammenkørte steder";
+
+//wooc Options for Place Hierarchy display
+$pgv_lang["GOOGLEMAP_PH"]               = "Brug Googlemap for stedhieraki";
+$pgv_lang["GOOGLEMAP_PH_help"]          = "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Ved at bruge denne indstilling kan brugen af Googlemap for stedhieraki aktiveres eller deaktiveres. For at det skal virke skal Googlemap modulet også være aktivt. Før det bruges anbefales det at indsætte alle steder i Googlemap-tabellerne.";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE"]              = "Størrelse på stedhieraki-kort (i pixler)";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"] = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />Størrelsen på kortet (i pixler) som vises på stedhieraki siderne.";
+$pgv_lang["GOOGLEMAP_PH_MARKER"]                = "Typen af stedmarkører i stedhieraki";
+$pgv_lang["GOOGLEMAP_PH_MARKER_help"]   = "~#pgv_lang[GOOGLEMAP_PH_MARKER]#~<br /><br />Her kan du vælge hvilken type markør du ønsker at bruge (standard eller flag). Hvis et sted ikke har noget flag, så brug standardmarkøren.";
+$pgv_lang["GM_DISP_SHORT_PLACE"]                = "Vis korte stednavne";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]   = "~#pgv_lang[GM_DISP_SHORT_PLACE]#~<br /><br />Her kan du vælge mellem to måder at vise stednavne i hierakiet. Hvis Ja er valgt vil stedet have et kort navn eller det aktuelle niveaunavn, hvis Nej, det fulde navn.<br /><b>Eksempler:<br />Fulde navn: </b>Chicago, Illinois, USA<br /><b>Kort navn: </b>Chicago<br /><b>Fulde navn: </b>Illinois, USA<br /><b>Kort navn: </b>Illinois";
+$pgv_lang["GM_DISP_COUNT"]                              = "Vis individ- og familieoptææling";
+$pgv_lang["GM_DISP_COUNT_help"]                 = "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Her kan du vælge om antallet af individer og familier der er tilknyttet til stedet vises. Hvis GEDCOM-filen indeholder mange personer, anbefales det at slå den fra.";
+$pgv_lang["GOOGLEMAP_PH_WHEEL"]                 = "Brug musehjul for zoom";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]    = "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Her kan du vælge om musehjulet skal bruges til at zoome med.";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS"]              = "Skjul kort-kontroller";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS_help"] = "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />Denne indstilling lader dig skjule kort-kontrollerne (f.eks. korttype valget) hvis musen er uden for kortet.";
 
 ?>

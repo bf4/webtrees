@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * phpGedView Research Assistant Tool - Form Loader Engine.
  *
@@ -23,15 +23,16 @@
  * @subpackage Research_Assistant
  * @version $Id$
  */
-  
- 
-//-- security check, only allow access from module.php
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Du kan ikke tilgå en sprogfil direkte.";
 	exit;
 }
 
-$pgv_lang["add_task_inst"]              = "Hvis der endnu ikke er oprettet en opgave til dine forskningsresultater, bør du oprette opgaven først, og derefter vælge at gemme og færdiggøre opgaven.";
+$png["autosearch_ssurname"] = "Inkludér ægtefælles efternavn:";
+$pgv_lang["autosearch_sgivennames"] = "Inkludér ægtefælles fornavn(e):";
+$pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com plugin";
+
+gv_lang["add_task_inst"]              = "Hvis der endnu ikke er oprettet en opgave til dine forskningsresultater, bør du oprette opgaven først, og derefter vælge at gemme og færdiggøre opgaven.";\
 $pgv_lang["complete_task_inst"] = "Vælg en opgave fra den nedenstående opgaveliste for at færdiggøre opgaven og indtast så dine resultater:";
 $pgv_lang["enter_results"]              = "Indtast resultater";
 $pgv_lang["auto_gen_inst"]              = "Nogle programmer lader dig indtaste forskningsopgaver som TODO emner i din GEDCOM fil. Denne indstilling vil søge i din GEDCOM fil og automatisk konvertere alle TODO emner til en forskingsopgave.";
@@ -53,9 +54,6 @@ $pgv_lang["auto_search_text"]	= "Autosøgning";
 $pgv_lang["task_list"]			= "Opgaver";
 $pgv_lang["task_list_text"]		= "Dette område viser opgaver du har oprettet, klik på <b>Vis</b> for at se opgaverne";
 
-// -- HELP COMMENTS
-$pgv_lang["help_comments"] = "Her kan du tilføje kommentarer. Andre personer kan se dem, og tilføje deres egne kommentarer.";
-
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]							= "Mine opgaver";
 $pgv_lang["add_task"]							= "Tilføj opgave";
@@ -65,17 +63,12 @@ $pgv_lang["up_folder"]							= "Mappe tilbage";
 $pgv_lang["edit_folder"]						= "Tilføj/rediger folder";
 $pgv_lang["gen_tasks"]							= "Opret automatisk opgaver";
 
-
 // -- RA GENERAL MESSAGES
 $pgv_lang["edit_task"]							= "Rediger opgave";
 $pgv_lang["completed"]							= "Færdig";
 $pgv_lang["complete"]							= "Færdige";
 $pgv_lang["incomplete"]							= "Ikke færdige";
-$pgv_lang["comres"]								= "Kommentarer/resultater";
-$pgv_lang["description"]						= "Beskrivelse";
 $pgv_lang["created"]							= "Oprettet";
-$pgv_lang["modified"]							= "Ændret";
-$pgv_lang["folder_list"]						= "Folderliste";
 $pgv_lang["details"]							= "Detaljer";
 $pgv_lang["result"]                     		= "Resultat";
 $pgv_lang["okay"]                               = "Ok";
@@ -128,17 +121,13 @@ $pgv_lang["ViewProbExplanation"]					= "Denne side analyserer data fra den aktiv
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Folder"]                             = "Folder:";
-$pgv_lang["Edit_Task"]                 			= "Rediger opgave";
 $pgv_lang["Edit_Gen_Task"]                              = "Rediger genereret opgave";
-$pgv_lang["End_Date"]                 			= "Slutdato";
 $pgv_lang["Start_Date"]                 		= "Startdato";
 $pgv_lang["Task_Name"]                			= "Opgavenavn";
 $pgv_lang["Folder_Name"]                		= "Foldernavn";
 $pgv_lang["Folder_View"]                		= "Foldervisning";
 $pgv_lang["Task_View"]                  		= "Opgavevisning";
 $pgv_lang["page_header"]						= "Forskningsassistent mapper";
-$pgv_lang["folder_new"]							= "Opret ny folder";
-$pgv_lang["folder_delete_check"]				= "Er du sikker på at du ønsker at slette denne folder?";
 $pgv_lang["no_folder_name"]             		= "Feltet foldernavn skal udfyldes.";
 $pgv_lang["add_folder"]                 		= "Tilføj folder";
 $pgv_lang["folder_name"]                		= "Foldernavn:";
@@ -152,58 +141,17 @@ $pgv_lang["folder_problem"]             		= "Der var et problem med tilføjelsen
 // -- Missing Information Help 
 $pgv_lang["ra_missing_info_help"] = "Dette område viser manglende information om posten. Vælg en markeringsboks og en folder, og tryk derefter på <b>Tilføj opgave</b> for at oprette en opgave for det manglende emne. Opgaver der allerede er oprettet vil vise <b>vis</b> i stedet for en markeringsboks.<br />";
 
-// -- RA_EDITFOLDER MESSAGES	
-$pgv_lang["edit_research_folder"]			= "Rediger forskningsfolder";
-$pgv_lang["folder_not_exist"]				= "Denne folder eksisterer ikke: ";
-$pgv_lang["folder_parent"]					= "Overliggende folder";
-$pgv_lang["parent_id"]						= "Ingen";
-$pgv_lang["folder_users"]					= "Andre brugere der kan se denne folder";
-
-// -- RA_EDITLOG MESSAGES
-$pgv_lang["edit_research_log"]				= "Rediger forskningslog";
-$pgv_lang["log_not_exist"]					= "Denne log eksisterer ikke: ";
-
-// -- RA_LOG MESSAGES
-$pgv_lang["edit_log_entry"]					= "Rediger forskingslog indtastning";
-$pgv_lang["log_no_entry"]					= "FEJL: Du har ikke tilladelse til at tilgå dette emne.";
-$pgv_lang["log_modified"]					= "Sidst ændret";
-$pgv_lang["log_modified_by"]				= "Sidst ændret af";
-$pgv_lang["log_edit_entry"]					= "Rediger dette emne";
-
 // -- RA_LISTLOGS MESSAGES
-$pgv_lang["research_logs"]					= "Forskningslog";
-$pgv_lang["log_no_entry_folder"]			= "FEJL: Du har ikke tilladelse til at tilgå denne folder.";
-$pgv_lang["folder_sub"]						= "Underfoldere";
-$pgv_lang["folder_sub_new"]					= "Opret ny underfolder";
 $pgv_lang["task_entry"]						= "Opret ny opgave.";
-$pgv_lang["log_show"]						= "Vis alle log's";
-$pgv_lang["log_show_uncomplete"]			= "Vis ufærdige log's";
-$pgv_lang["log_show_complete"]				= "Vis færdige log's";
-$pgv_lang["log_delete_check"]				= "Er du sikker på at du ønsker at slette dette log emne?";
-
-// -- RA_FUNCTIONS MESSAGES
-$pgv_lang["function_folder_delete"]			= "FEJL: Kan ikke slette denne folder da den stadig indeholder forskningslog emner.<br />Flyt eller slet først disse forskningslog emner og prøv så at slette folderen igen.";
-$pgv_lang["function_subfolder_delete"]		= "FEJL: Kan ikke slette denne folder da den stadig indeholder underfoldere.<br />Flyt eller slet først disse underfoldere og prøv så at slette folderen igen.";
-$pgv_lang["folder_delete_ok"]				= "Folderen #folder_name# er blevet slettet.";
-$pgv_lang["folder_update_ok"]				= "Folderen #folder_name# er korrekt opdateret.";
-$pgv_lang["folder_added"]					= "Folderen #folder_name# blev tilføjet.";
-
-//-- RA_SEARCH MESSAGES
-$pgv_lang["search_results"]					= "Søgeresultater";
-$pgv_lang["nothing_found"]					= "Ingen passende log's blev fundet.";
 
 //-- ERROR MESSAGES
 $pgv_lang["no_folder"]						= "Der eksisterer ikke nogen foldere endnu. Opret venligst en ny folder først.";
 
 //-- HELP MESSAGES
-$pgv_lang["help_rs_folders.php"]			= "Forskingsassistent-foldere<br /> #pgv_lang[sorry]#";
-$pgv_lang["help_rs_editfolder.php"]			= "Forskingsassistent redigér foldere<br />#pgv_lang[sorry]#";
-$pgv_lang["help_rs_editlog.php"]			= "Forskningsassistent redigér log<br />#pgv_lang[sorry]#";
 $pgv_lang["ra_fold_name_help"]			= "~Foldervisning~<ul><li><b>Foldernavn:</b> Denne kolonne indeholder navnene på alle de foldere du har oprettet.</li><li><b>Beskrivelse:</B> Denne kolonne indeholder beskrivelsen af folderne.</li></ul>";
 $pgv_lang["ra_add_task_help"]				= "~Tilføj ny opgave~<ul><li><b>Titel:</B> Her bør titlen på den opgave du laver stå.</li><li><b>Folder:</B> Her kan du vælge hvilken mappe du ønsker at tilknytte den nye opgave til.</li><li><b>Beskrivelse:</b> Indtast en beskrivelse af den opgave du ønsker at tilføje.</li><li><b>Kilder:</b> Tilkny de eventuelle kilder du har til denne opgave.</li><li><b>Personer:</b> Tilkny eventuelle personer der relateret til den nye opgave.</li></ul>";
 $pgv_lang["ra_edit_folder_help"]			= "<H2><B>Edit Folder:</B></H2><ul><li><B>Folder Name:</B> This is where you should add the title of the folder that you are editing.</B></li><li><B>Parent folder:</B> You can assign the parent folder, if any, of the folder you are editing.</B></li><li><B>Folder description:</B> This is the description of the folder you are editing.</B></li></ul>";
 $pgv_lang["ra_add_folder_help"]				= "<H2><B>Add Folder:</B></H2><ul><li><B>Folder Name:</B> This is where you should add the title of the folder that you are adding.</B></li><li><B>Parent folder:</B> You can assign the parent folder, if any, of the folder you are adding.</B></li><li><B>Folder description:</B> This is the description of the folder you are adding.</B></li></ul>";
-//$pgv_lang["ra_view_task_help"]			= "<H2><B>Task View:</B></H2><ul><li><B>Task Name:</B> This column contains the name of all of the tasks you.</B></li><li><B>Description:</B> This column contains the description of the tasks.</li><li><B>Start Date:</B> This will contain the start dates of all the tasks.</li><li><B>Completed:</B> This will show whether or not a task is completed.</li><li><B>Details:</B> This will show all the details of a task.</li><li><B>Delete:</B> This will delete the task.</li><ul><br /><a href=\"helpvids/MissingInformationUserHelp.htm\">User Tutorial</a>";
 $pgv_lang["ra_view_task_help"]				= "<H2><B>Task View:</B></H2><ul><li><B>Task Name:</B> This column contains the name of all of the tasks you.</B></li><li><B>Description:</B> This column contains the description of the tasks.</li><li><B>Start Date:</B> This will contain the start dates of all the tasks.</li><li><B>Completed:</B> This will show whether or not a task is completed.</li><li><B>Details:</B> This will show all the details of a task.</li><li><B>Delete:</B> This will delete the task.</li></ul>";
 $pgv_lang["ra_task_view_help"]				= "<H2><B>View Task:</B></H2><ul><li><B>Title:</B> This should contain the title of the task that you are adding.</li><li><B>People:</B> Assign any people associated for the new task.</li><li><B>Description:</B> Enter a description of the task you want to add.</li><li><B>Sources:</B> Assign any sources that you have for the task.</li><li>Click the 'Edit Task' button to edit the details of the task.</li></ul>";
 $pgv_lang["ra_comments_help"]				= "<H2><B>Comments:</B></H2><ul><li>This will contain any comments related to the task. Click the 'Add New Comment' button to add any comments.</li></ul>";
@@ -215,8 +163,6 @@ $pgv_lang["ra_edit_task_help"]				= "<H2><B>Edit Task:</B></H2></H2><ul><li><B>T
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "Vis opgave";
 $pgv_lang["add_new_comment"]				= "Tilføj ny kommentar";
-$pgv_lang["no_sources"]						= "Der er ikke nogen kilder tilknyttet til denne opgave.";
-$pgv_lang["no_people"]						= "Der er ikke nogen personer tilknyttet til denne opgave.";
 $pgv_lang["no_indi_tasks"]					= "Ingen opgaver tilknyttet dette individ.";
 $pgv_lang["no_sour_tasks"]					= "Ingen opgaver tilknyttet denne kilde.";
 $pgv_lang["edit_comment"]					= "Rediger kommentar";
@@ -242,10 +188,6 @@ $pgv_lang["show_view_folders"]		    = "Vis Vis mapper";
 $pgv_lang["show_add_folder"]		    = "Vis Tilføj mappe";
 $pgv_lang["show_add_unlinked_source"]   = "Show Add Unlinked Source";
 $pgv_lang["show_view_probabilities"]	= "Show View Probabilities";
-
-//-- COMMENT HELP
-$pgv_lang["comment_title_help"]			= "Comment Title Help here.";
-$pgv_lang["comment_help"]				= "Klik her for hjælp.";
 
 //-- Census Forms
 $pgv_lang["rows"]                       = "Antal rækker";
@@ -279,8 +221,8 @@ $pgv_lang["ra_no"]                                              = "Nummer:"; //@
 $pgv_lang["order_no"]                                   = "Ordrenummer:"; //@@
 
 //-- MY TASK BLOCK
-$pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";
-$pgv_lang["mytasks_block"] 				= "MyTasks Block";
+$pgv_lang["mytasks_block_descr"]		= "The #pgv_lang[my_tasks]# shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";
+$pgv_lang["mytasks_block"] 				= "Research Assistant";
 $pgv_lang["mytasks_edit"]               = "Rediger";
 $pgv_lang["mytasks_unassigned"]			= "Ikke tildelt";
 $pgv_lang["mytasks_takeOn"]				= "TakeOn";

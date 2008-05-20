@@ -1,19 +1,40 @@
-<?php
-/*=================================================
-   charset=utf-8
-   Project:         phpGedView
-   File:            lang.da.php
-   Author:          Jens Hyllegaard
-   Comments:        Danish Language file for Google map module
-===================================================*/
-
+﻿<?php
+/**
+ * Danish Language file for PhpGedView.
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007  PGV Development Team
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage GoogleMap
+ * @version $Id$
+ */
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+        print "You cannot access a language file directly.";
+        exit;
+}
 
 $pgv_lang["googlemap"]              = "Kort";
 $pgv_lang["no_gmtab"]               = "Ingen kortdata for denne person";
 $pgv_lang["gm_disabled"]            = "Googlemap modul deaktiveret";
 
-$pgv_lang['gm_redraw_map']          = "Gentegn kort";
+$pgv_lang["gm_redraw_map"]          = "Gentegn kort";
 $pgv_lang["gm_map"]                 = "Kort";
+$pgv_lang["gm_physical"]            = "Terræn";
 $pgv_lang["gm_satellite"]           = "Satellit";
 $pgv_lang["gm_hybrid"]              = "Hybrid";
 
@@ -48,7 +69,16 @@ $pgv_lang["gm_pp_po_pr_b_n"]        = "Postfiks, præfiks, begge, normal";
 $pgv_lang["gm_pp_pr_po_n_b"]        = "Præfiks, postfiks, normal, begge";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Postfiks, præfiks, normal, begge";
 $pgv_lang["googlemap_coord"]        = "Vis kort koordinater";
-
+//wooc place hierarchy
+$pgv_lang["gm_place_hierarchy"]         = "Brug Googlemap for stedhieraki";
+$pgv_lang["gm_ph_map_size"]                     = "Størrelse på stedhieraki kortet (i pixler)";
+$pgv_lang["gm_ph_marker_type"]          = "Typer af stedmarkører i stedhieraki";
+$pgv_lang["gm_standard_marker"]         = "Standard";
+$pgv_lang["gm_no_coord"]                        = "Dette sted har ingen koordinater";
+$pgv_lang["gm_ph_placenames"]           = "Vis korte stednavne";
+$pgv_lang["gm_ph_count"]                        = "Vis individ- og familieoptælling";
+$pgv_lang["gm_ph_wheel"]                        = "Brug musehjul for zoom";
+$pgv_lang["gm_ph_controls"]                     = "Skjul kort-kontroller";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Rediger geografiske sted placeringer";
@@ -74,6 +104,7 @@ $pgv_lang["pl_no_places_found"]     = "Ingen steder fundet";
 $pgv_lang["pl_use_this_value"]      = "Brug denne værdi";
 $pgv_lang["pl_precision"]           = "Præcision";
 $pgv_lang["pl_country"]             = "Land";
+$pgv_lang["pl_countries"]           = "Lande";
 $pgv_lang["pl_state"]               = "Amt/stat";
 $pgv_lang["pl_city"]                = "By";
 $pgv_lang["pl_neighborhood"]        = "Kvarter";
@@ -92,7 +123,7 @@ $pgv_lang["list_inactive"]              = "Klik her for at vise inaktive steder"
 
 //Placecheck specific text
 $pgv_lang["placecheck"]                         = "Kontroller steder";
-$pgv_lang['placecheck_text']            = "Dette vil vise alle stederne fra den valgte gedcom fil";
+$pgv_lang['placecheck_text']            = "Dette vil vise alle stederne fra den valgte gedcom fil. Som standard vil dette ikke inkludere steder der er korrekt sammenkørt imellem GEDCOM filen og Googlemap tabellerne";
 $pgv_lang['placecheck_top']                     = "Topniveau sted";
 $pgv_lang['placecheck_one']                     = "Niveau ét sted";
 $pgv_lang['placecheck_select1']         = "Vælg topniveau...";
@@ -101,11 +132,13 @@ $pgv_lang['placecheck_key']                     = "Oversigt over nedenfor brugte
 $pgv_lang['placecheck_key1']            = "<font size=\"-2\">dette sted og dets koordinater findes ikke i googlemap tabellerne</font>";
 $pgv_lang['placecheck_key2']            = "<font size=\"-2\">dette sted findes i googlemap tabellerne, men har ingen koordinater</font>";
 $pgv_lang['placecheck_key3']            = "<font size=\"-2\">dette stedniveau er blankt i din gedcomfil. Det bør tilføjes til googlemap<br/>steder som \"unknown\" med koordinater fra dens forældre niveau<br/>før du tilføjer noget sted til det næste niveau</font>";
-$pgv_lang['placecheck_head']            = "Stedliste for gedcom-fil";
 $pgv_lang['placecheck_key4']            = "<font size=\"-2\">dette stedniveau er blankt i din gedcomfil, men eksistere som 'unknown'<br/>i googlemap stedtabllen med koordinater. Der kræves ikke nogen<br/>handling før det manglende niveau kan indtastes</font>";
+$pgv_lang["placecheck_head"]            = "Stedliste for GEDCOM-filen";
 $pgv_lang['placecheck_gedheader']       = "Gedcom-fil steddata<br/>(2 PLAC mærke)";
 $pgv_lang['placecheck_gm_header']       = "GoogleMap steder tabeldata";
 $pgv_lang['placecheck_unique']          = "Totalt antal unikke steder";
 $pgv_lang["placecheck_zoom"]         = "Zoom=";
-
+$pgv_lang["placecheck_options"]     = "Stedkontrol liste indstillinger";
+$pgv_lang["placecheck_filter_text"] = "Vis filtrerings indstillinger";
+$pgv_lang["placecheck_match"]           = "Inkludér korrekt sammenkørte steder: ";
 ?>
