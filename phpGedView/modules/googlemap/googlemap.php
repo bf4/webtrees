@@ -701,7 +701,7 @@ function build_indiv_map($indifacts, $famids) {
 							print $pgv_lang["private"];
 						print "</a>";
 					}
-					print "<br/>";
+					print "<br />";
 					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
 						print_address_structure_map($markers[$j]["placerec"], 1);
 					} else {
@@ -709,12 +709,12 @@ function build_indiv_map($indifacts, $famids) {
 					}
 					if (!empty($markers[$j]["date"])) {
 						$date=new GedcomDate($markers[$j]["date"]);
-						print "<br/>".addslashes($date->Display(true));
+						print "<br />".addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\");\n";
 					} else {
-						print "<br/><br/>Lati: ";
+						print "<br /><br />Lati: ";
 						if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
 						print ", Long: ";
 						if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
@@ -757,7 +757,7 @@ function build_indiv_map($indifacts, $famids) {
 							print $pgv_lang["private"];
 						print "</a>";
 					}
-					print "<br/>";
+					print "<br />";
 					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
 						print_address_structure_map($markers[$j]["placerec"], 1);
 					} else {
@@ -765,12 +765,12 @@ function build_indiv_map($indifacts, $famids) {
 					}
 					if (!empty($markers[$j]["date"])) {
 						$date=new GedcomDate($markers[$j]["date"]);
-						print "<br/>".addslashes($date->Display(true));
+						print "<br />".addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\")";
 					} else {
-						print "<br/><br/>Lati: ";
+						print "<br /><br />Lati: ";
 						if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
 						print ", Long: ";
 						if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
@@ -826,7 +826,7 @@ function build_indiv_map($indifacts, $famids) {
 									print $pgv_lang["private"];
 								print "</a>";
 							}
-							print "<br/>";
+							print "<br />";
 							if (preg_match("/2 PLAC (.*)/", $markers[$k]["placerec"]) == 0) {
 								print_address_structure_map($markers[$k]["placerec"], 1);
 							} else {
@@ -834,12 +834,12 @@ function build_indiv_map($indifacts, $famids) {
 							}
 							if (!empty($markers[$k]["date"])) {
 								$date=new GedcomDate($markers[$k]["date"]);
-								print "<br/>".addslashes($date->Display(true));
+								print "<br />".addslashes($date->Display(true));
 							}
 							if ($GOOGLEMAP_COORD == "false"){
 								print "\")";
 							} else {
-								print "<br/><br/>Lati: ";
+								print "<br /><br />Lati: ";
 								if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
 								print ", Long: ";
 								if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
@@ -867,27 +867,27 @@ function build_indiv_map($indifacts, $famids) {
 			print "<a href=\"javascript:highlight({$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";
 			print "<td class=\"{$marker['class']}\">";
 			if (!empty($marker["info"]))
-				print "<span class=\"field\">{$marker["info"]}</span><br/>";
+				print "<span class=\"field\">{$marker["info"]}</span><br />";
 			if (!empty($marker["name"])) {
 				print "<a href=\"individual.php?pid={$marker["name"]}&amp;ged=$GEDCOM\">";
 				if (displayDetailsById($marker["name"])||showLivingNameById($marker["name"]))
 					print PrintReady(get_person_name($marker["name"]));
 				else
 					print $pgv_lang["private"];
-				print "</a><br/>";
+				print "</a><br />";
 			}
 			if (preg_match("/2 PLAC (.*)/", $marker["placerec"]) == 0) {
 				print_address_structure_map($marker["placerec"], 1);
 			} else {
-				print print_fact_place_map($marker["placerec"])."<br/>";
+				print print_fact_place_map($marker["placerec"])."<br />";
 			}
 			if (!empty($marker['date'])) {
 				$date=new GedcomDate($marker['date']);
-				print $date->Display(true)."<br/>";
+				print $date->Display(true)."<br />";
 			}
 			print "</td></tr>";
 		}
-		print "</table></div><br/>";
+		print "</table></div><br />";
 	}
 	print "\n<br />";
 

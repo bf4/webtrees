@@ -62,14 +62,14 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
 		print "<table class=\"facts_table\">\n";
 		print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_db_error"];
 		print "</td></tr></table>\n";
-		print "<br/><br/><br/>\n";
+		print "<br /><br /><br />\n";
 		print_footer();
 		exit;
 	}
 	print "<table class=\"facts_table\">\n";
 	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_table_created"];
 	print "</td></tr></table>\n";
-	print "<br/><br/><br/>\n";
+	print "<br /><br /><br />\n";
 }
 
 // Take a place id and find its place in the hierarchy
@@ -162,7 +162,7 @@ if (!PGV_USER_IS_ADMIN) {
 	print "<table class=\"facts_table\">\n";
 	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
 	print "</td></tr></table>\n";
-	print "<br/><br/><br/>\n";
+	print "<br /><br /><br />\n";
 	print_footer();
 	exit;
 }
@@ -238,7 +238,7 @@ if ($action=="ImportGedcom") {
 				$placelistUniq[$j-1]["lati"] = $place["lati"];
 				$placelistUniq[$j-1]["long"] = $place["long"];
 			} else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-				print "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br/>";
+				print "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br />";
 			}
 		}
 		$prevPlace = $place["place"];
@@ -286,7 +286,7 @@ if ($action=="ImportGedcom") {
 				}
 			}
 			if (!empty($sql)) {
-				print "$sql<br/>";
+				print "$sql<br />";
 				$res=dbquery($sql);
 			}
 		}
@@ -413,7 +413,7 @@ if ($action=="ImportFile2") {
 				$placelistUniq[$j-1]["zoom"] = $place["zoom"];
 				$placelistUniq[$j-1]["icon"] = $place["icon"];
 			} else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-				print "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br/>";
+				print "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br />";
 			}
 		}
 		$prevPlace = $place["place"];
@@ -635,7 +635,7 @@ foreach ($placelist as $place) {
 	print_help_link("PL_EXPORT_ALL_FILE_help", "qm", "PL_EXPORT_ALL_FILE");
 	print "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent=0\">";
 	print "{$pgv_lang['pl_export_all_file']}</a>";
-	print "</td></tr></table><br/>";
+	print "</td></tr></table><br />";
 if(empty($SEARCH_SPIDER))
 	print_footer();
 else {

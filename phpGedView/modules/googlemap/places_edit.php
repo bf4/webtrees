@@ -37,7 +37,7 @@ if (!PGV_USER_IS_ADMIN) {
 	print "<table class=\"facts_table\">\n";
 	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
 	print "</td></tr></table>\n";
-	print "<br/><br/><br/>\n";
+	print "<br /><br /><br />\n";
 	print_simple_footer();
 	exit;
 }

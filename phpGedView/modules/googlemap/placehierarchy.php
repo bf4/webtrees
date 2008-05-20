@@ -107,7 +107,7 @@ function create_map() {
 	print "<div id=\"place_map\" style=\"border: 1px solid gray; width: ".$GOOGLEMAP_PH_XSIZE."px; height: ".$GOOGLEMAP_PH_YSIZE."px; ";
 	print "background-image: url('images/loading.gif'); background-position: center; background-repeat: no-repeat; overflow: hidden;\"></div>";
 	print "<table style=\"width: ".$GOOGLEMAP_PH_XSIZE."px\">";
-	if (userIsAdmin(getUserName())) {
+	if (PGV_USER_IS_ADMIN) {
 		print "<tr><td align=\"left\">\n";
 		print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 		print "</td>\n";
@@ -520,15 +520,9 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	place_map.setCenter(bounds.getCenter());
 	<?php if ($GOOGLEMAP_PH_CONTROLS != "false") {?>
 	// hide controls
-	GEvent.addListener(place_map,'mouseout',function()
-	{
-		place_map.hideControls();
-	});
+	GEvent.addListener(place_map,'mouseout',function() {place_map.hideControls();});
 	// show controls
-	GEvent.addListener(place_map,'mouseover',function()
-	{
-		place_map.showControls();
-	});
+	GEvent.addListener(place_map,'mouseover',function() {place_map.showControls();});
 	GEvent.trigger(place_map,'mouseout');
 	<?php
 	}
@@ -543,7 +537,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
     // http://www.commchurch.freeserve.co.uk/
     // http://econym.googlepages.com/index.htm
 	//]]>
-	//version 1.0
+	//version 1.0.1
 	</script>
 	<?php
 }
