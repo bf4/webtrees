@@ -55,7 +55,6 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if (empty($show_full)) $show_full = 0;
 	if (empty($PEDIGREE_FULL_DETAILS)) $PEDIGREE_FULL_DETAILS = 0;
 
-	flush();
 	if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
 	// NOTE: Start div out-rand()
