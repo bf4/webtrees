@@ -285,15 +285,11 @@ function ltr_string($name) {
  * @param string $string	the string to remove the entities from
  * @return string	the string with entities converted
  */
-function unhtmlentities ($string)  {
-	$trans_tbl = get_html_translation_table (HTML_ENTITIES);
-	$trans_tbl = array_flip ($trans_tbl);
-	$ret = strtr ($string, $trans_tbl);
-	$ret = preg_replace('/&#(\d+);/me', "chr('\\1')",$ret);
-	//- temporarily remove &lrm; until they can be better handled later
-	//$ret = preg_replace(array('/&lrm;/','/&rlm;/'), array('',''), $ret);
-	$ret = preg_replace(array('/&lrm;/','/&rlm;/'), array("\xE2\x80\x8E", "\xE2\x80\x8F"), $ret);
-	return $ret;
+function unhtmlentities($string)  {
+	$trans_tbl=array_flip(get_html_translation_table (HTML_ENTITIES));
+	$trans_tbl['&lrm;']=PGV_UTF8_LRM;
+	$trans_tbl['&rlm;']=PGV_UTF8_RLM;
+	return preg_replace('/&#(\d+);/e', "chr(\\1)", strtr($string, $trans_tbl));
 }
 
 /**
@@ -365,7 +361,7 @@ function bidi_text($text) {
 				if ($i < strlen($text)-2) {
 					$l = $letter.$text{$i+1}.$text{$i+2};
 					$i += 2;
-					if (($l=="\xe2\x80\x8f")||($l=="\xe2\x80\x8e")) {
+					if (($l==PGV_UTF8_LRM)||($l==PGV_UTF8_RLM)) {
 						if (!empty($temp)) {
 							$last = array_pop($parts);
 							if ($temp{0}==")") $last = '(' . $last;
