@@ -169,7 +169,7 @@ if (!isset($action)) {
 }
 
 //Identify gedcom file
-print "<strong>".$pgv_lang['placecheck_head'].": </strong>".$ged."<br/><br/>";
+print "<strong>".$pgv_lang['placecheck_head'].": </strong>".$ged."<br /><br />";
 //Select all '2 PLAC ' tags in the file and create array
 $handle=fopen($all_geds[$ged], 'r');
 $place_list=array();
@@ -358,7 +358,7 @@ while ($x<$i) {
 }
 
 // Print final row of table
-print "<tr><td colspan=\"2\" class=\"list_label\">".$pgv_lang['placecheck_unique'].": ".$countrows."</td></tr></table><br/><br/>";
+print "<tr><td colspan=\"2\" class=\"list_label\">".$pgv_lang['placecheck_unique'].": ".$countrows."</td></tr></table><br /><br />";
 
 //Close the gedcom file
 fclose($handle);
