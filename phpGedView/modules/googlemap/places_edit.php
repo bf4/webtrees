@@ -43,6 +43,43 @@ if (!PGV_USER_IS_ADMIN) {
 }
 
 ?>
+<style type="text/css">
+	#map_type
+	{
+		margin: 0;
+		padding: 0;
+		font-family: Arial;
+		font-size: 10px;
+		list-style: none;
+	}
+	#map_type li
+	{
+		display: block;
+		width: 70px;
+		text-align: center;
+		padding: 2px;
+		border: 1px solid black;
+		cursor: pointer;
+		float: left;
+		margin-left: 2px;
+	}
+	#map_type li.non_active
+	{
+		background: white;
+		color: black;
+		font-weight: normal;
+	}
+	#map_type li.active
+	{
+		background: gray;
+		color: white;
+		font-weight: bold;
+	}
+	#map_type li:hover
+	{
+		background: #ddd;
+	}
+</style>
 <script type="text/javascript">
 <!--
 	function edit_close() {
@@ -316,13 +353,82 @@ if ($action=="add") {
 			map.addOverlay(childplaces[i]);
 		}
 	}
+	
+	function Map_type() {}
+	Map_type.prototype = new GControl();
 
+	Map_type.prototype.refresh = function()
+	{
+		if(this.map.getCurrentMapType() != G_NORMAL_MAP)
+			this.button1.className = 'non_active';
+		else
+			this.button1.className = 'active';
+		if(this.map.getCurrentMapType() != G_SATELLITE_MAP)
+			this.button2.className = 'non_active';
+		else
+			this.button2.className = 'active';
+		if(this.map.getCurrentMapType() != G_HYBRID_MAP)
+			this.button3.className = 'non_active';
+		else
+			this.button3.className = 'active';
+		if(this.map.getCurrentMapType() != G_PHYSICAL_MAP)
+			this.button4.className = 'non_active';
+		else
+			this.button4.className = 'active';
+	}
+
+	Map_type.prototype.initialize = function(place_map)
+	{
+		var list 	= document.createElement("ul");
+		list.id	= 'map_type';
+
+		var button1 = document.createElement('li');
+		var button2 = document.createElement('li');
+		var button3 = document.createElement('li');
+		var button4 = document.createElement('li');
+
+		button1.innerHTML = '<?php echo $pgv_lang["gm_map"]?>';
+		button2.innerHTML = '<?php echo $pgv_lang["gm_satellite"]?>';
+		button3.innerHTML = '<?php echo $pgv_lang["gm_hybrid"]?>';
+		button4.innerHTML = '<?php echo $pgv_lang["gm_physical"]?>';
+
+		button1.onclick = function() { map.setMapType(G_NORMAL_MAP); return false; };
+		button2.onclick = function() { map.setMapType(G_SATELLITE_MAP); return false; };
+		button3.onclick = function() { map.setMapType(G_HYBRID_MAP); return false; };
+		button4.onclick = function() { map.setMapType(G_PHYSICAL_MAP); return false; };
+
+		list.appendChild(button1);
+		list.appendChild(button2);
+		list.appendChild(button3);
+		list.appendChild(button4);
+
+		this.button1 = button1;
+		this.button2 = button2;
+		this.button3 = button3;
+		this.button4 = button4;
+		this.map = map;
+		map.getContainer().appendChild(list);
+		return list;
+	}
+
+	Map_type.prototype.getDefaultPosition = function()
+	{
+		return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(2, 2));
+	}
+	
 	function loadMap() {
 		var zoom;
 		if (GBrowserIsCompatible()) {
 			map = new GMap2(document.getElementById("map_pane"));
 			map.addControl(new GSmallMapControl());
 			map.addControl(new GScaleControl()) ;
+			var map_type;
+			map_type = new Map_type();
+			map.addControl(map_type);
+			GEvent.addListener(map,'maptypechanged',function()
+			{
+				map_type.refresh();
+			});
 			GEvent.addListener(map, 'click', function(overlay, point) {
 				if (overlay) {  //probably not needed in this case
 								//map.removeOverlay(overlay);
