@@ -650,19 +650,29 @@ function print_media_links($factrec, $level,$pid='') {
 				print "<table><tr><td>";
 				if ($isExternal || media_exists($thumbnail)) {
 				
-//LBox --------  change for Lightbox Album --------------------------------------------
+					//LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 						$name = trim($row["m_titl"]);
-						print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" title=\"" . $media_id . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
-// ---------------------------------------------------------------------------------------------
+							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+					// ---------------------------------------------------------------------------------------------
 					}elseif ($USE_MEDIA_VIEWER) {
 						print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
 					}else{
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
+					
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-					print " alt=\"". PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" /></a>";
+					print " alt=\"" . PrintReady($mediaTitle) . "\"";
+					//LBox --------  change for Lightbox Album --------------------------------------------
+					if ($row["m_titl"]){
+						print " title=\"" . $row["m_titl"] . "\"";
+					}else{
+						print " title=\"" . basename($row["m_file"]) . "\"";
+					}
+					// ---------------------------------------------------------------------------------------------
+					print "/>";
+					print "</a>";
 				}
 				print "</td><td>";
 				if(empty($SEARCH_SPIDER)) {
@@ -1483,7 +1493,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 					$name = trim($rowm["m_titl"]);
-					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
