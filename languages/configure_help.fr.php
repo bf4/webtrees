@@ -34,7 +34,7 @@ $pgv_lang["new_gedcom_title"]           = "Généalogie de [#GEDCOMFILE#]";
 $pgv_lang["USE_MEDIA_VIEWER"]           = "Utiliser le diaporama";
 #pgv_lang["USE_MEDIA_VIEWER_help"]      = "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />When this option is <b>#pgv_lang[yes]#</b>, clicking on images will produce the Media Viewer page.  This page shows the details of the image.  If you have sufficient rights, you can also edit these details.<br /><br />When this option is <b>#pgv_lang[no]#</b>, clicking on images will produce a full-size image in a new window.<br />";
 $pgv_lang["USE_MEDIA_FIREWALL"]         = "Utiliser le pare-feu MultiMedia";
-#pgv_lang["USE_MEDIA_FIREWALL_help"]    = "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />See the Wiki for a description of how to use the Media Firewall. <a href=\"http://wiki.phpgedview.net/en/index.php?title=Media_Firewall\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php?title=Media_Firewall</a><br />";
+#pgv_lang["USE_MEDIA_FIREWALL_help"]    = "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />See the Wiki for a description of how to use the Media Firewall. <a href=\"#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=Media_Firewall\" target=\"_blank\">#PGV_PHPGEDVIEW_WIKI#</a><br />";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR"]     = "Répertoire racine du pare-feu MultiMedia";
 #pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]= "~#pgv_lang[MEDIA_FIREWALL_ROOTDIR]#~<br /><br />Directory in which the protected Media directory can be created.  #pgv_lang[MEDIA_FIREWALL_ROOTDIR_note]#<br />";
 #pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]= "When this field is empty, the <b>#GLOBALS[INDEX_DIRECTORY]#</b> directory will be used.";
