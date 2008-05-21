@@ -273,6 +273,7 @@ var CB_Close_Win	= CB_Close_Win;
 	Player.prototype.registerCallback = function() {
 		return setInterval(this.onTimerEvent.bind(this), this.frequency);
 	}
+	
 	Player.prototype.clearCallback = function() {
    		clearInterval(this.callback);
    		this.callback = null;
@@ -746,22 +747,22 @@ var CB_Close_Win	= CB_Close_Win;
             CB_URL = CB_Links[i].getAttribute("href");
             if (CB_Rel.match("clearbox") != null && CB_Show != 0) {
                 if (CB_Rel == "clearbox") {
-                    CB_Links[i].onclick = function () {CB_ClickIMG(this.rel + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+                    CB_Links[i].onclick = function () {CB_ClickIMG(this.rel + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
 				} else {
 					if (CB_Rel.substring(0, 8) == "clearbox" &&
 						CB_Rel.charAt(8) == "[" &&
 						CB_Rel.charAt(CB_Rel.length - 1) == "]") {
 						if (CB_Links[i].rel.substring(9, CB_Links[i].rel.length - 1).split(",")[0] != "clearbox") {
-							CB_Links[i].onclick = function () {CB_ClickIMG(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+							CB_Links[i].onclick = function () {CB_ClickIMG(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
 						} else {
 							alert("ClearBox HIBA:\n\nClearBox galeria neve NEM lehet \"clearbox[clearbox]\"!\n(Helye: dokumentum, a " + i + ". <a> tag-en belul.)");						}
                     } else if (CB_Rel.substring(0, 8) == "clearbox" &&
                         CB_Rel.charAt(8) == "(" &&
                         CB_Rel.charAt(CB_Rel.length - 1) == ")") {
                         if (CB_Rel.substring(9, CB_Rel.length - 1).split(",")[2] == "click") {
-                            CB_Links[i].onclick = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+                            CB_Links[i].onclick = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
                         } else {
-                            CB_Links[i].onmouseover = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+                            CB_Links[i].onmouseover = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
                         }
                     } else {
                         alert("ClearBox HIBA:\n\nHibasan megadott clearbox REL azonosito: \"" + CB_Links[i].rel + "\"!\n(Helye: dokumentum, a " + i + ". <a> tag-en belul.)");
@@ -815,7 +816,7 @@ var CB_Close_Win	= CB_Close_Win;
                             b = CB_Links[i].getAttribute("tnhref");
                         }
 						// Split the Title info
-						var splitTitle = CB_Links[i].getAttribute("title").split(":",3);
+						var splitTitle = CB_Links[i].getAttribute("rev").split(":",3);
                         CB_Gallery.push(new Array(CB_Links[i].getAttribute("href"), splitTitle[2], b, splitTitle[0], splitTitle[1]));
                     }
                 }

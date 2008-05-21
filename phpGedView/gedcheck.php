@@ -131,6 +131,7 @@ $XREF_LINK=array(
 	'ALIA'=>'INDI',
 	'ANCI'=>'SUBM',
 	'DESI'=>'SUBM',
+	'_PGV_OBJS'=>'OBJE',
 	'AUTH'=>'INDI'  // This is not valid gedcom, but it is not an error if used.
 );
 
