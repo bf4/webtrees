@@ -10,7 +10,8 @@
 
 
 Version 4.1.6
- - Changed: Lightbox - Fix suppression of FF browser tooltip, personal Facts tooltip info etc (windmillway)  
+ - Changed: Lightbox: - Preparation for the Media sort feature (Which I hope to have out soon) (windmillway)
+ - Changed: Lightbox: - Fix suppression of FF browser tooltip, personal Facts tooltip info etc (windmillway)  
  - Added: Google Maps - use google geocode engine (wooc)
  - Fixed: [ 1966611 ] 4.1.5 - Edit Geographic Place Location - escapes, flag (wooc)
  - Fixed: [ 1965647 ] Starred Given Names in Charts including compact chart. (windmillway)
