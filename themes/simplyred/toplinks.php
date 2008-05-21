@@ -1,9 +1,9 @@
 <?php
 /**
- * Top-of-page menu for Standard theme
+ * Top-of-page menu for SimplyRed theme
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and others.  All rights resserved.
+ * Copyright (C) 2002 to 2008  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,87 +31,94 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 $menubar = new MenuBar();
 ?>
-<div style="width: 98%">
-		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="99%" height="3" alt="" />
-	<table id="topMenu">
+<div>
+	<table width="100%">
 		<tr>
-			<?php 		
-			$menu = $menubar->getGedcomMenu(); 
+			<?php
+			$menu = $menubar->getGedcomMenu();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getMygedviewMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getChartsMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getListsMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getCalendarMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getReportsMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
+				$menu->addIcon(null);
+				$menu->printMenu();
 				print "\t</td>\n";
 			}
-			$menu = $menubar->getClippingsMenu(); 
-			if ((!is_null($menu)) && ($menu->link != "")) { ?> 
-				<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
-			<?php 
-			} 
-
-			$menu = $menubar->getSearchMenu(); 
+			$menu = $menubar->getMygedviewMenu();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
+				$menu->addIcon(null);
+				$menu->printMenu();
 				print "\t</td>\n";
-			}	
-
-			$menu = $menubar->getOptionalMenu(); 
+			}
+			$menu = $menubar->getChartsMenu();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
+				$menu->addIcon(null);
+				$menu->printMenu();
 				print "\t</td>\n";
-			}	
-
-			$menus = $menubar->getModuleMenus(); 
+			}
+			$menu = $menubar->getListsMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->addIcon(null);
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getCalendarMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->addIcon(null);
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getReportsMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->addIcon(null);
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getClippingsMenu();
+			if((!is_null($menu)) && ($menu->link != "")) {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->addIcon(null);
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getSearchMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->addIcon(null);
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getOptionalMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->addIcon(null);
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menus = $menubar->getModuleMenus();
 			foreach($menus as $m=>$menu) {
 				if($menu->link != "") {
 					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu(); 
+					$menu->addIcon(null);
+					$menu->printMenu();
 					print "\t</td>\n";
 				}
-			} 
-
-			$menu = $menubar->getHelpMenu(); 
+			}
+			$menu = $menubar->getHelpMenu();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
+				$menu->addIcon(null);
+				$menu->printMenu();
 				print "\t</td>\n";
-			}	
+			}
 			?>
 		</tr>
 	</table>
-	<img align="middle" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="99%" height="3" alt="" />	
+	<br />
 </div>
-<?php include("accesskeyHeaders.php"); ?>
 </div>
-<div id="content">
+<!-- close div for div id="header" -->
+<?php print "<div id=\"content\" style=\"direction: $TEXT_DIRECTION;\">\n"; ?>

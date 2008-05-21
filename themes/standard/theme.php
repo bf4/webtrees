@@ -2,8 +2,8 @@
 /**
  * Standard theme
  *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * PhpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  John Finlay and others.  All rights resserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,11 @@
  * @subpackage Themes
  * @version $Id$
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
 
 $theme_name = "Standard";		//-- the name of this theme
 

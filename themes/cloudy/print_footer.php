@@ -1,9 +1,9 @@
 <?php
 /**
- * Print-friendly header for Standard theme pages
+ * Footer for print-friendly Cloudy theme pages
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and others.  All rights resserved.
+ * Copyright (C) 2002 to 2008  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @author w.a. bastein http://genealogy.bastein.biz
  * @package PhpGedView
  * @subpackage Themes
  * @version $Id$
@@ -30,3 +31,17 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 ?>
+<script type="text/javascript" language="javascript" >
+ function show_divs(){
+        if (document.getElementById('index_small_blocks'))
+        {
+                var smallblocks = document.getElementById('index_small_blocks');
+                var blocks = document.getElementById('index_main_blocks');
+                smallblocks.style.visibility = 'visible';
+                smallblocks.style.display = 'inline';
+                blocks.style.visibility = 'visible';
+                blocks.style.display = 'inline';
+        }
+}
+window.onload = function() { show_divs(); }
+</script>

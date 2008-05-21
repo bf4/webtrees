@@ -1,9 +1,9 @@
 <?php
 /**
- * Print-friendly header for Standard theme pages
+ * Top-of-page links for Cloudy theme
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and others.  All rights resserved.
+ * Copyright (C) 2002 to 2008  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @author w.a. bastein http://genealogy.bastein.biz
  * @package PhpGedView
  * @subpackage Themes
  * @version $Id$
@@ -30,3 +31,15 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 ?>
+</td></tr>
+</table>
+<?php include("accesskeyHeaders.php"); ?>
+</div><!-- close div for div id="header" -->
+<?php
+// stupid browsers ;)
+if ($BROWSERTYPE == "opera")
+        print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" id=\"cellcontainer\"><tr><td valign=\"top\" width=\"100%\" colspan=\"5\" id=\"container\">";
+else
+        print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"10\" id=\"container\" width=\"100%\" ><tr><td valign=\"top\" width=\"100%\"  id=\"cellcontainer\">";
+?>
+<div id="content">
