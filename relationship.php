@@ -575,6 +575,14 @@ $pid2 = clean_input($pid2);
 $title_string .= $pgv_lang["relationship_chart"];
 // -- print html header information
 print_header($title_string);
+
+// Lbox additions if installed ---------------------------------------------------------------------------------------------
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include_once('modules/lightbox/lb_config.php');
+	include_once('modules/lightbox/functions/lb_call_js.php');
+}	
+// ------------------------------------------------------------------------------------------------------------------------------
+
 if (!empty($pid1)) {
 	//-- check if the id is valid
 	$indirec = Person::getInstance($pid1);
