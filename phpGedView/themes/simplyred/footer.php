@@ -1,9 +1,9 @@
 <?php
 /**
- * Footer for Standard theme
+ * Footer for SimplyRed theme
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and others.  All rights resserved.
+ * Copyright (C) 2002 to 2008  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,13 +29,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-if (!isset($without_close)) print "</div> <!-- closing div id=\"content\" -->\n";//FIXME uncomment as soon as ready
-
+print "</div> <!-- closing div id=\"content\" -->\n";//FIXME uncomment as soon as ready
 print "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
-
-print contact_links();
-
 print "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
+print contact_links();
 print '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" width="100" height="45" border="0" alt="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.'" title="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.'" /></a><br />';
 print "\n\t<br />";
 print_help_link("preview_help", "qm");
@@ -50,5 +47,6 @@ print "<br />".$pgv_lang["changes_exist"].
 $pgv_lang["accept_changes"]."</a>\n";
 }
 print "</div>";
+?><!-- <a href="http://validator.w3.org/check/referer">Validate</a> --><?php
 print "</div> <!-- close div id=\"footer\" -->\n";
 ?>
