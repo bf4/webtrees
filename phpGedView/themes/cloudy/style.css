@@ -5,7 +5,7 @@
  * To learn more about CSS visit http: //www.w3.org/TR/REC-CSS2/
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved.
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -230,13 +230,6 @@ ul {
 	background-image: url(images/left1R.gif);
 }
 
-#index_small_blocks .person_box , #index_small_blocks .person_boxNN , #index_small_blocks .person_boxF {
-	margin: 0;
-	padding: 0;
-	border: none;
-	height: auto;
-}
-
 #index_small_blocks .name1 {
 	font: bold 10px tahoma, arial, helvetica, sans-serif;
 	color: #003399;
@@ -266,10 +259,6 @@ ul {
 #index_main_blocks {
 	font-family: tahoma, arial, helvetica, sans-serif;
 	float: left;
-}
-
-#index_main_blocks .person_box, #index_main_blocks .person_boxF, #index_main_blocks .person_boxNN {
-	margin-bottom: 10px;
 }
 
 #index_main_blocks .name2 {
@@ -462,8 +451,7 @@ th {
 .person_box {
 	background-color: #f0f9ff;
 	border: 1px solid #84beff;
-	padding: 3pt 3pt 3pt 3pt;
-	letter-spacing: .2px;
+	padding: 3pt;
 }
 
 .person_boxF {
