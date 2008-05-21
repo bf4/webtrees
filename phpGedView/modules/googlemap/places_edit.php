@@ -417,7 +417,7 @@ if ($action=="add") {
 	function loadMap() {
 		var zoom;
 		if (GBrowserIsCompatible()) {
-			map = new GMap2(document.getElementById("map"));
+			map = new GMap2(document.getElementById("map_pane"));
 			map.addControl(new GSmallMapControl());
 			map.addControl(new GScaleControl()) ;
 			var bounds = new GLatLngBounds();
@@ -658,7 +658,16 @@ if ($action=="add") {
 	
 	function showLocation(address) {
 	   geocoder.getLocations(address, addAddressToMap);
-	 }
+	}
+		 
+	function updatewholename() {
+	}
+
+	function paste_char(value,lang,mag) {
+		document.editplaces.NEW_PLACE_NAME.value += value;
+		language_filter = lang;
+		magnify = mag;
+	}
 	//-->
 </script>
 
@@ -677,7 +686,8 @@ if ($action=="add") {
 	<table class="facts_table">
 	<tr>
 		<td class="optionbox" colspan="2">
-		<center><div id="map" style="width: 100%; height: 300px"></div></center>
+		<center><div id="map_pane" style="width: 100%; height: 300px"></div></center>
+		</td>
 	</tr>
 	<tr>
 		<td class="optionbox" colspan="2">
@@ -685,21 +695,27 @@ if ($action=="add") {
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("PLE_PLACES_help", "qm", "PLE_PLACES");?><?php print $factarray["PLAC"];?></td>
-	 	 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php print htmlspecialchars(PrintReady($place_name));?>" size="20" class="address_input" tabindex="<?php print ++$i;?>"/>
+	 	 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php print htmlspecialchars(PrintReady($place_name));?>" size="25" class="address_input" tabindex="<?php print ++$i;?>" />
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
-	 	 <label for="new_pl_name"><a href="javascript:;" onclick="showLocation(NEW_PLACE_NAME.value); return false"><?php print $pgv_lang["search"]?></a><label/>
+	 	<label for="new_pl_name"><a href="javascript:;" onclick="showLocation(NEW_PLACE_NAME.value); return false">&nbsp;<?php print $pgv_lang["search"]?></a></label>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("PLE_PRECISION_help", "qm", "PLE_PRECISION");?><?php print $pgv_lang["pl_precision"];?></td>
 		<td class="optionbox">
-			<input type="radio" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==0) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php print ++$i;?>" ><?php print $pgv_lang["pl_country"];?></input>
-			<input type="radio" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==1) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_1;?>" tabindex="<?php print ++$i;?>" ><?php print $pgv_lang["pl_state"];?></input>
-			<input type="radio" name="NEW_PRECISION" onchange="updateMap();" <?php if(($level==2)||($level==3)) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_2;?>" tabindex="<?php print ++$i;?>" ><?php print $pgv_lang["pl_city"];?></input>
-			<input type="radio" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==4) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_3;?>" tabindex="<?php print ++$i;?>" ><?php print $pgv_lang["pl_neighborhood"];?></input>
-			<input type="radio" name="NEW_PRECISION" onchange="updateMap();"<?php if($level==5) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_4;?>" tabindex="<?php print ++$i;?>" ><?php print $pgv_lang["pl_house"];?></input>
-			<input type="radio" name="NEW_PRECISION" onchange="updateMap();" value="<?php print $GOOGLEMAP_PRECISION_5;?>"><?php print $pgv_lang["pl_max"];?></input>
+			<input type="radio" id="new_prec_0" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==0) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php print ++$i;?>" />
+			<label for="new_prec_0"><?php print $pgv_lang["pl_country"];?></label>
+			<input type="radio" id="new_prec_1" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==1) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_1;?>" tabindex="<?php print ++$i;?>" />
+			<label for="new_prec_1"><?php print $pgv_lang["pl_state"];?></label>
+			<input type="radio" id="new_prec_2" name="NEW_PRECISION" onchange="updateMap();" <?php if(($level==2)||($level==3)) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_2;?>" tabindex="<?php print ++$i;?>" />
+			<label for="new_prec_2"><?php print $pgv_lang["pl_city"];?></label>
+			<input type="radio" id="new_prec_3" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==4) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_3;?>" tabindex="<?php print ++$i;?>" />
+			<label for="new_prec_3"><?php print $pgv_lang["pl_neighborhood"];?></label>
+			<input type="radio" id="new_prec_4" name="NEW_PRECISION" onchange="updateMap();"<?php if($level==5) print "checked "?>value="<?php print $GOOGLEMAP_PRECISION_4;?>" tabindex="<?php print ++$i;?>" />
+			<label for="new_prec_4"><?php print $pgv_lang["pl_house"];?></label>
+			<input type="radio" id="new_prec_5" name="NEW_PRECISION" onchange="updateMap();" value="<?php print $GOOGLEMAP_PRECISION_5;?>" />
+			<label for="new_prec_5"><?php print $pgv_lang["pl_max"];?></label>
 		</td>
 	</tr>
 	<tr>
@@ -740,7 +756,7 @@ if ($action=="add") {
 				<a href="javascript:;" onclick="change_icon();return false;"><?php print $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;
 				<a href="javascript:;" onclick="remove_icon();return false;"><?php print $pgv_lang["pl_remove_flag"]?></a>
 <?php   } ?>
-			</div>
+			</div></td>
 	</tr>
 	</table>
 	<input id="savebutton" name="save2" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
