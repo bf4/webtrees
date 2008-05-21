@@ -92,19 +92,19 @@ th {
 }
 
 .gedcom_table {
-	border: 1px solid #84beff;
+	border: 1px solid #84BEFF;
 	margin: 0;
 	width: 99%;
 }
 
 .person_box {
-	background-color: #f0f9ff;
-	border: 1px solid #84beff;
+	background-color: #F0F9FF;
+	border: 1px solid #84BEFF;
 }
 
 .person_boxF {
-	background-color: #fff0f0;
-	border: 1px solid #ff2080;
+	background-color: #FFF0F0;
+	border: 1px solid #FF2080;
 }
 
 .person_boxNN {
@@ -113,7 +113,7 @@ th {
 }
 
 .person_box:target, .news_box:target, #gedcom_stats:target {
-	background-color: #ffffcc;
+	background-color: #FFFFCC;
 }
 
 .list_table {
@@ -123,14 +123,14 @@ th {
 
 .list_label, .list_label_wrap {
 	color: #000066;
-	background-color: #c3dfff;
+	background-color: #C3DFFF;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	text-align: center;
 }
 
 .list_value, .list_value_wrap {
-	background-color: #ecf5ff;
-	border: solid #c3dfff 1px;
+	background-color: #ECF5FF;
+	border: solid #C3DFFF 1px;
 	color: #000066;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
@@ -154,33 +154,33 @@ th {
 
 .facts_label {
 	color: #000066;
-	background-color: #c3dfff;
+	background-color: #C3DFFF;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
+	padding: 4px;
 	width: 20%;
 	text-align: center;
 }
 
 .facts_label02, .facts_label03 {
 	color: white;
-	background-color: #84beff;
+	background-color: #84BEFF;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
+	padding: 4px;
 	text-align: center;
 	font-weight: bold;
 }
 
 .facts_value {
-	background-color: #ecf5ff;
-	border: solid #c3dfff 1px;
+	background-color: #ECF5FF;
+	border: solid #C3DFFF 1px;
 	color: #000066;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
+	padding: 4px;
 }
 
 .facts_value02 {
-	background-color: #fbfdff;
-	border: solid #c3dfff 1px;
+	background-color: #FBFDFF;
+	border: solid #C3DFFF 1px;
 	color: #000066;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 5px;
@@ -188,18 +188,18 @@ th {
 
 .facts_labelred, .facts_labelblue {
 	color: #000066;
-	background-color: #9dd8ff;
+	background-color: #9DD8FF;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
+	padding: 4px;
 	width: 20%;
 	text-align: center;
 }
 
 .facts_valuered, .facts_valueblue {
-	background-color: #fbfdff;
+	background-color: #FBFDFF;
 	color: #000066;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
+	padding: 4px;
 }
 
 .facts_labelred, .facts_valuered {
@@ -215,9 +215,9 @@ th {
 }
 
 .tab_cell_active {
-    color: #000066;
+	color: #000066;
 	background-color: white;
-	border-color: #ff6633;
+	border-color: #FF6633;
 	border-width: 1px;
 	border-bottom-style: none;
 	border-top-style: solid;
@@ -227,9 +227,9 @@ th {
 }
 
 .tab_cell_inactive {
-    color: #000066;
-	background-color: #ecf5ff;
-	border-color: #ff6633;
+	color: #000066;
+	background-color: #ECF5FF;
+	border-color: #FF6633;
 	border-width: 1px;
 	border-right-style: solid;
 	text-align: center;
@@ -237,9 +237,9 @@ th {
 }
 
 .tab_cell_inactive_empty {
-    color: #000066;
-	background-color: #dce5ef;
-	border-color: #ff6633;
+	color: #000066;
+	background-color: #DCE5EF;
+	border-color: #FF6633;
 	border-width: 1px;
 	border-right-style: solid;
 	text-align: center;
@@ -247,10 +247,10 @@ th {
 }
 
 .tab_cell_inactive_empty a {
-	color: #5555ff;
+	color: #5555FF;
 }
 .tab_active_bottom {
-    background-color: white;
+	background-color: white;
 	border-top: none;
 	border-bottom: none;
 	border-left: none;
@@ -259,18 +259,18 @@ th {
 }
 
 .tab_inactive_bottom {
-    background-color: white;
+	background-color: white;
 	border-left: none;
 	border-right: none;
-	border-top: solid #ff6633 1px;
+	border-top: solid #FF6633 1px;
 	height: 5px;
 }
 
 .tab_inactive_bottom_right {
-    background-color: white;
+	background-color: white;
 	border-left: none;
 	border-right: none;
-	border-top: solid #ff6633 1px;
+	border-top: solid #FF6633 1px;
 	width: 35%;
 	height: 5px;
 }
@@ -304,7 +304,7 @@ a:hover .nameZoom {
 }
 
 .details1 {
-    color: #000066;
+	color: #000066;
 	font: 10px tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;
 }
@@ -315,7 +315,7 @@ a:hover .nameZoom {
 }
 
 .details2 {
-    color: #000066;
+	color: #000066;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;
 }
@@ -341,7 +341,7 @@ a:hover .nameZoom {
 }
 
 .label, .field {
-    color: #000066;
+	color: #000066;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 }
 
@@ -350,13 +350,13 @@ a:hover .nameZoom {
 }
 
 .error {
-	color: #dd0000;
+	color: #DD0000;
 	font-family: tahoma, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 
 .largeError {
-	color: #dd0000;
+	color: #DD0000;
 	font: large tahoma, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
@@ -415,8 +415,8 @@ a:hover .nameZoom {
 
 .icon, .adminicon {
 	border: none;
-	padding-left: 0pt;
-	padding-right: 5pt;
+	padding-left: 0;
+	padding-right: 5px;
 }
 
 .link {
@@ -425,12 +425,12 @@ a:hover .nameZoom {
 }
 
 .sublinks_table {
-	border: solid #84beff 1px;
+	border: solid #84BEFF 1px;
 }
 
 .sublinks_cell {
 	font-size: 11px;
-	background-color: #ecf5ff;
+	background-color: #ECF5FF;
 }
 
 .sublinks_table .icon {
@@ -474,7 +474,7 @@ a:hover .nameZoom {
 }
 
 .theme_form {
-	margin-top: 0px;
+	margin-top: 0;
 	font: 14px tahoma, arial, helvetica, sans-serif;
 	color: white;
 }
@@ -490,21 +490,21 @@ a:hover .nameZoom {
 .activeflag {
 	height: 15px;
 	border: none;
-	opacity: 1;		/* IE does not yet support this */
+	opacity: 1;
 }
 
 /* This one is for an inactive language when the mouse is hovering over it */
 .brightflag {
 	height: 15px;
 	border: none;
-	opacity: 1;		/* IE does not yet support this */
+	opacity: 1;
 }
 
 /* This one is for an inactive language when the mouse is not hovering over it */
 .dimflag {
 	height: 15px;
 	border: none;
-	opacity: 0.4;	/* IE does not yet support this */
+	opacity: 0.4;
 }
 
 .border1 {
@@ -520,8 +520,8 @@ a:hover .nameZoom {
 }
 
 .selected-option {
-	background-color: #ecf5ff;
-	border: solid #84beff 1px;
+	background-color: #ECF5FF;
+	border: solid #84BEFF 1px;
 }
 
 .favorites_form {
@@ -553,8 +553,8 @@ a:hover .nameZoom {
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	text-align: left;
-	background-color: #ecf5ff;
-	border: solid #84beff 1px;
+	background-color: #ECF5FF;
+	border: solid #84BEFF 1px;
 	white-space: nowrap;
 	width: 100px;
 }
@@ -582,8 +582,8 @@ a:hover .nameZoom {
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	text-align: center;
-	background-color: #ecf5ff;
-	border: solid #84beff 1px;
+	background-color: #ECF5FF;
+	border: solid #84BEFF 1px;
 	white-space: nowrap;
 }
 
@@ -591,7 +591,7 @@ a:hover .nameZoom {
 	color: black;
 	font: normal 11px tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;
-	background-color: #ecf5ff;
+	background-color: #ECF5FF;
 	white-space: nowrap;
 	text-align: left;
 }
@@ -638,8 +638,8 @@ a:hover .nameZoom {
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	text-align: center;
-	background-color: #ecf5ff;
-	border: solid #84beff 1px;
+	background-color: #ECF5FF;
+	border: solid #84BEFF 1px;
 	white-space: nowrap;
 }
 
@@ -647,7 +647,7 @@ a:hover .nameZoom {
 	color: black;
 	font: normal 11px tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;
-	background-color: #ecf5ff;
+	background-color: #ECF5FF;
 	white-space: nowrap;
 	padding: 1px;
 }
@@ -678,8 +678,8 @@ a:hover .nameZoom {
 }
 
 .news_box {
-	background-color: #f0f9ff;
-	border: 1px solid #84beff;
+	background-color: #F0F9FF;
+	border: 1px solid #84BEFF;
 }
 
 .news_title {
@@ -749,9 +749,8 @@ a:hover .nameZoom {
 }
 
 .block {
-	overflow: auto;
-	background-color: #ecf5ff;
-	border: solid #84beff 1px;
+	background-color: #ECF5FF;
+	border: solid #84BEFF 1px;
 	color: black;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
@@ -784,7 +783,7 @@ a:hover .nameZoom {
 #pedigree_chart {
 	position: relative;
 	top: -240px;
-	left: 0px;
+	left: 0;
 	width: 99%;
 }
 
@@ -793,7 +792,7 @@ a:hover .nameZoom {
 	position: relative;
 	float: right;
 	top: -240px;
-	right: 0px;
+	right: 0;
 	width: 99%;
 }
 
@@ -803,18 +802,18 @@ a:hover .nameZoom {
 	background-repeat: repeat-y;
 	background-position: left top;
 	list-style: none;
-	margin: 0px 0px 5px 15px; /* top right bottom left */
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
+	margin: 0 0 5px 15px; /* top right bottom left */
+	padding-top: 0;
+	padding-right: 0;
+	padding-bottom: 0;
 }
 
 #descendancy_chart li {
 	list-style: none;
-	margin: 0px 0px 0px -15px; /* top right bottom left */
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
+	margin: 0 0 0 -15px; /* top right bottom left */
+	padding-top: 0;
+	padding-right: 0;
+	padding-bottom: 0;
 }
 
 /*-- descendancy chart rtl specific stylesheets --*/
@@ -823,23 +822,23 @@ a:hover .nameZoom {
 	background-repeat: repeat-y;
 	background-position: right top;
 	list-style: none;
-	margin: 0px 15px 5px 0px; /* top right bottom left */
-	padding-top: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
+	margin: 0 15px 5px 0; /* top right bottom left */
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
 }
 
 #descendancy_chart_rtl li {
 	list-style: none;
-	margin: 0px -15px 0px 0px; /* top right bottom left */
-	padding: 0px 0px 0px 0px; /* top right bottom left */
+	margin: 0 -15px 0 0; /* top right bottom left */
+	padding: 0;
 }
 
 /*-- relationship chart specific stylesheets --*/
 #relationship_chart {
 	position: relative;
 	top: -40px;
-	left: 0px;
+	left: 0;
 }
 
 #relationship_chart_rtl {
@@ -854,18 +853,18 @@ a:hover .nameZoom {
 	background-repeat: repeat-y;
 	background-position: left top;
 	list-style: none;
-	margin: 0px 0px 0px 15px; /* top right bottom left */
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
+	margin: 0 0 0 15px; /* top right bottom left */
+	padding-top: 0;
+	padding-right: 0;
+	padding-bottom: 0;
 }
 
 #ancestry_chart li {
 	list-style: none;
-	margin: 0px 0px 2px -15px; /* top right bottom left */
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
+	margin: 0 0 2px -15px; /* top right bottom left */
+	padding-top: 0;
+	padding-right: 0;
+	padding-bottom: 0;
 }
 
 /*-- ancestry chart rtl specific stylesheets --*/
@@ -874,16 +873,16 @@ a:hover .nameZoom {
 	background-repeat: repeat-y;
 	background-position: right top;
 	list-style: none;
-	margin: 0px 15px 0px 0px; /* top right bottom left */
-	padding-top: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
+	margin: 0 15px 0 0; /* top right bottom left */
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
 }
 
 #ancestry_chart_rtl li {
 	list-style: none;
-	margin: 0px -15px 2px 0px; /* top right bottom left */
-	padding: 0px 2px 0px 0px; /* top right bottom left */
+	margin: 0 -15px 2px 0; /* top right bottom left */
+	padding: 0 2px 0 0; /* top right bottom left */
 }
 
 /*-- timeline chart specific styles --*/
@@ -896,38 +895,38 @@ a:hover .nameZoom {
 }
 
 .person0 {
-	background-color: #ecf5ff;
-	border: outset #84beff 1px;
+	background-color: #ECF5FF;
+	border: outset #84BEFF 1px;
 	vertical-align: top;
 }
 
 .person1 {
-	background-color: #aaffaa;
-	border: outset #aaffaa 1px;
+	background-color: #AAFFAA;
+	border: outset #AAFFAA 1px;
 	vertical-align: top;
 }
 
 .person2 {
-	background-color: #ffaaaa;
-	border: outset #ffaaaa 1px;
+	background-color: #FFAAAA;
+	border: outset #FFAAAA 1px;
 	vertical-align: top;
 }
 
 .person3 {
-	background-color: #aaaadd;
-	border: outset #5555ff 1px;
+	background-color: #AAAADD;
+	border: outset #5555FF 1px;
 	vertical-align: top;
 }
 
 .person4 {
-	background-color: #ff5555;
-	border: outset #ff5555 1px;
+	background-color: #FF5555;
+	border: outset #FF5555 1px;
 	vertical-align: top;
 }
 
 .person5 {
-	background-color: #55ff55;
-	border: outset #55ff55 1px;
+	background-color: #55FF55;
+	border: outset #55FF55 1px;
 	vertical-align: top;
 }
 
@@ -948,15 +947,9 @@ a:hover .nameZoom {
 }
 
 input, button, textarea {
-	border-top-color: white;
-	border-left-color: white;
-	border-right-color: #000066;
-	border-bottom-color: #000066;
-	border-top-width: 1px;
-	border-left-width: 1px;
-	border-bottom-width: 1px;
+	border-color: white #000066 #000066 white;
+	border-width: 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	border-right-width: 1px;
 }
 
 input, textarea {
@@ -965,15 +958,9 @@ input, textarea {
 }
 
 select {
-	border-top-color: #84beff;
-	border-left-color: #84beff;
-	border-right-color: #84beff;
-	border-bottom-color: #84beff;
-	border-top-width: 1px;
-	border-left-width: 1px;
-	border-bottom-width: 1px;
+	border-color: #84BEFF;
+	border-width: 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	border-right-width: 1px;
 }
 
 form {
@@ -1000,15 +987,15 @@ h4 {
 	font-family: url(./includes/fonts/DejaVuSans.ttf);
 	font-size: 7px;
 	color: black;
-	background-color: #eeeeee;
+	background-color: #EEEEEE;
 }
 
 .fan_chart_box {
-	background-color: #b1cff0;
+	background-color: #B1CFF0;
 }
 
 .fan_chart_boxF {
-	background-color: #e9daf1;
+	background-color: #E9DAF1;
 }
 
 .starredname {
@@ -1036,8 +1023,8 @@ h4 {
 /* Style for the top and bottom bar */
 .topbottombar {
 	color: white;
-	background-color: #84beff;
-	font: bold 12px tahoma, arial, Helvetica, sans-serif;
+	background-color: #84BEFF;
+	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px;
 	text-align: center;
 }
@@ -1045,8 +1032,8 @@ h4 {
 /* Style for the subbar in  */
 
 .subbar {
-	background-color: #ecf5ff;
-	border: solid #c3dfff 1px;
+	background-color: #ECF5FF;
+	border: solid #C3DFFF 1px;
 	color: #000066;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	padding: 3px;
@@ -1057,7 +1044,7 @@ h4 {
 /* Style for the descriptionbox */
 .descriptionbox {
 	color: #000066;
-	background-color: #c3dfff;
+	background-color: #C3DFFF;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px;
 	white-space: nowrap;
@@ -1066,8 +1053,8 @@ h4 {
 
 /* Style for the optionbox */
 .optionbox {
-	background-color: #ecf5ff;
-	border: solid #c3dfff 1px;
+	background-color: #ECF5FF;
+	border: solid #C3DFFF 1px;
 	color: #000066;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 3px;
@@ -1080,7 +1067,7 @@ h4 {
 }
 
 .vmiddle {
-	vertical-align: middle
+	vertical-align: middle;
 }
 
 /* Colors */
@@ -1089,9 +1076,6 @@ h4 {
 }
 
 .rela {
-	filter: alpha(opacity=67);
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=67);
-	-moz-opacity: 0.67;
 	opacity: 0.67;
 }
 
@@ -1177,8 +1161,8 @@ h4 {
 
 /* Message box */
 .messagebox {
-	background-color: #dfeeff;
-	border: solid #c3dfff 1px;
+	background-color: #DFEEFF;
+	border: solid #C3DFFF 1px;
 }
 
 /* Change indicators */
@@ -1191,18 +1175,17 @@ h4 {
 }
 
 .door {
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
+	margin: 0;
+	padding: 0;
 }
 
 .door dd {
-	margin: 2px 2px 2px 2px;
-	padding: 2px 6px 2px 6px;
-	height: 100%; float: left;
+	margin: 2px;
+	padding: 2px 6px;
+	height: 100%;
+	float: left;
 	font-weight: bold;
 	display: none;
-	-moz-border-radius-topleft: 0.6em;
-	-moz-border-radius-topright: 0.6em;
 }
 
 .note_details {
@@ -1210,48 +1193,44 @@ h4 {
 }
 
 a.showit {
-   position: relative;
-   z-index: 24;
-   color: black;
-   text-decoration: none;
+	 position: relative;
+	 z-index: 24;
+	 color: black;
+	 text-decoration: none;
 }
 
 a.showit:hover {
-   z-index: 25;
-   background-color: #ffff9b;
-   cursor: crosshair;
+	 z-index: 25;
+	 background-color: #FFFF9B;
+	 cursor: crosshair;
 }
 
 a.showit span {
-   display: none;
+	 display: none;
 }
 
 a.showit:hover span {
-   display: block;
-   position: absolute;
-   top: 22px;
-   left: 0px;
-   width: 225px;
-   border-style: outset;
-   border-left: 15px outset #1f1f1f;
-   border-top: 2px solid #1f1f1f;
-   border-bottom: 2px solid black;
-   border-right: 2px solid black;
-   padding: 3px;
-   background: #4f4f4f;
-   color: white;
-   font: 15px tahoma, arial, helvetica, sans-serif;
-   text-align: left;
-   FILTER: Alpha(Opacity=90, FinishOpacity=90, Style=2);
-   -moz-opacity: .85;
-   -khtml-opacity: .85;
-   z-index: 5;
+	 display: block;
+	 position: absolute;
+	 top: 22px;
+	 left: 0;
+	 width: 225px;
+	 border-left: 15px outset #1F1F1F;
+	 border-top: 2px solid #1F1F1F;
+	 border-bottom: 2px solid black;
+	 border-right: 2px solid black;
+	 padding: 3px;
+	 background: #4F4F4F;
+	 color: white;
+	 font: 15px tahoma, arial, helvetica, sans-serif;
+	 text-align: left;
+	 opacity: .85;
+	 z-index: 5;
 }
 
 .lifespan_people span:first-letter {
-   font: bold 16px tahoma, arial, helvetica, sans-serif;
-   font-variant: small-caps;
-   padding: 1px;
+	 font: small-caps bold 16px tahoma, arial, helvetica, sans-serif;
+	 padding: 1px;
 }
 
 .lifespan_outer {
@@ -1289,7 +1268,7 @@ a.showit:hover span {
 }
 .iwstyle {
 	width:360px;
-	/*background-color: #FFFFFF;*/
+	/*background-color: white;*/
 } 
 .iwstyle a {
 } 
@@ -1309,14 +1288,13 @@ a.showit:hover span {
 }
 
 .tag_cloud_sub {
-	font-family: tahoma, arial, helvetica, sans-serif;
-	font-size: 8px;
+	font: 8px tahoma, arial, helvetica, sans-serif;
 	color:#808080;
 }
 /* End of Tag Cloud styles*/
 
 /* Because the CSS file is only read once, the following two overriding classes MUST
-   appear at the end of the entire CSS file.
+	 appear at the end of the entire CSS file.
 */
 .nowrap {
 	white-space: nowrap;
