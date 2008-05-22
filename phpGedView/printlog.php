@@ -56,7 +56,7 @@ if ($logtype == "searchlog") {
 //-- make sure that they have admin status before they can use this page
 $auth = false;
 if (($logtype == "syslog") && PGV_USER_IS_ADMIN) $auth = true;
-if ((($logtype == "gedlog") || ($logtype == "searchlog"))  && (userGedcomAdmin(PGV_USER_ID, $gedname))) $auth = true;
+if ((($logtype == "gedlog") || ($logtype == "searchlog")) && (userGedcomAdmin(PGV_USER_ID, get_gedcom_from_id($gedname)))) $auth = true;
 
 if ($auth) {
 

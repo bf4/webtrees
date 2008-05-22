@@ -206,7 +206,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				print_how_many_people($level+1, $parent);
 			}
 		echo "<br />".$pgv_lang["gm_no_coord"];
-		if (userIsAdmin(getUserName()))
+		if (PGV_USER_IS_ADMIN)
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=".$levelm."&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
 		echo "</div></td>\");\n";
 	}

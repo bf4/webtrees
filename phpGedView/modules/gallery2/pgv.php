@@ -60,6 +60,8 @@ function mod_gallery2_load($uid)
 {
 	global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo, $pgv_lang;
 
+	$user_id=get_user_id($uid); // $uid is the gallery2 user-name, $user_id is the PGV user-id 
+
 	// Rebuild the url, just to be sure we have a clean one
 	$bits = parse_url($SERVER_URL);
 	if(isset($bits['query'])){$bits['query'] = "&{$bits['query']}";}else{$bits['query'] = '';}
@@ -81,7 +83,7 @@ function mod_gallery2_load($uid)
 		if($is_mapped && $is_mapped->getErrorCode() & ERROR_MISSING_OBJECT)
 		{
 			/* The user does not exist in G2 yet. Create in now on-the-fly */
-			$language = get_user_setting($uid, 'language');
+			$language = get_user_setting($user_id, 'language');
 			if($language)
 			{
 				$lang = $language_settings[$language]['lang_short_cut'];
@@ -92,17 +94,17 @@ function mod_gallery2_load($uid)
 			}
 			$create_user = GalleryEmbed::createUser($uid, array(
 				'username'			=> $uid,
-				'email'				=> get_user_setting($uid, 'email'),
-				'fullname'			=> getUserFullName($uid),
+				'email'				=> get_user_setting($user_id, 'email'),
+				'fullname'			=> getUserFullName($user_id),
 				'language'			=> $lang,
-				'hashedpassword'		=> get_user_password($uid),
+				'hashedpassword'		=> get_user_password($user_id),
 				'hashmethod'			=> 'crypt',
-				'creationtimestamp'		=> get_user_setting($uid, 'reg_timestamp')
+				'creationtimestamp'		=> get_user_setting($user_id, 'reg_timestamp')
 			));
 			if($create_user)
 			{
 				// Could not create the user, is it because the user already exists in g2?
-				list($not_mapped, $g2u) = GalleryCoreApi::fetchUserByUserName(get_user_setting($uid, 'username'));
+				list($not_mapped, $g2u) = GalleryCoreApi::fetchUserByUserName(get_user_setting($user_id, 'username'));
 				if($not_mapped)
 				{
 					print "{$pgv_lang['mod_gallery2_error_user_create']}<br />\n".$not_mapped->getAsHtml();
@@ -140,7 +142,7 @@ function mod_gallery2_load($uid)
 	}
 
 	// if admin, we need to add them to the admin group if not already added
-	if(userIsAdmin($uid) == 'Y')
+	if(userIsAdmin($user_id) == 'Y')
 	{
 		// This should be much faster the in the past after the first time loading for admins
 		list($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();

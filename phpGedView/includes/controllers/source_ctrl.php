@@ -108,7 +108,7 @@ class SourceControllerRoot extends BaseController {
 		}
 		
 		if ($this->source->canDisplayDetails()) {
-			$this->canedit = userCanEdit($this->uname);
+			$this->canedit = PGV_USER_CAN_EDIT;
 		}
 		
 		if ($this->show_changes=="yes" && $this->canedit) {

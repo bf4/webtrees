@@ -317,7 +317,7 @@ if (!file_exists($serverFilename)) {
 
 if (empty($controller->pid)) {
 	// the requested file IS NOT in the gedcom, but it exists (the check for fileExists was above) 
-	if (!userCanEdit() ) {
+	if (!PGV_USER_IS_ADMIN) {
 		// only show these files to admin users
 		// bail since current user is not admin
 		// Note: the 404 error status is still in effect. 

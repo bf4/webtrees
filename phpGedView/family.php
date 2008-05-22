@@ -111,7 +111,7 @@ $show_full = "1";
 					//$menu = $controller->getReportsMenu();
 					//$menu->printMenu();
 					endif; // reports
-					if (userCanEdit() && ($controller->display)) :
+					if (PGV_USER_CAN_EDIT && ($controller->display)) :
 					?>
 					</td>
 					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">

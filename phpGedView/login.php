@@ -61,26 +61,26 @@ if ($action=='login') {
 				$_SESSION['CLANGUAGE'] = $MyLanguage;
 			}
 		}
-		session_write_close();
 		
-		//-- section added based on UI feedback
-		// TODO: this block of code will never run, as the url will always have parameters ?pid=I123&ged=xyz.ged appended to it.  Has it ever worked?
-		if ($url=='individual.php') {
-			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-				if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
-					$pid = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
-					$ged = $ged_name;
-					break;
+		// If we have no access rights to the current gedcom, switch to one where we do
+		if (!userIsAdmin($user_id)) {
+			if (!userCanAccess($user_id, PGV_GED_ID)) {
+				foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+					if (userCanAccess($user_id, $ged_id)) {
+						$ged=$ged_name;
+						$url='index.php';
+						break;
+					}
 				}
 			}
-			if ($pid) {
-				$url = "individual.php?pid=".$pid;
-			} else {
-				//-- user does not have a pid?  Go to mygedview portal
-				$url = "index.php?ctype=user";
-			}
 		}
-		
+		session_write_close();
+
+		// If we've clicked login from the login page, we don't want to go back there.
+		if (substr($url, 0, 9)=='login.php') {
+			$url='index.php';
+		}
+			
 		$urlnew = $SERVER_URL;
 		if (substr($urlnew,-1,1)!="/") $urlnew .= "/";
 		$url = preg_replace("/logout=1/", "", $url);

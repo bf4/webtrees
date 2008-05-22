@@ -922,14 +922,14 @@ function get_last_private_data($gid) {
  * checks the current user and returns their privacy access level
  * @return int		their access level
  */
-function getUserAccessLevel() {
+function getUserAccessLevel($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $PRIV_PUBLIC, $PRIV_NONE, $PRIV_USER;
 
-	if (getUserId()) {
-		if (userGedcomAdmin()) {
+	if ($user_id) {
+		if (userGedcomAdmin($user_id, $ged_id)) {
 			return $PRIV_NONE;
 		} else {
-			if (userCanAccess()) {
+			if (userCanAccess($user_id, $ged_id)) {
 				return $PRIV_USER;
 			} else {
 				return $PRIV_PUBLIC;

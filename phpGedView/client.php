@@ -84,10 +84,6 @@ case 'connect':
 				print "SUCCESS\n".$stat;
 			}
 			$_SESSION['connected']=$user_id;
-			$canedit=userCanEdit($user_id);
-			if (!$canedit) {
-				AddToLog('Read-Only Client connection from '.$username);
-			}
 		} else {
 			addDebugLog($action." username=$username ERROR 10: Username and password key failed to authenticate.");
 			print "ERROR 10: Username and password key failed to authenticate.\n";

@@ -89,7 +89,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 					else if (preg_match("/1 SEX M/", $indirec)>0) $content .= "";
 					else $content .= "NN";
 					$content .= "\">";
-					if ($ctype=="user" || userIsAdmin()) $content .= $removeFavourite;
+					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
 					ob_start();
 					print_pedigree_person($favorite["gid"], $style, 1, $key);
 					$content .= ob_get_clean();
@@ -97,7 +97,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 				}
 				if ($favorite["type"]=="FAM") {
 					$content.="<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
-					if ($ctype=="user" || userIsAdmin()) {
+					if ($ctype=="user" || PGV_USER_IS_ADMIN) {
 						$content.=$removeFavourite;
 					}
 					$content.=format_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, '', 'span');
@@ -105,13 +105,13 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 				}
 				if ($favorite["type"]=="SOUR") {
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
-					if ($ctype=="user" || userIsAdmin()) $content .= $removeFavourite;
+					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
 					$content.=format_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], 'span');
 					$content .= PrintReady($favorite["note"]);
 				}
 				if ($favorite["type"]=="OBJE") {
 					$content .= "<div id=\"box".$favorite["gid"].".0\">";
-					if ($ctype=="user" || userIsAdmin()) $content .= $removeFavourite;
+					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
 					ob_start();
 					print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
 					$content .= ob_get_clean();

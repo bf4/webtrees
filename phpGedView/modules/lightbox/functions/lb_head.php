@@ -101,7 +101,7 @@ include('modules/lightbox/functions/lb_call_js.php');
         }		
 		
 		//Add a new multimedia object
-        if ( userCanEdit() ) {
+        if (PGV_USER_CAN_EDIT) {
 			if ($LB_AL_HEAD_LINKS == "both") {	
 				print "<td class=\"width20 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
@@ -126,7 +126,7 @@ include('modules/lightbox/functions/lb_call_js.php');
         }
 		
 		//Link to an existing item
-        if ( userCanEdit() ) {
+        if (PGV_USER_CAN_EDIT) {
 			if ($LB_AL_HEAD_LINKS == "both") {	
 				print "<td class=\"width20 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
@@ -161,7 +161,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 			$lbEditMode = 1;
 		}
 	
-        if ( userCanEdit() && $mediacnt!=0) {
+        if (PGV_USER_CAN_EDIT && $mediacnt!=0) {
 			if ($LB_AL_HEAD_LINKS == "both") {
  				print "<td class=\"width20 center wrap\" valign=\"top\">";
 	            print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";

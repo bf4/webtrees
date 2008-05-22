@@ -48,8 +48,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  * @return the user_id if sucessful, false otherwise
  */
 function authenticateUser($user_name, $password, $basic=false) {
-	global $GEDCOM, $pgv_lang;
-
 	checkTableExists();
 
 	// If we were already logged in, log out first
@@ -65,22 +63,8 @@ function authenticateUser($user_name, $password, $basic=false) {
 				//-- reset the user's session
 				$_SESSION = array();
 				$_SESSION['pgv_user'] = $user_id;
-				//-- unset the cookie_login session var to show that they have logged in with their password
+				// show that they have logged in with their password
 				$_SESSION['cookie_login'] = false;
-				if (isset($pgv_lang[get_user_setting($user_id, 'language')]))
-					$_SESSION['CLANGUAGE'] = get_user_setting($user_id, 'language');
-				//-- only change the gedcom if the user does not have an gedcom id
-				//-- for the currently active gedcom
-				if (get_user_gedcom_setting($user_id, PGV_GED_ID, 'gedcomid')=='') {
-					//-- if the user is not in the currently active gedcom then switch them
-					//-- to the first gedcom for which they have an ID
-					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-						if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
-							$_SESSION['GEDCOM']=$ged_name;
-							break;
-						}
-					}
-				}
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful");
 				return $user_id;
 			}
@@ -217,13 +201,10 @@ function getUserId() {
  * user has administrative privileges
  * to change the configuration files
  */
-function userIsAdmin($user_id=null) {
+function userIsAdmin($user_id=PGV_USER_ID) {
 	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true)
 		return false;
 
-	if (is_null($user_id))
-		$user_id=getUserId();
-	
 	return get_user_setting($user_id, 'canadmin')=='Y';
 	}
 
@@ -234,22 +215,11 @@ function userIsAdmin($user_id=null) {
  * user has administrative privileges
  * to change the configuration files for the currently active gedcom
  */
-function userGedcomAdmin($user_id=null, $ged="") {
-	global $GEDCOM;
-
+function userGedcomAdmin($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
 
-	if (is_null($user_id))
-		$user_id=getUserId();
-
-	if (get_user_setting($user_id, 'canadmin')=='Y')
-		return true;
-
-	if (empty($ged))
-		$ged = $GEDCOM;
-
-	return get_user_gedcom_setting($user_id, $ged, 'canedit')=='admin';
+	return userIsAdmin($user_id, $ged_id) || get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin';
 }
 
 /**
@@ -257,18 +227,16 @@ function userGedcomAdmin($user_id=null, $ged="") {
  *
  * takes a username and checks if the user has access privileges to view the private
  * gedcom data.
- * @param string $username the username of the user to check
+ * @param string $user_id the id of the user to check
+ * @param string $ged_id the id of the gedcom to check
  * @return boolean true if user can access false if they cannot
  */
-function userCanAccess() {
-	global $GEDCOM;
-	static $cache=null;
+function userCanAccess($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+	if (get_user_setting($user_id, 'canadmin')=='Y')
+		return true;
 
-	if (is_null($cache)) {
-		$user_id=getUserId();
-		$cache=get_user_setting($user_id, 'canadmin')=='Y' || get_user_gedcom_setting($user_id, $GEDCOM, 'canedit')!='none';
-	}
-	return $cache;
+	$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
+	return $tmp=='admin' || $tmp=='accept' || $tmp=='edit' || $tmp=='access';
 }
 
 /**
@@ -279,19 +247,16 @@ function userCanAccess() {
  * @param string $username the username of the user to check
  * @return boolean true if user can edit false if they cannot
  */
-function userCanEdit($user_id=null) {
-	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
+function userCanEdit($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+	global $ALLOW_EDIT_GEDCOM;
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
 
-	if (is_null($user_id))
-		$user_id=getUserId();
-
 	if (get_user_setting($user_id, 'canadmin')=='Y')
 		return true;
 
-	$tmp=get_user_gedcom_setting($user_id, $GEDCOM, 'canedit');
+	$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
 	return $tmp=='admin' || $tmp=='accept' || $tmp=='edit';
 }
 
@@ -303,22 +268,20 @@ function userCanEdit($user_id=null) {
  * @param string $username	the username of the user check privileges
  * @return boolean true if user can accept false if user cannot accept
  */
-function userCanAccept($user_id=null) {
-	global $ALLOW_EDIT_GEDCOM, $GEDCOM;
+function userCanAccept($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+	global $ALLOW_EDIT_GEDCOM;
 
 	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
 		return false;
 
-	if (is_null($user_id))
-		$user_id=getUserId();
-
+	// If we've disabled editing, an admin can still accept pending edits.
 	if (get_user_setting($user_id, 'canadmin')=='Y')
 		return true;
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
 	
-	$tmp=get_user_gedcom_setting($user_id, $GEDCOM, 'canedit');
+	$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
 	return $tmp=='admin' || $tmp=='accept';
 }
 
@@ -327,8 +290,8 @@ function userCanAccept($user_id=null) {
  * @param string $username	the user name of the user to check
  * @return boolean 		true if the changes should automatically be accepted
  */
-function userAutoAccept() {
-	return get_user_setting(getUserId(), 'auto_accept')=='Y';
+function userAutoAccept($user_id=PGV_USER_ID) {
+	return get_user_setting($user_id, 'auto_accept')=='Y';
 }
 
 /**
@@ -868,7 +831,7 @@ function addMessage($message) {
 	if (isset($message["from_name"]))
 		$message["body"] = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$message["body"];
 	//-- [ phpgedview-Feature Requests-1588353 ] Supress admin IP address in Outgoing PGV Email
-	if (!userIsAdmin($message["from"])) {
+	if (!userIsAdmin(get_user_id($message["from"]))) {
 		if (!empty($message["url"]))
 			$message["body"] .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
 		$message["body"] .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
