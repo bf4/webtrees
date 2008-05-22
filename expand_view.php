@@ -30,7 +30,7 @@ $pid = clean_input($pid);
 
 $indirec = find_person_record($pid);
 
-$skipfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO");
+$skipfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO","_PGV_OBJS");
 $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
 	  
 	  $f2 = 0;

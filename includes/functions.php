@@ -539,7 +539,7 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 			}
 		}
 		echo $fmt_msg;
-		AddToLog($log_msg);
+		if (function_exists('AddToLog')) AddToLog($log_msg);
 		if ($errno==1)
 			die();
 	}
@@ -1176,6 +1176,23 @@ function find_updated_record($gid, $gedfile="") {
 		return $change['undo'];
 	}
 	return "";
+}
+
+// Find out if there are any pending changes that a given user may accept
+function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+	global $pgv_changes;
+
+	if (!userCanAccept($user_id, $ged_id)) {
+		return false;
+	}
+
+	$gedcom=get_gedcom_from_id($ged_id);
+	foreach ($pgv_changes as $pgv_change) {
+		if ($pgv_change[0]['gedcom']==$gedcom) {
+			return true;
+		}
+	}
+	return false;
 }
 
 // ************************************************* START OF MULTIMEDIA FUNCTIONS ********************************* //

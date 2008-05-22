@@ -29,7 +29,7 @@ require 'config.php';
 
 // Extract request variables
 $mytheme =safe_GET('mytheme');
-$frompage=safe_GET('frompage', PGV_REGEX_NOSCRIPT, 'index.php');
+$frompage=safe_GET('frompage', PGV_REGEX_URL, 'index.php');
 
 // Only change to a valid theme
 foreach (get_theme_names() as $theme) {

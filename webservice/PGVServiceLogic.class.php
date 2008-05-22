@@ -261,7 +261,7 @@ class PGVServiceLogic extends GenealogyService
 	*/
 	function postAppendRecord($SID, $gedrec) {
 		if (!empty($gedrec)) {
-			if ((empty($_SESSION['readonly']))&&(userCanEdit())) {
+			if ((empty($_SESSION['readonly']))&& PGV_USER_CAN_EDIT) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$xref = append_gedrec($gedrec);
 				if ($xref) {
@@ -291,7 +291,7 @@ class PGVServiceLogic extends GenealogyService
 	function postDeleteRecord($SID, $RID)
 	{
 		if (!empty($RID)) {
-			if (((empty($_SESSION['readonly']))&&(userCanEdit()))&&(displayDetailsById($RID))) {
+			if (((empty($_SESSION['readonly']))&& PGV_USER_CAN_EDIT)&&(displayDetailsById($RID))) {
 				$success = delete_gedrec($RID);
 				if ($success) {
 					addDebugLog("delete RID=$RID SUCCESS");
@@ -324,7 +324,7 @@ class PGVServiceLogic extends GenealogyService
 		{
 			if (!empty($gedcom))
 			{
-				if (((empty($_SESSION['readonly']))&&(userCanEdit()))&&(displayDetailsById($RID)))
+				if (((empty($_SESSION['readonly']))&& PGV_USER_CAN_EDIT))&&(displayDetailsById($RID)))
 				{
 					$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedcom);
 					$success = replace_gedrec($RID, $gedrec);
@@ -1195,7 +1195,7 @@ class PGVServiceLogic extends GenealogyService
 		}
 		else if ($position=='new') {
 			//AddToLog("getXref position=new type=$type readonly=".$_SESSION['readonly']." username=".getUserName());
-			if ((empty($_SESSION['readonly']))&&(userCanEdit())) {
+			if ((empty($_SESSION['readonly']))&& PGV_USER_CAN_EDIT)) {
 				if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
 					addDebugLog("getXref type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER");
 					//print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";

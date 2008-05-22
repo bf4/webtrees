@@ -32,74 +32,67 @@
 #backprint {
 	display:none;
 }
-BODY {
-	COLOR: #000000;
-	background-color: #FFFFFF;
-	font-family: arial, Helvetica, sans-serif;
-	font-size: 12px;
-}
-A {
-	text-decoration: none;
-	font-family: arial, Helvetica, sans-serif, Verdana;
+body {
 	color: black;
-	}
-ul{
+	background-color: white;
+	font: 12px arial, helvetica, sans-serif;
+}
+a {
+	text-decoration: none;
+	font-family: arial, helvetica, verdana, sans-serif;
+	color: black;
+}
+ul {
 	padding-left: 15px;
 	padding-right: 15px;
 	margin: 8px;
 }
-.center { text-align: center; }
+.center {
+	text-align: center;
+}
 table.center {
  	margin-left: auto;
  	margin-right: auto;
 }
 
-TH {
-	font-weight: 100; }
+th {
+	font-weight: 100;
+}
 .button {
-	width: 60px
+	width: 60px;
 }
 .person_box {
-	font-family: Arial, sans-serif;
-	font-size: 10px;
-	border: solid #000000 1px;
-	 }
+	font: 10px arial, sans-serif;
+	border: solid black 1px;
+}
 .person_boxF {
-	font-family: Arial, sans-serif;
-	font-size: 10px;
-	border: solid #000000 1px;
-	}
+	font: 10px arial, sans-serif;
+	border: solid black 1px;
+}
 .person_boxNN {
-	font-family: Arial, sans-serif;
-	font-size: 10px;
-	border: solid #000000 1px;
-	}
+	font: 10px arial, sans-serif;
+	border: solid black 1px;
+}
 .list_table {
 }
 .list_label {
-	font-family: Arial, sans-serif;
-	font-size: 13px;
-	font-weight: bold;
+	font: bold 13px arial, sans-serif;
 	text-align: center;
 	white-space: nowrap;
 }
 .list_label_wrap {
-	font-family: Arial, sans-serif;
-	font-size: 13px;
-	font-weight: bold;
+	font: bold 13px arial, sans-serif;
 	text-align: center;
 }
 .list_value {
 	border: solid #C3DFFF 1px;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
+	font: 12px arial, sans-serif;
 	vertical-align: top;
 	white-space: nowrap;
 }
 .list_value_wrap {
 	border: solid #C3DFFF 1px;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
+	font: 12px arial, sans-serif;
 	vertical-align: top;
 }
 
@@ -108,65 +101,58 @@ TH {
 }
 .facts_table {
 	width: 99%;
-	 }
+}
 .facts_label {
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 12px;
-	padding: 4px 4px 4px 4px;
+	font: 12px verdana, helvetica, sans-serif;
+	padding: 4px;
 	width: 20%;
 	text-align: center;
-	}
+}
 .facts_label02 {
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 12px;
-	padding: 4px 4px 4px 4px;
+	font: bold 12px verdana, helvetica, sans-serif;
+	padding: 4px;
 	text-align: center;
-	font-weight: bold; }
+}
 .facts_label03 {
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 12px;
-	padding: 4px 4px 4px 4px;
+	font: bold 12px verdana, helvetica, sans-serif;
+	padding: 4px;
 	text-align: center;
-	font-weight: bold; }
+}
 .facts_value {
-	font-family: Arial, sans-serif;
-	font-size: 12px;
-	padding: 4px 4px 4px 4px;
+	font: 12px arial, sans-serif;
+	padding: 4px;
 }
 .facts_value02 {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	padding: 4px 4px 4px 4px;
-	}
+	font: 14px arial, sans-serif;
+	padding: 4px;
+}
 .facts_labelred {
 	border: solid red 2px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	padding: 4px 4px 4px 4px;
+	font: 14px arial, sans-serif;
+	padding: 4px;
 	width: 20%;
-	text-align: center; }
+	text-align: center;
+}
 .facts_valuered {
 	border: solid red 2px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	padding: 4px 4px 4px 4px;
-	}
+	font: 14px arial, sans-serif;
+	padding: 4px;
+}
 .facts_labelblue {
 	border: solid blue 2px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	padding: 4px 4px 4px 4px;
+	font: 14px arial, sans-serif;
+	padding: 4px;
 	width: 20%;
-	text-align: center; }
+	text-align: center;
+}
 .facts_valueblue {
 	border: solid blue 2px;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	padding: 4px 4px 4px 4px;
-	}
+	font: 14px arial, sans-serif;
+	padding: 4px;
+}
 .tabs_table {
 	width: 99%;
-	}
+}
 .tab_cell_active {
 	border-color: #FF6633;
 	border-width: 1px;
@@ -174,71 +160,82 @@ TH {
 	border-top-style: solid;
 	border-right-style: solid;
 	text-align: center;
-	font-weight: bold; }
+	font-weight: bold;
+}
 .tab_cell_inactive {
 	border-color: #FF6633;
 	border-width: 1px;
 	border-right-style: solid;
 	text-align: center;
-	font-weight: bold; }
+	font-weight: bold;
+}
 .tab_active_bottom {
-	border-top: none;
-	border-bottom: none;
-	border-left: none;
-	border-right: none;
-	height: 5px; }
+	border: none;
+	height: 5px;
+}
 .tab_inactive_bottom {
 	border-left: none;
 	border-right: none;
 	border-top: solid #FF6633 1px;
-	height: 5px; }
+	height: 5px;
+}
 .tab_inactive_bottom_right {
 	border-left: none;
 	border-right: none;
 	border-top: solid #FF6633 1px;
 	width: 35%;
-	height: 5px; }
+	height: 5px;
+}
 .name1 {
-	FONT: bold 10px verdana, helvetica, arial, sans-serif; }
+	font: bold 10px verdana, helvetica, arial, sans-serif;
+}
 .namered {
-  border: solid red 1px;
+	border: solid red 1px;
 }
 .nameblue {
-  border: solid blue 1px;
+	border: solid blue 1px;
 }
 .details1 {
-	FONT: 9px arial, helvetica, sans-serif;
-	text-decoration: none; }
+	font: 9px arial, helvetica, sans-serif;
+	text-decoration: none;
+}
 .name2 {
-	FONT: bold 11px verdana, helvetica, arial, sans-serif; }
+	font: bold 11px verdana, helvetica, arial, sans-serif;
+}
 .details2 {
-	FONT: 9px arial, helvetica, sans-serif;
-	text-decoration: none; }
+	font: 9px arial, helvetica, sans-serif;
+	text-decoration: none;
+}
 .nameZoom {
-	FONT: bold 16px verdana, helvetica, arial, sans-serif; }
+	font: bold 16px verdana, helvetica, arial, sans-serif;
+}
 .detailsZoom {
-	FONT: 13px arial, helvetica, sans-serif;
-	text-decoration: none; }
+	font: 13px arial, helvetica, sans-serif;
+	text-decoration: none;
+}
 
 .name_head {
-	FONT: bold 16px verdana, helvetica, arial, sans-serif;
-	letter-spacing: .2px; }
+	font: bold 16px verdana, helvetica, arial, sans-serif;
+	letter-spacing: .2px;
+}
 .error {
 	font-family: verdana, helvetica, arial, sans-serif;
 }
 .warning {
 	font-family: verdana, helvetica, arial, sans-serif;
-	font-weight: bold; }
+	font-weight: bold;
+}
 .indent {
 	padding-left: 7px;
-	}
+}
 .indent_rtl {
 	padding-right: 7px;
-	}
+}
 .image {
 	height: 150px;
 	padding: 5px;
-	border: solid black 1px; }
+	border: solid black 1px;
+}
 .gender_image {
 	height: 9px;
 	width: 9px;
@@ -251,10 +248,10 @@ TH {
 	margin-right: 3px;
 }
 .pedigree_image_portrait_rtl {
-    float: right;
-    height: 50px;
-    border: solid black 1px;
-    margin-left: 3px;
+	float: right;
+	height: 50px;
+	border: solid black 1px;
+	margin-left: 3px;
 }
 .pedigree_image_landscape {
 	float: left;
@@ -263,10 +260,10 @@ TH {
 	margin-right: 3px;
 }
 .pedigree_image_landscape_rtl {
-    float: right;
-    width: 50px;
-    border: solid black 1px;
-    margin-left: 3px;
+	float: right;
+	width: 50px;
+	border: solid black 1px;
+	margin-left: 3px;
 }
 .pedigree_form {
 	width: 60px;
@@ -283,17 +280,17 @@ TH {
 	text-align: center;
 }
 .sublinks_table {
-	border: solid #84beff 1px; }
+	border: solid #84BEFF 1px;
+}
 .sublinks_cell {
 	font-size: 11px;
 }
 .subheaders {
-	font-size: 16px;
-	font-weight: bold;
 	text-indent: 20px;
 	margin-top: 15px;
 	vertical-align: bottom;
-	font-family: Arial, sans-serif; }
+	font: bold 16px arial, sans-serif;
+}
 .age {
 	font-size: 9px;
 }
@@ -301,9 +298,9 @@ TH {
 	display: none;
 }
 .footer {
-	font-family: arial, Helvetica, sans-serif;
-	font-size: 12px;
-	width: 99%;}
+	font: 12px arial, helvetica, sans-serif;
+	width: 99%;
+}
 .contact_links {
 	text-align: center;
 }
@@ -318,55 +315,49 @@ TH {
 	margin-top: 3px;
 }
 .favorites_form {
-	margin-top: 0px;
+	margin-top: 0;
 }
 .help {
 	font-weight: bold;
 	cursor: help;
 }
 .menuitem {
-	FONT-SIZE: 11px;
-	FONT-FAMILY: Verdana, Helvetica, sans-serif;
+	font: 11px verdana, helvetica, sans-serif;
 	text-decoration: none;
 	text-align: center;
 	padding: 1px;
-	}
+}
 .menuitem_hover	{
-	FONT-SIZE: 11px;
-	FONT-FAMILY: Verdana, Helvetica, sans-serif;
+	font: 11px verdana, helvetica, sans-serif;
 	text-decoration: none;
 	text-align: center;
 	padding: 1px;
-	}
+}
 .submenu {
 	text-decoration: none;
-	font-family: Arial, sans-serif;
-	font-size: 11px;
+	font: 11px arial, sans-serif;
 	text-align: center;
-	border: solid #84beff 1px;
+	border: solid #84BEFF 1px;
 	white-space: nowrap;
-	}
+}
 .submenuitem {
-	FONT-SIZE: 11px;
-	FONT-FAMILY: Verdana, Helvetica, sans-serif;
-	FONT-WEIGHT: normal;
+	font: normal 11px verdana, helvetica, sans-serif;
 	text-decoration: none;
 	background-color: #ECF5FF;
 	white-space: nowrap;
 	text-align: left;
 	padding: 1px;
-	}
+}
 .submenuitem_hover	{
-	FONT-SIZE: 11px;
-	FONT-FAMILY: Verdana, Helvetica, sans-serif;
-	FONT-WEIGHT: normal;
+	font: normal 11px verdana, helvetica, sans-serif;
 	text-decoration: none;
-	background-color: #ffffff;
+	background-color: white;
 	white-space: nowrap;
 	text-align: left;
 	padding: 1px;
-	}
-.menuitem A {}
+}
+.menuitem a {
+}
 
 .current_day {
 	font-weight: bold;
@@ -383,22 +374,17 @@ TH {
 	font-weight: bold;
 }
 .helpheader {
-	font-family: Arial, sans-serif;
+	font: bold 16px arial, sans-serif;
 	color: black;
-	font-size: 16px;
-	font-weight: bold;
 }
 .helpstart {
-	font-family: Arial, sans-serif;
-	color: Blue;
-	font-size: 14px;
-	font-weight : bold;
+	font: bold 14px arial, sans-serif;
+	color: blue;
 	text-decoration : none;
 }
 .helptext {
-	font-family: Arial, sans-serif;
+	font: 12px arial, sans-serif;
 	color: black;
-	font-size: 12px;
 }
 
 #content {
@@ -413,14 +399,13 @@ TH {
 .small_inner_block {
 	height: 250px;
 	overflow: auto;
-	FONT: 10px times, times new roman, serif;
+	font: 10px times, "Times New Roman", serif;
 	text-decoration: none;
 }
 
 .block {
-	border: solid #84beff 1px;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
+	border: solid #84BEFF 1px;
+	font: 12px arial, sans-serif;
 	vertical-align: top;
 	margin: 1px;
 	padding: 1px;
@@ -452,59 +437,56 @@ TH {
 	height: 200px;
 }
 .news_title {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
+	font: bold 14px arial, sans-serif;
 }
 .news_date {
-	font-family: Arial, sans-serif;
-	font-size: 12px;
+	font: 12px arial, sans-serif;
 }
 
 /*-- pedigree chart specific stylesheets --*/
 #pedigree_chart {
 	position: absolute;
 	top: 120px;
-	left: 0px;
+	left: 0;
 }
 /*-- pedigree chart rtl specific stylesheets --*/
 #pedigree_chart_rtl {
 	position: absolute;
 	float: right;
 	top: 120px;
-	right: 0px;
+	right: 0;
 }
 
 /*-- descendancy chart specific stylesheets --*/
 #descendancy_chart ul {
 	border-left: thin solid #FF6633;
 	list-style: none;
-	margin: 0px 0px 5px 15px; /* top right bottom left */
-	padding: 0px 0px 0px auto; /* top right bottom left */
+	margin: 0 0 5px 15px; /* top right bottom left */
+	padding: 0; /* top right bottom left */
 }
 #descendancy_chart li {
 	list-style: none;
-	margin: 0px 0px 0px -16px; /* top right bottom left */
-	padding: 0px 0px 0px auto; /* top right bottom left */
+	margin: 0 0 0 -16px; /* top right bottom left */
+	padding: 0;
 }
 /*-- descendancy chart rtl specific stylesheets --*/
 #descendancy_chart_rtl ul {
 	border-right: thin solid #FF6633;
 	list-style: none;
-	margin: 0px 15px 5px 0px; /* top right bottom left */
-	padding: 0px auto 0px 0px; /* top right bottom left */
+	margin: 0 15px 5px 0; /* top right bottom left */
+	padding: 0;
 }
 #descendancy_chart_rtl li {
 	list-style: none;
-	margin: 0px -18px 0px 0px; /* top right bottom left */
-	padding: 0px 2px 0px 0px; /* top right bottom left */
+	margin: 0 -18px 0 0; /* top right bottom left */
+	padding: 0 2px 0 0; /* top right bottom left */
 }
 
 /*-- relationship chart specific stylesheets --*/
 #relationship_chart {
 	position: relative;
 	top: -40px;
-	left: 0px;
+	left: 0;
 }
 #relationship_chart_rtl {
 	position: relative;
@@ -515,86 +497,104 @@ TH {
 #ancestry_chart ul {
 	border-left: thin solid #FF6633;
 	list-style: none;
-	margin: 0px 0px 5px 15px; /* top right bottom left */
-	padding: 0px 0px 0px auto; /* top right bottom left */
+	margin: 0 0 5px 15px; /* top right bottom left */
+	padding: 0;
 }
 #ancestry_chart li {
 	list-style: none;
-	margin: 0px 0px 2px -15px; /* top right bottom left */
-	padding: 0px 0px 0px auto; /* top right bottom left */
+	margin: 0 0 2px -15px; /* top right bottom left */
+	padding: 0;
 }
 /*-- ancestry chart rtl specific stylesheets --*/
 #ancestry_chart_rtl ul {
 	border-right: thin solid #FF6633;
 	list-style: none;
-	margin: 0px 15px 0px 0px; /* top right bottom left */
-	padding: 0px auto 0px 0px; /* top right bottom left */
+	margin: 0 15px 0 0; /* top right bottom left */
+	padding: 0;
 }
 #ancestry_chart_rtl li {
 	list-style: none;
-	margin: 0px -18px 2px 0px; /* top right bottom left */
-	padding: 0px 2px 0px 0px; /* top right bottom left */
+	margin: 0 -18px 2px 0; /* top right bottom left */
+	padding: 0 2px 0 0; /* top right bottom left */
 }
 
 /*-- timeline chart specific styles --*/
 .timeline_table {
 }
-.person0	{
-	border: outset #84beff 1px;
+.person0 {
+	border: outset #84BEFF 1px;
 	vertical-align: top;
 	padding: 3px;
-	}
-.person1	{
+}
+.person1 {
 	border: outset #AAFFAA 1px;
 	vertical-align: top;
 	padding: 3px;
-	}
-.person2	{
+}
+.person2 {
 	border: outset #FFAAAA 1px;
 	vertical-align: top;
 	padding: 3px;
-	}
-.person3	{
+}
+.person3 {
 	border: outset #5555FF 1px;
 	vertical-align: top;
 	padding: 3px;
-	}
-.person4	{
+}
+.person4 {
 	border: outset #FF5555 1px;
 	vertical-align: top;
 	padding: 3px;
-	}
-.person5	{
+}
+.person5 {
 	border: outset #55FF55 1px;
 	vertical-align: top;
 	padding: 3px;
-	}
-
-.listlog	{
-	line-height: 20pt;
-	font-family: Arial, sans-serif;
-	}
-.barra  	{FONT-SIZE: 11px; FONT-FAMILY: Verdana, Helvetica, sans-serif; FONT-WEIGHT: normal}
-.blanco		{FONT-SIZE: 10px; FONT-FAMILY: Verdana, Helvetica, sans-serif; FONT-WEIGHT: bold}
-INPUT 		{BORDER-TOP-COLOR: #ffffff; BORDER-LEFT-COLOR: #ffffff; BORDER-RIGHT-COLOR: #000066; BORDER-BOTTOM-COLOR: #000066; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 10px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
-TEXTAREA	{BORDER-TOP-COLOR: #ffffff; BORDER-LEFT-COLOR: #ffffff; BORDER-RIGHT-COLOR: #000066; BORDER-BOTTOM-COLOR: #000066; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 10px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
-SELECT 		{BORDER-TOP-COLOR: #84beff; BORDER-LEFT-COLOR: #84beff; BORDER-RIGHT-COLOR: #84beff; BORDER-BOTTOM-COLOR: #84beff; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 10px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
-FORM 		{FONT-FAMILY: Verdana, Helvetica, san-serif; FONT-SIZE: 10px}
-H2       {FONT-FAMILY: arial, Helvetica, sans-serif; FONT-SIZE: 18px; FONT-WEIGHT: normal}
-.formField {
-	font-family: Arial, sans-serif;
-	font-size: 12px;
 }
 
-div#header, div#footer, .noprint {display:none !important;}
-form, button, input {display: none;} /* buttons and input are used out of forms in sortable tables*/
+.listlog {
+	line-height: 20pt;
+	font-family: arial, sans-serif;
+}
+.barra {
+	font: normal 11px verdana, helvetica, sans-serif;
+}
+.blanco {
+	font: bold 10px verdana, helvetica, sans-serif;
+}
+input, textarea {
+	border-color: white #000066 #000066 white;
+	border-width: 1px;
+	font: 10px verdana, helvetica, sans-serif;
+}
+select {
+	border-color: #84BEFF;
+	border-width: 1px;
+	font: 10px verdana, helvetica, sans-serif;
+}
+form {
+	font: 10px verdana, helvetica, sans-serif;
+}
+h2 {
+	font: normal 18px arial, helvetica, sans-serif;
+}
+.formField {
+	font: 12px arial, sans-serif;
+}
+
+div#header, div#footer, .noprint {
+	display:none !important;
+}
+form, button, input { /* buttons and input are used out of forms in sortable tables*/
+	display: none;
+}
 
 /*-- pseudo-class for fanchart : used on server-side to draw image --*/
 .fan_chart {
 	/*-- font-family must contain a server TTF file --*/
 	font-family: url(./includes/fonts/DejaVuSans.ttf);
 	font-size: 7px;
-	color: #000000;
+	color: black;
 	background-color : #EEEEEE;
 }
 .fan_chart_box {
@@ -605,7 +605,7 @@ form, button, input {display: none;} /* buttons and input are used out of forms 
 }
 /* Colors */
 .red {
-	color: #FF0000;
+	color: red;
 }
 
 /* Text direction */
@@ -617,17 +617,44 @@ form, button, input {display: none;} /* buttons and input are used out of forms 
 }
 
 /* Width settings */
+.width10 {
+	width: 10%;
+}
 .width20 {
 	width: 20%;
+}
+.width25 {
+	width: 25%;
+}
+.width30 {
+	width: 30%;
+}
+.width33 {
+	width: 33%;
 }
 .width40 {
 	width: 40%;
 }
+.width50 {
+	width: 50%;
+}
 .width60 {
 	width: 60%;
 }
+.width66 {
+	width: 66%;
+}
+.width70 {
+	width: 70%;
+}
+.width75 {
+	width: 75%;
+}
 .width80 {
 	width: 80%;
+}
+.width90 {
+	width: 90%;
 }
 .width100 {
 	width: 100%;
@@ -637,6 +664,10 @@ form, button, input {display: none;} /* buttons and input are used out of forms 
 .font11 {
 	font-size: 11px;
 }
+.font9 {
+	font-size: 9px;
+}
+
 .lifespan_outer {
 	position: relative; 
 	width: auto;

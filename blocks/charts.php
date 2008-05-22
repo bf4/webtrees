@@ -115,7 +115,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	$content = "";
 	$content .= "<script src=\"phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 	if ($show_full==0) {
-		$content .= '<span class="details2"><center>'.$pgv_lang['charts_click_box'].'</center></span><br />';
+		$content .= '<center><span class="details2">'.$pgv_lang['charts_click_box'].'</span></center><br />';
 	}
 	$content .= '<table cellspacing="0" cellpadding="0" border="0"><tr>';
 	if ($config['type']=='descendants' || $config['type']=='hourglass') {
@@ -148,7 +148,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$content .= "</td>";
 	}
 	$content .= "</tr></table>";
-	$content .= '<script type="text/javascript">
+	$content .= '<script language="JavaScript" type="text/javascript">
 		<!--
 		if (sizeLines) sizeLines();
 		//-->
@@ -162,7 +162,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	if ($block) {
 		print '<div class="small_inner_block">'.$content.'</div>';
 	} else {
-		print $content;
+		print '<div class="normal_inner_block">'.$content.'</div>';
 	}
 	print '</div></div>';
 	

@@ -36,7 +36,7 @@ mod_gallery2_run();
 function mod_gallery2_run()
 {
 	// load user and create a g2 user if required
-	mod_gallery2_load(getUserName());
+	mod_gallery2_load(getUserId());
 
 	$data = GalleryEmbed::handleRequest();
 	if($data['isDone']){exit;}
@@ -46,4 +46,3 @@ function mod_gallery2_run()
 	print_footer();
 	return true;
 }
-?>

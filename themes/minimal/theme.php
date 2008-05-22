@@ -2,8 +2,8 @@
 /**
  * Minimal theme
  *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * PhpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,16 +24,21 @@
  * @version $Id$
  */
 
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 $theme_name = "Minimal";		//-- the name of this theme
 
 $stylesheet = $THEME_DIR."style.css";	//-- CSS level 2 stylesheet to use
 $rtl_stylesheet = $THEME_DIR."style_rtl.css";	//-- CSS level 2 stylesheet to use
 $print_stylesheet = $THEME_DIR."print.css";	//-- CSS level 2 print stylesheet to use
-$toplinks = $THEME_DIR."toplinks.html";	//-- File to display the icons and links to different sections
-$headerfile = $THEME_DIR."header.html";	//-- Header information for the site
-$footerfile = $THEME_DIR."footer.html";	//-- Footer information for the site
-$print_footerfile = $THEME_DIR."print_footer.html";	//-- Print Preview Footer information for the site
-$print_headerfile = $THEME_DIR."print_header.html";	//-- Print Preview Header information for the site
+$toplinks = $THEME_DIR."toplinks.php";	//-- File to display the icons and links to different sections
+$headerfile = $THEME_DIR."header.php";	//-- Header information for the site
+$footerfile = $THEME_DIR."footer.php";	//-- Footer information for the site
+$print_footerfile = $THEME_DIR."print_footer.php";	//-- Print Preview Footer information for the site
+$print_headerfile = $THEME_DIR."print_header.php";	//-- Print Preview Header information for the site
 
 $PGV_USE_HELPIMG = false;		// set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
 

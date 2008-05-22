@@ -55,7 +55,6 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if (empty($show_full)) $show_full = 0;
 	if (empty($PEDIGREE_FULL_DETAILS)) $PEDIGREE_FULL_DETAILS = 0;
 
-	flush();
 	if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
 	// NOTE: Start div out-rand()
@@ -286,19 +285,19 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			$imgsize = findImageSize($object["file"]);
 			$imgwidth = $imgsize[0]+50;
 			$imgheight = $imgsize[1]+150;
-			
-//LBox --------  change for Lightbox Album --------------------------------------------
+		
+			//LBox --------  change for Lightbox Album --------------------------------------------
 			if (file_exists("modules/lightbox/album.php")) {
-				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" title=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">";
-// ---------------------------------------------------------------------------------------------
-
-			}elseif (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
+				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . ":" . $GEDCOM . ":" . PrintReady(htmlspecialchars($name)) . "\">";
+			}else
+			// ---------------------------------------------------------------------------------------------
+			
+			if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
 				print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
 			}else{
 				print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 			}
-
-			print "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
+			print "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".strip_tags($name)."\" ";
 			if (!$show_full) print " style=\"display: none;\"";
 			if ($imgsize) print " /></a>";
 			else print " />";
@@ -726,7 +725,6 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>'
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
 	echo $head, '</head>';
-	flush(); // Allow the browser to start fetching linked components right away
 	echo '<body id="body"';
 	if ($view=='preview') {
 		echo ' onbeforeprint="hidePrint();" onafterprint="showBack();"';
@@ -746,7 +744,6 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>'
 		include($print_headerfile);
 	}
 	echo '<!-- end header section --><!-- begin content section -->';
-	flush(); // Allow the browser to render the header while we're still generating the content
 }
 /**
  * print simple HTML header
@@ -895,7 +892,6 @@ function message(username, method, url, subject) {
 	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 	<?php
 	echo '</head>';
-	flush(); // Allow the browser to start fetching linked components right away
 	echo '<body style="margin:5px;" onload="loadHandler();">';
 }
 // -- print the html to close the page
@@ -906,7 +902,6 @@ function print_footer() {
 
 	if (!isset($footer_count)) $footer_count = 1;
 	else $footer_count++;
-	flush(); // Don't let a slow footer delay rendering of the main page
 	print "<!-- begin footer -->";
 	if ($view!="preview") {
 		include($footerfile);
@@ -925,7 +920,6 @@ function print_footer() {
 	if (function_exists("load_behaviour")) {
 		load_behaviour();  // @see function_print_lists.php
 	}
-	flush(); // Don't wait for external site before starting to render our own.
 	echo google_analytics();
 	echo '</body></html>';
 }

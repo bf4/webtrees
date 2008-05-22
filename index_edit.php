@@ -274,7 +274,7 @@ if ($action=="update") {
 
 if ($action=="clearcache") {
 	clearCache();
-	print "<span class=\"warning\">".$pgv_lang["clear_cache_succes"]."</span>";
+	print "<span class=\"warning\">".$pgv_lang["clear_cache_succes"]."</span><br /><br />";
 }
 
 if ($action=="configure" && isset($ublocks[$side][$index])) {

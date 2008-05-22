@@ -108,14 +108,14 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 							}
 							if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 							
-							// If Lightbox installed, open image with Lightbox
+							//LBox -- If Lightbox installed, open image with Lightbox
 							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$filename) || eregi("\.jpeg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ) { 
 								//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
 								print "<a 
 									href=\"" . $filename . "\" 
 									onmouseover=\"window.status='javascript:;'; return true;\" 
 									onmouseout=\"window.status=''; return true;\"
-									rel=\"clearbox[general]\" title=\"" . $controller->pid . ":" . $GEDCOM . ":" . PrintReady(htmlspecialchars($controller->mediaobject->getTitle())) . "\">" . "\n";	
+									rel=\"clearbox[general]\" rev=\"" . $controller->pid . ":" . $GEDCOM . ":" . PrintReady(htmlspecialchars($controller->mediaobject->getTitle())) . "\">" . "\n";	
 							}else{
 								//Else open image with the Image View Page
 								?>

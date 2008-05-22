@@ -106,12 +106,12 @@ if (count($GEDCOMS)>0) {
 		print_help_link("default_gedcom_help", "qm");
 		print $pgv_lang["DEFAULT_GEDCOM"]."&nbsp;";
 		print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
-		foreach($GEDCOMS as $gedc=>$gedarray) {
-			if (empty($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = $gedc;
-			print "<option value=\"".urlencode($gedc)."\"";
-			if ($DEFAULT_GEDCOM==$gedc) print " selected=\"selected\"";
+		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+			if (empty($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = $ged_name;
+			print "<option value=\"".urlencode($ged_name)."\"";
+			if ($DEFAULT_GEDCOM==$ged_name) print " selected=\"selected\"";
 			print " onclick=\"document.defaultform.submit();\">";
-			print PrintReady($gedarray["title"])."</option>";
+			print PrintReady(get_gedcom_setting($ged_id, 'title'))."</option>";
 		}
 		print "</select><br /><br />";
 	}
@@ -145,9 +145,9 @@ print "<table class=\"gedcom_table\">";
 $GedCount = 0;
 
 // Print the table of available GEDCOMs
-	foreach($GEDCOMS as $gedc=>$gedarray) {
-		if (userGedcomAdmin(PGV_USER_ID, $gedc)) {
-			if (empty($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = $gedc;
+	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		if (userGedcomAdmin(PGV_USER_ID, $ged_id)) {
+			if (empty($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = $ged_name;
 
 			// Row 0: Separator line
 			if ($GedCount!=0) {
@@ -163,12 +163,12 @@ $GedCount = 0;
 			print "<tr>";
 			print "<td colspan=\"1\" class=\"list_label\">".$pgv_lang["ged_title"]."</td>";
 			print "<td colspan=\"5\" class=\"list_value_wrap\">";
-			if ($DEFAULT_GEDCOM==$gedc) print "<span class=\"label\">";
-			print PrintReady($gedarray["title"])."&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$gedarray["id"].")" . getRLM();
-			else print getLRM() . "(".$gedarray["id"].")" . getLRM();
-			if ($DEFAULT_GEDCOM==$gedc) print "</span>";
-			print "&nbsp;&nbsp;<a href=\"editconfig_gedcom.php?source=replace_form&amp;path=".urlencode($gedarray['path'])."\">".$pgv_lang['upload_replacement']."</a>\n";
+			if ($DEFAULT_GEDCOM==$ged_name) print "<span class=\"label\">";
+			print PrintReady(get_gedcom_setting($ged_id, 'title'))."&nbsp;&nbsp;";
+			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$ged_id.")" . getRLM();
+			else print getLRM() . "(".$ged_id.")" . getLRM();
+			if ($DEFAULT_GEDCOM==$ged_name) print "</span>";
+			print "&nbsp;&nbsp;<a href=\"editconfig_gedcom.php?source=replace_form&amp;path=".urlencode(get_gedcom_setting($ged_id, 'path'))."\">".$pgv_lang['upload_replacement']."</a>\n";
 			print "</td>";
 			print "</tr>";
 
@@ -180,47 +180,47 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 2 (file name & notices)
-			if (file_exists($gedarray["path"])) {
-				if ($TEXT_DIRECTION=="ltr") print $gedarray["path"]." (";
-				else print getLRM() . $gedarray["path"]." " . getRLM() . "(";
-				printf("%.2fKb", (filesize($gedarray["path"])/1024));
+			if (file_exists(get_gedcom_setting($ged_id, 'path'))) {
+				if ($TEXT_DIRECTION=="ltr") print get_gedcom_setting($ged_id, 'path')." (";
+				else print getLRM() . get_gedcom_setting($ged_id, 'path')." " . getRLM() . "(";
+				printf("%.2fKb", (filesize(get_gedcom_setting($ged_id, 'path'))/1024));
 				print ")";
 				/** deactivate [ 1573749 ]
 				 * -- activating based on a request parameter instead of a config parameter
 				 */
 				if(!empty($_REQUEST['check_download'])){
-					$url = check_gedcom_downloadable($gedarray["path"]);
+					$url = check_gedcom_downloadable(get_gedcom_setting($ged_id, 'path'));
 					if ($url!==false) {
 						print "<br />\n";
 						print "<span class=\"error\">".$pgv_lang["gedcom_downloadable"]." :</span>";
 						print "<br /><a href=\"$url\">$url</a>";
 					}
-					else print "<br /><b>".str_replace("#GEDCOM#", $gedarray["path"], $pgv_lang['gedcom_download_secure'])."</b><br />";
+					else print "<br /><b>".str_replace("#GEDCOM#", get_gedcom_setting($ged_id, 'path'), $pgv_lang['gedcom_download_secure'])."</b><br />";
 				}
 			}
 			else print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span>";
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 3  (Import action)
-			print "<a href=\"uploadgedcom.php?GEDFILENAME=$gedc&amp;verify=verify_gedcom&amp;action=add_form&amp;import_existing=1\">".$pgv_lang["ged_import"]."</a>";
-			if (!check_for_import($gedc)) {
+			print "<a href=\"uploadgedcom.php?GEDFILENAME=$ged_name&amp;verify=verify_gedcom&amp;action=add_form&amp;import_existing=1\">".$pgv_lang["ged_import"]."</a>";
+			if (!check_for_import($ged_name)) {
 				print "<br /><span class=\"error\">".$pgv_lang["gedcom_not_imported"]."</span>";
 			}
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 4  (Delete action)
-			print "<a href=\"editgedcoms.php?action=delete&amp;ged=".urlencode($gedc)."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".preg_replace("/'/", "\'", $gedc)."?');\">".$pgv_lang["delete"]."</a>";
+			print "<a href=\"editgedcoms.php?action=delete&amp;ged=".urlencode($ged_name)."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".preg_replace("/'/", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 5  (Download action)
-			print "<a href=\"downloadgedcom.php?ged=$gedc\">".$pgv_lang["ged_download"]."</a>";
+			print "<a href=\"downloadgedcom.php?ged=$ged_name\">".$pgv_lang["ged_download"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 6  (Check action)
-			print "<a href=\"gedcheck.php?ged=$gedc\">".$pgv_lang["ged_check"]."</a>";
+			print "<a href=\"gedcheck.php?ged=$ged_name\">".$pgv_lang["ged_check"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
@@ -234,11 +234,11 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 2  (file name & notices)
-			print getLRM() . $gedarray["config"];
+			print getLRM() . get_gedcom_setting($ged_id, 'config');
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 3  (Edit action)
-			print "<a href=\"editconfig_gedcom.php?ged=".urlencode($gedc)."\">".$pgv_lang["edit"]."</a>";
+			print "<a href=\"editconfig_gedcom.php?ged=".urlencode($ged_name)."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
 			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
@@ -253,11 +253,11 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 2  (file name & notices)
-			print getLRM() . $gedarray["privacy"];
+			print getLRM() . get_gedcom_setting($ged_id, 'privacy');
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 3  (Edit action)
-			print "<a href=\"edit_privacy.php?action=edit&amp;ged=".urlencode($gedc)."\">".$pgv_lang["edit"]."</a>";
+			print "<a href=\"edit_privacy.php?ged=".urlencode($ged_name)."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
 			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
@@ -272,7 +272,7 @@ $GedCount = 0;
 			print "</td>";
 
 			unset($SEARCHLOG_CREATE);
-			if (file_exists($gedarray["config"])) require($gedarray["config"]);
+			if (file_exists(get_gedcom_setting($ged_id, 'config'))) require(get_gedcom_setting($ged_id, 'config'));
 			print "<td valign=\"top\">";		// Column 2  (notices)
 			if (!isset($SEARCHLOG_CREATE)) {
 				print getLRM() . $pgv_lang["none"];
@@ -290,7 +290,7 @@ $GedCount = 0;
 			$dir_var = opendir ($INDEX_DIRECTORY);
 			while ($file = readdir ($dir_var))
 			{
-				if ((strpos($file, ".log") > 0) && (strstr($file, "srch-".$gedc) !== false )) {$dir_array[$file_nr] = $file; $file_nr++;}
+				if ((strpos($file, ".log") > 0) && (strstr($file, "srch-".$ged_name) !== false )) {$dir_array[$file_nr] = $file; $file_nr++;}
 			}
 			closedir($dir_var);
 			$d_logfile_str  = "<form name=\"logform\" action=\"editgedcoms.php\" method=\"post\">";
@@ -325,7 +325,7 @@ $GedCount = 0;
 			print "</td>";
 
 			unset($CHANGELOG_CREATE);
-			if (file_exists($gedarray["config"])) require($gedarray["config"]);
+			if (file_exists(get_gedcom_setting($ged_id, 'config'))) require(get_gedcom_setting($ged_id, 'config'));
 			print "<td valign=\"top\">";		// Column 2  (notices)
 			if (!isset($CHANGELOG_CREATE)) {
 				print getLRM() . $pgv_lang["none"];
@@ -343,7 +343,7 @@ $GedCount = 0;
 			$dir_var = opendir ($INDEX_DIRECTORY);
 			while ($file = readdir ($dir_var))
 			{
-				if ((strpos($file, ".log") > 0) && (strstr($file, "ged-".$gedc) !== false )) {$dir_array[$file_nr] = $file; $file_nr++;}
+				if ((strpos($file, ".log") > 0) && (strstr($file, "ged-".$ged_name) !== false )) {$dir_array[$file_nr] = $file; $file_nr++;}
 			}
 			closedir($dir_var);
 			$d_logfile_str  = "<form name=\"logform2\" action=\"editgedcoms.php\" method=\"post\">";
