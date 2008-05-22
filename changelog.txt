@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Lightbox: - Fixed Firefox dragNdrop erroneous initial displacement when in zoom mode (windmillway)
  - Fixed: [ 1940401 ] GEDCOM changes notification  (fisharebest)
  - Fixed: [ 1764343 ] login after login (fisharebest)
  - Fixed: [ 1774725 ] problem in login in site with several Gedcoms (fisharebest)

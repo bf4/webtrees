@@ -1914,8 +1914,11 @@ dragDrop = {
 			dragDrop.startX = (obj.offsetLeft+(CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
 			dragDrop.startY = ((obj.offsetTop-document.documentElement.scrollTop)+(CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
 		}else{
-			dragDrop.startX = (obj.offsetLeft)+CB_ieRPBug ;
-			dragDrop.startY = (obj.offsetTop)+CB_ieRPBug ;
+		//	dragDrop.startX = (obj.offsetLeft)+CB_ieRPBug ;
+		//	dragDrop.startY = (obj.offsetTop)+CB_ieRPBug ;
+			dragDrop.startX = (obj.offsetLeft+(CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+			dragDrop.startY = ((obj.offsetTop-document.documentElement.scrollTop)+(CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+
 		}
         dragDrop.draggedObject = obj;
         obj.className += ' dragged';
