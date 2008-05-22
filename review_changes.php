@@ -43,33 +43,39 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  */
 function review_changes_block($block = true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	global $pgv_changes, $LAST_CHANGE_EMAIL, $ALLOW_EDIT_GEDCOM, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
+	global $pgv_changes, $LAST_CHANGE_EMAIL, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
-
-	if (!$ALLOW_EDIT_GEDCOM) return;
 
 	if (empty($config)) $config = $PGV_BLOCKS["review_changes_block"]["config"];
 
-	if (count($pgv_changes) > 0) {
+	if ($pgv_changes) {
 		if (!isset($LAST_CHANGE_EMAIL)) $LAST_CHANGE_EMAIL = 0;
 		//-- if the time difference from the last email is greater than 24 hours then send out another email
 		if (time()-$LAST_CHANGE_EMAIL > (60*60*24*$config["days"])) {
 			$LAST_CHANGE_EMAIL = time();
 			write_changes();
 			if ($config["sendmail"]=="yes") {
-				foreach(get_all_users() as $user_id=>$user_name) {
-					if (userCanAccept($user_id)) {
-						//-- send message
-						$message = array();
-						$message["to"]=$user_name;
-						$message["from"] = $PHPGEDVIEW_EMAIL;
-						$message["subject"] = $pgv_lang["review_changes_subject"];
-						$message["body"] = $pgv_lang["review_changes_body"];
-						$message["method"] = get_user_setting($user_id,'contactmethod');
-						$message["url"] = basename($SCRIPT_NAME)."?".$QUERY_STRING;
-						$message["no_from"] = true;
-						addMessage($message);
+				// Which users have pending changes?
+				$users_with_changes=array();
+				foreach (get_all_users() as $user_id=>$user_name) {
+					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+						if (exists_pending_change($user_id, $ged_id)) {
+							$users_with_changes[$user_id]=$user_name;
+							break;
+						}
 					}
+				}
+				foreach ($users_with_changes as $user_id=>$user_name) {
+					//-- send message
+					$message = array();
+					$message["to"]=$user_name;
+					$message["from"] = $PHPGEDVIEW_EMAIL;
+					$message["subject"] = $pgv_lang["review_changes_subject"];
+					$message["body"] = $pgv_lang["review_changes_body"];
+					$message["method"] = get_user_setting($user_id, 'contactmethod');
+					$message["url"] = basename($SCRIPT_NAME)."?".$QUERY_STRING;
+					$message["no_from"] = true;
+					addMessage($message);
 				}
 			}
 		}
@@ -90,12 +96,14 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			$title .= $pgv_lang["review_changes"];
 				
 			$content = "";
-			if (userCanAccept()) $content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />";
+			if (PGV_USER_CAN_ACCEPT) {
+				$content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />";
+			}
 			if ($config["sendmail"]=="yes") {
 				$content .= $pgv_lang["last_email_sent"].format_timestamp($LAST_CHANGE_EMAIL)."<br />";
 				$content .= $pgv_lang["next_email_sent"].format_timestamp($LAST_CHANGE_EMAIL+(60*60*24*$config["days"]))."<br /><br />";
 			}
-			foreach($pgv_changes as $cid=>$changes) {
+			foreach ($pgv_changes as $cid=>$changes) {
 				$change = $changes[count($changes)-1];
 				if ($change["gedcom"]==$GEDCOM) {
 					$gedrec = find_updated_record($change["gid"]);
@@ -133,7 +141,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					if ($block) $content .= "<br />";
 					if ($type=="INDI") $content .= " <a href=\"individual.php?pid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a><br />";
 					if ($type=="FAM") $content .= " <a href=\"family.php?famid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a><br />";
-					if (($type=="SOUR") && ($SHOW_SOURCES>=getUserAccessLevel())) $content .= " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a><br />";
+					if (($type=="SOUR") && ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL)) $content .= " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a><br />";
 				}
 			}
 
