@@ -10,6 +10,9 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1940401 ] GEDCOM changes notification  (fisharebest)
+ - Fixed: [ 1764343 ] login after login (fisharebest)
+ - Fixed: [ 1774725 ] problem in login in site with several Gedcoms (fisharebest)
  - Changed: Lightbox: - Preparation for the Media sort feature (Which I hope to have out soon) (windmillway)
  - Changed: Lightbox: - Fix suppression of FF browser tooltip, personal Facts tooltip info etc (windmillway)  
  - Added: Google Maps - use google geocode engine (wooc)

@@ -916,12 +916,12 @@ define('PGV_GED_ID',            get_id_from_gedcom(PGV_GEDCOM));
 define('PGV_USER_ID',           getUserId  ());
 define('PGV_USER_NAME',         getUserName());
 define('PGV_USER_IS_ADMIN',     userIsAdmin       (PGV_USER_ID));
-define('PGV_USER_GEDCOM_ADMIN', userGedcomAdmin   (PGV_USER_ID));
-define('PGV_USER_CAN_ACCESS',   userCanAccess     (PGV_USER_ID));
-define('PGV_USER_CAN_EDIT',     userCanEdit       (PGV_USER_ID));
-define('PGV_USER_CAN_ACCEPT',   userCanAccept     (PGV_USER_ID));
+define('PGV_USER_GEDCOM_ADMIN', userGedcomAdmin   (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_ACCESS',   userCanAccess     (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_EDIT',     userCanEdit       (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_ACCEPT',   userCanAccept     (PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
-define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID));
+define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
 define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
 
