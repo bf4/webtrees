@@ -1,5 +1,12 @@
+/*
+ * @version $Id$
+ */
 .small_inner_block {
 	height: expression( this.scrollHeight > 179 ? "180px" : "auto" ); 
+}
+
+.normal_inner_block {
+	width: 100%;
 }
 
 /* 
@@ -11,11 +18,13 @@
 }
 
 .dimflag {
-	filter: alpha(opacity=40);
+	filter: alpha(opacity=50);
 }
+
 .rela {
 	filter: alpha(opacity=67);
 }
+
 a.showit:hover span {
 	filter: alpha(opacity=85);
 }
