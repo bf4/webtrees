@@ -275,7 +275,7 @@ function get_last_xref($type, $ged_id=PGV_GED_ID) {
 function get_next_xref($pid, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX, $DBCONN;
 
-	$type=id_type($pid);
+	$type=gedcom_record_type($pid, $ged_id);
 	$pid=$DBCONN->escapeSimple($pid);
 	switch ($type) {
 	case "INDI":
@@ -304,7 +304,7 @@ function get_next_xref($pid, $ged_id=PGV_GED_ID) {
 function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX, $DBCONN;
 
-	$type=id_type($pid);
+	$type=gedcom_record_type($pid, $ged_id);
 	$pid=$DBCONN->escapeSimple($pid);
 	switch ($type) {
 	case "INDI":
@@ -578,6 +578,26 @@ function find_gedcom_record($pid, $gedfile='') {
 
 	// Record doesn't exist
 	return null;
+}
+
+// Find the type of a gedcom record. Check the cache before querying the database.
+// Returns 'INDI', 'FAM', etc., or null if the record does not exist.
+function gedcom_record_type($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN, $TOTAL_QUERIES, $gedcom_record_cache;
+
+	if (isset($gedcom_record_cache[$xref][$ged_id])) {
+		return $gedcom_record_cache[$xref][$ged_id]->getType();
+	} else {
+		++$TOTAL_QUERIES;
+		$xref=$DBCONN->escapeSimple($xref);
+		return $DBCONN->getOne(
+			"SELECT 'INDI' FROM {$TBLPREFIX}individuals WHERE i_id   ='{$xref}' AND i_file   ={$ged_id} UNION ALL ".
+			"SELECT 'FAM'  FROM {$TBLPREFIX}families    WHERE f_id   ='{$xref}' AND f_file   ={$ged_id} UNION ALL ".
+			"SELECT 'SOUR' FROM {$TBLPREFIX}sources     WHERE s_id   ='{$xref}' AND s_file   ={$ged_id} UNION ALL ".
+			"SELECT 'OBJE' FROM {$TBLPREFIX}media       WHERE m_media='{$xref}' AND m_gedfile={$ged_id} UNION ALL ".
+			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   ='{$xref}' AND o_file   ={$ged_id}"
+		);
+	}
 }
 
 /**
@@ -2287,7 +2307,7 @@ function get_media_list() {
 			$pt = preg_match("/\d _THUM (.*)/", $mediarec, $match);
 			if ($pt>0)
 				$isthumb = trim($match[1]);
-			$medialinks[$ct][$rowmm["mm_gid"]] = id_type($rowmm["mm_gid"]);
+			$medialinks[$ct][$rowmm["mm_gid"]] = gedcom_record_type($rowmm["mm_gid"], PGV_GED_ID);
 			$links = $medialinks[$ct];
 			if (!isset($foundlist[$filename])) {
 				$media = array();

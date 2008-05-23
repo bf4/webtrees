@@ -3388,18 +3388,6 @@ function has_utf8($string) {
 }
 
 /**
- * Determine the type of ID
- * @param string $id
- */
-function id_type($id) {
-	if (preg_match('/^0 @.*@ (\w+)/', find_gedcom_record($id), $match)) {
-		return $match[1];
-	} else {
-		return null;
-	}
-}
-
-/**
  * check file in
  * @param  string  $logline  Log message
  * @param  string  $filename Filename
