@@ -126,6 +126,7 @@ class Person extends GedcomRecord {
 			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
 		}
 		// Store the record in the cache
+		$person->ged_id=$ged_id;
 		$gedcom_record_cache[$pid][$ged_id]=&$person;
 		return $person;
 	}

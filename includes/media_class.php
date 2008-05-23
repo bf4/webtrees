@@ -97,6 +97,7 @@ class Media extends GedcomRecord {
 		$obje = new Media($gedrec, $simple);
 		if (!empty($fromfile)) $obje->setChanged(true);
 		// Store the object in the cache
+		$obje->ged_id=$ged_id;
 		$gedcom_record_cache[$pid][$ged_id]=&$obje;
 		return $obje;
 	}
