@@ -396,7 +396,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				print_address_structure($factrec, 1);
 			}
 			// -- Enhanced ASSOciates > RELAtionship
-			print_asso_rela_record($pid, $factrec, true, id_type($pid));
+			print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
 //			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];			
@@ -1625,7 +1625,7 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 		} else
 			$factyear=0;
 		$joe = null;
-		if (id_type($pid)=='INDI') $joe = Person::getInstance($pid);
+		if (gedcom_record_type($pid, PGV_GED_ID)=='INDI') $joe = Person::getInstance($pid);
 		$sexcheck = "";
 		if (!is_null($joe)) {
 			$sex = $joe->getSex();
