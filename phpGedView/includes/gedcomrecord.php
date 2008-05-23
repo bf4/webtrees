@@ -208,7 +208,7 @@ class GedcomRecord {
 	 * @param GedcomRecord $obj
 	 */
 	function equals(&$obj) {
-		return !is_null($obj) && $this->xref==$obj->getXref() && $this->ged_id==$obj->ged_id;
+		return !is_null($obj) && $this->xref==$obj->getXref();
 	}
 
 	/**
