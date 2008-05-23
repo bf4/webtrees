@@ -281,18 +281,24 @@ $factarray["_BURI_SPOU"] = "Burial of spouse";
 $factarray["_CREM_SPOU"] = "Cremation of spouse";
 
 $factarray["_BIRT_CHIL"] = "Birth of a child";
+$factarray["_CHR_CHIL" ] = "Christening of a child";
+$factarray["_BAPM_CHIL"] = "Baptism of a child";
 $factarray["_MARR_CHIL"] = "Marriage of a child";
 $factarray["_DEAT_CHIL"] = "Death of a child";
 $factarray["_BURI_CHIL"] = "Burial of a child";
 $factarray["_CREM_CHIL"] = "Cremation of a child";
 
 $factarray["_BIRT_GCHI"] = "Birth of a grandchild";
+$factarray["_CHR_GCHI" ] = "Christening of a grandchild";
+$factarray["_BAPM_GCHI"] = "Baptism of a grandchild";
 $factarray["_MARR_GCHI"] = "Marriage of a grandchild";
 $factarray["_DEAT_GCHI"] = "Death of a grandchild";
 $factarray["_BURI_GCHI"] = "Burial of a grandchild";
 $factarray["_CREM_GCHI"] = "Cremation of a grandchild";
 
 $factarray["_BIRT_GGCH"] = "Birth of a great-grandchild";
+$factarray["_CHR_GGCH" ] = "Christening of a great-grandchild";
+$factarray["_BAPM_GGCH"] = "Baptism of a great-grandchild";
 $factarray["_MARR_GGCH"] = "Marriage of a great-grandchild";
 $factarray["_DEAT_GGCH"] = "Death of a great-grandchild";
 $factarray["_BURI_GGCH"] = "Burial of a great-grandchild";

@@ -45,6 +45,15 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$factarray["_CHR_CHIL"]							30 April 2008			A
++$factarray["_CHR_GCHI"]							30 April 2008			A
++$factarray["_CHR_GGCH"]							30 April 2008			A
++$factarray["_BAPM_CHIL"]							30 April 2008			A
++$factarray["_BAPM_GCHI"]							30 April 2008			A
++$factarray["_BAPM_GGCH"]							30 April 2008			A
++$factarray["_ADOP_CHIL"]							30 April 2008			A
++$factarray["_ADOP_GCHI"]							30 April 2008			A
++$factarray["_ADOP_GGCH"]							30 April 2008			A
 +$factarray["_BURI_SPOU"]							30 April 2008			A
 +$factarray["_CREM_SPOU"]							30 April 2008			A
 +$factarray["_BURI_CHIL"]							30 April 2008			A
