@@ -86,6 +86,7 @@ class Source extends GedcomRecord {
 		$source = new Source($sourcerec, $simple);
 		if (!empty($fromfile)) $source->setChanged(true);
 		// Store the object in the cache
+		$source->ged_id=$ged_id;
 		$gedcom_record_cache[$pid][$ged_id]=&$source;
 		return $source;
 	}

@@ -83,6 +83,7 @@ class Repository extends GedcomRecord {
 		$repository = new Repository($repositoryrec, $simple);
 		if (!empty($fromfile)) $repository->setChanged(true);
 		// Store the object in the cache
+		$repository->ged_id=$ged_id;
 		$gedcom_record_cache[$pid][$ged_id]=&$repository;
 		return $repository;
 	}
