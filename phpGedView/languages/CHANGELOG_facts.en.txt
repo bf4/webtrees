@@ -45,15 +45,33 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
-+$factarray["_CHR_CHIL"]							30 April 2008			A
-+$factarray["_CHR_GCHI"]							30 April 2008			A
-+$factarray["_CHR_GGCH"]							30 April 2008			A
-+$factarray["_BAPM_CHIL"]							30 April 2008			A
-+$factarray["_BAPM_GCHI"]							30 April 2008			A
-+$factarray["_BAPM_GGCH"]							30 April 2008			A
-+$factarray["_ADOP_CHIL"]							30 April 2008			A
-+$factarray["_ADOP_GCHI"]							30 April 2008			A
-+$factarray["_ADOP_GGCH"]							30 April 2008			A
++$factarray["_CHR_SIBL"]							23 May 2008  			A
++$factarray["_BAPM_SIBL"]							23 May 2008  			A
++$factarray["_ADOP_SIBL"]							23 May 2008  			A
++$factarray["_CHR_HSIB"]							23 May 2008  			A
++$factarray["_BAPM_HSIB"]							23 May 2008  			A
++$factarray["_ADOP_HSIB"]							23 May 2008  			A
++$factarray["_CHR_NEPH"]							23 May 2008  			A
++$factarray["_BAPM_NEPH"]							23 May 2008  			A
++$factarray["_ADOP_NEPH"]							23 May 2008  			A
++$factarray["_CHR_MSIB"]							23 May 2008  			A
++$factarray["_BAPM_MSIB"]							23 May 2008  			A
++$factarray["_ADOP_MSIB"]							23 May 2008  			A
++$factarray["_CHR_HSIB"]							23 May 2008  			A
++$factarray["_BAPM_COUS"]							23 May 2008  			A
++$factarray["_ADOP_COUS"]							23 May 2008  			A
++$factarray["_CHR_COUS"]							23 May 2008  			A
++$factarray["_BAPM_HSIB"]							23 May 2008  			A
++$factarray["_ADOP_HSIB"]							23 May 2008  			A
++$factarray["_CHR_CHIL"]							23 May 2008  			A
++$factarray["_CHR_GCHI"]							23 May 2008  			A
++$factarray["_CHR_GGCH"]							23 May 2008  			A
++$factarray["_BAPM_CHIL"]							23 May 2008  			A
++$factarray["_BAPM_GCHI"]							23 May 2008  			A
++$factarray["_BAPM_GGCH"]							23 May 2008  			A
++$factarray["_ADOP_CHIL"]							23 May 2008  			A
++$factarray["_ADOP_GCHI"]							23 May 2008  			A
++$factarray["_ADOP_GGCH"]							23 May 2008  			A
 +$factarray["_BURI_SPOU"]							30 April 2008			A
 +$factarray["_CREM_SPOU"]							30 April 2008			A
 +$factarray["_BURI_CHIL"]							30 April 2008			A
