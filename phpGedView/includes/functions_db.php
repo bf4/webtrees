@@ -3547,8 +3547,6 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 				else
 					$year_regex="0*".$row[6];
 				$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
-				// Since we'll probably use this record later (in an indi list, etc.), insert it into the cache
-				global $gedcom_record_cache; $gedcom_record_cache[$row[0]][$ged_id]=$row[2]=='INDI' ? new Person($row[1]) : new Family($row[1]);
 				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 						$date=new GedcomDate($match[1]);
@@ -3627,8 +3625,6 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 			else
 				$year_regex="0*".$row[6];
 			$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
-			// Since we'll probably use this record later (in an indi list, etc.), insert it into the cache
-			global $gedcom_record_cache; $gedcom_record_cache[$row[0]][$ged_id]=$row[2]=='INDI' ? new Person($row[1]) : new Family($row[1]);
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 					$date=new GedcomDate($match[1]);
