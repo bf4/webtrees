@@ -45,6 +45,15 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$factarray["__BRTM_CHIL"]							24 May 2008				A
++$factarray["__BRTM_GCHI"]							24 May 2008				A
++$factarray["__BRTM_GGCH"]							24 May 2008				A
++$factarray["__BRTM_SIBL"]							24 May 2008				A
++$factarray["__BRTM_HSIB"]							24 May 2008				A
++$factarray["__BRTM_NEPH"]							24 May 2008				A
++$factarray["__BRTM_FSIB"]							24 May 2008				A
++$factarray["__BRTM_MSIB"]							24 May 2008				A
++$factarray["__BRTM_COUS"]							24 May 2008				A
 +$factarray["_CHR_SIBL"]							23 May 2008  			A
 +$factarray["_BAPM_SIBL"]							23 May 2008  			A
 +$factarray["_ADOP_SIBL"]							23 May 2008  			A
