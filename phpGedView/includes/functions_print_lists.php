@@ -1110,18 +1110,19 @@ function print_repo_table($datalist, $legend="") {
 	//-- table body
 	$n = 0;
 	foreach ($datalist as $key => $value) {
-		if (!is_array($value)) {
-			$repo = Repository::getInstance($key);
-			if (is_null($repo)) $repo = Repository::getInstance($value);
-			unset($value);
+		$repo=Repository::getInstance($key);
+		if (is_null($repo)) {
+			if (!is_array($value)) {
+				$repo=Repository::getInstance($value);
+			} else {
+				if (isset($value["gid"])) {
+					$repo=Repository::getInstance($value["gid"]);
+				}
+			}
 		}
-		else {
-			$gid = "";
-			if (isset($value["gid"])) $gid = $value["gid"];
-			if (isset($value["gedcom"])) $repo = new Repository($value["gedcom"]);
-			else $repo = Repository::getInstance($gid);
+		if (is_null($repo)) {
+			continue;
 		}
-		if (is_null($repo)) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -1139,7 +1140,7 @@ function print_repo_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Linked SOURces
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".count($repo->getRepositorySours())."</a>";
+		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".$repo->countLinkedSources()."</a>";
 		echo "</td>";
 		//-- Last change
 		if ($tiny && $SHOW_LAST_CHANGE)
