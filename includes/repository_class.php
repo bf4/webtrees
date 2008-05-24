@@ -208,15 +208,17 @@ class Repository extends GedcomRecord {
 	 * get the list of sources connected to this repository
 	 * @return array
 	 */
-	function getRepositorySours() {
-		global $REGEXP_DB;
-		if (!is_null($this->sourcelist)) return $this->sourcelist;
-		$query = "REPO @".$this->xref."@";
-		if (!$REGEXP_DB) $query = "%".$query."%";
+	function countLinkedSources() {
+		global $DBCONN, $TBLPREFIX, $TOTAL_QUERIES;
 
-		$this->sourcelist = search_sources($query);
-		uasort($this->sourcelist, "itemsort");
-		return $this->sourcelist;
+		$query=preg_replace('/([_%@])/', '@$1', $DBCONN->escapeSimple($this->getXref()));
+
+		++$TOTAL_QUERIES;
+		return $DBCONN->getOne(
+			"SELECT COUNT(s_id) FROM {$TBLPREFIX}sources ".
+			"WHERE s_gedcom LIKE '%\n1 REPO @@{$query}@@%' ESCAPE '@' ".
+			"AND s_file=".$this->ged_id
+		);
 	}
 
 	/**
