@@ -101,7 +101,7 @@ class DescendancyControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $show_full;
+	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $show_full;
 
 	$this->sexarray["M"] = $pgv_lang["male"];
 	$this->sexarray["F"] = $pgv_lang["female"];
