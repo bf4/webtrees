@@ -896,7 +896,7 @@ function message(username, method, url, subject) {
 }
 // -- print the html to close the page
 function print_footer() {
-	global $without_close, $pgv_lang, $view, $buildindex, $pgv_changes, $DBTYPE;
+	global $without_close, $pgv_lang, $view, $buildindex, $DBTYPE;
 	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
 
