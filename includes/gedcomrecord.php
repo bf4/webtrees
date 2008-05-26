@@ -385,12 +385,10 @@ class GedcomRecord {
 	// It also allows us to combine dates/places from different events in the summaries.
 	function getAllEventDates($event) {
 		$dates=array();
-		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
-			foreach ($events[1] as $event_rec) {
-				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^2 DATE +(.+)/m", $event_rec, $ged_dates)) {
-					foreach ($ged_dates[1] as $ged_date) {
-						$dates[]=new GedcomDate($ged_date);
-					}
+		foreach ($this->getAllEvents($event) as $event_rec) {
+			if (preg_match_all("/^2 DATE +(.+)/m", $event_rec, $ged_dates)) {
+				foreach ($ged_dates[1] as $ged_date) {
+					$dates[]=new GedcomDate($ged_date);
 				}
 			}
 		}
@@ -398,12 +396,10 @@ class GedcomRecord {
 	}
 	function getAllEventPlaces($event) {
 		$places=array();
-		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
-			foreach ($events[1] as $event_rec) {
-				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event_rec, $ged_places)) {
-					foreach ($ged_places[1] as $ged_place) {
-						$places[]=$ged_place;
-					}
+		foreach ($this->getAllEvents($event) as $event_rec) {
+			if (preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event_rec, $ged_places)) {
+				foreach ($ged_places[1] as $ged_place) {
+					$places[]=$ged_place;
 				}
 			}
 		}
@@ -411,13 +407,23 @@ class GedcomRecord {
 	}
 
 	// Get all the events of a type.
-	// TODO: event handling needs to be tidied up - with the event class from PGV4.2 ??
 	function getAllEvents($event) {
 		$event_recs=array();
-		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
-			foreach ($events[0] as $event_rec) {
-				if (!FactViewRestricted($this->xref, $event_rec)) {
-					$event_recs[]=$event_rec;
+		if (ShowFactDetails($event, $this->xref)) {
+			if (preg_match_all("/^1 *{$event}\b.*(?:[\r\n]+[2-9].*)*/m", $this->gedrec, $events)) {
+				foreach ($events[0] as $event_rec) {
+					if (!FactViewRestricted($this->xref, $event_rec)) {
+						$event_recs[]=$event_rec;
+					}
+				}
+			}	
+			// Some people use "1 EVEN/2 TYPE BIRT" instead of "1 BIRT".
+			// Find them and convert them back to the proper format.
+			if (preg_match_all("/^1 (?:FACT|EVEN)\b([^\r\n]*)((?:[\r\n]+[2-9][^\r\n]*)*)(?:[\r\n]+2 TYPE {$event})((?:[\r\n]+[2-9][^\r\n]*)*)/m", $this->gedrec, $matches, PREG_SET_ORDER)) {
+				foreach ($matches as $match) {
+					if (!FactViewRestricted($this->xref, $match[0])) {
+						$event_recs[]='1 '.$event.$match[1].$match[2].$match[3];
+					}
 				}
 			}	
 		}

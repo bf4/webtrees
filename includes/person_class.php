@@ -1171,8 +1171,7 @@ class Person extends GedcomRecord {
 				// add child birth
 				if (strstr($SHOW_RELATIVES_EVENTS, '_BIRT'.$option)) {
 					foreach (explode('|', PGV_EVENTS_BIRT) as $ev) {
-						$srec=get_sub_record(1, '1 '.$ev, $childrec);
-						if ($srec) {
+						foreach ($child->getAllEvents($ev) as $srec) {
 							$sgdate=new GedcomDate(get_gedcom_value('DATE', 2, $srec, '', false));
 							if ($option=='_CHIL' || $sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 								$factrec='1 _'.$ev.$option;
@@ -1199,8 +1198,7 @@ class Person extends GedcomRecord {
 				// add child death
 				if (strstr($SHOW_RELATIVES_EVENTS, '_DEAT'.$option)) {
 					foreach (explode('|', PGV_EVENTS_DEAT) as $ev) {
-						$srec=get_sub_record(1, '1 '.$ev, $childrec);
-						if ($srec) {
+						foreach ($child->getAllEvents($ev) as $srec) {
 							$sgdate=new GedcomDate(get_gedcom_value('DATE', 2, $srec, '', false));
 							if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 								$factrec='1 _'.$ev.$option;
@@ -1218,10 +1216,8 @@ class Person extends GedcomRecord {
 				// add child marriage
 				if (strstr($SHOW_RELATIVES_EVENTS, '_MARR'.$option)) {
 					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
-						$childrec = $sfamily->getGedcomRecord();
 						foreach (explode('|', PGV_EVENTS_MARR) as $ev) {
-							$srec=get_sub_record(1, '1 '.$ev, $childrec);
-							if ($srec) {
+							foreach ($sfamily->getAllEvents($ev) as $srec) {
 								$sgdate=new GedcomDate(get_gedcom_value('DATE', 2, $srec, '', false));
 								if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 									$factrec='1 _'.$ev.$option;
