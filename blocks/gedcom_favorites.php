@@ -101,6 +101,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 						$content .= "</div>\n";
 					}
 					if ($favorite["type"]=="SOUR") {
+						$sourrec = find_source_record($favorite["gid"]);
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
 						if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
 						$content.=format_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], 'span');
