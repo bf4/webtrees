@@ -35,7 +35,7 @@ $pgv_lang["associated_files"]		= "Associated files:";
 $pgv_lang["remove_all_files"]		= "Remove all nonessential files";
 $pgv_lang["warn_file_delete"]		= "This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?";
 $pgv_lang["deleted_files"]          = "Deleted files:";
-$pgv_lang["index_dir_cleanup_inst"]	= "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" alt=\"\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Cleanup Index directory";
 $pgv_lang["clear_cache_succes"]		= "The cache files have been removed.";
 $pgv_lang["clear_cache"]			= "Clear cache files";
