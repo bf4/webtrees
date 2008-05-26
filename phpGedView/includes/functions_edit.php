@@ -2186,7 +2186,8 @@ function insert_missing_subtags($level1tag)
  * @return boolean	true or false based on the successful completion of the deletion
  */
 function delete_person($pid, $gedrec='') {
-	global $pgv_lang, $GEDCOM, $pgv_changes;
+	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
+	global $pgv_lang, $GEDCOM;
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 
@@ -2246,7 +2247,8 @@ function delete_person($pid, $gedrec='') {
  * @return boolean	true or false based on the successful completion of the deletion
  */
 function delete_family($pid, $gedrec='') {
-	global $GEDCOM, $pgv_lang, $pgv_changes;
+	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
+	global $GEDCOM, $pgv_lang;
 	if (empty($gedrec)) $gedrec = find_family_record($pid);
 	if (!empty($gedrec)) {
 		$success = true;
