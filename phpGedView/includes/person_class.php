@@ -1023,6 +1023,8 @@ class Person extends GedcomRecord {
 							// recorded as ASSOciate ? [ 1690092 ]
 							//$srec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 							$this->indifacts[]=array(0, $srec."\n2 ASSO @".$spouse->getXref()."@\n3 RELA *sosa_".($sosa*2));
+							// Break here to show only the first DEAT/BURI/CREM instead of all DEAT/BURI/CREM
+							//break 2;
 						}
 					}
 				}
@@ -1046,6 +1048,8 @@ class Person extends GedcomRecord {
 							// recorded as ASSOciate ? [ 1690092 ]
 							$srec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 							$this->indifacts[]=array(0, $srec."\n2 ASSO @".$spouse->getXref()."@\n3 RELA *sosa_".($sosa*2+1));
+							// Break here to show only the first DEAT/BURI/CREM instead of all DEAT/BURI/CREM
+							//break 2;
 						}
 					}
 				}
@@ -1191,6 +1195,8 @@ class Person extends GedcomRecord {
 								}
 								$factrec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
 								$this->indifacts[]=array(0, $factrec);
+								// Break here to show only the first DEAT/BURI/CREM instead of all DEAT/BURI/CREM
+								//break 2;
 							}
 						}
 					}
@@ -1209,6 +1215,8 @@ class Person extends GedcomRecord {
 								$factrec.="\n2 ASSO @".$spid."@\n3 RELA *".$rela;
 								$factrec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
 								$this->indifacts[]=array(0, $factrec);
+								// Break here to show only the first DEAT/BURI/CREM instead of all DEAT/BURI/CREM
+								//break 2;
 							}
 						}
 					}
@@ -1237,6 +1245,8 @@ class Person extends GedcomRecord {
 									$factrec.="\n2 ASSO @".$sfamily->getSpouseId($spid)."@\n3 RELA *".$rela2;
 									$factrec.="\n".get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 									$this->indifacts[]=array(0, $factrec);
+									// Break here to show only the first DEAT/BURI/CREM instead of all DEAT/BURI/CREM
+									//break 2;
 								}
 							}
 						}
@@ -1296,6 +1306,8 @@ class Person extends GedcomRecord {
 						$srec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
 						$srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA *spouse";
 						$this->indifacts[]=array(0, $srec);
+						// Break here to show only the first DEAT/BURI/CREM instead of all DEAT/BURI/CREM
+						//break 2;
 					}
 				}
 			}
