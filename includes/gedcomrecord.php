@@ -419,10 +419,10 @@ class GedcomRecord {
 			}	
 			// Some people use "1 EVEN/2 TYPE BIRT" instead of "1 BIRT".
 			// Find them and convert them back to the proper format.
-			if (preg_match_all("/^1 (?:FACT|EVEN)\b([^\r\n]*)((?:[\r\n]+[2-9][^\r\n]*)*)(?:[\r\n]+2 TYPE {$event})((?:[\r\n]+[2-9][^\r\n]*)*)/m", $this->gedrec, $matches, PREG_SET_ORDER)) {
+			if (preg_match_all("/^1 (?:FACT|EVEN)\b[^\r\n]*((?:[\r\n]+[2-9][^\r\n]*)*)(?:[\r\n]+2 TYPE {$event})((?:[\r\n]+[2-9][^\r\n]*)*)/m", $this->gedrec, $matches, PREG_SET_ORDER)) {
 				foreach ($matches as $match) {
 					if (!FactViewRestricted($this->xref, $match[0])) {
-						$event_recs[]='1 '.$event.$match[1].$match[2].$match[3];
+						$event_recs[]='1 '.$event.$match[1].$match[2];
 					}
 				}
 			}	
