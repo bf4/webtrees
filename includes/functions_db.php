@@ -1490,9 +1490,9 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 function get_recent_changes($jd=0, $allgeds=false) {
 	global $TBLPREFIX;
 
-	$sql = "SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
+	$sql="SELECT DISTINCT(rec_xref) FROM {$TBLPREFIX}record, {$TBLPREFIX}fact WHERE rec_id=fact_rec_id AND fact_type='CHAN' AND fact_jd1>={$jd}";
 	if (!$allgeds)
-		$sql .= " AND d_file=".PGV_GED_ID." ";
+		$sql .= " AND rec_ged_id=".PGV_GED_ID;
 	$sql .= " ORDER BY d_julianday1 DESC";
 
 	$changes = array();
@@ -3245,7 +3245,7 @@ function get_remote_id($rfn) {
 // $ged_id - the id of the gedcom to search
 ////////////////////////////////////////////////////////////////////////////////
 function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX;
+	global $DBH, $TBLPREFIX, $TOTAL_QUERIES;
 
 	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
@@ -3256,10 +3256,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 	$found_facts=array();
 	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JewishDate($jd), new HijriDate($jd)) as $anniv) {
 		// Build a SQL where clause to match anniversaries in the appropriate calendar.
-		if ($anniv->CALENDAR_ESCAPE=='@#DGREGORIAN@')
-			$where="WHERE (d_type IS NULL OR d_type='{$anniv->CALENDAR_ESCAPE}')";
-		else
-			$where="WHERE d_type='{$anniv->CALENDAR_ESCAPE}'";
+		$where1="fact_cal1='{$anniv->CALENDAR_ESCAPE}'";
 		// SIMPLE CASES:
 		// a) Non-hebrew anniversaries
 		// b) Hebrew months TVT, SHV, IYR, SVN, TMZ, AAV, ELL
@@ -3267,150 +3264,155 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 			// Dates without days go on the first day of the month
 			// Dates with invalid days go on the last day of the month
 			if ($anniv->d==1) {
-				$where.=" AND d_day<=1";
-			} else
-				if ($anniv->d==$anniv->DaysInMonth())
-					$where.=" AND d_day>={$anniv->d}";
-				else
-					$where.=" AND d_day={$anniv->d}";
-			$where.=" AND d_mon={$anniv->m}";
+				$where1.=" AND fact_day1<=1";
+			} else {
+				if ($anniv->d==$anniv->DaysInMonth()) {
+					$where1.=" AND fact_day1>={$anniv->d}";
+				} else {
+					$where1.=" AND fact_day1={$anniv->d}";
+				}
+			}
+			$where1.=" AND fact_mon1={$anniv->m}";
 		} else {
 			// SPECIAL CASES:
 			switch ($anniv->m) {
 			case 2:
 				// 29 CSH does not include 30 CSH (but would include an invalid 31 CSH if there were no 30 CSH)
-				if ($anniv->d==1)
-					$where.=" AND d_day<=1 AND d_mon=2";
-				else
-					if ($anniv->d==30)
-						$where.=" AND d_day>=30 AND d_mon=2";
-					else
-						if ($anniv->d==29 && $anniv->DaysInMonth()==29)
-							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=2";
-						else
-							$where.=" AND d_day={$anniv->d} AND d_mon=2";
+				if ($anniv->d==1) {
+					$where1.=" AND fact_day1<=1 AND fact_mon1=2";
+				} else {
+					if ($anniv->d==30) {
+						$where1.=" AND fact_day1>=30 AND fact_mon1=2";
+					} else {
+						if ($anniv->d==29 && $anniv->DaysInMonth()==29) {
+							$where1.=" AND (fact_day1=29 OR fact_day1>30) AND fact_mon1=2";
+						} else {
+							$where1.=" AND fact_day1={$anniv->d} AND fact_mon1=2";
+						}
+					}
+				}
 				break;
 			case 3:
 				// 1 KSL includes 30 CSH (if this year didn't have 30 CSH)
 				// 29 KSL does not include 30 KSL (but would include an invalid 31 KSL if there were no 30 KSL)
 				if ($anniv->d==1) {
 					$tmp=new JewishDate(array($anniv->y, 'csh', 1));
-					if ($tmp->DaysInMonth()==29)
-						$where.=" AND (d_day<=1 AND d_mon=3 OR d_day=30 AND d_mon=2)";
-					else
-						$where.=" AND d_day<=1 AND d_mon=3";
-				} else
-					if ($anniv->d==30)
-						$where.=" AND d_day>=30 AND d_mon=3";
-					else
-						if ($anniv->d==29 && $anniv->DaysInMonth()==29)
-							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=3";
-						else
-							$where.=" AND d_day={$anniv->d} AND d_mon=3";
+					if ($tmp->DaysInMonth()==29) {
+						$where1.=" AND (fact_day1<=1 AND fact_mon1=3 OR fact_day1=30 AND fact_mon1=2)";
+					} else {
+						$where1.=" AND fact_day1<=1 AND fact_mon1=3";
+					}
+				} else {
+					if ($anniv->d==30) {
+						$where1.=" AND fact_day1>=30 AND fact_mon1=3";
+					} else {
+						if ($anniv->d==29 && $anniv->DaysInMonth()==29) {
+							$where1.=" AND (fact_day1=29 OR fact_day1>30) AND fact_mon1=3";
+						} else {
+							$where1.=" AND fact_day1={$anniv->d} AND fact_mon1=3";
+						}
+					}
+				}
 				break;
 			case 4:
 				// 1 TVT includes 30 KSL (if this year didn't have 30 KSL)
 				if ($anniv->d==1) {
 					$tmp=new JewishDate($anniv->y, 'ksl', 1);
-					if ($tmp->DaysInMonth()==29)
-						$where.=" AND (d_day<=1 AND d_mon=4 OR d_day=30 AND d_mon=3)";
-					else
-						$where.=" AND d_day<=1 AND d_mon=4";
-				} else
-					if ($anniv->d==$anniv->DaysInMonth())
-						$where.=" AND d_day>={$anniv->d} AND d_mon=4";
-					else
-						$where.=" AND d_day={$anniv->d} AND d_mon=4";
+					if ($tmp->DaysInMonth()==29) {
+						$where1.=" AND (fact_day1<=1 AND fact_mon1=4 OR fact_day1=30 AND fact_mon1=3)";
+					} else {
+						$where1.=" AND fact_day1<=1 AND fact_mon1=4";
+					}
+				} else {
+					if ($anniv->d==$anniv->DaysInMonth()) {
+						$where1.=" AND fact_day1>={$anniv->d} AND fact_mon1=4";
+					} else {
+						$where1.=" AND fact_day1={$anniv->d} AND fact_mon1=4";
+					}
+				}
 				break;
 			case 6: // ADR (non-leap) includes ADS (leap)
-				if ($anniv->d==1)
-					$where.=" AND d_day<=1";
-				else
-					if ($anniv->d==$anniv->DaysInMonth())
-						$where.=" AND d_day>={$anniv->d}";
-					else
-						$where.=" AND d_day={$anniv->d}";
-				if ($anniv->IsLeapYear())
-					$where.=" AND (d_mon=6 AND ".sql_mod_function("7*d_year+1","19")."<7)";
-				else
-					$where.=" AND (d_mon=6 OR d_mon=7)";
+				if ($anniv->d==1) {
+					$where1.=" AND fact_day1<=1";
+				} else {
+					if ($anniv->d==$anniv->DaysInMonth()) {
+						$where1.=" AND fact_day1>={$anniv->d}";
+					} else {
+						$where1.=" AND fact_day1={$anniv->d}";
+					}
+				}
+				if ($anniv->IsLeapYear()) {
+					$where1.=" AND (fact_day1=6 AND ".sql_mod_function("7*fact_year1+1","19")."<7)";
+				} else {
+					$where1.=" AND (fact_day1=6 OR fact_mon1=7)";
+				}
 				break;
 			case 7: // ADS includes ADR (non-leap)
-				if ($anniv->d==1)
-					$where.=" AND d_day<=1";
-				else
-					if ($anniv->d==$anniv->DaysInMonth())
-						$where.=" AND d_day>={$anniv->d}";
-					else
-						$where.=" AND d_day={$anniv->d}";
-				$where.=" AND (d_mon=6 AND ".sql_mod_function("7*d_year+1","19").">=7 OR d_mon=7)";
+				if ($anniv->d==1) {
+					$where1.=" AND fact_day1<=1";
+				} else {
+					if ($anniv->d==$anniv->DaysInMonth()) {
+						$where1.=" AND fact_day1>={$anniv->d}";
+					} else {
+						$where1.=" AND fact_day1={$anniv->d}";
+					}
+				}
+				$where1.=" AND (fact_mon1=6 AND ".sql_mod_function("7*fact_year1+1","19").">=7 OR fact_mon1=7)";
 				break;
 			case 8: // 1 NSN includes 30 ADR, if this year is non-leap
 				if ($anniv->d==1) {
-					if ($anniv->IsLeapYear())
-						$where.=" AND d_day<=1 AND d_mon=8";
-					else
-						$where.=" AND (d_day<=1 AND d_mon=8 OR d_day=30 AND d_mon=6)";
-				} else
-					if ($anniv->d==$anniv->DaysInMonth())
-						$where.=" AND d_day>={$anniv->d} AND d_mon=8";
-					else
-						$where.=" AND d_day={$anniv->d} AND d_mon=8";
+					if ($anniv->IsLeapYear()) {
+						$where1.=" AND fact_day1<=1 AND fact_mon1=8";
+					} else {
+						$where1.=" AND (fact_day1<=1 AND fact_mon1=8 OR fact_day1=30 AND fact_mon1=6)";
+					}
+				} else {
+					if ($anniv->d==$anniv->DaysInMonth()) {
+						$where1.=" AND fact_day1>={$anniv->d} AND fact_mon1=8";
+					} else {
+						$where1.=" AND fact_day1={$anniv->d} AND fact_mon1=8";
+					}
+				}
 				break;
 			}
 		}
 		// Only events in the past (includes dates without a year)
-		$where.=" AND d_year<={$anniv->y}";
+		$where1.=" AND fact_year1<={$anniv->y}";
+
+		// Need to query start and end dates
+		$where2=str_replace(array('fact_day1', 'fact_mon1', 'fact_year1'), array('fact_day2', 'fact_mon2', 'fact_year2'), $where1);
 		// Restrict to certain types of fact
 		if (empty($facts)) {
 			$excl_facts="'".preg_replace('/\W+/', "','", $skipfacts)."'";
-			$where.=" AND d_fact NOT IN ({$excl_facts})";
+			$where="fact_type NOT IN ({$excl_facts})";
 		} else {
 			$incl_facts="'".preg_replace('/\W+/', "','", $facts)."'";
-			$where.=" AND d_fact IN ({$incl_facts})";
+			$where="fact_type IN ({$incl_facts})";
 		}
-		// Only get events from the current gedcom
-		$where.=" AND d_file=".$ged_id;
 
 		// Now fetch these anniversaries
-		$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-		$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
-		foreach (array($ind_sql, $fam_sql) as $sql) {
-			$res=dbquery($sql);
-			while ($row=&$res->fetchRow()) {
-				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
-				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
-				// to be cached.  We should store the level1 fact here (or somewhere)
-				if ($row[8]=='@#DJULIAN@')
-					if ($row[6]<0)
-						$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
-					else
-						$year_regex="({$row[6]}|".($row[6]-1)."\/".($row[6]%100).")";
-				else
-					$year_regex="0*".$row[6];
-				$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
-				// Since we'll probably use this record later (in an indi list, etc.), insert it into the cache
-				global $gedcom_record_cache; $gedcom_record_cache[$row[0]][$ged_id]=$row[2]=='INDI' ? new Person($row[1]) : new Family($row[1]);
-				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
-						$date=new GedcomDate($match[1]);
-						if (preg_match('/2 PLAC (.+)/', $factrec, $match))
-							$plac=$match[1];
-						else
-							$plac='';
-						$found_facts[]=array(
-							'id'=>$row[0],
-							'objtype'=>$row[2],
-							'fact'=>$row[7],
-							'factrec'=>$factrec,
-							'jd'=>$jd,
-							'anniv'=>($row[6]==0?0:$anniv->y-$row[6]),
-							'date'=>$date,
-							'plac'=>$plac
-						);
-					}
-			}
-			$res->free();
+		$sql=
+			"SELECT rec_xref, rec_type, fact_type, fact_jd1, fact_day1, fact_year1, fact_date, fact_plac, fact_gedcom ".
+			"FROM {$TBLPREFIX}record, {$TBLPREFIX}fact ".
+			"WHERE rec_id=fact_rec_id AND rec_ged_id={$ged_id} AND {$where} AND {$where1} ".
+			"UNION ALL ".
+			"SELECT rec_xref, rec_type, fact_type, fact_jd2, fact_day2, fact_year2, fact_date, fact_plac, fact_gedcom ".
+			"FROM {$TBLPREFIX}record, {$TBLPREFIX}fact ".
+			"WHERE rec_id=fact_rec_id AND rec_ged_id={$ged_id} AND {$where} AND {$where2} ".
+			"ORDER BY fact_day1 ASC, fact_year1 DESC";
+
+		++$TOTAL_QUERIES;
+		foreach ($DBH->query($sql)->fetchAll(PDO::FETCH_OBJ) as $row) {
+			$found_facts[]=array(
+				'id'=>$row->rec_xref,
+				'objtype'=>$row->rec_type,
+				'fact'=>$row->fact_type,
+				'factrec'=>$row->fact_gedcom,
+				'jd'=>$row->fact_jd1,
+				'anniv'=>($row->fact_year1==0 ? 0 : $anniv->y-$row->fact_year1),
+				'date'=>new GedcomDate($row->fact_date),
+				'plac'=>$row->fact_plac
+			);
 		}
 	}
 	return $found_facts;
@@ -3437,60 +3439,41 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 
 	// This where clause gives events that start/end/overlap the period
 	// e.g. 1914-1918 would show up on 1916
-	//$where="WHERE d_julianday1 <={$jd2} AND d_julianday2>={$jd1}";
+	//$where="WHERE fact_jd1 <={$jd2} AND fact_jd2>={$jd1}";
 	// This where clause gives only events that start/end during the period
-	$where="WHERE (d_julianday1>={$jd1} AND d_julianday1<={$jd2} OR d_julianday2>={$jd1} AND d_julianday2<={$jd2})";
+	$where1="WHERE (fact_jd1>={$jd1} AND fact_jd1<={$jd2} OR fact_jd2>={$jd1} AND fact_jd2<={$jd2})";
+
+	// Need to query start and end dates
+	$where2=str_replace(array('fact_day1', 'fact_mon1', 'fact_year1'), array('fact_day2', 'fact_mon2', 'fact_year2'), $where1);
 
 	// Restrict to certain types of fact
 	if (empty($facts)) {
 		$excl_facts="'".preg_replace('/\W+/', "','", $skipfacts)."'";
-		$where.=" AND d_fact NOT IN ({$excl_facts})";
+		$where="fact_type NOT IN ({$excl_facts})";
 	} else {
 		$incl_facts="'".preg_replace('/\W+/', "','", $facts)."'";
-		$where.=" AND d_fact IN ({$incl_facts})";
+		$where="fact_type IN ({$incl_facts})";
 	}
-	// Only get events from the current gedcom
-	$where.=" AND d_file=".$ged_id;
 
-	// Now fetch these events
-	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
-	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
-	foreach (array($ind_sql, $fam_sql) as $sql) {
-		$res=dbquery($sql);
-		while ($row=&$res->fetchRow()) {
-			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
-			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
-			// to be cached.  We should store the level1 fact here (or somewhere)
-			if ($row[8]=='@#DJULIAN@')
-				if ($row[6]<0)
-					$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
-				else
-					$year_regex="({$row[6]}|".($row[6]-1)."\/".($row[6]%100).")";
-			else
-				$year_regex="0*".$row[6];
-			$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
-			// Since we'll probably use this record later (in an indi list, etc.), insert it into the cache
-			global $gedcom_record_cache; $gedcom_record_cache[$row[0]][$ged_id]=$row[2]=='INDI' ? new Person($row[1]) : new Family($row[1]);
-			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
-					$date=new GedcomDate($match[1]);
-					if (preg_match('/2 PLAC (.+)/', $factrec, $match))
-						$plac=$match[1];
-					else
-						$plac='';
-					$found_facts[]=array(
-						'id'=>$row[0],
-						'objtype'=>$row[2],
-						'fact'=>$row[7],
-						'factrec'=>$factrec,
-						'jd'=>$jd1,
-						'anniv'=>0,
-						'date'=>$date,
-						'plac'=>$plac
-					);
-				}
-		}
-		$res->free();
+	// Now fetch these anniversaries
+	$sql=
+		"SELECT rec_xref, rec_type, fact_type, fact_jd1, fact_day1, fact_year1, fact_date, fact_plac, fact_gedcom ".
+		"FROM {$TBLPREFIX}record, {$TBLPREFIX}fact ".
+		"WHERE rec_id=fact_rec_id AND rec_ged_id={$ged_id} AND {$where} AND ({$where1} OR {$where2}) ".
+		"ORDER BY fact_jd1";
+
+	++$TOTAL_QUERIES;
+	foreach ($DBH->query($sql)->fetchAll(PDO::FETCH_OBJ) as $row) {
+		$found_facts[]=array(
+			'id'=>$row->rec_xref,
+			'objtype'=>$row->rec_type,
+			'fact'=>$row->fact_type,
+			'factrec'=>$row->fact_gedcom,
+			'jd'=>$row->fact_jd1,
+			'anniv'=>($row->fact_year1==0 ? 0 : $anniv->y-$row->fact_year1),
+			'date'=>new GedcomDate($row->fact_date),
+			'plac'=>$row->fact_plac
+		);
 	}
 	return $found_facts;
 }

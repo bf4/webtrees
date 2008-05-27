@@ -82,7 +82,7 @@ function import_record($indirec, $update) {
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
 	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS, $GENERATE_UIDS;
 	global $TRANSLATE_TAGS;
-	global $DBH;
+	global $DBH, $factarray;
 
 	$FILE = $GEDCOM;
 
@@ -151,9 +151,8 @@ function import_record($indirec, $update) {
 		) . chr(0x80) . chr(0x8F), chr(0xE2) . chr(0x80) . chr(0x8E)), "", $indirec);
 	}
 
-	// Update the dates and places tables.
+	// Update the places tables.
 	update_places($gid, $indirec);
-	update_dates($gid, $indirec);
 
 	$newrec = update_media($gid, $indirec, $update);
 	if ($newrec != $indirec) {
@@ -417,6 +416,7 @@ function import_record($indirec, $update) {
 	if (preg_match_all('/\n1 +(\w+) *(.*)((?:\n[2-9] .*)*)/', $indirec, $fact_matches, PREG_SET_ORDER)) {
 		$statement_ins_fact->bindValue(1, $rec_id, PDO::PARAM_INT);
 		foreach ($fact_matches as $fact_match) {
+			list($gedfact, $tag, $value, $level2)=$fact_match;
 			if ($level2) {
 				// Remove Y from nonempty "1 XXXX" facts
 				if ($value=='Y') {
@@ -428,7 +428,6 @@ function import_record($indirec, $update) {
 					$value='Y';
 				}
 			}
-			list($gedfact, $tag, $value, $level2)=$fact_match;
 
 			// Translate 1 EVEN/2 TYPE XXXX into 1 XXXX for known tags
 			if (($tag=='FACT' || $tag=='EVEN') && preg_match('/\n2 TYPE (\w+)/', $level2, $fact_match) && array_key_exists($fact_match[1], $factarray)) {
@@ -491,8 +490,8 @@ function import_record($indirec, $update) {
 				}
 			}
 
-			$level2=substr($level2, 1); // Remove leading \n;
-			$statement_ins_fact->bindValue(17, $level2, PDO::PARAM_STR);
+			// Ignore leading \n in gedrec
+			$statement_ins_fact->bindValue(17, substr($gedfact,1), PDO::PARAM_STR);
 			$statement_ins_fact->execute();
 			$fact_id=$DBH->lastInsertId();
 
@@ -750,36 +749,6 @@ function update_places($gid, $indirec) {
 			$placecache[$key] = $p_id;
 			$personplace[$key]=1;
 			$level++;
-		}
-	}
-}
-
-/**
- * extract all date info from the given record and insert them
- * into the dates table
- * @param string $indirec
- */
-function update_dates($gid, $indirec) {
-	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS, $factarray;
-	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
-	if ($pt == 0)
-		return 0;
-	$facts = get_all_subrecords($indirec, "", false, false, false);
-	foreach ($facts as $f => $factrec) {
-		if (preg_match("/1 (\w+)/", $factrec, $match)) {
-			$fact = trim($match[1]);
-			// 1 FACT/2 TYPE XXXX gets recorded as XXXX to enable searching
-			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $factrec, $match) && array_key_exists($match[1], $factarray))
-				$fact=$match[1];
-			$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
-			for ($i = 0; $i < $pt; $i++) {
-				$geddate=new GedcomDate($match[$i][1]);
-				$dates=array($geddate->date1);
-				if ($geddate->date2)
-					$dates[]=$geddate->date2;
-				foreach($dates as $date)
-					dbquery("INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date->d},'".$date->Format('O')."',{$date->m},{$date->y},{$date->minJD},{$date->maxJD},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},'{$date->CALENDAR_ESCAPE}')");
-			}
 		}
 	}
 }
@@ -1060,10 +1029,6 @@ function setup_database() {
 	$has_names_surname = false;
 	$has_names_type = false;
 	$has_placelinks = false;
-	$has_dates = false;
-	$has_dates_mon = false;
-	$has_dates_datestamp = false;
-	$has_dates_juliandays = false;
 	$has_media = false;
 	$has_media_mapping = false;
 	$has_nextid = false;
@@ -1143,23 +1108,6 @@ function setup_database() {
 					break;
 				case "placelinks" :
 					$has_placelinks = true;
-					break;
-				case "dates" :
-					$has_dates = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "dates");
-					foreach ($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "d_mon" :
-								$has_dates_mon = true;
-								break;
-							case "d_datestamp" :
-								$has_dates_datestamp = true;
-								break;
-							case "d_julianday1" : // d_julianday1 and d_julianday2 added together
-								$has_dates_juliandays = true;
-								break;
-						}
-					}
 					break;
 				case "media" :
 					$has_media = true;
@@ -1264,33 +1212,6 @@ function setup_database() {
 		if (!$has_names_type) {
 			$sql = "ALTER TABLE " . $TBLPREFIX . "names ADD n_type VARCHAR(10)";
 			$res = dbquery($sql); //print "n_type added<br/>\n";
-		}
-	}
-	if (!$has_dates || stristr($DBTYPE, "mysql") === false && // AFTER keyword only in mysql
-	(!$has_dates_mon || !$has_dates_datestamp || !$has_dates_juliandays)) {
-		create_dates_table();
-	} else { // check columns in the table
-		if (!$has_dates_mon) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_mon INT AFTER d_month";
-			$res = dbquery($sql); //print "d_mon added<br/>\n";
-			$sql = "CREATE INDEX date_mon ON " . $TBLPREFIX . "dates (d_mon)";
-			$res = dbquery($sql);
-		}
-		if (!$has_dates_datestamp) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_datestamp INT AFTER d_year";
-			$res = dbquery($sql); //print "d_datestamp added<br/>\n";
-			$sql = "CREATE INDEX date_datestamp ON " . $TBLPREFIX . "dates (d_datestamp)";
-			$res = dbquery($sql);
-		}
-		if (!$has_dates_juliandays) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_julianday1 INT AFTER d_datestamp";
-			$res = dbquery($sql);
-			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_julianday2 INT AFTER d_julianday1";
-			$res = dbquery($sql);
-			$sql = "CREATE INDEX date_julianday1 ON " . $TBLPREFIX . "dates (d_julianday1)";
-			$res = dbquery($sql);
-			$sql = "CREATE INDEX date_julianday2 ON " . $TBLPREFIX . "dates (d_julianday2)";
-			$res = dbquery($sql);
 		}
 	}
 	if (!$has_media) {
@@ -1559,45 +1480,6 @@ function create_media_table() {
 	if (isset($DEBUG) && $DEBUG==true) "Successfully created media table.<br />\n";
 }
 /**
- * Create the dates table
- */
-function create_dates_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
-
-	$sql = "DROP TABLE " . $TBLPREFIX . "dates";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "dates (d_day INT, d_month VARCHAR(5), d_mon INT, d_year INT, d_datestamp INT, d_julianday1 INT, d_julianday2 INT, d_fact VARCHAR(10), d_gid VARCHAR(255), d_file INT, d_type VARCHAR(13) NULL)";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		exit;
-	}
-	$sql = "CREATE INDEX date_day ON " . $TBLPREFIX . "dates (d_day)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_month ON " . $TBLPREFIX . "dates (d_month)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_mon ON " . $TBLPREFIX . "dates (d_mon)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_year ON " . $TBLPREFIX . "dates (d_year)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_datestamp ON " . $TBLPREFIX . "dates (d_datestamp)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_julianday1 ON " . $TBLPREFIX . "dates (d_julianday1)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_julianday2 ON " . $TBLPREFIX . "dates (d_julianday2)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_gid ON " . $TBLPREFIX . "dates (d_gid)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_file ON " . $TBLPREFIX . "dates (d_file)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_type ON " . $TBLPREFIX . "dates (d_type)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_fact_gid ON ".$TBLPREFIX."dates (d_fact, d_gid)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print "Successfully created dates table.<br />\n";
-}
-
-/**
  * Create the media_mapping table
  */
 function create_media_mapping_table() {
@@ -1673,9 +1555,6 @@ function empty_database($FILE, $keepmedia=false) {
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "names WHERE n_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "dates WHERE d_file='$FILE'";
 	$res = dbquery($sql);
 
 	if (!$keepmedia) {
@@ -1952,9 +1831,6 @@ function update_record($indirec, $delete = false) {
 		$placeids[] = $row[0];
 	}
 	$sql = "DELETE FROM " . $TBLPREFIX . "placelinks WHERE pl_gid='" . $DBCONN->escapeSimple($gid) . "' AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "dates WHERE d_gid='" . $DBCONN->escapeSimple($gid) . "' AND d_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
 	//-- delete any unlinked places

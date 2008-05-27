@@ -3,6 +3,12 @@
  *
  * Create the database schema and migrate data from PGV v4.x to PGV v5.x
  *
+ * NOTE: we create INDEXES in reverse order.  This ensure that any newly
+ * added indexes will be created before the existing indexes throw an
+ * exception.  It also ensure that we only attempt the migration once.
+ *
+ * RDBMS without "CREATE TABLE IF NOT EXISTS" will need something different.
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2008 Greg Roach
  *
@@ -88,7 +94,7 @@ if (!function_exists('get_file_scalar_definitions')) {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}gedcom (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}gedcom (".
 		" ged_id   {$AUTONUM_TYPE},".
 		" ged_name VARCHAR(255) NOT NULL,".
 		" CONSTRAINT {$TBLPREFIX}gedcom_pk PRIMARY KEY (ged_id),".
@@ -117,7 +123,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}gedcom_setting (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}gedcom_setting (".
 		" gset_ged_id    INTEGER      NOT NULL,".
 		" gset_parameter VARCHAR(32)  NOT NULL,".
 		" gset_value     VARCHAR(255) NULL,".
@@ -126,8 +132,8 @@ try {
 		") {$STORAGE} {$COLLATION}"
 	);
 	// These two indexes should ensure we never need to access the table
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}gedcom_setting_ix1 ON {$TBLPREFIX}gedcom_setting (gset_ged_id, gset_parameter, gset_value)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}gedcom_setting_ix2 ON {$TBLPREFIX}gedcom_setting (gset_parameter, gset_value, gset_ged_id)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}gedcom_setting_ix1 ON {$TBLPREFIX}gedcom_setting (gset_ged_id, gset_parameter, gset_value)");
 
 	// Migrate PGV4.x data from gedcoms.php and *_(conf|priv).php
 	global $INDEX_DIRECTORY;
@@ -177,7 +183,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}user (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}user (".
 		" user_id {$AUTONUM_TYPE},".
 		" user_name VARCHAR(255) NOT NULL,".
 		" user_pass VARCHAR(255) NOT NULL,".
@@ -199,7 +205,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}privacy (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}privacy (".
 		" priv_id        {$AUTONUM_TYPE},".
 		" priv_ged_id    INTEGER      NOT NULL,".
 		" priv_user_id   INTEGER      NULL,".
@@ -212,9 +218,9 @@ try {
 		" CONSTRAINT {$TBLPREFIX}privacy_fk2 FOREIGN KEY (priv_user_id) REFERENCES {$TBLPREFIX}user  (user_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix1 ON {$TBLPREFIX}privacy (priv_xref, priv_ged_id)");
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix2 ON {$TBLPREFIX}privacy (priv_fact)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix3 ON {$TBLPREFIX}privacy (priv_type)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix2 ON {$TBLPREFIX}privacy (priv_fact)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}privacy_ix1 ON {$TBLPREFIX}privacy (priv_xref, priv_ged_id)");
 
 	// Migrate PGV4.x data from *_priv.php
 	global $INDEX_DIRECTORY;
@@ -293,7 +299,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}user_setting (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}user_setting (".
 		" uset_user_id   INTEGER      NOT NULL,".
 		" uset_parameter VARCHAR(32)  NOT NULL,".
 		" uset_value     VARCHAR(255) NULL,".
@@ -302,8 +308,8 @@ try {
 		") {$STORAGE} {$COLLATION}"
 	);
 	// These two indexes should ensure we never need to access the table
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_setting_ix1 ON {$TBLPREFIX}user_setting (uset_user_id, uset_parameter, uset_value)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_setting_ix2 ON {$TBLPREFIX}user_setting (uset_parameter, uset_value, uset_user_id)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_setting_ix1 ON {$TBLPREFIX}user_setting (uset_user_id, uset_parameter, uset_value)");
 
 	// Migrate PGV4.x data from gedcoms.php into the new table
 	$columns=array(
@@ -347,7 +353,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}user_gedcom_setting (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}user_gedcom_setting (".
 		" ugset_user_id   INTEGER      NOT NULL,".
 		" ugset_ged_id    INTEGER      NOT NULL,".
 		" ugset_parameter VARCHAR(32)  NOT NULL,".
@@ -358,8 +364,8 @@ try {
 		") {$STORAGE} {$COLLATION}"
 	);
 	// These two indexes should ensure we never need to access the table
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_gedcom_setting_ix1 ON {$TBLPREFIX}user_gedcom_setting (ugset_user_id, ugset_ged_id, ugset_parameter, ugset_value)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_gedcom_setting_ix2 ON {$TBLPREFIX}user_gedcom_setting (ugset_parameter, ugset_value, ugset_user_id, ugset_ged_id)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}user_gedcom_setting_ix1 ON {$TBLPREFIX}user_gedcom_setting (ugset_user_id, ugset_ged_id, ugset_parameter, ugset_value)");
 
 	// Migrate PGV4.x data from pgv_useres
 	$statement=$DBH->prepare(
@@ -389,7 +395,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}edit (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}edit (".
 		" edit_id      {$AUTONUM_TYPE},".
 		" edit_user_id INTEGER   NOT NULL,".
 		" edit_time    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,".
@@ -407,7 +413,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}record (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}record (".
 		" rec_id      {$AUTONUM_TYPE},".
 		" rec_ged_id  INTEGER     NOT NULL,".
 		" rec_xref    VARCHAR(32) NULL,". // I123, etc.
@@ -426,7 +432,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}fact (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}fact (".
 		" fact_id      {$AUTONUM_TYPE},".
 		" fact_rec_id  INTEGER      NOT NULL,".
 		" fact_type    VARCHAR(15)  NOT NULL,". // BIRT, MARR, etc.
@@ -453,9 +459,12 @@ try {
 		" CONSTRAINT {$TBLPREFIX}fact_fk3 FOREIGN KEY (fact_deleted) REFERENCES {$TBLPREFIX}edit (edit_id) ON DELETE RESTRICT".
 		") {$STORAGE} {$COLLATION}"
 	);
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix1 ON {$TBLPREFIX}fact (fact_type)");
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix2 ON {$TBLPREFIX}fact (fact_deleted, fact_created)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix6 ON {$TBLPREFIX}fact (fact_jd1, fact_jd2, fact_type)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix5 ON {$TBLPREFIX}fact (fact_year2, fact_day2, fact_mon2, fact_cal2, fact_type)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix4 ON {$TBLPREFIX}fact (fact_year1, fact_day1, fact_mon1, fact_cal1, fact_type)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix3 ON {$TBLPREFIX}fact (fact_created, fact_deleted)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix2 ON {$TBLPREFIX}fact (fact_deleted, fact_created)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}fact_ix1 ON {$TBLPREFIX}fact (fact_type)");
 } catch (PDOException $e) {
 }
 
@@ -469,7 +478,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-	"CREATE TABLE {$TBLPREFIX}link (".
+	"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}link (".
 	" link_id      {$AUTONUM_TYPE},".
 	" link_fact_id INTEGER     NOT NULL,".
 	" link_type    VARCHAR(15) NOT NULL,". // SOUR/INDI/FAM/etc.
@@ -480,10 +489,10 @@ try {
 	" CONSTRAINT {$TBLPREFIX}link_fk1 FOREIGN KEY (link_fact_id) REFERENCES {$TBLPREFIX}fact (fact_id) ON DELETE CASCADE".
 	") {$STORAGE} {$COLLATION}"
 	);
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix1 ON {$TBLPREFIX}link (link_fact_id, link_type, link_xref)");
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix2 ON {$TBLPREFIX}link (link_type, link_fact_id, link_xref)");
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix3 ON {$TBLPREFIX}link (link_rec_id2, link_type, link_rec_id1)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix4 ON {$TBLPREFIX}link (link_rec_id1, link_type, link_rec_id2)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix3 ON {$TBLPREFIX}link (link_rec_id2, link_type, link_rec_id1)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix2 ON {$TBLPREFIX}link (link_type, link_fact_id, link_xref)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}link_ix1 ON {$TBLPREFIX}link (link_fact_id, link_type, link_xref)");
 } catch (PDOException $e) {
 }
 
@@ -492,7 +501,7 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 try {
 	$DBH->exec(
-		"CREATE TABLE {$TBLPREFIX}name (".
+		"CREATE TABLE IF NOT EXISTS {$TBLPREFIX}name (".
 		" name_id      {$AUTONUM_TYPE},".
 		" name_fact_id INTEGER      NOT NULL,".
 		" name_type    VARCHAR(15)  NOT NULL,".
@@ -506,8 +515,8 @@ try {
 		" CONSTRAINT {$TBLPREFIX}name_fk1 FOREIGN KEY (name_fact_id) REFERENCES {$TBLPREFIX}fact (fact_id) ON DELETE CASCADE".
 		") {$STORAGE} {$COLLATION}"
 	);
-	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix1 ON {$TBLPREFIX}name (name_type)");
 	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix2 ON {$TBLPREFIX}name (name_surn, name_type, name_givn)");
+	$DBH->exec("CREATE INDEX {$TBLPREFIX}name_ix1 ON {$TBLPREFIX}name (name_type)");
 } catch (PDOException $e) {
 }
 
