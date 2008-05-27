@@ -478,9 +478,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
-//	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
-//	print "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
-	print "<form method=\"post\" name=\"addchildform\" action=\"{$nextaction}\" onsubmit=\"return checkform();\">\n";
+	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
+	print "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
+//	print "<form method=\"post\" name=\"addchildform\" action=\"{$nextaction}\" onsubmit=\"return checkform();\">\n";
 	print "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	print "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
@@ -1449,7 +1449,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 		if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
 		if ($fact=="OBJE" && !$value) {
-			print '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&amp;linktoid='.$linkToID.'&amp;level='.$level.'\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
+			print '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&linktoid='.$linkToID.'&level='.$level.'\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 			$value = "new";
 		}
 	}

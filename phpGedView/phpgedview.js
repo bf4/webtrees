@@ -422,7 +422,7 @@ function change_family_members(famid) {
 
 function addnewsource(field) {
 	pastefield = field;
-	window.open('edit_interface.php?action=addnewsource&amp;pid=newsour', '_blank', 'top=70,left=70,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('edit_interface.php?action=addnewsource&pid=newsour', '_blank', 'top=70,left=70,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
 }
 

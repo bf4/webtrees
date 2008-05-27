@@ -314,7 +314,7 @@ print_header($pgv_lang["manage_media"]);
 	<!-- // NOTE: Add media -->
 	<td class="descriptionbox wrap width25"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 	<td class="optionbox wrap">
-	<a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&amp;linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a>
+	<a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a>
 	</td>
 	</tr>
 	</table>
@@ -1549,7 +1549,7 @@ if (check_media_structure()) {
 							// Edit File
 							print "<a href=\"javascript:".$pgv_lang["edit"]."\" onclick=\"window.open('addmedia.php?action=";
 							if ($media["XREF"] != "") {
-								print "editmedia&amp;pid=".$media["XREF"]."&amp;linktoid=";
+								print "editmedia&pid=".$media["XREF"]."&linktoid=";
 								if (!$media["LINKED"]) {
 									print "new";
 								} else {
@@ -1557,7 +1557,7 @@ if (check_media_structure()) {
 									print $linkToID;
 								}
 							} else {
-								print "showmediaform&amp;filename=".rawurlencode($media["FILE"])."&amp;linktoid=new";
+								print "showmediaform&filename=".rawurlencode($media["FILE"])."&linktoid=new";
 							}
 							print "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["edit"]."</a><br />";
 

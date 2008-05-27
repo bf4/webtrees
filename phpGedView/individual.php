@@ -206,7 +206,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 // javascript function to open a window with the raw gedcom in it
 function show_gedcom_record(shownew) {
 	fromfile="";
-	if (shownew=="yes") fromfile='&amp;fromfile=1';
+	if (shownew=="yes") fromfile='&fromfile=1';
 	var recwin = window.open("gedrecord.php?pid=<?php print $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 }
 <?php if (PGV_USER_CAN_ACCEPT) { ?>
@@ -216,7 +216,7 @@ function open_link_remote(pid){
 }
 
 function showchanges() {
-	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&amp;show_changes=yes';
+	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
 <?php } ?>
 <!-- ====================== Added for Lightbox Module ===================== -->

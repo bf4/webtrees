@@ -277,7 +277,7 @@ switch ($action) {
 				    	if (isset($new_language_array[$y][1])) {
 				      		if ($new_language_array[$y][0] == $english_language_array[$z][0]) {
 				        		$dDummy =  $new_language_array[$y][1];
-				        		$dummy_output_02 .= "<a href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&amp;ls02=" . $y . "&amp;language2=" . $language2 . "&amp;file_type=" . $file_type . "&amp;" . session_name() . "=" . session_id() . "&amp;anchor=a1_" . $z . "');\">";
+				        		$dummy_output_02 .= "<a href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&ls02=" . $y . "&language2=" . $language2 . "&file_type=" . $file_type . "&" . session_name() . "=" . session_id() . "&anchor=a1_" . $z . "');\">";
 				        		$temp = str_replace($fromEscapedChars, $toPlainChars, $dDummy);
 				        		$dummy_output_02 .= $temp;
 				        		if ($temp == "") {
@@ -294,7 +294,7 @@ switch ($action) {
 						print $dummy_output;
 				  		print $dummy_output_02;
 				  		if (!$found) {
-				    		print "<a style=\"color: #FF0000\" href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&amp;ls02=" . (0 - intval($lastfound) - 1) . "&amp;language2=" . $language2 . "&amp;file_type=" . $file_type . "&amp;anchor=a1_" . $z . "');\">";
+				    		print "<a style=\"color: #FF0000\" href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&ls02=" . (0 - intval($lastfound) - 1) . "&language2=" . $language2 . "&file_type=" . $file_type . "&anchor=a1_" . $z . "');\">";
 				    		print "<i>";
 				    		$temp = str_replace($fromEscapedChars, $toPlainChars, $english_language_array[$z][1]);
 				    		if ($temp == "") print "&nbsp;";

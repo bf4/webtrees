@@ -700,20 +700,20 @@ function showBack() {
 function delete_record(pid, linenum, mediaid) {
 	if (!mediaid) mediaid="";
 	if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) {
-		window.open('edit_interface.php?action=delete&amp;pid='+pid+'&amp;linenum='+linenum+'&amp;mediaid='+mediaid+"&amp;"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+		window.open('edit_interface.php?action=delete&pid='+pid+'&linenum='+linenum+'&mediaid='+mediaid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	}
 	return false;
 }
 function deleteperson(pid) {
 	if (confirm('<?php print $pgv_lang["confirm_delete_person"]; ?>')) {
-		window.open('edit_interface.php?action=deleteperson&amp;pid='+pid+"&amp;"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+		window.open('edit_interface.php?action=deleteperson&pid='+pid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	}
 	return false;
 }
 
 function deleterepository(pid) {
 	if (confirm('<?php print $pgv_lang["confirm_delete_repo"]; ?>')) {
-		window.open('edit_interface.php?action=deleterepo&amp;pid='+pid+"&amp;"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+		window.open('edit_interface.php?action=deleterepo&pid='+pid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	}
 	return false;
 }
@@ -721,10 +721,10 @@ function deleterepository(pid) {
 function message(username, method, url, subject) {
 	if ((!url)||(url=="")) url='<?php print urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING); ?>';
 	if ((!subject)||(subject=="")) subject= '';
-	window.open('message.php?to='+username+'&amp;method='+method+'&amp;url='+url+'&amp;subject='+subject+"&amp;"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('message.php?to='+username+'&method='+method+'&url='+url+'&subject='+subject+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
 }
-var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&amp;action=".$action; ?>';
+var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>';
 //-->
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
@@ -889,7 +889,7 @@ function print_simple_header($title) {
 function message(username, method, url, subject) {
 	if ((!url)||(url=="")) url='<?php print urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING); ?>';
 	if ((!subject)||(subject=="")) subject= '';
-	window.open('message.php?to='+username+'&amp;method='+method+'&amp;url='+url+'&amp;subject='+subject+"&amp;"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('message.php?to='+username+'&method='+method+'&url='+url+'&subject='+subject+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
 }
 	//-->
