@@ -45,6 +45,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["RESN_help"]								27 May 2008				f	More: Correct HTML (add missing space in front of "/>")
 *$pgv_lang["RESN_help"]								26 May 2008				f	Correct HTML (add missing space in front of "/>")
 *$pgv_lang["index_add_favorites_help"]				15 May 2008				fw	added missing "and"
 *$pgv_lang["link_remote_help"]						14 May 2008				w	(Replace URL with CONSTANT)
