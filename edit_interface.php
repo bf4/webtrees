@@ -711,7 +711,7 @@ case 'addsourceaction':
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$xref = append_gedrec($newgedrec);
-	$link = "source.php?sid=$xref&amp;show_changes=yes";
+	$link = "source.php?sid=$xref&show_changes=yes";
 	if ($xref) {
 		print "<br /><br />\n".$pgv_lang["new_source_created"]."<br /><br />";
 		print "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
@@ -801,7 +801,7 @@ case 'addrepoaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$xref = append_gedrec($newgedrec);
-	$link = "repo.php?rid=$xref&amp;show_changes=yes";
+	$link = "repo.php?rid=$xref&show_changes=yes";
 	if ($xref) {
 		print "<br /><br />\n".$pgv_lang["new_repo_created"]."<br /><br />";
 		print "<a href=\"javascript:// REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
@@ -1036,7 +1036,7 @@ case 'addchildaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
-	$link = "individual.php?pid=$xref&amp;show_changes=yes";
+	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) {
 		print "<br /><br />".$pgv_lang["update_successful"];
 		$gedrec = "";
@@ -1178,7 +1178,7 @@ case 'addspouseaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
-	$link = "individual.php?pid=$xref&amp;show_changes=yes";
+	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
 	else exit;
 	$spouserec = $gedrec;
@@ -1490,7 +1490,7 @@ case 'addnewparentaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
-	$link = "individual.php?pid=$xref&amp;show_changes=yes";
+	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
 	else exit;
 	$spouserec = $gedrec;
