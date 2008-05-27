@@ -5,7 +5,7 @@
  * Displays events on a daily, monthly, or yearly calendar.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2008  Greg Roach and others, all rights reserved
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,6 +103,19 @@ if ($cal_date->d>$days_in_month && $action=='today')
 // Print the header stuff
 print_header($pgv_lang['anniversary_calendar']);
 print '<div style="text-align: center;" id="calendar_page">';
+
+if ($view!='preview') {
+	// Calendar form
+	print '<form name="dateform" method="get" action="calendar.php">';
+	print "<input type=\"hidden\" name=\"cal\"      value=\"{$cal}\"         />";
+	print "<input type=\"hidden\" name=\"day\"      value=\"{$cal_date->d}\" />";
+	print "<input type=\"hidden\" name=\"month\"    value=\"{$cal_month}\"   />";
+	print "<input type=\"hidden\" name=\"year\"     value=\"{$cal_date->y}\" />";
+	print "<input type=\"hidden\" name=\"action\"   value=\"{$action}\"      />";
+	print "<input type=\"hidden\" name=\"filterev\" value=\"{$filterev}\"    />";
+	print "<input type=\"hidden\" name=\"filtersx\" value=\"{$filtersx}\"    />";
+	print "<input type=\"hidden\" name=\"filterof\" value=\"{$filterof}\"    />";
+}
 print '<table class="facts_table '.$TEXT_DIRECTION.' width100">';
 print '<tr><td class="facts_label" colspan="8"><h2>';
 
@@ -120,16 +133,6 @@ case 'year':
 print '</h2></td></tr>';
 
 if ($view!='preview') {
-	// Calendar form
-	print '<form name="dateform" method="get" action="calendar.php">';
-	print "<input type=\"hidden\" name=\"cal\"      value=\"{$cal}\"         />";
-	print "<input type=\"hidden\" name=\"day\"      value=\"{$cal_date->d}\" />";
-	print "<input type=\"hidden\" name=\"month\"    value=\"{$cal_month}\"   />";
-	print "<input type=\"hidden\" name=\"year\"     value=\"{$cal_date->y}\" />";
-	print "<input type=\"hidden\" name=\"action\"   value=\"{$action}\"      />";
-	print "<input type=\"hidden\" name=\"filterev\" value=\"{$filterev}\"    />";
-	print "<input type=\"hidden\" name=\"filtersx\" value=\"{$filtersx}\"    />";
-	print "<input type=\"hidden\" name=\"filterof\" value=\"{$filterof}\"    />";
 	// Day selector
 	print '<tr><td class="descriptionbox vmiddle">';
 	print_help_link('annivers_date_select_help', 'qm', 'day');
@@ -305,7 +308,7 @@ if ($view!='preview') {
 	}
 	print "</td></tr>";
 } // print preview
-print "</table>";
+print "</table>\n</form>\n";
 
 // Convert event filter option to a list of gedcom event codes
 if ($filterev=='all')
@@ -394,23 +397,37 @@ case 'calendar':
 switch ($action) {
 case 'year':
 case 'today':
-	print "<table class=\"center {$TEXT_DIRECTION}\"><tr>";
+	print "<table class=\"center {$TEXT_DIRECTION} width100\"><tr>";
 	// Table headings
-	print "<td class=\"descriptionbox center\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['indis']['small']}\" border=\"0\" title=\"{$pgv_lang['individuals']}\" alt=\"{$pgv_lang['individuals']}\" />{$pgv_lang['individuals']}</td>";
-	print "<td class=\"descriptionbox center\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['cfamily']['small']}\" border=\"0\" title=\"{$pgv_lang['families']}\" alt=\"{$pgv_lang['families']}\" />{$pgv_lang['families']}</td>";
+	print "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['indis']['small']}\" border=\"0\" title=\"{$pgv_lang['individuals']}\" alt=\"{$pgv_lang['individuals']}\" />&nbsp;&nbsp;&nbsp;{$pgv_lang['individuals']}</td>";
+	print "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['cfamily']['small']}\" border=\"0\" title=\"{$pgv_lang['families']}\" alt=\"{$pgv_lang['families']}\" />&nbsp;&nbsp;&nbsp;{$pgv_lang['families']}</td>";
 	print "</tr><tr>";
 	// Table rows
 	$males=0;
 	$females=0;
 	$numfams=0;
-	print "<td class=\"optionbox {$TEXT_DIRECTION}\">";
-	print "<ul>";
+	print "<td class=\"optionbox {$TEXT_DIRECTION} wrap\">";
+	
+	// Avoid an empty unordered list
+	ob_start();
 	print calendar_list_text($indis, "<li>", "</li>", true);
-	print '</ul>';
+	$content = ob_get_clean();
+	if (!empty($content)) {
+		echo '<ul>', $content, '</ul>';
+	}
+	
 	print '</td>';
-	print "<td class=\"optionbox {$TEXT_DIRECTION}\"><ul>";
+	print "<td class=\"optionbox {$TEXT_DIRECTION} wrap\">";
+	
+	// Avoid an empty unordered list
+	ob_start();
 	print calendar_list_text($fams, "<li>", "</li>", true);
-	print '</ul></td>';
+	$content = ob_get_clean();
+	if (!empty($content)) {
+		echo '<ul>', $content, '</ul>';
+	}
+	
+	echo '</td>';
 	print "</tr><tr>";
 	// Table footers
 	print "<td class=\"descriptionbox\">{$pgv_lang['total_indis']} ";
@@ -511,7 +528,7 @@ if ($view=="preview") {
 		$filtertext="({$pgv_lang['filter']}: {$filtertext})";
 	echo '<br />', get_gedcom_setting(PGV_GED_ID, 'title'), ' ', $filtertext;
 }
-print "</table>";
+// print "</table>";
 print "</div><br />";
 print_footer();
 

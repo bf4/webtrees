@@ -3,7 +3,7 @@
  * Compact pedigree tree
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ if ($view != "preview") {
 		print "<td class=\"optionbox\">\n";
 		print "<input name=\"showids\" type=\"checkbox\" value=\"1\"";
 		if ($showids) print " checked=\"checked\"";
-		print "></td>\n</tr>\n";
+		print " /></td>\n</tr>\n";
 	}
 
 	if ($SHOW_HIGHLIGHT_IMAGES) {
@@ -112,7 +112,7 @@ if ($view != "preview") {
 		print "<td class=\"optionbox\">\n";
 		print "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
 		if ($showthumbs) print " checked=\"checked\"";
-		print "></td>\n</tr>\n";
+		print " /></td>\n</tr>\n";
 	}
 
 	print "</table>";

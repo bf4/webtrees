@@ -3,7 +3,7 @@
  * PopUp Window to provide users with a simple quick update form.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1522,7 +1522,7 @@ function checkform(frm) {
 		  <td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
 		  <?php
 		for($i=1; $i<=count($sfams); $i++) {
-			print "<td id=\"pagetab{$i}bottom\" class=\"tab_inactive_bottom\"><img src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["spacer"]["other"]."\" width=\"1\" height=\"1\" alt=\"\"/></td>\n";
+			print "<td id=\"pagetab{$i}bottom\" class=\"tab_inactive_bottom\"><img src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["spacer"]["other"]."\" width=\"1\" height=\"1\" alt=\"\" /></td>\n";
 		}
 		for($j=1; $j<=count($cfams); $j++) {
 			print "<td id=\"pagetab{$i}bottom\" class=\"tab_inactive_bottom\"><img src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["spacer"]["other"]."\" width=\"1\" height=\"1\" alt=\"\" /></td>\n";
@@ -1549,14 +1549,12 @@ function checkform(frm) {
 <tr><td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $pgv_lang["hebrew_surn"];?></td>
 <td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HSURN" value="<?php print PrintReady(htmlspecialchars($HSURN)); ?>" /></td></tr>
 <?php $tabkey++; ?>
-</tr>
 <tr><td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); print $pgv_lang["roman_givn"];?></td>
 <td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RGIVN" value="<?php print PrintReady(htmlspecialchars($RGIVN)); ?>" /></td></tr>
 <?php $tabkey++; ?>
 <tr><td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $pgv_lang["roman_surn"];?></td>
 <td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RSURN" value="<?php print PrintReady(htmlspecialchars($RSURN)); ?>" /></td></tr>
 <?php $tabkey++; ?>
-</tr>
 <?php } ?>
 
 <tr>
@@ -1919,7 +1917,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	</tr>
 	<?php $tabkey++; ?>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="BPLAC<?php echo $i; ?>" id="bplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="BPLAC<?php echo $i; ?>" id="bplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("bplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -1930,7 +1928,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	</tr>
 	<?php $tabkey++; ?>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="DPLAC<?php echo $i; ?>" id="dplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="DPLAC<?php echo $i; ?>" id="dplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("dplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2040,11 +2038,10 @@ $chil = find_children_in_record($famrec);
 		<td class="topbottombar" colspan="4"><?php print $pgv_lang["children"]; ?></td>
 	</tr>
 	<tr>
-			<input type="hidden" name="F<?php echo $i; ?>CDEL" value="" />
-					<td class="descriptionbox"><?php print $pgv_lang["name"]; ?></td>
-					<td class="descriptionbox center"><?php print $factarray["SEX"]; ?></td>
-					<td class="descriptionbox"><?php print $factarray["BIRT"]; ?></td>
-					<td class="descriptionbox"><?php print $pgv_lang["remove"]; ?></td>
+		<td class="descriptionbox"><?php print $pgv_lang["name"]; ?></td>
+		<td class="descriptionbox center"><?php print $factarray["SEX"]; ?></td>
+		<td class="descriptionbox"><?php print $factarray["BIRT"]; ?></td>
+		<td class="descriptionbox"><input type="hidden" name="F<?php echo $i; ?>CDEL" value="" /><?php print $pgv_lang["remove"]; ?></td>
 	</tr>
 			<?php
 				foreach($chil as $c=>$child) {
@@ -2149,7 +2146,7 @@ if (empty($child_surname)) $child_surname = "";
 	</tr>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor1x" id="canchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."place"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2163,7 +2160,7 @@ if (empty($child_surname)) $child_surname = "";
 	</tr>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor1x" id="canchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."dplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2234,7 +2231,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="BPLAC" id="bplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="BPLAC" id="bplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("bplace"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2249,7 +2246,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="DPLAC" id="dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="DPLAC" id="dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("dplace"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2265,7 +2262,7 @@ if (empty($child_surname)) $child_surname = "";
 <tr><td class="descriptionbox">
 		<?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" date="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="MDATE" id="MDATE" onblur="valid_date(this);" /><?php print_calendar_popup("MDATE");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="MDATE" id="MDATE" onblur="valid_date(this);" /><?php print_calendar_popup("MDATE");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>
@@ -2333,7 +2330,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="CPLAC" id="cplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor2x" id="canchor2x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="CPLAC" id="cplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("cplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2348,7 +2345,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="CDPLAC" id="cdplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor2x" id="canchor2x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="CDPLAC" id="cdplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("cdplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2426,7 +2423,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	}
 	else print $label." ".$pgv_lang["unknown"];
 	print "</td></tr>";
-	print "<tr><td class=\"descriptionbox\">".$pgv_lang["enter_pid"]."<td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"FATHER[$i]\" id=\"FATHER$i\" value=\"".$parents['HUSB']."\" />";
+	print "<tr><td class=\"descriptionbox\">".$pgv_lang["enter_pid"]."</td><td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"FATHER[$i]\" id=\"FATHER$i\" value=\"".$parents['HUSB']."\" />";
 	print_findindi_link("FATHER$i","");
 	print "</td></tr>";
 ?>
@@ -2484,7 +2481,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="FBPLAC<?php echo $i; ?>" id="Fbplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="FBPLAC<?php echo $i; ?>" id="Fbplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("Fbplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2499,7 +2496,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="FDPLAC<?php echo $i; ?>" id="Fdplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="danchor1x" id="danchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="FDPLAC<?php echo $i; ?>" id="Fdplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("Fdplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2530,7 +2527,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	}
 	else print $label." ".$pgv_lang["unknown"];
 	print "</td></tr>\n";
-	print "<tr><td  class=\"descriptionbox\">".$pgv_lang["enter_pid"]."<td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"MOTHER[$i]\" id=\"MOTHER$i\" value=\"".$parents['WIFE']."\" />";
+	print "<tr><td  class=\"descriptionbox\">".$pgv_lang["enter_pid"]."</td><td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"MOTHER[$i]\" id=\"MOTHER$i\" value=\"".$parents['WIFE']."\" />";
 	print_findindi_link("MOTHER$i","");
 	?>
 </td></tr>
@@ -2588,7 +2585,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="MBPLAC<?php echo $i; ?>" id="Mbplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="MBPLAC<?php echo $i; ?>" id="Mbplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("Mbplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2603,7 +2600,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="MDPLAC<?php echo $i; ?>" id="Mdplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="danchor1x" id="danchor1x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="MDPLAC<?php echo $i; ?>" id="Mdplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("Mdplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
@@ -2619,6 +2616,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"]; ?></td>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"]; ?></td>
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
+</tr>
 <?php
 foreach($famfacts as $f=>$fact) {
 	$fact_tag = $fact[0];
@@ -2626,48 +2624,47 @@ foreach($famfacts as $f=>$fact) {
 	$plac = get_gedcom_value("PLAC", 2, $fact[1], '', false);
 	$temp = get_gedcom_value("TEMP", 2, $fact[1], '', false);
 	?>
-			<tr>
-				<td class="descriptionbox">
-				<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag]; 
-					else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag]; 
-					else print $fact_tag;
-				?>
-					<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
-				</td>
-				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" /><?php print_calendar_popup("F{$i}DATE$f");?></td>
-				<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
-					<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac)); ?>" />
-					<?php print_findplace_link("F".$i."place$f"); ?>
-                         </td>
-				<?php }
-				else {
-					print "<td class=\"optionbox\"><select tabindex=\"".$tabkey."\" name=\"F".$i."TEMP[]\" >\n";
-					print "<option value=''>".$pgv_lang["no_temple"]."</option>\n";
-					foreach($TEMPLE_CODES as $code=>$temple) {
-						print "<option value=\"$code\"";
-						if ($code==$temp) print " selected=\"selected\"";
-						print ">$temple</option>\n";
-					}
-					print "</select>\n</td>\n";
-					$tabkey++;
-				}
-				?>
-				<td class="optionbox center">
-					<input type="hidden" name="F<?php echo $i; ?>REMS[<?php echo $f; ?>]" id="F<?php echo $i; ?>REM<?php echo $f; ?>" value="0" />
-					<?php if (!$fact[2]) { ?>
-					<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php print $pgv_lang["confirm_remove"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
-						<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["delete"]; ?>" />
-					</a>
-					<?php } ?>
-				</td>
-			</tr>
-			<?php if ($SHOW_QUICK_RESN) {
-				print_quick_resn("F".$i."RESNS[]");
-			} ?>
+	<tr>
+		<td class="descriptionbox">
+		<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag]; 
+			else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag]; 
+			else print $fact_tag;
+		?>
+			<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
+		</td>
+		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" /><?php print_calendar_popup("F{$i}DATE$f");?></td>
+		<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
+			<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac)); ?>" />
+			<?php print_findplace_link("F".$i."place$f"); ?>
+                 </td>
+		<?php }
+		else {
+			print "<td class=\"optionbox\"><select tabindex=\"".$tabkey."\" name=\"F".$i."TEMP[]\" >\n";
+			print "<option value=''>".$pgv_lang["no_temple"]."</option>\n";
+			foreach($TEMPLE_CODES as $code=>$temple) {
+				print "<option value=\"$code\"";
+				if ($code==$temp) print " selected=\"selected\"";
+				print ">$temple</option>\n";
+			}
+			print "</select>\n</td>\n";
+			$tabkey++;
+		}
+		?>
+		<td class="optionbox center">
+			<input type="hidden" name="F<?php echo $i; ?>REMS[<?php echo $f; ?>]" id="F<?php echo $i; ?>REM<?php echo $f; ?>" value="0" />
+			<?php if (!$fact[2]) { ?>
+			<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php print $pgv_lang["confirm_remove"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
+				<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["delete"]; ?>" />
+			</a>
+			<?php } ?>
+		</td>
+	</tr>
+	<?php if ($SHOW_QUICK_RESN) {
+		print_quick_resn("F".$i."RESNS[]");
+	} ?>
 	<?php
 }
 ?>
-</tr>
 <?php
 // NOTE: Add new fact
 ?>
@@ -2716,58 +2713,57 @@ $chil = find_children_in_record($famrec, $pid);
 		<td class="topbottombar" colspan="4"><?php print $pgv_lang["children"]; ?></td>
 	</tr>
 	<tr>
-		<input type="hidden" name="F<?php echo $i; ?>CDEL" value="" />
-					<td class="descriptionbox"><?php print $pgv_lang["name"]; ?></td>
-					<td class="descriptionbox center"><?php print $factarray["SEX"]; ?></td>
-					<td class="descriptionbox"><?php print $factarray["BIRT"]; ?></td>
-					<td class="descriptionbox"><?php print $pgv_lang["remove"]; ?></td>
-				</tr>
-			<?php
-				foreach($chil as $c=>$child) {
-					print "<tr><td class=\"optionbox\">";
-					$name = get_person_name($child);
-					$disp = displayDetailsById($child);
-					if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
-					$name .= " [".$pgv_lang["edit"]."]";
-					if ($disp||showLivingNameById($child)) {
-						print "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
-						print PrintReady($name);
-						print "</a>";
+		<td class="descriptionbox"><?php print $pgv_lang["name"]; ?></td>
+		<td class="descriptionbox center"><?php print $factarray["SEX"]; ?></td>
+		<td class="descriptionbox"><?php print $factarray["BIRT"]; ?></td>
+		<td class="descriptionbox"><?php print $pgv_lang["remove"]; ?><input type="hidden" name="F<?php echo $i; ?>CDEL" value="" /></td>
+	</tr>
+	<?php
+		foreach($chil as $c=>$child) {
+			print "<tr><td class=\"optionbox\">";
+			$name = get_person_name($child);
+			$disp = displayDetailsById($child);
+			if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
+			$name .= " [".$pgv_lang["edit"]."]";
+			if ($disp||showLivingNameById($child)) {
+				print "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
+				print PrintReady($name);
+				print "</a>";
+			}
+			else print $pgv_lang["private"];
+			$childrec = find_person_record($child);
+			print "</td>\n<td class=\"optionbox center\">";
+			if ($disp) {
+				print get_gedcom_value("SEX", 1, $childrec);
+			}
+			print "</td>\n<td class=\"optionbox\">";
+			if ($disp) {
+				$birtrec = get_sub_record(1, "1 BIRT", $childrec);
+				if (!empty($birtrec)) {
+					if (showFact("BIRT", $child) && !FactViewRestricted($child, $birtrec)) {
+						print get_gedcom_value("DATE", 2, $birtrec);
+						print " -- ";
+						print get_gedcom_value("PLAC", 2, $birtrec);
 					}
-					else print $pgv_lang["private"];
-					$childrec = find_person_record($child);
-					print "</td>\n<td class=\"optionbox center\">";
-					if ($disp) {
-						print get_gedcom_value("SEX", 1, $childrec);
-					}
-					print "</td>\n<td class=\"optionbox\">";
-					if ($disp) {
-						$birtrec = get_sub_record(1, "1 BIRT", $childrec);
-						if (!empty($birtrec)) {
-							if (showFact("BIRT", $child) && !FactViewRestricted($child, $birtrec)) {
-								print get_gedcom_value("DATE", 2, $birtrec);
-								print " -- ";
-								print get_gedcom_value("PLAC", 2, $birtrec);
-							}
-						}
-					}
-					print "</td>\n";
-					?>
-					<td class="optionbox center">
-						<a href="javascript: <?php print $pgv_lang["remove_child"]; ?>" onclick="document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); return false;">
-							<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["remove_child"]; ?>" />
-						</a>
-					</td>
-					<?php
-					print "</tr>\n";
 				}
+			}
+			print "</td>\n";
 			?>
-			<tr>
-				<td class="descriptionbox"><?php print $pgv_lang["add_child_to_family"]; ?></td>
-				<td class="optionbox" colspan="3"><input type="text" size="10" name="CHIL[]" id="CHIL<?php echo $i; ?>" />
-                                <?php print_findindi_link("CHIL$i","");?>
-                                </td>
-			</tr>
+			<td class="optionbox center">
+				<a href="javascript: <?php print $pgv_lang["remove_child"]; ?>" onclick="document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); return false;">
+					<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["remove_child"]; ?>" />
+				</a>
+			</td>
+			<?php
+			print "</tr>\n";
+		}
+	?>
+	<tr>
+		<td class="descriptionbox"><?php print $pgv_lang["add_child_to_family"]; ?></td>
+		<td class="optionbox" colspan="3"><input type="text" size="10" name="CHIL[]" id="CHIL<?php echo $i; ?>" />
+                        <?php print_findindi_link("CHIL$i","");?>
+                        </td>
+	</tr>
 <?php
 // NOTE: Add a child
 ?>
@@ -2824,7 +2820,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor3x" id="canchor3x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."place"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2839,7 +2835,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<?php $tabkey++; ?>
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
-	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor3x" id="canchor3x" alt="" />
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."dplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2852,7 +2848,7 @@ $chil = find_children_in_record($famrec, $pid);
 }
 if (PGV_USER_IS_ADMIN) {
 	print "<table class=\"facts_table width80\">\n";
-	print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap>";
+	print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap\">";
 	print_help_link("no_update_CHAN_help", "qm");
 	print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 	print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";

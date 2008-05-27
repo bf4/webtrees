@@ -3,7 +3,7 @@
  * Various functions used by the Edit interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -478,8 +478,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
-	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
-	print "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
+//	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
+//	print "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
+	print "<form method=\"post\" name=\"addchildform\" action=\"{$nextaction}\" onsubmit=\"return checkform();\">\n";
 	print "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	print "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
@@ -772,10 +773,10 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		return false;
 	}
 	function trim(str) {
-		//-- See the NAME_TEXT portion of the GEDCOM spec
-		//-- according to GEDCOM spec commas should not be allowed in NAME_TEXT, but
-		//-- some localization requirements require commas
-		//-- str=str.replace(/,/g," ");
+		// See the NAME_TEXT portion of the GEDCOM spec
+		// according to GEDCOM spec commas should not be allowed in NAME_TEXT, but
+		// some localization requirements require commas
+		// str=str.replace(/,/g," ");
 		
 		str=str.replace(/\s\s+/g," ");
 		return str.replace(/(^\s+)|(\s+$)/g,'');
@@ -847,7 +848,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var element = document.getElementById(eid);
 		if (element) {
 			if (element.type=="hidden") {
-				//-- IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
+				// IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
 				if (IE) {
 					var newInput = document.createElement('input');
 					newInput.setAttribute("type", "text");
@@ -868,7 +869,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				var delement = document.getElementById(eid+"_display");
 				if (delement) {
 					delement.style.display='none';
-					//-- force FF ui to update the display
+					// force FF ui to update the display
 					if (delement.innerHTML != oldName) {
 						oldName = delement.innerHTML;
 						element.value = oldName;
@@ -877,7 +878,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			}
 			else {
 				manualChange = false;
-				//-- IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
+				// IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
 				if (IE) {
 					var newInput = document.createElement('input');
 					newInput.setAttribute("type", "hidden");
@@ -936,6 +937,45 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					ip[i].value='';
 		}
 		return true;
+	}
+
+	function valid_lati_long(field, pos, neg) {
+		// valid LATI or LONG according to Gedcom standard
+		// pos (+) : N or E
+		// neg (-) : S or W
+		txt=field.value.toUpperCase();
+		txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
+		txt=txt.replace(/ /g,':'); // N12 34 ==> N12:34
+		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
+		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
+		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
+		// 0�34'11 ==> 0:34:11
+		txt=txt.replace(/\uB0/g,':'); // �
+		txt=txt.replace(/\u27/g,':'); // '
+		// 0:34:11.2W ==> W0.5698
+		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
+		// 0:34W ==> W0.5667
+		txt=txt.replace(/^([0-9]+):([0-9]+)(.*)/g, function($0, $1, $2, $3) { var n=parseFloat($1); n+=($2/60); n=Math.round(n*1E4)/1E4; return $3+n; });
+		// 0.5698W ==> W0.5698
+		txt=txt.replace(/(.*)([N|S|E|W]+)$/g,'$2$1');
+		// 17.1234 ==> N17.1234
+		if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
+		field.value = txt;
+	}
+	
+	function toggle_lati_long() {
+		tr = document.getElementsByTagName('tr');
+		for (var i=0; i<tr.length; i++) {
+			if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
+				var disp = tr[i].style.display;
+				if (disp=="none") {
+					disp="table-row";
+					if (document.all && !window.opera) disp = "inline"; // IE
+				}
+				else disp="none";
+				tr[i].style.display=disp;
+			}
+		}
 	}
 	//-->
 	</script>
@@ -1039,52 +1079,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	$subnamefacts = array("NPFX", "GIVN", "SPFX", "SURN", "NSFX", "_MARNM_SURN");
 	@list($level, $fact, $value) = explode(" ", $tag);
-
-	if ($fact=="LATI" || $fact=="LONG") {
-	?>
-	<script type="text/javascript">
-	<!--
-	function valid_lati_long(field, pos, neg) {
-		// valid LATI or LONG according to Gedcom standard
-		// pos (+) : N or E
-		// neg (-) : S or W
-		txt=field.value.toUpperCase();
-		txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
-		txt=txt.replace(/ /g,':'); // N12 34 ==> N12:34
-		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
-		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
-		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
-		// 0�34'11 ==> 0:34:11
-		txt=txt.replace(/\uB0/g,':'); // �
-		txt=txt.replace(/\u27/g,':'); // '
-		// 0:34:11.2W ==> W0.5698
-		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
-		// 0:34W ==> W0.5667
-		txt=txt.replace(/^([0-9]+):([0-9]+)(.*)/g, function($0, $1, $2, $3) { var n=parseFloat($1); n+=($2/60); n=Math.round(n*1E4)/1E4; return $3+n; });
-		// 0.5698W ==> W0.5698
-		txt=txt.replace(/(.*)([N|S|E|W]+)$/g,'$2$1');
-		// 17.1234 ==> N17.1234
-		if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
-		field.value = txt;
-	}
-	function toggle_lati_long() {
-		tr = document.getElementsByTagName('tr');
-		for (var i=0; i<tr.length; i++) {
-			if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
-				var disp = tr[i].style.display;
-				if (disp=="none") {
-					disp="table-row";
-					if (document.all && !window.opera) disp = "inline"; // IE
-				}
-				else disp="none";
-				tr[i].style.display=disp;
-			}
-		}
-	}
-	//-->
-	</script>
-	<?php
-	}
 
 	// element name : used to POST data
 	if ($level==0) {
@@ -1205,7 +1199,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($level<=1) {
 			print "<input type=\"checkbox\" ";
 			if ($value=="Y") print " checked=\"checked\"";
-			print " onClick=\"if (this.checked) ".$element_id.".value='Y'; else ".$element_id.".value=''; \" />";
+			print " onclick=\"if (this.checked) ".$element_id.".value='Y'; else ".$element_id.".value=''; \" />";
 			print $pgv_lang["yes"];
 		}
 	}
@@ -1226,7 +1220,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		               "WIFE"=>$factarray["WIFE"]) as $k=>$v) {
 			print "<option value='$k'";
 			if ($value==$k)
-				print " selected";
+				print " selected=\"selected\"";
 			print ">$v</option>";
 		}
 		print "</select>\n";
@@ -1240,7 +1234,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 									 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
 			print "<option value='$k'";
 			if (str2lower($value)==$k)
-				print " selected";
+				print " selected=\"selected\"";
 			print ">$v</option>";
 		}
 		print "</select>\n";
@@ -1360,9 +1354,9 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value))."\" >";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value))."\" />";
 		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value))."</span>";
-		print " <a href=\"#edit_name\" alt=\"".$pgv_lang["edit_name"]."\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
+		print " <a href=\"#edit_name\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
 		if (isset($PGV_IMAGES["edit_indi"]["small"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" />";
 		else print "<span class=\"age\">[".$pgv_lang["edit_name"]."]</span>";
 		print "</a>";
@@ -1372,9 +1366,9 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		else {
 			// text
 			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
-			if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
-			// onKeyUp should suffice.  Why the others?
-			if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
+			// if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
+			// onkeyup should suffice.  Why the others?
+			if (in_array($fact, $subnamefacts)) print " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
 			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
 			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
 			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
@@ -1479,12 +1473,12 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// pastable values
 	if ($readOnly=="") {
-		if ($fact=="NPFX") {
+/*		if ($fact=="NPFX") {
 			$text = $pgv_lang["autocomplete"];
 			if (isset($PGV_IMAGES["autocomplete"]["button"])) $Link = "<img id=\"".$element_id."_spec\" name=\"".$element_id."_spec\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["autocomplete"]["button"]."\"  alt=\"".$text."\"  title=\"".$text."\" border=\"0\" align=\"middle\" />";
 			else $Link = $text;
 			print "&nbsp;".$Link;
-		}
+		} */
 		if ($fact=="SPFX") print_autopaste_link($element_id, $SPFX_accept);
 		if ($fact=="NSFX") print_autopaste_link($element_id, $NSFX_accept);
 		if ($fact=="FORM") print_autopaste_link($element_id, $FILE_FORM_accept, false, false);

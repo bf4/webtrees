@@ -5,7 +5,7 @@
  * Processes PGV XML Reports and generates a report
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -225,15 +225,15 @@ function paste_id(value) {
 					}
 					if ($input["type"]=="checkbox") {
 						print "<input type=\"checkbox\" name=\"vars[".$input["name"]."]\" id=\"".$input["name"]."\" value=\"1\"";
-						if ($input["default"]=="1") print "checked=\"checked\"";
+						if ($input["default"]=="1") print " checked=\"checked\"";
 						print " />";
 					}
 					if ($input["type"]=="select") {
 						print "<select name=\"vars[".$input["name"]."]\" id=\"".$input["name"]."_var\">\n";
 						$options = preg_split("/[, ]+/", $input["options"]);
 						foreach($options as $indexval => $option) {
-							print "\t<option value=\"$option\" ";
-							if ($option==$input["default"]) print "selected=\"selected\"";
+							print "\t<option value=\"$option\"";
+							if ($option==$input["default"]) print " selected=\"selected\"";
 							print ">";
 							if (isset($pgv_lang[$option])) print $pgv_lang[$option];
 							else if (isset($factarray[$option])) print $factarray[$option];

@@ -3,7 +3,7 @@
  * Online UI for editing config.php site configuration variables
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -371,7 +371,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 		print "</b></a><br /><br />\n";
 	}
 	$tab = 0;
-	print "</div></td></tr>";
+	print "</div></td></tr></table>";
 ?>
 	<table class="facts_table">
 	<tr>
@@ -535,7 +535,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 						$LangName = $SortedLangs[$LocalName];
 						print "<td class=\"optionbox\"><input type=\"checkbox\" name=\"NEW_LANGS[".$LangName."]\" value=\"".$LangName."\"";
 						if ($pgv_lang_use[$LangName] == true) {
-							print "checked=\"checked\"";
+							print " checked=\"checked\"";
 						}
 						print "/></td>";
 						print "<td class=\"descriptionbox width30\">".$LocalName."</td>\n";

@@ -3,7 +3,7 @@
  * Login Page.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,9 +41,9 @@ $ged     =safe_POST('ged', get_all_gedcoms(), $GEDCOM);
 $help_message=safe_GET('help_messge');
 
 // Some variables can come from the URL as well as the form
-if (!$url)    $url   =safe_GET('url', PGV_REGEX_URL);
-if (!$type)   $type  =safe_GET('type', array('full', 'simple'), 'full');
-if (!$action) $action=safe_GET('action');
+if (!$url)    $url =safe_GET('url', PGV_REGEX_URL);
+if (!$type)   $type=safe_GET('type', array('full', 'simple'), 'full');
+if (!$action) $type=safe_GET('action');
 
 $message='';
 
@@ -88,8 +88,8 @@ if ($action=='login') {
 		if ($remember=="yes") setcookie("pgv_rem", $username, time()+60*60*24*7);
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
-		$url .= "&ged=".$ged; 
-		$url = str_replace(array(".php&amp;", ".php&"), ".php?", $url);
+		$url .= "&ged=".$ged;
+		$url = htmlentities(str_replace(array("&&", ".php&"), array("&", ".php?"), html_entity_decode($url)));
 		
 		header("Location: ".$url);
 		exit;

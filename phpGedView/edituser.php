@@ -3,7 +3,7 @@
  * User Account Edit Interface.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -154,45 +154,49 @@ if ($form_action=='update') {
 }
 
 // Form validation
-echo '<script type="text/javascript">';
-echo '	function checkform(frm) {';
-echo '		if (frm.form_username.value=="") {';
-echo '			alert("', $pgv_lang['enter_username'], '");';
-echo '			frm.form_username.focus();';
-echo '			return false;';
-echo '		}';
-echo '		if (frm.form_firstname.value=="") {';
-echo '			alert("', $pgv_lang['enter_fullname'], '");';
-echo '			frm.form_firstname.focus();';
-echo '			return false;';
-echo '		}';
-echo '		if (frm.form_lastname.value=="") {';
-echo '			alert("', $pgv_lang['enter_fullname'], '");';
-echo '			frm.form_lastname.focus();';
-echo '			return false;';
-echo '		}';
-echo '		if (frm.form_email.value.indexOf("@")==-1) {';
-echo '			alert("', $pgv_lang['enter_email'], '");';
-echo '			frm.user_email.focus();';
-echo '			return false;';
-echo '		}';
-echo '		if (frm.form_pass1.value!=frm.form_pass2.value) {';
-echo '			alert("', $pgv_lang['password_mismatch'], '");';
-echo '			frm.form_pass1.focus();';
-echo '			return false;';
-echo '		}';
-echo '		if (frm.form_pass1.value.length > 0 && frm.form_pass1.value.length < 6) {';
-echo '			alert("', $pgv_lang['passwordlength'], '");';
-echo '			frm.form_pass1.focus();';
-echo '			return false;';
-echo '		}';
-echo '		return true;';
-echo '	}';
-echo '	var pastefield;';
-echo '	function paste_id(value) {';
-echo '		pastefield.value=value;';
-echo '	}';
-echo '</script>';
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
+function checkform(frm) {
+	if (frm.form_username.value=="") {
+		alert("<?php print $pgv_lang['enter_username'];?>");
+		frm.form_username.focus();
+		return false;
+	}
+	if (frm.form_firstname.value=="") {
+		alert("<?php print $pgv_lang['enter_fullname'];?>");
+		frm.form_firstname.focus();
+		return false;
+	}
+	if (frm.form_lastname.value=="") {
+		alert("<?php print $pgv_lang['enter_fullname'];?>);
+		frm.form_lastname.focus();
+		return false;
+	}
+	if (frm.form_email.value.indexOf("@")==-1) {
+		alert("<?php print $pgv_lang['enter_email'];?>);
+		frm.user_email.focus();
+		return false;
+	}
+	if (frm.form_pass1.value!=frm.form_pass2.value) {
+		alert("<?php print $pgv_lang['password_mismatch'];?>);
+		frm.form_pass1.focus();
+		return false;
+	}
+	if (frm.form_pass1.value.length > 0 && frm.form_pass1.value.length < 6) {
+		alert("<?php print $pgv_lang['passwordlength'];?>);
+		frm.form_pass1.focus();
+		return false;
+	}
+	return true;
+}
+var pastefield;
+function paste_id(value) {
+	pastefield.value=value;
+}
+-->
+</script>
+<?php
 
 // show the form to edit a user account details
 $tab=0;
@@ -306,7 +310,7 @@ echo print_help_link('useradmin_visibleonline_help', 'qm', '', false, true);
 echo $pgv_lang['visibleonline'], '</td><td class="optionbox">';
 echo '<input type="checkbox" name="form_visible_online" tabindex="', ++$tab, '" value="yes"';
 if (get_user_setting(PGV_USER_ID, 'visibleonline')=='Y') {
-	echo 'checked="checked"';
+	echo ' checked="checked"';
 }
 echo ' /></td></tr>';
 

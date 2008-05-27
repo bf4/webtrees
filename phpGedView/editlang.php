@@ -3,7 +3,7 @@
  * Display a diff between two language files to help in translating.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -628,20 +628,21 @@ switch ($action) {
 			?></td>
 		</tr>
 		<tr>
-			<td class="facts_value width50"><?php
-				print_help_link("translation_forum_desc", "qm"); ?>
-				<a href="http://sourceforge.net/forum/forum.php?forum_id=294245" target="_blank" ><?php
-				print $pgv_lang["translation_forum"];
-	      	?></td>
-		  	<td class="facts_value width50"><?php
-				print_help_link("compare_lang_utility_help", "qm");
+			<td class="facts_value width50">
+				<?php print_help_link("translation_forum_desc", "qm"); ?>
+				<a href="http://sourceforge.net/forum/forum.php?forum_id=294245" target="_blank" ><?php print $pgv_lang["translation_forum"]; ?></a>
+	      	</td>
+		  	<td class="facts_value width50">
+		  		<?php 
+		  		print_help_link("compare_lang_utility_help", "qm");
 	      		print "<a href=\"editlang.php?action=compare\">".$pgv_lang["compare_lang_utility"]."</a>";
-		  	?></td>
+	      		?>
+		  	</td>
 		</tr>
 		<tr>
 		  	<td class="facts_value" colspan="2">
 		  	<div class="center">
-				<a href="admin.php"><b><?php print $pgv_lang["lang_back_admin"];?></a>
+				<a href="admin.php"><b><?php print $pgv_lang["lang_back_admin"];?></b></a>
 			</div>
 			</td>
 		</tr>

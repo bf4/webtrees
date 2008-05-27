@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,26 +138,26 @@ function warnuser(cbox) {
 			//echo $entry."\n";
 			if ($entry{0} != '.') {
 				if ($ged_id=get_id_from_gedcom($entry)) {
-					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
-					print "<img src=\"./images/RESN_confidential.gif\" />&nbsp;&nbsp;";
+					print "<li class=\"facts_value\" name=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
+					print "<img src=\"./images/RESN_confidential.gif\" alt=\"\" />&nbsp;&nbsp;";
 					print "<span class=\"name2\">".$entry."</span>";
 					print "&nbsp;&nbsp;{$pgv_lang["associated_files"]}<i>&nbsp;&nbsp;".str_replace($path,"",get_gedcom_setting($ged_id, 'privacy'));
 					print "&nbsp;&nbsp;".str_replace($path,"",get_gedcom_setting($ged_id, 'config'))."</i>";
 				}
 				else if (in_array($entry, $locked_by_context)) {
-					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
-					print "<img src=\"./images/RESN_confidential.gif\" />&nbsp;&nbsp;";
+					print "<li class=\"facts_value\" name=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
+					print "<img src=\"./images/RESN_confidential.gif\" alt=\"\" />&nbsp;&nbsp;";
 					print "<span class=\"name2\">".$entry."</span>";
 				}
 				else if (in_array($entry, $locked_with_warning)) {
-					print "<li class=\"facts_value\" name=\"$entry\" warn=\"true\" alt=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
+					print "<li class=\"facts_value\" name=\"$entry\" warn=\"true\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
 					print "<input type=\"checkbox\" name=\"to_delete[]\" warn=\"true\" value=\"".$entry."\" onclick=\"warnuser(this);\" />\n";
-					print "<img src=\"./images/RESN_locked.gif\" />&nbsp;&nbsp;";
+					print "<img src=\"./images/RESN_locked.gif\" alt=\"\" />&nbsp;&nbsp;";
 					print $entry;
 					$element[] = "li_".$entry;
 				}
 				else{
-					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
+					print "<li class=\"facts_value\" name=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
 					print "<input type=\"checkbox\" name=\"to_delete[]\" value=\"".$entry."\" />\n";
 					print $entry;
 					$element[] = "li_".$entry;
@@ -173,15 +173,15 @@ function warnuser(cbox) {
 
 		print "<div style=\"margin-bottom:2px;\">";
 		print "<table><tr><td>";
-		if (isset($PGV_IMAGES["trashcan"]["medium"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["trashcan"]["medium"]."\" align=\"left\"/>";
-		else print "<img src=\"images/trashcan.gif\" align=\"left\"/>";
+		if (isset($PGV_IMAGES["trashcan"]["medium"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["trashcan"]["medium"]."\" align=\"left\" alt=\"\" />";
+		else print "<img src=\"images/trashcan.gif\" align=\"left\" alt=\"\" />";
 		print "</td>";
 		print "<td valign=\"top\"><ul id=\"trashlist\">";
 		print "</ul></td></tr></table>";
 		print "</div>";
 
 		?> <script type="text/javascript" language="javascript">
-
+	<!--
 	new Effect.BlindDown('reorder_list', {duration: 1});
 	
 		<?php  
@@ -226,6 +226,7 @@ function removeAll() {
 	}
 	document.delete_form.submit();
 }
+// -->
 </script>
 
 		<button type="submit"><?php print $pgv_lang["delete"];?></button>

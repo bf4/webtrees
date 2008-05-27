@@ -2,7 +2,7 @@
  * Common javascript functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1239,4 +1239,30 @@ function toggleByClassName(tagName, className) {
 			elements[i].style.display = disp;
 		}
 	}
+}
+
+/**
+ * Load a CSS file from the body of a document
+ *
+ * CSS files are normally loaded through a <link rel="stylesheet" type="text/css" href="something" />
+ * statement.  This statement is only allowed in the <head> section of the document.
+ *
+ * See : http://www.phpied.com/javascript-include-ready-onload/
+ *
+ */
+function include_css(css_file) {
+    var html_doc = document.getElementsByTagName('head')[0];
+    var css = document.createElement('link');
+    css.setAttribute('rel', 'stylesheet');
+    css.setAttribute('type', 'text/css');
+    css.setAttribute('href', css_file);
+    html_doc.appendChild(css);
+}
+
+function include_js(file) {
+    var html_doc = document.getElementsByTagName('head')[0];
+    var js = document.createElement('script');
+    js.setAttribute('type', 'text/javascript');
+    js.setAttribute('src', file);
+    html_doc.appendChild(js);
 }

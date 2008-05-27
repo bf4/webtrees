@@ -6,7 +6,7 @@
  * used on the indilist, famlist, find, and search pages.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1381,12 +1381,13 @@ function print_changes_table($datalist) {
 		//-- Record name(s)
 		if ($record->type=="FAM") {
 			$name=$record->getSortableName(true);
-			$exp = explode("<br />", $name);
+/*			$exp = explode("<br />", $name);
 			$husb = $record->getHusband();
 			if ($husb) $exp[0].= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 			$wife = $record->getWife();
 			if ($wife) $exp[1].= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
-			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
+			$name = implode("<div></div>", $exp); // <div></div> is better here than <br /> */
+			$name = strip_tags(str_replace("<br />", " + ", $name));
 		}
 		else $name = $record->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";

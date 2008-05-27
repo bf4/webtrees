@@ -82,7 +82,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 
 	$stats=new stats($GEDCOM);
 
-	$content = "<b><a href=\"index.php?ctype=gedcom\">".get_gedcom_setting(PGV_GED_ID, 'title')."</a></b><br />\n";
+	$content = "<b><a href=\"index.php?ctype=gedcom\">".PrintReady(strip_tags(get_gedcom_setting(PGV_GED_ID, 'title')))."</a></b><br />\n";
 	$head = find_gedcom_record("HEAD");
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 	if ($ct>0) {
@@ -154,7 +154,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		$content .= '</tr>';
 	}
 	if ($config["stat_last_birth"]=="yes") {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_latest_birth"].'</td><td class="facts_value"><div dir="rtl"'.$stats->lastBirthYear().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_latest_birth"].'</td><td class="facts_value"><div dir="rtl">'.$stats->lastBirthYear().'</div></td>';
 		if (!$block){
 			$content .= '<td class="facts_value">'.$stats->lastBirth().'</td>';
 		}
@@ -234,7 +234,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	if ($block) {
 		print '<div class="small_inner_block">'.$content.'</div>';
 	} else {
-		print $content;
+		print '<div style="width: 99%">'.$content.'</div>';
 	}
 	print '</div></div>';
 }

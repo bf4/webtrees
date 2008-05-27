@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a media
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1417,7 +1417,7 @@ if (check_media_structure()) {
 			$uplink2 = "<a href=\"media.php?directory=".rawurlencode($pdir)."&amp;level=".($level-1).$thumbget."\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/";
 			if ($TEXT_DIRECTION=="ltr") $uplink2 .= $PGV_IMAGES["larrow"]["other"];
 			else $uplink2 .= $PGV_IMAGES["rarrow"]["other"];
-			$uplink2 .= "\" alt=\"".PrintReady($pdir)."\" title=\"".PrintReady($pdir)."\"></a>\n";
+			$uplink2 .= "\" alt=\"".PrintReady($pdir)."\" title=\"".PrintReady($pdir)."\" /></a>\n";
 		}
 
 		// Start of media directory table
@@ -1635,10 +1635,10 @@ if (check_media_structure()) {
 							print "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
 							if (!$isExternal) {
 								print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
-								print "<img src=\"".$media["THUMB"]."\" class=\"thumbnail\" border=\"0\" alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\"/></a>\n";
+								print "<img src=\"{$media['THUMB']}\" class=\"thumbnail\" border=\"0\" alt=\"{$mediaTitle}\" title=\"{$mediaTitle}\" /></a>\n";
 							} else {
 								print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
-								print "<img src=\"".$media["FILE"]."\" class=\"thumbnail\" width=\"".$THUMBNAIL_WIDTH."\" border=\"0\" alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\"/></a>\n";
+								print "<img src=\"{$media['FILE']}\" class=\"thumbnail\" width=\"{$THUMBNAIL_WIDTH}\" border=\"0\" alt=\"{$mediaTitle}\" title=\"{$mediaTitle}\" /></a>\n";
 							}
 							print "</td>";
 						}

@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ if ($action=="confighelp") {
 
     for ($z = 0; $z < sizeof($language_array); $z++) {
 		if (isset($language_array[$z][0])) {
-			if (strpos($language_array[$z][0], "_help") > 0) {
+			if (strpos($language_array[$z][0], "_help\"") > 0) {
 				$language_array[$z][0] = substr($language_array[$z][0], strpos($language_array[$z][0], "\"") + 1);
 		        $language_array[$z][0] = substr($language_array[$z][0], 0, strpos($language_array[$z][0], "\""));
 				$new_language_array[$new_language_array_counter] = $language_array[$z];
