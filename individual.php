@@ -5,7 +5,7 @@
  * Display all of the information about an individual
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				$pgvuser=get_user_from_gedcom_xref($GEDCOM, $controller->pid);
 				if ($pgvuser) {
   				print "&nbsp;";
-					print printReady("(<a href=\"useradmin.php?action=edituser&username={$pgvuser}\">{$pgvuser}</a>)");
+					print printReady("(<a href=\"useradmin.php?action=edituser&amp;username={$pgvuser}\">{$pgvuser}</a>)");
 				}
 			}
 		?>
@@ -142,13 +142,13 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 	?>
 	</td><td class="<?php echo $TEXT_DIRECTION; ?> noprint" valign="top">
 		<div class="accesskeys">
-			<a class="accesskeys" href="<?php print "pedigree.php?rootid=$pid&show_full=$showFull";?>" title="<?php print $pgv_lang["pedigree_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_pedigree"]; ?>"><?php print $pgv_lang["pedigree_chart"] ?></a>
-			<a class="accesskeys" href="<?php print "descendancy.php?pid=$pid&show_full=$showFull";?>" title="<?php print $pgv_lang["descend_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_descendancy"]; ?>"><?php print $pgv_lang["descend_chart"] ?></a>
+			<a class="accesskeys" href="<?php print "pedigree.php?rootid=$pid&amp;show_full=$showFull";?>" title="<?php print $pgv_lang["pedigree_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_pedigree"]; ?>"><?php print $pgv_lang["pedigree_chart"] ?></a>
+			<a class="accesskeys" href="<?php print "descendancy.php?pid=$pid&amp;show_full=$showFull";?>" title="<?php print $pgv_lang["descend_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_descendancy"]; ?>"><?php print $pgv_lang["descend_chart"] ?></a>
 			<a class="accesskeys" href="<?php print "timeline.php?pids[]=$pid";?>" title="<?php print $pgv_lang["timeline_chart"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_timeline"]; ?>"><?php print $pgv_lang["timeline_chart"] ?></a>
 			<?php
 				if (PGV_USER_GEDCOM_ID) {
 			?>
-			<a class="accesskeys" href="<?php print "relationship.php?show_full=$showFull&pid1=".PGV_USER_GEDCOM_ID."&pid2=".$controller->pid;?>" title="<?php print $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php print $pgv_lang["relationship_to_me"] ?></a>
+			<a class="accesskeys" href="<?php print "relationship.php?show_full=$showFull&amp;pid1=".PGV_USER_GEDCOM_ID."&amp;pid2=".$controller->pid;?>" title="<?php print $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php print $pgv_lang["relationship_to_me"] ?></a>
 			<?php 	}
 			if ($controller->canShowGedcomRecord()) {
 			?>
@@ -206,7 +206,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 // javascript function to open a window with the raw gedcom in it
 function show_gedcom_record(shownew) {
 	fromfile="";
-	if (shownew=="yes") fromfile='&fromfile=1';
+	if (shownew=="yes") fromfile='&amp;fromfile=1';
 	var recwin = window.open("gedrecord.php?pid=<?php print $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 }
 <?php if (PGV_USER_CAN_ACCEPT) { ?>
@@ -216,7 +216,7 @@ function open_link_remote(pid){
 }
 
 function showchanges() {
-	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
+	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&amp;show_changes=yes';
 }
 <?php } ?>
 <!-- ====================== Added for Lightbox Module ===================== -->
@@ -511,7 +511,7 @@ if(empty($SEARCH_SPIDER)) {
 	        print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</script></td></tr>\n";
 	        if (PGV_USER_IS_ADMIN) {
 	            print "<tr><td align=\"center\" colspan=\"2\">\n";
-	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+	            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 	            print "</td></tr>\n";
 	        }
 	        print "\n\t</table>\n<br />";
@@ -563,10 +563,10 @@ if(empty($SEARCH_SPIDER)) {
 				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 				            print "</td>\n";
    				            print "<td align=\"center\">\n";
-				            print "<a href=\"module.php?mod=googlemap&pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
 				            print "</td>\n";
    				            print "<td align=\"right\">\n";
-				            print "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
+				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
 				            print "</td></tr>\n";
 				        }
 				        print "</table>\n";

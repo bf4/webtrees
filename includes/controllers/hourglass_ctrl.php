@@ -3,7 +3,7 @@
  * Controller for the Hourglass Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,7 +188,7 @@ class HourglassControllerRoot extends BaseController {
 
 			//-- print an Ajax arrow on the last generation of the adult male
 			if ($count==$this->generations-1 && (count(find_family_ids($ARID))>0) && !is_null (find_family_ids($ARID))) {
-				print "<a href=\"#\" onclick=\"return ChangeDiv('td_".$ARID."','".$ARID."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."')\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" /></a> ";
+				print "<a href=\"#\" onclick=\"return ChangeDiv('td_".$ARID."','".$ARID."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."')\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" /></a> ";
 			}
 			//-- recursively get the father's family
 			$this->print_person_pedigree($parents["HUSB"], $count+1);
@@ -206,7 +206,7 @@ class HourglassControllerRoot extends BaseController {
 
 			//-- print an ajax arrow on the last generation of the adult female
 			if ($count==$this->generations-1 && (count(find_family_ids($ARID))>0) && !is_null (find_family_ids($ARID))) {
-				print "<a href=\"#\" onclick=\"ChangeDiv('td_".$ARID."','".$ARID."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."'); return false;\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" /></a> ";
+				print "<a href=\"#\" onclick=\"ChangeDiv('td_".$ARID."','".$ARID."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."'); return false;\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" /></a> ";
 			}
 
 			//-- recursively print the mother's family
@@ -228,6 +228,7 @@ class HourglassControllerRoot extends BaseController {
 	 */
 	function print_descendency($pid, $count, $showNav=true) {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
+		global $lastGenSecondFam;
 		
 		if ($count>$this->dgenerations) return 0;
 		$person = Person::getInstance($pid);
@@ -242,7 +243,10 @@ class HourglassControllerRoot extends BaseController {
 		//	print $this->dgenerations;
 		print "<!-- print_descendency for $pid -->";
 		//-- put a space between families on the last generation
-		if ($count==$this->dgenerations-1) print "<br />";
+		if ($count==$this->dgenerations-1) {
+			if (isset($lastGenSecondFam)) print "<br />";
+			$lastGenSecondFam = true;
+		}
 
 		print "<table id=\"table_$pid\" align=\"".$tablealign."\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
 		print "<tr>";
@@ -316,7 +320,7 @@ class HourglassControllerRoot extends BaseController {
 			if ($kcount==0) {
 				print "<div style=\"width: ".($this->arrwidth)."px;\"><br /></div>\n</td>\n<td width=\"$bwidth\">";
 			} else {
-				print "<div style=\"width: ".($this->arrwidth)."px;\"><a href=\"$pid\" onclick=\"return ChangeDis('td_".$pid."','".$pid."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."')\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" /></a></div>\n";
+				print "<div style=\"width: ".($this->arrwidth)."px;\"><a href=\"$pid\" onclick=\"return ChangeDis('td_".$pid."','".$pid."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."')\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" /></a></div>\n";
 				//-- move the arrow up to line up with the correct box
 				if ($this->show_spouse) {
 					foreach($families as $famid => $family) {
@@ -423,7 +427,7 @@ class HourglassControllerRoot extends BaseController {
 						}
 					}
 					//-- do we need to print this arrow?
-					print "<img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" /> ";
+					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" /> ";
 
 					//-- print the siblings
 					foreach($cfamids as $famid=>$family) {
@@ -529,7 +533,7 @@ class HourglassControllerRoot extends BaseController {
 		pastefield.value=value;
 	}
 	
-	// <!--Hourglass control..... Ajax arrows at the end of chart-->
+	// Hourglass control..... Ajax arrows at the end of chart
  	function ChangeDiv(div_id, ARID, full, spouse, width) {
  		var divelement = document.getElementById(div_id);
  		var oXmlHttp = createXMLHttp();	
@@ -546,7 +550,7 @@ class HourglassControllerRoot extends BaseController {
   		return false;
 	}
 	
-	// <!--Hourglass control..... Ajax arrows at the end of descendants chart-->
+	// Hourglass control..... Ajax arrows at the end of descendants chart
 	function ChangeDis(div_id, ARID, full, spouse, width) {
  		var divelement = document.getElementById(div_id);
  		var oXmlHttp = createXMLHttp();	

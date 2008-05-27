@@ -3,7 +3,7 @@
  * Administrative User Interface.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -233,7 +233,7 @@ if ($action=='createuser' || $action=='edituser2') {
 					}
 				}
 				// Reload the form cleanly, to allow the user to verify their changes
-				header("Location: useradmin.php?action=edituser&username={$username}");
+				header("Location: useradmin.php?action=edituser&amp;username={$username}");
 				exit;
 			}
 		}
@@ -643,7 +643,10 @@ if ($action == "listusers") {
 			else print "\t<td class=\"optionbox wrap\">".$user_name;
 		}
 		else print "\t<td class=\"optionbox wrap\">".$user_name;
-		if (get_user_setting($user_id, "comment")) print "<br /><img class=\"adminicon\" align=\"top\" alt=\"".PrintReady(stripslashes(get_user_setting($user_id, "comment")))."\"  title=\"".PrintReady(stripslashes(get_user_setting($user_id, "comment")))."\"  src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\">";
+		if (get_user_setting($user_id, "comment")) {
+			$tempTitle = PrintReady(stripslashes(get_user_setting($user_id, "comment")));
+			print "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}\" />";
+		}
 		print "</td>\n";
 		$userName = getUserFullName($user_id);
 		if ($TEXT_DIRECTION=="ltr") print "\t<td class=\"optionbox wrap\">".$userName. getLRM() . "</td>\n";
@@ -1081,18 +1084,18 @@ if ($action == "cleanup2") {
 	</tr>
 	<tr>
 		<td class="optionbox"><a href="useradmin.php?action=listusers"><?php print $pgv_lang["current_users"]; ?></a></td>
-		<td class="optionbox"><a href="useradmin.php?action=createform"><?php print $pgv_lang["add_user"]; ?></a></td>
+		<td class="optionbox" colspan="2" ><a href="useradmin.php?action=createform"><?php print $pgv_lang["add_user"]; ?></a></td>
 	</tr>
 	<tr>
 		<td class="optionbox"><a href="useradmin.php?action=cleanup"><?php print $pgv_lang["cleanup_users"]; ?></a></td>
-		<td class="optionbox">
+		<td class="optionbox" colspan="2" >
 			<a href="javascript: <?php print $pgv_lang["message_to_all"]; ?>" onclick="message('all', 'messaging2', '', ''); return false;"><?php print $pgv_lang["message_to_all"]; ?></a><br />
 			<a href="javascript: <?php print $pgv_lang["broadcast_never_logged_in"]; ?>" onclick="message('never_logged', 'messaging2', '', ''); return false;"><?php print $pgv_lang["broadcast_never_logged_in"]; ?></a><br />
 			<a href="javascript: <?php print $pgv_lang["broadcast_not_logged_6mo"]; ?>" onclick="message('last_6mo', 'messaging2', '', ''); return false;"><?php print $pgv_lang["broadcast_not_logged_6mo"]; ?></a><br />
 		</td>
 	</tr>
 	<tr>
-		<td class="topbottombar" colspan="2" align="center" ><a href="admin.php"><?php print $pgv_lang["lang_back_admin"]; ?></a></td>
+		<td class="topbottombar" colspan="3" align="center" ><a href="admin.php"><?php print $pgv_lang["lang_back_admin"]; ?></a></td>
 	</tr>
 	<tr>
 		<td colspan="3" class="topbottombar"><?php print $pgv_lang["admin_info"]; ?></td>
@@ -1126,7 +1129,7 @@ if ($action == "cleanup2") {
 		}
 		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 			if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin') {
-				$title=get_gedcom_setting($ged_id, 'title');
+				$title=PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')));
 				if (isset($gedadmin[$title])) {
 					$gedadmin[$title]["number"]++;
 				} else {
@@ -1148,10 +1151,10 @@ if ($action == "cleanup2") {
 	print "<table class=\"width100 $TEXT_DIRECTION\">";
 	print "<tr><td class=\"font11\">".$pgv_lang["users_total"]."</td><td class=\"font11\">".$totusers."</td></tr>";
 
-	print "<tr><td class=\"font11\">";
+	print "<tr><td class=\"font11\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 	if ($adminusers == 0) print $pgv_lang["users_admin"];
-	else print "<a href=\"useradmin.php?action=listusers&amp;filter=adminusers\">".$pgv_lang["users_admin"]."</a></td>";
-	print "<td class=\"font11\">".$adminusers."</td></tr>";
+	else print "<a href=\"useradmin.php?action=listusers&amp;filter=adminusers\">".$pgv_lang["users_admin"]."</a>";
+	print "</td><td class=\"font11\">".$adminusers."</td></tr>";
 
 	print "<tr><td class=\"font11\">".$pgv_lang["users_gedadmin"]."</td></tr>";
 	asort($gedadmin);
@@ -1159,10 +1162,10 @@ if ($action == "cleanup2") {
 	foreach ($gedadmin as $key=>$geds) {
 		if ($ind !=0) print "<td class=\"font11\"></td>";
 		$ind = 1;
-		print "<td class=\"font11\">";
+		print "<tr><td class=\"font11\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		if ($geds["number"] == 0) print $geds["name"];
 		else print "<a href=\"useradmin.php?action=listusers&amp;filter=gedadmin&amp;ged=".$geds["ged"]."\">".$geds["name"]."</a>";
-		print "</td><td class=\"font11\">".$geds["number"]."</td>";
+		print "</td><td class=\"font11\">".$geds["number"]."</td></tr>";
 	}
 	print "<tr><td class=\"font11\"></td></tr><tr><td class=\"font11\">";
 	if ($warnusers == 0) print $pgv_lang["warn_users"];

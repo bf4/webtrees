@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -609,7 +609,7 @@ case 'addnewsource':
 	//-->
 	</script>
 	<b><?php print $pgv_lang['create_source']; $tabkey = 1; ?></b>
-	<form method="post" action="edit_interface.php" onSubmit="return check_form(this);">
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addsourceaction" />
 		<input type="hidden" name="pid" value="newsour" />
 		<table class="facts_table">
@@ -643,7 +643,7 @@ case 'addnewsource':
 			<table class="facts_table">
 			<tr>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN_help", "qm"); print $pgv_lang['select_events']; ?></td>
-				<td class="optionbox wrap"><select name="EVEN[]" mulitple="multiple" size="5">
+				<td class="optionbox wrap"><select name="EVEN[]" multiple="multiple" size="5">
 					<?php
 					$parts = preg_split("/,/", $INDI_FACTS_ADD);
 					foreach($parts as $p=>$key) {
@@ -736,7 +736,7 @@ case 'addnewrepository':
 	<b><?php print $pgv_lang["create_repository"];
 	$tabkey = 1;
 	?></b>
-	<form method="post" action="edit_interface.php" onSubmit="return check_form(this);">
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addrepoaction" />
 		<input type="hidden" name="pid" value="newrepo" />
 		<table class="facts_table">

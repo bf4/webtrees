@@ -3,7 +3,7 @@
  * System for generating menus.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -170,7 +170,7 @@ class Menu
 		}
 		$icons=array();
 		if ($this->icon) {
-			$icons[]='<a href="'.$this->link.'"><img onmouseover="this.className=\''.$this->hoverclass.'\'" onmouseout="this.className=\''.$this->class.'\'" class="'.$this->class.'" src="'.$this->icon.'" alt="'.$this->label.'" title="'.$this->label.'"></a>';
+			$icons[]='<a href="'.$this->link.'"><img onmouseover="this.className=\''.$this->hoverclass.'\'" onmouseout="this.className=\''.$this->class.'\'" class="'.$this->class.'" src="'.$this->icon.'" alt="'.$this->label.'" title="'.$this->label.'" /></a>';
 		}
 		if ($this->submenus) {
 			foreach ($this->submenus as $submenu) {
@@ -246,9 +246,9 @@ class Menu
 			$link .= '" target="'.$this->target;
 		}
 		$link .= "\">";
-		if ($this->icon !== null)
-		{
-			$MenuIcon = "<img id=\"menu{$id}_icon\" src=\"{$this->icon}\" class=\"icon\" alt=\"".preg_replace("/\"/", '', $this->label).'" title="'.preg_replace("/\"/", '', $this->label).'" '." />";
+		if ($this->icon !== null) {
+			$tempTitle = preg_replace("/\"/", '', $this->label);
+			$MenuIcon = "<img id=\"menu{$id}_icon\" src=\"{$this->icon}\" class=\"icon\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" />";
 			switch ($this->labelpos) {
 			case "right":
 				$output .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
@@ -456,7 +456,7 @@ class MenuBar
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			//-- my_pedigree submenu
-			$submenu = new Menu($pgv_lang["my_pedigree"], "pedigree.php?rootid=".PGV_USER_GEDCOM_ID."&show_full={$showFull}&talloffset={$showLayout}");
+			$submenu = new Menu($pgv_lang["my_pedigree"], "pedigree.php?rootid=".PGV_USER_GEDCOM_ID."&amp;show_full={$showFull}&amp;talloffset={$showLayout}");
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
 			//$submenu->addIcon($PGV_IMAGE_DIR."/small/pedigree.gif");
@@ -531,9 +531,9 @@ class MenuBar
 		$showLayout = ($PEDIGREE_LAYOUT) ? 1 : 0;
 
 		//-- main charts menu item
-		$link = "pedigree.php?&show_full={$showFull}&talloffset={$showLayout}";
+		$link = "pedigree.php?&amp;show_full={$showFull}&amp;talloffset={$showLayout}";
 		if ($rootid) {
-			$link .= "&rootid={$rootid}";
+			$link .= "&amp;rootid={$rootid}";
 			$menu = new Menu($pgv_lang["charts"], $link);
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -567,8 +567,8 @@ class MenuBar
 			switch ($menuType) {
 			case "pedigree":
 				//-- pedigree
-				$link = "pedigree.php?show_full={$showFull}&talloffset={$showLayout}";
-				if ($rootid) $link .= "&rootid={$rootid}";
+				$link = "pedigree.php?show_full={$showFull}&amp;talloffset={$showLayout}";
+				if ($rootid) $link .= "&amp;rootid={$rootid}";
 				$submenu = new Menu($pgv_lang["pedigree_chart"], $link);
 				if (!empty($PGV_IMAGES["pedigree"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -579,7 +579,7 @@ class MenuBar
 			case "descendancy":
 				//-- descendancy
 				$link = "descendancy.php";
-				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
+				if ($rootid) $link .= "?pid={$rootid}&amp;show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["descend_chart"], $link);
 				if (!empty($PGV_IMAGES["descendant"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["descendant"]["small"]);
@@ -590,7 +590,7 @@ class MenuBar
 			case "ancestry":
 				//-- ancestry
 				$link = "ancestry.php";
-				if ($rootid) $link .= "?rootid={$rootid}&show_full={$showFull}";
+				if ($rootid) $link .= "?rootid={$rootid}&amp;show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["ancestry_chart"], $link);
 				if (!empty($PGV_IMAGES["ancestry"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["ancestry"]["small"]);
@@ -623,7 +623,7 @@ class MenuBar
 			case "hourglass":
 				//-- hourglass
 				$link = "hourglass.php";
-				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
+				if ($rootid) $link .= "?pid={$rootid}&amp;show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["hourglass_chart"], $link);
 				if (!empty($PGV_IMAGES["hourglass"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["hourglass"]["small"]);
@@ -634,7 +634,7 @@ class MenuBar
 			case "familybook":
 				//-- familybook
 				$link = "familybook.php";
-				if ($rootid) $link .= "?pid={$rootid}&show_full={$showFull}";
+				if ($rootid) $link .= "?pid={$rootid}&amp;show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["familybook_chart"], $link);
 				if (!empty($PGV_IMAGES["fambook"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["fambook"]["small"]);
@@ -687,7 +687,7 @@ class MenuBar
 						$link = "relationship.php";
 						if ($rootid) {
 							$link .= "?pid1=".$pid."&amp;pid2=".$rootid;
-							$label = $pgv_lang["relationship_chart"].": ".PrintReady(get_person_name($pid));
+							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags(get_person_name($pid)));
 							$submenu = new Menu($label, $link);
 						} else {
 							$submenu = new Menu($pgv_lang["relationship_chart"], $link);
@@ -1223,20 +1223,21 @@ class MenuBar
 
 		if ($ALLOW_THEME_DROPDOWN && $ALLOW_USER_THEMES && !$SEARCH_SPIDER) {
 			isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
-			$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
-			if(isset($_REQUEST['mod'])){
-				if(!strstr("?", $frompage))
-				{
-						if(!strstr("%3F", $frompage)) ;
-						else $frompage.="?";
+			$frompage = $_SERVER["SCRIPT_NAME"].html_entity_decode(urldecode($tqstring));
+			if (isset($_REQUEST['mod'])) {
+				if (!strstr("?", $frompage)) {
+					if (!strstr("%3F", $frompage)) ;
+					else $frompage .= "?";
 				}
-				if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
+				if (!strstr("&mod",$frompage)) $frompage .= "&mod=".$_REQUEST['mod'];
 			}
+			if (substr($frompage,-1) == "?") $frompage = substr($frompage,0,-1);
+			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
 			$menu=new Menu($pgv_lang['change_theme']);
 			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu');
 			$menu->print_menu = null;
 			foreach ($themes as $theme) {
-				$submenu=new Menu($theme['name'], 'themechange.php?frompage='.urlencode($frompage).'&amp;mytheme='.urlencode($theme['dir']));
+				$submenu=new Menu($theme['name'], 'themechange.php?frompage='.htmlentities(urlencode($frompage)).'&amp;mytheme='.urlencode($theme['dir']));
 				if ($theme['name']==$current) {
 					$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
 				} else {

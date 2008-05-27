@@ -3,7 +3,7 @@
  * Display a diff between two language files to help in translating.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,25 +106,25 @@ $maxlines = max($active, $inactive);
 /* Language File Settings Mask */
 
 print "<div class=\"center\">";
-print "<a href=\"admin.php\" style=\"font-weight: bold\";>";
+print "<a href=\"admin.php\" style=\"font-weight: bold;\">";
 print $pgv_lang["lang_back_admin"];
 print "</a><br />";
 print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
 
 //-- Choose the language you want to edit the settings of
-print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";
 
 switch ($action) {
 	case "addnew" :
+    	print "<form name=\"new_lang_form\" method=\"get\" action=\"$SCRIPT_NAME\">";
+      	print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
+      	print "<input type=\"hidden\" name=\"action\" value=\"new_lang\" />";
+		print "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
+		print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";
 		print "<tr><td class=\"facts_label03\" colspan=\"2\">";
 		print $pgv_lang["add_new_language"];
 		print "</td></tr>";
 
 		require( "includes/lang_codes_std.php");
-    	print "<form name=\"new_lang_form\" method=\"get\" action=\"$SCRIPT_NAME\">";
-      	print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
-      	print "<input type=\"hidden\" name=\"action\" value=\"new_lang\" />";
-		print "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
 		print "<tr><td class=\"facts_value center\"><select name=\"new_shortcut\">\n";
 
 		asort($lng_codes);		// Sort the language codes table into language name order
@@ -146,21 +146,20 @@ switch ($action) {
 		print_help_link("add_new_language_help", "qm");
 		print "</td>";
 		print "<td class=\"facts_value center\"><input type=\"submit\" value=\"" . $pgv_lang["add_new_lang_button"] . "\" onclick=\"return helpPopup03('" . "action=new_lang" . "&amp;" . session_name() . "=" . session_id() . "'); \" /></td></tr>";
-	    print "</td></tr>";
-		print "</table></form>";
 		$USERLANG = $LANGUAGE;
 		break;
 
 	case "editold" :
 	default :
+		print "<form name=\"lang_config_form\" method=\"get\" action=\"$PHP_SELF\">";
+		print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
+		print "<input type=\"hidden\" name=\"action\" value=\"config_lang\" />";
+		print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";
 		print "<tr><td class=\"facts_label03\" colspan=\"7\">";
 		print $pgv_lang["config_lang_utility"];
 		print_help_link("config_lang_utility_help", "qm");
 		print "</td></tr>";
 
-		print "<form name=\"lang_config_form\" method=\"get\" action=\"$PHP_SELF\">";
-		print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
-		print "<input type=\"hidden\" name=\"action\" value=\"config_lang\" />";
 		print "<tr>";
 
 
@@ -198,7 +197,7 @@ switch ($action) {
 
 		// Print the Language table in sorted name order
 		for ($i=1; $i<=$maxlines; $i++) {
-			print "<form name=\"activelanguage\">";
+			// print "<form name=\"activelanguage\">";
 			print "<tr>";
 			// Left 3 columns: Active language
 			$value = "";
@@ -213,7 +212,7 @@ switch ($action) {
 				print "</td>";
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
 					print "<input";
-					if (array_key_exists($value, $configuredlanguages["gedcom"]) or array_key_exists($value, $configuredlanguages["users"])) print " disabled";
+					if (array_key_exists($value, $configuredlanguages["gedcom"]) or array_key_exists($value, $configuredlanguages["users"])) print " disabled=\"disabled\"";
 					print " type=\"checkbox\" value=\"$value\" checked=\"checked\" onclick=\"enabledisablelanguage('$value');\" />";
 				print "</td>";
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
@@ -245,9 +244,8 @@ switch ($action) {
 				print "</td>";
 			}
 			print "</tr>";
-			print "</form>";
+			// print "</form>";
 		}
-		print "</form>";
 		$USERLANG = $LANGUAGE;
 		print "<tr>";
 		print "<td class=\"facts_label03\" colspan=\"7\">";
@@ -274,13 +272,14 @@ switch ($action) {
 			// Print language name and flag
 			print "<img src=\"".$language_settings[$key]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$key]."\" title=\"".$pgv_lang["lang_name_".$key]."\" />&nbsp;".$pgv_lang["lang_name_".$key]."<br />";
 		}
-		print "<tr><td  class=\"facts_value\" colspan=\"5\" valign=\"top\" colspan=\"2\">".$pgv_lang["users_langs"]."</td><td class=\"facts_value\" colspan=\"2\">";
+		print "</td></tr><tr><td  class=\"facts_value\" colspan=\"5\" valign=\"top\">".$pgv_lang["users_langs"]."</td><td class=\"facts_value\" colspan=\"2\">";
 		foreach ($configuredlanguages["users"] as $key => $value) {
 			print "<img src=\"".$language_settings[$key]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$key]."\" title=\"".$pgv_lang["lang_name_".$key]."\" />&nbsp;<a href=\"useradmin.php?action=listusers&amp;filter=language&amp;usrlang=".$key."\">".$pgv_lang["lang_name_".$key]."</a><br />";
 		}
+	print "</td></tr>";
 }
-print "</td></tr>";
 print "</table>";
+print "</form>";
 $LANGUAGE = $USERLANG;
 print "</div>";
 
