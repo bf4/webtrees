@@ -372,12 +372,12 @@ else {
 			if ($indi["gedfile"]==PGV_GED_ID) {
 				$ret = check_alive($indi["gedcom"], $year);
 				if ($ret==0) {
-	            	foreach($indi["names"] as $indexval => $namearray) {
-		            	$names[] = array($namearray[0], $namearray[1], $namearray[2], $namearray[3], $gid);
-	            	}
-	            	$total_living++;
-            	}
-            	else if ($ret<0) $indi_dead++;
+					foreach($indi["names"] as $indexval => $namearray) {
+						$names[] = array($namearray[0], $namearray[1], $namearray[2], $namearray[3], $gid);
+					}
+					$total_living++;
+				}
+				else if ($ret<0) $indi_dead++;
 				else $indi_unborn++;
 			}
 		}

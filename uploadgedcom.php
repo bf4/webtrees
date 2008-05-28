@@ -1061,12 +1061,12 @@ if ($stage == 1) {
 			$show_gid = $gid;
 
 			//-- check if we are getting close to timing out
-			if ($i % 2 == 0) {
+			if ($i % 5 == 0) {
 				//-- keep the browser informed by sending more data
 				print "\n";
 				$newtime = time();
 				$exectime = $newtime - $oldtime;
-				if (($timelimit != 0) && ($timelimit - $exectime) < 5) {
+				if (($timelimit != 0) && ($timelimit - $exectime) < 2) {
 					$importtime = $importtime + $exectime;
 					$fcontents = substr($fcontents, $pos2);
 					//-- store the resume information in the session
