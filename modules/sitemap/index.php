@@ -121,7 +121,7 @@ if ($action=="sendFiles") {
                     print "   </url>\n";
 		        }
 	        }
-        }
+    }
     print "</urlset>";
     exit;
 }

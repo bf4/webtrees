@@ -21,14 +21,14 @@
  *
  * @package PhpGedView
  * @subpackage Googlemap
- * @author Lukasz Wilenski <wooc@users.sourceforge.net>
+ * @author Łukasz Wileński <wooc@users.sourceforge.net>
  * $Id$
  */
 
 if (file_exists('modules/googlemap/defaultconfig.php')) {
 	require("modules/googlemap/defaultconfig.php");
 	require "modules/googlemap/googlemap.php";
-}	
+}
 
 function check_exist_table() {
 	global $DBCONN, $TBLPREFIX;
@@ -44,7 +44,7 @@ function get_place_list_loc($parent_id, $inactive=false) {
 		$sql="SELECT pl_id,pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
 	else
 		$sql="SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
-	
+
 	$res=dbquery($sql);
 	$placelist2=array();
 	while ($row=&$res->fetchRow())
@@ -73,21 +73,21 @@ function get_placeid($place) {
 	$par = array_reverse($par);
 	$place_id = 0;
 	if (check_exist_table()) {
-	for($i=0; $i<count($par); $i++) {
-		$par[$i] = trim($par[$i]);
-		if (empty($par[$i])) $par[$i]="unknown";
-		$placelist = create_possible_place_names($par[$i], $i+1);
-		foreach ($placelist as $key => $placename) {
-			$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
-			$psql = "SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place LIKE '{$escparent}' ORDER BY pl_place";
-			$res = dbquery($psql);
-			$row =& $res->fetchRow();
-			$res->free();
-			if (!empty($row[0])) break;
+		for($i=0; $i<count($par); $i++) {
+			$par[$i] = trim($par[$i]);
+			if (empty($par[$i])) $par[$i]="unknown";
+			$placelist = create_possible_place_names($par[$i], $i+1);
+			foreach ($placelist as $key => $placename) {
+				$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
+				$psql = "SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place LIKE '{$escparent}' ORDER BY pl_place";
+				$res = dbquery($psql);
+				$row =& $res->fetchRow();
+				$res->free();
+				if (!empty($row[0])) break;
+			}
+			if (empty($row[0])) break;
+			$place_id = $row[0];
 		}
-		if (empty($row[0])) break;
-		$place_id = $row[0];
-	}
 	}
 	return $place_id;
 }
@@ -100,7 +100,7 @@ function set_levelm($level, $parent) {
 	for ($i=1; $i<=$level; $i++) {
 		if ($parent[$level-$i]!="")
 			$fullplace .= $parent[$level-$i].", ";
-		else 
+		else
 			$fullplace .= "Unknown, ";
 	}
 	$fullplace = substr($fullplace,0,-2);
@@ -153,8 +153,8 @@ function check_place($place_names, $place) {
 
 function print_how_many_people($level, $parent) {
 	global $pgv_lang, $positions;
-	$place_count_indi=0;
-	$place_count_fam=0;
+	$place_count_indi = 0;
+	$place_count_fam = 0;
 	$positions = array();
 	if (!isset($parent[$level-1])) $parent[$level-1]="";
 	$positions = get_place_positions($parent, $level);
@@ -165,13 +165,13 @@ function print_how_many_people($level, $parent) {
 		if ($ct>0) {
 			$type = trim($match[2]);
 			if ($type == "INDI") {
-					$place_count_indi ++;
-				}
+				$place_count_indi ++;
+			}
 			else if ($type == "FAM") {
-					$place_count_fam ++;
-				}
+				$place_count_fam ++;
 			}
 		}
+	}
 	echo "<br /><br />".$pgv_lang["stat_individuals"].": ".$place_count_indi.", ".$pgv_lang["stat_families"].": ".$place_count_fam;
 }
 
@@ -195,7 +195,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			if ($place2['place'] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
 				else echo $pgv_lang["unknown"];
-			else 
+			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
 				else echo PrintReady(addslashes($place2['place']));
 		}
@@ -204,7 +204,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			if ($place2['place'] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["unknown"].$placelevels));
 				else echo $pgv_lang["unknown"];
-			else 
+			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($place2['place'].$placelevels));
 				else echo PrintReady(addslashes($place2['place']));
 		}
@@ -252,7 +252,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			if ($place2['place'] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
 				else echo $pgv_lang["unknown"];
-			else 
+			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
 				else echo PrintReady(addslashes($place2['place']));
 		}
@@ -261,7 +261,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			if ($place2['place'] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["unknown"].$placelevels));
 				else echo $pgv_lang["unknown"];
-			else 
+			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($place2['place'].$placelevels));
 				else echo PrintReady(addslashes($place2['place']));
 		}
@@ -462,7 +462,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
 		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+10);\n";
 	}
-	else 
+	else
 		echo "place_map.setCenter(new GLatLng(0,0),1);\n";
 	if ($GOOGLEMAP_PH_WHEEL != "false") echo "place_map.enableScrollWheelZoom();\n";
 	echo "	place_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
@@ -479,49 +479,49 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		if (isset($levelo[0])) $levelo[0]=0;
 		$numls = count($parent)-1;
 		$levelo=check_were_am_i($numls, $levelm);
-	if ($numfound==0 && $level>0) {
-		if (isset($levelo[($level-1)])) {
-			$placelist2=get_place_list_loc($levelo[($level-1)]);
-			if (!empty($placelist2)) {
-				//lastlevel place
+		if ($numfound==0 && $level>0) {
+			if (isset($levelo[($level-1)])) {
+				$placelist2=get_place_list_loc($levelo[($level-1)]);
+				if (!empty($placelist2)) {
+					//lastlevel place
 					foreach ($placelist2 as $place2) {
 						if (isset($levelo[$level])) {
 							if ($place2['place_id']==$levelo[$level])
-							print_gm_markers($place2, $level, $parent, $levelo[($level-1)], $linklevels, $placelevels, true);
+								print_gm_markers($place2, $level, $parent, $levelo[($level-1)], $linklevels, $placelevels, true);
 						}
 					}
 				}
-			else {
-				//lastlevel place not in table
-				$placelist2=get_place_list_loc($levelo[($level-1)], true);
-				foreach ($placelist2 as $place2) {
-					if (isset($levelo[$level])) {
-						if ($place2['place_id']==$levelo[$level])
-							print_gm_markers($place2, $level, $parent, $levelo[$level], $linklevels, $placelevels, true);
+				else {
+					//lastlevel place not in table
+					$placelist2=get_place_list_loc($levelo[($level-1)], true);
+					foreach ($placelist2 as $place2) {
+						if (isset($levelo[$level])) {
+							if ($place2['place_id']==$levelo[$level])
+								print_gm_markers($place2, $level, $parent, $levelo[$level], $linklevels, $placelevels, true);
 						}
+					}
 				}
 			}
 		}
-	}
-	else {
-		//place from table
-		$placelist2=get_place_list_loc($levelm);
-		if (!empty($placelist2)) {
-			foreach ($placelist2 as $place2) {
-				if (check_place($place_names, $place2['place']))
-					print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $placelevels);
+		else {
+			//place from table
+			$placelist2=get_place_list_loc($levelm);
+			if (!empty($placelist2)) {
+				foreach ($placelist2 as $place2) {
+					if (check_place($place_names, $place2['place']))
+						print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $placelevels);
+				}
 			}
-		}
-		else if ($level>0){ //if unknown place display the upper level place
+			else if ($level>0){ //if unknown place display the upper level place
 				$placelevels = ", ".$pgv_lang["unknown"].$placelevels;
 				$linklevels .= "&amp;parent[".$level."]=";
 				for ($i=1;$i<=$GM_MAX_NOF_LEVELS;$i++)
 				if (($level-$i)>=0 && isset($levelo[($level-$i)])) {
 					$placelist2=get_place_list_loc($levelo[($level-$i)], true);
 					foreach ($placelist2 as $place2) {
-					if ($place2['place']!="Unknown" || (($place2['lati'] != NULL) && ($place2['long'] != NULL))) {
+						if ($place2['place']!="Unknown" || (($place2['lati'] != NULL) && ($place2['long'] != NULL))) {
 							if (isset ($levelo[$level-$i+1]) && $place2['place_id']==$levelo[$level-$i+1])
-							print_gm_markers($place2, ($level+1), $parent, $levelm, $linklevels, $placelevels, true);
+								print_gm_markers($place2, ($level+1), $parent, $levelm, $linklevels, $placelevels, true);
 						}
 					}
 				}
@@ -558,7 +558,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	}
     // This Javascript is based on code provided by the
     // Blackpool Community Church Javascript Team
-    // http://www.commchurch.freeserve.co.uk/   
+    // http://www.commchurch.freeserve.co.uk/
     // http://econym.googlepages.com/index.htm
 	//]]>
 	//version 1.1
