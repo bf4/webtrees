@@ -104,6 +104,8 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 					$content.=PrintReady($favorite["note"]);
 				}
 				if ($favorite["type"]=="SOUR") {
+					$sourrec = find_source_record($favorite["gid"]);
+
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
 					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
 					$content.=format_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], 'span');

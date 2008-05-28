@@ -6,7 +6,7 @@
  * used on the indilist, famlist, find, and search pages.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1110,18 +1110,19 @@ function print_repo_table($datalist, $legend="") {
 	//-- table body
 	$n = 0;
 	foreach ($datalist as $key => $value) {
-		if (!is_array($value)) {
-			$repo = Repository::getInstance($key);
-			if (is_null($repo)) $repo = Repository::getInstance($value);
-			unset($value);
+		$repo=Repository::getInstance($key);
+		if (is_null($repo)) {
+			if (!is_array($value)) {
+				$repo=Repository::getInstance($value);
+			} else {
+				if (isset($value["gid"])) {
+					$repo=Repository::getInstance($value["gid"]);
+				}
+			}
 		}
-		else {
-			$gid = "";
-			if (isset($value["gid"])) $gid = $value["gid"];
-			if (isset($value["gedcom"])) $repo = new Repository($value["gedcom"]);
-			else $repo = Repository::getInstance($gid);
+		if (is_null($repo)) {
+			continue;
 		}
-		if (is_null($repo)) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -1139,7 +1140,7 @@ function print_repo_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Linked SOURces
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".count($repo->getRepositorySours())."</a>";
+		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".$repo->countLinkedSources()."</a>";
 		echo "</td>";
 		//-- Last change
 		if ($tiny && $SHOW_LAST_CHANGE)
@@ -1380,12 +1381,13 @@ function print_changes_table($datalist) {
 		//-- Record name(s)
 		if ($record->type=="FAM") {
 			$name=$record->getSortableName(true);
-			$exp = explode("<br />", $name);
+/*			$exp = explode("<br />", $name);
 			$husb = $record->getHusband();
 			if ($husb) $exp[0].= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 			$wife = $record->getWife();
 			if ($wife) $exp[1].= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
-			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
+			$name = implode("<div></div>", $exp); // <div></div> is better here than <br /> */
+			$name = strip_tags(str_replace("<br />", " + ", $name));
 		}
 		else $name = $record->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";

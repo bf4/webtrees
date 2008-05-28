@@ -3,7 +3,7 @@
  * File to edit the language settings of PHPGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ if ($action !="save" and $action != "toggleActive") {
   print "self.focus();";
   print "</script>\n";
 
-  print "<style type=\"text/css\">FORM { margin-top: 0px; margin-bottom: 0px; }</style>";
+  //print "<style type=\"text/css\">FORM { margin-top: 0px; margin-bottom: 0px; }</style>";
   print "<div class=\"center\"><center>";
 }
 
@@ -191,7 +191,7 @@ if ($action != "save" && $action != "toggleActive") {
 
     if ($v_lang_use) {
       print "<input";
-      if ($protectActive) print " disabled";
+      if ($protectActive) print " disabled=\"disabled\"";
       print " type=\"checkbox\" name=\"v_lang_use\" value=\"true\" checked=\"checked\" />";
     } else print "<input type=\"checkbox\" name=\"v_lang_use\" value=\"true\" />";
     print "</td>";
@@ -264,12 +264,12 @@ if ($action != "save" && $action != "toggleActive") {
       print "&nbsp;&nbsp;&nbsp;<select name=\"v_flagsfile\" onchange=\"document.Form1.action.value=''; submit();\">\n";
       foreach ($sortedflags as $key=>$value) {
         $i = $sortedflags[$key];
-        print "<option value=\"".$flagfiles["path"][$i]."\" ";
+        print "<option value=\"".$flagfiles["path"][$i]."\"";
         if ($v_flagsfile == $flagfiles["path"][$i]){
-          print "selected ";
+          print " selected=\"selected\"";
           $flag_i = $i;
         }
-      print "/>".$flagfiles["file"][$i]."</option>\n";
+      print ">".$flagfiles["file"][$i]."</option>\n";
       }
       print "</select>\n";
     } else {
@@ -458,7 +458,7 @@ if ($action != "save" && $action != "toggleActive") {
   if (!isset($v_faqlistfile)) $v_faqlistfile = "languages/faqlist.".$v_lang_shortcut.".php";
   if (!isset($v_extrafile)) $v_extrafile = "languages/extra.".$v_lang_shortcut.".php";
  
-  if ($action != "new_lang"){
+  if ($action != "new_lang") {
     print "<tr>";
     print "<td class=\"facts_label\" >";
 	print_help_link("lang_filenames_help", "qm");
@@ -479,6 +479,7 @@ if ($action != "save" && $action != "toggleActive") {
     	if (!file_exists($fileName)) print "&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["optional_file_not_exist"];
     	print "<br />";
 	}
+	print "</td></tr>";
   }
 
   print "</table>";

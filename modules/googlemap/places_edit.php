@@ -656,8 +656,13 @@ if ($action=="add") {
 	  }
 	 }
 	
-	function showLocation(address) {
-	   geocoder.getLocations(address, addAddressToMap);
+	function showLocation_level(address) {
+		address += '<?php if ($level>0) print ", ".PrintReady(implode(', ', array_reverse($where_am_i, true)));?>';
+		geocoder.getLocations(address, addAddressToMap);
+	}
+	
+	function showLocation_all(address) {
+		geocoder.getLocations(address, addAddressToMap);
 	}
 		 
 	function updatewholename() {
@@ -698,7 +703,8 @@ if ($action=="add") {
 	 	 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php print htmlspecialchars(PrintReady($place_name));?>" size="25" class="address_input" tabindex="<?php print ++$i;?>" />
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
-	 	<label for="new_pl_name"><a href="javascript:;" onclick="showLocation(NEW_PLACE_NAME.value); return false">&nbsp;<?php print $pgv_lang["search"]?></a></label>
+		<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_level(NEW_PLACE_NAME.value); return false">&nbsp;<?php print $pgv_lang["pl_search_level"]?></a></label>&nbsp;&nbsp;|
+	 	<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_all(NEW_PLACE_NAME.value); return false">&nbsp;<?php print $pgv_lang["pl_search_all"]?></a></label>
 		</td>
 	</tr>
 	<tr>

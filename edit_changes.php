@@ -137,24 +137,24 @@ else {
 				case 'INDI':
 					$names = get_indi_names($gedrec);
 					$output .= "<b>".PrintReady(check_NN($names[0][0]))."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output .= "<a href=\"javascript:;\" onclick=\"return show_diff('individual.php?pid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
+					$output .= "<a href=\"javascript:;\" onclick=\"return show_diff('individual.php?pid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				case 'FAM':
 					$output.= "<b>".PrintReady(get_family_descriptor($change["gid"]))."</b> " . getLRM() . "(" . $change["gid"]. ")" . getLRM() . "<br />";
-					$output.= "<a href=\"javascript:;\" onclick=\"return show_diff('family.php?famid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
+					$output.= "<a href=\"javascript:;\" onclick=\"return show_diff('family.php?famid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				case 'SOUR':
 					$name=get_gedcom_value("ABBR", 1, $gedrec);
 					if (empty($name))
 						$name=get_gedcom_value("TITL", 1, $gedrec);
 					$output.="<b>".PrintReady($name)."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
+					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('source.php?sid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				case 'OBJE':
 					$name = get_gedcom_value("TITL", 1, $gedrec);
 					if (empty($name)) $name = get_gedcom_value("TITL", 2, $gedrec);
 					$output.="<b>".PrintReady($name)."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('mediaviewer.php?mid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
+					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('mediaviewer.php?mid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				default:
 					$output.="<b>".$factarray[$type]."</b> " . getLRM() . "(".$change["gid"].")" . getLRM() ."<br />";

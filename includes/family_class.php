@@ -98,6 +98,7 @@ class Family extends GedcomRecord {
 		$object = new Family($gedrec, $simple);
 		if (!empty($fromfile)) $object->setChanged(true);
 		// Store the object in the cache
+		$object->ged_id=$ged_id;
 		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
 	}

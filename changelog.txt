@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1970563 ] SVN 3115 _CHR_CHIL appears as gedcom error (fisharebest)
  - Changed: Lightbox: - Fixed Firefox dragNdrop erroneous initial displacement when in zoom mode (windmillway)
  - Fixed: [ 1940401 ] GEDCOM changes notification  (fisharebest)
  - Fixed: [ 1764343 ] login after login (fisharebest)

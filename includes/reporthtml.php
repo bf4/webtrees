@@ -5,7 +5,7 @@
  * used by the SAX parser to generate HTML reports from the XML report file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,11 +99,17 @@ class PGVReport extends PGVReportBase {
 
 	function run() {
 		global $download, $embed_fonts, $CHARACTER_SET, $TEXT_DIRECTION, $rtl_stylesheet;
+		global $waitTitle;
 
 		header("Content-Type: text/html; charset=$CHARACTER_SET");
 		print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
 		print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
 		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n";
+		
+		// Delay all output until we've seen a page header
+		ob_start();
+		$waitTitle = true;
+		
 		print "<style type=\"text/css\">\n";
 		$this->PGVRStyles['footer'] = array('name'=>'footer', 'font'=>'Arial', 'size'=>'10', 'style'=>'');
 		foreach($this->PGVRStyles as $class=>$style) {
@@ -132,7 +138,8 @@ html {
 <?php
 		}
 		print "</style>\n";
-		print "</head>\n<body direction>\n";
+		// print "</head>\n<body direction>\n";
+		print "</head>\n<body>\n";
 		if (!isset($this->currentStyle)) $this->currentStyle = "";
 		$temp = $this->currentStyle;
 		//-- header
@@ -159,6 +166,15 @@ html {
 		}
 		print "</div>\n";
 		print "<script type=\"text/javascript\">\ndocument.getElementById('bodydiv').style.height='".($this->maxY+2)."pt';\n</script>\n";
+		
+		if (isset($waitTitle) && $waitTitle) {
+			// We haven't found a page title: take default action
+			$contents = ob_get_clean();
+			echo "<title>Unknown title</title>\n";
+			echo $contents;
+			$waitTitle = false;
+			unset ($contents);
+		}
 		//-- footer
 //		$this->SetY(-36);
 		$oldy = $this->Y;
@@ -295,11 +311,24 @@ html {
 	}
 
 	function write($text, $color='') {
+		global $waitTitle;
 		$style = $this->getStyle($this->getCurrentStyle());
+		
+		// Look for first occurrence of a page header, 
+		// and use this to complete the HTML <title> tag
+		if (isset($waitTitle) && $waitTitle && $style['name']=='header') {
+			$contents = ob_get_clean();
+			echo '<title>', PrintReady(strip_tags($text)), "</title>\n";
+			echo $contents;
+			$waitTitle = false;		// We're no longer waiting for a page header
+			unset ($contents);
+		}
 		$styleAdd = "";
-		if (!empty($color)) $styleAdd .= " color: ".$color.";";
+		if (!empty($color)) $styleAdd .= "color: ".$color.";";
 		if ($style['font']=='') $style['font'] = 'Arial';
-		print "<span class=\"".$style['name']."\" style=\"".$styleAdd."\">";
+		print "<span class=\"".$style['name']."\"";
+		if (!empty($styleAdd)) print " style=\"".$styleAdd."\"";
+		print ">";
 		print nl2br(PrintReady($text, false, false));
 		print "</span>";
 	}
@@ -762,7 +791,7 @@ class PGVRImageHTML extends PGVRImage {
 			$this->y=$pdf->GetY();
 		}
 		//$pdf->Image($this->file, $this->x, $this->y, $this->width, $this->height);
-		print "<img src=\"$this->file\" style=\"position: absolute; left: ".$this->x."pt; top: ".$this->y."pt; width: ".$this->width."pt; height: ".$this->height."pt;\" />\n";
+		print "<img src=\"$this->file\" style=\"position: absolute; left: ".$this->x."pt; top: ".$this->y."pt; width: ".$this->width."pt; height: ".$this->height."pt;\" alt=\"\" />\n";
 		$lastpicbottom = $this->y + $this->height;
 		$lastpicpage = $pdf->PageNo();
 		$lastpicleft=$this->x;

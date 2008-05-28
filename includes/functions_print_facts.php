@@ -5,7 +5,7 @@
  * Various printing functions used to print fact records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -396,7 +396,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				print_address_structure($factrec, 1);
 			}
 			// -- Enhanced ASSOciates > RELAtionship
-			print_asso_rela_record($pid, $factrec, true, id_type($pid));
+			print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
 //			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];			
@@ -889,7 +889,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 		$srec = substr($factrec, $spos1, $spos2-$spos1);
 		if (!showFact("SOUR", $pid) || FactViewRestricted($pid, $factrec)) return false;
 		if (displayDetailsById($sid, "SOUR")) {
-			if ($level==2) print "<tr class=row_sour2>";
+			if ($level==2) print "<tr class=\"row_sour2\">";
 			else print "<tr>";
 			print "<td class=\"descriptionbox";
 			if ($level==2) print " rela";
@@ -1625,7 +1625,7 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 		} else
 			$factyear=0;
 		$joe = null;
-		if (id_type($pid)=='INDI') $joe = Person::getInstance($pid);
+		if (gedcom_record_type($pid, PGV_GED_ID)=='INDI') $joe = Person::getInstance($pid);
 		$sexcheck = "";
 		if (!is_null($joe)) {
 			$sex = $joe->getSex();

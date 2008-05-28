@@ -337,7 +337,7 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	$titleLength = strpos($mytitle."\n", "\n");
 	$title = substr($mytitle, 0, $titleLength);
 	print "<center>";
-	print "<img src=\"imageflush.php?image_type=png&amp;image_name=$tempVarName&amp;width=$imageSize[0]&amp;height=$imageSize[1]\" width=\"$imageSize[0]\" height=\"$imageSize[1]\" border=\"0\" alt=\"$title\" title=\"$title\"/>";
+	print "<img src=\"imageflush.php?image_type=png&amp;image_name=$tempVarName&amp;width=$imageSize[0]&amp;height=$imageSize[1]\" width=\"$imageSize[0]\" height=\"$imageSize[1]\" border=\"0\" alt=\"$title\" title=\"$title\" />";
 	print "</center><br /><br />";
 }
 

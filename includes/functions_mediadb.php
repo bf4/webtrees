@@ -722,7 +722,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			// Update the medialist with this cross-reference,
 			// but only if the Media item actually exists (could be a phantom reference)
 			if (isset ($medialist[$keyMediaList])) {
-				$medialist[$keyMediaList]["LINKS"][stripslashes($row["mm_gid"])] = id_type(stripslashes($row["mm_gid"]));
+				$medialist[$keyMediaList]["LINKS"][stripslashes($row["mm_gid"])] = gedcom_record_type(stripslashes($row["mm_gid"]), get_id_from_gedcom($GEDCOM));
 				$medialist[$keyMediaList]["LINKED"] = true;
 			}
 
@@ -764,7 +764,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 
 					// Add this GEDCOM ID to the link list of the media object
 					if (isset ($medialist[$keyMediaList])) {
-						$medialist[$keyMediaList]["LINKS"][$pid] = id_type($pid);
+						$medialist[$keyMediaList]["LINKS"][$pid] = gedcom_record_type($pid, get_id_from_gedcom($GEDCOM));
 						$medialist[$keyMediaList]["LINKED"] = true;
 					}
 				}
@@ -999,7 +999,7 @@ function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
 			$sqlmm = "select mm_gid as mm_gid from " . $TBLPREFIX . "media_mapping where mm_media = '" . $row[0] . "' and mm_gedfile = '" . $GEDCOMS[$GEDCOM]["id"] . "'";
 			$resmm = & dbquery($sqlmm);
 			while ($rowmm = & $resmm->fetchRow()) {
-				$myindilist[$rowmm[0]] = id_type($rowmm[0]);
+				$myindilist[$rowmm[0]] = gedcom_record_type($rowmm[0], get_id_from_gedcom($GEDCOM));
 			}
 		}
 		$res->free();
@@ -1379,7 +1379,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	if (isset ($pgv_changes[$pid . "_" . $GEDCOM]))
 		$gedrec = find_updated_record($pid);
 	else
-		if (id_type($pid) == "OBJE")
+		if (gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)) == "OBJE")
 			$gedrec = find_media_record($pid);
 		else
 			$gedrec = "";
@@ -1870,7 +1870,7 @@ function get_media_relations($mid){
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
 		if ($row[0] != $mid){
-			$media[$row[0]] = id_type($row[0]);
+			$media[$row[0]] = gedcom_record_type($row[0], get_id_from_gedcom($GEDCOM));
 		}
 	}
 	$medialist[$keyMediaList]['LINKS'] = $media;

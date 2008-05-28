@@ -37,6 +37,7 @@ require_once('includes/media_class.php');
 class GedcomRecord {
 	var $gedrec = "";
 	var $xref = "";
+	var $ged_id=null; // only set if this record comes from a file
 	var $type = "";
 	var $changed = false;
 	var $rfn = null;
@@ -114,41 +115,34 @@ class GedcomRecord {
 		}
 		if (empty($indirec)) return null;
 
-		$ct = preg_match("/0 @.*@ (\w*)/", $indirec, $match);
-		if ($ct>0) {
-			$type = trim($match[1]);
-			if ($type=="INDI") {
+		if (preg_match("/^0 +@.+@ +(\w+)/", $indirec, $match)) {
+			switch ($match[1]) {
+			case 'INDI':
 				$record = new Person($indirec, $simple);
-				if (!empty($fromfile)) $record->setChanged(true);
-				return $record;
-			}
-			else if ($type=="FAM") {
+				break;
+			case 'FAM':
 				$record = new Family($indirec, $simple);
-				if (!empty($fromfile)) $record->setChanged(true);
-				return $record;
-			}
-			else if ($type=="SOUR") {
+				break;
+			case 'SOUR':
 				$record = new Source($indirec, $simple);
-				if (!empty($fromfile)) $record->setChanged(true);
-				return $record;
-			}
-			else if ($type=="REPO") {
+				break;
+			case 'REPO':
 				$record = new Repository($indirec, $simple);
-				if (!empty($fromfile)) $record->setChanged(true);
-				return $record;
-			}
-			else if ($type=="OBJE") {
+				break;
+			case 'OBJE':
 				$record = new Media($indirec, $simple);
-				if (!empty($fromfile)) $record->setChanged(true);
-				return $record;
-			}
-			else {
+				break;
+			default:
 				$record = new GedcomRecord($indirec, $simple);
-				if (!empty($fromfile)) $record->setChanged(true);
-				return $record;
+				break;
 			}
+			if (!empty($fromfile)) {
+				$record->setChanged(true);
+			}
+			$record->ged_id=$ged_id;
 			// Store the object in the cache
 			$gedcom_record_cache[$pid][$ged_id]=&$record;
+			return $record;
 		}
 		return null;
 	}
@@ -211,13 +205,10 @@ class GedcomRecord {
 
 	/**
 	 * check if this object is equal to the given object
-	 * basically just checks if the IDs are the same
 	 * @param GedcomRecord $obj
 	 */
 	function equals(&$obj) {
-		if (is_null($obj)) return false;
-		if ($this->xref==$obj->getXref()) return true;
-		return false;
+		return !is_null($obj) && $this->xref==$obj->getXref();
 	}
 
 	/**
@@ -225,9 +216,7 @@ class GedcomRecord {
 	 * @string a url that can be used to link to this person
 	 */
 	function getLinkUrl($link='gedcomrecord.php?pid=') {
-		global $GEDCOM;
-
-		$url = $link.urlencode($this->getXref()).'&amp;ged='.urlencode($GEDCOM);
+		$url = $link.urlencode($this->getXref()).'&amp;ged='.urlencode(get_gedcom_from_id($this->ged_id));
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
 			if ($aliaid && $servid) {
@@ -258,9 +247,7 @@ class GedcomRecord {
 	 * @return string
 	 */
 	function getLinkTitle() {
-		global $GEDCOM, $GEDCOMS;
-
-		$title = $GEDCOMS[$GEDCOM]['title'];
+		$title = get_gedcom_setting($this->ged_id);
 		if ($this->isRemote()) {
 			$parts = preg_split("/:/", $this->rfn);
 			if (count($parts)==2) {
@@ -398,12 +385,10 @@ class GedcomRecord {
 	// It also allows us to combine dates/places from different events in the summaries.
 	function getAllEventDates($event) {
 		$dates=array();
-		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
-			foreach ($events[1] as $event_rec) {
-				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^2 DATE +(.+)/m", $event_rec, $ged_dates)) {
-					foreach ($ged_dates[1] as $ged_date) {
-						$dates[]=new GedcomDate($ged_date);
-					}
+		foreach ($this->getAllEvents($event) as $event_rec) {
+			if (preg_match_all("/^2 DATE +(.+)/m", $event_rec, $ged_dates)) {
+				foreach ($ged_dates[1] as $ged_date) {
+					$dates[]=new GedcomDate($ged_date);
 				}
 			}
 		}
@@ -411,12 +396,10 @@ class GedcomRecord {
 	}
 	function getAllEventPlaces($event) {
 		$places=array();
-		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
-			foreach ($events[1] as $event_rec) {
-				if (!FactViewRestricted($this->xref, $event_rec) && preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event_rec, $ged_places)) {
-					foreach ($ged_places[1] as $ged_place) {
-						$places[]=$ged_place;
-					}
+		foreach ($this->getAllEvents($event) as $event_rec) {
+			if (preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event_rec, $ged_places)) {
+				foreach ($ged_places[1] as $ged_place) {
+					$places[]=$ged_place;
 				}
 			}
 		}
@@ -424,13 +407,23 @@ class GedcomRecord {
 	}
 
 	// Get all the events of a type.
-	// TODO: event handling needs to be tidied up - with the event class from PGV4.2 ??
 	function getAllEvents($event) {
 		$event_recs=array();
-		if (ShowFactDetails($event, $this->xref) && preg_match_all("/^1 *{$event}\b.*((?:[\r\n]+[2-9].*)+)/m", $this->gedrec, $events)) {
-			foreach ($events[0] as $event_rec) {
-				if (!FactViewRestricted($this->xref, $event_rec)) {
-					$event_recs[]=$event_rec;
+		if (ShowFactDetails($event, $this->xref)) {
+			if (preg_match_all("/^1 *{$event}\b.*(?:[\r\n]+[2-9].*)*/m", $this->gedrec, $events)) {
+				foreach ($events[0] as $event_rec) {
+					if (!FactViewRestricted($this->xref, $event_rec)) {
+						$event_recs[]=$event_rec;
+					}
+				}
+			}	
+			// Some people use "1 EVEN/2 TYPE BIRT" instead of "1 BIRT".
+			// Find them and convert them back to the proper format.
+			if (preg_match_all("/^1 (?:FACT|EVEN)\b[^\r\n]*((?:[\r\n]+[2-9][^\r\n]*)*)(?:[\r\n]+2 TYPE {$event})((?:[\r\n]+[2-9][^\r\n]*)*)/m", $this->gedrec, $matches, PREG_SET_ORDER)) {
+				foreach ($matches as $match) {
+					if (!FactViewRestricted($this->xref, $match[0])) {
+						$event_recs[]='1 '.$event.$match[1].$match[2];
+					}
 				}
 			}	
 		}

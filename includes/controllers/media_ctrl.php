@@ -205,8 +205,8 @@ class MediaControllerRoot extends IndividualController{
 		$menu = new Menu($pgv_lang["edit"]);
 		$click_link = "";
 		$click_link .= "window.open('addmedia.php?action=";
-		$click_link .= "editmedia&amp;pid=".$this->pid;
-		$click_link .= "&amp;linktoid=$linktoid";
+		$click_link .= "editmedia&pid=".$this->pid;
+		$click_link .= "&linktoid=$linktoid";
 		$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 		$menu->addOnclick($click_link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
@@ -217,8 +217,8 @@ class MediaControllerRoot extends IndividualController{
 			$submenu = new Menu($pgv_lang["edit"]);
 			$click_link = "";
 			$click_link .= "window.open('addmedia.php?action=";
-			$click_link .= "editmedia&amp;pid=".$this->pid;
-			$click_link .= "&amp;linktoid=$linktoid";
+			$click_link .= "editmedia&pid=".$this->pid;
+			$click_link .= "&linktoid=$linktoid";
 			$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 			$submenu->addOnclick($click_link);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");

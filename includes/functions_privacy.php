@@ -626,7 +626,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 		$links = get_media_relations($pid);
 		$disp = true;
 		foreach($links as $gid=>$type) {
-			$disp = $disp && displayDetailsById($gid, id_type($gid));
+			$disp = $disp && displayDetailsById($gid, $type);
 			if (!$disp) {
 				$privacy_cache[$pkey] = false;
 				return false;
@@ -960,7 +960,7 @@ function FactEditRestricted($pid, $factrec) {
 			if ($myindi == $pid) {
 				return false;
 			}
-			if (id_type($pid)=='FAM') {
+			if (gedcom_record_type($pid, PGV_GED_ID)=='FAM') {
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["HUSB"] || $myindi == $parents["WIFE"]) {
@@ -994,7 +994,7 @@ function FactViewRestricted($pid, $factrec) {
 			if ($myindi == $pid) {
 				return false;
 			}
-			if (id_type($pid)=='FAM') {
+			if (gedcom_record_type($pid, PGV_GED_ID)=='FAM') {
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["WIFE"] || $myindi == $parents["HUSB"]) {

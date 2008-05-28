@@ -5,7 +5,7 @@
  * Set the root person using the $pid variable
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ if ($view!="preview") {
 	<?php
 	for ($i=2; $i<=$MAX_DESCENDANCY_GENERATIONS; $i++) {
 		print "<option value=\"".$i."\"" ;
-		if ($i == $controller->generations) print "selected=\"selected\" ";
+		if ($i == $controller->generations) print " selected=\"selected\"";
 		print ">".$i."</option>";
 	}
 	?>

@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a media
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -314,7 +314,7 @@ print_header($pgv_lang["manage_media"]);
 	<!-- // NOTE: Add media -->
 	<td class="descriptionbox wrap width25"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 	<td class="optionbox wrap">
-	<a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&amp;linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a>
+	<a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a>
 	</td>
 	</tr>
 	</table>
@@ -1417,7 +1417,7 @@ if (check_media_structure()) {
 			$uplink2 = "<a href=\"media.php?directory=".rawurlencode($pdir)."&amp;level=".($level-1).$thumbget."\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/";
 			if ($TEXT_DIRECTION=="ltr") $uplink2 .= $PGV_IMAGES["larrow"]["other"];
 			else $uplink2 .= $PGV_IMAGES["rarrow"]["other"];
-			$uplink2 .= "\" alt=\"".PrintReady($pdir)."\" title=\"".PrintReady($pdir)."\"></a>\n";
+			$uplink2 .= "\" alt=\"".PrintReady($pdir)."\" title=\"".PrintReady($pdir)."\" /></a>\n";
 		}
 
 		// Start of media directory table
@@ -1549,7 +1549,7 @@ if (check_media_structure()) {
 							// Edit File
 							print "<a href=\"javascript:".$pgv_lang["edit"]."\" onclick=\"window.open('addmedia.php?action=";
 							if ($media["XREF"] != "") {
-								print "editmedia&amp;pid=".$media["XREF"]."&amp;linktoid=";
+								print "editmedia&pid=".$media["XREF"]."&linktoid=";
 								if (!$media["LINKED"]) {
 									print "new";
 								} else {
@@ -1557,7 +1557,7 @@ if (check_media_structure()) {
 									print $linkToID;
 								}
 							} else {
-								print "showmediaform&amp;filename=".rawurlencode($media["FILE"])."&amp;linktoid=new";
+								print "showmediaform&filename=".rawurlencode($media["FILE"])."&linktoid=new";
 							}
 							print "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["edit"]."</a><br />";
 
@@ -1635,10 +1635,10 @@ if (check_media_structure()) {
 							print "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
 							if (!$isExternal) {
 								print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
-								print "<img src=\"".$media["THUMB"]."\" class=\"thumbnail\" border=\"0\" alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\"/></a>\n";
+								print "<img src=\"{$media['THUMB']}\" class=\"thumbnail\" border=\"0\" alt=\"{$mediaTitle}\" title=\"{$mediaTitle}\" /></a>\n";
 							} else {
 								print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
-								print "<img src=\"".$media["FILE"]."\" class=\"thumbnail\" width=\"".$THUMBNAIL_WIDTH."\" border=\"0\" alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\"/></a>\n";
+								print "<img src=\"{$media['FILE']}\" class=\"thumbnail\" width=\"{$THUMBNAIL_WIDTH}\" border=\"0\" alt=\"{$mediaTitle}\" title=\"{$mediaTitle}\" /></a>\n";
 							}
 							print "</td>";
 						}
