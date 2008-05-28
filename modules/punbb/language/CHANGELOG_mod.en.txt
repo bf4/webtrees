@@ -1,6 +1,6 @@
-GALLERY2 MODULE LANGUAGE FILE CHANGELOG
+punBB MODULE LANGUAGE FILE CHANGELOG
 
-# $Id: CHANGELOG_mod.en.txt 2031 2007-10-25 21:26:03Z yalnifj $
+# $Id$
 
 Use this file to follow the changes made to the English language files
 between different versions of phpGedView.  There are five separate CHANGELOG files,
