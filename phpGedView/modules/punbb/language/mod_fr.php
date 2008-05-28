@@ -2,7 +2,7 @@
 /**
  * punBB Module
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	PGV Development team
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id: mod_fr.php 2410 2007-12-07 18:36:43Z canajun2eh $
+ * @version $Id$
  * @author Patrick Kellum
  * @translator Alain Bouquet [vizar]
  */
