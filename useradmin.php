@@ -1014,7 +1014,7 @@ if ($action == "cleanup") {
 // NOTE: No table parts
 if ($action == "cleanup2") {
 	foreach(get_all_users() as $user_id=>$user_name) {
-		if (safe_POST('del_'.$user_id)=='yes')) {
+		if (safe_POST('del_'.$user_id)=='yes') {
 			delete_user($user_id);
 			AddToLog("deleted user ->{$user_name}<-");
 			print $pgv_lang["usr_deleted"]; print $user_name."<br />";
