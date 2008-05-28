@@ -1,11 +1,35 @@
 <?php
 
+/*
+// Determine what locale to use
+switch (PHP_OS)
+{
+	case 'WINNT':
+	case 'WIN32':
+		$locale = 'polish';
+		break;
+
+	case 'FreeBSD':
+	case 'NetBSD':
+	case 'OpenBSD':
+		$locale = 'pl.PL-ASCII';
+		break;
+
+	default:
+		$locale = 'pl_PL';
+		break;
+}
+
+// Attempt to set the locale
+setlocale(LC_CTYPE, $locale);
+*/
+
 // Language definitions for frequently used strings
 $lang_common = array(
 
 // Text orientation and encoding
 'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
-//'lang_encoding'			=>	'iso-8859-8-i',
+//'lang_encoding'			=>	'iso-8859-8-2',
 'lang_encoding'			=>	'UTF-8',
 'lang_multibyte'		=>	false,
 
@@ -29,13 +53,13 @@ $lang_common = array(
 'Ban message'			=>	'Masz blokadę na te forum.',
 'Ban message 2'			=>	'Blokada do końca',
 'Ban message 3'			=>	'Administrator lub moderator, który Ci założył blokadę napisał wiadomość:',
-'Ban message 4'			=>	'Wszelkie prośby proszę kierować do administratora forum:',
+'Ban message 4'			=>	'Wszelkie prośby proszę kierować do administratora forum',
 'Never'					=>	'Nigdy',
 'Today'					=>	'Dziś',
 'Yesterday'				=>	'Wczoraj',
 'Info'					=>	'Informacje',		// a common table header
 'Go back'				=>	'Wróć',
-'Maintenance'			=>	'Utrzymanie'
+'Maintenance'			=>	'Utrzymanie',
 'Redirecting'			=>	'Przekierowywanie',
 'Click redirect'		=>	'Kliknij tu jeśli nie chcesz czekać (lub jeśli przeglądarka nie przejdzie sama)',
 'on'					=>	'włączone',		// as in "BBCode is on"
@@ -65,7 +89,7 @@ $lang_common = array(
 'Smilies'				=>	'Emotikonki',
 'and'					=>	'i',
 'Image link'			=>	'obrazek',	// This is displayed (i.e. <image>) instead of images when "Show images" is disabled in the profile
-'wrote'					=>	'pisze',	// For [quote]'s
+'wrote'					=>	'napisał',	// For [quote]'s
 'Code'					=>	'Kod',		// For [code]'s
 'Mailer'				=>	'Poczta',	// As in "MyForums Mailer" in the signature of outgoing e-mails
 'Important information'	=>	'Ważne informacje',

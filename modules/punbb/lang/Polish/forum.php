@@ -3,7 +3,7 @@
 // Language definitions used in viewforum.php
 $lang_forum = array(
 
-'Post topic'	=>	'Zacznij nowy w¹tek',
+'Post topic'	=>	'Zacznij nowy wÄ…tek',
 'Views'			=>	'Obejrzano',
 'Moved'			=>	'Przeniesiono',
 'Sticky'		=>	'Przyklejony',

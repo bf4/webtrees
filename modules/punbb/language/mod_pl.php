@@ -20,8 +20,8 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id$
  * @author Łukasz Wileński
+ * @version $Id$
  */
 $pgv_lang['mod_punbb'] = 'Forum dyskusyjne';
 $pgv_lang['mod_punbb_search'] = 'Szukaj';
