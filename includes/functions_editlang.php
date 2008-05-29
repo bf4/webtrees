@@ -3,7 +3,7 @@
  * Various functions used by the language editor of PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,7 +141,7 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 		fwrite($fp, " * $comment1\r\n");
 		fwrite($fp, " *\r\n");
 		fwrite($fp, " * PhpGedView: Genealogy Viewer\r\n");
-		fwrite($fp, " * Copyright (C) 2002 to ".date("Y")."  PGV Development Team\r\n");
+		fwrite($fp, " * Copyright (C) 2002 to ".date("Y")."  PGV Development Team.  All rights reserved.\r\n");
 		fwrite($fp, " *\r\n");
 		fwrite($fp, " * This program is free software; you can redistribute it and/or modify\r\n");
 		fwrite($fp, " * it under the terms of the GNU General Public License as published by\r\n");
