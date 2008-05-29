@@ -24,6 +24,10 @@
  * @version $Id$
  */
 
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+        print "Du kan ikke tilgå en sprogfil direkte.";
+        exit;
+}
 
 // Admin menu
 $pgv_lang["generate_sitemap"]       = "Opret sitemap filer";

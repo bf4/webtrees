@@ -111,6 +111,8 @@ $pgv_lang["pl_neighborhood"]        = "Kvarter";
 $pgv_lang["pl_house"]               = "Hus";
 $pgv_lang["pl_max"]                 = "Maks.";
 $pgv_lang["pl_delete"]              = "Slet geografisk sted";
+$pgv_lang["pl_search_level"]            = "Søg på dette niveau";
+$pgv_lang["pl_search_all"]                      = "Søg alle";
 
 $pgv_lang["pl_flag"]                = "Flag";
 $pgv_lang["flags_edit"]             = "Vælg flag";
