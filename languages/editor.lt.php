@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Lithuanian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Arturas Sleinius
  * @version $Id$
  */
 
@@ -49,7 +48,6 @@ $pgv_lang["reorder_children"]		= "Perrūšiuoti vaikus";
 $pgv_lang["add_from_clipboard"]		= "Pridėti iš laikinos atminties:";
 $pgv_lang["record_copied"]			= "Įrašas nukopijuotas į laikiną atmintį";
 $pgv_lang["add_unlinked_person"]	= "Pridėti nenusijusį asmenį";
-$pgv_lang["server_file"]				= "Bylos vardas serveryje";
 $pgv_lang["server_file_advice"]			= "Jei norite išsaugoti orginalų vardą, tai nekeisti.";
 $pgv_lang["server_file_advice2"]		= "Jūs galite suvesti URL, prasidedantį nuo &laquo;http://&raquo;.";
 $pgv_lang["add_media_other_folder"]		= "Kita direktorija...  Prašom suvesti";

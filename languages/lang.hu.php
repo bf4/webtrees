@@ -3,7 +3,7 @@
  * Hungarian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,8 +155,8 @@ $pgv_lang["as_spouse"]						= "Család a házastárssal";
 $pgv_lang["as_child"]						= "Család a szülőkkel";
 $pgv_lang["view_gedcom"]					= "A GEDCOM-rekord megtekintése";
 $pgv_lang["add_to_cart"]					= "Hozzáadás a Metszési Kosárhoz";
-$pgv_lang["still_living_error"]					= "A személy jelenleg is életben van, illetve nincs hozzárendelt születési vagy halálozási adat.  Az élő személyek adatai nem nyilvánosak.<br/>További információt a következő címen kérhet:";
-$pgv_lang["privacy_error"]	    				= "A személy adatai bizalmas jellegűek.<br/>";
+$pgv_lang["still_living_error"]					= "A személy jelenleg is életben van, illetve nincs hozzárendelt születési vagy halálozási adat.  Az élő személyek adatai nem nyilvánosak.<br />További információt a következő címen kérhet:";
+$pgv_lang["privacy_error"]	    				= "A személy adatai bizalmas jellegűek.<br />";
 $pgv_lang["more_information"]					= "További információt itt kérhet:";
 $pgv_lang["name"]						= "Név:";
 $pgv_lang["given_name"]						= "Keresztnév:";
@@ -209,7 +209,7 @@ $pgv_lang["number_children"]					= "Gyermekek száma: ";
 $pgv_lang["parents_timeline"]					= "A házaspár mutatása a Kronológiában";
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]						= "Metszési kosár";
-$pgv_lang["clip_explaination"]					= "A Családfa-ágak kosara lehetővé teszi, hogy a családfáról egyes ágakat lemetsszen, és egy különálló GEDCOM állományba összekötve letöltse azt.<br/><br/>";
+$pgv_lang["clip_explaination"]					= "A Családfa-ágak kosara lehetővé teszi, hogy a családfáról egyes ágakat lemetsszen, és egy különálló GEDCOM állományba összekötve letöltse azt.<br /><br />";
 $pgv_lang["item_with_id"]					= "Elem ezzel az id-vel";
 $pgv_lang["error_already"]					= "már szerepel a lemetszett ágakat tartalmazó kosárban.";
 $pgv_lang["which_links"]					= "Melyik ágat szeretné ebből a családból szintén hozzáadni?";
@@ -259,7 +259,6 @@ $pgv_lang["place_list2"]                			= "Helyszín-lista";
 $pgv_lang["show_place_hierarchy"]       			= "A helyszínek hierarchiában";
 $pgv_lang["show_place_list"]            			= "Az összes helyszín egy listában";
 $pgv_lang["total_unic_places"]          			= "Helyszínek száma";
-	 
 $pgv_lang["next_image"]						= "Következő kép";
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]					= "Multimédia elemek listája";
@@ -335,7 +334,7 @@ $pgv_lang["find_source"]					= "Találj Forrást";
 $pgv_lang["search_tagfilter"]					= "Szűrő nélkül";
 $pgv_lang["search_prtall"]					= "Az összes név";
 $pgv_lang["search_prthit"]					= "Talált nevek";
-$pgv_lang["search_prtnames"]					= "Személyek<br/>neveit kiírni:";
+$pgv_lang["search_prtnames"]					= "Személyek<br />neveit kiírni:";
 $pgv_lang["search_options"]					= "Keresési Opció";
 $pgv_lang["search_sources"]					= "Források";
 $pgv_lang["search_indis"]					= "Személyek";
@@ -368,7 +367,7 @@ $pgv_lang["tables_exist"]					= "A PhpGedView-táblák már léteznek az adatbá
 $pgv_lang["you_may"]						= "Választhat:";
 $pgv_lang["drop_tables"]					= "Jelenlegi táblák törlése";
 $pgv_lang["import_multiple"]					= "Több GEDCOM-állomány importálása és felhasználása";
-$pgv_lang["explain_options"]					= "Ha a táblák törlését választja, akkor az <u>összes</u> adat a jelenlegi GEDCOM-állománnyal lesz lecserélve.<br/><br/>Ha azt választja, hogy több GEDCOM-állománnyal dolgozzunk, akkor az nevű ugyanolyan állományokból származó rekordok törlésre kerülnek. Ez lehetőséget ad több GEDCOM-adat ugyanabban a táblában való tárolására, és a köztük való könnyű átváltásra.<br/><br/><b>Megjegyzésre szorul hogy a tartományok neve kis és nagy betűkkel különbözhet.</b> Ez azt jelenti hogy a <b>Test.GED</b> <u>nem</u> ugyan az mint a <b>test.ged</b>.";
+$pgv_lang["explain_options"]					= "Ha a táblák törlését választja, akkor az <u>összes</u> adat a jelenlegi GEDCOM-állománnyal lesz lecserélve.<br /><br />Ha azt választja, hogy több GEDCOM-állománnyal dolgozzunk, akkor az nevű ugyanolyan állományokból származó rekordok törlésre kerülnek. Ez lehetőséget ad több GEDCOM-adat ugyanabban a táblában való tárolására, és a köztük való könnyű átváltásra.<br /><br /><b>Megjegyzésre szorul hogy a tartományok neve kis és nagy betűkkel különbözhet.</b> Ez azt jelenti hogy a <b>Test.GED</b> <u>nem</u> ugyan az mint a <b>test.ged</b>.";
 $pgv_lang["path_to_gedcom"]					= "Adja meg az útvonalat a GEDCOM-állományhoz:";
 $pgv_lang["changes_present"]					= "Az aktuális GEDCOM -nak vannak függőben változtatásai. Ha folytatja az importálást akkor ezek a függőben levő változtatások azonnal bekerülnek az adatbázisba. Meg kellene tekintenie a függőben levő változtatásokat még mielőtt folytatná az importálást.";
 $pgv_lang["updating_is_dead"]					= "\"Elhunyt\" státusz frissítés az INDI -nek";
@@ -434,14 +433,13 @@ $pgv_lang["digest_auth"]					= "Kivonatos azonosítás";
 $pgv_lang["basic_auth"]						= "Alapvető azonosítás";
 $pgv_lang["basic_auth_failure"]					= "Ezt a forrást csak érvényes felhasználónévvel és jelszóval érheti el";
 $pgv_lang["basic_realm"]					= "PhpGedView azonosítási rendszer";
-$pgv_lang["add_another"]					= "Új személy hozzáadása:<br/>Személyi azonosító:";
+$pgv_lang["add_another"]					= "Új személy hozzáadása:<br />Személyi azonosító:";
 $pgv_lang["find_id"]						= "Azonosító";
 $pgv_lang["show"]						= "Mutat";
 $pgv_lang["year"]						= "Év:";
 $pgv_lang["timeline_instructions"]				= "Az elterjedtebb böngészők támogatják a szövegdobozok grafikonon belüli mozgatását.";
 $pgv_lang["zoom_in"]						= "Nagyítás";
 $pgv_lang["zoom_out"]						= "Kicsinyítés";
-
 $pgv_lang["cal_gregorian"]            				= "Gregorián";
 $pgv_lang["cal_julian"]               				= "Juliánusz";
 $pgv_lang["cal_french"]               				= "Francia";
@@ -465,8 +463,6 @@ $pgv_lang["sep"]						= "szeptember";
 $pgv_lang["oct"]						= "október";
 $pgv_lang["nov"]						= "november";
 $pgv_lang["dec"]						= "december";
-
-/*
 $pgv_lang["vend"]         = "Vendémiaire";
 $pgv_lang["brum"]         = "Brumaire";
 $pgv_lang["frim"]         = "Frimaire";
@@ -480,7 +476,6 @@ $pgv_lang["mess"]         = "Messidor";
 $pgv_lang["ther"]         = "Thermidor";
 $pgv_lang["fruc"]         = "Fructidor";
 $pgv_lang["comp"]         = "jours complémentaires";
-*/
 $pgv_lang["tsh"]          					= "Tisri";
 $pgv_lang["csh"]          					= "Hesván";
 $pgv_lang["ksl"]          					= "Kiszlév";
@@ -495,7 +490,6 @@ $pgv_lang["svn"]          					= "Sziván";
 $pgv_lang["tmz"]          					= "Tamuz";
 $pgv_lang["aav"]          					= "Áv";
 $pgv_lang["ell"]          					= "Elul";
-
 $pgv_lang["muhar"]        					= "Moharrem";
 $pgv_lang["safar"]        					= "Safar";
 $pgv_lang["rabia"]        					= "Rébi el avvel";
@@ -508,7 +502,6 @@ $pgv_lang["ramad"]        					= "Ramadán";
 $pgv_lang["shaww"]        					= "Sevvál";
 $pgv_lang["dhuaq"]        					= "Dsül kade";
 $pgv_lang["dhuah"]        					= "Dsül hedse";
-
 $pgv_lang["abt"]						= "körül";
 $pgv_lang["aft"]						= "után";
 $pgv_lang["and"]						= "és";
@@ -536,7 +529,6 @@ $pgv_lang["no_login"]						= "Nem sikerült azonosítani a felhasználót.";
 $pgv_lang["import_gedcom"]					= "GEDCOM-állomány importálása";
 $pgv_lang["enter_gedcomid"]					= "Egy GEDCOM azonosítót meg kell adnia.";
 $pgv_lang["user_info"]						= "Felhasználói adataim";
-$pgv_lang["upload_gedcom_help"]					= "Válasszon egy GEDCOM vagy ZIP állományt az ön számítógépéről amit fel szeretne tölteni a szerverre. Az állomány a <b>#INDEX_DIRECTORY#</b> mappába lesz feltöltve.<br/><br/>Ha egy ZIP állományt tölt fel akkor abban csak egy GEDCOM lehet és az a GEDCOM lesz automatikusan használva a következő lépésekben.<br/><br/>";
 $pgv_lang["enter_filename"]					= "Meg kell adnia egy GEDCOM-állomány nevét.";
 $pgv_lang["relationship_male_1_is_the_2_of_3"] 			= "%1\$s a %2\$s -ik a %3\$s -ból/ből.";
 $pgv_lang["relationship_female_1_is_the_2_of_3"] 		= "%1\$s a %2\$s -ik a %3\$s -ból/ből.";
@@ -708,7 +700,6 @@ $pgv_lang["file_not_exists"]    				= "Ezen a néven nem létezik GEDCOM-állom�
 $pgv_lang["file_not_present"]					= "Az állomány nem létezik.";
 $pgv_lang["file_exists"]					= "Ezen a néven már létezik egy GEDCOM-állomány. Kérem válasszon egy másikat, vagy törölje a régit.";
 $pgv_lang["new_gedcom_title"]					= "Családfa ebből az állományból: [#GEDCOMFILE#]";
-$pgv_lang["add_gedcom_instructions"]				= "Adjon meg egy ehhez az új GEDCOM-hoz. Az új GEDCOM-állományt az Index könyvtárban fogjuk elhelyezni:#INDEX_DIRECTORY#";
 $pgv_lang["research_assistant"]					= "Kutatási Segéd";
 $pgv_lang["link_media_records"]					= "Média hozzákapcsolása";
 $pgv_lang["manage_media_files"]					= "Média elemek kezelése";
@@ -755,7 +746,7 @@ $pgv_lang["line_up_generations"]        			= "Azonos generációk igazítása";
 $pgv_lang["oldest_top"]             				= "Legidősebbet felülre";
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]					= "Valóban törli ezt a GEDCOM-adatot?";
-$pgv_lang["access_denied"]					= "<b>Hozzáférés megtagadva</b><br/>Megfelelő jogosultság hiányában nem tekintheti meg ezt a forrást.";
+$pgv_lang["access_denied"]					= "<b>Hozzáférés megtagadva</b><br />Megfelelő jogosultság hiányában nem tekintheti meg ezt a forrást.";
 $pgv_lang["changes_exist"]					= "A jelenlegi GEDCOM megváltozott.";
 $pgv_lang["find_place"]						= "Hely keresése";
 $pgv_lang["close_window"]					= "Ablak bezárás";
@@ -833,19 +824,19 @@ $pgv_lang["mail02_line04a"]					= "Ön kapni fog egy email-t amint a jövendő f
 $pgv_lang["mail01_subject"]					= "Az Ön regisztrációja a(z) #SERVER_NAME# szerveren";
 $pgv_lang["mail02_line01"]					= "Kedves Adminisztrátor!";
 $pgv_lang["mail02_line02"]					= "Egy felhasználó új azonosítót készített a(z) ( #SERVER_NAME# ) szerveren.";
-$pgv_lang["pls_note06a"] 					= "Mi most küldeni fogunk egy ellenőrző email -t erre a címre ( #user_email# ). Önnek meg kell erősítenie a számla kérését az ellenőrző email alapján. Ha ön nem erősíti meg a számla kérését akkor automatikusan 7 nap után elutasításra kerül a kérelme. Önnek egy új kérelmet kell írnia.<br/><br/>Miután követte az instrukciókat az ellenőrző email-ben, utána tud csak bejelentkezni. Ahhoz hogy bejelentkezzen tudnia kell a felhasználónevét és a jelszavát.<br/><br/>";
+$pgv_lang["pls_note06a"] 					= "Mi most küldeni fogunk egy ellenőrző email -t erre a címre ( #user_email# ). Önnek meg kell erősítenie a számla kérését az ellenőrző email alapján. Ha ön nem erősíti meg a számla kérését akkor automatikusan 7 nap után elutasításra kerül a kérelme. Önnek egy új kérelmet kell írnia.<br /><br />Miután követte az instrukciókat az ellenőrző email-ben, utána tud csak bejelentkezni. Ahhoz hogy bejelentkezzen tudnia kell a felhasználónevét és a jelszavát.<br /><br />";
 $pgv_lang["mail02_line03"]					= "A felhasználó kapott egy emailt a fontosabb adatokkal, ahhoz hogy ellenőrizni tudja az azonosítóját.";
 $pgv_lang["mail02_line04"]					= "Amint a felhasználó elvégezte ezt az ellenőrzést, email-ben kap értesítést, így jogot adhat a felhasználónak a bejelentkezéshez.";
 $pgv_lang["mail02_subject"]					= "Új regisztráció a(z) #SERVER_NAME# szerveren";
 $pgv_lang["hashcode"]						= "Ellenőrző kód:";
-$pgv_lang["thankyou"]						= "Kedves #user_fullname#!<br/>Köszönjük a regisztrációt";
-$pgv_lang["pls_note06"]						= "Kapni fog egy ellenőrző emailt erre a címre ( #user_email# ). Ezt a levelet használja az azonosítója aktiválásához; ha hét napon belül nem sikerül az aktiválás, áthelyezésre kerül az azonosítója (akkor újra megkísérelheti a regisztrációt).<br/><br/>Ahhoz hogy bejelentkezzen az oldalra, tudnia kell az azonosítóját, és a jelszavát.";
+$pgv_lang["thankyou"]						= "Kedves #user_fullname#!<br />Köszönjük a regisztrációt";
+$pgv_lang["pls_note06"]						= "Kapni fog egy ellenőrző emailt erre a címre ( #user_email# ). Ezt a levelet használja az azonosítója aktiválásához; ha hét napon belül nem sikerül az aktiválás, áthelyezésre kerül az azonosítója (akkor újra megkísérelheti a regisztrációt).<br /><br />Ahhoz hogy bejelentkezzen az oldalra, tudnia kell az azonosítóját, és a jelszavát.";
 $pgv_lang["registernew"]					= "Új azonosító visszaigazolása";
 $pgv_lang["mail03_line03a"]					= "Nem kell mást csinálnia, a felhasználó most már be tud jelentkezni.";
 $pgv_lang["user_verify"]					= "Felhasználó ellenőrzése";
 $pgv_lang["send"]						= "Elküld";
 $pgv_lang["pls_note10a"]					= "Most már be tud jelentkezni a felhasználó nevével és a kódjával.";
-$pgv_lang["pls_note07"]						= "~#pgv_lang[user_verify]#~<br/><br/>Kérem írja be a felhasználónevét, a jelszavát és az email-ben az ellenőrzéshez kapott aktiváló kódot.";
+$pgv_lang["pls_note07"]						= "~#pgv_lang[user_verify]#~<br /><br />Kérem írja be a felhasználónevét, a jelszavát és az email-ben az ellenőrzéshez kapott aktiváló kódot.";
 $pgv_lang["pls_note08"]						= "A #user_name# felhasználó adatait leellenőriztük.";
 $pgv_lang["mail03_line01"]					= "Kedves Adminisztrátor!";
 $pgv_lang["mail03_line02"]					= "#newuser[username]# ( #newuser[fullname]# ) ellenőrizte a regisztrációs adatait.";
@@ -853,10 +844,10 @@ $pgv_lang["mail03_line03"]					= "Kérem, kattintson a lenti hivatkozásra, jele
 $pgv_lang["mail03_subject"]					= "Új ellenőrzés a(z) #SERVER_NAME# szerveren";
 $pgv_lang["pls_note09"]						= "Önt regisztrált felhasználóként azonosítottuk.";
 $pgv_lang["pls_note10"]						= "Az adminisztrátort értesítettük. Amint ő megadja az engedélyt a bejelentkezéshez, be tud majd jelentkezni a felhasználónevével és jelszavával.";
-$pgv_lang["data_incorrect"]					= "Hibás adat!<br/>Kérem próbálja újra!";
+$pgv_lang["data_incorrect"]					= "Hibás adat!<br />Kérem próbálja újra!";
 $pgv_lang["user_not_found"]					= "Nem lehetett ellenőrizni a megadott információt. Kérem lépjen vissza, és próbálja meg újra.";
 $pgv_lang["lost_pw_reset"]					= "Új jelszó kérése";
-$pgv_lang["pls_note11"]						= "Ahhoz hogy a jelszavát megváltoztassa, adja meg a felhasználónevet és az email címét. <br/><br/>Emailben küldünk egy speciális URL-t, amely egy igazolást tartalmaz. Meglátogatva azt az internetcímet, megváltoztathatja a jelszavát majd bejelentkezhet az oldalra. Biztonsági okokból, azt a címet ne adja meg másnak, még az oldal adminisztrátorának (ezt nem is kérjük).<br/><br/>Amennyiben segítségre van szüksége, lépjen kapcsolatba az oldal adminisztrátorával.";
+$pgv_lang["pls_note11"]						= "Ahhoz hogy a jelszavát megváltoztassa, adja meg a felhasználónevet és az email címét. <br /><br />Emailben küldünk egy speciális URL-t, amely egy igazolást tartalmaz. Meglátogatva azt az internetcímet, megváltoztathatja a jelszavát majd bejelentkezhet az oldalra. Biztonsági okokból, azt a címet ne adja meg másnak, még az oldal adminisztrátorának (ezt nem is kérjük).<br /><br />Amennyiben segítségre van szüksége, lépjen kapcsolatba az oldal adminisztrátorával.";
 $pgv_lang["enter_email"]					= "Adjon meg egy e-mail címet";
 $pgv_lang["mail04_line01"]					= "Kedves #user_fullname# ...";
 $pgv_lang["mail04_line02"]					= "Az Ön felhasználónevéhez új jelszót igényeltek!";
@@ -864,7 +855,7 @@ $pgv_lang["mail04_line03"]					= "Ajánlások:";
 $pgv_lang["mail04_line04"]					= "Kattintson az alábbi hivatkozásra, jelentkezzen be az új jelszóval majd változtassa meg ahhoz hogy az adatai biztonságban maradjanak.";
 $pgv_lang["mail04_line05"]					= "Miután be jelentkezett, válassza a \\\'#pgv_lang[myuserdata]#\\\' linket a \\\'#pgv_lang[mygedview]#\\\' menü alatt és töltse ki a jelszó mezőket hogy megváltoztassa a jelszavát.";
 $pgv_lang["mail04_subject"]					= "Adat kérése a(z) #SERVER_NAME# szerveren";
-$pgv_lang["pwreqinfo"]						= "Tisztelt Felhasználó!<br/><br/>Egy emailt küldtünk a (#user[email]#) címre, amiben benne van az új jelszó.<br/><br/>Kérjük, nézze meg a levelesládáját, mert ez a levél perceken belül megérkezhet.<br/><br/>Javaslat:<br/><br/>Miután megkapta az új jelszavát emailben, jelentkezzen be az új jelszóval majd változtassa meg ahhoz hogy az adatai biztonságban maradjanak.";
+$pgv_lang["pwreqinfo"]						= "Tisztelt Felhasználó!<br /><br />Egy emailt küldtünk a (#user[email]#) címre, amiben benne van az új jelszó.<br /><br />Kérjük, nézze meg a levelesládáját, mert ez a levél perceken belül megérkezhet.<br /><br />Javaslat:<br /><br />Miután megkapta az új jelszavát emailben, jelentkezzen be az új jelszóval majd változtassa meg ahhoz hogy az adatai biztonságban maradjanak.";
 $pgv_lang["editowndata"]					= "Felhasználói adataim";
 $pgv_lang["savedata"]						= "A megváltozott adatok mentése";
 $pgv_lang["datachanged"]					= "A felhasználó adata megváltozott!";
@@ -874,11 +865,11 @@ $pgv_lang["user_theme"]						= "Az én témám";
 $pgv_lang["mgv"]						= "MyGedView";
 $pgv_lang["mygedview"]						= "MyGedView Portál";
 $pgv_lang["passwordlength"]					= "A jelszónak legalább 6 karakterből kell állnia.";
-$pgv_lang["welcome_text_auth_mode_1"]   			= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon!</b></center><br/>A honlapot minden olyan felhasználó látogathatja, akinek van hozzáférési jogosultsága.<br/><br/>Amennyiben Önnek már rendelkezik felhasználói jogosultsággal, bejelentkezhet az oldalra. Ha még nem, a megfelelő hivatkozásra kattintva kezdeményezheti annak megszerzését.<br/><br/>Miután megerősítette jelentkezését, a honlap adminisztrátora fogadja el, vagy utasítja el az Ön igényét.A pozitív döntésről email-ben kap értesítést.";
-$pgv_lang["welcome_text_auth_mode_2"]   			= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon</b><center><br/>A honlaphoz kizárólag a <u>bejelentkezett</u> felhasználók férhetnek hozzá.<br/><br/>Amennyiben Önnek már rendelkezik felhasználói jogosultsággal, bejelentkezhet az oldalra. Ha még nem, a megfelelő hivatkozásra kattintva kezdeményezheti annak megszerzését.<br/><br/>Miután megerősítette jelentkezését, a honlap adminisztrátora fogadja el, vagy utasítja el az Ön igényét. A pozitív döntésről email-ben kap értesítést.";
-$pgv_lang["welcome_text_auth_mode_3"]   			= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon</b></center><br/>A honlaphoz <u>kizárólag családtagok</u> férhetnek hozzá.<br/><br/>Amennyiben Önnek már rendelkezik felhasználói jogosultsággal, bejelentkezhet az oldlara. Ha még nem, a megfelelő hivatkozásra kattintva kezdeményezheti annak megszerzését.<br/><br/>Miután megerősítette jelentkezését, a honlap adminisztrátora fogadja el, vagy utasítja el az Ön igényét. A pozitív döntésről email-ben kap értesítést.";
+$pgv_lang["welcome_text_auth_mode_1"]   			= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon!</b></center><br />A honlapot minden olyan felhasználó látogathatja, akinek van hozzáférési jogosultsága.<br /><br />Amennyiben Önnek már rendelkezik felhasználói jogosultsággal, bejelentkezhet az oldalra. Ha még nem, a megfelelő hivatkozásra kattintva kezdeményezheti annak megszerzését.<br /><br />Miután megerősítette jelentkezését, a honlap adminisztrátora fogadja el, vagy utasítja el az Ön igényét.A pozitív döntésről email-ben kap értesítést.";
+$pgv_lang["welcome_text_auth_mode_2"]   			= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon</b><center><br />A honlaphoz kizárólag a <u>bejelentkezett</u> felhasználók férhetnek hozzá.<br /><br />Amennyiben Önnek már rendelkezik felhasználói jogosultsággal, bejelentkezhet az oldalra. Ha még nem, a megfelelő hivatkozásra kattintva kezdeményezheti annak megszerzését.<br /><br />Miután megerősítette jelentkezését, a honlap adminisztrátora fogadja el, vagy utasítja el az Ön igényét. A pozitív döntésről email-ben kap értesítést.";
+$pgv_lang["welcome_text_auth_mode_3"]   			= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon</b></center><br />A honlaphoz <u>kizárólag családtagok</u> férhetnek hozzá.<br /><br />Amennyiben Önnek már rendelkezik felhasználói jogosultsággal, bejelentkezhet az oldlara. Ha még nem, a megfelelő hivatkozásra kattintva kezdeményezheti annak megszerzését.<br /><br />Miután megerősítette jelentkezését, a honlap adminisztrátora fogadja el, vagy utasítja el az Ön igényét. A pozitív döntésről email-ben kap értesítést.";
 $pgv_lang["acceptable_use"]					= "<div class=\"largeError\">Megjegyzés:</div><div class=\"error\">A következő form kitöltésével és elküldésével, Ön elfogadja a következőket:<ul><li>az oldalakon lévő élő személyek személyes adatai védelmezi</li><li>a lenti dobozban írja meg ki a felmenője, vagy adjon meg információt olyan személyről aki szerepelhet az oldalon.</li></ul></div>";
-$pgv_lang["welcome_text_cust_head"]				= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon</b></center><br/>A honlapot érvényes felhasználói névvel és jelszóval rendelkező felhasználók látogathatják.<br/>";
+$pgv_lang["welcome_text_cust_head"]				= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon</b></center><br />A honlapot érvényes felhasználói névvel és jelszóval rendelkező felhasználók látogathatják.<br />";
 $pgv_lang["acceptable_use"]					= "<div class=\"largeError\">Megjegyzés:</div><div class=\"error\">Jelen kérdőív kitöltésével Ön elfogadja az alábbiakat:<ul><li>az oldalunkon szereplő élő emberek adatainak bizalmasságát megőrzi,</li><li>illetve az alábbi 'Megjegyzés' szövegdobozban elmagyarázza, hogy ki(k)hez kapcsolódik, vagy információt ad olyan személyről akiről feltételezi, hogy szerepel az oldalunkon.</li></ul></div>";
 	 
 //-- mygedview page
@@ -886,12 +877,12 @@ $pgv_lang["welcome"]						= "Üdvözöljük";
 $pgv_lang["upcoming_events"]					= "Következő események";
 $pgv_lang["no_events_privacy"]					= "Történik esemény az elkövetkező #pgv_lang[global_num1]# napon, de bizalmas korlátozás miatt nem mutatható.";
 $pgv_lang["none_today_privacy"]					= "Történnek események ma, de bizalmas korlátozás miatt nem mutatható.";
-$pgv_lang["more_today_privacy"]					= "<br/>Több esemény történik ma, de bizalmas korlátozás miatt nem mutatható.";
+$pgv_lang["more_today_privacy"]					= "<br />Több esemény történik ma, de bizalmas korlátozás miatt nem mutatható.";
 $pgv_lang["none_today_privacy"]					= "Történnek események ma, de bizalmas korlátozás miatt nem mutatható.";
 $pgv_lang["none_today_all"]					= "A mai napon nincs esemény.";
 $pgv_lang["none_today_living"]					= "A mai napon nincs esemény az élők között.";
-$pgv_lang["more_events_privacy1"]				= "<br/>Több esemény történik holnap, de bizalmas korlátozás miatt nem mutatható.";
-$pgv_lang["more_events_privacy"]				= "<br/>Több esemény történik az elkövetkezendő #pgv_lang[global_num1]# napon, de bizalmas korlátozás miatt nem mutatható.";
+$pgv_lang["more_events_privacy1"]				= "<br />Több esemény történik holnap, de bizalmas korlátozás miatt nem mutatható.";
+$pgv_lang["more_events_privacy"]				= "<br />Több esemény történik az elkövetkezendő #pgv_lang[global_num1]# napon, de bizalmas korlátozás miatt nem mutatható.";
 $pgv_lang["no_events_privacy1"]					= "Történik esemény holnap, de bizalmas korlátozás miatt nem mutatható.";
 $pgv_lang["no_events_all1"]					= "Semmi esemény nincs holnap.";
 $pgv_lang["no_events_all"]					= "Semmi esemény nincs a következő #pgv_lang[global_num1]# napon.";
@@ -931,7 +922,7 @@ $pgv_lang["mygedview_desc"]					= "Az Ön MyGedView oldalán kiválaszthatja az 
 $pgv_lang["no_messages"]					= "Nincs új üzenete.";
 $pgv_lang["clicking_ok"]					= "Kattintson az OK-ra, és egy új ablakban léphet kapcsolatba a #user[fullname]# személlyel";
 $pgv_lang["my_favorites"]					= "Kedvenceim";
-$pgv_lang["no_favorites"]					= "Önnek nincsenek kijelölt Kedvencei.<br/><br/>Ha egy személyt, családot vagy forrást fel kíván venni Kedvencek közé, keresse meg és kattintson a <b>#pgv_lang[add_favorite]#</b> hivatkozásra, vagy használja az alábbi beviteli mezőt az azonosító alapján történő felvételhez. Azonosító szám helyett be írhat egy URL -t és egy címet.";
+$pgv_lang["no_favorites"]					= "Önnek nincsenek kijelölt Kedvencei.<br /><br />Ha egy személyt, családot vagy forrást fel kíván venni Kedvencek közé, keresse meg és kattintson a <b>#pgv_lang[add_favorite]#</b> hivatkozásra, vagy használja az alábbi beviteli mezőt az azonosító alapján történő felvételhez. Azonosító szám helyett be írhat egy URL -t és egy címet.";
 $pgv_lang["add_to_my_favorites"]				= "Hozzáadás a Kedvencekhez";
 $pgv_lang["gedcom_favorites"]					= "Kedvencek ebből a GEDCOM-ból";
 $pgv_lang["no_gedcom_favorites"]				= "Nincs kiválasztott kedvenc. Az adminisztrátor adhat olyan kedvenceket, amelyek induláskor megjelennek.";
@@ -946,7 +937,7 @@ $pgv_lang["message_email3"]					= "A következő üzenetet küldte el a PhpGedVi
 $pgv_lang["viewing_url"]					= "Az üzenetet az alábbi linkre kattintva küldheti el";
 $pgv_lang["messaging2_help"]					= "Az üzenet elküldésekor kapni fog egy másolatot email-ben, az Ön által megadott email címre";
 $pgv_lang["random_picture"]					= "Meglepetés-kép";
-$pgv_lang["message_instructions"]				= "<b>Figyelem:</b> Az élő személyek személyes adatait csak a család hozzátartozói és a közeli barátok láthatják. Mielőtt bármilyen személyes adatot megkaphatna, megkérjük hogy ellenőrizze a rokonságát. Lehetséges, hogy elhunyt személyek adatai sem hozzáférhetőek. Ebben az esetben, lehetséges hogy nincs elég információ arról hogy életben vannak-e még, vagy nincs elég egyéb információ róluk.<br/><br/>Mielőtt kérdezne, győződjön meg arról, hogy a megfelelő személyről van szó. Ellenőrizze le a dátumokat, helyeket és a közeli hozzátartozókat. Ha leszármazási adatokkal szolgál, kérem adja meg adja meg az információk forrását is.<br/><br/>";
+$pgv_lang["message_instructions"]				= "<b>Figyelem:</b> Az élő személyek személyes adatait csak a család hozzátartozói és a közeli barátok láthatják. Mielőtt bármilyen személyes adatot megkaphatna, megkérjük hogy ellenőrizze a rokonságát. Lehetséges, hogy elhunyt személyek adatai sem hozzáférhetőek. Ebben az esetben, lehetséges hogy nincs elég információ arról hogy életben vannak-e még, vagy nincs elég egyéb információ róluk.<br /><br />Mielőtt kérdezne, győződjön meg arról, hogy a megfelelő személyről van szó. Ellenőrizze le a dátumokat, helyeket és a közeli hozzátartozókat. Ha leszármazási adatokkal szolgál, kérem adja meg adja meg az információk forrását is.<br /><br />";
 $pgv_lang["sending_to"]						= "Ezt az üzenetet a(z) #TO_USER# felhasználónak küldjük.";
 $pgv_lang["preferred_lang"]	 				= "A felhasználó #USERLANG# nyelven szeretné a rendszert használni";
 $pgv_lang["gedcom_created_using"]				= "A GEDCOM-ot létrehozó szoftver: <b>#SOFTWARE# #CREATED_VERSION#</b>";
@@ -993,7 +984,7 @@ $pgv_lang["gedcom_news_limit_date"]				= "Egység ideje";
 $pgv_lang["gedcom_news_limit_nolimit"]				= "Nincs korlát";
 $pgv_lang["gedcom_news_limit"]					= "Megjelenési korlát ennyivel:";
 $pgv_lang["gedcom_stats_show_surnames"]				= "Leggyakoribb vezetéknevek mutatása?";
-$pgv_lang["portal_config_intructions"]				= "~#pgv_lang[customize_page]#<br/>#pgv_lang[customize_gedcom_page]#~<br/><br/>Ezen az oldalon beállíthatja a MyGedView Portálon megjelenő blokkok helyét, úgy hogy tetszőleges helyre helyezi a megfelelő blokkot. <br/><br/>Az oldal két fő részre van osztva, a <b>Központi</b> részre, és a <b>Jobb</b> oldalra. A központi rész nagyobb, és a \$pgv_lang[mgv] cím alatt jelenik meg. A <b>Jobb</b> oldal a cím jobb oldalánál kezdődik, és az oldal jobb oldalán halad lefelé.<br/><br/>Mindegyik résznek megvannak saját blokkjai, amelyeknek a sorrendjét meg lehet változtatni, valamint blokkokat lehet beszúrni és kivenni.<br/><br/>Amikor az egyik blokk üres, a maradék blokk felveszi az egész szélességet az oldalon.<br/><br/>";
+$pgv_lang["portal_config_intructions"]				= "~#pgv_lang[customize_page]#<br />#pgv_lang[customize_gedcom_page]#~<br /><br />Ezen az oldalon beállíthatja a MyGedView Portálon megjelenő blokkok helyét, úgy hogy tetszőleges helyre helyezi a megfelelő blokkot. <br /><br />Az oldal két fő részre van osztva, a <b>Központi</b> részre, és a <b>Jobb</b> oldalra. A központi rész nagyobb, és a #pgv_lang[mgv]# cím alatt jelenik meg. A <b>Jobb</b> oldal a cím jobb oldalánál kezdődik, és az oldal jobb oldalán halad lefelé.<br /><br />Mindegyik résznek megvannak saját blokkjai, amelyeknek a sorrendjét meg lehet változtatni, valamint blokkokat lehet beszúrni és kivenni.<br /><br />Amikor az egyik blokk üres, a maradék blokk felveszi az egész szélességet az oldalon.<br /><br />";
 $pgv_lang["login_block"]					= "Bejelentkező blokk";
 $pgv_lang["login_descr"]					= "A bejelentkező blokk felhasználónév és jelszó bevitelt tesz lehetővé a bejelentkezéshez.";
 $pgv_lang["theme_select_block"]         			= "Asztaltéma-választó blokk";
@@ -1002,7 +993,7 @@ $pgv_lang["block_top10_title"]          			= "Leggyakoribb vezetéknevek";
 $pgv_lang["block_top10"]                			= "Top 10 vezetéknév blokk";
 $pgv_lang["block_top10_descr"]          			= "Ez a blokk egy táblázatban megmutatja az adatbázisban lévő 10 leggyakoribb keresztnevet.";
 $pgv_lang["gedcom_news_block"]					= "GEDCOM hírblokk";
-$pgv_lang["gedcom_news_descr"]					= "A GEDCOM hírblokk az adminisztrátor által bevitt híreket mutatja.<br/><br/>A Hírek szolgálhat például a GEDCOM-állomány frissítésének, vagy családok újraegyesítésének bejelentésére vagy gyermek születésére.";
+$pgv_lang["gedcom_news_descr"]					= "A GEDCOM hírblokk az adminisztrátor által bevitt híreket mutatja.<br /><br />A Hírek szolgálhat például a GEDCOM-állomány frissítésének, vagy családok újraegyesítésének bejelentésére vagy gyermek születésére.";
 $pgv_lang["user_news_block"]					= "Felhasználói hírlap blokk";
 $pgv_lang["user_news_descr"]					= "A felhasználók hírlapjához saját feljegyzések készíthetőek.";
 $pgv_lang["my_journal"]						= "Az én hírlapom";
@@ -1055,15 +1046,15 @@ $pgv_lang["record_not_found"]					= "A kért Gedcom rekord nem található. Ez v
 $pgv_lang["phpgedview_message"]					= "PhpGedView üzenet";
 $pgv_lang["common_surnames"]					= "Leggyakoribb vezetéknevek:";
 $pgv_lang["default_news_title"]					= "Üdvözöljük az Ön Családfájánál.";
-$pgv_lang["default_news_text"]					= "Ezen az oldalon a családfa-információk közlését a <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a> programmal tettük lehetővé. Az oldal áttekintést ad ehhez a programhoz.<br/><br/>Ahhoz hogy megkezdhesse a munkát az adatokkal, válassza az egyik grafikont a Grafikonok menüből, menjen a személyek listájához, vagy keressen a nevek és a helyek közt.<br/><br/>Ha nehézségei támadnak az oldal használata közben, kattintson a segítség menüre, és ott magyarázatot kaphat annak az oldalnak a használatához.<br/><br/>Köszönjük hogy meglátogatta ezt az oldalt.";
+$pgv_lang["default_news_text"]					= "Ezen az oldalon a családfa-információk közlését a <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a> programmal tettük lehetővé. Az oldal áttekintést ad ehhez a programhoz.<br /><br />Ahhoz hogy megkezdhesse a munkát az adatokkal, válassza az egyik grafikont a Grafikonok menüből, menjen a személyek listájához, vagy keressen a nevek és a helyek közt.<br /><br />Ha nehézségei támadnak az oldal használata közben, kattintson a segítség menüre, és ott magyarázatot kaphat annak az oldalnak a használatához.<br /><br />Köszönjük hogy meglátogatta ezt az oldalt.";
 $pgv_lang["reset_default_blocks"]				= "Az alapértelmezett blokkok visszaállítása";
 $pgv_lang["recent_changes"]             			= "Aktuális változások";
 $pgv_lang["recent_changes_block"]       			= "Aktuális változások blokk";
 $pgv_lang["hide_block_warn"]					= "Amikor elrejt egy üres blokkot, akkor nem lehet megváltoztatni a konfigurációját amig a blokk megint látható nem lesz mert már nem lesz üres.";
 $pgv_lang["show_empty_block"]					= "Rejtve legyen ez a Blokk amikor üres?";
 $pgv_lang["block_not_configure"]				=	"Ezt a Blokkot nem lehet beállítani.";
-$pgv_lang["recent_changes_some"]				= "<b>Változás történt az elmúlt #pgv_lang[global_num1]# napban.</b><br/>";
-$pgv_lang["recent_changes_none"]				= "<b>Nem történt semmi változás az elmúlt #pgv_lang[global_num1]# napban.</b><br/>";
+$pgv_lang["recent_changes_some"]				= "<b>Változás történt az elmúlt #pgv_lang[global_num1]# napban.</b><br />";
+$pgv_lang["recent_changes_none"]				= "<b>Nem történt semmi változás az elmúlt #pgv_lang[global_num1]# napban.</b><br />";
 $pgv_lang["show_pending"]					= "Mutasd az elfogadásra váró változásokat";
 $pgv_lang["recent_changes_descr"]       			= "Az Aktuális változások blokkjában találhat minden olyan, a GEDCOM-állományt érintő változást, mely az elmúlt hónapban történt. Ez a blokk segíti Önt a változások naprakész követésében. A változások felismerése a CHAN elem alapján történik.";
 $pgv_lang["delete_selected_messages"]   			= "Kiválasztott üzenetek törlése";
@@ -1086,7 +1077,7 @@ $pgv_lang["total_not_born"]					= "Még meg nem születettek";
 $pgv_lang["common_upload_errors"]				= "Ez a hiba valószínűleg azért van mert a feltöltött állomány meghaladta a maximum méretet. Az PHP alap feltöltési mérete 2MB. Kapcsolatba léphet az adminisztrátorral megnövelje az alap beállítást a php.ini állományban, vagy feltölthető legyen FTP-n keresztül. Használja a <a href=\"uploadgedcom.php?action=add_form\"><b>GEDCOM hozzáadás</b></a> oldalt, hogy hozzáadjon egy GEDCOM állományt amit feltöltött FTP-n keresztül.";
 $pgv_lang["indis_with_surname"]					= "Személyek #surname# vezetéknévvel";
 $pgv_lang["marr_name_import_instr"]				= "Kattintson a lenti gombra ha azt szeretné hogy a PhpGedView megbecsülje a nők házasult nevét ebben a GEDCOM-ban. Ez lehetővé teszi hogy keressen asszonyokat a férjük vezetékneve alapján. <i>Megjegyzés: Házasult nevek csak akkor jelnnek meg a listákban ha a GEDCOM konfigurációjában ezt az opciót engedélyezi. <b>Ez csak egy lehetőség, nem kötelező.</b></i>";
-$pgv_lang["review_changes_descr"]				= "A Változások Függőben Blokk sorolja fel azokat a változtatásokat, amelyeket egy adminisztrátornak el kell fogadnia. Ezek a változások függőben vannak mindaddig amíg el nem fogadják vagy elutasítják őket.<br/><br/>Ha ez a Blokk be van kapcsolva, akkor felhasználok elfogadási engedéllyel, kapnak egy emailt naponta egyszer hogy változás történt amit meg kell tekinteni.";
+$pgv_lang["review_changes_descr"]				= "A Változások Függőben Blokk sorolja fel azokat a változtatásokat, amelyeket egy adminisztrátornak el kell fogadnia. Ezek a változások függőben vannak mindaddig amíg el nem fogadják vagy elutasítják őket.<br /><br />Ha ez a Blokk be van kapcsolva, akkor felhasználok elfogadási engedéllyel, kapnak egy emailt naponta egyszer hogy változás történt amit meg kell tekinteni.";
 $pgv_lang["number_sign"]					= "#";
 $pgv_lang["privacy"]						= "Diszkréció";
 $pgv_lang["locked"]						= "Ne változtasd meg";
@@ -1175,7 +1166,7 @@ $pgv_lang["before_or_after"]					= "Helyezze a számlálót a név elé vagy mö
 $pgv_lang["days_to_show"]					= "Napok száma feltüntetése";
 $pgv_lang["num_to_show"]					= "Elemek száma feltüntetése";
 $pgv_lang["html_block_sample_part2"]				= "megváltoztassa amit ide kiírt.</p>";
-$pgv_lang["html_block_sample_part1"]				= "<p class=\"blockhc\"><b>Írja ide a címet</b></p><br/><p>Kattintson a Konfiguráció gombra";
+$pgv_lang["html_block_sample_part1"]				= "<p class=\"blockhc\"><b>Írja ide a címet</b></p><br /><p>Kattintson a Konfiguráció gombra";
 $pgv_lang["html_block_descr"]					= "Ez egy egyszerű HTML Blokk amit az oldalra lehet tenni hogy, bármilyen saját üzenetet hozáadhasson.";
 $pgv_lang["changelog"]						= "Verzió #VERSION# változások";
 $pgv_lang["importing_dates"]					= "Dátum adatok importálása";
@@ -1192,14 +1183,14 @@ $pgv_lang["indi_is_remote"]					= "Az információ ennek a személynek egy küls
 $pgv_lang["next_email_sent"]					= "A következő emlékeztető email el lesz küldve";
 $pgv_lang["maxviews_exceeded"]					= "Az oldal látogatottságának sűrűsége #GLOBALS[MAX_VIEWS]# / #GLOBALS[MAX_VIEW_TIME]# elérte a maximálisat.";
 $pgv_lang["add_fav_enter_id"]					= "Írjon be egy Személy, Család vagy Forrás azonosítóját";
-$pgv_lang["add_fav_or_enter_url"]				= "VAGY<br/>\nÍrjon be egy URL-t és egy címet";
+$pgv_lang["add_fav_or_enter_url"]				= "VAGY<br />\nÍrjon be egy URL-t és egy címet";
 $pgv_lang["add_fav_enter_note"]					= "Beírhat egy tetszőleges jegyzetet erről a kedvencről";
 $pgv_lang["url"]						= "URL";
 $pgv_lang["add_favorite"]					= "Új kedvenc hozzáadása";
 $pgv_lang["delete_family"]					= "Család törlése";
 $pgv_lang["delete_family_confirm"]				= "A család törlése minden személyi összefüggést egymáshoz kitöröl de a személyek megmaradnak. Biztos benne hogy, ki akarja törölni ezt a családot?";
 $pgv_lang["cancel"]						= "Mégse";
-$pgv_lang["cookie_help"]					= "Ez az weboldal cookie-kat használ hogy, ellenőrizze a belépési státuszt.<br/><br/>A cookie elfogadását a böngészőben lehet beállítani. Ezt be kell állítani még mielőtt bejelentkezik. Az ön böngészőjében a Segitség-nél találhat információt hogy ezt  a beállítást hol találja.";
+$pgv_lang["cookie_help"]					= "Ez az weboldal cookie-kat használ hogy, ellenőrizze a belépési státuszt.<br /><br />A cookie elfogadását a böngészőben lehet beállítani. Ezt be kell állítani még mielőtt bejelentkezik. Az ön böngészőjében a Segitség-nél találhat információt hogy ezt  a beállítást hol találja.";
 $pgv_lang["stat_users"]						= "Felhasználók száma";
 $pgv_lang["no_family_facts"]					= "Nincs tény jegyezve ennek a családnak.";
 $pgv_lang["saturday_1st"]					= "Szo";
@@ -1207,7 +1198,6 @@ $pgv_lang["familybook_chart"]					= "Családi Könyv Grafikon";
 $pgv_lang["source_menu"]					= "Forrás Opció";
 $pgv_lang["edit_source"]					= "Forrás szerkesztése";
 $pgv_lang["cancel"]						= "Mégse";
-
 $pgv_lang["jan_1st"]						= "jan";
 $pgv_lang["feb_1st"]						= "febr";
 $pgv_lang["mar_1st"]						= "márc";
@@ -1220,7 +1210,6 @@ $pgv_lang["sep_1st"]						= "szept";
 $pgv_lang["oct_1st"]						= "okt";
 $pgv_lang["nov_1st"]						= "nov";
 $pgv_lang["dec_1st"]						= "dec";
-
 $pgv_lang["friday_1st"]						= "P";
 $pgv_lang["thursday_1st"]					= "Cs";
 $pgv_lang["site_had"]						= "a következőt tartalmazta";
@@ -1242,22 +1231,14 @@ $pgv_lang["broadcast_never_logged_in"]				= "Küldj üzenet azoknak a felhaszná
 $pgv_lang["broadcast_not_logged_6mo"]				= "Küldj üzenet azoknak a felhasználóknak akik 6 hónapja nem jelentkeztek be";
 $pgv_lang["ex-wife"] 						= "Volt feleség";
 $pgv_lang["ex-spouse"] 						= "Volt házastárs";
-$pgv_lang["label_site_url2"]        				= "Weboldal URL:";
 $pgv_lang["label_merge_options"]    				= "Egybeolvaszt Opció";
-$pgv_lang["label_remote_id"]        				= "Külső személy azonosítószáma";
 $pgv_lang["label_site_url"]         				= "Weboldal URL:";
 $pgv_lang["upload_file"]					= "Állomány feltöltése az ön számítógépéből.";
 $pgv_lang["invalid_id"]						= "Az azonosító nem létezik ebben a GEDCOM állományban.";
 $pgv_lang["media_id"]						= "Média azonosító";
-$pgv_lang["label_site"]             				= "Weboldal";
-$pgv_lang["label_location"]         				= "Weboldal Helye";
 $pgv_lang["label_ask_first"]        				= "Előbb engem kérdezz";
 $pgv_lang["label_accept_changes"]   				= "Az Összes változás elfogadása";
 $pgv_lang["site_list"]						= "Weboldal: ";
-$pgv_lang["label_diff_server"]      				= "Másik weboldal";
-$pgv_lang["label_same_server"]      				= "Azonos weboldal";
-$pgv_lang["title_remote_link"]      				= "Külső link hozzáadás";
-$pgv_lang["current_person"]         				= "Aktuálissal azonos";
 $pgv_lang["link_remote"]            				= "Kapcsolj egy külső személyt";
 $pgv_lang["indi_is_remote"]					= "Az információ ennek a személynek egy külső weboldalról lett ide kapcsolva.";
 //-- validate GEDCOM
@@ -1281,8 +1262,6 @@ $pgv_lang["descendancy_header"]					= "Leszármazási jelentés a következőhö
 $pgv_lang["descend_report"]					= "Leszármazási jelentés";
 $pgv_lang["ahnentafel_no_details"]				= "de a részletek ismeretlenek";
 $pgv_lang["ahnentafel_place"]					= "ban/ben";
-$pgv_lang["verify_gedcom_help"]					= "Itt változtatni tud hogy folytassa a feltöltést és importálást a GEDCOM -nak vagy megállítja a feltöltést és az importálást.";
-$pgv_lang["import_options_help"] 				= "Használhat más opciókat amikor importálja a GEDCOM -ot.";
 	 
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]					= "Homokóra diagram";
@@ -1342,7 +1321,6 @@ $pgv_lang["birthplace"]                 			= "Születési hely tartalmazza";
 $pgv_lang["birthdate1"]                 			= "Születési idő-intervallum kezdete";
 $pgv_lang["birthdate2"]                 			= "Születési idő-intervallum vége";
 $pgv_lang["sort_by"]                    			= "rendezési elv:";
-	 
 $pgv_lang["cleanup"]						= "Tisztítás";
  //-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
 $pgv_lang["dynasty_list"]               			= "Családok áttekintése";
@@ -1541,7 +1519,7 @@ $pgv_lang["statlza"]                    			= "a z-tengely mentén:";
 //-- statisticsplot utility
 $pgv_lang["stpl"]                        			= "...";
 $pgv_lang["stplGDno"]			 			= "Graphics Display Library nincsen a PHP 4 -ben. Kérem, lépjen kapcsolatba az ön rendszeradminisztátorával.";
-$pgv_lang["stpljpgraphno"]					= "JPgraph modulok nem elérhetők a <i>phpgedview/jpgraph/</i> mappában. Kérem, töltse le innen: http://www.aditus.nu/jpgraph/jpdownload.php<br/> <h3>Először telepítse a JPgraph -ot a <i>phpgedview/jpgraph/</i> mappába</h3><br/>";
+$pgv_lang["stpljpgraphno"]					= "JPgraph modulok nem elérhetők a <i>phpgedview/jpgraph/</i> mappában. Kérem, töltse le innen: http://www.aditus.nu/jpgraph/jpdownload.php<br /> <h3>Először telepítse a JPgraph -ot a <i>phpgedview/jpgraph/</i> mappába</h3><br />";
 $pgv_lang["stpltype"]			 			= "típus:";
 $pgv_lang["stplinfo"]			 			= "ábrázolási információ:";
 $pgv_lang["stplgzas"]			 			= "z-tengely határai:";
@@ -1549,8 +1527,8 @@ $pgv_lang["stplmf"]                     			= " / személy";
 $pgv_lang["stplipot"]                   			= " / időszak";
 $pgv_lang["stplmonth"]                  			= "hónap";
 $pgv_lang["click_here"]						= "Kattintson ide hogy folytassa";
-$pgv_lang["click_here_help"]					= "~#pgv_lang[click_here]#~<br/><br/>Kattintson erre a gombra hogy elmentse a változtatásokat.<br/><br/>Vissza fog kerülni a #pgv_lang[welcome]# vagy a #pgv_lang[mygedview]# oldalra, de a változtatásai lehet hogy még nem fognaklátsztani. Lehet hogy az oldalt frissítenie kell a változások megjelenítéséhez.";
-$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br/><br/>Egy rövid leírás minden egyes blokkról amit a #pgv_lang[welcome]# vagy a #pgv_lang[mygedview]# oldalra tud tenni.<br/><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br/><br/>";
+$pgv_lang["click_here_help"]					= "~#pgv_lang[click_here]#~<br /><br />Kattintson erre a gombra hogy elmentse a változtatásokat.<br /><br />Vissza fog kerülni a #pgv_lang[welcome]# vagy a #pgv_lang[mygedview]# oldalra, de a változtatásai lehet hogy még nem fognaklátsztani. Lehet hogy az oldalt frissítenie kell a változások megjelenítéséhez.";
+$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Egy rövid leírás minden egyes blokkról amit a #pgv_lang[welcome]# vagy a #pgv_lang[mygedview]# oldalra tud tenni.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
 $pgv_lang["display_all"]					= "Mutass mindent";
 $pgv_lang["source_contains"]					= "A Forrás tartalma:";
 $pgv_lang["repo_contains"]					= "A Szervezet tartalma:";
@@ -1665,7 +1643,6 @@ $pgv_lang["TYPE__photo"] 					= "Fotó";
 $pgv_lang["TYPE__tombstone"] 					= "Sírkő";
 $pgv_lang["TYPE__video"] 					= "Videó";
 $pgv_lang["sort_column"] 					= "Rendezés ezen oszlop szerint";
-	 
 $pgv_lang["differences"]					= "Különbségek";
 $pgv_lang["genealogy"]						= "genealógia/leszármazás";
 $pgv_lang["random_media_ajax_controls"]				= "Mutassuk a bemutató irányító gombjait?";

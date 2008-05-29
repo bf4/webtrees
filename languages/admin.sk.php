@@ -3,7 +3,7 @@
  * Slovak Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
  * @author Peter Moravčík
@@ -95,7 +94,7 @@ $pgv_lang["admin_site"]			= "Administrácia stránky";
 $pgv_lang["admin_user_warnings"]	= "Jeden, alebo viacero užívateľov má upozornenia";
 $pgv_lang["admin_verification_waiting"] = "Užívateľské účty čakajúce na verifikáciu administrátorom";
 $pgv_lang["administration"]		= "Administrácia";
-$pgv_lang["ALLOW_CHANGE_GEDCOM"]	= "Povoliť prepínanie GEDCOMov";
+$pgv_lang["ALLOW_CHANGE_GEDCOM"]	= "Povoliť prepínanie medzi GEDCOM súbormi";
 $pgv_lang["ALLOW_REMEMBER_ME"]		= "Zobraziť voľbu <b>Uložiť v tomto počítači?</b> na prihlasovacej stránke.";
 $pgv_lang["ALLOW_USER_THEMES"]		= "Umožniť uživateľom vybrať si vlastný motív";
 $pgv_lang["ansi_encoding_detected"]	= "Rozoznané kódovanie ANSI. PhpGedView pracuje najlepšie zo súbormi s kódovaním UTF-8.";
@@ -134,7 +133,6 @@ $pgv_lang["del_proceed"]		= "Pokračuj";
 $pgv_lang["del_unvera"]			= "Užívateľ nebol overený administrátorom.";
 $pgv_lang["del_unveru"]			= "Užívateľ nebol overený v priebehu 7 dní.";
 $pgv_lang["do_not_change"]		= "Nemeniť";
-$pgv_lang["download_file"]		= "Stiahnúť súbor";
 $pgv_lang["download_gedcom"]		= "Stiahnúť GEDCOM";
 $pgv_lang["download_here"]		= "Kliknite tu pre načítanie súboru.";
 $pgv_lang["download_note"]		= "POZNÁMKA: Veľké GEDCOM súbory sa môžu sťahovať veľmi dlho. Ak PHP preruší proces ešte pred úplným stiahnutím súboru, stiahnutý GEDCOM nebude kompletný. Ak sa chcete uistiť, že je váš súbor celý, podívajte sa, či je na jeho konci riadok 0 TRLR. Stiahnutie súboru by malo trvať približne rovnako dlho ako jeho nahranie.";
@@ -170,7 +168,7 @@ $pgv_lang["import_progress"]		= "Priebeh nahrávania...";
 $pgv_lang["import_statistics"]		= "Štatistika importu";
 $pgv_lang["import_time_exceeded"]	= "Časový limit pre spracovanie bol prekročený. Kliknite na tlačítko Pokračovať pre zobrazenie rekapitulácie importu GEDCOM súboru.";
 $pgv_lang["inc_languages"]		= "Jazyky";
-$pgv_lang["INDEX_DIRECTORY"]		= "Adresár pre index súbor";
+$pgv_lang["INDEX_DIRECTORY"]		= "Adresár Index súborov";
 $pgv_lang["invalid_dates"]		= "Rozoznané nesprávné formáty dátumu, vyčistením budú tieto formáty zmenené do podoby DD MMM YYYY (napr. 1 JAN 2005).";
 $pgv_lang["BOM_detected"] 		= "Byte Order Mark (BOM) bol nájdený na začiatku súboru. Tento špeciálny kód bude odstránený.";
 $pgv_lang["invalid_header"]		= "V GEDCOM súbore boli nájdené riadky pred hlavičkou GEDCOM <b>0&nbsp;HEAD</b>. Pri čistení súboru budú tieto riadky odstránené.";
@@ -218,10 +216,10 @@ $pgv_lang["page_views"]			= "&nbsp;&nbsp;page views in&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Vykonávanie validácie (skontrolovanie) GEDCOMu, vyberte potrebné možnosti a kliknite na 'Pokračovať'";
 $pgv_lang["pgsql"]			= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] 	= "Chyba!!! Nie je možné zapisovať do konfiguračného súboru PhpGedView. Prosím skontrolujte oprávnenia pre súbor a adresár a skuste zápis znovu.";
-$pgv_lang["PGV_MEMORY_LIMIT"]		= "Limit pamäte";
+$pgv_lang["PGV_MEMORY_LIMIT"]		= "Maximálna veľkosť pamäte";
 $pgv_lang["pgv_registry"]		= "Zobraziť iné weby používajúce PhpGedView";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Cesta pre ukladanie session";
-$pgv_lang["PGV_SESSION_TIME"]		= "Session timeout";
+$pgv_lang["PGV_SESSION_TIME"]		= "Vypršanie platnosti session";
 $pgv_lang["PGV_SIMPLE_MAIL"] 		= "Použiť jednoduchú hlavičku pre externé maily";
 $pgv_lang["PGV_STORE_MESSAGES"]		= "Povoliť on-line ukladanie správ";
 $pgv_lang["phpinfo"]			= "PHPInfo";
@@ -231,12 +229,12 @@ $pgv_lang["please_be_patient"]		= "PROSÍM O STRPENIE";
 $pgv_lang["reading_file"]		= "Načítanie súboru GEDCOM";
 $pgv_lang["readme_documentation"]	= "README dokumentácia";
 $pgv_lang["remove_ip"] 			= "Odstrániť IP";
-$pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"] 	= "Požadovať schválenie registrácie nových uživateľov administrátorom";
+$pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]		= "Vyžadovať schválenie nových uživateľov administratorom";
 $pgv_lang["review_readme"]		= "Prečítajte si súbor <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> než budete pokračovať v konfigurácii PhpGedView.<br /><br />";
 $pgv_lang["rootid"]			= "Východisková osoba vývodu";
 $pgv_lang["seconds"]			= "&nbsp;&nbsp;sekundy";
 $pgv_lang["select_an_option"]		= "Vyberte jednu z možností:";
-$pgv_lang["SERVER_URL"]			= "PhpGedView URL";
+$pgv_lang["SERVER_URL"]			= "URL PhpGedView";
 $pgv_lang["show_phpinfo"]		= "Zobraziť informačnú stránku PHP";
 $pgv_lang["siteadmin"]			= "Administrátor stránky";
 $pgv_lang["skip_cleanup"]		= "Preskočiť opravovanie";
@@ -245,7 +243,7 @@ $pgv_lang["sybase"]			= "Sybase";
 $pgv_lang["sync_gedcom"]		= "Synchronizovať nastavenia užívateľa s GEDCOM údajmi";
 $pgv_lang["system_time"]		= "Aktuálny čas servera:";
 $pgv_lang["user_time"]			= "Aktuálny čas užívateľa:";
-$pgv_lang["TBLPREFIX"]			= "Prefix databázovej tabuľky";
+$pgv_lang["TBLPREFIX"]			= "Prefix pred názvami tabuliek v databáze";
 $pgv_lang["themecustomization"]		= "Prisposobiť tému";
 $pgv_lang["time_limit"]			= "Časový limit:";
 $pgv_lang["title_manage_servers"]   	= "Spravovať stránky";
@@ -254,7 +252,7 @@ $pgv_lang["translator_tools"]		= "Nástroje prekladateľa";
 $pgv_lang["update_myaccount"]		= "Aktualizovať môj účet";
 $pgv_lang["update_user"]		= "Aktualizovať uživateľský účet";
 $pgv_lang["upload_gedcom"]		= "Nahrať GEDCOM";
-$pgv_lang["USE_REGISTRATION_MODULE"]	= "Povoliť návštevníkom požiadať o registráciu účtu";
+$pgv_lang["USE_REGISTRATION_MODULE"]	= "Umožniť uživateľom požadovať registráciu účtu";
 $pgv_lang["user_auto_accept"]		= "Automaticky akceptovať zmeny urobené uživateľom";
 $pgv_lang["user_contact_method"]	= "Uprednostňovaný spôsob kontaktu";
 $pgv_lang["user_create_error"]		= "Nie je možné pridať uživateľa. Prosím vráťte sa späť a skúste to znovu.";
@@ -322,8 +320,6 @@ $pgv_lang["spanish"]           		= "Španielsky";
 $pgv_lang["portuguese"]        		= "Potugalsky";
 $pgv_lang["icelandic"]         		= "Islandsky";
 $pgv_lang["paternal"]          		= "Po otcovi";
-
-
 $pgv_lang["sanity_err0"]		= "Chyby:";
 $pgv_lang["sanity_err1"]		= "Potrebujete PHP verziu 4.3 alebo vyššiu.";
 $pgv_lang["sanity_err2"]		= "Súbor alebo adresár <i>#GLOBALS[whichFile]#</i> neexistuje. Prosím skontrolujte existenciu súboru alebo adresára, jeho meno a nastavenie pristupových práv.";

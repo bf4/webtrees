@@ -3,7 +3,7 @@
  * Dutch Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Boudewijn Sjouke
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
+ * @author Eduard Wustenveld
+ * @author Erik Bent
  * @author Boudewijn Sjouke
  * @version $Id$
  */
@@ -369,7 +371,6 @@ $pgv_lang["block_move_up_help"]		= "~Wijzig vakvolgorde~<br /><br />Gebruik deze
 $pgv_lang["block_move_right_help"]	= "~Verplaats vakken~<br /><br />Gebruik deze knoppen om een vak van een lijst naar een andere te verplaatsen.<br /><br />Klik op het vak dat u wilt verplaatsen en klik op een pijlknop om het vak in de aangegeven richting te verplaatsen. Gebruik de <b>&raquo;</b> en <b>&laquo;</b> knoppen om het vak van meest links naar meest rechts te verplaatsen en vice versa. Gebruik de <b>></b> en <b><</b> knoppen om het vak tussen de lijst #pgv_lang[available_blocks]# list en de lijsten links en rechts te verplaatsen.<br /><br />De lijst met #pgv_lang[available_blocks]# wijzigt niet, ongeacht wat u met de #pgv_lang[move_right]# en #pgv_lang[move_left]# knoppen doet. Ze blijven beschikbaar omdat ze meerdere malen op dezelfde pagina kunnen verschijnen. Het HTML-vak is hiervan een goed voorbeeld.<br /><br />";
 $pgv_lang["block_default_index"]	= "~Standaard vakken op de #pgv_lang[welcome]#~<br /><br />Als u alle vakken uit de #pgv_lang[main_section]# en #pgv_lang[right_section]# verwijdert, of als u klikt op de <b>#pgv_lang[reset_default_blocks]#</b> knop, dan wordt de vakindeling als volgt ingesteld:<br /><br /><center><table border=\"1\"><tr><td class=\"list_value\"><b>#pgv_lang[main_section]#</b></td><td class=\"list_value\"><b>#pgv_lang[right_section]#</b></td></tr><td>#pgv_lang[gedcom_stats_block]#<br />#pgv_lang[gedcom_news_block]#<br />#pgv_lang[gedcom_favorites_block]#<br />#pgv_lang[review_changes_block]#</td><td>#pgv_lang[gedcom_block]#<br />#pgv_lang[random_media_block]#<br />#pgv_lang[todays_events_block]#<br />#pgv_lang[logged_in_users_block]#</td></tr></table></center><br />";
 $pgv_lang["block_default_portal"]	= "~Standaard vakken op de #pgv_lang[mygedview]# pagina~<br /><br />Als u alle vakken uit de #pgv_lang[main_section]# en de #pgv_lang[right_section]# verwijdert, of op de knop <b>#pgv_lang[reset_default_blocks]#</b> klikt, worden de vaklijsten als volgt ingesteld:<br /><br /><center><table border=\"1\"><tr><td class=\"list_value\"><b>#pgv_lang[main_section]#</b></td><td class=\"list_value\"><b>#pgv_lang[right_section]#</b></td></tr><td>#pgv_lang[todays_events_block]#<br />#pgv_lang[user_messages_block]#<br />#pgv_lang[user_favorites_block]#<br />&nbsp;</td><td>#pgv_lang[welcome_block]#<br />#pgv_lang[random_media_block]#<br />#pgv_lang[upcoming_events_block]#<br />#pgv_lang[logged_in_users_block]#</td></tr></table></center><br />";
-
 $pgv_lang["help_hourglass.php"]			= "~#pgv_lang[hourglass_chart]#~<br /><br />Het zandloperdiagram toont zowel de voorouders als de nakomelingen van de geselecteerde startpersoon in hetzelfde overzicht. Het is een mengvorm van kwartierstaat en overzicht nakomelingen.<br /><br />De startpersoon wordt weergegeven op het midden van de pagina, zijn nakomelingen links en zijn voorouders rechts. De generaties worden op die manier van links naar rechts weergegeven.<br /><br />";
 $pgv_lang["show_spouse_help"]			= "~#pgv_lang[show_spouses]#~<br /><br />Standaard worden in dit overzicht de partners van de personen niet weergegeven, omdat dit het overzicht ingewikkeld maakt. Met deze optie kunt u de partners alsnog laten tonen.<br />";
 $pgv_lang["reorder_families_help"]		= "~#pgv_lang[reorder_families]#~<br /><br />De gezinnen op het tabblad \"Verwanten\" worden weergegeven in de volgorde waarin ze in de gegevens van de desbetreffende persoon voorkomen. Dit is van belang, omdat soms niet de huwelijksdata bekend zijn, maar wel de volgorde van huwelijken.<br /><br />Met behulp van deze optie kunt u de volgorde van de gezinnen aanpassen. Daarbij is een speciale knop beschikbaar om de sortering op huwelijksdatum toe te passen, uiteraard indien alle huwelijksdata bekend zijn.<br />";

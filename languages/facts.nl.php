@@ -3,7 +3,7 @@
  * Dutch Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Erik Bent and Boudewijn Sjouke
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
+ * @author Eduard Wustenveld
  * @author Erik Bent
  * @author Boudewijn Sjouke
  * @version $Id$

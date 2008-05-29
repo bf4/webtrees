@@ -5,7 +5,7 @@
  * This file contains the Norwegian text for the PGV Configure system.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Geir Håkon Eikland
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -262,22 +262,22 @@ $factarray["_DEAT_FATH"] = "Dødsfall til faren";
 $factarray["_MARR_MOTH"] = "Ekteskap til moren";
 $factarray["_DEAT_MOTH"] = "Dødsfall til moren";
 
-$factarray["_BIRT_SIBL"] = "Fødsel<br />- en av søsknene";
-$factarray["_MARR_SIBL"] = "Ekteskap<br />- en av søsknene";
-$factarray["_DEAT_SIBL"] = "Dødsfall<br />- en av søsknene";
+$factarray["_BIRT_SIBL"] = "Fødsel: en av søsknene";
+$factarray["_MARR_SIBL"] = "Ekteskap: en av søsknene";
+$factarray["_DEAT_SIBL"] = "Dødsfall: en av søsknene";
 
-$factarray["_BIRT_HSIB"] = "Fødsel<br />- en av halvsøsknene";
-$factarray["_MARR_HSIB"] = "Ekteskap<br />- en av halvsøsknene";
-$factarray["_DEAT_HSIB"] = "Dødsfall<br />- en av halvsøsknene";
+$factarray["_BIRT_HSIB"] = "Fødsel: en av halvsøsknene";
+$factarray["_MARR_HSIB"] = "Ekteskap: en av halvsøsknene";
+$factarray["_DEAT_HSIB"] = "Dødsfall: en av halvsøsknene";
 
-$factarray["_DEAT_GPAR"] = "Dødsfall<br />- en av besteforeldrene";
+$factarray["_DEAT_GPAR"] = "Dødsfall: en av besteforeldrene";
 
-$factarray["_BIRT_FSIB"] = "Fødsel<br />- en av søsknene til faren";
-$factarray["_MARR_FSIB"] = "Ekteskap<br />- en av søknene til faren";
-$factarray["_DEAT_FSIB"] = "Dødsfall<br />- en av søsknene til faren";
+$factarray["_BIRT_FSIB"] = "Fødsel: en av søsknene til faren";
+$factarray["_MARR_FSIB"] = "Ekteskap: en av søknene til faren";
+$factarray["_DEAT_FSIB"] = "Dødsfall: en av søsknene til faren";
 
-$factarray["_BIRT_MSIB"] = "Fødsel<br />- en av søsknene til moren";
-$factarray["_MARR_MSIB"] = "Ekteskap<br />- en av søsknene til moren";
-$factarray["_DEAT_MSIB"] = "Dødsfall<br />- en av søsknene til moren";
+$factarray["_BIRT_MSIB"] = "Fødsel: en av søsknene til moren";
+$factarray["_MARR_MSIB"] = "Ekteskap: en av søsknene til moren";
+$factarray["_DEAT_MSIB"] = "Dødsfall: en av søsknene til moren";
 
 ?>

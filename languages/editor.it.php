@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Italian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
+ * @author Lorenzo Simionato, Fabio Parri
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -43,7 +43,7 @@ $pgv_lang["add_name"]				= "Aggiungi un nuovo nome";
 $pgv_lang["edit_raw"]				= "Modifica il campo GEDCOM";
 $pgv_lang["accept"] 				= "Accetta";
 $pgv_lang["accept_all"] 			= "Accetta tutte le modifiche";
-$pgv_lang["accept_gedcom"]		= "Per rifiutare una modifica, clicca \"undo\" nella linea successiva. Per accettare tutte le modifiche, reimporta il file GEDCOM";
+$pgv_lang["accept_gedcom"]		= "Decidi per ogni modifica se accettarla o rifiutarla.<br /><br />Per accettare tutte le modifiche in una volta, clicca <b>\"Accetta tutte le modifiche\"</b> in fondo.<br />Per avere più informazioni riguardo una modifica.<br />clicca <b>\"Guarda le differenze\"</b>,<br />o clicca <b>\"Mostra campo GEDCOM\"</b> per vedere i nuovi dati nel formato GEDCOM.";
 $pgv_lang["accept_successful"]		= "Cambiamenti effettuati con successo nel database";
 $pgv_lang["add_child"]			= "Aggiungi bambino";
 $pgv_lang["add_child_to_family"]	= "Aggiungi un bambino a questa famiglia";
@@ -67,7 +67,6 @@ $pgv_lang["add_wife"]			= "Aggiungi moglie";
 $pgv_lang["add_wife_to_family"]	= "Aggiungi una moglie a questa famiglia";
 $pgv_lang["changes_occurred"]		= "La persona presenta le seguenti modifiche:";
 $pgv_lang["date"]					= "Data";
-$pgv_lang["family"]				= "Famiglia";
 $pgv_lang["file_missing"]		= "Nessun file ricevuto, per favore riprova";
 $pgv_lang["file_partial"]		= "Il file è stato caricato solo parzialmente, per favore prova ancora";
 $pgv_lang["file_success"]		= "File caricato con successo";

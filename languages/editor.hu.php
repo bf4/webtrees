@@ -3,7 +3,7 @@
  * Hungarian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ $pgv_lang["label_gedcom_id"]        = "Adatbázis azonosítószáma";
 $pgv_lang["label_local_id"]         = "Személy azonosítószáma";
 $pgv_lang["accept"]  		        = "Elfogad";
 $pgv_lang["accept_all"]                 = "Mindent elfogad";
-$pgv_lang["accept_gedcom"]		= "Ön minden egyes változás megtartásáról vagy elvetéséről dönthet.<br/><br/>A változások egyszerre való elfogadásához kattintson a lenti <b>\"Mindet elfogad\"</b> hivatkozásra.<br/>További információért<br/>kattintson a <b>\"Eltérések\"</b> hivatkozásra, így megtekintheti a régi és az új változat közötti különbséget,<br/>vagy kattintson a <b>\"GEDCOM-rekord\"</b> hivatkozásra, hogy GEDCOM-formátumban nézhesse át az újabb állapotot.";
+$pgv_lang["accept_gedcom"]		= "Ön minden egyes változás megtartásáról vagy elvetéséről dönthet.<br /><br />A változások egyszerre való elfogadásához kattintson a lenti <b>\"Mindet elfogad\"</b> hivatkozásra.<br />További információért<br />kattintson a <b>\"Eltérések\"</b> hivatkozásra, így megtekintheti a régi és az új változat közötti különbséget,<br />vagy kattintson a <b>\"GEDCOM-rekord\"</b> hivatkozásra, hogy GEDCOM-formátumban nézhesse át az újabb állapotot.";
 $pgv_lang["accept_successful"]  	= "A változásokat sikeresen mentettük az adatbázisba.";
 $pgv_lang["add_child"]			= "Gyermek hozzáadása";
 $pgv_lang["add_child_to_family"]	= "Gyermek hozzáadása a családhoz";
@@ -92,7 +92,7 @@ $pgv_lang["basic_search"]			= "keres";
 $pgv_lang["birthdate_search"]		= "Születési dátum: ";
 $pgv_lang["birthplace_search"]		= "Születési hely: ";
 $pgv_lang["change"]					= "Változtat";
-$pgv_lang["change_family_instr"]	= "Használja ezt az oldalt hogy változtasson vagy töröljön családtagokat.<br/><br/>Minden családtagnál használhatja a Változtat linket hogy válasszon egy másik személyt a helyében. Az Eltávolít linket használhatja hogy a személyt eltávolítsa a családból.<br/><br/>Miután készen van a változtatásokkal, nyomja meg a Mentés gombot, hogy elmentse a változtatásokat.<br/>";
+$pgv_lang["change_family_instr"]	= "Használja ezt az oldalt hogy változtasson vagy töröljön családtagokat.<br /><br />Minden családtagnál használhatja a Változtat linket hogy válasszon egy másik személyt a helyében. Az Eltávolít linket használhatja hogy a személyt eltávolítsa a családból.<br /><br />Miután készen van a változtatásokkal, nyomja meg a Mentés gombot, hogy elmentse a változtatásokat.<br />";
 $pgv_lang["change_family_members"]	= "Családtagok változtatása";
 $pgv_lang["changes_occurred"]		= "A következő változások történtek ezen a személyen:";
 $pgv_lang["confirm_remove"]			= "Biztosan el akarja távolítani ezt a személyt ebből a családból?";
@@ -110,7 +110,6 @@ $pgv_lang["directory_not_empty"]	= "A mappa nem üres.";
 $pgv_lang["directory_not_exist"]	= "A mappa nem létezik.";
 $pgv_lang["error_remote"]           = "Egy Külső weboldalt választott.";
 $pgv_lang["error_same"]             = "Ugyanazt az weboldalt választotta.";
-$pgv_lang["family"]			= "Család";
 $pgv_lang["file_missing"]		= "Nem érkezett feltöltött állomány. Töltse fel újból.";
 $pgv_lang["file_partial"]		= "Az állomány csak részben töltődött fel, kérem próbálja meg újra";
 $pgv_lang["file_success"]		= "Az állomány feltöltése sikeresen befejeződött";
@@ -172,7 +171,7 @@ $pgv_lang["update_successful"]		= "A frissítés sikeresen megtörtént";
 $pgv_lang["upload"]					= "Feltöltés";
 $pgv_lang["upload_error"]		= "Hiba történt az Ön GEDCOM-állományának feltöltése közben.";
 $pgv_lang["upload_media"]		= "Média állomány feltöltése";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br/><br/>Válasszon állományokat a számítógépéről amit a szerverre fel akar tölteni. Minden álomány a <b>#MEDIA_DIRECTORY#</b> mappába lesz feltöltve vagy az alatta levő mappába.<br/><br/>Az ön által választott mappa név a #MEDIA_DIRECTORY# -hoz lesz kapcsolva. Például, #MEDIA_DIRECTORY#csaladom. Ha az előnézet mappa nem létezik akkor létre lesz hozva.";
+$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Válasszon állományokat a számítógépéről amit a szerverre fel akar tölteni. Minden álomány a <b>#MEDIA_DIRECTORY#</b> mappába lesz feltöltve vagy az alatta levő mappába.<br /><br />Az ön által választott mappa név a #MEDIA_DIRECTORY# -hoz lesz kapcsolva. Például, #MEDIA_DIRECTORY#csaladom. Ha az előnézet mappa nem létezik akkor létre lesz hozva.";
 $pgv_lang["upload_successful"]		= "A feltöltés sikeres volt.";
 $pgv_lang["view_change_diff"]		= "Változások megtekintése";
 

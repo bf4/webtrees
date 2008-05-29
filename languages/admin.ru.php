@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Russian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Eugene Fedorov
+ * @author Natalia Anikeeva
  * @version $Id$
  */
 
@@ -68,7 +68,6 @@ $pgv_lang["day_before_month"]		= "День перед Месяцем (DD MM YYYY
 $pgv_lang["do_not_change"]		= "Не менять";
 $pgv_lang["download_gedcom"]		= "Загрузить файл GEDCOM";
 $pgv_lang["download_note"]		= "ЗАМЕЧАНИЕ: Большие GEDCOM файлы могут потребовать большого времени для загрузки. Если ограничение по времени, установленное в PHP, истечет до того как загрузка будет завершена, Вы можете получить неполную загрузку. Для проверки полноты загрузки, Вы можете проверить последнюю строку загруженного GEDCOM файла, она должна быть равна 0 TRLR. В общем импорт GEDCOM файлов может занять много времени. ";
-$pgv_lang["duplicate_username"]		= "Пользователь с таким именем уже существует. Выбирете другое имя пользователя.";
 $pgv_lang["editaccount"]			= "Позволить этому пользователю редактировать информацию своей учетной записи";
 $pgv_lang["empty_dataset"]		= "Вы хотите очистить базу данных?";
 $pgv_lang["empty_lines_detected"]	= "В Ваше GEDCOM файле были обнаружены пустые строки. Они будут удалены при чистке.";
