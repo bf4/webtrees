@@ -65,7 +65,6 @@ $pgv_lang["day_before_month"]					= "Ημέρα πριν από Μήνα (ΗΗ �
 $pgv_lang["do_not_change"]						= "Do not change";
 $pgv_lang["download_gedcom"]					= "Λήψη Αρχείου GEDCOM";
 $pgv_lang["download_note"]						= "NOTE: Large GEDCOMs can take a long time to process before downloading.  If PHP times out before the download is complete, then you may not get a complete download.  You can check the downloaded GEDCOM for the 0 TRLR line at the end of the file to make sure it downloaded correctly.  In general it could take as much time to download as it took to import your GEDCOM.";
-$pgv_lang["duplicate_username"]					= "Υπάρχον Ψεύδώνυμο. Υπάρχει ήδη χρήστης με το ψευδώνυμο αυτό.  Παρακαλώ όπως πάτε πίσω και επιλέξτε άλλο ψευδώνυμο.";
 $pgv_lang["editaccount"]						= "Allow this user to edit their account information";
 $pgv_lang["empty_dataset"]						= "Do you want to erase the old data and replace it with this new data?";
 $pgv_lang["empty_lines_detected"]				= "Empty lines were detected in your GEDCOM file.   On cleanup, these empty lines will be removed.";

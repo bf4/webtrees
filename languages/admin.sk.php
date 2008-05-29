@@ -210,7 +210,6 @@ $pgv_lang["mysqli"]			= "MySQL 4.1+ a PHP 5";
 $pgv_lang["never"]			= "Nikdy";
 $pgv_lang["no_logs"]			= "Zakázať prihlasovanie";
 $pgv_lang["no_messaging"]		= "Bez kontaktnej metódy";
-$pgv_lang["none"]			= "Žiadny";
 $pgv_lang["oci8"]			= "Oracle 7+";
 $pgv_lang["page_views"]			= "&nbsp;&nbsp;page views in&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]	= "Vykonávanie validácie (skontrolovanie) GEDCOMu, vyberte potrebné možnosti a kliknite na 'Pokračovať'";

@@ -30,6 +30,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["duplicate_username"] 	= "Đã có tên giống hệt. Đã có một thành viên với tên đó. Xin lựa tên khác";
+$pgv_lang["none"]					= "Không hạn chế";
+$pgv_lang["family"] 				= "Gia Đình";
+$pgv_lang["invalid_search_input"] 	= "Ngoài Năm, xin cho vào Tên Gọi, Tên Họ, hoặc là Nơi ";
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["fullname"]				= "Toàn Bộ Danh Tánh";
 $pgv_lang["password"]				= "Mật khẩu";

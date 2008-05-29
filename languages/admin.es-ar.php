@@ -65,7 +65,6 @@ $pgv_lang["day_before_month"]	= "Día antes del mes (DD MM YYYY)";
 $pgv_lang["do_not_change"]	= "No modificar";
 $pgv_lang["download_gedcom"]	= "Grabar GEDCOM";
 $pgv_lang["download_note"]		= "NOTA: Los archivos GEDCOM de gran tamaño pueden demorar mucho tiempo de proceso antes de su descarga. Si PHP produce un 'time-out' antes de completar la descarga, esta podría quedar incompleta. Puede controlar la existencia de la línea 0 TRLR al final del archivo para asegurarse de su descarga completa. En general insume tanto tiempo descargar como importar un archivo GEDCOM.";
-$pgv_lang["duplicate_username"]	= "Nombre de Usuario duplicado. Ya existe un usuario con ese nombre. Por favor regrese y cree un usuario con un nombre diferente.";
 $pgv_lang["empty_dataset"]	= "Desea eliminar los datos anteriores y reemplazarlos con la nueva información?";
 $pgv_lang["empty_lines_detected"]	= "Se detectaron líneas vacías en su archivo GEDCOM. Al realizar limpieza, las líneas vacías se eliminarán.";
 $pgv_lang["error_header_write"]	= "El archivo GEDCOM, [#GEDCOM#], no es grabable. Controle sus atributos y privilegios de acceso.";

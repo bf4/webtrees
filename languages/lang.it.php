@@ -31,6 +31,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["SHOW_ID_NUMBERS"] = "Show ID numbers next to names:";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"] = "Show highlight images in people boxes:";
+$pgv_lang["reset"] 		= "Reset";
+$pgv_lang["download_file"]	= "Download File";
+$pgv_lang["cancel"]		= "Annulla";
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]    = "?";
 $pgv_lang["qm_ah"]     = "?";

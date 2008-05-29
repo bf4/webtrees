@@ -841,4 +841,12 @@ $pgv_lang["gd_helplink"]			= "http://www.php.net/gd";
 $pgv_lang["fontfile_error"]			= "Soubor s tímto fontem nebyl na PHP serveru nalezen.";
 $pgv_lang["rss_descr"]				= "Novinky a odkazy ze stránky #GEDCOM_TITLE#";
 $pgv_lang["rss_logo_descr"]			= "Materiál vytvořilo PhpGedView";
+$pgv_lang["none"]				= "Žádná";
+$pgv_lang["SHOW_ID_NUMBERS"]		= "Zobrazovat vedle jmen ID";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "Zobrazit zvýrazněné obrázky v políčkách lidí";
+$pgv_lang["download_file"]	= "Stáhnout soubor";
+$pgv_lang["cancel"]			= "Zrušit";
+$pgv_lang["duplicate_username"]		= "Toto uživatelské jméno již existuje. Prosím, vraťte se zpět a vyberte jiné uživatelské jméno.";
+$pgv_lang["family"]			= "Rodina";
+$pgv_lang["invalid_search_input"] 	= "Prosím zadejte k roku ještě jméno, příjmení nebo místo.";
 ?>

@@ -348,7 +348,6 @@ $pgv_lang["listing"]			= "Kilistázva";
 $pgv_lang["no_content"]			= "Nincs tartalom";
 $pgv_lang["editlang"]			= "Szerkeszt";
 $pgv_lang["editlang_help"]		= "~#pgv_lang[editlang]#~<br /><br />Üzenet szerkesztése a következő nyelvi állományban:<br />";
-$pgv_lang["cancel"]			= "Mégsem";
 $pgv_lang["savelang"]			= "Mentés";
 $pgv_lang["savelang_help"]		= "~#pgv_lang[savelang]#~<br /><br />Szerkesztett szöveg mentése.<br />";
 $pgv_lang["original_message"]		= "Eredeti szöveg";
@@ -441,8 +440,6 @@ $pgv_lang["hide_translated"]		= "Lefordított üzenetek elrejtése";
 $pgv_lang["lang_file_write_error"]	= "HIBA!!!<br /><br />A változásokat nem tudtuk rögzíteni a kiválasztott nyelvi állományba!<br />Kérjük, hogy ellenőrizze a(z) (#lang_filename#) írási jogosultságát!";
 $pgv_lang["no_open"]    = "HIBA!!!<br /><br />A(z) #lang_filename# állományt nem tudjuk megnyitni!";
 $pgv_lang["configured_languages"]	= "Használt nyelvek";
-$pgv_lang["message"]				= "Üzenet";
-$pgv_lang["type"]					= "Típus";
 	 
 //-- User Migration Tool messages
 $pgv_lang["um_header"] 			= "Felhasználói adat migrációs eszköz";

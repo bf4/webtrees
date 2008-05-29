@@ -30,6 +30,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["SHOW_ID_NUMBERS"] = "Mostrar los números ID a continuación de los nombres";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"] = "Mostrar miniaturas en las cajas de las personas";
+$pgv_lang["download_file"] = "Guardar archivo.";
+$pgv_lang["cancel"] = "Cancelar";
+$pgv_lang["duplicate_username"]	= "Nombre de Usuario duplicado. Ya existe un usuario con ese nombre. Por favor regrese y cree un usuario con un nombre diferente.";
+$pgv_lang["family"]	= "Familia";
+
 $pgv_lang["qm"]	= "?";
 $pgv_lang["qm_ah"] = "?";
 $pgv_lang["page_help"]	= "Ayuda";

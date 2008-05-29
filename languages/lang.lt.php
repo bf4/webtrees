@@ -29,6 +29,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["duplicate_username"] 	= "Pasikartojantis vardas. Naudotojas tokiu vardu jau egzistuoja. Pasirinkite kitą naudotojo vardą.";
+$pgv_lang["none"]					= "Nieko";
+$pgv_lang["family"] 				= "Šeima";
+$pgv_lang["invalid_search_input"] 	= "Prie metų dar  įveskite  vardą, pavardę ar \\n\\t vietą";
+$pgv_lang["multi_site_search"] 		= "Keleto svetainių paieška";
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["date_of_entry"]				= "Orginalaus šaltinius įrašo data";
 $pgv_lang["password"]				= "Slaptažodis";

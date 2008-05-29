@@ -30,6 +30,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["SHOW_ID_NUMBERS"]		= "Показать ID-номера имен:";
+$pgv_lang["download_file"]		= "Загрузить файл.";
+$pgv_lang["cancel"]			= "Прервать";
+$pgv_lang["family"]			= "Семья";
+$pgv_lang["invalid_search_input"] 	= "Пожалуйста укажите имя, фамилию или место nt в дополнение к году";
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]				= "?";
 $pgv_lang["qm_ah"]				= "?";

@@ -32,6 +32,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["none"]					= "Semmi";
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]							= "?";
 $pgv_lang["qm_ah"]						= "?";
@@ -902,7 +904,7 @@ $pgv_lang["login_user"]						= "1 bejelentkezett felhasználó";
 $pgv_lang["anon_users"]						= "#pgv_lang[global_num1]# névtelen bejelentkezett felhasználó";
 $pgv_lang["anon_user"]						= "1 névtelen bejelentkezett felhasználó";
 $pgv_lang["users_logged_in"]					= "Bejelentkezett felhasználók";
-$pgv_lang["message"]						= "Üzenet elküldése";
+$pgv_lang["message"]				= "Üzenet";
 $pgv_lang["my_messages"]					= "Üzeneteim";
 $pgv_lang["date_created"]					= "Adat elküldve:";
 $pgv_lang["message_from"]					= "E-mail cím:";
@@ -1232,7 +1234,6 @@ $pgv_lang["broadcast_not_logged_6mo"]				= "Küldj üzenet azoknak a felhasznál
 $pgv_lang["ex-wife"] 						= "Volt feleség";
 $pgv_lang["ex-spouse"] 						= "Volt házastárs";
 $pgv_lang["label_merge_options"]    				= "Egybeolvaszt Opció";
-$pgv_lang["label_site_url"]         				= "Weboldal URL:";
 $pgv_lang["upload_file"]					= "Állomány feltöltése az ön számítógépéből.";
 $pgv_lang["invalid_id"]						= "Az azonosító nem létezik ebben a GEDCOM állományban.";
 $pgv_lang["media_id"]						= "Média azonosító";

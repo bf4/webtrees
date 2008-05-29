@@ -3,7 +3,7 @@
  * Portugese Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Maurício Menegazzo Rosa
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Maurício Menegazzo Rosa
- * @author Anderson Wilson
+ * @author Anderson Wilson and Clovis Bombardelli
  * @version $Id$
  */
 
@@ -193,12 +193,10 @@ $pgv_lang["SHOW_GEDCOM_RECORD"]="Exibir os registros do GEDCOM para os usuários
 $pgv_lang["ALLOW_EDIT_GEDCOM"]="Permitir edição online";
 $pgv_lang["EDIT_AUTOCLOSE"]="Fechamento automático da janela de edição.";
 $pgv_lang["INDEX_DIRECTORY"]="Pasta do arquivo de Índice";
-$pgv_lang["SHOW_ID_NUMBERS"]="Exibir números de ID ao lado dos nomes";
 $pgv_lang["SHOW_FAM_ID_NUMBERS"]="Exibir os IDs ao lado das famílias";
 $pgv_lang["MEDIA_EXTERNAL"]="Guardar links";
 $pgv_lang["MEDIA_DIRECTORY"]="Pasta de Mídias";
 $pgv_lang["MEDIA_DIRECTORY_LEVELS"]="Qtde de sub-níveis da pasta de Mídias";
-$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]="Exibir imagens de destaque na página de pessoas";
 $pgv_lang["HIDE_GEDCOM_ERRORS"]="Não exibir erros do GEDCOM";
 $pgv_lang["DAYS_TO_SHOW_LIMIT"]="Limite de dias do bloco Próximos Eventos";
 $pgv_lang["PGV_SESSION_TIME"]="Tempo máximo de uma sessão";
