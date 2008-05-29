@@ -3,7 +3,7 @@
  * Slovak Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
  * @author Peter Moravčík
@@ -470,7 +469,6 @@ $pgv_lang["research_assistant"]		= "Asistent bádateľa";
 $pgv_lang["utf8_to_ansi"]		= "Chcete zmeniť kódovanie v tomto GEDCOM súbore z UTF-8 na ANSI (ISO-8859-1)?";
 $pgv_lang["media_linked"]		= "Tento súbor médií je prepojený na nasledujúce: ";
 $pgv_lang["media_not_linked"]		= "Tento súbor médií nie je spojený s žiadnym GEDCOM záznamom.";
-$pgv_lang["deleted_files"]           	= "Zmazané súbory:";
 $pgv_lang["media_dir_1"]			= "Tento objekt medií je uložený na externom serveri.";
 $pgv_lang["media_dir_2"]			= "Tento objekt médií je uložený v štandardnom adresári médií";
 $pgv_lang["media_dir_3"]			= "Tento objekt médií je uložený v neprístupnom adresári médií";

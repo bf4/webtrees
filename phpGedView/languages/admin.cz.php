@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Czech texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "Nemáte přímý přístup k souboru s češtinou.";
 	exit;
 }
 
@@ -47,7 +47,7 @@ $pgv_lang["created_other_fail"]	= "Není možné vytvořit tabulku <i>ostatních
 $pgv_lang["created_places"]			= "Tabulka <i>Místa</i> byla úspěšně vytvořena.";
 $pgv_lang["created_places_fail"]	= "Není možné vytvořit tabulku <i>míst</i>.";
 $pgv_lang["folder_created"]		= "Vytvořena složka";
-$pgv_lang["add_gedcom"]			= "Přidat GEDCOM";
+$pgv_lang["add_gedcom"]			= "Přidat další GEDCOM";
 $pgv_lang["add_new_gedcom"]		= "Vytvořit nový GEDCOM";
 $pgv_lang["admin_approved"]		= "Váš účet na #SERVER_NAME# byl povolen";
 $pgv_lang["admin_gedcom"]			= "Spravovat GEDCOM";

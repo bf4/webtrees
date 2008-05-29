@@ -3,7 +3,7 @@
  * Czech Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Jan Hapala
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,6 @@ $pgv_lang["edit_raw_gedcom_help"]	= "~UPRAVIT PŘÍMO GEDCOM~<br /><br />Pokud k
 $pgv_lang["index_help"]				= "~ÚVODNÍ STRANA~<br /><br />Toto je úvodní strana. Uvádí vás do zvoleného souboru <a href=\"#def_gedcom\">GEDCOM</a>. Na tuto stránku se můžete kdykoliv vrátit kliknutím na Úvodní stránku v horním menu. Je-li na těchto stránkách k dispozici více GEDCOMů, můžete si zvolit GEDCOM z rolovacího menu.<br /><b>Tato stránka s nápovědou obsahuje informace o:</b>(Jelikož je tato stránka první stránkou programu)<ul><li><a href=\"#index_portal\">Úvodní stránce</a><li><a href=\"#header\">Oblasti záhlaví</a><li><a href=\"#menu\">Menu</a><li><a href=\"#header_general\">Všeobecné informace</a><li><a href=\"#def\">Definice</a></ul><br />Verze #VERSION# přináší nový vzhled <a href=\"#def_pgv\">PhpGedView</a>. Menu, počáteční strana a mnoho dalších vlastností je vylepšeno a/nebo přepracováno.<br /><br />";
 
 //-- Index-page Header
-//$pgv_lang["header_help_items"]	is moved to help_text_vars.php
 $pgv_lang["header_help"]			= "<div class=\"name_head\"><center><b>OBLAST ZÁHLAVÍ</b></center></div><br />Záhlaví je horní část stránky a objevuje se na každé stránce.<br />Záhlaví obsahuje užitečné odkazy, které můžete používat pro procházení stránek.<br />Jelikož mohou mít tyto stránky různý vzhled v závislosti na zvoleném <a href=\"#def_theme\">Motivu</a>, záhlaví různých motivů tím mohou být ovlivněna a mohou se lišit.<br /><br /><b>Odkazy, které zde můžete najít, jsou:</b><ul><li><a href=\"#header_search\">Vyhledávácí políčko</a><li><a href=\"#header_lang_select\">Výběr jazyka</a><li><a href=\"#header_user_links\">Uživatelské odkazy</a><li><a href=\"#header_favorites\">Oblíbené</a><li><a href=\"#header_theme\">Změna motivu</a></ul>";
 $pgv_lang["header_search_help"]			= "~Oblast záhlaví: Vyhledávací políčko~<br />Toto vyhledávací políčko je sice malé, ale zato možnosti vyhledávání jsou široké.<br />Pro vyhledávání můžete zadat téměř cokoliv. Když kliknete na tlačítko <b>></b> nebo <b>Hledat</b>, budete přesměrováni na hlavní stránku vyhledávání, kde uvidíte seznam nalezených položek.<br />Podrobnější nápovědu k vyhledávání najdete na hlavní straně vyhledávání.<br />";
 $pgv_lang["header_lang_select_help"]		= "<center>Oblast záhlaví: <b>Výběr jazyka<</b></center>Jedna z nejdůležitějších vlastností tohoto programu je automatické přepnutí do podporovaného jazyka.<br />Někdy se může stát, že se program návštěvníkovi přepne do jiného jazyka, než by si přál (např. kvůli nesprávnému nastavení jazyka v prohlížeči).<br />Návštěvník si ale může změnit jazyk pomocí <b>>Výběru jazyka<</b><br />Výběr jazyka může být zobrazen dvěma odlišnými způsoby:<br />Buď uvidíte klasický rolovací seznam nebo barevnou verzi s národními vlajkami.<br />";
@@ -120,7 +119,6 @@ $pgv_lang["new_user_fullname_help"]		= "~#pgv_lang[fullname]#~<br /><br />Do toh
 $pgv_lang["help_descendancy.php"]		= "~STRÁNKA S ROZRODEM~<br /><br />Tato stránka zobrazí potomky osoby.<br />Výchozí osobu tohoto schématu si můžete zvolit přímo na této stránce nebo sem můžete být přesměrováni z jiné stránky kliknutím na odkaz \"Rozrod\".<br />Chcete-li se posunout ve schématu nahoru, klikněte na horní šipku. Budete-li chtít vidět rozrod jiné osoby, klikněte na ikonu schématu v rámečku požadované osoby.";
 $pgv_lang["desc_rootid_help"]			= "~NOVÝ STŘEN~<br /><br />Jestliže chcete zobrazit rozrod jiného střena, pak do tohoto políčka můžete zadat ID této osoby.<br /> Pokud neznáte její ID, použijte odkaz Najít ID.";
 $pgv_lang["desc_generations_help"]		= "~POČET  GENERACÍ~<br /><br />Tady můžete nastavit počet generací k zobrazení na jedné stránce.<br />Co je nejlepší? To záleží na velikosti vaší obrazovky a pak, jestli máte zapnuto zobrazování podrobností nebo ne.";
-//-- show_full is used from pedigree
 
 //-- Time line-page
 $pgv_lang["help_timeline.php"]			= "~STRÁNKA S ČASOVOU OSOU~<br /><br />Na této stránce si můžete nechat zobrazit jednu, dvě či více osob na časové ose.<br />Tímto způsobem si můžete například znázornit stav dvou či více osob v určitý okamžik.<br /><br />Kliknete-li na odkaz Časová osa na jiné stránce, uvidíte jednu osobu na časové ose již hned po načtení stránky.<br />Jestliže jste klikli na položku z menu v záhlaví, pak musíte vepsat do rámečku \"ID\" osoby, s níž chcete začít.";
@@ -141,7 +139,6 @@ $pgv_lang["chart_style_help"]			= "~Styl #pgv_lang[chart_style]#~<br /><br /><dl
 $pgv_lang["help_fanchart.php"]		= "~#pgv_lang[fan_chart]# page~<br /><br />Vějířové schéma je velmi podobné na <a href=\"?help=help_pedigree.php\">#pgv_lang[index_header]#</a>, ale s důrazem na grafickou podobu.<br /><br />Výchozí osoba je zobrazena ve středu, její rodiče na první kružnici, prarodiče na druhé atd...<br /><br />Pokud je znám rok narození, sňatku a úmrtí, pak je zobrazen pod jménem.<br /><br />Kliknete-li na jméno ve schématu, získáte nový obraz, na němž bude zvolené jméno ve středu schématu. Poblíž výchozí osoby je šipka se skrytým menu, z něhož budete moci vybrat jako novou výchozí osobu některé z dětí nebo sourozenců výchozí osoby, což můžete udělat také pomocí <a href=\"?help=help_pedigree.php\">#pgv_lang[index_header]#</a>.";
 $pgv_lang["fan_width_help"]		= "~Šířka #pgv_lang[fan_chart]#~</b><br /><br />Tady můžete nastavit šířku vějířového schématu od 50% do 300%.<br />Normální hodnota je 100% : výsledný obrázek má na šířku asi 640 pixelů.";
 $pgv_lang["fan_style_help"]			= "~Styl - #pgv_lang[fan_chart]#~<br /><br /><dl><dt>1/2</dt><dd>Obloukový (180°) vějíř</dd><dt>3/4</dt><dd>Tří-čtvrteční (270°) vějíř nebo 'Andělské křídlo'</dd><dt>4/4</dt><dd>Úplný (360°) vějíř</dd></dl>";
-//-- show_full is used from pedigree
 
 //-- Indilist-page
 $pgv_lang["help_indilist.php"]			= "~STRÁNKA SE SEZNAMEM OSOB~<br /><br />Na této stránce si můžete nechat zobrazit seznam osob.<br /><br />Jména budou zobrazena v abecedním pořadí, příjmení na prvním místě.<br />Výstup seznamu jmen závisí na:<br /><b>1.</b> písmeni, na něž jste klikli v abecedním rejstříku.<br /><b>2.</b> jestli jste klikli na \"Přeskočit\" nebo \"Zobrazit\" seznam příjmení.<br /><br />Jestliže k tomu potřebujete další nápovědu, klikněte prosím na ? za položkami.";

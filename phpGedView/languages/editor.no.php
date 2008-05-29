@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Norwegian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ $pgv_lang["label_gedcom_id"]        = "GEDCOM-ID";
 $pgv_lang["label_local_id"]         = "Person-ID";
 $pgv_lang["accept"]				= "Godkjenne";
 $pgv_lang["accept_all"]			= "Godkjenn alle endringer";
-$pgv_lang["accept_gedcom"]		= "Bestem deg for om du vil godkjenne eller avvise de enkelte endringene.<dl><dt>For å godta <i>alle</i> endringene på en gang</dt><dd>Klikk på linken \"Godkjenn alle endringer\" i boksen under.</dd><dt>For å få mer informasjon om en endring kan du klikke på:</dt><dd><li>\"$pgv_lang[view_change_diff]\" for å se på forskjellen mellom gammelt og nytt innhold.<br /><li>\"$pgv_lang[view_gedcom]\" for å se på det nye innholdet i slektsfil-oppsett (GEDCOM).</dd></dl>";
+$pgv_lang["accept_gedcom"]		= "Bestem deg for om du vil godkjenne eller avvise de enkelte endringene.<dl><dt>For å godta <i>alle</i> endringene på en gang</dt><dd>Klikk på linken <b>#pgv_lang[accept_all]#</b> i boksen under.</dd><dt>For å få mer informasjon om en endring kan du klikke på:</dt><dd><b>#pgv_lang[view_change_diff]#</b> for å se på forskjellen mellom gammelt og nytt innhold.<br /><b>#pgv_lang[view_gedcom]#</b> for å se på det nye innholdet i slektsfil-oppsett (GEDCOM).</dd></dl>";
 $pgv_lang["accept_successful"]	= "Godkjente endringer er lagt til databasen";
 $pgv_lang["add_child"]			= "Legg til barn";
 $pgv_lang["add_child_to_family"]	= "Legg til et barn til denne familien";

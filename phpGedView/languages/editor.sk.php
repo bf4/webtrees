@@ -3,7 +3,7 @@
  * Slovak Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
  * @author Peter Moravčík
@@ -217,7 +216,6 @@ $pgv_lang["upload_media"]		= "Nahrať multimediálne súbory";
 $pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Vyberte súbory na vašom lokálnom počítači pre načítanie na váš server. Všetky súbory budú načítané do adresára <b>#MEDIA_DIRECTORY#</b> alebo do niektorého z poddaresárov.<br /><br />Adresár, ktorého meno ste zadali, bude pridaný do #MEDIA_DIRECTORY#. Napríklad, #MEDIA_DIRECTORY#mojarodina. Ak adresár náhľadov neexistuje, bude založený automaticky.";
 $pgv_lang["upload_successful"]		= "Nahranie bolo úspešné";
 $pgv_lang["view_change_diff"]		= "Prehliadnúť si zmeny";
-
 $pgv_lang["edit_concurrency_change"] = "Tento záznam bol naposledy zmenený <i>#CHANGEUSER#</i> dňa #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]	= "Záznam s ID #PID# bol zmenený iným užívateľom medzitým než ste si ho otvoril.";
 $pgv_lang["edit_concurrency_msg1"]	= "Vyskytla sa chyba pri otvorení formulára Zmena. Iný užívateľ zmenil  tento záznam v dobe keď ste si ho prezeral. ";

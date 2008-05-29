@@ -3,7 +3,7 @@
  * Dutch texts
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author Eduard Wustenveld
- * @author Boudewijn Sjouke
  * @package PhpGedView
+ * @author Eduard Wustenveld
+ * @author Erik Bent
+ * @author Boudewijn Sjouke
  * @subpackage Languages
  * @version $Id$
  */
@@ -270,7 +271,6 @@ $pgv_lang["file_not_found"]				= "Bestand niet gevonden.";
 $pgv_lang["medialist_show"]				= "Toon";
 $pgv_lang["per_page"]					= "media objecten per pagina";
 $pgv_lang["current_dir"]				= "Huidige map: ";
-$pgv_lang["delete_dir_success"]			= "Map voor miniatuurweergaves succesvol verwijderd";
 $pgv_lang["delete_directory"]			= "Verwijder map";
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]				= "Doorzoek genealogie(en)";
@@ -394,7 +394,6 @@ $pgv_lang["year"]						= "Jaar:";
 $pgv_lang["timeline_instructions"]		= "In de nieuwste Internet Verkenners is het mogelijk om de weergegeven blokken te verschuiven zoals u dat wilt.";
 $pgv_lang["zoom_in"]					= "Inzoomen";
 $pgv_lang["zoom_out"]					= "Uitzoomen";
-
 $pgv_lang["cal_gregorian"]            = "Gregoriaans";
 $pgv_lang["cal_julian"]               = "Juliaans";
 $pgv_lang["cal_french"]               = "Frans";
@@ -454,7 +453,6 @@ $pgv_lang["enter_filename"]				= "Voer een GEDCOM-bestandsnaam in.";
 $pgv_lang["file_not_exists"]			= "Er bestaat geen bestand met de opgegeven naam.";
 $pgv_lang["file_exists"]				= "Er bestaat al een GEDCOM-bestand met die naam. Kies een andere naam, of verwijder het oude bestand.";
 $pgv_lang["new_gedcom_title"]			= "Genealogie van [#GEDCOMFILE#]";
-$pgv_lang["upload_gedcom_help"]			= "Selecteer op uw computer het GEDCOM- of ZIP-bestand dat u naar de server wilt uploaden. Het bestand wordt geplaatst in de map <b>#INDEX_DIRECTORY#</b>.<br /><br />Als u een ZIP-bestand upload, mag dit maar een GEDCOM-bestand bevatten. Dit GEDCOM bestand wordt automatisch in de volgende stappen gebruikt.<br /><br />";
 $pgv_lang["add_gedcom_instructions"]		= "Geef een naam voor het nieuwe GEDCOM-bestand. Deze zal worden geplaatst in de Index-map.";
 $pgv_lang["research_assistant"]		= "Onderzoeks Helper";
 $pgv_lang["research_log"]				= "Onderzoekslogboek";

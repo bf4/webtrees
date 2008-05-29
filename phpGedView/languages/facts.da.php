@@ -3,7 +3,7 @@
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -273,74 +273,78 @@ $factarray["_CREM_SPOU"] = "Ægtefælles kremering";
 $factarray["_BURI_SPOU"] = "Ægtefælles begravelse";
 
 $factarray["_BIRT_CHIL"] = "Barns fødsel";
-$factarray["_BURI_CHIL"] = "Et barns begravelse";
-$factarray["_CREM_CHIL"] = "Et barns kremering";
-$factarray["_MARR_CHIL"] = "Ægteskab for barn";
-$factarray["_DEAT_CHIL"] = "Et barns død";
+$factarray["_MARR_CHIL"] = "Barns Ægteskab";
+$factarray["_DEAT_CHIL"] = "Barns død";
+$factarray["_CREM_CHIL"] = "Barns kremering";
+$factarray["_BURI_CHIL"] = "Barns begravelse";
 
-$factarray["_BIRT_GCHI"] = "Oldebarns fødsel";
-$factarray["_MARR_GCHI"] = "Ægteskab på oldebarn";
-$factarray["_DEAT_GCHI"] = "Oldebarns død";
-$factarray["_CREM_GCHI"] = "Et barnebarns kremering";
-$factarray["_CREM_GGCH"] = "Et oldebarns kremering";
-$factarray["_BURI_GGCH"] = "Et oldebarns begravelse";
-$factarray["_DEAT_GGCH"] = "Et oldebarns død";
-$factarray["_MARR_GGCH"] = "Et oldebarns bryllup";
-$factarray["_CREM_FATH"] = "En faders kremering";
-$factarray["_BURI_FATH"] = "En faders begravelse";
-$factarray["_BIRT_GGCH"] = "Et oldebarns fødsel";
-$factarray["_CREM_MOTH"] = "En moders kremering";
-$factarray["_BURI_MOTH"] = "En moders begravelse";
-$factarray["_BURI_GCHI"] = "Et barnebarns begravelse";
+$factarray["_BIRT_GCHI"] = "Barnebarns fødsel";
+$factarray["_MARR_GCHI"] = "Barnebarns Ægteskab";
+$factarray["_DEAT_GCHI"] = "Barnebarns død";
+$factarray["_CREM_GCHI"] = "Barnebarns kremering";
+$factarray["_BURI_GCHI"] = "Barnebarns begravelse";
+
+$factarray["_BIRT_GGCH"] = "Oldebarns fødsel";
+$factarray["_MARR_GGCH"] = "Oldebarns bryllup";
+$factarray["_DEAT_GGCH"] = "Oldebarns død";
+$factarray["_CREM_GGCH"] = "Oldebarns kremering";
+$factarray["_BURI_GGCH"] = "Oldebarns begravelse";
 
 $factarray["_MARR_FATH"] = "Faders ægteskab";
 $factarray["_DEAT_FATH"] = "Faders død";
+$factarray["_CREM_FATH"] = "Faders kremering";
+$factarray["_BURI_FATH"] = "Faders begravelse";
 
 $factarray["_MARR_MOTH"] = "Moders ægteskab";
 $factarray["_DEAT_MOTH"] = "Moders død";
+$factarray["_CREM_MOTH"] = "Moders kremering";
+$factarray["_BURI_MOTH"] = "Moders begravelse";
 
-$factarray["_BIRT_SIBL"] = "En søskendes fødsel<br />";
-$factarray["_MARR_SIBL"] = "En søskendes ægteskab<br />";
-$factarray["_DEAT_SIBL"] = "En søskendes dødsfald<br />";
-$factarray["_CREM_SIBL"] = "En søskenes kremering";
-$factarray["_BURI_SIBL"] = "En søskenes begravelse";
+$factarray["_BIRT_SIBL"] = "Søskendes fødsel";
+$factarray["_MARR_SIBL"] = "Søskendes ægteskab";
+$factarray["_DEAT_SIBL"] = "Søskendes dødsfald";
+$factarray["_CREM_SIBL"] = "Søskenes kremering";
+$factarray["_BURI_SIBL"] = "Søskenes begravelse";
 
-$factarray["_BIRT_HSIB"] = "En halvsøskendes fødsel<br />";
-$factarray["_MARR_HSIB"] = "En halvsøskendes ægteskab<br />";
-$factarray["_CREM_HSIB"] = "En halvsøskenes kremering";
-$factarray["_BURI_HSIB"] = "En halvsøskenes begravelse";
-$factarray["_BIRT_NEPH"] = "Fødsel af Nevø eller niece.";
-$factarray["_CREM_NEPH"] = "En nevø eller nieces kremering";
-$factarray["_CREM_NEPH"] = "En nevø eller nieces kremering";
-$factarray["_BURI_NEPH"] = "En nevø eller nieces begravelse";
-$factarray["_DEAT_NEPH"] = "En nevø eller nieces død";
-$factarray["_MARR_NEPH"] = "En nevø eller nieces bryllup";
-$factarray["_DEAT_HSIB"] = "En halvsøskendes dødsfald<br />";
+$factarray["_BIRT_HSIB"] = "Halvsøskendes fødsel";
+$factarray["_MARR_HSIB"] = "Halvsøskendes ægteskab";
+$factarray["_DEAT_HSIB"] = "Halvsøskendes dødsfald";
+$factarray["_CREM_HSIB"] = "Halvsøskenes kremering";
+$factarray["_BURI_HSIB"] = "Halvsøskenes begravelse";
 
-$factarray["_DEAT_GPAR"] = "En bedsteforælders dødsfald<br />";
-$factarray["_CREM_GGPA"] = "En oldeforælders kremering";
-$factarray["_BURI_GGPA"] = "En oldeforælders begravelse";
-$factarray["_DEAT_GGPA"] = "En oldeforælders død";
-$factarray["_CREM_GPAR"] = "En bedsteforælders kremering";
-$factarray["_BURI_GPAR"] = "En bedsteforælders begravelse";
+$factarray["_BIRT_NEPH"] = "Nevø eller nieces Fødsel";
+$factarray["_MARR_NEPH"] = "Nevø eller nieces ægteskab";
+$factarray["_DEAT_NEPH"] = "Nevø eller nieces dødsfal";
+$factarray["_CREM_NEPH"] = "Nevø eller nieces kremering";
+$factarray["_CREM_NEPH"] = "Nevø eller nieces kremering";
+$factarray["_BURI_NEPH"] = "Nevø eller nieces begravelse";
 
-$factarray["_BIRT_FSIB"] = "En faders søskendes fødsel<br />";
-$factarray["_MARR_FSIB"] = "En faders søskendes ægteskab<br />";
-$factarray["_DEAT_FSIB"] = "En faders søskendes dødsfald<br />";
-$factarray["_CREM_FSIB"] = "En faders søskenes kremering";
-$factarray["_BURI_FSIB"] = "En faders søskenes begravelse";
+$factarray["_DEAT_GGPA"] = "Oldeforælders dødsfal";
+$factarray["_CREM_GGPA"] = "Oldeforælders kremering";
+$factarray["_BURI_GGPA"] = "Oldeforælders begravelse";
 
-$factarray["_BIRT_MSIB"] = "En moders søskendes fødsel<br />";
+$factarray["_DEAT_GPAR"] = "Bedsteforælders dødsfald";
+$factarray["_CREM_GPAR"] = "Bedsteforælders kremering";
+$factarray["_BURI_GPAR"] = "Bedsteforælders begravelse";
+
+$factarray["_BIRT_FSIB"] = "Faders søskendes fødsel";
+$factarray["_MARR_FSIB"] = "Faders søskendes ægteskab";
+$factarray["_DEAT_FSIB"] = "Faders søskendes dødsfald";
+$factarray["_CREM_FSIB"] = "Faders søskenes kremering";
+$factarray["_BURI_FSIB"] = "Faders søskenes begravelse";
+
+$factarray["_BIRT_MSIB"] = "En moders søskendes fødsel";
+$factarray["_MARR_MSIB"] = "En moders søskendes ægteskab";
+$factarray["_DEAT_MSIB"] = "En moders søskendes dødsfald";
 $factarray["_CREM_MSIB"] = "En moders søskenes kremering";
 $factarray["_BURI_MSIB"] = "En moders søskenes begravelse";
-$factarray["_MARR_MSIB"] = "En moders søskendes ægteskab<br />";
-$factarray["_DEAT_MSIB"] = "En moders søskendes dødsfald<br />";
-$factarray["_CREM_COUS"] = "En fætter eller kusines kremering";
-$factarray["_BURI_COUS"] = "En fætter eller kusines begravelse";
 
-$factarray["_BIRT_COUS"] = "En kusines eller fætters fødsel";
-$factarray["_MARR_COUS"] = "En kusines eller fætters ægteskab";
-$factarray["_DEAT_COUS"] = "En kusines eller fætters dødsfald";
+$factarray["_BIRT_COUS"] = "Fætter eller kusines  fødsel";
+$factarray["_MARR_COUS"] = "Fætter eller kusines  ægteskab";
+$factarray["_DEAT_COUS"] = "Fætter eller kusines  dødsfald";
+$factarray["_CREM_COUS"] = "Fætter eller kusines kremering";
+$factarray["_BURI_COUS"] = "Fætter eller kusines begravelse";
+
 $factarray["_FAMC_EMIG"] = "Forældres emigrering";
 $factarray["_FAMC_RESI"] = "Forældre bosted";
 

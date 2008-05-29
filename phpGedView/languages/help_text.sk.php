@@ -3,7 +3,7 @@
  * Slovak Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
  * @author Peter Moravčík
@@ -378,7 +377,6 @@ $pgv_lang["help_faq.php"] 			= "~FAQ - Často sa opakujúce otázky~<br />#pgv_l
 $pgv_lang["text_faq_help"] 			= "FAQ (Frequently Asked Questions) stránka obsahuje prehľad otázok a odpovedí k tejto genealogickej stránke.<br /><br /> Použitie stránky FAQ nastavuje výhradne administrátor. Administrátor nastavuje obsah položiek a tiež poradie v ktorom sa zobrazujú na stránke.";
 $pgv_lang["hs_title_help"] 			= "<center>~#pgv_lang[hs_title]#~</center><br />#pgv_lang[hs_intro]#<br /><br />#pgv_lang[hs_keyword_advice]#<br /><br />#pgv_lang[hs_searchhow_advice]#<br /><br />#pgv_lang[hs_searchin_advice]#";
 $pgv_lang["hs_searchin_advice"]		= "~#pgv_lang[hs_searchin]#~<br />Tu určíte rozsah hľadania.<br /><br />Administrátorovia majú možnosť hľadať v Uživateľskej nápovede alebo v Nápovede konfigurácie, prípadne v oboch. Uživatelia túto možnosť nemajú, pretože nemajú prístup na žiadnu funkčnosť konfigurácie, preto môžu hľadať iba v Uživateľskej nápovede.<br /><br />Súbory nápovedy neobsahujú iba nápovedu ale tiež určité textové reťazce používané vo formulároch a ďalších materiáloch. Táto voľba vám dáva možnosť určiť či bude prehľadávaný celý súbor nápovedy, alebo či bude prehľadávaný iba text nápovedy.<br />";
-
 $pgv_lang["edit_NCHI_help"]			= "~#factarray[NCHI]#~<br /><br />Vložte počet detí tejto osoby, alebo rodiny. Toto je nepovinné pole.<br /><br />|";
 $pgv_lang["edit_TIME_help"]			= "~#factarray[TIME]#~<br /><br />Vložte čas pre túto udalosť v 24-hodinovom formáte s vedúcimi nulami. Polnoc je 00:00. Príklad: 04:50 13:00 20:30.<br /><br />";
 $pgv_lang["edit_NOTE_help"]			= "~#factarray[NOTE]#~<br /><br />Poznamky sú neformatované texty, ktoré sa zobrazia na stránke v sekcii Detail udalosti.<br /><br />";
