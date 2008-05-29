@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - Form Loader Engine.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,18 +29,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
-// Added in VERSION 4.1.4 
-
-//$pgv_lang["lb_details"]			= "Details";
-//$pgv_lang["lb_detail_info"]		= "View this Media Item Details ...  Plus other Media Options - MediaViewer page";
-//$pgv_lang["lb_pause_ss"]		= "Pause Slideshow";
-//$pgv_lang["lb_start_ss"]		= "Start Slideshow";
-//$pgv_lang["lb_music"]			= "Turn Music On/Off";
-//$pgv_lang["lb_zoom_off"]		= "Disable Zoom";
-//$pgv_lang["lb_zoom_on"]			= "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out";
-//$pgv_lang["lb_close_win"]		= "Close Lightbox window";
-
-// VERSION 4.1.3 
+$pgv_lang["autosearch_ssurname"] 	= "Lisää puolison sukunimi:";
+$pgv_lang["autosearch_sgivennames"] = "Lisää puolison etunimet:";
+$pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com lisäke";
 
 $pgv_lang["add_task_inst"]		= "Mikäli tutkimustuloksiasi varten ei vielä ole luotu tehtävää, sinun tulisi ensin luoda tehtävä ja sitten valita vaihtoehto tallentaa ja suorittaa tehtävä loppuun."; 
 $pgv_lang["complete_task_inst"]	= "Valitse tehtävä allaolevasta tehtäväluettelosta suorittaaksesi sen lopuun ja lisää tulokset:";
@@ -65,16 +56,12 @@ $pgv_lang["auto_search_text"]	= "Automaattihaku";
 $pgv_lang["task_list"]			= "Tehtävät";
 $pgv_lang["task_list_text"]		= "Tällä alueella näytetään luomasi tehtävät. Näpäytä nähdäksesi tehtävän";
 
-// -- HELP COMMENTS
-//$pgv_lang["help_comments"] 		= "Tähän voidaan lisätä henkilöitä koskevia kommentteja muille käyttäjille näytettäväksi ja palautteen antamiseksi";
-
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]						= "Tehtäväni";
 $pgv_lang["add_task"]						= "Lisää tehtävä";
 $pgv_lang["view_folders"]					= "Näytä hakemistot";
 $pgv_lang["view_probabilities"]				= "Näytä todennäköisyydet";
 $pgv_lang["up_folder"]						= "Ylempi hakemsitotaso";
-//$pgv_lang["edit_folder"]					= "Lisää/editoi hakemisto(a)";
 $pgv_lang["gen_tasks"]						= "Luo automaattisesti tehtäviä";
 
 // -- RA GENERAL MESSAGES
@@ -82,11 +69,7 @@ $pgv_lang["edit_task"]						= "Editoi tehtävää";
 $pgv_lang["completed"]						= "Valmis";
 $pgv_lang["complete"]						= "Lopeta";
 $pgv_lang["incomplete"]						= "Kesken";
-//$pgv_lang["comres"]							= "Kommentit/tulokset";
-//$pgv_lang["description"]					= "Kuvaus";
 $pgv_lang["created"]						= "Luotu";
-//$pgv_lang["modified"]						= "Muutettu";
-//$pgv_lang["folder_list"]					= "Hakemistoluettelo";
 $pgv_lang["details"]						= "Yksityiskohdat";
 $pgv_lang["result"]                     	= "Tulos";
 $pgv_lang["okay"]                           = "OK";
@@ -140,17 +123,13 @@ $pgv_lang["ViewProbExplanation"]			= "Tällä sivulla analysoidaan aktiivisen GE
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Folder"]                         = "Hakemisto:";
-//$pgv_lang["Edit_Task"]                 		= "Editoi tehtävää";
 $pgv_lang["Edit_Gen_Task"]                 	= "Editoi luotu tehtävä"; 
-//$pgv_lang["End_Date"]                 		= "Loppetuspäivämäärä";
 $pgv_lang["Start_Date"]                 	= "Aloituspäivämäärä";
 $pgv_lang["Task_Name"]                		= "Tehtävän nimi";
 $pgv_lang["Folder_Name"]                	= "Hakemiston nimi";
 $pgv_lang["Folder_View"]                	= "Hakemistonäkymä";
 $pgv_lang["Task_View"]                  	= "Tehtävänäkymä";
 $pgv_lang["page_header"]					= "Tutkimusavustajahakemistot";
-//$pgv_lang["folder_new"]						= "Luo uusi hakemisto";
-//$pgv_lang["folder_delete_check"]			= "Haluatko varmasti poistaa tämän hakemiston?";
 $pgv_lang["no_folder_name"]             	= "Hakemistonimi on pakollinen";
 $pgv_lang["add_folder"]                 	= "Lisää hakemisto";
 $pgv_lang["edit_folder"]                	= "Editoi hakemistoa";
@@ -164,54 +143,12 @@ $pgv_lang["folder_problem"]             	= "Hakemistosi lisääminen ei onnistun
 
 // -- Missing Information Help
 $pgv_lang["ra_missing_info_help"]			= "Tällä alueella näytetään mitkä tiedot puuttuvat tietueesta . Valitse valintaruutu ja ja hakemisto ja paina Lisää tehtävä luodaksesi tehtävän puuttuvalle kohteelle. Jo luodut tehtävät näyttävät 'näytä' valintaruudun asemesta <br />";
-
-// -- RA_EDITFOLDER MESSAGES
-//$pgv_lang["edit_research_folder"]			= "Editoi tutkimushakemistoa";
-//$pgv_lang["folder_not_exist"]				= "Tätä hakemistoa ei ole: ";
-//$pgv_lang["folder_parent"]					= "Päähakemisto";
-//$pgv_lang["parent_id"]						= "Tyhjä";
-//$pgv_lang["folder_users"]					= "Muut käyttäjät, jotka voivat nähdä tämän hakemiston";
-
-// -- RA_EDITLOG MESSAGES
-//$pgv_lang["edit_research_log"]				= "Editoi tutkimuslokia";
-//$pgv_lang["log_not_exist"]					= "Tätä lokia ei ole: ";
-
-// -- RA_LOG MESSAGES
-//$pgv_lang["edit_log_entry"]					= "Editoi tutkimuslokitietoja";
-//$pgv_lang["log_no_entry"]					= "VIRHE: Sinulla ei ole oikeutta tähän.";
-//$pgv_lang["log_modified"]					= "Viimeksi muokattu";
-//$pgv_lang["log_modified_by"]				= "Viimeisin muokkaaja";
-//$pgv_lang["log_edit_entry"]					= "Editoi tätä";
-
-// -- RA_LISTLOGS MESSAGES
-//$pgv_lang["research_logs"]					= "Tutkimuslokit";
-//$pgv_lang["log_no_entry_folder"]			= "VIRHE: Sinulla ei ole pääsyoikeutta tähän hakemistoon.";
-//$pgv_lang["folder_sub"]						= "Alihakemistot";
-//$pgv_lang["folder_sub_new"]					= "Luo uusi alihakemisto";
 $pgv_lang["task_entry"]						= "Luo uusi tehtävä.";
-//$pgv_lang["log_show"]						= "Show All Logs";
-//$pgv_lang["log_show_uncomplete"]			= "Näytä ei-valmiit lokit";
-//$pgv_lang["log_show_complete"]				= "Näytä valmiit lokit";
-//$pgv_lang["log_delete_check"]				= "Haluatko varmasti poistaa tämän lokitiedon?";
-
-// -- RA_FUNCTIONS MESSAGES
-//$pgv_lang["function_folder_delete"]			= "VIRHE: Tätä hakemistoa ei voi poistaa, koska se sisältää tutkimuslokitietoja.<br />Siirrä tai poista ensin nämä tutkimuslokitiedot ja yritä sen jälkeen poistaa hakemisto uudelleen.";
-//$pgv_lang["function_subfolder_delete"]		= "VIRHE: Tätä hakemistoa ei voi poistaa, koska se sisältää alihakemistoja.<br />Siirrä tai poista ensin nämä alihakemistot ja yritä sen jälkeen poistaa hakemisto uudelleen.";
-//$pgv_lang["folder_delete_ok"]				= "Hakemiston #folder_name# poistaminen onnistui.";
-//$pgv_lang["folder_update_ok"]				= "Hakemiston #folder_name# päivitys onnistui.";
-//$pgv_lang["folder_added"]					= "Hakemiston #folder_name# luonti onnistui.";
-
-//-- RA_SEARCH MESSAGES
-//$pgv_lang["search_results"]					= "Hakutulokset";
-//$pgv_lang["nothing_found"]					= "Sopivia lokeja ei löytynyt.";
 
 //-- ERROR MESSAGES
 $pgv_lang["no_folder"]						= "Yhtään hakemistoa ei vielä ole. Luo ensin uusi hakemisto.";
 
 //-- HELP MESSAGES
-//$pgv_lang["help_rs_folders.php"]			= "Tutkimusavustajan hakemistot<br /> #pgv_lang[sorry]#";
-//$pgv_lang["help_rs_editfolder.php"]			= "Tutkimusavustajan editointihakemistots<br />#pgv_lang[sorry]#";
-//$pgv_lang["help_rs_editlog.php"]			= "Tutkimusavustajan editointiloki<br />#pgv_lang[sorry]#";
 $pgv_lang["ra_fold_name_help"]				= "<H2><B>Hakemistonäkymä:</B></H2><ul><li><B>Hakemiston nimi:</B> Tällä palstalla ovat kaikkien luomiesi hakemistojen nimet.</li><li><B>Kuvaus:</B> Tällä palstalla ovat hakemistojen kuvaukset.</li></ul>";
 $pgv_lang["ra_add_task_help"]				= "<H2><B>Lisää uusi tehtävä:</B></H2></H2><ul><li><B>Otsikko:</B>Tässä pitäisi olla lisäämäsi tehtävän otsikko.</li><li><B>Hakemisto:</B>Tähän kenttään voit merkitä, mihin hakemistoon uusi tehtävä tulee.</li><li><B>Kuvaus:</B> Lisää tehtävääsi kuvaava kuvaus.</li><li><B>Lähteet:</B> Lisää tehtävääsi liittyvät lähteet.</li><li><B>Henkilöt:</B> Lisää tehtävään liittyvät henkilöt.</li></ul>";
 $pgv_lang["ra_edit_folder_help"]			= "<H2><B>Editoi hakemistoa:</B></H2><ul><li><B>Hakemiston nimi:</B> Lisää tähän editoitavan hakemiston nimi.</B></li><li><B>Päähakemisto:</B> Voit määrittää editoitavan hakemiston päähakemistoksi.</B></li><li><B>Hakemiston kuvaus:</B> Lisää hakemistosi kuvaus.</B></li></ul>";
@@ -227,8 +164,6 @@ $pgv_lang["ra_edit_task_help"]				= "<H2><B>Editoi tehtävää:</B></H2></H2><ul
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "Näytä tehtävä";
 $pgv_lang["add_new_comment"]				= "Lisää uusi kommentti";
-//$pgv_lang["no_sources"]						= "Tähän tehtävään ei ole liitetty lähteitä.";
-//$pgv_lang["no_people"]						= "Tähän tehtävään ei ole liitetty henkilöitä.";
 $pgv_lang["no_indi_tasks"]					= "Tähän tehtävään ei ole liitetty yhtään henkilöä.";
 $pgv_lang["no_sour_tasks"]					= "No tasks associated with this ssource.";
 $pgv_lang["edit_comment"]					= "Editoi kommenttia";
@@ -254,10 +189,6 @@ $pgv_lang["show_view_folders"]		    	= "Näytä Näytä hakemisto";
 $pgv_lang["show_add_folder"]		    	= "Näytä Lisää hakemisto";
 $pgv_lang["show_add_unlinked_source"]   	= "Näytä Lisää linkittämätön lähde";
 $pgv_lang["show_view_probabilities"]		= "Näytä Näytä todennäköisyydet";
-
-//-- COMMENT HELP
-//$pgv_lang["comment_title_help"]				= "Kommentin otsikon aputeksti tähän."; 
-//$pgv_lang["comment_help"]					= "Näpäytä tästä saadaksesi ohjeita.";
 
 //-- Census Forms
 $pgv_lang["rows"]                       	= "Rivien lukumäärä";

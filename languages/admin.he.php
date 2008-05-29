@@ -3,7 +3,7 @@
  * Hebrew texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ $pgv_lang["associated_files"]		= "קבצים קשורים:";
 $pgv_lang["remove_all_files"]		= "הסר את כל הקבצים הבלתי נחוצים"; 
 $pgv_lang["warn_file_delete"]		= "הקובץ הזה מכיל מידע חשוב כגון הגדרת השפות או נתוני שינויים תלויים ועומדים. האם אתה בטוח שאתה רוצה למחוק קובץ זה?"; 
 $pgv_lang["deleted_files"]          		= "קבצים שנמחקו:";
-$pgv_lang["index_dir_cleanup_inst"]		= "כדי למחוק קובץ או ספרית משנה מתיקיית אינדקס גרור אותו לפח האשפה או בחר את תיבת הסימון שלו. לחץ על כפתור מחק כדי להסיר לצמיתות את הקבצים המסומנים.<br /><br />קבצים שמסומנים ע\"י <img src=\"./images/RESN_confidential.gif\" />  נחוצים לפעולה תקינה ולא ניתן למחוק אותם.<br />קבצים מסומנים ע\"י <img src=\"./images/RESN_locked.gif\" /> כוללים הגדרות חשובות או נתוני שינויים ממתינים ואותם יש למחוק רק אם אתה בטוח שאתה יודע מה שאתה עושה.<br /><br />"; 
+$pgv_lang["index_dir_cleanup_inst"]		= "כדי למחוק קובץ או ספרית משנה מתיקיית אינדקס גרור אותו לפח האשפה או בחר את תיבת הסימון שלו. לחץ על כפתור מחק כדי להסיר לצמיתות את הקבצים המסומנים.<br /><br />קבצים שמסומנים ע\"י <img src=\"./images/RESN_confidential.gif\" alt=\"\" />  נחוצים לפעולה תקינה ולא ניתן למחוק אותם.<br />קבצים מסומנים ע\"י <img src=\"./images/RESN_locked.gif\" alt=\"\" /> כוללים הגדרות חשובות או נתוני שינויים ממתינים ואותם יש למחוק רק אם אתה בטוח שאתה יודע מה שאתה עושה.<br /><br />"; 
 $pgv_lang["index_dir_cleanup"]		= "תיקיית אינדקס לניקוי"; 
 $pgv_lang["clear_cache_succes"]		= "קובצי cache הוסרו."; 
 $pgv_lang["clear_cache"]			= "cache נקה קובצי"; 
