@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Language definitions used in profile.php
 $lang_profile = array(
