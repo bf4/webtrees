@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Language definitions used in viewtopic.php
 $lang_topic = array(

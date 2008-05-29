@@ -1,4 +1,4 @@
-﻿Subject: Bienvenue sur <board_title> !
+Subject: Bienvenue sur <board_title> !
 
 Merci de vous être inscrit sur les forums <base_url>. Les détails de votre compte sont :
 

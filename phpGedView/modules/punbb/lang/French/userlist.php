@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Language definitions used in userlist.php
 $lang_ul = array(

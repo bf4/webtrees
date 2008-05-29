@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Language definitions used in register.php
 $lang_register = array(
