@@ -5,7 +5,7 @@
  * Display media Items using Lightbox 4.1
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
     global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
-	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
+	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i;
 	
 
 	// If reorder media has been clicked
@@ -126,9 +126,9 @@
                 // For Regular filetypes supported by lightbox at the moment ================
 				if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file'])  ) {
 					print "<table class=\"pic\" border=0><tr>" . "\n";
-					print "<td align=\"center\" rowspan=2 >
-					<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>
-					</td>". "\n";
+					print "<td align=\"center\" rowspan=2 >";
+					print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>";
+					print "</td>". "\n";
 					print "<td align=\"center\" >". "\n";
 					
 					// Check for Notes associated media item
@@ -201,9 +201,9 @@
                 // For URL filetypes supported by lightbox at the moment  ================
 				}else if ( eregi("http",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ) {
 					print "<table class=\"pic\" border=0><tr>" . "\n";
-					print "<td align=\"center\" rowspan=2 >
-					<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>
-					</td>". "\n";
+					print "<td align=\"center\" rowspan=2 >";
+					print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>";
+					print "</td>". "\n";
 					print "<td align=\"center\" colspan=1>". "\n";	
 					
 					// Check for Notes associated media item
@@ -271,9 +271,9 @@
 				// Else For filetypes NOT supported by lightbox at the moment, use the pop-up window technique ==============================
 				}else{
 					print "<table class=\"pic\" border=0><tr>" . "\n";
-					print "<td align=\"center\" rowspan=2 >
-					<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>
-					</td>". "\n";
+					print "<td align=\"center\" rowspan=2 >";
+					print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>";
+					print "</td>". "\n";
 					print "<td align=\"center\" colspan=1>" . "\n";
 					
 					// Check for Notes associated media item
@@ -365,11 +365,7 @@
 				print "<img src=\"" . $thumbnail . "\" height=\"".$height."\" border=\"0\" " ;
 			}
 
-			// This next line disables the extra IE Browser tooltip. (For the moment it will NOT disable the browser tooltip in Firefox)
-			// I will try to find a better way of removing the extra browser tooltip in FF ... Brian Holland .. Lightbox developer)
-			//
-			// The above is now done with the "rev" element contact Brian Holland for details
-			// print " alt=\"" . " " . "\" title=\"" . "" . "\"  />";
+			print " alt=\"" . " " . "\" title=\"" . "" . "\"  />";
 			
 			// Close anchor
 			if ($mainFileExists) print "</a>" . "\n";
@@ -450,7 +446,12 @@ else print "<i>&lrm;".PrintReady($sour1);
 //  -----------------------------------------------------------------------------------------------------------------------------
 
     } // NOTE End get the title of the media
+	
 
+	$media_data = $rowm['m_media']; 
+	print "<input type=\"hidden\" name=\"order1[$media_data]\" value=\"$sort_i\" />" . "\n";
+	$sort_i++;
+		
     print "</li>";
     print "\n\n";;
     return true;

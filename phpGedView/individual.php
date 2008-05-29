@@ -451,6 +451,13 @@ else
 	print "<div id=\"media\" class=\"tab_page\" style=\"display:block;\" >\n";
 if ($MULTI_MEDIA) {
 	print "<span class=\"subheaders\">".$pgv_lang["media"]."</span>";
+	// For Reorder media ------------------------------------
+	if (PGV_USER_CAN_EDIT) {
+		print "<center";
+		include_once('media_tab_head.php');
+		print "</center>";
+	}
+	// -----------------------------------------------------------
 	print "<div id=\"media_content\">";
 	if (($controller->default_tab==3)||(!empty($SEARCH_SPIDER))) $controller->getTab(3);
 	else {

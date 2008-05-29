@@ -1248,6 +1248,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
 	$ids = array($pid);
+	
 	//-- find all of the related ids
 	if ($related) {
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -1255,7 +1256,28 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			$ids[] = trim($match[$i][1]);
 		}
 	}
+	
+	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
+	$sort_current_objes = array();
+	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
+	else $sort_regexp = "/_PGV_OBJS @(.*)@/";
+	$sort_ct = preg_match_all($sort_regexp, $gedrec, $sort_match, PREG_SET_ORDER);
+	for($i=0; $i<$sort_ct; $i++) {
+		if (!isset($sort_current_objes[$sort_match[$i][1]])) $sort_current_objes[$sort_match[$i][1]] = 1;
+		else $sort_current_objes[$sort_match[$i][1]]++;
+		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
+	}
+	$sort_media_found = false;
+	// -----------------------------------------------------------------------------------------------
 
+	// create ORDER BY list from Gedcom sorted records list  ---------------------------
+	$orderbylist = 'ORDER BY '; // initialize  
+	foreach ($sort_match as $id) {
+		$orderbylist .= "m_media='$id[1]' DESC, ";
+	}  
+	$orderbylist = rtrim($orderbylist, ', ');
+	// -----------------------------------------------------------------------------------------------
+	
 	//-- get a list of the current objects in the record
 	$current_objes = array();
 	if ($level>0) $regexp = "/".$level." OBJE @(.*)@/";
@@ -1283,8 +1305,15 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
-
-	$sqlmm .= "ORDER BY mm_gid DESC";
+	
+	// LBox --- media sort -------------------------------------
+	if ($sort_ct>0) {
+		$sqlmm .= $orderbylist;
+	}else{
+		$sqlmm .= " ORDER BY mm_gid DESC ";
+	}
+	// ---------------------------------------------------------------
+	
 	$resmm = dbquery($sqlmm);
 	$foundObjs = array();
 	while($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1685,7 +1714,7 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 }
 
 // -----------------------------------------------------------------------------
-//  Extra print_facts_functions for lightbox 
+//  Extra print_facts_functions for lightbox and reorder media
 // -----------------------------------------------------------------------------
 
 function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=false ) {
@@ -1696,12 +1725,12 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
          include("modules/lightbox/functions/lightbox_print_media_row.php");
 }
 
-function lightbox_print_media_row_sort($rtype, $rowm, $pid) {
-         include("modules/lightbox/functions/lightbox_print_media_row_sort.php");
+function media_reorder_row($rtype, $rowm, $pid) {
+         include("media_reorder_row.php");
 }
 
 // -----------------------------------------------------------------------------
-//  End extra print_facts_functions for lightbox
+//  End extra print_facts_functions for lightbox and reorder media
 // -----------------------------------------------------------------------------
 
 ?>
