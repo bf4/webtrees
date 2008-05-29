@@ -3,7 +3,7 @@
  * Hebrew texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ $pgv_lang["replace"]			= "החלפת רשומה";
 $pgv_lang["append"]			= "הוספת רשומה בסוף";
 $pgv_lang["review_changes"]		= "סקור שינויי GEDCOM";
 $pgv_lang["remove_object"]		= "הסר ישות מדיה";
-$pgv_lang["remove_links"]			= "הסר קישור";
+$pgv_lang["remove_links"]		= "הסר קישור";
 $pgv_lang["media_not_deleted"]	= "תיקיית המדיה לא הוסרה.";
 $pgv_lang["thumbs_not_deleted"]	= "תיקיית התמונות המזעריות לא הוסרה.";
 $pgv_lang["thumbs_deleted"]		= "תיקיית התמונות המזעריות הוסרה בהצלחה.";
@@ -60,6 +60,13 @@ $pgv_lang["copy"]			= "העתק";
 $pgv_lang["cut"]			= "חתוך";
 $pgv_lang["sort_by_birth"]		= "מיין לפי תאריכי לידה";
 $pgv_lang["reorder_children"]		= "סדר מחדש את הילדים";
+$pgv_lang["reorder_media"]		= "סדר מחדש מדיה";
+$pgv_lang["reorder_media_title"]	= "גרור ושחרר תמונות ממוזערות כדי לשנות את הסדר של עצמי המדיה";
+$pgv_lang["reorder_media_window"]	= "סדר מחדש מדיה (חלון)";
+$pgv_lang["reorder_media_window_title"]	= "הקלק על שורה, ואח\"כ \"גרור ושחרר\" כדי לשנות את הסדר של עצמי המדיה ";
+$pgv_lang["reorder_media_save"]	= "שומר על המדיה ממויינת ל-GEDCOM של האדם";
+$pgv_lang["reorder_media_reset"]	= "מסיר את המדיה הממויינת מ-GEDCOM של האדם";
+$pgv_lang["reorder_media_cancel"]	= "עזוב וחזור";
 $pgv_lang["add_from_clipboard"]	= "הוסף מלוח הגזירים: ";
 $pgv_lang["record_copied"]		= " הרשומה הועתקה ללוח הגזירים";
 $pgv_lang["add_unlinked_person"]	= "הוסף אדם לא קשור";
@@ -146,7 +153,6 @@ $pgv_lang["directory_not_exist"]	= "התיקייה אינה קיימת.";
 $pgv_lang["error_remote"]           	= "בחרת אתר מרוחק.";
 $pgv_lang["error_same"]             	= "בחרת את אותו האתר.";
 $pgv_lang["external_file"]		= "המדיה לא קיימת כקובץ על השרת. לא ניתן למחוק, להעביר או לשנות אותה.";
-//$pgv_lang["family"]			= "משפחה";
 $pgv_lang["file_missing"]		= "שום קובץ לא התקבל. הבא שנית.";
 $pgv_lang["file_partial"]		= "הקובץ עלה חלקית, נסה שנית.";
 $pgv_lang["file_success"]		= "הקובץ הועלה בהצלחה";
@@ -167,7 +173,6 @@ $pgv_lang["hebrew_surn"]		= "שם משפחה עברי";
 $pgv_lang["hide_changes"]		= "לחץ כאן כדי להסתיר את השינויים.";
 $pgv_lang["highlighted"]		= "תמונה בהדגשה";
 $pgv_lang["illegal_chars"]		= "שם ריק או אותיות לא חוקיות בשם";  
-//$pgv_lang["invalid_search_input"] 	= "הכנס בבקשה שם פרטי, שם משפחה או מקום בנוסף לשנה";
 $pgv_lang["invalid_search_multisite_input"]  = "הכנס אחד מהפרטים הבאים: שם, תאריך לידה, מקום לידה, תאריך פטירה, מקום פטירה ומגדר ";
 $pgv_lang["invalid_search_multisite_input_gender"] 	= "אנא חפש שנית עם יותר נתונים, לא רק מגדר";
 $pgv_lang["label_diff_server"]      	= "אתר אחר";

@@ -3,7 +3,7 @@
  * Hebrew Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,6 +113,8 @@ $pgv_lang["pl_house"]               	= "בית";
 $pgv_lang["pl_max"]                 	= "מכסימלי";
 $pgv_lang["pl_delete"]              	= "מחק מקום גיאוגרפי"; 
 $pgv_lang["pl_flag"]                		= "דגל";
+$pgv_lang["pl_search_level"]		= "חפש ברמה זו";
+$pgv_lang["pl_search_all"]		= "חפש הכל"; 
 $pgv_lang["flags_edit"]             	= "בחר דגל";
 $pgv_lang["pl_change_flag"]         	= "החלף דגל";
 $pgv_lang["pl_remove_flag"]         	= "הסר דגל";
@@ -136,7 +138,7 @@ $pgv_lang["placecheck_key4"]           	= "רשימת מקומות עבור בק
 $pgv_lang["placecheck_head"]	= "הרמה הזו של רשימת מקומות ריקה בקובץ ה-GEDCOM שלך, אבל קיימת כ'בלתי ידוע'<br/>בטבלת המקומות של GoogleMap עם קואורדינאטות. שום פעולה אינה נדרשת<br/>עד שמוסיפים את הרמה החסרה";
 $pgv_lang["placecheck_gedheader"]	= "נתוני המקומות של קובץ GEDCOM<br/>2 PLAC";
 $pgv_lang["placecheck_gm_header"]	= "נתוני טבלת המקומות של GoogleMap";
-$pgv_lang["'placecheck_unique"]	= "סה\"כ מקומות ייחודיים"; 
+$pgv_lang["placecheck_unique"]	= "סה\"כ מקומות ייחודיים"; 
 $pgv_lang["placecheck_zoom"]         	= "זום=";
 $pgv_lang["placecheck_options"]     	= "אופציות של רשימת בדיקת מקום";
 $pgv_lang["placecheck_filter_text"] 	= "תציג אופציות של הפילטר";

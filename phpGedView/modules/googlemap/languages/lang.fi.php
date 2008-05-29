@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,10 +28,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
-$pgv_lang["autosearch_ssurname"] 	= "Lisää puolison sukunimi:";
-$pgv_lang["autosearch_sgivennames"] = "Lisää puolison etunimet:";
-$pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com lisäke";
-
 $pgv_lang["googlemap"]              = "Kartta";
 $pgv_lang["no_gmtab"]               = "Ei kartta tietoa tällä henkilöllä";
 $pgv_lang["gm_disabled"]            = "GoogleKartta moduli estetty";
