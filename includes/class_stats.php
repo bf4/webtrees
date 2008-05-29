@@ -38,6 +38,8 @@ define('STATS_NOT_ALLOWED', 'stats,getAllTags,getTags');
 class stats
 {
 	var $_gedcom;
+	var $_gedcom_url;
+	var $_ged_id;
 	var $_server_url; // Absolute URL for generating external links.  e.g. in RSS feeds
 	var $_not_allowed = false;
 	var $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'photo', 'tombstone', 'video', 'other');
@@ -54,8 +56,9 @@ class stats
 
 	function _setGedcom($gedcom)
 	{
-		global $GEDCOMS;
-		$this->_gedcom=$GEDCOMS[$gedcom];
+		$this->_gedcom=$gedcom;
+		$this->_ged_id=get_id_from_gedcom($gedcom);
+		$this->_gedcom_url=urlencode($gedcom);
 	}
 
 	/**
@@ -233,11 +236,11 @@ class stats
 // GEDCOM                                                                    //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function gedcomFilename(){return $this->_gedcom['gedcom'];}
+	function gedcomFilename(){return get_gedcom_from_id($this->_ged_id);}
 
-	function gedcomID(){return $this->_gedcom['id'];}
+	function gedcomID(){return $this->_ged_id;}
 
-	function gedcomTitle(){return $this->_gedcom['title'];}
+	function gedcomTitle(){return get_gedcom_setting($this->_ged_id, 'title');}
 
 	function _gedcomHead()
 	{
@@ -311,7 +314,7 @@ class stats
 	function gedcomUpdated()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact='CHAN' ORDER BY d_julianday2 DESC, d_type", 1);
+		$rows=$this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact='CHAN' ORDER BY d_julianday2 DESC, d_type", 1);
 		if (isset($rows[0])) {
 			$date=new GedcomDate("{$rows[0]['d_day']} {$rows[0]['d_month']} {$rows[0]['d_year']}");
 			return $date->Display(false);
@@ -322,49 +325,49 @@ class stats
 	function gedcomHighlight()
 	{
 		$highlight=false;
-		if(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.jpg"))
+		if(file_exists("images/gedcoms/{$this->_gedcom}.jpg"))
 		{
-			$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.jpg";
+			$highlight="images/gedcoms/{$this->_gedcom}.jpg";
 		}
-		elseif(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.png"))
+		elseif(file_exists("images/gedcoms/{$this->_gedcom}.png"))
 		{
-			$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.png";
+			$highlight="images/gedcoms/{$this->_gedcom}.png";
 		}
 		if(!$highlight){return '';}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" class=\"gedcom_highlight\" alt=\"\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom_url}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" class=\"gedcom_highlight\" alt=\"\" /></a>";
 	}
 
 	function gedcomHighlightLeft()
 	{
 		$highlight=false;
-		if (file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.jpg")) {
-			$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.jpg";
+		if (file_exists("images/gedcoms/{$this->_gedcom}.jpg")) {
+			$highlight="images/gedcoms/{$this->_gedcom}.jpg";
 		} else
-			if (file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.png")) {
-				$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.png";
+			if (file_exists("images/gedcoms/{$this->_gedcom}.png")) {
+				$highlight="images/gedcoms/{$this->_gedcom}.png";
 			}
 		if (!$highlight) {
 			return '';
 		}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" class=\"gedcom_highlight\" alt=\"\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom_url}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" class=\"gedcom_highlight\" alt=\"\" /></a>";
 	}
 
 	function gedcomHighlightRight()
 	{
 		$highlight=false;
-		if (file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.jpg")) {
-			$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.jpg";
+		if (file_exists("images/gedcoms/{$this->_gedcom}.jpg")) {
+			$highlight="images/gedcoms/{$this->_gedcom}.jpg";
 		} else
-			if (file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.png")) {
-				$highlight="images/gedcoms/{$this->_gedcom['gedcom']}.png";
+			if (file_exists("images/gedcoms/{$this->_gedcom}.png")) {
+				$highlight="images/gedcoms/{$this->_gedcom}.png";
 			}
 		if (!$highlight) {
 			return '';
 		}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" class=\"gedcom_highlight\" alt=\"\" /></a>";
+		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom_url}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" class=\"gedcom_highlight\" alt=\"\" /></a>";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -399,7 +402,7 @@ class stats
 	function totalIndividuals()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_gedcom['id']);
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -411,7 +414,7 @@ class stats
 	function totalFamilies()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_gedcom['id']);
+		$rows=$this->_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -423,7 +426,7 @@ class stats
 	function totalSources()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(s_id) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_gedcom['id']);
+		$rows=$this->_runSQL("SELECT COUNT(s_id) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -435,7 +438,7 @@ class stats
 	function totalOtherRecords()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(o_id) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_gedcom['id']);
+		$rows=$this->_runSQL("SELECT COUNT(o_id) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -460,7 +463,7 @@ class stats
 			$dis = ' DISTINCT ';
 			$opt = '';
 		}
-		$rows = $this->_runSQL("SELECT COUNT({$dis}i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']}{$opt}");
+		$rows = $this->_runSQL("SELECT COUNT({$dis}i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id}{$opt}");
 		return $rows[0]['tot'];
 	}
 
@@ -500,7 +503,7 @@ class stats
 			$opt = '';
 			$dis = '';
 		}
-		$rows = $this->_runSQL("SELECT {$dis}COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_gedcom['id']} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}", 1);
+		$rows = $this->_runSQL("SELECT {$dis}COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}", 1);
 		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
@@ -535,7 +538,7 @@ class stats
 	function totalSexMales()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_gedcom LIKE '%1 SEX M%'", 1);
+		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX M%'", 1);
 		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
@@ -548,7 +551,7 @@ class stats
 	function totalSexFemales()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_gedcom LIKE '%1 SEX F%'", 1);
+		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX F%'", 1);
 		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
@@ -562,7 +565,7 @@ class stats
 	function totalSexUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')", 1);
+		$rows=$this->_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')", 1);
 		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
@@ -593,7 +596,7 @@ class stats
 	function totalLiving()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=0", 1);
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=0", 1);
 		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
@@ -607,7 +610,7 @@ class stats
 	function totalDeceased()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=1", 1);
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=1", 1);
 		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
@@ -621,7 +624,7 @@ class stats
 	function totalMortalityUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_gedcom['id']} AND i_isdead=-1", 1);
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1", 1);
 		if(!isset($rows[0])){return '';}
 		return $rows[0]['tot'];
 	}
@@ -694,7 +697,7 @@ class stats
 				$like = " AND ({$nolike})";
 			}
 		}
-		$rows = $this->_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_gedcom['id']}'{$like}", 1);
+		$rows = $this->_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_ged_id}'{$like}", 1);
 		if(!isset($rows[0])){return 0;}
 		return $rows[0]['tot'];
 	}
@@ -793,7 +796,7 @@ class stats
 					.' FROM'
 						." {$TBLPREFIX}dates AS d2"
 					.' WHERE'
-						." d2.d_file={$this->_gedcom['id']} AND"
+						." d2.d_file={$this->_ged_id} AND"
 						." d2.d_fact IN ({$query_field}) AND"
 						.' d2.d_julianday1=('
 							.' SELECT'
@@ -801,7 +804,7 @@ class stats
 							.' FROM'
 								." {$TBLPREFIX}dates AS d1"
 							.' WHERE'
-								." d1.d_file={$this->_gedcom['id']} AND"
+								." d1.d_file={$this->_ged_id} AND"
 								." d1.d_fact IN ({$query_field}) AND"
 								.' d1.d_julianday1!=0'
 						.' )'
@@ -822,7 +825,7 @@ class stats
 					.' FROM'
 						." {$TBLPREFIX}dates"
 					.' WHERE'
-						." d_file={$this->_gedcom['id']} AND"
+						." d_file={$this->_ged_id} AND"
 						." d_fact IN ({$query_field}) AND"
 						.' d_julianday1!=0'
 					.' ORDER BY'
@@ -839,7 +842,7 @@ class stats
 			default:
 			case 'full':
 				if (displayDetailsById($row['d_gid'])) {
-					$result=format_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', 'span');
+					$result=format_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom), false, '', 'span');
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
@@ -857,7 +860,7 @@ class stats
 						$id="&nbsp;&nbsp;({$row['d_gid']})";
 					}
 				}
-				$result="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
+				$result="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom_url}\">".get_person_name($row['d_gid'])."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place(get_sub_record(1, "1 {$birth_death}", find_person_record($row['d_gid'])), true, true, true);
@@ -922,7 +925,7 @@ class stats
 			.' WHERE'
 				.' indi.i_id=birth.d_gid AND'
 				.' birth.d_gid=death.d_gid AND'
-				." death.d_file={$this->_gedcom['id']} AND"
+				." death.d_file={$this->_ged_id} AND"
 				.' birth.d_file=death.d_file AND'
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
@@ -940,7 +943,7 @@ class stats
 			default:
 			case 'full':
 				if (displayDetailsById($row['id'])) {
-					$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+					$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom), false, '', 'span');
 				} else {
 					$result= $pgv_lang['privacy_error'];
 				}
@@ -957,7 +960,7 @@ class stats
 						$id = "&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
+				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom_url}\">".get_person_name($row['id'])."{$id}</a>";
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -990,7 +993,7 @@ class stats
 			.' WHERE'
 				.' indi.i_id=birth.d_gid AND'
 				.' birth.d_gid=death.d_gid AND'
-				." death.d_file={$this->_gedcom['id']} AND"
+				." death.d_file={$this->_ged_id} AND"
 				.' birth.d_file=death.d_file AND'
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
@@ -1007,11 +1010,11 @@ class stats
 		{
 			if($type == 'list')
 			{
-				$top10[]="\t<li><a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($rows[$c]['d_gid'])."</a> [".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]</li>\n";
+				$top10[]="\t<li><a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom_url}\">".get_person_name($rows[$c]['d_gid'])."</a> [".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]</li>\n";
 			}
 			else
 			{
-				$top10[]="<a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($rows[$c]['d_gid'])."</a> [".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]";
+				$top10[]="<a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom_url}\">".get_person_name($rows[$c]['d_gid'])."</a> [".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]";
 			}
 		}
 		if($type == 'list')
@@ -1058,7 +1061,7 @@ class stats
 			.' WHERE'
 				.' indi.i_id=birth.d_gid AND'
 				.' birth.d_gid=death.d_gid AND'
-				." death.d_file={$this->_gedcom['id']} AND"
+				." death.d_file={$this->_ged_id} AND"
 				.' birth.d_file=death.d_file AND'
 				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
@@ -1133,7 +1136,7 @@ class stats
 			.' FROM'
 				." {$TBLPREFIX}dates"
 			.' WHERE'
-				." d_file={$this->_gedcom['id']} AND"
+				." d_file={$this->_ged_id} AND"
 				." d_gid!='HEAD' AND"
 				." d_fact {$fact_query} AND"
 				.' d_julianday1!=0'
@@ -1148,9 +1151,9 @@ class stats
 			case 'full':
 				if (displayDetailsById($row['id'])) {
 					if (preg_match('/^('.PGV_EVENTS_MARR.')$/', $row['fact'])) {
-						$result=format_list_family($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+						$result=format_list_family($row['id'], array(get_person_name($row['id']), $this->_gedcom), false, '', 'span');
 					} else {
-						$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+						$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom), false, '', 'span');
 					}
 				} else {
 					$result=$pgv_lang['privacy_error'];
@@ -1181,7 +1184,7 @@ class stats
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['id'])."{$id}</a>";
+				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom_url}\">".get_person_name($row['id'])."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place(get_sub_record(1, "1 {$row['fact']}", find_gedcom_record($row['id'])), true, true, true);
@@ -1241,16 +1244,16 @@ class stats
 			.' FROM'
 				." {$TBLPREFIX}families AS fam"
 			.' LEFT JOIN'
-				." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_gedcom['id']}"
+				." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
 			.' LEFT JOIN'
-				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_gedcom['id']}"
+				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
 			.' LEFT JOIN'
-				." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_gedcom['id']}"
+				." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
 			.' WHERE'
 				.' birth.d_gid = indi.i_id AND'
 				.' married.d_gid = fam.f_id AND'
 				." indi.i_id = fam.{$sex_field} AND"
-				." fam.f_file = {$this->_gedcom['id']} AND"
+				." fam.f_file = {$this->_ged_id} AND"
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
 				." married.d_fact = 'MARR' AND"
 				.' birth.d_julianday1 != 0 AND'
@@ -1266,13 +1269,13 @@ class stats
 			default:
 			case 'full':
 				if (displayDetailsById($row['f_id']) && displayDetailsById($row[$sex_field])) {
-					$result=format_list_family($row['f_id'], array(get_person_name($row[$sex_field]), $this->_gedcom['gedcom']), false, '', 'span');
+					$result=format_list_family($row['f_id'], array(get_person_name($row[$sex_field]), $this->_gedcom), false, '', 'span');
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
 				break;;
 			case 'name':
-				$result="<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['f_id']).'</a>';
+				$result="<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom_url}\">".get_family_descriptor($row['f_id']).'</a>';
 				break;
 			case 'age':
 				$result=floor($row['age']/365.25);
@@ -1319,7 +1322,7 @@ class stats
 			.' FROM'
 				." {$TBLPREFIX}families"
 			.' WHERE'
-				." f_file={$this->_gedcom['id']}"
+				." f_file={$this->_ged_id}"
 			.' ORDER BY'
 				.' tot DESC'
 		, 1);
@@ -1331,7 +1334,7 @@ class stats
 			case 'full':
 				if(displayDetailsById($row['id'], 'FAM'))
 				{
-					$result=format_list_family($row['id'], array(get_family_descriptor($row['id']), $this->_gedcom['gedcom']), false, '', 'span');
+					$result=format_list_family($row['id'], array(get_family_descriptor($row['id']), $this->_gedcom), false, '', 'span');
 				} else {
 					$result = $pgv_lang['privacy_error'];
 				}
@@ -1340,7 +1343,7 @@ class stats
 				$result=$row['tot'];
 				break;
 			case 'name':
-				$result="<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($row['id']).'</a>';
+				$result="<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom_url}\">".get_family_descriptor($row['id']).'</a>';
 				break;
 		}
 		// Statstics are used by RSS feeds, etc., so need absolute URLs.
@@ -1358,7 +1361,7 @@ class stats
 			.' FROM'
 				." {$TBLPREFIX}families"
 			.' WHERE'
-				." f_file={$this->_gedcom['id']}"
+				." f_file={$this->_ged_id}"
 			.' ORDER BY'
 				.' tot DESC'
 		, $total);
@@ -1368,11 +1371,11 @@ class stats
 		{
 			if($type == 'list')
 			{
-				$top10[] = "\t<li><a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($rows[$c]['id'])."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
+				$top10[] = "\t<li><a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom_url}\">".get_family_descriptor($rows[$c]['id'])."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
 			}
 			else
 			{
-				$top10[] = "<a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom['gedcom']}\">".get_family_descriptor($rows[$c]['id'])."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
+				$top10[] = "<a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom_url}\">".get_family_descriptor($rows[$c]['id'])."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
 			}
 		}
 		if($type == 'list')
@@ -1417,7 +1420,7 @@ class stats
 			.' FROM'
 				." {$TBLPREFIX}families"
 			.' WHERE'
-				." f_file={$this->_gedcom['id']}"
+				." f_file={$this->_ged_id}"
 			.' ORDER BY'
 				.' tot DESC'
 		, $total);
@@ -1438,7 +1441,7 @@ class stats
 	function averageChildren()
 	{
 		global $TBLPREFIX;
-		$rows=$this->_runSQL("SELECT AVG(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_gedcom['id']}", 1);
+		$rows=$this->_runSQL("SELECT AVG(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}", 1);
 		$row=$rows[0];
 		return sprintf('%.2f', $row['tot']);
 	}
@@ -1471,11 +1474,11 @@ class stats
 				}
 				if($type == 'list')
 				{
-					$common[] = "\t<li><a href=\"{$this->_server_url}indilist.php?surname=".urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name'])."</a>{$tot}</li>\n";
+					$common[] = "\t<li><a href=\"{$this->_server_url}indilist.php?surname=".urlencode($surname['name'])."&amp;ged={$this->_gedcom_url}\">".PrintReady($surname['name'])."</a>{$tot}</li>\n";
 				}
 				else
 				{
-					$common[] = '<a href="'.$this->_server_url.'indilist.php?surname='.urlencode($surname['name'])."&amp;ged={$this->_gedcom['gedcom']}\">".PrintReady($surname['name'])."</a>{$tot}";
+					$common[] = '<a href="'.$this->_server_url.'indilist.php?surname='.urlencode($surname['name'])."&amp;ged={$this->_gedcom_url}\">".PrintReady($surname['name'])."</a>{$tot}";
 				}
 			}
 			if($type == 'list')
