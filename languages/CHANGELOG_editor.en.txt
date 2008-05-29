@@ -45,6 +45,13 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["reorder_media"]							29 May 2008				A
++$pgv_lang["reorder_media_title"]					29 May 2008				A
++$pgv_lang["reorder_media_window"]					29 May 2008				A
++$pgv_lang["reorder_media_window_title"]			29 May 2008				A
++$pgv_lang["reorder_media_save"]					29 May 2008				A
++$pgv_lang["reorder_media_reset"]					29 May 2008				A
++$pgv_lang["reorder_media_cancel"]					29 May 2008				A
 +$pgv_lang["file_no_temp_dir"]						15 May 2008				A
 +$pgv_lang["file_cant_write"]						15 May 2008				A
 +$pgv_lang["file_bad_extension"]					15 May 2008				A

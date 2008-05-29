@@ -1816,12 +1816,138 @@ case 'paste':
 	break;
 
 	
-//LBox ==============================================================
-case 'reorder_media':
-	include_once("modules/lightbox/functions/reorder_media.php");
+//LBox  Reorder Media ========================================================
+
+//------------------------------------------------------------------------------
+case 'reorder_media': // Sort page using Popup
+	require_once("js/prototype.js.htm");
+	require_once("js/scriptaculous.js.htm");
+	include_once("media_reorder.php");
 	break;	
-//LBox ==============================================================	
+
+//------------------------------------------------------------------------------
+case 'reset_media_update': // Reset sort using popup
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+		$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+		//Debug -------------
+		/*
+		print "<b>\$newgedrec =</b>";
+		print "<pre>$newgedrec</pre>";
+		echo "<script type='text/javascript'>alert('RESET Debug')</script>";
+		*/
+		// Debug ------------
+	break;
+
+//------------------------------------------------------------------------------
+case 'reorder_media_update': // Update sort using popup
+	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
+//	asort($order);
+//	reset($order);
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+	foreach($order1 as $m_media=>$num) {
+		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\r\n";
+	}
+	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+		// Debug ------------
+		/*
+		print "<b>\$order1 =</b><br />";
+		print_r($order1);
+		print "<br /><br />";
+		print "<b>\$newgedrec =</b>";
+		print "<pre>$newgedrec</pre>";
+		echo "<script type='text/javascript'>alert('Hidden Input \$Order1 Debug')</script>";
+		*/
+		// Debug ------------
+	break;
+
+//------------------------------------------------------------------------------
+case 'al_reset_media_update': // Reset sort using Album Page
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+		$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+		//Debug -------------
+		// print "<b>\$newgedrec =</b>";
+		// print "<pre>$newgedrec</pre>";
+		// echo "<script type='text/javascript'>alert('RESET Debug')</script>";
+		// Debug ------------
+			?>
+		<script language="JavaScript" type="text/javascript" >
+		<!-- 
+			location.href='<?php echo "individual.php?tab=7&pid=" . $pid  ;?>';
+		//-->
+		</script>
+		<?php
+	break;
+
+//------------------------------------------------------------------------------
+case 'al_reorder_media_update': // Update sort using Album Page
+	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
 	
+	function SwapArray($Array){
+		$Values = array();
+		while(list($Key,$Val) = each($Array))
+			$Values[$Val] = $Key;
+		return $Values;
+	}
+	if (isset($_REQUEST['order2'])) $order2 = $_REQUEST['order2'];
+	$order2 = SwapArray(explode(",", substr($order2, 0, -1)));
+
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+	foreach($order2 as $m_media=>$num) {
+		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\r\n";
+	}
+	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	$success = (replace_gedrec($pid, $newgedrec));
+	
+	if ($success) {
+		if ($success) print "<br />".$pgv_lang["update_successful"]. "<br /><br />";
+		// Debug ------------
+		/*
+		print "<b>\$order2 =</b><br />";
+		print_r($order2);
+		print "<br /><br />";
+		print "<b>\$order1 =</b><br />";
+		print_r($order1);
+		print "<br /><br />";
+		print "<b>\$newgedrec =</b>";
+		print "<pre>$newgedrec</pre>";
+		print "<script type='text/javascript'>alert('Hidden Input \$Order1 Debug')</script>";
+		*/
+		// Debug ------------
+		?>
+		<script language="JavaScript" type="text/javascript" >
+		<!-- 
+			location.href='<?php echo "individual.php?tab=7&pid=" . $pid  ;?>';
+		//-->
+		</script>
+		<?php
+	}
+	break;
+
+//LBox ===================================================
+
+
 //------------------------------------------------------------------------------
 case 'reorder_children':
 	require_once("js/prototype.js.htm");
@@ -2255,6 +2381,8 @@ case 'mod_edit_fact':
 	}
 	break;
 }
+
+
 // Redirect to new record, if requested
 if (isset($_REQUEST['goto'])) $goto = $_REQUEST['goto'];
 if (isset($_REQUEST['link'])) $link = $_REQUEST['link'];
