@@ -63,7 +63,6 @@ $pgv_lang["add_wife_to_family"] = "Agregar esposa a esta familia";
 $pgv_lang["changes_occurred"]	= "Este individuo tuvo los siguientes cambios:";
 $pgv_lang["create_source"]		= "Crear una nueva fuente";
 $pgv_lang["date"]	= "Fecha";
-$pgv_lang["family"]	= "Familia";
 $pgv_lang["file_missing"]	= "No se recibió el archivo. Envíelo nuevamente.";
 $pgv_lang["file_partial"]	= "Archivo parcialmente cargado, por favor intente nuevamente.";
 $pgv_lang["file_success"]	= "Archivo cargado exitosamente";

@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Chinese texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,6 @@ $pgv_lang["add_wife"]			= "添加妻子";
 $pgv_lang["add_wife_to_family"]		= "添加一個妻子來這個系列";
 $pgv_lang["changes_occurred"]		= "以下更改發生對這單個:";
 $pgv_lang["date"]			= "日期";
-$pgv_lang["family"]			= "家";
 $pgv_lang["file_missing"]		= "文件未被接受。 向上作用的負載再。";
 $pgv_lang["file_partial"]		= "文件部份地只被上裝了, 請嘗試再";
 $pgv_lang["file_success"]		= "文件成功地被上裝";

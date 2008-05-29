@@ -286,7 +286,6 @@ $pgv_lang["logfile_content"]    			= "A napló-állomány tartalma";
 $pgv_lang["macfile_detected"]   			= "Macintosh-állományt találtunk. A tisztítás során ezt DOS-állománnyá fogjuk konvertálni.";
 $pgv_lang["merge_records"]              		= "Rekordok összefűzése";
 $pgv_lang["month_before_day"]				= "Hónap a nap előtt (HH NN ÉÉÉÉ)";
-$pgv_lang["none"]					= "Semmi";
 $pgv_lang["performing_validation"]			= "GEDCOM ellenőrzés kezdődik, válassza ki a kívánt lehetőségeket, majd kattintson a 'Tisztítás' gombra.";
 $pgv_lang["pgv_registry"]               		= "Oldalak, melyek szintén PhpGedView-t használnak";
 $pgv_lang["phpinfo"]					= "PHP információ";

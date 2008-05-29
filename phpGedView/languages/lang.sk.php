@@ -31,6 +31,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["none"]			= "Žiadny";
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]				= "?";
 $pgv_lang["qm_ah"]			= "?";

@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Portugese Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Maurício Menegazzo Rosa
+ * @author Anderson Wilson and Clovis Bombardelli
  * @version $Id$
  */
 
@@ -135,7 +134,6 @@ $pgv_lang["directory_not_exist"]="Pasta inexistente.";
 $pgv_lang["error_remote"]="Site remoto selecionado.";
 $pgv_lang["error_same"]="Você selecionou o mesmo site.";
 $pgv_lang["external_file"]="Está Mídia não pode ser excluída movida ou renomeada, pois não está armazenada no servidor.";
-$pgv_lang["family"]="Família";
 $pgv_lang["file_missing"]="Nenhum arquivo foi recebido. Por favor tente novamente.";
 $pgv_lang["file_partial"]="Arquivo foi enviado parcialmente, por favor tente novamente";
 $pgv_lang["file_success"]="Arquivo enviado com sucesso";
@@ -152,7 +150,6 @@ $pgv_lang["hebrew_surn"]="Sobrenome Hebráico";
 $pgv_lang["hide_changes"]="Clique aqui para não exibir as alterações.";
 $pgv_lang["highlighted"]="Imagem de Destaque";
 $pgv_lang["illegal_chars"]="Caracteres ilegais no nome";
-$pgv_lang["invalid_search_input"]="Favor informar um Nome, Sobrenome ou Local \\n\\Opcionalmente informe o Ano";
 $pgv_lang["invalid_search_multisite_input"]="Informe um destes: Nome, data/local de Nascimento, data/local de Falecimento, ou Sexo";
 $pgv_lang["invalid_search_multisite_input_gender"]="Por favor repita a pesquisa e informe algo mais além do sexo";
 $pgv_lang["label_diff_server"]="Site diferente";
@@ -179,7 +176,6 @@ $pgv_lang["media_file_deleted"]="Arquivo de Mídia excluído com sucesso.";
 $pgv_lang["media_file_not_moved"]="Não foi possível mover o arquivo de Mídia.";
 $pgv_lang["media_file_not_renamed"]="Não foi possível mover nem renomear a Mídia.";
 $pgv_lang["media_thumb_exists"]="Miniatura da Mídia já existe.";
-$pgv_lang["multi_site_search"]="Pesquisa Multi-Site";
 $pgv_lang["multiple_gedcoms"]="Esta árvore contém ligações para outra árvore genealógica neste mesmo servidor. Antes de excluir, mover ou renomear a árvore, é necessário excluir estas ligações.";
 $pgv_lang["must_provide"]="Informe um ";
 $pgv_lang["name_search"]="Nome:";

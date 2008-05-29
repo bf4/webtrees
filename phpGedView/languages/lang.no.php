@@ -32,6 +32,15 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["SHOW_ID_NUMBERS"] 			= "Vis ID-nummer etter navn";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"] 		= "Vis hovedbildet i rammen til en person";
+$pgv_lang["download_file"]				= "Last ned (download) fil";
+$pgv_lang["duplicate_username"]		= "NB!! Det finnes allerede et slikt brukernavn. Gå tilbake og velg et annet brukernavn.";
+$pgv_lang["none"]					= "Ingen";
+$pgv_lang["family"]				= "Familie";
+$pgv_lang["invalid_search_input"] 	= "Vennligst angi fornavn, etternavn eller stedsnavn \\n\\t i tillegg til år";
+$pgv_lang["multi_site_search"] 			= "Søk på flere nettsteder";
+
 $pgv_lang["date_of_entry"]			= "Angitt dato i originalkilde";
 $pgv_lang["file_information"]		= "Fil-informasjon";
 $pgv_lang["choose_file_type"]		= "Velg filtype";

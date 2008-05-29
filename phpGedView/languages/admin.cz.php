@@ -66,7 +66,6 @@ $pgv_lang["day_before_month"]		= "Den před měsícem (DD MM YYYY)";
 $pgv_lang["do_not_change"]		= "Neměnit";
 $pgv_lang["download_gedcom"]		= "Stáhnout GEDCOM";
 $pgv_lang["download_note"]		= "POZNÁMKA: Velké GEDCOM soubory se mohou stahovat velmi dlouho. Jestliže PHP přeruší proces ještě před úplným stažením souboru, stažený GEDCOM nebude kompletní. Chcete-li se ujistit, že je váš soubor celý, podívejte se, jestli je na jeho konci řádek 0 TRLR. Stažení souboru by mělo trvat přibližně stejně dlouho jako jeho nahrání.";
-$pgv_lang["duplicate_username"]		= "Toto uživatelské jméno již existuje. Prosím, vraťte se zpět a vyberte jiné uživatelské jméno.";
 $pgv_lang["editaccount"]			= "Umožnit tomuto uživateli upravovat informace o svém účtu";
 $pgv_lang["empty_dataset"]			= "Chcete vymazat stará data a nahradit je novými?";
 $pgv_lang["empty_lines_detected"]	= "Ve vašem GEDCOM souboru byly nalezeny prázdné řádky. Při čištění budou tyto řádky odstraněny.";

@@ -33,6 +33,15 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["SHOW_ID_NUMBERS"]		= "Toon ID's bij namen";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]		= "Laat eerste afbeelding in persoonsvak zien";
+$pgv_lang["download_file"]			= "Download bestand.";
+$pgv_lang["duplicate_username"]			= "Een gebruiker met die naam is reeds aanwezig. Ga terug en kies een andere naam.";
+$pgv_lang["none"]						= "Geen";
+$pgv_lang["family"]						= "Gezin";
+$pgv_lang["invalid_search_input"]		= "Jaar wordt alleen gebruikt in combinatie met een achternaam, voornaam of locatienaam.";
+$pgv_lang["multi_site_search"] 		= "Meerdere sites doorzoeken";
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["date_of_entry"]				= "Invoerdatum bij bron";
 $pgv_lang["qm"]							= "?";
