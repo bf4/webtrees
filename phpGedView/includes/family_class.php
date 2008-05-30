@@ -447,5 +447,44 @@ class Family extends GedcomRecord {
 	function getLinkUrl() {
 		return parent::getLinkUrl('family.php?famid=');
 	}
+
+	// Get an array of structures containing all the names in the record
+	function getAllNames() {
+		if (is_null($this->_getAllNames)) {
+			if ($this->husb) {
+				$husb_names=$this->husb->getAllNames();
+			} else {
+				$husb_names=array('type'=>'NAME', 'full'=>'', 'list'=>'', 'sort'=>'@N.N., @P.N.');
+			}
+			if ($this->wife) {
+				$wife_names=$this->wife->getAllNames();
+			} else {
+				$wife_names=array('type'=>'NAME', 'full'=>'', 'list'=>'', 'sort'=>'@N.N., @P.N.');
+			}
+			foreach ($husb_names as $husb_name) {
+				foreach ($wife_names as $wife_name) {
+					// Match NAME with NAME, FONE with FONE, _HEB with _HEB, etc.
+					if ($husb_name['type']==$wife_name['type']) {
+						$this->_getAllNames[]=array(
+							'type'=>$husb_name['type'],
+							'full'=>$husb_name['full'].' + '.$wife_name['full'],
+							'list'=>$husb_name['list'].' + '.$wife_name['list'],
+							'sort'=>$husb_name['sort'].' + '.$wife_name['sort'],
+						);
+					}
+				}
+			}
+			// The spouses have no matching name types.
+			if (!$this->_getAllNames) {
+				$this->_getAllNames[]=array(
+					'type'=>$husb_names[0]['type'],
+					'full'=>$husb_names[0]['full'].' + '.$wife_names[0]['full'],
+					'list'=>$husb_names[0]['list'].' + '.$wife_names[0]['list'],
+					'sort'=>$husb_names[0]['sort'].' + '.$wife_names[0]['sort'],
+				);
+			}
+		}
+		return $this->_getAllNames;
+	}
 }
 ?>

@@ -308,5 +308,10 @@ class Source extends GedcomRecord {
 	function getLinkUrl() {
 		return parent::getLinkUrl('source.php?sid=');
 	}
+
+	// Get an array of structures containing all the names in the record
+	function getAllNames() {
+		return parent::getAllNames('TITL');
+	}
 }
 ?>

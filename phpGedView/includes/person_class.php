@@ -1567,5 +1567,129 @@ class Person extends GedcomRecord {
 	function getLinkUrl() {
 		return parent::getLinkUrl('individual.php?pid=');
 	}
+
+	// Convert a name record into "full", "sort" and "list" versions.
+	function _addName($type, $full, $gedrec) {
+		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $HNN, $pgv_lang;
+		
+		// Some systems generate gedcoms generate single slashes.  e.g. 1 NAME John /Smith
+		// Note that zero slashes are valid, as names prior to c15 rarely have surnames.
+		if (preg_match('/^[^\/]*\/[^\/]*$/', $full)) {
+			$full.='/';
+		}
+
+		// Do we have a structured name?
+		$givn=preg_match('/^\d GIVN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		$surn=preg_match('/^\d SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		if ($givn || $surn) { 
+			// We have a structured name - use the structure
+			$npfx=preg_match('/^\d NPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+			$spfx=preg_match('/^\d SPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+			$nsfx=preg_match('/^\d NSFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+			$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? '&apos;'.$match[1].'&apos;' : '';
+			// GIVN and SURN, can be comma-separated lists.
+			$surns=preg_split('/ *, */', $surn);
+			$surn=preg_replace('/ *, */', ' ', $surn);			if ($NAME_REVERSE) {
+				$full=reverse_name($full);
+			}
+
+			$givn=preg_replace('/ *, */', ' ', $givn);
+		} else {
+			// We do not have a structured name - extract it ourselves
+			if (strpos($full, '/')===false) {
+				$givn=$full;
+				$surn='';
+				$nsfx='';
+			} else {
+				list($givn, $surn, $nsfx)=explode('/', $full);
+				if ($NAME_REVERSE && $givn && $nsfx) {
+					$tmp=$nsfx; $nsfx=$givn; $givn=$tmp;
+				}
+			}
+			// QUESTION: Should "Mac ", "O'" and "Ni'" be considered prefixes?
+			if (preg_match('/^((?:(?:a|aan|ab|af|al|ap|as|av|bat|ben|bij|bin|bint|da|de|del|della|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor)[ -]+)+(?:[dl]\')?)(.+)$/i', $surn, $match)) {
+				$spfx=trim($match[1]);
+				$surn=$match[2];
+			} else {
+				$spfx='';
+			}
+			$npfx='';
+			$nick='';
+			$surns=array($surn); // Can only specify multiple surnames via SURN.
+		}
+
+		// Add placeholder for unknown surname
+		if (strpos($full, '//')!==false) {
+			$full=str_replace('//', '/@N.N./', $full);
+			if (!$surn) {
+				$surn='@N.N.';
+			}
+		}
+
+		// Add placeholder for unknown given name
+		if (!$givn) {
+			$givn='@P.N.';
+			if ($NAME_REVERSE && substr($full, -1, 1)=='/') {
+				$full=$full.' @P.N.';
+			}
+			if (!$NAME_REVERSE && substr($full, 0, 1)=='/') {
+				$full='@P.N. '.$full;
+			}
+		}
+
+		// Convert "user-defined" unknowns into PGV unknowns
+		$unknown=preg_quote(trim($pgv_lang['NN'], '()'), '/');
+		$full=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $full);
+		$givn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $givn);
+		$surn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $surn);
+		foreach ($surns as $key=>$value) {
+			$surns[$key]=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $value);
+		}
+
+		// Create the SORT name(s) (we add the surname(s) later)
+		$sort=','.trim($givn.$npfx.$nsfx);
+		// Create the LIST name
+		if ($surn) {
+			$list=trim($spfx.' '.$surn).', '.trim($npfx.' '.$givn.' '.$nick.' '.$npfx);
+		} else {
+			$list=trim($npfx.' '.$givn.' '.$nick.' '.$npfx);
+		}
+		// Create the FULL name
+		if ($NAME_REVERSE) {
+			$full=reverse_name($full);
+		} else {
+			$full=str_replace('/', '', $full);
+		}
+
+		// Prefered names should have a suffix of "*"
+		$full=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $full);
+		$list=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $list);
+		// Alternatively, some people put prefered names in quotes
+		if ($UNDERLINE_NAME_QUOTES) {
+			$full=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $full);
+			$list=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $list);
+		}
+
+		// "unknown" names in _HEB tags are always in hebrew, regardless of the page language.
+		// Don't update the SORT name - we want them to sort as "@",  not "unknown"
+		if ($type=='_HEB') {
+			$list=str_replace(array('@N.N.','@P.N.'), $HNN, $list);
+			$full=str_replace(array('@N.N.','@P.N.'), $HNN, $full);
+		} else {
+			$list=str_replace(array('@N.N.','@P.N.'), array($pgv_lang['NN'], $pgv_lang['PN']), $list);
+			$full=str_replace(array('@N.N.','@P.N.'), array($pgv_lang['NN'], $pgv_lang['PN']), $full);
+		}
+
+		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
+		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
+		foreach ($surns as $surn) {
+			$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$surn.$sort);
+		}
+	}
+	
+	// Get an array of structures containing all the names in the record
+	function getAllNames() {
+		return parent::getAllNames('NAME');
+	}
 }
 ?>

@@ -806,9 +806,7 @@ function privatize_gedcom($gedrec) {
 			//-- check if name should be private
 			if (($type=="INDI")&&(!showLivingNameById($gid))) {
 				$newrec = "0 @".$gid."@ INDI\r\n";
-				$newrec .= "1 NAME " . $pgv_lang["private"] . " /" . $pgv_lang["private"] . "/" . "\r\n";
-				$newrec .= "2 SURN " . $pgv_lang["private"] . "\r\n";
-				$newrec .= "2 GIVN " . $pgv_lang["private"] . "\r\n";
+				$newrec .= "1 NAME " . $pgv_lang["private"] . "\r\n";
 				if ($SHOW_PRIVATE_RELATIONSHIPS) {
 					$fams = find_families_in_record($gedrec, "FAMS");
 					foreach($fams as $f=>$famid) {
