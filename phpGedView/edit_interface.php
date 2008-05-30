@@ -1860,16 +1860,13 @@ case 'reorder_media_update': // Update sort using popup
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
-		// Debug ------------
-		/*
-		print "<b>\$order1 =</b><br />";
-		print_r($order1);
-		print "<br /><br />";
-		print "<b>\$newgedrec =</b>";
-		print "<pre>$newgedrec</pre>";
-		echo "<script type='text/javascript'>alert('Hidden Input \$Order1 Debug')</script>";
-		*/
-		// Debug ------------
+		$mediaordsuccess='yes';
+		if ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==8) {
+			$link = "individual.php?pid=$pid&tab=7&show_changes=yes";
+		}else{
+			$link = "individual.php?pid=$pid&tab=3&show_changes=yes";
+		}
+		print "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 	break;
 
 //------------------------------------------------------------------------------
@@ -2390,7 +2387,7 @@ if (empty($goto) || empty($link))
 	$link='';
 //------------------------------------------------------------------------------
 // autoclose window when update successful
-if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"]) {
+if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"] && $mediaordsuccess!='yes') {
 	if ($action=="copy") print "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
 	else print "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }
