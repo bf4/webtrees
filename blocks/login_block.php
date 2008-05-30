@@ -38,7 +38,7 @@ $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>0);
  * Prints a block allowing the user to login to the site directly from the portal
  */
 function print_login_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $ctype, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $ALLOW_REMEMBER_ME;
+	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $ALLOW_REMEMBER_ME;
 	global $TEXT_DIRECTION;
 
 	if (PGV_USER_ID) {
@@ -64,7 +64,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 		else $title .= print_help_link("index_login_help", "qm", "", false, true);
 		$title .= $pgv_lang["login"];
 		$content = "<div class=\"center\"><form method=\"post\" action=\"$LOGIN_URL\" name=\"loginform\" onsubmit=\"t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;\">";
-		$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php?ctype=$ctype&amp;\" />";
+		$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php?ctype=user&amp;\" />";
 		$content .= "<input type=\"hidden\" name=\"ged\" value=\"";
 		if (isset($GEDCOM)) $content .= $GEDCOM;
 		$content .= "\" />";
