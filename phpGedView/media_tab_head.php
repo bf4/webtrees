@@ -3,7 +3,7 @@
  * Provides media tab header for reorder media Items using drag and drop
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2002 to 2008  PHPGedView Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,13 +51,13 @@
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media Popup\" >" ;
-				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Reorder Media Popup\" /><br />" ;
+				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Reorder Media Popup\" alt=\"\" /><br />" ;
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
 				print '</a>';
 				print "</td>";
 				//print "<td width=\"5%\">&nbsp;</td>";
 				print "\n";
-			}else if ($LB_AL_HEAD_LINKS == "text") {
+			} else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media Popup\" >" ;
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
@@ -65,10 +65,10 @@
 				print "</td>";
 				//print "<td width=\"5%\">&nbsp;</td>";
 				print "\n";
-			}else if ($LB_AL_HEAD_LINKS == "icon") {
+			} else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;&nbsp;";
 				print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media Popup\" >" ;
-				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Reorder Media Popup\" /><br />" ;
+				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Reorder Media Popup\" alt=\"\" /><br />" ;
 				print '</a>';
 				//print "<td width=\"5%\">&nbsp;</td>";
 				print "\n";
