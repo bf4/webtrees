@@ -217,7 +217,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		// table footer
 		$content .= "<tr class=\"sortbottom\">";
 		$content .= "<td class=\"list_label\">";
-		$content .= '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+		$content .= '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 		$content .= $pgv_lang["total_names"].": ".count($yahrzeits);
 		if ($hidden) {
 			$content .= "<br /><span class=\"warning\">{$pgv_lang['hidden']} : {$hidden}</span>";
