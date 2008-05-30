@@ -43,6 +43,11 @@ class GedcomRecord {
 	var $rfn = null;
 	var $disp = null;
 
+	// Cached results from various functions.
+	// These should become private when we move to PHP5.  Do not use them from outside this class.
+	var $_getAllNames=null;
+	var $_getPrimaryName=null;
+
 	/**
 	 * constructor for this class
 	 */
@@ -376,6 +381,84 @@ class GedcomRecord {
 	 */
 	function getAddName() {
 		return "";
+	}
+
+	// Convert a name record into sortable and listable versions.  This default
+	// should be OK for simple record types.  INDI records will need to redefine it.
+	function _addName($type, $value, $gedrec) {
+		$this->_getAllNames[]=array(
+			'type'=>$type,
+			'full'=>$value,
+			'list'=>$value,
+			'sort'=>preg_replace('/(\d+)/e', 'substr("000000000\\1", -10)', $value)
+		);
+	}
+
+	// Get all the names of a record, including ROMN, FONE and _HEB alternatives.
+	// Records without a name (e.g. FAM) will need to redefine this function.
+	//
+	// Parameters: the level 1 fact containing the name.
+	// Return value: an array of name structures, each containing
+	// ['type'] = the gedcom fact, e.g. NAME, TITL, FONE, _HEB, etc.
+	// ['full'] = the name as specified in the record, e.g. "Vincent van Gogh" or "John Unknown"
+	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
+	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
+	function getAllNames($fact) {
+		if (is_null($this->_getAllNames)) {
+			$this->_getAllNames=array();
+			if (preg_match_all('/^1 ('.$fact.')\s+([^\r\n]+)(([\r\n]+[2-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
+				foreach ($matches as $match) {
+					$this->_addName($match[1], $match[2], $match[0]);
+				}
+				if ($match[3] && preg_match_all('/^2 (ROMN|FONE|_\w+) +([^\r\n]+)/m', $match[3], $submatches, PREG_SET_ORDER)) {
+					foreach ($submatches as $submatch) {
+						$this->_addName($submatch[1], $submatch[2], $submatch[0]);
+					}
+				}
+			}
+			if (empty($this->_getAllNames)) {
+				$this->_addName($this->getType(), $this->getXref(), null);
+			}
+		}
+		return $this->_getAllNames;
+	}
+
+	// Which of the (possibly several) names of this record is the primary one.
+	function getPrimaryName() {
+		if (is_null($this->_getPrimaryName)) {
+			// Generally, the first name is the primary one....
+			$this->getPrimaryName=0;
+			// ....except on hebrew pages, when we want the first _HEB one.
+			global $LANGUAGE;
+			if ($LANGUAGE=='hebrew') {
+				foreach ($this->getAllNames() as $n=>$name) {
+					if ($name['type']=='_HEB') {
+						$this->_getPrimaryName=$n;
+						break;
+					}
+				}
+			}
+		}
+		return $this->_getPrimaryName;
+	}
+
+	// Static helper function to sort an array of objects by name
+	function CompareName($x, $y) {
+		return strcmp($x->getSortName(), $y->getSortName('sort'));
+	}
+
+	// Get the three variants of the name
+	function getFullName() {
+		$tmp=$this->getAllNames();
+		return $tmp[getPrimaryName()]['full'];
+	}
+	function getSortName() {
+		$tmp=$this->getAllNames();
+		return $tmp[getPrimaryName()]['sort'];
+	}
+	function getListName() {
+		$tmp=$this->getAllNames();
+		return $tmp[getPrimaryName()]['list'];
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
