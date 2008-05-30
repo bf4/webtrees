@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Finnish Language file for PhpGedView.
  *
@@ -136,5 +136,27 @@ $pgv_lang["PLACECHECK_FILTER_help"]  	= "~#pgv_lang[PLACECHECK_FILTER]#~<br /><b
 
 $pgv_lang["PLACECHECK_MATCH"]       	= "sisällytä yhteensopivat paikat";
 $pgv_lang["PLACECHECK_MATCH_help"]  	= "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br />By default the list does NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables.<br/>Fully matched means all levels exist in both the gedcom file and the GoogleMap tables; and the GoogleMap places have coordinates for every level.<br/><br/>Check this block to include those matched places";
+
+//wooc Options for Place Hierarchy display
+$pgv_lang["GOOGLEMAP_PH"]                 = "Käytä Googlemapia paikkahierarkiaa varten";
+$pgv_lang["GOOGLEMAP_PH_help"]                    = "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Tälla vaihtoehdolla kytketään Googlemapin toiminto paikkahierarkian käytössä päälle tai pois. Ennen käyttöä suositellaan kaikkien paikkojen lisäämistä Googlemap-taulukoihin.";
+
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE"]                   = "Paikkahierarkiakartan koko (pikseleinä)";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"]           = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />Kartan koko (pikseleinä) näytettynä paikkahierarkiasivuilla.";
+
+$pgv_lang["GOOGLEMAP_PH_MARKER"]                     = "Paikkamerkitsimien tyypit paikkahierarkiassa";
+$pgv_lang["GOOGLEMAP_PH_MARKER_help"] = "~#pgv_lang[GOOGLEMAP_PH_MARKER]#~<br /><br />Tässä voit määritellä, minkä tyyppisiä merkitsimiä (vakio tai lippu) voit käyttää. Mikäli paikalla ei ole lippua, käytä vakiomerkitsimiä..";
+
+$pgv_lang["GM_DISP_SHORT_PLACE"]              = "Näytä lyhyet paikannimet";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]     = "~#pgv_lang[GM_DISP_SHORT_PLACE]#~<br /><br />Tässä voit valita kahdesta tavasta näyttää paikannimet hierarkiassa. Mikäli valitset Kyllä, näytetään lyhytnimi tai käytössä oleva tason nimi. Mikäli valitset Ei, näytetään koko nimi.<br /><b>Esimerkkejä: </b>Chicago, Illinois, USA<br /><b>Lyhytnimi: </b>Chicago<br /><b>Koko nimi: </b>Illinois, USA<br /><b>Lyhytnimi: </b>Illinois";
+
+$pgv_lang["GM_DISP_COUNT"]                                        = "Näytä henkilö- ja perheluvut";
+$pgv_lang["GM_DISP_COUNT_help"]                                = "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Tässä voit määritellä, näytetäänkö paikkaan liittyvien henkilöiden ja perheiden lukumäärä. Mikäli GEDCOM-tiedosto sisältää paljon henkilöitä, tämä kannattaa kytkeä pois.";
+
+$pgv_lang["GOOGLEMAP_PH_WHEEL"]                         = "Käytä hiiren vieritysrullaa zoomaukseen";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]    = "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Tässä voit määritellä, käytetäänkö hiiren vieritysrullaa zoomaukseen.";
+
+$pgv_lang["GOOGLEMAP_PH_CONTROLS"]                 = "Piilota karttasäätimet";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]         = "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />Tällä vaihtoehdolla voit piilottaa karttasäätimet (esim. karttatyypin valinta) mikäli kursori on kartan ulkopuolella.";
 
 ?>

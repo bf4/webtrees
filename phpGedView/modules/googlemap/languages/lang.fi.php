@@ -28,6 +28,17 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
+
+$pgv_lang["gm_ph_map_size"]         = "Paikkahierarkiakartan koko (pikseleinä)"; 
+$pgv_lang["gm_ph_count"]            = "Näytä henkilö- ja perheluvut";
+
+$pgv_lang["gm_ph_controls"]         = "Piilota karttastimet"; 
+$pgv_lang["pl_countries"]           = "Maat";
+
+$pgv_lang["pl_search_level"]        = "Etsi tällä tasolla";
+
+$pgv_lang["pl_search_all"]          = "Etsi kaikkialla";
+
 $pgv_lang["googlemap"]              = "Kartta";
 $pgv_lang["no_gmtab"]               = "Ei kartta tietoa tällä henkilöllä";
 $pgv_lang["gm_disabled"]            = "GoogleKartta moduli estetty";
@@ -71,12 +82,12 @@ $pgv_lang["gm_pp_po_pr_n_b"]        = "Jälkiliite, etuliite, normal, kumpikin";
 $pgv_lang["googlemap_coord"]        = "Näytä kartta koordinaatit";
 
 //wooc place hierarchy
-$pgv_lang["gm_place_hierarchy"]         = "Käytä Googlemappia paikkahierarkiaa varten"; 
-$pgv_lang["gm_ph_marker_type"]        = "Paikkahierarkian paikkamerkkien tyyppi";
-$pgv_lang["gm_standard_marker"]       = "Vakio"; 
-$pgv_lang["gm_no_coord"]                   = "Tällä paikalla ei ole koordinaatteja"; 
-$pgv_lang["gm_ph_placenames"]        = "Näytetäänkö lyhyet paikannimet?"; 
-$pgv_lang["gm_ph_wheel"]                   = "Käytetäänkö hiiren vieritysrullaa zoomauksessa?"; 
+$pgv_lang["gm_place_hierarchy"]     = "Käytä Googlemappia paikkahierarkiaa varten"; 
+$pgv_lang["gm_ph_marker_type"]      = "Paikkahierarkian paikkamerkkien tyyppi";
+$pgv_lang["gm_standard_marker"]     = "Vakio"; 
+$pgv_lang["gm_no_coord"]            = "Tällä paikalla ei ole koordinaatteja"; 
+$pgv_lang["gm_ph_placenames"]       = "Näytetäänkö lyhyet paikannimet?"; 
+$pgv_lang["gm_ph_wheel"]            = "Käytetäänkö hiiren vieritysrullaa zoomauksessa?"; 
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Muokkaa sijainti paikka tietoja";
