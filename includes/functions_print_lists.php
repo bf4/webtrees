@@ -573,7 +573,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
 	echo "<td class=\"list_label\">"; // NAME
-	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
@@ -904,7 +904,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // FAM:ID
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
 	echo "<td class=\"list_label\">"; // HUSB:NAME
-	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_fams"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
@@ -913,7 +913,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<td></td>"; // HUSB:AGE
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // WIFE:ID
 	echo "<td class=\"list_label\" style=\"vertical-align: top;\">"; // WIFE:NAME
-	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo "</td>";
 	echo "<td style=\"display:none\">WIFE:GIVN</td>";
 	echo "<td></td>"; // WIFE:AGE
@@ -1429,7 +1429,7 @@ function print_changes_table($datalist) {
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
-	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
 	echo $pgv_lang["total_names"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";

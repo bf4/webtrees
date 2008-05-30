@@ -127,7 +127,7 @@ function table_filter_alive(id) {
 	return false;
 }
 
-function sortByNextCol(node) {
+function sortByOtherCol(node, offset) {
 	var td = node.parentNode;
 	var tr = td.parentNode;
 	var tbody = tr.parentNode;
@@ -136,7 +136,7 @@ function sortByNextCol(node) {
 	var thead = table.firstChild;
 	if (table.getElementsByTagName('thead').length == 0) thead = table;
 	for (var c = 0; c < tr.childNodes.length; c++) if (tr.childNodes[c] == td) break;
-	c++; // c is current col => c+1 is hidden sortable col
+	c+=offset; // c is current col => c+1 is hidden column to right, c-1 is hidden column to left, etc.
 	var a = thead.rows[0].cells[c].getElementsByTagName("a"); // get hidden col header links
 	if (a.length) ts_resortTable(a[0], c);
 	return false;
