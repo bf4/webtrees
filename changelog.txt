@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Allow Login block on Portal page (shows as Logout block) (canajun2eh)
  - Fixed: [ 1977981 ] login.php leads to empty Indy - and Wrong Admin ID (canajun2eh)
  - Fixed: Bogus message about missing cookie support on Login page (canajun2eh)
  - Added: New drag and drop Media Sort Function for Lightbox and Media Tabs (windmillway)
