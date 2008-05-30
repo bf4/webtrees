@@ -79,7 +79,7 @@
 	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
 	else $sort_regexp = "/_PGV_OBJS @(.*)@/";
 	$sort_ct = preg_match_all($sort_regexp, $gedrec, $sort_match, PREG_SET_ORDER);
-	for($i=0; $i<$sort_ct; $i++) {
+	for ($i=0; $i<$sort_ct; $i++) {
 		if (!isset($sort_current_objes[$sort_match[$i][1]])) $sort_current_objes[$sort_match[$i][1]] = 1;
 		else $sort_current_objes[$sort_match[$i][1]]++;
 		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
@@ -101,7 +101,7 @@
 	if ($level>0) $regexp = "/".$level." OBJE @(.*)@/";
 	else $regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
-	for($i=0; $i<$ct; $i++) {
+	for ($i=0; $i<$ct; $i++) {
 		if (!isset($current_objes[$match[$i][1]])) $current_objes[$match[$i][1]] = 1;
 		else $current_objes[$match[$i][1]]++;
 		$obje_links[$match[$i][1]][] = $match[$i][0];
@@ -116,7 +116,7 @@
 	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
 	$i=0;
-	foreach($ids as $key=>$media_id) {
+	foreach ($ids as $key=>$media_id) {
 		if ($i>0) $sqlmm .= ",";
 		$sqlmm .= "'".$DBCONN->escapeSimple($media_id)."'";
 		$i++;
@@ -127,7 +127,7 @@
 
 	if ($sort_ct>0) {
 		$sqlmm .= $orderbylist;
-	}else{
+	} else {
 		// $sqlmm .= " ORDER BY m_titl ";
 		$sqlmm .= " ORDER BY mm_gid DESC ";
 	}
@@ -141,9 +141,8 @@
 			while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
 				
 				if (isset($foundObjs[$rowm['m_media']])) {
-					if (isset($current_objes[$rowm['m_media']])) 
-							$current_objes[$rowm['m_media']]--;
-						continue;
+					if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
+					continue;
 				}
 				
 				// NOTE: Determine the size of the mediafile
@@ -153,7 +152,7 @@
 					if (in_array($rowm["m_ext"], $MEDIATYPE)) {
 						$imgwidth = 400+40;
 						$imgheight = 500+150;
-					}else{
+					} else {
 						$imgwidth = 800+40;
 						$imgheight = 400+150;
 					}
@@ -163,23 +162,22 @@
 					$imgwidth = $imgsize[0]+40;
 					$imgheight = $imgsize[1]+150;
 				}
-				$rows=array();
+				$rows = array();
 
 				$rows['normal'] = $rowm;
-				if (isset($current_objes[$rowm['m_media']]))  $current_objes[$rowm['m_media']]--; {
-				}
+				if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
 /*
 				if (!isset($j)) {
 					$j=0;
-				}else{
+				} else {
 					$j=$j;
 				}
 */
 				foreach($rows as $rtype => $rowm) {
-					// if  ( FactViewRestricted($rowm['m_media'], $rowm['m_gedrec']) == "true" )
+					// if  (FactViewRestricted($rowm['m_media'], $rowm['m_gedrec']) == "true")
 					$res = media_reorder_row($rtype, $rowm, $pid);
 					$media_found = $media_found || $res;
-					$foundObjs[$rowm['m_media']]=true;
+					$foundObjs[$rowm['m_media']] = true;
 					
 //					$media_data = $rowm['m_media']; 
 //					print "<input type=\"hidden\" name=\"order1[$media_data]\" value=\"$j\" />";
