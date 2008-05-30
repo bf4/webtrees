@@ -31,7 +31,7 @@ loadLangFile("pgv_country");
 asort($countries);
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
+	header("Location: login.php?type=simple&amp;ged=$GEDCOM&amp;url=edit_interface.php".urlencode("?".$QUERY_STRING));
 	exit;
 }
 
@@ -1976,6 +1976,7 @@ case 'reorder_children':
 				asort($children);
 			}
 			$i=0;
+			$show_full = 1;		// Force details to show for each child
 			foreach($children as $id=>$child) {
 				print "<li style=\"cursor:move;margin-bottom:2px;\"";
 				if (!in_array($id, $ids)) print " class=\"facts_valueblue\"";
