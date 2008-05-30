@@ -39,7 +39,7 @@
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
     global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
-	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1;
+	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $mediaType;
 	
 	if (!isset($rowm)) {
 		$rowm=$row;
