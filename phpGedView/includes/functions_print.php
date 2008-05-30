@@ -69,10 +69,14 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if ($lbwidth < 150) $lbwidth = 150;
 	$indirec=find_person_record($pid);
 	if (!$indirec) $indirec = find_updated_record($pid);
-	$isF = "NN";
-	if (preg_match("/1 SEX F/", $indirec)>0) $isF="F";
-	else if (preg_match("/1 SEX M/", $indirec)>0) $isF="";
-	$disp = displayDetailsByID($pid, "INDI");
+	
+	// TODO:  This routine works from the $indirec.  It needs to be updated
+	// to use the Person object.  I've made a start....
+	$person=Person::getInstance($pid);
+	$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
+	$isF=$tmp[$person->getSex()];
+	$disp=$person->canDisplayDetails();
+
 	$boxID = $pid.".".$personcount.".".$count;
 	$mouseAction1 = "onmouseover=\"clear_family_box_timeout('".$boxID."');\" onmouseout=\"family_box_timeout('".$boxID."');\"";
 	$mouseAction2 = " onmouseover=\"expandbox('".$boxID."', $style); return false;\" onmouseout=\"restorebox('".$boxID."', $style); return false;\"";
@@ -273,7 +277,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		else print "<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
 	}
 	//-- find the name
-	$name = get_person_name($pid);
+	$name = $person->getFullName();
 	if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
 		$object = find_highlighted_object($pid, $indirec);
 		if (!empty($object["thumb"])) {

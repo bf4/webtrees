@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1952481 ] Special Unknown Names do not print OK (fisharebest)
  - Fixed: [ 1941609 ] Prefix mixes up sort (fisharebest)
  - Fixed: [ 1346616 ] Improper Sorting on Name Prefixes (fisharebest)
  - Added: New framework for name handlinga (fisharebest)
