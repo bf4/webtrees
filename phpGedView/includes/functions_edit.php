@@ -919,13 +919,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	function checkform() {
-		// Make sure we have entered at least something for the name
-		if (document.addchildform.NAME.value=="//") {
-			alert('<?php print $pgv_lang["must_provide"]; print " ".$factarray["NAME"]; ?>');
-			document.addchildform.NAME.focus();
-			return false;
-		}
-
 		var ip=document.getElementsByTagName('input');
 		for (var i=0; i<ip.length; i++) {
 			// ADD slashes to _HEB and _AKA names
