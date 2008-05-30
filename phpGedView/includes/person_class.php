@@ -1647,7 +1647,7 @@ class Person extends GedcomRecord {
 		}
 
 		// Create the SORT name(s) (we add the surname(s) later)
-		$sort=','.trim($givn.$npfx.$nsfx);
+		$sort=','.$givn.','.$npfx.','.$nsfx;
 		// Create the LIST name
 		if ($surn) {
 			$list=trim($spfx.' '.$surn).', '.trim($npfx.' '.$givn.' '.$nick.' '.$npfx);

@@ -427,7 +427,7 @@ class GedcomRecord {
 	function getPrimaryName() {
 		if (is_null($this->_getPrimaryName)) {
 			// Generally, the first name is the primary one....
-			$this->getPrimaryName=0;
+			$this->_getPrimaryName=0;
 			// ....except on hebrew pages, when we want the first _HEB one.
 			global $LANGUAGE;
 			if ($LANGUAGE=='hebrew') {
@@ -450,15 +450,15 @@ class GedcomRecord {
 	// Get the three variants of the name
 	function getFullName() {
 		$tmp=$this->getAllNames();
-		return $tmp[getPrimaryName()]['full'];
+		return $tmp[$this->getPrimaryName()]['full'];
 	}
 	function getSortName() {
 		$tmp=$this->getAllNames();
-		return $tmp[getPrimaryName()]['sort'];
+		return $tmp[$this->getPrimaryName()]['sort'];
 	}
 	function getListName() {
 		$tmp=$this->getAllNames();
-		return $tmp[getPrimaryName()]['list'];
+		return $tmp[$this->getPrimaryName()]['list'];
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
