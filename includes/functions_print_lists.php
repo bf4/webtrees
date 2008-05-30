@@ -328,8 +328,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<thead><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
-	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	echo '<td class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this,2)">'.$factarray['NAME'].'</a></th>';
 	echo "<th class=\"list_label\" style=\"display:none\">GIVN</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">SURN</th>";
 	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
 	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
 	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
@@ -367,8 +368,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$hidden++;
 			continue;
 		}
-		$name = $person->getSortableName();
-		if (empty($name)) continue;
 		//-- place filtering
 		if ($option=="BIRT_PLAC" && strstr($person->getBirthPlace(), $filter)===false) continue;
 		if ($option=="DEAT_PLAC" && strstr($person->getDeathPlace(), $filter)===false) continue;
@@ -382,24 +381,31 @@ function print_indi_table($datalist, $legend="", $option="") {
 		$tdclass = "list_value_wrap";
 		if (!$person->isDead()) $tdclass .= " alive";
 		if (!$person->getChildFamilyIds()) $tdclass .= " patriarch";
-		echo "<td class=\"".$tdclass."\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		if ($tiny) echo $person->getSexImage();
-		foreach ($name_subtags as $k=>$subtag) {
-			for ($num=1; $num<9; $num++) {
-				$addname = $person->getSortableName($subtag, $num);
-				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-				if (empty($addname)) break;
+		echo "<td class=\"".$tdclass."\" align=\"".get_align($person->getFullName())."\">";
+		$names_html=array();
+		foreach ($person->getAllNames() as $n=>$name) {
+			if ($title=$name['type']=='_MARNM') {
+				$title='title="'.$factarray['_MARNM'].'"';
+			} else {
+				$title='';
 			}
+			if ($n==$person->getPrimaryName()) {
+				$class='list_item name2';
+				$sex_image=$tiny ? $person->getSexImage() : '';
+			} else {
+				$class='list_item';
+				$sex_image='';
+			}
+			$names_html[]='<a '.$title.' href="'.$person->getLinkUrl().'" class="'.$class.'">'.PrintReady($name['full']).'</a>'.$sex_image;
 		}
+		echo implode('<br/>', $names_html);
 		// Indi parents
 		if ($person->xref) print $person->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
-		//-- GIVN
-		echo "<td style=\"display:none\">";
-		$exp = explode(",", str_replace('<', ',', $name).",");
-		echo $exp[1];
-		echo "</td>";
+		//-- GIVN/SURN
+		list($surn, $givn)=explode(',', $person->getSortName());
+		echo '<td style="display:none">', $givn, '</td>';
+		echo '<td style="display:none">', $surn, '</td>';
 		//-- SOSA
 		if ($option=="sosa") {
 			echo "<td class=\"list_value_wrap\">";
@@ -579,6 +585,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	echo "<td style=\"display:none\">GIVN</td>";
+	echo "<td style=\"display:none\">SURN</td>";
 	if ($option=="sosa") echo "<td></td>"; // SOSA
 	echo "<td></td>"; // BIRT:DATE
 	if ($tiny) echo "<td></td>"; // BIRT:Reminder
