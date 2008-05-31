@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Moved Reorder files to Includes directory, made media tab reorder media link a button (windmillway)
  - Fixed: [ 1952483 ] Fill Unknown Name - not working (fisharebest)
  - Fixed: [ 1952481 ] Special Unknown Names do not print OK (fisharebest)
  - Fixed: [ 1941609 ] Prefix mixes up sort (fisharebest)
