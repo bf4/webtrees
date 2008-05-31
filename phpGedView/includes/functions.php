@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3430,7 +3430,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *
  *		This routine will always load the English version of the specified language
  *		files first, followed by the same set of files in the currently active language.
- *		After that, the "extra.xx.php" files will always be loaded, again trying for
+ *		After that, the "extra.xx.php" files will always be loaded, but not trying for
  *		English first.
  *
  *		To load the "help_text.xx.php" file set, you'd call this function thus:
@@ -3444,7 +3444,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut;
-	global $pgv_lang, $countries, $altCountryNames, $faqlist, $factAbbrev;
+	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
 	
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
 
@@ -3526,24 +3526,22 @@ function loadLangFile($fileListNames="") {
 		default:
 			return;
 		}
-		if (file_exists($fileName1))
-			require $fileName1;
-		if ($LANGUAGE!="english" && file_exists($fileName2))
-			require $fileName2;
+		if (file_exists($fileName1)) require $fileName1;
+		if ($LANGUAGE!="english" && file_exists($fileName2)) require $fileName2;
 	}
 
 	// Now that the variables have been loaded in the desired language, load the optional 
 	// "extra.xx.php" file so that they can be over-ridden as desired by the site Admin
 	// For compatibility reasons, we'll first look for optional file "lang.xx.extra.php"
-	if (file_exists("languages/lang.".$lang_short_cut["english"].".extra.php"))
-		require "languages/lang.".$lang_short_cut["english"].".extra.php";
-	if (file_exists($extrafile["english"]))
-		require $extrafile["english"];
-	if ($LANGUAGE!="english") {
-		if (file_exists("languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php"))
-			require "languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
-		if (file_exists($extrafile[$LANGUAGE]))
-			require $extrafile[$LANGUAGE];
+	//
+	// In contrast to the preceding logic, we will NOT first load the English extra.xx.php
+	// file when trying for other languages.
+	//
+	if (file_exists("languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php")) {
+		require "languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+	}
+	if (file_exists($extrafile[$LANGUAGE])) {
+		require $extrafile[$LANGUAGE];
 	}
 	
 }
@@ -3562,7 +3560,8 @@ function loadLangFile($fileListNames="") {
  *
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang, $factAbbrev;
+	global $LANGUAGE, $lang_short_cut;
+	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
 	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
@@ -3575,8 +3574,16 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
 	global $DBCONN;
 
-	if (!isset($pgv_language[$desiredLanguage]))
-		$desiredLanguage = "english";
+	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
+	
+	// Make sure we start with a clean slate
+	$pgv_lang = array();
+	$countries = array();
+	$altCountryNames = array();
+	$factarray = array();
+	$factAbbrev = array();
+	$faqlist = array();
+	
 	if ($forceLoad) {
 		$LANGUAGE = "english";
 		require($pgv_language[$LANGUAGE]);			// Load English
@@ -3606,15 +3613,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			if (DB::isError($DBCONN) || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
 				include($file);
 			}
-		}
-		// load extra language files
-		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
-		if (file_exists($file)) {
-			include($file);
-		}
-		$file = $extrafile[$LANGUAGE];
-		if (file_exists($file)) {
-			include($file);
 		}
 	}
 
@@ -3655,15 +3653,16 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 				include($file);
 			}
 		}
-		// load the extra language file
-		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
-		if (file_exists($file)) {
-			include($file);
-		}
-		$file = $extrafile[$LANGUAGE];
-		if (file_exists($file)) {
-			include($file);
-		}
+	}
+
+	// load the extra language file
+	$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+	if (file_exists($file)) {
+		include($file);
+	}
+	$file = $extrafile[$LANGUAGE];
+	if (file_exists($file)) {
+		include($file);
 	}
 
 	// Modify certain spellings if Ashkenazi pronounciations are in use.

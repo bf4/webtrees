@@ -1054,8 +1054,8 @@ require_once("hitcount.php"); //--load the hit counter
 
 if ($Languages_Default) {            // If Languages not yet configured
 	$pgv_lang_use["english"] = false;  //  disable English
-	$pgv_lang_use["$LANGUAGE"] = true; //  and enable according to Browser pref.
+	$pgv_lang_use[$LANGUAGE] = true; //  and enable according to Browser pref.
 	$language_settings["english"]["pgv_lang_use"] = false;
-	$language_settings["$LANGUAGE"]["pgv_lang_use"] = true;
+	$language_settings[$LANGUAGE]["pgv_lang_use"] = true;
 }
 ?>
