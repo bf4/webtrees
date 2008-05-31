@@ -32,6 +32,12 @@ global $lang_short_cut, $LANGUAGE, $PHP_SELF, $reorder;
 
 loadLangFile("lb_lang");
 
+if (!file_exists("modules/googlemap/defaultconfig.php")) {
+	$tabno = ($tabno-1);
+	}else{
+	$tabno = ($tabno);
+}
+
 // The following is temporary, until the handling of the Lightbox Help system
 // is adjusted to match the usual PhpGedView practice
 $lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
@@ -213,7 +219,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 		if (PGV_USER_CAN_EDIT && $ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
+				print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
 				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Reorder Media In Place\" /><br />" ;
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
 				print '</a>';
@@ -222,7 +228,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
+				print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
 				print '</a>';
 				print "</td>";
@@ -230,7 +236,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
-				print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
+				print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
 				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Reorder Media In Place\" />" ;
 				print '</a>';
 				//print "<td width=\"5%\">&nbsp;</td>";
