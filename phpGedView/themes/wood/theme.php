@@ -190,10 +190,9 @@ $PGV_DXHTMLTAB_COLORS = "#c7974d,#eae0d4";
 
 $ONLOADFUNCTION = "onloadfunction();";		//-- function that should be called in the <body onload="
 
-// Arrow symbol or icon for up-page links on Help pages
-$ImgSrc = $PGV_IMAGE_DIR."/uarrow3.gif";
-$UpArrow = "<b>^&nbsp;&nbsp;</b>";
-if (file_exists($ImgSrc)) $UpArrow = "<img src=\"$ImgSrc\" class=\"icon\" border=\"0\" alt=\"\" />";
-$pgv_lang["UpArrow"] = $UpArrow;	// help_text.xx.php requires this _untranslatable_ term!
+// Arrow symbol or icon for up-page links on Help pages 
+// This icon is referred to in Help text by: #GLOBALS[UpArrow]# 
+if (file_exists($PGV_IMAGE_DIR."/uarrow3.gif")) $UpArrow = "<img src=\"{$PGV_IMAGE_DIR}/uarrow3.gif\" class=\"icon\" border=\"0\" alt=\"^\" />";
+else $UpArrow = "<b>^^&nbsp;&nbsp;</b>";
 
 ?>
