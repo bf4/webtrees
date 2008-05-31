@@ -26,7 +26,7 @@
  */
 ?>
 <?php
-	global $LB_AL_HEAD_LINKS;
+	global $LB_AL_HEAD_LINKS, $gedrec;
 	
 	require_once("js/prototype.js.htm");
 	require_once("js/scriptaculous.js.htm");
@@ -42,12 +42,18 @@
 </script>
 <?php
 		// print "<table border=0 width=\"100%\"><tr>";
-		print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
-			//Popup Reorder Media
-			print "<td class=\"width15 left wrap\" valign=\"top\">";
-			print "<button type=\"button\" title=\"". $pgv_lang["reorder_media"]."\" onclick=\"reorder_media();\">". $pgv_lang["reorder_media"] ."</button>";
-		print "</td>";
-		//print "<td width=\"5%\">&nbsp;</td>";
-		print "\n";
-		print "</tr></table>";
+		$gedrec = find_gedcom_record($pid);
+		$regexp = "/OBJE @(.*)@/";
+		$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
+		if ($ct>1) {
+			print "<table border=0 width=\"100%\"><tr>";
+			// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
+				//Popup Reorder Media
+				print "<td class=\"width15 center wrap\" valign=\"top\">";
+				print "<button type=\"button\" title=\"". $pgv_lang["reorder_media"]."\" onclick=\"reorder_media();\">". $pgv_lang["reorder_media"] ."</button>";
+			print "</td>";
+			//print "<td width=\"5%\">&nbsp;</td>";
+			print "\n";
+			print "</tr></table>";
+		}
 ?>

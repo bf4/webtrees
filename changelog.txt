@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Hide Media Re-order links if number of Media items is less than 2 (windmillway)
  - Fixed [ 1979392 ] English extra.xx.php text shown in languages (canajun2eh)
  - Changed: Moved Reorder files to Includes directory, made media tab reorder media link a button (windmillway)
  - Fixed: [ 1952483 ] Fill Unknown Name - not working (fisharebest)

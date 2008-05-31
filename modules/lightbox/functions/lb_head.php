@@ -78,7 +78,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 	//Lightbox-Album header Links
 		//print "<br />";
 		print "<table border=0 width=\"75%\"><tr>";
-		print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
+		// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
 
 		if ($LB_AL_HEAD_LINKS == "icon") {
 		print "<td>";
@@ -203,9 +203,14 @@ include('modules/lightbox/functions/lb_call_js.php');
 				print "\n";
 			}
 		}
-
+		
+		// Find if media exists and is greater than 1 item
+		$gedrec = find_gedcom_record($pid);
+		$regexp = "/OBJE @(.*)@/";
+		$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
+		
 		//Album Reorder Media
-		if (PGV_USER_CAN_EDIT) {
+		if (PGV_USER_CAN_EDIT && $ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
@@ -233,7 +238,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 		}
 		
 		//Popup Reorder Media
-		if (PGV_USER_CAN_EDIT) {
+		if (PGV_USER_CAN_EDIT && $ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media Popup\" >" ;
