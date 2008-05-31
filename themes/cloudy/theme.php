@@ -197,15 +197,14 @@ $Dbheight = 78;		// -- height of DIV layer boxes
 $Dindent = 15;		// -- width to indent descendancy boxes
 $Darrowwidth = 30;	// -- additional width to include for the up arrows
 
-$CHARTS_CLOSE_HTML = true;                //-- should the charts, pedigree, descendacy, etc clost the HTML on the page
+$CHARTS_CLOSE_HTML = true;                //-- should the charts, pedigree, descendacy, etc close the HTML on the page
 $PGV_DXHTMLTAB_COLORS = "#f0f9ff,#c8e7ff";
 
 $ONLOADFUNCTION = "loadHandler();";		//-- function that should be called in the <body onload="
 
-// Arrow symbol or icon for up-page links on Help pages
-$ImgSrc = $PGV_IMAGE_DIR."/uarrow3.gif";
-$UpArrow = "<b>^&nbsp;&nbsp;</b>";
-if (file_exists($ImgSrc)) $UpArrow = "<img src=\"$ImgSrc\" class=\"icon\" border=\"0\" alt=\"\" />";
-$pgv_lang["UpArrow"] = $UpArrow;	// help_text.xx.php requires this _untranslatable_ term!
+// Arrow symbol or icon for up-page links on Help pages 
+// This icon is referred to in Help text by: #GLOBALS[UpArrow]# 
+if (file_exists($PGV_IMAGE_DIR."/uarrow3.gif")) $UpArrow = "<img src=\"{$PGV_IMAGE_DIR}/uarrow3.gif\" class=\"icon\" border=\"0\" alt=\"^\" />";
+else $UpArrow = "<b>^^&nbsp;&nbsp;</b>";
 
 ?>
