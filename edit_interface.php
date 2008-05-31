@@ -1854,6 +1854,8 @@ case 'reorder_media_update': // Update sort using popup
 		$mediaordsuccess='yes';
 		if ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==8) {
 			$link = "individual.php?pid=$pid&tab=7&show_changes=yes";
+		}elseif ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==7) {
+			$link = "individual.php?pid=$pid&tab=6&show_changes=yes";
 		}else{
 			$link = "individual.php?pid=$pid&tab=3&show_changes=yes";
 		}
