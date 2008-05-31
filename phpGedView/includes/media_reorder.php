@@ -25,7 +25,7 @@
  * @author Brian Holland
  */
 
-	include_once("includes/functions_print_facts.php");
+	include_once("functions_print_facts.php");
 
 	print "<br /><b>".$pgv_lang["reorder_media"]."</b>";
 //	print_help_link("reorder_children_help", "qm");

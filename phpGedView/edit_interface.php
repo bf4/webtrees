@@ -1822,7 +1822,7 @@ case 'paste':
 case 'reorder_media': // Sort page using Popup
 	require_once("js/prototype.js.htm");
 	require_once("js/scriptaculous.js.htm");
-	include_once("media_reorder.php");
+	include_once("includes/media_reorder.php");
 	break;	
 
 //------------------------------------------------------------------------------
@@ -1834,21 +1834,12 @@ case 'reset_media_update': // Reset sort using popup
 	}
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
-		//Debug -------------
-		/*
-		print "<b>\$newgedrec =</b>";
-		print "<pre>$newgedrec</pre>";
-		echo "<script type='text/javascript'>alert('RESET Debug')</script>";
-		*/
-		// Debug ------------
 	break;
 
 //------------------------------------------------------------------------------
 case 'reorder_media_update': // Update sort using popup
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
-//	asort($order);
-//	reset($order);
 	$lines = preg_split("/\n/", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
@@ -1878,12 +1869,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 	}
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
-		//Debug -------------
-		// print "<b>\$newgedrec =</b>";
-		// print "<pre>$newgedrec</pre>";
-		// echo "<script type='text/javascript'>alert('RESET Debug')</script>";
-		// Debug ------------
-			?>
+		?>
 		<script language="JavaScript" type="text/javascript" >
 		<!-- 
 			location.href='<?php echo "individual.php?tab=7&pid=" . $pid  ;?>';
@@ -1919,19 +1905,6 @@ case 'al_reorder_media_update': // Update sort using Album Page
 	
 	if ($success) {
 		if ($success) print "<br />".$pgv_lang["update_successful"]. "<br /><br />";
-		// Debug ------------
-		/*
-		print "<b>\$order2 =</b><br />";
-		print_r($order2);
-		print "<br /><br />";
-		print "<b>\$order1 =</b><br />";
-		print_r($order1);
-		print "<br /><br />";
-		print "<b>\$newgedrec =</b>";
-		print "<pre>$newgedrec</pre>";
-		print "<script type='text/javascript'>alert('Hidden Input \$Order1 Debug')</script>";
-		*/
-		// Debug ------------
 		?>
 		<script language="JavaScript" type="text/javascript" >
 		<!-- 
