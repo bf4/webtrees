@@ -454,7 +454,7 @@ if ($MULTI_MEDIA) {
 	// For Reorder media ------------------------------------
 	if (PGV_USER_CAN_EDIT) {
 		print "<center";
-		include_once('media_tab_head.php');
+		include_once('includes/media_tab_head.php');
 		print "</center>";
 	}
 	// -----------------------------------------------------------

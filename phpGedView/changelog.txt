@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Re-order Media: corrected wrong path for include in individual.php. (windmillway)
  - Fixed: Re-order Media: corrected omission for when Googlemaps not installed (windmillway)
  - Fixed: Corrected Reorder Media links when Googlemaps not installed (windmillway)
  - Changed: Hide Media Re-order links if number of Media items is less than 2 (windmillway)
