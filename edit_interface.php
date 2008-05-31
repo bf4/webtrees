@@ -1869,10 +1869,15 @@ case 'al_reset_media_update': // Reset sort using Album Page
 	}
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+			$tabno = "6";
+		}else{
+			$tabno = "7";
+		}
 		?>
 		<script language="JavaScript" type="text/javascript" >
 		<!-- 
-			location.href='<?php echo "individual.php?tab=7&pid=" . $pid  ;?>';
+			location.href='<?php echo "individual.php?tab=" . $tabno . "&pid=" . $pid  ;?>';
 		//-->
 		</script>
 		<?php
@@ -1901,14 +1906,18 @@ case 'al_reorder_media_update': // Update sort using Album Page
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\r\n";
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
-	$success = (replace_gedrec($pid, $newgedrec));
-	
+		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) {
+		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+			$tabno = "6";
+		}else{
+			$tabno = "7";
+		}
 		if ($success) print "<br />".$pgv_lang["update_successful"]. "<br /><br />";
 		?>
 		<script language="JavaScript" type="text/javascript" >
 		<!-- 
-			location.href='<?php echo "individual.php?tab=7&pid=" . $pid  ;?>';
+			location.href='<?php echo "individual.php?tab=" . $tabno . "&pid=" . $pid  ;?>';
 		//-->
 		</script>
 		<?php
