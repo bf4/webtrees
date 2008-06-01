@@ -87,13 +87,14 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 //------------------------------------------------------------------------------
 // Start Main Table
 //------------------------------------------------------------------------------
-echo "<table border=0 width='100%'><tr>" . "\n\n";
+echo "<table border=0 width='100%'><tr><td>" . "\n\n";
 
 //------------------------------------------------------------------------------
 // Build Thumbnail Rows
 //------------------------------------------------------------------------------
 
-	echo "<td border=0 id=\"ROWS\">";
+//echo "<td border=0 id=\"ROWS\">";
+	echo "<table width=\"100%\"><tr><td valign=\"top\" >";
 	for ($t=1; $t <=5; $t++) {
 	
            if ($t==1) {
@@ -116,22 +117,23 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
  
      }
 
-     echo '</td>';
+     echo "</td>";
 
 
 //------------------------------------------------------------------------------
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
-     echo '<td border=0 valign="top" align="center" width=220 class="optionbox" >' . "\n" ;
-     echo "<b>" . $pgv_lang["view"] . " '" . $pgv_lang["lightbox"] ."'</b><br /><br />" . "\n" ;
+	echo "<td valign=\"top\" align=\"center\" width=220  >" . "\n" ;
+// echo "<td>";
+	echo "<table ><tr><td class=\"optionbox\" align=\"center\">";
+	echo "<b>" . $pgv_lang["view"] . " '" . $pgv_lang["lightbox"] ."'</b><br /><br />" . "\n" ;
+		$controller->lightbox();	 
+	echo "<br />";
+	echo "</td>";
+	echo "</tr></table>";
 
 
-     echo '<table><tr><td>';
-     $controller->lightbox();	 
-     echo '</td></tr></table>';
-
-
-     echo '<br /></td>' . "\n\n" ;
+	echo "</td>" . "\n\n" ;
 // -----------------------------------------------------------------------------
 // end Relatives navigator
 // -----------------------------------------------------------------------------
@@ -140,6 +142,7 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
 //------------------------------------------------------------------------------
 // End Main Table
 //------------------------------------------------------------------------------
+echo "</td>";
 echo "</tr></table>";
 echo "<center>" . "\n";
 

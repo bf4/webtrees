@@ -36,9 +36,9 @@ global $edit, $tabno, $mediacnt;
 $edit=$edit;
 
      if (!file_exists("modules/googlemap/defaultconfig.php")) {
-         $tabno = ($tabno-1);
+         $tabno = "6";
          }else{
-         $tabno = ($tabno);
+         $tabno = "7";
          }
 
 //     echo "Light Box Stuff";

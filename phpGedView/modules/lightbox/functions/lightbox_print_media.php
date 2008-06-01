@@ -180,11 +180,13 @@
 		if ($t==5){
 			echo "<b><br />" . $tt . "</b><br /><br />";
 		}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){
-			echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $numm . ")";
+			echo "<b><br /><br />" . $tt . "</b><br /><br />";
+			// echo "(" . $numm . ")";
 		}else{
 			echo "<b><br />" . $tt . "</b><br /><br />";	
 		}
 		echo '</td>';
+		echo '<td width=\"2\"></td>';
 		
 		echo '<td class="facts_value">';
 		echo "<table width=\"100%\"><tr><td>" . "\n";
@@ -299,7 +301,8 @@
 		echo "<div class=clearlist>";
 		echo "</div>";
 		echo "</center>";
-		echo '</td></tr></table>' . "\n";
+		echo '</td>';
+		echo '</tr></table>' . "\n";
 
 		if ($t==3 && $numm > 0) {
 			echo "<font size='1'>";
@@ -310,7 +313,9 @@
 
 		echo "</center>" . "\n";
 		echo '</td>'. "\n";
-		echo '</td></tr></table>' . "\n\n";
+		echo '</td>';
+		echo '</tr>';
+		echo '</table>' . "\n\n";
 
 	}
 	
