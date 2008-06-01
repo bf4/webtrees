@@ -782,37 +782,37 @@ if (empty($PEDIGREE_GENERATIONS)) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENE
  *  This code existed in both lang_settings_std.php and in lang_settings.php.
  *  It has been removed from both files and inserted here, where it belongs.
  */
-$languages             = array();
-$pgv_lang_use          = array();
-$pgv_lang              = array();
-$lang_short_cut        = array();
-$lang_langcode         = array();
-$pgv_language          = array();
-$confighelpfile        = array();
-$helptextfile          = array();
-$flagsfile             = array();
-$factsfile             = array();
-$adminfile             = array();
-$editorfile            = array();
-$countryfile           = array();
-$faqlistfile           = array();
-$extrafile             = array();
-$factsarray            = array();
-$pgv_lang_name         = array();
-$ALPHABET_upper        = array();
-$ALPHABET_lower        = array();
-$MULTI_LETTER_ALPHABET = array();
-$DICTIONARY_SORT       = array();
-$DATE_FORMAT_array     = array();
-$TIME_FORMAT_array     = array();
-$WEEK_START_array      = array();
-$TEXT_DIRECTION_array  = array();
-$NAME_REVERSE_array    = array();
+$languages				= array();
+$pgv_lang_use			= array();
+$pgv_lang_self			= array();
+$lang_short_cut			= array();
+$lang_langcode			= array();
+$pgv_language			= array();
+$confighelpfile			= array();
+$helptextfile			= array();
+$flagsfile				= array();
+$factsfile				= array();
+$adminfile				= array();
+$editorfile				= array();
+$countryfile			= array();
+$faqlistfile			= array();
+$extrafile				= array();
+$factsarray				= array();
+$pgv_lang_name			= array();
+$ALPHABET_upper			= array();
+$ALPHABET_lower			= array();
+$MULTI_LETTER_ALPHABET	= array();
+$DICTIONARY_SORT		= array();
+$DATE_FORMAT_array		= array();
+$TIME_FORMAT_array		= array();
+$WEEK_START_array		= array();
+$TEXT_DIRECTION_array	= array();
+$NAME_REVERSE_array		= array();
 
 foreach ($language_settings as $key => $value) {
-	$languages[$key]             = $value["pgv_langname"];
+	$languages[$key]			 = $value["pgv_langname"];
 	$pgv_lang_use[$key]          = $value["pgv_lang_use"];
-	$pgv_lang[$key]              = $value["pgv_lang"];
+	$pgv_lang_self[$key]		 = $value["pgv_lang_self"];
 	$lang_short_cut[$key]        = $value["lang_short_cut"];
 	$lang_langcode[$key]         = $value["langcode"];
 	$pgv_language[$key]          = $value["pgv_language"];
@@ -835,7 +835,7 @@ foreach ($language_settings as $key => $value) {
 	$TEXT_DIRECTION_array[$key]  = $value["TEXT_DIRECTION"];
 	$NAME_REVERSE_array[$key]    = $value["NAME_REVERSE"];
 
-	$pgv_lang["lang_name_$key"]  = $value["pgv_lang"];
+	$pgv_lang["lang_name_$key"]  = $value["pgv_lang_self"];
 }
 
 /**
