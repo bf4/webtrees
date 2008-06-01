@@ -134,7 +134,7 @@
 					// Check for Notes associated media item
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
+							$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
 							print "<br />";
 							$items[$n+1]= $item+1;
@@ -142,7 +142,7 @@
 						}							
 					}else
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
+							$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
 							print "<br />";
 							$items[$n+1]= $item+1;
@@ -209,7 +209,7 @@
 					// Check for Notes associated media item
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
+							$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
 //							print $note[$n] . "\"> <font size=1>" . $note[$n] . "</font>";							
 							print "<br />";
@@ -218,7 +218,7 @@
 						}							
 					}else
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
+							$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";					
 							print "<br />";
 							$items[$n+1]= $item+1;
@@ -279,7 +279,7 @@
 					// Check for Notes associated media item
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
+							$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
 							print "<br />";
 							$items[$n+1]= $item+1;
@@ -287,7 +287,7 @@
 						}							
 					}else
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
+							$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";						
 							print "<br />";
 							$items[$n+1]= $item+1;
