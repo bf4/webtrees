@@ -102,11 +102,11 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				echo '<td valign="top" colspan="', $maxcols-$col, '">';
 				if ($birtdate->isOK() || $birtplac) {
 					echo '<span class="label">', $factarray['BIRT'].':', '</span> ';
-					echo '<span class="field">', $birtdate->Display(false), ' -- ', $birtplac, '</span><br />';
+					echo '<span class="field">', $birtdate->Display(false), ' -- ', PrintReady($birtplac), '</span><br />';
 				}
 				if ($deatdate->isOK() || $deatplac) {
 					echo '<span class="label">', $factarray['DEAT'].':','</span> ';
-					echo '<span class="field">', $deatdate->Display(false), ' -- ', $deatplac, '</span><br />';
+					echo '<span class="field">', $deatdate->Display(false), ' -- ', PrintReady($deatplac), '</span><br />';
 				}
 				if ($SHOW_LDS_AT_GLANCE) {
 					echo '<b>', get_lds_glance($controller->indi->getGedcomRecord()), '</b>';
