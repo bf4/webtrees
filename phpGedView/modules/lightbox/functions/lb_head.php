@@ -33,9 +33,9 @@ global $lang_short_cut, $LANGUAGE, $PHP_SELF, $reorder;
 loadLangFile("lb_lang");
 
 if (!file_exists("modules/googlemap/defaultconfig.php")) {
-	$tabno = ($tabno-1);
+	$tabno = "6";
 	}else{
-	$tabno = ($tabno);
+	$tabno = "7";
 }
 
 // The following is temporary, until the handling of the Lightbox Help system
@@ -76,12 +76,56 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 
 // Load Lightbox javascript and css files
 include('modules/lightbox/functions/lb_call_js.php');
+
+// Find if indi and family associated media exists and then count ( $m_count)  ===================================================
+	// Check indi gedcom items
+		$gedrec = find_gedcom_record($pid);
+		$regexp = "/OBJE @(.*)@/";
+		$ct_indi = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
+	//-- find all of the related ids
+		// if ($related) {
+			$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
+			for($i=0; $i<$ct; $i++) {
+				$ids[] = trim($match[$i][1]);
+			}
+		// }
+	// Use database to get details of indi items and related items ---------------------------------------------
+		$sqlmm = "SELECT DISTINCT ";
+		$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
+		$sqlmm .= "mm_gid IN (";
+		$i=0;
+		foreach($ids as $key=>$id) {
+			if ($i>0) $sqlmm .= ",";
+			$sqlmm .= "'".$DBCONN->escapeSimple($id)."'";
+			$i++;
+		}
+		$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+		//-- for family and source page only show level 1 obje references----------------------------------------
+		$level=0;
+		if ($level>0) {
+			$sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
+		}
+		// Order by -------------------------------------------------------
+		$sqlmm .= " ORDER BY mm_gid DESC ";
+		// Perform DB Query -----------------------
+		$resmm = dbquery($sqlmm);
+		$foundObjs = array();
+	// Database media count --------------------------------
+	$db_count = $resmm->numRows();
+	//Total Media count
+	$tot_med_ct = ($db_count + $ct_indi);
+// Debug --------------------------------------------
+// echo "Total Media count = " . $tot_med_ct;
+// =====================================================================================
+
+
+	// If in re-order mode do not show header links, but instead, show drag and drop title.
 	if (isset($reorder) && $reorder==1){
 		echo "<center><b>".$pgv_lang["reorder_media_title"]."</b></center>" ;
 		echo "<br />";
-
+		
 	}else{
-	//Lightbox-Album header Links
+		//Show Lightbox-Album header Links
 		//print "<br />";
 		print "<table border=0 width=\"75%\"><tr>";
 		// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
@@ -175,6 +219,7 @@ include('modules/lightbox/functions/lb_call_js.php');
         }
 
 		//Turn Edit Mode On or Off
+		/*
 		if (!isset($edit)) $edit=1;
 		if ($edit==1) {
 			$lbEditMsg = $pgv_lang["turn_edit_OFF"];
@@ -183,19 +228,19 @@ include('modules/lightbox/functions/lb_call_js.php');
 			$lbEditMsg = $pgv_lang["turn_edit_ON"];
 			$lbEditMode = 1;
 		}
-        if (PGV_USER_CAN_EDIT && $mediacnt!=0) {
+		if (PGV_USER_CAN_EDIT && $mediacnt!=0) {
 			if ($LB_AL_HEAD_LINKS == "both") {
  				print "<td class=\"width15 center wrap\" valign=\"top\">";
-	            print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
- 	          	print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
-            	print "" . $lbEditMsg . "&nbsp;";
-	            print "</a>";
-	            print "</td>";
+				print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
+				print "" . $lbEditMsg . "&nbsp;";
+				print "</a>";
+				print "</td>";
 				//    print "<td width=\"5%\">&nbsp;</td>";
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+				print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
 				print "" . $lbEditMsg . "&nbsp;";
 				print "</a>";
 				print "</td>";
@@ -203,20 +248,16 @@ include('modules/lightbox/functions/lb_call_js.php');
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
-				print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+				print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
 				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" />" ;
 				print "</a>";
 				print "\n";
 			}
 		}
-		
-		// Find if media exists and is greater than 1 item
-		$gedrec = find_gedcom_record($pid);
-		$regexp = "/OBJE @(.*)@/";
-		$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
+		*/
 		
 		//Album Reorder Media
-		if (PGV_USER_CAN_EDIT && $ct>1) {
+		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
@@ -244,7 +285,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 		}
 		
 		//Popup Reorder Media
-		if (PGV_USER_CAN_EDIT && $ct>1) {
+		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media Popup\" >" ;

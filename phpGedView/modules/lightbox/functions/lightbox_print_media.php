@@ -96,10 +96,10 @@
 	}
 
 	if (!showFact("OBJE", $pid)) return false;
-	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
+	if (!isset($pgv_changes[$pid."&nbsp;".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
 	$ids = array($pid);
-
+	
 	//-- find all of the related ids
 	if ($related) {
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -119,15 +119,14 @@
 		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
 	}
 	$sort_media_found = false;
-	// -----------------------------------------------------------------------------------------------
-
+		
 	// create ORDER BY list from Gedcom sorted records list  ---------------------------
 	$orderbylist = 'ORDER BY '; // initialize  
 	foreach ($sort_match as $id) {
 		$orderbylist .= "m_media='$id[1]' DESC, ";
 	}  
 	$orderbylist = rtrim($orderbylist, ', ');
-	// -----------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	//-- get a list of the current objects in the record
 	$current_objes = array();
@@ -171,7 +170,6 @@
  
 	$numm = $resmm->numRows();
 	
-
 
 	if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) ) {
 		echo "\n\n";
@@ -240,7 +238,7 @@
 			$rows=array();
 			//-- if there is a change to this media item then get the
 			//-- updated media item and show it
-			if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM])) {
+			if (isset($pgv_changes[$rowm["m_media"]."&nbsp;".$GEDCOM])) {
 				$newrec = find_updated_record($rowm["m_media"]);
 				$row = array();
 				$row['m_media'] = $rowm["m_media"];
@@ -283,8 +281,8 @@
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 					
 					}else{
-						print "<p id=\"" . $pgv_lang["note"]. "_" . ($fn) . "\" class=\"lb_notes\">";	
-							$note[$fn]  = $pgv_lang["note"] . "_" . ($fn) . "";
+						print "<p id=\"" . $pgv_lang["note"]. "&nbsp;" . ($fn) . "\" class=\"lb_notes\">";	
+							$note[$fn]  = $pgv_lang["note"] . "&nbsp;" . ($fn) . "";
 //						print "<a href=\"#a".$note[$fn]."\" class=\"lb_notes\" <font size=1>" . $note[$fn] . "</font>";
 						print "<font size=1>" . $note[$fn] . "</font>";					
 							print_fact_notes($mgedrec[$items[$fn]-1], 1);
