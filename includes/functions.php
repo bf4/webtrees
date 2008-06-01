@@ -3562,7 +3562,7 @@ function loadLangFile($fileListNames="") {
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $LANGUAGE, $lang_short_cut;
 	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
-	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile;
+	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile, $pgv_lang_self;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
 	global $TIME_FORMAT, $TIME_FORMAT_array;
@@ -3577,7 +3577,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
 	
 	// Make sure we start with a clean slate
-	$pgv_lang = array();
+	$pgv_lang = $pgv_lang_self;
 	$countries = array();
 	$altCountryNames = array();
 	$factarray = array();
