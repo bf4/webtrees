@@ -1382,7 +1382,9 @@ function create_nextid_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "nextid ";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "nextid (ni_id INT UNSIGNED NOT NULL, ni_type VARCHAR(30) NOT NULL, ni_gedfile INT NOT NULL, PRIMARY KEY(ni_type, ni_gedfile))";
+        // Changed the following line because it is unecessary to use UNSIGNED for this field and because it breaks PostgreSQL to use it.
+        // $sql = "CREATE TABLE ${TBLPREFIX}nextid (ni_id INT UNSIGNED NOT NULL, ni_type VARCHAR(30) NOT NULL, ni_gedfile INT NOT NULL, PRIMARY KEY(ni_type, ni_gedfile))"; */
+        $sql = "CREATE TABLE ${TBLPREFIX}nextid (ni_id INT NOT NULL, ni_type VARCHAR(30) NOT NULL, ni_gedfile INT NOT NULL, PRIMARY KEY(ni_type, ni_gedfile))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1434,7 +1436,7 @@ function empty_database($FILE, $keepmedia=false) {
 	}
 	else {
 		//-- make sure that we keep the correct IDs for media
-		$sql = "SELECT ni_id FROM ".$TBLPREFIX."nextid WHERE ni_type='OBJE' AND ni_gedfile='".$FILE."'";
+                $sql = "SELECT ni_id FROM ${TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='${FILE}'";
 		$res =& dbquery($sql);
 		if ($res->numRows() > 0) {
 			$row =& $res->fetchRow();
