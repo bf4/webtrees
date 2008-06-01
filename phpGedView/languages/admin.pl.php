@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -320,10 +320,11 @@ $pgv_lang["spacing"]      			= "odstęp";
 $pgv_lang["ADVANCED_NAME_FACTS"] 	= "Szczegółowe fakty o imieniu/nazwisku";
 $pgv_lang["ADVANCED_PLAC_FACTS"] 	= "Szczegółowe fakty o miejscu";
 $pgv_lang["SURNAME_TRADITION"] 		= "Tradycja przyjmowania nawiska";
-$pgv_lang["spanish"]          		= "hiszpańska";
-$pgv_lang["portuguese"]        		= "portugalska";
-$pgv_lang["icelandic"]         		= "islandzka";
-$pgv_lang["paternal"]         		= "ojcowska";
+$pgv_lang["tradition_spanish"]      = "hiszpańska";
+$pgv_lang["tradition_portuguese"]   = "portugalska";
+$pgv_lang["tradition_icelandic"]    = "islandzka";
+$pgv_lang["tradition_paternal"]     = "ojcowska";
+$pgv_lang["tradition_none"]			= "brak";
 
 $pgv_lang["clear_cache_succes"]		= "Pliki cache zostały usunięte.";
 $pgv_lang["clear_cache"]			= "Wyczyść pliki cache";

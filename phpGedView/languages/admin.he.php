@@ -3,7 +3,7 @@
  * Hebrew texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -356,9 +356,10 @@ $pgv_lang["spacing"]      	= "רווחים";
 $pgv_lang["ADVANCED_NAME_FACTS"] 	= "עובדות מתקדמות של שם"; 
 $pgv_lang["ADVANCED_PLAC_FACTS"] 	= "עובדות מתקדמות של שם מקום"; 
 $pgv_lang["SURNAME_TRADITION"]		= "מסורת שם משפחה"; // Default surname inheritance 
-$pgv_lang["spanish"]           	= "ספרדי"; 
-$pgv_lang["portuguese"]        	= "פורטוגזי"; 
-$pgv_lang["icelandic"]         	= "איסלנדי"; 
-$pgv_lang["paternal"]          	= "לפי אב";
+$pgv_lang["tradition_spanish"]		= "ספרדי"; 
+$pgv_lang["tradition_portuguese"]	= "פורטוגזי"; 
+$pgv_lang["tradition_icelandic"]	= "איסלנדי"; 
+$pgv_lang["tradition_paternal"]		= "לפי אב";
+$pgv_lang["tradition_none"]			= "אין";
 
 ?>

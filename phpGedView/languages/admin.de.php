@@ -3,7 +3,7 @@
  * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -314,13 +314,14 @@ $pgv_lang["see"]						= "zeigen";
 $pgv_lang["noref"]						= "Dieser Datensatz ist nirgends verbunden -- er ist eigenständig.";
 $pgv_lang["tag"]						= "GEDCOM-Tag";
 $pgv_lang["spacing"]					= "Abstand";
-$pgv_lang["ADVANCED_NAME_FACTS"] = "Besondere Namens-Fakten";
-$pgv_lang["ADVANCED_PLAC_FACTS"] = "Besondere Ortsnamen-Fakten";
-$pgv_lang["SURNAME_TRADITION"] = "Nachnamens-Tradition";
-$pgv_lang["spanish"]           = "spanisch";
-$pgv_lang["portuguese"]        = "portugiesisch";
-$pgv_lang["icelandic"]         = "islandisch";
-$pgv_lang["paternal"]          = "väterlich";
+$pgv_lang["ADVANCED_NAME_FACTS"]		= "Besondere Namens-Fakten";
+$pgv_lang["ADVANCED_PLAC_FACTS"]		= "Besondere Ortsnamen-Fakten";
+$pgv_lang["SURNAME_TRADITION"]			= "Nachnamens-Tradition";
+$pgv_lang["tradition_spanish"]			= "spanische";
+$pgv_lang["tradition_portuguese"]		= "portugiesische";
+$pgv_lang["tradition_icelandic"]		= "isländische";
+$pgv_lang["tradition_paternal"]			= "väterliche";
+$pgv_lang["tradition_none"]				= "keine";
 $pgv_lang["context_lines"]				= "Zusammenhang in der GEDCOM-Datei";
 $pgv_lang["open_link"]					= "Links öffnen im ...";
 $pgv_lang["warning"]					= "Warnung";

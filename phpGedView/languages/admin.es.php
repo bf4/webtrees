@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -346,10 +346,11 @@ $pgv_lang["tag"]          = "etiqueta";
 $pgv_lang["spacing"]      = "espaciado";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Hechos avanzados para nombres";
 $pgv_lang["ADVANCED_PLAC_FACTS"] = "Hechos avanzados para los nombres de lugares";
-$pgv_lang["SURNAME_TRADITION"] = "Tradición de apellidos"; // Default surname inheritance
-$pgv_lang["spanish"]           = "Español";
-$pgv_lang["portuguese"]        = "Portugués";
-$pgv_lang["icelandic"]         = "Islandés";
-$pgv_lang["paternal"]          = "Paterno";
+$pgv_lang["SURNAME_TRADITION"]		= "Tradición de apellidos"; // Default surname inheritance
+$pgv_lang["tradition_spanish"]		= "Español";
+$pgv_lang["tradition_portuguese"]	= "Portugués";
+$pgv_lang["tradition_icelandic"]	= "Islandés";
+$pgv_lang["tradition_paternal"]		= "Paterno";
+$pgv_lang["tradition_none"]			= "Ninguno";
 
 ?>
