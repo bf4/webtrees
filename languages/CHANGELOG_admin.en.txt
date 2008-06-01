@@ -45,6 +45,15 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["spanish"]								1 Jun 2008				D	variable name changed
+-$pgv_lang["portuguese"]							1 Jun 2008				D	variable name changed
+-$pgv_lang["icelandic"]								1 Jun 2008				D	variable name changed
+-$pgv_lang["paternal"]								1 Jun 2008				D	variable name changed
++$pgv_lang["tradition_spanish"]						1 Jun 2008				A	variable name changed
++$pgv_lang["tradition_portuguese"]					1 Jun 2008				A	variable name changed
++$pgv_lang["tradition_icelandic"]					1 Jun 2008				A	variable name changed
++$pgv_lang["tradition_paternal"]					1 Jun 2008				A	variable name changed
++$pgv_lang["tradition_none"]						1 Jun 2008				A		
 *$pgv_lang["index_dir_cleanup_inst"]				26 May 2008				w	(add missing alt="" to <img> tags
 *$pgv_lang["sanity_err1"]							14 May 2008				W (Replace value with constant)
 

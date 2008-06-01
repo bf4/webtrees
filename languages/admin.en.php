@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -345,10 +345,11 @@ $pgv_lang["tag"]          = "tag";
 $pgv_lang["spacing"]      = "spacing";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Advanced name facts";
 $pgv_lang["ADVANCED_PLAC_FACTS"] = "Advanced place name facts";
-$pgv_lang["SURNAME_TRADITION"] = "Surname tradition"; // Default surname inheritance
-$pgv_lang["spanish"]           = "Spanish";
-$pgv_lang["portuguese"]        = "Portuguese";
-$pgv_lang["icelandic"]         = "Icelandic";
-$pgv_lang["paternal"]          = "Paternal";
+$pgv_lang["SURNAME_TRADITION"]		= "Surname tradition"; // Default surname inheritance
+$pgv_lang["tradition_spanish"]		= "Spanish";
+$pgv_lang["tradition_portuguese"]	= "Portuguese";
+$pgv_lang["tradition_icelandic"]	= "Icelandic";
+$pgv_lang["tradition_paternal"]		= "Paternal";
+$pgv_lang["tradition_none"]			= "None";				
 
 ?>
