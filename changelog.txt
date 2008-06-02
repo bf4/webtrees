@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Re-Order Media: Remove error introduced in svn 3188. (windmillway)
  - Changed: Lightbox Album: (1) Changed: Thumbnail Note text Format. (2) Fixed: Hide Reorder Links when media count is less than 2. (windmillway)
  - Fixed: Lightbox Album: Album Navigator - Fixed spurious incorrect tab calls, Corrected alignment. (windmillway) 
  - Fixed: Re-order Media: corrected wrong path for include in individual.php. (windmillway)

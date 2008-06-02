@@ -42,7 +42,7 @@
 </script>
 
 <?php
-
+/*
 // Find if indi and family associated media exists and then count ( $m_count)  ===================================================
 	// Check indi gedcom items
 		$gedrec = find_gedcom_record($pid);
@@ -83,13 +83,13 @@
 // Debug ----------------------------------------------
 // echo "Total Media count = " . $tot_med_ct;
 // =====================================================================================
-
+*/
 
 	// print "<table border=0 width=\"100%\"><tr>";
 	$gedrec = find_gedcom_record($pid);
 	$regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
-	if ($tot_med_ct>1) {
+//	if ($tot_med_ct>1) {
 		print "<table border=0 width=\"100%\"><tr>";
 		// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
 			//Popup Reorder Media
@@ -99,5 +99,5 @@
 		//print "<td width=\"5%\">&nbsp;</td>";
 		print "\n";
 		print "</tr></table>";
-	}
+//	}
 ?>
