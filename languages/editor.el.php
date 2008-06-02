@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Greek texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Nicholas G. Antimisiaris
  * @version $Id$
  */
 
@@ -64,7 +63,6 @@ $pgv_lang["add_wife_to_family"]					= "Προσθήκη Συζύγου-Γυνα�
 $pgv_lang["changes_occurred"]					= "The following changes occured to this individual:";
 $pgv_lang["create_source"]						= "Δημιουργία νέας πηγής";
 $pgv_lang["date"]								= "Ημερομηνία";
-$pgv_lang["family"]								= "Οικογένεια";
 $pgv_lang["file_missing"]						= "No file was received. Upload again.";
 $pgv_lang["file_partial"]						= "File was only partially uploaded, please try again";
 $pgv_lang["file_success"]						= "Η Αποστολή Αρχείου ολοκληρώθηκε με επιτυχία";
@@ -74,7 +72,6 @@ $pgv_lang["gedcomid"]							= "GEDCOM INDI record ID";
 $pgv_lang["gedrec_deleted"]						= "GEDCOM record succesfully deleted.";
 $pgv_lang["hide_changes"]						= "Επιλέξτε εδώ για απόκρυψη αλλαγών.";
 $pgv_lang["highlighted"]						= "Highlited Image";
-$pgv_lang["invalid_search_input"]				= "Παρακαλώ δώστε Όνομα, Επώνυμο ή Τοποθεσία \\n\\t καθώς και Έτος";
 $pgv_lang["media_file"]							= "Αρχείο Πολυμέσων";
 $pgv_lang["must_provide"]						= "You must provide a ";
 $pgv_lang["new_source_created"]					= "New source created successfully.";

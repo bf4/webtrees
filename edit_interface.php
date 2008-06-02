@@ -31,7 +31,7 @@ loadLangFile("pgv_country");
 asort($countries);
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
+	header("Location: login.php?type=simple&amp;ged=$GEDCOM&amp;url=edit_interface.php".urlencode("?".$QUERY_STRING));
 	exit;
 }
 
@@ -1816,12 +1816,119 @@ case 'paste':
 	break;
 
 	
-//LBox ==============================================================
-case 'reorder_media':
-	include_once("modules/lightbox/functions/reorder_media.php");
+//LBox  Reorder Media ========================================================
+
+//------------------------------------------------------------------------------
+case 'reorder_media': // Sort page using Popup
+	require_once("js/prototype.js.htm");
+	require_once("js/scriptaculous.js.htm");
+	include_once("includes/media_reorder.php");
 	break;	
-//LBox ==============================================================	
+
+//------------------------------------------------------------------------------
+case 'reset_media_update': // Reset sort using popup
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+		$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+	break;
+
+//------------------------------------------------------------------------------
+case 'reorder_media_update': // Update sort using popup
+	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+	foreach($order1 as $m_media=>$num) {
+		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\r\n";
+	}
+	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+		$mediaordsuccess='yes';
+		if ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==8) {
+			$link = "individual.php?pid=$pid&tab=7&show_changes=yes";
+		}elseif ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==7) {
+			$link = "individual.php?pid=$pid&tab=6&show_changes=yes";
+		}else{
+			$link = "individual.php?pid=$pid&tab=3&show_changes=yes";
+		}
+		print "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
+	break;
+
+//------------------------------------------------------------------------------
+case 'al_reset_media_update': // Reset sort using Album Page
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+		$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+			$tabno = "6";
+		}else{
+			$tabno = "7";
+		}
+		?>
+		<script language="JavaScript" type="text/javascript" >
+		<!-- 
+			location.href='<?php echo "individual.php?tab=" . $tabno . "&pid=" . $pid  ;?>';
+		//-->
+		</script>
+		<?php
+	break;
+
+//------------------------------------------------------------------------------
+case 'al_reorder_media_update': // Update sort using Album Page
+	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
 	
+	function SwapArray($Array){
+		$Values = array();
+		while(list($Key,$Val) = each($Array))
+			$Values[$Val] = $Key;
+		return $Values;
+	}
+	if (isset($_REQUEST['order2'])) $order2 = $_REQUEST['order2'];
+	$order2 = SwapArray(explode(",", substr($order2, 0, -1)));
+
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+	foreach($order2 as $m_media=>$num) {
+		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\r\n";
+	}
+	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+		$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) {
+		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+			$tabno = "6";
+		}else{
+			$tabno = "7";
+		}
+		if ($success) print "<br />".$pgv_lang["update_successful"]. "<br /><br />";
+		?>
+		<script language="JavaScript" type="text/javascript" >
+		<!-- 
+			location.href='<?php echo "individual.php?tab=" . $tabno . "&pid=" . $pid  ;?>';
+		//-->
+		</script>
+		<?php
+	}
+	break;
+
+//LBox ===================================================
+
+
 //------------------------------------------------------------------------------
 case 'reorder_children':
 	require_once("js/prototype.js.htm");
@@ -1853,6 +1960,7 @@ case 'reorder_children':
 				asort($children);
 			}
 			$i=0;
+			$show_full = 1;		// Force details to show for each child
 			foreach($children as $id=>$child) {
 				print "<li style=\"cursor:move;margin-bottom:2px;\"";
 				if (!in_array($id, $ids)) print " class=\"facts_valueblue\"";
@@ -2255,6 +2363,8 @@ case 'mod_edit_fact':
 	}
 	break;
 }
+
+
 // Redirect to new record, if requested
 if (isset($_REQUEST['goto'])) $goto = $_REQUEST['goto'];
 if (isset($_REQUEST['link'])) $link = $_REQUEST['link'];
@@ -2262,7 +2372,7 @@ if (empty($goto) || empty($link))
 	$link='';
 //------------------------------------------------------------------------------
 // autoclose window when update successful
-if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"]) {
+if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"] && $mediaordsuccess!='yes') {
 	if ($action=="copy") print "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
 	else print "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }

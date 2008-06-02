@@ -3,7 +3,7 @@
  * Danish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ $pgv_lang["label_gedcom_id"]        = "GEDCOM-ID";
 $pgv_lang["label_local_id"]         = "Person-ID";
 $pgv_lang["accept"]				= "Godkend";
 $pgv_lang["accept_all"]			= "Godkend alle ændringer";
-$pgv_lang["accept_gedcom"]		= "Bestem dig for om du vil godkende eller afvise de enkelte ændringer.<dl><dt>For at godkende <i>alle</i> ændringer på en gang</dt><dd>Klik på linket \"Godkend alle ændringer\" i boksen nedenunder.</dd><dt>For at få mere information om en ændring kan du klikke på:</dt><dd><li>\"\$pgv_lang[view_change_diff]\" for at se på forskellen mellem gammelt og nyt indhold.<br /><li>\"\$pgv_lang[view_gedcom]\" for at se på det nye indhold i GEDCOM-format.</dd></dl>";
+$pgv_lang["accept_gedcom"]		= "Bestem dig for om du vil godkende eller afvise de enkelte ændringer.<dl><dt>For at godkende <i>alle</i> ændringer på en gang</dt><dd>Klik på linket <b>#pgv_lang[accept_all]#</b> i boksen nedenunder.</dd><dt>For at få mere information om en ændring kan du klikke på:</dt><dd><b>#pgv_lang[view_change_diff]#</b> for at se på forskellen mellem gammelt og nyt indhold.<br /><b>#pgv_lang[view_gedcom]#</b> for at se på det nye indhold i GEDCOM-format.</dd></dl>";
 $pgv_lang["accept_successful"]	= "Godkendte ændringer er lagt i databasen";
 $pgv_lang["add_child"]			= "Tilføj barn";
 $pgv_lang["add_child_to_family"]	= "Tilføj et barn til denne familie";
@@ -216,7 +216,6 @@ $pgv_lang["upload_error"]			= "Der opstod en FEJL under uploading af din fil.";
 $pgv_lang["upload_media"]			= "Upload mediefiler";
 $pgv_lang["upload_successful"]		= "Upload fuldført.";
 $pgv_lang["view_change_diff"]	= "Vis ændring, forskelle";
-
 $pgv_lang["admin_override"]			= "Admin indstilling";
 $pgv_lang["no_update_CHAN"]			= "Opdatér ikke CHAN (sidst ændret) posten";
 $pgv_lang["select_events"]			= "Vælg hændelser";

@@ -3,7 +3,7 @@
  * Danish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -340,10 +340,11 @@ $pgv_lang["see"]          = "se";
 $pgv_lang["noref"]        = "Intet henviser til denne post";
 $pgv_lang["tag"]          = "mærke";
 $pgv_lang["spacing"]      = "mellemrum";
-$pgv_lang["paternal"]          = "fædrende";
-$pgv_lang["icelandic"]         = "islandsk";
-$pgv_lang["portuguese"]        = "portugisisk";
-$pgv_lang["spanish"]           = "spansk";
+$pgv_lang["tradition_paternal"]		= "fædrende";
+$pgv_lang["tradition_icelandic"]	= "islandsk";
+$pgv_lang["tradition_portuguese"]	= "portugisisk";
+$pgv_lang["tradition_spanish"]		= "spansk";
+$pgv_lang["tradition_none"]			= "ingen";
 $pgv_lang["SURNAME_TRADITION"] = "Tradition for efternavnet";
 $pgv_lang["ADVANCED_PLAC_FACTS"] = "Avancerede fakta om stednavne";
 $pgv_lang["associated_files"]		= "Tilknyttede filer:";

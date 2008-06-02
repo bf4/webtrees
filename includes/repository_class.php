@@ -228,5 +228,10 @@ class Repository extends GedcomRecord {
 	function getLinkUrl() {
 		return parent::getLinkUrl('repo.php?rid=');
 	}
+
+	// Get an array of structures containing all the names in the record
+	function getAllNames() {
+		return parent::getAllNames('NAME');
+	}
 }
 ?>

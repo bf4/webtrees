@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,9 +64,9 @@ echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">להריץ מצגת שקפים</font></b><br />";
-echo "לחץ על צלמית התחל בתחתית בצד שמאל. המצגת מתחילה וצלמית הרמקול מופיעה. לחץ על צלמית הרמקול כדי להפעיל ולסגור את הקול. לחץ על צלמית הפסק כדי לעצור את המצגת.";
+echo "לחץ על צלמית התחל בתחתית בצד שמאל. המצגת מתחילה וצלמית הרמקול מופיעה. לחץ על צלמית הרמקול כדי להפעיל ולסגור את הקול. לחץ על צלמית הפסק כדי לעצור את המצגת. באתר יש קובץ קול של מקהלת הזמיר הפינית. המקהלה שרה את דר רבה אלימלך.";
 echo "<br /><br /></li>";
-echo "<li>";
+ echo "<li>";
 echo "<font color=\"blue\"><b>נווט ...</b></font><br />";
 echo "השתמש בטבלת ראה אלבום משמאל לטבלת צלמיות של התמונות כדי לבחור ישירות מראה אלבום של אדם אחר.";
 echo "<br /><br /></li>";

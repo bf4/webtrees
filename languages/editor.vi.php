@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Vietnamese texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Anton Luu
+ * @author Lan Nguyen
  * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "Bạn không thể vào thẳng nhu liệu ngôn ngữ được.";
 	exit;
 }
 
@@ -85,7 +85,6 @@ $pgv_lang["create_source"]			= "Gây ra nguồn mới";
 $pgv_lang["current_person"]         = "Giống như cái Hiện Tại";
 $pgv_lang["date"]					= "Ngày Tháng";
 $pgv_lang["delete_repo"]			= "Xóa Nơi Tàng Trữ";
-$pgv_lang["family"] 				= "Gia Đình";
 $pgv_lang["file_missing"]			= "Không nhận được tập tin nào. Xin gửi lại";
 $pgv_lang["file_partial"]			= "Tập tin chỉ gửi lên nửa chừng, xin làm lại";
 $pgv_lang["file_success"]			= "Tập tin gửi lên tốt đẹp";
@@ -99,7 +98,6 @@ $pgv_lang["generate_thumbnail"]		= "Tự động tạo ra bức chân dung nhỏ
 $pgv_lang["hide_changes"]			= "Nhấn vào đây để che khuất những gì đã đổi.";
 $pgv_lang["highlighted"]			= "Hình đề cao";
 $pgv_lang["illegal_chars"]			= "Kí tự không hợp pháp trong tên";
-$pgv_lang["invalid_search_input"] 	= "Ngoài Năm, xin cho vào Tên Gọi, Tên Họ, hoặc là Nơi ";
 $pgv_lang["label_diff_server"]      = "Site Khác";
 $pgv_lang["label_same_server"]      = "Cùng cái Site";
 $pgv_lang["link_as_child"]			= "Kèm người này vào một gia đình hiện tại như là con";

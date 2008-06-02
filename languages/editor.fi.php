@@ -3,7 +3,7 @@
  * Finnish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,7 +138,6 @@ $pgv_lang["directory_not_exist"]	= "Hakemistoa ei ole.";
 $pgv_lang["error_remote"]           	= "Olet valinnut etäpalvelimen";
 $pgv_lang["error_same"]             	= "Olet valinnut saman palvelimen.";
 $pgv_lang["external_file"]		= "Tätä mediakohdetta ei ole tiedostona tällä palvelimella. Sitä ei voi poistaa, siirtää tai nimetä uudelleen. ";
-//$pgv_lang["family"]			= "Perhe";
 $pgv_lang["file_missing"]		= "Yksikään tiedosto ei latautunut. Yritä uudelleen.";
 $pgv_lang["file_partial"]		= "Tiedosto latautui vain osittain, yritä uudelleen.";
 $pgv_lang["file_success"]		= "Tiedoston lataus onnistui.";
@@ -155,7 +154,6 @@ $pgv_lang["hebrew_surn"]			= "Heprealainen sukunimi";
 $pgv_lang["hide_changes"]		= "Klikkaa jos haluat kätkeä muutokset.";
 $pgv_lang["highlighted"]		= "Korostettu kuva";
 $pgv_lang["illegal_chars"]		= "Vääriä merkkejä nimessä";
-//$pgv_lang["invalid_search_input"] 	= "Anna etunimi, sukunimi tai paikka \\n\\t vuosiluvun lisäksi";
 $pgv_lang["invalid_search_multisite_input"] = "Anna joku seuraavista: nimi, syntymäaika, syntymäpaikka, kuolinaika, kuolinpaikka ja sukupuoli";
 $pgv_lang["invalid_search_multisite_input_gender"] = "Hae uudestaan, mutta anna enemmän tietoja pelkästään sukupuolen lisäksi.";
 $pgv_lang["label_diff_server"]      	= "Eri palvelin";
@@ -183,7 +181,6 @@ $pgv_lang["media_file_moved"]			= "Mediatiedosto siirretty.";
 $pgv_lang["media_file_not_moved"]	= "Mediatiedostoa ei voitu siirtää.";
 $pgv_lang["media_file_not_renamed"]	= "Mediatiedostoa ei voitu siirtää tai nimetä uudestaan.";
 $pgv_lang["media_thumb_exists"]	= "Median pienoiskuva on jo olemassa.";
-//$pgv_lang["multi_site_search"] 	= "Haku usealta sivustolta";
 $pgv_lang["multiple_gedcoms"]	= "Tämä tiedosto on linkitetty toiseen sukututkimustietokantaan tällä palvelimella. Sitä ei voi poistaa, siirtää tai nimetä uudelleen ennenkuin nämä linkitykset on poistettu.";
 $pgv_lang["must_provide"]		= "Sinun tulee antaa ";
 $pgv_lang["name_search"]		= "Nimi:";
@@ -216,7 +213,6 @@ $pgv_lang["upload_media"]		= "Lataa mediatiedostot palvelimelle";
 $pgv_lang["upload_media_help"]	= "Valitse ne tiedostot omalta tietokoneeltasi, jotka haluat ladata palvelimelle. Kaikki tiedostot ladataan hakemistoon <b>#MEDIA_DIRECTORY#</b> tai johonkin sen alihakemistoon.<br /><br />Määrittelemäsi hakemistonimet lisätään  #MEDIA_DIRECTORY#:n perään. Esimerkiksi  #MEDIA_DIRECTORY#myfamily- Mikäli pienoiskuvahakemistoa ei vielä ole olemassa, se luodaan automaattisesti.<br /><br />";
 $pgv_lang["upload_successful"]	= "Koneelle lataaminen onnistui";
 $pgv_lang["view_change_diff"]		= "Näytä muutokset";
-
 $pgv_lang["admin_override"]			= "Ylläpitäjävalinta";
 $pgv_lang["no_update_CHAN"]			= "Älä päivitä CHAN (viimeinen muutos) tietuetta";
 $pgv_lang["select_events"]			= "Valitse tapahtumat";

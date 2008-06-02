@@ -45,6 +45,13 @@ if (!$url)    $url =safe_GET('url', PGV_REGEX_URL);
 if (!$type)   $type=safe_GET('type', array('full', 'simple'), 'full');
 if (!$action) $type=safe_GET('action');
 
+if (empty($url)) {
+	// If we came here by means of a URL like http://mysite.com/foo/login.php
+	// we don't have a proper login URL, and session cookies haven't been set yet
+	// We'll re-load the page to properly determine cookie support
+	header("Location: login.php?url=index.php?ctype=user");
+}
+
 $message='';
 
 if ($action=='login') {
@@ -89,7 +96,7 @@ if ($action=='login') {
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
 		$url .= "&ged=".$ged;
-		$url = htmlentities(str_replace(array("&&", ".php&"), array("&", ".php?"), html_entity_decode($url)));
+		$url = htmlentities(str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url));
 		
 		header("Location: ".$url);
 		exit;
@@ -103,7 +110,7 @@ if ($action=='login') {
 		if ((isset($_SERVER['HTTP_REFERER'])) && ((stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false)||(stristr($_SERVER['HTTP_REFERER'],$tLOGIN_URL)!==false))) {
 			$url = basename($_SERVER['HTTP_REFERER']);
 			if (stristr($url, ".php")===false) {
-				$url = "index.php?ctype=gedcom&amp;ged=$GEDCOM";
+				$url = "index.php?ctype=gedcom&ged=$GEDCOM";
 			}
 		}
 		else {
@@ -114,11 +121,11 @@ if ($action=='login') {
 			/* - commented out based on UI feedback	
 			else $url = "index.php?ctype=user";
 			*/
-			else $url = "individual.php";
+			else $url = "index.php?ctype=gedcom";
 		}
 	}
 	else if (stristr($url, "index.php")&&!stristr($url, "ctype=")) {
-		$url.="&amp;ctype=gedcom";
+		$url.="&ctype=gedcom";
 	}
 }
 
@@ -215,8 +222,10 @@ $tab=0;		// initialize tab index
 		</table>
 </form><br /><br />
 <?php
+
 $sessname = session_name();
-if (!isset($_COOKIE[$sessname])) print "<span class=\"error\">".$pgv_lang["cookie_help"]."</span><br /><br />";
+if (!isset($_COOKIE[$sessname])) print "<center><div class=\"error width50\">".$pgv_lang["cookie_help"]."</div></center><br /><br />";
+
 if ($USE_REGISTRATION_MODULE) { ?>
 	<table class="center facts_table width50">
 	<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["account_information"]; ?></td></tr>

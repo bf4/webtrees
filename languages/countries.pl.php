@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
  *
  *
  * @author Katarzyna Adamska <adamska_k AT wp DOT pl>
+ * @author Łukasz Wileński <wooc@users.sourceforge.net>
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -68,7 +69,7 @@ $countries["BRA"]="Brazylia";
 $countries["BRN"]="Brunei";
 $countries["VGB"]="Brytyjskie Wyspy Dziewicze";
 $countries["BGR"]="Bułgaria";
-$countries["BFA"]="Burkina Faso (Górna Wolta)";
+$countries["BFA"]="Burkina Faso";
 $countries["BDI"]="Burundi";
 $countries["CHN"]="Chiny";
 $countries["HRV"]="Chorwacja";
@@ -168,7 +169,7 @@ $countries["MDV"]="Malediwy";
 $countries["MYS"]="Malezja";
 $countries["MLI"]="Mali";
 $countries["MLT"]="Malta";
-$countries["MNP"]="Mariany Pólnocne";
+$countries["MNP"]="Mariany Północne";
 $countries["MNT"]="Czarnogóra";
 $countries["MAR"]="Maroko";
 $countries["MTQ"]="Martynika";
@@ -197,7 +198,7 @@ $countries["NZL"]="Nowa Zelandia";
 $countries["OMN"]="Oman";
 $countries["PAK"]="Pakistan";
 $countries["PLW"]="Palau";
-$countries["PSE"]="Palestyńskie Terytorium Okupowane";
+$countries["PSE"]="Palestyna";
 $countries["PAN"]="Panama";
 $countries["PNG"]="Papua - Nowa Gwinea";
 $countries["PRY"]="Paragwaj";

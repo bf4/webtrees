@@ -5,7 +5,7 @@
  * This file contains the Norwegian text for the PGV Configure system.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Geir Håkon Eikland
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,15 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Du har ikke direkte tilgang til en språkfil.<br />You cannot access a language file directly.";
 	exit;
 }
+
+$pgv_lang["SHOW_ID_NUMBERS"] 			= "Vis ID-nummer etter navn";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"] 		= "Vis hovedbildet i rammen til en person";
+$pgv_lang["download_file"]				= "Last ned (download) fil";
+$pgv_lang["duplicate_username"]		= "NB!! Det finnes allerede et slikt brukernavn. Gå tilbake og velg et annet brukernavn.";
+$pgv_lang["none"]					= "Ingen";
+$pgv_lang["family"]				= "Familie";
+$pgv_lang["invalid_search_input"] 	= "Vennligst angi fornavn, etternavn eller stedsnavn \\n\\t i tillegg til år";
+$pgv_lang["multi_site_search"] 			= "Søk på flere nettsteder";
 
 $pgv_lang["date_of_entry"]			= "Angitt dato i originalkilde";
 $pgv_lang["file_information"]		= "Fil-informasjon";
@@ -594,7 +603,6 @@ $pgv_lang["year"]				= "År";
 $pgv_lang["timeline_instructions"]	= "- <i><b>PS!</b>  Du kan flytte på boksene under ved hjelp av musa!</i> (I de nyeste nettleserne)";
 $pgv_lang["zoom_out"]			= "Zoom ut";
 $pgv_lang["zoom_in"]			= "Zoom inn";
-
 $pgv_lang["cal_gregorian"]            = "Gregoriansk";
 $pgv_lang["cal_julian"]               = "Juliansk";
 $pgv_lang["cal_french"]               = "Fransk";
@@ -655,7 +663,6 @@ $pgv_lang["file_not_exists"]		= "Oppgitt filnavn finnes ikke!";
 $pgv_lang["file_not_present"]		= "Fant ikke filen.";
 $pgv_lang["file_exists"]			= "Det finnes allerede en slektsfil med dette navnet. Velg et annet navn, eller slett den gamle filen.";
 $pgv_lang["new_gedcom_title"]		= "Slektsbase fra [#GEDCOMFILE#]";
-$pgv_lang["upload_gedcom_help"]		= "Velg en slektsfil (GEDCOM) eller ZIP-fil fra din lokale PC for å hente (upload) til serveren din. Filen(e) vil bli lagret i mappen <b>#INDEX_DIRECTORY#</b>.<br /><br />Dersom du henter en ZIP-fil, bør den bare inneholde en slektsfil. Slektsfilen vil automatisk bli brukt for å importere datene til slektsbasen.<br /><br />";
 $pgv_lang["add_gedcom_instructions"]	= "Tast inn et filnavn for denne nye slektsfilen (GEDCOM). Den blir opprettet i mappen index:";
 $pgv_lang["research_assistant"]		= "Forsknings-assistent";
 $pgv_lang["utf8_to_ansi"]			= "Konvertere fra UTF-8 til ANSI tegnsett?";

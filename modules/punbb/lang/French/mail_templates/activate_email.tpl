@@ -1,4 +1,4 @@
-﻿Subject: Demande de changement d'adresse de courriel
+Subject: Demande de changement d'adresse de courriel
 
 Bonjour <username>,
 

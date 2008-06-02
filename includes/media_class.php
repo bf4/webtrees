@@ -379,5 +379,10 @@ class Media extends GedcomRecord {
 		if ($this->title==$obj->title && $this->file==$obj->file) return true;
 		return false;
 	}
+
+	// Get an array of structures containing all the names in the record
+	function getAllNames() {
+		return parent::getAllNames('TITL');
+	}
 }
 ?>

@@ -3,7 +3,7 @@
  * Finnish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -319,11 +319,12 @@ $pgv_lang["tag"]          = "merkitsin";
 $pgv_lang["spacing"]      = "välistys";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Erityiset nimitiedot";
 $pgv_lang["ADVANCED_PLAC_FACTS"] = "Erityiset paikannimitiedot";
-$pgv_lang["SURNAME_TRADITION"] = "Perinteinen sukunimi";
-$pgv_lang["icelandic"]         = "Islanti";
-$pgv_lang["paternal"]          = "Isän puolelta";
-$pgv_lang["portuguese"]        = "Portugali";
-$pgv_lang["spanish"]           = "Espanja";
+$pgv_lang["SURNAME_TRADITION"]		= "Perinteinen sukunimi";
+$pgv_lang["tradition_icelandic"]	= "Islanti";
+$pgv_lang["tradition_paternal"]		= "Isän puolelta";
+$pgv_lang["tradition_portuguese"]	= "Portugali";
+$pgv_lang["tradition_spanish"]		= "Espanja";
+$pgv_lang["tradition_none"]			= "Ei yhtään";
 $pgv_lang["clear_cache_succes"]		= "Tiedostot välimuistista on poistettu.";
 $pgv_lang["clear_cache"]			= "Poista tiedostot välimuistista.";
 $pgv_lang["sanity_err0"]			= "Virheet:";

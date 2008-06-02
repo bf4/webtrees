@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Portugese Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Maurício Menegazzo Rosa
+ * @author Anderson Wilson and Clovis Bombardelli
  * @version $Id$
  */
 
@@ -100,7 +99,6 @@ $pgv_lang["day_before_month"]="Dia antes do Mês (DD MM YYYY)";
 $pgv_lang["do_not_change"]="Não alterar";
 $pgv_lang["download_gedcom"]="Download GEDCOM";
 $pgv_lang["download_note"]="Observação: O processamento, que é feito antes do download, de GEDCOMs muito grandes pode ser demorado. Caso o PHP encerre o processamento por \"time out\", o arquivo poderá estar imcompleto.<br /><br />Para saber se o arquivo está integro, utilize um editor de texto qualquer e verifique se a última linha do arquivo GEDCOM é um <b>0&nbsp;TRLR</b>. <u>Não</u> salve o arquivo GEDCOM após verifica-lo.<br /><br />O processo de \"download\" pode demorar tanto quanto para o processo de envio do GEDCOM.";
-$pgv_lang["duplicate_username"]="Nome de Usuário duplicado.  Já existe um usuário com este nome. Por favor escolha outro nome de usuário.";
 $pgv_lang["editaccount"]="Permite este usuário alterar as informações de sua conta";
 $pgv_lang["empty_dataset"]="Você deseja apagar os dados antigos e substituir por estes novos?";
 $pgv_lang["empty_lines_detected"]="Detectado linhas vazias em seu arquivo GEDCOM.  Na 'Limpeza' essas linhas vazias serão removidas.";
@@ -146,7 +144,6 @@ $pgv_lang["logfile_content"]="Conteúdo do arquivo de log";
 $pgv_lang["macfile_detected"]="Detectado arquivo Macintosh.  Na 'Limpeza' seu arquivo será convertido para um arquivo DOS.";
 $pgv_lang["merge_records"]="Consolidar Registros";
 $pgv_lang["month_before_day"]="Mês antes do Dia (MM DD YYYY)";
-$pgv_lang["none"]="Nenhum";
 $pgv_lang["performing_validation"]="Validando o arquivo GEDCOM...";
 $pgv_lang["pgv_registry"]="Exibir outros sites usando PhpGedView";
 $pgv_lang["phpinfo"]="Informações do PHP";

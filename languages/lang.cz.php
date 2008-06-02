@@ -3,7 +3,7 @@
  * Czech Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,6 @@ $pgv_lang["my_pedigree"]		= "Můj vývod";
 $pgv_lang["my_indi"]			= "Můj osobní záznam";
 $pgv_lang["yes"]			= "Ano";
 $pgv_lang["no"]				= "Ne";
-$pgv_lang["add_gedcom"]			= "Přidat další GEDCOM";
 $pgv_lang["no_support"]			= "Zjistili jsme, že váš prohlížeč nepodporuje standardy užívané PhpGedView. Většina prohlížečů ve svých novějších verzích tyto standardy podporuje. Prosím aktualizujte svůj prohlížeč na novější verzi.";
 $pgv_lang["change_theme"]		= "Změna motivu";
 //-- INDEX (PEDIGREE_TREE) FILE MESSAGES
@@ -291,7 +290,6 @@ $pgv_lang["import_multiple"]			= "Importovat a pracovat s více GEDCOM soubory";
 $pgv_lang["explain_options"]			= "Jestliže zvolíte možnost \"smazat tabulky\", všechna budou nahrazena tímto GEDCOM souborem.<br />Pokud zvolíte \"importovat a pracovat s GEDCOM soubory\", PhpGedView smaže jakákoliv data, která byla importována ze stejnojmenného GEDCOM souboru. Tato volba vám umožňuje ukládat data z více GEDCOM souborů ve stejných tabulkách a jednoduše mezi nimi přepínat.";
 $pgv_lang["path_to_gedcom"]			= "Zadejte cestu k vašemu GEDCOM souboru:";
 $pgv_lang["gedcom_title"]			= "Zadejte nadpis popisující data v tomto GEDCOM souboru";
-$pgv_lang["empty_dataset"]			= "Chcete vyprázdnit databázi?";
 $pgv_lang["index_complete"]			= "Rejstřík je hotov.";
 $pgv_lang["updating_is_dead"]			= "Doplnění stavu k zemřelým osobám ";
 $pgv_lang["updating_family_names"]		= "Aktualizace příjmení pro FAM ";
@@ -335,7 +333,6 @@ $pgv_lang["year"]				= "Rok:";
 $pgv_lang["timeline_instructions"]		= "Ve většině novějších prohlížečů můžete klepnout na jméno v rámečku a přetáhnout jej na osu.";
 $pgv_lang["zoom_in"]				= "Zvětšit";
 $pgv_lang["zoom_out"]				= "Zmenšit";
-
 $pgv_lang["cal_gregorian"]            = "Gregoriánský";
 $pgv_lang["cal_julian"]               = "Juliánský";
 $pgv_lang["cal_french"]               = "Francouzský";
@@ -844,4 +841,12 @@ $pgv_lang["gd_helplink"]			= "http://www.php.net/gd";
 $pgv_lang["fontfile_error"]			= "Soubor s tímto fontem nebyl na PHP serveru nalezen.";
 $pgv_lang["rss_descr"]				= "Novinky a odkazy ze stránky #GEDCOM_TITLE#";
 $pgv_lang["rss_logo_descr"]			= "Materiál vytvořilo PhpGedView";
+$pgv_lang["none"]				= "Žádná";
+$pgv_lang["SHOW_ID_NUMBERS"]		= "Zobrazovat vedle jmen ID";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "Zobrazit zvýrazněné obrázky v políčkách lidí";
+$pgv_lang["download_file"]	= "Stáhnout soubor";
+$pgv_lang["cancel"]			= "Zrušit";
+$pgv_lang["duplicate_username"]		= "Toto uživatelské jméno již existuje. Prosím, vraťte se zpět a vyberte jiné uživatelské jméno.";
+$pgv_lang["family"]			= "Rodina";
+$pgv_lang["invalid_search_input"] 	= "Prosím zadejte k roku ještě jméno, příjmení nebo místo.";
 ?>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Language definitions used in both profile.php and register.php
 $lang_prof_reg = array(

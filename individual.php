@@ -102,11 +102,11 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				echo '<td valign="top" colspan="', $maxcols-$col, '">';
 				if ($birtdate->isOK() || $birtplac) {
 					echo '<span class="label">', $factarray['BIRT'].':', '</span> ';
-					echo '<span class="field">', $birtdate->Display(false), ' -- ', $birtplac, '</span><br />';
+					echo '<span class="field">', $birtdate->Display(false), ' -- ', PrintReady($birtplac), '</span><br />';
 				}
 				if ($deatdate->isOK() || $deatplac) {
 					echo '<span class="label">', $factarray['DEAT'].':','</span> ';
-					echo '<span class="field">', $deatdate->Display(false), ' -- ', $deatplac, '</span><br />';
+					echo '<span class="field">', $deatdate->Display(false), ' -- ', PrintReady($deatplac), '</span><br />';
 				}
 				if ($SHOW_LDS_AT_GLANCE) {
 					echo '<b>', get_lds_glance($controller->indi->getGedcomRecord()), '</b>';
@@ -451,6 +451,13 @@ else
 	print "<div id=\"media\" class=\"tab_page\" style=\"display:block;\" >\n";
 if ($MULTI_MEDIA) {
 	print "<span class=\"subheaders\">".$pgv_lang["media"]."</span>";
+	// For Reorder media ------------------------------------
+	if (PGV_USER_CAN_EDIT) {
+		print "<center";
+		include_once('includes/media_tab_head.php');
+		print "</center>";
+	}
+	// -----------------------------------------------------------
 	print "<div id=\"media_content\">";
 	if (($controller->default_tab==3)||(!empty($SEARCH_SPIDER))) $controller->getTab(3);
 	else {

@@ -3,7 +3,7 @@
  * Russian Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
+$pgv_lang["SHOW_ID_NUMBERS"]		= "Показать ID-номера имен:";
+$pgv_lang["download_file"]		= "Загрузить файл.";
+$pgv_lang["cancel"]			= "Прервать";
+$pgv_lang["family"]			= "Семья";
+$pgv_lang["invalid_search_input"] 	= "Пожалуйста укажите имя, фамилию или место nt в дополнение к году";
 
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]				= "?";
@@ -56,7 +62,6 @@ $pgv_lang["please_wait"]		= "Индексные файлы должны быть
 $pgv_lang["choose_gedcom"]		= "Выберите файл GEDCOM";
 $pgv_lang["username"]			= "Имя пользователя:";
 $pgv_lang["invalid_username"]	= "Имя пользователя имеет недопустимые символы.";
-$pgv_lang["fullname"]			= "Полное имя";
 $pgv_lang["password"]			= "Пароль:";
 $pgv_lang["confirm"]			= "Подтверждение пароля";
 $pgv_lang["login"]			= "Вход в программу";
@@ -370,7 +375,6 @@ $pgv_lang["cir"]			= "приблизительно";
 $pgv_lang["apx"]			= "примерно";
 $pgv_lang["user_admin"]			= "Управление пользователями";
 $pgv_lang["rebuild_indexes"]		= "Индексировать заново";
-$pgv_lang["configuration"]		= "Инсталлирование";
 $pgv_lang["password_mismatch"]		= "Разные пароли.";
 $pgv_lang["enter_username"]		= "Введите имя пользователя.";
 $pgv_lang["enter_fullname"]		= "Введите полное имя.";
@@ -671,7 +675,6 @@ $pgv_lang["location_upgrade"]		= "Укажите место расположен
 $pgv_lang["cannot_read"]		= "Нечитаемф";
 $pgv_lang["new_variable"]		= "Найдена новая переменная:";
 $pgv_lang["config_open_error"] 		= "Ошибка при открытии файла конфигурации.";
-$pgv_lang["config_write_error"] 	= "Ошибка! Невозможно откорректировать файл конфигурации.";
 $pgv_lang["config_update_ok"]		= "Файл конфигурации доработан.";
 $pgv_lang["config_uptodate"]		= "Ваш файл конфигурации доработан.";
 $pgv_lang["processing"]			= "Идет обработка...";
@@ -698,7 +701,6 @@ $pgv_lang["changed_mac"]		= "Обнуружены окончания строк 
 $pgv_lang["changed_places"]		= "Обнаружен неправильный формат географических названий. Исправьте записи географический названий в соответствии со спецификацией GEDCOM 5.5. Пример из Ваших GEDCOM данных:";
 $pgv_lang["optional_tools"]		= "Вы можете выбрать для запуска следующие необязательные инструменты перед импортированием.";
 $pgv_lang["optional"]			= "Необязательные Инструменты";
-$pgv_lang["date_format"]		= "Формат Даты:";
 $pgv_lang["add_media_tool"]		= "Добавить Медиа-инструмент";
 $pgv_lang["launch_media_tool"]		= "Нажмите здесь чтобы запустить Добавление Медиа-инструмента.";
 $pgv_lang["add_media_descr"]		= "Этот инструмент будет добавлять медиа OBJE ярлыки к GEDCOM данным. Выбирите это окно когда закончите добавлять медиа-объект.";

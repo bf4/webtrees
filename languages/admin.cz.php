@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Czech texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "Nemáte přímý přístup k souboru s češtinou.";
 	exit;
 }
 
@@ -47,7 +47,7 @@ $pgv_lang["created_other_fail"]	= "Není možné vytvořit tabulku <i>ostatních
 $pgv_lang["created_places"]			= "Tabulka <i>Místa</i> byla úspěšně vytvořena.";
 $pgv_lang["created_places_fail"]	= "Není možné vytvořit tabulku <i>míst</i>.";
 $pgv_lang["folder_created"]		= "Vytvořena složka";
-$pgv_lang["add_gedcom"]			= "Přidat GEDCOM";
+$pgv_lang["add_gedcom"]			= "Přidat další GEDCOM";
 $pgv_lang["add_new_gedcom"]		= "Vytvořit nový GEDCOM";
 $pgv_lang["admin_approved"]		= "Váš účet na #SERVER_NAME# byl povolen";
 $pgv_lang["admin_gedcom"]			= "Spravovat GEDCOM";
@@ -66,7 +66,6 @@ $pgv_lang["day_before_month"]		= "Den před měsícem (DD MM YYYY)";
 $pgv_lang["do_not_change"]		= "Neměnit";
 $pgv_lang["download_gedcom"]		= "Stáhnout GEDCOM";
 $pgv_lang["download_note"]		= "POZNÁMKA: Velké GEDCOM soubory se mohou stahovat velmi dlouho. Jestliže PHP přeruší proces ještě před úplným stažením souboru, stažený GEDCOM nebude kompletní. Chcete-li se ujistit, že je váš soubor celý, podívejte se, jestli je na jeho konci řádek 0 TRLR. Stažení souboru by mělo trvat přibližně stejně dlouho jako jeho nahrání.";
-$pgv_lang["duplicate_username"]		= "Toto uživatelské jméno již existuje. Prosím, vraťte se zpět a vyberte jiné uživatelské jméno.";
 $pgv_lang["editaccount"]			= "Umožnit tomuto uživateli upravovat informace o svém účtu";
 $pgv_lang["empty_dataset"]			= "Chcete vymazat stará data a nahradit je novými?";
 $pgv_lang["empty_lines_detected"]	= "Ve vašem GEDCOM souboru byly nalezeny prázdné řádky. Při čištění budou tyto řádky odstraněny.";

@@ -26,6 +26,26 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["PLE_PLACES_help"]					30 May 2008          f,W, added description of search methods
+*$pgv_lang["PL_EDIT_LOCATION_help"]				30 May 2008          f
+*$pgv_lang["PL_ADD_LOCATION_help"]				30 May 2008          f
+*$pgv_lang["PL_IMPORT_GEDCOM_help"]				30 May 2008          f
+*$pgv_lang["PL_IMPORT_ALL_GEDCOM_help"]			30 May 2008          f
+*$pgv_lang["PL_IMPORT_FILE_help"]				30 May 2008          f
+*$pgv_lang["PL_EXPORT_FILE_help"]				30 May 2008          f
+*$pgv_lang["PL_EXPORT_ALL_FILE_help"]			30 May 2008          f
+*$pgv_lang["PLE_EDIT_help"]						30 May 2008          f
+*$pgv_lang["PLE_PLACES_help"]					30 May 2008          f
+*$pgv_lang["PLE_PRECISION_help"]				30 May 2008          f
+*$pgv_lang["PLE_LATLON_CTRL_help"]				30 May 2008          f
+*$pgv_lang["PLE_ZOOM_help"]						30 May 2008          f
+*$pgv_lang["PLE_ICON_help"]						30 May 2008          f
+*$pgv_lang["PLIF_FILENAME_help"]				30 May 2008          f
+*$pgv_lang["PLIF_LOCALFILE_help"]				30 May 2008          f
+*$pgv_lang["PLIF_CLEAN_help"]					30 May 2008          f
+*$pgv_lang["PLIF_UPDATE_help"]					30 May 2008          f
+*$pgv_lang["PLIF_OVERWRITE_help"]				30 May 2008          f
+*$pgv_lang["PLE_ACTIVE_help"]					30 May 2008          f
 +$pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]		7 May 2008           A, new feature
 +$pgv_lang["GOOGLEMAP_PH_help"]					1 May 2008           A, new feature
 +$pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"]		1 May 2008           A, new feature

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /*
 // Determine what locale to use
@@ -12,7 +12,7 @@ switch (PHP_OS)
 	case 'FreeBSD':
 	case 'NetBSD':
 	case 'OpenBSD':
-		$locale = 'fr_FR.ISO8859-1';
+		$locale = 'fr_FR.FR-ASCII';
 		break;
 
 	default:
@@ -30,7 +30,8 @@ setlocale(LC_CTYPE, $locale);
 $lang_common = array(
 // Text orientation and encoding
 'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
-'lang_encoding'			=>	'iso-8859-1',
+//'lang_encoding'			=>	'iso-8859-1',
+'lang_encoding'			=>	'UTF-8',
 'lang_multibyte'		=>	false,
  
 // Notices

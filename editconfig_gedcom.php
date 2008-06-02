@@ -1930,7 +1930,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 				foreach (array('paternal', 'spanish', 'portuguese', 'icelandic', 'none') as $value) {
 					print '<option value="'.$value.'"';
 					if ($SURNAME_TRADITION==$value) print ' selected="selected"';
-					print '>'.$pgv_lang[$value].'</option>';
+					print '>'.$pgv_lang["tradition_".$value].'</option>';
 				}
 			?>
 			</select>

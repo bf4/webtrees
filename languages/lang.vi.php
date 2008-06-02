@@ -3,7 +3,7 @@
  * Vietnamese Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Anton Luu
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,19 @@
  *
  * @package PhpGedView
  * @author Anton Luu
+ * @author Lan Nguyen
  * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "Bạn không thể vào thẳng nhu liệu ngôn ngữ được.";
 	exit;
 }
+
+$pgv_lang["duplicate_username"] 	= "Đã có tên giống hệt. Đã có một thành viên với tên đó. Xin lựa tên khác";
+$pgv_lang["none"]					= "Không hạn chế";
+$pgv_lang["family"] 				= "Gia Đình";
+$pgv_lang["invalid_search_input"] 	= "Ngoài Năm, xin cho vào Tên Gọi, Tên Họ, hoặc là Nơi ";
 
 //-- GENERAL HELP MESSAGES
 $pgv_lang["fullname"]				= "Toàn Bộ Danh Tánh";

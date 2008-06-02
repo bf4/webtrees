@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Chinese texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,6 @@ $pgv_lang["confirm_user_delete"]	= "是否確實要刪除用戶";
 $pgv_lang["create_user"]		= "創造用戶";
 $pgv_lang["dataset_exists"]		= "GEDCOM 以這個文件名已經被導入入資料庫。";
 $pgv_lang["download_gedcom"]		= "下載GEDCOM";
-$pgv_lang["duplicate_username"]		= "複製用戶名。  一名用戶與那用戶名已經存在。  請回去和選擇其它用戶名。";
 $pgv_lang["empty_dataset"]		= "您想要倒空資料集嗎??";
 $pgv_lang["found_record"]		= "被查找的記錄";
 $pgv_lang["ged_import"]			= "導入GEDCOM";

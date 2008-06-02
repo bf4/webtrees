@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Latin American Spanish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
+ * @author Eduardo Cociña
  * @version $Id$
  */
 
@@ -63,7 +63,6 @@ $pgv_lang["add_wife_to_family"] = "Agregar esposa a esta familia";
 $pgv_lang["changes_occurred"]	= "Este individuo tuvo los siguientes cambios:";
 $pgv_lang["create_source"]		= "Crear una nueva fuente";
 $pgv_lang["date"]	= "Fecha";
-$pgv_lang["family"]	= "Familia";
 $pgv_lang["file_missing"]	= "No se recibió el archivo. Envíelo nuevamente.";
 $pgv_lang["file_partial"]	= "Archivo parcialmente cargado, por favor intente nuevamente.";
 $pgv_lang["file_success"]	= "Archivo cargado exitosamente";

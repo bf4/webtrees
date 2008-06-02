@@ -3,7 +3,7 @@
  * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All right reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,66 +67,66 @@ $pgv_lang["GM_NAME_PRE_POST"]           = "Porządek przedrostka/przyrostka";
 $pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />To pole wyznacza porządek w jakim nazwy będą używać przedrostka i przyrostka. Możliwe wartości:<br /><ul><li>Brak</li><li>Normalny, przedrostek, przyrostek, oba</li><li>Normalny, przyrostek, przedrostek, oba</li><li>Przedrostek, przyrostek, oba, normalny</li><li>Przyrostek, przedrostek, oba, normalny</li><li>Przedrostek, przyrostek, normalny, oba</li><li>Przyrostek, przedrostek, normalny, oba</li></ul>";
 
 $pgv_lang["PL_EDIT_LOCATION"]           = "Edytuj lub usuń miejsce";
-$pgv_lang["PL_EDIT_LOCATION_help"]      = "W tym miejscu można edytować lub usuwać miejsca. Jeśli klikniejsz na Edytuj zostanie otwarte nowe okno, w którym będzie można zmienić dane geograficzne.<br />Jeśli klikniesz na czerwony krzyżyk miejsce zostanie usunięte. Usunąć można jedynie miejsca, które nie mają miejsc podrzędnych.";
+$pgv_lang["PL_EDIT_LOCATION_help"]      = "~#pgv_lang[PL_EDIT_LOCATION]#~<br /><br />W tym miejscu można edytować lub usuwać miejsca. Jeśli klikniejsz na Edytuj zostanie otwarte nowe okno, w którym będzie można zmienić dane geograficzne.<br />Jeśli klikniesz na czerwony krzyżyk miejsce zostanie usunięte. Usunąć można jedynie miejsca, które nie mają miejsc podrzędnych.";
 
 $pgv_lang["PL_ADD_LOCATION"]            = "Dodaj nowe miejsce";
-$pgv_lang["PL_ADD_LOCATION_help"]       = "Użyj w celu dodania miejsca do tablicy. Miejsce będzie dodane w bieżącym poziomie.";
+$pgv_lang["PL_ADD_LOCATION_help"]       = "~#pgv_lang[PL_ADD_LOCATION]#~<br /><br />Użyj w celu dodania miejsca do tablicy. Miejsce będzie dodane w bieżącym poziomie.";
 
 $pgv_lang["PL_IMPORT_GEDCOM"]           = "Importuj z bieżącego GEDCOMu";
-$pgv_lang["PL_IMPORT_GEDCOM_help"]      = "Importuj miejsca z bieżącego GEDCOMu. Bieżący plik GEDCOM będzie przeskanowany i wszystkie miejsca będą dodane do tablicy. Jeśli współrzędne są dostępne będą również dodane.";
+$pgv_lang["PL_IMPORT_GEDCOM_help"]      = "~#pgv_lang[PL_IMPORT_GEDCOM]#~<br /><br />Importuj miejsca z bieżącego GEDCOMu. Bieżący plik GEDCOM będzie przeskanowany i wszystkie miejsca będą dodane do tablicy. Jeśli współrzędne są dostępne będą również dodane.";
 
 $pgv_lang["PL_IMPORT_ALL_GEDCOM"]       = "Importuj ze wszystkich GEDCOMów";
-$pgv_lang["PL_IMPORT_ALL_GEDCOM_help"]  = "Importuj miejsca ze wszystkich GEDCOMów. Wszystkie pliki GEDCOM będą przeskanowane i wszystkie miejsca będą dodane do tablicy. Jeśli współrzędne są dostępne będą również dodane.";
+$pgv_lang["PL_IMPORT_ALL_GEDCOM_help"]  = "~#pgv_lang[PL_IMPORT_ALL_GEDCOM]#~<br /><br />Importuj miejsca ze wszystkich GEDCOMów. Wszystkie pliki GEDCOM będą przeskanowane i wszystkie miejsca będą dodane do tablicy. Jeśli współrzędne są dostępne będą również dodane.";
 
 $pgv_lang["PL_IMPORT_FILE"]             = "Importuj z pliku";
-$pgv_lang["PL_IMPORT_FILE_help"]        = "Importuj miejsca z pliku. Plik powinie być zapisany w postaci CSV na komputerze. Separator rekordów: ';'";
+$pgv_lang["PL_IMPORT_FILE_help"]        = "~#pgv_lang[PL_IMPORT_FILE]#~<br /><br />Importuj miejsca z pliku. Plik powinie być zapisany w postaci CSV na komputerze. Separator rekordów: ';'";
 
 $pgv_lang["PL_EXPORT_FILE"]             = "Eksportuj aktualny widok do pliku";
-$pgv_lang["PL_EXPORT_FILE_help"]        = "Eksportuj aktualny widok do pliku. Ta opcja pozwala na zapisanie bieżącego widoku miejsc w pliku na komputerze. Oznacza to, że jeśli jest wybrany poziom Kraju i wyświetlone są województwa, do pliku zostaną zapisane dane województw i wszystkie miejsca podrzędne.";
+$pgv_lang["PL_EXPORT_FILE_help"]        = "~#pgv_lang[PL_EXPORT_FILE]#~<br /><br />Eksportuj aktualny widok do pliku. Ta opcja pozwala na zapisanie bieżącego widoku miejsc w pliku na komputerze. Oznacza to, że jeśli jest wybrany poziom Kraju i wyświetlone są województwa, do pliku zostaną zapisane dane województw i wszystkie miejsca podrzędne.";
 
-$pgv_lang["PL_EXPORT_ALL_FILE"]         = "Eksportuj wszystkie lokalizacje do pliku";
-$pgv_lang["PL_EXPORT_ALL_FILE_help"]    = "Eksportuj wszystkie lokalizacje do pliku. Ta opcja pozwala na zapisanie wszystkich miejsc w pliku na komputerze.";
+$pgv_lang["PL_EXPORT_ALL_FILE"]			= "Eksportuj wszystkie lokalizacje do pliku";
+$pgv_lang["PL_EXPORT_ALL_FILE_help"]    = "~#pgv_lang[PL_EXPORT_ALL_FILE]#~<br /><br />Eksportuj wszystkie lokalizacje do pliku. Ta opcja pozwala na zapisanie wszystkich miejsc w pliku na komputerze.";
 
 $pgv_lang["GOOGLEMAP_COORD"]            = "Wyświetl współrzędne";
 $pgv_lang["GOOGLEMAP_COORD_help"]       = "~#pgv_lang[GOOGLEMAP_COORD]#~<br /><br />Ta opcja określa czy współrzędne miejsc mają być wyświetlone w dymkach powiązanych ze znacznikami miejsca";
 
 // Help texts for places_edit.php
 $pgv_lang["PLE_EDIT"]               	= "Edytuj położenie geograficzne miejsc";
-$pgv_lang["PLE_EDIT_help"]              = "W tym miejscu możesz dodawać, edytować lub usuwać szczegóły dotyczące miejsca.";
+$pgv_lang["PLE_EDIT_help"]              = "~#pgv_lang[PLE_EDIT]#~<br /><br />W tym miejscu możesz dodawać, edytować lub usuwać szczegóły dotyczące miejsca.";
 
 $pgv_lang["PLE_PLACES"]                 = "Nazwa miejsca";
-$pgv_lang["PLE_PLACES_help"]            = "W tym miejscu możesz dodać lub edytować nazwę miejsca.";
+$pgv_lang["PLE_PLACES_help"]            = "~#pgv_lang[PLE_PLACES]#~<br /><br />W tym miejscu możesz dodać lub edytować nazwę miejsca.<br />Opcja 'Szukaj na tym poziomie' pozwala na wyszukanie współrzędnych miejsca mającego podaną nazwę tylko wśród miejsc z tego poziomu.<br />Opcja 'Szukaj wszystkie' pozwala na wyszukanie współrzędnych wszystkich miejsc mających podaną nazwę. Niektóre miejsca niższych poziomów mogą zostać nie wyświetlone przy tej metodzie szukania.";
 
 $pgv_lang["PLE_PRECISION"]              = "Precyzja";
-$pgv_lang["PLE_PRECISION_help"]         = "W tym miejscu możesz ustawić precyzję. Liczba miejsc po przecinku we współrzędnych odnosi się do tej wartości.";
+$pgv_lang["PLE_PRECISION_help"]         = "~#pgv_lang[PLE_PRECISION]#~<br /><br />W tym miejscu możesz ustawić precyzję. Liczba miejsc po przecinku we współrzędnych odnosi się do tej wartości.";
 
-$pgv_lang["PLE_LATLON_CTRL"]            = "Wprowadź współrzędne";
-$pgv_lang["PLE_LATLON_CTRL_help"]       = "W tym miejscu możesz ustawić współrzędne. Najpierw ustaw szerokość i długość geograficzną (E/W lub N/S). Następnie wprowadź współrzędne. Powinny być w formacie dziesiętnym.<br />Wartości dziesiętne można obliczyć przeliczając minuty i sekundy według podanego wzoru:<br />stopnie_dziesiętne = ((sekundy / 60) + minuty) / 60 + stopnie.";
+$pgv_lang["PLE_LATLON_CTRL"]            = "Wprowadź współrzędne geograficzne";
+$pgv_lang["PLE_LATLON_CTRL_help"]       = "~#pgv_lang[PLE_LATLON_CTRL]#~<br /><br />W tym miejscu możesz ustawić współrzędne. Najpierw ustaw szerokość i długość geograficzną (E/W lub N/S). Następnie wprowadź współrzędne. Powinny być w formacie dziesiętnym.<br />Wartości dziesiętne można obliczyć przeliczając minuty i sekundy według podanego wzoru:<br />stopnie_dziesiętne = ((sekundy / 60) + minuty) / 60 + stopnie.";
 
 $pgv_lang["PLE_ZOOM"]                   = "Powiększenie";
-$pgv_lang["PLE_ZOOM_help"]              = "W tym miejscu możesz ustawić powiększenie. Ta wartość będzie używana jako minimalna wartość podczas wyświetlania miejsc na mapie.";
+$pgv_lang["PLE_ZOOM_help"]              = "~#pgv_lang[PLE_ZOOM]#~<br /><br />W tym miejscu możesz ustawić powiększenie. Ta wartość będzie używana jako minimalna wartość podczas wyświetlania miejsc na mapie.";
 
 $pgv_lang["PLE_ICON"]                   = "Wybierz flagę miejsca";
-$pgv_lang["PLE_ICON_help"]              = "W tym miejscu możesz ustawić lub usunąć flagę dla tego miejsca. Podczas wyświetlania miejsc flaga będzie używana jako znacznik.";
+$pgv_lang["PLE_ICON_help"]              = "~#pgv_lang[PLE_ICON]#~<br /><br />W tym miejscu możesz ustawić lub usunąć flagę dla tego miejsca. Podczas wyświetlania miejsc flaga będzie używana jako znacznik.";
 
 $pgv_lang["PLE_FLAGS"]                  = "Wybierz flagę";
-$pgv_lang["PLE_FLAGS_help"]             = "Używając rozwijanej listy możesz wybrać kraj, dla którego będą wyświetlone flagi. Jeśli nie ma flag oznacza to, że nie ma ich zdefiniowanych dla danego kraju.";
+$pgv_lang["PLE_FLAGS_help"]             = "~#pgv_lang[PLE_FLAGS]#~<br /><br />Używając rozwijanej listy możesz wybrać kraj, dla którego będą wyświetlone flagi. Jeśli nie ma flag oznacza to, że nie ma ich zdefiniowanych dla danego kraju.";
 
 $pgv_lang["PLIF_FILENAME"]              = "Wprowadź nazwę pliku";
-$pgv_lang["PLIF_FILENAME_help"]         = "Przeglądaj komputer w celu znalezienia pliku w formacie CSV zawierającego miejsca.";
-$pgv_lang["PLIF_LOCALFILE_help"]        = "Wybierz plik z listy istniejących na serwerze zawierający miejsca.";
+$pgv_lang["PLIF_FILENAME_help"]         = "~#pgv_lang[PLIF_FILENAME]#~<br /><br />Przeglądaj komputer w celu znalezienia pliku w formacie CSV zawierającego miejsca.";
+$pgv_lang["PLIF_LOCALFILE_help"]        = "~#pgv_lang[PLIF_FILENAME]#~<br /><br />Wybierz plik z listy istniejących na serwerze zawierający miejsca.";
 
 $pgv_lang["PLIF_CLEAN"]                 = "Wyczyść bazę miejsc";
-$pgv_lang["PLIF_CLEAN_help"]            = "Jeśli ta opcja jest włączona baza lokalizacji miejsc zostanie wyczyszczona. To oznacza, że tylko miejsca występujące w tej tablicy zostaną usunięte. Ta opcja nie zmienia miejsc w pliku GEDCOM.";
+$pgv_lang["PLIF_CLEAN_help"]            = "~#pgv_lang[PLIF_CLEAN]#~<br /><br />Jeśli ta opcja jest włączona baza lokalizacji miejsc zostanie wyczyszczona. To oznacza, że tylko miejsca występujące w tej tablicy zostaną usunięte. Ta opcja nie zmienia miejsc w pliku GEDCOM.";
 
 $pgv_lang["PLIF_UPDATE"]                = "Aktualizuj tylko istniejące miejsca";
-$pgv_lang["PLIF_UPDATE_help"]           = "Aktualizuj tylko istniejące w bazie miejsca.<br />Jeśli ta opcja jest włączona tylko istniejące miejsca będą zaktualizowane. This can be used to fill in latitude and longitude of places that have been imported from a GEDCOM. No new places will be added to the database.";
+$pgv_lang["PLIF_UPDATE_help"]           = "~#pgv_lang[PLIF_UPDATE]#~<br /><br />Aktualizuj tylko istniejące w bazie miejsca.<br />Jeśli ta opcja jest włączona tylko istniejące miejsca będą zaktualizowane. This can be used to fill in latitude and longitude of places that have been imported from a GEDCOM. No new places will be added to the database.";
 
 $pgv_lang["PLIF_OVERWRITE"]             = "Nadpisać dane lokalizacji danymi z pliku";
-$pgv_lang["PLIF_OVERWRITE_help"]        = "Nadpisać dane lokalizacji w bazie danymi z pliku.<br />Jeśli ta opcja jest włączona, dane w bazie (współrzędne, powiększenie i flaga) zostaną nadpisane danymi z pliku, jeśli w pliku będą dostępne. Jeśli miejsce nie istnieje w bazie zostanie stworzony nowy wpis, ale tylko gdy opcja Aktualizuj tylko istniejące miejsca nie będzie zaznaczona.";
+$pgv_lang["PLIF_OVERWRITE_help"]        = "~#pgv_lang[PLIF_OVERWRITE]#~<br /><br />Nadpisać dane lokalizacji w bazie danymi z pliku.<br />Jeśli ta opcja jest włączona, dane w bazie (współrzędne, powiększenie i flaga) zostaną nadpisane danymi z pliku, jeśli w pliku będą dostępne. Jeśli miejsce nie istnieje w bazie zostanie stworzony nowy wpis, ale tylko gdy opcja Aktualizuj tylko istniejące miejsca nie będzie zaznaczona.";
 
 $pgv_lang["PLE_ACTIVE"]             	= "Pokaż miejsca nieaktywne";
-$pgv_lang["PLE_ACTIVE_help"]        	= "<strong>Lista miejsc w tablicy GoogleMaps, które nie są używane w pliku GEDCOM.</strong><br /><br />Domyślnie jest włączona opcja wyświetlania miejsc, które występują w tablicy GoogleMaps i pliku GEDCOM jednocześnie.<br /><br />Jeśli ta opcja jest zaznaczona i zostanie wciśnięty przycisk \"Pokaż\" na liście zostaną wyświetlone wszystkie miejsca z tego poziomu.";
+$pgv_lang["PLE_ACTIVE_help"]        	= "~#pgv_lang[PLE_ACTIVE]#~<br /><br /><strong>Lista miejsc w tablicy GoogleMaps, które nie są używane w pliku GEDCOM.</strong><br /><br />Domyślnie jest włączona opcja wyświetlania miejsc, które występują w tablicy GoogleMaps i pliku GEDCOM jednocześnie.<br /><br />Jeśli ta opcja jest zaznaczona i zostanie wciśnięty przycisk \"Pokaż\" na liście zostaną wyświetlone wszystkie miejsca z tego poziomu.";
 
 // Help text for placecheck.php
 $pgv_lang["GOOGLEMAP_PLACECHECK"]       = "Sprawdź miejsca";
