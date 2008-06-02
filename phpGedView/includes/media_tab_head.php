@@ -42,54 +42,16 @@
 </script>
 
 <?php
-/*
-// Find if indi and family associated media exists and then count ( $m_count)  ===================================================
-	// Check indi gedcom items
-		$gedrec = find_gedcom_record($pid);
-		$regexp = "/OBJE @(.*)@/";
-		$ct_indi = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
-	//-- find all of the related ids
-		// if ($related) {
-			$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$ids[] = trim($match[$i][1]);
-			}
-		// }
-	// Use database to get details of indi items and related items ---------------------------------------------
-		$sqlmm = "SELECT DISTINCT ";
-		$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
-		$sqlmm .= "mm_gid IN (";
-		$i=0;
-		foreach($ids as $key=>$id) {
-			if ($i>0) $sqlmm .= ",";
-			$sqlmm .= "'".$DBCONN->escapeSimple($id)."'";
-			$i++;
-		}
-		$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-		//-- for family and source page only show level 1 obje references----------------------------------------
-		$level=0;
-		if ($level>0) {
-			$sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
-		}
-		// Order by -------------------------------------------------------
-		$sqlmm .= " ORDER BY mm_gid DESC ";
-		// Perform DB Query -----------------------
-		$resmm = dbquery($sqlmm);
-		$foundObjs = array();
-	// Database media count --------------------------------
-	$db_count = $resmm->numRows();
-	//Total Media count
-	$tot_med_ct = ($db_count + $ct_indi);
-// Debug ----------------------------------------------
-// echo "Total Media count = " . $tot_med_ct;
-// =====================================================================================
-*/
+	// Find if indi and family associated media exists and then count them ( $tot_med_ct)  
+	include ('includes/media_reorder_count.php');
 
 	// print "<table border=0 width=\"100%\"><tr>";
 	$gedrec = find_gedcom_record($pid);
 	$regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
-//	if ($tot_med_ct>1) {
+	
+	// If media exists and is greater than 1 item ---------------------
+	if ($tot_med_ct>1) {
 		print "<table border=0 width=\"100%\"><tr>";
 		// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
 			//Popup Reorder Media
@@ -99,5 +61,5 @@
 		//print "<td width=\"5%\">&nbsp;</td>";
 		print "\n";
 		print "</tr></table>";
-//	}
+	}
 ?>
