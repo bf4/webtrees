@@ -76,7 +76,7 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 
 // Load Lightbox javascript and css files
 include('modules/lightbox/functions/lb_call_js.php');
-
+/*
 // Find if indi and family associated media exists and then count ( $m_count)  ===================================================
 	// Check indi gedcom items
 		$gedrec = find_gedcom_record($pid);
@@ -117,7 +117,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 // Debug --------------------------------------------
 // echo "Total Media count = " . $tot_med_ct;
 // =====================================================================================
-
+*/
 
 	// If in re-order mode do not show header links, but instead, show drag and drop title.
 	if (isset($reorder) && $reorder==1){
@@ -257,7 +257,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 		*/
 		
 		//Album Reorder Media
-		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
+		if (PGV_USER_CAN_EDIT) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&reorder=1 title=\"Reorder Media In Place\" >" ;
@@ -285,7 +285,7 @@ include('modules/lightbox/functions/lb_call_js.php');
 		}
 		
 		//Popup Reorder Media
-		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
+		if (PGV_USER_CAN_EDIT) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 				print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media Popup\" >" ;
