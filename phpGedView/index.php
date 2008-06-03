@@ -104,7 +104,7 @@ if (!isset($action)) $action="";
 if (!PGV_USER_ID) {
 	if (!empty($ctype)) {
 		if ($ctype=="user") {
-			header("Location: login.php?help_message=mygedview_login_helpamp;url=".urlencode("index.php?ctype=user"));
+			header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
 			exit;
 		}
 	}

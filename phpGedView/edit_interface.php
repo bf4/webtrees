@@ -31,7 +31,7 @@ loadLangFile("pgv_country");
 asort($countries);
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&amp;ged=$GEDCOM&amp;url=edit_interface.php".urlencode("?".$QUERY_STRING));
+	header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
 	exit;
 }
 

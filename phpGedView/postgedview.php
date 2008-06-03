@@ -21,10 +21,10 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// @version $Id:$
+// @version $Id$
 
 header(
-	"Location: modules/cms_interface/cms_login.php?cms_login=".urlencode($_COOKIE['post_user'])."&amp;cms_password=".urlencode($_COOKIE['def_upass'])
+	"Location: modules/cms_interface/cms_login.php?cms_login=".urlencode($_COOKIE['post_user'])."&cms_password=".urlencode($_COOKIE['def_upass'])
 );
 
 ?>
