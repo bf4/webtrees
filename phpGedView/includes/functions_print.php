@@ -556,7 +556,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>\n\t";
+	print "<title>".PrintReady(strip_tags($title.$metaTitle), TRUE)."</title>\n\t";
 	$GEDCOM_TITLE = "";
 	if (!empty($GEDCOMS[$GEDCOM]["title"])) $GEDCOM_TITLE = $GEDCOMS[$GEDCOM]["title"];
 	if ($ENABLE_RSS){
@@ -601,15 +601,17 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".PrintReady(strip_tags($META_AUTHOR), TRUE)."\" />\n";
 		if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".PrintReady(strip_tags($META_PUBLISHER), TRUE)."\" />\n";
 		if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".PrintReady(strip_tags($META_COPYRIGHT), TRUE)."\" />\n";
-		print "<meta name=\"keywords\" content=\"".PrintReady(strip_tags($META_KEYWORDS));
+		print "<meta name=\"keywords\" content=\"".PrintReady(strip_tags($META_KEYWORDS), TRUE);
 		if ($META_SURNAME_KEYWORDS) {
 			$surnames = get_common_surnames_index($GEDCOM);
-			$surnameList = "";
+			$surnameList = '';
 			foreach($surnames as $surname=>$count) {
-				$surnameList .= $surname;
-				$surnameList .= ", ";
+				if ($surname != '?') {
+					$surnameList .= ', ';
+					$surnameList .= $surname;
+				}
 			}
-			print PrintReady(strip_tags(substr($surnameList,0,-2)));
+			print PrintReady(strip_tags($surnameList), TRUE);
 		}
 		print "\" />\n";
 		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
@@ -817,21 +819,28 @@ function print_simple_header($title) {
 		if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
 		if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
 	}
-	if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".PrintReady(strip_tags($META_AUTHOR))."\" />";
-	if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".PrintReady(strip_tags($META_PUBLISHER))."\" />";
-	if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".PrintReady(strip_tags($META_COPYRIGHT))."\" />";
-	print "<meta name=\"keywords\" content=\"".$META_KEYWORDS;
+	if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".PrintReady(strip_tags($META_AUTHOR), TRUE)."\" />";
+	if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".PrintReady(strip_tags($META_PUBLISHER), TRUE)."\" />";
+	if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".PrintReady(strip_tags($META_COPYRIGHT), TRUE)."\" />";
+	print "<meta name=\"keywords\" content=\"".PrintReady(strip_tags($META_KEYWORDS), TRUE);
 	if ($META_SURNAME_KEYWORDS) {
 		$surnames = get_common_surnames_index($GEDCOM);
-		foreach($surnames as $surname=>$count) print ", $surname";
+		$surnameList = '';
+		foreach($surnames as $surname=>$count) {
+			if ($surname != '?') {
+				$surnameList .= ', ';
+				$surnameList .= $surname;
+			}
+		}
+		print PrintReady(strip_tags($surnameList), TRUE);
 	}
 	print "\" />";
 	if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
 	if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
-	if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_DESCRIPTION)))."\" />";
-	if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_PAGE_TOPIC)))."\" />";
-	if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"".PrintReady(strip_tags($META_AUDIENCE))."\" />";
-	if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"".PrintReady(strip_tags($META_PAGE_TYPE))."\" />";
+	if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_DESCRIPTION), TRUE))."\" />";
+	if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_PAGE_TOPIC), TRUE))."\" />";
+	if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"".PrintReady(strip_tags($META_AUDIENCE), TRUE)."\" />";
+	if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"".PrintReady(strip_tags($META_PAGE_TYPE), TRUE)."\" />";
 
 	// Restrict good search engine spiders to the index page and the individual.php pages.
 	// Quick and dirty hack that will still leave some url only links in Google.
@@ -846,12 +855,12 @@ function print_simple_header($title) {
 	   (strstr($SCRIPT_NAME, "/index.php")) ) {
 		// empty case is to index,follow anyways.
 		if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
-		print "<meta name=\"robots\" content=\"".PrintReady(strip_tags($META_ROBOTS))."\" />";
+		print "<meta name=\"robots\" content=\"".PrintReady(strip_tags($META_ROBOTS), TRUE)."\" />";
 	}
 	else {
 		print "<meta name=\"robots\" content=\"noindex,nofollow\" />";
 	}
-	if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"".PrintReady(strip_tags($META_REVISIT))."\" />";
+	if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"".PrintReady(strip_tags($META_REVISIT), TRUE)."\" />";
 	echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - '.PGV_PHPGEDVIEW_URL.'" />';
 	$META_AUTHOR = $old_META_AUTHOR;
 	$META_PUBLISHER = $old_META_PUBLISHER;
@@ -1998,7 +2007,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	//-- convert all & to &amp;
 	$text = preg_replace("/&/", "&amp;", $text);
 	//$text = preg_replace(array("/&/","/</","/>/"), array("&amp;","&lt;","&gt;"), $text);
-	//-- make sure we didn't double convert &amp; to &amp;&amp;
+	//-- make sure we didn't double convert existing HTML entities like so:  &foo; to &amp;foo;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);
     if ($trim) $text = trim($text);
     //-- if we are on the search page body, then highlight any search hits
