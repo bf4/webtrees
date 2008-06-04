@@ -183,7 +183,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	if ($block) {
 		print '<div class="small_inner_block">'.$content.'</div>';
 	} else {
-		print $content;
+		print '<div class="normal_inner_block">'.$content.'</div>';
 	}
 	print '</div></div>';
 }
