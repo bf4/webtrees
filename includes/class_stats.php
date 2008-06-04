@@ -1085,7 +1085,7 @@ class stats {
 
 	function longestLifeFemale() {return $this->_longlifeQuery('full', 'F');}
 	function longestLifeFemaleAge() {return $this->_longlifeQuery('age', 'F');}
-	function longestLifeFemaleNmae() {return $this->_longlifeQuery('name', 'F');}
+	function longestLifeFemaleName() {return $this->_longlifeQuery('name', 'F');}
 
 	function topTenOldestFemale($params=null) {return $this->_topTenOldest('nolist', 'F', $params);}
 	function topTenOldestFemaleList($params=null) {return $this->_topTenOldest('list', 'F', $params);}
@@ -1096,7 +1096,7 @@ class stats {
 
 	function longestLifeMale() {return $this->_longlifeQuery('full', 'M');}
 	function longestLifeMaleAge() {return $this->_longlifeQuery('age', 'M');}
-	function longestLifeMaleNmae() {return $this->_longlifeQuery('name', 'M');}
+	function longestLifeMaleName() {return $this->_longlifeQuery('name', 'M');}
 
 	function topTenOldestMale($params=null) {return $this->_topTenOldest('nolist', 'M', $params);}
 	function topTenOldestMaleList($params=null) {return $this->_topTenOldest('list', 'M', $params);}
