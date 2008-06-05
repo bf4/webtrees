@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
+ * @author Łukasz Wileński <wooc@users.sourceforge.net>
  * @subpackage Module
- * @version $Id:
+ * @version $Id: lang.pl.php 3143 2008-05-28 18:36:13Z wooc $
  */
 
 //-- security check, only allow access from module.php
@@ -45,7 +46,7 @@ $pgv_lang["lb_close_win"]		= "Zamknij";
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]		= "Konfiguracja <br />Lightbox-Album";
-$pgv_lang["mediatab"]       		= "Strona osobista - Multimedia";
+$pgv_lang["mediatab"]       		= "Strona informacji o osobie - Multimedia";
 $pgv_lang["lb_appearance"]			= "Wyświetl zakładkę";
 $pgv_lang["lb_linkAppearance"]		= "Wygląd odnośnika";
 $pgv_lang["lb_MP3Only"]				= "tylko format mp3";
@@ -57,8 +58,8 @@ $pgv_lang["lb_text"]				= "Tekst";
 $pgv_lang["lb_both"]				= "Ikona i tekst";
 $pgv_lang["lb_none"]				= "Brak";
 
-$pgv_lang["lb_al_head_links"]			= "Strona osobista - Album - Nagłówek";
-$pgv_lang["lb_al_thumb_links"]			= "Strona osobista - Album - Miniaturki";
+$pgv_lang["lb_al_head_links"]			= "Strona informacji o osobie - Album - Nagłówek";
+$pgv_lang["lb_al_thumb_links"]			= "Strona informacji o osobie - Album - Miniaturki";
 $pgv_lang["lb_ml_thumb_links"]			= "Strona multimediów - Miniaturki";
 $pgv_lang["lb_music_file"]				= "Muzyka podczas pokazu slajdów";
 $pgv_lang["lb_musicFileAdvice"]			= "Lokalizacja pliku dźwiękowego (puste jeśli bez muzyki)";
@@ -91,7 +92,7 @@ $pgv_lang["census_text"]  	 = "" ;
 $pgv_lang["lb_edit_details"] 	= "Edytuj szczegóły";
 $pgv_lang["lb_view_details"] 	= "Pokaż szczegóły";
 $pgv_lang["lb_edit_media"] 		= "Edytuj szczegóły dla tych multimediów";
-$pgv_lang["lb_delete_media"] 	= "Usuń multimedia - usuwa tylko odnośnik do strony osobistej - nie usuwa pliku lub innych odnośników";
+$pgv_lang["lb_delete_media"] 	= "Usuń multimedia - usuwa tylko odnośnik do strony z informacjami o osobie - nie usuwa pliku lub innych odnośników";
 $pgv_lang["lb_view_media"] 		= "Zobacz szczegóły oraz inne opcje multimediów - Strona przeglądarki multimediów";
 $pgv_lang["lb_add_media"] 		= "Dodaj nowe <br />multimedia";
 $pgv_lang["lb_add_media_full"] 	= "Dodaj nowe multimedia dla tej osoby";
