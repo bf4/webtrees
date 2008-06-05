@@ -428,11 +428,17 @@ class GedcomRecord {
 		if (is_null($this->_getPrimaryName)) {
 			// Generally, the first name is the primary one....
 			$this->_getPrimaryName=0;
-			// ....except on hebrew pages, when we want the first _HEB one.
+			// ....except for languages with non-latin character sets
 			global $LANGUAGE;
-			if ($LANGUAGE=='hebrew') {
+			switch ($LANGUAGE) {
+			case 'greek':
+			case 'russian':
+			case 'hebrew':
+			case 'arabic':
+			case 'vietnamese':
+			case 'chinese':
 				foreach ($this->getAllNames() as $n=>$name) {
-					if ($name['type']=='_HEB') {
+					if (whatLanguage($name['full'])==$LANGUAGE) {
 						$this->_getPrimaryName=$n;
 						break;
 					}
