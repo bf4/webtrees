@@ -49,6 +49,11 @@ require_once('includes/date_class.php');
 function get_age_at_event($agestring, $show_years) {
 	global $pgv_lang;
 
+	// Only suppress years if there are no months/days
+	if (preg_match('/\d[md]/i', $agestring)) {
+		$show_years=true;
+	}
+
 	$agestring=preg_replace(
 		array(
 			'/\bchi(ld)?\b/i',
