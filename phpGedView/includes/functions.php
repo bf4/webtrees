@@ -97,6 +97,13 @@ function check_db($ignore_previous=false) {
 		return false;
 	}
 
+	// Perform any database-specific initialisation
+	switch ($DBTYPE) {
+	case 'mysql':
+		//dbquery("SET CHARACTER SET 'utf8'"); // Our queries will be encoded using UTF-8.
+		break;
+	}
+
 	//-- protect the username and password on pages other than the Configuration page
 	if (strpos($_SERVER["PHP_SELF"], "editconfig.php") === false
 		&& strpos($_SERVER["PHP_SELF"], "sanity_check.php") === false) {
