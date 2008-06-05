@@ -5,7 +5,7 @@
  * This block will show the top 10 surnames that occur most frequently in the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,27 +32,23 @@ $PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
 	"cache"=>7,
 	"num"=>10, 
-	"count_placement"=>"left"
 	);
+
+function top_surname_sort($a, $b) {
+	return $b["match"] - $a["match"];
+}
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION;
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
-	function top_surname_sort($a, $b) {
-		return $b["match"] - $a["match"];
-	}
-
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
-	if (isset($config["count_placement"])) $CountSide = $config["count_placement"];
-	else $CountSide = "left";
 
 	//-- cache the result in the session so that subsequent calls do not have to
 	//-- perform the calculation all over again.
 	if (isset($_SESSION["top10"][$GEDCOM])&&(!isset($DEBUG)||($DEBUG==false))) {
 		$surnames = $_SESSION["top10"][$GEDCOM];
-	}
-	else {
+	} else {
 		$surnames = get_top_surnames($config["num"]);
 
 		// Insert from the "Add Names" list if not already in there
@@ -77,6 +73,9 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 				unset($surnames[$surname]);
 			}
 		}
+		unset($surnames["UNKNOWN"]);
+		unset($surnames["@N.N."]);
+		unset($surnames["?"]);
 
 		// Sort the list and save for future reference
 		uasort($surnames, "top_surname_sort");
@@ -97,9 +96,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			}
 		}
 		$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
-		
-		if (array_key_exists("UNKNOWN", $surnames)) unset($surnames["UNKNOWN"]);
-		if (array_key_exists("@N.N.", $surnames)) unset($surnames["@N.N."]);
+
 		ob_start();
 		print_surn_table(array_slice($surnames, 0, $config["num"]));
 		$content = ob_get_clean();
