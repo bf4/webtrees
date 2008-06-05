@@ -1572,8 +1572,8 @@ class Person extends GedcomRecord {
 	function _addName($type, $full, $gedrec) {
 		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $HNN, $pgv_lang;
 		
-		// Some systems generate gedcoms generate single slashes.  e.g. 1 NAME John /Smith
-		// Note that zero slashes are valid, as names prior to c15 rarely have surnames.
+		// Some old systems generate gedcoms generate single slashes.  e.g. 1 NAME John /Smith
+		// Note that zero slashes are valid; they indicate NO surname as opposed to missing surname.
 		if (preg_match('/^[^\/]*\/[^\/]*$/', $full)) {
 			$full.='/';
 		}
@@ -1582,40 +1582,60 @@ class Person extends GedcomRecord {
 		$givn=preg_match('/^\d GIVN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		$surn=preg_match('/^\d SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($givn || $surn) { 
-			// We have a structured name - use the structure
+			// We have a structured name - use it.
 			$npfx=preg_match('/^\d NPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 			$spfx=preg_match('/^\d SPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 			$nsfx=preg_match('/^\d NSFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 			$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? '&apos;'.$match[1].'&apos;' : '';
 			// GIVN and SURN, can be comma-separated lists.
 			$surns=preg_split('/ *, */', $surn);
-			$surn=preg_replace('/ *, */', ' ', $surn);			if ($NAME_REVERSE) {
-				$full=reverse_name($full);
-			}
-
+			$surn=preg_replace('/ *, */', ' ', $surn);
 			$givn=preg_replace('/ *, */', ' ', $givn);
 		} else {
 			// We do not have a structured name - extract it ourselves
-			if (strpos($full, '/')===false) {
-				$givn=$full;
-				$surn='';
+			// Firstly the NPFX
+			if (preg_match('/^((?:(?:Adm|Amb|Brig|Can|Capt|Chan|Chapln|Cmdr|Col|Cpl|Cpt|Dr|Gen|Gov|Hon|Lady|Lord|Lt|Mr|Mrs|Ms|Msgr|Pfc|Pres|Prof|Pvt|Rabbi|Rep|Rev|Sen|Sgt|Sir|Sr|Sra|Srta|Ven)\.? )+)(.+)/i', $full, $match)) {
+				$npfx=trim($match[1]);
+				$name=$match[2];
+			} else {
+				$npfx='';
+				$name=$full;
+			}
+			// Secondly the NSFX
+			if (preg_match('/(.+)((?: (?:esq|esquire|jr|junior|sr|senior|[ivx]+)\.?)+)$/i', $name, $match)) {
+				$name=$match[1];
+				$nsfx=trim($match[2]);
+			} else {
 				$nsfx='';
-			} else {
-				list($givn, $surn, $nsfx)=explode('/', $full);
-				if ($NAME_REVERSE && $givn && $nsfx) {
-					$tmp=$nsfx; $nsfx=$givn; $givn=$tmp;
-				}
 			}
-			// QUESTION: Should "Mac ", "O'" and "Ni'" be considered prefixes?
-			if (preg_match('/^((?:(?:a|aan|ab|af|al|ap|as|av|bat|ben|bij|bin|bint|da|de|del|della|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor)[ -]+)+(?:[dl]\')?)(.+)$/i', $surn, $match)) {
-				$spfx=trim($match[1]);
-				$surn=$match[2];
-			} else {
+			// Thirdly the GIVN, SPFX and SURN
+			if (strpos($name, '/')===false) {
+				$givn=$full;
 				$spfx='';
+				$surn='';
+			} else {
+				// The given names may be before or after the surn.  If both are present,
+				// then treat all as given names. (Not perfect, but works well enough for
+				// sort/list names)
+				list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $name);
+				$givn=trim($tmp1.' '.$tmp3);
+				if (preg_match('/^((?:(?:a|aan|ab|af|al|ap|as|av|bat|ben|bij|bin|bint|da|de|del|della|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor)[ -]+)+(?:[dl]\')?)(.+)$/i', $tmp2, $match)) {
+					$spfx=trim($match[1]);
+					$surn=$match[2];
+				} else {
+					$spfx='';
+					$surn=$tmp2;
+				}
+				$nick='';
 			}
-			$npfx='';
-			$nick='';
-			$surns=array($surn); // Can only specify multiple surnames via SURN.
+			// We can only specify multiple surnames in SURN.  The comma is valid in NAME, and
+			// should always be displayed.
+			$surns=array($surn);
+		}
+
+		// Hungarians always want to see names with surname first.
+		if ($NAME_REVERSE && $surn) {
+			$full=trim($npfx.' /'.trim($spfx.' '.$surn).'/ '.$givn.' '.$nsfx);
 		}
 
 		// Add placeholder for unknown surname
@@ -1640,26 +1660,21 @@ class Person extends GedcomRecord {
 		// Convert "user-defined" unknowns into PGV unknowns
 		$unknown=preg_quote(trim($pgv_lang['NN'], '()'), '/');
 		$full=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $full);
-		$givn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $givn);
+		$givn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@P.N.', $givn);
 		$surn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $surn);
 		foreach ($surns as $key=>$value) {
 			$surns[$key]=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $value);
 		}
 
-		// Create the SORT name(s) (we add the surname(s) later)
-		$sort=','.$givn.','.$npfx.','.$nsfx;
 		// Create the LIST name
 		if ($surn) {
-			$list=trim($spfx.' '.$surn).', '.trim($npfx.' '.$givn.' '.$nick.' '.$npfx);
+			$list=trim($spfx.' '.$surn).', '.trim($npfx.' '.$givn.' '.$nick.' '.$nsfx);
 		} else {
-			$list=trim($npfx.' '.$givn.' '.$nick.' '.$npfx);
+			$list=trim($npfx.' '.$givn.' '.$nick.' '.$nsfx);
 		}
+
 		// Create the FULL name
-		if ($NAME_REVERSE) {
-			$full=reverse_name($full);
-		} else {
-			$full=str_replace('/', '', $full);
-		}
+		$full=str_replace('/', '', $full);
 
 		// Prefered names should have a suffix of "*"
 		$full=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $full);
@@ -1671,7 +1686,7 @@ class Person extends GedcomRecord {
 		}
 
 		// "unknown" names in _HEB tags are always in hebrew, regardless of the page language.
-		// Don't update the SORT name - we want them to sort as "@",  not "unknown"
+		// NB don't update the SORT name - we want them to sort as "@",  not "unknown"
 		if ($type=='_HEB') {
 			$list=str_replace(array('@N.N.','@P.N.'), $HNN, $list);
 			$full=str_replace(array('@N.N.','@P.N.'), $HNN, $full);
@@ -1683,7 +1698,7 @@ class Person extends GedcomRecord {
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
 		foreach ($surns as $surn) {
-			$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$surn.$sort);
+			$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$surn.','.$givn);
 		}
 	}
 	
