@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Don't suppress "years" in display of ages that also have months/days
  - Fixed: [ 1684954 ] Lifespan Chart - Starred Middle Name (canajun2eh)
  - Fixed: Reorder Media: Hide Reorder Links when media count is less than 2. (windmillway)
  - Fixed: Re-Order Media: Remove error introduced in svn 3188. (windmillway)
