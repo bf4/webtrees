@@ -44,7 +44,10 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["uncle_in_law"]							10 May 2008				A
++$pgv_lang["count"]									4 June 2008				A
++$pgv_lang["block_givn_top10_title"]				4 June 2008				A
++$pgv_lang["block_givn_top10"]						4 June 2008				A
++$pgv_lang["block_givn_top10_descr"]				4 June 2008				A
 +$pgv_lang["aunt_in_law"]							10 May 2008				A
 *$pgv_lang["todo_descr"]							07 May 2008				pw
 *$pgv_lang["todo_show_other"]						07 May 2006				p

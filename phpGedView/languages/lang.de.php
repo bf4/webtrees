@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reerved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["count"]					= "Anzahl";
 $pgv_lang["age_differences"]		= "Datendifferenzen zeigen";
 $pgv_lang["date_of_entry"]			= "Datum des Eintrages in der ursprünglichen Quelle";
 $pgv_lang["multi_site_search"] 		= "Webseiten durchsuchen";
@@ -1157,6 +1158,9 @@ $pgv_lang["theme_select_descr"]			= "Der «Theme Auswahl» Block zeigt die Theme
 $pgv_lang["block_top10_title"]			= "Häufigste 10 Nachnamen";
 $pgv_lang["block_top10"]				= "Häufigste 10 Nachnamen";
 $pgv_lang["block_top10_descr"]			= "Dieser Block zeigt eine Liste mit den 10 häufigsten Nachnamen der Datenbank. Die tatsächliche Länge der Liste ist konfigurierbar. Sie können auch bestimmte Namen in der Liste unterdrücken.";
+$pgv_lang["block_givn_top10_title"]		= "Häufigste 10 Vornamen";
+$pgv_lang["block_givn_top10"]			= "Häufigste 10 Vornamen";
+$pgv_lang["block_givn_top10_descr"]		= "Dieser Block zeigt eine Liste mit den 10 häufigsten Vornamen der Datenbank. Die tatsächliche Länge der Liste ist konfigurierbar.";
 $pgv_lang["gedcom_news_block"]			= "GEDCOM Neuigkeiten";
 $pgv_lang["gedcom_news_descr"]			= "Der «GEDCOM Neuigkeiten» Block zeigt dem Besucher neue Veröffentlichungen oder Artikel an, die der Verwalter meldet.<br /><br />Dieser Bereich ist ein guter Platz für die Mitteilung über eine neue GEDCOM Datei, zur Ankündigung eines Familientreffens oder die Bekanntgabe der Geburt eines neuen Familienmitgliedes.";
 $pgv_lang["gedcom_news_limit"]			= "Anzeigenbeschränkung:";

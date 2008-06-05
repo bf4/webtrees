@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["count"]					= "Count";
 $pgv_lang["age_differences"]		= "Show Date Differences";
 $pgv_lang["date_of_entry"]			= "Date of entry in original source";
 $pgv_lang["multi_site_search"] 		= "Multi Site Search";
@@ -1273,6 +1274,9 @@ $pgv_lang["theme_select_descr"] 	= "The Theme Select block displays the Theme se
 $pgv_lang["block_top10_title"]		= "Top 10 Surnames";
 $pgv_lang["block_top10"]			= "Top 10 Surnames";
 $pgv_lang["block_top10_descr"]		= "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list.";
+$pgv_lang["block_givn_top10_title"]		= "Top 10 Given Names";
+$pgv_lang["block_givn_top10"]			= "Top 10 Given Names";
+$pgv_lang["block_givn_top10_descr"]		= "This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable.";
 
 $pgv_lang["gedcom_news_block"]		= "GEDCOM News";
 $pgv_lang["gedcom_news_descr"]		= "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.";
