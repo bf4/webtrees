@@ -579,6 +579,17 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 			print "<link rel=\"stylesheet\" href=\"".$THEME_DIR.$BROWSERTYPE.".css\" type=\"text/css\" media=\"all\" />";
 		}
 	}
+
+	//	-------------- Lightbox ----------------
+	if ($TEXT_DIRECTION=='rtl') {
+		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
+		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
+	} else {
+		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
+		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
+	}
+	//	-------------- Lightbox ----------------
+
 	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\" />";
 	if ($BROWSERTYPE == "msie") print "<style type=\"text/css\">\nFORM { margin-top: 0px; margin-bottom: 0px; }\n</style>\n";
 	echo '<!-- ', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, ' -->', "\n";
@@ -808,6 +819,17 @@ function print_simple_header($title) {
 	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>";
 	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" />";
 	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
+
+	//	-------------- Lightbox ----------------
+	if ($TEXT_DIRECTION=='rtl') {
+		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
+		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
+	} else {
+		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
+		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
+	}
+	//	-------------- Lightbox ----------------
+
 	$old_META_AUTHOR = $META_AUTHOR;
 	$old_META_PUBLISHER = $META_PUBLISHER;
 	$old_META_COPYRIGHT = $META_COPYRIGHT;
