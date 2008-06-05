@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,7 +150,7 @@ $pgv_lang["EXPAND_SOURCES_help"] = "~#pgv_lang[EXPAND_SOURCES]#~<br /><br />Ta o
 $pgv_lang["EXPAND_NOTES"]      = "Automatycznie rozwijaj notatki";
 $pgv_lang["EXPAND_NOTES_help"] = "~#pgv_lang[EXPAND_NOTES]#~<br /><br />Ta opcja pozwala na kontrolowanie czy automatycznie wyświetlać zawartość <i>Note</i> wpisu na stronie indywidualnej.<br />";
 $pgv_lang["SHOW_LEVEL2_NOTES"]      = "Pokaż wszystkie odnośniki do notatek i źródeł";
-$pgv_lang["SHOW_LEVEL2_NOTES_help"] = "~#pgv_lang[SHOW_LEVEL2_NOTES]#~<br /><br />Ta opcja pozwala na określenie czy Notatki i Źródła powiązane z faktami będą wyświetlanie w zakładkach notatek i źródeł na stronie osobistej.<br /><br />Zwykle, zakładki Notatek i Źródeł pokazują tylko notatki i źródła  odwołujące się bezpośrednio do danej osoby. To jest odwołanie do <i>poziomu 1</i>.<br /><br />Ustawienie <b>#pgv_lang[yes]#</b> spowoduje pokazanie notatek i źródeł odwołujących się do niższych poziomów.<br />";
+$pgv_lang["SHOW_LEVEL2_NOTES_help"] = "~#pgv_lang[SHOW_LEVEL2_NOTES]#~<br /><br />Ta opcja pozwala na określenie czy Notatki i Źródła powiązane z faktami będą wyświetlanie w zakładkach notatek i źródeł na stronie informacji o osobie.<br /><br />Zwykle, zakładki Notatek i Źródeł pokazują tylko notatki i źródła  odwołujące się bezpośrednio do danej osoby. To jest odwołanie do <i>poziomu 1</i>.<br /><br />Ustawienie <b>#pgv_lang[yes]#</b> spowoduje pokazanie notatek i źródeł odwołujących się do niższych poziomów.<br />";
 $pgv_lang["HIDE_LIVE_PEOPLE"]		= "Włącz ochronę prywatności";
 $pgv_lang["HIDE_LIVE_PEOPLE_help"]	= "~#pgv_lang[HIDE_LIVE_PEOPLE]#~<br /><br />Ta opcja spowoduje włączenie wszystkich ustawień prywatności i ukrycie szczegółów osób żyjących.<br /><br />Osoby żyjące są zdefiniowane jako te, z którymi nie jest związane żadne wydarzenie, które nastąpiłoby później, niż liczba lat określona parametrem \$MAX_ALIVE_AGE. Do celów tych obliczeń za takie wydarzenie uznaje się także narodziny dziecka.<br />";
 $pgv_lang["REQUIRE_AUTHENTICATION"]	= "Wymagaj autoryzacji gościa";
