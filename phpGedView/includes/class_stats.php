@@ -1518,6 +1518,135 @@ class stats {
 		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Given Names                                                               //
+///////////////////////////////////////////////////////////////////////////////
+
+	/*
+	 * [ 1977282 ] Most Common Given Names Block
+	 * Original block created by kiwi_pgv
+	 */
+	function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
+	{
+		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX;
+		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = 10;}
+		//-- cache the result in the session so that subsequent calls do not have to
+		//-- perform the calculation all over again.
+		if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false)))
+		{
+			$name_list_f = $_SESSION['first_names_f'][$GEDCOM];
+			$name_list_m = $_SESSION['first_names_m'][$GEDCOM];
+		}
+		else
+		{
+			//DB query
+			$firstnames = array();
+			$id = $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
+			$sql = "SELECT DISTINCT i_name, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$id}";
+			$res = dbquery($sql);
+			if(!DB::isError($res))
+			{
+				while($row =& $res->fetchRow())
+				{
+					$firstnamestring = explode('/', $row[0]);
+					$individual_names = explode(' ', $firstnamestring[0]);
+					if($individual_names[0] != '@P.N.' && $individual_names[0] != 'Living')
+					{
+						if(strlen($individual_names[0]) > 2)
+						{
+							if(preg_match("/1 SEX F/", $row[1]) > 0){$firstnames_f[] = $individual_names[0];}
+							if(preg_match("/1 SEX M/", $row[1]) > 0){$firstnames_m[] = $individual_names[0];}
+						}
+					}
+				}
+				$res->free();
+			}
+			//Calculate Female names
+			$unique_names_f = array_unique($firstnames_f);
+			$unique_count_f = (array_count_values($firstnames_f));
+			$name_list_f = (array_combine($unique_names_f,$unique_count_f));
+			// Sort the list and save for future reference
+			arsort($name_list_f);
+			$_SESSION['first_names_f'][$GEDCOM] = $name_list_f;
+
+			//Calculate Male names
+			$unique_names_m = array_unique($firstnames_m);
+			$unique_count_m = (array_count_values($firstnames_m));
+			$name_list_m = (array_combine($unique_names_m,$unique_count_m));
+			// Sort the list and save for future reference
+			arsort($name_list_m);
+			$_SESSION['first_names_m'][$GEDCOM] = $name_list_m;
+		}
+		if($sex == 'F')
+		{
+			$name_list = 'name_list_f';
+		}
+		elseif($sex == 'M')
+		{
+			$name_list = 'name_list_m';
+		}
+		else
+		{
+			$name_list_b = array_merge($name_list_f, $name_list_m);
+			arsort($name_list_b);
+			$name_list = 'name_list_b';
+		}
+		// Female
+		if(count($$name_list))
+		{
+			$common = array();
+			foreach($$name_list as $given=>$total)
+			{
+				if($total < $threshold){break;}
+				$tot = '';
+				if($show_tot)
+				{
+					if($TEXT_DIRECTION == 'rtl')
+					{
+						$tot = " &rlm;[{$total}&rlm;]";
+					}
+					else
+					{
+						$tot = " [{$total}]";
+					}
+				}
+				if($type == 'list')
+				{
+					$common[] = "\t<li>".PrintReady($given)."{$tot}</li>\n";
+				}
+				else
+				{
+					$common[] = PrintReady($given)."{$tot}";
+				}
+			}
+			if($type == 'list')
+			{
+				return "<ul>\n".join("\n", $common)."</ul>\n";
+			}
+			else
+			{
+				return join(', ', $common);
+			}
+		}
+		return '';
+	}
+
+	function commonGiven($params=null){return $this->_commonGivenQuery('B', 'nolist', false, $params);}
+	function commonGivenTotals($params=null){return $this->_commonGivenQuery('B', 'nolist', true, $params);}
+	function commonGivenList($params=null){return $this->_commonGivenQuery('B', 'list', false, $params);}
+	function commonGivenListTotals($params=null){return $this->_commonGivenQuery('B', 'list', true, $params);}
+
+	function commonGivenFemale($params=null){return $this->_commonGivenQuery('F', 'nolist', false, $params);}
+	function commonGivenFemaleTotals($params=null){return $this->_commonGivenQuery('F', 'nolist', true, $params);}
+	function commonGivenFemaleList($params=null){return $this->_commonGivenQuery('F', 'list', false, $params);}
+	function commonGivenFemaleListTotals($params=null){return $this->_commonGivenQuery('F', 'list', true, $params);}
+
+	function commonGivenMale($params=null){return $this->_commonGivenQuery('M', 'nolist', false, $params);}
+	function commonGivenMaleTotals($params=null){return $this->_commonGivenQuery('M', 'nolist', true, $params);}
+	function commonGivenMaleList($params=null){return $this->_commonGivenQuery('M', 'list', false, $params);}
+	function commonGivenMaleListTotals($params=null){return $this->_commonGivenQuery('M', 'list', true, $params);}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Users                                                                     //
 ///////////////////////////////////////////////////////////////////////////////
@@ -1758,5 +1887,17 @@ class stats {
 			return $rows;
 		}
 		return false;
+	}
+}
+
+if(!function_exists('array_combine'))
+{
+	function array_combine($arr1, $arr2)
+	{
+		$out = array();
+		$arr1 = array_values($arr1);
+		$arr2 = array_values($arr2);
+		foreach($arr1 as $key1 => $value1){$out[(string)$value1] = $arr2[$key1];}
+		return $out;
 	}
 }
