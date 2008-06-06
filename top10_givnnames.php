@@ -111,7 +111,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	print '<td class="blockh1">&nbsp;</td>';
 	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
 	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
+	print '</tr></table><div class="blockcontent" align="center">';
 	if ($block) print '<div class="small_inner_block">';
 	else print '<div class="normal_inner_block">';
 	
