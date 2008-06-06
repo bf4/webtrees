@@ -1459,6 +1459,7 @@ $pgv_lang["htmlplus_block_gedcom"]	= "Drzewo genealogiczne";
 $pgv_lang["htmlplus_block_default"]	= "Domyślny";
 $pgv_lang["htmlplus_block_current"]	= "Bieżący";
 $pgv_lang["htmlplus_block_compat"]	= "Tryb kompatybilności";
+$pgv_lang["htmlplus_block_ui"]		= "Rozszerzony interfejs";
 $pgv_lang["htmlplus_block_taglist"]	= "Lista haseł";
 $pgv_lang["htmlplus_block_keyword"]	= "Przykłady słów kluczowych (tylko język angielski)";
 $pgv_lang["htmlplus_block_narrative"] = "Styl narracji (tylko język angielski)";

@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - Form Loader Engine.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Language author: Łukasz Wileński <wooc(at)sourceforge.net>
- *
  * @package PhpGedView
  * @subpackage Research_Assistant
  * @version $Id$
@@ -31,30 +30,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 $pgv_lang["missing_info"] 		= "Brakujące informacje";
-$pgv_lang["auto_search"]		= "Ta opcja spowoduje automatyczne przeszukanie baz Ancestry i FamilySearch, możesz wybrać poszukiwania po nazwisku i dacie narodzin/śmierci<br />";
-$pgv_lang["auto_search_text"]			= "Automatyczne wyszukiwanie";
-$pgv_lang["autosearch_plugin_name"]     = "";
-$pgv_lang["autosearch_fsurname"]		= "Dołącz nazwisko ojca:";
-$pgv_lang["autosearch_fgivennames"]		= "Dołącz imię ojca:";
-$pgv_lang["autosearch_msurname"]		= "Dołącz nazwisko matki:";
-$pgv_lang["autosearch_mgivennames"]	    = "Dołącz imię matki:";
-$pgv_lang["autosearch_country"]  	    = "Dołącz kraj:";
-$pgv_lang["autosearch_plugin_name_ancestry"] 	= "Plugin Ancestry.com";
-$pgv_lang["autosearch_plugin_name_ancestrycouk"]= "Plugin Ancestry.co.uk";
-$pgv_lang["autosearch_plugin_name_ellisIsland"] = "Plugin EllisIslandRecords.org";
-$pgv_lang["autosearch_plugin_name_genNet"] 		= "Plugin GeneaNet.com";
-$pgv_lang["autosearch_plugin_name_gen"]  		= "Plugin Genealogy.com";
-$pgv_lang["autosearch_plugin_name_fs"]   		= "Plugin FamilySearch.org";
-$pgv_lang["autosearch_plugin_name_werelate"]	= "Plugin Werelate.org";
-$pgv_lang["autosearch_search"]   = "Szukaj";
-$pgv_lang["autosearch_keywords"] = "Słowa kluczowe:";
-$pgv_lang["has_tasks"]          ="Folder obecnie zawiera zadania i nie może być usunięty";
-$pgv_lang["has_folders"]        ="Folder obecnie zawiera inne foldery i nie może być usunięty";
 $pgv_lang["task_list"]			= "Zadania";
 $pgv_lang["task_list_text"]		= "Ten obszar wyświetla zadania które utworzyłeś, kliknij <b>Pokaż</b> aby zobaczyć dane zadanie";
-
-// -- HELP COMMENTS
-$temp_out_comments = "W tej sekcji można dodawać komentarze dotyczące danej osoby aby mogli je obejrzeć oraz wypowiedzieć się na ich temat inni";
 
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]							= "Moje zadania";
@@ -146,12 +123,8 @@ $pgv_lang["ra_missing_info_help"] = "Ten obszar wyświetla brakujące informacje
 // -- RA_LISTLOGS MESSAGES
 $pgv_lang["task_entry"]						= "Utwórz nowe zadanie.";
 
-// -- RA_FUNCTIONS MESSAGES
-$_SESSION['pgv_lang["keywords"]']			= "Słowa kluczowe:";
-$_SESSION['pgv_lang["search"]']				= "Szukaj";
-
 //-- ERROR MESSAGES
-$pgv_lang["no_folder"]						= "Nie istnieje aktualnie żaden folder. Najpierw utwórz folder.";
+$pgv_lang["no_folder"]						= "Aktualnie nie istnieje żaden folder. Najpierw utwórz folder.";
 
 //-- HELP MESSAGES
 $pgv_lang["ra_fold_name_help"]				= "<H2><B>Widok folderu:</B></H2><ul><li><B>Nazwa folderu:</B> Kolumna zawiera nazwy wszystkich istniejących folderów.</li><li><B>Opis:</B> Kolumna zawiera opisy folderów.</li></ul><br /><br /><a href=\"helpvids/ResearchAssistantUserHelp.htm\">Podręcznik asystenta badań</a>";
@@ -234,16 +207,38 @@ $pgv_lang["mytasks_takeOn"]				= "Podjęte";
 $pgv_lang["mytasks_help"]				= "~#pgv_lang[my_tasks]#~<br /><br />#pgv_lang[mytasks_block_descr]#";
 $pgv_lang["mytask_show_tasks"]   		= "Pokazać nieprzypisane zadania?";
 $pgv_lang["mytask_show_completed"]		= "Pokazać ukończone zadania?";
+
+//-- Auto Search Assistant
 $pgv_lang["autosearch_surname"]		    = "Dołącz nazwisko:";
 $pgv_lang["autosearch_givenname"]	    = "Dołącz imiona:";
 $pgv_lang["autosearch_byear"]		    = "Dołącz rok urodzenia:";
 $pgv_lang["autosearch_bloc"]		    = "Dołącz miejsce urodzenia:";
+$pgv_lang["autosearch_myear"]		    = "Dołącz rok ślubu:";
+$pgv_lang["autosearch_mloc"]		    = "Dołącz miejsce ślubu:";
 $pgv_lang["autosearch_dyear"]		    = "Dołącz rok śmierci:";
 $pgv_lang["autosearch_dloc"]		    = "Dołącz miejsce śmierci:";
 $pgv_lang["autosearch_gender"]          = "Dołącz płeć:";
+$pgv_lang["autosearch_plugin_name"]     = "";
+$pgv_lang["autosearch_fsurname"]		= "Dołącz nazwisko ojca:";
+$pgv_lang["autosearch_fgivennames"]		= "Dołącz imię ojca:";
+$pgv_lang["autosearch_msurname"]		= "Dołącz nazwisko matki:";
+$pgv_lang["autosearch_mgivennames"]	    = "Dołącz imię matki:";
+$pgv_lang["autosearch_country"]  	    = "Dołącz kraj:";
 $pgv_lang["autosearch_ssurname"] 		= "Dołącz nazwisko współmałżonka";
 $pgv_lang["autosearch_sgivennames"] 	= "Dołącz imię współmałżonka";
+$pgv_lang["autosearch_plugin_name_ancestry"]	= "Plugin Ancestry.com";
+$pgv_lang["autosearch_plugin_name_ancestrycouk"]= "Plugin Ancestry.co.uk";
+$pgv_lang["autosearch_plugin_name_ellisisland"] = "Plugin EllisIslandRecords.org";
+$pgv_lang["autosearch_plugin_name_geneanet"]	= "Plugin GeneaNet.com";
+$pgv_lang["autosearch_plugin_name_genealogy"]	= "Plugin Genealogy.com";
+$pgv_lang["autosearch_plugin_name_familysearch"]= "Plugin FamilySearch.org";
+$pgv_lang["autosearch_plugin_name_werelate"]	= "Plugin Werelate.org";
+$pgv_lang["autosearch_search"]   = "Szukaj";
+$pgv_lang["autosearch_keywords"] = "Słowa kluczowe:";
 $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Plugin Genealogy-Search-Help.com";
+$pgv_lang["auto_search"]		= "Ta opcja spowoduje automatyczne przeszukanie baz Ancestry i FamilySearch, możesz wybrać poszukiwania po nazwisku i dacie narodzin/śmierci<br />";
+$pgv_lang["auto_search_text"]			= "Automatyczne wyszukiwanie";
+
 $pgv_lang["add_task_inst"]				= "Jeśli zadanie nie zostało jeszcze utworzonie, powinno się najpierw utworzyć zadanie a następnie wybrać opcje do zapisania i ukończenia zadania.";
 $pgv_lang["complete_task_inst"]	= "Wybierz zadanie z listy swoich zadań poniżej aby wprowadzić wyniki:";
 $pgv_lang["enter_results"]		= "Wprowadź wyniki";
@@ -260,4 +255,8 @@ $pgv_lang["analyze_database"]	= "Analizuj bazę";
 $pgv_lang["pid_know_more"]		= "O czym chcesz się więcej dowiedzieć?";
 $pgv_lang["analyze_people"]		= "Analizuj osoby";
 $pgv_lang["analyze_data"]		= "Analizuj moje dane";
+
+//Folder deletion error messages
+$pgv_lang["has_tasks"]          = "Folder obecnie zawiera zadania i nie może być usunięty";
+$pgv_lang["has_folders"]        = "Folder obecnie zawiera inne foldery i nie może być usunięty";
 ?>
