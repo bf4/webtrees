@@ -264,11 +264,11 @@ class ra_ViewInferences extends ra_form {
 		//get the value of the tag from the related gedcom
  		if ($factTag=='SURN') {
  			$person = new Person($tempRecord);
- 			$factRelation = $person->getSurname();
+			list($factRelation)=explode(',', $person->getListName());
  		}
 		else if ($factTag=='GIVN'){
 			$person = new Person($tempRecord);
- 			$factRelation = $person->getGivenNames();
+			list($dummy, $factRelation)=explode(',', $person->getListName());
 		}
 		else {
 			$factRelation =	get_gedcom_value($factTag,1,$tempRecord);

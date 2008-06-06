@@ -27,6 +27,22 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.6
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
++$pgv_lang["autosearch_myear"]		                06 Jun 2008 A
++$pgv_lang["autosearch_mloc"]		                  06 Jun 2008 A
+-$pgv_lang["autosearch_plugin_name_ellisIsland"]  06 Jun 2008 A Rename index to be same as plugin name
++$pgv_lang["autosearch_plugin_name_ellisisland"]  06 Jun 2008 D "      "     "  "   "   "  "      "
+-$pgv_lang["autosearch_plugin_name_genNet"]       06 Jun 2008 A "      "     "  "   "   "  "      "
++$pgv_lang["autosearch_plugin_name_geneanet"]     06 Jun 2008 D "      "     "  "   "   "  "      "
+-$pgv_lang["autosearch_plugin_name_gen"]          06 Jun 2008 A "      "     "  "   "   "  "      "
++$pgv_lang["autosearch_plugin_name_genealogy"]    06 Jun 2008 D "      "     "  "   "   "  "      "
+-$pgv_lang["autosearch_plugin_name_fs"]           06 Jun 2008 A "      "     "  "   "   "  "      "
++$pgv_lang["autosearch_plugin_name_familysearch"] 06 Jun 2008 D "      "     "  "   "   "  "      "
+
+
 VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments

@@ -171,7 +171,8 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				</td>
 				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php
-				$menu = $menubar->getListsMenu($controller->indi->getSurname()); $menu->printMenu();
+				list($surname)=explode(',', $controller->indi->getSortName());
+				$menu = $menubar->getListsMenu($surname); $menu->printMenu();
 				if (file_exists("reports/individual.xml")) {?>
 					</td><td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 					<?php

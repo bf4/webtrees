@@ -1105,12 +1105,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$MissingReturn[] = array("DEAT", $pgv_lang["All"], $probFacts);
 	
 		}
-		if ($person->getGivenNames() == "unknown") {
+		list($lastname, $givennames)=explode(',', $person->getSortName());
+		if (substr($givennames,0,1)=='@') {
 			$probFacts = singleInference($perId,"GIVN");
 			$MissingReturn[] = array("GIVN","",$probFacts);
 			
 		}
-		if ($person->getSurname() == "@N.N.") {
+		if (substr($lastname,0,1)=='@') {
 			$probFacts = singleInference($perId,"SURN");
 			$MissingReturn[] = array("SURN","",$probFacts);
 			
@@ -1521,8 +1522,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $factarray;
 		
 		if (!is_object($person)) return "";
-		$givennames = $person->getGivenNames();
-		$lastname = $person->getSurname();
 		$bdate = $person->getEstimatedBirthDate();
 		$ddate = $person->getEstimatedDeathDate();
 		$byear = $bdate->gregorianYear();
@@ -1898,7 +1897,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							<div id=\"searchdiv\">";
 							foreach($this->sites as $file=>$value) break;
 							include_once("modules/research_assistant/search_plugin/".$file);
-							$out .=  autosearch_options();
+							$autosearch=new AutoSearch();
+							$out .=  $autosearch->options();
 							$out .= "</div>
 							</td></tr>\n
 							</table>\n
