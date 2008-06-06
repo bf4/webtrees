@@ -314,11 +314,11 @@ require_once("includes/person_class.php");
 					if($factType == "SURN")
 					{
 						$person = new Person($relatedGedcom);
-			 			$factRelation = $person->getSurname();
+						list($factRelation)=explode(',', $person->getListName());
 					}
 					else if ($factType=='GIVN'){
 						$person = new Person($relatedGedcom);
-			 			$factRelation = $person->getGivenNames();
+						list($dummy, $factRelation)=explode(',', $person->getListName());
 					}
 					$factInfer->setFactValue($factRelation);
 				}

@@ -144,18 +144,6 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * gets the number of names this individual has
-	 * @return int 	the number of names in this individual
-	 */
-	function getNameCount() {
-		global $indilist;
-		
-		if (isset($indilist[$this->getXref()]['names'])) return count($indilist[$this->getXref()]['names']);
-		$names = get_indi_names($this->gedrec);
-		return count($names);
-	}
-
-	/**
 	 * get the sortable name
 	 * @param string $subtag optional subtag _AKA _HEB etc...
 	 * @param int $num which matching subtag to get
@@ -214,33 +202,6 @@ class Person extends GedcomRecord {
 		}
 		if ($nsfx) $surn .= " ".trim($nsfx);
 		return trim($surn.", ".$givn);
-	}
-
-	/**
-	 * get the surname
-	 * @return string
-	 */
-	function getSurname() {
-		global $pgv_lang, $indilist;
-		if (!$this->canDisplayName()) return $pgv_lang["private"];
-		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
-		$ct = preg_match("~/(.*)/~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
-		if ($ct) $name = trim($match[1]);
-		if (empty($name)) return $pgv_lang["unknown"];
-		return $name;
-	}
-	/**
-	 * get the given names
-	 * @return string
-	 */
-	function getGivenNames(){
-		global $pgv_lang, $indilist;
-		if (!$this->canDisplayName()) return $pgv_lang["private"];
-		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
-		$ct = preg_match("~^([^\s]*)~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
-		if ($ct) $name = trim($match[1]);
-		if (empty($name)) return $pgv_lang["unknown"];
-		return $name;
 	}
 
 	/**
