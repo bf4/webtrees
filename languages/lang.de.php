@@ -74,6 +74,7 @@ $pgv_lang["htmlplus_block_custom"]		= "Personalisiert";
 $pgv_lang["htmlplus_block_keyword"]		= "Stichwort-Beispiele (nur in Englisch)";
 $pgv_lang["htmlplus_block_taglist"]		= "Liste der Tags";
 $pgv_lang["htmlplus_block_compat"]		= "Kompatibilitäts-Modus";
+$pgv_lang["htmlplus_block_ui"]			= "Erweiterte Schnittstelle";
 $pgv_lang["htmlplus_block_current"]		= "Aktuell";
 $pgv_lang["htmlplus_block_default"]		= "Standard";
 $pgv_lang["htmlplus_block_census"]		= "Volkszählung";
