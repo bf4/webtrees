@@ -1000,6 +1000,7 @@ class stats {
 				.' age DESC'
 		, $total);
 		if (!isset($rows[0])) {return '';}
+		if(count($rows) < $total){$total = count($rows);}
 		$top10=array();
 		for($c = 0; $c < $total; $c++)
 		{
@@ -1361,6 +1362,7 @@ class stats {
 				.' tot DESC'
 		, $total);
 		if (!isset($rows[0])) {return '';}
+		if(count($rows) < $total){$total = count($rows);}
 		$top10 = array();
 		for($c = 0; $c < $total; $c++)
 		{
@@ -1420,6 +1422,7 @@ class stats {
 				.' tot DESC'
 		, $total);
 		if (!isset($rows[0])) {return '';}
+		if(count($rows) < $total){$total = count($rows);}
 		$tot = 0; foreach ($rows as $indexval=>$row) {$tot += $row['tot'];}
 		$chd = '';
 		$chl = array();
@@ -1543,7 +1546,8 @@ class stats {
 		else
 		{
 			//DB query
-			$firstnames = array();
+			$firstnames_f = array();
+			$firstnames_m = array();
 			$id = $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
 			$sql = "SELECT DISTINCT i_name, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$id}";
 			$res = dbquery($sql);
