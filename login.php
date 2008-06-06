@@ -95,6 +95,9 @@ if ($action=='login') {
 		if ($remember=="yes") setcookie("pgv_rem", $username, time()+60*60*24*7);
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
+		$url .= "&";	// Simplify the preg_replace following
+		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode($url));	// Remove any existing &ged= parameter
+		if (substr($url, -1)=="&") $url = substr($url, 0, -1);
 		$url .= "&ged=".$ged;
 		$url = htmlentities(str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url));
 		
