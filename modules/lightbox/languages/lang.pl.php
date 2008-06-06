@@ -22,9 +22,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @author Łukasz Wileński <wooc@users.sourceforge.net>
  * @subpackage Module
- * @version $Id: lang.pl.php 3143 2008-05-28 18:36:13Z wooc $
+ * @author Łukasz Wileński <wooc@users.sourceforge.net>
+ * @version $Id: lang.pl.php 3215 2008-06-05 20:02:41Z wooc $  
  */
 
 //-- security check, only allow access from module.php
