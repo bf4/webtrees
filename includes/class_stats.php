@@ -1531,6 +1531,8 @@ class stats {
 	{
 		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX;
 		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = 10;}
+		if(is_array($params) && isset($params[1]) && $params[1] != ''){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = false;}
+
 		//-- cache the result in the session so that subsequent calls do not have to
 		//-- perform the calculation all over again.
 		if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false)))
@@ -1592,12 +1594,12 @@ class stats {
 			arsort($name_list_b);
 			$name_list = 'name_list_b';
 		}
-		// Female
 		if(count($$name_list))
 		{
 			$common = array();
 			foreach($$name_list as $given=>$total)
 			{
+				if($maxtoshow !== false){if($maxtoshow-- <= 0){break;}}
 				if($total < $threshold){break;}
 				$tot = '';
 				if($show_tot)
