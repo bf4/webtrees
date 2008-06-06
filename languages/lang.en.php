@@ -219,6 +219,7 @@ $pgv_lang["htmlplus_block_custom"]	= "Custom";
 $pgv_lang["htmlplus_block_keyword"]	= "Keyword Examples (English only)";
 $pgv_lang["htmlplus_block_taglist"]	= "Tag List";
 $pgv_lang["htmlplus_block_compat"]	= "Compatibility Mode";
+$pgv_lang["htmlplus_block_ui"]		= "Extended Interface";
 $pgv_lang["htmlplus_block_current"]	= "Current";
 $pgv_lang["htmlplus_block_default"]	= "Default";
 $pgv_lang["htmlplus_block_gedcom"]	= "Family Tree";
