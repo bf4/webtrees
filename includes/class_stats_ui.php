@@ -6,7 +6,7 @@
  * for use in the Advanced HTML block.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id$
+ * @version $Id $
  * @author Patrick Kellum
  * @package PhpGedView
  * @subpackage Lists
  */
 
-if(stristr($_SERVER['SCRIPT_NAME'], basename(__FILE__))!==false){print 'You cannot access an include file directly.';exit;}
+if (stristr($_SERVER['SCRIPT_NAME'], basename(__FILE__))!==false) {
+	print 'You cannot access an include file directly.';
+	exit;
+}
 
 require_once 'includes/class_stats.php';
 class stats_ui extends stats
