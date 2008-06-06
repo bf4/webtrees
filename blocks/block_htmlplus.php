@@ -38,7 +38,8 @@ $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 	'title'=>'',
 	'html'=>"{$pgv_lang['html_block_sample_part1']} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{$pgv_lang['config_block']}\" /> {$pgv_lang['html_block_sample_part2']}",
 	'gedcom'=>'__current__',
-	'compat'=>0
+	'compat'=>0,
+	'ui'=>0
 );
 
 function print_htmlplus_block($block=true, $config='', $side, $index)
@@ -92,21 +93,26 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	/*
 	 * Initiate the stats object.
 	 */
-	if ($config['compat'] == 1)
+	if($config['compat'] == 1)
 	{
 		include_once 'includes/class_stats_compat.php';
 		$stats = new stats_compat($GEDCOM);
+	}
+	elseif($config['ui'] == 1)
+	{
+		include_once 'includes/class_stats_ui.php';
+		$stats = new stats_ui($GEDCOM);
 	}
 	else
 	{
 		$stats = new stats($GEDCOM);
 	}
-	
+
 	// Make some values from the GEDCOM's 0 HEAD record visible to the world
 	global $CREATED_SOFTWARE, $CREATED_VERSION, $CREATED_DATE;
 	$CREATED_SOFTWARE = $stats->gedcomCreatedSoftware();
 	$CREATED_VERSION = $stats->gedcomCreatedVersion();
-	$CREATED_DATE = $stats->gedcomDate();	
+	$CREATED_DATE = $stats->gedcomDate();
 
 	/*
 	 * First Pass.
@@ -286,6 +292,13 @@ function print_htmlplus_block_config($config)
 	."{$pgv_lang['htmlplus_block_compat']}</td>"
 	."<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td></tr>"
 	;
+	// extended features
+	if ($config['ui'] == 1){$ui = ' checked="CHECKED"';}else{$ui = '';}
+	print "<tr><td class=\"descriptionbox wrap width33\">"
+	.print_help_link('index_htmlplus_ui_help', 'qm_ah', '', false, true)
+	."{$pgv_lang['htmlplus_block_ui']}</td>"
+	."<td class=\"optionbox\"><input type=\"checkbox\" name=\"ui\" value=\"1\"{$ui} /></td></tr>"
+	;
 	// Cache file life
 	if ($ctype=="gedcom") {
 		print "<tr><td class=\"descriptionbox wrap width33\">";
@@ -296,4 +309,3 @@ function print_htmlplus_block_config($config)
 		print "</td></tr>";
 	}
 }
-?>
