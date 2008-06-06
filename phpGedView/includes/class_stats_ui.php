@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: class_stats_compat.php 3047 2008-05-13 06:34:22Z pkellum $
+ * @version $Id:$
  * @author Patrick Kellum
  * @package PhpGedView
  * @subpackage Lists
