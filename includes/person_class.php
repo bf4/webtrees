@@ -144,6 +144,18 @@ class Person extends GedcomRecord {
 	}
 
 	/**
+	 * gets the number of names this individual has
+	 * @return int 	the number of names in this individual
+	 */
+/*	function getNameCount() {
+		global $indilist;
+		
+		if (isset($indilist[$this->getXref()]['names'])) return count($indilist[$this->getXref()]['names']);
+		$names = get_indi_names($this->gedrec);
+		return count($names);
+	} */
+
+	/**
 	 * get the sortable name
 	 * @param string $subtag optional subtag _AKA _HEB etc...
 	 * @param int $num which matching subtag to get
@@ -203,6 +215,33 @@ class Person extends GedcomRecord {
 		if ($nsfx) $surn .= " ".trim($nsfx);
 		return trim($surn.", ".$givn);
 	}
+
+	/**
+	 * get the surname
+	 * @return string
+	 */
+	function getSurname() {
+		global $pgv_lang, $indilist;
+		if (!$this->canDisplayName()) return $pgv_lang["private"];
+		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
+		$ct = preg_match("~/(.*)/~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
+		if ($ct) $name = trim($match[1]);
+		if (empty($name)) return $pgv_lang["unknown"];
+		return $name;
+	}
+	/**
+	 * get the given names
+	 * @return string
+	 */
+/*	function getGivenNames(){
+		global $pgv_lang, $indilist;
+		if (!$this->canDisplayName()) return $pgv_lang["private"];
+		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
+		$ct = preg_match("~^([^\s]*)~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
+		if ($ct) $name = trim($match[1]);
+		if (empty($name)) return $pgv_lang["unknown"];
+		return $name;
+	} */
 
 	/**
 	 * Check if an additional name exists for this person
@@ -1587,8 +1626,8 @@ class Person extends GedcomRecord {
 					$spfx='';
 					$surn=$tmp2;
 				}
-				$nick='';
 			}
+			$nick='';
 			// We can only specify multiple surnames in SURN.  The comma is valid in NAME, and
 			// should always be displayed.
 			$surns=array($surn);
@@ -1629,18 +1668,19 @@ class Person extends GedcomRecord {
 
 		// Create the LIST name
 		if ($surn) {
-			$list=trim($spfx.' '.$surn).', '.trim($npfx.' '.$givn.' '.$nick.' '.$nsfx);
+			$list=$spfx.' '.$surn.', '.$npfx.' '.$givn.' '.$nick.' '.$nsfx;
 		} else {
-			$list=trim($npfx.' '.$givn.' '.$nick.' '.$nsfx);
+			$list=$npfx.' '.$givn.' '.$nick.' '.$nsfx;
 		}
+		$list = preg_replace("/\s+/", " ", trim($list));		// Strip extra spaces
 
 		// Create the FULL name
 		$full=str_replace('/', '', $full);
 
-		// Prefered names should have a suffix of "*"
+		// Preferred names should have a suffix of "*"
 		$full=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $full);
 		$list=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $list);
-		// Alternatively, some people put prefered names in quotes
+		// Alternatively, some people put preferred names in quotes
 		if ($UNDERLINE_NAME_QUOTES) {
 			$full=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $full);
 			$list=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $list);
