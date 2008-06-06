@@ -44,6 +44,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["htmlplus_block_ui"]						6 June 2008				A
 +$pgv_lang["count"]									4 June 2008				A
 +$pgv_lang["block_givn_top10_title"]				4 June 2008				A
 +$pgv_lang["block_givn_top10"]						4 June 2008				A
