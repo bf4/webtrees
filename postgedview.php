@@ -24,7 +24,7 @@
 // @version $Id$
 
 header(
-	"Location: modules/cms_interface/cms_login.php?cms_login=".urlencode($_COOKIE['post_user'])."&amp;cms_password=".urlencode($_COOKIE['def_upass'])
+	"Location: modules/cms_interface/cms_login.php?cms_login=".urlencode($_COOKIE['post_user'])."&cms_password=".urlencode($_COOKIE['def_upass'])
 );
 
 ?>

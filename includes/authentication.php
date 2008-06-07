@@ -107,24 +107,26 @@ function basicHTTPAuthenticateUser() {
 function userLogout($user_id) {
 	global $GEDCOM;
 
-	set_user_setting($user_id, 'loggedin', 'N');
+	if ($user_id) {
+		set_user_setting($user_id, 'loggedin', 'N');
 
-	AddToLog("Logout ".getUserName($user_id));
+		AddToLog("Logout ".getUserName($user_id));
 
-	if ((isset($_SESSION['pgv_user']) && ($_SESSION['pgv_user']==$user_id)) || (isset($_COOKIE['pgv_rem'])&&$_COOKIE['pgv_rem']==$user_id)) {
-		if ($_SESSION['pgv_user']==$user_id) {
-			$_SESSION['pgv_user'] = "";
-			unset($_SESSION['pgv_user']);
-			if (isset($_SESSION["pgv_counter"]))
-				$tmphits = $_SESSION["pgv_counter"];
-			else
-				$tmphits = -1;
-			@session_destroy();
-			$_SESSION["gedcom"]=$GEDCOM;
-			$_SESSION["show_context_help"]="yes";
-			@setcookie("pgv_rem", "", -1000);
-			if ($tmphits>=0)
-				$_SESSION["pgv_counter"]=$tmphits; //set since it was set before so don't get double hits
+		if ((isset($_SESSION['pgv_user']) && ($_SESSION['pgv_user']==$user_id)) || (isset($_COOKIE['pgv_rem'])&&$_COOKIE['pgv_rem']==$user_id)) {
+			if ($_SESSION['pgv_user']==$user_id) {
+				$_SESSION['pgv_user'] = "";
+				unset($_SESSION['pgv_user']);
+				if (isset($_SESSION["pgv_counter"]))
+					$tmphits = $_SESSION["pgv_counter"];
+				else
+					$tmphits = -1;
+				@session_destroy();
+				$_SESSION["gedcom"]=$GEDCOM;
+				$_SESSION["show_context_help"]="yes";
+				@setcookie("pgv_rem", "", -1000);
+				if ($tmphits>=0)
+					$_SESSION["pgv_counter"]=$tmphits; //set since it was set before so don't get double hits
+			}
 		}
 	}
 }

@@ -3,7 +3,7 @@
  * Google map module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,11 @@
  * $Id$
  * @author Johan Borkhuis
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
 
 require('modules/googlemap/defaultconfig.php');
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
@@ -663,6 +668,12 @@ function build_indiv_map($indifacts, $famids) {
 			print "bounds.extend(new GLatLng({$marker["lati"]}, {$marker["lng"]}));\n";
 		print "SetBoundaries(bounds);\n";
 
+		print "var icon = new GIcon();";
+		print "icon.image = \"http://maps.google.com/intl/pl_ALL/mapfiles/marker.png\";";
+		print "icon.shadow = \"modules/googlemap/shadow50.png\";";
+		print "icon.iconAnchor = new GPoint(6, 20);";
+		print "icon.infoWindowAnchor = new GPoint(5, 1);";
+
 		$indexcounter = 0;
 		for ($j=1; $j<=$i; $j++) {
 			// Use @ because some installations give warnings (but not errors?) about UTF-8
@@ -677,7 +688,7 @@ function build_indiv_map($indifacts, $famids) {
 				if ($multimarker == 0) {        // Only one location with this long/lati combination
 					$markers[$j]["placed"] = "yes";
 					if (empty($markers[$j]["icon"])) {
-						print "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {title:\"{$tooltip}\"});\n";
+						print "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {icon:icon, title:\"{$tooltip}\"});\n";
 					} else {
 						print "var Marker{$j}_flag = new GIcon();\n";
 						print "    Marker{$j}_flag.image = \"".$markers[$j]["icon"]."\";\n";
@@ -731,7 +742,7 @@ function build_indiv_map($indifacts, $famids) {
 					$markersindex = 0;
 					$markers[$j]["placed"] = "yes";
 					if (empty($markers[$j]["icon"])) {
-						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {title:\"{$tooltip}\"});\n";
+						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:icon, title:\"{$tooltip}\"});\n";
 					} else {
 						print "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 						print "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
@@ -797,7 +808,7 @@ function build_indiv_map($indifacts, $famids) {
 								$markersindex = $markersindex + 1;
 
 								if (empty($markers[$j]["icon"])) {
-									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {title:\"{$tooltip}\"});\n";
+									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:icon, title:\"{$tooltip}\"});\n";
 								} else {
 									print "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 									print "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";

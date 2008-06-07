@@ -1,11 +1,8 @@
 <?php 
 /**
- * Search Plug-in
+ * Search Plug-in for www.ellisislandrecords.org
  *
- * This is a plug-in file for the Auto search Assistant
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,105 +18,37 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $id$
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Research Assistant
- * @Author Dparker
- * 
- * For further commenting see ancestry.php
+ *
  */
- 
-require_once("includes/person_class.php");
 
-function autosearch_options()
-{
-	global $pgv_lang;
-	//title
+require_once 'modules/research_assistant/search_plugin/base_autosearch.php';
 
-	
-	$pid = "";
-	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
-	$person = Person::getInstance($pid);
-	if (!is_object($person)) return "";
-	$givennames = $person->getGivenNames();
-	$lastname = $person->getSurname();
-	$gender = $person->getSex();
-	$seximg = $person->getSexImage();
-	$bdate=$person->getEstimatedBirthDate();
-	$byear=$bdate->gregorianYear();
-		
-	$to_return ="<form name='ancsearch' action='module.php' target=\"_blank\" method='post'> 
-						<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />
-						<input type=\"hidden\" name=\"action\" value=\"auto_search\" />
-						<input type=\"hidden\" name=\"searchtype\" value=\"ellisisland\" />
-						<input type=\"hidden\" name=\"pid\" value=\"".$pid."\" />
-							<table width='50%'>		
-		 						<tr>
-					 				<td class='optionbox'>
-					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' />&nbsp; ".$lastname."</td></tr>
-					 						<tr><td class='optionbox'>
-					 					".$pgv_lang["autosearch_givenname"]."</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' />&nbsp; ".$givennames."</td></tr>
-					 						<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' />&nbsp; ".$byear."</td></tr>
-					 						 						<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_gender"]."</td><td class ='optionbox'> <input type='checkbox' name='gender' value=\"".$gender."\" checked='checked' />&nbsp; ".$gender.$seximg."</td></tr>				
-								<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_ellisIsland"]."</td></tr>
-								<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
-		 			
-							</table>
-						
-					</form>";
-		 	
-		return $to_return;
+class AutoSearch extends Base_AutoSearch {
+	function AutoSearch() {
+		parent::__construct(
+			// Name of this file, without the extension.
+			// NB must also define this in $pgv_lang["autosearch_plugin_name_XXXX"]
+			basename(__FILE__, '.php'),
+			// Search engine URL, ending in "?" or "&"
+			'http://www.ellisislandrecords.org/search/passSearch.asp?byear_list=2&',
+			// Form method: GET or POST
+			'GET',
+			// Array keys are field names for the URL.
+			// Array values are:
+			//  function = defined in Base_AutoSearch and $pgv_lang["autosearch_XXXX"]
+			//  extra    = extra html to add to the checkbox
+			array(
+				'fname'   =>array('function'=>'surname',   'extra'=>'checked="checked"'),
+				'lname'   =>array('function'=>'givenname', 'extra'=>'checked="checked"'),
+				'birth'   =>array('function'=>'byear',     'extra'=>'checked="checked"'),
+				'gen_list'=>array('function'=>'gender',    'extra'=>'checked="checked"')
+			)
+		);
+	}
 }
 
-function autosearch_process() {
-	//debug line to print the request array
-	//$ret = print_r($_REQUEST, true);
-	
-	$pid = "";
-	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
-	$person = Person::getInstance($pid);
-		if (!is_object($person)) return "";
-		
-	
-	
-	$url = "http://www.ellisislandrecords.org/search/matchMore.asp?";
-	
-	if(isset($_REQUEST['givenname1'])){
-		$url.= "FNM=".urlencode($_REQUEST['givenname1']);
-	}
-	else
-	{
-		$url.= "FNM=none";
-	}
-
-	if(isset($_REQUEST['surname'])){
-		$url .= "&LNM=".urlencode($_REQUEST['surname']);
-	}
-	else
-	{
-		$url .= "&LNM=none";
-	}
-		
-
-	if(isset($_REQUEST['byear'])){
-		
-			$url.= "&bSYR=".urlencode($_REQUEST['byear']-2);
-			$url.= "&bEYR=".urlencode($_REQUEST['byear']+2);
-	}
-	
-	
-	if(isset($_REQUEST['gender'])){
-		$url.= "&CGD=".urlencode($_REQUEST['gender']);
-	}
-
-	$url .="&first_kind=1";
-	
-	// debug: print the $_REQUEST
-	//return $ret;  
-	Header("Location: ".$url);
-	exit;
-	
-}
 ?>
+

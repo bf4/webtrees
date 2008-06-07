@@ -446,21 +446,19 @@ class research_assistant extends ra_functions {
 			$out .= print_r($_REQUEST, true);
 			if (isset($_REQUEST['plugin'])) {
 				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['plugin'])) { 
-					include_once("modules/research_assistant/search_plugin/".$_REQUEST['plugin']);
-					$out="";
-					$out = autosearch_options();
-					return $out;
+					require_once 'modules/research_assistant/search_plugin/'.$_REQUEST['plugin'];
+					$autosearch=new AutoSearch();
+					return $autosearch->options();
 				}
 			}
 		}
 		else if ($_REQUEST['action']=='auto_search') {
 			$out .= print_r($_REQUEST, true);
 			if (isset($_REQUEST['searchtype'])) {
-				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].".php")) { 
-					include_once("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].".php");
-					$out = "";
-					$out = autosearch_process();
-					return $out;
+				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].'.php')) { 
+					require_once 'modules/research_assistant/search_plugin/'.$_REQUEST['searchtype'].'.php';
+					$autosearch=new AutoSearch();
+					return $autosearch->process();
 				}
 			}
 		}

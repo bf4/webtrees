@@ -65,7 +65,7 @@ the existing file in your joomla/components/com_phpgedview/ folder
 DRUPAL
 ================================================================================
 
-To run PhpGedView from within Drupal, you need the "phpGedView exension".
+To run PhpGedView from within Drupal, you need the "phpGedView extension".
 Karen Stevenson no longer maintains the module at http://drupal.org/project/phpgedview/
 These files are now in /modules/cms_interface/drupal.
 

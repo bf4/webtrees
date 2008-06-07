@@ -60,7 +60,7 @@ define('PGV_UTF8_LRM', "\xE2\x80\x8E"); // U+200E
 define('PGV_UTF8_RLM', "\xE2\x80\x8F"); // U+200F
 
 // Alternatives to BMD events for lists, charts, etc.
-define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|BAPL|ADOP');
+define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
 define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
 define('PGV_EVENTS_MARR', 'MARR|MARB|MARC|MARS');
 define('PGV_EVENTS_DIV',  'DIV|ANUL');

@@ -126,6 +126,13 @@ function check_db($ignore_previous=false) {
 		return false;
 	}
 
+	// Perform any database-specific initialisation
+	switch ($DBTYPE) {
+	case 'mysql':
+		//dbquery("SET CHARACTER SET 'utf8'"); // Our queries will be encoded using UTF-8.
+		break;
+	}
+
 	//-- protect the username and password on pages other than the Configuration page
 	if (strpos($_SERVER["PHP_SELF"], "editconfig.php") === false
 		&& strpos($_SERVER["PHP_SELF"], "sanity_check.php") === false) {
@@ -205,6 +212,19 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 	} else {
 		return $default;
 	}
+}
+
+function encode_url($url, $entities=true) {
+	$url = str_replace(array(' ', '+'), array('%20', '%2b'), $url);		// GEDCOM names can legitimately contain these chars
+	if ($entities) $url = htmlentities($url);
+	return $url;
+}
+
+
+function decode_url($url, $entities=true) {
+	if ($entities) $url = html_entity_decode($url);
+	$url = rawurldecode($url);		// GEDCOM names can legitimately contain " " and "+"
+	return $url;
 }
 
 function preg_match_recursive($regex, $var) {

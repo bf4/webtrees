@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,11 @@
  * @author Łukasz Wileński <wooc@users.sourceforge.net>
  * $Id$
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
 
 if (file_exists('modules/googlemap/defaultconfig.php')) {
 	require("modules/googlemap/defaultconfig.php");
@@ -219,7 +224,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		echo "<br />".$pgv_lang["gm_no_coord"];
 		if (PGV_USER_IS_ADMIN)
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=".$levelm."&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
-		echo "</div></td>\", icon_type);\n";
+		echo "</div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
 	}
 	else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
@@ -274,10 +279,10 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				print_how_many_people($level+1, $parent);
 			}
 		if ($GOOGLEMAP_COORD == "false"){
-			echo "<br /><br /></div></td>\", icon_type);\n";
+			echo "<br /><br /></div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
 		}
 		else {
-			echo "<br /><br />".$place2['lati'].", ".$place2['long']."</div></td>\", icon_type);\n";
+			echo "<br /><br />".$place2['lati'].", ".$place2['long']."</div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
 		}
 	}
 	echo "place_map.addOverlay(marker);\n";
@@ -427,11 +432,10 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	<?php echo create_buttons($numfound, $level);?>
 	if (GBrowserIsCompatible()) {
 	// Creates a marker whose info window displays the given name
-	function createMarker(point, name, icon)
+	function createMarker(point, html, icon, name)
 	{
-		var marker = new GMarker(point, icon);
+		var marker = new GMarker(point, {icon:icon, title:name});
 		// Show this markers name in the info window when it is clicked
-		var html = name;
 		GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml(html);});
 		return marker;
 	};
@@ -445,40 +449,40 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		map_type.refresh();
 	});
 	var bounds = new GLatLngBounds();
-	<?php
-	if ($numfound<2 && ($level==1 || !(isset($levelo[($level-1)])))){
-		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
-		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+5);\n";
-	}
-	else if ($numfound<2 && !isset($levelo[($level-2)])){
-		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
-		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+6);\n";
-	}
-	else if ($level==2){
-		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
-		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+8);\n";
-	}
-	else if ($numfound<2 && $level>1){
-		echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
-		echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+10);\n";
-	}
-	else
-		echo "place_map.setCenter(new GLatLng(0,0),1);\n";
-	if ($GOOGLEMAP_PH_WHEEL != "false") echo "place_map.enableScrollWheelZoom();\n";
-	echo "	place_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
-	?>
 	place_map.addControl(new GSmallMapControl());
 	place_map.addControl(new GScaleControl());
 	var mini = new GOverviewMapControl();
 	place_map.addControl(mini);
 	mini.hide();
-	//create markers
 	<?php
 	if (check_exist_table()) {
 		$levelm = set_levelm($level, $parent);
 		if (isset($levelo[0])) $levelo[0]=0;
 		$numls = count($parent)-1;
 		$levelo=check_were_am_i($numls, $levelm);
+		if ($numfound<2 && ($level==1 || !(isset($levelo[($level-1)])))){
+			echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
+			echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+5);\n";
+		}
+		else if ($numfound<2 && !isset($levelo[($level-2)])){
+			echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
+			echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+6);\n";
+		}
+		else if ($level==2){
+			echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
+			echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+8);\n";
+		}
+		else if ($numfound<2 && $level>1){
+			echo "zoomlevel = place_map.getBoundsZoomLevel(bounds);\n";
+			echo "	place_map.setCenter(new GLatLng(0,0),zoomlevel+10);\n";
+		}
+		else
+			echo "place_map.setCenter(new GLatLng(0,0),1);\n";
+		if ($GOOGLEMAP_PH_WHEEL != "false") echo "place_map.enableScrollWheelZoom();\n";
+		echo "	place_map.setMapType($GOOGLEMAP_MAP_TYPE);\n";
+		?>
+		//create markers
+		<?php
 		if ($numfound==0 && $level>0) {
 			if (isset($levelo[($level-1)])) {
 				$placelist2=get_place_list_loc($levelo[($level-1)]);
@@ -535,7 +539,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		echo "<br />".$pgv_lang["gm_no_coord"];
 		if (PGV_USER_IS_ADMIN)
 			echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
-		echo "<br /></div></td>\", icon_type);\n";
+		echo "<br /></div></td>\", icon_type, \"".$pgv_lang["pl_edit"]."\");\n";
 		echo "place_map.addOverlay(marker);\n";
 		echo "bounds.extend(point);\n";
 	}
@@ -543,12 +547,12 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	//end markers
 	place_map.setCenter(bounds.getCenter());
 	<?php if ($GOOGLEMAP_PH_CONTROLS != "false") {?>
-	// hide controls
-	GEvent.addListener(place_map,'mouseout',function() {place_map.hideControls();});
-	// show controls
-	GEvent.addListener(place_map,'mouseover',function() {place_map.showControls();});
-	GEvent.trigger(place_map,'mouseout');
-	<?php
+		// hide controls
+		GEvent.addListener(place_map,'mouseout',function() {place_map.hideControls();});
+		// show controls
+		GEvent.addListener(place_map,'mouseover',function() {place_map.showControls();});
+		GEvent.trigger(place_map,'mouseout');
+		<?php
 	}
 	if ($numfound>1)
 		echo "place_map.setZoom(place_map.getBoundsZoomLevel(bounds));\n";
@@ -561,7 +565,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
     // http://www.commchurch.freeserve.co.uk/
     // http://econym.googlepages.com/index.htm
 	//]]>
-	//version 1.1
+	//version 1.2
 	</script>
 	<?php
 }

@@ -1,11 +1,9 @@
 <?php 
 /**
- * Search Plug-in
- *
- * This is a plug-in file for the Auto search Assistant
+ * Search Plug-in for www.genealogy.com
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008 John Finlay and others. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,115 +22,34 @@
  * @version $Id$
  * @package PhpGedView
  * @subpackage Research Assistant
- * @Author Dparker
- * 
- * For further commenting see ancestry.php
  */
-require_once("includes/person_class.php");
 
+require_once 'modules/research_assistant/search_plugin/base_autosearch.php';
 
-function autosearch_options()
-{
-	global $pgv_lang;
-
-	
-	$pid = "";
-	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
-	$person = Person::getInstance($pid);
-	if (!is_object($person)) return "";
-	$givennames = $person->getGivenNames();
-	$lastname = $person->getSurname();
-	$bdate=$person->getEstimatedBirthDate();
-	$ddate=$person->getEstimatedDeathDate();
-	$byear=$bdate->gregorianYear();
-	$dyear=$ddate->gregorianYear();
-	$dloc = $person->getDeathPlace();
-	$bloc = $person->getBirthPlace();
-		
-	$to_return ="<form name='ancsearch' action='module.php' target=\"_blank\" method='post'> 
-						<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />
-						<input type=\"hidden\" name=\"action\" value=\"auto_search\" />
-						<input type=\"hidden\" name=\"searchtype\" value=\"genealogy\" />
-						<input type=\"hidden\" name=\"pid\" value=\"".$pid."\" />
-							<table width='50%'>		
-		 						<tr>
-					 				<td class='optionbox'>
-					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> &nbsp;".$lastname."</td></tr>
-					 						<tr><td class='optionbox'>
-					 					".$pgv_lang["autosearch_givenname"]."</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> &nbsp;".$givennames."</td></tr>
-					 						<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' />&nbsp; ".$byear."</td></tr>
-					 						
-";
-if(isset($bloc)){	
-	$to_return.="<tr><td class='optionbox'>	".$pgv_lang["autosearch_bloc"]."</td><td class='optionbox'> <input type='checkbox' name='bloc' value=\"".$bloc."\"  />&nbsp;".$bloc."
-					 				</td>
-		 						</tr>";
+class AutoSearch extends Base_AutoSearch {
+	function AutoSearch() {
+		parent::__construct(
+			// Name of this file, without the extension.
+			// NB must also define this in $pgv_lang["autosearch_plugin_name_XXXX"]
+			basename(__FILE__, '.php'),
+			// Search engine URL, ending in "?" or "&"
+			'http://www.genealogy.com/cgi-bin/wizard_search.cgi?MN=&',
+			// Form method: GET or POST
+			'GET',
+			// Array keys are field names for the URL.
+			// Array values are:
+			//  function = defined in Base_AutoSearch and $pgv_lang["autosearch_XXXX"]
+			//  extra    = extra html to add to the checkbox
+			array(
+				'FN'       =>array('function'=>'givenname', 'extra'=>'checked="checked"'),
+				'LN'       =>array('function'=>'surname',   'extra'=>'checked="checked"'),
+				'BDATE'    =>array('function'=>'byear',     'extra'=>'checked="checked"'),
+				'BLOCATION'=>array('function'=>'bloc',      'extra'=>'checked="checked"'),
+				'DDATE'    =>array('function'=>'dyear',     'extra'=>'checked="checked"'),
+				'DLOCATION'=>array('function'=>'dloc',      'extra'=>'checked="checked"')
+			)
+		);
 	}
-	$to_return .=  				"<tr><td class='optionbox'>
-					 					".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />&nbsp;".$dyear."
-					 				</td>
-		 						</tr>
-								
-";					 				
-	if(isset($dloc)){
-	$to_return.="<tr><td class='optionbox'>".$pgv_lang["autosearch_dloc"]."</td><td class='optionbox'> <input type='checkbox' name='dloc' value=\"".$dloc."\"  />&nbsp;".$dloc."</td></tr>	";	
-	}
-
-	
-		$to_return.=		"	<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_gen"]."</td></tr>
-<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
-		 			
-							</table>
-						
-					</form>";
-		 	
-		return $to_return;
 }
 
-function autosearch_process() {
-	//debug line to print the request array
-	//$ret = print_r($_REQUEST, true);
-	
-	$pid = "";
-	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
-	$person = Person::getInstance($pid);
-	if (!is_object($person)) return "";
-	$bdate=$person->getEstimatedBirthDate();
-	$ddate=$person->getEstimatedDeathDate();
-	$byear=$bdate->gregorianYear();
-	$dyear=$ddate->gregorianYear();
-	$dloc = $person->getDeathPlace();
-	$bloc = $person->getBirthPlace();
-	$url = "http://www.genealogy.com/cgi-bin/wizard_search.cgi?MN=";
-	
-	if(isset($_REQUEST['surname'])){
-		$url .= "&LN=".urlencode($_REQUEST['surname']);
-	}
-	
-	if(isset($_REQUEST['givenname1'])){
-		$url.= "&FN=".urlencode($_REQUEST['givenname1']);
-	}
-	if(isset($_REQUEST['byear'])){
-		
-			$url.= "&BDATE=".urlencode($_REQUEST['byear']);
-	}
-	if(isset($_REQUEST['dyear'])){
-			$url.= "&DDATE=".urlencode($_REQUEST['dyear']);
-		
-	}
-	if(isset($_REQUEST['dloc'])){
-			$url.= "&DLOCATION=".urlencode($_REQUEST['dloc']);
-		
-	}
-	if(isset($_REQUEST['bloc'])){
-			$url.= "&BLOCATION=".urlencode($_REQUEST['bloc']);
-		
-	}
-	// debug: print the $_REQUEST
-	//return $ret;  
-	Header("Location: ".$url);
-	exit;
-	
-}
 ?>

@@ -393,7 +393,8 @@ class LifespanControllerRoot extends BaseController {
 				
 				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
 				if (stristr($value->getName(), "starredname"))
-						$minlength = (strlen($value->getName())-34) * $this->zoomfactor;
+//						$minlength = (strlen($value->getName())-34) * $this->zoomfactor;
+						$minlength = (strlen($value->getName())-7) * $this->zoomfactor;  // Assumes <span class="starredname> becomes <u>
 				else	$minlength = strlen($value->getName()) * $this->zoomfactor;
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
@@ -487,10 +488,6 @@ class LifespanControllerRoot extends BaseController {
 						
 				}
 					
-				//TODO 
-				//We need to get starred $value->getName() names within <span class=\"starredname\"> and </span> to print in the 'zoom-box' (<span> ...</span> below) on the same line as the rest of the name. 
-				//How?   Now these names print on other data on the next line.
-				
 				$bdate=$value->getEstimatedBirthDate();
 				$ddate=$value->getEstimatedDeathDate();
 				if ($width > ($minlength +110)) {
@@ -499,10 +496,11 @@ class LifespanControllerRoot extends BaseController {
 					foreach($eventinformation as $evtwidth=>$val){
 						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 					}
-					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName()).":  $lifespan </a></td>" .
+					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getName()));
+					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
-					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 					print "</td></tr></table>";
 					echo '</div>';
 
@@ -513,17 +511,19 @@ class LifespanControllerRoot extends BaseController {
 						foreach($eventinformation as $evtwidth=>$val){
 							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 						}
-						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName())."</a></td>" .
+						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getName()));
+						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
-						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						print "</td></tr></table>";
 						echo '</div>';
 					} else {
 						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
 						" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">" ;
 							
-						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
+						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getName()));
+						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
 							print $val."<br />\n";
 						}
@@ -552,7 +552,8 @@ class LifespanControllerRoot extends BaseController {
 		for ($i = 0; $i < count($this->people); $i ++) {
 			if (!$this->people[$i]->canDisplayDetails()) {
 				if ($this->people[$i]->canDisplayName()) {
-					print "&nbsp;<a href=\"individual.php?pid=".$this->people[$i]->getXref()."\">".PrintReady($this->people[$i]->getName())."</a>";
+					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $this->people[$i]->getName()));
+					print "&nbsp;<a href=\"individual.php?pid=".$this->people[$i]->getXref()."\">".$indiName."</a>";
 					print_privacy_error($CONTACT_EMAIL);
 					print "<br />";
 					$printed = true;

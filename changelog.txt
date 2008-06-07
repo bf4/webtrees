@@ -10,6 +10,14 @@
 
 
 Version 4.1.6
+ - Fixed: Rewrite search-plugin code - various bugs/duplication/flexibilty/validation/etc.
+ - Fixed: [ 1809805 ] Ancestry Search For Surname/Married Names (fisharebest)
+ - Fixed: [ 1695907 ] RA Auto Search breaks with quoted given names (fisharebest)
+ - Added: "Top 10 Given Names" block (canajun2eh)
+ - Fixed: Don't suppress "years" in display of ages that also have months/days (fisharebest)
+ - Fixed: [ 1684954 ] Lifespan Chart - Starred Middle Name (canajun2eh)
+ - Fixed: Reorder Media: Hide Reorder Links when media count is less than 2. (windmillway)
+ - Fixed: Re-Order Media: Remove error introduced in svn 3188. (windmillway)
  - Changed: Lightbox Album: (1) Changed: Thumbnail Note text Format. (2) Fixed: Hide Reorder Links when media count is less than 2. (windmillway)
  - Fixed: Lightbox Album: Album Navigator - Fixed spurious incorrect tab calls, Corrected alignment. (windmillway) 
  - Fixed: Re-order Media: corrected wrong path for include in individual.php. (windmillway)

@@ -97,12 +97,12 @@ function print_todo($block=true, $config='', $side, $index) {
 				}
 				$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
 				$name=$record->getSortableName();
-				$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.$record->getLinkUrl().'">'.$name.'</a></td>';
+				$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.$record->getLinkUrl().'">'.PrintReady($name).'</a></td>';
 				if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
 					$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
 				}
 				$text=get_gedcom_value('_TODO', 1, $todo['factrec']);
-				$content.='<td class="list_value_wrap" align="'.get_align($text).'">'.$text.'</td>';
+				$content.='<td class="list_value_wrap" align="'.get_align($text).'">'.PrintReady($text).'</td>';
 				$content.='</tr>';
 				$found=true;
 			}
