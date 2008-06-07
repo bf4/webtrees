@@ -185,6 +185,19 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 	}
 }
 
+function encode_url($url, $entities=true) {
+	$url = str_replace(array(' ', '+'), array('%20', '%2b'), $url);		// GEDCOM names can legitimately contain these chars
+	if ($entities) $url = htmlentities($url);
+	return $url;
+}
+
+
+function decode_url($url, $entities=true) {
+	if ($entities) $url = html_entity_decode($url);
+	$url = rawurldecode($url);		// GEDCOM names can legitimately contain " " and "+"
+	return $url;
+}
+
 function preg_match_recursive($regex, $var) {
 	if (is_scalar($var)) {
 		return preg_match($regex, $var);
