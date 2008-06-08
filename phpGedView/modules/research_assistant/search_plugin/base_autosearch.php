@@ -95,7 +95,11 @@ class Base_AutoSearch {
 	function givenname($person, $inputname='givenname') {
 		$all_givn=array();
 		foreach ($person->getAllNames() as $name) {
-			list($surn, $givn)=explode(',', $name['list']);
+			if (strpos($name['list'], ',')) {
+				list($surn, $givn)=explode(',', $name['list']);
+			} else {
+				$givn=$name['list'];
+			}
 			$all_givn[]=htmlspecialchars(strip_tags($givn));
 		}
 		$all_givn=array_unique($all_givn);
@@ -114,8 +118,10 @@ class Base_AutoSearch {
 	function surname($person, $inputname='surname') {
 		$all_surn=array();
 		foreach ($person->getAllNames() as $name) {
-			list($surn, $givn)=explode(',', $name['list']);
-			$all_surn[]=htmlspecialchars(strip_tags($surn));
+			if (strpos($name['list'], ',')) {
+				list($surn, $givn)=explode(',', $name['list']);
+				$all_surn[]=htmlspecialchars(strip_tags($surn));
+			}
 		}
 		$all_surn=array_unique($all_surn);
 		if (count($all_surn)==1) {
