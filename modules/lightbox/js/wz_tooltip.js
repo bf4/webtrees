@@ -643,7 +643,7 @@ function tt_MkTipSubDivs()
 			// BH change for line below enables close to be within a bubble area---------------------------------------
 			//    ('<div id="WzTiTl" style="position:relative;z-index:1;">'
 			// ------------------------------------------------------------------------------------------------------------------------
-			('<div id="WzTiTl" style="position:relative;left:-13px;top:18px;z-index:1;">'
+			('<div id="WzTiTl" style="position:relative;left:-3px;top:20px;z-index:1;">'
 			+ '<table id="WzTiTlTb"' + sTbTrTd + 'id="WzTiTlI" style="' + sCss + '">'
 			+ tt_aV[TITLE]
 			+ '</td>'
