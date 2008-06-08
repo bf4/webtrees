@@ -409,4 +409,177 @@ class stats_ui extends stats
 	}
 
 	function totalUserJournal(){ return count(getUserNews(PGV_USER_ID));}
+
+///////////////////////////////////////////////////////////////////////////////
+// News                                                                      //
+///////////////////////////////////////////////////////////////////////////////
+
+	function gedcomNews($params=null)
+	{
+		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $PGV_BLOCKS;
+
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$limit = strtolower($params[0]);}else{$limit = 'count';}
+		if(isset($params[1]) && $params[1] != ''){$flag = strtolower($params[0]);}else{$flag = 5;} // News postings
+
+		if($flag == 0){$limit = 'nolimit';}
+		if(isset($_REQUEST['gedcom_news_archive']))
+		{
+			$limit = 'nolimit';
+			$flag = 0;
+		}
+
+		$usernews = getUserNews($GEDCOM);
+
+		$content = '';
+		if(count($usernews) == 0)
+		{
+			$content .= "{$pgv_lang['no_news']}<br />\n";
+		}
+		$c = 0;
+		$td = time();
+		foreach($usernews as $k=>$news)
+		{
+			if($limit == 'count')
+			{
+				if($c >= $flag){break;}
+				$c++;
+			}
+			if($limit == 'date')
+			{
+				if(floor(($td - $news['date']) / 86400) > $flag){break;}
+			}
+			$content .= "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
+
+			// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News title
+			$newsTitle = print_text($news['title'], 0, 2);
+			$ct = preg_match("/#(.+)#/", $newsTitle, $match);
+			if($ct > 0)
+			{
+				if(isset($pgv_lang[$match[1]]))
+				{
+					$newsTitle = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsTitle);
+				}
+			}
+			$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
+			$content .= "<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
+
+			// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News text
+			$newsText = print_text($news['text'], 0, 2);
+			$ct = preg_match("/#(.+)#/", $newsText, $match);
+			if($ct > 0)
+			{
+				if(isset($pgv_lang[$match[1]]))
+				{
+					$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $newsText);
+				}
+			}
+			$ct = preg_match("/#(.+)#/", $newsText, $match);
+			if($ct > 0)
+			{
+				$varname = $match[1];
+				if(isset($pgv_lang[$varname]))
+				{
+					$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$varname], $newsText);
+				}
+				else
+				{
+					if(defined('PGV_'.$varname))
+					{
+						// e.g. global $VERSION is now constant PGV_VERSION
+						$varname='PGV_'.$varname;
+					}
+					if(defined($varname))
+					{
+						$newsText = preg_replace("/{$match[0]}/", constant($varname), $newsText);
+					}
+					else
+					{
+						if(isset($$varname))
+						{
+							$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+						}
+					}
+				}
+			}
+			$trans = get_html_translation_table(HTML_SPECIALCHARS);
+			$trans = array_flip($trans);
+			$newsText = strtr($newsText, $trans);
+			//$newsText = nl2br($newsText);
+			$content .= PrintReady($newsText)."<br />\n";
+
+			// Print Admin options for this News item
+			if(PGV_USER_GEDCOM_ADMIN)
+			{
+				$content .= "<hr size=\"1\" />"
+					."<a href=\"javascript:;\" onclick=\"editnews('{$k}'); return false;\">{$pgv_lang['edit']}</a> | "
+					."<a href=\"index.php?action=deletenews&amp;news_id={$k}&amp;ctype={$ctype}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />"
+				;
+			}
+			$content .= "</div>\n";
+		}
+		$printedAddLink = false;
+		if(PGV_USER_GEDCOM_ADMIN)
+		{
+			$content .= "<a href=\"javascript:;\" onclick=\"addnews('".preg_replace("/'/", "\'", $GEDCOM)."'); return false;\">{$pgv_lang['add_news']}</a>";
+			$printedAddLink = true;
+		}
+		if($limit == 'date' || $limit == 'count')
+		{
+			if($printedAddLink){$content .= '&nbsp;&nbsp;|&nbsp;&nbsp;';}
+			$content .= print_help_link('gedcom_news_archive_help', 'qm', '', false, true);
+			$content .= "<a href=\"index.php?gedcom_news_archive=yes&amp;ctype={$ctype}\">{$pgv_lang['gedcom_news_archive']}</a><br />\n";
+		}
+		return $content;
+	}
+
+	function totalGedcomNews(){return count(getUserNews($GLOBALS['GEDCOM']));}
+
+///////////////////////////////////////////////////////////////////////////////
+// Block                                                                     //
+///////////////////////////////////////////////////////////////////////////////
+
+	function callBlock($params=null)
+	{
+		if($params === null){return '';}
+		if(isset($params[0]) && $params[0] != ''){$block = strtolower($params[0]);}else{return '';}
+
+		$func = "print_{$block}";
+		if(!function_exists("print_{$block}")){return '';}
+
+		// Build the config array
+		array_shift($params);
+		$cfg = array();
+		foreach($params as $config)
+		{
+			$bits = explode('=', $config);
+			if(count($bits) < 2){continue;}
+			$v = array_shift($bits);
+			$cfg[$v] = join('=', $bits);
+		}
+
+		// Run the block and retrive its contents
+		ob_start();
+		$func(false, $cfg, 'main', 9999);
+		$out = ob_get_clean();
+		// Rip out the content of the block
+		return trim(substr(trim(stristr($out, 'blockcontent')), 14, -12));
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// System                                                                    //
+// Only allowed in GEDCOM Welcome page, not user portals for security.       //
+///////////////////////////////////////////////////////////////////////////////
+
+	function includeFile($params=null)
+	{
+		if(!isset($_GET['ctype']) || $_GET['ctype'] != 'gedcom'){return '';}
+		if($params === null){$params = array();}
+		if(isset($params[0]) && $params[0] != ''){$fn = $params[0];}else{return '';}
+
+		if(!file_exists($fn) || stristr($fn, 'config.php')){return '';}
+		ob_start();
+		include filename_decode(real_path($fn));
+		return trim(ob_get_clean());
+	}
 }
