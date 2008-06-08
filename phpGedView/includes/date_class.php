@@ -1194,10 +1194,16 @@ class GedcomDate {
 	// Calculate the years/months/days between two events
 	// Return a gedcom style age string: "1y 2m 3d" (for fact details)
 	function GetAgeGedcom($d1, $d2=NULL) {
-		if (is_null($d2))
+		if (is_null($d2)) {
 			return $d1->date1->GetAge(true, client_jd());
-		else
-			return $d1->date1->GetAge(true, $d2->MinJD());
+		} else {
+			// If dates overlap, then can't calculate age.
+			if (GedcomDate::Compare($d1, $d2)) {
+				return $d1->date1->GetAge(true, $d2->MinJD());
+			} else {
+				return '';
+			}
+		}
 	}
 
 	// Static function to compare two dates.
