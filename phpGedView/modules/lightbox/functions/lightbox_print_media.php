@@ -140,10 +140,11 @@
 	}
 
 	$media_found = false;
-
-	// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
-	// but it may not work for all RDBMS.
-	// $sqlmm  = "SELECT ";
+	
+	// Get the related media items
+		// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
+		// but it may not work for all RDBMS.
+		// $sqlmm  = "SELECT ";
 	$sqlmm = "SELECT DISTINCT ";
 	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
@@ -170,42 +171,39 @@
  
 	$numm = $resmm->numRows();
 	
-
+	// Begin to Layout the Album Media Rows
 	if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) ) {
-		echo "\n\n";
-		echo '<table border=0 class="facts_table" ><tr>' . "\n";;
-		echo '<td width="80" align="center" class="descriptionbox">' ;
-		if ($t==5){
-			echo "<b><br />" . $tt . "</b><br /><br />";
-		}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){
-			echo "<b><br /><br />" . $tt . "</b><br /><br />";
-			// echo "(" . $numm . ")";
+		if ($t==5){ // do nothing
 		}else{
-			echo "<b><br />" . $tt . "</b><br /><br />";	
-		}
-		echo '</td>';
-		echo '<td width=\"2\"></td>';
-		
-		echo '<td class="facts_value">';
-		echo "<table width=\"100%\"><tr><td>" . "\n";
-		
-		
-		if ($t==5){
-		}else{
-			echo "<div id=\"thumbcontainer\" >" . "\n";
-			echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
-			//echo "<ul id=\"thumblist\">" . "\n\n";
+			echo "\n\n";
+			echo '<table border=0 class="facts_table" ><tr>' . "\n";;
+			echo '<td width="80" align="center" class="descriptionbox">' ;
+			if ($t==5){
+				echo "<b><br />" . $tt . "</b><br /><br />";
+			}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){
+				echo "<b><br /><br />" . $tt . "</b><br /><br />";
+				// echo "(" . $numm . ")";
+			}else{
+				echo "<b><br />" . $tt . "</b><br /><br />";	
 			}
+			echo '</td>';
+			echo '<td width=\"2\"></td>';
+			echo '<td class="facts_value">';
+			echo "<table width=\"100%\"><tr><td>" . "\n";
+				echo "<div id=\"thumbcontainer\" >" . "\n";
+				echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
+				//echo "<ul id=\"thumblist\">" . "\n\n";
+		}
 
 		// Album Reorder include =============================
-	// Following used for Album media sort ------------------
-	if ($reorder==1) {
-		if ($t==1) { $rownum1=$numm; }
-		if ($t==2) { $rownum2=$numm; }
-		if ($t==3) { $rownum3=$numm; }
-		if ($t==4) { $rownum4=$numm; }
-	}
-	// ----------------------------------------------------------------
+		// Following used for Album media sort ------------------
+		if ($reorder==1) {
+			if ($t==1) { $rownum1=$numm; }
+			if ($t==2) { $rownum2=$numm; }
+			if ($t==3) { $rownum3=$numm; }
+			if ($t==4) { $rownum4=$numm; }
+		}
+		// ----------------------------------------------------------------
 		if (($reorder==1 && $t==5) ) {
 			 include ("modules/lightbox/functions/lb_horiz_sort.php");
 		} 
@@ -262,9 +260,7 @@
 					if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
 				}
 			}
-//			$rows['normal'] = $rowm;
-//			if (isset($current_objes[$rowm['m_media']]))  $current_objes[$rowm['m_media']]--;
-
+			
 			foreach($rows as $rtype => $rowm) {
 				if ($t!=5){
 				
@@ -275,25 +271,10 @@
 				$foundObjs[$rowm['m_media']]=true;
 			}
 			$mgedrec[] = $rowm["m_gedrec"];
-			
-			if ( $t==5 ) {
-				if ( eregi("1 NOTE",$rowm['m_gedrec']) && isset($items[$fn])) {
-					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
-					
-					}else{
-						print "<p id=\"" . $pgv_lang["note"]. "&nbsp;" . ($fn) . "\" class=\"lb_notes\">";	
-							$note[$fn]  = $pgv_lang["note"] . "&nbsp;" . ($fn) . "";
-//						print "<a href=\"#a".$note[$fn]."\" class=\"lb_notes\" <font size=1>" . $note[$fn] . "</font>";
-						print "<font size=1>" . $note[$fn] . "</font>";					
-							print_fact_notes($mgedrec[$items[$fn]-1], 1);
-						$fn++;
-//						print "</a></p>";
-						print "</p>";					
-					}
-				}
-			}
 		}
-
+		
+		if ($t==5) {
+		}else{
 		echo "</ul>";
 		echo "</div>";
 		echo "<div class=clearlist>";
@@ -314,10 +295,8 @@
 		echo '</td>';
 		echo '</tr>';
 		echo '</table>' . "\n\n";
-
+		}
 	}
-	
-// -----------------------------------
 
 	//-- objects are removed from the $current_objes list as they are printed
 	//-- any objects left in the list are new objects recently added to the gedcom

@@ -1,4 +1,31 @@
 <?php
+/**
+ * Lightbox Album module for phpGedView
+ *
+ * Display media Items using Lightbox
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Module
+ * @version $Id$
+ * @author Brian Holland
+ */
 global $tabno ;
 
 loadLangFile("lb_lang");	// Load Lightbox language file
@@ -50,36 +77,13 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 		
 <?php  } ?>
 
-		<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script> 
+		<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>
+		<script src="modules/lightbox/js/tip_balloon.js" 			type="text/javascript"></script> 
 <?php
 
 		require_once("js/prototype.js.htm");
 		require_once("js/scriptaculous.js.htm");
 
-/*	
-// -------------------------------------------------------------------------------
-			if ($TEXT_DIRECTION == "rtl") { ?>
-			
-				<link href ="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
-				<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-				<!--[if lte IE 7]>
-				<link href ="modules/lightbox/css/album_page_RTL.css" 		rel="stylesheet" type="text/css" media="screen" /> 
-				<![endif]-->
-			<?php 
-			}else{ ?>
-				<link href ="modules/lightbox/css/clearbox_music.css" 		rel="stylesheet" type="text/css" />
-				<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" />  
-			<?php 
-			} ?>
-
-			<script src="modules/lightbox/js/prototype.js" 				type="text/javascript"></script>  
-			<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
-			<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
-
-			<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script> 
-<?php
-
-*/
 
 // ------------------------------------------------------------------------------- 
 

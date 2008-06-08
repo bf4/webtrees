@@ -10,6 +10,9 @@
 
 
 Version 4.1.6
+ - Added: Lightbox Album Page: (Windmillway)
+		1) New Feature - Removed Footnotes Row, Added Tooltip Bubble for notes associated with thumbnail
+		2) Tightened up hotspot for "Details" link on enlarged Lightbox Image.
  - Fixed: Rewrite search-plugin code - various bugs/duplication/flexibilty/validation/etc.
  - Fixed: [ 1809805 ] Ancestry Search For Surname/Married Names (fisharebest)
  - Fixed: [ 1695907 ] RA Auto Search breaks with quoted given names (fisharebest)
