@@ -96,7 +96,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		}
 	}
 	if ($person) {
-		$name=$person->getName();
+		$name=PrintReady($person->getName());
 	}
 	switch($config['type']) {
 		case 'pedigree':
