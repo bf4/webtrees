@@ -557,8 +557,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
 	print "<title>".PrintReady(strip_tags($title.$metaTitle), TRUE)."</title>\n\t";
-	$GEDCOM_TITLE = "";
-	if (!empty($GEDCOMS[$GEDCOM]["title"])) $GEDCOM_TITLE = $GEDCOMS[$GEDCOM]["title"];
+	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
 		if ($RSS_FORMAT == "ATOM" || $RSS_FORMAT == "ATOM0.3"){
@@ -805,8 +804,7 @@ function print_simple_header($title) {
 			exit;
 		}
 	}
-	$GEDCOM_TITLE = "";
-	if (!empty($GEDCOMS[$GEDCOM]["title"])) $GEDCOM_TITLE = $GEDCOMS[$GEDCOM]["title"];
+	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	header("Content-Type: text/html; charset=$CHARACTER_SET");
 	print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
 	print "<html xmlns=\"http://www.w3.org/1999/xhtml\"><head>";
