@@ -383,13 +383,13 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if (!$person->getChildFamilyIds()) $tdclass .= " patriarch";
 		echo "<td class=\"".$tdclass."\" align=\"".get_align($person->getFullName())."\">";
 		$names_html=array();
-		foreach ($person->getAllNames() as $n=>$name) {
+		foreach ($person->getAllNames() as $num=>$name) {
 			if ($title=$name['type']=='_MARNM') {
 				$title='title="'.$factarray['_MARNM'].'"';
 			} else {
 				$title='';
 			}
-			if ($n==$person->getPrimaryName()) {
+			if ($num==$person->getPrimaryName()) {
 				$class='list_item name2';
 				$sex_image=$tiny ? $person->getSexImage() : '';
 			} else {
