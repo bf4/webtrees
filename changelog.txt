@@ -10,7 +10,8 @@
 
 
 Version 4.1.6
- - Added: Lightbox Album Page: (Windmillway)
+ - Added: [ 1955594 ] Show Nicknames (fisharebest)
+ - Added: Lightbox Album Page: (windmillway)
 		1) New Feature - Removed Footnotes Row, Added Tooltip Bubble for notes associated with thumbnail
 		2) Tightened up hotspot for "Details" link on enlarged Lightbox Image.
  - Fixed: Rewrite search-plugin code - various bugs/duplication/flexibilty/validation/etc.

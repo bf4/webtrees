@@ -1581,12 +1581,12 @@ class Person extends GedcomRecord {
 		// Do we have a structured name?
 		$givn=preg_match('/^\d GIVN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		$surn=preg_match('/^\d SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? '&ldquo;'.$match[1].'&rdquo;' : '';
 		if ($givn || $surn) { 
 			// We have a structured name - use it.
 			$npfx=preg_match('/^\d NPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 			$spfx=preg_match('/^\d SPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 			$nsfx=preg_match('/^\d NSFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
-			$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? '&apos;'.$match[1].'&apos;' : '';
 			// GIVN and SURN, can be comma-separated lists.
 			$surns=preg_split('/ *, */', $surn);
 			$surn=preg_replace('/ *, */', ' ', $surn);
@@ -1627,7 +1627,6 @@ class Person extends GedcomRecord {
 					$surn=$tmp2;
 				}
 			}
-			$nick='';
 			// We can only specify multiple surnames in SURN.  The comma is valid in NAME, and
 			// should always be displayed.
 			$surns=array($surn);
@@ -1673,6 +1672,23 @@ class Person extends GedcomRecord {
 			$list=$npfx.' '.$givn.' '.$nick.' '.$nsfx;
 		}
 		$list = preg_replace("/\s+/", " ", trim($list));		// Strip extra spaces
+
+		// Show nicknames, if not already included in the name.
+		if ($nick) {
+			if (strpos($full, $nick)===false) {
+				$pos=strpos($full, '/');
+				if ($pos===false || $NAME_REVERSE) {
+					// Name is probably not "givn surn", so append nick
+					$full.=' '.$nick;
+				} else {
+					// Name is probably "givn surn", so put nick before surn
+					$full=substr($full, 0, $pos).' '.$nick.' /'.substr($full, $pos+1);
+				}
+			}
+			if (strpos($list, $nick)===false) {
+				$list.=' '.$nick;
+			}
+		}
 
 		// Create the FULL name
 		$full=str_replace('/', '', $full);
