@@ -80,7 +80,10 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	}
 	
 	$person = Person::getInstance($config["rootId"]);
-	if ($person==null) $person = Person::getInstance($PEDIGREE_ROOT_ID);
+	if ($person==null) {
+		$config["rootId"] = $PEDIGREE_ROOT_ID;
+		$person = Person::getInstance($PEDIGREE_ROOT_ID);
+	}
 	
 	$id = "charts_block";
 	$title = print_help_link("index_charts_help", "qm", "", false, true);
@@ -97,63 +100,65 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	}
 	if ($person) {
 		$name=PrintReady($person->getName());
-	}
-	switch($config['type']) {
-		case 'pedigree':
-			$title .= $name." ".$pgv_lang["index_header"];
-			break;
-		case 'descendants':
-			$title .= $name." ".$pgv_lang["descend_chart"];
-			break;
-		case 'hourglass':
-			$title .= $name." ".$pgv_lang["hourglass_chart"];
-			break;
-		case 'treenav':
-			$title .= $name." ".$pgv_lang["tree"];
-			break;
-	}
-	$content = "";
-	$content .= "<script src=\"phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
-	if ($show_full==0) {
-		$content .= '<center><span class="details2">'.$pgv_lang['charts_click_box'].'</span></center><br />';
-	}
-	$content .= '<table cellspacing="0" cellpadding="0" border="0"><tr>';
-	if ($config['type']=='descendants' || $config['type']=='hourglass') {
-		$content .= "<td valign=\"middle\">";
-		ob_start();
-		$controller->print_descendency($config['rootId'], 1, false);
-		$content .= ob_get_clean();
-		$content .= "</td>";
-	}
-	if ($config['type']=='pedigree' || $config['type']=='hourglass') {
-		//-- print out the root person
-		if ($config['type']!='hourglass') {
+		switch($config['type']) {
+			case 'pedigree':
+				$title .= $name." ".$pgv_lang["index_header"];
+				break;
+			case 'descendants':
+				$title .= $name." ".$pgv_lang["descend_chart"];
+				break;
+			case 'hourglass':
+				$title .= $name." ".$pgv_lang["hourglass_chart"];
+				break;
+			case 'treenav':
+				$title .= $name." ".$pgv_lang["tree"];
+				break;
+		}
+		$content = "";
+		$content .= "<script src=\"phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
+		if ($show_full==0) {
+			$content .= '<center><span class="details2">'.$pgv_lang['charts_click_box'].'</span></center><br />';
+		}
+		$content .= '<table cellspacing="0" cellpadding="0" border="0"><tr>';
+		if ($config['type']=='descendants' || $config['type']=='hourglass') {
 			$content .= "<td valign=\"middle\">";
 			ob_start();
-			print_pedigree_person($config['rootId']);
+			$controller->print_descendency($person->getXref(), 1, false);
 			$content .= ob_get_clean();
 			$content .= "</td>";
 		}
-		$content .= "<td valign=\"middle\">";
-		ob_start();
-		$controller->print_person_pedigree($config['rootId'], 1);
-		$content .= ob_get_clean();
-		$content .= "</td>";
+		if ($config['type']=='pedigree' || $config['type']=='hourglass') {
+			//-- print out the root person
+			if ($config['type']!='hourglass') {
+				$content .= "<td valign=\"middle\">";
+				ob_start();
+				print_pedigree_person($person->getXref());
+				$content .= ob_get_clean();
+				$content .= "</td>";
+			}
+			$content .= "<td valign=\"middle\">";
+			ob_start();
+			$controller->print_person_pedigree($person->getXref(), 1);
+			$content .= ob_get_clean();
+			$content .= "</td>";
+		}
+		if ($config['type']=='treenav') {
+			$content .= "<td>";
+			ob_start();
+			$nav->drawViewport('blocknav', "", "240px");
+			$content .= ob_get_clean();
+			$content .= "</td>";
+		}
+		$content .= "</tr></table>";
+		$content .= '<script language="JavaScript" type="text/javascript">
+			<!--
+			if (sizeLines) sizeLines();
+			//-->
+			</script>';
+	} else {
+		$content=$pgv_lang['invalid_id'];
 	}
-	if ($config['type']=='treenav') {
-		$content .= "<td>";
-		ob_start();
-		$nav->drawViewport('blocknav', "", "240px");
-		$content .= ob_get_clean();
-		$content .= "</td>";
-	}
-	$content .= "</tr></table>";
-	$content .= '<script language="JavaScript" type="text/javascript">
-		<!--
-		if (sizeLines) sizeLines();
-		//-->
-		</script>';
-	
+		
 	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
 	print '<td class="blockh1">&nbsp;</td>';
 	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
