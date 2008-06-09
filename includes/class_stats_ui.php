@@ -43,7 +43,7 @@ class stats_ui extends stats
 	function _getFavorites($isged=true)
 	{
 		global $GEDCOM, $pgv_lang;
-		global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $sourcelist, $TEXT_DIRECTION;
+		global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $sourcelist, $TEXT_DIRECTION, $INDEX_DIRECTORY;
 		global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
 		// Override GEDCOM configuration temporarily
@@ -75,11 +75,21 @@ class stats_ui extends stats
 		}
 		else
 		{
+			if(!$isged)
+			{
+				$mygedcom = $GEDCOM;
+				$current_gedcom = $GEDCOM;
+			}
 			$content .= "<table width=\"99%\" style=\"border:none\" cellspacing=\"3px\" class=\"center {$TEXT_DIRECTION}\">";
 			foreach($userfavs as $k=>$favorite)
 			{
 				if(isset($favorite['id'])){$k = $favorite['id'];}
 				$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype={$ctype}&amp;action=deletefav&amp;fv_id={$k}\" onclick=\"return confirm('{$pgv_lang['confirm_fav_remove']}');\">{$pgv_lang['remove']}</a><br />\n";
+				if(!$isged)
+				{
+					$current_gedcom = $GEDCOM;
+					$GEDCOM = $favorite['file'];
+				}
 				$content .= '<tr><td>';
 				if($favorite['type'] == 'URL')
 				{
@@ -93,6 +103,8 @@ class stats_ui extends stats
 				{
 					if(displayDetailsbyId($favorite['gid'], $favorite['type']))
 					{
+						require "{$INDEX_DIRECTORY}{$GEDCOM}_conf.php";
+
 						switch($favorite['type'])
 						{
 							case 'INDI':
@@ -140,6 +152,11 @@ class stats_ui extends stats
 								$content .= PrintReady($favorite['note'], false, true);
 								break;
 							}
+						}
+						if(!$isged)
+						{
+							$GEDCOM = $mygedcom;
+							require "{$INDEX_DIRECTORY}{$GEDCOM}_conf.php";
 						}
 					}
 				}
