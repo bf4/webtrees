@@ -367,7 +367,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 				else if (strstr('FAX PHON FILE ', $fact.' ')) print getLRM(). $event.' ' . getLRM();
 				else if ($event!='Y') {
-					if (!strstr('ADDR _RATID _DEAT _CREM _BURI ', substr($fact,0,5).' ')) echo PrintReady($event);
+					if (!strstr('ADDR _RATID _CREM ', substr($fact,0,5).' ')) echo PrintReady($event);
 					echo ' ';
 				}
 				$temp = trim(get_cont(2, $factrec), "\r\n");
