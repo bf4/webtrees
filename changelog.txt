@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Album tooltip Bubble now shows url items as "hotspot clickable" (windmillway)
  - Added: [ 1955594 ] Show Nicknames (fisharebest)
  - Added: Lightbox Album Page: (windmillway)
 		1) New Feature - Removed Footnotes Row, Added Tooltip Bubble for notes associated with thumbnail

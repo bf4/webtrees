@@ -93,7 +93,7 @@
 		$sour1 = " - " . $sour ; 
 		$sour2 = PrintReady($sour1);
 		
-		/*
+		
 		//Get media item Notes
 		$haystack = $rowm["m_gedrec"];
 		$needle   = "1 NOTE";
@@ -102,8 +102,9 @@
 		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 		$final    = $before.$needle.$worked;
 		$notes    = htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)));
-		*/
 		
+		
+		/*
 		//Get media item Notes
 		$notes=array();
 		for ($i=1; ; ++$i) {
@@ -118,8 +119,8 @@
 		$notes=ereg_replace("\n", "", $notes);
 		$notes=ereg_replace("1 NOTE ", "", $notes);
 		$notes=ereg_replace("2 CONT ", "<br />", $notes);
-
-
+		*/
+		
 		//text alignment for tooltip
 		if ($TEXT_DIRECTION=="rtl") {
 			$alignm = "right";
