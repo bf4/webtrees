@@ -978,7 +978,7 @@ class stats {
 		}
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		$rows=$this->_runSQL(''
-			.' SELECT'
+			.' SELECT DISTINCT'
 				.' death.d_julianday2-birth.d_julianday1 AS age,'
 				.' death.d_gid'
 			.' FROM'
@@ -1006,11 +1006,11 @@ class stats {
 		{
 			if ($type == 'list')
 			{
-				$top10[]="\t<li><a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom_url}\">".get_person_name($rows[$c]['d_gid'])."</a> [".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]</li>\n";
+				$top10[]="\t<li><a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_person_name($rows[$c]['d_gid']))."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]</li>\n";
 			}
 			else
 			{
-				$top10[]="<a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom_url}\">".get_person_name($rows[$c]['d_gid'])."</a> [".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]";
+				$top10[]="<a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_person_name($rows[$c]['d_gid']))."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]";
 			}
 		}
 		if ($type == 'list')
@@ -1068,7 +1068,7 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
-		return floor($row['age']/365.25);
+		return PrintReady(floor($row['age']/365.25));
 	}
 
 	// Both Sexes
@@ -1159,6 +1159,7 @@ class stats {
 			{
 				$date=new GedcomDate($row['type'].' '.$row['year']);
 				$result=$date->Display(true);
+				break;
 			}
 			case 'type':
 				if (isset($eventTypes[$row['fact']])) {
@@ -1180,7 +1181,7 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom_url}\">".get_person_name($row['id'])."{$id}</a>";
+				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_person_name($row['id']))."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place(get_sub_record(1, "1 {$row['fact']}", find_gedcom_record($row['id'])), true, true, true);
@@ -1236,7 +1237,8 @@ class stats {
 			.' SELECT'
 				.' fam.f_id,'
 				." fam.{$sex_field},"
-				.' married.d_julianday2-birth.d_julianday1 AS age'
+				.' married.d_julianday2-birth.d_julianday1 AS age,'
+				.' indi.i_id AS i_id'
 			.' FROM'
 				." {$TBLPREFIX}families AS fam"
 			.' LEFT JOIN'
@@ -1269,9 +1271,9 @@ class stats {
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
-				break;;
+				break;
 			case 'name':
-				$result="<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom_url}\">".get_family_descriptor($row['f_id']).'</a>';
+				$result="<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom_url}\">".get_person_name($row['i_id'], true).'</a>';
 				break;
 			case 'age':
 				$result=floor($row['age']/365.25);
@@ -1339,7 +1341,7 @@ class stats {
 				$result=$row['tot'];
 				break;
 			case 'name':
-				$result="<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom_url}\">".get_family_descriptor($row['id']).'</a>';
+				$result="<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_family_descriptor($row['id'])).'</a>';
 				break;
 		}
 		// Statstics are used by RSS feeds, etc., so need absolute URLs.
@@ -1351,7 +1353,7 @@ class stats {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		$rows=$this->_runSQL(''
-			.' SELECT'
+			.' SELECT DISTINCT'
 				.' f_numchil AS tot,'
 				.' f_id AS id'
 			.' FROM'
@@ -1368,11 +1370,11 @@ class stats {
 		{
 			if ($type == 'list')
 			{
-				$top10[] = "\t<li><a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom_url}\">".get_family_descriptor($rows[$c]['id'])."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
+				$top10[] = "\t<li><a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_family_descriptor($rows[$c]['id']))."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
 			}
 			else
 			{
-				$top10[] = "<a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom_url}\">".get_family_descriptor($rows[$c]['id'])."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
+				$top10[] = "<a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_family_descriptor($rows[$c]['id']))."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
 			}
 		}
 		if ($type == 'list')
@@ -1429,11 +1431,12 @@ class stats {
 		for($i = 0; $i < $total; $i++)
 		{
 			$per = round(100 * $rows[$i]['tot'] / $tot, 0);
-			$chd .= $this->_encoding[$per];
+			//$chd .= $this->_encoding[$per];
+			$chd .= $this->_array_to_extended_encoding(array($per));
 			$chl[] = urlencode(get_family_descriptor($rows[$i]['id']));
 		}
 		$chl = join('|', $chl);
-		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=s:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
 	function averageChildren()
@@ -1463,11 +1466,11 @@ class stats {
 				{
 					if ($TEXT_DIRECTION == 'rtl')
 					{
-						$tot = " &rlm;[{$surname['match']}&rlm;]";
+						$tot = PrintReady(" &rlm;[{$surname['match']}&rlm;]");
 					}
 					else
 					{
-						$tot = " [{$surname['match']}]";
+						$tot = PrintReady(" [{$surname['match']}]");
 					}
 				}
 				if ($type == 'list')
@@ -1533,8 +1536,13 @@ class stats {
 	function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
 	{
 		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX;
+		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
+
 		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = 10;}
 		if(is_array($params) && isset($params[1]) && $params[1] != ''){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = false;}
+		if(is_array($params) && isset($params[2]) && $params[2] != ''){$sorting = strtolower($params[2]);}else{$sorting = 'rcount';}
+		// sanity check
+		if(!isset($sort_types[$sorting])){$sorting = 'rcount';}
 
 		//-- cache the result in the session so that subsequent calls do not have to
 		//-- perform the calculation all over again.
@@ -1569,33 +1577,45 @@ class stats {
 				$res->free();
 			}
 			//Calculate Female names
-			$unique_names_f = array_unique($firstnames_f);
-			$unique_count_f = (array_count_values($firstnames_f));
-			$name_list_f = (array_combine($unique_names_f,$unique_count_f));
-			// Sort the list and save for future reference
-			arsort($name_list_f);
+			if(count($firstnames_f))
+			{
+				$unique_names_f = array_unique($firstnames_f);
+				$unique_count_f = (array_count_values($firstnames_f));
+				$name_list_f = (array_combine($unique_names_f,$unique_count_f));
+			}
+			else
+			{
+				$name_list_f = array();
+			}
 			$_SESSION['first_names_f'][$GEDCOM] = $name_list_f;
 
 			//Calculate Male names
-			$unique_names_m = array_unique($firstnames_m);
-			$unique_count_m = (array_count_values($firstnames_m));
-			$name_list_m = (array_combine($unique_names_m,$unique_count_m));
-			// Sort the list and save for future reference
-			arsort($name_list_m);
+			if(count($firstnames_m))
+			{
+				$unique_names_m = array_unique($firstnames_m);
+				$unique_count_m = (array_count_values($firstnames_m));
+				$name_list_m = (array_combine($unique_names_m, $unique_count_m));
+			}
+			else
+			{
+				$name_list_m = array();
+			}
 			$_SESSION['first_names_m'][$GEDCOM] = $name_list_m;
 		}
 		if($sex == 'F')
 		{
 			$name_list = 'name_list_f';
+			$sort_types[$sorting]($name_list_f);
 		}
 		elseif($sex == 'M')
 		{
 			$name_list = 'name_list_m';
+			$sort_types[$sorting]($name_list_m);
 		}
 		else
 		{
 			$name_list_b = array_merge($name_list_f, $name_list_m);
-			arsort($name_list_b);
+			$sort_types[$sorting]($name_list_b);
 			$name_list = 'name_list_b';
 		}
 		if(count($$name_list))
@@ -1610,11 +1630,11 @@ class stats {
 				{
 					if($TEXT_DIRECTION == 'rtl')
 					{
-						$tot = " &rlm;[{$total}&rlm;]";
+						$tot = PrintReady(" &rlm;[{$total}&rlm;]");
 					}
 					else
 					{
-						$tot = " [{$total}]";
+						$tot = PrintReady(" [{$total}]");
 					}
 				}
 				if($type == 'list')
