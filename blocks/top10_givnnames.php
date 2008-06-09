@@ -111,7 +111,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	print '<td class="blockh1">&nbsp;</td>';
 	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
 	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent" align="center">';
+	print '</tr></table><div class="blockcontent">';
 	if ($block) print '<div class="small_inner_block">';
 	else print '<div class="normal_inner_block">';
 	
@@ -142,30 +142,25 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		print "</div><br /><br />";
 		break;
 	case "style2":	// Style 2: Tabular format.  Narrow, 2-column table, good on right side of page
+		$nameAlign = ($TEXT_DIRECTION=='ltr') ? 'left':'right';
 		//Table Headings
-		print "<table>";
+		print "<table class=\"center\">";
 		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td></tr>";
 		print "<tr>";
 		//List Female names
-		$i=0;
 		print "<td><table>";
 		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
-		foreach ($name_list_f as $key => $value) {
-			$i++;
-			if ($i <= $config["num"]){
-			echo "<tr><td class='optionbox' align='left'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
-			}
+		$nameList = array_slice($name_list_f, 0, $config["num"]);
+		foreach ($nameList as $key => $value) {
+			echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
 		}
 		print "</table></td>";
 		//List Male names	
-		$i=0;
 		print "<td><table>";
 		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
-		foreach ($name_list_m as $key => $value) {
-			$i++;
-			if ($i <= $config["num"]){
-			echo "<tr><td class='optionbox' align='left'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
-			}
+		$nameList = array_slice($name_list_m, 0, $config["num"]);
+		foreach ($nameList as $key => $value) {
+			echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
 		}
 		print "</table></td>";
 		//Close table off
