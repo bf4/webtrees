@@ -406,11 +406,11 @@ class GedcomRecord {
 	function getAllNames($fact) {
 		if (is_null($this->_getAllNames)) {
 			$this->_getAllNames=array();
-			if (preg_match_all('/^1 ('.$fact.')\s+([^\r\n]+)(([\r\n]+[2-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
+			if (preg_match_all('/^1 ('.$fact.') +([^\r\n]+)(([\r\n]+[2-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
 				foreach ($matches as $match) {
 					$this->_addName($match[1], $match[2], $match[0]);
 				}
-				if ($match[3] && preg_match_all('/^2 (ROMN|FONE|_\w+) +([^\r\n]+)/m', $match[3], $submatches, PREG_SET_ORDER)) {
+				if ($match[3] && preg_match_all('/^2 (ROMN|FONE|_\w+) +([^\r\n]+)(([\r\n]+[3-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
 					foreach ($submatches as $submatch) {
 						$this->_addName($submatch[1], $submatch[2], $submatch[0]);
 					}
