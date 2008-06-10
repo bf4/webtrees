@@ -1851,7 +1851,7 @@ case 'reorder_media_update': // Update sort using popup
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
-		$mediaordsuccess='yes';
+		// $mediaordsuccess='yes';
 		if ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==8) {
 			$link = "individual.php?pid=$pid&tab=7&show_changes=yes";
 		}elseif ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==7) {
@@ -2372,7 +2372,7 @@ if (empty($goto) || empty($link))
 	$link='';
 //------------------------------------------------------------------------------
 // autoclose window when update successful
-if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"] && $mediaordsuccess!='yes') {
+if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"] ) {
 	if ($action=="copy") print "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
 	else print "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }
