@@ -389,7 +389,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 			} else {
 				$title='';
 			}
-			if ($num==$person->getPrimaryName()) {
+			if (isset($value['name']) && strpos($name['list'], $value['name'])===0 ||
+			   !isset($value['name']) && $num==$person->getPrimaryName()) {
 				$class='list_item name2';
 				$sex_image=$tiny ? $person->getSexImage() : '';
 			} else {
