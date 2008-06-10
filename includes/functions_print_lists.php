@@ -352,6 +352,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$n = 0;
 	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	$dateY = date("Y");
+	$unique_indis=array(); // Don't double-count indis with multiple names.
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$person = Person::getInstance($value);
@@ -368,6 +369,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$hidden++;
 			continue;
 		}
+		$unique_indis[$person->getXref()]=true;
 		//-- place filtering
 		if ($option=="BIRT_PLAC" && strstr($person->getBirthPlace(), $filter)===false) continue;
 		if ($option=="DEAT_PLAC" && strstr($person->getDeathPlace(), $filter)===false) continue;
@@ -582,7 +584,10 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<td class=\"list_label\">"; // NAME
 	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["parents"]."</label><br />";
-	echo $pgv_lang["total_names"]." : ".$n;
+	echo $pgv_lang['total_indis'], ' : ', count($unique_indis);
+	if ($n!=count($unique_indis)) {
+		echo '<br/>', $pgv_lang['total_names'], ' : ', $n;
+	}
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	echo "<td style=\"display:none\">GIVN</td>";
