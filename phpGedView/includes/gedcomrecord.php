@@ -252,7 +252,7 @@ class GedcomRecord {
 	 * @return string
 	 */
 	function getLinkTitle() {
-		$title = get_gedcom_setting($this->ged_id);
+		$title = get_gedcom_setting($this->ged_id, 'title');
 		if ($this->isRemote()) {
 			$parts = preg_split("/:/", $this->rfn);
 			if (count($parts)==2) {
