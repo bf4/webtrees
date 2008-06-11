@@ -1568,11 +1568,16 @@ class Person extends GedcomRecord {
 		return parent::getLinkUrl('individual.php?pid=');
 	}
 
+		// If this object has no name, what do we call it?
+	function getFallBackName() {
+		return '@P.N. /@N.N./';
+	}
+
 	// Convert a name record into "full", "sort" and "list" versions.
 	function _addName($type, $full, $gedrec) {
 		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $unknownNN, $unknownPN;
-		
-		// Some old systems generate gedcoms generate single slashes.  e.g. 1 NAME John /Smith
+
+		// Some old systems generate gedcoms generate single slashes.  e.g. 1 NAME John/Smith
 		// Note that zero slashes are valid; they indicate NO surname as opposed to missing surname.
 		if (preg_match('/^[^\/]*\/[^\/]*$/', $full)) {
 			$full.='/';
