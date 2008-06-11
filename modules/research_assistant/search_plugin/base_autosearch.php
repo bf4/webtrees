@@ -27,10 +27,12 @@
 require_once 'includes/person_class.php';
 
 class Base_AutoSearch {
-	static $url=null;
-	static $method=null;
-	static $title=null;
-	static $fields=null;
+	// These values should be class static/constant properties.
+	// When we move to PHP5, we can do this properly.
+	var $url=null;
+	var $method=null;
+	var $title=null;
+	var $fields=null;
 
 	// Constructor simply defines the fields to be used
 	function Base_AutoSearch($title, $url, $method, $fields) {
