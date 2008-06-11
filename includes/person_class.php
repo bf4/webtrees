@@ -1570,7 +1570,7 @@ class Person extends GedcomRecord {
 
 	// Convert a name record into "full", "sort" and "list" versions.
 	function _addName($type, $full, $gedrec) {
-		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $HNN, $pgv_lang;
+		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $unknownNN, $unknownPN;
 		
 		// Some old systems generate gedcoms generate single slashes.  e.g. 1 NAME John /Smith
 		// Note that zero slashes are valid; they indicate NO surname as opposed to missing surname.
@@ -1657,12 +1657,11 @@ class Person extends GedcomRecord {
 		}
 
 		// Convert "user-defined" unknowns into PGV unknowns
-		$unknown=preg_quote(trim($pgv_lang['NN'], '()'), '/');
-		$full=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $full);
-		$givn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@P.N.', $givn);
-		$surn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $surn);
+		$full=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,})/i', '@N.N.', $full);
+		$givn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,})/i', '@P.N.', $givn);
+		$surn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,})/i', '@N.N.', $surn);
 		foreach ($surns as $key=>$value) {
-			$surns[$key]=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,}|'.$unknown.')/i', '@N.N.', $value);
+			$surns[$key]=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,})/i', '@N.N.', $value);
 		}
 
 		// Create the LIST name
@@ -1702,15 +1701,11 @@ class Person extends GedcomRecord {
 			$list=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $list);
 		}
 
-		// "unknown" names in _HEB tags are always in hebrew, regardless of the page language.
-		// NB don't update the SORT name - we want them to sort as "@",  not "unknown"
-		if ($type=='_HEB') {
-			$list=str_replace(array('@N.N.','@P.N.'), $HNN, $list);
-			$full=str_replace(array('@N.N.','@P.N.'), $HNN, $full);
-		} else {
-			$list=str_replace(array('@N.N.','@P.N.'), array($pgv_lang['NN'], $pgv_lang['PN']), $list);
-			$full=str_replace(array('@N.N.','@P.N.'), array($pgv_lang['NN'], $pgv_lang['PN']), $full);
-		}
+		// If the name is written in greek/cyrillic/hebrew/etc., use the "unknown" name
+		// from that character set.  Otherwise use the one in the language file.
+		$lang = whatLanguage($full);
+		$list=str_replace(array('@N.N.','@P.N.'), array($unknownNN[$lang], $unknownPN[$lang]), $list);
+		$full=str_replace(array('@N.N.','@P.N.'), array($unknownNN[$lang], $unknownPN[$lang]), $full);
 
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
