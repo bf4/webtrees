@@ -404,20 +404,26 @@ class GedcomRecord {
 	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
 	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
 	function getAllNames($fact) {
+		global $pgv_lang;
+
 		if (is_null($this->_getAllNames)) {
-			$this->_getAllNames=array();
-			if (preg_match_all('/^1 ('.$fact.') *([^\r\n]*)(([\r\n]+[2-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
-				foreach ($matches as $match) {
-					$this->_addName($match[1], $match[2] ? $match[2] : $this->getFallBackName(), $match[0]);
-					if ($match[3] && preg_match_all('/^2 (ROMN|FONE|_\w+) *([^\r\n]*)(([\r\n]+[3-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
-						foreach ($submatches as $submatch) {
-							$this->_addName($submatch[1], $submatch[2] ? $submatch[2] : $this->getFallBackName(), $submatch[0]);
+			if ($this->canDisplayName()) {
+				$this->_getAllNames=array();
+				if (preg_match_all('/^1 ('.$fact.') *([^\r\n]*)(([\r\n]+[2-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
+					foreach ($matches as $match) {
+						$this->_addName($match[1], $match[2] ? $match[2] : $this->getFallBackName(), $match[0]);
+						if ($match[3] && preg_match_all('/^2 (ROMN|FONE|_\w+) *([^\r\n]*)(([\r\n]+[3-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
+							foreach ($submatches as $submatch) {
+								$this->_addName($submatch[1], $submatch[2] ? $submatch[2] : $this->getFallBackName(), $submatch[0]);
+							}
 						}
 					}
 				}
-			}
-			if (empty($this->_getAllNames)) {
-				$this->_addName($this->getType(), $this->getFallBackName(), null);
+				if (empty($this->_getAllNames)) {
+					$this->_addName($this->getType(), $this->getFallBackName(), null);
+				}
+			} else {
+				$this->_getAllNames[]=array('type'=>$fact, 'full'=>$pgv_lang['private'], 'list'=>$pgv_lang['private'], 'sort'=>'@');
 			}
 		}
 		return $this->_getAllNames;
@@ -426,6 +432,11 @@ class GedcomRecord {
 	// If this object has no name, what do we call it?
 	function getFallBackName() {
 		return $this->getXref();
+	}
+
+	// Can we display the name of this object?
+	function canDisplayName() {
+		return true;
 	}
 
 	// Which of the (possibly several) names of this record is the primary one.
