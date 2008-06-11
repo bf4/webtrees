@@ -1657,11 +1657,11 @@ class Person extends GedcomRecord {
 		}
 
 		// Convert "user-defined" unknowns into PGV unknowns
-		$full=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,})/i', '@N.N.', $full);
-		$givn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,})/i', '@P.N.', $givn);
-		$surn=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,})/i', '@N.N.', $surn);
+		$full=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@N.N.', $full);
+		$givn=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@P.N.', $givn);
+		$surn=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@N.N.', $surn);
 		foreach ($surns as $key=>$value) {
-			$surns[$key]=preg_replace('/(_{2,}|\?{2,}|\.{2,}|-{2,})/i', '@N.N.', $value);
+			$surns[$key]=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@N.N.', $value);
 		}
 
 		// Create the LIST name
