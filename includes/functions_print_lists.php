@@ -328,7 +328,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<thead><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
-	echo '<td class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this,2)">'.$factarray['NAME'].'</a></th>';
+	echo '<td class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this,2)">'.$factarray['NAME'].'</a></td>';
 	echo "<th class=\"list_label\" style=\"display:none\">GIVN</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">SURN</th>";
 	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
