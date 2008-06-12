@@ -244,14 +244,6 @@ class Person extends GedcomRecord {
 	} */
 
 	/**
-	 * Check if an additional name exists for this person
-	 * @return string
-	 */
-	function getAddName() {
-		if (!$this->canDisplayName()) return "";
-		return get_add_person_name($this->xref);
-	}
-	/**
 	 * Check if privacy options allow this record to be displayed
 	 * @return boolean
 	 */

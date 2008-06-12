@@ -119,16 +119,6 @@ class Repository extends GedcomRecord {
 	}
 
 	/**
-	 * get the repository additional name
-	 * @return string
-	 */
-	function getAddName() {
-		$addn = get_gedcom_value("NAME:_HEB", 1, $this->gedrec, '', false);
-		if (empty($addn)) $addn = get_gedcom_value("NAME:ROMN", 1, $this->gedrec, '', false);
-		return $addn;
-	}
-
-	/**
 	 * get repository facts array
 	 * @return array
 	 */

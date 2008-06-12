@@ -308,7 +308,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		}
 	}
 	//-- find additional name
-	$addname = get_add_person_name($pid);
+	$addname=$person->getAddName();
 	//-- check if the persion is visible
 	if (!$disp) {
 		if (showLivingName($indirec)) {
