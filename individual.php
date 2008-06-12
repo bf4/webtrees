@@ -57,7 +57,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		<span class="name_head">
 		<?php
 		    if ($TEXT_DIRECTION=="rtl") print "&nbsp;";
-			print PrintReady($controller->indi->getName());
+			print PrintReady($controller->indi->getFullName());
 			print "&nbsp;&nbsp;";
  			print PrintReady("(".$controller->pid.")");
 			if (PGV_USER_IS_ADMIN) {
