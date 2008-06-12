@@ -47,6 +47,7 @@ class GedcomRecord {
 	// These should become private when we move to PHP5.  Do not use them from outside this class.
 	var $_getAllNames=null;
 	var $_getPrimaryName=null;
+	var $_getSecondaryName=null;
 
 	/**
 	 * constructor for this class
@@ -374,15 +375,6 @@ class GedcomRecord {
 		return get_gedcom_value("NAME", 1, $this->gedrec);
 	}
 	
-	/**
-	 * get the additional name
-	 * This method should overridden in child sub-classes
-	 * @return string
-	 */
-	function getAddName() {
-		return "";
-	}
-
 	// Convert a name record into sortable and listable versions.  This default
 	// should be OK for simple record types.  INDI records will need to redefine it.
 	function _addName($type, $value, $gedrec) {
@@ -444,7 +436,7 @@ class GedcomRecord {
 		if (is_null($this->_getPrimaryName)) {
 			// Generally, the first name is the primary one....
 			$this->_getPrimaryName=0;
-			// ....except for languages with non-latin character sets
+			// ....except when the language/name use different character sets
 			global $LANGUAGE;
 			switch ($LANGUAGE) {
 			case 'greek':
@@ -459,9 +451,38 @@ class GedcomRecord {
 						break;
 					}
 				}
+				break;
+			default:
+				foreach ($this->getAllNames() as $n=>$name) {
+					if (whatLanguage($name['full'])=='other') {
+						$this->_getPrimaryName=$n;
+						break;
+					}
+				}
+				break;
 			}
 		}
 		return $this->_getPrimaryName;
+	}
+
+	// Which of the (possibly several) names of this record is the secondary one.
+	function getSecondaryName() {
+		if (is_null($this->_getSecondaryName)) {
+			// Generally, the primary and secondary names are the same
+			$this->_getSecondaryName=$this->getPrimaryName();
+			// ....except when there are names with different character sets
+			$all_names=$this->getAllNames();
+			if (count($all_names)>1) {
+				$primary_language=whatLanguage($all_names[$this->getPrimaryName()]['full']);
+				foreach ($all_names as $n=>$name) {
+					if ($n!=$this->getPrimaryName() && whatLanguage($name['full'])!=$primary_language) {
+						$this->_getSecondaryName=$n;
+						break;
+					}
+				}
+			}
+		}
+		return $this->_getSecondaryName;
 	}
 
 	// Static helper function to sort an array of objects by name
@@ -481,6 +502,15 @@ class GedcomRecord {
 	function getListName() {
 		$tmp=$this->getAllNames();
 		return $tmp[$this->getPrimaryName()]['list'];
+	}
+	// Get the fullname in an alternative character set
+	function getAddName() {
+		if ($this->getPrimaryName() != $this->getSecondaryName()) {
+			$all_names=$this->getAllNames();
+			return $all_names[$this->getSecondaryName()]['full'];
+		} else {
+			return null;
+		}
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
