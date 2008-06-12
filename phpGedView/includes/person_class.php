@@ -1616,7 +1616,7 @@ class Person extends GedcomRecord {
 				// sort/list names)
 				list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $name);
 				$givn=trim($tmp1.' '.$tmp3);
-				if (preg_match('/^((?:(?:a|aan|ab|af|al|ap|as|av|bat|ben|bij|bin|bint|da|de|del|della|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor)[ -]+)+(?:[dl]\')?)(.+)$/i', $tmp2, $match)) {
+				if (preg_match('/^((?:(?:a|aan|ab|af|al|ap|as|av|bat|ben|bij|bin|bint|da|de|del|della|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|st|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor)[ -]+)+(?:[dl]\')?)(.+)$/i', $tmp2, $match)) {
 					$spfx=trim($match[1]);
 					$surn=$match[2];
 				} else {
