@@ -1578,7 +1578,7 @@ class Person extends GedcomRecord {
 		// Do we have a structured name?
 		$givn=preg_match('/^\d GIVN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		$surn=preg_match('/^\d SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
-		$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? '&ldquo;'.$match[1].'&rdquo;' : '';
+		$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? '<q>'.$match[1].'</q>' : '';
 		if ($givn || $surn) { 
 			// We have a structured name - use it.
 			$npfx=preg_match('/^\d NPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
@@ -1686,8 +1686,8 @@ class Person extends GedcomRecord {
 			}
 		}
 
-		// Create the FULL name
-		$full=str_replace('/', '', $full);
+		// Create the FULL name (take care not to remove slashes inside closing tags)
+		$full=preg_replace('/(?<!<)\//', '', $full);
 
 		// Preferred names should have a suffix of "*"
 		$full=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $full);
