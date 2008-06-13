@@ -100,7 +100,13 @@ function check_db($ignore_previous=false) {
 	// Perform any database-specific initialisation
 	switch ($DBTYPE) {
 	case 'mysql':
-		//dbquery("SET CHARACTER SET 'utf8'"); // Our queries will be encoded using UTF-8.
+		//dbquery("SET NAMES UTF8");
+		break;
+	case 'pgsql':
+		//dbquery("SET NAMES 'UTF8'");
+		break;
+	case 'sqlite':
+		//dbquery('PRAGMA encoding = "UTF-8"');
 		break;
 	}
 
