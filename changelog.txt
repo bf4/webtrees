@@ -10,6 +10,8 @@
 
 
 Version 4.1.6
+ - Fixed: Lightbox: Fixed Image Distortion when at low browser resolution when clicking previous or next buttons (windmillway)
+ - Added: Lightbox: New Notes Display Link on Enlarged Lightbox Images.
  - Fixed: [ 1990954 ] SVN 2347 Error on links (fisharebest)
  - Fixed: [ 1987150 ] Auto close edit window error: removed surplus variable $mediaordsuccess (windmillway)
  - Fixed: [ 1946236 ] Over-counting individuals with a given surname (fisharebest)

@@ -119,20 +119,21 @@
 	top: -6px;
 }
 
-#CB_TopText {
+#CB_TopText, #CB_NoteText {
+	width: 40px;
     background-color: #FFFFFF;
 	text-align: center;
-	font-weight: 500;
+	font-weight: 300;
 	color: #8800FF;
 	padding-bottom: 4px;
-	margin-top: -6px;
-	margin-bottom: 6px;  
+	margin-top: -3px;
+	margin-bottom: 6px;
 }
 
-#CB_TopText a, #CB_Txt2 a {
+#CB_TopText a, #CB_NoteText a, #CB_Txt2 a {
 	color: #888888;
 }
-#CB_TopText a:hover, #CB_Txt2 a:hover  {
+#CB_TopText a:hover, #CB_NoteText a:hover, #CB_Txt2 a:hover  {
 	color: #AA0000;
 }
 

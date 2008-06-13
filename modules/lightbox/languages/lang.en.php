@@ -33,6 +33,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// Added in VERSION 4.1.6
+$pgv_lang["lb_notes"]			= "Notes";
+$pgv_lang["lb_notes_info"]		= "";
+ 
+
 // Added in VERSION 4.1.4 
 
 $pgv_lang["lb_details"]			= "Details";
@@ -43,8 +48,6 @@ $pgv_lang["lb_music"]			= "Turn Music On/Off";
 $pgv_lang["lb_zoom_off"]		= "Disable Zoom";
 $pgv_lang["lb_zoom_on"]			= "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out";
 $pgv_lang["lb_close_win"]		= "Close Lightbox window";
-
-
 
 
 // VERSION 4.1.3 
