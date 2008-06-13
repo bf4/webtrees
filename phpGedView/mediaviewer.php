@@ -115,7 +115,7 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 									href=\"" . $filename . "\" 
 									onmouseover=\"window.status='javascript:;'; return true;\" 
 									onmouseout=\"window.status=''; return true;\"
-									rel=\"clearbox[general]\" rev=\"" . $controller->pid . ":" . $GEDCOM . ":" . PrintReady(htmlspecialchars($controller->mediaobject->getTitle())) . "\">" . "\n";	
+									rel=\"clearbox[general]\" rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getTitle())) . "\">" . "\n";	
 							}else{
 								//Else open image with the Image View Page
 								?>

@@ -40,7 +40,7 @@
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 	global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
-	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i;
+	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q;
 	
 	// If reorder media has been clicked
 	if (isset($reorder) && $reorder==1) {
@@ -101,16 +101,16 @@
 		$after    = substr(strstr($haystack, $needle), strlen($needle)); 
 		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 		$final    = $before.$needle.$worked;
-		$notes    = htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)));
+		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true))));
 		
 		
-		/*
 		//Get media item Notes
+		/*
 		$notes=array();
 		for ($i=1; ; ++$i) {
 		$note=get_sub_record(1, '1 NOTE', $rowm["m_gedrec"], $i);
 			if ($note) {
-				$notes[]=htmlspecialchars(addslashes($note));
+				$notes[]=PrintReady(htmlspecialchars(addslashes($note)));
 			} else {
 				break;
 			}
@@ -121,11 +121,13 @@
 		$notes=ereg_replace("2 CONT ", "<br />", $notes);
 		*/
 		
-		//text alignment for tooltip
+		//text alignment for Tooltips
 		if ($TEXT_DIRECTION=="rtl") {
 			$alignm = "right";
+			$left	= "true";
 		}else{
 			$alignm = "left";
+			$left	= "false";
 		}
 		
 		// Check if allowed to View media
@@ -169,23 +171,45 @@
 				// Check for Notes associated media item
 				if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 					if ($reorder!=1) {
-						$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";
-						print " <a "; // href=\"#\" ";
-						// Tooltip Bubble ----------------------------------------------------
-						print "onmouseover=\"Tip(";
-							// Contents of Note 
+						// Print Note and number above thumbnail
+						if ($TEXT_DIRECTION=="rtl") {
+							$note[$n]  = "&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";
+						}else{
+							$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";
+						}
+						print "<a href=\"#\" ";
+						// Notes Tooltip ----------------------------------------------------
+						print "onclick=\"Tip(";
+							// Contents of Notes 
 							echo "'";
 								echo "<font color=#008800><b>" . $note[$n]. ":</b></font><br />";
 								echo $notes;
 							echo "'";
-							// Tooltip Parameters
-							print ",";
-							print "BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETX, -10, STICKY, true, PADDING, 6, CLICKCLOSE, true, BALLOON, true, ABOVE, true";
-						print ")\"";
+							// Notes Tooltip Parameters
+							print ", BALLOON, false";
+							print ", LEFT," . $left . "";
+							print ", ABOVE, true";
+							print ", TEXTALIGN, '" . $alignm . "'";
+							print ", WIDTH, -480 ";
+							print ", BORDERCOLOR, ''";
+							print ", TITLEBGCOLOR, ''";
+							print ", CLOSEBTNTEXT, 'X'";
+							print ", CLOSEBTN, true";
+							print ", CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000']";
+							print ", OFFSETX, -10";
+							print ", STICKY, true";
+							print ", PADDING, 6";
+							print ", CLICKCLOSE, true";
+							print ", BGCOLOR, '#f3f3f3'";
+							print ", JUMPHORZ, 'true' ";
+							print ", DELAY, 0";
+							print ");";
+							print "return false;\"";
 						if ($reorder==1) {
-							print "onmouseout=\"tt_HideInit()\"";
+							// print "onmouseout=\"tt_HideInit()\"";
+							print "onmouseout=\"UnTip();\"";
 						}
-						// End Tooltip Bubble --------------------------------------------------
+						// End Notes Tooltip --------------------------------------------------
 						print ">\n";
 						print "<font size=1>" . $note[$n] . "</font>";
 						print "</a>";
@@ -209,13 +233,13 @@
 				}else{
 					// If regular filetype (Lightbox)
 					if ($file_type == "regular") {
-						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . Printready(strip_tags($mediaTitle)) . "\""; 
+						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . Printready(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "\""; 
 					// Else If url filetype (Lightbox)
 					}elseif ($file_type == "url") {
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"";
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "::" . htmlspecialchars($notes) . "\"";
 					// Else Other filetype (Pop-up Window)
 					}else{
-						print 	"<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" rev=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\""; 
+						print 	"<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "\""; 
 					}
 					
 					// Thumbnail Tooltip --------------------------------
@@ -239,8 +263,9 @@
 							print "<b><font color=#0000FF>&nbsp;" . $rowm["m_media"] . "</font></b>";
 							print "<\/a>";
 						print "'";
-						// Tooltip parameters ----------------------------------
+						// Thumbnail Tooltip parameters ----------------------------------
 							print ", TEXTALIGN, '" . $alignm . "'";
+							print ", LEFT," . $left . "";
 							print ", WIDTH, -300 ";
 							print ", OFFSETY, 0 ";
 							print ", OFFSETX, 15 ";
@@ -250,8 +275,10 @@
 							print ", PADDING, 5 ";
 							print ", BGCOLOR, '#f3f3f3' ";
 							print ", FONTSIZE, '8pt' "; 
+							print ", JUMPHORZ, 'true' ";
+							print ", DELAY, 200";
 					print ")\"";
-					// End Tooltip
+					// End Thumbnail Tooltip ----------------------------------
 					print ">\n";
 				}
 			}
