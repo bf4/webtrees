@@ -319,9 +319,17 @@ if ($ct>0){
 
 		
 //LBox --------  change for Lightbox Album --------------------------------------------
+		//Get media item Notes
+		$haystack = $media["GEDCOM"];
+		$needle   = "1 NOTE";
+		$before   = substr($haystack, 0, strpos($haystack, $needle));
+		$after    = substr(strstr($haystack, $needle), strlen($needle)); 
+		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
+		$final    = $before.$needle.$worked;
+		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true))));
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
 //			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
-			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady($name) . "\">" . "\n";
+			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes) . "\">" . "\n";
 
         }elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
