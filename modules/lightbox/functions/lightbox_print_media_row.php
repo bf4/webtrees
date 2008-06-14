@@ -267,8 +267,8 @@
 							print ", TEXTALIGN, '" . $alignm . "'";
 							print ", LEFT," . $left . "";
 							print ", WIDTH, -300 ";
-							print ", OFFSETY, 0 ";
-							print ", OFFSETX, 15 ";
+							print ", OFFSETY, 5 ";
+							print ", OFFSETX, -15 ";
 							print ", CLICKCLOSE, true ";
 							print ", DURATION, 4000 ";
 							print ", STICKY, true ";
@@ -276,7 +276,7 @@
 							print ", BGCOLOR, '#f3f3f3' ";
 							print ", FONTSIZE, '8pt' "; 
 							print ", JUMPHORZ, 'true' ";
-							print ", DELAY, 200";
+							print ", DELAY, 0";
 					print ")\"";
 					// End Thumbnail Tooltip ----------------------------------
 					print ">\n";
