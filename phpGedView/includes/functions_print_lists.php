@@ -1578,7 +1578,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		//-- table footer
 		print "<tr class=\"sortbottom\">";
 		print "<td class=\"list_label\">";
-		print "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">&nbsp;&nbsp;".substr($pgv_lang["show_parents"],0,-1)."</label><br />";
+		print "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">&nbsp;&nbsp;".$pgv_lang["show_parents"]."</label><br />";
 		print "</td><td class=\"list_label\" colspan=\"3\">";
 		print $pgv_lang["stat_events"].": ".$output;
 		if ($allow_download) {
