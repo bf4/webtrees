@@ -491,6 +491,8 @@ $pgv_lang["widower"]					= "Witwer";
 $pgv_lang["widow"]						= "Witwe";
 $pgv_lang["leaves"]						= "Blätter";
 $pgv_lang["roots"]						= "Wurzeln";
+$pgv_lang["show_parents"] 				= "Eltern zeigen";
+
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]						= "Alter";
 $pgv_lang["days"]						= "Tage";
