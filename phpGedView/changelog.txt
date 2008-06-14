@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Lightbox: Corrected white rectangle appearing when closing Lighbox Image, Improved fast mouseover displacement of Tooltip
  - Fixed: Lightbox: Fixed Image Distortion when at low browser resolution when clicking previous or next buttons (windmillway)
  - Added: Lightbox: New Notes Display Link on Enlarged Lightbox Images.
  - Fixed: [ 1990954 ] SVN 2347 Error on links (fisharebest)

@@ -1714,6 +1714,8 @@ var CB_Close_Win		= CB_Close_Win;
         CB_ImgHd.style.visibility = "hidden";
         CB_ShTh.style.visibility = "hidden";
         CB_SlideShowStop();
+		CB_Txt.style.visibility = "hidden";
+		CB_Txt3.style.visibility = "hidden";
         CB_Txt.innerHTML = "";
 		CB_Txt3.innerHTML = "";
         CB_Img.src = "";
