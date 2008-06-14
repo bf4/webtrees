@@ -197,115 +197,163 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 function print_htmlplus_block_config($config)
 {
 	global
-	$pgv_lang,
-	$factarray,
-	$ctype,
-	$PGV_BLOCKS,
-	$TEXT_DIRECTION,
-	$LANGUAGE,
-	$language_settings,
-	$GEDCOM,
-	$DEFAULT_GEDCOM
+		$pgv_lang,
+		$factarray,
+		$ctype,
+		$PGV_BLOCKS,
+		$TEXT_DIRECTION,
+		$LANGUAGE,
+		$language_settings,
+		$GEDCOM,
+		$DEFAULT_GEDCOM
 	;
+	$useFCK = file_exists('./modules/FCKeditor/fckeditor.php');
 	$templates = array();
 	$d = dir('blocks/');
 	while(false !== ($entry = $d->read()))
 	{
-		if (strstr($entry, 'block_htmlplus_'))
+		if(strstr($entry, 'block_htmlplus_'))
 		{
 			$tpl = file("blocks/{$entry}");
 			$info = array_shift($tpl);
 			$bits = explode('|', $info);
-			if (count($bits) != 2)
+			if(count($bits) != 2)
 			{
 				$bits = array($entry, '');
 			}
 			$templates[] = array(
 				'filename'		=>$entry,
 				'title'			=>(isset($pgv_lang[$bits[0]]))?$pgv_lang[$bits[0]]:$bits[0],
-				'description'	=>(isset($pgv_lang[$bits[1]]))?$pgv_lang[$bits[1]]:$bits[1],
+				'description'		=>(isset($pgv_lang[$bits[1]]))?$pgv_lang[$bits[1]]:$bits[1],
 				'template'		=>htmlspecialchars(join('', $tpl))
 			);
 		}
 	}
 	$d->close();
+
 	// config sanity check
-	if (empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
+	if(empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
+
 	// title
 	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
-	print "<tr><td class=\"descriptionbox wrap width33\">"
-	.print_help_link('index_htmlplus_title_help', 'qm_ah', '', false, true)
-	."{$factarray['TITL']}</td>"
-	."<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td></tr>"
+	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
+		.print_help_link('index_htmlplus_title_help', 'qm_ah', '', false, true)
+		."{$factarray['TITL']}</td>\n"
+		."\t\t<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td>\n\t</tr>\n"
 	;
+
 	// templates
-	print "<tr><td class=\"descriptionbox wrap width33\">"
-	.print_help_link('index_htmlplus_template_help', 'qm_ah', '', false, true)
-	."{$pgv_lang['htmlplus_block_templates']}</td>"
-	."<td class=\"optionbox\">"
-	."<select name=\"template\" onChange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">"
-	."<option value=\"\">{$pgv_lang['htmlplus_block_custom']}</option>"
+	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
+		.print_help_link('index_htmlplus_template_help', 'qm_ah', '', false, true)
+		."{$pgv_lang['htmlplus_block_templates']}</td>\n"
+		."\t\t<td class=\"optionbox\">\n"
 	;
-	foreach($templates as $tpl) {
-		print "<option value=\"{$tpl['template']}\">{$tpl['title']}</option>";
+	if($useFCK)
+	{
+		print "\t\t\t<script language=\"JavaScript\" type=\"text/javascript\">\n"
+			."\t\t\t<!--\n"
+			."\t\t\t\tfunction loadTemplate(html)\n"
+			."\t\t\t\t{\n"
+			."\t\t\t\t\tvar oEditor = FCKeditorAPI.GetInstance('html');\n"
+			."\t\t\t\t\toEditor.SetHTML(html);\n"
+			."\t\t\t\t}\n"
+			."\t\t\t-->\n"
+			."\t\t\t</script>\n"
+			."\t\t\t<select name=\"template\" onChange=\"loadTemplate(document.block.template.options[document.block.template.selectedIndex].value);\">\n"
+		;
 	}
-	print "</select>"
-	."</td></tr>"
+	else
+	{
+		print "\t\t\t<select name=\"template\" onChange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">\n";
+	}
+	print "\t\t\t\t<option value=\"\">{$pgv_lang['htmlplus_block_custom']}</option>\n";
+	foreach($templates as $tpl)
+	{
+		print "\t\t\t\t<option value=\"{$tpl['template']}\">{$tpl['title']}</option>\n";
+	}
+	print "\t\t\t</select>\n"
+		."\t\t</td>\n\t</tr>\n"
 	;
+
 	// gedcom
-	if (count(get_all_gedcoms()) > 1) {
-		if ($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
-		if ($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
-		print "<tr><td class=\"descriptionbox wrap width33\">"
-		.print_help_link('index_htmlplus_gedcom_help', 'qm_ah', '', false, true)
-		."{$pgv_lang['htmlplus_block_gedcom']}</td>"
-		."<td class=\"optionbox\">"
-		."<select name=\"gedcom\">"
-		."<option value=\"__current__\"{$sel_current}>{$pgv_lang['htmlplus_block_current']}</option>"
-		."<option value=\"__default__\"{$sel_default}>{$pgv_lang['htmlplus_block_default']}</option>"
+	$gedcoms = get_all_gedcoms();
+	if(count($gedcoms) > 1)
+	{
+		if($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
+		if($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
+		print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
+			.print_help_link('index_htmlplus_gedcom_help', 'qm_ah', '', false, true)
+			."{$pgv_lang['htmlplus_block_gedcom']}</td>\n"
+			."\t\t<td class=\"optionbox\">\n"
+			."\t\t\t<select name=\"gedcom\">\n"
+			."\t\t\t\t<option value=\"__current__\"{$sel_current}>{$pgv_lang['htmlplus_block_current']}</option>\n"
+			."\t\t\t\t<option value=\"__default__\"{$sel_default}>{$pgv_lang['htmlplus_block_default']}</option>\n"
 		;
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-			if ($ged_name==$config['gedcom']) {
-				$sel = ' selected="selected"';
-			} else {
-				$sel = '';
-			}
-			echo '<option value="', $ged_name, '"', $sel, '>', get_gedcom_setting($ged_id, 'title'), '</option>';
+		foreach($gedcoms as $ged_id=>$ged_name)
+		{
+			if($ged_name == $config['gedcom']){$sel = ' selected="selected"';}else{$sel = '';}
+			print "\t\t\t\t<option value=\"{$ged_name}\"{$sel}>".get_gedcom_setting($ged_id, 'title')."</option>\n";
 		}
-		print "</select>"
-		."</td></tr>"
+		print "\t\t\t</select>\n"
+			."\t\t</td>\n\t</tr>\n"
 		;
 	}
+
 	// html
-	print "<tr><td class=\"descriptionbox wrap width33\">"
-	.print_help_link('index_htmlplus_content_help', 'qm_ah', '', false, true)
-	."{$pgv_lang['htmlplus_block_content']}<br /><br />"
-	."</td>"
-	."<td class=\"optionbox\">"
-	."<textarea name=\"html\" rows=\"10\" cols=\"80\">{$config['html']}</textarea>"
-	."</td></tr>"
+	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">\n"
+		.print_help_link('index_htmlplus_content_help', 'qm_ah', '', false, true)
+		."{$pgv_lang['htmlplus_block_content']}<br />\n\t\t\t<br />\n"
+		."\t\t</td>\n"
+		."\t\t<td class=\"optionbox\">\n\t\t\t"
 	;
+	if($useFCK)
+	{
+		// use FCKeditor module
+		include_once('./modules/FCKeditor/fckeditor.php');
+		$oFCKeditor = new FCKeditor('html') ;
+		$oFCKeditor->BasePath = './modules/FCKeditor/';
+		$oFCKeditor->Value = $config['html'];
+		$oFCKeditor->Width = 700;
+		$oFCKeditor->Height = 250;
+		$oFCKeditor->Config['AutoDetectLanguage'] = false ;
+		$oFCKeditor->Config['DefaultLanguage'] = $language_settings[$LANGUAGE]['lang_short_cut'];
+		$oFCKeditor->Create() ;
+	}
+	else
+	{
+		//use standard textarea
+		print "<textarea name=\"html\" rows=\"10\" cols=\"80\">{$config['html']}</textarea>";
+	}
+
+	print "\n\t\t</td>\n\t</tr>\n";
+
 	// compatibility mode
-	if ($config['compat'] == 1){$compat = ' checked="CHECKED"';}else{$compat = '';}
-	print "<tr><td class=\"descriptionbox wrap width33\">"
-	.print_help_link('index_htmlplus_compat_help', 'qm_ah', '', false, true)
-	."{$pgv_lang['htmlplus_block_compat']}</td>"
-	."<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td></tr>"
+	if($config['compat'] == 1){$compat = ' checked="checked"';}else{$compat = '';}
+	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
+		.print_help_link('index_htmlplus_compat_help', 'qm_ah', '', false, true)
+		."{$pgv_lang['htmlplus_block_compat']}</td>\n"
+		."\t\t<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td>\n"
+		."\t</tr>\n"
 	;
+
 	// extended features
-	if ($config['ui'] == 1){$ui = ' checked="CHECKED"';}else{$ui = '';}
-	print "<tr><td class=\"descriptionbox wrap width33\">"
-	.print_help_link('index_htmlplus_ui_help', 'qm_ah', '', false, true)
-	."{$pgv_lang['htmlplus_block_ui']}</td>"
-	."<td class=\"optionbox\"><input type=\"checkbox\" name=\"ui\" value=\"1\"{$ui} /></td></tr>"
+	if($config['ui'] == 1){$ui = ' checked="checked"';}else{$ui = '';}
+	print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
+		.print_help_link('index_htmlplus_ui_help', 'qm_ah', '', false, true)
+		."{$pgv_lang['htmlplus_block_ui']}</td>\n"
+		."\t\t<td class=\"optionbox\"><input type=\"checkbox\" name=\"ui\" value=\"1\"{$ui} /></td>\n"
+		."\t</tr>\n"
 	;
+
 	// Cache file life
-	if ($ctype=="gedcom") {
-		print "<tr><td class=\"descriptionbox wrap width33\">";
-		print_help_link("cache_life_help", "qm");
-		print $pgv_lang["cache_life"];
-		print "</td><td class=\"optionbox\">";
-		print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
-		print "</td></tr>";
+	if($ctype == 'gedcom')
+	{
+		print "\t<tr>\n\t\t<td class=\"descriptionbox wrap width33\">"
+			.print_help_link('cache_life_help', 'qm', '', false, true)
+			."{$pgv_lang['cache_life']}</td>\n"
+			."\t\t<td class=\"optionbox\">"
+			."<input type=\"text\" name=\"cache\" size=\"2\" value=\"{$config['cache']}\" /></td>\n"
+			."\t</tr>\n"
+		;
 	}
 }
