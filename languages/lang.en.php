@@ -594,6 +594,7 @@ $pgv_lang["roots"]		 				= "Roots";
 $pgv_lang["leaves"] 					= "Leaves";
 $pgv_lang["widow"] 					= "Widow";
 $pgv_lang["widower"] 				= "Widower";
+$pgv_lang["show_parents"] 			= "Show parents";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Age";
