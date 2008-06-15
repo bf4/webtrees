@@ -244,6 +244,7 @@ $pgv_lang["ancestors"]				= "Direct line ancestors and their families";
 $pgv_lang["descendants"]			= "Descendants";
 $pgv_lang["choose_relatives"]		= "Choose relatives";
 $pgv_lang["relatives_report"]		= "Relatives Report";
+$pgv_lang["total_unknown"]			= "Total unknown";
 $pgv_lang["total_living"]			= "Total living";
 $pgv_lang["total_dead"]				= "Total dead";
 $pgv_lang["total_not_born"]			= "Total not yet born";
