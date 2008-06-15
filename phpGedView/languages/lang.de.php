@@ -1590,6 +1590,7 @@ $pgv_lang["stat_users"]					= "Anzahl Benutzer";
 $pgv_lang["no_family_facts"]			= "Keine Ereignisse für diese Familie.";
 $pgv_lang["stat_males"]					= "Männlich, insgesamt";
 $pgv_lang["stat_females"]				= "Weiblich, insgesamt";
+$pgv_lang["stat_unknown"]				= "Unbekannt, insgesamt";
 $pgv_lang["sunday_1st"]					= "So";
 $pgv_lang["monday_1st"]					= "Mo";
 $pgv_lang["tuesday_1st"]				= "Di";

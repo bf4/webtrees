@@ -150,6 +150,7 @@ $pgv_lang["stat_users"]				= "Total users";
 $pgv_lang["no_family_facts"]		= "No facts for this family.";
 $pgv_lang["stat_males"]				= "Total males";
 $pgv_lang["stat_females"]			= "Total females";
+$pgv_lang["stat_unknown"]			= "Total unknown";
 
 $pgv_lang["sunday_1st"]				= "Su";
 $pgv_lang["monday_1st"]				= "M";
