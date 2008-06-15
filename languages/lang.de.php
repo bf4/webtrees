@@ -124,6 +124,7 @@ $pgv_lang["ancestors"]					= "Vorfahren in direkter Linie und deren Familien";
 $pgv_lang["descendants"]				= "Nachfahren";
 $pgv_lang["choose_relatives"]			= "Verwandte wählen";
 $pgv_lang["relatives_report"]			= "Verwandten Bericht";
+$pgv_lang["total_unknown"]				= "Insgesamt unbekannt";
 $pgv_lang["total_living"]				= "Insgesamt lebend";
 $pgv_lang["total_dead"]					= "Insgesamt verstorben";
 $pgv_lang["total_not_born"]				= "Insgesamt noch nicht geboren";
