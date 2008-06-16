@@ -5,7 +5,7 @@
  * This block allows administrators to enter news items for the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,7 +149,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		if(PGV_USER_GEDCOM_ADMIN) {
 			$content .= "<hr size=\"1\" />"
 			."<a href=\"javascript:;\" onclick=\"editnews('{$key}'); return false;\">{$pgv_lang['edit']}</a> | "
-			."<a href=\"index.php?action=deletenews&amp;news_id={$key}&amp;ctype={$ctype}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
+			."<a href=\"".encode_url("index.php?action=deletenews&news_id={$key}&ctype={$ctype}")."\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
 		}
 		$content .= "</div>\n";
 	}
@@ -161,7 +161,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	if ($config['limit'] == 'date' || $config['limit'] == 'count') {
 		if ($printedAddLink) $content .= "&nbsp;&nbsp;|&nbsp;&nbsp;";
 		$content .= print_help_link("gedcom_news_archive_help", "qm", "", false, true);
-		$content .= "<a href=\"index.php?gedcom_news_archive=yes&amp;ctype={$ctype}\">".$pgv_lang['gedcom_news_archive']."</a><br />";
+		$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">".$pgv_lang['gedcom_news_archive']."</a><br />";
 	}
 
 	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
@@ -204,7 +204,7 @@ function print_gedcom_news_config($config)
 	print $pgv_lang['gedcom_news_flag'].'</td>';
 	$output = '<td class="optionbox"><input type="text" name="flag" size="4" maxlength="4" value="'
 	.$config['flag']
-	.'"></td></tr>';
+	.'" /></td></tr>';
 	print $output;
 
 	// Cache file life

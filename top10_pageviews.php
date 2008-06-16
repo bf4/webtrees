@@ -5,7 +5,7 @@
  * This block will show the top 10 records from the Gedcom that have been viewed the most
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 			} else {
 				$name = PGV_USER_NAME;
 			}
-			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 		}
 	}
@@ -109,7 +109,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 								if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
 								$content .= "</td>";
 							}
-							$content .= "<td class=\"name2\" ><a href=\"individual.php?pid=".urlencode($id)."\">".PrintReady(get_person_name($id))."</a></td>";
+							$content .= "<td class=\"name2\" ><a href=\"individual.php?pid={$id}\">".PrintReady(get_person_name($id))."</a></td>";
 							if ($CountSide=="right") {
 								$content .= "<td dir=\"ltr\" align=\"right\">";
 								if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
@@ -129,7 +129,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 								if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
 								$content .= "</td>";
 							}
-							$content .= "<td class=\"name2\" ><a href=\"family.php?famid=".urlencode($id)."\">".PrintReady(get_family_descriptor($id))."</a></td>";
+							$content .= "<td class=\"name2\" ><a href=\"family.php?famid={$id}\">".PrintReady(get_family_descriptor($id))."</a></td>";
 							if ($CountSide=="right") {
 								$content .= "<td dir=\"ltr\" align=\"right\">";
 								if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
@@ -150,7 +150,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 									if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
 									$content .= "</td>";
 								}
-								$content .= "<td class=\"name2\" ><a href=\"repo.php?rid=".urlencode($id)."\">".PrintReady(get_repo_descriptor($id))."</a></td>";
+								$content .= "<td class=\"name2\" ><a href=\"repo.php?rid={$id}\">".PrintReady(get_repo_descriptor($id))."</a></td>";
 								if ($CountSide=="right") {
 									$content .= "<td dir=\"ltr\" align=\"right\">";
 									if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
@@ -172,7 +172,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 									if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
 									$content .= "</td>";
 								}
-								$content .= "<td class=\"name2\" ><a href=\"source.php?sid=".urlencode($id)."\">".PrintReady(get_source_descriptor($id))."</a></td>";
+								$content .= "<td class=\"name2\" ><a href=\"source.php?sid={$id}\">".PrintReady(get_source_descriptor($id))."</a></td>";
 								if ($CountSide=="right") {
 									$content .= "<td dir=\"ltr\" align=\"right\">";
 									if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
