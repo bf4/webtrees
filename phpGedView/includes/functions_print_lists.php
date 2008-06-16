@@ -69,7 +69,7 @@ function format_list_person($key, $value, $findid=false, $asso="", $tag='li') {
 		if ($findid) {
 			$html.='<a href="javascript:;" onclick="pasteid(\''.$key.'\', \''.preg_replace("/(['\"])/", "\\$1", PrintReady($value[0])).'\'); return false;" class="list_item"><b>'.$value[0].'</b>';
 		} else {
-			$html.='<a href="individual.php?pid='.$key.'&amp;ged='.$value[1].'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
+			$html.='<a href="'.encode_url("individual.php?pid={$key}&ged={$value[1]}").'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
 		}
 		if ($SHOW_ID_NUMBERS && $key) {
 			if ($listDir=='rtl') {
@@ -97,7 +97,7 @@ function format_list_person($key, $value, $findid=false, $asso="", $tag='li') {
 			$GEDCOM = $ged;
 			$name = get_person_name($key);
 			$GEDCOM = $oldged;
-			$html.=' <a href="individual.php?pid='.$key.'&amp;ged='.$ged.'" title="'.$name.'" class="list_item">';
+			$html.=' <a href="'.encode_url("individual.php?pid={$key}&ged={$ged}").'" title="'.$name.'" class="list_item">';
 			if ($TEXT_DIRECTION=="ltr") {
 				$html.=' ('.$pgv_lang['associate'].' '.$key.')';
 			} else {
@@ -145,7 +145,7 @@ function format_list_family($key, $value, $findid=false, $asso="", $tag='li') {
 		if ($findid) {
 			$html.='<a href="javascript:;" onclick="pasteid(\''.$key.'\'); return false;" class="list_item"><b>'.PrintReady($value[0]).'</b>';
 		}	else {
-			$html.='<a href="family.php?famid='.$key.'&amp;ged='.$value[1].'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
+			$html.='<a href="'.encode_url("family.php?famid={$key}&ged={$value[1]}").'" class="list_item"><b>'.PrintReady($value[0]).'</b>';
 		}
 		if ($SHOW_ID_NUMBERS && $key) {
 			if ($listDir=='rtl') {
@@ -172,7 +172,7 @@ function format_list_family($key, $value, $findid=false, $asso="", $tag='li') {
 			$GEDCOM = $ged;
 			$name = get_person_name($key);
 			$GEDCOM = $oldged;
-			$html.=' <a href="individual.php?pid='.$indikey.'&amp;ged='.$ged.'" title="'.$name.'" class="list_item">';
+			$html.=' <a href="'.encode_url("individual.php?pid={$indikey}&ged={$ged}").'" title="'.$name.'" class="list_item">';
 			$html.='&nbsp;&nbsp;';
 			if ($TEXT_DIRECTION=="ltr") {
 				$html.='('.$pgv_lang['associate'].'&nbsp;&nbsp;'.$indikey.')</a>';
@@ -210,7 +210,7 @@ function format_list_source($key, $value, $tag='li') {
 	if (displayDetailsByID($key, "SOUR")) {
 		$listDir=begRTLText($value['name']) ? 'rtl' : 'ltr';
 		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
-		$html.='<a href="source.php?sid='.$key.'&amp;ged='.get_gedcom_from_id($value['gedfile']).'" class="list_item"><b>'.PrintReady($value['name']).'</b>';
+		$html.='<a href="'.encode_url("source.php?sid={$key}&ged=".get_gedcom_from_id($value['gedfile'])).'" class="list_item"><b>'.PrintReady($value['name']).'</b>';
 		if ($SHOW_ID_NUMBERS && $key) {
 			if ($listDir=='rtl') {
 				$html.=' '.getRLM().'('.$key.')'.getRLM();
@@ -246,7 +246,7 @@ function format_list_repository($key, $value, $tag='li') {
 		$listDir=begRTLText($value[0]) ? 'rtl' : 'ltr';
 		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
 		$id = $value['id'];
-		$html.='<a href="repo.php?rid='.$id.'" class="list_item">';
+		$html.='<a href="'.encode_url("repo.php?rid={$id}").'" class="list_item">';
 		$html.=PrintReady($value['name']);
 		if ($SHOW_ID_NUMBERS && $key) {
 			if ($listDir=='rtl') {
@@ -414,7 +414,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "<td class=\"list_value_wrap\">";
 			$sosa = $key;
 			$rootid = $datalist[1];
-			echo "<a href=\"relationship.php?pid1=".$rootid."&amp;pid2=".$person->xref."\"".
+			echo "<a href=\"".encode_url("relationship.php?pid1={$rootid}&pid2={$person->xref}")."\"".
 			" title=\"".$pgv_lang["relationship_chart"]."\"".
 			" name=\"{$sosa}\"".
 			" class=\"list_item name2\">".$sosa."</a>";
@@ -1277,8 +1277,9 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	foreach($datalist as $key => $value) {
 		if (!isset($value["name"])) break;
 		$surn = $value["name"];
-		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
-		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
+		$url = ($target=="FAM") ? 'fam' : 'indi';
+		$url .= "list.php?ged={$GEDCOM}&surname={$surn}";
+		$url = encode_url($url);
 		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
 		$fontsize = ceil($value["match"]/$font_tag);
 		if ($TEXT_DIRECTION=="ltr") {
@@ -1289,7 +1290,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 			$tag = PrintReady("<span class=\"tag_cloud_sub\">(".$value["match"].")&nbsp;</span><font size=\"".$fontsize."\">".$surn."</font>");
 		}
 
-		echo "<a href=\"".$url."\" class=\"list_item\" title=\"".$title."\">".$tag."</a>&nbsp;&nbsp; ";
+		echo "<a href=\"{$url}\" class=\"list_item\" title=\"{$title}\">{$tag}</a>&nbsp;&nbsp; ";
 	}
 	echo "</td>";
 	echo "</tr>\n";
@@ -1317,8 +1318,9 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	foreach($datalist as $key => $value) {
 		if (!isset($value["name"])) break;
 		$surn = $value["name"];
-		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
-		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
+		$url = ($target=="FAM") ? 'fam' : 'indi';
+		$url .= "list.php?ged={$GEDCOM}&surname={$surn}";
+		$url = encode_url($url);
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -1586,7 +1588,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			global $whichFile;
 			$whichFile = "hCal-events.ics";
 			$title = print_text("download_file",0,1);
-			print "<br /><a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
+			print "<br /><a href=\"".encode_url("http://feeds.technorati.com/events/{$uri}")."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
 		}
 		print "</td>";
 		print "<td></td>";

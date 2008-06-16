@@ -489,7 +489,7 @@ if ($action=="update") {
 		$errors = true;
 		$error_msg .= "<span class=\"error\"><b>".print_text("gedcom_config_write_error",0,1)."</b></span><br />";
 		$_SESSION[$gedcom_config]=$configtext;
-		$error_msg .= "<br /><br /><a href=\"config_download.php?file=$gedcom_config\">".$pgv_lang["download_gedconf"]."</a> ".$pgv_lang["upload_to_index"]."$INDEX_DIRECTORY<br /><br />\n";
+		$error_msg .= "<br /><br /><a href=\"".encode_url("config_download.php?file={$gedcom_config}")."\">".$pgv_lang["download_gedconf"]."</a> ".$pgv_lang["upload_to_index"]."$INDEX_DIRECTORY<br /><br />\n";
 	}
 	$fp = @fopen($INDEX_DIRECTORY.$FILE."_conf.php", "wb");
 	if (!$fp) {
@@ -600,7 +600,7 @@ if ($action=="update") {
 		else if ($source == "add_form") $check = "add";
 		else if ($source == "add_new_form") $check = "add_new";
 		if (!isset($bakfile)) $bakfile = "";
-		if ($source !== "") header("Location: uploadgedcom.php?action=$source&check=$check&step=2&GEDFILENAME=$GEDFILENAME&path=$path&verify=verify_gedcom&bakfile=$bakfile");
+		if ($source !== "") header("Location: ".encode_url("uploadgedcom.php?action=$source&check=$check&step=2&GEDFILENAME={$GEDFILENAME}&path={$path}&verify=verify_gedcom&bakfile={$bakfile}"));
 		else {
 			header("Location: editgedcoms.php");
 		}
@@ -608,7 +608,7 @@ if ($action=="update") {
 	}
 }
 else if ($action=="replace") {
-	header("Location: uploadgedcom.php?action=upload_form&GEDFILENAME=$GEDFILENAME&path=$path&verify=validate_form");
+	header("Location: ".encode_url("uploadgedcom.php?action=upload_form&GEDFILENAME={$GEDFILENAME}&path={$path}&verify=validate_form"));
 }
 
 //-- output starts here
@@ -661,7 +661,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 		if (isset($ged)) {
 //			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$GEDCOMS[$ged]["id"].")&nbsp;" . getRLM();
 //			else print "&nbsp;" . getLRM() . "(".$GEDCOMS[$ged]["id"].")" . getLRM();
-			if (isset($GEDCOMS[$ged])) print $GEDCOMS[$ged]["title"];
+			if (isset($GEDCOMS[$ged])) print PrintReady($GEDCOMS[$ged]["title"]);
 		}
 		else if ($source == "add_form") print $pgv_lang["add_gedcom"];
 		else if ($source == "upload_form") print $pgv_lang["upload_gedcom"];
@@ -1023,13 +1023,13 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 		<td class="optionbox"><select id="NEW_CALENDAR_FORMAT" name="NEW_CALENDAR_FORMAT" tabindex="<?php $i++; print $i; ?>"  onfocus="getHelp('CALENDAR_FORMAT_help');" onchange="show_jewish();">
 		<?php
 			foreach (array('none', 'gregorian', 'julian', 'french', 'jewish', 'jewish_and_gregorian', 'hebrew', 'hebrew_and_gregorian', 'hijri', 'arabic') as $cal) {
-				print "<option value=\"{$cal}\"";
+				print "<option value=\"{$cal}\" ";
 				if ($CALENDAR_FORMAT==$cal)
-					print " selected=\"selected\"";
+					print "selected=\"selected\" ";
 				print ">{$pgv_lang["cal_{$cal}"]}</option>";
 			}
 		?>
-		</td>
+		</select></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">
@@ -1549,12 +1549,23 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_layout_conf"]."\" onclick=
 		</td>
 	</tr>
 	<tr>
+		<td class="descriptionbox wrap width20">
+			<?php print_help_link("EXPAND_RELATIVES_EVENTS_help", "qm", "EXPAND_RELATIVES_EVENTS"); print $pgv_lang["EXPAND_RELATIVES_EVENTS"]; ?>
+		</td>
+		<td class="optionbox">
+			<select name="NEW_EXPAND_RELATIVES_EVENTS" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('EXPAND_RELATIVES_EVENTS_help');">
+				<option value="yes" <?php if ($EXPAND_RELATIVES_EVENTS) print "selected=\"selected\" "; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$EXPAND_RELATIVES_EVENTS) print "selected=\"selected\" "; ?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_RELATIVES_EVENTS_help", "qm", "SHOW_RELATIVES_EVENTS"); print $pgv_lang["SHOW_RELATIVES_EVENTS"]; ?></td>
 		<td class="optionbox">
 			<input type="hidden" name="NEW_SHOW_RELATIVES_EVENTS" value="<?php echo $SHOW_RELATIVES_EVENTS; ?>" />
+			<table>
 <?php
 $previous="_DEAT_";
-print "<table>";
 foreach ($factarray as $factkey=>$factlabel) {
 	$f6=substr($factkey,0,6);
 	if ($f6=="_BIRT_" or $f6=="_MARR_" or $f6=="_DEAT_" or $f6=="_FAMC_") {
@@ -1566,23 +1577,12 @@ foreach ($factarray as $factkey=>$factlabel) {
 		if (strstr($SHOW_RELATIVES_EVENTS,$factkey)) print " checked=\"checked\"";
 		print " onchange=\"var old=document.configform.NEW_SHOW_RELATIVES_EVENTS.value; if (this.checked) old+=','+this.value; else old=old.replace(/".$factkey."/g,''); old=old.replace(/[,]+/gi,','); old=old.replace(/^[,]/gi,''); old=old.replace(/[,]$/gi,''); document.configform.NEW_SHOW_RELATIVES_EVENTS.value=old\" ";
 		print " /> ".$factlabel."</td>";
-		if ($f6=="_DEAT_") print "</tr>";
+		if ($f6=="_DEAT_" || $f6=="_FAMC_") print "</tr>";
 		$previous=$f6;
 	}
 }
-print "</table>";
-print "<tr>";
 ?>
-		<td class="descriptionbox wrap width20"><?php print_help_link("EXPAND_RELATIVES_EVENTS_help", "qm", "EXPAND_RELATIVES_EVENTS"); print $pgv_lang["EXPAND_RELATIVES_EVENTS"]; ?></td>
-		<td class="optionbox">
-			<select name="NEW_EXPAND_RELATIVES_EVENTS" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('EXPAND_RELATIVES_EVENTS_help');">
-				<option value="yes" <?php if ($EXPAND_RELATIVES_EVENTS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$EXPAND_RELATIVES_EVENTS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-			</select>
-		</td>
-<?php
-print "</tr>";
-?>
+			</table>
 		</td>
 	</tr>
 	<tr>

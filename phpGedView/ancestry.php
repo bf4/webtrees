@@ -88,13 +88,13 @@ if ($view != "preview") {
 	<td rowspan="2" class="optionbox vmiddle">
 	<input type="radio" name="chart_style" value="0"
 	<?php
-	if ($controller->chart_style == "0") print " checked=\"checked\" ";
-	print "onclick=\"toggleStatus('cousins');";
+	if ($controller->chart_style == "0") print " checked=\"checked\"";
+	print " onclick=\"toggleStatus('cousins');";
 	//if ($controller->chart_style != "1") print " document.people.chart_style.value='1';";
 	print "\" />".$pgv_lang["chart_list"];
 	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"1\"";
-	if ($controller->chart_style == "1") print " checked=\"checked\" ";
-	print "onclick=\"toggleStatus('cousins');";
+	if ($controller->chart_style == "1") print " checked=\"checked\"";
+	print " onclick=\"toggleStatus('cousins');";
 	//if ($controller->chart_style != "1") print " document.people.chart_style.value='0';";
 	print "\" />".$pgv_lang["chart_booklet"];
 	?>

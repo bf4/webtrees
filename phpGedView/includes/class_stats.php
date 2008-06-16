@@ -57,8 +57,8 @@ class stats {
 
 	function _setGedcom($gedcom) {
 		$this->_gedcom = $gedcom;
-		$this->_ged_id = get_id_from_gedcom($gedcom);
-		$this->_gedcom_url = urlencode($gedcom);
+		$this->_ged_id = PrintReady(get_id_from_gedcom($gedcom));
+		$this->_gedcom_url = encode_url($gedcom);
 	}
 
 	/**
@@ -235,7 +235,7 @@ class stats {
 
 	function gedcomID() {return $this->_ged_id;}
 
-	function gedcomTitle() {return get_gedcom_setting($this->_ged_id, 'title');}
+	function gedcomTitle() {return PrintReady(get_gedcom_setting($this->_ged_id, 'title'));}
 
 	function _gedcomHead()
 	{
@@ -330,7 +330,7 @@ class stats {
 		}
 		if (!$highlight) {return '';}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom_url}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" class=\"gedcom_highlight\" alt=\"\" /></a>";
+		return "<a href=\"".encode_url("{$this->_server_url}index.php?ctype=gedcom&ged={$this->_gedcom_url}")."\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" class=\"gedcom_highlight\" alt=\"\" /></a>";
 	}
 
 	function gedcomHighlightLeft()
@@ -346,7 +346,7 @@ class stats {
 			return '';
 		}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom_url}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" class=\"gedcom_highlight\" alt=\"\" /></a>";
+		return "<a href=\"".encode_url("{$this->_server_url}index.php?ctype=gedcom&ged={$this->_gedcom_url}")."\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" class=\"gedcom_highlight\" alt=\"\" /></a>";
 	}
 
 	function gedcomHighlightRight()
@@ -362,7 +362,7 @@ class stats {
 			return '';
 		}
 		$imgsize=findImageSize($highlight);
-		return "<a href=\"{$this->_server_url}index.php?ctype=gedcom&amp;ged={$this->_gedcom_url}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" class=\"gedcom_highlight\" alt=\"\" /></a>";
+		return "<a href=\"".encode_url("{$this->_server_url}index.php?ctype=gedcom&ged={$this->_gedcom_url}")."\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" class=\"gedcom_highlight\" alt=\"\" /></a>";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -575,7 +575,7 @@ class stats {
 	{
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '350x100';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
 		if (isset($params[2]) && $params[2] != '') {$color_male = strtolower($params[2]);}else{$color_male = 'add8e6';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '000000';}
@@ -584,8 +584,8 @@ class stats {
 		$tot_m = $this->totalSexMalesPercentage();
 		$tot_u = $this->totalSexUnknownPercentage();
 		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
-		$chl = urlencode("Total unknown|{$pgv_lang['stat_females']}|{$pgv_lang['stat_males']}");
-		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		$chl = "{$pgv_lang['stat_unknown']}|{$pgv_lang['stat_females']}|{$pgv_lang['stat_males']}";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
 	function totalLiving()
@@ -634,7 +634,7 @@ class stats {
 	{
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '350x100';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_dead = strtolower($params[2]);}else{$color_dead = 'cccccc';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -643,8 +643,8 @@ class stats {
 		$tot_d = $this->totalDeceasedPercentage();
 		$tot_u = $this->totalMortalityUnknownPercentage();
 		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
-		$chl = urlencode("Total unknown|{$pgv_lang['total_living']}|{$pgv_lang['total_dead']}");
-		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		$chl = "{$pgv_lang['total_unknown']}|{$pgv_lang['total_living']}|{$pgv_lang['total_dead']}";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
 	function totalUsers()
@@ -721,7 +721,7 @@ class stats {
 	{
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x200';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		$sizes = explode('x', $size);
@@ -749,7 +749,7 @@ class stats {
 		}
 		$chd = $this->_array_to_extended_encoding($mediaCounts);
 		$chl = urlencode(substr($mediaTypes,0,-1));
-		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -855,7 +855,7 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['d_gid']})";
 					}
 				}
-				$result="<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom_url}\">".get_person_name($row['d_gid'])."{$id}</a>";
+				$result="<a href=\"".encode_url("individual.php?pid={$row['d_gid']}&ged={$this->_gedcom_url}")."\">".get_person_name($row['d_gid'])."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place(get_sub_record(1, "1 {$birth_death}", find_person_record($row['d_gid'])), true, true, true);
@@ -955,7 +955,7 @@ class stats {
 						$id = "&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom_url}\">".get_person_name($row['id'])."{$id}</a>";
+				$result="<a href=\"".encode_url("individual.php?pid={$row['id']}&ged={$this->_gedcom_url}")."\">".get_person_name($row['id'])."{$id}</a>";
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -1006,11 +1006,11 @@ class stats {
 		{
 			if ($type == 'list')
 			{
-				$top10[]="\t<li><a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_person_name($rows[$c]['d_gid']))."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]</li>\n";
+				$top10[]="\t<li><a href=\"".encode_url("{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_person_name($rows[$c]['d_gid']))."</a> ".PrintReady("[".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]")."</li>\n";
 			}
 			else
 			{
-				$top10[]="<a href=\"{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_person_name($rows[$c]['d_gid']))."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]";
+				$top10[]="<a href=\"".encode_url("{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_person_name($rows[$c]['d_gid']))."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]";
 			}
 		}
 		if ($type == 'list')
@@ -1181,7 +1181,7 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"individual.php?pid={$row['id']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_person_name($row['id']))."{$id}</a>";
+				$result="<a href=\"".encode_url("individual.php?pid={$row['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_person_name($row['id']))."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place(get_sub_record(1, "1 {$row['fact']}", find_gedcom_record($row['id'])), true, true, true);
@@ -1273,7 +1273,7 @@ class stats {
 				}
 				break;
 			case 'name':
-				$result="<a href=\"family.php?famid={$row['f_id']}&amp;ged={$this->_gedcom_url}\">".get_person_name($row['i_id'], true).'</a>';
+				$result="<a href=\"".encode_url("family.php?famid={$row['f_id']}&ged={$this->_gedcom_url}")."\">".get_person_name($row['i_id'], true).'</a>';
 				break;
 			case 'age':
 				$result=floor($row['age']/365.25);
@@ -1341,7 +1341,7 @@ class stats {
 				$result=$row['tot'];
 				break;
 			case 'name':
-				$result="<a href=\"family.php?famid={$row['id']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_family_descriptor($row['id'])).'</a>';
+				$result="<a href=\"".encode_url("family.php?famid={$row['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_family_descriptor($row['id'])).'</a>';
 				break;
 		}
 		// Statstics are used by RSS feeds, etc., so need absolute URLs.
@@ -1370,11 +1370,11 @@ class stats {
 		{
 			if ($type == 'list')
 			{
-				$top10[] = "\t<li><a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_family_descriptor($rows[$c]['id']))."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
+				$top10[] = "\t<li><a href=\"".encode_url("{$this->_server_url}family.php?famid={$rows[$c]['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_family_descriptor($rows[$c]['id']))."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
 			}
 			else
 			{
-				$top10[] = "<a href=\"{$this->_server_url}family.php?famid={$rows[$c]['id']}&amp;ged={$this->_gedcom_url}\">".PrintReady(get_family_descriptor($rows[$c]['id']))."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
+				$top10[] = "<a href=\"".encode_url("{$this->_server_url}family.php?famid={$rows[$c]['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_family_descriptor($rows[$c]['id']))."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
 			}
 		}
 		if ($type == 'list')
@@ -1407,7 +1407,7 @@ class stats {
 	{
 		global $TBLPREFIX, $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '800x100';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '700x150';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$total = strtolower($params[3]);}else{$total = 10;}
@@ -1433,10 +1433,10 @@ class stats {
 			$per = round(100 * $rows[$i]['tot'] / $tot, 0);
 			//$chd .= $this->_encoding[$per];
 			$chd .= $this->_array_to_extended_encoding(array($per));
-			$chl[] = urlencode(get_family_descriptor($rows[$i]['id']));
+			$chl[] = get_family_descriptor($rows[$i]['id']);
 		}
 		$chl = join('|', $chl);
-		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
 	function averageChildren()
@@ -1475,11 +1475,11 @@ class stats {
 				}
 				if ($type == 'list')
 				{
-					$common[] = "\t<li><a href=\"{$this->_server_url}indilist.php?surname=".urlencode($surname['name'])."&amp;ged={$this->_gedcom_url}\">".PrintReady($surname['name'])."</a>{$tot}</li>\n";
+					$common[] = "\t<li><a href=\"".encode_url("{$this->_server_url}indilist.php?surname={$surname['name']}&ged={$this->_gedcom_url}")."\">".PrintReady($surname['name'])."</a>{$tot}</li>\n";
 				}
 				else
 				{
-					$common[] = '<a href="'.$this->_server_url.'indilist.php?surname='.urlencode($surname['name'])."&amp;ged={$this->_gedcom_url}\">".PrintReady($surname['name'])."</a>{$tot}";
+					$common[] = '<a href="'.encode_url("{$this->_server_url}indilist.php?surname={$surname['name']}&ged={$this->_gedcom_url}").'">'.PrintReady($surname['name'])."</a>{$tot}";
 				}
 			}
 			if ($type == 'list')
@@ -1520,8 +1520,8 @@ class stats {
 			$chd .= $this->_array_to_extended_encoding($per);
 			$chl[] = $surname['name'];
 		}
-		$chl = urlencode(join('|', $chl));
-		return "<img src=\"http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		$chl = join('|', $chl);
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
 

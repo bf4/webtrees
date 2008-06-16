@@ -3,7 +3,7 @@
  * Controller for the Ancestry Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -169,7 +169,7 @@ class AncestryControllerRoot extends BaseController {
 
 		$person = Person::getInstance($pid);
 		// child
-		print "<li>";
+		print "\r\n<li>";
 		print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td><a name=\"sosa".$sosa."\"></a>";
 		$new=($pid=="" or !isset($pidarr["$pid"]));
 		if ($sosa==1) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
@@ -185,7 +185,7 @@ class AncestryControllerRoot extends BaseController {
 		} else {
 			$label = $pid." :".$pgv_lang["ancestry_chart"];
 		}
-		if ($sosa>1) print_url_arrow($pid, "?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;show_full=$this->show_full&amp;box_width=$box_width&amp;chart_style=$this->chart_style", $label, 3);
+		if ($sosa>1) print_url_arrow($pid, encode_url("?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&show_full={$this->show_full}&box_width={$box_width}&chart_style={$this->chart_style}"), $label, 3);
 		print "</td>";
 		print "<td class=\"details1\">&nbsp;<span dir=\"ltr\" class=\"person_box". (($sosa==1)?"NN":(($sosa%2)?"F":"")) . "\">&nbsp;$sosa&nbsp;</span>&nbsp;";
 		print "</td><td class=\"details1\">";
@@ -196,7 +196,10 @@ class AncestryControllerRoot extends BaseController {
 		print "</td>";
 		print "</tr></table>";
 
-		if (is_null($person)) return;
+		if (is_null($person)) {
+			print "</li>"; 
+			return;
+		}
 		// parents
 		$famids = $person->getChildFamilies();
 		$parents = false;
@@ -219,7 +222,7 @@ class AncestryControllerRoot extends BaseController {
 			if (showFact("MARR", $famid)) print_simple_fact($famrec, "MARR", $parents["WIFE"]); else print $pgv_lang["private"];
 			print "</span>";
 			// display parents recursively
-			print "<ul style=\"list-style: none; display: block;\" id=\"sosa_$sosa\">";
+			print "\r\n<ul style=\"list-style: none; display: block;\" id=\"sosa_$sosa\">";
 			$this->print_child_ascendancy($parents["HUSB"], $sosa*2, $depth-1);
 			$this->print_child_ascendancy($parents["WIFE"], $sosa*2+1, $depth-1);
 			print "</ul>\r\n";

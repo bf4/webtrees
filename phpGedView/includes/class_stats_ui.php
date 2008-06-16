@@ -84,7 +84,7 @@ class stats_ui extends stats
 			foreach($userfavs as $k=>$favorite)
 			{
 				if(isset($favorite['id'])){$k = $favorite['id'];}
-				$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype={$ctype}&amp;action=deletefav&amp;fv_id={$k}\" onclick=\"return confirm('{$pgv_lang['confirm_fav_remove']}');\">{$pgv_lang['remove']}</a><br />\n";
+				$removeFavourite = "<a class=\"font9\" href=\"".encode_url("index.php?ctype={$ctype}&action=deletefav&fv_id={$k}")."\" onclick=\"return confirm('{$pgv_lang['confirm_fav_remove']}');\">{$pgv_lang['remove']}</a><br />\n";
 				if(!$isged)
 				{
 					$current_gedcom = $GEDCOM;
@@ -321,7 +321,7 @@ class stats_ui extends stats
 				{
 					$content .= "<a href=\"javascript:;\" onclick=\"reply('{$user_id}', '{$message['subject']}'); return false;\">{$pgv_lang['reply']}</a> | ";
 				}
-				$content .= "<a href=\"index.php?action=deletemessage&amp;message_id={$k}\" onclick=\"return confirm('{$pgv_lang['confirm_message_delete']}');\">{$pgv_lang['delete']}</a></div></td>\n</tr>\n";
+				$content .= "<a href=\"".encode_url("index.php?action=deletemessage&message_id={$k}")."\" onclick=\"return confirm('{$pgv_lang['confirm_message_delete']}');\">{$pgv_lang['delete']}</a></div></td>\n</tr>\n";
 			}
 			$content .= "</table>\n"
 				."<input type=\"submit\" value=\"{$pgv_lang['delete_selected_messages']}\" /><br />\n<br />\n"
@@ -414,7 +414,7 @@ class stats_ui extends stats
 			$news['text'] = strtr($news['text'], $trans);
 			$content .= PrintReady($news['text'])."<br />\n<br />\n"
 				."<a href=\"javascript:;\" onclick=\"editnews('{$k}'); return false;\">{$pgv_lang['edit']}</a> | "
-				."<a href=\"index.php?action=deletenews&amp;news_id={$k}&amp;ctype={$ctype}\" onclick=\"return confirm('{$pgv_lang['confirm_journal_delete']}');\">{$pgv_lang['delete']}</a><br />\n"
+				."<a href=\"".encode_url("index.php?action=deletenews&news_id={$k}&ctype={$ctype}")."\" onclick=\"return confirm('{$pgv_lang['confirm_journal_delete']}');\">{$pgv_lang['delete']}</a><br />\n"
 				."</div><br />\n"
 			;
 		}
@@ -530,7 +530,7 @@ class stats_ui extends stats
 			{
 				$content .= "<hr size=\"1\" />"
 					."<a href=\"javascript:;\" onclick=\"editnews('{$k}'); return false;\">{$pgv_lang['edit']}</a> | "
-					."<a href=\"index.php?action=deletenews&amp;news_id={$k}&amp;ctype={$ctype}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />"
+					."<a href=\"".encode_url("index.php?action=deletenews&news_id={$k}&ctype={$ctype}")."\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />"
 				;
 			}
 			$content .= "</div>\n";
@@ -545,7 +545,7 @@ class stats_ui extends stats
 		{
 			if($printedAddLink){$content .= '&nbsp;&nbsp;|&nbsp;&nbsp;';}
 			$content .= print_help_link('gedcom_news_archive_help', 'qm', '', false, true);
-			$content .= "<a href=\"index.php?gedcom_news_archive=yes&amp;ctype={$ctype}\">{$pgv_lang['gedcom_news_archive']}</a><br />\n";
+			$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">{$pgv_lang['gedcom_news_archive']}</a><br />\n";
 		}
 		return $content;
 	}

@@ -399,7 +399,7 @@ class HourglassControllerRoot extends BaseController {
 							$spouse = $family->getSpouse($person);
 							if (!empty($spouse)) {
 								$spid = $spouse->getXref();
-								print "\n\t\t\t\t<a href=\"hourglass.php?pid=$spid&amp;show_spouse=$this->show_spouse&amp;show_full=$this->show_full&amp;generations=$this->generations&amp;box_width=$this->box_width\"><span ";
+								print "\n\t\t\t\t<a href=\"".encode_url("hourglass.php?pid={$spid}&show_spouse={$this->show_spouse}&show_full={$this->show_full}&generations={$this->generations}&box_width={$this->box_width}")."\"><span ";
 								$name = $spouse->getName();
 								$name = rtrim($name);
 								if (hasRTLText($name))
@@ -413,7 +413,7 @@ class HourglassControllerRoot extends BaseController {
 							$children = $family->getChildren();
 							foreach($children as $id=>$child) {
 								$cid = $child->getXref();
-								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"hourglass.php?pid=$cid&amp;show_spouse=$this->show_spouse&amp;show_full=$this->show_full&amp;generations=$this->generations&amp;box_width=$this->box_width\"><span ";
+								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("hourglass.php?pid={$cid}&show_spouse={$this->show_spouse}&show_full={$this->show_full}&generations={$this->generations}&box_width={$this->box_width}")."\"><span ";
 								$name = $child->getName();
 								$name = rtrim($name);
 								if (hasRTLText($name))
@@ -437,7 +437,7 @@ class HourglassControllerRoot extends BaseController {
 								$husb = $family->getHusband();
 								if (!empty($husb)) {
 									$spid = $husb->getXref();
-									print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"hourglass.php?pid=$spid&amp;show_spouse=$this->show_spouse&amp;show_full=$this->show_full&amp;generations=$this->generations&amp;box_width=$this->box_width\"><span ";
+									print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("hourglass.php?pid={$spid}&show_spouse={$this->show_spouse}&show_full={$this->show_full}&generations={$this->generations}&box_width={$this->box_width}")."\"><span ";
 									$name = $husb->getName();
 									$name = rtrim($name);
 									if (hasRTLText($name))
@@ -449,7 +449,7 @@ class HourglassControllerRoot extends BaseController {
 								$husb = $family->getWife();
 								if (!empty($husb)) {
 									$spid = $husb->getXref();
-									print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"hourglass.php?pid=$spid&amp;show_spouse=$this->show_spouse&amp;show_full=$this->show_full&amp;generations=$this->generations&amp;box_width=$this->box_width\"><span ";
+									print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("hourglass.php?pid={$spid}&show_spouse={$this->show_spouse}&show_full={$this->show_full}&generations={$this->generations}&box_width={$this->box_width}")."\"><span ";
 									$name = $husb->getName();
 									$name = rtrim($name);
 									if (hasRTLText($name))
@@ -465,7 +465,7 @@ class HourglassControllerRoot extends BaseController {
 							foreach($children as $id=>$child) {
 								$cid = $child->getXref();
 								if ($cid!=$pid) {
-									print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"hourglass.php?pid=$cid&amp;show_spouse=$this->show_spouse&amp;show_full=$this->show_full&amp;generations=$this->generations&amp;box_width=$this->box_width\"><span ";
+									print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("hourglass.php?pid={$cid}&show_spouse={$this->show_spouse}&show_full={$this->show_full}&generations={$this->generations}&box_width={$this->box_width}")."\"><span ";
 									$name = $child->getName();
 									$name = rtrim($name);
 									if (hasRTLText($name))

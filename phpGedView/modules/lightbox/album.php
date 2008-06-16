@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,6 +80,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 */
 ?>
 		</center>
+	</form>
 <?php
 }
 // =====================================================================================
@@ -87,13 +88,13 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 //------------------------------------------------------------------------------
 // Start Main Table
 //------------------------------------------------------------------------------
-echo "<table border=0 width='100%'><tr><td>" . "\n\n";
+echo "<table border='0' width='100%'><tr><td>", "\n\n";
 
 //------------------------------------------------------------------------------
 // Build Thumbnail Rows
 //------------------------------------------------------------------------------
 
-//echo "<td border=0 id=\"ROWS\">";
+//echo "<td border='0' id='ROWS'>";
 	echo "<table width=\"100%\"><tr><td valign=\"top\" >";
 	for ($t=1; $t <=5; $t++) {
 	
@@ -123,10 +124,10 @@ echo "<table border=0 width='100%'><tr><td>" . "\n\n";
 //------------------------------------------------------------------------------
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
-	echo "<td valign=\"top\" align=\"center\" width=220  >" . "\n" ;
+	echo '<td valign="top" align="center" width="220">', "\n" ;
 // echo "<td>";
 	echo "<table ><tr><td class=\"optionbox\" align=\"center\">";
-	echo "<b>" . $pgv_lang["view"] . " '" . $pgv_lang["lightbox"] ."'</b><br /><br />" . "\n" ;
+	echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
 		$controller->lightbox();	 
 	echo "<br />";
 	echo "</td>";
@@ -144,22 +145,3 @@ echo "<table border=0 width='100%'><tr><td>" . "\n\n";
 //------------------------------------------------------------------------------
 echo "</td>";
 echo "</tr></table>";
-echo "<center>" . "\n";
-
-?>
-
-	</form>
-
-<?php
-// ===============================================================================
-
-?>
-
-<script type="text/javascript">
-// <![CDATA[
-//		Sortable.create( "ROWS", 	{ tag:'li', dropOnEmpty: false, constraint: false, only:'facts_value' } );
-	// ]]>
-</script>
-
-
-

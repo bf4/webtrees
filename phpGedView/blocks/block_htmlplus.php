@@ -157,7 +157,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 				} else {
 					$name = PGV_USER_NAME;
 				}
-				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
+				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
 				."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>"
 				;
 			}
@@ -175,7 +175,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 			}
 			$content .= "<br />"
 			.print_help_link('index_htmlplus_ahelp', 'qm_ah', '', false, true)
-			."<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=500,scrollbars=1,resizable=1'); return false;\">"
+			."<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=500,scrollbars=1,resizable=1'); return false;\">"
 			."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" title=\"{$pgv_lang['config_block']}\" /></a>"
 			;
 		}
@@ -224,7 +224,7 @@ function print_htmlplus_block_config($config)
 			$templates[] = array(
 				'filename'		=>$entry,
 				'title'			=>(isset($pgv_lang[$bits[0]]))?$pgv_lang[$bits[0]]:$bits[0],
-				'description'		=>(isset($pgv_lang[$bits[1]]))?$pgv_lang[$bits[1]]:$bits[1],
+				'description'	=>(isset($pgv_lang[$bits[1]]))?$pgv_lang[$bits[1]]:$bits[1],
 				'template'		=>htmlspecialchars(join('', $tpl))
 			);
 		}
@@ -259,12 +259,12 @@ function print_htmlplus_block_config($config)
 			."\t\t\t\t}\n"
 			."\t\t\t-->\n"
 			."\t\t\t</script>\n"
-			."\t\t\t<select name=\"template\" onChange=\"loadTemplate(document.block.template.options[document.block.template.selectedIndex].value);\">\n"
+			."\t\t\t<select name=\"template\" onchange=\"loadTemplate(document.block.template.options[document.block.template.selectedIndex].value);\">\n"
 		;
 	}
 	else
 	{
-		print "\t\t\t<select name=\"template\" onChange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">\n";
+		print "\t\t\t<select name=\"template\" onchange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">\n";
 	}
 	print "\t\t\t\t<option value=\"\">{$pgv_lang['htmlplus_block_custom']}</option>\n";
 	foreach($templates as $tpl)
@@ -292,7 +292,7 @@ function print_htmlplus_block_config($config)
 		foreach($gedcoms as $ged_id=>$ged_name)
 		{
 			if($ged_name == $config['gedcom']){$sel = ' selected="selected"';}else{$sel = '';}
-			print "\t\t\t\t<option value=\"{$ged_name}\"{$sel}>".get_gedcom_setting($ged_id, 'title')."</option>\n";
+			print "\t\t\t\t<option value=\"{$ged_name}\"{$sel}>".PrintReady(get_gedcom_setting($ged_id, 'title'))."</option>\n";
 		}
 		print "\t\t\t</select>\n"
 			."\t\t</td>\n\t</tr>\n"
@@ -322,7 +322,7 @@ function print_htmlplus_block_config($config)
 	else
 	{
 		//use standard textarea
-		print "<textarea name=\"html\" rows=\"10\" cols=\"80\">{$config['html']}</textarea>";
+		print "<textarea name=\"html\" rows=\"10\" cols=\"80\">".str_replace("<", "&lt;", $config['html'])."</textarea>";
 	}
 
 	print "\n\t\t</td>\n\t</tr>\n";

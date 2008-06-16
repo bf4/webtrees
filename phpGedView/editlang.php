@@ -277,7 +277,7 @@ switch ($action) {
 				    	if (isset($new_language_array[$y][1])) {
 				      		if ($new_language_array[$y][0] == $english_language_array[$z][0]) {
 				        		$dDummy =  $new_language_array[$y][1];
-				        		$dummy_output_02 .= "<a href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&ls02=" . $y . "&language2=" . $language2 . "&file_type=" . $file_type . "&" . session_name() . "=" . session_id() . "&anchor=a1_" . $z . "');\">";
+				        		$dummy_output_02 .= "<a href=\"javascript:;\" onclick=\"return helpPopup00('".encode_url("ls01={$z}&ls02={$y}&language2={$language2}&file_type={$file_type}&".session_name()."=".session_id()."&anchor=a1_{$z}")."');\">";
 				        		$temp = str_replace($fromEscapedChars, $toPlainChars, $dDummy);
 				        		$dummy_output_02 .= $temp;
 				        		if ($temp == "") {
@@ -294,7 +294,7 @@ switch ($action) {
 						print $dummy_output;
 				  		print $dummy_output_02;
 				  		if (!$found) {
-				    		print "<a style=\"color: #FF0000\" href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&ls02=" . (0 - intval($lastfound) - 1) . "&language2=" . $language2 . "&file_type=" . $file_type . "&anchor=a1_" . $z . "');\">";
+				    		print "<a style=\"color: #FF0000\" href=\"javascript:;\" onclick=\"return helpPopup00('".encode_url("ls01={$z}&ls02=".(0 - intval($lastfound) - 1)."&language2={$language2}&file_type={$file_type}&anchor=a1_{$z}")."');\">";
 				    		print "<i>";
 				    		$temp = str_replace($fromEscapedChars, $toPlainChars, $english_language_array[$z][1]);
 				    		if ($temp == "") print "&nbsp;";
@@ -708,7 +708,7 @@ $NAME_REVERSE_array		= array();
 foreach ($language_settings as $key => $value) {
 	$languages[$key] 			= $value["pgv_langname"];
 	$pgv_lang_use[$key]			= $value["pgv_lang_use"];
-	$pgv_lang[$key]				= $value["pgv_lang"];
+	$pgv_lang[$key]				= $value["pgv_lang_self"];
 	$lang_short_cut[$key]		= $value["lang_short_cut"];
 	$lang_langcode[$key]		= $value["langcode"];
 	$pgv_language[$key]			= $value["pgv_language"];
@@ -730,7 +730,7 @@ foreach ($language_settings as $key => $value) {
 	$TEXT_DIRECTION_array[$key]	= $value["TEXT_DIRECTION"];
 	$NAME_REVERSE_array[$key]	= $value["NAME_REVERSE"];
 
-	$pgv_lang["lang_name_$key"]	= $value["pgv_lang"];
+	$pgv_lang["lang_name_$key"]	= $value["pgv_lang_self"];
 
 	$dDummy = $value["langcode"];
 	$ct = strpos($dDummy, ";");

@@ -64,7 +64,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["husb"]->getXref() . "&edit=" . $edit . "\">";
+                                                     print "<a href=\"".encode_url("individual.php?tab={$tabno}&pid=".$people["husb"]->getXref()."&edit=}$edit}")."\">";
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -83,7 +83,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["wife"]->getXref() . "&edit=" . $edit . "\">";
+                                                     print "<a href=\"".encode_url("individual.php?tab={$tabno}&pid=".$people["wife"]->getXref()."&edit={$edit}")."\">";
                                                      print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -118,7 +118,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["husb"]->getXref() . "&edit=" . $edit . "\">";
+                                                     print "<a href=\"".encode_url("individual.php?tab={$tabno}&pid=".$people["husb"]->getXref()."&edit={$edit}")."\">";
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -137,7 +137,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["wife"]->getXref() . "&edit=" . $edit . "\">";
+                                                     print "<a href=\"".encode_url("individual.php?tab={$tabno}&pid=".$people["wife"]->getXref()."&edit={$edit}")."\">";
                                                      print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -159,7 +159,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($child); ?>">
                                                 <?php
                                                 if ( ($child->canDisplayDetails()) ) {
-                                                      print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $child->getXref() . "&edit=" . $edit . "\">";
+                                                      print "<a href=\"".encode_url("individual.php?tab={$tabno}&pid=".$child->getXref()."&edit={$edit}")."\">";
                                                       print PrintReady(get_person_name($child->getXref()));
                                                       print "</a>" . "\n" ;
                                                 }else{

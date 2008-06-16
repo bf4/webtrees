@@ -3,7 +3,7 @@
  * Interface to review/accept/reject changes made by editing online.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,24 +137,24 @@ else {
 				case 'INDI':
 					$names = get_indi_names($gedrec);
 					$output .= "<b>".PrintReady(check_NN($names[0][0]))."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output .= "<a href=\"javascript:;\" onclick=\"return show_diff('individual.php?pid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
+					$output .= "<a href=\"javascript:;\" onclick=\"return show_diff('".htmlentities(encode_url("individual.php?pid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes"))."');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				case 'FAM':
 					$output.= "<b>".PrintReady(get_family_descriptor($change["gid"]))."</b> " . getLRM() . "(" . $change["gid"]. ")" . getLRM() . "<br />";
-					$output.= "<a href=\"javascript:;\" onclick=\"return show_diff('family.php?famid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
+					$output.= "<a href=\"javascript:;\" onclick=\"return show_diff('".htmlentities(encode_url("family.php?famid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes"))."');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				case 'SOUR':
 					$name=get_gedcom_value("ABBR", 1, $gedrec);
 					if (empty($name))
 						$name=get_gedcom_value("TITL", 1, $gedrec);
 					$output.="<b>".PrintReady($name)."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('source.php?sid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
+					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('".htmlentities(encode_url("source.php?sid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes"))."');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				case 'OBJE':
 					$name = get_gedcom_value("TITL", 1, $gedrec);
 					if (empty($name)) $name = get_gedcom_value("TITL", 2, $gedrec);
 					$output.="<b>".PrintReady($name)."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('mediaviewer.php?mid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
+					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('".htmlentities(encode_url("mediaviewer.php?mid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes"))."');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				default:
 					$output.="<b>".$factarray[$type]."</b> " . getLRM() . "(".$change["gid"].")" . getLRM() ."<br />";
@@ -174,7 +174,7 @@ else {
 				$output.="</tr>\n";
 			}
 			if ($i==count($changes)-1) {
-				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"edit_changes.php?action=accept&amp;cid=$cid\">".$pgv_lang["accept"]."</a></td>\n";
+				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"".encode_url("edit_changes.php?action=accept&cid={$cid}")."\">".$pgv_lang["accept"]."</a></td>\n";
 			} else {
 				$output .= "<td class=\"list_value $TEXT_DIRECTION\">&nbsp;</td>";
 			}
@@ -187,7 +187,7 @@ else {
  			$output .= "<td class=\"list_value $TEXT_DIRECTION\">".format_timestamp($change["time"])."</td>\n";
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\">".$change["gedcom"]."</td>\n";
 			if ($i==count($changes)-1) {
-				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"edit_changes.php?action=undo&amp;cid=$cid&amp;index=$i\">".$pgv_lang["undo"]."</a></td>";
+				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"".encode_url("edit_changes.php?action=undo&cid={$cid}&index={$i}")."\">".$pgv_lang["undo"]."</a></td>";
 			} else {
 				$output .= "<td class=\"list_value $TEXT_DIRECTION\">&nbsp;</td>";
 			}
@@ -214,7 +214,7 @@ else {
 	$count = 0;
 	foreach($changedgedcoms as $ged=>$value) {
 		if ($count!=0) $output2.="<br /><br />";
-		$output2 .= "<a href=\"edit_changes.php?action=acceptall&amp;ged=$ged\">$ged - ".$pgv_lang["accept_all"]."</a>\n";
+		$output2 .= "<a href=\"".encode_url("edit_changes.php?action=acceptall&ged={$ged}")."\">$ged - ".$pgv_lang["accept_all"]."</a>\n";
 		$count ++;
 	}
 	$output2 .= "</td>";
@@ -225,7 +225,7 @@ else {
 	$count = 0;
 	foreach($changedgedcoms as $ged=>$value) {
 		if ($count!=0) $output2.="<br /><br />";
-		$output2 .= "<a href=\"edit_changes.php?action=undoall&amp;ged=$ged\" onclick=\"return confirm('".$pgv_lang["undo_all_confirm"]."');\">$ged - ".$pgv_lang["undo_all"]."</a>\n";
+		$output2 .= "<a href=\"".encode_url("edit_changes.php?action=undoall&ged={$ged}")."\" onclick=\"return confirm('".$pgv_lang["undo_all_confirm"]."');\">$ged - ".$pgv_lang["undo_all"]."</a>\n";
 		$count ++;
 	}
 	$output2 .= "</td></tr>";

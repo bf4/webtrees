@@ -3,7 +3,7 @@
  * Functions used for charts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,8 +107,14 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	$wife = $family->getWife();
 	if (is_null($wife)) $wife = new Person('');
 
-	if (!is_null($husb)) print "<a name=\"" . $husb->getXref() . "\"></a>\r\n";
-	if (!is_null($wife)) print "<a name=\"" . $wife->getXref() . "\"></a>\r\n";
+	if (!is_null($husb)) {
+		$tempID = $husb->getXref();
+		if (!empty($tempID)) print "<a name=\"{$tempID}\"></a>\r\n";
+	}
+	if (!is_null($wife)) {
+		$tempID = $wife->getXref();
+		if (!empty($tempID)) print "<a name=\"{$tempID}\"></a>\r\n";
+	}
 	print_family_header($famid);
 
 	// -- get the new record and parents if in editing show changes mode
@@ -165,7 +171,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	if (!empty($upfamid) and ($sosa!=-1) and ($view != "preview")) {
 		print "<td valign=\"middle\" rowspan=\"2\">";
-		print_url_arrow($upfamid, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "$upfamid", 1);
+		print_url_arrow($upfamid, encode_url(($sosa==0 ? "?famid={$upfamid}&show_full={$show_full}" : "#{$upfamid}")), "$upfamid", 1);
 		print "</td>\n";
 	}
 	if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
@@ -181,10 +187,12 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	print "</tr></table>\n\n";
 	if ($sosa!=0) {
-		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
+		print "<a href=\"".encode_url("family.php?famid={$famid}")."\" class=\"details1\">";
 		if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)" . getLRM() . "&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
-		if (showFact("MARR", $famid)) print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); else print $pgv_lang["private"];
+		if (showFact("MARR", $famid)) {
+			print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); 
+		} else print $pgv_lang["private"];
 		print "</a>";
 	}
 	else print "<br />\n";
@@ -237,7 +245,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	if (!empty($upfamid) and ($sosa!=-1) and ($view != "preview")) {
 		print "<td valign=\"middle\" rowspan=\"2\">";
-		print_url_arrow($upfamid.$label, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "$upfamid", 1);
+		print_url_arrow($upfamid.$label, encode_url(($sosa==0 ? "?famid={$upfamid}&show_full={$show_full}" : "#{$upfamid}")), "$upfamid", 1);
 		print "</td>\n";
 	}
 	if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
@@ -352,7 +360,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 						// family link
 						if ($famid) {
 							print "<br />";
-							print "<a class=\"details1\" href=\"family.php?famid=$famid\">";
+							print "<a class=\"details1\" href=\"".encode_url("family.php?famid={$famid}")."\">";
 							if ($SHOW_ID_NUMBERS) print getLRM() . "&nbsp;($famid)&nbsp;" . getLRM();
 							print "</a>";
 						}
@@ -638,9 +646,9 @@ function print_family_facts($famid, $sosa = 0) {
 			print_help_link("add_media_help", "qm", "add_media_lbl");
 			print $pgv_lang["add_media_lbl"] . "</td>";
 			print "<td class=\"optionbox\">";
-			print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('addmedia.php?action=showmediaform&linktoid=$famid', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
+			print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('".encode_url("addmedia.php?action=showmediaform&linktoid={$famid}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
 			print "<br />\n";
-			print '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$famid.'&linkto=family\', \'_blank\', \'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["link_to_existing_media"].'</a>';
+			print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("inverselink.php?linktoid={$famid}&linkto=family}")."', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["link_to_existing_media"]."</a>";
 			print "</td></tr>\n";
 			// -- new source citation
 			print "<tr><td class=\"descriptionbox\">";
@@ -672,7 +680,7 @@ function print_sosa_family($famid, $childid, $sosa, $label="", $parid="", $gpari
 
 	if ($view != "preview") print "<hr />";
 	print "\r\n\r\n<p style='page-break-before:always' />\r\n";
-	print "<a name=\"$famid\"></a>\r\n";
+	if (!empty($famid)) print"<a name=\"{$famid}\"></a>\r\n";
 	print_family_parents($famid, $sosa, $label, $parid, $gparid, $personcount);
 	$personcount++;
 	print "\n\t<br />\n";
@@ -1024,7 +1032,7 @@ function print_childbox_popup($rootid, $indirec, $url) {
 	else print "ltr\" style=\"position:absolute; left:";
 	print "0px; top:0px; visibility: hidden;\">";
 	print "\n\t\t\t<table class=\"person_box\"><tr><td>";
-	print "\n\t\t\t\t<a href=\"individual.php?pid=$rootid\" class=\"name1\">". PrintReady(rtrim(get_person_name($rootid))) . "</a><br />";
+	print "\n\t\t\t\t<a href=\"".encode_url("individual.php?pid={$rootid}")."\" class=\"name1\">". PrintReady(rtrim(get_person_name($rootid))) . "</a><br />";
 	if ($famids||($num>1)) {
 		for($f=0; $f<count($famids); $f++) {
 			$famrec = find_family_record(trim($famids[$f]));

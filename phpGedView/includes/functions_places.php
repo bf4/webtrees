@@ -304,7 +304,7 @@ function print_place_subfields($element_id) {
 		print " onblur=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
 		print " onchange=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
 		print " onmouseout=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
-		if ($icountry<$i and $i<=$icity) print " acdropdown=\"true\" autocomplete_list=\"url:places/getdata.php?localized=".$lang_short_cut[$LANGUAGE]."&amp;field=".$subtagname."&amp;s=\" autocomplete=\"off\" autocomplete_matchbegin=\"false\"";
+		if ($icountry<$i and $i<=$icity) print " acdropdown=\"true\" autocomplete_list=\"url:".encode_url("places/getdata.php?localized={$lang_short_cut[$LANGUAGE]}&field={$subtagname}&s=")."\" autocomplete=\"off\" autocomplete_matchbegin=\"false\"";
 		print " />\n";
 		// country selector
 		if ($i==$icountry) {

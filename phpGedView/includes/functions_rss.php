@@ -3,7 +3,7 @@
  * Various functions used to generate the PhpGedView RSS feed.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -341,7 +341,7 @@ function getTop10Surnames() {
 		$i=0;
 		foreach($surnames as $indexval => $surname) {
 			if (stristr($surname["name"], "@N.N")===false) {
-				$data .= "<a href=\"" . $SERVER_URL ."indilist.php?surname=".rawurlencode($surname["name"])."\">".PrintReady($surname["name"])."</a> ";
+				$data .= "<a href=\"".encode_url("{$SERVER_URL}indilist.php?surname={$surname['name']")."\">".PrintReady($surname["name"])."</a> ";
 				if ($TEXT_DIRECTION=="rtl") $data .= getRLM() . "[" . getRLM() .$surname["match"].getRLM() . "]" . getRLM() . "<br />";
 				else $data .= "[".$surname["match"]."]<br />";
 				$i++;
@@ -445,7 +445,7 @@ function getRecentChanges() {
 					if ($indirec) {
 						if ($lastgid!=$gid) {
 							$name = check_NN(get_sortable_name($gid));
-							$recentText .= "<li><a href=\"" . $SERVER_URL . "individual.php?pid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
+							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}individual.php?pid={$gid}&ged={$GEDCOM}")."\"><b>".PrintReady($name)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
@@ -480,7 +480,7 @@ function getRecentChanges() {
 					if ($famrec) {
 						$name = get_family_descriptor($gid);
 						if ($lastgid!=$gid) {
-							$recentText .= "<li><a href=\"" .$SERVER_URL . "family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
+							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}family.php?famid={$gid}&ged={$GEDCOM}")."\"><b>".PrintReady($name)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
@@ -514,7 +514,7 @@ function getRecentChanges() {
 					if ($sourcerec) {
 						$name = get_source_descriptor($gid);
 						if ($lastgid!=$gid) {
-							$recentText .= "<li><a href=\"" . $SERVER_URL . "source.php?sid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
+							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}source.php?sid={$gid}&ged={$GEDCOM}")."\"><b>".PrintReady($name)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
@@ -548,7 +548,7 @@ function getRecentChanges() {
 					if ($reporec) {
 						$name = get_repo_descriptor($gid);
 						if ($lastgid!=$gid) {
-							$recentText .= "<li><a href=\"" . $SERVER_URL . "repo.php?rid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
+							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}repo.php?rid={$gid}&ged={$GEDCOM}")."\"><b>".PrintReady($name)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
@@ -583,7 +583,7 @@ function getRecentChanges() {
 						else $title = $objectlist[$gid]["file"];
 						$SearchTitle = preg_replace("/ /","+",$title);
 						if ($lastgid!=$gid) {
- 							$recentText .= "<li><a href=\"" . $SERVER_URL . "medialist.php?action=filter&amp;search=yes&amp;filter=$SearchTitle&amp;ged=".$GEDCOM."\"><b>".PrintReady($title)."</b>";
+ 							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}medialist.php?action=filter&search=yes&filter={$SearchTitle}&ged{$GEDCOM}")."\"><b>".PrintReady($title)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
@@ -722,7 +722,7 @@ function getRandomMedia() {
 		$imgheight = $imgsize[1]+150;
 
 		$mediaid = $medialist[$value]["XREF"];
-		$randomMedia .= "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
+		$randomMedia .= "<a href=\"".encode_url("mediaviewer.php?mid={$mediaid}")."\">";
 		$mediaTitle = "";
 		if (!empty($medialist[$value]["TITL"])) {
 			$mediaTitle = PrintReady($medialist[$value]["TITL"]);
@@ -741,7 +741,7 @@ function getRandomMedia() {
 		}*/
 		$randomMedia .= "</a>\n";
 		$randomMedia .= "<br />";
-		$randomMedia .= "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
+		$randomMedia .= "<a href=\"".encode_url("mediaviewer.php?mid={$mediaid}")."\">";
 		$randomMedia .= "<b>". $mediaTitle ."</b>";
 		$randomMedia .= "</a>";
 

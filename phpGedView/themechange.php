@@ -43,5 +43,5 @@ foreach (get_theme_names() as $theme) {
 }
 
 // Go back to where we came from
-header('Location: '.$frompage);
+header('Location: '.encode_url(decode_url($frompage)));
 ?>

@@ -8,7 +8,7 @@
  * Requires SQL mode.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008, John Finlay and others, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ if (empty($ged)) $ged = $GEDCOM;
 $GEDCOM = $ged;
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&ged=$GEDCOM&url=addmedia.php");
+	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=addmedia.php"));
 	exit;
 }
 
@@ -598,8 +598,8 @@ if ($action=="showmedia") {
 		print "<td class=\"list_label\">".$factarray["FILE"]."</td><td class=\"list_label\">".$pgv_lang["highlighted"]."</td><td class=\"list_label\">order</td><td class=\"list_label\">gedcom</td></tr>\n";
 		foreach($medialist as $indexval => $media) {
 			print "<tr>";
-			print "<td class=\"list_value\"><a href=\"addmedia.php?action=delete&m_id=".$media["ID"]."\">delete</a></td>";
-			print "<td class=\"list_value\"><a href=\"addmedia.php?action=edit&m_id=".$media["ID"]."\">edit</a></td>";
+			print "<td class=\"list_value\"><a href=\"".encode_url("addmedia.php?action=delete&m_id=".$media["ID"])."\">delete</a></td>";
+			print "<td class=\"list_value\"><a href=\"".encode_url("addmedia.php?action=edit&m_id=".$media["ID"])."\">edit</a></td>";
 			print "<td class=\"list_value\">".$media["TITL"]."</td>";
 			print "<td class=\"list_value\">";
 			echo format_list_person($media['INDI'], array(get_person_name($media["INDI"]), $GEDCOM), false, '', 'div');

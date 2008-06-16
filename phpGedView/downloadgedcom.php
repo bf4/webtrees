@@ -4,7 +4,7 @@
  * Allow an admin user to download the entire gedcom	file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ if ($action == "download" && $zip == "yes") {
 		unlink(filename_decode($gedname));
 		if ($removeTempDir)
 			rmdir(filename_decode($temppath));
-		header("Location: downloadbackup.php?fname=" . rawurlencode($zipname));
+		header("Location: ".encode_url("downloadbackup.php?fname={$zipname}"));
 		exit;
 	}
 	exit;

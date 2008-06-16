@@ -4,7 +4,7 @@
  * Controller for the Search Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -366,7 +366,7 @@ class SearchControllerRoot extends BaseController {
 			// see if it's an indi ID. If it's found and privacy allows it, JUMP!!!!
 			if (find_person_record($this->query)) {
 				if (showLivingNameByID($this->query) || displayDetailsByID($this->query)) {
-					header("Location: individual.php?pid=".$this->query."&ged=".$GEDCOM);
+					header("Location: ".encode_url("individual.php?pid={$this->query}&ged={$GEDCOM}"));
 					exit;
 				}
 			}
@@ -376,7 +376,7 @@ class SearchControllerRoot extends BaseController {
 				if (displayDetailsByID($this->query, "FAM") == true) {
 					$parents = find_parents($this->query);
 					if (showLivingNameByID($parents["HUSB"]) && showLivingNameByID($parents["WIFE"])) {
-						header("Location: family.php?famid=".$this->query."&ged=".$GEDCOM);
+						header("Location: ".encode_url("family.php?famid={$this->query}&ged={$GEDCOM}"));
 						exit;
 					}
 				}
@@ -384,7 +384,7 @@ class SearchControllerRoot extends BaseController {
 			// see if it's an source ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
 				if (find_source_record($this->query)) {
-					header("Location: source.php?sid=".$this->query."&ged=".$GEDCOM);
+					header("Location: ".encode_url("source.php?sid={$this->query}&ged={$GEDCOM}"));
 					exit;
 				}
 			}
@@ -392,7 +392,7 @@ class SearchControllerRoot extends BaseController {
 			// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
 				if (find_repo_record($this->query)) {
-					header("Location: repo.php?rid=".$this->query."&ged=".$GEDCOM);
+					header("Location: ".encode_url("repo.php?rid={$this->query}&ged={$GEDCOM}"));
 					exit;
 				}
 			}
@@ -492,7 +492,7 @@ class SearchControllerRoot extends BaseController {
 						}
 						if (!isset ($assolist[$key])) {
 							if (showLivingNameByID($pid) || displayDetailsByID($pid)) {
-								header("Location: individual.php?pid=".$pid."&ged=".get_gedcom_from_id($indi["gedfile"]));
+								header("Location: ".encode_url("individual.php?pid={$pid}&ged=".get_gedcom_from_id($indi["gedfile"])));
 								exit;
 							}
 						}
@@ -516,7 +516,7 @@ class SearchControllerRoot extends BaseController {
 						if (displayDetailsByID($famid, "FAM") == true) {
 							$parents = find_parents($famid);
 							if (showLivingNameByID($parents["HUSB"]) && showLivingNameByID($parents["WIFE"])) {
-								header("Location: family.php?famid=".$famid."&ged=".$GEDCOM);
+								header("Location: ".encode_url("family.php?famid={$famid}&ged={$GEDCOM}"));
 								exit;
 							}
 						}
@@ -538,7 +538,7 @@ class SearchControllerRoot extends BaseController {
 							}
 						}
 						if (displayDetailsByID($sid, "SOUR")) {
-							header("Location: source.php?sid=".$sid."&ged=".get_gedcom_from_id($source["gedfile"]));
+							header("Location: ".encode_url("source.php?sid={$sid}&ged=".get_gedcom_from_id($source["gedfile"])));
 							exit;
 						}
 						if (count($this->sgeds > 1)) {
@@ -870,7 +870,7 @@ class SearchControllerRoot extends BaseController {
 			$GEDCOM = $this->printname[0][2];
 			include (get_privacy_file());
 			if (showLivingNameByID($this->printname[0][1]) || displayDetailsByID($this->printname[0][1])) {
-				header("Location: individual.php?pid=".$this->printname[0][1]."&ged=".$this->printname[0][2]);
+				header("Location: ".encode_url("individual.php?pid={$this->printname[0][1]}&ged={$this->printname[0][2]}"));
 				exit;
 			} else {
 				$GEDCOM = $oldged;
@@ -1330,7 +1330,7 @@ class SearchControllerRoot extends BaseController {
 					if ( count($datalist) > 0 ) {
 						$somethingPrinted = true;
 					}
-					print_indi_table($datalist, $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+					print_indi_table($datalist, $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					require(get_privacy_file());
@@ -1339,7 +1339,7 @@ class SearchControllerRoot extends BaseController {
 					if ( count($datalist) > 0 ) {
 						$somethingPrinted = true;
 					}
-					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					require(get_privacy_file());
@@ -1348,7 +1348,7 @@ class SearchControllerRoot extends BaseController {
 					if ( count($datalist) > 0 ) {
 						$somethingPrinted = true;
 					}
-					print_sour_table(array_unique($datalist), $pgv_lang["sources"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+					print_sour_table(array_unique($datalist), $pgv_lang["sources"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 				}
 				$GEDCOM = $oldged;
 				require(get_privacy_file());
@@ -1383,7 +1383,7 @@ class SearchControllerRoot extends BaseController {
 				if ( count($datalist) > 0 ) {
 					$somethingPrinted = true;
 				}
-				print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+				print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 			}
 			foreach ($this->sgeds as $key=>$GEDCOM) {
 				require(get_privacy_file());
@@ -1392,7 +1392,7 @@ class SearchControllerRoot extends BaseController {
 				if ( count($datalist) > 0 ) {
 					$somethingPrinted = true;
 				}
-				print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+				print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 			}
 			$GEDCOM = $oldged;
 			print "</div>";
@@ -1457,13 +1457,11 @@ class SearchControllerRoot extends BaseController {
 												print "<tr><td><table id=\"multiResultsInTbl\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ><tr>";
 											}
 											$displayed_once = true;
-											print "<td class=\"list_label\" colspan=\"2\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >".$pgv_lang["site_list"]."<a href=\"".$siteURL."\" target=\"_blank\">".$siteName."</a>".$pgv_lang["site_had"]."</td></tr>";
+											print "<td class=\"list_label\" colspan=\"2\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >".$pgv_lang["site_list"]."<a href=\"".encode_url($siteURL)."\" target=\"_blank\">".$siteName."</a>".$pgv_lang["site_had"]."</td></tr>";
 										}
 										print "<tr><td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" valign=\"center\" ><ul>";
 										print "<li class=\"$TEXT_DIRECTION\" dir=\"$TEXT_DIRECTION\">";
-										print "<a href=\"".$siteURL."/individual.php?pid=".$person->PID."&amp;ged=";
-										print $serviceClient->gedfile;
-										print "\" target=\"_blank\">";
+										print "<a href=\"".encode_url("{$siteURL}/individual.php?pid={$person->PID}&ged={$serviceClient->gedfile}")."\" target=\"_blank\">";
 										$indiName = sortable_name_from_name($person->gedcomName);
 										$pageResultsNum += 1;
 										print "<b>".$indiName."</b>";
@@ -1608,25 +1606,19 @@ class SearchControllerRoot extends BaseController {
 		*/
 	function printQueryString($inputFieldNames, $pageNum) {
 		global $GEDCOM;
-		$first = true;
-		print "search.php";
+		$tempURL = "search.php?ged={$GEDCOM}";
 		foreach ($inputFieldNames as $key => $value) {
 			$controllerVar = $this->getValue($value);
 			if (!empty ($controllerVar)) {
-				if ($first) {
-					print "?";
-					$first = false;
-				} else
-				print "&amp;";
-				print "$value=".$controllerVar;
+				$tempURL .= "&{$value}={$controllerVar}";
 			}
 		}
-		print "&amp;resultsPageNum=".$pageNum;
+		$tempURL .= "&resultsPageNum={$pageNum}";
 		foreach($this->sgeds as $i=>$key) {
 			$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $key);
-			print "&amp;".$str."=yes";
+			$tempURL .= "&{$str}=yes";
 		}
-		print "&amp;ged=".$GEDCOM;
+		print encode_url($tempURL);
 	}
 
 	function getValue($varName) {

@@ -5,7 +5,7 @@
  * Menu options are changed to apply to a media object instead of an individual
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	John Finlay and Others
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -203,11 +203,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		//-- main edit menu
 		$menu = new Menu($pgv_lang["edit"]);
-		$click_link = "";
-		$click_link .= "window.open('addmedia.php?action=";
-		$click_link .= "editmedia&pid=".$this->pid;
-		$click_link .= "&linktoid=$linktoid";
-		$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
+		$click_link = "window.open('".encode_url("addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 		$menu->addOnclick($click_link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
@@ -215,11 +211,7 @@ class MediaControllerRoot extends IndividualController{
 		if (PGV_USER_CAN_EDIT) {
 			//- plain edit option
 			$submenu = new Menu($pgv_lang["edit"]);
-			$click_link = "";
-			$click_link .= "window.open('addmedia.php?action=";
-			$click_link .= "editmedia&pid=".$this->pid;
-			$click_link .= "&linktoid=$linktoid";
-			$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
+			$click_link = "window.open('".encode_url("addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 			$submenu->addOnclick($click_link);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
@@ -234,7 +226,7 @@ class MediaControllerRoot extends IndividualController{
 			if (PGV_USER_GEDCOM_ADMIN) {
 				//- remove object option
 				$submenu = new Menu($pgv_lang["remove_object"]);
-				$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);
+				$submenu->addLink(encode_url("media.php?action=removeobject&xref=".$this->pid));
 				$submenu->addOnclick("return confirm('".$pgv_lang["confirm_remove_object"]."')");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
@@ -266,21 +258,21 @@ class MediaControllerRoot extends IndividualController{
 			$menu->addSeperator();
 			if ($this->show_changes=="no") {
 				$label = $pgv_lang["show_changes"];
-				$link = "mediaviewer.php?mid=".$this->pid."&amp;show_changes=yes";
+				$link = "mediaviewer.php?mid={$this->pid}&show_changes=yes";
 			}
 			else {
 				$label = $pgv_lang["hide_changes"];
-				$link = "mediaviewer.php?mid=".$this->pid."&amp;show_changes=no";
+				$link = "mediaviewer.php?mid={$this->pid}&show_changes=no";
 			}
-			$submenu = new Menu($label, $link);
+			$submenu = new Menu($label, encode_url($link));
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
 			if (PGV_USER_CAN_ACCEPT) {
-				$submenu = new Menu($pgv_lang["undo_all"], "mediaviewer.php?mid=".$this->pid."&amp;action=undo");
+				$submenu = new Menu($pgv_lang["undo_all"], encode_url("mediaviewer.php?mid={$this->pid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang["accept_all"], "mediaviewer.php?mid=".$this->pid."&amp;action=accept");
+				$submenu = new Menu($pgv_lang["accept_all"], encode_url("mediaviewer.php?mid={$this->pid}&action=accept"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -321,7 +313,7 @@ class MediaControllerRoot extends IndividualController{
 		else {
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
-			$menu->addLink("clippings.php?action=add&amp;id=".$this->pid."&amp;type=obje");
+			$menu->addLink(encode_url("clippings.php?action=add&id={$this->pid}&type=obje"));
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($this->canShowGedcomRecord()) {
@@ -334,14 +326,14 @@ class MediaControllerRoot extends IndividualController{
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->mediaobject->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
-			$submenu = new Menu($pgv_lang["add_to_cart"], "clippings.php?action=add&amp;id=".$this->pid."&amp;type=obje");
+			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("clippings.php?action=add&id={$this->pid}&type=obje"));
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->mediaobject->canDisplayDetails() && PGV_USER_ID) {
-			$submenu = new Menu($pgv_lang["add_to_my_favorites"], "mediaviewer.php?action=addfav&amp;mid=".$this->pid."&amp;gid=".$this->pid);
+			$submenu = new Menu($pgv_lang["add_to_my_favorites"], encode_url("mediaviewer.php?action=addfav&mid={$this->pid}&gid={$this->pid}"));
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
