@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -334,6 +334,7 @@ $pgv_lang["roots"]		 			= "Korzenie";
 $pgv_lang["leaves"] 				= "Liście";
 $pgv_lang["widow"] 					= "Wdowa";
 $pgv_lang["widower"] 				= "Wdowiec";
+$pgv_lang["show_parents"] 			= "Pokaż rodziców";
 $pgv_lang["skip_surnames"]			= "Pomiń listę nazwisk";
 $pgv_lang["show_surnames"]			= "Pokaż listę nazwisk";
 $pgv_lang["all"]					= "Wszystkie";
@@ -1029,6 +1030,7 @@ $pgv_lang["stat_surnames"]		= "Nazwisk";
 $pgv_lang["stat_users"]			= "Użytkowników";
 $pgv_lang["no_family_facts"]		= "Brak faktów dla tej rodziny.";
 $pgv_lang["stat_females"]			= "Kobiet";
+$pgv_lang["stat_unknown"]			= "Nieznanych";
 $pgv_lang["stat_males"]				= "Mężczyzn";
 $pgv_lang["stat_most_children"]		= "Najwięcej dzieci w rodzinie";
 $pgv_lang["stat_longest_life"]		= "Osoba żyjąca najdłużej";
@@ -1442,6 +1444,7 @@ $pgv_lang["direct-ancestors"]		= "Przodkowie w linii prostej";
 $pgv_lang["descendants"]			= "Potomkowie";
 $pgv_lang["choose_relatives"]		= "Wybierz krewnych";
 $pgv_lang["relatives_report"]		= "Raport o krewnych (podstawowy)";
+$pgv_lang["total_unknown"]			= "Nieznanych";
 $pgv_lang["total_not_born"]			= "Wszystkich nienarodzonych";
 $pgv_lang["cookie_login_help"]		= "Strona zapamiętała twoje dane z ostatniego logowania. Da ci to dostęp do poufnej informacji i innych uprawnień użytkownika, ale, dla większego bezpieczeństwa, aby edytować lub zarządzać stroną będzie konieczne ponowne zalogowanie się.";
 $pgv_lang["remove_custom_tags"]		= "Usuń znaczniki PhpGedView";
