@@ -55,6 +55,8 @@ class GedcomRecord {
 	function GedcomRecord($gedrec, $simple=false) {
 		if (empty($gedrec)) return;
 
+		$this->ged_id=PGV_GED_ID;
+
 		//-- lookup the record from another gedcom
 		$remoterfn = get_gedcom_value("RFN", 1, $gedrec);
 		if (!empty($remoterfn)) {
