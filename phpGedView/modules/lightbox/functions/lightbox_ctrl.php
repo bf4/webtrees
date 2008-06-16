@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?tab={$tabno}&pid=".$people["husb"]->getXref()."&edit=}$edit}")."\">";
+                                                     print "<a href=\"".encode_url("individual.php?tab={$tabno}&pid=".$people["husb"]->getXref()."&edit={$edit}")."\">";
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
