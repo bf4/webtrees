@@ -99,10 +99,9 @@ if ($action=='login') {
 		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url)));	// Remove any existing &ged= parameter
 		if (substr($url, -1)=="&") $url = substr($url, 0, -1);
 		$url .= "&ged=".$ged;
-		$url = htmlentities(str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url));
-		$url = str_replace(array(' ', '+'), array('%20', '%2b'), $url);		// GEDCOM names might contain these characters
+		$url = str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url);
 		
-		header("Location: ".$url);
+		header("Location: ".encode_url($url, false));
 		exit;
 	} else {
 		$message = $pgv_lang["no_login"];
