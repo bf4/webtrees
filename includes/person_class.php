@@ -1643,7 +1643,7 @@ class Person extends GedcomRecord {
 		// Make sure the NICK is included in the NAME record.
 		$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($nick && stristr($full, $nick)===false) {
-			$full.=' &ldquo;'.$nick.'$rdquo;';
+			$full.=' &ldquo;'.$nick.'&rdquo;';
 		}
 
 		// Convert "user-defined" unknowns into PGV unknowns
