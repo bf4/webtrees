@@ -96,10 +96,11 @@ if ($action=='login') {
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
 		$url .= "&";	// Simplify the preg_replace following
-		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode($url));	// Remove any existing &ged= parameter
+		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url)));	// Remove any existing &ged= parameter
 		if (substr($url, -1)=="&") $url = substr($url, 0, -1);
 		$url .= "&ged=".$ged;
 		$url = htmlentities(str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url));
+		$url = str_replace(array(' ', '+'), array('%20', '%2b'), $url);		// GEDCOM names might contain these characters
 		
 		header("Location: ".$url);
 		exit;

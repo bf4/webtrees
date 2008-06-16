@@ -202,7 +202,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 			if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) $did++;
 			print "\n\t\t\t\t</td><td valign=\"middle\">";
 			if ($view!="preview") {
-				print "<a href=\"pedigree.php?PEDIGREE_GENERATIONS=".$controller->PEDIGREE_GENERATIONS."&amp;rootid=".$controller->treeid[$did]."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\" ";
+				print "<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid={$controller->treeid[$did]}&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\" ";
 				if ($TEXT_DIRECTION=="rtl") {
 					print "onmouseover=\"swap_image('arrow$i',0);\" onmouseout=\"swap_image('arrow$i',0);\">";
 					print "<img id=\"arrow$i\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" />";
@@ -258,31 +258,27 @@ if ($controller->rootPerson->canDisplayDetails()) {
 				if($controller->rootid!=$husb) $spid=$family->getHusband();
 				else $spid=$family->getWife();
 				if (!empty($spid)) {
-					print "\n\t\t\t\t<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->PEDIGREE_GENERATIONS&amp;rootid=".$spid->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
+					print "\n\t\t\t\t<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$spid->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
 					if ($spid->canDisplayName()) {
 						$name = $spid->getName();
 						$name = rtrim($name);
-						if (hasRTLText($name))
-						     print "class=\"name2\">";								
-			   			else print "class=\"name1\">";
-						print PrintReady($name);
-					}
-					else print $pgv_lang["private"];
+					} else $name = $pgv_lang["private"];
+					if (hasRTLText($name)) print "class=\"name2\">";								
+			   		else print "class=\"name1\">";
+					print PrintReady($name);
 					print "<br /></span></a>";
 				}
 			
 				$children = $family->getChildren();
 				foreach($children as $ind2=>$child) {
-					print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->PEDIGREE_GENERATIONS&amp;rootid=".$child->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
+					print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
 					if ($child->canDisplayName()) {
 						$name = $child->getName();
 						$name = rtrim($name);
-						if (hasRTLText($name))
-						     print "class=\"name2\">&lt; ";									
-			   			else print "class=\"name1\">&lt; ";
-						print PrintReady($name);
-					}
-					else print ">" . $pgv_lang["private"];
+					} else $name = $pgv_lang["private"];
+					if (hasRTLText($name)) print "class=\"name2\">&lt; ";									
+			   		else print "class=\"name1\">&lt; ";
+					print PrintReady($name);
 					print "<br /></span></a>";
 				}
 			}
@@ -294,16 +290,14 @@ if ($controller->rootPerson->canDisplayDetails()) {
 				if (count($children)>1) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
 				foreach($children as $ind2=>$child) {
 					if (!$controller->rootPerson->equals($child) && !is_null($child)) {
-						print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"pedigree.php?PEDIGREE_GENERATIONS=$controller->PEDIGREE_GENERATIONS&amp;rootid=".$child->getXref()."&amp;show_full=$controller->show_full&amp;talloffset=$controller->talloffset\"><span ";
+						print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
 						if ($child->canDisplayName()) {
 							$name = $child->getName();
 							$name = rtrim($name);
-							if (hasRTLText($name))
-							print "class=\"name2\"> ";									 
-			   				else print "class=\"name1\"> ";
-							print PrintReady($name);
-						}
-						else print ">". $pgv_lang["private"];
+						} else $name = $pgv_lang["private"];
+						if (hasRTLText($name)) print "class=\"name2\"> ";									 
+			   			else print "class=\"name1\"> ";
+						print PrintReady($name);
 						print "<br /></span></a>";
 					}
 				}

@@ -93,11 +93,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				// NOTE: Zoom
 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
 				else $title = $pid." :".$pgv_lang["pedigree_chart"];
-				print "<a href=\"pedigree.php?rootid=$pid&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>";
+				print "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>";
 
 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
 				else $title = $pid." :".$pgv_lang["descend_chart"];
-				print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />";
+				print "<br /><a href=\"".encode_url("descendancy.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />";
 
 				$username = PGV_USER_NAME;
 				if (!empty($username)) {
@@ -105,29 +105,29 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					if ($myid) {
 						if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
 						else $title = $pid." :".$pgv_lang["relationship_chart"];
-						print "<a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&amp;pid1=$myid&amp;pid2=$pid&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;pretty=2&amp;followspouse=1&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />";
+						print "<a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$myid}&pid2={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&pretty=2&followspouse=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />";
 					}
 				}
 				// NOTE: Zoom
 				if (file_exists("ancestry.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
-					print "<a href=\"ancestry.php?rootid=$pid&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />";
+					print "<a href=\"".encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />";
 				}
 				if (file_exists("compact.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["compact_chart"];
-					print "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />";
+					print "<a href=\"".encode_url("compact.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />";
 				}
 				if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["fan_chart"];
-					print "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />";
+					print "<a href=\"".encode_url("fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />";
 				}
 				if (file_exists("hourglass.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
-					print "<a href=\"hourglass.php?pid=$pid&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
+					print "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
 				}
 				$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
 				for ($i=0; $i<$ct; $i++) {
@@ -142,11 +142,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 						if ((!empty($spouse))||($num>0)) {
 							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
 							else $title = $famid." :".$pgv_lang["familybook_chart"];
-							print "<a href=\"family.php?famid=$famid&amp;show_full=1&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br />";
+							print "<a href=\"".encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br />";
 							if (!empty($spouse)) {
 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse;
 								else $title = $spouse." :".$pgv_lang["indi_info"];
-								print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
+								print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
 								if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($spouse))||(showLivingNameByID($spouse))) print PrintReady(get_person_name($spouse));
 								else print $pgv_lang["private"];
 								print "</a><br />";
@@ -156,7 +156,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							$cpid = $smatch[$j][1];
 							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
 							else $title = $cpid." :".$pgv_lang["indi_info"];
-							print "&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
+							print "&nbsp;&nbsp;<a href=\"".encode_url("individual.php?pid={$cpid}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
 							if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($cpid))||(showLivingNameByID($cpid))) print PrintReady(get_person_name($cpid));
 							else print $pgv_lang["private"];
 							print "<br /></a>";
@@ -198,37 +198,37 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				$click_link="javascript:;";
 				$whichChart="";
 				if (preg_match("/pedigree.php/", $SCRIPT_NAME)>0) {
-					$click_link="pedigree.php?rootid=$pid&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM";
+					$click_link=encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}");
 					$whichChart="pedigree_chart";
 					$whichID=$pid;
 				}
 
 				if (preg_match("/hourglass.php/", $SCRIPT_NAME)>0) {
-					$click_link="hourglass.php?pid=$pid&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$click_link=encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="hourglass_chart";
 					$whichID=$pid;
 				}
 
 				if (preg_match("/ancestry.php/", $SCRIPT_NAME)>0) {
-					$click_link="ancestry.php?rootid=$pid&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$click_link=encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="ancestry_chart";
 					$whichID=$pid;
 				}
 
 				if (preg_match("/descendancy.php/", $SCRIPT_NAME)>0) {
-					$click_link="descendancy.php?&amp;show_full=$PEDIGREE_FULL_DETAILS&amp;pid=$pid&amp;agenerations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
+					$click_link=encode_url("descendancy.php?&show_full={$PEDIGREE_FULL_DETAILS}&pid={$pid}&agenerations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="descend_chart";
 					$whichID=$pid;
 				}
 
 				if ((preg_match("/family.php/", $SCRIPT_NAME)>0)&&!empty($famid)) {
-					$click_link="family.php?famid=$famid&amp;show_full=1&amp;ged=$GEDCOM";
+					$click_link=encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}");
 					$whichChart="familybook_chart";
 					$whichID=$famid;
 				}
 
 				if (preg_match("/individual.php/", $SCRIPT_NAME)>0) {
-					$click_link="individual.php?pid=$pid&amp;ged=$GEDCOM";
+					$click_link=encode_url("individual.php?pid={$pid}&ged={$GEDCOM}");
 					$whichChart="indi_info";
 					$whichID=$pid;
 				}
@@ -297,7 +297,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			// ---------------------------------------------------------------------------------------------
 			
 			if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
-				print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
+				print "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
 			}else{
 				print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 			}
@@ -315,7 +315,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			// NOTE: Start span namedef-$personcount.$pid.$count
 			if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 			else $title = $pid." :".$pgv_lang["indi_info"];
-			print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\"><span id=\"namedef-$boxID\" class=\"name$style\">";
+			print "<a href=\"".encode_url("individual.php?pid={$pid}&ged={$GEDCOM}")."\" title=\"$title\"><span id=\"namedef-$boxID\" class=\"name$style\">";
 			print PrintReady($name);
 			if ($PEDIGREE_SHOW_GENDER) {
 				// NOTE: IMG ID
@@ -374,7 +374,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	}
 	if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 	else $title = $pid." :".$pgv_lang["indi_info"];
-	print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" ";
+	print "<a href=\"".encode_url("individual.php?pid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ";
 	if (!$show_full) {
 		//not needed or wanted for mouseover //if ($ZOOM_BOXES=="mouseover") print " onmouseover=\"event.cancelBubble = true;\"";
 		if ($ZOOM_BOXES=="mousedown") print "onmousedown=\"event.cancelBubble = true;\"";
@@ -567,9 +567,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 			$GEDCOM_TITLE = "RSS";
 		}
 		if(! $REQUIRE_AUTHENTICATION){
-			print "<link href=\"" . $SERVER_URL . "rss.php?ged=$GEDCOM\" rel=\"alternate\" type=\"$applicationType\" title=\"".PrintReady(strip_tags($GEDCOM_TITLE), TRUE)."\" />\n\t";
+			print "<link href=\"".encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}")."\" rel=\"alternate\" type=\"$applicationType\" title=\"".PrintReady(strip_tags($GEDCOM_TITLE), TRUE)."\" />\n\t";
 		}
-		//print "<link href=\"" . $SERVER_URL . "rss.php?ged=$GEDCOM&amp;auth=basic\" rel=\"alternate\" type=\"$applicationType\" title=\"$GEDCOM_TITLE - " . $pgv_lang["authenticated_feed"] . "\" />\n\t";
+		//print "<link href=\"".encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}&auth=basic")."\" rel=\"alternate\" type=\"$applicationType\" title=\"$GEDCOM_TITLE - " . $pgv_lang["authenticated_feed"] . "\" />\n\t";
 	}
 	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\" />";
 	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
@@ -1055,7 +1055,7 @@ function print_user_links() {
 	} else {
 		$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
 		if (empty($SEARCH_SPIDER)) {
-			print "<a href=\"$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME).normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM"))."\" class=\"link\">".$pgv_lang["login"]."</a>";
+			print "<a href=\"$LOGIN_URL?url=".encode_url(basename($SCRIPT_NAME).decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM")))."\" class=\"link\">".$pgv_lang["login"]."</a>";
 		}
 	}
 	print "<br />";
@@ -1232,8 +1232,8 @@ function print_favorite_selector($option=0) {
 				$GEDCOM = $favorite["file"];
 				$submenu = array();
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//					$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
-					$submenu["link"] = $favorite["url"];
+//					$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
+					$submenu["link"] = encode_url($favorite["url"]);
 					$submenu["label"] = PrintReady($favorite["title"]);
 					$submenu["labelpos"] = "right";
 					$submenu["class"] = "favsubmenuitem";
@@ -1244,7 +1244,7 @@ function print_favorite_selector($option=0) {
 					if (displayDetailsById($pid, $favorite["type"])) {
 						$indirec = find_gedcom_record($pid);
 						if ($favorite["type"]=="INDI") {
-							$submenu["link"] = "individual.php?pid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+							$submenu["link"] = encode_url("individual.php?pid={$favorite['gid']}&ged={$GEDCOM}");
 							$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1253,7 +1253,7 @@ function print_favorite_selector($option=0) {
 							unset($indilist[$pid]);
 						}
 						if ($favorite["type"]=="FAM") {
-							$submenu["link"] = "family.php?famid=".$favorite["gid"]."&amp;show_full=1&amp;ged=$GEDCOM";
+							$submenu["link"] = encode_url("family.php?famid={$favorite['gid']}&show_full=1&ged={$GEDCOM}");
 							$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1262,7 +1262,7 @@ function print_favorite_selector($option=0) {
 							unset($famlist[$pid]);
 						}
 						if ($favorite["type"]=="SOUR") {
-							$submenu["link"] = "source.php?sid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+							$submenu["link"] = encode_url("source.php?sid={$favorite['gid']}&ged={$GEDCOM}");
 							$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1273,7 +1273,7 @@ function print_favorite_selector($option=0) {
 						if ($favorite["type"]=="OBJE") {
 							$media = Media::getInstance($pid);
 							if (!is_null($media)) {
-								$submenu["link"] = "mediaviewer.php?mid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+								$submenu["link"] = encode_url("mediaviewer.php?mid={$favorite['gid']}&ged={$GEDCOM}");
 								$submenu["label"] = PrintReady($media->getTitle());
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1296,7 +1296,7 @@ function print_favorite_selector($option=0) {
 				$submenu = array();
 				$submenu["label"] = $pgv_lang["add_to_my_favorites"];
 				$submenu["labelpos"] = "right";
-				$submenu["link"] = "individual.php?action=addfav&amp;gid=$pid&amp;pid=$pid";
+				$submenu["link"] = encode_url("individual.php?action=addfav&gid={$pid}&pid={$pid}");
 				$submenu["class"] = "favsubmenuitem";
 				$submenu["hoverclass"] = "favsubmenuitem_hover";
 				$menu["items"][] = $submenu;
@@ -1316,8 +1316,8 @@ function print_favorite_selector($option=0) {
 					$pid = $favorite["gid"];
 					$submenu = array();
 					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//						$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
-						$submenu["link"] = $favorite["url"];
+//						$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
+						$submenu["link"] = encode_url($favorite["url"]);
 						$submenu["label"] = PrintReady($favorite["title"]);
 						$submenu["labelpos"] = "right";
 						$submenu["class"] = "favsubmenuitem";
@@ -1328,7 +1328,7 @@ function print_favorite_selector($option=0) {
 						if (displayDetailsById($pid, $favorite["type"])) {
 							$indirec = find_gedcom_record($pid);
 							if ($favorite["type"]=="INDI") {
-								$submenu["link"] = "individual.php?pid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+								$submenu["link"] = encode_url("individual.php?pid={$favorite['gid']}&ged={$GEDCOM}");
 								$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1336,7 +1336,7 @@ function print_favorite_selector($option=0) {
 							}
 							}
 							if ($favorite["type"]=="FAM") {
-								$submenu["link"] = "family.php?famid=".$favorite["gid"]."&amp;show_full=1&amp;ged=$GEDCOM";
+								$submenu["link"] = encode_url("family.php?famid={$favorite['gid']}&show_full=1&ged={$GEDCOM}");
 								$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1344,7 +1344,7 @@ function print_favorite_selector($option=0) {
 							}
 							}
 							if ($favorite["type"]=="SOUR") {
-								$submenu["link"] = "source.php?sid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+								$submenu["link"] = encode_url("source.php?sid={$favorite['gid']}&ged={$GEDCOM}");
 								$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
@@ -1383,8 +1383,8 @@ function print_favorite_selector($option=0) {
 					$GEDCOM = $favorite["file"];
 					$pid = $favorite["gid"];
 					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//						print "<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
-						print "<option value=\"".$favorite["url"]."\">".PrintReady($favorite["title"]);
+//						print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
+						print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
 						print "</option>";
 					}
 					else {
@@ -1397,7 +1397,7 @@ function print_favorite_selector($option=0) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 									else $name .= getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
-								print "<option value=\"individual.php?pid=";
+								$tempURL = "individual.php?pid=";
 								unset($indilist[$pid]);
 							}
 							if ($favorite["type"]=="FAM") {
@@ -1407,7 +1407,7 @@ function print_favorite_selector($option=0) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
-								print "<option value=\"family.php?show_full=1&amp;famid=";
+								$tempURL = "family.php?show_full=1&famid=";
 								unset($famlist[$pid]);
 							}
 							if ($favorite["type"]=="SOUR") {
@@ -1417,7 +1417,7 @@ function print_favorite_selector($option=0) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
-								print "<option value=\"source.php?sid=";
+								$tempURL = "source.php?sid=";
 								unset($sourcelist[$pid]);
 							}
 							if ($favorite["type"]=="OBJE") {
@@ -1429,11 +1429,11 @@ function print_favorite_selector($option=0) {
 										if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
 										else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 									}
-									print "<option value=\"mediaviewer.php?mid=";
+									$tempURL = "mediaviewer.php?mid=";
 									unset($sourcelist[$pid]);
 								}
 							}
-							print $favorite["gid"]."&amp;ged=".$GEDCOM."\">".$name."</option>";
+							print "<option value=\"". encode_url("{$tempURL}{$favorite['gid']}&ged={$GEDCOM}")."\">".$name."</option>";
 						}
 					}
 				}
@@ -1453,8 +1453,8 @@ function print_favorite_selector($option=0) {
 						$GEDCOM = $favorite["file"];
 						$pid = $favorite["gid"];
 						if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//							print "<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
-							print "<option value=\"".$favorite["url"]."\">".PrintReady($favorite["title"]);
+//							print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
+							print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
 							print "</option>";
 						}
 						else {
@@ -1463,29 +1463,29 @@ function print_favorite_selector($option=0) {
 						if (displayDetailsById($pid, $favorite["type"])) {
 							if ($favorite["type"]=="INDI") {
 								$name = strip_tags(PrintReady(get_person_name($pid)));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							print "<option value=\"individual.php?pid=";
+								if ($SHOW_ID_NUMBERS) {
+									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
+									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+								}
+							$tempURL = "individual.php?pid=";
 							}
 							if ($favorite["type"]=="FAM") {
 								$name = strip_tags(PrintReady(get_family_descriptor($pid)));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							print "<option value=\"family.php?show_full=1&amp;famid=";
+								if ($SHOW_ID_NUMBERS) {
+									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
+									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+								}
+							$tempURL = "family.php?show_full=1&famid=";
 							}
 							if ($favorite["type"]=="SOUR") {
 								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							print "<option value=\"source.php?sid=";
+								if ($SHOW_ID_NUMBERS) {
+									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
+									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+								}
+							$tempURL = "source.php?sid=";
 						}
-						print $favorite["gid"]."&amp;ged=$GEDCOM\">".$name."</option>";
+						print "<option value=\"".encode_url("{$tempURL}{$favorite['gid']}&ged={$GEDCOM}")."\">".$name."</option>";
 					}
 				}
 			}
@@ -1864,7 +1864,7 @@ function print_help_index($help){
 			$admcol=true;
 			$ch++;
 		}
-		$replace_text = "<a href=\"help_text.php?help=".$items[0]."\">".$var."</a><br />";
+		$replace_text = "<a href=\"".encode_url("help_text.php?help=".$items[0])."\">".$var."</a><br />";
 		$help_sorted[$replace_text] = $var;
 		$sentence = str_replace("#".$replace."#", $replace_text, $sentence);
 	}
@@ -2248,7 +2248,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$name = $pgv_lang["private"];
 				$addname = "";
 			}
-			print "<a href=\"individual.php?pid=$pid2&amp;ged=$GEDCOM\">" . PrintReady($name);
+			print "<a href=\"".encode_url("individual.php?pid={$pid2}&ged={$GEDCOM}")."\">" . PrintReady($name);
 //			if (!empty($addname)) print "<br />" . PrintReady($addname);
 			if (!empty($addname)) print " - " . PrintReady($addname);
 			if ($SHOW_ID_NUMBERS) {
@@ -2275,17 +2275,17 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
-						if ($pid1 && $pid1!=$pid2) print " - <a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&amp;pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
 						$pid1 = $parents["WIFE"];
-						if ($pid1 && $pid1!=$pid2) print " - <a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&amp;pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
 					}
 				}
-				else if ($pid!=$pid2) print " - <a href=\"relationship.php?show_full=$PEDIGREE_FULL_DETAILS&amp;pid1=$pid&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "]</a>";
+				else if ($pid!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
 
 		}
 		else if (strstr($gedrec, "@ FAM")!==false) {
-			print "<a href=\"family.php?show_full=1&amp;famid=$pid2\">";
+			print "<a href=\"".encode_url("family.php?show_full=1&famid={$pid2}")."\">";
 			if ($TEXT_DIRECTION == "ltr") print getLRM(); else print " " . getRLM();
 			print "[".$pgv_lang["view_family"];
 			if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($pid2)" . getLRM();
@@ -2473,14 +2473,14 @@ function format_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 			$place = trim($match[1]);
 			// reverse the array so that we get the top level first
 			$levels = array_reverse($levels);
-			$html.='<a href="placelist.php?action=show&amp;';
+			$tempURL = "placelist.php?action=show&";
 			foreach($levels as $pindex=>$ppart) {
 				// routine for replacing ampersands
 				$ppart = preg_replace("/amp\%3B/", "", trim($ppart));
-				$html.='parent['.$pindex.']='.PrintReady($ppart).'&amp;';
+				$tempURL .= "parent[{$pindex}]=".PrintReady($ppart).'&';
 			}
-			$html.='level='.count($levels);
-			$html.='"> '.PrintReady($place).'</a>';
+			$tempURL .= 'level='.count($levels);
+			$html .= '<a href="'.encode_url($tempURL).'"> '.PrintReady($place).'</a>';
 		} else {
 			if (!$SEARCH_SPIDER) {
 				$html.=' -- ';
@@ -2528,10 +2528,10 @@ function format_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 			if ($map_lati and $map_long) {
 				$map_lati=trim(strtr($map_lati,"NSEW,�"," - -. ")); // S5,6789 ==> -5.6789
 				$map_long=trim(strtr($map_long,"NSEW,�"," - -. ")); // E3.456� ==> 3.456
-				$html.=' <a target="_BLANK" href="http://www.mapquest.com/maps/map.adp?searchtype=address&amp;formtype=latlong&amp;latlongtype=decimal&amp;latitude='.$map_lati.'&amp;longitude='.$map_long.'"><img src="images/mapq.gif" border="0" alt="Mapquest &copy;" title="Mapquest &copy;" /></a>';
-				$html.=' <a target="_BLANK" href="http://maps.google.com/maps?q='.$map_lati.",".$map_long.'"><img src="images/bubble.gif" border="0" alt="Google Maps &copy;" title="Google Maps &copy;" /></a>';
-				$html.=' <a target="_BLANK" href="http://www.multimap.com/map/browse.cgi?lat='.$map_lati.'&amp;lon='.$map_long.'&amp;scale=&amp;icon=x"><img src="images/multim.gif" border="0" alt="Multimap &copy;" title="Multimap &copy;" /></a>';
-				$html.=' <a target="_BLANK" href="http://www.terraserver.com/imagery/image_gx.asp?cpx='.$map_long.'&amp;cpy='.$map_lati.'&amp;res=30&amp;provider_id=340"><img src="images/terrasrv.gif" border="0" alt="TerraServer &copy;" title="TerraServer &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="'.encode_url("http://www.mapquest.com/maps/map.adp?searchtype=address&formtype=latlong&latlongtype=decimal&latitude={$map_lati}&longitude={$map_long}").'"><img src="images/mapq.gif" border="0" alt="Mapquest &copy;" title="Mapquest &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="'.encode_url("http://maps.google.com/maps?q={$map_lati},{$map_long}").'"><img src="images/bubble.gif" border="0" alt="Google Maps &copy;" title="Google Maps &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="'.encode_url("http://www.multimap.com/map/browse.cgi?lat={$map_lati}&lon={$map_long}&scale=&icon=x").'"><img src="images/multim.gif" border="0" alt="Multimap &copy;" title="Multimap &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="'.encode_url("http://www.terraserver.com/imagery/image_gx.asp?cpx={$map_long}&cpy={$map_lati}&res=30&provider_id=340").'"><img src="images/terrasrv.gif" border="0" alt="TerraServer &copy;" title="TerraServer &copy;" /></a>';
 			}
 			if (preg_match('/\d NOTE (.*)/', $placerec, $match)) {
 				ob_start();

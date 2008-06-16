@@ -266,7 +266,7 @@ switch ($action) {
 			
 			// Print gedcom names
 			foreach($value as $gedcomname => $used) {
-				print "<a href=\"editconfig_gedcom.php?ged=".urlencode($gedcomname)."\" target=\"blank\">".$gedcomname."</a><br />";
+				echo '<a href="', encode_url("editconfig_gedcom.php?ged={$gedcomname}"), '" target="blank">', $gedcomname, '</a><br />';
 			}
 			print "</td><td class=\"facts_value\" colspan=\"2\" valign=\"top\">";
 			// Print language name and flag
@@ -274,7 +274,7 @@ switch ($action) {
 		}
 		print "</td></tr><tr><td  class=\"facts_value\" colspan=\"5\" valign=\"top\">".$pgv_lang["users_langs"]."</td><td class=\"facts_value\" colspan=\"2\">";
 		foreach ($configuredlanguages["users"] as $key => $value) {
-			print "<img src=\"".$language_settings[$key]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$key]."\" title=\"".$pgv_lang["lang_name_".$key]."\" />&nbsp;<a href=\"useradmin.php?action=listusers&amp;filter=language&amp;usrlang=".$key."\">".$pgv_lang["lang_name_".$key]."</a><br />";
+			print "<img src=\"".$language_settings[$key]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$key]."\" title=\"".$pgv_lang["lang_name_".$key]."\" />&nbsp;<a href=\"".encode_url("useradmin.php?action=listusers&filter=language&usrlang={$key}")."\">".$pgv_lang["lang_name_".$key]."</a><br />";
 		}
 	print "</td></tr>";
 }

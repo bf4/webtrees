@@ -6,7 +6,7 @@
  * back to here.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  * Author: Mike Elliott (coloredpixels)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -59,21 +59,20 @@ print $pgv_lang['search_engine_landing_page'];
 if(!empty($SEARCH_SPIDER)) {
 	print "<br /><br />".$pgv_lang['label_search_engine_detected'].": ";
 	print $SEARCH_SPIDER."\n<br />\n";
-	}
+}
 
 print "\n</div>\n<br />";
 print "<a href=\"index.php\"><b>".$pgv_lang["welcome_page"]."</b></a><br />";
 
 // Doesn't act like its supposed to, but does force the default gedcom,
 // instead of reading from an inderminate session file.
-$link = "indilist.php?ged=$GEDCOM";
-print "<a href=\"".$link."\"><b>".$pgv_lang["individuals"]."</b></a><br />";
+print "<a href=\"".encode_url("indilist.php?ged={$GEDCOM}")."\"><b>".$pgv_lang["individuals"]."</b></a><br />";
 
 //-- gedcom list
 if ($ALLOW_CHANGE_GEDCOM && count($GEDCOMS)>1) {
 	foreach($GEDCOMS as $ged=>$gedarray) {
 		$name = $pgv_lang["individual_list"]." - ".PrintReady($gedarray["title"]);
-		print "<a href=\"indilist.php?ged=".$ged."\"><b>".$name."</b></a><br />";
+		print "<a href=\"".encode_url("indilist.php?ged={$ged}")."\"><b>".$name."</b></a><br />";
 	}
 }
 

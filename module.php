@@ -3,7 +3,7 @@
  * Module system for adding features to phpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -189,7 +189,7 @@ switch($modinfo['Module']['type'])
 			{
 				// fully qualified url is recomended.
 				if(!isFileExternal($results['url'])){$results['url'] = "{$SERVER_URL}{$results['url']}";}
-				header("Location: {$results['url']}");
+				header("Location: ".encode_url($results['url']));
 				print ' '; // for some older browsers.
 				exit;
 			}

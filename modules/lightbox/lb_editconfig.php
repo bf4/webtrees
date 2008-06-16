@@ -108,13 +108,13 @@ $i = 0;
 	//-->
 </script>
 
-<form method="post" name="configform" action="module.php?mod=lightbox&pgvaction=lb_editconfig&pid=<?php echo $pid ?>">
+<form method="post" name="configform" action="<?php print encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}"); ?>">
 <input type="hidden" name="action" value="update" />
 
     <table class="facts_table">
 
     <tr >
-		<td class="descriptionbox" width=400><?php print_help_link("mediatab_help", "qm", "mediatab"); ?><b><?php print $pgv_lang["mediatab"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_appearance"];?></td> 
+		<td class="descriptionbox" width="400"><?php print_help_link("mediatab_help", "qm", "mediatab"); ?><b><?php print $pgv_lang["mediatab"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_appearance"];?></td> 
 		<td class="optionbox">
 			<select name="NEW_mediatab" tabindex="<?php $i++; print $i?>" onfocus="getHelp('mediatab_help');"> 
                 <option value="1" <?php if ($mediatab==1) print "selected=\"selected\""; ?>><?php print $pgv_lang["show"];?></option>		

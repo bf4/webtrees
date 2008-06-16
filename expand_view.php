@@ -3,7 +3,7 @@
  * Used by AJAX to load the expanded view inside person boxes
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
 			if ($ct>0) {
 				$spouse=$match[1];
 				if ($spouse!=="") {
-					 print " <a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+					 print " <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
 					 if (displayDetailsById($spouse)||showLivingNameById($spouse)) print PrintReady(get_person_name($spouse));
 					 else print $pgv_lang["private"];
 					 print "</a>";

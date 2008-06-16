@@ -179,24 +179,22 @@ if ($action != "save" && $action != "toggleActive") {
 
   print "<table class=\"facts_table\">";
 
-  if ($action != "new_lang") {
-    if ($protectActive) $v_lang_use = true;
-    if (!isset($v_lang_use)) $v_lang_use = $pgv_lang_use[$ln];
-    print "<tr>";
-    print "<td class=\"facts_label\" >";
-	print_help_link("active_help", "qm");
-    print $pgv_lang["active"];
-    print "</td>";
-    write_td_with_textdir_check();
-
-    if ($v_lang_use) {
-      print "<input";
-      if ($protectActive) print " disabled=\"disabled\"";
-      print " type=\"checkbox\" name=\"v_lang_use\" value=\"true\" checked=\"checked\" />";
-    } else print "<input type=\"checkbox\" name=\"v_lang_use\" value=\"true\" />";
-    print "</td>";
-    print "</tr>";
-  } else print "<input type=\"hidden\" name=\"v_lang_use\" value=\"".$pgv_lang_use[$ln]."\" />";
+  if ($protectActive) $v_lang_use = true;
+  if (!isset($v_lang_use)) $v_lang_use = $pgv_lang_use[$ln];
+  print "<tr>";
+  print "<td class=\"facts_label\" >";
+  print_help_link("active_help", "qm");
+  print $pgv_lang["active"];
+  print "</td>";
+  write_td_with_textdir_check();
+  
+  if ($v_lang_use) {
+    print "<input";
+    if ($protectActive) print " disabled=\"disabled\"";
+    print " type=\"checkbox\" name=\"v_lang_use\" value=\"true\" checked=\"checked\" />";
+  } else print "<input type=\"checkbox\" name=\"v_lang_use\" value=\"true\" />";
+  print "</td>";
+  print "</tr>";
 
   print "<tr>";
   if (!isset($v_original_lang_name)) $v_original_lang_name = $pgv_lang_self[$ln];

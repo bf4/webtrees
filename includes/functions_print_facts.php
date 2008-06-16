@@ -149,7 +149,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 				else {
 					$menu['onclick'] = "";
-					$menu["link"] = "module.php?mod=research_assistant&amp;action=editfact&amp;taskid=".$taskid;
+					$menu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
 				}
 				$menu["class"] = "";
 				$menu["hoverclass"] = "";
@@ -166,7 +166,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 				else {
 					$submenu['onclick'] = "";
-					$submenu["link"] = "module.php?mod=research_assistant&amp;action=editfact&amp;taskid=".$taskid;
+					$submenu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
 				}
 				$submenu["class"] = "submenuitem";
 				$submenu["hoverclass"] = "submenuitem_hover";
@@ -223,7 +223,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 				else {
 					$menu['onclick'] = "";
-					$menu["link"] = "module.php?mod=research_assistant&amp;action=editfact&amp;taskid=".$taskid;
+					$menu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
 				}
 				$menu["class"] = "";
 				$menu["hoverclass"] = "";
@@ -240,7 +240,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 				else {
 					$submenu['onclick'] = "";
-					$submenu["link"] = "module.php?mod=research_assistant&amp;action=editfact&amp;taskid=".$taskid;
+					$submenu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
 				}
 				$submenu["link"] = "#";
 				$submenu["class"] = "submenuitem";
@@ -313,7 +313,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if ($ct>0) {
 				$spouse=$match[1];
 				if ($spouse!=="") {
- 					print " <a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+ 					print " <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
 					if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 						print PrintReady(get_person_name($spouse));
 						$addname = get_add_person_name($spouse);
@@ -324,7 +324,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 				if (($view!="preview") && ($spouse!=="")) print " - ";
 				if ($view!="preview" &&(empty($SEARCH_SPIDER))) {
-					print "<a href=\"family.php?famid=$pid\">";
+					print "<a href=\"".encode_url("family.php?famid={$pid}")."\">";
 					if ($TEXT_DIRECTION == "ltr") print " " . getLRM();
 					else print " " . getRLM();
 					print "[".$pgv_lang["view_family"];
@@ -339,7 +339,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				$ct = preg_match("/@(.*)@/", $event, $match);
 				if ($ct>0) {
 					$gedrec = find_gedcom_record($match[1]);
-					if (strstr($gedrec, "INDI")!==false) print "<a href=\"individual.php?pid=$match[1]&amp;ged=$GEDCOM\">".get_person_name($match[1])."</a><br />";
+					if (strstr($gedrec, "INDI")!==false) print "<a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">".get_person_name($match[1])."</a><br />";
 					else if ($fact=="REPO") print_repository_record($match[1]);
 					else print_submitter_info($match[1]);
 
@@ -408,7 +408,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			}
 			if (preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
 				print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
-				print "<a href=\"family.php?famid=".$match[1]."&amp;ged=$GEDCOM\">";
+				print "<a href=\"".encode_url("family.php?famid={$match[1]}&ged={$GEDCOM}")."\">";
 				print get_family_descriptor($match[1]);
 				print "</a>";
 				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", str2upper($factrec), $match)) {
@@ -513,7 +513,7 @@ function print_repository_record($sid) {
 		if ($ct > 0) {
 			$ct2 = preg_match("/0 @(.*)@/", $source, $rmatch);
 			if ($ct2>0) $rid = trim($rmatch[1]);
-			print "<span class=\"field\"><a href=\"repo.php?rid=$rid\"><b>".PrintReady($match[1])."</b>&nbsp;&nbsp;&nbsp;";
+			print "<span class=\"field\"><a href=\"".encode_url("repo.php?rid={$rid}")."\"><b>".PrintReady($match[1])."</b>&nbsp;&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$sid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -571,7 +571,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 			if ($lt>0) $data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 			$data .= $pgv_lang["source"].":</span> <span class=\"field\">";
 			$source = find_source_record($sid);
-			$data .= "<a href=\"source.php?sid=".$sid."\">";
+			$data .= "<a href=\"".encode_url("source.php?sid={$sid}")."\">";
 			$text = PrintReady(get_source_descriptor($sid));
 			//-- Print additional source title
 			$add_descriptor = get_add_source_descriptor($sid);
@@ -656,7 +656,7 @@ function print_media_links($factrec, $level,$pid='') {
 							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady($name) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
 					}elseif ($USE_MEDIA_VIEWER) {
-						print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
 					}else{
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
@@ -676,7 +676,7 @@ function print_media_links($factrec, $level,$pid='') {
 				}
 				print "</td><td>";
 				if(empty($SEARCH_SPIDER)) {
-					print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+					print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
 				}
 				if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() .  PrintReady($mediaTitle)."</i>";
 				else print "<i>".PrintReady($mediaTitle)."</i>";
@@ -706,7 +706,7 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($ct>0) {
 					$spouse=$match[1];
 					if ($spouse!=="") {
-						print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+						print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
 						if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 							print PrintReady(get_person_name($spouse));
 						}
@@ -719,7 +719,7 @@ function print_media_links($factrec, $level,$pid='') {
 						if ($ct>0) {
 							$famid = trim($match[1]);
 							if(empty($SEARCH_SPIDER)) {
-								print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"];
+								print "<a href=\"".encode_url("family.php?famid={$famid}")."\">[".$pgv_lang["view_family"];
 								if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM();
 								print "]</a>\n";
 							}
@@ -945,7 +945,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			//print "\n\t\t\t<td class=\"facts_value$styleadd\">";
 			if (showFactDetails("SOUR", $pid)) {
 				$source = find_source_record($sid);
-				echo "<a href=\"source.php?sid=".$sid."\">";
+				echo "<a href=\"".encode_url("source.php?sid={$sid}")."\">";
 				$text = PrintReady(get_source_descriptor($sid));
 				//-- Print additional source title
 				$add_descriptor = get_add_source_descriptor($sid);
@@ -1459,14 +1459,13 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	$linenum = 0;
 	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
 	if ($rowm['mm_gid']==$pid && PGV_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
-		$encodedFileName = rawurlencode($rowm["m_file"]);
 		$menu = array();
 		$menu["label"] = $pgv_lang["edit"];
 		$menu["labelpos"] = "right";
 		$menu["icon"] = "";
 		$menu["link"] = "#";
 		// $menu["onclick"] = "return edit_record('$pid', $linenum);";
-		$menu["onclick"] = "return window.open('addmedia.php?action=editmedia&amp;pid=".$rowm["m_media"]."&amp;filename=".$encodedFileName."&amp;linktoid=".$rowm["mm_gid"]."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		$menu["onclick"] = "return window.open('".encode_url("addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$menu["class"] = "";
 		$menu["hoverclass"] = "";
 		$menu["flyout"] = "down";
@@ -1476,7 +1475,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$submenu["label"] = $pgv_lang["edit"];
 		$submenu["labelpos"] = "right";
 		$submenu["icon"] = "";
-		$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&amp;pid=".$rowm["m_media"]."&amp;filename=".$encodedFileName."&amp;linktoid=".$rowm["mm_gid"]."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		$submenu["onclick"] = "return window.open('".encode_url("addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$submenu["link"] = "#";
 		$submenu["class"] = "submenuitem";
 		$submenu["hoverclass"] = "submenuitem_hover";
@@ -1486,7 +1485,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$submenu["labelpos"] = "right";
 		$submenu["icon"] = "";
 		$submenu["onclick"] = "return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');";
-		//$submenu["onclick"] = "return window.open('addmedia.php?action=delete&amp;pid=".$rowm["m_media"]."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		//$submenu["onclick"] = "return window.open('".encode_url("addmedia.php?action=delete&pid={$rowm['m_media']}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$submenu["link"] = "#";
 		$submenu["class"] = "submenuitem";
 		$submenu["hoverclass"] = "submenuitem_hover";
@@ -1525,7 +1524,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady($name) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
 				}elseif ($USE_MEDIA_VIEWER) {
-					print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
+					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 				}else{
 					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 				}
@@ -1536,7 +1535,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			if ($mainFileExists) print "</a>";
 		}
 		if(empty($SEARCH_SPIDER)) {
-			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
+			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 		}
 		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
 		else print "<i>".PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
@@ -1578,7 +1577,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) $spouse = $parents['WIFE'];
 			}
 			if (!empty($spouse)) {
-				print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+				print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
 				if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 					print PrintReady(get_person_name($spouse));
 				}
@@ -1589,7 +1588,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				if (($view != "preview") && (!empty($spouse))) print " - ";
 				if ($view != "preview") {
 						$famid = $rowm['mm_gid'];
-						print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"];
+						print "<a href=\"".encode_url("family.php?famid={$famid}")."\">[".$pgv_lang["view_family"];
 						if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM();
 						print "]</a>\n";
 				}

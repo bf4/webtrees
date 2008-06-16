@@ -2,7 +2,7 @@
 /**
  * Individual List
  *
- * Copyright (c) 2008, PGV Development Team, all rights reserved.
+ * Copyright (c) 2008  PGV Development Team.  All rights reserved.
  *
  * The individual list shows all individuals from a chosen gedcom file. The list is
  * setup in two sections. The alphabet bar and the details.
@@ -169,7 +169,7 @@ if (count($indialpha) > 0) {
 				$startalpha = $letter;
 				$alpha = $letter;
 			}
-			print "<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($letter)."&amp;surname_sublist=$surname_sublist\">";
+			print "<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$letter}&surname_sublist={$surname_sublist}")."\">";
 			if (($alpha==$letter)&&($show_all=="no")) print "<span class=\"warning\">".$letter."</span>";
 			else print $letter;
 			print "</a> | \n";
@@ -177,13 +177,13 @@ if (count($indialpha) > 0) {
 		if ($letter === "@") $pass = TRUE;
 	}
 	if ($pass == TRUE) {
-		if (isset($alpha) && $alpha == "@") print "<a href=\"aliveinyear.php?year=$year&amp;alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-		else print "<a href=\"aliveinyear.php?year=$year&amp;alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
+		if (isset($alpha) && $alpha == "@") print "<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha=@&surname_sublist=yes&surname=@N.N.")."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+		else print "<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha=@&surname_sublist=yes&surname=@N.N.")."\">".PrintReady($pgv_lang["NN"])."</a>";
 		print " | \n";
 		$pass = FALSE;
 	}
-	if ($show_all=="yes") print "<a href=\"aliveinyear.php?year=$year&amp;show_all=yes&amp;surname_sublist=$surname_sublist\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-	else print "<a href=\"aliveinyear.php?year=$year&amp;show_all=yes&amp;surname_sublist=$surname_sublist\">".$pgv_lang["all"]."</a>\n";
+	if ($show_all=="yes") print "<a href=\"".encode_url("aliveinyear.php?year={$year}&show_all=yes&surname_sublist={$surname_sublist}")."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
+	else print "<a href=\"".encode_url("aliveinyear.php?year={$year}&show_all=yes&surname_sublist={$surname_sublist}")."\">".$pgv_lang["all"]."</a>\n";
 	if (isset($startalpha)) $alpha = $startalpha;
 }
 print_help_link("alpha_help", "qm");
@@ -238,13 +238,13 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
-			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($namecount["alpha"])."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . getRLM() . " - [".($namecount["match"])."]" . getRLM();
+			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha=".$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname=".$namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . getRLM() . " - [".($namecount["match"])."]" . getRLM();
 		}
 		else if (substr($namecount["name"], 0, 5) == "@N.N.") {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">&nbsp;".$pgv_lang["NN"] . getLRM() . " - [".($namecount["match"])."]" . getLRM() . "&nbsp;";
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha=".$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname=@N.N.")."\">&nbsp;".$pgv_lang["NN"] . getLRM() . " - [".($namecount["match"])."]" . getLRM() . "&nbsp;";
 		}
 		else {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($namecount["alpha"])."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".PrintReady($namecount["name"]) . getLRM() . " - [" . ($namecount["match"])."]" . getLRM();
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha="$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname="$namecount["name"])."\">".PrintReady($namecount["name"]) . getLRM() . " - [" . ($namecount["match"])."]" . getLRM();
 		}
 
 		print "</a></div>\n";
@@ -320,13 +320,13 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
-			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . getRLM() . " - [".($namecount["match"])."]" . getRLM();
+			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname_sublist={$surname_sublist}&surname=".$namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . getRLM() . " - [".($namecount["match"])."]" . getRLM();
 		}
 		else if (substr($namecount["name"], 0, 5) == "@N.N.") {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">&nbsp;".$pgv_lang["NN"] . getLRM() . " - [".($namecount["match"])."]" . getLRM() . "&nbsp;";
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha=".$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname=@N.N.")."\">&nbsp;".$pgv_lang["NN"] . getLRM() . " - [".($namecount["match"])."]" . getLRM() . "&nbsp;";
 		}
 		else {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".PrintReady($namecount["name"]) . getLRM() . " - [".($namecount["match"])."]" . getLRM();
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname_sublist={$surname_sublist}&surname=".$namecount["name"])."\">".PrintReady($namecount["name"]) . getLRM() . " - [".($namecount["match"])."]" . getLRM();
 		}
 		print "</a>&nbsp;</div>\n";
 		$count_indi += $namecount["match"];
@@ -426,7 +426,7 @@ else {
 						$fstartalpha = $letter;
 						$falpha = $letter;
 					}
-					print "<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=".urlencode($letter)."&amp;surname_sublist=$surname_sublist\">";
+					print "<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname={$surname}&falpha={$letter}&surname_sublist={$surname_sublist}")."\">";
 					if (($falpha==$letter)&&($show_all=="no")) print "<span class=\"warning\">".$letter."</span>";
 					else print $letter;
 					print "</a> | \n";
@@ -434,13 +434,13 @@ else {
 				if ($letter === "@") $pass = TRUE;
 			}
 			if ($pass == TRUE) {
-				if (isset($falpha) && $falpha == "@") print "<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-				else print "<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes\">".PrintReady($pgv_lang["NN"])."</a>";
+				if (isset($falpha) && $falpha == "@") print "<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname={$surname}&;falpha=@&surname_sublist=yes")."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+				else print "<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname={$surname}&falpha=@&surname_sublist=yes")."\">".PrintReady($pgv_lang["NN"])."</a>";
 				print " | \n";
 				$pass = FALSE;
 			}
-			if ($show_all_firstnames=="yes") print "<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=no\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-			else print "<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=yes\">".$pgv_lang["all"]."</a>\n";
+			if ($show_all_firstnames=="yes") print "<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname={$surname}&show_all_firstnames=no")."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
+			else print "<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname={$surname}&show_all_firstnames=yes")."\">".$pgv_lang["all"]."</a>\n";
 			print_help_link("firstname_alpha_help", "qm");
 			print "</div>\n";
 			if (isset($fstartalpha)) $falpha = $fstartalpha;
@@ -500,8 +500,8 @@ print "</tr></table>";
 
 print_help_link("name_list_help", "qm");
 if ($alpha != "@") {
-	if ($surname_sublist=="yes") print "<br /><a href=\"aliveinyear.php?year=$year&amp;alpha=$alpha&amp;surname_sublist=no&amp;show_all=$show_all\">".$pgv_lang["skip_surnames"]."</a>";
-	else print "<br /><a href=\"aliveinyear.php?year=$year&amp;alpha=$alpha&amp;surname_sublist=yes&amp;show_all=$show_all\">".$pgv_lang["show_surnames"]."</a>";
+	if ($surname_sublist=="yes") print "<br /><a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname_sublist=no&show_all={$show_all}")."\">".$pgv_lang["skip_surnames"]."</a>";
+	else print "<br /><a href=\"".encode_url("aliveinyear.php?year={$year}&alpha={$alpha}&surname_sublist=yes&show_all={$show_all}")."\">".$pgv_lang["show_surnames"]."</a>";
 }
 if ($alpha != "@") print_help_link("skip_sublist_help", "qm");
 print "<br /><br />\n";

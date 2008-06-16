@@ -31,7 +31,7 @@ loadLangFile("pgv_country");
 asort($countries);
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
+	header("Location: ".encode_url("login.php?type=simple&ged={$GEDCOM}&url=edit_interface.php?".decode_url($QUERY_STRING)));
 	exit;
 }
 
@@ -480,11 +480,11 @@ case 'addfamlink':
 		print "<tr><td class=\"facts_label\">".$factarray["PEDI"]."</td>";
 		print "<td class=\"facts_value\"><select name=\"pedigree\">";
 		print "<option value=\"\"></option>";
-		print "<option value=\"birth\">".$pgv_lang["birth"]."</option>";
-		print "<option value=\"adopted\">".$pgv_lang["adopted"]."</option>";
-		print "<option value=\"foster\">".$pgv_lang["foster"]."</option>";
-		print "<option value=\"sealing\">".$pgv_lang["sealing"]."</option>";
-		print "</select></tr>";
+		print "<option value=\"birth\" >".$pgv_lang["birth"]."</option>";
+		print "<option value=\"adopted\" >".$pgv_lang["adopted"]."</option>";
+		print "<option value=\"foster\" >".$pgv_lang["foster"]."</option>";
+		print "<option value=\"sealing\" >".$pgv_lang["sealing"]."</option>";
+		print "</select></td></tr>";
 	}
 	print "</table>\n";
 	print "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /><br />\n";

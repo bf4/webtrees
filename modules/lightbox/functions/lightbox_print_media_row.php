@@ -5,7 +5,7 @@
  * Display media Items using Lightbox 4.1
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@
 	// If reorder media has been clicked
 	if (isset($reorder) && $reorder==1) {
 		print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";	
-		print "<b><font size=2 style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b>";
+		print "<b><font size=\"2\" style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b>";
 	// Else If reorder media has NOT been clicked
 	// Highlight Album Thumbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
 	}else if ($rtype=='new'){
@@ -142,9 +142,9 @@
 				$imgheight = $imgsize[1]+150;
 				
 				// Start Thumbnail Enclosure table 
-				print "<table class=\"pic\" border=0><tr>" . "\n";
-				print "<td align=\"center\" rowspan=2 >";
-				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\"></img>";
+				print "<table class=\"pic\" border=\"0\"><tr>" . "\n";
+				print "<td align=\"center\" rowspan=\"2\">";
+				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\" alt=\"\" />";
 				print "</td>". "\n";
 				print "<td align=\"center\" >". "\n";
 				
@@ -211,7 +211,7 @@
 						}
 						// End Notes Tooltip --------------------------------------------------
 						print ">\n";
-						print "<font size=1>" . $note[$n] . "</font>";
+						print "<font size=\"1\">" . $note[$n] . "</font>";
 						print "</a>";
 						print "<br />";
 						$items[$n+1]= $item+1;
@@ -220,7 +220,7 @@
 				//  Else if no note available
 				}else{
 					if ($reorder!=1) {
-						print "<font size=1>&nbsp;</font>";
+						print "<font size=\"1\">&nbsp;</font>";
 						print "<br />";
 					}
 				}
@@ -233,7 +233,7 @@
 				}else{
 					// If regular filetype (Lightbox)
 					if ($file_type == "regular") {
-						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . Printready(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "\""; 
+						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "\""; 
 					// Else If url filetype (Lightbox)
 					}elseif ($file_type == "url") {
 						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "::" . htmlspecialchars($notes) . "\"";
@@ -288,7 +288,7 @@
 			// Now finally print the thumbnail ----------------------------------
 			// If Plain URL Print the Common Thumbnail  
 			if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
-				print "<img src=\"" . $MEDIA_DIRECTORY . "thumbs/urls/URL.jpg \" height=80 border=\"0\" " ;
+				print "<img src=\"{$MEDIA_DIRECTORY}thumbs/urls/URL.jpg\" height=\"80\" border=\"0\" " ;
 			// Else Print the Regular Thumbnail if associated with an image, 
 			}else{
 				$browser = $_SERVER['HTTP_USER_AGENT']; 
@@ -299,11 +299,11 @@
 				}			
 				$size = findImageSize($thumbnail);
 				if ($size[1]<$height) $height = $size[1];
-				print "<img src=\"" . $thumbnail . "\" height=\"".$height."\" border=\"0\" " ;
+				print "<img src=\"{$thumbnail}\" height=\"{$height}\" border=\"0\" " ;
 			}
 			
 			// print no browser tooltips associated with image ----------------------------------------------
-			print " alt=\"" . " " . "\" title=\"" . "" . "\"  />";
+			print " alt=\"\" title=\"\" />";
 			
 			// Close anchor --------------------------------------------------------------
 			if ($mainFileExists) print "</a>" . "\n";
@@ -321,12 +321,12 @@
 				print "<tr><td align=\"center\" nowrap=\"nowrap\">". "\n";
 				
 				// Edit Media Item Details
-				print "<a href=\"javascript:;\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $rowm['m_media'] . "&amp;linktoid=" . $rowm["mm_gid"] . "', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\" ";
+				print "<a href=\"javascript:;\" onclick=\" return window.open('".encode_url("addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}")."', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\" ";
 				print " title=\"" . $pgv_lang["lb_edit_media"] . "\">";
 				if ($LB_AL_THUMB_LINKS == "text") {
-					print "<font size=2>" . $pgv_lang["edit"] . "</font>";
+					print "<font size=\"2\">" . $pgv_lang["edit"] . "</font>";
 				}else{	
-					print "<img src=\"modules/lightbox/images/image_edit.gif\" title=\"" . $pgv_lang["lb_edit_media"] . "\" /></img>";
+					print "<img src=\"modules/lightbox/images/image_edit.gif\" title=\"{$pgv_lang['lb_edit_media']}\" alt=\"{$pgv_lang['lb_edit_media']}\" />";
 				}
 				print "</a>" . "\n" ;
 				
@@ -336,9 +336,9 @@
 				print "<a href=\"javascript:;\" onclick=\" return delete_record('$pid', 'OBJE', '" . $rowm['m_media'] . "');\" ";
 				print " title=\"" . $pgv_lang["lb_delete_media"] . "\">";
 				if ($LB_AL_THUMB_LINKS == "text") {
-					print "<font size=2>" . $pgv_lang["remove"] . "</font>";
+					print "<font size=\"2\">" . $pgv_lang["remove"] . "</font>";
 				}else{	
-					print "<img src=\"modules/lightbox/images/image_delete.gif\" title=\"" . $pgv_lang["lb_delete_media"] . "\" /></img>";
+					print "<img src=\"modules/lightbox/images/image_delete.gif\" title=\"{$pgv_lang['lb_delete_media']}\" alt=\"{$pgv_lang['lb_delete_media']}\" />";
 				}
 				print "</a>" . "\n" ;
 

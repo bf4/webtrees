@@ -627,7 +627,7 @@ switch ($action) {
 		break;
 
 	default :
-		header("Location: $url"); 
+		header("Location: ".encode_url($url)); 
 		break;
 }
 

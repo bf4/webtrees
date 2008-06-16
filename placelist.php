@@ -264,7 +264,7 @@ if ($display=="hierarchy") {
 			}
 		}
 	}
-	print "<td class=\"center\" valign=\"top\">";
+//	print "<td class=\"center\" valign=\"top\">";
 
 	//-- create a string to hold the variable links and place names
 	$linklevels="";

@@ -18,7 +18,7 @@
  * Depending on the current status of the list.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -145,7 +145,7 @@ if (count($famalpha) > 0) {
 				$startalpha = $letter;
 				$alpha = $letter;
 			}
-			print "<a href=\"famlist.php?alpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."&amp;ged=".$GEDCOM."\">";
+			print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
 			if (($alpha==$letter)&&($show_all=="no")) print "<span class=\"warning\">".$letter."</span>";
 			else print $letter;
 			print "</a> | \n";
@@ -153,13 +153,13 @@ if (count($famalpha) > 0) {
 		if ($letter === "@") $pass = true;
 	}
 	if ($pass == true) {
-		if (isset($alpha) && $alpha == "@") print "<a href=\"famlist.php?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.&amp;ged=".$GEDCOM."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-		else print "<a href=\"famlist.php?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.&amp;ged=".$GEDCOM."\">".PrintReady($pgv_lang["NN"])."</a>";
+		if (isset($alpha) && $alpha == "@") print "<a href=\"".encode_url("famlist.php?alpha=@&surname_sublist=yes&surname=@N.N.&ged={$GEDCOM}")."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+		else print "<a href=\"".encode_url("famlist.php?alpha=@&surname_sublist=yes&surname=@N.N.&ged={$GEDCOM}")."\">".PrintReady($pgv_lang["NN"])."</a>";
 		print " | \n";
 		$pass = false;
 	}
-	if ($show_all=="yes") print "<a href=\"famlist.php?show_all=yes&amp;surname_sublist=".$surname_sublist."&amp;ged=".$GEDCOM."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-	else print "<a href=\"famlist.php?show_all=yes&amp;surname_sublist=".$surname_sublist."&amp;ged=".$GEDCOM."\">".$pgv_lang["all"]."</a>\n";
+	if ($show_all=="yes") print "<a href=\"".encode_url("famlist.php?show_all=yes&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
+	else print "<a href=\"".encode_url("famlist.php?show_all=yes&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">".$pgv_lang["all"]."</a>\n";
 	if (isset($startalpha)) $alpha = $startalpha;
 }
 
@@ -169,10 +169,10 @@ if(empty($SEARCH_SPIDER)) {
 	if (isset($alpha) && $alpha != "@") {
 		if ($surname_sublist=="yes") {
 			print_help_link("skip_sublist_help", "qm", "skip_surnames");
-			print "<a href=\"famlist.php?alpha=".$alpha."&amp;surname_sublist=no&amp;show_all=".$show_all."&amp;ged=".$GEDCOM."\">".$pgv_lang["skip_surnames"]."</a>";
+			print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname_sublist=no&show_all={$show_all}&ged={$GEDCOM}")."\">".$pgv_lang["skip_surnames"]."</a>";
 		} else {
 			print_help_link("skip_sublist_help", "qm", "show_surnames");
-			print "<a href=\"famlist.php?alpha=".$alpha."&amp;surname_sublist=yes&amp;show_all=".$show_all."&amp;ged=".$GEDCOM."\">".$pgv_lang["show_surnames"]."</a>";
+			print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname_sublist=yes&show_all={$show_all}&ged={$GEDCOM}")."\">".$pgv_lang["show_surnames"]."</a>";
 		}
 	}
 }
@@ -287,7 +287,7 @@ else {
 						$fstartalpha = $letter;
 						$falpha = $letter;
 					}
-					print "<a href=\"famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."&amp;ged=".$GEDCOM."\">";
+					print "<a href=\"".encode_url("famlist.php?alpha{$alpha}&surname={$surname}&falpha={$letter}&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
 					if (($falpha==$letter)&&($show_all_firstnames=="no")) print "<span class=\"warning\">".$letter."</span>";
 					else print $letter;
 					print "</a> | \n";
@@ -295,13 +295,13 @@ else {
 				if ($letter === "@") $pass = true;
 			}
 			if ($pass == true) {
-				if (isset($falpha) && $falpha == "@") print "<a href=\"famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes&amp;ged=".$GEDCOM."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-				else print "<a href=\"famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes&amp;ged=".$GEDCOM."\">".PrintReady($pgv_lang["NN"])."</a>";
+				if (isset($falpha) && $falpha == "@") print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&falpha=@&surname_sublist=yes&ged={$GEDCOM}")."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+				else print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&falpha=@&surname_sublist=yes&ged={$GEDCOM}")."\">".PrintReady($pgv_lang["NN"])."</a>";
 				print " | \n";
 				$pass = false;
 			}
-			if ($show_all_firstnames=="yes") print "<a href=\"famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=no&amp;ged=".$GEDCOM."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-			else print "<a href=\"famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=yes&amp;ged=".$GEDCOM."\">".$pgv_lang["all"]."</a>\n";
+			if ($show_all_firstnames=="yes") print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&show_all_firstnames=no&ged={$GEDCOM}")."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
+			else print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&show_all_firstnames=yes&ged={$GEDCOM}")."\">".$pgv_lang["all"]."</a>\n";
 			if (isset($fstartalpha)) $falpha = $fstartalpha;
 			if ($show_all_firstnames=="no") {
 				$ffamlist = array();

@@ -32,7 +32,7 @@ require_once("includes/serviceclient_class.php");
 
 //-- require that the user have entered their password
 if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
+	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=edit_interface.php?".decode_url($QUERY_STRING)));
 	exit;
 }
 
@@ -368,8 +368,6 @@ function checkform(frm){
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox width20"><?php print_help_link('link_remote_site_help', 'qm');?>
-		<span id="tdUrl"><?php echo $pgv_lang["label_site"];?></span></td>
 		<td class="optionbox" id="tdUrlText">
 			<div id="existingContent" style="display:none;">
 			<?php echo $pgv_lang["lbl_server_list"]; ?><br />

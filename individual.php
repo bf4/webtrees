@@ -28,8 +28,7 @@
 
 require_once("includes/controllers/individual_ctrl.php");
 
-loadLangFile("lb_lang");	// Load Lightbox language file
-loadLangFile("gm_lang");	// Load GoogleMap language file
+loadLangFile("lb_lang, gm_lang");	// Load Lightbox & GoogleMap language files
 
 global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
@@ -454,7 +453,7 @@ if ($MULTI_MEDIA) {
 	print "<span class=\"subheaders\">".$pgv_lang["media"]."</span>";
 	// For Reorder media ------------------------------------
 	if (PGV_USER_CAN_EDIT) {
-		print "<center";
+		print "<center>";
 		include_once('includes/media_tab_head.php');
 		print "</center>";
 	}
@@ -625,7 +624,7 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 			// Force icon options to "text" when we're dealing with the Minimal theme
 			print $pgv_lang["page_help"];
 		}else{
-			print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
+			print "<img src=\"{$PGV_IMAGE_DIR}/small/help.gif\" class=\"icon\" title=\"{$pgv_lang['page_help']}\" alt=\"{$pgv_lang['page_help']}\" />" ;
 		}
         print "</a>" ;
 

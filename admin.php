@@ -135,12 +135,12 @@ function showchanges() {
 			}
 			if ($verify_msg) {
 				print "<br />";
-				print "<a href=\"useradmin.php?action=listusers&amp;filter=admunver\" class=\"error\">".$pgv_lang["admin_verification_waiting"]."</a>";
+				print "<a href=\"".encode_url("useradmin.php?action=listusers&filter=admunver")."\" class=\"error\">".$pgv_lang["admin_verification_waiting"]."</a>";
 				print "<br /><br />";
 			}
 			if ($warn_msg) {
 				print "<br />";
-				print "<a href=\"useradmin.php?action=listusers&amp;filter=warnings\" class=\"error\" >".$pgv_lang["admin_user_warnings"]."</a>";
+				print "<a href=\"".encode_url("useradmin.php?action=listusers&filter=warnings")."\" class=\"error\" >".$pgv_lang["admin_user_warnings"]."</a>";
 				print "<br /><br />";
 			}
 			}

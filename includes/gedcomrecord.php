@@ -3,7 +3,7 @@
  * Base class for all gedcom records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -222,7 +222,7 @@ class GedcomRecord {
 	 * @string a url that can be used to link to this person
 	 */
 	function getLinkUrl($link='gedcomrecord.php?pid=') {
-		$url = $link.urlencode($this->getXref()).'&amp;ged='.urlencode(get_gedcom_from_id($this->ged_id));
+		$url = $link.$this->getXref().'&ged='.get_gedcom_from_id($this->ged_id);
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
 			if ($aliaid && $servid) {
@@ -230,7 +230,7 @@ class GedcomRecord {
 				$serviceClient = ServiceClient::getInstance($servid);
 				if ($serviceClient) {
 					$surl = $serviceClient->getURL();
-					$url = $link.urlencode($aliaid);
+					$url = $link.$aliaid;
 					if ($serviceClient->getType()=='remote') {
 						if (!empty($surl)) {
 							$url = dirname($surl).'/'.$url;
@@ -240,12 +240,12 @@ class GedcomRecord {
 					}
 					$gedcom = $serviceClient->getGedfile();
 					if ($gedcom) {
-						$url.='&amp;ged='.urlencode($gedcom);
+						$url .= "&ged={$gedcom}";
 					}
 				}
 			}
 		}
-		return $url;
+		return encode_url($url);
 	}
 	
 	/**
@@ -339,10 +339,12 @@ class GedcomRecord {
 		global $GEDCOM;
 		$exp = explode(",", $gedcom_place);
 		$level = count($exp);
-		$url = "placelist.php?action=show&amp;level=".$level;
-		for ($i=0; $i<$level; $i++) $url .= "&amp;parent[".$i."]=".urlencode(trim($exp[$level-$i-1]));
-		$url .= "&amp;ged=".$GEDCOM;
-		return $url;
+		$url = "placelist.php?action=show&level=".$level;
+		for ($i=0; $i<$level; $i++) {
+			$url .= "&parent[".$i."]=".trim($exp[$level-$i-1]);
+		}
+		$url .= "&ged=".$GEDCOM;
+		return encode_url($url);
 	}
 
 	/**

@@ -5,7 +5,7 @@
  * This block prints the changes that still need to be reviewed and accepted by an administrator
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					} else {
 						$name = PGV_USER_NAME;
 					}
-					$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+					$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 					$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 				}
 			}
@@ -139,9 +139,9 @@ function review_changes_block($block = true, $config="", $side, $index) {
 						$content .= " - ".$pgv_lang[$change["type"]]."<br />";
 					}
 					if ($block) $content .= "<br />";
-					if ($type=="INDI") $content .= " <a href=\"individual.php?pid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a><br />";
-					if ($type=="FAM") $content .= " <a href=\"family.php?famid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a><br />";
-					if (($type=="SOUR") && ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL)) $content .= " <a href=\"source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes\">".$pgv_lang["view_change_diff"]."</a><br />";
+					if ($type=="INDI") $content .= " <a href=\"".encode_url("individual.php?pid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes")."\">".$pgv_lang["view_change_diff"]."</a><br />";
+					if ($type=="FAM") $content .= " <a href=\"".encode_url("family.php?famid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes")."\">".$pgv_lang["view_change_diff"]."</a><br />";
+					if (($type=="SOUR") && ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL)) $content .= " <a href=\"".encode_url("source.php?sid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes")."\">".$pgv_lang["view_change_diff"]."</a><br />";
 				}
 			}
 

@@ -4,7 +4,7 @@
  * Controller for the timeline chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008, PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -498,7 +498,7 @@ class LifespanControllerRoot extends BaseController {
 					}
 					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getName()));
 					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
+					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
 					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 					print "</td></tr></table>";
@@ -513,7 +513,7 @@ class LifespanControllerRoot extends BaseController {
 						}
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getName()));
 						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().$indiName."</a></td>" .
+						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
 						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						print "</td></tr></table>";
@@ -523,7 +523,7 @@ class LifespanControllerRoot extends BaseController {
 						" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">" ;
 							
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getName()));
-						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
+						print"<a class=\"showit\" href=\"".encode_url("individual.php?pid=".$value->getXref())."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
 							print $val."<br />\n";
 						}
@@ -553,7 +553,7 @@ class LifespanControllerRoot extends BaseController {
 			if (!$this->people[$i]->canDisplayDetails()) {
 				if ($this->people[$i]->canDisplayName()) {
 					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $this->people[$i]->getName()));
-					print "&nbsp;<a href=\"individual.php?pid=".$this->people[$i]->getXref()."\">".$indiName."</a>";
+					print "&nbsp;<a href=\"".encode_url("individual.php?pid=".$this->people[$i]->getXref())."\">".$indiName."</a>";
 					print_privacy_error($CONTACT_EMAIL);
 					print "<br />";
 					$printed = true;

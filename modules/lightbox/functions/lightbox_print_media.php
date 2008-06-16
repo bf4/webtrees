@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,7 +176,7 @@
 		if ($t==5){ // do nothing
 		}else{
 			echo "\n\n";
-			echo '<table border=0 class="facts_table" ><tr>' . "\n";;
+			echo '<table border="0" class="facts_table" ><tr>', "\n";;
 			echo '<td width="80" align="center" class="descriptionbox">' ;
 			if ($t==5){
 				echo "<b><br />" . $tt . "</b><br /><br />";
@@ -187,7 +187,7 @@
 				echo "<b><br />" . $tt . "</b><br /><br />";	
 			}
 			echo '</td>';
-			echo '<td width=\"2\"></td>';
+			echo '<td width="2"></td>';
 			echo '<td class="facts_value">';
 			echo "<table width=\"100%\"><tr><td>" . "\n";
 				echo "<div id=\"thumbcontainer\" >" . "\n";
@@ -277,9 +277,9 @@
 		}else{
 		echo "</ul>";
 		echo "</div>";
-		echo "<div class=clearlist>";
+		echo "<div class=\"clearlist\">";
 		echo "</div>";
-		echo "</center>";
+//		echo "</center>";
 		echo '</td>';
 		echo '</tr></table>' . "\n";
 
@@ -290,7 +290,7 @@
 		}else{
 		}
 
-		echo "</center>" . "\n";
+//		echo "</center>" . "\n";
 		echo '</td>'. "\n";
 		echo '</td>';
 		echo '</tr>';
@@ -339,7 +339,7 @@
 					}
 
 					if ( $typ2a ) {
-						echo '<table border=0 class="facts_table"><tr>';
+						echo '<table border="0" class="facts_table"><tr>';
 						echo '<td width="80" align="center" class="descriptionbox">' ;
 						echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $ct . ")";
 						echo '</td>' . "\n";
@@ -356,7 +356,7 @@
 
 						echo "</ul>";
 						echo "</div>";
-						echo "<div id=clearlist>";
+						echo "<div id=\"clearlist\">";
 						echo "</div";
 						echo "</center>";
 						echo '</td></tr></table>';

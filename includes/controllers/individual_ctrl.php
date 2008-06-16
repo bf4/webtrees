@@ -159,7 +159,7 @@ class IndividualControllerRoot extends BaseController {
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
 		if ($this->indi->isRemote()) {
-			header('Location: '.preg_replace("/&amp;/", "&", $this->indi->getLinkUrl()));
+			header('Location: '.encode_url(decode_url($this->indi->getLinkUrl())));
 			exit;
 		}
 		*/
@@ -393,10 +393,9 @@ class IndividualControllerRoot extends BaseController {
 					//Lbox -----------------------------------------------------------------------------------------
 					
 					if (!$USE_MEDIA_VIEWER && $imgsize) {
-						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
+						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
 					}else{
-						$mediaviewlink = "mediaviewer.php?mid=".$mid;
-						$result .= "<a href=\"".$mediaviewlink."\">";
+						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
 					//LBox ---- $result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
 					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(strip_tags($name))."\" alt=\"".PrintReady(strip_tags($name))."\" />";
@@ -586,21 +585,21 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSeperator();
 			if ($this->show_changes=="no") {
 				$label = $pgv_lang["show_changes"];
-				$link = "individual.php?pid=".$this->pid."&amp;show_changes=yes";
+				$link = "individual.php?pid=".$this->pid."&show_changes=yes";
 			}
 			else {
 				$label = $pgv_lang["hide_changes"];
-				$link = "individual.php?pid=".$this->pid."&amp;show_changes=no";
+				$link = "individual.php?pid=".$this->pid."&show_changes=no";
 			}
-			$submenu = new Menu($label, $link);
+			$submenu = new Menu($label, encode_url($link));
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
 			if (PGV_USER_CAN_ACCEPT) {
-				$submenu = new Menu($pgv_lang["undo_all"], "individual.php?pid=".$this->pid."&amp;action=undo");
+				$submenu = new Menu($pgv_lang["undo_all"], encode_url("individual.php?pid={$this->pid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang["accept_all"], "individual.php?pid=".$this->pid."&amp;action=accept");
+				$submenu = new Menu($pgv_lang["accept_all"], encode_url("individual.php?pid={$this->pid}&action=accept"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -644,7 +643,7 @@ class IndividualControllerRoot extends BaseController {
 		else {
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
-			$menu->addLink("clippings.php?action=add&amp;id=".$this->pid."&amp;type=indi");
+			$menu->addLink(encode_url("clippings.php?action=add&id={$this->pid}&type=indi"));
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($this->canShowGedcomRecord()) {
@@ -657,14 +656,14 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
-			$submenu = new Menu($pgv_lang["add_to_cart"], "clippings.php?action=add&amp;id=".$this->pid."&amp;type=indi");
+			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("clippings.php?action=add&id={$this->pid}&type=indi"));
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && PGV_USER_NAME) {
-			$submenu = new Menu($pgv_lang["add_to_my_favorites"], "individual.php?action=addfav&amp;pid=".$this->pid."&amp;gid=".$this->pid);
+			$submenu = new Menu($pgv_lang["add_to_my_favorites"], encode_url("individual.php?action=addfav&pid={$this->pid}&gid={$this->pid}"));
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -1210,8 +1209,8 @@ class IndividualControllerRoot extends BaseController {
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 					<td class="facts_value">
-						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php echo $this->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
-						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php echo $this->pid; ?>&linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
+						<a href="javascript:;" onclick="window.open('<?php print encode_url("addmedia.php?action=showmediaform&linktoid={$this->pid}"); ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
+						<a href="javascript:;" onclick="window.open('<?php print encode_url("inverselink.php?linktoid={$this->pid}&linkto=person"); ?>', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
 					</td>
 				</tr>
 			<?php
@@ -1841,7 +1840,7 @@ class IndividualControllerRoot extends BaseController {
 					print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
 	        if (PGV_USER_IS_ADMIN) {
 	            print "<tr><td align=\"center\" colspan=\"2\">\n";
-	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+	            print "<a href=\"".encode_url("module.php?mod=googlemap&pgvaction=editconfig")."\">".$pgv_lang["gm_manage"]."</a>";
 	            print "</td></tr>\n";
 	        }
 	        print "\n\t</table>\n<br />";
@@ -1889,18 +1888,18 @@ class IndividualControllerRoot extends BaseController {
 		global $typ2b, $edit ;	
 		global $CONTACT_EMAIL, $pid, $tabno;
 
-		print "<table class=\"facts_table\">\n";		
 		$media_found = false;
 		if (!$this->indi->canDisplayDetails()) {
+			print "<table class=\"facts_table\">\n";		
 			print "<tr><td class=\"facts_value\">";
 			print_privacy_error($CONTACT_EMAIL);
 			print "</td></tr>";
+			print "</table>";
 		}else{
 			if (file_exists("modules/lightbox/album.php")) { 
 				include_once('modules/lightbox/album.php');	
 			}		
 		}
-		print "</table>";
 	}
 	
 	/**
