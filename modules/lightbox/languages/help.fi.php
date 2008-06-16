@@ -29,7 +29,7 @@
  */
 
 
-echo "<font size=2 face=\"Verdana\"> ";
+echo "<font size=\"2\" face=\"Verdana\"> ";
 echo "<h3>Valolaatikkoalbumin OHJE: </h3>";
 echo "<ol> ";
 

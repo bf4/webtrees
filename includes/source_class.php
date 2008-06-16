@@ -274,16 +274,6 @@ class Source extends GedcomRecord {
 	}
 
 	/**
-	 * get the source additional name
-	 * @return string
-	 */
-	function getAddName() {
-		$addn = get_gedcom_value("TITL:_HEB", 1, $this->gedrec, '', false);
-		if (empty($addn)) $addn = get_gedcom_value("TITL:ROMN", 1, $this->gedrec, '', false);
-		return $addn;
-	}
-
-	/**
 	 * get the repository of this source record
 	 * @return string
 	 */

@@ -27,7 +27,7 @@
  * @author Brian Holland
  */
 
-echo "<font size=2 face=\"Verdana\">";
+echo "<font size=\"2\" face=\"Verdana\">";
 echo "<span dir=\"rtl\"> ";
 echo "<h3>עזרה לאלבום-Lightbox: </h3>";
 echo "<ol> ";

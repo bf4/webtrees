@@ -241,24 +241,24 @@ if ($ct>0){
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
 			if ($currentPage > 1) {
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=0&amp;max=$max\">".$IconLDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
 			}
 			if ($start>0) {
 				$newstart = $start-$max;
 				if ($start<0) $start = 0;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$newstart&amp;max=$max\">".$IconLarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
 			}
 		}
 	} else {
 		if ($ct>$max) {
 			if ($currentPage < $lastPage) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$lastStart&amp;max=$max\">".$IconRDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
 			}
 			if ($start+$max < $ct) {
 				$newstart = $start+$count;
 				if ($start<0) $start = 0;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$newstart&amp;max=$max\">".$IconRarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
 			}
 		}
 	}
@@ -270,11 +270,11 @@ if ($ct>0){
 			if ($start+$max < $ct) {
 				$newstart = $start+$count;
 				if ($start<0) $start = 0;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$newstart&amp;max=$max\">".$IconRarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
 			}
 			if ($currentPage < $lastPage) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$lastStart&amp;max=$max\">".$IconRDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
 			}
 		}
 	} else {
@@ -282,11 +282,11 @@ if ($ct>0){
 			if ($start>0) {
 				$newstart = $start-$max;
 				if ($start<0) $start = 0;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$newstart&amp;max=$max\">".$IconLarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
 			}
 			if ($currentPage > 1) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=0&amp;max=$max\">".$IconLDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
 			}
 		}
 	}
@@ -319,11 +319,17 @@ if ($ct>0){
 
 		
 //LBox --------  change for Lightbox Album --------------------------------------------
+		//Get media item Notes
+		$haystack = $media["GEDCOM"];
+		$needle   = "1 NOTE";
+		$before   = substr($haystack, 0, strpos($haystack, $needle));
+		$after    = substr(strstr($haystack, $needle), strlen($needle)); 
+		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
+		$final    = $before.$needle.$worked;
+		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true))));
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
 //			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
-			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . $media["XREF"] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
-			
-// title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"\"
+			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes) . "\">" . "\n";
 
         }elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
@@ -450,24 +456,24 @@ if ($ct>0){
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
 			if ($currentPage > 1) {
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=0&amp;max=$max\">".$IconLDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
 			}
 			if ($start>0) {
 				$newstart = $start-$max;
 				if ($start<0) $start = 0;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$newstart&amp;max=$max\">".$IconLarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
 			}
 		}
 	} else {
 		if ($ct>$max) {
 			if ($currentPage < $lastPage) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$lastStart&amp;max=$max\">".$IconRDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
 			}
 			if ($start+$max < $ct) {
 				$newstart = $start+$count;
 				if ($start<0) $start = 0;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$newstart&amp;max=$max\">".$IconRarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
 			}
 		}
 	}
@@ -479,11 +485,11 @@ if ($ct>0){
 			if ($start+$max < $ct) {
 				$newstart = $start+$count;
 				if ($start<0) $start = 0;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$newstart&amp;max=$max\">".$IconRarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
 			}
 			if ($currentPage < $lastPage) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$lastStart&amp;max=$max\">".$IconRDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
 			}
 		}
 	} else {
@@ -491,11 +497,11 @@ if ($ct>0){
 			if ($start>0) {
 				$newstart = $start-$max;
 				if ($start<0) $start = 0;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=$newstart&amp;max=$max\">".$IconLarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
 			}
 			if ($currentPage > 1) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"medialist.php?folder=$folder&amp;filter=$filter&amp;search=no&amp;start=0&amp;max=$max\">".$IconLDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
 			}
 		}
 	}

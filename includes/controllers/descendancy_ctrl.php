@@ -3,7 +3,7 @@
  * Controller for the Descendancy Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -152,7 +152,7 @@ class DescendancyControllerRoot extends BaseController {
 	//-- if the person is from another gedcom then forward to the correct site
 	/*
 	if ($this->indi->isRemote()) {
-		header('Location: '.preg_replace("/&amp;/", "&", $this->indi->getLinkUrl()));
+		header('Location: '.encode_url(decode_url($this->indi->getLinkUrl())));
 		exit;
 	}
 	*/
@@ -235,7 +235,7 @@ function print_child_descendancy(&$person, $depth) {
 			$parid=$parents["HUSB"];
 			if ($parid=="") $parid=$parents["WIFE"];
 			if ($parid!="") {
-				print_url_arrow($parid.$personcount.$person->getXref(), "?pid=$parid&amp;generations=$this->generations&amp;chart_style=$this->chart_style&amp;show_full=$this->show_full&amp;box_width=$this->box_width", $pgv_lang["start_at_parents"], 2);
+				print_url_arrow($parid.$personcount.$person->getXref(), encode_url("?pid={$parid}&generations={$this->generations}&chart_style={$this->chart_style}&show_full={$this->show_full}&box_width={$this->box_width}"), $pgv_lang["start_at_parents"], 2);
 				$personcount++;
 			}
 		}
@@ -297,7 +297,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"".($Dindent+4)."\" border=\"0\" alt=\"\" />";
 		print "<span class=\"details1\" style=\"white-space: nowrap; \" >";
 		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a> ";
-		echo "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" class=\"details1\">";
+		echo '<a href="', encode_url("family.php?famid={$famid}&ged={$GEDCOM}"), '" class="details1">';
 		if (showFact("MARR", $famid)) print_simple_fact($famrec, "MARR", $id);
 		else print $pgv_lang["private"];
 		echo "</a>";
@@ -320,7 +320,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 				$parid=$parents["HUSB"];
 				if ($parid=="") $parid=$parents["WIFE"];
 				if ($parid!="") {
-					print_url_arrow($parid.$personcount.$person->getXref(), "?pid=$parid&amp;generations=$this->generations&amp;show_full=$this->show_full&amp;box_width=$this->box_width", $pgv_lang["start_at_parents"], 2);
+					print_url_arrow($parid.$personcount.$person->getXref(), encode_url("?pid={$parid}&generations={$this->generations}&show_full={$this->show_full}&box_width={$this->box_width}"), $pgv_lang["start_at_parents"], 2);
 					$personcount++;
 				}
 			}

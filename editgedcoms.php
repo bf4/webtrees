@@ -3,7 +3,7 @@
  * UI for online updating of the config file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -168,7 +168,7 @@ $GedCount = 0;
 			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$ged_id.")" . getRLM();
 			else print getLRM() . "(".$ged_id.")" . getLRM();
 			if ($DEFAULT_GEDCOM==$ged_name) print "</span>";
-			print "&nbsp;&nbsp;<a href=\"editconfig_gedcom.php?source=replace_form&amp;path=".urlencode(get_gedcom_setting($ged_id, 'path'))."\">".$pgv_lang['upload_replacement']."</a>\n";
+			print "&nbsp;&nbsp;<a href=\"".encode_url("editconfig_gedcom.php?source=replace_form&path=".get_gedcom_setting($ged_id, 'path'))."\">".$pgv_lang['upload_replacement']."</a>\n";
 			print "</td>";
 			print "</tr>";
 
@@ -202,7 +202,7 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 3  (Import action)
-			print "<a href=\"uploadgedcom.php?GEDFILENAME=$ged_name&amp;verify=verify_gedcom&amp;action=add_form&amp;import_existing=1\">".$pgv_lang["ged_import"]."</a>";
+			print "<a href=\"".encode_url("uploadgedcom.php?GEDFILENAME={$ged_name}&verify=verify_gedcom&action=add_form&import_existing=1")."\">".$pgv_lang["ged_import"]."</a>";
 			if (!check_for_import($ged_name)) {
 				print "<br /><span class=\"error\">".$pgv_lang["gedcom_not_imported"]."</span>";
 			}
@@ -210,17 +210,17 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 4  (Delete action)
-			print "<a href=\"editgedcoms.php?action=delete&amp;ged=".urlencode($ged_name)."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".preg_replace("/'/", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
+			print "<a href=\"".encode_url("editgedcoms.php?action=delete&ged={$ged_name}")."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".preg_replace("/'/", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 5  (Download action)
-			print "<a href=\"downloadgedcom.php?ged=$ged_name\">".$pgv_lang["ged_download"]."</a>";
+			print "<a href=\"".encode_url("downloadgedcom.php?ged={$ged_name}")."\">".$pgv_lang["ged_download"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 6  (Check action)
-			print "<a href=\"gedcheck.php?ged=$ged_name\">".$pgv_lang["ged_check"]."</a>";
+			print "<a href=\"".encode_url("gedcheck.php?ged={$ged_name}")."\">".$pgv_lang["ged_check"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
@@ -238,7 +238,7 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 3  (Edit action)
-			print "<a href=\"editconfig_gedcom.php?ged=".urlencode($ged_name)."\">".$pgv_lang["edit"]."</a>";
+			print "<a href=\"".encode_url("editconfig_gedcom.php?ged={$ged_name}")."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
 			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
@@ -257,7 +257,7 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 3  (Edit action)
-			print "<a href=\"edit_privacy.php?ged=".urlencode($ged_name)."\">".$pgv_lang["edit"]."</a>";
+			print "<a href=\"".encode_url("edit_privacy.php?ged={$ged_name}")."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
 			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)

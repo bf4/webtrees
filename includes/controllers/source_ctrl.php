@@ -3,7 +3,7 @@
  * Controller for the source page view
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	PGV Development Team
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -227,7 +227,7 @@ class SourceControllerRoot extends BaseController {
 			// edit_sour / show/hide changes
 			if ($this->show_changes == 'no')
 			{
-				$submenu = new Menu($pgv_lang['show_changes'], 'source.php?sid='.$this->sid.'&amp;show_changes=yes');
+				$submenu = new Menu($pgv_lang['show_changes'], encode_url("source.php?sid={$this->sid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -235,7 +235,7 @@ class SourceControllerRoot extends BaseController {
 			}
 			else
 			{
-				$submenu = new Menu($pgv_lang['hide_changes'], 'source.php?sid='.$this->sid.'&amp;show_changes=no');
+				$submenu = new Menu($pgv_lang['hide_changes'], encode_url("source.php?sid={$this->sid}&show_changes=no"));
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -245,12 +245,12 @@ class SourceControllerRoot extends BaseController {
 			if (PGV_USER_CAN_ACCEPT)
 			{
 				// edit_source / accept_all
-				$submenu = new Menu($pgv_lang["undo_all"], "source.php?sid=".$this->sid."&amp;action=undo");
+				$submenu = new Menu($pgv_lang["undo_all"], encode_url("source.php?sid={$this->sid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang['accept_all'], 'source.php?sid='.$this->sid.'&amp;action=accept');
+				$submenu = new Menu($pgv_lang['accept_all'], encode_url("source.php?sid={$this->sid}&action=accept"));
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -295,7 +295,7 @@ class SourceControllerRoot extends BaseController {
 		{
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
-			$menu->addLink('clippings.php?action=add&amp;id='.$this->sid.'&amp;type=sour');
+			$menu->addLink(encode_url("clippings.php?action=add&id={$this->sid}&type=sour'));
 		}
 		if ($SHOW_GEDCOM_RECORD)
 		{
@@ -316,7 +316,7 @@ class SourceControllerRoot extends BaseController {
 		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)
 		{
 				// other / add_to_cart
-				$submenu = new Menu($pgv_lang['add_to_cart'], 'clippings.php?action=add&amp;id='.$this->sid.'&amp;type=sour');
+				$submenu = new Menu($pgv_lang['add_to_cart'], encode_url("clippings.php?action=add&id={$this->sid}&type=sour"));
 				if (!empty($PGV_IMAGES["clippings"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -325,7 +325,7 @@ class SourceControllerRoot extends BaseController {
 		if ($this->source->canDisplayDetails() && !empty($this->uname))
 		{
 				// other / add_to_my_favorites
-				$submenu = new Menu($pgv_lang['add_to_my_favorites'], 'source.php?action=addfav&amp;sid='.$this->sid.'&amp;gid='.$this->sid);
+				$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url("source.php?action=addfav&sid={$this->sid}&gid={$this->sid}"));
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);

@@ -4,7 +4,7 @@
  * Various functions used by the media DB interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -432,7 +432,7 @@ function check_media_structure() {
 			if (!mkdir($MEDIA_DIRECTORY))
 				return false;
 			if (!file_exists($MEDIA_DIRECTORY . "index.php")) {
-				$inddata = html_entity_decode("<?php\nheader(\"Location: ../medialist.php\");\nexit;\n?>");
+				$inddata = "<?php\nheader(\"Location: ../medialist.php\");\nexit;\n?>";
 				$fp = @ fopen($MEDIA_DIRECTORY . "index.php", "w+");
 				if (!$fp)
 					print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs</div>";
@@ -1212,7 +1212,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 					}
 				} else {
 					fwrite($fp, "<?php\r\n");
-					fwrite($fp, "header(\"Location: " . $backPointer . "medialist.php\");\r\n");
+					fwrite($fp, "header(\"Location: {$backPointer}medialist.php\");\r\n");
 					fwrite($fp, "exit;\r\n");
 					fwrite($fp, "?>\r\n");
 					fclose($fp);
@@ -1235,7 +1235,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 					}
 				} else {
 					fwrite($fp, "<?php\r\n");
-					fwrite($fp, "header(\"Location: " . $backPointer . "../medialist.php\");\r\n");
+					fwrite($fp, "header(\"Location: {$backPointer}../medialist.php\");\r\n");
 					fwrite($fp, "exit;\r\n");
 					fwrite($fp, "?>\r\n");
 					fclose($fp);
@@ -1355,8 +1355,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "<input type=\"hidden\" name=\"action\" value=\"$action\" />\n";
 	print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	if (!empty ($linktoid))
-		print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
+	if (!empty ($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
 	print "<input type=\"hidden\" name=\"level\" value=\"$level\" />\n";
 	print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
@@ -1408,33 +1407,33 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print_help_link("upload_media_file_help", "qm");
 		print $pgv_lang["media_file"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"mediafile\"";
 		print " onchange=\"updateFormat(this.value);\"";
-		print " size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
+		print " size=\"40\" /><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 		// Check for thumbnail generation support
 		if (PGV_USER_GEDCOM_ADMIN) {
-		$ThumbSupport = "";
-		if (function_exists("imagecreatefromjpeg") and function_exists("imagejpeg"))
-			$ThumbSupport .= ", JPG";
-		if (function_exists("imagecreatefromgif") and function_exists("imagegif"))
-			$ThumbSupport .= ", GIF";
-		if (function_exists("imagecreatefrompng") and function_exists("imagepng"))
-			$ThumbSupport .= ", PNG";
-		if (!$AUTO_GENERATE_THUMBS)
 			$ThumbSupport = "";
-
-		if ($ThumbSupport != "") {
-			$ThumbSupport = substr($ThumbSupport, 2); // Trim off first ", "
+			if (function_exists("imagecreatefromjpeg") and function_exists("imagejpeg"))
+				$ThumbSupport .= ", JPG";
+			if (function_exists("imagecreatefromgif") and function_exists("imagegif"))
+				$ThumbSupport .= ", GIF";
+			if (function_exists("imagecreatefrompng") and function_exists("imagepng"))
+				$ThumbSupport .= ", PNG";
+			if (!$AUTO_GENERATE_THUMBS)
+				$ThumbSupport = "";
+	
+			if ($ThumbSupport != "") {
+				$ThumbSupport = substr($ThumbSupport, 2); // Trim off first ", "
+				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+				print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
+				print $pgv_lang["auto_thumbnail"];
+				print "</td><td class=\"optionbox wrap\">";
+				print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked=\"checked\" />";
+				print "&nbsp;&nbsp;&nbsp;" . $pgv_lang["generate_thumbnail"] . $ThumbSupport;
+				print "</td></tr>";
+			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-			print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
-			print $pgv_lang["auto_thumbnail"];
-			print "</td><td class=\"optionbox wrap\">";
-			print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked />";
-			print "&nbsp;&nbsp;&nbsp;" . $pgv_lang["generate_thumbnail"] . $ThumbSupport;
-			print "</td></tr>";
+			print_help_link("upload_thumbnail_file_help", "qm");
+			print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 		}
-		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-		print_help_link("upload_thumbnail_file_help", "qm");
-		print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
-	}
 		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
 	}
 	// File name on server
@@ -1498,30 +1497,30 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print $pgv_lang["server_folder"] . "</td><td class=\"optionbox wrap\">";
 		//-- don't let regular users change the location of media items
 		if ($action!='update' || PGV_USER_GEDCOM_ADMIN) {
-		$folders = get_media_folders();
-		print "<span dir=\"ltr\"><select name=\"folder_list\" onchange=\"document.newmedia.folder.value=this.options[this.selectedIndex].value;\">\n";
-		foreach ($folders as $f) {
-			if (!strpos($f, ".svn")){    //Do not print subversion directories
-				print "<option value=\"$f\"";
-				if ($folder == $f)
-					print " selected=\"selected\"";
-				print ">$f</option>\n";
+			$folders = get_media_folders();
+			print "<span dir=\"ltr\"><select name=\"folder_list\" onchange=\"document.newmedia.folder.value=this.options[this.selectedIndex].value;\">\n";
+			foreach ($folders as $f) {
+				if (!strpos($f, ".svn")){    //Do not print subversion directories
+					print "<option value=\"$f\"";
+					if ($folder == $f)
+						print " selected=\"selected\"";
+					print ">$f</option>\n";
+				}
 			}
-		}
 			if (PGV_USER_GEDCOM_ADMIN) print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
-		print "</select></span>\n";
+			print "</select></span>\n";
 		}
 		else print $folder;
-		if (PGV_USER_GEDCOM_ADMIN) print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
+		print "<input name=\"oldFolder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
+		if (PGV_USER_GEDCOM_ADMIN) print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\" /></span>";
 		else print "<input name=\"folder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 		if ($gedfile == "FILE") {
-			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub></td></tr>";
+			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub>";
 		}
 		print "</td></tr>";
 	}
 	else 
 		print "<input name=\"folder\" type=\"hidden\" value=\"\" />";
-	print "<input name=\"oldFolder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 	// 2 FORM
 	if ($gedrec == "")
 		$gedform = "FORM";
@@ -1777,7 +1776,7 @@ function PrintMediaLinks($links, $size = "small") {
 				print "<br />";
 			$firstLink = false;
 			$firstIndi = false;
-			print "<br /><a href=\"individual.php?pid=" . $linkItem["id"] . "\">";
+			print "<br /><a href=\"".encode_url("individual.php?pid=".$linkItem["id"]) . "\">";
 			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
 				print $pgv_lang["view_person"] . " -- ";
 				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";
@@ -1798,7 +1797,7 @@ function PrintMediaLinks($links, $size = "small") {
 				print "<br />";
 			$firstLink = false;
 			$firstFam = false;
-			print "<br /><a href=\"family.php?famid=" . $linkItem["id"] . "\">";
+			print "<br /><a href=\"".encode_url("family.php?famid=".$linkItem["id"]) . "\">";
 			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
 				print $pgv_lang["view_family"] . " -- ";
 				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";
@@ -1819,7 +1818,7 @@ function PrintMediaLinks($links, $size = "small") {
 				print "<br />";
 			$firstLink = false;
 			$firstSour = false;
-			print "<br /><a href=\"source.php?sid=" . $linkItem["id"] . "\">";
+			print "<br /><a href=\"".encode_url("source.php?sid=".$linkItem["id"]) . "\">";
 			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
 				print $pgv_lang["view_source"] . " -- ";
 				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";

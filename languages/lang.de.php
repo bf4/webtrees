@@ -124,6 +124,7 @@ $pgv_lang["ancestors"]					= "Vorfahren in direkter Linie und deren Familien";
 $pgv_lang["descendants"]				= "Nachfahren";
 $pgv_lang["choose_relatives"]			= "Verwandte wählen";
 $pgv_lang["relatives_report"]			= "Verwandten Bericht";
+$pgv_lang["total_unknown"]				= "Insgesamt unbekannt";
 $pgv_lang["total_living"]				= "Insgesamt lebend";
 $pgv_lang["total_dead"]					= "Insgesamt verstorben";
 $pgv_lang["total_not_born"]				= "Insgesamt noch nicht geboren";
@@ -491,6 +492,8 @@ $pgv_lang["widower"]					= "Witwer";
 $pgv_lang["widow"]						= "Witwe";
 $pgv_lang["leaves"]						= "Blätter";
 $pgv_lang["roots"]						= "Wurzeln";
+$pgv_lang["show_parents"] 				= "Eltern zeigen";
+
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]						= "Alter";
 $pgv_lang["days"]						= "Tage";
@@ -1587,6 +1590,7 @@ $pgv_lang["stat_users"]					= "Anzahl Benutzer";
 $pgv_lang["no_family_facts"]			= "Keine Ereignisse für diese Familie.";
 $pgv_lang["stat_males"]					= "Männlich, insgesamt";
 $pgv_lang["stat_females"]				= "Weiblich, insgesamt";
+$pgv_lang["stat_unknown"]				= "Unbekannt, insgesamt";
 $pgv_lang["sunday_1st"]					= "So";
 $pgv_lang["monday_1st"]					= "Mo";
 $pgv_lang["tuesday_1st"]				= "Di";

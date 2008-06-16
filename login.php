@@ -41,9 +41,9 @@ $ged     =safe_POST('ged', get_all_gedcoms(), $GEDCOM);
 $help_message=safe_GET('help_messge');
 
 // Some variables can come from the URL as well as the form
-if (!$url)    $url =safe_GET('url', PGV_REGEX_URL);
-if (!$type)   $type=safe_GET('type', array('full', 'simple'), 'full');
-if (!$action) $type=safe_GET('action');
+if (!$url)    $url   =safe_GET('url', PGV_REGEX_URL);
+if (!$type)   $type  =safe_GET('type', array('full', 'simple'), 'full');
+if (!$action) $action=safe_GET('action');
 
 if (empty($url)) {
 	// If we came here by means of a URL like http://mysite.com/foo/login.php
@@ -96,10 +96,11 @@ if ($action=='login') {
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
 		$url .= "&";	// Simplify the preg_replace following
-		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode($url));	// Remove any existing &ged= parameter
+		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url)));	// Remove any existing &ged= parameter
 		if (substr($url, -1)=="&") $url = substr($url, 0, -1);
 		$url .= "&ged=".$ged;
 		$url = htmlentities(str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url));
+		$url = str_replace(array(' ', '+'), array('%20', '%2b'), $url);		// GEDCOM names might contain these characters
 		
 		header("Location: ".$url);
 		exit;

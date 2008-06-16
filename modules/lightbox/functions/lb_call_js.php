@@ -1,4 +1,31 @@
 <?php
+/**
+ * Lightbox Album module for phpGedView
+ *
+ * Display media Items using Lightbox
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Module
+ * @version $Id$
+ * @author Brian Holland
+ */
 global $tabno ;
 
 loadLangFile("lb_lang");	// Load Lightbox language file
@@ -15,15 +42,26 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 			?>
 			<script language="javascript" type="text/javascript">
 			
-			var CB_ImgDetails		= "<?php print "\- ".$pgv_lang["lb_details"]." \-";	?>";		// Detail Text
-			var CB_Detail_Info		= "<?php print $pgv_lang["lb_detail_info"];			?>";		// Detail Info			
-			var CB_Pause_SS			= "<?php print $pgv_lang["lb_pause_ss"]; 			?>";		// Pause Slideshow
-			var CB_Start_SS			= "<?php print $pgv_lang["lb_start_ss"]; 			?>";		// Start Slideshow
-			var CB_Music			= "<?php print $pgv_lang["lb_music"];				?>";		// Music On/Off 
-			var CB_Zoom_Off			= "<?php print $pgv_lang["lb_zoom_off"];			?>";		// Disable Zoom
-			var CB_Zoom_On			= "<?php print $pgv_lang["lb_zoom_on"];				?>";		// Zoom is Enabled		
-			var CB_Close_Win		= "<?php print $pgv_lang["lb_close_win"];			?>";		// Close Lightbox Window
-		
+			var CB_ImgDetails		= "<?php print $pgv_lang["lb_details"];							?>";		// Detail Text
+			var CB_Detail_Info		= "<?php print $pgv_lang["lb_detail_info"];						?>";		// Detail Info
+			var CB_ImgNotes			= "<?php print $pgv_lang["lb_notes"];							?>";		// Notes Text
+			var CB_Note_Info		= "<?php print $pgv_lang["lb_notes_info"];						?>";		// Notes Info
+			var CB_Pause_SS			= "<?php print $pgv_lang["lb_pause_ss"]; 						?>";		// Pause Slideshow
+			var CB_Start_SS			= "<?php print $pgv_lang["lb_start_ss"]; 						?>";		// Start Slideshow
+			var CB_Music			= "<?php print $pgv_lang["lb_music"];							?>";		// Music On/Off 
+			var CB_Zoom_Off			= "<?php print $pgv_lang["lb_zoom_off"];						?>";		// Disable Zoom
+			var CB_Zoom_On			= "<?php print $pgv_lang["lb_zoom_on"];							?>";		// Zoom is Enabled	
+			var CB_Close_Win		= "<?php print $pgv_lang["lb_close_win"];						?>";		// Close Lightbox Window
+			var CB_Balloon			= "<?php print "false";											?>";		// Notes Tooltip Balloon or not
+			
+			<?php if ($TEXT_DIRECTION=="rtl") { ?> 
+				var CB_Alignm		= "<?php print "right";											?>";		// Notes RTL Tooltip Balloon Text align 
+				var CB_ImgNotes2	= "<?php print "&nbsp;&nbsp;&nbsp;&nbsp;".$pgv_lang["lb_notes"];?>";		// Notes RTL Tooltip for Full Image
+			<?php }else{ ?>
+				var CB_Alignm		= "<?php print "left";											?>";		// Notes LTR Tooltip Balloon Text align 
+				var CB_ImgNotes2	= "<?php print $pgv_lang["lb_notes"];							?>";		// Notes LTR Tooltip for Full Image
+			<?php }?>
+			
 			<?php if ($LB_MUSIC_FILE == "") { ?>
 				var myMusic = null;
 			<?php }else{ ?>
@@ -50,36 +88,14 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 		
 <?php  } ?>
 
-		<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script> 
+		<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>
+		<script src="modules/lightbox/js/tip_balloon.js" 			type="text/javascript"></script>
+		<script src="modules/lightbox/js/tip_centerwindow.js" 			type="text/javascript"></script> 
 <?php
 
 		require_once("js/prototype.js.htm");
 		require_once("js/scriptaculous.js.htm");
 
-/*	
-// -------------------------------------------------------------------------------
-			if ($TEXT_DIRECTION == "rtl") { ?>
-			
-				<link href ="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
-				<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-				<!--[if lte IE 7]>
-				<link href ="modules/lightbox/css/album_page_RTL.css" 		rel="stylesheet" type="text/css" media="screen" /> 
-				<![endif]-->
-			<?php 
-			}else{ ?>
-				<link href ="modules/lightbox/css/clearbox_music.css" 		rel="stylesheet" type="text/css" />
-				<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" />  
-			<?php 
-			} ?>
-
-			<script src="modules/lightbox/js/prototype.js" 				type="text/javascript"></script>  
-			<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
-			<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
-
-			<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script> 
-<?php
-
-*/
 
 // ------------------------------------------------------------------------------- 
 

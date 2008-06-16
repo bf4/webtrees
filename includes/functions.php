@@ -129,7 +129,13 @@ function check_db($ignore_previous=false) {
 	// Perform any database-specific initialisation
 	switch ($DBTYPE) {
 	case 'mysql':
-		//dbquery("SET CHARACTER SET 'utf8'"); // Our queries will be encoded using UTF-8.
+		//dbquery("SET NAMES UTF8");
+		break;
+	case 'pgsql':
+		//dbquery("SET NAMES 'UTF8'");
+		break;
+	case 'sqlite':
+		//dbquery('PRAGMA encoding = "UTF-8"');
 		break;
 	}
 
@@ -216,7 +222,11 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 
 function encode_url($url, $entities=true) {
 	$url = str_replace(array(' ', '+'), array('%20', '%2b'), $url);		// GEDCOM names can legitimately contain these chars
-	if ($entities) $url = htmlentities($url);
+//	if ($entities) $url = htmlentities($url);
+	if ($entities) {
+		$url = str_replace("&", "&amp;", ($url));
+		$url = str_replace("&amp;amp;", "&amp;", ($url));
+	}
 	return $url;
 }
 
@@ -3089,10 +3099,10 @@ function get_query_string() {
 		foreach ($_GET as $key => $value) {
 			if ($key != "view") {
 				if (!is_array($value))
-					$qstring .= $key."=".urlencode($value)."&amp;";
+					$qstring .= "{$key}={$value}&";
 				else
 					foreach ($value as $k=>$v)
-						$qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
+						$qstring .= "{$key}[{$k}]{$v}&";
 			}
 		}
 	} else {
@@ -3100,16 +3110,17 @@ function get_query_string() {
 			foreach ($_POST as $key => $value) {
 				if ($key != "view") {
 					if (!is_array($value))
-						$qstring .= $key."=".urlencode($value)."&amp;";
+						$qstring .= "{$key}={$value}&";
 					else
 						foreach ($value as $k=>$v)
 							if (!is_array($v))
-								$qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
+								$qstring .= "{$key}[{$k}]={$v}&";
 				}
 			}
 		}
 	}
-	return $qstring;
+	$qstring = rtrim($qstring, "&");	// Remove trailing "&"
+	return encode_url($qstring);
 }
 
 //This function works with a specified generation limit.  It will completely fill

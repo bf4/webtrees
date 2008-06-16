@@ -3,7 +3,7 @@
  * Classes for Gedcom Date/Calendar functionality.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007-2008 Greg Roach
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
+ * @author Greg Roach
  * @version $Id$
  *
  * NOTE: Since different calendars start their days at different times, (civil
@@ -510,28 +511,28 @@ class CalendarDate {
 		global $DATE_FORMAT;
 		if (empty($date_fmt))
 			$date_fmt=$DATE_FORMAT;
-		$URL='calendar.php?cal='.urlencode($this->CALENDAR_ESCAPE);
+		$URL='calendar.php?cal='.$this->CALENDAR_ESCAPE;
 		$action="year";
 		if (strpos($date_fmt, "Y")!==false
 		||  strpos($date_fmt, "y")!==false) {
-			$URL.='&amp;year='.$this->FormatGedcomYear();
+			$URL.='&year='.$this->FormatGedcomYear();
 		}
 		if (strpos($date_fmt, "F")!==false
 		||  strpos($date_fmt, "M")!==false
 		||  strpos($date_fmt, "m")!==false
 		||  strpos($date_fmt, "n")!==false) {
-			$URL.='&amp;month='.$this->FormatGedcomMonth();
+			$URL.='&month='.$this->FormatGedcomMonth();
 			if ($this->m>0)
 				$action="calendar";
 		}
 		if (strpos($date_fmt, "d")!==false
 		||  strpos($date_fmt, "D")!==false
 		||  strpos($date_fmt, "j")!==false) {
-			$URL.='&amp;day='.$this->FormatGedcomDay();
+			$URL.='&day='.$this->FormatGedcomDay();
 			if ($this->d>0)
 				$action="today";
 		}
-		return $URL.'&amp;action='.$action;
+		return encode_url($URL.'&action='.$action);
 	}
 } // class CalendarDate
 
@@ -1140,7 +1141,8 @@ class GedcomDate {
 		// Return at least one printable character, for better formatting in tables.
 		$tmp=trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}");
 		if (strip_tags($tmp)=='')
-			return '<a>&nbsp;</a>';
+//			return '<a>&nbsp;</a>';
+			return '&nbsp;';
 		else
 			return "<span class=\"date\">{$tmp}</span>";
 	}
@@ -1193,10 +1195,16 @@ class GedcomDate {
 	// Calculate the years/months/days between two events
 	// Return a gedcom style age string: "1y 2m 3d" (for fact details)
 	function GetAgeGedcom($d1, $d2=NULL) {
-		if (is_null($d2))
+		if (is_null($d2)) {
 			return $d1->date1->GetAge(true, client_jd());
-		else
-			return $d1->date1->GetAge(true, $d2->MinJD());
+		} else {
+			// If dates overlap, then can't calculate age.
+			if (GedcomDate::Compare($d1, $d2)) {
+				return $d1->date1->GetAge(true, $d2->MinJD());
+			} else {
+				return '';
+			}
+		}
 	}
 
 	// Static function to compare two dates.

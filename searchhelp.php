@@ -3,7 +3,7 @@
  * Search in help files 
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reerved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,7 +133,7 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 	if ($searchuser == "yes") $langFiles .= "pgv_help, ";
 	if ($searchconfig == "yes") $langFiles .= "pgv_confighelp, ";
 	if ($searchmodules == "yes") $langFiles .= "ra_lang, ra_help, gm_lang, gm_help, sm_lang, sm_help, ";
-	if (substr($langFiles, -2)==", ") $langFiles = substr($langFiles, 0, -2);
+	$langFiles = substr($langFiles, 0, -2);		// Trim last ", "
 	
 	$helpvarnames = array();
 	unset($pgv_lang);
@@ -153,7 +153,6 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 	
 	// Search in the previously stored vars for a hit and print it
 	foreach ($helpvarnames as $key => $value) {
-		$repeat = 0;
 		$helptxt = print_text($value,0,1);
 		// Remove hyperlinks
 		$helptxt = preg_replace("/<a[^<>]+>/", "", $helptxt);

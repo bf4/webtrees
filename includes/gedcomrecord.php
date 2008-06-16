@@ -3,7 +3,7 @@
  * Base class for all gedcom records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ class GedcomRecord {
 	// These should become private when we move to PHP5.  Do not use them from outside this class.
 	var $_getAllNames=null;
 	var $_getPrimaryName=null;
+	var $_getSecondaryName=null;
 
 	/**
 	 * constructor for this class
@@ -221,7 +222,7 @@ class GedcomRecord {
 	 * @string a url that can be used to link to this person
 	 */
 	function getLinkUrl($link='gedcomrecord.php?pid=') {
-		$url = $link.urlencode($this->getXref()).'&amp;ged='.urlencode(get_gedcom_from_id($this->ged_id));
+		$url = $link.$this->getXref().'&ged='.get_gedcom_from_id($this->ged_id);
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
 			if ($aliaid && $servid) {
@@ -229,7 +230,7 @@ class GedcomRecord {
 				$serviceClient = ServiceClient::getInstance($servid);
 				if ($serviceClient) {
 					$surl = $serviceClient->getURL();
-					$url = $link.urlencode($aliaid);
+					$url = $link.$aliaid;
 					if ($serviceClient->getType()=='remote') {
 						if (!empty($surl)) {
 							$url = dirname($surl).'/'.$url;
@@ -239,12 +240,12 @@ class GedcomRecord {
 					}
 					$gedcom = $serviceClient->getGedfile();
 					if ($gedcom) {
-						$url.='&amp;ged='.urlencode($gedcom);
+						$url .= "&ged={$gedcom}";
 					}
 				}
 			}
 		}
-		return $url;
+		return encode_url($url);
 	}
 	
 	/**
@@ -252,7 +253,7 @@ class GedcomRecord {
 	 * @return string
 	 */
 	function getLinkTitle() {
-		$title = get_gedcom_setting($this->ged_id);
+		$title = get_gedcom_setting($this->ged_id, 'title');
 		if ($this->isRemote()) {
 			$parts = preg_split("/:/", $this->rfn);
 			if (count($parts)==2) {
@@ -338,10 +339,12 @@ class GedcomRecord {
 		global $GEDCOM;
 		$exp = explode(",", $gedcom_place);
 		$level = count($exp);
-		$url = "placelist.php?action=show&amp;level=".$level;
-		for ($i=0; $i<$level; $i++) $url .= "&amp;parent[".$i."]=".urlencode(trim($exp[$level-$i-1]));
-		$url .= "&amp;ged=".$GEDCOM;
-		return $url;
+		$url = "placelist.php?action=show&level=".$level;
+		for ($i=0; $i<$level; $i++) {
+			$url .= "&parent[".$i."]=".trim($exp[$level-$i-1]);
+		}
+		$url .= "&ged=".$GEDCOM;
+		return encode_url($url);
 	}
 
 	/**
@@ -374,15 +377,6 @@ class GedcomRecord {
 		return get_gedcom_value("NAME", 1, $this->gedrec);
 	}
 	
-	/**
-	 * get the additional name
-	 * This method should overridden in child sub-classes
-	 * @return string
-	 */
-	function getAddName() {
-		return "";
-	}
-
 	// Convert a name record into sortable and listable versions.  This default
 	// should be OK for simple record types.  INDI records will need to redefine it.
 	function _addName($type, $value, $gedrec) {
@@ -404,23 +398,39 @@ class GedcomRecord {
 	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
 	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
 	function getAllNames($fact) {
+		global $pgv_lang;
+
 		if (is_null($this->_getAllNames)) {
-			$this->_getAllNames=array();
-			if (preg_match_all('/^1 ('.$fact.')\s+([^\r\n]+)(([\r\n]+[2-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
-				foreach ($matches as $match) {
-					$this->_addName($match[1], $match[2], $match[0]);
-				}
-				if ($match[3] && preg_match_all('/^2 (ROMN|FONE|_\w+) +([^\r\n]+)/m', $match[3], $submatches, PREG_SET_ORDER)) {
-					foreach ($submatches as $submatch) {
-						$this->_addName($submatch[1], $submatch[2], $submatch[0]);
+			if ($this->canDisplayName()) {
+				$this->_getAllNames=array();
+				if (preg_match_all('/^1 ('.$fact.') *([^\r\n]*)(([\r\n]+[2-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
+					foreach ($matches as $match) {
+						$this->_addName($match[1], $match[2] ? $match[2] : $this->getFallBackName(), $match[0]);
+						if ($match[3] && preg_match_all('/^2 (ROMN|FONE|_\w+) *([^\r\n]*)(([\r\n]+[3-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
+							foreach ($submatches as $submatch) {
+								$this->_addName($submatch[1], $submatch[2] ? $submatch[2] : $this->getFallBackName(), $submatch[0]);
+							}
+						}
 					}
 				}
-			}
-			if (empty($this->_getAllNames)) {
-				$this->_addName($this->getType(), $this->getXref(), null);
+				if (empty($this->_getAllNames)) {
+					$this->_addName($this->getType(), $this->getFallBackName(), null);
+				}
+			} else {
+				$this->_getAllNames[]=array('type'=>$fact, 'full'=>$pgv_lang['private'], 'list'=>$pgv_lang['private'], 'sort'=>'@');
 			}
 		}
 		return $this->_getAllNames;
+	}
+
+	// If this object has no name, what do we call it?
+	function getFallBackName() {
+		return $this->getXref();
+	}
+
+	// Can we display the name of this object?
+	function canDisplayName() {
+		return true;
 	}
 
 	// Which of the (possibly several) names of this record is the primary one.
@@ -428,7 +438,7 @@ class GedcomRecord {
 		if (is_null($this->_getPrimaryName)) {
 			// Generally, the first name is the primary one....
 			$this->_getPrimaryName=0;
-			// ....except for languages with non-latin character sets
+			// ....except when the language/name use different character sets
 			global $LANGUAGE;
 			switch ($LANGUAGE) {
 			case 'greek':
@@ -443,9 +453,38 @@ class GedcomRecord {
 						break;
 					}
 				}
+				break;
+			default:
+				foreach ($this->getAllNames() as $n=>$name) {
+					if (whatLanguage($name['full'])=='other') {
+						$this->_getPrimaryName=$n;
+						break;
+					}
+				}
+				break;
 			}
 		}
 		return $this->_getPrimaryName;
+	}
+
+	// Which of the (possibly several) names of this record is the secondary one.
+	function getSecondaryName() {
+		if (is_null($this->_getSecondaryName)) {
+			// Generally, the primary and secondary names are the same
+			$this->_getSecondaryName=$this->getPrimaryName();
+			// ....except when there are names with different character sets
+			$all_names=$this->getAllNames();
+			if (count($all_names)>1) {
+				$primary_language=whatLanguage($all_names[$this->getPrimaryName()]['full']);
+				foreach ($all_names as $n=>$name) {
+					if ($n!=$this->getPrimaryName() && whatLanguage($name['full'])!=$primary_language) {
+						$this->_getSecondaryName=$n;
+						break;
+					}
+				}
+			}
+		}
+		return $this->_getSecondaryName;
 	}
 
 	// Static helper function to sort an array of objects by name
@@ -465,6 +504,15 @@ class GedcomRecord {
 	function getListName() {
 		$tmp=$this->getAllNames();
 		return $tmp[$this->getPrimaryName()]['list'];
+	}
+	// Get the fullname in an alternative character set
+	function getAddName() {
+		if ($this->getPrimaryName() != $this->getSecondaryName()) {
+			$all_names=$this->getAllNames();
+			return $all_names[$this->getSecondaryName()]['full'];
+		} else {
+			return null;
+		}
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).

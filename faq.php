@@ -3,7 +3,7 @@
  * Customizable FAQ page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -287,16 +287,16 @@ if ($action == "show") {
 				if ($canconfig && $adminedit) {
 					print "<td class=\"optionbox center\">";
 					print_help_link("moveup_faq_item_help","qm","moveup_faq_item");
-					print "<a href=\"faq.php?action=commit&amp;type=moveup&amp;id=".$id."&amp;pidh=".$data["header"]["pid"]."&amp;pidb=".$data["body"]["pid"]."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"]."\" border=\"0\" alt=\"\" /></a>\n</td>";
+					print "<a href=\"".encode_url("faq.php?action=commit&type=moveup&id={$id}&pidh=".$data["header"]["pid"]."&pidb=".$data["body"]["pid"])."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"]."\" border=\"0\" alt=\"\" /></a>\n</td>";
 					print "\n<td class=\"optionbox center\">";
 					print_help_link("movedown_faq_item_help","qm","movedown_faq_item");
-					print "<a href=\"faq.php?action=commit&amp;type=movedown&amp;id=".$id."&amp;pidh=".$data["header"]["pid"]."&amp;pidb=".$data["body"]["pid"]."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" /></a>";
+					print "<a href=\"".encode_url("faq.php?action=commit&type=movedown&id={$id}&pidh=".$data["header"]["pid"]."&pidb=".$data["body"]["pid"])."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" /></a>";
 					print "\n</td>\n<td class=\"optionbox center\">";					
 					print_help_link("edit_faq_item_help","qm","edit_faq_item");
-					print "<a href=\"faq.php?action=edit&amp;id=".$id."\">".$pgv_lang["edit"]."</a>";
+					print "<a href=\"".encode_url("faq.php?action=edit&id={$id}")."\">".$pgv_lang["edit"]."</a>";
 					print "\n</td><td class=\"optionbox center\">";
 					print_help_link("delete_faq_item_help","qm","delete_faq_item");
-					print "<a href=\"faq.php?action=commit&amp;type=delete&amp;id=".$id."&amp;pidh=".$data["header"]["pid"]."&amp;pidb=".$data["body"]["pid"]."&amp;oldGEDCOM=".$data["header"]["gedcom"]."\" onclick=\"return confirm('".$pgv_lang["confirm_faq_delete"]."');\">".$pgv_lang["delete"]."</a>\n";
+					print "<a href=\"".encode_url("faq.php?action=commit&type=delete&id={$id}&pidh=".$data["header"]["pid"]."&amp;pidb=".$data["body"]["pid"]."&oldGEDCOM=".$data["header"]["gedcom"])."\" onclick=\"return confirm('".$pgv_lang["confirm_faq_delete"]."');\">".$pgv_lang["delete"]."</a>\n";
 					print "</td>";
 				}
 				// NOTE: Print the body text of the current item

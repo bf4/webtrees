@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// Added in VERSION 4.1.6
+$pgv_lang["view_lightbox"]		= "View Album of ...";
+$pgv_lang["lb_notes"]			= "Notes";
+$pgv_lang["lb_notes_info"]		= "";
+ 
+
 // Added in VERSION 4.1.4 
 
 $pgv_lang["lb_details"]			= "Details";
@@ -43,8 +49,6 @@ $pgv_lang["lb_music"]			= "Turn Music On/Off";
 $pgv_lang["lb_zoom_off"]		= "Disable Zoom";
 $pgv_lang["lb_zoom_on"]			= "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out";
 $pgv_lang["lb_close_win"]		= "Close Lightbox window";
-
-
 
 
 // VERSION 4.1.3 

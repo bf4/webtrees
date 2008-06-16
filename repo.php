@@ -4,7 +4,7 @@
  * Also shows how many sources reference this repository.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,10 +91,10 @@ if (PGV_USER_CAN_EDIT) {
 	if ($view!="preview") {
 		if (isset($pgv_changes[$rid."_".$GEDCOM])) {
 			if (!isset($show_changes)) {
-				print "<a href=\"repo.php?rid=$rid&amp;show_changes=yes\">".$pgv_lang["show_changes"]."</a>"."  ";
+				print "<a href=\"".encode_url("repo.php?rid={$rid}&show_changes=yes")."\">".$pgv_lang["show_changes"]."</a>"."  ";
 			}
 			else {
-				if (PGV_USER_CAN_ACCEPT) print "<a href=\"repo.php?rid=$rid&amp;action=accept\">".$pgv_lang["accept_all"]."</a> | ";
+				if (PGV_USER_CAN_ACCEPT) print "<a href=\"".encode_url("repo.php?rid={$rid}&action=accept")."\">".$pgv_lang["accept_all"]."</a> | ";
 				print "<a href=\"repo.php?rid=$rid\">".$pgv_lang["hide_changes"]."</a>"."  ";
 			}
 			print_help_link("show_changes_help", "qm");
@@ -247,7 +247,7 @@ if ($view!="preview" &&(empty($SEARCH_SPIDER))) {
 		print "</tr>\n\t\t<tr>";
 	}
 	if ($ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
-		print "<td align=\"center\" valign=\"top\"><span class=\"link\"><a href=\"clippings.php?action=add&amp;id=$rid&amp;type=repository\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]."\" border=\"0\" alt=\"\" /><br />".$pgv_lang["add_to_cart"]."</a>";
+		print "<td align=\"center\" valign=\"top\"><span class=\"link\"><a href=\"".encode_url("clippings.php?action=add&id={$rid}&type=repository")."\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]."\" border=\"0\" alt=\"\" /><br />".$pgv_lang["add_to_cart"]."</a>";
 		print_help_link("add_repository_clip_help", "qm");
 		print "</span></td>";
 	}

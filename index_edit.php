@@ -310,7 +310,7 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
 		print_help_link("click_here_help", "qm");
 		print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"document.block.submit();\" />";
-		print "&nbsp&nbsp;<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
+		print "&nbsp;&nbsp;<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
 		print "</td></tr>";
 	}
 	else {

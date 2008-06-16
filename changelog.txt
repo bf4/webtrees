@@ -10,6 +10,18 @@
 
 
 Version 4.1.6
+ - Added: MediaList Page: Added "Notes" link in Lightbox window when Lightbox installed (windmillway)
+ - Fixed: Lightbox: Corrected white rectangle appearing when closing Lighbox Image, Improved fast mouseover displacement of Tooltip
+ - Fixed: Lightbox: Fixed Image Distortion when at low browser resolution when clicking previous or next buttons (windmillway)
+ - Added: Lightbox: New Notes Display Link on Enlarged Lightbox Images.
+ - Fixed: [ 1990954 ] SVN 2347 Error on links (fisharebest)
+ - Fixed: [ 1987150 ] Auto close edit window error: removed surplus variable $mediaordsuccess (windmillway)
+ - Fixed: [ 1946236 ] Over-counting individuals with a given surname (fisharebest)
+ - Changed: Album tooltip Bubble now shows url items as "hotspot clickable" (windmillway)
+ - Added: [ 1955594 ] Show Nicknames (fisharebest)
+ - Added: Lightbox Album Page: (windmillway)
+		1) New Feature - Removed Footnotes Row, Added Tooltip Bubble for notes associated with thumbnail
+		2) Tightened up hotspot for "Details" link on enlarged Lightbox Image.
  - Fixed: Rewrite search-plugin code - various bugs/duplication/flexibilty/validation/etc.
  - Fixed: [ 1809805 ] Ancestry Search For Surname/Married Names (fisharebest)
  - Fixed: [ 1695907 ] RA Auto Search breaks with quoted given names (fisharebest)

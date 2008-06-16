@@ -176,7 +176,7 @@ if ($MULTI_MEDIA) {
 						} else {
 							$name = PGV_USER_NAME;
 						}
-							$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+							$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 							$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>";
 					}
 				}
@@ -387,41 +387,40 @@ function openPic(filename, width, height) {
 				<tr>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_avi"
-				<?php if ($config['filter_avi']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;avi&nbsp;&nbsp;</td>
+				<?php if ($config['filter_avi']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;avi&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_avi"
-				<?php if ($config['filter_bmp']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;bmp&nbsp;&nbsp;</td>
+				<?php if ($config['filter_bmp']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;bmp&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_avi"
-				<?php if ($config['filter_gif']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;gif&nbsp;&nbsp;</td>
+				<?php if ($config['filter_gif']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;gif&nbsp;&nbsp;</td>
 				</tr>
 		<tr>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_jpeg"
-				<?php if ($config['filter_jpeg']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;jpeg&nbsp;&nbsp;</td>
+				<?php if ($config['filter_jpeg']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;jpeg&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_mp3"
-				<?php if ($config['filter_mp3']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;mp3&nbsp;&nbsp;</td>
+				<?php if ($config['filter_mp3']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;mp3&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_ole"
-				<?php if ($config['filter_ole']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;ole&nbsp;&nbsp;</td>
+				<?php if ($config['filter_ole']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;ole&nbsp;&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_pcx"
-				<?php if ($config['filter_pcx']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;pcx&nbsp;&nbsp;</td>
+				<?php if ($config['filter_pcx']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;pcx&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_png"
-				<?php if ($config['filter_png']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;png&nbsp;&nbsp;</td>
+				<?php if ($config['filter_png']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;png&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_tiff"
-				<?php if ($config['filter_tiff']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;tiff&nbsp;&nbsp;</td>
-		</tr>
+				<?php if ($config['filter_tiff']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;tiff&nbsp;&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_wav"
-				<?php if ($config['filter_wav']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;wav&nbsp;&nbsp;</td>
+				<?php if ($config['filter_wav']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;wav&nbsp;&nbsp;</td>
 					<td class="width33">&nbsp;</td>
 					<td class="width33">&nbsp;</td>
 				</tr>
@@ -453,7 +452,7 @@ function openPic(filename, width, height) {
 						print "</tr><tr>";
 					}
 					print "<td class=\"width33\"><input type=\"checkbox\" value=\"yes\" name=\"filter_".$typeName."\"";
-					if ($config['filter_'.$typeName]=="yes") print "checked=\"checked\"";
+					if ($config['filter_'.$typeName]=="yes") print " checked=\"checked\"";
 					print " />&nbsp;&nbsp;".$typeValue."&nbsp;&nbsp;</td>";
 				}
 				?>
@@ -478,12 +477,11 @@ function openPic(filename, width, height) {
 		<?php if ($config["start"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
 		<option value="no"
 		<?php if ($config["start"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-	</select></td>
-	</tr>
+	</select>
+	<input type="hidden" name="cache" value="0" />
+	</td></tr>
 	
 		<?php
-		// Cache file life is not configurable by user:  anything other "no cache" doesn't make sense
-		print "<input type=\"hidden\" name=\"cache\" value=\"0\" />";
 	}
 	
 } // if ($MULTI_MEDIA)

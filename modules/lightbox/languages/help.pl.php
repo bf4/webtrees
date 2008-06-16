@@ -28,7 +28,7 @@
  */
 
 
-echo "<font size=2 face=\"Verdana\"> ";
+echo "<font size=\"2\" face=\"Verdana\"> ";
 echo "<h3>Lightbox-Album Pomoc: </h3>";
 echo "<ol> ";
 

@@ -27,10 +27,12 @@
 require_once 'includes/person_class.php';
 
 class Base_AutoSearch {
-	static $url=null;
-	static $method=null;
-	static $title=null;
-	static $fields=null;
+	// These values should be class static/constant properties.
+	// When we move to PHP5, we can do this properly.
+	var $url=null;
+	var $method=null;
+	var $title=null;
+	var $fields=null;
 
 	// Constructor simply defines the fields to be used
 	function Base_AutoSearch($title, $url, $method, $fields) {
@@ -95,8 +97,10 @@ class Base_AutoSearch {
 	function givenname($person, $inputname='givenname') {
 		$all_givn=array();
 		foreach ($person->getAllNames() as $name) {
-			list($surn, $givn)=explode(',', $name['list']);
-			$all_givn[]=htmlspecialchars(strip_tags($givn));
+			list($surn, $givn)=explode(',', $name['sort']);
+			if ($givn!='@P.N.') {
+				$all_givn[]=htmlspecialchars(strip_tags($givn));
+			}
 		}
 		$all_givn=array_unique($all_givn);
 		if (count($all_givn)==1) {
@@ -114,8 +118,10 @@ class Base_AutoSearch {
 	function surname($person, $inputname='surname') {
 		$all_surn=array();
 		foreach ($person->getAllNames() as $name) {
-			list($surn, $givn)=explode(',', $name['list']);
-			$all_surn[]=htmlspecialchars(strip_tags($surn));
+			list($surn)=explode(',', $name['sort']);
+			if ($surn!='@N.N.') {
+				$all_surn[]=htmlspecialchars(strip_tags($surn));
+			}
 		}
 		$all_surn=array_unique($all_surn);
 		if (count($all_surn)==1) {

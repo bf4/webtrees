@@ -5,7 +5,7 @@
  * This block will print a list of upcoming yahrzeit (hebrew death anniversaries)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008 PGV Developers
+ * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			} else {
 				$name = PGV_USER_NAME;
 			}
-			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>";
 		}
 	}
@@ -273,7 +273,7 @@ function print_yahrzeit_config($config) {
 
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link('style_help', 'qm');
-	print $pgv_lang['style']."</td>";
+	print $pgv_lang['style'];
 	print '</td><td class="optionbox">';
 	print '<select name="infoStyle">';
 	foreach (array('style1', 'style2') as $style) {
@@ -286,7 +286,7 @@ function print_yahrzeit_config($config) {
 
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link("cal_dowload_help", "qm");
-	print $pgv_lang["cal_download"]."</td>";
+	print $pgv_lang["cal_download"];
 	print '</td><td class="optionbox">';
 	print '<select name="allowDownload">';
 	foreach (array('yes', 'no') as $value) {
@@ -295,9 +295,11 @@ function print_yahrzeit_config($config) {
 			print " selected=\"selected\"";
 		print ">{$pgv_lang[$value]}</option>";
 	}
-	print '</select></td></tr>';
+	print '</select>';
 
 	// Cache file life is not configurable by user:  anything other than 1 day doesn't make sense
-	print "<input type=\"hidden\" name=\"cache\" value=\"1\" />";
+	print '<input type="hidden" name="cache" value="1" />';
+	
+	print '</td></tr>';
 }
 ?>

@@ -150,6 +150,7 @@ $pgv_lang["stat_users"]				= "Total users";
 $pgv_lang["no_family_facts"]		= "No facts for this family.";
 $pgv_lang["stat_males"]				= "Total males";
 $pgv_lang["stat_females"]			= "Total females";
+$pgv_lang["stat_unknown"]			= "Total unknown";
 
 $pgv_lang["sunday_1st"]				= "Su";
 $pgv_lang["monday_1st"]				= "M";
@@ -244,6 +245,7 @@ $pgv_lang["ancestors"]				= "Direct line ancestors and their families";
 $pgv_lang["descendants"]			= "Descendants";
 $pgv_lang["choose_relatives"]		= "Choose relatives";
 $pgv_lang["relatives_report"]		= "Relatives Report";
+$pgv_lang["total_unknown"]			= "Total unknown";
 $pgv_lang["total_living"]			= "Total living";
 $pgv_lang["total_dead"]				= "Total dead";
 $pgv_lang["total_not_born"]			= "Total not yet born";
@@ -594,6 +596,7 @@ $pgv_lang["roots"]		 				= "Roots";
 $pgv_lang["leaves"] 					= "Leaves";
 $pgv_lang["widow"] 					= "Widow";
 $pgv_lang["widower"] 				= "Widower";
+$pgv_lang["show_parents"] 			= "Show parents";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Age";

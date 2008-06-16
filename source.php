@@ -116,7 +116,7 @@ if ((!$controller->isPrintPreview())&&($controller->userCanEdit())) {
 	print_help_link("add_media_help", "qm", "add_media_lbl");
 	print $pgv_lang["add_media_lbl"] . "</td>";
 	print "<td class=\"optionbox\">";
-	print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('addmedia.php?action=showmediaform&linktoid=$controller->sid', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
+	print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('".encode_url("addmedia.php?action=showmediaform&linktoid={$controller->sid}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
 	print "<br />\n";
 	print '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->sid.'&linkto=source\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["link_to_existing_media"].'</a>';
 	print "</td></tr>\n";

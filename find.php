@@ -40,7 +40,7 @@ if (!isset($directory)) $directory = $MEDIA_DIRECTORY;
 if (!isset($multiple)) $multiple = false;
 if (!isset($showthumb)) $showthumb = true;
 $thumbget = "";
-if ($showthumb) {$thumbget = "&amp;showthumb=true";}
+if ($showthumb) {$thumbget = "&showthumb=true";}
 if (!isset($choose)) $choose = "0all";
 $embed = substr($choose,0,1)=="1";
 $chooseType = substr($choose,1);
@@ -513,7 +513,7 @@ if ($action=="filter") {
 			$levels = explode("/", $thumbdir);
 			$pthumb = "";
 			for($i=0; $i<count($levels)-2; $i++) $pthumb.=$levels[$i]."/";
-			$uplink = "<a href=\"find.php?directory=".rawurlencode($pdir)."&amp;thumbdir=".rawurlencode($pthumb)."&amp;level=".($level-1).$thumbget."&type=media&amp;choose=".$choose."\">&nbsp;&nbsp;&nbsp;&lt;-- <span dir=\"ltr\">".$pdir."</span>&nbsp;&nbsp;&nbsp;</a><br />\n";
+			$uplink = "<a href=\"".encode_url("find.php?directory={$pdir}&thumbdir={$pthumb}&level=".($level-1)."{$thumbget}&type=media&choose={$choose}")."\">&nbsp;&nbsp;&nbsp;&lt;-- <span dir=\"ltr\">".$pdir."</span>&nbsp;&nbsp;&nbsp;</a><br />\n";
 		}
 
 		// Start of media directory table
@@ -536,11 +536,11 @@ if ($action=="filter") {
 				print $uplink."</td></tr>";
 			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION\" colspan=\"2\">";
-			print "<a href=\"find.php?directory=".rawurlencode($directory)."&amp;thumbdir=".rawurlencode(str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory))."&amp;level=".$level.$thumbget."&amp;external_links=http&amp;type=media&amp;choose=".$choose."\">".$pgv_lang["external_objects"]."</a>";
+			print "<a href=\"".encode_url("find.php?directory={$directory}&thumbdir=".str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory)."&level={$level}{$thumbget}&external_links=http&type=media&choose={$choose}")."\">".$pgv_lang["external_objects"]."</a>";
 			print "</td></tr>";
 			foreach ($dirs as $indexval => $dir) {
 				print "<tr><td class=\"list_value $TEXT_DIRECTION\" colspan=\"2\">";
-				print "<a href=\"find.php?directory=".rawurlencode($directory.$dir."/")."&thumbdir=".rawurlencode($directory.$dir."/")."&level=".($level+1).$thumbget."&amp;type=media&amp;choose=".$choose."\"><span dir=\"ltr\">".$dir."</span></a>";
+				print "<a href=\"".encode_url("find.php?directory={$directory}{$dir}/&thumbdir={$directory}{$dir}/&level=".($level+1)."{$thumbget}&type=media&choose={$choose}")."\"><span dir=\"ltr\">".$dir."</span></a>";
 				print "</td></tr>";
 			}
 		}

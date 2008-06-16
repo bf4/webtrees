@@ -211,7 +211,7 @@ foreach($patrialpha as $letter=>$list) {
 			$startalpha = $letter;
 			$alpha = $letter;
 		}
-		print "<a href=\"patriarchlist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no\">";
+		print "<a href=\"".encode_url("patriarchlist.php?alpha=$letter&surname_sublist=no")."\">";
 		if (($alpha==$letter)&&($show_all=="no")) print "<span class=\"warning\">".$letter."</span>";
 		else print $letter;
 		print "</a> | \n";
@@ -220,11 +220,11 @@ foreach($patrialpha as $letter=>$list) {
 }
 if ($pass == TRUE) {
 	if ($alpha == "@") print "<span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span>";
-	else print "<a href=\"patriarchlist.php?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
+	else print "<a href=\"".encode_url("patriarchlist.php?alpha=@&surname_sublist=yes&surname=@N.N.")."\">".PrintReady($pgv_lang["NN"])."</a>";
 	print " | \n";
 	$pass = FALSE;
 }
-print "<a href=\"patriarchlist.php?show_all=yes&amp;surname_sublist=$surname_sublist\">";
+print "<a href=\"".encode_url("patriarchlist.php?show_all=yes&surname_sublist={$surname_sublist}")."\">";
 if ($show_all=="yes") print "<span class=\"warning\">";
 print_text("all");
 if ($show_all=="yes") print "</span>";
@@ -268,12 +268,12 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
-			print "<div class =\"rtl\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - " . getRLM() . "[".($namecount["match"])."]" . getRLM();
+			print "<div class =\"rtl\"><a href=\"".encode_url("patriarchlist.php?alpha=".$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname=".$namecount["name"])."\">".$namecount["name"]." - " . getRLM() . "[".($namecount["match"])."]" . getRLM();
 		}
 		else if (substr(trim($namecount["name"]), 0, 4) == "@N.N") {
-			print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">".$pgv_lang["NN"]." - " . getLRM() . "[".($namecount["match"])."]" . getLRM();
+			print "<div class =\"ltr\"><a href=\"".encode_url("patriarchlist.php?alpha=".$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname=@N.N.")."\">".$pgv_lang["NN"]." - " . getLRM() . "[".($namecount["match"])."]" . getLRM();
 		}
-		else print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - " . getLRM() ."[".($namecount["match"])."]" . getLRM();
+		else print "<div class =\"ltr\"><a href=\"".encode_url("patriarchlist.php?alpha=".$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname=".$namecount["name"])."\">".$namecount["name"]." - " . getLRM() ."[".($namecount["match"])."]" . getLRM();
 		print "</a></div>\n";
 		$count_indi += $namecount["match"];
 		$i++;
@@ -321,9 +321,9 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
-			print "<div class =\"rtl\">&nbsp;<a href=\"patriarchlist.php?alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".$namecount["name"]." - " . getRLM() . "[".($namecount["match"])."]" . getRLM();
+			print "<div class =\"rtl\">&nbsp;<a href=\"".encode_url("patriarchlist.php?alpha={$alpha}&surname_sublist={$surname_sublist}&surname=".$namecount["name"])."\">".$namecount["name"]." - " . getRLM() . "[".($namecount["match"])."]" . getRLM();
 		}
-		else print "<div class =\"ltr\">&nbsp;<a href=\"patriarchlist.php?alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - " . getLRM() . "[".($namecount["match"])."]" . getLRM();
+		else print "<div class =\"ltr\">&nbsp;<a href=\"".encode_url("patriarchlist.php?alpha={$alpha}&surname_sublist={$surname_sublist}&surname=".$namecount["name"])."\">".$namecount["name"]." - " . getLRM() . "[".($namecount["match"])."]" . getLRM();
 		print "</a>&nbsp;</div>\n";
 		$count_indi += $namecount["match"];
 		$i++;
@@ -404,19 +404,19 @@ if ($alpha != "@") {
 	else print_help_link("skip_sublist_help", "qm", "show_surnames");
 }
 if ($show_all=="yes" && $alpha != "@"){
-	if ($surname_sublist=="yes") print "<a href=\"patriarchlist.php?show_all=yes&amp;surname_sublist=no\">".$pgv_lang["skip_surnames"]."</a>";
- 	else print "<a href=\"patriarchlist.php?show_all=yes&amp;surname_sublist=yes\">".$pgv_lang["show_surnames"]."</a>";
+	if ($surname_sublist=="yes") print "<a href=\"".encode_url("patriarchlist.php?show_all=yes&surname_sublist=no")."\">".$pgv_lang["skip_surnames"]."</a>";
+ 	else print "<a href=\"".encode_url("patriarchlist.php?show_all=yes&surname_sublist=yes")."\">".$pgv_lang["show_surnames"]."</a>";
 }
 else if ((!isset($alpha)) || ($alpha=="" && $alpha != "@")) {
-	if ($surname_sublist=="yes") print "<a href=\"patriarchlist.php?show_all=yes&amp;surname_sublist=no\">".$pgv_lang["skip_surnames"]."</a>";
-	else print "<a href=\"patriarchlist.php?show_all=yes&amp;surname_sublist=yes\">".$pgv_lang["show_surnames"]."</a>";
+	if ($surname_sublist=="yes") print "<a href=\"".encode_url("patriarchlist.php?show_all=yes&surname_sublist=no")."\">".$pgv_lang["skip_surnames"]."</a>";
+	else print "<a href=\"".encode_url("patriarchlist.php?show_all=yes&surname_sublist=yes")."\">".$pgv_lang["show_surnames"]."</a>";
 }
 else if ($alpha != "@" && is_array(isset($surname))) {
-	print "<a href=\"patriarchlist.php?alpha=$alpha&amp;surname_sublist=yes\">".$pgv_lang["show_surnames"]."</a>";
+	print "<a href=\"".encode_url("patriarchlist.php?alpha={$alpha}&surname_sublist=yes")."\">".$pgv_lang["show_surnames"]."</a>";
 }
 else if ($alpha != "@"){
-	if ($surname_sublist=="yes") print "<a href=\"patriarchlist.php?alpha=$alpha&amp;surname_sublist=no\">".$pgv_lang["skip_surnames"]."</a>";
-	else print "<a href=\"patriarchlist.php?alpha=$alpha&amp;surname_sublist=yes\">".$pgv_lang["show_surnames"]."</a>";
+	if ($surname_sublist=="yes") print "<a href=\"".encode_url("patriarchlist.php?alpha={$alpha}&surname_sublist=no")."\">".$pgv_lang["skip_surnames"]."</a>";
+	else print "<a href=\"".encode_url("patriarchlist.php?alpha={$alpha}&surname_sublist=yes")."\">".$pgv_lang["show_surnames"]."</a>";
 }
 print "<br />\n";
 print "</div>\n";
