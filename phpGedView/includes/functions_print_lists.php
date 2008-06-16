@@ -328,7 +328,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<thead><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
-	echo '<td class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this,2)">'.$factarray['NAME'].'</a></td>';
+	echo '<th class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this,2)">'.$factarray['NAME'].'</a></th>';
 	echo "<th class=\"list_label\" style=\"display:none\">GIVN</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">SURN</th>";
 	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
@@ -385,6 +385,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if (!$person->getChildFamilyIds()) $tdclass .= " patriarch";
 		echo "<td class=\"".$tdclass."\" align=\"".get_align($person->getFullName())."\">";
 		$names_html=array();
+		list($surn, $givn)=explode(',', $person->getSortName());
 		foreach ($person->getAllNames() as $num=>$name) {
 			if ($title=$name['type']=='_MARNM') {
 				$title='title="'.$factarray['_MARNM'].'"';
@@ -395,6 +396,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			   !isset($value['name']) && $num==$person->getPrimaryName()) {
 				$class='list_item name2';
 				$sex_image=$tiny ? $person->getSexImage() : '';
+				list($surn, $givn)=explode(',', $name['sort']);
 			} else {
 				$class='list_item';
 				$sex_image='';
@@ -406,7 +408,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($person->xref) print $person->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- GIVN/SURN
-		list($surn, $givn)=explode(',', $person->getSortName());
 		echo '<td style="display:none">', $givn, '</td>';
 		echo '<td style="display:none">', $surn, '</td>';
 		//-- SOSA
