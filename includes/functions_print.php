@@ -1055,7 +1055,7 @@ function print_user_links() {
 	} else {
 		$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
 		if (empty($SEARCH_SPIDER)) {
-			print "<a href=\"$LOGIN_URL?url=".encode_url(basename($SCRIPT_NAME).decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM")))."\" class=\"link\">".$pgv_lang["login"]."</a>";
+			print "<a href=\"$LOGIN_URL?url=".rawurlencode(basename($SCRIPT_NAME).decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM")))."\" class=\"link\">".$pgv_lang["login"]."</a>";
 		}
 	}
 	print "<br />";
