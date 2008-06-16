@@ -28,7 +28,9 @@ require_once 'modules/research_assistant/search_plugin/base_autosearch.php';
 
 class AutoSearch extends Base_AutoSearch {
 	function AutoSearch() {
-		parent::__construct(
+		// PHP5 only
+		//parent::__construct(
+		parent::Base_AutoSearch(
 			// Name of this file, without the extension.
 			// NB must also define this in $pgv_lang["autosearch_plugin_name_XXXX"]
 			basename(__FILE__, '.php'),
