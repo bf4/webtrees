@@ -114,7 +114,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 						ob_start();
 						print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
 						$content .= ob_get_clean();
-						$content .= "<br />".PrintReady($favorite["note"]);
+						$content .= PrintReady($favorite["note"]);
 					}
 				}
 			}

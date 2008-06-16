@@ -101,7 +101,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 						$content.=$removeFavourite;
 					}
 					$content.=format_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, '', 'span');
-					$content.=PrintReady($favorite["note"]);
+					$content.= "<br />".PrintReady($favorite["note"]);
 				}
 				if ($favorite["type"]=="SOUR") {
 					$sourrec = find_source_record($favorite["gid"]);
@@ -109,7 +109,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
 					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
 					$content.=format_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], 'span');
-					$content .= PrintReady($favorite["note"]);
+					$content .= "<br />".PrintReady($favorite["note"]);
 				}
 				if ($favorite["type"]=="OBJE") {
 					$content .= "<div id=\"box".$favorite["gid"].".0\">";
