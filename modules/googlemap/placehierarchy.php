@@ -287,7 +287,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			echo "<br /><br /></div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
 		}
 		else {
-			echo "<br />$levelm<br />".$place2['lati'].", ".$place2['long']."</div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
+			echo "<br /><br />".$place2['lati'].", ".$place2['long']."</div></td>\", icon_type, \"".PrintReady(addslashes($place2['place']))."\");\n";
 		}
 	}
 	echo "place_map.addOverlay(marker);\n";
