@@ -51,7 +51,7 @@ $linkToID = $controller->sid;	// -- Tell addmedia.php what to link to
 <?php
 	if ($controller->accept_success) print "<b>".$pgv_lang["accept_successful"]."</b><br />";
 ?>
-			<span class="name_head"><?php print PrintReady($controller->source->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->sid.")" . getLRM(); ?></span><br />
+			<span class="name_head"><?php print PrintReady($controller->source->getFullName()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->sid.")" . getLRM(); ?></span><br />
 		</td>
 		<td valign="top" class="noprint">
 		<?php if (!$controller->isPrintPreview()) {
@@ -146,8 +146,8 @@ $myfamlist = $controller->source->getSourceFams();
 $ci=count($myindilist);
 $cf=count($myfamlist);
 
-if ($ci>0) print_indi_table($myindilist, $controller->source->getTitle());
-if ($cf>0) print_fam_table($myfamlist, $controller->source->getTitle());
+if ($ci>0) print_indi_table($myindilist, $controller->source->getFullName());
+if ($cf>0) print_fam_table($myfamlist, $controller->source->getFullName());
 
 ?>
 	<br />
