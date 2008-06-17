@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,4 +143,6 @@ $pgv_lang["placecheck_zoom"]        = "Zoom=";
 $pgv_lang["placecheck_options"]     = "PlaceCheck List Options";
 $pgv_lang["placecheck_filter_text"] = "List filtering options";
 $pgv_lang["placecheck_match"] 		= "Include fully matched places: ";
+$pgv_lang["placecheck_lati"] 		= "Latitude";
+$pgv_lang["placecheck_long"] 		= "Longitude";
 ?>

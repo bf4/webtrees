@@ -5,7 +5,7 @@
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 Nigel Osborne nigelo@users.sourceforge.net
- * Modifications Copyright (C) 2008 Greg Roach
+ * Modifications Copyright (C) 2008 Greg Roach and Łukasz Wileński
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -146,8 +146,8 @@ print "<table align='right'>";
 print "<tr><td colspan='4' align='center' class='descriptionbox'><strong>".$pgv_lang['placecheck_key']."</strong></td></tr>";
 print "<tr><td class='facts_value'><font color='#FF0000'>".$factarray["PLAC"]."</font></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key1']."</font></td></tr>";
 print "<tr><td class='facts_value'><a>".$factarray["PLAC"]."</a></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key2']."</font></td></tr>";
-print "<tr><td class='facts_value'><font color='#00FF00'><strong>unknown</strong></font></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key3']."</font></td></tr>";
-print "<tr><td class='facts_value'><a>unknown</a></td><td class='facts_value' align='center'>N55.0</td><td align='center' class='facts_value'>W75.0</td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key4']."</font></td></tr>";
+print "<tr><td class='facts_value'><font color='#00FF00'><strong>{$pgv_lang['unknown']}</strong></font></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key3']."</font></td></tr>";
+print "<tr><td class='facts_value'><a>{$pgv_lang['unknown']}</a></td><td class='facts_value' align='center'>N55.0</td><td align='center' class='facts_value'>W75.0</td><td class='facts_value'><font size=\"-2\">".$pgv_lang['placecheck_key4']."</font></td></tr>";
 print "</table>";
 print "</td>";
 print "</tr>";
@@ -212,12 +212,12 @@ $x=0;
 <script language="JavaScript" type="text/javascript">
 <!--
 function edit_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
 	return false;
 }
 
 function add_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
 	return false;
 }
 function showchanges() {
@@ -256,7 +256,7 @@ while ($cols<$max) {
 print "</tr><tr>";
 $cols=0;
 while ($cols<$max) {
-	print "<td class='descriptionbox' align='center'><strong>".$factarray["PLAC"]."</strong></td><td class='descriptionbox' align='center'><strong>".$factarray["LATI"]."</strong><td class='descriptionbox' align='center'><strong>".$factarray["LONG"]."</strong></td></td>";
+	print "<td class='descriptionbox' align='center'><strong>".$factarray["PLAC"]."</strong></td><td class='descriptionbox' align='center'><strong>".$pgv_lang["placecheck_lati"]."</strong><td class='descriptionbox' align='center'><strong>".$pgv_lang["placecheck_long"]."</strong></td></td>";
 	$cols++;
 }
 print "</tr>";
@@ -315,7 +315,7 @@ while ($x<$i) {
 				$matched[$x]++;
 		} else {
 			if ($levels[$z]=="unknown") {
-				$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#00FF00'><strong>".rtrim(ltrim($levels[$z]))."</strong></font>".$mapstr8;$matched[$x]++;
+				$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#00FF00'><strong>".rtrim(ltrim($pgv_lang['unknown']))."</strong></font>".$mapstr8;$matched[$x]++;
 			} else {
 				$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#FF0000'>".rtrim(ltrim($levels[$z]))."</font>".$mapstr8;$matched[$x]++;
 			}
@@ -332,8 +332,8 @@ while ($x<$i) {
 			$long[$z]="<td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td>";$matched[$x]++;
 		}
 		$level++;
-		$mapstr3=$mapstr3."&amp;parent[".$z."]=".$row['pl_placerequested'];
-		$mapstr4=$mapstr4."&amp;parent[".$z."]=".rtrim(ltrim($levels[$z]));
+		$mapstr3=$mapstr3."&amp;parent[".$z."]=".str_replace("'", "\'", PrintReady($row['pl_placerequested']));
+		$mapstr4=$mapstr4."&amp;parent[".$z."]=".str_replace("'", "\'", PrintReady(rtrim(ltrim($levels[$z]))));
 		$z++;
 	}
 	if ($matching==1) {

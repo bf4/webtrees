@@ -3,7 +3,7 @@
  * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All right reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ $pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "~#pgv_lang[GOOGLEMAP_PH_MARKER]#~<br />
 $pgv_lang["GM_DISP_SHORT_PLACE"]		= "Wyświetl skrócone nazwy miejsc";
 $pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "~#pgv_lang[GM_DISP_SHORT_PLACE]#~<br /><br />Tutaj możesz określić czy miejsca wyświetlane w hierarchii będą miały wyświetlone pełne nazwy czy tylko będzie wyświetlona nazwa aktualnego poziomu/miejsca.<br /><b>Przykłady:<br />Pełna nazwa: </b>Warszawa, Mazowieckie, Polska<br /><b>Skrócona nazwa: </b>Warszawa<br /><b>Pełna nazwa: </b>Mazowieckie, Polska<br /><b>Skrócona nazwa: </b>Mazowieckie";
 $pgv_lang["GM_DISP_COUNT"]				= "Wyświetl liczbę osób i rodzin połączonych z danym miejscem";
-$pgv_lang["GM_DISP_COUNT_help"]			= "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Możesz określić czy liczba osób i rodzin powiązana z danym miejscem będzie wyświetlana. Przy dużej ilości osób i miejsc zaleca się wyłączenie tej opcji.";
+$pgv_lang["GM_DISP_COUNT_help"]			= "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Możesz określić czy liczba osób i rodzin powiązana z danym miejscem będzie wyświetlana. Przy dużej ilości osób i miejsc zaleca się wyłączenie tej opcji (powyżej tysiąca osób powoduje duże spowolnienie w wyświetlaniu mapy).";
 $pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Użyj rolki myszki do przybliżania/oddalania";
 $pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Możesz określić czy rolka myszki będzie używana do przybliżania lub oddalania mapy.";
 $pgv_lang["GOOGLEMAP_PH_CONTROLS"]		= "Ukryj kontrolki mapy";
