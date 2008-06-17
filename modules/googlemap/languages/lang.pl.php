@@ -3,7 +3,7 @@
  * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -134,8 +134,8 @@ $pgv_lang["placecheck_select2"]		= "Wybierz następny poziom...";
 $pgv_lang["placecheck_key"]			= "Kod koloru użytego poniżej";
 $pgv_lang["placecheck_key1"]		= "to miejsce i te współrzędne nie istnieją w tablicach miejsc GoogleMap";
 $pgv_lang["placecheck_key2"]		= "to miejsce istnieje w tablicach miejsc GoogleMap, ale nie ma współrzędnych";
-$pgv_lang["placecheck_key3"]		= "ten poziom jest pusty w Twoim pliku GEDCOM. Powinien być dodany do<br />tablic miejsc GoogleMap jako \"nieznany\" z współrzędnymi z<br />poziomu powyżej zanim dodasz jakiekolwiek miejsce do następnego poziomu";
-$pgv_lang["placecheck_key4"]		= "ten poziom jest pusty w Twoim pliku GEDCOM, ale istnieje jako 'nieznany'<br />w tablicach miejsc GoogleMap wraz ze wsółrzędnymi. Nie wymagana jest edycja<br />dopóki ten poziom nie będzie wprowadzony";
+$pgv_lang["placecheck_key3"]		= "ten poziom jest pusty w Twoim pliku GEDCOM. Powinien być dodany do tablic miejsc GoogleMap jako miejsce \"nieznane\" z współrzędnymi z poziomu powyższego zanim dodasz jakiekolwiek miejsce do następnego poziomu";
+$pgv_lang["placecheck_key4"]		= "ten poziom jest pusty w Twoim pliku GEDCOM, ale w tablicach miejsc GoogleMap istnieje jako miejsce 'nieznane' wraz ze współrzędnymi. Nie wymagana jest edycja dopóki ten poziom nie będzie wprowadzony";
 $pgv_lang["placecheck_head"]		= "Lista miejsc dla pliku GEDCOM";
 $pgv_lang["placecheck_gedheader"]	= "Dane z pliku GEDCOM<br />(tag 2 PLAC)";
 $pgv_lang["placecheck_gm_header"]	= "Tablica miejsc GoogleMap";
@@ -144,4 +144,6 @@ $pgv_lang["placecheck_zoom"]        = "Zoom=";
 $pgv_lang["placecheck_options"]     = "Opcje listy Sprawdź Miejsca";
 $pgv_lang["placecheck_filter_text"] = "Opcje filtrowania listy";
 $pgv_lang["placecheck_match"] 		= "Dołącz identyczne miejsca: ";
+$pgv_lang["placecheck_lati"] 		= "Szerokość";
+$pgv_lang["placecheck_long"] 		= "Długość";
 ?>

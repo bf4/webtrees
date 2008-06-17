@@ -10,6 +10,8 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1995523 ] Google Maps: Admin Issue with Single Quotes in Place Name (wooc)
+ - Fixed: [ 1952941 ] Place Hierarchy with GoogleMap - Top Level - Nothing Shown (wooc)
  - Added: MediaList Page: Added "Notes" link in Lightbox window when Lightbox installed (windmillway)
  - Fixed: Lightbox: Corrected white rectangle appearing when closing Lighbox Image, Improved fast mouseover displacement of Tooltip
  - Fixed: Lightbox: Fixed Image Distortion when at low browser resolution when clicking previous or next buttons (windmillway)

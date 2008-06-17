@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -657,7 +657,7 @@ if ($action=="add") {
 	 }
 	
 	function showLocation_level(address) {
-		address += '<?php if ($level>0) print ", ".PrintReady(implode(', ', array_reverse($where_am_i, true)));?>';
+		address += '<?php if ($level>0) print ", ".str_replace("'", "\'", PrintReady(implode(', ', array_reverse($where_am_i, true))));?>';
 		geocoder.getLocations(address, addAddressToMap);
 	}
 	

@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,4 +132,6 @@ $pgv_lang["placecheck_zoom"]        = "Zum=";
 $pgv_lang["placecheck_options"]     = "Yer liste seçnekleri denetle";
 $pgv_lang["placecheck_filter_text"] = "Filitrelenen Seçeneklerin Listesi";
 $pgv_lang["placecheck_match"] 		= "Tüm aynı yerler dahil -";
+$pgv_lang["placecheck_lati"] 		= "Enlem";
+$pgv_lang["placecheck_long"] 		= "Boylam";
 ?>

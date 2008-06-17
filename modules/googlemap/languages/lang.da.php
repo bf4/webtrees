@@ -3,7 +3,7 @@
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,4 +143,6 @@ $pgv_lang["placecheck_zoom"]         = "Zoom=";
 $pgv_lang["placecheck_options"]     = "Stedkontrol liste indstillinger";
 $pgv_lang["placecheck_filter_text"] = "Vis filtrerings indstillinger";
 $pgv_lang["placecheck_match"]           = "Inkludér korrekt sammenkørte steder: ";
+$pgv_lang["placecheck_lati"] 		= "Breddegrad";
+$pgv_lang["placecheck_long"] 		= "Længdegrad";
 ?>
