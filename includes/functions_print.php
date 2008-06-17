@@ -1274,7 +1274,7 @@ function print_favorite_selector($option=0) {
 							$media = Media::getInstance($pid);
 							if (!is_null($media)) {
 								$submenu["link"] = encode_url("mediaviewer.php?mid={$favorite['gid']}&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady($media->getTitle());
+								$submenu["label"] = PrintReady($media->getFullName());
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
@@ -1423,7 +1423,7 @@ function print_favorite_selector($option=0) {
 							if ($favorite["type"]=="OBJE") {
 								$media = Media::getInstance($pid);
 								if (!is_null($media)) {
-									$name = strip_tags(PrintReady($media->getTitle()));
+									$name = strip_tags(PrintReady($media->getFullName()));
 									if (strlen($name)>50) $name = substr($name, 0, 50);
 									if ($SHOW_ID_NUMBERS) {
 										if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";

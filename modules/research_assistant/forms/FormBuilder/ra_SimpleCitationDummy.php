@@ -73,7 +73,7 @@ return false;}return true;}
 				$picture = Media::getInstance($citation['ts_obje']);
 				if(!is_null($picture))
 				{	
-					$out .= "<span id=\"censusImgSpan\">".$picture->getTitle().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
+					$out .= "<span id=\"censusImgSpan\">".$picture->getFullName().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
 				}
 				else
 				{
