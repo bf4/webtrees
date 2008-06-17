@@ -180,8 +180,10 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	print "<br />";
 
 	$NEW_SERVER_URL=trim(safe_POST('NEW_SERVER_URL'));
-	if (!isFileExternal($NEW_SERVER_URL)) $NEW_SERVER_URL = "http://".$NEW_SERVER_URL;
-	if (preg_match("'/$'", $NEW_SERVER_URL)==0) $NEW_SERVER_URL .= "/";
+	if (!empty($NEW_SERVER_URL)) {
+		if (!isFileExternal($NEW_SERVER_URL)) $NEW_SERVER_URL = "http://".$NEW_SERVER_URL;
+		if (preg_match("'/$'", $NEW_SERVER_URL)==0) $NEW_SERVER_URL .= "/";
+	}
 	update_config($configtext, 'SERVER_URL', $NEW_SERVER_URL);
 
 	$NEW_INDEX_DIRECTORY=preg_replace('/\\\/','/', $_POST["NEW_INDEX_DIRECTORY"]);
