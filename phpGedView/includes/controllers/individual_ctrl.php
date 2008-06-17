@@ -1209,8 +1209,8 @@ class IndividualControllerRoot extends BaseController {
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 					<td class="facts_value">
-						<a href="javascript:;" onclick="window.open('<?php print encode_url("addmedia.php?action=showmediaform&linktoid={$this->pid}"); ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
-						<a href="javascript:;" onclick="window.open('<?php print encode_url("inverselink.php?linktoid={$this->pid}&linkto=person"); ?>', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
+						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php print $this->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
+						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php print $this->pid; ?>&linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
 					</td>
 				</tr>
 			<?php

@@ -34,7 +34,7 @@
 <script language="javascript" type="text/javascript">
 <!--
 	function reorder_media() {
-	var win02 = window.open("<?php print encode_url("edit_interface.php?action=reorder_media&pid{$pid}"); ?>", "win02", "resizable=1, menubar=0, scrollbars=1, top=20, height=840, width=450 ");
+	var win02 = window.open("edit_interface.php?action=reorder_media&pid=<?php print $pid; ?>", "win02", "resizable=1, menubar=0, scrollbars=1, top=20, height=840, width=450 ");
 	if (window.focus) {win02.focus();}
 	}   
 -->

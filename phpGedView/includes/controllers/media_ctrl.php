@@ -203,7 +203,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		//-- main edit menu
 		$menu = new Menu($pgv_lang["edit"]);
-		$click_link = "window.open('".encode_url("addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
+		$click_link = "window.open('addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 		$menu->addOnclick($click_link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
@@ -211,7 +211,7 @@ class MediaControllerRoot extends IndividualController{
 		if (PGV_USER_CAN_EDIT) {
 			//- plain edit option
 			$submenu = new Menu($pgv_lang["edit"]);
-			$click_link = "window.open('".encode_url("addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
+			$click_link = "window.open('addmedia.php?action=editmedia&pid={$this->pid}&linktoid={$linktoid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 			$submenu->addOnclick($click_link);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);

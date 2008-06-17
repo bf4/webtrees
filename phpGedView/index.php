@@ -409,13 +409,13 @@ print "</td></tr></table><br />";		// Close off that table
 if (($ctype=="user") and (!$welcome_block_present)) {
 	print "<div align=\"center\" style=\"width: 99%;\">";
 	print_help_link("mygedview_customize_help", "qm");
-	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&amp;ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
+	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
 	print "</div>";
 }
 if (($ctype=="gedcom") and (!$gedcom_block_present)) {
 	if (PGV_USER_IS_ADMIN) {
 		print "<div align=\"center\" style=\"width: 99%;\">";
-		print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=$GEDCOM&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
+		print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
 		print "</div>";
 	}
 }
