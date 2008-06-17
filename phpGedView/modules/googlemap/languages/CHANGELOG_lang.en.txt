@@ -27,6 +27,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["pl_unknown"]					17 Jun 2008          A, Unknown place
 +$pgv_lang["placecheck_lati"]				17 Jun 2008          A
 +$pgv_lang["placecheck_long"]				17 Jun 2008          A
 +$pgv_lang["pl_search_level"]				28 May 2008          A, type of search

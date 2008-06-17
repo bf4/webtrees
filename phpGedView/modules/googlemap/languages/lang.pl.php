@@ -114,6 +114,7 @@ $pgv_lang["pl_max"]                 = "Maksimum";
 $pgv_lang["pl_delete"]              = "Usuń lokalizację";
 $pgv_lang["pl_search_level"]		= "Szukaj na tym poziomie";
 $pgv_lang["pl_search_all"]			= "Szukaj wszystkie";
+$pgv_lang["pl_unknown"]				= "nieznane";
 
 $pgv_lang["pl_flag"]                = "Flaga";
 $pgv_lang["flags_edit"]             = "Wybierz flagę";

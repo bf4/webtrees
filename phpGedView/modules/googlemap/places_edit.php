@@ -203,7 +203,7 @@ if ($action=="update") {
 
 	$success = false;
 
-	print "<b>".PrintReady(implode(', ', array_reverse($where_am_i, true)))."</b><br />";
+	print "<b>".str_replace("Unknown", $pgv_lang["pl_unknown"], PrintReady(implode(', ', array_reverse($where_am_i, true))))."</b><br />\n";
 }
 
 if ($action=="add") {
@@ -246,9 +246,9 @@ if ($action=="add") {
 	$show_marker = false;
 	$success = false;
 
-	print "<b>{$pgv_lang['unknown']}";
+	print "<b>".$pgv_lang["pl_unknown"];
 	if (count($where_am_i)>0)
-		print ", ".PrintReady(implode(', ', array_reverse($where_am_i, true)));
+		print ", ".str_replace("Unknown", $pgv_lang["pl_unknown"], PrintReady(implode(', ', array_reverse($where_am_i, true))))."</b><br />\n";
 	print "</b><br />";
 }
 
@@ -518,8 +518,16 @@ if ($action=="add") {
 			$i = 0;
 			while ($row =& $res->fetchRow()) {
 				if (($row[1] != null) && ($row[2] != null)) {
+					//delete leading zero
+					$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]);
+					$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]);
+					if ($pl_lati >= 0) 		$row[1] = abs($pl_lati);
+					else if ($pl_lati < 0) 	$row[1] = "-".abs($pl_lati);
+					if ($pl_long >= 0) 		$row[2] = abs($pl_long);
+					else if ($pl_long < 0) 	$row[2] = "-".abs($pl_long);
+					
 					if (($row[3] == null) || ($row[3] == "")) {
-						print "	 	 	 childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S', ','), array('', '-', '.'), $row[1]).", ".str_replace(array('E', 'W', ','), array('', '-', '.'), $row[2])."), childicon));\n";
+						print "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row[1].", ".$row[2]."), childicon));\n";
 					}
 					else {
 						print "	 	 	 var flagicon = new GIcon();\n";
@@ -529,12 +537,12 @@ if ($action=="add") {
 						print "	 	 	 flagicon.shadowSize = new GSize(35, 45);\n";
 						print "	 	 	 flagicon.iconAnchor = new GPoint(1, 45);\n";
 						print "			 flagicon.infoWindowAnchor = new GPoint(5, 1);\n";
-						print "	 	 	 childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]).", ".str_replace(array('E', 'W', ','), array('', '-', '.'), $row[2])."), flagicon));\n";
+						print "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row[1].", ".$row[2]."), flagicon));\n";
 					}
 					print "			 GEvent.addListener(childplaces[".$i."], \"click\", function() {\n";
 					print "             childplaces[".$i."].openInfoWindowHtml(\"<td width='100%'><div class='iwstyle' style='width: 250px;'><br />".addslashes($row[0])."<br /><br /></div>\")});\n";
 					print "	 	 	 map.addOverlay(childplaces[".$i."]);\n";
-					print "	 	 	 bounds.extend(new GLatLng(".str_replace(array('N', 'S', ','), array('', '-', '.'), $row[1]).", ".str_replace(array('E', 'W', ','), array('', '-', '.'), $row[2])."));\n";
+					print "	 	 	 bounds.extend(new GLatLng(".$row[1].", ".$row[2]."));\n";
 					$i++;
 					print "	 	 	 map.setCenter(bounds.getCenter());\n";
 				}
