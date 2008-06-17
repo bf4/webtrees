@@ -452,6 +452,13 @@ if ($action=="ImportFile2") {
 						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].",'".$place["icon"]."');";
 					}
 					else {
+						//delete leading zero
+						$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $place["lati"]);
+						$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $place["long"]);
+						if ($pl_lati >= 0) 		$place["lati"] = "N".abs($pl_lati);
+						else if ($pl_lati < 0) 	$place["lati"] = "S".abs($pl_lati);
+						if ($pl_long >= 0) 		$place["long"] = "E".abs($pl_long);
+						else if ($pl_long < 0) 	$place["long"] = "W".abs($pl_long);
 						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
 					}
 					$parent_id = $highestIndex;
@@ -539,14 +546,14 @@ foreach (array_reverse($where_am_i, true) as $id=>$place) {
 		if ($place != "Unknown")
 			print PrintReady($place);
 		else 
-			print $pgv_lang["unknown"];
+			print $pgv_lang["pl_unknown"];
 	else {
 // phre7d 2008-901-23 modified for persistant display of inactive records
 		print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">";
 		if ($place != "Unknown")
 			print PrintReady($place)."</a>";
 		else 
-			print $pgv_lang["unknown"]."</a>";
+			print $pgv_lang["pl_unknown"]."</a>";
 	}
 	print " - ";
 }
@@ -581,7 +588,7 @@ foreach ($placelist as $place) {
 	if ($place["place"] != "Unknown")
 			print PrintReady($place["place"])."</a></td>";
 		else 
-			print $pgv_lang["unknown"]."</a></td>";
+			print $pgv_lang["pl_unknown"]."</a></td>";
 	print "<td class=\"optionbox\">{$place['lati']}</td>";
 	print "<td class=\"optionbox\">{$place['long']}</td>";
 	print "<td class=\"optionbox\">{$place['zoom']}</td>";

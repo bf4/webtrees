@@ -725,9 +725,9 @@ function build_indiv_map($indifacts, $famids) {
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\");\n";
 					} else {
-						print "<br /><br />Lati: ";
+						print "<br /><br />";
 						if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
-						print ", Long: ";
+						print ", ";
 						if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 						print "\");\n";
 					}
@@ -781,9 +781,9 @@ function build_indiv_map($indifacts, $famids) {
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\")";
 					} else {
-						print "<br /><br />Lati: ";
+						print "<br /><br />";
 						if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
-						print ", Long: ";
+						print ", ";
 						if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 						print "\")";
 					}
@@ -850,9 +850,9 @@ function build_indiv_map($indifacts, $famids) {
 							if ($GOOGLEMAP_COORD == "false"){
 								print "\")";
 							} else {
-								print "<br /><br />Lati: ";
+								print "<br /><br />";
 								if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
-								print ", Long: ";
+								print ", ";
 								if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 								print "\")";
 							}

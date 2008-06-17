@@ -204,7 +204,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			$placename = substr($placelevels,2);
 			if ($place2['place'] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
-				else echo $pgv_lang["unknown"];
+				else echo $pgv_lang["pl_unknown"];
 			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
 				else echo PrintReady(addslashes($place2['place']));
@@ -212,8 +212,8 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		else {
 			$placename = $place2['place'].$placelevels;
 			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["unknown"].$placelevels));
-				else echo $pgv_lang["unknown"];
+				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
+				else echo $pgv_lang["pl_unknown"];
 			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($place2['place'].$placelevels));
 				else echo PrintReady(addslashes($place2['place']));
@@ -234,6 +234,11 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 	else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
 		$long = str_replace(array('E', 'W', ','), array('', '-', '.'), $place2['long']);
+		//delete leading zero
+		if ($lati >= 0) 	$lati = abs($lati);
+		else if ($lati < 0) $lati = "-".abs($lati);
+		if ($long >= 0) 	$long = abs($long);
+		else if ($long < 0) $long = "-".abs($long);
 		// flags by kiwi_pgv
 		if (($place2["icon"] == NULL) || ($place2['icon'] == "") || ($GOOGLEMAP_PH_MARKER != "G_FLAG")) {
 			echo "var icon_type = new GIcon(G_DEFAULT_ICON);\n";
@@ -261,7 +266,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			$placename = substr($placelevels,2);
 			if ($place2['place'] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
-				else echo $pgv_lang["unknown"];
+				else echo $pgv_lang["pl_unknown"];
 			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
 				else echo PrintReady(addslashes($place2['place']));
@@ -269,8 +274,8 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		else {
 			$placename = $place2['place'].$placelevels;
 			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["unknown"].$placelevels));
-				else echo $pgv_lang["unknown"];
+				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
+				else echo $pgv_lang["pl_unknown"];
 			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($place2['place'].$placelevels));
 				else echo PrintReady(addslashes($place2['place']));
@@ -522,7 +527,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 				}
 			}
 			else if ($level>0){ //if unknown place display the upper level place
-				$placelevels = ", ".$pgv_lang["unknown"].$placelevels;
+				$placelevels = ", ".$pgv_lang["pl_unknown"].$placelevels;
 				$linklevels .= "&amp;parent[".$level."]=";
 				for ($i=1;$i<=$GM_MAX_NOF_LEVELS;$i++)
 				if (($level-$i)>=0 && isset($levelo[($level-$i)])) {

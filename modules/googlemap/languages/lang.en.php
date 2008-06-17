@@ -113,6 +113,7 @@ $pgv_lang["pl_max"]                 = "Max";
 $pgv_lang["pl_delete"]              = "Delete geographic location";
 $pgv_lang["pl_search_level"]		= "Search on this level";
 $pgv_lang["pl_search_all"]			= "Search all";
+$pgv_lang["pl_unknown"]				= "Unknown";
 
 $pgv_lang["pl_flag"]                = "Flag";
 $pgv_lang["flags_edit"]             = "Select flag";
