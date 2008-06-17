@@ -176,7 +176,7 @@ class MediaControllerRoot extends IndividualController{
 		global $pgv_lang, $GEDCOM;
 
 		if (!is_null($this->mediaobject)) {
-			$name = $this->mediaobject->getTitle();
+			$name = $this->mediaobject->getFullName();
 			return $name." - ".$this->mediaobject->getXref();
 		}
 		else return $pgv_lang["unknown"];

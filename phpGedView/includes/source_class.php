@@ -100,17 +100,6 @@ class Source extends GedcomRecord {
 	}
 
 	/**
-	 * get the title of this source record
-	 * @return string
-	 */
-	function getTitle() {
-		global $pgv_lang;
-		if (!$this->canDisplayDetails()) return $pgv_lang["private"];
-		if (empty($this->name)) return $pgv_lang["unknown"];
-		return $this->name;
-	}
-
-	/**
 	 * get source facts array
 	 * @return array
 	 */

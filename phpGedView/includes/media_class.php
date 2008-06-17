@@ -117,43 +117,9 @@ class Media extends GedcomRecord {
 	function getNote(){
 		return $this->note;
 	}
-	/**
-	 * get the media title
-	 * @return string
-	 */
-	function getTitle() {
-		global $pgv_lang;
-		if (!$this->canDisplayDetails()) return $pgv_lang["private"];
-		if (empty($this->title)) {
-			$title = basename($this->file);
-			if (!empty($title)) return $title;
-			return $pgv_lang["unknown"];
-		}
-		return $this->title;
-	}
 
 	function getName() {
-		return $this->getTitle();
-	}
-
-	/**
-	 * get the _HEB or ROMN media title
-	 * @return string
-	 */
-	function getAddTitle() {
-		global $pgv_lang;
-
-		if (!$this->canDisplayDetails()) return "";
-
-		$addtitle = get_gedcom_value("TITL:_HEB", 2, $this->gedrec);
-		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $this->gedrec);
-		if (!empty($addtitle)) $addtitle = "<br />".$addtitle;
-
-		$addtitle2 = get_gedcom_value("TITL:ROMN", 2, $this->gedrec);
-		if (empty($addtitle2)) $addtitle2 = get_gedcom_value("TITL:ROMN", 1, $this->gedrec);
-
-		if (!empty($addtitle2)) $addtitle .= "<br />\n".$addtitle2;
-		return $addtitle;
+		return $this->getFullName();
 	}
 
 	/**
@@ -161,7 +127,7 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getSortableName() {
-		return $this->getTitle();
+		return $this->getSortName();
 	}
 
 	/**
@@ -376,9 +342,14 @@ class Media extends GedcomRecord {
 		return false;
 	}
 
+	// If this object has no name, what do we call it?
+	function getFallBackName() {
+		return basename($this->file);
+	}
+
 	// Get an array of structures containing all the names in the record
 	function getAllNames() {
-		return parent::getAllNames('TITL');
+		return parent::getAllNames('TITL', 2);
 	}
 }
 ?>
