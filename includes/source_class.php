@@ -256,7 +256,7 @@ class Source extends GedcomRecord {
 	 * @return string
 	 */
 	function getName() {
-		return $this->getTitle();
+		return $this->getFullName();
 	}
 
 	/**

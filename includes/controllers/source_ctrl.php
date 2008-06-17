@@ -166,7 +166,7 @@ class SourceControllerRoot extends BaseController {
 	 */
 	function getPageTitle() {
 		global $pgv_lang;
-		return $this->source->getTitle()." - ".$this->sid." - ".$pgv_lang["source_info"];
+		return $this->source->getFullName()." - ".$this->sid." - ".$pgv_lang["source_info"];
 	}
 	/**
 	 * check if use can edit this person
