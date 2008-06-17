@@ -468,7 +468,7 @@ class Family extends GedcomRecord {
 						$this->_getAllNames[]=array(
 							'type'=>$husb_name['type'],
 							'full'=>$husb_name['full'].' + '.$wife_name['full'],
-							'list'=>$husb_name['list'].' + '.$wife_name['list'],
+							'list'=>$husb_name['list'].$this->husb->getSexImage().'<br />'.$wife_name['list'].$this->wife->getSexImage(),
 							'sort'=>$husb_name['sort'].' + '.$wife_name['sort'],
 						);
 					}
@@ -479,7 +479,7 @@ class Family extends GedcomRecord {
 				$this->_getAllNames[]=array(
 					'type'=>$husb_names[0]['type'],
 					'full'=>$husb_names[0]['full'].' + '.$wife_names[0]['full'],
-					'list'=>$husb_names[0]['list'].' + '.$wife_names[0]['list'],
+					'list'=>$husb_names[0]['list'].$this->husb->getSexImage().'<br />'.$wife_names[0]['list'].$this->wife->getSexImage(),
 					'sort'=>$husb_names[0]['sort'].' + '.$wife_names[0]['sort'],
 				);
 			}
