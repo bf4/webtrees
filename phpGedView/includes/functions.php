@@ -192,7 +192,7 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 }
 
 function encode_url($url, $entities=true) {
-	$url = str_replace(array(' ', '+'), array('%20', '%2b'), $url);		// GEDCOM names can legitimately contain these chars
+	$url = str_replace(array(' ', '+', '#'), array('%20', '%2b', '23'), $url);		// GEDCOM names can legitimately contain these chars
 //	if ($entities) $url = htmlentities($url);
 	if ($entities) {
 		$url = str_replace("&", "&amp;", ($url));
