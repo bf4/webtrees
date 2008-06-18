@@ -1058,4 +1058,19 @@ if ($Languages_Default) {            // If Languages not yet configured
 	$language_settings["english"]["pgv_lang_use"] = false;
 	$language_settings[$LANGUAGE]["pgv_lang_use"] = true;
 }
+
+// Characters with weak-directionality can confuse the browser's BIDI algorithm.
+// Make sure that they follow the directionality of the page, not that of the
+// enclosed text.
+if ($TEXT_DIRECTION=='LTR') {
+	define ('PGV_LPARENS', '&lrm;(');
+	define ('PGV_RPARENS', ')&lrm;');
+	define ('PGV_LDQUO',   '&lrm;&ldquo;');
+	define ('PGV_RDQUO',   '&rdquo;&lrm;');
+} else {
+	define ('PGV_LPARENS', '&rlm;(');
+	define ('PGV_RPARENS', ')&rlm;');
+	define ('PGV_LDQUO',   '&rlm;&ldquo;');
+	define ('PGV_RDQUO',   '&rdquo;&rlm;');
+}
 ?>
