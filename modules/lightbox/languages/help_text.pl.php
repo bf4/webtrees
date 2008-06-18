@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PhpGedView developers
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id:
- * @author Łukasz Wileński
+  * @author Łukasz Wileński <wooc@users.sourceforge.net>
+ * @version $Id$
  */
 
 //-- security check, only allow access from module.php
@@ -33,6 +33,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// Added in VERSION 4.1.6
+$pgv_lang["lb_tt_balloonLegend"]		= "Album - Miniaturki - Okienko szczegółów";
+$pgv_lang["lb_tt_balloon_help"]			= "~#pgv_lang[lb_tt_balloonLegend]#~<br />Ta opcja pozwala wybrać czy szczegóły i notatki danej miniaturki będą wyświetlane w dymku czy w zwykłym okienku (tzw. tooltip).<br /><br />W dymku bądź okienku będą również wyświetlone odnośniki do szczegółów oraz źródeł powązanych z danymi multimediami.<br />";
+
+// VERSION 4.1.3 
 $pgv_lang["mediatabLegend"]				= "Właściwości zakładki Multimedia";
 $pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatab]#~<br />Ta opcja pozwala na określenie czy zakładka Multimediów ma być widoczna na stronie #pgv_lang[indi_info]#.<br /><br />Jeśli ta opcja jest ustawiona na <b>#pgv_lang[hide]#</b>, tylko zakładka <b>#pgv_lang[lightbox]#</b> będzie widoczna i będzie jej nazwa zmieniona na <b>#pgv_lang[media]#</b>.<br />";
 $pgv_lang["lb_al_head_linksLegend"]		= "Właściwości zakładki Album";
