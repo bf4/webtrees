@@ -1524,7 +1524,7 @@ class Person extends GedcomRecord {
 		// Add placeholder for unknown surname
 		if (strpos($full, '//')!==false) {
 			$full=str_replace('//', '/@N.N./', $full);
-			$surn='@N.N.';
+			$surns=array('@N.N.');
 		}
 
 		// Add placeholder for unknown given name
@@ -1564,7 +1564,7 @@ class Person extends GedcomRecord {
 			$list=$full;
 		} else {
 			list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $full);
-			$list=trim($tmp2.', '.$tmp1.' '.$tmp3);
+			$list=$tmp2.', '.trim($tmp1.' '.$tmp3);
 			$full=str_replace('/', '', $full);
 		}
 

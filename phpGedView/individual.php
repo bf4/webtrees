@@ -171,6 +171,9 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php
 				list($surname)=explode(',', $controller->indi->getSortName());
+				if (!$surname) {
+					$surname='@N.N.'; // TODO empty surname is not the same as @N.N.
+				}
 				$menu = $menubar->getListsMenu($surname); $menu->printMenu();
 				if (file_exists("reports/individual.xml")) {?>
 					</td><td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
