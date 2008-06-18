@@ -112,7 +112,11 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 					$record=GedcomRecord::getInstance($favorite['gid']);
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
 					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
-					$content.=$record->format_list('span');
+					if ($record) {
+						$content.=$record->format_list('span');
+					} else {
+						$content.=$pgv_lang['invalid_id'];
+					}
 					$content .= "<br />".PrintReady($favorite["note"]);
 				}
 			}
