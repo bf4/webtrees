@@ -356,33 +356,30 @@ if ($level > 0) {
 		$mysourcelist = array();
 		$myfamlist = array();
 		for($i=0; $i<count($positions); $i++) {
-			$gid = $positions[$i];
-			$indirec=find_gedcom_record($gid);
-			$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
-			if ($ct>0) {
-				$type = trim($match[2]);
-				if ($type == "INDI") {
-					$myindilist["$gid"] = get_sortable_name($gid);
-				}
-				else if ($type == "FAM") {
-					$myfamlist["$gid"] = get_sortable_family_descriptor($gid);
-				}
-				else if ($type == "SOUR") {
-					$mysourcelist["$gid"] = get_source_descriptor($gid);
-				}
+			$record=GedcomRecord::getInstance($positions[$i]);
+			switch ($record->getType()) {
+			case 'INDI':
+				$myindilist[]=$record;
+				break;
+			case 'SOUR':
+				$mysourlist[]=$record;
+				break;
+			case 'FAM':
+				$myfamlist[]=$record;
+				break;
 			}
 		}
 		print "<br />";
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
 		$title = PrintReady(substr($title, 0, -2))." ";
 		// Sort each of the tables by Name
-		if (count($myindilist) > 1) uasort($myindilist, "stringsort");
-		if (count($myfamlist) > 1) uasort($myfamlist, "stringsort");
-		if (count($mysourcelist) > 1) uasort($mysourcelist, "stringsort");
+		usort($myindilist,   array('GedcomRecord', 'CompareName'));
+		usort($myfamlist,    array('GedcomRecord', 'CompareName'));
+		usort($mysourcelist, array('GedcomRecord', 'CompareName'));
 		// Print each of the tables
-		print_indi_table(array_keys($myindilist),   $pgv_lang["individuals"]." @ ".$title);
-		print_fam_table (array_keys($myfamlist),    $pgv_lang["families"   ]." @ ".$title);
-		print_sour_table(array_keys($mysourcelist), $pgv_lang["sources"    ]." @ ".$title);
+		print_indi_table($myindilist,   $pgv_lang['individuals'].' @ '.$title);
+		print_fam_table ($myfamlist,    $pgv_lang['families'   ].' @ '.$title);
+		print_sour_table($mysourcelist, $pgv_lang['sources'    ].' @ '.$title);
 	}
 }
 
