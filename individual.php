@@ -127,7 +127,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		{
 			?><br />
 			<?php print $pgv_lang["indi_is_remote"]; ?><!--<br />--><!--take this out if you want break the remote site and the fact that it was remote into two separate lines-->
-			<a href="<?php print $controller->indi->getLinkUrl(); ?>"><?php print $controller->indi->getLinkTitle(); ?></a>
+			<a href="<?php print encode_url($controller->indi->getLinkUrl()); ?>"><?php print $controller->indi->getLinkTitle(); ?></a>
 			<?php
 		}
 		// if indivual is not a remote individual

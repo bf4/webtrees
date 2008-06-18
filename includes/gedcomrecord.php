@@ -247,7 +247,7 @@ class GedcomRecord {
 				}
 			}
 		}
-		return encode_url($url);
+		return $url;
 	}
 	
 	/**
@@ -278,7 +278,7 @@ class GedcomRecord {
 		global $SEARCH_SPIDER;
 		if (empty($SEARCH_SPIDER)) {
 			if ($target) $target = "target=\"".$target."\"";
-			return "<a href=\"".$this->getLinkUrl()."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
+			return "<a href=\"".encode_url($this->getLinkUrl())."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
 		}
 		else
 			return $this->getXref();
@@ -346,7 +346,7 @@ class GedcomRecord {
 			$url .= "&parent[".$i."]=".trim($exp[$level-$i-1]);
 		}
 		$url .= "&ged=".$GEDCOM;
-		return encode_url($url);
+		return $url;
 	}
 
 	/**
@@ -600,7 +600,7 @@ class GedcomRecord {
 			$text=strip_tags($d->Display(false, "{$DATE_FORMAT}", array()));
 		}
 		if ($add_url)
-			$text='<a name="'.$sort.'" href="'.$this->getLinkUrl().'">'.$text.'</a>';
+			$text='<a name="'.$sort.'" href="'.encode_url($this->getLinkUrl()).'">'.$text.'</a>';
 		return $text;
 	}
 

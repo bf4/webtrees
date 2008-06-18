@@ -97,7 +97,7 @@ function print_todo($block=true, $config='', $side, $index) {
 				}
 				$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
 				$name=$record->getListName();
-				$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.$record->getLinkUrl().'">'.PrintReady($name).'</a></td>';
+				$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
 				if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
 					$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
 				}
