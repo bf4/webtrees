@@ -1543,20 +1543,17 @@ class Person extends GedcomRecord {
 		// Make sure the NICK is included in the NAME record.
 		$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($nick && stristr($full, $nick)===false) {
-			//TODO directional quotes need &lrm; etc.
-			//$full.=' &ldquo;'.$nick.'&rdquo;';
 			$pos=strpos($full, '/');
 			if ($pos===false) {
-				$full.=' "'.$nick.'"';
+				$full.=' '.PGV_LDQUO.$nick.PGV_RDQUO;
 			} else {
-				$full=substr($full, 0, $pos).'"'.$nick.'" '.substr($full, $pos);
+				$full=substr($full, 0, $pos).PGV_LDQUO.$nick.PGV_RDQUO.' '.substr($full, $pos);
 			}
 		}
 
 		// Convert "user-defined" unknowns into PGV unknowns
 		$full=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@N.N.', $full);
 		$givn=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@P.N.', $givn);
-		$surn=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@N.N.', $surn);
 		foreach ($surns as $key=>$value) {
 			$surns[$key]=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@N.N.', $value);
 		}
@@ -1567,12 +1564,9 @@ class Person extends GedcomRecord {
 			$list=$full;
 		} else {
 			list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $full);
-			$list=trim('/'.$tmp2.'/, '.$tmp1.' '.$tmp3);
+			$list=trim($tmp2.', '.$tmp1.' '.$tmp3);
+			$full=str_replace('/', '', $full);
 		}
-
-		// Now we have finished altering the name, remove the slashes
-		$full=str_replace('/', '', $full);
-		$list=str_replace('/', '', $list);
 
 		// Hungarians want the "full" name to be the surname first (i.e. "list") variant
 		if ($NAME_REVERSE) {
