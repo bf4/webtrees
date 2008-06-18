@@ -35,7 +35,6 @@ $PGV_BLOCKS["print_block_givn_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
 	"cache"=>7,
 	"num"=>10, 
-	"count_placement"=>"left",
 	"infoStyle"=>"style2"
 	);
 
@@ -56,41 +55,43 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	if (isset($_SESSION["first_names_f"][$GEDCOM])&&(!isset($DEBUG)||($DEBUG==false))) {
 		$name_list_f = $_SESSION["first_names_f"][$GEDCOM];
 		$name_list_m = $_SESSION["first_names_m"][$GEDCOM];
+		$name_list_u = $_SESSION["first_names_u"][$GEDCOM];
 	} else {
+		$name_list_f = array();
+		$name_list_m = array();
+		$name_list_u = array();
 	
 		//DB query
-		$firstnames = array();
 		$sql = "SELECT DISTINCT i_name, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
 		$res = dbquery($sql);
 		
 		if (!DB::isError($res)) {
 			while ($row =& $res->fetchRow()) {
+				if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
+				else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
+				else $genderList = 'name_list_u';
 				$firstnamestring = explode("/", $row[0]);
-				$individual_names = explode(" ", $firstnamestring[0]);
-				if ($individual_names[0] != "@P.N."){
-					if (strlen($individual_names[0]) > "2") {
-						if (preg_match("/1 SEX F/", $row[1])>0) {$firstnames_f[] = $individual_names[0];}
-						if (preg_match("/1 SEX M/", $row[1])>0) {$firstnames_m[] = $individual_names[0];}
+				$nameList = explode(" ", $firstnamestring[0]);
+				foreach ($nameList as $givnName) {
+					if ($givnName!="@P.N." && strlen($givnName)>2) {
+						if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
+						${$genderList}[$givnName] ++;
 					}
 				}
 			}
 			$res->free();
 		}
 		//Calculate Female names
-		$unique_names_f = array_unique($firstnames_f);
-		$unique_count_f = array_count_values($firstnames_f);
-		$name_list_f = array_combine($unique_names_f, $unique_count_f);
-		// Sort the list and save for future reference
-		arsort($name_list_f);
+		arsort($name_list_f, SORT_NUMERIC);
 		$_SESSION["first_names_f"][$GEDCOM] = $name_list_f;
-		
+
 		//Calculate Male names
-		$unique_names_m = array_unique($firstnames_m);
-		$unique_count_m = array_count_values($firstnames_m);
-		$name_list_m = array_combine($unique_names_m, $unique_count_m);
-		// Sort the list and save for future reference
-		arsort($name_list_m);
+		arsort($name_list_m, SORT_NUMERIC);
 		$_SESSION["first_names_m"][$GEDCOM] = $name_list_m;
+
+		//Calculate Unknown names
+		arsort($name_list_u, SORT_NUMERIC);
+		$_SESSION["first_names_u"][$GEDCOM] = $name_list_u;
 	}
 
 	//Print block header
@@ -139,13 +140,23 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 			if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
 			else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
 		}
-		print "</div><br /><br />";
+		print "</div>";
+		//List Unknown names	
+		print "<br /><b>".$pgv_lang["unknown"]."</b>";
+		print "<div class=\"wrap\" style=\"$padding\">";
+		$nameList = array_slice($name_list_u, 0, $config["num"]);
+		if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
+		foreach ($nameList as $key => $value) {
+			if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
+			else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+		}
+		print "</div>";
 		break;
 	case "style2":	// Style 2: Tabular format.  Narrow, 2-column table, good on right side of page
 		$nameAlign = ($TEXT_DIRECTION=='ltr') ? 'left':'right';
 		//Table Headings
 		print "<table class=\"center\">";
-		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td></tr>";
+		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td></tr>";
 		print "<tr>";
 		//List Female names
 		print "<td><table>";
@@ -159,6 +170,14 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		print "<td><table>";
 		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 		$nameList = array_slice($name_list_m, 0, $config["num"]);
+		foreach ($nameList as $key => $value) {
+			echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
+		}
+		print "</table></td>";
+		//List Unknown names	
+		print "<td><table>";
+		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
+		$nameList = array_slice($name_list_u, 0, $config["num"]);
 		foreach ($nameList as $key => $value) {
 			echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
 		}

@@ -1535,87 +1535,73 @@ class stats {
 	 */
 	function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
 	{
-		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX;
+		global $TEXT_DIRECTION, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
+		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
 
-		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = 10;}
-		if(is_array($params) && isset($params[1]) && $params[1] != ''){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = false;}
+		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = 1;}
+		if(is_array($params) && isset($params[1]) && $params[1] != ''){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = 10;}
 		if(is_array($params) && isset($params[2]) && $params[2] != ''){$sorting = strtolower($params[2]);}else{$sorting = 'rcount';}
 		// sanity check
 		if(!isset($sort_types[$sorting])){$sorting = 'rcount';}
 
 		//-- cache the result in the session so that subsequent calls do not have to
 		//-- perform the calculation all over again.
-		if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false)))
-		{
+		if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false))) {
 			$name_list_f = $_SESSION['first_names_f'][$GEDCOM];
 			$name_list_m = $_SESSION['first_names_m'][$GEDCOM];
-		}
-		else
-		{
+			$name_list_u = $_SESSION["first_names_u"][$GEDCOM];
+		} else {
+			$name_list_f = array();
+			$name_list_m = array();
+			$name_list_u = array();
+
 			//DB query
-			$firstnames_f = array();
-			$firstnames_m = array();
 			$id = $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
 			$sql = "SELECT DISTINCT i_name, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$id}";
 			$res = dbquery($sql);
-			if(!DB::isError($res))
-			{
-				while($row =& $res->fetchRow())
-				{
+			if(!DB::isError($res)) {
+				while($row =& $res->fetchRow()) {
+					if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
+					else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
+					else $genderList = 'name_list_u';
 					$firstnamestring = explode('/', $row[0]);
-					$individual_names = explode(' ', $firstnamestring[0]);
-					if($individual_names[0] != '@P.N.' && $individual_names[0] != 'Living')
-					{
-						if(strlen($individual_names[0]) > 2)
-						{
-							if(preg_match("/1 SEX F/", $row[1]) > 0){$firstnames_f[] = $individual_names[0];}
-							if(preg_match("/1 SEX M/", $row[1]) > 0){$firstnames_m[] = $individual_names[0];}
+					$nameList = explode(' ', $firstnamestring[0]);
+					foreach ($nameList as $givnName) {
+						if ($givnName!="@P.N." && $givnName!='Living'&& strlen($givnName)>2) {
+							if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
+							${$genderList}[$givnName] ++;
 						}
 					}
 				}
 				$res->free();
 			}
-			//Calculate Female names
-			if(count($firstnames_f))
-			{
-				$unique_names_f = array_unique($firstnames_f);
-				$unique_count_f = (array_count_values($firstnames_f));
-				$name_list_f = (array_combine($unique_names_f,$unique_count_f));
-			}
-			else
-			{
-				$name_list_f = array();
-			}
 			$_SESSION['first_names_f'][$GEDCOM] = $name_list_f;
-
-			//Calculate Male names
-			if(count($firstnames_m))
-			{
-				$unique_names_m = array_unique($firstnames_m);
-				$unique_count_m = (array_count_values($firstnames_m));
-				$name_list_m = (array_combine($unique_names_m, $unique_count_m));
-			}
-			else
-			{
-				$name_list_m = array();
-			}
 			$_SESSION['first_names_m'][$GEDCOM] = $name_list_m;
+			$_SESSION['first_names_u'][$GEDCOM] = $name_list_u;
 		}
-		if($sex == 'F')
-		{
+		if ($sex == 'F') {
 			$name_list = 'name_list_f';
-			$sort_types[$sorting]($name_list_f);
-		}
-		elseif($sex == 'M')
-		{
+			eval($sort_types[$sorting]($name_list_f, $sort_flags[$sorting]).";");
+		} else if ($sex == 'M') {
 			$name_list = 'name_list_m';
-			$sort_types[$sorting]($name_list_m);
-		}
-		else
-		{
-			$name_list_b = array_merge($name_list_f, $name_list_m);
-			$sort_types[$sorting]($name_list_b);
+			eval($sort_types[$sorting]($name_list_m, $sort_flags[$sorting]).";");
+		} else if ($sex == 'U') {
+			$name_list = 'name_list_u';
+			eval($sort_types[$sorting]($name_list_u, $sort_flags[$sorting]).";");
+		} else {
+			$name_list_b = $name_list_f;
+			// Combine names and counts from the Male list into the Totals list
+			foreach ($name_list_m as $key => $count) {
+				if (isset($name_list_b[$key])) $name_list_b[$key] += $count;
+				else $name_list_b[$key] = $count;
+			}
+			// Combine names and counts from the Unknown list into the Totals list
+			foreach ($name_list_u as $key => $count) {
+				if (isset($name_list_b[$key])) $name_list_b[$key] += $count;
+				else $name_list_b[$key] = $count;
+			}
+			eval($sort_types[$sorting]($name_list_b, $sort_flags[$sorting]).";");
 			$name_list = 'name_list_b';
 		}
 		if(count($$name_list))
@@ -1672,6 +1658,11 @@ class stats {
 	function commonGivenMaleTotals($params=null){return $this->_commonGivenQuery('M', 'nolist', true, $params);}
 	function commonGivenMaleList($params=null){return $this->_commonGivenQuery('M', 'list', false, $params);}
 	function commonGivenMaleListTotals($params=null){return $this->_commonGivenQuery('M', 'list', true, $params);}
+
+	function commonGivenUnknown($params=null){return $this->_commonGivenQuery('U', 'nolist', false, $params);}
+	function commonGivenUnknownTotals($params=null){return $this->_commonGivenQuery('U', 'nolist', true, $params);}
+	function commonGivenUnknownList($params=null){return $this->_commonGivenQuery('U', 'list', false, $params);}
+	function commonGivenUnknownListTotals($params=null){return $this->_commonGivenQuery('U', 'list', true, $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Users                                                                     //
