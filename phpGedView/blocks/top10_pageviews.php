@@ -100,7 +100,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 					if ($CountSide=='left') {
 						$content .= '<td dir="ltr" align="right">['.$count.']</td>';
 					}
-					$content .= '<td class="name2" ><a href="'.$record->getLinkUrl().'">'.PrintReady($record->getFullName()).'</a></td>';
+					$content .= '<td class="name2" ><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($record->getFullName()).'</a></td>';
 					if ($CountSide=='right') {
 						$content .= '<td dir="ltr" align="right">['.$count.']</td>';
 					}
