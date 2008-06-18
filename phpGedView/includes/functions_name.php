@@ -270,29 +270,6 @@ function reverse_name($name) {
 }
 
 /**
- * get the descriptive title of the media object
- *
- * @param string $sid the gedcom xref id for the media to find
- * @return string the title of the source
- */
-function get_media_descriptor($id) {
-	global $objectlist;
-	if ($id=="") return false;
-
-	if (isset($objectlist[$id]["title"])) {
-		if (!empty($objectlist[$id]["title"])) return $objectlist[$id]["title"];
-		else return $objectlist[$id]["file"];
-	} else {
-		$gedrec = find_media_record($id);
-		if (!empty($gedrec)) {
-			if (!empty($objectlist[$id]["title"])) return $objectlist[$id]["title"];
-			else return $objectlist[$id]["file"];
-		}
-	}
-	return false;
-}
-
-/**
  * get the descriptive title of the source
  *
  * @param string $sid the gedcom xref id for the source to find

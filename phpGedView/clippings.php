@@ -242,31 +242,8 @@ else {
 			<td class="list_value ltr"><?php echo $clipping['id']?></td>
 			<td class="list_value">
 			<?php
-			$id_ok = true;
-			if(displayDetailsByID($clipping['id'],$tag)){
-				if ($tag=='INDI'){
-					  if ($id_ok)
-					  	$dName = get_sortable_name($clipping['id']);
-					  else
-					  	$dName = $pgv_lang["person_private"];
-				  	$names = preg_split("/,/", $dName);
-					$dName = check_NN($names);
-				  	print "<a href=\"individual.php?pid=".$clipping['id']."\">".PrintReady($dName)."</a>";
-				}
-				if ($tag=='FAM') {
-					$dName = get_family_descriptor($clipping['id']);
-				    $names = preg_split("/,/", $dName);
-					$dName = check_NN($names);
-				    print "<a href=\"family.php?famid=".$clipping['id']."\">".PrintReady($dName)."</a>";
-				}
-				if ($tag=='SOUR')
-					print "<a href=\"source.php?sid=".$clipping['id']."\">".PrintReady(get_source_descriptor($clipping['id']))."</a>";
-				if ($tag=='REPO')
-					print "<a href=\"repo.php?rid=".$clipping['id']."\">".PrintReady(get_repo_descriptor($clipping['id']))."</a>";
-				if ($tag=="OBJE") {
-				  	print "<a href=\"mediaviewer.php?mid=".$clipping['id']."\">".PrintReady(get_media_descriptor($clipping['id']))."</a>";
-				  }
-			}
+			$record=GedcomRecord::getInstance($clipping['id']);
+			echo '<a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($record->getListName()).'</a>';
 			?>
 			</td>
 			<td class="list_value center vmiddle"><a href="clippings.php?action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo $pgv_lang["remove"]?>" title="<?php echo $pgv_lang["remove"];?>" /></a></td>

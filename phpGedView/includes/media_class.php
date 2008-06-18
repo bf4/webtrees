@@ -336,7 +336,11 @@ class Media extends GedcomRecord {
 
 	// If this object has no name, what do we call it?
 	function getFallBackName() {
-		return basename($this->file);
+		if ($this->canDisplayDetails()) {
+			return basename($this->file);
+		} else {
+			return $this->getXref();
+		}
 	}
 
 	// Get an array of structures containing all the names in the record
