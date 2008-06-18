@@ -94,99 +94,20 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 			}
 			$i=0;
 			foreach($ids as $id=>$count) {
-				$gedrec = find_gedcom_record($id);
-				$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
-				if ($ct>0) {
-					$type = trim($match[2]);
-					$disp = displayDetailsById($id, $type);
-					if ($disp) {
-						if ($type=="INDI") {
-							$content .= "<tr valign=\"top\">";
-							if ($CountSide=="left") {
-								$content .= "<td dir=\"ltr\" align=\"right\">";
-								if ($TEXT_DIRECTION=="rtl") $content .= "&nbsp;";
-								$content .= "[".$count."]";
-								if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
-								$content .= "</td>";
-							}
-							$content .= "<td class=\"name2\" ><a href=\"individual.php?pid={$id}\">".PrintReady(get_person_name($id))."</a></td>";
-							if ($CountSide=="right") {
-								$content .= "<td dir=\"ltr\" align=\"right\">";
-								if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
-								$content .= "[".$count."]";
-								if ($TEXT_DIRECTION=="rtl") $content .= "&nbsp;";
-								$content .= "</td>";
-							}
-							$content .= "</tr>";
-							$i++;
-						}
-						if ($type=="FAM") {
-							$content .= "<tr valign=\"top\">";
-							if ($CountSide=="left") {
-								$content .= "<td dir=\"ltr\" align=\"right\">";
-								if ($TEXT_DIRECTION=="rtl") $content .= "&nbsp;";
-								$content .= "[".$count."]";
-								if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
-								$content .= "</td>";
-							}
-							$content .= "<td class=\"name2\" ><a href=\"family.php?famid={$id}\">".PrintReady(get_family_descriptor($id))."</a></td>";
-							if ($CountSide=="right") {
-								$content .= "<td dir=\"ltr\" align=\"right\">";
-								if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
-								$content .= "[".$count."]";
-								if ($TEXT_DIRECTION=="rtl") $content .= "&nbsp;";
-								$content .= "</td>";
-							}
-							$content .= "</tr>";
-								$i++;
-						}
-						if ($type=="REPO") {
-							if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
-								$content .= "<tr valign=\"top\">";
-								if ($CountSide=="left") {
-									$content .= "<td dir=\"ltr\" align=\"right\">";
-									if ($TEXT_DIRECTION=="rtl") $content .= "&nbsp;";
-									$content .= "[".$count."]";
-									if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
-									$content .= "</td>";
-								}
-								$content .= "<td class=\"name2\" ><a href=\"repo.php?rid={$id}\">".PrintReady(get_repo_descriptor($id))."</a></td>";
-								if ($CountSide=="right") {
-									$content .= "<td dir=\"ltr\" align=\"right\">";
-									if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
-									$content .= "[".$count."]";
-									if ($TEXT_DIRECTION=="rtl") $content .= "&nbsp;";
-									$content .= "</td>";
-								}
-								$content .= "</tr>";
-								$i++;
-							}
-						}
-						if ($type=="SOUR") {
-							if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
-								$content .= "<tr valign=\"top\">";
-								if ($CountSide=="left") {
-									$content .= "<td dir=\"ltr\" align=\"right\">";
-									if ($TEXT_DIRECTION=="rtl") $content .= "&nbsp;";
-									$content .= "[".$count."]";
-									if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
-									$content .= "</td>";
-								}
-								$content .= "<td class=\"name2\" ><a href=\"source.php?sid={$id}\">".PrintReady(get_source_descriptor($id))."</a></td>";
-								if ($CountSide=="right") {
-									$content .= "<td dir=\"ltr\" align=\"right\">";
-									if ($TEXT_DIRECTION=="ltr") $content .= "&nbsp;";
-									$content .= "[".$count."]";
-									if ($TEXT_DIRECTION=="rtl") $content .= "&nbsp;";
-									$content .= "</td>";
-								}
-								$content .= "</tr>";
-								$i++;
-							}
-						}
-						if ($i>=$config["num"]) break;
+				$record=GedcomRecord::getInstance($id);
+				if ($record && $record->canDisplayDetails()) {
+					$content .= '<tr valign="top">';
+					if ($CountSide=='left') {
+						$content .= '<td dir="ltr" align="right">['.$count.']</td>';
 					}
+					$content .= '<td class="name2" ><a href="'.$record->getLinkUrl().'">'.PrintReady($record->getFullName()).'</a></td>';
+					if ($CountSide=='right') {
+						$content .= '<td dir="ltr" align="right">['.$count.']</td>';
+					}
+					$content .= '</tr>';
+					$i++;
 				}
+				if ($i>=$config['num']) break;
 			}
 			$content .= "</table>";
 		} else {
