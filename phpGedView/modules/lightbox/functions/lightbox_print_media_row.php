@@ -40,7 +40,7 @@
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 	global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
-	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q;
+	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q, $LB_TT_BALLOON ;
 	
 	// If reorder media has been clicked
 	if (isset($reorder) && $reorder==1) {
@@ -130,6 +130,25 @@
 			$left	= "false";
 		}
 		
+		// Tooltip Options
+		$tt_opts	 =	", BALLOON," . $LB_TT_BALLOON ;
+		$tt_opts	.=	", LEFT," . $left . "";
+		$tt_opts	.=	", ABOVE, true";
+		$tt_opts	.=	", TEXTALIGN, '" . $alignm . "'";
+		$tt_opts	.=	", WIDTH, -480 ";
+		$tt_opts	.=	", BORDERCOLOR, ''";
+		$tt_opts	.=	", TITLEBGCOLOR, ''";
+		$tt_opts	.=	", CLOSEBTNTEXT, 'X'";
+		$tt_opts	.=	", CLOSEBTN, true";
+		$tt_opts	.=	", CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000']";
+		$tt_opts	.=	", OFFSETX, -10";
+		$tt_opts	.=	", STICKY, true";
+		$tt_opts	.=	", PADDING, 6";
+		$tt_opts	.=	", CLICKCLOSE, true";
+		$tt_opts	.=	", BGCOLOR, '#f3f3f3'";
+		$tt_opts	.=	", JUMPHORZ, 'true' ";
+		$tt_opts	.=	", DELAY, 0";
+		
 		// Check if allowed to View media
 		if ($isExternal || media_exists($thumbnail) && !FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 			$mainFileExists = false;
@@ -140,13 +159,6 @@
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-				
-				// Start Thumbnail Enclosure table 
-				print "<table class=\"pic\" border=\"0\"><tr>" . "\n";
-				print "<td align=\"center\" rowspan=\"2\">";
-				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"120px\" alt=\"\" />";
-				print "</td>". "\n";
-				print "<td align=\"center\" >". "\n";
 				
 				// Check Filetype of media item ( Regular, URL, or Not supported by lightbox at the moment )
 				// Regular ----------------------------------
@@ -168,67 +180,95 @@
 					$file_type = "other";
 				}
 				
+				// Start Thumbnail Enclosure table 
+				print "<table class=\"pic\" border=0><tr>" . "\n";
+				print "<td align=\"center\" rowspan=2 >";
+				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"100px\"></img>";
+				print "</td>". "\n";
+
 				// Check for Notes associated media item
-				if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-					if ($reorder!=1) {
+				if ($reorder!=1) {
+					print "<td width=\"45%\"valign=\"top\" align=\"center\" >". "\n";
+					if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 						// Print Note and number above thumbnail
-						if ($TEXT_DIRECTION=="rtl") {
-							$note[$n]  = "&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";
-						}else{
-							$note[$n]  = $pgv_lang["note"] . "&nbsp;" . ($n+1) . "";
-						}
 						print "<a href=\"#\" ";
 						// Notes Tooltip ----------------------------------------------------
 						print "onclick=\"Tip(";
 							// Contents of Notes 
 							echo "'";
-								echo "<font color=#008800><b>" . $note[$n]. ":</b></font><br />";
+								echo "<center><font color=#008800><b>&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["notes"] . ":&nbsp;&nbsp;&nbsp;&nbsp;</b></font></center>";
+								// echo "<br />";
 								echo $notes;
 							echo "'";
 							// Notes Tooltip Parameters
-							print ", BALLOON, false";
-							print ", LEFT," . $left . "";
-							print ", ABOVE, true";
-							print ", TEXTALIGN, '" . $alignm . "'";
-							print ", WIDTH, -480 ";
-							print ", BORDERCOLOR, ''";
-							print ", TITLEBGCOLOR, ''";
-							print ", CLOSEBTNTEXT, 'X'";
-							print ", CLOSEBTN, true";
-							print ", CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000']";
-							print ", OFFSETX, -10";
-							print ", STICKY, true";
-							print ", PADDING, 6";
-							print ", CLICKCLOSE, true";
-							print ", BGCOLOR, '#f3f3f3'";
-							print ", JUMPHORZ, 'true' ";
-							print ", DELAY, 0";
-							print ");";
-							print "return false;\"";
+							print $tt_opts;
+						print ");";
+						print "return false;\"";
 						if ($reorder==1) {
 							// print "onmouseout=\"tt_HideInit()\"";
 							print "onmouseout=\"UnTip();\"";
 						}
 						// End Notes Tooltip --------------------------------------------------
 						print ">\n";
-						print "<font size=\"1\">" . $note[$n] . "</font>";
+						print "<font size=\"1\">" . $pgv_lang["notes"] . "</font>";
 						print "</a>";
-						print "<br />";
+						// print "<br />";
 						$items[$n+1]= $item+1;
 						$n++;
+					//  Else if no note available
+					}else{
+							print "<font size=\"1\">&nbsp;</font>";
 					}
-				//  Else if no note available
-				}else{
-					if ($reorder!=1) {
-						print "<font size=\"1\">&nbsp;</font>";
-						print "<br />";
-					}
+					print "</td>";
 				}
 				$item++;
+				
+				
+				// Details Tooltip --------------------------------
+				print "<td width=\"45%\" valign=\"top\" align=\"center\" >". "\n";
+				if ($reorder!=1) {
+					print "<a href=\"#\" ";
+					print "onclick =\"Tip(";
+						// Contents of Details Tooltip 
+						print "'";
+							echo "<center><font color=#008800><b>&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["lb_details"] . ":&nbsp;&nbsp;&nbsp;&nbsp;</b></font></center>";
+							// Title --------------------------------
+							print addslashes($mediaTitle);
+							print "<br />";
+							// Source ----------------------------
+							if (eregi("1 SOUR",$rowm['m_gedrec'])) {
+								print $pgv_lang["lb_view_source_tip"] ;
+								print "<a href=\'" . $SERVER_URL . "source.php?sid=" . $sour . "\'>";
+								print "<b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 . "</font></b>";
+								print "<\/a>"; 
+								print "<br />";
+							}
+							// Details -----------------------------
+								print PrintReady($pgv_lang["lb_view_details_tip"]);
+								print "<a href=\'" . $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'>";
+								print "<b><font color=#0000FF>&nbsp;" . $rowm["m_media"] . "</font></b>";
+								print "<\/a>";
+						print "'";
+						// Details Tooltip parameters ----------------------------------
+						print $tt_opts;
+					print ");";
+					// End Details Tooltip ----------------------------------
+					print "return false;\"";
+					print ">\n";
+					// Link Text ------------------------
+					print "<font size=1>";
+					print $pgv_lang["lb_details"];
+					print "</font>";
 					
+					print "</a>";
+					print "</td>";
+				}
+				
+				print "</tr><tr>";
+				
+				print "<td colspan=2 valign=\"top\" align=\"center\" >". "\n";
 				//If reordering media, do NOT Enable Lightbox nor show thumbnail tooltip
 				if ( $reorder==1 ) {
-				
 				// Else Enable Lightbox (Or popup) and show thumbnail tooltip ----------
 				}else{
 					// If regular filetype (Lightbox)
@@ -236,49 +276,11 @@
 						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "\""; 
 					// Else If url filetype (Lightbox)
 					}elseif ($file_type == "url") {
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "::" . htmlspecialchars($notes) . "\"";
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "\"";
 					// Else Other filetype (Pop-up Window)
 					}else{
 						print 	"<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "\""; 
 					}
-					
-					// Thumbnail Tooltip --------------------------------
-					print "onmouseover =\"Tip(";
-						// Contents of Thumbnail Tooltip 
-						print "'";
-							// Title --------------------------------
-							print "&nbsp;" . addslashes($mediaTitle) . "";
-							print "<br />";
-							// Source ----------------------------
-							if (eregi("1 SOUR",$rowm['m_gedrec'])) {
-								print "&nbsp;" . $pgv_lang["lb_view_source_tip"] ;
-								print "<a href=\'" . $SERVER_URL . "source.php?sid=" . $sour . "\'>";
-								print "<b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 . "</font></b>";
-								print "<\/a>"; 
-								print "<br />";
-							}
-							// Details -----------------------------
-							print "&nbsp;" . PrintReady($pgv_lang["lb_view_details_tip"]);
-							print "<a href=\'" . $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'>";
-							print "<b><font color=#0000FF>&nbsp;" . $rowm["m_media"] . "</font></b>";
-							print "<\/a>";
-						print "'";
-						// Thumbnail Tooltip parameters ----------------------------------
-							print ", TEXTALIGN, '" . $alignm . "'";
-							print ", LEFT," . $left . "";
-							print ", WIDTH, -300 ";
-							print ", OFFSETY, 5 ";
-							print ", OFFSETX, -15 ";
-							print ", CLICKCLOSE, true ";
-							print ", DURATION, 4000 ";
-							print ", STICKY, true ";
-							print ", PADDING, 5 ";
-							print ", BGCOLOR, '#f3f3f3' ";
-							print ", FONTSIZE, '8pt' "; 
-							print ", JUMPHORZ, 'true' ";
-							print ", DELAY, 0";
-					print ")\"";
-					// End Thumbnail Tooltip ----------------------------------
 					print ">\n";
 				}
 			}
@@ -302,8 +304,8 @@
 				print "<img src=\"{$thumbnail}\" height=\"{$height}\" border=\"0\" " ;
 			}
 			
-			// print no browser tooltips associated with image ----------------------------------------------
-			print " alt=\"\" title=\"\" />";
+			// print browser tooltips associated with image ----------------------------------------------
+			print " alt=\"\" title=\"" . Printready(strip_tags($mediaTitle)) . "\"  />";
 			
 			// Close anchor --------------------------------------------------------------
 			if ($mainFileExists) print "</a>" . "\n";
@@ -314,11 +316,10 @@
 			
 			//If reordering media
 			if ( $reorder==1 ) {
-				//Do nothing
-				
+
 			// Else if an editor, show editing icons
 			}elseif ( PGV_USER_CAN_EDIT && $edit=="1" ) {
-				print "<tr><td align=\"center\" nowrap=\"nowrap\">". "\n";
+				print "<tr><td></td><td colspan=\"2\" valign=\"bottom\" align=\"center\" nowrap=\"nowrap\">". "\n";
 				
 				// Edit Media Item Details
 				print "<a href=\"javascript:;\" onclick=\" return window.open('".encode_url("addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}")."', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\" ";

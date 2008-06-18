@@ -610,7 +610,7 @@ var CB_Close_Win		= CB_Close_Win;
 	var CB_Hide, CB_LoadingImg, CB_JumpX, CB_JumpY, CB_MarginL, CB_MarginT, CB_Content;
 	var CB_ImgWidth = CB_WinBaseW, CB_ImgHeight = CB_WinBaseH - CB_TextH;
 	var CB_ImgRate, CB_Win, CB_Txt, CB_Img, CB_Prv, CB_Nxt, CB_ImgWidthOld, CB_ImgHeightOld, CB_ActImgId;
-	var CB_Gallery, CB_Count, CB_preImages, CB_Loaded, CB_Header, CB_Footer, CB_Left, CB_Right, CB_Txt3;
+	var CB_Gallery, CB_Count, CB_preImages, CB_Loaded, CB_Header, CB_Footer, CB_Left, CB_Right, CB_Txt3, CB_Txt3a;
 
     CB_PicDir += "/";
 
@@ -649,7 +649,7 @@ var CB_Close_Win		= CB_Close_Win;
             c.setAttribute("id", "CB_All");
             b.appendChild(c);
 			
-            document.getElementById("CB_All").innerHTML = "<table cellspacing=\"0\" cellpadding=\"0\" id=\"CB_Window\"><tr id=\"CB_Header\"><td id=\"CB_TopLeft\">" + a + "</td><td id=\"CB_Top\"></td><td id=\"CB_TopRight\">" + a + "</td></tr><tr id=\"CB_Body\"><td id=\"CB_Left\"></td><td id=\"CB_Content\" valign=\"top\" align=\"left\"><div id=\"CB_Padding\"><div id=\"CB_Text\"></div><div id=\"CB_ImgContainer\"><iframe frameborder=\"0\" id=\"CB_iFrame\" src=\"\"></iframe><div id=\"CB_ShowTh\"></div><div id=\"CB_Thumbs\"><div id=\"CB_Thumbs2\"></div></div><img id=\"CB_LoadingImage\" title=\"loading\" src=\"" + CB_PicDir + CB_PictureLoading + "\" alt=\"\" /><img id=\"CB_Image\" alt=\"\" src=\"" + CB_PicDir + "blank.gif\" /><div id=\"CB_PrevNext\"><div id=\"CB_ImgHide\"></div><img id=\"CB_SlideShowBar\" src=\"" + CB_PicDir + "white.gif\" alt=\"\" /><a id=\"CB_Prev\" href=\"#\"></a><a id=\"CB_Next\" href=\"#\"></a></div></div><div id=\"CB_NavBar\"><img id=\"CB_SlideShowP\" title=\"" + CB_Pause_SS + "\" src=\"" + CB_PicDir + CB_PicturePause + "\" alt=\"\" /><img id=\"CB_SlideShowS\" title=\"" + CB_Start_SS + "\" src=\"" + CB_PicDir + CB_PictureStart + "\" alt=\"\" /><img id=\"CB_Speaker\" title=\"" + CB_Music + "\" src=\"" + CB_PicDir + CB_MusicNull + "\" alt=\"\" /><img id=\"CB_ZoomOff\" title=\"" + CB_Zoom_Off + "\" src=\"" + CB_PicDir + CB_ZoomStop + "\" alt=\"\" /><img id=\"CB_ZoomOn\" title=\"" + CB_Zoom_On + "\" src=\"" + CB_PicDir + CB_ZoomStart + "\" alt=\"\" /><center><table><tr><td><div id=\"CB_TopText\" title=\"" + CB_Detail_Info + "\"><a href=\"\">" + CB_ImgDetails + "</a></div></td><td><div id=\"CB_NoteText\" ></div></td></tr></table></center><img id=\"CB_CloseWindow\" title=\"" + CB_Close_Win + "\" src=\"" + CB_PicDir + CB_PictureClose + "\" alt=\"\" /></div></div></td><td id=\"CB_Right\"></td></tr><tr id=\"CB_Footer\"><td id=\"CB_BtmLeft\">" + a + "</td><td id=\"CB_Btm\"></td><td id=\"CB_BtmRight\">" + a + "</td></tr></table><div id=\"CB_ContentHide\"></div>";
+            document.getElementById("CB_All").innerHTML = "<table cellspacing=\"0\" cellpadding=\"0\" id=\"CB_Window\"><tr id=\"CB_Header\"><td id=\"CB_TopLeft\">" + a + "</td><td id=\"CB_Top\"></td><td id=\"CB_TopRight\">" + a + "</td></tr><tr id=\"CB_Body\"><td id=\"CB_Left\"></td><td id=\"CB_Content\" valign=\"top\" align=\"left\"><div id=\"CB_Padding\"><div id=\"CB_Text\"></div><div id=\"CB_ImgContainer\"><iframe frameborder=\"0\" id=\"CB_iFrame\" src=\"\"></iframe><div id=\"CB_UrlNotes\" ></div><div id=\"CB_ShowTh\"></div><div id=\"CB_Thumbs\"><div id=\"CB_Thumbs2\"></div></div><img id=\"CB_LoadingImage\" title=\"loading\" src=\"" + CB_PicDir + CB_PictureLoading + "\" alt=\"\" /><img id=\"CB_Image\" alt=\"\" src=\"" + CB_PicDir + "blank.gif\" /><div id=\"CB_PrevNext\"><div id=\"CB_ImgHide\"></div><img id=\"CB_SlideShowBar\" src=\"" + CB_PicDir + "white.gif\" alt=\"\" /><a id=\"CB_Prev\" href=\"#\"></a><a id=\"CB_Next\" href=\"#\"></a></div></div><div id=\"CB_NavBar\"><img id=\"CB_SlideShowP\" title=\"" + CB_Pause_SS + "\" src=\"" + CB_PicDir + CB_PicturePause + "\" alt=\"\" /><img id=\"CB_SlideShowS\" title=\"" + CB_Start_SS + "\" src=\"" + CB_PicDir + CB_PictureStart + "\" alt=\"\" /><img id=\"CB_Speaker\" title=\"" + CB_Music + "\" src=\"" + CB_PicDir + CB_MusicNull + "\" alt=\"\" /><img id=\"CB_ZoomOff\" title=\"" + CB_Zoom_Off + "\" src=\"" + CB_PicDir + CB_ZoomStop + "\" alt=\"\" /><img id=\"CB_ZoomOn\" title=\"" + CB_Zoom_On + "\" src=\"" + CB_PicDir + CB_ZoomStart + "\" alt=\"\" /><center><table><tr><td valign=\"top\"><div id=\"CB_Notes\"></div></td><td><div id=\"CB_NoteText\" ></div></td><td><div id=\"CB_DetailText\" title=\"" + CB_Detail_Info + "\" alt=\"\"></div></td><td valign=\"top\"><a href=\"\"><img id=\"CB_Details\" title=\"" + CB_Detail_Info + "\" src=\"" + CB_PicDir + CB_PictureDetails + "\" alt=\"\" /></a></td></tr></table></center><img id=\"CB_CloseWindow\" title=\"" + CB_Close_Win + "\" src=\"" + CB_PicDir + CB_PictureClose + "\" alt=\"\" /></div></div></td><td id=\"CB_Right\"></td></tr><tr id=\"CB_Footer\"><td id=\"CB_BtmLeft\">" + a + "</td><td id=\"CB_Btm\"></td><td id=\"CB_BtmRight\">" + a + "</td></tr></table><div id=\"CB_ContentHide\"></div>";
 
             if (navigator.userAgent.indexOf("MSIE 6") != -1 &&
                 CB_RoundPix == 0) {
@@ -702,16 +702,31 @@ var CB_Close_Win		= CB_Close_Win;
             CB_Txt.style.fontSize = CB_FontSize + "px";
             CB_Txt.style.fontWeight = CB_FontWeigth;
 			//CB_Txt.style.color = CB_FontColor;
-
-			CB_Txt2 = document.getElementById("CB_TopText");
+			
+			CB_Txt2 = document.getElementById("CB_DetailText");
 			CB_Txt2.style.fontFamily = CB_Font;
 			CB_Txt2.style.fontSize = CB_FontSize + "px";
 			CB_Txt2.style.fontWeight = CB_FontWeigth;
+			
+			CB_Txt2a = document.getElementById("CB_Details");
+			CB_Txt2a.style.fontFamily = CB_Font;
+			CB_Txt2a.style.fontSize = CB_FontSize + "px";
+			CB_Txt2a.style.fontWeight = CB_FontWeigth;
  
  			CB_Txt3 = document.getElementById("CB_NoteText");
  			CB_Txt3.style.fontFamily = CB_Font;
 			CB_Txt3.style.fontSize = CB_FontSize + "px";
 			CB_Txt3.style.fontWeight = CB_FontWeigth;
+			
+			CB_Txt3a = document.getElementById("CB_Notes");
+ 			CB_Txt3a.style.fontFamily = CB_Font;
+			CB_Txt3a.style.fontSize = CB_FontSize + "px";
+			CB_Txt3a.style.fontWeight = CB_FontWeigth;
+			
+ 			CB_Txt4 = document.getElementById("CB_UrlNotes");
+ 			CB_Txt4.style.fontFamily = CB_Font;
+			CB_Txt4.style.fontSize = CB_FontSize + "px";
+			CB_Txt4.style.fontWeight = CB_FontWeigth;
 			
 			CB_Header = document.getElementById("CB_Header").style;
             CB_Header.height = CB_RoundPix + "px";
@@ -784,7 +799,6 @@ var CB_Close_Win		= CB_Close_Win;
         if (CB_Show == 0) {
             return false;
         }
-
         CB_Cls.onclick = "";
         CB_SlideS.onclick = "";
         CB_SlideP.onclick = "";
@@ -902,8 +916,8 @@ var CB_Close_Win		= CB_Close_Win;
 		CB_Speak.style.display = "none";		
         CB_ZoomS.style.display = "none";
         CB_ZoomP.style.display = "none";
+
  //       CB_Txt2.style.display = "none";	
- //       CB_Toptext.style.display = "none";			
         CB_HideDocument("x");
 		CB_HideContent.onclick = function () {CB_Close();return false;};
 		CB_SS = "pause";
@@ -1207,23 +1221,38 @@ var CB_Close_Win		= CB_Close_Win;
             CB_iFr.style.top = CB_ImgBorder + "px";
             CB_iFr.style.left = CB_ImgBorder + "px";
             CB_iFr.style.width = CB_ImgWidth + "px";
-//BH next line changed to make url navbar smaller in Firefox
-//BH            	CB_iFr.style.height = CB_ImgHeight + 2 + "px";			
+			//BH next line changed to make url navbar smaller in Firefox
+			//BH 		CB_iFr.style.height = CB_ImgHeight + 2 + "px";			
 			CB_iFr.style.height = CB_ImgHeight + 4 + "px";
+			
             if (CB_Clicked[2] &&
                 CB_Clicked[2] != "null" && CB_Clicked[2] != null) {
-				// CB_Txt.innerHTML =  CB_Clicked[2];	
-
-				// Split URL title and also create CB_Txt.innerHTML   
-				var splitURLTitle = CB_Clicked[2].split("::",4);				
+				
+				CB_Txt.style.visibility = "visible";
+				CB_Txt3.style.visibility = "visible";
+				CB_Txt3a.style.visibility = "visible";
+				
+				CB_Txt4.style.top = "20px";
+				CB_Txt4.style.left = "20px";
+				CB_Txt4.style.width = "200px";
+				CB_Txt4.style.height = "80px";
+				CB_Txt4.innerHTML = " Testing ";
+				CB_Txt4.style.visibility = "hidden";
+				
+				// Split URL title and also create CB_Txt.innerHTML 
+					// CB_Txt.innerHTML =  CB_Clicked[2];
+				var splitURLTitle = CB_Clicked[2].split("::",4);
 				CB_Txt.innerHTML = splitURLTitle[2];
 				var MIDa = splitURLTitle[0];
 				var GEDCOMa = splitURLTitle[1];
 				var notey = splitURLTitle[3];
 				if (notey != "&lt;br /&gt;" && notey) {
-					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true ) \">" + CB_ImgNotes + "</a>";
-				}
-				CB_Txt2.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MIDa+'&ged='+GEDCOMa; return false; };
+					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey + "', CENTERWINDOW, false, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON, false, ABOVE, false, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -25, OFFSETX, 40, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" >" + CB_ImgNotes + "</a>";
+					CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey + "', CENTERWINDOW, false, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON, false, ABOVE, false, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -25, OFFSETX, 40, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
+
+					}
+				CB_Txt2.onclick  = function () { window.location.href = 'mediaviewer.php?mid='+MIDa+'&ged='+GEDCOMa; return false; };
+				CB_Txt2a.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MIDa+'&ged='+GEDCOM; return false; };
             } else {
                 CB_Txt.innerHTML = CB_Clicked[1];
             }
@@ -1456,6 +1485,7 @@ var CB_Close_Win		= CB_Close_Win;
         if (CB_Animation != "warp") {
             CB_Txt.innerHTML = "";
 			CB_Txt3.innerHTML = "";
+			CB_Txt3a.innerHTML = "";
             CB_LoadingImg.style.visibility = "hidden";
             CB_Img.src = CB_Gallery[CB_ActImgId][0];
             CB_Img.style.visibility = "visible";
@@ -1472,14 +1502,16 @@ var CB_Close_Win		= CB_Close_Win;
 			CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][1];
 			var notey1 = CB_Gallery[CB_ActImgId][5];
 			if (notey1 != "&lt;br /&gt;" && notey1 ) {
-				CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + (((DocSizeY-BrSizeY)/2)) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" >" + CB_ImgNotes + "</a>";
+				CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + (((DocSizeY-BrSizeY)/2)) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
+				CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + (((DocSizeY-BrSizeY)/2)) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
 			}
 		} else {
 			if (CB_ShowImgURL == "be") {
 				CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][0].split("/")[CB_Gallery[CB_ActImgId][0].split("/").length - 1];
 				var notey2 = CB_Gallery[CB_ActImgId][5];
 				if (notey2 != "&lt;br /&gt;" && notey2 ) {
-					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true ) \">" + CB_ImgNotes + "</a>";
+					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true ) \"></a>";
+					CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true ) \"><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
 				}
 			}
         }
@@ -1491,6 +1523,7 @@ var CB_Close_Win		= CB_Close_Win;
 		
         CB_Txt.style.visibility = "visible";
 		CB_Txt3.style.visibility= "visible";
+		CB_Txt3a.style.visibility= "visible";
         if (CB_Gallery.length > 0) {
            	CB_ImgWidthOld = CB_ImgWidth;
 			CB_ImgHeightOld = CB_ImgHeight;
@@ -1551,13 +1584,13 @@ var CB_Close_Win		= CB_Close_Win;
 		var GEDCOM = CB_Gallery[CB_ActImgId][4];
 //		CB_Txt2.onclick = function () { window.open('mediaviewer.php?filename='+MID+'&ged='+GEDCOM+'', "win01", " resizable=1, scrollbars=1, top=50, HEIGHT=800, WIDTH=1100 "); };
 		if (MID != "") { 
-			CB_Txt2.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MID+'&ged='+GEDCOM; return false; };
+			CB_Txt2.onclick  = function () { window.location.href = 'mediaviewer.php?mid='+MID+'&ged='+GEDCOM; return false; };
+			CB_Txt2a.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MID+'&ged='+GEDCOM; return false; };
 			//CB_Txt3.onclick = function () { alert(CB_Gallery[CB_ActImgId][5]); };
 
 		}else{
-			CB_Txt2.onclick = function () { CB_Close(); };
-			// CB_Txt3.onclick = function () { CB_Close(); };
-
+			CB_Txt2.onclick  = function () { CB_Close(); };
+			CB_Txt2a.onclick = function () { CB_Close(); };
 		}
 		
         return true;
@@ -1716,8 +1749,12 @@ var CB_Close_Win		= CB_Close_Win;
         CB_SlideShowStop();
 		CB_Txt.style.visibility = "hidden";
 		CB_Txt3.style.visibility = "hidden";
+		CB_Txt3a.style.visibility = "hidden";
+		CB_Txt4.style.visibility = "hidden";
         CB_Txt.innerHTML = "";
-		CB_Txt3.innerHTML = "";
+ 		CB_Txt3.innerHTML = "";
+		CB_Txt3a.innerHTML = "";
+ 		CB_Txt4.innerHTML = "";
         CB_Img.src = "";
         CB_ImgWidth = CB_WinBaseW;
         CB_ImgHeight = CB_WinBaseH - CB_TextH;
