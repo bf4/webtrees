@@ -28,7 +28,7 @@
  */
 ?>
 <?php
-global $lang_short_cut, $LANGUAGE, $PHP_SELF, $reorder;
+global $lang_short_cut, $LANGUAGE, $PHP_SELF, $reorder, $GEDCOM;
 
 loadLangFile("lb_lang");
 
@@ -99,7 +99,7 @@ include ('includes/media_reorder_count.php');
         if (PGV_USER_IS_ADMIN) {
 			if ($LB_AL_HEAD_LINKS == "both") {	
 	            print "<td class=\"width15 center wrap\" valign=\"top\">";
-	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}")."\">";
+	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}&gedcom={$GEDCOM}")."\">";
 				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$pgv_lang['configure_lightbox']}\" alt=\"{$pgv_lang['configure_lightbox']}\" /><br />" ;
 				print "" . $pgv_lang["configure_lightbox"] . "&nbsp;";
 				print "</a>";
@@ -108,7 +108,7 @@ include ('includes/media_reorder_count.php');
 	            print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 	            print "<td class=\"width15 center wrap\" valign=\"top\">";
-	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig")."\">";
+	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}")."\">";
 				print "" . $pgv_lang["configure_lightbox"] . "&nbsp;";
 				print "</a>";
 				print "</td>"; 

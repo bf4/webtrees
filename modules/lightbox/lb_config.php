@@ -32,7 +32,7 @@
 // ----------------------------------------------------//
  
 global $mediatab,$LB_AL_HEAD_LINKS,$LB_AL_THUMB_LINKS,$LB_ML_THUMB_LINKS,$LB_SS_SPEED;
-global $LB_MUSIC_FILE,$LB_TRANSITION,$LB_URL_WIDTH,$LB_URL_HEIGHT;
+global $LB_MUSIC_FILE,$LB_TRANSITION,$LB_URL_WIDTH,$LB_URL_HEIGHT,$GEDCOM;
 
 $mediatab = "1";  					// Individual Page Media Tab
 										// Set to 	0	to hide Media Tab on Indi page from All Users, 
@@ -41,24 +41,22 @@ $mediatab = "1";  					// Individual Page Media Tab
 					
 $LB_AL_HEAD_LINKS = "both";			// Album Tab Page Header Links
 										// Set to "icon"	to view icon links 
-										// Set to "text"	to view text links , [Default]
-										// Set to "both"	to view both. 
+										// Set to "text"	to view text links , 
+										// Set to "both"	to view both.  [Default]
 								
-$LB_AL_THUMB_LINKS = "text"; 		// Album Tab Page below Thumbnail Links
+$LB_TT_BALLOON = "true"; 			// Album Tab Page - Above Thumbnail Links
+										// Set to "true"	to view Tooltip Balloon [Default]
+										// Set to "false"	to view Tooltip Normal ,
+										
+$LB_AL_THUMB_LINKS = "text"; 		// Album Tab Page - Below Thumbnail Links
 										// Set to "icon"	to view icon links [Default]
 										// Set to "text"	to view text links ,
-																						
-$LB_ML_THUMB_LINKS = "text"; 		// MultiMedia List Page Thumbnail Links
-										// Set to "icon"	to view icon links 
-										// Set to "text"	to view text links ,
-										// Set to "both"	to view both. [Default]
-										// Set to "none"	to view neither.
 										
-$LB_SS_SPEED = "4";					// SlideShow speed in seconds.  [Min 2  max 25]  [Default=4]										
-							
+$LB_SS_SPEED = "6";					// SlideShow speed in seconds.  [Min 2  max 25]  [Default=4]
+										
 $LB_MUSIC_FILE = "modules/lightbox/music/music.mp3";  // The music file. [mp3 only] [Default = modules/lightbox/music/music.mp3]
 
-$LB_TRANSITION = "none";			// Next or Prvious Image Transition effect
+$LB_TRANSITION = "double";			// Next or Prvious Image Transition effect
 										// Set to "none"		No transtion effect
 										// Set to "normal"		Normal transtion effect
 										// Set to "double"		Fast transition effect
@@ -66,8 +64,13 @@ $LB_TRANSITION = "none";			// Next or Prvious Image Transition effect
 										
 $LB_URL_WIDTH = "1000";				//  URL Window width in pixels [default 1000]
 	
-$LB_URL_HEIGHT = "600";				//  URL Window height in pixels [default 600]	
+$LB_URL_HEIGHT = "600";				//  URL Window height in pixels [default 600]
 									
+$LB_ML_THUMB_LINKS = "text"; 		// MultiMedia List Page Thumbnail Links
+										// Set to "icon"	to view icon links 
+										// Set to "text"	to view text links ,
+										// Set to "both"	to view both. [Default]
+										// Set to "none"	to view neither.
 
 // --------------------------------------------------------- //
 //  End Configuration parameters for Lightbox Album.  //
@@ -84,7 +87,11 @@ $LB_URL_HEIGHT = "600";				//  URL Window height in pixels [default 600]
 // Do not change parameters below this line -------------------------------------------
 	
 	// Tab id no for Lightbox
-	$tabno=7;	
+if (file_exists("modules/googlemap/defaultconfig.php")) { 
+	$tabno=7;
+}else{
+	$tabno=6;
+}	
 
 							
 ?>

@@ -33,6 +33,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// Added in VERSION 4.1.6
+$pgv_lang["lb_tt_balloonLegend"]		= "Album Tab Thumbnail - Upper Links Tooltip";
+$pgv_lang["lb_tt_balloon_help"]			= "~#pgv_lang[lb_tt_balloonLegend]#~<br />This option lets you determine whether the links above each thumbnail should show a \"Balloon\" Tooltip or \"Normal\" Tooltip when clicked. <br /><br />The links shown here show you the Notes associated with a Media item or the links to the Media item details and source (if available).<br />";
+
+
+
+// VERSION 4.1.3 
 $pgv_lang["mediatabLegend"]				= "Media Tab Appearance";
 $pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatab]#~<br />This option lets you determine whether the Media tab should be shown on the #pgv_lang[indi_info]# page.<br /><br />When this option is set to <b>#pgv_lang[hide]#</b>, only the <b>#pgv_lang[lightbox]#</b> tab will be shown, and it will also be re-named to <b>#pgv_lang[media]#</b>.<br />";
 $pgv_lang["lb_al_head_linksLegend"]		= "Album Tab Header Link appearance";

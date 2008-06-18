@@ -33,7 +33,8 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
     print "Now, why would you want to do that.  You're not hacking are you?";
     exit;
 }
-global $pgv_lang, $pid;
+global $pgv_lang, $pid, $GEDCOM ;
+
 loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
 print_header($pgv_lang["configure_lightbox"]);
 
@@ -60,6 +61,7 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$mediatab\s*=\s*".*";/', "\$mediatab = \"".$_POST["NEW_mediatab"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_AL_HEAD_LINKS\s*=\s*".*";/', "\$LB_AL_HEAD_LINKS = \"".$_POST["NEW_LB_AL_HEAD_LINKS"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_AL_THUMB_LINKS\s*=\s*".*";/', "\$LB_AL_THUMB_LINKS = \"".$_POST["NEW_LB_AL_THUMB_LINKS"]."\";", $configtext);
+    $configtext = preg_replace('/\$LB_TT_BALLOON\s*=\s*".*";/', "\$LB_TT_BALLOON = \"".$_POST["NEW_LB_TT_BALLOON"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_ML_THUMB_LINKS\s*=\s*".*";/', "\$LB_ML_THUMB_LINKS = \"".$_POST["NEW_LB_ML_THUMB_LINKS"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_MUSIC_FILE\s*=\s*".*";/', "\$LB_MUSIC_FILE = \"".$_POST["NEW_LB_MUSIC_FILE"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_SS_SPEED\s*=\s*".*";/', "\$LB_SS_SPEED = \"".$_POST["NEW_LB_SS_SPEED"]."\";", $configtext);
@@ -123,10 +125,9 @@ $i = 0;
 		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["show"];?>&nbsp;&nbsp;<?php print $pgv_lang["hide"];?> 
 		</td>		
     </tr>
-	
-	
-	<tr><td>	
+	<tr><td><br>
 	</td></tr>
+	
 	
     <tr>
 		<td class="descriptionbox"><?php print_help_link("lb_al_head_links_help", "qm", "lb_al_head_links");?><b><?php print $pgv_lang["lb_al_head_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td> 
@@ -139,9 +140,22 @@ $i = 0;
 		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_both"];?>
 		</td>		
     </tr>
-	
 	<tr><td>	
 	</td></tr>
+	
+	
+    <tr>
+		<td class="descriptionbox"><?php print_help_link("lb_tt_balloon_help", "qm", "lb_tt_balloon");?><b><?php print $pgv_lang["lb_tt_balloon"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_ttAppearance"];?></td> 
+		<td class="optionbox"><select name="NEW_LB_TT_BALLOON" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_THUMB_LINKS_help');">
+                <option value="true"  <?php if ($LB_TT_BALLOON=="true")  print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_balloon_true"];?></option>
+                <option value="false" <?php if ($LB_TT_BALLOON=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_balloon_false"];?></option>
+                </select>
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_balloon_true"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_balloon_false"];?>
+		</td>		
+    </tr>
+	<tr><td>
+	</td></tr>
+	
 	
     <tr>
 		<td class="descriptionbox"><?php print_help_link("lb_al_thumb_links_help", "qm", "lb_al_thumb_links");?><b><?php print $pgv_lang["lb_al_thumb_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td> 
@@ -152,26 +166,9 @@ $i = 0;
 		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>
 		</td>		
     </tr>
-	
 	<tr><td>
 	</td></tr>
-	
-	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_ml_thumb_links_help", "qm", "lb_ml_thumb_links");?><b><?php print $pgv_lang["lb_ml_thumb_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td> 
-		<td class="optionbox">
-			<select name="NEW_LB_ML_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_ML_THUMB_LINKS_help');" />
-                <option value= "none" <?php if ($LB_ML_THUMB_LINKS == "none")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_none"];?></option>
-                <option value= "text" <?php if ($LB_ML_THUMB_LINKS == "text")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_text"];?></option>
-                <option value= "icon" <?php if ($LB_ML_THUMB_LINKS == "icon")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_icon"];?></option>
-                <option value= "both" <?php if ($LB_ML_THUMB_LINKS == "both")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_both"];?></option>
-            </select>		
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_none"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_both"];?>	
-		</td>
-    </tr>		
-	
 
-	<tr><td>	
-	</td></tr>
 
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("lb_ss_speed_help", "qm", "lb_ss_speed");?><b><?php print $pgv_lang["lb_ss_speed"];?></b></td> 
@@ -192,9 +189,8 @@ $i = 0;
             </select>		
 		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_ss_SpeedAdvice"];?>
 		</td>
-    </tr>		
-
-	<tr><td>	
+    </tr>
+	<tr><td>
 	</td></tr>
 	
 	<tr>
@@ -204,8 +200,6 @@ $i = 0;
 		<?php print $pgv_lang["lb_musicFileAdvice"];?>
 		</td>
     </tr>	
-	
-	
 	<tr><td>
 	</td></tr>
 	
@@ -220,7 +214,6 @@ $i = 0;
 		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_none"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_normal"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_double"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_warp"];?>	
 		</td>		
     </tr>
-	
 	<tr><td>
 	</td></tr>
 
@@ -235,10 +228,26 @@ $i = 0;
 		<?php print $pgv_lang["lb_url_dimensionsAdvice"];?>
 		</td>
     </tr>	
-	
-	
-	<tr><td>
+	<tr><td><br>
 	</td></tr>		
+	
+
+	
+	<tr>
+		<td class="descriptionbox"><?php print_help_link("lb_ml_thumb_links_help", "qm", "lb_ml_thumb_links");?><b><?php print $pgv_lang["lb_ml_thumb_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td> 
+		<td class="optionbox">
+			<select name="NEW_LB_ML_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_ML_THUMB_LINKS_help');" />
+                <option value= "none" <?php if ($LB_ML_THUMB_LINKS == "none")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_none"];?></option>
+                <option value= "text" <?php if ($LB_ML_THUMB_LINKS == "text")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_text"];?></option>
+                <option value= "icon" <?php if ($LB_ML_THUMB_LINKS == "icon")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_icon"];?></option>
+                <option value= "both" <?php if ($LB_ML_THUMB_LINKS == "both")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_both"];?></option>
+            </select>		
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_none"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_both"];?>	
+		</td>
+    </tr>
+	<tr><td>
+	</td></tr>
+	
 
     </table>
 	
@@ -253,8 +262,8 @@ $i = 0;
             &nbsp;&nbsp;
             <input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
             &nbsp;&nbsp;				
-			<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&tab=7'" /> 			
-        </td>
+			<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&tab=<?php echo $tabno;?>&gedcom=<?php echo $GEDCOM;?>'" />
+			</td>
 
     </tr>
     </table>
