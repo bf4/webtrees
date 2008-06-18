@@ -92,29 +92,25 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 						$content .= ob_get_clean();
 						$content .= PrintReady($favorite["note"]);
 						$content .= "</div>\n";
-					}
-					if ($favorite["type"]=="FAM") {
+					} elseif ($favorite["type"]=="FAM") {
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
 						if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
 						$content .= format_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, '', 'span');
 						$content .= "<br />".PrintReady($favorite["note"]);
 						$content .= "</div>\n";
-					}
-					if ($favorite["type"]=="SOUR") {
-						$sourrec = find_source_record($favorite["gid"]);
-						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
-						if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
-						$content.=format_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], 'span');
-						$content .= "<br />".PrintReady($favorite["note"]);
-						$content .= "</div>\n";
-					}
-					if ($favorite["type"]=="OBJE") {
+					} elseif ($favorite["type"]=="OBJE") {
 						$content .= "<div id=\"box".$favorite["gid"].".0\">\n";
 						if ($ctype=="user" || userIsAdmin()) $content .= $removeFavourite;
 						ob_start();
 						print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
 						$content .= ob_get_clean();
 						$content .= PrintReady($favorite["note"]);
+					} else {
+						$record=GedcomRecord::getInstance($favorite['gid']);
+						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
+						if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
+						$content.=$record->format_list('span');
+						$content .= "<br />".PrintReady($favorite["note"]);
 					}
 				}
 			}

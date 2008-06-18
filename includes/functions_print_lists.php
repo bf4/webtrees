@@ -190,79 +190,6 @@ function format_list_family($key, $value, $findid=false, $asso="", $tag='li') {
 }
 
 /**
- * print a source in a list
- *
- * This function will print a
- * clickable link to the source.php
- * page with the source's name
- * @param string $key the GEDCOM xref id of the person to print
- * @param array $value is an array of the form array($name, $GEDCOM)
- */
-function format_list_source($key, $value, $tag='li') {
-	global $source_total, $source_hide, $SHOW_ID_NUMBERS, $GEDCOM;
-
-	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
-	if (!isset($source_total)) {
-		$source_total=array();
-	}
-	$source_total[$key."[".$GEDCOM."]"] = 1;
-	$html='';
-	if (displayDetailsByID($key, "SOUR")) {
-		$listDir=begRTLText($value['name']) ? 'rtl' : 'ltr';
-		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
-		$html.='<a href="'.encode_url("source.php?sid={$key}&ged=".get_gedcom_from_id($value['gedfile'])).'" class="list_item"><b>'.PrintReady($value['name']).'</b>';
-		if ($SHOW_ID_NUMBERS && $key) {
-			if ($listDir=='rtl') {
-				$html.=' '.getRLM().'('.$key.')'.getRLM();
-			} else {
-				$html.=' ('.$key.')';
-			}
-		}
-		$html.='</a></'.$tag.'>';
-	} else {
-		$source_hide[$key.'['.$GEDCOM.']'] = 1;
-	}
-	return $html;
-}
-
-/**
- * print a repository in a list
- *
- * This function will print a
- * clickable link to the repo.php
- * @param string $key the GEDCOM xref id of the person to print
- * @param array $value is an array of the form array($name, $GEDCOM)
- */
-function format_list_repository($key, $value, $tag='li') {
-	global $repo_total, $repo_hide, $SHOW_ID_NUMBERS, $GEDCOM;
-
-	$GEDCOM = get_gedcom_from_id($value['gedfile']);
-	if (!isset($repo_total)) {
-		$repo_total=array();
-	}
-	$repo_total[$key.'['.$GEDCOM.']'] = 1;
-	$html='';
-	if (displayDetailsByID($key, 'REPO')) {
-		$listDir=begRTLText($value[0]) ? 'rtl' : 'ltr';
-		$html.='<'.$tag.' class="'.$listDir.'" dir="'.$listDir.'">';
-		$id = $value['id'];
-		$html.='<a href="'.encode_url("repo.php?rid={$id}").'" class="list_item">';
-		$html.=PrintReady($value['name']);
-		if ($SHOW_ID_NUMBERS && $key) {
-			if ($listDir=='rtl') {
-				$html.=' '.getRLM().'('.$key.')'.getRLM();
-			} else {
-				$html.=' ('.$key.')';
-			}
-		}
-		$html.='</a></'.$tag.'>';
-	} else {
-		$repo_hide[$key.'['.$GEDCOM.']'] = 1;
-	}
-	return $html;
-}
-
-/**
  * print a sortable table of individuals
  *
  * @param array $datalist contain individuals that were extracted from the database.
@@ -383,7 +310,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		$tdclass = "list_value_wrap";
 		if (!$person->isDead()) $tdclass .= " alive";
 		if (!$person->getChildFamilyIds()) $tdclass .= " patriarch";
-		echo "<td class=\"".$tdclass."\" align=\"".get_align($person->getFullName())."\">";
+		echo "<td class=\"".$tdclass."\" align=\"".get_align($person->getListName())."\">";
 		$names_html=array();
 		list($surn, $givn)=explode(',', $person->getSortName());
 		foreach ($person->getAllNames() as $num=>$name) {
@@ -401,7 +328,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$class='list_item';
 				$sex_image='';
 			}
-			$names_html[]='<a '.$title.' href="'.$person->getLinkUrl().'" class="'.$class.'">'.PrintReady($name['full']).'</a>'.$sex_image;
+			$names_html[]='<a '.$title.' href="'.$person->getLinkUrl().'" class="'.$class.'">'.PrintReady($name['list']).'</a>'.$sex_image;
 		}
 		echo implode('<br/>', $names_html);
 		// Indi parents
@@ -739,19 +666,16 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink("_blank").'</td>';
 		//-- Husband name(s)
-		$name = $husb->getSortableName();
+		$name=$husb->getFullName();
+		$addname=$husb->getAddName();
 		$tdclass = "list_value_wrap";
 		if (!$husb->isDead()) $tdclass .= " alive";
 		if (!$husb->getChildFamilyIds()) $tdclass .= " patriarch";
 		echo "<td class=\"".$tdclass."\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $husb->xref) echo $husb->getSexImage();
-		foreach ($name_subtags as $k=>$subtag) {
-			for ($num=1; $num<9; $num++) {
-				$addname = $husb->getSortableName($subtag, $num);
-				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-				if (empty($addname)) break;
-			}
+		if ($addname) {
+			echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		// Husband parents
 		if ($husb->xref) echo $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
@@ -784,19 +708,16 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
-		$name = $wife->getSortableName();
+		$name=$wife->getFullName();
+		$add_name=$wife->getAddName();
 		$tdclass = "list_value_wrap";
 		if (!$wife->isDead()) $tdclass .= " alive";
 		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";
 		echo "<td class=\"".$tdclass."\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $wife->xref) echo $wife->getSexImage();
-		foreach ($name_subtags as $k=>$subtag) {
-			for ($num=1; $num<9; $num++) {
-				$addname = $wife->getSortableName($subtag, $num);
-				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-				if (empty($addname)) break;
-			}
+		if ($addname) {
+			echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		// Wife parents
 		if ($wife->xref) echo $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
@@ -1020,18 +941,16 @@ function print_sour_table($datalist, $legend="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$source->getXrefLink().'</td>';
 		//-- Source name(s)
-		$name = $source->getSortableName();
+		$name=$source->getFullName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "</td>";
 		// alternate title in a new column
 		echo "<td class=\"list_value_wrap t2\">";
-		foreach ($name_subtags as $k=>$subtag) {
-			$addname = $source->getSortableName($subtag);
-			if (!empty($addname) && $addname!=$name) {
-				echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a><br />";
-				$t2 = true;
-			}
+		$addname = $source->getAddName();
+		if ($addname) {
+			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a><br />";
+			$t2 = true;
 		}
 		echo "&nbsp;</td>";
 		//-- Author
@@ -1144,12 +1063,12 @@ function print_repo_table($datalist, $legend="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$repo->getXrefLink().'</td>';
 		//-- Repository name(s)
-		$name = $repo->getSortableName();
+		$name = $repo->getFullName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
-		foreach ($name_subtags as $k=>$subtag) {
-			$addname = $repo->getSortableName($subtag);
-			if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+		$addname=$repo->getAddName();
+		if ($addname) {
+			echo "<br /><a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		echo "</td>";
 		//-- Linked SOURces
@@ -1207,7 +1126,7 @@ function print_media_table($datalist, $legend="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$media->getXrefLink().'</td>';
 		//-- Object name(s)
-		$name = $media->getSortableName();
+		$name = $media->getListName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "<br /><a href=\"".$media->getLinkUrl()."\">".basename($media->file)."</a>";
@@ -1222,7 +1141,7 @@ function print_media_table($datalist, $legend="") {
 			foreach ($value["LINKS"] as $k=>$v) {
 			  if ($v!=$rectype) continue;
 				$record = GedcomRecord::getInstance($k);
-				$txt = $record->getSortableName();
+				$txt = $record->getListName();
 				if ($SHOW_ID_NUMBERS) $txt .= " (".$k.")";
 				$resu[] = $txt;
 			}
@@ -1395,38 +1314,25 @@ function print_changes_table($datalist) {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$record->getXrefLink().'</td>';
 		//-- Record name(s)
-		if ($record->type=="FAM") {
-			$name=$record->getSortableName(true);
-/*			$exp = explode("<br />", $name);
-			$husb = $record->getHusband();
-			if ($husb) $exp[0].= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
-			$wife = $record->getWife();
-			if ($wife) $exp[1].= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
-			$name = implode("<div></div>", $exp); // <div></div> is better here than <br /> */
-			$name = strip_tags(str_replace("<br />", " + ", $name));
-		}
-		else $name = $record->getSortableName();
+		$name = $record->getFullName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
-			$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-			foreach ($name_subtags as $k=>$subtag) {
-				for ($num=1; $num<9; $num++) {
-					$addname = $record->getSortableName($subtag, $num);
-					if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-					if (empty($addname)) break;
+		}
+		$addname=$record->getAddName();
+		if ($addname) {
+			echo "<br /><a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+		}
+		if ($record->type=='INDI') {
+			if ($SHOW_MARRIED_NAMES) {
+				foreach ($record->getAllNames() as $name) {
+					if ($name['type']=='_MARNM') {
+						echo "<br /><a title=\"_MARNM\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($name['full'])."</a>";
+					}
 				}
 			}
-			if ($record->xref) print $record->getPrimaryParentsNames("parents_$table_id details1", "none");
-		}
-		if ($record->type=="SOUR" || $record->type=="REPO") {
-			$name_subtags = array("_HEB", "ROMN");
-			foreach ($name_subtags as $k=>$subtag) {
-				$addname = $record->getSortableName($subtag);
-				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-			}
+			echo $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
 		echo "</td>";
 		//-- GIVN
@@ -1523,31 +1429,24 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 
 		print "<tr class=\"vevent\">"; // hCalendar:vevent
 		//-- Record name(s)
+		$name = $record->getListName();
 		if ($record->type=="FAM") {
-			$name = $record->getSortableName(true);
 			$exp = explode("<br />", $name);
 			$husb = $record->getHusband();
 			if ($husb) $exp[0] .= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 			$wife = $record->getWife();
 			if ($wife) $exp[1] .= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
 			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
-		} else $name = $record->getSortableName();
+		}
 		$url = $record->getLinkUrl();
 
 		print "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		print "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			print $record->getSexImage();
-			foreach ($name_subtags as $subtag) {
-				for ($num=1; ; ++$num) {
-					$addname = $record->getSortableName($subtag, $num);
-					if (empty($addname)) break;
-					else {
-						if ($addname!=$name) print "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
-					}
-				}
+			if ($record->xref) {
+				echo $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 			}
-			if ($record->xref) print $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
 		print "</td>";
 		//-- GIVN
@@ -1567,7 +1466,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
 			print "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
-			print "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$value['fact']]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>";
+			print "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$value['fact']]." : ".PrintReady(strip_tags($record->getFullName()))."\"></abbr>";
 		}
 		print "</td>";
 		//-- Event name
@@ -1681,7 +1580,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		}
 		$output ++;
 
-		$value['name'] = $record->getSortableName();
+		$value['name'] = $record->getListName();
 		$value['url'] = $record->getLinkUrl();
 		if ($record->type=="INDI")
 			$value['sex'] = $record->getSexImage();

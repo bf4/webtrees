@@ -468,7 +468,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			foreach($thePeopleList as $i=>$pid) {
 				if(!empty($pid)) {
 						$person=Person::getInstance($pid);
-						$output.='<a href="'.$person->getLinkUrl().'">'.$person->getName().'</a><br/>';
+						$output.='<a href="'.$person->getLinkUrl().'">'.$person->getFullName().'</a><br/>';
 				}
 			}
 			
@@ -1229,7 +1229,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	     	for($i=0; $i<count($missingName); $i++) {
 	     		$nextTaskID =get_next_id("tasks","t_id");
 	     		$nextItaskId=get_next_id("individualtask","it_t_id");
-	     		$personName = $person->getName();
+	     		$personName = $person->getFullName();
 	     		if($this->add_task($nextTaskID,$folderID,$missingName[$i],$personName." (auto generated)",$person->getXref()))
 	     		$this->add_indi_task($nextItaskId,$person->getXref(),$GEDCOMS[$GEDCOM]["id"]);
 	     	

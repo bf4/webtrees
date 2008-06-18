@@ -121,7 +121,7 @@ function getTitle(){
 			if (!is_null($person)) {
 				$bdate=$person->getEstimatedBirthDate();
 				$byear=$bdate->gregorianYear();
-				$out .= '<a href="individual.php?pid='.$people[0].'">'.PrintReady($person->getName()." - ".$byear).'</a><br />';
+				$out .= '<a href="individual.php?pid='.$people[0].'">'.PrintReady($person->getFullName()." - ".$byear).'</a><br />';
 			}
 		}
 

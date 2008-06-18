@@ -166,7 +166,7 @@ class TimelineControllerRoot extends BaseController {
 			if (!is_null($this->people[$i])) {
 				if (!$this->people[$i]->canDisplayDetails()) {
 					if ($this->people[$i]->canDisplayName()) {
-						print "&nbsp;<a href=\"".encode_url("individual.php?pid=".$this->people[$i]->getXref())."\">".PrintReady($this->people[$i]->getName())."</a>";
+						print "&nbsp;<a href=\"".encode_url("individual.php?pid=".$this->people[$i]->getXref())."\">".PrintReady($this->people[$i]->getFullName())."</a>";
 						print_privacy_error($CONTACT_EMAIL);
 						print "<br />";
 						$printed = true;

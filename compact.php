@@ -318,7 +318,7 @@ function print_td_person($n) {
 
 	if ($pid) {
 		$indi=Person::getInstance($pid);
-		$name=$indi->getName();
+		$name=$indi->getFullName();
 		$addname=$indi->getAddName();
 		
 		if (($showthumbs) && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {

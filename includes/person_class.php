@@ -144,106 +144,6 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * gets the number of names this individual has
-	 * @return int 	the number of names in this individual
-	 */
-/*	function getNameCount() {
-		global $indilist;
-		
-		if (isset($indilist[$this->getXref()]['names'])) return count($indilist[$this->getXref()]['names']);
-		$names = get_indi_names($this->gedrec);
-		return count($names);
-	} */
-
-	/**
-	 * get the sortable name
-	 * @param string $subtag optional subtag _AKA _HEB etc...
-	 * @param int $num which matching subtag to get
-	 * @param boolean $starred option to add starredname html code
-	 * @return string
-	 */
-	function getSortableName($subtag="", $num=1, $starred=true) {
-		global $pgv_lang, $UNDERLINE_NAME_QUOTES;
-		global $unknownNN, $unknownPN, $indilist;
-		if (!$this->canDisplayName()) {
-			if (empty($subtag)) return $pgv_lang["private"];
-			else return "";
-		}
-		// if subtag contains '/' we assume this is a name to change as sortable
-		// else we get name from gedcom record
-		if (stristr($subtag, "/")) $name = $subtag;
-		else if (empty($subtag)) {
-			//we need only the 1 NAME main names, not all the individual names
-			$namerec = get_sub_record(1, "1 NAME", $this->gedrec, $num);
-			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
-			//-- names are stored in the $indilist cache [names] element
-//			if (isset($indilist[$this->getXref()]['names'][$num-1])) $name = $indilist[$this->getXref()]['names'][$num-1][0];
-		}
-		else {
-			// Get the sub record from *all* the 1 NAME records
-			$all_name_recs=get_sub_record(1, "1 NAME", $this->gedrec, 1);
-			for ($i=2; ; ++$i) {
-				$tmp=get_sub_record(1, "1 NAME", $this->gedrec, $i);
-				if (empty($tmp))
-					break;
-				else
-					$all_name_recs.="\n".$tmp;
-			}
-			$namerec = get_sub_record(2, "2 ".$subtag, $all_name_recs, $num);
-			$name = get_gedcom_value($subtag, 2, $namerec, '', false);
-		}
-		if (empty($name)) return "";
-		// get GIVN and SURN
-		list($givn, $surn, $nsfx) = explode("/", $name."//");
-		$exp = explode(",",$givn); $givn = trim($exp[0]);
-		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") {
-			$lang = whatLanguage($givn);
-			$surn = $unknownNN[$lang];
-		}
-		if (empty($givn) or trim("@".$givn,"_")=="@" or $givn=="@P.N.") {
-			$lang = whatLanguage($surn);
-			$givn = $unknownPN[$lang];
-		}
-		else if ($starred) {
-			if ($UNDERLINE_NAME_QUOTES) {
-				$givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
-				$surn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $surn);
-			}
-			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
-			$surn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $surn);
-		}
-		if ($nsfx) $surn .= " ".trim($nsfx);
-		return trim($surn.", ".$givn);
-	}
-
-	/**
-	 * get the surname
-	 * @return string
-	 */
-	function getSurname() {
-		global $pgv_lang, $indilist;
-		if (!$this->canDisplayName()) return $pgv_lang["private"];
-		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
-		$ct = preg_match("~/(.*)/~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
-		if ($ct) $name = trim($match[1]);
-		if (empty($name)) return $pgv_lang["unknown"];
-		return $name;
-	}
-	/**
-	 * get the given names
-	 * @return string
-	 */
-/*	function getGivenNames(){
-		global $pgv_lang, $indilist;
-		if (!$this->canDisplayName()) return $pgv_lang["private"];
-		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
-		$ct = preg_match("~^([^\s]*)~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
-		if ($ct) $name = trim($match[1]);
-		if (empty($name)) return $pgv_lang["unknown"];
-		return $name;
-	} */
-
-	/**
 	 * Check if privacy options allow this record to be displayed
 	 * @return boolean
 	 */
@@ -756,13 +656,13 @@ class Person extends GedcomRecord {
 				if ((is_null($husb) || !$husb->equals($father)) && (is_null($wife)||$wife->equals($mother))) {
 					if ($mother->getSex()=="M") $label = $pgv_lang["fathers_family_with"];
 					else $label = $pgv_lang["mothers_family_with"];
-					if (!is_null($father)) $label .= $father->getName();
+					if (!is_null($father)) $label .= $father->getFullName();
 					else $label .= $pgv_lang["unknown"];
 				}
 				else if ((is_null($wife) || !$wife->equals($mother)) && (is_null($husb)||$husb->equals($father))) {
 					if ($father->getSex()=="F") $label = $pgv_lang["mothers_family_with"];
 					else $label = $pgv_lang["fathers_family_with"];
-					if (!is_null($mother)) $label .= $mother->getName();
+					if (!is_null($mother)) $label .= $mother->getFullName();
 					else $label .= $pgv_lang["unknown"];
 				}
 				if ($label!="Unknown Family") return $label;
@@ -789,11 +689,11 @@ class Person extends GedcomRecord {
 		$husb = $family->getHusband();
 		$wife = $family->getWife();
 		if ($this->equals($husb)) {
-			if (!is_null($wife)) $label .= $wife->getName();
+			if (!is_null($wife)) $label .= $wife->getFullName();
 			else $label .= $pgv_lang["unknown"];
 		}
 		else {
-			if (!is_null($husb)) $label .= $husb->getName();
+			if (!is_null($husb)) $label .= $husb->getFullName();
 			else $label .= $pgv_lang["unknown"];
 		}
 		return $label;
@@ -1535,9 +1435,9 @@ class Person extends GedcomRecord {
 		if ($display) $txt .= " style=\"display:$display\"";
 		$txt .= ">";
 		$husb = $fam->getHusband();
-		if ($husb) $txt .= $pgv_lang["father"].": ".PrintReady($husb->getSortableName())."<br />";
+		if ($husb) $txt .= $pgv_lang["father"].": ".PrintReady($husb->getSortName())."<br />";
 		$wife = $fam->getWife();
-		if ($wife) $txt .= $pgv_lang["mother"].": ".PrintReady($wife->getSortableName());
+		if ($wife) $txt .= $pgv_lang["mother"].": ".PrintReady($wife->getSortName());
 		$txt .= "</div>";
 		return $txt;
 	}
@@ -1643,7 +1543,14 @@ class Person extends GedcomRecord {
 		// Make sure the NICK is included in the NAME record.
 		$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($nick && stristr($full, $nick)===false) {
-			$full.=' &ldquo;'.$nick.'&rdquo;';
+			//TODO directional quotes need &lrm; etc.
+			//$full.=' &ldquo;'.$nick.'&rdquo;';
+			$pos=strpos($full, '/');
+			if ($pos===false) {
+				$full.=' "'.$nick.'"';
+			} else {
+				$full=substr($full, 0, $pos).'"'.$nick.'" '.substr($full, $pos);
+			}
 		}
 
 		// Convert "user-defined" unknowns into PGV unknowns

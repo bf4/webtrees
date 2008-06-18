@@ -127,7 +127,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		foreach ($yahrzeits as $yahrzeit)
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
-				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\">".$ind->getName()."</a>".$ind->getSexImage();
+				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\">".$ind->getFullName()."</a>".$ind->getSexImage();
 				$content .= "<div class=\"indent\">";
 				$content .= $yahrzeit['date']->Display(true);
 				$content .= ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
@@ -158,21 +158,14 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				$ind=person::GetInstance($yahrzeit['id']);
 				$content .= "<tr class=\"vevent\">"; // hCalendar:vevent
 				// Record name(s)
-				$name=$ind->getSortableName();
+				$name=$ind->getFullName();
 				$url=$ind->getLinkUrl();
 				$content .= "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 				$content .= $ind->getSexImage();
-				foreach ($name_subtags as $subtag) {
-					for ($num=1; ; ++$num) {
-						$addname = $ind->getSortableName($subtag, $num);
-
-						if (empty($addname))
-							break;
-						else
-							if ($addname!=$name)
-								$content .= "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
-					}
+				$addname=$ind->getAddName();
+				if ($addname) {
+					$content .= "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
 				}
 				$content .= "</td>";
 
@@ -202,7 +195,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 					// hCalendar:dtstart and hCalendar:summary
 					//TODO does this work??
 					$content .= "<abbr class=\"dtstart\" title=\"".strip_tags($yahrzeit['date']->Display(false,'Ymd',array()))."\"></abbr>";
-					$content .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$yahrzeit['fact']]." : ".PrintReady(strip_tags($ind->getSortableName()))."\"></abbr>";
+					$content .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$yahrzeit['fact']]." : ".PrintReady(strip_tags($ind->getFullName()))."\"></abbr>";
 				}
 
 				// upcomming yahrzeit dates

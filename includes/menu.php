@@ -1334,7 +1334,7 @@ class MenuBar
 						if (displayDetailsById($fav['gid'], $fav['type'])) {
 							$obj=GedcomRecord::getInstance($fav['gid']);
 							if ($obj) {
-								$submenu=new Menu(PrintReady($obj->getName()), $obj->getLinkUrl());
+								$submenu=new Menu(PrintReady($obj->getFullName()), $obj->getLinkUrl());
 								$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 								$menu->addSubMenu($submenu);
 							}
@@ -1366,7 +1366,7 @@ class MenuBar
 						if (displayDetailsById($fav['gid'], $fav['type'])) {
 							$obj=GedcomRecord::getInstance($fav['gid']);
 							if ($obj) {
-								$submenu=new Menu(PrintReady($obj->getName()), $obj->getLinkUrl());
+								$submenu=new Menu(PrintReady($obj->getFullName()), $obj->getLinkUrl());
 								$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 								$menu->addSubMenu($submenu);
 							}

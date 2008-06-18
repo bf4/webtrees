@@ -132,12 +132,12 @@ class stats_ui extends stats
 								$content .= "</div>\n";
 								break;
 							}
-							case 'SOUR':
+							default:
 							{
-								$sourrec = find_source_record($favorite['gid']);
+								$record=GedcomRecord::getInstance($favorite['gid']);
 								$content .= "<div id=\"box{$favorite['gid']}.0\" class=\"person_box\">\n";
 								if($ctype == 'user' || PGV_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
-								$content .= format_list_source($favorite['gid'], $sourcelist[$favorite['gid']], 'span');
+								$content .= $record->format_list('span');
 								$content .= "<br />\n".PrintReady($favorite['note'], false, true);
 								$content .= "</div>\n";
 								break;
