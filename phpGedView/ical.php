@@ -155,8 +155,8 @@ function getIndiBDIcalEvent($indi){
 	}
 	$summary = $indi->getFullName() ."'s Birthday";
 	$place = $indi->getBirthPlace();
-	$description = "Born on " . $birthDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . $indi->getAbsoluteLinkUrl();
-  	$iCalRecord = getIcalRecord($birthDate, $summary, $description, $indi->getAbsoluteLinkUrl());
+	$description = "Born on " . $birthDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . encode_url($indi->getAbsoluteLinkUrl());
+  	$iCalRecord = getIcalRecord($birthDate, $summary, $description, encode_url($indi->getAbsoluteLinkUrl()));
 
 
   	return $iCalRecord;
@@ -188,8 +188,8 @@ function getFamilyAnniversaryIcalEvent($family){
 
 	$summary = "Anniversary of " . $husband->getFullName() . " and " . $wife->getFullName();
 	$place = $family->getMarriagePlace() ;
-	$description = "Married on " . $anniversaryDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . $family->getAbsoluteLinkUrl();
-	$iCalRecord = getIcalRecord($anniversaryDate, $summary, $description, $family->getAbsoluteLinkUrl());
+	$description = "Married on " . $anniversaryDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . encode_url($family->getAbsoluteLinkUrl());
+	$iCalRecord = getIcalRecord($anniversaryDate, $summary, $description, encode_url($family->getAbsoluteLinkUrl()));
 
   	return $iCalRecord;
 }

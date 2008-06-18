@@ -132,16 +132,6 @@ class stats_ui extends stats
 								$content .= "</div>\n";
 								break;
 							}
-							default:
-							{
-								$record=GedcomRecord::getInstance($favorite['gid']);
-								$content .= "<div id=\"box{$favorite['gid']}.0\" class=\"person_box\">\n";
-								if($ctype == 'user' || PGV_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
-								$content .= $record->format_list('span');
-								$content .= "<br />\n".PrintReady($favorite['note'], false, true);
-								$content .= "</div>\n";
-								break;
-							}
 							case 'OBJE':
 							{
 								$content .= "<div id=\"box{$favorite['gid']}.0\">\n";
@@ -150,6 +140,16 @@ class stats_ui extends stats
 								print_media_links("1 OBJE @{$favorite['gid']}@", 1, $favorite['gid']);
 								$content .= ob_get_clean();
 								$content .= PrintReady($favorite['note'], false, true);
+								break;
+							}
+							default:
+							{
+								$record=GedcomRecord::getInstance($favorite['gid']);
+								$content .= "<div id=\"box{$favorite['gid']}.0\" class=\"person_box\">\n";
+								if($ctype == 'user' || PGV_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
+								$content .= $record->format_list('span');
+								$content .= "<br />\n".PrintReady($favorite['note'], false, true);
+								$content .= "</div>\n";
 								break;
 							}
 						}

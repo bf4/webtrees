@@ -127,7 +127,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		foreach ($yahrzeits as $yahrzeit)
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
-				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\">".$ind->getFullName()."</a>".$ind->getSexImage();
+				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".$ind->getFullName()."</a>".$ind->getSexImage();
 				$content .= "<div class=\"indent\">";
 				$content .= $yahrzeit['date']->Display(true);
 				$content .= ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
@@ -161,11 +161,11 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				$name=$ind->getFullName();
 				$url=$ind->getLinkUrl();
 				$content .= "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 				$content .= $ind->getSexImage();
 				$addname=$ind->getAddName();
 				if ($addname) {
-					$content .= "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					$content .= "<br /><a title=\"".$subtag."\" href=\"".encode_url($url)."\" class=\"list_item\">".PrintReady($addname)."</a>";
 				}
 				$content .= "</td>";
 
