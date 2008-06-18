@@ -321,8 +321,14 @@ function print_indi_table($datalist, $legend="", $option="") {
 			} else {
 				$title='';
 			}
-			if (isset($value['name']) && $name['list']==$value['name'] ||
-			   !isset($value['name']) && $num==$person->getPrimaryName()) {
+			// If we're showing search results, then the highlighted name is not
+			// necessarily the person's primary name.
+			if (is_array($value) && isset($value['name'])) {
+				$primary=($name['list']==$value['name']);
+			} else {
+				$primary=($num==$person->getPrimaryName());
+			}
+			if ($primary) {
 				$class='list_item name2';
 				$sex_image=$tiny ? $person->getSexImage() : '';
 				list($surn, $givn)=explode(',', $name['sort']);
