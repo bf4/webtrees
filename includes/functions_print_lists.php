@@ -281,9 +281,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$dateY = date("Y");
 	$unique_indis=array(); // Don't double-count indis with multiple names.
 	foreach($datalist as $key => $value) {
-		if (!is_array($value)) {
+		if (is_object($value)) { // Array of objects
+			$person=$value;
+		} elseif (!is_array($value)) { // Array of IDs
 			$person = Person::getInstance($value);
-		} else {
+		} else { // Array of search results
 			$gid = $key;
 			if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
@@ -635,9 +637,11 @@ function print_fam_table($datalist, $legend="", $option="") {
 	$n = 0;
 	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	foreach($datalist as $key => $value) {
-		if (!is_array($value)) {
+		if (is_object($value)) { // Array of objects
+			$family=$value;
+		} elseif (!is_array($value)) { // Array of IDs
 			$family=Family::getInstance($value);
-		} else {
+		} else { // Array of search results
 			$gid = "";
 			if (isset($value["gid"])) $gid = $value["gid"];
 			if (isset($value["gedcom"])) $family = new Family($value["gedcom"]);
@@ -675,7 +679,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $husb->xref) echo $husb->getSexImage();
 		if ($addname) {
-			echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+			echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		// Husband parents
 		if ($husb->xref) echo $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
@@ -717,7 +721,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $wife->xref) echo $wife->getSexImage();
 		if ($addname) {
-			echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+			echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		// Wife parents
 		if ($wife->xref) echo $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
@@ -918,12 +922,13 @@ function print_sour_table($datalist, $legend="") {
 	$hidden = 0;
 	$n = 0;
 	foreach ($datalist as $key => $value) {
-		if (!is_array($value)) {
+		if (is_object($value)) { // Array of objects
+			$source=$value;
+		} elseif (!is_array($value)) { // Array of IDs
 			$source = Source::getInstance($key); // from placelist
 			if (is_null($source)) $source = Source::getInstance($value);
 			unset($value);
-		}
-		else {
+		} else { // Array of search results
 			$gid = "";
 			if (isset($value["gid"])) $gid = $value["gid"];
 			if (isset($value["gedcom"])) $source = new Source($value["gedcom"]);
@@ -1043,13 +1048,17 @@ function print_repo_table($datalist, $legend="") {
 	//-- table body
 	$n = 0;
 	foreach ($datalist as $key => $value) {
-		$repo=Repository::getInstance($key);
-		if (is_null($repo)) {
-			if (!is_array($value)) {
-				$repo=Repository::getInstance($value);
-			} else {
-				if (isset($value["gid"])) {
-					$repo=Repository::getInstance($value["gid"]);
+		if (is_object($value)) {
+			$repo=$value;
+		} else {
+			$repo=Repository::getInstance($key);
+			if (is_null($repo)) {
+				if (!is_array($value)) {
+					$repo=Repository::getInstance($value);
+				} else {
+					if (isset($value["gid"])) {
+						$repo=Repository::getInstance($value["gid"]);
+					}
 				}
 			}
 		}
@@ -1116,9 +1125,13 @@ function print_media_table($datalist, $legend="") {
 	//-- table body
 	$n = 0;
 	foreach ($datalist as $key => $value) {
-		$media = new Media($value["GEDCOM"]);
-		if (is_null($media)) $media = Media::getInstance($key);
-		if (is_null($media)) continue;
+		if (is_object($value)) { // Array of objects
+			$media=$value;
+		} else {
+			$media = new Media($value["GEDCOM"]);
+			if (is_null($media)) $media = Media::getInstance($key);
+			if (is_null($media)) continue;
+		}
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -1294,13 +1307,17 @@ function print_changes_table($datalist) {
 	$NMAX = 1000;
 	foreach($datalist as $key => $value) {
 		if ($n>=$NMAX) break;
-		$record = null;
-		if (!is_array($value)) $record = GedcomRecord::getInstance($key);
-		else {
-			if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
-			if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
+		if (is_object($value)) { // Array of objects
+			$record=$value;
+		} else {
+			$record = null;
+			if (!is_array($value)) $record = GedcomRecord::getInstance($key);
+			else {
+				if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
+				if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
+			}
+			if (is_null($record)) continue;
 		}
-		if (is_null($record)) continue;
 		// Privacy
 		if (!$record->canDisplayDetails()) {
 			$hidden++;
