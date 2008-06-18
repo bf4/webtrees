@@ -33,7 +33,6 @@ require_once('includes/gedcomrecord.php');
 
 class Source extends GedcomRecord {
 	var $disp = true;
-	var $name = "";
 	var $sourcefacts = null;
 	var $indilist = null;
 	var $famlist = null;
@@ -45,10 +44,6 @@ class Source extends GedcomRecord {
 	function Source($gedrec) {
 		parent::GedcomRecord($gedrec);
 		$this->disp = displayDetailsByID($this->xref, "SOUR");
-		
-		$this->name = PrintReady(get_source_descriptor($this->xref));
-		$add_descriptor = get_add_source_descriptor($this->xref);
-		if ($add_descriptor) $this->name .= " - ".PrintReady($add_descriptor);
 	}
 
 	/**
@@ -246,20 +241,6 @@ class Source extends GedcomRecord {
 	 */
 	function getName() {
 		return $this->getFullName();
-	}
-
-	/**
-	 * get the source sortable name
-	 * @return string
-	 */
-	function getSortableName($subtag="") {
-		global $pgv_lang;
-		if (!$this->canDisplayDetails()) {
-			if (empty($subtag)) return $pgv_lang["private"];
-			else return "";
-		}
-		if (empty($subtag)) return get_gedcom_value("TITL", 1, $this->gedrec, '', false);
-		else return get_gedcom_value("TITL:".$subtag, 1, $this->gedrec, '', false);
 	}
 
 	/**

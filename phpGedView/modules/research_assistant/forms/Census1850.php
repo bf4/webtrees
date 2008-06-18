@@ -290,7 +290,7 @@ $out .= '</tr>
 			$out .= '
 	            <td id="peoplecell" class="optionbox">
 	                   <div id="peoplelink'.$i.'">';
-	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 	                   $out .= '</div>
 	                   <INPUT tabindex="'.($i*100+29).'"  type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
 	                              if(isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $searchName = $citation['ts_array']['rows'][$i]['NameOfPeople'];
@@ -484,7 +484,7 @@ $out .= '</tr>
 				
 			if($occupation != $rows[$number]["Trade"])
 			{
-				$inferredFact["Person"] = $person->getName();
+				$inferredFact["Person"] = $person->getFullName();
 				$inferredFact["PersonID"] = $person->getXref();
 				$inferredFact["Reason"] = "Add <i>".$rows[$number]["Trade"]."</i> occupation fact.";
 				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
@@ -506,7 +506,7 @@ $out .= '</tr>
 						if(!is_null($sFamValue))
 						{
 							$tempArray = array();
-							$inferredFact["Person"] = $sFamValue->getSortableName();								
+							$inferredFact["Person"] = $sFamValue->getFullName();
 							$inferredFact["PersonID"] = $sFamValue->getXref();
 							$inferredFact["Reason"] = "A Marriage Date can be inferred!";
 							$inferredFact["Fact"] = "1 MARR \r\n2 DATE ABT 1850";
@@ -532,7 +532,7 @@ $out .= '</tr>
 				 {
 				 	if(!empty($rows[$number]["PlaceOfBirth"]))
 				 	{
-				 		$inferredFact["Person"] = $person->getName();
+				 		$inferredFact["Person"] = $person->getFullName();
 						$inferredFact["PersonID"] = $person->getXref();
 				 		$inferredFact["Reason"] = "A birth date difference was detected";
 				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ABT".$birthDate."\r\n2 PLAC ".$rows[$number]["PlaceOfBirth"];
@@ -544,7 +544,7 @@ $out .= '</tr>
 				 	}
 				 	else
 				 	{
-				 		$inferredFact["Person"] = $person->getName();
+				 		$inferredFact["Person"] = $person->getFullName();
 						$inferredFact["PersonID"] = $person->getXref();
 				 		$inferredFact["Reason"] = "A birth date difference was detected";
 				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ABT".$birthDate;

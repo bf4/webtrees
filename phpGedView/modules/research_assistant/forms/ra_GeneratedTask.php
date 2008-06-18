@@ -123,22 +123,12 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_GeneratedTask.php")) {
    
    	function orderby_name($a, $b)
    	{
-   		$val1 = strtolower($a->getName());
-   		$val2 = strtolower($b->getName());
-   		if($val1 == $val2)
-   			return 0;
-   		else
-   			return ($val1 > $val2) ? 1 : -1;
+			return GedcomRecord::CompareName($a, $b);
    	}
    	
    	function orderby_name_descending($a, $b)
    	{
-   		$val1 = strtolower($a->getName());
-   		$val2 = strtolower($b->getName());
-   		if($val1 == $val2)
-   			return 0;
-   		else
-   			return ($val1 > $val2) ? -1 : 1;
+			return GedcomRecord::CompareName($b, $a);
    	}
  }
 ?>

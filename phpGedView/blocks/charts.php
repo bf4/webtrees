@@ -99,7 +99,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		}
 	}
 	if ($person) {
-		$name=PrintReady($person->getName());
+		$name=PrintReady($person->getFullName());
 		switch($config['type']) {
 			case 'pedigree':
 				$title .= $name." ".$pgv_lang["index_header"];

@@ -361,16 +361,6 @@ class GedcomRecord {
 	}
 
 	/**
-	 * get the sortable name
-	 * This method should be overridden in child sub-classes
-	 * (no class yet for NOTE record)
-	 * @return string
-	 */
-	function getSortableName() {
-		return $this->type." ".$this->xref;
-	}
-	
-	/**
 	 * get the name
 	 * This method should overridden in child sub-classes
 	 * @return string
@@ -517,6 +507,26 @@ class GedcomRecord {
 		} else {
 			return null;
 		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	// Format this object for display in a list
+	//////////////////////////////////////////////////////////////////////////////
+	function format_list($tag='li') {
+		global $SHOW_ID_NUMBERS;
+
+		$name=$this->getListName();
+		$dir=begRTLText($name) ? 'rtl' : 'ltr';
+		$html='<a href="'.encode_url($this->getLinkUrl()).'" class="list_item"><b>'.PrintReady($name).'</b>';
+		if ($SHOW_ID_NUMBERS) {
+			$xref='('.$this->getXref().')';
+			if ($dir=='rtl') {
+				$xref=getRLM().$xref.getRLM();
+			}
+			$html.=' '.$xref;
+		}
+		$html='<'.$tag.' class="'.$dir.'" dir="'.$dir.'">'.$html.'</a></'.$tag.'>';
+		return $html;
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).

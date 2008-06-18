@@ -678,12 +678,12 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	 * of the person
 	 */
 	 function ComparePeople(&$Person1,&$Person2){
-		$PersonName1=$Person1->getName();
+		$PersonName1=$Person1->getFullName();
 		$PersonSex1=$Person1->getSex();
 		$PersonBirth1=$Person1->getEstimatedBirthDate();
 		$PersonDeath1=$Person1->getEstimatedDeathDate();
 
-		$PersonName2=$Person2->getName();
+		$PersonName2=$Person2->getFullName();
 		$PersonSex2=$Person2->getSex();
 		$PersonBirth2=$Person2->getEstimatedBirthDate();
 		$PersonDeath2=$Person2->getEstimatedDeathDate();

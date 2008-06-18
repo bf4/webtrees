@@ -306,7 +306,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function getPageTitle() {
 		global $pgv_lang, $GEDCOM;
-		$name = $this->indi->getName();
+		$name = $this->indi->getFullName();
 		return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
 	}
 
@@ -386,7 +386,7 @@ class IndividualControllerRoot extends BaseController {
 					$mid = $firstmediarec['mid'];
 					
 					//LBox --------  addition for Lightbox Album --------------------------------------------
-					$name = $this->indi->getName();
+					$name = $this->indi->getFullName();
 					if (file_exists("modules/lightbox/album.php")) {
 						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 					}else

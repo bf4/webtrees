@@ -153,7 +153,7 @@ function getIndiBDIcalEvent($indi){
 	if (!$birthDate->isOK()){
 		return;
 	}
-	$summary = $indi->getName() ."'s Birthday";
+	$summary = $indi->getFullName() ."'s Birthday";
 	$place = $indi->getBirthPlace();
 	$description = "Born on " . $birthDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . $indi->getAbsoluteLinkUrl();
   	$iCalRecord = getIcalRecord($birthDate, $summary, $description, $indi->getAbsoluteLinkUrl());
@@ -186,7 +186,7 @@ function getFamilyAnniversaryIcalEvent($family){
 	}
 	$anniversaryDate=new GedcomDate($anniversaryDate);
 
-	$summary = "Anniversary of " . $husband->getName() . " and " . $wife->getName();
+	$summary = "Anniversary of " . $husband->getFullName() . " and " . $wife->getFullName();
 	$place = $family->getMarriagePlace() ;
 	$description = "Married on " . $anniversaryDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . $family->getAbsoluteLinkUrl();
 	$iCalRecord = getIcalRecord($anniversaryDate, $summary, $description, $family->getAbsoluteLinkUrl());

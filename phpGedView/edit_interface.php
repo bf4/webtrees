@@ -2055,7 +2055,7 @@ case 'changefamily':
 			if (!is_null($father)) {
 			?>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $father->getLabel(); ?></b><input type="hidden" name="HUSB" value="<?php print $father->getXref(); ?>" /></td>
-				<td id="HUSBName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($father->getName()); ?></td>
+				<td id="HUSBName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($father->getFullName()); ?></td>
 			<?php
 			}
 			else {
@@ -2075,7 +2075,7 @@ case 'changefamily':
 			if (!is_null($mother)) {
 			?>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $mother->getLabel(); ?></b><input type="hidden" name="WIFE" value="<?php print $mother->getXref(); ?>" /></td>
-				<td id="WIFEName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($mother->getName()); ?></td>
+				<td id="WIFEName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($mother->getFullName()); ?></td>
 			<?php
 			}
 			else {
@@ -2097,7 +2097,7 @@ case 'changefamily':
 				?>
 			<tr>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $child->getLabel(); ?></b><input type="hidden" name="CHIL<?php print $i; ?>" value="<?php print $child->getXref(); ?>" /></td>
-				<td id="CHILName<?php print $i; ?>" class="optionbox wrap"><?php print PrintReady($child->getName()); ?></td>
+				<td id="CHILName<?php print $i; ?>" class="optionbox wrap"><?php print PrintReady($child->getFullName()); ?></td>
 				<td class="optionbox wrap <?php print $TEXT_DIRECTION; ?>">
 					<a href="javascript:;" id="childrem<?php print $i; ?>" style="display: block;" onclick="document.changefamform.CHIL<?php print $i; ?>.value=''; document.getElementById('CHILName<?php print $i; ?>').innerHTML=''; this.style.display='none'; return false;"><?php print $pgv_lang["remove"]; ?></a>
 					<a href="javascript:;" onclick="nameElement = document.getElementById('CHILName<?php print $i; ?>'); remElement = document.getElementById('childrem<?php print $i; ?>'); return findIndi(document.changefamform.CHIL<?php print $i; ?>);"><?php print $pgv_lang["change"]; ?></a><br />

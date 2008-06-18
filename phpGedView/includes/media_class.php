@@ -123,14 +123,6 @@ class Media extends GedcomRecord {
 	}
 
 	/**
-	 * get the media sortable name
-	 * @return string
-	 */
-	function getSortableName() {
-		return $this->getSortName();
-	}
-
-	/**
 	 * get the thumbnail filename
 	 * @return string
 	 */
