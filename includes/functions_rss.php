@@ -341,7 +341,7 @@ function getTop10Surnames() {
 		$i=0;
 		foreach($surnames as $indexval => $surname) {
 			if (stristr($surname["name"], "@N.N")===false) {
-				$data .= "<a href=\"".encode_url("{$SERVER_URL}indilist.php?surname={$surname['name']")."\">".PrintReady($surname["name"])."</a> ";
+				$data .= "<a href=\"".encode_url("{$SERVER_URL}indilist.php?surname={$surname['name']}")."\">".PrintReady($surname["name"])."</a> ";
 				if ($TEXT_DIRECTION=="rtl") $data .= getRLM() . "[" . getRLM() .$surname["match"].getRLM() . "]" . getRLM() . "<br />";
 				else $data .= "[".$surname["match"]."]<br />";
 				$i++;
