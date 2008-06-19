@@ -73,6 +73,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 				$firstnamestring = explode("/", $row[0]);
 				$nameList = explode(" ", $firstnamestring[0]);
 				foreach ($nameList as $givnName) {
+					$givnName = str_replace(array('"', '*', '.', ',', '(', ')', '[', ']'), '', $givnName);
 					if ($givnName!="@P.N." && strlen($givnName)>2) {
 						if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
 						${$genderList}[$givnName] ++;
