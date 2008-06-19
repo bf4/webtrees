@@ -159,7 +159,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td></tr>";
 		print "<tr>";
 		//List Female names
-		print "<td><table>";
+		print "<td valign='top'><table>";
 		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 		$nameList = array_slice($name_list_f, 0, $config["num"]);
 		foreach ($nameList as $key => $value) {
@@ -167,7 +167,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		}
 		print "</table></td>";
 		//List Male names	
-		print "<td><table>";
+		print "<td valign='top'><table>";
 		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 		$nameList = array_slice($name_list_m, 0, $config["num"]);
 		foreach ($nameList as $key => $value) {
@@ -175,7 +175,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		}
 		print "</table></td>";
 		//List Unknown names	
-		print "<td><table>";
+		print "<td valign='top'><table>";
 		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 		$nameList = array_slice($name_list_u, 0, $config["num"]);
 		foreach ($nameList as $key => $value) {
