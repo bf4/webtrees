@@ -688,7 +688,7 @@ function build_indiv_map($indifacts, $famids) {
 				if ($multimarker == 0) {        // Only one location with this long/lati combination
 					$markers[$j]["placed"] = "yes";
 					if (empty($markers[$j]["icon"])) {
-						print "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {icon:icon, title:\"{$tooltip}\"});\n";
+						print "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
 					} else {
 						print "var Marker{$j}_flag = new GIcon();\n";
 						print "    Marker{$j}_flag.image = \"".$markers[$j]["icon"]."\";\n";
@@ -697,7 +697,7 @@ function build_indiv_map($indifacts, $famids) {
 						print "    Marker{$j}_flag.shadowSize = new GSize(35, 45);\n";
 						print "    Marker{$j}_flag.iconAnchor = new GPoint(1, 45);\n";
 						print "    Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						print "var Marker{$j} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_flag, title:\"".$tooltip."\"});\n";
+						print "var Marker{$j} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_flag, title:\"".addslashes($tooltip)."\"});\n";
 					}
 					print "GEvent.addListener(Marker{$j}, \"click\", function() {\n";
 					print "Marker{$j}.openInfoWindowHtml(\"<div class='iwstyle'>";
@@ -742,7 +742,7 @@ function build_indiv_map($indifacts, $famids) {
 					$markersindex = 0;
 					$markers[$j]["placed"] = "yes";
 					if (empty($markers[$j]["icon"])) {
-						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:icon, title:\"{$tooltip}\"});\n";
+						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
 					} else {
 						print "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 						print "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
@@ -751,7 +751,7 @@ function build_indiv_map($indifacts, $famids) {
 						print "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 						print "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
 						print "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_{$markersindex}_flag, title:\"{$tooltip}\"});\n";
+						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_{$markersindex}_flag, title:\"".addslashes($tooltip)."\"});\n";
 					}
 					print "var Marker{$j}_{$markersindex}Info = [\n";
 					$markers[$j]["index"] = $indexcounter;
@@ -808,7 +808,7 @@ function build_indiv_map($indifacts, $famids) {
 								$markersindex = $markersindex + 1;
 
 								if (empty($markers[$j]["icon"])) {
-									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:icon, title:\"{$tooltip}\"});\n";
+									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
 								} else {
 									print "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 									print "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
@@ -817,7 +817,7 @@ function build_indiv_map($indifacts, $famids) {
 									print "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 									print "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
 									print "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:Marker{$j}_{$markersindex}_flag, title:\"{$tooltip}\"});\n";
+									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:Marker{$j}_{$markersindex}_flag, title:\"".addslashes($tooltip)."\"});\n";
 								}
 								print "var Marker{$j}_{$markersindex}Info = [\n";
 							} else {

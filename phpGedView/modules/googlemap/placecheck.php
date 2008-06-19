@@ -332,8 +332,8 @@ while ($x<$i) {
 			$long[$z]="<td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td>";$matched[$x]++;
 		}
 		$level++;
-		$mapstr3=$mapstr3."&amp;parent[".$z."]=".str_replace("'", "\'", PrintReady($row['pl_placerequested']));
-		$mapstr4=$mapstr4."&amp;parent[".$z."]=".str_replace("'", "\'", PrintReady(rtrim(ltrim($levels[$z]))));
+		$mapstr3=$mapstr3."&amp;parent[".$z."]=".addslashes(PrintReady($row['pl_placerequested']));
+		$mapstr4=$mapstr4."&amp;parent[".$z."]=".addslashes(PrintReady(rtrim(ltrim($levels[$z]))));
 		$z++;
 	}
 	if ($matching==1) {
