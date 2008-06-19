@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: Lightbox Configuration page: Now conform to PGV config file updates and avoid destroying lb_config file on option updates (windmillway)
  - Added: Album Tab Page: (windmillway)
 		1) Added Notes Link on Enlarged Lightbox Image. 
 		2) Moved Thumbnail Mouseover Details Tooltip to link above Thumbnail.
