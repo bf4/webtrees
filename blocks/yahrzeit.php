@@ -147,12 +147,6 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		$content .= "<th class=\"list_label\">{$factarray['_YART']}</th>";
 		$content .= "</tr>";
 
-		// Which types of name do we display for an INDI
-		$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-		if ($SHOW_MARRIED_NAMES) {
-			$name_subtags[] = "_MARNM";
-		}
-
 		foreach ($yahrzeits as $yahrzeit) {
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
@@ -165,7 +159,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				$content .= $ind->getSexImage();
 				$addname=$ind->getAddName();
 				if ($addname) {
-					$content .= "<br /><a title=\"".$subtag."\" href=\"".encode_url($url)."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					$content .= "<br /><a href=\"".encode_url($url)."\" class=\"list_item\">".PrintReady($addname)."</a>";
 				}
 				$content .= "</td>";
 

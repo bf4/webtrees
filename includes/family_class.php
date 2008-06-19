@@ -429,10 +429,10 @@ class Family extends GedcomRecord {
 			// The spouses have no matching name types.
 			if (!$this->_getAllNames) {
 				$this->_getAllNames[]=array(
-					'type'=>$husb_names[0]['type'],
-					'full'=>$husb_names[0]['full'].' + '.$wife_names[0]['full'],
-					'list'=>$husb_names[0]['list'].$husb->getSexImage().'<br />'.$wife_names[0]['list'].$wife->getSexImage(),
-					'sort'=>$husb_names[0]['sort'].' + '.$wife_names[0]['sort'],
+					'type'=>'NAME',
+					'full'=>$husb->getFullName().' + '.$wife->getFullName(),
+					'list'=>$husb->getListName().$husb->getSexImage().'<br />'.$wife->getListName().$wife->getSexImage(),
+					'sort'=>$husb->getSortName().' + '.$wife->getSortName()
 				);
 			}
 		}
