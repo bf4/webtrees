@@ -1430,7 +1430,11 @@ class stats {
 		$chl = array();
 		for($i = 0; $i < $total; $i++)
 		{
-			$per = round(100 * $rows[$i]['tot'] / $tot, 0);
+			if ($tot==0) {
+				$per=0;
+			} else {
+				$per = round(100 * $rows[$i]['tot'] / $tot, 0);
+			}
 			//$chd .= $this->_encoding[$per];
 			$chd .= $this->_array_to_extended_encoding(array($per));
 			$chl[] = get_family_descriptor($rows[$i]['id']);
