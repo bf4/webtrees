@@ -421,7 +421,7 @@ function getRecentChanges() {
 				}
 				if ($disp) {
 					$factrec = get_sub_record(1, "1 CHAN", $gedrec);
-					$found_facts[] = array($gid, $factrec, $type);
+					$found_facts[$gid] = array($gid, $factrec, $type);
 				}
 			}
 		}
@@ -435,187 +435,20 @@ function getRecentChanges() {
 		print_text("recent_changes_none", 0, 1);
 	} else {
 		print_text("recent_changes_some", 0, 1);
-		$lastgid="";
-		foreach($found_facts as $index=>$factarr) {
-			if ($factarr[2]=="INDI") {
-				$gid = $factarr[0];
-				$factrec = $factarr[1];
-				if (displayDetailsById($gid)) {
-					$indirec = find_person_record($gid);
-					if ($indirec) {
-						if ($lastgid!=$gid) {
-							$name = check_NN(get_sortable_name($gid));
-							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}individual.php?pid={$gid}&ged={$GEDCOM}")."\"><b>".PrintReady($name)."</b>";
-							if ($SHOW_ID_NUMBERS) {
-								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-							}
-							$recentText .= "</a> ";
-							$lastgid=$gid;
-						}
-						$recentText .= $factarray["CHAN"];
-						// TODO there is function in class gedcomrecord that does this.
-						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
-						if ($ct>0) {
-								$date=new GedcomDate($match[1]);
-								$recentText .= " - " .$date->Display(false);
-								$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
-								if ($tt>0) {
-									$recentText .= " - ".$match[1];
-								}
-
-						}
-						$recentText .=  "</li>\n";
-					}
+		foreach($found_facts as $gid=>$factarr) {
+			$record=GedcomRecord::getInstance($gid);
+			if ($record && $record->canDisplayDetails()) {
+				$recentText.='<li>';
+				$recentText.='<a href="'.encode_url($record->getAbsoluteLinkUrl()).'"><b>'.PrintReady($record->getFullName()).'</b>';
+				if ($SHOW_ID_NUMBERS) {
+					$recentText .= ' '.PGV_LPARENS.$gid.PGV_RPARENS;
 				}
-			}
-
-			if ($factarr[2]=="FAM") {
-				$gid = $factarr[0];
-				$factrec = $factarr[1];
-				if (displayDetailsById($gid, "FAM")) {
-					$famrec = find_family_record($gid);
-					if ($famrec) {
-						$name = get_family_descriptor($gid);
-						if ($lastgid!=$gid) {
-							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}family.php?famid={$gid}&ged={$GEDCOM}")."\"><b>".PrintReady($name)."</b>";
-							if ($SHOW_ID_NUMBERS) {
-								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-							}
-							$recentText .= "</a> ";
-							$lastgid=$gid;
-						}
-						$recentText .= $factarray["CHAN"];
-						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
-						if ($ct>0) {
-							$date=new GedcomDate($match[1]);
-							$recentText .= " - " .$date->Display(false);
-							$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
-							if ($tt>0) {
-								$recentText .= " - ".$match[1];
-							}
-
-						}
-						$recentText .=  "</li>\n";
-					}
-				}
-			}
-
-			if ($factarr[2]=="SOUR") {
-				$gid = $factarr[0];
-				$factrec = $factarr[1];
-				if (displayDetailsById($gid, "SOUR")) {
-					$sourcerec = find_source_record($gid);
-					if ($sourcerec) {
-						$name = get_source_descriptor($gid);
-						if ($lastgid!=$gid) {
-							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}source.php?sid={$gid}&ged={$GEDCOM}")."\"><b>".PrintReady($name)."</b>";
-							if ($SHOW_ID_NUMBERS) {
-								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-							}
-							$recentText .= "</a> ";
-							$lastgid=$gid;
-						}
-						$recentText .= $factarray["CHAN"];
-						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
-						if ($ct>0) {
-							$date=new GedcomDate($match[1]);
-							$recentText .= " - ".$date->Display(false);
-							$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
-							if ($tt>0) {
-								$recentText .= " - ".$match[1];
-							}
-
-						}
-						$recentText .=  "</li>\n";
-					}
-				}
-			}
-
-			if ($factarr[2]=="REPO") {
-				$gid = $factarr[0];
-				$factrec = $factarr[1];
-				if (displayDetailsById($gid, "REPO")) {
-					$reporec = find_repo_record($gid);
-					if ($reporec) {
-						$name = get_repo_descriptor($gid);
-						if ($lastgid!=$gid) {
-							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}repo.php?rid={$gid}&ged={$GEDCOM}")."\"><b>".PrintReady($name)."</b>";
-							if ($SHOW_ID_NUMBERS) {
-								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-							}
-							$recentText .= "</a> ";
-							$lastgid=$gid;
-						}
-						$recentText .= $factarray["CHAN"];
-						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
-						if ($ct>0) {
-							$date=new GedcomDate($match[1]);
-							$recentText .= " - ".$date->Display(false);
-							$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
-							if ($tt>0) {
-								$recentText .=  " - ".$match[1];
-							}
-
-						}
-						$recentText .=  "</li>\n";
-					}
-				}
-			}
-			if ($factarr[2]=="OBJE") {
-				$gid = $factarr[0];
-				$factrec = $factarr[1];
-				if (displayDetailsById($gid, "OBJE")) {
-					$mediarec = find_media_record($gid);
-					if ($mediarec) {
-						if (isset($objectlist[$gid]["title"]) && $objectlist[$gid]["title"] != "") $title=$objectlist[$gid]["title"];
-						else $title = $objectlist[$gid]["file"];
-						$SearchTitle = preg_replace("/ /","+",$title);
-						if ($lastgid!=$gid) {
- 							$recentText .= "<li><a href=\"".encode_url("{$SERVER_URL}medialist.php?action=filter&search=yes&filter={$SearchTitle}&ged{$GEDCOM}")."\"><b>".PrintReady($title)."</b>";
-							if ($SHOW_ID_NUMBERS) {
-								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
-							}
-							$recentText .= "</a> ";
-							$lastgid=$gid;
-						}
-						$recentText .= $factarray["CHAN"];
-						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
-						if ($ct>0) {
-							$date=new GedcomDate($match[1]);
-							$recentText .= " - ".$date->Display(false);
-							$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
-							if ($tt>0) {
-								$recentText .= " - ".$match[1];
-							}
-
-						}
-						$recentText .= "</li>\n";
-					}
-				}
+				$recentText.='</a> '.$factarray['CHAN'].' - '.$record->LastChangeTimestamp(false).'</li>';
 			}
 		}
-
 	}
-	$recentText .= "</ul>";
-
-	$recentText = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $recentText);
+	$recentText.='</ul>';
 	$recentText = strip_tags($recentText, '<a><ul><li><b><span>');
-
 	$dataArray[2] = $recentText;
 	return $dataArray;
 }

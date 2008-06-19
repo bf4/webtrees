@@ -116,17 +116,9 @@ function search_ID_details($checkVar, $outputVar) {
 		case 'INDI':
 			echo '<span class="list_item">', PrintReady(get_person_name($pid)), format_first_major_fact($pid), '</span>';
 			break;
-		case 'SOUR':
-			echo '<span class="list_item">', PrintReady(get_source_descriptor($pid)), '</span>';
-			break;
-		case 'FAM':
-			echo '<span class="list_item">', PrintReady(get_family_descriptor($pid)), '</span>';
-			break;
-		case 'REPO':
-			echo '<span class="list_item">', PrintReady(get_repo_descriptor($pid)), '</span>';
-			break;
 		default:
-			echo $type, ' ', $pid;
+			$record=GedcomRecord::getInstance($pid);
+			echo '<span class="list_item">', $record->getListName(), '</span>';
 			break;
 		}
 	} else {

@@ -1028,75 +1028,60 @@ T2;
  * @param array $datalist contain repositories that were extracted from the database.
  * @param string $legend optional legend of the fieldset
  */
-function print_repo_table($datalist, $legend="") {
+function print_repo_table($repos, $legend='') {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 
-	if (count($datalist)<1) return;
-	$tiny = (count($datalist)<=500);
-	$name_subtags = array("_HEB", "ROMN");
+	if (!$repos) {
+		return;
+	}
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/repository_class.php';
 
-	if ($legend == "") $legend = $pgv_lang["repos_found"];
-	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
-	echo "<fieldset><legend>".$legend."</legend>";
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" />';
+	if ($legend) {
+		echo $legend;
+	} else {
+		echo $pgv_lang['repos_found'];
+	}
+	echo '</legend>';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">REPO</th>";
-	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "</tr>\n";
+	echo '<table id="', $table_id, '" class="sortable list_table center"><tr><td></td>';
+	if ($SHOW_ID_NUMBERS) {
+		echo '<th class="list_label rela">REPO</th>';
+	}
+	echo '<th class="list_label">', $factarray['NAME'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['sources'], '</th>';
+	if ($SHOW_LAST_CHANGE) {
+		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
+	}
+	echo '</tr>';
 	//-- table body
-	$n = 0;
-	foreach ($datalist as $key => $value) {
-		if (is_object($value)) {
-			$repo=$value;
-		} else {
-			$repo=Repository::getInstance($key);
-			if (is_null($repo)) {
-				if (!is_array($value)) {
-					$repo=Repository::getInstance($value);
-				} else {
-					if (isset($value["gid"])) {
-						$repo=Repository::getInstance($value["gid"]);
-					}
-				}
-			}
-		}
-		if (is_null($repo)) {
-			continue;
-		}
+	$n=0;
+	foreach ($repos as $repo) {
 		//-- Counter
-		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		echo '<tr><td class="list_value_wrap rela list_item">', ++$n, '</td>';
 		//-- REPO ID
 		if ($SHOW_ID_NUMBERS)
-			echo '<td class="list_value_wrap rela">'.$repo->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">', $repo->getXrefLink(), '</td>';
 		//-- Repository name(s)
 		$name = $repo->getFullName();
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".encode_url($repo->getLinkUrl())."\" class=\"list_item name2\">".PrintReady($name)."</a>";
+		echo '<td class="list_value_wrap" align="', get_align($name), '"><a href="', encode_url($repo->getLinkUrl()), '" class="list_item name2">', PrintReady($name), '</a>';
 		$addname=$repo->getAddName();
 		if ($addname) {
-			echo "<br /><a href=\"".encode_url($repo->getLinkUrl())."\" class=\"list_item\">".PrintReady($addname)."</a>";
+			echo '<br /><a href="', encode_url($repo->getLinkUrl()), '" class="list_item">', PrintReady($addname), '</a>';
 		}
-		echo "</td>";
+		echo '</td>';
 		//-- Linked SOURces
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".encode_url($repo->getLinkUrl())."\" class=\"list_item\">".$repo->countLinkedSources()."</a>";
-		echo "</td>";
+		echo '<td class="list_value_wrap"><a href="', encode_url($repo->getLinkUrl()), '" class="list_item">', $repo->countLinkedSources(), '</a></td>';
 		//-- Last change
-		if ($tiny && $SHOW_LAST_CHANGE)
-			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$repo->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
-		echo "</tr>\n";
+		if ($SHOW_LAST_CHANGE) {
+			echo '<td class="', strrev($TEXT_DIRECTION), ' list_value_wrap rela">', $repo->LastChangeTimestamp(!$SEARCH_SPIDER), '</td>';
+		}
+		echo '</tr>';
 	}
-	echo "</table>\n";
-	echo "</fieldset>\n";
+	echo '</table></fieldset>';
 }
 
 /**
