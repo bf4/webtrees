@@ -38,12 +38,11 @@ global $pgv_lang, $pid, $GEDCOM ;
 loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
 print_header($pgv_lang["configure_lightbox"]);
 
+require('modules/lightbox/lb_defaultconfig.php');
 if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
 
 print "<span class=\"subheaders\">".$pgv_lang["configure_lightbox"]."</span>";
 print "<br /><br />";
-
-
 
 if (!PGV_USER_IS_ADMIN) {
     print "<table class=\"facts_table\">\n";
@@ -56,8 +55,8 @@ if (!PGV_USER_IS_ADMIN) {
 
 if ($action=="update" && !isset($security_user)) {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
-    $configtext = implode('', file("modules/lightbox/lb_config.php"));
-
+    $configtext = implode('', file("modules/lightbox/lb_defaultconfig.php"));
+	
     $configtext = preg_replace('/\$mediatab\s*=\s*".*";/', "\$mediatab = \"".$_POST["NEW_mediatab"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_AL_HEAD_LINKS\s*=\s*".*";/', "\$LB_AL_HEAD_LINKS = \"".$_POST["NEW_LB_AL_HEAD_LINKS"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_AL_THUMB_LINKS\s*=\s*".*";/', "\$LB_AL_THUMB_LINKS = \"".$_POST["NEW_LB_AL_THUMB_LINKS"]."\";", $configtext);
@@ -68,7 +67,6 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$LB_TRANSITION\s*=\s*".*";/', "\$LB_TRANSITION = \"".$_POST["NEW_LB_TRANSITION"]."\";", $configtext);
 	$configtext = preg_replace('/\$LB_URL_WIDTH\s*=\s*".*";/', "\$LB_URL_WIDTH = \"".$_POST["NEW_LB_URL_WIDTH"]."\";", $configtext);
 	$configtext = preg_replace('/\$LB_URL_HEIGHT\s*=\s*".*";/', "\$LB_URL_HEIGHT = \"".$_POST["NEW_LB_URL_HEIGHT"]."\";", $configtext);
-
 	
     $res = @eval($configtext);
     if ($res===false) {
