@@ -1461,7 +1461,7 @@ class stats {
 			}
 			//$chd .= $this->_encoding[$per];
 			$chd .= $this->_array_to_extended_encoding(array($per));
-			$famName = get_family_descriptor($rows[$i]['id']);
+			$famName = strip_tags(get_family_descriptor($rows[$i]['id']));
 			$langName = whatLanguage($famName);
 			if ($langName=='hebrew' || $langName=='arabic') {
 				$chl[] = reverseText($famName);
@@ -1554,9 +1554,9 @@ class stats {
 			$chd .= $this->_array_to_extended_encoding($per);
 			$nameLang = whatLanguage($surname['name']);
 			if ($nameLang=='hebrew' || $nameLang=='arabic') {
-				$chl[] = reverseText($surname['name']);
+				$chl[] = reverseText(strip_tags(($surname['name'])));
 			} else {
-				$chl[] = $surname['name'];
+				$chl[] = strip_tags($surname['name']);
 			}
 		}
 		$chl = join('|', $chl);
@@ -1609,6 +1609,7 @@ class stats {
 					$firstnamestring = explode('/', $row[0]);
 					$nameList = explode(' ', $firstnamestring[0]);
 					foreach ($nameList as $givnName) {
+						$givnName = str_replace(array('"', '*', '.', ',', '(', ')', '[', ']'), '', $givnName);
 						if ($givnName!="@P.N." && $givnName!='Living'&& strlen($givnName)>2) {
 							if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
 							${$genderList}[$givnName] ++;
