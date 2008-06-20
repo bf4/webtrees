@@ -438,5 +438,14 @@ class Family extends GedcomRecord {
 		}
 		return $this->_getAllNames;
 	}
+
+	// Extra info to display when displaying this record in a list of
+	// selection items or favourites.
+	function format_list_details() {
+		return
+		  $this->format_first_major_fact(PGV_EVENTS_MARR).
+		  $this->format_first_major_fact(PGV_EVENTS_DIV);
+	}
+
 }
 ?>

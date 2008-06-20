@@ -92,12 +92,6 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 						$content .= ob_get_clean();
 						$content .= PrintReady($favorite["note"]);
 						$content .= "</div>\n";
-					} elseif ($favorite["type"]=="FAM") {
-						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
-						if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;
-						$content .= format_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, '', 'span');
-						$content .= "<br />".PrintReady($favorite["note"]);
-						$content .= "</div>\n";
 					} elseif ($favorite["type"]=="OBJE") {
 						$content .= "<div id=\"box".$favorite["gid"].".0\">\n";
 						if ($ctype=="user" || userIsAdmin()) $content .= $removeFavourite;
