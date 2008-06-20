@@ -1435,9 +1435,9 @@ class Person extends GedcomRecord {
 		if ($display) $txt .= " style=\"display:$display\"";
 		$txt .= ">";
 		$husb = $fam->getHusband();
-		if ($husb) $txt .= $pgv_lang["father"].": ".PrintReady($husb->getSortName())."<br />";
+		if ($husb) $txt .= $pgv_lang["father"].": ".PrintReady($husb->getListName())."<br />";
 		$wife = $fam->getWife();
-		if ($wife) $txt .= $pgv_lang["mother"].": ".PrintReady($wife->getSortName());
+		if ($wife) $txt .= $pgv_lang["mother"].": ".PrintReady($wife->getListName());
 		$txt .= "</div>";
 		return $txt;
 	}
