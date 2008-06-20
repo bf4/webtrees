@@ -45,7 +45,6 @@
 	// If reorder media has been clicked
 	if (isset($reorder) && $reorder==1) {
 		print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";	
-		print "<b><font size=\"2\" style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b>";
 	// Else If reorder media has NOT been clicked
 	// Highlight Album Thumbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
 	}else if ($rtype=='new'){
@@ -185,9 +184,10 @@
 				print "<td align=\"center\" rowspan=2 >";
 				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"100px\"></img>";
 				print "</td>". "\n";
-
+				
 				// Check for Notes associated media item
 				if ($reorder!=1) {
+					// If reorder media has NOT been clicked
 					print "<td width=\"45%\"valign=\"top\" align=\"center\" >". "\n";
 					if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 						// Print Note and number above thumbnail
@@ -196,7 +196,11 @@
 						print "onclick=\"Tip(";
 							// Contents of Notes 
 							echo "'";
-								echo "<center><font color=#008800><b>&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["notes"] . ":&nbsp;&nbsp;&nbsp;&nbsp;</b></font></center>";
+								if ($TEXT_DIRECTION== "rtl") {
+									echo "<font color=#008800><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["notes"] . ":</b></font><br />";
+								}else{
+									echo "<font color=#008800><b>" . $pgv_lang["notes"] . ":</b></font><br >";
+								}
 								// echo "<br />";
 								echo $notes;
 							echo "'";
@@ -220,13 +224,17 @@
 							print "<font size=\"1\">&nbsp;</font>";
 					}
 					print "</td>";
+				}else{
+					// If reorder media has been clicked
+					print "<td width=\"90% align=\"center\"><b><font size=\"2\" style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b></td>";
 				}
 				$item++;
 				
 				
 				// Details Tooltip --------------------------------
-				print "<td width=\"45%\" valign=\"top\" align=\"center\" >". "\n";
 				if ($reorder!=1) {
+					// If reorder media has NOT been clicked
+					print "<td width=\"45%\" valign=\"top\" align=\"center\" >". "\n";
 					print "<a href=\"#\" ";
 					print "onclick =\"Tip(";
 						// Contents of Details Tooltip 
@@ -267,6 +275,7 @@
 				print "</tr><tr>";
 				
 				print "<td colspan=2 valign=\"top\" align=\"center\" >". "\n";
+				
 				//If reordering media, do NOT Enable Lightbox nor show thumbnail tooltip
 				if ( $reorder==1 ) {
 				// Else Enable Lightbox (Or popup) and show thumbnail tooltip ----------
@@ -283,7 +292,7 @@
 					}
 					print ">\n";
 				}
-			}
+			} // End If media is external or media_exists($mainmedia)
 			
 			// LB 	print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			
