@@ -1065,12 +1065,12 @@ if ($Languages_Default) {            // If Languages not yet configured
 if ($TEXT_DIRECTION=='LTR') {
 	define ('PGV_LPARENS', '&lrm;(');
 	define ('PGV_RPARENS', ')&lrm;');
-	define ('PGV_LDQUO',   '&lrm;&ldquo;');
-	define ('PGV_RDQUO',   '&rdquo;&lrm;');
+	define ('PGV_LDQUO',   '&ldquo;');
+	define ('PGV_RDQUO',   '&rdquo;');
 } else {
 	define ('PGV_LPARENS', '&rlm;(');
 	define ('PGV_RPARENS', ')&rlm;');
-	define ('PGV_LDQUO',   '&rlm;&ldquo;');
-	define ('PGV_RDQUO',   '&rdquo;&rlm;');
+	define ('PGV_LDQUO',   '&rdquo;'); // NOTE, unlike brackets, we need to manually
+	define ('PGV_RDQUO',   '&ldquo;'); // reverse ldquo/rdquo symbols for RTL text.
 }
 ?>
