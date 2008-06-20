@@ -473,7 +473,8 @@ if ($action=="filter") {
 					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
-				echo format_list_family($pvalue[1], array($pvalue[0], $pvalue[2]), true);
+				$family=Family::getInstance($pvalue[1]);
+				echo $family->format_list('li', true);
 			}
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
