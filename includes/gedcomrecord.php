@@ -511,22 +511,44 @@ class GedcomRecord {
 
 	//////////////////////////////////////////////////////////////////////////////
 	// Format this object for display in a list
+	// If $find is set, then we are displaying items from a selection list.
 	//////////////////////////////////////////////////////////////////////////////
-	function format_list($tag='li') {
+	function format_list($tag='li', $find=false) {
 		global $SHOW_ID_NUMBERS;
 
-		$name=$this->getListName();
+		$name=$this->getFullName();
 		$dir=begRTLText($name) ? 'rtl' : 'ltr';
-		$html='<a href="'.encode_url($this->getLinkUrl()).'" class="list_item"><b>'.PrintReady($name).'</b>';
-		if ($SHOW_ID_NUMBERS) {
-			$xref='('.$this->getXref().')';
-			if ($dir=='rtl') {
-				$xref=getRLM().$xref.getRLM();
-			}
-			$html.=' '.$xref;
+		if ($find) {
+			$href='javascript:;" onclick="pasteid(\''.$this->getXref().'\'); return false;';
+		} else {
+			$href=encode_url($this->getLinkUrl());
 		}
+		$html='<a href="'.$href.'" class="list_item"><b>'.PrintReady($name).'</b>';
+		if ($SHOW_ID_NUMBERS) {
+			$html.=' '.PGV_LPARENS.$this->getXref().PGV_RPARENS;
+		}
+		$html.=$this->format_list_details();
 		$html='<'.$tag.' class="'.$dir.'" dir="'.$dir.'">'.$html.'</a></'.$tag.'>';
 		return $html;
+	}
+	// This function should be redefined in derived classes to show any major
+	// identifying characteristics of this record.
+	function format_list_details() {
+		return '';
+	}
+
+	// Extract/format the first fact from a list of facts.
+	function format_first_major_fact($facts) {
+		global $factarray;
+		foreach (explode('|', $facts) as $fact) {
+			foreach ($this->getAllEvents($fact) as $factrec) {
+				// Only display if it has a date or place (or both)
+				if (preg_match('/^2 (DATE|PLAC) (.+)/m', $factrec)) {
+					return '<br /><i>'.$factarray[$fact].' '.format_fact_date($factrec).format_fact_place($factrec).'</i>';
+				}
+			}
+		}
+		return '';
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
