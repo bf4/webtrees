@@ -26,7 +26,7 @@
  * @version 4.1 09 Jul 2007
  * $Id$
  */
-require("config.php");
+require_once ("config.php");
 require("googlemap.php"); // gives access to googlemap functions
 
 loadLangFile("gm_lang, gm_help");
