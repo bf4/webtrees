@@ -94,13 +94,6 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 					print_pedigree_person($favorite["gid"], $style, 1, $key);
 					$content .= ob_get_clean();
 					$content .= PrintReady($favorite["note"]);
-				} elseif ($favorite["type"]=="OBJE") {
-					$content .= "<div id=\"box".$favorite["gid"].".0\">";
-					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
-					ob_start();
-					print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
-					$content .= ob_get_clean();
-					$content .= PrintReady($favorite["note"]);
 				} else {
 					$record=GedcomRecord::getInstance($favorite['gid']);
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
