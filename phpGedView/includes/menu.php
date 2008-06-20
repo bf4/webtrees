@@ -450,7 +450,7 @@ class MenuBar
 		if (PGV_USER_GEDCOM_ID) {
 			//-- quick_update submenu
 			$submenu = new Menu($pgv_lang["quick_update_title"], "#");
-			$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."');");
+			$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."', '', '".PGV_GEDCOM."');");
 			if (!empty($PGV_IMAGES["indis"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
