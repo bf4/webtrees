@@ -347,5 +347,14 @@ class Media extends GedcomRecord {
 	function getAllNames() {
 		return parent::getAllNames('TITL', 2);
 	}
+
+	// Extra info to display when displaying this record in a list of
+	// selection items or favourites.
+	function format_list_details() {
+		ob_start();
+		print_media_links('1 OBJE @'.$this->getXref().'@', 1, $this->getXref());
+		return ob_get_clean();
+	}
+
 }
 ?>
