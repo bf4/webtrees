@@ -1552,9 +1552,9 @@ class Person extends GedcomRecord {
 		if ($nick && !preg_match('/[\/ "^]'.preg_quote($nick, '/').'[\/ "$]/', $full)) {
 			$pos=strpos($full, '/');
 			if ($pos===false) {
-				$full.=' '.PGV_LDQUO.$nick.PGV_RDQUO;
+				$full.=' "'.$nick.'"';
 			} else {
-				$full=substr($full, 0, $pos).PGV_LDQUO.$nick.PGV_RDQUO.' '.substr($full, $pos);
+				$full=substr($full, 0, $pos)'"'.$nick.'" '.substr($full, $pos);
 			}
 		}
 
