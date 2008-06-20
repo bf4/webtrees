@@ -94,13 +94,6 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 					print_pedigree_person($favorite["gid"], $style, 1, $key);
 					$content .= ob_get_clean();
 					$content .= PrintReady($favorite["note"]);
-				} elseif ($favorite["type"]=="FAM") {
-					$content.="<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
-					if ($ctype=="user" || PGV_USER_IS_ADMIN) {
-						$content.=$removeFavourite;
-					}
-					$content.=format_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, '', 'span');
-					$content.= "<br />".PrintReady($favorite["note"]);
 				} elseif ($favorite["type"]=="OBJE") {
 					$content .= "<div id=\"box".$favorite["gid"].".0\">";
 					if ($ctype=="user" || PGV_USER_IS_ADMIN) $content .= $removeFavourite;
