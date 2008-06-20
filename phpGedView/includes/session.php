@@ -1065,8 +1065,8 @@ if ($Languages_Default) {            // If Languages not yet configured
 if ($TEXT_DIRECTION=='ltr') {
 	define ('PGV_LPARENS', '&lrm;(');
 	define ('PGV_RPARENS', ')&lrm;');
-	define ('PGV_LDQUO',   '&ldquo;');
-	define ('PGV_RDQUO',   '&rdquo;');
+	define ('PGV_LDQUO',   '&lrm;&ldquo;');
+	define ('PGV_RDQUO',   '&rdquo;&lrm;');
 } else {
 	define ('PGV_LPARENS', '&rlm;(');
 	define ('PGV_RPARENS', ')&rlm;');
