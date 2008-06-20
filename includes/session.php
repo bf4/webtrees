@@ -1070,7 +1070,7 @@ if ($TEXT_DIRECTION=='LTR') {
 } else {
 	define ('PGV_LPARENS', '&rlm;(');
 	define ('PGV_RPARENS', ')&rlm;');
-	define ('PGV_LDQUO',   '&rdquo;'); // NOTE, unlike brackets, we need to manually
-	define ('PGV_RDQUO',   '&ldquo;'); // reverse ldquo/rdquo symbols for RTL text.
+	define ('PGV_LDQUO',   '"'); // Directional quotations marks work very badly
+	define ('PGV_RDQUO',   '"'); // in RTL pages, so just use simple quotes.
 }
 ?>
