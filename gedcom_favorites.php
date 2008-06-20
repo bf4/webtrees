@@ -92,13 +92,6 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 						$content .= ob_get_clean();
 						$content .= PrintReady($favorite["note"]);
 						$content .= "</div>\n";
-					} elseif ($favorite["type"]=="OBJE") {
-						$content .= "<div id=\"box".$favorite["gid"].".0\">\n";
-						if ($ctype=="user" || userIsAdmin()) $content .= $removeFavourite;
-						ob_start();
-						print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
-						$content .= ob_get_clean();
-						$content .= PrintReady($favorite["note"]);
 					} else {
 						$record=GedcomRecord::getInstance($favorite['gid']);
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">";
