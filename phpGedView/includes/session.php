@@ -1065,12 +1065,8 @@ if ($Languages_Default) {            // If Languages not yet configured
 if ($TEXT_DIRECTION=='ltr') {
 	define ('PGV_LPARENS', '&lrm;(');
 	define ('PGV_RPARENS', ')&lrm;');
-	define ('PGV_LDQUO',   '&lrm;&ldquo;');
-	define ('PGV_RDQUO',   '&rdquo;&lrm;');
 } else {
 	define ('PGV_LPARENS', '&rlm;(');
 	define ('PGV_RPARENS', ')&rlm;');
-	define ('PGV_LDQUO',   '"'); // Directional quotations marks work very badly
-	define ('PGV_RDQUO',   '"'); // in RTL pages, so just use simple quotes.
 }
 ?>
