@@ -1476,14 +1476,21 @@ class Person extends GedcomRecord {
 	function _addName($type, $full, $gedrec) {
 		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $unknownNN, $unknownPN;
 
+		if (preg_match('/^\d/', $gedrec, $match)) {
+			$level=(int)$match[0];
+		} else {
+			$level=1;
+		}
+		$sublevel=$level+1;
+
 		// Some old systems generate gedcoms with single slashes.  e.g. 1 NAME John/Smith
 		if (preg_match('/^[^\/]*\/[^\/]*$/', $full)) {
 			$full.='/';
 		}
 
 		// Need the GIVN and SURN to generate the sortable name.
-		$givn=preg_match('/^\d GIVN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
-		$surn=preg_match('/^\d SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		$givn=preg_match('/^'.$sublevel.' GIVN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		$surn=preg_match('/^'.$sublevel.' SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($givn || $surn) { 
 			// GIVN and SURN, can be comma-separated lists.
 			$surns=preg_split('/ *, */', $surn);
@@ -1535,14 +1542,14 @@ class Person extends GedcomRecord {
 		}
 
 		// Some systems don't include the NPFX in the NAME record.
-		$npfx=preg_match('/^\d NPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		$npfx=preg_match('/^'.$sublevel.' NPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($npfx && stristr($full, $npfx)===false) {
 			$full=$npfx.' '.$full;
 		}
 
 		// Make sure the NICK is included in the NAME record.
-		$nick=preg_match('/^\d NICK ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
-		if ($nick && stristr($full, $nick)===false) {
+		$nick=preg_match('/^'.$sublevel.' NICK ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		if ($nick && !preg_match('/[\/ "^]'.preg_quote($nick, '/').'[\/ "$]/', $full)) {
 			$pos=strpos($full, '/');
 			if ($pos===false) {
 				$full.=' '.PGV_LDQUO.$nick.PGV_RDQUO;
