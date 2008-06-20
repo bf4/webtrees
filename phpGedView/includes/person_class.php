@@ -1554,7 +1554,7 @@ class Person extends GedcomRecord {
 			if ($pos===false) {
 				$full.=' "'.$nick.'"';
 			} else {
-				$full=substr($full, 0, $pos)'"'.$nick.'" '.substr($full, $pos);
+				$full=substr($full, 0, $pos).'"'.$nick.'" '.substr($full, $pos);
 			}
 		}
 
