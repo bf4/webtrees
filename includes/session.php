@@ -1062,7 +1062,7 @@ if ($Languages_Default) {            // If Languages not yet configured
 // Characters with weak-directionality can confuse the browser's BIDI algorithm.
 // Make sure that they follow the directionality of the page, not that of the
 // enclosed text.
-if ($TEXT_DIRECTION=='LTR') {
+if ($TEXT_DIRECTION=='ltr') {
 	define ('PGV_LPARENS', '&lrm;(');
 	define ('PGV_RPARENS', ')&lrm;');
 	define ('PGV_LDQUO',   '&ldquo;');
