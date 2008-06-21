@@ -566,15 +566,17 @@ if(empty($SEARCH_SPIDER)) {
 						print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
 						print "<div id=\"map_pane\" style=\"border: 1px solid gray; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
 						if (PGV_USER_IS_ADMIN) {
-							print "<tr><td align=\"left\">\n";
+							print "<table width=\"100%\"><tr>\n";
+							print "<td width=\"33%\" align=\"left\">\n";
 							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 							print "</td>\n";
-							print "<td align=\"center\">\n";
+							print "<td width=\"33%\" align=\"center\">\n";
 							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
 							print "</td>\n";
-							print "<td align=\"right\">\n";
+							print "<td width=\"33%\" align=\"right\">\n";
 							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
-							print "</td></tr>\n";
+							print "</td>\n";
+							print "</tr></table>\n";
 						}
 						print "</div>\n";
 						print "</td>\n";
@@ -583,7 +585,7 @@ if(empty($SEARCH_SPIDER)) {
 						setup_map();
 						if ($controller->default_tab==6) {
 							$controller->getTab(6);
-						}else{ 
+				        }else{
 							loading_message();
 						}
 						print "</div>\n";

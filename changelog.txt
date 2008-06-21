@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Indi Page: Corrected Research assistant and Googlemap validation errors, tidied up a few lightbox files  (windmillway)
  - Fixed: Indi Page: Corrected all Validation errors. (windmillway) 
 		1) most within Lightbox files. 
 		2) some within Googlemap section in individual.php

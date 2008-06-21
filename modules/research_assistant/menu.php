@@ -74,7 +74,7 @@ class research_assistant_ModuleMenu {
 		//'View Folders' ddl menu item
 		if (PGV_USER_ACCESS_LEVEL<= $SHOW_VIEW_FOLDERS)
 		{
-		$submenu = new Menu($pgv_lang["view_folders"], "module.php?mod=research_assistant&action=view_folders");
+		$submenu = new Menu($pgv_lang["view_folders"], "module.php?mod=research_assistant&amp;action=view_folders");
 		$submenu->addIcon('modules/research_assistant/images/folder_blue_icon.gif');
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
