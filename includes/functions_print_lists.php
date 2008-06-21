@@ -719,7 +719,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
 		$name=$wife->getFullName();
-		$add_name=$wife->getAddName();
+		$addname=$wife->getAddName();
 		$tdclass = "list_value_wrap";
 		if (!$wife->isDead()) $tdclass .= " alive";
 		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";
