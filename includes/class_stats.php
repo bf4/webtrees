@@ -1848,6 +1848,61 @@ class stats {
 	function userName() {return getUserName();}
 	function userFullName() {return getUserFullName(getUserId());}
 
+	function _getLatestUserData($type='userid', $params=null)
+	{
+		global $DATE_FORMAT, $TIME_FORMAT, $pgv_lang;
+		static $user = null;
+		
+		if($user === null)
+		{
+			$users = get_all_users('DESC', 'reg_timestamp', 'username');
+			$user = array_shift($users);
+			unset($users);
+		}
+		
+		switch($type)
+		{
+			default:
+			case 'userid':
+			{
+				return $user;
+			}
+			case 'username':
+			{
+				return get_user_name($user);
+			}
+			case 'fullname':
+			{
+				return getUserFullName($user);
+			}
+			case 'regdate':
+			{
+				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
+				//$d = new GedcomDate(date('j M Y', get_user_setting($user, 'reg_timestamp')));
+				//return strip_tags($d->Display(false, $DATE_FORMAT, array()));
+				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
+			}
+			case 'regtime':
+			{
+				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $TIME_FORMAT;}
+				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
+			}
+			case 'loggedin':
+			{
+				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = $pgv_lang['yes'];}
+				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = $pgv_lang['no'];}
+				return (get_user_setting($user, 'loggedin') == 'Y')?$yes:$no;
+			}
+		}
+	}
+
+	function latestUserId(){return $this->_getLatestUserData('userid');}
+	function latestUserName(){return $this->_getLatestUserData('username');}
+	function latestUserFullName(){return $this->_getLatestUserData('fullname');}
+	function latestUserRegDate($params=null){return $this->_getLatestUserData('regdate', $params);}
+	function latestUserRegTime($params=null){return $this->_getLatestUserData('regtime', $params);}
+	function latestUserLoggedin($params=null){return $this->_getLatestUserData('loggedin', $params);}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Contact                                                                   //
 ///////////////////////////////////////////////////////////////////////////////
