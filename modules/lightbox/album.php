@@ -88,52 +88,49 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 //------------------------------------------------------------------------------
 // Start Main Table
 //------------------------------------------------------------------------------
-echo "<table border='0' width='100%'><tr><td>", "\n\n";
+echo "<table border='0' width='100%'><tr>", "\n\n";
 
 //------------------------------------------------------------------------------
 // Build Thumbnail Rows
 //------------------------------------------------------------------------------
-
-//echo "<td border='0' id='ROWS'>";
-	echo "<table width=\"100%\"><tr><td valign=\"top\" >";
-	for ($t=1; $t <=5; $t++) {
-	
-           if ($t==1) {
-                lightbox_print_media($pid, 0, true, 1);
-           }
-           elseif ($t==2) {
-                lightbox_print_media($pid, 0, true, 2);
-           }
-           elseif ($t==3) {
-                lightbox_print_media($pid, 0, true, 3);
-           }
-           elseif ($t==4) {
-                lightbox_print_media($pid, 0, true, 4);
-           }
-           elseif ($t==5 ) {
-                lightbox_print_media($pid, 0, true, 5);
-           }		   
-           else{
-           }
- 
-     }
-
-     echo "</td>";
-
+	echo "<td>";
+		echo "<table width=\"100%\"><tr>";
+		echo "<td valign=\"top\" >";
+		for ($t=1; $t <=5; $t++) {
+			if ($t==1) {
+				lightbox_print_media($pid, 0, true, 1);
+			}
+			elseif ($t==2) {
+				lightbox_print_media($pid, 0, true, 2);
+			}
+			elseif ($t==3) {
+				lightbox_print_media($pid, 0, true, 3);
+			}
+			elseif ($t==4) {
+				lightbox_print_media($pid, 0, true, 4);
+			}
+			elseif ($t==5 ) {
+				lightbox_print_media($pid, 0, true, 5);
+			}   
+			else{
+			}
+		}
+		echo "</td>";
+		echo "</tr></table>";
+	echo "</td>";
+//------------------------------------------------------------------------------
+// End Thumbnail Rows
+//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
 	echo '<td valign="top" align="center" width="220">', "\n" ;
-// echo "<td>";
-	echo "<table ><tr><td class=\"optionbox\" align=\"center\">";
-	echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
-		$controller->lightbox();	 
-	echo "<br />";
-	echo "</td>";
-	echo "</tr></table>";
-
-
+		echo "<table ><tr><td class=\"optionbox\" align=\"center\">";
+		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
+			$controller->lightbox();	 
+		echo "<br />";
+		echo "</td></tr></table>";
 	echo "</td>" . "\n\n" ;
 // -----------------------------------------------------------------------------
 // end Relatives navigator
@@ -143,5 +140,4 @@ echo "<table border='0' width='100%'><tr><td>", "\n\n";
 //------------------------------------------------------------------------------
 // End Main Table
 //------------------------------------------------------------------------------
-echo "</td>";
 echo "</tr></table>";

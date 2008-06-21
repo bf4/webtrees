@@ -180,15 +180,15 @@
 				}
 				
 				// Start Thumbnail Enclosure table 
-				print "<table class=\"pic\" border=0><tr>" . "\n";
-				print "<td align=\"center\" rowspan=2 >";
-				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"100px\"></img>";
+				print "<table class=\"pic\" border=\"0\"><tr>" . "\n";
+				print "<td align=\"center\" rowspan=\"2\" >";
+				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"100px\" alt=\"\"></img>";
 				print "</td>". "\n";
 				
 				// Check for Notes associated media item
 				if ($reorder!=1) {
 					// If reorder media has NOT been clicked
-					print "<td width=\"45%\"valign=\"top\" align=\"center\" >". "\n";
+					print "<td width=\"45%\" valign=\"top\" align=\"center\" >". "\n";
 					if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 						// Print Note and number above thumbnail
 						print "<a href=\"#\" ";
@@ -197,9 +197,9 @@
 							// Contents of Notes 
 							echo "'";
 								if ($TEXT_DIRECTION== "rtl") {
-									echo "<font color=#008800><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["notes"] . ":</b></font><br />";
+									echo "&lt;font color=#008800>&lt;b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br />";
 								}else{
-									echo "<font color=#008800><b>" . $pgv_lang["notes"] . ":</b></font><br >";
+									echo "&lt;font color=#008800>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br >";
 								}
 								// echo "<br />";
 								echo $notes;
@@ -239,23 +239,23 @@
 					print "onclick =\"Tip(";
 						// Contents of Details Tooltip 
 						print "'";
-							echo "<center><font color=#008800><b>&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["lb_details"] . ":&nbsp;&nbsp;&nbsp;&nbsp;</b></font></center>";
+							echo "&lt;center>&lt;font color=#008800>&lt;b>&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["lb_details"] . ":&nbsp;&nbsp;&nbsp;&nbsp;&lt;/b>&lt;/font>&lt;/center>";
 							// Title --------------------------------
 							print addslashes($mediaTitle);
-							print "<br />";
+							print "&lt;br />";
 							// Source ----------------------------
 							if (eregi("1 SOUR",$rowm['m_gedrec'])) {
 								print $pgv_lang["lb_view_source_tip"] ;
-								print "<a href=\'" . $SERVER_URL . "source.php?sid=" . $sour . "\'>";
-								print "<b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 . "</font></b>";
-								print "<\/a>"; 
-								print "<br />";
+								print "&lt;a href=\'" . $SERVER_URL . "source.php?sid=" . $sour . "\'>";
+								print "&lt;b>&lt;font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 . "&lt;/font>&lt;/b>";
+								print "&lt;\/a>"; 
+								print "&lt;br />";
 							}
 							// Details -----------------------------
 								print PrintReady($pgv_lang["lb_view_details_tip"]);
-								print "<a href=\'" . $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'>";
-								print "<b><font color=#0000FF>&nbsp;" . $rowm["m_media"] . "</font></b>";
-								print "<\/a>";
+								print "&lt;a href=\'" . $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'>";
+								print "&lt;b>&lt;font color=#0000FF>&nbsp;" . $rowm["m_media"] . "&lt;/font>&lt;/b>";
+								print "&lt;\/a>";
 						print "'";
 						// Details Tooltip parameters ----------------------------------
 						print $tt_opts;
@@ -264,7 +264,7 @@
 					print "return false;\"";
 					print ">\n";
 					// Link Text ------------------------
-					print "<font size=1>";
+					print "<font size=\"1\">";
 					print $pgv_lang["lb_details"];
 					print "</font>";
 					
@@ -274,7 +274,7 @@
 				
 				print "</tr><tr>";
 				
-				print "<td colspan=2 valign=\"top\" align=\"center\" >". "\n";
+				print "<td colspan=\"2\" valign=\"top\" align=\"center\" >". "\n";
 				
 				//If reordering media, do NOT Enable Lightbox nor show thumbnail tooltip
 				if ( $reorder==1 ) {
