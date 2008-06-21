@@ -514,17 +514,17 @@ if(empty($SEARCH_SPIDER)) {
 if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/googlemap/defaultconfig.php")) {
 		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
-    		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
-    	include_once('modules/googlemap/googlemap.php');
+		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+		include_once('modules/googlemap/googlemap.php');
 		if ($GOOGLEMAP_ENABLED == "false") {
-	        print "<table class=\"facts_table\">\n";
-	        print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</script></td></tr>\n";
-	        if (PGV_USER_IS_ADMIN) {
-	            print "<tr><td align=\"center\" colspan=\"2\">\n";
-	            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
-	            print "</td></tr>\n";
-	        }
-	        print "\n\t</table>\n<br />";
+			print "<table class=\"facts_table\">\n";
+			print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</script></td></tr>\n";
+			if (PGV_USER_IS_ADMIN) {
+				print "<tr><td align=\"center\" colspan=\"2\">\n";
+				print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+				print "</td></tr>\n";
+			}
+			print "\n\t</table>\n<br />";
 			?>
 			<script language="JavaScript" type="text/javascript">
 			<!--
@@ -533,68 +533,65 @@ if(empty($SEARCH_SPIDER)) {
 			//-->
 			</script>
 			<?php
-	    }
-	    else {
-    	if(empty($SEARCH_SPIDER)) {
-	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
-	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
-	    	$tNew = preg_replace("/&/", "&amp;", $tNew);
-	    	if($SESSION_HIDE_GOOGLEMAP == "true") {
-			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
-			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
-			    print " ".$pgv_lang["activate"]."</a></span>\n";
-		    	} else {
-			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
-			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
-			    print " ".$pgv_lang["deactivate"]."</a></span>\n";
+		}else{
+			if(empty($SEARCH_SPIDER)) {
+				$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
+				$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
+				$tNew = preg_replace("/&/", "&amp;", $tNew);
+				if($SESSION_HIDE_GOOGLEMAP == "true") {
+					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
+					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
+					print " ".$pgv_lang["activate"]."</a></span>\n";
+					} else {
+						print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
+						print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
+						print " ".$pgv_lang["deactivate"]."</a></span>\n";
+					}
 			}
-	    }
-        if (!$controller->indi->canDisplayName()) {
-            print "\n\t<table class=\"facts_table\">";
-            print "<tr><td class=\"facts_value\">";
-            print_privacy_error($CONTACT_EMAIL);
-            print "</td></tr>";
-            print "\n\t</table>\n<br />";
-            print "<script type=\"text/javascript\">\n";
-            print "function ResizeMap ()\n{\n}\n</script>\n";
-        }
-        else {
-            if(empty($SEARCH_SPIDER)) {
-				if($SESSION_HIDE_GOOGLEMAP == "false") {
-			            include_once('modules/googlemap/googlemap.php');
-				        print "<table class=\"facts_table\">\n";
-				        print "<tr><td valign=\"top\">\n";
-				        print "<div id=\"googlemap_left\">\n";
-				        print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
-				        print "<div id=\"map_pane\" style=\"border: 1px solid gray; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
-				        print "<table width=\"100%\"><tr>\n";
-				        if (PGV_USER_IS_ADMIN) {
-				            print "<tr><td align=\"left\">\n";
-				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
-				            print "</td>\n";
-   				            print "<td align=\"center\">\n";
-				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
-				            print "</td>\n";
-   				            print "<td align=\"right\">\n";
-				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
-				            print "</td></tr>\n";
-				        }
-				        print "</table>\n";
-				        print "</div>\n";
-				        print "</td>\n";
-				        print "<td valign=\"top\" width=\"33%\">\n";
+			if (!$controller->indi->canDisplayName()) {
+				print "\n\t<table class=\"facts_table\">";
+				print "<tr><td class=\"facts_value\">";
+				print_privacy_error($CONTACT_EMAIL);
+				print "</td></tr>";
+				print "\n\t</table>\n<br />";
+				print "<script type=\"text/javascript\">\n";
+				print "function ResizeMap ()\n{\n}\n</script>\n";
+			}else{
+				if(empty($SEARCH_SPIDER)) {
+					if($SESSION_HIDE_GOOGLEMAP == "false") {
+						include_once('modules/googlemap/googlemap.php');
+						print "<table class=\"facts_table\">\n";
+						print "<tr><td valign=\"top\">\n";
+						print "<div id=\"googlemap_left\">\n";
+						print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
+						print "<div id=\"map_pane\" style=\"border: 1px solid gray; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+						if (PGV_USER_IS_ADMIN) {
+							print "<tr><td align=\"left\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+							print "</td>\n";
+							print "<td align=\"center\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+							print "</td>\n";
+							print "<td align=\"right\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
+							print "</td></tr>\n";
+						}
+						print "</div>\n";
+						print "</td>\n";
+						print "<td valign=\"top\" width=\"33%\">\n";
 						print "<div id=\"googlemap_content\">\n";
-				        setup_map();
-				        if ($controller->default_tab==6) {
-				        	$controller->getTab(6);
-				        }
-		else loading_message();
-		print "</div>\n";
+						setup_map();
+						if ($controller->default_tab==6) {
+							$controller->getTab(6);
+						}else{ 
+							loading_message();
+						}
+						print "</div>\n";
 						print "</td></tr></table>\n";
+					}
 				}
-            }
-        }
-	    }
+			}
+		}
 		// start
 		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
 		// end

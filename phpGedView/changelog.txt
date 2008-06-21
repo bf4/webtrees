@@ -10,6 +10,9 @@
 
 
 Version 4.1.6
+ - Fixed: Indi Page: Corrected all Validation errors. (windmillway) 
+		1) most within Lightbox files. 
+		2) some within Googlemap section in individual.php
  - Fixed: Lightbox Album: Media Re-sort (Horizontal sort): Fixed displacement problem in IE. (windmillway)
  - Added: Lightbox Configuration page: Now conform to PGV config file updates and avoid destroying lb_config file on option updates (windmillway)
  - Added: Album Tab Page: (windmillway)
