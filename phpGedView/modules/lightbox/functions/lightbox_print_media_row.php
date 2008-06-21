@@ -42,24 +42,28 @@
 	global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q, $LB_TT_BALLOON ;
 	
-	// If reorder media has been clicked
-	if (isset($reorder) && $reorder==1) {
-		print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";	
-	// Else If reorder media has NOT been clicked
-	// Highlight Album Thumbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
-	}else if ($rtype=='new'){
-		print "<li class=\"li_new\">" . "\n";
-	}else if ($rtype=='old'){
-		print "<li class=\"li_old\">" . "\n";
-	}else{
-		print "<li class=\"li_norm\">" . "\n";
-	}
+
 	
 	//If media is linked to a 'private' person
 	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 		$item++;
 		return false;
+	}else{
+	// Media is NOT linked to private person
+		// If reorder media has been clicked
+		if (isset($reorder) && $reorder==1) {
+			print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";	
+		// Else If reorder media has NOT been clicked
+		// Highlight Album Thumbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
+		}else if ($rtype=='new'){
+			print "<li class=\"li_new\">" . "\n";
+		}else if ($rtype=='old'){
+			print "<li class=\"li_old\">" . "\n";
+		}else{
+			print "<li class=\"li_norm\">" . "\n";
+		}
 	}
+	
 	// Add blue or red borders
 	$styleadd="";
 	if ($rtype=='new') $styleadd = "change_new";

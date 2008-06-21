@@ -91,7 +91,7 @@ include ('includes/media_reorder_count.php');
 		echo '<table border="0" width="75%"><tr>';
 		// print "<td class=\"width10 center wrap\" valign=\"top\"></td>";
 
-		if ($LB_AL_HEAD_LINKS == "icon") {
+		if ($LB_AL_HEAD_LINKS == "icon" || (!PGV_USER_IS_ADMIN && !PGV_USER_CAN_EDIT)) {
 		print "<td>";
 		}
 
@@ -221,7 +221,7 @@ include ('includes/media_reorder_count.php');
 		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=\"".encode_url("{$PHP_SELF}?tab={$tabno}&pid={$pid}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url("{$PHP_SELF}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"{$pgv_lang['reorder_media']}\" alt=\"{$pgv_lang['reorder_media']}\" /><br />" ;
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
 				print '</a>';
@@ -230,7 +230,7 @@ include ('includes/media_reorder_count.php');
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=\"".encode_url("{$PHP_SELF}?tab={$tabno}&pid={$pid}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url("{$PHP_SELF}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
 				print '</a>';
 				print "</td>";
@@ -238,7 +238,7 @@ include ('includes/media_reorder_count.php');
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
-				print "<a href=\"".encode_url("{$PHP_SELF}?tab={$tabno}&pid={$pid}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url("{$PHP_SELF}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"{$pgv_lang['reorder_media']}\" alt=\"{$pgv_lang['reorder_media']}\" />" ;
 				print '</a>';
 				//print "<td width=\"5%\">&nbsp;</td>";
@@ -274,7 +274,7 @@ include ('includes/media_reorder_count.php');
 			}
 		}
 		
-		if ($LB_AL_HEAD_LINKS == "icon") {
+		if ($LB_AL_HEAD_LINKS == "icon" || (!PGV_USER_IS_ADMIN && !PGV_USER_CAN_EDIT)) {
 		print "</td>";
 		}
 		

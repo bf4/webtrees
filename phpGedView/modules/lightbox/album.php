@@ -70,7 +70,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 		<center>
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>" onclick="saveOrder();" ><?php print $pgv_lang["save"];?></button>&nbsp;
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='al_reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>&nbsp;
-		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?tab=7&pid=" . $pid  ;?>'"><?php print $pgv_lang["cancel"];?></button> 
+		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?pid=" . $pid . "&tab=7"; ?>'"><?php print $pgv_lang["cancel"];?></button> 
 <?php
 /*
 		// Debug ---------------------------------------------------------------------------
@@ -126,11 +126,13 @@ echo "<table border='0' width='100%'><tr>", "\n\n";
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
 	echo '<td valign="top" align="center" width="220">', "\n" ;
+	echo "<table><tr><td>";
 		echo "<table ><tr><td class=\"optionbox\" align=\"center\">";
 		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
 			$controller->lightbox();	 
 		echo "<br />";
 		echo "</td></tr></table>";
+	echo "</td></tr></table>";
 	echo "</td>" . "\n\n" ;
 // -----------------------------------------------------------------------------
 // end Relatives navigator
@@ -141,3 +143,5 @@ echo "<table border='0' width='100%'><tr>", "\n\n";
 // End Main Table
 //------------------------------------------------------------------------------
 echo "</tr></table>";
+
+?>

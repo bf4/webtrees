@@ -1879,7 +1879,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 		?>
 		<script language="JavaScript" type="text/javascript" >
 		<!-- 
-			location.href='<?php echo "individual.php?tab=" . $tabno . "&pid=" . $pid  ;?>';
+			location.href='<?php echo "individual.php?pid=" . $pid . "&tab=" . $tabno ;?>';
 		//-->
 		</script>
 		<?php
@@ -1919,7 +1919,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 		?>
 		<script language="JavaScript" type="text/javascript" >
 		<!-- 
-			location.href='<?php echo "individual.php?tab=" . $tabno . "&pid=" . $pid  ;?>';
+			location.href='<?php echo "individual.php?pid=" . $pid . "&tab=" . $tabno ;?>';
 		//-->
 		</script>
 		<?php
