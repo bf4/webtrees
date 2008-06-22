@@ -1606,17 +1606,18 @@ class stats {
 					if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
 					else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
 					else $genderList = 'name_list_u';
-					$firstnamestring = explode('/', $row[0]);
-					$nameList = explode(' ', $firstnamestring[0]);
+					$firstnamestring = explode("/", preg_replace(array("/@N.N.?/","/@P.N.?/"), "", $row[0]));
+					$firstnamestring[0] = str_replace(array('*', '.', "\xE2\xA0\xA6", '-', ',', '(', ')', '[', ']', '{', '}'), ' ', $firstnamestring[0]);
+					$firstnamestring[0] = str_replace(array(" '", "' ", ' "', '" '), ' ', $firstnamestring[0]);		// Special treatment to allow names like "D'arcy"
+					$nameList = explode(" ", $firstnamestring[0]);
 					foreach ($nameList as $givnName) {
-						$givnName = str_replace(array('"', '*', '.', ',', '(', ')', '[', ']'), '', $givnName);
-						if ($givnName!="@P.N." && $givnName!='Living'&& strlen($givnName)>2) {
+						if (strlen($givnName)>1) {
 							if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
 							${$genderList}[$givnName] ++;
 						}
 					}
 				}
-				$res->free();
+			$res->free();
 			}
 			arsort($name_list_f, SORT_NUMERIC);
 			$_SESSION['first_names_f'][$GEDCOM] = $name_list_f;
