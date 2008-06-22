@@ -876,8 +876,8 @@ case 'update':
 	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	
 	if (!empty($NAME)) $newged .= "1 NAME $NAME\r\n";
@@ -890,12 +890,14 @@ case 'update':
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\r\n";
 
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
-	$newged = handle_updates($newged);
-
+	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added 
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $newged .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
+	
+	$newged = handle_updates($newged);	
+
+	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
 
 	while($i<count($gedlines)) {
@@ -922,8 +924,8 @@ case 'addchildaction':
 	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
 	
@@ -937,8 +939,8 @@ case 'addchildaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	
@@ -1087,8 +1089,8 @@ case 'addspouseaction':
 	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
 	
@@ -1102,8 +1104,8 @@ case 'addspouseaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	
@@ -1399,8 +1401,8 @@ case 'addnewparentaction':
 	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
 	
@@ -1414,8 +1416,8 @@ case 'addnewparentaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	
