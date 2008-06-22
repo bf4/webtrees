@@ -442,7 +442,7 @@ class GedcomRecord {
 			case 'vietnamese':
 			case 'chinese':
 				foreach ($this->getAllNames() as $n=>$name) {
-					if (whatLanguage($name['full'])==$LANGUAGE) {
+					if ($name['type']!='_MARNM' && whatLanguage($name['full'])==$LANGUAGE) {
 						$this->_getPrimaryName=$n;
 						break;
 					}
