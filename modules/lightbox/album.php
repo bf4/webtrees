@@ -33,7 +33,8 @@ global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $L
 global $reorder, $PHP_SELF, $rownum, $sort_i, $GEDCOM;
 
 // Get Javascript variables from lb_config.php --------------------------- 
-include_once('modules/lightbox/lb_config.php'); 
+include_once('modules/lightbox/lb_defaultconfig.php'); 
+if (file_exists('modules/lightbox/lb_config.php')) include_once('modules/lightbox/lb_config.php'); 
 //	include_once('modules/lightbox/functions/browser_detection_php_ar.php');
 
 
