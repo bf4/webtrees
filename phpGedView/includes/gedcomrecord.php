@@ -471,7 +471,7 @@ class GedcomRecord {
 			if (count($all_names)>1) {
 				$primary_language=whatLanguage($all_names[$this->getPrimaryName()]['full']);
 				foreach ($all_names as $n=>$name) {
-					if ($n!=$this->getPrimaryName() && whatLanguage($name['full'])!=$primary_language) {
+					if ($n!=$this->getPrimaryName() $name['type']!='_MARNM' && whatLanguage($name['full'])!=$primary_language) {
 						$this->_getSecondaryName=$n;
 						break;
 					}
