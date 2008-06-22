@@ -469,39 +469,6 @@ function get_add_person_name_in_record($name_record, $keep_slash=false) {
 	return $name;
 }
 
-// -- find and return a given individual's second name in sort format: familyname, firstname
-function get_sortable_add_name($pid) {
-	global $NAME_REVERSE;
-	global $NAME_FROM_GEDCOM;
-
-	//-- get the name from the indexes
-	$record = find_person_record($pid);
-	$name_record = get_sub_record(1, "1 NAME", $record);
-
-	// Check for ROMN name
-	$romn = preg_match("/(2 ROMN (.*)|2 _HEB (.*))/", $name_record, $romn_match);
-	if ($romn > 0){
-		$names = preg_split("/\//", $romn_match[count($romn_match)-1]);
-		if ($names[0] == "") $names[0] = "@P.N.";	//-- MA
-		if (empty($names[1])) $names[1] = "@N.N.";	//-- MA
-		if (count($names)>1) {
-			$fullname = trim($names[1]).",";
-			$fullname .= ",# ".trim($names[0]);
-			if (count($names)>2) $fullname .= ",% ".trim($names[2]);
-		}
-		else $fullname=$romn_match[1];
-		if (!$NAME_REVERSE) {
-			$name = trim($names[1]).", ".trim($names[0]);
-		}
-		else {
-			$name = trim($names[0])." ,".trim($names[1]);
-		}
-	}
-	else $name = get_sortable_name($pid);
-
-	return $name;
-}
-
 /**
  * strip name prefixes
  *
