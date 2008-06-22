@@ -1847,6 +1847,8 @@ class stats {
 	function userID() {return getUserId();}
 	function userName() {return getUserName();}
 	function userFullName() {return getUserFullName(getUserId());}
+	function userFirstName() {return get_user_setting(getUserId(), 'firstname');}
+	function userLastName() {return get_user_setting(getUserId(), 'lastname');}
 
 	function _getLatestUserData($type='userid', $params=null)
 	{
@@ -1875,6 +1877,14 @@ class stats {
 			{
 				return getUserFullName($user);
 			}
+			case 'firstname':
+			{
+				return get_user_setting($user, 'firstname');
+			}
+			case 'lastname':
+			{
+				return get_user_setting($user, 'lastname');
+			}
 			case 'regdate':
 			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
@@ -1899,6 +1909,8 @@ class stats {
 	function latestUserId(){return $this->_getLatestUserData('userid');}
 	function latestUserName(){return $this->_getLatestUserData('username');}
 	function latestUserFullName(){return $this->_getLatestUserData('fullname');}
+	function latestUserFirstName(){return $this->_getLatestUserData('firstname');}
+	function latestUserLastName(){return $this->_getLatestUserData('lastname');}
 	function latestUserRegDate($params=null){return $this->_getLatestUserData('regdate', $params);}
 	function latestUserRegTime($params=null){return $this->_getLatestUserData('regtime', $params);}
 	function latestUserLoggedin($params=null){return $this->_getLatestUserData('loggedin', $params);}
