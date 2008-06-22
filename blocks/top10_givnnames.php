@@ -70,11 +70,12 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 				if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
 				else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
 				else $genderList = 'name_list_u';
-				$firstnamestring = explode("/", $row[0]);
+				$firstnamestring = explode("/", preg_replace(array("/@N.N.?/","/@P.N.?/"), "", $row[0]));
+				$firstnamestring[0] = str_replace(array('*', '.', "\xE2\xA0\xA6", '-', ',', '(', ')', '[', ']', '{', '}'), ' ', $firstnamestring[0]);
+				$firstnamestring[0] = str_replace(array(" '", "' ", ' "', '" '), ' ', $firstnamestring[0]);		// Special treatment to allow names like "D'arcy"
 				$nameList = explode(" ", $firstnamestring[0]);
 				foreach ($nameList as $givnName) {
-					$givnName = str_replace(array('"', '*', '.', ',', '(', ')', '[', ']'), '', $givnName);
-					if ($givnName!="@P.N." && strlen($givnName)>2) {
+					if (strlen($givnName)>1) {
 						if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
 						${$genderList}[$givnName] ++;
 					}
@@ -122,7 +123,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	case "style1":	// Output style 1:  Simple list style.  Better suited to left side of page.
 		if ($TEXT_DIRECTION=='ltr') $padding = 'padding-left: 15px';
 		else $padding = 'padding-right: 15px';
-		//List Female names	
+		//List Female names
 		print "<b>".$pgv_lang["female"]."</b>";
 		print "<div class=\"wrap\" style=\"$padding\">";
 		$nameList = array_slice($name_list_f, 0, $config["num"]);
@@ -157,32 +158,42 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		$nameAlign = ($TEXT_DIRECTION=='ltr') ? 'left':'right';
 		//Table Headings
 		print "<table class=\"center\">";
-		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td></tr>";
+		print "<tr>";
+			if (count($name_list_f)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td>";
+			if (count($name_list_m)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td>";
+			if (count($name_list_u)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td>";
+		print "</tr>";
 		print "<tr>";
 		//List Female names
-		print "<td valign='top'><table>";
-		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
-		$nameList = array_slice($name_list_f, 0, $config["num"]);
-		foreach ($nameList as $key => $value) {
-			echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
-		}
-		print "</table></td>";
-		//List Male names	
-		print "<td valign='top'><table>";
-		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
-		$nameList = array_slice($name_list_m, 0, $config["num"]);
-		foreach ($nameList as $key => $value) {
-			echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
-		}
-		print "</table></td>";
+			if (count($name_list_f)>0) {
+				print "<td valign='top'><table>";
+				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
+				$nameList = array_slice($name_list_f, 0, $config["num"]);
+				foreach ($nameList as $key => $value) {
+					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
+				}
+				print "</table></td>";
+			}
+		//List Male names
+			if (count($name_list_m)>0) {
+				print "<td valign='top'><table>";
+				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
+				$nameList = array_slice($name_list_m, 0, $config["num"]);
+				foreach ($nameList as $key => $value) {
+					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
+				}
+				print "</table></td>";
+			}
 		//List Unknown names	
-		print "<td valign='top'><table>";
-		print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
-		$nameList = array_slice($name_list_u, 0, $config["num"]);
-		foreach ($nameList as $key => $value) {
-			echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
-		}
-		print "</table></td>";
+			if (count($name_list_m)>0) {
+				print "<td valign='top'><table>";
+				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
+				$nameList = array_slice($name_list_u, 0, $config["num"]);
+				foreach ($nameList as $key => $value) {
+					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
+				}
+				print "</table></td>";
+			}
 		//Close table off
 		print "</tr></table>";
 		break;
