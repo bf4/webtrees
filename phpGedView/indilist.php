@@ -203,7 +203,15 @@ if ($surname_sublist=='yes') {
 		}
 	}
 	uksort($surnames, 'compareStrings');
-	print_surname_table($surnames, 'indilist');
+	switch ($SURNAME_LIST_STYLE) {
+	case 'style3':
+		print_surname_tagcloud($surnames, 'indilist');
+		break;
+	case 'style2':
+	default:
+		print_surname_table($surnames, 'indilist');
+		break;
+	}
 } else {
 	// Show the individual list
 	// Note that each person is listed as many times as they have names that
