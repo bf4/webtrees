@@ -219,7 +219,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	echo "<div id=\"".$table_id."-table\">";
+	echo '<div id="'.$table_id.'-table" class="center">';
 	//-- filter buttons
 	$person = new Person("");
 	echo "<button type=\"button\" class=\"SEX_M\" title=\"".$pgv_lang["button_SEX_M"]."\" >";
@@ -251,7 +251,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<button type=\"button\" class=\"reset\" title=\"".$pgv_lang["button_reset"]."\" >";
 	echo $pgv_lang["reset"]."</button> ";
 	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table\">";
 	echo "<thead><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
@@ -324,7 +324,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			// If we're showing search results, then the highlighted name is not
 			// necessarily the person's primary name.
 			if (is_array($value) && isset($value['name'])) {
-				$primary=($name['list']==$value['name']);
+				$primary=($name['sort']==$value['name']);
 			} else {
 				$primary=($num==$person->getPrimaryName());
 			}
@@ -343,8 +343,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($person->xref) print $person->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- GIVN/SURN
-		echo '<td style="display:none">', $givn, '</td>';
-		echo '<td style="display:none">', $surn, '</td>';
+		echo '<td style="display:none">', $givn, ',', $surn, '</td>';
+		echo '<td style="display:none">', $surn, ',', $givn, '</td>';
 		//-- SOSA
 		if ($option=="sosa") {
 			echo "<td class=\"list_value_wrap\">";
@@ -1268,6 +1268,92 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	echo "<td class=\"list_label name2\">".$total."</td>";
 	echo "</tr>\n";
 	echo "</table>\n";
+}
+
+// Print a table of surnames.
+// @param $surnames array (of SURN, of array of SPFX_SURN, of array of PID)
+// @param $type string, indilist or famlist
+function print_surname_table($surnames, $type) {
+	global $pgv_lang, $factarray, $GEDCOM;
+
+	require_once 'js/sorttable.js.htm';
+	$table_id = 'ID'.floor(microtime()*1000000); // sorttable requires a unique ID
+	echo '<table id="', $table_id, '" class="sortable list_table center">';
+	echo '<tr><th></th>';
+	echo '<th class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this,1)">'.$factarray['SURN'].'</a></th>';
+	echo '<th style="display:none;">SURN</th>'; // hidden column for sorting surnames
+	echo '<th class="list_label">';
+	if ($type=='famlist') {
+		echo $pgv_lang['spouses']; 
+	} else {
+		echo $pgv_lang['individuals'];
+	}
+	echo '</th></tr>';
+
+	$unique_surn=array();
+	$unique_indi=array();
+	$row_num=0;
+	foreach ($surnames as $surn=>$surns) {
+		// Each surname links back to the indi/fam surname list
+		$url=$type.'.php?surname='.urlencode($surn).'&amp;ged='.urlencode($GEDCOM);
+		// Row counter
+		echo '<tr><td class="list_value_wrap rela list_item">', ++$row_num, '</td>';
+		// Surname
+		echo '<td class="list_value_wrap" align="', get_align($surn), '">';
+		if (count($surns)==1) {
+			// Single surname variant
+			foreach ($surns as $spfxsurn=>$indis) {
+				echo '<a href="', $url, '" class="list_item name1">', PrintReady($spfxsurn), '</a>';
+				$unique_surn[$spfxsurn]=true;
+				foreach (array_keys($indis) as $pid) {
+					$unique_indi[$pid]=true;
+				}
+			}
+		} else {
+			// Multiple surname variants, e.g. von Groot, van Groot, van der Groot, etc.
+			echo '<a href="', $url, '" class="list_item name2">', PrintReady($surn), '</a>';
+			foreach ($surns as $spfxsurn=>$indis) {
+				echo '<br/>', PrintReady($spfxsurn);
+				$unique_surn[$spfxsurn]=true;
+				foreach (array_keys($indis) as $pid) {
+					$unique_indi[$pid]=true;
+				}
+			}
+		}
+		echo '</td>';
+		// Hidden column for sorting surnames
+		echo '<td style="display:none;">', $surn, '</td>';
+		// Surname count
+		echo '<td class="list_value_wrap">';
+		if (count($surns)==1) {
+			// Single surname variant
+			foreach ($surns as $spfxsurn=>$indis) {
+				$subtotal=count($indis);
+				echo '<a name="', $subtotal, '">', $subtotal, '</a>';;
+			}
+		} else {
+			// Multiple surname variants, e.g. von Groot, van Groot, van der Groot, etc.
+			$subtotal=0;
+			foreach ($surns as $spfxsurn=>$indis) {
+				$subtotal+=count($indis);
+			}
+			echo '<a name="', $subtotal, '">', $subtotal, '</a>';;
+			foreach ($surns as $spfxsurn=>$indis) {
+				echo '<br/>', count($indis);
+			}
+		}
+		echo '</td></tr>';
+	}
+	//-- table footer
+	echo '<tr class="sortbottom">';
+	echo '<td class="list_item">&nbsp;</td>';
+	echo '<td class="list_item">&nbsp;</td>';
+	echo '<td style="display:none;">&nbsp;</td>'; // hidden column for sorting surnames
+	echo '<td class="list_label name2">';
+	echo $pgv_lang['total_indis'], ': ', count($unique_indi);
+	echo '<br/>', $pgv_lang['total_names'], ': ', count($unique_surn);
+	echo '</tr>';
+	echo '</table>';
 }
 
 /**

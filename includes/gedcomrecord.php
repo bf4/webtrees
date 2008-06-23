@@ -411,7 +411,7 @@ class GedcomRecord {
 					$this->_addName($this->getType(), $this->getFallBackName(), null);
 				}
 			} else {
-				$this->_getAllNames[]=array('type'=>$fact, 'full'=>$pgv_lang['private'], 'list'=>$pgv_lang['private'], 'sort'=>'@');
+				$this->_getAllNames[]=array('type'=>$fact, 'full'=>$pgv_lang['private'], 'list'=>$pgv_lang['private'], 'sort'=>'@,@');
 			}
 		}
 		return $this->_getAllNames;
