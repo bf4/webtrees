@@ -1247,7 +1247,7 @@ var CB_Close_Win		= CB_Close_Win;
 				var GEDCOMa = splitURLTitle[1];
 				var notey = splitURLTitle[3];
 				if (notey != "&lt;br /&gt;" && notey) {
-					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey + "', CENTERWINDOW, false, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON, false, ABOVE, false, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -25, OFFSETX, 40, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" >" + CB_ImgNotes + "</a>";
+					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey + "', CENTERWINDOW, false, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON, false, ABOVE, false, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -25, OFFSETX, 40, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
 					CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"Tip('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey + "', CENTERWINDOW, false, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON, false, ABOVE, false, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, true, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -25, OFFSETX, 40, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
 
 					}
