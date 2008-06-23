@@ -32,7 +32,7 @@ require_once("includes/functions_edit.php");
 loadLangFile("pgv_editor");
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: ".encode_url("login.php?type=simple&url=edit_interface.php"));
+	header("Location: login.php?type=simple&url=edit_interface.php);
 	exit;
 }
 if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"] == "on"))

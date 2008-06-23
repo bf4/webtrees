@@ -987,7 +987,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 						$url.="&ged=".$GEDCOM;
 					}
 					$url = str_replace("?&", "?", $url);
-					header("Location: ".encode_url("login.php?url={$url}"));
+					header("Location: login.php?url=".urlencode($url));
 					exit;
 				}
 			}

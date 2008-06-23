@@ -82,7 +82,7 @@ if ($action == "download" && $zip == "yes") {
 		unlink(filename_decode($gedname));
 		if ($removeTempDir)
 			rmdir(filename_decode($temppath));
-		header("Location: ".encode_url("downloadbackup.php?fname={$zipname}"));
+		header("Location: ".encode_url("downloadbackup.php?fname={$zipname}", false));
 		exit;
 	}
 	exit;

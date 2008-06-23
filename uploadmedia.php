@@ -31,7 +31,7 @@ if (!PGV_USER_CAN_EDIT) {
 }
 
 if (isset($_SESSION["cookie_login"]) && $_SESSION["cookie_login"]==true) {
-	header("Location: ".encode_url("login.php?ged={$GEDCOM}&url=uploadmedia.php"));
+	header("Location: ".encode_url("login.php?ged={$GEDCOM}&url=uploadmedia.php", false));
 	exit;
 }
 

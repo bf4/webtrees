@@ -37,7 +37,7 @@ if (empty($ged)) $ged = $GEDCOM;
 $GEDCOM = $ged;
 
 if ($_SESSION["cookie_login"]) {
-	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=addmedia.php"));
+	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=addmedia.php", false));
 	exit;
 }
 

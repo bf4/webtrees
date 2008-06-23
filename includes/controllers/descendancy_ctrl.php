@@ -152,7 +152,7 @@ class DescendancyControllerRoot extends BaseController {
 	//-- if the person is from another gedcom then forward to the correct site
 	/*
 	if ($this->indi->isRemote()) {
-		header('Location: '.encode_url(decode_url($this->indi->getLinkUrl())));
+		header('Location: '.encode_url(decode_url($this->indi->getLinkUrl(), false)));
 		exit;
 	}
 	*/
