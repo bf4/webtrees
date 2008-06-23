@@ -189,7 +189,7 @@ switch($modinfo['Module']['type'])
 			{
 				// fully qualified url is recomended.
 				if(!isFileExternal($results['url'])){$results['url'] = "{$SERVER_URL}{$results['url']}";}
-				header("Location: ".encode_url($results['url']));
+				header("Location: ".encode_url($results['url'], false));
 				print ' '; // for some older browsers.
 				exit;
 			}
