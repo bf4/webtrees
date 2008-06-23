@@ -686,7 +686,7 @@ class MenuBar
 					if (($pid and $pid!=$rootid) or empty($rootid)) {
 						$link = "relationship.php";
 						if ($rootid) {
-							$link .= "?pid1={$pid}&pid2={$rootid}";
+							$link .= "?pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
 							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags(get_person_name($pid)));
 							$submenu = new Menu($label, encode_url($link));
 						} else {
