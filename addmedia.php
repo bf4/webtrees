@@ -46,6 +46,8 @@ if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (isset($_REQUEST['linktoid'])) $linktoid = $_REQUEST['linktoid'];
 if (isset($_REQUEST['gid'])) $gid = $_REQUEST['gid'];
+if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
+if (isset($_REQUEST['oldFolder'])) $oldFolder = $_REQUEST['oldFolder'];
 if (isset($_REQUEST['filename'])) $filename = $_REQUEST['filename'];
 if (isset($_REQUEST['oldFilename'])) $oldFilename = $_REQUEST['oldFilename'];
 

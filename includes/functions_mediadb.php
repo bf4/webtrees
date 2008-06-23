@@ -1518,9 +1518,10 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub>";
 		}
 		print "</td></tr>";
-	}
-	else 
+	} else {
+		print "<input name=\"oldFolder\" type=\"hidden\" value=\"\" />";
 		print "<input name=\"folder\" type=\"hidden\" value=\"\" />";
+	}
 	// 2 FORM
 	if ($gedrec == "")
 		$gedform = "FORM";
