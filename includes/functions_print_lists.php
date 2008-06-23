@@ -1361,6 +1361,52 @@ function print_surname_table($surnames, $type) {
 	echo '</table>';
 }
 
+// Print a tagcloud of surnames.
+// @param $surnames array (of SURN, of array of SPFX_SURN, of array of PID)
+// @param $type string, indilist or famlist
+function print_surname_tagcloud($surnames, $type) {
+	global $TEXT_DIRECTION, $GEDCOM;
+
+	require_once 'js/sorttable.js.htm';
+	// Requested style is "cloud", where the surnames are a list of names (with links),
+	// and the font size used for each name depends on the number of occurrences of this name
+	// in the database - generally known as a 'tag cloud'.
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	//-- table header
+	echo '<table id="'.$table_id.'" class="tag_cloud_table"><tr><td class="tag_cloud">';
+	//-- Calculate range for font sizing
+	$max_tag = 0;
+	$font_tag = 0;
+
+	foreach ($surnames as $surn=>$surns) {
+		foreach ($surns as $spfxsurn=>$indis) {
+			$max_tag=max($max_tag, count($indis));
+		}
+	}
+	$font_tag = $max_tag / 6;
+	//-- Print each name
+	foreach ($surnames as $surn=>$surns) {
+		// Each surname links back to the indi/fam surname list
+		$url=$type.'.php?surname='.urlencode($surn).'&amp;ged='.urlencode($GEDCOM);
+		foreach ($surns as $spfxsurn=>$indis) {
+			$count=count($indis);
+			$fontsize = ceil($count/$font_tag);
+			if ($TEXT_DIRECTION=="ltr") {
+				$title = PrintReady($surn." (".$count.")");
+				$tag = PrintReady("<font size=\"".$fontsize."\">".$surn."</font><span class=\"tag_cloud_sub\">&nbsp;(".$count.")</span>");
+			} else {
+				$title = PrintReady("(".$count.") ".$surn);
+				$tag = PrintReady("<span class=\"tag_cloud_sub\">(".$value["match"].")&nbsp;</span><font size=\"".$fontsize."\">".$surn."</font>");
+			}
+			echo "<a href=\"{$url}\" class=\"list_item\" title=\"{$title}\">{$tag}</a>&nbsp;&nbsp; ";
+		}
+	}
+	echo "</td>";
+	echo "</tr>\n";
+	//-- table footer
+	echo "</table>\n";
+}
+
 /**
  * print a sortable table of recent changes
  * also called by mediaviewer to list records linked to a media
