@@ -653,7 +653,7 @@ function print_media_links($factrec, $level,$pid='') {
 					//LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 						$name = trim($row["m_titl"]);
-							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady($name) . "\">" . "\n";
+							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
 					}elseif ($USE_MEDIA_VIEWER) {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
@@ -1521,7 +1521,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 					$name = trim($rowm["m_titl"]);
-					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady($name) . "\">" . "\n";
+					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
