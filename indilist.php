@@ -186,8 +186,16 @@ if ($surname_sublist=='yes') {
 		$person=Person::getInstance($pid);
 		foreach ($person->getAllNames() as $name) {
 			$surn=reset(explode(',', $name['sort']));
-			if ($surname && $surname==$surn || !$surname && $alpha==get_first_letter($surn)) {
+			if ($show_all || $surname && $surname==$surn || !$surname && $alpha==get_first_letter($surn)) {
 				$spfxsurn=str2upper(reset(explode(',', $name['list'])));
+				switch ($surn) {
+				case '@N.N.':
+					$spfxsurn=$pgv_lang['NN'];
+					break;
+				case '':
+					$spfxsurn='('.$pgv_lang['none'].')';
+					break;
+				} 
 				if (! array_key_exists($surn, $surnames)) {
 					$surnames[$surn]=array();
 				}
