@@ -315,28 +315,33 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<td class=\"".$tdclass."\" align=\"".get_align($person->getListName())."\">";
 		$names_html=array();
 		list($surn, $givn)=explode(',', $person->getSortName());
-		foreach ($person->getAllNames() as $num=>$name) {
-			if ($title=$name['type']=='_MARNM') {
-				$title='title="'.$factarray['_MARNM'].'"';
-			} else {
-				$title='';
+		// If we're showing search results, then the highlighted name is not
+		// necessarily the person's primary name.
+		if (is_array($value) && isset($value['primary'])) {
+			$primary=$value['primary'];
+		} else {
+			$primary=$person->getPrimaryName();
+		}
+		$names=$person->getAllNames();
+		foreach ($names as $num=>$name) {
+			// Exclude duplicate names, which can occur when individuals have
+			// multiple surnames, such as in Spain/Portugal
+			if ($num==$primary || $names[$num]['type']!=$names[$primary]['type'] || $names[$num]['full']!=$names[$primary]['full']) {
+				if ($title=$name['type']=='_MARNM') {
+					$title='title="'.$factarray['_MARNM'].'"';
+				} else {
+					$title='';
+				}
+				if ($num==$primary) {
+					$class='list_item name2';
+					$sex_image=$tiny ? $person->getSexImage() : '';
+					list($surn, $givn)=explode(',', $name['sort']);
+				} else {
+					$class='list_item';
+					$sex_image='';
+				}
+				$names_html[]='<a '.$title.' href="'.encode_url($person->getLinkUrl()).'" class="'.$class.'">'.PrintReady($name['list']).'</a>'.$sex_image;
 			}
-			// If we're showing search results, then the highlighted name is not
-			// necessarily the person's primary name.
-			if (is_array($value) && isset($value['name'])) {
-				$primary=($name['sort']==$value['name']);
-			} else {
-				$primary=($num==$person->getPrimaryName());
-			}
-			if ($primary) {
-				$class='list_item name2';
-				$sex_image=$tiny ? $person->getSexImage() : '';
-				list($surn, $givn)=explode(',', $name['sort']);
-			} else {
-				$class='list_item';
-				$sex_image='';
-			}
-			$names_html[]='<a '.$title.' href="'.encode_url($person->getLinkUrl()).'" class="'.$class.'">'.PrintReady($name['list']).'</a>'.$sex_image;
 		}
 		echo implode('<br/>', $names_html);
 		// Indi parents

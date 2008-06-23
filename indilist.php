@@ -215,7 +215,7 @@ if ($surname_sublist=='yes') {
 	// Show the indi list
 	foreach (array_keys($indis) as $pid) {
 		$person=Person::getInstance($pid);
-		foreach ($person->getAllNames() as $name) {
+		foreach ($person->getAllNames() as $n=>$name) {
 			if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
 				list($surn,$givn)=explode(',', $name['sort']);
 				$givn_alpha=get_first_letter($givn);
@@ -223,7 +223,7 @@ if ($surname_sublist=='yes') {
 				if ((!$surname || $surname==$surn) &&
 				    (!$alpha   || $alpha==get_first_letter($name['sort'])) &&
 				    (!$falpha  || $falpha==$givn_alpha)) {
-					$individuals[]=array('gid'=>$pid, 'name'=>$name['sort']);
+					$individuals[]=array('gid'=>$pid, 'primary'=>$n, 'name'=>$name['sort']);
 				}
 			}
 		}
