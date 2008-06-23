@@ -1493,9 +1493,8 @@ class Person extends GedcomRecord {
 		$surn=preg_match('/^'.$sublevel.' SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($givn || $surn) { 
 			// GIVN and SURN, can be comma-separated lists.
-			$surns=preg_split('/ *, */', $surn);
-			$surn=preg_replace('/ *, */', ' ', $surn);
-			$givn=preg_replace('/ *, */', ' ', $givn);
+			$surns=preg_split('/ *, */', str2upper($surn));
+			$givn=preg_replace('/ *, */', ' ', str2upper($givn));
 		} else {
 			// We do not have a structured name - extract the GIVN and SURN ourselves
 			// Strip the NPFX
@@ -1510,14 +1509,14 @@ class Person extends GedcomRecord {
 			}
 			// Extract the GIVN and SURN
 			if (strpos($name, '/')===false) {
-				$givn=$full;
+				$givn=str2upper($full);
 				$surn='';
 			} else {
 				// The given names may be before or after the surn.  If both are present,
 				// then treat all as given names. (Not perfect, but works well enough for
 				// sort/list names)
 				list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $name);
-				$givn=trim($tmp1.' '.$tmp3);
+				$givn=str2upper(trim($tmp1.' '.$tmp3));
 				$surn=$tmp2;
 				if (preg_match('/^(?:(?:(?:a|aan|ab|af|al|ap|as|av|bat|ben|bij|bin|bint|da|de|del|della|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|st|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor)[ -]+)+(?:[dl]\')?)(.+)$/i', $surn, $match)) {
 					$surn=$match[1];
@@ -1525,7 +1524,7 @@ class Person extends GedcomRecord {
 			}
 			// We can only specify multiple surnames in the SURN field.
 			// The comma is valid in NAME, and should always be displayed.
-			$surns=array($surn);
+			$surns=array(str2upper($surn));
 		}
 
 		// Add placeholder for unknown surname
@@ -1598,6 +1597,9 @@ class Person extends GedcomRecord {
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
 		foreach ($surns as $surn) {
+			// Scottish "Mc and Mac" prefixes sort under "Mac"
+			if (substr($surn, 0, 2)=='MC'  ) { $surn='MAC'.substr($surn, 2); }
+			if (substr($surn, 0, 4)=='MAC ') { $surn='MAC'.substr($surn, 4); }
 			$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$surn.','.$givn);
 		}
 	}
