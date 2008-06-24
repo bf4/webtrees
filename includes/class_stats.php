@@ -592,11 +592,7 @@ class stats {
 		$tot_m = $this->totalSexMalesPercentage();
 		$tot_u = $this->totalSexUnknownPercentage();
 		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
-		if ($TEXT_DIRECTION=='rtl') {
-			$chl = reverseText($pgv_lang['stat_unknown']).'|'.reverseText($pgv_lang['stat_females']).'|'.reverseText($pgv_lang['stat_males']);
-		} else {
-			$chl = "{$pgv_lang['stat_unknown']}|{$pgv_lang['stat_females']}|{$pgv_lang['stat_males']}";
-		}
+		$chl = reverseText($pgv_lang['stat_unknown']).'|'.reverseText($pgv_lang['stat_females']).'|'.reverseText($pgv_lang['stat_males']);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
@@ -655,11 +651,7 @@ class stats {
 		$tot_d = $this->totalDeceasedPercentage();
 		$tot_u = $this->totalMortalityUnknownPercentage();
 		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
-		if ($TEXT_DIRECTION=='rtl') {
-			$chl = reverseText($pgv_lang['total_unknown']).'|'.reverseText($pgv_lang['total_living']).'|'.reverseText($pgv_lang['total_dead']);
-		} else {
-			$chl = "{$pgv_lang['total_unknown']}|{$pgv_lang['total_living']}|{$pgv_lang['total_dead']}";
-		}
+		$chl = reverseText($pgv_lang['total_unknown']).'|'.reverseText($pgv_lang['total_living']).'|'.reverseText($pgv_lang['total_dead']);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
@@ -753,22 +745,14 @@ class stats {
 			$count = $this->_totalMediaType($type);
 			if ($count != 0) {
 				$mediaCounts[] = round(100 * $count / $tot, 0);
-				if ($TEXT_DIRECTION=='rtl') {
-					$mediaTypes .= reverseText($pgv_lang['TYPE__'.$type]);
-				} else {
-					$mediaTypes .= $pgv_lang['TYPE__'.$type];
-				}
+				$mediaTypes .= reverseText($pgv_lang['TYPE__'.$type]);
 				$mediaTypes .= '|';
 			}
 		}
 		$count = $this->_totalMediaType('unknown');
 		if ($count != 0) {
 			$mediaCounts[] = round(100 * $count / $tot, 0);
-				if ($TEXT_DIRECTION=='rtl') {
-					$mediaTypes .= reverseText($pgv_lang['unknown']);
-				} else {
-					$mediaTypes .= $pgv_lang['unknown'];
-				}
+			$mediaTypes .= reverseText($pgv_lang['unknown']);
 			$mediaTypes .= '|';
 		}
 		$chd = $this->_array_to_extended_encoding($mediaCounts);
@@ -1043,7 +1027,7 @@ class stats {
 		}
 		else
 		{
-			$top10=join('; ', $top10);
+			$top10=join(';&nbsp; ', $top10);
 		}
 		if ($TEXT_DIRECTION=='rtl') {
 			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
@@ -1368,7 +1352,7 @@ class stats {
 				$result="<a href=\"".encode_url("family.php?famid={$row['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_family_descriptor($row['id'])).'</a>';
 				break;
 		}
-		// Statstics are used by RSS feeds, etc., so need absolute URLs.
+		// Statistics are used by RSS feeds, etc., so need absolute URLs.
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
@@ -1407,7 +1391,7 @@ class stats {
 		}
 		else
 		{
-			$top10 = join('; ', $top10);
+			$top10 = join(';&nbsp; ', $top10);
 		}
 		if ($TEXT_DIRECTION == 'rtl')
 		{
@@ -1461,13 +1445,7 @@ class stats {
 			}
 			//$chd .= $this->_encoding[$per];
 			$chd .= $this->_array_to_extended_encoding(array($per));
-			$famName = strip_tags(get_family_descriptor($rows[$i]['id']));
-			$langName = whatLanguage($famName);
-			if ($langName=='hebrew' || $langName=='arabic') {
-				$chl[] = reverseText($famName);
-			} else {
-				$chl[] = $famName;
-			}
+			$chl[] = reverseText(get_family_descriptor($rows[$i]['id']));
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
@@ -1485,47 +1463,42 @@ class stats {
 // Surnames                                                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _commonSurnamesQuery($type='list', $show_tot=false, $params=null)
-	{
+	function _commonSurnamesQuery($type='list', $show_tot=false, $params=null) {
 		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+
 		if (is_array($params) && isset($params[0]) && $params[0] != '') {$threshold = strtolower($params[0]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
 		$surnames = get_common_surnames($threshold);
-		if (count($surnames) > 0)
-		{
-			$common = array();
-			foreach ($surnames as $indexval=>$surname)
-			{
-				$tot = '';
-				if ($show_tot)
-				{
-					if ($TEXT_DIRECTION == 'rtl')
-					{
-						$tot = PrintReady(" &rlm;[{$surname['match']}&rlm;]");
-					}
-					else
-					{
-						$tot = PrintReady(" [{$surname['match']}]");
-					}
+		if (count($surnames) == 0) return '';
+
+		$common = array();
+		foreach ($surnames as $indexval=>$surname) {
+			if ($show_tot) {
+				$tot = PrintReady("[{$surname['match']}]");
+				if ($TEXT_DIRECTION=='ltr') {
+					$totL = '';
+					$totR = '&nbsp;'.$tot;
+				} else {
+					$totL = $tot.'&nbsp;';
+					$totR = '';
 				}
-				if ($type == 'list')
-				{
-					$common[] = "\t<li><a href=\"".encode_url("{$this->_server_url}indilist.php?surname={$surname['name']}&ged={$this->_gedcom_url}")."\">".PrintReady($surname['name'])."</a>{$tot}</li>\n";
-				}
-				else
-				{
-					$common[] = '<a href="'.encode_url("{$this->_server_url}indilist.php?surname={$surname['name']}&ged={$this->_gedcom_url}").'">'.PrintReady($surname['name'])."</a>{$tot}";
-				}
+			} else {
+				$totL = '';
+				$totR = '';
 			}
-			if ($type == 'list')
-			{
-				return "<ul>\n".join("\n", $common)."</ul>\n";
-			}
-			else
-			{
-				return join(', ', $common);
+			$name = PrintReady($surname['name']);
+			if ($surname['name']=='?' && $TEXT_DIRECTION=='rtl') $name = "&lrm;{$surname['name']}&lrm;";
+			if ($type == 'list') {
+				$common[] = "\t<li>{$totL}<a href=\"".encode_url("{$this->_server_url}indilist.php?surname={$surname['name']}&ged={$this->_gedcom_url}")."\">{$name}</a>{$totR}</li>\n";
+			} else {
+				$common[] = "{$totL}<a href=\"".encode_url("{$this->_server_url}indilist.php?surname={$surname['name']}&ged={$this->_gedcom_url}")."\">{$name}</a>{$totR}";
 			}
 		}
-		return '';
+		if ($type == 'list') {
+			return "<ul>\n".join("\n", $common)."</ul>\n";
+		} else {
+			if ($TEXT_DIRECTION=='ltr') return join(';&nbsp; ', $common);
+			else return join(' &nbsp;;', $common);
+		}
 	}
 
 	function commonSurnames($params=null) {return $this->_commonSurnamesQuery('nolist', false, $params);}
@@ -1552,12 +1525,7 @@ class stats {
 		{
 			$per = round(100 * $surname['match'] / $tot, 0);
 			$chd .= $this->_array_to_extended_encoding($per);
-			$nameLang = whatLanguage($surname['name']);
-			if ($nameLang=='hebrew' || $nameLang=='arabic') {
-				$chl[] = reverseText(strip_tags(($surname['name'])));
-			} else {
-				$chl[] = strip_tags($surname['name']);
-			}
+			$chl[] = reverseText($surname['name']);
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
@@ -1651,44 +1619,36 @@ class stats {
 			$nameList = array_slice($name_list_b, 0, $maxtoshow);
 			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
 		}
-		if(count($nameList))
-		{
-			$common = array();
-			foreach($nameList as $given=>$total)
-			{
-				if($maxtoshow !== false){if($maxtoshow-- <= 0){break;}}
-				if($total < $threshold){break;}
-				$tot = '';
-				if($show_tot)
-				{
-					if($TEXT_DIRECTION == 'rtl')
-					{
-						$tot = PrintReady(" &rlm;[{$total}&rlm;]");
-					}
-					else
-					{
-						$tot = PrintReady(" [{$total}]");
-					}
+		if (count($nameList)==0) return '';
+
+		$common = array();
+		foreach ($nameList as $given=>$total) {
+			if ($maxtoshow !== false) {if($maxtoshow-- <= 0){break;}}
+			if ($total < $threshold) {break;}
+			if ($show_tot) {
+				$tot = PrintReady("[{$total}]");
+				if ($TEXT_DIRECTION=='ltr') {
+					$totL = '';
+					$totR = '&nbsp;'.$tot;
+				} else {
+					$totL = $tot.'&nbsp;';
+					$totR = '';
 				}
-				if($type == 'list')
-				{
-					$common[] = "\t<li>".PrintReady($given)."{$tot}</li>\n";
-				}
-				else
-				{
-					$common[] = PrintReady($given)."{$tot}";
-				}
+			} else {
+				$totL = '';
+				$totR = '';
 			}
-			if($type == 'list')
-			{
-				return "<ul>\n".join("\n", $common)."</ul>\n";
-			}
-			else
-			{
-				return join(', ', $common);
+			if ($type == 'list') {
+				$common[] = "\t<li>{$totL}".PrintReady($given)."{$totR}</li>\n";
+			} else {
+				$common[] = $totL.PrintReady($given).$totR;
 			}
 		}
-		return '';
+		if($type == 'list') {
+			return "<ul>\n".join("\n", $common)."</ul>\n";
+		} else {
+			return join(';&nbsp; ', $common);
+		}
 	}
 
 	function commonGiven($params=array(1,10,'alpha')){return $this->_commonGivenQuery('B', 'nolist', false, $params);}

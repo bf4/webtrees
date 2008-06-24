@@ -65,6 +65,26 @@ $UTF8_ranges[] = array("arabic",	0x00FE70, 0x00FEFF);	// Arabic
 $UTF8_ranges[] = array("chinese",	0x020000, 0x02A6DF);	// Chinese
 $UTF8_ranges[] = array("chinese",	0x02F800, 0x02FA1F);	// Chinese
 
+// Numbers:  These are always rendered in LTR, even when the rest of the text is RTL
+$UTF8_numbers = array(
+	'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+	"\xD9\xA0", "\xD9\xA1", "\xD9\xA2", "\xD9\xA3", "\xD9\xA4", "\xD9\xA5", "\xD9\xA6", "\xD9\xA7", "\xD9\xA8", "\xD9\xA9",
+	"\xDB\xB0", "\xDB\xB1", "\xDB\xB2", "\xDB\xB3", "\xDB\xB4", "\xDB\xB5", "\xDB\xB6", "\xDB\xB7", "\xDB\xB8", "\xDB\xB9"
+	);
+
+// Parentheses and other paired characters that need to be reversed for proper appearance within RTL text
+$UTF8_brackets = array(
+	'('=>')', ')'=>'(', 
+	'['=>']', ']'=>'[', 
+	'{'=>'}', '}'=>'{', 
+	'<'=>'>', '>'=>'<',
+	"\xC2\xAB"=>"\xC2\xBB", "\xC2\xBB"=>"\xC2\xAB", 
+	"\xEF\xB4\xBF"=>"\xEF\xB4\xBE", "\xEF\xB4\xBE"=>"\xEF\xB4\xBF",
+	"\xE2\x80\xBA"=>"\xE2\x80\xB9", "\xE2\x80\xB9"=>"\xE2\x80\xBA",
+	"\xE2\x80\x9E"=>"\xE2\x80\x9C", "\xE2\x80\x9D"=>"\xE2\x80\x9C", "\xE2\x80\x9C"=>"\xE2\x80\x9D",
+	"\xE2\x80\x9A"=>"\xE2\x80\x98", "\xE2\x80\x99"=>"\xE2\x80\x98", "\xE2\x80\x98"=>"\xE2\x80\x99"
+	);
+
 /**
  * $HNN and $ANN are used in
  * RTLUndefined, check_NN, get_common_surnames, print_block_name_top10
@@ -220,62 +240,6 @@ function whatLanguage($string) {
 	return $lastLang;
 }
 
-
-/**
- * Force a string in ltr direction
- *
- * This function returns a string in left-to-right direction.
- * To be used for non HTML string output (e.g. GD ImageTtfText function).
- *
- * @author opus27
- * @param string $name input string
- * @return string ltr string
- * @todo more hebrew controls (check numbers or &rlm; tags)
- * @todo other rtl languages
- */
-function ltr_string($name) {
-	if(! useRTLFunctions()) {
-		return $name;
-	} else {
-		// hebrew string => reverse
-		global $RTLOrd;
-
-		$found = false;
-		foreach($RTLOrd as $indexval => $ord) {
-	   		if (strpos($name, chr($ord)) !== false) $found=true;
-		}
-		if ($found) {
-		 	$ltrname = "";
-			$i=0;
-			while ($i<strlen($name)) {
-	 			if (in_array(ord(substr($name,$i,1)),$RTLOrd)) {
-					$ltrname = substr($name, $i, 2) . $ltrname;
-					$i+=2;
-				}
-				else {
-					if ($name{$i}==' ') $ltrname = " " . $ltrname;
-					else if ($name{$i}=='(') $ltrname = ")" . $ltrname;
-					else if ($name{$i}==')') $ltrname = "(" . $ltrname;
-					else if ($name{$i}=='[') $ltrname = "]" . $ltrname;
-					else if ($name{$i}==']') $ltrname = "[" . $ltrname;
-					else if ($name{$i}=='{') $ltrname = "}" . $ltrname;
-					else if ($name{$i}=='}') $ltrname = "{" . $ltrname;
-					else $ltrname = $name{$i} . $ltrname;   //--- ???
-					$i++;
-				}
-			}
-			$ltrname=str_replace(";mrl&", "", $ltrname);
-			$ltrname=str_replace(";mlr&", "", $ltrname);
-			return $ltrname;
-		}
-		// other rtl languages => (to be completed)
-		// else
-	$ltrname=$name;
-	$ltrname=str_replace("&lrm;", "", $ltrname);
-	$ltrname=str_replace("&rlm;", "", $ltrname);
-	return $ltrname;
-	}
-}
 
 /**
  * convert HTML entities to to their original characters
@@ -505,11 +469,47 @@ function hasLTRText($text) {
 	}
 }
 
+/*
+ * Function to reverse RTL text for proper appearance on charts.
+ *
+ * GoogleChart and the GD library don't handle RTL text properly.  They assume that all text is LTR.
+ * This function reverses the input text so that it will appear properly when rendered by GoogleChart
+ * and by the GD library (the Circle Diagram).
+ *
+ * Note 1: Numbers must always be rendered LTR, even when the rest of the text is RTL.
+ * Note 2: The visual direction of paired characters such as parentheses, brackets, directional 
+ *         quotation marks, etc. must be reversed so that the appearance of the RTL text is preserved.
+ */
 function reverseText($text) {
-	// Hebrew and Arabic text needs to be reversed before GoogleCharts sees it
-	// Be careful that Arabic numbers don't get reversed (they're always LTR)
-	// Can we use existing function bidi_text() ????  -- probably not.
-	return $text;		// Fill this in later
+	global $UTF8_numbers, $UTF8_brackets;
+
+	$text = strip_tags(html_entity_decode($text));
+	$text = str_replace(array('&lrm;', '&rlm;', PGV_UTF8_LRM, PGV_UTF8_RLM), '', $text);
+	$textLanguage = whatLanguage($text);
+	if ($textLanguage!='hebrew' && $textLanguage!='arabic') return $text;
+
+	$reversedText = '';
+	$numbers = '';
+	while ($text!='') {
+		$charLen = 1;
+		$letter = substr($text, 0, 1);
+		if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
+		if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
+		if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
+
+		$letter = substr($text, 0, $charLen);
+		$text = substr($text, $charLen);
+		if (in_array($letter, $UTF8_numbers)) $numbers .= $letter;		// accumulate numbers in LTR mode
+		else {
+			$reversedText = $numbers.$reversedText;		// emit any waiting LTR numbers now
+			$numbers = '';
+			if (isset($UTF8_brackets[$letter])) $reversedText = $UTF8_brackets[$letter].$reversedText;
+			else $reversedText = $letter.$reversedText;
+		}
+	}
+
+	$reversedText = $numbers.$reversedText;		// emit any waiting LTR numbers now
+	return $reversedText;
 }
 
 ?>

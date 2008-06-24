@@ -226,15 +226,15 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 					$addname = get_add_person_name($pid);
 				}
 
-$name = str_replace(array('<span class="starredname">', '</span>'), array('', ''), $name); 
-$addname = str_replace(array('<span class="starredname">', '</span>'), array('', ''), $addname); 
+//$name = str_replace(array('<span class="starredname">', '</span>'), '', $name); 
+//$addname = str_replace(array('<span class="starredname">', '</span>'), '', $addname); 
 //$name = str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $name); //@@
 //$addname = str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $addname); //@@
 // ToDo - print starred names underlined - 1985154
 // Todo - print Arabic letters combined - 1360209				
 								
-				$text = ltr_string($name) . "\r\n";
-				if (!empty($addname)) $text .= ltr_string($addname). "\r\n";
+				$text = reverseText($name) . "\r\n";
+				if (!empty($addname)) $text .= reverseText($addname). "\r\n";
 				
 				if (displayDetailsByID($pid)) {
 					$birthrec = get_sub_record(1, "1 BIRT", $indirec);
