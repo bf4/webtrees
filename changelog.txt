@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1921937 ] Starred surname in Surname Lists (fisharebest)
  - Fixed: [ 1999315 ] 3344 New Name & Lists (fisharebest)
  - Fixed: Indi Page Media Tab: Corrected truncation of title when Lightbox Image opened. (windmillway)
  - Fixed: Indi Page: Corrected Research assistant and Googlemap validation errors, tidied up a few lightbox files  (windmillway)

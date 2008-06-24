@@ -188,6 +188,7 @@ if ($surname_sublist=='yes') {
 			$surn=reset(explode(',', $name['sort']));
 			if ($show_all=='yes' || $surname && $surname==$surn || !$surname && $alpha==get_first_letter($surn)) {
 				$spfxsurn=str2upper(reset(explode(',', $name['list'])));
+				$spfxsurn=str_replace(array('<SPAN CLASS="STARREDNAME">', '</SPAN>'), array('<span class="starredname">', '</span>'), $spfxsurn); // Nasty hack!
 				switch ($surn) {
 				case '@N.N.':
 					$spfxsurn=$pgv_lang['NN'];
