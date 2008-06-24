@@ -208,29 +208,7 @@ class FamilyRoot extends BaseController
 			exit;
 		}
 
-		$none = true;
-		if ($this->showLivingHusb == true)
-		{
-			if (get_person_name($this->parents['HUSB']) !== 'Individual ')
-			{
-				$this->title .= get_person_name($this->parents['HUSB']);
-				$none = false;
-			}
-			if ($this->showLivingWife && (get_person_name($this->parents['WIFE']) !== 'Individual '))
-			{
-				if ($none == false)
-				{
-					$this->title .= ' + ';
-				}
-				$this->title .= get_person_name($this->parents['WIFE']);
-				$none = false;
-			}
-			$this->title = "{$this->title} {$pgv_lang['family_info']}";
-		}
-		if ($none == true)
-		{
-			$this->title = $pgv_lang['family_info'];
-		}
+		$this->title=$this->family->getFullName();
 
 		if (empty($this->parents['HUSB']) || empty($this->parents['WIFE']))
 		{
