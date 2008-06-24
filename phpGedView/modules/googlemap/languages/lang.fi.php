@@ -119,7 +119,7 @@ $pgv_lang["pl_neighborhood"]        = "Naapurusto";
 $pgv_lang["pl_house"]               = "Talo";
 $pgv_lang["pl_max"]                 = "Maksimi";
 $pgv_lang["pl_delete"]              = "Poista sijaintipaikka";
-
+$pgv_lang["pl_unknown"]	= "Tuntematon";
 $pgv_lang["pl_flag"]                = "Lippu";
 $pgv_lang["flags_edit"]             = "Valitse lippu";
 $pgv_lang["pl_change_flag"]         = "Vaihda lippu";

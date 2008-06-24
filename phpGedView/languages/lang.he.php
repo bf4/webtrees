@@ -150,6 +150,7 @@ $pgv_lang["stat_users"]			= "סה\"כ משתמשים";
 $pgv_lang["no_family_facts"]			= "אין עובדות למשפחה זו.";
 $pgv_lang["stat_males"]			= "סה\"כ גברים";
 $pgv_lang["stat_females"]			= "סה\"כ נשים";
+$pgv_lang["stat_unknown"]			= "סה\"כ לא ידוע";
 
 $pgv_lang["sunday_1st"]		= "א";
 $pgv_lang["monday_1st"]		= "ב";
@@ -244,6 +245,7 @@ $pgv_lang["ancestors"]		= "אב-אבות בקו ישיר ומשפחותיהם";
 $pgv_lang["descendants"]		= "צאצאים";
 $pgv_lang["choose_relatives"]	= "בחר קרובים";
 $pgv_lang["relatives_report"]		= "דו\"ח קרובים";
+$pgv_lang["total_unknown"]		= "סה\"כ לא ידוע"; 
 $pgv_lang["total_living"]		= "סה\"כ חיים";
 $pgv_lang["total_dead"]		= "סה\"כ מתים";
 $pgv_lang["total_not_born"]		= "סה\"כ שלא נולדו עדיין";
@@ -397,8 +399,10 @@ $pgv_lang["status"]			= "מצב";
 $pgv_lang["source"]			= "מקור";
 $pgv_lang["text"]			= "טקסט מקור:";
 $pgv_lang["note"]			= "הערה";
-$pgv_lang["NN"]			= "(לא ידוע)";
-$pgv_lang["PN"]			= "(לא ידוע)";
+//$pgv_lang["NN"]			= "(לא ידוע)";
+//$pgv_lang["PN"]			= "(לא ידוע)";
+$pgv_lang["NN"] 		= "(unknown)";
+$pgv_lang["PN"] 		= "(unknown)";
 $pgv_lang["unrecognized_code"]	= "קוד GEDCOM לא מוכר";
 $pgv_lang["unrecognized_code_msg"]	= "זו שגיאה שברצוננו לתקן. דווח לנו על השגיאה הזו.";
 $pgv_lang["indi_info"]			= "מידע אישי";
@@ -596,6 +600,7 @@ $pgv_lang["roots"]		 	= "שורשים";
 $pgv_lang["leaves"] 			= "עלים";
 $pgv_lang["widow"] 			= "אלמנה";
 $pgv_lang["widower"] 			= "אלמן";
+$pgv_lang["show_parents"] 		= "הראה הורים"; 
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "גיל";
