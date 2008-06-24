@@ -306,78 +306,78 @@ function import_record($indirec, $update) {
 		}
 		break;
 	case 'FAM':
-			cleanup_tags_y($indirec);
-			$parents = array ();
-			$ct = preg_match("/1 HUSB @(.*)@/", $indirec, $match);
-			if ($ct > 0)
-				$parents["HUSB"] = $match[1];
-			else
-				$parents["HUSB"] = false;
-			$ct = preg_match("/1 WIFE @(.*)@/", $indirec, $match);
-			if ($ct > 0)
-				$parents["WIFE"] = $match[1];
-			else
-				$parents["WIFE"] = false;
-			$ct = preg_match_all("/\d CHIL @(.*)@/", $indirec, $match, PREG_SET_ORDER);
-			$chil = "";
-			for ($j = 0; $j < $ct; $j++) {
-				$chil .= $match[$j][1] . ";";
-			}
-			$nchi = get_gedcom_value("NCHI", 1, $indirec);
-			if (!empty($nchi)) $ct = $nchi;
-			$fam = array ();
-			$fam["HUSB"] = $parents["HUSB"];
-			$fam["WIFE"] = $parents["WIFE"];
-			$fam["CHIL"] = $chil;
-			$fam["gedcom"] = $indirec;
-			$fam["gedfile"] = $GEDCOMS[$FILE]["id"];
-			//$famlist[$gid] = $fam;
-			$sql = "INSERT INTO " . $TBLPREFIX . "families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($fam["gedfile"]) . "','" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
-			$res = dbquery($sql);
+		cleanup_tags_y($indirec);
+		$parents = array ();
+		$ct = preg_match("/1 HUSB @(.*)@/", $indirec, $match);
+		if ($ct > 0)
+			$parents["HUSB"] = $match[1];
+		else
+			$parents["HUSB"] = false;
+		$ct = preg_match("/1 WIFE @(.*)@/", $indirec, $match);
+		if ($ct > 0)
+			$parents["WIFE"] = $match[1];
+		else
+			$parents["WIFE"] = false;
+		$ct = preg_match_all("/\d CHIL @(.*)@/", $indirec, $match, PREG_SET_ORDER);
+		$chil = "";
+		for ($j = 0; $j < $ct; $j++) {
+			$chil .= $match[$j][1] . ";";
+		}
+		$nchi = get_gedcom_value("NCHI", 1, $indirec);
+		if (!empty($nchi)) $ct = $nchi;
+		$fam = array ();
+		$fam["HUSB"] = $parents["HUSB"];
+		$fam["WIFE"] = $parents["WIFE"];
+		$fam["CHIL"] = $chil;
+		$fam["gedcom"] = $indirec;
+		$fam["gedfile"] = $GEDCOMS[$FILE]["id"];
+		//$famlist[$gid] = $fam;
+		$sql = "INSERT INTO " . $TBLPREFIX . "families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($fam["gedfile"]) . "','" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
+		$res = dbquery($sql);
 		break;
 	case 'SOUR':
-				$et = preg_match("/1 ABBR (.*)/", $indirec, $smatch);
-				if ($et > 0)
-					$name = $smatch[1];
-				$tt = preg_match("/1 TITL (.*)/", $indirec, $smatch);
-				if ($tt > 0)
-					$name = $smatch[1];
-				if (empty ($name))
-					$name = $gid;
-				$subindi = preg_split("/1 TITL /", $indirec);
-				if (count($subindi) > 1) {
-					$pos = strpos($subindi[1], "\n1", 0);
-					if ($pos)
-						$subindi[1] = substr($subindi[1], 0, $pos);
-					$ct = preg_match_all("/2 CON[C|T] (.*)/", $subindi[1], $match, PREG_SET_ORDER);
-					for ($i = 0; $i < $ct; $i++) {
-						$name = trim($name);
-						if ($WORD_WRAPPED_NOTES)
-							$name .= " " . $match[$i][1];
-						else
-							$name .= $match[$i][1];
-					}
-				}
-				$sql = "INSERT INTO " . $TBLPREFIX . "sources VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($indirec) . "')";
-				$res = dbquery($sql);
+		$et = preg_match("/1 ABBR (.*)/", $indirec, $smatch);
+		if ($et > 0)
+			$name = $smatch[1];
+		$tt = preg_match("/1 TITL (.*)/", $indirec, $smatch);
+		if ($tt > 0)
+			$name = $smatch[1];
+		if (empty ($name))
+			$name = $gid;
+		$subindi = preg_split("/1 TITL /", $indirec);
+		if (count($subindi) > 1) {
+			$pos = strpos($subindi[1], "\n1", 0);
+			if ($pos)
+				$subindi[1] = substr($subindi[1], 0, $pos);
+			$ct = preg_match_all("/2 CON[C|T] (.*)/", $subindi[1], $match, PREG_SET_ORDER);
+			for ($i = 0; $i < $ct; $i++) {
+				$name = trim($name);
+				if ($WORD_WRAPPED_NOTES)
+					$name .= " " . $match[$i][1];
+				else
+					$name .= $match[$i][1];
+			}
+		}
+		$sql = "INSERT INTO " . $TBLPREFIX . "sources VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($indirec) . "')";
+		$res = dbquery($sql);
 		break;
 	case 'OBJE':
 					//-- don't duplicate OBJE records
 					//-- OBJE records are imported by update_media function
 		break;
 	default:
-					if (preg_match("/_/", $type) == 0) {
-						if ($type == "HEAD") {
-							$ct = preg_match("/1 DATE (.*)/", $indirec, $match);
-							if ($ct == 0) {
-								$indirec = trim($indirec);
-								$indirec .= "\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
-							}
-						}
-						if ($gid=="") $gid = $type;
-						$sql = "INSERT INTO " . $TBLPREFIX . "other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($indirec) . "')";
-						$res = dbquery($sql);
-					}
+		if (preg_match("/_/", $type) == 0) {
+			if ($type == "HEAD") {
+				$ct = preg_match("/1 DATE (.*)/", $indirec, $match);
+				if ($ct == 0) {
+					$indirec = trim($indirec);
+					$indirec .= "\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
+				}
+			}
+			if ($gid=="") $gid = $type;
+			$sql = "INSERT INTO " . $TBLPREFIX . "other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($indirec) . "')";
+			$res = dbquery($sql);
+		}
 		break;
 	} // switch
 
@@ -1229,7 +1229,6 @@ function setup_database() {
 		create_soundex_table();
 	}
 }
-
 /**
  * Create the individuals table
  */

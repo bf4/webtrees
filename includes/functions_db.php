@@ -8,7 +8,7 @@
  * cache arrays are checked first before querying the database.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team, all rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -377,10 +377,10 @@ function find_family_record($pid, $gedfile='') {
 		}
 		find_person_record($row[1]);
 		find_person_record($row[2]);
-	return $row[0];
+		return $row[0];
 	} else {
 		return null;
-}
+	}
 }
 
 /**
@@ -409,9 +409,9 @@ function load_families($ids) {
 		$parents = array();
 		while ($row=$res->fetchRow()) {
 			$famlist[$row[1]]=array('gedcom'=>$row[0], 'gedfile'=>PGV_GED_ID, 'husb'=>$row[2], 'wife'=>$row[3], 'numchil'=>$row[4]);
-			$parents[] = $row[2];
-			$parents[] = $row[3];
-			}
+			$parents[]=$row[2];
+			$parents[]=$row[3];
+		}
 		$res->free();
 		load_people(array($row[2], $row[3]));
 	}
@@ -443,7 +443,7 @@ function find_person_record($pid, $gedfile='') {
 	// Try the cache files first.
 	if ((isset($indilist[$pid]['gedcom']))&&($indilist[$pid]['gedfile']==$ged_id)) {
 		return $indilist[$pid]['gedcom'];
-		}
+	}
 
 	// Look in the table.
 	$escpid=$DBCONN->escapeSimple($pid);
@@ -453,7 +453,7 @@ function find_person_record($pid, $gedfile='') {
 	);
 	if (DB::isError($res)) return "";
 	$row=$res->fetchRow();
-		$res->free();
+	$res->free();
 
 	if ($row) {
 		// Don't cache records from other gedcoms
@@ -481,13 +481,13 @@ function load_people($ids) {
 	foreach ($ids as $k=>$id) {
 		if (!$id || isset($indilist[$id]['gedcom']) && $indilist[$id]['gedfile']==PGV_GED_ID) {
 			if ($id) {
-			$myindilist[$id] = $indilist[$id];
-	}
+				$myindilist[$id]=$indilist[$id];
+			}
 			unset ($ids[$k]);
 		} else {
 			$ids[$k]="'".$DBCONN->escapeSimple($id)."'";
 		}
-			}
+	}
 
 	if ($ids) {
 		$res=dbquery(
@@ -569,14 +569,14 @@ function find_gedcom_record($pid, $gedfile='') {
 		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id {$like} '{$pid}' ESCAPE '@' AND o_file={$ged_id}"
 	);
 	$row=$res->fetchRow();
-			$res->free();
+	$res->free();
 	if ($row) {
-			return $row[0];
-		}
+		return $row[0];
+	}
 
 	// Record doesn't exist
 	return null;
-					}
+}
 
 // Find the type of a gedcom record. Check the cache before querying the database.
 // Returns 'INDI', 'FAM', etc., or null if the record does not exist.
@@ -633,7 +633,7 @@ function find_source_record($pid, $gedfile="") {
 	);
 	if (DB::isError($res)) return "";
 	$row=$res->fetchRow();
-		$res->free();
+	$res->free();
 
 	if ($row) {
 		// Don't cache records from other gedcoms
@@ -670,7 +670,7 @@ function find_repo_record($pid, $gedfile="") {
 		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_id='{$pid}' AND o_file={$ged_id}"
 	);
 	$row=$res->fetchRow();
-		$res->free();
+	$res->free();
 
 	if ($row) {
 		return $row[0];
@@ -708,7 +708,7 @@ function find_media_record($pid, $gedfile='') {
 		"WHERE m_media='{$escpid}' AND m_gedfile={$ged_id}"
 	);
 	$row=$res->fetchRow();
-		$res->free();
+	$res->free();
 
 	if ($row) {
 		// Don't cache records from other gedcoms
@@ -854,8 +854,8 @@ function get_repo_list() {
 		$repo=Repository::getInstance($row[0]);
 		if ($repo->canDisplayDetails()) {
 			$repo_list[]=$repo;
+		}
 	}
-}
 	usort($repo_list, array('GedcomRecord', 'CompareName')); // sort by repo name
 	return $repo_list;
 }
