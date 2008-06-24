@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1849075 ] SVN2416 ... indilist sums incorrectly (fisharebest)
  - Fixed: [ 1967411 ] INDI sorting issue, latest SVN (fisharebest)
  - Fixed: [ 1921937 ] Starred surname in Surname Lists (fisharebest)
  - Fixed: [ 1999315 ] 3344 New Name & Lists (fisharebest)
