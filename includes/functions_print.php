@@ -997,7 +997,7 @@ function google_analytics() {
  */
 function print_execution_stats() {
 	global $start_time, $pgv_lang, $TOTAL_QUERIES, $PRIVACY_CHECKS;
-	$end_time = microtime(true);
+	$end_time = getmicrotime();
 	$exectime = $end_time - $start_time;
 	print "<br /><br />".$pgv_lang["exec_time"];
 	printf(" %.3f ".$pgv_lang["sec"], $exectime);
@@ -1055,7 +1055,7 @@ function print_user_links() {
 	} else {
 		$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
 		if (empty($SEARCH_SPIDER)) {
-			print "<a href=\"$LOGIN_URL?url=".encode_url(basename($SCRIPT_NAME).decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM")))."\" class=\"link\">".$pgv_lang["login"]."</a>";
+			print "<a href=\"$LOGIN_URL?url=".rawurlencode(basename($SCRIPT_NAME).decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM")))."\" class=\"link\">".$pgv_lang["login"]."</a>";
 		}
 	}
 	print "<br />";
@@ -1274,7 +1274,7 @@ function print_favorite_selector($option=0) {
 							$media = Media::getInstance($pid);
 							if (!is_null($media)) {
 								$submenu["link"] = encode_url("mediaviewer.php?mid={$favorite['gid']}&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady($media->getTitle());
+								$submenu["label"] = PrintReady($media->getFullName());
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
@@ -1423,7 +1423,7 @@ function print_favorite_selector($option=0) {
 							if ($favorite["type"]=="OBJE") {
 								$media = Media::getInstance($pid);
 								if (!is_null($media)) {
-									$name = strip_tags(PrintReady($media->getTitle()));
+									$name = strip_tags(PrintReady($media->getFullName()));
 									if (strlen($name)>50) $name = substr($name, 0, 50);
 									if ($SHOW_ID_NUMBERS) {
 										if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";

@@ -5,7 +5,7 @@
  *  Allow a user the ability to add links to people from other servers and other gedcoms.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008, PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ require_once("includes/serviceclient_class.php");
 
 //-- require that the user have entered their password
 if ($_SESSION["cookie_login"]) {
-	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=edit_interface.php?".decode_url($QUERY_STRING)));
+	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
 	exit;
 }
 

@@ -10,6 +10,20 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1999315 ] 3344 New Name & Lists (fisharebest)
+ - Fixed: Indi Page Media Tab: Corrected truncation of title when Lightbox Image opened. (windmillway)
+ - Fixed: Indi Page: Corrected Research assistant and Googlemap validation errors, tidied up a few lightbox files  (windmillway)
+ - Fixed: Indi Page: Corrected all Validation errors. (windmillway) 
+		1) most within Lightbox files. 
+		2) some within Googlemap section in individual.php
+ - Fixed: Lightbox Album: Media Re-sort (Horizontal sort): Fixed displacement problem in IE. (windmillway)
+ - Added: Lightbox Configuration page: Now conform to PGV config file updates and avoid destroying lb_config file on option updates (windmillway)
+ - Added: Album Tab Page: (windmillway)
+		1) Added Notes Link on Enlarged Lightbox Image. 
+		2) Moved Thumbnail Mouseover Details Tooltip to link above Thumbnail.
+		3) Added Tooltip "Balloon" option in Lightbox Configuration page.
+ - Fixed: [ 1995523 ] Google Maps: Admin Issue with Single Quotes in Place Name (wooc)
+ - Fixed: [ 1952941 ] Place Hierarchy with GoogleMap - Top Level - Nothing Shown (wooc)
  - Added: MediaList Page: Added "Notes" link in Lightbox window when Lightbox installed (windmillway)
  - Fixed: Lightbox: Corrected white rectangle appearing when closing Lighbox Image, Improved fast mouseover displacement of Tooltip
  - Fixed: Lightbox: Fixed Image Distortion when at low browser resolution when clicking previous or next buttons (windmillway)

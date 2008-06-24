@@ -473,7 +473,8 @@ if ($action=="filter") {
 					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
-				echo format_list_family($pvalue[1], array($pvalue[0], $pvalue[2]), true);
+				$family=Family::getInstance($pvalue[1]);
+				echo $family->format_list('li', true);
 			}
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
@@ -689,20 +690,16 @@ if ($action=="filter") {
 	// Output Repositories
 	if ($type == "repo") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
-		$repolist = get_repo_list();
-		$ctrepo = count($repolist);
-		if ($ctrepo>0) {
+		$repo_list = get_repo_list();
+		if ($repo_list) {
 			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
-			foreach ($repolist as $key => $value) {
-				$id = $value["id"];
-					print "<li><a href=\"javascript:;\" onclick=\"pasteid('$id');\"><span class=\"list_item\">".PrintReady(get_repo_descriptor($key))."&nbsp;&nbsp;&nbsp;";
-					if ($TEXT_DIRECTION=="rtl") print getRLM();
-					print "(".$key.")";
-					if ($TEXT_DIRECTION=="rtl") print getRLM();
-					print "</span></a></li>";
+			foreach ($repo_list as $repo) {
+				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$repo->getXref()."');\"><span class=\"list_item\">".$repo->getListName()."&nbsp;&nbsp;&nbsp;";
+				echo PGV_LPARENS.$repo->getXref().PGV_RPARENS;
+				echo "</span></a></li>";
 			}
 			print "</ul></td></tr>";
-			print "<tr><td class=\"list_label\">".$pgv_lang["repos_found"]." ".$ctrepo;
+			print "<tr><td class=\"list_label\">".$pgv_lang["repos_found"]." ".count($repo_list);
 			print "</td></tr>";
 		}
 		else {

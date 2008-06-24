@@ -505,4 +505,11 @@ function hasLTRText($text) {
 	}
 }
 
+function reverseText($text) {
+	// Hebrew and Arabic text needs to be reversed before GoogleCharts sees it
+	// Be careful that Arabic numbers don't get reversed (they're always LTR)
+	// Can we use existing function bidi_text() ????  -- probably not.
+	return $text;		// Fill this in later
+}
+
 ?>

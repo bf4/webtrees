@@ -62,7 +62,7 @@ define('PGV_UTF8_RLM', "\xE2\x80\x8F"); // U+200F
 // Alternatives to BMD events for lists, charts, etc.
 define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
 define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
-define('PGV_EVENTS_MARR', 'MARR|MARB|MARC|MARS');
+define('PGV_EVENTS_MARR', 'MARR|MARB');
 define('PGV_EVENTS_DIV',  'DIV|ANUL');
 
 function isAlphaNum($value) {
@@ -1059,5 +1059,16 @@ if ($Languages_Default) {            // If Languages not yet configured
 	$pgv_lang_use[$LANGUAGE] = true; //  and enable according to Browser pref.
 	$language_settings["english"]["pgv_lang_use"] = false;
 	$language_settings[$LANGUAGE]["pgv_lang_use"] = true;
+}
+
+// Characters with weak-directionality can confuse the browser's BIDI algorithm.
+// Make sure that they follow the directionality of the page, not that of the
+// enclosed text.
+if ($TEXT_DIRECTION=='ltr') {
+	define ('PGV_LPARENS', '&lrm;(');
+	define ('PGV_RPARENS', ')&lrm;');
+} else {
+	define ('PGV_LPARENS', '&rlm;(');
+	define ('PGV_RPARENS', ')&rlm;');
 }
 ?>

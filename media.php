@@ -314,7 +314,7 @@ print_header($pgv_lang["manage_media"]);
 	<!-- // NOTE: Add media -->
 	<td class="descriptionbox wrap width25"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 	<td class="optionbox wrap">
-	<a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('<?php print encode_url("addmedia.php?action=showmediaform&linktoid=new"); ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a>
+	<a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a>
 	</td>
 	</tr>
 	</table>
@@ -1559,7 +1559,7 @@ if (check_media_structure()) {
 							} else {
 								$tempURL .= "showmediaform&filename={$media['FILE']}&linktoid=new";
 							}
-							echo "<a href=\"javascript:".$pgv_lang["edit"]."\" onclick=\"window.open('", encode_url($tempURL), "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">", $pgv_lang["edit"], "</a><br />";
+							echo "<a href=\"javascript:".$pgv_lang["edit"]."\" onclick=\"window.open('", encode_url($tempURL, false), "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">", $pgv_lang["edit"], "</a><br />";
 
 							// Edit Raw
 							if ($media["XREF"] != "") {

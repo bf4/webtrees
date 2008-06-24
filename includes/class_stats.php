@@ -88,6 +88,7 @@ class stats {
 	 * Return a string of all supported tags and an example of its output in table row form.
 	 */
 	function getAllTagsTable() {
+		global $TEXT_DIRECTION;
 		$examples = array();
 		$methods = get_class_methods($this);
 		$c = count($methods);
@@ -104,10 +105,17 @@ class stats {
 			}
 		}
 		$out = '';
+		if ($TEXT_DIRECTION=='ltr') {
+			$alignVar = 'right';
+			$alignRes = 'left';
+		} else {
+			$alignVar = 'left';
+			$alignRes = 'right';
+		}
 		foreach ($examples as $tag=>$v) {
 			$out .= "\t<tr class=\"vevent\">"
-				."<td class=\"list_value_wrap\" align=\"right\" valign=\"top\" style=\"padding:3px\">{$tag}</td>"
-				."<td class=\"list_value_wrap\" align=\"left\" valign=\"top\">{$v}</td>"
+				."<td class=\"list_value_wrap\" align=\"{$alignVar}\" valign=\"top\" style=\"padding:3px\">{$tag}</td>"
+				."<td class=\"list_value_wrap\" align=\"{$alignRes}\" valign=\"top\">{$v}</td>"
 				."</tr>\n"
 			;
 		}
@@ -573,7 +581,7 @@ class stats {
 
 	function chartSex($params=null)
 	{
-		global $pgv_lang;
+		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
@@ -584,7 +592,11 @@ class stats {
 		$tot_m = $this->totalSexMalesPercentage();
 		$tot_u = $this->totalSexUnknownPercentage();
 		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
-		$chl = "{$pgv_lang['stat_unknown']}|{$pgv_lang['stat_females']}|{$pgv_lang['stat_males']}";
+		if ($TEXT_DIRECTION=='rtl') {
+			$chl = reverseText($pgv_lang['stat_unknown']).'|'.reverseText($pgv_lang['stat_females']).'|'.reverseText($pgv_lang['stat_males']);
+		} else {
+			$chl = "{$pgv_lang['stat_unknown']}|{$pgv_lang['stat_females']}|{$pgv_lang['stat_males']}";
+		}
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
@@ -632,7 +644,7 @@ class stats {
 
 	function chartMortality($params=null)
 	{
-		global $pgv_lang;
+		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
@@ -643,7 +655,11 @@ class stats {
 		$tot_d = $this->totalDeceasedPercentage();
 		$tot_u = $this->totalMortalityUnknownPercentage();
 		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
-		$chl = "{$pgv_lang['total_unknown']}|{$pgv_lang['total_living']}|{$pgv_lang['total_dead']}";
+		if ($TEXT_DIRECTION=='rtl') {
+			$chl = reverseText($pgv_lang['total_unknown']).'|'.reverseText($pgv_lang['total_living']).'|'.reverseText($pgv_lang['total_dead']);
+		} else {
+			$chl = "{$pgv_lang['total_unknown']}|{$pgv_lang['total_living']}|{$pgv_lang['total_dead']}";
+		}
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
@@ -719,7 +735,7 @@ class stats {
 
 	function chartMedia($params=null)
 	{
-		global $pgv_lang;
+		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
@@ -737,14 +753,22 @@ class stats {
 			$count = $this->_totalMediaType($type);
 			if ($count != 0) {
 				$mediaCounts[] = round(100 * $count / $tot, 0);
-				$mediaTypes .= $pgv_lang['TYPE__'.$type];
+				if ($TEXT_DIRECTION=='rtl') {
+					$mediaTypes .= reverseText($pgv_lang['TYPE__'.$type]);
+				} else {
+					$mediaTypes .= $pgv_lang['TYPE__'.$type];
+				}
 				$mediaTypes .= '|';
 			}
 		}
 		$count = $this->_totalMediaType('unknown');
 		if ($count != 0) {
 			$mediaCounts[] = round(100 * $count / $tot, 0);
-			$mediaTypes .= $pgv_lang['unknown'];
+				if ($TEXT_DIRECTION=='rtl') {
+					$mediaTypes .= reverseText($pgv_lang['unknown']);
+				} else {
+					$mediaTypes .= $pgv_lang['unknown'];
+				}
 			$mediaTypes .= '|';
 		}
 		$chd = $this->_array_to_extended_encoding($mediaCounts);
@@ -1430,10 +1454,20 @@ class stats {
 		$chl = array();
 		for($i = 0; $i < $total; $i++)
 		{
-			$per = round(100 * $rows[$i]['tot'] / $tot, 0);
+			if ($tot==0) {
+				$per=0;
+			} else {
+				$per = round(100 * $rows[$i]['tot'] / $tot, 0);
+			}
 			//$chd .= $this->_encoding[$per];
 			$chd .= $this->_array_to_extended_encoding(array($per));
-			$chl[] = get_family_descriptor($rows[$i]['id']);
+			$famName = strip_tags(get_family_descriptor($rows[$i]['id']));
+			$langName = whatLanguage($famName);
+			if ($langName=='hebrew' || $langName=='arabic') {
+				$chl[] = reverseText($famName);
+			} else {
+				$chl[] = $famName;
+			}
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
@@ -1518,7 +1552,12 @@ class stats {
 		{
 			$per = round(100 * $surname['match'] / $tot, 0);
 			$chd .= $this->_array_to_extended_encoding($per);
-			$chl[] = $surname['name'];
+			$nameLang = whatLanguage($surname['name']);
+			if ($nameLang=='hebrew' || $nameLang=='arabic') {
+				$chl[] = reverseText(strip_tags(($surname['name'])));
+			} else {
+				$chl[] = strip_tags($surname['name']);
+			}
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
@@ -1535,93 +1574,87 @@ class stats {
 	 */
 	function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
 	{
-		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX;
+		global $TEXT_DIRECTION, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
+		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
 
-		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = 10;}
-		if(is_array($params) && isset($params[1]) && $params[1] != ''){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = false;}
+		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = 1;}
+		if(is_array($params) && isset($params[1]) && $params[1] != ''){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = 10;}
 		if(is_array($params) && isset($params[2]) && $params[2] != ''){$sorting = strtolower($params[2]);}else{$sorting = 'rcount';}
 		// sanity check
-		if(!isset($sort_types[$sorting])){$sorting = 'rcount';}
+		if ($threshold<1) $threshold = 1;
+		if ($maxtoshow<1) $maxtoshow = 10;
+		if (!isset($sort_types[$sorting])) $sorting = 'rcount';
 
 		//-- cache the result in the session so that subsequent calls do not have to
 		//-- perform the calculation all over again.
-		if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false)))
-		{
+		if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false))) {
 			$name_list_f = $_SESSION['first_names_f'][$GEDCOM];
 			$name_list_m = $_SESSION['first_names_m'][$GEDCOM];
-		}
-		else
-		{
+			$name_list_u = $_SESSION["first_names_u"][$GEDCOM];
+		} else {
+			$name_list_f = array();
+			$name_list_m = array();
+			$name_list_u = array();
+
 			//DB query
-			$firstnames_f = array();
-			$firstnames_m = array();
 			$id = $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
 			$sql = "SELECT DISTINCT i_name, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$id}";
 			$res = dbquery($sql);
-			if(!DB::isError($res))
-			{
-				while($row =& $res->fetchRow())
-				{
-					$firstnamestring = explode('/', $row[0]);
-					$individual_names = explode(' ', $firstnamestring[0]);
-					if($individual_names[0] != '@P.N.' && $individual_names[0] != 'Living')
-					{
-						if(strlen($individual_names[0]) > 2)
-						{
-							if(preg_match("/1 SEX F/", $row[1]) > 0){$firstnames_f[] = $individual_names[0];}
-							if(preg_match("/1 SEX M/", $row[1]) > 0){$firstnames_m[] = $individual_names[0];}
+			if(!DB::isError($res)) {
+				while($row =& $res->fetchRow()) {
+					if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
+					else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
+					else $genderList = 'name_list_u';
+					$firstnamestring = explode("/", preg_replace(array("/@N.N.?/","/@P.N.?/"), "", $row[0]));
+					$firstnamestring[0] = str_replace(array('*', '.', "\xE2\xA0\xA6", '-', ',', '(', ')', '[', ']', '{', '}'), ' ', $firstnamestring[0]);
+					$firstnamestring[0] = str_replace(array(" '", "' ", ' "', '" '), ' ', $firstnamestring[0]);		// Special treatment to allow names like "D'arcy"
+					$nameList = explode(" ", $firstnamestring[0]);
+					foreach ($nameList as $givnName) {
+						if (strlen($givnName)>1) {
+							if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
+							${$genderList}[$givnName] ++;
 						}
 					}
 				}
-				$res->free();
+			$res->free();
 			}
-			//Calculate Female names
-			if(count($firstnames_f))
-			{
-				$unique_names_f = array_unique($firstnames_f);
-				$unique_count_f = (array_count_values($firstnames_f));
-				$name_list_f = (array_combine($unique_names_f,$unique_count_f));
-			}
-			else
-			{
-				$name_list_f = array();
-			}
+			arsort($name_list_f, SORT_NUMERIC);
 			$_SESSION['first_names_f'][$GEDCOM] = $name_list_f;
-
-			//Calculate Male names
-			if(count($firstnames_m))
-			{
-				$unique_names_m = array_unique($firstnames_m);
-				$unique_count_m = (array_count_values($firstnames_m));
-				$name_list_m = (array_combine($unique_names_m, $unique_count_m));
-			}
-			else
-			{
-				$name_list_m = array();
-			}
+			arsort($name_list_m, SORT_NUMERIC);
 			$_SESSION['first_names_m'][$GEDCOM] = $name_list_m;
+			arsort($name_list_u, SORT_NUMERIC);
+			$_SESSION['first_names_u'][$GEDCOM] = $name_list_u;
 		}
-		if($sex == 'F')
-		{
-			$name_list = 'name_list_f';
-			$sort_types[$sorting]($name_list_f);
+		if ($sex == 'F') {
+			$nameList = array_slice($name_list_f, 0, $maxtoshow);
+			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
+		} else if ($sex == 'M') {
+			$nameList = array_slice($name_list_m, 0, $maxtoshow);
+			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
+		} else if ($sex == 'U') {
+			$nameList = array_slice($name_list_u, 0, $maxtoshow);
+			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
+		} else {
+			$name_list_b = $name_list_f;
+			// Combine names and counts from the Male list into the Totals list
+			foreach ($name_list_m as $key => $count) {
+				if (isset($name_list_b[$key])) $name_list_b[$key] += $count;
+				else $name_list_b[$key] = $count;
+			}
+			// Combine names and counts from the Unknown list into the Totals list
+			foreach ($name_list_u as $key => $count) {
+				if (isset($name_list_b[$key])) $name_list_b[$key] += $count;
+				else $name_list_b[$key] = $count;
+			}
+			arsort($name_list_b, SORT_NUMERIC);
+			$nameList = array_slice($name_list_b, 0, $maxtoshow);
+			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
 		}
-		elseif($sex == 'M')
-		{
-			$name_list = 'name_list_m';
-			$sort_types[$sorting]($name_list_m);
-		}
-		else
-		{
-			$name_list_b = array_merge($name_list_f, $name_list_m);
-			$sort_types[$sorting]($name_list_b);
-			$name_list = 'name_list_b';
-		}
-		if(count($$name_list))
+		if(count($nameList))
 		{
 			$common = array();
-			foreach($$name_list as $given=>$total)
+			foreach($nameList as $given=>$total)
 			{
 				if($maxtoshow !== false){if($maxtoshow-- <= 0){break;}}
 				if($total < $threshold){break;}
@@ -1658,20 +1691,25 @@ class stats {
 		return '';
 	}
 
-	function commonGiven($params=null){return $this->_commonGivenQuery('B', 'nolist', false, $params);}
-	function commonGivenTotals($params=null){return $this->_commonGivenQuery('B', 'nolist', true, $params);}
-	function commonGivenList($params=null){return $this->_commonGivenQuery('B', 'list', false, $params);}
-	function commonGivenListTotals($params=null){return $this->_commonGivenQuery('B', 'list', true, $params);}
+	function commonGiven($params=array(1,10,'alpha')){return $this->_commonGivenQuery('B', 'nolist', false, $params);}
+	function commonGivenTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('B', 'nolist', true, $params);}
+	function commonGivenList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('B', 'list', false, $params);}
+	function commonGivenListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('B', 'list', true, $params);}
 
-	function commonGivenFemale($params=null){return $this->_commonGivenQuery('F', 'nolist', false, $params);}
-	function commonGivenFemaleTotals($params=null){return $this->_commonGivenQuery('F', 'nolist', true, $params);}
-	function commonGivenFemaleList($params=null){return $this->_commonGivenQuery('F', 'list', false, $params);}
-	function commonGivenFemaleListTotals($params=null){return $this->_commonGivenQuery('F', 'list', true, $params);}
+	function commonGivenFemale($params=array(1,10,'alpha')){return $this->_commonGivenQuery('F', 'nolist', false, $params);}
+	function commonGivenFemaleTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('F', 'nolist', true, $params);}
+	function commonGivenFemaleList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('F', 'list', false, $params);}
+	function commonGivenFemaleListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('F', 'list', true, $params);}
 
-	function commonGivenMale($params=null){return $this->_commonGivenQuery('M', 'nolist', false, $params);}
-	function commonGivenMaleTotals($params=null){return $this->_commonGivenQuery('M', 'nolist', true, $params);}
-	function commonGivenMaleList($params=null){return $this->_commonGivenQuery('M', 'list', false, $params);}
-	function commonGivenMaleListTotals($params=null){return $this->_commonGivenQuery('M', 'list', true, $params);}
+	function commonGivenMale($params=array(1,10,'alpha')){return $this->_commonGivenQuery('M', 'nolist', false, $params);}
+	function commonGivenMaleTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('M', 'nolist', true, $params);}
+	function commonGivenMaleList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('M', 'list', false, $params);}
+	function commonGivenMaleListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('M', 'list', true, $params);}
+
+	function commonGivenUnknown($params=array(1,10,'alpha')){return $this->_commonGivenQuery('U', 'nolist', false, $params);}
+	function commonGivenUnknownTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('U', 'nolist', true, $params);}
+	function commonGivenUnknownList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('U', 'list', false, $params);}
+	function commonGivenUnknownListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('U', 'list', true, $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Users                                                                     //
@@ -1810,6 +1848,73 @@ class stats {
 	function userID() {return getUserId();}
 	function userName() {return getUserName();}
 	function userFullName() {return getUserFullName(getUserId());}
+	function userFirstName() {return get_user_setting(getUserId(), 'firstname');}
+	function userLastName() {return get_user_setting(getUserId(), 'lastname');}
+
+	function _getLatestUserData($type='userid', $params=null)
+	{
+		global $DATE_FORMAT, $TIME_FORMAT, $pgv_lang;
+		static $user = null;
+		
+		if($user === null)
+		{
+			$users = get_all_users('DESC', 'reg_timestamp', 'username');
+			$user = array_shift($users);
+			unset($users);
+		}
+		
+		switch($type)
+		{
+			default:
+			case 'userid':
+			{
+				return $user;
+			}
+			case 'username':
+			{
+				return get_user_name($user);
+			}
+			case 'fullname':
+			{
+				return getUserFullName($user);
+			}
+			case 'firstname':
+			{
+				return get_user_setting($user, 'firstname');
+			}
+			case 'lastname':
+			{
+				return get_user_setting($user, 'lastname');
+			}
+			case 'regdate':
+			{
+				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
+				//$d = new GedcomDate(date('j M Y', get_user_setting($user, 'reg_timestamp')));
+				//return strip_tags($d->Display(false, $DATE_FORMAT, array()));
+				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
+			}
+			case 'regtime':
+			{
+				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $TIME_FORMAT;}
+				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
+			}
+			case 'loggedin':
+			{
+				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = $pgv_lang['yes'];}
+				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = $pgv_lang['no'];}
+				return (get_user_setting($user, 'loggedin') == 'Y')?$yes:$no;
+			}
+		}
+	}
+
+	function latestUserId(){return $this->_getLatestUserData('userid');}
+	function latestUserName(){return $this->_getLatestUserData('username');}
+	function latestUserFullName(){return $this->_getLatestUserData('fullname');}
+	function latestUserFirstName(){return $this->_getLatestUserData('firstname');}
+	function latestUserLastName(){return $this->_getLatestUserData('lastname');}
+	function latestUserRegDate($params=null){return $this->_getLatestUserData('regdate', $params);}
+	function latestUserRegTime($params=null){return $this->_getLatestUserData('regtime', $params);}
+	function latestUserLoggedin($params=null){return $this->_getLatestUserData('loggedin', $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Contact                                                                   //

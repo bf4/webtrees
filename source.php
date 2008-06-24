@@ -4,7 +4,7 @@
  * reference this source.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007 PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ $linkToID = $controller->sid;	// -- Tell addmedia.php what to link to
 <?php
 	if ($controller->accept_success) print "<b>".$pgv_lang["accept_successful"]."</b><br />";
 ?>
-			<span class="name_head"><?php print PrintReady($controller->source->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->sid.")" . getLRM(); ?></span><br />
+			<span class="name_head"><?php print PrintReady($controller->source->getFullName()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->sid.")" . getLRM(); ?></span><br />
 		</td>
 		<td valign="top" class="noprint">
 		<?php if (!$controller->isPrintPreview()) {
@@ -116,7 +116,7 @@ if ((!$controller->isPrintPreview())&&($controller->userCanEdit())) {
 	print_help_link("add_media_help", "qm", "add_media_lbl");
 	print $pgv_lang["add_media_lbl"] . "</td>";
 	print "<td class=\"optionbox\">";
-	print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('".encode_url("addmedia.php?action=showmediaform&linktoid={$controller->sid}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
+	print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('addmedia.php?action=showmediaform&linktoid={$controller->sid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
 	print "<br />\n";
 	print '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->sid.'&linkto=source\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["link_to_existing_media"].'</a>';
 	print "</td></tr>\n";
@@ -146,8 +146,8 @@ $myfamlist = $controller->source->getSourceFams();
 $ci=count($myindilist);
 $cf=count($myfamlist);
 
-if ($ci>0) print_indi_table($myindilist, $controller->source->getTitle());
-if ($cf>0) print_fam_table($myfamlist, $controller->source->getTitle());
+if ($ci>0) print_indi_table($myindilist, $controller->source->getFullName());
+if ($cf>0) print_fam_table($myfamlist, $controller->source->getFullName());
 
 ?>
 	<br />

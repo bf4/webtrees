@@ -218,7 +218,7 @@ class PedigreeControllerRoot extends BaseController {
 		global $pgv_lang, $GEDCOM;
 		
 		$name = $pgv_lang['unknown'];
-		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getName();
+		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
 		return $name." ".$pgv_lang["index_header"];
 	}
 	
@@ -226,7 +226,7 @@ class PedigreeControllerRoot extends BaseController {
 		global $pgv_lang;
 		
 		$name = $pgv_lang['unknown'];
-		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getName();
+		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
 		return $name;
 	}
 	

@@ -306,11 +306,11 @@ $addname = str_replace(array('<span class="starredname">', '</span>'), array('',
 				$ty=round($cy - $mr * -sin($rad));
 				$imagemap .= "$tx, $ty";
 				// add action url
-				$url = "javascript:// " . PrintReady(strip_tags($name));
-				if ($SHOW_ID_NUMBERS) $url .= " (".$pid.")";
-				$imagemap .= "\" href=\"$url\" ";
-				$url = "?rootid=$pid&amp;PEDIGREE_GENERATIONS=$PEDIGREE_GENERATIONS&amp;fan_width=$fan_width&amp;fan_style=$fan_style";
-				if (!empty($view)) $url .= "&amp;view=$view";
+				$tempURL = "javascript:// " . PrintReady(strip_tags($name));
+				if ($SHOW_ID_NUMBERS) $tempURL .= " (".$pid.")";
+				$imagemap .= "\" href=\"$tempURL\" ";
+				$tempURL = "fanchart?rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}&fan_width={$fan_width}&fan_style={$fan_style}";
+				if (!empty($view)) $tempURL .= "&view={$view}";
 				$count=0;
 				$lbwidth=200;
 				print "\n\t\t<div id=\"I".$pid.".".$count."links\" style=\"position:absolute; >";
@@ -326,7 +326,7 @@ $addname = str_replace(array('<span class="starredname">', '</span>'), array('',
 				}
 				print "<br /><a href=\"ancestry.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["ancestry_chart"]."</a>\n";
 				print "<br /><a href=\"compact.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["compact_chart"]."</a>\n";
-				print "<br /><a href=\"".encode_url("fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}&fan_width={$fan_width}&fan_style={$fan_style}")."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["fan_chart"]."</a>\n";
+				print "<br /><a href=\"".encode_url($tempURL)."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["fan_chart"]."</a>\n";
 				print "<br /><a href=\"hourglass.php?pid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["hourglass_chart"]."</a>\n";
 				if ($sosa>=1) {
 					$famids = find_sfamily_ids($pid);
@@ -347,8 +347,8 @@ $addname = str_replace(array('<span class="starredname">', '</span>'), array('',
 									if ($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
 									else $spid=$parents["WIFE"];
 									if (!empty($spid)) {
-										$linkurl=str_replace("id=".$pid, "id=".$spid, $url);
-										print "\n<br /><a href=\"$linkurl\" class=\"name1\">";
+										$linkURL=str_replace("id=".$pid, "id=".$spid, $tempURL);
+										print "\n<br /><a href=\"".encode_url($linkURL)."\" class=\"name1\">";
 										if (displayDetailsById($spid) || showLivingNameById($spid)) print PrintReady(rtrim(get_person_name($spid)));
 										else print $pgv_lang["private"];
 										print "</a>";
@@ -357,8 +357,8 @@ $addname = str_replace(array('<span class="starredname">', '</span>'), array('',
 								$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 								for ($i=0; $i<$num; $i++) {
 									$cpid = $smatch[$i][1];
-									$linkurl=str_replace("id=".$pid, "id=".$cpid, $url);
-									print "\n<br />&nbsp;&nbsp;<a href=\"$linkurl\" class=\"name1\">&lt; ";
+									$linkURL=str_replace("id=".$pid, "id=".$cpid, $tempURL);
+									print "\n<br />&nbsp;&nbsp;<a href=\"".encode_url($linkURL)."\" class=\"name1\">&lt; ";
 									if (displayDetailsById($cpid) || showLivingNameById($cpid)) print PrintReady(rtrim(get_person_name($cpid)));
 									else print $pgv_lang["private"];
 									print "</a>";
@@ -374,8 +374,8 @@ $addname = str_replace(array('<span class="starredname">', '</span>'), array('',
 								for($i=0; $i<$num; $i++) {
 									$cpid = $smatch[$i][1];
 									if ($cpid!=$pid) {
-										$linkurl=str_replace("id=".$pid, "id=".$cpid, $url);
-										print "\n<br />&nbsp;&nbsp;<a href=\"$linkurl\" class=\"name1\"> ";
+										$linkURL=str_replace("id=".$pid, "id=".$cpid, $tempURL);
+										print "\n<br />&nbsp;&nbsp;<a href=\"".encode_url($linkURL)."\" class=\"name1\"> ";
 										if (displayDetailsById($cpid) || showLivingNameById($cpid)) print PrintReady(rtrim(get_person_name($cpid)));
 										else print $pgv_lang["private"];
 										print "</a>";

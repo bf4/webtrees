@@ -34,9 +34,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 // Added in VERSION 4.1.6
-$pgv_lang["view_lightbox"]		= "View Album of ...";
-$pgv_lang["lb_notes"]			= "Notes";
-$pgv_lang["lb_notes_info"]		= "";
+$pgv_lang["lb_balloon_true"]			= "Balloon";
+$pgv_lang["lb_balloon_false"]			= "Normal";
+$pgv_lang["lb_tt_balloon"]				= "Individual Page - Album Tab Thumbnail - Upper Links Tooltip";
+$pgv_lang["lb_ttAppearance"]			= "Upper Links - Tooltip appearance";
+$pgv_lang["view_lightbox"]				= "View Album of ...";
+$pgv_lang["lb_notes"]					= "Notes";
+$pgv_lang["lb_notes_info"]				= "";
  
 
 // Added in VERSION 4.1.4 
@@ -96,9 +100,9 @@ $pgv_lang["TYPE__other"] 	 = "Other";
 
 $pgv_lang["TYPE__footnotes"] = "Footnotes";
 
-$pgv_lang["census_text"]  	 = "\"These census images have been obtained from \"The National Archives\", the custodian of the original records, ";
+$pgv_lang["census_text"]  	 = "\"UK census images have been obtained from \"The National Archives\", the custodian of the original records, ";
 $pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
-$pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other census images appearing on this website should be directed to: ";
+$pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other UK census images appearing on this website should be directed to: ";
 $pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
 
 $pgv_lang["lb_edit_details"] 	= "Edit Details";

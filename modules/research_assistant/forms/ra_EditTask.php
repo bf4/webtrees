@@ -332,7 +332,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	                   				$pval .= ';'.$person->getXref();
 														$bdate=$person->getEstimatedBirthDate();
 														$byear=$bdate->gregorianYear();
-	                   				print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName()." - ".$byear.'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   				print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName()." - ".$byear.'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
                    				}
                    			}
                    		?>

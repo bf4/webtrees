@@ -306,7 +306,7 @@ class ra_form {
 	                   			foreach($people as $pid=>$person) {
 							if (!is_null($person)) {
 	                   				$pval .= ';'.$person->getXref();
-	                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 							}
 	                   			}
 	                   $out .= '</div>
@@ -436,10 +436,10 @@ END_OUT;
 				
 				if(is_object($person))
 				{
-					$peopleList .= "<option value=\"$pid\" selected=\"selected\">".$person->getName()."</option>";
+					$peopleList .= "<option value=\"$pid\" selected=\"selected\">".$person->getFullName()."</option>";
 					$families = $person->getSpouseFamilies();
 					foreach($families as $famid=>$family) {
-						if (is_object($family)) $familyList .= "<option value=\"$famid\">".$family->getSortableName()."</option>";
+						if (is_object($family)) $familyList .= "<option value=\"$famid\">".$family->getFullName()."</option>";
 					}
 				}
 			}
@@ -464,7 +464,7 @@ END_OUT;
 								if ($fact['tf_multiple']=='Y' || in_array($pid, $selectedPeople)) {
 									$peopleList .= "<option value=\"$pid\" ";
 									if (in_array($pid, $selectedPeople)) $peopleList .= "selected=\"selected\"";
-									$peopleList .= ">".$person->getName()."</option>";
+									$peopleList .= ">".$person->getFullName()."</option>";
 								}
 							
 							}
@@ -480,7 +480,7 @@ END_OUT;
 									if ($fact['tf_multiple']=='Y' || in_array($famid, $selectedPeople)) {
 										$familyList .= "<option value=\"$famid\" ";
 										if (in_array($famid, $selectedPeople)) $familyList .= "selected=\"selected\"";
-										$familyList .= ">".$family->getSortableName()."</option>";
+										$familyList .= ">".$family->getFullName()."</option>";
 									}
 								}
 							}

@@ -233,7 +233,7 @@ if ($action=='createuser' || $action=='edituser2') {
 					}
 				}
 				// Reload the form cleanly, to allow the user to verify their changes
-				header("Location: ".encode_url("useradmin.php?action=edituser&username={$username}&ged={$ged}"));
+				header("Location: ".encode_url("useradmin.php?action=edituser&username={$username}&ged={$ged}", false));
 				exit;
 			}
 		}

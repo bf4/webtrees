@@ -34,7 +34,7 @@ if (!PGV_USER_IS_ADMIN) {
 }
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: ".encode_url("login.php?type=simple&ged={$GEDCOM}&url=dir_editor.php?".decode_url($QUERY_STRING)));
+	header("Location: ".encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("dir_editor.php?".decode_url($QUERY_STRING)), false));
 	exit;
 }
 

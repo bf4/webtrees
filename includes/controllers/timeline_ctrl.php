@@ -166,7 +166,7 @@ class TimelineControllerRoot extends BaseController {
 			if (!is_null($this->people[$i])) {
 				if (!$this->people[$i]->canDisplayDetails()) {
 					if ($this->people[$i]->canDisplayName()) {
-						print "&nbsp;<a href=\"".encode_url("individual.php?pid=".$this->people[$i]->getXref())."\">".PrintReady($this->people[$i]->getName())."</a>";
+						print "&nbsp;<a href=\"".encode_url("individual.php?pid=".$this->people[$i]->getXref())."\">".PrintReady($this->people[$i]->getFullName())."</a>";
 						print_privacy_error($CONTACT_EMAIL);
 						print "<br />";
 						$printed = true;
@@ -275,7 +275,7 @@ class TimelineControllerRoot extends BaseController {
 						}
 						if ($p==count($this->pids)) $p = $factitem["p"];
 						$col = $p % 6;
-						print " <span class=\"person$col\"> <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}").\">";
+						print " <span class=\"person$col\"> <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
 						if (displayDetailsById($spouse)||showLivingNameById($spouse)) print get_person_name($spouse);
 						else print $pgv_lang["private"];
 						print "</a> </span>";

@@ -176,21 +176,24 @@
 		if ($t==5){ // do nothing
 		}else{
 			echo "\n\n";
-			echo '<table border="0" class="facts_table" ><tr>', "\n";;
-			echo '<td width="80" align="center" class="descriptionbox">' ;
-			if ($t==5){
-				echo "<b><br />" . $tt . "</b><br /><br />";
-			}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){
-				echo "<b><br /><br />" . $tt . "</b><br /><br />";
-				// echo "(" . $numm . ")";
-			}else{
-				echo "<b><br />" . $tt . "</b><br /><br />";	
-			}
+			echo '<table border="0" class="facts_table" ><tr>', "\n";
+			
+			echo '<td width="80" align="center" class="descriptionbox">';
+				if ($t==5){
+					echo "<b><br />" . $tt . "</b><br /><br />";
+				}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){
+					echo "<b><br /><br />" . $tt . "</b><br /><br />";
+					// echo "(" . $numm . ")";
+				}else{
+					echo "<b><br />" . $tt . "</b><br /><br />";	
+				}
 			echo '</td>';
+			
 			echo '<td width="2"></td>';
+			
 			echo '<td class="facts_value">';
 			echo "<table width=\"100%\"><tr><td>" . "\n";
-				echo "<div id=\"thumbcontainer\" >" . "\n";
+				echo "<div id=\"thumbcontainer".$t."\">" . "\n";
 				echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
 				//echo "<ul id=\"thumblist\">" . "\n\n";
 		}
@@ -279,9 +282,9 @@
 		echo "</div>";
 		echo "<div class=\"clearlist\">";
 		echo "</div>";
-//		echo "</center>";
-		echo '</td>';
-		echo '</tr></table>' . "\n";
+		// echo "</center>";
+
+		echo '</td></tr></table>' . "\n";
 
 		if ($t==3 && $numm > 0) {
 			echo "<font size='1'>";
@@ -290,9 +293,9 @@
 		}else{
 		}
 
-//		echo "</center>" . "\n";
+		// echo "</center>" . "\n";
 		echo '</td>'. "\n";
-		echo '</td>';
+//echo '</td>';
 		echo '</tr>';
 		echo '</table>' . "\n\n";
 		}
@@ -301,6 +304,7 @@
 	//-- objects are removed from the $current_objes list as they are printed
 	//-- any objects left in the list are new objects recently added to the gedcom
 	//-- but not yet accepted into the database.  We will print them too.
+	
 	foreach($current_objes as $media_id=>$value) {
 		while($value>0) {
 			$objSubrec = array_pop($obje_links[$media_id]);
@@ -347,7 +351,7 @@
 						echo "<center>" . "\n\n";
 						echo '<table><tr><td>' . "\n";
 						echo "<center>" . "\n\n";  // needed for Firefox
-						echo "<div id=\"thumbcontainer\">" . "\n";
+						echo "<div id=\"thumbcontainer".$t."\">" . "\n";
 
 						echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
 
@@ -359,10 +363,14 @@
 						echo "<div id=\"clearlist\">";
 						echo "</div";
 						echo "</center>";
+						
 						echo '</td></tr></table>';
 						echo "</center>";
+						
 						echo '</td>';
-						echo '</td></tr></table>' . "\n\n";
+						echo '</td>';
+						echo '</tr>';
+						echo '</table>' . "\n\n";
 					}
 				}
 			}

@@ -24,7 +24,7 @@
  * @package PhpGedView
  * @subpackage Module
  * @author Łukasz Wileński <wooc@users.sourceforge.net>
- * @version $Id: lang.pl.php 3215 2008-06-05 20:02:41Z wooc $  
+ * @version $Id$
  */
 
 //-- security check, only allow access from module.php
@@ -32,6 +32,16 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
 	exit;
 }
+
+// Added in VERSION 4.1.6
+$pgv_lang["lb_balloon_true"]	= "Dymek";
+$pgv_lang["lb_balloon_false"]	= "Normalne";
+$pgv_lang["lb_tt_balloon"]		= "Strona informacji o osobie - Album - Miniaturki - Okienko szczegółów";
+$pgv_lang["lb_ttAppearance"]	= "Wygląd okienka szczegółów/notatek";
+$pgv_lang["view_lightbox"]		= "Zobacz Album ...";
+$pgv_lang["lb_notes"]			= "Notatki";
+$pgv_lang["lb_notes_info"]		= "";
+
 
 // Added in VERSION 4.1.4 
 

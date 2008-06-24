@@ -35,6 +35,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 // Added in VERSION 4.1.6
+$pgv_lang["lb_balloon_true"]	= "Sprechblase";
+$pgv_lang["lb_balloon_false"]	= "Normal";
+$pgv_lang["lb_tt_balloon"]		= "Persönliche Fakten Seite - Album Ordner Miniaturbild Bereich";
+$pgv_lang["lb_ttAppearance"]	= "Behandlung der oberen Links";
 $pgv_lang["view_lightbox"]		= "Von ... Album zeigen";
 $pgv_lang["lb_notes"]			= "Bemerkungen";
 $pgv_lang["lb_notes_info"]		= "";
@@ -43,7 +47,7 @@ $pgv_lang["lb_notes_info"]		= "";
 // Added in VERSION 4.1.4 
 
 $pgv_lang["lb_details"]			= "Details";
-#$pgv_lang["lb_detail_info"]		= "View this Media Item Details ...  Plus other Media Options - MediaViewer page";
+$pgv_lang["lb_detail_info"]		= "Details des Medien-Objekts zeigen ...  weitere Optionen - Medienbetrachter Seite";
 $pgv_lang["lb_pause_ss"]		= "Diavortrag unterbrechen";
 $pgv_lang["lb_start_ss"]		= "Diavortrag Start";
 $pgv_lang["lb_music"]			= "Ton ein/abschalten";
@@ -58,7 +62,7 @@ $pgv_lang["lb_close_win"]		= "Fenster schließen";
 $pgv_lang["configure_lightbox"]		= "Album Konfiguration";
 $pgv_lang["mediatab"]       		= "Persönliche Fakten Seite - Multimedia Ordner";
 $pgv_lang["lb_appearance"]			= "Darstellung";
-$pgv_lang["lb_linkAppearance"]		= "Links-Darstellung";
+$pgv_lang["lb_linkAppearance"]		= "Darstellung der Links";
 $pgv_lang["lb_MP3Only"]				= "(nur mp3 unterstützt)";
 $pgv_lang["lb_admin_error"]         = "Nur für Verwalter bestimmt";
 $pgv_lang["lb_toAlbumPage"]			= "Zurück zur Album-Seite";
@@ -69,7 +73,7 @@ $pgv_lang["lb_both"]				= "Beide";
 $pgv_lang["lb_none"]				= "Keine";
 
 $pgv_lang["lb_al_head_links"]		= "Persönliche Fakten Seite - Album Ordner Kopfbereich";
-$pgv_lang["lb_al_thumb_links"]		= "Persönliche Fakten Seite - Album Ordner Miniaturbilder";
+$pgv_lang["lb_al_thumb_links"]		= "Persönliche Fakten Seite - Album Ordner Miniaturbild Bereich";
 $pgv_lang["lb_ml_thumb_links"]		= "MultiMedia Seite - Minaturbilder";
 $pgv_lang["lb_music_file"]			= "Dia-Vortrag Tonspur";
 $pgv_lang["lb_musicFileAdvice"]		= "Lagerort der gewählten Tonspur  (wenn leer: keine Tonspur)";

@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PhpGedView developers
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,12 @@
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
 }
+
+// Added in VERSION 4.1.6
+$pgv_lang["lb_tt_balloonLegend"]	= "Album Ordner Miniaturbildbereich - Links (oben)";
+$pgv_lang["lb_tt_balloon_help"]	= "~#pgv_lang[lb_tt_balloonLegend]#~<br />Durch diese Option können Sie bestimmen, ob die Links über jedem Miniaturbild eine Sprechblase oder einen normalen Tip aufrufen.<br /><br />Diese Links zeigen Ihnen Bemerkungen und Details über das Medien-Objekt.<br />";
+
+
 
 $pgv_lang["mediatabLegend"]			= "Multimedia Ordner Darstellung";
 $pgv_lang["mediatab_help"]			= "~#pgv_lang[mediatabLegend]#~<br />Hier können Sie bestimmen, ob der gewöhnliche Medien-Ordner auf der #pgv_lang[indi_info]# Seite gezeigt werden soll oder nicht.<br /><br />Wenn Sie <b>#pgv_lang[hide]#</b> wählen, wird nur der <b>#pgv_lang[lightbox]#</b> Ordner gezeigt, und dieser Ordner wird dann auch auf <b>#pgv_lang[media]#</b> umbenannt.<br />";

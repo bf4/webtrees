@@ -38,7 +38,8 @@ else print "<h2>".$pgv_lang["index_header"].":";
 print "<br />".PrintReady($controller->getPersonName())."</h2>";
 
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include_once('modules/lightbox/lb_config.php');
+	include('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include_once('modules/lightbox/functions/lb_call_js.php');
 }	
 
@@ -260,7 +261,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 				if (!empty($spid)) {
 					print "\n\t\t\t\t<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$spid->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
 					if ($spid->canDisplayName()) {
-						$name = $spid->getName();
+						$name = $spid->getFullName();
 						$name = rtrim($name);
 					} else $name = $pgv_lang["private"];
 					if (hasRTLText($name)) print "class=\"name2\">";								
@@ -273,7 +274,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 				foreach($children as $ind2=>$child) {
 					print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
 					if ($child->canDisplayName()) {
-						$name = $child->getName();
+						$name = $child->getFullName();
 						$name = rtrim($name);
 					} else $name = $pgv_lang["private"];
 					if (hasRTLText($name)) print "class=\"name2\">&lt; ";									
@@ -292,7 +293,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 					if (!$controller->rootPerson->equals($child) && !is_null($child)) {
 						print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
 						if ($child->canDisplayName()) {
-							$name = $child->getName();
+							$name = $child->getFullName();
 							$name = rtrim($name);
 						} else $name = $pgv_lang["private"];
 						if (hasRTLText($name)) print "class=\"name2\"> ";									 

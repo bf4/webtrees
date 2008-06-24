@@ -450,7 +450,7 @@ class MenuBar
 		if (PGV_USER_GEDCOM_ID) {
 			//-- quick_update submenu
 			$submenu = new Menu($pgv_lang["quick_update_title"], "#");
-			$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."');");
+			$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."', '', '".PGV_GEDCOM."');");
 			if (!empty($PGV_IMAGES["indis"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -686,7 +686,7 @@ class MenuBar
 					if (($pid and $pid!=$rootid) or empty($rootid)) {
 						$link = "relationship.php";
 						if ($rootid) {
-							$link .= "?pid1={$pid}&pid2={$rootid}";
+							$link .= "?pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
 							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags(get_person_name($pid)));
 							$submenu = new Menu($label, encode_url($link));
 						} else {
@@ -1334,7 +1334,7 @@ class MenuBar
 						if (displayDetailsById($fav['gid'], $fav['type'])) {
 							$obj=GedcomRecord::getInstance($fav['gid']);
 							if ($obj) {
-								$submenu=new Menu(PrintReady($obj->getName()), $obj->getLinkUrl());
+								$submenu=new Menu(PrintReady($obj->getFullName()), encode_url($obj->getLinkUrl()));
 								$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 								$menu->addSubMenu($submenu);
 							}
@@ -1366,7 +1366,7 @@ class MenuBar
 						if (displayDetailsById($fav['gid'], $fav['type'])) {
 							$obj=GedcomRecord::getInstance($fav['gid']);
 							if ($obj) {
-								$submenu=new Menu(PrintReady($obj->getName()), $obj->getLinkUrl());
+								$submenu=new Menu(PrintReady($obj->getFullName()), encode_url($obj->getLinkUrl()));
 								$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 								$menu->addSubMenu($submenu);
 							}

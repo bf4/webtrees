@@ -42,8 +42,8 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 $server = "";
-$Links="";
-$famLinks="";
+$Links=array();
+$famLinks=array();
 if (!empty($_REQUEST["selectedServer"])){
 	$serverID = $_REQUEST["selectedServer"];
 	//$server_split = explode(" - ", $server_gedcomid);
@@ -93,7 +93,8 @@ if (!empty($_REQUEST["selectedServer"])){
 <ul>
 <?php
 foreach($Links as $pid=>$indi){
-	echo format_list_person($pid, array($indi["names"][0][0], $GEDCOM));
+	$person=Person::getInstance($pid);
+	echo $person->format_list();
 }
 ?>
 </ul>
@@ -107,8 +108,8 @@ foreach($Links as $pid=>$indi){
 <ul>
 <?php
 foreach($famLinks as $famPid=>$fam){
-	$fullname = check_NN($fam["name"]);
-	echo format_list_family($famPid, array($fullname, $GEDCOM));
+	$family=Family::getInstance($famPid);
+	echo $family->format_list();
 }
 ?>
 </ul>

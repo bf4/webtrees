@@ -222,46 +222,6 @@ class Family extends GedcomRecord {
 	}
 
 	/**
-	 * get the family name
-	 * @return string
-	 */
-	function getName() {
-		global $pgv_lang;
-		$name = "";
-		if (is_null($this->husb)) $name .= $pgv_lang["unknown"];
-		else {
-			$name .= $this->husb->getName();
-		}
-		$name .= " + ";
-		if (is_null($this->wife)) $name .= $pgv_lang["unknown"];
-		else {
-			$name .= $this->wife->getName();
-		}
-		return $name;
-	}
-	
-	/**
-	 * get the family sortable name
-	 * @return string
-	 */
-	function getSortableName($linebr=false) {
-		global $pgv_lang;
-		$name = "";
-		if (is_null($this->husb)) $name .= $pgv_lang["unknown"];
-		else {
-			$name .= $this->husb->getSortableName();
-			if ($linebr) $name .= $this->husb->getSexImage();
-		}
-		if ($linebr) $name .= "<br />"; else $name .= " + ";
-		if (is_null($this->wife)) $name .= $pgv_lang["unknown"];
-		else {
-			$name .= $this->wife->getSortableName();
-			if ($linebr) $name .= $this->wife->getSexImage();
-		}
-		return $name;
-	}
-
-	/**
 	 * Check if privacy options allow this record to be displayed
 	 * @return boolean
 	 */
@@ -451,24 +411,16 @@ class Family extends GedcomRecord {
 	// Get an array of structures containing all the names in the record
 	function getAllNames() {
 		if (is_null($this->_getAllNames)) {
-			if ($this->husb) {
-				$husb_names=$this->husb->getAllNames();
-			} else {
-				$husb_names=array('type'=>'NAME', 'full'=>'', 'list'=>'', 'sort'=>'@N.N., @P.N.');
-			}
-			if ($this->wife) {
-				$wife_names=$this->wife->getAllNames();
-			} else {
-				$wife_names=array('type'=>'NAME', 'full'=>'', 'list'=>'', 'sort'=>'@N.N., @P.N.');
-			}
-			foreach ($husb_names as $husb_name) {
-				foreach ($wife_names as $wife_name) {
-					// Match NAME with NAME, FONE with FONE, _HEB with _HEB, etc.
-					if ($husb_name['type']==$wife_name['type']) {
+			$husb=$this->husb ? $this->husb : new Person('1 SEX M');
+			$wife=$this->wife ? $this->wife : new Person('1 SEX F');
+			foreach ($husb->getAllNames() as $husb_name) {
+				foreach ($wife->getAllNames() as $wife_name) {
+					// Match latin names with latin names, arabic with arabic, etc.
+					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM' && whatLanguage($husb_name['full'])==whatLanguage($wife_name['full'])) {
 						$this->_getAllNames[]=array(
 							'type'=>$husb_name['type'],
 							'full'=>$husb_name['full'].' + '.$wife_name['full'],
-							'list'=>$husb_name['list'].' + '.$wife_name['list'],
+							'list'=>$husb_name['list'].$husb->getSexImage().'<br />'.$wife_name['list'].$wife->getSexImage(),
 							'sort'=>$husb_name['sort'].' + '.$wife_name['sort'],
 						);
 					}
@@ -477,14 +429,23 @@ class Family extends GedcomRecord {
 			// The spouses have no matching name types.
 			if (!$this->_getAllNames) {
 				$this->_getAllNames[]=array(
-					'type'=>$husb_names[0]['type'],
-					'full'=>$husb_names[0]['full'].' + '.$wife_names[0]['full'],
-					'list'=>$husb_names[0]['list'].' + '.$wife_names[0]['list'],
-					'sort'=>$husb_names[0]['sort'].' + '.$wife_names[0]['sort'],
+					'type'=>'NAME',
+					'full'=>$husb->getFullName().' + '.$wife->getFullName(),
+					'list'=>$husb->getListName().$husb->getSexImage().'<br />'.$wife->getListName().$wife->getSexImage(),
+					'sort'=>$husb->getSortName().' + '.$wife->getSortName()
 				);
 			}
 		}
 		return $this->_getAllNames;
 	}
+
+	// Extra info to display when displaying this record in a list of
+	// selection items or favourites.
+	function format_list_details() {
+		return
+		  $this->format_first_major_fact(PGV_EVENTS_MARR).
+		  $this->format_first_major_fact(PGV_EVENTS_DIV);
+	}
+
 }
 ?>

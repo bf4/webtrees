@@ -23,6 +23,6 @@
 //
 // @version $Id$
 
-header("Location: ".encode_url("modules/cms_interface/cms_login.php?cms_login=".$_COOKIE['post_user']."&cms_password=".$_COOKIE['def_upass']));
+header("Location: ".encode_url("modules/cms_interface/cms_login.php?cms_login={$_COOKIE['post_user']}&cms_password={$_COOKIE['def_upass']}", false));
 
 ?>

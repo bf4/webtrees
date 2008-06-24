@@ -118,8 +118,8 @@
 	top: -6px;
 }
 
-#CB_TopText, #CB_NoteText {
-	width: 40px;
+#CB_DetailText, #CB_NoteText {
+	width: 5px;
     background-color: #FFFFFF;
 	text-align: center;
 	font-weight: 300;
@@ -128,12 +128,24 @@
 	margin-top: -3px;
 	margin-bottom: 6px;
 }
-
-#CB_TopText a, #CB_NoteText a, #CB_Txt2 a {
+#CB_DetailText a, #CB_NoteText a, #CB_Txt2 a {
 	color: #888888;
 }
-#CB_TopText a:hover, #CB_NoteText a:hover, #CB_Txt2 a:hover  {
+#CB_DetailText a:hover, #CB_NoteText a:hover, #CB_Txt2 a:hover  {
 	color: #AA0000;
+}
+
+#CB_NavBar table {
+    background-color: #FFFFFF;
+	text-align: center;
+	font-weight: 300;
+	color: #8800FF;
+	padding-bottom: 4px;
+	margin-top: -4px;
+	margin-bottom: 3px;
+}
+#CB_NavBar table td img{
+	border: 0px;
 }
 
 #CB_Window {
@@ -149,10 +161,21 @@
 }
 
 #CB_iFrame {
+	/* border: red solid 1px; */
 	position: absolute;
 	width: 0px;
 	height: 0px;
 	z-index: 1003;
+}
+
+#CB_UrlNotes {
+	position: absolute;
+	color: magenta;
+	width: 0px;
+	height: 0px; 
+	background: #ffff88;
+	border: blue solid 1px;
+	z-index: 1010;
 }
 
 #CB_TopLeft {

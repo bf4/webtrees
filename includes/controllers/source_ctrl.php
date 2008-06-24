@@ -166,7 +166,7 @@ class SourceControllerRoot extends BaseController {
 	 */
 	function getPageTitle() {
 		global $pgv_lang;
-		return $this->source->getTitle()." - ".$this->sid." - ".$pgv_lang["source_info"];
+		return $this->source->getFullName()." - ".$this->sid." - ".$pgv_lang["source_info"];
 	}
 	/**
 	 * check if use can edit this person
@@ -295,7 +295,7 @@ class SourceControllerRoot extends BaseController {
 		{
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
-			$menu->addLink(encode_url("clippings.php?action=add&id={$this->sid}&type=sour'));
+			$menu->addLink(encode_url("clippings.php?action=add&id={$this->sid}&type=sour"));
 		}
 		if ($SHOW_GEDCOM_RECORD)
 		{

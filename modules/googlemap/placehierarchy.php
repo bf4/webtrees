@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,14 +102,18 @@ function set_levelm($level, $parent) {
 		$levelm=0;
 	}
 	$fullplace = "";
-	for ($i=1; $i<=$level; $i++) {
-		if ($parent[$level-$i]!="")
-			$fullplace .= $parent[$level-$i].", ";
-		else
-			$fullplace .= "Unknown, ";
+	if ($level==0) 
+		$levelm=0;
+	else {
+		for ($i=1; $i<=$level; $i++) {
+			if ($parent[$level-$i]!="")
+				$fullplace .= $parent[$level-$i].", ";
+			else
+				$fullplace .= "Unknown, ";
+		}
+		$fullplace = substr($fullplace,0,-2);
+		$levelm = get_placeid($fullplace);
 	}
-	$fullplace = substr($fullplace,0,-2);
-	$levelm = get_placeid($fullplace);
 	return $levelm;
 }
 
@@ -117,23 +121,24 @@ function create_map() {
 	global $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION, $pgv_lang;
 	// create the map
 	//<!-- start of map display -->
-	print "\n<br /><br />\n";
-	print "<table class=\"width80\"><tr valign=\"top\"><td class=\"center\">";
-	print "<div id=\"place_map\" style=\"border: 1px solid gray; width: ".$GOOGLEMAP_PH_XSIZE."px; height: ".$GOOGLEMAP_PH_YSIZE."px; ";
-	print "background-image: url('images/loading.gif'); background-position: center; background-repeat: no-repeat; overflow: hidden;\"></div>";
-	print "<table style=\"width: ".$GOOGLEMAP_PH_XSIZE."px\">";
+	echo "\n<br /><br />\n";
+	echo "<table class=\"width80\"><tr valign=\"top\"><td class=\"center\">";
+	echo "<div id=\"place_map\" style=\"border: 1px solid gray; width: ".$GOOGLEMAP_PH_XSIZE."px; height: ".$GOOGLEMAP_PH_YSIZE."px; ";
+	echo "background-image: url('images/loading.gif'); background-position: center; background-repeat: no-repeat; overflow: hidden;\"></div>";
+	echo "<table style=\"width: ".$GOOGLEMAP_PH_XSIZE."px\">";
 	if (PGV_USER_IS_ADMIN) {
-		print "<tr><td align=\"left\">\n";
-		print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
-		print "</td>\n";
-		print "<td align=\"center\">\n";
-		print "<a href=\"module.php?mod=googlemap&pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
-		print "</td>\n";
-		print "<td align=\"right\">\n";
-		print "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
-		print "</td></tr>\n";
+		echo "<tr><td align=\"left\">\n";
+		echo "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+		echo "</td>\n";
+		echo "<td align=\"center\">\n";
+		echo "<a href=\"module.php?mod=googlemap&pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+		echo "</td>\n";
+		echo "<td align=\"right\">\n";
+		echo "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
+		echo "</td></tr>\n";
 	}
-	print "</table>\n";
+	echo "</table>\n";
+	echo "</td><td style=\"margin-left:15; vertical-align: top;\">";
 }
 
 function check_were_am_i($numls, $levelm) {
@@ -199,7 +204,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			$placename = substr($placelevels,2);
 			if ($place2['place'] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
-				else echo $pgv_lang["unknown"];
+				else echo $pgv_lang["pl_unknown"];
 			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
 				else echo PrintReady(addslashes($place2['place']));
@@ -207,8 +212,8 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		else {
 			$placename = $place2['place'].$placelevels;
 			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["unknown"].$placelevels));
-				else echo $pgv_lang["unknown"];
+				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
+				else echo $pgv_lang["pl_unknown"];
 			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($place2['place'].$placelevels));
 				else echo PrintReady(addslashes($place2['place']));
@@ -229,6 +234,11 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 	else {
 		$lati = str_replace(array('N', 'S', ','), array('', '-', '.'), $place2['lati']);
 		$long = str_replace(array('E', 'W', ','), array('', '-', '.'), $place2['long']);
+		//delete leading zero
+		if ($lati >= 0) 	$lati = abs($lati);
+		else if ($lati < 0) $lati = "-".abs($lati);
+		if ($long >= 0) 	$long = abs($long);
+		else if ($long < 0) $long = "-".abs($long);
 		// flags by kiwi_pgv
 		if (($place2["icon"] == NULL) || ($place2['icon'] == "") || ($GOOGLEMAP_PH_MARKER != "G_FLAG")) {
 			echo "var icon_type = new GIcon(G_DEFAULT_ICON);\n";
@@ -256,7 +266,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			$placename = substr($placelevels,2);
 			if ($place2['place'] == "Unknown")
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
-				else echo $pgv_lang["unknown"];
+				else echo $pgv_lang["pl_unknown"];
 			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo addslashes(substr($placelevels,2));
 				else echo PrintReady(addslashes($place2['place']));
@@ -264,8 +274,8 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 		else {
 			$placename = $place2['place'].$placelevels;
 			if ($place2['place'] == "Unknown")
-				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["unknown"].$placelevels));
-				else echo $pgv_lang["unknown"];
+				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($pgv_lang["pl_unknown"].$placelevels));
+				else echo $pgv_lang["pl_unknown"];
 			else
 				if ($GM_DISP_SHORT_PLACE == "false") echo PrintReady(addslashes($place2['place'].$placelevels));
 				else echo PrintReady(addslashes($place2['place']));
@@ -416,7 +426,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GM_MAX_NOF_LEVELS, $GOOGLEMAP_PH_WHEEL, $GOOGLEMAP_PH_CONTROLS, $pgv_lang;
 	?>
 	<!-- Start of map scripts -->
-	<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php print $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
+	<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
 	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	// <![CDATA[
@@ -517,7 +527,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 				}
 			}
 			else if ($level>0){ //if unknown place display the upper level place
-				$placelevels = ", ".$pgv_lang["unknown"].$placelevels;
+				$placelevels = ", ".$pgv_lang["pl_unknown"].$placelevels;
 				$linklevels .= "&amp;parent[".$level."]=";
 				for ($i=1;$i<=$GM_MAX_NOF_LEVELS;$i++)
 				if (($level-$i)>=0 && isset($levelo[($level-$i)])) {
@@ -565,7 +575,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
     // http://www.commchurch.freeserve.co.uk/
     // http://econym.googlepages.com/index.htm
 	//]]>
-	//version 1.2
+	//version 1.3
 	</script>
 	<?php
 }

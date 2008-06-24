@@ -33,7 +33,6 @@ require_once('includes/gedcomrecord.php');
 
 class Repository extends GedcomRecord {
 	var $disp = true;
-	var $name = "";
 	var $sourcelist = null;
 
 	/**
@@ -43,9 +42,6 @@ class Repository extends GedcomRecord {
 	function Repository($gedrec) {
 		parent::GedcomRecord($gedrec);
 		$this->disp = displayDetailsByID($this->xref, "REPO");
-		$this->name = get_repo_descriptor($this->xref);
-		$add_descriptor = get_add_repo_descriptor($this->xref);
-		if ($add_descriptor) $this->name .= " - ".$add_descriptor;
 	}
 
 	/**
@@ -102,20 +98,6 @@ class Repository extends GedcomRecord {
 	 */
 	function getName() {
 		return $this->name;
-	}
-
-	/**
-	 * get the repository sortable name
-	 * @return string
-	 */
-	function getSortableName($subtag="") {
-		global $pgv_lang;
-		if (!$this->canDisplayDetails()) {
-			if (empty($subtag)) return $pgv_lang["private"];
-			else return "";
-		}
-		if (empty($subtag)) return get_gedcom_value("NAME", 1, $this->gedrec, '', false);
-		else return get_gedcom_value("NAME:".$subtag, 1, $this->gedrec, '', false);
 	}
 
 	/**

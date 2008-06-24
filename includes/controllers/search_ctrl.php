@@ -366,7 +366,7 @@ class SearchControllerRoot extends BaseController {
 			// see if it's an indi ID. If it's found and privacy allows it, JUMP!!!!
 			if (find_person_record($this->query)) {
 				if (showLivingNameByID($this->query) || displayDetailsByID($this->query)) {
-					header("Location: ".encode_url("individual.php?pid={$this->query}&ged={$GEDCOM}"));
+					header("Location: ".encode_url("individual.php?pid={$this->query}&ged={$GEDCOM}", false));
 					exit;
 				}
 			}
@@ -376,7 +376,7 @@ class SearchControllerRoot extends BaseController {
 				if (displayDetailsByID($this->query, "FAM") == true) {
 					$parents = find_parents($this->query);
 					if (showLivingNameByID($parents["HUSB"]) && showLivingNameByID($parents["WIFE"])) {
-						header("Location: ".encode_url("family.php?famid={$this->query}&ged={$GEDCOM}"));
+						header("Location: ".encode_url("family.php?famid={$this->query}&ged={$GEDCOM}", false));
 						exit;
 					}
 				}
@@ -384,7 +384,7 @@ class SearchControllerRoot extends BaseController {
 			// see if it's an source ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
 				if (find_source_record($this->query)) {
-					header("Location: ".encode_url("source.php?sid={$this->query}&ged={$GEDCOM}"));
+					header("Location: ".encode_url("source.php?sid={$this->query}&ged={$GEDCOM}", false));
 					exit;
 				}
 			}
@@ -392,7 +392,7 @@ class SearchControllerRoot extends BaseController {
 			// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
 				if (find_repo_record($this->query)) {
-					header("Location: ".encode_url("repo.php?rid={$this->query}&ged={$GEDCOM}"));
+					header("Location: ".encode_url("repo.php?rid={$this->query}&ged={$GEDCOM}", false));
 					exit;
 				}
 			}
@@ -492,7 +492,7 @@ class SearchControllerRoot extends BaseController {
 						}
 						if (!isset ($assolist[$key])) {
 							if (showLivingNameByID($pid) || displayDetailsByID($pid)) {
-								header("Location: ".encode_url("individual.php?pid={$pid}&ged=".get_gedcom_from_id($indi["gedfile"])));
+								header("Location: ".encode_url("individual.php?pid={$pid}&ged=".get_gedcom_from_id($indi["gedfile"]), false));
 								exit;
 							}
 						}
@@ -516,7 +516,7 @@ class SearchControllerRoot extends BaseController {
 						if (displayDetailsByID($famid, "FAM") == true) {
 							$parents = find_parents($famid);
 							if (showLivingNameByID($parents["HUSB"]) && showLivingNameByID($parents["WIFE"])) {
-								header("Location: ".encode_url("family.php?famid={$famid}&ged={$GEDCOM}"));
+								header("Location: ".encode_url("family.php?famid={$famid}&ged={$GEDCOM}", false));
 								exit;
 							}
 						}
@@ -538,7 +538,7 @@ class SearchControllerRoot extends BaseController {
 							}
 						}
 						if (displayDetailsByID($sid, "SOUR")) {
-							header("Location: ".encode_url("source.php?sid={$sid}&ged=".get_gedcom_from_id($source["gedfile"])));
+							header("Location: ".encode_url("source.php?sid={$sid}&ged=".get_gedcom_from_id($source["gedfile"]), false));
 							exit;
 						}
 						if (count($this->sgeds > 1)) {
@@ -870,7 +870,7 @@ class SearchControllerRoot extends BaseController {
 			$GEDCOM = $this->printname[0][2];
 			include (get_privacy_file());
 			if (showLivingNameByID($this->printname[0][1]) || displayDetailsByID($this->printname[0][1])) {
-				header("Location: ".encode_url("individual.php?pid={$this->printname[0][1]}&ged={$this->printname[0][2]}"));
+				header("Location: ".encode_url("individual.php?pid={$this->printname[0][1]}&ged={$this->printname[0][2]}", false));
 				exit;
 			} else {
 				$GEDCOM = $oldged;

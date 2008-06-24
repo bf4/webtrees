@@ -55,6 +55,8 @@ class GedcomRecord {
 	function GedcomRecord($gedrec, $simple=false) {
 		if (empty($gedrec)) return;
 
+		$this->ged_id=PGV_GED_ID;
+
 		//-- lookup the record from another gedcom
 		$remoterfn = get_gedcom_value("RFN", 1, $gedrec);
 		if (!empty($remoterfn)) {
@@ -245,7 +247,7 @@ class GedcomRecord {
 				}
 			}
 		}
-		return encode_url($url);
+		return $url;
 	}
 	
 	/**
@@ -276,7 +278,7 @@ class GedcomRecord {
 		global $SEARCH_SPIDER;
 		if (empty($SEARCH_SPIDER)) {
 			if ($target) $target = "target=\"".$target."\"";
-			return "<a href=\"".$this->getLinkUrl()."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
+			return "<a href=\"".encode_url($this->getLinkUrl())."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
 		}
 		else
 			return $this->getXref();
@@ -344,7 +346,7 @@ class GedcomRecord {
 			$url .= "&parent[".$i."]=".trim($exp[$level-$i-1]);
 		}
 		$url .= "&ged=".$GEDCOM;
-		return encode_url($url);
+		return $url;
 	}
 
 	/**
@@ -358,16 +360,6 @@ class GedcomRecord {
 		return trim($exp[0]);
 	}
 
-	/**
-	 * get the sortable name
-	 * This method should be overridden in child sub-classes
-	 * (no class yet for NOTE record)
-	 * @return string
-	 */
-	function getSortableName() {
-		return $this->type." ".$this->xref;
-	}
-	
 	/**
 	 * get the name
 	 * This method should overridden in child sub-classes
@@ -397,16 +389,18 @@ class GedcomRecord {
 	// ['full'] = the name as specified in the record, e.g. "Vincent van Gogh" or "John Unknown"
 	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
 	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
-	function getAllNames($fact) {
+	function getAllNames($fact, $level=1) {
 		global $pgv_lang;
 
 		if (is_null($this->_getAllNames)) {
+			$sublevel=$level+1;
+			$subsublevel=$sublevel+1;
 			if ($this->canDisplayName()) {
 				$this->_getAllNames=array();
-				if (preg_match_all('/^1 ('.$fact.') *([^\r\n]*)(([\r\n]+[2-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
+				if (preg_match_all('/^'.$level.' ('.$fact.') *([^\r\n]*)(([\r\n]+['.$sublevel.'-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
 					foreach ($matches as $match) {
 						$this->_addName($match[1], $match[2] ? $match[2] : $this->getFallBackName(), $match[0]);
-						if ($match[3] && preg_match_all('/^2 (ROMN|FONE|_\w+) *([^\r\n]*)(([\r\n]+[3-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
+						if ($match[3] && preg_match_all('/^'.$sublevel.' (ROMN|FONE|_\w+) *([^\r\n]*)(([\r\n]+['.$subsublevel.'-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
 							foreach ($submatches as $submatch) {
 								$this->_addName($submatch[1], $submatch[2] ? $submatch[2] : $this->getFallBackName(), $submatch[0]);
 							}
@@ -417,7 +411,7 @@ class GedcomRecord {
 					$this->_addName($this->getType(), $this->getFallBackName(), null);
 				}
 			} else {
-				$this->_getAllNames[]=array('type'=>$fact, 'full'=>$pgv_lang['private'], 'list'=>$pgv_lang['private'], 'sort'=>'@');
+				$this->_getAllNames[]=array('type'=>$fact, 'full'=>$pgv_lang['private'], 'list'=>$pgv_lang['private'], 'sort'=>'@,@');
 			}
 		}
 		return $this->_getAllNames;
@@ -448,7 +442,7 @@ class GedcomRecord {
 			case 'vietnamese':
 			case 'chinese':
 				foreach ($this->getAllNames() as $n=>$name) {
-					if (whatLanguage($name['full'])==$LANGUAGE) {
+					if ($name['type']!='_MARNM' && whatLanguage($name['full'])==$LANGUAGE) {
 						$this->_getPrimaryName=$n;
 						break;
 					}
@@ -477,7 +471,7 @@ class GedcomRecord {
 			if (count($all_names)>1) {
 				$primary_language=whatLanguage($all_names[$this->getPrimaryName()]['full']);
 				foreach ($all_names as $n=>$name) {
-					if ($n!=$this->getPrimaryName() && whatLanguage($name['full'])!=$primary_language) {
+					if ($n!=$this->getPrimaryName() && $name['type']!='_MARNM' && whatLanguage($name['full'])!=$primary_language) {
 						$this->_getSecondaryName=$n;
 						break;
 					}
@@ -513,6 +507,48 @@ class GedcomRecord {
 		} else {
 			return null;
 		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	// Format this object for display in a list
+	// If $find is set, then we are displaying items from a selection list.
+	//////////////////////////////////////////////////////////////////////////////
+	function format_list($tag='li', $find=false) {
+		global $SHOW_ID_NUMBERS;
+
+		$name=$this->getFullName();
+		$dir=begRTLText($name) ? 'rtl' : 'ltr';
+		if ($find) {
+			$href='javascript:;" onclick="pasteid(\''.$this->getXref().'\'); return false;';
+		} else {
+			$href=encode_url($this->getLinkUrl());
+		}
+		$html='<a href="'.$href.'" class="list_item"><b>'.PrintReady($name).'</b>';
+		if ($SHOW_ID_NUMBERS) {
+			$html.=' '.PGV_LPARENS.$this->getXref().PGV_RPARENS;
+		}
+		$html.=$this->format_list_details();
+		$html='<'.$tag.' class="'.$dir.'" dir="'.$dir.'">'.$html.'</a></'.$tag.'>';
+		return $html;
+	}
+	// This function should be redefined in derived classes to show any major
+	// identifying characteristics of this record.
+	function format_list_details() {
+		return '';
+	}
+
+	// Extract/format the first fact from a list of facts.
+	function format_first_major_fact($facts) {
+		global $factarray;
+		foreach (explode('|', $facts) as $fact) {
+			foreach ($this->getAllEvents($fact) as $factrec) {
+				// Only display if it has a date or place (or both)
+				if (preg_match('/^2 (DATE|PLAC) (.+)/m', $factrec)) {
+					return '<br /><i>'.$factarray[$fact].' '.format_fact_date($factrec).format_fact_place($factrec).'</i>';
+				}
+			}
+		}
+		return '';
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
@@ -586,7 +622,7 @@ class GedcomRecord {
 			$text=strip_tags($d->Display(false, "{$DATE_FORMAT}", array()));
 		}
 		if ($add_url)
-			$text='<a name="'.$sort.'" href="'.$this->getLinkUrl().'">'.$text.'</a>';
+			$text='<a name="'.$sort.'" href="'.encode_url($this->getLinkUrl()).'">'.$text.'</a>';
 		return $text;
 	}
 

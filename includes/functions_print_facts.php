@@ -653,7 +653,7 @@ function print_media_links($factrec, $level,$pid='') {
 					//LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 						$name = trim($row["m_titl"]);
-							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady($name) . "\">" . "\n";
+							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
 					}elseif ($USE_MEDIA_VIEWER) {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
@@ -1465,7 +1465,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$menu["icon"] = "";
 		$menu["link"] = "#";
 		// $menu["onclick"] = "return edit_record('$pid', $linenum);";
-		$menu["onclick"] = "return window.open('".encode_url("addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		$menu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$menu["class"] = "";
 		$menu["hoverclass"] = "";
 		$menu["flyout"] = "down";
@@ -1475,7 +1475,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$submenu["label"] = $pgv_lang["edit"];
 		$submenu["labelpos"] = "right";
 		$submenu["icon"] = "";
-		$submenu["onclick"] = "return window.open('".encode_url("addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$submenu["link"] = "#";
 		$submenu["class"] = "submenuitem";
 		$submenu["hoverclass"] = "submenuitem_hover";
@@ -1485,7 +1485,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$submenu["labelpos"] = "right";
 		$submenu["icon"] = "";
 		$submenu["onclick"] = "return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');";
-		//$submenu["onclick"] = "return window.open('".encode_url("addmedia.php?action=delete&pid={$rowm['m_media']}")."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		//$submenu["onclick"] = "return window.open('addmedia.php?action=delete&pid={$rowm['m_media']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$submenu["link"] = "#";
 		$submenu["class"] = "submenuitem";
 		$submenu["hoverclass"] = "submenuitem_hover";
@@ -1521,7 +1521,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 					$name = trim($rowm["m_titl"]);
-					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady($name) . "\">" . "\n";
+					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";

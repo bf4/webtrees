@@ -34,6 +34,10 @@ occur in the respective language files.
 VERSION 4.1.6
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["lb_balloon_true"]						18 Jun 2008				A
++$pgv_lang["lb_balloon_false"]						18 Jun 2008				A
++$pgv_lang["lb_tt_balloon"]							18 Jun 2008				A
++$pgv_lang["lb_ttAppearance"]						18 Jun 2008				A
 +$pgv_lang["view_lightbox"]							15 Jun 2008				A
 +$pgv_lang["lb_notes"]								11 Jun 2008				A
 +$pgv_lang["lb_notes_info"]							11 Jun 2008				A
