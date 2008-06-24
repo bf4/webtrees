@@ -112,6 +112,7 @@ $pgv_lang["pl_neighborhood"]        	= "שכונה";
 $pgv_lang["pl_house"]               	= "בית";
 $pgv_lang["pl_max"]                 	= "מכסימלי";
 $pgv_lang["pl_delete"]              	= "מחק מקום גיאוגרפי"; 
+$pgv_lang["pl_unknown"]		= "לא ידוע"; 
 $pgv_lang["pl_flag"]                		= "דגל";
 $pgv_lang["pl_search_level"]		= "חפש ברמה זו";
 $pgv_lang["pl_search_all"]		= "חפש הכל"; 
