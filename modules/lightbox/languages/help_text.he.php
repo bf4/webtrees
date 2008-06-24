@@ -32,7 +32,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "אין לך גישה ישירה לקובץ השפות.";
 	exit;
 }
+// Added in VERSION 4.1.6
+$pgv_lang["lb_tt_balloonLegend"]	= "תמונה ממוזערת של חוצץ האלבום - Tooltip של הקישורים העליונים"; 
+$pgv_lang["lb_tt_balloon_help"]	= "~#pgv_lang[lb_tt_balloonLegend]#~<br />האופציה מאפשרת לקבוע אם הקישורים מעל לכל תמונה ממוזערת יראו Tooltip \"בלון\" או Tooltip \"רגיל \" כאשר לוחצים עליו. <br /><br />הקישורים המוצגים כאן מראים את ההערות הקשורות לישות מדיה או הקישורים לפירוט ומקור של ישות המדיה (אם קיימים).<br />"; 
 
+// VERSION 4.1.3 
 $pgv_lang["mediatabLegend"]		= "הופעת חוצץ מדיה";
 $pgv_lang["mediatab_help"]		= "~#pgv_lang[mediatabLegend]#~<br />הבחירה מאפשרת לך לקבוע אם להראות את חוצץ המדיה על דף #pgv_lang[indi_info]#.<br /><br />כאשר הערך הוא <b>#pgv_lang[hide]#</b>, מראים רק את החוצץ <b>#pgv_lang[lightbox]#</b>, והוא יקרא גם כן <b>#pgv_lang[media]#</b>.<br />";
 $pgv_lang["lb_al_head_linksLegend"]	= "הופעת קישור חוצץ כותרת של אלבום";

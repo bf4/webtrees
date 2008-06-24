@@ -32,9 +32,17 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "אין לך גישה ישירה לקובץ השפות.";
 	exit;
 }
+// Added in VERSION 4.1.6
+$pgv_lang["lb_balloon_true"]		= "בלון";
+$pgv_lang["lb_balloon_false"]		= "רגיל"; 
+$pgv_lang["lb_tt_balloon"]		= "דף אישי - חוצץ אלבום תמונה ממוזערת - Tooltip של קישורים עליונים"; 
+$pgv_lang["lb_ttAppearance"]		= "קישורים עליונים - הופעת Tooltip"; 
+$pgv_lang["view_lightbox"]		= "ראה אלבום של ...";
+$pgv_lang["lb_notes"]			= "הערות";
+$pgv_lang["lb_notes_info"]		= "";
+
 
 // Added in VERSION 4.1.4 
-
 $pgv_lang["lb_details"]			= "פירוטים"; 
 $pgv_lang["lb_detail_info"]			= " ראה את פירוטי ישות מדיה זו ... ואופציות מדיה נוספות - דף מציג מדיה";
 $pgv_lang["lb_pause_ss"]			= "הפסק מצגת שקפים"; 
