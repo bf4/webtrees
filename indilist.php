@@ -112,7 +112,7 @@ if ($show_all=='yes') {
 }
 
 // Don't sublists short lists.
-if (count($indis)<100) {
+if (count($indis)<$SUBLIST_TRIGGER_I) {
 	$falpha='';
 	$show_all_firstnames='no';
 }
@@ -248,7 +248,7 @@ if ($surname_sublist=='yes') {
 	uasort($givn_initials, 'stringsort');
 
 	// Break long lists by initial letter of given name
-	if (count($indis)>100) {
+	if (count($indis)>$SUBLIST_TRIGGER_I) {
 		if (!$falpha && $show_all_firstnames=='no') {
 			// If we didn't specify initial or all, filter by the first initial
 			$falpha=reset($givn_initials);
