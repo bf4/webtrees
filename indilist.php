@@ -64,6 +64,19 @@ if (! $initials) {
 	$initials[]='@';
 }
 
+// Decide which initial letter to show by default - if the user hasn't
+// specified.  Use the one in the same character set as the page language
+function default_initial($initials) {
+	global $pgv_lang;
+	$page_language=whatLanguage($pgv_lang['mother']); // Pick any text
+	foreach ($initials as $initial) {
+		if (whatLanguage($initial)==$page_language) {
+			return $initial;
+		}
+	}
+	return reset($initials);
+}
+
 // Fetch the list of indis, and make sure selections are consistent.
 // i.e. can't specify show_all and surname at the same time.
 if ($show_all=='yes') {
@@ -93,7 +106,7 @@ if ($show_all=='yes') {
 } else {
 	// Can only select initial letters that are actually used.
 	if (! in_array($alpha, $initials)) {
-		$alpha=reset($initials);
+		$alpha=default_initial($initials);
 	}
 	$show_all='no';
 	$surname='';
@@ -251,7 +264,7 @@ if ($surname_sublist=='yes') {
 	if (count($indis)>$SUBLIST_TRIGGER_I) {
 		if (!$falpha && $show_all_firstnames=='no') {
 			// If we didn't specify initial or all, filter by the first initial
-			$falpha=reset($givn_initials);
+			$falpha=default_initial($givn_initials);
 			$legend.=', '.$falpha;
 			foreach ($individuals as $key=>$value) {
 				if (strpos($value['name'], ','.$falpha)===false) {
