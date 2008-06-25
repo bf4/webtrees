@@ -1,6 +1,6 @@
 <?php
 /**
- * Lightbox Album module for phpGedView
+ * Polish language file for Lightbox Album module
  *
  * Display media Items using Lightbox
  *
@@ -34,17 +34,23 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 // Added in VERSION 4.1.6
+$pgv_lang["lb_viewedit"]		= "Zobacz/Edytuj";
+$pgv_lang["lb_viewnotes"]		= "Zobacz notatki";
+$pgv_lang["lb_viewdetails"]		= "Zobacz szczegóły";
+$pgv_lang["lb_viewsource"]		= "Zobacz źródło";
+$pgv_lang["lb_editmedia"]		= "Edytuj multimedia";
+$pgv_lang["lb_unlinkmedia"]		= "Skasuj odnośniki";
 $pgv_lang["lb_balloon_true"]	= "Dymek";
 $pgv_lang["lb_balloon_false"]	= "Normalne";
-$pgv_lang["lb_tt_balloon"]		= "Strona informacji o osobie - Album - Miniaturki - Okienko szczegółów";
-$pgv_lang["lb_ttAppearance"]	= "Wygląd okienka szczegółów/notatek";
+$pgv_lang["lb_tt_balloon"]		= "Strona informacji o osobie - Album - Miniaturki - Okienko notatek";
+$pgv_lang["lb_ttAppearance"]	= "Wygląd okienka notatek";
 $pgv_lang["view_lightbox"]		= "Zobacz Album ...";
 $pgv_lang["lb_notes"]			= "Notatki";
 $pgv_lang["lb_notes_info"]		= "";
 
 
 // Added in VERSION 4.1.4 
-
+$pgv_lang["lb_generalhelp"]     = "Strona informacji o osobie - Pomoc Ogólna - Lightbox";
 $pgv_lang["lb_details"]			= "Szczegóły";
 $pgv_lang["lb_detail_info"]		= "Pokaż szczegóły - Strona przeglądarki multimediów";
 $pgv_lang["lb_pause_ss"]		= "Pauza";
