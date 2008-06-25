@@ -1546,17 +1546,20 @@ class stats {
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
 		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
 
-		if(is_array($params) && isset($params[0]) && $params[0] != ''){$threshold = strtolower($params[0]);}else{$threshold = 1;}
-		if(is_array($params) && isset($params[1]) && $params[1] != ''){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = 10;}
-		if(is_array($params) && isset($params[2]) && $params[2] != ''){$sorting = strtolower($params[2]);}else{$sorting = 'rcount';}
-		// sanity check
-		if ($threshold<1) $threshold = 1;
-		if ($maxtoshow<1) $maxtoshow = 10;
-		if (!isset($sort_types[$sorting])) $sorting = 'rcount';
+		if(is_array($params) && isset($params[0]) && $params[0] != '' && $params[0] >= 0){$threshold = strtolower($params[0]);}else{$threshold = 1;}
+		if(is_array($params) && isset($params[1]) && $params[1] != '' && $params[1] >= 0){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = 10;}
+		if(is_array($params) && isset($params[2]) && $params[2] != '' && isset($sort_types[strtolower($params[2])])){$sorting = strtolower($params[2]);}else{$sorting = 'rcount';}
 
 		//-- cache the result in the session so that subsequent calls do not have to
 		//-- perform the calculation all over again.
-		if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false))) {
+		//if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false))) {
+		if(
+			isset($_SESSION['first_names_f'][$GEDCOM]) &&
+			isset($_SESSION['first_names_m'][$GEDCOM]) &&
+			isset($_SESSION['first_names_u'][$GEDCOM]) &&
+			(!isset($DEBUG) ||
+			($DEBUG == false))
+		) {
 			$name_list_f = $_SESSION['first_names_f'][$GEDCOM];
 			$name_list_m = $_SESSION['first_names_m'][$GEDCOM];
 			$name_list_u = $_SESSION["first_names_u"][$GEDCOM];
@@ -1815,14 +1818,14 @@ class stats {
 	{
 		global $DATE_FORMAT, $TIME_FORMAT, $pgv_lang;
 		static $user = null;
-		
+
 		if($user === null)
 		{
 			$users = get_all_users('DESC', 'reg_timestamp', 'username');
 			$user = array_shift($users);
 			unset($users);
 		}
-		
+
 		switch($type)
 		{
 			default:
