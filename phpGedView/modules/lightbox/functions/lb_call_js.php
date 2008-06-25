@@ -43,24 +43,24 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 			?>
 			<script language="javascript" type="text/javascript">
 			
-			var CB_ImgDetails		= "<?php print $pgv_lang["lb_details"];							?>";		// = "Details"
-			var CB_Detail_Info		= "<?php print $pgv_lang["lb_detail_info"];						?>";		// = "View this Media Item......etc"
-			var CB_ImgNotes			= "<?php print $pgv_lang["notes"];								?>";		// = "Notes" 
-			var CB_Note_Info		= "<?php print $pgv_lang["lb_notes_info"];						?>";		// = ""
-			var CB_Pause_SS			= "<?php print $pgv_lang["lb_pause_ss"]; 						?>";		// = "Pause Slideshow"
-			var CB_Start_SS			= "<?php print $pgv_lang["lb_start_ss"]; 						?>";		// = "Start Slideshow"
-			var CB_Music			= "<?php print $pgv_lang["lb_music"];							?>";		// = "Music On/Off "
-			var CB_Zoom_Off			= "<?php print $pgv_lang["lb_zoom_off"];						?>";		// = "Disable Zoom"
-			var CB_Zoom_On			= "<?php print $pgv_lang["lb_zoom_on"];							?>";		// = "Zoom is Enabled"	
-			var CB_Close_Win		= "<?php print $pgv_lang["lb_close_win"];						?>";		// = "Close Lightbox Window"
-			var CB_Balloon			= "<?php print "false";											?>";		// Notes Tooltip Balloon or not
+			var CB_ImgDetails		= "<?php print $pgv_lang["lb_details"];			?>";		// = "Details"
+			var CB_Detail_Info		= "<?php print $pgv_lang["lb_detail_info"];		?>";		// = "View this Media Item......etc"
+			var CB_ImgNotes			= "<?php print $pgv_lang["notes"];				?>";		// = "Notes" 
+			var CB_Note_Info		= "<?php print $pgv_lang["lb_notes_info"];		?>";		// = ""
+			var CB_Pause_SS			= "<?php print $pgv_lang["lb_pause_ss"]; 		?>";		// = "Pause Slideshow"
+			var CB_Start_SS			= "<?php print $pgv_lang["lb_start_ss"]; 		?>";		// = "Start Slideshow"
+			var CB_Music			= "<?php print $pgv_lang["lb_music"];			?>";		// = "Music On/Off "
+			var CB_Zoom_Off			= "<?php print $pgv_lang["lb_zoom_off"];		?>";		// = "Disable Zoom"
+			var CB_Zoom_On			= "<?php print $pgv_lang["lb_zoom_on"];			?>";		// = "Zoom is Enabled"	
+			var CB_Close_Win		= "<?php print $pgv_lang["lb_close_win"];		?>";		// = "Close Lightbox Window"
+			var CB_Balloon			= "<?php print "false";							?>";		// Notes Tooltip Balloon or not
 			
 			<?php if ($TEXT_DIRECTION=="rtl") { ?> 
-				var CB_Alignm		= "<?php print "right";											?>";		// Notes RTL Tooltip Balloon Text align 
-				var CB_ImgNotes2	= "<?php print "&nbsp;&nbsp;&nbsp;&nbsp;".$pgv_lang["notes"];?>";		// Notes RTL Tooltip for Full Image
+				var CB_Alignm		= "<?php print "right";							?>";		// Notes RTL Tooltip Balloon Text align 
+				var CB_ImgNotes2	= "<?php print $pgv_lang["notes"];				?>";		// Notes RTL Tooltip for Full Image
 			<?php }else{ ?>
-				var CB_Alignm		= "<?php print "left";											?>";		// Notes LTR Tooltip Balloon Text align 
-				var CB_ImgNotes2	= "<?php print $pgv_lang["notes"];							?>";		// Notes LTR Tooltip for Full Image
+				var CB_Alignm		= "<?php print "left";							?>";		// Notes LTR Tooltip Balloon Text align 
+				var CB_ImgNotes2	= "<?php print $pgv_lang["notes"];				?>";		// Notes LTR Tooltip for Full Image
 			<?php }?>
 			
 			<?php if ($LB_MUSIC_FILE == "") { ?>

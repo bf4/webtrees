@@ -613,23 +613,12 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 
-		// The following is temporary, until the handling of the Lightbox Help system
-		// is adjusted to match the usual PhpGedView practice
-		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
-		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
-
 		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		print "&nbsp;&nbsp;";
 
 		// ---------- Help link --------------------
-		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
-		if ($theme_name=="Minimal") {
-			// Force icon options to "text" when we're dealing with the Minimal theme
-			print $pgv_lang["page_help"];
-		}else{
-			print "<img src=\"{$PGV_IMAGE_DIR}/small/help.gif\" class=\"icon\" title=\"{$pgv_lang['page_help']}\" alt=\"{$pgv_lang['page_help']}\" />" ;
-		}
-        print "</a>" ;
+		print_help_link("lb_general_help", "qm", "lb_help", true);
+		
 
 		// Header info ---------------------------------------------------
 		$mediacnt = $controller->get_media_count();

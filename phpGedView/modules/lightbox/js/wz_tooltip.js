@@ -106,6 +106,19 @@ config. Width			= 0 		// Tooltip width; 0 for automatic adaption to tooltip cont
 
 
 //=====================  PUBLIC  =============================================//
+var CB_tt="";
+function TipTog()
+{
+	if (CB_tt!="open") {
+		tt_Tip(arguments, null);
+		CB_tt="open";
+	}else{
+		tt_HideInit();
+		CB_tt="closed";
+	}
+}
+
+
 function Tip()
 {
 	tt_Tip(arguments, null);
@@ -195,6 +208,7 @@ function tt_Hide()
 		tt_tHide.EndTimer();
 		tt_tDurt.EndTimer();
 		tt_tFade.EndTimer();
+	CB_tt="closed";
 		if(!tt_op && !tt_ie)
 		{
 			tt_tWaitMov.EndTimer();
@@ -1039,10 +1053,13 @@ function tt_Pos(iDim)
 	// Prevent tip from extending past clientarea boundary
 	if(iX > iMax)
 		iX = bJmpMode ? tt_PosAlt(iDim) : iMax;
+		
 	// In case of insufficient space on both sides, ensure the left/upper part
 	// of the tip be visible
-	if(iX < iScrl)
-		iX = bJmpMode ? tt_PosDef(iDim) : iScrl;
+//BH changed following line to correct HORZ JUMP
+	if(iX < (iScrl-OFFSETY))
+		// iX = bJmpMode ? tt_PosDef(iDim) : iScrl;
+		iX = (bJmpMode ? tt_PosDef(iDim) : iScrl)-(OFFSETY*9);
 	return iX;
 }
 function tt_PosDef(iDim)

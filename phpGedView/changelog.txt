@@ -10,6 +10,10 @@
 
 
 Version 4.1.6
+ - Changed: Album Page: (windmillway) 
+		1) Lightbox General Help Text now in line with PGV norms. (lang variable is also split for easier editing)
+		2) Tidy up thumbnail area - Added drop-down menu to replace links above and below thumbnail.
+		3) Made "View Notes" link a "toggle Show"/"toggle Hide" item on thumbnails and enlarged Lightbox images.
  - Fixed: [ 1677025 ] Search Results Sorttable List - Main name (fisharebest)
  - Fixed: [ 1166561 ] Undefined Indis in Indi-/Fam-List (fisharebest)
  - Fixed: [ 1998767 ] Google analytics error on Google place check (fisharebest)
