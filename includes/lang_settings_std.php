@@ -342,7 +342,7 @@ $language_settings['polish']=array(
 'ALPHABET_upper'=>'AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŹŻ',
 'ALPHABET_lower'=>'aąbcćdeęfghijklłmnńoópqrsśtuvwxyzźż',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>false
 );
 
 //-- settings for portuguese-br
