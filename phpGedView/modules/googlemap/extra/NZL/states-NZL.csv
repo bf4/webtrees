@@ -1,19 +1,18 @@
-Level;Country;State;Place;void;Longitude;Latitude;ZoomLevel;Icon
-
-1;New Zealand;Northland;;;174.3333333;-35.7333333;6;
-1;New Zealand;Wellington;;;174.7666667;-41.2833333;6;
-1;New Zealand;Manawatu-Wanganui;;;175.0166667;-39.95;6;
-1;New Zealand;Waikato;;;175.3333333;-37.5;6;
-1;New Zealand;Taranaki;;;174.6666667;-39.1666667;6;
-1;New Zealand;Southland;;;16;-45.6666667;6;
-1;New Zealand;Bay of Plenty;;;175.5;-38;6;
-1;New Zealand;Marlborough;;;173.5;-41.6666667;6;
-1;New Zealand;Hawkes Bay;;;176.5;-39.6666667;6;
-1;New Zealand;East Cape;;;178;-38.65;6;
-1;New Zealand;Canterbury;;;171.5;-43.5;6;
-1;New Zealand;Auckland;;;174.7833333;-36.85;6;
-1;New Zealand;Chatham Islands;;;-176.5;-44;6;
-1;New Zealand;Nelson;;;173.282461166382;-41.2705816805255;6;
-1;New Zealand;Otago;;;170.511074066162;-45.8844519284878;6
-1;New Zealand;West Coast;;;171.220808029175;-42.4565842202113;6
-1;New Zealand;Tasman;;;173.014722;-41.123333;6
+Level;Country;State;County;Place;Longitude;Latitude;ZoomLevel;Icon
+1;New Zealand;Auckland;;;E174.7833333;S36.85;6;
+1;New Zealand;Bay of Plenty;;;E175.5;S38;6;
+1;New Zealand;Canterbury;;;E171.5;S43.5;6;
+1;New Zealand;Chatham Islands;;;W176.5;S44;6;
+1;New Zealand;East Cape;;;E178;S38.65;6;
+1;New Zealand;Hawkes Bay;;;E176.5;S39.6666667;6;
+1;New Zealand;Manawatu-Wanganui;;;E175.0166667;S39.95;6;
+1;New Zealand;Marlborough;;;E173.5;S41.6666667;6;
+1;New Zealand;Nelson;;;E173.28246116638;S41.270581680526;6;
+1;New Zealand;Northland;;;E174.3333333;S35.7333333;6;
+1;New Zealand;Otago;;;E170.51107406616;S45.884451928488;6;
+1;New Zealand;Southland;;;E16;S45.6666667;6;
+1;New Zealand;Taranaki;;;E174.6666667;S39.1666667;6;
+1;New Zealand;Tasman;;;E173.014722;S41.123333;6;
+1;New Zealand;Waikato;;;E175.3333333;S37.5;6;
+1;New Zealand;Wellington;;;E174.7666667;S41.2833333;6
+1;New Zealand;West Coast;;;E171.22080802918;S42.456584220211;6
