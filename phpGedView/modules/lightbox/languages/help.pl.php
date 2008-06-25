@@ -1,11 +1,11 @@
 <?php
 /**
- * Lightbox Album module for phpGedView
+ * Polish language file for Lightbox Album module
  *
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id:
- * @author Łukasz Wileński
+ * @author Łukasz Wileński <wooc@users.sourceforge.net>
+ * @version $Id$
  */
 
 
@@ -34,21 +34,21 @@ echo "<ol> ";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Oglądanie obrazów</font></b><br />";
-echo "Kliknij na miniaturkę. Tytuł obrazu będzie widoczny na dole wyświetlanego obrazu. ";
+echo "Kliknij na miniaturkę. Tytuł obrazu będzie widoczny nad wyświetlanym obrazem.";
 echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Powiększenie</font></b><br />" ;
 echo "Ważne: Pokaz slajdów musi być wyłączony aby była dostępna ikona powiększenia.<br />";
 echo "<b> Włącz powiększenie: </b><br />";
-echo "Jeśli jest widoczny zielony znak plusa w prawym dolnym rogu obrazka, powiększenie jest dostępne. Użyj rolki myszki aby zamieniać rozmiar obrazka. (Lub użyj klawiszy <b>I</b> and <b>O</b>) Ikona się zmieni na czerwony minus.<br /> ";
+echo "Jeśli jest widoczny zielony znak plusa w prawym dolnym rogu obrazka, powiększenie jest dostępne. Użyj rolki myszki aby zamieniać rozmiar obrazka. (Lub użyj klawiszy <b>I</b> oraz <b>O</b>) Ikona się zmieni na czerwony minus.<br /> ";
 echo "Jeśli rozmiar powiększonego obrazu jest większy niż rozmiar strony, użyj strzałek aby przesuwać obraz.<br />";
 echo "<b> Wyłącz powiększenie: </b><br />";
 echo "Kliknij na czerwony znak minusa w prawym dolnym rogu aby powrócić do normalnego widoku. (Lub użyj klawisza <b>Z</b>)";
 echo "<br /><br /></li>";
 
 echo "<li>";
-echo "<b><font color=\"blue\">Zamknij obraz </font></b><br />";
+echo "<b><font color=\"blue\">Zamknij obraz</font></b><br />";
 echo "Kliknij na czerwony X w prawym dolnym rogu.";
 echo "<br /><br /></li>";
 
@@ -59,7 +59,7 @@ echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Przejście do innego obrazu w Albumie</font></b><br />";
-echo "Kiedy kursor myszki jest w górnej części obrazu i jeśli powiększenie jest wyłączone, galeria miniaturek jest dostępna. Jeśli to konieczne przesuń kursor myszki w lewo lub w prawo by zoboaczyć kolejne cześci galerii. Kliknij na wybraną miniaturkę aby zobaczyć obraz. Działa również podczas pokazu slajdów";
+echo "Kiedy kursor myszki jest w górnej części obrazu i jeśli powiększenie jest wyłączone, będzie dostępna galeria miniaturek. Jeśli to konieczne przesuń kursor myszki w lewo lub w prawo by zobaczyć kolejne cześci galerii. Kliknij na wybraną miniaturkę aby zobaczyć obraz. Działa również podczas pokazu slajdów.";
 echo "<br /><br /></li>";
 
 echo "<li>";
