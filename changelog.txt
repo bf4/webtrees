@@ -10,6 +10,11 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1985733 ] 3215 Unrecognized GEDCOM Code (fisharebest)
+ - Fixed: [ 1675790 ] Individual List - Duplicates - Omissions (fisharebest)
+ - Fixed: [ 1675691 ] Highlighted names with special characters - unprintable (fisharebest)
+ - Fixed: [ 1984020 ] Placelist Indi Count Issue (fisharebest)
+ - Fixed: [ 1952481 ] Special Unknown Names do not print OK (fisharebest)
  - Fixed: [ 1941667 ] SVN 2840 4.1.5 ... TITLE shows living people (fisharebest)
  - Fixed: [ 1849075 ] SVN2416 ... indilist sums incorrectly (fisharebest)
  - Fixed: [ 1967411 ] INDI sorting issue, latest SVN (fisharebest)
