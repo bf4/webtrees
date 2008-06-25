@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1731593 ] Name twice in Individual and Family lists (fisharebest)
  - Fixed: [ 1985733 ] 3215 Unrecognized GEDCOM Code (fisharebest)
  - Fixed: [ 1675790 ] Individual List - Duplicates - Omissions (fisharebest)
  - Fixed: [ 1675691 ] Highlighted names with special characters - unprintable (fisharebest)
