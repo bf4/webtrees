@@ -10,6 +10,8 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1677025 ] Search Results Sorttable List - Main name (fisharebest)
+ - Fixed: [ 1166561 ] Undefined Indis in Indi-/Fam-List (fisharebest)
  - Fixed: [ 1998767 ] Google analytics error on Google place check (fisharebest)
  - Fixed: [ 1731593 ] Name twice in Individual and Family lists (fisharebest)
  - Fixed: [ 1985733 ] 3215 Unrecognized GEDCOM Code (fisharebest)
