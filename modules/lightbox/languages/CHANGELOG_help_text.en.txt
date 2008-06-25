@@ -32,9 +32,42 @@ occur in the respective language files.
 
 
 // Added in VERSION 4.1.6
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
++$pgv_lang["lb_generalLegend"]						24 Jun 2008				A
++$pgv_lang["lb_general_help"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help1"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help1a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help1b"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help1c"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help1d"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help2"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help2a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help3"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help3a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help3b"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help3c"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help4"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help4a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help5"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help5a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help6"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help6a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help7"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help7a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help8"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help8a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help9"] 						24 Jun 2008				A 
++$pgv_lang["lb_general_help9a"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help10"] 					24 Jun 2008				A 
++$pgv_lang["lb_general_help10a"] 					24 Jun 2008				A 
 
-*$pgv_lang["lb_tt_balloonLegend"]					26 Oct 2007				A
-*$pgv_lang["lb_tt_balloon_help"]					26 Oct 2007				A
+*$pgv_lang["lb_tt_balloonLegend"]					24 Jun 2008				w
+*$pgv_lang["lb_tt_balloon_help"]					24 Jun 2008				w
+
++$pgv_lang["lb_tt_balloonLegend"]					18 Jun 2008				A
++$pgv_lang["lb_tt_balloon_help"]					18 Jun 2008				A
+
 
 
 VERSION 4.1.3

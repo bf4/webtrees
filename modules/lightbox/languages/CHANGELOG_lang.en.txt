@@ -34,6 +34,14 @@ occur in the respective language files.
 VERSION 4.1.6
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["lb_view_notes"]							24 Jun 2008				A
++$pgv_lang["lb_view_details"]						24 Jun 2008				A
++$pgv_lang["lb_view_source"]						24 Jun 2008				A
++$pgv_lang["lb_edit_media"]							24 Jun 2008				A
++$pgv_lang["lb_unlink_media"]						24 Jun 2008				A
+*$pgv_lang["lb_tt_balloon"]							24 Jun 2008				w
+*$pgv_lang["lb_ttAppearance"]						24 Jun 2008				w
+
 +$pgv_lang["lb_balloon_true"]						18 Jun 2008				A
 +$pgv_lang["lb_balloon_false"]						18 Jun 2008				A
 +$pgv_lang["lb_tt_balloon"]							18 Jun 2008				A
@@ -46,7 +54,6 @@ VERSION 4.1.6
 
 
 VERSION 4.1.4
-
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
 +$pgv_lang["lb_details"]							21 Nov 2007				A
@@ -114,6 +121,10 @@ VERSION 4.1.2
 +$pgv_lang["lb_none"]								08 Oct 2007				A
 +$pgv_lang["lb_al_head_links"]						08 Oct 2007				A
 +$pgv_lang["lb_al_thumb_links"]						08 Oct 2007				A
++$pgv_lang["lb_ml_thumb_links"]						08 Oct 2007				A
++$pgv_lang["lb_music_file"]							08 Oct 2007				A
++$pgv_lang["lb_ss_speed"]							08 Oct 2007				A
+ct 2007				A
 +$pgv_lang["lb_ml_thumb_links"]						08 Oct 2007				A
 +$pgv_lang["lb_music_file"]							08 Oct 2007				A
 +$pgv_lang["lb_ss_speed"]							08 Oct 2007				A
