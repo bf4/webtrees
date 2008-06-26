@@ -52,7 +52,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	
 	//-- cache the result in the session so that subsequent calls do not have to
 	//-- perform the calculation all over again.
-	if (isset($_SESSION["first_names_f"][$GEDCOM])&&(!isset($DEBUG)||($DEBUG==false))) {
+	if (isset($_SESSION["first_names_f"][$GEDCOM]) && isset($_SESSION["first_names_m"][$GEDCOM]) && isset($_SESSION["first_names_u"][$GEDCOM]) && (!isset($DEBUG)||($DEBUG==false))) {
 		$name_list_f = $_SESSION["first_names_f"][$GEDCOM];
 		$name_list_m = $_SESSION["first_names_m"][$GEDCOM];
 		$name_list_u = $_SESSION["first_names_u"][$GEDCOM];
