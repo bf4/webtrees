@@ -34,6 +34,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 // Added in VERSION 4.1.6
+$pgv_lang["lb_generalhelp"]     = "Strona informacji o osobie - Pomoc Ogólna - Lightbox";
 $pgv_lang["lb_viewedit"]		= "Zobacz/Edytuj";
 $pgv_lang["lb_viewnotes"]		= "Zobacz notatki";
 $pgv_lang["lb_viewdetails"]		= "Zobacz szczegóły";
@@ -50,7 +51,6 @@ $pgv_lang["lb_notes_info"]		= "";
 
 
 // Added in VERSION 4.1.4 
-$pgv_lang["lb_generalhelp"]     = "Strona informacji o osobie - Pomoc Ogólna - Lightbox";
 $pgv_lang["lb_details"]			= "Szczegóły";
 $pgv_lang["lb_detail_info"]		= "Pokaż szczegóły - Strona przeglądarki multimediów";
 $pgv_lang["lb_pause_ss"]		= "Pauza";
