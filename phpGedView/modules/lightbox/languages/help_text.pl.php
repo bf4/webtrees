@@ -36,96 +36,17 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 // Added in VERSION 4.1.6
 // Lightbox general help file  ---------------------------------------------------------------------------------------------------------
 $pgv_lang["lb_generalLegend"]		 = "Album Lightbox - Pomoc Ogólna";
-
-$pgv_lang["lb_general_help"]		 = "~#pgv_lang[lb_generalLegend]#~";
-$pgv_lang["lb_general_help"]		.= "<br /><br />";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help1]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help1a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help1b]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help1c]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help1d]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help2]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help2a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help3]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help3a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help3b]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help3c]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help4]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help4a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help5]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help5a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help6]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help6a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help7]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help7a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help8]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help8a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help9]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help9a]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help10]#";
-$pgv_lang["lb_general_help"]		.= "#pgv_lang[lb_general_help10a]#";
-
-$pgv_lang["lb_general_help1"]		 = "<br />~1 - Oglądanie notatek lub szczegółów powiązanych z obrazem~<br />";
-$pgv_lang["lb_general_help1a"]		 = "<b>Rozwijane menu:</b><br />";
-$pgv_lang["lb_general_help1a"]		.= "Najedź kursorem na link \"Zobacz\" poniżej miniaturki a rozwinie się menu.";
-$pgv_lang["lb_general_help1a"]		.= "Dostępne opcje: \"Zobacz notatki\" (jeśli jakieś są dostępne), \"Zobacz szczegóły\" (domyślne) oraz \"Zobacz źródło\" (jeśli jesteś zalogowany i źródło jest dostępne).";
-$pgv_lang["lb_general_help1a"]		.= "<br />";
-$pgv_lang["lb_general_help1b"]		 = "<br /><b>Wyświetlanie:</b>";
-$pgv_lang["lb_general_help1b"]		.= "<br />Klikając \"Zobacz notatki\" zostanie wyświetlony dymek lub okienko z notatkami. Kliknij ponownie by je wyłączyć. ";
-$pgv_lang["lb_general_help1b"]		.= "<br />Klikając \"Zobacz szczegóły\" zostaniesz przeniesiony do strony przeglądarki multimediów, natomiast \"Zobacz źródło\" przenosi (jeśli jesteś zalogowany) do strony źródła";
-$pgv_lang["lb_general_help1b"]		.= "<br />";
-$pgv_lang["lb_general_help1c"]		 = "<br /><b>Edytowanie:</b>";
-$pgv_lang["lb_general_help1c"]		.= "<br />(Dostępna jest opcja \"Edytuj\" dla użytkowników z uprawnieniami edytorskimi)";
-$pgv_lang["lb_general_help1c"]		.= "<br />";
-$pgv_lang["lb_general_help1d"]		 = "<br /><b>Otwarty obraz:</b>";
-$pgv_lang["lb_general_help1d"]		.= "<br />Podczas oglądania obrazu ikony Zobacz notatki i Zobacz szczegóły działają na takiej samej zasadzie.";
-$pgv_lang["lb_general_help1d"]		.= "<br />";
-
-$pgv_lang["lb_general_help2"]		 = "<br />~2 - Oglądanie obrazów~<br />";
-$pgv_lang["lb_general_help2a"]		 = "Kliknij na miniaturkę. Tytuł obrazu będzie widoczny nad wyświetlanym obrazem.";
-$pgv_lang["lb_general_help2a"]		.= "<br />";
-
-$pgv_lang["lb_general_help3"]		 = "<br />~3 - Używanie powiększenia~<br />";
-$pgv_lang["lb_general_help3a"]		 = "<b>WAŻNE:</b><br />";
-$pgv_lang["lb_general_help3a"]		.= " Pokaz slajdów musi być wyłączony aby była dostępna ikona powiększenia.";
-$pgv_lang["lb_general_help3a"]		.= "<br />";
-$pgv_lang["lb_general_help3b"]		 = "<br /><b>Włącz powiększenie:</b><br />";
-$pgv_lang["lb_general_help3b"]		.= "Jeśli jest widoczny zielony znak plusa w prawym dolnym rogu obrazka, powiększenie jest dostępne. Użyj rolki myszki aby zamieniać rozmiar obrazka, lub użyj klawiszy \"I\" oraz \"O\". Ikona zielonego plusa się zmieni na czerwony minus.";
-$pgv_lang["lb_general_help3b"]		.= "<br />";
-$pgv_lang["lb_general_help3b"]		.= "Jeśli rozmiar powiększonego obrazu jest większy niż rozmiar strony, użyj strzałek aby przesuwać obraz.";
-$pgv_lang["lb_general_help3b"]		.= "<br />";
-$pgv_lang["lb_general_help3c"]		 = "<br /><b>Wyłącz powiększenie:</b><br />";
-$pgv_lang["lb_general_help3c"]		.= "Aby powrócić do normalnego widoku kliknij dwa razy na obraz, lub kliknij na czerwony znak minusa w prawym dolnym rogu, lub użyj klawisza \"Z\".";
-$pgv_lang["lb_general_help3c"]		.= "<br />";
-
-$pgv_lang["lb_general_help4"]		 = "<br />~4 - Zamknij obraz~<br />";
-$pgv_lang["lb_general_help4a"]		 = "Kliknij na zewnątrz obrazu, lub kliknij na czerwony <font color=red><b>X</b></font> w prawym dolnym rogu, lub użyj klawisza \"X\". ";
-$pgv_lang["lb_general_help4a"]		.= "<br />";
-
-$pgv_lang["lb_general_help5"]		 = "<br />~5 - Pokaż następny lub poprzedni obraz~";
-$pgv_lang["lb_general_help5a"]		 = "<br />AKiedy kursor myszki jest nad obrazem i jeśli powiększenie jest wyłączone, po lewej stronie pojawi się symbol <b>&lt;</b>, a po prawej <b>&gt;</b>. Kliknij w dowolne miejsce po prawej stronie obrazu aby zobaczyć następny lub po lewej stronie by zobaczyć poprzedni obraz.";
-$pgv_lang["lb_general_help5a"]		.= "<br />";
-
-$pgv_lang["lb_general_help6"]		 = "<br />~6 - Skocz do innego obrazu w Albumie~<br />";
-$pgv_lang["lb_general_help6a"]		 = "Kiedy kursor myszki jest w górnej części obrazu i jeśli powiększenie jest wyłączone, będzie dostępna galeria miniaturek. Jeśli to konieczne przesuń kursor myszki w lewo lub w prawo by zobaczyć kolejne cześci galerii. Kliknij na wybraną miniaturkę aby zobaczyć obraz.";
-$pgv_lang["lb_general_help6a"]		.= "<br /><br />";
-$pgv_lang["lb_general_help6a"]		.= "Przyciski <b>Następny</b>, <b>Poprzedni</b> oraz <b>Skok do innego obrazu w Albumie</b> działają również podczas pokazu slajdów.";
-$pgv_lang["lb_general_help6a"]		.= "<br /> ";
-
-$pgv_lang["lb_general_help7"]		 = "<br />~7 - Uruchomienie pokazu slajdów~<br />";
-$pgv_lang["lb_general_help7a"]		 = "Kliknij na ikonkę startu w lewym dolnym rogu. Jeśli jest dostępny plik z muzyką, pojawi się ikonka głośnika. Kliknij na nią aby włączyć lub wyłączyć muzykę. Kliknij na przycisk pauzy aby zatrzymać pokaz.";
-$pgv_lang["lb_general_help7a"]		.= "<br /> ";
-
-$pgv_lang["lb_general_help8"]		 = "<br />~8 - Nawigacja...~<br />";
-$pgv_lang["lb_general_help8a"]		 = "Użyj tabeli 'Zobacz Album...' znajdującej się po prawej stronie aby wybrać Album innej osoby.";
-$pgv_lang["lb_general_help8a"]		.= "<br />";
-
-$pgv_lang["lb_general_help9"]		 = "<br />~9 - Uwaga:~<br />";
-$pgv_lang["lb_general_help9a"]		 = "Miniaturki, które nie są obrazami, takie jak pliki PDF, audio lub wideo, mogą być oglądane oddzielnie, ale nie będą dostępne w pokazie slajdów.";
-$pgv_lang["lb_general_help9a"]		.= "<br /> ";
-
-$pgv_lang["lb_general_help10"]		 = "<br />~10 - Uwaga dla administratora:~<br />";
-$pgv_lang["lb_general_help10a"]		 = "Jeśli jakieś pliki obrazów (jpg, bmp, gif, itp.) reprezentujące typy obrazów jak fotografie, certyfikaty, dokumenty, itp. pojawią się w sekcji <b>Inne</b>, będzie trzeba ustawić typ multimediów dla tych obrazów.";
+$pgv_lang["lb_general_help"]		 = "~#pgv_lang[lb_generalLegend]#~<br /><br /><ul>#pgv_lang[lb_general_help1]##pgv_lang[lb_general_help2]##pgv_lang[lb_general_help3]##pgv_lang[lb_general_help4]##pgv_lang[lb_general_help5]##pgv_lang[lb_general_help6]##pgv_lang[lb_general_help7]##pgv_lang[lb_general_help8]##pgv_lang[lb_general_help9]##pgv_lang[lb_general_help10]#</ul>";
+$pgv_lang["lb_general_help1"]		 = "<li>~Oglądanie notatek lub szczegółów powiązanych z obrazem~<br /><b>Rozwijane menu:</b><br />Najedź kursorem na link \"Zobacz\" poniżej miniaturki a rozwinie się menu. Dostępne opcje: <b>#pgv_lang[lb_viewnotes]#</b> (jeśli jakieś są dostępne), <b>#pgv_lang[lb_viewdetails]#</b> (domyślne) oraz <b>#pgv_lang[lb_viewsource]#</b> (jeśli jesteś zalogowany i źródło jest dostępne).<br /><br /><b>Wyświetlanie:</b><br />Klikając <b>#pgv_lang[lb_viewnotes]#</b> zostanie wyświetlony dymek lub okienko z notatkami. Kliknij ponownie by je wyłączyć.<br />Klikając <b>#pgv_lang[lb_viewdetails]#</b> zostaniesz przeniesiony do strony przeglądarki multimediów, natomiast <b>#pgv_lang[lb_viewsource]#</b> przenosi (jeśli jesteś zalogowany) do strony źródła<br /><br /><b>Edytowanie:</b><br />(Dostępna jest opcja \"Edytuj\" dla użytkowników z uprawnieniami edytorskimi)<br /><br /><b>Otwarty obraz:</b><br />Podczas oglądania obrazu ikony <b>#pgv_lang[lb_viewnotes]#</b> i <b>#pgv_lang[lb_viewdetails]#</b> działają na takiej samej zasadzie.<br /><br /></li>";
+$pgv_lang["lb_general_help2"]		 = "<li>~Oglądanie obrazów~<br />Kliknij na miniaturkę. Tytuł obrazu będzie widoczny nad wyświetlanym obrazem.<br /><br /></li>";
+$pgv_lang["lb_general_help3"]		 = "<li>~Używanie powiększenia~<br /><b>WAŻNE:</b><br />Pokaz slajdów musi być wyłączony aby była dostępna ikona powiększenia.<br /><br /><b>Włącz powiększenie:</b><br />Jeśli jest widoczny zielony znak plusa w prawym dolnym rogu obrazka, powiększenie jest dostępne. Użyj rolki myszki aby zamieniać rozmiar obrazka, lub użyj klawiszy \"I\" oraz \"O\". Ikona zielonego plusa się zmieni na czerwony minus.<br />Jeśli rozmiar powiększonego obrazu jest większy niż rozmiar strony, użyj strzałek aby przesuwać obraz.<br /><br /><b>Wyłącz powiększenie:</b><br />Aby powrócić do normalnego widoku kliknij dwa razy na obraz, lub kliknij na czerwony znak minusa w prawym dolnym rogu, lub użyj klawisza \"Z\".<br /><br /></li>";
+$pgv_lang["lb_general_help4"]		 = "<li>~Zamknij obraz~<br />Kliknij na zewnątrz obrazu, lub kliknij na czerwony <font color=red><b>X</b></font> w prawym dolnym rogu, lub użyj klawisza \"X\".<br /><br /></li>";
+$pgv_lang["lb_general_help5"]		 = "<li>~Pokaż następny lub poprzedni obraz~<br />Kiedy kursor myszki jest nad obrazem i jeśli powiększenie jest wyłączone, po lewej stronie pojawi się symbol <b>&lt;</b>, a po prawej <b>&gt;</b>. Kliknij w dowolne miejsce po prawej stronie obrazu aby zobaczyć następny lub po lewej stronie by zobaczyć poprzedni obraz.<br /><br /></li>";
+$pgv_lang["lb_general_help6"]		 = "<li>~Skok do innego obrazu w Albumie~<br />Kiedy kursor myszki jest w górnej części obrazu i jeśli powiększenie jest wyłączone, będzie dostępna galeria miniaturek. Jeśli to konieczne przesuń kursor myszki w lewo lub w prawo by zobaczyć kolejne cześci galerii. Kliknij na wybraną miniaturkę aby zobaczyć obraz.<br /><br />Przyciski <b>Następny</b>, <b>Poprzedni</b> oraz <b>Skok do innego obrazu w Albumie</b> działają również podczas pokazu slajdów.<br /><br /></li>";
+$pgv_lang["lb_general_help7"]		 = "<li>~Uruchomienie pokazu slajdów~<br />Kliknij na ikonkę startu w lewym dolnym rogu. Jeśli jest dostępny plik z muzyką, pojawi się ikonka głośnika. Kliknij na nią aby włączyć lub wyłączyć muzykę. Kliknij na przycisk pauzy aby zatrzymać pokaz.<br /><br /></li>";
+$pgv_lang["lb_general_help8"]		 = "<li>~Nawigacja...~<br />Użyj tabeli <b>#pgv_lang[view_lightbox]#</b> znajdującej się po prawej stronie aby wybrać Album innej osoby.<br /><br /></li>";
+$pgv_lang["lb_general_help9"]		 = "<li>~Uwaga:~<br />Miniaturki, które nie są obrazami, takie jak pliki PDF, audio lub wideo, mogą być oglądane oddzielnie, ale nie będą dostępne w pokazie slajdów.<br /><br /></li>";
+$pgv_lang["lb_general_help10"]		 = "<li>~Uwaga dla administratora:~<br />Jeśli jakieś pliki obrazów (jpg, bmp, gif, itp.) reprezentujące typy obrazów jak fotografie, certyfikaty, dokumenty, itp. pojawią się w sekcji <b>Inne</b>, konieczne będzie ustawienie typu poprzez ustawienie wartości <b>#factarray[TYPE]#</b> dla tych multimediów.</li>";
 //End Lightbox General Help File ----------------------------------------------------------------------------------------------------------------------------- 
 $pgv_lang["lb_tt_balloonLegend"]		= "Album - Miniaturki - Okienko notatek";
 $pgv_lang["lb_tt_balloon_help"]			= "~#pgv_lang[lb_tt_balloonLegend]#~<br />Ta opcja pozwala wybrać czy notatki danej miniaturki będą wyświetlane w dymku czy w zwykłym okienku (tzw. tooltip).<br /><br />W dymku zostaną wyświetlone notatki danego obiektu multimedialnego (jeśli istnieją).<br />";
