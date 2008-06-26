@@ -326,22 +326,34 @@ function print_indi_table($datalist, $legend="", $option="") {
 		foreach ($names as $num=>$name) {
 			// Exclude duplicate names, which can occur when individuals have
 			// multiple surnames, such as in Spain/Portugal
-			if ($num==$primary || $names[$num]['type']!=$names[$primary]['type'] || $names[$num]['full']!=$names[$primary]['full']) {
-				if ($title=$name['type']=='_MARNM') {
-					$title='title="'.$factarray['_MARNM'].'"';
-				} else {
-					$title='';
+			$dupe_found=false;
+			foreach ($names as $dupe_num=>$dupe_name) {
+				if ($dupe_num>$num && $dupe_name['type']==$name['type'] && $dupe_name['full']==$name['full']) {
+					// Take care not to skip the "primary" name
+					if ($num==$primary) {
+						$primary=$dupe_num;
+					}
+					$dupe_found=true;
+					break;
 				}
-				if ($num==$primary) {
-					$class='list_item name2';
-					$sex_image=$tiny ? $person->getSexImage() : '';
-					list($surn, $givn)=explode(',', $name['sort']);
-				} else {
-					$class='list_item';
-					$sex_image='';
-				}
-				$names_html[]='<a '.$title.' href="'.encode_url($person->getLinkUrl()).'" class="'.$class.'">'.PrintReady($name['list']).'</a>'.$sex_image;
 			}
+			if ($dupe_found) {
+				continue;
+			}
+			if ($title=$name['type']=='_MARNM') {
+				$title='title="'.$factarray['_MARNM'].'"';
+			} else {
+				$title='';
+			}
+			if ($num==$primary) {
+				$class='list_item name2';
+				$sex_image=$tiny ? $person->getSexImage() : '';
+				list($surn, $givn)=explode(',', $name['sort']);
+			} else {
+				$class='list_item';
+				$sex_image='';
+			}
+			$names_html[]='<a '.$title.' href="'.encode_url($person->getLinkUrl()).'" class="'.$class.'">'.PrintReady($name['list']).'</a>'.$sex_image;
 		}
 		echo implode('<br/>', $names_html);
 		// Indi parents
