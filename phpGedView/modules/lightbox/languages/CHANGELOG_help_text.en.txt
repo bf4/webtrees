@@ -34,6 +34,32 @@ occur in the respective language files.
 // Added in VERSION 4.1.6
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["lb_general_help"] 						26 Jun 2008				W 
+*$pgv_lang["lb_general_help1"] 						26 Jun 2008				W 
+-$pgv_lang["lb_general_help1a"] 					26 Jun 2008				D 
+-$pgv_lang["lb_general_help1b"] 					26 Jun 2008				D 
+-$pgv_lang["lb_general_help1c"] 					26 Jun 2008				D 
+-$pgv_lang["lb_general_help1d"] 					26 Jun 2008				D 
+*$pgv_lang["lb_general_help2"] 						26 Jun 2008				W 
+-$pgv_lang["lb_general_help2a"] 					26 Jun 2008				D 
+*$pgv_lang["lb_general_help3"] 						26 Jun 2008				W 
+-$pgv_lang["lb_general_help3a"] 					26 Jun 2008				D 
+-$pgv_lang["lb_general_help3b"] 					26 Jun 2008				D 
+-$pgv_lang["lb_general_help3c"] 					26 Jun 2008				D 
+*$pgv_lang["lb_general_help4"] 						26 Jun 2008				W 
+-$pgv_lang["lb_general_help4a"] 					26 Jun 2008				D 
+-$pgv_lang["lb_general_help5"] 						26 Jun 2008				D 
+-$pgv_lang["lb_general_help5a"] 					26 Jun 2008				D 
+*$pgv_lang["lb_general_help6"] 						26 Jun 2008				W 
+-$pgv_lang["lb_general_help6a"] 					26 Jun 2008				D 
+*$pgv_lang["lb_general_help7"] 						26 Jun 2008				W 
+-$pgv_lang["lb_general_help7a"] 					26 Jun 2008				D 
+*$pgv_lang["lb_general_help8"] 						26 Jun 2008				W 
+-$pgv_lang["lb_general_help8a"] 					26 Jun 2008				D 
+*$pgv_lang["lb_general_help9"] 						26 Jun 2008				W 
+-$pgv_lang["lb_general_help9a"] 					26 Jun 2008				D 
+*$pgv_lang["lb_general_help10"] 					26 Jun 2008				W 
+-$pgv_lang["lb_general_help10a"] 					26 Jun 2008				D 
 +$pgv_lang["lb_generalLegend"]						24 Jun 2008				A
 +$pgv_lang["lb_general_help"] 						24 Jun 2008				A 
 +$pgv_lang["lb_general_help1"] 						24 Jun 2008				A 
