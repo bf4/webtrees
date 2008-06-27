@@ -182,11 +182,13 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	$NEW_SERVER_URL=trim(safe_POST('NEW_SERVER_URL'));
 	if (!empty($NEW_SERVER_URL)) {
 		if (!isFileExternal($NEW_SERVER_URL)) $NEW_SERVER_URL = "http://".$NEW_SERVER_URL;
-		if (preg_match("'/$'", $NEW_SERVER_URL)==0) $NEW_SERVER_URL .= "/";
+		$NEW_SERVER_URL = rtrim($NEW_SERVER_URL, '/').'/';		// Make sure that trailing "/" is present
 	}
 	update_config($configtext, 'SERVER_URL', $NEW_SERVER_URL);
 
-	$NEW_INDEX_DIRECTORY=preg_replace('/\\\/','/', $_POST["NEW_INDEX_DIRECTORY"]);
+	$NEW_INDEX_DIRECTORY=preg_replace('/\\\/','/', trim($_POST["NEW_INDEX_DIRECTORY"]));
+	if (empty($NEW_INDEX_DIRECTORY)) $NEW_INDEX_DIRECTORY = "./index/";
+	$NEW_INDEX_DIRECTORY = rtrim($NEW_INDEX_DIRECTORY, '/').'/';	// Make sure that trailing "/" is present
 	update_config($configtext, 'INDEX_DIRECTORY', $NEW_INDEX_DIRECTORY);
 
 	update_config($configtext, 'CONFIG_VERSION', $CONFIG_VERSION); // No longer used?
