@@ -655,9 +655,11 @@ class stats {
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
-	function totalUsers()
+	function totalUsers($params=null)
 	{
-		return get_user_count();
+		$adj = 0;
+		if(isset($params[0]) && $params[0] != '') {$adj = (integer)$params[0];}else{$adj = 0;}
+		return get_user_count() + $adj;
 	}
 
 	function totalAdmins()
