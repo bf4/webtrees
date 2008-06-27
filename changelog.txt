@@ -10,6 +10,9 @@
 
 
 Version 4.1.6
+ - Changed: Album Page: (Windmillway)
+		1)Changed Thumbnail dropdown link to be a truncated version the Title of the media (instead of View or View/Edit)
+		2)Changed source view to be viewable by all.
  - Changed: Album Page: (windmillway) 
 		1) Lightbox General Help Text now in line with PGV norms. (lang variable is also split for easier editing)
 		2) Tidy up thumbnail area - Added drop-down menu to replace links above and below thumbnail.
