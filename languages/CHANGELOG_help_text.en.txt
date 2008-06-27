@@ -45,6 +45,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["useradmin_can_edit_help"]				26 June 2008			w
 *$pgv_lang["edit_surname_help"]						23 June 2008			w
 *$pgv_lang["edit_surname_help"]						23 June 2008			W
 +$pgv_lang["index_common_given_names_help"]			4 June 2008				A
