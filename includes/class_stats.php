@@ -1467,11 +1467,30 @@ class stats {
 		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
 
 		if (is_array($params) && isset($params[0]) && $params[0] != '') {$threshold = strtolower($params[0]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
+		if(is_array($params) && isset($params[1]) && $params[1] != '' && $params[1] >= 0){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = false;}
+		if(is_array($params) && isset($params[2]) && $params[2] != ''){$sorting = strtolower($params[2]);}else{$sorting = 'alpha';}
 		$surnames = get_common_surnames($threshold);
 		if (count($surnames) == 0) return '';
 
+		switch($sorting)
+		{
+			default:
+			case 'alpha':
+				break;
+			case 'ralpha':
+				uasort($surnames, array('stats', '_name_name_rsort'));
+				break;
+			case 'count':
+				uasort($surnames, array('stats', '_name_total_sort'));
+				break;
+			case 'rcount':
+				uasort($surnames, array('stats', '_name_total_rsort'));
+				break;
+		}
+
 		$common = array();
 		foreach ($surnames as $indexval=>$surname) {
+			if($maxtoshow !== false) {if($maxtoshow-- <= 0){break;}}
 			if ($show_tot) {
 				$tot = PrintReady("[{$surname['match']}]");
 				if ($TEXT_DIRECTION=='ltr') {
@@ -1577,7 +1596,7 @@ class stats {
 					if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
 					else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
 					else $genderList = 'name_list_u';
-					$firstnamestring = explode("/", preg_replace(array("/@N.N.?/","/@P.N.?/"), "", $row[0]));
+					$firstnamestring = explode("/", preg_replace(array("/@N.N.?/","/@P.N.?/","/Living?/"), "", $row[0]));
 					$firstnamestring[0] = str_replace(array('*', '.', "\xE2\xA0\xA6", '-', ',', '(', ')', '[', ']', '{', '}'), ' ', $firstnamestring[0]);
 					$firstnamestring[0] = str_replace(array(" '", "' ", ' "', '" '), ' ', $firstnamestring[0]);		// Special treatment to allow names like "D'arcy"
 					$nameList = explode(" ", $firstnamestring[0]);
@@ -1626,7 +1645,7 @@ class stats {
 
 		$common = array();
 		foreach ($nameList as $given=>$total) {
-			if ($maxtoshow !== false) {if($maxtoshow-- <= 0){break;}}
+			if ($maxtoshow !== -1) {if($maxtoshow-- <= 0){break;}}
 			if ($total < $threshold) {break;}
 			if ($show_tot) {
 				$tot = PrintReady("[{$total}]");
@@ -1942,6 +1961,73 @@ class stats {
 			$encoding .= $this->_xencoding[$first].$this->_xencoding[$second];
 		}
 		return $encoding;
+	}
+
+	function _name_name_rsort($a, $b)
+	{
+		if(isset($a['name']))
+		{
+			$aname = sortable_name_from_name($a['name']);
+		}
+		else
+		{
+			if(isset($a['names']))
+			{
+				$aname = sortable_name_from_name($a['names'][0][0]);
+			}
+			else
+			{
+				if(is_array($a))
+				{
+					$aname = sortable_name_from_name(array_shift($a));
+				}
+				else
+				{
+					$aname = $a;
+				}
+			}
+		}
+		if(isset($b['name']))
+		{
+			$bname = sortable_name_from_name($b['name']);
+		}
+		else
+		{
+			if(isset($b['names']))
+			{
+				$bname = sortable_name_from_name($b['names'][0][0]);
+			}
+			else
+			{
+				if(is_array($b))
+				{
+					$bname = sortable_name_from_name(array_shift($b));
+				}
+				else
+				{
+					$bname = $b;
+				}
+			}
+		}
+
+		$aname = strip_prefix($aname);
+		$bname = strip_prefix($bname);
+		$result = compareStrings($bname, $aname, true);		// Case-insensitive compare
+		return $result;
+	}
+
+	function _name_total_sort($a, $b)
+	{
+		if($a['match'] > $b['match']){return 1;}
+		if($a['match'] < $b['match']){return -1;}
+		return 0;
+	}
+
+	function _name_total_rsort($a, $b)
+	{
+		if($a['match'] < $b['match']){return 1;}
+		if($a['match'] > $b['match']){return -1;}
+		return 0;
 	}
 
 	function _runSQL($sql, $count=0)
