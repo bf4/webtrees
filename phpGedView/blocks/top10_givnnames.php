@@ -124,35 +124,41 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		if ($TEXT_DIRECTION=='ltr') $padding = 'padding-left: 15px';
 		else $padding = 'padding-right: 15px';
 		//List Female names
-		print "<b>".$pgv_lang["female"]."</b>";
-		print "<div class=\"wrap\" style=\"$padding\">";
 		$nameList = array_slice($name_list_f, 0, $config["num"]);
-		if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
-		foreach ($nameList as $key => $value) {
-			if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-			else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+		if (count($nameList)>0) {
+			print "<b>".$pgv_lang["female"]."</b>";
+			print "<div class=\"wrap\" style=\"$padding\">";
+			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
+			foreach ($nameList as $key => $value) {
+				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
+				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+			}
+			print "</div><br />";
 		}
-		print "</div>";
 		//List Male names	
-		print "<br /><b>".$pgv_lang["male"]."</b>";
-		print "<div class=\"wrap\" style=\"$padding\">";
 		$nameList = array_slice($name_list_m, 0, $config["num"]);
-		if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
-		foreach ($nameList as $key => $value) {
-			if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-			else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+		if (count($nameList)>0) {
+			print "<b>".$pgv_lang["male"]."</b>";
+			print "<div class=\"wrap\" style=\"$padding\">";
+			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
+			foreach ($nameList as $key => $value) {
+				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
+				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+			}
+			print "</div><br />";
 		}
-		print "</div>";
 		//List Unknown names	
-		print "<br /><b>".$pgv_lang["unknown"]."</b>";
-		print "<div class=\"wrap\" style=\"$padding\">";
 		$nameList = array_slice($name_list_u, 0, $config["num"]);
-		if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
-		foreach ($nameList as $key => $value) {
-			if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-			else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+		if (count($nameList)>0) {
+			print "<b>".$pgv_lang["unknown"]."</b>";
+			print "<div class=\"wrap\" style=\"$padding\">";
+			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
+			foreach ($nameList as $key => $value) {
+				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
+				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+			}
+			print "</div><br />";
 		}
-		print "</div>";
 		break;
 	case "style2":	// Style 2: Tabular format.  Narrow, 2-column table, good on right side of page
 		$nameAlign = ($TEXT_DIRECTION=='ltr') ? 'left':'right';
