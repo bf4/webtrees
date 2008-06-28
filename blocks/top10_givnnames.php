@@ -35,7 +35,8 @@ $PGV_BLOCKS["print_block_givn_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
 	"cache"=>7,
 	"num"=>10, 
-	"infoStyle"=>"style2"
+	"infoStyle"=>"style2",
+	"showUnknown"=>"yes"
 	);
 
 /**
@@ -49,6 +50,8 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
 	if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
 	else $infoStyle = "style2";
+	if (isset($config["showUnknown"])) $showUnknown = $config["showUnknown"];  // "yes" or "no"
+	else $showUnknown = "yes";
 	
 	//-- cache the result in the session so that subsequent calls do not have to
 	//-- perform the calculation all over again.
@@ -149,7 +152,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		}
 		//List Unknown names	
 		$nameList = array_slice($name_list_u, 0, $config["num"]);
-		if (count($nameList)>0) {
+		if (count($nameList)>0 && $showUnknown=="yes") {
 			print "<b>".$pgv_lang["unknown"]."</b>";
 			print "<div class=\"wrap\" style=\"$padding\">";
 			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
@@ -167,7 +170,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		print "<tr>";
 			if (count($name_list_f)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td>";
 			if (count($name_list_m)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td>";
-			if (count($name_list_u)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td>";
+			if (count($name_list_u)>0 && $showUnknown=="yes") print "<td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td>";
 		print "</tr>";
 		print "<tr>";
 		//List Female names
@@ -191,7 +194,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 				print "</table></td>";
 			}
 		//List Unknown names	
-			if (count($name_list_u)>0) {
+			if (count($name_list_u)>0 && $showUnknown=="yes") {
 				print "<td valign='top'><table>";
 				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 				$nameList = array_slice($name_list_u, 0, $config["num"]);
@@ -212,6 +215,7 @@ function print_block_givn_top10_config($config) {
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_givn_top10"]["config"]["cache"];
 	if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";
+	if (!isset($config["showUnknown"])) $config["showUnknown"] = "yes";
 
 	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["num_to_show"]."</td>";?>
 	<td class="optionbox">
@@ -229,6 +233,19 @@ function print_block_givn_top10_config($config) {
 			<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
 		</select>
 	</td></tr>
+
+	<tr><td class="descriptionbox wrap width33">
+	<?php
+	print_help_link("showUnknown_help", "qm");
+	print $pgv_lang["showUnknown"];
+	?>
+	</td><td class="optionbox">
+		<select name="showUnknown">
+			<option value="yes"<?php if ($config["showUnknown"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no"<?php if ($config["showUnknown"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+		</select>
+	</td></tr>
+
 <?php	// Cache file life
 	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
