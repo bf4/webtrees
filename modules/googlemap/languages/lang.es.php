@@ -37,9 +37,9 @@ $pgv_lang["gm_disabled"]            = "Módulo GoogleMap desactivado";
 
 $pgv_lang["gm_redraw_map"]          = "Redibujar mapa";
 $pgv_lang["gm_map"]                 = "Mapa";
+$pgv_lang["gm_physical"]            = "Relieve";
 $pgv_lang["gm_satellite"]           = "Satélite";
 $pgv_lang["gm_hybrid"]              = "Híbrido";
-$pgv_lang["gm_physical"]            = "Relieve";
 
 // Configuration texts
 $pgv_lang["gm_manage"]              = "Gestionar la configuración de GoogleMap";
@@ -72,10 +72,20 @@ $pgv_lang["gm_pp_po_pr_b_n"]        = "Sufijo, prefijo, ambos, normal";
 $pgv_lang["gm_pp_pr_po_n_b"]        = "Prefijo, sufijo, normal, ambos";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Sufijo, prefijo, normal, ambos";
 $pgv_lang["googlemap_coord"]        = "Mostrar coordenadas del mapa";
-
+//wooc place hierarchy
+$pgv_lang["gm_place_hierarchy"]  	= "Usar Googlemap para la jerarquía de lugares";
+$pgv_lang["gm_ph_map_size"]			= "Tamaño del mapa en la jerarquía de lugares (en píxeles)";
+$pgv_lang["gm_ph_marker_type"]		= "Tipo de marcadores de lugar en la jerarquía de lugares";
+$pgv_lang["gm_standard_marker"]		= "Estándar";
+$pgv_lang["gm_no_coord"]			= "Este lugar no tiene coordenadas";
+$pgv_lang["gm_ph_placenames"]		= "Mostrar nombres recortados para los lugares";
+$pgv_lang["gm_ph_count"]			= "Mostrar totales de personas y familias";
+$pgv_lang["gm_ph_wheel"]			= "Use mouse wheel for zoom";
+$pgv_lang["gm_ph_controls"]			= "Ocultar los controles del mapa";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Editar las posiciones geográficas de los lugares";
+$pgv_lang["pl_no_places_found"]     = "No se encontraron lugares";
 $pgv_lang["pl_zoom_factor"]         = "Factor de aumento";
 $pgv_lang["pl_place_icon"]          = "Icono";
 $pgv_lang["pl_edit"]                = "Modificar la posición geográfica";
@@ -94,16 +104,19 @@ $pgv_lang["pl_places_filename"]     = "Archivo con los lugares (CSV)";
 $pgv_lang["pl_clean_db"]            = "¿Limpiar todas las posiciones de lugares antes de la importación?";
 $pgv_lang["pl_update_only"]         = "¿Actualizar solamente los lugares existentes?";
 $pgv_lang["pl_overwrite_data"]      = "¿Sustituir los datos actuales de ubicación con los del archivo?";
-$pgv_lang["pl_no_places_found"]     = "No se encontraron lugares";
 $pgv_lang["pl_use_this_value"]      = "Usar este valor";
 $pgv_lang["pl_precision"]           = "Precisión";
-$pgv_lang["pl_country"]             = "País";
+$pgv_lang["pl_country"]				= "País";
+$pgv_lang["pl_countries"]			= "Países";
 $pgv_lang["pl_state"]               = "Estado/Provincia";
 $pgv_lang["pl_city"]                = "Población";
 $pgv_lang["pl_neighborhood"]        = "Barrio";
 $pgv_lang["pl_house"]               = "Edificio";
 $pgv_lang["pl_max"]                 = "Máximo";
 $pgv_lang["pl_delete"]              = "Borrar la posición geográfica";
+$pgv_lang["pl_search_level"]		= "Buscar en este nivel";
+$pgv_lang["pl_search_all"]			= "Buscar en todos";
+$pgv_lang["pl_unknown"]				= "Desconocido";
 
 $pgv_lang["pl_flag"]                = "Bandera";
 $pgv_lang["flags_edit"]             = "Seleccionar bandera";

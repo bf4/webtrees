@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -238,7 +238,9 @@ $pgv_lang["mytask_show_completed"]		= "¿Mostrar tareas completadas?";
 $pgv_lang["autosearch_surname"]		    = "Incluir apellido:";
 $pgv_lang["autosearch_givenname"]	    = "Incluir nombres de pila:";
 $pgv_lang["autosearch_byear"]		    = "Incluir año de nacimiento:";
-$pgv_lang["autosearch_bloc"]		    = "Incluir el lugar de nacimiento";  
+$pgv_lang["autosearch_bloc"]		    = "Incluir el lugar de nacimiento:";  
+$pgv_lang["autosearch_myear"]		    = "Incluir año de matrimonio:";
+$pgv_lang["autosearch_mloc"]		    = "Incluir el lugar de matrimonio:";
 $pgv_lang["autosearch_dyear"]		    = "Incluir año de defunción:";
 $pgv_lang["autosearch_dloc"]		    = "Incluir el lugar de defunción:";
 $pgv_lang["autosearch_gender"]          = "Incluir sexo:";
@@ -250,10 +252,10 @@ $pgv_lang["autosearch_mgivennames"]	    = "Incluir los nombres de pila de la mad
 $pgv_lang["autosearch_country"]  	    = "Incluir país:"; 
 $pgv_lang["autosearch_plugin_name_ancestry"] = "Módulo para Ancestry.com";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Módulo para Ancestry.co.uk";
-$pgv_lang["autosearch_plugin_name_ellisIsland"] = "Módulo para EllisIslandRecords.org";
-$pgv_lang["autosearch_plugin_name_genNet"] = "Módulo para GeneaNet.com";
-$pgv_lang["autosearch_plugin_name_gen"]  = "Módulo para Genealogy.com"; 
-$pgv_lang["autosearch_plugin_name_fs"]   = "Módulo para FamilySearch.org";
+$pgv_lang["autosearch_plugin_name_ellisisland"] = "Módulo para EllisIslandRecords.org";
+$pgv_lang["autosearch_plugin_name_geneanet"] = "Módulo para GeneaNet.com";
+$pgv_lang["autosearch_plugin_name_genealogy"]  = "Módulo para Genealogy.com"; 
+$pgv_lang["autosearch_plugin_name_familysearch"]   = "Módulo para FamilySearch.org";
 $pgv_lang["autosearch_plugin_name_werelate"]   = "Módulo para Werelate.org";
 $pgv_lang["autosearch_search"]           = "Buscar";
 $pgv_lang["autosearch_keywords"] = "Palabras clave:";
