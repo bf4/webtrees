@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Album Page: Fixed RTL alignment of dropdown menu items, Removed spurious "dots" on Dropdown menu header link (windmillway)
  - Changed: Album Page: (Windmillway)
 		1)Changed Thumbnail dropdown link to be a truncated version the Title of the media (instead of View or View/Edit)
 		2)Changed source view to be viewable by all.
