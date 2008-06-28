@@ -215,11 +215,7 @@
 			$submenu["onclick"]  = "TipTog(";
 				// Contents of Notes 
 				$submenu["onclick"] .= "'";
-				if ($TEXT_DIRECTION== "rtl") {
-					$submenu["onclick"] .= "&lt;font color=#ffffff>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br />";
-				}else{
-					$submenu["onclick"] .= "&lt;font color=#008800>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br >";
-				}
+				$submenu["onclick"] .= "&lt;font color=#008800>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br />";
 				// echo "<br />";
 				$submenu["onclick"] .= $notes;
 				$submenu["onclick"] .= "'";

@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Album Page: Minor font and cell width changes to accommodate languages other than English (windmillway)
  - Fixed: Album Page: Fixed RTL alignment of dropdown menu items, Removed spurious "dots" on Dropdown menu header link (windmillway)
  - Changed: Album Page: (Windmillway)
 		1)Changed Thumbnail dropdown link to be a truncated version the Title of the media (instead of View or View/Edit)
