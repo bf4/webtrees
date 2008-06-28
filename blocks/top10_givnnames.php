@@ -191,7 +191,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 				print "</table></td>";
 			}
 		//List Unknown names	
-			if (count($name_list_m)>0) {
+			if (count($name_list_u)>0) {
 				print "<td valign='top'><table>";
 				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 				$nameList = array_slice($name_list_u, 0, $config["num"]);
