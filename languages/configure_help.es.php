@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -230,6 +230,8 @@ $pgv_lang["REPO_ID_PREFIX"]		= "Prefijo del ID de los Repositorios";
 $pgv_lang["REPO_ID_PREFIX_help"]	= "~#pgv_lang[REPO_ID_PREFIX]#~<br /><br />Si se añade un nuevo repositorio en PhpGedView se generará automáticamente un número ID.  El ID del repositorio tendrá este prefijo.<br />";
 $pgv_lang["PEDIGREE_FULL_DETAILS"]	= "Mostrar detalles de nacimiento y defunción en los árboles de Ascendientes y Descendientes";
 $pgv_lang["PEDIGREE_FULL_DETAILS_help"]	= "Le dice si debe mostrar o no los detalles de nacimiento o defunción de una persona por defecto.";
+$pgv_lang["PEDIGREE_SHOW_GENDER"]	= "Mostrar el icono de sexo en los diagramas";
+$pgv_lang["PEDIGREE_SHOW_GENDER_help"]	= "~#pgv_lang[PEDIGREE_SHOW_GENDER]#~<br /><br />Esta opción controla si se muestra o no el icono del sexo de la persona en los diagramas.<br /><br />Como el sexo también se indica mediante el color de la caja, esta opción no oculta el sexo, simplemente suprime alguna información innecesaria de la caja.<br />";
 $pgv_lang["PEDIGREE_LAYOUT"]		= "Formato de Árbol de ascendientes";
 $pgv_lang["PEDIGREE_LAYOUT_help"]	= "Esto le dice al programa en que formato mostrará el Árbol de Ascendientes: Natural o Apaisado.";
 $pgv_lang["SHOW_EMPTY_BOXES"]		= "Mostrar cajas vacías en el Árbol de ascendientes";
@@ -295,6 +297,8 @@ $pgv_lang["NAME_FROM_GEDCOM_help"]	= "Por defecto phpGedView usa el nombre almac
 $pgv_lang["SHOW_ID_NUMBERS_help"]	= "~#pgv_lang[SHOW_ID_NUMBERS]#~<br /><br />Esta opción controla si se muestran o no los números ID entre paréntesis tras los nombres en diagramas y listas.<br />";
 $pgv_lang["SHOW_LAST_CHANGE"]		= "Mostrar la fecha del último cambio del registro GEDCOM en las listas";
 $pgv_lang["SHOW_LAST_CHANGE_help"]	= "~#pgv_lang[SHOW_LAST_CHANGE]#~<br /><br />Esta opción controla si se muestra o no la fecha de último cambio del registro GEDCOM en las listas.<br />";
+$pgv_lang["SHOW_EST_LIST_DATES"]		= "Mostrar fechas estimadas de nacimiento y defunción";
+$pgv_lang["SHOW_EST_LIST_DATES_help"]	= "~#pgv_lang[SHOW_EST_LIST_DATES]#~<br /><br />Esta opción controla si en las listas de personas se muestran o no fechas estimadas para el nacimiento y la defunción si no se conocen en vez de dejarlas en blanco.<br />";
 $pgv_lang["SHOW_PEDIGREE_PLACES"]	= "Niveles a mostrar en las cajas de persona";
 $pgv_lang["SHOW_PEDIGREE_PLACES_help"]	= "~#pgv_lang[SHOW_PEDIGREE_PLACES]#~<br /><br />Determina cuánto de la información del lugar se muestra en las cajas de persona en los diagramas.<br /><br />Si se fija a 9 se mostrarán todos los niveles.  Si se fija a 0 se ocultarán completamente los lugares.  Si se fija a 1, se mostrará el primer nivel; si se fija a 2, se mostrarán dos niveles, etc.<br />";
 $pgv_lang["MULTI_MEDIA"]		= "Permitir características multimedia:";

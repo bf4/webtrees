@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,6 +61,13 @@ $pgv_lang["copy"]					= "Copiar";
 $pgv_lang["cut"]					= "Cortar";
 $pgv_lang["sort_by_birth"]			= "Ordenar por fecha de nacimiento";
 $pgv_lang["reorder_children"]		= "Reordenar hijos";
+$pgv_lang["reorder_media"]					= "Reordenar los objetos";
+$pgv_lang["reorder_media_title"]			= "Arrastre y suelte las miniaturas para reordenar los objetos";
+$pgv_lang["reorder_media_window"]			= "Reordenar objetos (ventana)";
+$pgv_lang["reorder_media_window_title"]		= "Haga clic en una fila y luego arrastre y suelte para reordenar los objetos ";
+$pgv_lang["reorder_media_save"]				= "Salva los objetos reordenados a la base de datos";
+$pgv_lang["reorder_media_reset"]			= "Restaurar orden original";
+$pgv_lang["reorder_media_cancel"]			= "Abandonar y salir";
 $pgv_lang["add_from_clipboard"]		= "Agregar desde el portapapeles: ";
 $pgv_lang["record_copied"]			= "Registro copiado al portapapeles";
 $pgv_lang["add_unlinked_person"]	= "Agregar una nueva persona sin vincular";
@@ -151,6 +158,10 @@ $pgv_lang["file_missing"]			= "Archivo no recibido. Envíelo de nuevo.";
 $pgv_lang["file_partial"]			= "Archivo parcialmente subido, por favor inténtelo de nuevo";
 $pgv_lang["file_success"]			= "Archivo correctamente subido";
 $pgv_lang["file_too_big"]			= "El archivo a subir excede el tamaño permitido";
+$pgv_lang["file_no_temp_dir"]		= "Falta el directorio temporal de PHP";
+$pgv_lang["file_cant_write"]		= "PHP no pudo escribir en disco";
+$pgv_lang["file_bad_extension"]		= "PHP bloqueó el archivo por su extensión";
+$pgv_lang["file_unkown_err"]		= "Al subir el archivo se produjo en error desconocido con código #pgv_lang[global_num1]#. Por favor, repórtelo como error de programación.";
 $pgv_lang["folder"]		 			= "Carpeta en el servidor";
 $pgv_lang["gedcom_editing_disabled"]	= "El administrador ha deshabilitado las modificaciones a este GEDCOM.";
 $pgv_lang["gedcomid"]				= "ID personal";
