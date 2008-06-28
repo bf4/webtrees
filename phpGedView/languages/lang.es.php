@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["count"]					= "Número";
 $pgv_lang["age_differences"]		= "Mostrar diferencias de edad";
 $pgv_lang["date_of_entry"]			= "Fecha de la entrada en la fuente original";
 $pgv_lang["multi_site_search"] 		= "Búsqueda multi-sitio";
@@ -150,6 +151,7 @@ $pgv_lang["stat_users"]				= "Total usuarios";
 $pgv_lang["no_family_facts"]		= "No hay hechos para esta familia.";
 $pgv_lang["stat_males"]				= "Total de hombres";
 $pgv_lang["stat_females"]			= "Total de mujeres";
+$pgv_lang["stat_unknown"]			= "Total sexo desconocido";
 
 $pgv_lang["sunday_1st"]				= "D";
 $pgv_lang["monday_1st"]				= "L";
@@ -219,6 +221,7 @@ $pgv_lang["htmlplus_block_custom"]	= "Personalizado";
 $pgv_lang["htmlplus_block_keyword"]	= "Ejemplos de palabras clave (sólo inglés)";
 $pgv_lang["htmlplus_block_taglist"]	= "Lista de etiquetas";
 $pgv_lang["htmlplus_block_compat"]	= "Modo de Compatibilidad";
+$pgv_lang["htmlplus_block_ui"]		= "Interfaz extendida";
 $pgv_lang["htmlplus_block_current"]	= "Actual";
 $pgv_lang["htmlplus_block_default"]	= "Predeterminado";
 $pgv_lang["htmlplus_block_gedcom"]	= "Árbol genealógico";
@@ -243,6 +246,7 @@ $pgv_lang["ancestors"]				= "Ascendientes por línea directa y sus familias";
 $pgv_lang["descendants"]			= "Descendientes";
 $pgv_lang["choose_relatives"]		= "Escoja parientes";
 $pgv_lang["relatives_report"]		= "Informe de parientes";
+$pgv_lang["total_unknown"]			= "Total desconocido";
 $pgv_lang["total_living"]			= "Número total de personas vivas";
 $pgv_lang["total_dead"]				= "Número total de personas fallecidas";
 $pgv_lang["total_not_born"]			= "Número total de personas no nacidas aún";
@@ -357,8 +361,6 @@ $pgv_lang["landscape"]				= "Apaisado";
 $pgv_lang["start_at_parents"]		= "Comenzar en los padres";
 $pgv_lang["charts"] 				= "Diagramas";
 $pgv_lang["lists"]					= "Listas";
-$pgv_lang["max_generation"] 		= "El número máximo de generaciones es #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"] 		= "El número mínimo de generaciones es 3";
 $pgv_lang["box_width"] 				= "Ancho de la caja";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -595,6 +597,7 @@ $pgv_lang["roots"]		 				= "Raíces";
 $pgv_lang["leaves"] 					= "Hojas";
 $pgv_lang["widow"] 					= "Viuda";
 $pgv_lang["widower"] 				= "Viudo";
+$pgv_lang["show_parents"] 			= "Mostrar padres";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Edad";
@@ -799,12 +802,14 @@ $pgv_lang["oldest_top"]             = "Mostrar lo más antiguo antes";
 $pgv_lang["relationship_male_1_is_the_2_of_3"] = "%1\$s es el %2\$s de %3\$s.";
 $pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s es la %2\$s de %3\$s.";
 
-$pgv_lang["mother_in_law"]		    = "suegra";
-$pgv_lang["father_in_law"]		    = "suegro";
-$pgv_lang["brother_in_law"]		    = "cuñado";
-$pgv_lang["sister_in_law"]		    = "cuñada";
-$pgv_lang["son_in_law"]		        = "yerno";
-$pgv_lang["daughter_in_law"]		= "nuera";
+$pgv_lang["mother_in_law"]		    = "Suegra";
+$pgv_lang["father_in_law"]		    = "Suegro";
+$pgv_lang["brother_in_law"]		    = "Cuñado";
+$pgv_lang["sister_in_law"]		    = "Cuñada";
+$pgv_lang["son_in_law"]		        = "Yerno";
+$pgv_lang["daughter_in_law"]		= "Nuera";
+$pgv_lang["uncle_in_law"]			= "Tío político";
+$pgv_lang["aunt_in_law"]			= "Tía política";
 $pgv_lang["cousin_in_law"]			= "Primo político";
 
 $pgv_lang["step_son"]		        = "hijastro";
@@ -1238,6 +1243,12 @@ $pgv_lang["upcoming_events_block"]	= "Próximos eventos";
 $pgv_lang["upcoming_events_descr"]	= "El bloque Próximos Eventos muestra aniversarios de eventos que van a ocurrir en el futuro próximo.  Puede configurar la cantidad de detalle que se mostrará y el administrador puede configurar cuántos días en el futuro considerará este bloque.";
 $pgv_lang["todays_events_block"]	= "Bloque En este Día";
 $pgv_lang["todays_events_descr"]	= "El bloque \"En este día en su Historia...\" muestra los aniversarios de los eventos para hoy.  Puede configurar la cantidad de detalle que se muestra.";
+$pgv_lang["todo_block"] = "Tareas pendientes";
+$pgv_lang["todo_descr"] = "El bloque Acciones Pendientes lista todos los hechos _TODO pendientes en la base de datos.";
+$pgv_lang["todo_show_other"]     = "Mostrar tareas de otros usuarios";
+$pgv_lang["todo_show_unassigned"]= "Mostrar tareas sin asignar";
+$pgv_lang["todo_show_future"]    = "Mostrar tareas futuras";
+$pgv_lang["todo_nothing"]        = "No hay tareas pendientes.";
 $pgv_lang["yahrzeit_block"]			= "Próximos aniversarios de defunción";
 $pgv_lang["yahrzeit_descr"]			= "El bloque de próximos aniversarios de defunción muestra los aniversarios próximos a suceder de las defunciones.  Se puede configurar el periodo mostrado y el administrador puede configurar el periodo máximo que se considerará.";
 $pgv_lang["logged_in_users_block"]	= "Bloque de Usuarios Registrados";
@@ -1268,6 +1279,9 @@ $pgv_lang["theme_select_descr"] 	= "El bloque de Selección de Tema muestra el s
 $pgv_lang["block_top10_title"]		= "Apellidos más comunes";
 $pgv_lang["block_top10"]			= "Bloque de 10 apellidos más frecuentes";
 $pgv_lang["block_top10_descr"]		= "Este bloque muestra una tabla de los 10 apellidos más frecuentes en la base de datos. El número real de apellidos mostrados en este bloque es configurable  Puede configurar el GEDCOM para eliminar nombres de esta lista.";
+$pgv_lang["block_givn_top10_title"]		= "Los 10 nombres de pila más corrientes";
+$pgv_lang["block_givn_top10"]			= "Los 10 nombres de pila más corrientes";
+$pgv_lang["block_givn_top10_descr"]		= "Este bloque muestra la tabla de los 10 nombres de pila más frecuentes en la base de datos.  En número de nombres que se muestra en este bloque es configurable.";
 
 $pgv_lang["gedcom_news_block"]		= "Bloque de Novedades GEDCOM";
 $pgv_lang["gedcom_news_descr"]		= "El bloque de Novedades del GEDCOM muestra al usuario novedades o artículos agragados por un usuario administrador.<br /><br />El bloque de Novedades es un buen sitio para anunciar una actualización de la base de datos, una reunión familiar o el nacimiento de un hijo.";
@@ -1676,6 +1690,8 @@ $pgv_lang["TYPE__newspaper"] = "Periódico";
 $pgv_lang["TYPE__photo"] = "Foto";
 $pgv_lang["TYPE__tombstone"] = "Lápida";
 $pgv_lang["TYPE__video"] = "Vídeo";
+$pgv_lang["TYPE__painting"] = "Pintura";
+$pgv_lang["TYPE__other"] = "Otro";
 
 //-- Other media suff
 $pgv_lang["view_slideshow"] 		= "Ver como presentación";

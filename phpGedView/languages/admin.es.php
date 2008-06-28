@@ -351,6 +351,6 @@ $pgv_lang["tradition_spanish"]		= "Español";
 $pgv_lang["tradition_portuguese"]	= "Portugués";
 $pgv_lang["tradition_icelandic"]	= "Islandés";
 $pgv_lang["tradition_paternal"]		= "Paterno";
-$pgv_lang["tradition_none"]			= "Ninguno";
+$pgv_lang["tradition_none"]			= "Ninguno";				
 
 ?>
