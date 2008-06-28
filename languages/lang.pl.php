@@ -1538,4 +1538,5 @@ $pgv_lang["charts_click_box"]		= "Kliknij na ramkę aby otrzymać więcej inform
 $pgv_lang["charts_block"]			= "Sekcja diagramów";
 $pgv_lang["age_differences"]		= "Pokaż różnicę wieku";
 $pgv_lang["count"]					= "Liczba";
+$pgv_lang["showUnknown"]			= "Pokaż osoby o nieznanej płci";
 ?>
