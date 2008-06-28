@@ -175,10 +175,17 @@
 		$tt_opts	.=	", DELAY, 0";
 		
 		// Prepare Below Thumbnail  menu ----------------------------------------------------
+			if ($TEXT_DIRECTION== "rtl") {
+				$submenu_class			=	"submenuitem_rtl";
+				$submenu_hoverclass		=	"submenuitem_hover_rtl";
+			}else{
+				$submenu_class			=	"submenuitem";
+				$submenu_hoverclass		=	"submenuitem_hover";
+			}
 			$menu = array();
 			$mtitle = substr($mediaTitle, 0, 13);
 			$mtitle2 = cut_html($mtitle);
-			$menu["label"] = "\n<img src=\"{$thumbnail}\" height=\"0\" border=\"0\" alt=\"\" title=\"\" />" . $mtitle2 . "..</img>\n";
+			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . $mtitle2 . "...</img>\n";
 			// Menu Title
 			$menu["labelpos"] = "right";
 			$menu["icon"] = "";
@@ -221,8 +228,8 @@
 			$submenu["onclick"] .= ");";
 			$submenu["onclick"] .= "return false;\"";
 			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
+			$submenu["class"] = $submenu_class;
+			$submenu["hoverclass"] = $submenu_hoverclass;
 			$menu["items"][] = $submenu;
 		echo "\n";
 		}
@@ -233,8 +240,8 @@
 			$submenu["icon"] = "";
 			$submenu["onclick"] = "";
 			$submenu["link"] = $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] ;
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
+			$submenu["class"] = $submenu_class;
+			$submenu["hoverclass"] = $submenu_hoverclass;
 			$menu["items"][] = $submenu;
 		//View Source
 		if (eregi("1 SOUR",$rowm['m_gedrec'])) {
@@ -244,8 +251,8 @@
 			$submenu["icon"] = "";
 			$submenu["onclick"] = "";
 			$submenu["link"] = $SERVER_URL . "source.php?sid=" . $sour ; 
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
+			$submenu["class"] = $submenu_class;
+			$submenu["hoverclass"] = $submenu_hoverclass;
 			$menu["items"][] = $submenu;
 		}
 		if ( PGV_USER_CAN_EDIT ) {
@@ -256,8 +263,8 @@
 			$submenu["icon"] = "";
 			$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');";
 			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
+			$submenu["class"] = $submenu_class;
+			$submenu["hoverclass"] = $submenu_hoverclass;
 			$menu["items"][] = $submenu;
 			// Unlink Media
 			$submenu = array();
@@ -266,8 +273,8 @@
 			$submenu["icon"] = "";
 			$submenu["onclick"] = "return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');";
 			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
+			$submenu["class"] = $submenu_class;
+			$submenu["hoverclass"] = $submenu_hoverclass;
 			$menu["items"][] = $submenu;
 			// Copy
 			/*
@@ -277,8 +284,8 @@
 			$submenu["icon"] = "";
 			$submenu["onclick"] = "return copy_record('".$rowm['m_media']."', 'media');";
 			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
+			$submenu["class"] = $submenu_class;
+			$submenu["hoverclass"] = $submenu_hoverclass;
 			$menu["items"][] = $submenu;
 			*/
 		}
