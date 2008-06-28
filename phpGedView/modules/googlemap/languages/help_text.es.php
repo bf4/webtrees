@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,4 +138,19 @@ $pgv_lang["PLACECHECK_FILTER_help"]  	= "~#pgv_lang[PLACECHECK_FILTER]#~<br /><b
 $pgv_lang["PLACECHECK_MATCH"]       	= "Incluir sitios con correspondencia";
 $pgv_lang["PLACECHECK_MATCH_help"]  	= "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br />Por defecto, la lista NO INCLUYE lugares que correspondan completamente entre el archivo GEDCOM y las tablas de GoogleMap.<br/>Las correspondencias completas son aquellas en las que todos los niveles existen tanto en el archivo gedcom como en las tablas de GoogleMap y los lugares de GoogleMap tiene coordenadas para cada nivel.<br/><br/>Marque esta casilla para incluir esos sitios también";
 
+//wooc Options for Place Hierarchy display
+$pgv_lang["GOOGLEMAP_PH"]             	= "Usar Googlemap para la jerarquía de lugares";
+$pgv_lang["GOOGLEMAP_PH_help"]        	= "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Mediante esta opción puede activarse o desartivarse el uso de Googlemap para la jerarquía de lugares. Para usarlo se necesita activar el módulo Googlemap también. Antes de utilizarlo se recomienda   agregar todos los lugares a las tablas de Googlemap.";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE"]		= "Tamaño del mapa en la jerarquía de lugares (en píxeles)";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"]	= "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />El tamaño del mapa (en píxeles) en las páginas de la jerarquía de lugares.";
+$pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Tipo de marcadores de lugar en la jerarquía de lugares";
+$pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "~#pgv_lang[GOOGLEMAP_PH_MARKER]#~<br /><br />Aquí puede especificar qué tipo de marcador se usará (estándar o bandera). Si el lugar no tiene bandera, usar el marcador estándar.";
+$pgv_lang["GM_DISP_SHORT_PLACE"]		= "Mostrar nombres recortados para los lugares";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "~#pgv_lang[GM_DISP_SHORT_PLACE]#~<br /><br />Aquí puede elegir entre dos formas de mostrar los nombres de los lugares en la jerarquía. Si pone Sí el lugar usará un nombre corto o el nombre del nivel.  Si no, se utilizará el nombre completo.<br /><b>Ejemplos:<br />Nombre completo: </b>Chicago, Illinois, USA<br /><b>Nombre corto: </b>Chicago<br /><b>Nombre completo: </b>Illinois, USA<br /><b>Nombre corto: </b>Illinois";
+$pgv_lang["GM_DISP_COUNT"]				= "Mostrar totales de personas y familias";
+$pgv_lang["GM_DISP_COUNT_help"]			= "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Aquí puede especificar si se muestran los totals de personas y familias relacionadas con el lugar. Si el archivo GEDCOM contiene muchas personas se recomienda desactivarlo.";
+$pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Usar la rueda del ratón para acercar y alejar";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Aquí puede indicar si la rueda del ratón se utiliza para acercar y alejar.";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS"]		= "Ocultar los controles del mapa";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]	= "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />Esta opción permite ocultar los controles del mapa (por ejemplo, la opción de tipo de mapa) si el ratón está fuera del mapa.";
 ?>
