@@ -877,7 +877,7 @@ function smart_utf8_decode($in_str)
  * @param string $indirec	The raw individual gedcom record
  * @return array	The array of individual names
  */
-function get_indi_names($indirec, $import=false) {
+function get_indi_names($indirec, $import=false, $getMarriedName=true) {
 	global $NAME_REVERSE;
 	$names = array();
 	//-- get all names
@@ -916,18 +916,20 @@ function get_indi_names($indirec, $import=false) {
 				$names[] = array($addname, $letter, $surname, "A");
 			}
 			//-- check for _MARNM name subtags
-			$ct = preg_match_all("/\d _MARNM (.*)/", $namerec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$marriedname = trim($match[$i][1]);
-				$surname = extract_surname($marriedname, false);
-				if (empty($surname)) $surname = "@N.N.";
-				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
-				if (empty($lname)) $lname = $surname;
-				$letter = get_first_letter($lname, $import);
-				$letter = str2upper($letter);
-				if (empty($letter)) $letter = "@";
-				if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
-				$names[] = array($marriedname, $letter, $surname, "C");
+			if ($getMarriedName) {
+				$ct = preg_match_all("/\d _MARNM (.*)/", $namerec, $match, PREG_SET_ORDER);
+				for($i=0; $i<$ct; $i++) {
+					$marriedname = trim($match[$i][1]);
+					$surname = extract_surname($marriedname, false);
+					if (empty($surname)) $surname = "@N.N.";
+					$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
+					if (empty($lname)) $lname = $surname;
+					$letter = get_first_letter($lname, $import);
+					$letter = str2upper($letter);
+					if (empty($letter)) $letter = "@";
+					if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
+					$names[] = array($marriedname, $letter, $surname, "C");
+				}
 			}
 			//-- check for _AKA name subtags
 			$ct = preg_match_all("/\d _AKA (.*)/", $namerec, $match, PREG_SET_ORDER);
