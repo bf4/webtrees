@@ -101,7 +101,7 @@ class DescendancyControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $show_full;
+	global $USE_RIN, $MAX_ALIVE_AGE, $bwidth, $bheight, $pbwidth, $pbheight, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS, $show_full;
 
 	$this->sexarray["M"] = $pgv_lang["male"];
 	$this->sexarray["F"] = $pgv_lang["female"];
@@ -111,7 +111,7 @@ class DescendancyControllerRoot extends BaseController {
 	$this->pid        =safe_GET_xref('pid');
 	$this->show_full  =safe_GET('show_full', array('0', '1'), $PEDIGREE_FULL_DETAILS);
 	$this->chart_style=safe_GET_integer('chart_style', 0, 3, 0);
-	$this->generations=safe_GET_integer('generations', 2, $MAX_DESCENDANCY_GENERATIONS, 2);
+	$this->generations=safe_GET_integer('generations', 2, $MAX_DESCENDANCY_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 	$this->box_width  =safe_GET_integer('box_width',   50, 300, 100);
 
 	// This is passed as a global.  A parameter would be better...
