@@ -67,20 +67,23 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		//DB query
 		$sql = "SELECT DISTINCT i_name, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
 		$res = dbquery($sql);
-		
+
 		if (!DB::isError($res)) {
 			while ($row =& $res->fetchRow()) {
 				if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
 				else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
 				else $genderList = 'name_list_u';
-				$firstnamestring = explode("/", preg_replace(array("/@N.N.?/","/@P.N.?/"), "", $row[0]));
-				$firstnamestring[0] = str_replace(array('*', '.', "\xE2\xA0\xA6", '-', ',', '(', ')', '[', ']', '{', '}'), ' ', $firstnamestring[0]);
-				$firstnamestring[0] = str_replace(array(" '", "' ", ' "', '" '), ' ', $firstnamestring[0]);		// Special treatment to allow names like "D'arcy"
-				$nameList = explode(" ", $firstnamestring[0]);
-				foreach ($nameList as $givnName) {
-					if (strlen($givnName)>1) {
-						if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
-						${$genderList}[$givnName] ++;
+				$allNames = get_indi_names($row[1], false, false);		// Get all names (except Married name)
+				foreach ($allNames as $name) {
+					$firstnamestring = preg_replace(':/.*/:', '', $name[0]);		// Remove surname
+					$firstnamestring = str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}'), ' ', $firstnamestring);
+					$nameList = explode(" ", $firstnamestring);
+					foreach ($nameList as $givnName) {
+						$givnName = preg_replace(array(":^'(.*)'$:", ':^"(.*)"$:'), '\1', $givnName);		// Remove quotes and apostrophes enclosing name
+						if (strlen($givnName)>1) {
+							if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
+							${$genderList}[$givnName] ++;
+						}
 					}
 				}
 			}
