@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["showUnknown"]			= "הראה מין לא ידוע"; 
 $pgv_lang["count"]				= "ספירה"; 
 $pgv_lang["age_differences"]			= "הראה הפרשי תאריכים";
 $pgv_lang["date_of_entry"]			= "תאריך רישום במקור האוריגינלי";
