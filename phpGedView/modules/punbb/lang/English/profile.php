@@ -23,7 +23,7 @@ $lang_profile = array(
 'Paginate info'				=>	'Enter the number of topics and posts you wish to view on each page.',
 
 // Password stuff
-'Pass key bad'				=>	'The specified password activation key was incorrect or has expired. Please re-request a new password. If that fails, contact the forum administrator at',
+'Pass key bad'				=>	'The specified password activation key was incorrect or has expired. Please requst a new password again. If that fails, contact the forum administrator at',
 'Pass updated'				=>	'Your password has been updated. You can now login with your new password.',
 'Pass updated redirect'		=>	'Password updated. Redirecting &hellip;',
 'Wrong pass'				=>	'Wrong old password.',
@@ -34,7 +34,7 @@ $lang_profile = array(
 'Confirm new pass'			=>	'Confirm new password',
 
 // E-mail stuff
-'E-mail key bad'			=>	'The specified e-mail activation key was incorrect or has expired. Please re-request change of e-mail address. If that fails, contact the forum administrator at',
+'E-mail key bad'			=>	'The specified e-mail activation key was incorrect or has expired. Please request change of e-mail address again. If that fails, contact the forum administrator at',
 'E-mail updated'			=>	'Your e-mail address has been updated.',
 'Activate e-mail sent'		=>	'An email has been sent to the specified address with instructions on how to activate the new e-mail address. If it doesn\'t arrive you can contact the forum administrator at',
 'E-mail legend'				=>	'Enter your new e-mail address',
@@ -90,7 +90,7 @@ $lang_profile = array(
 'Avatar legend'				=>	'Set your avatar display options',
 'Avatar info'				=>	'An avatar is a small image that will be displayed with all your posts. You can upload an avatar by clicking the link below. The checkbox \'Use avatar\' below must be checked in order for the avatar to be visible in your posts.',
 'Change avatar'				=>	'Change avatar',
-'Use avatar'				=>	'Use avatar.',
+'Use avatar'				=>	'Use avatar',
 'Signature legend'			=>	'Compose your signature',
 'Signature info'			=>	'A signature is a small piece of text that is attached to your posts. In it, you can enter just about anything you like. Perhaps you would like to enter your favourite quote or your star sign. It\'s up to you! In your signature you can use BBCode if it is allowed in this particular forum. You can see the features that are allowed/enabled listed below whenever you edit your signature.',
 'Sig preview'				=>	'Current signature preview:',
