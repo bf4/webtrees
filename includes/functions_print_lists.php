@@ -1317,6 +1317,19 @@ function print_surname_table($surnames, $type) {
 		echo '<tr><td class="list_value_wrap rela list_item">', ++$row_num, '</td>';
 		// Surname
 		echo '<td class="list_value_wrap" align="', get_align($surn), '">';
+		// If all the surnames are just case variants, then merge them into one
+		// Comment out this block if you want SMITH listed separately from Smith
+		$first_spfxsurn=null;
+		foreach ($surns as $spfxsurn=>$indis) {
+			if ($first_spfxsurn) {
+				if (str2upper($spfxsurn)==str2upper($first_spfxsurn)) {
+					$surns[$first_spfxsurn]=array_merge($surns[$first_spfxsurn],$surns[$spfxsurn]);
+					unset ($surns[$spfxsurn]);
+				}
+			} else {
+				$first_spfxsurn=$spfxsurn;
+			}
+		}
 		if (count($surns)==1) {
 			// Single surname variant
 			foreach ($surns as $spfxsurn=>$indis) {
