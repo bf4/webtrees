@@ -91,26 +91,14 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 						}
 					}
 			// Display summary birth/death info.  Note this info can come from various BIRT/CHR/BAPM/etc. records
-			$birtdate=$controller->indi->getBirthDate();
-			$birtplac=$controller->indi->getBirthPlace();
-			$deatdate=$controller->indi->getDeathDate();
-			$deatplac=$controller->indi->getDeathPlace();
-			if ($birtdate->isOK() || $birtplac || $deatdate->isOK() || $deatdate || $SHOW_LDS_AT_GLANCE) {
+			$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
+			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
+			if ($SHOW_LDS_AT_GLANCE) {
+				$summary.='<b>'.get_lds_glance($controller->indi->getGedcomRecord()).'</b>';
+			}
+			if ($summary) {
 				++$col;
-				echo '<td width="10"><br /></td>';
-				echo '<td valign="top" colspan="', $maxcols-$col, '">';
-				if ($birtdate->isOK() || $birtplac) {
-					echo '<span class="label">', $factarray['BIRT'].':', '</span> ';
-					echo '<span class="field">', $birtdate->Display(false), ' -- ', PrintReady($birtplac), '</span><br />';
-				}
-				if ($deatdate->isOK() || $deatplac) {
-					echo '<span class="label">', $factarray['DEAT'].':','</span> ';
-					echo '<span class="field">', $deatdate->Display(false), ' -- ', PrintReady($deatplac), '</span><br />';
-				}
-				if ($SHOW_LDS_AT_GLANCE) {
-					echo '<b>', get_lds_glance($controller->indi->getGedcomRecord()), '</b>';
-				}
-				echo '</td>';
+				echo '<td width="10"><br /></td><td valign="top" colspan="', $maxcols-$col, '">', $summary, '</td>';
 			}
 		?>
 		</tr>

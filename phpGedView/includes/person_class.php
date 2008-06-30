@@ -1613,8 +1613,8 @@ class Person extends GedcomRecord {
 	// selection items or favourites.
 	function format_list_details() {
 		return
-		  $this->format_first_major_fact(PGV_EVENTS_BIRT).
-		  $this->format_first_major_fact(PGV_EVENTS_DEAT);
+		  $this->format_first_major_fact(PGV_EVENTS_BIRT, 1).
+		  $this->format_first_major_fact(PGV_EVENTS_DEAT, 1);
 	}
 
 }
