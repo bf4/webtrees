@@ -1473,11 +1473,14 @@ class stats {
 		if(is_array($params) && isset($params[2]) && $params[2] != ''){$sorting = strtolower($params[2]);}else{$sorting = 'alpha';}
 		$surnames = get_common_surnames($threshold);
 		if (count($surnames) == 0) return '';
+		
+		uasort($surnames, array('stats', '_name_total_rsort'));
+		if ($maxtoshow>0) $surnames = array_slice($surnames, 0, $maxtoshow);
 
-		switch($sorting)
-		{
+		switch($sorting) {
 			default:
 			case 'alpha':
+				uasort($surnames, array('stats', '_name_name_sort'));
 				break;
 			case 'ralpha':
 				uasort($surnames, array('stats', '_name_name_rsort'));
@@ -1492,7 +1495,6 @@ class stats {
 
 		$common = array();
 		foreach ($surnames as $indexval=>$surname) {
-			if($maxtoshow !== false) {if($maxtoshow-- <= 0){break;}}
 			if ($show_tot) {
 				$tot = PrintReady("[{$surname['match']}]");
 				if ($TEXT_DIRECTION=='ltr') {
@@ -1522,10 +1524,10 @@ class stats {
 		}
 	}
 
-	function commonSurnames($params=null) {return $this->_commonSurnamesQuery('nolist', false, $params);}
-	function commonSurnamesTotals($params=null) {return $this->_commonSurnamesQuery('nolist', true, $params);}
-	function commonSurnamesList($params=null) {return $this->_commonSurnamesQuery('list', false, $params);}
-	function commonSurnamesListTotals($params=null) {return $this->_commonSurnamesQuery('list', true, $params);}
+	function commonSurnames($params=array('','','alpha')) {return $this->_commonSurnamesQuery('nolist', false, $params);}
+	function commonSurnamesTotals($params=array('','','rcount')) {return $this->_commonSurnamesQuery('nolist', true, $params);}
+	function commonSurnamesList($params=array('','','alpha')) {return $this->_commonSurnamesQuery('list', false, $params);}
+	function commonSurnamesListTotals($params=array('','','rcount')) {return $this->_commonSurnamesQuery('list', true, $params);}
 
 	function chartCommonSurnames($params=null)
 	{
@@ -1968,48 +1970,63 @@ class stats {
 		return $encoding;
 	}
 
-	function _name_name_rsort($a, $b)
-	{
-		if(isset($a['name']))
-		{
+	function _name_name_sort($a, $b) {
+		if (isset($a['name'])) {
 			$aname = sortable_name_from_name($a['name']);
-		}
-		else
-		{
-			if(isset($a['names']))
-			{
+		} else {
+			if (isset($a['names'])) {
 				$aname = sortable_name_from_name($a['names'][0][0]);
-			}
-			else
-			{
-				if(is_array($a))
-				{
+			} else {
+				if (is_array($a)) {
 					$aname = sortable_name_from_name(array_shift($a));
-				}
-				else
-				{
+				} else {
 					$aname = $a;
 				}
 			}
 		}
-		if(isset($b['name']))
-		{
+		if (isset($b['name'])) {
 			$bname = sortable_name_from_name($b['name']);
-		}
-		else
-		{
-			if(isset($b['names']))
-			{
+		} else {
+			if (isset($b['names'])) {
 				$bname = sortable_name_from_name($b['names'][0][0]);
-			}
-			else
-			{
-				if(is_array($b))
-				{
+			} else {
+				if (is_array($b)) {
 					$bname = sortable_name_from_name(array_shift($b));
+				} else {
+					$bname = $b;
 				}
-				else
-				{
+			}
+		}
+
+		$aname = strip_prefix($aname);
+		$bname = strip_prefix($bname);
+		$result = compareStrings($aname, $bname, true);		// Case-insensitive compare
+		return $result;
+	}
+
+	function _name_name_rsort($a, $b) {
+		if (isset($a['name'])) {
+			$aname = sortable_name_from_name($a['name']);
+		} else {
+			if (isset($a['names'])) {
+				$aname = sortable_name_from_name($a['names'][0][0]);
+			} else {
+				if (is_array($a)) {
+					$aname = sortable_name_from_name(array_shift($a));
+				} else {
+					$aname = $a;
+				}
+			}
+		}
+		if (isset($b['name'])) {
+			$bname = sortable_name_from_name($b['name']);
+		} else {
+			if (isset($b['names'])) {
+				$bname = sortable_name_from_name($b['names'][0][0]);
+			} else {
+				if (is_array($b)) {
+					$bname = sortable_name_from_name(array_shift($b));
+				} else {
 					$bname = $b;
 				}
 			}
