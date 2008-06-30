@@ -33,6 +33,18 @@ global $linkToID;
 
 print_header($controller->getPageTitle());
 $linkToID = $controller->sid;	// -- Tell addmedia.php what to link to
+
+// LBox ============================================================================= 
+// Get Javascript variables from lb_config.php --------------------------- 
+ if (file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');	
+}
+// LBox  ============================================================================	
+
+loadLangFile("lb_lang");	// Load Lightbox language file	
+
 ?>
 <?php if ($controller->source->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">

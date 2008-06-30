@@ -240,7 +240,7 @@
 			$submenu["hoverclass"] = $submenu_hoverclass;
 			$menu["items"][] = $submenu;
 		//View Source
-		if (eregi("1 SOUR",$rowm['m_gedrec'])) {
+		if (eregi("1 SOUR",$rowm['m_gedrec']) && displayDetailsById($sour, "SOUR")) {
 			$submenu = array();
 			$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewsource"] . "&nbsp;&nbsp;";
 			$submenu["labelpos"] = "right";
