@@ -933,7 +933,7 @@ class stats {
 				." death.d_file={$this->_ged_id} AND"
 				.' birth.d_file=death.d_file AND'
 				.' birth.d_file=indi.i_file AND'
-				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
 				.' death.d_julianday1!=0 AND'
@@ -988,8 +988,8 @@ class stats {
 		}
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		$rows=$this->_runSQL(''
-			.' SELECT DISTINCT'
-				.' death.d_julianday2-birth.d_julianday1 AS age,'
+			.' SELECT '
+				.' MAX(death.d_julianday2-birth.d_julianday1) AS age,'
 				.' death.d_gid'
 			.' FROM'
 				." {$TBLPREFIX}dates AS death,"
@@ -1001,11 +1001,13 @@ class stats {
 				." death.d_file={$this->_ged_id} AND"
 				.' birth.d_file=death.d_file AND'
 				.' birth.d_file=indi.i_file AND'
-				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
 				.' death.d_julianday1!=0'
 				.$sex_search
+			.' GROUP BY'
+				.' d_gid'	
 			.' ORDER BY'
 				.' age DESC'
 		, $total);
@@ -1070,7 +1072,7 @@ class stats {
 				." death.d_file={$this->_ged_id} AND"
 				.' birth.d_file=death.d_file AND'
 				.' birth.d_file=indi.i_file AND'
-				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
 				.' death.d_julianday1!=0'
@@ -1262,7 +1264,7 @@ class stats {
 				.' married.d_gid = fam.f_id AND'
 				." indi.i_id = fam.{$sex_field} AND"
 				." fam.f_file = {$this->_ged_id} AND"
-				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM') AND"
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." married.d_fact = 'MARR' AND"
 				.' birth.d_julianday1 != 0 AND'
 				.' married.d_julianday1 != 0 AND'
@@ -1603,7 +1605,7 @@ class stats {
 					$allNames = get_indi_names($row[1], false, false);		// Get all names (except Married name)
 					foreach ($allNames as $name) {
 						$firstnamestring = preg_replace(':/.*/:', '', $name[0]);		// Remove surname
-						$firstnamestring = str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}'), ' ', $firstnamestring);
+						$firstnamestring = str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@P'), ' ', $firstnamestring); 
 						$nameList = explode(" ", $firstnamestring);
 						foreach ($nameList as $givnName) {
 							$givnName = preg_replace(array(":^'(.*)'$:", ':^"(.*)"$:'), '\1', $givnName);		// Remove quotes and apostrophes enclosing name
