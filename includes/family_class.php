@@ -443,8 +443,8 @@ class Family extends GedcomRecord {
 	// selection items or favourites.
 	function format_list_details() {
 		return
-		  $this->format_first_major_fact(PGV_EVENTS_MARR).
-		  $this->format_first_major_fact(PGV_EVENTS_DIV);
+		  $this->format_first_major_fact(PGV_EVENTS_MARR, 1).
+		  $this->format_first_major_fact(PGV_EVENTS_DIV, 1);
 	}
 
 }
