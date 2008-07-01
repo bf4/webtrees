@@ -3156,16 +3156,19 @@ function get_top_surnames($num) {
 	global $TBLPREFIX;
 
 	$surnames = array();
-	$sql = "SELECT COUNT(i_surname) AS count, i_surname FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." GROUP BY i_surname ORDER BY count DESC";
+	$sql = "SELECT COUNT(i_surname) AS count, i_surname, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." GROUP BY i_surname ORDER BY count DESC";
 	$res = dbquery($sql, true, $num+1);
 
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow()) {
-			if (isset($surnames[str2upper($row[1])]["match"]))
-				$surnames[str2upper($row[1])]["match"] += $row[0];
-			else {
-				$surnames[str2upper($row[1])]["name"] = $row[1];
-				$surnames[str2upper($row[1])]["match"] = $row[0];
+			$name = ereg_replace('.*1 NAME .*/(.*)/.*', '\1', $row[2]);		// Extract first surname from GEDCOM record
+			if (preg_match("/^(@N\.N\.?|_+|\?+)$/", $row[1])==0) {			// Skip various forms of "unknown"
+				if (isset($surnames[str2upper($row[1])]['match']))
+					$surnames[str2upper($row[1])]['match'] += $row[0];
+				else {
+					$surnames[str2upper($row[1])]['name'] = $name;
+					$surnames[str2upper($row[1])]['match'] = $row[0];
+				}
 			}
 		}
 		$res->free();
@@ -3175,11 +3178,11 @@ function get_top_surnames($num) {
 
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow()) {
-			if (isset($surnames[str2upper($row[1])]["match"]))
-				$surnames[str2upper($row[1])]["match"] += $row[0];
+			if (isset($surnames[str2upper($row[1])]['match']))
+				$surnames[str2upper($row[1])]['match'] += $row[0];
 			else {
-				$surnames[str2upper($row[1])]["name"] = $row[1];
-				$surnames[str2upper($row[1])]["match"] = $row[0];
+				$surnames[str2upper($row[1])]['name'] = $row[1];
+				$surnames[str2upper($row[1])]['match'] = $row[0];
 			}
 		}
 		$res->free();
