@@ -612,6 +612,82 @@ function get_first_letter($text, $import=false) {
 }
 
 /**
+ * get first letters
+ *
+ * get the first $n letters of a UTF-8 string
+ * @param string $text	the text to get the first letters from
+ * @return string 	the first letter UTF-8 encoded
+ * $n the number of letters to return
+ */
+function get_first_letters($text, $import=false, $n) {
+	global $LANGUAGE, $CHARACTER_SET;
+	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
+
+	$x=0;
+	$letters = "";
+	for ($i=0; $i<=$n; $i++) {
+		
+		$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
+		$danishTo   = array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
+		
+		//$text=trim(str2upper($text));
+		if (!$import) {
+			if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian") {
+				$text = str_replace($danishFrom, $danishTo, $text);
+			}
+		}
+		
+		$multiByte = false;
+		 
+		// Look for 4-byte combinations that should be treated as a single character
+		$letter = substr($text, $x, 4);
+		if ($import) {
+			if (isset($quadgraphAll[$letter])) $multiByte = true;
+		} else {
+			if (isset($quadgraph[$letter])) $multiByte = true;
+		}
+		
+		if (!$multiByte) {
+			// 4-byte combination isn't listed: try 3-byte combination
+			$letter = substr($text, $x, 3);
+			if ($import) {
+				if (isset($trigraphAll[$letter])) $multiByte = true;
+			} else {
+				if (isset($trigraph[$letter])) $multiByte = true;
+			}
+		}
+		
+		if (!$multiByte) {
+			// 3-byte combination isn't listed: try 2-byte combination
+			$letter = substr($text, $x, 2);
+			if ($import) {
+				if (isset($digraphAll[$letter])) $multiByte = true;
+			} else {
+				if (isset($digraph[$letter])) $multiByte = true;
+			}
+		}
+		
+		if (!$multiByte) {
+			// All lists failed: try for a UTF8 character
+			$charLen = 1;
+			$letter = substr($text, $x, 1);
+			if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
+			if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
+			if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
+			$letter = substr($text, $x, $charLen);
+		}
+		
+		if ($letter=="/") $letter="@"; //where has @P.N. vanished from names with a null firstname?
+		
+		$letters1 = array();
+		$letters1[$i] = $letter;
+		$letters .= implode("", $letters1);
+		$x = $x + $charLen;
+	}
+	return $letters;
+}
+
+/**
  * This function replaces @N.N. and @P.N. with the language specific translations
  * @param mixed $names	$names could be an array of name parts or it could be a string of the name
  * @return string
