@@ -1475,7 +1475,6 @@ class stats {
 		if(is_array($params) && isset($params[2]) && $params[2] != ''){$sorting = strtolower($params[2]);}else{$sorting = 'alpha';}
 		$surnames = get_common_surnames($threshold);
 		if (count($surnames) == 0) return '';
-		
 		uasort($surnames, array('stats', '_name_total_rsort'));
 		if ($maxtoshow>0) $surnames = array_slice($surnames, 0, $maxtoshow);
 
@@ -1605,13 +1604,25 @@ class stats {
 					$allNames = get_indi_names($row[1], false, false);		// Get all names (except Married name)
 					foreach ($allNames as $name) {
 						$firstnamestring = preg_replace(':/.*/:', '', $name[0]);		// Remove surname
-						$firstnamestring = str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@P'), ' ', $firstnamestring); 
+						$firstnamestring = str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@'), ' ', $firstnamestring); 
 						$nameList = explode(" ", $firstnamestring);
 						foreach ($nameList as $givnName) {
-							$givnName = preg_replace(array(":^'(.*)'$:", ':^"(.*)"$:'), '\1', $givnName);		// Remove quotes and apostrophes enclosing name
-							if (strlen($givnName)>1) {
-								if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
-								${$genderList}[$givnName] ++;
+							// Remove names within quotes and apostrophes
+							$givnName = preg_replace(array(":^'.*'$:", ':^".*"$:'), '', $givnName);
+							$givnName = preg_replace(":^(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99).*(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99)$:", '', $givnName);
+							$givnName = trim($givnName);
+
+							// Ignore single letters
+							if (!empty($givnName)) {
+								$charLen = 1;
+								$letter = substr($givnName, 0, 1);
+								if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
+								if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
+								if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
+								if (strlen($givnName)>$charLen) {
+									if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
+									${$genderList}[$givnName] ++;
+								}
 							}
 						}
 					}
