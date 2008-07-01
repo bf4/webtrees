@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Album Page: added get_first_letters() function in functions_name.php to correctly create a truncated TITLE dropdown link for RTL and LTR (windmillway)
  - Fixed: Album Page: Corrected wrong appearance of View Source drop down menu item when not authorized. Lightbox added to source.php page (windmillway)
  - Fixed: [ 2002885 ] Place of DEAT, assumed? (fisharebest)
  - Changed: Album Page: Minor font and cell width changes to accommodate languages other than English (windmillway)

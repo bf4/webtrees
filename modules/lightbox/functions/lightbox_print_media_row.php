@@ -98,7 +98,9 @@
 	if (showFactDetails("OBJE", $pid)) {
 		
 		//  Get the title of the media
-		$mediaTitle = $rowm["m_titl"];
+		$media=Media::getInstance($rowm["m_media"]);
+		$mediaTitle = $media->getFullName();
+		
 		$subtitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
 		
 		// If no title, use filename
@@ -182,11 +184,13 @@
 				$submenu_class			=	"submenuitem";
 				$submenu_hoverclass		=	"submenuitem_hover";
 			}
+			
 			$menu = array();
-			$mtitle = substr($mediaTitle, 0, 13);
-			$mtitle2 = cut_html($mtitle);
-			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . $mtitle2 . "...</img>\n";
-			// Menu Title
+			// Get the first 12 characters of the Media Title
+			$mtitle = htmlspecialchars_decode($mediaTitle, ENT_QUOTES);
+			$mtitle1 = get_first_letters($mtitle, false, 12);  // Last parameter is the number of characters.
+			$mtitle2 = htmlspecialchars($mtitle1);
+			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle2) . "...</img>\n";
 			$menu["labelpos"] = "right";
 			$menu["icon"] = "";
 			$menu["onclick"] = "";
