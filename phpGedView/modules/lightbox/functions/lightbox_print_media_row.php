@@ -188,7 +188,7 @@
 			$menu = array();
 			// Get the first 12 characters of the Media Title
 			$mtitle = htmlspecialchars_decode($mediaTitle, ENT_QUOTES);
-			$mtitle1 = get_first_letters($mtitle, false, 12);  // Last parameter is the number of characters.
+			$mtitle1 = get_first_letters($mtitle, 12);  // Second parameter is the number of characters.
 			$mtitle2 = htmlspecialchars($mtitle1);
 			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle2) . "...</img>\n";
 			$menu["labelpos"] = "right";

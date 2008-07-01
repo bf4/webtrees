@@ -619,7 +619,7 @@ function get_first_letter($text, $import=false) {
  * @return string 	the first letter UTF-8 encoded
  * $n the number of letters to return
  */
-function get_first_letters($text, $import=false, $n) {
+function get_first_letters($text, $n) {
 	global $LANGUAGE, $CHARACTER_SET;
 	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
 
@@ -630,41 +630,26 @@ function get_first_letters($text, $import=false, $n) {
 		$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
 		$danishTo   = array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
 		
-		//$text=trim(str2upper($text));
-		if (!$import) {
-			if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian") {
-				$text = str_replace($danishFrom, $danishTo, $text);
-			}
+		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian") {
+			$text = str_replace($danishFrom, $danishTo, $text);
 		}
 		
 		$multiByte = false;
 		 
 		// Look for 4-byte combinations that should be treated as a single character
 		$letter = substr($text, $x, 4);
-		if ($import) {
-			if (isset($quadgraphAll[$letter])) $multiByte = true;
-		} else {
-			if (isset($quadgraph[$letter])) $multiByte = true;
-		}
+		if (isset($quadgraph[$letter])) $multiByte = true;
 		
 		if (!$multiByte) {
 			// 4-byte combination isn't listed: try 3-byte combination
 			$letter = substr($text, $x, 3);
-			if ($import) {
-				if (isset($trigraphAll[$letter])) $multiByte = true;
-			} else {
-				if (isset($trigraph[$letter])) $multiByte = true;
-			}
+			if (isset($trigraph[$letter])) $multiByte = true;
 		}
 		
 		if (!$multiByte) {
 			// 3-byte combination isn't listed: try 2-byte combination
 			$letter = substr($text, $x, 2);
-			if ($import) {
-				if (isset($digraphAll[$letter])) $multiByte = true;
-			} else {
-				if (isset($digraph[$letter])) $multiByte = true;
-			}
+			if (isset($digraph[$letter])) $multiByte = true;
 		}
 		
 		if (!$multiByte) {
