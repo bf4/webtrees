@@ -34,6 +34,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once('includes/mutex_class.php');
 require_once('includes/media_class.php');
 
+if (!extension_loaded('mbstring')) {
+	require_once 'includes/functions_mbstring.php';
+}
+
 /**
  * The level of error reporting
  * $ERROR_LEVEL = 0 will not print any errors
