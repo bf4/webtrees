@@ -199,7 +199,24 @@ if ($surname_sublist=='yes') {
 		$person=Person::getInstance($pid);
 		foreach ($person->getAllNames() as $name) {
 			$surn=reset(explode(',', $name['sort']));
-			if ($show_all=='yes' || $surname && $surname==$surn || !$surname && $alpha==get_first_letter($surn)) {
+			// Ignore diacritics - need to use the same logic as get_indi_alpha()
+			// TODO: This ought to be a language-dependent conversion, as in some
+			// languages, letters with diacritics are regarded as separate letters.
+			$initial=get_first_letter($surn);
+			if ($DICTIONARY_SORT[$LANGUAGE]) {
+				$position = strpos($UCDiacritWhole, $initial);
+				if ($position!==false) {
+					$position = $position >> 1;
+					$initial = substr($UCDiacritStrip, $position, 1);
+				} else {
+					$position = strpos($LCDiacritWhole, $initial);
+					if ($position!==false) {
+						$position = $position >> 1;
+						$initial = substr($LCDiacritStrip, $position, 1);
+					}
+				}
+			}
+			if ($show_all=='yes' || $surname && $surname==$surn || !$surname && $alpha==$initial) {
 				$spfxsurn=reset(explode(',', $name['list']));
 				switch ($surn) {
 				case '@N.N.':
