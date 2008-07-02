@@ -389,7 +389,7 @@ class GedcomRecord {
 	// ['full'] = the name as specified in the record, e.g. "Vincent van Gogh" or "John Unknown"
 	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
 	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
-	function getAllNames($fact, $level=1) {
+	function getAllNames($fact='!', $level=1) {
 		global $pgv_lang;
 
 		if (is_null($this->_getAllNames)) {
