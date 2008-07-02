@@ -77,11 +77,12 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 				foreach ($allNames as $name) {
 					$firstnamestring = preg_replace(':/.*/:', '', $name[0]);		// Remove surname
 					$firstnamestring = str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@'), ' ', $firstnamestring); 
-					$nameList = explode(" ", $firstnamestring);
+					// Remove names within quotes and apostrophes
+					$firstnamestring = preg_replace(array(": '.*' :", ': ".*" :'), ' ', $firstnamestring);
+					$firstnamestring = preg_replace(": (\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99).*(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99) :", ' ', $firstnamestring);
+
+					$nameList = explode(" ", trim($firstnamestring));
 					foreach ($nameList as $givnName) {
-						// Remove names within quotes and apostrophes
-						$givnName = preg_replace(array(":^'.*'$:", ':^".*"$:'), '', $givnName);
-						$givnName = preg_replace(":^(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99).*(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99)$:", '', $givnName);
 						$givnName = trim($givnName);
 
 						// Ignore single letters
