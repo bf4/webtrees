@@ -618,24 +618,25 @@ if ($action=="filter") {
 						if ($media["LINKED"]) {
 							print $pgv_lang["media_linked"]."<br />";
 							foreach ($media["LINKS"] as $indi => $type_record) {
-								if (isset($pgv_changes[$indi."_".$GEDCOM])) $indirec = find_updated_record($indi);
-								else $indirec = find_gedcom_record($indi);
-								if ($type_record=="INDI") {
-									print " <br /><a href=\"individual.php?pid=".$indi."\"> ".$pgv_lang["view_person"]." - ".PrintReady(get_person_name($indi))."</a>";
+								$record=GedcomRecord::getInstance($indi);
+								echo '<br /><a href="'.encode_url($record->getLinkUrl()).'">';
+								switch($type_record) {
+								case 'INDI':
+									echo $pgv_lang['view_person'], ' - ';
+									break;
+								case 'FAM':
+									echo $pgv_lang['view_family'], ' - ';
+									break;
+								case 'SOUR':
+									echo $pgv_lang['view_source'], ' - ';
+									break;
+								case 'OBJE':
+									echo $pgv_lang['view_object'], ' - ';
+									break;
 								}
-								else if ($type_record=="FAM") {
-									print "<br /> <a href=\"family.php?famid=".$indi."\"> ".$pgv_lang["view_family"]." - ".PrintReady(get_family_descriptor($indi))."</a>";
-								}
-								else if ($type_record=="SOUR") {
-									print "<br /> <a href=\"source.php?sid=".$indi."\"> ".$pgv_lang["view_source"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
-								}
-								//-- no reason why we might not get media linked to media. eg stills from movie clip, or differents resolutions of the same item
-								else if ($type_record=="OBJE") {
-									//print "<br /> <a href=\"media.php?gid=".$indi."\"> ".$pgv_lang["view_object"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
-								}
+								echo PrintReady($record->getFullName()), '</a>';
 							}
-						}
-						else {
+						} else {
 							print $pgv_lang["media_not_linked"];
 						}
 						print "\n\t\t\t</td>";
