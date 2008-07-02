@@ -138,17 +138,10 @@ function import_record($indirec, $update) {
 		if ($MAX_IDS[$type] < $idnum)
 			$MAX_IDS[$type] = $idnum;
 
-	if ($USE_RTL_FUNCTIONS) {
-		//-- replace any added ltr processing codes
-		//		$indirec = preg_replace(array("/".html_entity_decode("&rlm;",ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $indirec);
-		// Because of a bug in PHP 4, the above generates an error message and does nothing.
-		// see:  http://bugs.php.net/bug.php?id=25670
-		// HTML entity &rlm; is the 3-byte UTF8 character 0xE2808F
-		// HTML entity &lrm; is the 3-byte UTF8 character 0xE2808E
-		$indirec = str_replace(array (
-			chr(0xE2
-		) . chr(0x80) . chr(0x8F), chr(0xE2) . chr(0x80) . chr(0x8E)), "", $indirec);
-	}
+	//-- replace any added ltr processing codes
+	// HTML entity &rlm; is the 3-byte UTF8 character 0xE2808F
+	// HTML entity &lrm; is the 3-byte UTF8 character 0xE2808E
+	$indirec = str_replace(array(PGV_UTF8_LRM,PGV_UTF8_RLM), "", $indirec);
 
 	// Update the dates and places tables.
 	update_places($gid, $indirec);
