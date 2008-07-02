@@ -74,7 +74,7 @@ $countries["BGR"]="Bulgaria";
 $countries["BHR"]="Bahréin";
 $countries["BHS"]="Bahamas";
 $countries["BIH"]="Bosnia y Herzegovina";
-$countries["BLR"]="Belarrusia";
+$countries["BLR"]="Belarusia";
 $countries["BLZ"]="Belice";
 $countries["BMU"]="Bermudas";
 $countries["BOL"]="Bolivia";
@@ -301,7 +301,7 @@ $countries["WAF"]="África occidental";
 $countries["WLF"]="Wallis y Futuna";
 $countries["WLS"]="Gales";
 $countries["WSM"]="Samoa";
-$countries["YEM"]="Yemén";
+$countries["YEM"]="Yemen";
 $countries["YUG"]="Yugoslavia";
 $countries["ZAF"]="Sudáfrica";
 $countries["ZAR"]="Zaire";
@@ -344,6 +344,6 @@ $altCountryNames["TLS"]="Timor Oriental";
 $altCountryNames["USA"]="Estados Unidos; Estados Unidos de América; EE.UU.AA.";
 $altCountryNames["VAT"]="Santa Sede";
 $altCountryNames["WSM"]="Samoa Occidental";
-
+$altCountryNames["YEM"]="Yemén";
 
 ?>

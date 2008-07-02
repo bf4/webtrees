@@ -1518,7 +1518,7 @@ class Person extends GedcomRecord {
 				list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $name);
 				$givn=str2upper(trim($tmp1.' '.$tmp3));
 				$surn=$tmp2;
-				if (preg_match('/^(?:(?:(?:a|aan|ab|af|al|ap|as|av|bat|ben|bij|bin|bint|da|de|del|della|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|st|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor)[ -]+)+(?:[dl]\')?)(.+)$/i', $surn, $match)) {
+				if (preg_match('/^(?:(?:(?:a|aan|ab|af|al|ap|as|auf|av|bat|ben|bij|bin|bint|da|de|del|della|dem|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|st|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor|vor)[ -]+)+(?:[dl]\')?)(.+)$/i', $surn, $match)) {
 					$surn=$match[1];
 				}
 			}
@@ -1613,8 +1613,8 @@ class Person extends GedcomRecord {
 	// selection items or favourites.
 	function format_list_details() {
 		return
-		  $this->format_first_major_fact(PGV_EVENTS_BIRT).
-		  $this->format_first_major_fact(PGV_EVENTS_DEAT);
+		  $this->format_first_major_fact(PGV_EVENTS_BIRT, 1).
+		  $this->format_first_major_fact(PGV_EVENTS_DEAT, 1);
 	}
 
 }

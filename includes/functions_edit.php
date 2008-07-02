@@ -773,10 +773,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		return false;
 	}
 	function trim(str) {
-		// See the NAME_TEXT portion of the GEDCOM spec
-		// according to GEDCOM spec commas should not be allowed in NAME_TEXT, but
-		// some localization requirements require commas
-		// str=str.replace(/,/g," ");
+		// Commas are used in the GIVN and SURN field to separate lists of surnames.
+		// For example, to differentiate the two Spanish surnames from an English
+		// double-barred name.
+		// Commas *may* be used in the NAME field, and will form part of the displayed
+		// name.  This is not encouraged, as it may confuse some logic that assumes
+		// "list" format names are always "surn, givn".
+		str=str.replace(/,/g," ");
 		
 		str=str.replace(/\s\s+/g," ");
 		return str.replace(/(^\s+)|(\s+$)/g,'');

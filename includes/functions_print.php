@@ -2045,7 +2045,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 				$newtext = $text;
 				$hasallhits = true;
 				foreach($queries as $index=>$query1) {
-					$query1esc=addcslashes($query1, '/');
+					$query1esc=preg_quote($query1, '/');
 					if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
 						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 					}
@@ -2065,7 +2065,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 					$newtext = $text;
 					$hasallhits = true;
 					foreach($queries as $index=>$query1) {
-						$query1esc=addcslashes($query1, '/');
+						$query1esc=preg_quote($query1, '/');
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
@@ -2084,7 +2084,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 					$newtext = $text;
 					$hasallhits = true;
 					foreach($queries as $index=>$query1) {
-						$query1esc=addcslashes($query1, '/');
+						$query1esc=preg_quote($query1, '/');
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
@@ -2103,7 +2103,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 					$newtext = $text;
 					$hasallhits = true;
 					foreach($queries as $index=>$query1) {
-						$query1esc=addcslashes($query1, '/');
+						$query1esc=preg_quote($query1, '/');
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
@@ -2122,7 +2122,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 					$newtext = $text;
 					$hasallhits = true;
 					foreach($queries as $index=>$query1) {
-						$query1=addcslashes($query1, '/');
+						$query1=preg_quote($query1, '/');
 						if (preg_match("/(".$query1.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
 						}

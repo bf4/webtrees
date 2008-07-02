@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["showUnknown"]			= "Show unknown gender";
 $pgv_lang["count"]					= "Count";
 $pgv_lang["age_differences"]		= "Show Date Differences";
 $pgv_lang["date_of_entry"]			= "Date of entry in original source";

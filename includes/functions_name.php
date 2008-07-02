@@ -612,6 +612,67 @@ function get_first_letter($text, $import=false) {
 }
 
 /**
+ * get first letters
+ *
+ * get the first $n letters of a UTF-8 string
+ * @param string $text	the text to get the first letters from
+ * @return string 	the first letter UTF-8 encoded
+ * $n the number of letters to return
+ */
+function get_first_letters($text, $n) {
+	global $LANGUAGE, $CHARACTER_SET;
+	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
+
+	$x=0;
+	$letters = "";
+	for ($i=0; $i<=$n; $i++) {
+		
+		$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
+		$danishTo   = array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
+		
+		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian") {
+			$text = str_replace($danishFrom, $danishTo, $text);
+		}
+		
+		$multiByte = false;
+		 
+		// Look for 4-byte combinations that should be treated as a single character
+		$letter = substr($text, $x, 4);
+		if (isset($quadgraph[$letter])) $multiByte = true;
+		
+		if (!$multiByte) {
+			// 4-byte combination isn't listed: try 3-byte combination
+			$letter = substr($text, $x, 3);
+			if (isset($trigraph[$letter])) $multiByte = true;
+		}
+		
+		if (!$multiByte) {
+			// 3-byte combination isn't listed: try 2-byte combination
+			$letter = substr($text, $x, 2);
+			if (isset($digraph[$letter])) $multiByte = true;
+		}
+		
+		if (!$multiByte) {
+			// All lists failed: try for a UTF8 character
+			$charLen = 1;
+			$letter = substr($text, $x, 1);
+			if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
+			if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
+			if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
+			$letter = substr($text, $x, $charLen);
+		}
+		
+		if ($letter=="/") $letter="@"; //where has @P.N. vanished from names with a null firstname?
+		
+		$letters1 = array();
+		$letters1[$i] = $letter;
+		$letters .= implode("", $letters1);
+		$x = $x + $charLen;
+	}
+	return $letters;
+}
+
+/**
  * This function replaces @N.N. and @P.N. with the language specific translations
  * @param mixed $names	$names could be an array of name parts or it could be a string of the name
  * @return string
@@ -877,7 +938,7 @@ function smart_utf8_decode($in_str)
  * @param string $indirec	The raw individual gedcom record
  * @return array	The array of individual names
  */
-function get_indi_names($indirec, $import=false) {
+function get_indi_names($indirec, $import=false, $getMarriedName=true) {
 	global $NAME_REVERSE;
 	$names = array();
 	//-- get all names
@@ -916,18 +977,20 @@ function get_indi_names($indirec, $import=false) {
 				$names[] = array($addname, $letter, $surname, "A");
 			}
 			//-- check for _MARNM name subtags
-			$ct = preg_match_all("/\d _MARNM (.*)/", $namerec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$marriedname = trim($match[$i][1]);
-				$surname = extract_surname($marriedname, false);
-				if (empty($surname)) $surname = "@N.N.";
-				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
-				if (empty($lname)) $lname = $surname;
-				$letter = get_first_letter($lname, $import);
-				$letter = str2upper($letter);
-				if (empty($letter)) $letter = "@";
-				if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
-				$names[] = array($marriedname, $letter, $surname, "C");
+			if ($getMarriedName) {
+				$ct = preg_match_all("/\d _MARNM (.*)/", $namerec, $match, PREG_SET_ORDER);
+				for($i=0; $i<$ct; $i++) {
+					$marriedname = trim($match[$i][1]);
+					$surname = extract_surname($marriedname, false);
+					if (empty($surname)) $surname = "@N.N.";
+					$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
+					if (empty($lname)) $lname = $surname;
+					$letter = get_first_letter($lname, $import);
+					$letter = str2upper($letter);
+					if (empty($letter)) $letter = "@";
+					if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
+					$names[] = array($marriedname, $letter, $surname, "C");
+				}
 			}
 			//-- check for _AKA name subtags
 			$ct = preg_match_all("/\d _AKA (.*)/", $namerec, $match, PREG_SET_ORDER);

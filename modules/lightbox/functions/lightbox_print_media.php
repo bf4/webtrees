@@ -50,7 +50,7 @@
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
 	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
-
+	
 	// Set type of media from call in album
 	if ($t==1) {
 		$tt      = $pgv_lang["TYPE__photo"];
@@ -178,7 +178,7 @@
 			echo "\n\n";
 			echo '<table border="0" class="facts_table" ><tr>', "\n";
 			
-			echo '<td width="80" align="center" class="descriptionbox">';
+			echo '<td width="100" align="center" class="descriptionbox">';
 				if ($t==5){
 					echo "<b><br />" . $tt . "</b><br /><br />";
 				}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){

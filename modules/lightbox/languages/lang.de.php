@@ -35,10 +35,17 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 // Added in VERSION 4.1.6
+$pgv_lang["lb_generalhelp"]     = "Persönliche Fakten Seite - Lightbox Allgemeine Hilfe";
+$pgv_lang["lb_viewedit"]		= "Zeigen/Bearbeiten";
+$pgv_lang["lb_viewnotes"]		= "Bemerkungen zeigen";
+$pgv_lang["lb_viewdetails"]		= "Details zeigen";
+$pgv_lang["lb_viewsource"]		= "Quelle zeigen";
+$pgv_lang["lb_editmedia"]		= "Medienobjekt bearbeiten";
+$pgv_lang["lb_unlinkmedia"]		= "Verbindung abbrechen";
 $pgv_lang["lb_balloon_true"]	= "Sprechblase";
 $pgv_lang["lb_balloon_false"]	= "Normal";
 $pgv_lang["lb_tt_balloon"]		= "Persönliche Fakten Seite - Album Ordner Miniaturbild Bereich";
-$pgv_lang["lb_ttAppearance"]	= "Behandlung der oberen Links";
+$pgv_lang["lb_ttAppearance"]	= "Behandlung der Links zu Bemerkungen";
 $pgv_lang["view_lightbox"]		= "Von ... Album zeigen";
 $pgv_lang["lb_notes"]			= "Bemerkungen";
 $pgv_lang["lb_notes_info"]		= "";

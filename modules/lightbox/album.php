@@ -37,6 +37,24 @@ include_once('modules/lightbox/lb_defaultconfig.php');
 if (file_exists('modules/lightbox/lb_config.php')) include_once('modules/lightbox/lb_config.php'); 
 //	include_once('modules/lightbox/functions/browser_detection_php_ar.php');
 
+function cut_html($string)
+{
+    $a=$string;
+
+    while ($a = strstr($a, '&'))
+    {
+        //echo "'".$a."'\n";
+        $b=strstr($a, ';');
+        if (!$b)
+        {
+            //echo "couper...\n";
+            $nb=strlen($a);
+            return substr($string, 0, strlen($string)-$nb);
+        }
+        $a=substr($a,1,strlen($a)-1);
+    }
+    return $string;
+}
 
 if (isset($edit)) {
 	$edit=$edit;

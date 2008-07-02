@@ -91,26 +91,14 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 						}
 					}
 			// Display summary birth/death info.  Note this info can come from various BIRT/CHR/BAPM/etc. records
-			$birtdate=$controller->indi->getBirthDate();
-			$birtplac=$controller->indi->getBirthPlace();
-			$deatdate=$controller->indi->getDeathDate();
-			$deatplac=$controller->indi->getDeathPlace();
-			if ($birtdate->isOK() || $birtplac || $deatdate->isOK() || $deatdate || $SHOW_LDS_AT_GLANCE) {
+			$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
+			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
+			if ($SHOW_LDS_AT_GLANCE) {
+				$summary.='<b>'.get_lds_glance($controller->indi->getGedcomRecord()).'</b>';
+			}
+			if ($summary) {
 				++$col;
-				echo '<td width="10"><br /></td>';
-				echo '<td valign="top" colspan="', $maxcols-$col, '">';
-				if ($birtdate->isOK() || $birtplac) {
-					echo '<span class="label">', $factarray['BIRT'].':', '</span> ';
-					echo '<span class="field">', $birtdate->Display(false), ' -- ', PrintReady($birtplac), '</span><br />';
-				}
-				if ($deatdate->isOK() || $deatplac) {
-					echo '<span class="label">', $factarray['DEAT'].':','</span> ';
-					echo '<span class="field">', $deatdate->Display(false), ' -- ', PrintReady($deatplac), '</span><br />';
-				}
-				if ($SHOW_LDS_AT_GLANCE) {
-					echo '<b>', get_lds_glance($controller->indi->getGedcomRecord()), '</b>';
-				}
-				echo '</td>';
+				echo '<td width="10"><br /></td><td valign="top" colspan="', $maxcols-$col, '">', $summary, '</td>';
 			}
 		?>
 		</tr>
@@ -613,23 +601,12 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 
-		// The following is temporary, until the handling of the Lightbox Help system
-		// is adjusted to match the usual PhpGedView practice
-		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
-		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
-
 		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		print "&nbsp;&nbsp;";
 
 		// ---------- Help link --------------------
-		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
-		if ($theme_name=="Minimal") {
-			// Force icon options to "text" when we're dealing with the Minimal theme
-			print $pgv_lang["page_help"];
-		}else{
-			print "<img src=\"{$PGV_IMAGE_DIR}/small/help.gif\" class=\"icon\" title=\"{$pgv_lang['page_help']}\" alt=\"{$pgv_lang['page_help']}\" />" ;
-		}
-        print "</a>" ;
+		print_help_link("lb_general_help", "qm", "lb_help", true);
+		
 
 		// Header info ---------------------------------------------------
 		$mediacnt = $controller->get_media_count();

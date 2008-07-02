@@ -389,7 +389,7 @@ class GedcomRecord {
 	// ['full'] = the name as specified in the record, e.g. "Vincent van Gogh" or "John Unknown"
 	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
 	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
-	function getAllNames($fact, $level=1) {
+	function getAllNames($fact='!', $level=1) {
 		global $pgv_lang;
 
 		if (is_null($this->_getAllNames)) {
@@ -538,13 +538,16 @@ class GedcomRecord {
 	}
 
 	// Extract/format the first fact from a list of facts.
-	function format_first_major_fact($facts) {
+	function format_first_major_fact($facts, $style) {
 		global $factarray;
 		foreach (explode('|', $facts) as $fact) {
 			foreach ($this->getAllEvents($fact) as $factrec) {
 				// Only display if it has a date or place (or both)
 				if (preg_match('/^2 (DATE|PLAC) (.+)/m', $factrec)) {
-					return '<br /><i>'.$factarray[$fact].' '.format_fact_date($factrec).format_fact_place($factrec).'</i>';
+					switch ($style) {
+					case 1: return '<br /><i>'.$factarray[$fact].' '.format_fact_date($factrec).format_fact_place($factrec).'</i>';
+					case 2: return '<span class="label">'.$factarray[$fact].':</span> <span class="field">'.format_fact_date($factrec).format_fact_place($factrec).'</span><br />';
+					}
 				}
 			}
 		}

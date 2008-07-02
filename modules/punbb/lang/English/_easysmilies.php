@@ -17,7 +17,7 @@ $lang_smiley = array(
 	'Smiley Code'				=>	'Smiley\'s Code',
 	'Smiley Image'				=>	'Smiley\'s Image',
 	'Smiley Code Description'				=>	'Enter the text code that you want the smiley to be displayed as (ex. :O)).',
-	'Smiley Image Description'				=>	'Enter the name of the image that cooresponds to the above text code (ex. bignose.png).',
+	'Smiley Image Description'				=>	'Enter the name of the image that corresponds to the above text code (ex. bignose.png).',
 	'Submit Smiley'				=>	'Submit Smiley',
 
 	// Easy Smilies (delete a smiley)

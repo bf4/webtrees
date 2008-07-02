@@ -385,4 +385,22 @@ $factarray["_ADOP_CHIL"] = "Adopcja dziecka";
 $factarray["MARR_CIVIL"] = "Ślub cywilny";
 $factarray["COMM"]		 = "Komentarz";
 
+/*-- Fact abbreviations for use in Chart boxes.
+ *              Use these abbreviations in cases where the standard method of using the first
+ *              letter of the spelled-out name results in an undesirable abbreviation or where
+ *              you want to produce a different result (eg: "x" instead of "M" for "Married").
+ *
+ *              You can abbreviate any Fact label this way.  The list of abbreviations is
+ *              open-ended.
+ *
+ *              These abbreviations are user-customizable. Just put them into file "extra.xx.php".
+ *              The length of these abbreviations is not restricted to 1 letter.
+ */
+
+$factAbbrev["BIRT"]		= "U";
+$factAbbrev["MARR"]		= "M";
+$factAbbrev["DEAT"]		= "Ś";
+
+
+
 ?>
