@@ -40,7 +40,7 @@ function top_surname_sort($a, $b) {
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION;
-	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
 
@@ -98,7 +98,41 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
 
 		ob_start();
-		print_surn_table(array_slice($surnames, 0, $config["num"]));
+		$all_surnames=array();
+		foreach (array_keys($surnames) as $n=>$surname) {
+			if ($n>=$config["num"]) {
+				break;
+			}
+			foreach (array_keys(get_surname_indis($surname)) as $pid) {
+				$person=Person::getInstance($pid);
+				foreach ($person->getAllNames() as $name) {
+					$surn=reset(explode(',', $name['sort']));
+					if ($surn && $surn!='@N.N.' && $surname==$surn) {
+						$spfxsurn=reset(explode(',', $name['list']));
+						if (! array_key_exists($surn, $all_surnames)) {
+							$all_surnames[$surn]=array();
+						}
+						if (! array_key_exists($spfxsurn, $all_surnames[$surn])) {
+							$all_surnames[$surn][$spfxsurn]=array();
+						}
+						// $surn is the base surname, e.g. GOGH
+						// $spfxsurn is the full surname, e.g. van GOGH
+						// $pid allows us to count indis as well as surnames, for indis that
+						// appear twice in this list.
+						$all_surnames[$surn][$spfxsurn][$pid]=true;
+					}
+				}
+			}
+		}
+		switch ($SURNAME_LIST_STYLE) {
+		case 'style3':
+			print_surname_tagcloud($all_surnames, 'indilist');
+			break;
+		case 'style2':
+		default:
+			print_surname_table($all_surnames, 'indilist');
+			break;
+		}
 		$content = ob_get_clean();
 	}
 
