@@ -127,8 +127,8 @@ if ($action == "choose" && $paramok) {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktoid\" size=\"3\" value=\"$linktoid\" />";
 			print_findindi_link("linktoid","");
 		} else {
-			print "<b>".PrintReady(get_person_name($linktoid))."</b>";
-			print "&nbsp;&nbsp;&nbsp;";
+			$record=Person::getInstance($linktoid);
+			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -136,14 +136,14 @@ if ($action == "choose" && $paramok) {
 	}
 
 	if ($linkto == "family") {
-		print $pgv_lang["enter_famid"]."</td>";
+		print $pgv_lang["family"]."</td>";
 		print "<td class=\"optionbox wrap\">";
 		if ($linktoid=="") {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktoid\" size=\"3\" value=\"$linktoid\" />";
 			print_findfamily_link("linktoid");
 		} else {
-			print "<b>".PrintReady(get_family_descriptor($linktoid))."</b>";
-			print "&nbsp;&nbsp;&nbsp;";
+			$record=Family::getInstance($linktoid);
+			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -157,8 +157,8 @@ if ($action == "choose" && $paramok) {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktoid\" size=\"3\" value=\"$linktoid\" />";
 			print_findsource_link("linktoid");
 		} else {
-			print "<b>".PrintReady(get_source_descriptor($linktoid))."</b>";
-			print "&nbsp;&nbsp;&nbsp;";
+			$record=Source::getInstance($linktoid);
+			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();

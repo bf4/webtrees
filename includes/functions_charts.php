@@ -648,7 +648,7 @@ function print_family_facts($famid, $sosa = 0) {
 			print "<td class=\"optionbox\">";
 			print "<a href=\"javascript: ".$pgv_lang["add_media_lbl"]."\" onclick=\"window.open('addmedia.php?action=showmediaform&linktoid={$famid}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["add_media"]."</a>";
 			print "<br />\n";
-			print "<a href=\"javascript:;\" onclick=\"window.open('inverselink.php?linktoid={$famid}&linkto=family}', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["link_to_existing_media"]."</a>";
+			print "<a href=\"javascript:;\" onclick=\"window.open('inverselink.php?linktoid={$famid}&linkto=family', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["link_to_existing_media"]."</a>";
 			print "</td></tr>\n";
 			// -- new source citation
 			print "<tr><td class=\"descriptionbox\">";
