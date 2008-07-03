@@ -895,58 +895,53 @@ function filterMedia($media, $filter, $acceptExt) {
 	if (empty ($acceptExt) || $acceptExt != "http")
 		$acceptExt = "";
 
-	$isEditor = PGV_USER_CAN_EDIT;
+	//-- Check Privacy first.  No point in proceeding if Privacy says "don't show"
+	$links = $media["LINKS"];
+	if (count($links) != 0) {
+		foreach ($links as $id => $type) {
+			if (!displayDetailsByID($id, $type)) {
+				return false;
+			}
+		}
+	}
 
-	while (true) {
-		$isValid = true;
+	//-- Accept external Media only if specifically told to do so
+	if (isFileExternal($media["FILE"]) && $acceptExt != "http")
+		return false;
 
-		//-- Check Privacy first.  No point in proceeding if Privacy says "don't show"
-		$links = $media["LINKS"];
-		if (count($links) != 0) {
-			foreach ($links as $id => $type) {
-				if (!displayDetailsByID($id, $type)) {
-					$isValid = false;
-					break;
-				}
+	//-- Accept everything if filter string is empty
+	if ($filter == "")
+		return true;
+
+	$filter=str2upper($filter);
+
+	//-- Accept when filter string contained in file name (but only for editing users)
+	if (PGV_USER_CAN_EDIT && strstr(str2upper(basename($media["FILE"])), $filter))
+		return true;
+
+	//-- Accept when filter string contained in Media item's title
+	$record=Media::getInstance($media['XREF']);
+		foreach ($record->getAllNames() as $name) {
+			if (strpos(str2upper($name['full']), $filter)!==false) {
+				return true;
 			}
 		}
 
-		//-- Accept external Media only if specifically told to do so
-		if (isFileExternal($media["FILE"]) && $acceptExt != "http")
-			$isValid = false;
+	if (strpos(str2upper($media["TITL"]), $filter)!==false)
+		return true;
 
-		if (!$isValid)
-			break;
-
-		//-- Accept everything if filter string is empty
-		if ($filter == "")
-			break;
-
-		//-- Accept when filter string contained in file name (but only for editing users)
-		if ($isEditor && stristr(basename($media["FILE"]), $filter))
-			break;
-
-		//-- Accept when filter string contained in Media item's title
-		if (stristr($media["TITL"], $filter))
-			break;
-
-		//-- Accept when filter string contained in name of any item
-		//-- this Media item is linked to.  (Privacy already checked)
-		$isValid = false;
-		if (count($links) != 0)
-			break;
-		foreach ($links as $id => $type) {
-			if ($type == "INDI" && stristr(get_person_name($id), $filter))
-				$isValid = true;
-			if ($type == "FAM" && stristr(get_family_descriptor($id), $filter))
-				$isValid = true;
-			if ($type == "SOUR" && stristr(get_source_descriptor($id), $filter))
-				$isValid = true;
+	//-- Accept when filter string contained in name of any item
+	//-- this Media item is linked to.  (Privacy already checked)
+	foreach ($links as $id=>$type) {
+		$record=GedcomRecord::getInstance($id);
+		foreach ($record->getAllNames() as $name) {
+			if (strpos(str2upper($name['full']), $filter)!==false) {
+				return true;
+			}
 		}
-		break;
 	}
 
-	return $isValid;
+	return false;
 }
 //-- search through the gedcom records for individuals
 /**
@@ -1741,26 +1736,30 @@ function PrintMediaLinks($links, $size = "small") {
 	$linkList = array ();
 
 	foreach ($links as $id => $type) {
-		$linkItem = array ();
-
-		$linkItem["id"] = $id;
-		$linkItem["type"] = $type;
-		$linkItem["name"] = "";
-		if ($type == "INDI" && displayDetailsByID($id)) {
-			$linkItem["name"] = "A" . get_sortable_name($id);
-			$linkItem["printName"] = get_person_name($id);
-		} else
-			if ($type == "FAM" && displayDetailsByID($id, "FAM")) {
-				$linkItem["name"] = "B" . get_sortable_family_descriptor($id);
-				$linkItem["printName"] = get_family_descriptor($id);
-			} else
-				if ($type == "SOUR" && displayDetailsByID($id, "SOUR")) {
-					$linkItem["printName"] = get_source_descriptor($id);
-					$linkItem["name"] = "C" . $linkItem["printName"];
-				}
-
-		if ($linkItem["name"] != "")
-			$linkList[] = $linkItem;
+		$record=GedcomRecord::getInstance($id);
+		if ($record && $record->canDisplaydetails()) {
+			switch ($record->getType()) {
+			case 'INDI':
+				$linkItem = array ();
+				$linkItem['name']='A'.$record->getSortName();
+				$linkItem['record']=$record;
+				$linkList[] = $linkItem;
+				break;
+			case 'FAM':
+				$linkItem = array ();
+				$linkItem['name']='B'.$record->getSortName();
+				$linkItem['record']=$record;
+				$linkList[] = $linkItem;
+				break;
+			case 'SOUR':
+				$linkItem = array ();
+				$linkItem['name']='C'.$record->getSortName();
+				$linkItem['record']=$record;
+				$linkList[] = $linkItem;
+				break;
+				
+			}
+		}
 	}
 	uasort($linkList, "mediasort");
 
@@ -1771,71 +1770,43 @@ function PrintMediaLinks($links, $size = "small") {
 	$firstObje = true;
 	if ($size == "small")
 		print "<sub>";
+	$prev_record=null;
 	foreach ($linkList as $linkItem) {
-		if ($linkItem["type"] == "INDI") {
-			if ($firstIndi && !$firstLink)
-				print "<br />";
-			$firstLink = false;
-			$firstIndi = false;
-			print "<br /><a href=\"".encode_url("individual.php?pid=".$linkItem["id"]) . "\">";
-			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
-				print $pgv_lang["view_person"] . " -- ";
-				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";
-				print PrintReady($linkItem["printName"]);
-			} else {
-				print $pgv_lang["view_person"] . " -- ";
-				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-				print "(" . $linkItem["id"] . ")";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-			}
-			print "</a>";
+		$record=$linkItem['record'];
+		if ($prev_record && $prev_record->getType()!=$record->getType()) {
+			echo '<br />';
 		}
-		if ($linkItem["type"] == "FAM") {
-			if ($firstFam && !$firstLink)
-				print "<br />";
-			$firstLink = false;
-			$firstFam = false;
-			print "<br /><a href=\"".encode_url("family.php?famid=".$linkItem["id"]) . "\">";
-			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
-				print $pgv_lang["view_family"] . " -- ";
-				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";
-				print PrintReady($linkItem["printName"]);
-			} else {
-				print $pgv_lang["view_family"] . " -- ";
-				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-				print "(" . $linkItem["id"] . ")";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-			}
-			print "</a>";
+		echo '<br /><a href="', encode_url($record->getLinkUrl()), '">';
+		switch ($record->getType()) {
+		case 'INDI':
+			echo $pgv_lang['view_person'];
+			break;
+		case 'FAM':
+			echo $pgv_lang['view_family'];
+			break;
+		case 'SOUR':
+			echo $pgv_lang['view_source'];
+			break;
 		}
-		if ($linkItem["type"] == "SOUR") {
-			if ($firstSour && !$firstLink)
-				print "<br />";
-			$firstLink = false;
-			$firstSour = false;
-			print "<br /><a href=\"".encode_url("source.php?sid=".$linkItem["id"]) . "\">";
-			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
-				print $pgv_lang["view_source"] . " -- ";
-				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";
-				print PrintReady($linkItem["printName"]);
-			} else {
-				print $pgv_lang["view_source"] . " -- ";
-				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-				print "(" . $linkItem["id"] . ")";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
+		echo ' -- ';
+		$name=$record->getFullname();
+		if (begRTLText($name) && $TEXT_DIRECTION == 'ltr') {
+			echo '('.$record->getXref().')&nbsp;&nbsp;';
+			echo PrintReady($name);
+		} else {
+			echo PrintReady($name).'&nbsp;&nbsp;';
+			if ($TEXT_DIRECTION=='rtl') {
+				echo getRLM();
 			}
-			print "</a>";
+			echo "(" . $record->getXref().')';
+			if ($TEXT_DIRECTION=='rtl') {
+				echo getRLM();
+			}
 		}
+		echo '</a>';
+		$prev_record=$record;
 	}
+		
 	if ($size == "small")
 		print "</sub>";
 	return true;
