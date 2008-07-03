@@ -110,13 +110,10 @@
 		
 		// Get the tooltip link for source
 		$sour = get_gedcom_value("SOUR", 1, $rowm["m_gedrec"]);	
-		$sourdesc = PrintReady(get_source_descriptor($sour));
 		
 		// Avoid special character problems
 		//make ready for RTL
 		$mediaTitle = PrintReady(htmlspecialchars($mediaTitle));
-		$sour1 = " - " . $sour ; 
-		$sour2 = PrintReady($sour1);
 		
 		
 		//Get media item Notes
