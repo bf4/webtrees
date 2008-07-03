@@ -106,42 +106,20 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			foreach ($pgv_changes as $cid=>$changes) {
 				$change = $changes[count($changes)-1];
 				if ($change["gedcom"]==$GEDCOM) {
-					$gedrec = find_updated_record($change["gid"]);
-					if (empty($gedrec)) $gedrec = $change["undo"];
-					$ct = preg_match("/0 @(.*)@(.*)/", $gedrec, $match);
-					if ($ct>0) $type = trim($match[2]);
-					else $type = "INDI";
-					if ($type=="INDI") {
-						$content .= "<b>".PrintReady(get_person_name($change["gid"]))."</b>&nbsp;";
-						if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
-						$content .= "(".$change["gid"].")";
-						if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
-					}
-					else if ($type=="FAM") {
-						$content .= "<b>".PrintReady(get_family_descriptor($change["gid"]))."</b>&nbsp;";
-						if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
-						$content .= "(".$change["gid"].")";
-						if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
-					}
-					else if ($type=="SOUR") {
-						if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
-							$content .= "<b>".PrintReady(get_source_descriptor($change["gid"]))."</b>&nbsp;";
-							if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
-							$content .= "(".$change["gid"].")";
-							if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
+					$record=GedcomRecord::getInstance($change['gid']);
+					if ($record->getType()!='SOUR' || $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+						$content.='<b>'.PrintReady($record->getFullName()).'</b> '.getLRM().'('.$record->getXref().')'.getLRM();
+						switch ($record->getType()) {
+						case 'INDI':
+						case 'FAM':
+						case 'SOUR':
+						case 'OBJE':
+							$content.=$block ? '<br />' : ' ';
+							$content.='<a href="'.encode_url($record->getLinkUrl().'&show_changes=yes').'">'.$pgv_lang['view_change_diff'].'</a>';
+							break;
 						}
+						$content.='<br />';
 					}
-					else {
-						$content .= "<b>".$factarray[$type]."</b>&nbsp;";
-						if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
-						$content .= "(".$change["gid"].")";
-						if ($TEXT_DIRECTION=="rtl") $content .= getRLM();
-						$content .= " - ".$pgv_lang[$change["type"]]."<br />";
-					}
-					if ($block) $content .= "<br />";
-					if ($type=="INDI") $content .= " <a href=\"".encode_url("individual.php?pid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes")."\">".$pgv_lang["view_change_diff"]."</a><br />";
-					if ($type=="FAM") $content .= " <a href=\"".encode_url("family.php?famid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes")."\">".$pgv_lang["view_change_diff"]."</a><br />";
-					if (($type=="SOUR") && ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL)) $content .= " <a href=\"".encode_url("source.php?sid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes")."\">".$pgv_lang["view_change_diff"]."</a><br />";
 				}
 			}
 
