@@ -408,9 +408,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			}
 			if (preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
 				print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
-				print "<a href=\"".encode_url("family.php?famid={$match[1]}&ged={$GEDCOM}")."\">";
-				print get_family_descriptor($match[1]);
-				print "</a>";
+				$family=Family::getInstance($match[1]);
+				echo "<a href=\"".encode_url($family->getLinkUrl())."\">", $family->getFullName(), "</a>";
 				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", str2upper($factrec), $match)) {
 					print '<br/><span class="indent"><span class="label">'.$factarray['ADOP'].':</span> ';
 					print '<span class="field">';
@@ -570,22 +569,15 @@ function print_fact_sources($factrec, $level, $return=false) {
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
 			if ($lt>0) $data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 			$data .= $pgv_lang["source"].":</span> <span class=\"field\">";
-			$source = find_source_record($sid);
-			$data .= "<a href=\"".encode_url("source.php?sid={$sid}")."\">";
-			$text = PrintReady(get_source_descriptor($sid));
-			//-- Print additional source title
-			$add_descriptor = get_add_source_descriptor($sid);
-			if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
-			// if (strpos($source, " _ITALIC")) print "<i>".$text."</i>"; else print $text;
-			$data .= $text;
-			$data .= "</a>";
+			$source=Source::getInstance($sid);
+			$data .= "<a href=\"".encode_url($source->getLinkUrl())."\">".PrintReady($source->getFullName())."</a>";
 			$data .= "</span>";
 
 			$data .= "<div id=\"$elementID\"";
 			if ($EXPAND_SOURCES) $data .= " style=\"display:block\"";
 			$data .= " class=\"source_citations\">";
 			// PUBL
-			$text = get_gedcom_value("PUBL", "1", $source);
+			$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
 			if (!empty($text)) {
 				$data .= "<span class=\"label\">".$factarray["PUBL"].": </span>";
 				$data .= $text;
@@ -944,20 +936,12 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			print "\n\t\t\t<td class=\"optionbox $styleadd wrap\">";
 			//print "\n\t\t\t<td class=\"facts_value$styleadd\">";
 			if (showFactDetails("SOUR", $pid)) {
-				$source = find_source_record($sid);
-				echo "<a href=\"".encode_url("source.php?sid={$sid}")."\">";
-				$text = PrintReady(get_source_descriptor($sid));
-				//-- Print additional source title
-				$add_descriptor = get_add_source_descriptor($sid);
-				if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
-				// if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
-				echo $text;
-				echo "</a>";
+				$source=Source::getInstance($sid);
+				echo "<a href=\"".encode_url($source->getLinkUrl())."\">", PrintReady($source->getFullName()), "</a>";
 				// PUBL
-				$text = get_gedcom_value("PUBL", "1", $source);
+				$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
 				if (!empty($text)) {
 					echo "<br /><span class=\"label\">".$factarray["PUBL"].": </span>";
-					// if (strpos($source, " _PAREN")) echo "(".$text.")"; else echo $text;
 					echo $text;
 				}
 				// See if RESN tag prevents display or edit/delete
@@ -968,7 +952,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 					print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
 					print_help_link("RESN_help", "qm");
 				}
-				if ($source) {
+				if ($srec) {
 					print printSourceStructure(getSourceStructure($srec));
 					print "<div class=\"indent\">";
 					print_media_links($srec, $nlevel);
