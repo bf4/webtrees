@@ -33,25 +33,35 @@ if (stristr($_SERVER['SCRIPT_NAME'], basename(__FILE__))!==false) {
 define ('PGV_MB_UTF8_REGEX', '/[\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF][\x80-\xBF]|[\xF0-\xF4][\x80-\xBF][\x80-\xBF][\x80-\xBF]/');
 
 function mb_substr($string, $start=0, $length=null) {
-	if (!preg_match_all(PGV_MB_UTF8_REGEX, $string, $match)) {
+	$total=preg_match_all(PGV_MB_UTF8_REGEX, $string, $match);
+	if ($total) {
+		if ($start<0) {
+			$start=$total+$start;
+		}
+		if ($start<0) {
+			$start=0;
+		}
+		if (is_null($length) || $start+$length>$total) {
+			$length=$total-$start;
+		}
+  	return implode('', array_slice($match[0], $start, $length));
+	} else {
 		return '';
 	}
-	$total=count($match[0]);
-	if ($start<0) {
-		$start=$total+$start;
-	}
-	if ($start<0) {
-		$start=0;
-	}
-	if (is_null($length) || $start+$length>$total) {
-		$length=$total-$start;
-	}
-  return implode('', array_slice($match[0], $start, $length));
 }
 
 function mb_strlen($string) {
 	return (int)preg_match_all(PGV_MB_UTF8_REGEX, $string, $match);
 }
 
+function mb_strtoupper($string) {
+	// TODO: Move the str2upper code here??
+	return str2upper($string);
+}
+
+function mb_strtolower($string) {
+	// TODO: Move the str2lower code here??
+	return str2lower($string);
+}
 
 ?>
