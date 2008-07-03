@@ -1,6 +1,7 @@
 <?php
 /**
- * Local versions of mstring functions that may not be present on target servers.
+ * We need to provide versions of multibyte string functions for servers
+ * that don't have the mbstring module installed.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2008 Greg Roach.  All rights reserved
@@ -23,15 +24,16 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (stristr($_SERVER['SCRIPT_NAME'], basename(__FILE__))!==false) {
+	print 'You cannot access an include file directly.';
 	exit;
 }
 
-define ('PGV_MB_UTF_REGEX', '/[\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF][\x80-\xBF]|[\xF0-\xF4][\x80-\xBF][\x80-\xBF][\x80-\xBF]/');
+// Matches valid UTF8 characters, and ignores invalid ones, such as extended ascii.
+define ('PGV_MB_UTF8_REGEX', '/[\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF][\x80-\xBF]|[\xF0-\xF4][\x80-\xBF][\x80-\xBF][\x80-\xBF]/');
 
 function mb_substr($string, $start=0, $length=null) {
-	if (!preg_match_all(PGV_MB_UTF_REGEX, $string, $match)) {
+	if (!preg_match_all(PGV_MB_UTF8_REGEX, $string, $match)) {
 		return '';
 	}
 	$total=count($match[0]);
@@ -41,21 +43,15 @@ function mb_substr($string, $start=0, $length=null) {
 	if ($start<0) {
 		$start=0;
 	}
-	if (is_null($length)) {
-		$length=$total;
-	}
-	if ($start+$length>$total) {
+	if (is_null($length) || $start+$length>$total) {
 		$length=$total-$start;
 	}
   return implode('', array_slice($match[0], $start, $length));
 }
 
 function mb_strlen($string) {
-	if (!preg_match_all(PGV_MB_UTF_REGEX, $string, $match)) {
-		return 0;
-	} else {
-		return count($match[0]);
-	}
+	return (int)preg_match_all(PGV_MB_UTF8_REGEX, $string, $match);
 }
+
 
 ?>
