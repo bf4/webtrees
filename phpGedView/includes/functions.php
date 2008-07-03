@@ -34,15 +34,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once('includes/mutex_class.php');
 require_once('includes/media_class.php');
 
-if (extension_loaded('mbstring')) {
-	mb_internal_encoding('UTF-8');
-	mb_regex_encoding('UTF-8');
-} else {
-	// Roll our own versions of multibyte string functions for servers
-	// where the module is not present.
-	require_once 'includes/functions_mbstring.php';
-}
-
 /**
  * The level of error reporting
  * $ERROR_LEVEL = 0 will not print any errors
