@@ -1204,32 +1204,85 @@ function print_favorite_selector($option=0) {
 
 	print "<div class=\"favorites_form\">";
 	switch($option) {
-		case 1:
-			$menu = array();
-			$menu["label"] = $pgv_lang["favorites"];
-			$menu["labelpos"] = "right";
-			$menu["link"] = "#";
-			$menu["class"] = "favmenuitem";
-			$menu["hoverclass"] = "favmenuitem_hover";
-			$menu["flyout"] = "down";
-			$menu["submenuclass"] = "favsubmenu";
-			$menu["items"] = array();
-			$mygedcom = $GEDCOM;
+	case 1:
+		$menu = array();
+		$menu["label"] = $pgv_lang["favorites"];
+		$menu["labelpos"] = "right";
+		$menu["link"] = "#";
+		$menu["class"] = "favmenuitem";
+		$menu["hoverclass"] = "favmenuitem_hover";
+		$menu["flyout"] = "down";
+		$menu["submenuclass"] = "favsubmenu";
+		$menu["items"] = array();
+		$mygedcom = $GEDCOM;
+		$current_gedcom = $GEDCOM;
+		$mypid = $pid;
+		if (count($userfavs)>0) {
+			$submenu = array();
+			$submenu["label"] = "<b>".$pgv_lang["my_favorites"]."</b>";
+			$submenu["labelpos"] = "right";
+			$submenu["link"] = "#";
+			$submenu["class"] = "favsubmenuitem";
+			$submenu["hoverclass"] = "favsubmenuitem_hover";
+			$menu["items"][] = $submenu;
+		}
+		foreach($userfavs as $key=>$favorite) {
+			$pid = $favorite["gid"];
 			$current_gedcom = $GEDCOM;
-			$mypid = $pid;
-			if (count($userfavs)>0) {
-				$submenu = array();
-				$submenu["label"] = "<b>".$pgv_lang["my_favorites"]."</b>";
+			$GEDCOM = $favorite["file"];
+			$submenu = array();
+			if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+//				$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
+				$submenu["link"] = encode_url($favorite["url"]);
+				$submenu["label"] = PrintReady($favorite["title"]);
 				$submenu["labelpos"] = "right";
-				$submenu["link"] = "#";
 				$submenu["class"] = "favsubmenuitem";
 				$submenu["hoverclass"] = "favsubmenuitem_hover";
 				$menu["items"][] = $submenu;
+			} else {
+				$record=GedcomRecord::getInstance($pid);
+				if ($record->canDisplayName()) {
+					$submenu["link"] = encode_url($record->getLinkUrl());
+					$submenu["label"] = PrintReady($record->getFullName());
+					if ($SHOW_ID_NUMBERS) {
+						if ($TEXT_DIRECTION=="ltr") {
+							$submenu["label"] .= " (".$record->getXref().")";
+						} else {
+							$submenu["label"] .= " " . getRLM() . "(".$record->getXref().")" . getRLM();
+						}
+					}
+					$submenu["labelpos"] = "right";
+					$submenu["class"] = "favsubmenuitem";
+					$submenu["hoverclass"] = "favsubmenuitem_hover";
+					$menu["items"][] = $submenu;
+				}
 			}
-			foreach($userfavs as $key=>$favorite) {
-				$pid = $favorite["gid"];
-				$current_gedcom = $GEDCOM;
+		}
+		$pid = $mypid;
+		$GEDCOM = $mygedcom;
+		if ((!empty($username))&&(strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false)) {
+			$menu["items"][]="separator";
+			$submenu = array();
+			$submenu["label"] = $pgv_lang["add_to_my_favorites"];
+			$submenu["labelpos"] = "right";
+			$submenu["link"] = encode_url("individual.php?action=addfav&gid={$pid}&pid={$pid}");
+			$submenu["class"] = "favsubmenuitem";
+			$submenu["hoverclass"] = "favsubmenuitem_hover";
+			$menu["items"][] = $submenu;
+		}
+		if (count($gedcomfavs)>0) {
+			$menu["items"][]="separator";
+			$submenu = array();
+			$submenu["label"] = "<b>".$pgv_lang["gedcom_favorites"]."</b>";
+			$submenu["labelpos"] = "right";
+			$submenu["link"] = "#";
+			$submenu["class"] = "favsubmenuitem";
+			$submenu["hoverclass"] = "favsubmenuitem_hover";
+			$menu["items"][] = $submenu;
+			$current_gedcom = $GEDCOM;
+			foreach($gedcomfavs as $key=>$favorite) {
 				$GEDCOM = $favorite["file"];
+				$pid = $favorite["gid"];
 				$submenu = array();
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
 //					$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
@@ -1239,47 +1292,16 @@ function print_favorite_selector($option=0) {
 					$submenu["class"] = "favsubmenuitem";
 					$submenu["hoverclass"] = "favsubmenuitem_hover";
 					$menu["items"][] = $submenu;
-				}
-				else {
-					if (displayDetailsById($pid, $favorite["type"])) {
-						$indirec = find_gedcom_record($pid);
-						if ($favorite["type"]=="INDI") {
-							$submenu["link"] = encode_url("individual.php?pid={$favorite['gid']}&ged={$GEDCOM}");
-							$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							unset($indilist[$pid]);
-						}
-						if ($favorite["type"]=="FAM") {
-							$submenu["link"] = encode_url("family.php?famid={$favorite['gid']}&show_full=1&ged={$GEDCOM}");
-							$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							unset($famlist[$pid]);
-						}
-						if ($favorite["type"]=="SOUR") {
-							$submenu["link"] = encode_url("source.php?sid={$favorite['gid']}&ged={$GEDCOM}");
-							$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							unset($sourcelist[$pid]);
-						}
-						if ($favorite["type"]=="OBJE") {
-							$media = Media::getInstance($pid);
-							if (!is_null($media)) {
-								$submenu["link"] = encode_url("mediaviewer.php?mid={$favorite['gid']}&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady($media->getFullName());
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-								if (isset($medialist[$pid])) unset($medialist[$pid]);
+				} else {
+					$record=GedcomRecord::getInstance($pid);
+					if ($record->canDisplayName()) {
+						$submenu["link"] = encode_url($record->getLinkUrl());
+						$submenu["label"] = PrintReady($record->getFullName());
+						if ($SHOW_ID_NUMBERS) {
+							if ($TEXT_DIRECTION=="ltr") {
+								$submenu["label"] .= " (".$record->getXref().")";
+							} else {
+								$submenu["label"] .= " " . getRLM() . "(".$record->getXref().")" . getRLM();
 							}
 						}
 						$submenu["labelpos"] = "right";
@@ -1291,201 +1313,78 @@ function print_favorite_selector($option=0) {
 			}
 			$pid = $mypid;
 			$GEDCOM = $mygedcom;
-			if ((!empty($username))&&(strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false)) {
-				$menu["items"][]="separator";
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["add_to_my_favorites"];
-				$submenu["labelpos"] = "right";
-				$submenu["link"] = encode_url("individual.php?action=addfav&gid={$pid}&pid={$pid}");
-				$submenu["class"] = "favsubmenuitem";
-				$submenu["hoverclass"] = "favsubmenuitem_hover";
-				$menu["items"][] = $submenu;
+			print_menu($menu);
+		}
+		break;
+	default:
+		print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
+		print "\" method=\"post\" onsubmit=\"return false;\">";
+		print "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}".normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$pid}&amp;pid={$pid}")."';\">";
+		print "<option value=\"\">".$pgv_lang["favorites"]."</option>";
+		if (!empty($username)) {
+			if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
+				print "<optgroup label=\"".$pgv_lang["my_favorites"]."\">";
 			}
-			if (count($gedcomfavs)>0) {
-				$menu["items"][]="separator";
-				$submenu = array();
-				$submenu["label"] = "<b>".$pgv_lang["gedcom_favorites"]."</b>";
-				$submenu["labelpos"] = "right";
-				$submenu["link"] = "#";
-				$submenu["class"] = "favsubmenuitem";
-				$submenu["hoverclass"] = "favsubmenuitem_hover";
-				$menu["items"][] = $submenu;
+			$mygedcom = $GEDCOM;
+			$current_gedcom = $GEDCOM;
+			$mypid = $pid;
+			if (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false) {
+				print "<option value=\"add\">- ".$pgv_lang["add_to_my_favorites"]." -</option>";
+			}
+			foreach($userfavs as $key=>$favorite) {
 				$current_gedcom = $GEDCOM;
-				foreach($gedcomfavs as $key=>$favorite) {
-					$GEDCOM = $favorite["file"];
-					$pid = $favorite["gid"];
-					$submenu = array();
-					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//						$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
-						$submenu["link"] = encode_url($favorite["url"]);
-						$submenu["label"] = PrintReady($favorite["title"]);
-						$submenu["labelpos"] = "right";
-						$submenu["class"] = "favsubmenuitem";
-						$submenu["hoverclass"] = "favsubmenuitem_hover";
-						$menu["items"][] = $submenu;
-					}
-					else {
-						if (displayDetailsById($pid, $favorite["type"])) {
-							$indirec = find_gedcom_record($pid);
-							if ($favorite["type"]=="INDI") {
-								$submenu["link"] = encode_url("individual.php?pid={$favorite['gid']}&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+				$GEDCOM = $favorite["file"];
+				$pid = $favorite["gid"];
+				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+//					print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
+					print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
+					print "</option>";
+				} else {
+					$record=GedcomRecord::getInstance($pid);
+					if ($record->canDisplayName()) {
+					$name=$record->getFullName();
+						if ($SHOW_ID_NUMBERS) {
+							if ($TEXT_DIRECTION=="ltr") {
+								$name.=' ('.$record->getXref().')';
+							} else {
+								$name.=' '.getRLM().'('.$record->getXref().')'.getRLM();
 							}
-							}
-							if ($favorite["type"]=="FAM") {
-								$submenu["link"] = encode_url("family.php?famid={$favorite['gid']}&show_full=1&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							}
-							if ($favorite["type"]=="SOUR") {
-								$submenu["link"] = encode_url("source.php?sid={$favorite['gid']}&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							}
-							$submenu["labelpos"] = "right";
-							$submenu["class"] = "favsubmenuitem";
-							$submenu["hoverclass"] = "favsubmenuitem_hover";
-							$menu["items"][] = $submenu;
 						}
+						print "<option value=\"". encode_url($record->getLinkUrl())."\">".$name."</option>";
 					}
 				}
-				$pid = $mypid;
-				$GEDCOM = $mygedcom;
-				print_menu($menu);
 			}
-			break;
-		default:
-			print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
-			print "\" method=\"post\" onsubmit=\"return false;\">";
-			print "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}".normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$pid}&amp;pid={$pid}")."';\">";
-			print "<option value=\"\">".$pgv_lang["favorites"]."</option>";
-			if (!empty($username)) {
-				if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
-					print "<optgroup label=\"".$pgv_lang["my_favorites"]."\">";
-				}
-				$mygedcom = $GEDCOM;
+			if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
+				print "</optgroup>";
+			}
+			$GEDCOM = $mygedcom;
+			$pid = $mypid;
+		}
+		if (count($gedcomfavs)>0) {
+			print "<optgroup label=\"".$pgv_lang["gedcom_favorites"]."\">";
+			$mygedcom = $GEDCOM;
+			$current_gedcom = $GEDCOM;
+			$mypid = $pid;
+			foreach($gedcomfavs as $key=>$favorite) {
 				$current_gedcom = $GEDCOM;
-				$mypid = $pid;
-				if (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false) {
-					print "<option value=\"add\">- ".$pgv_lang["add_to_my_favorites"]." -</option>";
-				}
-				foreach($userfavs as $key=>$favorite) {
-					$current_gedcom = $GEDCOM;
-					$GEDCOM = $favorite["file"];
-					$pid = $favorite["gid"];
-					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//						print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
-						print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
-						print "</option>";
-					}
-					else {
-						if (displayDetailsById($pid, $favorite["type"])) {
-							$indirec = find_gedcom_record($pid);
-							$name = $pgv_lang["unknown"];
-							if ($favorite["type"]=="INDI") {
-								$name = strip_tags(PrintReady(get_person_name($pid)));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-								$tempURL = "individual.php?pid=";
-								unset($indilist[$pid]);
+				$GEDCOM = $favorite["file"];
+				$pid = $favorite["gid"];
+				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+//					print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
+					print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
+					print "</option>";
+				} else {
+					$record=GedcomRecord::getInstance($pid);
+					if ($record->canDisplayName()) {
+						$name=$record->getFullName();
+						if ($SHOW_ID_NUMBERS) {
+							if ($TEXT_DIRECTION=="ltr") {
+								$name.=' ('.$record->getXref().')';
+							} else {
+								$name.=' '.getRLM().'('.$record->getXref().')'.getRLM();
 							}
-							if ($favorite["type"]=="FAM") {
-								$name = strip_tags(PrintReady(get_family_descriptor($pid)));
-								if (strlen($name)>50) $name = substr($name, 0, 50);
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-								$tempURL = "family.php?show_full=1&famid=";
-								unset($famlist[$pid]);
-							}
-							if ($favorite["type"]=="SOUR") {
-								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
-								if (strlen($name)>50) $name = substr($name, 0, 50);
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-								$tempURL = "source.php?sid=";
-								unset($sourcelist[$pid]);
-							}
-							if ($favorite["type"]=="OBJE") {
-								$media = Media::getInstance($pid);
-								if (!is_null($media)) {
-									$name = strip_tags(PrintReady($media->getFullName()));
-									if (strlen($name)>50) $name = substr($name, 0, 50);
-									if ($SHOW_ID_NUMBERS) {
-										if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-										else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-									}
-									$tempURL = "mediaviewer.php?mid=";
-									unset($sourcelist[$pid]);
-								}
-							}
-							print "<option value=\"". encode_url("{$tempURL}{$favorite['gid']}&ged={$GEDCOM}")."\">".$name."</option>";
 						}
-					}
-				}
-				if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
-					print "</optgroup>";
-				}
-				$GEDCOM = $mygedcom;
-				$pid = $mypid;
-			}
-			if (count($gedcomfavs)>0) {
-				print "<optgroup label=\"".$pgv_lang["gedcom_favorites"]."\">";
-					$mygedcom = $GEDCOM;
-					$current_gedcom = $GEDCOM;
-					$mypid = $pid;
-					foreach($gedcomfavs as $key=>$favorite) {
-						$current_gedcom = $GEDCOM;
-						$GEDCOM = $favorite["file"];
-						$pid = $favorite["gid"];
-						if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//							print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
-							print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
-							print "</option>";
-						}
-						else {
-						$indirec = find_gedcom_record($pid);
-						$name = $pgv_lang["unknown"];
-						if (displayDetailsById($pid, $favorite["type"])) {
-							if ($favorite["type"]=="INDI") {
-								$name = strip_tags(PrintReady(get_person_name($pid)));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-							$tempURL = "individual.php?pid=";
-							}
-							if ($favorite["type"]=="FAM") {
-								$name = strip_tags(PrintReady(get_family_descriptor($pid)));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-							$tempURL = "family.php?show_full=1&famid=";
-							}
-							if ($favorite["type"]=="SOUR") {
-								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-							$tempURL = "source.php?sid=";
-						}
-						print "<option value=\"".encode_url("{$tempURL}{$favorite['gid']}&ged={$GEDCOM}")."\">".$name."</option>";
+						print "<option value=\"". encode_url($record->getLinkUrl())."\">".$name."</option>";
 					}
 				}
 			}
