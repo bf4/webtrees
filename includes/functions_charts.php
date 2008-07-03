@@ -66,21 +66,8 @@ function print_sosa_number($sosa, $pid = "", $arrowDirection = "up") {
  * @param string $famid family gedcom ID
  */
 function print_family_header($famid) {
-	global $pgv_lang;
-
-	//-- check if we can display both parents
-	$parents = find_parents($famid);
-	if (DisplayDetailsByID($famid, "FAM") || showLivingNameByID($parents["HUSB"]) || showLivingNameByID($parents["WIFE"])) {
-	$fam = get_family_descriptor($famid);
-	$addfam = get_family_add_descriptor($famid);
-	}
-	else {
-		$fam = $pgv_lang["private"];
-		$addfam = "";
-	}
-	print "<p class=\"name_head\">".PrintReady($fam);
-	if ($addfam != $fam) print "<br />".PrintReady($addfam);
-	print "</p>\r\n";
+	$family=Family::getInstance($famid);
+	echo '<p class="name_head">', PrintReady($family->getFullName()), '</p>';
 }
 
 /**
