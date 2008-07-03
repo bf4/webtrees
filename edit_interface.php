@@ -276,19 +276,25 @@ if (isset($gedrec)) $gedrec = privatize_gedcom($gedrec);
 if (!isset($type)) $type="";
 $level0type = $type;
 if ($type=="INDI") {
-	print "<b>".PrintReady(get_person_name($pid))."</b><br />";
+	$record=Person::getInstance($pid);
+	print "<b>".PrintReady($record->getFullName())."</b><br />";
 }
-else if ($type=="FAM") {
-	if (!empty($pid)) print "<b>".PrintReady(get_family_descriptor($pid))."</b><br />";
-	else print "<b>".PrintReady(get_family_descriptor($famid))."</b><br />";
-}
-else if ($type=="SOUR") {
-	print "<b>".PrintReady(get_source_descriptor($pid))."&nbsp;&nbsp;&nbsp;";
+elseif ($type=="FAM") {
+	if (!empty($pid)) {
+		$record=Family::getInstance($pid);
+	}	else {
+		$record=Family::getInstance($famid);
+	}
+	print "<b>".PrintReady($record->getFullName())."</b><br />";
+} elseif ($type=="SOUR") {
+	$record=Source::getInstance($pid);
+	print "<b>".PrintReady($record->getFullName())."&nbsp;&nbsp;&nbsp;";
 	if ($TEXT_DIRECTION=="rtl") print getRLM();
 	print "(".$pid.")";
 	if ($TEXT_DIRECTION=="rtl") print getRLM();
 	print "</b><br />";
 }
+
 if (strstr($action,"addchild")) {
 	if (empty($famid)) {
 		print_help_link("edit_add_unlinked_person_help", "qm");
@@ -2307,8 +2313,8 @@ case 'reorder_fams':
 			$i=0;
 			foreach($fams as $famid=>$family) {
 				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$famid\" >";
-				print "<span class=\"name2\">".PrintReady(get_family_descriptor($famid))."</span><br />";
-				print_simple_fact($family->getGedcomRecord(), "MARR", $famid);
+				print "<span class=\"name2\">".PrintReady($family->getFullName())."</span><br />";
+				print $family->format_first_major_fact(PGV_EVENTS_MARR, 2);
 				print "<input type=\"hidden\" name=\"order[$famid]\" value=\"$i\"/>";
 				print "</li>";
 				$i++;
