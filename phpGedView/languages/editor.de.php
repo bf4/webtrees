@@ -50,6 +50,7 @@ $pgv_lang["to_person"]				= "mit Person";
 $pgv_lang["to_family"]				= "mit Familie";
 $pgv_lang["to_source"]				= "mit Quelle";
 $pgv_lang["edit_fam"]				= "Familie bearbeiten";
+$pgv_lang["edit_repo"]				= "Archiv bearbeiten";
 $pgv_lang["copy"]					= "Kopieren";
 $pgv_lang["cut"]					= "Ausschneiden";
 $pgv_lang["sort_by_birth"]			= "Nach Geburtsdaten sortieren";
