@@ -1341,8 +1341,8 @@ function print_favorite_selector($option=0) {
 					print "</option>";
 				} else {
 					$record=GedcomRecord::getInstance($pid);
-					if ($record->canDisplayName()) {
-					$name=$record->getFullName();
+					if ($record && $record->canDisplayName()) {
+						$name=$record->getFullName();
 						if ($SHOW_ID_NUMBERS) {
 							if ($TEXT_DIRECTION=="ltr") {
 								$name.=' ('.$record->getXref().')';
