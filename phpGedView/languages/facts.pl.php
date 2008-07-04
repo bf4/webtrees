@@ -227,7 +227,7 @@ $factarray["LONG"] 	= "Długość geograficzna";
 $factarray["FONE"] 	= "Fonetycznie";
 $factarray["ROMN"] 	= "Zlatynizowane";
 
-// Fakty zwiںane z PAF
+// Fakty związane z PAF
 $factarray["_NAME"] = "Nazwisko adresowe";
 $factarray["URL"] 	= "Adres URL";
 $factarray["_URL"] 	= "Adres URL";
@@ -263,7 +263,7 @@ $factarray["_NLIV"]	= "Nie żyje";
 $factarray["_NMAR"]	= "Nigdy nie żonaty/zamężna";
 $factarray["_PRMN"]	= "Stały numer";
 $factarray["_WEIG"]	= "Waga";
-$factarray["_YART"]	= "Nadchodzące wydarzenie";
+$factarray["_YART"]	= "Yahrzeit";
 $factarray["_MARNM"]	= "Po ślubie";
 $factarray["_MARNM_SURN"] = "Nazwisko po ślubie";
 $factarray["_STAT"]	= "Stan cywilny";

@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 $pgv_lang["missing_info"] 		= "Brakujące informacje";
 $pgv_lang["task_list"]			= "Zadania";
-$pgv_lang["task_list_text"]		= "Ten obszar wyświetla zadania które utworzyłeś, kliknij <b>Pokaż</b> aby zobaczyć dane zadanie";
+$pgv_lang["task_list_text"]		= "Ten obszar wyświetla zadania które utworzyłeś, kliknij <b>Pokaż</b> aby zobaczyć dane zadanie.";
 
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]							= "Moje zadania";
@@ -92,7 +92,7 @@ $pgv_lang["InferIndvGivn"]						= "Jest %PERCENT% szansy, że imię to:";
 $pgv_lang["All"]								= "Wszystko";
 $pgv_lang["More"]								= "Więcej";
 $pgv_lang["ThereIsChance"]						= "Prawdopodobnie źródła mogą zawierać:";
-$pgv_lang["TheMostLikely"]						= "Najprawdopodobne miejsce dla tego źródła to:";
+$pgv_lang["TheMostLikely"]						= "Najbardziej prawdopodobne miejsce dla tego źródła to:";
 $pgv_lang["DataCorrelations"]					= "Współzależności danych";
 $pgv_lang["ViewProbExplanation"]				= "Ta strona analizuje dane z aktywnego pliku GEDCOM i pokazuje współzależności pomiędzy różnymi danymi. Na przykład może być 95% współzaleźności między nazwiskiem a nazwiskiem ojca. To znaczy, że 95% osób w danym pliku GEDCOM ma nazwisko po swoim ojcu.";
 $pgv_lang["Folder"]                             = "Folder:";
@@ -118,10 +118,10 @@ $pgv_lang["folder_submitted"]          			= "Twój folder został wysłany";
 $pgv_lang["folder_problem"]             		= "Wystąpił problem podczas dodawania twojego folderu, spróbuj jeszcze raz";
 
 // -- Missing Information Help 
-$pgv_lang["ra_missing_info_help"] = "Ten obszar wyświetla brakujące informacje o rekordzie. Wybierz element i folder po czym naciśnij przycisk Dodaj zadanie aby utworzyć zadanie dla brakującego elementu. Już utworzone zadania będą wyświetlone ze znacznikiem 'Pokaż' zamiast opcji zaznaczenia <br /><a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">Naciśnij tutaj aby otworzyć podręcznik na pełnym ekranie</a>";
+$pgv_lang["ra_missing_info_help"] = "Ten obszar wyświetla brakujące informacje o rekordzie. Wybierz element i folder po czym naciśnij przycisk Dodaj zadanie aby utworzyć zadanie dla brakującego elementu. Już utworzone zadania będą wyświetlone ze znacznikiem 'Pokaż' zamiast opcji zaznaczenia.<br /><a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">Naciśnij tutaj aby otworzyć podręcznik na pełnym ekranie.</a>";
 
 // -- RA_LISTLOGS MESSAGES
-$pgv_lang["task_entry"]						= "Utwórz nowe zadanie.";
+$pgv_lang["task_entry"]						= "Utwórz nowe zadanie";
 
 //-- ERROR MESSAGES
 $pgv_lang["no_folder"]						= "Aktualnie nie istnieje żaden folder. Najpierw utwórz folder.";
@@ -142,8 +142,8 @@ $pgv_lang["ra_edit_task_help"]				= "~Edytuj zadanie~<ul><li><b>Tytuł:</b> Powi
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "Pokaż zadanie";
 $pgv_lang["add_new_comment"]				= "Dodaj komentarz";
-$pgv_lang["no_sour_tasks"]					= "Brak zadań połączonych z tym źródłem.";
-$pgv_lang["no_indi_tasks"]					= "Nie ma zadań skojarzonych z tą osobą.";
+$pgv_lang["no_sour_tasks"]					= "Brak zadań połączonych z tym źródłem";
+$pgv_lang["no_indi_tasks"]					= "Nie ma zadań skojarzonych z tą osobą";
 $pgv_lang["edit_comment"]					= "Edytuj komentarz";
 $pgv_lang["comment_success"]				= "Komentarz został dodany pomyślnie.";
 $pgv_lang["comment_body"]					= "Komentarz";
@@ -236,7 +236,7 @@ $pgv_lang["autosearch_plugin_name_werelate"]	= "Plugin Werelate.org";
 $pgv_lang["autosearch_search"]   = "Szukaj";
 $pgv_lang["autosearch_keywords"] = "Słowa kluczowe:";
 $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Plugin Genealogy-Search-Help.com";
-$pgv_lang["auto_search"]		= "Ta opcja spowoduje automatyczne przeszukanie baz Ancestry i FamilySearch, możesz wybrać poszukiwania po nazwisku i dacie narodzin/śmierci<br />";
+$pgv_lang["auto_search"]		= "Ta opcja spowoduje automatyczne przeszukanie baz Ancestry i FamilySearch, możesz wybrać poszukiwania po nazwisku i dacie narodzin/śmierci.<br />";
 $pgv_lang["auto_search_text"]			= "Automatyczne wyszukiwanie";
 
 $pgv_lang["add_task_inst"]				= "Jeśli zadanie nie zostało jeszcze utworzonie, powinno się najpierw utworzyć zadanie a następnie wybrać opcje do zapisania i ukończenia zadania.";
@@ -252,7 +252,7 @@ $pgv_lang["part_of"]			= "Część (opcjonalnie)";
 $pgv_lang["search_fhl"]			= "Przeszukaj Katalog Family History Library";
 $pgv_lang["determine_sources"]	= "Ustal możliwe źródła";
 $pgv_lang["analyze_database"]	= "Analizuj bazę";
-$pgv_lang["pid_know_more"]		= "O czym chcesz się więcej dowiedzieć?";
+$pgv_lang["pid_know_more"]		= "O kim chcesz się więcej dowiedzieć?";
 $pgv_lang["analyze_people"]		= "Analizuj osoby";
 $pgv_lang["analyze_data"]		= "Analizuj moje dane";
 

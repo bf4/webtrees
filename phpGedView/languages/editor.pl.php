@@ -235,4 +235,5 @@ $pgv_lang["edit_concurrency_change"] = "Ten wpis został ostatnio zmieniony prze
 $pgv_lang["edit_concurrency_msg2"]	= "Wpis z identyfikatorem #PID# został zmieniony przez innego użytkownika podczas Twojego dostępu.";
 $pgv_lang["edit_concurrency_msg1"]	= "Wystąpił błąd podczas edytowania. Inny użytkownik w tym czasie mógł dokonać zmian w tym wpisie.";
 $pgv_lang["edit_concurrency_reload"]= "Użyj przycisku Poprzednia strona w przeglądarce internetowej aby odświeżyć poprzednią stronę i mieć pewność, że pracujesz z najbardziej aktualnym wpisem.";
+$pgv_lang["edit_repo"]				= "Edytuj repozytorium";
 ?>
