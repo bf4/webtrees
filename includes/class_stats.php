@@ -1338,13 +1338,14 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
+		$family=Family::getInstance($row['id']);
 		switch($type)
 		{
 			default:
 			case 'full':
-				if (displayDetailsById($row['id'], 'FAM'))
+				if ($family->canDisplayDetails())
 				{
-					$result=format_list_family($row['id'], array(get_family_descriptor($row['id']), $this->_gedcom), false, '', 'span');
+					$result=format_list_family($row['id'], array($family->getFullName(), $this->_gedcom), false, '', 'span');
 				} else {
 					$result = $pgv_lang['privacy_error'];
 				}
@@ -1353,7 +1354,7 @@ class stats {
 				$result=$row['tot'];
 				break;
 			case 'name':
-				$result="<a href=\"".encode_url("family.php?famid={$row['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_family_descriptor($row['id'])).'</a>';
+				$result="<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName()).'</a>';
 				break;
 		}
 		// Statistics are used by RSS feeds, etc., so need absolute URLs.
@@ -1378,15 +1379,14 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		if(count($rows) < $total){$total = count($rows);}
 		$top10 = array();
-		for($c = 0; $c < $total; $c++)
-		{
-			if ($type == 'list')
-			{
-				$top10[] = "\t<li><a href=\"".encode_url("{$this->_server_url}family.php?famid={$rows[$c]['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_family_descriptor($rows[$c]['id']))."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
-			}
-			else
-			{
-				$top10[] = "<a href=\"".encode_url("{$this->_server_url}family.php?famid={$rows[$c]['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_family_descriptor($rows[$c]['id']))."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
+		for($c = 0; $c < $total; $c++) {
+			$family=Family::getInstance($rows[$c]['id']);
+			if ($family->canDisplayDetails()) {
+				if ($type == 'list') {
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
+				} else {
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
+				}
 			}
 		}
 		if ($type == 'list')
@@ -1449,7 +1449,8 @@ class stats {
 			}
 			//$chd .= $this->_encoding[$per];
 			$chd .= $this->_array_to_extended_encoding(array($per));
-			$chl[] = reverseText(get_family_descriptor($rows[$i]['id']));
+			$family=Family::getInstance($rows[$i]['id']);
+			$chl[] = reverseText($family->getFullName());
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
