@@ -860,33 +860,6 @@ function get_repo_list() {
 	return $repo_list;
 }
 
-//-- get the repositorylist from the datastore
-function get_repo_id_list() {
-	global $TBLPREFIX;
-
-	$repo_id_list = array();
-
-	$sql = "SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file=".PGV_GED_ID." AND o_type='REPO' ORDER BY o_id";
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$repo = array();
-		$tt = preg_match("/1 NAME (.*)/", $row["o_gedcom"], $match);
-		if ($tt>0)
-			$repo["name"] = $match[1];
-		else
-			$repo["name"] = "";
-		$repo["gedfile"] = PGV_GED_ID;
-		$repo["type"] = 'REPO';
-		$repo["gedcom"] = $row["o_gedcom"];
-		$row = db_cleanup($row);
-		$repo_id_list[$row["o_id"]] = $repo;
-	}
-	$res->free();
-	return $repo_id_list;
-}
-
 //-- get the indilist from the datastore
 function get_indi_list() {
 	global $indilist, $TBLPREFIX, $INDILIST_RETRIEVED;
