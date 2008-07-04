@@ -269,33 +269,6 @@ function reverse_name($name) {
 	return $name;
 }
 
-function get_family_descriptor($fid) {
-	global $pgv_lang, $NAME_REVERSE;
-	$parents = find_parents($fid);
-	if ($parents["HUSB"]) {
-		if (displayDetailsById($parents["HUSB"]) || showLivingNameById($parents["HUSB"]))
-			$hname = get_person_name($parents["HUSB"], false);
-		else $hname = $pgv_lang["private"];
-	} else {
-		if ($NAME_REVERSE) $hname = "@N.N. @P.N.";
-		else $hname = "@P.N. @N.N.";
-	}
-	if ($parents["WIFE"]) {
-		if (displayDetailsById($parents["WIFE"]) || showLivingNameById($parents["WIFE"]))
-			$wname = get_person_name($parents["WIFE"], false);
-		else $wname = $pgv_lang["private"];
-	} else {
-		if ($NAME_REVERSE) $wname = "@N.N. @P.N.";
-		else $wname = "@P.N. @N.N.";
-	}
-	$result = "";
-	if (!empty($hname) && !empty($wname)) $result = check_NN($hname)." + ".check_NN($wname);
-	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
-	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
-
-	return $result;
-}
-
 // -- find and return a given individual's second name in format: firstname lastname
 function get_add_person_name($pid) {
 	global $NAME_FROM_GEDCOM;
