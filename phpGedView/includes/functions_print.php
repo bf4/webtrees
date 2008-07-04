@@ -1241,7 +1241,7 @@ function print_favorite_selector($option=0) {
 				$menu["items"][] = $submenu;
 			} else {
 				$record=GedcomRecord::getInstance($pid);
-				if ($record->canDisplayName()) {
+				if ($record && $record->canDisplayName()) {
 					$submenu["link"] = encode_url($record->getLinkUrl());
 					$submenu["label"] = PrintReady($record->getFullName());
 					if ($SHOW_ID_NUMBERS) {
@@ -1294,7 +1294,7 @@ function print_favorite_selector($option=0) {
 					$menu["items"][] = $submenu;
 				} else {
 					$record=GedcomRecord::getInstance($pid);
-					if ($record->canDisplayName()) {
+					if ($record && $record->canDisplayName()) {
 						$submenu["link"] = encode_url($record->getLinkUrl());
 						$submenu["label"] = PrintReady($record->getFullName());
 						if ($SHOW_ID_NUMBERS) {
@@ -1375,7 +1375,7 @@ function print_favorite_selector($option=0) {
 					print "</option>";
 				} else {
 					$record=GedcomRecord::getInstance($pid);
-					if ($record->canDisplayName()) {
+					if ($record && $record->canDisplayName()) {
 						$name=$record->getFullName();
 						if ($SHOW_ID_NUMBERS) {
 							if ($TEXT_DIRECTION=="ltr") {
