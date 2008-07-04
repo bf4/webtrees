@@ -56,6 +56,7 @@ $pgv_lang["to_person"]				= "To Person";
 $pgv_lang["to_family"]				= "To Family";
 $pgv_lang["to_source"]				= "To Source";
 $pgv_lang["edit_fam"]				= "Edit Family";
+$pgv_lang["edit_repo"]				= "Edit Repository";
 $pgv_lang["copy"]					= "Copy";
 $pgv_lang["cut"]					= "Cut";
 $pgv_lang["sort_by_birth"]			= "Sort by birth dates";
