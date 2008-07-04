@@ -354,19 +354,19 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 						print $pgv_lang["yes"]."<br />";
 					}
 				}*/
-				else if ($event=="N") {
+				elseif ($event=="N") {
 					if (get_sub_record(2, "2 DATE", $factrec)=="") {
 						print $pgv_lang["no"];
 					}
-				}
-				else if (strstr("URL WWW ", $fact." ")) {
+				} elseif (strstr("URL WWW ", $fact." ")) {
 					print "<a href=\"".$event."\" target=\"new\">".PrintReady($event)."</a>";
-				}
-				else if (strstr("_EMAIL", $fact)) {
+				} elseif (strstr("_EMAIL", $fact)) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
-				}
-				else if (strstr('FAX PHON FILE ', $fact.' ')) print getLRM(). $event.' ' . getLRM();
-				else if ($event!='Y') {
+				} elseif (strstr("AFN", $fact)) {
+					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.htmlspecialchars($event).'</a>';
+				} elseif (strstr('FAX PHON FILE ', $fact.' ')) {
+					print getLRM(). $event.' ' . getLRM();
+				} elseif ($event!='Y') {
 					if (!strstr('ADDR _RATID _CREM ', substr($fact,0,5).' ')) echo PrintReady($event);
 					echo ' ';
 				}
