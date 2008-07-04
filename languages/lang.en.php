@@ -73,6 +73,7 @@ $pgv_lang["child"]					= "Child";
 $pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
 $pgv_lang["source_menu"]			= "Options for source";
+$pgv_lang["repo_menu"]			= "Options for repository";
 $pgv_lang["other_records"]			= "Records that link to this Source:";
 $pgv_lang["other_repo_records"]		= "Records that link to this Repository:";
 $pgv_lang["repo_info"]				= "Repository Information";

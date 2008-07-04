@@ -45,6 +45,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["edit_repo"]				            04 Jul 2008       A
 *$pgv_lang["reorder_media_title"]					29 May 2008				w
 *$pgv_lang["reorder_media_window_title"]			29 May 2008				w
 *$pgv_lang["reorder_media_save"]					29 May 2008				w

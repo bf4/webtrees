@@ -34,6 +34,7 @@ require_once('includes/gedcomrecord.php');
 class Repository extends GedcomRecord {
 	var $disp = true;
 	var $sourcelist = null;
+	var $repositoryfacts = null;
 
 	/**
 	 * Constructor for repository object
