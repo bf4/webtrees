@@ -941,7 +941,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		// neg (-) : S or W
 		txt=field.value.toUpperCase();
 		txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
-		txt=txt.replace(/ /g,':'); // N12 34 ==> N12:34
+		txt=txt.replace(/ /g,':'); // N12 34 ==> N12.34
 		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
 		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
 		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
@@ -1060,7 +1060,26 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
-
+	
+	?>
+	<script>
+	function toggle_lati_long() {
+		tr = document.getElementsByTagName('tr');
+		for (var i=0; i<tr.length; i++) {
+			if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
+				var disp = tr[i].style.display;
+				if (disp=="none") {
+					disp="table-row";
+					if (document.all && !window.opera) disp = "inline"; // IE
+				}
+				else disp="none";
+				tr[i].style.display=disp;
+			}
+		}
+	}
+	//-->
+	</script>
+	<?php
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
 		$readOnly = "";
