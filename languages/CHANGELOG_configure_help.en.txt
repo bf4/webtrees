@@ -45,6 +45,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$pgv_lang["lang_name_catalan"]						06 July 2008			catalan - new language
 *$pgv_lang["DEFAULT_PEDIGREE_GENERATIONS_help"]		29 June 2008			w
 *$pgv_lang["ENABLE_RSS_help"]						26 May 2008				f (fix HTML:  remove "alt='Wikipedia article'")
 *$pgv_lang["RSS_FORMAT_help"]						26 May 2008				f (fix HTML:  remove "alt='Wikipedia article'")
