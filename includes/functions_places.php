@@ -316,7 +316,8 @@ function print_place_subfields($element_id) {
 			print "<option value=\"\">?</option>\n";
 			foreach ($countries as $alpha3=>$country) {
 				$txt=$alpha3." : ".$country;
-				if (strlen($txt)>32) $txt=substr($txt,0,32)."...";
+				if (UTF8_strlen($txt)>32) $txt = UTF8_substr($txt, 0, 32).$pgv_lang["ellipsis"];
+				//if (strlen($txt)>32) $txt=substr($txt,0,32)."...";
 				print "<option value=\"".$alpha3."\">".$txt."</option>\n";
 			}
 			print "</select>\n";
