@@ -1,4 +1,4 @@
- <?php
+<?php
 /**
  * String handling functions for strings optionally containing UTF-8 characters.
  *
