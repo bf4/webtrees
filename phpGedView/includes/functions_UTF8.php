@@ -90,6 +90,38 @@ function UTF8_ord($char) {
 
 
 /*
+ * Get the UTF-8 encoded character from the input ordinal value
+ */
+function UTF8_chr($value) {
+	$value = (int)$value;		// Make sure we're dealing with an integer
+	if ($value<=0x7F) return chr($value);		// values from \x00 to \x7F are returned as single letters
+
+	$value = $value & 0x1FFFFF;		// Make sure we don't exceed the range covered by 4-byte sequences
+	
+	$mask1 = 0x80;
+	$char = array();
+
+	// Split the input integer into 6-bit chunks.  
+	// Emit each chunk except the first as an 8-bit byte with the high-order bit set.
+	while ($value>0x3F) {
+		$char[] = chr(0x80 | ($value & 0x3F));
+		$value = $value >> 6;
+		$mask1 = 0x80 | ($mask1 >> 1);		// Keep track of how often we did this
+	}
+
+	// Emit the first byte with the high-order bits indicating the length of the whole thing:
+	// 0		1 byte
+	// 10		not valid as first byte
+	// 110		2 bytes
+	// 1110		3 bytes
+	// 11110	4 bytes
+	$char[] = chr($value | $mask1);
+
+	return implode('', array_reverse($char));
+}
+
+
+/*
  * Extract substring from input string
  */
 function UTF8_substr($text, $start=0, $end=0) {
@@ -154,16 +186,17 @@ function UTF8_strtolower($text) {
 /*
  * Case sensitive search for a string to be contained in another string
  */
-function UTF8_strpos($haystack, $needle) {
+function UTF8_strpos($haystack, $needle, $offset=0) {
 	$UTF8_haystack = UTF8_explodeString($haystack);
 	$haystackLen = count($UTF8_haystack);
 	$UTF8_needle = UTF8_explodeString($needle);
 	$needleLen = count($UTF8_needle);
-	if ($haystackLen==0 || $needleLen==0) return false;
+	if ($haystackLen==0 || $needleLen==0 || $offset<0) return false;
 
 	$lastPos = $haystackLen - $needleLen;
+	$found = false;
 
-	for ($currPos=0; $currPos<=$lastPos; $currPos++) {
+	for ($currPos=$offset; $currPos<=$lastPos; $currPos++) {
 		$found = true;
 		for ($i=0; $i<$needleLen; $i++) {
 			if ($UTF8_haystack[$currPos+$i]!=$UTF8_needle[$i]) {
@@ -182,11 +215,11 @@ function UTF8_strpos($haystack, $needle) {
 /*
  * Case insensitive search for a string to be contained in another string
  */
-function UTF8_stripos($haystack, $needle) {
+function UTF8_stripos($haystack, $needle, $offset=0) {
 	$UTF8_haystack = UTF8_strtoupper(UTF8_explodeString($haystack));
 	$UTF8_needle = UTF8_strtoupper(UTF8_explodeString($needle));
 
-	return UTF8_strstr($UTF8_haystack, $UTF8_needle);
+	return UTF8_strpos($UTF8_haystack, $UTF8_needle, $offset);
 }
 
 
