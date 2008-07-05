@@ -33,6 +33,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require_once('includes/mutex_class.php');
 require_once('includes/media_class.php');
+require_once('includes/functions_UTF8.php');
 
 /**
  * The level of error reporting
@@ -1609,8 +1610,8 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 						if (($bPos===false)&&($aPos!==false)) return 1;
 						if (($bPos===false)&&($aPos===false)) {
 							// Determine the binary value of both letters
-							$aValue = ord_UTF8($aLetter);
-							$bValue = ord_UTF8($bLetter);
+							$aValue = UTF8_ord($aLetter);
+							$bValue = UTF8_ord($bLetter);
 							return $aValue - $bValue;
 						}
 						return ($aPos-$bPos);
