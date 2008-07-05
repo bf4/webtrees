@@ -435,6 +435,7 @@ $pgv_lang["lang_name_lithuanian"]	= "Litauisch";
 $pgv_lang["lang_name_vietnamese"]	= "Vietnamesisch";
 $pgv_lang["lang_name_slovak"]		= "Slowakisch";
 $pgv_lang["lang_name_estonian"]		= "Estnisch";
+$pgv_lang["lang_name_catalan"]		= "Katalanisch (Valencianisch)";
 $pgv_lang["lang_new_language"]		= "Neue Sprache";
 $pgv_lang["original_lang_name"]		= "Original-Name der Sprache auf #D_LANGNAME#";
 $pgv_lang["original_lang_name_help"]	= "~#pgv_lang[original_lang_name]#~<br /><br />Wie heißt die Sprache in dieser Sprache?<br /><br />Englisch heißt in Englisch: English<br /><br />Deutsch heißt in Deutsch: Deutsch<br /><br />Niederländisch heißt in Niederländisch: Nederlands<br /><br />etc.<br />";
