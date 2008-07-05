@@ -138,6 +138,7 @@ $pgv_lang["family_with"]		= "Rodzina z:";
 $pgv_lang["as_spouse"]			= "Małżeństwo z:";
 $pgv_lang["as_child"]			= "Rodzice";
 $pgv_lang["source_menu"]		= "Opcje źródła";
+$pgv_lang["repo_menu"]			= "Opcje repozytorium";
 $pgv_lang["view_gedcom"]		= "Pokaż wpis GEDCOM";
 $pgv_lang["add_to_cart"]		= "Dodaj do wycinków";
 $pgv_lang["privacy_error"]	  	= "Dane dotyczące tej osoby są prywatne.<br />";
@@ -1539,5 +1540,5 @@ $pgv_lang["charts_block"]			= "Sekcja diagramów";
 $pgv_lang["age_differences"]		= "Pokaż różnicę wieku";
 $pgv_lang["count"]					= "Liczba";
 $pgv_lang["showUnknown"]			= "Pokaż osoby o nieznanej płci";
-$pgv_lang["repo_menu"]			= "Opcje repozytorium";
+$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 ?>
