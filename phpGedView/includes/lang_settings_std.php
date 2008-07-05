@@ -38,7 +38,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 $language_settings = array();
 
 //-- settings for catalan (valencian)
-$language_settings['catalan (valencian)']=array(
+$language_settings['catalan']=array(
 'pgv_langname'=>'catalan (valencian)',
 'pgv_lang_use'=>true,
 'pgv_lang_self'=>'Català',

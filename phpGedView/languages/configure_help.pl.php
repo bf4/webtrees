@@ -544,6 +544,7 @@ $pgv_lang["export_filename"]		= "Nazwa pliku wynikowego";
 $pgv_lang["lang_back"]				= "Powrót do menu konfiguracji plików językowych";
 $pgv_lang["lang_back_admin"]		= "Powrót do menu administracji";
 $pgv_lang["lang_back_manage_gedcoms"]	= "Powrót do menu zarządzania plikami GEDCOM";
+$pgv_lang["lang_name_catalan"] 		= "kataloński";
 $pgv_lang["lang_name_czech"]		= "czeski";
 $pgv_lang["lang_name_chinese"]		= "chiński";
 $pgv_lang["lang_name_danish"]		= "duński";
