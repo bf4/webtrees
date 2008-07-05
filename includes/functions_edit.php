@@ -934,45 +934,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 		return true;
 	}
-
-	function valid_lati_long(field, pos, neg) {
-		// valid LATI or LONG according to Gedcom standard
-		// pos (+) : N or E
-		// neg (-) : S or W
-		txt=field.value.toUpperCase();
-		txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
-		txt=txt.replace(/ /g,':'); // N12 34 ==> N12.34
-		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
-		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
-		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
-		// 0�34'11 ==> 0:34:11
-		txt=txt.replace(/\uB0/g,':'); // �
-		txt=txt.replace(/\u27/g,':'); // '
-		// 0:34:11.2W ==> W0.5698
-		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
-		// 0:34W ==> W0.5667
-		txt=txt.replace(/^([0-9]+):([0-9]+)(.*)/g, function($0, $1, $2, $3) { var n=parseFloat($1); n+=($2/60); n=Math.round(n*1E4)/1E4; return $3+n; });
-		// 0.5698W ==> W0.5698
-		txt=txt.replace(/(.*)([N|S|E|W]+)$/g,'$2$1');
-		// 17.1234 ==> N17.1234
-		if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
-		field.value = txt;
-	}
-	
-	function toggle_lati_long() {
-		tr = document.getElementsByTagName('tr');
-		for (var i=0; i<tr.length; i++) {
-			if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
-				var disp = tr[i].style.display;
-				if (disp=="none") {
-					disp="table-row";
-					if (document.all && !window.opera) disp = "inline"; // IE
-				}
-				else disp="none";
-				tr[i].style.display=disp;
-			}
-		}
-	}
 	//-->
 	</script>
 	<?php
@@ -1061,25 +1022,52 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
 	
-	?>
-	<script>
-	function toggle_lati_long() {
-		tr = document.getElementsByTagName('tr');
-		for (var i=0; i<tr.length; i++) {
-			if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
-				var disp = tr[i].style.display;
-				if (disp=="none") {
-					disp="table-row";
-					if (document.all && !window.opera) disp = "inline"; // IE
+	if (substr($tag, 0, strpos($tag, "PLAC"))) {
+		?>
+		<script>
+		<!--
+		function valid_lati_long(field, pos, neg) {
+			// valid LATI or LONG according to Gedcom standard
+			// pos (+) : N or E
+			// neg (-) : S or W
+			txt=field.value.toUpperCase();
+			txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
+			txt=txt.replace(/ /g,':'); // N12 34 ==> N12.34
+			txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
+			txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
+			txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
+			// 0�34'11 ==> 0:34:11
+			txt=txt.replace(/\uB0/g,':'); // �
+			txt=txt.replace(/\u27/g,':'); // '
+			// 0:34:11.2W ==> W0.5698
+			txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
+			// 0:34W ==> W0.5667
+			txt=txt.replace(/^([0-9]+):([0-9]+)(.*)/g, function($0, $1, $2, $3) { var n=parseFloat($1); n+=($2/60); n=Math.round(n*1E4)/1E4; return $3+n; });
+			// 0.5698W ==> W0.5698
+			txt=txt.replace(/(.*)([N|S|E|W]+)$/g,'$2$1');
+			// 17.1234 ==> N17.1234
+			if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
+			field.value = txt;
+		}
+	
+		function toggle_lati_long() {
+			tr = document.getElementsByTagName('tr');
+			for (var i=0; i<tr.length; i++) {
+				if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
+					var disp = tr[i].style.display;
+					if (disp=="none") {
+						disp="table-row";
+						if (document.all && !window.opera) disp = "inline"; // IE
+					}
+					else disp="none";
+					tr[i].style.display=disp;
 				}
-				else disp="none";
-				tr[i].style.display=disp;
 			}
 		}
+		//-->
+		</script>
+		<?php
 	}
-	//-->
-	</script>
-	<?php
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
 		$readOnly = "";
