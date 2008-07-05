@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * String handling functions for strings optionally containing UTF-8 characters.
  *
@@ -154,7 +154,7 @@ function UTF8_strtolower($text) {
 /*
  * Case sensitive search for a string to be contained in another string
  */
-function UTF8_strstr($haystack, $needle) {
+function UTF8_strpos($haystack, $needle) {
 	$UTF8_haystack = UTF8_explodeString($haystack);
 	$haystackLen = count($UTF8_haystack);
 	$UTF8_needle = UTF8_explodeString($needle);
@@ -182,7 +182,7 @@ function UTF8_strstr($haystack, $needle) {
 /*
  * Case insensitive search for a string to be contained in another string
  */
-function UTF8_stristr($haystack, $needle) {
+function UTF8_stripos($haystack, $needle) {
 	$UTF8_haystack = UTF8_strtoupper(UTF8_explodeString($haystack));
 	$UTF8_needle = UTF8_strtoupper(UTF8_explodeString($needle));
 
