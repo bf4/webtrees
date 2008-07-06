@@ -70,7 +70,7 @@ function default_initial($initials) {
 	global $pgv_lang;
 	$page_language=whatLanguage($pgv_lang['mother']); // Pick any text
 	foreach ($initials as $initial) {
-		if (whatLanguage($initial)==$page_language) {
+		if (whatLanguage($initial)==$page_language && $initial!=',') {
 			return $initial;
 		}
 	}
