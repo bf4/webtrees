@@ -40,7 +40,7 @@ $language_settings = array();
 //-- settings for catalan (valencian)
 $language_settings['catalan']=array(
 'pgv_langname'=>'catalan',
-'pgv_lang_use'=>true,
+'pgv_lang_use'=>false,
 'pgv_lang_self'=>'Català',
 'lang_short_cut'=>'ca',
 'langcode'=>'ca;',

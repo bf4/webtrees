@@ -93,10 +93,10 @@ function UTF8_ord($char) {
  * Get the UTF-8 encoded character from the input ordinal value
  */
 function UTF8_chr($value) {
-	$value = (int)$value;		// Make sure we're dealing with an integer
+	$value = intval($value);		// make sure we're dealing with an integer
 	if ($value<=0x7F) return chr($value);		// values from \x00 to \x7F are returned as single letters
 
-	$value = $value & 0x1FFFFF;		// Make sure we don't exceed the range covered by 4-byte sequences
+	$value = $value & 0x1FFFFF;		// make sure we don't exceed the range covered by 4-byte sequences
 	
 	$mask1 = 0x80;
 	$char = array();
@@ -184,17 +184,60 @@ function UTF8_strtolower($text) {
 
 
 /*
+ * Case sensitive search for the first occurrence of a string within in another string
+ */
+function UTF8_strstr($haystack, $needle) {
+	$UTF8_haystack = UTF8_explodeString($haystack);
+	$haystackLen = count($UTF8_haystack);
+	if (!is_string($needle) && !is_array($needle)) $UTF8_needle = array(UTF8_chr(intval($needle)));
+	else $UTF8_needle = UTF8_explodeString($needle);
+	$needleLen = count($UTF8_needle);
+	if ($haystackLen==0 || $needleLen==0) return false;
+
+	$stringPos = UTF8_strpos($UTF8_haystack, $UTF8_needle, 0);
+	if ($stringpos===false) return false;
+
+	$result = array_slice($UTF8_haystack, $stringPos);
+
+	if (is_array($haystack)) return $result;
+	else return implode('', $result);
+}
+
+
+/*
+ * Case insensitive search for the first occurrence of a string within in another string
+ */
+function UTF8_stristr($haystack, $needle, $offset=0) {
+	$UTF8_haystack = UTF8_explodeString($haystack);
+	$haystackLen = count($UTF8_haystack);
+	if (!is_string($needle) && !is_array($needle)) $UTF8_needle = array(UTF8_chr(intval($needle)));
+	else $UTF8_needle = UTF8_explodeString($needle);
+	$needleLen = count($UTF8_needle);
+	if ($haystackLen==0 || $needleLen==0) return false;
+
+	$stringPos = UTF8_strpos(UTF8_strtoupper($UTF8_haystack), UTF8_strtoupper($UTF8_needle, 0));
+	if ($stringpos===false) return false;
+
+	$result = array_slice($UTF8_haystack, $stringPos);
+
+	if (is_array($haystack)) return $result;
+	else return implode('', $result);
+}
+
+
+/*
  * Case sensitive search for a string to be contained in another string
  */
 function UTF8_strpos($haystack, $needle, $offset=0) {
 	$UTF8_haystack = UTF8_explodeString($haystack);
 	$haystackLen = count($UTF8_haystack);
-	$UTF8_needle = UTF8_explodeString($needle);
+	if (!is_string($needle) && !is_array($needle)) $UTF8_needle = array(UTF8_chr(intval($needle)));
+	else $UTF8_needle = UTF8_explodeString($needle);
 	$needleLen = count($UTF8_needle);
+	if ($offset<0) $offset += $haystackLen;
 	if ($haystackLen==0 || $needleLen==0 || $offset<0) return false;
 
 	$lastPos = $haystackLen - $needleLen;
-	$found = false;
 
 	for ($currPos=$offset; $currPos<=$lastPos; $currPos++) {
 		$found = true;
@@ -204,7 +247,7 @@ function UTF8_strpos($haystack, $needle, $offset=0) {
 				break;
 			}
 		}
-		
+		if ($found) break;
 	}
 
 	if ($found) return $currPos;
@@ -216,10 +259,52 @@ function UTF8_strpos($haystack, $needle, $offset=0) {
  * Case insensitive search for a string to be contained in another string
  */
 function UTF8_stripos($haystack, $needle, $offset=0) {
-	$UTF8_haystack = UTF8_strtoupper(UTF8_explodeString($haystack));
-	$UTF8_needle = UTF8_strtoupper(UTF8_explodeString($needle));
+	$UTF8_haystack = UTF8_explodeString($haystack);
+	$UTF8_needle = UTF8_explodeString($needle);
 
-	return UTF8_strpos($UTF8_haystack, $UTF8_needle, $offset);
+	return UTF8_strpos(UTF8_strtoupper($UTF8_haystack), UTF8_strtoupper($UTF8_needle, $offset));
+}
+
+
+/*
+ * Case sensitive reverse search for a string to be contained in another string
+ */
+function UTF8_strrpos($haystack, $needle, $offset=0) {
+	$UTF8_haystack = UTF8_explodeString($haystack);
+	$haystackLen = count($UTF8_haystack);
+	if (!is_string($needle) && !is_array($needle)) $UTF8_needle = array(UTF8_chr(intval($needle)));
+	else $UTF8_needle = UTF8_explodeString($needle);
+	$needleLen = count($UTF8_needle);
+	if ($offset<=0) $offset += $haystackLen;
+	if ($haystackLen==0 || $needleLen==0 || $offset<0) return false;
+	
+	$lastPos = $offset - $needleLen - 1;
+	if ($lastPos>($haystackLen-$needleLen)) return false;
+
+	for ($currPos=$lastPos; $currPos>=0; $currPos--) {
+		$found = true;
+		for ($i=0; $i<$needleLen; $i++) {
+			if ($UTF8_haystack[$currPos+$i]!=$UTF8_needle[$i]) {
+				$found = false;
+				break;
+			}
+		}
+		if ($found) break;		
+	}
+
+	if ($found) return $currPos;
+	else return false;
+}
+
+
+/*
+ * Case insensitive reverse search for a string to be contained in another string
+ */
+function UTF8_strripos($haystack, $needle, $offset=0) {
+	$UTF8_haystack = UTF8_explodeString($haystack);
+	$UTF8_needle = UTF8_explodeString($needle);
+
+	return UTF8_strrpos(UTF8_strtoupper($UTF8_haystack), UTF8_strtoupper($UTF8_needle, $offset));
 }
 
 
@@ -248,7 +333,7 @@ function UTF8_strcmp($text1, $text2) {
 /*
  * Case sensitive comparison of two strings, max length specifiable
  */
-function UTF8_strncmp($text1, $text2, $maxLen) {
+function UTF8_strncmp($text1, $text2, $maxLen=0) {
 	$UTF8_text1 = UTF8_explodeString($text1);
 	$UTF8_text2 = UTF8_explodeString($text2);
 	if ($maxLen>0) {
@@ -264,24 +349,24 @@ function UTF8_strncmp($text1, $text2, $maxLen) {
  * Case insensitive comparison of two strings
  */
 function UTF8_strcasecmp($text1, $text2) {
-	$UTF8_text1 = UTF8_strtoupper(UTF8_explodeString($text1));
-	$UTF8_text2 = UTF8_strtoupper(UTF8_explodeString($text2));
+	$UTF8_text1 = UTF8_explodeString($text1);
+	$UTF8_text2 = UTF8_explodeString($text2);
 
-	return UTF8_strcmp($UTF8_text1, $UTF8_text2);
+	return UTF8_strcmp(UTF8_strtoupper($UTF8_text1), UTF8_strtoupper($UTF8_text2));
 }
 
 
 /*
  * Case insensitive comparison of two strings, max length specifiable
  */
-function UTF8_strncasecmp($text1, $text2, $maxLength) {
-	$UTF8_text1 = UTF8_strtoupper(UTF8_explodeString($text1));
-	$UTF8_text2 = UTF8_strtoupper(UTF8_explodeString($text2));
-	if ($maxLength>0) {
-		$UTF8_text1 = array_slice($UTF8_text1, 0, $maxLength);
-		$UTF8_text2 = array_slice($UTF8_text2, 0, $maxLength);
+function UTF8_strncasecmp($text1, $text2, $maxLen=0) {
+	$UTF8_text1 = UTF8_explodeString($text1);
+	$UTF8_text2 = UTF8_explodeString($text2);
+	if ($maxLen>0) {
+		$UTF8_text1 = array_slice($UTF8_text1, 0, $maxLen);
+		$UTF8_text2 = array_slice($UTF8_text2, 0, $maxLen);
 	}
 
-	return UTF8_strcmp($UTF8_text1, $UTF8_text2);
+	return UTF8_strcmp(UTF8_strtoupper($UTF8_text1), UTF8_strtoupper($UTF8_text2));
 }
 ?>
