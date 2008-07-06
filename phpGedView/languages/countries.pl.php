@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,7 +133,8 @@ $countries["CYM"]="Kajmany";
 $countries["KHM"]="Kambodża";
 $countries["CMR"]="Kamerun";
 $countries["CAN"]="Kanada";
-$countries["CAP"]="Kolonia Cape";
+$countries["CAP"]="Kolonia Przylądkowa";
+$countries["CAT"]="Katalonia";
 $countries["CCK"]="Wyspy Kokosowe (Keelinga)";
 $countries["QAT"]="Katar";
 $countries["KAZ"]="Kazachstan";
@@ -143,7 +144,7 @@ $countries["KIR"]="Kiribati";
 $countries["COL"]="Kolumbia";
 $countries["COM"]="Komory";
 $countries["COG"]="Republika Konga (Brazzaville)";
-$countries["COD"]="Demokratyczna Republika Konga (Kinshasa)";
+$countries["COD"]="Demokratyczna Republika Konga (Kinszasa)";
 $countries["PRK"]="Korea Północna";
 $countries["KOR"]="Korea Południowa";
 $countries["CRI"]="Kostaryka";
