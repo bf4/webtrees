@@ -100,6 +100,7 @@ $UTF8_ranges[] = array("russian",	0x000400, 0x00052F);	// Cyrillic
 $UTF8_ranges[] = array("hebrew",	0x000590, 0x0005FF);	// Hebrew
 $UTF8_ranges[] = array("arabic",	0x000600, 0x0006FF);	// Arabic
 $UTF8_ranges[] = array("arabic",	0x000750, 0x0007FF);	// Arabic
+$UTF8_ranges[] = array("thai",	  0x000E00, 0x000E7F);	// Thai
 $UTF8_ranges[] = array("vietnamese", 0x001E00, 0x001EFF);	// Vietnamese (assumption!!!)
 $UTF8_ranges[] = array("greek",		0x001F00, 0x001FFF);	// Greek
 $UTF8_ranges[] = array("chinese",	0x002E80, 0x002FDF);	// Chinese
