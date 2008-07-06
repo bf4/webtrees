@@ -76,6 +76,7 @@ $unknownNN["greek"]		= "(άγνωστος/η)";
 $unknownNN["russian"]	= "(неопределено)";
 $unknownNN["chinese"]	= "(未知)";
 $unknownNN["vietnamese"] = "(vô danh)";
+$unknownNN["thai"]		= $pgv_lang["NN"];
 $unknownNN["other"]		= $pgv_lang["NN"];
 
 $unknownPN = array();	 
@@ -85,6 +86,7 @@ $unknownPN["greek"]		= "(άγνωστος/η)";
 $unknownPN["russian"]	= "(неопределено)";
 $unknownPN["chinese"]	= "(未知)";
 $unknownPN["vietnamese"] = "(không biết tuổi)";
+$unknownPN["thai"]		= $pgv_lang["PN"];
 $unknownPN["other"]		= $pgv_lang["PN"];
 
 // Table of UTF8 code ranges
