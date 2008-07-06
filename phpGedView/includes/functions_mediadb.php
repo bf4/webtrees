@@ -921,11 +921,13 @@ function filterMedia($media, $filter, $acceptExt) {
 
 	//-- Accept when filter string contained in Media item's title
 	$record=Media::getInstance($media['XREF']);
+	if ($record) {
 		foreach ($record->getAllNames() as $name) {
 			if (strpos(str2upper($name['full']), $filter)!==false) {
 				return true;
 			}
 		}
+	}
 
 	if (strpos(str2upper($media["TITL"]), $filter)!==false)
 		return true;
