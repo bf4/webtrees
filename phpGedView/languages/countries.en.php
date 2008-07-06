@@ -11,6 +11,7 @@
  *
  * These codes do not appear in the two Chapman lists cited:
  *		ALA		Åland Islands
+ *		CAT		Catalonia
  *		COD		Congo (Brazzaville)		This country was known as Zaire
  *		NFK		Norfolk Island
  *		PRI		Puerto Rico				Chapman lists this as a state of the USA
@@ -88,6 +89,7 @@ $countries["BWI"]="British West Indies";
 $countries["CAF"]="Central African Republic";
 $countries["CAN"]="Canada";
 $countries["CAP"]="Cape Colony";
+$countries["CAT"]="Catalonia";
 $countries["CCK"]="Cocos (Keeling) Islands";
 $countries["CHE"]="Switzerland";
 $countries["CHI"]="Channel Islands";
