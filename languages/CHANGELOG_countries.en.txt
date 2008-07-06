@@ -41,6 +41,13 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.6
+
+?$countries["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
++$countries["CAT"]									5 July 2008				A
+
+
 VERSION 4.1
 
 ?$countries["whatever"]								dd Monthname, year		Change codes and comments
