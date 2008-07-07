@@ -1209,7 +1209,7 @@ function find_updated_record($gid, $gedfile="") {
 function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $pgv_changes;
 
-	if (!userCanAccept($user_id, $ged_id)) {
+	if (!isset($pgv_changes) || !userCanAccept($user_id, $ged_id)) {
 		return false;
 	}
 
