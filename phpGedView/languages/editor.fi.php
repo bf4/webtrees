@@ -48,6 +48,7 @@ $pgv_lang["to_person"]		= "henkilöön";
 $pgv_lang["to_family"]		= "perheeseen";
 $pgv_lang["to_source"]		= "lähteeseen";
 $pgv_lang["edit_fam"]		= "Editoi perhettä";
+$pgv_lang["edit_repo"]				= "Editoi tietovarasto";
 $pgv_lang["copy"]			= "Kopioi";
 $pgv_lang["cut"]			= "Leikkaa";
 $pgv_lang["sort_by_birth"]		= "Lajittele syntymäpäivän mukaan";

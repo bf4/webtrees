@@ -87,6 +87,7 @@ $countries["BWI"]="Brittiläinen Länsi-Intia";
 $countries["CAF"]="Keski-Afrikka";
 $countries["CAN"]="Kanada";
 $countries["CAP"]="Kapkolonia";
+$countries["CAT"]="Katalonia"; 
 $countries["CCK"]="Kookossaaret";
 $countries["CHE"]="Sveitsi";
 $countries["CHI"]="Kanaalisaaret";

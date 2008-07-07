@@ -87,6 +87,7 @@ $countries["BWI"]="הודו המערבית הבריטית";
 $countries["CAF"]="הרפובליקה המרכז אפריקאית";
 $countries["CAN"]="קנדה";
 $countries["CAP"]="מושבת הכף";
+$countries["CAT"]="קטלוניה"; 
 $countries["CCK"]="איי קוקוס";
 $countries["CHE"]="שוויץ";
 $countries["CHI"]="איי התעלה";

@@ -30,6 +30,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["age_differences"]		= "Näytä ikäerot";
 $pgv_lang["date_of_entry"]		= "Alkuperäisen lähteen päiväys";
 $pgv_lang["multi_site_search"] 	= "Haku monesta palvelusta";
@@ -1520,6 +1521,7 @@ $pgv_lang["add_fav_or_enter_url"]	= "TAI<br /> lisää URL-osoite ja otsikko";
 $pgv_lang["add_fav_enter_id"]	= "Lisää henkilö, perhe tai lähde-ID";
 $pgv_lang["edit_source"]		= "Editoi lähdettä";
 $pgv_lang["source_menu"]		= "Vaihtoehtoja lähteille";
+$pgv_lang["repo_menu"]			= "Vaihtoehtoja tietovarastolle"; 
 $pgv_lang["familybook_chart"]		= "Sukukirjakaavio";
 $pgv_lang["family_of"]			= "Perhe:  ";
 $pgv_lang["descent_steps"]		= "Jälkipolvien lukumäärä";
