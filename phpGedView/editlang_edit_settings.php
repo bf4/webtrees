@@ -585,7 +585,7 @@ if ($action == "save" or $action=="toggleActive") {
       fwrite($fp, "?>");
       fclose($fp);
 	  $logline = AddToLog("lang_settings.php updated");
- 	  if (!empty($COMMIT_COMMAND)) check_in($logline, $Filename, $INDEX_DIRECTORY);	
+ 	  check_in($logline, $Filename, $INDEX_DIRECTORY);	
     } else $error = "lang_config_write_error";
   } else $error = "lang_set_file_read_error";
 

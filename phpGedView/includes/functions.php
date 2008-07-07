@@ -387,7 +387,7 @@ function getmicrotime() {
  */
 function store_gedcoms() {
 	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $DEFAULT_GEDCOM, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
-	global $COMMIT_COMMAND, $IN_STORE_GEDCOMS;
+	global $IN_STORE_GEDCOMS;
 
 	if (!$CONFIGURED)
 		return false;
@@ -467,8 +467,7 @@ function store_gedcoms() {
 	} else {
 		fwrite($fp, $gedcomtext);
 		fclose($fp);
-		if (!empty($COMMIT_COMMAND))
-			check_in("store_gedcoms() ->" . PGV_USER_NAME ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
+		check_in("store_gedcoms() ->" . PGV_USER_NAME ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
 	$mutex->Release();
 	$IN_STORE_GEDCOMS = false;
@@ -2768,7 +2767,7 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
  * @return bool true if successful false if there was an error
  */
 function write_changes() {
-	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL, $COMMIT_COMMAND;
+	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
 
 	//-- only allow 1 thread to write changes at a time
 	$mutex = new Mutex("pgv_changes");
@@ -2814,10 +2813,8 @@ function write_changes() {
 	//-- release the mutex acquired above
 	$mutex->Release();
 
- 	if (!empty($COMMIT_COMMAND)) {
-		$logline = AddToLog("pgv_changes.php updated");
- 		check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
- 	}
+	$logline = AddToLog("pgv_changes.php updated");
+	check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
 	return true;
 }
 
@@ -2927,7 +2924,7 @@ function getAlphabet() {
  * @return array 	The array of the found reports with indexes [title] [file]
  */
 function get_report_list($force=false) {
-	global $INDEX_DIRECTORY, $report_array, $vars, $xml_parser, $elementHandler, $LANGUAGE, $COMMIT_COMMAND;
+	global $INDEX_DIRECTORY, $report_array, $vars, $xml_parser, $elementHandler, $LANGUAGE;
 
 	$files = array();
 	if (!$force) {
@@ -2997,7 +2994,7 @@ function get_report_list($force=false) {
 	@fwrite($fp, serialize($files));
 	@fclose($fp);
 	$logline = AddToLog("reports.dat updated");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, "reports.dat", $INDEX_DIRECTORY);
+ 	check_in($logline, "reports.dat", $INDEX_DIRECTORY);
 
 	return $files;
 }
@@ -3430,7 +3427,7 @@ function has_utf8($string) {
 function check_in($logline, $filename, $dirname, $bInsert = false) {
 	global $COMMIT_COMMAND;
 	$bRetSts = false;
-	if (($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
+	if (!empty($COMMIT_COMMAND) && ($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
 		$cwd = getcwd();
 		if ($dirname) {
 			chdir($dirname);

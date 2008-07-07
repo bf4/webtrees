@@ -282,7 +282,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 }
 
 function um_export($proceed) {
-	global $INDEX_DIRECTORY, $TBLPREFIX, $DBCONN, $pgv_lang, $COMMIT_COMMAND;
+	global $INDEX_DIRECTORY, $TBLPREFIX, $DBCONN, $pgv_lang;
 
 	// Get user array and create authenticate.php
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
@@ -320,7 +320,7 @@ function um_export($proceed) {
 			fwrite($fp, $authtext);
 			fclose($fp);
 			$logline = AddToLog("authenticate.php updated");
- 			if (!empty($COMMIT_COMMAND)) check_in($logline, "authenticate.php", $INDEX_DIRECTORY);
+ 			check_in($logline, "authenticate.php", $INDEX_DIRECTORY);
 			if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." authenticate.php<br /><br />";
 		} else
 			print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."authenticate.php. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
@@ -354,7 +354,7 @@ function um_export($proceed) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline = AddToLog("messages.dat updated");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "messages.dat", $INDEX_DIRECTORY);
+ 				check_in($logline, "messages.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." messages.dat<br /><br />";
 			} else
 				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."messages.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
@@ -393,7 +393,7 @@ function um_export($proceed) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline = AddToLog("favorites.dat updated");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "favorites.dat", $INDEX_DIRECTORY);
+ 				check_in($logline, "favorites.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." favorites.dat<br /><br />";
 			} else
 				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."favorites.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
@@ -427,7 +427,7 @@ function um_export($proceed) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline = AddToLog("news.dat updated");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "news.dat", $INDEX_DIRECTORY);
+ 				check_in($logline, "news.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." news.dat<br /><br />";
 			} else
 				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."news.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
@@ -462,7 +462,7 @@ function um_export($proceed) {
 				fwrite($fp, $mstring);
 				fclose($fp);
 				$logline = AddToLog("blocks.dat updated");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "blocks.dat", $INDEX_DIRECTORY);
+ 				check_in($logline, "blocks.dat", $INDEX_DIRECTORY);
 				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." blocks.dat<br /><br />";
 			} else
 				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."blocks.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";

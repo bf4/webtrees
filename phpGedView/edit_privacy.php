@@ -285,7 +285,7 @@ if ($action=="update") {
 	include $INDEX_DIRECTORY.$GEDCOM."_priv.php";
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
  	$gedcomprivname = $GEDCOM."_priv.php";
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
+ 	check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
  	//-- delete the cache files for the welcome page blocks
 	include_once("includes/index_cache.php");

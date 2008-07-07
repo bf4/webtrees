@@ -585,7 +585,7 @@ if ($action=="update") {
 
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated");
 	$gedcomconfname = $FILE."_conf.php";
-	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
+	check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
 	if (!$errors) {
 		$gednews = getUserNews($FILE);
 		if (count($gednews)==0) {
