@@ -109,7 +109,7 @@ else if ($check == "add") {
 			fwrite($fp, $newgedcom);
 			fclose($fp);
 			$logline = AddToLog($GEDFILENAME." updated");
-			if (!empty ($COMMIT_COMMAND)) check_in($logline, $GEDFILENAME, $INDEX_DIRECTORY);
+			check_in($logline, $GEDFILENAME, $INDEX_DIRECTORY);
 			$verify = "validate_form";
 			$exists = true;
 			// NOTE: Go straight to import, no other settings needed
@@ -1149,7 +1149,7 @@ if ($stage == 1) {
 	} else {
 		@unlink($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new");
 		$logline = AddToLog($GEDCOM_FILE." updated");
-		if (!empty ($COMMIT_COMMAND)) check_in($logline, $GEDCOM_FILE, $INDEX_DIRECTORY);
+		check_in($logline, $GEDCOM_FILE, $INDEX_DIRECTORY);
 	}
 	$newtime = time();
 	$exectime = $newtime - $oldtime;

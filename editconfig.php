@@ -290,7 +290,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 				}
 				fclose($fp);
 				$logline = AddToLog("Language settings file, lang_settings.php, updated");
-				if (!empty($COMMIT_COMMAND)) check_in($logline, $Filename, $INDEX_DIRECTORY);	
+				check_in($logline, $Filename, $INDEX_DIRECTORY);	
 			}
 			else $error = "lang_config_write_error";
 		}
@@ -313,7 +313,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 				fwrite($fp, $configtext);
 				fclose($fp);
 				$logline = AddToLog("config.php updated");
-				if (!empty($COMMIT_COMMAND)) check_in($logline, "config.php", "");	
+				check_in($logline, "config.php", "");	
 				if ($CONFIGURED) {
 					print "<script language=\"JavaScript\" type=\"text/javascript\">\nwindow.location = 'editconfig.php';\n</script>\n";
 				}

@@ -315,7 +315,7 @@ global $match1,$match2;
 }
 
 function put_plot_data() {
-	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $COMMIT_COMMAND;
+	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY;
 	global $nrfam, $famgeg, $nrpers, $persgeg,$key2ind,$nrman,$nrvrouw;
 	global $pgv_lang;
 
@@ -339,7 +339,7 @@ function put_plot_data() {
 	fwrite($FP, '}');
 	fclose($FP);
 	$logline = AddToLog($GEDCOM."_statistiek.php updated");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, $GEDCOM."_statistiek.php", $INDEX_DIRECTORY);
+ 	check_in($logline, $GEDCOM."_statistiek.php", $INDEX_DIRECTORY);
 }
 
 //--	========= start of main program =========

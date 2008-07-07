@@ -1500,7 +1500,7 @@ function read_gedcom_file() {
 //-- this function writes the $fcontents back to the
 //-- gedcom file
 function write_file() {
-	global $fcontents, $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY, $COMMIT_COMMAND;
+	global $fcontents, $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
 
 	if (empty($fcontents)) return;
 	if (preg_match("/0 TRLR/", $fcontents)==0) $fcontents.="0 TRLR\n";
@@ -1541,7 +1541,7 @@ function write_file() {
 	//-- always release the mutex
 	$mutex->Release();
 	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
+ 	check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
 
 	return true;;
 }
@@ -1554,7 +1554,7 @@ function write_file() {
  */
 function accept_changes($cid) {
 	global $pgv_changes, $GEDCOM, $TBLPREFIX, $FILE, $DBCONN, $GEDCOMS;
-	global $COMMIT_COMMAND, $INDEX_DIRECTORY, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
+	global $INDEX_DIRECTORY, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
 
 	if (isset ($pgv_changes[$cid])) {
 		$changes = $pgv_changes[$cid];
@@ -1657,8 +1657,7 @@ function accept_changes($cid) {
 		if (isset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]))
 			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database");
-		if (!empty ($COMMIT_COMMAND))
-			check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
+		check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
 		if (isset ($change["linkpid"]))
 			accept_changes($change["linkpid"] . "_" . $GEDCOM);
 		return true;

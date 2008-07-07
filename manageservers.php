@@ -38,7 +38,7 @@ require_once("includes/serviceclient_class.php");
  * @param varchar(30) $ip	The ip to be saved
  */
 function add_banned_ip($ip) {
-	global $banned, $INDEX_DIRECTORY, $pgv_lang, $COMMIT_COMMAND;
+	global $banned, $INDEX_DIRECTORY, $pgv_lang;
 	if (file_exists($INDEX_DIRECTORY."banned.php")) include_once($INDEX_DIRECTORY."banned.php");
 	$bannedtext = "<?php\n//--List of banned IP addresses\n";
 	$bannedtext .= "\$banned = array();\n";	
@@ -62,7 +62,7 @@ function add_banned_ip($ip) {
 		fwrite($fp, $bannedtext);
 		fclose($fp);
 		$logline = AddToLog("banned.php updated");
- 		if (!empty($COMMIT_COMMAND)) check_in($logline, "banned.php", $INDEX_DIRECTORY);	
+ 		check_in($logline, "banned.php", $INDEX_DIRECTORY);	
 	}
 }
 
@@ -71,7 +71,7 @@ function add_banned_ip($ip) {
  * @param varchar(30) $ip	The ip to be saved
  */
 function add_search_engine_ip($ip) {
-	global $search_engines, $INDEX_DIRECTORY, $pgv_lang, $COMMIT_COMMAND;
+	global $search_engines, $INDEX_DIRECTORY, $pgv_lang;
 	if (file_exists($INDEX_DIRECTORY."search_engines.php")) include_once($INDEX_DIRECTORY."search_engines.php");
 	$searchtext = "<?php\n//--List of search engine IP addresses\n";
 	$searchtext .= "\$search_engines = array();\n";	
@@ -95,7 +95,7 @@ function add_search_engine_ip($ip) {
 		fwrite($fp, $searchtext);
 		fclose($fp);
 		$logline = AddToLog("search_engines.php updated");
- 		if (!empty($COMMIT_COMMAND)) check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
+ 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
 	}
 }
 
@@ -105,7 +105,7 @@ function add_search_engine_ip($ip) {
  * @param varchar(30) $ip	IP address to remove
  */
 function delete_banned_ip($ip) {
-	global $banned, $INDEX_DIRECTORY, $pgv_lang, $COMMIT_COMMAND;
+	global $banned, $INDEX_DIRECTORY, $pgv_lang;
 	if (file_exists($INDEX_DIRECTORY."banned.php")) include_once($INDEX_DIRECTORY."banned.php");
 	
 	$bannedtext = "<?php\n//--List of banned IP addresses\n";
@@ -130,7 +130,7 @@ function delete_banned_ip($ip) {
 		fwrite($fp, $bannedtext);
 		fclose($fp);
 		$logline = AddToLog("banned.php updated");
- 		if (!empty($COMMIT_COMMAND)) check_in($logline, "banned.php", $INDEX_DIRECTORY);	
+ 		check_in($logline, "banned.php", $INDEX_DIRECTORY);	
 	}
 }
 
@@ -140,7 +140,7 @@ function delete_banned_ip($ip) {
  * @param varchar(30) $ip	IP address to remove
  */
 function delete_search_engine_ip($ip) {
-	global $search_engines, $INDEX_DIRECTORY, $pgv_lang, $COMMIT_COMMAND;
+	global $search_engines, $INDEX_DIRECTORY, $pgv_lang;
 	if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
 	include_once($INDEX_DIRECTORY."search_engines.php");
 	
@@ -166,7 +166,7 @@ function delete_search_engine_ip($ip) {
 		fwrite($fp, $searchtext);
 		fclose($fp);
 		$logline = AddToLog("search_engines.php updated");
- 		if (!empty($COMMIT_COMMAND)) check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
+ 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
 	}
 }
 
