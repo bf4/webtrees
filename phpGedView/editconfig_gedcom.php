@@ -1002,13 +1002,8 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 			<?php
 			if ($source == "") {
 				if (!empty($indirec)) {
-					if ($source == "") {
-						$indilist[$PEDIGREE_ROOT_ID]["gedcom"] = $indirec;
-						$indilist[$PEDIGREE_ROOT_ID]["names"] = get_indi_names($indirec);
-						$indilist[$PEDIGREE_ROOT_ID]["isdead"] = 1;
-						$indilist[$PEDIGREE_ROOT_ID]["gedfile"] = $GEDCOM;
-						echo '<span class="list_item">', get_person_name($PEDIGREE_ROOT_ID), format_first_major_fact($PEDIGREE_ROOT_ID), '</span>';
-					}
+					$person=new Person($indirec);
+					echo '<span class="list_item">', $person->getFullName(), $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
 				} else {
 					echo '<span class="error">', $pgv_lang['unable_to_find_record'], '</span>';
 				}
