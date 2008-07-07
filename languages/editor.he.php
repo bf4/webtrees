@@ -56,6 +56,7 @@ $pgv_lang["to_person"]		= "לאדם";
 $pgv_lang["to_family"]			= "למשפחה";
 $pgv_lang["to_source"]		= "למקור";
 $pgv_lang["edit_fam"]			= "ערוך משפחה";
+$pgv_lang["edit_repo"]		= "ערוך מאגר"; //@@
 $pgv_lang["copy"]			= "העתק";
 $pgv_lang["cut"]			= "חתוך";
 $pgv_lang["sort_by_birth"]		= "מיין לפי תאריכי לידה";

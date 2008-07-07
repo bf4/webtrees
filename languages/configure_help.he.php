@@ -550,6 +550,7 @@ $pgv_lang["export_filename"]			= "שם קובץ הפלט:";
 $pgv_lang["lang_back"]			= "חזור לתפריט הראשי כדי לערוך ולעצב קבצי השפות";
 $pgv_lang["lang_back_admin"]		= "חזור לתפריט הניהול";
 $pgv_lang["lang_back_manage_gedcoms"]	= "חזור לתפריט ניהול GEDCOM-ים";
+$pgv_lang["lang_name_catalan"]		= "קטלאנית (ולנסית)"; 
 $pgv_lang["lang_name_czech"]		= "צ'כית";
 $pgv_lang["lang_name_chinese"]		= "סינית";
 $pgv_lang["lang_name_danish"]		= "דנית";

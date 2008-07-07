@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "הראה מין לא ידוע"; 
 $pgv_lang["count"]				= "ספירה"; 
 $pgv_lang["age_differences"]			= "הראה הפרשי תאריכים";
@@ -62,7 +63,7 @@ $pgv_lang["SHOW_ID_NUMBERS"]		= "הראה קודי זיהוי ליד שמות";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "הראה תמונות מודגשות בתיבות של אנשים"; 
 $pgv_lang["view_img_details"]		= "הצג פירטי האימג'";
 $pgv_lang["server_folder"]			= "שם התיקייה על השרת"; 
-$pgv_lang["medialist_recursive"]		= "הצג קבצים בתיקיות משנה"; //
+$pgv_lang["medialist_recursive"]		= "הצג קבצים בתיקיות משנה"; 
 $pgv_lang["media_options"]			= "אופציות מדיה"; 
 $pgv_lang["confirm_password"]		= "עליך לאשר את הסיסמא."; 
 $pgv_lang["enter_email"]			= "עליך להכניס כתובת דואר אלקטרוני."; 
@@ -73,6 +74,7 @@ $pgv_lang["child"]				= "ילד/ה";
 $pgv_lang["family"]				= "משפחה";
 $pgv_lang["as_child"]				= "משפחה עם הורים";
 $pgv_lang["source_menu"]			= "בחירות עבור מקור";
+$pgv_lang["repo_menu"]			= "בחירות עבור מאגר"; //@@ 
 $pgv_lang["other_records"]			= "הנתונים הקשורים למקור זה:";
 $pgv_lang["other_repo_records"]		= "רשומות קשורות למאגר זה:";
 $pgv_lang["repo_info"]			= "נתוני מאגר";

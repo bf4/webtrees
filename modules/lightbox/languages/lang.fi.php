@@ -33,6 +33,21 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
+// Added in VERSION 4.1.6
+$pgv_lang["lb_generalhelp"]     = "Individual Page - Lightbox General Help";
+$pgv_lang["lb_viewedit"]		= "View/Edit";
+$pgv_lang["lb_viewnotes"]		= "View Notes";
+$pgv_lang["lb_viewdetails"]		= "View Details";
+$pgv_lang["lb_viewsource"]		= "View Source";
+$pgv_lang["lb_editmedia"]		= "Edit Media";
+$pgv_lang["lb_unlinkmedia"]		= "Unlink Media";
+$pgv_lang["lb_balloon_true"]	= "Balloon";
+$pgv_lang["lb_balloon_false"]	= "Normal";
+$pgv_lang["lb_tt_balloon"]		= "Individual Page - Album Tab Thumbnail - Notes Tooltip";
+$pgv_lang["lb_ttAppearance"]	= "Notes - Tooltip appearance";
+$pgv_lang["view_lightbox"]		= "View Album of ...";
+$pgv_lang["lb_notes"]			= "Notes";
+$pgv_lang["lb_notes_info"]		= "";
 
 // Added in VERSION 4.1.4 
 $pgv_lang["lb_details"]	= "Tietoja";

@@ -173,6 +173,7 @@ $pgv_lang["lang_back"]			= "Palaa päävalikkoon muokataksesi ja hallitaksesi ki
 $pgv_lang["lang_back_admin"]	= "Palaa ylläpitovalikkoon";
 $pgv_lang["lang_back_manage_gedcoms"]	= "Palaa GEDCOM hallinta valikkoon";
 
+$pgv_lang["lang_name_catalan"]		= "Katalaani (Valencia)";
 $pgv_lang["lang_name_chinese"]		= "Kiina";
 $pgv_lang["lang_name_czech"]		= "Tšekki";
 $pgv_lang["lang_name_swedish"]		= "Ruotsi";
