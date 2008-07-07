@@ -1500,7 +1500,7 @@ function read_gedcom_file() {
 //-- this function writes the $fcontents back to the
 //-- gedcom file
 function write_file() {
-	global $fcontents, $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
+	global $fcontents, $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY, $COMMIT_COMMAND;
 
 	if (empty($fcontents)) return;
 	if (preg_match("/0 TRLR/", $fcontents)==0) $fcontents.="0 TRLR\n";

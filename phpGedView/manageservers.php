@@ -38,11 +38,8 @@ require_once("includes/serviceclient_class.php");
  * @param varchar(30) $ip	The ip to be saved
  */
 function add_banned_ip($ip) {
-	global $banned, $INDEX_DIRECTORY, $pgv_lang;
-	if (file_exists($INDEX_DIRECTORY."banned.php"))
-	{
-	include_once($INDEX_DIRECTORY."banned.php");
-	}
+	global $banned, $INDEX_DIRECTORY, $pgv_lang, $COMMIT_COMMAND;
+	if (file_exists($INDEX_DIRECTORY."banned.php")) include_once($INDEX_DIRECTORY."banned.php");
 	$bannedtext = "<?php\n//--List of banned IP addresses\n";
 	$bannedtext .= "\$banned = array();\n";	
 	if(isset($banned)){
@@ -74,11 +71,8 @@ function add_banned_ip($ip) {
  * @param varchar(30) $ip	The ip to be saved
  */
 function add_search_engine_ip($ip) {
-	global $search_engines, $INDEX_DIRECTORY, $pgv_lang;
-	if (file_exists($INDEX_DIRECTORY."search_engines.php"))
-	{
-	include_once($INDEX_DIRECTORY."search_engines.php");
-	}
+	global $search_engines, $INDEX_DIRECTORY, $pgv_lang, $COMMIT_COMMAND;
+	if (file_exists($INDEX_DIRECTORY."search_engines.php")) include_once($INDEX_DIRECTORY."search_engines.php");
 	$searchtext = "<?php\n//--List of search engine IP addresses\n";
 	$searchtext .= "\$search_engines = array();\n";	
 	if(isset($search_engines)){
@@ -111,11 +105,8 @@ function add_search_engine_ip($ip) {
  * @param varchar(30) $ip	IP address to remove
  */
 function delete_banned_ip($ip) {
-	global $banned, $INDEX_DIRECTORY, $pgv_lang;
-	if (file_exists($INDEX_DIRECTORY."banned.php"))
-	{
-	include_once($INDEX_DIRECTORY."banned.php");
-	}
+	global $banned, $INDEX_DIRECTORY, $pgv_lang, $COMMIT_COMMAND;
+	if (file_exists($INDEX_DIRECTORY."banned.php")) include_once($INDEX_DIRECTORY."banned.php");
 	
 	$bannedtext = "<?php\n//--List of banned IP addresses\n";
 	$bannedtext .= "\$banned = array();\n";	
@@ -149,11 +140,9 @@ function delete_banned_ip($ip) {
  * @param varchar(30) $ip	IP address to remove
  */
 function delete_search_engine_ip($ip) {
-	global $search_engines, $INDEX_DIRECTORY, $pgv_lang;
-	if (file_exists($INDEX_DIRECTORY."search_engines.php"))
-	{
+	global $search_engines, $INDEX_DIRECTORY, $pgv_lang, $COMMIT_COMMAND;
+	if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
 	include_once($INDEX_DIRECTORY."search_engines.php");
-	}
 	
 	$searchtext = "<?php\n//--List of search engine IP addresses\n";
 	$searchtext .= "\$search_engines = array();\n";	

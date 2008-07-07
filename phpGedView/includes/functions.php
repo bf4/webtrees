@@ -2768,7 +2768,7 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
  * @return bool true if successful false if there was an error
  */
 function write_changes() {
-	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
+	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL, $COMMIT_COMMAND;
 
 	//-- only allow 1 thread to write changes at a time
 	$mutex = new Mutex("pgv_changes");
@@ -2927,7 +2927,7 @@ function getAlphabet() {
  * @return array 	The array of the found reports with indexes [title] [file]
  */
 function get_report_list($force=false) {
-	global $INDEX_DIRECTORY, $report_array, $vars, $xml_parser, $elementHandler, $LANGUAGE;
+	global $INDEX_DIRECTORY, $report_array, $vars, $xml_parser, $elementHandler, $LANGUAGE, $COMMIT_COMMAND;
 
 	$files = array();
 	if (!$force) {

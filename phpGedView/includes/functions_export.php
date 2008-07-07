@@ -282,7 +282,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 }
 
 function um_export($proceed) {
-	global $INDEX_DIRECTORY, $TBLPREFIX, $DBCONN, $pgv_lang;
+	global $INDEX_DIRECTORY, $TBLPREFIX, $DBCONN, $pgv_lang, $COMMIT_COMMAND;
 
 	// Get user array and create authenticate.php
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
