@@ -1391,7 +1391,6 @@ function format_surname_table($surnames, $type) {
 function format_surname_tagcloud($surnames, $type) {
 	global $TEXT_DIRECTION, $GEDCOM;
 
-	require_once 'js/sorttable.js.htm';
 	// Requested style is "cloud", where the surnames are a list of names (with links),
 	// and the font size used for each name depends on the number of occurrences of this name
 	// in the database - generally known as a 'tag cloud'.
@@ -1443,6 +1442,53 @@ function format_surname_tagcloud($surnames, $type) {
 	$html.='</td></tr></table>';
 	return $html;
 }
+
+// Print a list of surnames.
+// @param $surnames array (of SURN, of array of SPFX_SURN, of array of PID)
+// @param $style, 1=bullet list, 2=semicolon-separated list
+// @param $totals, boolean, show totals after each name
+function format_surname_list($surnames, $style, $totals) {
+	global $GEDCOM;
+
+	$html=array();
+	foreach ($surnames as $surn=>$surns) {
+		// Each surname links back to the indilist
+		if ($surn) {
+			$url='indilist.php?surname='.urlencode($surn).'&amp;ged='.urlencode($GEDCOM);
+		} else {
+			$url='indilist.php?alpha=,&amp;ged='.urlencode($GEDCOM);
+		}
+		// If all the surnames are just case variants, then merge them into one
+		// Comment out this block if you want SMITH listed separately from Smith
+		$first_spfxsurn=null;
+		foreach ($surns as $spfxsurn=>$indis) {
+			if ($first_spfxsurn) {
+				if (str2upper($spfxsurn)==str2upper($first_spfxsurn)) {
+					$surns[$first_spfxsurn]=array_merge($surns[$first_spfxsurn],$surns[$spfxsurn]);
+					unset ($surns[$spfxsurn]);
+				}
+			} else {
+				$first_spfxsurn=$spfxsurn;
+			}
+		}
+		$subhtml='<a href="'.$url.'">'.PrintReady(implode(', ', array_keys($surns))).'</a>';
+		if ($totals) {
+			$subtotal=0;
+			foreach ($surns as $spfxsurn=>$indis) {
+				$subtotal+=count($indis);
+			}
+			$subhtml.=' ['.$subtotal.']';
+		}
+		$html[]=$subhtml;
+	}
+	switch ($style) {
+	case 1:
+		return '<ul><li>'.implode('</li><li>', $html).'</li></ul>';
+	case 2:
+		return implode('; ', $html);
+	}
+}
+
 
 /**
  * print a sortable table of recent changes
