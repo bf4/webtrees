@@ -97,7 +97,6 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		}
 		$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
 
-		ob_start();
 		$all_surnames=array();
 		foreach (array_keys($surnames) as $n=>$surname) {
 			if ($n>=$config["num"]) {
@@ -126,14 +125,13 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		}
 		switch ($SURNAME_LIST_STYLE) {
 		case 'style3':
-			print_surname_tagcloud($all_surnames, 'indilist');
+			$content=format_surname_tagcloud($all_surnames, 'indilist');
 			break;
 		case 'style2':
 		default:
-			print_surname_table($all_surnames, 'indilist');
+			$content=format_surname_table($all_surnames, 'indilist');
 			break;
 		}
-		$content = ob_get_clean();
 	}
 
 	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';

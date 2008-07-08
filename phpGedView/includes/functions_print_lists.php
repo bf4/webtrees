@@ -1290,22 +1290,22 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 // Print a table of surnames.
 // @param $surnames array (of SURN, of array of SPFX_SURN, of array of PID)
 // @param $type string, indilist or famlist
-function print_surname_table($surnames, $type) {
+function format_surname_table($surnames, $type) {
 	global $pgv_lang, $factarray, $GEDCOM;
 
 	require_once 'js/sorttable.js.htm';
-	$table_id = 'ID'.floor(microtime()*1000000); // sorttable requires a unique ID
-	echo '<table id="', $table_id, '" class="sortable list_table center">';
-	echo '<tr><th></th>';
-	echo '<th class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this,1)">'.$factarray['SURN'].'</a></th>';
-	echo '<th style="display:none;">SURN</th>'; // hidden column for sorting surnames
-	echo '<th class="list_label">';
+	$table_id ='ID'.floor(microtime()*1000000); // sorttable requires a unique ID
+	$html='<table id="'.$table_id.'" class="sortable list_table center">';
+	$html.='<tr><th></th>';
+	$html.='<th class="list_label"><a href="javascript:;" onclick="sortByOtherCol(this,1)">'.$factarray['SURN'].'</a></th>';
+	$html.='<th style="display:none;">SURN</th>'; // hidden column for sorting surnames
+	$html.='<th class="list_label">';
 	if ($type=='famlist') {
-		echo $pgv_lang['spouses']; 
+		$html.=$pgv_lang['spouses']; 
 	} else {
-		echo $pgv_lang['individuals'];
+		$html.=$pgv_lang['individuals'];
 	}
-	echo '</th></tr>';
+	$html.='</th></tr>';
 
 	$unique_surn=array();
 	$unique_indi=array();
@@ -1318,9 +1318,10 @@ function print_surname_table($surnames, $type) {
 			$url=$type.'.php?alpha=,&amp;ged='.urlencode($GEDCOM);
 		}
 		// Row counter
-		echo '<tr><td class="list_value_wrap rela list_item">', ++$row_num, '</td>';
+		++$row_num;
+		$html.='<tr><td class="list_value_wrap rela list_item">'.$row_num.'</td>';
 		// Surname
-		echo '<td class="list_value_wrap" align="', get_align($surn), '">';
+		$html.='<td class="list_value_wrap" align="'.get_align($surn).'">';
 		// If all the surnames are just case variants, then merge them into one
 		// Comment out this block if you want SMITH listed separately from Smith
 		$first_spfxsurn=null;
@@ -1337,7 +1338,7 @@ function print_surname_table($surnames, $type) {
 		if (count($surns)==1) {
 			// Single surname variant
 			foreach ($surns as $spfxsurn=>$indis) {
-				echo '<a href="', $url, '" class="list_item name1">', PrintReady($spfxsurn), '</a>';
+				$html.='<a href="'.$url.'" class="list_item name1">'.PrintReady($spfxsurn).'</a>';
 				$unique_surn[$spfxsurn]=true;
 				foreach (array_keys($indis) as $pid) {
 					$unique_indi[$pid]=true;
@@ -1346,52 +1347,48 @@ function print_surname_table($surnames, $type) {
 		} else {
 			// Multiple surname variants, e.g. von Groot, van Groot, van der Groot, etc.
 			foreach ($surns as $spfxsurn=>$indis) {
-				echo '<a href="', $url, '" class="list_item name1">', PrintReady($spfxsurn), '</a><br />';
+				$html.='<a href="'.$url.'" class="list_item name1">'.PrintReady($spfxsurn).'</a><br />';
 				$unique_surn[$spfxsurn]=true;
 				foreach (array_keys($indis) as $pid) {
 					$unique_indi[$pid]=true;
 				}
 			}
-			//echo '<a href="', $url, '" class="list_item name2">', PrintReady($surn), '</a>';
 		}
-		echo '</td>';
+		$html.='</td>';
 		// Hidden column for sorting surnames
-		echo '<td style="display:none;">', $surn, '</td>';
+		$html.='<td style="display:none;">'.htmlspecialchars($surn).'</td>';
 		// Surname count
-		echo '<td class="list_value_wrap">';
+		$html.='<td class="list_value_wrap">';
 		if (count($surns)==1) {
 			// Single surname variant
 			foreach ($surns as $spfxsurn=>$indis) {
 				$subtotal=count($indis);
-				echo '<a name="', $subtotal, '">', $subtotal, '</a>';;
+				$html.='<a name="'.$subtotal.'">'.$subtotal.'</a>';
 			}
 		} else {
 			// Multiple surname variants, e.g. von Groot, van Groot, van der Groot, etc.
 			$subtotal=0;
 			foreach ($surns as $spfxsurn=>$indis) {
 				$subtotal+=count($indis);
-				echo count($indis), '<br />';
+				$html.=count($indis).'<br />';
 			}
-			echo '<a name="', $subtotal, '">', $subtotal, '</a>';
+			$html.='<a name="'.$subtotal.'">'.$subtotal.'</a>';
 		}
-		echo '</td></tr>';
+		$html.='</td></tr>';
 	}
 	//-- table footer
-	echo '<tr class="sortbottom">';
-	echo '<td class="list_item">&nbsp;</td>';
-	echo '<td class="list_item">&nbsp;</td>';
-	echo '<td style="display:none;">&nbsp;</td>'; // hidden column for sorting surnames
-	echo '<td class="list_label name2">';
-	echo $pgv_lang['total_indis'], ': ', count($unique_indi);
-	echo '<br/>', $pgv_lang['total_names'], ': ', count($unique_surn);
-	echo '</tr>';
-	echo '</table>';
+	$html.='<tr class="sortbottom"><td class="list_item">&nbsp;</td>';
+	$html.='<td class="list_item">&nbsp;</td>';
+	$html.='<td style="display:none;">&nbsp;</td>'; // hidden column for sorting surnames
+	$html.='<td class="list_label name2">'.$pgv_lang['total_indis'].': '.count($unique_indi);
+	$html.='<br/>'.$pgv_lang['total_names'].': '.count($unique_surn).'</tr></table>';
+	return $html;
 }
 
 // Print a tagcloud of surnames.
 // @param $surnames array (of SURN, of array of SPFX_SURN, of array of PID)
 // @param $type string, indilist or famlist
-function print_surname_tagcloud($surnames, $type) {
+function format_surname_tagcloud($surnames, $type) {
 	global $TEXT_DIRECTION, $GEDCOM;
 
 	require_once 'js/sorttable.js.htm';
@@ -1400,7 +1397,7 @@ function print_surname_tagcloud($surnames, $type) {
 	// in the database - generally known as a 'tag cloud'.
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
-	echo '<table id="'.$table_id.'" class="tag_cloud_table"><tr><td class="tag_cloud">';
+	$html='<table id="'.$table_id.'" class="tag_cloud_table"><tr><td class="tag_cloud">';
 	//-- Calculate range for font sizing
 	$max_tag = 0;
 	$font_tag = 0;
@@ -1419,23 +1416,32 @@ function print_surname_tagcloud($surnames, $type) {
 		} else {
 			$url=$type.'.php?alpha=,&amp;ged='.urlencode($GEDCOM);
 		}
+		// If all the surnames are just case variants, then merge them into one
+		// Comment out this block if you want SMITH listed separately from Smith
+		$first_spfxsurn=null;
+		foreach ($surns as $spfxsurn=>$indis) {
+			if ($first_spfxsurn) {
+				if (str2upper($spfxsurn)==str2upper($first_spfxsurn)) {
+					$surns[$first_spfxsurn]=array_merge($surns[$first_spfxsurn],$surns[$spfxsurn]);
+					unset ($surns[$spfxsurn]);
+				}
+			} else {
+				$first_spfxsurn=$spfxsurn;
+			}
+		}
 		foreach ($surns as $spfxsurn=>$indis) {
 			$count=count($indis);
 			$fontsize = ceil($count/$font_tag);
 			if ($TEXT_DIRECTION=="ltr") {
-				$title = PrintReady($surn." (".$count.")");
-				$tag = PrintReady("<font size=\"".$fontsize."\">".$surn."</font><span class=\"tag_cloud_sub\">&nbsp;(".$count.")</span>");
+				$tag = "<font size=\"".$fontsize."\">".PrintReady($spfxsurn)."</font><span class=\"tag_cloud_sub\">&nbsp;(".$count.")</span>";
 			} else {
-				$title = PrintReady("(".$count.") ".$surn);
-				$tag = PrintReady("<span class=\"tag_cloud_sub\">(".$value["match"].")&nbsp;</span><font size=\"".$fontsize."\">".$surn."</font>");
+				$tag = PrintReady("<span class=\"tag_cloud_sub\">(".$value["match"].")&nbsp;</span><font size=\"".$fontsize."\">".$spfxsurn."</font>");
 			}
-			echo "<a href=\"{$url}\" class=\"list_item\" title=\"{$title}\">{$tag}</a>&nbsp;&nbsp; ";
+			$html.='<a href="'.$url.'" class="list_item">'.$tag.'</a> ';
 		}
 	}
-	echo "</td>";
-	echo "</tr>\n";
-	//-- table footer
-	echo "</table>\n";
+	$html.='</td></tr></table>';
+	return $html;
 }
 
 /**
