@@ -1469,61 +1469,65 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _commonSurnamesQuery($type='list', $show_tot=false, $params=null) {
-		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD, $SURNAME_LIST_STYLE;
 
 		if (is_array($params) && isset($params[0]) && $params[0] != '') {$threshold = strtolower($params[0]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
 		if(is_array($params) && isset($params[1]) && $params[1] != '' && $params[1] >= 0){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = false;}
 		if(is_array($params) && isset($params[2]) && $params[2] != ''){$sorting = strtolower($params[2]);}else{$sorting = 'alpha';}
-		$surnames = get_common_surnames($threshold);
-		if (count($surnames) == 0) return '';
-		uasort($surnames, array('stats', '_name_total_rsort'));
-		if ($maxtoshow>0) $surnames = array_slice($surnames, 0, $maxtoshow);
+		$surname_list = get_common_surnames($threshold);
+		if (count($surname_list) == 0) return '';
+		uasort($surname_list, array('stats', '_name_total_rsort'));
+		if ($maxtoshow>0) $surname_list = array_slice($surname_list, 0, $maxtoshow);
 
 		switch($sorting) {
 			default:
 			case 'alpha':
-				uasort($surnames, array('stats', '_name_name_sort'));
+				uasort($surname_list, array('stats', '_name_name_sort'));
 				break;
 			case 'ralpha':
-				uasort($surnames, array('stats', '_name_name_rsort'));
+				uasort($surname_list, array('stats', '_name_name_rsort'));
 				break;
 			case 'count':
-				uasort($surnames, array('stats', '_name_total_sort'));
+				uasort($surname_list, array('stats', '_name_total_sort'));
 				break;
 			case 'rcount':
-				uasort($surnames, array('stats', '_name_total_rsort'));
+				uasort($surname_list, array('stats', '_name_total_rsort'));
 				break;
 		}
 
-		$common = array();
-		foreach ($surnames as $indexval=>$surname) {
-			if ($show_tot) {
-				$tot = PrintReady("[{$surname['match']}]");
-				if ($TEXT_DIRECTION=='ltr') {
-					$totL = '';
-					$totR = '&nbsp;'.$tot;
-				} else {
-					$totL = $tot.'&nbsp;';
-					$totR = '';
+		// Note that we count/display SPFX SURN, but sort/group under just SURN
+		$surnames=array();
+		foreach (array_keys($surname_list) as $surname) {
+			foreach (array_keys(get_surname_indis($surname)) as $pid) {
+				$person=Person::getInstance($pid);
+				foreach ($person->getAllNames() as $name) {
+					$surn=reset(explode(',', $name['sort']));
+					if ($surname==$surn) {
+						$spfxsurn=reset(explode(',', $name['list']));
+						if (! array_key_exists($surn, $surnames)) {
+							$surnames[$surn]=array();
+						}
+						if (! array_key_exists($spfxsurn, $surnames[$surn])) {
+							$surnames[$surn][$spfxsurn]=array();
+						}
+						// $surn is the base surname, e.g. GOGH
+						// $spfxsurn is the full surname, e.g. van GOGH
+						// $pid allows us to count indis as well as surnames, for indis that
+						// appear twice in this list.
+						$surnames[$surn][$spfxsurn][$pid]=true;
+					}
 				}
-			} else {
-				$totL = '';
-				$totR = '';
-			}
-			$name = PrintReady($surname['name']);
-			if ($surname['name']=='?' && $TEXT_DIRECTION=='rtl') $name = "&lrm;{$surname['name']}&lrm;";
-			if ($type == 'list') {
-				$common[] = "\t<li>{$totL}<a href=\"".encode_url("{$this->_server_url}indilist.php?surname={$surname['name']}&ged={$this->_gedcom_url}")."\">{$name}</a>{$totR}</li>\n";
-			} else {
-				$common[] = "{$totL}<a href=\"".encode_url("{$this->_server_url}indilist.php?surname={$surname['name']}&ged={$this->_gedcom_url}")."\">{$name}</a>{$totR}";
 			}
 		}
-		if ($type == 'list') {
-			return "<ul>\n".join("\n", $common)."</ul>\n";
-		} else {
-			if ($TEXT_DIRECTION=='ltr') return join(';&nbsp; ', $common);
-			else return join(' &nbsp;;', $common);
+
+		switch ($SURNAME_LIST_STYLE) {
+		case 'style3':
+			return format_surname_tagcloud($surnames, 'indilist', $show_tot);
+		case 'style2':
+		default:
+			return format_surname_list($surnames, ($type=='list' ? 1 : 2), $show_tot);
 		}
+		
 	}
 
 	function commonSurnames($params=array('','','alpha')) {return $this->_commonSurnamesQuery('nolist', false, $params);}

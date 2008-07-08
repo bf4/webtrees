@@ -125,7 +125,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		}
 		switch ($SURNAME_LIST_STYLE) {
 		case 'style3':
-			$content=format_surname_tagcloud($all_surnames, 'indilist');
+			$content=format_surname_tagcloud($all_surnames, 'indilist', true);
 			break;
 		case 'style2':
 		default:

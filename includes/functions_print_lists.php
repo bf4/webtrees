@@ -1388,7 +1388,8 @@ function format_surname_table($surnames, $type) {
 // Print a tagcloud of surnames.
 // @param $surnames array (of SURN, of array of SPFX_SURN, of array of PID)
 // @param $type string, indilist or famlist
-function format_surname_tagcloud($surnames, $type) {
+// @param $totals, boolean, show totals after each name
+function format_surname_tagcloud($surnames, $type, $totals) {
 	global $TEXT_DIRECTION, $GEDCOM;
 
 	// Requested style is "cloud", where the surnames are a list of names (with links),
@@ -1431,10 +1432,15 @@ function format_surname_tagcloud($surnames, $type) {
 		foreach ($surns as $spfxsurn=>$indis) {
 			$count=count($indis);
 			$fontsize = ceil($count/$font_tag);
-			if ($TEXT_DIRECTION=="ltr") {
-				$tag = "<font size=\"".$fontsize."\">".PrintReady($spfxsurn)."</font><span class=\"tag_cloud_sub\">&nbsp;(".$count.")</span>";
+			if ($totals) {
+				$total='('.$count.')';
 			} else {
-				$tag = PrintReady("<span class=\"tag_cloud_sub\">(".$value["match"].")&nbsp;</span><font size=\"".$fontsize."\">".$spfxsurn."</font>");
+				$total='';
+			}
+			if ($TEXT_DIRECTION=="ltr") {
+				$tag = "<font size=\"".$fontsize."\">".PrintReady($spfxsurn)."</font><span class=\"tag_cloud_sub\">&nbsp;".$total."</span>";
+			} else {
+				$tag = PrintReady("<span class=\"tag_cloud_sub\">".getRLM().$total.getRLM()."&nbsp;</span><font size=\"".$fontsize."\">".$spfxsurn."</font>");
 			}
 			$html.='<a href="'.$url.'" class="list_item">'.$tag.'</a> ';
 		}
@@ -1448,7 +1454,7 @@ function format_surname_tagcloud($surnames, $type) {
 // @param $style, 1=bullet list, 2=semicolon-separated list
 // @param $totals, boolean, show totals after each name
 function format_surname_list($surnames, $style, $totals) {
-	global $GEDCOM;
+	global $TEXT_DIRECTION, $GEDCOM;
 
 	$html=array();
 	foreach ($surnames as $surn=>$surns) {
