@@ -1341,14 +1341,14 @@ function print_surname_table($surnames, $type) {
 			}
 		} else {
 			// Multiple surname variants, e.g. von Groot, van Groot, van der Groot, etc.
-			echo '<a href="', $url, '" class="list_item name2">', PrintReady($surn), '</a>';
 			foreach ($surns as $spfxsurn=>$indis) {
-				echo '<br/>', PrintReady($spfxsurn);
+				echo '<a href="', $url, '" class="list_item name1">', PrintReady($spfxsurn), '</a><br />';
 				$unique_surn[$spfxsurn]=true;
 				foreach (array_keys($indis) as $pid) {
 					$unique_indi[$pid]=true;
 				}
 			}
+			//echo '<a href="', $url, '" class="list_item name2">', PrintReady($surn), '</a>';
 		}
 		echo '</td>';
 		// Hidden column for sorting surnames
@@ -1366,11 +1366,9 @@ function print_surname_table($surnames, $type) {
 			$subtotal=0;
 			foreach ($surns as $spfxsurn=>$indis) {
 				$subtotal+=count($indis);
+				echo count($indis), '<br />';
 			}
-			echo '<a name="', $subtotal, '">', $subtotal, '</a>';;
-			foreach ($surns as $spfxsurn=>$indis) {
-				echo '<br/>', count($indis);
-			}
+			echo '<a name="', $subtotal, '">', $subtotal, '</a>';
 		}
 		echo '</td></tr>';
 	}
