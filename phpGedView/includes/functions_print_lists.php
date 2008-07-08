@@ -1312,7 +1312,11 @@ function print_surname_table($surnames, $type) {
 	$row_num=0;
 	foreach ($surnames as $surn=>$surns) {
 		// Each surname links back to the indi/fam surname list
-		$url=$type.'.php?surname='.urlencode($surn).'&amp;ged='.urlencode($GEDCOM);
+		if ($surn) {
+			$url=$type.'.php?surname='.urlencode($surn).'&amp;ged='.urlencode($GEDCOM);
+		} else {
+			$url=$type.'.php?alpha=,&amp;ged='.urlencode($GEDCOM);
+		}
 		// Row counter
 		echo '<tr><td class="list_value_wrap rela list_item">', ++$row_num, '</td>';
 		// Surname
@@ -1410,7 +1414,11 @@ function print_surname_tagcloud($surnames, $type) {
 	//-- Print each name
 	foreach ($surnames as $surn=>$surns) {
 		// Each surname links back to the indi/fam surname list
-		$url=$type.'.php?surname='.urlencode($surn).'&amp;ged='.urlencode($GEDCOM);
+		if ($surn) {
+			$url=$type.'.php?surname='.urlencode($surn).'&amp;ged='.urlencode($GEDCOM);
+		} else {
+			$url=$type.'.php?alpha=,&amp;ged='.urlencode($GEDCOM);
+		}
 		foreach ($surns as $spfxsurn=>$indis) {
 			$count=count($indis);
 			$fontsize = ceil($count/$font_tag);
