@@ -246,7 +246,7 @@ if ($surname_sublist=='yes') {
 	uksort($surnames, 'compareStrings');
 	switch ($SURNAME_LIST_STYLE) {
 	case 'style3':
-		echo format_surname_tagcloud($surnames, 'indilist');
+		echo format_surname_tagcloud($surnames, 'indilist', true);
 		break;
 	case 'style2':
 	default:
