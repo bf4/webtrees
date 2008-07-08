@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2011427 ] [SVN 3475] lightbox : undefined function: htmlspecialchars, with PHP ver. less than PHP 5.0.1 (windmillway)
  - Fixed: [ 2012084 ] config page chokes on change list (fisharebest)
  - Fixed: [ 2002003 ] [SVN 3385] Place : toggle_lati_long is not defined (wooc)
  - Changed: Album Page: added get_first_letters() function in functions_name.php to correctly create a truncated TITLE dropdown link for RTL and LTR (windmillway)
