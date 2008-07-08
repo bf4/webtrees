@@ -3,7 +3,7 @@
  * Startup and session logic
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,13 @@ define('PGV_PHPGEDVIEW',      'PhpGedView');
 define('PGV_VERSION',         '4.1.6');
 define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
+define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
+define('PGV_PHPGEDVIEW_WIKI', 'http://wiki.phpgedview.net');
 
-// Don't try to use old privacy files
+// Environmental requirements
+define('PGV_REQUIRED_PHP_VERSION',     '4.3.5');
+define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not currently enforced
+define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not currently enforced
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
@@ -48,6 +53,17 @@ define('PGV_REGEX_PASSWORD',  '.{6,}');
 define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
 define('PGV_REGEX_URL',       '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
 define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
+
+// UTF8 representation of various characters
+define('PGV_UTF8_BOM', "\xEF\xBB\xBF"); // U+FEFF
+define('PGV_UTF8_LRM', "\xE2\x80\x8E"); // U+200E
+define('PGV_UTF8_RLM', "\xE2\x80\x8F"); // U+200F
+
+// Alternatives to BMD events for lists, charts, etc.
+define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
+define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
+define('PGV_EVENTS_MARR', 'MARR|MARB');
+define('PGV_EVENTS_DIV',  'DIV|ANUL');
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);
 @ini_set('display_errors', '1');
@@ -112,8 +128,9 @@ unset($ini_include_path, $includes_dir); // destroy some variables for security 
 
 set_magic_quotes_runtime(0);
 
-if (version_compare(phpversion(), '4.3.5')<0)
-	die ("<html>\n<body><b style=\"color: red;\">PhpGedView requires PHP version 4.3.5 or later.</b><br /><br />\nYour server is running PHP version ".phpversion().".  Please ask your server's Administrator to upgrade the PHP installation.</body></html>");
+if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
+	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.phpversion().'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+}
 
 //-- load file for language settings
 require_once( "includes/lang_settings_std.php");
@@ -345,10 +362,13 @@ require_once("includes/functions_date.php");
 if (empty($PEDIGREE_GENERATIONS)) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
 
 /* Re-build the various language-related arrays
+ *  Note:
+ *  This code existed in both lang_settings_std.php and in lang_settings.php.
+ *  It has been removed from both files and inserted here, where it belongs.
  */
 $languages 				= array();
 $pgv_lang_use 			= array();
-$pgv_lang 				= array();
+$pgv_lang_self			= array();
 $lang_short_cut 		= array();
 $lang_langcode 			= array();
 $pgv_language 			= array();
@@ -376,7 +396,7 @@ $NAME_REVERSE_array		= array();
 foreach ($language_settings as $key => $value) {
 	$languages[$key] 			= $value["pgv_langname"];
 	$pgv_lang_use[$key]			= $value["pgv_lang_use"];
-	$pgv_lang[$key]				= $value["pgv_lang"];
+	$pgv_lang_self[$key]		 = $value["pgv_lang_self"];
 	$lang_short_cut[$key]		= $value["lang_short_cut"];
 	$lang_langcode[$key]		= $value["langcode"];
 	$pgv_language[$key]			= $value["pgv_language"];
@@ -399,7 +419,7 @@ foreach ($language_settings as $key => $value) {
 	$TEXT_DIRECTION_array[$key]	= $value["TEXT_DIRECTION"];
 	$NAME_REVERSE_array[$key]	= $value["NAME_REVERSE"];
 
-	$pgv_lang["lang_name_$key"]	= $value["pgv_lang"];
+	$pgv_lang["lang_name_$key"]  = $value["pgv_lang_self"];
 }
 
 
@@ -476,22 +496,22 @@ if ($logout) {
 }
 
 // Define some constants to save calculating the same value repeatedly.
+define('PGV_GEDCOM',            $GEDCOM);
+define('PGV_GED_ID',            get_id_from_gedcom(PGV_GEDCOM));
 define('PGV_USER_ID',           getUserId  ());
 define('PGV_USER_NAME',         getUserName());
 define('PGV_USER_IS_ADMIN',     userIsAdmin       (PGV_USER_ID));
-define('PGV_USER_GEDCOM_ADMIN', userGedcomAdmin   (PGV_USER_ID));
-define('PGV_USER_CAN_ACCESS',   userCanAccess     (PGV_USER_ID));
-define('PGV_USER_CAN_EDIT',     userCanEdit       (PGV_USER_ID));
-define('PGV_USER_CAN_ACCEPT',   userCanAccept     (PGV_USER_ID));
+define('PGV_USER_GEDCOM_ADMIN', userGedcomAdmin   (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_ACCESS',   userCanAccess     (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_EDIT',     userCanEdit       (PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_CAN_ACCEPT',   userCanAccept     (PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
-define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID));
-define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'gedcomid'));
-define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, $GEDCOM, 'rootid'));
-if (empty($GEDCOMS) || DB::isError($DBCONN)) {
-	define('PGV_GED_ID', null);
-} else {
-	define('PGV_GED_ID', $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']));
-}
+define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
+define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
+define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
+
+// Only site administrators should see debugging output.
+define('PGV_DEBUG', PGV_USER_IS_ADMIN && safe_GET_bool('debug'));
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);
@@ -618,8 +638,19 @@ require_once("hitcount.php"); //--load the hit counter
 
 if ($Languages_Default) {            // If Languages not yet configured
 	$pgv_lang_use["english"] = false;  //  disable English
-	$pgv_lang_use["$LANGUAGE"] = true; //  and enable according to Browser pref.
+	$pgv_lang_use[$LANGUAGE] = true; //  and enable according to Browser pref.
 	$language_settings["english"]["pgv_lang_use"] = false;
-	$language_settings["$LANGUAGE"]["pgv_lang_use"] = true;
+	$language_settings[$LANGUAGE]["pgv_lang_use"] = true;
+}
+
+// Characters with weak-directionality can confuse the browser's BIDI algorithm.
+// Make sure that they follow the directionality of the page, not that of the
+// enclosed text.
+if ($TEXT_DIRECTION=='ltr') {
+	define ('PGV_LPARENS', '&lrm;(');
+	define ('PGV_RPARENS', ')&lrm;');
+} else {
+	define ('PGV_LPARENS', '&rlm;(');
+	define ('PGV_RPARENS', ')&rlm;');
 }
 ?>

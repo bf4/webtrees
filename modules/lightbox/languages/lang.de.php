@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PhpGedView developers
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,11 +34,42 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// Added in VERSION 4.1.6
+$pgv_lang["lb_generalhelp"]     = "Persönliche Fakten Seite - Lightbox Allgemeine Hilfe";
+$pgv_lang["lb_viewedit"]		= "Zeigen/Bearbeiten";
+$pgv_lang["lb_viewnotes"]		= "Bemerkungen zeigen";
+$pgv_lang["lb_viewdetails"]		= "Details zeigen";
+$pgv_lang["lb_viewsource"]		= "Quelle zeigen";
+$pgv_lang["lb_editmedia"]		= "Medienobjekt bearbeiten";
+$pgv_lang["lb_unlinkmedia"]		= "Verbindung abbrechen";
+$pgv_lang["lb_balloon_true"]	= "Sprechblase";
+$pgv_lang["lb_balloon_false"]	= "Normal";
+$pgv_lang["lb_tt_balloon"]		= "Persönliche Fakten Seite - Album Ordner Miniaturbild Bereich";
+$pgv_lang["lb_ttAppearance"]	= "Behandlung der Links zu Bemerkungen";
+$pgv_lang["view_lightbox"]		= "Von ... Album zeigen";
+$pgv_lang["lb_notes"]			= "Bemerkungen";
+$pgv_lang["lb_notes_info"]		= "";
+ 
+
+// Added in VERSION 4.1.4 
+
+$pgv_lang["lb_details"]			= "Details";
+$pgv_lang["lb_detail_info"]		= "Details des Medien-Objekts zeigen ...  weitere Optionen - Medienbetrachter Seite";
+$pgv_lang["lb_pause_ss"]		= "Diavortrag unterbrechen";
+$pgv_lang["lb_start_ss"]		= "Diavortrag Start";
+$pgv_lang["lb_music"]			= "Ton ein/abschalten";
+$pgv_lang["lb_zoom_off"]		= "Zoom abschalten";
+$pgv_lang["lb_zoom_on"]			= "Zoom ist eingeschaltet ... Sie können mit dem Mausrad oder den <b>i</b> und <b>o</b> Tasten die Zoom-Funktionen bewirken.";
+$pgv_lang["lb_close_win"]		= "Fenster schließen";
+
+
+// VERSION 4.1.3 
+
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]		= "Album Konfiguration";
 $pgv_lang["mediatab"]       		= "Persönliche Fakten Seite - Multimedia Ordner";
 $pgv_lang["lb_appearance"]			= "Darstellung";
-$pgv_lang["lb_linkAppearance"]		= "Links-Darstellung";
+$pgv_lang["lb_linkAppearance"]		= "Darstellung der Links";
 $pgv_lang["lb_MP3Only"]				= "(nur mp3 unterstützt)";
 $pgv_lang["lb_admin_error"]         = "Nur für Verwalter bestimmt";
 $pgv_lang["lb_toAlbumPage"]			= "Zurück zur Album-Seite";
@@ -49,7 +80,7 @@ $pgv_lang["lb_both"]				= "Beide";
 $pgv_lang["lb_none"]				= "Keine";
 
 $pgv_lang["lb_al_head_links"]		= "Persönliche Fakten Seite - Album Ordner Kopfbereich";
-$pgv_lang["lb_al_thumb_links"]		= "Persönliche Fakten Seite - Album Ordner Miniaturbilder";
+$pgv_lang["lb_al_thumb_links"]		= "Persönliche Fakten Seite - Album Ordner Miniaturbild Bereich";
 $pgv_lang["lb_ml_thumb_links"]		= "MultiMedia Seite - Minaturbilder";
 $pgv_lang["lb_music_file"]			= "Dia-Vortrag Tonspur";
 $pgv_lang["lb_musicFileAdvice"]		= "Lagerort der gewählten Tonspur  (wenn leer: keine Tonspur)";

@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Lithuanian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Arturas Sleinius
  * @version $Id$
  */
 
@@ -49,7 +48,6 @@ $pgv_lang["reorder_children"]		= "Perrūšiuoti vaikus";
 $pgv_lang["add_from_clipboard"]		= "Pridėti iš laikinos atminties:";
 $pgv_lang["record_copied"]			= "Įrašas nukopijuotas į laikiną atmintį";
 $pgv_lang["add_unlinked_person"]	= "Pridėti nenusijusį asmenį";
-$pgv_lang["server_file"]				= "Bylos vardas serveryje";
 $pgv_lang["server_file_advice"]			= "Jei norite išsaugoti orginalų vardą, tai nekeisti.";
 $pgv_lang["server_file_advice2"]		= "Jūs galite suvesti URL, prasidedantį nuo &laquo;http://&raquo;.";
 $pgv_lang["add_media_other_folder"]		= "Kita direktorija...  Prašom suvesti";
@@ -97,7 +95,6 @@ $pgv_lang["directory_not_empty"]	= "Katalogas nėra tuščias.";
 $pgv_lang["directory_not_exist"]	= "Katalogas neegzistuoja.";
 $pgv_lang["error_remote"]           = "Jūs pasirinkote nutolusią svetainę.";
 $pgv_lang["error_same"]             = "Jūs pasirinkote tą pačią svetainę.";
-$pgv_lang["family"] 				= "Šeima";
 $pgv_lang["file_missing"]			= "Negauta failo. Siųskite iš naujo.";
 $pgv_lang["file_partial"]			= "Nusiųsta tik failo dalis, bandykite iš naujo";
 $pgv_lang["file_success"]			= "Failas sėkmingai nusiųstas";
@@ -108,7 +105,6 @@ $pgv_lang["gender_search"]			= "Lytis:";
 $pgv_lang["generate_thumbnail"]		= "Sugeneruoti mažą paveiksliuką automatiškai iš";
 $pgv_lang["highlighted"]			= "Paryškintas paveikslas";
 $pgv_lang["illegal_chars"]			= "Varde yra neleistinų simbolių";
-$pgv_lang["invalid_search_input"] 	= "Prie metų dar  įveskite  vardą, pavardę ar \\n\\t vietą";
 $pgv_lang["label_diff_server"]      = "Kita svetainė";
 $pgv_lang["label_password_id2"]		= "Slaptažodis:";
 $pgv_lang["label_rel_to_current"]   = "Ryšys su dabartiniu asmeniu";
@@ -122,7 +118,6 @@ $pgv_lang["lbl_type_server"]        = "Suvesti naują svetainę.";
 $pgv_lang["link_to_existing_media"]		= "Susieti su egzistuojančiu media įrašu";
 $pgv_lang["max_upload_size"]		= "Didžiausias siunčiamas failas:";
 $pgv_lang["media_file"] 			= "Media failas";
-$pgv_lang["multi_site_search"] 		= "Keleto svetainių paieška";
 $pgv_lang["name_search"]			= "Vardas:";
 $pgv_lang["new_repo_created"]		= "Nauja saugykla sukurta";
 $pgv_lang["new_source_created"] 	= "Naujas šaltinis sukurtas sėkmingai.";

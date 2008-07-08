@@ -317,7 +317,7 @@ if (!file_exists($serverFilename)) {
 
 if (empty($controller->pid)) {
 	// the requested file IS NOT in the gedcom, but it exists (the check for fileExists was above) 
-	if (!userCanEdit() ) {
+	if (!PGV_USER_IS_ADMIN) {
 		// only show these files to admin users
 		// bail since current user is not admin
 		// Note: the 404 error status is still in effect. 
@@ -415,7 +415,7 @@ if ($debug_mediafirewall) {
 	echo  '<tr><td>filesize</td><td>'.@filesize($serverFilename).'</td><td>this is right</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getThumbnail()</td><td>'.$controller->mediaobject->getThumbnail().'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->canDisplayDetails()</td><td>'.$controller->mediaobject->canDisplayDetails().'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>controller->mediaobject->getTitle()</td><td>'.$controller->mediaobject->getTitle().'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>controller->mediaobject->getFullName()</td><td>'.$controller->mediaobject->getFullName().'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>basename($serverFilename)</td><td>'.basename($serverFilename).'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>filetime</td><td>'.$filetime.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>filetimeHeader</td><td>'.$filetimeHeader.'</td><td>&nbsp;</td></tr>';

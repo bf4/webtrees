@@ -32,10 +32,10 @@ if (!empty($lang)) {
 	$changelanguage = "yes";
 	$NEWLANGUAGE = $lang;
 }
-require("includes/feedcreator.class.php");
-require("includes/functions_rss.php");
-require("config.php");
-require("includes/index_cache.php");
+require 'config.php';
+require 'includes/feedcreator.class.php';
+require 'includes/functions_rss.php';
+require 'includes/index_cache.php';
 
 $feedCacheName = "fullFeed";
 
@@ -92,7 +92,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$author=getUserFullName($CONTACT_EMAIL);
 
 	$feed = new UniversalFeedCreator();
-	$feed->generator = "http://www.phpgedview.net ".PGV_VERSION_TEXT;
+	$feed->generator = PGV_PHPGEDVIEW_URL.' '.PGV_VERSION_TEXT;
 	$feed->title = $GEDCOMS[$GEDCOM]["title"];
 	$feed->language = $lang_short_cut[$LANGUAGE]; //$lang_langcode[$LANGUAGE];
 	$feed->descriptionHtmlSyndicated = true;
@@ -110,7 +110,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$image = new FeedImage();
 	$image->title = $pgv_lang["rss_logo_descr"];
 	$image->url = $SERVER_URL."images/gedview.gif";
-	$image->link = "http://www.phpgedview.net";
+	$image->link = PGV_PHPGEDVIEW_URL;
 	$image->description = $pgv_lang["rss_logo_descr"];
 	$image->descriptionHtmlSyndicated = true;
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output

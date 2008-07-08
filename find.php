@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a family id, person id
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ if (!isset($directory)) $directory = $MEDIA_DIRECTORY;
 if (!isset($multiple)) $multiple = false;
 if (!isset($showthumb)) $showthumb = true;
 $thumbget = "";
-if ($showthumb) {$thumbget = "&amp;showthumb=true";}
+if ($showthumb) {$thumbget = "&showthumb=true";}
 if (!isset($choose)) $choose = "0all";
 $embed = substr($choose,0,1)=="1";
 $chooseType = substr($choose,1);
@@ -473,7 +473,8 @@ if ($action=="filter") {
 					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
-				echo format_list_family($pvalue[1], array($pvalue[0], $pvalue[2]), true);
+				$family=Family::getInstance($pvalue[1]);
+				echo $family->format_list('li', true);
 			}
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
@@ -513,7 +514,7 @@ if ($action=="filter") {
 			$levels = explode("/", $thumbdir);
 			$pthumb = "";
 			for($i=0; $i<count($levels)-2; $i++) $pthumb.=$levels[$i]."/";
-			$uplink = "<a href=\"find.php?directory=".rawurlencode($pdir)."&amp;thumbdir=".rawurlencode($pthumb)."&amp;level=".($level-1).$thumbget."&type=media&amp;choose=".$choose."\">&nbsp;&nbsp;&nbsp;&lt;-- <span dir=\"ltr\">".$pdir."</span>&nbsp;&nbsp;&nbsp;</a><br />\n";
+			$uplink = "<a href=\"".encode_url("find.php?directory={$pdir}&thumbdir={$pthumb}&level=".($level-1)."{$thumbget}&type=media&choose={$choose}")."\">&nbsp;&nbsp;&nbsp;&lt;-- <span dir=\"ltr\">".$pdir."</span>&nbsp;&nbsp;&nbsp;</a><br />\n";
 		}
 
 		// Start of media directory table
@@ -536,11 +537,11 @@ if ($action=="filter") {
 				print $uplink."</td></tr>";
 			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION\" colspan=\"2\">";
-			print "<a href=\"find.php?directory=".rawurlencode($directory)."&amp;thumbdir=".rawurlencode(str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory))."&amp;level=".$level.$thumbget."&amp;external_links=http&amp;type=media&amp;choose=".$choose."\">".$pgv_lang["external_objects"]."</a>";
+			print "<a href=\"".encode_url("find.php?directory={$directory}&thumbdir=".str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory)."&level={$level}{$thumbget}&external_links=http&type=media&choose={$choose}")."\">".$pgv_lang["external_objects"]."</a>";
 			print "</td></tr>";
 			foreach ($dirs as $indexval => $dir) {
 				print "<tr><td class=\"list_value $TEXT_DIRECTION\" colspan=\"2\">";
-				print "<a href=\"find.php?directory=".rawurlencode($directory.$dir."/")."&thumbdir=".rawurlencode($directory.$dir."/")."&level=".($level+1).$thumbget."&amp;type=media&amp;choose=".$choose."\"><span dir=\"ltr\">".$dir."</span></a>";
+				print "<a href=\"".encode_url("find.php?directory={$directory}{$dir}/&thumbdir={$directory}{$dir}/&level=".($level+1)."{$thumbget}&type=media&choose={$choose}")."\"><span dir=\"ltr\">".$dir."</span></a>";
 				print "</td></tr>";
 			}
 		}
@@ -592,7 +593,7 @@ if ($action=="filter") {
 						//-- thumbnail field
 						if ($showthumb) {
 							print "\n\t\t\t<td class=\"list_value $TEXT_DIRECTION width10\">";
-							if (isset($media["THUMB"])) print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\"><img src=\"".filename_decode($media["THUMB"])."\" border=\"0\" width=\"50\"></a>\n";
+							if (isset($media["THUMB"])) print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\"><img src=\"".filename_decode($media["THUMB"])."\" border=\"0\" width=\"50\" alt=\"\" /></a>\n";
 							else print "&nbsp;";
 						}
 
@@ -617,24 +618,25 @@ if ($action=="filter") {
 						if ($media["LINKED"]) {
 							print $pgv_lang["media_linked"]."<br />";
 							foreach ($media["LINKS"] as $indi => $type_record) {
-								if (isset($pgv_changes[$indi."_".$GEDCOM])) $indirec = find_updated_record($indi);
-								else $indirec = find_gedcom_record($indi);
-								if ($type_record=="INDI") {
-						            print " <br /><a href=\"individual.php?pid=".$indi."\"> ".$pgv_lang["view_person"]." - ".PrintReady(get_person_name($indi))."</a>";
-								}
-								else if ($type_record=="FAM") {
-						           	print "<br /> <a href=\"family.php?famid=".$indi."\"> ".$pgv_lang["view_family"]." - ".PrintReady(get_family_descriptor($indi))."</a>";
-								}
-								else if ($type_record=="SOUR") {
-						            	print "<br /> <a href=\"source.php?sid=".$indi."\"> ".$pgv_lang["view_source"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
-								}
-								//-- no reason why we might not get media linked to media. eg stills from movie clip, or differents resolutions of the same item
-								else if ($type_record=="OBJE") {
-						            	//print "<br /> <a href=\"media.php?gid=".$indi."\"> ".$pgv_lang["view_object"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
-								}
+								$record=GedcomRecord::getInstance($indi);
+								echo '<br /><a href="'.encode_url($record->getLinkUrl()).'">';
+								switch($type_record) {
+								case 'INDI':
+									echo $pgv_lang['view_person'], ' - ';
+									break;
+								case 'FAM':
+									echo $pgv_lang['view_family'], ' - ';
+									break;
+								case 'SOUR':
+									echo $pgv_lang['view_source'], ' - ';
+									break;
+								case 'OBJE':
+									echo $pgv_lang['view_object'], ' - ';
+									break;
 							}
+								echo PrintReady($record->getFullName()), '</a>';
 						}
-						else {
+						} else {
 							print $pgv_lang["media_not_linked"];
 						}
 						print "\n\t\t\t</td>";
@@ -689,20 +691,16 @@ if ($action=="filter") {
 	// Output Repositories
 	if ($type == "repo") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
-		$repolist = get_repo_list();
-		$ctrepo = count($repolist);
-		if ($ctrepo>0) {
+		$repo_list = get_repo_list();
+		if ($repo_list) {
 			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
-			foreach ($repolist as $key => $value) {
-				$id = $value["id"];
-			    print "<li><a href=\"javascript:;\" onclick=\"pasteid('$id');\"><span class=\"list_item\">".PrintReady(get_repo_descriptor($key))."&nbsp;&nbsp;&nbsp;";
-			    if ($TEXT_DIRECTION=="rtl") print getRLM();
-			    print "(".$key.")";
-			    if ($TEXT_DIRECTION=="rtl") print getRLM();
-			    print "</span></a></li>";
+			foreach ($repo_list as $repo) {
+				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$repo->getXref()."');\"><span class=\"list_item\">".$repo->getListName()."&nbsp;&nbsp;&nbsp;";
+				echo PGV_LPARENS.$repo->getXref().PGV_RPARENS;
+				echo "</span></a></li>";
 			}
 			print "</ul></td></tr>";
-			print "<tr><td class=\"list_label\">".$pgv_lang["repos_found"]." ".$ctrepo;
+			print "<tr><td class=\"list_label\">".$pgv_lang["repos_found"]." ".count($repo_list);
 			print "</td></tr>";
 		}
 		else {

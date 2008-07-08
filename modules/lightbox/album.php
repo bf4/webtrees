@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,28 +29,93 @@
 loadLangFile("lb_lang");
 
 global $LANGUAGE, $mediatab, $mediacnt;
-global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT ;
+global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT, $LB_TT_BALLOON ;
+global $reorder, $PHP_SELF, $rownum, $sort_i, $GEDCOM;
 
 // Get Javascript variables from lb_config.php --------------------------- 
-include_once('modules/lightbox/lb_config.php'); 
+include_once('modules/lightbox/lb_defaultconfig.php'); 
+if (file_exists('modules/lightbox/lb_config.php')) include_once('modules/lightbox/lb_config.php'); 
 //	include_once('modules/lightbox/functions/browser_detection_php_ar.php');
 
+function cut_html($string)
+{
+    $a=$string;
+
+    while ($a = strstr($a, '&'))
+    {
+        //echo "'".$a."'\n";
+        $b=strstr($a, ';');
+        if (!$b)
+        {
+            //echo "couper...\n";
+            $nb=strlen($a);
+            return substr($string, 0, strlen($string)-$nb);
+        }
+        $a=substr($a,1,strlen($a)-1);
+    }
+    return $string;
+}
 
 if (isset($edit)) {
 	$edit=$edit;
 }else{
 	$edit=1;
 	}
+
+// Used when sorting media on album tab page ===============================================
+if ($reorder==1 ){
+
+$sort_i=0; // Used in sorting on lightbox_print_media_row.php page
+
+?>
+	<script type="text/javascript">
+	// This script saves the dranNdrop reordered info into a hidden form input element (name=order2)
+	function saveOrder() {
+		var sections = document.getElementsByClassName('section');
+		var order = '';
+		sections.each(function(section) {
+			order += Sortable.sequence(section) + ',';
+		});
+		document.getElementById("ord2").value = order;
+	}; 
+	</script>
+	
+	
+	<form name="reorder_form" method="post" action="edit_interface.php">
+		<input type="hidden" name="action" value="al_reorder_media_update" />
+		<input type="hidden" name="pid" value="<?php print $pid; ?>" />
+		<input type="hidden" id="ord2" name="order2" value="" />
+
+		<center>
+		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>" onclick="saveOrder();" ><?php print $pgv_lang["save"];?></button>&nbsp;
+		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='al_reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>&nbsp;
+		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?pid=" . $pid . "&tab=7"; ?>'"><?php print $pgv_lang["cancel"];?></button> 
+<?php
+/*
+		// Debug ---------------------------------------------------------------------------
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="button" onClick="getGroupOrder()" value="Debug: Sorted">
+		// ------------------------------------------------------------------------------------
+*/
+?>
+		</center>
+	</form>
+<?php
+}
+// =====================================================================================
+
 //------------------------------------------------------------------------------
 // Start Main Table
 //------------------------------------------------------------------------------
-echo "<table border=0 width='100%'><tr>" . "\n\n";
+echo "<table border='0' width='100%'><tr>", "\n\n";
 
 //------------------------------------------------------------------------------
 // Build Thumbnail Rows
 //------------------------------------------------------------------------------
 
      echo "<td>";
+		echo "<table width=\"100%\"><tr>";
+		echo "<td valign=\"top\" >";
      for ($t=1; $t <=5; $t++) {
 
            if ($t==1) {
@@ -72,22 +137,25 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
            }
 
      }
-     echo '</td>';
-
+		echo "</td>";
+		echo "</tr></table>";
+	echo "</td>";
+//------------------------------------------------------------------------------
+// End Thumbnail Rows
+//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
-     echo '<td border=0 valign="top" align="center" width=220 class="optionbox" >' . "\n" ;
-     echo "<b>" . $pgv_lang["view"] . " '" . $pgv_lang["lightbox"] ."'</b><br /><br />" . "\n" ;
-
-
-     echo '<table><tr><td>';
+	echo '<td valign="top" align="center" width="220">', "\n" ;
+	echo "<table><tr><td>";
+		echo "<table ><tr><td class=\"optionbox\" align=\"center\">";
+		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
      $controller->lightbox();	 
-     echo '</td></tr></table>';
-
-
-     echo '<br /></td>' . "\n\n" ;
+		echo "<br />";
+		echo "</td></tr></table>";
+	echo "</td></tr></table>";
+	echo "</td>" . "\n\n" ;
 // -----------------------------------------------------------------------------
 // end Relatives navigator
 // -----------------------------------------------------------------------------
@@ -97,8 +165,5 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
 // End Main Table
 //------------------------------------------------------------------------------
 echo "</tr></table>";
-echo "<center>" . "\n";
+
 ?>
-
-
-

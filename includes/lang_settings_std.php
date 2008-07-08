@@ -5,7 +5,7 @@
  * -> NEVER manually delete or edit this file <-
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,11 +37,39 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 // Array definition of language_settings
 $language_settings = array();
 
+//-- settings for catalan (valencian)
+$language_settings['catalan']=array(
+'pgv_langname'=>'catalan',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Català',
+'lang_short_cut'=>'ca',
+'langcode'=>'ca;',
+'pgv_language'=>'languages/lang.ca.php',
+'confighelpfile'=>'languages/configure_help.ca.php',
+'helptextfile'=>'languages/help_text.ca.php',
+'flagsfile'=>'images/flags/catalonia.gif',
+'factsfile'=>'languages/facts.ca.php',
+'adminfile'=>'languages/admin.ca.php',
+'editorfile'=>'languages/editor.ca.php',
+'countryfile'=>'languages/countries.ca.php',
+'faqlistfile'=>'languages/faqlist.ca.php',
+'extrafile'=>'languages/extra.ca.php',
+'DATE_FORMAT'=>'D M Y',
+'TIME_FORMAT'=>'g:i:sa',
+'WEEK_START'=>'1',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'AÀBCÇDEÈÉFGHIÍÏJKLMNÑOÒÓPQRSTUÚÜVWXYZ',
+'ALPHABET_lower'=>'aàbcçdeèéfghiíïjklmnñopqrstuúüvwxyz',
+'MULTI_LETTER_ALPHABET'=>'l·l',
+'DICTIONARY_SORT'=>true
+);
+
 //-- settings for czech
 $language_settings['czech']=array(
 'pgv_langname'=>'czech',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Čeština',
+'pgv_lang_self'=>'Čeština',
 'lang_short_cut'=>'cz',
 'langcode'=>'cs;cz;',
 'pgv_language'=>'languages/lang.cz.php',
@@ -65,11 +93,39 @@ $language_settings['czech']=array(
 'DICTIONARY_SORT'=>true
 );
 
+//-- settings for danish
+$language_settings['danish']=array(
+'pgv_langname'=>'danish',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Dansk',
+'lang_short_cut'=>'da',
+'langcode'=>'da;',
+'pgv_language'=>'languages/lang.da.php',
+'confighelpfile'=>'languages/configure_help.da.php',
+'helptextfile'=>'languages/help_text.da.php',
+'flagsfile'=>'images/flags/denmark.gif',
+'factsfile'=>'languages/facts.da.php',
+'adminfile'=>'languages/admin.da.php',
+'editorfile'=>'languages/editor.da.php',
+'countryfile'=>'languages/countries.da.php',
+'faqlistfile'=>'languages/faqlist.da.php',
+'extrafile'=>'languages/extra.da.php',
+'DATE_FORMAT'=>'D M Y',
+'TIME_FORMAT'=>'G:i:s',
+'WEEK_START'=>'1',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ',
+'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzæøå',
+'MULTI_LETTER_ALPHABET'=>'',
+'DICTIONARY_SORT'=>false
+);
+
 //-- settings for german
 $language_settings['german']=array(
 'pgv_langname'=>'german',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Deutsch',
+'pgv_lang_self'=>'Deutsch',
 'lang_short_cut'=>'de',
 'langcode'=>'de;de-de;de-at;de-li;de-lu;de-ch;',
 'pgv_language'=>'languages/lang.de.php',
@@ -93,11 +149,39 @@ $language_settings['german']=array(
 'DICTIONARY_SORT'=>true
 );
 
+//-- settings for estonian
+$language_settings['estonian']=array(
+'pgv_langname'=>'estonian',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Eesti',
+'lang_short_cut'=>'et',
+'langcode'=>'et;',
+'pgv_language'=>'languages/lang.et.php',
+'confighelpfile'=>'languages/configure_help.et.php',
+'helptextfile'=>'languages/help_text.et.php',
+'flagsfile'=>'images/flags/estonia.gif',
+'factsfile'=>'languages/facts.et.php',
+'adminfile'=>'languages/admin.et.php',
+'editorfile'=>'languages/editor.et.php',
+'countryfile'=>'languages/countries.et.php',
+'faqlistfile'=>'languages/faqlist.et.php',
+'extrafile'=>'languages/extra.et.php',
+'DATE_FORMAT'=>'D. M Y',
+'TIME_FORMAT'=>'G:i:s',
+'WEEK_START'=>'1',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSŠZŽTUVWÕÄÖÜXY',
+'ALPHABET_lower'=>'abcdefghijklmnopqrsšzžtuvwõäöüxy',
+'MULTI_LETTER_ALPHABET'=>'',
+'DICTIONARY_SORT'=>false
+);
+
 //-- settings for english
 $language_settings['english']=array(
 'pgv_langname'=>'english',
 'pgv_lang_use'=>true,
-'pgv_lang'=>'English',
+'pgv_lang_self'=>'English',
 'lang_short_cut'=>'en',
 'langcode'=>'en;en-us;en-au;en-bz;en-ca;en-ie;en-jm;en-nz;en-ph;en-za;en-tt;en-gb;en-zw;',
 'pgv_language'=>'languages/lang.en.php',
@@ -125,7 +209,7 @@ $language_settings['english']=array(
 $language_settings['spanish']=array(
 'pgv_langname'=>'spanish',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Español',
+'pgv_lang_self'=>'Español',
 'lang_short_cut'=>'es',
 'langcode'=>'es;es-ar;es-bo;es-cl;es-co;es-cr;es-do;es-ec;es-sv;es-gt;es-hn;es-mx;es-ni;es-pa;es-py;es-pe;es-pr;es-us;es-uy;es-ve;',
 'pgv_language'=>'languages/lang.es.php',
@@ -153,7 +237,7 @@ $language_settings['spanish']=array(
 $language_settings['spanish-ar']=array(
 'pgv_langname'=>'spanish-ar',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Español Latinoamericano',
+'pgv_lang_self'=>'Español Latinoamericano',
 'lang_short_cut'=>'es-ar',
 'langcode'=>'es;es-ar;es-bo;es-cl;es-co;es-cr;es-do;es-ec;es-sv;es-gt;es-hn;es-mx;es-ni;es-pa;es-py;es-pe;es-pr;es-us;es-uy;es-ve;',
 'pgv_language'=>'languages/lang.es-ar.php',
@@ -181,7 +265,7 @@ $language_settings['spanish-ar']=array(
 $language_settings['french']=array(
 'pgv_langname'=>'french',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Français',
+'pgv_lang_self'=>'Français',
 'lang_short_cut'=>'fr',
 'langcode'=>'fr;fr-be;fr-ca;fr-lu;fr-mc;fr-ch;',
 'pgv_language'=>'languages/lang.fr.php',
@@ -209,7 +293,7 @@ $language_settings['french']=array(
 $language_settings['italian']=array(
 'pgv_langname'=>'italian',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Italiano',
+'pgv_lang_self'=>'Italiano',
 'lang_short_cut'=>'it',
 'langcode'=>'it;it-ch;',
 'pgv_language'=>'languages/lang.it.php',
@@ -237,7 +321,7 @@ $language_settings['italian']=array(
 $language_settings['hungarian']=array(
 'pgv_langname'=>'hungarian',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Magyar',
+'pgv_lang_self'=>'Magyar',
 'lang_short_cut'=>'hu',
 'langcode'=>'hu;',
 'pgv_language'=>'languages/lang.hu.php',
@@ -261,11 +345,39 @@ $language_settings['hungarian']=array(
 'DICTIONARY_SORT'=>true
 );
 
+//-- settings for lithuanian
+$language_settings['lithuanian']=array(
+'pgv_langname'=>'lithuanian',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Lietuvių',
+'lang_short_cut'=>'lt',
+'langcode'=>'lt;',
+'pgv_language'=>'languages/lang.lt.php',
+'confighelpfile'=>'languages/configure_help.lt.php',
+'helptextfile'=>'languages/help_text.lt.php',
+'flagsfile'=>'images/flags/lithuania.gif',
+'factsfile'=>'languages/facts.lt.php',
+'adminfile'=>'languages/admin.lt.php',
+'editorfile'=>'languages/editor.lt.php',
+'countryfile'=>'languages/countries.lt.php',
+'faqlistfile'=>'languages/faqlist.lt.php',
+'extrafile'=>'languages/extra.lt.php',
+'DATE_FORMAT'=>'Y M D',
+'TIME_FORMAT'=>'g:i:sa',
+'WEEK_START'=>'1',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'AĄBCČDEĘĖFGHIYĮJKLMNOPRSŠTUŲŪVZŽ',
+'ALPHABET_lower'=>'aąbcčdeęėfghiyįjklmnoprsštuųūvzž',
+'MULTI_LETTER_ALPHABET'=>'',
+'DICTIONARY_SORT'=>true
+);
+
 //-- settings for dutch
 $language_settings['dutch']=array(
 'pgv_langname'=>'dutch',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Nederlands',
+'pgv_lang_self'=>'Nederlands',
 'lang_short_cut'=>'nl',
 'langcode'=>'nl;nl-be;',
 'pgv_language'=>'languages/lang.nl.php',
@@ -293,7 +405,7 @@ $language_settings['dutch']=array(
 $language_settings['norwegian']=array(
 'pgv_langname'=>'norwegian',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Norsk',
+'pgv_lang_self'=>'Norsk',
 'lang_short_cut'=>'no',
 'langcode'=>'no;nb;nn;',
 'pgv_language'=>'languages/lang.no.php',
@@ -321,7 +433,7 @@ $language_settings['norwegian']=array(
 $language_settings['polish']=array(
 'pgv_langname'=>'polish',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Polski',
+'pgv_lang_self'=>'Polski',
 'lang_short_cut'=>'pl',
 'langcode'=>'pl;',
 'pgv_language'=>'languages/lang.pl.php',
@@ -342,14 +454,14 @@ $language_settings['polish']=array(
 'ALPHABET_upper'=>'AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŹŻ',
 'ALPHABET_lower'=>'aąbcćdeęfghijklłmnńoópqrsśtuvwxyzźż',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>false
 );
 
 //-- settings for portuguese-br
 $language_settings['portuguese-br']=array(
 'pgv_langname'=>'portuguese-br',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Português',
+'pgv_lang_self'=>'Português',
 'lang_short_cut'=>'pt-br',
 'langcode'=>'pt;pt-br;',
 'pgv_language'=>'languages/lang.pt-br.php',
@@ -373,11 +485,39 @@ $language_settings['portuguese-br']=array(
 'DICTIONARY_SORT'=>true
 );
 
+//-- settings for slovak
+$language_settings['slovak']=array(
+'pgv_langname'=>'slovak',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Slovenčina',
+'lang_short_cut'=>'sk',
+'langcode'=>'sk;',
+'pgv_language'=>'languages/lang.sk.php',
+'confighelpfile'=>'languages/configure_help.sk.php',
+'helptextfile'=>'languages/help_text.sk.php',
+'flagsfile'=>'images/flags/slovakia.gif',
+'factsfile'=>'languages/facts.sk.php',
+'adminfile'=>'languages/admin.sk.php',
+'editorfile'=>'languages/editor.sk.php',
+'countryfile'=>'languages/countries.sk.php',
+'faqlistfile'=>'languages/faqlist.sk.php',
+'extrafile'=>'languages/extra.sk.php',
+'DATE_FORMAT'=>'D. M Y',
+'TIME_FORMAT'=>'G:i:s',
+'WEEK_START'=>'1',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'AÁÄBCČDĎEÉFGHCHIÍJKLĽĹMNŇOÓÔPQRŔSŠTŤUÚVWXYÝZŽ',
+'ALPHABET_lower'=>'aáäbcčdďeéfghchiíjklľĺmnňoóôpqrŕsštťuúvwxyýzž',
+'MULTI_LETTER_ALPHABET'=>'dz,ch',
+'DICTIONARY_SORT'=>true
+);
+
 //-- settings for finnish
 $language_settings['finnish']=array(
 'pgv_langname'=>'finnish',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Suomi',
+'pgv_lang_self'=>'Suomi',
 'lang_short_cut'=>'fi',
 'langcode'=>'fi;',
 'pgv_language'=>'languages/lang.fi.php',
@@ -405,7 +545,7 @@ $language_settings['finnish']=array(
 $language_settings['swedish']=array(
 'pgv_langname'=>'swedish',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Svenska',
+'pgv_lang_self'=>'Svenska',
 'lang_short_cut'=>'sv',
 'langcode'=>'sv;sv-fi;',
 'pgv_language'=>'languages/lang.sv.php',
@@ -433,7 +573,7 @@ $language_settings['swedish']=array(
 $language_settings['turkish']=array(
 'pgv_langname'=>'turkish',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Türkçe',
+'pgv_lang_self'=>'Türkçe',
 'lang_short_cut'=>'tr',
 'langcode'=>'tr;',
 'pgv_language'=>'languages/lang.tr.php',
@@ -457,11 +597,39 @@ $language_settings['turkish']=array(
 'DICTIONARY_SORT'=>true
 );
 
+//-- settings for vietnamese
+$language_settings['vietnamese']=array(
+'pgv_langname'=>'vietnamese',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Tiếng Việt',
+'lang_short_cut'=>'vi',
+'langcode'=>'vi;',
+'pgv_language'=>'languages/lang.vi.php',
+'confighelpfile'=>'languages/configure_help.vi.php',
+'helptextfile'=>'languages/help_text.vi.php',
+'flagsfile'=>'images/flags/vietnam.gif',
+'factsfile'=>'languages/facts.vi.php',
+'adminfile'=>'languages/admin.vi.php',
+'editorfile'=>'languages/editor.vi.php',
+'countryfile'=>'languages/countries.vi.php',
+'faqlistfile'=>'languages/faqlist.vi.php',
+'extrafile'=>'languages/extra.vi.php',
+'DATE_FORMAT'=>'D M Y',
+'TIME_FORMAT'=>'g:i:sa',
+'WEEK_START'=>'0',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>true,
+'ALPHABET_upper'=>'AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ',
+'ALPHABET_lower'=>'aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz',
+'MULTI_LETTER_ALPHABET'=>'',
+'DICTIONARY_SORT'=>true
+);
+
 //-- settings for chinese
 $language_settings['chinese']=array(
 'pgv_langname'=>'chinese',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'繁體中文',
+'pgv_lang_self'=>'繁體中文',
 'lang_short_cut'=>'zh',
 'langcode'=>'zh;zh-cn;zh-hk;zh-mo;zh-sg;zh-tw;',
 'pgv_language'=>'languages/lang.zh.php',
@@ -489,7 +657,7 @@ $language_settings['chinese']=array(
 $language_settings['hebrew']=array(
 'pgv_langname'=>'hebrew',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'‏עברית',
+'pgv_lang_self'=>'‏עברית',
 'lang_short_cut'=>'he',
 'langcode'=>'he;',
 'pgv_language'=>'languages/lang.he.php',
@@ -517,7 +685,7 @@ $language_settings['hebrew']=array(
 $language_settings['russian']=array(
 'pgv_langname'=>'russian',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'русский',
+'pgv_lang_self'=>'русский',
 'lang_short_cut'=>'ru',
 'langcode'=>'ru;ru-md;',
 'pgv_language'=>'languages/lang.ru.php',
@@ -545,7 +713,7 @@ $language_settings['russian']=array(
 $language_settings['greek']=array(
 'pgv_langname'=>'greek',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'Ελληνικά',
+'pgv_lang_self'=>'Ελληνικά',
 'lang_short_cut'=>'el',
 'langcode'=>'el;',
 'pgv_language'=>'languages/lang.el.php',
@@ -573,7 +741,7 @@ $language_settings['greek']=array(
 $language_settings['arabic']=array(
 'pgv_langname'=>'arabic',
 'pgv_lang_use'=>false,
-'pgv_lang'=>'عربي',
+'pgv_lang_self'=>'عربي',
 'lang_short_cut'=>'ar',
 'langcode'=>'ar;ar-ae;ar-bh;ar-dz;ar-eg;ar-iq;ar-jo;ar-kw;ar-lb;ar-ly;ar-ma;ar-om;ar-qa;ar-sa;ar-sy;ar-tn;ar-ye;',
 'pgv_language'=>'languages/lang.ar.php',
@@ -593,146 +761,6 @@ $language_settings['arabic']=array(
 'NAME_REVERSE'=>false,
 'ALPHABET_upper'=>'ابتثجحخدذرزسشصضطظعغفقكلمنهويآةىی',
 'ALPHABET_lower'=>'ابتثجحخدذرزسشصضطظعغفقكلمنهويآةىی',
-'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
-);
-
-//-- settings for lithuanian
-$language_settings['lithuanian']=array(
-'pgv_langname'=>'lithuanian',
-'pgv_lang_use'=>false,
-'pgv_lang'=>'Lietuvių',
-'lang_short_cut'=>'lt',
-'langcode'=>'lt;',
-'pgv_language'=>'languages/lang.lt.php',
-'confighelpfile'=>'languages/configure_help.lt.php',
-'helptextfile'=>'languages/help_text.lt.php',
-'flagsfile'=>'images/flags/lithuania.gif',
-'factsfile'=>'languages/facts.lt.php',
-'adminfile'=>'languages/admin.lt.php',
-'editorfile'=>'languages/editor.lt.php',
-'countryfile'=>'languages/countries.lt.php',
-'faqlistfile'=>'languages/faqlist.lt.php',
-'extrafile'=>'languages/extra.lt.php',
-'DATE_FORMAT'=>'Y M D',
-'TIME_FORMAT'=>'g:i:sa',
-'WEEK_START'=>'1',
-'TEXT_DIRECTION'=>'ltr',
-'NAME_REVERSE'=>false,
-'ALPHABET_upper'=>'AĄBCČDEĘĖFGHIYĮJKLMNOPRSŠTUŲŪVZŽ',
-'ALPHABET_lower'=>'aąbcčdeęėfghiyįjklmnoprsštuųūvzž',
-'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
-);
-
-//-- settings for danish
-$language_settings['danish']=array(
-'pgv_langname'=>'danish',
-'pgv_lang_use'=>false,
-'pgv_lang'=>'Dansk',
-'lang_short_cut'=>'da',
-'langcode'=>'da;',
-'pgv_language'=>'languages/lang.da.php',
-'confighelpfile'=>'languages/configure_help.da.php',
-'helptextfile'=>'languages/help_text.da.php',
-'flagsfile'=>'images/flags/denmark.gif',
-'factsfile'=>'languages/facts.da.php',
-'adminfile'=>'languages/admin.da.php',
-'editorfile'=>'languages/editor.da.php',
-'countryfile'=>'languages/countries.da.php',
-'faqlistfile'=>'languages/faqlist.da.php',
-'extrafile'=>'languages/extra.da.php',
-'DATE_FORMAT'=>'D M Y',
-'TIME_FORMAT'=>'G:i:s',
-'WEEK_START'=>'1',
-'TEXT_DIRECTION'=>'ltr',
-'NAME_REVERSE'=>false,
-'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ',
-'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzæøå',
-'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
-);
-
-//-- settings for vietnamese
-$language_settings['vietnamese']=array(
-'pgv_langname'=>'vietnamese',
-'pgv_lang_use'=>false,
-'pgv_lang'=>'Tiếng Việt',
-'lang_short_cut'=>'vi',
-'langcode'=>'vi;',
-'pgv_language'=>'languages/lang.vi.php',
-'confighelpfile'=>'languages/configure_help.vi.php',
-'helptextfile'=>'languages/help_text.vi.php',
-'flagsfile'=>'images/flags/vietnam.gif',
-'factsfile'=>'languages/facts.vi.php',
-'adminfile'=>'languages/admin.vi.php',
-'editorfile'=>'languages/editor.vi.php',
-'countryfile'=>'languages/countries.vi.php',
-'faqlistfile'=>'languages/faqlist.vi.php',
-'extrafile'=>'languages/extra.vi.php',
-'DATE_FORMAT'=>'D M Y',
-'TIME_FORMAT'=>'g:i:sa',
-'WEEK_START'=>'0',
-'TEXT_DIRECTION'=>'ltr',
-'NAME_REVERSE'=>true,
-'ALPHABET_upper'=>'AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ',
-'ALPHABET_lower'=>'aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz',
-'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
-);
-
-//-- settings for slovak
-$language_settings['slovak']=array(
-'pgv_langname'=>'slovak',
-'pgv_lang_use'=>false,
-'pgv_lang'=>'Slovenčina',
-'lang_short_cut'=>'sk',
-'langcode'=>'sk;',
-'pgv_language'=>'languages/lang.sk.php',
-'confighelpfile'=>'languages/configure_help.sk.php',
-'helptextfile'=>'languages/help_text.sk.php',
-'flagsfile'=>'images/flags/slovakia.gif',
-'factsfile'=>'languages/facts.sk.php',
-'adminfile'=>'languages/admin.sk.php',
-'editorfile'=>'languages/editor.sk.php',
-'countryfile'=>'languages/countries.sk.php',
-'faqlistfile'=>'languages/faqlist.sk.php',
-'extrafile'=>'languages/extra.sk.php',
-'DATE_FORMAT'=>'D. M Y',
-'TIME_FORMAT'=>'G:i:s',
-'WEEK_START'=>'1',
-'TEXT_DIRECTION'=>'ltr',
-'NAME_REVERSE'=>false,
-'ALPHABET_upper'=>'AÁÄBCČDĎEÉFGHCHIÍJKLĽĹMNŇOÓÔPQRŔSŠTŤUÚVWXYÝZŽ',
-'ALPHABET_lower'=>'aáäbcčdďeéfghchiíjklľĺmnňoóôpqrŕsštťuúvwxyýzž',
-'MULTI_LETTER_ALPHABET'=>'dz,ch',
-'DICTIONARY_SORT'=>true
-);
-
-//-- settings for estonian
-$language_settings['estonian']=array(
-'pgv_langname'=>'estonian',
-'pgv_lang_use'=>false,
-'pgv_lang'=>'Eesti',
-'lang_short_cut'=>'et',
-'langcode'=>'et;',
-'pgv_language'=>'languages/lang.et.php',
-'confighelpfile'=>'languages/configure_help.et.php',
-'helptextfile'=>'languages/help_text.et.php',
-'flagsfile'=>'images/flags/estonia.gif',
-'factsfile'=>'languages/facts.et.php',
-'adminfile'=>'languages/admin.et.php',
-'editorfile'=>'languages/editor.et.php',
-'countryfile'=>'languages/countries.et.php',
-'faqlistfile'=>'languages/faqlist.et.php',
-'extrafile'=>'languages/extra.et.php',
-'DATE_FORMAT'=>'D. M Y',
-'TIME_FORMAT'=>'G:i:s',
-'WEEK_START'=>'1',
-'TEXT_DIRECTION'=>'ltr',
-'NAME_REVERSE'=>false,
-'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSŠZŽTUVWÕÄÖÜXY',
-'ALPHABET_lower'=>'abcdefghijklmnopqrsšzžtuvwõäöüxy',
 'MULTI_LETTER_ALPHABET'=>'',
 'DICTIONARY_SORT'=>false
 );

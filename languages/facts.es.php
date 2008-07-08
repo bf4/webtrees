@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ $factarray["CONF"]	= "Confirmación";
 $factarray["CONL"]	= "Confirmación SUD";
 $factarray["COPR"]	= "Copyright";
 $factarray["CORP"]	= "Corporación / Compañía";
-$factarray["CREM"]	= "Cremación";
+$factarray["CREM"]	= "Incineración";
 $factarray["CTRY"]	= "País";
 $factarray["DATA"]	= "Datos";
 $factarray["DATE"]	= "Fecha";
@@ -281,52 +281,127 @@ $factarray["_HNM"] = "Nombre hebreo";
 
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"] = "Fallecimiento de un cónyuge";
+$factarray["_BURI_SPOU"] = "Entierro de un cónyuge";
+$factarray["_CREM_SPOU"] = "Incineración de un cónyuge";
 
 $factarray["_BIRT_CHIL"] = "Nacimiento de un hijo";
+$factarray["_CHR_CHIL" ] = "Christening of a child";
+$factarray["_BAPM_CHIL"] = "Bautismo de un hijo";
+$factarray["__BRTM_CHIL"] = "Brit mila de un hijo";
+$factarray["_ADOP_CHIL"] = "Adopción de un hijo";
 $factarray["_MARR_CHIL"] = "Matrimonio de un hijo";
+$factarray["_MARB_CHIL"] = "Amonestaciones de un hijo";
 $factarray["_DEAT_CHIL"] = "Defunción de un hijo";
+$factarray["_BURI_CHIL"] = "Entierro de un hijo";
+$factarray["_CREM_CHIL"] = "Incineración de un hijo";
 
 $factarray["_BIRT_GCHI"] = "Nacimiento de un nieto";
+$factarray["_CHR_GCHI" ] = "Christening of a grandchild";
+$factarray["_BAPM_GCHI"] = "Bautismo de un nieto";
+$factarray["__BRTM_GCHI"] = "Brit mila de un nieto";
+$factarray["_ADOP_GCHI"] = "Adopción de un nieto";
 $factarray["_MARR_GCHI"] = "Matrimonio de un nieto";
+$factarray["_MARB_GCHI"] = "Amonestaciones de un nieto";
 $factarray["_DEAT_GCHI"] = "Defunción de un nieto";
+$factarray["_BURI_GCHI"] = "Entierro de un nieto";
+$factarray["_CREM_GCHI"] = "Incineración de un nieto";
 
 $factarray["_BIRT_GGCH"] = "Nacimiento de un bisnieto";
+$factarray["_CHR_GGCH" ] = "Christening of a great-grandchild";
+$factarray["_BAPM_GGCH"] = "Bautismo de un bisnieto";
+$factarray["__BRTM_GGCH"] = "Brit mila de un bisnieto";
+$factarray["_ADOP_GGCH"] = "Adopción de un bisnieto";
 $factarray["_MARR_GGCH"] = "Matrimonio de un bisnieto";
+$factarray["_MARB_GGCH"] = "Amonestaciones de un bisnieto";
 $factarray["_DEAT_GGCH"] = "Defunción de un bisnieto";
+$factarray["_BURI_GGCH"] = "Entierro de un bisnieto";
+$factarray["_CREM_GGCH"] = "Incineración de un bisnieto";
 
 $factarray["_MARR_FATH"] = "Matrimonio del padre";
+$factarray["_MARB_FATH"] = "Amonestaciones del padre";
 $factarray["_DEAT_FATH"] = "Defunción del padre";
+$factarray["_BURI_FATH"] = "Entierro del padre";
+$factarray["_CREM_FATH"] = "Incineración del padre";
 
 $factarray["_MARR_MOTH"] = "Matrimonio de la madre";
+$factarray["_MARB_MOTH"] = "Amonestaciones de la madre";
 $factarray["_DEAT_MOTH"] = "Defunción de la madre";
+$factarray["_BURI_MOTH"] = "Entierro de la madre";
+$factarray["_CREM_MOTH"] = "Incineración de la madre";
 
 $factarray["_BIRT_SIBL"] = "Nacimiento de un hermano";
+$factarray["_CHR_SIBL" ] = "Christening of sibling";
+$factarray["_BAPM_SIBL"] = "Bautismo de un hermano";
+$factarray["__BRTM_SIBL"] = "Brit mila de un hermano";
+$factarray["_ADOP_SIBL"] = "Adopción de un hermano";
 $factarray["_MARR_SIBL"] = "Matrimonio de un hermano";
+$factarray["_MARB_SIBL"] = "Amonestaciones de un hermano";
 $factarray["_DEAT_SIBL"] = "Defunción de un hermano";
+$factarray["_BURI_SIBL"] = "Entierro de un hermano";
+$factarray["_CREM_SIBL"] = "Incineración de un hermano";
 
 $factarray["_BIRT_HSIB"] = "Nacimiento de un medio hermano";
+$factarray["_CHR_HSIB" ] = "Christening of half-sibling";
+$factarray["_BAPM_HSIB"] = "Bautismo de un medio hermano";
+$factarray["__BRTM_HSIB"] = "Brit mila de un medio hermano";
+$factarray["_ADOP_HSIB"] = "Adopción de un medio hermano";
 $factarray["_MARR_HSIB"] = "Matrimonio de un medio hermano";
+$factarray["_MARB_HSIB"] = "Amonestacions de un medio hermano";
 $factarray["_DEAT_HSIB"] = "Defunción de un medio hermano";
+$factarray["_BURI_HSIB"] = "Entierro de un medio hermano";
+$factarray["_CREM_HSIB"] = "Incineración de un medio hermano";
 
 $factarray["_BIRT_NEPH"] = "Nacimiento de un sobrino o una sobrina";
+$factarray["_CHR_NEPH" ] = "Christening of a nephew or niece";
+$factarray["_BAPM_NEPH"] = "Bautismo de un sobrino o una sobrina";
+$factarray["__BRTM_NEPH"] = "Brit mila de un sobrino o una sobrina";
+$factarray["_ADOP_NEPH"] = "Adopción de un sobrino o una sobrina";
 $factarray["_MARR_NEPH"] = "Matrimonio de un sobrino o una sobrina";
+$factarray["_MARB_NEPH"] = "Amonestaciones de un sobrino o una sobrina";
 $factarray["_DEAT_NEPH"] = "Defunción de un sobrino o una sobrina";
+$factarray["_BURI_NEPH"] = "Entierro de un sobrino o una sobrina";
+$factarray["_CREM_NEPH"] = "Incineración de un sobrino o una sobrina";
 
 $factarray["_DEAT_GPAR"] = "Defunción de un abuelo";
+$factarray["_BURI_GPAR"] = "Entierro de un abuelo";
+$factarray["_CREM_GPAR"] = "Incineración de un abuelo";
 
 $factarray["_DEAT_GGPA"] = "Defunción de un bisabuelo";
+$factarray["_BURI_GGPA"] = "Entierro de un bisabuelo";
+$factarray["_CREM_GGPA"] = "Incineración de un bisabuelo";
 
 $factarray["_BIRT_FSIB"] = "Nacimiento de un tío paterno";
+$factarray["_CHR_FSIB" ] = "Christening of father's sibling";
+$factarray["_BAPM_FSIB"] = "Bautismo de un tío paterno";
+$factarray["__BRTM_FSIB"] = "Brit mila de un tío paterno";
+$factarray["_ADOP_FSIB"] = "Adopción de un tío paterno";
 $factarray["_MARR_FSIB"] = "Matrimonio de un tío paterno";
+$factarray["_MARB_FSIB"] = "Amonestaciones de un tío paterno";
 $factarray["_DEAT_FSIB"] = "Defunción de un tío paterno";
+$factarray["_BURI_FSIB"] = "Entierro de un tío paterno";
+$factarray["_CREM_FSIB"] = "Incineración de un tío paterno";
 
 $factarray["_BIRT_MSIB"] = "Nacimiento de un tío materno";
+$factarray["_CHR_MSIB" ] = "Christening of mother's sibling";
+$factarray["_BAPM_MSIB"] = "Bautismo de un tío materno";
+$factarray["__BRTM_MSIB"] = "Brit mila de un tío materno";
+$factarray["_ADOP_MSIB"] = "Adopción de un tío materno";
 $factarray["_MARR_MSIB"] = "Matrimonio de un tío materno";
+$factarray["_MARB_MSIB"] = "Amonestaciones de un tío materno";
 $factarray["_DEAT_MSIB"] = "Defunción de un tío materno";
+$factarray["_BURI_MSIB"] = "Entierro de un tío materno";
+$factarray["_CREM_MSIB"] = "Incineración de un tío materno";
 
 $factarray["_BIRT_COUS"] = "Nacimiento de un primo hermano";
+$factarray["_CHR_COUS"]  = "Bautismo de un primo hermano";
+$factarray["_BAPM_COUS"] = "Bautismo de un primo hermano";
+$factarray["__BRTM_COUS"] = "Brit mila de un primo hermano";
+$factarray["_ADOP_COUS"] = "Adopción de un primo hermano";
 $factarray["_MARR_COUS"] = "Matrimonio de un primo hermano";
+$factarray["_MARB_COUS"] = "Amonestaciones de un primo hermano";
 $factarray["_DEAT_COUS"] = "Defunción de un primo hermano";
+$factarray["_BURI_COUS"] = "Entierro de un primo hermano";
+$factarray["_CREM_COUS"] = "Incineración de un primo hermano";
 
 $factarray["_FAMC_EMIG"] = "Emigración de los padres";
 $factarray["_FAMC_RESI"] = "Residencia de los padres";
@@ -336,5 +411,25 @@ $factarray["_THUM"]	= "¿Usar esta imagen como la miniatura?";
 $factarray["_PGVU"]	= "Última modificación realizada por"; // last changed by
 $factarray["SERV"] = "Servidor remoto";
 $factarray["_GEDF"] = "Archivo GEDCOM";
+
+/*-- Fact abbreviations for use in Chart boxes.  
+ *		Use these abbreviations in cases where the standard method of using the first
+ *		letter of the spelled-out name results in an undesirable abbreviation or where
+ *		you want to produce a different result (eg: "x" instead of "M" for "Married").
+ *
+ *		You can abbreviate any Fact label this way.  The list of abbreviations is
+ *		open-ended.
+ *
+ *		These abbreviations are user-customizable. Just put them into file "extra.xx.php".
+ *		The length of these abbreviations is not restricted to 1 letter.
+ */
+ 
+/*-- The following lines have been commented out.  They should serve as examples. 
+ 
+$factAbbrev["BIRT"]		= "B";
+$factAbbrev["MARR"]		= "M";
+$factAbbrev["DEAT"]		= "D";
+
+ */
 
 ?>

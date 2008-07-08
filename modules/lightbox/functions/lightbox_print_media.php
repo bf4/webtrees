@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,10 +45,11 @@ $fn=1;
 
 global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 global $pgv_lang, $pgv_changes, $factarray, $view;
-global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
+	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $DBCONN, $DBTYPE;
 global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
-global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text;
+	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
+	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
 
 // Set type of media from call in album
 if ($t==1) {
@@ -95,7 +96,7 @@ if ($t==5){
 }
 	
 if (!showFact("OBJE", $pid)) return false;
-if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
+	if (!isset($pgv_changes[$pid."&nbsp;".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 else $gedrec = find_updated_record($pid);
 $ids = array($pid);
 	
@@ -107,6 +108,26 @@ if ($related) {
 		}
 }
 
+	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
+	$sort_current_objes = array();
+	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
+	else $sort_regexp = "/_PGV_OBJS @(.*)@/";
+	$sort_ct = preg_match_all($sort_regexp, $gedrec, $sort_match, PREG_SET_ORDER);
+	for($i=0; $i<$sort_ct; $i++) {
+		if (!isset($sort_current_objes[$sort_match[$i][1]])) $sort_current_objes[$sort_match[$i][1]] = 1;
+		else $sort_current_objes[$sort_match[$i][1]]++;
+		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
+	}
+	$sort_media_found = false;
+		
+	// create ORDER BY list from Gedcom sorted records list  ---------------------------
+	$orderbylist = 'ORDER BY '; // initialize  
+	foreach ($sort_match as $id) {
+		$orderbylist .= "m_media='$id[1]' DESC, ";
+	}  
+	$orderbylist = rtrim($orderbylist, ', ');
+	// ---------------------------------------------------------------------------------------------------------------------------------------------------
+	
 //-- get a list of the current objects in the record
 $current_objes = array();
 if ($level>0) $regexp = "/".$level." OBJE @(.*)@/";
@@ -120,6 +141,7 @@ for($i=0; $i<$ct; $i++) {
 
 $media_found = false;
 
+	// Get the related media items
 // Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
 // but it may not work for all RDBMS.
 // $sqlmm  = "SELECT ";
@@ -137,37 +159,60 @@ $sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media
 if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
 
 $sqlmm .= " AND $typ2b ";
-$sqlmm .= " ORDER BY m_titl ";
+	// $sqlmm .= " ORDER BY m_titl ";
+	if ($sort_ct>0) {
+		$sqlmm .= $orderbylist;
+	}else{
+		$sqlmm .= " ORDER BY mm_gid DESC ";
+	}
 	
 $resmm = dbquery($sqlmm);
 $foundObjs = array();
 	  
 $numm = $resmm->numRows();
 	  
+	// Begin to Layout the Album Media Rows
 if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) ) {
+		if ($t==5){ // do nothing
+		}else{
 		echo "\n\n";
-		echo '<table border=0 class="facts_table"><tr>' . "\n";;
-		echo '<td width="80" align="center" class="descriptionbox">' ;
+			echo '<table border="0" class="facts_table" ><tr>', "\n";
 	
+			echo '<td width="100" align="center" class="descriptionbox">';
 		if ($t==5){
 			echo "<b><br />" . $tt . "</b><br /><br />";
 		}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){
-			echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $numm . ")";
+					echo "<b><br /><br />" . $tt . "</b><br /><br />";
+					// echo "(" . $numm . ")";
 		}else{
 			echo "<b><br />" . $tt . "</b><br /><br />";	
 		}
-	
 	echo '</td>';
+			
+			echo '<td width="2"></td>';
+			
 	echo '<td class="facts_value">';
 	echo "<table width=\"100%\"><tr><td>" . "\n";
+				echo "<div id=\"thumbcontainer".$t."\">" . "\n";
+				echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
+				//echo "<ul id=\"thumblist\">" . "\n\n";
+		}
 	
-		if ($t==5){
-		
-		}else{		
-		echo "<div id=\"thumbcontainer\">" . "\n";
-		echo "<ul id=\"thumblist_".$t."\">" . "\n\n";
+		// Album Reorder include =============================
+		// Following used for Album media sort ------------------
+		if ($reorder==1) {
+			if ($t==1) { $rownum1=$numm; }
+			if ($t==2) { $rownum2=$numm; }
+			if ($t==3) { $rownum3=$numm; }
+			if ($t==4) { $rownum4=$numm; }
+		}
+		// ----------------------------------------------------------------
+		if (($reorder==1 && $t==5) ) {
+			 include ("modules/lightbox/functions/lb_horiz_sort.php");
 	}	
+		// ==================================================
 
+		// Start pulling media items into thumbcontainer div ==============================
 		while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
 		
 			if (isset($foundObjs[$rowm['m_media']])) {
@@ -194,7 +239,7 @@ if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm
 			$rows=array();
 			//-- if there is a change to this media item then get the
 			//-- updated media item and show it
-			if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM])) {
+			if (isset($pgv_changes[$rowm["m_media"]."&nbsp;".$GEDCOM])) {
 				$newrec = find_updated_record($rowm["m_media"]);
 				$row = array();
 				$row['m_media'] = $rowm["m_media"];
@@ -218,44 +263,28 @@ if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm
 		if (isset($current_objes[$rowm['m_media']]))  $current_objes[$rowm['m_media']]--;
 				}
 			}
-//			$rows['normal'] = $rowm;
-//			if (isset($current_objes[$rowm['m_media']]))  $current_objes[$rowm['m_media']]--;
 
 				foreach($rows as $rtype => $rowm) {
 					if ($t!=5){
+				
 						$res = lightbox_print_media_row($rtype, $rowm, $pid);
+				
 					}
 						$media_found = $media_found || $res;
 						$foundObjs[$rowm['m_media']]=true;
 				}
 
 			$mgedrec[] = $rowm["m_gedrec"];
+		}
 			
 			if ( $t==5 ) {
-			if ( eregi("1 NOTE",$rowm['m_gedrec']) && isset($items[$fn])) {
-					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
-					
 					}else{
-					print "<p id=\"" . $pgv_lang["note"]. "_" . ($fn) . "\" class=\"lb_notes\">";	
-						$note[$fn]  = $pgv_lang["note"] . "_" . ($fn) . "";
-//					print "<a href=\"#a".$note[$fn]."\" class=\"lb_notes\" <font size=1>" . $note[$fn] . "</font>";
-						print "<font size=1>" . $note[$fn] . "</font>";									
-						print_fact_notes($mgedrec[$items[$fn]-1], 1);
-						$fn++;
-//					print "</a></p>";
-					print "</p>";					
-					}	
-						
-				}					
-			}	
-		
-		}
-		
 		echo "</ul>";
 		echo "</div>";
-		echo "<div id=clearlist>";
+		echo "<div class=\"clearlist\">";
 		echo "</div>";
-		echo "</center>";
+		// echo "</center>";
+
 		echo '</td></tr></table>' . "\n";
 
 		if ($t==3 && $numm > 0) {
@@ -265,18 +294,20 @@ if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm
 		}else{
 		}
 
-		echo "</center>" . "\n";
+		// echo "</center>" . "\n";
 		echo '</td>'. "\n";
-		echo '</td></tr></table>' . "\n\n";
-		
+//echo '</td>';
+		echo '</tr>';
+		echo '</table>' . "\n\n";
+		}
 }
 	
 
 //-- objects are removed from the $current_objes list as they are printed
 //-- any objects left in the list are new objects recently added to the gedcom
 //-- but not yet accepted into the database.  We will print them too.
-foreach($current_objes as $media_id=>$value) {
 
+	foreach($current_objes as $media_id=>$value) {
 		while($value>0) {
 			$objSubrec = array_pop($obje_links[$media_id]);
 
@@ -316,7 +347,7 @@ foreach($current_objes as $media_id=>$value) {
 					}
 
 					if ( $typ2a ) {
-						echo '<table border=0 class="facts_table"><tr>';
+						echo '<table border="0" class="facts_table"><tr>';
 						echo '<td width="80" align="center" class="descriptionbox">' ;
 						echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $ct . ")";
 						echo '</td>' . "\n";
@@ -324,28 +355,36 @@ foreach($current_objes as $media_id=>$value) {
 						echo "<center>" . "\n\n";
 						echo '<table><tr><td>' . "\n";
 						echo "<center>" . "\n\n";  // needed for Firefox
-						echo "<div id=\"thumbcontainer\">" . "\n";
-					//						echo "<ul id=\"thumblist\">" . "\n\n";
-						echo "<ul id=\"thumblist_".$t."\">" . "\n\n";
+						echo "<div id=\"thumbcontainer".$t."\">" . "\n";
+
+						echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
 
 							$res = lightbox_print_media_row('normal', $row, $pid);
 							$media_found = $media_found || $res;
 
 						echo "</ul>";
 						echo "</div>";
-						echo "<div id=clearlist>";
+						echo "<div id=\"clearlist\">";
 						echo "</div";
 						echo "</center>";
+						
 						echo '</td></tr></table>';
 						echo "</center>";
+						
 						echo '</td>';
-						echo '</td></tr></table>' . "\n\n";
+						echo '</td>';
+						echo '</tr>';
+						echo '</table>' . "\n\n";
 					}
 				}
 			}
 			$value--;
 		}
 }
+
+
+// ====================================================================================
+
 
 if ($media_found) return $is_media="YES" ;
 else return $is_media="NO" ;

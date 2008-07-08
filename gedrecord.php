@@ -24,7 +24,7 @@
  * @subpackage Charts
  */
 require("config.php");
-require_once("includes/gedcomrecord.php");
+require_once("includes/datamodel/gedcomrecord_class.php");
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];

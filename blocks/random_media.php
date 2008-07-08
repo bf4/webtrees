@@ -5,7 +5,7 @@
  * This block will randomly choose media items and show them in a block
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,8 +176,8 @@ if ($MULTI_MEDIA) {
 						} else {
 							$name = PGV_USER_NAME;
 						}
-							$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-							$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+							$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+							$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>";
 					}
 				}
 				$title .= $pgv_lang["random_picture"];
@@ -185,12 +185,12 @@ if ($MULTI_MEDIA) {
 				if ($config['controls']=='yes') {
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next_image"]."\" title=\"".$pgv_lang["next_image"]."\" /></a>";
+					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['rdarrow']['other']}\" border=\"0\" alt=\"{$pgv_lang['next_image']}\" title=\"{$pgv_lang['next_image']}\" /></a>";
 	
 						$content .= "<div class=\"center\" id=\"random_picture_controls$index\"><br />";
 						if ($TEXT_DIRECTION=="rtl") $content .= $linkNextImage;
 						$content .= "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" onclick=\"togglePlay(); return false;\">";
-						if (isset($PGV_IMAGES[$image]['other'])) $content .= "<img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/>";
+						if (isset($PGV_IMAGES[$image]['other'])) $content .= "<img id=\"play_stop\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES[$image]['other']}\" border=\"0\" alt=\"{$pgv_lang['play']}/{$pgv_lang['stop']}\" title=\"{$pgv_lang['play']}/{$pgv_lang['stop']}\" />";
 						else $content .= $pgv_lang["play"]."/".$pgv_lang["stop"];
 						$content .= "</a>";
 						if ($TEXT_DIRECTION=="ltr") $content .= $linkNextImage;
@@ -245,8 +245,9 @@ if ($MULTI_MEDIA) {
 			$mediaid = $medialist[$value]["XREF"];
 			
 //LBox --------  change for Lightbox Album --------------------------------------------
-?><script>
-/*
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
 function openPic(filename, width, height) {
 		height=height+50;
 		screenW = screen.width;
@@ -259,7 +260,7 @@ function openPic(filename, width, height) {
 		else window.open(unescape(filename),'win02','top=50,left=150,height='+height+',width='+width+',scrollbars=1,resizable=1');
 		win02.focus();
 	}
-*/
+-->
 </script><?php
 
 			if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
@@ -285,13 +286,12 @@ function openPic(filename, width, height) {
 			if ($block) {
 					$content .= "<img src=\"".$medialist[$value]["THUMB"]."\" border=\"0\" class=\"thumbnail\"";
 					if ($isExternal) $content .= " width=\"".$THUMBNAIL_WIDTH."\"";
-					$content .= " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
 			} else {
 					$content .= "<img src=\"".$medialist[$value]["FILE"]."\" border=\"0\" class=\"thumbnail\" ";
 				$imgsize = findImageSize($medialist[$value]["FILE"]);
 					if ($imgsize[0] > 175) $content .= "width=\"175\" ";
-					$content .= " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
 			}
+			$content .= " alt=\"{$mediaTitle}\" title=\"{$mediaTitle}\" />";
 			$content .= "</a>";
 			if ($block) $content .= "<br />";
 			else $content .= "</td><td class=\"details2\">";
@@ -309,17 +309,8 @@ function openPic(filename, width, height) {
 			$content .= "</div>"; // random_picture_content
 			$content .= "</div>"; // random_picture_container
 				if ($action!="ajax") {
-				print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-				print '<td class="blockh1">&nbsp;</td>';
-				print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-				print '<td class="blockh3">&nbsp;</td>';
-				print '</tr></table><div class="blockcontent">';
-				//if ($block) {
-					//print '<div class="small_inner_block">'.$content.'</div>';
-				//} else {
-					print $content;
-				//}
-				print '</div></div>';
+					global $THEME_DIR;
+					include($THEME_DIR."/templates/block_main_temp.php");
 				}
 				else print $content;
 		}
@@ -417,7 +408,6 @@ function openPic(filename, width, height) {
 				name="filter_tiff"
 				<?php if ($config['filter_tiff']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;tiff&nbsp;&nbsp;</td>
 		</tr>
-		</tr>
 		<tr>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_wav"
@@ -478,12 +468,11 @@ function openPic(filename, width, height) {
 		<?php if ($config["start"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
 		<option value="no"
 		<?php if ($config["start"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-	</select></td>
-	</tr>
+	</select>
+	<input type="hidden" name="cache" value="0" />
+	</td></tr>
 	
 		<?php
-		// Cache file life is not configurable by user:  anything other "no cache" doesn't make sense
-		print "<input type=\"hidden\" name=\"cache\" value=\"0\" />";
 	}
 	
 } // if ($MULTI_MEDIA)

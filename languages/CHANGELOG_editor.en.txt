@@ -41,10 +41,26 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
-VERSION 4.2
+VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["edit_repo"]				            04 Jul 2008       A
+*$pgv_lang["reorder_media_title"]					29 May 2008				w
+*$pgv_lang["reorder_media_window_title"]			29 May 2008				w
+*$pgv_lang["reorder_media_save"]					29 May 2008				w
+*$pgv_lang["reorder_media_reset"]					29 May 2008				w
++$pgv_lang["reorder_media"]							29 May 2008				A
++$pgv_lang["reorder_media_title"]					29 May 2008				A
++$pgv_lang["reorder_media_window"]					29 May 2008				A
++$pgv_lang["reorder_media_window_title"]			29 May 2008				A
++$pgv_lang["reorder_media_save"]					29 May 2008				A
++$pgv_lang["reorder_media_reset"]					29 May 2008				A
++$pgv_lang["reorder_media_cancel"]					29 May 2008				A
++$pgv_lang["file_no_temp_dir"]						15 May 2008				A
++$pgv_lang["file_cant_write"]						15 May 2008				A
++$pgv_lang["file_bad_extension"]					15 May 2008				A
++$pgv_lang["file_unkown_err"]						15 May 2008				A
 
 
 VERSION 4.1.3

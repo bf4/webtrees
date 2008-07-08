@@ -131,6 +131,7 @@ $XREF_LINK=array(
 	'ALIA'=>'INDI',
 	'ANCI'=>'SUBM',
 	'DESI'=>'SUBM',
+	'_PGV_OBJS'=>'OBJE',
 	'AUTH'=>'INDI'  // This is not valid gedcom, but it is not an error if used.
 );
 
@@ -1004,7 +1005,7 @@ fclose($handle);
 ////////////////////////////////////////////////////////////////////////////////
 $num_lines=count($gedfile);
 // Ignore the Byte-Order-Mark on UTF files
-if ($num_lines>0) $gedfile[0]=preg_replace('/^\xEF\xBB\xBF/', '', $gedfile[0]);
+if ($num_lines>0) $gedfile[0]=preg_replace('/^'.PGV_UTF8_BOM.'/', '', $gedfile[0]);
 $context=array('GEDCOM'); $curr_xref="";
 foreach ($gedfile as $num=>$value) {
 	preg_match('/^(\s*)(\d*)(\s*)(@[^@#]+@)?(\s*)(\S*)(\s*)(.*)/', $value, $match);

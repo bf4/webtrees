@@ -3,7 +3,7 @@
  * Greek Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,9 +29,19 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["download_file"]							= "Download File";
+$pgv_lang["none"]						= "Καμμία";
+$pgv_lang["SHOW_ID_NUMBERS"]						= "Show ID numbers next to names";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]					= "Show highlight images in people boxes";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]					= "Show highlight images in people boxes";
+$pgv_lang["cancel"]									= "Ακύρωση";
+$pgv_lang["duplicate_username"]					= "Υπάρχον Ψεύδώνυμο. Υπάρχει ήδη χρήστης με το ψευδώνυμο αυτό.  Παρακαλώ όπως πάτε πίσω και επιλέξτε άλλο ψευδώνυμο.";
+$pgv_lang["family"]								= "Οικογένεια";
+$pgv_lang["invalid_search_input"]				= "Παρακαλώ δώστε Όνομα, Επώνυμο ή Τοποθεσία \\n\\t καθώς και Έτος";
+
 //-- GENERAL HELP MESSAGES
-$pgv_lang["qm"]									= ";";
-$pgv_lang["qm_ah"]								= ";";
+$pgv_lang["qm"]									= "?";
+$pgv_lang["qm_ah"]								= "?";
 $pgv_lang["page_help"]							= "Βοήθεια";
 $pgv_lang["help_for_this_page"]					= "Βοήθεια για τη σελίδα αυτή";
 $pgv_lang["help_contents"]						= "Περιεχέμενα Βοήθειας";

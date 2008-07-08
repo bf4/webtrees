@@ -3,7 +3,7 @@
  * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ $pgv_lang["associated_files"]		= "Verwandte Dateien:";
 $pgv_lang["remove_all_files"]		= "Alle nicht unbedingt erforderliche Dateien löschen";
 $pgv_lang["warn_file_delete"]		= "Diese Datei enthält wichtige Datensätze, wie zum Beispiel die Sprach-Konfiguration oder noch nicht angenommene Datenbank-Änderungen.  Sind Sie sicher, daß Sie diese Datei löschen möchten?";
 $pgv_lang["deleted_files"]          = "Gelöschte Dateien:";
-$pgv_lang["index_dir_cleanup_inst"]	= "Dateien oder Unterverzeichnisse werden aus dem Index-Verzeichnis gelöscht indem Sie die Namen in den Papierkorb verlegen oder sie in der Liste ankreuzen.  Die so gekennzeichnete Dateien werden unwiderruflich gelöscht wenn Sie den «Löschen» Button klicken.<br /><br />Unbedingt erforderliche Dateien sind mit <img src=\"./images/RESN_confidential.gif\" /> gekennzeichnet; sie dürfen nicht gelöscht werden.<br />Dateien, die mit <img src=\"./images/RESN_locked.gif\" /> gekennzeichnet sind, enthalten wichtige Datensätze und sollten nur gelöscht werden, wenn Sie dessen sicher sind.<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "Dateien oder Unterverzeichnisse werden aus dem Index-Verzeichnis gelöscht indem Sie die Namen in den Papierkorb verlegen oder sie in der Liste ankreuzen.  Die so gekennzeichnete Dateien werden unwiderruflich gelöscht wenn Sie den «Löschen» Button klicken.<br /><br />Unbedingt erforderliche Dateien sind mit <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> gekennzeichnet; sie dürfen nicht gelöscht werden.<br />Dateien, die mit <img src=\"./images/RESN_locked.gif\" alt=\"\" /> gekennzeichnet sind, enthalten wichtige Datensätze und sollten nur gelöscht werden, wenn Sie dessen sicher sind.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Index-Verzeichnis reinigen";
 $pgv_lang["user"]						= "Benutzer bestätigt";
 $pgv_lang["thumbnail_deleted"]			= "Miniaturbild wurde gelöscht.";
@@ -314,13 +314,14 @@ $pgv_lang["see"]						= "zeigen";
 $pgv_lang["noref"]						= "Dieser Datensatz ist nirgends verbunden -- er ist eigenständig.";
 $pgv_lang["tag"]						= "GEDCOM-Tag";
 $pgv_lang["spacing"]					= "Abstand";
-$pgv_lang["ADVANCED_NAME_FACTS"] = "Besondere Namens-Fakten";
-$pgv_lang["ADVANCED_PLAC_FACTS"] = "Besondere Ortsnamen-Fakten";
-$pgv_lang["SURNAME_TRADITION"] = "Nachnamens-Tradition";
-$pgv_lang["spanish"]           = "spanisch";
-$pgv_lang["portuguese"]        = "portugiesisch";
-$pgv_lang["icelandic"]         = "islandisch";
-$pgv_lang["paternal"]          = "väterlich";
+$pgv_lang["ADVANCED_NAME_FACTS"]		= "Besondere Namens-Fakten";
+$pgv_lang["ADVANCED_PLAC_FACTS"]		= "Besondere Ortsnamen-Fakten";
+$pgv_lang["SURNAME_TRADITION"]			= "Nachnamens-Tradition";
+$pgv_lang["tradition_spanish"]			= "spanische";
+$pgv_lang["tradition_portuguese"]		= "portugiesische";
+$pgv_lang["tradition_icelandic"]		= "isländische";
+$pgv_lang["tradition_paternal"]			= "väterliche";
+$pgv_lang["tradition_none"]				= "keine";
 $pgv_lang["context_lines"]				= "Zusammenhang in der GEDCOM-Datei";
 $pgv_lang["open_link"]					= "Links öffnen im ...";
 $pgv_lang["warning"]					= "Warnung";
@@ -334,7 +335,7 @@ $pgv_lang["log_message"]				= "Mitteilung";
 $pgv_lang["searchtype"]					= "Art der Suche";
 $pgv_lang["query"]						= "Abfrage";
 $pgv_lang["sanity_err0"]				= "Fehler:";
-$pgv_lang["sanity_err1"]				= "Ihre PHP-Version muss mindestens 4.3.5 sein.";
+$pgv_lang["sanity_err1"]				= "Ihre PHP-Version muss mindestens #PGV_REQUIRED_PHP_VERSION# sein.";
 $pgv_lang["sanity_err2"]				= "Datei oder Verzeichnis <i>#GLOBALS[whichFile]#</i> ist nicht vorhanden. Bitte prüfen Sie, ob diese Datei oder dieses Verzeichnis wirklich nicht vorhanden ist, nicht mit falschem Namen benannt ist, und die richtigen Lese-Rechte hat.";
 $pgv_lang["sanity_err3"]				= "Die Datei <i>#GLOBALS[whichFile]#</i> wurde nicht richtig auf den Server hochgeladen. Bitte wiederholen Sie das Hochladen.";
 $pgv_lang["sanity_err4"]				= "Die Datei <i>config.php</i> enthält Fehler.";

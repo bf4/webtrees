@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,10 +56,18 @@ $pgv_lang["to_person"]				= "To Person";
 $pgv_lang["to_family"]				= "To Family";
 $pgv_lang["to_source"]				= "To Source";
 $pgv_lang["edit_fam"]				= "Edit Family";
+$pgv_lang["edit_repo"]				= "Edit Repository";
 $pgv_lang["copy"]					= "Copy";
 $pgv_lang["cut"]					= "Cut";
 $pgv_lang["sort_by_birth"]			= "Sort by birth dates";
 $pgv_lang["reorder_children"]		= "Re-order children";
+$pgv_lang["reorder_media"]					= "Re-order media";
+$pgv_lang["reorder_media_title"]			= "Drag-and-drop thumbnails to re-order media items";
+$pgv_lang["reorder_media_window"]			= "Re-order media (window)";
+$pgv_lang["reorder_media_window_title"]		= "Click a row, then drag-and-drop to re-order media ";
+$pgv_lang["reorder_media_save"]				= "Saves the sorted media to the database";
+$pgv_lang["reorder_media_reset"]			= "Reset to the original order";
+$pgv_lang["reorder_media_cancel"]			= "Quit and return";
 $pgv_lang["add_from_clipboard"]		= "Add from Clipboard: ";
 $pgv_lang["record_copied"]			= "Record copied to clipboard";
 $pgv_lang["add_unlinked_person"]	= "Add an unlinked person";
@@ -150,6 +158,10 @@ $pgv_lang["file_missing"]			= "No file was received. Please upload again.";
 $pgv_lang["file_partial"]			= "File was only partially uploaded, please try again";
 $pgv_lang["file_success"]			= "File successfully uploaded";
 $pgv_lang["file_too_big"]			= "Uploaded file exceeds the allowed size";
+$pgv_lang["file_no_temp_dir"]		= "Missing PHP temporary directory";
+$pgv_lang["file_cant_write"]		= "PHP failed to write to disk";
+$pgv_lang["file_bad_extension"]		= "PHP blocked file by extension";
+$pgv_lang["file_unkown_err"]		= "Unknown file upload error code #pgv_lang[global_num1]#. Please report this as a bug.";
 $pgv_lang["folder"]		 			= "Folder on server";
 $pgv_lang["gedcom_editing_disabled"]	= "Editing this GEDCOM has been disabled by the administrator.";
 $pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";

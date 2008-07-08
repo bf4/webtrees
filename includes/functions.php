@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require_once('includes/mutex_class.php');
-require_once('includes/media_class.php');
+require_once('includes/datamodel/media_class.php');
+require_once('includes/functions_UTF8.php');
 
 /**
  * The level of error reporting
@@ -52,9 +53,8 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
-	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN;
-       	global $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
-	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX;
+	global $DBTYPE, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
+	global $INDEX_DIRECTORY, $BUILDING_INDEX;
 
 	if (!$ignore_previous) {
 		if ((is_object($DBCONN)) && (!DB::isError($DBCONN)))
@@ -76,6 +76,7 @@ function check_db($ignore_previous=false) {
 	}
 	//-- initialize query counter
 	$TOTAL_QUERIES = 0;
+	if (!isset($DBPORT)) $DBPORT="";
 
 	$dsn = array(
 		'phptype'  => $DBTYPE,
@@ -98,6 +99,19 @@ function check_db($ignore_previous=false) {
 	if (DB::isError($DBCONN)) {
 		//die($DBCONN->getMessage());
 		return false;
+	}
+
+	// Perform any database-specific initialisation
+	switch ($DBTYPE) {
+	case 'mysql':
+		//dbquery("SET NAMES UTF8");
+		break;
+	case 'pgsql':
+		//dbquery("SET NAMES 'UTF8'");
+		break;
+	case 'sqlite':
+		//dbquery('PRAGMA encoding = "UTF-8"');
+		break;
 	}
 
 	//-- protect the username and password on pages other than the Configuration page
@@ -180,6 +194,23 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 	}
 }
 
+function encode_url($url, $entities=true) {
+	$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url);		// GEDCOM names can legitimately contain these chars
+//	if ($entities) $url = htmlentities($url);
+	if ($entities) {
+		$url = str_replace("&", "&amp;", ($url));
+		$url = str_replace("&amp;amp;", "&amp;", ($url));
+	}
+	return $url;
+}
+
+
+function decode_url($url, $entities=true) {
+	if ($entities) $url = html_entity_decode($url);
+	$url = rawurldecode($url);		// GEDCOM names can legitimately contain " " and "+"
+	return $url;
+}
+
 function preg_match_recursive($regex, $var) {
 	if (is_scalar($var)) {
 		return preg_match($regex, $var);
@@ -228,6 +259,25 @@ function update_config(&$text, $var, $value) {
 	} else {
 		// Variable not found in file - insert it
 		$text=preg_replace('/^(.*[\r\n]+)([ \t]*[$].*)$/s', '$1'.$assign." // new config variable\n".'$2',$text);
+	}
+}
+
+// Convert a file upload PHP error code into user-friendly text
+function file_upload_error_text($error_code) {
+	global $pgv_lang;
+
+	switch ($error_code) {
+	case UPLOAD_ERR_OK:         return $pgv_lang['file_success'];
+	case UPLOAD_ERR_INI_SIZE:
+	case UPLOAD_ERR_FORM_SIZE:  return $pgv_lang['file_too_big'];
+	case UPLOAD_ERR_PARTIAL:    return $pgv_lang['file_partial'];
+	case UPLOAD_ERR_NO_FILE:    return $pgv_lang['file_missing'];
+	case UPLOAD_ERR_NO_TMP_DIR: return $pgv_lang['file_no_temp_dir'];
+	case UPLOAD_ERR_CANT_WRITE: return $pgv_lang['file_cant_write'];
+	case UPLOAD_ERR_EXTENSION:  return $pgv_lang['file_bad_extension'];
+	default:
+								$pgv_lang['global_num1'] = $error_code;		// Make this available to print_text()
+								return print_text('file_unknown_err', 0, 1);
 	}
 }
 
@@ -339,7 +389,7 @@ function getmicrotime(){
  */
 function store_gedcoms() {
 	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $DEFAULT_GEDCOM, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
-	global $COMMIT_COMMAND, $IN_STORE_GEDCOMS;
+	global $IN_STORE_GEDCOMS;
 
 	if (!$CONFIGURED)
 		return false;
@@ -419,7 +469,6 @@ function store_gedcoms() {
 	} else {
 		fwrite($fp, $gedcomtext);
 		fclose($fp);
-		if (!empty($COMMIT_COMMAND))
 			check_in("store_gedcoms() ->" . PGV_USER_NAME ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
 	$mutex->Release();
@@ -578,7 +627,7 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 			}
 		}
 		echo $fmt_msg;
-		AddToLog($log_msg);
+		if (function_exists('AddToLog')) AddToLog($log_msg);
 		if ($errno==1)
 			die();
 	}
@@ -1217,6 +1266,23 @@ function find_updated_record($gid, $gedfile="") {
 	return "";
 }
 
+// Find out if there are any pending changes that a given user may accept
+function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
+	global $pgv_changes;
+
+	if (!isset($pgv_changes) || !userCanAccept($user_id, $ged_id)) {
+		return false;
+	}
+
+	$gedcom=get_gedcom_from_id($ged_id);
+	foreach ($pgv_changes as $pgv_change) {
+		if ($pgv_change[0]['gedcom']==$gedcom) {
+			return true;
+		}
+	}
+	return false;
+}
+
 // ************************************************* START OF MULTIMEDIA FUNCTIONS ********************************* //
 /**
  * find the highlighted media object for a gedcom entity
@@ -1605,8 +1671,8 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 						if (($bPos===false)&&($aPos!==false)) return 1;
 						if (($bPos===false)&&($aPos===false)) {
 							// Determine the binary value of both letters
-							$aValue = ord_UTF8($aLetter);
-							$bValue = ord_UTF8($bLetter);
+							$aValue = UTF8_ord($aLetter);
+							$bValue = UTF8_ord($bLetter);
 							return $aValue - $bValue;
 						}
 						return ($aPos-$bPos);
@@ -1765,110 +1831,6 @@ function lettersort($a, $b) {
 }
 
 // Helper function to sort facts.
-function compare_facts_type($arec, $brec) {
-	global $factarray;
-	static $factsort;
-
-	if (is_array($arec))
-		$arec = $arec[1];
-	if (is_array($brec))
-		$brec = $brec[1];
-
-	// Facts from different families stay grouped together
-	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
-		return 0;
-		
-	// Extract fact type from record
-	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
-		return 0;
-	$afact=$matcha[1];
-	$bfact=$matchb[1];
-
-	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
-		$afact=$match[1];
-	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
-		$bfact=$match[1];
-
-	if (!is_array($factsort))
-		$factsort = array_flip(array(
-			"BIRT",
-			"_HNM",
-			"ALIA", "_AKA", "_AKAN",
-			"ADOP", "_ADPF", "_ADPF",
-			"_BRTM",
-			"CHR", "BAPM",
-			"FCOM",
-			"CONF",
-			"BARM", "BASM",
-			"SSN",
-			"EDUC",
-			"GRAD",
-			"_DEG",
-			"EMIG", "IMMI",
-			"NATU",
-			"_MILI", "_MILT",
-			"ENGA",
-			"MARB", "MARC", "MARL", "_MARI", "_MBON",
-			"MARR", "MARR_CIVIL", "MARR_RELIGIOUS", "MARR_PARTNERS", "MARR_UNKNOWN", "_COML",
-			"_STAT",
-			"_SEPR",
-			"DIVF",
-			"MARS",
-			"_BIRT_CHIL",
-			"DIV", "ANUL",
-			"_BIRT_", "_MARR_", "_DEAT_",
-			"CENS",
-			"OCCU",
-			"RESI",
-			"PROP",
-			"CHRA",
-			"RETI",
-			"FACT", "EVEN",
-			"_NMR", "_NMAR", "NMR",
-			"NCHI",
-			"WILL",
-			"_HOL",
-			"_????_",
-			"DEAT", "CAUS",
-			"_FNRL", "BURI", "CREM", "_INTE", "CEME",
-			"_YART",
-			"_NLIV",
-			"PROB",
-			"TITL",
-			"COMM",
-			"NATI",
-			"CITN",
-			"CAST",
-			"RELI",
-			"IDNO",
-			"TEMP",
-			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
-			"AFN", "REFN", "_PRMN", "REF", "RIN",
-			"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
-			"CHAN", "_TODO"
-		));
-
-	// Events not in the above list get mapped onto one that is.
-	if (!isset($factsort[$afact]))
-		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $afact, $match))
-			$afact=$match[1];
-		else
-			$afact="_????_";
-	if (!isset($factsort[$bfact]))
-		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $bfact, $match))
-			$bfact=$match[1];
-		else
-			$bfact="_????_";
-
-	$ret = $factsort[$afact]-$factsort[$bfact];
-	//-- if the facts are the same, then go ahead and compare them by date
-	//-- this will improve the positioning of non-dated elements on the next pass
-	if ($ret==0)
-		$ret = compare_facts_date($arec, $brec);
-	return $ret;
-}
-
-// Helper function to sort facts.
 function compare_facts_date($arec, $brec) {
 	if (is_array($arec))
 		$arec = $arec[1];
@@ -1971,13 +1933,13 @@ function sort_facts(&$arr) {
 	}
 
 	//-- add extra codes for the next pass of sorting
-	$lastDate = "";
+	//$lastDate = "";
 	for($i=0; $i<count($arr); $i++) {
 		//-- add a fake date for the date sorting based on the previous fact that came before
-		if (is_null($arr[$i]->getDate(false))) {
-			if (!empty($lastDate)) $arr[$i]->sortDate = $lastDate;
-		}
-		else $lastDate = $arr[$i]->getDate(false);
+		//if (is_null($arr[$i]->getDate(false))) {
+		//	if (!empty($lastDate)) $arr[$i]->sortDate = $lastDate;
+		//}
+		//else $lastDate = $arr[$i]->getDate(false);
 		$arr[$i]->sortOrder = $i;
 	}
 	
@@ -2797,10 +2759,8 @@ function write_changes() {
 	//-- release the mutex acquired above
 	$mutex->Release();
 
- 	if (!empty($COMMIT_COMMAND)) {
 		$logline = AddToLog("pgv_changes.php updated");
  		check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
- 	}
 	return true;
 }
 
@@ -2980,7 +2940,7 @@ function get_report_list($force=false) {
 	@fwrite($fp, serialize($files));
 	@fclose($fp);
 	$logline = AddToLog("reports.dat updated");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, "reports.dat", $INDEX_DIRECTORY);
+ 	check_in($logline, "reports.dat", $INDEX_DIRECTORY);
 
 	return $files;
 }
@@ -3079,10 +3039,10 @@ function get_query_string() {
 		foreach($_GET as $key => $value) {
 			if($key != "view") {
 				if (!is_array($value))
-					$qstring .= $key."=".urlencode($value)."&amp;";
+					$qstring .= "{$key}={$value}&";
 				else
 					foreach ($value as $k=>$v)
-						$qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
+						$qstring .= "{$key}[{$k}]{$v}&";
 			}
 		}
 	} else {
@@ -3090,16 +3050,17 @@ function get_query_string() {
 			foreach($_POST as $key => $value) {
 				if($key != "view") {
 					if (!is_array($value))
-						$qstring .= $key."=".urlencode($value)."&amp;";
+						$qstring .= "{$key}={$value}&";
 					else
 						foreach ($value as $k=>$v)
 							if (!is_array($v))
-								$qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
+								$qstring .= "{$key}[{$k}]={$v}&";
 				}
 			}
 		}
 	}
-	return $qstring;
+	$qstring = rtrim($qstring, "&");	// Remove trailing "&"
+	return encode_url($qstring);
 }
 
 //This function works with a specified generation limit.  It will completely fill
@@ -3402,18 +3363,6 @@ function has_utf8($string) {
 }
 
 /**
- * Determine the type of ID
- * @param string $id
- */
-function id_type($id) {
-	if (preg_match('/^0 @.*@ (\w+)/', find_gedcom_record($id), $match)) {
-		return $match[1];
-	} else {
-		return null;
-	}
-}
-
-/**
  * check file in
  * @param string $logline	Log message
  * @param string $filename	Filename
@@ -3424,7 +3373,7 @@ function id_type($id) {
 function check_in($logline, $filename, $dirname, $bInsert = false) {
 	global $COMMIT_COMMAND;
 	$bRetSts = false;
-	if (($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
+	if (!empty($COMMIT_COMMAND) && ($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
         	$cwd = getcwd();
 		if ($dirname) {
 				chdir($dirname);
@@ -3456,7 +3405,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *
  *		This routine will always load the English version of the specified language
  *		files first, followed by the same set of files in the currently active language.
- *		After that, the "extra.xx.php" files will always be loaded, again trying for
+ *		After that, the "extra.xx.php" files will always be loaded, but not trying for
  *		English first.
  *
  *		To load the "help_text.xx.php" file set, you'd call this function thus:
@@ -3470,7 +3419,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut;
-	global $pgv_lang, $countries, $altCountryNames, $faqlist, $factAbbrev;
+	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
 	
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
 
@@ -3552,23 +3501,21 @@ function loadLangFile($fileListNames="") {
 		default:
 			return;
 		}
-		if (file_exists($fileName1))
-			require $fileName1;
-		if ($LANGUAGE!="english" && file_exists($fileName2))
-			require $fileName2;
+		if (file_exists($fileName1)) require $fileName1;
+		if ($LANGUAGE!="english" && file_exists($fileName2)) require $fileName2;
 	}
 
 	// Now that the variables have been loaded in the desired language, load the optional 
 	// "extra.xx.php" file so that they can be over-ridden as desired by the site Admin
 	// For compatibility reasons, we'll first look for optional file "lang.xx.extra.php"
-	if (file_exists("languages/lang.".$lang_short_cut["english"].".extra.php"))
-		require "languages/lang.".$lang_short_cut["english"].".extra.php";
-	if (file_exists($extrafile["english"]))
-		require $extrafile["english"];
-	if ($LANGUAGE!="english") {
-		if (file_exists("languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php"))
+	//
+	// In contrast to the preceding logic, we will NOT first load the English extra.xx.php
+	// file when trying for other languages.
+	//
+	if (file_exists("languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php")) {
 			require "languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
-		if (file_exists($extrafile[$LANGUAGE]))
+	}
+	if (file_exists($extrafile[$LANGUAGE])) {
 			require $extrafile[$LANGUAGE];
 	}
 	
@@ -3588,8 +3535,9 @@ function loadLangFile($fileListNames="") {
  *
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang, $factAbbrev;
-	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile;
+	global $LANGUAGE, $lang_short_cut;
+	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
+	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile, $pgv_lang_self;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
 	global $TIME_FORMAT, $TIME_FORMAT_array;
@@ -3601,8 +3549,16 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
 	global $DBCONN;
 
-	if (!isset($pgv_language[$desiredLanguage]))
-		$desiredLanguage = "english";
+	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
+	
+	// Make sure we start with a clean slate
+	$pgv_lang = $pgv_lang_self;
+	$countries = array();
+	$altCountryNames = array();
+	$factarray = array();
+	$factAbbrev = array();
+	$faqlist = array();
+	
 	if ($forceLoad) {
 		$LANGUAGE = "english";
 		require($pgv_language[$LANGUAGE]);			// Load English
@@ -3632,15 +3588,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			if (DB::isError($DBCONN) || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
 				include($file);
 			}
-		}
-		// load extra language files
-		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
-		if (file_exists($file)) {
-			include($file);
-		}
-		$file = $extrafile[$LANGUAGE];
-		if (file_exists($file)) {
-			include($file);
 		}
 	}
 
@@ -3681,6 +3628,8 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 				include($file);
 			}
 		}
+	}
+
 		// load the extra language file
 		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
 		if (file_exists($file)) {
@@ -3690,7 +3639,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		if (file_exists($file)) {
 			include($file);
 		}
-	}
 
 	// Modify certain spellings if Ashkenazi pronounciations are in use.
 	if ($JEWISH_ASHKENAZ_PRONUNCIATION)

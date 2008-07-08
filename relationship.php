@@ -3,7 +3,7 @@
  * Calculates the relationship between two individuals in the gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 // -- include config file
 require("config.php");
 require_once("includes/functions_charts.php");
-require_once("includes/person_class.php");
+require_once("includes/datamodel/person_class.php");
 
 function getRelationshipSentence($node, $pid1, $pid2)
 {
@@ -575,6 +575,15 @@ $pid2 = clean_input($pid2);
 $title_string .= $pgv_lang["relationship_chart"];
 // -- print html header information
 print_header($title_string);
+
+// Lbox additions if installed ---------------------------------------------------------------------------------------------
+if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
+	include_once('modules/lightbox/functions/lb_call_js.php');
+}	
+// ------------------------------------------------------------------------------------------------------------------------------
+
 if (!empty($pid1)) {
 	//-- check if the id is valid
 	$indirec = Person::getInstance($pid1);
@@ -748,7 +757,7 @@ if ($view!="preview") {
 				$new_path=false;
 			}
 			else {
-				print "<a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;path_to_find=$i&amp;followspouse=$followspouse&amp;pretty=$pretty&amp;show_full=$show_full&amp;asc=$asc\">".($i+1)."</a>\n";
+				print "<a href=\"".encode_url("relationship.php?pid1={$pid1}&pid2={$pid2}&path_to_find={$i}&followspouse={$followspouse}&pretty={$pretty}&show_full={$show_full}&asc={$asc}")."\">".($i+1)."</a>\n";
 			}
 			$i++;
 		}

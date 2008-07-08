@@ -4,7 +4,7 @@
  * Various functions used by the media DB interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -432,7 +432,7 @@ function check_media_structure() {
 			if (!mkdir($MEDIA_DIRECTORY))
 				return false;
 			if (!file_exists($MEDIA_DIRECTORY . "index.php")) {
-				$inddata = html_entity_decode("<?php\nheader(\"Location: ../medialist.php\");\nexit;\n?>");
+				$inddata = "<?php\nheader(\"Location: ../medialist.php\");\nexit;\n?>";
 				$fp = @ fopen($MEDIA_DIRECTORY . "index.php", "w+");
 				if (!$fp)
 					print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs</div>";
@@ -722,7 +722,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			// Update the medialist with this cross-reference,
 			// but only if the Media item actually exists (could be a phantom reference)
 			if (isset ($medialist[$keyMediaList])) {
-				$medialist[$keyMediaList]["LINKS"][stripslashes($row["mm_gid"])] = id_type(stripslashes($row["mm_gid"]));
+				$medialist[$keyMediaList]["LINKS"][stripslashes($row["mm_gid"])] = gedcom_record_type(stripslashes($row["mm_gid"]), get_id_from_gedcom($GEDCOM));
 				$medialist[$keyMediaList]["LINKED"] = true;
 			}
 
@@ -764,7 +764,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 
 					// Add this GEDCOM ID to the link list of the media object
 					if (isset ($medialist[$keyMediaList])) {
-						$medialist[$keyMediaList]["LINKS"][$pid] = id_type($pid);
+						$medialist[$keyMediaList]["LINKS"][$pid] = gedcom_record_type($pid, get_id_from_gedcom($GEDCOM));
 						$medialist[$keyMediaList]["LINKED"] = true;
 					}
 				}
@@ -895,58 +895,55 @@ function filterMedia($media, $filter, $acceptExt) {
 	if (empty ($acceptExt) || $acceptExt != "http")
 		$acceptExt = "";
 
-	$isEditor = PGV_USER_CAN_EDIT;
-
-	while (true) {
-		$isValid = true;
-
 		//-- Check Privacy first.  No point in proceeding if Privacy says "don't show"
 		$links = $media["LINKS"];
 		if (count($links) != 0) {
 			foreach ($links as $id => $type) {
 				if (!displayDetailsByID($id, $type)) {
-					$isValid = false;
-					break;
+				return false;
 				}
 			}
 		}
 
 		//-- Accept external Media only if specifically told to do so
 		if (isFileExternal($media["FILE"]) && $acceptExt != "http")
-			$isValid = false;
-
-		if (!$isValid)
-			break;
+		return false;
 
 		//-- Accept everything if filter string is empty
 		if ($filter == "")
-			break;
+		return true;
+
+	$filter=str2upper($filter);
 
 		//-- Accept when filter string contained in file name (but only for editing users)
-		if ($isEditor && stristr(basename($media["FILE"]), $filter))
-			break;
+	if (PGV_USER_CAN_EDIT && strstr(str2upper(basename($media["FILE"])), $filter))
+		return true;
 
 		//-- Accept when filter string contained in Media item's title
-		if (stristr($media["TITL"], $filter))
-			break;
+	$record=Media::getInstance($media['XREF']);
+	if ($record) {
+		foreach ($record->getAllNames() as $name) {
+			if (strpos(str2upper($name['full']), $filter)!==false) {
+				return true;
+			}
+		}
+	}
+
+	if (strpos(str2upper($media["TITL"]), $filter)!==false)
+		return true;
 
 		//-- Accept when filter string contained in name of any item
 		//-- this Media item is linked to.  (Privacy already checked)
-		$isValid = false;
-		if (count($links) != 0)
-			break;
 		foreach ($links as $id => $type) {
-			if ($type == "INDI" && stristr(get_person_name($id), $filter))
-				$isValid = true;
-			if ($type == "FAM" && stristr(get_family_descriptor($id), $filter))
-				$isValid = true;
-			if ($type == "SOUR" && stristr(get_source_descriptor($id), $filter))
-				$isValid = true;
+		$record=GedcomRecord::getInstance($id);
+		foreach ($record->getAllNames() as $name) {
+			if (strpos(str2upper($name['full']), $filter)!==false) {
+				return true;
+			}
 		}
-		break;
 	}
 
-	return $isValid;
+	return false;
 }
 //-- search through the gedcom records for individuals
 /**
@@ -999,7 +996,7 @@ function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
 			$sqlmm = "select mm_gid as mm_gid from " . $TBLPREFIX . "media_mapping where mm_media = '" . $row[0] . "' and mm_gedfile = '" . $GEDCOMS[$GEDCOM]["id"] . "'";
 			$resmm = & dbquery($sqlmm);
 			while ($rowmm = & $resmm->fetchRow()) {
-				$myindilist[$rowmm[0]] = id_type($rowmm[0]);
+				$myindilist[$rowmm[0]] = gedcom_record_type($rowmm[0], get_id_from_gedcom($GEDCOM));
 			}
 		}
 		$res->free();
@@ -1212,7 +1209,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 					}
 				} else {
 					fwrite($fp, "<?php\r\n");
-					fwrite($fp, "header(\"Location: " . $backPointer . "medialist.php\");\r\n");
+					fwrite($fp, "header(\"Location: {$backPointer}medialist.php\");\r\n");
 					fwrite($fp, "exit;\r\n");
 					fwrite($fp, "?>\r\n");
 					fclose($fp);
@@ -1235,7 +1232,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 					}
 				} else {
 					fwrite($fp, "<?php\r\n");
-					fwrite($fp, "header(\"Location: " . $backPointer . "../medialist.php\");\r\n");
+					fwrite($fp, "header(\"Location: {$backPointer}../medialist.php\");\r\n");
 					fwrite($fp, "exit;\r\n");
 					fwrite($fp, "?>\r\n");
 					fclose($fp);
@@ -1355,8 +1352,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "<input type=\"hidden\" name=\"action\" value=\"$action\" />\n";
 	print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	if (!empty ($linktoid))
-		print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
+	if (!empty ($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
 	print "<input type=\"hidden\" name=\"level\" value=\"$level\" />\n";
 	print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
@@ -1379,7 +1375,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	if (isset ($pgv_changes[$pid . "_" . $GEDCOM]))
 		$gedrec = find_updated_record($pid);
 	else
-		if (id_type($pid) == "OBJE")
+		if (gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)) == "OBJE")
 			$gedrec = find_media_record($pid);
 		else
 			$gedrec = "";
@@ -1408,7 +1404,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print_help_link("upload_media_file_help", "qm");
 		print $pgv_lang["media_file"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"mediafile\"";
 		print " onchange=\"updateFormat(this.value);\"";
-		print " size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
+		print " size=\"40\" /><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 		// Check for thumbnail generation support
 		if (PGV_USER_GEDCOM_ADMIN) {
 		$ThumbSupport = "";
@@ -1427,13 +1423,13 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
 			print $pgv_lang["auto_thumbnail"];
 			print "</td><td class=\"optionbox wrap\">";
-			print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked />";
+				print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked=\"checked\" />";
 			print "&nbsp;&nbsp;&nbsp;" . $pgv_lang["generate_thumbnail"] . $ThumbSupport;
 			print "</td></tr>";
 		}
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("upload_thumbnail_file_help", "qm");
-		print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
+			print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\" /><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 	}
 		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
 	}
@@ -1512,16 +1508,17 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "</select></span>\n";
 		}
 		else print $folder;
-		if (PGV_USER_GEDCOM_ADMIN) print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
+		print "<input name=\"oldFolder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
+		if (PGV_USER_GEDCOM_ADMIN) print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\" /></span>";
 		else print "<input name=\"folder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 		if ($gedfile == "FILE") {
-			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub></td></tr>";
+			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub>";
 		}
 		print "</td></tr>";
-	}
-	else 
+	} else {
+		print "<input name=\"oldFolder\" type=\"hidden\" value=\"\" />";
 		print "<input name=\"folder\" type=\"hidden\" value=\"\" />";
-	print "<input name=\"oldFolder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
+	}
 	// 2 FORM
 	if ($gedrec == "")
 		$gedform = "FORM";
@@ -1741,26 +1738,30 @@ function PrintMediaLinks($links, $size = "small") {
 	$linkList = array ();
 
 	foreach ($links as $id => $type) {
+		$record=GedcomRecord::getInstance($id);
+		if ($record && $record->canDisplaydetails()) {
+			switch ($record->getType()) {
+			case 'INDI':
+				$linkItem = array ();
+				$linkItem['name']='A'.$record->getSortName();
+				$linkItem['record']=$record;
+				$linkList[] = $linkItem;
+				break;
+			case 'FAM':
 		$linkItem = array ();
+				$linkItem['name']='B'.$record->getSortName();
+				$linkItem['record']=$record;
+				$linkList[] = $linkItem;
+				break;
+			case 'SOUR':
+				$linkItem = array ();
+				$linkItem['name']='C'.$record->getSortName();
+				$linkItem['record']=$record;
+				$linkList[] = $linkItem;
+				break;
 
-		$linkItem["id"] = $id;
-		$linkItem["type"] = $type;
-		$linkItem["name"] = "";
-		if ($type == "INDI" && displayDetailsByID($id)) {
-			$linkItem["name"] = "A" . get_sortable_name($id);
-			$linkItem["printName"] = get_person_name($id);
-		} else
-			if ($type == "FAM" && displayDetailsByID($id, "FAM")) {
-				$linkItem["name"] = "B" . get_sortable_family_descriptor($id);
-				$linkItem["printName"] = get_family_descriptor($id);
-			} else
-				if ($type == "SOUR" && displayDetailsByID($id, "SOUR")) {
-					$linkItem["printName"] = get_source_descriptor($id);
-					$linkItem["name"] = "C" . $linkItem["printName"];
 				}
-
-		if ($linkItem["name"] != "")
-			$linkList[] = $linkItem;
+		}
 	}
 	uasort($linkList, "mediasort");
 
@@ -1771,71 +1772,43 @@ function PrintMediaLinks($links, $size = "small") {
 	$firstObje = true;
 	if ($size == "small")
 		print "<sub>";
+	$prev_record=null;
 	foreach ($linkList as $linkItem) {
-		if ($linkItem["type"] == "INDI") {
-			if ($firstIndi && !$firstLink)
-				print "<br />";
-			$firstLink = false;
-			$firstIndi = false;
-			print "<br /><a href=\"individual.php?pid=" . $linkItem["id"] . "\">";
-			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
-				print $pgv_lang["view_person"] . " -- ";
-				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";
-				print PrintReady($linkItem["printName"]);
-			} else {
-				print $pgv_lang["view_person"] . " -- ";
-				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-				print "(" . $linkItem["id"] . ")";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-			}
-			print "</a>";
+		$record=$linkItem['record'];
+		if ($prev_record && $prev_record->getType()!=$record->getType()) {
+			echo '<br />';
 		}
-		if ($linkItem["type"] == "FAM") {
-			if ($firstFam && !$firstLink)
-				print "<br />";
-			$firstLink = false;
-			$firstFam = false;
-			print "<br /><a href=\"family.php?famid=" . $linkItem["id"] . "\">";
-			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
-				print $pgv_lang["view_family"] . " -- ";
-				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";
-				print PrintReady($linkItem["printName"]);
-			} else {
-				print $pgv_lang["view_family"] . " -- ";
-				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-				print "(" . $linkItem["id"] . ")";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-			}
-			print "</a>";
+		echo '<br /><a href="', encode_url($record->getLinkUrl()), '">';
+		switch ($record->getType()) {
+		case 'INDI':
+			echo $pgv_lang['view_person'];
+			break;
+		case 'FAM':
+			echo $pgv_lang['view_family'];
+			break;
+		case 'SOUR':
+			echo $pgv_lang['view_source'];
+			break;
 		}
-		if ($linkItem["type"] == "SOUR") {
-			if ($firstSour && !$firstLink)
-				print "<br />";
-			$firstLink = false;
-			$firstSour = false;
-			print "<br /><a href=\"source.php?sid=" . $linkItem["id"] . "\">";
-			if (begRTLText($linkItem["printName"]) && $TEXT_DIRECTION == "ltr") {
-				print $pgv_lang["view_source"] . " -- ";
-				print "(" . $linkItem["id"] . ")&nbsp;&nbsp;";
-				print PrintReady($linkItem["printName"]);
+		echo ' -- ';
+		$name=$record->getFullname();
+		if (begRTLText($name) && $TEXT_DIRECTION == 'ltr') {
+			echo '('.$record->getXref().')&nbsp;&nbsp;';
+			echo PrintReady($name);
 			} else {
-				print $pgv_lang["view_source"] . " -- ";
-				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
-				print "(" . $linkItem["id"] . ")";
-				if ($TEXT_DIRECTION == "rtl")
-					print getRLM();
+			echo PrintReady($name).'&nbsp;&nbsp;';
+			if ($TEXT_DIRECTION=='rtl') {
+				echo getRLM();
 			}
-			print "</a>";
+			echo "(" . $record->getXref().')';
+			if ($TEXT_DIRECTION=='rtl') {
+				echo getRLM();
 		}
 	}
+		echo '</a>';
+		$prev_record=$record;
+	}
+		
 	if ($size == "small")
 		print "</sub>";
 	return true;
@@ -1870,7 +1843,7 @@ function get_media_relations($mid){
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
 		if ($row[0] != $mid){
-			$media[$row[0]] = id_type($row[0]);
+			$media[$row[0]] = gedcom_record_type($row[0], get_id_from_gedcom($GEDCOM));
 		}
 	}
 	$medialist[$keyMediaList]['LINKS'] = $media;

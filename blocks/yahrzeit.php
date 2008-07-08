@@ -5,7 +5,7 @@
  * This block will print a list of upcoming yahrzeit (hebrew death anniversaries)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008 PGV Developers
+ * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			} else {
 				$name = PGV_USER_NAME;
 			}
-			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>";
 		}
 	}
@@ -127,7 +127,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		foreach ($yahrzeits as $yahrzeit)
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
-				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\">".$ind->getName()."</a>".$ind->getSexImage();
+				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".$ind->getFullName()."</a>".$ind->getSexImage();
 				$content .= "<div class=\"indent\">";
 				$content .= $yahrzeit['date']->Display(true);
 				$content .= ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
@@ -135,8 +135,8 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			}
 		break;
 	case "style2": // Table style
-		$content .= file_get_contents('js/sorttable.js.htm');
-		require_once("includes/gedcomrecord.php");
+		require_once("js/sorttable.js.htm");
+		require_once("includes/datamodel/gedcomrecord_class.php");
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 		$content .= "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
 		$content .= "<tr>";
@@ -147,32 +147,19 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		$content .= "<th class=\"list_label\">{$factarray['_YART']}</th>";
 		$content .= "</tr>";
 
-		// Which types of name do we display for an INDI
-		$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-		if ($SHOW_MARRIED_NAMES) {
-			$name_subtags[] = "_MARNM";
-		}
-
 		foreach ($yahrzeits as $yahrzeit) {
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
 				$content .= "<tr class=\"vevent\">"; // hCalendar:vevent
 				// Record name(s)
-				$name=$ind->getSortableName();
+				$name=$ind->getFullName();
 				$url=$ind->getLinkUrl();
 				$content .= "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-				$content .= "<a href=\"".$ind->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 				$content .= $ind->getSexImage();
-				foreach ($name_subtags as $subtag) {
-					for ($num=1; ; ++$num) {
-						$addname = $ind->getSortableName($subtag, $num);
-
-						if (empty($addname))
-							break;
-						else
-							if ($addname!=$name)
-								$content .= "<br /><a title=\"".$subtag."\" href=\"".$url."\" class=\"list_item\">".PrintReady($addname)."</a>";
-					}
+				$addname=$ind->getAddName();
+				if ($addname) {
+					$content .= "<br /><a href=\"".encode_url($url)."\" class=\"list_item\">".PrintReady($addname)."</a>";
 				}
 				$content .= "</td>";
 
@@ -202,7 +189,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 					// hCalendar:dtstart and hCalendar:summary
 					//TODO does this work??
 					$content .= "<abbr class=\"dtstart\" title=\"".strip_tags($yahrzeit['date']->Display(false,'Ymd',array()))."\"></abbr>";
-					$content .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$yahrzeit['fact']]." : ".PrintReady(strip_tags($ind->getSortableName()))."\"></abbr>";
+					$content .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$yahrzeit['fact']]." : ".PrintReady(strip_tags($ind->getFullName()))."\"></abbr>";
 				}
 
 				// upcomming yahrzeit dates
@@ -217,7 +204,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		// table footer
 		$content .= "<tr class=\"sortbottom\">";
 		$content .= "<td class=\"list_label\">";
-		$content .= '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+		$content .= '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 		$content .= $pgv_lang["total_names"].": ".count($yahrzeits);
 		if ($hidden) {
 			$content .= "<br /><span class=\"warning\">{$pgv_lang['hidden']} : {$hidden}</span>";
@@ -268,7 +255,7 @@ function print_yahrzeit_config($config) {
 
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link('style_help', 'qm');
-	print $pgv_lang['style']."</td>";
+	print $pgv_lang['style'];
 	print '</td><td class="optionbox">';
 	print '<select name="infoStyle">';
 	foreach (array('style1', 'style2') as $style) {
@@ -281,7 +268,7 @@ function print_yahrzeit_config($config) {
 
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link("cal_dowload_help", "qm");
-	print $pgv_lang["cal_download"]."</td>";
+	print $pgv_lang["cal_download"];
 	print '</td><td class="optionbox">';
 	print '<select name="allowDownload">';
 	foreach (array('yes', 'no') as $value) {
@@ -290,9 +277,11 @@ function print_yahrzeit_config($config) {
 			print " selected=\"selected\"";
 		print ">{$pgv_lang[$value]}</option>";
 	}
-	print '</select></td></tr>';
+	print '</select>';
 
 	// Cache file life is not configurable by user:  anything other than 1 day doesn't make sense
-	print "<input type=\"hidden\" name=\"cache\" value=\"1\" />";
+	print '<input type="hidden" name="cache" value="1" />';
+	
+	print '</td></tr>';
 }
 ?>

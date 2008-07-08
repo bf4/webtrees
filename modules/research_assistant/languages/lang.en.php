@@ -54,9 +54,6 @@ $pgv_lang["auto_search_text"]	= "Auto Search";
 $pgv_lang["task_list"]			= "Tasks";
 $pgv_lang["task_list_text"]		= "This area displays tasks you have created. Click <b>View</b> to see the tasks.";
 
-// -- HELP COMMENTS
-$pgv_lang["help_comments"] = "Here you can add comments. Other people can see them and add their own comments.";
-
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]							= "My Tasks";
 $pgv_lang["add_task"]							= "Add Task";
@@ -72,10 +69,7 @@ $pgv_lang["edit_task"]							= "Edit Task";
 $pgv_lang["completed"]							= "Completed";
 $pgv_lang["complete"]							= "Complete";
 $pgv_lang["incomplete"]							= "Incomplete";
-$pgv_lang["comres"]								= "Comments/Results";
 $pgv_lang["created"]							= "Created";
-$pgv_lang["modified"]							= "Modified";
-$pgv_lang["folder_list"]						= "Folder List";
 $pgv_lang["details"]							= "Details";
 $pgv_lang["result"]                     		= "Result";
 $pgv_lang["okay"]                               = "Okay";
@@ -128,17 +122,13 @@ $pgv_lang["ViewProbExplanation"]				= "This page analyzes the data for the activ
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Folder"]                             = "Folder:";
-$pgv_lang["Edit_Task"]                 			= "Edit Task";
 $pgv_lang["Edit_Gen_Task"]                 		= "Edit Generated Task";
-$pgv_lang["End_Date"]                 			= "End Date";
 $pgv_lang["Start_Date"]                 		= "Start Date";
 $pgv_lang["Task_Name"]                			= "Task Name";
 $pgv_lang["Folder_Name"]                		= "Folder Name";
 $pgv_lang["Folder_View"]                		= "Folder View";
 $pgv_lang["Task_View"]                  		= "Task View";
 $pgv_lang["page_header"]						= "Research Assistant Folders";
-$pgv_lang["folder_new"]							= "Create New Folder";
-$pgv_lang["folder_delete_check"]				= "Are you sure you want to delete this folder?";
 $pgv_lang["no_folder_name"]             		= "Folder name field must be filled in.";
 $pgv_lang["add_folder"]                 		= "Add Folder";
 $pgv_lang["folder_name"]                		= "Folder Name:";
@@ -152,53 +142,13 @@ $pgv_lang["folder_problem"]             		= "There has a been problem with addin
 // -- Missing Information Help 
 $pgv_lang["ra_missing_info_help"] = "This area displays missing information about the record. Select a checkbox and folder and click <b>Add Task</b> to create a task for the missing item. Existing tasks will show <b>View</b> instead of a checkbox.<br />";
 
-// -- RA_EDITFOLDER MESSAGES	
-$pgv_lang["edit_research_folder"]			= "Edit Research Folder";
-$pgv_lang["folder_not_exist"]				= "This folder does not exist: ";
-$pgv_lang["folder_parent"]					= "Parent Folder";
-$pgv_lang["parent_id"]						= "None";
-$pgv_lang["folder_users"]					= "Other Users who can see this folder";
-
-// -- RA_EDITLOG MESSAGES
-$pgv_lang["edit_research_log"]				= "Edit Research Log";
-$pgv_lang["log_not_exist"]					= "This log does not exist: ";
-
-// -- RA_LOG MESSAGES
-$pgv_lang["edit_log_entry"]					= "Edit Research Log Entry";
-$pgv_lang["log_no_entry"]					= "ERROR: You do not have permission to access this item.";
-$pgv_lang["log_modified"]					= "Last Modified";
-$pgv_lang["log_modified_by"]				= "Last Modified By";
-$pgv_lang["log_edit_entry"]					= "Edit this entry";
-
 // -- RA_LISTLOGS MESSAGES
-$pgv_lang["research_logs"]					= "Research Logs";
-$pgv_lang["log_no_entry_folder"]			= "ERROR: You do not have permission to access this folder.";
-$pgv_lang["folder_sub"]						= "Sub Folders";
-$pgv_lang["folder_sub_new"]					= "Create New Sub Folder";
 $pgv_lang["task_entry"]						= "Create new task.";
-$pgv_lang["log_show"]						= "Show All Logs";
-$pgv_lang["log_show_uncomplete"]			= "Show Uncompleted Logs";
-$pgv_lang["log_show_complete"]				= "Show Completed Logs";
-$pgv_lang["log_delete_check"]				= "Are you sure you want to delete this log entry?";
-
-// -- RA_FUNCTIONS MESSAGES
-$pgv_lang["function_folder_delete"]			= "ERROR: Cannot delete this folder because it still contains research log entries.<br />First move or delete these research log entries and then try to delete the folder again.";
-$pgv_lang["function_subfolder_delete"]		= "ERROR: Cannot delete this folder because it still contains subfolders.<br />First move or delete these subfolders and then try to delete the folder again.";
-$pgv_lang["folder_delete_ok"]				= "The folder #folder_name# has been deleted sucessfully.";
-$pgv_lang["folder_update_ok"]				= "The folder #folder_name# has been sucessfully updated.";
-$pgv_lang["folder_added"]					= "The folder #folder_name# was sucessfully added.";
-
-//-- RA_SEARCH MESSAGES
-$pgv_lang["search_results"]					= "Search Results";
-$pgv_lang["nothing_found"]					= "No matching logs found.";
 
 //-- ERROR MESSAGES
 $pgv_lang["no_folder"]						= "No folder exists yet. Please create a new folder first.";
 
 //-- HELP MESSAGES
-$pgv_lang["help_rs_folders.php"]			= "Research Assistant Folders<br /> #pgv_lang[sorry]#";
-$pgv_lang["help_rs_editfolder.php"]			= "Research Assistant Edit Folders<br />#pgv_lang[sorry]#";
-$pgv_lang["help_rs_editlog.php"]			= "Research Assistant Edit Log<br />#pgv_lang[sorry]#";
 $pgv_lang["ra_fold_name_help"]				= "~Folder View~<ul><li><b>Folder Name:</b> This column contains the names of all of the folders you have created.</li><li><b>Description:</b> This column contains the description of the folders.</li></ul>";
 $pgv_lang["ra_add_task_help"]				= "~Add New Task~<ul><li><b>Title:</b> This should contain the title of the task that you are adding.</li><li><b>Folder:</b> In this field you can assign which folder you want your new task to go to.</li><li><b>Description:</b> Enter a description of the task you want to add.</li><li><b>Sources:</b> Assign any sources that you have for the task.</li><li><b>People:</b> Assign any people associated for the new task.</li></ul>";
 $pgv_lang["ra_edit_folder_help"]			= "~Edit Folder~<ul><li><b>Folder Name:</b> This is where you should add the title of the folder that you are editing.</b></li><li><b>Parent folder:</b> You can assign the parent folder, if any, of the folder you are editing.</b></li><li><b>Folder description:</b> This is the description of the folder you are editing.</b></li></ul>";
@@ -214,8 +164,6 @@ $pgv_lang["ra_edit_task_help"]				= "~Edit Task~<ul><li><b>Title:</b> This shoul
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "View Task";
 $pgv_lang["add_new_comment"]				= "Add New Comment";
-$pgv_lang["no_sources"]						= "There are no sources associated with this task.";
-$pgv_lang["no_people"]						= "There are no people associated with this task.";
 $pgv_lang["no_indi_tasks"]					= "No tasks associated with this individual.";
 $pgv_lang["no_sour_tasks"]					= "No tasks associated with this source.";
 $pgv_lang["edit_comment"]					= "Edit Comment";
@@ -241,10 +189,6 @@ $pgv_lang["show_view_folders"]		    = "Show View Folders";
 $pgv_lang["show_add_folder"]		    = "Show Add Folder";
 $pgv_lang["show_add_unlinked_source"]   = "Show Add Unlinked Source";
 $pgv_lang["show_view_probabilities"]	= "Show View Probabilities";
-
-//-- COMMENT HELP
-$pgv_lang["comment_title_help"]			= "Comment Title Help here.";
-$pgv_lang["comment_help"]				= "Click here for help.";
 
 //-- Census Forms
 $pgv_lang["rows"]                       = "Number of Rows";
@@ -292,6 +236,8 @@ $pgv_lang["autosearch_surname"]		    = "Include surname:";
 $pgv_lang["autosearch_givenname"]	    = "Include given names:";
 $pgv_lang["autosearch_byear"]		    = "Include birth year:";
 $pgv_lang["autosearch_bloc"]		    = "Include birth location:";  
+$pgv_lang["autosearch_myear"]		    = "Include marriage year:";
+$pgv_lang["autosearch_mloc"]		    = "Include marriage location:";
 $pgv_lang["autosearch_dyear"]		    = "Include death year:";
 $pgv_lang["autosearch_dloc"]		    = "Include death location:";
 $pgv_lang["autosearch_gender"]          = "Include gender:";
@@ -303,15 +249,15 @@ $pgv_lang["autosearch_mgivennames"]	    = "Include mother's given names:";
 $pgv_lang["autosearch_country"]  	    = "Include country:"; 
 $pgv_lang["autosearch_plugin_name_ancestry"] = "Ancestry.com Plug-in";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Ancestry.co.uk Plug-in";
-$pgv_lang["autosearch_plugin_name_ellisIsland"] = "EllisIslandRecords.org Plug-in";
-$pgv_lang["autosearch_plugin_name_genNet"] = "GeneaNet.com Plug-in";
-$pgv_lang["autosearch_plugin_name_gen"]  = "Genealogy.com Plug-in"; 
-$pgv_lang["autosearch_plugin_name_fs"]   = "FamilySearch.org Plug-in";
+$pgv_lang["autosearch_plugin_name_ellisisland"] = "EllisIslandRecords.org Plug-in";
+$pgv_lang["autosearch_plugin_name_geneanet"] = "GeneaNet.com Plug-in";
+$pgv_lang["autosearch_plugin_name_genealogy"]  = "Genealogy.com Plug-in"; 
+$pgv_lang["autosearch_plugin_name_familysearch"]   = "FamilySearch.org Plug-in";
 $pgv_lang["autosearch_plugin_name_werelate"]   = "Werelate.org Plug-in";
 $pgv_lang["autosearch_search"]           = "Search";
 $pgv_lang["autosearch_keywords"] = "Keywords:";
 
 //Folder deletion error messages
 $pgv_lang["has_tasks"]                 ="The folder currently contains tasks and cannot be deleted";
-$pgv_lang["has_folders"]               ="The folder currently contains folders and cannot be deleted";
+$pgv_lang["has_folders"]               ="The folder currently countains folders and cannot be deleted";
 ?>

@@ -1,12 +1,33 @@
 <?php
-/*=================================================
-   charset=utf-8
-   Project:		phpGedView
-   File:		lang.pl.php
-   Author:		Łukasz Wileński
-   Comments:	Polish Language file for Google map module
-===================================================*/
-
+/**
+ * Polish Language file for PhpGedView.
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage GoogleMap
+ * @author: Łukasz Wileński
+ * @version $Id$
+ */
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
+}
 
 $pgv_lang["googlemap"]              = "Mapa";
 $pgv_lang["no_gmtab"]               = "Brak danych o mapie dla tej osoby";
@@ -91,6 +112,9 @@ $pgv_lang["pl_neighborhood"]        = "Sąsiedztwo";
 $pgv_lang["pl_house"]               = "Dom";
 $pgv_lang["pl_max"]                 = "Maksimum";
 $pgv_lang["pl_delete"]              = "Usuń lokalizację";
+$pgv_lang["pl_search_level"]		= "Szukaj na tym poziomie";
+$pgv_lang["pl_search_all"]			= "Szukaj wszystkie";
+$pgv_lang["pl_unknown"]				= "nieznane";
 
 $pgv_lang["pl_flag"]                = "Flaga";
 $pgv_lang["flags_edit"]             = "Wybierz flagę";
@@ -111,8 +135,8 @@ $pgv_lang["placecheck_select2"]		= "Wybierz następny poziom...";
 $pgv_lang["placecheck_key"]			= "Kod koloru użytego poniżej";
 $pgv_lang["placecheck_key1"]		= "to miejsce i te współrzędne nie istnieją w tablicach miejsc GoogleMap";
 $pgv_lang["placecheck_key2"]		= "to miejsce istnieje w tablicach miejsc GoogleMap, ale nie ma współrzędnych";
-$pgv_lang["placecheck_key3"]		= "ten poziom jest pusty w Twoim pliku GEDCOM. Powinien być dodany do<br />tablic miejsc GoogleMap jako \"nieznany\" z współrzędnymi z<br />poziomu powyżej zanim dodasz jakiekolwiek miejsce do następnego poziomu";
-$pgv_lang["placecheck_key4"]		= "ten poziom jest pusty w Twoim pliku GEDCOM, ale istnieje jako 'nieznany'<br />w tablicach miejsc GoogleMap wraz ze wsółrzędnymi. Nie wymagana jest edycja<br />dopóki ten poziom nie będzie wprowadzony";
+$pgv_lang["placecheck_key3"]		= "ten poziom jest pusty w Twoim pliku GEDCOM. Powinien być dodany do tablic miejsc GoogleMap jako miejsce \"nieznane\" z współrzędnymi z poziomu powyższego zanim dodasz jakiekolwiek miejsce do następnego poziomu";
+$pgv_lang["placecheck_key4"]		= "ten poziom jest pusty w Twoim pliku GEDCOM, ale w tablicach miejsc GoogleMap istnieje jako miejsce 'nieznane' wraz ze współrzędnymi. Nie wymagana jest edycja dopóki ten poziom nie będzie wprowadzony";
 $pgv_lang["placecheck_head"]		= "Lista miejsc dla pliku GEDCOM";
 $pgv_lang["placecheck_gedheader"]	= "Dane z pliku GEDCOM<br />(tag 2 PLAC)";
 $pgv_lang["placecheck_gm_header"]	= "Tablica miejsc GoogleMap";
@@ -121,4 +145,6 @@ $pgv_lang["placecheck_zoom"]        = "Zoom=";
 $pgv_lang["placecheck_options"]     = "Opcje listy Sprawdź Miejsca";
 $pgv_lang["placecheck_filter_text"] = "Opcje filtrowania listy";
 $pgv_lang["placecheck_match"] 		= "Dołącz identyczne miejsca: ";
+$pgv_lang["placecheck_lati"] 		= "Szerokość";
+$pgv_lang["placecheck_long"] 		= "Długość";
 ?>

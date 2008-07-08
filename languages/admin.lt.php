@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Lithuanian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Arturas Sleinius
  * @version $Id$
  */
 
@@ -68,7 +67,6 @@ $pgv_lang["create_user"]			= "Sukurti varotoją";
 $pgv_lang["dataset_exists"] 		= "GEDCOM'as su tokiu vardu jau buvo įkeltas į šią duomenų bazę.";
 $pgv_lang["do_not_change"]			= "Nekeisti";
 $pgv_lang["download_gedcom"]		= "Persisiųsti GEDCOM'ą";
-$pgv_lang["duplicate_username"] 	= "Pasikartojantis vardas. Naudotojas tokiu vardu jau egzistuoja. Pasirinkite kitą naudotojo vardą.";
 $pgv_lang["empty_dataset"]			= "Ar norite ištrinti senus duomenis ir pakeisti juos naujais?";
 $pgv_lang["empty_lines_detected"]	= "GEDCOM faile aptikta tuščių eilučių. Išvalant šios tuščios eilutės bus ištrintos.";
 $pgv_lang["error_ban_server"]       = "Blogas IP adresas.";
@@ -96,7 +94,6 @@ $pgv_lang["label_server_url"]       = "Svetainės URL/IP";
 $pgv_lang["label_username_id"]		= "Naudotojas";
 $pgv_lang["logfile_content"]		= "Log failo turinys";
 $pgv_lang["merge_records"]			= "Sujungti įrašus";
-$pgv_lang["none"]					= "Nieko";
 $pgv_lang["performing_validation"]	= "Atliekamas GEDCOM patikrinimas...";
 $pgv_lang["pgv_registry"]			= "Žiūrėti kitus puslapius, kurie naudoja PhpGedView";
 $pgv_lang["phpinfo"]				= "PHP informacija";

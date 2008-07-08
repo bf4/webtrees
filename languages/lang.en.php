@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 $pgv_lang['tree']					= "Tree";
-
+$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
+$pgv_lang["showUnknown"]			= "Show unknown gender";
+$pgv_lang["count"]					= "Count";
 $pgv_lang["age_differences"]		= "Show Date Differences";
 $pgv_lang["date_of_entry"]			= "Date of entry in original source";
 $pgv_lang["multi_site_search"] 		= "Multi Site Search";
@@ -73,6 +75,7 @@ $pgv_lang["child"]					= "Child";
 $pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
 $pgv_lang["source_menu"]			= "Options for source";
+$pgv_lang["repo_menu"]			= "Options for repository";
 $pgv_lang["other_records"]			= "Records that link to this Source:";
 $pgv_lang["other_repo_records"]		= "Records that link to this Repository:";
 $pgv_lang["repo_info"]				= "Repository Information";
@@ -151,6 +154,7 @@ $pgv_lang["stat_users"]				= "Total users";
 $pgv_lang["no_family_facts"]		= "No facts for this family.";
 $pgv_lang["stat_males"]				= "Total males";
 $pgv_lang["stat_females"]			= "Total females";
+$pgv_lang["stat_unknown"]			= "Total unknown";
 
 $pgv_lang["sunday_1st"]				= "Su";
 $pgv_lang["monday_1st"]				= "M";
@@ -220,6 +224,7 @@ $pgv_lang["htmlplus_block_custom"]	= "Custom";
 $pgv_lang["htmlplus_block_keyword"]	= "Keyword Examples (English only)";
 $pgv_lang["htmlplus_block_taglist"]	= "Tag List";
 $pgv_lang["htmlplus_block_compat"]	= "Compatibility Mode";
+$pgv_lang["htmlplus_block_ui"]		= "Extended Interface";
 $pgv_lang["htmlplus_block_current"]	= "Current";
 $pgv_lang["htmlplus_block_default"]	= "Default";
 $pgv_lang["htmlplus_block_gedcom"]	= "Family Tree";
@@ -244,6 +249,7 @@ $pgv_lang["ancestors"]				= "Direct line ancestors and their families";
 $pgv_lang["descendants"]			= "Descendants";
 $pgv_lang["choose_relatives"]		= "Choose relatives";
 $pgv_lang["relatives_report"]		= "Relatives Report";
+$pgv_lang["total_unknown"]			= "Total unknown";
 $pgv_lang["total_living"]			= "Total living";
 $pgv_lang["total_dead"]				= "Total dead";
 $pgv_lang["total_not_born"]			= "Total not yet born";
@@ -595,6 +601,7 @@ $pgv_lang["roots"]		 				= "Roots";
 $pgv_lang["leaves"] 					= "Leaves";
 $pgv_lang["widow"] 					= "Widow";
 $pgv_lang["widower"] 				= "Widower";
+$pgv_lang["show_parents"] 			= "Show parents";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Age";
@@ -1278,6 +1285,9 @@ $pgv_lang["theme_select_descr"] 	= "The Theme Select block displays the Theme se
 $pgv_lang["block_top10_title"]		= "Top 10 Surnames";
 $pgv_lang["block_top10"]			= "Top 10 Surnames";
 $pgv_lang["block_top10_descr"]		= "This block shows a table of the 10 most frequently occurring surnames in the database.  The actual number of surnames shown in this block is configurable.  You can configure the GEDCOM to remove names from this list.";
+$pgv_lang["block_givn_top10_title"]		= "Top 10 Given Names";
+$pgv_lang["block_givn_top10"]			= "Top 10 Given Names";
+$pgv_lang["block_givn_top10_descr"]		= "This block shows a table of the 10 most frequently occurring given names in the database.  The actual number of given names shown in this block is configurable.";
 
 $pgv_lang["gedcom_news_block"]		= "GEDCOM News";
 $pgv_lang["gedcom_news_descr"]		= "The GEDCOM News block shows the visitor news releases or articles posted by an admin user.<br /><br />The News block is a good place to announce a significant database update, a family reunion, or the birth of a child.";

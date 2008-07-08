@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Norwegian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ $pgv_lang["label_gedcom_id"]        = "GEDCOM-ID";
 $pgv_lang["label_local_id"]         = "Person-ID";
 $pgv_lang["accept"]				= "Godkjenne";
 $pgv_lang["accept_all"]			= "Godkjenn alle endringer";
-$pgv_lang["accept_gedcom"]		= "Bestem deg for om du vil godkjenne eller avvise de enkelte endringene.<dl><dt>For å godta <i>alle</i> endringene på en gang</dt><dd>Klikk på linken \"Godkjenn alle endringer\" i boksen under.</dd><dt>For å få mer informasjon om en endring kan du klikke på:</dt><dd><li>\"$pgv_lang[view_change_diff]\" for å se på forskjellen mellom gammelt og nytt innhold.<br /><li>\"$pgv_lang[view_gedcom]\" for å se på det nye innholdet i slektsfil-oppsett (GEDCOM).</dd></dl>";
+$pgv_lang["accept_gedcom"]		= "Bestem deg for om du vil godkjenne eller avvise de enkelte endringene.<dl><dt>For å godta <i>alle</i> endringene på en gang</dt><dd>Klikk på linken <b>#pgv_lang[accept_all]#</b> i boksen under.</dd><dt>For å få mer informasjon om en endring kan du klikke på:</dt><dd><b>#pgv_lang[view_change_diff]#</b> for å se på forskjellen mellom gammelt og nytt innhold.<br /><b>#pgv_lang[view_gedcom]#</b> for å se på det nye innholdet i slektsfil-oppsett (GEDCOM).</dd></dl>";
 $pgv_lang["accept_successful"]	= "Godkjente endringer er lagt til databasen";
 $pgv_lang["add_child"]			= "Legg til barn";
 $pgv_lang["add_child_to_family"]	= "Legg til et barn til denne familien";
@@ -135,7 +135,6 @@ $pgv_lang["directory_not_exist"]	= "Mappen finnes ikke.";
 $pgv_lang["error_remote"]           = "Du har valgt et eksternt nettsted.";
 $pgv_lang["error_same"]             = "Du har valgt det samme nettstedet.";
 $pgv_lang["external_file"]		= "Dette mediaobjektet finnes ikke som en fil på dette nettstedet.  Den kan derfor ikke slettes, flyttes eller gis nytt navn.";
-$pgv_lang["family"]				= "Familie";
 $pgv_lang["file_missing"]			= "Det ble ikke mottatt noen fil. Hent filen på nytt.";
 $pgv_lang["file_partial"]			= "Filen ble bare delvis lastet opp, forsøk på nytt";
 $pgv_lang["file_success"]			= "Filen er lastet opp";
@@ -152,7 +151,6 @@ $pgv_lang["hebrew_surn"]			= "Hebraisk etternavn";
 $pgv_lang["hide_changes"]		= "Klikk her for å skjule endringer.";
 $pgv_lang["highlighted"]			= "Bruke som hovedbilde";
 $pgv_lang["illegal_chars"]		= "Ugyldige tegn i navn";
-$pgv_lang["invalid_search_input"] 	= "Vennligst angi fornavn, etternavn eller stedsnavn \\n\\t i tillegg til år";
 $pgv_lang["invalid_search_multisite_input"] = "Du må angi en av disse:  Navn, fødselsdato, fødselssted, dødsdato, dødssted eller kjønn ";
 $pgv_lang["invalid_search_multisite_input_gender"] = "Du må søke på nytt med flere opplysninger enn bare kjønn";
 $pgv_lang["label_diff_server"]      = "Annet nettsted";
@@ -179,7 +177,6 @@ $pgv_lang["media_file_deleted"]		= "Media-fil er nå slettet.";
 $pgv_lang["media_file_not_moved"]	= "Klarte ikke å flytte mediafil.";
 $pgv_lang["media_file_not_renamed"]	= "Klarte ikke å flytte eller å gi mediafilen et nytt navn.";
 $pgv_lang["media_thumb_exists"]	= "Media-miniatyrbilde finnes fra før.";
-$pgv_lang["multi_site_search"] 			= "Søk på flere nettsteder";
 $pgv_lang["multiple_gedcoms"]	= "Denne filen har en kobling til en annen slektsbase på dette nettstedet.  Filen kan derfor ikke slettes, flyttes eller gis nytt navn før disse koblingene er fjernet.";
 $pgv_lang["must_provide"]		= "Du må sørge for et ";
 $pgv_lang["name_search"]			= "Navn: ";

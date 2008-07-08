@@ -60,7 +60,7 @@ class PGVReport extends PGVReportBase {
 		if ($showGenText) {
 			$element = new PGVRCellPDF(0,10, "C", "");
 			$element->addText("$pgv_lang[generated_by] ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT);
-			$element->setUrl("http://www.phpgedview.net/");
+			$element->setUrl(PGV_PHPGEDVIEW_URL);
 			$this->pdf->addFooter($element);
 		}
 		//TCPDF $this->pdf->SetAutoPageBreak(false);

@@ -5,7 +5,7 @@
  * Displays events on a daily, monthly, or yearly calendar.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2008  Greg Roach and others, all rights reserved
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,6 +103,19 @@ if ($cal_date->d>$days_in_month && $action=='today')
 // Print the header stuff
 print_header($pgv_lang['anniversary_calendar']);
 print '<div style="text-align: center;" id="calendar_page">';
+
+if ($view!='preview') {
+	// Calendar form
+	print '<form name="dateform" method="get" action="calendar.php">';
+	print "<input type=\"hidden\" name=\"cal\"      value=\"{$cal}\"         />";
+	print "<input type=\"hidden\" name=\"day\"      value=\"{$cal_date->d}\" />";
+	print "<input type=\"hidden\" name=\"month\"    value=\"{$cal_month}\"   />";
+	print "<input type=\"hidden\" name=\"year\"     value=\"{$cal_date->y}\" />";
+	print "<input type=\"hidden\" name=\"action\"   value=\"{$action}\"      />";
+	print "<input type=\"hidden\" name=\"filterev\" value=\"{$filterev}\"    />";
+	print "<input type=\"hidden\" name=\"filtersx\" value=\"{$filtersx}\"    />";
+	print "<input type=\"hidden\" name=\"filterof\" value=\"{$filterof}\"    />";
+}
 print '<table class="facts_table '.$TEXT_DIRECTION.' width100">';
 print '<tr><td class="facts_label" colspan="8"><h2>';
 
@@ -120,16 +133,6 @@ case 'year':
 print '</h2></td></tr>';
 
 if ($view!='preview') {
-	// Calendar form
-	print '<form name="dateform" method="get" action="calendar.php">';
-	print "<input type=\"hidden\" name=\"cal\"      value=\"{$cal}\"         />";
-	print "<input type=\"hidden\" name=\"day\"      value=\"{$cal_date->d}\" />";
-	print "<input type=\"hidden\" name=\"month\"    value=\"{$cal_month}\"   />";
-	print "<input type=\"hidden\" name=\"year\"     value=\"{$cal_date->y}\" />";
-	print "<input type=\"hidden\" name=\"action\"   value=\"{$action}\"      />";
-	print "<input type=\"hidden\" name=\"filterev\" value=\"{$filterev}\"    />";
-	print "<input type=\"hidden\" name=\"filtersx\" value=\"{$filtersx}\"    />";
-	print "<input type=\"hidden\" name=\"filterof\" value=\"{$filterof}\"    />";
 	// Day selector
 	print '<tr><td class="descriptionbox vmiddle">';
 	print_help_link('annivers_date_select_help', 'qm', 'day');
@@ -140,7 +143,7 @@ if ($view!='preview') {
 		if ($d==$cal_date->d)
 			print "<span class=\"error\">{$d_fmt}</span>";
 		else
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$d_fmt}</a>";
+			print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$d_fmt}</a>";
 		print ' | ';
 	}
 	$tmp=new GedcomDate($today->Format('@ A O E')); // Need a gedcom date to get localisation
@@ -161,19 +164,19 @@ if ($view!='preview') {
 			$month_name=$pgv_lang[$m.$l];
 			if ($n==$cal_date->m)
 				$month_name="<span class=\"error\">{$month_name}</span>";
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$month_name}</a>";
+			print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$m}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$month_name}</a>";
 			print ' | ';
 		}
-	print "<a href=\"calendar.php?cal={$cal}&amp;day=".min($cal_date->d, $today->DaysInMonth())."&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('F Y').'</b></a></td></tr>';
+	print "<a href=\"".encode_url("calendar.php?cal={$cal}&day=".min($cal_date->d, $today->DaysInMonth())."&month={$today_month}&year={$today->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\"><b>".$today->Format('F Y').'</b></a></td></tr>';
 	// Year selector
 	print '<tr><td class="descriptionbox vmiddle">';
 	print_help_link('annivers_year_select_help', 'qm', 'year');
 	print $pgv_lang['year'].'</td>';
 	print "<td class=\"optionbox vmiddle\">";
-	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y==1?-1:$cal_date->y-1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">-1</a>";
+	print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year=".($cal_date->y==1?-1:$cal_date->y-1)."&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">-1</a>";
 	print " <input type=\"text\" name=\"year\" value=\"{$year}\" size=\"7\" /> ";
-	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y==-1?1:$cal_date->y+1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">+1</a>";
-	print " | <a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('Y')."</b></a>";
+	print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year=".($cal_date->y==-1?1:$cal_date->y+1)."&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">+1</a>";
+	print " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$today->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\"><b>".$today->Format('Y')."</b></a>";
 	print "</td> ";
 	// Filtering options
 		print "<td class=\"descriptionbox vmiddle\">";
@@ -203,20 +206,20 @@ if ($view!='preview') {
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" />";
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" /> | ";
 		} else {
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=&amp;action={$action}\">";
+		print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=&action={$action}")."\">";
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" />";
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a>"." | ";
 		}
 		if ($filtersx=="M") {
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" /> | ";
 		} else {
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=M&amp;action={$action}\">";
+		print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=M&action={$action}")."\">";
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a> | ";
 		}
 		if ($filtersx=="F")
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" />";
 		else
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=F&amp;action={$action}\">";
+		print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx=F&action={$action}")."\">";
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a>";
 
 		print "</td>";
@@ -280,17 +283,17 @@ if ($view!='preview') {
 	if ($action=='today')
 		print "<span class=\"error\">{$pgv_lang['viewday']}</span>";
 	else
-		print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action=today\">{$pgv_lang['viewday']}</a>";
+		print "<a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=today")."\">{$pgv_lang['viewday']}</a>";
 
 	if ($action=='calendar')
 		print " | <span class=\"error\">{$pgv_lang['viewmonth']}</span>";
 	else
-		print " | <a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action=calendar\">{$pgv_lang['viewmonth']}</a>";
+		print " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=calendar")."\">{$pgv_lang['viewmonth']}</a>";
 
 	if ($action=='year')
 		print " | <span class=\"error\">{$pgv_lang['viewyear']}</span>";
 	else
-		print " | <a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action=year\">{$pgv_lang['viewyear']}</a>";
+		print " | <a href=\"".encode_url("calendar.php?cal={$cal}&day={$cal_date->d}&month={$cal_month}&year={$cal_date->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action=year")."\">{$pgv_lang['viewyear']}</a>";
 
 	foreach (array('gregorian', 'julian', 'jewish', 'french', 'hijri') as $newcal) {
 		$tmp=$cal_date->convert_to_cal($newcal);
@@ -300,12 +303,12 @@ if ($view!='preview') {
 			else {
 				$newcalesc=urlencode($tmp->CALENDAR_ESCAPE);
 				$tmpmonth=$tmp->FormatGedcomMonth();
-				print " | <a href=\"calendar.php?cal={$newcalesc}&amp;day={$tmp->d}&amp;month={$tmpmonth}&amp;year={$tmp->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang['cal_'.$newcal]}</a>";
+				print " | <a href=\"".encode_url("calendar.php?cal={$newcalesc}&day={$tmp->d}&month={$tmpmonth}&year={$tmp->y}&filterev={$filterev}&filterof={$filterof}&filtersx={$filtersx}&action={$action}")."\">{$pgv_lang['cal_'.$newcal]}</a>";
 			}
 	}
 	print "</td></tr>";
 } // print preview
-print "</table>";
+print "</table>\n</form>\n";
 
 // Convert event filter option to a list of gedcom event codes
 if ($filterev=='all')
@@ -394,23 +397,37 @@ case 'calendar':
 switch ($action) {
 case 'year':
 case 'today':
-	print "<table class=\"center {$TEXT_DIRECTION}\"><tr>";
+	print "<table class=\"center {$TEXT_DIRECTION} width100\"><tr>";
 	// Table headings
-	print "<td class=\"descriptionbox center\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['indis']['small']}\" border=\"0\" title=\"{$pgv_lang['individuals']}\" alt=\"{$pgv_lang['individuals']}\" />{$pgv_lang['individuals']}</td>";
-	print "<td class=\"descriptionbox center\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['cfamily']['small']}\" border=\"0\" title=\"{$pgv_lang['families']}\" alt=\"{$pgv_lang['families']}\" />{$pgv_lang['families']}</td>";
+	print "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['indis']['small']}\" border=\"0\" title=\"{$pgv_lang['individuals']}\" alt=\"{$pgv_lang['individuals']}\" />&nbsp;&nbsp;&nbsp;{$pgv_lang['individuals']}</td>";
+	print "<td class=\"descriptionbox center width50\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['cfamily']['small']}\" border=\"0\" title=\"{$pgv_lang['families']}\" alt=\"{$pgv_lang['families']}\" />&nbsp;&nbsp;&nbsp;{$pgv_lang['families']}</td>";
 	print "</tr><tr>";
 	// Table rows
 	$males=0;
 	$females=0;
 	$numfams=0;
-	print "<td class=\"optionbox {$TEXT_DIRECTION}\">";
-	print "<ul>";
+	print "<td class=\"optionbox {$TEXT_DIRECTION} wrap\">";
+	
+	// Avoid an empty unordered list
+	ob_start();
 	print calendar_list_text($indis, "<li>", "</li>", true);
-	print '</ul>';
+	$content = ob_get_clean();
+	if (!empty($content)) {
+		echo '<ul>', $content, '</ul>';
+	}
+	
 	print '</td>';
-	print "<td class=\"optionbox {$TEXT_DIRECTION}\"><ul>";
+	print "<td class=\"optionbox {$TEXT_DIRECTION} wrap\">";
+	
+	// Avoid an empty unordered list
+	ob_start();
 	print calendar_list_text($fams, "<li>", "</li>", true);
-	print '</ul></td>';
+	$content = ob_get_clean();
+	if (!empty($content)) {
+		echo '<ul>', $content, '</ul>';
+	}
+	
+	echo '</td>';
 	print "</tr><tr>";
 	// Table footers
 	print "<td class=\"descriptionbox\">{$pgv_lang['total_indis']} ";
@@ -511,7 +528,7 @@ if ($view=="preview") {
 		$filtertext="({$pgv_lang['filter']}: {$filtertext})";
 	echo '<br />', get_gedcom_setting(PGV_GED_ID, 'title'), ' ', $filtertext;
 }
-print "</table>";
+// print "</table>";
 print "</div><br />";
 print_footer();
 
@@ -574,7 +591,7 @@ function calendar_list_text($list, $tag1, $tag2, $show_sex_symbols) {
 	global $males, $females;
 	foreach ($list as $id=>$facts) {
 		$tmp=GedcomRecord::GetInstance($id);
-		print "{$tag1}<a href=\"".$tmp->getLinkUrl()."\">".PrintReady($tmp->getSortableName())."</a>&nbsp;";
+		print "{$tag1}<a href=\"".encode_url($tmp->getLinkUrl())."\">".PrintReady($tmp->getFullName())."</a>&nbsp;";
 		if ($show_sex_symbols && $tmp->getType()=='INDI')
 			switch ($tmp->getSex()) {
 			case 'M':

@@ -16,7 +16,7 @@
 	<PGVRStyle name="footnote" font="dejavusans" size="8" style="" />
 	<PGVRStyle name="footnotenum" font="dejavusans" size="6" style="" />
 	<PGVRDoc pageSize="$pageSize" orientation="P" margin="24">
-		<PGVRSetVar name="ignore" value="CHAN,NAME,SEX,SOUR,NOTE,OBJE,FAMC,FAMS,TITL,CHIL,HUSB,WIFE,_UID" />
+		<PGVRSetVar name="ignore" value="CHAN,NAME,SEX,SOUR,NOTE,OBJE,FAMC,FAMS,TITL,CHIL,HUSB,WIFE,_UID,_PGV_OBJS " />
 		<!-- set the default widths -->
 		<PGVRSetVar name="width" value="0" />
 		<PGVRSetVar name="width1" value="0" />

@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
- * @version $Id: lang.fi.php 2311 2007-11-27 21:38:04Z meliza $
+ * @version $Id: lang.fi.php 3154 2008-05-29 21:57:16Z meliza $
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -53,6 +53,5 @@ $pgv_lang["sm_yearly"] = "vuosittain";
 $pgv_lang["sm_never"] = "ei koskaan";
 $pgv_lang["sm_generate"] = "Luo";
 $pgv_lang["gedcoms_privacy"] = "Ei linkkejä yksityisiin tietoihin";
-
 
 ?>

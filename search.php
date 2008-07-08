@@ -508,7 +508,7 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 			print "<input type=\"checkbox\" ";
 			if (isset ($_REQUEST["$str"]))
 				print "checked=\"checked\" ";
-			print "value=\"yes\" name=\"".$str."\""." />".$gedarray["title"]."<br />";
+			print "value=\"yes\" name=\"".$str."\""." />".PrintReady($gedarray["title"], true)."<br />";
 			$i ++;
 		}
 ?>

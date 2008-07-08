@@ -3,7 +3,7 @@
  * Edit Privacy Settings
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
  * @version $Id$
  */
 require "config.php";
-require_once("includes/gedcomrecord.php");
+require_once("includes/datamodel/gedcomrecord_class.php");
 loadLangFile("pgv_confighelp, pgv_help");
 
 if (empty($ged)) $ged = $GEDCOM;
@@ -101,30 +101,16 @@ function search_ID_details($checkVar, $outputVar) {
 			$pid = $match[1];
 			$type = trim($match[2]);
 		}
-		if ($type=="INDI") {
-			$name = get_person_name($pid);
-			print "\n<span class=\"list_item\">".PrintReady($name);
-			print_first_major_fact($pid);
-			print "</span>\n";
-		}
-		else if ($type=="SOUR") {
-			$name = get_source_descriptor($pid);
-			print "\n<span class=\"list_item\">".PrintReady($name);
-			print "</span>\n";
-		}
-		else if ($type=="FAM") {
-			$name = get_family_descriptor($pid);
-			print "\n<span class=\"list_item\">".PrintReady($name);
-			print "</span>\n";
-		}
-		else if ($type=="REPO") {
-			$name = get_repo_descriptor($pid);
-			print "\n<span class=\"list_item\">".PrintReady($name);
-			print "</span>\n";
-		}
-		else print "$type $pid";
+		switch ($type) {
+		case 'INDI':
+			echo '<span class="list_item">', PrintReady(get_person_name($pid)), format_first_major_fact($pid), '</span>';
+			break;
+		default:
+			$record=GedcomRecord::getInstance($pid);
+			echo '<span class="list_item">', $record->getListName(), '</span>';
+			break;
 	}
-	else {
+	} else {
 		print "<span class=\"error\">";
 		if ($outputVar == 1) {
 			print $pgv_lang["unable_to_find_privacy_indi"];
@@ -140,10 +126,10 @@ if (empty($action)) $action="";
 $PRIVACY_MODULE = get_privacy_file();
 print_header($pgv_lang["privacy_header"]);
 ?>
-<table class="facts_table <?php print $TEXT_DIRECTION ?>">
+<table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
 		<td colspan="2" class="facts_label"><?php
-			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".$GEDCOMS[$ged]["title"]. "</h2>";
+			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".PrintReady(strip_tags(get_gedcom_setting($ged, 'title'))). "</h2>";
 			print "(" . getLRM() . $PRIVACY_MODULE.")";
 			print "<br /><br /><a href=\"editgedcoms.php\"><b>";
 			print $pgv_lang["lang_back_manage_gedcoms"];
@@ -280,7 +266,7 @@ if ($action=="update") {
 	include $INDEX_DIRECTORY.$GEDCOM."_priv.php";
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
  	$gedcomprivname = $GEDCOM."_priv.php";
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
+ 	check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
  	//-- delete the cache files for the welcome page blocks
 	include_once("includes/index_cache.php");

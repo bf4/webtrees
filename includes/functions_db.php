@@ -217,6 +217,118 @@ function sql_mod_function($x,$y) {
 	}
 }
 
+//-- gets the first record in the gedcom
+function get_first_xref($type, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		break;
+	case "FAM":
+		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
+		break;
+	case "SOUR":
+		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
+		break;
+	case "OBJE":
+		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
+		break;
+	default:
+		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the last record in the gedcom
+function get_last_xref($type, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		break;
+	case "FAM":
+		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
+		break;
+	case "SOUR":
+		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
+		break;
+	case "OBJE":
+		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
+		break;
+	default:
+		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the next person in the gedcom
+function get_next_xref($pid, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	$type=gedcom_record_type($pid, $ged_id);
+	$pid=$DBCONN->escapeSimple($pid);
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id>'{$pid}'";
+		break;
+	case "FAM":
+		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id>'{$pid}'";
+		break;
+	case "SOUR":
+		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id>'{$pid}'";
+		break;
+	case "OBJE":
+		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media>'{$pid}'";
+		break;
+	default:
+		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id>'{$pid}' AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
+//-- gets the previous person in the gedcom
+function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
+	global $TBLPREFIX, $DBCONN;
+
+	$type=gedcom_record_type($pid, $ged_id);
+	$pid=$DBCONN->escapeSimple($pid);
+	switch ($type) {
+	case "INDI":
+		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id<'{$pid}'";
+		break;
+	case "FAM":
+		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id<'{$pid}'";
+		break;
+	case "SOUR":
+		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id<'{$pid}'";
+		break;
+	case "OBJE":
+		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media<'{$pid}'";
+		break;
+	default:
+		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id<'{$pid}' AND o_type='{$type}'";
+		break;
+	}
+	$res=dbquery($sql);
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+
 /**
  * find the gedcom record for a family
  *
@@ -423,8 +535,6 @@ function find_gedcom_record($pid, $gedfile='') {
 		return $objectlist[$pid]["gedcom"];
 	if ((isset($sourcelist[$pid]["gedcom"]))&&($sourcelist[$pid]["gedfile"]==$ged_id))
 		return $sourcelist[$pid]["gedcom"];
-	if ((isset($repolist[$pid]["gedcom"])) && ($repolist[$pid]["gedfile"]==$ged_id))
-		return $repolist[$pid]["gedcom"];
 	if ((isset($otherlist[$pid]["gedcom"]))&&($otherlist[$pid]["gedfile"]==$ged_id))
 		return $otherlist[$pid]["gedcom"];
 
@@ -466,6 +576,26 @@ function find_gedcom_record($pid, $gedfile='') {
 
 	// Record doesn't exist
 	return null;
+}
+
+// Find the type of a gedcom record. Check the cache before querying the database.
+// Returns 'INDI', 'FAM', etc., or null if the record does not exist.
+function gedcom_record_type($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN, $TOTAL_QUERIES, $gedcom_record_cache;
+
+	if (isset($gedcom_record_cache[$xref][$ged_id])) {
+		return $gedcom_record_cache[$xref][$ged_id]->getType();
+	} else {
+		++$TOTAL_QUERIES;
+		$xref=$DBCONN->escapeSimple($xref);
+		return $DBCONN->getOne(
+			"SELECT 'INDI' FROM {$TBLPREFIX}individuals WHERE i_id   ='{$xref}' AND i_file   ={$ged_id} UNION ALL ".
+			"SELECT 'FAM'  FROM {$TBLPREFIX}families    WHERE f_id   ='{$xref}' AND f_file   ={$ged_id} UNION ALL ".
+			"SELECT 'SOUR' FROM {$TBLPREFIX}sources     WHERE s_id   ='{$xref}' AND s_file   ={$ged_id} UNION ALL ".
+			"SELECT 'OBJE' FROM {$TBLPREFIX}media       WHERE m_media='{$xref}' AND m_gedfile={$ged_id} UNION ALL ".
+			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   ='{$xref}' AND o_file   ={$ged_id}"
+		);
+	}
 }
 
 /**
@@ -523,7 +653,7 @@ function find_source_record($pid, $gedfile="") {
  * @param string $gedfile	the gedcom file id
  */
 function find_repo_record($pid, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $repolist;
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
 	if (!$pid) {
 		return null;
@@ -535,12 +665,6 @@ function find_repo_record($pid, $gedfile="") {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	// Try the cache files first.
-	if ((isset($repolist[$pid]['gedcom']))&&($repolist[$pid]['gedfile']==$ged_id)) {
-		return $repolist[$pid]['gedcom'];
-	}
-
-	// Look in the table.
 	$pid=$DBCONN->escapeSimple($pid);
 	$res=dbquery(
 		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_id='{$pid}' AND o_file={$ged_id}"
@@ -549,15 +673,6 @@ function find_repo_record($pid, $gedfile="") {
 		$res->free();
 
 	if ($row) {
-		// Don't cache records from other gedcoms
-		if ($ged_id==PGV_GED_ID) {
-			if (preg_match('/^1 NAME (.+)/m', $row[0], $match)){
-				$name=stripslashes($match[1]);
-	} else {
-				$name=$pid;
-			}
-			$repolist[$pid]=array('gedcom'=>$row[0], 'name'=>$name, 'gedfile'=>$ged_id);
-		}
 		return $row[0];
 	} else {
 		return null;
@@ -728,93 +843,20 @@ function get_source_list() {
 
 //-- get the repositorylist from the datastore
 function get_repo_list() {
-	global $repolist, $TBLPREFIX;
-
-	$repolist = array();
-
-	$sql = "SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file=".PGV_GED_ID." AND o_type='REPO'";
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$repo = array();
-		$tt = preg_match("/1 NAME (.*)/", $row["o_gedcom"], $match);
-		if ($tt == "0")
-			$name = $row["o_id"];
-		else
-			$name = $match[1];
-		$repo["name"] = $name;
-		$repo["id"] = $row["o_id"];
-		$repo["gedfile"] = PGV_GED_ID;
-		$repo["type"] = 'REPO';
-		$repo["gedcom"] = $row["o_gedcom"];
-		$row = db_cleanup($row);
-		$repolist[$row["o_id"]]= $repo;
-	}
-	$res->free();
-	asort($repolist); // sort by repo name
-	return $repolist;
-}
-
-//-- get the repositorylist from the datastore
-function get_repo_id_list() {
 	global $TBLPREFIX;
 
-	$repo_id_list = array();
+	$repo_list = array();
 
-	$sql = "SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file=".PGV_GED_ID." AND o_type='REPO' ORDER BY o_id";
+	$sql = "SELECT o_id FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file=".PGV_GED_ID;
 	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$repo = array();
-		$tt = preg_match("/1 NAME (.*)/", $row["o_gedcom"], $match);
-		if ($tt>0)
-			$repo["name"] = $match[1];
-		else
-			$repo["name"] = "";
-		$repo["gedfile"] = PGV_GED_ID;
-		$repo["type"] = 'REPO';
-		$repo["gedcom"] = $row["o_gedcom"];
-		$row = db_cleanup($row);
-		$repo_id_list[$row["o_id"]] = $repo;
+	while ($row =& $res->fetchRow()) {
+		$repo=Repository::getInstance($row[0]);
+		if ($repo->canDisplayDetails()) {
+			$repo_list[]=$repo;
 	}
-	$res->free();
-	return $repo_id_list;
-}
-
-/**
- * get a list of all the repository titles
- *
- * returns an array of all of the repositorytitles in the database.
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#repositories
- * @return array the array of repository-titles
- */
-function get_repo_add_title_list() {
-	global $TBLPREFIX;
-
-	$repolist = array();
-
- 	$sql = "SELECT o_id, o_file, o_file as o_name, o_type, o_gedcom FROM ".$TBLPREFIX."other WHERE o_type='REPO' AND o_file=".PGV_GED_ID." AND ((o_gedcom LIKE '% _HEB %') OR (o_gedcom LIKE '% ROMN %'));";
-
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$repo = array();
-		$repo["gedcom"] = $row["o_gedcom"];
-		$ct = preg_match("/\d ROMN (.*)/", $row["o_gedcom"], $match);
- 		if ($ct==0) $ct = preg_match("/\d _HEB (.*)/", $row["o_gedcom"], $match);
-		$repo["name"] = $match[1];
-		$repo["id"] = $row["o_id"];
-		$repo["gedfile"] = $row["o_file"];
-		$repo["type"] = $row["o_type"];
-		$row = db_cleanup($row);
-		$repolist[$row["o_id"]] = $repo;
-
 	}
-	$res->free();
-	return $repolist;
+	usort($repo_list, array('GedcomRecord', 'CompareName')); // sort by repo name
+	return $repo_list;
 }
 
 //-- get the indilist from the datastore
@@ -1531,6 +1573,39 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 	return $myindilist;
 }
 
+/**
+ * Search for individuals who had dates within the given year ranges
+ * @param int $startyear	the starting year
+ * @param int $endyear		The ending year
+ * @return array
+ */
+function search_indis_year_range($startyear, $endyear) {
+	// TODO: This function should use Julian-days, rather than gregorian years, to allow
+	// the lifespan chart, etc., to use other calendars.
+	global $TBLPREFIX;
+
+	$startjd=GregorianDate::YMDtoJD($startyear, 1, 1);
+	$endjd  =GregorianDate::YMDtoJD($endyear+1, 1, 1)-1;
+
+	$sql=
+		"SELECT d_gid ".
+		"FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals ".
+		"WHERE i_file=".PGV_GED_ID." ".
+		"  AND i_file=d_file ".
+		"  AND i_id=d_gid ".
+		"  AND d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL','_TODO') ".
+		"  AND d_julianday1!=0 ".
+		"GROUP BY d_gid ".
+		"HAVING MAX(d_julianday2) > {$startjd} AND MIN(d_julianday1) < {$endjd}";
+	$res=dbquery($sql);
+	$indis=array();
+	while ($row=$res->fetchRow()) {
+		$indis[]=$row[0];
+	}
+	load_people($indis);
+	return $indis;
+}
+	
 //-- search through the gedcom records for families
 function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $DBTYPE, $GEDCOMS;
@@ -2133,7 +2208,7 @@ function get_media_list() {
 			$pt = preg_match("/\d _THUM (.*)/", $mediarec, $match);
 			if ($pt>0)
 				$isthumb = trim($match[1]);
-			$medialinks[$ct][$rowmm["mm_gid"]] = id_type($rowmm["mm_gid"]);
+			$medialinks[$ct][$rowmm["mm_gid"]] = gedcom_record_type($rowmm["mm_gid"], PGV_GED_ID);
 			$links = $medialinks[$ct];
 			if (!isset($foundlist[$filename])) {
 				$media = array();
@@ -3049,11 +3124,13 @@ function get_top_surnames($num) {
 
 	if (!DB::isError($res)) {
 		while($row =& $res->fetchRow()) {
-			if (isset($surnames[str2upper($row[1])]["match"]))
-				$surnames[str2upper($row[1])]["match"] += $row[0];
+			if (preg_match("/^(@N\.N\.?|_+|\?+)$/", $row[1])==0) {			// Skip various forms of "unknown"
+				if (isset($surnames[str2upper($row[1])]['match']))
+					$surnames[str2upper($row[1])]['match'] += $row[0];
 			else {
-				$surnames[str2upper($row[1])]["name"] = $row[1];
-				$surnames[str2upper($row[1])]["match"] = $row[0];
+					$surnames[str2upper($row[1])]['name'] = $row[1];
+					$surnames[str2upper($row[1])]['match'] = $row[0];
+				}
 			}
 		}
 		$res->free();
@@ -3063,11 +3140,11 @@ function get_top_surnames($num) {
 
 	if (!DB::isError($res)) {
 		while($row =& $res->fetchRow()) {
-			if (isset($surnames[str2upper($row[1])]["match"]))
-				$surnames[str2upper($row[1])]["match"] += $row[0];
+			if (isset($surnames[str2upper($row[1])]['match']))
+				$surnames[str2upper($row[1])]['match'] += $row[0];
 			else {
-				$surnames[str2upper($row[1])]["name"] = $row[1];
-				$surnames[str2upper($row[1])]["match"] = $row[0];
+				$surnames[str2upper($row[1])]['name'] = $row[1];
+				$surnames[str2upper($row[1])]['match'] = $row[0];
 			}
 		}
 		$res->free();
@@ -3489,38 +3566,10 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
  * This routine does not check the Privacy of the events in the list.  That check has
  * to be done by the routine that makes use of the event list.
  */
-function get_event_list() {
-	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG, $DAYS_TO_SHOW_LIMIT, $COMMIT_COMMAND;
-
-	if (!isset($DAYS_TO_SHOW_LIMIT))
-		$DAYS_TO_SHOW_LIMIT = 30;
-
-	// Look for cached Facts data
-	if ((file_exists($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"))&&(!isset($DEBUG)||($DEBUG==false))) {
-		$modtime = filemtime($INDEX_DIRECTORY.$GEDCOM."_upcoming.php");
-		$mday = date("d", $modtime);
-		if ($mday==date('j')) {
-			$fp = fopen($INDEX_DIRECTORY.$GEDCOM."_upcoming.php", "rb");
-			$fcache = fread($fp, filesize($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"));
-			fclose($fp);
-			return unserialize($fcache);
-		}
-	}
-
+function get_events_list($jd1, $jd2, $events='') {
 	$found_facts=array();
-	// Cache dates for a day either side of the range "today to today+N".
-	// This is because users may be in different time zones (and on different
-	// days) to the server.
-	for ($jd=server_jd()-1; $jd<=server_jd()+1+$DAYS_TO_SHOW_LIMIT; ++$jd)
-		$found_facts=array_merge($found_facts, get_anniversary_events($jd));
-	// Cache the Facts data just found
-	if (is_writable($INDEX_DIRECTORY)) {
-		$fp = fopen($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php", "wb");
-		fwrite($fp, serialize($found_facts));
-		fclose($fp);
-		$logline = AddToLog($GEDCOM."_upcoming.php updated");
-		if (!empty($COMMIT_COMMAND))
-			check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
+	for ($jd=$jd1; $jd<=$jd2; ++$jd) {
+		$found_facts=array_merge($found_facts, get_anniversary_events($jd, $events));
 	}
 	return $found_facts;
 }

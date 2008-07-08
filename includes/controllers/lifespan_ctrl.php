@@ -4,7 +4,7 @@
  * Controller for the timeline chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008, PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once ("config.php");
 require_once ("includes/functions_charts.php");
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/person_class.php';
+require_once 'includes/datamodel/person_class.php';
 
 function compare_people($a, $b) {
 	return ($a->getBirthYear() - $b->getBirthYear());
@@ -83,35 +83,6 @@ class LifespanControllerRoot extends BaseController {
 	 */
 	function TimelineRootController() {
 		parent :: BaseController();
-	}
-	
-	/**
-	 * Search for individuals who had dates within the given year ranges
-	 * @param int $startyear	the starting year
-	 * @param int $endyear		The ending year
-	 * @return array
-	 */
-	function search_indis_year_range($startyear, $endyear) {
-		global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
-	
-		if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
-		else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
-		else $term='LIKE';
-	
-		$sql = "SELECT date1.d_gid, date1.d_file, MIN(date1.d_year) as birth, MAX(date2.d_year) as death ";
-		$sql .= "FROM ".$TBLPREFIX."dates as date1, ".$TBLPREFIX."dates as date2, ".$TBLPREFIX."individuals ";
-		$sql .= "WHERE date1.d_gid=date2.d_gid AND date1.d_gid=i_id AND date1.d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND date1.d_file='".$GEDCOMS[$GEDCOM]['id']."' ";
-		$sql .= "AND date1.d_file=date2.d_file AND date1.d_file=i_file AND date1.d_year>=".$DBCONN->escapeSimple($startyear)." AND date2.d_year<=".$DBCONN->escapeSimple($endyear)." AND date2.d_year!=0 GROUP BY d_gid";
-		$res = dbquery($sql);
-		//print $sql;
-		$myids = array();
-		while($row =& $res->fetchRow()){
-			$myids[] = $row[0];
-		}
-		$res->free();
-		//var_dump($myids);
-		$myindilist = load_people($myids);
-		return $myindilist;
 	}
 	
 	/**
@@ -217,10 +188,10 @@ class LifespanControllerRoot extends BaseController {
 
 			//Variables to restrict the person boxes to the year searched.
 			//--Searches for individuals who had an even between the year begin and end years
-				$indis = $this->search_indis_year_range($beginYear, $endYear);
+				$indis = search_indis_year_range($beginYear, $endYear);
 			//--Populates an array of people that had an event within those years
 					
-			foreach ($indis as $pid => $indi) {
+				foreach ($indis as $pid) {
 					if (empty($searchplace) || in_array($pid, $this->pids)) {
 					$person = Person::getInstance($pid);
 						if ($person) {
@@ -421,9 +392,10 @@ class LifespanControllerRoot extends BaseController {
 				$height = 2 * $this->zoomfactor;
 				
 				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
-				if (stristr($value->getName(), "starredname"))
-						$minlength = (strlen($value->getName())-34) * $this->zoomfactor;
-				else	$minlength = strlen($value->getName()) * $this->zoomfactor;
+				if (stristr($value->getFullName(), "starredname"))
+//						$minlength = (strlen($value->getFullName())-34) * $this->zoomfactor;
+						$minlength = (strlen($value->getFullName())-7) * $this->zoomfactor;  // Assumes <span class="starredname> becomes <u>
+				else	$minlength = strlen($value->getFullName()) * $this->zoomfactor;
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15;
@@ -507,10 +479,6 @@ class LifespanControllerRoot extends BaseController {
 						
 				}
 
-				//TODO 
-				//We need to get starred $value->getName() names within <span class=\"starredname\"> and </span> to print in the 'zoom-box' (<span> ...</span> below) on the same line as the rest of the name. 
-				//How?   Now these names print on other data on the next line.
-				
 				$bdate=$value->getEstimatedBirthDate();
 				$ddate=$value->getEstimatedDeathDate();
 				if ($width > ($minlength +110)) {
@@ -519,10 +487,11 @@ class LifespanControllerRoot extends BaseController {
 					foreach($eventinformation as $evtwidth=>$val){
 						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 					}
-					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false,'',NULL, false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName()).":  $lifespan </a></td>" .
+					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
+					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
-					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false,'',NULL, false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 					print "</td></tr></table>";
 					echo '</div>';
 
@@ -533,17 +502,19 @@ class LifespanControllerRoot extends BaseController {
 						foreach($eventinformation as $evtwidth=>$val){
 							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 						}
-						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false,'',NULL, false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName())."</a></td>" .
+						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
+						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
-						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false,'',NULL, false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						print "</td></tr></table>";
 						echo '</div>';
 					} else {
 						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
 						" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">" ;
 							
-						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
+						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
+						print"<a class=\"showit\" href=\"".encode_url("individual.php?pid=".$value->getXref())."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
 							print $val."<br />\n";
 						}
@@ -572,7 +543,8 @@ class LifespanControllerRoot extends BaseController {
 		for ($i = 0; $i < count($this->people); $i ++) {
 			if (!$this->people[$i]->canDisplayDetails()) {
 				if ($this->people[$i]->canDisplayName()) {
-					print "&nbsp;<a href=\"individual.php?pid=".$this->people[$i]->getXref()."\">".PrintReady($this->people[$i]->getName())."</a>";
+					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $this->people[$i]->getFullName()));
+					print "&nbsp;<a href=\"".encode_url("individual.php?pid=".$this->people[$i]->getXref())."\">".$indiName."</a>";
 					print_privacy_error($CONTACT_EMAIL);
 					print "<br />";
 					$printed = true;

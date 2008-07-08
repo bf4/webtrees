@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,13 +51,13 @@ $pgv_lang["associated_files"]		= "Associated files:";
 $pgv_lang["remove_all_files"]		= "Remove all nonessential files";
 $pgv_lang["warn_file_delete"]		= "This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?";
 $pgv_lang["deleted_files"]          = "Deleted files:";
-$pgv_lang["index_dir_cleanup_inst"]	= "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" alt=\"\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Cleanup Index directory";
 
 $pgv_lang["clear_cache_succes"]		= "The cache files have been removed.";
 $pgv_lang["clear_cache"]			= "Clear cache files";
 $pgv_lang["sanity_err0"]			= "Errors:";
-$pgv_lang["sanity_err1"]			= "You need to have PHP version 4.3.5 or higher.";
+$pgv_lang["sanity_err1"]			= "You need to have PHP version #PGV_REQUIRED_PHP_VERSION# or higher.";
 $pgv_lang["sanity_err2"]			= "The file or directory <i>#GLOBALS[whichFile]#</i> does not exist. Please verify that the file or directory exists, was not mis-named, and Read permissions are set correctly.";
 $pgv_lang["sanity_err3"]			= "The file <i>#GLOBALS[whichFile]#</i> did not upload correctly. Please try to upload the file again.";
 $pgv_lang["sanity_err4"]			= "The file <i>config.php</i> is corrupt.";
@@ -363,9 +363,10 @@ $pgv_lang["spacing"]      = "spacing";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Advanced name facts";
 $pgv_lang["ADVANCED_PLAC_FACTS"] = "Advanced place name facts";
 $pgv_lang["SURNAME_TRADITION"] = "Surname tradition"; // Default surname inheritance
-$pgv_lang["spanish"]           = "Spanish";
-$pgv_lang["portuguese"]        = "Portuguese";
-$pgv_lang["icelandic"]         = "Icelandic";
-$pgv_lang["paternal"]          = "Paternal";
+$pgv_lang["tradition_spanish"]		= "Spanish";
+$pgv_lang["tradition_portuguese"]	= "Portuguese";
+$pgv_lang["tradition_icelandic"]	= "Icelandic";
+$pgv_lang["tradition_paternal"]		= "Paternal";
+$pgv_lang["tradition_none"]			= "None";				
 
 ?>

@@ -1,3 +1,10 @@
+/* clearbox.js - Author Brian Holland .... email webman@windmillway.f2s.com    -  (modified from Clearbox.js - Author Pyro ... email pyrex@chello.hu)
+ * @package PhpGedView
+ * @subpackage Module
+ * @version $Id: clearbox.js 3314 2008-06-18 21:05:02Z windmillway $
+ * @author Brian Holland
+*/
+
 /*
 	ClearBox JS by pyro
 	
@@ -101,8 +108,8 @@
 		A ClearBox ablak animációja állítható be vele. Többféle lehetõség közül választhatsz:
 
 			'none': 		ilyenkor az ablak egy lépésben felveszi a méretet,
-			'normal':	ez a már megszokott animáció,
-			'double':	ilyenkor az ablak egyszerre méretezõdik X és Y irányban
+			'normal':		ez a már megszokott animáció,
+			'double':		ilyenkor az ablak egyszerre méretezõdik X és Y irányban
 			'warp':		mint a double, de a kép még az animáció megkezdése elõtt megjelenik
 						(nagy a cpu igénye, ezért kisebb méretû képekhez ajánlott)
 		
@@ -324,6 +331,8 @@
 		var CB_PicturePause='pause.png';
 		var CB_PictureClose='close_red.png';
 		var CB_PictureLoading='loading.gif';
+		var CB_PictureNotes='notes.gif';
+		var CB_PictureDetails='detail.gif';
 		var CB_MusicStart='music_off.png';		
 		var CB_MusicStop='music_on.png';
 		var CB_MusicNull='music_null.png';

@@ -3,7 +3,7 @@
  * Online UI for editing config.php site configuration variables
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ if (!PGV_USER_IS_ADMIN) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
     print "</td></tr></table>\n";
-    print "<br/><br/><br/>\n";
+    print "<br /><br /><br />\n";
     print_footer();
     exit;
 }

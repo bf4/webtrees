@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: lang.fi.php 2388 2007-12-07 14:56:16Z nathanhaigh $
+ * @version $Id: lang.fi.php 3492 2008-07-07 07:56:33Z meliza $
  * @author Brian Holland
  * @translator Matti Valve
  */
@@ -33,6 +33,21 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
+// Added in VERSION 4.1.6
+$pgv_lang["lb_generalhelp"]     = "Individual Page - Lightbox General Help";
+$pgv_lang["lb_viewedit"]		= "View/Edit";
+$pgv_lang["lb_viewnotes"]		= "View Notes";
+$pgv_lang["lb_viewdetails"]		= "View Details";
+$pgv_lang["lb_viewsource"]		= "View Source";
+$pgv_lang["lb_editmedia"]		= "Edit Media";
+$pgv_lang["lb_unlinkmedia"]		= "Unlink Media";
+$pgv_lang["lb_balloon_true"]	= "Balloon";
+$pgv_lang["lb_balloon_false"]	= "Normal";
+$pgv_lang["lb_tt_balloon"]		= "Individual Page - Album Tab Thumbnail - Notes Tooltip";
+$pgv_lang["lb_ttAppearance"]	= "Notes - Tooltip appearance";
+$pgv_lang["view_lightbox"]		= "View Album of ...";
+$pgv_lang["lb_notes"]			= "Notes";
+$pgv_lang["lb_notes_info"]		= "";
 
 // Added in VERSION 4.1.4 
 $pgv_lang["lb_details"]	= "Tietoja";

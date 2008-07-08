@@ -3,7 +3,7 @@
  * Finnish FAQ file for PhpGedView.
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @translator Matti Valve
  * @created 2007-11-09
- * @version $Id: faqlist.fi.php 2311 2007-11-27 21:38:04Z meliza $
+ * @version $Id: faqlist.fi.php 3154 2008-05-29 21:57:16Z meliza $
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -35,7 +35,7 @@ $faqlist["FAQ_000_head"] = "\"FAQ\": OLEN KUULLUT TÄSTÄ, MUTTA MISTÄ OIKEIN O
 $faqlist["FAQ_000_body"] = "<b>FAQ</b> on lyhenne <b>F</b>requently <b>A</b>sked <b>Q</b>uestion, suomeksi käytetään joskus lyhennettä <b>UKK</b> (<b>U</b>sein <b>K</b>ysytyt <b>K</b>ysymykset).<br /><br />FAQ-luettelo on luettelo usein kysytyistä kysymyksistä (yhdessä vastausten kanssa). Sen on laatinut PhpGedView-tiimi ja sitä päivitetään usein.";
 
 $faqlist["FAQ_010_head"] = "TERVETULOA #GLOBALS[GEDCOM_TITLE]# Usein esitettyihin kysymyksiin (FAQ)";
-$faqlist["FAQ_010_body"] = "#GLOBALS[GEDCOM_TITLE]#en perheenjäsenet toivottavat kaikki sukututkimusta harrastavat \'serkkumme\' tervetulleiksi kannustaen tutkimaan esivanhempiaan. Tästä voi muodostua viha-rakkaussuhde koska se vaatii tolkuttomasti aikaa, mutta palkitsee myös valtavasti. Tarjoamme mahdollisuuden nauttia sukututkimuksesta käyttämällä ohjelmaa <a href=\"http://www.phpgedview.net\" target=\"_blank\">PhpGedView</a>, jonka ovat luoneet taitavat ohjelmoijat John Finlay ja hänen PGV-ryhmänsä - erinomainen avoimen lähdekoodin sukututkimusohjelma.";
+$faqlist["FAQ_010_body"] = "#GLOBALS[GEDCOM_TITLE]#en perheenjäsenet toivottavat kaikki sukututkimusta harrastavat \'serkkumme\' tervetulleiksi kannustaen tutkimaan esivanhempiaan. Tästä voi muodostua viha-rakkaussuhde koska se vaatii tolkuttomasti aikaa, mutta palkitsee myös valtavasti. Tarjoamme mahdollisuuden nauttia sukututkimuksesta käyttämällä ohjelmaa <a href=\"#PGV_PHPGEDVIEW_URL#\" target=\"_blank\">#PGV_PHPGEDVIEW#</a>, jonka ovat luoneet taitavat ohjelmoijat John Finlay ja hänen PGV-ryhmänsä - erinomainen avoimen lähdekoodin sukututkimusohjelma.";
 
 $faqlist["FAQ_015_head"] = "MIKÄ ON ERO TÄMÄN PhpGedView PUUN JA MUIDEN TEKSTIMUOTOISTEN JA DYNAAMISTEN PUIDEN VÄLILLÄ?";
 $faqlist["FAQ_015_body"] = "Tekstimuotoiset ja dynaamiset puut näyttävät puun eri tavoin, mutta mitään niistä et itse voi konfiguroida, muuttaa tai päivittää. Vain verkkovastaavalla on päivitysmahdollisuus. <br /><br />PhpGedView on vuorovaikutteinen puu. Kuka tahansa, jonka perhe on tässä laajennetussa puussa voi päivittää, lisätä ja muuttaa läheisiä oksiaan. (Sinun on ensin rekistöidyttävä tehdäksesi muutoksia.)";
@@ -72,7 +72,8 @@ $faqlist["FAQ_030_PLACES4"] = "Paikan oikea muoto löytyy kahdella tavalla:<br /
 $faqlist["FAQ_030_PLACES5"] = "Kenttää \"heprealainen\" \"paikka\"-kentän alapuolella on tarkoitus käyttää, kun halutaan kirjoittaa paikan nimi heprealaisilla kirjaimilla latinalaisten kirjainten lisäksi.";
 $faqlist["FAQ_030_NAMES"] = "<strong>NIMET</strong>: Nimien lisääminen on yksinkertaista lomakkeen ja ohjeen avulla. INDI syöttölaatikossa tulisi olla jo valmiiksi avatut nimikentät. Mikäli näin ei ole, sekä se että paikkalaatikko saadaan avattua näpäyttämällä vastaavaa <b>+</b>-merkkiä.";
 $faqlist["FAQ_030_PREFIX"] = "Nimien <u>etuliitteet (PREFIX)</u> ovat yleensä arvo- tai kunnianimikkeitä kuten tri, Rabbi, varatuomari jne. Tavallisia etuliitteitä kuten herra, rouva tai neiti ei käytetä.";
-$faqlist["FAQ_030_GIVN"] = "<u>GIVN</u> - Etunimet ovat yleensä ensimmäinen ja toinen nimi joka annetaan lapselle. Mikäli nimiä muutetaan syntymän jälkeen ne voidaan lisätä erikseen kunhan henkilö on ensin tallennettu tietokantaan. Ne voidaan myös lisätä lisäniminä (AKA).<br /><br />Oletamme, että henkilöitä kutsutaan ensimmäisellä etunimellään. Mikäli näin ei ole, osoita kutsumanimi laittamalla tähti (*) kutsumanimen eteen. Esimerkiksi <i>Matti *Johannes Meikäläisen </i> kutsumanimi on \"Johannes\". Tässä tapauksessa \"Johannes\" ei ole lempinimi, mutta \"Jussi\" voisi olla.";
+$faqlist["FAQ_030_GIVN"] = "<u>GIVN</u> - Etunimet ovat yleensä ensimmäinen ja toinen nimi joka annetaan lapselle.";
+$faqlist["FAQ_030_GIVN1"] = " Mikäli nimiä muutetaan syntymän jälkeen ne voidaan lisätä erikseen kunhan henkilö on ensin tallennettu tietokantaan. Ne voidaan myös lisätä lisäniminä (AKA).<br /><br />Oletamme, että henkilöitä kutsutaan ensimmäisellä etunimellään. Mikäli näin ei ole, osoita kutsumanimi laittamalla tähti (*) kutsumanimen jälkeen. Esimerkiksi <i>Matti Johannes* Meikäläisen </i> kutsumanimi on \"Johannes\". Tässä tapauksessa \"Johannes\" ei ole lempinimi, mutta \"Jussi\" voisi olla.";
 $faqlist["FAQ_030_GIVN2"] = " Etunimen ensimmäinen kirjain kirjoitetaan isolla, muut pienellä kirjasimella.";
 $faqlist["FAQ_030_SURNAME"] = "<u>SUKUNIMI</u> on perheen viimeinen nimi. Se on vihityn henkilön <u>syntymänimi</u> eikä avioliiton solmimisen jälkeen otettu nimi. Katso <i>avionimi</i> alempana. Mikäli nimiä muutetaan syntymän jälkeen ne voidaan lisätä erikseen kunhan henkilö on ensin tallennettu tietokantaan. Ne voidaan myös lisätä lisäniminä (AKA, tunnetaan myös nimellä).";
 $faqlist["FAQ_030_SURNAME2"] = "Sukunimen ensimmäinen kirjain kirjoitetaan isolla, muut pienellä kirjasimella.";

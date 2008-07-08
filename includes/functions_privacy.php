@@ -625,7 +625,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	    $links = get_media_relations($pid);
 	    $disp = true;
 		    foreach($links as $gid=>$type) {
-		    	$disp = $disp && displayDetailsById($gid, id_type($gid));
+			$disp = $disp && displayDetailsById($gid, $type);
 		    	if (!$disp) {
 		    		$privacy_cache[$pkey] = false;
 		    		return false;
@@ -805,9 +805,7 @@ function privatize_gedcom($gedrec) {
 			//-- check if name should be private
 			if (($type=="INDI")&&(!showLivingNameById($gid))) {
 				$newrec = "0 @".$gid."@ INDI\r\n";
-				$newrec .= "1 NAME " . $pgv_lang["private"] . " /" . $pgv_lang["private"] . "/" . "\r\n";
-				$newrec .= "2 SURN " . $pgv_lang["private"] . "\r\n";
-				$newrec .= "2 GIVN " . $pgv_lang["private"] . "\r\n";
+				$newrec .= "1 NAME " . $pgv_lang["private"] . "\r\n";
 				if ($SHOW_PRIVATE_RELATIONSHIPS) {
 					$fams = find_families_in_record($gedrec, "FAMS");
 					foreach($fams as $f=>$famid) {
@@ -921,14 +919,14 @@ function get_last_private_data($gid) {
  * checks the current user and returns their privacy access level
  * @return int		their access level
  */
-function getUserAccessLevel() {
+function getUserAccessLevel($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $PRIV_PUBLIC, $PRIV_NONE, $PRIV_USER;
 
-	if (getUserId()) {
-		if (userGedcomAdmin()) {
+	if ($user_id) {
+		if (userGedcomAdmin($user_id, $ged_id)) {
 			return $PRIV_NONE;
 		} else {
-			if (userCanAccess()) {
+			if (userCanAccess($user_id, $ged_id)) {
 				return $PRIV_USER;
 			} else {
 				return $PRIV_PUBLIC;
@@ -959,7 +957,7 @@ function FactEditRestricted($pid, $factrec) {
 			if ($myindi == $pid) {
 				return false;
 			}
-			if (id_type($pid)=='FAM') {
+			if (gedcom_record_type($pid, PGV_GED_ID)=='FAM') {
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["HUSB"] || $myindi == $parents["WIFE"]) {
@@ -993,7 +991,7 @@ function FactViewRestricted($pid, $factrec) {
 			if ($myindi == $pid) {
 				return false;
 			}
-			if (id_type($pid)=='FAM') {
+			if (gedcom_record_type($pid, PGV_GED_ID)=='FAM') {
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["WIFE"] || $myindi == $parents["HUSB"]) {

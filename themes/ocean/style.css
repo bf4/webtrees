@@ -489,21 +489,21 @@ a:hover .nameZoom {
 .activeflag {
 	height: 15px;
 	border: none;
-	opacity: 1;		/* IE does not yet support this */
+	opacity: 1;		/* IE's support is different */
 }
 
 /* This one is for an inactive language when the mouse is hovering over it */
 .brightflag {
 	height: 15px;
 	border: none;
-	opacity: 1;		/* IE does not yet support this */
+	opacity: 1;		/* IE's support is different */
 }
 
 /* This one is for an inactive language when the mouse is not hovering over it */
 .dimflag {
 	height: 15px;
 	border: none;
-	opacity: 0.4;	/* IE does not yet support this */
+	opacity: 0.5;	/* IE's support is different */
 }
 
 .border1 {
@@ -643,8 +643,11 @@ a:hover .nameZoom {
 	text-decoration: none;
 }
 
-.block {
+.normal_inner_block {
 	overflow: auto;
+}
+
+.block {
 	background-color: #b1cff0;
 	color: black;
 	border: ridge #a1bfe0 2px;
@@ -968,9 +971,6 @@ thead {
 }
 
 .rela {
-	filter: alpha(opacity=67);
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=67);
-	-moz-opacity: 0.67;
 	opacity: 0.67;
 }
 /* Text direction */
@@ -1079,8 +1079,6 @@ thead {
 	height: 100%; float: left;
 	font-weight: bold;
 	display: none;
-	-moz-border-radius-topleft: 0.6em;
-	-moz-border-radius-topright: 0.6em;
 }
 
 .note_details {
@@ -1088,48 +1086,47 @@ thead {
 }
 
 a.showit {
-   position: relative;
-   z-index: 24;
-   color: black;
-   text-decoration: none;
+	position: relative;
+	z-index: 24;
+	color: black;
+	text-decoration: none;
 }
 
 a.showit:hover {
-   z-index: 25;
-   background-color: #ffff9b;
-   cursor: crosshair;
+	z-index: 25;
+	background-color: #ffff9b;
+	cursor: crosshair;
 }
 
 a.showit span {
-   display: none;
+	display: none;
 }
 
 a.showit:hover span {
-   display: block;
-   position: absolute;
-   top: 22px;
-   left: 0px;
-   width: 225px;
-   border-style: outset;
-   border-left: 15px outset #1f1f1f;
-   border-top: 2px solid #1f1f1f;
-   border-bottom: 2px solid black;
-   border-right: 2px solid black;
-   padding: 3px;
-   background: #4f4f4f;
-   color: white;
-   font: 15px tahoma, arial, helvetica, sans-serif;
-   text-align: left;
-   FILTER: Alpha(Opacity=90, FinishOpacity=90, Style=2);
-   -moz-opacity: .85;
-   -khtml-opacity: .85;
-   z-index: 5;
+	display: block;
+	position: absolute;
+	top: 22px;
+	left: 0px;
+	width: 225px;
+	border-style: outset;
+	border-left: 15px outset #1f1f1f;
+	border-top: 2px solid #1f1f1f;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+	padding: 3px;
+	background: #4f4f4f;
+	color: white;
+	font: 15px tahoma, arial, helvetica, sans-serif;
+	text-align: left;
+	opacity: .85;
+	z-index: 5;
+	white-space: normal; 
 }
 
 .lifespan_people span:first-letter {
-   font: bold 16px tahoma, arial, helvetica, sans-serif;
-   font-variant: small-caps;
-   padding: 1px;
+	font: bold 16px tahoma, arial, helvetica, sans-serif;
+	font-variant: small-caps;
+	padding: 1px;
 }
 
 .lifespan_outer {
@@ -1193,9 +1190,7 @@ a.showit:hover span {
 }
 /* End of Tag Cloud styles*/
 
-/* Because the CSS file is only read once, the following two overriding classes MUST
-   appear at the end of the entire CSS file.
-*/
+/* The following two overriding classes MUST appear at the end of the entire CSS file. */
 .nowrap {
 	white-space: nowrap;
 }

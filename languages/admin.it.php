@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Italian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
+ * @author Lorenzo Simionato, Fabio Parri
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -42,30 +42,27 @@ $pgv_lang["admin_approved"]		= "Il tuo account su #SERVER_NAME# è stato accetta
 $pgv_lang["admin_gedcom"]			= "Amministra GEDCOM";
 $pgv_lang["admin_geds"]				= "Amministrazioni Dati e GEDCOM";
 $pgv_lang["admin_info"]				= "Informazioni";
-$pgv_lang["admin_site"]				= "Amministrazione Sito";
+$pgv_lang["admin_site"]				= "Amministrazione sito";
 $pgv_lang["administration"] 		= "Amministrazione";
 $pgv_lang["can_admin"]				= "Può amministrare";
 $pgv_lang["can_edit"]				= "Può modificare";
 $pgv_lang["change_id"]				= "Modifica ID Persona in:";
 $pgv_lang["click_here_to_go_to_pedigree_tree"] = "Clicca qui per andare all'albero genealogico";
 $pgv_lang["configuration"]			= "Configurazione";
-$pgv_lang["confirm_user_delete"]	= "Sei sicuro di voler cancellare l'utente";
+$pgv_lang["confirm_user_delete"]	= "Sei sicuro di voler cancellare l'utente?";
 $pgv_lang["create_user"]			= "Crea un utente";
 $pgv_lang["dataset_exists"]			= "Un file GEDCOM con questo nome è già stato importato nell'archivio";
 $pgv_lang["do_not_change"]   = "Non cambiare";
 $pgv_lang["download_gedcom"]		= "Scarica file GEDCOM";
-$pgv_lang["duplicate_username"]		= "Username doppio. Un utente con questo username già esiste. Torna indietro e modificalo";
 $pgv_lang["empty_dataset"]			= "Vuoi cancellare i vecchi dati e sovrascriverli con i nuovi?";
 $pgv_lang["found_record"]			= "Recordo trovato";
 $pgv_lang["ged_import"]			= "Importa file GEDCOM";
 $pgv_lang["gedcom_file"]		= "File GEDCOM";
 $pgv_lang["import_complete"]		= "Importazione completata";
 $pgv_lang["inc_languages"]		= "Linguaggi";
-$pgv_lang["merge_records"]   = "Fondi Dati";
-$pgv_lang["none"]     = "Nessuno";
+$pgv_lang["merge_records"]   = "Fondi dati";
 $pgv_lang["pgv_registry"]			= "Visualizza altri siti che utilizzano PhpGedView";
 $pgv_lang["please_be_patient"]		= "UN ATTIMO DI PAZIENZA PER FAVORE";
-$pgv_lang["reading_file"]				= "Lettura del file GEDCOM in corso";
 $pgv_lang["readme_documentation"]	= "File README";
 $pgv_lang["rootid"]					= "Albero genealogico della persona";
 $pgv_lang["select_an_option"]		= "Seleziona un'opzione:";
@@ -82,7 +79,6 @@ $pgv_lang["verified"]				= "L'utente ha verificato se stesso";
 $pgv_lang["verified_by_admin"]		= "Utente approvato dall'amministratore:";
 $pgv_lang["view_logs"]				= "Visualizza file di log";
 $pgv_lang["visibleonline"]			= "Visibile dagli altri utenti quando sei online?";
-$pgv_lang["you_may_login"]		= " dall'amministratore. Ora devi autenticarti cliccando sul link qui sotto:";
 
 
 ?>

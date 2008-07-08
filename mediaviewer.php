@@ -5,7 +5,7 @@
  * This page displays all information about media that is selected in PHPGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,8 @@ global $tmb;
 // LBox ============================================================================= 
 // Get Javascript variables from lb_config.php --------------------------- 
  if (file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');	
 }
 // LBox  ============================================================================		
@@ -84,8 +85,8 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 		<table width="70%">
 			<tr>
 				<td class="name_head" colspan="2">
-					 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
-					 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br /><br />
+					 <?php print PrintReady($controller->mediaobject->getFullName()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
+					 <?php print PrintReady($controller->mediaobject->getAddName()); ?> <br /><br />
 					 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 				</td>
 			</tr>
@@ -108,21 +109,21 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 							}
 							if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 							
-							// If Lightbox installed, open image with Lightbox
+							//LBox -- If Lightbox installed, open image with Lightbox
 							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$filename) || eregi("\.jpeg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ) { 
 								//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
 								print "<a 
 									href=\"" . $filename . "\" 
 									onmouseover=\"window.status='javascript:;'; return true;\" 
 									onmouseout=\"window.status=''; return true;\"
-									rel=\"clearbox[general]\" title=\"" . $controller->pid . ":" . $GEDCOM . ":" . PrintReady(htmlspecialchars($controller->mediaobject->getTitle())) . "\">" . "\n";	
+									rel=\"clearbox[general]\" rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName())) . "\">" . "\n";	
 							}else{
 								//Else open image with the Image View Page
 								?>
 								<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);"> 
 								<?php 
 							} ?>
-							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getTitle())); ?>" />
+							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName())); ?>" />
 							</a>
 							<?php
 						}
@@ -130,7 +131,7 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 							// this is not an image
 							?>
 							<a href="<?php print $filename; ?>" target="_BLANK">
-							<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getTitle())); ?>" />
+							<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName())); ?>" />
 							</a>
 							<?php
 						}
@@ -139,7 +140,7 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 					else{
 						// the file is not external and does not exist
 						?>
-						<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getTitle())); ?>" />
+						<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName())); ?>" />
 						<br /><span class="error"><?php print $pgv_lang["file_not_found"];?></span>
 						<?php
 					}
@@ -153,8 +154,8 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 								<table class="facts_table<?php print $TEXT_DIRECTION=='ltr'?'':'_rtl';?>">
 									<?php
 										$facts = $controller->getFacts($SHOW_MEDIA_FILENAME);
-										foreach($facts as $f=>$event) {
-											print_fact($event);
+										foreach($facts as $f=>$factrec) {
+											print_fact($factrec, $controller->pid, 1, false, true);
 										}
 									?>
 								</table>
@@ -196,7 +197,7 @@ function lightboxView(){
 
 // javascript function to open the original imageviewer.php page
 function openImageView(){
-	window.open("imageview.php?filename=<?php print $filename ?>", "Image View");
+	window.open("imageview.php?filename=<?php print encode_url($filename) ?>", "Image View");
 	return false;
 }
 // javascript function to open a window with the raw gedcom in it

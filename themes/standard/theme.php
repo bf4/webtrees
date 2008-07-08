@@ -2,8 +2,8 @@
 /**
  * Standard theme
  *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * PhpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  John Finlay and others.  All rights resserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,11 @@
  * @subpackage Themes
  * @version $Id$
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
 
 $theme_name = "Standard";		//-- the name of this theme
 
@@ -70,6 +75,7 @@ $PGV_IMAGES["descendant"]["small"] = "small/descendancy.gif";
 $PGV_IMAGES["edit_fam"]["small"] = "small/edit_fam.gif";
 $PGV_IMAGES["edit_indi"]["small"] = "small/edit_indi.gif";
 $PGV_IMAGES["edit_sour"]["small"] = "small/edit_sour.gif";
+$PGV_IMAGES["edit_repo"]["small"] = "small/edit_repo.gif";
 $PGV_IMAGES["fambook"]["small"] = "small/fambook.gif";
 $PGV_IMAGES["fanchart"]["small"] = "small/fanchart.gif";
 $PGV_IMAGES["gedcom"]["small"] = "small/gedcom.gif";
@@ -180,13 +186,12 @@ $Dbheight = 80;			// -- height of DIV layer boxes
 $Dindent = 15;			// -- width to indent descendancy boxes
 $Darrowwidth = 15;		// -- additional width to include for the up arrows
 
-$CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc clost the HTML on the page
+$CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
 $PGV_DXHTMLTAB_COLORS = "#d6e0ea,white";
 
 // Arrow symbol or icon for up-page links on Help pages
-$ImgSrc = $PGV_IMAGE_DIR."/uarrow3.gif";
-$UpArrow = "<b>^&nbsp;&nbsp;</b>";
-if (file_exists($ImgSrc)) $UpArrow = "<img src=\"$ImgSrc\" class=\"icon\" border=\"0\" alt=\"\" />";
-$pgv_lang["UpArrow"] = $UpArrow;	// help_text.xx.php requires this _untranslatable_ term!
+// This icon is referred to in Help text by: #GLOBALS[UpArrow]# 
+if (file_exists($PGV_IMAGE_DIR."/uarrow3.gif")) $UpArrow = "<img src=\"{$PGV_IMAGE_DIR}/uarrow3.gif\" class=\"icon\" border=\"0\" alt=\"^\" />";
+else $UpArrow = "<b>^^&nbsp;&nbsp;</b>";
 
 ?>

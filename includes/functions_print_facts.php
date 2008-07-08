@@ -5,7 +5,7 @@
  * Various printing functions used to print fact records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once 'includes/person_class.php';
+require_once 'includes/datamodel/person_class.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -145,7 +145,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 				else {
 					$menu['onclick'] = "";
-					$menu["link"] = "module.php?mod=research_assistant&amp;action=editfact&amp;taskid=".$taskid;
+					$menu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
 				}
 				$menu["class"] = "";
 				$menu["hoverclass"] = "";
@@ -162,7 +162,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 				else {
 					$submenu['onclick'] = "";
-					$submenu["link"] = "module.php?mod=research_assistant&amp;action=editfact&amp;taskid=".$taskid;
+					$submenu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
 				}
 				$submenu["class"] = "submenuitem";
 				$submenu["hoverclass"] = "submenuitem_hover";
@@ -220,7 +220,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 				else {
 					$menu['onclick'] = "";
-					$menu["link"] = "module.php?mod=research_assistant&amp;action=editfact&amp;taskid=".$taskid;
+					$menu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
 				}
 				$menu["class"] = "";
 				$menu["hoverclass"] = "";
@@ -237,7 +237,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 				else {
 					$submenu['onclick'] = "";
-					$submenu["link"] = "module.php?mod=research_assistant&amp;action=editfact&amp;taskid=".$taskid;
+					$submenu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
 				}
 				$submenu["link"] = "#";
 				$submenu["class"] = "submenuitem";
@@ -310,7 +310,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($ct>0) {
 				$spouse=$match[1];
 				if ($spouse!=="") {
- 					print " <a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+ 					print " <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
 					if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 						print PrintReady(get_person_name($spouse));
 						$addname = get_add_person_name($spouse);
@@ -321,7 +321,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 				if (($view!="preview") && ($spouse!=="")) print " - ";
 				if ($view!="preview" &&(empty($SEARCH_SPIDER))) {
-					print "<a href=\"family.php?famid=$pid\">";
+					print "<a href=\"".encode_url("family.php?famid={$pid}")."\">";
 					if ($TEXT_DIRECTION == "ltr") print " " . getLRM();
 					else print " " . getRLM();
 					print "[".$pgv_lang["view_family"];
@@ -336,7 +336,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				$ct = preg_match("/@(.*)@/", $event, $match);
 				if ($ct>0) {
 					$gedrec = find_gedcom_record($match[1]);
-					if (strstr($gedrec, "INDI")!==false) print "<a href=\"individual.php?pid=$match[1]&amp;ged=$GEDCOM\">".get_person_name($match[1])."</a><br />";
+					if (strstr($gedrec, "INDI")!==false) print "<a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">".get_person_name($match[1])."</a><br />";
 					else if ($fact=="REPO") print_repository_record($match[1]);
 					else print_submitter_info($match[1]);
 				}
@@ -354,16 +354,16 @@ function print_fact(&$eventObj, $noedit=false) {
 					if (get_sub_record(2, "2 DATE", $factrec)=="") {
 						print $pgv_lang["no"];
 					}
-				}
-				else if (strstr("URL WWW ", $fact." ")) {
+				} elseif (strstr("URL WWW ", $fact." ")) {
 					print "<a href=\"".$event."\" target=\"new\">".PrintReady($event)."</a>";
-				}
-				else if (strstr("_EMAIL", $fact)) {
+				} elseif (strstr("_EMAIL", $fact)) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
-				}
-				else if (strstr('FAX PHON FILE ', $fact.' ')) print getLRM(). $event.' ' . getLRM();
-				else if ($event!='Y') {
-					if (!strstr('ADDR _RATID _DEAT _CREM _BURI ', substr($fact,0,5).' ')) echo PrintReady($event);
+				} elseif (strstr("AFN", $fact)) {
+					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.htmlspecialchars($event).'</a>';
+				} elseif (strstr('FAX PHON FILE ', $fact.' ')) {
+					print getLRM(). $event.' ' . getLRM();
+				} elseif ($event!='Y') {
+					if (!strstr('ADDR _RATID _CREM ', substr($fact,0,5).' ')) echo PrintReady($event);
 					echo ' ';
 				}
 				$temp = trim(get_cont(2, $factrec), "\r\n");
@@ -393,7 +393,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				print_address_structure($factrec, 1);
 			}
 			// -- Enhanced ASSOciates > RELAtionship
-			print_asso_rela_record($pid, $factrec, true, id_type($pid));
+			print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
 //			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];			
@@ -405,9 +405,8 @@ function print_fact(&$eventObj, $noedit=false) {
 			}
 			if (preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
 				print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
-				print "<a href=\"family.php?famid=".$match[1]."&amp;ged=$GEDCOM\">";
-				print get_family_descriptor($match[1]);
-				print "</a>";
+				$family=Family::getInstance($match[1]);
+				echo "<a href=\"".encode_url($family->getLinkUrl())."\">", $family->getFullName(), "</a>";
 				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", str2upper($factrec), $match)) {
 					print '<br/><span class="indent"><span class="label">'.$factarray['ADOP'].':</span> ';
 					print '<span class="field">';
@@ -511,7 +510,7 @@ function print_repository_record($sid) {
 		if ($ct > 0) {
 			$ct2 = preg_match("/0 @(.*)@/", $source, $rmatch);
 			if ($ct2>0) $rid = trim($rmatch[1]);
-			print "<span class=\"field\"><a href=\"repo.php?rid=$rid\"><b>".PrintReady($match[1])."</b>&nbsp;&nbsp;&nbsp;";
+			print "<span class=\"field\"><a href=\"".encode_url("repo.php?rid={$rid}")."\"><b>".PrintReady($match[1])."</b>&nbsp;&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$sid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -568,22 +567,19 @@ function print_fact_sources($factrec, $level, $return=false) {
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
 			if ($lt>0) $data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 			$data .= $pgv_lang["source"].":</span> <span class=\"field\">";
-			$source = find_source_record($sid);
-			$data .= "<a href=\"source.php?sid=".$sid."\">";
-			$text = PrintReady(get_source_descriptor($sid));
-			//-- Print additional source title
-			$add_descriptor = get_add_source_descriptor($sid);
-			if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
-			// if (strpos($source, " _ITALIC")) print "<i>".$text."</i>"; else print $text;
-			$data .= $text;
-			$data .= "</a>";
+			$source=Source::getInstance($sid);
+			if ($source) {
+				$data .= "<a href=\"".encode_url($source->getLinkUrl())."\">".PrintReady($source->getFullName())."</a>";
+			} else {
+				$date .= $sid;
+			}
 			$data .= "</span>";
 
 			$data .= "<div id=\"$elementID\"";
 			if ($EXPAND_SOURCES) $data .= " style=\"display:block\"";
 			$data .= " class=\"source_citations\">";
 			// PUBL
-			$text = get_gedcom_value("PUBL", "1", $source);
+			$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
 			if (!empty($text)) {
 				$data .= "<span class=\"label\">".$factarray["PUBL"].": </span>";
 				$data .= $text;
@@ -651,20 +647,30 @@ function print_media_links($factrec, $level,$pid='') {
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 						$name = trim($row["m_titl"]);
-						print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" title=\"" . $media_id . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
 					}elseif ($USE_MEDIA_VIEWER) {
-						print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
 					}else{
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
+					
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-					print " alt=\"". PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" /></a>";
+					print " alt=\"" . PrintReady($mediaTitle) . "\"";
+					//LBox --------  change for Lightbox Album --------------------------------------------
+					if ($row["m_titl"]){
+						print " title=\"" . $row["m_titl"] . "\"";
+					}else{
+						print " title=\"" . basename($row["m_file"]) . "\"";
+					}
+					// ---------------------------------------------------------------------------------------------
+					print "/>";
+					print "</a>";
 				}
 				print "</td><td>";
 				if(empty($SEARCH_SPIDER)) {
-					print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+					print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
 				}
 				if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() .  PrintReady($mediaTitle)."</i>";
 				else print "<i>".PrintReady($mediaTitle)."</i>";
@@ -694,7 +700,7 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($ct>0) {
 					$spouse=$match[1];
 					if ($spouse!=="") {
-						print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+						print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
 						if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 							print PrintReady(get_person_name($spouse));
 						}
@@ -707,7 +713,7 @@ function print_media_links($factrec, $level,$pid='') {
 						if ($ct>0) {
 							$famid = trim($match[1]);
 							if(empty($SEARCH_SPIDER)) {
-								print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"];
+								print "<a href=\"".encode_url("family.php?famid={$famid}")."\">[".$pgv_lang["view_family"];
 								if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM();
 								print "]</a>\n";
 							}
@@ -877,7 +883,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 		$srec = substr($factrec, $spos1, $spos2-$spos1);
 		if (!showFact("SOUR", $pid) || FactViewRestricted($pid, $factrec)) return false;
 		if (displayDetailsById($sid, "SOUR")) {
-			if ($level==2) print "<tr class=row_sour2>";
+			if ($level==2) print "<tr class=\"row_sour2\">";
 			else print "<tr>";
 			print "<td class=\"descriptionbox";
 			if ($level==2) print " rela";
@@ -932,20 +938,12 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			print "\n\t\t\t<td class=\"optionbox $styleadd wrap\">";
 			//print "\n\t\t\t<td class=\"facts_value$styleadd\">";
 			if (showFactDetails("SOUR", $pid)) {
-				$source = find_source_record($sid);
-				echo "<a href=\"source.php?sid=".$sid."\">";
-				$text = PrintReady(get_source_descriptor($sid));
-				//-- Print additional source title
-				$add_descriptor = get_add_source_descriptor($sid);
-				if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
-				// if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
-				echo $text;
-				echo "</a>";
+				$source=Source::getInstance($sid);
+				echo "<a href=\"".encode_url($source->getLinkUrl())."\">", PrintReady($source->getFullName()), "</a>";
 				// PUBL
-				$text = get_gedcom_value("PUBL", "1", $source);
+				$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
 				if (!empty($text)) {
 					echo "<br /><span class=\"label\">".$factarray["PUBL"].": </span>";
-					// if (strpos($source, " _PAREN")) echo "(".$text.")"; else echo $text;
 					echo $text;
 				}
 				// See if RESN tag prevents display or edit/delete
@@ -1253,6 +1251,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
 	$ids = array($pid);
+	
 	//-- find all of the related ids
 	if ($related) {
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -1261,6 +1260,27 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		}
 	}
 
+	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
+	$sort_current_objes = array();
+	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
+	else $sort_regexp = "/_PGV_OBJS @(.*)@/";
+	$sort_ct = preg_match_all($sort_regexp, $gedrec, $sort_match, PREG_SET_ORDER);
+	for($i=0; $i<$sort_ct; $i++) {
+		if (!isset($sort_current_objes[$sort_match[$i][1]])) $sort_current_objes[$sort_match[$i][1]] = 1;
+		else $sort_current_objes[$sort_match[$i][1]]++;
+		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
+	}
+	$sort_media_found = false;
+	// -----------------------------------------------------------------------------------------------
+
+	// create ORDER BY list from Gedcom sorted records list  ---------------------------
+	$orderbylist = 'ORDER BY '; // initialize  
+	foreach ($sort_match as $id) {
+		$orderbylist .= "m_media='$id[1]' DESC, ";
+	}  
+	$orderbylist = rtrim($orderbylist, ', ');
+	// -----------------------------------------------------------------------------------------------
+	
 	//-- get a list of the current objects in the record
 	$current_objes = array();
 	if ($level>0) $regexp = "/".$level." OBJE @(.*)@/";
@@ -1289,7 +1309,14 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
 
+	// LBox --- media sort -------------------------------------
+	if ($sort_ct>0) {
+		$sqlmm .= $orderbylist;
+	}else{
 	$sqlmm .= "ORDER BY mm_gid DESC";
+	}
+	// ---------------------------------------------------------------
+	
 	$resmm = dbquery($sqlmm);
 	$foundObjs = array();
 	while($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1435,14 +1462,13 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	$linenum = 0;
 	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
 	if ($rowm['mm_gid']==$pid && PGV_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
-		$encodedFileName = rawurlencode($rowm["m_file"]);
 		$menu = array();
 		$menu["label"] = $pgv_lang["edit"];
 		$menu["labelpos"] = "right";
 		$menu["icon"] = "";
 		$menu["link"] = "#";
 		// $menu["onclick"] = "return edit_record('$pid', $linenum);";
-		$menu["onclick"] = "return window.open('addmedia.php?action=editmedia&amp;pid=".$rowm["m_media"]."&amp;filename=".$encodedFileName."&amp;linktoid=".$rowm["mm_gid"]."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		$menu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$menu["class"] = "";
 		$menu["hoverclass"] = "";
 		$menu["flyout"] = "down";
@@ -1452,7 +1478,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$submenu["label"] = $pgv_lang["edit"];
 		$submenu["labelpos"] = "right";
 		$submenu["icon"] = "";
-		$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&amp;pid=".$rowm["m_media"]."&amp;filename=".$encodedFileName."&amp;linktoid=".$rowm["mm_gid"]."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$submenu["link"] = "#";
 		$submenu["class"] = "submenuitem";
 		$submenu["hoverclass"] = "submenuitem_hover";
@@ -1462,7 +1488,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$submenu["labelpos"] = "right";
 		$submenu["icon"] = "";
 		$submenu["onclick"] = "return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');";
-		//$submenu["onclick"] = "return window.open('addmedia.php?action=delete&amp;pid=".$rowm["m_media"]."', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		//$submenu["onclick"] = "return window.open('addmedia.php?action=delete&pid={$rowm['m_media']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$submenu["link"] = "#";
 		$submenu["class"] = "submenuitem";
 		$submenu["hoverclass"] = "submenuitem_hover";
@@ -1498,10 +1524,10 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 					$name = trim($rowm["m_titl"]);
-					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
 				}elseif ($USE_MEDIA_VIEWER) {
-					print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
+					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 				}else{
 					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 				}
@@ -1512,7 +1538,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			if ($mainFileExists) print "</a>";
 		}
 		if(empty($SEARCH_SPIDER)) {
-			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
+			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 		}
 		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
 		else print "<i>".PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
@@ -1554,7 +1580,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) $spouse = $parents['WIFE'];
 			}
 			if (!empty($spouse)) {
-				print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+				print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
 				if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 					print PrintReady(get_person_name($spouse));
 				}
@@ -1565,7 +1591,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				if (($view != "preview") && (!empty($spouse))) print " - ";
 				if ($view != "preview") {
 						$famid = $rowm['mm_gid'];
-						print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"];
+						print "<a href=\"".encode_url("family.php?famid={$famid}")."\">[".$pgv_lang["view_family"];
 						if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM();
 						print "]</a>\n";
 				}
@@ -1602,7 +1628,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 }
 
 // -----------------------------------------------------------------------------
-//  Extra print_facts_functions for lightbox 
+//  Extra print_facts_functions for lightbox and reorder media
 // -----------------------------------------------------------------------------
 
 function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=false ) {
@@ -1613,12 +1639,12 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
          include("modules/lightbox/functions/lightbox_print_media_row.php");
 }
 
-function lightbox_print_media_row_sort($rtype, $rowm, $pid) {
-         include("modules/lightbox/functions/lightbox_print_media_row_sort.php");
+function media_reorder_row($rtype, $rowm, $pid) {
+         include("media_reorder_row.php");
 }
 
 // -----------------------------------------------------------------------------
-//  End extra print_facts_functions for lightbox
+//  End extra print_facts_functions for lightbox and reorder media
 // -----------------------------------------------------------------------------
 
 ?>

@@ -34,7 +34,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
 loadLangFile("ra_lang");	// Set up our default language file
 
 include_once("modules/research_assistant/forms/ra_privacy.php");
-require_once("includes/person_class.php");
+require_once("includes/datamodel/person_class.php");
 
 //the inferences function will look for correlations
 //and return an array with each probability
@@ -319,11 +319,11 @@ function singleInference($pid,$factType)
 				if($factType == "SURN")
 				{
 					$person = new Person($relatedGedcom);
-					$factRelation = $person->getSurname();
+						list($factRelation)=explode(',', $person->getListName());
 				}
 				else if ($factType=='GIVN'){
 					$person = new Person($relatedGedcom);
-					$factRelation = $person->getGivenNames();
+						list($dummy, $factRelation)=explode(',', $person->getListName());
 				}
 				$factInfer->setFactValue($factRelation);
 			}

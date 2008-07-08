@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,16 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
-$pgv_lang["autosearch_ssurname"] 	= "Lisää puolison sukunimi:";
-$pgv_lang["autosearch_sgivennames"] = "Lisää puolison etunimet:";
-$pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com lisäke";
+
+$pgv_lang["gm_ph_map_size"]         = "Paikkahierarkiakartan koko (pikseleinä)"; 
+$pgv_lang["gm_ph_count"]            = "Näytä henkilö- ja perheluvut";
+
+$pgv_lang["gm_ph_controls"]         = "Piilota karttastimet"; 
+$pgv_lang["pl_countries"]           = "Maat";
+
+$pgv_lang["pl_search_level"]        = "Etsi tällä tasolla";
+
+$pgv_lang["pl_search_all"]          = "Etsi kaikkialla";
 
 $pgv_lang["googlemap"]              = "Kartta";
 $pgv_lang["no_gmtab"]               = "Ei kartta tietoa tällä henkilöllä";
@@ -75,12 +82,12 @@ $pgv_lang["gm_pp_po_pr_n_b"]        = "Jälkiliite, etuliite, normal, kumpikin";
 $pgv_lang["googlemap_coord"]        = "Näytä kartta koordinaatit";
 
 //wooc place hierarchy
-$pgv_lang["gm_place_hierarchy"]         = "Käytä Googlemappia paikkahierarkiaa varten"; 
-$pgv_lang["gm_ph_marker_type"]        = "Paikkahierarkian paikkamerkkien tyyppi";
-$pgv_lang["gm_standard_marker"]       = "Vakio"; 
-$pgv_lang["gm_no_coord"]                   = "Tällä paikalla ei ole koordinaatteja"; 
-$pgv_lang["gm_ph_placenames"]        = "Näytetäänkö lyhyet paikannimet?"; 
-$pgv_lang["gm_ph_wheel"]                   = "Käytetäänkö hiiren vieritysrullaa zoomauksessa?"; 
+$pgv_lang["gm_place_hierarchy"]     = "Käytä Googlemappia paikkahierarkiaa varten"; 
+$pgv_lang["gm_ph_marker_type"]      = "Paikkahierarkian paikkamerkkien tyyppi";
+$pgv_lang["gm_standard_marker"]     = "Vakio"; 
+$pgv_lang["gm_no_coord"]            = "Tällä paikalla ei ole koordinaatteja"; 
+$pgv_lang["gm_ph_placenames"]       = "Näytetäänkö lyhyet paikannimet?"; 
+$pgv_lang["gm_ph_wheel"]            = "Käytetäänkö hiiren vieritysrullaa zoomauksessa?"; 
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Muokkaa sijainti paikka tietoja";
@@ -112,7 +119,7 @@ $pgv_lang["pl_neighborhood"]        = "Naapurusto";
 $pgv_lang["pl_house"]               = "Talo";
 $pgv_lang["pl_max"]                 = "Maksimi";
 $pgv_lang["pl_delete"]              = "Poista sijaintipaikka";
-
+$pgv_lang["pl_unknown"]	= "Tuntematon";
 $pgv_lang["pl_flag"]                = "Lippu";
 $pgv_lang["flags_edit"]             = "Valitse lippu";
 $pgv_lang["pl_change_flag"]         = "Vaihda lippu";
@@ -142,4 +149,6 @@ $pgv_lang["placecheck_zoom"]        = "Zoomaus=";
 $pgv_lang["placecheck_options"]     = "Paikkatarkistus lista valinnat";
 $pgv_lang["placecheck_filter_text"] = "Lista suodatus valinnat";
 $pgv_lang["placecheck_match"] 		= "Sisällytä täysin vastaavat paikat -";
+$pgv_lang["placecheck_lati"] 		= "Leveysaste";
+$pgv_lang["placecheck_long"] 		= "Pituusaste";
 ?>

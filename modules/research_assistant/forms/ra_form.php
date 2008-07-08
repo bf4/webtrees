@@ -30,7 +30,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 	exit;
 }
 global $LANGUAGE, $factarray;
-require_once "includes/person_class.php";
+require_once "includes/datamodel/person_class.php";
 
 /**
  * Base class for Research Assistant forms
@@ -45,28 +45,17 @@ class ra_form {
 	 */
 	function getPeople(){
         global $TBLPREFIX, $DBCONN;
-		$people = array();
 
 		if (!is_null($this->people)) return $this->people;
 		
-		if(isset($_REQUEST['personid'])) {
-			$peopleList=split(";",$_REQUEST['personid']);
-			foreach($peopleList as $pid) {
-				if(!empty($pid))
-				$people[$pid] = Person::getInstance($pid);
-			}
-			return $people;
-		}
-	
-		if($_REQUEST["taskid"]!=0) {
 		$sql = 	"SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
+		$people = array();
 		while($row = $res->fetchRow()){
 			$people[$row[0]] = Person::getInstance($row[0]);
 		}
 		$res->free();
-		}
 		$this->people = $people;
 		return $people;
 	}
@@ -317,12 +306,12 @@ class ra_form {
 	                   			foreach($people as $pid=>$person) {
 							if (!is_null($person)) {
 	                   				$pval .= ';'.$person->getXref();
-	                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 							}
 	                   			}
 	                   $out .= '</div>
 	                   <input type="hidden" id="personid" name="personid" size="3" value="'.$pval.'" />';
-	                   $out .= print_findindi_link("personid", "peoplelink", true,true,'','');
+	                   $out .= print_findindi_link("personid", "peoplelink", true,false,'','');
 	                   $out .= '<br />
 	            </td>
 	        </tr>';
@@ -447,10 +436,10 @@ END_OUT;
 				
 				if(is_object($person))
 				{
-					$peopleList .= "<option value=\"$pid\" selected=\"selected\">".$person->getName()."</option>";
+					$peopleList .= "<option value=\"$pid\" selected=\"selected\">".$person->getFullName()."</option>";
 					$families = $person->getSpouseFamilies();
 					foreach($families as $famid=>$family) {
-						if (is_object($family)) $familyList .= "<option value=\"$famid\">".$family->getSortableName()."</option>";
+						if (is_object($family)) $familyList .= "<option value=\"$famid\">".$family->getFullName()."</option>";
 					}
 				}
 			}
@@ -475,7 +464,7 @@ END_OUT;
 								if ($fact['tf_multiple']=='Y' || in_array($pid, $selectedPeople)) {
 									$peopleList .= "<option value=\"$pid\" ";
 									if (in_array($pid, $selectedPeople)) $peopleList .= "selected=\"selected\"";
-									$peopleList .= ">".$person->getName()."</option>";
+									$peopleList .= ">".$person->getFullName()."</option>";
 								}
 							
 							}
@@ -491,7 +480,7 @@ END_OUT;
 									if ($fact['tf_multiple']=='Y' || in_array($famid, $selectedPeople)) {
 										$familyList .= "<option value=\"$famid\" ";
 										if (in_array($famid, $selectedPeople)) $familyList .= "selected=\"selected\"";
-										$familyList .= ">".$family->getSortableName()."</option>";
+										$familyList .= ">".$family->getFullName()."</option>";
 									}
 								}
 							}
@@ -740,7 +729,6 @@ END_OUT;
 			}
 			//-->
 			</script>
-			<input type="hidden" value="{$_REQUEST['personid']}" name="personid"/>
 			<input type="button" value="{$pgv_lang["add"]}" onclick="add_ra_fact('newfact','indi');" />
 			</td>
 		</tr>

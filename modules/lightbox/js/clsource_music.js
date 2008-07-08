@@ -16,16 +16,21 @@ var zoomSet = 0; 	// ZoomSet = 0 means No Lightbox window.  (Leave at 0 here ple
 					// Note: ZoomSet = 2 means Lightbox window open and zoomed. 
 
 var soond = null;
-var CB_Animation	= CB_Animation;
-var CB_SlShowTime	= CB_SlShowTime;
-var CB_ImgDetails	= CB_ImgDetails;
-var CB_Detail_Info	= CB_Detail_Info;
-var CB_Start_SS		= CB_Start_SS;
-var CB_Pause_SS		= CB_Pause_SS;
-var CB_Music		= CB_Music; 
-var CB_Zoom_Off		= CB_Zoom_Off;			
-var CB_Zoom_On		= CB_Zoom_On;		
-var CB_Close_Win	= CB_Close_Win;
+var CB_Alignm			= CB_Alignm;
+var CB_Balloon			= CB_Balloon;
+var CB_Animation		= CB_Animation;
+var CB_SlShowTime		= CB_SlShowTime;
+var CB_ImgDetails		= CB_ImgDetails;
+var CB_Detail_Info		= CB_Detail_Info;
+var CB_ImgNotes			= CB_ImgNotes;
+var CB_ImgNotes2		= CB_ImgNotes2;
+var CB_Note_Info		= CB_Note_Info;
+var CB_Start_SS			= CB_Start_SS;
+var CB_Pause_SS			= CB_Pause_SS;
+var CB_Music			= CB_Music; 
+var CB_Zoom_Off			= CB_Zoom_Off;
+var CB_Zoom_On			= CB_Zoom_On;
+var CB_Close_Win		= CB_Close_Win;
 
 // ------- Keyboard options ---------------------------------------------------------
 
@@ -273,6 +278,7 @@ var CB_Close_Win	= CB_Close_Win;
 	Player.prototype.registerCallback = function() {
 		return setInterval(this.onTimerEvent.bind(this), this.frequency);
 	}
+	
 	Player.prototype.clearCallback = function() {
    		clearInterval(this.callback);
    		this.callback = null;
@@ -604,7 +610,7 @@ var CB_Close_Win	= CB_Close_Win;
 	var CB_Hide, CB_LoadingImg, CB_JumpX, CB_JumpY, CB_MarginL, CB_MarginT, CB_Content;
 	var CB_ImgWidth = CB_WinBaseW, CB_ImgHeight = CB_WinBaseH - CB_TextH;
 	var CB_ImgRate, CB_Win, CB_Txt, CB_Img, CB_Prv, CB_Nxt, CB_ImgWidthOld, CB_ImgHeightOld, CB_ActImgId;
-	var CB_Gallery, CB_Count, CB_preImages, CB_Loaded, CB_Header, CB_Footer, CB_Left, CB_Right;
+	var CB_Gallery, CB_Count, CB_preImages, CB_Loaded, CB_Header, CB_Footer, CB_Left, CB_Right, CB_Txt3, CB_Txt3a;
 
     CB_PicDir += "/";
 
@@ -633,7 +639,8 @@ var CB_Close_Win	= CB_Close_Win;
 		}else{
 			document.onkeypress = CB_KeyPress;
 		}
-		//BH ------------------------------------------------------------------------------	
+		//BH ------------------------------------------------------------------------------
+		
         if (!document.getElementById("CB_All") && CB_Show != 0) {
             document.body.style.position = "static";
             var a = "<div class=\"CB_RoundPixBugFix\" style=\"width: " + CB_RoundPix + "px; height: " + CB_RoundPix + "px;\"></div>";
@@ -642,8 +649,7 @@ var CB_Close_Win	= CB_Close_Win;
             c.setAttribute("id", "CB_All");
             b.appendChild(c);
 			
-            document.getElementById("CB_All").innerHTML = "<table cellspacing=\"0\" cellpadding=\"0\" id=\"CB_Window\"><tr id=\"CB_Header\"><td id=\"CB_TopLeft\">" + a + "</td><td id=\"CB_Top\"></td><td id=\"CB_TopRight\">" + a + "</td></tr><tr id=\"CB_Body\"><td id=\"CB_Left\"></td><td id=\"CB_Content\" valign=\"top\" align=\"left\"><div id=\"CB_Padding\"><div id=\"CB_Text\"></div><div id=\"CB_ImgContainer\"><iframe frameborder=\"0\" id=\"CB_iFrame\" src=\"\"></iframe><div id=\"CB_ShowTh\"></div><div id=\"CB_Thumbs\"><div id=\"CB_Thumbs2\"></div></div><img id=\"CB_LoadingImage\" title=\"loading\" src=\"" + CB_PicDir + CB_PictureLoading + "\" /><img id=\"CB_Image\" alt=\"\" src=\"" + CB_PicDir + "blank.gif\" /><div id=\"CB_PrevNext\"><div id=\"CB_ImgHide\"></div><img id=\"CB_SlideShowBar\" src=\"" + CB_PicDir + "white.gif\" /><a id=\"CB_Prev\" href=\"#\"></a><a id=\"CB_Next\" href=\"#\"></a></div></div><div id=\"CB_NavBar\"><img id=\"CB_SlideShowP\" title=\"" + CB_Pause_SS + "\" src=\"" + CB_PicDir + CB_PicturePause + "\" /><img id=\"CB_SlideShowS\" title=\"" + CB_Start_SS + "\" src=\"" + CB_PicDir + CB_PictureStart + "\" /><img id=\"CB_Speaker\" title=\"" + CB_Music + "\" src=\"" + CB_PicDir + CB_MusicNull + "\" /><img id=\"CB_ZoomOff\" title=\"" + CB_Zoom_Off + "\" src=\"" + CB_PicDir + CB_ZoomStop + "\" /><img id=\"CB_ZoomOn\" title=\"" + CB_Zoom_On + "\" src=\"" + CB_PicDir + CB_ZoomStart + "\" /><div id=\"CB_TopText\" title=\"" + CB_Detail_Info + "\"><a href=\"\">" + CB_ImgDetails + "</a></div><img id=\"CB_CloseWindow\" title=\"" + CB_Close_Win + "\" src=\"" + CB_PicDir + CB_PictureClose + "\" /></div></div></td><td id=\"CB_Right\"></td></tr><tr id=\"CB_Footer\"><td id=\"CB_BtmLeft\">" + a + "</td><td id=\"CB_Btm\"></td><td id=\"CB_BtmRight\">" + a + "</td></tr></table><div id=\"CB_ContentHide\"></div>";
-			
+            document.getElementById("CB_All").innerHTML = "<table cellspacing=\"0\" cellpadding=\"0\" id=\"CB_Window\"><tr id=\"CB_Header\"><td id=\"CB_TopLeft\">" + a + "</td><td id=\"CB_Top\"></td><td id=\"CB_TopRight\">" + a + "</td></tr><tr id=\"CB_Body\"><td id=\"CB_Left\"></td><td id=\"CB_Content\" valign=\"top\" align=\"left\"><div id=\"CB_Padding\"><div id=\"CB_Text\"></div><div id=\"CB_ImgContainer\"><iframe frameborder=\"0\" id=\"CB_iFrame\" src=\"\"></iframe><div id=\"CB_UrlNotes\" ></div><div id=\"CB_ShowTh\"></div><div id=\"CB_Thumbs\"><div id=\"CB_Thumbs2\"></div></div><img id=\"CB_LoadingImage\" title=\"loading\" src=\"" + CB_PicDir + CB_PictureLoading + "\" alt=\"\" /><img id=\"CB_Image\" alt=\"\" src=\"" + CB_PicDir + "blank.gif\" /><div id=\"CB_PrevNext\"><div id=\"CB_ImgHide\"></div><img id=\"CB_SlideShowBar\" src=\"" + CB_PicDir + "white.gif\" alt=\"\" /><a id=\"CB_Prev\" href=\"#\"></a><a id=\"CB_Next\" href=\"#\"></a></div></div><div id=\"CB_NavBar\"><img id=\"CB_SlideShowP\" title=\"" + CB_Pause_SS + "\" src=\"" + CB_PicDir + CB_PicturePause + "\" alt=\"\" /><img id=\"CB_SlideShowS\" title=\"" + CB_Start_SS + "\" src=\"" + CB_PicDir + CB_PictureStart + "\" alt=\"\" /><img id=\"CB_Speaker\" title=\"" + CB_Music + "\" src=\"" + CB_PicDir + CB_MusicNull + "\" alt=\"\" /><img id=\"CB_ZoomOff\" title=\"" + CB_Zoom_Off + "\" src=\"" + CB_PicDir + CB_ZoomStop + "\" alt=\"\" /><img id=\"CB_ZoomOn\" title=\"" + CB_Zoom_On + "\" src=\"" + CB_PicDir + CB_ZoomStart + "\" alt=\"\" /><center><table><tr><td valign=\"top\"><div id=\"CB_Notes\"></div></td><td><div id=\"CB_NoteText\" ></div></td><td><div id=\"CB_DetailText\" title=\"" + CB_Detail_Info + "\" alt=\"\"></div></td><td valign=\"top\"><a href=\"\"><img id=\"CB_Details\" title=\"" + CB_Detail_Info + "\" src=\"" + CB_PicDir + CB_PictureDetails + "\" alt=\"\" /></a></td></tr></table></center><img id=\"CB_CloseWindow\" title=\"" + CB_Close_Win + "\" src=\"" + CB_PicDir + CB_PictureClose + "\" alt=\"\" /></div></div></td><td id=\"CB_Right\"></td></tr><tr id=\"CB_Footer\"><td id=\"CB_BtmLeft\">" + a + "</td><td id=\"CB_Btm\"></td><td id=\"CB_BtmRight\">" + a + "</td></tr></table><div id=\"CB_ContentHide\"></div>";
 
             if (navigator.userAgent.indexOf("MSIE 6") != -1 &&
                 CB_RoundPix == 0) {
@@ -690,21 +696,38 @@ var CB_Close_Win	= CB_Close_Win;
             CB_Prv = document.getElementById("CB_Prev");
             CB_Nxt = document.getElementById("CB_Next");
             CB_Txt = document.getElementById("CB_Text");
- //           	CB_Txt.style.height = CB_TextH - CB_PadT + "px";
- //           	CB_Txt.style.marginTop = CB_PadT + "px";
+			//  CB_Txt.style.height = CB_TextH - CB_PadT + "px";
+			// CB_Txt.style.marginTop = CB_PadT + "px";
             CB_Txt.style.fontFamily = CB_Font;
             CB_Txt.style.fontSize = CB_FontSize + "px";
             CB_Txt.style.fontWeight = CB_FontWeigth;
-//		CB_Txt.style.color = CB_FontColor;
-	
-			CB_Txt2 = document.getElementById("CB_TopText");
- //       	CB_Txt2.style.height = CB_TextH - CB_PadT + "px";
- //       	CB_Txt2.style.marginTop = CB_PadT + "px";
+			//CB_Txt.style.color = CB_FontColor;
+			
+			CB_Txt2 = document.getElementById("CB_DetailText");
 			CB_Txt2.style.fontFamily = CB_Font;
 			CB_Txt2.style.fontSize = CB_FontSize + "px";
 			CB_Txt2.style.fontWeight = CB_FontWeigth;
- //		CB_Txt2.style.color = CB_FontColor;	
-
+			
+			CB_Txt2a = document.getElementById("CB_Details");
+			CB_Txt2a.style.fontFamily = CB_Font;
+			CB_Txt2a.style.fontSize = CB_FontSize + "px";
+			CB_Txt2a.style.fontWeight = CB_FontWeigth;
+ 
+ 			CB_Txt3 = document.getElementById("CB_NoteText");
+ 			CB_Txt3.style.fontFamily = CB_Font;
+			CB_Txt3.style.fontSize = CB_FontSize + "px";
+			CB_Txt3.style.fontWeight = CB_FontWeigth;
+			
+			CB_Txt3a = document.getElementById("CB_Notes");
+ 			CB_Txt3a.style.fontFamily = CB_Font;
+			CB_Txt3a.style.fontSize = CB_FontSize + "px";
+			CB_Txt3a.style.fontWeight = CB_FontWeigth;
+			
+ 			CB_Txt4 = document.getElementById("CB_UrlNotes");
+ 			CB_Txt4.style.fontFamily = CB_Font;
+			CB_Txt4.style.fontSize = CB_FontSize + "px";
+			CB_Txt4.style.fontWeight = CB_FontWeigth;
+			
 			CB_Header = document.getElementById("CB_Header").style;
             CB_Header.height = CB_RoundPix + "px";
             CB_Footer = document.getElementById("CB_Footer").style;
@@ -746,22 +769,22 @@ var CB_Close_Win	= CB_Close_Win;
             CB_URL = CB_Links[i].getAttribute("href");
             if (CB_Rel.match("clearbox") != null && CB_Show != 0) {
                 if (CB_Rel == "clearbox") {
-                    CB_Links[i].onclick = function () {CB_ClickIMG(this.rel + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+                    CB_Links[i].onclick = function () {CB_ClickIMG(this.rel + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
 				} else {
 					if (CB_Rel.substring(0, 8) == "clearbox" &&
 						CB_Rel.charAt(8) == "[" &&
 						CB_Rel.charAt(CB_Rel.length - 1) == "]") {
 						if (CB_Links[i].rel.substring(9, CB_Links[i].rel.length - 1).split(",")[0] != "clearbox") {
-							CB_Links[i].onclick = function () {CB_ClickIMG(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+							CB_Links[i].onclick = function () {CB_ClickIMG(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
 						} else {
 							alert("ClearBox HIBA:\n\nClearBox galeria neve NEM lehet \"clearbox[clearbox]\"!\n(Helye: dokumentum, a " + i + ". <a> tag-en belul.)");						}
                     } else if (CB_Rel.substring(0, 8) == "clearbox" &&
                         CB_Rel.charAt(8) == "(" &&
                         CB_Rel.charAt(CB_Rel.length - 1) == ")") {
                         if (CB_Rel.substring(9, CB_Rel.length - 1).split(",")[2] == "click") {
-                            CB_Links[i].onclick = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+                            CB_Links[i].onclick = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
                         } else {
-                            CB_Links[i].onmouseover = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("title"));return false;};
+                            CB_Links[i].onmouseover = function () {CB_ClickURL(this.rel.substring(9, this.rel.length - 1) + "+\\+" + this.getAttribute("href") + "+\\+" + this.getAttribute("rev"));return false;};
                         }
                     } else {
                         alert("ClearBox HIBA:\n\nHibasan megadott clearbox REL azonosito: \"" + CB_Links[i].rel + "\"!\n(Helye: dokumentum, a " + i + ". <a> tag-en belul.)");
@@ -776,7 +799,6 @@ var CB_Close_Win	= CB_Close_Win;
         if (CB_Show == 0) {
             return false;
         }
-
         CB_Cls.onclick = "";
         CB_SlideS.onclick = "";
         CB_SlideP.onclick = "";
@@ -814,9 +836,9 @@ var CB_Close_Win	= CB_Close_Win;
                         } else {
                             b = CB_Links[i].getAttribute("tnhref");
                         }
-						// Split the Title info
-						var splitTitle = CB_Links[i].getAttribute("title").split(":",3);
-                        CB_Gallery.push(new Array(CB_Links[i].getAttribute("href"), splitTitle[2], b, splitTitle[0], splitTitle[1]));
+						// Split the rev attribute
+						var splitTitle = CB_Links[i].getAttribute("rev").split("::",4);
+                        CB_Gallery.push(new Array(CB_Links[i].getAttribute("href"), splitTitle[2], b, splitTitle[0], splitTitle[1], splitTitle[3]));
                     }
                 }
             }
@@ -894,8 +916,8 @@ var CB_Close_Win	= CB_Close_Win;
 		CB_Speak.style.display = "none";		
         CB_ZoomS.style.display = "none";
         CB_ZoomP.style.display = "none";
+
  //       CB_Txt2.style.display = "none";	
- //       CB_Toptext.style.display = "none";			
         CB_HideDocument("x");
 		CB_HideContent.onclick = function () {CB_Close();return false;};
 		CB_SS = "pause";
@@ -982,6 +1004,7 @@ var CB_Close_Win	= CB_Close_Win;
             CB_LoadingImg.style.visibility = "visible";
         }
         CB_Txt.innerHTML = CB_LoadingText;
+		CB_Txt.innerHTML = "";
         CB_Count = 0;
         CB_preImages = new Image;
         CB_preImages.src = CB_Gallery[CB_ActImgId][0];
@@ -1198,20 +1221,38 @@ var CB_Close_Win	= CB_Close_Win;
             CB_iFr.style.top = CB_ImgBorder + "px";
             CB_iFr.style.left = CB_ImgBorder + "px";
             CB_iFr.style.width = CB_ImgWidth + "px";
-//BH next line changed to make url navbar smaller in Firefox
-//BH            	CB_iFr.style.height = CB_ImgHeight + 2 + "px";			
+			//BH next line changed to make url navbar smaller in Firefox
+			//BH 		CB_iFr.style.height = CB_ImgHeight + 2 + "px";			
 			CB_iFr.style.height = CB_ImgHeight + 4 + "px";
+			
             if (CB_Clicked[2] &&
                 CB_Clicked[2] != "null" && CB_Clicked[2] != null) {
-//				CB_Txt.innerHTML =  CB_Clicked[2];	
-
-				// Split URL title and also create CB_Txt.innerHTML   
-				var splitURLTitle = CB_Clicked[2].split(":",3);				
+				
+				CB_Txt.style.visibility = "visible";
+				CB_Txt3.style.visibility = "visible";
+				CB_Txt3a.style.visibility = "visible";
+				
+				CB_Txt4.style.top = "20px";
+				CB_Txt4.style.left = "20px";
+				CB_Txt4.style.width = "200px";
+				CB_Txt4.style.height = "80px";
+				CB_Txt4.innerHTML = " Testing ";
+				CB_Txt4.style.visibility = "hidden";
+				
+				// Split URL title and also create CB_Txt.innerHTML 
+					// CB_Txt.innerHTML =  CB_Clicked[2];
+				var splitURLTitle = CB_Clicked[2].split("::",4);
 				CB_Txt.innerHTML = splitURLTitle[2];
 				var MIDa = splitURLTitle[0];
-				var GEDCOMa = splitURLTitle[1];		
-				CB_Txt2.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MIDa+'&ged='+GEDCOMa; return false; };
-				
+				var GEDCOMa = splitURLTitle[1];
+				var notey = splitURLTitle[3];
+				if (notey != "&lt;br /&gt;" && notey) {
+					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey + "', CENTERWINDOW, false, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON, false, ABOVE, false, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -25, OFFSETX, 40, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
+					CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey + "', CENTERWINDOW, false, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON, false, ABOVE, false, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -25, OFFSETX, 40, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
+
+					}
+				CB_Txt2.onclick  = function () { window.location.href = 'mediaviewer.php?mid='+MIDa+'&ged='+GEDCOMa; return false; };
+				CB_Txt2a.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MIDa+'&ged='+GEDCOM; return false; };
             } else {
                 CB_Txt.innerHTML = CB_Clicked[1];
             }
@@ -1423,8 +1464,11 @@ var CB_Close_Win	= CB_Close_Win;
 
     function CB_ShowImage() {
 		// ---Adjust Title width to image ----------------------------
-		CB_Txt.style.width = CB_ImgWidth +"px";
-		// ---------------------------------------------------------------		
+		CB_Txt.style.width = CB_ImgWidth + "px";
+		// ---------------------------------------------------------------
+		
+		// UnTip(); // Supposed to Clear Notes Tooltip ... Does not work ?
+		tt_HideInit(); // Clears Notes Tooltip
 		
 		// init music player
 		setMusicPlayer();
@@ -1440,6 +1484,8 @@ var CB_Close_Win	= CB_Close_Win;
         CB_PrvNxt.display = "block";
         if (CB_Animation != "warp") {
             CB_Txt.innerHTML = "";
+			CB_Txt3.innerHTML = "";
+			CB_Txt3a.innerHTML = "";
             CB_LoadingImg.style.visibility = "hidden";
             CB_Img.src = CB_Gallery[CB_ActImgId][0];
             CB_Img.style.visibility = "visible";
@@ -1448,13 +1494,25 @@ var CB_Close_Win	= CB_Close_Win;
         CB_HideContent.onclick = function () {CB_Close();return false;};
         CB_Prv.style.height = CB_ImgHeight + "px";
         CB_Nxt.style.height = CB_ImgHeight + "px";
-        if (CB_Gallery[CB_ActImgId][1] &&
-            CB_Gallery[CB_ActImgId][1] != "null" &&
-            CB_Gallery[CB_ActImgId][1] != null) {
-            CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][1];
-        } else {
-            if (CB_ShowImgURL == "be") {
-                CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][0].split("/")[CB_Gallery[CB_ActImgId][0].split("/").length - 1];
+
+		if (CB_Gallery[CB_ActImgId][1] &&
+			CB_Gallery[CB_ActImgId][1] != "null" &&
+			CB_Gallery[CB_ActImgId][1] != null) {
+			
+			CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][1];
+			var notey1 = CB_Gallery[CB_ActImgId][5];
+			if (notey1 != "&lt;br /&gt;" && notey1 ) {
+				CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + (((DocSizeY-BrSizeY)/2)) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
+				CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + (((DocSizeY-BrSizeY)/2)) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
+			}
+		} else {
+			if (CB_ShowImgURL == "be") {
+				CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][0].split("/")[CB_Gallery[CB_ActImgId][0].split("/").length - 1];
+				var notey2 = CB_Gallery[CB_ActImgId][5];
+				if (notey2 != "&lt;br /&gt;" && notey2 ) {
+					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true ) \"></a>";
+					CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true ) \"><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
+				}
 			}
         }
         if (CB_ImgNum == "be" && CB_Gallery.length > 2) {
@@ -1464,9 +1522,11 @@ var CB_Close_Win	= CB_Close_Win;
         CB_PrevNext();
 		
         CB_Txt.style.visibility = "visible";
+		CB_Txt3.style.visibility= "visible";
+		CB_Txt3a.style.visibility= "visible";
         if (CB_Gallery.length > 0) {
            	CB_ImgWidthOld = CB_ImgWidth;
-			CB_ImgHeightOld = CB_ImgHeight;		
+			CB_ImgHeightOld = CB_ImgHeight;
         }
         if (CB_Gallery.length > 2) {
             if (CB_SS == "pause") {
@@ -1511,7 +1571,7 @@ var CB_Close_Win	= CB_Close_Win;
             for (i = 1; i < CB_Gallery.length; i++) {
                 CB_preThumbs = new Image;
                 CB_preThumbs.src = CB_Gallery[i][2];
-                a += "<a href=\"javascript:void(0)\" onclick=\"if(CB_SSTimer){CB_SlideShowJump();}CB_LoadImage(" + i + ")\"><img style=\"border: 0; left: " + c + "px;\" \" src=\"" + CB_Gallery[i][2] + "\" height=\"50\" class=\"CB_ThumbsImg\" /></a>";
+                a += "<a href=\"javascript:void(0)\" onclick=\"if(CB_SSTimer){CB_SlideShowJump();}CB_LoadImage(" + i + ")\"><img style=\"border: 0; left: " + c + "px;\" \" src=\"" + CB_Gallery[i][2] + "\" height=\"50\" class=\"CB_ThumbsImg\" alt=\"\" /></a>";
                 c += Math.round(CB_preThumbs.width / CB_preThumbs.height * 50) + b;
             }
             CB_Thm2.style.width = CB_AllThumbsWidth + "px";
@@ -1524,9 +1584,13 @@ var CB_Close_Win	= CB_Close_Win;
 		var GEDCOM = CB_Gallery[CB_ActImgId][4];
 //		CB_Txt2.onclick = function () { window.open('mediaviewer.php?filename='+MID+'&ged='+GEDCOM+'', "win01", " resizable=1, scrollbars=1, top=50, HEIGHT=800, WIDTH=1100 "); };
 		if (MID != "") { 
-			CB_Txt2.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MID+'&ged='+GEDCOM; return false; };
+			CB_Txt2.onclick  = function () { window.location.href = 'mediaviewer.php?mid='+MID+'&ged='+GEDCOM; return false; };
+			CB_Txt2a.onclick = function () { window.location.href = 'mediaviewer.php?mid='+MID+'&ged='+GEDCOM; return false; };
+			//CB_Txt3.onclick = function () { alert(CB_Gallery[CB_ActImgId][5]); };
+
 		}else{
-			CB_Txt2.onclick = function () { CB_Close(); };
+			CB_Txt2.onclick  = function () { CB_Close(); };
+			CB_Txt2a.onclick = function () { CB_Close(); };
 		}
 		
         return true;
@@ -1642,7 +1706,12 @@ var CB_Close_Win	= CB_Close_Win;
 			}else{
 				CB_Speak.style.display = "block";
 			}
-            CB_Prv.onclick = function () {if (CB_SSTimer) {CB_SlideShowJump();}	resetZoom(); CB_LoadImage(CB_ActImgId - 1);return false;};
+            CB_Prv.onclick = function () {
+				if (CB_SSTimer) {
+					CB_SlideShowJump();
+				}	CB_LoadImage(CB_ActImgId - 1);
+				return false;
+			};
         }
         if (CB_ActImgId < CB_Gallery.length - 1) {
             if (CB_Preload == "be") {
@@ -1653,7 +1722,12 @@ var CB_Close_Win	= CB_Close_Win;
                 CB_Txt.innerHTML += " <a class=\"CB_TextNav\" href=\"javascript:void(0)\" onclick=\"if(CB_SSTimer){CB_SlideShowJump();}CB_LoadImage(" + (CB_ActImgId + 1) + ")\" alt=\"&gt;\">" + CB_NavTextNxt + "</a>";
             }
             CB_Nxt.style.display = "block";
-            CB_Nxt.onclick = function () {if (CB_SSTimer) {CB_SlideShowJump();} resetZoom(); CB_LoadImage(CB_ActImgId + 1);return false;};
+            CB_Nxt.onclick = function () {
+				if (CB_SSTimer) {
+					CB_SlideShowJump();
+				} CB_LoadImage(CB_ActImgId + 1);
+				return false;
+			};
         }
         if (CB_ActImgId == 1 && CB_SS == "start" && soond=="playing" ) {
 			if (slideshowMusic == null) {
@@ -1673,7 +1747,14 @@ var CB_Close_Win	= CB_Close_Win;
         CB_ImgHd.style.visibility = "hidden";
         CB_ShTh.style.visibility = "hidden";
         CB_SlideShowStop();
+		CB_Txt.style.visibility = "hidden";
+		CB_Txt3.style.visibility = "hidden";
+		CB_Txt3a.style.visibility = "hidden";
+		CB_Txt4.style.visibility = "hidden";
         CB_Txt.innerHTML = "";
+ 		CB_Txt3.innerHTML = "";
+		CB_Txt3a.innerHTML = "";
+ 		CB_Txt4.innerHTML = "";
         CB_Img.src = "";
         CB_ImgWidth = CB_WinBaseW;
         CB_ImgHeight = CB_WinBaseH - CB_TextH;
@@ -1913,8 +1994,11 @@ dragDrop = {
 			dragDrop.startX = (obj.offsetLeft+(CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
 			dragDrop.startY = ((obj.offsetTop-document.documentElement.scrollTop)+(CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
 		}else{
-			dragDrop.startX = (obj.offsetLeft)+CB_ieRPBug ;
-			dragDrop.startY = (obj.offsetTop)+CB_ieRPBug ;
+		//	dragDrop.startX = (obj.offsetLeft)+CB_ieRPBug ;
+		//	dragDrop.startY = (obj.offsetTop)+CB_ieRPBug ;
+			dragDrop.startX = (obj.offsetLeft+(CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+			dragDrop.startY = ((obj.offsetTop-document.documentElement.scrollTop)+(CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+
 		}
         dragDrop.draggedObject = obj;
         obj.className += ' dragged';

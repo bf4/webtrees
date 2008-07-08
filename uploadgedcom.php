@@ -7,7 +7,7 @@
  * file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,10 +95,8 @@ else if ($check == "add") {
 	$ok = true;
 } else if ($check == "add_new") {
 	if (((!file_exists($INDEX_DIRECTORY.$GEDFILENAME)) && !file_exists($path.$GEDFILENAME)) || $override == "yes") {
-		if ($path != "")
-		$fp = fopen($path.$GEDFILENAME, "wb");
-		else
-		$fp = fopen($INDEX_DIRECTORY.$GEDFILENAME, "wb");
+		if ($path != "") $fp = fopen($path.$GEDFILENAME, "wb");
+		else $fp = fopen($INDEX_DIRECTORY.$GEDFILENAME, "wb");
 		if ($fp) {
 			$newgedcom = gedcom_header($GEDFILENAME).
 			"0 @I1@ INDI\r\n" .
@@ -111,7 +109,6 @@ else if ($check == "add") {
 			fwrite($fp, $newgedcom);
 			fclose($fp);
 			$logline = AddToLog($GEDFILENAME." updated");
-			if (!empty ($COMMIT_COMMAND))
 			check_in($logline, $GEDFILENAME, $INDEX_DIRECTORY);
 			$verify = "validate_form";
 			$exists = true;
@@ -827,9 +824,9 @@ if ($startimport == "true") {
 			progress = document.getElementById("progress_header");
 			if (progress) progress.innerHTML = '<span class="error"><b><?php print $pgv_lang["import_complete"]; ?></b></span><br />'+exectext+' '+time+' <?php print $pgv_lang["sec"]; ?>'; 
 			progress = document.getElementById("link1"); 
-			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print preg_replace("/'/", "\'", $ged); ?>">'+go_pedi+'</a>'; 
+			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_pedi+'</a>'; 
 			progress = document.getElementById("link2"); 
-			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print preg_replace("/'/", "\'", $ged); ?>">'+go_welc+'</a>'; 
+			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_welc+'</a>'; 
 			progress = document.getElementById("link3"); 
 			if (progress) progress.innerHTML = '<a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"]; ?></a>';
 		}
@@ -1152,7 +1149,6 @@ if ($stage == 1) {
 	} else {
 		@unlink($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new");
 		$logline = AddToLog($GEDCOM_FILE." updated");
-		if (!empty ($COMMIT_COMMAND))
 		check_in($logline, $GEDCOM_FILE, $INDEX_DIRECTORY);
 	}
 	$newtime = time();
@@ -1163,8 +1159,9 @@ if ($stage == 1) {
 	$go_welc = $pgv_lang["welcome_page"];
 	if ($LANGUAGE == "french" || $LANGUAGE == "italian") {
 		print "<script type=\"text/javascript\">complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");</script>";
-	} else
-	print "<script type=\"text/javascript\">complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');</script>";
+	} else {
+		print "<script type=\"text/javascript\">complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');</script>";
+	}
 	flush();
 
 	if ($marr_names == "yes") {

@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,24 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-// Added in VERSION 4.1.4 
+// Added in VERSION 4.1.6
+$pgv_lang["lb_generalhelp"]     = "Individual Page - Lightbox General Help";
+$pgv_lang["lb_viewedit"]		= "View/Edit";
+$pgv_lang["lb_viewnotes"]		= "View Notes";
+$pgv_lang["lb_viewdetails"]		= "View Details";
+$pgv_lang["lb_viewsource"]		= "View Source";
+$pgv_lang["lb_editmedia"]		= "Edit Media";
+$pgv_lang["lb_unlinkmedia"]		= "Unlink Media";
+$pgv_lang["lb_balloon_true"]	= "Balloon";
+$pgv_lang["lb_balloon_false"]	= "Normal";
+$pgv_lang["lb_tt_balloon"]		= "Individual Page - Album Tab Thumbnail - Notes Tooltip";
+$pgv_lang["lb_ttAppearance"]	= "Notes - Tooltip appearance";
+$pgv_lang["view_lightbox"]		= "View Album of ...";
+$pgv_lang["lb_notes"]			= "Notes";
+$pgv_lang["lb_notes_info"]		= "";
+ 
 
+// Added in VERSION 4.1.4 
 $pgv_lang["lb_details"]			= "Details";
 $pgv_lang["lb_detail_info"]		= "View this Media Item Details ...  Plus other Media Options - MediaViewer page";
 $pgv_lang["lb_pause_ss"]		= "Pause Slideshow";
@@ -43,8 +59,6 @@ $pgv_lang["lb_music"]			= "Turn Music On/Off";
 $pgv_lang["lb_zoom_off"]		= "Disable Zoom";
 $pgv_lang["lb_zoom_on"]			= "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out";
 $pgv_lang["lb_close_win"]		= "Close Lightbox window";
-
-
 
 
 // VERSION 4.1.3 
@@ -58,10 +72,10 @@ $pgv_lang["lb_MP3Only"]					= "(mp3 only)";
 $pgv_lang["lb_admin_error"]				= "Page only for Administrators";
 $pgv_lang["lb_toAlbumPage"]				= "Return to Album page";
 
-$pgv_lang["lb_icon"]				= "Icon";
-$pgv_lang["lb_text"]				= "Text";
-$pgv_lang["lb_both"]				= "Both";
-$pgv_lang["lb_none"]				= "None";
+$pgv_lang["lb_icon"]					= "Icon";
+$pgv_lang["lb_text"]					= "Text";
+$pgv_lang["lb_both"]					= "Both";
+$pgv_lang["lb_none"]					= "None";
 
 $pgv_lang["lb_al_head_links"]			= "Individual Page - Album Tab Header";
 $pgv_lang["lb_al_thumb_links"]			= "Individual Page - Album Tab Thumbnails";
@@ -92,9 +106,9 @@ $pgv_lang["TYPE__other"] 	 = "Other";
 
 $pgv_lang["TYPE__footnotes"] = "Footnotes";
 
-$pgv_lang["census_text"]  	 = "\"These census images have been obtained from \"The National Archives\", the custodian of the original records, ";
+$pgv_lang["census_text"]  	 = "\"UK census images have been obtained from \"The National Archives\", the custodian of the original records, ";
 $pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
-$pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other census images appearing on this website should be directed to: ";
+$pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other UK census images appearing on this website should be directed to: ";
 $pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
 
 $pgv_lang["lb_edit_details"] 	= "Edit Details";
@@ -116,5 +130,7 @@ $pgv_lang["lb_source_avail"] 	= "Source information available - Click here.";
 $pgv_lang["lb_private"] 		= "Image linked <br /> to a Private Individual";
 $pgv_lang["lb_view_source_tip"] = "View Source : ";
 $pgv_lang["lb_view_details_tip"] = "View Media Details : ";
+
+
 
 ?>

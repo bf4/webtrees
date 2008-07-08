@@ -3,7 +3,7 @@
  * Google map module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,11 @@
  * $Id$
  * @author Johan Borkhuis
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
 
 require('modules/googlemap/defaultconfig.php');
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
@@ -297,6 +302,7 @@ function setup_map() {
 	//]]>
 	</script>
 	<?php
+
 }
 
 function tool_tip_text($marker) {
@@ -311,6 +317,120 @@ function tool_tip_text($marker) {
 	}
 	return $tool_tip;
 // dates & RTL is not OK - adding PrintReady does not solve it
+}
+
+function create_indiv_buttons() {
+	global $pgv_lang;
+	?>
+	<style type="text/css">
+	#map_type
+	{
+		margin: 0;
+		padding: 0;
+		font-family: Arial;
+		font-size: 10px;
+		list-style: none;
+	}
+	#map_type li
+	{
+		display: block;
+		width: 70px;
+		text-align: center;
+		padding: 2px;
+		border: 1px solid black;
+		cursor: pointer;
+		float: left;
+		margin-left: 2px;
+	}
+	#map_type li.non_active
+	{
+		background: white;
+		color: black;
+		font-weight: normal;
+	}
+	#map_type li.active
+	{
+		background: gray;
+		color: white;
+		font-weight: bold;
+	}
+	#map_type li:hover
+	{
+		background: #ddd;
+	}
+	</style>
+	<script type='text/javascript'>
+	<!--
+	function Map_type() {}
+	Map_type.prototype = new GControl();
+
+	Map_type.prototype.refresh = function()
+	{
+		this.button1.className = 'non_active';
+		if(this.map.getCurrentMapType() != G_NORMAL_MAP)
+			this.button2.className = 'non_active';
+		else
+			this.button2.className = 'active';
+		if(this.map.getCurrentMapType() != G_SATELLITE_MAP)
+			this.button3.className = 'non_active';
+		else
+			this.button3.className = 'active';
+		if(this.map.getCurrentMapType() != G_HYBRID_MAP)
+			this.button4.className = 'non_active';
+		else
+			this.button4.className = 'active';
+		if(this.map.getCurrentMapType() != G_PHYSICAL_MAP)
+			this.button5.className = 'non_active';
+		else
+			this.button5.className = 'active';
+	}
+
+	Map_type.prototype.initialize = function(place_map)
+	{
+		var list 	= document.createElement("ul");
+		list.id	= 'map_type';
+
+		var button1 = document.createElement('li');
+		var button2 = document.createElement('li');
+		var button3 = document.createElement('li');
+		var button4 = document.createElement('li');
+		var button5 = document.createElement('li');
+
+		button1.innerHTML = '<?php echo $pgv_lang["gm_redraw_map"]?>';
+		button2.innerHTML = '<?php echo $pgv_lang["gm_map"]?>';
+		button3.innerHTML = '<?php echo $pgv_lang["gm_satellite"]?>';
+		button4.innerHTML = '<?php echo $pgv_lang["gm_hybrid"]?>';
+		button5.innerHTML = '<?php echo $pgv_lang["gm_physical"]?>';
+
+		button1.onclick = function() { javascript:ResizeMap(); return false; };
+		button2.onclick = function() { map.setMapType(G_NORMAL_MAP); return false; };
+		button3.onclick = function() { map.setMapType(G_SATELLITE_MAP); return false; };
+		button4.onclick = function() { map.setMapType(G_HYBRID_MAP); return false; };
+		button5.onclick = function() { map.setMapType(G_PHYSICAL_MAP); return false; };
+
+		list.appendChild(button1);
+		list.appendChild(button2);
+		list.appendChild(button3);
+		list.appendChild(button4);
+		list.appendChild(button5);
+
+		this.button1 = button1;
+		this.button2 = button2;
+		this.button3 = button3;
+		this.button4 = button4;
+		this.button5 = button5;
+		this.map = map;
+		map.getContainer().appendChild(list);
+		return list;
+	}
+
+	Map_type.prototype.getDefaultPosition = function()
+	{
+		return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(2, 2));
+	}
+	var map_type;
+	</script>
+	<?php
 }
 
 function build_indiv_map($indifacts, $famids) {
@@ -548,6 +668,12 @@ function build_indiv_map($indifacts, $famids) {
 			print "bounds.extend(new GLatLng({$marker["lati"]}, {$marker["lng"]}));\n";
 		print "SetBoundaries(bounds);\n";
 
+		print "var icon = new GIcon();";
+		print "icon.image = \"http://maps.google.com/intl/pl_ALL/mapfiles/marker.png\";";
+		print "icon.shadow = \"modules/googlemap/shadow50.png\";";
+		print "icon.iconAnchor = new GPoint(6, 20);";
+		print "icon.infoWindowAnchor = new GPoint(5, 1);";
+
 		$indexcounter = 0;
 		for ($j=1; $j<=$i; $j++) {
 			// Use @ because some installations give warnings (but not errors?) about UTF-8
@@ -562,7 +688,7 @@ function build_indiv_map($indifacts, $famids) {
 				if ($multimarker == 0) {        // Only one location with this long/lati combination
 					$markers[$j]["placed"] = "yes";
 					if (empty($markers[$j]["icon"])) {
-						print "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {title:\"{$tooltip}\"});\n";
+						print "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
 					} else {
 						print "var Marker{$j}_flag = new GIcon();\n";
 						print "    Marker{$j}_flag.image = \"".$markers[$j]["icon"]."\";\n";
@@ -571,7 +697,7 @@ function build_indiv_map($indifacts, $famids) {
 						print "    Marker{$j}_flag.shadowSize = new GSize(35, 45);\n";
 						print "    Marker{$j}_flag.iconAnchor = new GPoint(1, 45);\n";
 						print "    Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						print "var Marker{$j} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_flag, title:\"".$tooltip."\"});\n";
+						print "var Marker{$j} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_flag, title:\"".addslashes($tooltip)."\"});\n";
 					}
 					print "GEvent.addListener(Marker{$j}, \"click\", function() {\n";
 					print "Marker{$j}.openInfoWindowHtml(\"<div class='iwstyle'>";
@@ -586,7 +712,7 @@ function build_indiv_map($indifacts, $famids) {
 							print $pgv_lang["private"];
 						print "</a>";
 					}
-					print "<br/>";
+					print "<br />";
 					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
 						print_address_structure_map($markers[$j]["placerec"], 1);
 					} else {
@@ -594,14 +720,14 @@ function build_indiv_map($indifacts, $famids) {
 					}
 					if (!empty($markers[$j]["date"])) {
 						$date=new GedcomDate($markers[$j]["date"]);
-						print "<br/>".addslashes($date->Display(true));
+						print "<br />".addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\");\n";
 					} else {
-						print "<br/><br/>Lati: ";
+						print "<br /><br />";
 						if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
-						print ", Long: ";
+						print ", ";
 						if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 						print "\");\n";
 					}
@@ -616,7 +742,7 @@ function build_indiv_map($indifacts, $famids) {
 					$markersindex = 0;
 					$markers[$j]["placed"] = "yes";
 					if (empty($markers[$j]["icon"])) {
-						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {title:\"{$tooltip}\"});\n";
+						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
 					} else {
 						print "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 						print "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
@@ -625,7 +751,7 @@ function build_indiv_map($indifacts, $famids) {
 						print "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 						print "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
 						print "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_{$markersindex}_flag, title:\"{$tooltip}\"});\n";
+						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_{$markersindex}_flag, title:\"".addslashes($tooltip)."\"});\n";
 					}
 					print "var Marker{$j}_{$markersindex}Info = [\n";
 					$markers[$j]["index"] = $indexcounter;
@@ -642,7 +768,7 @@ function build_indiv_map($indifacts, $famids) {
 							print $pgv_lang["private"];
 						print "</a>";
 					}
-					print "<br/>";
+					print "<br />";
 					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
 						print_address_structure_map($markers[$j]["placerec"], 1);
 					} else {
@@ -650,14 +776,14 @@ function build_indiv_map($indifacts, $famids) {
 					}
 					if (!empty($markers[$j]["date"])) {
 						$date=new GedcomDate($markers[$j]["date"]);
-						print "<br/>".addslashes($date->Display(true));
+						print "<br />".addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\")";
 					} else {
-						print "<br/><br/>Lati: ";
+						print "<br /><br />";
 						if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
-						print ", Long: ";
+						print ", ";
 						if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 						print "\")";
 					}
@@ -682,7 +808,7 @@ function build_indiv_map($indifacts, $famids) {
 								$markersindex = $markersindex + 1;
 
 								if (empty($markers[$j]["icon"])) {
-									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {title:\"{$tooltip}\"});\n";
+									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
 								} else {
 									print "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
 									print "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
@@ -691,7 +817,7 @@ function build_indiv_map($indifacts, $famids) {
 									print "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 									print "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
 									print "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:Marker{$j}_{$markersindex}_flag, title:\"{$tooltip}\"});\n";
+									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:Marker{$j}_{$markersindex}_flag, title:\"".addslashes($tooltip)."\"});\n";
 								}
 								print "var Marker{$j}_{$markersindex}Info = [\n";
 							} else {
@@ -711,7 +837,7 @@ function build_indiv_map($indifacts, $famids) {
 									print $pgv_lang["private"];
 								print "</a>";
 							}
-							print "<br/>";
+							print "<br />";
 							if (preg_match("/2 PLAC (.*)/", $markers[$k]["placerec"]) == 0) {
 								print_address_structure_map($markers[$k]["placerec"], 1);
 							} else {
@@ -719,14 +845,14 @@ function build_indiv_map($indifacts, $famids) {
 							}
 							if (!empty($markers[$k]["date"])) {
 								$date=new GedcomDate($markers[$k]["date"]);
-								print "<br/>".addslashes($date->Display(true));
+								print "<br />".addslashes($date->Display(true));
 							}
 							if ($GOOGLEMAP_COORD == "false"){
 								print "\")";
 							} else {
-								print "<br/><br/>Lati: ";
+								print "<br /><br />";
 								if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
-								print ", Long: ";
+								print ", ";
 								if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 								print "\")";
 							}
@@ -752,27 +878,27 @@ function build_indiv_map($indifacts, $famids) {
 			print "<a href=\"javascript:highlight({$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";
 			print "<td class=\"{$marker['class']}\">";
 			if (!empty($marker["info"]))
-				print "<span class=\"field\">{$marker["info"]}</span><br/>";
+				print "<span class=\"field\">{$marker["info"]}</span><br />";
 			if (!empty($marker["name"])) {
 				print "<a href=\"individual.php?pid={$marker["name"]}&amp;ged=$GEDCOM\">";
 				if (displayDetailsById($marker["name"])||showLivingNameById($marker["name"]))
 					print PrintReady(get_person_name($marker["name"]));
 				else
 					print $pgv_lang["private"];
-				print "</a><br/>";
+				print "</a><br />";
 			}
 			if (preg_match("/2 PLAC (.*)/", $marker["placerec"]) == 0) {
 				print_address_structure_map($marker["placerec"], 1);
 			} else {
-				print print_fact_place_map($marker["placerec"])."<br/>";
+				print print_fact_place_map($marker["placerec"])."<br />";
 			}
 			if (!empty($marker['date'])) {
 				$date=new GedcomDate($marker['date']);
-				print $date->Display(true)."<br/>";
+				print $date->Display(true)."<br />";
 			}
 			print "</td></tr>";
 		}
-		print "</table></div><br/>";
+		print "</table></div><br />";
 	}
 	print "\n<br />";
 

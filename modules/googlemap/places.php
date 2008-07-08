@@ -3,7 +3,7 @@
  * Online UI for editing config.php site configuration variables
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,8 +32,6 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
-
-
 require( "modules/googlemap/defaultconfig.php" );
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
@@ -64,14 +62,14 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
 		print "<table class=\"facts_table\">\n";
 		print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_db_error"];
 		print "</td></tr></table>\n";
-		print "<br/><br/><br/>\n";
+		print "<br /><br /><br />\n";
 		print_footer();
 		exit;
 	}
 	print "<table class=\"facts_table\">\n";
 	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_table_created"];
 	print "</td></tr></table>\n";
-	print "<br/><br/><br/>\n";
+	print "<br /><br /><br />\n";
 }
 
 // Take a place id and find its place in the hierarchy
@@ -102,7 +100,7 @@ function getHighestIndex() {
 	$res->free();
 	if (empty($row[0]))
 		return 0;
- 	else
+	else
 		return $row[0];
 }
 
@@ -164,7 +162,7 @@ if (!PGV_USER_IS_ADMIN) {
 	print "<table class=\"facts_table\">\n";
 	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
 	print "</td></tr></table>\n";
-	print "<br/><br/><br/>\n";
+	print "<br /><br /><br />\n";
 	print_footer();
 	exit;
 }
@@ -240,7 +238,7 @@ if ($action=="ImportGedcom") {
 				$placelistUniq[$j-1]["lati"] = $place["lati"];
 				$placelistUniq[$j-1]["long"] = $place["long"];
 			} else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-				print "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br/>";
+				print "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br />";
 			}
 		}
 		$prevPlace = $place["place"];
@@ -266,7 +264,7 @@ if ($action=="ImportGedcom") {
 			$res = dbquery($psql);
 			$row =& $res->fetchRow();
 			$res->free();
-				$sql="";
+			$sql="";
 			if ($i < count($parent)-1) {
 				// Create higher-level places, if necessary
 				if (empty($row[0])) {
@@ -288,7 +286,7 @@ if ($action=="ImportGedcom") {
 				}
 			}
 			if (!empty($sql)) {
-				print "$sql<br/>";
+				print "$sql<br />";
 				$res=dbquery($sql);
 			}
 		}
@@ -307,10 +305,10 @@ if ($action=="ImportFile") {
 		if (file_exists($path)) {
 			$dir = dir($path);
 			while (false !== ($entry = $dir->read())) {
-		   		if ($entry!="." && $entry!=".." && $entry!=".svn") {
-		   			if (is_dir($path."/".$entry)) findFiles($path."/".$entry); 
-		   			else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
-		   		}
+				if ($entry!="." && $entry!=".." && $entry!=".svn") {
+					if (is_dir($path."/".$entry)) findFiles($path."/".$entry); 
+					else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
+				}
 			}
 			$dir->close();
 		}
@@ -415,7 +413,7 @@ if ($action=="ImportFile2") {
 				$placelistUniq[$j-1]["zoom"] = $place["zoom"];
 				$placelistUniq[$j-1]["icon"] = $place["icon"];
 			} else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-				print "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br/>";
+				print "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br />";
 			}
 		}
 		$prevPlace = $place["place"];
@@ -454,6 +452,13 @@ if ($action=="ImportFile2") {
 						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].",'".$place["icon"]."');";
 					}
 					else {
+						//delete leading zero
+						$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $place["lati"]);
+						$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $place["long"]);
+						if ($pl_lati >= 0) 		$place["lati"] = "N".abs($pl_lati);
+						else if ($pl_lati < 0) 	$place["lati"] = "S".abs($pl_lati);
+						if ($pl_long >= 0) 		$place["long"] = "E".abs($pl_long);
+						else if ($pl_long < 0) 	$place["long"] = "W".abs($pl_long);
 						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
 					}
 					$parent_id = $highestIndex;
@@ -514,12 +519,12 @@ function showchanges() {
 }
 
 function edit_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
 	return false;
 }
 
 function add_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
 	return false;
 }
 
@@ -539,16 +544,16 @@ $where_am_i=place_id_to_hierarchy($parent);
 foreach (array_reverse($where_am_i, true) as $id=>$place) {
 	if ($id==$parent)
 		if ($place != "Unknown")
-		print PrintReady($place);
-	else
-			print $pgv_lang["unknown"];
+			print PrintReady($place);
+		else 
+			print $pgv_lang["pl_unknown"];
 	else {
 // phre7d 2008-901-23 modified for persistant display of inactive records
 		print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">";
 		if ($place != "Unknown")
 			print PrintReady($place)."</a>";
 		else 
-			print $pgv_lang["unknown"]."</a>";
+			print $pgv_lang["pl_unknown"]."</a>";
 	}
 	print " - ";
 }
@@ -578,12 +583,12 @@ print "{$pgv_lang['pl_edit']}</th></tr>";
 if (count($placelist) == 0)
 	print "<tr><td colspan=\"7\" class=\"facts_value\">{$pgv_lang['pl_no_places_found']}</td></tr>";
 foreach ($placelist as $place) {
-// phre7d 2008-901-23 modified for persistant display of inactive records	
+	// phre7d 2008-901-23 modified for persistant display of inactive records	
 	print "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}&display={$display}\">";
 	if ($place["place"] != "Unknown")
 			print PrintReady($place["place"])."</a></td>";
 		else 
-			print $pgv_lang["unknown"]."</a></td>";
+			print $pgv_lang["pl_unknown"]."</a></td>";
 	print "<td class=\"optionbox\">{$place['lati']}</td>";
 	print "<td class=\"optionbox\">{$place['long']}</td>";
 	print "<td class=\"optionbox\">{$place['zoom']}</td>";
@@ -637,7 +642,7 @@ foreach ($placelist as $place) {
 	print_help_link("PL_EXPORT_ALL_FILE_help", "qm", "PL_EXPORT_ALL_FILE");
 	print "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent=0\">";
 	print "{$pgv_lang['pl_export_all_file']}</a>";
-	print "</td></tr></table><br/>";
+	print "</td></tr></table><br />";
 if(empty($SEARCH_SPIDER))
 	print_footer();
 else {

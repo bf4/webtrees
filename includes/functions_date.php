@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once('includes/date_class.php');
+require_once('includes/datamodel/date_class.php');
 
 /**
  * translate gedcom age string
@@ -48,6 +48,11 @@ require_once('includes/date_class.php');
  */
 function get_age_at_event($agestring, $show_years) {
 	global $pgv_lang;
+
+	// Only suppress years if there are no months/days
+	if (preg_match('/\d[md]/i', $agestring)) {
+		$show_years=true;
+	}
 
 	$agestring=preg_replace(
 		array(

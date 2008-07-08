@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reerved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
+$pgv_lang["showUnknown"]			= "«Geschlecht unbekannt» zeigen";
+$pgv_lang["count"]					= "Anzahl";
 $pgv_lang["age_differences"]		= "Datendifferenzen zeigen";
 $pgv_lang["date_of_entry"]			= "Datum des Eintrages in der ursprünglichen Quelle";
 $pgv_lang["multi_site_search"] 		= "Webseiten durchsuchen";
@@ -73,6 +76,7 @@ $pgv_lang["htmlplus_block_custom"]		= "Personalisiert";
 $pgv_lang["htmlplus_block_keyword"]		= "Stichwort-Beispiele (nur in Englisch)";
 $pgv_lang["htmlplus_block_taglist"]		= "Liste der Tags";
 $pgv_lang["htmlplus_block_compat"]		= "Kompatibilitäts-Modus";
+$pgv_lang["htmlplus_block_ui"]			= "Erweiterte Schnittstelle";
 $pgv_lang["htmlplus_block_current"]		= "Aktuell";
 $pgv_lang["htmlplus_block_default"]		= "Standard";
 $pgv_lang["htmlplus_block_census"]		= "Volkszählung";
@@ -122,6 +126,7 @@ $pgv_lang["ancestors"]					= "Vorfahren in direkter Linie und deren Familien";
 $pgv_lang["descendants"]				= "Nachfahren";
 $pgv_lang["choose_relatives"]			= "Verwandte wählen";
 $pgv_lang["relatives_report"]			= "Verwandten Bericht";
+$pgv_lang["total_unknown"]				= "Insgesamt unbekannt";
 $pgv_lang["total_living"]				= "Insgesamt lebend";
 $pgv_lang["total_dead"]					= "Insgesamt verstorben";
 $pgv_lang["total_not_born"]				= "Insgesamt noch nicht geboren";
@@ -489,6 +494,8 @@ $pgv_lang["widower"]					= "Witwer";
 $pgv_lang["widow"]						= "Witwe";
 $pgv_lang["leaves"]						= "Blätter";
 $pgv_lang["roots"]						= "Wurzeln";
+$pgv_lang["show_parents"] 				= "Eltern zeigen";
+
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]						= "Alter";
 $pgv_lang["days"]						= "Tage";
@@ -1157,6 +1164,9 @@ $pgv_lang["theme_select_descr"]			= "Der «Theme Auswahl» Block zeigt die Theme
 $pgv_lang["block_top10_title"]			= "Häufigste 10 Nachnamen";
 $pgv_lang["block_top10"]				= "Häufigste 10 Nachnamen";
 $pgv_lang["block_top10_descr"]			= "Dieser Block zeigt eine Liste mit den 10 häufigsten Nachnamen der Datenbank. Die tatsächliche Länge der Liste ist konfigurierbar. Sie können auch bestimmte Namen in der Liste unterdrücken.";
+$pgv_lang["block_givn_top10_title"]		= "Häufigste 10 Vornamen";
+$pgv_lang["block_givn_top10"]			= "Häufigste 10 Vornamen";
+$pgv_lang["block_givn_top10_descr"]		= "Dieser Block zeigt eine Liste mit den 10 häufigsten Vornamen der Datenbank. Die tatsächliche Länge der Liste ist konfigurierbar.";
 $pgv_lang["gedcom_news_block"]			= "GEDCOM Neuigkeiten";
 $pgv_lang["gedcom_news_descr"]			= "Der «GEDCOM Neuigkeiten» Block zeigt dem Besucher neue Veröffentlichungen oder Artikel an, die der Verwalter meldet.<br /><br />Dieser Bereich ist ein guter Platz für die Mitteilung über eine neue GEDCOM Datei, zur Ankündigung eines Familientreffens oder die Bekanntgabe der Geburt eines neuen Familienmitgliedes.";
 $pgv_lang["gedcom_news_limit"]			= "Anzeigenbeschränkung:";
@@ -1582,6 +1592,7 @@ $pgv_lang["stat_users"]					= "Anzahl Benutzer";
 $pgv_lang["no_family_facts"]			= "Keine Ereignisse für diese Familie.";
 $pgv_lang["stat_males"]					= "Männlich, insgesamt";
 $pgv_lang["stat_females"]				= "Weiblich, insgesamt";
+$pgv_lang["stat_unknown"]				= "Unbekannt, insgesamt";
 $pgv_lang["sunday_1st"]					= "So";
 $pgv_lang["monday_1st"]					= "Mo";
 $pgv_lang["tuesday_1st"]				= "Di";
@@ -1603,7 +1614,8 @@ $pgv_lang["nov_1st"]					= "Nov";
 $pgv_lang["dec_1st"]					= "Dez";
 $pgv_lang["edit_source"]				= "Quelle bearbeiten";
 $pgv_lang["source_menu"]				= "Quellenoptionen";
-$pgv_lang["indi_is_remote"]				= "Die Informationen dieser Person stammen aus einer fremden Seite.";
+$pgv_lang["repo_menu"]					= "Archivoptionen";
+$pgv_lang["indi_is_remote"]				= "Die Informationen dieser Person stammen aus einer fremden Datenbank.";
 $pgv_lang["link_remote"]				= "Mit anderer Person verbinden";
 $pgv_lang["title_search_link"]			= "Lokale Verbindung hinzufügen";
 $pgv_lang["label_site_url2"]			= "Internetseiten-Adresse";

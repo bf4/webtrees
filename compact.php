@@ -3,7 +3,7 @@
  * Compact pedigree tree
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,8 @@ print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
 }	
 // ==========================================================================================
@@ -100,7 +101,7 @@ if ($view != "preview") {
 		print "<td class=\"optionbox\">\n";
 		print "<input name=\"showids\" type=\"checkbox\" value=\"1\"";
 		if ($showids) print " checked=\"checked\"";
-		print "></td>\n</tr>\n";
+		print " /></td>\n</tr>\n";
 	}
 
 	if ($SHOW_HIGHLIGHT_IMAGES) {
@@ -112,7 +113,7 @@ if ($view != "preview") {
 		print "<td class=\"optionbox\">\n";
 		print "<input name=\"showthumbs\" type=\"checkbox\" value=\"1\"";
 		if ($showthumbs) print " checked=\"checked\"";
-		print "></td>\n</tr>\n";
+		print " /></td>\n</tr>\n";
 	}
 
 	print "</table>";
@@ -305,6 +306,7 @@ function print_td_person($n) {
 	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES;
 	global $showids, $showthumbs;
+	global $GEDCOM;
 
 	$text = "";
 	$pid = $treeid[$n];
@@ -317,7 +319,7 @@ function print_td_person($n) {
 
 	if ($pid) {
 		$indi=Person::getInstance($pid);
-		$name=$indi->getName();
+		$name=$indi->getFullName();
 		$addname=$indi->getAddName();
 
 		if (($showthumbs) && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
@@ -333,8 +335,7 @@ function print_td_person($n) {
 				$imgheight = $imgsize[1]+150;
 //LBox --------  change for Lightbox Album --------------------------------------------
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" title=\"" . $object["mid"] . "\">" . "\n";
-					//$text .= " ><a href=\"mediaviewer.php?mid=".$object["mid"]."\">";
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($name)) . "\">" . "\n";
 				}else{
 // ---------------------------------------------------------------------------------------------
 				$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
@@ -343,14 +344,14 @@ function print_td_person($n) {
 // ---------------------------------------------------------------------------------------------
 				$birth_date=$indi->getBirthDate();
 				$death_date=$indi->getDeathDate();
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".$name.' '.strip_tags(html_entity_decode(($birth_date->Display(false).' - '.$death_date->Display(false)))).'" ';
+				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".strip_tags($name).' '.strip_tags(html_entity_decode(($birth_date->Display(false).' - '.$death_date->Display(false)))).'" ';
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}
 		}
 
 		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" title=\"$title\"> ";
-		$text .= PrintReady($name);
+		$text .= PrintReady(htmlspecialchars($name));
 		if ($addname) $text .= "<br />" . PrintReady($addname);
 		$text .= "</a>";
 		if ($showids) {
@@ -369,11 +370,12 @@ function print_td_person($n) {
 			$text.=$death->date1->Format('Y');
 			$age=GedcomDate::GetAgeYears($birth, $death);
 			if ($age)
-				$text.=" <span class=\"age\">({$age})</span>";
+ 			$text.=" <span class=\"age\">".PrintReady("({$age})")."</span>";			
 			$text.="</span>";
 		}
 	}
 	$text = unhtmlentities($text);
+	
 	// -- empty box
 	if (empty($text)) $text = "&nbsp;<br />&nbsp;<br />";
 	// -- box color

@@ -43,7 +43,14 @@ $help_message=safe_GET('help_messge');
 // Some variables can come from the URL as well as the form
 if (!$url)    $url =safe_GET('url', PGV_REGEX_URL);
 if (!$type)   $type=safe_GET('type', array('full', 'simple'), 'full');
-if (!$action) $type=safe_GET('action');
+if (!$action) $action=safe_GET('action');
+
+if (empty($url)) {
+	// If we came here by means of a URL like http://mysite.com/foo/login.php
+	// we don't have a proper login URL, and session cookies haven't been set yet
+	// We'll re-load the page to properly determine cookie support
+	header("Location: login.php?url=index.php?ctype=user");
+}
 
 $message='';
 
@@ -61,7 +68,19 @@ if ($action=='login') {
 				$_SESSION['CLANGUAGE'] = $MyLanguage;
 			}
 		}
-		session_write_close();
+
+		// If we have no access rights to the current gedcom, switch to one where we do
+		if (!userIsAdmin($user_id)) {
+			if (!userCanAccess($user_id, PGV_GED_ID)) {
+				foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+					if (userCanAccess($user_id, $ged_id)) {
+						$ged=$ged_name;
+						$url='index.php';
+						break;
+					}
+				}
+			}
+		}
 		
 		//-- section added based on UI feedback
 		// TODO: this block of code will never run, as the url will always have parameters ?pid=I123&ged=xyz.ged appended to it.  Has it ever worked?
@@ -80,6 +99,13 @@ if ($action=='login') {
 				$url = "index.php?ctype=user";
 			}
 		}
+
+		session_write_close();
+
+		// If we've clicked login from the login page, we don't want to go back there.
+		if (substr($url, 0, 9)=='login.php') {
+			$url='index.php';
+		}
 		
 		$urlnew = $SERVER_URL;
 		if (substr($urlnew,-1,1)!="/") $urlnew .= "/";
@@ -88,8 +114,11 @@ if ($action=='login') {
 		if ($remember=="yes") setcookie("pgv_rem", $username, time()+60*60*24*7);
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
+		$url .= "&";	// Simplify the preg_replace following
+		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url)));	// Remove any existing &ged= parameter
+		if (substr($url, -1)=="&") $url = substr($url, 0, -1);
 		$url .= "&ged=".$ged; 
-		$url = str_replace(array(".php&amp;", ".php&"), ".php?", $url);
+		$url = str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url);
 		
 		header("Location: ".$url);
 		exit;
@@ -103,7 +132,7 @@ if ($action=='login') {
 		if ((isset($_SERVER['HTTP_REFERER'])) && ((stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false)||(stristr($_SERVER['HTTP_REFERER'],$tLOGIN_URL)!==false))) {
 			$url = basename($_SERVER['HTTP_REFERER']);
 			if (stristr($url, ".php")===false) {
-				$url = "index.php?ctype=gedcom&amp;ged=$GEDCOM";
+				$url = "index.php?ctype=gedcom&ged=$GEDCOM";
 			}
 		}
 		else {
@@ -118,7 +147,7 @@ if ($action=='login') {
 		}
 	}
 	else if (stristr($url, "index.php")&&!stristr($url, "ctype=")) {
-		$url.="&amp;ctype=gedcom";
+		$url.="&ctype=gedcom";
 	}
 }
 
@@ -216,7 +245,8 @@ $tab=0;		// initialize tab index
 </form><br /><br />
 <?php
 $sessname = session_name();
-if (!isset($_COOKIE[$sessname])) print "<span class=\"error\">".$pgv_lang["cookie_help"]."</span><br /><br />";
+if (!isset($_COOKIE[$sessname])) print "<center><div class=\"error width50\">".$pgv_lang["cookie_help"]."</div></center><br /><br />";
+
 if ($USE_REGISTRATION_MODULE) {?>
 	<table class="center facts_table width50">
 	<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["account_information"];?></td></tr>

@@ -5,7 +5,7 @@
  * This block prints basic information about the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ function print_gedcom_block($block = true, $config="", $side, $index) {
 		$content .=  $pgv_lang["hit_count"]."  ".$hits."<br />\n";
 	$content .=  "\n<br />";
 	if (PGV_USER_GEDCOM_ADMIN) {
-		$content .=  "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".preg_replace("/'/", "\'", $GEDCOM)."&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1'); return false;\">".$pgv_lang["customize_gedcom_page"]."</a><br />\n";
+		$content .=  "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".preg_replace("/'/", "\'", $GEDCOM)."&ctype=gedcom")."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1'); return false;\">".$pgv_lang["customize_gedcom_page"]."</a><br />\n";
 	}
 	$content .=  "</div>";
 	

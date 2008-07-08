@@ -274,7 +274,7 @@ if ($action=="update") {
 
 if ($action=="clearcache") {
 	clearCache();
-	print "<span class=\"warning\">".$pgv_lang["clear_cache_succes"]."</span>";
+	print "<span class=\"warning\">".$pgv_lang["clear_cache_succes"]."</span><br /><br />";
 }
 
 if ($action=="configure" && isset($ublocks[$side][$index])) {
@@ -310,7 +310,7 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";
 		print_help_link("click_here_help", "qm");
 		print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"document.block.submit();\" />";
-		print "&nbsp&nbsp;<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
+		print "&nbsp;&nbsp;<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
 		print "</td></tr>";
 	}
 	else {

@@ -269,191 +269,6 @@ function reverse_name($name) {
 	return $name;
 }
 
-/**
- * get the descriptive title of the media object
- *
- * @param string $sid the gedcom xref id for the media to find
- * @return string the title of the source
- */
-function get_media_descriptor($id) {
-	global $objectlist;
-	if ($id=="") return false;
-
-	if (isset($objectlist[$id]["title"])) {
-		if (!empty($objectlist[$id]["title"])) return $objectlist[$id]["title"];
-		else return $objectlist[$id]["file"];
-	} else {
-		$gedrec = find_media_record($id);
-		if (!empty($gedrec)) {
-			if (!empty($objectlist[$id]["title"])) return $objectlist[$id]["title"];
-			else return $objectlist[$id]["file"];
-		}
-	}
-	return false;
-}
-
-/**
- * get the descriptive title of the source
- *
- * @param string $sid the gedcom xref id for the source to find
- * @return string the title of the source
- */
-function get_source_descriptor($sid) {
-	global $sourcelist;
-	if ($sid=="") return false;
-
-	if (isset($sourcelist[$sid]["name"])) {
-		return $sourcelist[$sid]["name"];
-	} else {
-		$gedrec = find_source_record($sid);
-		if (!empty($gedrec)) return $sourcelist[$sid]["name"];
-	}
-	return false;
-}
-
-/**
- * get the descriptive title of the repository
- *
- * @param string $rid the gedcom xref id for the repository to find
- * @return string the title of the repository
- */
-function get_repo_descriptor($rid) {
-	global $TBLPREFIX, $WORD_WRAPPED_NOTES;
-	global $GEDCOM, $repo_id_list;
-
-	if ($rid=="") return false;
-
-	if (isset($repo_id_list[$rid]["name"])) {
-		return $repo_id_list[$rid]["name"];
-	}
-	else {
-		$repo_id_list = get_repo_id_list();
-		if ((!empty($repo_id_list)) && (isset($repo_id_list[$rid]))) return $repo_id_list[$rid]["name"];
-	}
-	return false;
-}
-
-/**
- * get the additional descriptive title of the source
- *
- * @param string $sid the gedcom xref id for the source to find
- * @return string the additional title of the source
- */
-function get_add_source_descriptor($sid) {
-	global $TBLPREFIX, $WORD_WRAPPED_NOTES;
-	global $GEDCOM, $sourcelist;
-	$title = "";
-	if ($sid=="") return false;
-
-	$gedrec = find_source_record($sid);
-	if (!empty($gedrec)) {
-		$ct = preg_match("/\d ROMN (.*)/", $gedrec, $match);
-		if ($ct>0) return($match[1]);
-		$ct = preg_match("/\d _HEB (.*)/", $gedrec, $match);
-		if ($ct>0) return($match[1]);
-	}
-	return false;
-}
-
-/**
- * get the additional descriptive title of the repository
- *
- * @param string $rid the gedcom xref id for the repository to find
- * @return string the additional title of the repository
- */
-function get_add_repo_descriptor($rid) {
-	global $TBLPREFIX, $WORD_WRAPPED_NOTES;
-	global $GEDCOM, $repolist;
-	$title = "";
-	if ($rid=="") return false;
-
-	$gedrec = find_repo_record($rid);
-	if (!empty($gedrec)) {
-		$ct = preg_match("/\d ROMN (.*)/", $gedrec, $match);
-		if ($ct>0) return($match[1]);
-		$ct = preg_match("/\d _HEB (.*)/", $gedrec, $match);
-		if ($ct>0) return($match[1]);
-	}
-	return false;
-}
-
-function get_sortable_family_descriptor($fid) {
-	global $pgv_lang;
-	$parents = find_parents($fid);
-	if ($parents["HUSB"]) {
-		if (displayDetailsById($parents["HUSB"]) || showLivingNameById($parents["HUSB"]))
-			$hname = get_sortable_name($parents["HUSB"]);
-		else $hname = $pgv_lang["private"];
-	}
-	else $hname = "@N.N., @P.N.";
-	if ($parents["WIFE"]) {
-		if (displayDetailsById($parents["WIFE"]) || showLivingNameById($parents["WIFE"]))
-			$wname = get_sortable_name($parents["WIFE"]);
-		else $wname = $pgv_lang["private"];
-	}
-	else $wname = "@N.N., @P.N.";
-
-	if (!empty($hname) && !empty($wname)) $result = check_NN($hname)." + ".check_NN($wname);
-	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
-	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
-
-	return $result;
-}
-
-function get_family_descriptor($fid) {
-	global $pgv_lang, $NAME_REVERSE;
-	$parents = find_parents($fid);
-	if ($parents["HUSB"]) {
-		if (displayDetailsById($parents["HUSB"]) || showLivingNameById($parents["HUSB"]))
-			$hname = get_person_name($parents["HUSB"], false);
-		else $hname = $pgv_lang["private"];
-	} else {
-		if ($NAME_REVERSE) $hname = "@N.N. @P.N.";
-		else $hname = "@P.N. @N.N.";
-	}
-	if ($parents["WIFE"]) {
-		if (displayDetailsById($parents["WIFE"]) || showLivingNameById($parents["WIFE"]))
-			$wname = get_person_name($parents["WIFE"], false);
-		else $wname = $pgv_lang["private"];
-	} else {
-		if ($NAME_REVERSE) $wname = "@N.N. @P.N.";
-		else $wname = "@P.N. @N.N.";
-	}
-	$result = "";
-	if (!empty($hname) && !empty($wname)) $result = check_NN($hname)." + ".check_NN($wname);
-	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
-	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
-
-	return $result;
-}
-
-function get_family_add_descriptor($fid) {
-	global $pgv_lang;
-	$parents = find_parents($fid);
-	if ($parents["HUSB"]) {
-		if (displayDetailsById($parents["HUSB"]) || showLivingNameById($parents["HUSB"]))
-			$hname = get_add_person_name($parents["HUSB"]);
-		else $hname = $pgv_lang["private"];
-	}
-	else $hname = "";
-	// handle the additional name of a non existing spouse the same way as of
-	// a spouse who does not have an additional name
-
-	if ($parents["WIFE"]) {
-		if (displayDetailsById($parents["WIFE"]) || showLivingNameById($parents["WIFE"]))
-			$wname = get_add_person_name($parents["WIFE"]);
-		else $wname = $pgv_lang["private"];
-	}
-	else $wname = "";
-
-	if (!empty($hname) && !empty($wname)) $result = $hname . " + " . $wname;
-	else if (!empty($hname) && empty($wname)) $result = $hname;
-	else if (empty($hname) && !empty($wname)) $result = $wname;
-	else $result = "";
-
-	return $result;
-}
-
 // -- find and return a given individual's second name in format: firstname lastname
 function get_add_person_name($pid) {
 	global $NAME_FROM_GEDCOM;
@@ -489,39 +304,6 @@ function get_add_person_name_in_record($name_record, $keep_slash=false) {
 	else $name = "";
 
 	if ($NAME_REVERSE) $name = reverse_name($name);
-	return $name;
-}
-
-// -- find and return a given individual's second name in sort format: familyname, firstname
-function get_sortable_add_name($pid) {
-	global $NAME_REVERSE;
-	global $NAME_FROM_GEDCOM;
-
-	//-- get the name from the indexes
-	$record = find_person_record($pid);
-	$name_record = get_sub_record(1, "1 NAME", $record);
-
-	// Check for ROMN name
-	$romn = preg_match("/(2 ROMN (.*)|2 _HEB (.*))/", $name_record, $romn_match);
-	if ($romn > 0){
-		$names = preg_split("/\//", $romn_match[count($romn_match)-1]);
-		if ($names[0] == "") $names[0] = "@P.N.";	//-- MA
-		if (empty($names[1])) $names[1] = "@N.N.";	//-- MA
-		if (count($names)>1) {
-			$fullname = trim($names[1]).",";
-			$fullname .= ",# ".trim($names[0]);
-			if (count($names)>2) $fullname .= ",% ".trim($names[2]);
-		}
-		else $fullname=$romn_match[1];
-		if (!$NAME_REVERSE) {
-			$name = trim($names[1]).", ".trim($names[0]);
-		}
-		else {
-			$name = trim($names[0])." ,".trim($names[1]);
-		}
-	}
-	else $name = get_sortable_name($pid);
-
 	return $name;
 }
 
@@ -933,7 +715,7 @@ function smart_utf8_decode($in_str)
  * @param string $indirec	The raw individual gedcom record
  * @return array	The array of individual names
  */
-function get_indi_names($indirec, $import=false) {
+function get_indi_names($indirec, $import=false, $getMarriedName=true) {
 	global $NAME_REVERSE;
 	$names = array();
 	//-- get all names
@@ -972,6 +754,7 @@ function get_indi_names($indirec, $import=false) {
 				$names[] = array($addname, $letter, $surname, "A");
 			}
 			//-- check for _MARNM name subtags
+			if ($getMarriedName) {
 			$ct = preg_match_all("/\d _MARNM (.*)/", $namerec, $match, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
 				$marriedname = trim($match[$i][1]);
@@ -984,6 +767,7 @@ function get_indi_names($indirec, $import=false) {
 				if (empty($letter)) $letter = "@";
 				if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
 				$names[] = array($marriedname, $letter, $surname, "C");
+				}
 			}
 			//-- check for _AKA name subtags
 			$ct = preg_match_all("/\d _AKA (.*)/", $namerec, $match, PREG_SET_ORDER);

@@ -489,19 +489,19 @@ table.center{
 .activeflag {
 	height: 15px;
 	border: none;
-	opacity: 1;		/* IE does not yet support this */
+	opacity: 1;		/* IE's support is different */
 }
 /* This one is for an inactive language when the mouse is hovering over it */
 .brightflag {
 	height: 15px;
 	border: none;
-	opacity: 1;		/* IE does not yet support this */
+	opacity: 1;		/* IE's support is different */
 }
 /* This one is for an inactive language when the mouse is not hovering over it */
 .dimflag {
 	height: 15px;
 	border: none;
-	opacity: 0.4;	/* IE does not yet support this */
+	opacity: 0.5;	/* IE's support is different */
 }
 
 .border1 {
@@ -660,15 +660,17 @@ table.center{
 
 /*-- index.php specific style sheets -- */
 .small_inner_block {
-/*	height: auto;  */
 	max-height: 200px;
 	overflow: auto;
 	font: normal 10px tahoma, tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;
 }
 
-.block {
+.normal_inner_block {
 	overflow: auto;
+}
+
+.block {
 	background-color: white;
 	color: black;
 	border: solid black 2px;
@@ -949,9 +951,6 @@ table.center{
 }
 
 .rela {
-	filter: alpha(opacity=67);
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=67);
-	-moz-opacity: 0.67;
 	opacity: 0.67;
 }
 
@@ -1048,8 +1047,6 @@ table.center{
 	height:100%; float:left;
 	font-weight:bold;
 	display:none;
-	-moz-border-radius-topleft: 0.6em;
-	-moz-border-radius-topright: 0.6em;
 }
 
 .note_details {
@@ -1087,10 +1084,9 @@ a.showit:hover span {
 	color: white;
 	font: 15px tahoma, arial, helvetica, sans-serif;
 	text-align: left;
-	FILTER: Alpha(Opacity=90, FinishOpacity=90, Style=2);
-	-moz-opacity: .85;
-	-khtml-opacity: .85;
+	opacity: .85;
 	z-index: 5;
+	white-space: normal; 
 }
 .lifespan_people span:first-letter {
    font: bold 16px tahoma, arial, helvetica, sans-serif;
@@ -1159,9 +1155,7 @@ a.showit:hover span {
 }
 /* End of Tag Cloud styles*/
 
-/* Because the CSS file is only read once, the following two overriding classes MUST
-   appear at the end of the entire CSS file.
-*/
+/* The following two overriding classes MUST appear at the end of the entire CSS file. */
 .nowrap {
 	white-space: nowrap;
 }

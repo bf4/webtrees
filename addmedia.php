@@ -8,7 +8,7 @@
  * Requires SQL mode.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008, John Finlay and others, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ if (empty($ged)) $ged = $GEDCOM;
 $GEDCOM = $ged;
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&ged=$GEDCOM&url=addmedia.php");
+	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=addmedia.php", false));
 	exit;
 }
 
@@ -46,6 +46,8 @@ if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (isset($_REQUEST['linktoid'])) $linktoid = $_REQUEST['linktoid'];
 if (isset($_REQUEST['gid'])) $gid = $_REQUEST['gid'];
+if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
+if (isset($_REQUEST['oldFolder'])) $oldFolder = $_REQUEST['oldFolder'];
 if (isset($_REQUEST['filename'])) $filename = $_REQUEST['filename'];
 if (isset($_REQUEST['oldFilename'])) $oldFilename = $_REQUEST['oldFilename'];
 
@@ -146,7 +148,6 @@ if ($action=="newentry") {
 	$thumbFile = "";
 	if (!empty($_FILES['mediafile']["name"]) || !empty($_FILES['thumbnail']["name"])) {
 		// NOTE: Check for file upload
-		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		$folderName = "";
 		if (!empty($_POST["folder"])) $folderName = trim($_POST["folder"]);
 		// Validate and correct folder names
@@ -199,7 +200,7 @@ if ($action=="newentry") {
 			} else {
 				if (!move_uploaded_file($_FILES["mediafile"]["tmp_name"], filename_decode($newFile))) { 
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["mediafile"]["error"]]."<br />";
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile"]["error"])."<br />";
 				} else {
 					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
 				}
@@ -214,7 +215,7 @@ if ($action=="newentry") {
 			} else {
 				if (!move_uploaded_file($_FILES["thumbnail"]["tmp_name"], filename_decode($newThum))) { 
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["thumbnail"]["error"]]."<br />";
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 				} else {
 					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
 				}
@@ -224,7 +225,7 @@ if ($action=="newentry") {
 			// Copy user-supplied thumbnail file into the main destination directory
 			if (!copy(filename_decode($serverThumbFolderName.$mediaFile), filename_decode($serverFolderName.$mediaFile))) { 
 				// the file cannot be copied
-				$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES["thumbnail"]["error"]]."<br />";
+				$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 			} else {
 				AddToLog("Media file {$folderName}{$mediaFile} uploaded");
 			}
@@ -408,7 +409,7 @@ if ($action=="newentry") {
 
 		$newged = handle_updates($newged);
 		
-		require_once 'includes/media_class.php';
+		require_once 'includes/datamodel/media_class.php';
 		$media_obje = new Media($newged);
 		$mediaid = Media::in_obje_list($media_obje);
 		if (!$mediaid) $mediaid = append_gedrec($newged, $linktoid);
@@ -599,8 +600,8 @@ if ($action=="showmedia") {
 		print "<td class=\"list_label\">".$factarray["FILE"]."</td><td class=\"list_label\">".$pgv_lang["highlighted"]."</td><td class=\"list_label\">order</td><td class=\"list_label\">gedcom</td></tr>\n";
 		foreach($medialist as $indexval => $media) {
 			print "<tr>";
-			print "<td class=\"list_value\"><a href=\"addmedia.php?action=delete&m_id=".$media["ID"]."\">delete</a></td>";
-			print "<td class=\"list_value\"><a href=\"addmedia.php?action=edit&m_id=".$media["ID"]."\">edit</a></td>";
+			print "<td class=\"list_value\"><a href=\"".encode_url("addmedia.php?action=delete&m_id=".$media["ID"])."\">delete</a></td>";
+			print "<td class=\"list_value\"><a href=\"".encode_url("addmedia.php?action=edit&m_id=".$media["ID"])."\">edit</a></td>";
 			print "<td class=\"list_value\">".$media["TITL"]."</td>";
 			print "<td class=\"list_value\">";
 			echo format_list_person($media['INDI'], array(get_person_name($media["INDI"]), $GEDCOM), false, '', 'div');

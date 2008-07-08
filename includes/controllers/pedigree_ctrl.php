@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once("config.php");
 require_once("includes/functions_charts.php");
 require_once 'includes/controllers/basecontrol.php';
-require_once('includes/person_class.php');
+require_once('includes/datamodel/person_class.php');
 
 /**
  * Main controller class for the Ancestry page.
@@ -77,11 +77,14 @@ class PedigreeControllerRoot extends BaseController {
 		
 		$this->rootid    =safe_GET_xref('rootid');
 		$this->show_full =safe_GET('show_full', array('0', '1'), $PEDIGREE_FULL_DETAILS);
-		$this->talloffset=safe_GET('talloffset', array('0', '1'), '0');
-		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 3, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
+		$this->talloffset=safe_GET('talloffset', array('0', '1'), $PEDIGREE_LAYOUT);
+		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 2, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
 		// This is passed as a global.  A parameter would be better...
+		$this->show_full = ($this->show_full) ? 1 : 0;		// Make SURE this is an integer
+		$this->talloffset = ($this->talloffset) ? 1 : 0;
 		$show_full=$this->show_full;
+		$talloffset = $this->talloffset;
 
 		// Validate parameters
 		$this->rootid = check_rootid($this->rootid);
@@ -215,7 +218,7 @@ class PedigreeControllerRoot extends BaseController {
 		global $pgv_lang, $GEDCOM;
 		
 		$name = $pgv_lang['unknown'];
-		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getName();
+		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
 		return $name." ".$pgv_lang["index_header"];
 	}
 	
@@ -223,7 +226,7 @@ class PedigreeControllerRoot extends BaseController {
 		global $pgv_lang;
 		
 		$name = $pgv_lang['unknown'];
-		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getName();
+		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
 		return $name;
 	}
 	

@@ -3,7 +3,7 @@
  * Allow visitor to change the theme
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ require 'config.php';
 
 // Extract request variables
 $mytheme =safe_GET('mytheme');
-$frompage=safe_GET('frompage', PGV_REGEX_NOSCRIPT, 'index.php');
+$frompage=safe_GET('frompage', PGV_REGEX_URL, 'index.php');
 
 // Only change to a valid theme
 foreach (get_theme_names() as $theme) {
@@ -43,5 +43,5 @@ if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
 }
 	
 // Go back to where we came from
-header('Location: '.$frompage);
+header('Location: '.encode_url(decode_url($frompage), false));
 ?>

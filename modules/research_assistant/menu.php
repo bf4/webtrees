@@ -23,7 +23,7 @@
  * @version $Id$
  */
 //-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"research_assistant/menu.php")) {
+if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
@@ -74,11 +74,12 @@ class research_assistant_ModuleMenu {
 		//'View Folders' ddl menu item
 		if (PGV_USER_ACCESS_LEVEL<= $SHOW_VIEW_FOLDERS)
 		{
-			$submenu = new Menu($pgv_lang["view_folders"], "module.php?mod=research_assistant&action=view_folders");
+		$submenu = new Menu($pgv_lang["view_folders"], "module.php?mod=research_assistant&amp;action=view_folders");
 			$submenu->addIcon('modules/research_assistant/images/folder_blue_icon.gif');
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
+		
 		return $menu;
 	}
 }

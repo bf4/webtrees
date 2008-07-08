@@ -3,7 +3,7 @@
  * Various functions used by the language editor of PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,7 +141,7 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 		fwrite($fp, " * $comment1\r\n");
 		fwrite($fp, " *\r\n");
 		fwrite($fp, " * PhpGedView: Genealogy Viewer\r\n");
-		fwrite($fp, " * Copyright (C) 2002 to ".date("Y")."  PGV Development Team\r\n");
+		fwrite($fp, " * Copyright (C) 2002 to ".date("Y")."  PGV Development Team.  All rights reserved.\r\n");
 		fwrite($fp, " *\r\n");
 		fwrite($fp, " * This program is free software; you can redistribute it and/or modify\r\n");
 		fwrite($fp, " * it under the terms of the GNU General Public License as published by\r\n");
@@ -402,7 +402,6 @@ function get_last_string($hay, $need){
 function check_bom(){
 	global $language_settings, $pgv_lang;
 	$check = false;
-	$BOM = chr(239).chr(187).chr(191);
 	$fileList = array("pgv_language", "confighelpfile", "helptextfile", "factsfile", "adminfile", "editorfile", "countryfile");
 
 	foreach ($language_settings as $key => $language) {
@@ -416,11 +415,11 @@ function check_bom(){
 					print "</span>";
 				} else {
 					$str = file_get_contents($language[$fileName]);
-					if (strlen($str)>3 && substr($str,0,3) == $BOM) {
+					if (strpos($str, PGV_UTF8_BOM)===0) {
 						$check = true;
 						print "<span class=\"warning\">".$pgv_lang["bom_found"].substr($language[$fileName], 10).".</span>";
 						print "<br />";
-						$writetext = substr($str,3);
+						$writetext = substr($str, strlen(PGV_UTF8_BOM));
 						if (!$handle = @fopen($language[$fileName], "w")){
 							print "<span class=\"warning\">";
 							print str_replace("#lang_filename#", substr($language[$fileName], 10), $pgv_lang["no_open"]) . "<br /><br />";

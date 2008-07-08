@@ -3,7 +3,7 @@
  * Danish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,13 @@ $pgv_lang["server_folder_advice2"]		= "Denne indtastning ignoreres hvis du har i
 $pgv_lang["add_linkid_advice"]			= "Indtast eller søg efter ID på den person, familie eller kilde til hvilken dette medieemne skal tilknyttes.";
 $pgv_lang["use_browse_advice"]			= "Brug &laquo;Gennemse&raquo; knappen til at søge på din lokale computer efter den ønskede fil.";
 $pgv_lang["add_media_file"]				= "Eksisterende mediefil på server";
+$pgv_lang["main_media_ok2"]				= "Mediefilen <b>#GLOBALS[oldMediaName]#</b> er flyttet korrekt fra <b>#GLOBALS[oldMediaFolder]#</b> til <b>#GLOBALS[newMediaFolder]#</b>.";
+$pgv_lang["main_media_ok3"]				= "Mediefilen blev korrekt flyttet og omdøbt fra <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> til <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+$pgv_lang["main_media_fail0"]			= "Mediefilen <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> eksisterer ikke.";
+$pgv_lang["main_media_fail1"]			= "Mediefilen <b>#GLOBALS[oldMediaName]#</b> kunne ikke omdøbes til <b>#GLOBALS[newMediaName]#</b>.";
+$pgv_lang["main_media_fail2"]			= "Mediefilen <b>#GLOBALS[oldMediaName]#</b> kunne ikke flyttes fra <b>#GLOBALS[oldMediaFolder]#</b> til <b>#GLOBALS[newMediaFolder]#</b>.";
+$pgv_lang["main_media_fail3"]			= "Mediefilen kunne ikke flyttes og omdøbes fra <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> til <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+$pgv_lang["main_media_ok1"]				= "Mediefilen <b>#GLOBALS[oldMediaName]#</b> er korrekt omdøbt til <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["resn_disabled"]				= "Bemærk: Du skal aktiver 'Brug GEDCOM (RESN) Privat indstillinger feature, før denne indstillinge kan have effect.";
 $pgv_lang["add_media_other_folder"]		= "Anden mappe... indtast venligst";
 $pgv_lang["thumb_media_ok1"]			= "Miniaturefilen <b>#GLOBALS[oldMediaName]#</b> er korrekt omdøbt til <b>#GLOBALS[newMediaName]#</b>.";
@@ -82,7 +89,7 @@ $pgv_lang["label_gedcom_id"]        = "GEDCOM-ID";
 $pgv_lang["label_local_id"]         = "Person-ID";
 $pgv_lang["accept"]				= "Godkend";
 $pgv_lang["accept_all"]			= "Godkend alle ændringer";
-$pgv_lang["accept_gedcom"]		= "Bestem dig for om du vil godkende eller afvise de enkelte ændringer.<dl><dt>For at godkende <i>alle</i> ændringer på en gang</dt><dd>Klik på linket \"Godkend alle ændringer\" i boksen nedenunder.</dd><dt>For at få mere information om en ændring kan du klikke på:</dt><dd><li>\"\$pgv_lang[view_change_diff]\" for at se på forskellen mellem gammelt og nyt indhold.<br /><li>\"\$pgv_lang[view_gedcom]\" for at se på det nye indhold i GEDCOM-format.</dd></dl>";
+$pgv_lang["accept_gedcom"]		= "Bestem dig for om du vil godkende eller afvise de enkelte ændringer.<dl><dt>For at godkende <i>alle</i> ændringer på en gang</dt><dd>Klik på linket <b>#pgv_lang[accept_all]#</b> i boksen nedenunder.</dd><dt>For at få mere information om en ændring kan du klikke på:</dt><dd><b>#pgv_lang[view_change_diff]#</b> for at se på forskellen mellem gammelt og nyt indhold.<br /><b>#pgv_lang[view_gedcom]#</b> for at se på det nye indhold i GEDCOM-format.</dd></dl>";
 $pgv_lang["accept_successful"]	= "Godkendte ændringer er lagt i databasen";
 $pgv_lang["add_child"]			= "Tilføj barn";
 $pgv_lang["add_child_to_family"]	= "Tilføj et barn til denne familie";
@@ -130,11 +137,14 @@ $pgv_lang["directory_not_exist"]	= "Mappen findes ikke.";
 $pgv_lang["error_remote"]           = "Du har valgt en ekstern site.";
 $pgv_lang["error_same"]             = "Du har valgt den samme site.";
 $pgv_lang["external_file"]			= "Dette medieobjekt findes ikke som en fil på denne server.  Det kan ikke slettes, flyttes eller omdøbes.";
-$pgv_lang["family"]				= "Familie";
 $pgv_lang["file_missing"]			= "Der blev ikke modtaget nogen fil. Hent filen igen.";
 $pgv_lang["file_partial"]			= "Filen blev kun uploadet delvist, forsøg igen";
 $pgv_lang["file_success"]			= "Filen er uploadet";
 $pgv_lang["file_too_big"]			= "Den uploadede fil overskrider den tilladte størrelse";
+$pgv_lang["file_unkown_err"]		= "Ukendt filupload fejlkode #pgv_lang[global_num1]#. Rapportér venligst dette som en fejl.";
+$pgv_lang["file_bad_extension"]		= "PHP blokkerede filen på efternavnet";
+$pgv_lang["file_cant_write"]		= "PHP kunne ikke skrive til disken";
+$pgv_lang["file_no_temp_dir"]		= "Manglende midlertidig PHP mappe";
 $pgv_lang["folder"]		 			= "Mappe på server";
 $pgv_lang["gedcom_editing_disabled"]	= "Muligheden for at ændre denne slægtsdatabase (GEDCOM) er blevet deaktiveret af system-administratoren.";
 $pgv_lang["gedcomid"]				= "Bruger ID";
@@ -174,7 +184,6 @@ $pgv_lang["media_file_moved"]			= "Mediefil flyttet.";
 $pgv_lang["media_file_not_moved"]	= "Mediefilen kunne ikke flyttes.";
 $pgv_lang["media_file_not_renamed"]	= "Mediefilen kunne ikke flyttes eller omd�";
 $pgv_lang["media_thumb_exists"]		= "Miniaturebillede findes allerede.";
-$pgv_lang["multi_site_search"] 		= "Søgning på flere sites";
 $pgv_lang["multiple_gedcoms"]		= "Denne fil er linket til en anden genealogisk database på denne server. Den kan ikke slettes, flyttes eller omdøbes, før disse links er fjernet.";
 $pgv_lang["must_provide"]		= "Du skal sørge for et ";
 $pgv_lang["name_search"]			= "Navn: ";
@@ -207,13 +216,13 @@ $pgv_lang["upload_error"]			= "Der opstod en FEJL under uploading af din fil.";
 $pgv_lang["upload_media"]			= "Upload mediefiler";
 $pgv_lang["upload_successful"]		= "Upload fuldført.";
 $pgv_lang["view_change_diff"]	= "Vis ændring, forskelle";
-
 $pgv_lang["admin_override"]			= "Admin indstilling";
 $pgv_lang["no_update_CHAN"]			= "Opdatér ikke CHAN (sidst ændret) posten";
 $pgv_lang["select_events"]			= "Vælg hændelser";
 $pgv_lang["edit_concurrency_change"] = "Posten blev sidst ændret af <i>#CHANGEUSER#</i> den #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]	= "Posten med id #PID# er blevet ændret af en anden bruger siden du sidst tilgik den.";
 $pgv_lang["edit_concurrency_msg1"]	= "En fejl opstod ved oprettelse af Redigering form. En anden bruger er måske igang med at lave ændringer.";
+$pgv_lang["edit_concurrency_reload"]	= "Brug venligst din browsers Forige side knap og genindlæs den forrige side for at sikre at du arbejder med den nyeste post.";
 $pgv_lang["add_marriage"]			= "Tilføj ny giftemål";
 $pgv_lang["source_events"]			= "Tilknyt hændelser med denne kilde";
 ?>

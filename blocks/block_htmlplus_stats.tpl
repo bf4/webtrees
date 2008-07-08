@@ -88,7 +88,7 @@ gedcom_stats_block|gedcom_stats_descr
 				</tr>
 				<tr>
 					<td class="facts_label">#stat_average_children#</td>
-					<td class="facts_value">&nbsp;#averageChildren#%&nbsp;</td>
+					<td class="facts_value">&nbsp;#averageChildren#</td>
 					<td class="facts_value"></td>
 				</tr>
 			</table>

@@ -182,7 +182,7 @@
 	 * @return true if the user can edit the comment, false otherwise.
 	 */
 	function verify_user($user){
-		if(userIsAdmin($user)){
+		if(userIsAdmin(get_user_id($user))){
 			return;
 		}
 		

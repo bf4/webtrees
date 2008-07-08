@@ -3,7 +3,7 @@
  * Danish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -340,16 +340,17 @@ $pgv_lang["see"]          = "se";
 $pgv_lang["noref"]        = "Intet henviser til denne post";
 $pgv_lang["tag"]          = "mærke";
 $pgv_lang["spacing"]      = "mellemrum";
-$pgv_lang["paternal"]          = "fædrende";
-$pgv_lang["icelandic"]         = "islandsk";
-$pgv_lang["portuguese"]        = "portugisisk";
-$pgv_lang["spanish"]           = "spansk";
+$pgv_lang["tradition_paternal"]		= "fædrende";
+$pgv_lang["tradition_icelandic"]	= "islandsk";
+$pgv_lang["tradition_portuguese"]	= "portugisisk";
+$pgv_lang["tradition_spanish"]		= "spansk";
+$pgv_lang["tradition_none"]			= "ingen";
 $pgv_lang["SURNAME_TRADITION"] = "Tradition for efternavnet";
 $pgv_lang["ADVANCED_PLAC_FACTS"] = "Avancerede fakta om stednavne";
 $pgv_lang["associated_files"]		= "Tilknyttede filer:";
 $pgv_lang["remove_all_files"]		= "Fjern alle unødvendige filer";
 $pgv_lang["deleted_files"]          = "Slettede filer:";
-$pgv_lang["index_dir_cleanup_inst"]	= "For at slette en fil eller undermappe fra Index mappen, skal du trække den til skraldespanden eller vælge dens afkrydsningsboks. Klik på Slet knappen for at fjerne de valgte filer permanent.<br /><br />Filer der er markeret med <img src=\\\"./images/RESN_confidential.gif\\\" /> er påkrævet for korrekt afvikling og kan ikke fjernes.<br />Filer markeret med <img src=\\\"./images/RESN_locked.gif\\\" /> har vigtige indstillinger eller ventende data og bør kun slettes hvis du er sikker på at du ved hvad du gør.<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "For at slette en fil eller undermappe fra Index mappen, skal du trække den til skraldespanden eller vælge dens afkrydsningsboks. Klik på Slet knappen for at fjerne de valgte filer permanent.<br /><br />Filer der er markeret med <img src=\"./images/RESN_confidential.gif\" /> er påkrævet for korrekt afvikling og kan ikke fjernes.<br />Filer markeret med <img src=\"./images/RESN_locked.gif\" /> har vigtige indstillinger eller ventende data og bør kun slettes hvis du er sikker på at du ved hvad du gør.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Ryd op i Index mappen";
 $pgv_lang["warn_file_delete"]		= "Denne fil indeholder vigtige oplysninger såsom sprogindstillinger eller ventende ændringsdata. Er du sikker på at du ønsker at slette denne fil?";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Avancerede fakta om navne";

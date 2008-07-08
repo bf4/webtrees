@@ -5,7 +5,7 @@
  * This block will show the top 10 surnames that occur most frequently in the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,27 +32,23 @@ $PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
 	"cache"=>7,
 	"num"=>10, 
-	"count_placement"=>"left"
 	);
-
-function print_block_name_top10($block=true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION;
-	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	function top_surname_sort($a, $b) {
 		return $b["match"] - $a["match"];
 	}
 
+function print_block_name_top10($block=true, $config="", $side, $index) {
+	global $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
+
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
-	if (isset($config["count_placement"])) $CountSide = $config["count_placement"];
-	else $CountSide = "left";
 
 	//-- cache the result in the session so that subsequent calls do not have to
 	//-- perform the calculation all over again.
 	if (isset($_SESSION["top10"][$GEDCOM])&&(!isset($DEBUG)||($DEBUG==false))) {
 		$surnames = $_SESSION["top10"][$GEDCOM];
-	}
-	else {
+	} else {
 		$surnames = get_top_surnames($config["num"]);
 
 		// Insert from the "Add Names" list if not already in there
@@ -77,6 +73,9 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 				unset($surnames[$surname]);
 			}
 		}
+		unset($surnames["UNKNOWN"]);
+		unset($surnames["@N.N."]);
+		unset($surnames["?"]);
 
 		// Sort the list and save for future reference
 		uasort($surnames, "top_surname_sort");
@@ -92,17 +91,47 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 				} else {
 					$name = PGV_USER_NAME;
 				}
-				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 				$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 			}
 		}
 		$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
 		
-		if (array_key_exists("UNKNOWN", $surnames)) unset($surnames["UNKNOWN"]);
-		if (array_key_exists("@N.N.", $surnames)) unset($surnames["@N.N."]);
-		ob_start();
-		print_surn_table(array_slice($surnames, 0, $config["num"]));
-		$content = ob_get_clean();
+		$all_surnames=array();
+		foreach (array_keys($surnames) as $n=>$surname) {
+			if ($n>=$config["num"]) {
+				break;
+			}
+			foreach (array_keys(get_surname_indis($surname)) as $pid) {
+				$person=Person::getInstance($pid);
+				foreach ($person->getAllNames() as $name) {
+					$surn=reset(explode(',', $name['sort']));
+					if ($surn && $surn!='@N.N.' && $surname==$surn) {
+						$spfxsurn=reset(explode(',', $name['list']));
+						if (! array_key_exists($surn, $all_surnames)) {
+							$all_surnames[$surn]=array();
+						}
+						if (! array_key_exists($spfxsurn, $all_surnames[$surn])) {
+							$all_surnames[$surn][$spfxsurn]=array();
+						}
+						// $surn is the base surname, e.g. GOGH
+						// $spfxsurn is the full surname, e.g. van GOGH
+						// $pid allows us to count indis as well as surnames, for indis that
+						// appear twice in this list.
+						$all_surnames[$surn][$spfxsurn][$pid]=true;
+					}
+				}
+			}
+		}
+		switch ($SURNAME_LIST_STYLE) {
+		case 'style3':
+			$content=format_surname_tagcloud($all_surnames, 'indilist', true);
+			break;
+		case 'style2':
+		default:
+			$content=format_surname_table($all_surnames, 'indilist');
+			break;
+		}
 	}
 
 	global $THEME_DIR;

@@ -38,7 +38,8 @@ if (!$controller->family->disp) {
 
 // LB added for Lightbox viewer ==============================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include_once('modules/lightbox/lb_config.php');
+	include('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include_once('modules/lightbox/functions/lb_call_js.php');
 }	
 // LB ======================================================================================
@@ -111,7 +112,7 @@ $show_full = "1";
 					//$menu = $controller->getReportsMenu();
 					//$menu->printMenu();
 					endif; // reports
-					if (userCanEdit() && ($controller->display)) :
+					if (PGV_USER_CAN_EDIT && ($controller->display)) :
 					?>
 					</td>
 					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">
@@ -147,7 +148,7 @@ $show_full = "1";
 			<?php print_family_children($controller->getFamilyID());?>
 		</td>
 		<td valign="top">
-			<?php print_family_facts($controller->family);?>
+			<?php print_family_facts($controller->getFamilyID());?>
 		</td>
 	</tr>
 </table>

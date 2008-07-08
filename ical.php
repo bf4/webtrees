@@ -32,8 +32,8 @@
 
 // -- include config file
 require("config.php");
-require_once 'includes/person_class.php';
-require_once 'includes/family_class.php';
+require_once 'includes/datamodel/person_class.php';
+require_once 'includes/datamodel/family_class.php';
 
 //Basic http auth needed for non browser authentication. If the user is not logged in and fails basic auth, nothing will be returned
 basicHTTPAuthenticateUser();
@@ -153,10 +153,10 @@ function getIndiBDIcalEvent($indi){
 	if (!$birthDate->isOK()){
 		return;
 	}
-	$summary = $indi->getName() ."'s Birthday";
+	$summary = $indi->getFullName() ."'s Birthday";
 	$place = $indi->getBirthPlace();
-	$description = "Born on " . $birthDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . $indi->getAbsoluteLinkUrl();
-  	$iCalRecord = getIcalRecord($birthDate, $summary, $description, $indi->getAbsoluteLinkUrl());
+	$description = "Born on " . $birthDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . encode_url($indi->getAbsoluteLinkUrl());
+  	$iCalRecord = getIcalRecord($birthDate, $summary, $description, encode_url($indi->getAbsoluteLinkUrl()));
 
 
   	return $iCalRecord;
@@ -186,10 +186,10 @@ function getFamilyAnniversaryIcalEvent($family){
 	}
 	$anniversaryDate=new GedcomDate($anniversaryDate);
 
-	$summary = "Anniversary of " . $husband->getName() . " and " . $wife->getName();
+	$summary = "Anniversary of " . $husband->getFullName() . " and " . $wife->getFullName();
 	$place = $family->getMarriagePlace() ;
-	$description = "Married on " . $anniversaryDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . $family->getAbsoluteLinkUrl();
-	$iCalRecord = getIcalRecord($anniversaryDate, $summary, $description, $family->getAbsoluteLinkUrl());
+	$description = "Married on " . $anniversaryDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . encode_url($family->getAbsoluteLinkUrl());
+	$iCalRecord = getIcalRecord($anniversaryDate, $summary, $description, encode_url($family->getAbsoluteLinkUrl()));
 
   	return $iCalRecord;
 }
@@ -217,8 +217,8 @@ function getIcalRecord($date, $summary, $description, $URL=""){
 		    		. "\r\nRRULE:FREQ=YEARLY"
 		    		. "\r\nCLASS:CONFIDENTIAL" //CLASS:PRIVATE together with TRANSP:TRANSPARENT can be used as well
 		    		. "\r\nTRANSP:TRANSPARENT" //Not needed if CLASS:CONFIDENTIAL is used, but will not hurt
-		    		. "\r\nUID:PhpGedView-" . generate_guid() //unique ID
-		    		. "\r\nCATEGORIES:PhpGedView Events"
+		    		. "\r\nUID:".PGV_PHPGEDVIEW.'-'.generate_guid() //unique ID
+		    		. "\r\nCATEGORIES:".PGV_PHPGEDVIEW." Events"
 					. "\r\n" . formatIcalData("URL:$URL")
 					. "\r\nEND:VEVENT";
    return $iCalString;
@@ -262,12 +262,12 @@ function getIcalTS($time=""){
 function getIcalHeader(){
 	//header('Content-type: text/plain');
 	header('Content-type: text/calendar; method=PUBLISH');
-  	header('Content-Disposition: attachment; filename="PhpGedView.ics"');
+  	header('Content-Disposition: attachment; filename="'.PGV_PHPGEDVIEW.'.ics"');
 	return "BEGIN:VCALENDAR"
 			."\r\nVERSION:2.0"
 			."\r\nCALSCALE:GREGORIAN"
-			."\r\nPRODID:-//PhpGedView Online Genealogy at its Best//PhpGedView 4.0//EN"
-			."\r\nX-WR-CALNAME:PhpGedView"
+			."\r\nPRODID:-//".PGV_PHPGEDVIEW."//".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT."//EN"
+			."\r\nX-WR-CALNAME:".PGV_PHPGEDVIEW
   			."\r\nMETHOD:PUBLISH";
 }
 

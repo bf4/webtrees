@@ -5,7 +5,7 @@
  * This block will print a list of things to do, based on _TODO records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008 Greg Roach.  All rights reserved.
+ * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ function print_todo($block=true, $config='', $side, $index) {
 			} else {
 				$name = PGV_USER_NAME;
 			}
-			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			$title .= "<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>";
 		}
 	}
@@ -64,7 +64,7 @@ function print_todo($block=true, $config='', $side, $index) {
 	$content = "";
 
 	require_once("js/sorttable.js.htm");
-	require_once("includes/gedcomrecord.php");
+	require_once("includes/datamodel/gedcomrecord_class.php");
 
 	$all_gedcoms=get_all_gedcoms();
 
@@ -89,22 +89,24 @@ function print_todo($block=true, $config='', $side, $index) {
 		$GEDCOM=$ged_name;
 		foreach (get_calendar_events(0, $end_jd, '_TODO', $ged_id) as $todo) {
 			$record=GedcomRecord::getInstance($todo['id']);
+			if ($record && $record->canDisplayDetails()) {
 			$pgvu=get_gedcom_value('_PGVU', 2, $todo['factrec']);
-			if ($record && ($pgvu==PGV_USER_ID || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes')) {
+				if ($pgvu==PGV_USER_ID || !$pgvu && $config['show_unassigned']=='yes' || $pgvu && $config['show_other']=='yes') {
 				$content.='<tr valign="top">';
 				if (count($all_gedcoms)>1) {
-					$content.='<td class="list_value_wrap"><a href="index.php?ctype=gedcom&amp;ged='.urlencode($ged_name).'">'.$ged_name.'</a></td>';
+						$content.='<td class="list_value_wrap"><a href="'.encode_url("index.php?ctype=gedcom&ged={$ged_name}").'">'.$ged_name.'</a></td>';
 				}
 				$content.='<td class="list_value_wrap">'.str_replace('<a', '<a name="'.$todo['date']->MinJD().'"', $todo['date']->Display(false)).'</td>';
-				$name=$record->getSortableName();
-				$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.$record->getLinkUrl().'">'.$name.'</a></td>';
+					$name=$record->getListName();
+					$content.='<td class="list_value_wrap" align="'.get_align($name).'"><a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($name).'</a></td>';
 				if ($config['show_unassigned']=='yes' || $config['show_other']=='yes') {
 					$content.='<td class="list_value_wrap">'.$pgvu.'</td>';
 				}
 				$text=get_gedcom_value('_TODO', 1, $todo['factrec']);
-				$content.='<td class="list_value_wrap" align="'.get_align($text).'">'.$text.'</td>';
+					$content.='<td class="list_value_wrap" align="'.get_align($text).'">'.PrintReady($text).'</td>';
 				$content.='</tr>';
 				$found=true;
+				}
 			}
 		}
 	}

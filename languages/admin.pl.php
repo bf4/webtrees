@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -306,9 +306,9 @@ $pgv_lang["new_win"]      			= "nowej zakładce/oknie";
 $pgv_lang["context_lines"]			= "Wiersze kontekstu GEDCOM";
 $pgv_lang["all_rec"]      			= "Wszystkie wpisy";
 $pgv_lang["err_rec"]      			= "Wpisy z błędami";
-$pgv_lang["missing"]      			= "brakujące";
-$pgv_lang["multiple"]     			= "wielokrotne";
-$pgv_lang["invalid"]      			= "niepoprawne";
+$pgv_lang["missing"]      			= "brakujący";
+$pgv_lang["multiple"]     			= "wielokrotny";
+$pgv_lang["invalid"]      			= "niepoprawny";
 $pgv_lang["too_many"]     			= "zbyt wiele";
 $pgv_lang["too_few"]      			= "zbyt mało";
 $pgv_lang["no_link"]      			= "nie ma odnośnika powrotu";
@@ -320,15 +320,16 @@ $pgv_lang["spacing"]      			= "odstęp";
 $pgv_lang["ADVANCED_NAME_FACTS"] 	= "Szczegółowe fakty o imieniu/nazwisku";
 $pgv_lang["ADVANCED_PLAC_FACTS"] 	= "Szczegółowe fakty o miejscu";
 $pgv_lang["SURNAME_TRADITION"] 		= "Tradycja przyjmowania nawiska";
-$pgv_lang["spanish"]          		= "hiszpańska";
-$pgv_lang["portuguese"]        		= "portugalska";
-$pgv_lang["icelandic"]         		= "islandzka";
-$pgv_lang["paternal"]         		= "ojcowska";
+$pgv_lang["tradition_spanish"]      = "hiszpańska";
+$pgv_lang["tradition_portuguese"]   = "portugalska";
+$pgv_lang["tradition_icelandic"]    = "islandzka";
+$pgv_lang["tradition_paternal"]     = "ojcowska";
+$pgv_lang["tradition_none"]			= "brak";
 
 $pgv_lang["clear_cache_succes"]		= "Pliki cache zostały usunięte.";
 $pgv_lang["clear_cache"]			= "Wyczyść pliki cache";
 $pgv_lang["sanity_err0"]			= "Błędy:";
-$pgv_lang["sanity_err1"]			= "Potrzebujesz PHP w wersji 4.3 lub nowszej. ";
+$pgv_lang["sanity_err1"]			= "Potrzebujesz PHP w wersji #PGV_REQUIRED_PHP_VERSION# lub nowszej. ";
 $pgv_lang["sanity_err2"]			= "Plik lub katalog <i>#GLOBALS[whichFile]#</i> nie istnieje. Sprawdź, czy plik lub katalog istnieje, czy ma poprawną nazwę, i czy prawa do odczytu są poprawnie ustawione.";
 $pgv_lang["sanity_err3"]			= "Plik <i>#GLOBALS[whichFile]#</i> nie został wgrany poprawnie. Spróbuj wgrać ten plik jeszcze raz.";
 $pgv_lang["sanity_err4"]			= "Plik <i>config.php</i> jest uszkodzony.";
@@ -350,6 +351,6 @@ $pgv_lang["associated_files"]		= "Powiązane pliki:";
 $pgv_lang["remove_all_files"]		= "Usuń wszystkie niepotrzebne pliki";
 $pgv_lang["warn_file_delete"]		= "Ten plik zawiera ważne informcje takie jak ustawienia języka lub zmiany danych jeszcze nie zatwierdzone. Czy jesteś pewien by go usunąć?";
 $pgv_lang["deleted_files"]          = "Usunięte pliki:";
-$pgv_lang["index_dir_cleanup_inst"]	= "Aby usunąc plik lub podkatalog z katalogu Index przesuń go do kosza lub zaznacz. Kliknij przycisk Usuń aby trwale usunąć wybrane pliki.<br /><br />Pliki zaznaczone <img src=\"./images/RESN_confidential.gif\" /> są wymaganymi do prawidłowego działania i nie mogą być usunięte.<br />Pliki zaznaczone <img src=\"./images/RESN_locked.gif\" /> zawierają ważne ustawienia oraz zmiany nie zatwierdzone jeszcze przez administratora. Bez absolutnej pewności nie usuwaj ich.<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "Aby usunąc plik lub podkatalog z katalogu Index przesuń go do kosza lub zaznacz. Kliknij przycisk Usuń aby trwale usunąć wybrane pliki.<br /><br />Pliki zaznaczone <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> są wymaganymi do prawidłowego działania i nie mogą być usunięte.<br />Pliki zaznaczone <img src=\"./images/RESN_locked.gif\" alt=\"\" /> zawierają ważne ustawienia oraz zmiany nie zatwierdzone jeszcze przez administratora. Bez absolutnej pewności nie usuwaj ich.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Wyczyść katalog Index";
 ?>

@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ loadLangFile("pgv_country");
 asort($countries);
 
 if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
+	header("Location: ".encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
 	exit;
 }
 
@@ -276,14 +276,19 @@ if (isset($gedrec)) $gedrec = privatize_gedcom($gedrec);
 if (!isset($type)) $type="";
 $level0type = $type;
 if ($type=="INDI") {
-	print "<b>".PrintReady(get_person_name($pid))."</b><br />";
+	$record=Person::getInstance($pid);
+	print "<b>".PrintReady($record->getFullName())."</b><br />";
 }
 else if ($type=="FAM") {
-	if (!empty($pid)) print "<b>".PrintReady(get_family_descriptor($pid))."</b><br />";
-	else print "<b>".PrintReady(get_family_descriptor($famid))."</b><br />";
+	if (!empty($pid)) {
+		$record=Family::getInstance($pid);
+	}	else {
+		$record=Family::getInstance($famid);
 }
-else if ($type=="SOUR") {
-	print "<b>".PrintReady(get_source_descriptor($pid))."&nbsp;&nbsp;&nbsp;";
+	print "<b>".PrintReady($record->getFullName())."</b><br />";
+} elseif ($type=="SOUR") {
+	$record=Source::getInstance($pid);
+	print "<b>".PrintReady($record->getFullName())."&nbsp;&nbsp;&nbsp;";
 	if ($TEXT_DIRECTION=="rtl") print getRLM();
 	print "(".$pid.")";
 	if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -486,7 +491,7 @@ case 'addfamlink':
 		print "<option value=\"adopted\">".$pgv_lang["adopted"]."</option>";
 		print "<option value=\"foster\">".$pgv_lang["foster"]."</option>";
 		print "<option value=\"sealing\">".$pgv_lang["sealing"]."</option>";
-		print "</select></tr>";
+		print "</select></td></tr>";
 	}
 	print "</table>\n";
 	print "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /><br />\n";
@@ -611,7 +616,7 @@ case 'addnewsource':
 	//-->
 	</script>
 	<b><?php print $pgv_lang['create_source']; $tabkey = 1; ?></b>
-	<form method="post" action="edit_interface.php" onSubmit="return check_form(this);">
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addsourceaction" />
 		<input type="hidden" name="pid" value="newsour" />
 		<table class="facts_table">
@@ -645,7 +650,7 @@ case 'addnewsource':
 			<table class="facts_table">
 			<tr>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN_help", "qm"); print $pgv_lang['select_events']; ?></td>
-				<td class="optionbox wrap"><select name="EVEN[]" mulitple="multiple" size="5">
+				<td class="optionbox wrap"><select name="EVEN[]" multiple="multiple" size="5">
 					<?php
 					$parts = preg_split("/,/", $INDI_FACTS_ADD);
 					foreach($parts as $p=>$key) {
@@ -713,7 +718,7 @@ case 'addsourceaction':
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$xref = append_gedrec($newgedrec);
-	$link = "source.php?sid=$xref&amp;show_changes=yes";
+	$link = "source.php?sid=$xref&show_changes=yes";
 	if ($xref) {
 		print "<br /><br />\n".$pgv_lang["new_source_created"]."<br /><br />";
 		print "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
@@ -738,7 +743,7 @@ case 'addnewrepository':
 	<b><?php print $pgv_lang["create_repository"];
 	$tabkey = 1;
 	?></b>
-	<form method="post" action="edit_interface.php" onSubmit="return check_form(this);">
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addrepoaction" />
 		<input type="hidden" name="pid" value="newrepo" />
 		<table class="facts_table">
@@ -803,7 +808,7 @@ case 'addrepoaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$xref = append_gedrec($newgedrec);
-	$link = "repo.php?rid=$xref&amp;show_changes=yes";
+	$link = "repo.php?rid=$xref&show_changes=yes";
 	if ($xref) {
 		print "<br /><br />\n".$pgv_lang["new_repo_created"]."<br /><br />";
 		print "<a href=\"javascript:// REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
@@ -831,13 +836,12 @@ case 'update':
 	if (count($_FILES)>0) {
 		if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
 		$uploaded_files = array();
-		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		if (substr($folder,0,1) == "/") $folder = substr($folder,1);
 		if (substr($folder,-1,1) != "/") $folder .= "/";
 		foreach($_FILES as $upload) {
 			if (!empty($upload['tmp_name'])) {
 				if (!move_uploaded_file($upload['tmp_name'], $MEDIA_DIRECTORY.$folder.basename($upload['name']))) {
-					$error .= "<br />".$pgv_lang["upload_error"]."<br />".$upload_errors[$upload['error']];
+					$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($upload['error']);
 					$uploaded_files[] = "";
 				}
 				else {
@@ -879,8 +883,8 @@ case 'update':
 	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	
 	if (!empty($NAME)) $newged .= "1 NAME $NAME\r\n";
@@ -893,12 +897,14 @@ case 'update':
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\r\n";
 
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
-	$newged = handle_updates($newged);
-
+	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added 
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $newged .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
+	
+	$newged = handle_updates($newged);	
+
+	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
 
 	while($i<count($gedlines)) {
@@ -925,8 +931,8 @@ case 'addchildaction':
 	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
 	
@@ -940,8 +946,8 @@ case 'addchildaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	
@@ -1039,7 +1045,7 @@ case 'addchildaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
-	$link = "individual.php?pid=$xref&amp;show_changes=yes";
+	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) {
 		print "<br /><br />".$pgv_lang["update_successful"];
 		$gedrec = "";
@@ -1090,8 +1096,8 @@ case 'addspouseaction':
 	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
 	
@@ -1105,8 +1111,8 @@ case 'addspouseaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	
@@ -1181,7 +1187,7 @@ case 'addspouseaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
-	$link = "individual.php?pid=$xref&amp;show_changes=yes";
+	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
 	else exit;
 	$spouserec = $gedrec;
@@ -1402,8 +1408,8 @@ case 'addnewparentaction':
 	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
 
@@ -1417,8 +1423,8 @@ case 'addnewparentaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	
@@ -1493,7 +1499,7 @@ case 'addnewparentaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
-	$link = "individual.php?pid=$xref&amp;show_changes=yes";
+	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
 	else exit;
 	$spouserec = $gedrec;
@@ -1819,11 +1825,118 @@ case 'paste':
 	break;
 
 	
-//LBox ==============================================================
-case 'reorder_media':
-	include_once("modules/lightbox/functions/reorder_media.php");
+//LBox  Reorder Media ========================================================
+
+//------------------------------------------------------------------------------
+case 'reorder_media': // Sort page using Popup
+	require_once("js/prototype.js.htm");
+	require_once("js/scriptaculous.js.htm");
+	include_once("includes/media_reorder.php");
 	break;	
-//LBox ==============================================================	
+
+//------------------------------------------------------------------------------
+case 'reset_media_update': // Reset sort using popup
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+		$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+	break;
+
+//------------------------------------------------------------------------------
+case 'reorder_media_update': // Update sort using popup
+	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+	foreach($order1 as $m_media=>$num) {
+		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\r\n";
+	}
+	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+		// $mediaordsuccess='yes';
+		if ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==8) {
+			$link = "individual.php?pid=$pid&tab=7&show_changes=yes";
+		}elseif ($_COOKIE['lasttabs'][strlen($_COOKIE['lasttabs'])-1]==7) {
+			$link = "individual.php?pid=$pid&tab=6&show_changes=yes";
+		}else{
+			$link = "individual.php?pid=$pid&tab=3&show_changes=yes";
+		}
+		print "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
+	break;
+
+//------------------------------------------------------------------------------
+case 'al_reset_media_update': // Reset sort using Album Page
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+		$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
+		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+			$tabno = "6";
+		}else{
+			$tabno = "7";
+		}
+		?>
+		<script language="JavaScript" type="text/javascript" >
+		<!-- 
+			location.href='<?php echo "individual.php?pid=" . $pid . "&tab=" . $tabno ;?>';
+		//-->
+		</script>
+		<?php
+	break;
+
+//------------------------------------------------------------------------------
+case 'al_reorder_media_update': // Update sort using Album Page
+	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
+	
+	function SwapArray($Array){
+		$Values = array();
+		while(list($Key,$Val) = each($Array))
+			$Values[$Val] = $Key;
+		return $Values;
+	}
+	if (isset($_REQUEST['order2'])) $order2 = $_REQUEST['order2'];
+	$order2 = SwapArray(explode(",", substr($order2, 0, -1)));
+
+	$lines = preg_split("/\n/", $gedrec);
+	$newgedrec = "";
+	for($i=0; $i<count($lines); $i++) {
+		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+	}
+	foreach($order2 as $m_media=>$num) {
+		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\r\n";
+	}
+	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+		$success = (replace_gedrec($pid, $newgedrec));
+	if ($success) {
+		if (!file_exists("modules/googlemap/defaultconfig.php")) {
+			$tabno = "6";
+		}else{
+			$tabno = "7";
+		}
+		if ($success) print "<br />".$pgv_lang["update_successful"]. "<br /><br />";
+		?>
+		<script language="JavaScript" type="text/javascript" >
+		<!-- 
+			location.href='<?php echo "individual.php?pid=" . $pid . "&tab=" . $tabno ;?>';
+		//-->
+		</script>
+		<?php
+	}
+	break;	
+
+//LBox ===================================================
+
 	
 //------------------------------------------------------------------------------
 case 'reorder_children':
@@ -1856,6 +1969,7 @@ case 'reorder_children':
 				asort($children);
 			}
 			$i=0;
+			$show_full = 1;		// Force details to show for each child
 			foreach($children as $id=>$child) {
 				print "<li style=\"cursor:move;margin-bottom:2px;\"";
 				if (!in_array($id, $ids)) print " class=\"facts_valueblue\"";
@@ -1889,7 +2003,7 @@ case 'reorder_children':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily':
-	require_once 'includes/family_class.php';
+	require_once 'includes/datamodel/family_class.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -1950,7 +2064,7 @@ case 'changefamily':
 			if (!is_null($father)) {
 			?>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $father->getLabel(); ?></b><input type="hidden" name="HUSB" value="<?php print $father->getXref();?>" /></td>
-				<td id="HUSBName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($father->getName()); ?></td>
+				<td id="HUSBName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($father->getFullName()); ?></td>
 			<?php
 			}
 			else {
@@ -1970,7 +2084,7 @@ case 'changefamily':
 			if (!is_null($mother)) {
 			?>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $mother->getLabel(); ?></b><input type="hidden" name="WIFE" value="<?php print $mother->getXref();?>" /></td>
-				<td id="WIFEName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($mother->getName()); ?></td>
+				<td id="WIFEName" class="optionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print PrintReady($mother->getFullName()); ?></td>
 			<?php
 			}
 			else {
@@ -1992,7 +2106,7 @@ case 'changefamily':
 				?>
 			<tr>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>"><b><?php print $child->getLabel(); ?></b><input type="hidden" name="CHIL<?php print $i; ?>" value="<?php print $child->getXref();?>" /></td>
-				<td id="CHILName<?php print $i; ?>" class="optionbox wrap"><?php print PrintReady($child->getName()); ?></td>
+				<td id="CHILName<?php print $i; ?>" class="optionbox wrap"><?php print PrintReady($child->getFullName()); ?></td>
 				<td class="optionbox wrap <?php print $TEXT_DIRECTION; ?>">
 					<a href="javascript:;" id="childrem<?php print $i; ?>" style="display: block;" onclick="document.changefamform.CHIL<?php print $i; ?>.value=''; document.getElementById('CHILName<?php print $i; ?>').innerHTML=''; this.style.display='none'; return false;"><?php print $pgv_lang["remove"]; ?></a>
 					<a href="javascript:;" onclick="nameElement = document.getElementById('CHILName<?php print $i; ?>'); remElement = document.getElementById('childrem<?php print $i; ?>'); return findIndi(document.changefamform.CHIL<?php print $i; ?>);"><?php print $pgv_lang["change"]; ?></a><br />
@@ -2020,7 +2134,7 @@ case 'changefamily':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily_update':
-	require_once 'includes/family_class.php';
+	require_once 'includes/datamodel/family_class.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -2200,8 +2314,8 @@ case 'reorder_fams':
 			$i=0;
 			foreach($fams as $famid=>$family) {
 				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$famid\" >";
-				print "<span class=\"name2\">".PrintReady(get_family_descriptor($famid))."</span><br />";
-				print_simple_fact($family->getGedcomRecord(), "MARR", $famid);
+				print "<span class=\"name2\">".PrintReady($family->getFullName())."</span><br />";
+				print $family->format_first_major_fact(PGV_EVENTS_MARR, 2);
 				print "<input type=\"hidden\" name=\"order[$famid]\" value=\"$i\"/>";
 				print "</li>";
 				$i++;

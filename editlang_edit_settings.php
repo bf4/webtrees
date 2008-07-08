@@ -3,7 +3,7 @@
  * File to edit the language settings of PHPGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ if ($action !="save" and $action != "toggleActive") {
   print "self.focus();";
   print "</script>\n";
 
-  print "<style type=\"text/css\">FORM { margin-top: 0px; margin-bottom: 0px; }</style>";
+  //print "<style type=\"text/css\">FORM { margin-top: 0px; margin-bottom: 0px; }</style>";
   print "<div class=\"center\"><center>";
 }
 
@@ -100,7 +100,7 @@ if ($action == "new_lang") {
   $d_LangName      = "lang_name_" . $ln;
   $languages[$ln]     = $ln;
   $pgv_lang_use[$ln]    = true;
-  $pgv_lang[$ln]    = $lng_codes[$new_shortcut][0];
+  $pgv_lang_self[$ln]    = $lng_codes[$new_shortcut][0];
   $lang_short_cut[$ln]    = $new_shortcut;
   $lang_langcode[$ln]    = $new_shortcut . ";";
   if (array_key_exists($new_shortcut, $lng_synonyms)) $lang_langcode[$ln] .= $lng_synonyms[$new_shortcut];
@@ -179,7 +179,6 @@ if ($action != "save" && $action != "toggleActive") {
 
   print "<table class=\"facts_table\">";
 
-  if ($action != "new_lang") {
     if ($protectActive) $v_lang_use = true;
     if (!isset($v_lang_use)) $v_lang_use = $pgv_lang_use[$ln];
     print "<tr>";
@@ -191,15 +190,14 @@ if ($action != "save" && $action != "toggleActive") {
 
     if ($v_lang_use) {
       print "<input";
-      if ($protectActive) print " disabled";
+    if ($protectActive) print " disabled=\"disabled\"";
       print " type=\"checkbox\" name=\"v_lang_use\" value=\"true\" checked=\"checked\" />";
     } else print "<input type=\"checkbox\" name=\"v_lang_use\" value=\"true\" />";
     print "</td>";
     print "</tr>";
-  } else print "<input type=\"hidden\" name=\"v_lang_use\" value=\"".$pgv_lang_use[$ln]."\" />";
 
   print "<tr>";
-  if (!isset($v_original_lang_name)) $v_original_lang_name = $pgv_lang[$ln];
+  if (!isset($v_original_lang_name)) $v_original_lang_name = $pgv_lang_self[$ln];
   print "<td class=\"facts_label\" >";
   print_help_link("original_lang_name_help", "qm");
   print str_replace("#D_LANGNAME#", $pgv_lang[$d_LangName], $pgv_lang["original_lang_name"]);
@@ -266,10 +264,10 @@ if ($action != "save" && $action != "toggleActive") {
         $i = $sortedflags[$key];
         print "<option value=\"".$flagfiles["path"][$i]."\" ";
         if ($v_flagsfile == $flagfiles["path"][$i]){
-          print "selected ";
+          print " selected=\"selected\"";
           $flag_i = $i;
         }
-      print "/>".$flagfiles["file"][$i]."</option>\n";
+      print ">".$flagfiles["file"][$i]."</option>\n";
       }
       print "</select>\n";
     } else {
@@ -479,6 +477,7 @@ if ($action != "save" && $action != "toggleActive") {
     	if (!file_exists($fileName)) print "&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["optional_file_not_exist"];
     	print "<br />";
 	}
+	print "</td></tr>";
   }
 
   print "</table>";
@@ -504,8 +503,7 @@ if ($action == "save") {
   if ($_POST["new_old"] == "new") {
     $lang = array();
     $d_LangName      = "lang_name_".$ln;
-    $pgv_lang[$d_LangName]  = $v_original_lang_name;
-    $pgv_lang[$ln]    = $ln;
+    $pgv_lang_self[$d_LangName]  = $v_original_lang_name;
     $pgv_language[$ln]    = "languages/lang.".$v_lang_shortcut.".php";
     $confighelpfile[$ln]  = "languages/configure_help.".$v_lang_shortcut.".php";
     $helptextfile[$ln]    = "languages/help_text.".$v_lang_shortcut.".php";
@@ -519,7 +517,7 @@ if ($action == "save") {
   }
 
   $flagsfile[$ln]    = $v_flagsfile;
-  $pgv_lang[$ln]  = $_POST["v_original_lang_name"];
+  $pgv_lang_self[$ln]  = $_POST["v_original_lang_name"];
   $pgv_lang_use[$ln]  = $_POST["v_lang_use"];
   $lang_short_cut[$ln]  = $_POST["v_lang_shortcut"];
   $lang_langcode[$ln]  = $_POST["v_lang_langcode"];
@@ -559,7 +557,7 @@ if ($action == "save" or $action=="toggleActive") {
         fwrite($fp, "\$language_settings['{$languages[$key]}']=array(\r\n");
         fwrite($fp, "'pgv_langname'=>'{$languages[$key]}',\r\n");
         fwrite($fp, "'pgv_lang_use'=>".($pgv_lang_use[$key]?'true':'false').",\r\n");
-        fwrite($fp, "'pgv_lang'=>'{$pgv_lang[$key]}',\r\n");
+        fwrite($fp, "'pgv_lang_self'=>'{$pgv_lang_self[$key]}',\r\n");
         fwrite($fp, "'lang_short_cut'=>'{$lang_short_cut[$key]}',\r\n");
         fwrite($fp, "'langcode'=>'{$lang_langcode[$key]}',\r\n");
         fwrite($fp, "'pgv_language'=>'{$pgv_language[$key]}',\r\n");
@@ -587,7 +585,7 @@ if ($action == "save" or $action=="toggleActive") {
       fwrite($fp, "?>");
       fclose($fp);
 	  $logline = AddToLog("lang_settings.php updated");
- 	  if (!empty($COMMIT_COMMAND)) check_in($logline, $Filename, $INDEX_DIRECTORY);	
+ 	  check_in($logline, $Filename, $INDEX_DIRECTORY);	
     } else $error = "lang_config_write_error";
   } else $error = "lang_set_file_read_error";
 

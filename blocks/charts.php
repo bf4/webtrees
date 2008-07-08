@@ -5,7 +5,7 @@
  * This block prints pedigree, descendency, or hourglass charts for the chosen person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,6 +55,9 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		}
 	}
 	
+	// Override GEDCOM configuration temporarily	
+	if (isset($show_full)) $saveShowFull = $show_full;
+	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
 	if ($config["details"]=="no") {
 		$show_full = 0;
 		// Here we could adjust the block width & height to accommodate larger displays 
@@ -62,8 +65,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$show_full = 1;
 		// Here we could adjust the block width & height to accommodate larger displays 
 	}
-	
-	$PEDIGREE_FULL_DETAILS = $show_full;		// Override GEDCOM configuration (but only for the Charts block)
+	$PEDIGREE_FULL_DETAILS = $show_full;
 	
 	if ($config['type']!='treenav') {
 		include_once("includes/controllers/hourglass_ctrl.php");
@@ -78,7 +80,10 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	}
 	
 	$person = Person::getInstance($config["rootId"]);
-	if ($person==null) $person = Person::getInstance($PEDIGREE_ROOT_ID);
+	if ($person==null) {
+		$config["rootId"] = $PEDIGREE_ROOT_ID;
+		$person = Person::getInstance($PEDIGREE_ROOT_ID);
+	}
 	
 	$id = "charts_block";
 	$title = print_help_link("index_charts_help", "qm", "", false, true);
@@ -89,13 +94,12 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			} else {
 				$name = PGV_USER_NAME;
 			}
-			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 		}
 	}
 	if ($person) {
-	$name = $person->getName();
-	}
+		$name=PrintReady($person->getFullName());
 	switch($config['type']) {
 		case 'pedigree':
 			$title .= $name." ".$pgv_lang["index_header"];
@@ -113,13 +117,13 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	$content="";
 	$content .= "<script src=\"phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 	if ($show_full==0) {
-		$content .= '<span class="details2"><center>'.$pgv_lang['charts_click_box'].'</center></span><br />';
+			$content .= '<center><span class="details2">'.$pgv_lang['charts_click_box'].'</span></center><br />';
 	}
 	$content .= '<table cellspacing="0" cellpadding="0" border="0"><tr>';
 	if ($config['type']=='descendants' || $config['type']=='hourglass') {
 		$content .= "<td valign=\"middle\">";
 		ob_start();
-		$controller->print_descendency($config['rootId'], 1, false);
+			$controller->print_descendency($person->getXref(), 1, false);
 		$content .= ob_get_clean();
 		$content .= "</td>";
 	}
@@ -128,13 +132,13 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		if ($config['type']!='hourglass') {
 			$content .= "<td valign=\"middle\">";
 			ob_start();
-			print_pedigree_person($config['rootId']);
+				print_pedigree_person($person->getXref());
 			$content .= ob_get_clean();
 			$content .= "</td>";
 		}
 		$content .= "<td valign=\"middle\">";
 		ob_start();
-		$controller->print_person_pedigree($config['rootId'], 1);
+			$controller->print_person_pedigree($person->getXref(), 1);
 		$content .= ob_get_clean();
 		$content .= "</td>";
 	}
@@ -146,14 +150,22 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$content .= "</td>";
 	}
 	$content .= "</tr></table>";
-	$content .= '<script type="text/javascript">
+		$content .= '<script language="JavaScript" type="text/javascript">
 		<!--
 		if (sizeLines) sizeLines();
 		//-->
 		</script>';
+	} else {
+		$content=$pgv_lang['invalid_id'];
+	}
+	
 	
 	global $THEME_DIR;
 	include($THEME_DIR."/templates/block_small_temp.php");
+	// Restore GEDCOM configuration
+	unset($show_full);
+	if (isset($saveShowFull)) $show_full = $saveShowFull;
+	$PEDIGREE_FULL_DETAILS = $savePedigreeFullDetails;
 }
 
 function print_charts_block_config($config) {

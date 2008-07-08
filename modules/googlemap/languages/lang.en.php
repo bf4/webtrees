@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ $pgv_lang["pl_update_only"]         = "Update existing places only?";
 $pgv_lang["pl_overwrite_data"]      = "Overwrite location-data with data from file?";
 $pgv_lang["pl_use_this_value"]      = "Use this value";
 $pgv_lang["pl_precision"]           = "Precision";
-$pgv_lang["pl_country"]             = "Country";
+$pgv_lang["pl_country"]				= "Country";
 $pgv_lang["pl_countries"]			= "Countries";
 $pgv_lang["pl_state"]               = "State";
 $pgv_lang["pl_city"]                = "City";
@@ -111,6 +111,9 @@ $pgv_lang["pl_neighborhood"]        = "Neighborhood";
 $pgv_lang["pl_house"]               = "House";
 $pgv_lang["pl_max"]                 = "Max";
 $pgv_lang["pl_delete"]              = "Delete geographic location";
+$pgv_lang["pl_search_level"]		= "Search on this level";
+$pgv_lang["pl_search_all"]			= "Search all";
+$pgv_lang["pl_unknown"]				= "Unknown";
 
 $pgv_lang["pl_flag"]                = "Flag";
 $pgv_lang["flags_edit"]             = "Select flag";
@@ -131,14 +134,16 @@ $pgv_lang["placecheck_select2"]		= "Select Next Level...";
 $pgv_lang["placecheck_key"]			= "Key to colors used below";
 $pgv_lang["placecheck_key1"]		= "this place and its coordinates do not exist in the GoogleMap tables";
 $pgv_lang["placecheck_key2"]		= "this place exists in the GoogleMap tables, but has no coordinates";
-$pgv_lang["placecheck_key3"]		= "this place level is blank in your GEDCOM file. It should be added to<br/>GoogleMap places as \"unknown\" with coordinates from its parent<br/>level before you add any place to the next level";
-$pgv_lang["placecheck_key4"]		= "this place level is blank in your GEDCOM file, but exists as 'unknown'<br/>in the GoogleMap places table with coordinates. No action required<br/>until the missing level can be entered";
+$pgv_lang["placecheck_key3"]		= "this place level is blank in your GEDCOM file. It should be added to<br />GoogleMap places as \"unknown\" with coordinates from its parent<br />level before you add any place to the next level";
+$pgv_lang["placecheck_key4"]		= "this place level is blank in your GEDCOM file, but exists as 'unknown'<br />in the GoogleMap places table with coordinates. No action required<br />until the missing level can be entered";
 $pgv_lang["placecheck_head"]		= "Place list for GEDCOM file";
-$pgv_lang["placecheck_gedheader"]	= "GEDCOM File Place Data<br/>(2 PLAC tag)";
+$pgv_lang["placecheck_gedheader"]	= "GEDCOM File Place Data<br />(2 PLAC tag)";
 $pgv_lang["placecheck_gm_header"]	= "GoogleMap Places Table Data";
 $pgv_lang["placecheck_unique"]		= "Total unique places";
 $pgv_lang["placecheck_zoom"]        = "Zoom=";
 $pgv_lang["placecheck_options"]     = "PlaceCheck List Options";
 $pgv_lang["placecheck_filter_text"] = "List filtering options";
 $pgv_lang["placecheck_match"] 		= "Include fully matched places: ";
+$pgv_lang["placecheck_lati"] 		= "Latitude";
+$pgv_lang["placecheck_long"] 		= "Longitude";
 ?>

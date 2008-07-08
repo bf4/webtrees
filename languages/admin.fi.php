@@ -3,7 +3,7 @@
  * Finnish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -319,15 +319,16 @@ $pgv_lang["tag"]          = "merkitsin";
 $pgv_lang["spacing"]      = "välistys";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Erityiset nimitiedot";
 $pgv_lang["ADVANCED_PLAC_FACTS"] = "Erityiset paikannimitiedot";
-$pgv_lang["SURNAME_TRADITION"] = "Perinteinen sukunimi";
-$pgv_lang["icelandic"]         = "Islanti";
-$pgv_lang["paternal"]          = "Isän puolelta";
-$pgv_lang["portuguese"]        = "Portugali";
-$pgv_lang["spanish"]           = "Espanja";
+$pgv_lang["SURNAME_TRADITION"]		= "Perinteinen sukunimi";
+$pgv_lang["tradition_icelandic"]	= "Islanti";
+$pgv_lang["tradition_paternal"]		= "Isän puolelta";
+$pgv_lang["tradition_portuguese"]	= "Portugali";
+$pgv_lang["tradition_spanish"]		= "Espanja";
+$pgv_lang["tradition_none"]			= "Ei yhtään";
 $pgv_lang["clear_cache_succes"]		= "Tiedostot välimuistista on poistettu.";
 $pgv_lang["clear_cache"]			= "Poista tiedostot välimuistista.";
 $pgv_lang["sanity_err0"]			= "Virheet:";
-$pgv_lang["sanity_err1"]			= "Tarvitaan PHP versio 4.3 tai uudempi.";
+$pgv_lang["sanity_err1"]			= "Tarvitaan PHP versio #PGV_REQUIRED_PHP_VERSION# tai uudempi.";
 $pgv_lang["sanity_err2"]			= "Tiedosto tai hakemisto <i>#GLOBALS[whichFile]#</i> ei ole olemassa. Tarkista, että tiedosto tai hakemisto on olemassa,, sitä ei ole nimetty väärin ja että lukuoikeudet on asetettu oikein.";
 $pgv_lang["sanity_err3"]			= "Tiedosto <i>#GLOBALS[whichFile]#</i> ei latautunut oikein. Yritä ladata se uudestaan.";
 $pgv_lang["sanity_err4"]			= "Tiedosto <i>config.php</i> on viallinen.";

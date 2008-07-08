@@ -35,7 +35,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_EditTask.php")) {
 }
 // Require the database functions
 require_once("includes/functions_db.php");
-require_once("includes/person_class.php");
+require_once("includes/datamodel/person_class.php");
 global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
  
  	/**
@@ -332,7 +332,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	                   				$pval .= ';'.$person->getXref();
 														$bdate=$person->getEstimatedBirthDate();
 														$byear=$bdate->gregorianYear();
-	                   				print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName()." - ".$byear.'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   				print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName()." - ".$byear.'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
                    				}
                    			}
                    		?>

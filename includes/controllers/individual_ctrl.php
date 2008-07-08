@@ -3,7 +3,7 @@
  * Controller for the Individual Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,8 @@ require_once("config.php");
 require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/menu.php';
-require_once 'includes/person_class.php';
-require_once 'includes/family_class.php';
+require_once 'includes/datamodel/person_class.php';
+require_once 'includes/datamodel/family_class.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -49,6 +49,7 @@ $nonfacts[] = "CHIL";
 $nonfacts[] = "HUSB";
 $nonfacts[] = "WIFE";
 $nonfacts[] = "RFN";
+$nonfacts[] = "_PGV_OBJS";
 $nonfacts[] = "";
 
 //$nonfamfacts[] = "NCHI";  	// Turning back on NCHI display for the indi page.
@@ -158,7 +159,7 @@ class IndividualControllerRoot extends BaseController {
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
 		if ($this->indi->isRemote()) {
-			header('Location: '.preg_replace("/&amp;/", "&", $this->indi->getLinkUrl()));
+			header('Location: '.encode_url(decode_url($this->indi->getLinkUrl()), false));
 			exit;
 		}
 		*/
@@ -305,7 +306,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function getPageTitle() {
 		global $pgv_lang, $GEDCOM;
-		$name = $this->indi->getName();
+		$name = $this->indi->getFullName();
 		return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
 	}
 
@@ -359,7 +360,7 @@ class IndividualControllerRoot extends BaseController {
 	 * @return string	HTML string for the <img> tag
 	 */
 	function getHighlightedObject() {
-		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
+		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $GEDCOM;
 		if ($this->canShowHighlightedObject()) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if (!empty($firstmediarec)) {
@@ -384,20 +385,20 @@ class IndividualControllerRoot extends BaseController {
 					//Gets the Media View Link Information and Concatinate
 					$mid = $firstmediarec['mid'];
 					
-//LBox --------  change for Lightbox Album --------------------------------------------
+					//LBox --------  addition for Lightbox Album --------------------------------------------
+					$name = $this->indi->getFullName();
 					if (file_exists("modules/lightbox/album.php")) {
-						$name1 = trim($firstmediarec["file"]);
-						print "<a href=\"" . $filename . "\" rel=\"clearbox[general_1]\" title=\"" . $mid . "\">" . "\n";
+						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
 					}else
-// ---------------------------------------------------------------------------------------------
+					//Lbox -----------------------------------------------------------------------------------------
+					
 					if (!$USE_MEDIA_VIEWER && $imgsize) {
-						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
+						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
 					}else{
-						$mediaviewlink = "mediaviewer.php?mid=".$mid;
-						$result .= "<a href=\"".$mediaviewlink."\">";
+						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
-
-					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
+					//LBox ---- $result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
+					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(strip_tags($name))."\" alt=\"".PrintReady(strip_tags($name))."\" />";
 					$result .= "</a>";
 
 					return $result;
@@ -586,21 +587,21 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSeperator();
 			if ($this->show_changes=="no") {
 				$label = $pgv_lang["show_changes"];
-				$link = "individual.php?pid=".$this->pid."&amp;show_changes=yes";
+				$link = "individual.php?pid=".$this->pid."&show_changes=yes";
 			}
 			else {
 				$label = $pgv_lang["hide_changes"];
-				$link = "individual.php?pid=".$this->pid."&amp;show_changes=no";
+				$link = "individual.php?pid=".$this->pid."&show_changes=no";
 			}
-			$submenu = new Menu($label, $link);
+			$submenu = new Menu($label, encode_url($link));
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
 			if (PGV_USER_CAN_ACCEPT) {
-				$submenu = new Menu($pgv_lang["undo_all"], "individual.php?pid=".$this->pid."&amp;action=undo");
+				$submenu = new Menu($pgv_lang["undo_all"], encode_url("individual.php?pid={$this->pid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang["accept_all"], "individual.php?pid=".$this->pid."&amp;action=accept");
+				$submenu = new Menu($pgv_lang["accept_all"], encode_url("individual.php?pid={$this->pid}&action=accept"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -644,7 +645,7 @@ class IndividualControllerRoot extends BaseController {
 		else {
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
-			$menu->addLink("clippings.php?action=add&amp;id=".$this->pid."&amp;type=indi");
+			$menu->addLink(encode_url("clippings.php?action=add&id={$this->pid}&type=indi"));
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 		if ($this->canShowGedcomRecord()) {
@@ -657,14 +658,14 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
-			$submenu = new Menu($pgv_lang["add_to_cart"], "clippings.php?action=add&amp;id=".$this->pid."&amp;type=indi");
+			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("clippings.php?action=add&id={$this->pid}&type=indi"));
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && PGV_USER_NAME) {
-			$submenu = new Menu($pgv_lang["add_to_my_favorites"], "individual.php?action=addfav&amp;pid=".$this->pid."&amp;gid=".$this->pid);
+			$submenu = new Menu($pgv_lang["add_to_my_favorites"], encode_url("individual.php?action=addfav&pid={$this->pid}&gid={$this->pid}"));
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -1932,7 +1933,7 @@ class IndividualControllerRoot extends BaseController {
 			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
 	        if (PGV_USER_IS_ADMIN) {
 				print "<tr><td align=\"center\" colspan=\"2\">\n";
-				print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+	            print "<a href=\"".encode_url("module.php?mod=googlemap&pgvaction=editconfig")."\">".$pgv_lang["gm_manage"]."</a>";
 				print "</td></tr>\n";
 			}
 			print "\n\t</table>\n<br />";
@@ -1958,10 +1959,12 @@ class IndividualControllerRoot extends BaseController {
 			$this->indi->add_family_facts(false);
 						// LB Fix if no googlemaps ========================================================
 						if (file_exists("modules/googlemap/googlemap.php")) {
+							create_indiv_buttons();
 			build_indiv_map($this->getIndiFacts(), $famids);
 		}
 						// LB Fix if no googlemaps ========================================================
 	}
+}
 	
 	function print_tree_tab() {
 		//-- nothing to do here
@@ -1983,18 +1986,18 @@ class IndividualControllerRoot extends BaseController {
 		global $typ2b, $edit ;	
 		global $CONTACT_EMAIL, $pid, $tabno;
 
-		print "<table class=\"facts_table\">\n";		
 		$media_found = false;
 		if (!$this->indi->canDisplayDetails()) {
+			print "<table class=\"facts_table\">\n";		
 			print "<tr><td class=\"facts_value\">";
 			print_privacy_error($CONTACT_EMAIL);
 			print "</td></tr>";
+			print "</table>";
 		}else{
 			if (file_exists("modules/lightbox/album.php")) {
 				include_once('modules/lightbox/album.php');	
 			}		
 		}
-		print "</table>";
 	}
 	
 	/**
@@ -2006,7 +2009,7 @@ class IndividualControllerRoot extends BaseController {
 // -----------------------------------------------------------------------------
 // End LightBox Album Functions
 // -----------------------------------------------------------------------------
-		
+
 }
 // -- end of class
 //-- load a user extended class if one exists

@@ -414,7 +414,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (PGV_USER_ACCESS_LEVEL<=$SHOW_ADD_FOLDER )
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addfolder"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
 		//button 'Add Unlinked Source'
-//		if (PGV_USER_ACCESS_LEVEL<=$SHOW_ADD_UNLINKED_SOURCE && userCanEdit() && empty ($folderid))
+//		if (PGV_USER_ACCESS_LEVEL<=$SHOW_ADD_UNLINKED_SOURCE && PGV_USER_CAN_EDIT && empty ($folderid))
 //			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
 		//button 'View Probabilities'
 //		if (PGV_USER_ACCESS_LEVEL<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
@@ -468,7 +468,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			foreach($thePeopleList as $i=>$pid) {
 				if(!empty($pid)) {
 						$person=Person::getInstance($pid);
-						$output.='<a href="'.$person->getLinkUrl().'">'.$person->getName().'</a><br/>';
+						$output.='<a href="'.$person->getLinkUrl().'">'.$person->getFullName().'</a><br/>';
 				}
 			}
 			
@@ -1105,12 +1105,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$MissingReturn[] = array("DEAT", $pgv_lang["All"], $probFacts);
 	
 		}
-		if ($person->getGivenNames() == "unknown") {
+		list($lastname, $givennames)=explode(',', $person->getSortName());
+		if (substr($givennames,0,1)=='@') {
 			$probFacts = singleInference($perId,"GIVN");
 			$MissingReturn[] = array("GIVN","",$probFacts);
 			
 		}
-		if ($person->getSurname() == "@N.N.") {
+		if (substr($lastname,0,1)=='@') {
 			$probFacts = singleInference($perId,"SURN");
 			$MissingReturn[] = array("SURN","",$probFacts);
 			
@@ -1226,7 +1227,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	     	for($i=0; $i<count($missingName); $i++) {
 	     		$nextTaskID =get_next_id("tasks","t_id");
 	     		$nextItaskId=get_next_id("individualtask","it_t_id");
-	     		$personName = $person->getName();
+	     		$personName = $person->getFullName();
 	     		if($this->add_task($nextTaskID,$folderID,$missingName[$i],$personName." (auto generated)",$person->getXref()))
 	     		$this->add_indi_task($nextItaskId,$person->getXref(),$GEDCOMS[$GEDCOM]["id"]);
 	     	
@@ -1519,8 +1520,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $factarray;
 		
 		if (!is_object($person)) return "";
-		$givennames = $person->getGivenNames();
-		$lastname = $person->getSurname();
 		$bdate = $person->getEstimatedBirthDate();
 		$ddate = $person->getEstimatedDeathDate();
 		$byear = $bdate->gregorianYear();
@@ -1889,7 +1888,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							<div id=\"searchdiv\">";
 							foreach($this->sites as $file=>$value) break;
 							include_once("modules/research_assistant/search_plugin/".$file);
-							$out .=  autosearch_options();
+							$autosearch=new AutoSearch();
+							$out .=  $autosearch->options();
 							$out .= "</div>
 							</td></tr>\n
 							</table>\n

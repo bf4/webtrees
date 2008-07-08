@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,7 @@
 // Function lightbox() for Lightbox Album - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
 // function lightbox_relatives2() {
-
-global $edit, $tabno, $mediacnt;
+global $edit, $tabno, $mediacnt, $GEDCOM;
 
 $edit=$edit;
 
@@ -67,7 +66,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["husb"]->getXref() . "&edit=" . $edit . "\">";
+                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -86,7 +85,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["wife"]->getXref() . "&edit=" . $edit . "\">";
+                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
                                                      print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -121,7 +120,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["husb"]->getXref() . "&edit=" . $edit . "\">";
+                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -140,7 +139,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["wife"]->getXref() . "&edit=" . $edit . "\">";
+                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
                                                      print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -162,7 +161,7 @@ $edit=$edit;
                                                 <td class="<?php print $this->getPersonStyle($child); ?>">
                                                 <?php
                                                 if ( ($child->canDisplayDetails()) ) {
-                                                      print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $child->getXref() . "&edit=" . $edit . "\">";
+                                                      print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
                                                       print PrintReady(get_person_name($child->getXref()));
                                                       print "</a>" . "\n" ;
                                                 }else{

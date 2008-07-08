@@ -3,7 +3,7 @@
  * Administrative User Interface.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -233,7 +233,7 @@ if ($action=='createuser' || $action=='edituser2') {
 					}
 				}
 				// Reload the form cleanly, to allow the user to verify their changes
-				header("Location: useradmin.php?action=edituser&username={$username}");
+				header("Location: ".encode_url("useradmin.php?action=edituser&username={$username}&ged={$ged}", false));
 				exit;
 			}
 		}
@@ -295,7 +295,7 @@ if ($action=="edituser") {
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
 	<input type="submit" tabindex="<?php print ++$tab; ?>" value="<?php print $pgv_lang["update_user"]; ?>" />
-	<input type="button" tabindex="<?php print ++$tab; ?>" value="<?php print $pgv_lang["back"];?>" onclick="window.location='useradmin.php?action=listusers&amp;sort=<?php print $sort;?>&amp;filter=<?php print $filter;?>&amp;usrlang=<?php print $usrlang;?>';"/>
+	<input type="button" tabindex="<?php print ++$tab; ?>" value="<?php print $pgv_lang["back"]; ?>" onclick="window.location='<?php print encode_url("useradmin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
 	</td></tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php print_help_link("useradmin_username_help", "qm","username"); print $pgv_lang["username"];?></td>
@@ -333,7 +333,7 @@ if ($action=="edituser") {
 		print_findindi_link($varname, "", false, false, $ged_name);
 		if ($pid) {
 			$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-			echo '<span class="list_item"><a href="individual.php?pid=', $pid, '&amp;ged=', $ged_name, '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
+			echo '<span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
 		}
 		print "</td></tr>";
 	}
@@ -354,7 +354,7 @@ if ($action=="edituser") {
 		print_findindi_link($varname, "", false, false, $ged_name);
 		if ($pid) {
 			$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-			echo '<span class="list_item"><a href="individual.php?pid=', $pid, '&amp;ged=', $ged_name, '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
+			echo '<span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
 		}
 		?>
 		</td></tr>
@@ -406,7 +406,7 @@ if ($action=="edituser") {
 			}
 			echo '</option>';
 		}
-		print "</td></tr>";
+		print "</select></td></tr>";
 	}
 	?>
 	</table>
@@ -509,7 +509,7 @@ if ($action=="edituser") {
 	</tr>
 	<tr><td class="topbottombar" colspan="2">
 	<input type="submit" tabindex="<?php print ++$tab; ?>" value="<?php print $pgv_lang["update_user"]; ?>" />
-	<input type="button" tabindex="<?php print ++$tab; ?>" value="<?php print $pgv_lang["back"];?>" onclick="window.location='useradmin.php?action=listusers&amp;sort=<?php print $sort;?>&amp;filter=<?php print $filter;?>&amp;usrlang=<?php print $usrlang;?>';"/>
+	<input type="button" tabindex="<?php print ++$tab; ?>" value="<?php print $pgv_lang["back"]; ?>" onclick="window.location='<?php print encode_url("useradmin.php?action=listusers&sort={$sort}&filter={$filter}&usrlang={$usrlang}"); ?>';"/>
 	</td></tr>
 	</table>
 	</form>
@@ -602,8 +602,8 @@ if ($action == "listusers") {
 	print "<td class=\"descriptionbox wrap\">";
 	print $pgv_lang["message"]."</td>";
 	} ?>
-	<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortusername&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">"; ?><?php print $pgv_lang["username"]; ?></a></td>
-	<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortlname&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">"; ?><?php print $pgv_lang["full_name"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["username"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["full_name"]; ?></a></td>
 	<td class="descriptionbox wrap"><?php print $pgv_lang["inc_languages"]; ?></td>
 	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php print $pgv_lang["privileges"];?>" onclick="<?php
 	$k = 1;
@@ -618,10 +618,10 @@ if ($action == "listusers") {
 	print "</div>&nbsp;";
 	print $pgv_lang["privileges"];?>
 	</td>
-	<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortreg&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">"; ?><?php print $pgv_lang["date_registered"]; ?></a></td>
-	<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortllgn&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">"; ?><?php print $pgv_lang["last_login"]; ?></a></td>
-	<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortver&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">"; ?><?php print $pgv_lang["verified"]; ?></a></td>
-	<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortveradm&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">"; ?><?php print $pgv_lang["verified_by_admin"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortreg&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["date_registered"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortllgn&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["last_login"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortver&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["verified"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortveradmin&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["verified_by_admin"]; ?></a></td>
 	<?php if ($view != "preview") {
 	print "<td class=\"descriptionbox wrap\">";
 	print $pgv_lang["delete"]."</td>";
@@ -633,7 +633,7 @@ if ($action == "listusers") {
 		print "<tr>\n";
 		if ($view != "preview") {
 			print "\t<td class=\"optionbox wrap\">";
-			print "<a href=\"useradmin.php?action=edituser&amp;username=".urlencode($user_name)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\">".$pgv_lang["edit"]."</a></td>\n";
+			print "<a href=\"".encode_url("useradmin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}")."\">".$pgv_lang["edit"]."</a></td>\n";
 			print "\t<td class=\"optionbox wrap\">";
 			if ($user_id!=PGV_USER_ID) print "<a href=\"javascript:;\" onclick=\"return message('".$user_name."');\">".$pgv_lang["message"]."</a>";
 			print "</td>\n";
@@ -643,7 +643,10 @@ if ($action == "listusers") {
 			else print "\t<td class=\"optionbox wrap\">".$user_name;
 		}
 		else print "\t<td class=\"optionbox wrap\">".$user_name;
-		if (get_user_setting($user_id, "comment")) print "<br /><img class=\"adminicon\" align=\"top\" alt=\"".PrintReady(stripslashes(get_user_setting($user_id, "comment")))."\"  title=\"".PrintReady(stripslashes(get_user_setting($user_id, "comment")))."\"  src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\">";
+		if (get_user_setting($user_id, "comment")) {
+			$tempTitle = PrintReady(stripslashes(get_user_setting($user_id, "comment")));
+			print "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}\" />";
+		}
 		print "</td>\n";
 		$userName = getUserFullName($user_id);
 		if ($TEXT_DIRECTION=="ltr") print "\t<td class=\"optionbox wrap\">".$userName. getLRM() . "</td>\n";
@@ -669,7 +672,7 @@ if ($action == "listusers") {
 			if ($vval=="accept" || $vval=="admin") print "<li class=\"warning\">";
 			else print "<li>";
 			print $pgv_lang[$vval]." ";
-			if ($uged != "") print "<a href=\"individual.php?pid=".$uged."&amp;ged=".$ged_name."\">".$ged_name."</a></li>\n";
+			if ($uged != "") print "<a href=\"".encode_url("individual.php?pid={$uged}&ged={$ged_name}")."\">".$ged_name."</a></li>\n";
 			else print $ged_name."</li>\n";
 		}
 		print "</ul>";
@@ -697,7 +700,7 @@ if ($action == "listusers") {
 		print "</td>\n";
 		if ($view != "preview") {
 			print "\t<td class=\"optionbox wrap\">";
-			if (PGV_USER_ID!=$user_id) print "<a href=\"useradmin.php?action=deleteuser&amp;username=".urlencode($user_name)."&amp;sort=".$sort."&amp;filter=".$filter."&amp;usrlang=".$usrlang."&amp;ged=".$ged."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user_name');\">".$pgv_lang["delete"]."</a>";
+			if (PGV_USER_ID!=$user_id) print "<a href=\"".encode_url("useradmin.php?action=deleteuser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}")."\" onclick=\"return confirm('".$pgv_lang["confirm_user_delete"]." $user_name');\">".$pgv_lang["delete"]."</a>";
 			print "</td>\n";
 		}
 		print "</tr>\n";
@@ -1080,18 +1083,18 @@ if ($action == "cleanup2") {
 	</tr>
 	<tr>
 		<td class="optionbox"><a href="useradmin.php?action=listusers"><?php print $pgv_lang["current_users"];?></a></td>
-		<td class="optionbox"><a href="useradmin.php?action=createform"><?php print $pgv_lang["add_user"];?></a></td>
+		<td class="optionbox" colspan="2" ><a href="useradmin.php?action=createform"><?php print $pgv_lang["add_user"]; ?></a></td>
 	</tr>
 	<tr>
 		<td class="optionbox"><a href="useradmin.php?action=cleanup"><?php print $pgv_lang["cleanup_users"];?></a></td>
-		<td class="optionbox">
+		<td class="optionbox" colspan="2" >
 			<a href="javascript: <?php print $pgv_lang["message_to_all"]; ?>" onclick="message('all', 'messaging2', '', ''); return false;"><?php print $pgv_lang["message_to_all"]; ?></a><br />
 			<a href="javascript: <?php print $pgv_lang["broadcast_never_logged_in"]; ?>" onclick="message('never_logged', 'messaging2', '', ''); return false;"><?php print $pgv_lang["broadcast_never_logged_in"]; ?></a><br />
 			<a href="javascript: <?php print $pgv_lang["broadcast_not_logged_6mo"]; ?>" onclick="message('last_6mo', 'messaging2', '', ''); return false;"><?php print $pgv_lang["broadcast_not_logged_6mo"]; ?></a><br />
 		</td>
 	</tr>
 	<tr>
-		<td class="topbottombar" colspan="2" align="center" ><a href="admin.php"><?php print $pgv_lang["lang_back_admin"]; ?></a></td>
+		<td class="topbottombar" colspan="3" align="center" ><a href="admin.php"><?php print $pgv_lang["lang_back_admin"]; ?></a></td>
 	</tr>
 	<tr>
 		<td colspan="3" class="topbottombar"><?php print $pgv_lang["admin_info"]; ?></td>
@@ -1125,7 +1128,7 @@ if ($action == "cleanup2") {
 		}
 		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 			if (get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin') {
-				$title=get_gedcom_setting($ged_id, 'title');
+				$title=PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')));
 				if (isset($gedadmin[$title])) {
 					$gedadmin[$title]["number"]++;
 				} else {
@@ -1147,10 +1150,10 @@ if ($action == "cleanup2") {
 	print "<table class=\"width100 $TEXT_DIRECTION\">";
 	print "<tr><td class=\"font11\">".$pgv_lang["users_total"]."</td><td class=\"font11\">".$totusers."</td></tr>";
 
-	print "<tr><td class=\"font11\">";
+	print "<tr><td class=\"font11\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 	if ($adminusers == 0) print $pgv_lang["users_admin"];
-	else print "<a href=\"useradmin.php?action=listusers&amp;filter=adminusers\">".$pgv_lang["users_admin"]."</a></td>";
-	print "<td class=\"font11\">".$adminusers."</td></tr>";
+	else print "<a href=\"useradmin.php?action=listusers&amp;filter=adminusers\">".$pgv_lang["users_admin"]."</a>";
+	print "</td><td class=\"font11\">".$adminusers."</td></tr>";
 
 	print "<tr><td class=\"font11\">".$pgv_lang["users_gedadmin"]."</td></tr>";
 	asort($gedadmin);
@@ -1158,10 +1161,10 @@ if ($action == "cleanup2") {
 	foreach ($gedadmin as $key=>$geds) {
 		if ($ind !=0) print "<td class=\"font11\"></td>";
 		$ind = 1;
-		print "<td class=\"font11\">";
+		print "<tr><td class=\"font11\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		if ($geds["number"] == 0) print $geds["name"];
-		else print "<a href=\"useradmin.php?action=listusers&amp;filter=gedadmin&amp;ged=".$geds["ged"]."\">".$geds["name"]."</a>";
-		print "</td><td class=\"font11\">".$geds["number"]."</td>";
+		else print "<a href=\"".encode_url("useradmin.php?action=listusers&filter=gedadmin&ged=".$geds["ged"])."\">".$geds["name"]."</a>";
+		print "</td><td class=\"font11\">".$geds["number"]."</td></tr>";
 	}
 	print "<tr><td class=\"font11\"></td></tr><tr><td class=\"font11\">";
 	if ($warnusers == 0) print $pgv_lang["warn_users"];
@@ -1181,7 +1184,7 @@ if ($action == "cleanup2") {
 	asort($userlang);
 	print "<tr valign=\"middle\"><td class=\"font11\">".$pgv_lang["users_langs"]."</td>";
 	foreach ($userlang as $key=>$ulang) {
-		print "\t<td class=\"font11\"><img src=\"".$language_settings[$ulang["langname"]]["flagsfile"]."\" class=\"brightflag\" alt=\"".$key."\" title=\"".$key."\" /></td><td>&nbsp;<a href=\"useradmin.php?action=listusers&amp;filter=language&amp;usrlang=".$ulang["langname"]."\">".$key."</a></td><td>".$ulang["number"]."</td></tr><tr class=\"vmiddle\"><td></td>\n";
+		print "\t<td class=\"font11\"><img src=\"".$language_settings[$ulang["langname"]]["flagsfile"]."\" class=\"brightflag\" alt=\"".$key."\" title=\"".$key."\" /></td><td>&nbsp;<a href=\"".encode_url("useradmin.php?action=listusers&filter=language&usrlang=".$ulang["langname"])."\">".$key."</a></td><td>".$ulang["number"]."</td></tr><tr class=\"vmiddle\"><td></td>\n";
 	}
 	print "</tr></table>";
 	print "</td></tr></table>";

@@ -35,6 +35,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"research_assistant.php")) {
 }
 // Require our base class and db functions
 require_once ("modules/research_assistant/ra_functions.php");
+require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
 if (file_exists('modules/research_assistant/config.php')) include_once('modules/research_assistant/config.php');
 
 //-- commmented out because the other section should take care of redirecting
@@ -359,13 +360,11 @@ class research_assistant extends ra_functions {
 		else
 			if($_REQUEST['action'] == "genTasks")
 			{
-				require_once('modules/research_assistant/forms/ra_GeneratedTask.php');
 				$out .= $this->loadGenTasks();
 			}
 		else
 			if($_REQUEST['action'] == "generatetask")
 			{
-				require_once('modules/research_assistant/forms/ra_GeneratedTask.php');
 				$checkedtasks = array();
 				$tasks = array();
 				if(!empty($_REQUEST['checkedtasks']) && !empty($_SESSION['genTasks']))
@@ -383,7 +382,6 @@ class research_assistant extends ra_functions {
 		else
 			if($_REQUEST['action']  == "savegentask")
 			{
-				require_once('modules/research_assistant/forms/ra_GeneratedTask.php');
 				$tasks = unserialize($_SESSION['genTasks']);
 				foreach($tasks as $key => $value)
  					if($value->getID() == $_REQUEST['genTaskId'])
@@ -399,7 +397,6 @@ class research_assistant extends ra_functions {
 		else
 			if($_REQUEST['action'] == "editgenTasks")
 			{
-				require_once('modules/research_assistant/forms/ra_GeneratedTask.php');
 				$out .= $this->print_menu();
 				$out .= $this->print_form('ra_EditGeneratedTask');
 			}
@@ -450,21 +447,19 @@ class research_assistant extends ra_functions {
 			$out .= print_r($_REQUEST, true);
 			if (isset($_REQUEST['plugin'])) {
 				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['plugin'])) { 
-					include_once("modules/research_assistant/search_plugin/".$_REQUEST['plugin']);
-					$out="";
-					$out = autosearch_options();
-					return $out;
+					require_once 'modules/research_assistant/search_plugin/'.$_REQUEST['plugin'];
+					$autosearch=new AutoSearch();
+					return $autosearch->options();
 				}
 			}
 		}
 		else if ($_REQUEST['action']=='auto_search') {
 			$out .= print_r($_REQUEST, true);
 			if (isset($_REQUEST['searchtype'])) {
-				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].".php")) { 
-					include_once("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].".php");
-					$out = "";
-					$out = autosearch_process();
-					return $out;
+				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].'.php')) { 
+					require_once 'modules/research_assistant/search_plugin/'.$_REQUEST['searchtype'].'.php';
+					$autosearch=new AutoSearch();
+					return $autosearch->process();
 				}
 			}
 		}

@@ -5,7 +5,7 @@
  * To learn more about CSS visit http: //www.w3.org/TR/REC-CSS2/
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved.
+ * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,6 @@ ul {
 }
 
 .blockcontent {
-	overflow: auto;
 	margin-left: auto;
 	border: 1pt solid #999;
 	margin-right: 5px;
@@ -177,6 +176,10 @@ ul {
 	padding: 0pt 5px 0pt 5px;
 }
 
+.normal_inner_block {
+	overflow: auto;
+}
+
 .blockheader {
 	table-layout: fixed;
 	padding: 0px;
@@ -230,21 +233,9 @@ ul {
 	background-image: url(images/left1R.gif);
 }
 
-#index_small_blocks .person_box , #index_small_blocks .person_boxNN , #index_small_blocks .person_boxF {
-	margin: 0;
-	padding: 0;
-	border: 0pt solid white;
-	height: auto;
-}
-
 #index_small_blocks .name1 {
 	font: bold 10px tahoma, arial, helvetica, sans-serif;
 	color: #003399;
-}
-
-#index_small_blocks .person_box img, #index_small_blocks .person_boxF img, #index_small_blocks .person_boxNN img {
-	display: none;
-	visibility: hidden;
 }
 
 /* exclude thumbs */
@@ -271,10 +262,6 @@ ul {
 #index_main_blocks {
 	font-family: tahoma, arial, helvetica, sans-serif;
 	float: left;
-}
-
-#index_main_blocks .person_box, #index_main_blocks .person_boxF, #index_main_blocks .person_boxNN {
-	margin-bottom: 10px;
 }
 
 #index_main_blocks .name2 {
@@ -467,8 +454,7 @@ th {
 .person_box {
 	background-color: #f0f9ff;
 	border: 1px solid #84beff;
-	padding: 3pt 3pt 3pt 3pt;
-	letter-spacing: .2px;
+	padding: 3pt;
 }
 
 .person_boxF {
@@ -884,21 +870,21 @@ th {
 .activeflag {
 	height: 15px;
 	border: none;
-	opacity: 1;		/* IE does not yet support this */
+	opacity: 1;		/* IE's support is different */
 }
 
 /* This one is for an inactive language when the mouse is hovering over it */
 .brightflag {
 	height: 15px;
 	border: none;
-	opacity: 1;		/* IE does not yet support this */
+	opacity: 1;		/* IE's support is different */
 }
 
 /* This one is for an inactive language when the mouse is not hovering over it */
 .dimflag {
 	height: 15px;
 	border: none;
-	opacity: 0.4;	/* IE does not yet support this */
+	opacity: 0.5;	/* IE's support is different */
 }
 
 .border1 {
@@ -1362,9 +1348,6 @@ h4 {
 }
 
 .rela {
-	filter: alpha(opacity=67);
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=67);
-	-moz-opacity: 0.67;
 	opacity: 0.67; 
 	color: black;
 }
@@ -1474,8 +1457,6 @@ h4 {
 	height: 100%; float: left;
 	font-weight: bold;
 	display: none;
-	-moz-border-radius-topleft: 0.6em;
-	-moz-border-radius-topright: 0.6em;
 }
 
 .note_details {
@@ -1515,10 +1496,9 @@ a.showit:hover span {
 	color: white;
 	font: 15px tahoma, arial, helvetica, sans-serif;
 	text-align: left;
-	FILTER: Alpha(Opacity=90, FinishOpacity=90, Style=2);
-	-moz-opacity: .85;
-	-khtml-opacity: .85;
+	opacity: .85;
 	z-index: 5;
+	white-space: normal; 
 }
 
 .lifespan_people span:first-letter {
@@ -1588,9 +1568,7 @@ a.showit:hover span {
 }
 /* End of Tag Cloud styles*/
 
-/* Because the CSS file is only read once, the following two overriding classes MUST
-   appear at the end of the entire CSS file.
-*/
+/* The following two overriding classes MUST appear at the end of the entire CSS file. */
 .nowrap {
 	white-space: nowrap;
 }

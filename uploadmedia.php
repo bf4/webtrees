@@ -3,7 +3,7 @@
  * Allow admin users to upload media files using a web interface.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,12 +31,11 @@ if (!PGV_USER_CAN_EDIT) {
 }
 
 if (isset($_SESSION["cookie_login"]) && $_SESSION["cookie_login"]==true) {
-	header("Location: login.php?ged=$GEDCOM&url=uploadmedia.php");
+	header("Location: ".encode_url("login.php?ged={$GEDCOM}&url=uploadmedia.php", false));
 	exit;
 }
 
 print_header($pgv_lang["upload_media"]);
-$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 ?>
 <center>
 <?php
@@ -54,7 +53,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 				AddToLog("Media file ".$MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name'])." uploaded");
 				$thumbgenned = false;
 				if (!move_uploaded_file($_FILES['mediafile'.$i]['tmp_name'], $MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name']))) {
-					$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES['mediafile'.$i]['error']]."<br />";
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES['mediafile'.$i]['error'])."<br />";
 				}
 				else {
 					//-- automatically generate thumbnail
@@ -70,7 +69,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 				if (!$thumbgenned) {
 					if (!is_dir($MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i])) mkdir($MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i]);
 					if (!move_uploaded_file($_FILES['thumbnail'.$i]['tmp_name'], $MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['thumbnail'.$i]['name']))) {
-						$error .= $pgv_lang["upload_error"]."<br />".$upload_errors[$_FILES['thumbnail'.$i]['error']]."<br />";
+						$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES['thumbnail'.$i]['error'])."<br />";
 					}
 					AddToLog("Media thumbnail ".$MEDIA_DIRECTORY."thumbs/".$_POST["folder".$i].basename($_FILES['thumbnail'.$i]['name'])." uploaded");
 				}
@@ -103,6 +102,15 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 ?>
 		<form enctype="multipart/form-data" method="post" action="uploadmedia.php">
 		<input type="hidden" name="action" value="upload" />
+<?php
+		if (!PGV_USER_GEDCOM_ADMIN) {
+			echo '<input type="hidden" name="folder1" value="" />';
+			echo '<input type="hidden" name="folder2" value="" />';
+			echo '<input type="hidden" name="folder3" value="" />';
+			echo '<input type="hidden" name="folder4" value="" />';
+			echo '<input type="hidden" name="folder5" value="" />';
+		}
+?>
 		<table class="center <?php print $TEXT_DIRECTION ?> width70">
 		<tr><td colspan="2" class="topbottombar"><?php print $pgv_lang["upload_media"]; ?></td></tr>
 		<?php
@@ -116,11 +124,9 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 						print "&nbsp;";
 					print "</td>";
 					print "<td class=\"optionbox\">";
-						print "<input type=\"text\" name=\"folder".$i."\" size=60 />";
+						print "<input type=\"text\" name=\"folder".$i."\" size=\"60\" />";
 					print "</td>";
 				print "</tr>";
-			} else {
-				print "<input type=\"hidden\" name=\"folder{$i}\" value=\"\" />";
 			}
 			print "<tr>";
 				print "<td ";
@@ -130,7 +136,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 					print "&nbsp;";
 				print "</td>";
 				print "<td class=\"optionbox\">";
-					print "<input name=\"mediafile".$i."\" type=\"file\" size=60 />";
+					print "<input name=\"mediafile".$i."\" type=\"file\" size=\"60\" />";
 				print "</td>";
 			print "</tr>";
 			if (PGV_USER_GEDCOM_ADMIN) {
@@ -142,7 +148,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 						print "&nbsp;";
 					print "</td>";
 					print "<td class=\"optionbox\">";
-						print "<input name=\"thumbnail".$i."\" type=\"file\" size=60 />";
+						print "<input name=\"thumbnail".$i."\" type=\"file\" size=\"60\" />";
 					print "</td>";
 				print "</tr>";
 			}
@@ -158,7 +164,7 @@ $upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pg
 				if (PGV_USER_GEDCOM_ADMIN) {
 					print "<tr>";
 						print "<td colspan=\"2\" class=\"center\">";
-							print "<input type=\"checkbox\" name=\"genthumb".$i."\" value=\"yes\" checked/> ";
+							print "<input type=\"checkbox\" name=\"genthumb".$i."\" value=\"yes\" checked=\"checked\" /> ";
 							print $pgv_lang["generate_thumbnail"];
 							print $ThumbSupport;
 							print_help_link("generate_thumb_help", "qm");

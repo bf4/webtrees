@@ -56,7 +56,7 @@ class RemoteLinkController extends BaseController {
 
 		//-- require that the user have entered their password
 		if ($_SESSION["cookie_login"]) {
-			header("Location: login.php?type=simple&ged=$GEDCOM&url=edit_interface.php".urlencode("?".$QUERY_STRING));
+			header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
 			exit;
 		}
 

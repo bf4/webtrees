@@ -5,7 +5,7 @@
  * Use the $pids array to set which individuals to show on the chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -281,7 +281,7 @@ $controller->checkPrivacy();
 				break;
 			}
 		?>
- 			<a href="individual.php?pid=<?php print $pid; ?>">&nbsp;<?php print PrintReady($indi->getName()); ?><br />
+ 			<a href="individual.php?pid=<?php print $pid; ?>">&nbsp;<?php print PrintReady($indi->getFullName()); ?><br />
  			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) print PrintReady($addname); ?>
 			</a>
 			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid); ?>" />
@@ -334,8 +334,8 @@ $controller->checkPrivacy();
 		$scalemod = round($controller->scale*.2) + 1;
 		?>
 		<td class="list_value" style="padding: 5px">
-			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other']; ?>" title="<?php print $pgv_lang["zoom_in"]; ?>" border="0" /></a><br />
-			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other']; ?>" title="<?php print $pgv_lang["zoom_out"]; ?>" border="0" /></a><br />
+			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other']; ?>" title="<?php print $pgv_lang["zoom_in"]; ?>" alt="<?php print $pgv_lang["zoom_in"]; ?>" border="0" /></a><br />
+			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other']; ?>" title="<?php print $pgv_lang["zoom_out"]; ?>" alt="<?php print $pgv_lang["zoom_out"]; ?>" border="0" /></a><br />
 			<input type="button" value="<?php print $pgv_lang['clear_chart']; ?>" onclick="window.location = 'timeline.php?clear=1';" />
 		</td>
 	<?php } ?>

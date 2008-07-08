@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Russian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
  * @package PhpGedView
- * @subpackage Languages
+ * @author Eugene Fedorov
+ * @author Natalia Anikeeva
  * @version $Id$
  */
 
@@ -65,7 +65,6 @@ $pgv_lang["add_wife_to_family"]		= "Добавить супругу в эту с
 $pgv_lang["changes_occurred"]		= "Следующие изменения для этой персоны предотвращены:";
 $pgv_lang["create_source"]		= "Добавить новый источник";
 $pgv_lang["date"]			= "Дата";
-$pgv_lang["family"]			= "Семья";
 $pgv_lang["file_missing"]		= "Файл не получен. Пошлите его заново.";
 $pgv_lang["file_partial"]		= "Файл послан частично. Попробуйте заново.";
 $pgv_lang["file_success"]		= "Пересылка файла завершена успешно.";
@@ -75,7 +74,6 @@ $pgv_lang["gedcomid"]			= "GEDCOM INDI запись номер ID";
 $pgv_lang["gedrec_deleted"]		= "Запись GEDCOM удалена";
 $pgv_lang["hide_changes"]		= "Нажмите здесть чтобы скрыть изменения.";
 $pgv_lang["highlighted"]		= "Выделенное изображение";
-$pgv_lang["invalid_search_input"] 	= "Пожалуйста укажите имя, фамилию или место nt в дополнение к году";
 $pgv_lang["media_file"]			= "Файл фото/аудио/видио";
 $pgv_lang["must_provide"]		= "Импортировать:";
 $pgv_lang["new_source_created"]	= "Новый источник успешно создан";

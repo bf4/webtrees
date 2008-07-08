@@ -3,7 +3,7 @@
  * Various functions used by the Edit interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,82 +90,6 @@ $STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
 //-- it returns the connection identifier
 function newConnection() {
 	return session_name()."\t".session_id()."\n";
-}
-
-//-- gets the next person in the gedcom, if we reach the end then
-//-- returns false
-function get_next_xref($gid, $type='INDI') {
-	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
-
-	switch($type) {
-		case "INDI":
-			$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(i_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(i_id,2)";
-			break;
-		case "FAM":
-			$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(f_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(f_id,2)";
-			break;
-		case "SOUR":
-			$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(s_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(s_id,2)";
-			break;
-		case "REPO":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-		case "NOTE":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-		case "OBJE":
-			$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(m_media,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(m_media,2)";
-			break;
-		case "OTHER":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
-			break;
-	}
-	$res = dbquery($sql, true, 1);
-	if ($res->numRows()>0) {
-		$row = $res->fetchRow();
-		$res->free();
-		$xref = $row[0];
-		return $xref;
-	}
-	return "";
-}
-
-//-- gets the previous person in the gedcom, if we reach the start then
-//-- returns the last record
-function get_prev_xref($gid, $type='INDI') {
-	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
-
-	switch($type) {
-		case "INDI":
-			$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(i_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(i_id,2) DESC";
-			break;
-		case "FAM":
-			$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(f_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(f_id,2) DESC";
-			break;
-		case "SOUR":
-			$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(s_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(s_id,2) DESC";
-			break;
-		case "REPO":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-		case "NOTE":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-		case "OBJE":
-			$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(m_media,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(m_media,2) DESC";
-			break;
-		case "OTHER":
-			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
-			break;
-	}
-	$res = dbquery($sql, true, 1);
-	if ($res->numRows()>0) {
-		$row = $res->fetchRow();
-		$res->free();
-		$xref = $row[0];
-		return $xref;
-	}
-	return "";
 }
 
 /**
@@ -556,6 +480,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	init_calendar_popup();
 	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
+//	print "<form method=\"post\" name=\"addchildform\" action=\"{$nextaction}\" onsubmit=\"return checkform();\">\n";
 	print "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	print "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
@@ -835,8 +760,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 	print "</form>\n";
 	?>
-<script
-	type="text/javascript" src="autocomplete.js"></script>
+	<script type="text/javascript" src="autocomplete.js"></script>
 <script type="text/javascript">
 	<!--
 	//	copy php arrays into js arrays
@@ -849,10 +773,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		return false;
 	}
 	function trim(str) {
-		//-- See the NAME_TEXT portion of the GEDCOM spec
-		//-- according to GEDCOM spec commas should not be allowed in NAME_TEXT, but
-		//-- some localization requirements require commas
-		//-- str=str.replace(/,/g," ");
+		// Commas are used in the GIVN and SURN field to separate lists of surnames.
+		// For example, to differentiate the two Spanish surnames from an English
+		// double-barred name.
+		// Commas *may* be used in the NAME field, and will form part of the displayed
+		// name.  This is not encouraged, as it may confuse some logic that assumes
+		// "list" format names are always "surn, givn".
+		str=str.replace(/,/g," ");
 		
 		str=str.replace(/\s\s+/g," ");
 		return str.replace(/(^\s+)|(\s+$)/g,'');
@@ -924,7 +851,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var element = document.getElementById(eid);
 		if (element) {
 			if (element.type=="hidden") {
-				//-- IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
+				// IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
 				if (IE) {
 					var newInput = document.createElement('input');
 					newInput.setAttribute("type", "text");
@@ -945,7 +872,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				var delement = document.getElementById(eid+"_display");
 				if (delement) {
 					delement.style.display='none';
-					//-- force FF ui to update the display
+					// force FF ui to update the display
 					if (delement.innerHTML != oldName) {
 						oldName = delement.innerHTML;
 						element.value = oldName;
@@ -954,7 +881,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			}
 			else {
 				manualChange = false;
-				//-- IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
+				// IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
 				if (IE) {
 					var newInput = document.createElement('input');
 					newInput.setAttribute("type", "hidden");
@@ -995,13 +922,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	function checkform() {
-		// Make sure we have entered at least something for the name
-		if (document.addchildform.NAME.value=="//") {
-			alert('<?php print $pgv_lang["must_provide"]; print " ".$factarray["NAME"]; ?>');
-			document.addchildform.NAME.focus();
-			return false;
-		}
-
 		var ip=document.getElementsByTagName('input');
 		for (var i=0; i<ip.length; i++) {
 			// ADD slashes to _HEB and _AKA names
@@ -1102,22 +1022,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
 
-	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
-		$noClose = "NOCLOSE";
-		$readOnly = "";
-	}
-
-	if (!isset($noClose) || $noClose!="NOCLOSE") $noClose = "";
-	if (!isset($readOnly) || $readOnly!="READONLY") $readOnly = "";
-
-	if (!isset($tabkey)) $tabkey = 1;
-
-	if (empty($linkToID)) $linkToID = $pid;
-
-	$subnamefacts = array("NPFX", "GIVN", "SPFX", "SURN", "NSFX", "_MARNM_SURN");
-	@list($level, $fact, $value) = explode(" ", $tag);
-
-	if ($fact=="LATI" || $fact=="LONG") {
+	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
 <script type="text/javascript">
 	<!--
@@ -1127,7 +1032,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		// neg (-) : S or W
 		txt=field.value.toUpperCase();
 		txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
-		txt=txt.replace(/ /g,':'); // N12 34 ==> N12:34
+			txt=txt.replace(/ /g,':'); // N12 34 ==> N12.34
 		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
 		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
 		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
@@ -1144,6 +1049,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
 		field.value = txt;
 	}
+	
 	function toggle_lati_long() {
 		tr = document.getElementsByTagName('tr');
 		for (var i=0; i<tr.length; i++) {
@@ -1162,6 +1068,20 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	</script>
 		<?php
 	}
+	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
+		$noClose = "NOCLOSE";
+		$readOnly = "";
+	}
+
+	if (!isset($noClose) || $noClose!="NOCLOSE") $noClose = "";
+	if (!isset($readOnly) || $readOnly!="READONLY") $readOnly = "";
+
+	if (!isset($tabkey)) $tabkey = 1;
+
+	if (empty($linkToID)) $linkToID = $pid;
+
+	$subnamefacts = array("NPFX", "GIVN", "SPFX", "SURN", "NSFX", "_MARNM_SURN");
+	@list($level, $fact, $value) = explode(" ", $tag);
 
 	// element name : used to POST data
 	if ($level==0) {
@@ -1282,7 +1202,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($level<=1) {
 			print "<input type=\"checkbox\" ";
 			if ($value=="Y") print " checked=\"checked\"";
-			print " onClick=\"if (this.checked) ".$element_id.".value='Y'; else ".$element_id.".value=''; \" />";
+			print " onclick=\"if (this.checked) ".$element_id.".value='Y'; else ".$element_id.".value=''; \" />";
 			print $pgv_lang["yes"];
 		}
 	}
@@ -1303,7 +1223,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			               "WIFE"=>$factarray["WIFE"]) as $k=>$v) {
 			print "<option value='$k'";
 			if ($value==$k)
-				print " selected";
+				print " selected=\"selected\"";
 			print ">$v</option>";
 		}
 		print "</select>\n";
@@ -1317,7 +1237,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 										 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
 			print "<option value='$k'";
 			if (str2lower($value)==$k)
-				print " selected";
+				print " selected=\"selected\"";
 			print ">$v</option>";
 		}
 		print "</select>\n";
@@ -1426,7 +1346,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$type["other"] = $pgv_lang["TYPE__other"];
 		//-- Build the selector for the Media "TYPE" Fact
 		print "<select tabindex=\"".$tabkey."\" name=\"text[]\">";
-		print "<option selected=\"selected\" value=\"\"> ".$pgv_lang["choose"]." </option>";
+		if ($value=="") print "<option selected=\"selected\" value=\"\" > ".$pgv_lang["choose"]." </option>";
 		$selectedValue = strtolower($value);
 		foreach ($type as $typeName => $typeValue) {
 			print "<option value=\"".$typeName."\"";
@@ -1437,14 +1357,13 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value))."\" >";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value))."\" />";
 		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value))."</span>";
-		print " <a href=\"#edit_name\" alt=\"".$pgv_lang["edit_name"]."\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
+		print " <a href=\"#edit_name\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
 		if (isset($PGV_IMAGES["edit_indi"]["small"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" />";
 		else print "<span class=\"age\">[".$pgv_lang["edit_name"]."]</span>";
 		print "</a>";
-	} 
-	else {
+	} else {
 		// textarea
 		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value))."</textarea><br />\n";
 		else {
@@ -1472,9 +1391,9 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			else {
 				// text
 				print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
-				if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
-				// onKeyUp should suffice.  Why the others?
-				if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
+			// if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
+			// onkeyup should suffice.  Why the others?
+			if (in_array($fact, $subnamefacts)) print " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
 				if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
 				if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
 				if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
@@ -1555,7 +1474,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			}
 			if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
 			if ($fact=="OBJE" && !$value) {
-				print '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&amp;linktoid='.$linkToID.'&amp;level='.$level.'\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
+			print '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&linktoid={$linkToID}&level={$level}\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 				$value = "new";
 			}
 		}
@@ -1564,27 +1483,35 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($TEXT_DIRECTION=="ltr") {
 			if ($fact=="DATE") {
 				$date=new GedcomDate($value);
-				print $date->Display(false);
+			echo $date->Display(false);
+		}
+		if (($fact=="ASSO" || $fact=="SOUR") && $value) {
+			$record=GedcomRecord::getInstance($value);
+			if ($record) {
+				echo ' ', PrintReady($record->getFullName()), ' (', $value, ')';
 			}
-			if ($fact=="ASSO" and $value) print " ".PrintReady(get_person_name($value))." (".$value.")";
-			if ($fact=="SOUR" and $value) print " ".PrintReady(get_source_descriptor($value))." (".$value.")";
+			}
 		} else {
 			if ($fact=="DATE") {
 				$date=new GedcomDate($value);
-				print getRLM().$date->Display(false).getRLM();
+			echo getRLM(), $date->Display(false), getRLM();
+		}
+		if (($fact=="ASSO" || $fact=="SOUR") && $value) {
+			$record=GedcomRecord::getInstance($value);
+			if ($record) {
+				echo ' ', PrintReady($record->getFullName()), ' ', getLRM(), '(', $value, ')', getLRM();
 			}
-			if ($fact=="ASSO" and $value) print " " . getRLM() . PrintReady(get_person_name($value))." (".$value.")" . getRLM();
-			if ($fact=="SOUR" and $value) print " " . getRLM() .PrintReady(get_source_descriptor($value)). getRLM() . "&nbsp;&nbsp;" . getLRM() . "(".$value.")" . getLRM();
+			}
 		}
 
 		// pastable values
 		if ($readOnly=="") {
-			if ($fact=="NPFX") {
+/*		if ($fact=="NPFX") {
 				$text = $pgv_lang["autocomplete"];
 				if (isset($PGV_IMAGES["autocomplete"]["button"])) $Link = "<img id=\"".$element_id."_spec\" name=\"".$element_id."_spec\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["autocomplete"]["button"]."\"  alt=\"".$text."\"  title=\"".$text."\" border=\"0\" align=\"middle\" />";
 				else $Link = $text;
 				print "&nbsp;".$Link;
-			}
+		} */
 			if ($fact=="SPFX") print_autopaste_link($element_id, $SPFX_accept);
 			if ($fact=="NSFX") print_autopaste_link($element_id, $NSFX_accept);
 			if ($fact=="FORM") print_autopaste_link($element_id, $FILE_FORM_accept, false, false);
@@ -1906,6 +1833,7 @@ function handle_updates($newged, $levelOverride="no") {
 			}
 		}
 
+//		if (!empty($text[$j])) {
 		if (trim($text[$j])!='') {
 			$pass = true;
 		}
@@ -1935,6 +1863,7 @@ function handle_updates($newged, $levelOverride="no") {
 
 		//-- if the value is not empty or it has sub lines
 		//--- then write the line to the gedcom record
+		//if ((($text[trim($j)]!="")||($pass==true)) && (strlen($text[$j]) > 0)) {
 		//-- we have to let some emtpy text lines pass through... (DEAT, BIRT, etc)
 		if ($pass==true) {
 			$newline = $glevels[$j]+$levelAdjust." ".$tag[$j];
@@ -2285,6 +2214,7 @@ function insert_missing_subtags($level1tag)
  * @return boolean	true or false based on the successful completion of the deletion
  */
 function delete_person($pid, $gedrec='') {
+	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
 	global $pgv_lang, $GEDCOM;
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -2345,6 +2275,7 @@ function delete_person($pid, $gedrec='') {
  * @return boolean	true or false based on the successful completion of the deletion
  */
 function delete_family($pid, $gedrec='') {
+	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
 	global $GEDCOM, $pgv_lang;
 	if (empty($gedrec)) $gedrec = find_family_record($pid);
 	if (!empty($gedrec)) {

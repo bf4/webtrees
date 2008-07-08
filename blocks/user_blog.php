@@ -5,7 +5,7 @@
  * This block allows users to have their own blog
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ function print_user_news($block=true, $config="", $side, $index) {
 		$news["text"] = nl2br($news["text"]);
 		$content .= PrintReady($news["text"])."<br /><br />";
 		$content .= "<a href=\"javascript:;\" onclick=\"editnews('$key'); return false;\">".$pgv_lang["edit"]."</a> | ";
-		$content .= "<a href=\"index.php?action=deletenews&amp;news_id=$key&amp;ctype=$ctype\" onclick=\"return confirm('".$pgv_lang["confirm_journal_delete"]."');\">".$pgv_lang["delete"]."</a><br />";
+		$content .= "<a href=\"".encode_url("index.php?action=deletenews&news_id={$key}&ctype={$ctype}")."\" onclick=\"return confirm('".$pgv_lang["confirm_journal_delete"]."');\">".$pgv_lang["delete"]."</a><br />";
 		$content .= "</div><br />";
 	}
 	if (PGV_USER_ID) {

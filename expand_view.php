@@ -3,7 +3,7 @@
  * Used by AJAX to load the expanded view inside person boxes
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ $pid = clean_input($pid);
 $person = Person::getInstance($pid);
 if (!$person->canDisplayDetails()) return $pgv_lang['private'];
 
-$nonfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO","REFN");
+$nonfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO","_PGV_OBJS");
 $person->add_family_facts(false);
 $subfacts = $person->getIndiFacts();
 	  
@@ -61,8 +61,8 @@ foreach($subfacts as $indexval => $event) {
 		if (!empty($spouseid)) {
 			$spouse = Person::getInstance($spouseid);
 			if (!is_null($spouse)) {
-				print " <a href=\"individual.php?pid=$spouseid&amp;ged=$GEDCOM\">";
-				print PrintReady($spouse->getName());
+				print " <a href=\"".encode_url("individual.php?pid={$spouseid}&ged=$GEDCOM")."\">";
+				print PrintReady($spouse->getFullName());
 				print "</a>";
 				print " - ";
 				}

@@ -74,7 +74,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			} else {
 				$name = PGV_USER_NAME;
 			}
-			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=700,height=400,scrollbars=1,resizable=1'); return false;\">";
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 		}
 	}
@@ -82,7 +82,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 
 	$stats=new stats($GEDCOM);
 
-	$content = "<b><a href=\"index.php?ctype=gedcom\">".get_gedcom_setting(PGV_GED_ID, 'title')."</a></b><br />\n";
+	$content = "<b><a href=\"index.php?ctype=gedcom\">".PrintReady(strip_tags(get_gedcom_setting(PGV_GED_ID, 'title')))."</a></b><br />\n";
 	$head = find_gedcom_record("HEAD");
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 	if ($ct>0) {
@@ -110,10 +110,10 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	$content .= "<br />\n";
 	$content .= "<table><tr><td valign=\"top\" class=\"width20\"><table cellspacing=\"1\" cellpadding=\"0\">";
 	if ($config["stat_indi"]=="yes") {
-		$content.='<tr><td class="facts_label">'.$pgv_lang["stat_individuals"].'</td><td class="facts_value"><div dir="rtl"><a href="indilist.php?surname_sublist=no&amp;ged='.$GEDCOM.'">'.$stats->totalIndividuals().'</a></div></td></tr>';
+		$content.='<tr><td class="facts_label">'.$pgv_lang["stat_individuals"].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged={$GEDCOM}").'">'.$stats->totalIndividuals().'</a></div></td></tr>';
 	}
 	if ($config["stat_surname"]=="yes") {
-		$content .= '<tr><td class="facts_label">'.$pgv_lang["stat_surnames"].'</td><td class="facts_value"><div dir="rtl"><a href="indilist.php?surname_sublist=yes&amp;ged='.$GEDCOM.'">'.$stats->totalSurnames().'</a></div></td></tr>';
+		$content .= '<tr><td class="facts_label">'.$pgv_lang["stat_surnames"].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=yes&ged={$GEDCOM}").'">'.$stats->totalSurnames().'</a></div></td></tr>';
 	}
 	if ($config["stat_fam"]=="yes") {
 		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_families"].'</td><td class="facts_value"><div dir="rtl"><a href="famlist.php">'.$stats->totalFamilies().'</a></div></td></tr>';
@@ -154,7 +154,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			$content .= '</tr>';
 		}
 	if ($config["stat_last_birth"]=="yes") {
-		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_latest_birth"].'</td><td class="facts_value"><div dir="rtl"'.$stats->lastBirthYear().'</div></td>';
+		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_latest_birth"].'</td><td class="facts_value"><div dir="rtl">'.$stats->lastBirthYear().'</div></td>';
 			if (!$block){
 			$content .= '<td class="facts_value">'.$stats->lastBirth().'</td>';
 			}
@@ -219,7 +219,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 					if ($i>0) {
 						$content .= ", ";
 					}
-					$content .= "<a href=\"indilist.php?ged=".$GEDCOM."&amp;surname=".urlencode($surname["name"])."\">".PrintReady($surname["name"])."</a>";
+					$content .= "<a href=\"".encode_url("indilist.php?ged={$GEDCOM}&surname=".$surname["name"])."\">".PrintReady($surname["name"])."</a>";
 					$i++;
 				}
 			}

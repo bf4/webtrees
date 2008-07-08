@@ -5,7 +5,7 @@
  * This page will allow you to merge 2 gedcom records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -282,7 +282,7 @@ if ($action=="choose") {
 	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 		print "<option value=\"$ged_name\"";
 		if (empty($ged) && $ged_id==PGV_GED_ID || !empty($ged) && $ged==$ged_name) print " selected=\"selected\"";
-		print ">".get_gedcom_setting($ged_id, 'title')."</option>\n";
+		print ">".PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')))."</option>\n";
 	}
 	print "</select>\n";
 	print "<a href=\"javascript:iopen_find(document.merge.gid1, document.merge.ged);\" tabindex=\"6\"> ".$pgv_lang["find_individual"]."</a> |";
@@ -297,7 +297,7 @@ if ($action=="choose") {
 	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 		print "<option value=\"$ged_name\"";
 		if (empty($ged2) && $ged_id==PGV_GED_ID || !empty($ged2) && $ged2==$ged_name) print " selected=\"selected\"";
-		print ">".get_gedcom_setting($ged_id, 'title')."</option>\n";
+		print ">".PrintReady(strip_tags(get_gedcom_setting($ged_id, 'title')))."</option>\n";
 	}
 	print "</select>\n";
 	print "<a href=\"javascript:iopen_find(document.merge.gid2, document.merge.ged2);\" tabindex=\"7\"> ".$pgv_lang["find_individual"]."</a> |";

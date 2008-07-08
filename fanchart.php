@@ -3,7 +3,7 @@
  * Displays a fan chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -225,8 +225,17 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 					$name = get_person_name($pid);
 					$addname = get_add_person_name($pid);
 				}
-				$text = ltr_string($name) . "\r\n";
-				if (!empty($addname)) $text .= ltr_string($addname). "\r\n";
+
+//$name = str_replace(array('<span class="starredname">', '</span>'), '', $name); 
+//$addname = str_replace(array('<span class="starredname">', '</span>'), '', $addname); 
+//$name = str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $name); //@@
+//$addname = str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $addname); //@@
+// ToDo - print starred names underlined - 1985154
+// Todo - print Arabic letters combined - 1360209				
+								
+				$text = reverseText($name) . "\r\n";
+				if (!empty($addname)) $text .= reverseText($addname). "\r\n";
+				
 				if (displayDetailsByID($pid)) {
 					$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 					$ct = preg_match("/2 DATE.*(\d\d\d\d)/", $birthrec, $match);
@@ -235,8 +244,10 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 					$ct = preg_match("/2 DATE.*(\d\d\d\d)/", $deathrec, $match);
 					if ($ct>0) $text.= "-".trim($match[1]);
 				}
+				
 				$text = unhtmlentities($text);
 				$text = strip_tags($text);
+//Do we still need?
 
 				// split and center text by lines
 				$wmax = floor($angle*7/$fontsize*$scale);
@@ -295,11 +306,11 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				$ty=round($cy - $mr * -sin($rad));
 				$imagemap .= "$tx, $ty";
 				// add action url
-				$url = "javascript:// " . PrintReady(strip_tags($name));
-				if ($SHOW_ID_NUMBERS) $url .= " (".$pid.")";
-				$imagemap .= "\" href=\"$url\" ";
-				$url = "?rootid=$pid&amp;PEDIGREE_GENERATIONS=$PEDIGREE_GENERATIONS&amp;fan_width=$fan_width&amp;fan_style=$fan_style";
-				if (!empty($view)) $url .= "&amp;view=$view";
+				$tempURL = "javascript:// " . PrintReady(strip_tags($name));
+				if ($SHOW_ID_NUMBERS) $tempURL .= " (".$pid.")";
+				$imagemap .= "\" href=\"$tempURL\" ";
+				$tempURL = "fanchart?rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}&fan_width={$fan_width}&fan_style={$fan_style}";
+				if (!empty($view)) $tempURL .= "&view={$view}";
 				$count=0;
 				$lbwidth=200;
 				print "\n\t\t<div id=\"I".$pid.".".$count."links\" style=\"position:absolute; >";
@@ -311,11 +322,11 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				print "<br /><a href=\"pedigree.php?rootid=$pid\" >".$pgv_lang["index_header"]."</a>\n";
 				print "<br /><a href=\"descendancy.php?pid=$pid\" >".$pgv_lang["descend_chart"]."</a>\n";
 				if (PGV_USER_GEDCOM_ID) {
-					print "<br /><a href=\"relationship.php?pid1=".PGV_USER_GEDCOM_ID."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["relationship_to_me"]."</a>\n";
+					print "<br /><a href=\"".encode_url("relationship.php?pid1=".PGV_USER_GEDCOM_ID."&pid2={$pid}&ged={$GEDCOM}")."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["relationship_to_me"]."</a>\n";
 				}
 				print "<br /><a href=\"ancestry.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["ancestry_chart"]."</a>\n";
 				print "<br /><a href=\"compact.php?rootid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["compact_chart"]."</a>\n";
-				print "<br /><a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$PEDIGREE_GENERATIONS&amp;fan_width=$fan_width&amp;fan_style=$fan_style\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["fan_chart"]."</a>\n";
+				print "<br /><a href=\"".encode_url($tempURL)."\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["fan_chart"]."</a>\n";
 				print "<br /><a href=\"hourglass.php?pid=$pid\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">".$pgv_lang["hourglass_chart"]."</a>\n";
 				if ($sosa>=1) {
 					$famids = find_sfamily_ids($pid);
@@ -336,8 +347,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 									if ($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
 									else $spid=$parents["WIFE"];
 									if (!empty($spid)) {
-										$linkurl=str_replace("id=".$pid, "id=".$spid, $url);
-										print "\n<br /><a href=\"$linkurl\" class=\"name1\">";
+										$linkURL=str_replace("id=".$pid, "id=".$spid, $tempURL);
+										print "\n<br /><a href=\"".encode_url($linkURL)."\" class=\"name1\">";
 										if (displayDetailsById($spid) || showLivingNameById($spid)) print PrintReady(rtrim(get_person_name($spid)));
 										else print $pgv_lang["private"];
 										print "</a>";
@@ -346,8 +357,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 								$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 								for ($i=0; $i<$num; $i++) {
 									$cpid = $smatch[$i][1];
-									$linkurl=str_replace("id=".$pid, "id=".$cpid, $url);
-									print "\n<br />&nbsp;&nbsp;<a href=\"$linkurl\" class=\"name1\">&lt; ";
+									$linkURL=str_replace("id=".$pid, "id=".$cpid, $tempURL);
+									print "\n<br />&nbsp;&nbsp;<a href=\"".encode_url($linkURL)."\" class=\"name1\">&lt; ";
 									if (displayDetailsById($cpid) || showLivingNameById($cpid)) print PrintReady(rtrim(get_person_name($cpid)));
 									else print $pgv_lang["private"];
 									print "</a>";
@@ -363,8 +374,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 								for($i=0; $i<$num; $i++) {
 									$cpid = $smatch[$i][1];
 									if ($cpid!=$pid) {
-										$linkurl=str_replace("id=".$pid, "id=".$cpid, $url);
-										print "\n<br />&nbsp;&nbsp;<a href=\"$linkurl\" class=\"name1\"> ";
+										$linkURL=str_replace("id=".$pid, "id=".$cpid, $tempURL);
+										print "\n<br />&nbsp;&nbsp;<a href=\"".encode_url($linkURL)."\" class=\"name1\"> ";
 										if (displayDetailsById($cpid) || showLivingNameById($cpid)) print PrintReady(rtrim(get_person_name($cpid)));
 										else print $pgv_lang["private"];
 										print "</a>";
@@ -392,7 +403,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	echo "\r\n$imagemap";
 
 	// PGV banner ;-)
-	ImageStringUp($image, 1, $fanw-10, $fanh/3, "www.phpgedview.net", $color);
+	ImageStringUp($image, 1, $fanw-10, $fanh/3, PGV_PHPGEDVIEW_URL, $color);
 
 	// here we cannot send image to browser ('header already sent')
 	// and we dont want to use a tmp file
@@ -412,7 +423,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	unset($_SESSION[$image_name]);		// statisticsplot.php uses this to hold a file name to send to browser
 	$image_title=preg_replace("~<.*>~", "", $name) . " " . $pgv_lang["fan_chart"];
 	echo "\r\n<p align=\"center\" >";
-	echo "<img src=\"imageflush.php?image_type=png&amp;image_name=$image_name&height=$fanh&width=$fanw\" width=\"$fanw\" height=\"$fanh\" border=\"0\" alt=\"$image_title\" title=\"$image_title\" usemap=\"#fanmap\" />";
+	echo "<img src=\"imageflush.php?image_type=png&image_name=$image_name&height=$fanh&width=$fanw\" width=\"$fanw\" height=\"$fanh\" border=\"0\" alt=\"$image_title\" title=\"$image_title\" usemap=\"#fanmap\" />";
 	echo "\r\n</p>\r\n";
 	ImageDestroy($image);
 }

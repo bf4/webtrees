@@ -3,7 +3,7 @@
  * Latin American Spanish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,19 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "Usted no puede acceder a este archivo de idioma directamente.";
 	exit;
 }
 
+$pgv_lang["SHOW_ID_NUMBERS"] = "Mostrar los números ID a continuación de los nombres";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"] = "Mostrar miniaturas en las cajas de las personas";
+$pgv_lang["download_file"] = "Guardar archivo.";
+$pgv_lang["cancel"] = "Cancelar";
+$pgv_lang["duplicate_username"]	= "Nombre de Usuario duplicado. Ya existe un usuario con ese nombre. Por favor regrese y cree un usuario con un nombre diferente.";
+$pgv_lang["family"]	= "Familia";
+
 $pgv_lang["qm"]	= "?";
+$pgv_lang["qm_ah"] = "?";
 $pgv_lang["page_help"]	= "Ayuda";
 $pgv_lang["help_for_this_page"]	= "Ayuda con ésta página";
 $pgv_lang["help_contents"]	= "Contenido de ayuda";
@@ -622,7 +630,6 @@ $pgv_lang["not_configured"]	= "Todavía no ha configurado PhpGedView";
 $pgv_lang["location_upgrade"]	= "Por favor indique la ubicación de sus archivos de actualización";
 $pgv_lang["new_variable"]	= "Se encontró una nueva variable";
 $pgv_lang["config_open_error"]	= "Ha habido un error abriendo el archivo de configuración";
-$pgv_lang["config_write_error"] 	= "Error!!! No se puede grabar el archivo de configuración.";
 $pgv_lang["config_update_ok"]	= "Archivo de configuración actualizado con éxito";
 $pgv_lang["config_uptodate"]	= "Su archivo de configuración se encuentra al día";
 $pgv_lang["processing"]	= "Procesando...";
@@ -648,7 +655,6 @@ $pgv_lang["changed_mac"]	= "Se detectó finales de línea tipo Macintosh. Se cam
 $pgv_lang["changed_places"]	= "Se detectó codificación de lugares inválida. Se realizó una limpieza de los registros de lugares para conformar las especificaciones GEDCOM 5.5 adecuadas. Un ejemplo para su GEDCOM es:";
 $pgv_lang["optional_tools"]	= "Si desea, puede ejecutar las siguientes herramientas opcionales antes de realizar la importación.";
 $pgv_lang["optional"]	= "Herramientas opcionales";
-$pgv_lang["date_format"]	= "Formato de fecha:";
 $pgv_lang["add_media_tool"]	= "Agregar Herramienta de Medios";
 $pgv_lang["launch_media_tool"]	= "Presione aquí para ejecutar Agregar Herramienta de Medios.";
 $pgv_lang["add_media_descr"]	= "Esta herramienta agregará etiquetas OBJE al GEDCOM. Cierre esta ventana cuando finalice el agregado de Medios.";

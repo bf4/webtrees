@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
  * @subpackage Languages
  * @version $Id$
  */
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	header("HTTP/1.0 403 Forbidden" );
 	exit;
@@ -289,8 +290,20 @@ $countries["ZAF"]                       ="Afrique du Sud";
 $countries["ZAR"]                       ="Zaïre";
 $countries["ZMB"]                       ="Zambie";
 $countries["ZWE"]                       ="Zimbabwe";
-$countries["???"]						="Inconnu";
+$countries["???"]                       ="inconnu";
 
-$altCountryNames["CHI"]					="Îles de la Manche";
-$altCountryNames["TLS"]					="Timor Occidental";
+$altCountryNames["COD"]                 ="Zaïre";
+$altCountryNames["DEU"]                 ="East Germany; West Germany; GDR; FRG";
+$altCountryNames["FLK"]                 ="Malouines";
+$altCountryNames["GBR"]                 ="Grande Bretagne";
+$altCountryNames["LKA"]                 ="Ceylan";
+$altCountryNames["MAC"]                 ="Macao";
+$altCountryNames["MMR"]                 ="Birmanie";
+$altCountryNames["NLD"]                 ="Hollande";
+$altCountryNames["PLW"]                 ="Belau";
+$altCountryNames["SUN"]                 ="Union Soviétique";
+$altCountryNames["TLS"]                 ="Timor Occidental";
+$altCountryNames["VAT"]                 ="Saint Siège";
+$altCountryNames["WSM"]                 ="Samoa Occidental";
+
 ?>

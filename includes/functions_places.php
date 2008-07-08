@@ -3,7 +3,7 @@
  * Functions for places selection (clickable maps, autocompletion...)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,11 @@ function setup_place_subfields($element_id) {
 	$plac_label = get_plac_label();
 	
 	?>
-	<link rel="stylesheet" type="text/css" href="places/dropdown.css" />
+	<script language="JavaScript" type="text/javascript">
+	<!--
+	include_css('places/dropdown.css');
+	-->
+	</script>
 	<script type="text/javascript" src="places/getobject.js"></script>
 	<script type="text/javascript" src="places/modomt.js"></script>
 	<script type="text/javascript" src="places/xmlextras.js"></script>
@@ -264,7 +268,7 @@ function print_place_subfields($element_id) {
 
 	//if ($element_id=="DEAT_PLAC") return; // known bug - waiting for a patch
 	$plac_label = get_plac_label();
-	print "<div id='mapdata' name='mapdata'></div>";
+	print "<div id='mapdata'></div>";
 	
 	$cols=40;
 	print "&nbsp;<a href=\"javascript:;\" onclick=\"expand_layer('".$element_id."_div'); toggleplace('".$element_id."'); return false;\"><img id=\"".$element_id."_div_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" />&nbsp;</a>";
@@ -300,11 +304,11 @@ function print_place_subfields($element_id) {
 		print " onblur=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
 		print " onchange=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
 		print " onmouseout=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";
-		if ($icountry<$i and $i<=$icity) print " acdropdown=\"true\" autocomplete_list=\"url:places/getdata.php?localized=".$lang_short_cut[$LANGUAGE]."&amp;field=".$subtagname."&amp;s=\" autocomplete=\"off\" autocomplete_matchbegin=\"false\"";
+		if ($icountry<$i and $i<=$icity) print " acdropdown=\"true\" autocomplete_list=\"url:".encode_url("places/getdata.php?localized={$lang_short_cut[$LANGUAGE]}&field={$subtagname}&s=")."\" autocomplete=\"off\" autocomplete_matchbegin=\"false\"";
 		print " />\n";
 		// country selector
 		if ($i==$icountry) {
-			print " <img id=\"".$element_id."_PLAC_CTRY_flag\" name=\"".$element_id."_PLAC_CTRY_flag\" src=\"places/flags/blank.gif\" class=\"brightflag border1\" style=\"vertical-align:bottom\"/> ";
+			print " <img id=\"".$element_id."_PLAC_CTRY_flag\" name=\"".$element_id."_PLAC_CTRY_flag\" src=\"places/flags/blank.gif\" class=\"brightflag border1\" style=\"vertical-align:bottom\" alt=\"\" /> ";
 			print "<select id=\"".$subtagid."_select\" name=\"".$subtagname."_select\" class=\"submenuitem\"";
 			print " onchange=\"setPlaceCountry(this.value, '".$element_id."');\"";
 //			print " acdropdown=\"true\" autocomplete_complete=\"true\"";
@@ -312,7 +316,8 @@ function print_place_subfields($element_id) {
 			print "<option value=\"\">?</option>\n";
 			foreach ($countries as $alpha3=>$country) {
 				$txt=$alpha3." : ".$country;
-				if (strlen($txt)>32) $txt=substr($txt,0,32)."...";
+				if (UTF8_strlen($txt)>32) $txt = UTF8_substr($txt, 0, 32).$pgv_lang["ellipsis"];
+				//if (strlen($txt)>32) $txt=substr($txt,0,32)."...";
 				print "<option value=\"".$alpha3."\">".$txt."</option>\n";
 			}
 			print "</select>\n";

@@ -2,8 +2,8 @@
 /**
  * Xenea theme
  *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * PhpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  John Finlay and others.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,16 +24,21 @@
  * @version $Id$
  */
 
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 $theme_name = "Xenea";		//-- the name of this theme
 
 $stylesheet = $THEME_DIR."style.css";	//-- CSS level 2 stylesheet to use
 $rtl_stylesheet = $THEME_DIR."style_rtl.css";	//-- CSS level 2 stylesheet to use
 $print_stylesheet = $THEME_DIR."print.css";	//-- CSS level 2 print stylesheet to use
-$toplinks = $THEME_DIR."toplinks.html";	//-- File to display the icons and links to different sections
-$headerfile = $THEME_DIR."header.html";	//-- Header information for the site
-$footerfile = $THEME_DIR."footer.html";	//-- Footer information for the site
-$print_footerfile = $THEME_DIR."print_footer.html";	//-- Print Preview Footer information for the site
-$print_headerfile = $THEME_DIR."print_header.html";	//-- Print Preview Header information for the site
+$toplinks = $THEME_DIR."toplinks.php";	//-- File to display the icons and links to different sections
+$headerfile = $THEME_DIR."header.php";	//-- Header information for the site
+$footerfile = $THEME_DIR."footer.php";	//-- Footer information for the site
+$print_footerfile = $THEME_DIR."print_footer.php";	//-- Print Preview Footer information for the site
+$print_headerfile = $THEME_DIR."print_header.php";	//-- Print Preview Header information for the site
 $PGV_IMAGE_DIR = "themes/xenea/images";		//-- directory to look for images
 
 $PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
@@ -71,6 +76,7 @@ $PGV_IMAGES["descendant"]["small"] = "small/descendancy.gif";
 $PGV_IMAGES["edit_fam"]["small"] = "small/edit_fam.gif";
 $PGV_IMAGES["edit_indi"]["small"] = "small/edit_indi.gif";
 $PGV_IMAGES["edit_sour"]["small"] = "small/edit_sour.gif";
+$PGV_IMAGES["edit_repo"]["small"] = "small/edit_repo.gif";
 $PGV_IMAGES["fambook"]["small"] = "small/fambook.gif";
 $PGV_IMAGES["fanchart"]["small"] = "small/fanchart.gif";
 $PGV_IMAGES["gedcom"]["small"] = "small/gedcom.gif";
@@ -181,13 +187,12 @@ $Dbheight = 80;		// -- height of DIV layer boxes
 $Dindent = 15;		// -- width to indent descendancy boxes
 $Darrowwidth = 15;	// -- additional width to include for the up arrows
 
-$CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc clost the HTML on the page
+$CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
 $PGV_DXHTMLTAB_COLORS = "#b1cff0,#f2f5f9";
 
 // Arrow symbol or icon for up-page links on Help pages
-$ImgSrc = $PGV_IMAGE_DIR."/uarrow3.gif";
-$UpArrow = "<b>^&nbsp;&nbsp;</b>";
-if (file_exists($ImgSrc)) $UpArrow = "<img src=\"$ImgSrc\" class=\"icon\" border=\"0\" alt=\"\" />";
-$pgv_lang["UpArrow"] = $UpArrow;	// help_text.xx.php requires this _untranslatable_ term!
+// This icon is referred to in Help text by: #GLOBALS[UpArrow]# 
+if (file_exists($PGV_IMAGE_DIR."/uarrow3.gif")) $UpArrow = "<img src=\"{$PGV_IMAGE_DIR}/uarrow3.gif\" class=\"icon\" border=\"0\" alt=\"^\" />";
+else $UpArrow = "<b>^^&nbsp;&nbsp;</b>";
 
 ?>

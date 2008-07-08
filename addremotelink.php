@@ -5,7 +5,7 @@
  *  Allow a user the ability to add links to people from other servers and other gedcoms.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,8 +147,6 @@ function checkform(frm){
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox width20"><?php print_help_link('link_remote_site_help', 'qm');?>
-		<span id="tdUrl"><?php echo $pgv_lang["label_site"];?></span></td>
 		<td class="optionbox" id="tdUrlText">
 			<div id="existingContent" style="display:none;">
 			<?php echo $pgv_lang["lbl_server_list"]; ?><br />
@@ -177,8 +175,11 @@ function checkform(frm){
 			</div>
 			<div id="localContent" style="display:none;">
 				<select id="cbGedcomId" name="cbGedcomId">
-					<?php foreach($GEDCOMS as $ged){?>
-						<option><?php print $ged["gedcom"];?></option><?php }?>
+					<?php
+						foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+							echo '<option>', $ged_name, '</option>';
+						}
+					?>
 				</select><br />
 			</div>
 		</td>

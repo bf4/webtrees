@@ -56,6 +56,7 @@ $countries["BWI"]="Britisches West Indien";
 $countries["CAF"]="Zentralafrikanische Republik";
 $countries["CAN"]="Kanada";
 $countries["CAP"]="Kap Kolonie";
+$countries["CAT"]="Katalonien";
 $countries["CCK"]="Kokosinseln";
 $countries["CHE"]="Schweiz";
 $countries["CHI"]="Kanalinseln";

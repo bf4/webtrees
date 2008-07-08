@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,6 @@ if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 
 print_simple_header($pgv_lang["flags_edit"]);
 
-//if (empty($file)) $file="POL";
 $country = array();
 $rep = opendir('./places/flags/');
 while ($file = readdir($rep)) {
@@ -153,7 +152,6 @@ function getHelp(which) {
         $placesDir = scandir('./places/');
         for ($i = 0; $i < count($country); $i++) {
 			if (count(preg_grep('/'.$country[$i].'/', $placesDir)) != 0) {
-			//if (count(preg_grep('/'.$country[$i].'[^.]/', $placesDir)) != 0) {
                 $rep = opendir('./places/'.$country[$i].'/');
                 while ($file = readdir($rep)) {
                     if (stristr($file, "flags")) {

@@ -286,47 +286,79 @@ $factarray["_BURI_SPOU"] = "Ehegatte: Beerdigung";
 $factarray["_CREM_SPOU"] = "Ehegatte: Einäscherung";
 
 $factarray["_BIRT_CHIL"] = "Kind: Geburt";
+$factarray["_CHR_CHIL" ] = "Kind: Taufe";
+$factarray["_BAPM_CHIL"] = "Kind: Taufe";
+$factarray["__BRTM_CHIL"] = "Kind: Brit mila";
+$factarray["_ADOP_CHIL"] = "Kind: Adoption";
 $factarray["_MARR_CHIL"] = "Kind: Ehe";
+$factarray["_MARB_CHIL"] = "Kind: Eheaufgebot";
 $factarray["_DEAT_CHIL"] = "Kind: Tod";
 $factarray["_BURI_CHIL"] = "Kind: Beerdigung";
 $factarray["_CREM_CHIL"] = "Kind: Einäscherung";
 
 $factarray["_BIRT_GCHI"] = "Enkel: Geburt";
+$factarray["_CHR_GCHI" ] = "Enkel: Taufe";
+$factarray["_BAPM_GCHI"] = "Enkel: Taufe";
+$factarray["__BRTM_GCHI"] = "Enkel: Brit mila";
+$factarray["_ADOP_GCHI"] = "Enkel: Adoption";
 $factarray["_MARR_GCHI"] = "Enkel: Ehe";
+$factarray["_MARB_GCHI"] = "Enkel: Eheaufgebot";
 $factarray["_DEAT_GCHI"] = "Enkel: Tod";
 $factarray["_BURI_GCHI"] = "Enkel: Beerdigung";
 $factarray["_CREM_GCHI"] = "Enkel: Einäscherung";
 
 $factarray["_BIRT_GGCH"] = "Urenkel: Geburt";
+$factarray["_CHR_GGCH" ] = "Urenkel: Taufe";
+$factarray["_BAPM_GGCH"] = "Urenkel: Taufe";
+$factarray["__BRTM_GGCH"] = "Urenkel: Brit mila";
+$factarray["_ADOP_GGCH"] = "Urenkel: Adoption";
 $factarray["_MARR_GGCH"] = "Urenkel: Ehe";
+$factarray["_MARB_GGCH"] = "Urenkel: Eheaufgebot";
 $factarray["_DEAT_GGCH"] = "Urenkel: Tod";
 $factarray["_BURI_GGCH"] = "Urenkel: Beerdigung";
 $factarray["_CREM_GGCH"] = "Urenkel: Einäscherung";
 
 $factarray["_MARR_FATH"] = "Vater: Ehe";
+$factarray["_MARB_FATH"] = "Vater: Eheaufgebot";
 $factarray["_DEAT_FATH"] = "Vater: Tod";
 $factarray["_BURI_FATH"] = "Vater: Beerdigung";
 $factarray["_CREM_FATH"] = "Vater: Einäscherung";
 
 $factarray["_MARR_MOTH"] = "Mutter: Ehe";
+$factarray["_MARB_MOTH"] = "Mutter: Eheaufgebot";
 $factarray["_DEAT_MOTH"] = "Mutter: Tod";
 $factarray["_BURI_MOTH"] = "Mutter: Beerdigung";
 $factarray["_CREM_MOTH"] = "Mutter: Einäscherung";
 
 $factarray["_BIRT_SIBL"] = "Geschwister: Geburt";
+$factarray["_CHR_SIBL" ] = "Geschwister: Taufe";
+$factarray["_BAPM_SIBL"] = "Geschwister: Taufe";
+$factarray["__BRTM_SIBL"] = "Geschwister: Brit mila";
+$factarray["_ADOP_SIBL"] = "Geschwister: Adoption";
 $factarray["_MARR_SIBL"] = "Geschwister: Ehe";
+$factarray["_MARB_SIBL"] = "Geschwister: Eheaufgebot";
 $factarray["_DEAT_SIBL"] = "Geschwister: Tod";
 $factarray["_BURI_SIBL"] = "Geschwister: Beerdigung";
 $factarray["_CREM_SIBL"] = "Geschwister: Einäscherung";
 
 $factarray["_BIRT_HSIB"] = "Halbgeschwister: Geburt";
+$factarray["_CHR_HSIB" ] = "Halbgeschwister: Taufe";
+$factarray["_BAPM_HSIB"] = "Halbgeschwister: Taufe";
+$factarray["__BRTM_HSIB"] = "Halbgeschwister: Brit mila";
+$factarray["_ADOP_HSIB"] = "Halbgeschwister: Adoption";
 $factarray["_MARR_HSIB"] = "Halbgeschwister: Ehe";
+$factarray["_MARB_HSIB"] = "Halbgeschwister: Eheaufgebot";
 $factarray["_DEAT_HSIB"] = "Halbgeschwister: Tod";
 $factarray["_BURI_HSIB"] = "Halbgeschwister: Beerdigung";
 $factarray["_CREM_HSIB"] = "Halbgeschwister: Einäscherung";
 
 $factarray["_BIRT_NEPH"] = "Neffe oder Nichte: Geburt";
+$factarray["_CHR_NEPH" ] = "Neffe oder Nichte: Taufe";
+$factarray["_BAPM_NEPH"] = "Neffe oder Nichte: Taufe";
+$factarray["__BRTM_NEPH"] = "Neffe oder Nichte: Brit mila";
+$factarray["_ADOP_NEPH"] = "Neffe oder Nichte: Adoption";
 $factarray["_MARR_NEPH"] = "Neffe oder Nichte: Ehe";
+$factarray["_MARB_NEPH"] = "Neffe oder Nichte: Eheaufgebot";
 $factarray["_DEAT_NEPH"] = "Neffe oder Nichte: Tod";
 $factarray["_BURI_NEPH"] = "Neffe oder Nichte: Beerdigung";
 $factarray["_CREM_NEPH"] = "Neffe oder Nichte: Einäscherung";
@@ -340,19 +372,34 @@ $factarray["_BURI_GGPA"] = "Urgroßeltern: Beerdigung";
 $factarray["_CREM_GGPA"] = "Urgroßeltern: Einäscherung";
 
 $factarray["_BIRT_FSIB"] = "Vaters Geschwister: Geburt";
+$factarray["_CHR_FSIB" ] = "Vaters Geschwister: Taufe";
+$factarray["_BAPM_FSIB"] = "Vaters Geschwister: Taufe";
+$factarray["__BRTM_FSIB"] = "Vaters Geschwister: Brit mila";
+$factarray["_ADOP_FSIB"] = "Vaters Geschwister: Adoption";
 $factarray["_MARR_FSIB"] = "Vaters Geschwister: Ehe";
+$factarray["_MARB_FSIB"] = "Vaters Geschwister: Eheaufgebot";
 $factarray["_DEAT_FSIB"] = "Vaters Geschwister: Tod";
 $factarray["_BURI_FSIB"] = "Vaters Geschwister: Beerdigung";
 $factarray["_CREM_FSIB"] = "Vaters Geschwister: Einäscherung";
 
 $factarray["_BIRT_MSIB"] = "Mutters Geschwister: Geburt";
+$factarray["_CHR_MSIB" ] = "Mutters Geschwister: Taufe";
+$factarray["_BAPM_MSIB"] = "Mutters Geschwister: Taufe";
+$factarray["__BRTM_MSIB"] = "Mutters Geschwister: Brit mila";
+$factarray["_ADOP_MSIB"] = "Mutters Geschwister: Adoption";
 $factarray["_MARR_MSIB"] = "Mutters Geschwister: Ehe";
+$factarray["_MARB_MSIB"] = "Mutters Geschwister: Eheaufgebot";
 $factarray["_DEAT_MSIB"] = "Mutters Geschwister: Tod";
 $factarray["_BURI_MSIB"] = "Mutters Geschwister: Beerdigung";
 $factarray["_CREM_MSIB"] = "Mutters Geschwister: Einäscherung";
 
 $factarray["_BIRT_COUS"] = "Cousin: Geburt";
+$factarray["_CHR_COUS" ] = "Cousin: Taufe";
+$factarray["_BAPM_COUS"] = "Cousin: Taufe";
+$factarray["__BRTM_COUS"] = "Cousin: Brit mila";
+$factarray["_ADOP_COUS"] = "Cousin: Adoption";
 $factarray["_MARR_COUS"] = "Cousin: Ehe";
+$factarray["_MARB_COUS"] = "Cousin: Eheaufgebot";
 $factarray["_DEAT_COUS"] = "Cousin: Tod";
 $factarray["_BURI_COUS"] = "Cousin: Beerdigung";
 $factarray["_CREM_COUS"] = "Cousin: Einäscherung";

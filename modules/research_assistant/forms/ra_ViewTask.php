@@ -34,7 +34,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 	exit;
 }
 // Require the database functions
-require_once("includes/person_class.php");
+require_once("includes/datamodel/person_class.php");
 global $pgv_lang;
  
  	/**
@@ -121,7 +121,7 @@ function getTitle(){
 			if (!is_null($person)) {
 				$bdate=$person->getEstimatedBirthDate();
 				$byear=$bdate->gregorianYear();
-				$out .= '<a href="individual.php?pid='.$people[0].'">'.PrintReady($person->getName()." - ".$byear).'</a><br />';
+				$out .= '<a href="individual.php?pid='.$people[0].'">'.PrintReady($person->getFullName()." - ".$byear).'</a><br />';
 			}
 		}
 

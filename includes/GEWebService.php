@@ -190,7 +190,7 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 	*/
 	function create_lds_event($indirec, $eventName, $eventABV, $eParent) {
 		global $ePerson, $TEMPLE_CODES, $clipping, $eRoot;
-require_once("includes/person_class.php");
+require_once("includes/datamodel/person_class.php");
 		if (($hasldsevent = get_sub_record(1, "1 " . $eventABV, $indirec)) != null) {
 
 			// Create <lds_ord> and attaches the type attribute

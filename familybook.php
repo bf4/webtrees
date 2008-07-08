@@ -5,7 +5,7 @@
  * Set the root person using the $pid variable
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -184,7 +184,7 @@ function print_descendency($pid, $count) {
 									$name = get_person_name($spid);
 									$name = rtrim($name);
 								} else $name = $pgv_lang["private"];
-								print "\n\t\t\t\t<a href=\"familybook.php?pid=$spid&amp;show_spouse=$show_spouse&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width\"><span class=\"";
+								print "\n\t\t\t\t<a href=\"".encode_url("familybook.php?pid={$spid}&show_spouse={$show_spouse}&show_full={$show_full}&generations={$generations}&box_width={$box_width}")."\"><span class=\"";
 								if (hasRTLText($name)) print "name2";
 					   			else print "name1";
 					   			print "\">";
@@ -201,7 +201,7 @@ function print_descendency($pid, $count) {
 								$name = get_person_name($cid);
 								$name = rtrim($name);
 							} else $name = $pgv_lang["private"];
-							print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"familybook.php?pid=$cid&amp;show_spouse=$show_spouse&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width\"><span class=\"";
+							print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("familybook.php?pid={$cid}&show_spouse={$show_spouse}&show_full={$show_full}&generations={$generations}&box_width={$box_width}")."\"><span class=\"";
 							if (hasRTLText($name)) print "name2";
 					   		else print "name1";
 					   		print "\">&lt; ";
@@ -223,7 +223,7 @@ function print_descendency($pid, $count) {
 									$name = get_person_name($spid);
 									$name = rtrim($name);
 								} else $name = $pgv_lang["private"];
-								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"familybook.php?pid=$spid&amp;show_spouse=$show_spouse&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width\"><span class=\"";
+								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("familybook.php?pid={$spid}&show_spouse={$show_spouse}&show_full={$show_full}&generations={$generations}&box_width={$box_width}")."\"><span class=\"";
 								if (hasRTLText($name)) print "name2";
 					   			else print "name1";
 					   			print "\">";
@@ -236,7 +236,7 @@ function print_descendency($pid, $count) {
 									$name = get_person_name($spid);
 									$name = rtrim($name);
 								} else $name = $pgv_lang["private"];
-								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"familybook.php?pid=$spid&amp;show_spouse=$show_spouse&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width\"><span class=\"";
+								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("familybook.php?pid={$spid}&show_spouse={$show_spouse}&show_full={$show_full}&generations={$generations}&box_width={$box_width}")."\"><span class=\"";
 								if (hasRTLText($name)) print "name2";
 					   			else print "name1";
 					   			print "\">";
@@ -374,7 +374,8 @@ print_header(PrintReady($name)." ".$pgv_lang["familybook_chart"]);
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/lb_defaultconfig.php');
+	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
 }	
 // ==========================================================================================
