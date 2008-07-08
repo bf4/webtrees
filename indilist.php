@@ -69,11 +69,15 @@ if (! $initials) {
 
 // Decide which initial letter to show by default - if the user hasn't
 // specified.  Use the one in the same character set as the page language
-function default_initial($initials) {
+function default_initial($initials, $sample_text=null) {
 	global $pgv_lang;
-	$page_language=whatLanguage($pgv_lang['mother']); // Pick any text
+	if (is_null($sample_text)) {
+		$language=whatLanguage($pgv_lang['mother']); // Pick any text
+	} else {
+		$language=whatLanguage($sample_text);
+	}
 	foreach ($initials as $initial) {
-		if (whatLanguage($initial)==$page_language && $initial!=',') {
+		if (whatLanguage($initial)==$language && $initial!=',') {
 			return $initial;
 		}
 	}
@@ -283,7 +287,7 @@ if ($surname_sublist=='yes') {
 	if (count($indis)>$SUBLIST_TRIGGER_I) {
 		if (!$falpha && $show_all_firstnames=='no') {
 			// If we didn't specify initial or all, filter by the first initial
-			$falpha=default_initial($givn_initials);
+			$falpha=default_initial($givn_initials, $alpha);
 			$legend.=', '.$falpha;
 			foreach ($individuals as $key=>$value) {
 				if (strpos($value['name'], ','.$falpha)===false) {
