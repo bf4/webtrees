@@ -17,6 +17,9 @@
  * Beneath the details list is the option to skip the surname list or show it.
  * Depending on the current status of the list.
  *
+ * NOTE: indilist.php and famlist.php contain mostly identical code.
+ * Updates to one file almost certainly need to be made to the other one as well.
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
  *
@@ -243,11 +246,11 @@ if ($surname_sublist=='yes') {
 	uksort($surnames, 'compareStrings');
 	switch ($SURNAME_LIST_STYLE) {
 	case 'style3':
-		print_surname_tagcloud($surnames, 'indilist');
+		echo format_surname_tagcloud($surnames, 'indilist');
 		break;
 	case 'style2':
 	default:
-		print_surname_table($surnames, 'indilist');
+		echo format_surname_table($surnames, 'indilist');
 		break;
 	}
 } else {
