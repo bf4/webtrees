@@ -183,10 +183,19 @@
 			}
 			
 			$menu = array();
+			// Make function htmlspecialchar_decode for older PHP versions ( < PHP 5.1.0 )
+				if (!function_exists('htmlspecialchars_decode')) {
+					function htmlspecialchars_decode($string,$style=ENT_COMPAT) {
+						$translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
+						if($style === ENT_QUOTES){ $translation['&#039;'] = '\''; }
+						return strtr($string,$translation);
+					}
+				}
 			// Get the first 12 characters of the Media Title
-			$mtitle = htmlspecialchars_decode(stripLRMRLM($mediaTitle), ENT_QUOTES);
-			if (UTF8_strlen($mtitle)>12) $mtitle = UTF8_substr($mtitle, 0, 12).$pgv_lang["ellipsis"];
-			$mtitle = htmlspecialchars($mtitle);
+				$mtitle = htmlspecialchars_decode(stripLRMRLM($mediaTitle), ENT_QUOTES);
+				if (UTF8_strlen($mtitle)>12) $mtitle = UTF8_substr($mtitle, 0, 12).$pgv_lang["ellipsis"];
+				$mtitle = htmlspecialchars($mtitle);
+			// Continue menu construction
 			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle) . "</img>\n";
 			$menu["labelpos"] = "right";
 			$menu["icon"] = "";
