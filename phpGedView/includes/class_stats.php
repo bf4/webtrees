@@ -1520,14 +1520,13 @@ class stats {
 			}
 		}
 
-		switch ($SURNAME_LIST_STYLE) {
-		case 'style3':
-			return format_surname_tagcloud($surnames, 'indilist', $show_tot);
-		case 'style2':
-		default:
+		//switch ($SURNAME_LIST_STYLE) {
+		//case 'style3':
+		//	return format_surname_tagcloud($surnames, 'indilist', $show_tot);
+		//case 'style2':
+		//default:
 			return format_surname_list($surnames, ($type=='list' ? 1 : 2), $show_tot);
-		}
-		
+		//}
 	}
 
 	function commonSurnames($params=array('','','alpha')) {return $this->_commonSurnamesQuery('nolist', false, $params);}
