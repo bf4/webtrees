@@ -113,10 +113,12 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	if (PGV_USER_GEDCOM_ADMIN) { 
 	$content .= '
 		<script language="JavaScript" type="text/javascript">
+		<!--
 		var pastefield;
 		function paste_id(value) {
 			pastefield.value=value;
 		}
+		//-->
 		</script>
 		<br />
 		';
