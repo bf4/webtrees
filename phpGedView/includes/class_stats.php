@@ -1551,7 +1551,11 @@ class stats {
 		$chl = array();
 		foreach ($surnames as $indexval=>$surname)
 		{
-			$per = round(100 * $surname['match'] / $tot, 0);
+			if ($tot==0) {
+				$per = 0;
+			} else {
+				$per = round(100 * $surname['match'] / $tot, 0);
+			}
 			$chd .= $this->_array_to_extended_encoding($per);
 			$chl[] = reverseText($surname['name']);
 		}
