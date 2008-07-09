@@ -284,7 +284,8 @@ if ($surname_sublist=='yes') {
 	uasort($givn_initials, 'stringsort');
 
 	// Break long lists by initial letter of given name
-	if (count($indis)>$SUBLIST_TRIGGER_I) {
+	//if (count($indis)>$SUBLIST_TRIGGER_I) {
+	if ($surname && count($indis)>$SUBLIST_TRIGGER_I) { // Ingore setting on initial lists at request of MA
 		if (!$falpha && $show_all_firstnames=='no') {
 			// If we didn't specify initial or all, filter by the first initial
 			$falpha=default_initial($givn_initials, $alpha);
