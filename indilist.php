@@ -89,7 +89,7 @@ function default_initial($initials, $sample_text=null) {
 if ($show_all=='yes') {
 	$alpha='';
 	$surname='';
-	$legend='';
+	$legend=$pgv_lang['all'];
 	$indis=get_indi_list();
 	$url='indilist.php?show_all=yes';
 } elseif ($surname) {
@@ -285,7 +285,7 @@ if ($surname_sublist=='yes') {
 
 	// Break long lists by initial letter of given name
 	//if (count($indis)>$SUBLIST_TRIGGER_I) {
-	if ($surname && count($indis)>$SUBLIST_TRIGGER_I) { // Ingore setting on initial lists at request of MA
+	if (($surname || $show_all=='yes') && count($indis)>$SUBLIST_TRIGGER_I) { // Ingore setting on initial lists at request of MA
 		if (!$falpha && $show_all_firstnames=='no') {
 			// If we didn't specify initial or all, filter by the first initial
 			$falpha=default_initial($givn_initials, $alpha);
