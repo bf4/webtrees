@@ -1499,6 +1499,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
  * @param string $factrec	the factrecord to print the notes from
  * @param int $level		The level of the factrecord
  * @param bool $textOnly	Don't print the "Note: " introduction
+ * @param boolean $return	whether to return text or print the data
  */
 function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	global $pgv_lang;
@@ -1600,11 +1601,10 @@ function print_privacy_error($username) {
  * @param int $helpText		The text to be printed if the theme does not use images for help links
  * @param int $show_desc		The text to be shown as JavaScript description
  * @param boolean $use_print_text	If the text needs to be printed with the print_text() function
- * @param boolean $output	return the text instead of printing it
+ * @param boolean $return	return the text instead of printing it
  */
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
-	global $TEXT_DIRECTION;
 
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {

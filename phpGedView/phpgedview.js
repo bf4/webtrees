@@ -874,6 +874,12 @@ function show_submenu(elementid, parentid, dir) {
 		}
 
 		if (element.offsetLeft < 0) element.style.left = "0px";
+		
+		//-- put scrollbars on really long menus
+		if (element.offsetHeight > 500) {
+        	element.style.height = '400px';
+			element.style.overflow = 'auto';
+		}
 
 		currentmenu = elementid;
 		element.style.visibility='visible';

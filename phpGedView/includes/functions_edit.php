@@ -1024,7 +1024,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
-		<script>
+<script type="text/javascript">
 		<!--
 		function valid_lati_long(field, pos, neg) {
 			// valid LATI or LONG according to Gedcom standard

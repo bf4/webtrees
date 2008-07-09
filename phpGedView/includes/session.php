@@ -936,7 +936,8 @@ CheckPageViews();
 
 if (!isset($SCRIPT_NAME)) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
 
-if (!isset($show_context_help)) $show_context_help = "";
+$show_context_help = "";
+if (!empty($_REQUEST['show_context_help'])) $show_context_help = $_REQUEST['show_context_help'];
 if (!isset($_SESSION["show_context_help"])) $_SESSION["show_context_help"] = $SHOW_CONTEXT_HELP;
 if (!isset($_SESSION["pgv_user"])) $_SESSION["pgv_user"] = "";
 if (!isset($_SESSION["cookie_login"])) $_SESSION["cookie_login"] = false;
