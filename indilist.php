@@ -273,10 +273,11 @@ if ($surname_sublist=='yes') {
 				list($surn,$givn)=explode(',', $name['sort']);
 				$givn_alpha=get_first_letter($givn);
 				if ((!$surname || $surname==$surn) &&
-				    (!$alpha   || $alpha==get_first_letter($name['sort'])) &&
-				    (!$falpha  || $falpha==$givn_alpha)) {
-					$individuals[]=array('gid'=>$pid, 'primary'=>$n, 'name'=>$name['sort']);
+				    (!$alpha   || $alpha==get_first_letter($name['sort']))) {
 					$givn_initials[$givn_alpha]=$givn_alpha;
+					if (!$falpha || $falpha==$givn_alpha) {
+						$individuals[]=array('gid'=>$pid, 'primary'=>$n, 'name'=>$name['sort']);
+					}
 				}
 			}
 		}
