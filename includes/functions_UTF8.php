@@ -34,6 +34,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  */
 function UTF8_explodeString($text) {
 	if (is_array($text)) return $text;		// No action:  input has already been expanded
+	if (is_int($text)) return array(UTF8_chr($text));		// Integer: Convert to UTF8 character  
 	$result = array();
 	if ($text=='') return $result;
 	
@@ -83,6 +84,8 @@ function UTF8_ord($char) {
 	case 4:
 		$value = ((ord(substr($char,0,1)) & 0x07) << 18) + ((ord(substr($char,1,1)) & 0x3F) << 12) + ((ord(substr($char,1,2)) & 0x3F) << 6) + (ord(substr($char,1,3)) & 0x3F);
 		break;
+	default:
+		$value = 0;
 	}
 
 	return $value;
@@ -127,8 +130,7 @@ function UTF8_chr($value) {
 function UTF8_substr($text, $start=0, $end=0) {
 	$UTF8_text = UTF8_explodeString($text);
 	$textLen = count($UTF8_text);
-
-	if ($textLen==0) return '';
+	if ($textLen==0) return $text;
 
 	if ($end==0 || $end>$textLen) $end = $textLen;
 	if ($start<0) $start = $textLen - $start;
@@ -136,6 +138,56 @@ function UTF8_substr($text, $start=0, $end=0) {
 	if ($start>$textLen || $start>$end) return '';
 
 	$result = array_slice($UTF8_text, $start, $end);
+
+	if (is_array($text)) return $result;
+	else return implode('', $result);
+}
+
+
+/*
+ * Pad string
+ */
+function UTF8_str_pad($text, $outLen, $pad='', $padType=STR_PAD_RIGHT) {
+	$UTF8_text = UTF8_explodeString($text);
+	$textLen = count($UTF8_text);
+	if ($textLen>=$outLen) return $text;
+	$UTF8_pad = UTF8_explodeString($pad);
+	$padLen = count($UTF8_pad);
+
+	switch ($padType) {
+	case STR_PAD_BOTH:
+		$textLeftLen = ($outLen - $textLen) >> 1;
+		$textRightLen = $outLen - $textLeftLen;
+		break;
+	case STR_PAD_LEFT:
+		$textLeftLen = $outLen - $textLen;
+		$textRightLen = 0;
+		break;
+	case STR_PAD_RIGHT:
+	default:
+		$textLeftLen = 0;
+		$textRightLen = $outLen - $textLen;
+		break;
+	}
+
+	$UTF8_textLeft = array();
+	for ($i=0; $i<$textLeftLen; $i+=$padLen) {
+		for ($j=0; $j<$padLen; $j++) {
+			$UTF8_textLeft[] = $UTF8_pad[$j];
+		}
+	}
+	if (count($UTF8_textLeft)>$textLeftLen) $UTF8_textLeft = array_slice($UTF8_textLeft, (count($UTF8_textLeft)-$textLeftLen));
+
+	$UTF8_textRight = array();
+	for ($i=0; $i<$textRightLen; $i+=$padLen) {
+		for ($j=0; $j<$padLen; $j++) {
+			$UTF8_textRight[] = $UTF8_pad[$j];
+		}
+	}
+	if (count($UTF8_textRight)>$textRightLen) $UTF8_textRight = array_slice($UTF8_textRight, 0, $textRightLen);
+
+	$result = $UTF8_textleft + $UTF8_text + $UTF8_textRight;
+	$result = array_slice($result, 0, $outLen);
 
 	if (is_array($text)) return $result;
 	else return implode('', $result);

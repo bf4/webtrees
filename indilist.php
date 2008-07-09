@@ -69,11 +69,15 @@ if (! $initials) {
 
 // Decide which initial letter to show by default - if the user hasn't
 // specified.  Use the one in the same character set as the page language
-function default_initial($initials) {
+function default_initial($initials, $sample_text=null) {
 	global $pgv_lang;
-	$page_language=whatLanguage($pgv_lang['mother']); // Pick any text
+	if (is_null($sample_text)) {
+		$language=whatLanguage($pgv_lang['mother']); // Pick any text
+	} else {
+		$language=whatLanguage($sample_text);
+	}
 	foreach ($initials as $initial) {
-		if (whatLanguage($initial)==$page_language && $initial!=',') {
+		if (whatLanguage($initial)==$language && $initial!=',') {
 			return $initial;
 		}
 	}
@@ -85,7 +89,7 @@ function default_initial($initials) {
 if ($show_all=='yes') {
 	$alpha='';
 	$surname='';
-	$legend='';
+	$legend=$pgv_lang['all'];
 	$indis=get_indi_list();
 	$url='indilist.php?show_all=yes';
 } elseif ($surname) {
@@ -269,10 +273,11 @@ if ($surname_sublist=='yes') {
 				list($surn,$givn)=explode(',', $name['sort']);
 				$givn_alpha=get_first_letter($givn);
 				if ((!$surname || $surname==$surn) &&
-				    (!$alpha   || $alpha==get_first_letter($name['sort'])) &&
-				    (!$falpha  || $falpha==$givn_alpha)) {
-					$individuals[]=array('gid'=>$pid, 'primary'=>$n, 'name'=>$name['sort']);
+				    (!$alpha   || $alpha==get_first_letter($name['sort']))) {
 					$givn_initials[$givn_alpha]=$givn_alpha;
+					if (!$falpha || $falpha==$givn_alpha) {
+						$individuals[]=array('gid'=>$pid, 'primary'=>$n, 'name'=>$name['sort']);
+					}
 					}
 				}
 				}
@@ -280,10 +285,11 @@ if ($surname_sublist=='yes') {
 	uasort($givn_initials, 'stringsort');
 	
 	// Break long lists by initial letter of given name
-	if (count($indis)>$SUBLIST_TRIGGER_I) {
+	//if (count($indis)>$SUBLIST_TRIGGER_I) {
+	if (($surname || $show_all=='yes') && count($indis)>$SUBLIST_TRIGGER_I) { // Ingore setting on initial lists at request of MA
 		if (!$falpha && $show_all_firstnames=='no') {
 			// If we didn't specify initial or all, filter by the first initial
-			$falpha=default_initial($givn_initials);
+			$falpha=default_initial($givn_initials, $alpha);
 			$legend.=', '.$falpha;
 			foreach ($individuals as $key=>$value) {
 				if (strpos($value['name'], ','.$falpha)===false) {
