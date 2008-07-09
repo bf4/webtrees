@@ -390,14 +390,15 @@ class GedcomRecord {
 	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
 	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
 	function getAllNames($fact='!', $level=1) {
-		global $pgv_lang;
+		global $pgv_lang, $WORD_WRAPPED_NOTES;
 
 		if (is_null($this->_getAllNames)) {
 			$sublevel=$level+1;
 			$subsublevel=$sublevel+1;
 			if ($this->canDisplayName()) {
 				$this->_getAllNames=array();
-				if (preg_match_all('/^'.$level.' ('.$fact.') *([^\r\n]*)(([\r\n]+['.$sublevel.'-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
+				$gedrec=preg_replace('/[\r\n]+\d CONC /', $WORD_WRAPPED_NOTES ? ' ' : '', $this->gedrec);
+				if (preg_match_all('/^'.$level.' ('.$fact.') *([^\r\n]*)(([\r\n]+['.$sublevel.'-9][^\r\n]+)*)/m', $gedrec, $matches, PREG_SET_ORDER)) {
 					foreach ($matches as $match) {
 						$this->_addName($match[1], $match[2] ? $match[2] : $this->getFallBackName(), $match[0]);
 						if ($match[3] && preg_match_all('/^'.$sublevel.' (ROMN|FONE|_\w+) *([^\r\n]*)(([\r\n]+['.$subsublevel.'-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
