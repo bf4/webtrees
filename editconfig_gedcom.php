@@ -232,6 +232,7 @@ $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;
 require($gedcom_config);
 if (!isset($_POST["GEDCOMLANG"])) $GEDCOMLANG = $LANGUAGE;
+else $GEDCOMLANG = $_POST["GEDCOMLANG"];
 $LANGUAGE = $USERLANG;
 $error_msg = "";
 
@@ -1005,7 +1006,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 					$person=new Person($indirec);
 					echo '<span class="list_item">', $person->getFullName(), $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
 				} else {
-					echo '<span class="error">', $pgv_lang['unable_to_find_record'], '</span>';
+					echo '<span class="error">'. $pgv_lang['unable_to_find_record']. '</span>';
 				}
 				print_findindi_link("NEW_PEDIGREE_ROOT_ID","");
 			}

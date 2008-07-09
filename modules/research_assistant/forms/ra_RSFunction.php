@@ -66,8 +66,8 @@ require_once("includes/person_class.php");
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB:FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE:FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		
-		$indilist = get_indi_list();
- 		$famlist = get_fam_list();
+//		$indilist = get_indi_list();
+// 		$famlist = get_fam_list();
 		//Create an array to put our data in
 		$myindilist = array();
 		//Create a family array to put our family data in
@@ -124,7 +124,7 @@ require_once("includes/person_class.php");
 					//these people may already exist and their detials will just be
 					//added again.  If we didn't do this, things might get lost 
 					//in the mix
-					$myindilist[$child->getXref()] = $indilist[$child->getXref()];
+					if (!is_null($child)) $myindilist[$child->getXref()] = $indilist[$child->getXref()];
 				}
 			}
 		}
@@ -162,17 +162,21 @@ require_once("includes/person_class.php");
 							$ct = preg_match("/0 @(.*)@/", $record, $match);
 							if ($ct>0) {
 								$gid = $match[1];
-								$gedval = $indilist[$gid]['names'][0][2];
+							$person = Person::getInstance($gid);
+							if (!is_null($person)) {
+								$gedval = $person->getSurname();
 								if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
 								$inferences[$pr_id]['count']++;
 							}
 						}
+					}
 						else if (preg_match("/GIVN/", $value['comp'])) {
 								$ct = preg_match("/0 @(.*)@/", $record, $match);
 								if ($ct>0) {
 									$gid = $match[1];
-									$parts = preg_split("~/~", $indilist[$gid]['names'][0][0]);
-									$gedval = $parts[0];
+							$person = Person::getInstance($gid);
+							if (!is_null($person)) {
+								$gedval = $person->getGivenNames();
 									$parts1 = preg_split("/\s+/", $gedval);
 									$parts2 = preg_split("/\s+/", $locals['GIVN']);
 									foreach($parts1 as $p1=>$part1) {
@@ -183,6 +187,7 @@ require_once("includes/person_class.php");
 									}
 								}
 						}
+					}
 						else {
 							$gedval = get_gedcom_value($value['comp'], 1, $record, '', false);
 							if (!empty($gedval) && !empty($locals[$value['local']])) {
@@ -467,5 +472,4 @@ require_once("includes/person_class.php");
 		}
 		return $out;
 	}
-	
 	

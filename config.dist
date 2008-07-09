@@ -62,7 +62,6 @@ $PGV_MEMORY_LIMIT = "32M";						//-- the maximum amount of memory that PGV shoul
 $ALLOW_REMEMBER_ME = false;						//-- whether the users have the option of being remembered on the current computer
 $CONFIG_VERSION = "4.0";						//-- the version this config file goes to
 
-$DIRECTORY_MODE = "ldap";						//-- User info stored in db or ldap directory
 $COMMIT_COMMAND = "";						//-- Choices are empty string, cvs or svn
 
 $CONFIGURED = false;

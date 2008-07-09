@@ -178,7 +178,7 @@ class Repository extends GedcomRecord {
 	}
 
 	/**
-	 * get the list of sources connected to this repository
+	 * get the count of sources connected to this repository
 	 * @return array
 	 */
 	function countLinkedSources() {

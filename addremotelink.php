@@ -26,41 +26,14 @@
  * @version $Id$
  */
 
-require_once("config.php");
-require_once("includes/functions_edit.php");
-require_once("includes/serviceclient_class.php");
+require_once("includes/controllers/remotelink_ctrl.php");
+$controller = new RemoteLinkController();
+$controller->init();
 
-//-- require that the user have entered their password
-if ($_SESSION["cookie_login"]) {
-	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
-	exit;
-}
-
-if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-
-$success = false;
-//check for pid
-if(!isset($pid)){
-	$pid="";
-	$name="no name passed";
-	$disp = false;
-}
-else{
-	$pid = clean_input($pid);
-	$name = get_person_name($pid);
-	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_person_record($pid);
-	else $gedrec = find_updated_record($pid);
-	if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
-	$disp = displayDetailsById($pid);
-	$server_list = get_server_list();
-}
-
-if (!isset($action)) $action = "";
 print_simple_header($pgv_lang["title_remote_link"]);
 
 //-- only allow gedcom admins to create remote links
-if (!PGV_USER_GEDCOM_ADMIN || !$disp || !$ALLOW_EDIT_GEDCOM) {
+if ($controller->canAccess()) {
 	//print "pid: $pid<br />";
 	//print "gedrec: $gedrec<br />";
 	print $pgv_lang["access_denied"];
@@ -77,201 +50,7 @@ if (!PGV_USER_GEDCOM_ADMIN || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	exit;
 }
 
-if ($action=="addlink") {
-	$pid = $_POST["pid"];
-	$link_pid = $_POST["txtPID"];
-	//print "Link PID= ".$link_pid;
-	$relation_type = $_POST["cbRelationship"];
-
-	$is_remote = $_POST["location"];
-	if ($is_remote=="remote") {
-		if (empty($_POST["txtURL"])) {
-			$serverID = $_POST["cbExistingServers"];
-			//print $_POST["cbExistingServers"];
-		} else {
-			if (isset($_POST["txtURL"])) $server_name = $_POST["txtURL"];
-			else $server_name = "";
-			if (isset($_POST["txtGID"]))$gedcom_id = $_POST["txtGID"];
-			else $gedcom_id = "";
-			if (isset($_POST["txtUsername"])) $username = $_POST["txtUsername"];
-			else $username = "";
-			if (isset($_POST["txtPassword"])) $password = $_POST["txtPassword"];
-			else $password = "";
-			$gedcom_string = "0 @new@ SOUR\r\n";
-			if (preg_match("/\?wsdl$/", $server_name)==0) $server_name.="?wsdl";
-			$gedcom_string.= "1 URL ".$server_name."\r\n";
-			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
-			$gedcom_string.= "2 _USER ".$username."\r\n";
-			$gedcom_string.= "2 _PASS ".$password."\r\n";
-			//-- only allow admin users to see password
-			$gedcom_string.= "2 RESN confidential\r\n";
-			$service = new ServiceClient($gedcom_string);
-			$sid = $service->authenticate();
-			if (PEAR::isError($sid)) {
-				print "<span class=\"error\">failed to authenticate to remote site</span>";
-				print_r($sid);
-			}
-			if (!empty($sid)) {
-				$gedcom_string.= "1 TITL ".$service->getServiceTitle()."\r\n";
-				$serverID = append_gedrec($gedcom_string);
-			} else {
-				print "<span class=\"error\">failed to authenticate to remote site</span>";
-			}
-		}
-	} else {
-		$gedcom_id = $_POST["cbGedcomId"];
-		$server_name = $SERVER_URL;
-
-		$gedcom_string = "0 @new@ SOUR\r\n";
-		if (get_gedcom_setting($gedcom_id, 'title')) {
-			$gedcom_string.= "1 TITL ".get_gedcom_setting($gedcom_id, 'title')."\r\n";
-		} else {
-			$gedcom_string.= "1 TITL ".$server_name."\r\n";
-		}
-		$gedcom_string.= "1 URL ".$SERVER_URL."\r\n";
-		$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
-		$gedcom_string.= "2 _BLOCK false\r\n";
-		$serverID = append_gedrec($gedcom_string);
-	}
-
-	if (!empty($serverID)&&!empty($link_pid)) {
-		if (isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_updated_record($pid);
-		else $indirec = find_person_record($pid);
-
-		if($relation_type=="father"){
-			$indistub = "0 @new@ INDI\r\n";
-			$indistub .= "1 SOUR @".$serverID."@\r\n";
-			$indistub .= "2 PAGE ".$link_pid."\r\n";
-			$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
-			$stub_id = append_gedrec($indistub, false);
-			$indistub = find_updated_record($stub_id);
-
-			$gedcom_fam = "0 @new@ FAM\r\n";
-			$gedcom_fam.= "1 HUSB @".$stub_id."@\r\n";
-			$gedcom_fam.= "1 CHIL @".$pid."@\r\n";
-			$fam_id = append_gedrec($gedcom_fam);
-
-			$indirec.= "\r\n";
-			$indirec.= "1 FAMC @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($pid, $indirec);
-
-			$serviceClient = ServiceClient::getInstance($serverID);
-			$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-			$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($stub_id, $indistub, false);
-		}else if($relation_type=="mother"){
-			$indistub = "0 @NEW@ INDI\r\n";
-			$indistub .= "1 SOUR @".$serverID."@\r\n";
-			$indistub .= "2 PAGE ".$link_pid."\r\n";
-			$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
-			$stub_id = append_gedrec($indistub, false);
-			$indistub = find_updated_record($stub_id);
-
-			$gedcom_fam = "0 @NEW@ FAM\r\n";
-			$gedcom_fam.= "1 WIFE @".$stub_id."@\r\n";
-			$gedcom_fam.= "1 CHIL @".$pid."@\r\n";
-			$fam_id = append_gedrec($gedcom_fam);
-
-			$indirec.= "\r\n";
-			$indirec.= "1 FAMC @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($pid, $indirec);
-
-			$serviceClient = ServiceClient::getInstance($serverID);
-			$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-			$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($stub_id, $indistub, false);
-		}else if($relation_type=="husband"){
-			$indistub = "0 @NEW@ INDI\r\n";
-			$indistub .= "1 SOUR @".$serverID."@\r\n";
-			$indistub .= "2 PAGE ".$link_pid."\r\n";
-			$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
-			$stub_id = append_gedrec($indistub, false);
-			$indistub = find_updated_record($stub_id);
-
-			$gedcom_fam = "0 @NEW@ FAM\r\n";
-			$gedcom_fam.= "1 WIFE @".$pid."@\r\n";
-			$gedcom_fam.= "1 HUSB @".$stub_id."@\r\n";
-			$fam_id = append_gedrec($gedcom_fam);
-
-			$indirec.= "\r\n";
-			$indirec.= "1 FAMS @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($pid, $indirec);
-
-			$serviceClient = ServiceClient::getInstance($serverID);
-			$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-			$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($stub_id, $indistub, false);
-		}else if($relation_type=="wife"){
-			$indistub = "0 @NEW@ INDI\r\n";
-			$indistub .= "1 SOUR @".$serverID."@\r\n";
-			$indistub .= "2 PAGE ".$link_pid."\r\n";
-			$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
-			$stub_id = append_gedrec($indistub, false);
-			$indistub = find_updated_record($stub_id);
-
-			$gedcom_fam = "0 @NEW@ FAM\r\n";
-			$gedcom_fam.= "1 WIFE @".$stub_id."@\r\n";
-			$gedcom_fam.= "1 HUSB @".$pid."@\r\n";
-			$fam_id = append_gedrec($gedcom_fam);
-
-			$indirec.= "\r\n";
-			$indirec.= "1 FAMS @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($pid, $indirec);
-
-			$serviceClient = ServiceClient::getInstance($serverID);
-			$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-			$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($stub_id, $indistub, false);
-		}else if($relation_type=="son"||$relation_type=="daughter"){
-			$indistub = "0 @NEW@ INDI\r\n";
-			$indistub .= "1 SOUR @".$serverID."@\r\n";
-			$indistub .= "2 PAGE ".$link_pid."\r\n";
-			$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
-			$stub_id = append_gedrec($indistub, false);
-			$indistub = find_updated_record($stub_id);
-
-			$sex = get_gedcom_value("SEX", 1, $indirec, '', false);
-			if($sex=="M"){
-				$gedcom_fam = "0 @NEW@ FAM\r\n";
-				$gedcom_fam.= "1 HUSB @".$pid."@\r\n";
-				$gedcom_fam.= "1 CHIL @".$stub_id."@\r\n";
-			}else{
-				$gedcom_fam = "0 @NEW@ FAM\r\n";
-				$gedcom_fam.= "1 WIFE @".$pid."@\r\n";
-				$gedcom_fam.= "1 CHIL @".$stub_id."@\r\n";
-			}
-			$fam_id = append_gedrec($gedcom_fam);
-			$indirec.= "\r\n";
-			$indirec.= "1 FAMS @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($pid, $indirec);
-
-			$serviceClient = ServiceClient::getInstance($serverID);
-			$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-			$indistub.= "\r\n1 FAMC @".$fam_id."@\r\n";
-			$answer2 = replace_gedrec($stub_id, $indistub,false);
-		}else if($relation_type=="self"){
-			$indirec.="\r\n";
-			$indirec.="1 RFN ".$serverID.":".$link_pid."\r\n";
-			$indirec.="1 SOUR @".$serverID."@\r\n";
-
-			$serviceClient = ServiceClient::getInstance($serverID);
-			if (!is_null($serviceClient)) {
-				//-- get rid of change date
-				$pos1 = strpos($indirec, "\n1 CHAN");
-				if ($pos1!==false) {
-					$pos2 = strpos($indirec, "\n1", $pos1+5);
-					if ($pos2===false) $indirec = substr($indirec, 0, $pos1+1);
-					else $indirec= substr($indirec, 0, $pos1+1).substr($indirec, $pos2+1);
-				}
-				$indirec = $serviceClient->mergeGedcomRecord($link_pid, $indirec, true, true);
-			} else {
-				print "Unable to find server";
-			}
-		}
-		print "<b>".$pgv_lang["link_success"]."</b>";
-		$success = true;
-	}
-}
+$controller->runAction();
 ?>
 
 <script language="JavaScript" type="text/javascript">
@@ -420,7 +199,7 @@ function checkform(frm){
 		<?php
 }
 // autoclose window when update successful
-if ($success and $EDIT_AUTOCLOSE) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+if ($success && $EDIT_AUTOCLOSE) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 
 print "<div class=\"center\"><a href=\"javascript:// ".$pgv_lang["close_window"]."\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
 
