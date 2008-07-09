@@ -573,7 +573,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 			if ($source) {
 				$data .= "<a href=\"".encode_url($source->getLinkUrl())."\">".PrintReady($source->getFullName())."</a>";
 			} else {
-				$date .= $sid;
+				$data .= $sid;
 			}
 			$data .= "</span>";
 
