@@ -360,10 +360,120 @@ class Menu
 	function subCount() {
 		return count($this->submenus);
 	}
+	
+	/**
+	 * convert an old array style menu to an object
+	 * @static 
+	 */
+	function convertMenu($menu) {
+		$conv = array(
+			'label'=>'label',
+			'labelpos'=>'labelpos',
+			'icon'=>'icon',
+			'hovericon'=>'hovericon',
+			'link'=>'link',
+			'accesskey'=>'accesskey',
+			'class'=>'class',
+			'hoverclass'=>'hoverclass',
+			'flyout'=>'flyout',
+			'submenuclass'=>'submenuclass',
+			'onclick'=>'onclick'
+		);
+		$obj = new Menu();
+		if ($menu == 'separator') {
+			$obj->isSeperator();
+			$obj->printMenu();
+			return;
+		}
+		$items = false;
+		foreach ($menu as $k=>$v) {
+			if ($k == 'items' && is_array($v) && count($v) > 0) $items = $v;
+			else {
+				if (isset($conv[$k])){
+					if ($v != '') {
+						$obj->$conv[$k] = $v;
+					}
+				}
+			}
+		}
+		if ($items !== false) {
+			foreach ($items as $sub) {
+				$sobj = new Menu();
+				if ($sub == 'separator') {
+					$sobj->isSeperator();
+					$obj->addSubmenu($sobj);
+					continue;
+				}
+				foreach ($sub as $k2=>$v2) {
+					if (isset($conv[$k2])) {
+						if ($v2 != '') {
+							$sobj->$conv[$k2] = $v2;
+						}
+					}
+				}
+				$obj->addSubmenu($sobj);
+			}
+		}
+		return $obj;
+	}
 }
 
 class MenuBar
 {
+	var $defaultMenus = array("getHomeMenu","getGedcomMenu","getMygedviewMenu","getChartsMenu","getListsMenu",
+	"getCalendarMenu", "getReportsMenu", "getClippingsMenu", "getSearchMenu", "getHelpMenu");
+	/**
+	 * Look up and create a menu from the custom menu database
+	 */
+	function getMenu($index) {
+		global $GEDCOM, $TBLPREFIX, $DBCONN, $PGV_IMAGES, $PGV_IMAGE_DIR;
+		//-- check db
+		if (!empty($DBCONN) && !DB::isError($DBCONN)) {
+			$uname = getUserName();
+			if (empty($uname)) $uname = $GEDCOM;
+			$sql = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX."menu WHERE mn_username='".$DBCONN->escapeSimple($uname)."' AND mn_parent=0 AND mn_order=".$index;
+			$res = dbquery($sql, false);
+			if (!empty($res) && !DB::isError($res) && is_object($res) && $res->numRows()>0) {
+				$row = $res->fetchRow();
+				$res->free();
+				$menu = new Menu($row[1]);
+				if (!empty($row[2])) {
+					if (isset($PGV_IMAGES[$row[2]])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES[$row[2]]['large']);
+					else $menu->addIcon($row[2]);
+				}
+				$menu->addOnclick($row[3]);
+				
+				$sqls = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX."menu WHERE mn_parent=".$row[0]." ORDER BY mn_order";
+				$ress = dbquery($sqls);
+				if (!DB::isError($res)) {
+					while($row = $res->fetchRow()) {
+						if ($row[1]!='seperator') {
+							$submenu = new Menu($row[1]);
+							if (!empty($row[2])) {
+								if (isset($PGV_IMAGES[$row[2]])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES[$row[2]]['large']);
+								else $submenu->addIcon($row[2]);
+							}
+							$submenu->addOnclick($row[3]);
+							$menu->addSubMenu($submenu);
+						}
+						else $menu->addSeperator();
+					}
+				}
+			}
+		}
+		//-- default menus
+		if (empty($menu)) {
+			if (isset($this->defaultMenus[$index])) {
+				$method = $this->defaultMenus[$index];
+				return $this->$method();
+			}
+			$menus = $this->getModuleMenus();
+			$index = $index-count($this->defaultMenus);
+			if ($index<count($menus)) return $menus[$index];
+			else return false;
+		}
+		return $menu;
+	}
 
 	/**
 	 * get the home menu

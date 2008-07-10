@@ -129,14 +129,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	}
 	$title .= str_replace("10", $config["num"], $pgv_lang["block_givn_top10_title"]);
 		
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
-	if ($block) print '<div class="small_inner_block">';
-	else print '<div class="normal_inner_block">';
-	
+	$content = '<div class="normal_inner_block">';
 	//Select List or Table
 	switch ($infoStyle) {
 	case "style1":	// Output style 1:  Simple list style.  Better suited to left side of page.
@@ -145,85 +138,90 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		//List Female names
 		$nameList = array_slice($name_list_f, 0, $config["num"]);
 		if (count($nameList)>0) {
-			print "<b>".$pgv_lang["female"]."</b>";
-			print "<div class=\"wrap\" style=\"$padding\">";
+			$content .=  "<b>".$pgv_lang["female"]."</b>";
+			$content .=  "<div class=\"wrap\" style=\"$padding\">";
 			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
 			foreach ($nameList as $key => $value) {
-				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+				if ($TEXT_DIRECTION=='ltr') $content .= ' '. PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
+				else $content .=  ' '. PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
 			}
-			print "</div><br />";
+			$content .=  "</div><br />";
 		}
 		//List Male names	
 		$nameList = array_slice($name_list_m, 0, $config["num"]);
 		if (count($nameList)>0) {
-			print "<b>".$pgv_lang["male"]."</b>";
-			print "<div class=\"wrap\" style=\"$padding\">";
+			$content .=  "<b>".$pgv_lang["male"]."</b>";
+			$content .=  "<div class=\"wrap\" style=\"$padding\">";
 			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
 			foreach ($nameList as $key => $value) {
-				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+				if ($TEXT_DIRECTION=='ltr') $content .=  ' '. PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
+				else $content .=  ' '. PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
 			}
-			print "</div><br />";
+			$content .=  "</div><br />";
 		}
 		//List Unknown names	
 		$nameList = array_slice($name_list_u, 0, $config["num"]);
 		if (count($nameList)>0 && $showUnknown=="yes") {
-			print "<b>".$pgv_lang["unknown"]."</b>";
-			print "<div class=\"wrap\" style=\"$padding\">";
+			$content .=  "<b>".$pgv_lang["unknown"]."</b>";
+			$content .=  "<div class=\"wrap\" style=\"$padding\">";
 			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
 			foreach ($nameList as $key => $value) {
-				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
+				if ($TEXT_DIRECTION=='ltr') $content .=  ' '. PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
+				else $content .=  ' '. PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
 			}
-			print "</div><br />";
+			$content .=  "</div><br />";
 		}
 		break;
 	case "style2":	// Style 2: Tabular format.  Narrow, 2-column table, good on right side of page
 		$nameAlign = ($TEXT_DIRECTION=='ltr') ? 'left':'right';
 		//Table Headings
-		print "<table class=\"center\">";
-		print "<tr>";
-			if (count($name_list_f)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td>";
-			if (count($name_list_m)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td>";
-			if (count($name_list_u)>0 && $showUnknown=="yes") print "<td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td>";
-		print "</tr>";
-		print "<tr>";
+		$content .=  "<table class=\"center\">";
+		$content .=  "<tr>";
+			if (count($name_list_f)>0) $content .=  "<td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td>";
+			if (count($name_list_m)>0) $content .=  "<td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td>";
+			if (count($name_list_u)>0 && $showUnknown=="yes") $content .=  "<td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td>";
+		$content .=  "</tr>";
+		$content .=  "<tr>";
 		//List Female names
 			if (count($name_list_f)>0) {
-				print "<td valign='top'><table>";
-				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
+				$content .=  "<td valign='top'><table>";
+				$content .=  "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 				$nameList = array_slice($name_list_f, 0, $config["num"]);
 				foreach ($nameList as $key => $value) {
-					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
+					$content .=  "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
 				}
-				print "</table></td>";
+				$content .=  "</table></td>";
 			}
 		//List Male names
 			if (count($name_list_m)>0) {
-				print "<td valign='top'><table>";
-				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
+				$content .=  "<td valign='top'><table>";
+				$content .=  "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 				$nameList = array_slice($name_list_m, 0, $config["num"]);
 				foreach ($nameList as $key => $value) {
-					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
+					$content .=  "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
 				}
-				print "</table></td>";
+				$content .=  "</table></td>";
 			}
 		//List Unknown names	
 			if (count($name_list_u)>0 && $showUnknown=="yes") {
-				print "<td valign='top'><table>";
-				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
+				$content .=  "<td valign='top'><table>";
+				$content .=  "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
 				$nameList = array_slice($name_list_u, 0, $config["num"]);
 				foreach ($nameList as $key => $value) {
-					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
+					$content .=  "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
 				}
-				print "</table></td>";
+				$content .=  "</table></td>";
 			}
 		//Close table off
-		print "</tr></table>";
+		$content .=  "</tr></table>";
 		break;
 	}
-print "</div></div></div>";
+$content .=  "</div>";
+
+	global $THEME_DIR;
+	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
+	else include($THEME_DIR."/templates/block_main_temp.php");
+
 }
 
 function print_block_givn_top10_config($config) {

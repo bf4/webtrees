@@ -309,17 +309,8 @@ function openPic(filename, width, height) {
 			$content .= "</div>"; // random_picture_content
 			$content .= "</div>"; // random_picture_container
 			if ($action!="ajax") {
-				print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-				print '<td class="blockh1">&nbsp;</td>';
-				print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-				print '<td class="blockh3">&nbsp;</td>';
-				print '</tr></table><div class="blockcontent">';
-				//if ($block) {
-					//print '<div class="small_inner_block">'.$content.'</div>';
-				//} else {
-					print $content;
-				//}
-				print '</div></div>';
+					global $THEME_DIR;
+					include($THEME_DIR."/templates/block_main_temp.php");
 			}
 				else print $content;
 		}

@@ -43,16 +43,11 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 	$theme_menu=MenuBar::getThemeMenu();
 	$content='<div class="center theme_form"><br />'.$theme_menu->getMenuAsDropdown().'<br /<br /></div>';
 	
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
+	global $THEME_DIR;
 	if ($style) {
-		print '<div class="small_inner_block">'.$content.'</div>';
+		include($THEME_DIR."/templates/block_small_temp.php");
 	} else {
-		print $content;
+		include($THEME_DIR."/templates/block_main_temp.php");
 	}
-	print '</div></div>';
 }
 ?>

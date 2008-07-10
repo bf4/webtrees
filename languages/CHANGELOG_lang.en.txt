@@ -44,6 +44,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang['tree']									03 Oct 2007				A
 +$pgv_lang["ellipsis"]								4 July 2008				A
 +$pgv_lang["repo_menu"]								4 July 2008				A
 +$pgv_lang["showUnknown"]							28 June 2008			A

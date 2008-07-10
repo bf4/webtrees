@@ -1117,31 +1117,29 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			
 		}
 
-		$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN,_UID,_COMM", false);
+		//$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN,_UID,_COMM", false);
+		$indifacts = $person->getIndiFacts();
 
+		/* @var $far Event */
 		foreach ($indifacts as $key => $far) {
-			$match = array();
-			$ft = preg_match("/1 (\w+)(.*)/", $far, $match);
-			if ($ft > 0) {
-				$fact = trim($match[1]);
-				$event = trim($match[2]);
-			}
+			$fact = $far->getTag();
+			$event = $far->getDetail();
 			if ($fact=="EVEN" || $fact=="FACT") {
-				$fact = get_gedcom_value("TYPE", 2, $far);
+				$fact = $far->getType();
 			}
-			$date = get_gedcom_value("DATE", 2, $far);
+			$date = $far->getDate();
 			if (empty ($date)) {
 				if (!in_array($fact, $nondatefacts)) {
 					$MissingReturn[] = array ($fact, "DATE");
 				}
 			}
-			$source = get_gedcom_value("SOUR", 2, $far);
+			$source = get_gedcom_value("SOUR", 2, $far->getGedComRecord());
 			if (empty ($source))
 				$MissingReturn[] = array ($fact, "SOUR");
-			$plac = get_gedcom_value("PLAC", 2, $far);
+			$plac = $far->getPlace();
 			if (empty ($plac)) {
 				if (in_array($fact, $templefacts)) {
-					$plac = get_gedcom_value("TEMP", 2, $far);
+					$plac = $far->getValue("TEMP");
 					if (empty($plac)) {
 						$MissingReturn[] = array ($fact, "TEMP");
 					}
@@ -1815,15 +1813,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 														
 												foreach($tempDates as $tKey=>$tVal)
 												{
-													$tempDate = get_gedcom_value("DATE",2,$tVal[1]);
-													$tempPlace = get_gedcom_value("PLAC",2,$tVal[1]);
-													$parsedDates = new GedcomDate($tempDate);
-													$parsedDates = $parsedDates->MinDate();
-													$parsedDates = $parsedDates->convert_to_cal('gregorian');
-
-													$sortdate = $parsedDates->Format('Y');
-													$sortdate.=($parsedDates->m) ? $parsedDates->Format('m') : '00';
-													$sortdate.=($parsedDates->d) ? $parsedDates->Format('d') : '00';
+													$tempDate = $tVal->getDate();
+													$tempPlace = $tVal->getPlace();
 
 													$place = trim($place);
 														
@@ -1904,6 +1895,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							</table>\n
 					</td></tr></table>";
 			
+		//beginning of FamilySearch results functionality
+		if (file_exists("modules/FamilySearch/RA_AutoMatch.php")) {
+			include_once("modules/FamilySearch/RA_AutoMatch.php");
+			$matcher = new RA_AutoMatch();
+			$out .= $matcher->generateResultsTable($person);
+			unset($matcher);
+		}
 
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {

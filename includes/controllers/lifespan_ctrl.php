@@ -455,35 +455,26 @@ class LifespanControllerRoot extends BaseController {
 
 				$eventinformation = Array();
 				$eventspacing = Array();
-				foreach($unparsedEvents as $index=>$val) {
-					if(preg_match('/2 DATE/',$val[1])) {
-						$date = get_gedcom_value("DATE",2,$val[1]);
-						$ft = preg_match("/1\s(\w+) *(.*)/", $val[1], $match);
-						if ($ft>0) {
-							$fact = $match[1];
-							$data = $match[2]=='Y' ? '' : ': '.$match[2];
-						}
-						$date_arr = new GedcomDate($date);
-						$yearsin = $date_arr->gregorianYear()-$birthYear;
+				foreach($unparsedEvents as $index=>$val)
+				{
+					$date = $val->getDate();
+					if (!empty($date)) {
+						$fact = $val->getTag();
+						$yearsin = $date->date1->y-$birthYear;
 						if ($lifespannumeral==0) $lifespannumeral = 1; 
 						$eventwidth = ($yearsin/$lifespannumeral)* 100; // percent of the lifespan before the event occured used for determining div spacing
 						// figure out some schema
 						$evntwdth = $eventwidth."%";
 						//-- if the fact is a generic EVENt then get the qualifying TYPE
 						if ($fact=="EVEN") {
-							$fact = get_gedcom_value("TYPE",2,$val[1]);
+							$fact = $val->getType();
 						}
-						$place = get_gedcom_value("PLAC", 2, $val[1]);
+						$place = $val->getPlace();
 						$trans = $fact;
-						if (isset($factarray[$fact])) {
-							$trans = $factarray[$fact];
-						} else
-							if (isset($pgv_lang[$fact]))
-								$trans = $pgv_lang[$fact];  
-						if (isset($eventinformation[$evntwdth]))
-							$eventinformation[$evntwdth] .= "<br />\n".$trans.$data."<br />\n".strip_tags($date)." ".$place;
-						else
-							$eventinformation[$evntwdth]= $trans.$data."<br />\n".strip_tags($date)." ".$place;
+						if (isset($factarray[$fact])) $trans = $factarray[$fact];
+						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];  
+						if (isset($eventinformation[$evntwdth])) $eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
+						else $eventinformation[$evntwdth]= $trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
 					}
 						
 				}

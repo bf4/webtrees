@@ -35,10 +35,12 @@ global $edit, $tabno, $mediacnt, $GEDCOM;
 
 $edit=$edit;
 
+	$tabno=8;
+	
      if (!file_exists("modules/googlemap/defaultconfig.php")) {
-         $tabno = "6";
+         $tabno = ($tabno-1);
          }else{
-         $tabno = "7";
+         $tabno = ($tabno);
          }
 
 //     echo "Light Box Stuff";

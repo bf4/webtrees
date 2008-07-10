@@ -102,18 +102,12 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 <?php
 $repositoryfacts = $controller->repository->getRepositoryFacts();
 foreach($repositoryfacts as $indexval => $fact) {
-	$factrec = $fact[0];
-	$linenum = $fact[1];
-	$ft = preg_match("/1\s(_?\w+)\s(.*)/", $factrec, $match);
-	if ($ft>0) $fact = $match[1];
-	else $fact="";
-	$fact = trim($fact);
 	if (!empty($fact)) {
-		if ($fact=="NOTE") {
-			print_main_notes($factrec, 1, $controller->rid, $linenum);
+		if ($fact->getTag()=="NOTE") {
+			print_main_notes($fact->getGedcomRecord(), 1, $rid, $fact->getLineNumber());
 		}
 		else {
-			print_fact($factrec, $controller->rid, $linenum);
+			print_fact($fact);
 		}
 	}
 }
