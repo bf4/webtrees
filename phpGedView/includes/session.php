@@ -183,6 +183,7 @@ if ($configOverride) {
 		require_once("includes/functions.php");
 		//-- load db specific functions
 		require_once("includes/functions_db.php");
+		require_once("includes/functions_name.php");
 		require_once("includes/authentication.php");      // -- load the authentication system
 		AddToLog("MSG>Configuration override detected; script terminated.");
 		AddToLog("UA>{$ua}<");
@@ -354,8 +355,6 @@ if (strstr($SCRIPT_NAME, "client.php")===false && strstr($SCRIPT_NAME, "genservi
 	//-- load media specific functions
 	require_once("includes/functions_print.php");
 	require_once("includes/functions_rtl.php");
-	// TODO: do the name functions always need to be loaded?
-	require_once("includes/functions_name.php");
 }
 
 if ($MULTI_MEDIA) require_once("includes/functions_mediadb.php");
