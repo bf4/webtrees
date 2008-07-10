@@ -590,7 +590,7 @@ class MenuBar
 
 			case "descendancy":
 				//-- descendancy
-				$link = "descendancy.php?ged=${$ged}";
+				$link = "descendancy.php?ged=${ged}";
 				if ($rootid) $link .= "&pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["descend_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["descendant"]["small"]))
