@@ -868,7 +868,7 @@ class stats {
 				$result="<a href=\"".encode_url("individual.php?pid={$row['d_gid']}&ged={$this->_gedcom_url}")."\">".get_person_name($row['d_gid'])."{$id}</a>";
 				break;
 			case 'place':
-				$result=format_fact_place(get_sub_record(1, "1 {$birth_death}", find_person_record($row['d_gid'])), true, true, true);
+				$result=format_fact_place(Person::getInstance($row['d_gid'])->getFactByType($row['d_fact']), true, true, true);
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -1196,7 +1196,7 @@ class stats {
 				$result="<a href=\"".encode_url("individual.php?pid={$row['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_person_name($row['id']))."{$id}</a>";
 				break;
 			case 'place':
-				$result=format_fact_place(get_sub_record(1, "1 {$row['fact']}", find_gedcom_record($row['id'])), true, true, true);
+				$result=format_fact_place(Person::getInstance($row['id'])->getFactByType($row['fact']), true, true, true);
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);

@@ -427,176 +427,44 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
  * @param string $famid family gedcom ID
  * @param int $sosa optional child sosa number
  */
-function print_family_facts($famid, $sosa = 0) {
+function print_family_facts(&$family, $sosa = 0) {
 	global $pgv_lang, $pbwidth, $pbheight, $view;
 	global $nonfacts, $factarray;
 	global $TEXT_DIRECTION, $GEDCOM, $SHOW_ID_NUMBERS;
 	global $show_changes, $pgv_changes;
 	global $linkToID;
 
+	$famid=$family->getXref();
 	// -- if both parents are displayable then print the marriage facts
-	if (displayDetailsByID($famid, "FAM")) {
+	if ($family->canDisplayDetails()) {
 		$linkToID = $famid;		// -- Tell addmedia.php what to link to
 		// -- array of GEDCOM elements that will be found but should not be displayed
 		$nonfacts = array("FAMS", "FAMC", "MAY", "BLOB", "HUSB", "WIFE", "CHIL", "");
+		
 		// -- find all the fact information
-		$indifacts = array(); // -- array to store the fact records in for sorting and displaying
-		$otheritems = array();
-		$famrec = find_family_record($famid);
-		$indilines = split("\n", $famrec); // -- find the number of lines in the individuals record
-		$lct = count($indilines);
-		$factrec = ""; // -- complete fact record
-		$line = ""; // -- temporary line buffer
-		$f = 0;
-		$linenum = 0;
-		for($i = 1; $i <= $lct; $i++) {
-			if ($i < $lct) $line = $indilines[$i];
-			else $line = " ";
-			if (empty($line)) $line = " ";
-			if (($i == $lct) || ($line{0} == 1)) {
-				$ft = preg_match("/1\s(\w+)(.*)/", $factrec, $match);
-				if ($ft > 0) $fact = $match[1];
-				else $fact = "";
-				$fact = trim($fact);
-				// -- handle special source fact case
-				if ($fact == "SOUR") {
-					$otheritems[] = array($linenum, $factrec);
-				}
-				// -- handle special media object case
-				else if ($fact == "OBJE") {
-					$otheritems[] = array($linenum, $factrec);
-				}
-				// -- handle special note fact case
-				else if ($fact == "NOTE") {
-					$otheritems[] = array($linenum, $factrec);
-				} else {
-					if (!in_array($fact, $nonfacts)) {
-						$indifacts[$f] = array($linenum, $factrec);
-						$f++;
-					}
-				}
-				$factrec = $line;
-				$linenum = $i;
-			} else $factrec .= "\n" . $line;
-		}
-		if ($sosa==0 && PGV_USER_CAN_EDIT) {
-			if ((isset($_REQUEST['show_changes'])&&($_REQUEST['show_changes']=='yes')) && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
-				if (empty($newrec)) $newrec = find_updated_record($famid);
-				$indilines = split("\n", $newrec); // -- find the number of lines in the individuals record
-				$lct = count($indilines);
-				$factrec = ""; // -- complete fact record
-				$line = ""; // -- temporary line buffer
-				$f = 0;
-				$newfacts = array();
-				$newother = array();
-				$linenum = 0;
-				for($i = 1; $i <= $lct; $i++) {
-					if ($i < $lct) $line = $indilines[$i];
-					else $line = " ";
-					if (empty($line)) $line = " ";
-					if (($i == $lct) || ($line{0} == 1)) {
-						$ft = preg_match("/1\s(\w+)\s(.*)/", $factrec, $match);
-						if ($ft > 0) $fact = $match[1];
-						else $fact = "";
-						$fact = trim($fact);
-						// -- handle special source fact case
-						if ($fact == "SOUR") {
-							$newother[] = array($linenum, $factrec);
-						}
-						// -- handle special media object case
-						else if ($fact == "OBJE") {
-							$newother[] = array($linenum, $factrec);
-						}
-						// -- handle special note fact case
-						else if ($fact == "NOTE") {
-							$newother[] = array($linenum, $factrec);
-						} else {
-							$newfacts[$f] = array($linenum, $factrec);
-							$f++;
-						}
-						$factrec = $line;
-						$linenum = $i;
-					} else $factrec .= "\n" . $line;
-				}
-			}
-		}
-		// -- loop through new facts and add them to the list if they are any changes
-		if (isset($newfacts)) {
-			// -- compare new and old facts of the Personal Fact and Details tab 1
-			for($i = 0; $i < count($indifacts); $i++) {
-				$found = false;
-				foreach($newfacts as $indexval => $newfact) {
-					if (trim($newfact[1]) == trim($indifacts[$i][1])) {
-						$found = true;
-						break;
-					}
-				}
-				if (!$found) {
-					$indifacts[$i][1] .= "\nPGV_OLD\n";
-				}
-			}
-			foreach($newfacts as $indexval => $newfact) {
-				$found = false;
-				foreach($indifacts as $indexval => $fact) {
-					if (trim($fact[1]) == trim($newfact[1])) {
-						$found = true;
-						break;
-					}
-				}
-				if (!$found) {
-					$newfact[1] .= "\nPGV_NEW\n";
-					$indifacts[] = $newfact;
-				}
-			}
-			// -- compare new and old facts of the Notes Sources and Media tab 2
-			for($i = 0; $i < count($otheritems); $i++) {
-				$found = false;
-				foreach($newother as $indexval => $newfact) {
-					if (trim($newfact[1]) == trim($otheritems[$i][1])) {
-						$found = true;
-						break;
-					}
-				}
-				if (!$found) {
-					$otheritems[$i][1] .= "\nPGV_OLD\n";
-				}
-			}
-			foreach($newother as $indexval => $newfact) {
-				$found = false;
-				foreach($otheritems as $indexval => $fact) {
-					if (trim($fact[1]) == trim($newfact[1])) {
-						$found = true;
-						break;
-					}
-				}
-				if (!$found) {
-					$newfact[1] .= "\nPGV_NEW\n";
-					$otheritems[] = $newfact;
-				}
-			}
-		}
-		if ((count($indifacts) > 0) || (count($otheritems) > 0)) {
+		$indifacts = $family->getFacts();
+		
+		if (count($indifacts) > 0) {
 			sort_facts($indifacts);
 			print "\n\t<span class=\"subheaders\">" . $pgv_lang["family_group_info"];
 			if ($SHOW_ID_NUMBERS and $famid != "") print "&nbsp;&nbsp;&nbsp;($famid)";
 			print "</span><br />\n\t<table class=\"facts_table\">";
+			/* @var $value Event */
 			foreach ($indifacts as $key => $value) {
-				print_fact($value[1], $famid, $value[0]);
+				if ($value->getTag()!="SOUR" && $value->getTag()!="OBJE" && $value->getTag()!="NOTE")
+					print_fact($value);
 			}
 			// do not print otheritems for sosa
 			if ($sosa == 0) {
-				foreach($otheritems as $key => $value) {
-					$ft = preg_match("/1\s(\w+)\s(.*)/", $value[1], $match);
-					if ($ft > 0) $fact = $match[1];
-					else $fact = "";
-					$fact = trim($fact);
+				foreach($indifacts as $key => $value) {
+					$fact = $value->getTag();
 					// -- handle special source fact case
 					if ($fact == "SOUR") {
-						print_main_sources($value[1], 1, $famid, $value[0]);
+						print_main_sources($value->getGedComRecord(), 1, $famid, $value->getLineNumber());
 					}
 					// -- handle special note fact case
 					else if ($fact == "NOTE") {
-						print_main_notes($value[1], 1, $famid, $value[0]);
+						print_main_notes($value->getGedComRecord(), 1, $famid, $value->getLineNumber());
 					}
 				}
 				// NOTE: Print the media
@@ -674,7 +542,7 @@ function print_sosa_family($famid, $childid, $sosa, $label="", $parid="", $gpari
 	print "<table width=\"95%\"><tr><td valign=\"top\" style=\"width: " . ($pbwidth) . "px;\">\n";
 	print_family_children($famid, $childid, $sosa, $label, $personcount);
 	print "</td><td valign=\"top\">";
-	if ($sosa == 0) print_family_facts($famid, $sosa);
+	if ($sosa == 0) print_family_facts(Family::getInstance($famid), $sosa);
 	print "</td></tr></table>\n";
 	print "<br />";
 }
@@ -736,27 +604,7 @@ function ancestry_array($rootid, $maxgen=0) {
 		$treeid[($i * 2) + 1] = false; // -- mother
 		if (!empty($treeid[$i])) {
 			$person = Person::getInstance($treeid[$i]);
-			$families = $person->getChildFamilies();
-			$family=false;
-			if (count($families)>1) {
-				// If there is more than one FAMC record, choose the preferred parents:
-				$indirec=$person->getGedcomRecord();
-				// a) records with "2 _PRIMARY"
-				foreach ($families as $famid=>$fam)
-					if (empty($family) && preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+_PRIMARY Y\b)/i", $indirec))
-					$family=$fam;
-				// b) records with "2 PEDI birt"
-				foreach ($families as $famid=>$fam)
-					if (empty($family) && preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\s+birth?\b)/i", $indirec))
-					$family=$fam;
-				// c) records with no "2 PEDI"
-				foreach ($families as $famid=>$fam)
-					if (empty($family) && !preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\b)/i", $indirec))
-					$family=$fam;
-			}
-			// d) any record
-			if (empty($family) && count($families>0))
-				$family=reset($families);
+			$family = $person->getPrimaryChildFamily();
 			// Store the prefered parents
 			if (!empty($family)) {
 				$treeid[($i * 2)] = $family->getHusbId();

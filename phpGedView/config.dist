@@ -7,7 +7,7 @@
  * Site administrators may edit these settings online through the editconfig.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ if (preg_match("/\Wconfig.php/", $_SERVER["SCRIPT_NAME"])>0) {
 
 $DBTYPE = "mysql";								//-- type of database to connect when using the PEAR:DB module
 $DBHOST = "localhost";							//-- Host where MySQL database is kept
+$DBPORT = "";									//-- Database port, leave blank for default
 $DBUSER = "root";									//-- MySQL database User Name
 $DBPASS = "";									//-- MySQL database User Password
 $DBNAME = "phpgedview";							//-- The MySQL database name where you want PHPGedView to build its tables

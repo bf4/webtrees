@@ -53,7 +53,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
-	global $DBTYPE, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
+	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
 	global $INDEX_DIRECTORY, $BUILDING_INDEX;
 
 	if (!$ignore_previous) {
@@ -69,18 +69,21 @@ function check_db($ignore_previous=false) {
 			if (isset($_POST['NEW_DBUSER'])) $DBUSER = $_POST['NEW_DBUSER'];
 			if (isset($_POST['NEW_DBPASS'])) $DBPASS = $_POST['NEW_DBPASS'];
 			if (isset($_POST['NEW_DBHOST'])) $DBHOST = $_POST['NEW_DBHOST'];
+			if (isset($_POST['NEW_DBPORT'])) $DBPORT = $_POST['NEW_DBPORT'];
 			if (isset($_POST['NEW_DBNAME'])) $DBNAME = $_POST['NEW_DBNAME'];
 			if (isset($_POST['NEW_DBPERSIST'])) $DBPERSIST = $_POST['NEW_DBPERSIST'];
 		}
 	}
 	//-- initialize query counter
 	$TOTAL_QUERIES = 0;
+	if (!isset($DBPORT)) $DBPORT="";
 
 	$dsn = array(
 		'phptype'  => $DBTYPE,
 		'username' => $DBUSER,
 		'password' => $DBPASS,
 		'hostspec' => $DBHOST,
+		'port'     => $DBPORT,
 		'database' => $DBNAME
 	);
 	
@@ -1769,110 +1772,6 @@ function lettersort($a, $b) {
 }
 
 // Helper function to sort facts.
-function compare_facts_type($arec, $brec) {
-	global $factarray;
-	static $factsort;
-
-	if (is_array($arec))
-		$arec = $arec[1];
-	if (is_array($brec))
-		$brec = $brec[1];
-
-	// Facts from different families stay grouped together
-	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
-		return 0;
-		
-	// Extract fact type from record
-	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
-		return 0;
-	$afact=$matcha[1];
-	$bfact=$matchb[1];
-
-	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
-		$afact=$match[1];
-	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
-		$bfact=$match[1];
-
-	if (!is_array($factsort))
-		$factsort = array_flip(array(
-			"BIRT",
-			"_HNM",
-			"ALIA", "_AKA", "_AKAN",
-			"ADOP", "_ADPF", "_ADPF",
-			"_BRTM",
-			"CHR", "BAPM",
-			"FCOM",
-			"CONF",
-			"BARM", "BASM",
-			"SSN",
-			"EDUC",
-			"GRAD",
-			"_DEG",
-			"EMIG", "IMMI",
-			"NATU",
-			"_MILI", "_MILT",
-			"ENGA",
-			"MARB", "MARC", "MARL", "_MARI", "_MBON",
-			"MARR", "MARR_CIVIL", "MARR_RELIGIOUS", "MARR_PARTNERS", "MARR_UNKNOWN", "_COML",
-			"_STAT",
-			"_SEPR",
-			"DIVF",
-			"MARS",
-			"_BIRT_CHIL",
-			"DIV", "ANUL",
-			"_BIRT_", "_MARR_", "_DEAT_",
-			"CENS",
-			"OCCU",
-			"RESI",
-			"PROP",
-			"CHRA",
-			"RETI",
-			"FACT", "EVEN",
-			"_NMR", "_NMAR", "NMR",
-			"NCHI",
-			"WILL",
-			"_HOL",
-			"_????_",
-			"DEAT", "CAUS",
-			"_FNRL", "BURI", "CREM", "_INTE", "CEME",
-			"_YART",
-			"_NLIV",
-			"PROB",
-			"TITL",
-			"COMM",
-			"NATI",
-			"CITN",
-			"CAST",
-			"RELI",
-			"IDNO",
-			"TEMP",
-			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
-			"AFN", "REFN", "_PRMN", "REF", "RIN",
-			"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
-			"CHAN", "_TODO"
-		));
-
-	// Events not in the above list get mapped onto one that is.
-	if (!isset($factsort[$afact]))
-		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $afact, $match))
-			$afact=$match[1];
-		else
-			$afact="_????_";
-	if (!isset($factsort[$bfact]))
-		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $bfact, $match))
-			$bfact=$match[1];
-		else
-			$bfact="_????_";
-
-	$ret = $factsort[$afact]-$factsort[$bfact];
-	//-- if the facts are the same, then go ahead and compare them by date
-	//-- this will improve the positioning of non-dated elements on the next pass
-	if ($ret==0)
-		$ret = compare_facts_date($arec, $brec);
-	return $ret;
-}
-
-// Helper function to sort facts.
 function compare_facts_date($arec, $brec) {
 	if (is_array($arec))
 		$arec = $arec[1];
@@ -1964,62 +1863,36 @@ function compare_facts_date($arec, $brec) {
 // *mostly* being in sequence.
 function sort_facts(&$arr) {
 	// Pass one - insertion sort on fact type
-	$lastDate = "";
-	for ($i=0; $i<count($arr); ++$i) {
-		if ($i>0) {
+	for ($i=1; $i<count($arr); ++$i) {
 			$tmp=$arr[$i];
 			$j=$i;
-			while ($j>0 && compare_facts_type($arr[$j-1], $tmp)>0) {
+		while ($j>0 && Event::CompareType($arr[$j-1], $tmp)>0) {
 				$arr[$j]=$arr[$j-1];
 				--$j;
 			}
 			$arr[$j]=$tmp;
 		}
-	}
 
 	//-- add extra codes for the next pass of sorting
-	//-- add a fake date for the date sorting based on the previous fact that came before
-	$lastDate = "";
+	//$lastDate = "";
 	for ($i=0; $i<count($arr); $i++) {
 		//-- add a fake date for the date sorting based on the previous fact that came before
-		if (is_array($arr[$i])) {
-			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate))
-				$arr[$i][1].="\r\n2 _DATE ".$lastDate."\r\n";
-			else
-				$lastDate = @$match[1];
-			//-- also add a sort field so that we can compare based on how they were sorted by the previous pass when the date does not give enough information
-			$arr[$i][1] .= "\r\n2 _SORT ".$i."\r\n";
-		} else {
-			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate))
-				$arr[$i].="\r\n2 _DATE ".$lastDate."\r\n";
-			else
-				$lastDate = @$match[1];
-			$arr[$i].="\r\n2 _SORT ".$i."\r\n";
-		}
+		//if (is_null($arr[$i]->getDate(false))) {
+		//	if (!empty($lastDate)) $arr[$i]->sortDate = $lastDate;
+		//}
+		//else $lastDate = $arr[$i]->getDate(false);
+		$arr[$i]->sortOrder = $i;
 	}
 	
 	// Pass two - modified bubble/insertion sort on date
 	for ($i=0; $i<count($arr)-1; ++$i)
 		for ($j=count($arr)-1; $j>$i; --$j)
-			if (compare_facts_date($arr[$i],$arr[$j])>0) {
+			if (Event::CompareDate($arr[$i],$arr[$j])>0) {
 				$tmp=$arr[$i];
 				for ($k=$i; $k<$j; ++$k)
 					$arr[$k]=$arr[$k+1];
 				$arr[$j]=$tmp;
 			}
-			
-	//-- delete the temporary fields
-	for ($i=0; $i<count($arr); $i++) {
-		if (is_array($arr[$i])) {
-			$arr[$i][1] = preg_replace("/2 _DATE (.+)/", "", $arr[$i][1]);
-			$arr[$i][1] = preg_replace("/2 _SORT (.+)/", "", $arr[$i][1]);
-			$arr[$i][1] = trim($arr[$i][1]);
-		} else {
-			$arr[$i] = preg_replace("/2 _DATE (.+)/", "", $arr[$i]);
-			$arr[$i] = preg_replace("/2 _SORT (.+)/", "", $arr[$i]);
-			$arr[$i] = trim($arr[$i]);
-		}
-	}
 }
 
 /**
@@ -2033,20 +1906,33 @@ function compare_date($a, $b) {
 	$tag = "BIRT";
 	if (!empty($sortby))
 		$tag = $sortby;
-	if (isset($a["undo"]) && $tag=="CHAN") {
-		// Look at record in pgv_changes.php
-		$abirt = get_sub_record(1, "1 $tag", $a["undo"]);
-		$bbirt = get_sub_record(1, "1 $tag", $b["undo"]);
-	} else {
-		// Look at record in GEDCOM
-		$abirt = get_sub_record(1, "1 $tag", $a["gedcom"]);
-		$bbirt = get_sub_record(1, "1 $tag", $b["gedcom"]);
-	}
-	$c = compare_facts_date($abirt, $bbirt);
-	if ($c==0)
+	if (is_object($a)) {
+		$afact = $a->getFactByType($tag);
+		$bfact = $b->getFactByType($tag);
+		if (!is_null($afact) && !is_null($bfact)) {
+			$cmp=GedcomDate::Compare($afact->getDate(), $bfact->getDate());
+			if ($cmp!=0)
+				return $cmp;
+		}
 		return itemsort($a, $b);
-	else
-		return $c;
+	}
+	else if (isset($a["undo"])) {
+		// Look at record in pgv_changes.php
+		$adate=get_gedcom_value("$tag:DATE", 1, $a['undo'], '', false);
+		$bdate=get_gedcom_value("$tag:DATE", 1, $b['undo'], '', false);
+	} else {
+		$adate=get_gedcom_value("$tag:DATE", 1, $a['gedcom'], '', false);
+		$bdate=get_gedcom_value("$tag:DATE", 1, $b['gedcom'], '', false);
+	}
+	if (!empty($adate) && !empty($bdate)){
+		$adate=new GedcomDate($adate);
+		$bdate=new GedcomDate($adate);
+		$cmp=GedcomDate::Compare($adate, $bdate);
+		if ($cmp!=0)
+			return $cmp;
+	}
+	// Same date?  Sort by name
+		return itemsort($a, $b);
 }
 function compare_date_descending($a, $b) {
 	$result = compare_date($a, $b);

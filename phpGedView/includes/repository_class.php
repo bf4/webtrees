@@ -178,6 +178,21 @@ class Repository extends GedcomRecord {
 	}
 
 	/**
+	 * get the list of sources connected to this repository
+	 * @return array
+	 */
+	function getRepositorySours() {
+		global $REGEXP_DB;
+		if (!is_null($this->sourcelist)) return $this->sourcelist;
+		$query = "REPO @".$this->xref."@";
+		if (!$REGEXP_DB) $query = "%".$query."%";
+
+		$this->sourcelist = search_sources($query);
+		uasort($this->sourcelist, "itemsort");
+		return $this->sourcelist;
+	}
+
+	/**
 	 * get the count of sources connected to this repository
 	 * @return array
 	 */

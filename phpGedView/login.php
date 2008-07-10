@@ -81,6 +81,25 @@ if ($action=='login') {
 				}
 			}
 		}
+		
+		//-- section added based on UI feedback
+		// $url is set to individual.php below if a URL is not passed in... it will then be resent as "individual.php" when the user attempts to login
+		if ($url=='individual.php') {
+			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+				if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
+					$pid = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
+					$ged = $ged_name;
+					break;
+				}
+			}
+			if ($pid) {
+				$url = "individual.php?pid=".$pid;
+			} else {
+				//-- user does not have a pid?  Go to mygedview portal
+				$url = "index.php?ctype=user";
+			}
+		}
+
 		session_write_close();
 
 		// If we've clicked login from the login page, we don't want to go back there.
@@ -124,7 +143,7 @@ if ($action=='login') {
 			/* - commented out based on UI feedback	
 			else $url = "index.php?ctype=user";
 			*/
-			else $url = "index.php?ctype=gedcom";
+			else $url = "individual.php";
 		}
 	}
 	else if (stristr($url, "index.php")&&!stristr($url, "ctype=")) {

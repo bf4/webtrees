@@ -418,6 +418,12 @@ class MediaControllerRoot extends IndividualController{
 			$size = getLRM() . round($this->mediaobject->getFilesizeraw()/1024, 2)." kb" . getLRM();
 			$facts[] = "1 EVEN ".$size."\r\n2 TYPE file_size";
 		}
+		
+		$newfacts = array();
+		foreach($facts as $f=>$fact) {
+			$newfacts[] = new Event($fact);
+		}
+		$facts = $newfacts;
 
 		sort_facts($facts);
 		return $facts;

@@ -1367,6 +1367,28 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		// textarea
 		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value))."</textarea><br />\n";
 		else {
+			if ($fact=="PLAC") {
+				// geonames autocompletion
+				echo "<span class=\"suggestBoxDiv\">";
+				echo "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
+				echo " onFocus=\"closeSuggestBox()\"";
+				echo " ".$readOnly." />\n";
+				echo "<span id=\"".$element_id."_suggestBox\" class=\"suggestBoxElement\"></span>";
+				echo "</span>";
+				echo "<input type=\"hidden\" id=\"".$element_id."_suggestBoxLang\" value=\"".$lang_short_cut[$LANGUAGE]."\" >";
+				print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
+				print_specialchar_link($element_id, false);
+				require_once("js/geonames.js.htm");
+				echo "<a href=\"javascript:;\" onclick=\"geoLookup('".$element_id."');\"><img src=\"images/wizard.gif\" border=\"0\" alt=\"geonames.org\" title=\"geonames.org\" /></a>";
+				print_findplace_link($element_id);
+				print "</div>\n";
+				print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
+				if ($SPLIT_PLACES) {
+					if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
+					print_place_subfields($element_id);
+				}
+			}
+			else {
 			// text
 			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
 			// if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
@@ -1496,7 +1518,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 
 	if ($noClose != "NOCLOSE") print "</td></tr>\n";
-
+	}
 	$tabkey++;
 	return $element_id;
 }

@@ -61,20 +61,17 @@ function expand_urls($text) {
  * print a fact record
  *
  * prints a fact record designed for the personal facts and details page
- * @param string $factrec	The gedcom subrecord
- * @param string $pid		The Gedcom Xref ID of the person the fact belongs to (required to check fact privacy)
- * @param int $linenum		The line number where this fact started in the original gedcom record (required for editing)
- * @param string $indirec	optional INDI record for age calculation at family event
+ * @param Event $eventObje	The Event object to print
  * @param boolean $noedit	Hide or show edit links
  */
-function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
+function print_fact(&$eventObj, $noedit=false) {
 	global $factarray;
 	global $nonfacts;
 	global $PGV_IMAGE_DIR;
 	global $pgv_lang, $GEDCOM;
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
-	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS;
+	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS;
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $SHOW_FACT_ICONS;
 	global $n_chil, $n_gchi, $n_ggch;
@@ -85,16 +82,14 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 
 	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
-	$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
-	if ($ft>0) {
-		$fact = trim($match[1]);
-		$event = trim($match[2]);
-		if ($event=="" and $fact=="TEXT") $event="\n";
-	}
-	else {
-		$fact="";
-		$event="";
-	}
+	$fact = $eventObj->getTag();
+	$event = $eventObj->getDetail();
+	$factrec = $eventObj->getGedcomRecord();
+	$linenum = $eventObj->getLineNumber();
+	$parent = $eventObj->getParentObject();
+	$pid = "";
+	if (!is_null($eventObj->getFamilyId())) $pid = $eventObj->getFamilyId();
+	else if (!is_null($parent)) $pid = $parent->getXref();
 
 	if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum, $noedit);
 	if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum, $noedit);
@@ -133,7 +128,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
-			print_fact_icon($fact, $factrec, $label, $pid);
+			if ($SHOW_FACT_ICONS)
+				print $eventObj->Icon().' ';
 			print $factarray[$fact];
 			if ($fact=="_BIRT_CHIL" and isset($n_chil)) print "<br />".$pgv_lang["number_sign"].$n_chil++;
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) print "<br />".$pgv_lang["number_sign"].$n_gchi++;
@@ -209,7 +205,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			print "<td class=\"descriptionbox $styleadd center width20\">";
-			print_fact_icon($fact, $factrec, $label, $pid);
+			if ($SHOW_FACT_ICONS)
+				print $eventObj->Icon().' ';
 			print $label;
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 				$menu = array();
@@ -307,7 +304,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 			}
 			// -- find date for each fact
-			echo format_fact_date($factrec, true, true, $fact, $pid, $indirec);
+			echo format_fact_date($eventObj, true, true);
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
@@ -380,12 +377,13 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			$ct = preg_match("/2 DESC (.*)/", $factrec, $match);
 			if ($ct>0) print PrintReady($match[1]);
 				// -- print PLACe, TEMPle and STATus
-				echo format_fact_place($factrec, true, true, true);
+				echo format_fact_place($eventObj, true, true, true);
 				if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || (!empty($event)&&$fact!="ADDR")) print "<br />\n";
 				// -- print BURIal -> CEMEtery
 				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
 				if ($ct>0) {
-					print_fact_icon("CEME", $factrec, $factarray["CEME"], $pid);
+					if ($SHOW_FACT_ICONS)
+						print $eventObj->Icon().' ';
 					print $factarray["CEME"].": ".$match[1]."<br />\n";
 				}
 			//-- print address structure
@@ -455,7 +453,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 					if (!in_array($factref, $special_facts)) {
 						if (isset($factarray[$factref])) $label = $factarray[$factref];
 						else $label = $factref;
-					if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) print_fact_icon($factref, $factrec, $label, $pid);
+						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) 
+							print $eventObj->Icon().' ';
 					else print "<span class=\"label\">".$label.": </span>";
 						$value = trim($match[$i][2]);
 						if (isset($pgv_lang[strtolower($value)])) print $pgv_lang[strtolower($value)];
@@ -956,7 +955,13 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 					print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
 					print_help_link("RESN_help", "qm");
 				}
-				if ($srec) {
+				$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
+				if ($cs>0) {
+					print "<br /><span class=\"label\">".$factarray["EVEN"]." </span><span class=\"field\">".$cmatch[1]."</span>";
+					$cs = preg_match("/".($nlevel+1)." ROLE (.*)/", $srec, $cmatch);
+					if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"]." </span><span class=\"field\">$cmatch[1]</span>";
+				}
+				if ($source) {
 					print printSourceStructure(getSourceStructure($srec));
 					print "<div class=\"indent\">";
 					print_media_links($srec, $nlevel);
@@ -1610,94 +1615,6 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	}
 	print "</td></tr>";
 	return true;
-}
-/**
- * Print a fact icon that varies by the decade, century, and subtype
- *
- * Many facts change over time.  Military uniforms, marriage dress, census forms.
- * This is a cutesy way to show the changes over time.  More icons need to be added
- * to the themes/?????/images/facts/ directory with a form of nn00_TYPE.gif or nnn0_TYPE.gif.
- * A special case of nn00_OCCU_FARM.gif has been added to celebrate farmers and farm hands.
- * A special case of nn00_OCCU_HOUS.gif has been added for KEEPing HOUSe or HOUSe KEEPers.
- * Generic subtyping is done by storing the first four characters of the value of the
- * record in a filename.  "1 RELI Methodist" is RELI_METH.gif or 1900_RELI_METH.gif.
- * 1960__MILI_CONF.gif would be Confederate soldier, and 1860__MILI_UNIO.gif would be
- * the counterpart Union soldier.  The most specific match wins.
- * Examples: 1900_CENS.gif 1910_CENS.gif 1900_OCCU_FARM.gif 1800_OCCU_FARM.gif
- *
- * @param string $fact		The fact type to print
- * @param string $factrec	The gedcom subrecord
- * @param string $label		The fact type described and possibly translated
- * @param string $pid		The gedcom id record the fact orginiated from
- */
-function print_fact_icon($fact, $factrec, $label, $pid) {
-	global $SHOW_FACT_ICONS, $PGV_IMAGE_DIR;
-
-	if ($SHOW_FACT_ICONS) {
-		$fact_image = "";
-		if (preg_match('/2 DATE (.+)/', $factrec, $match)) {
-			$factdate = new GedcomDate($match[1]);
-			$factyear = $factdate->gregorianYear();
-		} else
-			$factyear=0;
-		$joe = null;
-		if (gedcom_record_type($pid, PGV_GED_ID)=='INDI') $joe = Person::getInstance($pid);
-		$sexcheck = "";
-		if (!is_null($joe)) {
-			$sex = $joe->getSex();
-			if(($sex == "F") || ($sex == "M") || ($sex == "U"))
-				$sexcheck = "_".$sex;
-		}
-		// If the date is not on the fact, fall back to birth if available
-		// Does not catch the date if it is attached to the source of the fact
-		// (ratid entered OCCU) or if the fact comes from a family record. (MARR)
-		if ($factyear == 0 && !is_null($joe)) {
-			$fallback=$joe->getEstimatedBirthDate();
-			$fallback=$fallback->gregorianYear();
-			if($fallback)
-				$factyear=$fallback;
-		}
-
-		// converting from scalar to array string.
-		$century = $decade = sprintf("%04d", $factyear);
-		$decade[3] = '0';	// Zero out the years
-		$century[2] = '0';	// Zero out the decades
-		$century[3] = '0';
-
-		if(file_exists($PGV_IMAGE_DIR."/facts/".$fact.".gif"))
-			$fact_image = $PGV_IMAGE_DIR."/facts/".$fact;
-		if(file_exists($PGV_IMAGE_DIR."/facts/".$century."_".$fact.".gif"))
-			$fact_image = $PGV_IMAGE_DIR."/facts/".$century."_".$fact;
-		if(file_exists($PGV_IMAGE_DIR."/facts/".$decade."_".$fact.".gif"))
-			$fact_image = $PGV_IMAGE_DIR."/facts/".$decade."_".$fact;
-
-		// Since so much of the population before 1900 were farmers and their
-		// wives keeping house, why not show a special icon.
-		if(($fact == "OCCU") && ((stristr(substr($factrec, 7, 30), "house")) ||
-		                         (stristr(substr($factrec, 7, 30), "keep")))) {
-			if(file_exists($fact_image."_HOUS.gif"))
-				$fact_image = $fact_image."_HOUS";
-			}
-		if(($fact == "OCCU") && (stristr(substr($factrec, 7, 30), "farm"))) {
-			if(file_exists($fact_image."_FARM.gif"))
-				$fact_image = $fact_image."_FARM";
-			}
-		$j = explode(" ", substr($factrec, 0, 20));
-		if((!empty($j[2])) && (!empty($fact_image))) {
-			$subtype = strtoupper(substr($j[2], 0, 4));
-			if(file_exists($fact_image."_".$subtype.".gif"))
-				$fact_image = $fact_image."_".$subtype;
-			}
-		// Append _M, _F, or _U if available
-		if($sexcheck != "") {
-			if(file_exists($fact_image.$sexcheck.".gif"))
-				$fact_image = $fact_image.$sexcheck;
-			}
-
-		if(!empty($fact_image))
-			print "<img src=\"".$fact_image.".gif\" alt=\"".$label."\" title=\"".$label."\" align=\"middle\" /> ";
-	}
-	return;
 }
 
 // -----------------------------------------------------------------------------

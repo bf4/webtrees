@@ -47,6 +47,7 @@
 // NOTE: $bakfile = Name and path of the backupfile, this file is created if a file with the same name exists
 
 ini_set('register_globals', 'Off');
+@import_request_variables('gcp');
 require "config.php";
 require_once "includes/functions_import.php";
 require_once "includes/functions_export.php";

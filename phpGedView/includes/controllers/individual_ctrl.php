@@ -75,7 +75,7 @@ class IndividualControllerRoot extends BaseController {
 	var $total_names = 0;
 	var $SEX_COUNT = 0;
 	var $sexarray = array();
-	var $tabarray = array("facts","notes","sources","media","relatives","research","map","lightbox");
+	var $tabarray = array("facts","notes","sources","media","relatives","tree","research","map","lightbox");
 	
 	/**
 	 * constructor
@@ -145,7 +145,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		//-- if the action is a research assistant action then default to the RA tab
-		if (strstr($this->action, 'ra_')!==false) $this->default_tab = 5;
+		if (strstr($this->action, 'ra_')!==false) $this->default_tab = 6;
 
 		//-- set the default tab from a request parameter
 		if (isset($_REQUEST['tab'])) {
@@ -155,6 +155,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->default_tab<-2 || $this->default_tab>9) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
+		$_SESSION['navRoot'] = $this->indi->getXref();
 
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
@@ -411,13 +412,15 @@ class IndividualControllerRoot extends BaseController {
 	 *
 	 * Called from the individual information page
 	 * @see individual.php
-	 * @param string $factrec	the raw gedcom record of the name to print
-	 * @param int $linenum		the line number from the original INDI gedcom record where this name record started, used for editing
+	 * @param Event $event	the event object
 	 */
-	function print_name_record($factrec, $linenum) {
+	function print_name_record(&$event) {
 		global $pgv_lang, $factarray, $NAME_REVERSE;
-		if ((!showFact("NAME", $this->pid))||(!showFactDetails("NAME", $this->pid))) return false;
-		$lines = split("\n", $factrec);
+		
+		if (!$event->canShowDetails()) return false;
+		$factrec = $event->getGedComRecord();
+		$linenum = $event->getLineNumber();
+		
 		$this->name_count++;
 		print "<td valign=\"top\"";
 		if (preg_match("/PGV_OLD/", $factrec)>0) print " class=\"namered\"";
@@ -485,14 +488,13 @@ class IndividualControllerRoot extends BaseController {
 	 *
 	 * Called from the individual information page
 	 * @see individual.php
-	 * @param string $factrec	the raw gedcom record to print
-	 * @param int $linenum		the line number from the original INDI gedcom record where this sex record started, used for editing
+	 * @param Event $event	the Event object
 	 */
-	function print_sex_record($factrec, $linenum) {
+	function print_sex_record(&$event) {
 	   global $pgv_lang, $sex, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	   if ((!showFact("SEX", $this->pid))||(!showFactDetails("SEX", $this->pid))) return false;
-	   $ft = preg_match("/\d\s(\w+)(.*)/", $factrec, $match);
-	   $sex = trim($match[2]);
+	   
+	   if (!$event->canShowDetails()) return false;
+	   $sex = $event->getDetail();
 	   if (empty($sex)) $sex = "U";
 		print "<td valign=\"top\"><span class=\"label\">".$pgv_lang["sex"].":    </span><span class=\"field\">".$this->sexarray[$sex];
 		print " <img src=\"$PGV_IMAGE_DIR/";
@@ -501,21 +503,21 @@ class IndividualControllerRoot extends BaseController {
 		else print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
 		print "\" width=\"0\" height=\"0\" class=\"gender_image\" border=\"0\" />";
 		if ($this->SEX_COUNT>1) {
-			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (preg_match("/PGV_OLD/", $factrec)==0)) {
-			    if ($linenum=="new") print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";
+			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (preg_match("/PGV_OLD/", $event->getGedComRecord())==0)) {
+			    if ($event->getLineNumber()=="new") print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";
 			    else {
-			    	print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', $linenum); return false;\">".$pgv_lang["edit"]."</a> | ";
-			    	print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">".$pgv_lang["delete"]."</a>\n";
+			    	print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', $event->getLineNumber()); return false;\">".$pgv_lang["edit"]."</a> | ";
+			    	print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["delete"]."</a>\n";
 			    }
 			}
 		}
 		print "<br /></span>";
 	   // -- find sources
 	   print "&nbsp;&nbsp;&nbsp;";
-	   print_fact_sources($factrec, 2);
+	   print_fact_sources($event->getGedComRecord(), 2);
 	   //-- find the notes
 	   print "&nbsp;&nbsp;&nbsp;";
-	   print_fact_notes($factrec, 2);
+	   print_fact_notes($event->getGedComRecord(), 2);
 	   print "</td>";
 	}
 	/**
@@ -681,17 +683,14 @@ class IndividualControllerRoot extends BaseController {
 
 		$globalfacts = $this->indi->getGlobalFacts();
 		foreach ($globalfacts as $key => $value) {
-			$ft = preg_match("/\d\s(\w+)(.*)/", $value[1], $match);
-			if ($ft>0) $fact = $match[1];
-			else $fact="";
-			$fact = trim($fact);
+			$fact = $value->getTag();
 			if ($fact=="SEX") {
 				$this->SEX_COUNT++;
-				$SEX_LINENUM = $value[0];
+				$SEX_LINENUM = $value->getLineNumber();
 			}
 			if ($fact=="NAME") {
 				$this->total_names++;
-				$NAME_LINENUM = $value[0];
+				$NAME_LINENUM = $value->getLineNumber();
 			}
 			}
 		return $globalfacts;
@@ -796,11 +795,15 @@ class IndividualControllerRoot extends BaseController {
 		}
 		$newhusb = null;
 		$newwife = null;
+		$newchildren = array();
+		$delchildren = array();
+		$children = array();
 		$husb = null;
 		$wife = null;
 		if (!$family->getChanged()) {
 			$husb = $family->getHusband();
 			$wife = $family->getWife();
+			$children = $family->getChildren();
 		}
 		//-- step families : set the label for the common parent
 		if ($type=="step") {
@@ -869,46 +872,99 @@ class IndividualControllerRoot extends BaseController {
 					$newwife->setLabel($label);
 				}
 				else $newwife = null;
+				//-- check for any new children
+				$merged_children = array();
+				$new_children = $newfamily->getChildren();
+				$num = count($children);
+				for($i=0; $i<$num; $i++) {
+					$child = $children[$i];
+					if (!is_null($child)) {
+						$found = false;
+						foreach($new_children as $key=>$newchild) {
+							if (!is_null($newchild)) {
+								if ($child->equals($newchild)) {
+									$found = true;
+									break;
+								}
+							}
+						}
+						if (!$found) $delchildren[] = $child;
+						else $merged_children[] = $child;
+					}
+			}
+				foreach($new_children as $key=>$newchild) {
+					if (!is_null($newchild)) {
+						$found = false;
+						foreach($children as $key1=>$child) {
+							if (!is_null($child)) {
+								if ($child->equals($newchild)) {
+									$found = true;
+									break;
+								}
+							}
+						}
+						if (!$found) $newchildren[] = $newchild;
+					}
+				}
+				$children = $merged_children;
 			}
 		}
-		//-- check children
-		$children = array();
-		// new children ?
-		if (isset($newfamily) && $newfamily->getChildren()) {
-			$childrenIds = $newfamily->getChildrenIds();
-			// add deleted children
-			$childrenIds = array_merge($childrenIds, array_diff($family->getChildrenIds(), $newfamily->getChildrenIds()));
-		}
-		else $childrenIds = $family->getChildrenIds();
-		foreach ($childrenIds as $k=>$pid) {
-			$child = Person::getInstance($pid);
-			if ($child->getSex()=="F")
-				$label = $labels["sister"];
-			else if ($child->getSex()=="M")
-				$label = $labels["brother"];
-			else
+		//-- set the labels for the children
+		$num = count($children);
+		for($i=0; $i<$num; $i++) {
+			if (!is_null($children[$i])) {
 				$label = $labels["sibling"];
-			if ($child->getXref()==$this->pid)
-				$label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$pedi = $child->getChildFamilyPedigree($family->getXref());
-			if ($pedi && isset($pgv_lang[$pedi]))
-				$label .= " (".$pgv_lang[$pedi].")";
-			if (isset($newfamily)) {
-				// deleted child
-				if (in_array($pid, $family->getChildrenIds())
-				&& (!in_array($pid, $newfamily->getChildrenIds()))) $label = "- ".$label;
-				// new child
-				if (!in_array($pid, $family->getChildrenIds())
-				&& (in_array($pid, $newfamily->getChildrenIds()))) $label = "+ ".$label;
+				$sex = $children[$i]->getSex();
+				if ($sex=="F") {
+					$label = $labels["sister"];
+				}
+				if ($sex=="M") {
+					$label = $labels["brother"];
+				}
+				if ($children[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+				$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $children[$i]->gedrec);
+				$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+				if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
+				$children[$i]->setLabel($label);
 			}
-			$child->setLabel($label);
-			$children[] = $child;
+		}
+		$num = count($newchildren);
+		for($i=0; $i<$num; $i++) {
+			$label = $labels["sibling"];
+			$sex = $newchildren[$i]->getSex();
+			if ($sex=="F") {
+				$label = $labels["sister"];
+			}
+			if ($sex=="M") {
+				$label = $labels["brother"];
+			}
+			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+			$pedi = $newchildren[$i]->getChildFamilyPedigree($family->getXref());
+			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
+			$newchildren[$i]->setLabel($label);
+		}
+		$num = count($delchildren);
+		for($i=0; $i<$num; $i++) {
+				$label = $labels["sibling"];
+			$sex = $delchildren[$i]->getSex();
+			if ($sex=="F") {
+				$label = $labels["sister"];
+			}
+			if ($sex=="M") {
+				$label = $labels["brother"];
+			}
+			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+			$pedi = $delchildren[$i]->getChildFamilyPedigree($family->getXref());
+			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
+			$delchildren[$i]->setLabel($label);
 		}
 		if (!is_null($newhusb)) $people['newhusb'] = $newhusb;
 		if (!is_null($husb)) $people['husb'] = $husb;
 		if (!is_null($newwife)) $people['newwife'] = $newwife;
 		if (!is_null($wife)) $people['wife'] = $wife;
 		$people['children'] = $children;
+		$people['newchildren'] = $newchildren;
+		$people['delchildren'] = $delchildren;
 		return $people;
 	}
 
@@ -917,9 +973,9 @@ class IndividualControllerRoot extends BaseController {
 // LB Fix for no googlemaps ==========================================================================
 
 		if (file_exists("modules/googlemap/defaultconfig.php")) { 
-			$tab_array = array("facts","notes","sources","media","relatives","research","map","lightbox");
+			$tab_array = array("facts","notes","sources","media","relatives","tree","research","map","lightbox");
 		}else{
-			$tab_array = array("facts","notes","sources","media","relatives","research","lightbox");
+			$tab_array = array("facts","notes","sources","media","relatives","tree","research","lightbox");
 		}
 		$tabType = $tab_array[$tab];
 
@@ -951,6 +1007,9 @@ class IndividualControllerRoot extends BaseController {
 			case "lightbox":
 				$this->print_lightbox_tab();
 				break;				
+			case "tree":
+				$this->print_tree_tab();
+				break;		
 			default:
 				print "No tab found";
 				break;
@@ -996,18 +1055,17 @@ class IndividualControllerRoot extends BaseController {
 			$n_gchi=1;
 			$n_ggch=1;
 			foreach ($indifacts as $key => $value) {
-				if (preg_match('/^1 (BURI|CREM|DEAT)/m', $value[1])) {
-					$yetdied=true;
-				}
-				if (preg_match("/^1 _PGVFS @(.*)@/m", $value[1], $match)>0) {
-					// do not show family events after death
+				if ($value->getTag() == "DEAT") $yetdied = true;
+				if ($value->getTag() == "CREM") $yetdied = true;
+				if ($value->getTag() == "BURI") $yetdied = true;
+				
+				if (!is_null($value->getFamilyId())) {	
 					if (!$yetdied) {
-						print_fact($value[1],trim($match[1]),$value[0], $this->indi->getGedcomRecord());
+						print_fact($value);
 					}
 				}
-				else print_fact($value[1],$this->pid,$value[0], $this->indi->getGedcomRecord());
+				else print_fact($value);
 				$FACT_COUNT++;
-		//		print_r($value);
 			}
 		}
 		//-- new fact link
@@ -1057,20 +1115,17 @@ class IndividualControllerRoot extends BaseController {
 			</tr>
 			<?php
 			$otherfacts = $this->getOtherFacts();
-			foreach ($otherfacts as $key => $factrec) {
-				$ft = preg_match("/\n\d (\w+)(.*)/", "\n".$factrec[1], $match);
-				if ($ft>0) $fact = $match[1];
-				else $fact="";
-				$fact = trim($fact);
+			foreach ($otherfacts as $key => $event) {
+				$fact = $event->getTag();
 				if ($fact=="NOTE") {
-					print_main_notes($factrec[1], 1, $this->pid, $factrec[0]);
+					print_main_notes($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
 				}
 				$FACT_COUNT++;
 			}
 			// 2nd level notes/sources [ 1712181 ]
 			$this->indi->add_family_facts(false);
 			foreach ($this->getIndiFacts() as $key => $factrec) {
-				print_main_notes($factrec[1], 2, $this->pid, $factrec[0], true);
+					print_main_notes($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
 			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 			//-- New Note Link
@@ -1129,20 +1184,15 @@ class IndividualControllerRoot extends BaseController {
 			</tr>
 			<?php
 			$otheritems = $this->getOtherFacts();
-			foreach ($otheritems as $key => $factrec) {
-				$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
-				if ($ft>0) $fact = $match[1];
-				else $fact="";
-				$fact = trim($fact);
-				if ($fact=="SOUR") {
-					print_main_sources($factrec[1], 1, $this->pid, $factrec[0]);
+				foreach ($otheritems as $key => $event) {
+					if ($event->getTag()=="SOUR") print_main_sources($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
+					$FACT_COUNT++;
 				}
-				$FACT_COUNT++;
 			}
 			// 2nd level sources [ 1712181 ]
 			$this->indi->add_family_facts(false);
 			foreach ($this->getIndiFacts() as $key => $factrec) {
-				print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
+					print_main_sources($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
 			}
 			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
 			//-- New Source Link
@@ -1157,7 +1207,6 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 			<?php
 			}
-		}
 		?>
 		</table>
 		<br />
@@ -1270,7 +1319,7 @@ class IndividualControllerRoot extends BaseController {
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php }?>
 				<?php if ($family->getMarriageDate()) {
-					$date=new GedcomDate($family->getMarriageDate());
+					$date=$family->getMarriageDate();
 				}?>
 					</td>
 				</tr>
@@ -1289,7 +1338,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate();
+					$elderdate = $people["newhusb"]->getBirthDate(false);
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1300,7 +1349,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate();
+					$elderdate = $people["husb"]->getBirthDate(false);
 				}
 				else if (!isset($people["newhusb"])) {
 					if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
@@ -1350,7 +1399,7 @@ class IndividualControllerRoot extends BaseController {
 						$famrec = find_updated_record($family->getXref());
 						$marrrec = get_sub_record(1, "1 MARR", $famrec);
 						if ($marrrec!=$family->getMarriageRecord()) {
-							$date = get_gedcom_value("MARR:DATE", 1, $marrrec, '', false);
+							$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
 							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
 							$styleadd = "blue";
 						}
@@ -1362,10 +1411,7 @@ class IndividualControllerRoot extends BaseController {
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($date) {
-						$date=new GedcomDate($date);
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false);
-//						if (!empty($place)) echo " -- ".$family->getPlaceShort($place);
-						if (!empty($place)) echo " -- ".$place;
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
 					}
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
@@ -1375,25 +1421,46 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 				<?php
 				}
-				//-- children
-				$elderdate = new GedcomDate($family->getMarriageDate());
-				foreach($people["children"] as $key=>$child) {
-					$label = $child->getLabel();
-					if ($label[0]=='+')
-						$styleadd = "blue";
-					else if ($label[0]=='-')
-						$styleadd = "red";
-					else
-						$styleadd = "";
+				$styleadd = "blue";
+				if (isset($people["newchildren"])) {
+					foreach($people["newchildren"] as $key=>$child) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php if ($styleadd=="red") print $child->getLabel(); else print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate();
+					}
+				}
+				$styleadd = "";
+				if (isset($people["children"])) {
+					$elderdate = $family->getMarriageDate();
+				foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					$elderdate = $child->getBirthDate(false);
+					}
+				}
+						$styleadd = "red";
+				if (isset($people["delchildren"])) {
+					foreach($people["delchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
 				}
 				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
@@ -1448,7 +1515,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate();
+					$elderdate = $people["newhusb"]->getBirthDate(false);
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1459,7 +1526,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate();
+					$elderdate = $people["husb"]->getBirthDate(false);
 				}
 				$styleadd = "";
 				if (isset($people["newwife"])) {
@@ -1491,7 +1558,7 @@ class IndividualControllerRoot extends BaseController {
 						$famrec = find_updated_record($family->getXref());
 						$marrrec = get_sub_record(1, "1 MARR", $famrec);
 						if ($marrrec!=$family->getMarriageRecord()) {
-							$date = get_gedcom_value("MARR:DATE", 1, $marrrec, '', false);
+							$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
 							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
 							$styleadd = "blue";
 						}
@@ -1503,10 +1570,7 @@ class IndividualControllerRoot extends BaseController {
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($date) {
-						$date=new GedcomDate($date);
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false);
-//						if (!empty($place)) echo " -- ".$family->getPlaceShort($place);
-						if (!empty($place)) echo " -- ".$place;
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
 					}
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
@@ -1516,25 +1580,46 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 				<?php
 				}
-				//-- children
-				$elderdate = new GedcomDate($family->getMarriageDate());
-				foreach($people["children"] as $key=>$child) {
-					$label = $child->getLabel();
-					if ($label[0]=='+')
-						$styleadd = "blue";
-					else if ($label[0]=='-')
-						$styleadd = "red";
-					else
-						$styleadd = "";
+				$styleadd = "blue";
+				if (isset($people["newchildren"])) {
+					foreach($people["newchildren"] as $key=>$child) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php if ($styleadd=="red") print $child->getLabel(); else print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate();
+					}
+				}
+				$styleadd = "";
+				if (isset($people["children"])) {
+					$elderdate = $family->getMarriageDate();
+				foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					$elderdate = $child->getBirthDate(false);
+					}
+				}
+						$styleadd = "red";
+				if (isset($people["delchildren"])) {
+					foreach($people["delchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
 				}
 				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
@@ -1588,7 +1673,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate();
+					$elderdate = $people["newhusb"]->getBirthDate(false);
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1599,7 +1684,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate();
+					$elderdate = $people["husb"]->getBirthDate(false);
 				}
 				$styleadd = "";
 				if (isset($people["newwife"])) {
@@ -1649,7 +1734,7 @@ class IndividualControllerRoot extends BaseController {
 						$famrec = find_updated_record($family->getXref());
 						$marrrec = get_sub_record(1, "1 MARR", $famrec);
 						if ($marrrec!=$family->getMarriageRecord()) {
-							$date = get_gedcom_value("MARR:DATE", 1, $marrrec, '', false);
+							$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
 							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
 							$styleadd = "blue";
 						}
@@ -1661,10 +1746,7 @@ class IndividualControllerRoot extends BaseController {
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($date) {
-						$date=new GedcomDate($date);
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false);
-//						if (!empty($place)) echo " -- ".$family->getPlaceShort($place);
-						if (!empty($place)) echo " -- ".$place;
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
 					}
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
@@ -1674,25 +1756,46 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 				<?php
 				}
-				//-- children
-				$elderdate = new GedcomDate($family->getMarriageDate());
-				foreach($people["children"] as $key=>$child) {
-					$label = $child->getLabel();
-					if ($label[0]=='+')
-						$styleadd = "blue";
-					else if ($label[0]=='-')
-						$styleadd = "red";
-					else
-						$styleadd = "";
+				$styleadd = "blue";
+				if (isset($people["newchildren"])) {
+					foreach($people["newchildren"] as $key=>$child) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php if ($styleadd=="red") print $child->getLabel(); else print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate();
+					}
+				}
+				$styleadd = "";
+				if (isset($people["children"])) {
+					$elderdate = $family->getMarriageDate();
+				foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate, $key+1); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					$elderdate = $child->getBirthDate(false);
+					}
+				}
+						$styleadd = "red";
+				if (isset($people["delchildren"])) {
+					foreach($people["delchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
 				}
 				if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 					?>
@@ -1873,11 +1976,16 @@ class IndividualControllerRoot extends BaseController {
 		}
 	}
 
+	function print_tree_tab() {
+		//-- nothing to do here
+		//-- the tree is already ajax enabled
+	}
+
 // -----------------------------------------------------------------------------
 // Functions for Lightbox Album 
 // -----------------------------------------------------------------------------
 	/**
-	 * print the lightbox tab, ( which =  getTab7()  )
+	 * print the lightbox tab, ( which =  getTab8()  )
 	 */
 	function print_lightbox_tab() {
 		global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
