@@ -322,7 +322,7 @@ if (!isset($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = "";
 if (isset($_SESSION["GEDCOM"])) $GEDCOM = $_SESSION["GEDCOM"];
 if (isset($_REQUEST["GEDCOM"])) $GEDCOM = trim($_REQUEST["GEDCOM"]);
 if (isset($_REQUEST["ged"])) $GEDCOM = trim($_REQUEST["ged"]);
-if (is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
+if (!empty($GEDCOM) && is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
 if (empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) $GEDCOM=$DEFAULT_GEDCOM;
 if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
          foreach($GEDCOMS as $ged_file=>$ged_array) {
