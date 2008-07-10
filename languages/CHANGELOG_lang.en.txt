@@ -44,7 +44,6 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang['tree']									03 Oct 2007				A
 +$pgv_lang["historical_facts"]						14 Jun 2007				A
 +$pgv_lang["nephew"]								13 May 2007				A
 +$pgv_lang["niece"]									13 May 2007				A
@@ -53,6 +52,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang['tree']									03 Oct 2007				A
 +$pgv_lang["ellipsis"]								4 July 2008				A
 +$pgv_lang["repo_menu"]								4 July 2008				A
 +$pgv_lang["showUnknown"]							28 June 2008			A

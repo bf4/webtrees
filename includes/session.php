@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 // Identify ourself
 define('PGV_PHPGEDVIEW',      'PhpGedView');
-define('PGV_VERSION',         '4.1.6');
+define('PGV_VERSION',         '4.2');
 define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
 define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
@@ -313,6 +313,7 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 else $GEDCOMS=array();
 
 //-- connect to the database
+$DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
 $PGV_DB_CONNECTED = check_db();
 
 //-- try to set the active GEDCOM

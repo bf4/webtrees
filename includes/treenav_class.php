@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @version $Id$
  */
-require_once('includes/datamodel/person_class.php');
+require_once('includes/person_class.php');
 require_once('includes/functions_charts.php');
 
 class TreeNav {

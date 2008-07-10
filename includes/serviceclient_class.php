@@ -29,9 +29,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once('includes/datamodel/gedcomrecord_class.php');
+require_once('includes/gedcomrecord.php');
 include_once('SOAP/Client.php');
-include_once('includes/datamodel/family_class.php');
+include_once('includes/family_class.php');
 
 class ServiceClient extends GedcomRecord {
 	var $url = "";

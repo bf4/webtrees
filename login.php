@@ -83,7 +83,7 @@ if ($action=='login') {
 		}
 		
 		//-- section added based on UI feedback
-		// TODO: this block of code will never run, as the url will always have parameters ?pid=I123&ged=xyz.ged appended to it.  Has it ever worked?
+		// $url is set to individual.php below if a URL is not passed in... it will then be resent as "individual.php" when the user attempts to login
 		if ($url=='individual.php') {
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
@@ -120,7 +120,7 @@ if ($action=='login') {
 		$url .= "&ged=".$ged; 
 		$url = str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url);
 		
-		header("Location: ".$url);
+		header("Location: ".encode_url($url, false));
 		exit;
 	} else {
 		$message = $pgv_lang["no_login"];

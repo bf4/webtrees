@@ -29,12 +29,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once('includes/datamodel/person_class.php');
-require_once('includes/datamodel/family_class.php');
-require_once('includes/datamodel/source_class.php');
-require_once('includes/datamodel/repository_class.php');
-require_once('includes/datamodel/media_class.php');
-require_once('includes/datamodel/event_class.php');
+require_once('includes/person_class.php');
+require_once('includes/family_class.php');
+require_once('includes/source_class.php');
+require_once('includes/repository_class.php');
+require_once('includes/media_class.php');
+require_once('includes/event_class.php');
 
 class GedcomRecord {
 	var $gedrec = "";
@@ -548,17 +548,16 @@ class GedcomRecord {
 	// Extract/format the first fact from a list of facts.
 	function format_first_major_fact($facts, $style) {
 		global $factarray;
-		foreach (explode('|', $facts) as $fact) {
-			foreach ($this->getAllEvents($fact) as $factrec) {
+			/* @var $event Event */
+			foreach ($this->getAllFactsByType(explode('|', $facts)) as $event) {
 				// Only display if it has a date or place (or both)
-				if (preg_match('/^2 (DATE|PLAC) (.+)/m', $factrec)) {
+				if ($event->getDate() || $event->getPlace()) {
 					switch ($style) {
-					case 1: return '<br /><i>'.$factarray[$fact].' '.format_fact_date($factrec).format_fact_place($factrec).'</i>';
-					case 2: return '<span class="label">'.$factarray[$fact].':</span> <span class="field">'.format_fact_date($factrec).format_fact_place($factrec).'</span><br />';
+					case 1: return '<br /><i>'.$event->getLabel().' '.format_fact_date($event).format_fact_place($event).'</i>';
+					case 2: return '<span class="label">'.$event->getLabel().':</span> <span class="field">'.format_fact_date($event).format_fact_place($event).'</span><br />';
 					}
 				}
 			}
-		}
 		return '';
 	}
 
@@ -569,49 +568,21 @@ class GedcomRecord {
 	// It also allows us to combine dates/places from different events in the summaries.
 	function getAllEventDates($event) {
 		$dates=array();
-		foreach ($this->getAllEvents($event) as $event_rec) {
-			if (preg_match_all("/^2 DATE +(.+)/m", $event_rec, $ged_dates)) {
-					foreach ($ged_dates[1] as $ged_date) {
-						$dates[]=new GedcomDate($ged_date);
-					}
-				}
-			}
+		foreach ($this->getAllFactsByType($event) as $event) {
+			$dates[]=$event->getDate();
+		}
 		return $dates;
 	}
 	function getAllEventPlaces($event) {
 		$places=array();
-		foreach ($this->getAllEvents($event) as $event_rec) {
-			if (preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event_rec, $ged_places)) {
+		foreach ($this->getAllFactsByType($event) as $event) {
+			if (preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event->getGedComRecord(), $ged_places)) {
 					foreach ($ged_places[1] as $ged_place) {
 						$places[]=$ged_place;
 					}
 				}
 			}
 		return $places;
-	}
-
-	// Get all the events of a type.
-	function getAllEvents($event) {
-		$event_recs=array();
-		if (ShowFactDetails($event, $this->xref)) {
-			if (preg_match_all("/^1 *{$event}\b.*(?:[\r\n]+[2-9].*)*/m", $this->gedrec, $events)) {
-				foreach ($events[0] as $event_rec) {
-					if (!FactViewRestricted($this->xref, $event_rec)) {
-						$event_recs[]=$event_rec;
-					}
-				}
-			}	
-			// Some people use "1 EVEN/2 TYPE BIRT" instead of "1 BIRT".
-			// Find them and convert them back to the proper format.
-			if (preg_match_all("/^1 (?:FACT|EVEN)\b[^\r\n]*((?:[\r\n]+[2-9][^\r\n]*)*)(?:[\r\n]+2 TYPE {$event})((?:[\r\n]+[2-9][^\r\n]*)*)/m", $this->gedrec, $matches, PREG_SET_ORDER)) {
-				foreach ($matches as $match) {
-					if (!FactViewRestricted($this->xref, $match[0])) {
-						$event_recs[]='1 '.$event.$match[1].$match[2];
-					}
-				}
-			}	
-		}
-		return $event_recs;
 	}
 
 	/**
@@ -624,7 +595,7 @@ class GedcomRecord {
 		$this->parseFacts();
 		if (empty($this->facts)) return null;
 		foreach($this->facts as $f=>$fact) {
-			if ($fact->getTag()==$factType) return $fact;
+			if ($fact->getTag()==$factType || $fact->getType()==$factType) return $fact;
 		}
 		return null;
 	}
@@ -640,7 +611,7 @@ class GedcomRecord {
 		if (is_string($factTypes)) $factTypes = array($factTypes);
 		$facts = array();
 		foreach($this->facts as $f=>$fact) {
-			if (in_array($fact->getTag(), $factType)) $facts[] = $fact;
+			if (in_array($fact->getTag(), $factTypes) || in_array($fact->getType(), $factTypes)) $facts[] = $fact;
 		}
 		return $facts;
 	}

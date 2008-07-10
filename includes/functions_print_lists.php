@@ -32,7 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once 'includes/datamodel/person_class.php';
+require_once 'includes/person_class.php';
 
 /**
  * format a person for display in a list
@@ -205,7 +205,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/datamodel/person_class.php';
+	require_once 'includes/person_class.php';
 	//-- init chart data
 	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $deat_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
@@ -593,7 +593,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/datamodel/family_class.php';
+	require_once 'includes/family_class.php';
 	//-- init chart data
 	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $marr_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
@@ -918,7 +918,7 @@ function print_sour_table($datalist, $legend="") {
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/datamodel/source_class.php';
+	require_once 'includes/source_class.php';
 
 	if ($legend == "") $legend = $pgv_lang["sources"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -1053,7 +1053,7 @@ function print_repo_table($repos, $legend='') {
 		return;
 	}
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/datamodel/repository_class.php';
+	require_once 'includes/repository_class.php';
 
 	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" />';
 	if ($legend) {
@@ -1113,7 +1113,7 @@ function print_media_table($datalist, $legend="") {
 
 	if (count($datalist)<1) return;
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/datamodel/media_class.php';
+	require_once 'includes/media_class.php';
 
 	if ($legend == "") $legend = $pgv_lang["media"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
@@ -1506,7 +1506,7 @@ function print_changes_table($datalist) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/datamodel/gedcomrecord_class.php';
+	require_once 'includes/gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -1608,7 +1608,7 @@ function print_changes_table($datalist) {
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $SERVER_URL;
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/datamodel/gedcomrecord_class.php';
+	require_once 'includes/gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	// Did we have any output?  Did we skip anything?

@@ -409,7 +409,7 @@ if ($action=="newentry") {
 
 		$newged = handle_updates($newged);
 		
-		require_once 'includes/datamodel/media_class.php';
+		require_once 'includes/media_class.php';
 		$media_obje = new Media($newged);
 		$mediaid = Media::in_obje_list($media_obje);
 		if (!$mediaid) $mediaid = append_gedrec($newged, $linktoid);

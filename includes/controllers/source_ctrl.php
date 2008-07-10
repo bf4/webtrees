@@ -32,7 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once("config.php");
 require_once('includes/functions_print_facts.php');
 require_once('includes/controllers/basecontrol.php');
-require_once('includes/datamodel/source_class.php');
+require_once('includes/source_class.php');
 require_once('includes/menu.php');
 
 $nonfacts = array();

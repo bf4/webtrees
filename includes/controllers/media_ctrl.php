@@ -33,7 +33,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require_once('includes/controllers/individual_ctrl.php');
-require_once("includes/datamodel/media_class.php");
+require_once("includes/media_class.php");
 
 class MediaControllerRoot extends IndividualController {
 

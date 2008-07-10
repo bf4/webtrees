@@ -92,38 +92,17 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 					}
 				}
 			}
-//-- - put the birth info in this section
-			$birthEvent = $controller->indi->getBirthEvent(false);
-			$deathEvent = $controller->indi->getDeathEvent(false);
-			if ((!empty($birthEvent)) || (!empty($deathEvent)) || $SHOW_LDS_AT_GLANCE) {
-				print "<td width=\"10\"><br /></td>\n";
+			// Display summary birth/death info.  Note this info can come from various BIRT/CHR/BAPM/etc. records
+			$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
+			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
+			if ($SHOW_LDS_AT_GLANCE) {
+				$summary.='<b>'.get_lds_glance($controller->indi->getGedcomRecord()).'</b>';
+			}
+			if ($summary) {
 				++$col;
+				echo '<td width="10"><br /></td><td valign="top" colspan="', $maxcols-$col, '">', $summary, '</td>';
+			}
 				?>
-				<td valign="top" colspan="<?php print $maxcols-$col; ?>">
-				<?php if (!empty($birthEvent) && $birthEvent->canShowDetails()) { ?>
-					<span class="label"><?php print $birthEvent->getLabel().":"; ?></span>
-					<span class="field">
-						<?php format_fact_date($birthEvent); ?>
-						<?php format_fact_place($birthEvent); ?>
-					</span><br />
-				<?php } ?>
-				<?php
-				// RFE [ 1229233 ] "DEAT" vs "DEAT Y"
-				// The check $deathrec != "1 DEAT" will not show any records that only have 1 DEAT in them
-				if ((!empty($deathEvent)) && $deathEvent->canShowDetails()) {
-			?>
-				<span class="label"><?php print $factarray["DEAT"].":"; ?></span>
-				<span class="field">
-				<?php
-					format_fact_date($deathEvent);
-					format_fact_place($deathEvent);
-				?>
-				</span><br />
-			<?php }
-				if ($SHOW_LDS_AT_GLANCE) print "<b>".get_lds_glance($controller->indi->getGedcomRecord())."</b>";
-			?>
-			</td>
-			<?php } ?>
 		</tr>
 		</table>
 		<?php

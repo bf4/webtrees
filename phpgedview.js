@@ -233,7 +233,7 @@ var show = false;
 
 	var timeouts = new Array();
 	function family_box_timeout(boxid) {
-		tout = setTimeout("hide_family_box('"+boxid+"')", 250);
+		tout = setTimeout("hide_family_box('"+boxid+"')", 2500);
 		timeouts[boxid] = tout;
 	}
 
@@ -875,7 +875,7 @@ function show_submenu(elementid, parentid, dir) {
 
 		if (element.offsetLeft < 0) element.style.left = "0px";
 
-		//-- put scrollbars are really long windows
+		//-- put scrollbars on really long menus
 		if (element.offsetHeight > 500) {
         	element.style.height = '400px';
 			element.style.overflow = 'auto';

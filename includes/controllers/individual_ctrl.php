@@ -33,8 +33,8 @@ require_once("config.php");
 require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/menu.php';
-require_once 'includes/datamodel/person_class.php';
-require_once 'includes/datamodel/family_class.php';
+require_once 'includes/person_class.php';
+require_once 'includes/family_class.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -970,7 +970,19 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function getTab($tab) {
-		$tabType = $this->tabarray[$tab];
+	
+// LB Fix for no googlemaps ==========================================================================
+
+		if (file_exists("modules/googlemap/defaultconfig.php")) { 
+			$tab_array = array("facts","notes","sources","media","relatives","tree","research","map","lightbox");
+		}else{
+			$tab_array = array("facts","notes","sources","media","relatives","tree","research","lightbox");
+		}
+		$tabType = $tab_array[$tab];
+
+//		$tabType = $this->tabarray[$tab];
+// ================================================================================================
+
 		switch($tabType) {
 			case "facts":
 				$this->print_facts_tab();
@@ -1174,10 +1186,9 @@ class IndividualControllerRoot extends BaseController {
 			<?php
 				$otheritems = $this->getOtherFacts();
 				foreach ($otheritems as $key => $event) {
-					print_main_sources($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
+					if ($event->getTag()=="SOUR") print_main_sources($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
 					$FACT_COUNT++;
 				}
-				$FACT_COUNT++;
 			}
 				// 2nd level sources [ 1712181 ]
 				$this->indi->add_family_facts(false);
@@ -1248,8 +1259,8 @@ class IndividualControllerRoot extends BaseController {
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 					<td class="facts_value">
-						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&amp;linktoid=<?php echo $this->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
-						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php echo $this->pid; ?>&amp;linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
+						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php print $this->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
+						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php print $this->pid; ?>&linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
 					</td>
 				</tr>
 			<?php

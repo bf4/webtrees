@@ -30,7 +30,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once('includes/datamodel/media_class.php');
+require_once('includes/media_class.php');
 include_once('includes/functions_lang.php');
 require_once('includes/mutex_class.php');
 require_once('includes/index_cache.php');
@@ -288,7 +288,7 @@ function import_record($indirec, $update) {
 		$indi["isdead"] = $isdead;
 		$indi["gedcom"] = $indirec;
 		$indi["gedfile"] = $GEDCOMS[$FILE]["id"];
-		$indi["gedner"] = $person->getSex();
+		$indi["gender"] = $person->getSex();
 		if ($USE_RIN) {
 			$ct = preg_match("/1 RIN (.*)/", $indirec, $match);
 			if ($ct > 0)

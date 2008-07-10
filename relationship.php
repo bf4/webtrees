@@ -29,7 +29,7 @@
 // -- include config file
 require("config.php");
 require_once("includes/functions_charts.php");
-require_once("includes/datamodel/person_class.php");
+require_once("includes/person_class.php");
 
 function getRelationshipSentence($node, $pid1, $pid2)
 {

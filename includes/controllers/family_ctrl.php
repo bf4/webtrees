@@ -35,7 +35,7 @@ require_once 'config.php';
 require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/functions_charts.php';
-require_once 'includes/datamodel/family_class.php';
+require_once 'includes/family_class.php';
 require_once 'includes/menu.php';
 
 class FamilyRoot extends BaseController

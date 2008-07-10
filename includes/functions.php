@@ -32,7 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require_once('includes/mutex_class.php');
-require_once('includes/datamodel/media_class.php');
+require_once('includes/media_class.php');
 require_once('includes/functions_UTF8.php');
 
 /**
@@ -53,7 +53,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
-	global $DBTYPE, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
+	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
 	global $INDEX_DIRECTORY, $BUILDING_INDEX;
 
 	if (!$ignore_previous) {

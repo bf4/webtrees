@@ -34,7 +34,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 	exit;
 }
 // Require the database functions
-require_once("includes/datamodel/person_class.php");
+require_once("includes/person_class.php");
 global $pgv_lang;
  
  	/**

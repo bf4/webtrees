@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once('includes/datamodel/date_class.php');
+require_once('includes/date_class.php');
 
 /**
  * translate gedcom age string

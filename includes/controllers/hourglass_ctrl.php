@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require_once("config.php");
 require_once("includes/controllers/basecontrol.php");
-require_once("includes/datamodel/person_class.php");
+require_once("includes/person_class.php");
 require_once("includes/functions_charts.php");
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying

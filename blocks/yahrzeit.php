@@ -136,7 +136,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		break;
 	case "style2": // Table style
 		require_once("js/sorttable.js.htm");
-		require_once("includes/datamodel/gedcomrecord_class.php");
+		require_once("includes/gedcomrecord.php");
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 		$content .= "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
 		$content .= "<tr>";
@@ -232,6 +232,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	} else {
 		include($THEME_DIR."/templates/block_main_temp.php");
 	}
+
 }
 
 function print_yahrzeit_config($config) {

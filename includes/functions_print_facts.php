@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once 'includes/datamodel/person_class.php';
+require_once 'includes/person_class.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -963,24 +963,13 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 				if ($source) {
 					print printSourceStructure(getSourceStructure($srec));
 					print "<div class=\"indent\">";
+					print_media_links($srec, $nlevel);
+					print_fact_notes($srec, $nlevel);
 					print "</div>";
 				}
-				$cs = preg_match("/$nlevel QUAY (.*)/", $srec, $cmatch);
-				if ($cs>0) print "<br /><span class=\"label\">".$factarray["QUAY"]." </span><span class=\"field\">".$cmatch[1]."</span>";
-				$cs = preg_match_all("/$nlevel TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
-				for($k=0; $k<$cs; $k++) {
-					print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">".$tmatch[$k][1];
-					$trec = get_sub_record($nlevel, $tmatch[$k][0], $srec);
-					$text = get_cont($nlevel+1, $trec);
-					$text = expand_urls($text);
-					print $text;
-					print "</span>";
-				}
-				print_media_links($srec, $nlevel);
-				print_fact_notes($srec, $nlevel);
 			}
+			print "</td></tr>";
 		}
-		print "</td></tr>";
 	}
 }
 

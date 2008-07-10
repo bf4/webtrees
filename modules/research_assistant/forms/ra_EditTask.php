@@ -35,7 +35,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_EditTask.php")) {
 }
 // Require the database functions
 require_once("includes/functions_db.php");
-require_once("includes/datamodel/person_class.php");
+require_once("includes/person_class.php");
 global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
  
  	/**

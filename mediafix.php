@@ -44,15 +44,16 @@ function fixmedia($oldrecord) {
 			}
 			else {
 				$level = $line{0};
+				$sublevel = $level + 1;
 				$oldi = $i;
 				do {
 					$i++;
-					if (isset($lines[$i])) {
+					if (!empty($lines[$i])) {
 						$line = $lines[$i];
 						$sublevel = $line{0};
 					}
 				} while($sublevel>$level && $i<count($lines));
-				if ($i!=$oldi && $i<count($lines)) $newrec .= $line."\r\n";
+				if ($i!=$oldi && $i<count($lines)) $i--;//$newrec .= $line."\r\n";
 			}
 		}
 	}

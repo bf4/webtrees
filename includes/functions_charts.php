@@ -29,7 +29,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once("includes/datamodel/person_class.php");
+require_once("includes/person_class.php");
 
 /**
  * print a table cell with sosa number

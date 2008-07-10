@@ -121,8 +121,11 @@ if($SHOW_COUNTER)
   }
 
   //replace the numbers with their images
+	if (array_key_exists('0', $PGV_IMAGES))
   for($i=0;$i<10;$i++)
     $hits = str_replace("$i","<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$i]["digit"]."\" alt=\"pgv_counter\" />","$hits");
+	else
+		$hits="<span class=\"hit-counter\">{$hits}</span>";
 
     if ($TEXT_DIRECTION=="rtl") $hits = getLRM() . $hits . getLRM();
 }

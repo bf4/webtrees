@@ -64,7 +64,7 @@ function print_todo($block=true, $config='', $side, $index) {
 	$content = "";
 
 	require_once("js/sorttable.js.htm");
-	require_once("includes/datamodel/gedcomrecord_class.php");
+	require_once("includes/gedcomrecord.php");
 
 	$all_gedcoms=get_all_gedcoms();
 
@@ -117,17 +117,12 @@ function print_todo($block=true, $config='', $side, $index) {
 		$content.='<p>'.$pgv_lang['todo_nothing'].'</p>';
 	}
 
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
+	global $THEME_DIR;
 	if ($block) {
-		print '<div class="small_inner_block">'.$content.'</div>';
+		include($THEME_DIR."/templates/block_small_temp.php");
 	} else {
-		print $content;
+		include($THEME_DIR."/templates/block_main_temp.php");
 	}
-	print '</div></div>';
 }
 
 function print_todo_config($config) {

@@ -30,7 +30,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 	exit;
 }
 global $LANGUAGE, $factarray;
-require_once "includes/datamodel/person_class.php";
+require_once "includes/person_class.php";
 
 /**
  * Base class for Research Assistant forms
