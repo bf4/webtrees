@@ -183,7 +183,6 @@ if ($configOverride) {
 		require_once("includes/functions.php");
 		//-- load db specific functions
 		require_once("includes/functions_db.php");
-		require_once("includes/functions_name.php");
 		require_once("includes/authentication.php");      // -- load the authentication system
 		AddToLog("MSG>Configuration override detected; script terminated.");
 		AddToLog("UA>{$ua}<");
@@ -263,6 +262,7 @@ if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = "32M";
 
 //--load common functions
 require_once("includes/functions.php");
+require_once("includes/functions_name.php");
 //-- set the error handler
 $OLD_HANDLER = set_error_handler("pgv_error_handler");
 //-- load db specific functions
