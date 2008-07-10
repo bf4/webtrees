@@ -68,8 +68,12 @@ class GedcomFile {
 			return $gedcom_record_cache[$ged][$ged_id];
 		}
 		
-		$gedarray = $GEDCOMS[$ged];
-
+		if (isset($GEDCOMS[$ged])) {
+			$gedarray = $GEDCOMS[$ged];
+			$file = new GedcomFile($gedarray);
+			$gedcom_record_cache[$ged][$ged_id] = $file;
+			return $file;
+		}
 		
 		return null;
 	}
