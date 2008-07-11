@@ -30,12 +30,14 @@
 <?php
 global $lang_short_cut, $LANGUAGE, $PHP_SELF, $reorder, $GEDCOM;
 
+$reorder=safe_get('reorder', '1', '0');
+
 loadLangFile("lb_lang");
 
 if (!file_exists("modules/googlemap/defaultconfig.php")) {
-	$tabno = "6";
-	}else{
 	$tabno = "7";
+	}else{
+	$tabno = "8";
 }
 
 // The following is temporary, until the handling of the Lightbox Help system
@@ -226,6 +228,7 @@ include ('includes/media_reorder_count.php');
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
 				print '</a>';
 				print "</td>";
+				// print "<input type=\"hidden\" name=\"reorder\" value=\"1\" />";
 				//print "<td width=\"5%\">&nbsp;</td>";
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {

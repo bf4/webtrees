@@ -32,6 +32,8 @@ global $LANGUAGE, $mediatab, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT, $LB_TT_BALLOON ;
 global $reorder, $PHP_SELF, $rownum, $sort_i, $GEDCOM;
 
+$reorder=safe_get('reorder', '1', '0');
+
 // Get Javascript variables from lb_config.php --------------------------- 
 include_once('modules/lightbox/lb_defaultconfig.php'); 
 if (file_exists('modules/lightbox/lb_config.php')) include_once('modules/lightbox/lb_config.php'); 
@@ -89,7 +91,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 		<center>
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>" onclick="saveOrder();" ><?php print $pgv_lang["save"];?></button>&nbsp;
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='al_reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>&nbsp;
-		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?pid=" . $pid . "&tab=7"; ?>'"><?php print $pgv_lang["cancel"];?></button> 
+		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?pid=" . $pid . "&tab=" . $tabno; ?>'"><?php print $pgv_lang["cancel"];?></button> 
 <?php
 /*
 		// Debug ---------------------------------------------------------------------------
