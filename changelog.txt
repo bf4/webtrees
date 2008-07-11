@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Album page errors due to import_request_variables() call being removed (windmillway)
  - Added theme based template for portal blocks (yalnifj)
  - Added theme based template for person box (yalnifj)
  - Added Tree tab to individual page (yalnifj)

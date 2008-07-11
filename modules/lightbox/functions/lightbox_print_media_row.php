@@ -42,17 +42,20 @@
 	global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q, $LB_TT_BALLOON ;
 	
-
+	$reorder=safe_get('reorder', '1', '0');
 	
 	//If media is linked to a 'private' person
 	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 		$item++;
 		return false;
 	}else{
+	
+	
 	// Media is NOT linked to private person
 		// If reorder media has been clicked
 		if (isset($reorder) && $reorder==1) {
-			print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";	
+			print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";
+			
 		// Else If reorder media has NOT been clicked
 		// Highlight Album Thumbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
 		}else if ($rtype=='new'){
@@ -62,6 +65,7 @@
 		}else{
 			print "<li class=\"li_norm\">" . "\n";
 		}
+	
 	}
 	
 	// Add blue or red borders
@@ -181,7 +185,7 @@
 				$submenu_class			=	"submenuitem";
 				$submenu_hoverclass		=	"submenuitem_hover";
 			}
-			
+
 			$menu = array();
 			// Make function htmlspecialchar_decode for older PHP versions ( < PHP 5.1.0 )
 				if (!function_exists('htmlspecialchars_decode')) {
@@ -193,7 +197,7 @@
 				}
 			// Get the first 12 characters of the Media Title
 				$mtitle = htmlspecialchars_decode(stripLRMRLM($mediaTitle), ENT_QUOTES);
-				if (UTF8_strlen($mtitle)>12) $mtitle = UTF8_substr($mtitle, 0, 12).$pgv_lang["ellipsis"];
+				if (UTF8_strlen($mtitle)>16) $mtitle = UTF8_substr($mtitle, 0, 13).$pgv_lang["ellipsis"];
 				$mtitle = htmlspecialchars($mtitle);
 			// Continue menu construction
 			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle) . "</img>\n";
@@ -306,27 +310,7 @@
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-		/*		
-				// Check Filetype of media item ( Regular, URL, or Not supported by lightbox at the moment )
-				// Regular ----------------------------------
-				if (eregi("\.jpg" ,$rowm['m_file']) || 
-					eregi("\.jpeg",$rowm['m_file']) || 
-					eregi("\.gif" ,$rowm['m_file']) || 
-					eregi("\.png" ,$rowm['m_file'])  
-					) 
-				{	
-					$file_type = "regular";
-				// URL ----------------------------------
-				}else if(eregi("http" ,$rowm['m_file']) || 
-						 eregi("\.pdf",$rowm['m_file']) 
-						) 
-				{	
-					$file_type = "url";
-				// Other ------------------------------
-				}else{
-					$file_type = "other";
-				}
-		*/		
+
 				// Start Thumbnail Enclosure table 
 				print "<table width=\"10px\" class=\"pic\" border=\"0\"><tr>" . "\n";
 				print "<td align=\"center\" rowspan=\"2\" >";
