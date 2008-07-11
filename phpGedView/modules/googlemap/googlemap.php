@@ -33,6 +33,27 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require('modules/googlemap/defaultconfig.php');
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
+global $SESSION_HIDE_GOOGLEMAP;
+$SESSION_HIDE_GOOGLEMAP = "empty";
+if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
+	if(stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
+		$SESSION_HIDE_GOOGLEMAP = "true";
+	}
+	if(stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
+		$SESSION_HIDE_GOOGLEMAP = "false";
+	}
+}
+
+// change the session values and store if needed.
+if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
+if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
+if($SESSION_HIDE_GOOGLEMAP == "empty") {
+	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
+		$SESSION_HIDE_GOOGLEMAP = "true";
+	else 
+		$SESSION_HIDE_GOOGLEMAP = "false";
+}
+
 loadLangFile("gm_lang");
 
 // functions copied from print_fact_place
