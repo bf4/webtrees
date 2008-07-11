@@ -488,23 +488,23 @@ function build_indiv_map($indifacts, $famids) {
 	sort_facts($indifacts);
 	$i = 0;
 	foreach ($indifacts as $key => $value) {
-		if (preg_match("/1 (\w+)(.*)/", $value[1], $match)) {
-			$fact = $match[1];
-			$fact_data=trim($match[2]);
+			$fact = $value->getTag();
+			$fact_data=$value->getDetail();
+			$factrec = $value->getGedComRecord();
 			$placerec = null;
-			if (preg_match("/2 PLAC (.*)/", $value[1], $match)) {
-				$placerec = get_sub_record(2, "2 PLAC", $value[1]);
+			if ($event->getPlace()!=null) {
+				$placerec = get_sub_record(2, "2 PLAC", $factrec);
 				$addrFound = false;
 			} else {
-				if (preg_match("/\d ADDR (.*)/", $value[1], $match)) {
-					$placerec = get_sub_record(1, "\d ADDR", $value[1]);
+				if (preg_match("/\d ADDR (.*)/", $factrec, $match)) {
+					$placerec = get_sub_record(1, "\d ADDR", $factrec);
 					$addrFound = true;
 				}
 			}
 			if (!empty($placerec)) {
 				$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
 				$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
-				$spouserec = get_sub_record(1, "1 _PGVS", $value[1]);
+				$spouserec = get_sub_record(2, "2 _PGVS", $factrec);
 				$ctlp = preg_match("/\d _PGVS @(.*)@/", $spouserec, $spouseid);
 				if ($ctlp>0) {
 					$useThisItem = displayDetailsByID($spouseid[1]);
@@ -515,7 +515,7 @@ function build_indiv_map($indifacts, $famids) {
 					$i = $i + 1;
 					$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
 					if ($fact == "EVEN" || $fact=="FACT") {
-						$eventrec = get_sub_record(1, "2 TYPE", $value[1]);
+						$eventrec = get_sub_record(1, "2 TYPE", $factrec);
 						if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
 							if (isset($factarray[$match3[1]]))
 								$markers[$i]["fact"]=$factarray[$match3[1]];
@@ -533,7 +533,7 @@ function build_indiv_map($indifacts, $famids) {
 					$match2[1] = trim($match2[1]);
 					$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]);
 					$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]);
-					$ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
+					$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
 					if ($ctd>0)
 						$markers[$i]["date"] = $match[1];
 					if ($ctlp>0)
@@ -553,7 +553,7 @@ function build_indiv_map($indifacts, $famids) {
 							$i = $i + 1;
 							$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
 							if ($fact == "EVEN" || $fact=="FACT") {
-								$eventrec = get_sub_record(1, "2 TYPE", $value[1]);
+								$eventrec = get_sub_record(1, "2 TYPE", $factrec);
 								if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
 									if (isset($factarray[$match3[1]]))
 										$markers[$i]["fact"]=$factarray[$match3[1]];
@@ -571,7 +571,7 @@ function build_indiv_map($indifacts, $famids) {
 							if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
 							$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]);
 							$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]);
-							$ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
+							$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
 							if ($ctd>0)
 								$markers[$i]["date"] = $match[1];
 							if ($ctlp>0)
@@ -580,7 +580,6 @@ function build_indiv_map($indifacts, $famids) {
 					}
 				}
 			}
-		}
 	}
 
 	// Add children to the list
