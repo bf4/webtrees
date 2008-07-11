@@ -712,7 +712,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
-		$mdate=new GedcomDate($family->getMarriageDate());
+		$mdate=$family->getMarriageDate();
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
 		$hdate=$husb->getBirthDate();
