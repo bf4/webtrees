@@ -492,7 +492,7 @@ function build_indiv_map($indifacts, $famids) {
 			$fact_data=$value->getDetail();
 			$factrec = $value->getGedComRecord();
 			$placerec = null;
-			if ($event->getPlace()!=null) {
+			if ($value->getPlace()!=null) {
 				$placerec = get_sub_record(2, "2 PLAC", $factrec);
 				$addrFound = false;
 			} else {
