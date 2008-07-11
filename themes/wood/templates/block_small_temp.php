@@ -25,7 +25,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: functions_print.php 2144 2007-11-06 16:53:45Z yalnifj $
+ * @version $Id$
  */
 ?>
 <div id="<?php print $id; ?>" class="block" >
