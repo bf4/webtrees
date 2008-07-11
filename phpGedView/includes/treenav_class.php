@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: treenav_class.php 3509 2008-07-08 23:27:34Z yalnifj $
+ * @version $Id$
  */
 require_once('includes/person_class.php');
 require_once('includes/functions_charts.php');

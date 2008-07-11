@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage admin
- * @version $Id: session_spider.php 2674 2008-03-04 15:31:56Z fisharebest $
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
