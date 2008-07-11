@@ -176,7 +176,7 @@ require_once("includes/person_class.php");
 									$gid = $match[1];
 							$person = Person::getInstance($gid);
 							if (!is_null($person)) {
-								$gedval = $person->getGivenNames();
+									list($dummy, $gedval) = explode(',', $person->getSortName());
 									$parts1 = preg_split("/\s+/", $gedval);
 									$parts2 = preg_split("/\s+/", $locals['GIVN']);
 									foreach($parts1 as $p1=>$part1) {
