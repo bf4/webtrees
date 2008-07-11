@@ -607,6 +607,7 @@ class GedcomRecord {
 		$this->parseFacts();
 		if (is_string($factTypes)) $factTypes = array($factTypes);
 		$facts = array();
+		if (empty($this->facts)) return $facts;
 		foreach($this->facts as $f=>$fact) {
 			if (in_array($fact->getTag(), $factTypes) || in_array($fact->getType(), $factTypes)) $facts[] = $fact;
 		}
@@ -639,7 +640,7 @@ class GedcomRecord {
 	 */
 	function parseFacts() {
 		//-- only run this function once
-		if (!is_null($this->facts)) return;
+		if (!is_null($this->facts) && is_array($this->facts)) return;
 		$this->facts=array();
 		//-- don't run this function if privacy does not allow viewing of details
 		if (!$this->canDisplayDetails()) return;
