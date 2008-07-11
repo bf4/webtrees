@@ -152,7 +152,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							if (!empty($spouse)) {
 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse->getXref();
 								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
-								$personlinks .= "<a href=\"".encode_url("individual.php?pid={$spouse->getXref()}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
+								$tmp=$spouse->getXref();
+								$personlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
 								if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getName());
 								else $personlinks .= $pgv_lang["private"];
 								$personlinks .= "</a><br />\n";
