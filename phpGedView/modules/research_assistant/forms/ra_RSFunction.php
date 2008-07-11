@@ -164,7 +164,7 @@ require_once("includes/person_class.php");
 								$gid = $match[1];
 							$person = Person::getInstance($gid);
 							if (!is_null($person)) {
-								$gedval = $person->getSurname();
+								list($gedval) = explode(',', $person->getSortName());
 								if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
 								$inferences[$pr_id]['count']++;
 							}
