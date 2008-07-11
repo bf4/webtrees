@@ -51,7 +51,7 @@ class TimelineControllerRoot extends BaseController {
 	var $pidlinks = "";
 	var $scale = 2;
 	// GEDCOM elements that will be found but should not be displayed
-	var $nonfacts = "FAMS,FAMC,MAY,BLOB,OBJE,SEX,NAME,SOUR,NOTE,BAPL,ENDL,SLGC,SLGS,_TODO,CHAN,HUSB,WIFE,CHIL";
+	var $nonfacts = array("FAMS","FAMC","MAY","BLOB","OBJE","SEX","NAME","SOUR","NOTE","BAPL","ENDL","SLGC","SLGS","_TODO","CHAN","HUSB","WIFE","CHIL");
 	/**
 	 * constructor
 	 */
@@ -101,6 +101,7 @@ class TimelineControllerRoot extends BaseController {
 		}
 		$this->pids = $newpids;
 		$this->pidlinks = "";
+		/* @var $indi Person */
 		foreach($this->people as $p=>$indi) {
 			if (!is_null($indi) && $indi->canDisplayDetails()) {
 				//-- setup string of valid pids for links
@@ -116,31 +117,24 @@ class TimelineControllerRoot extends BaseController {
 					}
 				}
 				// find all the fact information
-				$facts = get_all_subrecords($indi->getGedcomRecord(), $this->nonfacts, true, false);
-				foreach($facts as $indexval => $factrec) {
+				$indi->add_family_facts(false);
+				$facts = $indi->getIndiFacts($this->nonfacts);
+				//$facts = get_all_subrecords($indi->getGedcomRecord(), $this->nonfacts, true, false);
+				foreach($facts as $indexval => $event) {
 					//-- get the fact type
-					$ct = preg_match("/1 (\w+)(.*)/", $factrec, $match);
-					if ($ct > 0) {
-						$fact = trim($match[1]);
-						$desc = trim($match[2]);
-						//-- check for a date
-						if (preg_match("/2 DATE (.*)/", $factrec, $match)) {
-							$date=new GedcomDate($match[1]);
-							$date=$date->MinDate();
-							$date=$date->convert_to_cal('gregorian');
-							if ($date->y) {
-								$this->baseyear=min($this->baseyear, $date->y);
-								$this->topyear =max($this->topyear,  $date->y);
+					$fact = $event->getTag();
+					//-- check for a date
+					$date = $event->getDate();
+					$date=$date->MinDate();
+					$date=$date->convert_to_cal('gregorian');
+					if ($date->y) {
+						$this->baseyear=min($this->baseyear, $date->y);
+						$this->topyear =max($this->topyear,  $date->y);
 
-								if (!is_dead_id($indi->getXref()))
-									$this->topyear=max($this->topyear, date('Y'));
-								$tfact = array();
-								$tfact["p"] = $p;
-								$tfact["pid"] = $indi->getXref();
-								$tfact[1] = $factrec;
-								$this->indifacts[] = $tfact;
-							}
-						}
+						if (!is_dead_id($indi->getXref()))
+							$this->topyear=max($this->topyear, date('Y'));
+						$event->temp = $p;
+						$this->indifacts[] = $event;
 					}
 				}
 			}
@@ -179,30 +173,26 @@ class TimelineControllerRoot extends BaseController {
 			}
 		}
 	}
-	function print_time_fact($factitem) {
+	
+	function print_time_fact($event) {
 		global $basexoffset, $baseyoffset, $factcount, $TEXT_DIRECTION;
 		global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
 		global $familyfacts, $GEDCOM;
-		$factrec = $factitem[1];
-		$ct = preg_match("/1 (\w+)(.*)/", $factrec, $match);
-		if ($ct > 0) {
-			$fact = trim($match[1]);
-			$desc = trim($match[2]);
+		/* @var $event Event */
+		$factrec = $event->getGedComRecord();
+			$fact = $event->getTag();
+			$desc = $event->getDetail();
 			if ($fact=="EVEN" || $fact=="FACT") {
-				$ct = preg_match("/2 TYPE (.*)/", $factrec, $match);
-				if ($ct>0) $fact = trim($match[1]);
+				$fact = $event->getType();
 			}
-			$ct = preg_match("/2 DATE (.*)/", $factrec, $match);
-			if ($ct>0) {
 				//-- check if this is a family fact
-				$ct = preg_match("/1 _PGVFS @(.*)@/", $factrec, $fmatch);
-				if ($ct>0) {
-					$famid = trim($fmatch[1]);
+				$famid = $event->getFamilyId();
+				if ($famid!=null) {
 					//-- if we already showed this family fact then don't print it
-					if (isset($familyfacts[$famid.$fact])&&($familyfacts[$famid.$fact]!=$factitem["p"])) return;
-					$familyfacts[$famid.$fact] = $factitem["p"];
+					if (isset($familyfacts[$famid.$fact])&&($familyfacts[$famid.$fact]!=$event->temp)) return;
+					$familyfacts[$famid.$fact] = $event->temp;
 				}
-				$gdate=new GedcomDate($match[1]);
+				$gdate=$event->getDate();
 				$date=$gdate->MinDate();
 				$date=$date->convert_to_cal('gregorian');
 				$year  = $date->y;
@@ -238,25 +228,23 @@ class TimelineControllerRoot extends BaseController {
 				if ($TEXT_DIRECTION=="ltr") print "left";
 				else print "right";
 				print ": 3px;\" />\n";
-				$col = $factitem["p"] % 6;
+				$col = $event->temp % 6;
 				print "</td><td valign=\"top\" class=\"person".$col."\">\n";
-				if (count($this->pids) > 6)print get_person_name($factitem["pid"])." - ";
-				if (isset($factarray[$fact])) print $factarray[$fact];
-				else if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
-				else print $fact;
+				if (count($this->pids) > 6) print $event->getParentObject()->getFullName()." - ";
+				print $event->getLabel();
 				print "--";
 				print $gdate->Display(false);
-				$indi=Person::GetInstance($factitem["pid"]); // TODO we already have this object somewhere....
+				$indi=$event->getParentObject();
 				$birth_date=$indi->getEstimatedBirthDate();
 				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $gdate), false);
 				if (!empty($age))
 					print " ({$pgv_lang['age']} {$age})";
 				print " {$desc}";
 				if ($SHOW_PEDIGREE_PLACES>0) {
-					$pct = preg_match("/2 PLAC (.*)/", $factrec, $match);
-					if ($pct>0) {
+					$place = $event->getPlace();
+					if ($place!=null) {
 						print " - ";
-						$plevels = preg_split("/,/", $match[1]);
+						$plevels = preg_split("/,/", $place);
 						for($plevel=0; $plevel<$SHOW_PEDIGREE_PLACES; $plevel++) {
 							if (!empty($plevels[$plevel])) {
 								if ($plevel>0) print ", ";
@@ -266,20 +254,17 @@ class TimelineControllerRoot extends BaseController {
 					}
 				}
 				//-- print spouse name for marriage events
-				$ct = preg_match("/1 _PGVS @(.*)@/", $factrec, $match);
-				if ($ct>0) {
-					$spouse=$match[1];
-					if ($spouse!=="") {
-						for($p=0; $p<count($this->pids); $p++) {
-							if ($this->pids[$p]==$spouse) break;
-						}
-						if ($p==count($this->pids)) $p = $factitem["p"];
-						$col = $p % 6;
-						print " <span class=\"person$col\"> <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-						if (displayDetailsById($spouse)||showLivingNameById($spouse)) print get_person_name($spouse);
-						else print $pgv_lang["private"];
-						print "</a> </span>";
+				$spouse = $event->getSpouseId();
+				if ($spouse) {
+					for($p=0; $p<count($this->pids); $p++) {
+						if ($this->pids[$p]==$spouse) break;
 					}
+					if ($p==count($this->pids)) $p = $event->temp;
+					$col = $p % 6;
+					print " <span class=\"person$col\"> <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
+					if (displayDetailsById($spouse)||showLivingNameById($spouse)) print get_person_name($spouse);
+					else print $pgv_lang["private"];
+					print "</a> </span>";
 				}
 				print "</td></tr></table>\n";
 				print "</div>";
@@ -308,8 +293,6 @@ class TimelineControllerRoot extends BaseController {
 				print " background-image: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$img]["other"]."');";
 				print " background-position: 0% $ypos; \" >\n";
 				print "</div>\n";
-			}
-		}
 	}
 }
 // -- end of class

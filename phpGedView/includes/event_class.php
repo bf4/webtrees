@@ -56,6 +56,8 @@ class Event {
 	var $values = NULL;
 	var $sortOrder = 0;
 	var $sortDate = NULL;
+	//-- temporary state variable that can be used by other scripts
+	var $temp = NULL;
 	
 	/**
 	 * Get the value for the first given GEDCOM tag
