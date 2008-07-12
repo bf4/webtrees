@@ -205,9 +205,7 @@ class Menu
 			return $output;
 		}
 		$c = count($this->submenus);
-		$xicon = $this->icon ? $this->icon : "";
-		$xlink = $this->link ? $this->link : "";
-		$output = "<div x-link=\"{$xlink}\" x-icon=\"{$xicon}\" x-label=\"{$this->label}\" id=\"menu{$id}\" class=\"{$this->class}\">\n";
+		$output = "<div id=\"menu{$id}\" style=\"clear: both;\" class=\"{$this->class}\">\n";
 		if ($this->link=="#") $this->link = "javascript:;";
 		$link = "<a href=\"{$this->link}\" onmouseover=\"";
 		if ($c >= 0)
