@@ -32,28 +32,25 @@
 	style="position: absolute; left: 0px; top: 0px; width: <?php print $lbwidth; ?>px; visibility: hidden; z-index: '100';">
 <?php print $personlinks; ?></div>
 <div id="out-<?php print $boxID; ?>" <?php print $outBoxAdd; ?>>
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-	<tr>
-		<td valign="top">
+<!--  table helps to maintain spacing -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td valign="top">
 		<div id="icons-<?php print $boxID; ?>"
 			style="<?php print $iconsStyleAdd; ?> width: 25px; height: 50px;"><?php print $icons; ?>
 		</div>
-		<?php print $thumbnail; ?> <a onclick="event.cancelBubble = true;"
+		<?php print $thumbnail; ?> 
+		<a onclick="event.cancelBubble = true;"
 			href="individual.php?pid=<?php print $pid; ?>&amp;ged=<?php print $GEDCOM; ?>"
-			title="<?php print $title; ?>"> <span
-			id="namedef-<?php print $boxID; ?>"
-			class="name<?php print $style; ?> <?php print $classfacts; ?>"> <?php print $name.$addname; ?>
-		</span><span class="name<?php print $style; ?>"> <?php print $genderImage; ?>
-		</span> <?php print $showid; ?> </a>
-		<div id="fontdef-<?php print $boxID; ?>"
-			class="details<?php print $style; ?>">
-		<div id="inout2-<?php print $boxID; ?>" style="display: block;"><?php print $BirthDeath; ?>
-		</div>
+			title="<?php print $title; ?>"> 
+		<span id="namedef-<?php print $boxID; ?>" class="name<?php print $style; ?> <?php print $classfacts; ?>"> 
+			<?php print $name.$addname; ?>
+		</span>
+		<span class="name<?php print $style; ?>"> <?php print $genderImage; ?></span> 
+		<?php print $showid; ?> </a>
+		<div id="fontdef-<?php print $boxID; ?>" class="details<?php print $style; ?>">
+			<div id="inout2-<?php print $boxID; ?>" style="display: block;"><?php print $BirthDeath; ?></div>
 		</div>
 		<div id="inout-<?php print $boxID; ?>" style="display: none;">
-		<div id="LOADING-inout-<?php print $boxID; ?>"><?php print $pgv_lang['loading']; ?></div>
+			<div id="LOADING-inout-<?php print $boxID; ?>"><?php print $pgv_lang['loading']; ?></div>
 		</div>
-		</td>
-	</tr>
-</table>
+</td></tr></table>
 </div>

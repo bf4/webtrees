@@ -102,10 +102,10 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 							$content.=$pgv_lang['invalid_id'];
 						}
 						$content .= "<br />".PrintReady($favorite["note"]);
+						$content .= "</div>";
 					}
 				}
 			}
-			$content .= "</div>";
 			$content .= "</td></tr>\n";
 		}
 		$content .= "</table>\n";
