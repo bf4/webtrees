@@ -40,10 +40,17 @@ if (isset ($_REQUEST['mod']))
 	exit;
 }
 
-if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['message_id'])) $message_id = $_REQUEST['message_id'];
-
+if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
+$message_id = safe_GET('message_id');
+$gid = safe_POST("gid");
+$favnote = safe_POST("favnote");
+$favtype = safe_POST("favtype");
+$url = safe_POST("url");
+$favtitle = safe_POST("favtitle");
+$fv_id = safe_GET("fv_id");
+$news_id = safe_GET("news_id");
+	
 /**
  * Block definition array
  *
@@ -120,12 +127,11 @@ if (PGV_USER_ID) {
 	//-- add favorites action
 	if (($action=="addfav")&&(!empty($gid))) {
 		$gid = strtoupper($gid);
-		if (!isset($favnote)) $favnote = "";
 		$indirec = find_gedcom_record($gid);
 		$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
 		if ($indirec && $ct>0) {
 			$favorite = array();
-			if (!isset($favtype)) {
+			if (empty($favtype)) {
 				if ($ctype=="user") $favtype = "user";
 				else $favtype = "gedcom";
 			}
@@ -145,7 +151,6 @@ if (PGV_USER_ID) {
 		}
 	}
 	if (($action=="addfav")&&(!empty($url))) {
-		if (!isset($favnote)) $favnote = "";
 		if (empty($favtitle)) $favtitle = $url;
 		$favorite = array();
 		if (!isset($favtype)) {
@@ -166,7 +171,7 @@ if (PGV_USER_ID) {
 		$favorite["title"] = $favtitle;
 		addFavorite($favorite);
 	}
-	if (($action=="deletefav")&&(isset($fv_id))) {
+	if (($action=="deletefav")&&(!empty($fv_id))) {
 		deleteFavorite($fv_id);
 		if ($ctype=="gedcom") $_SESSION['clearcache'] = true;
 	}
