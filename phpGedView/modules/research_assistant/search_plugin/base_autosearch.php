@@ -210,7 +210,7 @@ class Base_AutoSearch {
 	function myear($person) {
 		$myears=array();
 		foreach ($person->getSpouseFamilies() as $family) {
-			$mdate=new GedcomDate($family->getMarriageDate());
+			$mdate=$family->getMarriageDate();
 			if ($mdate->isOK()) {
 				$myears[]=$mdate->gregorianYear();
 			} else {
