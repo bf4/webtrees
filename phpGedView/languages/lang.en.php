@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$pgv_lang['tree']					= "Tree";
+$pgv_lang["tree"]					= "Tree";
 $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "Show unknown gender";
 $pgv_lang["count"]					= "Count";
