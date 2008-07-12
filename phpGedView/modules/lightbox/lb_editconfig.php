@@ -36,15 +36,13 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
 global $pgv_lang, $pid, $GEDCOM ;
 
 $pid=safe_get('pid');
+$action = safe_POST("action");
 
 loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
 print_header($pgv_lang["configure_lightbox"]);
 
 require('modules/lightbox/lb_defaultconfig.php');
 if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
-
-//Fix for Tree Tab being added
-$tabno=$tabno+1;
 
 print "<span class=\"subheaders\">".$pgv_lang["configure_lightbox"]."</span>";
 print "<br /><br />";

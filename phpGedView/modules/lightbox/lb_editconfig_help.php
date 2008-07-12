@@ -28,6 +28,8 @@ require "config.php";
 
 loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
 
+$help = safe_GET("help");
+
 print_simple_header($pgv_lang["config_help"]);
 print '<span class="helpheader">';
 print_text("config_help");
