@@ -200,6 +200,7 @@
 
 		// Album Reorder include =============================
 		// Following used for Album media sort ------------------
+		$reorder=safe_get('reorder', '1', '0');
 		if ($reorder==1) {
 			if ($t==1) { $rownum1=$numm; }
 			if ($t==2) { $rownum2=$numm; }

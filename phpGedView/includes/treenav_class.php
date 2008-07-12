@@ -174,7 +174,7 @@ class TreeNav {
 		}
 		}
 		Behaviour.register(myrules);
-		
+		/*-- not used yet
 		function dragObserver() {
 			this.parent = null;
 			this.onEnd = function(eventName, draggable, event) {
@@ -187,6 +187,7 @@ class TreeNav {
 			}
 		}
 		Draggables.addObserver(new dragObserver());
+		*/
 	//-->
 	</script>
 		<?php
@@ -218,7 +219,7 @@ class TreeNav {
 		
 		?>
 		<span class="name1"><a href="individual.php?pid=<?php print $person->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><?php print $person->getSexImage().PrintReady($name); ?></a>
-		<img id="d_<?php print $person->getXref(); ?>" alt="<?php print $person->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" />
+		<!--  <img id="d_<?php print $person->getXref(); ?>" alt="<?php print $person->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" /> -->
 		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM); ?>');" /> 
 		</span><br />
 		<div class="details1 indent">
@@ -255,7 +256,7 @@ class TreeNav {
 			?>
 			<a href="individual.php?pid=<?php print $spouse->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"> 
 			<?php print $spouse->getSexImage().PrintReady($name); ?></a>
-			<img id="d_<?php print $spouse->getXref(); ?>" alt="<?php print $spouse->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" />
+			<!-- <img id="d_<?php print $spouse->getXref(); ?>" alt="<?php print $spouse->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" /> -->
 			<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM); ?>');" />
 			<br />
 			<div class="details1 indent">
