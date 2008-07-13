@@ -20,11 +20,11 @@
  *
  * @package PhpGedView
  * @subpackage Modules, punBB
- * @version $Id: menu.php 2265 2007-11-23 11:50:04Z nathanhaigh $
+ * @version $Id: menu.php 507 2006-10-17 21:07:54Z canajun2eh $
  * @author Patrick Kellum
  */
 //-- security check, only allow access from module.php
-if(strstr($_SERVER['SCRIPT_NAME'], 'punbb/menu.php')){print "Now, why would you want to do that.  You're not hacking are you?";exit;}
+if(strstr($_SERVER['SCRIPT_NAME'], 'menu.php')){print "Now, why would you want to do that.  You're not hacking are you?";exit;}
 
 // Load PGV embeding language file
 global $language_settings, $LANGUAGE, $pgv_lang;
@@ -43,6 +43,7 @@ class punbb_ModuleMenu
 	{
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $gallery;
+return null;
 		if(!file_exists('modules/punbb.php')){return null;}
 
 		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
@@ -59,7 +60,7 @@ class punbb_ModuleMenu
 		$menu->addSubmenu($submenu);
 
 		// Site Admin
-		if(PGV_USER_IS_ADMIN)
+		if(userIsAdmin(getUserName()))
 		{
 			$submenu = new Menu();$submenu->isSeperator();$menu->addSubmenu($submenu);
 
