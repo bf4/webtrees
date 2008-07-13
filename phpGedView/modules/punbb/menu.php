@@ -43,7 +43,6 @@ class punbb_ModuleMenu
 	{
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $gallery;
-return null;
 		if(!file_exists('modules/punbb.php')){return null;}
 
 		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
