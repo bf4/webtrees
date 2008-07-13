@@ -61,7 +61,7 @@ function expand_urls($text) {
  * print a fact record
  *
  * prints a fact record designed for the personal facts and details page
- * @param Event $eventObje	The Event object to print
+ * @param Event $eventObj	The Event object to print
  * @param boolean $noedit	Hide or show edit links
  */
 function print_fact(&$eventObj, $noedit=false) {
@@ -120,7 +120,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		// -- handle generic facts
 		if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
 			$factref = $fact;
-			if (!showFact($factref, $pid)) return false;
+			if (!$eventObj->canShow()) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
 			print "\n\t\t<tr class=\"".$rowID."\">";
@@ -445,7 +445,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				//-- catch all other facts that could be here
 				$special_facts = array("ADDR","ALIA","ASSO","CEME","CONC","CONT","DATE","DESC","EMAIL",
 				"FAMC","FAMS","FAX","NOTE","OBJE","PHON","PLAC","RESN","SOUR","STAT","TEMP",
-				"TIME","TYPE","WWW","_EMAIL","_PGVU", "URL", "AGE");
+				"TIME","TYPE","WWW","_EMAIL","_PGVU", "URL", "AGE","_PGVS","_PGVFS","_RATID");
 				$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $match, PREG_SET_ORDER);
 				if ($ct>0) print "<br />";
 				for($i=0; $i<$ct; $i++) {
