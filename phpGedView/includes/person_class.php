@@ -947,11 +947,9 @@ class Person extends GedcomRecord {
 						if (!is_null($spouse)) $factrec.="\r\n2 _PGVS @".$spouse->getXref()."@";
 						$factrec.="\r\n2 _PGVFS @$famid@\r\n";
 						if ($updfamily) $factrec .= "PGV_NEW\r\n";
-						//-- make a new event object that will be associated with the Person instead of the Family
-						$fevent = new Event($factrec,0);
-						$fevent->setParentObject($this);
-						if ($fact!="OBJE") $this->indifacts[] = $fevent;
-						else $this->otherfacts[]=$fevent;
+						$event->gedComRecord = $factrec;
+						if ($fact!="OBJE") $this->indifacts[] = $event;
+						else $this->otherfacts[]=$event;
 					}
 				}
 			}
