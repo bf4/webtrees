@@ -37,13 +37,13 @@ print_header($pgv_lang["clip_cart"]); ?>
 <h2><?php $pgv_lang["clippings_cart"] ?></h2>
 <?php
 
-if ($action=='add') {
-	if ($type=='fam') {?>
+if ($controller->action=='add') {
+	if ($controller->type=='fam') {?>
 		<form action="clippings.php" method="get">
 		<table>
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_links"]?>
-			<input type="hidden" name="id" value="<?php print $id; ?>" />
-			<input type="hidden" name="type" value="<?php print $type ?>" />
+			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
+			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
 			<input type="hidden" name="action" value="add1" /></tr></td>
 			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_family"]?></tr></td>
 			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["parents_and_family"]?></tr></td>
@@ -54,12 +54,12 @@ if ($action=='add') {
 		</table>
 		</form>
 	<?php }
-	else if ($type=='indi') {?>
+	else if ($controller->type=='indi') {?>
 		<form action="clippings.php" method="get">
 		<table>
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_p_links"]?>
-			<input type="hidden" name="id" value="<?php print $id; ?>" />
-			<input type="hidden" name="type" value="<?php print $type ?>" />
+			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
+			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
 			<input type="hidden" name="action" value="add1" /></tr></td>
 			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_person"]?></tr></td>
 			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["person_parents_sibs"]?></tr></td>
@@ -70,12 +70,12 @@ if ($action=='add') {
 			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
 		</table>
 		</form>
-	<?php } else if ($type=='sour')  {?>
+	<?php } else if ($controller->type=='sour')  {?>
 		<form action="clippings.php" method="get">
 		<table>
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_s_links"]?>
-			<input type="hidden" name="id" value="<?php print $id; ?>" />
-			<input type="hidden" name="type" value="<?php print $type ?>" />
+			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
+			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
 			<input type="hidden" name="action" value="add1" /></tr></td>
 			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_source"]?></tr></td>
 			<tr><td class="optionbox"><input type="radio" name="others" value="linked" /><?php print $pgv_lang["linked_source"]?></tr></td>
@@ -93,7 +93,7 @@ if ($controller->privCount>0) {
 if($ct==0) {
 
 	// -- new lines, added by Jans, to display helptext when cart is empty
-	if ($action!='add') {
+	if ($controller->action!='add') {
 
 		loadLangFile("pgv_help");
 		print_text("help_clippings.php");
@@ -138,8 +138,8 @@ if($ct==0) {
 	print "\r\n\t\t<br /><br />".$pgv_lang["cart_is_empty"]."<br /><br />";
 }
 else {
-	if ($action != 'download' && $action != 'add') { ?>
-		<form method="post" action="clippings.php">
+	if ($controller->action != 'download' && $controller->action != 'add') { ?>
+		<form method="get" action="clippings.php">
 		<input type="hidden" name="action" value="download" />
 		<table><tr><td valign="top">
 		<table>
@@ -150,7 +150,6 @@ else {
 		<?php print getLRM();?><input type="radio" name="filetype" checked="checked"  value="gedcom" /> GEDCOM <?php print_help_link("def_gedcom_help", "qm"); ?><?php print getLRM();?>
 		<br/>
 		<?php print getLRM();?><input type="radio" name="filetype" value="gramps" /> Gramps XML <?php print_help_link("def_gramps_help", "qm"); ?><?php print getLRM();?>
-		</td></tr>
 		</td></tr>
 
 		<tr><td class="descriptionbox wrap"><?php print $pgv_lang["zip_files"]; ?> </td>
@@ -238,7 +237,9 @@ else {
 			if ($tag=='NOTE') $icon = "notes";
 			if ($tag=='OBJE') $icon = "media";
 			?>
-			<tr><td class="list_value"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES[$icon]["small"];?>" border="0" alt="<?php echo $tag;?>" title="<?php echo $tag;?>" /></td>
+			<tr><td class="list_value">
+				<?php if (!empty($icon)) { ?><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES[$icon]["small"];?>" border="0" alt="<?php echo $tag;?>" title="<?php echo $tag;?>" /><?php } ?>
+			</td>
 			<td class="list_value ltr"><?php echo $clipping['id']?></td>
 			<td class="list_value">
 			<?php

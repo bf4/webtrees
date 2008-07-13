@@ -33,7 +33,6 @@ require_once('includes/gedcomrecord.php');
 
 class Source extends GedcomRecord {
 	var $disp = true;
-	var $sourcefacts = null;
 	var $indilist = null;
 	var $famlist = null;
 
@@ -100,7 +99,7 @@ class Source extends GedcomRecord {
 	 */
 	function getSourceFacts() {
 		$this->parseFacts();
-		return $this->sourcefacts;
+		return $this->facts;
 	}
 
 	/**

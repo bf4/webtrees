@@ -1290,8 +1290,15 @@ function PGVRFactsSHandler($attrs) {
 		$tag = $vars[$match[1]]["id"];
 	}
 
-	if (empty($attrs["diff"])) {
-	$repeats = get_all_subrecords($gedrec, $tag, $families);
+	if (empty($attrs["diff"]) && !empty($id)) {
+//		$repeats = get_all_subrecords($gedrec, $tag, $families);
+		$record = GedcomRecord::getInstance($id);
+		$facts = $record->getFacts(explode(",",$tag));
+		sort_facts($facts);
+		$repeats = array();
+		foreach($facts as $event) {
+			if (strpos($tag.",",$event->getTag())===false) $repeats[]=$event->getGedComRecord();
+		}
 	}
 	else {
 		global $nonfacts;

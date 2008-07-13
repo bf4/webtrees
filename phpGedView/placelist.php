@@ -34,10 +34,10 @@ function case_in_array($value, $array) {
 	}
 	return false;
 }
-
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['display'])) $display = $_REQUEST['display'];
-if (isset($_REQUEST['parent'])) $parent = $_REQUEST['parent'];
+$action = safe_GET('action');
+$display = safe_GET('display');
+$parent = safe_GET('parent');
+$level = safe_GET('level');
 
 if (empty($action)) $action = "find";
 if (empty($display)) $display = "hierarchy";

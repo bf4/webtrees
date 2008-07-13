@@ -135,7 +135,7 @@ if ((!$controller->isPrintPreview())&&($controller->userCanEdit())) {
 		<tr class="center"><td colspan="2">
 <?php
 
-$query = "REPO @$rid@";
+$query = "REPO @".$controller->rid."@";
 // -- array of sources
 $mysourcelist = array();
 

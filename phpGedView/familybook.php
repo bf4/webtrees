@@ -137,7 +137,8 @@ function print_descendency($pid, $count) {
 				$marrec = get_sub_record(1, "1 MARR", $famrec);
 				if (!empty($marrec)) {
 					print "<br />";
-					print_simple_fact($famrec, "1 MARR", $famid);
+					$marriage = new Event($marrec);
+					$marriage->print_simple_fact();
 				}
 				if ($parents["HUSB"]!=$pid) print_pedigree_person($parents["HUSB"]);
 				else print_pedigree_person($parents["WIFE"]);

@@ -43,6 +43,23 @@
 
 require("config.php");
 require_once("includes/functions_print_lists.php");
+
+// We show three different lists:
+$alpha   =safe_GET('alpha'); // All surnames beginning with this letter where "@"=unknown and ","=none
+$surname =safe_GET('surname'); // All indis with this surname
+$show_all=safe_GET('show_all', array('no','yes'), 'no'); // All indis
+
+// Long lists can be broken down by given name
+$falpha=safe_GET('falpha'); // All first names beginning with this letter
+$show_all_firstnames=safe_GET('show_all_firstnames', array('no','yes'), 'no');
+
+// We can show either a list of surnames or a list of names
+$surname_sublist=safe_GET('surname_sublist', array('no','yes'));
+if (!$surname_sublist) {
+	$surname_sublist=safe_COOKIE('surname_sublist', array('no','yes'), 'yes');
+}
+setcookie('surname_sublist', $surname_sublist);
+
 print_header($pgv_lang["family_list"]);
 print "<div class =\"center\">";
 print "\n\t<h2>".$pgv_lang["family_list"]."</h2>";

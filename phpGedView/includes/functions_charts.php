@@ -177,8 +177,9 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		print "<a href=\"".encode_url("family.php?famid={$famid}")."\" class=\"details1\">";
 		if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)" . getLRM() . "&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
-		if (showFact("MARR", $famid)) {
-			print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); 
+		$marriage = $family->getMarriage();
+		if ($marriage->canShow()) {
+			$marriage->print_simple_fact(); 
 		} else print $pgv_lang["private"];
 		print "</a>";
 	}
