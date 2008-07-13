@@ -1,13 +1,14 @@
 <?php
 /**
- * Template for drawing the main blocks on the portal pages
+ * Template for drawing the height-restricted blocks on the portal pages
  * 
  * This template expects that the following variables will be set
+ * $id - the DOM id for the block div
  * $title - the title of the block
  * $content - the content of the block
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
