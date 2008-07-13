@@ -46,6 +46,7 @@ class gallery2_ModuleMenu
 	{
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $gallery;
+return null;
 		if(!file_exists('modules/gallery2.php')){return null;}
 
 		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
@@ -103,7 +104,8 @@ class gallery2_ModuleMenu
 */
 
 		// Site Admin
-		if(PGV_USER_IS_ADMIN) {
+		if(userIsAdmin(getUserName()))
+		{
 			$submenu = new Menu($pgv_lang['mod_gallery2_siteadmin'], 'index.php?mod=gallery2&amp;g2_view=core.SiteAdmin');
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}");
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
