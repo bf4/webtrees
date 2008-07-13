@@ -32,15 +32,16 @@ loadLangFile("lb_lang");
 // LBox --------------------------------------------------------
 
 // $LB_SS_SPEED = "5";	
-
-if (!isset($level)) $level = 0;
-if (!isset($action)) $action = "";
-if (!isset($filter)) $filter = "";
-else $filter = stripLRMRLM(stripslashes($filter));
-if (!isset($search)) $search = "yes";
-if (!isset($folder)) $folder = $MEDIA_DIRECTORY;
+$level = safe_GET("level","","0");
+$action = safe_GET('action');
+$filter = safe_GET('filter');
+$filter = stripLRMRLM(stripslashes($filter));
+$search = safe_GET('search');
+$folder = safe_GET('folder');
+if (empty($folder)) $folder = $MEDIA_DIRECTORY;
 if (!isset($_SESSION["medialist"])) $search = "yes";
-$currentdironly = (isset($subdirs) && $subdirs=="on") ? false : true;
+
+$currentdironly = (isset($_REQUEST['subdirs']) && $subdirs=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
 

@@ -46,7 +46,9 @@ class Base_AutoSearch {
 	function options() {
 		global $pgv_lang;
 
-		$person=Person::getInstance(safe_GET_xref('pid'));
+		$pid = safe_GET_xref('pid');
+		if (empty($pid)) $pid = safe_POST_xref('pid');
+		$person=Person::getInstance($pid);
 
 		$html ='<form name="autosearch" action="module.php" target="_blank" method="post">'; 
 		$html.='<input type="hidden" name="mod"        value="research_assistant" />';
@@ -115,7 +117,7 @@ class Base_AutoSearch {
 		}
 	}
 
-	function surname($person, $inputname='surname') {
+	function surname(&$person, $inputname='surname') {
 		$all_surn=array();
 		foreach ($person->getAllNames() as $name) {
 			list($surn)=explode(',', $name['sort']);

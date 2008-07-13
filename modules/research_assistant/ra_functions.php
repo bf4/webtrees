@@ -1816,7 +1816,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 													$tempDate = $tVal->getDate();
 													$tempPlace = $tVal->getPlace();
 
-													$place = trim($place);
+													$tempDate = $tempDate->date1;
+													$sortdate = $tempDate->y;
+													$sortdate.=($tempDate->m) ? $tempDate->Format('m') : '00';
+													$sortdate.=($tempDate->d) ? $tempDate->Format('d') : '00';
+													
+													$place = trim($tempPlace);
 														
 													if(empty($closest))
 													{

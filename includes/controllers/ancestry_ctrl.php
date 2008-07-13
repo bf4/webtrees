@@ -213,13 +213,16 @@ class AncestryControllerRoot extends BaseController {
 			}
 		}
 
-		if (($parents or $SHOW_EMPTY_BOXES) and $new and $depth>0) {
+		if (($parents || $SHOW_EMPTY_BOXES) && $new && $depth>0) {
 			// print marriage info
 			print "<span class=\"details1\" style=\"white-space: nowrap;\" >";
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" align=\"middle\" alt=\"\" /><a href=\"javascript: ".$pgv_lang["view_family"]."\" onclick=\"expand_layer('sosa_".$sosa."'); return false;\" class=\"top\"><img id=\"sosa_".$sosa."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a> ";
 			print "&nbsp;<span class=\"person_box\">&nbsp;".($sosa*2)."&nbsp;</span>&nbsp;".$pgv_lang["and"];
 			print "&nbsp;<span class=\"person_boxF\">&nbsp;".($sosa*2+1)." </span>&nbsp;";
-			if (showFact("MARR", $famid)) print_simple_fact($famrec, "MARR", $parents["WIFE"]); else print $pgv_lang["private"];
+			if (!empty($family)) {
+				$marriage = $family->getMarriage();
+				if ($marriage->canShow()) $marriage->print_simple_fact(); else print $pgv_lang["private"];
+			}
 			print "</span>";
 			// display parents recursively
 			print "\r\n<ul style=\"list-style: none; display: block;\" id=\"sosa_$sosa\">";

@@ -618,8 +618,8 @@ class GedcomRecord {
 	 * returns an array of all of the facts
 	 * @return Array
 	 */
-	function getFacts() {
-		$this->parseFacts();
+	function getFacts($nfacts=NULL) {
+		$this->parseFacts($nfacts);
 		return $this->facts;
 	}
 
@@ -638,7 +638,7 @@ class GedcomRecord {
 	/**
 	 * Parse the facts from the record
 	 */
-	function parseFacts() {
+	function parseFacts($nfacts=NULL) {
 		//-- only run this function once
 		if (!is_null($this->facts) && is_array($this->facts)) return;
 		$this->facts=array();
@@ -659,8 +659,11 @@ class GedcomRecord {
 			if ($i==$lct||$line{0}==1) {
 				if ($i>1){
 					$event = new Event($factrec, $linenum);
-					$event->setParentObject($this);
-					$this->facts[] = $event;
+					$fact = $event->getTag();
+					if ($nfacts==NULL || !in_array($fact, $nfacts)) {
+						$event->setParentObject($this);
+						$this->facts[] = $event;
+					}
 				}
 				$factrec = $line;
 				$linenum = $i;
