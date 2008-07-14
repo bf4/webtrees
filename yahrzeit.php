@@ -127,7 +127,8 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		foreach ($yahrzeits as $yahrzeit)
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
-				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".$ind->getFullName()."</a>".$ind->getSexImage();
+//@@			$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".$ind->getFullName()."</a>".$ind->getSexImage();
+				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".PrintReady($ind->getFullName())."</a>".$ind->getSexImage();
 				$content .= "<div class=\"indent\">";
 				$content .= $yahrzeit['date']->Display(true);
 				$content .= ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
