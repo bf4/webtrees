@@ -1413,8 +1413,8 @@ class Person extends GedcomRecord {
 						// check if this fact already exists in the list
 						$found = false;
 						if ($sdate) foreach($this->indifacts as $k=>$v) {
-							if (strpos($v[1], trim($sdate))
-							&& strpos($v[1], "2 ASSO @".$person->getXref()."@")) {
+							if (strpos($v->getGedComRecord(), trim($sdate))
+							&& strpos($v->getGedComRecord(), "2 ASSO @".$person->getXref()."@")) {
 								$found = true;
 								break;
 							}
