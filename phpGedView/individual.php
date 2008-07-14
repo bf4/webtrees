@@ -493,7 +493,7 @@ if(empty($SEARCH_SPIDER)) {
 <?php
 	require_once('includes/treenav_class.php');
 	if ($controller->default_tab==5) {
-		$inav = new TreeNav($this->pid,'treetab');
+		$inav = new TreeNav($controller->pid,'treetab');
 	}
 	else {
 		$inav = new TreeNav('none','treetab');
