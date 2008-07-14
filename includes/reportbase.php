@@ -1291,7 +1291,6 @@ function PGVRFactsSHandler($attrs) {
 	}
 
 	if (empty($attrs["diff"]) && !empty($id)) {
-//		$repeats = get_all_subrecords($gedrec, $tag, $families);
 		$record = GedcomRecord::getInstance($id);
 		$facts = $record->getFacts(explode(",",$tag));
 		sort_facts($facts);

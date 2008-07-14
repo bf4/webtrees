@@ -359,50 +359,51 @@ class MediaControllerRoot extends IndividualController{
 	function getFacts($includeFileName=true) {
 		global $pgv_changes, $GEDCOM, $pgv_lang;
 
-		$ignore = "TITL,FILE";
-		if ($this->show_changes=='yes') $ignore = '';
-		else if (PGV_USER_GEDCOM_ADMIN) $ignore = "TITL";
-		$facts = get_all_subrecords($this->mediaobject->getGedcomRecord(), $ignore);
-		if ($includeFileName) $facts[] = "1 FILE ".$this->mediaobject->getFilename();
-		$facts[] = "1 FORM ".$this->mediaobject->getFiletype();
+		$ignore = array("TITL","FILE");
+		if ($this->show_changes=='yes') $ignore = array();
+		else if (PGV_USER_GEDCOM_ADMIN) $ignore = array("TITL");
+		
+		$facts = $this->mediaobject->getFacts($ignore);
+		sort_facts($facts);
+		if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
+//		$facts[] = new Event("1 FORM ".$this->mediaobject->getFiletype());
 		$mediaType = $this->mediaobject->getMediatype();
-		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = "1 TYPE ".$pgv_lang["TYPE__".$mediaType];
-		else $facts[] = "1 TYPE ".$pgv_lang["TYPE__other"];
+		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);
+		else $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__other"]);
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes=="yes")) {
 			$newrec = find_updated_record($this->pid);
-			$newfacts = get_all_subrecords($newrec);
 			$newmedia = new Media($newrec);
-			if ($includeFileName) $newfacts[] = "1 TYPE ".$pgv_lang["TYPE__".$mediaType];
-			$newfacts[] = "1 FORM ".$newmedia->getFiletype();
+			$newfacts = $newmedia->getFacts($ignore);
+			if ($includeFileName) $newfacts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);
+			$newfacts[] = new Event("1 FORM ".$newmedia->getFiletype());
 			$mediaType = $newmedia->getMediatype();
-			if (isset($pgv_lang["TYPE__".$mediaType])) $newfacts[] = "1 TYPE ".$mediaType;
-			else $newfacts[] = "1 TYPE ".$pgv_lang["TYPE__other"];
-			//print_r($newfacts);
+			if (isset($pgv_lang["TYPE__".$mediaType])) $newfacts[] = new Event("1 TYPE ".$mediaType);
+			else $newfacts[] = new Event("1 TYPE ".$pgv_lang["TYPE__other"]);
 			//-- loop through new facts and add them to the list if they are any changes
 			//-- compare new and old facts of the Personal Fact and Details tab 1
 			for($i=0; $i<count($facts); $i++) {
 				$found=false;
 				foreach($newfacts as $indexval => $newfact) {
-					if (trim($newfact)==trim($facts[$i])) {
+					if (trim($newfact->gedComRecord)==trim($facts[$i]->gedComRecord)) {
 						$found=true;
 						break;
 					}
 				}
 				if (!$found) {
-					$facts[$i].="\r\nPGV_OLD\r\n";
+					$facts[$i]->gedComRecord.="\r\nPGV_OLD\r\n";
 				}
 			}
 			foreach($newfacts as $indexval => $newfact) {
 				$found=false;
 				foreach($facts as $indexval => $fact) {
-					if (trim($fact)==trim($newfact)) {
+					if (trim($fact->gedComRecord)==trim($newfact->gedComRecord)) {
 						$found=true;
 						break;
 					}
 				}
 				if (!$found) {
-					$newfact.="\r\nPGV_NEW\r\n";
+					$newfact->gedComRecord.="\r\nPGV_NEW\r\n";
 					$facts[]=$newfact;
 				}
 			}
@@ -411,20 +412,14 @@ class MediaControllerRoot extends IndividualController{
 		if ($this->mediaobject->fileExists()) {
 			// get height and width of image, when available
 			if ($this->mediaobject->getWidth()) {
-				$facts[] = "1 EVEN " . getLRM() . $this->mediaobject->getWidth()." x ".$this->mediaobject->getHeight() . getLRM() . "\r\n2 TYPE image_size";
+				$facts[] = new Event("1 EVEN " . getLRM() . $this->mediaobject->getWidth()." x ".$this->mediaobject->getHeight() . getLRM() . "\r\n2 TYPE image_size");
 			}
 			//Prints the file size
 			//Rounds the size of the image to 2 decimal places
 			$size = getLRM() . round($this->mediaobject->getFilesizeraw()/1024, 2)." kb" . getLRM();
-			$facts[] = "1 EVEN ".$size."\r\n2 TYPE file_size";
+			$facts[] = new Event("1 EVEN ".$size."\r\n2 TYPE file_size");
 		}
 		
-		$newfacts = array();
-		foreach($facts as $f=>$fact) {
-			$newfacts[] = new Event($fact);
-		}
-		$facts = $newfacts;
-
 		sort_facts($facts);
 		return $facts;
 	}

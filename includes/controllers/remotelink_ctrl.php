@@ -49,6 +49,8 @@ class RemoteLinkController extends BaseController {
 	 *
 	 */
 	function init() {
+		global $GEDCOM;
+		
 		if (file_exists("modules/FamilySearch/familySearchWrapper.php")) {
 			$this->has_familysearch = true;
 			require_once("modules/FamilySearch/familySearchWrapper.php");
@@ -71,7 +73,7 @@ class RemoteLinkController extends BaseController {
 		else{
 			$this->pid = clean_input($this->pid);
 
-			if (!isset($pgv_changes[$pid."_".$GEDCOM])) $this->person = Person::getInstance($this->pid);
+			if (!isset($pgv_changes[$this->pid."_".$GEDCOM])) $this->person = Person::getInstance($this->pid);
 			else {
 				$gedrec = find_updated_record($this->pid);
 				$this->person = new Person($gedrec);
