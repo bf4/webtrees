@@ -1541,4 +1541,5 @@ $pgv_lang["age_differences"]		= "Pokaż różnicę wieku";
 $pgv_lang["count"]					= "Liczba";
 $pgv_lang["showUnknown"]			= "Pokaż osoby o nieznanej płci";
 $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
+$pgv_lang["tree"]					= "Drzewo";
 ?>
