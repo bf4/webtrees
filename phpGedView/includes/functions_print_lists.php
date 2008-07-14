@@ -1477,7 +1477,8 @@ function format_surname_list($surnames, $style, $totals) {
 				$first_spfxsurn=$spfxsurn;
 			}
 		}
-		$subhtml='<a href="'.$url.'">'.PrintReady(implode(', ', array_keys($surns))).'</a>';
+		$subhtml='<a href="'.$url.'">'.implode(', ', array_keys($surns)).'</a>'; 
+		
 		if ($totals) {
 			$subtotal=0;
 			foreach ($surns as $spfxsurn=>$indis) {
@@ -1485,7 +1486,8 @@ function format_surname_list($surnames, $style, $totals) {
 			}
 			$subhtml.=' ['.$subtotal.']';
 		}
-		$html[]=$subhtml;
+		$html[]=PrintReady($subhtml);  
+		
 	}
 	switch ($style) {
 	case 1:
