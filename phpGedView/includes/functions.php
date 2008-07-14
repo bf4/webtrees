@@ -83,9 +83,10 @@ function check_db($ignore_previous=false) {
 		'username' => $DBUSER,
 		'password' => $DBPASS,
 		'hostspec' => $DBHOST,
-		'port'     => $DBPORT,
 		'database' => $DBNAME
 	);
+	
+	if (!empty($DBPORT)) $dsn['port'] = $DBPORT;
 	
 	if ($ignore_previous) $dsn['new_link'] = true;
 
