@@ -322,9 +322,10 @@ else {
 			if (isset($fstartalpha)) $falpha = $fstartalpha;
 			if ($show_all_firstnames=="no") {
 				$ffamlist = array();
+				if (empty($falpha)) $falpha = key($firstalpha);
 				$ids = preg_split("/,/", $firstalpha[$falpha]["ids"]);
 				foreach($ids as $indexval => $id) {
-					$ffamlist[$id] = $famlist[$id];
+					if (isset($famlist[$id])) $ffamlist[$id] = $famlist[$id];
 				}
 				$tfamlist = $ffamlist;
 			}
