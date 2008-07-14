@@ -1117,7 +1117,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			
 		}
 
-		//$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN,_UID,_COMM", false);
 		$indifacts = $person->getIndiFacts();
 
 		/* @var $far Event */
@@ -2127,10 +2126,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	 * delete all facts associated with the given task id
 	 * @param string $taskid	the taskid to delete facts for
-	 * @param string $indirec	the record to look in
+	 * @param GedcomRecord $record	the record to look in
 	 * @return string 			the updated record without the associated facts
 	 */
-	function deleteRAFacts($taskid, $indirec) {
+	function deleteRAFacts($taskid, &$record) {
+		$indirec = $record->getGedcomRecord();
 		if (preg_match("/\d _RATID ".$taskid."/", $indirec)>0) {
 			$lines = preg_split("/[\r\n]/", $indirec);
 			$newrec = $lines[0]."\r\n";

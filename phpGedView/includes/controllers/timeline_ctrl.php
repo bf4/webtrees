@@ -119,7 +119,6 @@ class TimelineControllerRoot extends BaseController {
 				// find all the fact information
 				$indi->add_family_facts(false);
 				$facts = $indi->getIndiFacts($this->nonfacts);
-				//$facts = get_all_subrecords($indi->getGedcomRecord(), $this->nonfacts, true, false);
 				foreach($facts as $indexval => $event) {
 					//-- get the fact type
 					$fact = $event->getTag();
