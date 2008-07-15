@@ -220,7 +220,7 @@ function print_htmlplus_block_config($config)
 				'filename'		=>$entry,
 				'title'			=>(isset($pgv_lang[$bits[0]]))?$pgv_lang[$bits[0]]:$bits[0],
 				'description'	=>(isset($pgv_lang[$bits[1]]))?$pgv_lang[$bits[1]]:$bits[1],
-				'template'		=>htmlspecialchars(join('', $tpl))
+				'template'		=>htmlspecialchars(join('', $tpl),ENT_COMPAT,'UTF-8')
 			);
 		}
 	}
