@@ -485,7 +485,7 @@ function build_indiv_map($indifacts, $famids) {
 	$tables = $DBCONN->getListOf('tables');
 	$placelocation=in_array($TBLPREFIX."placelocation", $tables);
 	//-- sort the facts
-	sort_facts($indifacts);
+	//sort_facts($indifacts); facts should already be sorted
 	$i = 0;
 	foreach ($indifacts as $key => $value) {
 			$fact = $value->getTag();

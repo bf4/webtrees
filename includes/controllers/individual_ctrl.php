@@ -1961,18 +1961,18 @@ class IndividualControllerRoot extends BaseController {
 	        <?php
 	        return;
 	    } else {
-		                $famids = array();
-		                $families = $this->indi->getSpouseFamilies();
-		                foreach($families as $famid=>$family) {
-		                    $famids[] = $family->getXref();
-		                }
-						$this->indi->add_family_facts(false);
-						// LB Fix if no googlemaps ========================================================
-						if (file_exists("modules/googlemap/googlemap.php")) {
-							create_indiv_buttons();
-							build_indiv_map($this->getIndiFacts(), $famids);
-						}
-						// LB Fix if no googlemaps ========================================================
+                $famids = array();
+                $families = $this->indi->getSpouseFamilies();
+                foreach($families as $famid=>$family) {
+                    $famids[] = $family->getXref();
+                }
+				$this->indi->add_family_facts(false);
+				// LB Fix if no googlemaps ========================================================
+				if (file_exists("modules/googlemap/googlemap.php")) {
+					create_indiv_buttons();
+					build_indiv_map($this->getIndiFacts(), $famids);
+				}
+				// LB Fix if no googlemaps ========================================================
 		}
 	}
 
