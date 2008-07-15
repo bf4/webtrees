@@ -29,18 +29,17 @@ require_once 'includes/functions_print_lists.php';
 
 /**
  * is the person alive in the given year
- * @param string $indirec	the persons raw gedcom record
+ * @param Person $person	the persons raw gedcom record
  * @param int $year			the year to check if they are alive in
  * @return int			return 0 if the person is alive, negative number if they died earlier, positive number if they will be born in the future
  */
-function check_alive($indirec, $year) {
+function check_alive(&$person, $year) {
 	global $MAX_ALIVE_AGE;
-	if (is_dead($indirec, $year)) return -1;
+	if (is_dead($person->getGedcomRecord(), $year)) return -1;
 
 	// Died before year?
-	$deathrec = get_sub_record(1, "1 DEAT", $indirec);
-	if (preg_match("/\d DATE (.*)/", $deathrec, $match)) {
-		$ddate = new GedcomDate($match[1]);
+	$ddate = $person->getDeathDate(false);
+	if ($ddate) {
 		$dyear=$ddate->gregorianYear();
 		if ($year>$dyear) {
 			return -1;
@@ -48,9 +47,8 @@ function check_alive($indirec, $year) {
 	}
 
 	// Born after year?
-	$birthrec = get_sub_record(1, "1 BIRT", $indirec);
-	if (preg_match("/\d DATE (.*)/", $birthrec, $match)) {
-		$bdate = new GedcomDate($match[1]);
+	$bdate = $person->getBirthDate(false);
+	if ($bdate) {
 		$byear=$bdate->gregorianYear();
 		if ($year<$byear) {
 			return 1;
@@ -63,10 +61,10 @@ function check_alive($indirec, $year) {
 
 	// If no death record than check all dates;
 	$years = array();
-	$subrecs = get_all_subrecords($indirec, "CHAN", true, true, false);
-	foreach($subrecs as $ind=>$subrec)
-		if (preg_match("/\d DATE (.*)/", $subrec, $match)) {
-			$date = new GedcomDate($match[1]);
+	$facts = $person->getFacts(array("CHAN","SLGS","SLGC","BAPL","ENDL"));
+	foreach($facts as $ind=>$fact)
+		$date = $fact->getDate();
+		if ($date) {
 			$datey= $date->gregorianYear();
 			if ($datey) {
 				$years[] = $datey;
@@ -206,8 +204,9 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	foreach($indilist as $gid=>$indi) {
 		//-- make sure that favorites from other gedcoms are not shown
 		if ($indi["gedfile"]==PGV_GED_ID) {
-			if (displayDetailsById($gid)||showLivingNameById($gid)) {
-				$ret = check_alive($indi["gedcom"], $year);
+			$person = Person::getInstance($gid);
+			if ($person->canDisplayName()) {
+				$ret = check_alive($person, $year);
 				if ($ret==0) {
 					foreach($indi["names"] as $indexval => $name) {
 						surname_count($name[2]);
@@ -244,7 +243,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha=".$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname=@N.N.")."\">&nbsp;".$pgv_lang["NN"] . getLRM() . " - [".($namecount["match"])."]" . getLRM() . "&nbsp;";
 		}
 		else {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha="$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname="$namecount["name"])."\">".PrintReady($namecount["name"]) . getLRM() . " - [" . ($namecount["match"])."]" . getLRM();
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"".encode_url("aliveinyear.php?year={$year}&alpha=".$namecount["alpha"]."&surname_sublist={$surname_sublist}&surname=".$namecount["name"])."\">".PrintReady($namecount["name"]) . getLRM() . " - [" . ($namecount["match"])."]" . getLRM();
 		}
 
 		print "</a></div>\n";
@@ -280,8 +279,9 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	$temp = 0;
 	$surnames = array();
 	foreach($tindilist as $gid=>$indi) {
-		if ((displayDetailsByID($gid))||(showLivingNameById($gid))) {
-			$ret = check_alive($indi["gedcom"], $year);
+		$person = Person::getInstance($gid);
+		if ($person->canDisplayName()) {
+			$ret = check_alive($person, $year);
 			if ($ret==0) {
 				$indi_alive++;
 				foreach($indi["names"] as $name) {
@@ -370,15 +370,18 @@ else {
 		foreach($tindilist as $gid => $indi) {
 			//-- make sure that favorites from other gedcoms are not shown
 			if ($indi["gedfile"]==PGV_GED_ID) {
-				$ret = check_alive($indi["gedcom"], $year);
-				if ($ret==0) {
-					foreach($indi["names"] as $indexval => $namearray) {
-						$names[] = array($namearray[0], $namearray[1], $namearray[2], $namearray[3], $gid);
+				$person = Person::getInstance($gid);
+				if ($person->canDisplayName()) {
+					$ret = check_alive($person, $year);
+					if ($ret==0) {
+						foreach($indi["names"] as $indexval => $namearray) {
+							$names[] = array($namearray[0], $namearray[1], $namearray[2], $namearray[3], $gid);
+						}
+						$total_living++;
 					}
-					$total_living++;
+					else if ($ret<0) $indi_dead++;
+					else $indi_unborn++;
 				}
-				else if ($ret<0) $indi_dead++;
-				else $indi_unborn++;
 			}
 		}
 		uasort($names, "itemsort");
@@ -459,23 +462,26 @@ else {
 		$i=0;
 		$names = array();
 		foreach($tindilist as $gid => $indi) {
-			$ret = check_alive($indi["gedcom"], $year);
-			if ($ret==0) {
-				foreach($indi["names"] as $indexval => $namearray) {
-					$text = "";
-					if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
-						if ($alpha == "\xC3\x98") $text = "OE";
-						else if ($alpha == "\xC3\x86") $text = "AE";
-						else if ($alpha == "\xC3\x85") $text = "AA";
-					}
-					if ((empty($surname)&&((preg_match("/^$alpha/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/", $namearray[1])>0))) || (stristr($namearray[2], $surname)!==false)) {
-						$name = check_NN(sortable_name_from_name($namearray[0]));
-						$names[] = array("gid"=>$gid, "name"=>$name);
+			$person = Person::getInstance($gid);
+			if ($person->canDisplayName()) {
+				$ret = check_alive($person, $year);
+				if ($ret==0) {
+					foreach($indi["names"] as $indexval => $namearray) {
+						$text = "";
+						if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
+							if ($alpha == "\xC3\x98") $text = "OE";
+							else if ($alpha == "\xC3\x86") $text = "AE";
+							else if ($alpha == "\xC3\x85") $text = "AA";
+						}
+						if ((empty($surname)&&((preg_match("/^$alpha/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/", $namearray[1])>0))) || (stristr($namearray[2], $surname)!==false)) {
+							$name = check_NN(sortable_name_from_name($namearray[0]));
+							$names[] = array("gid"=>$gid, "name"=>$name);
+						}
 					}
 				}
+				else if ($ret<0) $indi_dead++;
+				else $indi_unborn++;
 			}
-			else if ($ret<0) $indi_dead++;
-			else $indi_unborn++;
 		}
 		uasort($names, "itemsort");
 		$count = count($names);

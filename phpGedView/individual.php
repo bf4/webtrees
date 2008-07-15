@@ -486,7 +486,7 @@ else
 
 <!-- ============================= Start 6th tab individual page ==== Tree -->
 <?php
-if(empty($SEARCH_SPIDER)) {
+if(empty($SEARCH_SPIDER) && file_exists("includes/treenav_class.php")) {
 	print "<div id=\"tree\" class=\"tab_page\" style=\"display:none; border: solid blue 1px;\" >\n";
 ?>
 <div id="tree_content">
@@ -498,8 +498,9 @@ if(empty($SEARCH_SPIDER)) {
 	else {
 		$inav = new TreeNav('none','treetab');
 	}
-	$inav->generations = 5;
-	$inav->drawViewport('treetab', "100%", "350px");
+	$inav->generations = 7;
+	$inav->zoomLevel = -1;
+	$inav->drawViewport('treetab', "100%", "600px");
 ?>
 </div>
 </div>
@@ -683,6 +684,7 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	}
 <?php if ($controller->isPrintPreview()) print "tabswitch(0);";
 else print "tabswitch(". ($controller->default_tab+1) .");\n";
+if ($controller->default_tab==5) print "treetab.sizeLines();\n";
 ?>
 if (typeof toggleByClassName == "undefined") alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');
 

@@ -580,10 +580,12 @@ function print_fact_sources($factrec, $level, $return=false) {
 			if ($EXPAND_SOURCES) $data .= " style=\"display:block\"";
 			$data .= " class=\"source_citations\">";
 			// PUBL
-			$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
-			if (!empty($text)) {
-				$data .= "<span class=\"label\">".$factarray["PUBL"].": </span>";
-				$data .= $text;
+			if ($source) {
+				$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
+				if (!empty($text)) {
+					$data .= "<span class=\"label\">".$factarray["PUBL"].": </span>";
+					$data .= $text;
+				}
 			}
 			$data .= printSourceStructure(getSourceStructure($srec));
 			$data .= "<div class=\"indent\">";
