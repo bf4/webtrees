@@ -464,13 +464,13 @@ class Person extends GedcomRecord {
 				}
 				foreach ($this->getSpouseFamilies() as $family) {
 					$tmp=$family->getMarriageDate();
-					if ($tmp && $tmp->MinJD()) {
+					if (is_object($tmp) && $tmp->MinJD()) {
 						$min[]=$tmp->MaxJD()-365*45;
 						$max[]=$tmp->MinJD()-365*15;
 					}
 					if ($spouse=$family->getSpouse($this)) {
 						$tmp=$spouse->getBirthDate();
-						if ($tmp->MinJD()) {
+						if (is_object($tmp) && $tmp->MinJD()) {
 							$min[]=$tmp->MaxJD()-365*25;
 							$max[]=$tmp->MinJD()+365*25;
 						}

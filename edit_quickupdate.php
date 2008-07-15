@@ -1425,7 +1425,7 @@ if ($action=="choosepid") {
 	foreach($reqdfacts as $ind=>$fact) {
 		$indifacts[] = array($fact, "1 $fact\r\n", true, 0);
 	}
-	sort_facts($indifacts);
+	sort_facts_old($indifacts);
 	$sfams = find_families_in_record($gedrec, "FAMS");
 	$cfams = find_families_in_record($gedrec, "FAMC");
 	if (count($cfams)==0) $cfams[] = "";

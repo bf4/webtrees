@@ -38,6 +38,6 @@ if (!empty($_REQUEST['jsname'])) $name = $_REQUEST['jsname'];
 $nav = new TreeNav($rootid, $name, $zoom);
 
 print_header('test');
-$nav->drawViewport('', "", "450px");
+$nav->drawViewport('', "", "600px");
 print_footer();
 ?>
