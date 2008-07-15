@@ -31,7 +31,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 $search = @$HTTP_GET_VARS["search"];
-print "<title>PhpGedView : changelog (".htmlentities($search).")</title>\n";
+print "<title>PhpGedView : changelog (".htmlentities($search,ENT_COMPAT,'UTF-8').")</title>\n";
 
 $text = file_get_contents("changelog.txt");
 $wait = @file_get_contents("changelog.local.txt");

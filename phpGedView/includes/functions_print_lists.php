@@ -1356,7 +1356,7 @@ function format_surname_table($surnames, $type) {
 		}
 		$html.='</td>';
 		// Hidden column for sorting surnames
-		$html.='<td style="display:none;">'.htmlspecialchars($surn).'</td>';
+		$html.='<td style="display:none;">'.htmlspecialchars($surn,ENT_COMPAT,'UTF-8').'</td>';
 		// Surname count
 		$html.='<td class="list_value_wrap">';
 		if (count($surns)==1) {

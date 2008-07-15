@@ -124,7 +124,7 @@ class TreeNav {
 			<table>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" /></a></td></tr>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" /></a></td></tr>
-				<tr><td <?php if (is_null($this->rootPerson)) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM);?>'); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
+				<tr><td <?php if (is_null($this->rootPerson)) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
 			</table>
 			</div>
 		</div>
@@ -220,7 +220,7 @@ class TreeNav {
 		?>
 		<span class="name1"><a href="individual.php?pid=<?php print $person->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><?php print $person->getSexImage().PrintReady($name); ?></a>
 		<!--  <img id="d_<?php print $person->getXref(); ?>" alt="<?php print $person->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" /> -->
-		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM); ?>');" /> 
+		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" /> 
 		</span><br />
 		<div class="details1 indent">
 			<b><?php print get_first_letter($factarray['BIRT']);?>:</b>
@@ -257,7 +257,7 @@ class TreeNav {
 			<a href="individual.php?pid=<?php print $spouse->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"> 
 			<?php print $spouse->getSexImage().PrintReady($name); ?></a>
 			<!-- <img id="d_<?php print $spouse->getXref(); ?>" alt="<?php print $spouse->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" /> -->
-			<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM); ?>');" />
+			<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 			<br />
 			<div class="details1 indent">
 			<b><?php print get_first_letter($factarray['BIRT']);?>:</b>

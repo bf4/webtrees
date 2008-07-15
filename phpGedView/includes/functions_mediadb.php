@@ -1465,7 +1465,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "</td>\n";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
 		if (PGV_USER_GEDCOM_ADMIN) {
-			print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName) . "\" size=\"40\"";
+			print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName,ENT_COMPAT,'UTF-8') . "\" size=\"40\"";
 			if ($isExternal)
 				print " />";
 			else
@@ -1478,7 +1478,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				print " alt=\"\" title=\"\" />";
 			} */
 			print $fileName;
-			print "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName) . "\" size=\"40\" />";
+			print "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName,ENT_COMPAT,'UTF-8') . "\" size=\"40\" />";
 		}
 		print "</td>";
 		print "</tr>\n";

@@ -309,19 +309,10 @@ function delete_gedrec($gid, $linkpid='') {
 
 //-- this function will check a GEDCOM record for valid gedcom format
 function check_gedcom($gedrec, $chan=true) {
-	global $pgv_lang, $DEBUG, $USE_RTL_FUNCTIONS;
+	global $pgv_lang, $DEBUG;
 
-	$gedrec = trim(stripslashes($gedrec));
+	$gedrec = trim(stripslashes(stripLRMRLM($gedrec)));
 
-	if ($USE_RTL_FUNCTIONS) {
-		//-- replace any added ltr processing codes
-//		$gedrec = preg_replace(array("/".html_entity_decode(getRLM(),ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $gedrec);
-		// Because of a bug in PHP 4, the above generates a run-time error message and does nothing.
-		// see:  http://bugs.php.net/bug.php?id=25670
-		// HTML entity &rlm; is the 3-byte UTF8 character 0xE2808F
-		// HTML entity &lrm; is the 3-byte UTF8 character 0xE2808E
-		$gedrec = str_replace(array(chr(0xE2).chr(0x80).chr(0x8F), chr(0xE2).chr(0x80).chr(0x8E)), "", $gedrec);
-	}
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 	if ($ct==0) {
 		print "ERROR 20: Invalid GEDCOM 5.5 format.\n";
@@ -363,7 +354,7 @@ function check_gedcom($gedrec, $chan=true) {
 		if (!empty($line)) $newrec .= $line."\r\n";
 	}
 
-	$newrec = html_entity_decode($newrec);
+	$newrec = html_entity_decode($newrec,ENT_COMPAT,'UTF-8');
 	return $newrec;
 }
 
@@ -1360,18 +1351,18 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value))."\" />";
-		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value))."</span>";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" />";
+		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."</span>";
 		print " <a href=\"#edit_name\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
 		if (isset($PGV_IMAGES["edit_indi"]["small"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" />";
 		else print "<span class=\"age\">[".$pgv_lang["edit_name"]."]</span>";
 		print "</a>";
 	} else {
 		// textarea
-		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value))."</textarea><br />\n";
+		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."</textarea><br />\n";
 		else {
 			// text
-			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
+			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" size=\"".$cols."\" dir=\"ltr\"";
 			// if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
 			// onkeyup should suffice.  Why the others?
 			if (in_array($fact, $subnamefacts)) print " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";

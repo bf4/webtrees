@@ -197,18 +197,19 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 }
 
 function encode_url($url, $entities=true) {
+	$url = decode_url($url, $entities);		// Make sure we don't do any double conversions
 	$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url);		// GEDCOM names can legitimately contain these chars
-//	if ($entities) $url = htmlentities($url);
-	if ($entities) {
-		$url = str_replace("&", "&amp;", ($url));
-		$url = str_replace("&amp;amp;", "&amp;", ($url));
-	}
+	if ($entities) $url = htmlspecialchars($url,ENT_COMPAT,'UTF-8');
+//	if ($entities) {
+//		$url = str_replace("&", "&amp;", ($url));
+//		$url = str_replace("&amp;amp;", "&amp;", ($url));
+//	}
 	return $url;
 }
 
 
 function decode_url($url, $entities=true) {
-	if ($entities) $url = html_entity_decode($url);
+	if ($entities) $url = html_entity_decode($url,ENT_COMPAT,'UTF-8');
 	$url = rawurldecode($url);		// GEDCOM names can legitimately contain " " and "+"
 	return $url;
 }

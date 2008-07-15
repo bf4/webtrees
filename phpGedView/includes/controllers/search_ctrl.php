@@ -136,9 +136,10 @@ class SearchControllerRoot extends BaseController {
 			// Reset the "Search" text from the page header
 			if ($_REQUEST["query"] == $pgv_lang["search"] || strlen($_REQUEST["query"])<2 || preg_match("/^\.+$/", $_REQUEST["query"])>0) {
 				$this->query="";
+				$this->myquery="";
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
-				$this->myquery = htmlspecialchars($this->query);
+				$this->myquery = htmlspecialchars($this->query,ENT_COMPAT,'UTF-8');
 			}
 		}
 		if (isset ($_REQUEST["replace"])) {

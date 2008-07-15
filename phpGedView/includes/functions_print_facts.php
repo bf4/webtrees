@@ -360,7 +360,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				} elseif (strstr("_EMAIL", $fact)) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
 				} elseif (strstr("AFN", $fact)) {
-					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.htmlspecialchars($event).'</a>';
+					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.htmlspecialchars($event,ENT_COMPAT,'UTF-8').'</a>';
 				} elseif (strstr('FAX PHON FILE ', $fact.' ')) {
 					print getLRM(). $event.' ' . getLRM();
 				} elseif ($event!='Y') {
@@ -648,7 +648,7 @@ function print_media_links($factrec, $level,$pid='') {
 					//LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 						$name = trim($row["m_titl"]);
-							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
+							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
 					}elseif ($USE_MEDIA_VIEWER) {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
@@ -1514,7 +1514,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 					$name = trim($rowm["m_titl"]);
-					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
+					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
@@ -1524,22 +1524,22 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}
 			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle)) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle)) . "\" />";
+			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" />";
 			if ($mainFileExists) print "</a>";
 		}
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
-		else print "<i>".PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')."&nbsp;&nbsp;({$rowm['m_media']})");
+		else print "<i>".PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')."&nbsp;&nbsp;({$rowm['m_media']})");
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $rowm["m_gedrec"]);
-		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle));
+		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle,ENT_COMPAT,'UTF-8'));
 		$addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 1, $rowm["m_gedrec"]);
-		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle));
+		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle,ENT_COMPAT,'UTF-8'));
 		print "</i>";
 		if(empty($SEARCH_SPIDER)) {
 			print "</a>";

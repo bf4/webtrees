@@ -277,11 +277,11 @@ class stats_ui extends stats
 					$content .= PrintReady(getUserFullName($user_id));
 					if($TEXT_DIRECTION == 'ltr')
 					{
-						$content .= ' '.getLRM().' - '.htmlspecialchars($user_id).getLRM();
+						$content .= ' '.getLRM().' - '.htmlspecialchars($user_id,ENT_COMPAT,'UTF-8').getLRM();
 					}
 					else
 					{
-						$content .= ' '.getRLM().' - '.htmlspecialchars($user_id).getRLM();
+						$content .= ' '.getRLM().' - '.htmlspecialchars($user_id,ENT_COMPAT,'UTF-8').getRLM();
 					}
 				}
 				else
@@ -292,7 +292,7 @@ class stats_ui extends stats
 					."</tr>\n"
 					."<tr>\n<td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message{$k}\" style=\"display: none;\">"
 				;
-				$message['body'] = expand_urls(nl2br(htmlspecialchars($message['body'])));
+				$message['body'] = expand_urls(nl2br(htmlspecialchars($message['body'],ENT_COMPAT,'UTF-8')));
 				$content .= PrintReady($message['body'])."<br />\n<br />\n";
 				if(preg_match("/RE:/", $message["subject"]) == 0)
 				{

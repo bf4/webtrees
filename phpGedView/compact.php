@@ -344,14 +344,14 @@ function print_td_person($n) {
 // ---------------------------------------------------------------------------------------------
 				$birth_date=$indi->getBirthDate();
 				$death_date=$indi->getDeathDate();
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".strip_tags($name).' '.strip_tags(html_entity_decode(($birth_date->Display(false).' - '.$death_date->Display(false)))).'" ';
+				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".strip_tags($name).' '.strip_tags(html_entity_decode($birth_date->Display(false).' - '.$death_date->Display(false),ENT_COMPAT,'UTF-8')).'" ';
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}
 		}
 
 		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" title=\"$title\"> ";
-		$text .= PrintReady(htmlspecialchars($name));
+		$text .= PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8'));
 		if ($addname) $text .= "<br />" . PrintReady($addname);
 		$text .= "</a>";
 		if ($showids) {

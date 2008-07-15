@@ -96,9 +96,9 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			if ($user_id) {
 				$content .= PrintReady(getUserFullName($user_id));
 				if ($TEXT_DIRECTION=="ltr") {
-					$content .= " " . getLRM() . " - ".htmlspecialchars($user_id) . getLRM();
+					$content .= " " . getLRM() . " - ".htmlspecialchars($user_id,ENT_COMPAT,'UTF-8') . getLRM();
 				} else {
-					$content .= " " . getRLM() . " - ".htmlspecialchars($user_id) . getRLM();
+					$content .= " " . getRLM() . " - ".htmlspecialchars($user_id,ENT_COMPAT,'UTF-8') . getRLM();
 				}
 			} else {
 				$content .= "<a href=\"mailto:".$user_id."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$user_id)."</a>";
@@ -106,7 +106,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$content .= "</td>";
 			$content .= "</tr>";
 			$content .= "<tr><td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message$key\" style=\"display: none;\">";
-			$message["body"] = nl2br(htmlspecialchars($message["body"]));
+			$message["body"] = nl2br(htmlspecialchars($message["body"],ENT_COMPAT,'UTF-8'));
 			$message["body"] = expand_urls($message["body"]);
 
 			$content .= PrintReady($message["body"])."<br /><br />";

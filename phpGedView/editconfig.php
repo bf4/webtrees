@@ -319,7 +319,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 				}
 			}
 		} else {
-			print "<span class=\"error\">There was an error in the generated config.php.</span>".htmlentities($configtext);
+			print "<span class=\"error\">There was an error in the generated config.php.</span>".htmlentities($configtext,ENT_COMPAT,'UTF-8');
 		}
 	} else {
 		$_SESSION["config.php"]=$configtext;
