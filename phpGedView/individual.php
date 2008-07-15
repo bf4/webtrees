@@ -604,7 +604,7 @@ if(empty($SEARCH_SPIDER)) {
 						setup_map();
 				        if ($controller->default_tab==7) {
 				        	$controller->getTab(7);
-						}
+				        }
 						print "</div>\n";
 						print "</td></tr></table>\n";
 					}
@@ -682,7 +682,10 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	function paste_id(value) {
 		catch_and_ignore = value;
 	}
-<?php if ($controller->isPrintPreview()) print "tabswitch(0);";
+<?php
+//-- make sure googlemap is reloaded
+if ($controller->default_tab==7) print "loadedTabs[".($controller->default_tab+1)."] = false;\n"; 
+if ($controller->isPrintPreview()) print "tabswitch(0);\n";
 else print "tabswitch(". ($controller->default_tab+1) .");\n";
 if ($controller->default_tab==5) print "treetab.sizeLines();\n";
 ?>
