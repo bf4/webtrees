@@ -413,7 +413,7 @@ function hasLTRText($text) {
 function reverseText($text) {
 	global $UTF8_numbers, $UTF8_brackets;
 
-	$text = strip_tags(html_entity_decode($text));
+	$text = strip_tags(html_entity_decode($text,ENT_COMPAT,'UTF-8'));
 	$text = str_replace(array('&lrm;', '&rlm;', PGV_UTF8_LRM, PGV_UTF8_RLM), '', $text);
 	$textLanguage = whatLanguage($text);
 	if ($textLanguage!='hebrew' && $textLanguage!='arabic') return $text;

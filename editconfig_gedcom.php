@@ -2124,7 +2124,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("HOME_SITE_TEXT_help", "qm", "HOME_SITE_TEXT"); print $pgv_lang["HOME_SITE_TEXT"]; ?></td>
-		<td class="optionbox"><input type="text" dir="ltr" name="NEW_HOME_SITE_TEXT" value="<?php print htmlspecialchars($HOME_SITE_TEXT); ?>" size="50" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('HOME_SITE_TEXT_help');" /></td>
+		<td class="optionbox"><input type="text" dir="ltr" name="NEW_HOME_SITE_TEXT" value="<?php print htmlspecialchars($HOME_SITE_TEXT,ENT_COMPAT,'UTF-8'); ?>" size="50" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('HOME_SITE_TEXT_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("META_AUTHOR_help", "qm", "META_AUTHOR"); print $pgv_lang["META_AUTHOR"]; ?></td>

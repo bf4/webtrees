@@ -675,7 +675,7 @@ function str2upper($value) {
 
 
 /**
- * Convert a string to UTF8
+ * Convert a string from UTF8 to ASCII
  *
  * This function is a replacement for utf8_decode()
  *
@@ -683,32 +683,11 @@ function str2upper($value) {
  * @param	string $in_str the text to be converted
  * @return	string $new_str the converted text
  */
-function smart_utf8_decode($in_str)
-{
-	$new_str = html_entity_decode(htmlentities($in_str, ENT_COMPAT, 'UTF-8'));
+function smart_utf8_decode($in_str) {
+	$new_str = html_entity_decode(htmlentities($in_str,ENT_COMPAT,'UTF-8'),ENT_COMPAT,'ISO-8859-1');
 	$new_str = str_replace("&oelig;", "\x9c", $new_str);
 	$new_str = str_replace("&OElig;", "\x8c", $new_str);
 	return $new_str;
-	/**
-	// Replace ? with a unique string
-	$new_str = str_replace("?", "q0u0e0s0t0i0o0n", $in_str);
-
-	// Try the utf8_decode
-	$new_str=utf8_decode($new_str);
-
-	// if it contains ? marks
-	if (strpos($new_str,"?") !== false)
-	{
-	// Something went wrong, set new_str to the original string.
-	$new_str=$in_str;
-	}
-	else
-	{
-	// If not then all is well, put the ?-marks back where is belongs
-	$new_str = str_replace("q0u0e0s0t0i0o0n", "?", $new_str);
-	}
-	return $new_str;
-	**/
 }
 
 /**

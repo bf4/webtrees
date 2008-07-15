@@ -1537,23 +1537,23 @@ function checkform(frm) {
 <table class="<?php print $TEXT_DIRECTION; ?> width80">
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_name_help", "qm"); ?><?php print $pgv_lang["update_name"]; ?></td></tr>
 <tr><td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); print $factarray["GIVN"];?></td>
-<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="GIVN" value="<?php print PrintReady(htmlspecialchars($GIVN)); ?>" /></td></tr>
+<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="GIVN" value="<?php print PrintReady(htmlspecialchars($GIVN,ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 <?php $tabkey++; ?>
 <tr><td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $factarray["SURN"];?></td>
-<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="SURN" value="<?php print PrintReady(htmlspecialchars($SURN)); ?>" /></td></tr>
+<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="SURN" value="<?php print PrintReady(htmlspecialchars($SURN,ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 <?php $tabkey++; ?>
 <?php if ($USE_RTL_FUNCTIONS) { ?>
 <tr><td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); print $pgv_lang["hebrew_givn"];?></td>
-<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HGIVN" value="<?php print PrintReady(htmlspecialchars($HGIVN)); ?>" /></td></tr>
+<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HGIVN" value="<?php print PrintReady(htmlspecialchars($HGIVN,ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 <?php $tabkey++; ?>
 <tr><td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $pgv_lang["hebrew_surn"];?></td>
-<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HSURN" value="<?php print PrintReady(htmlspecialchars($HSURN)); ?>" /></td></tr>
+<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HSURN" value="<?php print PrintReady(htmlspecialchars($HSURN,ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 <?php $tabkey++; ?>
 <tr><td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); print $pgv_lang["roman_givn"];?></td>
-<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RGIVN" value="<?php print PrintReady(htmlspecialchars($RGIVN)); ?>" /></td></tr>
+<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RGIVN" value="<?php print PrintReady(htmlspecialchars($RGIVN,ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 <?php $tabkey++; ?>
 <tr><td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $pgv_lang["roman_surn"];?></td>
-<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RSURN" value="<?php print PrintReady(htmlspecialchars($RSURN)); ?>" /></td></tr>
+<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RSURN" value="<?php print PrintReady(htmlspecialchars($RSURN,ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 <?php $tabkey++; ?>
 <?php } ?>
 
@@ -1599,21 +1599,21 @@ foreach($indifacts as $f=>$fact) {
 	</td>
 	<?php if (!in_array($fact_tag, $emptyfacts)) { ?>
 	<td class="optionbox" colspan="2">
-		<input type="text" name="DESCS[]" size="40" value="<?php print PrintReady(htmlspecialchars($desc)); ?>" />
-		<input type="hidden" name="DATES[]" value="<?php print htmlspecialchars($date); ?>" />
-		<input type="hidden" name="PLACS[]" value="<?php print htmlspecialchars($plac); ?>" />
-		<input type="hidden" name="TEMPS[]" value="<?php print htmlspecialchars($temp); ?>" />
+		<input type="text" name="DESCS[]" size="40" value="<?php print PrintReady(htmlspecialchars($desc,ENT_COMPAT,'UTF-8')); ?>" />
+		<input type="hidden" name="DATES[]" value="<?php print htmlspecialchars($date,ENT_COMPAT,'UTF-8'); ?>" />
+		<input type="hidden" name="PLACS[]" value="<?php print htmlspecialchars($plac,ENT_COMPAT,'UTF-8'); ?>" />
+		<input type="hidden" name="TEMPS[]" value="<?php print htmlspecialchars($temp,ENT_COMPAT,'UTF-8'); ?>" />
 	</td>
 	<?php }	else {
 		if (!in_array($fact_tag, $nondatefacts)) { ?>
 			<td class="optionbox">
-				<input type="hidden" name="DESCS[]" value="<?php print htmlspecialchars($desc); ?>" />
-				<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="DATES[]" id="DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" />&nbsp;<?php print_calendar_popup("DATE$f");?>
+				<input type="hidden" name="DESCS[]" value="<?php print htmlspecialchars($desc,ENT_COMPAT,'UTF-8'); ?>" />
+				<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="DATES[]" id="DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date,ENT_COMPAT,'UTF-8')); ?>" />&nbsp;<?php print_calendar_popup("DATE$f");?>
 			</td>
 		<?php }
 		if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
 			<td class="optionbox">
-				<input type="text" size="30" tabindex="<?php print $tabkey; $tabkey++; ?>" name="PLACS[]" id="place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac)); ?>" />
+				<input type="text" size="30" tabindex="<?php print $tabkey; $tabkey++; ?>" name="PLACS[]" id="place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac,ENT_COMPAT,'UTF-8')); ?>" />
 				<?php print_findplace_link("place$f"); ?>
 				<input type="hidden" name="TEMPS[]" value="" />
 			</td>
@@ -1753,20 +1753,20 @@ if (!is_dead_id($pid) || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empt
 	</td>
 	<td class="optionbox" colspan="3">
 		<?php if (!empty($CITY)&&!empty($POST)) { ?>
-			<?php  if (empty($ADDR)) { ?><input type="hidden" name="ADDR" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADDR))); ?>" /><?php } ?>
+			<?php  if (empty($ADDR)) { ?><input type="hidden" name="ADDR" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?>" /><?php } ?>
 			<table>
-			<?php if (!empty($_NAME)) { ?><tr><td><?php print $factarray["NAME"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($_NAME)) print "dir=\"ltr\""; ?> name="_NAME" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($_NAME))); ?>" /></td></tr><?php } ?>
-			<?php  if (!empty($ADDR)) { ?><tr><td><?php print $factarray["ADDR"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) print "dir=\"ltr\""; ?> name="ADDR" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADDR))); ?>" /></td></tr><?php } ?>
-			<tr><td><?php print $factarray["ADR1"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) print "dir=\"ltr\""; ?> name="ADR1" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADR1))); ?>" /></td></tr>
-			<tr><td><?php print $factarray["ADR2"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR2)) print "dir=\"ltr\""; ?> name="ADR2" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADR2))); ?>" /></td></tr>
-			<tr><td><?php print $factarray["CITY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CITY)) print "dir=\"ltr\""; ?> name="CITY" value="<?php print PrintReady(htmlspecialchars(strip_tags($CITY))); ?>" /> 
-			 <?php print $factarray["STAE"]; ?> <input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($STAE)) print "dir=\"ltr\""; ?> name="STAE" value="<?php print PrintReady(htmlspecialchars(strip_tags($STAE))); ?>" /></td></tr>
-			<tr><td><?php print $factarray["POST"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($POST)) print "dir=\"ltr\""; ?> name="POST" value="<?php print PrintReady(htmlspecialchars(strip_tags($POST))); ?>" /></td></tr>
-			<tr><td><?php print $factarray["CTRY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CTRY)) print "dir=\"ltr\""; ?> name="CTRY" value="<?php print PrintReady(htmlspecialchars(strip_tags($CTRY))); ?>" /></td></tr>
+			<?php if (!empty($_NAME)) { ?><tr><td><?php print $factarray["NAME"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($_NAME)) print "dir=\"ltr\""; ?> name="_NAME" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($_NAME),ENT_COMPAT,'UTF-8')); ?>" /></td></tr><?php } ?>
+			<?php  if (!empty($ADDR)) { ?><tr><td><?php print $factarray["ADDR"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) print "dir=\"ltr\""; ?> name="ADDR" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?>" /></td></tr><?php } ?>
+			<tr><td><?php print $factarray["ADR1"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) print "dir=\"ltr\""; ?> name="ADR1" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADR1),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php print $factarray["ADR2"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR2)) print "dir=\"ltr\""; ?> name="ADR2" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADR2),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php print $factarray["CITY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CITY)) print "dir=\"ltr\""; ?> name="CITY" value="<?php print PrintReady(htmlspecialchars(strip_tags($CITY),ENT_COMPAT,'UTF-8')); ?>" /> 
+			 <?php print $factarray["STAE"]; ?> <input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($STAE)) print "dir=\"ltr\""; ?> name="STAE" value="<?php print PrintReady(htmlspecialchars(strip_tags($STAE),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php print $factarray["POST"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($POST)) print "dir=\"ltr\""; ?> name="POST" value="<?php print PrintReady(htmlspecialchars(strip_tags($POST),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php print $factarray["CTRY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CTRY)) print "dir=\"ltr\""; ?> name="CTRY" value="<?php print PrintReady(htmlspecialchars(strip_tags($CTRY),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 			</table>
 			
 		<?php } else { ?>
-		<textarea name="ADDR" tabindex="<?php print $tabkey; ?>" cols="35" rows="4"><?php print PrintReady(htmlspecialchars(strip_tags($ADDR))); ?></textarea>
+		<textarea name="ADDR" tabindex="<?php print $tabkey; ?>" cols="35" rows="4"><?php print PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?></textarea>
 		<?php } ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -1776,7 +1776,7 @@ if (!is_dead_id($pid) || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empt
 		<?php print $factarray["PHON"]; ?>
 	</td>
 	<td class="optionbox" colspan="3">
-		<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++; ?>" name="PHON" size="20" value="<?php print PrintReady(htmlspecialchars($PHON)); ?>" />
+		<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++; ?>" name="PHON" size="20" value="<?php print PrintReady(htmlspecialchars($PHON,ENT_COMPAT,'UTF-8')); ?>" />
 	</td>
 </tr>
 <tr>
@@ -1784,7 +1784,7 @@ if (!is_dead_id($pid) || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empt
 				<?php print $factarray["FAX"]; ?>
 		</td>
 		<td class="optionbox" colspan="3">
-				<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++; ?>" name="FAX" size="20" value="<?php print PrintReady(htmlspecialchars($FAX)); ?>" />
+				<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++; ?>" name="FAX" size="20" value="<?php print PrintReady(htmlspecialchars($FAX,ENT_COMPAT,'UTF-8')); ?>" />
 	</td>
 </tr>
 <tr>
@@ -1792,7 +1792,7 @@ if (!is_dead_id($pid) || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empt
 		<?php print $factarray["EMAIL"]; ?>
 	</td>
 	<td class="optionbox" colspan="3">
-		<input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" name="EMAIL" size="40" value="<?php print PrintReady(htmlspecialchars($EMAIL)); ?>" />
+		<input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" name="EMAIL" size="40" value="<?php print PrintReady(htmlspecialchars($EMAIL,ENT_COMPAT,'UTF-8')); ?>" />
 	</td>
 	<?php $tabkey++; ?>
 </tr>
@@ -1960,9 +1960,9 @@ foreach($famfacts as $f=>$fact) {
 				?>
 					<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
 				</td>
-				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" /><?php print_calendar_popup("F{$i}DATE{$f}");?></td>
+				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date,ENT_COMPAT,'UTF-8')); ?>" /><?php print_calendar_popup("F{$i}DATE{$f}");?></td>
 				<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
-					<td class="optionbox"><input type="text" size="30" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac)); ?>" />
+					<td class="optionbox"><input type="text" size="30" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac,ENT_COMPAT,'UTF-8')); ?>" />
                                         <?php print_findplace_link("F{$i}place{$f}"); ?>
                                         </td>
 				<?php }
@@ -2632,9 +2632,9 @@ foreach($famfacts as $f=>$fact) {
 		?>
 			<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
 		</td>
-		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" /><?php print_calendar_popup("F{$i}DATE$f");?></td>
+		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date,ENT_COMPAT,'UTF-8')); ?>" /><?php print_calendar_popup("F{$i}DATE$f");?></td>
 		<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
-			<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac)); ?>" />
+			<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac,ENT_COMPAT,'UTF-8')); ?>" />
 			<?php print_findplace_link("F".$i."place$f"); ?>
                  </td>
 		<?php }

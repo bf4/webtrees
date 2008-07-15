@@ -68,7 +68,7 @@ if ($view != "preview") {
 	print_help_link("rootid_help", "qm");
 	print $pgv_lang["root_person"]?></td>
 	<td class="optionbox vmiddle">
-	<input class="pedigree_form" type="text" name="rootid" id="rootid" size="3" value="<?php print htmlentities($controller->rootid) ?>" />
+	<input class="pedigree_form" type="text" name="rootid" id="rootid" size="3" value="<?php print htmlentities($controller->rootid,ENT_COMPAT,'UTF-8') ?>" />
 	<?php print_findindi_link("rootid",""); ?>
 	</td>
 
@@ -77,7 +77,7 @@ if ($view != "preview") {
 	<?php
 	print_help_link("box_width_help", "qm");
 	print $pgv_lang["box_width"]?></td>
-	<td class="optionbox vmiddle"><input type="text" size="3" name="box_width" value="<?php print htmlentities($box_width) ?>" /> <b>%</b>
+	<td class="optionbox vmiddle"><input type="text" size="3" name="box_width" value="<?php print htmlentities($box_width,ENT_COMPAT,'UTF-8') ?>" /> <b>%</b>
 	</td>
 
 	<!-- // NOTE: chart style -->

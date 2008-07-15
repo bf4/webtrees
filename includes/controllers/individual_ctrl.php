@@ -389,7 +389,7 @@ class IndividualControllerRoot extends BaseController {
 					//LBox --------  addition for Lightbox Album --------------------------------------------
 					$name = $this->indi->getFullName();
 					if (file_exists("modules/lightbox/album.php")) {
-						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
+						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 					}else
 					//Lbox -----------------------------------------------------------------------------------------
 					

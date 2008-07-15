@@ -361,7 +361,7 @@ class GrampsExport {
 //			$num++;
 //		}
 		$eNote = $this->dom->createElement("note");
-		$etNote = $this->dom->createTextNode(htmlentities($note));
+		$etNote = $this->dom->createTextNode(htmlentities($note,ENT_COMPAT,'UTF-8'));
 		$etNote = $eNote->appendChild($etNote);
 		$eNote = $eParent->appendChild($eNote);
 	}
@@ -602,7 +602,7 @@ function create_source($sourceID, $sourceRec, $level = 1, $done=1) {
 	*/
 	function validate($domObj, $printXML = true) {
 		if ($printXML) {
-			print "<br /><br /><br />" . nl2br(htmlentities($domObj->saveXML()));
+			print "<br /><br /><br />" . nl2br(htmlentities($domObj->saveXML(),ENT_COMPAT,'UTF-8'));
 		}
 		print "Loading GRAMPS file... <br />";
 		$domObj->loadXML($domObj->saveXML());

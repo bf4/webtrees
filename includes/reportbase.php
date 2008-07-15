@@ -222,7 +222,7 @@ class PGVRElement {
 		}
    		if ($found) $embed_fonts = true;
    		$t = trim($t, "\r\n\t");
-		$t = preg_replace(array("/<br \/>/", "/&nbsp;/"), array("\n", " "), $t);
+		$t = str_replace(array('<br />', '&nbsp;'), array("\n", ' '), $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
 		if ($embed_fonts) $t = bidi_text($t);
@@ -436,13 +436,11 @@ class PGVRFootnote extends PGVRElement {
    		if ($found) $embed_fonts = true;
 
 		$t = trim($t, "\r\n\t");
-		$t = preg_replace("/<br \/>/", "\n", $t);
-		// NOTE -- this will cause user added <brackets> to disappear?
-		// TODO find out why strip_tags was added and how to fix the problem without it
+		$t = str_replace(array('<br />', '&nbsp;'), array("\n", ' '), $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
 		if ($embed_fonts) $t = bidi_text($t);
-		else $t = smart_utf8_decode($t);
+		//else $t = smart_utf8_decode($t);
 		$this->text .= $t;
 	}
 
@@ -1336,7 +1334,7 @@ function PGVRFactsEHandler() {
 	$lineoffset++;
 //	var_dump($lineoffset);
 	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) {
-//		print $i." ".htmlentities($lines[$i]);
+//		print $i." ".htmlentities($lines[$i],ENT_COMPAT,'UTF-8');
 		$reportxml .= $lines[$i];
 	}
 	$reportxml .= "</tempdoc>\n";
@@ -1915,7 +1913,7 @@ function PGVRListEHandler() {
 	$line = $line1-1;
 	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) $reportxml .= $lines[$i];
 	$reportxml .= "</tempdoc>\n";
-	//print htmlentities($reportxml)."\n";
+	//print htmlentities($reportxml,ENT_COMPAT,'UTF-8')."\n";
 	array_push($parserStack, $parser);
 
 	$oldgedrec = $gedrec;
@@ -2114,7 +2112,7 @@ function PGVRRelativesEHandler() {
 	$line = $line1-1;
 	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) $reportxml .= $lines[$i];
 	$reportxml .= "</tempdoc>\n";
-//	print htmlentities($reportxml)."\n";
+//	print htmlentities($reportxml,ENT_COMPAT,'UTF-8')."\n";
 	array_push($parserStack, $parser);
 
 	$oldgedrec = $gedrec;

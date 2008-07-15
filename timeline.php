@@ -284,7 +284,7 @@ $controller->checkPrivacy();
  			<a href="individual.php?pid=<?php print $pid; ?>">&nbsp;<?php print PrintReady($indi->getFullName()); ?><br />
  			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) print PrintReady($addname); ?>
 			</a>
-			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid); ?>" />
+			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid,ENT_COMPAT,'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
 				print "<br />";
 				print_help_link("remove_person_help", "qm");
@@ -305,7 +305,7 @@ $controller->checkPrivacy();
 		else {
 			print_privacy_error($CONTACT_EMAIL);
 			?>
-			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid); ?>" />
+			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid,ENT_COMPAT,'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
 				print "<br />";
 				print_help_link("remove_person_help", "qm");
