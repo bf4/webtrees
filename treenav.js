@@ -192,14 +192,14 @@ function NavTree(outerId, innerId, name) {
  		oXmlHttp.send(null);
  		var biglink = document.getElementById("biglink");
  		biglink.parentNode.style.display="block";
- 		alert(biglink.onclick);
+ 		//alert(biglink.onclick);
  		biglink.onclick="function(event) { "+this.name+".loadBigTree('"+xref+"', '"+gedcom+"'); return false; }";
- 		alert(biglink.onclick);
+ 		//alert(biglink.onclick);
  		return false;
 	}
 	
 	this.loadBigTree = function(xref, gedcom) {
-		alert(xref);
+		//alert(xref);
 		link = "treenav.php?jsname="+this.name+"&rootid="+xref+"&newroot=1";
 		if (gedcom) link += "&ged="+gedcom;
 		window.location = link;
