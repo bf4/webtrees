@@ -187,18 +187,10 @@
 			}
 
 			$menu = array();
-			// Make function htmlspecialchar_decode for older PHP versions ( < PHP 5.1.0 )
-				if (!function_exists('htmlspecialchars_decode')) {
-					function htmlspecialchars_decode($string,$style=ENT_COMPAT) {
-						$translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
-						if($style === ENT_QUOTES){ $translation['&#039;'] = '\''; }
-						return strtr($string,$translation);
-					}
-				}
-			// Get the first 12 characters of the Media Title
-				$mtitle = htmlspecialchars_decode(stripLRMRLM($mediaTitle), ENT_QUOTES);
+			// If Media Title character length > 16,  Get the first 13 characters of the Media Title and add the ellipsis. (using UTF-8 Charset)
+				$mtitle = html_entity_decode(stripLRMRLM($mediaTitle), ENT_COMPAT,'UTF-8');
 				if (UTF8_strlen($mtitle)>16) $mtitle = UTF8_substr($mtitle, 0, 13).$pgv_lang["ellipsis"];
-				$mtitle = htmlspecialchars($mtitle);
+				$mtitle = htmlentities($mtitle, ENT_COMPAT, 'UTF-8');
 			// Continue menu construction
 			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle) . "</img>\n";
 			$menu["labelpos"] = "right";
