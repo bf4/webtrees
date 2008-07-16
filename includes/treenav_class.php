@@ -67,7 +67,7 @@ class TreeNav {
 						$father = $cfamily->getHusband();
 						if (!empty($father)) {
 							$fam = null;
-							$this->drawPerson($father, 1, 1, $fam);
+							$this->drawPerson($father, 2, 1, $fam);
 						}
 						else print "<br />\n";
 					}
@@ -82,7 +82,7 @@ class TreeNav {
 							$mother = $cfamily->getHusband();
 							if (!empty($mother)) {
 								$fam = null;
-								$this->drawPerson($mother, 1, 1, $fam);
+								$this->drawPerson($mother, 2, 1, $fam);
 							}
 							else print "<br />\n";
 						}
@@ -94,7 +94,7 @@ class TreeNav {
 			else {
 				$fams = $this->rootPerson->getSpouseFamilies();
 				$family = end($fams);
-				$this->drawChildren($family, 1);
+				$this->drawChildren($family, 2);
 			}
 			exit;
 		}
