@@ -35,7 +35,7 @@
 			<?php } 
 		}elseif (file_exists("modules/googlemap/defaultconfig.php")) {  ?>
 			<?php if (file_exists("modules/lightbox/album.php") ) {?>
-				<dd id="door8"><a href="javascript:;" onclick="tabswitch(9); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd> 
+				<dd id="door9"><a href="javascript:;" onclick="tabswitch(9); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd> 
 			<?php } 
 		} 
 	}
