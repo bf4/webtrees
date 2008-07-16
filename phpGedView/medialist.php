@@ -330,10 +330,8 @@ if ($ct>0){
 		$final    = $before.$needle.$worked;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
-//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
 			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-
-        }elseif ($USE_MEDIA_VIEWER) {
+        } elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 		} else {
 			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";	
@@ -342,7 +340,7 @@ if ($ct>0){
 
 		print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
+		print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
 		
 //LBox --------  added for Lightbox Album --------------------------------------------
