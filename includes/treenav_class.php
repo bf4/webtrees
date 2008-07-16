@@ -116,7 +116,7 @@ class TreeNav {
 		?>
 		<?php $this->setupJS(); ?>
 		
-		<div id="out_<?php print $this->name; ?>" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
+		<div id="out_<?php print $this->name; ?>" dir="ltr" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
 			<div id="in_<?php print $this->name; ?>" style="position: relative; left: -20px; width: auto; cursor: move;" onmousedown="dragStart(event, 'in_<?php print $this->name; ?>', <?php print $this->name; ?>);" onmouseup="dragStop(event);">
 			<?php $parent=null; $this->drawPerson($this->rootPerson, $this->generations, 0, $parent); ?>
 			</div>
