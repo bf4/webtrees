@@ -68,7 +68,7 @@ class Event {
 	function getValue($code) {
 		if (is_null($this->values)) {
 			$this->values=array();
-			preg_match_all('/\n2\s(\w+)\s*(.*)\r?\n/', $this->gedComRecord."\r\n", $matches, PREG_SET_ORDER);
+			preg_match_all('/\n2\s(\w+)\s*(.*)/', $this->gedComRecord, $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
 				$this->values[$match[1]]=preg_replace("/@/", "", $match[2]);
 			}

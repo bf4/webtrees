@@ -2392,7 +2392,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	foreach($famreqdfacts as $ind=>$fact) {
 		$famfacts[] = array($fact, "1 $fact\r\n", 1);
 	}
-	sort_facts($famfacts);
+	sort_facts_old($famfacts);
 	$spid = "";
 	if($parents) {
 		if($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
