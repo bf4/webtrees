@@ -114,7 +114,7 @@ print "</table><input type='submit' value='{$pgv_lang["show"]}'><input type='hid
 
 // Do not run until user clicks "show", as default page may take a while to load.
 // Instead, show some useful help info.
-if (!isset($action)) {
+if (!isset($_POST["action"])) {
 	print "<P>".$pgv_lang['gedcheck_text']."</P><HR />";
 	print_footer();
 	exit();
