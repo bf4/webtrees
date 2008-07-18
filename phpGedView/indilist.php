@@ -93,7 +93,7 @@ if ($show_all=='yes') {
 	$indis=get_indi_list();
 	$url='indilist.php?show_all=yes';
 } elseif ($surname) {
-	$surname=str2upper($surname);
+	$surname=UTF8_strtoupper($surname);
 	$alpha=get_first_letter($surname);
 	$show_all='no';
 	$legend=$surname;

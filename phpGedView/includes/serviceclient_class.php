@@ -3,7 +3,7 @@
  * Class used to access records and data on a remote server
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -691,7 +691,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 		$count=0;
 		$Probability=0;
 		if (!empty($PersonName1)&&!empty($PersonName2)){
-			$lev = levenshtein(str2lower($PersonName1), str2lower($PersonName2));
+			$lev = levenshtein(UTF8_strtolower($PersonName1), UTF8_strtolower($PersonName2));
 			if($lev<4){
 				$Probability+=2;
 			} else

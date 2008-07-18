@@ -1569,7 +1569,7 @@ function print_text($help, $level=0, $noprint=0){
 		if (stristr($mod_sentence, "~")){  // If there's a second one:
 			$pos2 = strpos($mod_sentence, "~");
 			$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
-			$replace_text = "<span class=\"helpstart\">".str2upper($replace)."</span>";
+			$replace_text = "<span class=\"helpstart\">".UTF8_strtoupper($replace)."</span>";
 			$sentence = str_replace("~".$replace."~", $replace_text, $sentence);
 		} else break;
 	}
@@ -1795,9 +1795,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 					if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
 						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 					}
-					else if (@preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+					else if (@preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
 						$nlen = strlen($query1);
-						$npos = strpos(str2upper($text), str2upper($query1));
+						$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
 						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 						$newtext = substr_replace($newtext, "\x01", $npos, 0);
 					}
@@ -1815,9 +1815,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
+							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}
@@ -1834,9 +1834,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
+							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}
@@ -1853,9 +1853,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
+							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}

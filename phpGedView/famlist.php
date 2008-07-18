@@ -234,7 +234,7 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 			foreach($fam["surnames"] as $indexval => $name) {
 				$lname = strip_prefix($name);
 				if (empty($lname)) $lname = $name;
-				$firstLetter=get_first_letter(str2upper($lname));
+				$firstLetter=get_first_letter(UTF8_strtoupper($lname));
 				if ($alpha==$firstLetter) surname_count(trim($name));
 			}
 		}
@@ -271,13 +271,13 @@ else {
 				$firstalpha = array();
 				foreach($tfamlist as $gid=>$fam) {
 					$names = preg_split("/[,+] ?/", $fam["name"]);
-					$letter = str2upper(get_first_letter(trim($names[1])));
+					$letter = UTF8_strtoupper(get_first_letter(trim($names[1])));
 					if (!isset($firstalpha[$letter])) {
 						if (isset($names[0])&&isset($names[1])&&$names[0]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 					}
 					else if ($names[0]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
 					if (isset($names[2])&&isset($names[3])) {
-						$letter = str2upper(get_first_letter(trim($names[3])));
+						$letter = UTF8_strtoupper(get_first_letter(trim($names[3])));
 						if (!isset($firstalpha[$letter])) {
 							if ($names[2]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 						}

@@ -3,7 +3,7 @@
  * Name Specific Functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ function get_common_surnames($min) {
 				&& stristr($surname["name"], $ANN.",")===false
 				&& stristr($COMMON_NAMES_REMOVE, $surname["name"])===false ) {
 			if ($surname["match"]>=$min) {
-				$topsurns[str2upper($surname["name"])] = $surname;
+				$topsurns[UTF8_strtoupper($surname["name"])] = $surname;
 			}
 			$i++;
 		}
@@ -367,8 +367,8 @@ function surname_count($nsurname) {
 	if (empty($lname)) $lname = $nsurname;
 	$sort_letter=get_first_letter($lname);
 		$tsurname = preg_replace(array("/ [jJsS][rR]\.?/", "/ I+/"), array("",""), $nsurname);
-		$tsurname = str2upper($tsurname);
-		if (empty($surname) || (str2upper($surname)==$tsurname)) {
+		$tsurname = UTF8_strtoupper($tsurname);
+		if (empty($surname) || (UTF8_strtoupper($surname)==$tsurname)) {
 			if (!isset($surnames[$tsurname])) {
 				$surnames[$tsurname] = array();
 				$surnames[$tsurname]["name"] = $nsurname;
@@ -399,7 +399,7 @@ function get_first_letter($text, $import=false) {
 	$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
 	$danishTo   = array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
 
-	$text=trim(str2upper($text));
+	$text=trim(UTF8_strtoupper($text));
 	if (!$import) {
 		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian") {
 			$text = str_replace($danishFrom, $danishTo, $text);
@@ -525,7 +525,7 @@ function is_utf8($string) {
  * @return	string $value_lower the converted text in lowercase
  * @todo look at function performance as it is much slower than strtolower
  */
-function str2lower($value) {
+/* function str2lower($value) {
 	global $ALPHABET_upper, $ALPHABET_lower;
 	static $all_ALPHABET_upper, $all_ALPHABET_lower;
 
@@ -592,7 +592,7 @@ function str2lower($value) {
 		}
 	}
 	return $value;
-}
+} */
 // END function str2lower
 
 /**
@@ -605,7 +605,7 @@ function str2lower($value) {
  * @return	string $value_upper the converted text in uppercase
  * @todo look at function performance as it is much slower than strtoupper
  */
-function str2upper($value) {
+/* function str2upper($value) {
 	global $ALPHABET_upper, $ALPHABET_lower;
 	static $all_ALPHABET_upper, $all_ALPHABET_lower;
 
@@ -670,7 +670,7 @@ function str2upper($value) {
 		}
 	}
 	return $value;
-}
+} */
 // END function str2upper
 
 
@@ -715,7 +715,7 @@ function get_indi_names($indirec, $import=false, $getMarriedName=true) {
 			$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 			if (empty($lname)) $lname = $surname;
 			$letter = get_first_letter($lname, $import);
-			$letter = str2upper($letter);
+			$letter = UTF8_strtoupper($letter);
 			if (empty($letter)) $letter = "@";
 			if (preg_match("~/~", $name)==0) $name .= " /@N.N./";
 			$names[] = array($name, $letter, $surname, "A");
@@ -728,7 +728,7 @@ function get_indi_names($indirec, $import=false, $getMarriedName=true) {
 				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 				if (empty($lname)) $lname = $surname;
 				$letter = get_first_letter($lname, $import);
-				$letter = str2upper($letter);
+				$letter = UTF8_strtoupper($letter);
 				if (empty($letter)) $letter = "@";
 				if (preg_match("~/~", $addname)==0) $addname .= " /@N.N./";
 				$names[] = array($addname, $letter, $surname, "A");
@@ -743,7 +743,7 @@ function get_indi_names($indirec, $import=false, $getMarriedName=true) {
 					$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 					if (empty($lname)) $lname = $surname;
 					$letter = get_first_letter($lname, $import);
-					$letter = str2upper($letter);
+					$letter = UTF8_strtoupper($letter);
 					if (empty($letter)) $letter = "@";
 					if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
 					$names[] = array($marriedname, $letter, $surname, "C");
@@ -758,7 +758,7 @@ function get_indi_names($indirec, $import=false, $getMarriedName=true) {
 				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 				if (empty($lname)) $lname = $surname;
 				$letter = get_first_letter($lname, $import);
-				$letter = str2upper($letter);
+				$letter = UTF8_strtoupper($letter);
 				if (empty($letter)) $letter = "@";
 				if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
 				$names[] = array($marriedname, $letter, $surname, "A");
@@ -821,7 +821,7 @@ function DMSoundex($name, $option = "") {
 	}
 
 	// Check if in cache
-	$name = str2upper($name);
+	$name = UTF8_strtoupper($name);
 	$name = substr(trim($name), 0, 30);
 	if (isset($dmsoundexlist[$name])) return $dmsoundexlist[$name];
 

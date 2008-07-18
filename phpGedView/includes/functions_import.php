@@ -4,7 +4,7 @@
  * Import specific functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -422,7 +422,7 @@ function update_places($gid, $indirec) {
 	$pt = preg_match_all("/[2-9] PLAC (.+)/", $indirec, $match, PREG_SET_ORDER);
 	for ($i = 0; $i < $pt; $i++) {
 		$place = trim($match[$i][1]);
-		$lowplace = str2lower($place);
+		$lowplace = UTF8_strtolower($place);
 		//-- if we have already visited this place for this person then we don't need to again
 		if (isset($personplace[$lowplace])) continue;
 		$personplace[$lowplace] = 1;

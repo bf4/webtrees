@@ -1230,7 +1230,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		               "foster" =>$pgv_lang["foster"],
 									 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
 			print "<option value='$k'";
-			if (str2lower($value)==$k)
+			if (UTF8_strtolower($value)==$k)
 				print " selected=\"selected\"";
 			print ">$v</option>";
 		}

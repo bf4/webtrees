@@ -86,7 +86,7 @@ if ($action=="confighelp") {
 	require "includes/functions_editlang.php";
 	$helpindex = "config_help_help";
 	print_header($pgv_lang["config_help"]);
-	print "<h2 class=\"center\">".str2upper($pgv_lang["config_help"])."</h2><br />";
+	print "<h2 class=\"center\">".UTF8_strtoupper($pgv_lang["config_help"])."</h2><br />";
 	$language_array = array();
     $language_array = read_export_file_into_array($confighelpfile[$LANGUAGE], "pgv_lang[");
     $new_language_array = array();

@@ -409,7 +409,7 @@ else {
 				$firstalpha = array();
 				foreach($tindilist as $gid=>$indi) {
 					foreach($indi["names"] as $indexval => $namearray) {
-						$letter = str2upper(get_first_letter($namearray[0]));
+						$letter = UTF8_strtoupper(get_first_letter($namearray[0]));
 						if (!isset($firstalpha[$letter])) {
 							$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 						}
