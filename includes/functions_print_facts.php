@@ -296,7 +296,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				$ct = preg_match("/2 TYPE (.*)/", $factrec, $match);
 				if ($ct>0) {
 					$type = trim($match[1]);
-					if (isset ($factarray["MARR_".str2upper($type)])) print $factarray["MARR_".str2upper($type)];
+					if (isset ($factarray["MARR_".UTF8_strtoupper($type)])) print $factarray["MARR_".UTF8_strtoupper($type)];
 					else if (isset($factarray[$type])) print $factarray[$type];
 					else if (isset($pgv_lang[$type])) print $pgv_lang[$type];
 					else print $type;
@@ -408,7 +408,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
 				$family=Family::getInstance($match[1]);
 				echo "<a href=\"".encode_url($family->getLinkUrl())."\">", $family->getFullName(), "</a>";
-				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", str2upper($factrec), $match)) {
+				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", UTF8_strtoupper($factrec), $match)) {
 					print '<br/><span class="indent"><span class="label">'.$factarray['ADOP'].':</span> ';
 					print '<span class="field">';
 					switch ($match[1]) {

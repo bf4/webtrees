@@ -363,7 +363,7 @@ else {
 			if (!empty($names[1])) $firstname = trim($names[1]);
 			else $firstname = "";
 			$names = preg_split("/[,+]/", $fam["name"]);
-			$surname = str2upper(trim($names[$i]));
+			$surname = UTF8_strtoupper(trim($names[$i]));
 			if (empty($surname)) $surname = $gid;
 			$surnames[$surname.$firstname.$gid]["name"] = check_NN($fam["name"]);
 			$surnames[$surname.$firstname.$gid]["gid"] = $gid;

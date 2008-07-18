@@ -166,7 +166,7 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 		$cnotfound = 0;
 		foreach ($criteria as $ckey => $criterium) {
 			// See if there is a case insensitive hit
-			if (strpos(str2upper($helptxtorg), str2upper($criterium))) {
+			if (strpos(UTF8_strtoupper($helptxtorg), UTF8_strtoupper($criterium))) {
 				// Set the search string for preg_replace, case insensitive
 				$srch = "/$criterium/i";
 				// The \\0 is for wrapping the existing string in the text with the span

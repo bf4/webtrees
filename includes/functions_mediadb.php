@@ -917,23 +917,23 @@ function filterMedia($media, $filter, $acceptExt) {
 	if ($filter == "")
 		return true;
 
-	$filter=str2upper($filter);
+	$filter=UTF8_strtoupper($filter);
 
 	//-- Accept when filter string contained in file name (but only for editing users)
-	if (PGV_USER_CAN_EDIT && strstr(str2upper(basename($media["FILE"])), $filter))
+	if (PGV_USER_CAN_EDIT && strstr(UTF8_strtoupper(basename($media["FILE"])), $filter))
 		return true;
 
 	//-- Accept when filter string contained in Media item's title
 	$record=Media::getInstance($media['XREF']);
 	if ($record) {
 		foreach ($record->getAllNames() as $name) {
-			if (strpos(str2upper($name['full']), $filter)!==false) {
+			if (strpos(UTF8_strtoupper($name['full']), $filter)!==false) {
 				return true;
 			}
 		}
 	}
 
-	if (strpos(str2upper($media["TITL"]), $filter)!==false)
+	if (strpos(UTF8_strtoupper($media["TITL"]), $filter)!==false)
 		return true;
 
 	//-- Accept when filter string contained in name of any item
@@ -941,7 +941,7 @@ function filterMedia($media, $filter, $acceptExt) {
 	foreach ($links as $id=>$type) {
 		$record=GedcomRecord::getInstance($id);
 		foreach ($record->getAllNames() as $name) {
-			if (strpos(str2upper($name['full']), $filter)!==false) {
+			if (strpos(UTF8_strtoupper($name['full']), $filter)!==false) {
 				return true;
 			}
 		}
@@ -969,14 +969,14 @@ function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
 	else
 		$term = "LIKE";
 	if (!is_array($query))
-		$sql = "SELECT m_media as m_media FROM " . $TBLPREFIX . "media WHERE (m_gedrec $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2upper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2lower($query)) . "')";
+		$sql = "SELECT m_media as m_media FROM " . $TBLPREFIX . "media WHERE (m_gedrec $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(UTF8_strtoupper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(UTF8_strtolower($query)) . "')";
 	else {
 		$sql = "SELECT m_media FROM " . $TBLPREFIX . "media WHERE (";
 		$i = 0;
 		foreach ($query as $indexval => $q) {
 			if ($i > 0)
 				$sql .= " $ANDOR ";
-			$sql .= "(m_gedrec $term '" . $DBCONN->escapeSimple(str2upper($q)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2lower($q)) . "')";
+			$sql .= "(m_gedrec $term '" . $DBCONN->escapeSimple(UTF8_strtoupper($q)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(UTF8_strtolower($q)) . "')";
 			$i++;
 		}
 		$sql .= ")";

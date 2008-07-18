@@ -1613,8 +1613,8 @@ class Person extends GedcomRecord {
 		$surn=preg_match('/^'.$sublevel.' SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($givn || $surn) {
 			// GIVN and SURN, can be comma-separated lists.
-			$surns=preg_split('/ *, */', str2upper($surn));
-			$givn=preg_replace('/ *, */', ' ', str2upper($givn));
+			$surns=preg_split('/ *, */', UTF8_strtoupper($surn));
+			$givn=preg_replace('/ *, */', ' ', UTF8_strtoupper($givn));
 		} else {
 			// We do not have a structured name - extract the GIVN and SURN ourselves
 			// Strip the NPFX
@@ -1629,14 +1629,14 @@ class Person extends GedcomRecord {
 			}
 			// Extract the GIVN and SURN
 			if (strpos($name, '/')===false) {
-				$givn=str2upper($full);
+				$givn=UTF8_strtoupper($full);
 				$surn='';
 			} else {
 				// The given names may be before or after the surn.  If both are present,
 				// then treat all as given names. (Not perfect, but works well enough for
 				// sort/list names)
 				list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $name);
-				$givn=str2upper(trim($tmp1.' '.$tmp3));
+				$givn=UTF8_strtoupper(trim($tmp1.' '.$tmp3));
 				$surn=$tmp2;
 				if (preg_match('/^(?:(?:(?:a|aan|ab|af|al|ap|as|auf|av|bat|ben|bij|bin|bint|da|de|del|della|dem|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|st|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor|vor)[ -]+)+(?:[dl]\')?)(.+)$/i', $surn, $match)) {
 					$surn=$match[1];
@@ -1644,7 +1644,7 @@ class Person extends GedcomRecord {
 			}
 			// We can only specify multiple surnames in the SURN field.
 			// The comma is valid in NAME, and should always be displayed.
-			$surns=array(str2upper($surn));
+			$surns=array(UTF8_strtoupper($surn));
 		}
 
 		// Add placeholder for unknown surname

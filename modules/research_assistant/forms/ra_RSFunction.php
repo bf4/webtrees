@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - RecordSearch.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -165,7 +165,7 @@ require_once("includes/person_class.php");
 							$person = Person::getInstance($gid);
 							if (!is_null($person)) {
 								list($gedval) = explode(',', $person->getSortName());
-								if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
+								if (UTF8_strtolower($locals[$value['local']])==UTF8_strtolower($gedval)) $inferences[$pr_id]['value']++;
 								$inferences[$pr_id]['count']++;
 							}
 						}
@@ -181,7 +181,7 @@ require_once("includes/person_class.php");
 									$parts2 = preg_split("/\s+/", $locals['GIVN']);
 									foreach($parts1 as $p1=>$part1) {
 										foreach($parts2 as $p2=>$part2) {
-											if (str2lower($part1)==str2lower($part2)) $inferences[$pr_id]['value']++;
+											if (UTF8_strtolower($part1)==UTF8_strtolower($part2)) $inferences[$pr_id]['value']++;
 											$inferences[$pr_id]['count']++;
 										}
 									}
@@ -191,7 +191,7 @@ require_once("includes/person_class.php");
 						else {
 							$gedval = get_gedcom_value($value['comp'], 1, $record, '', false);
 							if (!empty($gedval) && !empty($locals[$value['local']])) {
-								if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
+								if (UTF8_strtolower($locals[$value['local']])==UTF8_strtolower($gedval)) $inferences[$pr_id]['value']++;
 								$inferences[$pr_id]['count']++;
 							}
 						}

@@ -1572,8 +1572,8 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 				}
 
 				if ($ignoreCase) {
-					$aLetter = str2upper($aLetter);
-					$bLetter = str2upper($bLetter);
+					$aLetter = UTF8_strtoupper($aLetter);
+					$bLetter = UTF8_strtoupper($bLetter);
 				}
 
 				if ($aLetter!=$bLetter && $bLetter!="" && $aLetter!="") {
@@ -2211,8 +2211,8 @@ function compare_date_gedcomrec($a, $b) {
 }
 
 function gedcomsort($a, $b) {
-	$aname = str2upper($a["title"]);
-	$bname = str2upper($b["title"]);
+	$aname = UTF8_strtoupper($a["title"]);
+	$bname = UTF8_strtoupper($b["title"]);
 
 	return stringsort($aname, $bname);
 }
@@ -3874,7 +3874,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if (!isset($MULTI_LETTER_ALPHABET[$LANGUAGE]))
 		$MULTI_LETTER_ALPHABET[$LANGUAGE] = "";
 	if ($MULTI_LETTER_ALPHABET[$LANGUAGE]!="") {
-		$myList = str2upper($MULTI_LETTER_ALPHABET[$LANGUAGE]);
+		$myList = UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE]);
 		$myList = str_replace(array(";", ","), " ", $myList);
 		$myList = preg_replace("/\s\s+/", " ", $myList);
 		$myList = trim($myList);
@@ -3905,7 +3905,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		if ($lang!="all")
 			$MULTI_LETTER_ALPHABET["all"] .= $letters." ";
 	}
-	$MULTI_LETTER_ALPHABET["all"] = str2upper($MULTI_LETTER_ALPHABET["all"]);
+	$MULTI_LETTER_ALPHABET["all"] = UTF8_strtoupper($MULTI_LETTER_ALPHABET["all"]);
 	$MULTI_LETTER_ALPHABET["all"] = str_replace(array(";", ","), " ", $MULTI_LETTER_ALPHABET["all"]);
 	$MULTI_LETTER_ALPHABET["all"] = preg_replace("/\s\s+/", " ", $MULTI_LETTER_ALPHABET["all"]);
 	$wholeList = explode(" ", $MULTI_LETTER_ALPHABET["all"]);

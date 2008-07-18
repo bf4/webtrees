@@ -715,8 +715,8 @@ function get_sosa_name($sosa) {
 		case "swedish":
 			$sosaname = "";
 			$addname = "";
-			$father = strtolower($pgv_lang["father"]);
-			$mother = strtolower($pgv_lang["mother"]);
+			$father = UTF8_strtolower($pgv_lang["father"]);
+			$mother = UTF8_strtolower($pgv_lang["mother"]);
 			$grand = "be".($LANGUAGE == "danish"?"dste":"ste");
 			$great = "olde";
 			$tip = "tip".($LANGUAGE == "danish"?"-":"p-");
@@ -739,7 +739,9 @@ function get_sosa_name($sosa) {
 				$sosaname .= $mother;
 				if ($gen>0) $addname .= $mother;
 			}
-			$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
+			$sosaname = UTF8_str_split($sosaname);
+			$sosaname[0] = UTF8_strtoupper($sosaname[0]);
+			$sosaname = implode('', $sosaname);
 			if ($LANGUAGE != "swedish") if (!empty($addname)) $sosaname .= ($gen>5?"<br />&nbsp;&nbsp;&nbsp;&nbsp;":"")." <small>(".$addname.")</small>";
 			break;
 	
@@ -768,20 +770,21 @@ function get_sosa_name($sosa) {
 	
 		case "finnish":
 		    $sosaname = "";
-			$father = str2lower($pgv_lang["father"]);
-			$mother = str2lower($pgv_lang["mother"]);
+			$father = UTF8_strtolower($pgv_lang["father"]);
+			$mother = UTF8_strtolower($pgv_lang["mother"]);
 	//		$father = "isä";
 	//		$mother = "äiti";
 	//		$pgv_lang["sosa_2"]= "äidin";	//Grand (mother)
 			for ($i=$gen; $i>0; $i--){
 				if (!(floor($sosa/(pow(2,$i)))%2)) $sosaname .= $father."n";
 	//			else $sosaname .= $pgv_lang["sosa_2"];
-				else $sosaname .= substr($mother, 0,3)."din";
+				else $sosaname .= UTF8_substr($mother, 0,2)."din";
 			}
 			if ($sosa%2==0) $sosaname .= $father;
 			else $sosaname .= $mother;
-			if (substr($sosaname, 0,1)=="i") $sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
-			else $sosaname = str2upper(substr($mother, 0,2)).substr($sosaname,2);
+			$sosaname = UTF8_str_split($sosaname);
+			$sosaname[0] = UTF8_strtoupper($sosaname[0]);
+			$sosaname = implode('',$sosaname);
 			break;
 	
 		case "hebrew":

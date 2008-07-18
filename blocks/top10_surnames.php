@@ -56,7 +56,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
 			if (count($addnames)==0) $addnames[] = $COMMON_NAMES_ADD;
 			foreach($addnames as $indexval => $name) {
-				$surname = str2upper($name);
+				$surname = UTF8_strtoupper($name);
 				if (!isset($surnames[$surname])) {
 					$surnames[$surname]["name"] = $name;
 					$surnames[$surname]["match"] = $COMMON_NAMES_THRESHOLD;
@@ -69,7 +69,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			$delnames = preg_split("/[,;] /", $COMMON_NAMES_REMOVE);
 			if (count($delnames)==0) $delnames[] = $COMMON_NAMES_REMOVE;
 			foreach($delnames as $indexval => $name) {
-				$surname = str2upper($name);
+				$surname = UTF8_strtoupper($name);
 				unset($surnames[$surname]);
 			}
 		}

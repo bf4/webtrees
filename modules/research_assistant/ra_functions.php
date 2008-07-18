@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - Functions File.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008, John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1318,7 +1318,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 						if ($ct>0) {
 							$gid = $match[1];
 							$gedval = $indilist[$gid]['names'][0][2];
-							if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
+							if (UTF8_strtolower($locals[$value['local']])==UTF8_strtolower($gedval)) $inferences[$pr_id]['value']++;
 							$inferences[$pr_id]['count']++;
 						}
 					}
@@ -1335,7 +1335,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 								$parts2 = preg_split("/\s+/", $locals['GIVN']);
 								foreach($parts1 as $p1=>$part1) {
 									foreach($parts2 as $p2=>$part2) {
-										if (str2lower($part1)==str2lower($part2)) $inferences[$pr_id]['value']++;
+										if (UTF8_strtolower($part1)==UTF8_strtolower($part2)) $inferences[$pr_id]['value']++;
 										$inferences[$pr_id]['count']++;
 									}
 								}
@@ -1352,7 +1352,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							}               
 
 							$inferences[$pr_id]['count']++;
-							if (str2lower($locals[$value['local']])==str2lower($gedval)) {
+							if (UTF8_strtolower($locals[$value['local']])==UTF8_strtolower($gedval)) {
 								$inferences[$pr_id]['value']++; 
 //								if (strpos($value['local'],':PLAC') !== false) { print "<p>".$value['local']."-".$locals[$value['local']]."<br />".$value['comp']."-".$gedval."<br />SAME!</p>"; }               
 //							} else {

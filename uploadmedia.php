@@ -39,7 +39,7 @@ print_header($pgv_lang["upload_media"]);
 ?>
 <center>
 <?php
-	print "<span class=\"subheaders\">".str2upper($pgv_lang["upload_media"])."</span><br /><br />\n";
+	print "<span class=\"subheaders\">".UTF8_strtoupper($pgv_lang["upload_media"])."</span><br /><br />\n";
 	if ((isset($action)) && ($action=="upload")) {
 		for($i=1; $i<6; $i++) {
 			$error="";

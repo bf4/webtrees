@@ -5,7 +5,7 @@
  * Display all of the information about an individual
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1879,11 +1879,11 @@ if (($view!="preview") && (userCanEdit())&&($disp)) {
 		print_help_link("reorder_families_help", "qm");
 		print "<br />\n";
 	}
-   print "<a href=\"#\" onclick=\"return add_famc('$pid');\">".$pgv_lang["link_as"].($LANGUAGE=="german"?$pgv_lang["child"]:str2lower($pgv_lang["child"]))."</a>";
+   print "<a href=\"#\" onclick=\"return add_famc('$pid');\">".$pgv_lang["link_as"].($LANGUAGE=="german"?$pgv_lang["child"]:UTF8_strtolower($pgv_lang["child"]))."</a>";
 			 print_help_link("link_child_help", "qm");
 		  print "<br />\n";
    if ($sex!="F") {
-		   print "<a href=\"#\" onclick=\"return add_fams('$pid','HUSB');\">".$pgv_lang["link_as"].($LANGUAGE=="german"?$pgv_lang["husband"]:str2lower($pgv_lang["husband"]))."</a>";
+		   print "<a href=\"#\" onclick=\"return add_fams('$pid','HUSB');\">".$pgv_lang["link_as"].($LANGUAGE=="german"?$pgv_lang["husband"]:UTF8_strtolower($pgv_lang["husband"]))."</a>";
 		   print_help_link("link_husband_help", "qm");
 		   print "<br />\n";
 		   print "<a href=\"#\" onclick=\"return addspouse('$pid','WIFE');\">".$pgv_lang["add_new_wife"]."</a>";
@@ -1891,7 +1891,7 @@ if (($view!="preview") && (userCanEdit())&&($disp)) {
 		   print "<br />\n";
    }
    if ($sex!="M") {
-		   print "<a href=\"#\" onclick=\"return add_fams('$pid','WIFE');\">".$pgv_lang["link_as"].($LANGUAGE=="german"?$pgv_lang["wife"]:str2lower($pgv_lang["wife"]))."</a>";
+		   print "<a href=\"#\" onclick=\"return add_fams('$pid','WIFE');\">".$pgv_lang["link_as"].($LANGUAGE=="german"?$pgv_lang["wife"]:UTF8_strtolower($pgv_lang["wife"]))."</a>";
 		   print_help_link("link_wife_help", "qm");
 		   print "<br />\n";
 		   print "<a href=\"#\" onclick=\"return addspouse('$pid','HUSB');\">".$pgv_lang["add_new_husb"]."</a>";

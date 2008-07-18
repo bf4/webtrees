@@ -8,7 +8,7 @@
  * cache arrays are checked first before querying the database.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team, all rights reserved
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1071,7 +1071,7 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE (";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
-			$sql .= "i_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR i_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
+			$sql .= "i_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($query))."' OR i_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($query))."')";
 		else
 			$sql .= "i_gedcom $term '".$DBCONN->escapeSimple($query)."')";
 	} else {
@@ -1082,7 +1082,7 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 			if ($i>0)
 				$sql .= " $ANDOR ";
 			if (has_utf8($q))
-				$sql .= "(i_gedcom $term '".$DBCONN->escapeSimple(str2upper($q))."' OR i_gedcom $term '".$DBCONN->escapeSimple(str2lower($q))."')";
+				$sql .= "(i_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($q))."' OR i_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($q))."')";
 			else
 				$sql .= "(i_gedcom $term '".$DBCONN->escapeSimple($q)."')";
 			$i++;
@@ -1458,7 +1458,7 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 	if (!empty($day))
 		$sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
 	if (!empty($month))
-		$sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
+		$sql .= "AND d_month='".$DBCONN->escapeSimple(UTF8_strtoupper($month))."' ";
 	if (!empty($year))
 		$sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
 	if (!empty($fact)) {
@@ -1471,9 +1471,9 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 			$ct = preg_match("/!(\w+)/", $fact, $match);
 			if ($ct > 0) {
 				$fact = $match[1];
-				$sql .= "d_fact!='".$DBCONN->escapeSimple(str2upper($fact))."'";
+				$sql .= "d_fact!='".$DBCONN->escapeSimple(UTF8_strtoupper($fact))."'";
 			} else {
-				$sql .= "d_fact='".$DBCONN->escapeSimple(str2upper($fact))."'";
+				$sql .= "d_fact='".$DBCONN->escapeSimple(UTF8_strtoupper($fact))."'";
 			}
 			$i++;
 		}
@@ -1534,9 +1534,9 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 			$ct = preg_match("/!(\w+)/", $fact, $match);
 			if ($ct > 0) {
 				$fact = $match[1];
-				$sql .= "d_fact!='".$DBCONN->escapeSimple(str2upper($fact))."'";
+				$sql .= "d_fact!='".$DBCONN->escapeSimple(UTF8_strtoupper($fact))."'";
 			} else {
-				$sql .= "d_fact='".$DBCONN->escapeSimple(str2upper($fact))."'";
+				$sql .= "d_fact='".$DBCONN->escapeSimple(UTF8_strtoupper($fact))."'";
 			}
 			$i++;
 		}
@@ -1867,7 +1867,7 @@ function search_sources($query, $allgeds=false, $ANDOR="AND") {
 		$sql = "SELECT s_id, s_name, s_file, s_gedcom FROM ".$TBLPREFIX."sources WHERE ";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
-			$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR s_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
+			$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($query))."' OR s_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($query))."')";
 		else
 			$sql .= "s_gedcom $term '".$DBCONN->escapeSimple($query)."'";
 	} else {
@@ -1877,7 +1877,7 @@ function search_sources($query, $allgeds=false, $ANDOR="AND") {
 			if ($i>0)
 				$sql .= " $ANDOR ";
 			if (has_utf8($q))
-				$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple(str2upper($q))."' OR s_gedcom $term '".$DBCONN->escapeSimple(str2lower($q))."')";
+				$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($q))."' OR s_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($q))."')";
 			else
 				$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple($q)."')";
 			$i++;
@@ -1933,11 +1933,11 @@ function search_sources_dates($day="", $month="", $year="", $fact="", $allgeds=f
 	if (!empty($day))
 		$sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
 	if (!empty($month))
-		$sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
+		$sql .= "AND d_month='".$DBCONN->escapeSimple(UTF8_strtoupper($month))."' ";
 	if (!empty($year))
 		$sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
 	if (!empty($fact))
-		$sql .= "AND d_fact='".$DBCONN->escapeSimple(str2upper($fact))."' ";
+		$sql .= "AND d_fact='".$DBCONN->escapeSimple(UTF8_strtoupper($fact))."' ";
 	if (!$allgeds)
 		$sql .= "AND d_file=".PGV_GED_ID." ";
 	$sql .= "GROUP BY s_id ORDER BY d_year, d_month, d_day DESC";
@@ -1980,7 +1980,7 @@ function search_other($query, $allgeds=false, $type="", $ANDOR="AND") {
 		$sql = "SELECT o_id, o_type, o_file, o_gedcom FROM ".$TBLPREFIX."other WHERE ";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
-			$sql .= "(o_gedcom $term '".$DBCONN->escapeSimple(str2upper($query))."' OR o_gedcom $term '".$DBCONN->escapeSimple(str2lower($query))."')";
+			$sql .= "(o_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($query))."' OR o_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($query))."')";
 		else
 			$sql .= "o_gedcom $term '".$DBCONN->escapeSimple($query)."'";
 	} else {
@@ -1990,7 +1990,7 @@ function search_other($query, $allgeds=false, $type="", $ANDOR="AND") {
 			if ($i>0)
 				$sql .= " $ANDOR ";
 			if (has_utf8($q))
-				$sql .= "(o_gedcom $term '".$DBCONN->escapeSimple(str2upper($q))."' OR o_gedcom $term '".$DBCONN->escapeSimple(str2lower($q))."')";
+				$sql .= "(o_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($q))."' OR o_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($q))."')";
 			else
 				$sql .= "(o_gedcom $term '".$DBCONN->escapeSimple($q)."')";
 			$i++;
@@ -2046,11 +2046,11 @@ function search_other_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 	if (!empty($day))
 		$sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
 	if (!empty($month))
-		$sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
+		$sql .= "AND d_month='".$DBCONN->escapeSimple(UTF8_strtoupper($month))."' ";
 	if (!empty($year))
 		$sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
 	if (!empty($fact))
-		$sql .= "AND d_fact='".$DBCONN->escapeSimple(str2upper($fact))."' ";
+		$sql .= "AND d_fact='".$DBCONN->escapeSimple(UTF8_strtoupper($fact))."' ";
 	if (!$allgeds)
 		$sql .= "AND d_file=".PGV_GED_ID." ";
 	$sql .= "GROUP BY o_id ORDER BY d_year, d_month, d_day DESC";
@@ -2181,7 +2181,7 @@ function find_place_list($place) {
 		$found = array();
 		foreach ($placelist as $indexval => $pplace) {
 			if (preg_match("/$place/i", $pplace)>0) {
-				$upperplace = str2upper($pplace);
+				$upperplace = UTF8_strtoupper($pplace);
 				if (!isset($found[$upperplace])) {
 					$found[$upperplace] = $pplace;
 				}
@@ -2260,7 +2260,7 @@ function get_indi_alpha() {
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = str2upper($row["alpha"]);
+		$letter = UTF8_strtoupper($row["alpha"]);
 		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
 			$letter = str_replace($danishFrom, $danishTo, $letter);
 		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
@@ -2292,7 +2292,7 @@ function get_indi_alpha() {
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = str2upper($row["alpha"]);
+		$letter = UTF8_strtoupper($row["alpha"]);
 		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
 			$letter = str_replace($danishFrom, $danishTo, $letter);
 		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
@@ -2340,7 +2340,7 @@ function get_fam_alpha() {
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = str2upper($row["alpha"]);
+		$letter = UTF8_strtoupper($row["alpha"]);
 		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
 			$letter = str_replace($danishFrom, $danishTo, $letter);
 		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
@@ -2369,7 +2369,7 @@ function get_fam_alpha() {
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = str2upper($row["alpha"]);
+		$letter = UTF8_strtoupper($row["alpha"]);
 		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
 			$letter = str_replace($danishFrom, $danishTo, $letter);
 		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
@@ -2798,7 +2798,7 @@ function get_alpha_fams($letter) {
 //				[ 1579889 ]
 //				if ((preg_match("/^$letter/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/", $namearray[1])>0)) {
 					if ((preg_match("/^$letter/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/i", $namearray[2])>0)) {
-						$surnames[str2upper($namearray[2])] = $namearray[2];
+						$surnames[UTF8_strtoupper($namearray[2])] = $namearray[2];
 						$hname = sortable_name_from_name($namearray[0]);
 					}
 				}
@@ -2810,7 +2810,7 @@ function get_alpha_fams($letter) {
 					if (isset($indilist[$WIFE]["names"])) {
 						foreach ($indilist[$WIFE]["names"] as $n=>$namearray) {
 							if (hasRTLText($namearray[0])) {
-								$surnames[str2upper($namearray[2])] = $namearray[2];
+								$surnames[UTF8_strtoupper($namearray[2])] = $namearray[2];
 								$wname = sortable_name_from_name($namearray[0]);
 								break;
 							}
@@ -3135,11 +3135,11 @@ function get_top_surnames($num) {
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow()) {
 			if (preg_match("/^(@N\.N\.?|_+|\?+)$/", $row[1])==0) {			// Skip various forms of "unknown"
-				if (isset($surnames[str2upper($row[1])]['match']))
-					$surnames[str2upper($row[1])]['match'] += $row[0];
+				if (isset($surnames[UTF8_strtoupper($row[1])]['match']))
+					$surnames[UTF8_strtoupper($row[1])]['match'] += $row[0];
 				else {
-					$surnames[str2upper($row[1])]['name'] = $row[1];
-					$surnames[str2upper($row[1])]['match'] = $row[0];
+					$surnames[UTF8_strtoupper($row[1])]['name'] = $row[1];
+					$surnames[UTF8_strtoupper($row[1])]['match'] = $row[0];
 				}
 			}
 		}
@@ -3150,11 +3150,11 @@ function get_top_surnames($num) {
 
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow()) {
-			if (isset($surnames[str2upper($row[1])]['match']))
-				$surnames[str2upper($row[1])]['match'] += $row[0];
+			if (isset($surnames[UTF8_strtoupper($row[1])]['match']))
+				$surnames[UTF8_strtoupper($row[1])]['match'] += $row[0];
 			else {
-				$surnames[str2upper($row[1])]['name'] = $row[1];
-				$surnames[str2upper($row[1])]['match'] = $row[0];
+				$surnames[UTF8_strtoupper($row[1])]['name'] = $row[1];
+				$surnames[UTF8_strtoupper($row[1])]['match'] = $row[0];
 			}
 		}
 		$res->free();
