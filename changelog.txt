@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2022036 ] Translation tool adds backslashes input text 
  - Fixed: [ 2020014 ] Weird indexing for surnames with some diacritics (canajun2eh)
  - Fixed: Album page errors due to import_request_variables() call being removed (windmillway)
  - Added theme based template for portal blocks (yalnifj)

@@ -3,7 +3,7 @@
  * Edit a language file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ if ($action != "save")
       print "</tr>";
     print "</table>";
 
-    print "<form name=\"Form1\" method=\"post\" action=\"" .$PHP_SELF. "\">";
+    print "\r\n<form name=\"Form1\" method=\"post\" action=\"" .$PHP_SELF. "\">";
       print "<input type=\"hidden\" name=\"".session_name()."\" value=\"".session_id()."\" />";
       print "<input type=\"hidden\" name=\"action\" value=\"save\" />";
       print "<input type=\"hidden\" name=\"anchor\" value=\"".$anchor."\" />";
@@ -116,35 +116,35 @@ if ($action != "save")
       print "<input type=\"hidden\" name=\"ls02\" value=\"" . $ls02 . "\" />";
       print "<input type=\"hidden\" name=\"file_type\" value=\"" . $file_type . "\" />";
 
-      print "<table class=\"facts_table\">";
+      print "\r\n<table class=\"facts_table\">";
         print "<tr>";
-          print "<td class=\"facts_label03\" style=\"color: #0000FF; font-weight: bold; \">";
+          print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">";
             print_text("original_message");
           print "</td>";
         print "</tr>";
         print "<tr>";
-          print "<td class=\"facts_value\" style=\"text-align:center; color: #0000FF\" >";
+          print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
             print "<strong style=\"color: red\">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>";
           print "</td>";
         print "</tr>";
       print "</table>";
       print "<br />";
-      print "<table class=\"facts_table\">";
+      print "\r\n<table class=\"facts_table\">";
         print "<tr>";
-          print "<td class=\"facts_label03\" style=\"color: #FF0000; font-weight: bold; \" >";
+          print "<td class=\"facts_label03\" style=\"color: red; font-weight: bold; \" >";
             print_text("message_to_edit");
           print "</td>";
         print "</tr>";
         print "<tr>";
           print "<td class=\"facts_value\" style=\"text-align:center; \" >";
-            print "<textarea rows=\"10\" name=\"new_message\" cols=\"75\" style=\"color: #FF0000\" >";
+            print "<textarea rows=\"10\" name=\"new_message\" cols=\"75\" style=\"color: red\" >";
               if ($ls02>0) print str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls02, $lang_filename));
             print "</textarea>";
           print "</td>";
         print "</tr>";
       print "</table>";
       print "<br />";
-      print "<table class=\"facts_table\">";
+      print "\r\n<table class=\"facts_table\">";
         print "<tr>";
           print "<td class=\"facts_value\" style=\"text-align:center; \" >";
             print "<input type=\"submit\" value=\"";
@@ -171,6 +171,14 @@ if ($action == "save")
   // $ls01 is the number of the message in english language file
   // $ls02 is the number of the message in the edited language file
   // $file_type defines which language file
+  
+  $new_message = safe_POST('new_message');
+  $language2 = safe_POST('language2');
+  $ls01 = safe_POST('ls01');
+  $ls02 = safe_POST('ls02');
+  $file_type = safe_POST('file_type');
+  
+  if (get_magic_quotes_gpc()) $new_message = stripslashes($new_message);	// Remove escaping backslashes added by POST
 
   switch ($file_type)
   {
@@ -297,7 +305,7 @@ if ($action == "save")
   print "<form name=\"Form2\" method=\"post\" action=\"" .$PHP_SELF. "\">";
     print "<table class=\"facts_table\">";
       print "<tr>";
-        if ($Write_Ok) print "<td class=\"facts_label03\" style=\"color: #0000FF; font-weight: bold; \">".print_text("original_message",0,1);
+        if ($Write_Ok) print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">".print_text("original_message",0,1);
         else
         {
         print "<td class=\"warning\" >";
@@ -308,7 +316,7 @@ if ($action == "save")
       if ($Write_Ok)
       {
       print "<tr>";
-        print "<td class=\"facts_value\" style=\"text-align:center; color: #0000FF\" >";
+        print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
           print "<strong style=\"color: red\">|</strong>".str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>";
         print "</td>";
       print "</tr>";
@@ -321,13 +329,13 @@ if ($action == "save")
 
     print "<table class=\"facts_table\">";
       print "<tr>";
-        print "<td class=\"facts_label03\" style=\"color: #0000FF; font-weight: bold; \">";
+        print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">";
           print_text("changed_message");
         print "</td>";
       print "</tr>";
 
       print "<tr>";
-        print "<td class=\"facts_value\" style=\"text-align:center; color: #0000FF\" >";
+        print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
           print "<strong style=\"color: red; \">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, $new_message) . "<strong style=\"color: red\">|</strong>";
         print "</td>";
       print "</tr>";
