@@ -70,7 +70,7 @@ class Event {
 			$this->values=array();
 			preg_match_all('/\n2\s(\w+)\s*(.*)/', $this->gedComRecord, $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
-				$this->values[$match[1]]=preg_replace("/@/", "", $match[2]);
+				$this->values[$match[1]]=trim(preg_replace("/@/", "", $match[2]), "\r\n");
 			}
 		}
 		if (array_key_exists($code, $this->values))
