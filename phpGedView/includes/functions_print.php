@@ -59,7 +59,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
 	// NOTE: Start div out-rand()
-	if ($pid==false) {
+	$person=Person::getInstance($pid);
+	if ($pid==false || empty($person)) {
 		print "<div id=\"out-".rand()."\" class=\"person_boxNN\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\">";
 		print "<br />";
 		print "</div>";
@@ -69,7 +70,6 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	$lbwidth = $bwidth*.75;
 	if ($lbwidth < 150) $lbwidth = 150;
 	
-	$person=Person::getInstance($pid);
 	$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
 	$isF=$tmp[$person->getSex()];
 
