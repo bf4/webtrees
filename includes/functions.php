@@ -2112,44 +2112,54 @@ function compare_facts_date($arec, $brec) {
 		}
 }
 
-// Sort the facts, using three conflicting rules (family sequence,
-// date sequence and fact sequence).
-// We sort by fact first (preserving family order where possible) and then
-// resort by date (preserving fact order where possible).
-// This results in the dates always being in sequence, and the facts
-// *mostly* being in sequence.
+/**
+ * A multi-key sort
+ * 1. First divide the facts into two arrays one set with dates and one set without dates
+ * 2. Sort each of the two new arrays, the date using the compare date function, the non-dated
+ * using the compare type function
+ * 3. Then merge the arrays back into the original array using the compare type function
+ *
+ * @param unknown_type $arr
+ */
 function sort_facts(&$arr) {
-	// Pass one - insertion sort on fact type
-	for ($i=1; $i<count($arr); ++$i) {
-			$tmp=$arr[$i];
-			$j=$i;
-		while ($j>0 && Event::CompareType($arr[$j-1], $tmp)>0) {
-				$arr[$j]=$arr[$j-1];
-				--$j;
-			}
-			$arr[$j]=$tmp;
-		}
-
-	//-- add extra codes for the next pass of sorting
-	//$lastDate = "";
-	for ($i=0; $i<count($arr); $i++) {
-		//-- add a fake date for the date sorting based on the previous fact that came before
-		//if (is_null($arr[$i]->getDate(false))) {
-		//	if (!empty($lastDate)) $arr[$i]->sortDate = $lastDate;
-		//}
-		//else $lastDate = $arr[$i]->getDate(false);
-		$arr[$i]->sortOrder = $i;
+	$dated = array();
+	$nondated = array();
+	//-- split the array into dated and non-dated arrays
+	foreach($arr as $event) {
+		if ($event->getValue("DATE")==NULL) $nondated[] = $event;
+		else $dated[] = $event;
 	}
 	
-	// Pass two - modified bubble/insertion sort on date
-	for ($i=0; $i<count($arr)-1; ++$i)
-		for ($j=count($arr)-1; $j>$i; --$j)
-			if (Event::CompareDate($arr[$i],$arr[$j])>0) {
-				$tmp=$arr[$i];
-				for ($k=$i; $k<$j; ++$k)
-					$arr[$k]=$arr[$k+1];
-				$arr[$j]=$tmp;
-			}
+	//-- sort each type of array
+	usort($dated, array("Event","CompareDate"));
+	usort($nondated, array("Event","CompareType"));
+	
+	//-- merge the arrays back together comparing by Facts
+	$dc = count($dated);
+	$nc = count($nondated);
+	$i = 0;
+	$j = 0;
+	$k = 0;
+	// while there is anything in the dated array continue merging
+	while($i<$dc) {
+		// compare each fact by type to merge them in order
+		if ($j<$nc && Event::CompareType($dated[$i],$nondated[$j])>0) {
+			$arr[$k] = $nondated[$j];
+			$j++;
+		}
+		else {
+			$arr[$k] = $dated[$i];
+			$i++;
+		}
+		$k++; 
+	}
+	
+	// get anything that might be left in the nondated array
+	while($j<$nc) {
+		$arr[$k] = $nondated[$j];
+		$j++;
+		$k++;
+	}
 }
 
 /**
