@@ -933,8 +933,10 @@ class Person extends GedcomRecord {
 			$updfamily = $family->getUpdatedFamily(); //-- updated family ?
 			$spouse = $family->getSpouse($this);
 
-			if ($updfamily) $facts = $updfamily->getFacts();
-			else $facts = $family->getFacts();
+			if ($updfamily) {
+				$family->diffMerge($updfamily);
+			}
+			$facts = $family->getFacts();
 			$hasdiv = false;
 			/* @var $event Event */
 			foreach($facts as $event) {
@@ -946,7 +948,6 @@ class Person extends GedcomRecord {
 						$factrec = $event->getGedComRecord();
 						if (!is_null($spouse)) $factrec.="\r\n2 _PGVS @".$spouse->getXref()."@";
 						$factrec.="\r\n2 _PGVFS @$famid@\r\n";
-						if ($updfamily) $factrec .= "PGV_NEW\r\n";
 						$event->gedComRecord = $factrec;
 						if ($fact!="OBJE") $this->indifacts[] = $event;
 						else $this->otherfacts[]=$event;
@@ -1440,6 +1441,7 @@ class Person extends GedcomRecord {
 		for($i=0; $i<count($this->indifacts); $i++) {
 			$found=false;
 			$oldfactrec = $this->indifacts[$i]->getGedcomRecord();
+			print $this->indifacts[$i]->getTag()." ";
 			foreach($diff->indifacts as $indexval => $newfact) {
 				$newfactrec = $newfact->getGedcomRecord();
 				//-- remove all whitespace for comparison
