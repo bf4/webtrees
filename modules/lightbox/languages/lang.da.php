@@ -33,6 +33,22 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// Added in VERSION 4.1.6
+$pgv_lang["lb_generalhelp"]     = "Individside - Lyskasse gennerel hjælp";
+$pgv_lang["lb_viewedit"]                = "Vis/redigér";
+$pgv_lang["lb_viewnotes"]               = "Vis noter";
+$pgv_lang["lb_viewdetails"]             = "Vis detaljer";
+$pgv_lang["lb_viewsource"]              = "Vis kilde";
+$pgv_lang["lb_editmedia"]               = "Redigér medie";
+$pgv_lang["lb_unlinkmedia"]             = "Fjern link til medie";
+$pgv_lang["lb_balloon_true"]    = "Ballon";
+$pgv_lang["lb_balloon_false"]   = "Normal";
+$pgv_lang["lb_tt_balloon"]              = "Individside - Albumfanen miniaturer - værktøjstip for noter";
+$pgv_lang["lb_ttAppearance"]    = "Noter - Værktøjstip-udseende";
+$pgv_lang["view_lightbox"]              = "Vis album for ...";
+$pgv_lang["lb_notes"]                   = "Noter";
+$pgv_lang["lb_notes_info"]              = "";
+
 // Added in VERSION 4.1.4 
 
 $pgv_lang["lb_details"]			= "Detaljer";
