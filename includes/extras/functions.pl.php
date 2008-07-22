@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 Greg Roach
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,5 +81,86 @@ function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 		$q1=$pgv_lang[$q1];
 	if (isset($pgv_lang[$q2]))
 		$q2=$pgv_lang[$q2];
+}
+////////////////////////////////////////////////////////////////////////////////
+// Localise an age.
+////////////////////////////////////////////////////////////////////////////////
+function age_localisation_pl(&$agestring, &$show_years) {
+	global $pgv_lang;
+	
+	// Only suppress years if there are no months/days
+	if (preg_match('/\d[md]/i', $agestring)) {
+		$show_years=true;
+	}
+	$agestring=preg_replace(
+		array(
+			'/\bchi(ld)?\b/i',
+			'/\binf(ant)?\b/i',
+			'/\bsti(llborn)?\b/i',
+			'/\b1y/i',
+			'/\b2y/i','/\b3y/i','/\b4y/i',
+			'/\b22y/i','/\b23y/i','/\b24y/i',
+			'/\b32y/i','/\b33y/i','/\b34y/i',
+			'/\b42y/i','/\b43y/i','/\b44y/i',
+			'/\b52y/i','/\b53y/i','/\b54y/i',
+			'/\b62y/i','/\b63y/i','/\b64y/i',
+			'/\b72y/i','/\b73y/i','/\b74y/i',
+			'/\b82y/i','/\b83y/i','/\b84y/i',
+			'/\b92y/i','/\b93y/i','/\b94y/i',
+			'/\b102y/i','/\b103y/i','/\b104y/i',
+			'/\b122y/i','/\b123y/i','/\b124y/i',
+			'/\b132y/i','/\b133y/i','/\b134y/i',
+			'/(\d+)y/i',
+			'/\b1m/i',
+			'/\b2m/i','/\b3m/i','/\b4m/i',
+			'/\b22m/i','/\b23m/i','/\b24m/i',
+			'/(\d+)m/i',
+			'/\b1d/i',
+			'/(\d+)d/i'
+		),
+		array(
+			$pgv_lang['child'],
+			$pgv_lang['infant'],  
+	 		$pgv_lang['stillborn'], 
+			$show_years ? '1 '.$pgv_lang['year1'] : '1',
+			$show_years ? '2 '."lata" : '2', $show_years ? '3 '."lata" : '3', $show_years ? '4 '."lata" : '4',
+			$show_years ? '22 '."lata" : '22', $show_years ? '23 '."lata" : '23', $show_years ? '24 '."lata" : '24',
+			$show_years ? '32 '."lata" : '32', $show_years ? '33 '."lata" : '33', $show_years ? '34 '."lata" : '34',
+			$show_years ? '42 '."lata" : '42', $show_years ? '43 '."lata" : '43', $show_years ? '44 '."lata" : '44',
+			$show_years ? '52 '."lata" : '52', $show_years ? '53 '."lata" : '53', $show_years ? '54 '."lata" : '54',
+			$show_years ? '62 '."lata" : '62', $show_years ? '63 '."lata" : '63', $show_years ? '64 '."lata" : '64',
+			$show_years ? '72 '."lata" : '72', $show_years ? '73 '."lata" : '73', $show_years ? '74 '."lata" : '74',
+			$show_years ? '82 '."lata" : '82', $show_years ? '83 '."lata" : '83', $show_years ? '84 '."lata" : '84',
+			$show_years ? '92 '."lata" : '92', $show_years ? '93 '."lata" : '93', $show_years ? '94 '."lata" : '94',
+			$show_years ? '102 '."lata" : '102', $show_years ? '103 '."lata" : '103', $show_years ? '104 '."lata" : '104',
+			$show_years ? '122 '."lata" : '122', $show_years ? '123 '."lata" : '123', $show_years ? '124 '."lata" : '124',
+			$show_years ? '132 '."lata" : '132', $show_years ? '133 '."lata" : '133', $show_years ? '134 '."lata" : '134',
+			$show_years ? '$1 '.$pgv_lang['years'] : '$1',
+			'1 '.$pgv_lang['month1'],
+			'2 '."miesiące", '3 '."miesiące", '4 '."miesiące",
+			'22 '."miesiące", '23 '."miesiące", '24 '."miesiące",
+	 		'$1 '.$pgv_lang['months'],
+			'1 '.$pgv_lang['day1'],  
+			'$1 '.$pgv_lang['days']
+		),
+		$agestring
+	);
+}
+////////////////////////////////////////////////////////////////////////////////
+// Localise a date differences.
+////////////////////////////////////////////////////////////////////////////////
+function date_diff_localisation_pl(&$label, &$gap) {
+	global $pgv_lang;
+
+	if (($gap==12)||($gap==-12)) $label .= round($gap/12)." ".$pgv_lang["year1"]; // 1 rok
+	else if (($gap>20 && $gap<54)||($gap<-20 && $gap>-54)) $label .= round($gap/12)." lata"; // 2-4 lata
+	else if (($gap>=258 && $gap<294)||($gap<=-258 && $gap>-294)) $label .= round($gap/12)." lata"; // 22-24 lata
+	else if (($gap>=378&&$gap<414)||($gap<=-378&&$gap>-414)) $label .= round($gap/12)." lata"; // 32-34 lata
+	else if (($gap>=498&&$gap<534)||($gap<=-498&&$gap>-534)) $label .= round($gap/12)." lata"; // 42-44 lata
+	else if (($gap>=618&&$gap<654)||($gap<=-618&&$gap>-654)) $label .= round($gap/12)." lata"; // 52-54 lata
+	else if ($gap>20 or $gap<-20) $label .= round($gap/12)." ".$pgv_lang["years"];	// x lat
+	else if (($gap==1)||($gap==-1)) $label .= $gap." ".$pgv_lang["month1"]; // 1 miesiąc
+	else if (($gap>1&&$gap<5)||($gap<-1&&$gap>-5)) $label .= $gap." miesiące"; // 2-4 miesiące
+	else if ($gap!=0) $label .= $gap." ".$pgv_lang["months"]; // x miesięcy
 }
 ?>

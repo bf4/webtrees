@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,12 +47,23 @@ require_once('includes/date_class.php');
  * @see http://homepages.rootsweb.com/~pmcbride/gedcom/55gcch2.htm#AGE_AT_EVENT
  */
 function get_age_at_event($agestring, $show_years) {
-	global $pgv_lang;
+	global $pgv_lang, $lang_short_cut, $LANGUAGE;
+	
+	// Allow special processing for different languages
+	$func="age_localisation_{$lang_short_cut[$LANGUAGE]}";
+	if (!function_exists($func))
+		$func="DefaultAgeLocalisation";
+	// Localise the age
+	$func($agestring, $show_years);
 
-	// Only suppress years if there are no months/days
-	if (preg_match('/\d[md]/i', $agestring)) {
-		$show_years=true;
-	}
+	if (!empty($agestring))
+		$agestring="<span class=\"age\">{$agestring}</span>";
+	return $agestring;
+}
+
+// Localise an age.  This is a default function, and may be overridden in includes/extras/functions.xx.php
+function DefaultAgeLocalisation(&$agestring, &$show_years) {
+	global $pgv_lang;
 
 	$agestring=preg_replace(
 		array(
@@ -69,19 +80,16 @@ function get_age_at_event($agestring, $show_years) {
 		array(
 			$pgv_lang['child'],
 			$pgv_lang['infant'],  
-	 		$pgv_lang['stillborn'], 
-			$show_years ? '1 '.$pgv_lang['year1'] : '1', 
+	 		$pgv_lang['stillborn'],
+			$show_years ? '1 '.$pgv_lang['year1'] : '1',
 			$show_years ? '$1 '.$pgv_lang['years'] : '$1',
-	  	'1 '.$pgv_lang['month1'], 
+	  	'1 '.$pgv_lang['month1'],
 	 		'$1 '.$pgv_lang['months'],
 	  	'1 '.$pgv_lang['day1'],  
 			'$1 '.$pgv_lang['days']
 		),
 		$agestring
 	);
-	if (!empty($agestring))
-		$agestring="<span class=\"age\">{$agestring}</span>";
-	return $agestring;
 }
 
 /**

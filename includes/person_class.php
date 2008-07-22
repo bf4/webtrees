@@ -557,7 +557,7 @@ class Person extends GedcomRecord {
 	 * @return string
 	 */
 	function getLabel($elderdate="", $counter=0) {
-		global $pgv_lang, $TEXT_DIRECTION;
+		global $pgv_lang, $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION;
 		$label = "";
 		$gap = 0;
 		if (is_object($elderdate) && $elderdate->isOK()) {
@@ -577,8 +577,13 @@ class Person extends GedcomRecord {
 					}**/
 				// gap in years or months
 				$gap = round($gap*12/365.25); // months
-				if ($gap>20 or $gap<-20) $label .= round($gap/12)." ".$pgv_lang["years"];
-				else if ($gap!=0) $label .= $gap." ".$pgv_lang["months"];
+
+				// Allow special processing for different languages
+				$func="date_diff_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (!function_exists($func))
+					$func="DefaultGetLabel";
+				// Localise the age diff
+				$func($label, $gap);
 				$label .= "</div>";
 			}
 		}
@@ -1738,6 +1743,15 @@ class Person extends GedcomRecord {
 		$this->format_first_major_fact(PGV_EVENTS_BIRT, 1).
 		$this->format_first_major_fact(PGV_EVENTS_DEAT, 1);
 	}
+}
 
+// Localise a date differences.  This is a default function, and may be overridden in includes/extras/functions.xx.php
+function DefaultGetLabel(&$label, &$gap) {
+	global $pgv_lang;
+
+	if (($gap==12)||($gap==-12)) $label .= round($gap/12)." ".$pgv_lang["year1"]; // 1 year
+	else if ($gap>20 or $gap<-20) $label .= round($gap/12)." ".$pgv_lang["years"]; // x years
+	else if (($gap==1)||($gap==-1)) $label .= $gap." ".$pgv_lang["month1"]; // 1 month
+	else if ($gap!=0) $label .= $gap." ".$pgv_lang["months"]; // x months
 }
 ?>
