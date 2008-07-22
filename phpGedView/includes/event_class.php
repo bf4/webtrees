@@ -385,7 +385,9 @@ class Event {
 		else $ret = GedcomDate::Compare($adate, $bdate);
 		if ($ret==0) {
 			$ret = $a->sortOrder - $b->sortOrder;
+			//if ($ret==0) $ret = Event::CompareType($a, $b);
 		}
+		//if ($ret==0) print "[".$a->getTag().":".$adate->MinJD()."-".$adate->MaxJD()." ".$b->getTag().":".$bdate->MinJD()."-".$bdate->MaxJD()." ".$ret."] ";
 		return $ret;
 	}
 
@@ -397,9 +399,9 @@ class Event {
 	 * @return int
 	 */
 	function CompareType(&$a, &$b) {
-		static $factsort=NULL;
-
-		if (is_null($factsort))
+		global $factsort;
+		
+		if (empty($factsort))
 			$factsort=array_flip(array(
 				"BIRT",
 				"_HNM",
@@ -477,10 +479,11 @@ class Event {
 			else
 				$btag="_????_";
 
+		//-- don't let dated after DEAT/BURI facts sort non-dated facts before DEAT/BURI
+		//-- treat dated after BURI facts as BURI instead
+		if ($a->getValue('DATE')!=NULL && $factsort[$atag]>$factsort['BURI'] && $factsort[$atag]<$factsort['CHAN']) $atag='BURI';
 		$ret = $factsort[$atag]-$factsort[$btag];
-		//-- if the facts are the same, then go ahead and compare them by date
-		//-- this will improve the positioning of non-dated elements on the next pass
-		if ($ret==0) $ret = Event::CompareDate($a, $b);
+
 		return $ret;
 	}
 }
