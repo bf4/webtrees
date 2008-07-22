@@ -2134,6 +2134,41 @@ function sort_facts(&$arr) {
 	usort($dated, array("Event","CompareDate"));
 	usort($nondated, array("Event","CompareType"));
 	
+	/* This commented out code is an algorithm for inserting non-dated events into the dated events
+	 * using a weighted comparison.  Non-dated events are sorted by inserting them next to the the dated
+	 * fact they should be closest to. 
+	$arr = $dated;
+	//-- find the best place to put each nondated event
+	$index = 0;
+	foreach($nondated as $event) {
+		$score = null;
+//		print "<br />".$event->getTag()." ";
+		for($i=$index; $i<count($arr); $i++) {
+			$tmp = Event::CompareType($event, $arr[$i]);
+//			print $i.":".$arr[$i]->getTag().":".$tmp." ";
+			if ($score==null || abs($tmp)<abs($score)) {
+				$score = $tmp;
+				$index = $i;
+			}
+		}
+		
+		if ($score!=null) {
+			if ($score>0) $index++;
+			$ct = count($arr);
+			for($i=$ct-1; $i>=$index; $i--) {
+				$arr[$i+1] = $arr[$i];
+			}
+		}
+		else {
+			$index=count($arr);
+		}
+//		print "[$score $index]";
+		$arr[$index] = $event;
+		//-- because they are already sorted, they should always be after the event we just added
+		$index++;
+	}
+	
+	*/
 	//-- merge the arrays back together comparing by Facts
 	$dc = count($dated);
 	$nc = count($nondated);
@@ -2160,6 +2195,7 @@ function sort_facts(&$arr) {
 		$j++;
 		$k++;
 	}
+
 }
 
 /**
