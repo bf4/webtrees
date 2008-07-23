@@ -557,7 +557,6 @@ if ($action=="filter") {
 			generate_thumbnail($directory.$filename,$thumbdir.$filename);
 		}
 
-		$applyfilter = ($filter != "");
 		print "<br />";
 
 		// display the images TODO x across if lots of files??
@@ -570,11 +569,10 @@ if ($action=="filter") {
 
 				if (($ct <= $level+1 && $external_links != "http" && !isFileExternal($media["FILE"])) || (isFileExternal($media["FILE"]) && $external_links == "http")) {
 					// simple filter to reduce the number of items to view
-					if ($applyfilter) $isvalid = (strpos(UTF8_strtolower($media["FILE"]),UTF8_strtolower($filter)) !== false);
-					else $isvalid = true;
+					$isvalid = filterMedia($media, $filter, 'http');
 					if ($isvalid && $chooseType!="all") {
-						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false;
-						if ($chooseType!="file" && empty($media["XREF"])) $isvalid = false;
+						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false;	// skip linked media files
+						if ($chooseType=="media" && empty($media["XREF"])) $isvalid = false;	// skip unlinked media files
 					}
 
 					if ($isvalid) {
