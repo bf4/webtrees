@@ -78,6 +78,8 @@ if (isset($surname)) {
 	if (empty($surname) or trim("@".$surname,"_")=="@" or $surname=="@N.N.") $doctitle .= $pgv_lang["NN"];
 	else $doctitle .= $surname;
 }
+if (isset($alpha) || isset($surname) || $show_all=='yes') $showList = true;
+else $showList = false;		// Don't show the list until we have some filter criteria
 if (isset($doctitle)) {
 	?>
 	<script language="JavaScript" type="text/javascript">
@@ -186,10 +188,10 @@ if(empty($SEARCH_SPIDER)) {
 	if (isset($alpha) && $alpha != "@") {
 		if ($surname_sublist=="yes") {
 			print_help_link("skip_sublist_help", "qm", "skip_surnames");
-			print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname_sublist=no&show_all={$show_all}&ged={$GEDCOM}")."\">".$pgv_lang["skip_surnames"]."</a>";
+			print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname_sublist=no&show_all={$show_all}&ged={$GEDCOM}")."\">".$pgv_lang["skip_surnames"]."</a>";
 		} else {
 			print_help_link("skip_sublist_help", "qm", "show_surnames");
-			print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname_sublist=yes&show_all={$show_all}&ged={$GEDCOM}")."\">".$pgv_lang["show_surnames"]."</a>";
+			print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname_sublist=yes&show_all={$show_all}&ged={$GEDCOM}")."\">".$pgv_lang["show_surnames"]."</a>";
 		}
 	}
 }
@@ -199,153 +201,155 @@ if (empty($SEARCH_SPIDER)) {
 	print "<br /><br />";
 }
 
-print "<table class=\"list_table $TEXT_DIRECTION\"><tr><td class=\"center\">";
-if (($surname_sublist=="yes")&&($show_all=="yes")) {
-	get_fam_list();
-	if (!isset($alpha)) $alpha="";
-	$surnames = array();
-	$fam_hide = array();
-	foreach($famlist as $gid=>$fam) {
-		if (displayDetailsById($gid, "FAM")||showLivingNameById($gid, "FAM")) {
-			$names = preg_split("/\+/", $fam["name"]);
-			$foundnames = array();
-			for($i=0; $i<count($names); $i++) {
-				$name = trim($names[$i]);
-				$sname = extract_surname($name);
-				if (isset($foundnames[$sname])) {
-					if (isset($surnames[$sname]["match"])) $surnames[$sname]["match"]--;
+if ($showList) {
+	print "<table class=\"list_table $TEXT_DIRECTION\"><tr><td class=\"center\">";
+	if (($surname_sublist=="yes")&&($show_all=="yes")) {
+		get_fam_list();
+		if (!isset($alpha)) $alpha="";
+		$surnames = array();
+		$fam_hide = array();
+		foreach($famlist as $gid=>$fam) {
+			if (displayDetailsById($gid, "FAM")||showLivingNameById($gid, "FAM")) {
+				$names = preg_split("/\+/", $fam["name"]);
+				$foundnames = array();
+				for($i=0; $i<count($names); $i++) {
+					$name = trim($names[$i]);
+					$sname = extract_surname($name);
+					if (isset($foundnames[$sname])) {
+						if (isset($surnames[$sname]["match"])) $surnames[$sname]["match"]--;
+					}
+					else $foundnames[$sname]=1;
 				}
-				else $foundnames[$sname]=1;
 			}
+			else $fam_hide[$gid."[".$fam["gedfile"]."]"] = 1;
 		}
-		else $fam_hide[$gid."[".$fam["gedfile"]."]"] = 1;
+		uasort($surnames, "itemsort");
+		print_surn_table($surnames, "FAM");
+		if (count($fam_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($fam_hide)."</span>";
 	}
-	uasort($surnames, "itemsort");
-	print_surn_table($surnames, "FAM");
-	if (count($fam_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($fam_hide)."</span>";
-}
-else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
-	if (!isset($alpha)) $alpha="";
-	$tfamlist = get_alpha_fams($alpha);
-	$surnames = array();
-	$fam_hide = array();
-	foreach($tfamlist as $gid=>$fam) {
-		if ((displayDetailsByID($gid, "FAM"))||(showLivingNameById($gid, "FAM"))) {
-			foreach($fam["surnames"] as $indexval => $name) {
-				$lname = strip_prefix($name);
-				if (empty($lname)) $lname = $name;
-				$firstLetter=get_first_letter(UTF8_strtoupper($lname));
-				if ($alpha==$firstLetter) surname_count(trim($name));
-			}
-		}
-		else $fam_hide[$gid."[".$fam["gedfile"]."]"] = 1;
-	}
-	$i = 0;
-	uasort($surnames, "itemsort");
-	print_surn_table($surnames, "FAM");
-	if (count($fam_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($fam_hide)."</span>";
-}
-else {
-	$firstname_alpha = false;
-	//-- if the surname is set then only get the names in that surname list
-	if ((!empty($surname))&&($surname_sublist=="yes")) {
-		$surname = trim($surname);
-		$tfamlist = get_surname_fams($surname);
-		//-- split up long surname lists by first letter of first name
-		if ($SUBLIST_TRIGGER_F>0 && count($tfamlist)>$SUBLIST_TRIGGER_F) $firstname_alpha = true;
-	}
-
-	if (($surname_sublist=="no")&&(!empty($alpha))&&($show_all=="no")) {
+	else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
+		if (!isset($alpha)) $alpha="";
 		$tfamlist = get_alpha_fams($alpha);
-	}
-
-	//-- simplify processing for ALL famlist
-	if (($surname_sublist=="no")&&($show_all=="yes")) {
-		$tfamlist = get_fam_list();
-		uasort($tfamlist, "itemsort");
+		$surnames = array();
+		$fam_hide = array();
+		foreach($tfamlist as $gid=>$fam) {
+			if ((displayDetailsByID($gid, "FAM"))||(showLivingNameById($gid, "FAM"))) {
+				foreach($fam["surnames"] as $indexval => $name) {
+					$lname = strip_prefix($name);
+					if (empty($lname)) $lname = $name;
+					$firstLetter=get_first_letter(UTF8_strtoupper($lname));
+					if ($alpha==$firstLetter) surname_count(trim($name));
+				}
+			}
+			else $fam_hide[$gid."[".$fam["gedfile"]."]"] = 1;
+		}
+		$i = 0;
+		uasort($surnames, "itemsort");
+		print_surn_table($surnames, "FAM");
+		if (count($fam_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($fam_hide)."</span>";
 	}
 	else {
-		//--- the list is really long so divide it up again by the first letter of the first name
-		if ($firstname_alpha) {
-			if (!isset($_SESSION[$surname."_firstalphafams"])||$DEBUG) {
-				$firstalpha = array();
-				foreach($tfamlist as $gid=>$fam) {
-					$names = preg_split("/[,+] ?/", $fam["name"]);
-					$letter = UTF8_strtoupper(get_first_letter(trim($names[1])));
-					if (!isset($firstalpha[$letter])) {
-						if (isset($names[0])&&isset($names[1])&&$names[0]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
-					}
-					else if ($names[0]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
-					if (isset($names[2])&&isset($names[3])) {
-						$letter = UTF8_strtoupper(get_first_letter(trim($names[3])));
-						if (!isset($firstalpha[$letter])) {
-							if ($names[2]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
-						}
-						else if ($names[2]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
-// Make sure that the same gid is not already defined for the letter
-					}
-				}
-
-				uasort($firstalpha, "lettersort");
-				//-- put the list in the session so that we don't have to calculate this the next time
-				$_SESSION[$surname."_firstalphafams"] = $firstalpha;
-			}
-			else $firstalpha = $_SESSION[$surname."_firstalphafams"];
-			print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
-			print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]));
-			print "</td></tr><tr>\n";
-			print "<td style=\"text-align:center;\" colspan=\"2\">";
-			print $pgv_lang["first_letter_fname"]."<br />\n";
-			print_help_link("firstname_f_help", "qm", "firstname_alpha_index");
-			foreach($firstalpha as $letter=>$list) {
-				$pass = false;
-				if ($letter != "@") {
-					if (!isset($fstartalpha) && !isset($falpha)) {
-						$fstartalpha = $letter;
-						$falpha = $letter;
-					}
-					print "<a href=\"".encode_url("famlist.php?alpha{$alpha}&surname={$surname}&falpha={$letter}&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
-					if (($falpha==$letter)&&($show_all_firstnames=="no")) print "<span class=\"warning\">".$letter."</span>";
-					else print $letter;
-					print "</a> | \n";
-				}
-				if ($letter === "@") $pass = true;
-			}
-			if ($pass == true) {
-				if (isset($falpha) && $falpha == "@") print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&falpha=@&surname_sublist=yes&ged={$GEDCOM}")."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-				else print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&falpha=@&surname_sublist=yes&ged={$GEDCOM}")."\">".PrintReady($pgv_lang["NN"])."</a>";
-				print " | \n";
-				$pass = false;
-			}
-			if ($show_all_firstnames=="yes") print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&show_all_firstnames=no&ged={$GEDCOM}")."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-			else print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&show_all_firstnames=yes&ged={$GEDCOM}")."\">".$pgv_lang["all"]."</a>\n";
-			if (isset($fstartalpha)) $falpha = $fstartalpha;
-			if ($show_all_firstnames=="no") {
-				$ffamlist = array();
-				if (empty($falpha)) $falpha = key($firstalpha);
-				$ids = preg_split("/,/", $firstalpha[$falpha]["ids"]);
-				foreach($ids as $indexval => $id) {
-					if (isset($famlist[$id])) $ffamlist[$id] = $famlist[$id];
-				}
-				$tfamlist = $ffamlist;
-			}
-			print "</td></tr><tr>\n";
+		$firstname_alpha = false;
+		//-- if the surname is set then only get the names in that surname list
+		if ((!empty($surname))&&($surname_sublist=="yes")) {
+			$surname = trim($surname);
+			$tfamlist = get_surname_fams($surname);
+			//-- split up long surname lists by first letter of first name
+			if ($SUBLIST_TRIGGER_F>0 && count($tfamlist)>$SUBLIST_TRIGGER_F) $firstname_alpha = true;
 		}
-		uasort($tfamlist, "itemsort");
+	
+		if (($surname_sublist=="no")&&(!empty($alpha))&&($show_all=="no")) {
+			$tfamlist = get_alpha_fams($alpha);
+		}
+	
+		//-- simplify processing for ALL famlist
+		if (($surname_sublist=="no")&&($show_all=="yes")) {
+			$tfamlist = get_fam_list();
+			uasort($tfamlist, "itemsort");
+		}
+		else {
+			//--- the list is really long so divide it up again by the first letter of the first name
+			if ($firstname_alpha) {
+				if (!isset($_SESSION[$surname."_firstalphafams"])||$DEBUG) {
+					$firstalpha = array();
+					foreach($tfamlist as $gid=>$fam) {
+						$names = preg_split("/[,+] ?/", $fam["name"]);
+						$letter = UTF8_strtoupper(get_first_letter(trim($names[1])));
+						if (!isset($firstalpha[$letter])) {
+							if (isset($names[0])&&isset($names[1])&&$names[0]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
+						}
+						else if ($names[0]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
+						if (isset($names[2])&&isset($names[3])) {
+							$letter = UTF8_strtoupper(get_first_letter(trim($names[3])));
+							if (!isset($firstalpha[$letter])) {
+								if ($names[2]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
+							}
+							else if ($names[2]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
+	// Make sure that the same gid is not already defined for the letter
+						}
+					}
+	
+					uasort($firstalpha, "lettersort");
+					//-- put the list in the session so that we don't have to calculate this the next time
+					$_SESSION[$surname."_firstalphafams"] = $firstalpha;
+				}
+				else $firstalpha = $_SESSION[$surname."_firstalphafams"];
+				print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
+				print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]));
+				print "</td></tr><tr>\n";
+				print "<td style=\"text-align:center;\" colspan=\"2\">";
+				print $pgv_lang["first_letter_fname"]."<br />\n";
+				print_help_link("firstname_f_help", "qm", "firstname_alpha_index");
+				foreach($firstalpha as $letter=>$list) {
+					$pass = false;
+					if ($letter != "@") {
+						if (!isset($fstartalpha) && !isset($falpha)) {
+							$fstartalpha = $letter;
+							$falpha = $letter;
+						}
+						print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&falpha={$letter}&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
+						if (($falpha==$letter)&&($show_all_firstnames=="no")) print "<span class=\"warning\">".$letter."</span>";
+						else print $letter;
+						print "</a> | \n";
+					}
+					if ($letter === "@") $pass = true;
+				}
+				if ($pass == true) {
+					if (isset($falpha) && $falpha == "@") print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&falpha=@&surname_sublist=yes&ged={$GEDCOM}")."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+					else print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&falpha=@&surname_sublist=yes&ged={$GEDCOM}")."\">".PrintReady($pgv_lang["NN"])."</a>";
+					print " | \n";
+					$pass = false;
+				}
+				if ($show_all_firstnames=="yes") print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&show_all_firstnames=no&ged={$GEDCOM}")."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
+				else print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&show_all_firstnames=yes&ged={$GEDCOM}")."\">".$pgv_lang["all"]."</a>\n";
+				if (isset($fstartalpha)) $falpha = $fstartalpha;
+				if ($show_all_firstnames=="no") {
+					$ffamlist = array();
+					if (empty($falpha)) $falpha = key($firstalpha);
+					$ids = preg_split("/,/", $firstalpha[$falpha]["ids"]);
+					foreach($ids as $indexval => $id) {
+						if (isset($famlist[$id])) $ffamlist[$id] = $famlist[$id];
+					}
+					$tfamlist = $ffamlist;
+				}
+				print "</td></tr><tr>\n";
+			}
+			uasort($tfamlist, "itemsort");
+		}
 	}
-}
-print "</td></tr></table>";
-
-if ($show_all=="yes") unset($alpha);
-if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]);
-else if (isset($alpha) and $show_all=="no") $legend = str_replace("#surname#", $alpha.".", $pgv_lang["fams_with_surname"]);
-else $legend = $pgv_lang["families"];
-if ($show_all_firstnames=="yes") $falpha = "@";
-if (isset($falpha) and $falpha!="@") $legend .= ", ".$falpha.".";
-$legend = PrintReady($legend);
-
-if (!empty($surname) or $surname_sublist=="no") {
-	print_fam_table($tfamlist, $legend);
+	print "</td></tr></table>";
+	
+	if ($show_all=="yes") unset($alpha);
+	if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]);
+	else if (isset($alpha) and $show_all=="no") $legend = str_replace("#surname#", $alpha.".", $pgv_lang["fams_with_surname"]);
+	else $legend = $pgv_lang["families"];
+	if ($show_all_firstnames=="yes") $falpha = "@";
+	if (isset($falpha) and $falpha!="@") $legend .= ", ".$falpha.".";
+	$legend = PrintReady($legend);
+	
+	if (!empty($surname) or $surname_sublist=="no") {
+		print_fam_table($tfamlist, $legend);
+	}
 }
 
 print "<br /><br />\n";

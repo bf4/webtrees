@@ -188,11 +188,8 @@ if (isset($directory))$directory = stripslashes($directory);
 if (isset($movetodir))$movetodir = stripslashes($movetodir);
 if (isset($movefile))$movefile = stripslashes($movefile);
 
-if (!isset($action)) {
-	if (isset($search)) $action = "filter";
-	else $action="";
-}
 if (empty($action)) $action="filter";
+if (empty($subclick)) $subclick = "none";
 
 if (!isset($media)) $media="";
 if (!isset($filter) || strlen($filter)<2) $filter="";
@@ -261,7 +258,7 @@ print_header($pgv_lang["manage_media"]);
 
 	function checknames(frm) {
 		if (document.managemedia.subclick) button = document.managemedia.subclick.value;
-		if (button == "reset") {
+		if (button == "all") {
 			frm.filter.value = "";
 			return true;
 		}
@@ -300,8 +297,8 @@ print_header($pgv_lang["manage_media"]);
 	<table class="fact_table center width100 <?php print $TEXT_DIRECTION; ?>">
 	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
 	<!-- // NOTE: Filter options -->
-	<tr><td class="descriptionbox wrap width25"><?php print_help_link("filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
-	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if(isset($filter)) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="reset" value="<?php print $pgv_lang["reset"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
+	<tr><td class="descriptionbox wrap width25"><?php print_help_link("simple_filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
+	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if(isset($filter)) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Upload media files -->
 	<td class="descriptionbox wrap width25"><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"]; ?></td>
@@ -1328,8 +1325,8 @@ if (check_media_structure()) {
 		print "</table>";
 		print "<br />";
 
-		// display the images TODO x across if lots of files??
-		if (count($medialist)) {
+		// display the images
+		if (count($medialist) && ($subclick=='search' || $subclick=='all')) {
 			print "\n\t<table class=\"list_table width100\">";
 			if ($directory==$MEDIA_DIRECTORY) {
 				$httpFilter = "http";
