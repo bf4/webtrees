@@ -155,22 +155,31 @@ $worms = array(
 	// mark everything else as a spider/bot.
 	// Java/ Axis/ and PEAR required for GDBI and our own cross site communication.
 	$real_browsers = array(
-	'PGVAgent',
-	'MSIE ',
-	'Opera',
-	'Firefox',
-	'Konqueror',
-	'Gecko',
-	'Safari',
-	'http://www.avantbrowser.com',
-	'BlackBerry',
-	'Lynx',
-	'Java/',
-	'PEAR',
-	'Axis/',
-	'MSFrontPage',
-	'RssReader',
-	'W3C_Validator'
+		'PGVAgent',
+		'MSIE ',
+		'Opera',
+		'Firefox',
+		'Konqueror',
+		'Gecko',
+		'Safari',
+		'http://www.avantbrowser.com',
+		'BlackBerry',
+		'Lynx',
+		'Java/',
+		'PEAR',
+		'Axis/',
+		'MSFrontPage',
+		'RssReader',
+		'W3C_Validator'
+		);
+
+	// Here we list the search engines whose accesses we don't need to log.
+	// This avoids cluttering the log files with useless entries
+	$known_spiders = array(
+		'Googlebot',
+		'Yahoo Slurp',
+		'msnbot',
+		'Ask Jeeves'
 	);
 
 	// We overlay the following name with carefully selected characters.
@@ -340,26 +349,33 @@ $worms = array(
 	if(!empty($SEARCH_SPIDER)) {
 		$spidertime = time();
 		$spiderdate = date("d.m.Y", $spidertime);
-		$_SESSION['last_spider_name'] = $SEARCH_SPIDER;
+		// Do we need to log this spider access?
+		$outstr = preg_replace('/\s+/', ' ', $SEARCH_SPIDER); 	// convert tabs etc. to blanks; trim extra blanks 
+		$outstr = str_replace(' - ', ' ', $outstr);				// Don't allow ' - ' because that is the log separator
+		$logSpider = true;
+		foreach ($known_spiders as $spider) {
+			if (strpos($outstr, $spider) !== false) {
+				$logSpider = false;
+				break;
+			}
+		}
 		if(isset($_SESSION['spider_count']))
 		$spidercount = $_SESSION['spider_count'] + 1;
 		else {
 			$spidercount = 1;
-			//adds a message to the log that a new spider session is starting
-			require_once("includes/authentication.php");      // -- Loaded early so AddToLog works
-			$outstr = preg_replace('/\s\s+/', ' ', $SEARCH_SPIDER); // trim trailing whitespace
-			// Don't allow ' - ' because that is the log seperator
-			$outstr = preg_replace('/ - /', ' ', $outstr);
-			AddToLog("New search engine encountered: ->".$outstr."<-");
+			if ($logSpider) {
+				//adds a message to the log that a new spider session is starting
+				require_once("includes/authentication.php");      // -- Loaded early so AddToLog works
+				AddToLog("New search engine encountered: ->".$outstr."<-");
+			}
 		}
 		if(isset($_SESSION['last_spider_date'])) {
 			if($spiderdate != $_SESSION['last_spider_date']) {
 				//adds a message to the log that a new spider session is starting
-				require_once("includes/authentication.php");      // -- Loaded early so AddToLog works
-				$outstr = preg_replace('/\s\s+/', ' ', $SEARCH_SPIDER); // trim trailing whitespace
-				// Don't allow ' - ' because that is the log seperator
-				$outstr = preg_replace('/ - /', ' ', $outstr);
-				AddToLog("Returning search engine last seen ".$_SESSION['spider_count']." times on ".$_SESSION['last_spider_date']." from ".$_SESSION['last_spider_ip']." ->".$outstr."<-");
+				if ($logSpider) {
+					require_once("includes/authentication.php");      // -- Loaded early so AddToLog works
+					AddToLog("Returning search engine last seen ".$_SESSION['spider_count']." times on ".$_SESSION['last_spider_date']." from ".$_SESSION['last_spider_ip']." ->".$outstr."<-");
+				}
 				$_SESSION['last_spider_date'] = $spiderdate;
 				$spidercount = 1;
 			}
@@ -368,6 +384,7 @@ $worms = array(
 		$_SESSION['spider_count'] = $spidercount;
 		if(isset($_SERVER['REMOTE_ADDR']))
 		$_SESSION['last_spider_ip'] = $_SERVER['REMOTE_ADDR'];
+		$_SESSION['last_spider_name'] = $SEARCH_SPIDER;
 		if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		$_SESSION['last_spider_lang'] = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		
