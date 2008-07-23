@@ -570,7 +570,7 @@ if ($action=="filter") {
 
 				if (($ct <= $level+1 && $external_links != "http" && !isFileExternal($media["FILE"])) || (isFileExternal($media["FILE"]) && $external_links == "http")) {
 					// simple filter to reduce the number of items to view
-					if ($applyfilter) $isvalid = (strpos(str2lower($media["FILE"]),str2lower($filter)) !== false);
+					if ($applyfilter) $isvalid = (strpos(UTF8_strtolower($media["FILE"]),UTF8_strtolower($filter)) !== false);
 					else $isvalid = true;
 					if ($isvalid && $chooseType!="all") {
 						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false;
