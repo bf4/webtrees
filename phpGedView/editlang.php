@@ -706,6 +706,7 @@ $TEXT_DIRECTION_array	= array();
 $NAME_REVERSE_array		= array();
 
 foreach ($language_settings as $key => $value) {
+	if (!isset($value['pgv_lang_self']) || !isset($value['pgv_language']) || !file_exists($value['pgv_language'])) continue;
 	$languages[$key] 			= $value["pgv_langname"];
 	$pgv_lang_use[$key]			= $value["pgv_lang_use"];
 	$pgv_lang[$key]				= $value["pgv_lang_self"];
