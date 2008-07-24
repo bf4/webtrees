@@ -457,23 +457,23 @@ $language_settings['polish']=array(
 'DICTIONARY_SORT'=>false
 );
 
-//-- settings for portuguese-br
-$language_settings['portuguese-br']=array(
-'pgv_langname'=>'portuguese-br',
+//-- settings for portuguese
+$language_settings['portuguese']=array(
+'pgv_langname'=>'portuguese',
 'pgv_lang_use'=>false,
 'pgv_lang_self'=>'Português',
-'lang_short_cut'=>'pt-br',
+'lang_short_cut'=>'pt',
 'langcode'=>'pt;pt-br;',
-'pgv_language'=>'languages/lang.pt-br.php',
-'confighelpfile'=>'languages/configure_help.pt-br.php',
-'helptextfile'=>'languages/help_text.pt-br.php',
-'flagsfile'=>'images/flags/brazil.gif',
-'factsfile'=>'languages/facts.pt-br.php',
-'adminfile'=>'languages/admin.pt-br.php',
-'editorfile'=>'languages/editor.pt-br.php',
-'countryfile'=>'languages/countries.pt-br.php',
-'faqlistfile'=>'languages/faqlist.pt-br.php',
-'extrafile'=>'languages/extra.pt-br.php',
+'pgv_language'=>'languages/lang.pt.php',
+'confighelpfile'=>'languages/configure_help.pt.php',
+'helptextfile'=>'languages/help_text.pt.php',
+'flagsfile'=>'images/flags/portugal.gif',
+'factsfile'=>'languages/facts.pt.php',
+'adminfile'=>'languages/admin.pt.php',
+'editorfile'=>'languages/editor.pt.php',
+'countryfile'=>'languages/countries.pt.php',
+'faqlistfile'=>'languages/faqlist.pt.php',
+'extrafile'=>'languages/extra.pt.php',
 'DATE_FORMAT'=>'D M Y',
 'TIME_FORMAT'=>'g:i:sa',
 'WEEK_START'=>'0',

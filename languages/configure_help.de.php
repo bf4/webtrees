@@ -423,7 +423,6 @@ $pgv_lang["lang_name_italian"]		= "Italienisch";
 $pgv_lang["lang_name_norwegian"]	= "Norwegisch";
 $pgv_lang["lang_name_polish"]		= "Polnisch";
 $pgv_lang["lang_name_portuguese"]	= "Portugiesisch";
-$pgv_lang["lang_name_portuguese-br"]	= "Portugiesisch (Brasilien)";
 $pgv_lang["lang_name_russian"]		= "Russisch";
 $pgv_lang["lang_name_spanish"]		= "Spanisch";
 $pgv_lang["lang_name_spanish-ar"]	= "Spanisch (Latein-Amerika)";
