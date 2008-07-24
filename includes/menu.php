@@ -1338,7 +1338,7 @@ class MenuBar
 
 			$menu->print_menu = null;
 			foreach ($language_settings as $lang=>$language) {
-				if ($language['pgv_lang_use']) {
+				if ($language['pgv_lang_use'] && isset($language['pgv_lang_self']) && isset($language['pgv_language']) && file_exists($language['pgv_language'])) {
 					$submenu=new Menu($language['pgv_lang_self'], $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang));
 					if ($lang==$LANGUAGE) {
 						$submenu->addClass('activeflag', 'brightflag');
