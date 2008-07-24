@@ -395,6 +395,7 @@ $TEXT_DIRECTION_array	= array();
 $NAME_REVERSE_array		= array();
 
 foreach ($language_settings as $key => $value) {
+	if (!isset($value["pgv_lang_self"])) continue;
 	$languages[$key]			 = $value["pgv_langname"];
 	$pgv_lang_use[$key]          = $value["pgv_lang_use"];
 	$pgv_lang_self[$key]		 = $value["pgv_lang_self"];

@@ -552,6 +552,7 @@ if ($action == "save" or $action=="toggleActive") {
       fwrite($fp, "// Array definition of language_settings\r\n");
       fwrite($fp, "\$language_settings = array();\r\n");
       foreach ($language_settings as $key => $value) {
+	    if (!isset($languages[$key])) continue;
         fwrite($fp, "\r\n");
         fwrite($fp, "//-- settings for {$languages[$key]}\r\n");
         fwrite($fp, "\$language_settings['{$languages[$key]}']=array(\r\n");
