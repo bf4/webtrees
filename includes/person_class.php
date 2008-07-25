@@ -1301,14 +1301,14 @@ class Person extends GedcomRecord {
 
 		// add spouse death
 		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, '_DEAT_SPOU')) {
-			foreach ($spouse->getAllFactsByType(explode('|', PGV_EVENTS_MARR)) as $sEvent) {
+			foreach ($spouse->getAllFactsByType(explode('|', PGV_EVENTS_DEAT)) as $sEvent) {
 				$sdate=$sEvent->getDate();
 				$srec = $sEvent->getGedComRecord();
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
-					$srec=preg_replace('/^1 .*/', "1 _{$event}_SPOU ", $srec);
+					$srec=preg_replace('/^1 .*/', "1 _{$sEvent->getTag()}_SPOU ", $srec);
 					$srec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
 					$srec.="\n2 ASSO @".$spouse->getXref()."@\n3 RELA *spouse";
-					$event = new Event($factrec, 0);
+					$event = new Event($srec, 0);
 					$event->setParentObject($this);
 					$this->indifacts[] = $event;
 				}
