@@ -427,7 +427,7 @@ class Event {
 				"MARS",
 				"_BIRT_CHIL",
 				"DIV", "ANUL",
-				"_BIRT_", "_MARR_", "_DEAT_", // other events of close relatives
+				"_BIRT_", "_MARR_", "_DEAT_","_BURI_", // other events of close relatives
 				"CENS",
 				"OCCU",
 				"RESI",
@@ -469,12 +469,12 @@ class Event {
 		
 		// Events not in the above list get mapped onto one that is.
 		if (!array_key_exists($atag, $factsort))
-			if (preg_match('/^(_(BIRT|MARR|DEAT)_)/', $atag, $match))
+			if (preg_match('/^(_(BIRT|MARR|DEAT|BURI)_)/', $atag, $match))
 				$atag=$match[1];
 			else
 				$atag="_????_";
 		if (!array_key_exists($btag, $factsort))
-			if (preg_match('/^(_(BIRT|MARR|DEAT)_)/', $btag, $match))
+			if (preg_match('/^(_(BIRT|MARR|DEAT|BURI)_)/', $btag, $match))
 				$btag=$match[1];
 			else
 				$btag="_????_";
