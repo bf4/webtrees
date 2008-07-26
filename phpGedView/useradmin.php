@@ -819,14 +819,16 @@ if ($action == "createform") {
 		<td class="optionbox wrap"><input type="checkbox" name="new_sync_gedcom" tabindex="<?php print ++$tab; ?>" value="Y" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin_help", "qm","can_admin"); print $pgv_lang["can_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php print ++$tab; ?>" value="Y" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm","can_edit");print $pgv_lang["can_edit"]; ?></td><td class="optionbox wrap">
+		<table class="<?php print $TEXT_DIRECTION; ?>">
 		<?php
 		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 			$varname='canedit'.$ged_id;
 			$tab++;
+			print "<tr><td>{$ged_name}:&nbsp;&nbsp;</td><td>";
 			print "<select name=\"$varname\" tabindex=\"".$tab."\">\n";
-			print "<option value=\"none\"";
+			print "<option value=\"none\" selected=\"selected\"";
 			print ">".$pgv_lang["none"]."</option>\n";
-			print "<option value=\"access\" selected=\"selected\"";
+			print "<option value=\"access\"";
 			print ">".$pgv_lang["access"]."</option>\n";
 			print "<option value=\"edit\"";
 			print ">".$pgv_lang["edit"]."</option>\n";
@@ -834,9 +836,10 @@ if ($action == "createform") {
 			print ">".$pgv_lang["accept"]."</option>\n";
 			print "<option value=\"admin\"";
 			print ">".$pgv_lang["admin_gedcom"]."</option>\n";
-			print "</select> $ged_name<br />\n";
+			print "</select></td></tr>\n";
 		}
 		?>
+		</table>
 		</td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept_help", "qm", "user_auto_accept");print $pgv_lang["user_auto_accept"]; ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="new_auto_accept" tabindex="<?php print ++$tab; ?>" value="Y" /></td></tr>
