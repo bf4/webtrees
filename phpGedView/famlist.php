@@ -263,8 +263,8 @@ if ($showList) {
 		} else {
 			//--- the list is really long so divide it up again by the first letter of the first name
 			if ($firstname_alpha) {
-				$showSublist = false;		// Don't show the list until we have some filter criteria
-				if (isset($falpha) || $show_all_firstnames=='yes') $showSublist = true;
+				$showList = false;		// Don't show the list until we have some filter criteria
+				if (isset($falpha) || $show_all_firstnames=='yes') $showList = true;
 				if (!isset($_SESSION[$surname."_firstalphafams"])||$DEBUG) {
 					$firstalpha = array();
 					foreach ($tfamlist as $gid=>$fam) {
@@ -303,7 +303,7 @@ if ($showList) {
 					if ($letter == "@") $delayLetter = true;
 					else {
 						print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&falpha={$letter}&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
-						if ($showSublist && $falpha==$letter && $show_all_firstnames=="no") print "<span class=\"warning\">".$letter."</span>";
+						if ($showList && $falpha==$letter && $show_all_firstnames=="no") print "<span class=\"warning\">".$letter."</span>";
 						else print $letter;
 						print "</a> | \n";
 					}
@@ -311,7 +311,7 @@ if ($showList) {
 				if ($delayLetter) {
 					$letter = '@';
 					print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&falpha={$letter}&surname_sublist=yes&ged={$GEDCOM}")."\">";
-					if ($showSublist && $falpha==$letter && $show_all_firstnames=="no") print "<span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span>";
+					if ($showList && $falpha==$letter && $show_all_firstnames=="no") print "<span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span>";
 					else print PrintReady($pgv_lang["NN"]);
 					print "</a> | \n";
 				}
@@ -328,7 +328,6 @@ if ($showList) {
 				}
 			}
 			uasort($tfamlist, "itemsort");
-			$showList = $showSublist;
 		}
 	}
 	echo '</p>';
