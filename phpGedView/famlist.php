@@ -270,7 +270,9 @@ if ($showList) {
 					foreach ($tfamlist as $gid=>$fam) {
 						$initials = array();
 						foreach (array($fam['husb'], $fam['wife']) as $pid) {
+							if (empty($pid)) continue;
 							$person=Person::getInstance($pid);
+							if (!is_object($person)) continue;
 							foreach ($person->getAllNames() as $n=>$name) {
 								if ($name['type']=='_MARNM') continue;
 								list($surn,$givn) = explode(',', $name['sort'], 2);

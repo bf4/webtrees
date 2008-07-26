@@ -217,7 +217,9 @@ if ($showList) {
 		// Note that we count/display SPFX SURN, but sort/group under just SURN
 		$surnames=array();
 		foreach (array_keys($indis) as $pid) {
+			if (empty($pid)) continue;
 			$person=Person::getInstance($pid);
+			if (!is_object($person)) continue;
 			foreach ($person->getAllNames() as $name) {
 				$surn=reset(explode(',', $name['sort']));
 				// Ignore diacritics - need to use the same logic as get_indi_alpha()
@@ -281,7 +283,9 @@ if ($showList) {
 		$givn_initials=array();
 		// Show the indi list
 		foreach (array_keys($indis) as $pid) {
+			if (empty($pid)) continue;
 			$person=Person::getInstance($pid);
+			if (!is_object($person)) continue;
 			foreach ($person->getAllNames() as $n=>$name) {
 				if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
 					list($surn,$givn)=explode(',', $name['sort']);
