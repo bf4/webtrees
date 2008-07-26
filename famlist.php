@@ -93,14 +93,6 @@ if (empty($show_all_firstnames)) $show_all_firstnames = "no";
 if (empty($DEBUG)) $DEBUG = false;
 
 /**
- * Check for the @ symbol
- *
- * This variable is used for checking if the @ symbol is present in the alphabet list.
- * @global boolean $pass
- */
-$pass = false;
-
-/**
  * Total famlist array
  *
  * The tfamlist array will contain families that are extracted from the database.
@@ -123,11 +115,11 @@ if (empty($surname_sublist))
         $surname_sublist = "yes";
 
 /**
- * In the first half of 2007, Google is only indexing the first 1,000 urls 
- * on a page.  We now produce 4 urls per line, instead of 12.  So, we divide 
- * 1000 by 5 for some breathing room, and adjust to do surname pages if the 
+ * In the first half of 2007, Google is only indexing the first 1,000 urls
+ * on a page.  We now produce 4 urls per line, instead of 12.  So, we divide
+ * 1000 by 5 for some breathing room, and adjust to do surname pages if the
  * alphalist page would exceed that number minus the header urls and alphas.
- * 200 - letters - unknown and all - menu urls 
+ * 200 - letters - unknown and all - menu urls
  * If you have over 200 families in the same surname, some will still not
  * get indexed through here, and will have to be caught by the close relatives
  * on the individual.php, family.php, or the indilist.php page.
@@ -150,36 +142,39 @@ if (!(empty($SEARCH_SPIDER))) {
 if (isset($alpha) && !isset($famalpha["$alpha"])) $alpha="";
 
 if (count($famalpha) > 0) {
-	if (empty($SEARCH_SPIDER))
+	if (empty($SEARCH_SPIDER)) {
 		print_help_link("alpha_help", "qm", "alpha_index");
-	foreach($famalpha as $letter=>$list) {
+		print $pgv_lang["first_letter_name"]."<br />\n";
+	}
+	$delayLetter = false;		// indicates that "@" was found in list
+	foreach ($famalpha as $letter=>$list) {
 		if (empty($alpha)) {
 			if (!empty($surname)) {
 				if ($USE_RTL_FUNCTIONS && hasRTLText($surname)) $alpha = substr(preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^[a-z. ]*/"), array(",",",",""), $surname),0,2);
 				else $alpha = substr(preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^[a-z. ]*/"), array(",",",",""), $surname),0,1);
 			}
 		}
-		if ($letter != "@") {
-			if (!isset($startalpha) && !isset($alpha)) {
-				$startalpha = $letter;
-				$alpha = $letter;
-			}
+		if (!isset($alpha)) {
+			$alpha = $letter;
+		}
+		if ($letter == "@") $delayLetter = true;
+		else {
 			print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
-			if (($alpha==$letter)&&($show_all=="no")) print "<span class=\"warning\">".$letter."</span>";
+			if ($showList && $alpha==$letter && $show_all=="no") print "<span class=\"warning\">".$letter."</span>";
 			else print $letter;
 			print "</a> | \n";
 		}
-		if ($letter === "@") $pass = true;
 	}
-	if ($pass == true) {
-		if (isset($alpha) && $alpha == "@") print "<a href=\"".encode_url("famlist.php?alpha=@&surname_sublist=yes&surname=@N.N.&ged={$GEDCOM}")."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-		else print "<a href=\"".encode_url("famlist.php?alpha=@&surname_sublist=yes&surname=@N.N.&ged={$GEDCOM}")."\">".PrintReady($pgv_lang["NN"])."</a>";
-		print " | \n";
-		$pass = false;
+	if ($delayLetter) {
+		$letter = '@';
+		print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname_sublist=yes&surname=@N.N.&ged={$GEDCOM}")."\">";
+		if ($showList && $alpha==$letter && $show_all=="no") print "<span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span>";
+		else print PrintReady($pgv_lang["NN"]);
+		print "</a> | \n";
 	}
-	if ($show_all=="yes") print "<a href=\"".encode_url("famlist.php?show_all=yes&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-	else print "<a href=\"".encode_url("famlist.php?show_all=yes&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">".$pgv_lang["all"]."</a>\n";
-	if (isset($startalpha)) $alpha = $startalpha;
+	print "<a href=\"".encode_url("famlist.php?show_all=yes&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
+	if ($show_all=="yes") print "<span class=\"warning\">".$pgv_lang["all"]."</span></a>\n";
+	else print $pgv_lang["all"]."</a>\n";
 }
 
 print "<br /><br />";
@@ -202,13 +197,13 @@ if (empty($SEARCH_SPIDER)) {
 }
 
 if ($showList) {
-	print "<table class=\"list_table $TEXT_DIRECTION\"><tr><td class=\"center\">";
+	echo '<p class="center">';
 	if (($surname_sublist=="yes")&&($show_all=="yes")) {
 		get_fam_list();
 		if (!isset($alpha)) $alpha="";
 		$surnames = array();
 		$fam_hide = array();
-		foreach($famlist as $gid=>$fam) {
+		foreach ($famlist as $gid=>$fam) {
 			if (displayDetailsById($gid, "FAM")||showLivingNameById($gid, "FAM")) {
 				$names = preg_split("/\+/", $fam["name"]);
 				$foundnames = array();
@@ -232,9 +227,9 @@ if ($showList) {
 		$tfamlist = get_alpha_fams($alpha);
 		$surnames = array();
 		$fam_hide = array();
-		foreach($tfamlist as $gid=>$fam) {
+		foreach ($tfamlist as $gid=>$fam) {
 			if ((displayDetailsByID($gid, "FAM"))||(showLivingNameById($gid, "FAM"))) {
-				foreach($fam["surnames"] as $indexval => $name) {
+				foreach ($fam["surnames"] as $indexval => $name) {
 					$lname = strip_prefix($name);
 					if (empty($lname)) $lname = $name;
 					$firstLetter=get_first_letter(UTF8_strtoupper($lname));
@@ -247,8 +242,7 @@ if ($showList) {
 		uasort($surnames, "itemsort");
 		print_surn_table($surnames, "FAM");
 		if (count($fam_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($fam_hide)."</span>";
-	}
-	else {
+	} else {
 		$firstname_alpha = false;
 		//-- if the surname is set then only get the names in that surname list
 		if ((!empty($surname))&&($surname_sublist=="yes")) {
@@ -257,88 +251,88 @@ if ($showList) {
 			//-- split up long surname lists by first letter of first name
 			if ($SUBLIST_TRIGGER_F>0 && count($tfamlist)>$SUBLIST_TRIGGER_F) $firstname_alpha = true;
 		}
-	
+
 		if (($surname_sublist=="no")&&(!empty($alpha))&&($show_all=="no")) {
 			$tfamlist = get_alpha_fams($alpha);
 		}
-	
+
 		//-- simplify processing for ALL famlist
 		if (($surname_sublist=="no")&&($show_all=="yes")) {
 			$tfamlist = get_fam_list();
 			uasort($tfamlist, "itemsort");
-		}
-		else {
+		} else {
 			//--- the list is really long so divide it up again by the first letter of the first name
 			if ($firstname_alpha) {
+				$showSublist = false;		// Don't show the list until we have some filter criteria
+				if (isset($falpha) || $show_all_firstnames=='yes') $showSublist = true;
 				if (!isset($_SESSION[$surname."_firstalphafams"])||$DEBUG) {
 					$firstalpha = array();
-					foreach($tfamlist as $gid=>$fam) {
-						$names = preg_split("/[,+] ?/", $fam["name"]);
-						$letter = UTF8_strtoupper(get_first_letter(trim($names[1])));
-						if (!isset($firstalpha[$letter])) {
-							if (isset($names[0])&&isset($names[1])&&$names[0]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
-						}
-						else if ($names[0]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
-						if (isset($names[2])&&isset($names[3])) {
-							$letter = UTF8_strtoupper(get_first_letter(trim($names[3])));
-							if (!isset($firstalpha[$letter])) {
-								if ($names[2]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
+					foreach ($tfamlist as $gid=>$fam) {
+						$initials = array();
+						foreach (array($fam['husb'], $fam['wife']) as $pid) {
+							$person=Person::getInstance($pid);
+							foreach ($person->getAllNames() as $n=>$name) {
+								if ($name['type']=='_MARNM') continue;
+								list($surn,$givn) = explode(',', $name['sort'], 2);
+								if (!empty($surname) && UTF8_strtoupper(trim($surn))!=UTF8_strtoupper($surname)) continue;
+								$letter=UTF8_strtoupper(get_first_letter(trim($givn)));
+								if (!isset($initials[$letter])) $initials[$letter] = $letter;	// Unique initials only
 							}
-							else if ($names[2]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
-	// Make sure that the same gid is not already defined for the letter
+						}
+						foreach ($initials as $letter) {
+							if (isset($firstalpha[$letter])) $firstalpha[$letter]["ids"] .= ",".$gid;
+							else $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 						}
 					}
-	
 					uasort($firstalpha, "lettersort");
 					//-- put the list in the session so that we don't have to calculate this the next time
 					$_SESSION[$surname."_firstalphafams"] = $firstalpha;
 				}
 				else $firstalpha = $_SESSION[$surname."_firstalphafams"];
-				print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
+				echo '<h2 class="center">';
 				print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]));
-				print "</td></tr><tr>\n";
-				print "<td style=\"text-align:center;\" colspan=\"2\">";
-				print $pgv_lang["first_letter_fname"]."<br />\n";
+				echo '</h2>';
+				echo '<br />';
 				print_help_link("firstname_f_help", "qm", "firstname_alpha_index");
-				foreach($firstalpha as $letter=>$list) {
-					$pass = false;
-					if ($letter != "@") {
-						if (!isset($fstartalpha) && !isset($falpha)) {
-							$fstartalpha = $letter;
-							$falpha = $letter;
-						}
-						print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&falpha={$letter}&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
-						if (($falpha==$letter)&&($show_all_firstnames=="no")) print "<span class=\"warning\">".$letter."</span>";
+				print $pgv_lang["first_letter_fname"]."<br />\n";
+				$delayLetter = false;		// indicates that "@" was found in list
+				foreach ($firstalpha as $letter=>$list) {
+					if (!isset($falpha)) {
+						$falpha = $letter;
+					}
+					if ($letter == "@") $delayLetter = true;
+					else {
+						print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&falpha={$letter}&surname_sublist={$surname_sublist}&ged={$GEDCOM}")."\">";
+						if ($showSublist && $falpha==$letter && $show_all_firstnames=="no") print "<span class=\"warning\">".$letter."</span>";
 						else print $letter;
 						print "</a> | \n";
 					}
-					if ($letter === "@") $pass = true;
 				}
-				if ($pass == true) {
-					if (isset($falpha) && $falpha == "@") print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&falpha=@&surname_sublist=yes&ged={$GEDCOM}")."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-					else print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&falpha=@&surname_sublist=yes&ged={$GEDCOM}")."\">".PrintReady($pgv_lang["NN"])."</a>";
-					print " | \n";
-					$pass = false;
+				if ($delayLetter) {
+					$letter = '@';
+					print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&falpha={$letter}&surname_sublist=yes&ged={$GEDCOM}")."\">";
+					if ($showSublist && $falpha==$letter && $show_all_firstnames=="no") print "<span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span>";
+					else print PrintReady($pgv_lang["NN"]);
+					print "</a> | \n";
 				}
-				if ($show_all_firstnames=="yes") print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&show_all_firstnames=no&ged={$GEDCOM}")."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-				else print "<a href=\"".encode_url("famlist.php?alpha={$letter}&surname={$surname}&show_all_firstnames=yes&ged={$GEDCOM}")."\">".$pgv_lang["all"]."</a>\n";
-				if (isset($fstartalpha)) $falpha = $fstartalpha;
+				if ($show_all_firstnames=="yes") print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&show_all_firstnames=no&ged={$GEDCOM}")."\"><span class=\"warning\">".$pgv_lang["all"]."</span></a>\n";
+				else print "<a href=\"".encode_url("famlist.php?alpha={$alpha}&surname={$surname}&show_all_firstnames=yes&ged={$GEDCOM}")."\">".$pgv_lang["all"]."</a>\n";
 				if ($show_all_firstnames=="no") {
 					$ffamlist = array();
 					if (empty($falpha)) $falpha = key($firstalpha);
 					$ids = preg_split("/,/", $firstalpha[$falpha]["ids"]);
-					foreach($ids as $indexval => $id) {
+					foreach ($ids as $indexval => $id) {
 						if (isset($famlist[$id])) $ffamlist[$id] = $famlist[$id];
 					}
 					$tfamlist = $ffamlist;
 				}
-				print "</td></tr><tr>\n";
 			}
 			uasort($tfamlist, "itemsort");
+			$showList = $showSublist;
 		}
 	}
-	print "</td></tr></table>";
-	
+	echo '</p>';
+
 	if ($show_all=="yes") unset($alpha);
 	if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]);
 	else if (isset($alpha) and $show_all=="no") $legend = str_replace("#surname#", $alpha.".", $pgv_lang["fams_with_surname"]);
@@ -346,8 +340,8 @@ if ($showList) {
 	if ($show_all_firstnames=="yes") $falpha = "@";
 	if (isset($falpha) and $falpha!="@") $legend .= ", ".$falpha.".";
 	$legend = PrintReady($legend);
-	
-	if (!empty($surname) or $surname_sublist=="no") {
+
+	if ($showList && (!empty($surname) || $surname_sublist=="no")) {
 		print_fam_table($tfamlist, $legend);
 	}
 }
