@@ -52,6 +52,7 @@ $show_all=safe_GET('show_all', array('no','yes'), 'no'); // All indis
 
 if (isset($alpha) || isset($surname) || $show_all=='yes') $showList = true;
 else $showList = false;		// Don't show the list until we have some filter criteria
+if (!isset($alpha)) $alpha = '';
 
 // Long lists can be broken down by given name
 $falpha=safe_GET('falpha'); // All first names beginning with this letter
@@ -115,9 +116,9 @@ if ($show_all=='yes') {
 	$url='indilist.php?surname='.urlencode($surname);
 } else {
 	// Can only select initial letters that are actually used.
-	if (! in_array($alpha, $initials)) {
-		$alpha=default_initial($initials);
-	}
+//	if (! in_array($alpha, $initials)) {
+//		$alpha=default_initial($initials);
+//	}
 	$show_all='no';
 	$surname='';
 	if ($alpha=='@') {
@@ -151,19 +152,23 @@ echo '<h2 class="center">', $pgv_lang['individual_list'], '</h2>';
 
 // Print a selection list of initial letters
 $list=array();
+$delayedList = array();
 foreach ($initials as $letter) {
 	switch ($letter) {
 	case '@':
+		$delay = true;
 		$html=$pgv_lang['NN'];
 		break;
 	case ',':
+		$delay = true;
 		$html=$pgv_lang['none'];
 		break;
 	default:
+		$delay = false;
 		$html=$letter;
 		break;
 	}
-	if ($letter==$alpha && $show_all=='no') {
+	if ($showList && $letter==$alpha && $show_all=='no') {
 		if ($surname) {
 			$html='<a href="indilist.php?alpha='.urlencode($letter).'" class="warning">'.$html.'</a>';
 		} else {
@@ -172,9 +177,13 @@ foreach ($initials as $letter) {
 	} else {
 		$html='<a href="indilist.php?alpha='.urlencode($letter).'">'.$html.'</a>';
 	}
-	$list[]=$html;
+	if ($delay) $delayedList[] = $html;
+	else $list[] = $html;
 }
-// Seach spiders don't get the "show all" option as the other links give them everything.
+foreach ($delayedList as $listEntry) {
+	$list[] = $listEntry;		// "@" and "," should always be at the end of the letter list
+}
+// Search spiders don't get the "show all" option as the other links give them everything.
 if (!$SEARCH_SPIDER) {
 	if ($show_all=='yes') {
 		$list[]='<span class="warning">'.$pgv_lang['all'].'</span>';
@@ -184,7 +193,8 @@ if (!$SEARCH_SPIDER) {
 }
 echo '<p class="center">';
 print_help_link('alpha_help', 'qm', 'alpha_index');
-echo ' ', join(' | ', $list), '</p>';
+print $pgv_lang["first_letter_iname"]."<br />";
+echo join(' | ', $list), '</p>';
 
 // Search spiders don't get an option to show/hide the surname sublists,
 // not does it make sense on the all/unknown/surname views
@@ -236,7 +246,7 @@ if ($showList) {
 					case '':
 						$spfxsurn='('.$pgv_lang['none'].')';
 						break;
-					} 
+					}
 					if (! array_key_exists($surn, $surnames)) {
 						$surnames[$surn]=array();
 					}
@@ -266,7 +276,7 @@ if ($showList) {
 		// Note that each person is listed as many times as they have names that
 		// match the search criteria.  e.g. Mary Black nee Brown is listed twice
 		// on the "B" list.
-	
+
 		$individuals=array();
 		$givn_initials=array();
 		// Show the indi list
@@ -287,10 +297,12 @@ if ($showList) {
 			}
 		}
 		uasort($givn_initials, 'stringsort');
-	
+
 		// Break long lists by initial letter of given name
 		//if (count($indis)>$SUBLIST_TRIGGER_I) {
 		if (($surname || $show_all=='yes') && count($indis)>$SUBLIST_TRIGGER_I) { // Ingore setting on initial lists at request of MA
+			$showList = false;		// Don't show the list until we have some filter criteria
+			if (!empty($falpha) || $show_all_firstnames=='yes') $showList = true;
 			if (!$falpha && $show_all_firstnames=='no') {
 				// If we didn't specify initial or all, filter by the first initial
 				$falpha=default_initial($givn_initials, $alpha);
@@ -302,21 +314,28 @@ if ($showList) {
 				}
 			}
 			$list=array();
+			$delayedList = array();
 			foreach ($givn_initials as $givn_initial) {
 				switch ($givn_initial) {
 				case '@':
+					$delay = true;
 					$html=$pgv_lang['NN'];
 					break;
 				default:
+					$delay = false;
 					$html=$givn_initial;
 					break;
 				}
-				if ($givn_initial==$falpha && $show_all_firstnames=='no') {
+				if ($showList && $givn_initial==$falpha && $show_all_firstnames=='no') {
 					$html='<span class="warning">'.$html.'</span>';
 				} else {
 					$html='<a href="'.$url.'&amp;falpha='.$givn_initial.'">'.$html.'</a>';
 				}
-				$list[]=$html;
+				if ($delay) $delayedList[] = $html;
+				else $list[]=$html;
+			}
+			foreach ($delayedList as $listEntry) {
+				$list[] = $listEntry;
 			}
 			// Seach spiders don't get the "show all" option as the other links give them everything.
 			if (!$SEARCH_SPIDER) {
@@ -331,16 +350,19 @@ if ($showList) {
 				print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang['indis_with_surname']));
 				echo '</h2>';
 			}
-			echo '<p class="center">', $pgv_lang['first_letter_fname'], '<br />';
+			echo '<p class="center">';
 			print_help_link('alpha_help', 'qm', 'alpha_index');
-			echo ' ', join(' | ', $list), '</p>';
+			echo $pgv_lang['first_letter_fname'], '<br />';
+			echo join(' | ', $list), '</p>';
 		}
-	
-		usort($individuals, 'itemsort');
-		if ($legend && $show_all=='no') {
-			$legend=PrintReady(str_replace("#surname#", check_NN($legend), $pgv_lang['indis_with_surname']));
+
+		if ($showList) {
+			usort($individuals, 'itemsort');
+			if ($legend && $show_all=='no') {
+				$legend=PrintReady(str_replace("#surname#", check_NN($legend), $pgv_lang['indis_with_surname']));
+			}
+			print_indi_table($individuals, $legend);
 		}
-		print_indi_table($individuals, $legend);
 	}
 }
 
