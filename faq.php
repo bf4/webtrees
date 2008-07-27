@@ -39,8 +39,7 @@ if (!isset($adminedit) && $canconfig) $adminedit = true;
 else if (!isset($adminedit)) $adminedit = false;
 
 // -- print html header information
-$pgv_lang["faq_page"] = "Frequently Asked Questions";
-print_header($pgv_lang["faq_page"]);
+print_header($pgv_lang["faq_list"]);
 
 // NOTE: Commit the faq data to the DB
 if ($action=="commit") {
