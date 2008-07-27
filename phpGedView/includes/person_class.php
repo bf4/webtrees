@@ -1446,7 +1446,6 @@ class Person extends GedcomRecord {
 		for($i=0; $i<count($this->indifacts); $i++) {
 			$found=false;
 			$oldfactrec = $this->indifacts[$i]->getGedcomRecord();
-			print $this->indifacts[$i]->getTag()." ";
 			foreach($diff->indifacts as $indexval => $newfact) {
 				$newfactrec = $newfact->getGedcomRecord();
 				//-- remove all whitespace for comparison
