@@ -1856,7 +1856,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	foreach($famreqdfacts as $ind=>$fact) {
 		$famfacts[] = array($fact, "1 $fact\r\n", 1);
 	}
-	sort_facts($famfacts);
+	sort_facts_old($famfacts);
 ?>
 </td></tr>
 <tr>
