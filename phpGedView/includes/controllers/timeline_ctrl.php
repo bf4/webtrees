@@ -117,6 +117,7 @@ class TimelineControllerRoot extends BaseController {
 					}
 				}
 				// find all the fact information
+				$indi->parseFacts($this->nonfacts);
 				$indi->add_family_facts(false);
 				$facts = $indi->getIndiFacts($this->nonfacts);
 				foreach($facts as $indexval => $event) {
@@ -133,7 +134,8 @@ class TimelineControllerRoot extends BaseController {
 						if (!is_dead_id($indi->getXref()))
 							$this->topyear=max($this->topyear, date('Y'));
 						$event->temp = $p;
-						$this->indifacts[] = $event;
+						//-- do not add the same fact twice (prevents marriages from being added multiple times)
+						if (!in_array($event, $this->indifacts, true)) $this->indifacts[] = $event;
 					}
 				}
 			}
@@ -234,10 +236,12 @@ class TimelineControllerRoot extends BaseController {
 				print "--";
 				print $gdate->Display(false);
 				$indi=$event->getParentObject();
-				$birth_date=$indi->getEstimatedBirthDate();
-				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $gdate), false);
-				if (!empty($age))
-					print " ({$pgv_lang['age']} {$age})";
+				if (get_class($indi)=="Person") {
+					$birth_date=$indi->getEstimatedBirthDate();
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $gdate), false);
+					if (!empty($age))
+						print " ({$pgv_lang['age']} {$age})";
+				}
 				print " {$desc}";
 				if ($SHOW_PEDIGREE_PLACES>0) {
 					$place = $event->getPlace();
