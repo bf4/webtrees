@@ -1252,7 +1252,12 @@ class GedcomDate {
 			if ($amin>$bmax)
 				return 1;
 			else
-				return 0;
+				if ($amin<$bmin && $amax<=$bmax) 
+					return -1;
+				else 
+					if ($amin>$bmin && $amax>=$bmax) 
+						return 1;
+				else return 0;
 	}
 
 	// Check whether a gedcom date contains usable calendar date(s).
