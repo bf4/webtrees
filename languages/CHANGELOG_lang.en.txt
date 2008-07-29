@@ -44,6 +44,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["example"]								29 July 2008			A
 +$pgv_lang["first_letter_name"]						26 July 2008			A
 +$pgv_lang["first_letter_iname"]					26 July 2008			A
 +$pgv_lang["tree"]									11 July 2008			A

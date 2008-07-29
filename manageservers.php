@@ -33,304 +33,246 @@ require_once("includes/functions_edit.php");
 require_once("includes/functions_import.php");
 require_once("includes/serviceclient_class.php");
 
-/**
- * Adds an ip address to the banned.php file
- * @param varchar(30) $ip	The ip to be saved
- */
-function add_banned_ip($ip) {
-	global $banned, $INDEX_DIRECTORY, $pgv_lang;
-	if (file_exists($INDEX_DIRECTORY."banned.php")) include_once($INDEX_DIRECTORY."banned.php");
-	$bannedtext = "<?php\n//--List of banned IP addresses\n";
-	$bannedtext .= "\$banned = array();\n";	
-	if(isset($banned)){
-	reset($banned);
-		foreach ($banned as $value)
-		{
-			$bannedtext .= "\$banned[] = \"".$value."\";\n";
-		}
-	}
-	$bannedtext .= "\$banned[] = \"".$ip."\";\n";
-	$bannedtext .= "\n"."?>";
-
-	$fp = @fopen($INDEX_DIRECTORY."banned.php", "wb");
-	if (!$fp) {
-		global $whichFile;
-		$whichFile = $INDEX_DIRECTORY."banned.php";
-		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
-	}
-	else {
-		fwrite($fp, $bannedtext);
-		fclose($fp);
-		$logline = AddToLog("banned.php updated");
- 		check_in($logline, "banned.php", $INDEX_DIRECTORY);	
-	}
-}
-
-/**
- * Adds an ip address to the search_engines.php file
- * @param varchar(30) $ip	The ip to be saved
- */
-function add_search_engine_ip($ip) {
-	global $search_engines, $INDEX_DIRECTORY, $pgv_lang;
-	if (file_exists($INDEX_DIRECTORY."search_engines.php")) include_once($INDEX_DIRECTORY."search_engines.php");
-	$searchtext = "<?php\n//--List of search engine IP addresses\n";
-	$searchtext .= "\$search_engines = array();\n";	
-	if(isset($search_engines)){
-	reset($search_engines);
-		foreach ($search_engines as $value)
-		{
-			$searchtext .= "\$search_engines[] = \"".$value."\";\n";
-		}
-	}
-	$searchtext .= "\$search_engines[] = \"".$ip."\";\n";
-	$searchtext .= "\n"."?>";
-
-	$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "wb");
-	if (!$fp) {
-		global $whichFile;
-		$whichFile = $INDEX_DIRECTORY."search_engines.php";
-		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
-	}
-	else {
-		fwrite($fp, $searchtext);
-		fclose($fp);
-		$logline = AddToLog("search_engines.php updated");
- 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
-	}
-}
-
-/**
- * Removes an IP address from the banned.php list
- * 
- * @param varchar(30) $ip	IP address to remove
- */
-function delete_banned_ip($ip) {
-	global $banned, $INDEX_DIRECTORY, $pgv_lang;
-	if (file_exists($INDEX_DIRECTORY."banned.php")) include_once($INDEX_DIRECTORY."banned.php");
-	
-	$bannedtext = "<?php\n//--List of banned IP addresses\n";
-	$bannedtext .= "\$banned = array();\n";	
-	foreach ($banned as $value)
-	{
-		if ($value != $ip)
-		{
-			$bannedtext .= "\$banned[] = \"".$value."\";\n";
-		}
-	}
-	
-	$bannedtext .= "\n"."?>";
-
-	$fp = @fopen($INDEX_DIRECTORY."banned.php", "wb");
-	if (!$fp) {
-		global $whichFile;
-		$whichFile = $INDEX_DIRECTORY."banned.php";
-		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
-	}
-	else {
-		fwrite($fp, $bannedtext);
-		fclose($fp);
-		$logline = AddToLog("banned.php updated");
- 		check_in($logline, "banned.php", $INDEX_DIRECTORY);	
-	}
-}
-
-/**
- * Removes an IP address from the search_engines.php list
- * 
- * @param varchar(30) $ip	IP address to remove
- */
-function delete_search_engine_ip($ip) {
-	global $search_engines, $INDEX_DIRECTORY, $pgv_lang;
-	if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
-	include_once($INDEX_DIRECTORY."search_engines.php");
-	
-	$searchtext = "<?php\n//--List of search engine IP addresses\n";
-	$searchtext .= "\$search_engines = array();\n";	
-	foreach ($search_engines as $value)
-	{
-		if ($value != $ip)
-		{
-			$searchtext .= "\$search_engines[] = \"".$value."\";\n";
-		}
-	}
-	
-	$searchtext .= "\n"."?>";
-
-	$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "wb");
-	if (!$fp) {
-		global $whichFile;
-		$whichFile = $INDEX_DIRECTORY."search_engines.php";
-		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
-	}
-	else {
-		fwrite($fp, $searchtext);
-		fclose($fp);
-		$logline = AddToLog("search_engines.php updated");
- 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
-	}
-}
-
-
- // print_simple_header("Manage Servers");
-print_header($pgv_lang["administration"]);
+print_header($pgv_lang["title_manage_servers"]);
 //-- only allow gedcom admins here
 if (!PGV_USER_GEDCOM_ADMIN) {
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
 	if (!PGV_USER_GEDCOM_ADMIN) print "<br />".$pgv_lang["user_cannot_edit"];
 	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".$pgv_lang["close_window"]."\" onclick=\"window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
-	print_simple_footer();
+	print_footer();
 	exit;
 }
-  
-if(isset($_REQUEST["action"])){
-	if($_REQUEST["action"]==$pgv_lang["label_add_server"]){
-		$serverTitle = $_POST["txtTitle"];
-		$serverURL = $_POST["txtNewURL"];
-		$username = $_POST["txtUsername"];
-		$password = $_POST["txtPassword"];
-		$gedcom_id = $_POST["txtGID"];
 
-		if (!$serverTitle=="" || !$serverURL=="")	{
+$banned = array();
+if (file_exists($INDEX_DIRECTORY."banned.php"))	require($INDEX_DIRECTORY."banned.php");
+$banned = array_unique($banned);						// Make sure we have no duplicates
+$search_engines = array();
+if (file_exists($INDEX_DIRECTORY."search_engines.php"))	require($INDEX_DIRECTORY."search_engines.php");
+$search_engines = array_unique($search_engines);		// Make sure we have no duplicates
+$remoteServer = array();
+$remoteServer = get_server_list();
+
+$action = safe_GET('action');
+if (empty($action)) $action = safe_POST('action');
+$address = safe_GET('address');
+if (empty($address)) $address = safe_POST('address');
+
+$deleteBanned = safe_POST('deleteBanned');
+if (!empty($deleteBanned)) {		// A "remove banned IP" button was pushed
+	$action = 'deleteBanned';
+	$address = $deleteBanned;
+}
+
+$deleteSearch = safe_POST('deleteSearch');
+if (!empty($deleteSearch)) {		// A "remove search engine IP" button was pushed
+	$action = 'deleteSearch';
+	$address = $deleteSearch;
+}
+
+$deleteServer = safe_POST('deleteServer');
+if (!empty($deleteServer)) {		// A "remove remote server" button was pushed
+	$action = 'deleteServer';
+	$address = $deleteServer;
+}
+
+if (empty($action)) $action = 'showForm';
+
+/*
+ * Validate input string to be an IP address
+ */
+function validIP($address) {
+	if (!preg_match('/^\d{1,3}\.(\d{1,3}|\*)\.(\d{1,3}|\*)\.(\d{1,3}|\*)$/', $address)) return false;
+	$pieces = explode('.', $address);
+	foreach ($pieces as $number) {
+		if ($number!="*" && $number>255) return false;
+	}
+	return true;
+}
+
+
+/**
+ * Adds an IP address to the banned.php file
+ */
+if ($action=='addBanned') {
+	if (validIP($address)) {
+		$banned[] = $address;
+		$banned = array_unique($banned);		// Make sure we have no duplicates
+		
+		$bannedtext = "<?php\n//--List of banned IP addresses\n";
+		$bannedtext .= "\$banned = array();\n";	
+		foreach ($banned as $value) {
+			$bannedtext .= "\$banned[] = \"".$value."\";\n";
+		}
+		$bannedtext .= "\n"."?>";
+    	
+		$fp = @fopen($INDEX_DIRECTORY."banned.php", "w");
+		if (!$fp) {
+			global $whichFile;
+			$whichFile = $INDEX_DIRECTORY."banned.php";
+			$errorBanned = print_text("gedcom_config_write_error",0,1);
+		} else {
+			fwrite($fp, $bannedtext);
+			fclose($fp);
+			$logline = AddToLog("banned.php updated");
+ 			check_in($logline, "banned.php", $INDEX_DIRECTORY);	
+		}
+	} else $errorBanned = $pgv_lang["error_ban_server"];
+	
+	$action = 'showForm';
+}
+
+/**
+ * Removes an IP address from the banned.php file
+ */
+if ($action=='deleteBanned') {
+	$banned = array_flip($banned);
+	unset($banned[$address]);
+	$banned = array_flip($banned);
+	
+	$bannedtext = "<?php\n//--List of banned IP addresses\n";
+	$bannedtext .= "\$banned = array();\n";	
+	foreach ($banned as $value) {
+		$bannedtext .= "\$banned[] = \"".$value."\";\n";
+	}
+	$bannedtext .= "\n"."?>";
+
+	$fp = @fopen($INDEX_DIRECTORY."banned.php", "w");
+	if (!$fp) {
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."banned.php";
+		$errorBanned = print_text("gedcom_config_write_error",0,1);
+	} else {
+		fwrite($fp, $bannedtext);
+		fclose($fp);
+		$logline = AddToLog("banned.php updated");
+ 		check_in($logline, "banned.php", $INDEX_DIRECTORY);	
+	}
+	
+	$action = 'showForm';
+}
+
+/**
+ * Adds an IP address to the search_engines.php file
+ */
+if ($action=='addSearch') {
+	if (validIP($address)) {
+		$search_engines[] = $address;
+		$search_engines = array_unique($search_engines);		// Make sure we have no duplicates
+		$searchtext = "<?php\n//--List of search engine IP addresses\n";
+		$searchtext .= "\$search_engines = array();\n";	
+		foreach ($search_engines as $value) {
+			$searchtext .= "\$search_engines[] = \"".$value."\";\n";
+		}
+		$searchtext .= "\n"."?>";
+	
+		$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "w");
+		if (!$fp) {
+			global $whichFile;
+			$whichFile = $INDEX_DIRECTORY."search_engines.php";
+			$errorSearch = print_text("gedcom_config_write_error",0,1);
+		} else {
+			fwrite($fp, $searchtext);
+			fclose($fp);
+			$logline = AddToLog("search_engines.php updated");
+	 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
+		}
+	} else $errorSearch = $pgv_lang["error_ban_server"];
+	
+	$action = 'showForm';
+}
+
+/**
+ * Removes an IP address from the search_engines.php file
+ */
+if ($action=='deleteSearch') {
+	$search_engines = array_flip($search_engines);
+	unset($search_engines[$address]);
+	$search_engines = array_flip($search_engines);
+		
+	$searchtext = "<?php\n//--List of search engine IP addresses\n";
+	$searchtext .= "\$search_engines = array();\n";	
+	foreach ($search_engines as $value) {
+		$searchtext .= "\$search_engines[] = \"".$value."\";\n";
+	}
+	$searchtext .= "\n"."?>";
+
+	$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "wb");
+	if (!$fp) {
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."search_engines.php";
+		$errorSearch = '<span class="error">'.print_text("gedcom_config_write_error",0,1).'<br /></span>\n';
+	} else {
+		fwrite($fp, $searchtext);
+		fclose($fp);
+		$logline = AddToLog("search_engines.php updated");
+ 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
+	}
+	
+	$action = 'showForm';
+}
+
+/**
+ * Adds a server to the outbound remote linking list
+ */
+if ($action=='addServer') {
+	$serverTitle = stripslashes(safe_POST('serverTitle'));
+	$serverURL = stripslashes(safe_POST('serverURL'));
+	$gedcom_id = stripslashes(safe_POST('gedcom_id'));
+	$username = stripslashes(safe_POST('username'));
+	$password = stripslashes(safe_POST('password'));
+
+	if (!$serverTitle=="" || !$serverURL=="") {
 		$gedcom_string = "0 @new@ SOUR\r\n";
 		$gedcom_string.= "1 URL ".$serverURL."\r\n";
-	    $gedcom_string.= "1 TITL ".$serverTitle."\r\n";
+    	$gedcom_string.= "1 TITL ".$serverTitle."\r\n";
 		$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
 		$gedcom_string.= "2 _USER ".$username."\r\n";
 		$gedcom_string.= "2 _PASS ".$password."\r\n";
-	  
+    	
 		$service = new ServiceClient($gedcom_string);
 		$sid = $service->authenticate();
-		if (PEAR::isError($sid) || empty($sid)) {
-			print "<span class=\"error\">".$pgv_lang["error_siteauth_failed"]."</span>";
-		}
-		if (!empty($sid)) {
+		if (empty($sid) || PEAR::isError($sid)) {
+			$errorServer = $pgv_lang["error_siteauth_failed"];
+		} else {
 			$serverID = append_gedrec($gedcom_string);
 			accept_changes($serverID."_".$GEDCOM);
 		}
-		else print "<span class=\"error\">".$pgv_lang["error_siteauth_failed"]."</span>";
-		}else{
-			print "<span class=\"error\">".$pgv_lang["error_url_blank"]."</span>";
-		}
-    }else if($_REQUEST["action"]==$pgv_lang["label_ban_server"]){
-       $serverID = $_POST["txtAddIp"];
-	   //Validates IP address to make sure it is a number or *. 
-		if (preg_match('/^\d{0,3}\.(\d{0,3}|\*)\.(\d{0,3}|\*)\.(\d{0,3}|\*)/', $serverID) && !ip_exists($serverID)) {
-			add_banned_ip($serverID);
-		} 
-		else {
-			print("<span class=\"error\">".$pgv_lang["error_ban_server"]."</span>");
-		}
-    }else if($_REQUEST["action"]==$pgv_lang["label_add_search_server"]){
-       $serverID = $_POST["searchtxtAddIp"];
-	   //Validates IP address to make sure it is a number or *. 
-		if (preg_match('/^\d{0,3}\.(\d{0,3}|\*)\.(\d{0,3}|\*)\.(\d{0,3}|\*)/', $serverID) && !ip_exists($serverID)) {
-			add_search_engine_ip($serverID);
-		} 
-		else {
-			print("<span class=\"error\">".$pgv_lang["error_ban_server"]."</span>");
-		}
-    }else if($_REQUEST["action"]==$pgv_lang["remove_ip"]){
-		if (isset($_REQUEST["serverID"]))
-		{
-			$serverID = $_REQUEST["serverID"];
-			delete_search_engine_ip($serverID);
-		}
-    }else if($_REQUEST["action"]==$pgv_lang["remove"]){
-		if (isset($_REQUEST["serverID"]))
-		{
-			$serverID = $_REQUEST["serverID"];
-			delete_banned_ip($serverID);
-		}
-		else if(isset($_REQUEST["dbID"]))
-		{
-			if(delete_gedrec($_REQUEST["dbID"]))
-			{
-			accept_changes($_REQUEST["dbID"]."_".$GEDCOM);
-			}
-		}
-	}
-}
-  //Requires banned.php down here so page refreshes correctly
-  $bannedexists = false;
-if (file_exists($INDEX_DIRECTORY."banned.php"))	{
-	$bannedexists = true;
-	require($INDEX_DIRECTORY."banned.php");
-}
-  //Requires search_engines.php down here so page refreshes correctly
-  $searchexists = false;
-if (file_exists($INDEX_DIRECTORY."search_engines.php"))	{
-	$searchexists = true;
-	require($INDEX_DIRECTORY."search_engines.php");
+	} else $errorServer = $pgv_lang["error_url_blank"];
+	
+	$remoteServer = array();
+	$remoteServer = get_server_list();		// refresh the list
+	$action = 'showForm';
 }
 
-function ip_exists($ip)	{
-	global $INDEX_DIRECTORY, $banned;
-	if (file_exists($INDEX_DIRECTORY."banned.php")){
-		include($INDEX_DIRECTORY."banned.php");
-		if(isset($banned))
-		{
-		reset($banned);
-		foreach($banned as $value) {
-				if ($ip==$value){
-					return true;
-				}
-			}
+/**
+ * Removes a server from the remote linking outbound list
+ */
+if ($action=='deleteServer') {
+	if (!empty($address)) {
+		$address = stripslashes($address);
+		if (delete_gedrec($address)) {
+			accept_changes($address."_".$GEDCOM);
 		}
 	}
-	return false;
-}
-
-function search_ip_exists($ip)	{
-	global $INDEX_DIRECTORY, $search_engines;
-	if (file_exists($INDEX_DIRECTORY."search_engines.php")){
-		include($INDEX_DIRECTORY."search_engines.php");
-		if(isset($search_engines))
-		{
-		reset($search_engines);
-		foreach($search_engines as $value) {
-				if ($ip==$value){
-					return true;
-				}
-			}
-		}
-	}
-	return false;
+	
+	$remoteServer = array();
+	$remoteServer = get_server_list();		// refresh the list
+	$action = 'showForm';
 }
 
 ?>
-<script language="javascript" type="text/javascript">
-function validateIP(str){
-	ipRegEx = /^(\d{1,3})\.(\d{1,3}|\*)\.(\d{1,3}|\*)\.(\d{1,3}|\*)$/;
-	if (str.match(ipRegEx)){
-		return true;
-	}
-	else	{
-		alert('<?php print $pgv_lang["error_ban_server"];?>');
-		return false;
-	}
-}
 
-function validateDB(){
-	if (document.getElementById('txtTitle').value == "" || document.getElementById('txtNewURL').value == ""){
-		alert('<?php print $pgv_lang["error_url_blank"];?>');
-		return false;
-	}
-	else	{
-		return true;
-	}
-}
-	
-</script>
+
 <table class="width66" align="center">
  <tr>
-  <td height="2" colspan="2" class="title" align="center">
+  <td colspan="2" class="title" align="center">
    <?php echo $pgv_lang["title_manage_servers"];?>
   </td>
  </tr>
  <tr>
   <td>
-   <form name="searchegineform" action="manageservers.php" method="post" onsubmit="return validateIP(document.getElementById('searchtxtAddIp').value);">
+   <form name="searchengineform" action="manageservers.php" method="post">
    <!-- Search Engine IP address table --> 
    <table class="width100" align="center">
     <tr>
@@ -340,36 +282,39 @@ function validateDB(){
      </td>
     </tr>
     <tr>
-     <td class="facts_value" height="160">
+     <td class="facts_value">
       <table align="center">
 <?php
- if ($searchexists) {
-  foreach ($search_engines as $value) { ?>
+  foreach ($search_engines as $index=>$value) { 
+    ?>
        <tr>
+        <td><span dir="ltr">
+         <input type="text" name="address<?php echo $index;?>" size="16" value="<?php echo $value;?>" READONLY />
+        </span></td>
         <td>
-         <?php echo $value; ?>
-        </td>
-        <td>
-         <a href="<?php echo "manageservers.php?action=".$pgv_lang["remove_ip"]."&amp;serverID=".urlencode($value);?>"><?php echo $pgv_lang["remove_ip"];?></a>
+         &nbsp;&nbsp;&nbsp;
+         <button name="deleteSearch" value="<?php echo $value;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
         </td>
        </tr>
-<?php }}?>
+<?php }?>
        <tr>
-        <td colspan="2">
-         <br />
-         <?php echo $pgv_lang["label_remove_search"];?>
+        <td><span dir="ltr">
+         <input type="hidden" name="action" value="addSearch" />
+         <input type="text" name="address" size="16" value="<?php echo (empty($errorSearch))? '':$address;?>" />
+         </span></td>
+        <td>
+         &nbsp;&nbsp;&nbsp;
+         <input type="submit" value="<?php echo $pgv_lang['add'];?>" />
         </td>
        </tr>
-       <tr>
-        <td>
-         <input type="text" id="searchtxtAddIp" name="searchtxtAddIp" size="14" />
-         <input type="hidden" />
-        </td>
-        <td>
-         <input type="submit" value="<?php echo $pgv_lang['label_add_search_server'];?>" id="searchbtnAddIp" />
-         <input name="action" type="hidden" value="<?php echo $pgv_lang['label_add_search_server'];?>"/>
-        </td>
-       </tr>
+<?php
+	if (!empty($errorSearch)) {
+		print '<tr><td colspan="2"><span class="warning">';
+		print $errorSearch;
+		print '</span></td></tr>';
+		$errorSearch = '';
+	}
+?>
       </table>
      </td>
     </tr>
@@ -382,7 +327,7 @@ function validateDB(){
 <table class="width66" align="center">
  <tr>
   <td>
-   <form name="banserversform" action="manageservers.php" method="post" onsubmit="return validateIP(document.getElementById('txtAddIp').value);">
+   <form name="banIPform" action="manageservers.php" method="post">
    <!-- Banned IP address table --> 
    <table class="width100" align="center">
     <tr>
@@ -392,36 +337,39 @@ function validateDB(){
      </td>
     </tr>
     <tr>
-     <td class="facts_value" height="160">
+     <td class="facts_value">
       <table align="center">
 <?php
- if ($bannedexists) {
-  foreach ($banned as $value) { ?>
+  foreach ($banned as $index=>$value) 
+    { ?>
        <tr>
+        <td><span dir="ltr">
+         <input type="text" name="address<?php echo $index;?>" size="16" value="<?php echo $value;?>" READONLY />
+        </span></td>
         <td>
-         <?php echo $value; ?>
-        </td>
-        <td>
-         <a href="<?php echo "manageservers.php?action=".$pgv_lang["remove"]."&amp;serverID=".urlencode($value);?>"><?php echo $pgv_lang["remove"];?></a>
+         &nbsp;&nbsp;&nbsp;
+         <button name="deleteBanned" value="<?php echo $value;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
         </td>
        </tr>
-<?php }}?>
+<?php }?>
        <tr>
-        <td colspan="2">
-         <br />
-         <?php echo $pgv_lang["label_remove_ip"];?>
+        <td><span dir="ltr">
+         <input name="action" type="hidden" value="addBanned"/>
+         <input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo (empty($errorBanned))? '':$address;?>" />
+        </span></td>
+        <td>
+         &nbsp;&nbsp;&nbsp;
+         <input type="submit" value="<?php echo $pgv_lang['add'];?>" />
         </td>
        </tr>
-       <tr>
-        <td>
-         <input type="text" id="txtAddIp" name="txtAddIp" size="14" />
-         <input type="hidden" />
-        </td>
-        <td>
-         <input type="submit" value="<?php echo $pgv_lang['label_ban_server'];?>" id="btnAddIp" />
-         <input name="action" type="hidden" value="<?php echo $pgv_lang['label_ban_server'];?>"/>
-        </td>
-       </tr>
+<?php
+	if (!empty($errorBanned)) {
+		print '<tr><td colspan="2"><span class="warning">';
+		print $errorBanned;
+		print '</span></td></tr>';
+		$errorBanned = '';
+	}
+?>
       </table>
      </td>
     </tr>
@@ -431,33 +379,52 @@ function validateDB(){
  </tr>
 </table>
 
-<!-- Allowed servers table -->
 <table class="width66" align="center">
  <tr>
-  <td class="facts_label">
-   <b><?php echo $pgv_lang["label_added_servers"];?></b>
-  </td>
- </tr>
-<?php
- $remoteServer = get_server_list();
- foreach ($remoteServer as $sid=>$value) { ?>
- <tr>
-  <td class="facts_value">
-   <table class="width100" align="center">
+  <td>
+   <form name="serverlistform" action="manageservers.php" method="post">
+   <!-- remote server list --> 
+   <table class="width100">
     <tr>
-     <td class="width80">
-      <a href=<?php echo "\"viewconnections.php?selectedServer=".$sid."\"";?>><?php echo $value["name"]; ?></a>
+     <td class="facts_label">
+      <b><?php echo $pgv_lang["label_added_servers"];?></b>
      </td>
-     <td align="right">
-      <a href="<?php echo "manageservers.php?action=".$pgv_lang["remove"]."&amp;dbID=".$sid;?>"><?php echo $pgv_lang["remove"];?></a>
+    </tr>
+    <tr>
+     <td class="facts_value">
+      <table>
+<?php
+  foreach ($remoteServer as $sid=>$value) 
+    { ?>
+       <tr>
+        <td>
+          <button name="deleteServer" value="<?php echo $sid;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
+        </td>
+        <td>
+         &nbsp;&nbsp;
+         <button type="button" onclick="window.open('viewconnections.php?selectedServer=<?php echo $sid;?>', '_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1')"><?php echo $pgv_lang["title_view_conns"];?></button>
+         &nbsp;&nbsp;
+         <?php echo PrintReady($value["name"]); ?>
+        </td>
+       </tr>
+<?php }?>
+      </table>
      </td>
     </tr>
    </table>
+   </form>
   </td>
  </tr>
-<?php }?>
 </table>
-<form name="addserversform" action="manageservers.php" method="post" onsubmit="return validateDB();">
+<?php
+if (empty($errorServer)) {
+	$serverTitle = '';
+	$serverURL = '';
+	$gedcom_id = '';
+	$username = '';
+}
+?>
+<form name="addserversform" action="manageservers.php" method="post"">
 <table class="width66" align="center">
  <tr>
   <td valign="top">
@@ -474,7 +441,7 @@ function validateDB(){
       <?php print $pgv_lang["title"];?>
      </td>
      <td class="facts_value">
-      <input type="text" size="50" id="txtTitle" name="txtTitle"/>
+      <input type="text" size="50" name="serverTitle" value="<?php echo PrintReady($serverTitle);?>" />
      </td>
     </tr>
     <tr>
@@ -483,7 +450,8 @@ function validateDB(){
       <?php print $pgv_lang["label_server_url"];?>
      </td>
      <td class="facts_value">
-      <input type="text" size="50" id="txtNewURL" name="txtNewURL"/>
+      <input type="text" size="50" name="serverURL" value="<?php echo PrintReady($serverURL);?>" />
+      <br /><?php echo $pgv_lang["example"];?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl
      </td>
     </tr>
     <tr>
@@ -491,7 +459,7 @@ function validateDB(){
       <?php echo $pgv_lang["label_gedcom_id2"];?>
      </td>
      <td class="facts_value">
-      <input type="text" id="txtGID" name="txtGID" size="14"/>
+      <input type="text" name="gedcom_id" value="<?php echo PrintReady($gedcom_id);?>" />
      </td>
     </tr>
     <tr>
@@ -499,7 +467,7 @@ function validateDB(){
       <?php print $pgv_lang["label_username_id"];?>
      </td>
      <td class="facts_value">
-      <input type="text" id="txtUsername" name="txtUsername"/>
+      <input type="text" name="username" value="<?php echo PrintReady($username);?>" />
      </td>
     </tr> 
     <tr>
@@ -507,13 +475,21 @@ function validateDB(){
       <?php print $pgv_lang["label_password_id"];?>
      </td>
      <td class="facts_value">
-      <input type="password" id="txtPassword" name="txtPassword"/>
+      <input type="password" name="password" />
      </td>
     </tr>
     <tr>
      <td class="facts_value" align="center" colspan="2">
-      <input type="submit" value="<?php echo $pgv_lang['label_add_server'];?>" id="btnAddServer" />
-      <input name="action" type="hidden" value="<?php echo $pgv_lang['label_add_server'];?>"/>
+      <input type="submit" value="<?php echo $pgv_lang['add'];?>" />
+      <input name="action" type="hidden" value="addServer"/>
+<?php
+	if (!empty($errorServer)) {
+		print '<br /><br /><span class="warning">';
+		print $errorServer;
+		print '</span>';
+		$errorServer = '';
+	}
+?>
      </td>
     </tr>
    </table>

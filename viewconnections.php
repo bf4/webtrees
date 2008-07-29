@@ -30,7 +30,7 @@
 require 'config.php';
 require_once 'includes/functions_print_lists.php';
 
-print_simple_header('View Connections');
+print_simple_header($pgv_lang["title_view_conns"]);
 
 //-- only allow gedcom admins here
 if (!PGV_USER_GEDCOM_ADMIN) {
