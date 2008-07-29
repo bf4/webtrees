@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["example"]				= "Beispiel:";
 $pgv_lang["tree"]					= "Baum";
 $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "«Geschlecht unbekannt» zeigen";
@@ -350,7 +351,7 @@ $pgv_lang["just_family"]				= "Nur den Familiendatensatz dieser Familie hinzufü
 $pgv_lang["parents_and_family"]			= "Den Familiendatensatz und die Datensätze der Eltern dieser Familie hinzufügen.";
 $pgv_lang["parents_and_child"]			= "Den Familiendatensatz, die der Eltern und die der Kinder dieser Familie hinzufügen.";
 $pgv_lang["parents_desc"]				= "Den Familiendatensatz, die Datensätze aller Nachkommen, und die der Eltern hinzufügen.";
-$pgv_lang["continue"]					= "Fortsetzen";
+$pgv_lang["continue"]					= "fortsetzen";
 $pgv_lang["which_p_links"]				= "Welche Verbindungen dieser Person möchten Sie hinzufügen?";
 $pgv_lang["just_person"]				= "Nur den Datensatz dieser Person hinzufügen.";
 $pgv_lang["person_parents_sibs"]		= "Den Datensatz dieser Person, die seiner Eltern und seiner Geschwister hinzufügen.";
@@ -367,7 +368,7 @@ $pgv_lang["download"]					= "Klicken Sie mit der rechten Maustaste (beim Mac Con
 $pgv_lang["cart_is_empty"]				= "Ihr Sammelbehälter ist leer.";
 $pgv_lang["id"]							= "Identifikationsnummer (ID)";
 $pgv_lang["name_description"]			= "Name / Beschreibung";
-$pgv_lang["remove"]						= "Entfernen";
+$pgv_lang["remove"]						= "löschen";
 $pgv_lang["empty_cart"]					= "Sammelbehälter leeren";
 $pgv_lang["download_now"]				= "Jetzt herunterladen";
 $pgv_lang["download_file"]				= "Datei #GLOBAL[whichFile]# herunterladen";
