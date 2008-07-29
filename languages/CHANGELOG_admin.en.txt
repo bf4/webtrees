@@ -45,7 +45,13 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["label_add_search_server"]				29 July 2008			D
+-$pgv_lang["label_add_server"]						29 July 2008			D
+-$pgv_lang["label_ban_server"]						29 July 2008			D
 *$pgv_lang["label_added_servers"]					29 July 2008			w
+-$pgv_lang["label_remove_ip"]						29 July 2008			D
+-$pgv_lang["label_remove_search"]					29 July 2008			D
+*$pgv_lang["label_server_info"]						29 July 2008			w
 -$pgv_lang["spanish"]								1 Jun 2008				D	variable name changed
 -$pgv_lang["portuguese"]							1 Jun 2008				D	variable name changed
 -$pgv_lang["icelandic"]								1 Jun 2008				D	variable name changed
