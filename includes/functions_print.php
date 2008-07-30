@@ -424,16 +424,17 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 	// Determine browser type
-	if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
-		$BROWSERTYPE = "opera";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
-		$BROWSERTYPE = "netscape";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
-		$BROWSERTYPE = "mozilla";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
-		$BROWSERTYPE = "msie";
-	else
-		$BROWSERTYPE = "other";
+	$BROWSERTYPE = "other";
+	if (!empty($_SERVER["HTTP_USER_AGENT"])) {
+		if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
+			$BROWSERTYPE = "opera";
+		else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
+			$BROWSERTYPE = "netscape";
+		else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
+			$BROWSERTYPE = "mozilla";
+		else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
+			$BROWSERTYPE = "msie";
+	}
 
 	print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
 	print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
