@@ -168,6 +168,7 @@ $pgv_lang["enable_disable_lang"]				= "Configure supported languages";
 $pgv_lang["error_ban_server"]       			= "Invalid IP address.";
 $pgv_lang["error_delete_person"]   				= "You must select the person whose remote link you wish to delete.";
 $pgv_lang["error_header_write"] 				= "The GEDCOM file, <b>#GEDCOM#</b>, is not writable. Please check attributes and access rights.";
+$pgv_lang["error_remote_duplicate"]				= "This remote database is already in the list as <i>#GLOBALS[whichFile]#</i>";
 $pgv_lang["error_siteauth_failed"]				= "Failed to authenticate to remote site";
 $pgv_lang["error_url_blank"]					= "Please do not leave remote site title or URL blank";
 $pgv_lang["error_view_info"]       				= "You must select the person whose information you wish to view.";
