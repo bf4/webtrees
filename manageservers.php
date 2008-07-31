@@ -50,7 +50,6 @@ $banned = array_unique($banned);						// Make sure we have no duplicates
 $search_engines = array();
 if (file_exists($INDEX_DIRECTORY."search_engines.php"))	require($INDEX_DIRECTORY."search_engines.php");
 $search_engines = array_unique($search_engines);		// Make sure we have no duplicates
-$remoteServer = array();
 $remoteServer = get_server_list();
 
 $action = safe_GET('action');
@@ -201,7 +200,7 @@ if ($action=='deleteSearch') {
 	if (!$fp) {
 		global $whichFile;
 		$whichFile = $INDEX_DIRECTORY."search_engines.php";
-		$errorSearch = '<span class="error">'.print_text("gedcom_config_write_error",0,1).'<br /></span>\n';
+		$errorSearch = print_text("gedcom_config_write_error",0,1);
 	} else {
 		fwrite($fp, $searchtext);
 		fclose($fp);
@@ -223,25 +222,38 @@ if ($action=='addServer') {
 	$password = stripslashes(safe_POST('password'));
 
 	if (!$serverTitle=="" || !$serverURL=="") {
-		$gedcom_string = "0 @new@ SOUR\r\n";
-		$gedcom_string.= "1 URL ".$serverURL."\r\n";
-    	$gedcom_string.= "1 TITL ".$serverTitle."\r\n";
-		$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
-		$gedcom_string.= "2 _USER ".$username."\r\n";
-		$gedcom_string.= "2 _PASS ".$password."\r\n";
-    	
-		$service = new ServiceClient($gedcom_string);
-		$sid = $service->authenticate();
-		if (empty($sid) || PEAR::isError($sid)) {
-			$errorServer = $pgv_lang["error_siteauth_failed"];
-		} else {
-			$serverID = append_gedrec($gedcom_string);
-			accept_changes($serverID."_".$GEDCOM);
+		$errorServer = '';
+		$turl = preg_replace("~^\w+://~", "", $serverURL);
+		//-- check the existing server list
+		foreach ($remoteServer as $server) {
+			if (stristr($server['url'], $turl)) {
+				if (empty($gedcom_id) || preg_match("/_DBID $gedcom_id/", $server['gedcom'])) {
+					$whichFile = $server['name'];
+					$errorServer = print_text("error_remote_duplicate",0,1);
+					break;
+				}
+			}
+		}
+		if (empty($errorServer)) {
+			$gedcom_string = "0 @new@ SOUR\r\n";
+			$gedcom_string.= "1 URL ".$serverURL."\r\n";
+    		$gedcom_string.= "1 TITL ".$serverTitle."\r\n";
+			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
+			$gedcom_string.= "2 _USER ".$username."\r\n";
+			$gedcom_string.= "2 _PASS ".$password."\r\n";
+    		
+			$service = new ServiceClient($gedcom_string);
+			$sid = $service->authenticate();
+			if (empty($sid) || PEAR::isError($sid)) {
+				$errorServer = $pgv_lang["error_siteauth_failed"];
+			} else {
+				$serverID = append_gedrec($gedcom_string);
+				accept_changes($serverID."_".$GEDCOM);
+				$remoteServer = get_server_list();		// refresh the list
+			}
 		}
 	} else $errorServer = $pgv_lang["error_url_blank"];
 	
-	$remoteServer = array();
-	$remoteServer = get_server_list();		// refresh the list
 	$action = 'showForm';
 }
 
@@ -256,12 +268,28 @@ if ($action=='deleteServer') {
 		}
 	}
 	
-	$remoteServer = array();
 	$remoteServer = get_server_list();		// refresh the list
 	$action = 'showForm';
 }
 
 ?>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function showSite(siteID) {
+	buttonShow = document.getElementById("buttonShow_"+siteID);
+	siteDetails = document.getElementById("siteDetails_"+siteID);
+	if (siteDetails.style.display=='none') {
+		buttonShow.innerHTML='<?php echo $pgv_lang["hide_details"];?>';
+		siteDetails.style.display='block';
+	} else {
+		buttonShow.innerHTML='<?php echo $pgv_lang["show_details"];?>';
+		siteDetails.style.display='none';
+	}
+}
+//-->
+</script>
+
 
 
 <table class="width66" align="center">
@@ -394,17 +422,67 @@ if ($action=='deleteServer') {
      <td class="facts_value">
       <table>
 <?php
-  foreach ($remoteServer as $sid=>$value) 
-    { ?>
+  foreach ($remoteServer as $sid=>$server) {
+	  $serverTitle = $server['name'];
+	  $serverURL = $server['url'];
+	  $gedcom_id = get_gedcom_value('_DBID', 1, $server['gedcom']);
+	  $username = get_gedcom_value('_USER', 2, $server['gedcom']);
+?>
        <tr>
         <td>
           <button name="deleteServer" value="<?php echo $sid;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
-        </td>
-        <td>
+         &nbsp;&nbsp;
+         <button id="buttonShow_<?php echo $sid;?>" type="button" onclick="showSite('<?php echo $sid;?>');"><?php echo $pgv_lang["show_details"];?></button>
          &nbsp;&nbsp;
          <button type="button" onclick="window.open('viewconnections.php?selectedServer=<?php echo $sid;?>', '_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1')"><?php echo $pgv_lang["title_view_conns"];?></button>
          &nbsp;&nbsp;
-         <?php echo PrintReady($value["name"]); ?>
+         <?php echo PrintReady($serverTitle); ?>
+         <div id="siteDetails_<?php echo $sid;?>" style="display:none">
+          <br />
+          <table>
+           <tr>
+            <td class="facts_label width20">
+             <?php print $pgv_lang["id"];?>
+            </td>
+            <td class="facts_value">
+             <?php echo $sid;?>
+            </td>
+           </tr>
+           <tr>
+            <td class="facts_label width20">
+             <?php print $pgv_lang["title"];?>
+            </td>
+            <td class="facts_value">
+             <?php echo PrintReady($serverTitle);?>
+            </td>
+           </tr>
+           <tr>
+            <td class="facts_label width20">
+             <?php print $pgv_lang["label_server_url"];?>
+            </td>
+            <td class="facts_value">
+             <?php echo PrintReady($serverURL);?>
+            </td>
+           </tr>
+           <tr>
+            <td class="facts_label width20">
+             <?php echo $pgv_lang["label_gedcom_id2"];?>
+            </td>
+            <td class="facts_value">
+             <?php echo PrintReady($gedcom_id);?>
+            </td>
+           </tr>
+           <tr>
+            <td class="facts_label width20">
+             <?php print $pgv_lang["label_username_id"];?>
+            </td>
+            <td class="facts_value">
+             <?php echo PrintReady($username);?>
+            </td>
+           </tr> 
+          </table>
+          <br />
+         </div>
         </td>
        </tr>
 <?php }?>
@@ -441,7 +519,7 @@ if (empty($errorServer)) {
       <?php print $pgv_lang["title"];?>
      </td>
      <td class="facts_value">
-      <input type="text" size="50" name="serverTitle" value="<?php echo PrintReady($serverTitle);?>" />
+      <input type="text" size="66" name="serverTitle" value="<?php echo PrintReady($serverTitle);?>" />
      </td>
     </tr>
     <tr>
@@ -450,7 +528,7 @@ if (empty($errorServer)) {
       <?php print $pgv_lang["label_server_url"];?>
      </td>
      <td class="facts_value">
-      <input type="text" size="50" name="serverURL" value="<?php echo PrintReady($serverURL);?>" />
+      <input type="text" size="66" name="serverURL" value="<?php echo PrintReady($serverURL);?>" />
       <br /><?php echo $pgv_lang["example"];?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl
      </td>
     </tr>
