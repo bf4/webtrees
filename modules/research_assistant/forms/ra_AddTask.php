@@ -54,7 +54,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
 
 		while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		    $out .= '<option value="'.$foldername['fr_id'].'"';
-		    if ($_REQUEST['folderid']==$foldername['fr_id']) $out .= '" selected="selected"';
+		    if (!empty($_REQUEST['folderid']) && $_REQUEST['folderid']==$foldername['fr_id']) $out .= '" selected="selected"';
 			$out .= '>'.$foldername['fr_name'] . '</option>';
         }
         

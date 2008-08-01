@@ -31,6 +31,7 @@ class TreeNav {
 	var $zoomLevel = 0;
 	var $name = 'nav';
 	var $generations = 4;
+	var $allSpouses = true;
 	
 	/**
 	 * Tree Navigator Constructor
@@ -47,6 +48,10 @@ class TreeNav {
 		$this->name = $name;
 		//-- handle AJAX requests
 		if (!empty($_REQUEST['navAjax'])) {
+			if (isset($_REQUEST['allSpouses'])) {
+				if ($_REQUEST['allSpouses']=='false' || $_REQUEST['allSpouses']==false) $this->allSpouses = false;
+				else $this->allSpouses = true;
+			}
 			if (!empty($_REQUEST['details'])) {
 				$this->getDetails($this->rootPerson);
 			}
@@ -55,7 +60,8 @@ class TreeNav {
 				if (!empty($_REQUEST['drawport'])) $this->drawViewport('', "", "150px"); 
 				else {
 					$fam = null;
-					$this->drawPerson($this->rootPerson, 4, 0, $fam);
+					if ($this->allSpouses) $this->drawPersonAllSpouses($this->rootPerson, 4, 0);
+					else $this->drawPerson($this->rootPerson, 4, 0, $fam);
 				}
 			}
 			else if (!empty($_REQUEST['parent'])) {
@@ -94,7 +100,8 @@ class TreeNav {
 			else {
 				$fams = $this->rootPerson->getSpouseFamilies();
 				$family = end($fams);
-				$this->drawChildren($family, 2);
+				if (!$this->allSpouses) $this->drawChildren($family, 2);
+				else $this->drawAllChildren($this->rootPerson, 2);
 			}
 			exit;
 		}
@@ -118,19 +125,24 @@ class TreeNav {
 		
 		<div id="out_<?php print $this->name; ?>" dir="ltr" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
 			<div id="in_<?php print $this->name; ?>" style="position: relative; left: -20px; width: auto; cursor: move;" onmousedown="dragStart(event, 'in_<?php print $this->name; ?>', <?php print $this->name; ?>);" onmouseup="dragStop(event);">
-			<?php $parent=null; $this->drawPerson($this->rootPerson, $this->generations, 0, $parent); ?>
+			<?php $parent=null; 
+			if (!$this->allSpouses) $this->drawPerson($this->rootPerson, $this->generations, 0, $parent); 
+			else $this->drawPersonAllSpouses($this->rootPerson, $this->generations, 0);?>
 			</div>
 			<div id="controls" style="position: absolute; left: 0px; top: 0px; z-index: 100; background-color: #EEEEEE">
 			<table>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" /></a></td></tr>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" /></a></td></tr>
-				<tr><td <?php if (is_null($this->rootPerson)) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
+				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php print $this->rootPerson->getXref(); ?>'); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" /></td></tr>
+				<tr><td><?php print_help_link('help_treenav.php',''); ?></td></tr>
 			</table>
 			</div>
 		</div>
 		<script type="text/javascript">
 		<!--
 		var <?php print $this->name; ?> = new NavTree("out_<?php print $this->name; ?>","in_<?php print $this->name; ?>", '<?php print $this->name; ?>');
+		<?php if ($this->allSpouses) { print $this->name; ?>.allSpouses=true; <?php } ?>
 		<?php print $this->name; ?>.sizeLines();
 		//-->
 		</script>
@@ -203,14 +215,31 @@ class TreeNav {
 		if (empty($person)) $person = $this->rootPerson;
 		if (!$person->canDisplayDetails()) return;
 		
+		$families = array();
 		if (!empty($_REQUEST['famid'])) {
-			$family = Family::getInstance($_REQUEST['famid']);
-			if (!empty($family)) $spouse = $family->getSpouse($person);
+			$famid = $_REQUEST['famid'];
+			if ($famid!='all') {
+				$family = Family::getInstance($_REQUEST['famid']);
+				if (!empty($family)) $families[] = $family;
+			}
+			else {
+				$fams = $person->getSpouseFamilies();
+				foreach($fams as $fam) {
+					$families[] = $fam;
+				}
+			}
 		}
-		if (empty($spouse)) {
-			$spouse = $person->getCurrentSpouse();
-			$fams = $person->getSpouseFamilies();
-			$family = end($fams); 
+		else {
+			if ($this->allSpouses) {
+				$fams = $person->getSpouseFamilies();
+				foreach($fams as $fam) {
+					$families[] = $fam;
+				}
+			}
+			else {
+				$fams = $person->getSpouseFamilies();
+				$families[] = end($fams);
+			} 
 		}
 		
 		$name = $person->getName(); 
@@ -230,16 +259,6 @@ class TreeNav {
 			?>
 			<?php $place = $person->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 			<br />
-			<b><?php print get_first_letter($factarray['MARR']);?>:</b>
-			<?php if (!empty($family)) {
-				$mdate = $family->getMarriageDate();
-				if (!is_null($mdate)) print $mdate->Display()." ";
-				$place=''; 
-				$place = $family->getMarriagePlace();  
-				if (!empty($place)) print PrintReady($place); ?>
-				<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a>
-			<?php } ?>
-			<br />
 			<b><?php print get_first_letter($factarray['DEAT']);?>:</b>
 			<?php
 				$ddate = $person->getDeathDate(false);
@@ -249,33 +268,46 @@ class TreeNav {
 		</div>
 		<br />
 		<span class="name1"><?php 
-		if (!is_null($spouse)) {
-			$name = $spouse->getName(); 
-			if ($SHOW_ID_NUMBERS) 
-			$name.=" (".$spouse->getXref().")";
-			?>
-			<a href="individual.php?pid=<?php print $spouse->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"> 
-			<?php print $spouse->getSexImage().PrintReady($name); ?></a>
-			<!-- <img id="d_<?php print $spouse->getXref(); ?>" alt="<?php print $spouse->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" /> -->
-			<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
-			<br />
-			<div class="details1 indent">
-			<b><?php print get_first_letter($factarray['BIRT']);?>:</b>
-			<?php
-				$bdate = $spouse->getBirthDate();
-				if (!is_null($bdate)) print $bdate->Display();
-			?>
-			<?php $place = $spouse->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
-			<br />
-			<b><?php print get_first_letter($factarray['DEAT']);?>:</b>
-			<?php
-				$ddate = $spouse->getDeathDate(false);
-				if (!is_null($ddate)) print $ddate->Display();
-			?>
-			<?php $place = $spouse->getDeathPlace();  if (!empty($place)) print PrintReady($place); ?>
-			</div>
-			<?php 
-		} else print "<br />\n"; ?>
+		foreach($families as $family) {
+			if (!empty($family)) $spouse = $family->getSpouse($person);
+			if (!is_null($spouse)) {
+				$name = $spouse->getName(); 
+				if ($SHOW_ID_NUMBERS) 
+				$name.=" (".$spouse->getXref().")";
+				?>
+				<a href="individual.php?pid=<?php print $spouse->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"> 
+				<?php print $spouse->getSexImage().PrintReady($name); ?></a>
+				<!-- <img id="d_<?php print $spouse->getXref(); ?>" alt="<?php print $spouse->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" /> -->
+				<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
+				<br />
+				<div class="details1 indent">
+				<b><?php print get_first_letter($factarray['BIRT']);?>:</b>
+				<?php
+					$bdate = $spouse->getBirthDate();
+					if (!is_null($bdate)) print $bdate->Display();
+				?>
+				<?php $place = $spouse->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
+				<br />
+				<b><?php print get_first_letter($factarray['MARR']);?>:</b>
+				<?php 
+					$mdate = $family->getMarriageDate();
+					if (!is_null($mdate)) print $mdate->Display()." ";
+					$place=''; 
+					$place = $family->getMarriagePlace();  
+					if (!empty($place)) print PrintReady($place); ?>
+					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a>
+				<br />
+				<b><?php print get_first_letter($factarray['DEAT']);?>:</b>
+				<?php
+					$ddate = $spouse->getDeathDate(false);
+					if (!is_null($ddate)) print $ddate->Display();
+				?>
+				<?php $place = $spouse->getDeathPlace();  if (!empty($place)) print PrintReady($place); ?>
+				</div>
+				<?php 
+			} else print "<br />\n"; 
+		}
+		?>
 		</span>
 		<?php
 	}
@@ -293,6 +325,137 @@ class TreeNav {
 				$this->drawPerson($child, $gen-1, -1, $fam);
 			}
 		}
+	}
+	
+	/**
+	 * Draw all of the children for a person
+	 * @param Person $person	The person to draw the children for
+	 * @param int $gen			The number of generations of descendents to draw
+	 */
+	function drawAllChildren(&$person, $gen=2) {
+		if (!empty($person) && $gen>0) {
+			$fams = $person->getSpouseFamilies();
+			foreach($fams as $famid=>$family) {
+				$children = $family->getChildren();
+				foreach($children as $ci=>$child) {
+					$fam = null;
+					$this->drawPersonAllSpouses($child, $gen-1, -1);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Draw a person for the chart but include all of their spouses instead of just one
+	 * @param Person $person		The Person object to draw the box for
+	 * @param int $gen				The number of generations up or down to print
+	 * @param int $state			Whether we are going up or down the tree, -1 for descendents +1 for ancestors
+	 */
+	function drawPersonAllSpouses(&$person, $gen, $state) {
+		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		
+		if ($gen<0) {
+			return;
+		}
+		if ($this->zoomLevel < -2) $style = "display: none;";
+		else $style = "width: ".(10+$this->zoomLevel)."; height: ".(10+$this->zoomLevel).";";
+		if (empty($person)) $person = $this->rootPerson;
+		if (empty($person)) return;
+		if (!$person->canDisplayDetails()) return;
+		$mother = null;
+		$father = null;
+		
+		if ($state<=0) {
+			$fams = $person->getSpouseFamilies();
+			$family = end($fams);
+		}
+		if ($state>=0) {
+			$fams = $person->getChildFamilies();
+			$cfamily = end($fams);
+			if (!empty($cfamily)) {
+				$father = $cfamily->getHusband();
+			}
+			if (!empty($spouse)) {
+				$fams = $spouse->getChildFamilies();
+				$mcfamily = end($fams);
+				if (!empty($mcfamily)) {
+					$mother = $mcfamily->getHusband();
+				}
+			}
+		}
+		?>
+		<table border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px; margin-bottom: 1px;">
+			<tbody>
+				<tr>
+					<?php /* print the children */
+					if ($state<=0) {
+						$hasChildren = false;
+						if ($person->getNumberOfChildren()>0) $hasChildren = true;  
+					?>
+					<td id="ch_<?php print $person->getXref();?>" align="right" <?php if ($gen==0 && $hasChildren) print 'id="'.$this->name.'_cload" name="'.$this->name.'_cload" onclick="'.$this->name.'.loadChild(this, \''.$person->getXref().'\');"'; ?>>
+						<?php
+							$this->drawAllChildren($person, $gen);
+						?>
+					</td>
+					<?php  
+					if ($hasChildren && $person->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php }
+					}
+					if ($state>0) {
+						?><td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
+					}
+					/* print the person */ ?>
+					<td>
+						<div class="person_box" id="box_<?php print $person->getXref();?>" style="text-align: left; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px;" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', 'all');">
+						<?php $name = $person->getName(); if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; print $person->getSexImage($style).PrintReady($name); ?><br />
+						<?php 
+						$fams = $person->getSpouseFamilies();
+						foreach($fams as $famid=>$family) {
+							$spouse = $family->getSpouse($person);
+							if (!is_null($spouse)) {
+								$name = $spouse->getFullName(); 
+								if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")"; 
+								print "&nbsp;&nbsp;".$spouse->getSexImage($style).PrintReady($name); 
+								print "<br />\n";
+							} else print "<br />\n"; 
+						}
+						?>
+						</div>
+					</td>
+					<?php 
+					if ($state<0) {
+						?><td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
+					}
+					/* print the father */ 
+					if ($state>=0 && (!empty($father) || !empty($mother))) {
+						$lineid = "pline_";
+						if (!empty($father)) $lineid.=$father->getXref();
+						$lineid.="_";
+						if (!empty($mother)) $lineid.=$mother->getXref();
+						?>
+					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php } ?>
+					<td align="left">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tbody>
+								<tr>
+									<?php /* there is a IE JavaScript bug where the "id" has to be the same as the "name" in order to use the document.getElementsByName() function */ ?>
+									<td <?php if ($gen==0 && !empty($father)) print 'id="'.$this->name.'_pload" name="'.$this->name.'_pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'f\');"'; ?>>
+										<?php if (!empty($father)) $this->drawPerson($father, $gen-1, 1, $cfamily); else print "<br />\n";?>
+									</td>
+								</tr>
+								<tr>
+								<?php /* print the mother */ ?>
+									<td <?php if ($gen==0 && !empty($mother)) print 'id="'.$this->name.'_pload" name="'.$this->name.'_pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'m\');"'; ?>>
+										<?php if (!empty($mother)) $this->drawPerson($mother, $gen-1, 1, $mcfamily); else print"<br />\n";?>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+					<?php } ?>
+				</tr>
+			</tbody>
+		</table>
+		<?php
 	}
 	
 	/**

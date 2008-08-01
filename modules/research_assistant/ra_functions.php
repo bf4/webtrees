@@ -464,11 +464,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$output="<br/>";
 			
 			//gets each person that was changed and shows their name with a link to their individual page
+			if (isset($_REQUEST['personid'])) {
 			$thePeopleList=split(";",$_REQUEST['personid']);
-			foreach($thePeopleList as $i=>$pid) {
-				if(!empty($pid)) {
-						$person=Person::getInstance($pid);
-						$output.='<a href="'.$person->getLinkUrl().'">'.$person->getFullName().'</a><br/>';
+				foreach($thePeopleList as $i=>$pid) {
+					if(!empty($pid)) {
+							$person=Person::getInstance($pid);
+							$output.='<a href="'.$person->getLinkUrl().'">'.$person->getFullName().'</a><br/>';
+					}
 				}
 			}
 			
@@ -484,7 +486,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		// The actual message layout
 		$out = '<table align="center" width="50%" height="100" valign="center">';
-		$out .= '<tr><td class="optionbox" align="center" valign="center"><img src="'.$image.'" /></td></tr>';
+		if (!empty($image)) $out .= '<tr><td class="optionbox" align="center" valign="center"><img src="'.$image.'" /></td></tr>';
 		$out .= '<tr><td class="optionbox" valign="center" align="center"><h3>'.$div.''.$message.''.$end.'</h3></td></tr>';
 		$out .= '</table>';
 
