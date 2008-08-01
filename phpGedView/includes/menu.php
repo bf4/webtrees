@@ -625,6 +625,7 @@ class MenuBar
 		if (file_exists("lifespan.php")) $menuList["lifespan"] = $pgv_lang["lifespan_chart"];
 		if (file_exists("relationship.php")) $menuList["relationship"] = $pgv_lang["relationship_chart"];
 		if (file_exists("statistics.php") && file_exists("jpgraph")) $menuList["statistics"] = $pgv_lang["statistics"];
+		if (file_exists("treenav.php")) $menuList["treenav"] = $pgv_lang["interactive_tree"];
 		asort($menuList);
 
 		// Produce the submenus in localized name order
@@ -774,6 +775,16 @@ class MenuBar
 				$menu->addSubmenu($submenu);
 				break;
 
+			case "treenav":
+				//-- interactive tree
+				$link = "treenav.php?ged=".$ged;
+				$submenu = new Menu($pgv_lang["interactive_tree"], encode_url($link));
+				if (!empty($PGV_IMAGES["gedcom"]["small"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$menu->addSubmenu($submenu);
+				break;
+				break;
 			}
 		}
 		return $menu;

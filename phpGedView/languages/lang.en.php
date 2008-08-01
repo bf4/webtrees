@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["interactive_tree"]		= "Interactive Tree";
 $pgv_lang["example"]				= "Example:";
 $pgv_lang["tree"]					= "Tree";
 $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";

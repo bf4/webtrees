@@ -37,7 +37,7 @@ if (isset($_REQUEST['rootid'])) $rootid = $_REQUEST['rootid'];
 if (!empty($_REQUEST['jsname'])) $name = $_REQUEST['jsname'];
 $nav = new TreeNav($rootid, $name, $zoom);
 
-print_header('test');
+print_header($pgv_lang["interactive_tree"]);
 $nav->drawViewport('', "", "600px");
 print_footer();
 ?>

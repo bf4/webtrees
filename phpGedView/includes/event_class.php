@@ -387,7 +387,7 @@ class Event {
 			$ret = $a->sortOrder - $b->sortOrder;
 			//if ($ret==0) $ret = Event::CompareType($a, $b);
 		}
-		//if ($ret==0) print "[".$a->getTag().":".$adate->MinJD()."-".$adate->MaxJD()." ".$b->getTag().":".$bdate->MinJD()."-".$bdate->MaxJD()." ".$ret."] ";
+//		print "[".$a->getTag().":".$adate->isOK().":".$adate->MinJD()."-".$adate->MaxJD()." ".$b->getTag().":".$bdate->isOK().":".$bdate->MinJD()."-".$bdate->MaxJD()." ".$ret."] ";
 		return $ret;
 	}
 
