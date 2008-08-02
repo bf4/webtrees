@@ -784,7 +784,6 @@ class MenuBar
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 				break;
-				break;
 			}
 		}
 		return $menu;
