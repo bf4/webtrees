@@ -1544,4 +1544,6 @@ $pgv_lang["count"]					= "Liczba";
 $pgv_lang["showUnknown"]			= "Pokaż osoby o nieznanej płci";
 $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["tree"]					= "Drzewo";
+$pgv_lang["example"]				= "Przykład:";
+$pgv_lang["interactive_tree"]		= "Interaktywne Drzewo";
 ?>
