@@ -46,15 +46,13 @@ if (!isset($lang_filename_orig)) $lang_filename_orig = "";
 
 print_simple_header($pgv_lang["editlang_help"]);
 
-print "<script language=\"JavaScript\" type=\"text/javascript\">";
-  print "self.focus();";
-print "</script>\n";
+print "<script language=\"JavaScript\" type=\"text/javascript\">self.focus();</script>\n";
 
-$fromEscapedChars	= array("&",     "<",    ">"   );
-$toPlainChars		= array("&amp;", "&lt;", "&gt;");
+$fromEscapedChars	= array("&",     "<",    ">",    "\\\"");
+$toPlainChars		= array("&amp;", "&lt;", "&gt;", "\\\\&quot;");
 
-$fromPlainChars		= array("&gt;", "&lt;", "&amp;");
-$toEscapedChars		= array(">",    "<",    "&",   );
+$fromPlainChars		= array("\\\\&quot;", "&gt;", "&lt;", "&amp;");
+$toEscapedChars		= array("\\\"", ">",    "<",    "&");
 
 switch ($file_type)
 {
@@ -86,6 +84,10 @@ switch ($file_type)
 	$lang_filename = $faqlistfile[$language2];
   	$lang_filename_orig = $faqlistfile["english"];
   	break;
+  case "extra": 
+	$lang_filename = $extrafile[$language2];
+  	$lang_filename_orig = $extrafile["english"];
+  	break;
   case "lang":
   default: 
   	$lang_filename = $pgv_language[$language2];
@@ -95,75 +97,75 @@ switch ($file_type)
 
 if ($action != "save")
 {
-  print "<div align=\"center\"><center>";
-    print "<table class=\"facts_table\">";
-      print "<tr>";
-        print "<td class=\"facts_label03\">";
+  print "<div align=\"center\"><center>\n";
+    print "<table class=\"facts_table\">\n";
+      print "  <tr>\n";
+        print "    <td class=\"facts_label03\">\n";
         print_text("editlang_help");
-        print "</td>";
-      print "</tr>";
-      print "<tr>";
-        print "<td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>";
-      print "</tr>";
-    print "</table>";
+        print "    </td>\n";
+      print "  </tr>\n";
+      print "  <tr>\n";
+        print "    <td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>\n";
+      print "  </tr>\n";
+    print "</table>\n";
 
-    print "\r\n<form name=\"Form1\" method=\"post\" action=\"" .$PHP_SELF. "\">";
-      print "<input type=\"hidden\" name=\"".session_name()."\" value=\"".session_id()."\" />";
-      print "<input type=\"hidden\" name=\"action\" value=\"save\" />";
-      print "<input type=\"hidden\" name=\"anchor\" value=\"".$anchor."\" />";
-      print "<input type=\"hidden\" name=\"language2\" value=\"" . $language2 . "\" />";
-      print "<input type=\"hidden\" name=\"ls01\" value=\"" . $ls01 . "\" />";
-      print "<input type=\"hidden\" name=\"ls02\" value=\"" . $ls02 . "\" />";
-      print "<input type=\"hidden\" name=\"file_type\" value=\"" . $file_type . "\" />";
+    print "\r\n<form name=\"Form1\" method=\"post\" action=\"" .$PHP_SELF. "\">\n";
+      print "<input type=\"hidden\" name=\"".session_name()."\" value=\"".session_id()."\" />\n";
+      print "<input type=\"hidden\" name=\"action\" value=\"save\" />\n";
+      print "<input type=\"hidden\" name=\"anchor\" value=\"".$anchor."\" />\n";
+      print "<input type=\"hidden\" name=\"language2\" value=\"" . $language2 . "\" />\n";
+      print "<input type=\"hidden\" name=\"ls01\" value=\"" . $ls01 . "\" />\n";
+      print "<input type=\"hidden\" name=\"ls02\" value=\"" . $ls02 . "\" />\n";
+      print "<input type=\"hidden\" name=\"file_type\" value=\"" . $file_type . "\" />\n";
 
-      print "\r\n<table class=\"facts_table\">";
-        print "<tr>";
+      print "\r\n<table class=\"facts_table\">\n";
+        print "<tr>\n";
           print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">";
             print_text("original_message");
-          print "</td>";
-        print "</tr>";
-        print "<tr>";
+          print "</td>\n";
+        print "</tr>\n";
+        print "<tr>\n";
           print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-            print "<strong style=\"color: red\">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>";
-          print "</td>";
-        print "</tr>";
-      print "</table>";
-      print "<br />";
+            print "<strong style=\"color: red\">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>\n";
+          print "</td>\n";
+        print "</tr>\n";
+      print "</table>\n";
+      print "<br />\n";
       print "\r\n<table class=\"facts_table\">";
         print "<tr>";
           print "<td class=\"facts_label03\" style=\"color: red; font-weight: bold; \" >";
             print_text("message_to_edit");
-          print "</td>";
-        print "</tr>";
-        print "<tr>";
-          print "<td class=\"facts_value\" style=\"text-align:center; \" >";
+          print "</td>\n";
+        print "</tr>\n";
+        print "<tr>\n";
+          print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
             print "<textarea rows=\"10\" name=\"new_message\" cols=\"75\" style=\"color: red\" >";
               if ($ls02>0) print str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls02, $lang_filename));
-            print "</textarea>";
-          print "</td>";
-        print "</tr>";
-      print "</table>";
-      print "<br />";
+            print "</textarea>\n";
+          print "</td>\n";
+        print "</tr>\n";
+      print "</table>\n";
+      print "<br />\n";
       print "\r\n<table class=\"facts_table\">";
-        print "<tr>";
-          print "<td class=\"facts_value\" style=\"text-align:center; \" >";
+        print "<tr>\n";
+          print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
             print "<input type=\"submit\" value=\"";
             print_text("lang_save");
-            print "\" />";
+            print "\" />\n";
             print "&nbsp;&nbsp;";
             print "<input type=\"submit\" value=\"";
             print_text("cancel");
-            print "\"" . " onclick=\"self.close()\" />";
-          print "</td>";
-        print "</tr>";
-      print "</table>";
-    print "</form>";
-  print "</center></div>";
+            print "\"" . " onclick=\"self.close()\" />\n";
+          print "</td>\n";
+        print "</tr>\n";
+      print "</table>\n";
+    print "</form>\n";
+  print "</center></div>\n";
 }
 
 if ($action == "save")
 {
-  if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
+    if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 
   // Post-parameters
   // $new_message is the edited message
@@ -172,7 +174,7 @@ if ($action == "save")
   // $ls02 is the number of the message in the edited language file
   // $file_type defines which language file
   
-  $new_message = safe_POST('new_message');
+  //$new_message = safe_POST('new_message'); 	//generates errors while editing texts contains brackets
   $language2 = safe_POST('language2');
   $ls01 = safe_POST('ls01');
   $ls02 = safe_POST('ls02');
@@ -245,6 +247,15 @@ if ($action == "save")
         			  $new_language_file =  $faqlistfile[$language2];
         			  $new_language_array = read_complete_file_into_array($new_language_file, "faqlist[");
         			  break;
+	case "extra":
+        			  // read extra.en.php file into array
+        			  $english_language_array = array();
+        			  $english_language_array = read_complete_file_into_array($extrafile["english"], "pgv_lang[", "factarray[", "countries[", "faqlist[");
+        			  // read extra.xx.php file into array
+        			  $new_language_array = array();
+        			  $new_language_file =  $extrafile[$language2];
+        			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[", "factarray[", "countries[", "faqlist[");
+        			  break;
     case "lang": 
     default:
         			  // read lang.en.php file into array
@@ -259,11 +270,13 @@ if ($action == "save")
 
   $new_message = str_replace($fromPlainChars, $toEscapedChars, $new_message);
   $new_message_line = (-1);
+
   if (isset($new_language_array[$ls02])) $dummyArray = $new_language_array[$ls02];
   else $dummyArray = array();
 
   if ($ls02 < 1)
   {
+
     $dummyArray = $english_language_array[$ls01];
     $new_message_line = abs($ls02);
   }
@@ -289,84 +302,98 @@ if ($action == "save")
   @copy($new_language_file, $new_language_file . ".old");
   $Write_Ok = write_array_into_file($new_language_file, $new_language_array, $new_message_line, $dummyArray[3]);
 
-  print "<div align=\"center\"><center>";
+  print "<div align=\"center\"><center>\n";
 
-    print "<table class=\"facts_table\">";
-      print "<tr>";
-        print "<td class=\"facts_label03\">";
+    print "<table class=\"facts_table\">\n";
+      print "<tr>\n";
+        print "<td class=\"facts_label03\">\n";
         print_text("savelang_help");
-        print "</td>";
-      print "</tr>";
-      print "<tr>";
-        print "<td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>";
-      print "</tr>";
-    print "</table>";
+        print "</td>\n";
+      print "</tr>\n";
+      print "<tr>\n";
+        print "<td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>\n";
+      print "</tr>\n";
+    print "</table>\n";
 
-  print "<form name=\"Form2\" method=\"post\" action=\"" .$PHP_SELF. "\">";
-    print "<table class=\"facts_table\">";
-      print "<tr>";
+  print "<form name=\"Form2\" method=\"post\" action=\"" .$PHP_SELF. "\">\n";
+    print "<table class=\"facts_table\">\n";
+      print "<tr>\n";
         if ($Write_Ok) print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">".print_text("original_message",0,1);
         else
         {
-        print "<td class=\"warning\" >";
-          print str_replace("#lang_filename#", $lang_filename, $pgv_lang["lang_file_write_error"]) . "<br /><br />";
+        print "<td class=\"warning\" >\n";
+          print str_replace("#lang_filename#", $lang_filename, $pgv_lang["lang_file_write_error"]) . "<br /><br />\n";
         }
-        print "</td>";
-      print "</tr>";
+        print "</td>\n";
+      print "</tr>\n";
       if ($Write_Ok)
       {
-      print "<tr>";
+      print "<tr>\n";
         print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-          print "<strong style=\"color: red\">|</strong>".str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>";
-        print "</td>";
-      print "</tr>";
+          print "<strong style=\"color: red\">|</strong>".str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>\n";
+        print "</td>\n";
+      print "</tr>\n";
       }
-    print "</table>";
+    print "</table>\n";
 
     if ($Write_Ok)
     {
-    print "<br />";
+    print "<br />\n";
 
-    print "<table class=\"facts_table\">";
-      print "<tr>";
+    print "<table class=\"facts_table\">\n";
+      print "<tr>\n";
         print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">";
           print_text("changed_message");
-        print "</td>";
-      print "</tr>";
+        print "</td>\n";
+      print "</tr>\n";
 
-      print "<tr>";
+      print "<tr>\n";
         print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-          print "<strong style=\"color: red; \">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, $new_message) . "<strong style=\"color: red\">|</strong>";
-        print "</td>";
-      print "</tr>";
-    print "</table>";
+          print "<strong style=\"color: red; \">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, $new_message) . "<strong style=\"color: red\">|</strong>\n";
+        print "</td>\n";
+      print "</tr>\n";
+    print "</table>\n";
 
-    print "<br />";
+    print "<br />\n";
     }
 
-    print "<table class=\"facts_table\">";
-      print "<tr>";
-          print "<td class=\"facts_value\" style=\"text-align:center; \" >";
+    print "<table class=\"facts_table\">\n";
+      print "<tr>\n";
+          print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
           srand((double)microtime()*1000000);
-          print "<input type=\"submit\" value=\"" . $pgv_lang["close_window"] . "\"" . " onclick=\"window.opener.showchanges('&dv=".rand()."#".$anchor."'); self.close();\" />";
-        print "</td>";
-      print "</tr>";
+          print "<input type=\"submit\" value=\"" . $pgv_lang["close_window"] . "\"" . " onclick=\"window.opener.showchanges('&dv=".rand()."#".$anchor."'); self.close();\" />\n";
+        print "</td>\n";
+      print "</tr>\n";
       if ($Write_Ok)
       {
-      print "<tr>";
-        print "<td class=\"facts_value\" style=\"text-align:center; \" >";
+      print "<tr>\n";
+        print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
         print "<br /><br /><input type=\"submit\" value=\"";
         print_text("close_window_without_refresh");
-        print "\"" . " onclick=\"self.close();\" /><br /><br />";
-        print "<div class=\"error\">";
+        print "\"" . " onclick=\"self.close();\" /><br /><br />\n";
+        print "<div class=\"error\">\n";
         print_text("edit_lang_utility_warning");
-        print "</div></td>";
-      print "</tr>";
+        print "</div></td>\n";
+      print "</tr>\n";
       }
-    print "</table>";
+    print "</table>\n";
 
-  print "</form>";
-  print "</center></div>";
+  print "</form>\n";
+  print "</center></div>\n";
+  
+  // if ls02 (the line of the translated sentence) variable has not been set, try to find the row in the translated file
+  if ($ls02 == "")
+  {
+    $ls02 = 0;
+    for ($y = 0; $y < sizeof($new_language_array); $y++) {
+      if (isset($new_language_array[$y][1])) {
+          if ($new_language_array[$y][0] == $english_language_array[$ls01][0]) {
+            $ls02 = $y;
+            break;
+          }
+      }
+    }
+  }
 }
 
 print_simple_footer();

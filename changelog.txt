@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: [ 1923217 ] Google Translate API Addition to Language Tools (wooc)
  - Changed: Removed Portuguese (Brazil) language; replaced with Portuguese, using pt-br language files (canajun2eh)
  - Changed: Don't pollute log file with logs of known good spiders (canajun2eh)
  - Changed: Don't show lists until filter criteria have been entered (canajun2eh)

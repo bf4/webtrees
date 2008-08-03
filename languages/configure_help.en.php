@@ -471,6 +471,13 @@ $pgv_lang["select_privacyfile_button"]		= "Select privacy file";
 $pgv_lang["PRIVACY_BY_YEAR"]		= "Limit Privacy by age of event";
 $pgv_lang["PRIVACY_BY_YEAR_help"]	= "~#pgv_lang[PRIVACY_BY_YEAR]#~<br /><br />The <b>#pgv_lang[PRIVACY_BY_YEAR]#</b> setting will hide the details of people based on how old they were at specific events regardless of whether they are dead or alive.<br /><br />Use this setting along with the <b>#pgv_lang[MAX_ALIVE_AGE]#</b> setting.  For example, if you made the Age setting 100 and set this option to <b>Yes</b>, all persons, alive or dead, born less than 100 years ago would be set to private.  People who were married less than 85 years ago and people who died less than 75 years ago would also be marked as private.  Please note that using this option will slow down your performance somewhat.<br />";
 
+// Google Translate
+$pgv_lang["google_translate"]	= "Google Translate";
+$pgv_lang["commit"]				= "Commit";
+$pgv_lang["commit_google"]		= "Commit Google translated changes";
+$pgv_lang["commit_google_help"]	= "~#pgv_lang[commit_google]#~<br /><br />Clicking this link allow to save all Google translated changes. Below is the progress indicator of the writing translations.<br /><br />";
+$pgv_lang["google_translate_help"]	= "~Google Translate API Addition to Language Tools~<br /><br />This tool is the quick translation mechanism which will give a hint to the translator rather than providing a complete translation.<br /><br />It is a two step process, first select the entries you want to edit, click the <b>#pgv_lang[google_translate]#</b> link, <b>#pgv_lang[commit]#</b> to allow each row to be commited or click the <b>#pgv_lang[commit_google]#</b> the changes and once the page is reloaded you would then edit the mistranslated entries by hand. This should speed up translation by an order of magnitude.<br /><br /><b>It can't guarantee the output will be correct!</b><br /><br />This tool isn't recommended to the complete translation of texts contains special chars (#, <, >, /) or recalls to other texts variables. This tool be unable to translate some texts as well.<br /><br />";
+
 //-- language edit utility
 $pgv_lang["lang_edit_help"]			= "~#pgv_lang[translator_tools]#~<br /><br />This page is intended to be used by translators.  You can translate, compare, and export language files.  There is also an option to help translators determine the origin of text that is output by PhpGedView.<br /><br />You can use the following options and utilities:<br />";
 $pgv_lang["edit_langdiff"]		= "Edit and configure language files";
