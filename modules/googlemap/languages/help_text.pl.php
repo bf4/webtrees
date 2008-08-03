@@ -31,10 +31,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 $pgv_lang["GOOGLEMAP_CONFIG"]           = "Konfiguracja Googlemap";
-$pgv_lang["GOOGLEMAP_CONFIG_help"]      = "~#pgv_lang[GOOGLEMAP_CONFIG]#~<br /><br />W tym miejscu możesz skonfigurować wszystkie aspekty modułu  GoogleMap.";
+$pgv_lang["GOOGLEMAP_CONFIG_help"]      = "~#pgv_lang[GOOGLEMAP_CONFIG]#~<br /><br />W tym miejscu możesz skonfigurować wszystkie aspekty modułu  Googlemap.";
 
 $pgv_lang["GOOGLEMAP_ENABLE"]           = "Włącz Googlemap";
-$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Używająć tej opcji możesz włączać i wyłączać Googlemap.<br />Jeśli moduł jest wyłączony zakładka Mapa na stronie z danymi osoby jest pokazana, ale nie wyświetla mapy. Odnośnik konfiguracyjny dla administratora jest dostępny. Jeśli moduł jest wyłączony hierarchia miejsc jest wyświetlana standardowo.";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Używając tej opcji możesz włączać i wyłączać moduł Googlemap.<br />Jeśli moduł jest wyłączony zakładka Mapa na stronie z danymi osoby jest pokazana, ale nie wyświetla mapy. Odnośnik konfiguracyjny dla administratora jest dostępny. Jeśli moduł jest wyłączony hierarchia miejsc jest wyświetlana standardowo.";
 
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Google-map API key";
 $pgv_lang["GOOGLEMAP_API_KEY_help"]     = "~#pgv_lang[GOOGLEMAP_API_KEY]#~<br /><br />Wprowadź tu swój klucz Google Map API. Możesz go otrzymać tutaj: <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\">http://www.google.com/apis/maps/</a>";
@@ -46,7 +46,7 @@ $pgv_lang["GOOGLEMAP_MAP_SIZE"]         = "Rozmiar mapy";
 $pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />Rozmiar mapy w pikselach. Mapa wyświetlana na stronie osoby będzie miała podany rozmiar.";
 
 $pgv_lang["GOOGLEMAP_MAP_ZOOM"]         = "Współczynnik powiększenia";
-$pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimalny i maksymalny współczynnik powiększenia dla  mapy Google. 1 - cała mapa, 15 - pojedyńcze domy. Współczynnik 15 dostępny jest tylko w pewnych miejscach.";
+$pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimalny i maksymalny współczynnik powiększenia dla mapy Google. 1 - cała mapa, 15 - pojedyńcze domy. Współczynnik 15 dostępny jest tylko w pewnych miejscach.";
 
 $pgv_lang["GOOGLEMAP_PRECISION"]        = "Precyzja współrzędnych";
 $pgv_lang["GOOGLEMAP_PRECISION_help"]   = "~#pgv_lang[GOOGLEMAP_PRECISION]#~<br /><br />Możesz określić precyzję dla wprowadzanych współrzędnych dla różnych poziomów. Na przykład: Kraj może być określony z precyzją 0(brak miejsc po przecinku), podczas gdy miejscowości potrzebują precyzji 3-4 miejsc po przecinku.";
@@ -55,7 +55,7 @@ $pgv_lang["GM_DEFAULT_LEVEL_0"]         = "Domyślna wartość głównego poziom
 $pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "~#pgv_lang[GM_DEFAULT_LEVEL_0]#~<br /><br />Tu możesz zdefiniować domyślną wartość dla głównego poziomu w hierarchii miejsc. Jeśli miejsce nie zostanie znaleznione jego nazwa zostanie dodana jako najwyższy poziom (kraj) i baza zostanie przeszukana ponownie.";
 
 $pgv_lang["GM_NOF_LEVELS"]              = "Liczba poziomów miejsc";
-$pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />W tym miejscu można określić liczbę poziomów w hierarchii miejsc, która jest używana przez moduł Googlemap.<br />Wartością domyślną jest 4 (Kraj, województwo, powiat, miejscowość). Jeśli chcesz dodać dodatkowe poziomy (na przykład szkoły, cmentarze) możesz zmienić liczbę poziomów. Jeśli chcesz usunąc poziom (na przykład Kraj) możesz zmniejszyć tą wartość, ale pamiętaj, że pliki zawierające współrzędne miejsc mają strukturę 4-poziomową.";
+$pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />W tym miejscu można określić liczbę poziomów w hierarchii miejsc, która jest używana przez moduł Googlemap.<br />Wartością domyślną jest 4 (Kraj, województwo, powiat, miejscowość). Jeśli chcesz dodać dodatkowe poziomy (na przykład szkoły, cmentarze) możesz zmienić liczbę poziomów. Jeśli chcesz usunąć poziom (na przykład Kraj) możesz zmniejszyć tą wartość, ale pamiętaj, że pliki zawierające współrzędne miejsc mają strukturę 4-poziomową.";
 
 $pgv_lang["GM_NAME_PREFIX"]             = "Przedrostek dla nazw w tym poziomie";
 $pgv_lang["GM_NAME_PREFIX_help"]        = "~#pgv_lang[GM_NAME_PREFIX]#~<br /><br />Ta wartość będzie dodana na początku nazw tego poziomu. Różne wartości mogą być używane, ale należy rozdzielić je średnikiem.";
