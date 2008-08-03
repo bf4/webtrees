@@ -171,7 +171,7 @@ $pgv_lang["import_options"]			= "Opcje importu";
 $pgv_lang["import_progress"]		= "Trwa importowanie...";
 $pgv_lang["import_statistics"]		= "Statystyki importu";
 $pgv_lang["import_time_exceeded"]	= "Przekroczono limit czasu wykonania. Kliknij na przycisk Dalej aby wznowić import pliku GEDCOM.";
-$pgv_lang["inc_languages"]			= " Języki";
+$pgv_lang["inc_languages"]			= "Języki";
 $pgv_lang["INDEX_DIRECTORY"]		= "Katalog z plikiem index";
 $pgv_lang["invalid_dates"]			= "Wykryto nieprawidłowe formaty daty. Podczas porządkowania zostaną zamienione na format DD MMM RRRR (np. 1 JAN 2004).";
 $pgv_lang["BOM_detected"] 			= "Wykryto znak BOM (Byte Order Mark) na początku pliku. Podczas porządkowania ten znak specialny zostanie usunięty.";
@@ -348,5 +348,5 @@ $pgv_lang["warn_file_delete"]		= "Ten plik zawiera ważne informcje takie jak us
 $pgv_lang["deleted_files"]          = "Usunięte pliki:";
 $pgv_lang["index_dir_cleanup_inst"]	= "Aby usunąc plik lub podkatalog z katalogu Index przesuń go do kosza lub zaznacz. Kliknij przycisk Usuń aby trwale usunąć wybrane pliki.<br /><br />Pliki zaznaczone <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> są wymaganymi do prawidłowego działania i nie mogą być usunięte.<br />Pliki zaznaczone <img src=\"./images/RESN_locked.gif\" alt=\"\" /> zawierają ważne ustawienia oraz zmiany nie zatwierdzone jeszcze przez administratora. Bez absolutnej pewności nie usuwaj ich.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Wyczyść katalog Index";
-$pgv_lang["error_remote_duplicate"]				= "Ta baza danych istnieje na liście jako <i>#GLOBALS[whichFile]#</i>";
+$pgv_lang["error_remote_duplicate"]	= "Ta baza danych istnieje na liście jako <i>#GLOBALS[whichFile]#</i>";
 ?>
