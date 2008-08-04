@@ -45,7 +45,11 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["error_remote_duplicate"]				31 July 2008			A
+-$pgv_lang["title_view_conns"]						3 Aug 2008				D
+*$pgv_lang["error_remove_site"]						3 Aug 2008				A
+*$pgv_lang["error_remove_site_linked"]				3 Aug 2008				A
+*$pgv_lang["label_gedcom_id2"]						3 Aug 2008				w	"GEDCOM" -> "Database"
++$pgv_lang["error_remote_duplicate"]				3 Aug 2008				A
 -$pgv_lang["label_add_search_server"]				29 July 2008			D
 -$pgv_lang["label_add_server"]						29 July 2008			D
 -$pgv_lang["label_ban_server"]						29 July 2008			D
