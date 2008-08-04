@@ -53,4 +53,3 @@ class AutoSearch extends Base_AutoSearch {
 }
 
 ?>
-
