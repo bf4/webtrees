@@ -26,8 +26,8 @@ function translate(lang1, lang2, ls01) {
         if (result.translation) {
         
             var r = result.translation;
-            r = r.replace(/\r\n/g, "&lt;br/&gt;");
-            r = r.replace(/\n/g, "&lt;br/&gt;");
+            r = r.replace(/\r\n/g, "&lt;br /&gt;");
+            r = r.replace(/\n/g, "&lt;br /&gt;");
             r = r.replace(/</g, "&lt;");
             r = r.replace(/>/g, "&gt;");
             r = r.replace(/\\/g, "");
