@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2034084 ] 3609 Find Family errors (fisharebest)
  - Added: [ 1923217 ] Google Translate API Addition to Language Tools (wooc)
  - Changed: Removed Portuguese (Brazil) language; replaced with Portuguese, using pt-br language files (canajun2eh)
  - Changed: Don't pollute log file with logs of known good spiders (canajun2eh)
