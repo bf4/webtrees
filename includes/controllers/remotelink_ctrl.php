@@ -66,11 +66,10 @@ class RemoteLinkController extends BaseController {
 		if (isset($_REQUEST['action'])) $this->action = $_REQUEST['action'];
 
 		//check for pid
-		if(empty($this->pid)){
+		if (empty($this->pid)) {
 			$name="no name passed";
 			$this->disp = false;
-		}
-		else{
+		} else{
 			$this->pid = clean_input($this->pid);
 
 			if (!isset($pgv_changes[$this->pid."_".$GEDCOM])) $this->person = Person::getInstance($this->pid);
@@ -87,63 +86,56 @@ class RemoteLinkController extends BaseController {
 	 *
 	 */
 	function runAction() {
+		global $pgv_lang, $GEDCOM;
+		$this->success = false;
 		if ($this->action=="addlink") {
-			if (!empty($_POST['cbExistingServers'])) {
-				$serverID = $_POST["cbExistingServers"];
-			}
-			else {
-				$is_remote = $_POST["location"];
-				if($is_remote=="remote") {
-					if(empty($_POST["txtURL"])) {
+			$serverID = trim(stripslashes(safe_POST('cbExistingServers')));
+			if (empty($serverID)) {
+				$is_remote = trim(stripslashes(safe_POST('location')));
+				switch ($is_remote) {
+				case "remote":
+					$server_URL = trim(stripslashes(safe_POST('txtURL', PGV_REGEX_URL, '')));
+					if (empty($server_URL)) {
 						echo "Must enter a URL";
-						//print $_POST["cbExistingServers"];
-					}
-					else {
-						if (isset($_POST["txtURL"])) $server_name = $_POST["txtURL"];
-						else $server_name = "";
-						if (isset($_POST["txtGID"]))$gedcom_id = $_POST["txtGID"];
-						else $gedcom_id = "";
-						if (isset($_POST["txtUsername"])) $username = $_POST["txtUsername"];
-						else $username = "";
-						if (isset($_POST["txtPassword"])) $password = $_POST["txtPassword"];
-						else $password = "";
+					} else {
+						$server_title = trim(stripslashes(safe_POST('txtTitle', '[^<>"%{};]+', '')));
+						$gedcom_id = trim(stripslashes(safe_POST('txtGID', PGV_REGEX_NOSCRIPT, '')));
+						$username = trim(stripslashes(safe_POST('txtUsername', PGV_REGEX_NOSCRIPT, '')));
+						$password = trim(stripslashes(safe_POST('txtPassword', PGV_REGEX_NOSCRIPT, '')));
 
-						$serverID = $this->addRemoteServer($server_name, $gedcom_id, $username, $password);
+						$serverID = $this->addRemoteServer($server_title, $server_URL, $gedcom_id, $username, $password);
 					}
-				}
+					break;
+				case "FamilySearch":
 				//this will happen when the family search radio button is selected.
 				//TODO: Make sure that it is merging correctly
-				else if($is_remote=="FamilySearch"){
-					if(empty($_POST["txtFS_URL"])) {
+					$server_URL = trim(stripslashes(safe_POST('txtFS_URL', PGV_REGEX_URL, '')));
+					if (empty($server_URL)) {
 						echo "Must enter a URL";
-						//print $_POST["cbExistingServers"];
-					}
-					else {
-						if (isset($_POST["txtFS_URL"])) $server_name = $_POST["txtFS_URL"];
-						else $server_name = "";
-						if (isset($_POST["txtFS_GID"]))$gedcom_id = $_POST["txtFS_GID"];
-						else $gedcom_id = "";
-						if (isset($_POST["txtFS_Username"])) $username = $_POST["txtFS_Username"];
-						else $username = "";
-						if (isset($_POST["txtFS_Password"])) $password = $_POST["txtFS_Password"];
-						else $password = "";
+					} else {
+						$server_title = trim(stripslashes(safe_POST('txtFS_Title', '[^<>"%{};]+', '')));
+						$gedcom_id = trim(stripslashes(safe_POST('txtFS_GID', PGV_REGEX_NOSCRIPT, '')));
+						$username = trim(stripslashes(safe_POST('txtFS_Username', PGV_REGEX_NOSCRIPT, '')));
+						$password = trim(stripslashes(safe_POST('txtFS_Password', PGV_REGEX_NOSCRIPT, '')));
 							
-						$serverID = $this->addFamilySearchServer($server_name, $gedcom_id, $username, $password);
+						$serverID = $this->addFamilySearchServer($server_title, $server_URL, $gedcom_id, $username, $password);
 					}
-				}
-				else {
-					$gedcom_id = $_POST["cbGedcomId"];
+					break;
+				default:		// Must be a local database
+					$gedcom_id = safe_POST('cbGedcomId');
 					$serverID = $this->addLocalServer($gedcom_id);
+					break;
 				}
 			}
 
-			$link_pid = $_POST["txtPID"];
-			$relation_type = $_POST["cbRelationship"];
+			$link_pid = safe_POST('txtPID');
+			$relation_type = safe_POST('cbRelationship');
 			if (!empty($serverID)&&!empty($link_pid)) {
-				if (isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_updated_record($pid);
-				else $indirec = find_person_record($pid);
+				if (isset($pgv_changes[$this->pid."_".$GEDCOM])) $indirec = find_updated_record($this->pid);
+				else $indirec = find_person_record($this->pid);
 
-				if($relation_type=="father"){
+				switch ($relation_type) {
+				case "father":
 					$indistub = "0 @new@ INDI\r\n";
 					$indistub .= "1 SOUR @".$serverID."@\r\n";
 					$indistub .= "2 PAGE ".$link_pid."\r\n";
@@ -164,7 +156,8 @@ class RemoteLinkController extends BaseController {
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
 					$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
 					$answer2 = replace_gedrec($stub_id, $indistub, false);
-				}else if($relation_type=="mother"){
+					break;
+				case "mother":
 					$indistub = "0 @NEW@ INDI\r\n";
 					$indistub .= "1 SOUR @".$serverID."@\r\n";
 					$indistub .= "2 PAGE ".$link_pid."\r\n";
@@ -185,7 +178,8 @@ class RemoteLinkController extends BaseController {
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
 					$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
 					$answer2 = replace_gedrec($stub_id, $indistub, false);
-				}else if($relation_type=="husband"){
+					break;
+				case "husband":
 					$indistub = "0 @NEW@ INDI\r\n";
 					$indistub .= "1 SOUR @".$serverID."@\r\n";
 					$indistub .= "2 PAGE ".$link_pid."\r\n";
@@ -206,7 +200,8 @@ class RemoteLinkController extends BaseController {
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
 					$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
 					$answer2 = replace_gedrec($stub_id, $indistub, false);
-				}else if($relation_type=="wife"){
+					break;
+				case "wife":
 					$indistub = "0 @NEW@ INDI\r\n";
 					$indistub .= "1 SOUR @".$serverID."@\r\n";
 					$indistub .= "2 PAGE ".$link_pid."\r\n";
@@ -227,7 +222,9 @@ class RemoteLinkController extends BaseController {
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
 					$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
 					$answer2 = replace_gedrec($stub_id, $indistub, false);
-				}else if($relation_type=="son"||$relation_type=="daughter"){
+					break;
+				case "son":
+				case "daughter":
 					$indistub = "0 @NEW@ INDI\r\n";
 					$indistub .= "1 SOUR @".$serverID."@\r\n";
 					$indistub .= "2 PAGE ".$link_pid."\r\n";
@@ -236,11 +233,11 @@ class RemoteLinkController extends BaseController {
 					$indistub = find_updated_record($stub_id);
 
 					$sex = get_gedcom_value("SEX", 1, $indirec, '', false);
-					if($sex=="M"){
+					if ($sex=="M") {
 						$gedcom_fam = "0 @NEW@ FAM\r\n";
 						$gedcom_fam.= "1 HUSB @".$pid."@\r\n";
 						$gedcom_fam.= "1 CHIL @".$stub_id."@\r\n";
-					}else{
+					} else {
 						$gedcom_fam = "0 @NEW@ FAM\r\n";
 						$gedcom_fam.= "1 WIFE @".$pid."@\r\n";
 						$gedcom_fam.= "1 CHIL @".$stub_id."@\r\n";
@@ -254,7 +251,8 @@ class RemoteLinkController extends BaseController {
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
 					$indistub.= "\r\n1 FAMC @".$fam_id."@\r\n";
 					$answer2 = replace_gedrec($stub_id, $indistub,false);
-				}else if($relation_type=="self"){
+					break;
+				default:		// assume "self"
 					$indirec.="\r\n";
 					$indirec.="1 RFN ".$serverID.":".$link_pid."\r\n";
 					$indirec.="1 SOUR @".$serverID."@\r\n";
@@ -270,26 +268,28 @@ class RemoteLinkController extends BaseController {
 						}
 						//print "{".$indirec."}";
 						$indirec = $serviceClient->mergeGedcomRecord($link_pid, $indirec, true, true);
-					}
-					else print "Unable to find server";
+					} else print "Unable to find server";
 					//$answer2 = replace_gedrec($pid, $indirec);
+					break;
 				}
 				print "<b>".$pgv_lang["link_success"]."</b>";
-				$success = true;
+				$this->success = true;
 			}
 		}
+		return $this->success;
 	}
 
 	/**
 	 * Add a remote server
 	 *
+	 * @param string $title
 	 * @param string $url
 	 * @param string $gedcom_id
 	 * @param string $username
 	 * @param string $password
 	 * @return mixed	the serverID of the server to link to
 	 */
-	function addRemoteServer($url, $gedcom_id, $username, $password) {
+	function addRemoteServer($title, $url, $gedcom_id, $username, $password) {
 		if (preg_match("/\?wsdl$/", $url)==0) $url.="?wsdl";
 		$serverID = $this->checkExistingServer($url, $gedcom_id);
 		if ($serverID===false) {
@@ -299,19 +299,16 @@ class RemoteLinkController extends BaseController {
 			$gedcom_string.= "2 _USER ".$username."\r\n";
 			$gedcom_string.= "2 _PASS ".$password."\r\n";
 			//-- only allow admin users to see password
-			$gedcom_string.= "2 RESN Confidential\r\n";
+			$gedcom_string.= "3 RESN confidential\r\n";
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
-			if (PEAR::isError($sid)) {
-				print "<span class=\"error\">failed to authenticate to remote site</span>";
-				print_r($sid);
-			}
-			if (!empty($sid)) {
-				$title = $service->getServiceTitle();
+			if (PEAR::isError($sid)) $sid = '';
+			if (empty($sid)) print "<span class=\"error\">failed to authenticate to remote site</span>";
+			else {
+				if (empty($title)) $title = $service->getServiceTitle();
 				$gedcom_string.= "1 TITL ".$title."\r\n";
 				$serverID = append_gedrec($gedcom_string);
 			}
-			else print "<span class=\"error\">failed to authenticate to remote site</span>";
 		}
 		return $serverID;
 	}
@@ -319,13 +316,14 @@ class RemoteLinkController extends BaseController {
 	/**
 	 * Add a familySearch server
 	 *
+	 * @param string $title
 	 * @param string $url
 	 * @param string $gedcom_id
 	 * @param string $username
 	 * @param string $password
 	 * @return mixed	the serverID of the server to link to
 	 */
-	function addFamilySearchServer($url, $gedcom_id, $username, $password) {
+	function addFamilySearchServer($title, $url, $gedcom_id, $username, $password) {
 		$serverID = $this->checkExistingServer($url, $gedcom_id);
 		if ($serverID===false) {
 			$gedcom_string = "0 @new@ SOUR\r\n";
@@ -334,21 +332,18 @@ class RemoteLinkController extends BaseController {
 			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
 			$gedcom_string.= "2 _USER ".$username."\r\n";
 			$gedcom_string.= "2 _PASS ".$password."\r\n";
-
 			//-- only allow admin users to see password
-			$gedcom_string.= "2 RESN Confidential\r\n";
+			$gedcom_string.= "3 RESN confidential\r\n";
 			$service = new FamilySearchWrapper($gedcom_string);
 			$sid = $service->authenticate();
-			if ($sid==false || PEAR::isError($sid)) {
-			print "<span class=\"error\">failed to authenticate to remote site</span>";
-			print_r($sid);
-			}
-			if (!empty($sid)) {
+			if (PEAR::isError($sid)) $sid = '';
+			if (empty($sid)) print "<span class=\"error\">failed to authenticate to remote site</span>";
+			else {
+				if (empty($title)) $title = $service->getServiceTitle();
 				$title = $service->getServiceTitle();
 				$gedcom_string.= "1 TITL ".$title."\r\n";
 				$serverID = append_gedrec($gedcom_string);
 			}
-			else print "<span class=\"error\">failed to authenticate to remote site</span>";
 		}
 		return $serverID;
 	}
@@ -360,6 +355,7 @@ class RemoteLinkController extends BaseController {
 	 * @return mixed	the serverID of the server to link to
 	 */
 	function addLocalServer($gedcom_id) {
+		global $SERVER_URL;
 		$serverID = $this->checkExistingServer($SERVER_URL, $gedcom_id);
 		if ($serverID===false) {
 			$gedcom_string = "0 @new@ SOUR\r\n";
@@ -384,9 +380,9 @@ class RemoteLinkController extends BaseController {
 	function checkExistingServer($url, $gedcom_id='') {
 		global $pgv_changes;
 		//-- get rid of the protocol
-		$turl = preg_replace("~\w+://~", "", $url);
+		$turl = preg_replace("~^\w+://~", "", $url);
 		//-- check the existing server list
-		foreach($this->server_list as $id=>$server) {
+		foreach ($this->server_list as $id=>$server) {
 			if (stristr($server['url'], $turl)) {
 				if (empty($gedcom_id) || preg_match("/_DBID $gedcom_id/", $server['gedcom']))
 				return $id;
@@ -394,7 +390,7 @@ class RemoteLinkController extends BaseController {
 		}
 		
 		//-- check for recent additions
-		foreach($pgv_changes as $cid=>$changes) {
+		foreach ($pgv_changes as $cid=>$changes) {
 			$change = $changes[count($changes) - 1];
 			if ($change['type']!='delete') {
 				$gid = $change["gid"];
@@ -422,7 +418,9 @@ class RemoteLinkController extends BaseController {
 	 */
 	function canAccess() {
 		global $ALLOW_EDIT_GEDCOM;
-		if (!userGedcomAdmin(getUserName())||(!$this->person->canDisplayDetails())||(!$ALLOW_EDIT_GEDCOM)) return false;
+		if (!$ALLOW_EDIT_GEDCOM) return false;
+		if (!PGV_USER_GEDCOM_ADMIN) return false;
+		if (!$this->person->canDisplayDetails()) return false;
 		return true;
 	}
 }

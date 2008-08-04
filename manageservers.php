@@ -50,7 +50,7 @@ $banned = array_unique($banned);						// Make sure we have no duplicates
 $search_engines = array();
 if (file_exists($INDEX_DIRECTORY."search_engines.php"))	require($INDEX_DIRECTORY."search_engines.php");
 $search_engines = array_unique($search_engines);		// Make sure we have no duplicates
-$remoteServer = get_server_list();
+$remoteServers = get_server_list();
 
 $action = safe_GET('action');
 if (empty($action)) $action = safe_POST('action');
@@ -215,17 +215,17 @@ if ($action=='deleteSearch') {
  * Adds a server to the outbound remote linking list
  */
 if ($action=='addServer') {
-	$serverTitle = stripslashes(safe_POST('serverTitle'));
-	$serverURL = stripslashes(safe_POST('serverURL'));
-	$gedcom_id = stripslashes(safe_POST('gedcom_id'));
-	$username = stripslashes(safe_POST('username'));
-	$password = stripslashes(safe_POST('password'));
-
+	$serverTitle = trim(stripslashes(safe_POST('serverTitle', '[^<>"%{};]+')));		// same as PGV_REGEX_NOSCRIPT, but allow ampersand in title
+	$serverURL = trim(stripslashes(safe_POST('serverURL', PGV_REGEX_URL)));
+	$gedcom_id = trim(stripslashes(safe_POST('gedcom_id')));
+	$username = trim(stripslashes(safe_POST('username')));
+	$password = trim(stripslashes(safe_POST('password')));
+	
 	if (!$serverTitle=="" || !$serverURL=="") {
 		$errorServer = '';
 		$turl = preg_replace("~^\w+://~", "", $serverURL);
 		//-- check the existing server list
-		foreach ($remoteServer as $server) {
+		foreach ($remoteServers as $server) {
 			if (stristr($server['url'], $turl)) {
 				if (empty($gedcom_id) || preg_match("/_DBID $gedcom_id/", $server['gedcom'])) {
 					$whichFile = $server['name'];
@@ -236,11 +236,13 @@ if ($action=='addServer') {
 		}
 		if (empty($errorServer)) {
 			$gedcom_string = "0 @new@ SOUR\r\n";
-			$gedcom_string.= "1 URL ".$serverURL."\r\n";
     		$gedcom_string.= "1 TITL ".$serverTitle."\r\n";
+			$gedcom_string.= "1 URL ".$serverURL."\r\n";
 			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
 			$gedcom_string.= "2 _USER ".$username."\r\n";
 			$gedcom_string.= "2 _PASS ".$password."\r\n";
+			//-- only allow admin users to see password
+			$gedcom_string.= "3 RESN confidential\r\n";
     		
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
@@ -249,7 +251,7 @@ if ($action=='addServer') {
 			} else {
 				$serverID = append_gedrec($gedcom_string);
 				accept_changes($serverID."_".$GEDCOM);
-				$remoteServer = get_server_list();		// refresh the list
+				$remoteServers = get_server_list();		// refresh the list
 			}
 		}
 	} else $errorServer = $pgv_lang["error_url_blank"];
@@ -262,13 +264,22 @@ if ($action=='addServer') {
  */
 if ($action=='deleteServer') {
 	if (!empty($address)) {
-		$address = stripslashes($address);
-		if (delete_gedrec($address)) {
-			accept_changes($address."_".$GEDCOM);
-		}
+		$sid = stripslashes($address);
+		
+		// Search the database for references to this Source ID
+		$query = "SOUR @".$sid."@";
+		if (!$REGEXP_DB) $query = "%".$query."%";
+		$myList = search_fams($query);		// Search family list first (it's shorter)
+		if (count($myList)==0) $myList = search_indis($query);		// No hit on families: try indis
+
+		if (count($myList)==0) {	// No references exist:  it's OK to delete this source
+			if (delete_gedrec($sid)) {
+				accept_changes($sid."_".$GEDCOM);
+			} else $errorDelete = $pgv_lang["error_remove_site"];
+		} else $errorDelete = $pgv_lang["error_remove_site_linked"];
 	}
 	
-	$remoteServer = get_server_list();		// refresh the list
+	$remoteServers = get_server_list();		// refresh the list
 	$action = 'showForm';
 }
 
@@ -291,7 +302,7 @@ function showSite(siteID) {
 </script>
 
 
-
+<!-- Search Engine IP address table --> 
 <table class="width66" align="center">
  <tr>
   <td colspan="2" class="title" align="center">
@@ -301,7 +312,6 @@ function showSite(siteID) {
  <tr>
   <td>
    <form name="searchengineform" action="manageservers.php" method="post">
-   <!-- Search Engine IP address table --> 
    <table class="width100" align="center">
     <tr>
      <td class="facts_label">
@@ -352,11 +362,11 @@ function showSite(siteID) {
  </tr>
 </table>
 
+<!-- Banned IP address table --> 
 <table class="width66" align="center">
  <tr>
   <td>
    <form name="banIPform" action="manageservers.php" method="post">
-   <!-- Banned IP address table --> 
    <table class="width100" align="center">
     <tr>
      <td class="facts_label">
@@ -407,11 +417,11 @@ function showSite(siteID) {
  </tr>
 </table>
 
+<!-- remote server list --> 
 <table class="width66" align="center">
  <tr>
   <td>
    <form name="serverlistform" action="manageservers.php" method="post">
-   <!-- remote server list --> 
    <table class="width100">
     <tr>
      <td class="facts_label">
@@ -422,7 +432,7 @@ function showSite(siteID) {
      <td class="facts_value">
       <table>
 <?php
-  foreach ($remoteServer as $sid=>$server) {
+  foreach ($remoteServers as $sid=>$server) {
 	  $serverTitle = $server['name'];
 	  $serverURL = $server['url'];
 	  $gedcom_id = get_gedcom_value('_DBID', 1, $server['gedcom']);
@@ -430,11 +440,11 @@ function showSite(siteID) {
 ?>
        <tr>
         <td>
-          <button name="deleteServer" value="<?php echo $sid;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
+         <button type="submit" onclick="return (confirm('<?php echo $pgv_lang["confirm_delete_source"];?>'))" name="deleteServer" value="<?php echo $sid;?>"><?php echo $pgv_lang["remove"];?></button>
          &nbsp;&nbsp;
          <button id="buttonShow_<?php echo $sid;?>" type="button" onclick="showSite('<?php echo $sid;?>');"><?php echo $pgv_lang["show_details"];?></button>
          &nbsp;&nbsp;
-         <button type="button" onclick="window.open('viewconnections.php?selectedServer=<?php echo $sid;?>', '_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1')"><?php echo $pgv_lang["title_view_conns"];?></button>
+         <button type="button" onclick="window.open('source.php?sid=<?php echo $sid;?>&ged=<?php echo $GEDCOM;?>')"><?php echo $pgv_lang["title_view_conns"];?></button>
          &nbsp;&nbsp;
          <?php echo PrintReady($serverTitle); ?>
          <div id="siteDetails_<?php echo $sid;?>" style="display:none">
@@ -485,7 +495,15 @@ function showSite(siteID) {
          </div>
         </td>
        </tr>
-<?php }?>
+<?php 
+      }
+	if (!empty($errorDelete)) {
+		print '<tr><td colspan="2"><span class="warning">';
+		print $errorDelete;
+		print '</span></td></tr>';
+		$errorDelete = '';
+	}
+?>
       </table>
      </td>
     </tr>
@@ -494,6 +512,8 @@ function showSite(siteID) {
   </td>
  </tr>
 </table>
+
+<!-- Add remote server form -->
 <?php
 if (empty($errorServer)) {
 	$serverTitle = '';
@@ -506,7 +526,6 @@ if (empty($errorServer)) {
 <table class="width66" align="center">
  <tr>
   <td valign="top">
-   <!-- Add remote server table -->
    <table class="width100">
     <tr>
      <td class="facts_label" colspan="2">

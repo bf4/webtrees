@@ -1446,7 +1446,7 @@ class Person extends GedcomRecord {
 		for($i=0; $i<count($this->indifacts); $i++) {
 			$found=false;
 			$oldfactrec = $this->indifacts[$i]->getGedcomRecord();
-			foreach($diff->indifacts as $indexval => $newfact) {
+			foreach($diff->indifacts as $newfact) {
 				$newfactrec = $newfact->getGedcomRecord();
 				//-- remove all whitespace for comparison
 				$tnf = preg_replace("/\s+/", " ", $newfactrec);
@@ -1463,9 +1463,9 @@ class Person extends GedcomRecord {
 			}
 		}
 		//-- check for any new facts being added
-		foreach($diff->indifacts as $indexval => $newfact) {
+		foreach($diff->indifacts as $newfact) {
 			$found=false;
-			foreach($this->indifacts as $indexval => $fact) {
+			foreach($this->indifacts as $fact) {
 				$tif = preg_replace("/\s+/", " ", $fact->getGedcomRecord());
 				$tnf = preg_replace("/\s+/", " ", $newfact->getGedcomRecord());
 				if ($tif==$tnf) {
@@ -1481,7 +1481,7 @@ class Person extends GedcomRecord {
 		//-- compare new and old facts of the Notes Sources and Media tab 2
 		for($i=0; $i<count($this->otherfacts); $i++) {
 			$found=false;
-			foreach($diff->otherfacts as $indexval => $newfact) {
+			foreach($diff->otherfacts as $newfact) {
 				if (trim($newfact->getGedcomRecord())==trim($this->otherfacts[$i]->getGedcomRecord())) {
 					$this->otherfacts[$i] = $newfact;				  //-- make sure the correct linenumber is used
 					$found=true;
