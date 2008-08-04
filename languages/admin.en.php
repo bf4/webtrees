@@ -273,6 +273,7 @@ $pgv_lang["TBLPREFIX"]							= "Database Table Prefix";
 $pgv_lang["themecustomization"]					= "Theme Customization";
 $pgv_lang["time_limit"]							= "Time limit:";
 $pgv_lang["title_manage_servers"]   			= "Manage Sites";
+$pgv_lang["title_view_conns"]       			= "View Connections";
 $pgv_lang["translator_tools"]					= "Translator tools";
 $pgv_lang["update_myaccount"]					= "Update MyAccount";
 $pgv_lang["update_user"]						= "Update User Account";
