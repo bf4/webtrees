@@ -31,6 +31,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["load_full_tree"]			= "View this tree in the full page interactive tree";
+$pgv_lang["hide_show_spouses"]		= "Show or Hide Multiple Spouses";
 $pgv_lang["interactive_tree"]		= "Interactive Tree";
 $pgv_lang["example"]				= "Example:";
 $pgv_lang["tree"]					= "Tree";
