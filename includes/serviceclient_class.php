@@ -117,10 +117,10 @@ class ServiceClient extends GedcomRecord {
 			else {
 				AddtoLog("Using SOAP Extension");
 				//-- don't use exceptions in PHP 4
-				$this->soapClient = new SoapClient($this->url, array('exceptions' => 0));
+				//$this->soapClient = new SoapClient($this->url, array('exceptions' => 0));
 			}
 		}
-		if (!$this->isError($this->soapClient)) {
+		if ($this->soapClient!=null && !$this->isError($this->soapClient)) {
 			$res = $this->soapClient->Authenticate($this->username, $this->password, $this->gedfile, "",$this->data_type);
 			if (!is_object($res))
 			{

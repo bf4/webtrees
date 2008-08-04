@@ -44,6 +44,8 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["load_full_tree"]						04 August 2008			A
++$pgv_lang["hide_show_spouses"]						04 August 2008			A
 +$pgv_lang["interactive_tree"]						01 August 2008			A
 +$pgv_lang["example"]								29 July 2008			A
 +$pgv_lang["first_letter_name"]						26 July 2008			A

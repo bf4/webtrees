@@ -32,6 +32,7 @@ class TreeNav {
 	var $name = 'nav';
 	var $generations = 4;
 	var $allSpouses = true;
+	var $images = true;
 	
 	/**
 	 * Tree Navigator Constructor
@@ -73,7 +74,7 @@ class TreeNav {
 						$father = $cfamily->getHusband();
 						if (!empty($father)) {
 							$fam = null;
-							$this->drawPerson($father, 2, 1, $fam);
+							$this->drawPerson($father, 1, 1, $fam);
 						}
 						else print "<br />\n";
 					}
@@ -88,7 +89,7 @@ class TreeNav {
 							$mother = $cfamily->getHusband();
 							if (!empty($mother)) {
 								$fam = null;
-								$this->drawPerson($mother, 2, 1, $fam);
+								$this->drawPerson($mother, 1, 1, $fam);
 							}
 							else print "<br />\n";
 						}
@@ -114,7 +115,7 @@ class TreeNav {
 	 * @param string $height	the height parameter for the outer style  
 	 */
 	function drawViewport($id='', $width='', $height='') {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		if (empty($id)) $id = $this->rootPerson->getXref();
 		$widthS = "";
 		$heightS = "";
@@ -133,16 +134,15 @@ class TreeNav {
 			<table>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" /></a></td></tr>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" /></a></td></tr>
-				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" /></td></tr>
+				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print $pgv_lang["load_full_tree"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print $pgv_lang["hide_show_spouses"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" /></td></tr>
 				<tr><td><?php print_help_link('help_treenav.php',''); ?></td></tr>
 			</table>
 			</div>
 		</div>
 		<script type="text/javascript">
 		<!--
-		var <?php print $this->name; ?> = new NavTree("out_<?php print $this->name; ?>","in_<?php print $this->name; ?>", '<?php print $this->name; ?>');
-		<?php if ($this->allSpouses) { print $this->name; ?>.allSpouses=true; <?php } ?>
+		var <?php print $this->name; ?> = new NavTree("out_<?php print $this->name; ?>","in_<?php print $this->name; ?>", '<?php print $this->name; ?>', '<?php print $id; ?>');
 		<?php print $this->name; ?>.sizeLines();
 		//-->
 		</script>
@@ -247,8 +247,9 @@ class TreeNav {
 		$name.=" (".$person->getXref().")";
 		
 		?>
-		<span class="name1"><a href="individual.php?pid=<?php print $person->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><?php print $person->getSexImage().PrintReady($name); ?></a>
-		<!--  <img id="d_<?php print $person->getXref(); ?>" alt="<?php print $person->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" /> -->
+		<span class="name1">
+		<?php print $this->getThumbnail($person); ?>
+		<a href="individual.php?pid=<?php print $person->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><?php print $person->getSexImage().PrintReady($name); ?></a>
 		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" /> 
 		</span><br />
 		<div class="details1 indent">
@@ -275,9 +276,9 @@ class TreeNav {
 				if ($SHOW_ID_NUMBERS) 
 				$name.=" (".$spouse->getXref().")";
 				?>
+				<?php print $this->getThumbnail($spouse); ?>
 				<a href="individual.php?pid=<?php print $spouse->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"> 
 				<?php print $spouse->getSexImage().PrintReady($name); ?></a>
-				<!-- <img id="d_<?php print $spouse->getXref(); ?>" alt="<?php print $spouse->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['indi']['button']; ?>" border="0" /> -->
 				<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 				<br />
 				<div class="details1 indent">
@@ -346,6 +347,40 @@ class TreeNav {
 	}
 	
 	/**
+	 * Get the thumbnail image for the given person
+	 *
+	 * @param Person $person
+	 * @return string
+	 */
+	function getThumbnail(&$person) {
+		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $TEXT_DIRECTION, $USE_MEDIA_VIEWER;
+		$thumbnail = "";
+		if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $person->getXref())) {
+			$object = $person->findHighlightedMedia();
+			if (!empty($object["thumb"])) {
+				$size = findImageSize($object["thumb"]);
+				$class = "pedigree_image_portrait";
+				if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
+				if($TEXT_DIRECTION == "rtl") $class .= "_rtl";
+				// NOTE: IMG ID
+				$imgsize = findImageSize($object["file"]);
+				$imgwidth = $imgsize[0]+50;
+				$imgheight = $imgsize[1]+150;
+			
+				if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
+					$thumbnail .= "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
+				}else{
+					$thumbnail .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
+				}
+				$thumbnail .= "<img src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"\"";
+				if ($imgsize) $thumbnail .= " /></a>";
+				else $thumbnail .= " />";
+			}
+		}
+		return $thumbnail;
+	}
+	
+	/**
 	 * Draw a person for the chart but include all of their spouses instead of just one
 	 * @param Person $person		The Person object to draw the box for
 	 * @param int $gen				The number of generations up or down to print
@@ -406,7 +441,12 @@ class TreeNav {
 					/* print the person */ ?>
 					<td>
 						<div class="person_box" id="box_<?php print $person->getXref();?>" style="text-align: left; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px;" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', 'all');">
-						<?php $name = $person->getName(); if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; print $person->getSexImage($style).PrintReady($name); ?><br />
+						<?php 
+							$name = $person->getName(); 
+							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
+							
+							print $person->getSexImage($style).PrintReady($name); 
+						?><br />
 						<?php 
 						$fams = $person->getSpouseFamilies();
 						foreach($fams as $famid=>$family) {
@@ -525,7 +565,11 @@ class TreeNav {
 					/* print the person */ ?>
 					<td>
 						<div class="person_box" id="box_<?php print $person->getXref();?>" style="text-align: left; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px;" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', '<?php if (!empty($pfamily)) print $pfamily->getXref(); ?>');">
-						<?php $name = $person->getName(); if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; print $person->getSexImage($style).PrintReady($name); ?><br />
+						<?php 
+							$name = $person->getName(); 
+							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
+							print $person->getSexImage($style).PrintReady($name); 
+						?><br />
 						<?php if (!is_null($spouse)) {$name = $spouse->getName(); if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")"; print $spouse->getSexImage($style).PrintReady($name); } else print "<br />\n"; ?>
 						
 						</div>
