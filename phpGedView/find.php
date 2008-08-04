@@ -484,12 +484,7 @@ if ($action=="filter") {
 			}
 			print "</tr>\n";
 
-			print "<tr><td class=\"list_label\">".$pgv_lang["total_fams"]." ".count($myfamlist);
-			if (count($fam_private)>0) print "  (".$pgv_lang["private"]." ".count($fam_private).")";
-			if (count($fam_hide)>0) print "  --  ".$pgv_lang["hidden"]." ".count($fam_hide);
-			if (count($fam_private)>0 || count($fam_hide)>0) print_help_link("privacy_error_help", "qm");
-
-			print "</tr></td>";
+			print "<tr><td class=\"list_label\">".$pgv_lang["total_fams"]." ".count($myfamlist)."</tr></td>";
 		}
 		else {
 			print "<td class=\"list_value_wrap\">";
