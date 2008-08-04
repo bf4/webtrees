@@ -26,7 +26,7 @@ function getElementsByNameIE(tag, name) {
 	return els;
 }
 
-function NavTree(outerId, innerId, name) {
+function NavTree(outerId, innerId, name, xref) {
 
 	this.innerPort = document.getElementById(innerId);
 	this.outerPort = document.getElementById(outerId);
@@ -37,7 +37,9 @@ function NavTree(outerId, innerId, name) {
 	this.zoom = 0;
 	this.name = name;
 	this.collapseBox = true;
-	this.allSpouses = false;
+	this.allSpouses = true;
+	this.rootId = xref;
+	this.ajaxCounter = 0;
 	
 	this.callback = function() { }
 	
@@ -46,6 +48,14 @@ function NavTree(outerId, innerId, name) {
 		this.outerPort = document.getElementById('out_'+this.name);
 		this.rootTable = this.innerPort.getElementsByTagName("table")[0];
 		this.sizeLines();
+	}
+	
+	this.decreaseCounter = function() {
+		this.ajaxCounter--;
+		this.sizeLines();
+		if (this.ajaxCounter<=0) {
+			this.ajaxCounter = 0;
+		}
 	}
 
 	this.sizeLines = function() {
@@ -119,7 +129,8 @@ function NavTree(outerId, innerId, name) {
 		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&zoom="+this.zoom;
 		link = link + "&allSpouses="+this.allSpouses;
 		oXmlHttp.open("get", link, true);
-		this.callback = this.sizeLines;
+		this.ajaxCounter++;
+		this.callback = this.decreaseCounter;
 		temp = new tempNavObj(target, oXmlHttp, this);
 		oXmlHttp.onreadystatechange=temp.processFunc;
  		oXmlHttp.send(null);
@@ -132,7 +143,8 @@ function NavTree(outerId, innerId, name) {
 		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&parent="+ptype+"&zoom="+this.zoom;
 		link = link + "&allSpouses="+this.allSpouses;
 		oXmlHttp.open("get", link, true);
-		this.callback = this.sizeLines;
+		this.ajaxCounter++;
+		this.callback = this.decreaseCounter;
 		temp = new tempNavObj(target, oXmlHttp, this);
 		oXmlHttp.onreadystatechange=temp.processFunc;
  		oXmlHttp.send(null);
@@ -178,7 +190,7 @@ function NavTree(outerId, innerId, name) {
 	
 	this.expandCallback = function() {
 		this.sizeLines();
-		Behaviour.apply();
+		//Behaviour.apply();
 	}
 
 	this.newRoot = function(xref, element, gedcom) {
@@ -186,6 +198,8 @@ function NavTree(outerId, innerId, name) {
 		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&newroot=1&zoom="+this.zoom;
 		link = link + "&allSpouses="+this.allSpouses;	
 		if (gedcom) link += "&ged="+gedcom;
+		
+		this.rootId = xref;
 		
 		oXmlHttp.open("get", link, true);
 		if (!element) element=this.innerPort;
@@ -198,9 +212,6 @@ function NavTree(outerId, innerId, name) {
  		oXmlHttp.send(null);
  		var biglink = document.getElementById("biglink");
  		biglink.parentNode.style.display="block";
- 		//alert(biglink.onclick);
- 		biglink.onclick="function(event) { "+this.name+".loadBigTree('"+xref+"', '"+gedcom+"'); return false; }";
- 		//alert(biglink.onclick);
  		return false;
 	}
 	
@@ -208,11 +219,12 @@ function NavTree(outerId, innerId, name) {
 		if (this.allSpouses) this.allSpouses = false;
 		else this.allSpouses = true;
 	
+		if (!xref || xref=='') xref = this.rootId; 
 		this.newRoot(xref);
 	}
 	
 	this.loadBigTree = function(xref, gedcom) {
-		//alert(xref);
+		if (!xref || xref=='') xref = this.rootId;
 		link = "treenav.php?jsname="+this.name+"&rootid="+xref+"&newroot=1";
 		link = link + "&allSpouses="+this.allSpouses;
 		if (gedcom) link += "&ged="+gedcom;
@@ -222,7 +234,7 @@ function NavTree(outerId, innerId, name) {
 	this.center = function() {
 		this.reInit();
 		this.sizeLines();
-		Behaviour.apply();
+		//Behaviour.apply();
 		//-- load up any other people to fill in the page
 		this.loadChildren(this.innerPort);
  		this.loadParents(this.innerPort);
@@ -294,21 +306,21 @@ function NavTree(outerId, innerId, name) {
 	 */
 	this.loadParents = function(elNode) {
 		if (elNode.offsetLeft + this.rootTable.offsetWidth < this.outerPort.offsetWidth+40) {
-	  	var chil = document.getElementsByName(this.name+'_pload');
-	  	if (chil.length>0) {
-		  	for(i=0; i<chil.length; i++) {
-		  		if (chil[i] && chil[i].onclick) {
-		  			cell = chil[i];
-		  			y = findPosY(cell);
-		  			if (y < this.outerPort.offsetHeight + this.outerPort.offsetTop) {
-		  				if (cell.onclick) {
-		  					cell.onclick();
-		  				}
-		  			}
-		  		}
+		  	var chil = document.getElementsByName(this.name+'_pload');
+		  	if (chil.length>0) {
+			  	for(i=0; i<chil.length; i++) {
+			  		if (chil[i] && chil[i].onclick) {
+			  			cell = chil[i];
+			  			y = findPosY(cell);
+			  			if (y < this.outerPort.offsetHeight + this.outerPort.offsetTop) {
+			  				if (cell.onclick) {
+			  					cell.onclick();
+			  				}
+			  			}
+			  		}
+			  	}
 		  	}
 	  	}
-	  }
 	}
 	
 	/**
@@ -495,5 +507,5 @@ function dragStop(event) {
     document.removeEventListener("mousemove", dragGo,   true);
     document.removeEventListener("mouseup",   dragStop, true);
   }
-	Behaviour.apply();
+	//Behaviour.apply();
 }
