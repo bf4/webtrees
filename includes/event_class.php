@@ -341,13 +341,10 @@ class Event {
 		$eras=array("{$decade}_", "{$century}_", '');
 
 		// Extra details, such as 1 OCCU Shoemaker or 1 RELI Catholic
-		if ($tag=='OCCU') {
-			$detail=strtoupper(substr($this->getDetail(),0,4));
-			if ($detail=='KEEP') // Keeping House => House Keeper
-				$detail='HOUS';
-			$details=array($detail, '');
-		} else
-			$details=array('');
+		$detail=strtoupper(substr($this->getDetail(),0,4));
+		if ($detail=='KEEP') // Keeping House => House Keeper
+			$detail='HOUS';
+		$details=array('_'.$detail, '');
 
 		// Variations for different sexes
 		if (is_object($this->parentObject) && $this->parentObject->getType()=='INDI')
@@ -364,7 +361,7 @@ class Event {
 					if (file_exists("{$dir}/{$era}{$tag}{$detail}{$sex}.gif")) {
 						$label=$this->getLabel();
 						return "<img src=\"{$dir}/{$era}{$tag}{$detail}{$sex}.gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" />";
-				}
+					}
 
 		return '';
 	}
