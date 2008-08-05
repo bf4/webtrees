@@ -32,6 +32,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["load_full_tree"]			= "Diesen Stammbaum im vollen interaktiven Baumdiagramm zeigen";
+$pgv_lang["hide_show_spouses"]		= "Alle oder nur den letzten Partner zeigen";
 $pgv_lang["interactive_tree"]		= "Interaktives Baumdiagramm";
 $pgv_lang["example"]				= "Beispiel:";
 $pgv_lang["tree"]					= "Baum";
