@@ -206,7 +206,12 @@ function checkform(frm) {
 				</tr></table>
 			</div>
 			<div id="localContent" style="display:none;">
-				<select id="cbGedcomId" name="cbGedcomId">
+			<table><tr>
+					<td ><?php echo $pgv_lang["title"];?></td>
+					<td><input type="text" id="txtCB_Title" name="txtCB_Title" size="66" /></td>
+				</tr><tr>
+					<td valign="top"><?php echo $pgv_lang["gedcom_file"];?></td>
+					<td><select id="txtCB_GID" name="txtCB_GID">
 					<?php
 						foreach ($gedcomList as $ged_name) {
 							if ($ged_name != $GEDCOM) {
@@ -214,7 +219,8 @@ function checkform(frm) {
 							}
 						}
 					?>
-				</select><br />
+					</select></td>
+				</tr></table>
 			</div>
 		</td>
 	</tr>

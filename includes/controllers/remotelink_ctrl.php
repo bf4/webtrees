@@ -122,8 +122,9 @@ class RemoteLinkController extends BaseController {
 					}
 					break;
 				default:		// Must be a local database
-					$gedcom_id = safe_POST('cbGedcomId');
-					$serverID = $this->addLocalServer($gedcom_id);
+					$server_title = trim(stripslashes(safe_POST('txtCB_Title', '[^<>"%{};]+', '')));
+					$gedcom_id = trim(stripslashes(safe_POST('txtCB_GID', PGV_REGEX_NOSCRIPT, '')));
+					$serverID = $this->addLocalServer($server_title, $gedcom_id);
 					break;
 				}
 			}
@@ -354,13 +355,12 @@ class RemoteLinkController extends BaseController {
 	 * @param string $gedcom_id
 	 * @return mixed	the serverID of the server to link to
 	 */
-	function addLocalServer($gedcom_id) {
-		global $SERVER_URL;
+	function addLocalServer($title, $gedcom_id) {
+		global $SERVER_URL, $GEDCOMS;
 		$serverID = $this->checkExistingServer($SERVER_URL, $gedcom_id);
 		if ($serverID===false) {
 			$gedcom_string = "0 @new@ SOUR\r\n";
-			$title = $server_name;
-			if (isset($GEDCOMS[$gedcom_id])) $title = $GEDCOMS[$gedcom_id]["title"];
+			if (empty($title)) $title = $GEDCOMS[$gedcom_id]["title"];
 			$gedcom_string.= "1 TITL ".$title."\r\n";
 			$gedcom_string.= "1 URL ".$SERVER_URL."\r\n";
 			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
