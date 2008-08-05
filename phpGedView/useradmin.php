@@ -760,6 +760,10 @@ if ($action == "createform") {
 			}
 			return true;
 		}
+		var pastefield;
+		function paste_id(value) {
+			pastefield.value=value;
+		}
 	//-->
 	</script>
 
