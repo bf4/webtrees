@@ -30,7 +30,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require_once('includes/gedcomrecord.php');
-include_once('SOAP/Client.php');
 include_once('includes/family_class.php');
 
 class ServiceClient extends GedcomRecord {
@@ -107,6 +106,7 @@ class ServiceClient extends GedcomRecord {
 		if (!empty($this->SID)) return $this->SID;
 		if (is_null($this->soapClient)) {
 			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
+				include_once('SOAP/Client.php');
 				//AddToLog('Using PEAR:SOAP library');
 				//	get the wsdl and cache it
 				$wsdl = new SOAP_WSDL($this->url);

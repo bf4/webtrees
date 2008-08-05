@@ -683,8 +683,8 @@ if ($action=="update") {
 			}
 			if (isset($_REQUEST["RC{$i}GIVN"])) $rsgivn = $_REQUEST["RC{$i}GIVN"];
 			if (isset($_REQUEST["RC{$i}SURN"])) $rssurn = $_REQUEST["RC{$i}SURN"];
-			if (!empty($$rsgivn) || !empty($$rssurn)) {
-				$childrec .= "2 ROMN ".$$rsgivn." /".$$rssurn."/\r\n";
+			if (!empty($rsgivn) || !empty($rssurn)) {
+				$childrec .= "2 ROMN ".$rsgivn." /".$rssurn."/\r\n";
 			}
 			$var = "C".$i."SEX";
 			$csex = "";
@@ -900,7 +900,7 @@ if ($action=="update") {
 			//--add new spouse name, birth
 			if (isset($_REQUEST["FGIVN$i"])) $sgivn = $_REQUEST["FGIVN$i"];
 			if (isset($_REQUEST["FSURN$i"])) $ssurn = $_REQUEST["FSURN$i"];
-			if (!empty($$sgivn) || !empty($$ssurn)) {
+			if (!empty($sgivn) || !empty($ssurn)) {
 				//-- first add the new spouse
 				$spouserec = "0 @REF@ INDI\r\n";
 				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\r\n";
@@ -940,7 +940,7 @@ if ($action=="update") {
 				$bplac = "";
 				if (isset($_REQUEST["FDDATE$i"])) $bdate = $_REQUEST["FDDATE$i"];
 				if (isset($_REQUEST["FDPLAC$i"])) $bplac = $_REQUEST["FDPLAC$i"];
-				if (!empty($$bdate)||!empty($$bplac)) {
+				if (!empty($bdate)||!empty($bplac)) {
 					$spouserec .= "1 DEAT\r\n";
 					$bdate = check_input_date($bdate);
 					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
@@ -1033,8 +1033,6 @@ if ($action=="update") {
 				if (isset($_REQUEST["MDPLAC$i"])) $bplac = $_REQUEST["MDPLAC$i"];
 				if (!empty($bdate)||!empty($bplac)) {
 					$spouserec .= "1 DEAT\r\n";
-					if (!empty($$bdate)) $bdate = $$bdate;
-					else $bdate = "";
 					$bdate = check_input_date($bdate);
 					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
 					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\r\n";

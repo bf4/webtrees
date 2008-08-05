@@ -31,6 +31,7 @@ function NavTree(outerId, innerId, name, xref) {
 	this.innerPort = document.getElementById(innerId);
 	this.outerPort = document.getElementById(outerId);
 	this.rootTable = this.innerPort.getElementsByTagName("table")[0];
+	this.loading = document.getElementById(name+"_loading");
 	this.oldText = new Array();
 	this.oldWidth = new Array();
 	this.opennedBox = new Array();
@@ -52,10 +53,18 @@ function NavTree(outerId, innerId, name, xref) {
 	
 	this.decreaseCounter = function() {
 		this.ajaxCounter--;
-		this.sizeLines();
-		if (this.ajaxCounter<=0) {
-			this.ajaxCounter = 0;
+		if (this.ajaxCounter<=1) {
+			this.sizeLines();
+			this.restoreCursor();
 		}
+	}
+	
+	this.restoreCursor = function() {
+		if (this.ajaxCounter>2) return window.setTimeout(this.name+".restoreCursor()", 2000);
+		this.outerPort.style.cursor = "";
+		this.ajaxCounter = 0;
+		this.loading.style.display = "none";
+		Behaviour.apply();
 	}
 
 	this.sizeLines = function() {
@@ -74,7 +83,6 @@ function NavTree(outerId, innerId, name, xref) {
 			tables = new Array();
 			k=0;
 			for(j=0; j<children.length; j++) {
-			//alert(children[j].tagName);
 				if (children[j].tagName=='TABLE') {
 					tables[k] = children[j];
 					k++;
@@ -190,7 +198,7 @@ function NavTree(outerId, innerId, name, xref) {
 	
 	this.expandCallback = function() {
 		this.sizeLines();
-		//Behaviour.apply();
+		Behaviour.apply();
 	}
 
 	this.newRoot = function(xref, element, gedcom) {
@@ -234,7 +242,7 @@ function NavTree(outerId, innerId, name, xref) {
 	this.center = function() {
 		this.reInit();
 		this.sizeLines();
-		//Behaviour.apply();
+		Behaviour.apply();
 		//-- load up any other people to fill in the page
 		this.loadChildren(this.innerPort);
  		this.loadParents(this.innerPort);
@@ -275,6 +283,8 @@ function NavTree(outerId, innerId, name, xref) {
 		}
 		this.zoom++;
 		this.sizeLines();
+		this.loadParents(this.innerPort);
+		this.loadChildren(this.innerPort);
 	}
 
 	this.zoomOut = function() {
@@ -287,6 +297,8 @@ function NavTree(outerId, innerId, name, xref) {
 		}
 		this.zoom--;
 		this.sizeLines();
+		this.loadParents(this.innerPort);
+		this.loadChildren(this.innerPort);
 	}
 
 	this.zoomImgs = function(child) {
@@ -308,6 +320,11 @@ function NavTree(outerId, innerId, name, xref) {
 		if (elNode.offsetLeft + this.rootTable.offsetWidth < this.outerPort.offsetWidth+40) {
 		  	var chil = document.getElementsByName(this.name+'_pload');
 		  	if (chil.length>0) {
+		  		//-- give the user some feedback that we are loading data
+		  		this.outerPort.style.cursor = "wait";
+		  		//-- prevent the wait from staying on forever
+		  		window.setTimeout(this.name+".restoreCursor()", 2000);
+		  		this.loading.style.display = "block";
 			  	for(i=0; i<chil.length; i++) {
 			  		if (chil[i] && chil[i].onclick) {
 			  			cell = chil[i];
@@ -330,6 +347,11 @@ function NavTree(outerId, innerId, name, xref) {
 		if (elNode.offsetLeft > -40) {
 		  	children = document.getElementsByName(this.name+'_cload');
 		  	if (children.length>0) {
+		  		//-- give the user some feedback that we are loading data
+		  		this.outerPort.style.cursor = "wait";
+		  		//-- prevent the wait from staying on forever
+		  		window.setTimeout(this.name+".restoreCursor()", 2000);
+		  		this.loading.style.display = "block";
 			  	for(i=0; i<children.length; i++) {
 			  		if (children[i] && children[i].onclick) {
 			  			cell = children[i];
@@ -507,5 +529,5 @@ function dragStop(event) {
     document.removeEventListener("mousemove", dragGo,   true);
     document.removeEventListener("mouseup",   dragStop, true);
   }
-	//Behaviour.apply();
+  Behaviour.apply();
 }
