@@ -525,15 +525,15 @@ class Person extends GedcomRecord {
 	 * NOTE: It would have been nice if we'd called the images sexM, sexF and sexU
 	 * @return string 	<img ... />
 	 */
-	function getSexImage() {
+	function getSexImage($style='') {
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		switch ($this->getSex()) {
 			case 'M':
-				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" alt="" />';
+				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" alt="" style="'.$style.'" />';
 			case 'F':
-				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" alt="" />';
+				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" alt="" style="'.$style.'" />';
 			default:
-				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexn']['small'].'" class="gender_image" alt="" />';
+				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexn']['small'].'" class="gender_image" alt="" style="'.$style.'" />';
 		}
 	}
 

@@ -74,22 +74,22 @@ class TreeNav {
 						$father = $cfamily->getHusband();
 						if (!empty($father)) {
 							$fam = null;
-							$this->drawPerson($father, 1, 1, $fam);
+							$this->drawPerson($father, 2, 1, $fam);
 						}
 						else print "<br />\n";
 					}
 					else print "<br />\n";
 				}
 				else {
+					$spouse = $person->getCurrentSpouse();
 					if (!empty($spouse)) {
-						$spouse = $person->getCurrentSpouse();
 						$fams = $spouse->getChildFamilies();
 						$cfamily = end($fams);
 						if (!empty($cfamily)) {
 							$mother = $cfamily->getHusband();
 							if (!empty($mother)) {
 								$fam = null;
-								$this->drawPerson($mother, 1, 1, $fam);
+								$this->drawPerson($mother, 2, 1, $fam);
 							}
 							else print "<br />\n";
 						}
@@ -137,13 +137,15 @@ class TreeNav {
 				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print $pgv_lang["load_full_tree"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print $pgv_lang["hide_show_spouses"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" /></td></tr>
 				<tr><td><?php print_help_link('help_treenav.php',''); ?></td></tr>
+				<tr><td><img id="<?php print $this->name; ?>_loading" src="images/loading.gif" style="display: none;" /></td></tr>
 			</table>
 			</div>
 		</div>
 		<script type="text/javascript">
 		<!--
 		var <?php print $this->name; ?> = new NavTree("out_<?php print $this->name; ?>","in_<?php print $this->name; ?>", '<?php print $this->name; ?>', '<?php print $id; ?>');
-		<?php print $this->name; ?>.sizeLines();
+		<?php print $this->name; ?>.zoom = <?php print $this->zoomLevel; ?>;
+		<?php print $this->name; ?>.center();
 		//-->
 		</script>
 		<?php
@@ -400,21 +402,25 @@ class TreeNav {
 		$mother = null;
 		$father = null;
 		
-		if ($state<=0) {
-			$fams = $person->getSpouseFamilies();
-			$family = end($fams);
-		}
 		if ($state>=0) {
 			$fams = $person->getChildFamilies();
 			$cfamily = end($fams);
 			if (!empty($cfamily)) {
 				$father = $cfamily->getHusband();
 			}
-			if (!empty($spouse)) {
-				$fams = $spouse->getChildFamilies();
-				$mcfamily = end($fams);
-				if (!empty($mcfamily)) {
-					$mother = $mcfamily->getHusband();
+			$fams = $person->getSpouseFamilies();
+			$fams = array_reverse($fams);
+			//-- find the last spouse family that has a known spouse
+			foreach($fams as $family) {
+				if (!empty($family)) $spouse = $family->getSpouse($person);
+				if (!empty($spouse)) {
+					$fams = $spouse->getChildFamilies();
+					$mcfamily = end($fams);
+					if (!empty($mcfamily)) {
+						$mother = $mcfamily->getHusband();
+						//-- a mother's father was found so break out
+						break;
+					}
 				}
 			}
 		}
@@ -443,7 +449,7 @@ class TreeNav {
 						<div class="person_box" id="box_<?php print $person->getXref();?>" style="text-align: left; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px;" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', 'all');">
 						<?php 
 							$name = $person->getName(); 
-							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
+//							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
 							
 							print $person->getSexImage($style).PrintReady($name); 
 						?><br />
@@ -453,7 +459,7 @@ class TreeNav {
 							$spouse = $family->getSpouse($person);
 							if (!is_null($spouse)) {
 								$name = $spouse->getFullName(); 
-								if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")"; 
+//								if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")"; 
 								print "&nbsp;&nbsp;".$spouse->getSexImage($style).PrintReady($name); 
 								print "<br />\n";
 							} else print "<br />\n"; 
@@ -479,15 +485,29 @@ class TreeNav {
 								<tr>
 									<?php /* there is a IE JavaScript bug where the "id" has to be the same as the "name" in order to use the document.getElementsByName() function */ ?>
 									<td <?php if ($gen==0 && !empty($father)) print 'id="'.$this->name.'_pload" name="'.$this->name.'_pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'f\');"'; ?>>
-										<?php if (!empty($father)) $this->drawPerson($father, $gen-1, 1, $cfamily); else print "<br />\n";?>
+										<?php if (!empty($father)) $this->drawPersonAllSpouses($father, $gen-1, 1, $cfamily); else print "<br />\n";?>
 									</td>
 								</tr>
+								<?php 
+								$fams = $person->getSpouseFamilies();
+								foreach($fams as $famid=>$family) {
+									$spouse = $family->getSpouse($person);
+									$mother = null;
+									if ($spouse!=null) {
+										$fams = $spouse->getChildFamilies();
+										$mcfamily = end($fams);
+										if (!empty($mcfamily)) {
+											$mother = $mcfamily->getHusband();
+										}
+									}
+									if (!is_null($mother)) {
+								?>
 								<tr>
-								<?php /* print the mother */ ?>
 									<td <?php if ($gen==0 && !empty($mother)) print 'id="'.$this->name.'_pload" name="'.$this->name.'_pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'m\');"'; ?>>
-										<?php if (!empty($mother)) $this->drawPerson($mother, $gen-1, 1, $mcfamily); else print"<br />\n";?>
+										<?php if (!empty($mother)) $this->drawPersonAllSpouses($mother, $gen-1, 1, $mcfamily); else print"<br />\n";?>
 									</td>
 								</tr>
+								<?php } } ?>
 							</tbody>
 						</table>
 					</td>
@@ -567,10 +587,12 @@ class TreeNav {
 						<div class="person_box" id="box_<?php print $person->getXref();?>" style="text-align: left; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px;" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', '<?php if (!empty($pfamily)) print $pfamily->getXref(); ?>');">
 						<?php 
 							$name = $person->getName(); 
-							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
+//							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
 							print $person->getSexImage($style).PrintReady($name); 
 						?><br />
-						<?php if (!is_null($spouse)) {$name = $spouse->getName(); if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")"; print $spouse->getSexImage($style).PrintReady($name); } else print "<br />\n"; ?>
+						<?php if (!is_null($spouse)) {$name = $spouse->getName(); 
+//						if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")";
+						print $spouse->getSexImage($style).PrintReady($name); } else print "<br />\n"; ?>
 						
 						</div>
 					</td>
