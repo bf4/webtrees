@@ -107,7 +107,7 @@ class ServiceClient extends GedcomRecord {
 		if (!empty($this->SID)) return $this->SID;
 		if (is_null($this->soapClient)) {
 			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
-				AddToLog('Using PEAR:SOAP library');
+				//AddToLog('Using PEAR:SOAP library');
 				//	get the wsdl and cache it
 				$wsdl = new SOAP_WSDL($this->url);
 				//change the encoding style
@@ -115,9 +115,9 @@ class ServiceClient extends GedcomRecord {
 				$this->soapClient = $wsdl->getProxy();
 			}
 			else {
-				AddtoLog("Using SOAP Extension");
+				//AddtoLog("Using SOAP Extension");
 				//-- don't use exceptions in PHP 4
-				//$this->soapClient = new SoapClient($this->url, array('exceptions' => 0));
+				$this->soapClient = new SoapClient($this->url, array('exceptions' => 0));
 			}
 		}
 		if ($this->soapClient!=null && !$this->isError($this->soapClient)) {
