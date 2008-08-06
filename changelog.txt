@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2038773 ] Concatenated data (CONC) splits UTF-8 characters (canajun2eh)
  - Fixed: [ 2028403 ] Age display glitch (fisharebest)
  - Fixed: [ 2034084 ] 3609 Find Family errors (fisharebest)
  - Added: [ 1923217 ] Google Translate API Addition to Language Tools (wooc)
