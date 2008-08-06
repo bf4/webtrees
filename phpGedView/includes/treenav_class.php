@@ -504,7 +504,7 @@ class TreeNav {
 								<tr>
 									<?php /* there is a IE JavaScript bug where the "id" has to be the same as the "name" in order to use the document.getElementsByName() function */ ?>
 									<td <?php if ($gen==0 && !empty($father)) print 'id="'.$this->name.'_pload" name="'.$this->name.'_pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'f\');"'; ?>>
-										<?php if (!empty($father)) $this->drawPersonAllSpouses($father, $gen-1, 1, $cfamily); else print "<br />\n";?>
+										<?php if (!empty($father)) $this->drawPerson($father, $gen-1, 1, $cfamily); else print "<br />\n";?>
 									</td>
 								</tr>
 								<?php 
@@ -523,7 +523,7 @@ class TreeNav {
 								?>
 								<tr>
 									<td <?php if ($gen==0 && !empty($mother)) print 'id="'.$this->name.'_pload" name="'.$this->name.'_pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'m\');"'; ?>>
-										<?php if (!empty($mother)) $this->drawPersonAllSpouses($mother, $gen-1, 1, $mcfamily); else print"<br />\n";?>
+										<?php if (!empty($mother)) $this->drawPerson($mother, $gen-1, 1, $mcfamily); else print"<br />\n";?>
 									</td>
 								</tr>
 								<?php } } ?>
