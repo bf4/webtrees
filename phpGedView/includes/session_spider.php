@@ -180,7 +180,8 @@ $worms = array(
 		'Googlebot',
 		'Yahoo Slurp',
 		'msnbot',
-		'Ask Jeeves'
+		'Ask Jeeves',
+		'Twiceler'
 	);
 
 	// We overlay the following name with carefully selected characters.
@@ -351,7 +352,7 @@ $worms = array(
 		$spidertime = time();
 		$spiderdate = date("d.m.Y", $spidertime);
 		// Do we need to log this spider access?
-		$outstr = preg_replace('/\s+/', ' ', $SEARCH_SPIDER); 	// convert tabs etc. to blanks; trim extra blanks 
+		$outstr = preg_replace('/\s+/', ' ', $SEARCH_SPIDER); 	// convert tabs etc. to blanks; trim extra blanks
 		$outstr = str_replace(' - ', ' ', $outstr);				// Don't allow ' - ' because that is the log separator
 		$logSpider = true;
 		foreach ($known_spiders as $spider) {
@@ -388,7 +389,7 @@ $worms = array(
 		$_SESSION['last_spider_name'] = $SEARCH_SPIDER;
 		if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		$_SESSION['last_spider_lang'] = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-		
+
 		$_SESSION['pgv_user'] = "";	// Don't allow search engine into user/admin mode.
 		$_SESSION['CLANGUAGE'] = "";	// Force language to gedcom default language.
 	}
