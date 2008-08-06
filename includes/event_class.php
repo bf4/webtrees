@@ -268,7 +268,7 @@ class Event {
 	}
 	
 	function getLabel($abbreviate=false) {
-		global $factarray;
+		global $factarray, $factAbbrev;
 
 		if (is_null($this->label))
 			if (array_key_exists($this->tag, $factarray))
@@ -277,7 +277,8 @@ class Event {
 				$this->label=$this->tag;
 		
 		if ($abbreviate)
-			return get_first_letter($this->label);
+			if (isset ($factAbbrev[$this->tag])) return $factAbbrev[$this->tag];
+			else return get_first_letter($this->label);
 		else
 			return $this->label;
 	}

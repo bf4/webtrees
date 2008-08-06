@@ -212,7 +212,7 @@ class TreeNav {
 	 * @param Person $person	the person to print the details for
 	 */
 	function getDetails(&$person) {
-		global $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		
 		if (empty($person)) $person = $this->rootPerson;
 		if (!$person->canDisplayDetails()) return;
@@ -255,25 +255,33 @@ class TreeNav {
 		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" /> 
 		</span><br />
 		<div class="details1 indent">
-			<b><?php print get_first_letter($factarray['BIRT']);?>:</b>
+			<b><?php
+				if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
+				else print get_first_letter($factarray['BIRT']);
+				?>:</b>
 			<?php
 				$bdate = $person->getBirthDate();
 				if (!is_null($bdate)) print $bdate->Display();
 			?>
 			<?php $place = $person->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 			<br />
-			<b><?php print get_first_letter($factarray['DEAT']);?>:</b>
-			<?php
+			<b><?php
+			if ($person->isDead()) {
+				if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
+				else print get_first_letter($factarray['DEAT']);
+				?>:</b>
+				<?php
 				$ddate = $person->getDeathDate(false);
 				if (!is_null($ddate)) print $ddate->Display();
-			?>
-			<?php $place = $person->getDeathPlace();  if (!empty($place)) print PrintReady($place); ?>
+				?>
+				<?php $place = $person->getDeathPlace();  if (!empty($place)) print PrintReady($place);
+			} ?>
 		</div>
 		<br />
 		<span class="name1"><?php 
 		foreach($families as $family) {
 			if (!empty($family)) $spouse = $family->getSpouse($person);
-			if (!is_null($spouse)) {
+			if (!empty($spouse)) {
 				$name = $spouse->getName(); 
 				if ($SHOW_ID_NUMBERS) 
 				$name.=" (".$spouse->getXref().")";
@@ -284,14 +292,20 @@ class TreeNav {
 				<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 				<br />
 				<div class="details1 indent">
-				<b><?php print get_first_letter($factarray['BIRT']);?>:</b>
+				<b><?php 
+					if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
+					else print get_first_letter($factarray['BIRT']);
+					?>:</b>
 				<?php
 					$bdate = $spouse->getBirthDate();
 					if (!is_null($bdate)) print $bdate->Display();
 				?>
 				<?php $place = $spouse->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 				<br />
-				<b><?php print get_first_letter($factarray['MARR']);?>:</b>
+				<b><?php
+					if (isset ($factAbbrev["MARR"])) print $factAbbrev["MARR"];
+					else print get_first_letter($factarray['MARR']);
+					?>:</b>
 				<?php 
 					$mdate = $family->getMarriageDate();
 					if (!is_null($mdate)) print $mdate->Display()." ";
@@ -300,12 +314,17 @@ class TreeNav {
 					if (!empty($place)) print PrintReady($place); ?>
 					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a>
 				<br />
-				<b><?php print get_first_letter($factarray['DEAT']);?>:</b>
-				<?php
+				<b><?php
+				if ($spouse->isDead()) {
+					if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
+					else print print get_first_letter($factarray['DEAT']);
+					?>:</b>
+					<?php
 					$ddate = $spouse->getDeathDate(false);
 					if (!is_null($ddate)) print $ddate->Display();
-				?>
-				<?php $place = $spouse->getDeathPlace();  if (!empty($place)) print PrintReady($place); ?>
+					?>
+					<?php $place = $spouse->getDeathPlace();  if (!empty($place)) print PrintReady($place);
+				} ?>
 				</div>
 				<?php 
 			} else print "<br />\n"; 
