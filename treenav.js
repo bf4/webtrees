@@ -317,7 +317,7 @@ function NavTree(outerId, innerId, name, xref) {
 	 * Check if any of the parent boxes need to be loaded
 	 */
 	this.loadParents = function(elNode) {
-		if (elNode.offsetLeft + this.rootTable.offsetWidth < this.outerPort.offsetWidth+40) {
+		if (elNode && elNode.offsetLeft + this.rootTable.offsetWidth < this.outerPort.offsetWidth+40) {
 		  	var chil = document.getElementsByName(this.name+'_pload');
 		  	if (chil.length>0) {
 		  		//-- give the user some feedback that we are loading data
@@ -344,7 +344,7 @@ function NavTree(outerId, innerId, name, xref) {
 	 * Check if any of the children boxes need to be loaded
 	 */
 	this.loadChildren = function(elNode) {
-		if (elNode.offsetLeft > -40) {
+		if (elNode && elNode.offsetLeft > -40) {
 		  	children = document.getElementsByName(this.name+'_cload');
 		  	if (children.length>0) {
 		  		//-- give the user some feedback that we are loading data
