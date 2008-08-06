@@ -898,7 +898,8 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
  *
  * Break input GEDCOM subrecord into pieces not more than 255 chars long,
  * with CONC and CONT lines as needed.  Routine also pays attention to the
- * word wrapped Notes option.
+ * word wrapped Notes option.  Routine also avoids splitting UTF-8 encoded
+ * characters between lines.
  *
  * @param	string	$newline	Input GEDCOM subrecord to be worked on
  * @return	string	$newged		Output string with all necessary CONC and CONT lines
@@ -933,6 +934,19 @@ function breakConts($newline) {
 					// Make sure this piece doesn't end on a blank
 					// (Blanks belong at the start of the next piece)
 					$thisPiece = rtrim(substr($newlines[$k], 0, 255));
+					// Make sure this piece doesn't end in the middle of a UTF-8 character
+					$nextPieceFirstChar = substr($newlines[$k], strlen($thisPiece), 1);
+					if (($nextPieceFirstChar&"\xC0") == "\x80") {
+						// Include all of the UTF-8 character in next piece
+						while (true) {
+							// Find the start of the UTF-8 encoded character
+							$nextPieceFirstChar = substr($thisPiece, -1);
+							$thisPiece = substr($thisPiece, 0, -1);
+							if (($nextPieceFirstChar&"\xC0") != "\x80") break;
+						}
+						// Make sure we didn't back up to a blank
+						$thisPiece = rtrim($thisPiece);
+					}
 					$newged .= $thisPiece."\r\n";
 					$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
 					$newlines[$k] = "{$level} CONC ".$newlines[$k];
