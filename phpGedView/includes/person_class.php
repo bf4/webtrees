@@ -189,7 +189,7 @@ class Person extends GedcomRecord {
 	 * parse birth and death records
 	 */
 	function _parseBirthDeath() {
-		global $MAX_ALIVE_AGE, $pgv_lang;
+		global $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES, $pgv_lang;
 
 		if ($this->bd_parsed) return;
 		$this->bd_parsed = true;
@@ -226,7 +226,7 @@ class Person extends GedcomRecord {
 		$ddate = null;
 		if (!is_null($this->birthEvent)) $bdate = $this->birthEvent->getDate();
 		if (!is_null($this->deathEvent)) $ddate = $this->deathEvent->getDate();
-		if (is_null($ddate) && !is_null($bdate)) {
+		if (is_null($ddate) && !is_null($bdate) && $SHOW_EST_LIST_DATES) {
 			if ($bdate->date1->y>0) {
 				$this->dest = true;
 				$nddate = $bdate->AddYears($MAX_ALIVE_AGE, 'BEF');
@@ -236,7 +236,7 @@ class Person extends GedcomRecord {
 			//else if (!empty($this->drec)) $this->ddate = $pgv_lang["yes"];
 		}
 		//-- if no birth estimate from death
-		if (is_null($bdate) && !is_null($ddate)) {
+		if (is_null($bdate) && !is_null($ddate) && $SHOW_EST_LIST_DATES) {
 			if ($ddate->date1->y>0) {
 				$this->best = true;
 				$nbdate = $ddate->AddYears(0-$MAX_ALIVE_AGE, 'AFT');
