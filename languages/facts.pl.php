@@ -397,9 +397,9 @@ $factarray["COMM"]		 = "Komentarz";
  *              The length of these abbreviations is not restricted to 1 letter.
  */
 
-$factAbbrev["BIRT"]		= "U";
-$factAbbrev["MARR"]		= "M";
-$factAbbrev["DEAT"]		= "Ś";
+$factAbbrev["BIRT"]		= "Ur.";
+$factAbbrev["MARR"]		= "Mał.";
+$factAbbrev["DEAT"]		= "Zm.";
 
 
 
