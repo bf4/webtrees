@@ -484,6 +484,7 @@ $pgv_lang["ssourcess"]					= "Quellen";
 $pgv_lang["media"]						= "Multimedia";
 $pgv_lang["name_contains"]				= "Name enthält:";
 $pgv_lang["filter"]						= "Filter";
+$pgv_lang["apply_filter"]				= "Filter anwenden";
 $pgv_lang["find_individual"]			= "Person suchen";
 $pgv_lang["find_familyid"]				= "Familie suchen";
 $pgv_lang["find_sourceid"]				= "Quelle suchen";
