@@ -342,7 +342,7 @@ class Event {
 		$eras=array("{$decade}_", "{$century}_", '');
 
 		// Extra details, such as 1 OCCU Shoemaker or 1 RELI Catholic
-		$detail=strtoupper(substr($this->getDetail(),0,4));
+		$detail=trim(strtoupper(substr($this->getDetail(),0,4)));
 		if ($detail=='KEEP') // Keeping House => House Keeper
 			$detail='HOUS';
 		$details=array('_'.$detail, '');
