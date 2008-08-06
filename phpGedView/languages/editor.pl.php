@@ -172,7 +172,6 @@ $pgv_lang["label_diff_server"]      = "Inna strona";
 $pgv_lang["label_location"]         = "Lokalizacja strony";
 $pgv_lang["label_password_id2"]		= "Hasło: ";
 $pgv_lang["label_rel_to_current"]   = "Związek z bieżącą osobą";
-$pgv_lang["label_remote_id"]        = "ID osoby z zewnątrz";
 $pgv_lang["label_same_server"]      = "Ta sama strona";
 $pgv_lang["label_site"]             = "Strona";
 $pgv_lang["label_site_url"]         = "URL strony:";

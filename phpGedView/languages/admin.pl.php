@@ -349,4 +349,6 @@ $pgv_lang["deleted_files"]          = "Usunięte pliki:";
 $pgv_lang["index_dir_cleanup_inst"]	= "Aby usunąc plik lub podkatalog z katalogu Index przesuń go do kosza lub zaznacz. Kliknij przycisk Usuń aby trwale usunąć wybrane pliki.<br /><br />Pliki zaznaczone <img src=\"./images/RESN_confidential.gif\" alt=\"\" /> są wymaganymi do prawidłowego działania i nie mogą być usunięte.<br />Pliki zaznaczone <img src=\"./images/RESN_locked.gif\" alt=\"\" /> zawierają ważne ustawienia oraz zmiany nie zatwierdzone jeszcze przez administratora. Bez absolutnej pewności nie usuwaj ich.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Wyczyść katalog Index";
 $pgv_lang["error_remote_duplicate"]	= "Ta baza danych istnieje na liście jako <i>#GLOBALS[whichFile]#</i>";
+$pgv_lang["error_remove_site"]			= "Zdalny serwer nie może być usunięty.";
+$pgv_lang["error_remove_site_linked"]	= "Zdalny serwer nie może być usunięty ponieważ jego lista połączeń nie jest pusta.";
 ?>

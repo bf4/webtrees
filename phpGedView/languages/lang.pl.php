@@ -1546,4 +1546,6 @@ $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["tree"]					= "Drzewo";
 $pgv_lang["example"]				= "Przykład:";
 $pgv_lang["interactive_tree"]		= "Interaktywne Drzewo";
+$pgv_lang["hide_show_spouses"]		= "Pokaż lub ukryj wielu małżonków";
+$pgv_lang["load_full_tree"]			= "Zobacz to drzewo na stronie interaktywnego drzewa";
 ?>
