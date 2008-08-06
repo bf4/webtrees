@@ -589,6 +589,7 @@ $pgv_lang["ssourcess"]				= "Sources";
 $pgv_lang["media"]					= "Media";
 $pgv_lang["name_contains"]			= "Name contains:";
 $pgv_lang["filter"] 				= "Filter";
+$pgv_lang["apply_filter"]			= "Apply filter";
 $pgv_lang["find_individual"]		= "Find Individual ID";
 $pgv_lang["find_familyid"]			= "Find Family ID";
 $pgv_lang["find_sourceid"]			= "Find Source ID";
