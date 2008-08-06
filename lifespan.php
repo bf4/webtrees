@@ -5,7 +5,7 @@
  * Use the $pids array to set which individuals to show on the chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -311,11 +311,19 @@ var oldMx = 0;
   		<td><input type="text" name="endYear" size="5" value="<?php if (isset($endYear)) print $endYear; ?>" /></td>
   		<td><input type="text" name="place" size="15" value="<?php if (isset($place)) print $place; ?>" /></td>
   		<td><input type="submit" name="search" value="<?php print $pgv_lang["search"]; ?>" /></td>
-		<td><input type="button" value="<?php print $pgv_lang['clear_chart']; ?>" onclick="window.location = 'lifespan.php?clear=1';" /></td>
+		<td><input type="button" value="<?php print $pgv_lang["clear_chart"]; ?>" onclick="window.location = 'lifespan.php?clear=1';" /></td>
     </tr>  
   </table> 
   <?php if(count($controller->people) > 0){ 
-  	print "<br /><b>".count($controller->people)." ".$pgv_lang['individuals']."</b>";
+	// Allow special processing for different languages
+	$func="num_people_localisation_{$lang_short_cut[$LANGUAGE]}";
+	if (!function_exists($func)) {
+		if(count($controller->people) == 1) print "<br /><b>".count($controller->people)." ".$pgv_lang["individual"]."</b>";
+		else print "<br /><b>".count($controller->people)." ".$pgv_lang["individuals"]."</b>";
+	}
+	else
+		// Localise the num of people
+		$func(count($controller->people));
   } ?>
 </form>
 <?php } ?>
@@ -326,9 +334,6 @@ var oldMx = 0;
 	</div>
 		<div id="inner" class="lifespan_people" onmousedown="pandiv(); return false;">
 		<?php $maxY = $controller->fillTL($controller->people,$controller->minYear,$controller->YrowLoc); ?>
-	<?php 	
-	?>
-	
 	</div>
 	<?php if (!$controller->isPrintPreview()) { ?>
 	<!--  Floating div controls START -->

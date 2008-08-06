@@ -152,15 +152,28 @@ function age_localisation_pl(&$agestring, &$show_years) {
 function date_diff_localisation_pl(&$label, &$gap) {
 	global $pgv_lang;
 
-	if (($gap==12)||($gap==-12)) $label .= round($gap/12)." ".$pgv_lang["year1"]; // 1 rok
-	else if (($gap>20 && $gap<54)||($gap<-20 && $gap>-54)) $label .= round($gap/12)." lata"; // 2-4 lata
-	else if (($gap>=258 && $gap<294)||($gap<=-258 && $gap>-294)) $label .= round($gap/12)." lata"; // 22-24 lata
-	else if (($gap>=378&&$gap<414)||($gap<=-378&&$gap>-414)) $label .= round($gap/12)." lata"; // 32-34 lata
-	else if (($gap>=498&&$gap<534)||($gap<=-498&&$gap>-534)) $label .= round($gap/12)." lata"; // 42-44 lata
-	else if (($gap>=618&&$gap<654)||($gap<=-618&&$gap>-654)) $label .= round($gap/12)." lata"; // 52-54 lata
-	else if ($gap>20 or $gap<-20) $label .= round($gap/12)." ".$pgv_lang["years"];	// x lat
-	else if (($gap==1)||($gap==-1)) $label .= $gap." ".$pgv_lang["month1"]; // 1 miesiąc
-	else if (($gap>1&&$gap<5)||($gap<-1&&$gap>-5)) $label .= $gap." miesiące"; // 2-4 miesiące
-	else if ($gap!=0) $label .= $gap." ".$pgv_lang["months"]; // x miesięcy
+	$yrs = round($gap/12);
+	if ($gap == 12 || $gap == -12) $label .= $yrs." ".$pgv_lang["year1"]; // 1 rok
+	else if (($yrs > 1 && $yrs < 5) || ($yrs < -1 && $yrs < -5)) $label .= $yrs." lata"; // 2-4 lata
+	else if (($yrs > 21 || $yrs < -21) && substr($yrs, -1, 1) > 1 && substr($yrs, -1, 1) < 5 && substr($yrs, -2, 1) != 1) $label .= $yrs." lata";
+	else if ($gap > 20 or $gap < -20) $label .= $yrs." ".$pgv_lang["years"]; // x lat
+	else if ($gap == 1 || $gap == -1) $label .= $gap." ".$pgv_lang["month1"]; // 1 miesiąc
+	else if (($gap > 1 && $gap < 5) || ($gap < -1 && $gap > -5)) $label .= $gap." miesiące"; // 2-4 miesiące
+	else if ($gap != 0) $label .= $gap." ".$pgv_lang["months"]; // x miesięcy
+}
+////////////////////////////////////////////////////////////////////////////////
+// Localise a number of people.
+////////////////////////////////////////////////////////////////////////////////
+function num_people_localisation_pl(&$count) {
+	global $pgv_lang;
+
+	if ($count == 1)
+		print "<br /><b>".$count." ".$pgv_lang["individual"]."</b>";
+	else if ($count > 1 && $count < 5)
+		print "<br /><b>".$count." ".$pgv_lang["individuals"]."</b>";
+	else if ($count > 21 && substr($count, -1, 1) > 1 && substr($count, -1, 1) < 5 && substr($count, -2, 1) != 1)
+		print "<br /><b>".$count." ".$pgv_lang["individuals"]."</b>";
+	else
+		print "<br /><b>".$count." ".$pgv_lang["stat_individuals"]."</b>";
 }
 ?>

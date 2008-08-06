@@ -334,7 +334,7 @@ class LifespanControllerRoot extends BaseController {
 	
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $top) {
-		global $maxX, $zindex, $pgv_lang, $factarray;
+		global $maxX, $zindex, $pgv_lang, $factarray, $factAbbrev;
 		
 		$zindex = count($ar);
 		
@@ -474,54 +474,82 @@ class LifespanControllerRoot extends BaseController {
 						if (isset($factarray[$fact])) $trans = $factarray[$fact];
 						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];  
 						if (isset($eventinformation[$evntwdth])) $eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
-						else $eventinformation[$evntwdth]= $trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
+						else $eventinformation[$evntwdth]= $fact."-fact,".$trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
 					}
-						
 				}
 					
 				$bdate=$value->getEstimatedBirthDate();
 				$ddate=$value->getEstimatedDeathDate();
 				if ($width > ($minlength +110)) {
-					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
-					" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
+					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px; background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 					foreach($eventinformation as $evtwidth=>$val){
-						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
+						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>";
+						$text = explode("-fact,", $val);
+						$fact = $text[0];
+						$val = $text[1];
+						if (isset ($factAbbrev[$fact])) print $factAbbrev[$fact];
+						else print get_first_letter($val);
+						print "</b><span>".PrintReady($val)."</span></a></div>";
 					}
 					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
-					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
+					if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
+					else print get_first_letter($factarray["BIRT"]);
+					print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
-					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+					if ($value->isDead()) {
+						print "<a class=\"showit\" href=\"#\"><b>";
+						if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
+						else get_first_letter($factarray["DEAT"]);
+						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+					}
 					print "</td></tr></table>";
 					echo '</div>';
 
 				} else {
 					if ($width > $minlength +5) {
-						echo "\n<div style=\"text-align: left; position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
-						"  background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
+						echo "\n<div style=\"text-align: left; position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px; background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 						foreach($eventinformation as $evtwidth=>$val){
-							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
+							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"top:-2px; font-size:10px;\"><b>";
+							$text = explode("-fact,", $val);
+							$fact = $text[0];
+							$val = $text[1];
+							if (isset ($factAbbrev[$fact])) print $factAbbrev[$fact];
+							else print get_first_letter($val);
+							print "</b><span>".PrintReady($val)."</span></a></div>";
 						}
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
-						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
+						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
+						else print get_first_letter($factarray["BIRT"]);
+						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
-						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						if ($value->isDead()) {
+							print "<a class=\"showit\" href=\"#\"><b>";
+							if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
+							else get_first_letter($factarray["DEAT"]);
+							print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						}
 						print "</td></tr></table>";
 						echo '</div>';
 					} else {
-						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
-						" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">" ;
-							
+						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px; background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">" ;
+
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
-						print"<a class=\"showit\" href=\"".encode_url("individual.php?pid=".$value->getXref())."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().$indiName."<br/>".$pgv_lang["birth"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
+						print"<a class=\"showit\" href=\"".encode_url("individual.php?pid=".$value->getXref())."\"><b>";
+						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
+						else print get_first_letter($factarray["BIRT"]);
+						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
+							$text = explode("-fact,", $val);
+							$val = $text[1];
 							print $val."<br />\n";
 						}
-						if ($value->isDead()) print $pgv_lang["death"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace());
+						if ($value->isDead()) print $factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace());
 						print "</span></a>";
 						echo '</div>';
-											
 					}
 				}
 				$zindex--;
@@ -529,11 +557,10 @@ class LifespanControllerRoot extends BaseController {
 				if ($maxX < $startPos + $width)
 					$maxX = $startPos + $width;
 				if ($maxY < $Y) $maxY = $Y;
-				
 		}
-
 		return $maxY;
 	}
+
 	/**
 	 * check the privacy of the incoming people to make sure they can be shown
 	 */
