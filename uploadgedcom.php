@@ -502,7 +502,8 @@ if ($verify == "verify_gedcom") {
 			}
 			fclose($fp);
 			
-			if ($mc>0 && !$hasObje) {
+//			if ($mc>0 && !$hasObje) {
+			if ($mc>0) {
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
