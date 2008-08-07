@@ -244,7 +244,7 @@ class TreeNav {
 			} 
 		}
 		
-		$name = $person->getName(); 
+		$name = $person->getFullName(); 
 		if ($SHOW_ID_NUMBERS) 
 		$name.=" (".$person->getXref().")";
 		
@@ -282,7 +282,7 @@ class TreeNav {
 		foreach($families as $family) {
 			if (!empty($family)) $spouse = $family->getSpouse($person);
 			if (!empty($spouse)) {
-				$name = $spouse->getName(); 
+				$name = $spouse->getFullName(); 
 				if ($SHOW_ID_NUMBERS) 
 				$name.=" (".$spouse->getXref().")";
 				?>
@@ -408,7 +408,7 @@ class TreeNav {
 	 * @param int $state			Whether we are going up or down the tree, -1 for descendents +1 for ancestors
 	 */
 	function drawPersonAllSpouses(&$person, $gen, $state) {
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 		
 		if ($gen<0) {
 			return;
@@ -465,12 +465,12 @@ class TreeNav {
 					}
 					/* print the person */ ?>
 					<td>
-						<div class="person_box" id="box_<?php print $person->getXref();?>" style="text-align: left; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px;" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', 'all');">
+						<div class="person_box" dir="<?php print $TEXT_DIRECTION; ?>" id="box_<?php print $person->getXref();?>" style="text-align: <?php echo $TEXT_DIRECTION=="rtl" ? "right":"left"; ?>; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px; direction: <?php print $TEXT_DIRECTION; ?>" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', 'all');">
 						<?php 
-							$name = $person->getName(); 
+							$name = $person->getFullName(); 
 //							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
 							
-							print $person->getSexImage($style).PrintReady($name); 
+							print PrintReady($person->getSexImage($style)." ".$name); 
 						?><br />
 						<?php 
 						$fams = $person->getSpouseFamilies();
@@ -479,7 +479,7 @@ class TreeNav {
 							if (!is_null($spouse)) {
 								$name = $spouse->getFullName(); 
 //								if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")"; 
-								print "&nbsp;&nbsp;".$spouse->getSexImage($style).PrintReady($name); 
+								print PrintReady("&nbsp;&nbsp;".$spouse->getSexImage($style)." ".$name); 
 								print "<br />\n";
 							} else print "<br />\n"; 
 						}
@@ -545,7 +545,7 @@ class TreeNav {
 	 * @param Family $pfamily
 	 */
 	function drawPerson(&$person, $gen, $state, &$pfamily) {
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 		
 		if ($gen<0) {
 			return;
@@ -603,15 +603,16 @@ class TreeNav {
 					}
 					/* print the person */ ?>
 					<td>
-						<div class="person_box" id="box_<?php print $person->getXref();?>" style="text-align: left; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px;" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', '<?php if (!empty($pfamily)) print $pfamily->getXref(); ?>');">
+						<div class="person_box" dir="<?php print $TEXT_DIRECTION; ?>" id="box_<?php print $person->getXref();?>" style="text-align: <?php echo $TEXT_DIRECTION=="rtl" ? "right":"left"; ?>; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px; direction: <?php print $TEXT_DIRECTION; ?>" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', '<?php if (!empty($pfamily)) print $pfamily->getXref(); ?>');">
 						<?php 
-							$name = $person->getName(); 
+							$name = $person->getFullName(); 
 //							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
-							print $person->getSexImage($style).PrintReady($name); 
+							print PrintReady($person->getSexImage($style)." ".$name); 
 						?><br />
-						<?php if (!is_null($spouse)) {$name = $spouse->getName(); 
+						<?php if (!is_null($spouse)) {$name = $spouse->getFullName(); 
 //						if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")";
-						print $spouse->getSexImage($style).PrintReady($name); } else print "<br />\n"; ?>
+						print PrintReady($spouse->getSexImage($style)." ".$name); 
+						} else print "<br />\n"; ?>
 						
 						</div>
 					</td>

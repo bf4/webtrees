@@ -324,7 +324,7 @@ class PGVServiceLogic extends GenealogyService
 		{
 			if (!empty($gedcom))
 			{
-				if (empty($_SESSION['readonly'])&& PGV_USER_CAN_EDIT && displayDetailsById($RID))
+				if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($RID))
 				{
 					$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedcom);
 					$success = replace_gedrec($RID, $gedrec);
