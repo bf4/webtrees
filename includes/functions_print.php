@@ -317,7 +317,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		$ct = preg_match("/1 $fact/", $indirec, $nmatch);
 		if ($ct>0) $classfacts .= " $fact";
 	}
-	$genderImage = " ".$person->getSexImage('', "box-$boxID-gender");
+	if ($PEDIGREE_SHOW_GENDER)
+		$genderImage = " ".$person->getSexImage('', "box-$boxID-gender");
 	if ($SHOW_ID_NUMBERS) {
 		if ($TEXT_DIRECTION=="ltr") $showid .= "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
 		else $showid .= "<span class=\"details$style\">" . getRLM() . "($pid)" . getRLM() . " </span>";
