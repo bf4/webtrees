@@ -383,8 +383,9 @@ function print_fact(&$eventObj, $noedit=false) {
 				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
 				if ($ct>0) {
 					if ($SHOW_FACT_ICONS)
-						print $eventObj->Icon().' ';
-					print $factarray["CEME"].": ".$match[1]."<br />\n";
+						//print $eventObj->Icon().' '; // print incorrect fact icon !!!
+						print "<img src=\"{$PGV_IMAGE_DIR}/facts/CEME.gif\" alt=\"{$factarray["CEME"]}\" title=\"{$factarray["CEME"]}\" align=\"middle\" /> ";
+					print "<b>".$factarray["CEME"].":</b> ".$match[1]."<br />\n";
 				}
 			//-- print address structure
 			if ($fact!="ADDR") {
@@ -454,8 +455,9 @@ function print_fact(&$eventObj, $noedit=false) {
 						if (isset($factarray[$factref])) $label = $factarray[$factref];
 						else $label = $factref;
 						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) 
-							print $eventObj->Icon().' ';
-					else print "<span class=\"label\">".$label.": </span>";
+							//print $eventObj->Icon().' '; // print incorrect fact icon !!!
+							print "<img src=\"{$PGV_IMAGE_DIR}/facts/".$factref.".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
+						else print "<span class=\"label\">".$label.": </span>";
 						$value = trim($match[$i][2]);
 						if (isset($pgv_lang[strtolower($value)])) print $pgv_lang[strtolower($value)];
 						else print PrintReady($value);
@@ -676,11 +678,12 @@ function print_media_links($factrec, $level,$pid='') {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
 				}
 				if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() .  PrintReady($mediaTitle)."</i>";
-				else print "<i>".PrintReady($mediaTitle)."</i>";
+				else print "<i>".PrintReady($mediaTitle)."</i><br />";
 				if(empty($SEARCH_SPIDER)) {
 					print "</a>";
 				}
-
+				// NOTE: Print the notes of the media
+				print print_fact_notes($row["m_gedrec"], 1);
 				// NOTE: Print the format of the media
 				if (!empty($row["m_ext"])) {
 					print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$row["m_ext"]."</span>";
