@@ -118,7 +118,7 @@ $pgv_lang["folder_submitted"]          			= "Twój folder został wysłany";
 $pgv_lang["folder_problem"]             		= "Wystąpił problem podczas dodawania twojego folderu, spróbuj jeszcze raz";
 
 // -- Missing Information Help 
-$pgv_lang["ra_missing_info_help"] = "Ten obszar wyświetla brakujące informacje o rekordzie. Wybierz element i folder po czym naciśnij przycisk Dodaj zadanie aby utworzyć zadanie dla brakującego elementu. Już utworzone zadania będą wyświetlone ze znacznikiem 'Pokaż' zamiast opcji zaznaczenia.<br /><a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">Naciśnij tutaj aby otworzyć podręcznik na pełnym ekranie.</a>";
+$pgv_lang["ra_missing_info_help"] = "Ten obszar wyświetla brakujące informacje o rekordzie. Wybierz element i folder po czym naciśnij przycisk Dodaj zadanie aby utworzyć zadanie dla brakującego elementu. Już utworzone zadania będą wyświetlone ze znacznikiem 'Pokaż' zamiast opcji zaznaczenia.<br />";
 
 // -- RA_LISTLOGS MESSAGES
 $pgv_lang["task_entry"]						= "Utwórz nowe zadanie";
