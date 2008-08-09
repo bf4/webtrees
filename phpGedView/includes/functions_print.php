@@ -2468,7 +2468,7 @@ function init_calendar_popup() {
 function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='', $filter='') {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
-	$text = $pgv_lang["find_id"];
+	$text = $pgv_lang["find_individual"];
 	if (empty($ged)) $ged=$GEDCOM;
 	if (isset($PGV_IMAGES["indi"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indi"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -2497,7 +2497,7 @@ function print_findfamily_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_family"];
+	$text = $pgv_lang["find_familyid"];
 	if (isset($PGV_IMAGES["family"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["family"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findFamily(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";
