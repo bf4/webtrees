@@ -140,8 +140,8 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= print_findsource_link("gid{$uniqueID}","",true);
 
 		$content .= "\n<br />".$pgv_lang["add_fav_or_enter_url"];
-		$content .= "\n<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
-		$content .= "\n<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
+		$content .= "\n<table><tr><td>".$pgv_lang["url"]."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>";
+		$content .= "\n<tr><td>".$pgv_lang["title"]."</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>";
 		if ($block) $content .= "\n</td></tr><tr><td><br />";
 		else $content .= "\n</td><td>";
 		$content .= "\n".$pgv_lang["add_fav_enter_note"];
