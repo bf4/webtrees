@@ -383,7 +383,8 @@ class Event {
 		else $ret = GedcomDate::Compare($adate, $bdate);
 		if ($ret==0) {
 			$ret = $a->sortOrder - $b->sortOrder;
-			//if ($ret==0) $ret = Event::CompareType($a, $b);
+			//-- if dates are the same they should be ordered by their fact type
+			if ($ret==0) $ret = Event::CompareType($a, $b);
 		}
 //		print "[".$a->getTag().":".$adate->isOK().":".$adate->MinJD()."-".$adate->MaxJD()." ".$b->getTag().":".$bdate->isOK().":".$bdate->MinJD()."-".$bdate->MaxJD()." ".$ret."] ";
 		return $ret;

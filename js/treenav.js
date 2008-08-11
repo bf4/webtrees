@@ -246,18 +246,19 @@ function NavTree(outerId, innerId, name, xref) {
 		//-- load up any other people to fill in the page
 		this.loadChildren(this.innerPort);
  		this.loadParents(this.innerPort);
- 		
-		x = this.rootTable.offsetWidth/2;
-		y = this.rootTable.offsetHeight/2;
-		cx = this.outerPort.offsetWidth/2;
-		cy = this.outerPort.offsetHeight/2;
-		x = cx-x;
-		y = cy-y;
-		x = (this.innerPort.offsetLeft+x);
-		y = (this.innerPort.offsetTop+y);
-		//alert(x+" "+y);
-		this.innerPort.style.top = y+'px';
-		this.innerPort.style.left = x+'px';
+ 		if (this.rootTable) {
+			x = this.rootTable.offsetWidth/2;
+			y = this.rootTable.offsetHeight/2;
+			cx = this.outerPort.offsetWidth/2;
+			cy = this.outerPort.offsetHeight/2;
+			x = cx-x;
+			y = cy-y;
+			x = (this.innerPort.offsetLeft+x);
+			y = (this.innerPort.offsetTop+y);
+			//alert(x+" "+y);
+			this.innerPort.style.top = y+'px';
+			this.innerPort.style.left = x+'px';
+		}
 	}
 
 	this.drawViewport = function(element) {
@@ -317,7 +318,7 @@ function NavTree(outerId, innerId, name, xref) {
 	 * Check if any of the parent boxes need to be loaded
 	 */
 	this.loadParents = function(elNode) {
-		if (elNode && elNode.offsetLeft + this.rootTable.offsetWidth < this.outerPort.offsetWidth+40) {
+		if (elNode && this.rootTable && elNode.offsetLeft + this.rootTable.offsetWidth < this.outerPort.offsetWidth+40) {
 		  	var chil = document.getElementsByName(this.name+'_pload');
 		  	if (chil.length>0) {
 		  		//-- give the user some feedback that we are loading data
