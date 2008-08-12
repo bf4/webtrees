@@ -26,6 +26,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["GOOGLEMAP_PH_help"]					12 Aug 2008			 w
 *$pgv_lang["PLE_PLACES_help"]					30 May 2008          f,W, added description of search methods
 *$pgv_lang["PL_EDIT_LOCATION_help"]				30 May 2008          f
 *$pgv_lang["PL_ADD_LOCATION_help"]				30 May 2008          f
