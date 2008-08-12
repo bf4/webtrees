@@ -28,7 +28,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Localise a date.
+// Localise a date. Lokalizacja daty.
 ////////////////////////////////////////////////////////////////////////////////
 function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	global $pgv_lang;
@@ -83,7 +83,7 @@ function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 		$q2=$pgv_lang[$q2];
 }
 ////////////////////////////////////////////////////////////////////////////////
-// Localise an age.
+// Localise an age. Lokalizacja wieku.
 ////////////////////////////////////////////////////////////////////////////////
 function age_localisation_pl(&$agestring, &$show_years) {
 	global $pgv_lang;
@@ -147,7 +147,7 @@ function age_localisation_pl(&$agestring, &$show_years) {
 	);
 }
 ////////////////////////////////////////////////////////////////////////////////
-// Localise a date differences.
+// Localise a date differences. Lokalizacja różnic dat.
 ////////////////////////////////////////////////////////////////////////////////
 function date_diff_localisation_pl(&$label, &$gap) {
 	global $pgv_lang;
@@ -162,18 +162,141 @@ function date_diff_localisation_pl(&$label, &$gap) {
 	else if ($gap != 0) $label .= $gap." ".$pgv_lang["months"]; // x miesięcy
 }
 ////////////////////////////////////////////////////////////////////////////////
-// Localise a number of people.
+// Localise a number of people. Lokalizacja liczby osób.
 ////////////////////////////////////////////////////////////////////////////////
 function num_people_localisation_pl(&$count) {
 	global $pgv_lang;
 
 	if ($count == 1)
-		print "<br /><b>".$count." ".$pgv_lang["individual"]."</b>";
+		print "<br /><b>".$count." ".$pgv_lang["individual"]."</b>"; // 1 osoba
 	else if ($count > 1 && $count < 5)
-		print "<br /><b>".$count." ".$pgv_lang["individuals"]."</b>";
+		print "<br /><b>".$count." ".$pgv_lang["individuals"]."</b>"; // 2-4 osoby
 	else if ($count > 21 && substr($count, -1, 1) > 1 && substr($count, -1, 1) < 5 && substr($count, -2, 1) != 1)
-		print "<br /><b>".$count." ".$pgv_lang["individuals"]."</b>";
+		print "<br /><b>".$count." ".$pgv_lang["individuals"]."</b>"; // x2-x4 osoby
 	else
-		print "<br /><b>".$count." ".$pgv_lang["stat_individuals"]."</b>";
+		print "<br /><b>".$count." ".$pgv_lang["stat_individuals"]."</b>"; // x osób
+}
+///////////////////////////////////////////////////////////////////////////////////////////
+// Localise the _AKAN, _AKA, ALIA and _INTE facts. Lokalizacja faktów _AKAN, _AKA, ALIA i _INTE.
+///////////////////////////////////////////////////////////////////////////////////////////
+function fact_AKA_localisation_pl(&$fact, &$pid) {
+	global $factarray;
+	
+	$person = Person::getInstance($pid);
+	$sex = $person->getSex();
+	if ($fact == "_INTE") {
+		if ($sex == "M")	  $factarray[$fact] = "Pochowany"; // mężczyzna
+		else if ($sex == "F") $factarray[$fact] = "Pochowana"; // kobieta
+	}
+	else {
+		if ($sex == "M")	  $factarray[$fact] = "Znany także jako"; // mężczyzna
+		else if ($sex == "F") $factarray[$fact] = "Znana także jako"; // kobieta
+	}
+}
+////////////////////////////////////////////////////////////////////////////////
+// Localise the close relatives facts. Lokalizacja faktów dotyczących bliskich
+////////////////////////////////////////////////////////////////////////////////
+function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
+	global $factarray;
+	
+	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
+	if ($ct>0) $pid2 = $match[0][1];
+	if (isset($pid2)) {
+		$sex1 = Person::getInstance($pid)->getSex();
+		$sex2 = Person::getInstance($pid2)->getSex();
+	
+		if ($explode_fact[1] == "BIRT") {
+			switch ($explode_fact[2]) {
+			case "SIBL":
+				if ($sex2 == "M")		$factarray[$fact] = "Narodziny brata";
+				else if ($sex2 == "F")  $factarray[$fact] = "Narodziny siostry";
+				break;
+			case "GCHI":
+				if ($sex2 == "M")		$factarray[$fact] = "Narodziny wnuka";
+				else if ($sex2 == "F")  $factarray[$fact] = "Narodziny wnuczki";
+				break;
+			case "GGCH":
+				if ($sex2 == "M")		$factarray[$fact] = "Narodziny prawnuka";
+				else if ($sex2 == "F")  $factarray[$fact] = "Narodziny prawnuczki";
+				break;
+			case "COUS":
+				if ($sex2 == "M")		$factarray[$fact] = "Narodziny kuzyna";
+				else if ($sex2 == "F")  $factarray[$fact] = "Narodziny kuzynki";
+				break;
+			case "FSIB":
+				if ($sex2 == "M")		$factarray[$fact] = "Narodziny brata ojca";
+				else if ($sex2 == "F")  $factarray[$fact] = "Narodziny siostry ojca";
+				break;
+			case "MSIB":
+				if ($sex2 == "M")		$factarray[$fact] = "Narodziny brata matki";
+				else if ($sex2 == "F")  $factarray[$fact] = "Narodziny siostry matki";
+				break;
+			case "NEPH":
+				$node = get_relationship($pid, $pid2);
+				$sex3 = Person::getInstance($node["path"][1])->getSex();
+				if ($sex2 == "M") {
+					if ($sex3 == "M")		$factarray[$fact] = "Narodziny bratanka";
+					else if ($sex3 == "F")	$factarray[$fact] = "Narodziny siostrzeńca";
+				}
+				else if ($sex2 == "F") {
+					if ($sex3 == "M")		$factarray[$fact] = "Narodziny bratanicy";
+					else if ($sex3 == "F")	$factarray[$fact] = "Narodziny siostrzenicy";
+				}
+				break;
+			}
+		}
+		else if ($explode_fact[1] != "") {
+			switch ($explode_fact[2]) {
+			case "SIBL":
+				if ($sex2 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." brata";
+				else if ($sex2 == "F")  $factarray[$fact] = $factarray[$explode_fact[1]]." siostry";
+				break;
+			case "GCHI":
+				if ($sex2 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." wnuka";
+				else if ($sex2 == "F")  $factarray[$fact] = $factarray[$explode_fact[1]]." wnuczki";
+				break;
+			case "GGCH":
+				if ($sex2 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." prawnuka";
+				else if ($sex2 == "F")  $factarray[$fact] = $factarray[$explode_fact[1]]." prawnuczki";
+				break;
+			case "GPAR":
+				if ($sex2 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." dziadka";
+				else if ($sex2 == "F")  $factarray[$fact] = $factarray[$explode_fact[1]]." babci";
+				break;
+			case "GGPA":
+				if ($sex2 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." pradziadka";
+				else if ($sex2 == "F")  $factarray[$fact] = $factarray[$explode_fact[1]]." prababci";
+				break;
+			case "COUS":
+				if ($sex2 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." kuzyna";
+				else if ($sex2 == "F")  $factarray[$fact] = $factarray[$explode_fact[1]]." kuzynki";
+				break;
+			case "FSIB":
+				if ($sex2 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." brata ojca";
+				else if ($sex2 == "F")  $factarray[$fact] = $factarray[$explode_fact[1]]." siostry ojca";
+				break;
+			case "MSIB":
+				if ($sex2 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." brata matki";
+				else if ($sex2 == "F")  $factarray[$fact] = $factarray[$explode_fact[1]]." siostry matki";
+				break;
+			case "SPOU":
+				if ($sex2 == "M"  || $sex1 == "F") 		$factarray[$fact] = $factarray[$explode_fact[1]]." męża";
+				else if ($sex2 == "F"  || $sex1 == "M") $factarray[$fact] = $factarray[$explode_fact[1]]." żony";
+				break;
+			case "NEPH":
+				$node = get_relationship($pid, $pid2);
+				$sex3 = Person::getInstance($node["path"][1])->getSex();
+				if ($sex2 == "M") {
+					if ($sex3 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." bratanka";
+					else if ($sex3 == "F")	$factarray[$fact] = $factarray[$explode_fact[1]]." siostrzeńca";
+				}
+				else if ($sex2 == "F") {
+					if ($sex3 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." bratanicy";
+					else if ($sex3 == "F")	$factarray[$fact] = $factarray[$explode_fact[1]]." siostrzenicy";
+				}
+				break;
+			}
+		}
+	}
 }
 ?>

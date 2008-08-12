@@ -1969,12 +1969,30 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				}
 				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
 				if ($cr > 0) {
-					$rela = get_sosa_name($relamatch[0][1]);
+					$rela = ucwords(get_sosa_name($relamatch[0][1]));
 				}
 				else {
 					if (isset($pgv_lang[$key])) $rela = $pgv_lang[$key];
 					else if (isset($factarray[strtoupper($key)])) $rela = $factarray[strtoupper($key)];
 					else $rela = $rmatch[1];
+					if ($key == "nephew") {
+						$node = get_relationship($pid, $pid2);
+						$sex3 = Person::getInstance($node["path"][1])->getSex();
+						if ($sex3 == "M")  $rela = ucwords($pgv_lang["bosa_brothers_offspring_2"]);
+						else if ($sex3 == "F")  $rela = ucwords($pgv_lang["bosa_sisters_offspring_2"]);
+					}
+					else if ($key == "niece") {
+						$node = get_relationship($pid, $pid2);
+						$sex3 = Person::getInstance($node["path"][1])->getSex();
+						if ($sex3 == "M")  $rela = ucwords($pgv_lang["bosa_brothers_offspring_3"]);
+						else if ($sex3 == "F")  $rela = ucwords($pgv_lang["bosa_sisters_offspring_3"]);
+					}
+					else if ($key == "uncle" || $key == "aunt") {
+						$node = get_relationship($pid, $pid2);
+						$sex3 = Person::getInstance($node["path"][1])->getSex();
+						if ($sex3 == "M")  $rela = ucwords($pgv_lang["sosa_{$key}_2"]);
+						else if ($sex3 == "F")  $rela = ucwords($pgv_lang["sosa_{$key}_3"]);
+					}
 				}
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
