@@ -418,7 +418,7 @@ class TreeNav {
 		else $style = "width: ".(10+$this->zoomLevel)."; height: ".(10+$this->zoomLevel).";";
 		if (empty($person)) $person = $this->rootPerson;
 		if (empty($person)) return;
-		if (!$person->canDisplayDetails()) return;
+//		if (!$person->canDisplayDetails()) return;
 		$mother = null;
 		$father = null;
 		
@@ -555,7 +555,7 @@ class TreeNav {
 		else $style = "width: ".(10+$this->zoomLevel)."; height: ".(10+$this->zoomLevel).";";
 		if (empty($person)) $person = $this->rootPerson;
 		if (empty($person)) return;
-		if (!$person->canDisplayDetails()) return;
+//		if (!$person->canDisplayDetails()) return;
 		$mother = null;
 		$father = null;
 		if (!empty($pfamily)) $spouse = $pfamily->getSpouse($person);
