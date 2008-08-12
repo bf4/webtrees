@@ -320,6 +320,7 @@ $factarray["_BURI_FATH"] = "Burial of father";
 $factarray["_CREM_FATH"] = "Cremation of father";
 
 $factarray["_MARR_FAMC"] = "Marriage of parents";
+$factarray["_MARB_FAMC"] = "Marriage Bann of parents";
 
 $factarray["_MARR_MOTH"] = "Marriage of mother";
 $factarray["_MARB_MOTH"] = "Marriage Bann of mother";

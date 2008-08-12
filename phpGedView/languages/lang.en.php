@@ -821,8 +821,8 @@ $pgv_lang["daughter_in_law"]		= "Daughter-in-law";
 $pgv_lang["uncle_in_law"]			= "Uncle-in-law";
 $pgv_lang["aunt_in_law"]			= "Aunt-in-law";
 $pgv_lang["cousin_in_law"]			= "Cousin-in-law";
-$pgv_lang["m_cousin_in_law"]		= "Male Cousin-in-law";
-$pgv_lang["f_cousin_in_law"]		= "Female Cousin-in-law";
+$pgv_lang["m_cousin_in_law"]		= "Cousin-in-law";
+$pgv_lang["f_cousin_in_law"]		= "Cousin-in-law";
 $pgv_lang["step_son"]		        = "step son";
 $pgv_lang["step_daughter"]	    	= "step daughter";
 

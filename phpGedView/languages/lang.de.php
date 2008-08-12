@@ -718,6 +718,8 @@ $pgv_lang["daughter_in_law"]			= "Schwiegertochter";
 $pgv_lang["uncle_in_law"]				= "Schwiegeronkel";
 $pgv_lang["aunt_in_law"]				= "Schwiegertante";
 $pgv_lang["cousin_in_law"]				= "Schwiegercousin";
+$pgv_lang["m_cousin_in_law"]			= "Schwiegercousin";
+$pgv_lang["f_cousin_in_law"]			= "Schwiegercousine";
 $pgv_lang["step_son"]					= "Stiefsohn";
 $pgv_lang["step_daughter"]				= "Stieftochter";
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
