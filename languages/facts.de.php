@@ -324,6 +324,9 @@ $factarray["_DEAT_FATH"] = "Vater: Tod";
 $factarray["_BURI_FATH"] = "Vater: Beerdigung";
 $factarray["_CREM_FATH"] = "Vater: Einäscherung";
 
+$factarray["_MARR_FAMC"] = "Eltern: Ehe";
+$factarray["_MARB_FAMC"] = "Eltern: Eheaufgebot";
+
 $factarray["_MARR_MOTH"] = "Mutter: Ehe";
 $factarray["_MARB_MOTH"] = "Mutter: Eheaufgebot";
 $factarray["_DEAT_MOTH"] = "Mutter: Tod";
