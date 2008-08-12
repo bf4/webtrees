@@ -324,11 +324,12 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		else $showid .= "<span class=\"details$style\">" . getRLM() . "($pid)" . getRLM() . " </span>";
 	}
 	if (strlen($addname) > 0) {
-		if (hasRTLText($addname) && $style=="1") $addname  = "<br /><span id=\"addnamedef-$boxID\" class=\"name2\"> ".PrintReady($addname)."</span><br />";
-		$addname = "<br /><span id=\"addnamedef-$boxID\" class=\"name$style\"> ".PrintReady($addname)."</span><br />";
+		$tempStyle = $style;
+		if (hasRTLText($addname) && $style=='1') $tempStyle = '2';
+		$addname = "<br /><span id=\"addnamedef-$boxID\" class=\"name$tempStyle\"> ".PrintReady($addname)."</span><br />";
 	}
 	if ($SHOW_LDS_AT_GLANCE) {
-		$addname .= "<span class=\"details$style\">".get_lds_glance($indirec)."</span>";
+		$addname = ' <span class="details$style">'.get_lds_glance($indirec).'</span>' . $addname;
 	}
 
 		if ($show_full) {
