@@ -416,6 +416,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function print_name_record(&$event) {
 		global $pgv_lang, $factarray, $NAME_REVERSE;
+		global $lang_short_cut, $LANGUAGE;
 		
 		if (!$event->canShowDetails()) return false;
 		$factrec = $event->getGedComRecord();
@@ -450,6 +451,14 @@ class IndividualControllerRoot extends BaseController {
 		for($i=0; $i<$ct; $i++) {
 			$fact = trim($nmatch[$i][1]);
 			if (($fact!="SOUR")&&($fact!="NOTE")) {
+				if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
+					// Allow special processing for different languages
+					$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+					if (function_exists($func)) {
+						// Localise the AKA fact
+						$func($fact, $this->pid);
+					}
+				}
 				print "\n\t\t\t<span class=\"label\">";
 				if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
 				else if (isset($factarray[$fact])) print $factarray[$fact];

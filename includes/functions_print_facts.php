@@ -69,11 +69,11 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $nonfacts;
 	global $PGV_IMAGE_DIR;
 	global $pgv_lang, $GEDCOM;
+	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS;
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
-	global $SHOW_FACT_ICONS;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
 	
@@ -119,6 +119,23 @@ function print_fact(&$eventObj, $noedit=false) {
 		}
 		// -- handle generic facts
 		if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
+			if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
+				// Allow special processing for different languages
+				$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func)) {
+					// Localise the AKA or _INTE facts
+					$func($fact, $pid);
+				}
+			}
+			$explode_fact = explode("_", $fact);
+			if (!empty($explode_fact[1]) && !empty($explode_fact[2])) {
+				// Allow special processing for different languages
+				$func="cr_facts_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func)) {
+					// Localise close relatives facts
+					$func($factrec, $fact, $explode_fact, $pid);
+				}
+			}
 			$factref = $fact;
 			if (!$eventObj->canShow()) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
@@ -339,7 +356,6 @@ function print_fact(&$eventObj, $noedit=false) {
 					if (strstr($gedrec, "INDI")!==false) print "<a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">".get_person_name($match[1])."</a><br />";
 					else if ($fact=="REPO") print_repository_record($match[1]);
 					else print_submitter_info($match[1]);
-
 				}
 				else if ($fact=="ALIA") {
 					//-- strip // from ALIA tag for FTM generated gedcoms

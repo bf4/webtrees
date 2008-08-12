@@ -1015,6 +1015,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
+	global $lang_short_cut, $LANGUAGE;
 	
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
@@ -1145,6 +1146,14 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="DATE") print_help_link("def_gedcom_date_help", "qm", "date");
 		else if ($fact=="RESN") print_help_link($fact."_help", "qm");
 		else print_help_link("edit_".$fact."_help", "qm");
+	}
+	if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
+		// Allow special processing for different languages
+		$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+		if (function_exists($func)) {
+			// Localise the AKA fact
+			$func($fact, $pid);
+		}
 	}
 	if ($GLOBALS["DEBUG"]) print $element_name."<br />\n";
 	if (!empty($label)) print $label;
@@ -1981,7 +1990,7 @@ function create_add_form($fact) {
  */
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
-	global $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
+	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 	global $lang_short_cut, $LANGUAGE;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
@@ -2053,6 +2062,14 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 					$text=$conversion_function($text);
 				else
 					$text=default_gedcom_to_edit_date($text);
+			}
+			if ($type=="_AKAN" || $type=="_AKA" || $type=="ALIA") {
+				// Allow special processing for different languages
+				$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func)) {
+					// Localise the AKA fact
+					$func($type, $pid);
+				}
 			}
 			$subrecord = $level." ".$type." ".$text;
 			if ($inSource && $type=="DATE") add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
