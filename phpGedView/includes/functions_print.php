@@ -2030,9 +2030,20 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$tmp=new Person($gedrec);
 				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
-				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
-				if (!empty($age))
-					print " ({$pgv_lang['age']} {$age})";
+				$death_date=$tmp->getDeathDate(false);
+
+				if (!strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0) {
+					// After death, print time since death
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $event_date), true);
+					if (!empty($age))
+						if (GedcomDate::GetAgeGedcom($death_date, $event_date)=="0d") print " (".$pgv_lang["at_death_day"].")";
+						else print " (".$age." ".$pgv_lang["after_death"].")";
+				}
+				else {
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
+					if (!empty($age))
+						print " ({$pgv_lang['age']} {$age})";
+				}
 			}
 
 			// RELAtionship calculation : for a family print relationship to both spouses
@@ -2191,11 +2202,12 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 							$html.=' ('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
 					}
 				}
-				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>0) {
+				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>=0) {
 					// After death, print time since death
-					$age=GedcomDate::GetAgeGedcom($death_date, $date);
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $date), true);
 					if (!empty($age))
-						$html.=' ('.get_age_at_event($age, true).' '.$pgv_lang['after_death'].')';
+						if (GedcomDate::GetAgeGedcom($death_date, $date)=="0d") $html.=' ('.$pgv_lang['at_death_day'].')';
+						else $html.=' ('.$age.' '.$pgv_lang['after_death'].')';
 				}
 			}
 		}

@@ -340,6 +340,7 @@ $pgv_lang["skip_surnames"]			= "Pomiń listę nazwisk";
 $pgv_lang["show_surnames"]			= "Pokaż listę nazwisk";
 $pgv_lang["all"]					= "Wszystkie";
 $pgv_lang["after_death"]        	= "po śmierci";
+$pgv_lang["at_death_day"]      		= "w dniu śmierci";
 $pgv_lang["year1"]					= "rok";
 $pgv_lang["month1"]					= "miesiąc";
 $pgv_lang["day1"]					= "dzień";

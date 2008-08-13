@@ -325,6 +325,7 @@ $factarray["_BURI_FATH"] = "Pogrzeb ojca";
 $factarray["_CREM_FATH"] = "Kremacja ojca";
 
 $factarray["_MARR_FAMC"] = "Ślub rodziców";
+$factarray["_MARB_FAMC"] = "Zapowiedzi przedmałżeńskie rodziców";
 
 $factarray["_MARR_MOTH"] = "Ślub matki";
 $factarray["_MARB_MOTH"] = "Zapowiedzi przedmałżeńskie matki";
