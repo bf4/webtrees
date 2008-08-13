@@ -38,8 +38,8 @@ $pgv_lang["generate_sitemap"]       = "Generar archivos de mapa del sitio";
 // Sitemap pages
 $pgv_lang["selected_item"]          = "Elementos seleccionados para almacenar en el mapa del sitio:";
 $pgv_lang["gedcoms_selected"]       = "GEDCOMs a almacenar en el mapa del sitio:";
-$pgv_lang["sitemaps_generated"]     = "Los siguiente archivos para el mapa del sitio se han generado y pueden ser descargados:";
-$pgv_lang["sitemaps_placement"]     = "Coloque todos los archivos en la raíz de su instalación de phpGedView.";
+$pgv_lang["sitemaps_generated"]     = "Los siguiente archivos para el mapa del sitio se han generado y pueden descargarse:";
+$pgv_lang["sitemaps_placement"]     = "Coloque todos los archivos en la raíz de su instalación de PhpGedView.";
 $pgv_lang["sm_indi_info"]			= "Información de Personas";
 $pgv_lang["sm_family_info"]			= "Información de familias";
 $pgv_lang["sm_individual_list"]		= "Lista de Personas";
