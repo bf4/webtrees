@@ -80,7 +80,7 @@ $pgv_lang["gm_standard_marker"]		= "Estándar";
 $pgv_lang["gm_no_coord"]			= "Este lugar no tiene coordenadas";
 $pgv_lang["gm_ph_placenames"]		= "Mostrar nombres recortados para los lugares";
 $pgv_lang["gm_ph_count"]			= "Mostrar totales de personas y familias";
-$pgv_lang["gm_ph_wheel"]			= "Use mouse wheel for zoom";
+$pgv_lang["gm_ph_wheel"]			= "Usar la rueda para acercar y alejar";
 $pgv_lang["gm_ph_controls"]			= "Ocultar los controles del mapa";
 
 // Texts used on the Places location page
@@ -129,7 +129,7 @@ $pgv_lang["list_inactive"]        	= "Haga clic aquí para mostrar los lugares i
 
 //Placecheck specific text
 $pgv_lang["placecheck"]				= "Comprobación de lugares";
-$pgv_lang["placecheck_text"]		= "Esto listará todos los sitios del archivo GEDCOM seleccionado. Por defecto NO SE INCLUIRÁN lugares que que corresponden completamente entre el archivo GEDCOM y las tablas GoogleMap";
+$pgv_lang["placecheck_text"]		= "Esto listará todos los sitios del archivo GEDCOM seleccionado. Por omisión NO SE INCLUIRÁN lugares que que corresponden completamente entre el archivo GEDCOM y las tablas GoogleMap";
 $pgv_lang["placecheck_top"]			= "Nivel más alto de la Jerarquía de Lugares";
 $pgv_lang["placecheck_one"]			= "Lugar de Nivel Uno";
 $pgv_lang["placecheck_select1"]		= "Seleccione el nivel más alto...";
