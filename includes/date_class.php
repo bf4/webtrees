@@ -1202,6 +1202,8 @@ class GedcomDate {
 			// If dates overlap, then can't calculate age.
 			if (GedcomDate::Compare($d1, $d2)) {
 				return $d1->date1->GetAge(true, $d2->MinJD());
+			} if (GedcomDate::Compare($d1, $d2)==0 && $d1->date1->minJD==$d2->MinJD()) {
+				return '0d';
 			} else {
 				return '';
 			}
