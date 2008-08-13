@@ -302,7 +302,7 @@ $pgv_lang["SHOW_ID_NUMBERS_help"]		= "~#pgv_lang[SHOW_ID_NUMBERS]#~<br /><br />T
 $pgv_lang["SHOW_LAST_CHANGE"]		= "הראה ברשימות את תאריך השינוי האחרון של רשומת ה-GEDCOM";
 $pgv_lang["SHOW_LAST_CHANGE_help"]		= "~#pgv_lang[SHOW_LAST_CHANGE]#~<br /><br />This option controls whether or not to show GEDCOM record last change date on lists.<br />";
 $pgv_lang["SHOW_EST_LIST_DATES"]		= "הראה תאריכים מוערכים עבור לידה ופטירה";
-$pgv_lang["SHOW_EST_LIST_DATES_help"]	= "~#pgv_lang[SHOW_EST_LIST_DATES]#~<br /><br />This option controls whether or not to show estimated dates for birth and death instead of leaving blanks on individual lists for individuals whose dates are not known.<br />";
+$pgv_lang["SHOW_EST_LIST_DATES_help"]	= "~#pgv_lang[SHOW_EST_LIST_DATES]#~<br /><br />This option controls whether or not to show estimated dates for birth and death instead of leaving blanks on individual lists and charts for individuals whose dates are not known.<br />";
 $pgv_lang["SHOW_PEDIGREE_PLACES"]		= "מספר הרמות של המקומות המוצגים בתיבות האישיות:";
 $pgv_lang["SHOW_PEDIGREE_PLACES_help"]	= "~#pgv_lang[SHOW_PEDIGREE_PLACES]#~<br /><br />This sets how much of the place information is shown in the person boxes on charts.<br /><br />Setting the value to 9 will guarantee to show all place levels.  Setting the value to 0 will hide places completely.  Setting the value to 1 will show the first level, setting it to 2 will show the first two levels, etc.<br />";
 $pgv_lang["MULTI_MEDIA"]				= "אפשר מאפיינים של מולטימדיה"; 
@@ -485,6 +485,13 @@ $pgv_lang["select_privacyfile_button"]	= "בחר קובץ פרטיות";
 $pgv_lang["PRIVACY_BY_YEAR"]		= "הגבל את הפרטיות לפי גיל האירוע";
 $pgv_lang["PRIVACY_BY_YEAR_help"]	= "~#pgv_lang[PRIVACY_BY_YEAR]#~<br /><br />The <b>#pgv_lang[PRIVACY_BY_YEAR]#</b> setting will hide the details of people based on how old they were at specific events regardless of whether they are dead or alive.<br /><br />Use this setting along with the <b>#pgv_lang[MAX_ALIVE_AGE]#</b> setting.  For example, if you made the Age setting 100 and set this option to <b>Yes</b>, all persons, alive or dead, born less than 100 years ago would be set to private.  People who were married less than 85 years ago and people who died less than 75 years ago would also be marked as private.  Please note that using this option will slow down your performance somewhat.<br />";
 
+// Google Translate
+$pgv_lang["google_translate"]			= "Google Translate"; 
+$pgv_lang["commit"]				= "בצע";
+$pgv_lang["commit_google"]			= "מסור שינויים של Google translate";
+$pgv_lang["commit_google_help"]		= "~#pgv_lang[commit_google]#~<br /><br />לחיצה על הקישור מאפשרת לשמור כל השינויים ש-Google translate תרגם. מתחת תמצא אינדיקטור של ההתקדמות של כתיבת התרגומים.<br /><br />";
+$pgv_lang["google_translate_help"]		= "~Google Translate API Addition to Language Tools~<br /><br />This tool is the quick translation mechanism which will give a hint to the translator rather than providing a complete translation.<br /><br />It is a two step process, first select the entries you want to edit, click the <b>#pgv_lang[google_translate]#</b> link, <b>#pgv_lang[commit]#</b> to allow each row to be commited or click the <b>#pgv_lang[commit_google]#</b> the changes and once the page is reloaded you would then edit the mistranslated entries by hand. This should speed up translation by an order of magnitude.<br /><br /><b>It can't guarantee the output will be correct!</b><br /><br />This tool isn't recommended to the complete translation of texts contains special chars (#, <, >, /) or recalls to other texts variables. This tool be unable to translate some texts as well.<br /><br />More info about Google Translate tool on site: <a href=http://www.google.com/intl/en/help/faq_translation.html>Google Translate — FAQ</a>.<br /><br />"; //@@
+
 //-- language edit utility
 $pgv_lang["lang_edit_help"]			= "~#pgv_lang[translator_tools]#~<br /><br />הדף מיועד לשמש מתרגמים. ניתן לתרגם, להשוות, ולייצא קבצי שפות. קיימת גם אפשרות לעזור למתרגם לקבוע את מקור הטכסט ש-PhpGedView מראה.<br /><br />ניתן להשתמש באפשרויות ותוכניות העזר הבאות:<br />";
 $pgv_lang["edit_langdiff"]			= "ערוך תוכן קבצי השפות";
@@ -565,7 +572,7 @@ $pgv_lang["lang_name_italian"]		= "איטלקית";
 $pgv_lang["lang_name_norwegian"]		= "נורבגית";
 $pgv_lang["lang_name_polish"]		= "פולנית";
 $pgv_lang["lang_name_portuguese"]		= "פורטוגזית";
-$pgv_lang["lang_name_portuguese-br"]	= "פורטוגזית (ברזיל)";
+//$pgv_lang["lang_name_portuguese-br"]	= "פורטוגזית (ברזיל)";
 $pgv_lang["lang_name_russian"]		= "רוסית";
 $pgv_lang["lang_name_spanish"]		= "ספרדית";
 $pgv_lang["lang_name_spanish-ar"]		= "ספרדית (אמריקה הלטינית)";
