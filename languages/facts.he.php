@@ -316,11 +316,16 @@ $factarray["_BURI_GGCH"] = "קבורת שלש/ה";
 $factarray["_CREM_GGCH"] = "שריפת שלש/ה"; 
 
 $factarray["_MARR_FATH"] = "נישואי אב";
+$factarray["_MARB_FATH"] = "הודעת נישואין של האב";
 $factarray["_DEAT_FATH"] = "פטירת אב";
 $factarray["_BURI_FATH"] = "קבורת אב"; 
 $factarray["_CREM_FATH"] = "שריפת אב"; 
 
+$factarray["_MARR_FAMC"] = "נישואי הורים";
+$factarray["_MARB_FAMC"] = "הודעת נישואין של הורים";
+
 $factarray["_MARR_MOTH"] = "נישואי אם";
+$factarray["_MARB_MOTH"] = "הודעת נישואין של האם";
 $factarray["_DEAT_MOTH"] = "פטירת אם";
 $factarray["_BURI_MOTH"] = "קבורת אם"; 
 $factarray["_CREM_MOTH"] = "שריפת אם"; 
