@@ -1,6 +1,6 @@
 <?php
 /**
- * Latin American Spanish texts
+ * Spanish FAQ texts for PhpGedView
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
@@ -20,9 +20,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
+ * @author PGV Developers
+ * @translator: Julio Sánchez Fernández
  * @package PhpGedView
  * @subpackage Languages
- * @author Eduardo Cociña
  * @version $Id$
  */
 
@@ -31,6 +32,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require "languages/editor.es.php";		// Load Spanish file instead
+require "languages/faqlist.es.php";		// Load Spanish file instead
 
 ?>
