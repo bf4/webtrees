@@ -326,7 +326,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if (strlen($addname) > 0) {
 		$tempStyle = $style;
 		if (hasRTLText($addname) && $style=='1') $tempStyle = '2';
-		$addname = "<br /><span id=\"addnamedef-$boxID\" class=\"name$tempStyle\"> ".PrintReady($addname)."</span><br />";
+		$addname = "<br /><span id=\"addnamedef-$boxID\" class=\"name$tempStyle\"> ".PrintReady($addname)."</span>";
 	}
 	if ($SHOW_LDS_AT_GLANCE) {
 		$addname = ' <span class="details$style">'.get_lds_glance($indirec).'</span>' . $addname;
