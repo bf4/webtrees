@@ -56,8 +56,8 @@ function get_age_at_event($agestring, $show_years) {
 	// Localise the age
 	$func($agestring, $show_years);
 
-	if (!empty($agestring))
-		$agestring="<span class=\"age\">{$agestring}</span>";
+//	if (!empty($agestring))
+//		$agestring="<span class=\"age\">{$agestring}</span>";
 	return $agestring;
 }
 

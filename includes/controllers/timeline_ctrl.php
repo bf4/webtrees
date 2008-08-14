@@ -240,7 +240,7 @@ class TimelineControllerRoot extends BaseController {
 					$birth_date=$indi->getEstimatedBirthDate();
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $gdate), false);
 					if (!empty($age))
-						print " ({$pgv_lang['age']} {$age})";
+						print '<span class="age">'.PrintReady(" ({$pgv_lang['age']} {$age})").'</span>';
 				}
 				print " {$desc}";
 				if ($SHOW_PEDIGREE_PLACES>0) {
