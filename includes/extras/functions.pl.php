@@ -299,4 +299,11 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 		}
 	}
 }
+////////////////////////////////////////////////////////////////////////////////
+// Localise the relationships. Lokalizacja pokrewieństwa.
+////////////////////////////////////////////////////////////////////////////////
+function rela_localisation_pl(&$rela) {
+	
+	print " ".ucfirst($rela).": ";
+}
 ?>

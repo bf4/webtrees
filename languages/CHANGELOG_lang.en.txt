@@ -44,6 +44,9 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["godson"]								15 August 2008			A
++$pgv_lang["goddaughter"]							15 August 2008			A
++$pgv_lang["godchild"]								15 August 2008			A
 *$pgv_lang["at_death_day"]							14 August 2008			W
 +$pgv_lang["at_death_day"]							13 August 2008			A
 *$pgv_lang["m_cousin_in_law"]						12 August 2008			w		Removed "Male" (no distinction in English)

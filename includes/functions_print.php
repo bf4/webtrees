@@ -1949,12 +1949,13 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
  */
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
-	global $PEDIGREE_FULL_DETAILS;
+	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
 	// get ASSOciate(s) ID(s)
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$ct; $i++) {
 		$level = substr($match[$i][0],0,1);
 		$pid2 = $match[$i][1];
+		if (empty($pid) && isset($match[1][1])) $pid = $match[1][1];
 		// get RELAtionship field
 		$autoRela = false;		// Indicates that the RELA information was automatically generated
 		$assorec = get_sub_record($level, "$level ASSO ", $factrec, $i+1);
@@ -1997,7 +1998,13 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
 //				if ($pid2==$pid) print "<span class=\"details_label\">";
-				print " {$rela}: ";
+				// Allow special processing for different languages
+				$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func))
+					// Localise the age diff
+					$func($rela);
+				else
+					print " {$rela}: ";
 //				if ($pid2==$pid) print "</span>";
 			}
 			else $rela = $factarray["RELA"]; // default
@@ -2033,7 +2040,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$death_date=$tmp->getDeathDate(false);
 				$ageText = '';
 
-				if (!strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0) {
+				if (!strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0 && $tmp->isDead()) {
 					// After death, print time since death
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $event_date), true);
 					if (!empty($age))
@@ -2055,12 +2062,12 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
-						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
 						$pid1 = $parents["WIFE"];
-						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
 					}
 				}
-				else if ($pid!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
+				else if ($pid!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
 
 		}
@@ -2158,7 +2165,6 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 
 	if (!is_object($eventObj)) pgv_error_handler(2, "Must use Event object", __FILE__, __LINE__);
 	$factrec = $eventObj->getGedcomRecord();
-
 	$html='';
 	// Recorded age
 	$fact_age=get_gedcom_value('AGE', 2, $factrec);
@@ -2193,7 +2199,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 				$birth_date=$person->getBirthDate(false);
 				$death_date=$person->getDeathDate(false);
 				$ageText = '';
-				if (GedcomDate::Compare($date, $death_date)<0 || $fact=='DEAT') {
+				if ((GedcomDate::Compare($date, $death_date)<0 || !$person->isDead()) || $fact=='DEAT') {
 					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age

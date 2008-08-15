@@ -1011,7 +1011,7 @@ class Person extends GedcomRecord {
 						$factrec .= "\n".trim($sdate);
 						if (!$sEvent->canShow()) $factrec .= "\n2 RESN privacy";
 						$factrec .= "\n2 ASSO @".$spouse->getXref()."@";
-						$factrec .= "\n3 RELA sosa_".($sosa*2);
+						$factrec .= "\n3 RELA *sosa_".($sosa*2);
 						// recorded as ASSOciate ?
 						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 						$event = new Event($factrec, 0);
@@ -1038,7 +1038,7 @@ class Person extends GedcomRecord {
 						$factrec .= "\n".trim($sdate);
 						if (!$sEvent->canShow()) $factrec .= "\n2 RESN privacy";
 						$factrec .= "\n2 ASSO @".$spouse->getXref()."@";
-						$factrec .= "\n3 RELA sosa_".($sosa*2+1);
+						$factrec .= "\n3 RELA *sosa_".($sosa*2+1);
 						// recorded as ASSOciate ?
 						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 						$event = new Event($factrec, 0);
@@ -1082,12 +1082,12 @@ class Person extends GedcomRecord {
 							$factrec .= "\n".trim($sdate);
 							if (!$sEvent->canShow()) $factrec .= "\n2 RESN privacy";
 							$factrec .= "\n2 ASSO @".$parent->getXref()."@";
-							$factrec .= "\n3 RELA ".$rela;
+							$factrec .= "\n3 RELA *".$rela;
 							if ($rela=="father") $rela2="stepmom";
 							else $rela2="stepdad";
 							if ($sfamid==$famid) $rela2="mother";
 							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($parent->getXref())."@";
-							$factrec .= "\n3 RELA ".$rela2;
+							$factrec .= "\n3 RELA *".$rela2;
 							//$this->indifacts[]=array(0, $factrec);
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
@@ -1408,10 +1408,10 @@ class Person extends GedcomRecord {
 						$rrec = get_sub_record(3, "3 RELA", $arec);
 						$rela = trim(substr($rrec, 7));
 						if (empty($rela)) $rela = "ASSO";
-						if (isset($pgv_lang[strtolower($rela)])) $rela = $pgv_lang[strtolower($rela)];
-						else if (isset($factarray[$rela])) $rela = $factarray[$rela];
 						// add an event record
-						$factrec = "1 EVEN\n2 TYPE ".$label."<br/>[ <span class=\"details_label\">".$rela."</span> ]";
+						$factrec = "1 EVEN\n2 TYPE ".$label."<br/>[ <span class=\"details_label\">";
+						if (isset($pgv_lang[strtolower($rela)])) $factrec .= $pgv_lang[strtolower($rela)]."</span> ]";
+						else if (isset($factarray[$rela])) $factrec .= $factarray[$rela]."</span> ]";
 						$factrec .= "\n".trim($sdate);
 						if (!$event->canShow()) $factrec .= "\n2 RESN privacy";
 						if ($typ=='FAM') {
@@ -1422,9 +1422,16 @@ class Person extends GedcomRecord {
 								if ($parents["WIFE"]) $factrec .= "\n2 ASSO @".$parents["WIFE"]."@"; //\n3 RELA ".$factarray[$fact];
 							}
 						}
-						else $factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$label;
+						else if ($fact=='CHR') {
+							$sex = Person::getInstance($rid)->getSex();
+							if ($sex == "M") $rela_chr="godson";
+							else if ($sex == "F") $rela_chr="goddaughter";
+							else $rela_chr="godchild";
+							$factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$rela_chr;
+						}
+						else $factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$fact;
 						//$factrec .= "\n3 NOTE ".$rela;
-						$factrec .= "\n2 ASSO @".$person->getXref()."@\n3 RELA ".$rela;
+						$factrec .= "\n2 ASSO @".$person->getXref()."@\n3 RELA *".$rela;
 						// check if this fact already exists in the list
 						$found = false;
 						if ($sdate) foreach($this->indifacts as $k=>$v) {
