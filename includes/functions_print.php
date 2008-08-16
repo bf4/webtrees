@@ -2161,7 +2161,7 @@ function format_parents_age($pid) {
  * @param boolean $time		option to print TIME value
  */
 function format_fact_date(&$eventObj, $anchor=false, $time=false) {
-	global $factarray, $pgv_lang, $SEARCH_SPIDER;
+	global $factarray, $pgv_lang, $pid, $SEARCH_SPIDER;
 
 	if (!is_object($eventObj)) pgv_error_handler(2, "Must use Event object", __FILE__, __LINE__);
 	$factrec = $eventObj->getGedcomRecord();
@@ -2220,6 +2220,25 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 				}
 				if (!empty($ageText)) $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
 			}
+		}
+		else if (!is_null($person) && $person->getType()=='FAM') {
+			$indirec=find_person_record($pid);
+			$indi=new Person($indirec);
+			$birth_date=$indi->getBirthDate(false);
+			$death_date=$indi->getDeathDate(false);
+			$ageText = '';
+			if (GedcomDate::Compare($date, $death_date)<=0) {
+				$age=GedcomDate::GetAgeGedcom($birth_date, $date);
+				// Only show calculated age if it differs from recorded age
+				if (!empty($age) && $age>0) {
+					if (!empty($fact_age) && $fact_age!=$age ||
+					    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
+					    !empty($husb_age) && $indi->getSex()=='M' && $husb_age!= $age ||
+					    !empty($wife_age) && $indi->getSex()=='F' && $wife_age!=$age)
+						$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+				}
+			}
+			if (!empty($ageText)) $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
 		}
 	} else {
 		// 1 DEAT Y with no DATE => print YES
