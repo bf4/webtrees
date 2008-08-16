@@ -31,7 +31,7 @@
 // Function lightbox() for Lightbox Album - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
 // function lightbox_relatives2() {
-global $edit, $tabno, $mediacnt, $GEDCOM;
+global $edit, $tabno, $mediacnt, $GEDCOM, $pid;
 
 $edit=$edit;
 
@@ -96,6 +96,38 @@ $edit=$edit;
                                         </tr>
                                         <?php
                                 }
+
+								if (isset($people["children"])) {
+									$elderdate = $family->getMarriageDate();
+									foreach($people["children"] as $key=>$child) {
+									?>
+									<tr>
+										<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+										<td class="<?php print $this->getPersonStyle($child); ?>">
+											<?php
+                                            if ( ($child->canDisplayDetails()) ) {
+												if ($pid == $child->getXref()) {
+													// print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
+													print PrintReady(get_person_name($child->getXref()));
+													print "\n" ;
+												}else{
+													print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
+													print PrintReady(get_person_name($child->getXref()));
+													print "</a>" . "\n" ;
+												}
+                                            }else{
+												print $pgv_lang["private"];
+                                            }
+                                            ?>
+  
+										<?php //print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+										</td>
+									</tr>
+									<?php
+									$elderdate = $child->getBirthDate(false);
+									}
+								}
+
                                 ?>
                          <?php
                 }

@@ -176,7 +176,7 @@
 		if ($t==5){ // do nothing
 		}else{
 			echo "\n\n";
-			echo '<table border="0" class="facts_table" ><tr>', "\n";
+			echo '<table border="0" width=\"100%\" class="facts_table" ><tr>', "\n";
 			
 			echo '<td width="100" align="center" class="descriptionbox">';
 				if ($t==5){
