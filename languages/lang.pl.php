@@ -430,15 +430,15 @@ $pgv_lang["aav"]				= "Av";
 $pgv_lang["ell"]				= "Elul";
 $pgv_lang["muhar"]				= "Muharram";
 $pgv_lang["safar"]				= "Safar";
-$pgv_lang["rabia"]				= "Rabi\' al-awwal";
-$pgv_lang["rabit"]				= "Rabi\' al-thani";
+$pgv_lang["rabia"]				= "Rabi' al-awwal";
+$pgv_lang["rabit"]				= "Rabi' al-thani";
 $pgv_lang["jumaa"]				= "Jumada al-awwal";
 $pgv_lang["jumat"]				= "Jumada al-thani";
 $pgv_lang["rajab"]				= "Rajab";
-$pgv_lang["shaab"]				= "Sha\'aban";
+$pgv_lang["shaab"]				= "Sha'aban";
 $pgv_lang["ramad"]				= "Ramadan";
 $pgv_lang["shaww"]				= "Shawwal";
-$pgv_lang["dhuaq"]				= "Dhu al-Qi\'dah";
+$pgv_lang["dhuaq"]				= "Dhu al-Qi'dah";
 $pgv_lang["dhuah"]				= "Dhu al-Hijjah";
 $pgv_lang["b.c."]				= "p.n.e.";
 $pgv_lang["abt"]				= "ok.";
@@ -728,6 +728,7 @@ $pgv_lang["female_cousin_17"]	= "kuzynka siedemnastego stopnia";
 $pgv_lang["female_cousin_18"]	= "kuzynka osiemnastego stopnia";
 $pgv_lang["female_cousin_19"]	= "kuzynka dziwiętnastego stopnia";
 $pgv_lang["female_cousin_20"] 	= "kuzynka dwudziestego stopnia";
+$pgv_lang["female_cousin_n"]	= "kuzynka %d stopnia";
 
 // Only referenced from english specific functions
 $pgv_lang["removed_ascending_20"]  	= "dwadzieścia razy przesunięty(a) w górę";
