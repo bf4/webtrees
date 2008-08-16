@@ -310,7 +310,7 @@ function openPic(filename, width, height) {
 			$content .= "</div>"; // random_picture_container
 			if ($action!="ajax") {
 					global $THEME_DIR;
-					include($THEME_DIR."/templates/block_main_temp.php");
+					include($THEME_DIR."templates/block_main_temp.php");
 			}
 				else print $content;
 		}

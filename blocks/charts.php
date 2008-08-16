@@ -161,7 +161,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		
 	
 	global $THEME_DIR;
-	include($THEME_DIR."/templates/block_small_temp.php");
+	include($THEME_DIR."templates/block_small_temp.php");
 	// Restore GEDCOM configuration
 	unset($show_full);
 	if (isset($saveShowFull)) $show_full = $saveShowFull;
