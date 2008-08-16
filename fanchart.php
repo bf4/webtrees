@@ -309,7 +309,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				$tempURL = "javascript:// " . PrintReady(strip_tags($name));
 				if ($SHOW_ID_NUMBERS) $tempURL .= " (".$pid.")";
 				$imagemap .= "\" href=\"$tempURL\" ";
-				$tempURL = "fanchart?rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}&fan_width={$fan_width}&fan_style={$fan_style}";
+				$tempURL = "fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$PEDIGREE_GENERATIONS}&fan_width={$fan_width}&fan_style={$fan_style}";
 				if (!empty($view)) $tempURL .= "&view={$view}";
 				$count=0;
 				$lbwidth=200;
