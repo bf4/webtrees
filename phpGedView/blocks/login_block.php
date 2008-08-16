@@ -160,9 +160,9 @@ function print_login_block($block = true, $config="", $side, $index) {
 
 	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."/templates/block_small_temp.php");
+		include($THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."/templates/block_main_temp.php");
+		include($THEME_DIR."templates/block_main_temp.php");
 	}
 }
 ?>

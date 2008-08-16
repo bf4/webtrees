@@ -379,7 +379,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			}
 		}
 	global $THEME_DIR;
-	include($THEME_DIR."/templates/personbox_template.php");
+	include($THEME_DIR."templates/personbox_template.php");
 }
 
 /**
