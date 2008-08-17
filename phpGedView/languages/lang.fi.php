@@ -1092,7 +1092,7 @@ $pgv_lang["phpgedview_message"]	= "PhpGedView viesti";
 $pgv_lang["reset_default_blocks"]	= "Palauta alkuperäiset alueet";
 $pgv_lang["common_surnames"]	= "Yleisimmät sukunimet";
 $pgv_lang["default_news_title"]	= "Tervetuloa sukututkimukseesi";
-$pgv_lang["default_news_text"]	= "Tätä sukututkimussivustoa käyttää  <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>. Tämä sivu johdattelee tähän sukututkimukseen. Aloittaaksesi tietojen käsittelyn, valitse yksi kaaviomalli kaaviovalikosta, mene henkilöluetteloon tai hae nimi tai paikka.<br /><br />Mikäli sinulla on vaikeuksia käyttää sivustoa, näpäyttämällä Ohje-valikkoa saat tietoa kuinka käyttää parhaillaan katselemaasi sivua. <br /><br />Kiitos kun käyt tällä sivustolla.";
+$pgv_lang["default_news_text"]	= "Tätä sukututkimussivustoa käyttää  <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Tämä sivu johdattelee tähän sukututkimukseen. Aloittaaksesi tietojen käsittelyn, valitse yksi kaaviomalli kaaviovalikosta, mene henkilöluetteloon tai hae nimi tai paikka.<br /><br />Mikäli sinulla on vaikeuksia käyttää sivustoa, näpäyttämällä Ohje-valikkoa saat tietoa kuinka käyttää parhaillaan katselemaasi sivua. <br /><br />Kiitos kun käyt tällä sivustolla.";
 $pgv_lang["recent_changes"]		= "Viimeiset muutokset";
 $pgv_lang["recent_changes_block"]	= "Viimeisten muutosten alue";
 $pgv_lang["recent_changes_descr"]	= "Viimeisten muutosten alueella luetteloidaan GEDCOM-tiedostoon tehdyt muutokset viimeisen kuukauden aikana. Tämä alue pitää sinut ajan tasalla tehtyjen muutosten suhteen. Muutokset havaitan CHAN-merkitsimen avulla.";

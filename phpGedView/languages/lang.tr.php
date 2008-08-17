@@ -1016,7 +1016,7 @@ $pgv_lang["hit_count"]			= "Sayaç:";
 $pgv_lang["phpgedview_message"]		= "PhpGedView mesajı";
 $pgv_lang["common_surnames"]		= "Ençok kullanılan soy isimler listesi";
 $pgv_lang["default_news_title"]		= "Nesep tetkikine hoş geldiniz";
-$pgv_lang["default_news_text"]		= "Bu sitede bulunan seçere bilgileri <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a> yazılımı ile gösterilmektedir. Bu sayfada bu soyağacını tanıtan bilgiler bulunmaktadır. Bu bilgilere ulaşmak için 'Çizgeler' menüsünden bir çizgeyi seçin, ya da 'Listeler' menüsünden şahıs listesine gidin, veyahut sizi ilgilendiren bir soy ismini ya da yeri arayın.<br /><br />Bu siteyi gezerken bir sorunla karşılaşacak olursanız yardım simgesine tıklayıp bulunduğunuz sayfa hakkında gerekli yardımı bulabilirsiniz.<br /><br />Bu siteyi ziyaret ettiğiniz için teşekkür ederiz.";
+$pgv_lang["default_news_text"]		= "Bu sitede bulunan seçere bilgileri <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a> yazılımı ile gösterilmektedir. Bu sayfada bu soyağacını tanıtan bilgiler bulunmaktadır. Bu bilgilere ulaşmak için 'Çizgeler' menüsünden bir çizgeyi seçin, ya da 'Listeler' menüsünden şahıs listesine gidin, veyahut sizi ilgilendiren bir soy ismini ya da yeri arayın.<br /><br />Bu siteyi gezerken bir sorunla karşılaşacak olursanız yardım simgesine tıklayıp bulunduğunuz sayfa hakkında gerekli yardımı bulabilirsiniz.<br /><br />Bu siteyi ziyaret ettiğiniz için teşekkür ederiz.";
 $pgv_lang["reset_default_blocks"]	= "Kutuları varsayılan duruma sıfırla";
 $pgv_lang["recent_changes"]		= "En Son Değişiklikler";
 $pgv_lang["recent_changes_block"]	= "\"En son değişiklikler\" kutusu";

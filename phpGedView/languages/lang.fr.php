@@ -1307,7 +1307,7 @@ $pgv_lang["hit_count"]                  = "Compteur";
 $pgv_lang["phpgedview_message"]         = "Message PhpGedView";
 $pgv_lang["common_surnames"]            = "Principaux noms de familles";
 $pgv_lang["default_news_title"]         = "Bienvenue";
-$pgv_lang["default_news_text"]          = "Ce site utilise l'outil de généalogie <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>.<br /><br />Pour démarrer, faîtes un choix dans le menu <b>Diagrammes</b> ou dans le menu <b>Listes</b>.<br /><br />En cas de difficultés, reportez-vous au menu <b>Aide</b>.<br /><br />Merci de votre visite.";
+$pgv_lang["default_news_text"]          = "Ce site utilise l'outil de généalogie <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>.<br /><br />Pour démarrer, faîtes un choix dans le menu <b>Diagrammes</b> ou dans le menu <b>Listes</b>.<br /><br />En cas de difficultés, reportez-vous au menu <b>Aide</b>.<br /><br />Merci de votre visite.";
 $pgv_lang["reset_default_blocks"]       = "Retour aux blocs par défaut";
 $pgv_lang["recent_changes"]             = "Modifications récentes";
 $pgv_lang["recent_changes_block"]       = "Bloc «Modifications récentes»";

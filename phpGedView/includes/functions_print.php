@@ -442,7 +442,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
 	print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t\t";
 	if( $FAVICON ) {
-		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
+		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />\n";
 	}
 
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
@@ -463,10 +463,10 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		//print "<link href=\"".encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}&auth=basic")."\" rel=\"alternate\" type=\"$applicationType\" title=\"$GEDCOM_TITLE - " . $pgv_lang["authenticated_feed"] . "\" />\n\t";
 	}
 	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\" />";
-	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
+	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />\n";
 	if ($use_alternate_styles) {
 		if ($BROWSERTYPE != "other") {
-			print "<link rel=\"stylesheet\" href=\"".$THEME_DIR.$BROWSERTYPE.".css\" type=\"text/css\" media=\"all\" />";
+			print "<link rel=\"stylesheet\" href=\"".$THEME_DIR.$BROWSERTYPE.".css\" type=\"text/css\" media=\"all\" />\n";
 		}
 	}
 
@@ -480,9 +480,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	}
 	//	-------------- Lightbox ----------------
 
-	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\" />";
+	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\" />\n";
 	if ($BROWSERTYPE == "msie") print "<style type=\"text/css\">\nFORM { margin-top: 0px; margin-bottom: 0px; }\n</style>\n";
-	echo '<!-- ', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, ' -->', "\n";
+	//echo '<!-- ', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, ' -->', "\n";
 	if (isset($changelanguage))
 		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
 	else
@@ -541,7 +541,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 			print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
 		}
 		if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"".PrintReady(strip_tags($META_REVISIT), TRUE)."\" />\n";
-		echo '<meta name="generator" content="', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, ' - ', PGV_PHPGEDVIEW_URL, "\" />\n";
+		echo '<meta name="generator" content="', PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL, "\" />\n";
 		$META_AUTHOR = $old_META_AUTHOR;
 		$META_PUBLISHER = $old_META_PUBLISHER;
 		$META_COPYRIGHT = $old_META_COPYRIGHT;
