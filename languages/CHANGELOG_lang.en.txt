@@ -44,6 +44,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["default_news_text"]						17 August 2008			w		removed #VERSION# from text (all "lang.xx.php" files)
 +$pgv_lang["godson"]								15 August 2008			A
 +$pgv_lang["goddaughter"]							15 August 2008			A
 +$pgv_lang["godchild"]								15 August 2008			A
