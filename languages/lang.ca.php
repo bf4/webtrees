@@ -1277,7 +1277,7 @@ $pgv_lang["phpgedview_message"] 		= "Missatge PhpGedView";
 $pgv_lang["common_surnames"]			= "Cognoms més corrents";
 
 $pgv_lang["default_news_title"] 		= "Benvingut a la vostra Genealogia!";
-$pgv_lang["default_news_text"]		= "La informació genealògica d'aquest lloc és presentada mitjançant <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>. Aquesta és la pàgina d'inici i visió general.<br /><br />Per a accedir a les dades, escolliu un dels gràfics del menú, aneu a la llista de persones o cerqueu un nom o lloc.<br /><br />Si teniu algun dubte, polseu sobre el menú d'ajuda i obtindreu informació de com accedir i gestionar tots els seus recursos.<br /><br />Gràcies per visitar-nos!";
+$pgv_lang["default_news_text"]		= "La informació genealògica d'aquest lloc és presentada mitjançant <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Aquesta és la pàgina d'inici i visió general.<br /><br />Per a accedir a les dades, escolliu un dels gràfics del menú, aneu a la llista de persones o cerqueu un nom o lloc.<br /><br />Si teniu algun dubte, polseu sobre el menú d'ajuda i obtindreu informació de com accedir i gestionar tots els seus recursos.<br /><br />Gràcies per visitar-nos!";
 $pgv_lang["reset_default_blocks"]		= "Restaura els blocs per defecte";
 $pgv_lang["recent_changes"] 			= "Canvis recents";
 $pgv_lang["recent_changes_block"]		= "Canvis recents";

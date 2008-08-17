@@ -1330,7 +1330,7 @@ $pgv_lang["hit_count"]				= "Número de accesos:";
 $pgv_lang["phpgedview_message"] 	= "Mensaje de PhpGedView";
 $pgv_lang["common_surnames"]		= "Apellidos más comunes";
 $pgv_lang["default_news_title"] 	= "Bienvenido a Su Genealogía";
-$pgv_lang["default_news_text"]		= "La información genealógica de este sitio está gestionada por <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>.  Esta página suministra una introducción e información general de esta genealogía.<br /><br />Para comenzar a trabajar con los datos, elija una de las páginas de diagramas del menú de Diagramas, diríjase a la lista de Personas o busque un nombre o un lugar.<br /><br />Si tiene problemas con el uso del sitio, puede hacer clic en el icono de Ayuda para obtener información sobre cómo utilizar la página en la que se encuentra.<br /><br />Gracias por visitar este sitio.";
+$pgv_lang["default_news_text"]		= "La información genealógica de este sitio está gestionada por <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>.  Esta página suministra una introducción e información general de esta genealogía.<br /><br />Para comenzar a trabajar con los datos, elija una de las páginas de diagramas del menú de Diagramas, diríjase a la lista de Personas o busque un nombre o un lugar.<br /><br />Si tiene problemas con el uso del sitio, puede hacer clic en el icono de Ayuda para obtener información sobre cómo utilizar la página en la que se encuentra.<br /><br />Gracias por visitar este sitio.";
 $pgv_lang["reset_default_blocks"]	= "Reestablecer los bloques por omisión";
 $pgv_lang["recent_changes"] 		= "Cambios recientes";
 $pgv_lang["recent_changes_block"]	= "Cambios recientes";

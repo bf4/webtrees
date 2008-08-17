@@ -1134,7 +1134,7 @@ $pgv_lang["hit_count"]="Nº de Visitas:";
 $pgv_lang["phpgedview_message"]="Mensagem PhpGedView";
 $pgv_lang["common_surnames"]="Sobrenomes Mais Comuns";
 $pgv_lang["default_news_title"]="Bem-vindo à sua Árvore Genealógica ";
-$pgv_lang["default_news_text"]="As informações de genealogia deste website são produzidas  por <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>.  Esta página fornece uma introdução e visão geral desta genealogia.<br /><br />Para explorar as informações do site você pode escolher um dos gráficos a partir do menu de <b>Gráficos</b>, mostrar <b>Listas</b> de pessoas, famílias, locais, mídias ou também <b>Pesquisar</b> um nome ou local.<br /><br />Se tiver dúvida ao usar o site, clicando no menu de <b>Ajuda</b> você receberá informações de como usar a página que está sendo visualizada no momento.<br /><br />Obrigado por visitar este site !!!";
+$pgv_lang["default_news_text"]="As informações de genealogia deste website são produzidas  por <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>.  Esta página fornece uma introdução e visão geral desta genealogia.<br /><br />Para explorar as informações do site você pode escolher um dos gráficos a partir do menu de <b>Gráficos</b>, mostrar <b>Listas</b> de pessoas, famílias, locais, mídias ou também <b>Pesquisar</b> um nome ou local.<br /><br />Se tiver dúvida ao usar o site, clicando no menu de <b>Ajuda</b> você receberá informações de como usar a página que está sendo visualizada no momento.<br /><br />Obrigado por visitar este site !!!";
 $pgv_lang["reset_default_blocks"]="Restaurar padrão de Blocos";
 $pgv_lang["recent_changes"]="Últimas Atualizações";
 $pgv_lang["recent_changes_block"]="Últimas Atualizações";

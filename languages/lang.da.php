@@ -1247,7 +1247,7 @@ $pgv_lang["hit_count"]			= "Antal visninger:";
 $pgv_lang["phpgedview_message"]	= "Besked";
 $pgv_lang["common_surnames"]	= "Oftest forekommende efternavne";
 $pgv_lang["default_news_title"]		= "Velkommen til disse slægtssider";
-$pgv_lang["default_news_text"]		= "Information om slægten på denne hjemmeside bliver vist ved hjælp af <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a><br />Siderne giver dig et indblik og en oversigt over denne slægt.<br />Til at starte med, kan du for eksempel vælge Slægtstræer eller Slægtslister på menuen for oven, eller søge efter et navn eller et sted.<br /><br />Hvis der er noget, du ikke forstår på en af siderne, så se Hjælp i menuen, hvor der til enhver tid vil være information om brugen af denne side.<br /><br /><b><i>Tak fordi du besøger denne hjemmeside.</i></b>";
+$pgv_lang["default_news_text"]		= "Information om slægten på denne hjemmeside bliver vist ved hjælp af <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a><br />Siderne giver dig et indblik og en oversigt over denne slægt.<br />Til at starte med, kan du for eksempel vælge Slægtstræer eller Slægtslister på menuen for oven, eller søge efter et navn eller et sted.<br /><br />Hvis der er noget, du ikke forstår på en af siderne, så se Hjælp i menuen, hvor der til enhver tid vil være information om brugen af denne side.<br /><br /><b><i>Tak fordi du besøger denne hjemmeside.</i></b>";
 $pgv_lang["reset_default_blocks"]	= "Indstil til standard rammer";
 $pgv_lang["recent_changes"]			= "Seneste Ændringer";
 $pgv_lang["recent_changes_block"]	= "Seneste Ændringer";

@@ -1044,7 +1044,7 @@ $pgv_lang["stat_earliest_death"] 	= "Vroegste jaar van overlijden";
 $pgv_lang["stat_latest_death"] 	= "Laatste jaar van overlijden";
 $pgv_lang["stat_earliest_birth"] 		= "Vroegste geboortejaar";
 $pgv_lang["phpgedview_message"]			= "PhpGedView bericht";
-$pgv_lang["default_news_text"]			= "De informatie op deze website wordt beschikbaar gemaakt met behulp van <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView  #VERSION#</a>. Deze pagina geeft een introductie in en overzicht over deze genealogie. U kunt een van de overzichten kiezen uit het menu, de details van personen bekijken, of op naam of plaats zoeken.<br /><br />Als u problemen heeft met het gebruik van PhpGedView, kijk dan in het helpmenu voor meer informatie over de pagina waarop u zich bevindt.<br /><br />Dank voor uw bezoek!";
+$pgv_lang["default_news_text"]			= "De informatie op deze website wordt beschikbaar gemaakt met behulp van <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView </a>. Deze pagina geeft een introductie in en overzicht over deze genealogie. U kunt een van de overzichten kiezen uit het menu, de details van personen bekijken, of op naam of plaats zoeken.<br /><br />Als u problemen heeft met het gebruik van PhpGedView, kijk dan in het helpmenu voor meer informatie over de pagina waarop u zich bevindt.<br /><br />Dank voor uw bezoek!";
 $pgv_lang["reset_default_blocks"]		= "Terug naar standaardindeling";
 $pgv_lang["recent_changes"]				= "Recente wijzigingen";
 $pgv_lang["recent_changes_block"]		= "Recente wijzigingen";
