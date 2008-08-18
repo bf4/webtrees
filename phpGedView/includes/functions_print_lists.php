@@ -474,7 +474,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($birth_dates[0]->isOK() && $death_dates[0]->isOK()) {
 			$age = GedcomDate::GetAgeYears($birth_dates[0], $death_dates[0]);
 			$age_jd = $death_dates[0]->MinJD()-$birth_dates[0]->MinJD();
-			echo "<a name=\"".$age_jd."\" title=\"".$age_jd."\" class=\"list_item age\">".$age."</a>";
+			echo "<a name=\"".$age_jd."\" title=\"".$pgv_lang["age"].": ".$age."\" class=\"list_item age\">".$age."</a>";
 			$deat_by_age[max(0,min($MAX_ALIVE_AGE, $age))] .= $person->getSex();
 		} else {
 			echo '<a name="-1">&nbsp;</a>';
@@ -722,7 +722,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			}
 			if ($mdate->isOK()) {
 				$hage =GedcomDate::GetAgeYears($hdate, $mdate);
-				print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
+				print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" title=\"".$pgv_lang["age"].": ".$hage."\" class=\"list_item age\">{$hage}</a>";
 				$marr_by_age[max(0,min($MAX_ALIVE_AGE, $hage))] .= $husb->getSex();
 			} else {
 				echo '&nbsp;';
@@ -763,7 +763,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			}
 			if ($mdate->isOK()) {
 				$wage =GedcomDate::GetAgeYears($wdate, $mdate);
-				print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
+				print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" title=\"".$pgv_lang["age"].": ".$wage."\" class=\"list_item age\">{$wage}</a>";
 				$marr_by_age[max(0,min($MAX_ALIVE_AGE, $wage))] .= $wife->getSex();
 			} else {
 				print "&nbsp;";
@@ -1249,7 +1249,6 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	echo "<td></td>";
 	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
 	echo "<th class=\"list_label\">";
-//	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
 	if ($target=="FAM") echo $pgv_lang["spouses"]; else echo $pgv_lang["individuals"];
 	echo "</th>";
 	echo "</tr>\n";

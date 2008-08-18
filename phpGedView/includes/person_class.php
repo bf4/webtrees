@@ -1088,6 +1088,10 @@ class Person extends GedcomRecord {
 							if ($sfamid==$famid) $rela2="mother";
 							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($parent->getXref())."@";
 							$factrec .= "\n3 RELA *".$rela2;
+							if ($sfamily->getHusbId() && $sfamily->getWifeId()) {
+								$ct = preg_match("/0 @(.*)@/", $sfamily->getGedcomRecord(), $match);
+								if ($ct>0) $factrec .= "\n2 ASSO @".$match[1]."@\n";
+							}
 							//$this->indifacts[]=array(0, $factrec);
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
@@ -1198,6 +1202,10 @@ class Person extends GedcomRecord {
 								if ($family->getWifeId()) {
 									$factrec.="\n2 ASSO @".$family->getWifeId()."@\n3 RELA *mother";
 								}
+								if ($family->getHusbId() && $family->getWifeId()) {
+									$ct = preg_match("/0 @(.*)@/", $family->getGedcomRecord(), $match);
+									if ($ct>0) $factrec .= "\n2 ASSO @".$match[1]."@\n";
+								}
 							}
 							$factrec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
 							$event = new Event($factrec, 0);
@@ -1252,6 +1260,10 @@ class Person extends GedcomRecord {
 							else $rela2='spouse';
 							$factrec.="\n2 ASSO @".$sfamily->getSpouseId($spid)."@\n3 RELA *".$rela2;
 							$factrec.="\n".get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
+							if ($sfamily->getHusbId() && $sfamily->getWifeId()) {
+								$ct = preg_match("/0 @(.*)@/", $sfamily->getGedcomRecord(), $match);
+								if ($ct>0) $factrec .= "\n2 ASSO @".$match[1]."@\n";
+							}
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
 							$this->indifacts[] = $event;
