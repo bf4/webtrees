@@ -611,6 +611,8 @@ $pgv_lang["show_parents"] 			= "Show parents";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Age";
+$pgv_lang["husb_age"]				= "Husband's age";
+$pgv_lang["wife_age"]				= "Wife's age";
 $pgv_lang["days"]					= "days";
 $pgv_lang["months"]					= "months";
 $pgv_lang["years"]					= "years";

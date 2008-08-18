@@ -94,6 +94,13 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 			}
 			// Display summary birth/death info.  Note this info can come from various BIRT/CHR/BAPM/etc. records
 			$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
+			if (!($controller->indi->isDead())) {
+				// If alive display age
+				$bdate=$controller->indi->getBirthDate();
+				$age = GedcomDate::GetAgeGedcom($bdate);
+				if ($age!="")
+					$summary.= "<span class=\"label\">".$pgv_lang["age"].":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
+			}
 			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 			if ($SHOW_LDS_AT_GLANCE) {
 				$summary.='<b>'.get_lds_glance($controller->indi->getGedcomRecord()).'</b>';

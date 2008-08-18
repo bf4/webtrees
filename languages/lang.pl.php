@@ -351,6 +351,8 @@ $pgv_lang["confidential"]			= "Poufne";
 $pgv_lang["hidden"]					= "Ukryte";
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Wiek";
+$pgv_lang["husb_age"]				= "Wiek męża";
+$pgv_lang["wife_age"]				= "Wiek żony";
 $pgv_lang["timeline_title"]			= "Oś czasu";
 $pgv_lang["timeline_chart"]			= "Wykres osi czasu";
 $pgv_lang["remove_person"]			= "Usuń osobę";

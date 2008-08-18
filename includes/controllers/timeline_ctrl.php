@@ -177,7 +177,7 @@ class TimelineControllerRoot extends BaseController {
 	
 	function print_time_fact($event) {
 		global $basexoffset, $baseyoffset, $factcount, $TEXT_DIRECTION;
-		global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
+		global $factarray, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
 		global $familyfacts, $GEDCOM;
 		/* @var $event Event */
 		$factrec = $event->getGedComRecord();
@@ -232,15 +232,48 @@ class TimelineControllerRoot extends BaseController {
 				$col = $event->temp % 6;
 				print "</td><td valign=\"top\" class=\"person".$col."\">\n";
 				if (count($this->pids) > 6) print $event->getParentObject()->getFullName()." - ";
-				print $event->getLabel();
-				print "--";
-				print $gdate->Display(false);
 				$indi=$event->getParentObject();
+				if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
+					// Allow special processing for different languages
+					$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+					if (function_exists($func) && get_class($indi)=="Person") {
+						// Localise the facts
+						$func($fact, $indi->getXref());
+						print $factarray[$fact];
+					}
+					else print $event->getLabel();
+				}
+				else print $event->getLabel();
+				print " -- ";
 				if (get_class($indi)=="Person") {
-					$birth_date=$indi->getEstimatedBirthDate();
-					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $gdate), false);
-					if (!empty($age))
-						print '<span class="age"> '.PrintReady("({$pgv_lang['age']} {$age})").'</span>';
+					print format_fact_date($event);
+				}
+				if (get_class($indi)=="Family") {
+					print $gdate->Display(false);
+					$family=$indi;
+					$husbid=$family->getHusbId();
+					$wifeid=$family->getWifeId();
+					//-- Retrieve husband and wife age
+					for($p=0; $p<count($this->pids); $p++) {
+						if ($this->pids[$p]==$husbid) {
+							$husb=$family->getHusband();
+							if (is_null($husb)) $husb = new Person('');
+							$hdate=$husb->getBirthDate();
+							if ($hdate->isOK()) $ageh=get_age_at_event(GedcomDate::GetAgeGedcom($hdate, $gdate), false);
+						}
+						else if ($this->pids[$p]==$wifeid) {
+							$wife=$family->getWife();
+							if (is_null($wife)) $wife = new Person('');
+							$wdate=$wife->getBirthDate();
+							if ($wdate->isOK()) $agew=get_age_at_event(GedcomDate::GetAgeGedcom($wdate, $gdate), false);
+						}
+					}
+					if (!empty($ageh) && $ageh > 0)
+						if (empty($agew)) print '<span class="age"> '.PrintReady("({$pgv_lang["age"]} {$ageh})").'</span>';
+						else print '<span class="age"> '.PrintReady("({$pgv_lang["husb_age"]} {$ageh},").' ';
+					if (!empty($agew) && $agew > 0)
+						if (empty($ageh)) print '<span class="age"> '.PrintReady("({$pgv_lang["age"]} {$agew})").'</span>';
+						else print PrintReady("{$pgv_lang["wife_age"]} {$agew})").'</span>';
 				}
 				print " {$desc}";
 				if ($SHOW_PEDIGREE_PLACES>0) {
@@ -264,10 +297,21 @@ class TimelineControllerRoot extends BaseController {
 					}
 					if ($p==count($this->pids)) $p = $event->temp;
 					$col = $p % 6;
-					print " <span class=\"person$col\"> <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-					if (displayDetailsById($spouse)||showLivingNameById($spouse)) print get_person_name($spouse);
-					else print $pgv_lang["private"];
-					print "</a> </span>";
+					if ($spouse!=$this->pids[$p]) {
+						print " <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
+						if (displayDetailsById($spouse)||showLivingNameById($spouse)) print get_person_name($spouse);
+						else print $pgv_lang["private"];
+						print "</a>";
+					}
+					else {
+						$ct = preg_match("/2 _PGVFS @(.*)@/", $factrec, $match);
+						if ($ct>0) {
+							print " <a href=\"".encode_url("family.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+							if (displayDetailsById($match[1])||showLivingNameById($match[1])) print $event->getParentObject()->getFullName();
+							else print $pgv_lang["private"];
+							print "</a>";
+						}
+					}
 				}
 				print "</td></tr></table>\n";
 				print "</div>";
