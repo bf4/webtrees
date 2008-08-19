@@ -150,7 +150,7 @@ echo "<table border='0' width='100%'><tr>", "\n\n";
 //------------------------------------------------------------------------------
 	echo '<td valign="top" align="center" width="220">', "\n" ;
 	echo "<table><tr><td>";
-		echo "<table ><tr><td class=\"descriptionbox\" align=\"center\">";
+		echo "<table ><tr><td class=\"optionbox\" align=\"center\">";
 		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
 			$controller->lightbox();	 
 		echo "<br />";
