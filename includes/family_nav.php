@@ -1,8 +1,9 @@
 <?php
 /**
- * Lightbox Album module for phpGedView
+ * Family Navigator for phpGedView
  *
- * Display media Items using Lightbox
+ * Display immediate family members table for fast navigation
+ * ( Currently used with Facts and Details tab, and Album Tab pages )
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
@@ -22,39 +23,45 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Module
+ * @subpackage Includes
  * @version $Id$
  * @author Brian Holland
  */
 
 // -----------------------------------------------------------------------------
-// Function lightbox() for Lightbox Album - called by individual_ctrl.php
+// Function Family Nav) for PHPGedView - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
-// function lightbox_relatives2() {
+// function family_nav() {
+
 global $edit, $tabno, $mediacnt, $GEDCOM, $pid;
 
 $edit=$edit;
+// echo "Tabno =" . $this->default_tab;
 
-	$tabno=8;
-	
-     if (!file_exists("modules/googlemap/defaultconfig.php")) {
-         $tabno = ($tabno-1);
-         }else{
-         $tabno = ($tabno);
-         }
+// Set the tab page we are on =======================================================================
+// If we are on the Album page and googlemaps is NOT installed --------------
+if ($this->default_tab == "8" && !file_exists("modules/googlemap/defaultconfig.php")) {
+	$tabno="7";
+// If we are on the Album page and googlemaps IS installed -------------------
+}elseif ($this->default_tab == "8" && file_exists("modules/googlemap/defaultconfig.php")) {
+	$tabno="8";
+// If we are on the Details page -----------------------------------------------------
+}elseif ($this->default_tab == "1") {
+	$tabno="0";
+// If all fails, go to the Details page ------------------------------------------------
+}else{
+	$tabno="0";
+}
+// ===============================================================================================
 
-//     echo "Light Box Stuff";
+//     Start Family Nav Table ----------------------------
      echo "<table width='230'>";
-
-
-
                 global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
                 $personcount=0;
                 $families = $this->indi->getChildFamilies();
                 //-- parent families
                 foreach($families as $famid=>$family) {
                         ?>
-
                                 <?php
                                 //$personcount = 0;
                                 $people = $this->buildFamilyList($family, "parents");
@@ -115,12 +122,11 @@ $edit=$edit;
 													print PrintReady(get_person_name($child->getXref()));
 													print "</a>" . "\n" ;
 												}
-                                            }else{
+											}else{
 												print $pgv_lang["private"];
-                                            }
-                                            ?>
-  
-										<?php //print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+											}
+											?>
+											<?php //print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 										</td>
 									</tr>
 									<?php
@@ -128,12 +134,8 @@ $edit=$edit;
 									}
 								}
 
-                                ?>
-                         <?php
                 }
-
-
-
+				
                 //-- spouses and children
                 $families = $this->indi->getSpouseFamilies();
                 foreach($families as $famid=>$family) {
@@ -206,15 +208,12 @@ $edit=$edit;
                                         }
                                 }
 
-                                ?>
-                <?php
                 }
-
      echo "</table>";
 
 // }
 // -----------------------------------------------------------------------------
-// End LightBox Album Functions
+// End Family Nav Table
 // -----------------------------------------------------------------------------
 
 
