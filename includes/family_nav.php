@@ -36,21 +36,38 @@
 global $edit, $tabno, $mediacnt, $GEDCOM, $pid;
 
 $edit=$edit;
-// echo "Tabno =" . $this->default_tab;
+
+// echo "DEFAULT TAB =" . $this->default_tab ;
 
 // Set the tab page we are on =======================================================================
-// If we are on the Album page and googlemaps is NOT installed --------------
-if ($this->default_tab == "8" && !file_exists("modules/googlemap/defaultconfig.php")) {
-	$tabno="7";
-// If we are on the Album page and googlemaps IS installed -------------------
-}elseif ($this->default_tab == "8" && file_exists("modules/googlemap/defaultconfig.php")) {
-	$tabno="8";
-// If we are on the Details page -----------------------------------------------------
-}elseif ($this->default_tab == "1") {
-	$tabno="0";
-// If all fails, go to the Details page ------------------------------------------------
+// If googlemaps is NOT installed --------------
+if (file_exists('modules/googlemap/defaultconfig.php')) {
+	if ($this->default_tab == "9") {
+		$tabno="8";
+	// If we are on the Album page and googlemaps IS installed -------------------
+	}elseif ($this->default_tab == "8") {
+		$tabno="8";
+	// If we are on the Details page -----------------------------------------------------
+	}elseif ($this->default_tab == "1") {
+		$tabno="0";
+	// If all fails, go to the Details page ------------------------------------------------
+	}else{
+		$tabno="0";
+	}
+// If googlemaps is NOT installed --------------
 }else{
-	$tabno="0";
+	if ($this->default_tab == "8") {
+		$tabno="7";
+	// If we are on the Album page and googlemaps IS installed -------------------
+	}elseif ($this->default_tab == "7") {
+		$tabno="7";
+	// If we are on the Details page -----------------------------------------------------
+	}elseif ($this->default_tab == "1") {
+		$tabno="0";
+	// If all fails, go to the Details page ------------------------------------------------
+	}else{
+		$tabno="0";
+	}
 }
 // ===============================================================================================
 
