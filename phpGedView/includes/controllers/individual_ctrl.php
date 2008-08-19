@@ -1061,7 +1061,7 @@ class IndividualControllerRoot extends BaseController {
 					<?php }?>
 				</td>
 				<?php // ==================== Start Details Tab Navigator ======================================== ?>
-				<td rowspan="<?php print count($indifacts); ?>" align="center" width="220" class="descriptionbox">
+				<td rowspan="<?php print count($indifacts); ?>" align="center" width="220" class="optionbox">
 				<b>View Facts and Details of ...</b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
