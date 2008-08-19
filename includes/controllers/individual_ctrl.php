@@ -1062,7 +1062,7 @@ class IndividualControllerRoot extends BaseController {
 				</td>
 				<?php // ==================== Start Details Tab Navigator ======================================== ?>
 				<td rowspan="<?php print count($indifacts); ?>" align="center" width="220" class="optionbox">
-				<b>View Facts and Details of ...</b><br /><br />
+				<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
 				</td>
