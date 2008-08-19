@@ -749,7 +749,7 @@ class IndividualControllerRoot extends BaseController {
 	 * @return array			an array of Person that will be used to iterate through on the indivudal.php page
 	 */
 	function buildFamilyList(&$family, $type) {
-		global $pgv_lang;
+		global $factarray, $pgv_lang;
 		$people = array();
 		if (!is_object($family)) return $people;
 		$labels = array();
@@ -933,7 +933,10 @@ class IndividualControllerRoot extends BaseController {
 				if ($children[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
 				$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $children[$i]->gedrec);
 				$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
-				if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
+				if ($pedi) {
+					if ($pedi=="birth") $label .= " (".$factarray["BIRT"].")";
+					else if (isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
+				}
 				$children[$i]->setLabel($label);
 			}
 		}
@@ -1419,16 +1422,36 @@ class IndividualControllerRoot extends BaseController {
 					</td>
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($date || !empty($place)) {
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>";
+					<?php if ($date->Display()!="&nbsp;" || !empty($place)) {
+						$marr_type = "MARR_".strtoupper($family->getMarriageType());
+						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
+						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
 						if ($date) {
 							echo $date->Display(false);
 							if (!empty($place)) echo ' -- ';
 						}
 						if (!empty($place)) echo $place;
 					}
+					else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref())))
+						echo $factarray["_NMR"];
+					else if (get_sub_record(1, "1 _NMAR", find_family_record($family->getXref())))
+						echo $factarray["_NMAR"];
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
+					}
+					else {
+						$factdetail = preg_split("/ /", trim($family->getMarriageRecord()));
+						if ($family->getMarriageType())	$marr_type = "MARR_".strtoupper($family->getMarriageType());
+						else $marr_type = "MARR";
+						if (isset($factarray[$marr_type])) {
+							if (isset($factdetail))
+								if (count($factdetail) == 3)
+									if (strtoupper($factdetail[2]) == "Y")
+										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["yes"];
+									else if (strtoupper($factdetail[2]) == "N")
+										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["no"];
+						}
+						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
 					}
 					 ?>
 					</td>
@@ -1583,16 +1606,36 @@ class IndividualControllerRoot extends BaseController {
 					</td>
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($date || !empty($place)) {
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>";
+					<?php if ($date->Display()!="&nbsp;" || !empty($place)) {
+						$marr_type = "MARR_".strtoupper($family->getMarriageType());
+						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
+						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
 						if ($date) {
 							echo $date->Display(false);
 							if (!empty($place)) echo ' -- ';
 						}
 						if (!empty($place)) echo $place;
 					}
+					else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref())))
+						echo $factarray["_NMR"];
+					else if (get_sub_record(1, "1 _NMAR", find_family_record($family->getXref())))
+						echo $factarray["_NMAR"];
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
+					}
+					else {
+						$factdetail = preg_split("/ /", trim($family->getMarriageRecord()));
+						if ($family->getMarriageType())	$marr_type = "MARR_".strtoupper($family->getMarriageType());
+						else $marr_type = "MARR";
+						if (isset($factarray[$marr_type])) {
+							if (isset($factdetail))
+								if (count($factdetail) == 3)
+									if (strtoupper($factdetail[2]) == "Y")
+										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["yes"];
+									else if (strtoupper($factdetail[2]) == "N")
+										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["no"];
+						}
+						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
 					}
 					 ?>
 					</td>
@@ -1764,16 +1807,36 @@ class IndividualControllerRoot extends BaseController {
 					</td>
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($date || !empty($place)) {
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>";
+					<?php if ($date->Display()!="&nbsp;" || !empty($place)) {
+						$marr_type = "MARR_".strtoupper($family->getMarriageType());
+						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
+						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
 						if ($date) {
 							echo $date->Display(false);
 							if (!empty($place)) echo ' -- ';
 						}
 						if (!empty($place)) echo $place;
 					}
+					else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref())))
+						echo $factarray["_NMR"];
+					else if (get_sub_record(1, "1 _NMAR", find_family_record($family->getXref())))
+						echo $factarray["_NMAR"];
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
+					}
+					else {
+						$factdetail = preg_split("/ /", trim($family->getMarriageRecord()));
+						if ($family->getMarriageType())	$marr_type = "MARR_".strtoupper($family->getMarriageType());
+						else $marr_type = "MARR";
+						if (isset($factarray[$marr_type])) {
+							if (isset($factdetail))
+								if (count($factdetail) == 3)
+									if (strtoupper($factdetail[2]) == "Y")
+										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["yes"];
+									else if (strtoupper($factdetail[2]) == "N")
+										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["no"];
+						}
+						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
 					}
 					 ?>
 					</td>

@@ -492,7 +492,7 @@ case 'addfamlink':
 		print "<tr><td class=\"facts_label\">".$factarray["PEDI"]."</td>";
 		print "<td class=\"facts_value\"><select name=\"pedigree\">";
 		print "<option value=\"\"></option>";
-		print "<option value=\"birth\" >".$pgv_lang["birth"]."</option>";
+		print "<option value=\"birth\" >".$factarray["BIRT"]."</option>";
 		print "<option value=\"adopted\" >".$pgv_lang["adopted"]."</option>";
 		print "<option value=\"foster\" >".$pgv_lang["foster"]."</option>";
 		print "<option value=\"sealing\" >".$pgv_lang["sealing"]."</option>";

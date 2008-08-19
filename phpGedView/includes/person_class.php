@@ -830,7 +830,7 @@ class Person extends GedcomRecord {
 	 * @return string
 	 */
 	function getSpouseFamilyLabel(&$family) {
-		global $pgv_lang;
+		global $factarray, $pgv_lang;
 
 		$label = $pgv_lang["family_with"] . " ";
 		if (is_null($family)) return $label . $pgv_lang["unknown"];
@@ -838,7 +838,8 @@ class Person extends GedcomRecord {
 		$ft = preg_match("/2 PEDI (.*)/", $famlink, $fmatch);
 		if ($ft>0) {
 			$temp = trim($fmatch[1]);
-			if (isset($pgv_lang[$temp])) $label = $pgv_lang[$temp]." ";
+			if ($temp=="birth") $label = $factarray["BIRT"]." ";
+			else if (isset($pgv_lang[$temp])) $label = $pgv_lang[$temp]." ";
 		}
 		$husb = $family->getHusband();
 		$wife = $family->getWife();
