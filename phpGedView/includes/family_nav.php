@@ -73,7 +73,7 @@ if ($this->default_tab == "8" && !file_exists("modules/googlemap/defaultconfig.p
                                                 <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
+                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -92,7 +92,7 @@ if ($this->default_tab == "8" && !file_exists("modules/googlemap/defaultconfig.p
                                                 <td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
+                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
                                                      print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -118,7 +118,7 @@ if ($this->default_tab == "8" && !file_exists("modules/googlemap/defaultconfig.p
 													print PrintReady(get_person_name($child->getXref()));
 													print "\n" ;
 												}else{
-													print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
+													print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
 													print PrintReady(get_person_name($child->getXref()));
 													print "</a>" . "\n" ;
 												}
@@ -154,7 +154,7 @@ if ($this->default_tab == "8" && !file_exists("modules/googlemap/defaultconfig.p
                                                 <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
+                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -173,7 +173,7 @@ if ($this->default_tab == "8" && !file_exists("modules/googlemap/defaultconfig.p
                                                 <td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
+                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
                                                      print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
@@ -195,7 +195,7 @@ if ($this->default_tab == "8" && !file_exists("modules/googlemap/defaultconfig.p
                                                 <td class="<?php print $this->getPersonStyle($child); ?>">
                                                 <?php
                                                 if ( ($child->canDisplayDetails()) ) {
-                                                      print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
+                                                      print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
                                                       print PrintReady(get_person_name($child->getXref()));
                                                       print "</a>" . "\n" ;
                                                 }else{
