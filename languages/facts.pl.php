@@ -263,14 +263,14 @@ $factarray["_MEDC"]	= "Stan zdrowia";
 $factarray["_MILI"]	= "Służba wojskowa";
 $factarray["_NMR"]	= "Nieżonaty/niezamężna";
 $factarray["_NLIV"]	= "Nie żyje";
-$factarray["_NMAR"]	= "Nigdy nie żonaty/zamężna";
+$factarray["_NMAR"]	= "Nigdy nieżonaty/niezamężna";
 $factarray["_PRMN"]	= "Stały numer";
 $factarray["_WEIG"]	= "Waga";
 $factarray["_YART"]	= "Yahrzeit";
 $factarray["_MARNM"]	= "Po ślubie";
 $factarray["_MARNM_SURN"] = "Nazwisko po ślubie";
 $factarray["_STAT"]	= "Stan cywilny";
-$factarray["COMM"]		 = "Komentarz";
+$factarray["COMM"]	= "Komentarz";
 
 // Aldfaer related facts
 $factarray["MARR_CIVIL"] 	= "Ślub cywilny";
