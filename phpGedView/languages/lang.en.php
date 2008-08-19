@@ -780,6 +780,7 @@ $pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media di
 $pgv_lang["media_firewall_invalid_dir"]	= "Error: The Media Firewall was launched from a directory other than the media directory.";
 
 //-- Relationship chart messages
+$pgv_lang["view_fam_nav_details"]	= "View Details of ...";
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";
 $pgv_lang["person1"]				= "Person 1";

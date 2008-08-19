@@ -42,8 +42,9 @@ occur in the respective language files.
 
 VERSION 4.1.6
 
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["view_fam_nav_details"]					19 August 2008			A		Line 781 in lang_en.php
 +$pgv_lang["husb_age"]								18 August 2008			A
 +$pgv_lang["wife_age"]								18 August 2008			A
 *$pgv_lang["default_news_text"]						17 August 2008			w		removed #VERSION# from text (all "lang.xx.php" files)

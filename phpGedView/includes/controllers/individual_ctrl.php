@@ -1060,6 +1060,13 @@ class IndividualControllerRoot extends BaseController {
 						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
 				</td>
+				<?php // ==================== Start Details Tab Navigator ======================================== ?>
+				<td rowspan="<?php print count($indifacts); ?>" align="center" width="220" class="descriptionbox">
+				<b>View Facts and Details of ...</b><br /><br />
+				<?php include_once('includes/family_nav.php'); ?>
+				<br />
+				</td>
+				<?php // ==================== End Details Tab Navigator ========================================= ?>
 			</tr>
 			<?php
 			$yetdied=false;
@@ -1250,7 +1257,6 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function print_media_tab() {
 		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
-
 		?>
 		<table class="facts_table">
 		<?php
@@ -1263,7 +1269,6 @@ class IndividualControllerRoot extends BaseController {
 		else {
 			$media_found = print_main_media($this->pid, 0, true);
 			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr>\n";
-
 			//-- New Media link
 			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 		   	?>
@@ -2101,12 +2106,27 @@ class IndividualControllerRoot extends BaseController {
 	 * include lightbox controller
 	 */
     function lightbox() {
-        include('modules/lightbox/functions/lightbox_ctrl.php');
+        include('includes/family_nav.php');
     }
 // -----------------------------------------------------------------------------
 // End LightBox Album Functions
 // -----------------------------------------------------------------------------
-		
+
+// -----------------------------------------------------------------------------
+// Functions for Census Assistant 
+// -----------------------------------------------------------------------------
+	/**
+	 * include lightbox controller
+	 */
+    function census_assistant() {
+        include('modules/census_assistant/census_ctrl.php');
+    }
+// -----------------------------------------------------------------------------
+// End LightBox Album Functions
+// -----------------------------------------------------------------------------
+
+
+
 }
 // -- end of class
 //-- load a user extended class if one exists
