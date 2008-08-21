@@ -1036,7 +1036,8 @@ class IndividualControllerRoot extends BaseController {
 		//-- only need to add family facts on this tab
 		$this->indi->add_family_facts();
 		?>
-		<table class="facts_table">
+		<table><tr><td valign="top" width="100%" >
+		<table class="facts_table" STYLE="margin-top:-2px;" >
 		<?php if (!$this->indi->canDisplayDetails()) {
 			print "<tr><td class=\"facts_value\" colspan=\"2\">";
 			print_privacy_error($CONTACT_EMAIL);
@@ -1051,7 +1052,7 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 			<?php }?>
 			<tr id="row_top">
-				<td></td>
+				<td valign="top"></td>
 				<td class="descriptionbox rela">
 					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
 					<label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
@@ -1060,13 +1061,7 @@ class IndividualControllerRoot extends BaseController {
 						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
 				</td>
-				<?php // ==================== Start Details Tab Navigator ======================================== ?>
-				<td rowspan="<?php print count($indifacts); ?>" align="center" width="220" class="optionbox">
-				<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-				</td>
-				<?php // ==================== End Details Tab Navigator ========================================= ?>
+
 			</tr>
 			<?php
 			$yetdied=false;
@@ -1093,6 +1088,18 @@ class IndividualControllerRoot extends BaseController {
 		}
 		?>
 		</table>
+		</td>
+				<?php // ==================== Start Details Tab Navigator ======================================== 
+				?>
+				<td valign="top">
+				<table class="optionbox" width="220px"><tr><td align="center">
+				<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
+				<?php include_once('includes/family_nav.php'); ?>
+				<br />
+				</td></tr></table>
+				</td>
+				<?php // ==================== End Details Tab Navigator ========================================= */?>
+		</tr></table>
 		<br />
 		<script language="JavaScript" type="text/javascript">
 		<!--
@@ -2116,13 +2123,14 @@ class IndividualControllerRoot extends BaseController {
 // Functions for Census Assistant 
 // -----------------------------------------------------------------------------
 	/**
-	 * include lightbox controller
+	 * include Census controller
 	 */
     function census_assistant() {
         include('modules/census_assistant/census_ctrl.php');
+        // include('modules/census_assistant/census_test2.php');
     }
 // -----------------------------------------------------------------------------
-// End LightBox Album Functions
+// End  Census Assistant  Functions
 // -----------------------------------------------------------------------------
 
 
