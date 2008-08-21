@@ -233,14 +233,16 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 				break;
 			case "NEPH":
 				$node = get_relationship($pid, $pid2);
-				$sex3 = Person::getInstance($node["path"][1])->getSex();
-				if ($sex2 == "M") {
-					if ($sex3 == "M")		$factarray[$fact] = "Narodziny bratanka";
-					else if ($sex3 == "F")	$factarray[$fact] = "Narodziny siostrzeńca";
-				}
-				else if ($sex2 == "F") {
-					if ($sex3 == "M")		$factarray[$fact] = "Narodziny bratanicy";
-					else if ($sex3 == "F")	$factarray[$fact] = "Narodziny siostrzenicy";
+				if (isset($node["path"][1])) {
+					$sex3 = Person::getInstance($node["path"][1])->getSex();
+					if ($sex2 == "M") {
+						if ($sex3 == "M")		$factarray[$fact] = "Narodziny bratanka";
+						else if ($sex3 == "F")	$factarray[$fact] = "Narodziny siostrzeńca";
+					}
+					else if ($sex2 == "F") {
+						if ($sex3 == "M")		$factarray[$fact] = "Narodziny bratanicy";
+						else if ($sex3 == "F")	$factarray[$fact] = "Narodziny siostrzenicy";
+					}
 				}
 				break;
 			}
@@ -285,14 +287,16 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 				break;
 			case "NEPH":
 				$node = get_relationship($pid, $pid2);
-				$sex3 = Person::getInstance($node["path"][1])->getSex();
-				if ($sex2 == "M") {
-					if ($sex3 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." bratanka";
-					else if ($sex3 == "F")	$factarray[$fact] = $factarray[$explode_fact[1]]." siostrzeńca";
-				}
-				else if ($sex2 == "F") {
-					if ($sex3 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." bratanicy";
-					else if ($sex3 == "F")	$factarray[$fact] = $factarray[$explode_fact[1]]." siostrzenicy";
+				if (isset($node["path"][1])) {
+					$sex3 = Person::getInstance($node["path"][1])->getSex();
+					if ($sex2 == "M") {
+						if ($sex3 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." bratanka";
+						else if ($sex3 == "F")	$factarray[$fact] = $factarray[$explode_fact[1]]." siostrzeńca";
+					}
+					else if ($sex2 == "F") {
+						if ($sex3 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." bratanicy";
+						else if ($sex3 == "F")	$factarray[$fact] = $factarray[$explode_fact[1]]." siostrzenicy";
+					}
 				}
 				break;
 			}
