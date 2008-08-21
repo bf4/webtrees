@@ -502,6 +502,7 @@ $pgv_lang["media_firewall_invalid_dir"]					= "Błąd: Firewall multimediów zos
 $pgv_lang["setperms_readonly"]		= "Możliwość odczytu dla wszystkich";
 
 //-- Relationship chart messages
+$pgv_lang["view_fam_nav_details"]	= "Zobacz szczegóły ...";
 $pgv_lang["relationship_great"]		= "pra";
 $pgv_lang["relationship_chart"]		= "Diagram pokrewieństwa";
 $pgv_lang["person1"]				= "Pierwsza osoba";
