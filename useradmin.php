@@ -541,9 +541,9 @@ if ($action == "listusers") {
 		case "sortver":
 			$users = get_all_users("asc","verified");
 			break;
-		case "sortveradm":
+		case "sortveradmin":
 			$users = get_all_users("asc","verified_by_admin");
-			break;
+			break;	
 		default:
 			$users = get_all_users("asc","username");
 			break;
