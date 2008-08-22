@@ -2,7 +2,7 @@
     PhpGedView
 
     Version 4.1
-    Copyright (c) 2005 to 2008 John Finlay and others
+    Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
 
     This and other information can be found online at
     http://www.PhpGedView.net
@@ -38,7 +38,7 @@ CONTENTS
 LICENSE
 
 PhpGedView: Genealogy Viewer
-Copyright (C) 2002 to 2007  John Finlay and Others
+Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

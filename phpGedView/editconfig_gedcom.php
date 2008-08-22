@@ -1002,13 +1002,13 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 	<td class="optionbox"><input type="text" name="NEW_PEDIGREE_ROOT_ID" id="NEW_PEDIGREE_ROOT_ID" value="<?php print $PEDIGREE_ROOT_ID; ?>" size="5" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('PEDIGREE_ROOT_ID_help');" />
 			<?php
 			if ($source == "") {
+				print_findindi_link("NEW_PEDIGREE_ROOT_ID","");
 				if (!empty($indirec)) {
 					$person=new Person($indirec);
-					echo '<span class="list_item">', $person->getFullName(), $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
+					echo ' <span class="list_item">', $person->getFullName(), ' ', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
 				} else {
-					echo '<span class="error">'. $pgv_lang['unable_to_find_record']. '</span>';
+					echo ' <span class="error">'. $pgv_lang['unable_to_find_record']. '</span>';
 				}
-				print_findindi_link("NEW_PEDIGREE_ROOT_ID","");
 			}
 		?>
 		</td>
@@ -2236,5 +2236,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 	else print "document.configform.GEDCOMPATH.focus();"; ?>
 </script>
 <?php
+if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = PGV_USER_NAME;
+if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = PGV_USER_NAME;
 print_footer();
 ?>
