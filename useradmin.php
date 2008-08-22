@@ -333,7 +333,7 @@ if ($action=="edituser") {
 		print_findindi_link($varname, "", false, false, $ged_name);
 		if ($pid) {
 			$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-			echo '<span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
+			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
 		}
 		print "</td></tr>";
 	}
@@ -354,7 +354,7 @@ if ($action=="edituser") {
 		print_findindi_link($varname, "", false, false, $ged_name);
 		if ($pid) {
 			$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-			echo '<span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
+			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
 		}
 		?>
 		</td></tr>

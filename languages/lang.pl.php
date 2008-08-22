@@ -1048,7 +1048,7 @@ $pgv_lang["phpgedview_message"]		= "Wiadomość";
 $pgv_lang["common_surnames"]		= "Najczęstsze nazwiska";
 $pgv_lang["default_news_title"]		= "Witaj w swojej genealogii";
 $pgv_lang["default_news_text"]		= "Informacje genealogiczne na tej stronie są wyświetlane dzięki <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Ta strona jest wprowadzeniem i przeglądem tej genealogii. Aby rozpocząć pracę z danymi, wybierz jeden z diagramów z menu Diagramy powyżej, przejdź do listy osób, lub skorzystaj z wyszukiwarki nazwisk lub miejsc.<br /><br />Jeśli masz kłopoty z korzystaniem ze strony, możesz kliknąć ikonkę pomocy aby uzyskać informacje dotyczące strony, którą właśnie widzisz.<br /><br />Dziękujemy za odwiedzenie naszej strony.";
-$pgv_lang["hide_block_warn"]		= "Jeśli ukryjesz pustą sekcję, nie będziesz w stanie zmienić jego konfiguracji do momentu gdy pojawi się w nim zawartość i stanie się widoczny.";
+$pgv_lang["hide_block_warn"]		= "Jeśli ukryjesz pustą sekcję, nie będziesz w stanie zmienić jej konfiguracji do momentu gdy pojawi się w niej zawartość i stanie się widoczna.";
 $pgv_lang["reset_default_blocks"]	= "Przywróć domyślne sekcje";
 $pgv_lang["recent_changes_some"]	= "<b>Zmiany dokonane w ciągu ostatnich #pgv_lang[global_num1]# dni</b><br />";
 $pgv_lang["show_empty_block"]		= "Ukryj pustą sekcję";

@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$pgv_lang["add_marriage"]			= "Add a new marriage";
+$pgv_lang["add_marriage"]			= "Add marriage details";
 $pgv_lang["edit_concurrency_change"] = "This record was last changed by <i>#CHANGEUSER#</i> at #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]	= "The record with id #PID# was changed by another user since you last accessed it.";
 $pgv_lang["edit_concurrency_msg1"]	= "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it.";

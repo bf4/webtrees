@@ -545,17 +545,19 @@ class GedcomRecord {
 	// Extract/format the first fact from a list of facts.
 	function format_first_major_fact($facts, $style) {
 		global $factarray;
-			/* @var $event Event */
-			foreach ($this->getAllFactsByType(explode('|', $facts)) as $event) {
-				// Only display if it has a date or place (or both)
-				if ($event->getDate() || $event->getPlace()) {
-					switch ($style) {
-					case 1: return '<br /><i>'.$event->getLabel().' '.format_fact_date($event).format_fact_place($event).'</i>';
-					case 2: return '<span class="label">'.$event->getLabel().':</span> <span class="field">'.format_fact_date($event).format_fact_place($event).'</span><br />';
+		/* @var $event Event */
+		$fact_string = '';
+		foreach ($this->getAllFactsByType(explode('|', $facts)) as $event) {
+			// Only display if it has a date or place (or both)
+			if ($event->getDate() || $event->getPlace()) {
+				switch ($style) {
+					case 1: $fact_string = '<br /><i>'.$event->getLabel().' '.format_fact_date($event).format_fact_place($event).'</i>';
+					case 2: $fact_string = '<span class="label">'.$event->getLabel().':</span> <span class="field">'.format_fact_date($event).format_fact_place($event).'</span><br />';
 				}
+				if ($event->getTag()=="DEAT" || $event->getTag()=="BIRT") return $fact_string;
 			}
 		}
-		return '';
+		return $fact_string;
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
