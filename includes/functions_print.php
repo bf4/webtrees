@@ -2007,7 +2007,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				// Allow special processing for different languages
 				$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
 				if (function_exists($func))
-					// Localise the age diff
+					// Localise the relationship
 					$func($rela);
 				else
 					print " {$rela}: ";
@@ -2039,21 +2039,21 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			}
 			print "</a>";
 			// ID age
-			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
+			if (preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
 				$tmp=new Person($gedrec);
 				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
 				$death_date=$tmp->getDeathDate(false);
 				$ageText = '';
 
-				if (!strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0 && $tmp->isDead()) {
+				if (!strstr($factrec, "_BIRT_") && !strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0 && $tmp->isDead()) {
 					// After death, print time since death
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $event_date), true);
 					if (!empty($age))
 						if (GedcomDate::GetAgeGedcom($death_date, $event_date)=="0d") $ageText = "(".$pgv_lang["at_death_day"].")";
 						else $ageText = "(".$age." ".$pgv_lang["after_death"].")";
 				}
-				else {
+				else if (GedcomDate::GetAgeGedcom($birth_date, $event_date)!="0d") {
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
 					if (!empty($age))
 						$ageText = "({$pgv_lang['age']} {$age})";
