@@ -653,7 +653,6 @@ $pgv_lang["research_assistant"]			= "Forschungs-Assistent";
 $pgv_lang["utf8_to_ansi"]				= "Möchten Sie diese GEDCOM Datei vom UTF-8 in den ANSI (ISO-8859-1) Zeichensatz konvertieren?";
 $pgv_lang["media_linked"]				= "Dieses Medien Objekt ist wie folgt verbunden:";
 $pgv_lang["media_not_linked"]			= "Dieses Medien Objekt ist mit keinem GEDCOM Datensatz verbunden.";
-$pgv_lang["relationship_great"]			= "Ur";
 $pgv_lang["media_dir_1"]				= "Dieses Medien Objekt befindet sich auf einem externen Server";
 $pgv_lang["media_dir_2"]				= "Dieses Medien Objekt befindet sich im gewöhnlichen Medien-Verzeichnis";
 $pgv_lang["media_dir_3"]				= "Dieses Medien Objekt befindet sich im geschützten Medien-Verzeichnis";
@@ -678,6 +677,8 @@ $pgv_lang["media_firewall_protected_dir_not_writable"]	= "Das geschützte Medien
 $pgv_lang["media_firewall_invalid_dir"]	= "Fehler: Die Medien-Feuerwand wurde außerhalb des Medien-Verzeichnisses aufgerufen.";
 
 //-- Relationship chart messages
+$pgv_lang["view_fam_nav_details"]		= "Zeige Details von ...";
+$pgv_lang["relationship_great"]			= "Ur";
 $pgv_lang["relationship_chart"]			= "Verwandtschaftsberechnung";
 $pgv_lang["person1"]					= "Person 1";
 $pgv_lang["person2"]					= "Person 2";
