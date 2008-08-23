@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$pgv_lang["add_marriage"]			= "Neue Ehe hinzufügen";
+$pgv_lang["add_marriage"]			= "Ehedetails hinzufügen";
 $pgv_lang["select_events"]			= "Ereignisse wählen";
 $pgv_lang["source_events"]			= "Ereignisse mit dieser Quelle verbinden";
 $pgv_lang["advanced_name_fields"]	= "Weitere Namen (Spitzname, Ehename, usw.)";
