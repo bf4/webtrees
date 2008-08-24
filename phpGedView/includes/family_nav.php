@@ -91,7 +91,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
                                                      print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                     print PrintReady(get_person_name($people["husb"]->getXref()));
+                                                     print PrintReady($people["husb"]->getFullName());
                                                      print "</a>" . "\n" ;
                                                 }else{
                                                       print $pgv_lang["private"];
@@ -110,7 +110,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
                                                      print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                     print PrintReady(get_person_name($people["wife"]->getXref()));
+                                                     print PrintReady($people["wife"]->getFullName());
                                                      print "</a>" . "\n" ;
                                                 }else{
                                                       print $pgv_lang["private"];
@@ -132,11 +132,11 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
                                             if ( ($child->canDisplayDetails()) ) {
 												if ($pid == $child->getXref()) {
 													// print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
-													print PrintReady(get_person_name($child->getXref()));
+													print PrintReady($child->getFullName());
 													print "\n" ;
 												}else{
 													print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-													print PrintReady(get_person_name($child->getXref()));
+													print PrintReady($child->getFullName());
 													print "</a>" . "\n" ;
 												}
 											}else{
@@ -172,7 +172,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
                                                      print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                     print PrintReady(get_person_name($people["husb"]->getXref()));
+                                                     print PrintReady($people["husb"]->getFullName());
                                                      print "</a>" . "\n" ;
                                                 }else{
                                                       print $pgv_lang["private"];
@@ -191,7 +191,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
                                                      print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                     print PrintReady(get_person_name($people["wife"]->getXref()));
+                                                     print PrintReady($people["wife"]->getFullName());
                                                      print "</a>" . "\n" ;
                                                 }else{
                                                       print $pgv_lang["private"];
@@ -213,7 +213,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
                                                 <?php
                                                 if ( ($child->canDisplayDetails()) ) {
                                                       print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                      print PrintReady(get_person_name($child->getXref()));
+                                                      print PrintReady($child->getFullName());
                                                       print "</a>" . "\n" ;
                                                 }else{
                                                       print $pgv_lang["private"];
