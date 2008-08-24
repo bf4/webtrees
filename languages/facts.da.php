@@ -399,4 +399,7 @@ $factarray["_THUM"]	= "Brug dette billede som miniaturebillede?";
 $factarray["_PGVU"]	= "Sidst opdateret af";
 $factarray["SERV"] = "Ekstern server";
 $factarray["_GEDF"] = "GEDCOM-fil";
+$factarray["_MARR_FAMC"] = "Marriage of forældre";
+$factarray["_MARR_FAMC"] = "Forældres ægteskab";
+$factarray["_MARB_FAMC"] = "Lysning af forældres bryllup";
 ?>

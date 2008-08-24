@@ -310,4 +310,5 @@ $countries["ZMB"]="Zambia";
 $countries["ZWE"]="Zimbabwe";
 $countries["???"]="Ukendt";
 
+$countries["CAT"]="Catalonien";
 ?>
