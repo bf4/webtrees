@@ -171,7 +171,6 @@ $pgv_lang["label_diff_server"]      = "Anden site";
 $pgv_lang["label_location"]         = "Placering";
 $pgv_lang["label_password_id2"]		  = "Adgangskode: ";
 $pgv_lang["label_rel_to_current"]   = "Relation til aktuel person";
-$pgv_lang["label_remote_id"]        = "Ekstern Person-ID";
 $pgv_lang["label_same_server"]      = "Samme hjemmeside";
 $pgv_lang["label_site"]             = "Hjemmeside";
 $pgv_lang["label_site_url"]         = "URL-adresse";
