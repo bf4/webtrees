@@ -330,8 +330,12 @@ function tool_tip_text($marker) {
 	$tool_tip=$marker['fact'];
 	if (!empty($marker['info']))
 		$tool_tip.=": {$marker['info']}";
-	if (!empty($marker['name']) && (displayDetailsById($marker['name']) || showLivingNameById($marker['name'])))
-		$tool_tip.=": ".PrintReady(get_person_name($marker['name']));
+	if (!empty($marker['name'])) {
+		$person=Person::getInstance($marker['name']);
+		if ($person && $person->canDisplayName()) {
+			$tool_tip.=": ".PrintReady($person->getFullName());
+		}
+	}
 	if (!empty($marker['date'])) {
 		$date=new GedcomDate($marker['date']);
 		$tool_tip.=" - ".$date->Display(false);
