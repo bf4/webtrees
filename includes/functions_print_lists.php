@@ -95,7 +95,8 @@ function format_list_person($key, $value, $findid=false, $asso="", $tag='li') {
 			$key = substr($asso,0,$p1);
 			$oldged = $GEDCOM;
 			$GEDCOM = $ged;
-			$name = get_person_name($key);
+			$person2=Person::getInstance($key);
+			$name = $person2 ? $person2->getFullName() : $key;
 			$GEDCOM = $oldged;
 			$html.=' <a href="'.encode_url("individual.php?pid={$key}&ged={$ged}").'" title="'.$name.'" class="list_item">';
 			if ($TEXT_DIRECTION=="ltr") {
@@ -170,7 +171,8 @@ function format_list_family($key, $value, $findid=false, $asso="", $tag='li') {
 			$indikey = substr($asso,0,$p1);
 			$oldged = $GEDCOM;
 			$GEDCOM = $ged;
-			$name = get_person_name($key);
+			$person2=Person::getInstance($key);
+			$name = $person2 ? $person2->getFullName() : $key;
 			$GEDCOM = $oldged;
 			$html.=' <a href="'.encode_url("individual.php?pid={$indikey}&ged={$ged}").'" title="'.$name.'" class="list_item">';
 			$html.='&nbsp;&nbsp;';

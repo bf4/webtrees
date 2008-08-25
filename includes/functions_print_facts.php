@@ -325,19 +325,18 @@ function print_fact(&$eventObj, $noedit=false) {
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
-				$spouse=$match[1];
-				if ($spouse!=="") {
- 					print " <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-					if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
-						print PrintReady(get_person_name($spouse));
-						$addname = get_add_person_name($spouse);
-						if ($addname!="") print " - ".PrintReady($addname);
+				$spouse=Person::getInstance($match[1]);
+				if ($spouse) {
+ 					print " <a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+					if ($spouse->canDisplayName()) {
+						print PrintReady($spouse->getFullName());
+					} else {
+						print $pgv_lang["private"];
 					}
-					else print $pgv_lang["private"];
 					print "</a>";
 				}
-				if (($view!="preview") && ($spouse!=="")) print " - ";
-				if ($view!="preview" &&(empty($SEARCH_SPIDER))) {
+				if ($view!="preview" && $spouse) print " - ";
+				if ($view!="preview" && empty($SEARCH_SPIDER)) {
 					print "<a href=\"".encode_url("family.php?famid={$pid}")."\">";
 					if ($TEXT_DIRECTION == "ltr") print " " . getLRM();
 					else print " " . getRLM();
@@ -352,10 +351,14 @@ function print_fact(&$eventObj, $noedit=false) {
 				print " ";
 				$ct = preg_match("/@(.*)@/", $event, $match);
 				if ($ct>0) {
-					$gedrec = find_gedcom_record($match[1]);
-					if (strstr($gedrec, "INDI")!==false) print "<a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">".get_person_name($match[1])."</a><br />";
-					else if ($fact=="REPO") print_repository_record($match[1]);
-					else print_submitter_info($match[1]);
+					$gedrec=GedcomRecord::getInstance($match[1]);
+					if ($gedrec->getType()=='INDI') {
+						echo '<a href="', encode_url($gedrec->getLinkUrl()), '">', $gedrec->getFullName(), '</a><br />';
+					}	elseif ($fact=='REPO') {
+						print_repository_record($match[1]);
+					} else {
+						print_submitter_info($match[1]);
+					}
 				}
 				else if ($fact=="ALIA") {
 					//-- strip // from ALIA tag for FTM generated gedcoms
@@ -720,16 +723,17 @@ function print_media_links($factrec, $level,$pid='') {
 				//-- print spouse name for marriage events
 				$ct = preg_match("/PGV_SPOUSE: (.*)/", $factrec, $match);
 				if ($ct>0) {
-					$spouse=$match[1];
-					if ($spouse!=="") {
-						print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-						if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
-							print PrintReady(get_person_name($spouse));
+					$spouse=Person::getInstance($match[1]);
+					if ($spouse) {
+						print "<a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+						if ($spouse->canDisplayName()) {
+							print PrintReady($spouse->getFullName());
+						} else {
+							print $pgv_lang["private"];
 						}
-						else print $pgv_lang["private"];
 						print "</a>";
 					}
-					if (($view != "preview") && ($spouse!=="") && (empty($SEARCH_SPIDER))) print " - ";
+					if ($view!="preview" && $spouse && empty($SEARCH_SPIDER)) print " - ";
 					if ($view != "preview") {
 						$ct = preg_match("/PGV_FAMILY_ID: (.*)/", $factrec, $match);
 						if ($ct>0) {
@@ -1587,20 +1591,23 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if ($rowm['mm_gid']!=$pid) {
 			$parents = find_parents($rowm['mm_gid']);
 			if ($parents) {
-				if (!empty($parents['HUSB']) && $parents['HUSB']!=$pid) $spouse = $parents['HUSB'];
-				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) $spouse = $parents['WIFE'];
+				if (!empty($parents['HUSB']) && $parents['HUSB']!=$pid) $spouse = Person::getInstance($parents['HUSB']);
+				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) $spouse = Person::getInstance($parents['WIFE']);
+			} else {
+				$spouse=null;
 			}
-			if (!empty($spouse)) {
-				print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-				if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
-					print PrintReady(get_person_name($spouse));
+			if ($spouse) {
+				print "<a href=\"".$spouse->getLinkUrl()."\">";
+				if ($spouse->canDisplayName()) {
+					print PrintReady($spouse->getFullName());
+				} else {
+					print $pgv_lang["private"];
 				}
-				else print $pgv_lang["private"];
 				print "</a>";
 			}
 			if(empty($SEARCH_SPIDER)) {
-				if (($view != "preview") && (!empty($spouse))) print " - ";
-				if ($view != "preview") {
+				if ($view!="preview" && $spouse) print " - ";
+				if ($view!="preview") {
 						$famid = $rowm['mm_gid'];
 						print "<a href=\"".encode_url("family.php?famid={$famid}")."\">[".$pgv_lang["view_family"];
 						if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM();
