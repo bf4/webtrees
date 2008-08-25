@@ -618,7 +618,7 @@ class MenuBar
 		if (file_exists("descendancy.php")) $menuList["descendancy"] = $pgv_lang["descend_chart"];
 		if (file_exists("ancestry.php")) $menuList["ancestry"] = $pgv_lang["ancestry_chart"];
 		if (file_exists("compact.php")) $menuList["compact"] = $pgv_lang["compact_chart"];
-		if (file_exists("fanchart.php") and function_exists("imagettftext")) $menuList["fanchart"] = $pgv_lang["fan_chart"];
+		if (file_exists("fanchart.php") && function_exists("imagettftext")) $menuList["fanchart"] = $pgv_lang["fan_chart"];
 		if (file_exists("hourglass.php")) $menuList["hourglass"] = $pgv_lang["hourglass_chart"];
 		if (file_exists("familybook.php")) $menuList["familybook"] = $pgv_lang["familybook_chart"];
 		if (file_exists("timeline.php")) $menuList["timeline"] = $pgv_lang["timeline_chart"];
@@ -749,11 +749,12 @@ class MenuBar
 				}
 				$pids = array_unique($pids);
 				foreach ($pids as $key=>$pid) {
-					if (($pid and $pid!=$rootid) or empty($rootid)) {
+					$person=Person::getInstance($pid);
+					if (($person && $pid!=$rootid) || empty($rootid)) {
 						$link = "relationship.php?ged=".$ged;
 						if ($rootid) {
 							$link .= "&pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
-							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags(get_person_name($pid)));
+							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags($person->getFullName()));
 							$submenu = new Menu($label, encode_url($link));
 						} else {
 							$submenu = new Menu($pgv_lang["relationship_chart"], encode_url($link));
@@ -848,12 +849,12 @@ class MenuBar
 		$menuList = array();
 		$menuList["individual"] = $pgv_lang["individual_list"];
 		if (file_exists("famlist.php")) $menuList["family"] = $pgv_lang["family_list"];
-		if (!$surname and file_exists("sourcelist.php") and $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
-		if (!$surname and file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
-		if (!$surname and file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
-		if (!$surname and file_exists("medialist.php") and $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
+		if (!$surname && file_exists("sourcelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
+		if (!$surname && file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
+		if (!$surname && file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
+		if (!$surname && file_exists("medialist.php") && $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
 		// if (file_exists("patriarchlist.php")) $menuList["patriarch"] = $pgv_lang["patriarch_list"];
-		// if (!$surname and file_exists("aliveinyear.php")) $menuList["aliveinyear"] = $pgv_lang["alive_in_year"];
+		// if (!$surname && file_exists("aliveinyear.php")) $menuList["aliveinyear"] = $pgv_lang["alive_in_year"];
 		asort($menuList);
 
 		// Produce the submenus in localized name order
@@ -997,7 +998,7 @@ class MenuBar
 			}
 
 		//-- main reports menu item
-		if ($pid or $famid) {
+		if ($pid || $famid) {
 			$menu = new Menu($pgv_lang["reports"], "#");
 			if (!empty($PGV_IMAGES["reports"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["reports"]["small"]);
@@ -1037,15 +1038,15 @@ class MenuBar
 				else if ($famid) $submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}&famid={$famid}"));
 				// default
 				else $submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}"));
-				if (isset($PGV_IMAGES["reports"]["small"]) and isset($PGV_IMAGES[$report["icon"]]["small"])) $iconfile=$PGV_IMAGE_DIR."/".$PGV_IMAGES[$report["icon"]]["small"];
+				if (isset($PGV_IMAGES["reports"]["small"]) && isset($PGV_IMAGES[$report["icon"]]["small"])) $iconfile=$PGV_IMAGE_DIR."/".$PGV_IMAGES[$report["icon"]]["small"];
 				if (isset($iconfile) && file_exists($iconfile)) $submenu->addIcon($iconfile);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				// indi report
-				if ($pid and $report["icon"]!="sfamily" and $report["icon"]!="place") $menu->addSubmenu($submenu);
+				if ($pid && $report["icon"]!="sfamily" && $report["icon"]!="place") $menu->addSubmenu($submenu);
 				// family report
-				else if ($famid and $report["icon"]=="sfamily") $menu->addSubmenu($submenu);
+				else if ($famid && $report["icon"]=="sfamily") $menu->addSubmenu($submenu);
 				// default
-				else if (empty($pid) and empty($famid)) $menu->addSubmenu($submenu);
+				else if (empty($pid) && empty($famid)) $menu->addSubmenu($submenu);
 			}
 		}
 		return $menu;

@@ -73,8 +73,13 @@ function edit_to_gedcom_date_fi($datestr) {
 // it is best left to a finnish speaker
 function getFirstRelationsName_fi($pid)
 {
-    // In Finnish we want the genitive form of the name
-    $name = get_person_name($pid);
+	// In Finnish we want the genitive form of the name
+	$person=Person::getInstance($pid);
+	if ($person) {
+		$name=$person->getFullName();
+	} else {
+		$name='';
+	}
 
 	// for now I have been asked to remove the body of this function - if any Finnish
 	// speaker can sort this out I would be grateful.
