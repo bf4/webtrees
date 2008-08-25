@@ -154,7 +154,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
 								$tmp=$spouse->getXref();
 								$personlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
-								if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getName());
+								if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getFullName());
 								else $personlinks .= $pgv_lang["private"];
 								$personlinks .= "</a><br />\n";
 							}
@@ -165,7 +165,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
 							else $title = $cpid." :".$pgv_lang["indi_info"];
 							$personlinks .= "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
-							if ($child->canDisplayName()) $personlinks .= PrintReady($child->getName());
+							if ($child->canDisplayName()) $personlinks .= PrintReady($child->getFullName());
 							else $personlinks .= $pgv_lang["private"];
 							$personlinks .= "<br /></a>";
 						}

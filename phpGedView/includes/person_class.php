@@ -140,18 +140,6 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get the name
-	 * @return string
-	 */
-	function getName() {
-		global $pgv_lang;
-		if (!$this->canDisplayName()) return $pgv_lang["private"];
-		$name = get_person_name($this->xref);
-		if (empty($name)) return $pgv_lang["unknown"];
-		return $name;
-	}
-
-	/**
 	 * Check if privacy options allow this record to be displayed
 	 * @return boolean
 	 */
