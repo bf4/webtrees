@@ -190,7 +190,7 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 		$regex='(?:'.join('|', $regex).')';
 	}
 	if (array_key_exists($var, $arr) && preg_match_recursive('~^'.addcslashes($regex,'~').'$~', $arr[$var])) {
-		return trim_recursive($arr[$var], get_magic_quotes_gpc());
+		return trim_recursive($arr[$var]);
 	} else {
 		return $default;
 	}
@@ -232,12 +232,9 @@ function preg_match_recursive($regex, $var) {
 	}
 }
 
-function trim_recursive($var, $strip_slashes=0) {
+function trim_recursive($var) {
 	if (is_scalar($var)) {
-		if ($strip_slashes)
-			return stripslashes(trim($var));
-		else
-			return trim($var);
+		return trim($var);
 	} else {
 		if (is_array($var)) {
 			foreach ($var as $k=>$v) {
