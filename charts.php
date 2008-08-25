@@ -200,12 +200,9 @@ function print_charts_block_config($config) {
 			<input type="text" name="rootId" id="rootId" value="<?php print $config['rootId']; ?>" size="5" />
 			<?php
 			print_findindi_link('rootId','');
-			if ($config['rootId']) {
-				echo
-					'<span class="list_item">',
-					get_person_name($config['rootId']),
-					format_first_major_fact($config['rootId']),
-					'</span>';
+			$root=Person::getInstance($config['rootId']);
+			if ($root) {
+				echo '<span class="list_item">', $root->getFullName(), $root->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
 			}
 			?>
 		</td>
