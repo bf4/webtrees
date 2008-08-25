@@ -2019,18 +2019,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 		// ASSOciate ID link
 		$gedrec = find_gedcom_record($pid2);
 		if (strstr($gedrec, "@ INDI")!==false || strstr($gedrec, "@ SUBM")!==false) {
-			// ID name
-			if ((DisplayDetailsByID($pid2))||(showLivingNameByID($pid2))) {
-				$name = get_person_name($pid2);
-				$addname = get_add_person_name($pid2);
-			}
-			else {
-				$name = $pgv_lang["private"];
-				$addname = "";
-			}
+			$record=GedcomRecord::getInstance($pid2);
+			$name=$record->getFullName();
 			print "<a href=\"".encode_url("individual.php?pid={$pid2}&ged={$GEDCOM}")."\">" . PrintReady($name);
-//			if (!empty($addname)) print "<br />" . PrintReady($addname);
-			if (!empty($addname)) print " - " . PrintReady($addname);
 			if ($SHOW_ID_NUMBERS) {
 				print "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
