@@ -411,8 +411,8 @@ $pgv_lang["text"]			= "טקסט מקור:";
 $pgv_lang["note"]			= "הערה";
 //$pgv_lang["NN"]			= "(לא ידוע)";
 //$pgv_lang["PN"]			= "(לא ידוע)";
-$pgv_lang["NN"] 		= "(unknown)";
-$pgv_lang["PN"] 		= "(unknown)";
+$pgv_lang["NN"] 			= "(unknown)";
+$pgv_lang["PN"] 			= "(unknown)";
 $pgv_lang["unrecognized_code"]	= "קוד GEDCOM לא מוכר";
 $pgv_lang["unrecognized_code_msg"]	= "זו שגיאה שברצוננו לתקן. דווח לנו על השגיאה הזו.";
 $pgv_lang["indi_info"]			= "מידע אישי";
@@ -440,8 +440,8 @@ $pgv_lang["partner"] 		= "שותף";
 $pgv_lang["spouse"]		= "בן/בת זוג";
 $pgv_lang["spouses"] 		= "בני זוג";
 $pgv_lang["surnames"]	= "שמות משפחה";
-$pgv_lang["adopted"]		= "מאומץ";
-$pgv_lang["foster"]		= "אומנת";
+$pgv_lang["adopted"]		= "אימוץ"; 
+$pgv_lang["foster"]		= "אומנה"; 
 $pgv_lang["sealing"]		= "אישור";
 $pgv_lang["challenged"]	= "אותגר";
 $pgv_lang["disproved"]	= "הופרך";
@@ -615,6 +615,8 @@ $pgv_lang["show_parents"] 		= "הראה הורים";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "גיל";
+$pgv_lang["husb_age"]		= "גיל הבעל"; 
+$pgv_lang["wife_age"]			= "גיל האישה"; 
 $pgv_lang["days"]			= "ימים";
 $pgv_lang["months"]			= "חודשים";
 $pgv_lang["years"]			= "שנים";
@@ -622,6 +624,7 @@ $pgv_lang["day1"]			= "יום";
 $pgv_lang["month1"]			= "חודש";
 $pgv_lang["year1"]			= "שנה";
 $pgv_lang["after_death"]        		= "לאחר הפטירה"; 
+$pgv_lang["at_death_day"]      	= "ביום הפטירה";
 $pgv_lang["timeline_title"]		= "תרשים קו הזמן של PhpGedView";
 $pgv_lang["timeline_chart"]		= "תרשים קו הזמן";
 $pgv_lang["remove_person"]		= "הסר אדם";
@@ -782,6 +785,7 @@ $pgv_lang["media_firewall_protected_dir_not_writable"]	= "ספריית המדי�
 $pgv_lang["media_firewall_invalid_dir"]	= "שגיאה: חומת האש הופעלה מתיקיה שונה מתיקית המדיה"; 
 
 //-- Relationship chart messages
+$pgv_lang["view_fam_nav_details"]	= "הצג פרטים של ..."; 
 $pgv_lang["relationship_great"]	= "Great"; //--@#@ ??
 $pgv_lang["relationship_chart"]	= "קירבה משפחתית";
 $pgv_lang["person1"]			= "אדם א'";
@@ -1175,7 +1179,6 @@ $pgv_lang["welcome_text_auth_mode_3"] = "<center><b>ברוכים הבאים לא
 $pgv_lang["welcome_text_cust_head"]	= "<center><b>ברוכים הבאים לאתר הזה של חקר שושלת היוחסין</b></center><br />גישה לאתר זה מותרת למשתמשים בעלי קוד משתמש וסיסמא.<br />";
 $pgv_lang["acceptable_use"]			= "<div class=\"largeError\">הודעה:</div><div class=\"error\">ע\"י מילוי ושליחה של טופס זה, הנך מסכים:<ul><li>להגן על פרטיות של אנשים חיים שרשומים באתר שלנו;</li><li>ובתיבת הטכסט שלמטה, עליך להסביר למי אתה מקורב, או לספק לנו מידע על אנשים שהיו צריכים להיות רשומים באתר שלנו.</li></ul></div>";
 
-
 //-- mygedview page
 $pgv_lang["upcoming_events"]	= "אירועים קרובים";
 $pgv_lang["living_or_all"]		= "הצג רק אירועים של אנשים חיים?";
@@ -1530,6 +1533,9 @@ $pgv_lang["friend"] 			= "חבר/ה";
 $pgv_lang["godfather"] 		= "סנדק";
 $pgv_lang["godmother"] 		= "סנדק";
 $pgv_lang["godparent"] 		= "סנדק";
+$pgv_lang["godson"]			= "בן-סנדקאות‬"; 
+$pgv_lang["goddaughter"] 		= "בת-סנדקאות‬"; 
+$pgv_lang["godchild"]			= "ילד-סנדקאות‬";
 $pgv_lang["informant"] 		= "מוסר מידע";
 $pgv_lang["lodger"] 			= "דייר";
 $pgv_lang["nurse"] 			= "אחות מטפלת";

@@ -605,6 +605,7 @@ $pgv_lang["file_not_exists"]		= "Annettua tiedostonimeä ei ole.";
 $pgv_lang["research_assistant"]	= "Tutkimusavustaja";
 $pgv_lang["utf8_to_ansi"]		= "Muunnetaanko tämä UTF-8-koodattu GEDCOM ANSI (ISO-8859-1) muotoon?";
 //-- Relationship chart messages
+$pgv_lang["view_fam_nav_details"]	= "Näytä tiedot ..."; 
 $pgv_lang["relationship_chart"]	= "Sukulaisuus";
 $pgv_lang["person1"]			= "Henkilö 1";
 $pgv_lang["person2"]			= "Henkilö 2";
@@ -648,9 +649,9 @@ $pgv_lang["brother_in_law"]		= "Lanko";
 $pgv_lang["sister_in_law"]		= "Käly";
 $pgv_lang["son_in_law"]		= "Vävy";
 $pgv_lang["daughter_in_law"]		= "Miniä";
-$pgv_lang["aunt_in_law"]		= "Täti"; //??
-$pgv_lang["uncle_in_law"]		= "Eno/Setä"; //??
-$pgv_lang["cousin_in_law"]		= "Serkku"; //??
+$pgv_lang["aunt_in_law"]		= "Täti";
+$pgv_lang["uncle_in_law"]		= "Eno/Setä";
+$pgv_lang["cousin_in_law"]		= "Serkku";
 $pgv_lang["step_son"]			= "poikapuoli";
 $pgv_lang["step_daughter"]	    	= "tytärpuoli";
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
@@ -1521,7 +1522,7 @@ $pgv_lang["add_fav_or_enter_url"]	= "TAI<br /> lisää URL-osoite ja otsikko";
 $pgv_lang["add_fav_enter_id"]	= "Lisää henkilö, perhe tai lähde-ID";
 $pgv_lang["edit_source"]		= "Editoi lähdettä";
 $pgv_lang["source_menu"]		= "Vaihtoehtoja lähteille";
-$pgv_lang["repo_menu"]			= "Vaihtoehtoja tietovarastolle"; 
+$pgv_lang["repo_menu"]			= "Vaihtoehtoja tietovarastolle";
 $pgv_lang["familybook_chart"]		= "Sukukirjakaavio";
 $pgv_lang["family_of"]			= "Perhe:  ";
 $pgv_lang["descent_steps"]		= "Jälkipolvien lukumäärä";
@@ -1605,4 +1606,5 @@ $pgv_lang["genealogy"]		= "sukututkimus";
 $pgv_lang["invalid_search_input"] 	= "Anna vuosiluvun lisäksi etunimi, sukunimi tai paikka. ";
 $pgv_lang["duplicate_username"] 	= "Tämä käyttäjätunnus on jo olemassa. Valitse toinen käyttäjätunnus.";
 $pgv_lang["cache_life"]		= "Välimuistitiedoston elinikä";
+$pgv_lang["tree"]					= "Puu";
 ?>
