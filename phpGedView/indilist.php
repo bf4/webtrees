@@ -47,7 +47,7 @@ require_once 'includes/functions_print_lists.php';
 
 // We show three different lists:
 $alpha   =safe_GET('alpha'); // All surnames beginning with this letter where "@"=unknown and ","=none
-$surname =safe_GET('surname'); // All indis with this surname
+$surname =safe_GET('surname', '[^<>&%{};]*'); // All indis with this surname.  NB - allow ' and "
 $show_all=safe_GET('show_all', array('no','yes'), 'no'); // All indis
 
 if (isset($alpha) || isset($surname) || $show_all=='yes') $showList = true;
