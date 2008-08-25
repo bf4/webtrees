@@ -128,6 +128,15 @@ unset($ini_include_path, $includes_dir); // destroy some variables for security 
 
 set_magic_quotes_runtime(0);
 
+// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
+if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
+    ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
+	$_GET    =array_map('stripslashes', $_GET);
+	$_POST   =array_map('stripslashes', $_POST);
+	$_COOKIE =array_map('stripslashes', $_COOKIE);
+	$_REQUEST=array_map('stripslashes', $_REQUEST);
+}
+
 if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
 	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.phpversion().'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
 }
