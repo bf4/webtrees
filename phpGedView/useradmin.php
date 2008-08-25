@@ -325,15 +325,16 @@ if ($action=="edituser") {
 	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 		$varname='gedcomid'.$ged_id;
 		?>
-		<tr>
+		<tr valign="top">
 		<td><?php print $ged_name; ?>:&nbsp;&nbsp;</td>
 		<td><input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
 		$pid=get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $ged_name);
-		if ($pid) {
-			$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
+		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
+		$person=Person::getInstance($pid);
+		if ($person) {
+			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), $person->format_first_major_fact(PGV_EVENTS_DEAT, 1), '</span>';
 		}
 		print "</td></tr>";
 	}
@@ -346,15 +347,16 @@ if ($action=="edituser") {
 	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 		$varname='rootid'.$ged_id;
 		?>
-		<tr>
+		<tr valign="top">
 		<td><?php print $ged_name; ?>:&nbsp;&nbsp;</td>
 		<td> <input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
 		$pid=get_user_gedcom_setting($user_id, $ged_id, 'rootid');
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $ged_name);
-		if ($pid) {
-			$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
+		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
+		$person=Person::getInstance($pid);
+		if ($person) {
+			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), $person->format_first_major_fact(PGV_EVENTS_DEAT, 1), '</span>';
 		}
 		?>
 		</td></tr>
