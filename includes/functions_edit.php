@@ -1418,7 +1418,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="DATE") print_calendar_popup($element_id);
 		if ($fact=="FAMC") print_findfamily_link($element_id, "");
 		if ($fact=="FAMS") print_findfamily_link($element_id, "");
-		if ($fact=="ASSO") print_findindi_link($element_id, get_person_name($value));
+		if ($fact=="ASSO") print_findindi_link($element_id, "");
 		if ($fact=="FILE") print_findmedia_link($element_id, "0file");
 		if ($fact=="SOUR") {
 			print_findsource_link($element_id);
