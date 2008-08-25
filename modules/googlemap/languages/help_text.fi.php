@@ -141,8 +141,7 @@ $pgv_lang["PLACECHECK_MATCH_help"]  	= "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br 
 //wooc Options for Place Hierarchy display
 $pgv_lang["GOOGLEMAP_PH"]                 = "Käytä Googlemapia paikkahierarkiaa varten";
 $pgv_lang["GOOGLEMAP_PH_help"]                    = "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Tälla vaihtoehdolla kytketään Googlemapin toiminto paikkahierarkian käytössä päälle tai pois. Ennen käyttöä suositellaan kaikkien paikkojen lisäämistä Googlemap-taulukoihin.";
-//@@	
-Tämän vaihtoehdon päällä (Kyllä) tai pois (Ei) kyky korvaa Googlemapilla PhpGedViewn tavanomaisen Paikat. Jotta voitaisiin asettaa tämän vaihtoehdon Kyllä, Googlemap-moduulin on myös oltava käytössä. VAROITUS: Ennen käyttöä suositellaan kaikkien paikkojen lisäämistä Googlemap-taulukoihin.";
+//@@Tämän vaihtoehdon päällä (Kyllä) tai pois (Ei) kyky korvaa Googlemapilla PhpGedViewn tavanomaisen Paikat. Jotta voitaisiin asettaa tämän vaihtoehdon Kyllä, Googlemap-moduulin on myös oltava käytössä. VAROITUS: Ennen käyttöä suositellaan kaikkien paikkojen lisäämistä Googlemap-taulukoihin.";
 //@@$pgv_lang["GOOGLEMAP_PH_help"]          = "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Use this option to enable (Yes) or disable (No) the ability to substitute Googlemap for PhpGEDView's usual Place Hierarchy. To be able to set this option to YES, the Googlemap module must be also be enabled. CAUTION: Before using this option, it is recommended that you insert all places currently existing in your GED into the Googlemap tables.";
 
 $pgv_lang["GOOGLEMAP_PH_MAP_SIZE"]                   = "Paikkahierarkiakartan koko (pikseleinä)";
