@@ -44,6 +44,9 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["parent_age"]							26 August 2008			A
++$pgv_lang["father_age"]							26 August 2008			A
++$pgv_lang["mother_age"]							26 August 2008			A
 +$pgv_lang["view_fam_nav_details"]					19 August 2008			A		Line 781 in lang_en.php
 +$pgv_lang["husb_age"]								18 August 2008			A
 +$pgv_lang["wife_age"]								18 August 2008			A
