@@ -1207,8 +1207,7 @@ class Person extends GedcomRecord {
 							$event = new Event($factrec, 0);
 							$event->setParentObject($this);
 							$this->indifacts[]=$event;
-							// Break here to show only the first DEAT/BURI/CREM instead of all DEAT/BURI/CREM
-							//break 2;
+							break;
 						}
 					}
 				}
