@@ -412,6 +412,7 @@ class LifespanControllerRoot extends BaseController {
 				
 				$lifespan = $birthYear."-";
 				$deathReal = $value->getDeathDate(false)->isOK();
+				$birthReal = $value->getBirthDate(false)->isOK();
 				if ($value->isDead() && $deathReal) $lifespan .= $deathYear; 
 				$lifespannumeral = $deathYear - $birthYear;
 				
@@ -496,6 +497,7 @@ class LifespanControllerRoot extends BaseController {
 					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
 					if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
 					else print get_first_letter($factarray["BIRT"]);
+					if (!$birthReal) print "*";
 					print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
@@ -525,6 +527,7 @@ class LifespanControllerRoot extends BaseController {
 						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
 						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
 						else print get_first_letter($factarray["BIRT"]);
+						if (!$birthReal) print "*";
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
@@ -544,6 +547,7 @@ class LifespanControllerRoot extends BaseController {
 						print"<a class=\"showit\" href=\"".encode_url("individual.php?pid=".$value->getXref())."\"><b>";
 						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
 						else print get_first_letter($factarray["BIRT"]);
+						if (!$birthReal) print "*";
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
 							$text = explode("-fact,", $val);
