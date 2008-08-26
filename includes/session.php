@@ -131,10 +131,15 @@ set_magic_quotes_runtime(0);
 // magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
 if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
     ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
-	$_GET    =array_map('stripslashes', $_GET);
-	$_POST   =array_map('stripslashes', $_POST);
-	$_COOKIE =array_map('stripslashes', $_COOKIE);
-	$_REQUEST=array_map('stripslashes', $_REQUEST);
+	foreach (array('_GET', '_POST', '_COOKIE', '_REQUEST') as $var) {
+		foreach (array_keys($$var) as $key) {
+			if (is_array($$var[$key])) {
+				$$var[$key]=array_map('stripslashes', $$var[$key]);
+			} else {
+				$$var[$key]=stripslashes($$var[$key]);
+			}
+		}
+	}
 }
 
 if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
