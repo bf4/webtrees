@@ -472,7 +472,7 @@ function store_gedcoms() {
 	} else {
 		fwrite($fp, $gedcomtext);
 		fclose($fp);
-		check_in("store_gedcoms() ->" . PGV_USER_ID ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
+		check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
 	$mutex->Release();
 	$IN_STORE_GEDCOMS = false;
