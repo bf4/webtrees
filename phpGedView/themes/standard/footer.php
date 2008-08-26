@@ -25,27 +25,29 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+	echo "You cannot access an include file directly.";
 	exit;
 }
 
-if (!isset($without_close)) print "</div> <!-- closing div id=\"content\" -->\n";//FIXME uncomment as soon as ready
+if (!isset($without_close)) echo "</div> <!-- closing div id=\"content\" -->\n";//FIXME uncomment as soon as ready
 
-print "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
+echo "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
 
-print contact_links();
+echo contact_links();
 
-print "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
-print '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" width="100" height="45" border="0" alt="'.PGV_PHPGEDVIEW.'" title="'.PGV_PHPGEDVIEW.'" /></a><br />';
-print "\n\t<br />";
+echo "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
+echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" width="100" height="45" border="0" alt="'.PGV_PHPGEDVIEW.'" title="'.PGV_PHPGEDVIEW;
+if (PGV_USER_IS_ADMIN) echo " - ".PGV_VERSION_TEXT;
+echo '" /></a><br />';
+echo "\n\t<br />";
 print_help_link("preview_help", "qm");
-print "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_lang["print_preview"]."</a>";
-print "<br />";
+echo "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_lang["print_preview"]."</a>";
+echo "<br />";
 if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
-if ($buildindex) print " ".$pgv_lang["build_error"]."  <a href=\"editgedcoms.php\">".$pgv_lang["rebuild_indexes"]."</a>\n";
+if ($buildindex) echo " ".$pgv_lang["build_error"]."  <a href=\"editgedcoms.php\">".$pgv_lang["rebuild_indexes"]."</a>\n";
 if (exists_pending_change()) {
-	print "<br />".$pgv_lang["changes_exist"]." <a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a>\n";
+	echo "<br />".$pgv_lang["changes_exist"]." <a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a>\n";
 }
-print "</div>";
-print "</div> <!-- close div id=\"footer\" -->\n";
+echo "</div>";
+echo "</div> <!-- close div id=\"footer\" -->\n";
 ?>
