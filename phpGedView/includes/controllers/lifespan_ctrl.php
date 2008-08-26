@@ -411,7 +411,7 @@ class LifespanControllerRoot extends BaseController {
 				}
 				
 				$lifespan = $birthYear."-";
-				if ($value->isDead()) $lifespan .= $deathYear; 
+				if ($value->isDead() && $value->getDeathDate(false)->isOK()) $lifespan .= $deathYear; 
 				$lifespannumeral = $deathYear - $birthYear;
 				
 				//-- calculate a good Y top value
@@ -501,7 +501,7 @@ class LifespanControllerRoot extends BaseController {
 					if ($value->isDead()) {
 						print "<a class=\"showit\" href=\"#\"><b>";
 						if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-						else get_first_letter($factarray["DEAT"]);
+						else print get_first_letter($factarray["DEAT"]);
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 					}
 					print "</td></tr></table>";
