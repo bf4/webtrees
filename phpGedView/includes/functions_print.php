@@ -1967,6 +1967,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if (substr($key,0,1)=='*') {
 					$autoRela = true;
 					$key = substr($key,1);
+					
 				}
 				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
 				if ($cr > 0) {
@@ -1999,6 +2000,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 							if ($sex3 == "M")  $rela = $pgv_lang["sosa_{$key}_2"];
 							else if ($sex3 == "F")  $rela = $pgv_lang["sosa_{$key}_3"];
 						}
+					}
+					else if ($key == "twin" || $key == "twin_brother" || $key =="twin_sister") {
+						$autoRela = true;
 					}
 				}
 				$p = strpos($rela, "(=");
@@ -2064,7 +2068,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
 					}
 				}
-				else if ($pid!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
+				else if ($pid!=$pid2 && $rela!="twin_sister") print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
 
 		}
@@ -2120,7 +2124,7 @@ function format_parents_age($pid) {
 							$class='parentdeath';
 							$title=$factarray['_DEAT_MOTH'];
 						} else {
-							$title=$pgv_lang['mother'];
+							$title=$pgv_lang['mother_age'];
 						}
 						break;
 					case 'M':
@@ -2129,11 +2133,11 @@ function format_parents_age($pid) {
 							$class='parentdeath';
 							$title=$factarray['_DEAT_FATH'];
 						} else {
-							$title=$pgv_lang['father'];
+							$title=$pgv_lang['father_age'];
 						}
 						break;
 					default:
-						$title=$pgv_lang['parent'];
+						$title=$pgv_lang['parent_age'];
 						break;
 					}
 					if ($class) {
