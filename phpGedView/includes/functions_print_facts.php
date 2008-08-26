@@ -401,7 +401,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				// -- print BURIal -> CEMEtery
 				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
 				if ($ct>0) {
-					if ($SHOW_FACT_ICONS)
+					if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/CEME.gif"))
 						//print $eventObj->Icon().' '; // print incorrect fact icon !!!
 						print "<img src=\"{$PGV_IMAGE_DIR}/facts/CEME.gif\" alt=\"{$factarray["CEME"]}\" title=\"{$factarray["CEME"]}\" align=\"middle\" /> ";
 					print "<b>".$factarray["CEME"].":</b> ".$match[1]."<br />\n";
