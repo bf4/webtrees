@@ -411,7 +411,8 @@ class LifespanControllerRoot extends BaseController {
 				}
 				
 				$lifespan = $birthYear."-";
-				if ($value->isDead() && $value->getDeathDate(false)->isOK()) $lifespan .= $deathYear; 
+				$deathReal = $value->getDeathDate(false)->isOK();
+				if ($value->isDead() && $deathReal) $lifespan .= $deathYear; 
 				$lifespannumeral = $deathYear - $birthYear;
 				
 				//-- calculate a good Y top value
@@ -502,6 +503,7 @@ class LifespanControllerRoot extends BaseController {
 						print "<a class=\"showit\" href=\"#\"><b>";
 						if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
 						else print get_first_letter($factarray["DEAT"]);
+						if (!$deathReal) print "*";
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 					}
 					print "</td></tr></table>";
@@ -529,7 +531,8 @@ class LifespanControllerRoot extends BaseController {
 						if ($value->isDead()) {
 							print "<a class=\"showit\" href=\"#\"><b>";
 							if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-							else get_first_letter($factarray["DEAT"]);
+							else print get_first_letter($factarray["DEAT"]);
+							if (!$deathReal) print "*";
 							print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						}
 						print "</td></tr></table>";
@@ -547,7 +550,7 @@ class LifespanControllerRoot extends BaseController {
 							$val = $text[1];
 							print $val."<br />\n";
 						}
-						if ($value->isDead()) print $factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace());
+						if ($value->isDead() && $deathReal) print $factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace());
 						print "</span></a>";
 						echo '</div>';
 					}
