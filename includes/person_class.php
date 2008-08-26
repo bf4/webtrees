@@ -1182,7 +1182,14 @@ class Person extends GedcomRecord {
 							if (!$sEvent->canShow()) {
 								$factrec.='\n2 RESN privacy';
 							}
+							if (strstr($srec, "twin")) {
+								$rela_sex = Person::getInstance($spid)->getSex();
+								$rela="twin";
+								if ($rela_sex=="F") $rela="twin_sister";
+								else if ($rela_sex=="M") $rela="twin_brother";
+							}
 							$factrec.="\n2 ASSO @".$spid."@\n3 RELA *".$rela;
+							
 							// add parents on grandchildren, cousin or nephew's birth
 							if ($option=='_GCHI' || $option=='_GGCH' || $option=='_COUS' || $option=='_NEPH') {
 								if ($family->getHusbId()) {
@@ -1422,6 +1429,13 @@ class Person extends GedcomRecord {
 								if ($parents["HUSB"]) $factrec .= "\n2 ASSO @".$parents["HUSB"]."@"; //\n3 RELA ".$factarray[$fact];
 								if ($parents["WIFE"]) $factrec .= "\n2 ASSO @".$parents["WIFE"]."@"; //\n3 RELA ".$factarray[$fact];
 							}
+						}
+						else if ($fact=='BIRT') {
+							$sex = Person::getInstance($rid)->getSex();
+							if ($sex == "M") $rela_b="twin_brother";
+							else if ($sex == "F") $rela_b="twin_sister";
+							else $rela_b="twin";
+							$factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$rela_b;
 						}
 						else if ($fact=='CHR') {
 							$sex = Person::getInstance($rid)->getSex();
