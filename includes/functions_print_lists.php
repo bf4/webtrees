@@ -445,8 +445,10 @@ function print_indi_table($datalist, $legend="", $option="") {
 			foreach ($death_dates as $num=>$death_date) {
 				if ($num) {
 					echo '<div>', $death_date->Display(!$SEARCH_SPIDER), '</div>';
-				} else {
+				} else if ($death_date->MinJD()!=0) {
 					echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
+				} else if ($person->isDead()) {
+					echo '<div>', $pgv_lang["yes"], '<a name="9999999"></a></div>';
 				}
 			}
 			if ($death_dates[0]->gregorianYear()>=1550) {
@@ -780,20 +782,40 @@ function print_fam_table($datalist, $legend="", $option="") {
 			foreach ($marriage_dates as $num=>$marriage_date) {
 				if ($num) {
 					echo '<div>', $marriage_date->Display(!$SEARCH_SPIDER), '</div>';
-				} else {
+				} else if ($marriage_date->MinJD()!=0) {
 					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
+				} else {
+					$factdetail = preg_split("/ /", trim($family->getMarriageRecord()));
+					if (isset($factdetail)) {
+						if (count($factdetail) == 3) {
+							if (strtoupper($factdetail[2]) == "Y")
+								echo '<div>', $pgv_lang["yes"], '<a name="9999998"></a></div>';
+							else if (strtoupper($factdetail[2]) == "N")
+								echo '<div>', $pgv_lang["no"], '<a name="9999999"></a></div>';
+						}
+						else echo '&nbsp;';
+					}
 				}
 			}
 			if ($marriage_dates[0]->gregorianYear()>=1550) {
 				$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
 			}
+		} else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref()))) {
+			echo '<div>', $factarray["_NMR"], '<a name="9999999"></a></div>';
+		} else if (get_sub_record(1, "1 _NMAR", find_family_record($family->getXref()))) {
+			echo '<div>', $factarray["_NMAR"], '<a name="9999999"></a></div>';
 		} else {
 			echo '&nbsp;';
 		}
 		echo "</td>";
 		//-- Marriage anniversary
-		if ($tiny)
-			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($mdate)."</span></td>";
+		if ($tiny) {
+			echo "<td class=\"list_value_wrap rela\">";
+			$mage=GedcomDate::GetAgeYears($mdate);
+			if (empty($mage)) echo "&nbsp;";
+			else echo "<span class=\"age\">".$mage."</span>";
+			echo "</td>";
+		}
 		//-- Marriage place
 		echo '<td class="list_value_wrap">';
 		if ($marriage_places=$family->getAllMarriagePlaces()) {
