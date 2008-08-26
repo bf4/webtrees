@@ -137,7 +137,7 @@ class TreeNav {
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" /></a></td></tr>
 				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print $pgv_lang["load_full_tree"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
 				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print $pgv_lang["hide_show_spouses"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" /></td></tr>
-				<tr><td><?php print_help_link('help_treenav.php',''); ?></td></tr>
+				<tr><td><?php print_help_link('help_treenav.php','qm'); ?></td></tr>
 				<tr><td><img id="<?php print $this->name; ?>_loading" src="images/loading.gif" style="display: none;" /></td></tr>
 			</table>
 			</div>
