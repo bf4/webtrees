@@ -92,53 +92,57 @@ class ra_EditGeneratedTask extends ra_form
 				//-->
 				</script>';
 		return $out;
- 	}
- 	
- 	function print_Content()
- 	{
-	 	global $pgv_lang;
- 		$out = '<tr>' .
-					'<th class="descriptionbox">' .
-		      			$pgv_lang["Task_Name"].':' .
-		      		'</th>' .
-		      		'<th class="optionbox" align="left">' .
-		      			'<input type="text" name="title" value="' . $this->task->getName() . '"size="50"/>' .
-		      		'</th>' .
-		      	'<tr>' .
-					'<th class="descriptionbox">' .
-		      			$pgv_lang["TaskDescription"].':' .
-		      		'</th>' .
-		      		'<th class="optionbox" align="left">' .
-		      			'<textarea name="description" cols=25 rows=5 wrap=soft>' . $this->task->getDescription() . '</textarea>' .
-		      		'</th>' .
-		      	'</tr>' .
-		      	'<tr>' .
-					'<th class="descriptionbox">' .
-		            	$pgv_lang["people"].':' .
-		            '</th>' .
-		            '<th id="peoplecell" class="optionbox" align="left">' .
-		            	'<input type="hidden" id="personid" name="personid" size="3" value="' . $this->task->getPersonId() . '" />' .
-		                '<div id="peoplelink">';
-		                if($this->task->getPersonId() != '')
-		                	$out .= get_person_name($this->task->getPersonId());
-		                $out .= '</div>' .
-		                print_findindi_link("personid", "peoplelink", true) .
-		            '</th>' .
-		        '</tr>' .
-		        '<tr>' .
-		        	'<th class="descriptionbox">' .
-		            	$pgv_lang["sources"].':' .
-		            '</th>' .
-		        	'<th id="sourcecell" class="optionbox" align="left">' .
-		        		'<input type="hidden" id="sourceid" name="sourceid" size="3" value="" />' .
-                   		'<div id="sourcelink"></div>' .
-                   		print_findsource_link("sourceid", "sourcelink", true) .
-                    	'<br />' .
-                	'</th>' .
-            	'</tr>';
+	}
+	
+	function print_Content()
+	{
+		global $pgv_lang;
+		$out =
+			'<tr>' .
+			'<th class="descriptionbox">' .
+			$pgv_lang["Task_Name"].':' .
+			'</th>' .
+			'<th class="optionbox" align="left">' .
+			'<input type="text" name="title" value="' . $this->task->getName() . '"size="50"/>' .
+			'</th>' .
+			'<tr>' .
+			'<th class="descriptionbox">' .
+			$pgv_lang["TaskDescription"].':' .
+			'</th>' .
+			'<th class="optionbox" align="left">' .
+			'<textarea name="description" cols=25 rows=5 wrap=soft>' . $this->task->getDescription() . '</textarea>' .
+			'</th>' .
+			'</tr>' .
+			'<tr>' .
+			'<th class="descriptionbox">' .
+			$pgv_lang["people"].':' .
+			'</th>' .
+			'<th id="peoplecell" class="optionbox" align="left">' .
+			'<input type="hidden" id="personid" name="personid" size="3" value="' . $this->task->getPersonId() . '" />' .
+			'<div id="peoplelink">';
+		$person=Person::getInstance($this->task->getPersonId());
+		if ($person) {
+			$out .= $person->getFullName();
+		}
+		$out .=
+			'</div>' .
+			print_findindi_link("personid", "peoplelink", true) .
+			'</th>' .
+			'</tr>' .
+			'<tr>' .
+			'<th class="descriptionbox">' .
+			$pgv_lang["sources"].':' .
+			'</th>' .
+			'<th id="sourcecell" class="optionbox" align="left">' .
+			'<input type="hidden" id="sourceid" name="sourceid" size="3" value="" />' .
+			'<div id="sourcelink"></div>' .
+			print_findsource_link("sourceid", "sourcelink", true) .
+			'<br />' .
+			'</th>' .
+			'</tr>';
 		return $out;
- 	}
- 	
+	}
+	
  	function print_footer() 
  	{
 	 	global $pgv_lang;
