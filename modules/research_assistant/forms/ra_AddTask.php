@@ -199,17 +199,20 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
             <tr>
     <!--PEOPLE-->
                 <td class="descriptionbox">
-                    <?php print $pgv_lang["people"];
-                    if (!empty($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-					else $pid = ""; 
+										<?php
+										echo $pgv_lang['people'];
+										$person=Person::getInstance(safe_GET('pid'));
+										$pid=$person ? $person->getXref() : ''
                     ?>
                 </td>
                 <td id="peoplecell" class="optionbox" colspan="3">
-                   <input type="hidden" id="personid" name="personid" value="<?php print $pid; ?>" />
+                   <input type="hidden" id="personid" name="personid" value="<?php echo $pid; ?>" />
                    <div id="peoplelink">
-                   <?php if (!empty($pid)) {
-                   		print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.get_person_name($pid).'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\''.$pid.'\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
-                   } ?>
+										<?php
+										if ($person) {
+                   		echo'<a id="link_', $pid, '" href="'.$person->getLinkUrl(), '">', $person->getFullName(), '</a> <a id="rem_', $pid, '" href="#" onclick="clearname(\'', $pid, '\', \'link_', $pid, '\', \'', $pid, '\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+                   	}
+										?>
                    </div>
                      <?php print_findindi_link("personid", "peoplelink", false, true,'',''); ?>
                     <br />
