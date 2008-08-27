@@ -867,6 +867,7 @@ class Person extends GedcomRecord {
 	 */
 	function parseFacts($nfacts=NULL) {
 		global $nonfacts;
+		parent::parseFacts();
 		if ($nfacts!=NULL) $nonfacts = $nfacts;
 		//-- only run this function once
 		if ($this->facts_parsed) return;
@@ -874,7 +875,6 @@ class Person extends GedcomRecord {
 		if (!$this->canDisplayDetails()) return;
 		$sexfound = false;
 		//-- run the parseFacts() method from the parent class
-		parent::parseFacts();
 		$this->facts_parsed = true;
 
 		//-- sort the fact info into different categories for people
