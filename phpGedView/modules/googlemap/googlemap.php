@@ -729,12 +729,10 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]['info']))
 						print ": {$markers[$j]['info']}";
 					if (!empty($markers[$j]["name"])) {
-						print ": <a href=\\\"individual.php?pid=".$markers[$j]["name"]."&amp;ged=$GEDCOM\\\">";
-						if (displayDetailsById($markers[$j]["name"])||showLivingNameById($markers[$j]["name"]))
-							print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($markers[$j]["name"])));
-						else
-							print $pgv_lang["private"];
-						print "</a>";
+						$person=Person::getInstance($markers[$j]['name']);
+						if ($person) {
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? htmlspecialchars($person->getFullName()) : $pgv_lang['private'], '</a>';
+						}
 					}
 					print "<br />";
 					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
@@ -785,12 +783,10 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]['info']))
 						print ": {$markers[$j]['info']}";
 					if (!empty($markers[$j]["name"])) {
-						print ": <a href=\\\"individual.php?pid=".$markers[$j]["name"]."&amp;ged=$GEDCOM\\\">";
-						if (displayDetailsById($markers[$j]["name"])||showLivingNameById($markers[$j]["name"]))
-							print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($markers[$j]["name"])));
-						else
-							print $pgv_lang["private"];
-						print "</a>";
+						$person=Person::getInstance($markers[$j]['name']);
+						if ($person) {
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? htmlspecialchars($person->getFullName()) : $pgv_lang['private'], '</a>';
+						}
 					}
 					print "<br />";
 					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
@@ -854,12 +850,10 @@ function build_indiv_map($indifacts, $famids) {
 							if (!empty($markers[$k]['info']))
 								print ": {$markers[$k]['info']}";
 							if (!empty($markers[$k]["name"])) {
-								print ": <a href=\\\"individual.php?pid=".$markers[$k]["name"]."&amp;ged=$GEDCOM\\\">";
-								if (displayDetailsById($markers[$k]["name"])||showLivingNameById($markers[$k]["name"]))
-									print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($markers[$k]["name"])));
-								else
-									print $pgv_lang["private"];
-								print "</a>";
+								$person=Person::getInstance($markers[$k]['name']);
+								if ($person) {
+									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? htmlspecialchars($person->getFullName()) : $pgv_lang['private'], '</a>';
+								}
 							}
 							print "<br />";
 							if (preg_match("/2 PLAC (.*)/", $markers[$k]["placerec"]) == 0) {
@@ -904,12 +898,11 @@ function build_indiv_map($indifacts, $famids) {
 			if (!empty($marker["info"]))
 				print "<span class=\"field\">{$marker["info"]}</span><br />";
 			if (!empty($marker["name"])) {
-				print "<a href=\"individual.php?pid={$marker["name"]}&amp;ged=$GEDCOM\">";
-				if (displayDetailsById($marker["name"])||showLivingNameById($marker["name"]))
-					print PrintReady(get_person_name($marker["name"]));
-				else
-					print $pgv_lang["private"];
-				print "</a><br />";
+				$person=Person::getInstance($marker['name']);
+				if ($person) {
+					echo '<a href="', $person->getLinkUrl(), '">', $person->canDisplayName() ? htmlspecialchars($person->getFullName()) : $pgv_lang['private'], '</a>';
+				}
+				print '<br />';
 			}
 			if (preg_match("/2 PLAC (.*)/", $marker["placerec"]) == 0) {
 				print_address_structure_map($marker["placerec"], 1);
