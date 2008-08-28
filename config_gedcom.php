@@ -93,10 +93,6 @@ $SUBLIST_TRIGGER_F = "200";				// -- Number of names required before Family list
 										// -- Set to zero to disable sub-lists
 $SURNAME_LIST_STYLE = "style2";			// -- Surname list style.  "style2"=sortable table, "style3"=list of names in varying font sizes
 
-$NAME_FROM_GEDCOM = false;				// -- By default phpGedView uses the name stored in the indexes to get a person's name
-										// -- With some gedcom formats the sortable name stored in the indexes does not get
-										// -- displayed properly and the best way to get the correct display name is from the gedcom
-										// -- However, retrieving the name from the gedcom will slow the program down.
 $SHOW_MARRIED_NAMES = false;			// -- Option to show the married name for females in the indilist
 
 $SHOW_ID_NUMBERS = true;				// -- Show gedcom id numbers on charts next to  names
