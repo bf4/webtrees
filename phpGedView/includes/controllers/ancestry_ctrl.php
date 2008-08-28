@@ -118,22 +118,12 @@ class AncestryControllerRoot extends BaseController {
 		$pbwidth = $bwidth+12;
 		$pbheight = $bheight+14;
 
-
-
-		if ((DisplayDetailsByID($this->rootid)) || (showLivingNameByID($this->rootid))) {
-			$this->name = get_person_name($this->rootid);
-			$this->addname = get_add_person_name($this->rootid);
-		}
-		else {
-			$this->name = $pgv_lang["private"];
-			$this->addname = "";
-		}
+		$this->ancestry = Person::getInstance($this->rootid);
+		$this->name     = $this->ancestry->getFullName();
+		$this->addname  = $this->ancestry->getAddName();
 
 		if (strlen($this->name)<30) $this->cellwidth="420";
 		else $this->cellwidth=(strlen($this->name)*14);
-
-
-		$this->ancestry = Person::getInstance($this->pid);
 
 		if (!$this->isPrintPreview()) {
 			$this->visibility = "hidden";

@@ -493,20 +493,31 @@ class GedcomRecord {
 
 	// Get the three variants of the name
 	function getFullName() {
-		$tmp=$this->getAllNames();
-		return $tmp[$this->getPrimaryName()]['full'];
+		global $pgv_lang;
+		if ($this->canDisplayName()) {
+			$tmp=$this->getAllNames();
+			return $tmp[$this->getPrimaryName()]['full'];
+		} else {
+			return $pgv_lang['private'];
+		}
 	}
 	function getSortName() {
+		// The sortable name is never displayed, no need to call canDisplayName()
 		$tmp=$this->getAllNames();
 		return $tmp[$this->getPrimaryName()]['sort'];
 	}
 	function getListName() {
-		$tmp=$this->getAllNames();
-		return $tmp[$this->getPrimaryName()]['list'];
+		global $pgv_lang;
+		if ($this->canDisplayName) {
+			$tmp=$this->getAllNames();
+			return $tmp[$this->getPrimaryName()]['list'];
+		} else {
+			return $pgv_lang['private'];
+		}
 	}
 	// Get the fullname in an alternative character set
 	function getAddName() {
-		if ($this->getPrimaryName() != $this->getSecondaryName()) {
+		if ($this->canDisplayName() && $this->getPrimaryName()!=$this->getSecondaryName()) {
 			$all_names=$this->getAllNames();
 			return $all_names[$this->getSecondaryName()]['full'];
 		} else {
