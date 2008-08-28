@@ -196,53 +196,6 @@ function sortable_name_from_name($name) {
 }
 
 /**
- * get the name for a person
- *
- * returns the name in the form Given Name Surname
- * If the <var>$NAME_FROM_GEDCOM</var> variable is true then the name is retrieved from the
- * gedcom record not from the database index.
- * @param string $pid the xref gedcom id of the person
- * @param bool $checkUnknown whether to check for (unknown) before returning
- * @return string the person's name (Given Name Surname)
- */
-function get_person_name($pid, $checkUnknown=true) {
-	global $NAME_REVERSE;
-	global $NAME_FROM_GEDCOM;
-	global $indilist;
-	global $GEDCOM, $GEDCOMS;
-
-	$name = "";
-
-	//-- get the name from the gedcom record
-	if ($NAME_FROM_GEDCOM) {
-		$indirec = find_person_record($pid);
-		if (!$indirec) $indirec = find_updated_record($pid);
-		$name = get_gedcom_value("NAME", 1, $indirec, '', false);
-	} else {
-		//-- first check if the person is in the cache
-		if ((isset($indilist[$pid]["names"][0][0]))&&($indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]["id"])) {
-			$name = $indilist[$pid]["names"][0][0];
-		} else {
-			//-- cache missed, so load the person into the cache with the find_person_record function
-			//-- and get the name from the cache again
-			$gedrec = find_person_record($pid);
-			if (empty($gedrec)) {
-				$gedrec = find_updated_record($pid);
-			}
-			if (!empty($gedrec)) {
-				$names = get_indi_names($gedrec);
-				$name = $names[0][0];
-			}
-		}
-	}
-
-	if ($NAME_REVERSE) $name = reverse_name($name);
-	
-	if ($checkUnknown) $name = check_NN($name);
-	return $name;
-}
-
-/**
  * reverse a name
  * this function will reverse a name for languages that
  * prefer last name first such as hungarian and chinese
@@ -266,19 +219,6 @@ function reverse_name($name) {
 		if (!empty($othername)) $name .= " ".$othername;
 	}
 
-	return $name;
-}
-
-// -- find and return a given individual's second name in format: firstname lastname
-function get_add_person_name($pid) {
-	global $NAME_FROM_GEDCOM;
-
-	//-- get the name from the indexes
-	$record = find_person_record($pid);
-	$name_record = get_sub_record(1, "1 NAME", $record);
-	$name = get_add_person_name_in_record($name_record);
-	$name = check_NN($name); 
-		
 	return $name;
 }
 
