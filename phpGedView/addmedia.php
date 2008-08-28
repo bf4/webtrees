@@ -592,6 +592,7 @@ if ($action=="delete") {
 // **** end action "delete"
 
 // **** begin action "showmedia"
+// IS THIS STILL USED?
 if ($action=="showmedia") {
 	$medialist = get_db_media_list();
 	if (count($medialist)>0) {
@@ -604,7 +605,12 @@ if ($action=="showmedia") {
 			print "<td class=\"list_value\"><a href=\"".encode_url("addmedia.php?action=edit&m_id=".$media["ID"])."\">edit</a></td>";
 			print "<td class=\"list_value\">".$media["TITL"]."</td>";
 			print "<td class=\"list_value\">";
-			echo format_list_person($media['INDI'], array(get_person_name($media["INDI"]), $GEDCOM), false, '', 'div');
+			$person=Person::getInstance($media["INDI"]);
+			if ($person) {
+				echo $person->format_list('span');
+			} else {
+				echo $pgv_lang['unknown'];
+			}
 			print "</td>";
 			print "<td class=\"list_value\">".$media["FILE"]."</td>";
 			print "<td class=\"list_value\">".$media["_PRIM"]."</td>";

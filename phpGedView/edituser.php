@@ -226,20 +226,24 @@ echo $pgv_lang['lastname'], '</td><td class="optionbox">';
 echo '<input type="text" name="form_lastname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'lastname'), '" />';
 echo '</td></tr>';
 	
-if (PGV_USER_GEDCOM_ID) {
+$person=Person::getInstance(PGV_USER_GEDCOM_ID);
+if ($person) {
 	echo '<tr><td class="descriptionbox wrap">';
 	echo print_help_link("edituser_gedcomid_help", "qm", '', false, true);
 	echo $pgv_lang['gedcomid'], '</td><td class="optionbox">';
-	echo format_list_person(PGV_USER_GEDCOM_ID, array(get_person_name(PGV_USER_GEDCOM_ID), $GEDCOM), false, '', 'div');
+	echo $person->format_list('span');
 	echo '</td></tr>';
 }
 	
+$person=Person::getInstance(PGV_USER_ROOT_ID);
 echo '<tr><td class="descriptionbox wrap">';
 echo print_help_link('edituser_rootid_help', 'qm', '', false, true);
 echo $pgv_lang['rootid'], '</td><td class="optionbox">';
 echo '<input type="text" name="form_rootid" id="rootid" tabindex="', ++$tab, '" value="', PGV_USER_ROOT_ID, '" />';
-echo print_findindi_link('rootid', '', true), ' ';
-echo format_list_person(PGV_USER_ROOT_ID, array(get_person_name(PGV_USER_ROOT_ID), $GEDCOM), false, '', 'div');
+echo print_findindi_link('rootid', '', true), '<br/>';
+if ($person) {
+	echo $person->format_list('span');
+}
 echo '</td></tr>';
 
 echo '<tr><td class="descriptionbox wrap">';
