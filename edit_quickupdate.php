@@ -257,9 +257,10 @@ if ($action=="update") {
 		}
 		return $famupdate;
 	}
-	
+
+	$person=Person::getInstance($pid);
 	print "<h2>".$pgv_lang["quick_update_title"]."</h2>\n";
-	print "<b>".PrintReady(get_person_name($pid))."</b><br /><br />";
+	print "<b>".PrintReady($person->getFullName())."</b><br /><br />";
 	
 	AddToChangeLog("Quick update attempted for $pid by >".PGV_USER_NAME."<");
 
@@ -1429,10 +1430,12 @@ if ($action=="choosepid") {
 	if (count($cfams)==0) $cfams[] = "";
 		
 	$tabkey = 1;
-	$name = PrintReady(get_person_name($pid));
-	print "<b>".$name;
-	if ($SHOW_ID_NUMBERS) print PrintReady("&nbsp;&nbsp;(".$pid.")");
-	print "</b><br />";
+	$person=Person::getInstance($pid);
+	echo '<b>', PrintReady($person->getFullName());
+	if ($SHOW_ID_NUMBERS) {
+		echo PrintReady("&nbsp;&nbsp;(".$pid.")");
+	}
+	echo '</b><br />';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -1489,19 +1492,14 @@ function checkform(frm) {
 				else $spid=$parents["WIFE"];
 			}			
 			print "<td id=\"pagetab$i\" class=\"tab_cell_inactive\" onclick=\"switch_tab($i); return false;\"><a href=\"javascript: ".$pgv_lang["family_with"]."&nbsp;";
-			if (!empty($spid)) {
-				if (displayDetailsById($spid) && showLivingNameById($spid)) {
-					print PrintReady(str_replace(array("<span class=\"starredname\">", "</span>"), "", get_person_name($spid)));
-					print "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ";
-					print PrintReady(get_person_name($spid));
-				}
-				else {
-					print $pgv_lang["private"];
-					print "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ";
-					print $pgv_lang["private"];
-				}
+			$person=Person::getInstance($spid);
+			if ($person) {
+				print PrintReady(strip_tags($person->getFullName()));
+				print "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ";
+				print PrintReady($person->getFullName());
+			} else {
+				print "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ".$pgv_lang["unknown"];
 			}
-			else print "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ".$pgv_lang["unknown"];
 			print "</a></td>\n";
 		}
 		?>
@@ -1818,15 +1816,13 @@ for($i=1; $i<=count($sfams); $i++) {
 		if($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
 		else $spid=$parents["WIFE"];
 	}
-	if (!empty($spid)) {
-		if (displayDetailsById($spid) && showLivingNameById($spid)) {
-			print "<a href=\"#\" onclick=\"return quickEdit('".$spid."','','{$GEDCOM}');\">";
-			$name = PrintReady(get_person_name($spid));
-			if ($SHOW_ID_NUMBERS) $name .= " (".$spid.")";
-			$name .= " [".$pgv_lang["edit"]."]";
-			print $name."</a>\n";
-		}
-		else print $pgv_lang["private"];
+	$person=Person::getInstance($spid);
+	if ($person) {
+		print "<a href=\"#\" onclick=\"return quickEdit('".$person->getXref()."','','{$GEDCOM}');\">";
+		$name = PrintReady($person->getFullName());
+		if ($SHOW_ID_NUMBERS) $name .= " (".$person->getXref().")";
+		$name .= " [".$pgv_lang["edit"]."]";
+		print $name."</a>\n";
 	}
 	else print $pgv_lang["unknown"];
 	$subrecords = get_all_subrecords($famrec, "HUSB,WIFE,CHIL", false, false, false);
@@ -2043,17 +2039,14 @@ $chil = find_children_in_record($famrec);
 	</tr>
 			<?php
 				foreach($chil as $c=>$child) {
+					$person=Person::getInstance($child);
 					print "<tr><td class=\"optionbox\">";
-					$name = get_person_name($child);
-					$disp = displayDetailsById($child);
+					$name = $person->getFullName();
 					if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 					$name .= " [".$pgv_lang["edit"]."]";
-					if ($disp||showLivingNameById($child)) {
-						print "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
-						print PrintReady($name);
-						print "</a>";
-					}
-					else print $pgv_lang["private"];
+					print "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
+					print PrintReady($name);
+					print "</a>";
 					$childrec = find_person_record($child);
 					print "</td>\n<td class=\"optionbox center\">";
 					if ($disp) {
@@ -2400,26 +2393,23 @@ for($j=1; $j<=count($cfams); $j++) {
 // NOTE: Father
 ?>
 	<tr><td class="topbottombar" colspan="4">
-	<?php
-	$label = $pgv_lang["father"];
-	if (!empty($parents["HUSB"])) {
-		if (displayDetailsById($parents["HUSB"]) && showLivingNameById($parents["HUSB"])) {
-			$fatherrec = find_person_record($parents["HUSB"]);
-			$fsex = get_gedcom_value("SEX", 1, $fatherrec, '', false);
-			$child_surname = "";
-			$ct = preg_match("~1 NAME.*/(.*)/~", $fatherrec, $match);
-			if ($ct>0) $child_surname = $match[1];
-			if ($fsex=="F") $label = $pgv_lang["mother"];
-			print $label." ";
-			print "<a href=\"#\" onclick=\"return quickEdit('".$parents["HUSB"]."','','{$GEDCOM}');\">";
-			$name = get_person_name($parents["HUSB"]);
-			if ($SHOW_ID_NUMBERS) $name .= " (".$parents["HUSB"].")";
-			$name .= " [".$pgv_lang["edit"]."]";
-			print PrintReady($name)."</a>\n";
-		}
-		else print $label." ".$pgv_lang["private"];
+<?php
+	echo $pgv_lang['father'], ' ';
+	$person=Person::getInstance($parents['HUSB']);
+	if ($person) {
+		$fatherrec = $person->getGedcomRecord();
+		$child_surname = "";
+		$ct = preg_match("~1 NAME.*/(.*)/~", $fatherrec, $match);
+		if ($ct>0) $child_surname = $match[1];
+		if ($person->getSex()=="F") $label = $pgv_lang["mother"];
+		echo "<a href=\"#\" onclick=\"return quickEdit('".$parents["HUSB"]."','','{$GEDCOM}');\">";
+		$name = $person->getFullname();
+		if ($SHOW_ID_NUMBERS) $name .= " (".$parents["HUSB"].")";
+		$name .= " [".$pgv_lang["edit"]."]";
+		echo ($name)."</a>\n";
+	} else {
+		echo $pgv_lang["unknown"];
 	}
-	else print $label." ".$pgv_lang["unknown"];
 	print "</td></tr>";
 	print "<tr><td class=\"descriptionbox\">".$pgv_lang["enter_pid"]."</td><td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"FATHER[$i]\" id=\"FATHER$i\" value=\"".$parents['HUSB']."\" />";
 	print_findindi_link("FATHER$i","");
@@ -2508,22 +2498,19 @@ for($j=1; $j<=count($cfams); $j++) {
 <tr><td>&nbsp;</td></tr>
 <tr><td class="topbottombar" colspan="4">
 <?php
-	$label = $pgv_lang["mother"];
-	if (!empty($parents["WIFE"])) {
-		if (displayDetailsById($parents["WIFE"]) && showLivingNameById($parents["WIFE"])) {
-			$motherrec = find_person_record($parents["WIFE"]);
-			$msex = get_gedcom_value("SEX", 1, $motherrec, '', false);
-			if ($msex=="M") $label = $pgv_lang["father"];
-			print $label." ";
-			print "<a href=\"#\" onclick=\"return quickEdit('".$parents["WIFE"]."','','{$GEDCOM}');\">";
-			$name = get_person_name($parents["WIFE"]);
-			if ($SHOW_ID_NUMBERS) $name .= " (".$parents["WIFE"].")";
-			$name .= " [".$pgv_lang["edit"]."]";
-			print PrintReady($name)."</a>\n";
-		}
-		else print $label." ".$pgv_lang["private"];
+	echo $pgv_lang['mother'], ' ';
+	$person=Person::getInstance($parents["WIFE"]);
+	if ($person) {
+		$motherrec = $person->getGedcomRecord();
+		if ($person->getSex()=="M") $label = $pgv_lang["father"];
+		print "<a href=\"#\" onclick=\"return quickEdit('".$parents["WIFE"]."','','{$GEDCOM}');\">";
+		$name = $person->getFullName();
+		if ($SHOW_ID_NUMBERS) $name .= " (".$parents["WIFE"].")";
+		$name .= " [".$pgv_lang["edit"]."]";
+		print PrintReady($name)."</a>\n";
+	} else {
+		echo $pgv_lang['unknown'];
 	}
-	else print $label." ".$pgv_lang["unknown"];
 	print "</td></tr>\n";
 	print "<tr><td  class=\"descriptionbox\">".$pgv_lang["enter_pid"]."</td><td  class=\"optionbox\" colspan=\"3\"><input type=\"text\" size=\"10\" name=\"MOTHER[$i]\" id=\"MOTHER$i\" value=\"".$parents['WIFE']."\" />";
 	print_findindi_link("MOTHER$i","");
@@ -2718,33 +2705,18 @@ $chil = find_children_in_record($famrec, $pid);
 	</tr>
 	<?php
 		foreach($chil as $c=>$child) {
+			$person=Person::getInstance($child);
 			print "<tr><td class=\"optionbox\">";
-			$name = get_person_name($child);
-			$disp = displayDetailsById($child);
+			$name = $person->getFullName();
 			if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 			$name .= " [".$pgv_lang["edit"]."]";
-			if ($disp||showLivingNameById($child)) {
-				print "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
-				print PrintReady($name);
-				print "</a>";
-			}
-			else print $pgv_lang["private"];
-			$childrec = find_person_record($child);
+			print "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
+			print PrintReady($name);
+			print "</a>";
 			print "</td>\n<td class=\"optionbox center\">";
-			if ($disp) {
-				print get_gedcom_value("SEX", 1, $childrec);
-			}
+			print $person->getSex();
 			print "</td>\n<td class=\"optionbox\">";
-			if ($disp) {
-				$birtrec = get_sub_record(1, "1 BIRT", $childrec);
-				if (!empty($birtrec)) {
-					if (showFact("BIRT", $child) && !FactViewRestricted($child, $birtrec)) {
-						print get_gedcom_value("DATE", 2, $birtrec);
-						print " -- ";
-						print get_gedcom_value("PLAC", 2, $birtrec);
-					}
-				}
-			}
+			print $person->format_first_major_fact(PGV_EVENTS_BIRT, 2);
 			print "</td>\n";
 			?>
 			<td class="optionbox center">

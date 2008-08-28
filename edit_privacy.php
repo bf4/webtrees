@@ -103,24 +103,9 @@ function write_yes_no($checkVar) {
 function search_ID_details($checkVar, $outputVar) {
 	global $pgv_lang;
 
-	$indirec = find_gedcom_record($checkVar);
-	if (empty($indirec)) $indirec = find_updated_record($checkVar);
-
-	if (!empty($indirec)) {
-		$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
-		if ($ct>0) {
-			$pid = $match[1];
-			$type = trim($match[2]);
-		}
-		switch ($type) {
-		case 'INDI':
-			echo '<span class="list_item">', PrintReady(get_person_name($pid)), format_first_major_fact($pid), '</span>';
-			break;
-		default:
-			$record=GedcomRecord::getInstance($pid);
-			echo '<span class="list_item">', $record->getListName(), '</span>';
-			break;
-		}
+	$record=GedcomRecord::getInstance($checkVar);
+	if ($record) {
+		echo $record->format_list('span');
 	} else {
 		print "<span class=\"error\">";
 		if ($outputVar == 1) {
