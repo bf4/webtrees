@@ -48,9 +48,9 @@ if ($show_full==false) {
 $bhalfheight = (int) ($bheight / 2);
 
 // -- root id
-$pid=check_rootid($pid);
-if ((DisplayDetailsByID($pid))||(showLivingNameByID($pid))) $name = get_person_name($pid);
-else $name = $pgv_lang["private"];
+$pid   =check_rootid($pid);
+$person=Person::getInstance($pid);
+$name  =$person->getFullName();
 
 function print_descendency($pid, $count) {
 	global $show_spouse, $dgenerations, $bwidth, $bheight, $bhalfheight, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;
@@ -180,11 +180,9 @@ function print_descendency($pid, $count) {
 						if($parents) {
 							if($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
 							else $spid=$parents["WIFE"];
-							if (!empty($spid)) {
-								if (displayDetailsById($spid) || showLivingNameById($spid)) {
-									$name = get_person_name($spid);
-									$name = rtrim($name);
-								} else $name = $pgv_lang["private"];
+							$spouse=Person::getInstance($spid);
+							if ($spouse) {
+								$name=$spouse->getFullName();
 								print "\n\t\t\t\t<a href=\"".encode_url("familybook.php?pid={$spid}&show_spouse={$show_spouse}&show_full={$show_full}&generations={$generations}&box_width={$box_width}")."\"><span class=\"";
 								if (hasRTLText($name)) print "name2";
 					   			else print "name1";
@@ -198,10 +196,8 @@ function print_descendency($pid, $count) {
 							//-- add the following line to stop a bad PHP bug
 							if ($i>=$num) break;
 							$cid = $smatch[$i][1];
-							if (displayDetailsById($cid) || showLivingNameById($cid)) {
-								$name = get_person_name($cid);
-								$name = rtrim($name);
-							} else $name = $pgv_lang["private"];
+							$child=Person::getInstance($cid);
+							$name=$child->getFullName();
 							print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("familybook.php?pid={$cid}&show_spouse={$show_spouse}&show_full={$show_full}&generations={$generations}&box_width={$box_width}")."\"><span class=\"";
 							if (hasRTLText($name)) print "name2";
 					   		else print "name1";
@@ -220,10 +216,8 @@ function print_descendency($pid, $count) {
 							print "<span class=\"name1\"><br />".$pgv_lang["parents"]."<br /></span>";
 							if (!empty($parents["HUSB"])) {
 								$spid = $parents["HUSB"];
-								if (displayDetailsById($spid) || showLivingNameById($spid)) {
-									$name = get_person_name($spid);
-									$name = rtrim($name);
-								} else $name = $pgv_lang["private"];
+								$spouse=Person::getInstance($spid);
+								$name=$spouse->getFullName();
 								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("familybook.php?pid={$spid}&show_spouse={$show_spouse}&show_full={$show_full}&generations={$generations}&box_width={$box_width}")."\"><span class=\"";
 								if (hasRTLText($name)) print "name2";
 					   			else print "name1";
@@ -233,10 +227,8 @@ function print_descendency($pid, $count) {
 							}
 							if (!empty($parents["WIFE"])) {
 								$spid = $parents["WIFE"];
-								if (displayDetailsById($spid) || showLivingNameById($spid)) {
-									$name = get_person_name($spid);
-									$name = rtrim($name);
-								} else $name = $pgv_lang["private"];
+								$spouse=Person::getInstance($spid);
+								$name=$spouse->getFullName();
 								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("familybook.php?pid={$spid}&show_spouse={$show_spouse}&show_full={$show_full}&generations={$generations}&box_width={$box_width}")."\"><span class=\"";
 								if (hasRTLText($name)) print "name2";
 					   			else print "name1";
@@ -252,10 +244,8 @@ function print_descendency($pid, $count) {
 							if ($i>=$num) break;
 							$cid = $smatch[$i][1];
 							if ($cid!=$pid) {
-								if (displayDetailsById($cid) || showLivingNameById($cid)) {
-									$name = get_person_name($cid);
-									$name = rtrim($name);
-								} else $name = $pgv_lang["private"];
+								$child=Person::getInstance($cid);
+								$name=$child->getFullName();
 								print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"familybook.php?pid=$cid&amp;show_spouse=$show_spouse&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width\"><span class=\"";
 								if (hasRTLText($name)) print "name2";
 					   			else print "name1";
@@ -337,9 +327,8 @@ function print_family_book($pid, $descent)
     if (count($famids)>0 || empty($firstrun)) {
     	$firstrun = true;
         $pid=check_rootid($pid);
-        if ((DisplayDetailsByID($pid))||(showLivingNameByID($pid))) $name = get_person_name($pid);
-        else $name = $pgv_lang["private"];
-        
+				$person=Person::getInstance($pid);
+				$name=$person->getFullName();
         print "\n\t<h2 style=\"text-align: center\">".$pgv_lang["family_of"].PrintReady($name)."</h2>";
         print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr>\n";
         

@@ -482,7 +482,8 @@ function getRelationshipSentence($node, $pid1, $pid2)
     }
     else
     {
-        $pid1Name = PrintReady(get_person_name($pid1));         
+			$person  =Person::getInstance($pid1);
+			$pid1Name=PrintReady($person->getFullName());         
     }
 
     $getLanguageSpecificName = "getSecondRelationsName_" . $langStr;
@@ -492,7 +493,8 @@ function getRelationshipSentence($node, $pid1, $pid2)
     }
     else
     {
-        $pid2Name = PrintReady(get_person_name($pid2));          
+			$person  =Person::getInstance($pid2);
+			$pid2Name=PrintReady($person->getFullName());         
     }
 
     if($relationshipDescription != false)
@@ -592,9 +594,11 @@ if (!empty($pid1)) {
 		$pid1=$GEDCOM_ID_PREFIX.$pid1;
 		$indirec=Person::getInstance($pid1);
 	}
-	if (!$indirec) $pid1 = "";
-	if ((!displayDetailsByID($pid1))&&(!showLivingNameByID($pid1))) $title_string .= ": ".$pgv_lang["private"];
-	else $title_string .= ":<br />".get_person_name($pid1);
+	if ($indirec) {
+		$title_string.=':<br />'.$indirec->getFullName();
+	} else {
+		$pid1='';
+	}
 	if (!empty($_SESSION["pid1"]) && ($_SESSION["pid1"]!=$pid1)) {
 		unset($_SESSION["relationships"]);
 		$path_to_find=0;
@@ -602,15 +606,17 @@ if (!empty($pid1)) {
 }
 if (!empty($pid2)) {
 	//-- check if the id is valid
-	$indirec = find_person_record($pid2);
+	$indirec = Person::getInstance($pid2);
 	if (!$indirec && $GEDCOM_ID_PREFIX) {
 		// Allow user to specify person without the prefix
 		$pid2=$GEDCOM_ID_PREFIX.$pid2;
-		$indirec = find_person_record($pid2);
+		$indirec = Person::getInstance($pid2);
 	}
-	if (!$indirec) $pid2 = "";
-	if ((!displayDetailsByID($pid2))&&(!showLivingNameByID($pid2))) $title_string .= " - " . $pgv_lang["private"]." ";
-	else $title_string .= " ".$pgv_lang["and"]." ".get_person_name($pid2)." ";
+	if ($indirec) {
+		$title_string.=' '.$pgv_lang['and'].' '.$indirec->getFullName();
+	} else {
+		$pid2='';
+	}
 	if (!empty($_SESSION["pid2"]) && ($_SESSION["pid2"]!=$pid2)) {
 		unset($_SESSION["relationships"]);
 		$path_to_find=0;
