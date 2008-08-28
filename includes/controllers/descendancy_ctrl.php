@@ -141,13 +141,11 @@ class DescendancyControllerRoot extends BaseController {
 	// Validate form variables
 	$this->pid=check_rootid($this->pid);
 
-	if ((DisplayDetailsByID($this->pid))||(showLivingNameByID($this->pid))) $this->name = get_person_name($this->pid);
-	else $this->name = $pgv_lang["private"];
-
 	if (strlen($this->name)<30) $this->cellwidth="420";
 	else $this->cellwidth=(strlen($this->name)*14);
 
 	$this->descPerson = Person::getInstance($this->pid);
+	$this->name=$this->descPerson->getFullName();
 
 	//-- if the person is from another gedcom then forward to the correct site
 	/*

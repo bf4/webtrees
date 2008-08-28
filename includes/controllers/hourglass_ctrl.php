@@ -129,10 +129,8 @@ class HourglassControllerRoot extends BaseController {
 		// Validate parameters
 		$this->pid=check_rootid($this->pid);
 
-		if ((DisplayDetailsByID($this->pid))||(showLivingNameByID($this->pid))) $this->name = get_person_name($this->pid);
-		else $this->name = $pgv_lang["private"];
-
 		$this->hourPerson = Person::getInstance($this->pid);
+		$this->name=$this->hourPerson->getFullName();
 
 		//Checks how many generations of descendency is for the person for formatting purposes
 		$this->dgenerations = $this->max_descendency_generations($this->pid, 0);

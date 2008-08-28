@@ -290,18 +290,15 @@ class TimelineControllerRoot extends BaseController {
 					}
 				}
 				//-- print spouse name for marriage events
-				$spouse = $event->getSpouseId();
+				$spouse = Person::getInstance($event->getSpouseId());
 				if ($spouse) {
 					for($p=0; $p<count($this->pids); $p++) {
-						if ($this->pids[$p]==$spouse) break;
+						if ($this->pids[$p]==$spouse->getXref()) break;
 					}
 					if ($p==count($this->pids)) $p = $event->temp;
 					$col = $p % 6;
-					if ($spouse!=$this->pids[$p]) {
-						print " <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-						if (displayDetailsById($spouse)||showLivingNameById($spouse)) print get_person_name($spouse);
-						else print $pgv_lang["private"];
-						print "</a>";
+					if ($spouse->getXref()!=$this->pids[$p]) {
+						echo ' <a href="', $spouse->getLinkUrl(), '">', $spouse->getFullName(), '</a>';
 					}
 					else {
 						$ct = preg_match("/2 _PGVFS @(.*)@/", $factrec, $match);
