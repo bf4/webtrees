@@ -224,7 +224,6 @@ function reverse_name($name) {
 
 function get_add_person_name_in_record($name_record, $keep_slash=false) {
 	global $NAME_REVERSE;
-	global $NAME_FROM_GEDCOM;
 
 	// Check for ROMN name
 	$romn = preg_match("/(2 ROMN (.*)|2 _HEB (.*))/", $name_record, $romn_match);
