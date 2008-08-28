@@ -59,6 +59,12 @@ class Family extends GedcomRecord {
 		//-- get the wifes ids
 		$wife = get_gedcom_value("WIFE", 1, $gedrec);
 		if (!empty($wife)) $this->wife = Person::getInstance($wife, $simple);
+		// Make sure husb/wife are the right way round.
+		if ($this->husb && $this->husb->getSex()=='F' || $this->wife && $this->wife->getSex()=='M') {
+			$tmp=$this->husb;
+			$this->husb=$this->wife;
+			$this->wife=$tmp;
+		}
 		//-- load the parents before privatizing the record because the parents may be remote records
 		parent::GedcomRecord($gedrec);
 		$this->disp = displayDetailsById($this->xref, "FAM");
