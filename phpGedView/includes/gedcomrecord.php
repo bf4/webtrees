@@ -508,7 +508,7 @@ class GedcomRecord {
 	}
 	function getListName() {
 		global $pgv_lang;
-		if ($this->canDisplayName) {
+		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
 			return $tmp[$this->getPrimaryName()]['list'];
 		} else {
