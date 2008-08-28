@@ -1999,85 +1999,21 @@ class stats {
 	}
 
 	function _name_name_sort($a, $b) {
-		if (isset($a['name'])) {
-			$aname = sortable_name_from_name($a['name']);
-		} else {
-			if (isset($a['names'])) {
-				$aname = sortable_name_from_name($a['names'][0][0]);
-			} else {
-				if (is_array($a)) {
-					$aname = sortable_name_from_name(array_shift($a));
-				} else {
-					$aname = $a;
-				}
-			}
-		}
-		if (isset($b['name'])) {
-			$bname = sortable_name_from_name($b['name']);
-		} else {
-			if (isset($b['names'])) {
-				$bname = sortable_name_from_name($b['names'][0][0]);
-			} else {
-				if (is_array($b)) {
-					$bname = sortable_name_from_name(array_shift($b));
-				} else {
-					$bname = $b;
-				}
-			}
-		}
-
-		$aname = strip_prefix($aname);
-		$bname = strip_prefix($bname);
-		$result = compareStrings($aname, $bname, true);		// Case-insensitive compare
-		return $result;
+		return compareStrings(strip_prefix($a['name']), strip_prefix($b['name']), true);		// Case-insensitive compare
 	}
 
 	function _name_name_rsort($a, $b) {
-		if (isset($a['name'])) {
-			$aname = sortable_name_from_name($a['name']);
-		} else {
-			if (isset($a['names'])) {
-				$aname = sortable_name_from_name($a['names'][0][0]);
-			} else {
-				if (is_array($a)) {
-					$aname = sortable_name_from_name(array_shift($a));
-				} else {
-					$aname = $a;
-				}
-			}
-		}
-		if (isset($b['name'])) {
-			$bname = sortable_name_from_name($b['name']);
-		} else {
-			if (isset($b['names'])) {
-				$bname = sortable_name_from_name($b['names'][0][0]);
-			} else {
-				if (is_array($b)) {
-					$bname = sortable_name_from_name(array_shift($b));
-				} else {
-					$bname = $b;
-				}
-			}
-		}
-
-		$aname = strip_prefix($aname);
-		$bname = strip_prefix($bname);
-		$result = compareStrings($bname, $aname, true);		// Case-insensitive compare
-		return $result;
+		return compareStrings(strip_prefix($b['name']), strip_prefix($a['name']), true);		// Case-insensitive compare
 	}
 
 	function _name_total_sort($a, $b)
 	{
-		if($a['match'] > $b['match']){return 1;}
-		if($a['match'] < $b['match']){return -1;}
-		return 0;
+		return $a['match']-$b['match'];
 	}
 
 	function _name_total_rsort($a, $b)
 	{
-		if($a['match'] < $b['match']){return 1;}
-		if($a['match'] > $b['match']){return -1;}
-		return 0;
+		return $b['match']-$a['match'];
 	}
 
 	function _runSQL($sql, $count=0)

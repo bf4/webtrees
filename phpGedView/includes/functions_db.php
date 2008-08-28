@@ -856,7 +856,7 @@ function get_repo_list() {
 			$repo_list[]=$repo;
 		}
 	}
-	usort($repo_list, array('GedcomRecord', 'CompareName')); // sort by repo name
+	usort($repo_list, array('GedcomRecord', 'Compare')); // sort by repo name
 	return $repo_list;
 }
 

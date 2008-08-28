@@ -487,7 +487,7 @@ class GedcomRecord {
 	}
 
 	// Static helper function to sort an array of objects by name
-	function CompareName($x, $y) {
+	function Compare($x, $y) {
 		return strcmp($x->getSortName(), $y->getSortName('sort'));
 	}
 
@@ -528,11 +528,14 @@ class GedcomRecord {
 	//////////////////////////////////////////////////////////////////////////////
 	// Format this object for display in a list
 	// If $find is set, then we are displaying items from a selection list.
+	// $name allows us to use something other than the record name.
 	//////////////////////////////////////////////////////////////////////////////
-	function format_list($tag='li', $find=false) {
+	function format_list($tag='li', $find=false, $name=null) {
 		global $SHOW_ID_NUMBERS;
 
-		$name=$this->getFullName();
+		if (is_null($name)) {
+			$name=($tag=='li') ? $this->getListName() : $this->getFullName();
+		}
 		$dir=begRTLText($name) ? 'rtl' : 'ltr';
 		if ($find) {
 			$href='javascript:;" onclick="pasteid(\''.$this->getXref().'\'); return false;';
