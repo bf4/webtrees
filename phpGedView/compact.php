@@ -32,17 +32,12 @@ $showids   =safe_GET('showids' ,   '1', '0');
 $showthumbs=safe_GET('showthumbs', '1', '0');
 
 // Validate form variables
-$rootid = check_rootid($rootid);
+$rootid=check_rootid($rootid);
 
-$person = Person::getInstance($rootid);
+$person =Person::getInstance($rootid);
+$name   =$person->getFullName();
+$addname=$person->getAddName();
 
-if ($person->canDisplayName()) {
-	$name = get_person_name($rootid);
-	$addname = get_add_person_name($rootid);
-} else {
-	$name = $pgv_lang["private"];
-	$addname = "";
-}
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
 

@@ -842,12 +842,13 @@ class stats {
 		}
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
+		$person=Person::getInstance($row['d_gid']);
 		switch($type)
 		{
 			default:
 			case 'full':
 				if (displayDetailsById($row['d_gid'])) {
-					$result=format_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom), false, '', 'span');
+					$result=format_list_person($row['d_gid'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
@@ -865,7 +866,7 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['d_gid']})";
 					}
 				}
-				$result="<a href=\"".encode_url("individual.php?pid={$row['d_gid']}&ged={$this->_gedcom_url}")."\">".get_person_name($row['d_gid'])."{$id}</a>";
+				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName()."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place(Person::getInstance($row['d_gid'])->getFactByType($row['d_fact']), true, true, true);
@@ -943,12 +944,13 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
+		$person=Person::getInstance($row['id']);
 		switch($type)
 		{
 			default:
 			case 'full':
 				if (displayDetailsById($row['id'])) {
-					$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom), false, '', 'span');
+					$result=format_list_person($row['id'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
 				} else {
 					$result= $pgv_lang['privacy_error'];
 				}
@@ -965,7 +967,7 @@ class stats {
 						$id = "&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"".encode_url("individual.php?pid={$row['id']}&ged={$this->_gedcom_url}")."\">".get_person_name($row['id'])."{$id}</a>";
+				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName()."{$id}</a>";
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -1016,13 +1018,14 @@ class stats {
 		$top10=array();
 		for($c = 0; $c < $total; $c++)
 		{
+			$person=Person::getInstance($rows[$c]['d_gid']);
 			if ($type == 'list')
 			{
-				$top10[]="\t<li><a href=\"".encode_url("{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_person_name($rows[$c]['d_gid']))."</a> ".PrintReady("[".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]")."</li>\n";
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]")."</li>\n";
 			}
 			else
 			{
-				$top10[]="<a href=\"".encode_url("{$this->_server_url}individual.php?pid={$rows[$c]['d_gid']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_person_name($rows[$c]['d_gid']))."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]";
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]";
 			}
 		}
 		if ($type == 'list')
@@ -1153,15 +1156,16 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
+		$person=Person::getInstance($row['id']);
 		switch($type)
 		{
 			default:
 			case 'full':
 				if (displayDetailsById($row['id'])) {
 					if (preg_match('/^('.PGV_EVENTS_MARR.')$/', $row['fact'])) {
-						$result=format_list_family($row['id'], array(get_person_name($row['id']), $this->_gedcom), false, '', 'span');
+						$result=format_list_family($row['id'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
 					} else {
-						$result=format_list_person($row['id'], array(get_person_name($row['id']), $this->_gedcom), false, '', 'span');
+						$result=format_list_person($row['id'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
 					}
 				} else {
 					$result=$pgv_lang['privacy_error'];
@@ -1193,7 +1197,7 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"".encode_url("individual.php?pid={$row['id']}&ged={$this->_gedcom_url}")."\">".PrintReady(get_person_name($row['id']))."{$id}</a>";
+				$result="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."{$id}</a>";
 				break;
 			case 'place':
 				$result=format_fact_place(Person::getInstance($row['id'])->getFactByType($row['fact']), true, true, true);
@@ -1274,18 +1278,20 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
+		$family=Family::getInstance($row['f_id']);
+		$person=Person::getInstance($row[$sex_field]);
 		switch($type)
 		{
 			default:
 			case 'full':
-				if (displayDetailsById($row['f_id']) && displayDetailsById($row[$sex_field])) {
-					$result=format_list_family($row['f_id'], array(get_person_name($row[$sex_field]), $this->_gedcom), false, '', 'span');
+				if ($family->canDisplayDetails()) {
+					$result=format_list_family($row['f_id'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
 				break;
 			case 'name':
-				$result="<a href=\"".encode_url("family.php?famid={$row['f_id']}&ged={$this->_gedcom_url}")."\">".get_person_name($row['i_id'], true).'</a>';
+				$result="<a href=\"".$family->getLinkUrl()."\">".$person->getFullName().'</a>';
 				break;
 			case 'age':
 				$result=floor($row['age']/365.25);

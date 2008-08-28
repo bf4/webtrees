@@ -217,14 +217,9 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 					else if (preg_match("/1 SEX M/", $indirec)>0) $bg=$bgcolorM;
 				}
 				ImageFilledArc($image, $cx, $cy, $rx, $rx, $deg1, $deg2, $bg, IMG_ARC_PIE);
-				if ((!displayDetailsByID($pid))&&(!showLivingNameByID($pid))) {
-					$name = $pgv_lang["private"];
-					$addname = "";
-				}
-				else {
-					$name = get_person_name($pid);
-					$addname = get_add_person_name($pid);
-				}
+				$person =Person::getInstance($pid);
+				$name   =$person->getFullName();
+				$addname=$person->getAddName();
 
 //$name = str_replace(array('<span class="starredname">', '</span>'), '', $name); 
 //$addname = str_replace(array('<span class="starredname">', '</span>'), '', $addname); 
@@ -343,25 +338,20 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 							$famrec = find_family_record(trim($famids[$f]));
 							if ($famrec) {
 								$parents = find_parents($famids[$f]);
-								if($parents) {
+								if ($parents) {
 									if ($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
 									else $spid=$parents["WIFE"];
-									if (!empty($spid)) {
-										$linkURL=str_replace("id=".$pid, "id=".$spid, $tempURL);
-										print "\n<br /><a href=\"".encode_url($linkURL)."\" class=\"name1\">";
-										if (displayDetailsById($spid) || showLivingNameById($spid)) print PrintReady(rtrim(get_person_name($spid)));
-										else print $pgv_lang["private"];
-										print "</a>";
+									$person=Person::getInstance($spid);
+									if ($person) {
+										echo '<br /><a href="', $person->getLinkUrl(), '" class="name1">', $person->getFullName(), '</a>';
 									}
 								}
 								$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 								for ($i=0; $i<$num; $i++) {
-									$cpid = $smatch[$i][1];
-									$linkURL=str_replace("id=".$pid, "id=".$cpid, $tempURL);
-									print "\n<br />&nbsp;&nbsp;<a href=\"".encode_url($linkURL)."\" class=\"name1\">&lt; ";
-									if (displayDetailsById($cpid) || showLivingNameById($cpid)) print PrintReady(rtrim(get_person_name($cpid)));
-									else print $pgv_lang["private"];
-									print "</a>";
+									$person=Person::getInstance($smatch[$i][1]);
+									if ($person) {
+										echo '<br />&nbsp;&nbsp;<a href="', $person->getLinkUrl(), '" class="name1">&lt; ', $person->getFullName(), '</a>';
+									}
 								}
 							}
 						}
@@ -374,11 +364,10 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 								for($i=0; $i<$num; $i++) {
 									$cpid = $smatch[$i][1];
 									if ($cpid!=$pid) {
-										$linkURL=str_replace("id=".$pid, "id=".$cpid, $tempURL);
-										print "\n<br />&nbsp;&nbsp;<a href=\"".encode_url($linkURL)."\" class=\"name1\"> ";
-										if (displayDetailsById($cpid) || showLivingNameById($cpid)) print PrintReady(rtrim(get_person_name($cpid)));
-										else print $pgv_lang["private"];
-										print "</a>";
+										$person=Person::getInstance($cpid);
+										if ($person) {
+											echo '<br />&nbsp;&nbsp;<a href="', $person->getLinkUrl(), '" class="name1"> ', $person->getFullName(), '</a>';
+										}
 									}
 								}
 							}
@@ -437,14 +426,10 @@ $PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 2, $MAX_PEDIGREE_
 // Validate form parameters
 $rootid = check_rootid($rootid);
 
-if ((DisplayDetailsByID($rootid)) || (showLivingNameByID($rootid))) {
-	$name = get_person_name($rootid);
-	$addname = get_add_person_name($rootid);
-}
-else {
-	$name = $pgv_lang["private"];
-	$addname = "";
-}
+$person =Person::getInstance($rootid);
+$name   =$person->getFullName();
+$addname=$person->getAddName();
+
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["fan_chart"]);
 if (strlen($name)<30) $cellwidth="420";
