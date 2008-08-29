@@ -853,8 +853,6 @@ class MenuBar
 		if (!$surname && file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
 		if (!$surname && file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
 		if (!$surname && file_exists("medialist.php") && $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
-		// if (file_exists("patriarchlist.php")) $menuList["patriarch"] = $pgv_lang["patriarch_list"];
-		// if (!$surname && file_exists("aliveinyear.php")) $menuList["aliveinyear"] = $pgv_lang["alive_in_year"];
 		asort($menuList);
 
 		// Produce the submenus in localized name order
@@ -918,27 +916,6 @@ class MenuBar
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 				break;
-/*
-			case "patriarch":
-				//-- list most ancient parent of a family
-				$link = 'patriarchlist.php?ged='.$GEDCOM;
-				if ($surname) $link .= "&surname=".$surname;
-				$submenu = new Menu($pgv_lang["patriarch_list"], encode_url($link));
-				if (!empty($PGV_IMAGES["patriarch"]["small"]))
-					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				$menu->addSubmenu($submenu);
-				break;
-
-			case "aliveinyear":
-				//-- aliveinyear
-				$submenu = new Menu($pgv_lang["alive_in_year"], "aliveinyear.php");
-				if (!empty($PGV_IMAGES["indis"]["small"]))
-					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				$menu->addSubmenu($submenu);
-				break;
-*/
 			}
 		}
 

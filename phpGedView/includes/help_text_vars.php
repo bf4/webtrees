@@ -36,8 +36,6 @@ loadLangFile("pgv_confighelp");
 $pgv_lang["help_manageservers.php"]	= "#pgv_lang[help_managesites]#";
 $pgv_lang["edit_RESN_help"]			= "#pgv_lang[RESN_help]#";
 
-$pgv_lang["help_aliveinyear.php"]	= "#pgv_lang[alive_in_year_help]#";
-
 //General
 $pgv_lang["start_ahelp"]			= "<div class=\"list_value_wrap\"><center class=\"error\">#pgv_lang[start_admin_help]#</center>";
 $pgv_lang["end_ahelp"]				= "<center class=\"error\">#pgv_lang[end_admin_help]#</center></div>";
