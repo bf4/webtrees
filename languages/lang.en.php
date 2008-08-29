@@ -1426,8 +1426,6 @@ $pgv_lang["sort_by"]				= "Sort by";
 $pgv_lang["cleanup"]				= "Cleanup";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
-$pgv_lang["dynasty_list"]			= "Overview of families";
-$pgv_lang["patriarch_list"] 		= "Patriarch list";
 $pgv_lang["statistics"] 			= "Statistics";
 
 //-- Merge Records

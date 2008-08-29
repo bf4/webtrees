@@ -44,6 +44,8 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["dynasty_list"]			      29 August 2008        D
+-$pgv_lang["patriarch_list"] 		      29 August 2008        D
 +$pgv_lang["parent_age"]							26 August 2008			A
 +$pgv_lang["father_age"]							26 August 2008			A
 +$pgv_lang["mother_age"]							26 August 2008			A
