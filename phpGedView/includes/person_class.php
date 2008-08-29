@@ -1745,9 +1745,10 @@ class Person extends GedcomRecord {
 
 		// If the name is written in greek/cyrillic/hebrew/etc., use the "unknown" name
 		// from that character set.  Otherwise use the one in the language file.
-		$lang = whatLanguage($full);
-		$list=str_replace(array('@N.N.','@P.N.'), array($unknownNN[$lang], $unknownPN[$lang]), $list);
-		$full=str_replace(array('@N.N.','@P.N.'), array($unknownNN[$lang], $unknownPN[$lang]), $full);
+		$lang_givn = whatLanguage($givn);
+		$lang_surn = whatLanguage($surn);
+		$list=str_replace(array('@N.N.','@P.N.'), array($unknownNN[$lang_givn], $unknownPN[$lang_surn]), $list);
+		$full=str_replace(array('@N.N.','@P.N.'), array($unknownNN[$lang_givn], $unknownPN[$lang_surn]), $full);
 
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
