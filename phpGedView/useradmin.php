@@ -604,8 +604,8 @@ if ($action == "listusers") {
 	print "<td class=\"descriptionbox wrap\">";
 	print $pgv_lang["message"]."</td>";
 	} ?>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["username"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["full_name"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["username"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["full_name"]; ?></a></td>
 	<td class="descriptionbox wrap"><?php print $pgv_lang["inc_languages"]; ?></td>
 	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php print $pgv_lang["privileges"]; ?>" onclick="<?php
 	$k = 1;
@@ -620,10 +620,10 @@ if ($action == "listusers") {
 	print "</div>&nbsp;";
 	print $pgv_lang["privileges"]; ?>
 	</td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortreg&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["date_registered"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortllgn&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["last_login"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortver&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["verified"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortveradmin&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["verified_by_admin"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortreg&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["date_registered"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortllgn&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["last_login"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortver&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["verified"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortveradmin&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["verified_by_admin"]; ?></a></td>
 	<?php if ($view != "preview") {
 	print "<td class=\"descriptionbox wrap\">";
 	print $pgv_lang["delete"]."</td>";
