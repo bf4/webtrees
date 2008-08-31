@@ -2596,7 +2596,8 @@ function get_alpha_fams($letter) {
 	$SHOW_MARRIED_NAMES = false;
 	$myindilist = get_alpha_indis($letter);
 	$SHOW_MARRIED_NAMES = $temp;
-	foreach ($myindilist as $person) {
+	foreach (array_keys($myindilist) as $pid) {
+		$person=Person::getInstance($pid);
 		foreach ($person->getSpouseFamilyIds() as $famid) {
 			$tfamlist[$famid] = $famid;
 		}
