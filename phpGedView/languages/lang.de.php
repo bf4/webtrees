@@ -1274,8 +1274,6 @@ $pgv_lang["marrdate1"]					= "Ehedatenbereich Anfang";
 $pgv_lang["sort_by"]					= "Sortieren nach";
 $pgv_lang["cleanup"]					= "Korrigieren";
 //-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
-$pgv_lang["dynasty_list"]				= "Übersicht der Familien";
-$pgv_lang["patriarch_list"]				= "Spitzenahnen Liste";
 $pgv_lang["statistics"]					= "Statistiken";
 //-- Merge Records
 $pgv_lang["merge_same"]					= "Die Datensätze sind nicht vom gleichen Typ und können daher nicht zusammengefügt werden.";
