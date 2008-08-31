@@ -126,7 +126,11 @@ function setup_place_subfields($element_id) {
 			//alert(elt.value.charCodeAt(0)+'\n'+elt.value.charCodeAt(1));
 			if (elt.value=='\u05d9\u05e9\u05e8\u05d0\u05dc') ctry='ISR'; // Israel hebrew name
 			else if (ctry.length==3) elt.value=ctry;
-			ctry=ctry.substr(0,3);
+			if (ctry=='') ctry='???';
+			<?php foreach ($countries as $alpha3=>$country) { ?>
+			else if (ctry=='<?php print UTF8_strtoupper($country) ?>') ctry='<?php print $alpha3 ?>';
+			<?php } ?>
+			else if (ctry.length!=3) ctry=ctry.substr(0,3);
 			pdir='places/'+ctry+'/';
 			// select current country in the list
 			sel=document.getElementsByName(place_tag+'_PLAC_CTRY_select')[0];
@@ -134,7 +138,7 @@ function setup_place_subfields($element_id) {
 			// refresh country flag
 			var img=document.getElementsByName(place_tag+'_PLAC_CTRY_flag')[0];
 			var ctryFlag = 'places/flags/'+ctry+'.gif';
-			if (ctry=='') ctryFlag = 'places/flags/blank.gif';
+			if (ctry=='???') ctryFlag = 'places/flags/blank.gif';
 			img.src=ctryFlag;
 			img.alt=ctry;
 			img.title=ctry;
@@ -313,12 +317,13 @@ function print_place_subfields($element_id) {
 			print " onchange=\"setPlaceCountry(this.value, '".$element_id."');\"";
 //			print " acdropdown=\"true\" autocomplete_complete=\"true\"";
 			print " >\n";
-			print "<option value=\"\">?</option>\n";
+			print "<option value=\"???\">??? : ".$countries["???"]."</option>\n";
 			foreach ($countries as $alpha3=>$country) {
-				$txt=$alpha3." : ".$country;
-				if (UTF8_strlen($txt)>32) $txt = UTF8_substr($txt, 0, 32).$pgv_lang["ellipsis"];
-				//if (strlen($txt)>32) $txt=substr($txt,0,32)."...";
-				print "<option value=\"".$alpha3."\">".$txt."</option>\n";
+				if ($alpha3!="???") {
+					$txt=$alpha3." : ".$country;
+					if (UTF8_strlen($txt)>32) $txt = UTF8_substr($txt, 0, 32).$pgv_lang["ellipsis"];
+					print "<option value=\"".$alpha3."\">".$txt."</option>\n";
+				}
 			}
 			print "</select>\n";
 		}

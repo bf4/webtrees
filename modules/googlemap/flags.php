@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -192,9 +192,13 @@ function getHelp(which) {
     $j = 1;
     for ($i = 0; $i < count($flags); $i++) {
         if ($countrySelected == "Countries") {
-			$tempstr = "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"";
-			if (array_key_exists( $country[$i], $countries) )
+			$tempstr = "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"".$flags[$i]."\"  title=\"";
+			if (array_key_exists( $country[$i], $countries))
 				$tempstr .=$countries[$country[$i]];
+			else if ($flags[$i]=="blank") {
+				$tempstr .=$countries["???"];
+				$flags[$i]="???";
+			}
 			else
 				$tempstr .= $flags[$i];
 			print $tempstr."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
