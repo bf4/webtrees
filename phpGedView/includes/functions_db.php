@@ -924,18 +924,10 @@ function get_asso_list($type = "all", $ipid='') {
 			$asso["gedfile"] = $row["f_file"];
 			// Get the family names
 			$GEDCOM = get_gedcom_from_id($row["f_file"]);
-			$hname = get_sortable_name($row["f_husb"], "", "", true);
-			$wname = get_sortable_name($row["f_wife"], "", "", true);
-			if (empty($hname))
-				$hname = "@N.N.";
-			if (empty($wname))
-				$wname = "@N.N.";
-			$name = array();
-			foreach ($hname as $hkey => $hn) {
-				foreach ($wname as $wkey => $wn) {
-					$name[] = $hn." + ".$wn;
-					$name[] = $wn." + ".$hn;
-				}
+			$name=array();
+			$family=Family::getInstance($row['f_id']);
+			foreach ($family->getAllNames() as $fname) {
+				$name[]=$fname['sort'];
 			}
 			$asso["name"] = $name;
 			$ca = preg_match_all("/\d ASSO @(.*)@/", $row["f_gedcom"], $match, PREG_SET_ORDER);
@@ -995,18 +987,8 @@ function get_fam_list() {
 		$fam = array();
 		$fam["gedcom"] = $row["f_gedcom"];
 		$row = db_cleanup($row);
-		$hname = get_sortable_name($row["f_husb"]);
-		$wname = get_sortable_name($row["f_wife"]);
-		$name = "";
-		if (!empty($hname))
-			$name = $hname;
-		else
-			$name = "@N.N., @P.N.";
-
-		if (!empty($wname))
-			$name .= " + ".$wname;
-		else
-			$name .= " + @N.N., @P.N.";
+		$family=Family::getInstance($row['f_id']);
+		$name=$family->getSortName();
 
 		$fam["name"] = $name;
 		$fam["HUSB"] = $row["f_husb"];
@@ -1654,28 +1636,14 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 		while ($row =& $res->fetchRow()){
 			$row = db_cleanup($row);
 			$GEDCOM = get_gedcom_from_id($row[3]);
+			$family=Family::getInstance($row[0]);
 			if ($allnames == true) {
-				$hname = get_sortable_name($row[1], "", "", true);
-				$wname = get_sortable_name($row[2], "", "", true);
-				if (empty($hname))
-					$hname = "@N.N.";
-				if (empty($wname))
-					$wname = "@N.N.";
 				$name = array();
-				foreach ($hname as $hkey => $hn) {
-					foreach ($wname as $wkey => $wn) {
-						$name[] = $hn." + ".$wn;
-						$name[] = $wn." + ".$hn;
-					}
+				foreach ($family->getAllNames() as $fname) {
+					$name[]=$fname['sort'];
 				}
 			} else {
-				$hname = get_sortable_name($row[1]);
-				$wname = get_sortable_name($row[2]);
-				if (empty($hname))
-					$hname = "@N.N.";
-				if (empty($wname))
-					$wname = "@N.N.";
-				$name = $hname." + ".$wname;
+				$name=$family->getSortName();
 			}
 			if (count($allgeds) > 1) {
 				$myfamlist[$row[0]."[".$row[3]."]"]["name"] = $name;
@@ -1721,28 +1689,14 @@ function search_fams_names($query, $ANDOR="AND", $allnames=false, $gedcnt=1) {
 		while ($row =& $res->fetchRow()){
 			$row = db_cleanup($row);
 			$GEDCOM = get_gedcom_from_id($row[3]);
+			$family=Family::getInstance($row[0]);
 			if ($allnames == true) {
-				$hname = get_sortable_name($row[1], "", "", true);
-				$wname = get_sortable_name($row[2], "", "", true);
-				if (empty($hname))
-					$hname = "@N.N.";
-				if (empty($wname))
-					$wname = "@N.N.";
-				$name = array();
-				foreach ($hname as $hkey => $hn) {
-					foreach ($wname as $wkey => $wn) {
-						$name[] = $hn." + ".$wn;
-						$name[] = $wn." + ".$hn;
-					}
+				$name=array();
+				foreach ($family->getAllNames() as $fname) {
+					$name[]=$fname['sort'];
 				}
 			} else {
-				$hname = get_sortable_name($row[1]);
-				$wname = get_sortable_name($row[2]);
-				if (empty($hname))
-					$hname = "@N.N.";
-				if (empty($wname))
-					$wname = "@N.N.";
-				$name = $hname." + ".$wname;
+				$name=$family->getSortName();
 			}
 			if ($gedcnt > 1) {
 				$myfamlist[$row[0]."[".$row[3]."]"]["name"] = $name;
@@ -1811,28 +1765,14 @@ function search_fams_members($query, $allgeds=false, $ANDOR="AND", $allnames=fal
 	$i=0;
 	while ($row =& $res->fetchRow()){
 		$row = db_cleanup($row);
+		$family=Family::getInstance($row[0]);
 		if ($allnames == true) {
-			$hname = get_sortable_name($row[1], "", "", true);
-			$wname = get_sortable_name($row[2], "", "", true);
-			if (empty($hname))
-				$hname = "@N.N.";
-			if (empty($wname))
-				$wname = "@N.N.";
 			$name = array();
-			foreach ($hname as $hkey => $hn) {
-				foreach ($wname as $wkey => $wn) {
-					$name[] = $hn." + ".$wn;
-					$name[] = $wn." + ".$hn;
-				}
+			foreach ($family->getAllNames() as $fname) {
+				$name[]=$fname['sort'];
 			}
 		} else {
-			$hname = get_sortable_name($row[1]);
-			$wname = get_sortable_name($row[2]);
-			if (empty($hname))
-				$hname = "@N.N.";
-			if (empty($wname))
-				$wname = "@N.N.";
-			$name = $hname." + ".$wname;
+			$name=$family->getSortName();
 		}
 		if (count($allgeds) > 1) {
 			$myfamlist[$i]["name"] = $name;
@@ -2433,7 +2373,7 @@ function get_alpha_indis($letter) {
 
 	$checkDictSort = true;
 
-	$sql = "SELECT i_id, i_gedcom, i_name, i_letter,i_surname, i_isdead FROM {$TBLPREFIX}individuals WHERE ";
+	$sql = "SELECT i_id FROM {$TBLPREFIX}individuals WHERE ";
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
 		if ($letter == "Ø")
 			$text = "OE";
@@ -2509,24 +2449,14 @@ function get_alpha_indis($letter) {
 	$res = dbquery($sql);
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$row = db_cleanup($row);
-			//if (substr($row["i_letter"], 0, 1)==substr($letter, 0, 1)||(isset($text)?substr($row["i_letter"], 0, 1)==substr($text, 0, 1):FALSE)){
-				$indi = array();
-				$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], 'P'));
-				$indi["isdead"] = $row["i_isdead"];
-				$indi["gedcom"] = $row["i_gedcom"];
-				$indi["gedfile"] = PGV_GED_ID;
-				$tindilist[$row["i_id"]] = $indi;
-				//-- cache the item in the $indilist for improved speed
-				$indilist[$row["i_id"]] = $indi;
-			//}
+			$tindilist[$row["i_id"]] = $row["i_id"];
 		}
 		$res->free();
 	}
 
 	$checkDictSort = true;
 
-	$sql = "SELECT i_id, i_name, i_file, i_isdead, i_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND ";
+	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND ";
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
 		if ($letter == "Ø")
 			$text = "OE";
@@ -2603,25 +2533,7 @@ function get_alpha_indis($letter) {
 	$res = dbquery($sql);
 	if (!DB::isError($res)) {
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
-		//if (substr($row["n_letter"], 0, strlen($letter))==$letter||(isset($text)?substr($row["n_letter"], 0, strlen($text))==$text:FALSE)){
-			if (!isset($indilist[$row["i_id"]]) || !isset($indilist[$row["i_id"]]["names"])) {
-				$indi = array();
-				$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"), array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
-				$indi["isdead"] = $row["i_isdead"];
-				$indi["gedcom"] = $row["i_gedcom"];
-				$indi["gedfile"] = $row["i_file"];
-				//-- cache the item in the $indilist for improved speed
-				$indilist[$row["i_id"]] = $indi;
-				$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
-			} else {
-				// do not add to the array an indi name that already exists in it
-				if (!in_array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]), $indilist[$row["i_id"]]["names"])) {
-				    $indilist[$row["i_id"]]["names"][] = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
-			    }
-				$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
-			}
-		//}
+		$tindilist[$row["i_id"]] = $row["i_id"];
 	}
 	$res->free();
 	}
@@ -2638,89 +2550,26 @@ function get_alpha_indis($letter) {
  * @see http://www.phpgedview.net/devdocs/arrays.php#indilist
  */
 function get_surname_indis($surname) {
-	global $TBLPREFIX, $indilist, $SHOW_MARRIED_NAMES, $DBCONN;
+	global $TBLPREFIX, $SHOW_MARRIED_NAMES, $DBCONN;
 
 	$tindilist = array();
-	$sql = "SELECT i_id, i_isdead, i_file, i_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	$sql .= "AND i_file=".PGV_GED_ID;
-	$sql .= " ORDER BY i_surname";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$row = db_cleanup($row);
-		$indi = array();
-		$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"));
-		$indi["isdead"] = $row["i_isdead"];
-		$indi["gedcom"] = $row["i_gedcom"];
-		$indi["gedfile"] = $row["i_file"];
-		$indi["numchil"] = "";
-		$indilist[$row["i_id"]] = $indi;
-		$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
+		$tindilist[$row["i_id"]] = $row["i_id"];
 	}
 	$res->free();
 
-	// Get the number of children for each individual
-	$sqlHusb = "";
-	$sqlWife = "";
-	foreach ($tindilist as $gid => $indi) {
-		$sqlHusb .= "f_husb = '".$gid."' OR ";
-		$sqlWife .= "f_wife = '".$gid."' OR ";
-	}
-	// Look for all individuals recorded as partner #1 in a family.
-	// Because of same-sex partnerships, we can't depend on male persons being recorded
-	// as the "father" in the family.
-	// We'll do separate "father" and "mother" searches to allow better use of indexes.
-	if ($sqlHusb) {
-		$sql = "SELECT f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE (";
-		$sql .= substr($sqlHusb, 0, -4);		// get rid of final " OR "
-		$sql .= ") AND f_file=".PGV_GED_ID;
-		$res = dbquery($sql);
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$gid = $row["f_husb"];
-			$indilist[$gid]["numchil"] += $row["f_numchil"];
-			$tindilist[$gid]["numchil"] += $row["f_numchil"];
-		}
-		$res->free();
-	}
-	// And now the same thing for partner #2 in a family.
-	if ($sqlWife) {
-		$sql = "SELECT f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE (";
-		$sql .= substr($sqlWife, 0, -4);		// get rid of final " OR "
-		$sql .= ") AND f_file=".PGV_GED_ID;
-		$res = dbquery($sql);
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$gid = $row["f_wife"];
-			$indilist[$gid]["numchil"] += $row["f_numchil"];
-			$tindilist[$gid]["numchil"] += $row["f_numchil"];
-		}
-		$res->free();
-	}
-
-	$sql = "SELECT i_id, i_name, i_file, i_isdead, i_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	if (!$SHOW_MARRIED_NAMES)
 		$sql .= "AND n_type!='C' ";
-	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY n_surname";
+	$sql .= "AND i_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
-		if (isset($indilist[$row["i_id"]]) && isset($indilist[$row["i_id"]]["names"])) {
-			$namearray = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
-			// do not add to the array an indi name that already exists in it
-			if (!in_array($namearray, $indilist[$row["i_id"]]["names"])) {
-				$indilist[$row["i_id"]]["names"][] = $namearray;
-		    }
-			$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
-		} else {
-			$indi = array();
-			//do not add main name first name beginning letter for alternate names
-			$indi["names"] = array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]),array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"));
-			$indi["isdead"] = $row["i_isdead"];
-			$indi["gedcom"] = $row["i_gedcom"];
-			$indi["gedfile"] = $row["i_file"];
-			$indilist[$row["i_id"]] = $indi;
-			$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
-		}
+		$tindilist[$row["i_id"]] = $row["i_id"];
 	}
 	$res->free();
 	return $tindilist;
@@ -2736,8 +2585,7 @@ function get_surname_indis($surname) {
  * @see http://www.phpgedview.net/devdocs/arrays.php#famlist
  */
 function get_alpha_fams($letter) {
-	global $TBLPREFIX, $famlist, $indilist, $LANGUAGE, $SHOW_MARRIED_NAMES;
-	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
+	global $TBLPREFIX, $SHOW_MARRIED_NAMES;
 
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
@@ -2748,118 +2596,19 @@ function get_alpha_fams($letter) {
 	$SHOW_MARRIED_NAMES = false;
 	$myindilist = get_alpha_indis($letter);
 	$SHOW_MARRIED_NAMES = $temp;
-	if ($letter=="(" || $letter=="[" || $letter=="?" || $letter=="/" || $letter=="*" || $letter=="+" || $letter==')')
-		$letter = "\\".$letter;
-	foreach ($myindilist as $gid=>$indi) {
-		$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
-		$surnames = array();
-		for ($i=0; $i<$ct; $i++) {
-			$famid = $match[$i][1];
-
-			$family=Family::getInstance($famid);
-			if ($family->getHusbId()==$gid) {
-				$HUSB=$family->getHusbId();
-				$WIFE=$family->getWifeId();
-			} else {
-				$HUSB=$family->getWifeId();
-				$WIFE=$family->getHusbId();
-			}
-
-			$hname="";
-			$surnames = array();
-			foreach ($indi["names"] as $indexval => $namearray) {
-				//-- don't use married names in the family list
-				if ($namearray[3]!='C') {
-					$text = "";
-					if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
-						if ($letter == "Ø")
-							$text = "OE";
-						else
-							if ($letter == "Æ")
-								$text = "AE";
-							else
-								if ($letter == "Å")
-									$text = "AA";
-					}
-					if ($DICTIONARY_SORT[$LANGUAGE]) {
-						if (strlen($namearray[1])>1) {
-							$aPos = strpos($UCDiacritWhole, $namearray[1]);
-							if ($aPos!==false) {
-								if ($letter==substr($UCDiacritStrip, ($aPos>>1), 1))
-									$text = $namearray[1];
-							} else {
-								$aPos = strpos($LCDiacritWhole, $namearray[1]);
-								if ($aPos!==false) {
-									if ($letter==substr($LCDiacritStrip, ($aPos>>1), 1))
-										$text = $namearray[1];
-								}
-							}
-						}
-					}
-//				[ 1579889 ]
-//				if ((preg_match("/^$letter/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/", $namearray[1])>0)) {
-					if ((preg_match("/^$letter/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/i", $namearray[2])>0)) {
-						$surnames[UTF8_strtoupper($namearray[2])] = $namearray[2];
-						$hname = sortable_name_from_name($namearray[0]);
-					}
-				}
-			}
-			if (!empty($hname)) {
-				$wname = get_sortable_name($WIFE);
-				if (hasRTLText($hname)) {
-					$indirec = find_person_record($WIFE);
-					if (isset($indilist[$WIFE]["names"])) {
-						foreach ($indilist[$WIFE]["names"] as $n=>$namearray) {
-							if (hasRTLText($namearray[0])) {
-								$surnames[UTF8_strtoupper($namearray[2])] = $namearray[2];
-								$wname = sortable_name_from_name($namearray[0]);
-								break;
-							}
-						}
-					}
-				}
-				$name = $hname ." + ". $wname;
-				if ($family->getWifeId()==$gid)
-					$name = $wname ." + ". $hname; // force husb first
-				$famlist[$famid]["name"] = $name;
-				if (!isset($famlist[$famid]["surnames"])||count($famlist[$famid]["surnames"])==0)
-					$famlist[$famid]["surnames"] = $surnames;
-				else
-					$famlist[$famid]["surnames"] += $surnames;
-				$tfamlist[$famid] = $famlist[$famid];
-			}
+	foreach ($myindilist as $person) {
+		foreach ($person->getSpouseFamiliyIds() as $famid) {
+			$tfamlist[$famid] = $famid;
 		}
 	}
 
-	//-- handle the special case for @N.N. when families don't have any husb or wife
-	//-- SHOULD WE SHOW THE UNDEFINED? MA
 	if ($letter=="@") {
-		$sql = "SELECT f_id, f_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families WHERE (f_husb='' OR f_wife='') AND f_file=".PGV_GED_ID;
+		$sql = "SELECT f_id FROM {$TBLPREFIX}families WHERE (f_husb='' OR f_wife='') AND f_file=".PGV_GED_ID;
 		$res = dbquery($sql);
 
 		if ($res->numRows()>0) {
 			while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-				$fam = array();
-				$hname = get_sortable_name($row["f_husb"]);
-				$wname = get_sortable_name($row["f_wife"]);
-				if (!empty($hname))
-					$name = $hname;
-				else
-					$name = "@N.N., @P.N.";
-				if (!empty($wname))
-					$name .= " + ".$wname;
-				else
-					$name .= " + @N.N., @P.N.";
-				$fam["name"] = $name;
-				$fam["HUSB"] = $row["f_husb"];
-				$fam["WIFE"] = $row["f_wife"];
-				$fam["CHIL"] = $row["f_chil"];
-				$fam["gedcom"] = $row["f_gedcom"];
-				$fam["gedfile"] = PGV_GED_ID;
-				$fam["surnames"] = array("@N.N.");
-				$tfamlist[$row["f_id"]] = $fam;
-				//-- cache the items in the lists for improved speed
-				$famlist[$row["f_id"]] = $fam;
+				$tfamlist[$row["f_id"]] = $row["f_id"];
 			}
 		}
 		$res->free();
@@ -2879,88 +2628,23 @@ function get_surname_fams($surname) {
 	global $TBLPREFIX, $famlist, $indilist, $SHOW_MARRIED_NAMES;
 
 	$tfamlist = array();
+
 	$temp = $SHOW_MARRIED_NAMES;
 	$SHOW_MARRIED_NAMES = false;
-	$myindilist = get_surname_indis($surname);
+	$myindilist = get_alpha_indis($letter);
 	$SHOW_MARRIED_NAMES = $temp;
-	$famids = array();
-	//-- load up the families with 1 query
-	foreach ($myindilist as $gid=>$indi) {
-		$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
-		for ($i=0; $i<$ct; $i++) {
-			$famid = $match[$i][1];
-			$famids[] = $famid;
-		}
-	}
-	load_families($famids);
-
-	foreach ($myindilist as $gid=>$indi) {
-		$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
-		for ($i=0; $i<$ct; $i++) {
-			$famid = $match[$i][1];
-			if ($famlist[$famid]["husb"]==$gid) {
-				$HUSB = $famlist[$famid]["husb"];
-				$WIFE = $famlist[$famid]["wife"];
-			} else {
-				$HUSB = $famlist[$famid]["wife"];
-				$WIFE = $famlist[$famid]["husb"];
-			}
-			$hname = "";
-			foreach ($indi["names"] as $indexval => $namearray) {
-				if (stristr($namearray[2], $surname)!==false) {
-					$hname = sortable_name_from_name($namearray[0]);
-					break;
-					// we should show also at least the _HEB and ROMN first names of our family parent surname in the list
-					// currently only one name is processed - without the break it is the last name
-					// now we stop at the first name
-				}
-			}
-			if (!empty($hname)) {
-				$wname = get_sortable_name($WIFE);
-				if (hasRTLText($hname)) {
-					$indirec = find_person_record($WIFE);
-					if (isset($indilist[$WIFE])) {
-						foreach ($indilist[$WIFE]["names"] as $n=>$namearray) {
-							if (hasRTLText($namearray[0])) {
-								$wname = sortable_name_from_name($namearray[0]);
-								break;
-							}
-						}
-					}
-				}
-				$name = $hname ." + ". $wname;
-				if ($famlist[$famid]["wife"]==$gid)
-					$name = $wname ." + ". $hname; // force husb first
-				$famlist[$famid]["name"] = $name;
-				$tfamlist[$famid] = $famlist[$famid];
-			}
+	foreach ($myindilist as $person) {
+		foreach ($person->getSpouseFamilyIds() as $famidy) {
+			$tfamlist[$famid] = $famid;
 		}
 	}
 
-	//-- handle the special case for @N.N. when families don't have any husb or wife
-	//-- SHOULD WE SHOW THE UNDEFINED?
 	if ($surname=="@N.N.") {
-		$sql = "SELECT f_id, f_gedcom, f_husb, f_wife, f_chil FROM {$TBLPREFIX}families WHERE (f_husb='' OR f_wife='') AND f_file=".PGV_GED_ID;
+		$sql = "SELECT f_id FROM {$TBLPREFIX}families WHERE (f_husb='' OR f_wife='') AND f_file=".PGV_GED_ID;
 		$res = dbquery($sql);
-
 		if ($res->numRows()>0) {
 			while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-				$fam = array();
-				$hname = get_sortable_name($row["f_husb"]);
-				$wname = get_sortable_name($row["f_wife"]);
-				if (empty($hname))
-					$hname = "@N.N., @P.N.";
-				if (empty($wname))
-					$wname = "@N.N., @P.N.";
-				$fam["name"] = $hname." + ".$wname;
-				$fam["HUSB"] = $row["f_husb"];
-				$fam["WIFE"] = $row["f_wife"];
-				$fam["CHIL"] = $row["f_chil"];
-				$fam["gedcom"] = $row["f_gedcom"];
-				$fam["gedfile"] = PGV_GED_ID;
-				$tfamlist[$row["f_id"]] = $fam;
-				//-- cache the items in the lists for improved speed
-				$famlist[$row["f_id"]] = $fam;
+				$tfamlist[$row["f_id"]] = $row["f_id"];
 			}
 		}
 		$res->free();
