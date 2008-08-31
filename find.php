@@ -393,7 +393,8 @@ if ($action=="filter") {
 					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
-				echo format_list_person($pvalue[1], array(check_NN($pvalue[0]), $pvalue[2]), true);
+				$person=Person::getInstance($pvalue[1]);
+				echo $person->format_list('li', false, check_NN($pvalue[0]));
 				print "\n";
 			}
 			print "\n\t\t</ul></td>";

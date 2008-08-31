@@ -848,7 +848,7 @@ class stats {
 			default:
 			case 'full':
 				if (displayDetailsById($row['d_gid'])) {
-					$result=format_list_person($row['d_gid'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
+					$result=$person->format_list('span');
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
@@ -950,7 +950,7 @@ class stats {
 			default:
 			case 'full':
 				if (displayDetailsById($row['id'])) {
-					$result=format_list_person($row['id'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
+					$result=$person->format_list('span');
 				} else {
 					$result= $pgv_lang['privacy_error'];
 				}
@@ -1156,17 +1156,13 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
-		$person=Person::getInstance($row['id']);
+		$record=GedcomRecord::getInstance($row['id']);
 		switch($type)
 		{
 			default:
 			case 'full':
-				if (displayDetailsById($row['id'])) {
-					if (preg_match('/^('.PGV_EVENTS_MARR.')$/', $row['fact'])) {
-						$result=format_list_family($row['id'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
-					} else {
-						$result=format_list_person($row['id'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
-					}
+				if ($record->canDisplayDetails()) {
+					$result=$record->format_list('span');
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
@@ -1197,10 +1193,10 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
-				$result="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."{$id}</a>";
+				$result="<a href=\"".$record->getLinkUrl()."\">".PrintReady($record->getFullName())."{$id}</a>";
 				break;
 			case 'place':
-				$result=format_fact_place(Person::getInstance($row['id'])->getFactByType($row['fact']), true, true, true);
+				$result=format_fact_place($record->getFactByType($row['fact']), true, true, true);
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -1285,7 +1281,7 @@ class stats {
 			default:
 			case 'full':
 				if ($family->canDisplayDetails()) {
-					$result=format_list_family($row['f_id'], array($person->getFullName(), $this->_gedcom), false, '', 'span');
+					$result=$family->format_list('span', false, $person->getFullName());
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
@@ -1351,7 +1347,7 @@ class stats {
 			case 'full':
 				if ($family->canDisplayDetails())
 				{
-					$result=format_list_family($row['id'], array($family->getFullName(), $this->_gedcom), false, '', 'span');
+					$result=$family->format_list('span');
 				} else {
 					$result = $pgv_lang['privacy_error'];
 				}
