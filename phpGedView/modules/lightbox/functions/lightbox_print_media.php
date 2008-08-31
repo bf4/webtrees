@@ -47,6 +47,7 @@
 	global $pgv_lang, $pgv_changes, $factarray, $view;
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $DBCONN, $DBTYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+	
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
 	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
@@ -215,12 +216,10 @@
 
 		// Start pulling media items into thumbcontainer div ==============================
 		while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
-			
 			if (isset($foundObjs[$rowm['m_media']])) {
 				if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
 				continue;
 			}
-			
 			// NOTE: Determine the size of the mediafile
 			$imgwidth = 300+40;
 			$imgheight = 300+150;
@@ -238,9 +237,13 @@
 				$imgheight = $imgsize[1]+150;
 			}
 			$rows=array();
+			
+
 			//-- if there is a change to this media item then get the
 			//-- updated media item and show it
-			if (isset($pgv_changes[$rowm["m_media"]."&nbsp;".$GEDCOM])) {
+			// if (isset(find_updated_record($rowm["m_media"]) {
+			if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM][0]["gid"]) && $t!="5"  ){
+			// if (isset($pgv_changes[$rowm["m_media"]."&nbsp;".$GEDCOM])) {
 				$newrec = find_updated_record($rowm["m_media"]);
 				$row = array();
 				$row['m_media'] = $rowm["m_media"];
@@ -258,12 +261,16 @@
 				$rows['old'] = $rowm;
 				$current_objes[$rowm['m_media']]--;
 			}else{
-				if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) $rows['old'] = $rowm;
-				else {
+				if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) {
+					$rows['old'] = $rowm;
+				}else{
 					$rows['normal'] = $rowm;
-					if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
+					if (isset($current_objes[$rowm['m_media']])) {
+						$current_objes[$rowm['m_media']]--;
+					}
 				}
 			}
+
 			
 			foreach($rows as $rtype => $rowm) {
 				if ($t!=5){

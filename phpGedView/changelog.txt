@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1979072 ] and [ 1817168 ] Album Page now shows updated media (old and new) and removes edit menu from "old" item (windmillway)
  - Fixed: [ 2049164 ] ucwords is cultural bias (canajun2eh)
  - Fixed: [ 2038773 ] Concatenated data (CONC) splits UTF-8 characters (canajun2eh)
  - Fixed: [ 2028403 ] Age display glitch (fisharebest)
