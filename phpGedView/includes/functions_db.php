@@ -2402,6 +2402,7 @@ function get_fam_alpha() {
 	}
 	$res->free();
 
+	uasort($famalpha, "stringsort");
 	return $famalpha;
 }
 

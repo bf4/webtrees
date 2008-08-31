@@ -28,7 +28,7 @@ require("config.php");
 require("includes/functions_edit.php");
 
 loadLangFile("pgv_country");
-asort($countries);
+uasort($countries, "stringsort");
 
 if ($_SESSION["cookie_login"]) {
 	header("Location: ".encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
