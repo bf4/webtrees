@@ -114,6 +114,8 @@ $worms = array(
 	'libwww-perl',
 	'LWP::Simple',
 	'lwp-trivial',
+	'MJ bot',
+	'DotBot',
 	'HTTrack'
 	);
 	$quitReason = "";
