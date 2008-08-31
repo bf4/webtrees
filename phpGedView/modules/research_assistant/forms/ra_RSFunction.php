@@ -66,8 +66,6 @@ require_once("includes/person_class.php");
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB:FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE:FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		
-//		$indilist = get_indi_list();
-// 		$famlist = get_fam_list();
 		//Create an array to put our data in
 		$myindilist = array();
 		//Create a family array to put our family data in
@@ -137,21 +135,23 @@ require_once("includes/person_class.php");
 		$malesCount = 0;
 		$femalesCount = 0;
 
-		foreach ($myindilist as $pid => $indi) {
-			if (isset($indi['gedcom'])) {
+		foreach (array_keys($myindilist) as $pid) {
+			$indi=Person::getInstance($pid);
+			if ($indi) {
 				//assign surname, gender, birthplace and occupation for the individual
-				$gender = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
+				$gender = $indi->getSex();
 				$locals = array();
 				foreach($inferences as $pr_id=>$value) {
 					//-- get the local value from the the individual record
 					if (!isset($locals[$value['local']])) {
-						if ($value['local']=='SURN') $locals['SURN'] = $indi['names'][0][2];
-						else if ($value['local']=='GIVN'){
-							$parts = preg_split("~/~", $indi['names'][0][0]);
-							$locals['GIVN'] = $parts[0];
-						}
-						else {
-							$locals[$value['local']] = get_gedcom_value($value['local'], 1, $indi['gedcom'], '', false);
+						switch ($value['local']) {
+						case 'GIVN':
+						case 'SURN':
+							list($locals['SURN'], $locals['GIVN'])=explode(',', $indi->getSortName());
+							break;
+						default:
+							$locals[$value['local']] = get_gedcom_value($value['local'], 1, $indi->getGedcomRecord(), '', false);
+							break;
 						}
 					}
 					

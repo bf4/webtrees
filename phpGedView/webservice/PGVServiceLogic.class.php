@@ -915,7 +915,6 @@ class PGVServiceLogic extends GenealogyService
 				}
 
 				// sample how to get information for the result set
-				//$name = $indi["names"][0][0];
 				//$birtdate = get_gedcom_value("BIRT:DATE", 1, $gedrec, '', false);
 			}
 	//		AddToLog('Found '.count($results_array).' after privatizing');

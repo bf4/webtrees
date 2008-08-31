@@ -378,12 +378,19 @@ if ($action=="filter") {
 			$names = preg_split("/[\s,]+/", $filter);
 			print "<td class=\"list_value_wrap\"><ul>";
 			foreach ($myindilist as $key => $value) {
-				foreach($value["names"] as $indexval => $namearray) {
+				$person=Person::getInstance($key);
+				foreach ($person->getAllNames() as $namearray) {
+					$found = true;
 					foreach($names as $ni=>$name) {
-						$found = true;
-						if (preg_match("/".$name."/i", $namearray[0])==0) $found=false;
+						if (preg_match("/".$name."/i", $namearray['list'])==0) {
+							$found=false;
+							break;
+						}
 					}
-					if ($found) $printname[] = array(sortable_name_from_name($namearray[0]), $key, get_gedcom_from_id($value["gedfile"]));
+					if ($found) {
+						$printname[] = array($namearray['list'], $key, get_gedcom_from_id($value["gedfile"]));
+						break;
+					}
 				}
 			}
 			uasort($printname, "itemsort");

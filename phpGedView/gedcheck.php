@@ -787,11 +787,6 @@ function check_indi($id)
 	$gedrec=$indi_list[$id]["gedcom"];
 	$errors="";
 
-	if (isset($indi_list[$id]["names"][0][0]))
-		$name=$indi_list[$id]["names"][0][0];
-	else
-		$name="???";
-
 	if ($err_level>=$error)
 		foreach ($indi_facts_unique as $fact)
 			if (get_sub_record(1, "1 $fact", $gedrec, 2)!="")
