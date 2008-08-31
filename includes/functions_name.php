@@ -105,64 +105,6 @@ function get_common_surnames($min) {
 }
 
 /**
- * get the person's name as surname, given names
- *
- * This function will return the given person's name in a format that is good for sorting
- * Surname, given names
- * @param string $pid the gedcom xref id for the person
- * @param string $alpha	only get the name that starts with a certain letter
- * @param string $surname only get the name that has this surname
- * @param boolean $allnames true returns all names in an array
- * @return string the sortable name
- */
-function get_sortable_name($pid, $alpha="", $surname="", $allnames=false) {
-	global $TBLPREFIX, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
-	global $GEDCOM, $GEDCOMS, $indilist, $pgv_lang;
-
-	$mynames = array();
-
-	if (empty($pid)) {
-		if ($allnames == false) return "@N.N., @P.N.";
-		else {
-			$mynames[] = "@N.N., @P.N.";
-			return $mynames;
-		}
-	}
-
-	//-- first check if the person is in the cache
-	if ((isset($indilist[$pid]["names"]))&&($indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id'])) {
-		$names = $indilist[$pid]["names"];
-	}
-	else {
-		//-- cache missed, so load the person into the cache with the find_person_record function
-		//-- and get the name from the cache again
-		$gedrec = find_person_record($pid);
-		if (empty($gedrec)) $gedrec = find_updated_record($pid);
-		if (!empty($indilist[$pid]["names"])) {
-			$names = $indilist[$pid]["names"];
-		}
-		else {
-			if ($allnames)
-				return array("@N.N., @P.N.");
-			else
-				return "@N.N., @P.N.";
-		}
-	}
-	if ($allnames) {
-		$mynames = array();
-		foreach ($names as $key => $name) {
-			$mynames[] = sortable_name_from_name($name[0]);
-		}
-		return $mynames;
-	}
-	foreach($names as $indexval => $name) {
-		if ($surname!="" && $name[2]==$surname) return sortable_name_from_name($name[0]);
-		else if ($alpha!="" && $name[1]==$alpha) return sortable_name_from_name($name[0]);
-	}
-	return sortable_name_from_name($names[0][0]);
-}
-
-/**
  * get the sortable name from the gedcom name
  * @param string $name 	the name from the 1 NAME gedcom line including the /
  * @return string 	The new name in the form Surname, Given Names

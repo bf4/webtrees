@@ -297,7 +297,7 @@ if ($showList) {
 					    	(!$alpha   || $alpha==get_first_letter($name['sort']))) {
 							$givn_initials[$givn_alpha]=$givn_alpha;
 							if (!$falpha || $falpha==$givn_alpha) {
-							$families[]=array('gid'=>$pid, 'primary'.$sex=>$n, 'name'=>$name['sort']);
+								$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'name'=>$name['sort']);
 							}
 						}
 					}
