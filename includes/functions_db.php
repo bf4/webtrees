@@ -2632,10 +2632,11 @@ function get_surname_fams($surname) {
 
 	$temp = $SHOW_MARRIED_NAMES;
 	$SHOW_MARRIED_NAMES = false;
-	$myindilist = get_alpha_indis($letter);
+	$myindilist = get_surname_indis($surname);
 	$SHOW_MARRIED_NAMES = $temp;
-	foreach ($myindilist as $person) {
-		foreach ($person->getSpouseFamilyIds() as $famidy) {
+	foreach ($myindilist as $pid) {
+		$person=Person::getInstance($pid);
+		foreach ($person->getSpouseFamilyIds() as $famid) {
 			$tfamlist[$famid] = $famid;
 		}
 	}
