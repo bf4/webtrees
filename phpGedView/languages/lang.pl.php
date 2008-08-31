@@ -1196,11 +1196,11 @@ $pgv_lang["html_reports"]			= "Raporty HTML";
 $pgv_lang["pdf_reports"]			= "Raporty PDF";
 $pgv_lang["reports"]				= "Raporty";
 $pgv_lang["cleanup"]				= "Porządkowanie";
-//-- CONFIGURE (extra) messgaes for programs patriarch, slklist and statistics
-$pgv_lang["dynasty_list"]			= "Przegląd przodków w rodzinach<br />Osoby bez wprowadzonych rodziców";
+//-- CONFIGURE (extra) messgaes for programs statistics
+$pgv_lang["statistics"]				= "Statystyki";
+
 $pgv_lang["chart_booklet"]   		= "Broszura";
 $pgv_lang["chart_list"]				= "Lista";
-$pgv_lang["patriarch_list"]			= "Przegląd przodków";
 $pgv_lang["ancestry_chart"] 		= "Diagram przodków";
 $pgv_lang["chart_style"]			= "Styl wykresu";
 $pgv_lang["gen_ancestry_chart"]		= "Diagram przodków pokoleń: #PEDIGREE_GENERATIONS#";
@@ -1464,7 +1464,6 @@ $pgv_lang["sosa_5"] 			= "babcia";
 $pgv_lang["sosa_4"] 			= "dziadek";
 $pgv_lang["sosa_3"] 			= "matka";
 $pgv_lang["sosa_2"] 			= "ojciec";
-$pgv_lang["statistics"]			= "Statystyki";
 $pgv_lang["merge_step3"]		= "3 z 3 kroków scalania";
 $pgv_lang["no_matches_found"]	= "Nie znaleziono zgodnych faktów.";
 $pgv_lang["same_ids"]			= "Wprowadzono jednakowe identyfikatory. Nie można scalać wpisu samego ze sobą.";
