@@ -10,6 +10,8 @@
 
 
 Version 4.1.6
+ - Fixed: [ 1819502 ] Lightbox & Missing media file. (windmillway)
+ - Fixed: [ 2079873 ] Fixed Charts ref line below (windmillway)
  - Fixed: [ 2079873 ] Names as media titles also now print double quotes (Nicknames) and do not truncate (windmillway)
  - Fixed: [ 1979072 ] and [ 1817168 ] Album Page now shows updated media (old and new) and removes edit menu from "old" item (windmillway)
  - Fixed: [ 2049164 ] ucwords is cultural bias (canajun2eh)
