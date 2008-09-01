@@ -454,7 +454,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	echo "<div id=\"".$table_id."-table\">";
+	echo '<div id="'.$table_id.'-table" class="center">';
 	//-- filter buttons
 	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".$pgv_lang["button_DEAT_N"]."\" >";
 	echo $pgv_lang["both_alive"]."</button> ";
