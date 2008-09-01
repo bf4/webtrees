@@ -297,7 +297,19 @@ if ($showList) {
 					    	(!$alpha   || $alpha==get_first_letter($name['sort']))) {
 							$givn_initials[$givn_alpha]=$givn_alpha;
 							if (!$falpha || $falpha==$givn_alpha) {
-								$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'name'=>$name['sort']);
+								if ($sex=='M') {
+									if ($family->wife) {
+										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'hname'=>$name['full'], 'name'=>$name['sort'].'+'.$family->wife->getSortName());
+									} else {
+										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'hname'=>$name['full'], 'name'=>$name['sort'].'+@N.N.');
+									}
+								} else {
+									if ($family->husb) {
+										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'wname'=>$name['full'], 'name'=>$family->husb->getSortName().'+'.$name['sort']);
+									} else {
+										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'wname'=>$name['full'], 'name'=>'@N.N.+'.$name['sort']);
+									}
+								}
 							}
 						}
 					}
