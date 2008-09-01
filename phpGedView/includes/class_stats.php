@@ -1576,7 +1576,7 @@ class stats {
 	 */
 	function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
 	{
-		global $TEXT_DIRECTION, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX;
+		global $TEXT_DIRECTION, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX, $pgv_lang;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
 		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
 
@@ -1691,15 +1691,25 @@ class stats {
 				$totL = '';
 				$totR = '';
 			}
-			if ($type == 'list') {
+			switch ($type) {
+			case 'table':
+				$common[] = '<tr><td class="optionbox">'.PrintReady($given).'</td><td class="optionbox">'.$total.'</tr>';
+				break;
+			case 'list':
 				$common[] = "\t<li>{$totL}".PrintReady($given)."{$totR}</li>\n";
-			} else {
+				break;
+			case 'nolist':
 				$common[] = $totL.PrintReady($given).$totR;
+				break;
 			}
 		}
-		if($type == 'list') {
+		switch ($type) {
+		case 'table':
+			$lookup=array('M'=>$pgv_lang['male'], 'F'=>$pgv_lang['female'], 'U'=>$pgv_lang['unknown'], 'B'=>$pgv_lang['all']);
+			return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.$pgv_lang['name'].'</td><td class="descriptionbox center">'.$pgv_lang['count'].'</td></tr>'.join('', $common).'</table>';
+		case 'list':
 			return "<ul>\n".join("\n", $common)."</ul>\n";
-		} else {
+		case 'nolist':
 			return join(';&nbsp; ', $common);
 		}
 	}
@@ -1708,21 +1718,25 @@ class stats {
 	function commonGivenTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('B', 'nolist', true, $params);}
 	function commonGivenList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('B', 'list', false, $params);}
 	function commonGivenListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('B', 'list', true, $params);}
+	function commonGivenTable($params=array(1,10,'rcount')){return $this->_commonGivenQuery('B', 'table', false, $params);}
 
 	function commonGivenFemale($params=array(1,10,'alpha')){return $this->_commonGivenQuery('F', 'nolist', false, $params);}
 	function commonGivenFemaleTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('F', 'nolist', true, $params);}
 	function commonGivenFemaleList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('F', 'list', false, $params);}
 	function commonGivenFemaleListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('F', 'list', true, $params);}
+	function commonGivenFemaleTable($params=array(1,10,'rcount')){return $this->_commonGivenQuery('F', 'table', false, $params);}
 
 	function commonGivenMale($params=array(1,10,'alpha')){return $this->_commonGivenQuery('M', 'nolist', false, $params);}
 	function commonGivenMaleTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('M', 'nolist', true, $params);}
 	function commonGivenMaleList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('M', 'list', false, $params);}
 	function commonGivenMaleListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('M', 'list', true, $params);}
+	function commonGivenMaleTable($params=array(1,10,'rcount')){return $this->_commonGivenQuery('M', 'table', false, $params);}
 
 	function commonGivenUnknown($params=array(1,10,'alpha')){return $this->_commonGivenQuery('U', 'nolist', false, $params);}
 	function commonGivenUnknownTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('U', 'nolist', true, $params);}
 	function commonGivenUnknownList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('U', 'list', false, $params);}
 	function commonGivenUnknownListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('U', 'list', true, $params);}
+	function commonGivenUnknownTable($params=array(1,10,'rcount')){return $this->_commonGivenQuery('U', 'table', false, $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Users                                                                     //
