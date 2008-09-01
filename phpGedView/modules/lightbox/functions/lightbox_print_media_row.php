@@ -40,42 +40,63 @@
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 	global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
-	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q, $LB_TT_BALLOON ;
+	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q, $LB_TT_BALLOON, $theme_name ;
 	
 	$reorder=safe_get('reorder', '1', '0');
 	
-	//If media is linked to a 'private' person
-	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
-		$item++;
-		return false;
+	// If media file is missing from "media" directory, but is referenced in Gedcom
+	if(!media_exists($rowm['m_file'])) {
+		print "<li class=\"li_norm\" >";
+		print "<table class=\"pic\" width=\"50px\" border=\"0\" >";
+		print "<tr>";
+			print "<td valign=\"top\" rowspan=\"2\" >";
+				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"100px\" alt=\"\"></img>";
+			print "</td>". "\n";
+			print "<td class=\"facts_value\" valign=\"top\" colspan=\"3\">";
+				print "<center><br /><img src=\"themes/" . strtolower($theme_name) . "/images/media.gif\" height=\"30\" border=\"0\" />";
+				print "<font size=\"1\"><br /><br />" . $pgv_lang["file_not_found"] . "</font></center>";
+			print "</td>";
+		print "</tr>". "\n";
+		
+	// Else Media files are present in "media" directory
 	}else{
-	
-	
-	// Media is NOT linked to private person
-		// If reorder media has been clicked
-		if (isset($reorder) && $reorder==1) {
-			print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";
-			
-		// Else If reorder media has NOT been clicked
-		// Highlight Album Thumbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
-		}else if ($rtype=='new'){
-			print "<li class=\"li_new\">" . "\n";
-		}else if ($rtype=='old'){
-			print "<li class=\"li_old\">" . "\n";
+		
+		//If media is linked to a 'private' person
+		if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
+			return false;
 		}else{
-			print "<li class=\"li_norm\">" . "\n";
+			// Media is NOT linked to private person
+			// If reorder media has been clicked
+			if (isset($reorder) && $reorder==1) {
+				print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";
+				
+			// Else If reorder media has NOT been clicked
+			// Highlight Album Thumbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
+			}else if ($rtype=='new'){
+				print "<li class=\"li_new\">" . "\n";
+			}else if ($rtype=='old'){
+				print "<li class=\"li_old\">" . "\n";
+			}else{
+				print "<li class=\"li_norm\">" . "\n";
+			}
 		}
-	
+		
+		// Add blue or red borders
+		$styleadd="";
+		if ($rtype=='new') $styleadd = "change_new";
+		if ($rtype=='old') $styleadd = "change_old";
 	}
 	
-	// Add blue or red borders
-	$styleadd="";
-	if ($rtype=='new') $styleadd = "change_new";
-	if ($rtype=='old') $styleadd = "change_old";
-	
 	// NOTE Start printing the media details
-	$thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
-	$isExternal = isFileExternal($thumbnail);
+	// if ($isExternal || media_exists($thumbnail)) {
+	if(!media_exists($rowm['m_file'])) {
+		$thumbnail = "";
+		$isExternal = ""; // isFileExternal($thumbnail);
+	}else{
+		$thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
+		$isExternal = isFileExternal($thumbnail);
+		// echo $thumbnail;
+	}
 	$linenum = 0;
 
 	// Check Filetype of media item ( Regular, URL, or Not supported by lightbox at the moment )
@@ -89,7 +110,7 @@
 		$file_type = "regular";
 	// URL ----------------------------------
 	}else if(eregi("http" ,$rowm['m_file']) || 
-			 eregi("\.pdf",$rowm['m_file']) 
+			eregi("\.pdf",$rowm['m_file']) 
 			) 
 	{	
 		$file_type = "url";
@@ -97,13 +118,13 @@
 	}else{
 		$file_type = "other";
 	}
-	
+		
 	// If Fact details can be shown --------------------------------------------------------------------------------------------
-	if (showFactDetails("OBJE", $pid)) {
+	if (showFactDetails("OBJE", $pid) ) {
 		
 		//  Get the title of the media
 		$media=Media::getInstance($rowm["m_media"]);
-		// $mediaTitle = $media->getFullName();
+		//$mediaTitle = $media->getFullName();
 		$mediaTitle = $rowm["m_titl"]; // Changed back to old style because of Title error on Images which are not approved ---- Check with Greg Roach
 		
 		$subtitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
@@ -177,8 +198,8 @@
 		$tt_opts	.=	", JUMPHORZ, 'true' ";
 		$tt_opts	.=	", JUMPVERT, 'false' ";
 		$tt_opts	.=	", DELAY, 0";
-		
-		// Prepare Below Thumbnail  menu ----------------------------------------------------
+			
+			// Prepare Below Thumbnail  menu ----------------------------------------------------
 			if ($TEXT_DIRECTION== "rtl") {
 				$submenu_class			=	"submenuitem_rtl";
 				$submenu_hoverclass		=	"submenuitem_hover_rtl";
@@ -191,7 +212,7 @@
 				$mtitle = html_entity_decode(stripLRMRLM($mediaTitle), ENT_COMPAT,'UTF-8');
 				if (UTF8_strlen($mtitle)>16) $mtitle = UTF8_substr($mtitle, 0, 13).$pgv_lang["ellipsis"];
 				$mtitle = htmlentities($mtitle, ENT_COMPAT, 'UTF-8');
-
+				
 			// Continue menu construction
 			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle) . "\n";
 			$menu["labelpos"] = "right";
@@ -217,179 +238,195 @@
 				// Continue printing menu
 				$menu["submenuclass"] = "submenu";
 				$menu["items"] = array();
-			// View Notes
-			if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewnotes"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				// Notes Tooltip ----------------------------------------------------
-				$submenu["onclick"]  = "TipTog(";
-					// Contents of Notes 
-					$submenu["onclick"] .= "'";
-					$submenu["onclick"] .= "&lt;font color=#008800>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br />";
-					// echo "<br />";
-					$submenu["onclick"] .= $notes;
-					$submenu["onclick"] .= "'";
-					// Notes Tooltip Parameters
-					$submenu["onclick"] .= $tt_opts;
-				$submenu["onclick"] .= ");";
-				$submenu["onclick"] .= "return false;";
-				$submenu["link"] = "#";
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
-			echo "\n";
-			}
-			//View Details
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewdetails"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "";
-				$submenu["link"] = $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] ;
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
-			//View Source
-			if (eregi("1 SOUR",$rowm['m_gedrec']) && displayDetailsById($sour, "SOUR")) {
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewsource"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "";
-				$submenu["link"] = $SERVER_URL . "source.php?sid=" . $sour ; 
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
-			}
-			if ( PGV_USER_CAN_EDIT ) {
-				// Edit Media
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_editmedia"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&amp;pid={$rowm['m_media']}&amp;linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');";
-				$submenu["link"] = "#";
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
-				// Unlink Media
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_unlinkmedia"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');";
-				$submenu["link"] = "#";
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
-				// Copy
-				/*
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["copy"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return copy_record('".$rowm['m_media']."', 'media');";
-				$submenu["link"] = "#";
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
-				*/
-			}
-		}
-
-		// Check if allowed to View media
-		if ($isExternal || media_exists($thumbnail) && !FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
-			$mainFileExists = false;
-			
-			// Get Media info
-			if ($isExternal || media_exists($mainMedia)) {
-				$mainFileExists = true;
-				$imgsize = findImageSize($mainMedia);
-				$imgwidth = $imgsize[0]+40;
-				$imgheight = $imgsize[1]+150;
-
-				// Start Thumbnail Enclosure table 
-				print "<table width=\"10px\" class=\"pic\" border=\"0\"><tr>" . "\n";
-				print "<td align=\"center\" rowspan=\"2\" >";
-				print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"100px\" alt=\"\"></img>";
-				print "</td>". "\n";
-				
-				// Check for Notes associated media item
-				if ($reorder!=1) {
-				}else{
-					// If reorder media has been clicked
-					print "<td width=\"90% align=\"center\"><b><font size=\"2\" style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b></td>";
-					print "</tr>";
-					}
-				$item++;
-				
-				print "<td colspan=\"3\" valign=\"top\" align=\"center\" >". "\n";
-				//If reordering media, do NOT Enable Lightbox nor show thumbnail tooltip
-				if ( $reorder==1 ) {
-				// Else Enable Lightbox (Or popup) and show thumbnail tooltip ----------
-				}else{
-					// If regular filetype (Lightbox)
-					if ($file_type == "regular") {
-						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "\""; 
-					// Else If url filetype (Lightbox)
-					}elseif ($file_type == "url") {
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "\"";
-					// Else Other filetype (Pop-up Window)
-					}else{
-						print 	"<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "\""; 
-					}
-					print ">\n";
+				// View Notes
+				if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+					$submenu = array();
+					$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewnotes"] . "&nbsp;&nbsp;";
+					$submenu["labelpos"] = "right";
+					$submenu["icon"] = "";
+					// Notes Tooltip ----------------------------------------------------
+					$submenu["onclick"]  = "TipTog(";
+						// Contents of Notes 
+						$submenu["onclick"] .= "'";
+						$submenu["onclick"] .= "&lt;font color=#008800>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br />";
+						// echo "<br />";
+						$submenu["onclick"] .= $notes;
+						$submenu["onclick"] .= "'";
+						// Notes Tooltip Parameters
+						$submenu["onclick"] .= $tt_opts;
+					$submenu["onclick"] .= ");";
+					$submenu["onclick"] .= "return false;";
+					$submenu["link"] = "#";
+					$submenu["class"] = $submenu_class;
+					$submenu["hoverclass"] = $submenu_hoverclass;
+					$menu["items"][] = $submenu;
+					echo "\n";
 				}
-			} // End If media is external or media_exists($mainmedia)
+				//View Details
+					$submenu = array();
+					$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewdetails"] . "&nbsp;&nbsp;";
+					$submenu["labelpos"] = "right";
+					$submenu["icon"] = "";
+					$submenu["onclick"] = "";
+					$submenu["link"] = $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] ;
+					$submenu["class"] = $submenu_class;
+					$submenu["hoverclass"] = $submenu_hoverclass;
+					$menu["items"][] = $submenu;
+				//View Source
+				if (eregi("1 SOUR",$rowm['m_gedrec']) && displayDetailsById($sour, "SOUR")) {
+					$submenu = array();
+					$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewsource"] . "&nbsp;&nbsp;";
+					$submenu["labelpos"] = "right";
+					$submenu["icon"] = "";
+					$submenu["onclick"] = "";
+					$submenu["link"] = $SERVER_URL . "source.php?sid=" . $sour ; 
+					$submenu["class"] = $submenu_class;
+					$submenu["hoverclass"] = $submenu_hoverclass;
+					$menu["items"][] = $submenu;
+				}
+				if ( PGV_USER_CAN_EDIT ) {
+					// Edit Media
+					$submenu = array();
+					$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_editmedia"] . "&nbsp;&nbsp;";
+					$submenu["labelpos"] = "right";
+					$submenu["icon"] = "";
+					$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&amp;pid={$rowm['m_media']}&amp;linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');";
+					$submenu["link"] = "#";
+					$submenu["class"] = $submenu_class;
+					$submenu["hoverclass"] = $submenu_hoverclass;
+					$menu["items"][] = $submenu;
+					// Unlink Media
+					$submenu = array();
+					$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_unlinkmedia"] . "&nbsp;&nbsp;";
+					$submenu["labelpos"] = "right";
+					$submenu["icon"] = "";
+					$submenu["onclick"] = "return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');";
+					$submenu["link"] = "#";
+					$submenu["class"] = $submenu_class;
+					$submenu["hoverclass"] = $submenu_hoverclass;
+					$menu["items"][] = $submenu;
+					// Copy
+					/*
+					$submenu = array();
+					$submenu["label"] = $pgv_lang["copy"];
+					$submenu["labelpos"] = "right";
+					$submenu["icon"] = "";
+					$submenu["onclick"] = "return copy_record('".$rowm['m_media']."', 'media');";
+					$submenu["link"] = "#";
+					$submenu["class"] = $submenu_class;
+					$submenu["hoverclass"] = $submenu_hoverclass;
+					$menu["items"][] = $submenu;
+					*/
+				}
+			}
 			
-			// LB 	print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-			
-			// Now finally print the thumbnail ----------------------------------
-			// If Plain URL Print the Common Thumbnail  
-			if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
-				print "<img src=\"{$MEDIA_DIRECTORY}thumbs/urls/URL.jpg\" height=\"80\" border=\"0\" " ;
-			// Else Print the Regular Thumbnail if associated with an image, 
-			}else{
-				$browser = $_SERVER['HTTP_USER_AGENT']; 
-				if(strstr($browser,"MSIE")) {
-					$height = 80;
+			// Check if allowed to View media
+			if ($isExternal || media_exists($thumbnail) && !FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
+				$mainFileExists = false;
+				
+				// Get Media info
+				if ($isExternal || media_exists($mainMedia)) {
+					$mainFileExists = true;
+					$imgsize = findImageSize($mainMedia);
+					$imgwidth = $imgsize[0]+40;
+					$imgheight = $imgsize[1]+150;
+					
+					// Start Thumbnail Enclosure table 
+					print "<table width=\"10px\" class=\"pic\" border=\"0\"><tr>" . "\n";
+					print "<td align=\"center\" rowspan=\"2\" >";
+					print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"100px\" alt=\"\"></img>";
+					print "</td>". "\n";
+					
+					// Check for Notes associated media item
+					if ($reorder!=1) {
+					}else{
+						// If reorder media has been clicked
+						print "<td width=\"90% align=\"center\"><b><font size=\"2\" style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b></td>";
+						print "</tr>";
+						}
+					$item++;
+					
+					print "<td colspan=\"3\" valign=\"top\" align=\"center\" >". "\n";
+					//If reordering media, do NOT Enable Lightbox nor show thumbnail tooltip
+					if ( $reorder==1 ) {
+					// Else Enable Lightbox (Or popup) and show thumbnail tooltip ----------
+					}else{
+						// If regular filetype (Lightbox)
+						if ($file_type == "regular") {
+							print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "\""; 
+						// Else If url filetype (Lightbox)
+						}elseif ($file_type == "url") {
+							print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "\"";
+						// Else Other filetype (Pop-up Window)
+						}else{
+							print 	"<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "\""; 
+						}
+						print ">\n";
+					}
+				} // End If media is external or media_exists($mainmedia)
+				
+				// LB 	print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+				
+				// Now finally print the thumbnail ----------------------------------
+				// If Plain URL Print the Common Thumbnail  
+				if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
+					print "<img src=\"{$MEDIA_DIRECTORY}thumbs/urls/URL.jpg\" height=\"80\" border=\"0\" " ;
+				// Else Print the Regular Thumbnail if associated with an image, 
 				}else{
-					$height = 78;
-				}			
-				$size = findImageSize($thumbnail);
-				if ($size[1]<$height) $height = $size[1];
-				print "<img src=\"{$thumbnail}\" height=\"{$height}\" border=\"0\" " ;
+					$browser = $_SERVER['HTTP_USER_AGENT']; 
+					if(strstr($browser,"MSIE")) {
+						$height = 78;
+					}else{
+						$height = 78;
+					}			
+					$size = findImageSize($thumbnail);
+					if ($size[1]<$height) $height = $size[1];
+					print "<img src=\"{$thumbnail}\" height=\"{$height}\" border=\"0\" " ;
+				}
+				
+				// print browser tooltips associated with image ----------------------------------------------
+				print " alt=\"\" title=\"" . Printready(strip_tags($mediaTitle)) . "\"  />";
+				
+				// Close anchor --------------------------------------------------------------
+				if ($mainFileExists) print "</a>" . "\n";
+				print "</td></tr>" . "\n";
+				
+				//View Edit Menu ----------------------------------
+				//If reordering media
+				if ( $reorder==1 ) {
+					//Print Nothing
+				}else{
+					//Else if not reordering media, print View or View-Edit Menu
+					print "<tr>";
+					print "<td width=\"40px\"></td>";
+					print "<td valign=\"bottom\" align=\"center\" nowrap=\"nowrap\">";
+						print_menu($menu);
+					print "</td>";
+					print "<td width=\"40px\"></td>";
+					print "</tr>" . "\n";
+				}
+				
+				// print "</table>" . "\n";
 			}
 			
-			// print browser tooltips associated with image ----------------------------------------------
-			print " alt=\"\" title=\"" . Printready(strip_tags($mediaTitle)) . "\"  />";
-			
-			// Close anchor --------------------------------------------------------------
-			if ($mainFileExists) print "</a>" . "\n";
-			print "</td></tr>" . "\n";
+		} // NOTE End If Show fact details
 
-			//View Edit Menu ----------------------------------
-			//If reordering media
-			if ( $reorder==1 ) {
-				//Print Nothing
-			}else{
-				//Else if not reordering media, print View or View-Edit Menu
-				print "<tr>";
-				print "<td width=\"40px\"></td>";
-				print "<td valign=\"bottom\" align=\"center\" nowrap=\"nowrap\">";
-					print_menu($menu);
-				print "</td>";
-				print "<td width=\"40px\"></td>";
-				print "</tr>" . "\n";
-			}
-			
-			print "</table>" . "\n";
-		}
 
-	} // NOTE End If Show fact details
+
+	// If media file is missing but details are in Gedcom
+	if(!media_exists($rowm['m_file'])) {
+		print "<tr>";
+		print "<td ></td>";
+		print "<td valign=\"bottom\" align=\"center\" nowrap=\"nowrap\">";
+			print_menu($menu);
+		print "</td>";
+		print "<td ></td>";
+		print "</tr>" . "\n";
+
+	}
 	
+		print "</table>";
+
 	$media_data = $rowm['m_media']; 
 	print "<input type=\"hidden\" name=\"order1[$media_data]\" value=\"$sort_i\" />" . "\n";
 	$sort_i++;

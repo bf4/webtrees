@@ -288,7 +288,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		
 			//LBox --------  change for Lightbox Album --------------------------------------------
 			if (file_exists("modules/lightbox/album.php")) {
-				$thumbnail .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">";
+				$thumbnail .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">";
 			}else
 			// ---------------------------------------------------------------------------------------------
 			
@@ -297,7 +297,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			}else{
 				$thumbnail .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 			}
-			$thumbnail .= "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"".strip_tags($name)."\"";
+			$thumbnail .= "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"".PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8'))."\"";
 			if (!$show_full) $thumbnail .= " style=\"display: none;\"";
 			if ($imgsize) $thumbnail .= " /></a>";
 			else $thumbnail .= " />";
@@ -305,7 +305,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	}
 	//-- find additional name
 	$addname=$person->getAddName();
-	$name = PrintReady($name);
+	$name = PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8'));
 
 	if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 	else $title = $pid." :".$pgv_lang["indi_info"];
@@ -604,6 +604,7 @@ function showBack() {
 	arrows[3].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"]; ?>";
 
 <?php if (PGV_USER_CAN_EDIT) { ?>
+
 function delete_record(pid, linenum, mediaid) {
 	if (!mediaid) mediaid="";
 	if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) {
@@ -2484,6 +2485,8 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	print "</select>";
 	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" />";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
+
+
 	print "</form>";
 	print "</td></tr>";
 }
