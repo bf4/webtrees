@@ -1588,88 +1588,75 @@ class stats {
 		//-- perform the calculation all over again.
 		//if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false))) {
 		if(
-			isset($_SESSION['first_names_f'][$GEDCOM]) &&
-			isset($_SESSION['first_names_m'][$GEDCOM]) &&
-			isset($_SESSION['first_names_u'][$GEDCOM]) &&
+			isset($_SESSION['first_names_F'][$GEDCOM]) &&
+			isset($_SESSION['first_names_M'][$GEDCOM]) &&
+			isset($_SESSION['first_names_U'][$GEDCOM]) &&
 			(!isset($DEBUG) ||
 			($DEBUG == false))
 		) {
-			$name_list_f = $_SESSION['first_names_f'][$GEDCOM];
-			$name_list_m = $_SESSION['first_names_m'][$GEDCOM];
-			$name_list_u = $_SESSION["first_names_u"][$GEDCOM];
+			$name_list_F = $_SESSION['first_names_F'][$GEDCOM];
+			$name_list_M = $_SESSION['first_names_M'][$GEDCOM];
+			$name_list_U = $_SESSION["first_names_U"][$GEDCOM];
 		} else {
-			$name_list_f = array();
-			$name_list_m = array();
-			$name_list_u = array();
+			$name_list_F = array();
+			$name_list_M = array();
+			$name_list_U = array();
 
-			//DB query
-			$id = $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
-			$sql = "SELECT DISTINCT i_name, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$id}";
-			$res = dbquery($sql);
-			if(!DB::isError($res)) {
-				while($row =& $res->fetchRow()) {
-					if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
-					else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
-					else $genderList = 'name_list_u';
-					$allNames = get_indi_names($row[1], false, false);		// Get all names (except Married name)
-					foreach ($allNames as $name) {
-						$firstnamestring = preg_replace(':/.*/:', '', $name[0]);		// Remove surname
+			foreach (array_keys(get_indi_list()) as $pid) {
+				$person=Person::getInstance($pid);
+				$genderList='name_list_'.$person->getSex();
+				foreach ($person->getAllNames() as $name) {
+					if ($name['type']!='_MARNM') {
+						list($dummy, $firstnamestring)=explode(',', $name['sort']);
 						$firstnamestring = ' '.str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@'), ' ', $firstnamestring).' '; 
 						// Remove names within quotes and apostrophes
 						$firstnamestring = preg_replace(array(": '.*' :", ': ".*" :'), ' ', $firstnamestring);
 						$firstnamestring = preg_replace(": (\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99).*(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99) :", ' ', $firstnamestring);
 
-						$nameList = explode(" ", trim($firstnamestring));
-						foreach ($nameList as $givnName) {
-							$givnName = trim($givnName);
-
-							// Ignore single letters
-							if (!empty($givnName)) {
-								$charLen = 1;
-								$letter = substr($givnName, 0, 1);
-								if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
-								if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
-								if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
-								if (strlen($givnName)>$charLen) {
-									if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
+						foreach (explode(' ', $firstnamestring) as $givnName) {
+							// Ignore single letters (but not single-character japanese/chinese names?)
+							if (strlen($givnName)>1) {
+								if (isset(${$genderList}[$givnName])) {
 									${$genderList}[$givnName] ++;
+								} else {
+									${$genderList}[$givnName] = 1;
 								}
 							}
 						}
 					}
 				}
-			$res->free();
 			}
-			arsort($name_list_f, SORT_NUMERIC);
-			$_SESSION['first_names_f'][$GEDCOM] = $name_list_f;
-			arsort($name_list_m, SORT_NUMERIC);
-			$_SESSION['first_names_m'][$GEDCOM] = $name_list_m;
-			arsort($name_list_u, SORT_NUMERIC);
-			$_SESSION['first_names_u'][$GEDCOM] = $name_list_u;
+
+			arsort($name_list_F, SORT_NUMERIC);
+			$_SESSION['first_names_F'][$GEDCOM] = $name_list_F;
+			arsort($name_list_M, SORT_NUMERIC);
+			$_SESSION['first_names_M'][$GEDCOM] = $name_list_M;
+			arsort($name_list_U, SORT_NUMERIC);
+			$_SESSION['first_names_U'][$GEDCOM] = $name_list_U;
 		}
 		if ($sex == 'F') {
-			$nameList = array_slice($name_list_f, 0, $maxtoshow);
+			$nameList = array_slice($name_list_F, 0, $maxtoshow);
 			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
 		} else if ($sex == 'M') {
-			$nameList = array_slice($name_list_m, 0, $maxtoshow);
+			$nameList = array_slice($name_list_M, 0, $maxtoshow);
 			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
 		} else if ($sex == 'U') {
-			$nameList = array_slice($name_list_u, 0, $maxtoshow);
+			$nameList = array_slice($name_list_U, 0, $maxtoshow);
 			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
 		} else {
-			$name_list_b = $name_list_f;
+			$name_list_B = $name_list_F;
 			// Combine names and counts from the Male list into the Totals list
-			foreach ($name_list_m as $key => $count) {
-				if (isset($name_list_b[$key])) $name_list_b[$key] += $count;
-				else $name_list_b[$key] = $count;
+			foreach ($name_list_M as $key => $count) {
+				if (isset($name_list_B[$key])) $name_list_B[$key] += $count;
+				else $name_list_B[$key] = $count;
 			}
 			// Combine names and counts from the Unknown list into the Totals list
-			foreach ($name_list_u as $key => $count) {
-				if (isset($name_list_b[$key])) $name_list_b[$key] += $count;
-				else $name_list_b[$key] = $count;
+			foreach ($name_list_U as $key => $count) {
+				if (isset($name_list_B[$key])) $name_list_B[$key] += $count;
+				else $name_list_B[$key] = $count;
 			}
-			arsort($name_list_b, SORT_NUMERIC);
-			$nameList = array_slice($name_list_b, 0, $maxtoshow);
+			arsort($name_list_B, SORT_NUMERIC);
+			$nameList = array_slice($name_list_B, 0, $maxtoshow);
 			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
 		}
 		if (count($nameList)==0) return '';
@@ -1693,7 +1680,7 @@ class stats {
 			}
 			switch ($type) {
 			case 'table':
-				$common[] = '<tr><td class="optionbox">'.PrintReady($given).'</td><td class="optionbox">'.$total.'</tr>';
+				$common[] = '<tr><td class="optionbox">'.PrintReady(UTF8_substr($given,0,1).UTF8_strtolower(UTF8_substr($given,1))).'</td><td class="optionbox">'.$total.'</tr>';
 				break;
 			case 'list':
 				$common[] = "\t<li>{$totL}".PrintReady($given)."{$totR}</li>\n";
@@ -1703,14 +1690,18 @@ class stats {
 				break;
 			}
 		}
-		switch ($type) {
-		case 'table':
-			$lookup=array('M'=>$pgv_lang['male'], 'F'=>$pgv_lang['female'], 'U'=>$pgv_lang['unknown'], 'B'=>$pgv_lang['all']);
-			return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.$pgv_lang['name'].'</td><td class="descriptionbox center">'.$pgv_lang['count'].'</td></tr>'.join('', $common).'</table>';
-		case 'list':
-			return "<ul>\n".join("\n", $common)."</ul>\n";
-		case 'nolist':
-			return join(';&nbsp; ', $common);
+		if ($common) {
+			switch ($type) {
+			case 'table':
+				$lookup=array('M'=>$pgv_lang['male'], 'F'=>$pgv_lang['female'], 'U'=>$pgv_lang['unknown'], 'B'=>$pgv_lang['all']);
+				return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.$pgv_lang['name'].'</td><td class="descriptionbox center">'.$pgv_lang['count'].'</td></tr>'.join('', $common).'</table>';
+			case 'list':
+				return "<ul>\n".join("\n", $common)."</ul>\n";
+			case 'nolist':
+				return join(';&nbsp; ', $common);
+			}
+		} else {
+			return '';
 		}
 	}
 
