@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2079873 ] Names as media titles also now print double quotes (Nicknames) and do not truncate (windmillway)
  - Fixed: [ 1979072 ] and [ 1817168 ] Album Page now shows updated media (old and new) and removes edit menu from "old" item (windmillway)
  - Fixed: [ 2049164 ] ucwords is cultural bias (canajun2eh)
  - Fixed: [ 2038773 ] Concatenated data (CONC) splits UTF-8 characters (canajun2eh)
