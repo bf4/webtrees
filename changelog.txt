@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2082505 ] [3724] Indiv list diplay error (fisharebest)
  - Fixed: [ 1819502 ] Lightbox & Missing media file. (windmillway)
  - Fixed: [ 2079873 ] Fixed Charts ref line below (windmillway)
  - Fixed: [ 2079873 ] Names as media titles also now print double quotes (Nicknames) and do not truncate (windmillway)

@@ -321,7 +321,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($birth_dates[0]->isOK() && $death_dates[0]->isOK()) {
 			$age = GedcomDate::GetAgeYears($birth_dates[0], $death_dates[0]);
 			$age_jd = $death_dates[0]->MinJD()-$birth_dates[0]->MinJD();
-			echo "<a name=\"".$age_jd."\" title=\"".$pgv_lang["age"].": ".$age."\" class=\"list_item age\">".$age."</a>";
+			echo '<a name="', $age_jd, '" class="list_item age">', $age, '</a>';
 			$deat_by_age[max(0,min($MAX_ALIVE_AGE, $age))] .= $person->getSex();
 		} else {
 			echo '<a name="-1">&nbsp;</a>';
