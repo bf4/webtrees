@@ -1745,8 +1745,8 @@ class Person extends GedcomRecord {
 
 		// If the name is written in greek/cyrillic/hebrew/etc., use the "unknown" name
 		// from that character set.  Otherwise use the one in the language file.
-		if ($givn=='' || $surn=='') {
-			if ($givn=='' && $surn=='') {
+		if ($givn=='@P.N.' || $surn=='' || $surn=='@N.N.') {
+			if ($givn=='@P.N.' && ($surn=='' || $surn=='@N.N.')) {
 				$PN=$pgv_lang['PN'];
 				$NN=$pgv_lang['NN'];
 			} else {
