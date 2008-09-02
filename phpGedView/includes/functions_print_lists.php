@@ -236,7 +236,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$birth_date=$person->getEstimatedBirthDate();
 				echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
 			} else {
-				echo '&nbsp;';
+				echo '<span class="date">&nbsp;</span>'; // span needed for alive-in-year filter
 			}
 			$birth_dates[0]=new GedcomDate('');
 		}
@@ -302,7 +302,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$death_date=$person->getEstimatedDeathDate();
 				echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
 			} else {
-				echo '&nbsp;';
+				echo '<span class="date">&nbsp;</span>'; // span needed for alive-in-year filter
 			}
 			$death_dates[0]=new GedcomDate('');
 		}
