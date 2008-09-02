@@ -542,6 +542,10 @@ function print_fam_table($datalist, $legend="", $option="") {
 		//-- Husband name(s)
 		$name=$husb->getFullName();
 		$addname=$husb->getAddName();
+		if (is_array($value) && isset($value['hname']) && $value['hname']!=$name && $value['hname']!=$addname) {
+			$name=$value['hname'];
+			$addname='';
+		}
 		$tdclass = "list_value_wrap";
 		if (!$husb->isDead()) $tdclass .= " alive";
 		if (!$husb->getChildFamilyIds()) $tdclass .= " patriarch";
@@ -584,6 +588,10 @@ function print_fam_table($datalist, $legend="", $option="") {
 		//-- Wife name(s)
 		$name=$wife->getFullName();
 		$addname=$wife->getAddName();
+		if (is_array($value) && isset($value['wname']) && $value['wname']!=$name && $value['wname']!=$addname) {
+			$name=$value['wname'];
+			$addname='';
+		}
 		$tdclass = "list_value_wrap";
 		if (!$wife->isDead()) $tdclass .= " alive";
 		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";
