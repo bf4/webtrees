@@ -44,6 +44,22 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["NNhebrew"]                02 September 2008     A (do not translate this)
++$pgv_lang["PNhebrew"]                02 September 2008     A ditto
++$pgv_lang["NNarabic"]                02 September 2008     A ditto
++$pgv_lang["PNarabic"]                02 September 2008     A ditto
++$pgv_lang["NNgreek"]                 02 September 2008     A ditto
++$pgv_lang["PNgreek"]                 02 September 2008     A ditto
++$pgv_lang["NNrussian"]               02 September 2008     A ditto
++$pgv_lang["PNrussian"]               02 September 2008     A ditto
++$pgv_lang["NNchinese"]               02 September 2008     A ditto
++$pgv_lang["PNchinese"]               02 September 2008     A ditto
++$pgv_lang["NNvietnamese"]            02 September 2008     A ditto
++$pgv_lang["PNvietnamese"]            02 September 2008     A ditto
++$pgv_lang["NNthai"]                  02 September 2008     A ditto
++$pgv_lang["PNthai"]                  02 September 2008     A ditto
++$pgv_lang["NNother"]                 02 September 2008     A "unknown" in latin text
++$pgv_lang["PNother"]                 02 September 2008     A ditto
 -$pgv_lang["dynasty_list"]			      29 August 2008        D
 -$pgv_lang["patriarch_list"] 		      29 August 2008        D
 +$pgv_lang["parent_age"]							26 August 2008			A
