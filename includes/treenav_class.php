@@ -427,6 +427,7 @@ class TreeNav {
 			$cfamily = end($fams);
 			if (!empty($cfamily)) {
 				$father = $cfamily->getHusband();
+				if (empty($father)) $father = $cfamily->getWife();
 			}
 			$fams = $person->getSpouseFamilies();
 			$fams = array_reverse($fams);
