@@ -92,11 +92,14 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 			$content.='<b>'.$pgv_lang['unknown'].'</b><div class="wrap" style="'.$padding.'">'.$totals.'</div><br />';
 		}
 		break;
-	case "style2":	// Style 2: Tabular format.  Narrow, 2-column table, good on right side of page
+	case "style2":	// Style 2: Tabular format.  Narrow, 2 or 3 column table, good on right side of page
 		$params=array(1,$config['num'],'rcount');
 		$content.='<table class="center"><tr valign="top"><td>'.$stats->commonGivenFemaleTable($params);
 		$content.='</td><td>'.$stats->commonGivenMaleTable($params).'</td><td>';
-		$content.=$stats->commonGivenUnknownTable($params).'</td><td></tr></table>';
+		if ($showUnknown=="yes") {
+			$content.=$stats->commonGivenUnknownTable($params).'</td><td>';
+		}
+		$content.='</tr></table>';
 		break;
 	}
 	$content .=  "</div>";
