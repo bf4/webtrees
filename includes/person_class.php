@@ -1745,17 +1745,18 @@ class Person extends GedcomRecord {
 
 		// If the name is written in greek/cyrillic/hebrew/etc., use the "unknown" name
 		// from that character set.  Otherwise use the one in the language file.
-		if ($givn=='@P.N.' && $surn=='@N.N.') {
-			$PN=$pgv_lang['PN'];
-			$NN=$pgv_lang['NN'];
-		} else {
-			echo '[',whatLanguage($givn), whatLanguage($surn), ']';
-			$PN=$unknownPN[whatLanguage($surn)];
-			$NN=$unknownNN[whatLanguage($givn)];
+		if ($givn=='@P.N.' || $surn=='@N.N.') {
+			if ($givn=='@P.N.' && $surn=='@N.N.') {
+				$PN=$pgv_lang['PN'];
+				$NN=$pgv_lang['NN'];
+			} else {
+				$PN=$unknownPN[whatLanguage($surn)];
+				$NN=$unknownNN[whatLanguage($givn)];
+			}
+			$list=str_replace(array('@N.N.','@P.N.'), array($NN, $PN), $list);
+			$full=str_replace(array('@N.N.','@P.N.'), array($NN, $PN), $full);
 		}
-		$list=str_replace(array('@N.N.','@P.N.'), array($NN, $PN), $list);
-		$full=str_replace(array('@N.N.','@P.N.'), array($NN, $PN), $full);
-
+	
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
 		foreach ($surns as $surn) {
