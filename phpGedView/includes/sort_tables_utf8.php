@@ -69,25 +69,26 @@ if ($DICTIONARY_SORT[$LANGUAGE]) {
 	$LCDiacritOrder = "ABCDEFGHIJKABCDEABABCDEFGHIAABCDABCDEFGHIJLAAABCDEABCDABCDEFGHIJKLABCABCDABCABCDEFGHIJKLMNOPQAABCABC";	
 }
 
-$unknownNN = array();
-$unknownNN["hebrew"]	= "(לא ידוע)";
-$unknownNN["arabic"]	= "(غير معروف)";
-$unknownNN["greek"]		= "(άγνωστος/η)";
-$unknownNN["russian"]	= "(неопределено)";
-$unknownNN["chinese"]	= "(未知)";
-$unknownNN["vietnamese"] = "(vô danh)";
-$unknownNN["thai"]		= $pgv_lang["NN"];
-$unknownNN["other"]		= $pgv_lang["NN"];
-
-$unknownPN = array();	 
-$unknownPN["hebrew"]	= "(לא ידוע)";
-$unknownPN["arabic"]	= "(غير معروف)";
-$unknownPN["greek"]		= "(άγνωστος/η)";
-$unknownPN["russian"]	= "(неопределено)";
-$unknownPN["chinese"]	= "(未知)";
-$unknownPN["vietnamese"] = "(không biết tuổi)";
-$unknownPN["thai"]		= $pgv_lang["PN"];
-$unknownPN["other"]		= $pgv_lang["PN"];
+$unknownNN = array(
+	'hebrew'    =>$pgv_lang['NNhebrew'],
+	'arabic'    =>$pgv_lang['NNarabic'],
+	'greek'     =>$pgv_lang['NNgreek'],
+	'russian'   =>$pgv_lang['NNrussian'],
+	'chinese'   =>$pgv_lang['NNchinese'],
+	'vietnamese'=>$pgv_lang['NNvietnamese'],
+	'thai'      =>$pgv_lang['NNthai'],
+	'other'     =>$pgv_lang['NNother'],
+);
+$unknownPN = array(
+	'hebrew'    =>$pgv_lang['PNhebrew'],
+	'arabic'    =>$pgv_lang['PNarabic'],
+	'greek'     =>$pgv_lang['PNgreek'],
+	'russian'   =>$pgv_lang['PNrussian'],
+	'chinese'   =>$pgv_lang['PNchinese'],
+	'vietnamese'=>$pgv_lang['PNvietnamese'],
+	'thai'      =>$pgv_lang['PNthai'],
+	'other'     =>$pgv_lang['PNother'],
+);
 
 // Table of UTF8 code ranges
 // Reference: Unicode Consortium  http://www.unicode.org
