@@ -67,7 +67,9 @@ function print_sosa_number($sosa, $pid = "", $arrowDirection = "up") {
  */
 function print_family_header($famid) {
 	$family=Family::getInstance($famid);
-	echo '<p class="name_head">', PrintReady($family->getFullName()), '</p>';
+	if ($family) {
+		echo '<p class="name_head">', PrintReady($family->getFullName()), '</p>';
+	}
 }
 
 /**
