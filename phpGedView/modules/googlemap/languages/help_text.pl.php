@@ -46,10 +46,10 @@ $pgv_lang["GOOGLEMAP_MAP_SIZE"]         = "Rozmiar mapy";
 $pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />Rozmiar mapy w pikselach. Mapa wyświetlana na stronie osoby będzie miała podany rozmiar.";
 
 $pgv_lang["GOOGLEMAP_MAP_ZOOM"]         = "Współczynnik powiększenia";
-$pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimalny i maksymalny współczynnik powiększenia dla mapy Google. 1 - cała mapa, 15 - pojedyńcze domy. Współczynnik 15 dostępny jest tylko w pewnych miejscach.";
+$pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimalny i maksymalny współczynnik powiększenia dla mapy Google. 1 - cała mapa, 15 - pojedyncze domy. Współczynnik 15 dostępny jest tylko w pewnych miejscach.";
 
 $pgv_lang["GOOGLEMAP_PRECISION"]        = "Precyzja współrzędnych";
-$pgv_lang["GOOGLEMAP_PRECISION_help"]   = "~#pgv_lang[GOOGLEMAP_PRECISION]#~<br /><br />Możesz określić precyzję dla wprowadzanych współrzędnych dla różnych poziomów. Na przykład: Kraj może być określony z precyzją 0(brak miejsc po przecinku), podczas gdy miejscowości potrzebują precyzji 3-4 miejsc po przecinku.";
+$pgv_lang["GOOGLEMAP_PRECISION_help"]   = "~#pgv_lang[GOOGLEMAP_PRECISION]#~<br /><br />Możesz określić precyzję dla wprowadzanych współrzędnych dla różnych poziomów. Na przykład: Kraj może być określony z precyzją 0 (brak miejsc po przecinku), podczas gdy miejscowości potrzebują precyzji 3-4 miejsc po przecinku.";
 
 $pgv_lang["GM_DEFAULT_LEVEL_0"]         = "Domyślna wartość głównego poziomu";
 $pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "~#pgv_lang[GM_DEFAULT_LEVEL_0]#~<br /><br />Tu możesz zdefiniować domyślną wartość dla głównego poziomu w hierarchii miejsc. Jeśli miejsce nie zostanie znaleznione jego nazwa zostanie dodana jako najwyższy poziom (kraj) i baza zostanie przeszukana ponownie.";
