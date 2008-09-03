@@ -2119,20 +2119,6 @@ class IndividualControllerRoot extends BaseController {
 // End LightBox Album Functions
 // -----------------------------------------------------------------------------
 
-// -----------------------------------------------------------------------------
-// Functions for Census Assistant 
-// -----------------------------------------------------------------------------
-	/**
-	 * include Census controller
-	 */
-    function census_assistant() {
-        include('modules/census_assistant/census_ctrl.php');
-    }
-// -----------------------------------------------------------------------------
-// End  Census Assistant  Functions
-// -----------------------------------------------------------------------------
-
-
 
 }
 // -- end of class
