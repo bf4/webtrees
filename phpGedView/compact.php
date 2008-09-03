@@ -330,7 +330,7 @@ function print_td_person($n) {
 				$imgheight = $imgsize[1]+150;
 //LBox --------  change for Lightbox Album --------------------------------------------
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 				}else{
 // ---------------------------------------------------------------------------------------------
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
@@ -339,14 +339,14 @@ function print_td_person($n) {
 // ---------------------------------------------------------------------------------------------
 				$birth_date=$indi->getBirthDate();
 				$death_date=$indi->getDeathDate();
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars($name, ENT_QUOTES, 'UTF-8'))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false),ENT_QUOTES,'UTF-8'))."\"";
+				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false),ENT_QUOTES,'UTF-8'))."\"";
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}
 		}
 
 		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" title=\"$title\"> ";
-		$text .= PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8'));
+		$text .= PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'));
 		if ($addname) $text .= "<br />" . PrintReady($addname);
 		$text .= "</a>";
 		if ($showids) {

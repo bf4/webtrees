@@ -389,7 +389,7 @@ class IndividualControllerRoot extends BaseController {
 					//LBox --------  addition for Lightbox Album --------------------------------------------
 					$name = $this->indi->getFullName();
 					if (file_exists("modules/lightbox/album.php")) {
-						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
+						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 					}else
 					//Lbox -----------------------------------------------------------------------------------------
 					
@@ -399,7 +399,7 @@ class IndividualControllerRoot extends BaseController {
 						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
 					//LBox ---- $result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
-					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8'))."\" alt=\"".PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8'))."\" />";
+					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'))."\" alt=\"".PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'))."\" />";
 					$result .= "</a>";
 					return $result;
 				}
@@ -2117,6 +2117,19 @@ class IndividualControllerRoot extends BaseController {
     }
 // -----------------------------------------------------------------------------
 // End LightBox Album Functions
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Functions for Census Assistant 
+// -----------------------------------------------------------------------------
+	/**
+	 * include Census controller
+	 */
+    function census_assistant() {
+        include('modules/census_assistant/census_ctrl.php');
+    }
+// -----------------------------------------------------------------------------
+// End  Census Assistant  Functions
 // -----------------------------------------------------------------------------
 
 
