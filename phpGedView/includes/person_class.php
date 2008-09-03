@@ -1613,8 +1613,7 @@ class Person extends GedcomRecord {
 	// Convert a name record into "full", "sort" and "list" versions.
 	// Use the NAME field to generate the "full" and "list" versions, as the
 	// gedcom spec says that this is the person's name, as they would write it.
-	// Use the SURN field to generate the sortable names.  Note that Spanish and
-	// Portuguese names have two surnames (comma separated) and that this field
+	// Use the SURN field to generate the sortable names.  Note that this field
 	// may also be used for the "true" surname, perhaps spelt differently to that
 	// recorded in the NAME field. e.g.
 	//
@@ -1628,64 +1627,78 @@ class Person extends GedcomRecord {
 	// list=>'de Gliderow, Robert "The Bald"'
 	// sort=>'CLITHEROW, ROBERT'
 	//
+	// Handle multiple surnames, either as;
+	// 1 NAME Carlos /Vasquez/ y /Sante/
+	// or
+	// 1 NAME Carlos /Vasquez y Sante/
+	// 2 GIVN Carlos
+	// 2 SURN Vasquez,Sante
 	function _addName($type, $full, $gedrec) {
 		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $unknownNN, $unknownPN, $pgv_lang;
 
-		if (preg_match('/^\d/', $gedrec, $match)) {
-			$level=(int)$match[0];
-		} else {
-			$level=1;
-		}
-		$sublevel=$level+1;
+		// Look for GIVN/SURN at level n+1
+		$sublevel=1+(int)$gedrec[0];;
 
-		// Some old systems generate gedcoms with single slashes.  e.g. 1 NAME John/Smith
-		if (preg_match('/^[^\/]*\/[^\/]*$/', $full)) {
+		// Fix bad slashes.  e.g. "John/Smith" => "John/Smith/"
+		if (substr_count($full, '/')%2==1) {
 			$full.='/';
 		}
 
 		// Need the GIVN and SURN to generate the sortable name.
-		$givn=preg_match('/^'.$sublevel.' GIVN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
-		$surn=preg_match('/^'.$sublevel.' SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		$givn=preg_match('/^'.$sublevel.' GIVN ([^\r\n]+)/m', $gedrec, $match) ? UTF8_strtoupper($match[1]) : '';
+		$surn=preg_match('/^'.$sublevel.' SURN ([^\r\n]+)/m', $gedrec, $match) ? UTF8_strtoupper($match[1]) : '';
 		if ($givn || $surn) {
-			// GIVN and SURN, can be comma-separated lists.
-			$surns=preg_split('/ *, */', UTF8_strtoupper($surn));
-			$givn=preg_replace('/ *, */', ' ', UTF8_strtoupper($givn));
+			// GIVN and SURN can be comma-separated lists.
+			$surns=preg_split('/ *, */', $surn);
+			$givn=str_replace(array(',', ', '), ' ', $givn);
 		} else {
-			// We do not have a structured name - extract the GIVN and SURN ourselves
+			$name=UTF8_strtoupper($full);
+			// We do not have a structured name - extract the GIVN and SURN(s) ourselves
 			// Strip the NPFX
-			if (preg_match('/^(?:(?:(?:Adm|Amb|Brig|Can|Capt|Chan|Chapln|Cmdr|Col|Cpl|Cpt|Dr|Gen|Gov|Hon|Lady|Lord|Lt|Mr|Mrs|Ms|Msgr|Pfc|Pres|Prof|Pvt|Rabbi|Rep|Rev|Sen|Sgt|Sir|Sr|Sra|Srta|Ven)\.? )+)(.+)/i', $full, $match)) {
+			if (preg_match('/^(?:(?:(?:ADM|AMB|BRIG|CAN|CAPT|CHAN|CHAPLN|CMDR|COL|CPL|CPT|DR|GEN|GOV|HON|LADY|LORD|LT|MR|MRS|MS|MSGR|PFC|PRES|PROF|PVT|RABBI|REP|REV|SEN|SGT|SIR|SR|SRA|SRTA|VEN)\.? +)+)(.+)/', $name, $match)) {
 				$name=$match[1];
-			} else {
-				$name=$full;
 			}
 			// Strip the NSFX
-			if (preg_match('/(.+)(?:(?: (?:esq|esquire|jr|junior|sr|senior|[ivx]+)\.?)+)$/i', $name, $match)) {
+			if (preg_match('/(.+)(?:(?: +(?:ESQ|ESQUIRE|JR|JUNIOR|SR|SENIOR|[IVX]+)\.?)+)$/', $name, $match)) {
 				$name=$match[1];
 			}
-			// Extract the GIVN and SURN
-			if (strpos($name, '/')===false) {
-				$givn=UTF8_strtoupper($full);
-				$surn='';
+			// Extract GIVN/SURN.
+			if (strpos($full, '/')===false) {
+				$givn=trim($name);
+				$surns=array('');
 			} else {
-				// The given names may be before or after the surn.  If both are present,
-				// then treat all as given names. (Not perfect, but works well enough for
-				// sort/list names)
-				list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $name);
-				$givn=UTF8_strtoupper(trim($tmp1.' '.$tmp3));
-				$surn=$tmp2;
-				if (preg_match('/^(?:(?:(?:a|aan|ab|af|al|ap|as|auf|av|bat|ben|bij|bin|bint|da|de|del|della|dem|den|der|di|du|el|fitz|het|ibn|la|las|le|les|los|onder|op|over|\'s|st|\'t|te|ten|ter|till|tot|uit|uijt|van|vanden|von|voor|vor)[ -]+)+(?:[dl]\')?)(.+)$/i', $surn, $match)) {
-					$surn=$match[1];
+				// Extract SURN.  Split at "/".  Odd numbered parts are SURNs.
+				$surns=array();
+				foreach (preg_split(': */ *:', $name) as $key=>$value) {
+					if ($key%2==1) {
+						if ($value) {
+							// Strip SPFX
+							if (preg_match('/^(?:(?:(?:A|AAN|AB|AF|AL|AP|AS|AUF|AV|BAT|BEN|BIJ|BIN|BINT|DA|DE|DEL|DELLA|DEM|DEN|DER|DI|DU|EL|FITZ|HET|IBN|LA|LAS|LE|LES|LOS|ONDER|OP|OVER|\'S|ST|\'T|TE|TEN|TER|TILL|TOT|UIT|UIJT|VAN|VANDEN|VON|VOOR|VOR)[ -]+)+(?:[DL]\')?)(.+)$/', $value, $match)) {
+								$value=$match[1];
+							}
+							$surns[]=$value ? $value : '@N.N.';
+						} else {
+							$surns[]='@N.N.';
+						}
+					}
+				}
+				// Extract the GIVN.  Before first "/" and after last.
+				$pos1=strpos($name, '/');
+				if ($pos1===false) {
+					$givn=$name;
+				} else {
+					$pos2=strrpos($name, '/');
+					$givn=trim(substr($name, 0, $pos1).' '.substr($name, $pos2+1));
 				}
 			}
-			// We can only specify multiple surnames in the SURN field.
-			// The comma is valid in NAME, and should always be displayed.
-			$surns=array(UTF8_strtoupper($surn));
 		}
 
+		// Tidy up whitespace
+		$full=preg_replace('/  +/', ' ', trim($full));
+
 		// Add placeholder for unknown surname
-		if (strpos($full, '//')!==false) {
-			$full=str_replace('//', '/@N.N./', $full);
-			$surns=array('@N.N.');
+		if (preg_match(':/ */:', $full)) {
+			$full=preg_replace(':/ */:', '/@N.N./', $full);
 		}
 
 		// Add placeholder for unknown given name
@@ -1721,12 +1734,14 @@ class Person extends GedcomRecord {
 
 		// Create the list (surname first) version of the name.  Note that zero
 		// slashes are valid; they indicate NO surname as opposed to missing surname.
-		if (strpos($full, '/')===false) {
+		$pos1=strpos($full, '/');
+		if ($pos1===false) {
 			$list=$full;
 		} else {
-			list($tmp1, $tmp2, $tmp3)=preg_split('/ *\/ */', $full);
-			$list=$tmp2.', '.trim($tmp1.' '.$tmp3);
-			$full=str_replace('/', '', $full);
+			$pos2=strrpos($full, '/');
+			$list=trim(substr($full, $pos1+1, $pos2-$pos1-1)).', '.substr($full, 0, $pos1).substr($full, $pos2+1);
+			$list=trim(str_replace(array('/', '  '), array('', ' '), $list));
+			$full=trim(str_replace(array('/', '  '), array('', ' '), $full));
 		}
 
 		// Hungarians want the "full" name to be the surname first (i.e. "list") variant
