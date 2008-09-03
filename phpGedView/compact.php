@@ -330,7 +330,7 @@ function print_td_person($n) {
 				$imgheight = $imgsize[1]+150;
 //LBox --------  change for Lightbox Album --------------------------------------------
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8')) . "\">" . "\n";
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 				}else{
 // ---------------------------------------------------------------------------------------------
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";

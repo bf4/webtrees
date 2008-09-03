@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Allowed Lightbox enlarged image to show starred names as underlined in title (windmillway)
  - Fixed: Starred name problem - (introduced by svn 3755 and 3756) - (windmillway)
  - Fixed: [ 2082505 ] [3724] Indiv list diplay error (fisharebest)
  - Fixed: [ 1819502 ] Lightbox & Missing media file. (windmillway)

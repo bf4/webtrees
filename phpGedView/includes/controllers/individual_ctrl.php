@@ -383,13 +383,13 @@ class IndividualControllerRoot extends BaseController {
 					$imgsize = findImageSize($firstmediarec["file"]);
 					$imgwidth = $imgsize[0]+40;
 					$imgheight = $imgsize[1]+150;
-					//Gets the Media View Link Information and Concatinate
+					//Gets the Media View Link Information and Concatenate
 					$mid = $firstmediarec['mid'];
 					
 					//LBox --------  addition for Lightbox Album --------------------------------------------
 					$name = $this->indi->getFullName();
 					if (file_exists("modules/lightbox/album.php")) {
-						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8')) . "\">" . "\n";
+						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 					}else
 					//Lbox -----------------------------------------------------------------------------------------
 					
