@@ -100,7 +100,7 @@ foreach ($assokeys as $indexval => $key) {
   if (isset($pgv_lang["$key"])) $assorela["$key"] = $pgv_lang["$key"];
   else $assorela["$key"] = "? $key";
 }
-natsort($assorela);
+uasort($assorela, "stringsort");
 
 print_simple_header('Edit Interface');
 
