@@ -128,7 +128,7 @@ function setup_place_subfields($element_id) {
 			else if (ctry.length==3) elt.value=ctry;
 			if (ctry=='') ctry='???';
 			<?php foreach ($countries as $alpha3=>$country) { ?>
-			else if (ctry=='<?php print UTF8_strtoupper($country) ?>') ctry='<?php print $alpha3 ?>';
+			else if (ctry=='<?php print addslashes(UTF8_strtoupper($country)) ?>') ctry='<?php print $alpha3 ?>';
 			<?php } ?>
 			else if (ctry.length!=3) ctry=ctry.substr(0,3);
 			pdir='places/'+ctry+'/';
