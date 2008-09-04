@@ -94,7 +94,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			if (isset($people["husb"])) {
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap"><?php print $people["husb"]->getLabel(); ?></td>
 					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
 						<?php
 						if ( ($people["husb"]->canDisplayDetails()) ) {
@@ -174,7 +174,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["step_parent_family"] ?></b></td>
 				</tr>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>">
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
 						if ($people["husb"]->getLabel() == ".") {
 							print $pgv_lang["stepdad"];
@@ -183,7 +183,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 						}
 						?>
 					</td>
-					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>" >
 						<?php
 						if ( ($people["husb"]->canDisplayDetails()) ) {
 							print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
@@ -203,7 +203,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			if (isset($people["wife"])) {
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>">
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
 						if ($people["wife"]->getLabel() == ".") {
 							print $pgv_lang["stepmom"];
@@ -233,7 +233,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				foreach($people["children"] as $key=>$child) {
 					?>
 					<tr>
-					<td class="facts_label<?php print $styleadd; ?>">
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
 							print $child->getLabel(); 
 						?>
@@ -276,10 +276,10 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			}
 			$styleadd = "";
 
-			//if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
+			if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
 				?>
 				<tr>
-					<td nowrap="nowrap" class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap"><?php print $people["husb"]->getLabel(); ?></td>
 					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
 						<?php
 							if ( ($people["husb"]->canDisplayDetails()) ) {
@@ -298,12 +298,12 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					</td>
 				</tr>
 				<?php
-			//}
+			}
 			
-			//if ( isset($people["wife"]) && $spousetag == 'WIFE') {
+			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
 				?>
 				<tr>
-					<td nowrap="nowrap" class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap"><?php print $people["wife"]->getLabel(); ?></td>
 					<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
 							if ( ($people["wife"]->canDisplayDetails()) ) {
@@ -322,14 +322,14 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					</td>
 				</tr>
 				<?php
-			//}
+			}
 			
 			$styleadd = "";
 			if (isset($people["children"])) {
 				foreach($people["children"] as $key=>$child) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap"><?php print $child->getLabel(); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
 							if ( ($child->canDisplayDetails()) ) {
