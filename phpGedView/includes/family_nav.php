@@ -74,7 +74,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 // ================================================================================================
 
 //     Start Family Nav Table ----------------------------
-	echo "<table width='230'>";
+	echo "<table width='230' cellpadding=\"0\">";
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
@@ -84,6 +84,12 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			$label = $this->indi->getChildFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "parents");
 			$styleadd = "";
+			
+			?>
+			<tr>
+				<td style="padding-bottom: 4px;" align="center" colspan="2"><b> Parents Family </b></td>
+			</tr>
+			<?php
 			
 			if (isset($people["husb"])) {
 				?>
@@ -165,6 +171,9 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			if (isset($people["husb"])) {
 				?>
 				<tr>
+					<td style="padding-bottom: 4px;" align="center" colspan="2"><b> Step-Parent Family </b></td>
+				</tr>
+				<tr>
 					<td class="facts_label<?php print $styleadd; ?>">
 						<?php
 						if ($people["husb"]->getLabel() == ".") {
@@ -203,7 +212,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 						}
 						?>
 					</td>
-					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+					<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
 						if ( ($people["wife"]->canDisplayDetails()) ) {
 							print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
@@ -249,9 +258,14 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 
 		//-- spouses and children ---------------------------------------------------------------------------------------------------
 		$families = $this->indi->getSpouseFamilies();
+
 		foreach($families as $famid=>$family) {
-			
-			echo "<tr><td><br /></td><td></td></tr>";
+		echo "<tr><td><br /></td><td></td></tr>";
+		?>
+			<tr>
+				<td style="padding-bottom: 4px;" align="center" colspan="2"><b> Immediate Family </b></td>
+			</tr>
+		<?php
 			
 			//$personcount = 0;
 			$people = $this->buildFamilyList($family, "spouse");
@@ -261,44 +275,54 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				$spousetag = 'HUSB';
 			}
 			$styleadd = "";
-			
-			if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
+
+			//if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
 				?>
 				<tr>
 					<td nowrap="nowrap" class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
 					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
 						<?php
-						if ( ($people["husb"]->canDisplayDetails()) ) {
-							print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-							print "&nbsp;" . PrintReady($people["husb"]->getFullName());
-							print "</a>" . "\n" ;
-						}else{
-							print $pgv_lang["private"];
-						}
+							if ( ($people["husb"]->canDisplayDetails()) ) {
+								if ($pid == $people["husb"]->getXref()) {
+									print "&nbsp;" . PrintReady($people["husb"]->getFullName());
+									print "\n" ;
+								}else{
+									print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+									print "&nbsp;" . PrintReady($people["husb"]->getFullName());
+									print "</a>" . "\n" ;
+								}
+							}else{
+								print $pgv_lang["private"];
+							}
 						?>
 					</td>
 				</tr>
 				<?php
-			}
+			//}
 			
-			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
+			//if ( isset($people["wife"]) && $spousetag == 'WIFE') {
 				?>
 				<tr>
 					<td nowrap="nowrap" class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
 					<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
-						if ( ($people["wife"]->canDisplayDetails()) ) {
-							print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-							print "&nbsp;" . PrintReady($people["wife"]->getFullName());
-							print "</a>" . "\n" ;
-						}else{
-							print $pgv_lang["private"];
-						}
+							if ( ($people["wife"]->canDisplayDetails()) ) {
+								if ($pid == $people["wife"]->getXref()) {
+									print "&nbsp;" . PrintReady($people["wife"]->getFullName());
+									print "\n" ;
+								}else{
+									print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+									print "&nbsp;" . PrintReady($people["wife"]->getFullName());
+									print "</a>" . "\n" ;
+								}
+							}else{
+								print $pgv_lang["private"];
+							}
 						?>
 					</td>
 				</tr>
 				<?php
-			}
+			//}
 			
 			$styleadd = "";
 			if (isset($people["children"])) {

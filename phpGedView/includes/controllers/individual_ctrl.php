@@ -1036,8 +1036,8 @@ class IndividualControllerRoot extends BaseController {
 		//-- only need to add family facts on this tab
 		$this->indi->add_family_facts();
 		?>
-		<table><tr><td valign="top" width="100%" >
-		<table class="facts_table" STYLE="margin-top:-2px;" >
+		<table cellpadding=\"0\" ><tr><td valign="top" width="100%" >
+		<table class="facts_table" STYLE="margin-top:-2px; "cellpadding=\"0\">
 		<?php if (!$this->indi->canDisplayDetails()) {
 			print "<tr><td class=\"facts_value\" colspan=\"2\">";
 			print_privacy_error($CONTACT_EMAIL);
@@ -1092,7 +1092,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php // ==================== Start Details Tab Navigator ======================================== 
 				?>
 				<td valign="top">
-				<table class="optionbox" width="220px"><tr><td align="center">
+				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
@@ -2097,7 +2097,7 @@ class IndividualControllerRoot extends BaseController {
 
 		$media_found = false;
 		if (!$this->indi->canDisplayDetails()) {
-			print "<table class=\"facts_table\">\n";		
+			print "<table class=\"facts_table\" cellpadding=\"0\">\n";		
 			print "<tr><td class=\"facts_value\">";
 			print_privacy_error($CONTACT_EMAIL);
 			print "</td></tr>";
@@ -2118,6 +2118,21 @@ class IndividualControllerRoot extends BaseController {
 // -----------------------------------------------------------------------------
 // End LightBox Album Functions
 // -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+// Functions for Census Assistant 
+// -----------------------------------------------------------------------------
+	/**
+	 * include Census controller
+	 */
+    function census_assistant() {
+        include('modules/census_assistant/census_ctrl.php');
+    }
+// -----------------------------------------------------------------------------
+// End  Census Assistant  Functions
+// -----------------------------------------------------------------------------
+
 
 
 }
