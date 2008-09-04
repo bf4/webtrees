@@ -438,16 +438,11 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 			$BROWSERTYPE = "msie";
 	}
 
-	print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
-	print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
-	print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t\t";
-	if( $FAVICON ) {
-		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />\n";
-	}
-
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-	print "<title>".PrintReady(strip_tags($title.$metaTitle), TRUE)."</title>\n\t";
+	
+	$title = PrintReady(strip_tags($title.$metaTitle), TRUE);
+	
 	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
@@ -457,32 +452,8 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		if(empty($GEDCOM_TITLE)){
 			$GEDCOM_TITLE = "RSS";
 		}
-		if(! $REQUIRE_AUTHENTICATION){
-			print "<link href=\"".encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}")."\" rel=\"alternate\" type=\"$applicationType\" title=\"".PrintReady(strip_tags($GEDCOM_TITLE), TRUE)."\" />\n\t";
-		}
-		//print "<link href=\"".encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}&auth=basic")."\" rel=\"alternate\" type=\"$applicationType\" title=\"$GEDCOM_TITLE - " . $pgv_lang["authenticated_feed"] . "\" />\n\t";
 	}
-	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\" />";
-	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />\n";
-	if ($use_alternate_styles) {
-		if ($BROWSERTYPE != "other") {
-			print "<link rel=\"stylesheet\" href=\"".$THEME_DIR.$BROWSERTYPE.".css\" type=\"text/css\" media=\"all\" />\n";
-		}
-	}
-
-	//	-------------- Lightbox ----------------
-	if ($TEXT_DIRECTION=='rtl') {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
-	} else {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
-	}
-	//	-------------- Lightbox ----------------
-
-	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\" />\n";
-	if ($BROWSERTYPE == "msie") print "<style type=\"text/css\">\nFORM { margin-top: 0px; margin-bottom: 0px; }\n</style>\n";
-	//echo '<!-- ', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, ' -->', "\n";
+	$javascript = '';
 	if (isset($changelanguage))
 		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
 	else
@@ -499,10 +470,6 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 			if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
 			if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
 		}
-		if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".PrintReady(strip_tags($META_AUTHOR), TRUE)."\" />\n";
-		if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".PrintReady(strip_tags($META_PUBLISHER), TRUE)."\" />\n";
-		if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".PrintReady(strip_tags($META_COPYRIGHT), TRUE)."\" />\n";
-		print "<meta name=\"keywords\" content=\"".PrintReady(strip_tags($META_KEYWORDS), TRUE);
 		if ($META_SURNAME_KEYWORDS) {
 			$surnames = get_common_surnames_index($GEDCOM);
 			$surnameList = '';
@@ -512,15 +479,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 					$surnameList .= $surname;
 				}
 			}
-			print PrintReady(strip_tags($surnameList), TRUE);
 		}
-		print "\" />\n";
 		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
 		if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
-		if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_DESCRIPTION), TRUE))."\" />\n";
-		if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_PAGE_TOPIC), TRUE))."\" />\n";
-		if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"".PrintReady(strip_tags($META_AUDIENCE), TRUE)."\" />\n";
-		if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"".PrintReady(strip_tags($META_PAGE_TYPE), TRUE)."\" />\n";
 
 		// Restrict good search engine spiders to the index page and the individual.php pages.
 		// Quick and dirty hack that will still leave some url only links in Google.
@@ -535,13 +496,108 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		   (strstr($SCRIPT_NAME, "/index.php")) ) {
 			// empty case is to index,follow anyways.
 			if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
-				print "<meta name=\"robots\" content=\"".PrintReady(strip_tags($META_ROBOTS), TRUE)."\" />\n";
 		}
 		else {
-			print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
+			$META_ROBOTS ="noindex,nofollow";
 		}
-		if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"".PrintReady(strip_tags($META_REVISIT), TRUE)."\" />\n";
-		echo '<meta name="generator" content="', PGV_PHPGEDVIEW, ' - ', PGV_PHPGEDVIEW_URL, "\" />\n";
+		$javascript .='<script language="JavaScript" type="text/javascript">
+	<!--
+	function hidePrint() {
+		var printlink = document.getElementById("printlink");
+		var printlinktwo = document.getElementById("printlinktwo");
+		if (printlink) {
+			printlink.style.display="none";
+			printlinktwo.style.display="none";
+		}
+	}
+	function showBack() {
+		var printlink = document.getElementById("printlink");
+		var printlinktwo = document.getElementById("printlinktwo");
+		if (printlink) {
+			printlink.style.display="inline";
+			printlinktwo.style.display="inline";
+		}
+	}
+	//-->
+	</script>';
+	}
+	$javascript.='<script language="JavaScript" type="text/javascript">
+		<!--
+		/* setup some javascript variables */
+		var query = "'.$query_string.'";
+		var textDirection = "'.$TEXT_DIRECTION.'";
+		var browserType = "'.$BROWSERTYPE.'";
+		var themeName = "'.strtolower($theme_name).'";
+		var SCRIPT_NAME = "'.$SCRIPT_NAME.'";
+		/* keep the session id when opening new windows */
+		var sessionid = "'.session_id().'";
+		var sessionname = "'.session_name().'";
+		var plusminus = new Array();
+		plusminus[0] = new Image();
+		plusminus[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"].'";
+		plusminus[1] = new Image();
+		plusminus[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"].'";
+		var zoominout = new Array();
+		zoominout[0] = new Image();
+		zoominout[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"].'";
+		zoominout[1] = new Image();
+		zoominout[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomout"]["other"].'";
+		var arrows = new Array();
+		arrows[0] = new Image();
+		arrows[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow2"]["other"].'";
+		arrows[1] = new Image();
+		arrows[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow2"]["other"].'";
+		arrows[2] = new Image();
+		arrows[2].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow2"]["other"].'";
+		arrows[3] = new Image();
+		arrows[3].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"].'";
+	';
+	if (PGV_USER_CAN_EDIT) {
+	
+	$javascript .= 'function delete_record(pid, linenum, mediaid) {
+		if (!mediaid) mediaid="";
+		if (confirm(\''.$pgv_lang["check_delete"].'\')) {
+			window.open(\'edit_interface.php?action=delete&pid=\'+pid+\'&linenum=\'+linenum+\'&mediaid=\'+mediaid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
+		}
+		return false;
+	}
+	function deleteperson(pid) {
+		if (confirm(\''.$pgv_lang["confirm_delete_person"].'\')) {
+			window.open(\'edit_interface.php?action=deleteperson&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
+		}
+		return false;
+	}
+	
+	function deleterepository(pid) {
+		if (confirm(\''.$pgv_lang["confirm_delete_repo"].'\')) {
+			window.open(\'edit_interface.php?action=deleterepo&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
+		}
+		return false;
+	}
+	';
+	}
+	$javascript .= '
+	function message(username, method, url, subject) {
+		if ((!url)||(url=="")) url=\''.urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING).'\';
+		if ((!subject)||(subject=="")) subject="";
+		window.open(\'message.php?to=\'+username+\'&method=\'+method+\'&url=\'+url+\'&subject=\'+subject+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
+		return false;
+	}
+	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
+	//-->
+	</script>
+	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+	';
+	$bodyOnLoad = '';
+	if ($view=="preview") $bodyOnLoad .= " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
+	$bodyOnLoad .= " onload=\"";
+	if (!empty($ONLOADFUNCTION)) $bodyOnLoad .= $ONLOADFUNCTION;
+	if ($TEXT_DIRECTION=="rtl") {
+		$bodyOnLoad .= " maxscroll = document.documentElement.scrollLeft;";
+	}
+	$bodyOnLoad .= "\"";
+	if ($view!="preview") {
+		include($headerfile);
 		$META_AUTHOR = $old_META_AUTHOR;
 		$META_PUBLISHER = $old_META_PUBLISHER;
 		$META_COPYRIGHT = $old_META_COPYRIGHT;
@@ -549,115 +605,10 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
 	}
 	else {
-?>
-<script language="JavaScript" type="text/javascript">
-<!--
-function hidePrint() {
-	var printlink = document.getElementById('printlink');
-	var printlinktwo = document.getElementById('printlinktwo');
-	if (printlink) {
-		printlink.style.display='none';
-		printlinktwo.style.display='none';
-	}
-}
-function showBack() {
-	var printlink = document.getElementById('printlink');
-	var printlinktwo = document.getElementById('printlinktwo');
-	if (printlink) {
-		printlink.style.display='inline';
-		printlinktwo.style.display='inline';
-	}
-}
-//-->
-</script>
-<?php
-}
-?>
-<script language="JavaScript" type="text/javascript">
-	<!--
-	<?php print "query = \"$query_string\";\n"; ?>
-	<?php print "textDirection = \"$TEXT_DIRECTION\";\n"; ?>
-	<?php print "browserType = \"$BROWSERTYPE\";\n"; ?>
-	<?php print "themeName = \"".strtolower($theme_name)."\";\n"; ?>
-	<?php print "SCRIPT_NAME = \"$SCRIPT_NAME\";\n"; ?>
-	/* keep the session id when opening new windows */
-	<?php print "sessionid = \"".session_id()."\";\n"; ?>
-	<?php print "sessionname = \"".session_name()."\";\n"; ?>
-	plusminus = new Array();
-	plusminus[0] = new Image();
-	plusminus[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>";
-	plusminus[1] = new Image();
-	plusminus[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]; ?>";
-	zoominout = new Array();
-	zoominout[0] = new Image();
-	zoominout[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]; ?>";
-	zoominout[1] = new Image();
-	zoominout[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomout"]["other"]; ?>";
-	arrows = new Array();
-	arrows[0] = new Image();
-	arrows[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow2"]["other"]; ?>";
-	arrows[1] = new Image();
-	arrows[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow2"]["other"]; ?>";
-	arrows[2] = new Image();
-	arrows[2].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow2"]["other"]; ?>";
-	arrows[3] = new Image();
-	arrows[3].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"]; ?>";
-
-<?php if (PGV_USER_CAN_EDIT) { ?>
-
-function delete_record(pid, linenum, mediaid) {
-	if (!mediaid) mediaid="";
-	if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) {
-		window.open('edit_interface.php?action=delete&pid='+pid+'&linenum='+linenum+'&mediaid='+mediaid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	}
-	return false;
-}
-function deleteperson(pid) {
-	if (confirm('<?php print $pgv_lang["confirm_delete_person"]; ?>')) {
-		window.open('edit_interface.php?action=deleteperson&pid='+pid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	}
-	return false;
-}
-
-function deleterepository(pid) {
-	if (confirm('<?php print $pgv_lang["confirm_delete_repo"]; ?>')) {
-		window.open('edit_interface.php?action=deleterepo&pid='+pid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	}
-	return false;
-}
-<?php } ?>
-function message(username, method, url, subject) {
-	if ((!url)||(url=="")) url='<?php print urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING); ?>';
-	if ((!subject)||(subject=="")) subject= '';
-	window.open('message.php?to='+username+'&method='+method+'&url='+url+'&subject='+subject+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	return false;
-}
-var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>';
-//-->
-</script>
-<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
-<?php
-	print $head;
-	print "</head>\n\t<body id=\"body\"";
-	if ($view=="preview") print " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
-	print " onload=\"";
-	if (!empty($ONLOADFUNCTION)) print $ONLOADFUNCTION;
-	if ($TEXT_DIRECTION=="rtl") {
-		print " maxscroll = document.documentElement.scrollLeft;";
-	}
-	print "\"";
-	print ">\n\t";
-	print "<!-- begin header section -->\n";
-	if ($view!="preview") {
-		include($headerfile);
-		include($toplinks);
-	}
-	else {
 		include($print_headerfile);
 	}
-	print "<!-- end header section -->\n";
-	print "<!-- begin content section -->\n";
 }
+
 /**
  * print simple HTML header
  *
@@ -670,160 +621,11 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>'
  * @param boolean $use_alternate_styles
  */
 function print_simple_header($title) {
-	global $pgv_lang;
-	global $HOME_SITE_URL;
-	global $HOME_SITE_TEXT, $SEARCH_SPIDER;
-	global $view, $rtl_stylesheet;
-	global $CHARACTER_SET, $PGV_IMAGE_DIR;
-	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage;
-	global $FAVICON, $stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile, $SCRIPT_NAME;
-	global $TEXT_DIRECTION, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD,$PGV_IMAGES;
-	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
-
-	// If not on allowed list, dump the spider onto the redirect page.
-	// This kills recognized spiders in their tracks.
-	// To stop unrecognized spiders, see META_ROBOTS below.
-	if(!empty($SEARCH_SPIDER)) {
-		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
-		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		     (strstr($SCRIPT_NAME, "/family.php")) ||
-		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		     (strstr($SCRIPT_NAME, "/source.php")) ||
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
-			header("Location: search_engine.php");
-			exit;
-		}
-	}
-	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
-	header("Content-Type: text/html; charset=$CHARACTER_SET");
-	print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
-	print "<html xmlns=\"http://www.w3.org/1999/xhtml\"><head>";
-	print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />";
-	if( $FAVICON ) {
-		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
-	}
-	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
-	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>";
-	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" />";
-	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
-
-	//	-------------- Lightbox ----------------
-	if ($TEXT_DIRECTION=='rtl') {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
-	} else {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
-	}
-	//	-------------- Lightbox ----------------
-
-	$old_META_AUTHOR = $META_AUTHOR;
-	$old_META_PUBLISHER = $META_PUBLISHER;
-	$old_META_COPYRIGHT = $META_COPYRIGHT;
-	$old_META_DESCRIPTION = $META_DESCRIPTION;
-	$old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-	if (get_user_id($CONTACT_EMAIL)) {
-		$cuserName=getUserFullName($CONTACT_EMAIL);
-		if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
-		if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
-		if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
-	}
-	if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".PrintReady(strip_tags($META_AUTHOR), TRUE)."\" />";
-	if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".PrintReady(strip_tags($META_PUBLISHER), TRUE)."\" />";
-	if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".PrintReady(strip_tags($META_COPYRIGHT), TRUE)."\" />";
-	print "<meta name=\"keywords\" content=\"".PrintReady(strip_tags($META_KEYWORDS), TRUE);
-	if ($META_SURNAME_KEYWORDS) {
-		$surnames = get_common_surnames_index($GEDCOM);
-		$surnameList = '';
-		foreach($surnames as $surname=>$count) {
-			if ($surname != '?') {
-				$surnameList .= ', ';
-				$surnameList .= $surname;
-			}
-		}
-		print PrintReady(strip_tags($surnameList), TRUE);
-	}
-	print "\" />";
-	if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
-	if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
-	if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_DESCRIPTION), TRUE))."\" />";
-	if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_PAGE_TOPIC), TRUE))."\" />";
-	if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"".PrintReady(strip_tags($META_AUDIENCE), TRUE)."\" />";
-	if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"".PrintReady(strip_tags($META_PAGE_TYPE), TRUE)."\" />";
-
-	// Restrict good search engine spiders to the index page and the individual.php pages.
-	// Quick and dirty hack that will still leave some url only links in Google.
-	// Also ignored by crawlers like wget, so other checks have to be done too.
-	if((strstr($SCRIPT_NAME, "/individual.php")) ||
-	   (strstr($SCRIPT_NAME, "/indilist.php")) ||
-	   (strstr($SCRIPT_NAME, "/family.php")) ||
-	   (strstr($SCRIPT_NAME, "/famlist.php")) ||
-	   (strstr($SCRIPT_NAME, "/help_text.php")) ||
-	   (strstr($SCRIPT_NAME, "/source.php")) ||
-	   (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-	   (strstr($SCRIPT_NAME, "/index.php")) ) {
-		// empty case is to index,follow anyways.
-		if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
-		print "<meta name=\"robots\" content=\"".PrintReady(strip_tags($META_ROBOTS), TRUE)."\" />";
-	}
-	else {
-		print "<meta name=\"robots\" content=\"noindex,nofollow\" />";
-	}
-	if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"".PrintReady(strip_tags($META_REVISIT), TRUE)."\" />";
-	echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - '.PGV_PHPGEDVIEW_URL.'" />';
-	$META_AUTHOR = $old_META_AUTHOR;
-	$META_PUBLISHER = $old_META_PUBLISHER;
-	$META_COPYRIGHT = $old_META_COPYRIGHT;
-	$META_DESCRIPTION = $old_META_DESCRIPTION;
-	$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
-?>
-	<style type="text/css">
-	<!--
-	.largechars {
-		font-size: 18px;
-	}
-	-->
-	</style>
-	<script language="JavaScript" type="text/javascript">
-	<!--
-	/* set these vars so that the session can be passed to new windows */
-	<?php print "sessionid = \"".session_id()."\";"; ?>
-	<?php print "sessionname = \"".session_name()."\";"; ?>
-	plusminus = new Array();
-	plusminus[0] = new Image();
-	plusminus[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>";
-	plusminus[1] = new Image();
-	plusminus[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]; ?>";
-	zoominout = new Array();
-	zoominout[0] = new Image();
-	zoominout[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]; ?>";
-	zoominout[1] = new Image();
-	zoominout[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomout"]["other"]; ?>";
-
-	var helpWin;
-	function helpPopup(which) {
-
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('help_text.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-
-		else helpWin.location = 'help_text.php?help='+which;
-		return false;
-	}
-function message(username, method, url, subject) {
-	if ((!url)||(url=="")) url='<?php print urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING); ?>';
-	if ((!subject)||(subject=="")) subject= '';
-	window.open('message.php?to='+username+'&method='+method+'&url='+url+'&subject='+subject+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	return false;
+	global $view;
+	$view = 'simple';
+	print_header($title);
 }
-	//-->
-	</script>
-	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
-	<?php
-	echo '</head>';
-	echo '<body style="margin:5px;" onload="loadHandler();">';
-}
+
 // -- print the html to close the page
 function print_footer() {
 	global $without_close, $pgv_lang, $view, $buildindex, $DBTYPE;

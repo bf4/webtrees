@@ -29,25 +29,26 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-if (!isset($without_close)) echo "</div> <!-- closing div id=\"content\" -->\n";//FIXME uncomment as soon as ready
-
-echo "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
-
-echo contact_links();
-
-echo "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
-echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" width="100" height="45" border="0" alt="'.PGV_PHPGEDVIEW.'" title="'.PGV_PHPGEDVIEW;
-if (PGV_USER_IS_ADMIN) echo " - ".PGV_VERSION_TEXT;
-echo '" /></a><br />';
-echo "\n\t<br />";
-print_help_link("preview_help", "qm");
-echo "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_lang["print_preview"]."</a>";
-echo "<br />";
-if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
-if ($buildindex) echo " ".$pgv_lang["build_error"]."  <a href=\"editgedcoms.php\">".$pgv_lang["rebuild_indexes"]."</a>\n";
-if (exists_pending_change()) {
-	echo "<br />".$pgv_lang["changes_exist"]." <a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a>\n";
-}
-echo "</div>";
-echo "</div> <!-- close div id=\"footer\" -->\n";
+if (!isset($without_close)) echo "</div> <!-- closing div id=\"content\" -->\n";
 ?>
+<div id="footer" class="<?php echo $TEXT_DIRECTION; ?>">
+<?php echo contact_links(); ?>
+
+<br /><div align="center" style="width:99%;">
+<br />
+<a href="<?php echo PGV_PHPGEDVIEW_URL; ?>" target="_blank">
+	<img src="<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'];?>" width="100" height="45" border="0" alt="<?php echo PGV_PHPGEDVIEW; ?>" 
+		title="<?php echo PGV_PHPGEDVIEW; if (PGV_USER_IS_ADMIN) echo " - ".PGV_VERSION_TEXT;?>" /></a><br />
+<br />
+<?php print_help_link("preview_help", "qm"); ?>
+<a href="<?php echo $SCRIPT_NAME."?view=preview&amp;".get_query_string(); ?>"><?php echo $pgv_lang["print_preview"];?></a>
+<br />
+<?php if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
+if (exists_pending_change()) {?>
+	<br />
+	<?php echo $pgv_lang["changes_exist"]; ?>
+	<a href="javascript:;" onclick="window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;">
+	<?php echo $pgv_lang["accept_changes"]; ?></a>
+<?php } ?>
+</div>
+</div> <!-- close div id=\"footer\" -->
