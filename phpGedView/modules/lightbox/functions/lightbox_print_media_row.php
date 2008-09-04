@@ -413,7 +413,7 @@
 
 
 
-	// If media file is missing but details are in Gedcom
+	// If media file is missing but details are in Gedcom then add the menu as well
 	if(!media_exists($rowm['m_file'])) {
 		print "<tr>";
 		print "<td ></td>";
@@ -422,10 +422,10 @@
 		print "</td>";
 		print "<td ></td>";
 		print "</tr>" . "\n";
-
 	}
 	
-		print "</table>";
+	//close off the table
+	print "</table>";
 
 	$media_data = $rowm['m_media']; 
 	print "<input type=\"hidden\" name=\"order1[$media_data]\" value=\"$sort_i\" />" . "\n";
