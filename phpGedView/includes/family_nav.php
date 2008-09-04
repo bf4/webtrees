@@ -87,7 +87,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			
 			?>
 			<tr>
-				<td style="padding-bottom: 4px;" align="center" colspan="2"><b> Parents Family </b></td>
+				<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["parent_family"] ?></b></td>
 			</tr>
 			<?php
 			
@@ -171,7 +171,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			if (isset($people["husb"])) {
 				?>
 				<tr>
-					<td style="padding-bottom: 4px;" align="center" colspan="2"><b> Step-Parent Family </b></td>
+					<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["step_parent_family"] ?></b></td>
 				</tr>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>">
@@ -263,7 +263,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 		echo "<tr><td><br /></td><td></td></tr>";
 		?>
 			<tr>
-				<td style="padding-bottom: 4px;" align="center" colspan="2"><b> Immediate Family </b></td>
+				<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["immediate_family"] ?></b></td>
 			</tr>
 		<?php
 			
