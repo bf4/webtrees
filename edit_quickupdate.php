@@ -474,7 +474,7 @@ if ($action=="update") {
 		$updated = true;
 	}
 
-	if (isset($_REQUEST['PHOM'])) $PHOM = $_REQUEST['PHOM'];
+	if (isset($_REQUEST['PHON'])) $PHON = $_REQUEST['PHON'];
 	$factrec = "";
 	if (!empty($PHON)) $factrec = "1 PHON $PHON\r\n";
 	$pos1 = strpos($gedrec, "1 PHON");
