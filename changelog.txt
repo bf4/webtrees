@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: Half siblings support to Indi page "View Details of...", "View Album of..." Family_Navigator. (windmillway)
  - Fixed: [ 2087441 ] [3743] Bugs in edit_interface.php (wooc)
  - Changed: Allowed Lightbox enlarged image to show starred names as underlined in title (windmillway)
  - Fixed: Starred name problem - (introduced by svn 3755 and 3756) - (windmillway)
