@@ -177,7 +177,7 @@
 		if ($t==5){ // do nothing
 		}else{
 			echo "\n\n";
-			echo '<table border="0" width=\"100%\" class="facts_table" ><tr>', "\n";
+			echo '<table border="0" width=\"100%\" ><tr>', "\n";
 			
 			echo '<td width="100" align="center" class="descriptionbox">';
 				if ($t==5){
@@ -190,10 +190,10 @@
 				}
 			echo '</td>';
 			
-			echo '<td width="2"></td>';
+			//echo '<td width="2"></td>';
 			
 			echo '<td class="facts_value">';
-			echo "<table width=\"100%\"><tr><td>" . "\n";
+			echo "<table width=\"100%\" cellpadding=\"0\"><tr><td >" . "\n";
 				echo "<div id=\"thumbcontainer".$t."\">" . "\n";
 				echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
 				//echo "<ul id=\"thumblist\">" . "\n\n";
@@ -286,26 +286,24 @@
 		
 		if ($t==5) {
 		}else{
-		echo "</ul>";
-		echo "</div>";
-		echo "<div class=\"clearlist\">";
-		echo "</div>";
-		// echo "</center>";
+			echo "</ul>";
+			echo "</div>";
+			echo "<div class=\"clearlist\">";
+			echo "</div>";
+			// echo "</center>";
 
-		echo '</td></tr></table>' . "\n";
+			echo '</td></tr></table>' . "\n";
 
-		if ($t==3 && $numm > 0) {
-			echo "<font size='1'>";
-			echo $pgv_lang["census_text"];
-			echo "</font>";
-		}else{
-		}
+			if ($t==3 && $numm > 0) {
+				echo "<font size='1'>";
+				echo $pgv_lang["census_text"];
+				echo "</font>";
+			}
 
-		// echo "</center>" . "\n";
-		echo '</td>'. "\n";
-//echo '</td>';
-		echo '</tr>';
-		echo '</table>' . "\n\n";
+			// echo "</center>" . "\n";
+			echo '</td>'. "\n";
+			echo '</tr>';
+			echo '</table>' . "\n\n";
 		}
 	}
 
@@ -385,7 +383,8 @@
 			$value--;
 		}
 	}
-	
+
+
 
 // ====================================================================================
 
