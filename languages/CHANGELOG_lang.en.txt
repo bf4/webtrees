@@ -44,6 +44,9 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["parent_family"]							26 August 2008			A		Line 34 in lang_en.php
++$pgv_lang["step_parent_family"]					26 August 2008			A		Line 35 in lang_en.php
++$pgv_lang["immediate_family"]						26 August 2008			A		Line 36 in lang_en.php
 +$pgv_lang["NNhebrew"]                02 September 2008     A (do not translate this)
 +$pgv_lang["PNhebrew"]                02 September 2008     A ditto
 +$pgv_lang["NNarabic"]                02 September 2008     A ditto
