@@ -29,9 +29,10 @@
  */
 
 // -----------------------------------------------------------------------------
-// Function Family Nav) for PHPGedView - called by individual_ctrl.php
+// Function Family Nav for PHPGedView - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
 // function family_nav() {
+// ------------------------------------------------------------------------------
 
 global $edit, $tabno, $mediacnt, $GEDCOM, $pid;
 
@@ -69,165 +70,263 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 		$tabno="0";
 	}
 }
-// ===============================================================================================
+
+// ================================================================================================
 
 //     Start Family Nav Table ----------------------------
-     echo "<table width='230'>";
-                global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
-                $personcount=0;
-                $families = $this->indi->getChildFamilies();
-                //-- parent families
-                foreach($families as $famid=>$family) {
-                        ?>
-                                <?php
-                                //$personcount = 0;
-                                $people = $this->buildFamilyList($family, "parents");
-                                $styleadd = "";
-                                if (isset($people["husb"])) {
-                                        ?>
-                                        <tr>
-                                                <td class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
-                                                <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
-                                                <?php
-                                                if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                     print PrintReady($people["husb"]->getFullName());
-                                                     print "</a>" . "\n" ;
-                                                }else{
-                                                      print $pgv_lang["private"];
-                                                }
-                                                ?>
-                                                </td>
-                                        </tr>
-                                        <?php
-                                }
-
-                                if (isset($people["wife"])) {
-                                        ?>
-                                        <tr>
-                                                <td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
-                                                <td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
-                                                <?php
-                                                if ( ($people["wife"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                     print PrintReady($people["wife"]->getFullName());
-                                                     print "</a>" . "\n" ;
-                                                }else{
-                                                      print $pgv_lang["private"];
-                                                }
-                                                ?>
-                                                </td>
-                                        </tr>
-                                        <?php
-                                }
-
-								if (isset($people["children"])) {
-									$elderdate = $family->getMarriageDate();
-									foreach($people["children"] as $key=>$child) {
-									?>
-									<tr>
-										<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
-										<td class="<?php print $this->getPersonStyle($child); ?>">
-											<?php
-                                            if ( ($child->canDisplayDetails()) ) {
-												if ($pid == $child->getXref()) {
-													// print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&edit={$edit}&gedcom={$GEDCOM}")."\">";
-													print PrintReady($child->getFullName());
-													print "\n" ;
-												}else{
-													print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-													print PrintReady($child->getFullName());
-													print "</a>" . "\n" ;
-												}
-											}else{
-												print $pgv_lang["private"];
-											}
-											?>
-											<?php //print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-										</td>
-									</tr>
-									<?php
-									$elderdate = $child->getBirthDate(false);
-									}
+	echo "<table width='230'>";
+		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		$personcount=0;
+		$families = $this->indi->getChildFamilies();
+		
+		//-- parent families ---------------------------------------------------------------------------------------------------
+		foreach($families as $famid=>$family) {
+			$label = $this->indi->getChildFamilyLabel($family);
+			$people = $this->buildFamilyList($family, "parents");
+			$styleadd = "";
+			
+			if (isset($people["husb"])) {
+				?>
+				<tr>
+					<td class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
+					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+						<?php
+						if ( ($people["husb"]->canDisplayDetails()) ) {
+							print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+							print "&nbsp;" . PrintReady($people["husb"]->getFullName());
+							print "</a>" . "\n" ;
+						}else{
+							print $pgv_lang["private"];
+						}
+						?>
+					</td>
+				</tr>
+				<?php
+			}
+			
+			if (isset($people["wife"])) {
+				?>
+				<tr>
+					<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+					<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
+						<?php
+						if ( ($people["wife"]->canDisplayDetails()) ) {
+							print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+							print "&nbsp;" . PrintReady($people["wife"]->getFullName());
+							print "</a>" . "\n" ;
+						}else{
+							print $pgv_lang["private"];
+						}
+						?>
+					</td>
+				</tr>
+				<?php
+			}
+			
+			if (isset($people["children"])) {
+				$elderdate = $family->getMarriageDate();
+				foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+							<?php
+							if ( ($child->canDisplayDetails()) ) {
+								if ($pid == $child->getXref()) {
+									print "&nbsp;" . PrintReady($child->getFullName());
+									print "\n" ;
+								}else{
+									print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+									print "&nbsp;" . PrintReady($child->getFullName());
+									print "</a>" . "\n" ;
 								}
+							}else{
+								print $pgv_lang["private"];
+							}
+							//print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					$elderdate = $child->getBirthDate(false);
+				}
+			}
+		}
 
-                }
+		//-- step families ---------------------------------------------------------------------------------------------------
+		foreach($this->indi->getStepFamilies() as $famid=>$family) {
+			$label = $this->indi->getStepFamilyLabel($family);
+			$people = $this->buildFamilyList($family, "step");
+			if ($people){
+				echo "<tr><td><br /></td><td></td></tr>";
+			}
 				
-                //-- spouses and children
-                $families = $this->indi->getSpouseFamilies();
-                foreach($families as $famid=>$family) {
-                                echo "<tr><td><br /></td><td></td></tr>";
-                                //$personcount = 0;
-                                $people = $this->buildFamilyList($family, "spouse");
+			$styleadd = "";
+			$elderdate = "";
+			if (isset($people["husb"])) {
+				?>
+				<tr>
+					<td class="facts_label<?php print $styleadd; ?>">
+						<?php
+						if ($people["husb"]->getLabel() == ".") {
+							print $pgv_lang["stepdad"];
+						}else{
+							print $people["husb"]->getLabel(); 
+						}
+						?>
+					</td>
+					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+						<?php
+						if ( ($people["husb"]->canDisplayDetails()) ) {
+							print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+							print "&nbsp;" . PrintReady($people["husb"]->getFullName());
+							print "</a>" . "\n" ;
+						}else{
+							print $pgv_lang["private"];
+						}
+						?>
+					</td>
+				</tr>
+				<?php
+				$elderdate = $people["husb"]->getBirthDate(false);
+			}
+			
+			$styleadd = "";
+			if (isset($people["wife"])) {
+				?>
+				<tr>
+					<td class="facts_label<?php print $styleadd; ?>">
+						<?php
+						if ($people["wife"]->getLabel() == ".") {
+							print $pgv_lang["stepmom"];
+						}else{
+							print $people["wife"]->getLabel(); 
+						}
+						?>
+					</td>
+					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+						<?php
+						if ( ($people["wife"]->canDisplayDetails()) ) {
+							print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+							print "&nbsp;" . PrintReady($people["wife"]->getFullName());
+							print "</a>" . "\n" ;
+						}else{
+							print $pgv_lang["private"];
+						}
+						?>
+					</td>
+				</tr>
+				<?php
+			}
 
-                                if ($this->indi->equals($people["husb"])) $spousetag = 'WIFE';
-                                else $spousetag = 'HUSB';
+			$styleadd = "";
+			if (isset($people["children"])) {
+				$elderdate = $family->getMarriageDate();
+				foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+					<td class="facts_label<?php print $styleadd; ?>">
+						<?php
+							print $child->getLabel(); 
+						?>
+					</td>
+					<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php
+						if ( ($child->canDisplayDetails()) ) {
+							print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+							print "&nbsp;" . PrintReady($child->getFullName());
+							print "</a>" . "\n" ;
+						}else{
+							print $pgv_lang["private"];
+						}
+						?>
+					</td>
+					</tr>
+					<?php
+					//$elderdate = $child->getBirthDate(false);
+				}
+			}
+		}
 
-                                $styleadd = "";
-                                if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
-                                        ?>
-                                        <tr>
-                                                <td nowrap="nowrap" class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
-                                                <td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
-                                                <?php
-                                                if ( ($people["husb"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                     print PrintReady($people["husb"]->getFullName());
-                                                     print "</a>" . "\n" ;
-                                                }else{
-                                                      print $pgv_lang["private"];
-                                                }
-                                                ?>
-                                                </td>
-                                        </tr>
-                                        <?php
-                                }
-
-                                if ( isset($people["wife"]) && $spousetag == 'WIFE') {
-                                        ?>
-                                        <tr>
-                                                <td nowrap="nowrap" class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
-                                                <td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
-                                                <?php
-                                                if ( ($people["wife"]->canDisplayDetails()) ) {
-                                                     print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                     print PrintReady($people["wife"]->getFullName());
-                                                     print "</a>" . "\n" ;
-                                                }else{
-                                                      print $pgv_lang["private"];
-                                                }
-                                                ?>
-                                                </td>
-                                        </tr>
-                                        <?php
-
-                                }
-
-                                $styleadd = "";
-                                if (isset($people["children"])) {
-                                        foreach($people["children"] as $key=>$child) {
-                                        ?>
-                                        <tr>
-                                                <td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
-                                                <td class="<?php print $this->getPersonStyle($child); ?>">
-                                                <?php
-                                                if ( ($child->canDisplayDetails()) ) {
-                                                      print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-                                                      print PrintReady($child->getFullName());
-                                                      print "</a>" . "\n" ;
-                                                }else{
-                                                      print $pgv_lang["private"];
-                                                }
-                                                ?>
-                                                </td>
-                                        </tr>
-                                        <?php
-                                        }
-                                }
-
-                }
-     echo "</table>";
-
+		//-- spouses and children ---------------------------------------------------------------------------------------------------
+		$families = $this->indi->getSpouseFamilies();
+		foreach($families as $famid=>$family) {
+			
+			echo "<tr><td><br /></td><td></td></tr>";
+			
+			//$personcount = 0;
+			$people = $this->buildFamilyList($family, "spouse");
+			if ($this->indi->equals($people["husb"])){
+				$spousetag = 'WIFE';
+			}else{
+				$spousetag = 'HUSB';
+			}
+			$styleadd = "";
+			
+			if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
+				?>
+				<tr>
+					<td nowrap="nowrap" class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
+					<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+						<?php
+						if ( ($people["husb"]->canDisplayDetails()) ) {
+							print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+							print "&nbsp;" . PrintReady($people["husb"]->getFullName());
+							print "</a>" . "\n" ;
+						}else{
+							print $pgv_lang["private"];
+						}
+						?>
+					</td>
+				</tr>
+				<?php
+			}
+			
+			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
+				?>
+				<tr>
+					<td nowrap="nowrap" class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+					<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
+						<?php
+						if ( ($people["wife"]->canDisplayDetails()) ) {
+							print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+							print "&nbsp;" . PrintReady($people["wife"]->getFullName());
+							print "</a>" . "\n" ;
+						}else{
+							print $pgv_lang["private"];
+						}
+						?>
+					</td>
+				</tr>
+				<?php
+			}
+			
+			$styleadd = "";
+			if (isset($people["children"])) {
+				foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+							<?php
+							if ( ($child->canDisplayDetails()) ) {
+								print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
+								print "&nbsp;" . PrintReady($child->getFullName());
+								print "</a>" . "\n" ;
+							}else{
+								print $pgv_lang["private"];
+							}
+							?>
+						</td>
+					</tr>
+					<?php
+				}
+			}
+			
+		}
+		echo "</table>";
+	 
+	 
+// -----------------------------------------------------------------------------
 // }
 // -----------------------------------------------------------------------------
 // End Family Nav Table
