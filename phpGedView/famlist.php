@@ -299,15 +299,15 @@ if ($showList) {
 							if (!$falpha || $falpha==$givn_alpha) {
 								if ($sex=='M') {
 									if ($family->wife) {
-										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'hname'=>$name['full'], 'name'=>$name['sort'].'+'.$family->wife->getSortName());
+										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'hname'=>$n, 'name'=>$name['sort'].'+'.$family->wife->getSortName());
 									} else {
-										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'hname'=>$name['full'], 'name'=>$name['sort'].'+@N.N.');
+										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'hname'=>$n, 'name'=>$name['sort'].'+@N.N.');
 									}
 								} else {
 									if ($family->husb) {
-										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'wname'=>$name['full'], 'name'=>$family->husb->getSortName().'+'.$name['sort']);
+										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'wname'=>$n, 'name'=>$family->husb->getSortName().'+'.$name['sort']);
 									} else {
-										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'wname'=>$name['full'], 'name'=>'@N.N.+'.$name['sort']);
+										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'wname'=>$n, 'name'=>'@N.N.+'.$name['sort']);
 									}
 								}
 							}

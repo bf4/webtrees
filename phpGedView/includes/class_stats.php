@@ -1683,10 +1683,10 @@ class stats {
 				$common[] = '<tr><td class="optionbox">'.PrintReady(UTF8_substr($given,0,1).UTF8_strtolower(UTF8_substr($given,1))).'</td><td class="optionbox">'.$total.'</tr>';
 				break;
 			case 'list':
-				$common[] = "\t<li>{$totL}".PrintReady($given)."{$totR}</li>\n";
+				$common[] = "\t<li>{$totL}".PrintReady(UTF8_substr($given,0,1).UTF8_strtolower(UTF8_substr($given,1)))."{$totR}</li>\n";
 				break;
 			case 'nolist':
-				$common[] = $totL.PrintReady($given).$totR;
+				$common[] = $totL.PrintReady(UTF8_substr($given,0,1).UTF8_strtolower(UTF8_substr($given,1))).$totR;
 				break;
 			}
 		}
