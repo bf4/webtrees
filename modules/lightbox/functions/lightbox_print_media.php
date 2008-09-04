@@ -177,7 +177,7 @@
 		if ($t==5){ // do nothing
 		}else{
 			echo "\n\n";
-			echo '<table border="0" width=\"100%\" ><tr>', "\n";
+			echo "<table cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"facts_table\"><tr>", "\n";
 			
 			echo '<td width="100" align="center" class="descriptionbox">';
 				if ($t==5){
@@ -192,8 +192,8 @@
 			
 			//echo '<td width="2"></td>';
 			
-			echo '<td class="facts_value">';
-			echo "<table width=\"100%\" cellpadding=\"0\"><tr><td >" . "\n";
+			echo '<td class="facts_value" >';
+			echo '<table class="facts_table" width=\"100%\" cellpadding=\"0\"><tr><td >' . "\n";
 				echo "<div id=\"thumbcontainer".$t."\">" . "\n";
 				echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
 				//echo "<ul id=\"thumblist\">" . "\n\n";

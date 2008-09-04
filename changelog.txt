@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: More aesthetic tidying up of Album Page Layout (fixed short table rows in IE) (windmillway)
  - Added:   Language support for Family navigator (ref. previous 2 entries). (windmillway)
  - Changed: General Tidying up of Family Navigator and associated nested tables (windmillway)
  - Added:   Half siblings support to Indi page "View Details of...", "View Album of..." Family_Navigator. (windmillway)
