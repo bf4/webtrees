@@ -594,8 +594,8 @@ function print_fam_table($datalist, $legend="", $option="") {
 			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
 		$names=$wife->getAllNames();
-		if (is_array($value) && isset($value['hname'])) {
-			$n1=$value['hname'];
+		if (is_array($value) && isset($value['wname'])) {
+			$n1=$value['wname'];
 			if ($n1==$wife->getPrimaryName()) {
 				$n2=$wife->getSecondaryName();
 			} else {
