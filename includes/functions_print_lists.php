@@ -232,11 +232,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 				$birt_by_decade[floor($birth_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
 			}
 		} else {
+			$birth_date=$person->getEstimatedBirthDate();
+			$birth_jd=$birth_date->JD();
 			if ($SHOW_EST_LIST_DATES) {
-				$birth_date=$person->getEstimatedBirthDate();
-				echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
+				echo '<div>', str_replace('<a', '<a name="'.$birth_jd.'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
 			} else {
-				echo '<span class="date">&nbsp;</span>'; // span needed for alive-in-year filter
+				echo '<span class="date"><a name="'.$birth_jd.'">&nbsp;</span>'; // span needed for alive-in-year filter
 			}
 			$birth_dates[0]=new GedcomDate('');
 		}
@@ -291,18 +292,20 @@ function print_indi_table($datalist, $legend="", $option="") {
 				} else if ($death_date->MinJD()!=0) {
 					echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
 				} else if ($person->isDead()) {
-					echo '<div>', $pgv_lang["yes"], '<a name="9999999"></a></div>';
+					$est_death_date=$person->getEstimatedDeathDate();
+					echo '<div>', $pgv_lang["yes"], '<a name="'.$est_death_date->JD().'"></a></div>';
 				}
 			}
 			if ($death_dates[0]->gregorianYear()>=1550) {
 				$deat_by_decade[floor($death_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
 			}
 		} else {
+			$death_date=$person->getEstimatedDeathDate();
+			$death_jd=$death_date->JD();
 			if ($SHOW_EST_LIST_DATES) {
-				$death_date=$person->getEstimatedDeathDate();
-				echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
+				echo '<div>', str_replace('<a', '<a name="'.$death_jd.'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
 			} else {
-				echo '<span class="date">&nbsp;</span>'; // span needed for alive-in-year filter
+				echo '<span class="date"><a name="'.$death_jd.'">&nbsp;</span>'; // span needed for alive-in-year filter
 			}
 			$death_dates[0]=new GedcomDate('');
 		}
@@ -540,29 +543,33 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink("_blank").'</td>';
 		//-- Husband name(s)
-		$name=$husb->getFullName();
-		$addname=$husb->getAddName();
-		if (is_array($value) && isset($value['hname']) && $value['hname']!=$name && $value['hname']!=$addname) {
-			$name=$value['hname'];
-			$addname='';
+		$names=$husb->getAllNames();
+		if (is_array($value) && isset($value['hname'])) {
+			$n1=$value['hname'];
+			if ($n1==$husb->getPrimaryName()) {
+				$n2=$husb->getSecondaryName();
+			} else {
+				$n2=$husb->getPrimaryName();
+			}
+		} else {
+			$n1=$husb->getPrimaryName();
+			$n2=$husb->getSecondaryName();
 		}
 		$tdclass = "list_value_wrap";
 		if (!$husb->isDead()) $tdclass .= " alive";
 		if (!$husb->getChildFamilyIds()) $tdclass .= " patriarch";
-		echo "<td class=\"".$tdclass."\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<td class=\"".$tdclass."\" align=\"".get_align($names[$n1]['list'])."\">";
+		echo "<a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($names[$n1]['list'])."</a>";
 		if ($tiny && $husb->xref) echo $husb->getSexImage();
-		if ($addname) {
-			echo "<br /><a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item\">".PrintReady($addname)."</a>";
+		if ($n1!=$n2) {
+			echo "<br /><a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item\">".PrintReady($names[$n2]['list'])."</a>";
 		}
 		// Husband parents
 		if ($husb->xref) echo $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Husb GIVN
-		echo "<td style=\"display:none\">";
-		$exp = explode(",", str_replace('<', ',', $name).",");
-		echo $exp[1];
-		echo "</td>";
+		list($surn,$givn)=explode(',', $names[$n1]['sort']);
+		echo '<td style="display:none">', $givn, '</td>';
 		$mdate=$family->getMarriageDate();
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
@@ -586,29 +593,34 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
-		$name=$wife->getFullName();
-		$addname=$wife->getAddName();
-		if (is_array($value) && isset($value['wname']) && $value['wname']!=$name && $value['wname']!=$addname) {
-			$name=$value['wname'];
-			$addname='';
+		$names=$wife->getAllNames();
+		if (is_array($value) && isset($value['hname'])) {
+			$n1=$value['hname'];
+			if ($n1==$wife->getPrimaryName()) {
+				$n2=$wife->getSecondaryName();
+			} else {
+				$n2=$wife->getPrimaryName();
+			}
+		} else {
+			$n1=$wife->getPrimaryName();
+			$n2=$wife->getSecondaryName();
 		}
 		$tdclass = "list_value_wrap";
 		if (!$wife->isDead()) $tdclass .= " alive";
 		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";
-		echo "<td class=\"".$tdclass."\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<td class=\"".$tdclass."\" align=\"".get_align($names[$n1]['list'])."\">";
+		echo "<a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($names[$n1]['list'])."</a>";
 		if ($tiny && $wife->xref) echo $wife->getSexImage();
-		if ($addname) {
-			echo "<br /><a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item\">".PrintReady($addname)."</a>";
+		if ($n1!=$n2) {
+			echo "<br /><a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item\">".PrintReady($names[$n2]['list'])."</a>";
 		}
 		// Wife parents
 		if ($wife->xref) echo $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Wife GIVN
-		echo "<td style=\"display:none\">";
-		$exp = explode(",", str_replace('<', ',', $name).",");
-		echo $exp[1];
-		echo "</td>";
+		list($surn,$givn)=explode(',', $names[$n1]['sort']);
+		echo '<td style="display:none">', $givn, '</td>';
+		$mdate=$family->getMarriageDate();
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
 		$wdate=$wife->getBirthDate();
