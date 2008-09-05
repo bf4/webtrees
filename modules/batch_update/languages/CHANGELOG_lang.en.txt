@@ -1,0 +1,27 @@
+PHPGEDVIEW GOOGLEMAP LANGUAGE FILE CHANGELOG
+
+# $Id$
+
++ $pgv_lang["text"] / means added
+- $pgv_lang["text"] / deleted
+* $pgv_lang["text"] / text was changed
+
+Additional codes, to help Translators, follow the date as follows:
+    A - Added or moved from another file
+    C - Capitalization  (doesn't affect translation)
+    D - Deleted
+    f - Minor format change
+    F - Major format change
+    p - Punctuation change  (doesn't affect translation)
+    M - Moved to another file
+    S - Spelling change     (doesn't affect translation)
+    w - Minor wording change
+    W - Major wording change or completely new text
+
+The above list of codes may be amended as new situations arise.
+For massive changes, the variable names should be listed in the order in which they
+occur in the respective language files.
+
+?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
+----------------------------------------------------------------------------------------
+
