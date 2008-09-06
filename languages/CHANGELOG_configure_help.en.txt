@@ -45,6 +45,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+-$PGV_LANG["import_marr_names_help"]           8 Aug 2008   D
 -$PGV_LANG["NAME_FROM_GEDCOM"]                28 Aug 2008   Configuration option removed
 -$PGV_LANG["NAME_FROM_GEDCOM_help"]           28 Aug 2008
 *$pgv_lang["SHOW_EST_LIST_DATES_help"]				06 Aug 2008				W added "and charts"

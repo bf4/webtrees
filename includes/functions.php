@@ -1191,7 +1191,6 @@ function find_record_in_file($gid) {
 				//-- add record to indilist for caching
 				if ($type=="INDI") {
 					$indilist[$gid]["gedcom"]=$indirec;
-					$indilist[$gid]["names"]=get_indi_names($indirec);
 					$indilist[$gid]["gedfile"]=$GEDCOM;
 					$indilist[$gid]["isdead"] = -1;
 				}
@@ -1670,22 +1669,14 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 function itemsort($a, $b) {
 	if (isset($a["name"]))
 		$aname = sortable_name_from_name($a["name"]);
-	else
-		if (isset($a["names"]))
-			$aname = sortable_name_from_name($a["names"][0][0]);
-		else
-			if (is_array($a))
-				$aname = sortable_name_from_name(array_shift($a));
+	elseif (is_array($a))
+		$aname = sortable_name_from_name(array_shift($a));
 	else
 		$aname=$a;
 	if (isset($b["name"]))
 		$bname = sortable_name_from_name($b["name"]);
-	else
-		if (isset($b["names"]))
-			$bname = sortable_name_from_name($b["names"][0][0]);
-		else
-			if (is_array($b))
-				$bname = sortable_name_from_name(array_shift($b));
+	elseif (is_array($b))
+		$bname = sortable_name_from_name(array_shift($b));
 	else
 		$bname=$b;
 
