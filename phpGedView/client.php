@@ -190,7 +190,7 @@ case 'update':
 	if ($xref) {
 		$gedrec=safe_GET('gedrec', '.*'); // raw data may contain any characters
 		if ($gedrec) {
-			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetails($gedrec)) {
+			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($xref)) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$success = replace_gedrec($xref, $gedrec);
 				if ($success) {
@@ -255,7 +255,7 @@ case 'getnext':
 		if (!$gedrec) {
 			$gedrec = find_gedcom_record($xref1);
 		}
-		if (!displayDetails($gedrec)) {
+		if (!displayDetailsById($xref1)) {
 			//-- do not have full access to this record, so privatize it
 			$gedrec = privatize_gedcom($gedrec);
 		}
@@ -274,7 +274,7 @@ case 'getprev':
 		if (!$gedrec) {
 			$gedrec = find_gedcom_record($xref1);
 		}
-		if (!displayDetails($gedrec)) {
+		if (!displayDetailsById($xref1)) {
 			//-- do not have full access to this record, so privatize it
 			$gedrec = privatize_gedcom($gedrec);
 		}

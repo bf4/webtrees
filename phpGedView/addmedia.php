@@ -68,14 +68,14 @@ if (!empty($pid)) {
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_media_record($pid);
 	else $gedrec = find_updated_record($pid);
 	if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
-	$disp = displayDetails($pid, "OBJE");
+	$disp = displayDetailsById($pid, "OBJE");
 }
 if ($action=="update" || $action=="newentry") {
 	if (!isset($linktoid) || $linktoid=="new") $linktoid="";
 	if (empty($linktoid) && !empty($gid)) $linktoid = $gid;
 	if (!empty($linktoid)) {
 		$linktoid = clean_input($linktoid);
-		$disp = displayDetails(find_gedcom_record($linktoid));
+		$disp = displayDetailsById($linktoid);
 	}
 }
 

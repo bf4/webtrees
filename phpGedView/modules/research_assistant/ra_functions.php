@@ -1089,7 +1089,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$perId = $person->getXref();
 	
 		$MissingReturn = array (); //Local var for the return string
-		if ($person->sex == "U") //check for missing sex info
+		if ($person->getSex() == "U") //check for missing sex info
 		{
 			$MissingReturn[] = array("SEX", $pgv_lang["All"]);
 		}

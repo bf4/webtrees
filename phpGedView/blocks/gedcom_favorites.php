@@ -78,7 +78,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 				$content .= "<br />".PrintReady($favorite["note"]);
 				$content .= "</div>\n";
 			} else {
-				if (displayDetailsbyId($favorite["gid"], $favorite["type"])) {
+				if (displayDetailsById($favorite["gid"], $favorite["type"])) {
 					if ($favorite["type"]=="INDI") {
 						$indirec = find_person_record($favorite["gid"]);
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";

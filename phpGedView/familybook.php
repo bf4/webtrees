@@ -149,7 +149,7 @@ function print_descendency($pid, $count) {
 	if ($count==0) {
 		$indirec = find_person_record($pid);
 		// NOTE: If statement OK
-		if (displayDetails($indirec) || showLivingName($indirec)) {
+		if (displayDetailsById($pid, 'INDI') || showLivingNameById($pid)) {
 			// -- print left arrow for decendants so that we can move down the tree
 			$famids = find_sfamily_ids($pid);
 			//-- make sure there is more than 1 child in the family with parents
