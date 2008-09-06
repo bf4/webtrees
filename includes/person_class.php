@@ -79,8 +79,8 @@ class Person extends GedcomRecord {
 	function Person($gedrec,$simple=true) {
 		parent::GedcomRecord($gedrec, $simple);
 
-		$this->disp = displayDetailsById($this->gedrec, 'INDI');
-		$this->dispname = showLivingName($this->gedrec);
+		$this->disp = displayDetailsById($this->xref, 'INDI');
+		$this->dispname = showLivingNameById($this->xref);
 	}
 
 	/**
