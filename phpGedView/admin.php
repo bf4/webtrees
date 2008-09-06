@@ -185,6 +185,12 @@ function showchanges() {
 			<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) { print_help_link("help_dir_editor.php", "qm"); print "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
 			<td class="optionbox width50"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
 	</tr>
+<?php if (PGV_USER_GEDCOM_ADMIN && is_dir('./modules/batch_update')) { ?>
+	<tr>
+		<td class="optionbox with50"><?php print_help_link("batch_update_help", "qm"); ?><a href="module.php?mod=batch_update"><?php print $pgv_lang["batch_update"]; ?></a></td>
+		<td class="optionbox width50">&nbsp;</td>
+	</tr>
+<?php } ?>
 	<?php if (PGV_USER_IS_ADMIN) { ?>
 	<tr>
 		<td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_site"]; ?></td>
