@@ -401,7 +401,7 @@ if ($action=="filter") {
 					$curged = $GEDCOM;
 				}
 				$person=Person::getInstance($pvalue[1]);
-				echo $person->format_list('li', false, check_NN($pvalue[0]));
+				echo $person->format_list('li', false, $pvalue[0]);
 				print "\n";
 			}
 			print "\n\t\t</ul></td>";
@@ -439,8 +439,7 @@ if ($action=="filter") {
 		if (find_person_record($filter)) {
 			$printname = search_fams_members($filter);
 			$ctf = count($printname);
-		}
-		else {
+		} else {
 			$myindilist = search_indis_names($filter);
 			foreach($myindilist as $key1 => $myindi) {
 				$famquery[] = array($key1, $GEDCOMS[$GEDCOM]['id']);
@@ -460,12 +459,12 @@ if ($action=="filter") {
 					foreach($value["name"] as $nkey => $famname) {
 						$famsplit = preg_split("/(\s\+\s)/", trim($famname));
 						if (preg_match("/".preg_replace("/\s+/", "|", $filter)."/i", $famsplit[0]) != 0) {
-							$printname[]=array(check_NN($famname), $key, get_gedcom_from_id($value["gedfile"]));
+							$printname[]=array($famname, $key, get_gedcom_from_id($value["gedfile"]));
 							$found = true;
 							break;
 						}
 					}
-					if (!$found) $printname[] = array(check_NN($value["name"][0]), $key, get_gedcom_from_id($value["gedfile"]));
+					if (!$found) $printname[] = array($value["name"][0], $key, get_gedcom_from_id($value["gedfile"]));
 				}
 				$ctf = count($printname);
 			}

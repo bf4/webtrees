@@ -427,25 +427,10 @@ class IndividualControllerRoot extends BaseController {
 		if (preg_match("/PGV_OLD/", $factrec)>0) print " class=\"namered\"";
 		if (preg_match("/PGV_NEW/", $factrec)>0) print " class=\"nameblue\"";
 		print ">";
-		// Second/third names are *NOT* necessarily AKA names.
-		//if ($this->name_count>1) print "\n\t\t<span class=\"label\">".$pgv_lang["aka"]." </span><br />\n";
-		$ct = preg_match_all("/2 (SURN)|(GIVN) (.*)/", $factrec, $nmatch, PREG_SET_ORDER);
-		if ($ct==0) {
-			$nt = preg_match("/1 NAME (.*)/", $factrec, $nmatch);
-			if ($nt>0){
-				print "\n\t\t<span class=\"label\">".$pgv_lang["name"].": </span><br />";
-				$name = trim($nmatch[1]);
-				if ($NAME_REVERSE) $name = reverse_name($name);
-				$name = preg_replace("'/,'", ",", $name);
-	   			$name = preg_replace("'/'", " ", $name);
-				// handle PAF extra NPFX [ 961860 ]
-				$ct = preg_match("/2 NPFX (.*)/", $factrec, $match);
-				if ($ct>0) {
-					$npfx = trim($match[1]);
-					if (strpos($name, $npfx)===false) $name = $npfx." ".$name;
-				}
-				print PrintReady($name)."<br />\n";
-			}
+		if (!preg_match("/^2 (SURN)|(GIVN)/m", $factrec)) {
+			$dummy=new Person($factrec);
+			echo '<span class="label">', $pgv_lang['name'], ': </span><br />';
+			echo PrintReady($dummy->getFullName()), '<br />';
 		}
 		$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $nmatch, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
@@ -468,7 +453,7 @@ class IndividualControllerRoot extends BaseController {
 			  		$name = trim($nmatch[$i][2]);
 			  		$name = preg_replace("'/,'", ",", $name);
 					$name = preg_replace("'/'", " ", $name);
-					print PrintReady(check_NN($name));
+					print PrintReady($name);
 				}
 				print " </span><br />";
 			}

@@ -1346,7 +1346,7 @@ if ($action=="choosepid") {
 		if (!empty($ADDR_CONT)) $ADDR .= $ADDR_CONT;
 		else {
 			$_NAME = get_gedcom_value("_NAME", 2, $subrec);
-			if (!empty($_NAME)) $ADDR .= "\r\n". check_NN($_NAME);
+			if (!empty($_NAME)) $ADDR .= "\r\n". $_NAME;
 			$ADR1 = get_gedcom_value("ADR1", 2, $subrec);
 			if (!empty($ADR1)) $ADDR .= "\r\n". $ADR1;
 			$ADR2 = get_gedcom_value("ADR2", 2, $subrec);
