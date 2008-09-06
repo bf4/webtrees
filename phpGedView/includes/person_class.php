@@ -128,7 +128,6 @@ class Person extends GedcomRecord {
 		if ($person->isRemote() && $ged_id==PGV_GED_ID) {
 			global $indilist;
 			$indilist[$pid]['gedcom'] = $person->gedrec;
-			$indilist[$pid]['names'] = get_indi_names($person->gedrec);
 			$indilist[$pid]["isdead"] = is_dead($person->gedrec);
 			$indilist[$pid]["gedfile"] = $ged_id;
 			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);

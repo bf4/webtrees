@@ -380,34 +380,6 @@ function import_record($indirec, $update) {
 }
 
 /**
- * Add a new calculated name to the individual names table
- *
- * this function will add a new name record for the given individual, this function is called from the
- * importgedcom.php script stage 5
- * @param string $gid	gedcom xref id of individual to update
- * @param string $newname	the new calculated name to add
- * @param string $surname	the surname for this name
- * @param string $letter	the letter for this name
- */
-function add_new_name($gid, $newname, $letter, $surname, $indirec) {
-	global $TBLPREFIX, $USE_RIN, $indilist, $FILE, $DBCONN, $GEDCOMS;
-
-	$sql = 'INSERT INTO ' . $TBLPREFIX . 'names VALUES(\'' . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($newname) . "','" . $DBCONN->escapeSimple($letter) . "','" . $DBCONN->escapeSimple($surname) . "','C')";
-	$res = dbquery($sql);
-
-	$sql = 'UPDATE ' . $TBLPREFIX . 'individuals SET i_gedcom=\'' . $DBCONN->escapeSimple($indirec) . "' WHERE i_id='" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "'";
-	$res = dbquery($sql);
-
-	$indilist[$gid]["names"][] = array (
-		$newname,
-		$letter,
-		$surname,
-		'C'
-	);
-	$indilist[$gid]["gedcom"] = $indirec;
-}
-
-/**
  * extract all places from the given record and insert them
  * into the places table
  * @param string $indirec
