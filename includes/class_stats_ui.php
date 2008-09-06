@@ -101,7 +101,7 @@ class stats_ui extends stats
 				}
 				else
 				{
-					if(displayDetailsbyId($favorite['gid'], $favorite['type']))
+					if(displayDetailsById($favorite['gid'], $favorite['type']))
 					{
 						require "{$INDEX_DIRECTORY}{$GEDCOM}_conf.php";
 

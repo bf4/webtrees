@@ -34,7 +34,6 @@ require_once 'includes/family_class.php';
 require_once 'includes/event_class.php';
 
 class Person extends GedcomRecord {
-	var $sex = "U";
 	var $disp = true;
 	var $dispname = true;
 	var $indifacts = array();
@@ -61,6 +60,7 @@ class Person extends GedcomRecord {
 
 	// Cached results from various functions.
 	// These should become private when we move to PHP5.  Do not use them from outside this class.
+	var $_getSex=null;
 	var $_getBirthDate=null;
 	var $_getBirthPlace=null;
 	var $_getAllBirthDates=null;
@@ -79,10 +79,7 @@ class Person extends GedcomRecord {
 	function Person($gedrec,$simple=true) {
 		parent::GedcomRecord($gedrec, $simple);
 
-		$st = preg_match("/1 SEX (.*)/", $this->gedrec, $smatch);
-		if ($st>0) $this->sex = trim($smatch[1]);
-		if (empty($this->sex)) $this->sex = "U";
-		$this->disp = displayDetails($this->gedrec);
+		$this->disp = displayDetailsById($this->gedrec, 'INDI');
 		$this->dispname = showLivingName($this->gedrec);
 	}
 
@@ -504,6 +501,13 @@ class Person extends GedcomRecord {
 	 * @return string 	return M, F, or U
 	 */
 	function getSex() {
+		if (is_null($this->_getSex)) {
+			if (preg_match('/^1 SEX ([MF])/m', $this->gedrec, $match)) {
+				$this->sex=$match[1];
+			} else {
+				$this->sex='U';
+			}
+		}	
 		return $this->sex;
 	}
 

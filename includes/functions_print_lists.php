@@ -66,13 +66,15 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	echo '<div id="'.$table_id.'-table" class="center">';
 	//-- filter buttons
-	$person = new Person("");
+	$personM = new Person("1 SEX M");
+	$personF = new Person("1 SEX F");
+	$personU = new Person("1 SEX U");
 	echo "<button type=\"button\" class=\"SEX_M\" title=\"".$pgv_lang["button_SEX_M"]."\" >";
-	$person->sex = "M"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo $personM->getSexImage()."&nbsp;</button> ";
 	echo "<button type=\"button\" class=\"SEX_F\" title=\"".$pgv_lang["button_SEX_F"]."\" >";
-	$person->sex = "F"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo $personF->getSexImage()."&nbsp;</button> ";
 	echo "<button type=\"button\" class=\"SEX_U\" title=\"".$pgv_lang["button_SEX_U"]."\" >";
-	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo $personU->getSexImage()."&nbsp;</button> ";
 	echo " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
 	echo "<button type=\"button\" class=\"alive_in_year\" title=\"".$pgv_lang["button_alive_in_year"]."\" >";
 	echo $pgv_lang["alive_in_year"]."</button> ";
@@ -356,7 +358,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Filtering by birth date
 		echo "<td style=\"display:none\">";
-		if (!$person->disp || GedcomDate::Compare($birth_dates[0], $d100y)>0)
+		if (!$person->canDisplayDetails() || GedcomDate::Compare($birth_dates[0], $d100y)>0)
 			echo "Y100";
 		else
 			echo "YES";
@@ -715,7 +717,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$family->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
-		if (!$family->disp || !$mdate->isOK())
+		if (!$family->canDisplayDetails() || !$mdate->isOK())
 			echo "U";
 		else
 			if (GedcomDate::Compare($mdate, $d100y)>0)
