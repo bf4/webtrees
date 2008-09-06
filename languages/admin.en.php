@@ -316,6 +316,8 @@ $pgv_lang["yearly"]								= "Yearly";
 $pgv_lang["admin_OK_subject"]					= "Approval of account at #SERVER_NAME#";
 $pgv_lang["admin_OK_message"]					= "The administrator at the PhpGedView site #SERVER_NAME# has approved your application for an account.  You may now login by accessing the following link:\r\n\r\n#SERVER_NAME#\r\n";
 
+$pgv_lang["batch_update"]="Perform batch updates/edits on your GEDCOM";
+
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     = "Gedcom checker";          // Module title
 $pgv_lang["gedcheck_text"]= "This module checks the format of a GEDCOM file against the <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM Specification</a>.  It also checks for a number of common errors in your data.  Note that there are lots of versions, extensions and variations on the specification so you should not be concerned with any issues other than those flagged as \"Critical\".  The explanation for all the line-by-line errors can be found in the specification, so please check there before asking for help.";
