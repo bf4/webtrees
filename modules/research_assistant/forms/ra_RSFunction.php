@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - RecordSearch.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,8 +66,6 @@ require_once("includes/person_class.php");
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB:FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE:FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		
-		$indilist = get_indi_list();
- 		$famlist = get_fam_list();
 		//Create an array to put our data in
 		$myindilist = array();
 		//Create a family array to put our family data in
@@ -124,7 +122,7 @@ require_once("includes/person_class.php");
 					//these people may already exist and their detials will just be
 					//added again.  If we didn't do this, things might get lost 
 					//in the mix
-					$myindilist[$child->getXref()] = $indilist[$child->getXref()];
+					if (!is_null($child)) $myindilist[$child->getXref()] = $indilist[$child->getXref()];
 				}
 			}
 		}
@@ -137,21 +135,23 @@ require_once("includes/person_class.php");
 		$malesCount = 0;
 		$femalesCount = 0;
 
-		foreach ($myindilist as $pid => $indi) {
-			if (isset($indi['gedcom'])) {
+		foreach (array_keys($myindilist) as $pid) {
+			$indi=Person::getInstance($pid);
+			if ($indi) {
 				//assign surname, gender, birthplace and occupation for the individual
-				$gender = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
+				$gender = $indi->getSex();
 				$locals = array();
 				foreach($inferences as $pr_id=>$value) {
 					//-- get the local value from the the individual record
 					if (!isset($locals[$value['local']])) {
-						if ($value['local']=='SURN') $locals['SURN'] = $indi['names'][0][2];
-						else if ($value['local']=='GIVN'){
-							$parts = preg_split("~/~", $indi['names'][0][0]);
-							$locals['GIVN'] = $parts[0];
-						}
-						else {
-							$locals[$value['local']] = get_gedcom_value($value['local'], 1, $indi['gedcom'], '', false);
+						switch ($value['local']) {
+						case 'GIVN':
+						case 'SURN':
+							list($locals['SURN'], $locals['GIVN'])=explode(',', $indi->getSortName());
+							break;
+						default:
+							$locals[$value['local']] = get_gedcom_value($value['local'], 1, $indi->getGedcomRecord(), '', false);
+							break;
 						}
 					}
 					
@@ -162,31 +162,36 @@ require_once("includes/person_class.php");
 							$ct = preg_match("/0 @(.*)@/", $record, $match);
 							if ($ct>0) {
 								$gid = $match[1];
-								$gedval = $indilist[$gid]['names'][0][2];
-								if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
+							$person = Person::getInstance($gid);
+							if (!is_null($person)) {
+								list($gedval) = explode(',', $person->getSortName());
+								if (UTF8_strtolower($locals[$value['local']])==UTF8_strtolower($gedval)) $inferences[$pr_id]['value']++;
 								$inferences[$pr_id]['count']++;
 							}
 						}
+					}
 						else if (preg_match("/GIVN/", $value['comp'])) {
 								$ct = preg_match("/0 @(.*)@/", $record, $match);
 								if ($ct>0) {
 									$gid = $match[1];
-									$parts = preg_split("~/~", $indilist[$gid]['names'][0][0]);
-									$gedval = $parts[0];
+							$person = Person::getInstance($gid);
+							if (!is_null($person)) {
+									list($dummy, $gedval) = explode(',', $person->getSortName());
 									$parts1 = preg_split("/\s+/", $gedval);
 									$parts2 = preg_split("/\s+/", $locals['GIVN']);
 									foreach($parts1 as $p1=>$part1) {
 										foreach($parts2 as $p2=>$part2) {
-											if (str2lower($part1)==str2lower($part2)) $inferences[$pr_id]['value']++;
+											if (UTF8_strtolower($part1)==UTF8_strtolower($part2)) $inferences[$pr_id]['value']++;
 											$inferences[$pr_id]['count']++;
 										}
 									}
 								}
 						}
+					}
 						else {
 							$gedval = get_gedcom_value($value['comp'], 1, $record, '', false);
 							if (!empty($gedval) && !empty($locals[$value['local']])) {
-								if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
+								if (UTF8_strtolower($locals[$value['local']])==UTF8_strtolower($gedval)) $inferences[$pr_id]['value']++;
 								$inferences[$pr_id]['count']++;
 							}
 						}
@@ -467,5 +472,4 @@ require_once("includes/person_class.php");
 		}
 		return $out;
 	}
-	
 	

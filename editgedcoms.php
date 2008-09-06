@@ -89,7 +89,7 @@ if (($action=="setdefault") && isset($default_ged)) {
 		fwrite($fp, $configtext);
 		fclose($fp);
 		$logline = AddToLog("gedcoms.php updated");
- 		if (!empty($COMMIT_COMMAND)) check_in($logline, "gedcoms.php", $INDEX_DIRECTORY);
+ 		check_in($logline, "gedcoms.php", $INDEX_DIRECTORY);
 	}
 }
 

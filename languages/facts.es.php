@@ -254,13 +254,13 @@ $factarray["_EYEC"]	= "Color de ojos";
 $factarray["_FNRL"]	= "Funeral";
 $factarray["_HAIR"]	= "Color de pelo";
 $factarray["_HEIG"]	= "Altura";
-$factarray["_HOL"]  = "Holocaust";
+$factarray["_HOL"]  = "Holocausto";
 $factarray["_INTE"]	= "Entierro";
 $factarray["_MARI"]	= "Proposición de matrimonio";
 $factarray["_MBON"]	= "Lazo matrimonial";
 $factarray["_MEDC"]	= "Estado médico";
 $factarray["_MILI"]	= "Militar";
-$factarray["_NMR"]	= "Soltero";
+$factarray["_NMR"]	= "Relación sin matrimonio";
 $factarray["_NLIV"]	= "Fallecido";
 $factarray["_NMAR"]	= "Nunca contrajo matrimonio";
 $factarray["_PRMN"]	= "Número fijo";
@@ -285,7 +285,7 @@ $factarray["_BURI_SPOU"] = "Entierro de un cónyuge";
 $factarray["_CREM_SPOU"] = "Incineración de un cónyuge";
 
 $factarray["_BIRT_CHIL"] = "Nacimiento de un hijo";
-$factarray["_CHR_CHIL" ] = "Christening of a child";
+$factarray["_CHR_CHIL"] = "Bautismo de un hijo";
 $factarray["_BAPM_CHIL"] = "Bautismo de un hijo";
 $factarray["__BRTM_CHIL"] = "Brit mila de un hijo";
 $factarray["_ADOP_CHIL"] = "Adopción de un hijo";
@@ -296,7 +296,7 @@ $factarray["_BURI_CHIL"] = "Entierro de un hijo";
 $factarray["_CREM_CHIL"] = "Incineración de un hijo";
 
 $factarray["_BIRT_GCHI"] = "Nacimiento de un nieto";
-$factarray["_CHR_GCHI" ] = "Christening of a grandchild";
+$factarray["_CHR_GCHI"] = "Bautismo de un nieto";
 $factarray["_BAPM_GCHI"] = "Bautismo de un nieto";
 $factarray["__BRTM_GCHI"] = "Brit mila de un nieto";
 $factarray["_ADOP_GCHI"] = "Adopción de un nieto";
@@ -307,7 +307,7 @@ $factarray["_BURI_GCHI"] = "Entierro de un nieto";
 $factarray["_CREM_GCHI"] = "Incineración de un nieto";
 
 $factarray["_BIRT_GGCH"] = "Nacimiento de un bisnieto";
-$factarray["_CHR_GGCH" ] = "Christening of a great-grandchild";
+$factarray["_CHR_GGCH"] = "Bautismo de un bisnieto";
 $factarray["_BAPM_GGCH"] = "Bautismo de un bisnieto";
 $factarray["__BRTM_GGCH"] = "Brit mila de un bisnieto";
 $factarray["_ADOP_GGCH"] = "Adopción de un bisnieto";
@@ -323,6 +323,9 @@ $factarray["_DEAT_FATH"] = "Defunción del padre";
 $factarray["_BURI_FATH"] = "Entierro del padre";
 $factarray["_CREM_FATH"] = "Incineración del padre";
 
+$factarray["_MARR_FAMC"] = "Matrimonio de los padres";
+$factarray["_MARB_FAMC"] = "Amonestaciones de los padres";
+
 $factarray["_MARR_MOTH"] = "Matrimonio de la madre";
 $factarray["_MARB_MOTH"] = "Amonestaciones de la madre";
 $factarray["_DEAT_MOTH"] = "Defunción de la madre";
@@ -330,7 +333,7 @@ $factarray["_BURI_MOTH"] = "Entierro de la madre";
 $factarray["_CREM_MOTH"] = "Incineración de la madre";
 
 $factarray["_BIRT_SIBL"] = "Nacimiento de un hermano";
-$factarray["_CHR_SIBL" ] = "Christening of sibling";
+$factarray["_CHR_SIBL"] = "Bautismo de un hermano";
 $factarray["_BAPM_SIBL"] = "Bautismo de un hermano";
 $factarray["__BRTM_SIBL"] = "Brit mila de un hermano";
 $factarray["_ADOP_SIBL"] = "Adopción de un hermano";
@@ -341,7 +344,7 @@ $factarray["_BURI_SIBL"] = "Entierro de un hermano";
 $factarray["_CREM_SIBL"] = "Incineración de un hermano";
 
 $factarray["_BIRT_HSIB"] = "Nacimiento de un medio hermano";
-$factarray["_CHR_HSIB" ] = "Christening of half-sibling";
+$factarray["_CHR_HSIB"] = "Bautismo de un medio hermano";
 $factarray["_BAPM_HSIB"] = "Bautismo de un medio hermano";
 $factarray["__BRTM_HSIB"] = "Brit mila de un medio hermano";
 $factarray["_ADOP_HSIB"] = "Adopción de un medio hermano";
@@ -352,7 +355,7 @@ $factarray["_BURI_HSIB"] = "Entierro de un medio hermano";
 $factarray["_CREM_HSIB"] = "Incineración de un medio hermano";
 
 $factarray["_BIRT_NEPH"] = "Nacimiento de un sobrino o una sobrina";
-$factarray["_CHR_NEPH" ] = "Christening of a nephew or niece";
+$factarray["_CHR_NEPH"] = "Bautismo de un sobrino";
 $factarray["_BAPM_NEPH"] = "Bautismo de un sobrino o una sobrina";
 $factarray["__BRTM_NEPH"] = "Brit mila de un sobrino o una sobrina";
 $factarray["_ADOP_NEPH"] = "Adopción de un sobrino o una sobrina";
@@ -371,7 +374,7 @@ $factarray["_BURI_GGPA"] = "Entierro de un bisabuelo";
 $factarray["_CREM_GGPA"] = "Incineración de un bisabuelo";
 
 $factarray["_BIRT_FSIB"] = "Nacimiento de un tío paterno";
-$factarray["_CHR_FSIB" ] = "Christening of father's sibling";
+$factarray["_CHR_FSIB"] = "Bautismo de un tío paterno";
 $factarray["_BAPM_FSIB"] = "Bautismo de un tío paterno";
 $factarray["__BRTM_FSIB"] = "Brit mila de un tío paterno";
 $factarray["_ADOP_FSIB"] = "Adopción de un tío paterno";
@@ -382,7 +385,7 @@ $factarray["_BURI_FSIB"] = "Entierro de un tío paterno";
 $factarray["_CREM_FSIB"] = "Incineración de un tío paterno";
 
 $factarray["_BIRT_MSIB"] = "Nacimiento de un tío materno";
-$factarray["_CHR_MSIB" ] = "Christening of mother's sibling";
+$factarray["_CHR_MSIB"] = "Bautismo de un tío materno";
 $factarray["_BAPM_MSIB"] = "Bautismo de un tío materno";
 $factarray["__BRTM_MSIB"] = "Brit mila de un tío materno";
 $factarray["_ADOP_MSIB"] = "Adopción de un tío materno";

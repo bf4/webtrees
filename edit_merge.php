@@ -116,7 +116,7 @@ if ($action!="choose") {
 					print "<table border=\"1\">\n";
 					foreach($facts1 as $i=>$fact1) {
 						foreach($facts2 as $j=>$fact2) {
-							if (str2upper($fact1["subrec"])==str2upper($fact2["subrec"])) {
+							if (UTF8_strtoupper($fact1["subrec"])==UTF8_strtoupper($fact2["subrec"])) {
 								$skip1[] = $i;
 								$skip2[] = $j;
 								$equal_count++;

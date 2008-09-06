@@ -35,6 +35,9 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
 }
 global $pgv_lang, $pid, $GEDCOM ;
 
+$pid=safe_get('pid');
+$action = safe_POST("action");
+
 loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
 print_header($pgv_lang["configure_lightbox"]);
 

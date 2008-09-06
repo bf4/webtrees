@@ -108,7 +108,7 @@ class FamilyRoot extends BaseController
 		}
 		$_REQUEST['famid'] = clean_input($_REQUEST['famid']);
 		$this->famid = $_REQUEST['famid'];
-		$this->famrec = find_family_record($this->famid);
+		$this->family = Family::getInstance($this->famid);
 		
 		if (empty($this->famrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->famid, $match);
@@ -125,9 +125,12 @@ class FamilyRoot extends BaseController
 		}
 		
 		//-- if no record was found create a default empty one
-		if (empty($this->famrec)) $this->famrec = "0 @".$this->famid."@ FAM\r\n";
+		if (empty($this->family)) {
+			$this->famrec = "0 @".$this->famid."@ FAM\r\n";
+			$this->family = new Family($this->famrec);
+		}
+		$this->famrec = $this->family->getGedcomRecord();
 		$this->display = displayDetailsByID($this->famid, 'FAM');
-		$this->family = new Family($this->famrec);
 
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
@@ -135,8 +138,9 @@ class FamilyRoot extends BaseController
 			if (empty($newrec)) $newrec = find_family_record($this->famid);
 			$this->difffam = new Family($newrec);
 			$this->difffam->setChanged(true);
-			$this->famrec = $newrec;
-			$this->family = new Family($this->famrec);
+			$this->family->diffMerge($this->difffam);
+			//$this->famrec = $newrec;
+			//$this->family = new Family($this->famrec);
 		}
 		$this->parents = array('HUSB'=>$this->family->getHusbId(), 'WIFE'=>$this->family->getWifeId());
 

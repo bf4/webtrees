@@ -188,11 +188,8 @@ if (isset($directory))$directory = stripslashes($directory);
 if (isset($movetodir))$movetodir = stripslashes($movetodir);
 if (isset($movefile))$movefile = stripslashes($movefile);
 
-if (!isset($action)) {
-	if (isset($search)) $action = "filter";
-	else $action="";
-}
 if (empty($action)) $action="filter";
+if (empty($subclick)) $subclick = "none";
 
 if (!isset($media)) $media="";
 if (!isset($filter) || strlen($filter)<2) $filter="";
@@ -261,7 +258,7 @@ print_header($pgv_lang["manage_media"]);
 
 	function checknames(frm) {
 		if (document.managemedia.subclick) button = document.managemedia.subclick.value;
-		if (button == "reset") {
+		if (button == "all") {
 			frm.filter.value = "";
 			return true;
 		}
@@ -300,8 +297,8 @@ print_header($pgv_lang["manage_media"]);
 	<table class="fact_table center width100 <?php print $TEXT_DIRECTION; ?>">
 	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
 	<!-- // NOTE: Filter options -->
-	<tr><td class="descriptionbox wrap width25"><?php print_help_link("filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
-	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if(isset($filter)) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="reset" value="<?php print $pgv_lang["reset"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
+	<tr><td class="descriptionbox wrap width25"><?php print_help_link("simple_filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
+	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if(isset($filter)) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Upload media files -->
 	<td class="descriptionbox wrap width25"><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"]; ?></td>
@@ -1110,192 +1107,6 @@ if (check_media_structure()) {
 					}
 					print "<br />";
 				}
-				/** why are we search through all of the tables instead of joining on the media mapping?
-				// Combine the searchquery of filename and xref
-				$mediaRef = "@".$xref."@";
-				$query[] = $mediaRef;
-
-				// Find the INDIS with the mediafile in it
-				$foundindis = search_indis($query);
-				
-				// Now update the record
-				foreach ($foundindis as $pid => $person) {
-					// Check if changes to the record exist
-					if (isset($pgv_changes[$pid."_".$person["gedfile"]])) $person["gedcom"] = find_updated_record($pid);
-					$subrecs = get_all_subrecords($person["gedcom"], "", false, false, false);
-					$newrec = "0 @$pid@ INDI\r\n";
-					foreach($subrecs as $ind=>$subrec) {
-				    	if (strstr($subrec, $mediaRef)) {
-					    	$pieces = explode("\r\n", $subrec);
-					    	$skip = false;
-					    	foreach ($pieces as $n=>$nibble) {
-						    	if (!$skip) {
-							    	if (strstr($nibble, $mediaRef)) {
-								    	$skip = true;
-								    	$refLevel = substr($nibble, 0, 1);
-							    	}
-						    	} else {
-							    	if (substr($nibble, 0, 1)==$refLevel) {
-								    	$skip = false;
-							    	}
-						    	}
-						    	if ($skip || empty($pieces)) unset($pieces[$n]);
-					    	}
-					    	if (count($pieces)>0) {
-					    		$subrec = implode("\r\n", $pieces);
-					    		$newrec .= $subrec."\r\n";
-				    		}
-				    	} else $newrec .= $subrec."\r\n";
-			    	}
-					// Save the changed INDI record
-					if (replace_gedrec($pid, $newrec, true, $xref)) {
-						print_text("record_updated");
-						AddToChangeLog(print_text("record_updated",0,1));
-					} else {
-						$finalResult = false;
-						print "<span class=\"error\">";
-						print_text("record_not_updated");
-						print "</span>";
-						AddToChangeLog(print_text("record_not_updated",0,1));
-					}
-					print "<br />";
-				}
-
-				// Find the FAMS with the mediafile in it
-				$foundfams = search_fams($query);
-
-				// Now update the record
-				foreach ($foundfams as $pid => $family) {
-					if (isset($pgv_changes[$pid."_".$family["gedfile"]])) $family["gedcom"] = find_updated_record($pid);
-					$subrecs = get_all_subrecords($family["gedcom"], "", false, false, false);
-					$newrec = "0 @$pid@ FAM\r\n";
-					foreach($subrecs as $fam=>$subrec) {
-				    	if (strstr($subrec, $mediaRef)) {
-					    	$pieces = explode("\r\n", $subrec);
-					    	$skip = false;
-					    	foreach ($pieces as $n=>$nibble) {
-						    	if (!$skip) {
-							    	if (strstr($nibble, $mediaRef)) {
-								    	$skip = true;
-								    	$refLevel = substr($nibble, 0, 1);
-							    	}
-						    	} else {
-							    	if (substr($nibble, 0, 1)==$refLevel) {
-								    	$skip = false;
-							    	}
-						    	}
-						    	if ($skip || empty($pieces)) unset($pieces[$n]);
-					    	}
-					    	if (count($pieces)>0) {
-					    		$subrec = implode("\r\n", $pieces);
-					    		$newrec .= $subrec."\r\n";
-				    		}
-				    	} else $newrec .= $subrec."\r\n";
-			    	}
-					// Save the changed FAM record
-					if (replace_gedrec($pid, $newrec)) {
-						print_text("record_updated");
-						AddToChangeLog(print_text("record_updated",0,1));
-					} else {
-						$finalResult = false;
-						print "<span class=\"error\">";
-						print_text("record_not_updated");
-						print "</span>";
-						AddToChangeLog(print_text("record_not_updated",0,1));
-					}
-					print "<br />";
-				}
-
-				// Find the SOURCE with the mediafile in it
-				$foundsources = search_sources($query);
-
-				// Now update the record
-				foreach ($foundsources as $pid => $source) {
-					if (isset($pgv_changes[$pid."_".$source["gedfile"]])) $source["gedcom"] = find_updated_record($pid);
-					$subrecs = get_all_subrecords($source["gedcom"], "", false, false, false);
-					$newrec = "0 @$pid@ SOUR\r\n";
-					foreach($subrecs as $src=>$subrec) {
-				    	if (strstr($subrec, $mediaRef)) {
-					    	$pieces = explode("\r\n", $subrec);
-					    	$skip = false;
-					    	foreach ($pieces as $n=>$nibble) {
-						    	if (!$skip) {
-							    	if (strstr($nibble, $mediaRef)) {
-								    	$skip = true;
-								    	$refLevel = substr($nibble, 0, 1);
-							    	}
-						    	} else {
-							    	if (substr($nibble, 0, 1)==$refLevel) {
-								    	$skip = false;
-							    	}
-						    	}
-						    	if ($skip || empty($pieces)) unset($pieces[$n]);
-					    	}
-					    	if (count($pieces)>0) {
-					    		$subrec = implode("\r\n", $pieces);
-					    		$newrec .= $subrec."\r\n";
-				    		}
-				    	} else $newrec .= $subrec."\r\n";
-			    	}
-					// Save the changed SOUR record
-					if (replace_gedrec($pid, $newrec)) {
-						print_text("record_updated");
-						AddToChangeLog(print_text("record_updated",0,1));
-					} else {
-						$finalResult = false;
-						print "<span class=\"error\">";
-						print_text("record_not_updated");
-						print "</span>";
-						AddToChangeLog(print_text("record_not_updated",0,1));
-					}
-					print "<br />";
-				}
-
-				// Find any other records with the mediafile in it
-				$foundsources = search_other($query);
-
-				// Now update the record
-				foreach ($foundsources as $pid => $source) {
-					if (isset($pgv_changes[$pid."_".$source["gedfile"]])) $source["gedcom"] = find_updated_record($pid);
-					$subrecs = get_all_subrecords($source["gedcom"], "", false, false, false);
-					$newrec = "0 @$pid@ SOUR\r\n";		//-- Not sure WHY this is "SOUR"
-					foreach($subrecs as $src=>$subrec) {
-				    	if (strstr($subrec, $mediaRef)) {
-					    	$pieces = explode("\r\n", $subrec);
-					    	$skip = false;
-					    	foreach ($pieces as $n=>$nibble) {
-						    	if (!$skip) {
-							    	if (strstr($nibble, $mediaRef)) {
-								    	$skip = true;
-								    	$refLevel = substr($nibble, 0, 1);
-							    	}
-						    	} else {
-							    	if (substr($nibble, 0, 1)==$refLevel) {
-								    	$skip = false;
-							    	}
-						    	}
-						    	if ($skip || empty($pieces)) unset($pieces[$n]);
-					    	}
-					    	if (count($pieces)>0) {
-					    		$subrec = implode("\r\n", $pieces);
-					    		$newrec .= $subrec."\r\n";
-				    		}
-				    	} else $newrec .= $subrec."\r\n";
-			    	}
-					// Save the changed record
-					if (replace_gedrec($pid, $newrec)) {
-						print_text("record_updated");
-						AddToChangeLog(print_text("record_updated",0,1));
-					} else {
-						$finalResult = false;
-						print "<span class=\"error\">";
-						print_text("record_not_updated");
-						print "</span>";
-						AddToChangeLog(print_text("record_not_updated",0,1));
-					}
-					print "<br />";
-				}
-				*/
 
 				// Record changes to the Media object
 					//-- why do we accept changes just to delete the item?
@@ -1514,8 +1325,8 @@ if (check_media_structure()) {
 		print "</table>";
 		print "<br />";
 
-		// display the images TODO x across if lots of files??
-		if (count($medialist)) {
+		// display the images
+		if (count($medialist) && ($subclick=='search' || $subclick=='all')) {
 			print "\n\t<table class=\"list_table width100\">";
 			if ($directory==$MEDIA_DIRECTORY) {
 				$httpFilter = "http";

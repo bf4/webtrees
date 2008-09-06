@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - Functions File.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008, John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -464,11 +464,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$output="<br/>";
 			
 			//gets each person that was changed and shows their name with a link to their individual page
+			if (isset($_REQUEST['personid'])) {
 			$thePeopleList=split(";",$_REQUEST['personid']);
-			foreach($thePeopleList as $i=>$pid) {
-				if(!empty($pid)) {
-						$person=Person::getInstance($pid);
-						$output.='<a href="'.$person->getLinkUrl().'">'.$person->getFullName().'</a><br/>';
+				foreach($thePeopleList as $i=>$pid) {
+					if(!empty($pid)) {
+							$person=Person::getInstance($pid);
+							$output.='<a href="'.$person->getLinkUrl().'">'.$person->getFullName().'</a><br/>';
+					}
 				}
 			}
 			
@@ -484,7 +486,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		// The actual message layout
 		$out = '<table align="center" width="50%" height="100" valign="center">';
-		$out .= '<tr><td class="optionbox" align="center" valign="center"><img src="'.$image.'" /></td></tr>';
+		if (!empty($image)) $out .= '<tr><td class="optionbox" align="center" valign="center"><img src="'.$image.'" /></td></tr>';
 		$out .= '<tr><td class="optionbox" valign="center" align="center"><h3>'.$div.''.$message.''.$end.'</h3></td></tr>';
 		$out .= '</table>';
 
@@ -1117,31 +1119,28 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			
 		}
 
-		$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN,_UID,_COMM", false);
+		$indifacts = $person->getIndiFacts();
 
+		/* @var $far Event */
 		foreach ($indifacts as $key => $far) {
-			$match = array();
-			$ft = preg_match("/1 (\w+)(.*)/", $far, $match);
-			if ($ft > 0) {
-				$fact = trim($match[1]);
-				$event = trim($match[2]);
-			}
+			$fact = $far->getTag();
+			$event = $far->getDetail();
 			if ($fact=="EVEN" || $fact=="FACT") {
-				$fact = get_gedcom_value("TYPE", 2, $far);
+				$fact = $far->getType();
 			}
-			$date = get_gedcom_value("DATE", 2, $far);
+			$date = $far->getDate();
 			if (empty ($date)) {
 				if (!in_array($fact, $nondatefacts)) {
 					$MissingReturn[] = array ($fact, "DATE");
 				}
 			}
-			$source = get_gedcom_value("SOUR", 2, $far);
+			$source = get_gedcom_value("SOUR", 2, $far->getGedComRecord());
 			if (empty ($source))
 				$MissingReturn[] = array ($fact, "SOUR");
-			$plac = get_gedcom_value("PLAC", 2, $far);
+			$plac = $far->getPlace();
 			if (empty ($plac)) {
 				if (in_array($fact, $templefacts)) {
-					$plac = get_gedcom_value("TEMP", 2, $far);
+					$plac = $far->getValue("TEMP");
 					if (empty($plac)) {
 						$MissingReturn[] = array ($fact, "TEMP");
 					}
@@ -1261,108 +1260,84 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$malesCount = 0;
 		$femalesCount = 0;
 
-		foreach ($indilist as $pid => $indi) {
+		foreach (array_keys($indilist) as $pid) {
+			$indi=Person::getInstance($pid);
 			//assign surname, gender, birthplace and occupation for the individual
-			$gender = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
+			$gender = $indi->getSex();
 			$locals = array();
 			foreach($inferences as $pr_id=>$value) {
 				//-- get the local value from the the individual record
 				if (!isset($locals[$value['local']])) {
-					if ($value['local']=='SURN') $locals['SURN'] = $indi['names'][0][2];
-					else if ($value['local']=='GIVN'){
-						$parts = preg_split("~/~", $indi['names'][0][0]);
-						$locals['GIVN'] = $parts[0];
-					}
-					else {
-						$localvalue = get_gedcom_value($value['local'], 1, $indi['gedcom'], '', false);
-						if ( (strpos($value['local'],':PLAC') !== false) && $localvalue) {
+					switch ($value['local']) {
+					case 'GIVN':
+					case 'SURN':
+						list($locals['SURN'], $locals['GIVN'])=explode(',', $indi->getSortName());
+						break;
+					default:
+						$gedvalue = get_gedcom_value($value['local'], 1, $indi->getGedcomRecord(), '', false);
+						if ($gedvalue && strpos($value['comp'],':PLAC') !== false) {
 							// this is a PLAC string, trim it to a consistent number of levels
-							$localvalue = trimLocation($localvalue);
+							$gedvalue = trimLocation($gedvalue);
 						}               
-						$locals[$value['local']] = $localvalue;
+						$locals[$value['local']] = $gedvalue;
+						break;
 					}
 				}
 				
 				//-- load up the gedcom record we want to compare the data from
 				//-- record defaults to the indis record, after this section runs it will be 
 				//-- set to the record from the inferences table that we want to compare the value to
-				$record = $indi['gedcom'];
-				if ($value['record']!='') {
+				$record = $indi;
+				if ($record) {
 					$rec_tags = preg_split("/:/", $value['record']);
-					for($i=0; $i<count($rec_tags); $i++) {
-						$tag = $rec_tags[$i];
-						if ($tag=="SPOUSE") {
-							$parents = find_parents_in_record($record);
-							if ($parents['HUSB']==$pid) $id = $parents['WIFE']; 
-							else $id = $parents['HUSB'];
-							if (empty($id)) $record = '';
-							else {
-								if (isset($indilist[$id])) $record = $indilist[$id]['gedcom'];
-								else $record = '';
+					while ($record && $rec_tags) {
+						$tag = array_shift($rec_tags);
+						if (preg_match("/1 $tag @(.*)@/", $record->getGedcomRecord(), $match)) {
+							if ($tag=='FAMS' && $rec_tags && $rec_tags[0]=='SPOUSE') {
+								$record=$record->getCurrentSpouse();
+								array_shift($rec_tags);
+							} else {
+								$record=GedcomRecord::getInstance($match[1]);
 							}
-						}
-						else {
-							$match = array();
-							$ct = preg_match("/1 $tag @(.*)@/", $record, $match);
-							if ($ct==0) $record = "";
-							else {
-								$id = $match[1];
-								if (isset($indilist[$id])) $record = $indilist[$id]['gedcom'];
-								else if (isset($famlist[$id])) $record = $famlist[$id]['gedcom'];
-								else $record = find_gedcom_record($id);
-							}
+						} else {
+							$record=null;
 						}
 					}
 				}
 			
-				if (!empty($record)) {
-					if (preg_match("/SURN/", $value['comp'])) {
-						$ct = preg_match("/0 @(.*)@/", $record, $match);
-						if ($ct>0) {
-							$gid = $match[1];
-							$gedval = $indilist[$gid]['names'][0][2];
-							if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
-							$inferences[$pr_id]['count']++;
+				if ($record) {
+					switch ($value['comp']) {
+					case 'SURN':
+						list($surn)=explode(',', $record->getSortName());
+						if ($surn==$locals['SURN'] && $surn!='@N.N.') {
+							$inferences[$pr_id]['value']++;
 						}
-					}
-					else if (preg_match("/GIVN/", $value['comp'])) {
-//						$gender1 = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
-//						$gender2 = get_gedcom_value("SEX", 1, $record, '', false);
-//						if ($gender1==$gender2) {
-							$ct = preg_match("/0 @(.*)@/", $record, $match);
-							if ($ct>0) {
-								$gid = $match[1];
-								$parts = preg_split("~/~", $indilist[$gid]['names'][0][0]);
-								$gedval = $parts[0];
-								$parts1 = preg_split("/\s+/", $gedval);
-								$parts2 = preg_split("/\s+/", $locals['GIVN']);
-								foreach($parts1 as $p1=>$part1) {
-									foreach($parts2 as $p2=>$part2) {
-										if (str2lower($part1)==str2lower($part2)) $inferences[$pr_id]['value']++;
-										$inferences[$pr_id]['count']++;
-									}
+						break;
+					case 'GIVN':
+						list($dummy, $givn)=explode(',', $record->getSortName());
+						$parts1 = preg_split("/\s+/", $givn);
+						$parts2 = preg_split("/\s+/", $locals['GIVN']);
+						foreach ($parts1 as $part1) {
+							foreach ($parts2 as $part2) {
+								if ($part1==$part2 && $part1!='@P.N.') {
+									$inferences[$pr_id]['value']++;
+									break 2;
 								}
 							}
-//						}
-					}
-					else {
-						$gedval = get_gedcom_value($value['comp'], 1, $record, '', false);
-						if (!empty($gedval) && !empty($locals[$value['local']])) {
-
-							if ( (strpos($value['comp'],':PLAC') !== false) && $gedval) {
-								// this is a PLAC string, trim it to a consistent number of levels
-								$gedval = trimLocation($gedval);
-							}               
-
-							$inferences[$pr_id]['count']++;
-							if (str2lower($locals[$value['local']])==str2lower($gedval)) {
-								$inferences[$pr_id]['value']++; 
-//								if (strpos($value['local'],':PLAC') !== false) { print "<p>".$value['local']."-".$locals[$value['local']]."<br />".$value['comp']."-".$gedval."<br />SAME!</p>"; }               
-//							} else {
-//								if (strpos($value['local'],':PLAC') !== false) { print "<p>".$value['local']."-".$locals[$value['local']]."<br />".$value['comp']."-".$gedval."<br />DIFFERENT</p>"; }
-							}
 						}
+						break;
+					default:
+						$gedvalue = get_gedcom_value($value['local'], 1, $indi->getGedcomRecord(), '', false);
+						if ($gedvalue && strpos($value['comp'],':PLAC') !== false) {
+							// this is a PLAC string, trim it to a consistent number of levels
+							$gedvalue = trimLocation($gedvalue);
+						}               
+						if ($gedvalue && UTF8_strtolower($gedvalue)==UTF8_strtolower($locals[$value['local']])) {
+							$inferences[$pr_id]['value']++;
+						}
+						break;
 					}
+					$inferences[$pr_id]['count']++;
 				}
 			}
 		}
@@ -1815,17 +1790,15 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 														
 												foreach($tempDates as $tKey=>$tVal)
 												{
-													$tempDate = get_gedcom_value("DATE",2,$tVal[1]);
-													$tempPlace = get_gedcom_value("PLAC",2,$tVal[1]);
-													$parsedDates = new GedcomDate($tempDate);
-													$parsedDates = $parsedDates->MinDate();
-													$parsedDates = $parsedDates->convert_to_cal('gregorian');
+													$tempDate = $tVal->getDate();
+													$tempPlace = $tVal->getPlace();
 
-													$sortdate = $parsedDates->Format('Y');
-													$sortdate.=($parsedDates->m) ? $parsedDates->Format('m') : '00';
-													$sortdate.=($parsedDates->d) ? $parsedDates->Format('d') : '00';
-
-													$place = trim($place);
+													$tempDate = $tempDate->date1;
+													$sortdate = $tempDate->y;
+													$sortdate.=($tempDate->m) ? $tempDate->Format('m') : '00';
+													$sortdate.=($tempDate->d) ? $tempDate->Format('d') : '00';
+													
+													$place = trim($tempPlace);
 														
 													if(empty($closest))
 													{
@@ -1904,6 +1877,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							</table>\n
 					</td></tr></table>";
 			
+		//beginning of FamilySearch results functionality
+		if (file_exists("modules/FamilySearch/RA_AutoMatch.php")) {
+			include_once("modules/FamilySearch/RA_AutoMatch.php");
+			$matcher = new RA_AutoMatch();
+			$out .= $matcher->generateResultsTable($person);
+			unset($matcher);
+		}
 
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {
@@ -2124,10 +2104,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	 * delete all facts associated with the given task id
 	 * @param string $taskid	the taskid to delete facts for
-	 * @param string $indirec	the record to look in
+	 * @param GedcomRecord $record	the record to look in
 	 * @return string 			the updated record without the associated facts
 	 */
-	function deleteRAFacts($taskid, $indirec) {
+	function deleteRAFacts($taskid, &$record) {
+		$indirec = $record->getGedcomRecord();
 		if (preg_match("/\d _RATID ".$taskid."/", $indirec)>0) {
 			$lines = preg_split("/[\r\n]/", $indirec);
 			$newrec = $lines[0]."\r\n";

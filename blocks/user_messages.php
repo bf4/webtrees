@@ -96,9 +96,9 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			if ($user_id) {
 				$content .= PrintReady(getUserFullName($user_id));
 				if ($TEXT_DIRECTION=="ltr") {
-					$content .= " " . getLRM() . " - ".htmlspecialchars($user_id) . getLRM();
+					$content .= " " . getLRM() . " - ".htmlspecialchars($user_id,ENT_COMPAT,'UTF-8') . getLRM();
 				} else {
-					$content .= " " . getRLM() . " - ".htmlspecialchars($user_id) . getRLM();
+					$content .= " " . getRLM() . " - ".htmlspecialchars($user_id,ENT_COMPAT,'UTF-8') . getRLM();
 				}
 			} else {
 				$content .= "<a href=\"mailto:".$user_id."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$user_id)."</a>";
@@ -106,7 +106,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$content .= "</td>";
 			$content .= "</tr>";
 			$content .= "<tr><td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message$key\" style=\"display: none;\">";
-			$message["body"] = nl2br(htmlspecialchars($message["body"]));
+			$message["body"] = nl2br(htmlspecialchars($message["body"],ENT_COMPAT,'UTF-8'));
 			$message["body"] = expand_urls($message["body"]);
 
 			$content .= PrintReady($message["body"])."<br /><br />";
@@ -143,16 +143,11 @@ function print_user_messages($block=true, $config="", $side, $index) {
 	}
 	$content .= "</form>";
 
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
+	global $THEME_DIR;
 	if ($block) {
-		print '<div class="small_inner_block">'.$content.'</div>';
+		include($THEME_DIR."templates/block_small_temp.php");
 	} else {
-		print $content;
+		include($THEME_DIR."templates/block_main_temp.php");
 	}
-	print '</div></div>';
 }
 ?>

@@ -378,12 +378,19 @@ if ($action=="filter") {
 			$names = preg_split("/[\s,]+/", $filter);
 			print "<td class=\"list_value_wrap\"><ul>";
 			foreach ($myindilist as $key => $value) {
-				foreach($value["names"] as $indexval => $namearray) {
+				$person=Person::getInstance($key);
+				foreach ($person->getAllNames() as $namearray) {
+					$found = true;
 					foreach($names as $ni=>$name) {
-						$found = true;
-						if (preg_match("/".$name."/i", $namearray[0])==0) $found=false;
+						if (preg_match("/".$name."/i", $namearray['list'])==0) {
+							$found=false;
+							break;
+						}
 					}
-					if ($found) $printname[] = array(sortable_name_from_name($namearray[0]), $key, get_gedcom_from_id($value["gedfile"]));
+					if ($found) {
+						$printname[] = array($namearray['list'], $key, get_gedcom_from_id($value["gedfile"]));
+						break;
+					}
 				}
 			}
 			uasort($printname, "itemsort");
@@ -393,7 +400,8 @@ if ($action=="filter") {
 					include get_privacy_file();
 					$curged = $GEDCOM;
 				}
-				echo format_list_person($pvalue[1], array(check_NN($pvalue[0]), $pvalue[2]), true);
+				$person=Person::getInstance($pvalue[1]);
+				echo $person->format_list('li', false, check_NN($pvalue[0]));
 				print "\n";
 			}
 			print "\n\t\t</ul></td>";
@@ -484,12 +492,7 @@ if ($action=="filter") {
 			}
 			print "</tr>\n";
 
-			print "<tr><td class=\"list_label\">".$pgv_lang["total_fams"]." ".count($myfamlist);
-			if (count($fam_private)>0) print "  (".$pgv_lang["private"]." ".count($fam_private).")";
-			if (count($fam_hide)>0) print "  --  ".$pgv_lang["hidden"]." ".count($fam_hide);
-			if (count($fam_private)>0 || count($fam_hide)>0) print_help_link("privacy_error_help", "qm");
-
-			print "</tr></td>";
+			print "<tr><td class=\"list_label\">".$pgv_lang["total_fams"]." ".count($myfamlist)."</tr></td>";
 		}
 		else {
 			print "<td class=\"list_value_wrap\">";
@@ -557,7 +560,6 @@ if ($action=="filter") {
 			generate_thumbnail($directory.$filename,$thumbdir.$filename);
 		}
 
-		$applyfilter = ($filter != "");
 		print "<br />";
 
 		// display the images TODO x across if lots of files??
@@ -570,11 +572,10 @@ if ($action=="filter") {
 
 				if (($ct <= $level+1 && $external_links != "http" && !isFileExternal($media["FILE"])) || (isFileExternal($media["FILE"]) && $external_links == "http")) {
 					// simple filter to reduce the number of items to view
-					if ($applyfilter) $isvalid = (strpos(str2lower($media["FILE"]),str2lower($filter)) !== false);
-					else $isvalid = true;
+					$isvalid = filterMedia($media, $filter, 'http');
 					if ($isvalid && $chooseType!="all") {
-						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false;
-						if ($chooseType!="file" && empty($media["XREF"])) $isvalid = false;
+						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false;	// skip linked media files
+						if ($chooseType=="media" && empty($media["XREF"])) $isvalid = false;	// skip unlinked media files
 					}
 
 					if ($isvalid) {
@@ -618,24 +619,25 @@ if ($action=="filter") {
 						if ($media["LINKED"]) {
 							print $pgv_lang["media_linked"]."<br />";
 							foreach ($media["LINKS"] as $indi => $type_record) {
-								if (isset($pgv_changes[$indi."_".$GEDCOM])) $indirec = find_updated_record($indi);
-								else $indirec = find_gedcom_record($indi);
-								if ($type_record=="INDI") {
-									print " <br /><a href=\"individual.php?pid=".$indi."\"> ".$pgv_lang["view_person"]." - ".PrintReady(get_person_name($indi))."</a>";
+								$record=GedcomRecord::getInstance($indi);
+								echo '<br /><a href="'.encode_url($record->getLinkUrl()).'">';
+								switch($type_record) {
+								case 'INDI':
+									echo $pgv_lang['view_person'], ' - ';
+									break;
+								case 'FAM':
+									echo $pgv_lang['view_family'], ' - ';
+									break;
+								case 'SOUR':
+									echo $pgv_lang['view_source'], ' - ';
+									break;
+								case 'OBJE':
+									echo $pgv_lang['view_object'], ' - ';
+									break;
 								}
-								else if ($type_record=="FAM") {
-									print "<br /> <a href=\"family.php?famid=".$indi."\"> ".$pgv_lang["view_family"]." - ".PrintReady(get_family_descriptor($indi))."</a>";
-								}
-								else if ($type_record=="SOUR") {
-									print "<br /> <a href=\"source.php?sid=".$indi."\"> ".$pgv_lang["view_source"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
-								}
-								//-- no reason why we might not get media linked to media. eg stills from movie clip, or differents resolutions of the same item
-								else if ($type_record=="OBJE") {
-									//print "<br /> <a href=\"media.php?gid=".$indi."\"> ".$pgv_lang["view_object"]." - ".PrintReady(get_source_descriptor($indi))."</a>";
-								}
+								echo PrintReady($record->getFullName()), '</a>';
 							}
-						}
-						else {
+						} else {
 							print $pgv_lang["media_not_linked"];
 						}
 						print "\n\t\t\t</td>";

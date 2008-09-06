@@ -140,8 +140,8 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= print_findsource_link("gid{$uniqueID}",'',true);
 
 	$content .= "<br />".$pgv_lang["add_fav_or_enter_url"];
-	$content .= "<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
-	$content .= "<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
+	$content .= "<table><tr><td>".$pgv_lang["url"]."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>";
+	$content .= "<tr><td>".$pgv_lang["title"]."</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>";
 	if ($block) $content .= "\n</td></tr><tr><td><br />";
 	else $content .= "\n</td><td>";
 	$content .= $pgv_lang["add_fav_enter_note"];
@@ -150,18 +150,12 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" style=\"font-size: 8pt; \" />";
 	$content .= "</form></div>";
 
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
+	global $THEME_DIR;
 	if ($block) {
-		print '<div class="small_inner_block">'.$content.'</div>';
+		include($THEME_DIR."templates/block_small_temp.php");
 	} else {
-		print $content;
+		include($THEME_DIR."templates/block_main_temp.php");
 	}
-	print '</div></div>';
-	
 	// Restore GEDCOM configuration
 	unset($show_full);
 	if (isset($saveShowFull)) $show_full = $saveShowFull;

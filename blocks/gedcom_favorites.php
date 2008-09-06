@@ -102,10 +102,10 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 							$content.=$pgv_lang['invalid_id'];
 						}
 						$content .= "<br />".PrintReady($favorite["note"]);
+						$content .= "</div>";
 					}
 				}
 			}
-			$content .= "</div>";
 			$content .= "</td></tr>\n";
 		}
 		$content .= "</table>\n";
@@ -113,10 +113,12 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	if (PGV_USER_GEDCOM_ADMIN) { 
 	$content .= '
 		<script language="JavaScript" type="text/javascript">
+		<!--
 		var pastefield;
 		function paste_id(value) {
 			pastefield.value=value;
 		}
+		//-->
 		</script>
 		<br />
 		';
@@ -138,8 +140,8 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= print_findsource_link("gid{$uniqueID}","",true);
 
 		$content .= "\n<br />".$pgv_lang["add_fav_or_enter_url"];
-		$content .= "\n<br />".$pgv_lang["url"]."<input type=\"text\" name=\"url\" size=\"40\" value=\"\" />";
-		$content .= "\n<br />".$pgv_lang["title"]." <input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" />";
+		$content .= "\n<table><tr><td>".$pgv_lang["url"]."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>";
+		$content .= "\n<tr><td>".$pgv_lang["title"]."</td><td><input type=\"text\" name=\"favtitle\" size=\"40\" value=\"\" /></td></tr></table>";
 		if ($block) $content .= "\n</td></tr><tr><td><br />";
 		else $content .= "\n</td><td>";
 		$content .= "\n".$pgv_lang["add_fav_enter_note"];
@@ -149,18 +151,12 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "\n</form></div>\n";
 	}
 	
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
+	global $THEME_DIR;
 	if ($block) {
-		print '<div class="small_inner_block">'.$content.'</div>';
+		include($THEME_DIR."templates/block_small_temp.php");
 	} else {
-		print $content;
+		include($THEME_DIR."templates/block_main_temp.php");
 	}
-	print '</div></div>';
-	
 	// Restore GEDCOM configuration
 	unset($show_full);
 	if (isset($saveShowFull)) $show_full = $saveShowFull;

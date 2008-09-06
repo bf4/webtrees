@@ -136,7 +136,7 @@ $pgv_lang["PLACECHECK_MATCH_help"]  	= "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br 
 
 //wooc Options for Place Hierarchy display
 $pgv_lang["GOOGLEMAP_PH"]             	= "Use Googlemap for Place Hierarchy";
-$pgv_lang["GOOGLEMAP_PH_help"]        	= "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Using this option the functionality of the Googlemap for Place Hierarchy can be enabled or disabled. For show is needed to enable Googlemap module also. Before using is recomended to insert all places into the Googlemap tables.";
+$pgv_lang["GOOGLEMAP_PH_help"]        	= "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Use this option to enable (Yes) or disable (No) the ability to substitute Googlemap for PhpGEDView's usual Place Hierarchy. To be able to set this option to YES, the Googlemap module must be also be enabled. CAUTION: Before using this option, it is recommended that you insert all places currently existing in your GED into the Googlemap tables.";
 $pgv_lang["GOOGLEMAP_PH_MAP_SIZE"]		= "Size of Place Hierarchy map (in pixels)";
 $pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"]	= "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />The size of the map (in pixels) as shown on the Place Hierarchy pages.";
 $pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Type of place markers in Place Hierarchy";

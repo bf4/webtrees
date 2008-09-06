@@ -61,22 +61,19 @@ function expand_urls($text) {
  * print a fact record
  *
  * prints a fact record designed for the personal facts and details page
- * @param string $factrec	The gedcom subrecord
- * @param string $pid		The Gedcom Xref ID of the person the fact belongs to (required to check fact privacy)
- * @param int $linenum		The line number where this fact started in the original gedcom record (required for editing)
- * @param string $indirec	optional INDI record for age calculation at family event
+ * @param Event $eventObj	The Event object to print
  * @param boolean $noedit	Hide or show edit links
  */
-function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
+function print_fact(&$eventObj, $noedit=false) {
 	global $factarray;
 	global $nonfacts;
 	global $PGV_IMAGE_DIR;
 	global $pgv_lang, $GEDCOM;
+	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
-	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS;
+	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS;
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
-	global $SHOW_FACT_ICONS;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
 	
@@ -85,16 +82,14 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 
 	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
-	$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
-	if ($ft>0) {
-		$fact = trim($match[1]);
-		$event = trim($match[2]);
-		if ($event=="" and $fact=="TEXT") $event="\n";
-	}
-	else {
-		$fact="";
-		$event="";
-	}
+	$fact = $eventObj->getTag();
+	$event = $eventObj->getDetail();
+	$factrec = $eventObj->getGedcomRecord();
+	$linenum = $eventObj->getLineNumber();
+	$parent = $eventObj->getParentObject();
+	$pid = "";
+	if (!is_null($eventObj->getFamilyId())) $pid = $eventObj->getFamilyId();
+	else if (!is_null($parent)) $pid = $parent->getXref();
 
 	if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum, $noedit);
 	if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum, $noedit);
@@ -124,8 +119,25 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 		}
 		// -- handle generic facts
 		if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
+			if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
+				// Allow special processing for different languages
+				$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func)) {
+					// Localise the AKA or _INTE facts
+					$func($fact, $pid);
+				}
+			}
+			$explode_fact = explode("_", $fact);
+			if (!empty($explode_fact[1]) && !empty($explode_fact[2])) {
+				// Allow special processing for different languages
+				$func="cr_facts_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func)) {
+					// Localise close relatives facts
+					$func($factrec, $fact, $explode_fact, $pid);
+				}
+			}
 			$factref = $fact;
-			if (!showFact($factref, $pid)) return false;
+			if (!$eventObj->canShow()) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
 			print "\n\t\t<tr class=\"".$rowID."\">";
@@ -133,7 +145,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
-			print_fact_icon($fact, $factrec, $label, $pid);
+			if ($SHOW_FACT_ICONS)
+				print $eventObj->Icon().' ';
 			print $factarray[$fact];
 			if ($fact=="_BIRT_CHIL" and isset($n_chil)) print "<br />".$pgv_lang["number_sign"].$n_chil++;
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) print "<br />".$pgv_lang["number_sign"].$n_gchi++;
@@ -209,7 +222,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			print "<td class=\"descriptionbox $styleadd center width20\">";
-			print_fact_icon($fact, $factrec, $label, $pid);
+			if ($SHOW_FACT_ICONS)
+				print $eventObj->Icon().' ';
 			print $label;
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
 				$menu = array();
@@ -299,7 +313,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				$ct = preg_match("/2 TYPE (.*)/", $factrec, $match);
 				if ($ct>0) {
 					$type = trim($match[1]);
-					if (isset ($factarray["MARR_".str2upper($type)])) print $factarray["MARR_".str2upper($type)];
+					if (isset ($factarray["MARR_".UTF8_strtoupper($type)])) print $factarray["MARR_".UTF8_strtoupper($type)];
 					else if (isset($factarray[$type])) print $factarray[$type];
 					else if (isset($pgv_lang[$type])) print $pgv_lang[$type];
 					else print $type;
@@ -307,23 +321,22 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 			}
 			// -- find date for each fact
-			echo format_fact_date($factrec, true, true, $fact, $pid, $indirec);
+			echo format_fact_date($eventObj, true, true);
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
-				$spouse=$match[1];
-				if ($spouse!=="") {
- 					print " <a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-					if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
-						print PrintReady(get_person_name($spouse));
-						$addname = get_add_person_name($spouse);
-						if ($addname!="") print " - ".PrintReady($addname);
+				$spouse=Person::getInstance($match[1]);
+				if ($spouse) {
+ 					print " <a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+					if ($spouse->canDisplayName()) {
+						print PrintReady($spouse->getFullName());
+					} else {
+						print $pgv_lang["private"];
 					}
-					else print $pgv_lang["private"];
 					print "</a>";
 				}
-				if (($view!="preview") && ($spouse!=="")) print " - ";
-				if ($view!="preview" &&(empty($SEARCH_SPIDER))) {
+				if ($view!="preview" && $spouse) print " - ";
+				if ($view!="preview" && empty($SEARCH_SPIDER)) {
 					print "<a href=\"".encode_url("family.php?famid={$pid}")."\">";
 					if ($TEXT_DIRECTION == "ltr") print " " . getLRM();
 					else print " " . getRLM();
@@ -338,11 +351,14 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				print " ";
 				$ct = preg_match("/@(.*)@/", $event, $match);
 				if ($ct>0) {
-					$gedrec = find_gedcom_record($match[1]);
-					if (strstr($gedrec, "INDI")!==false) print "<a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">".get_person_name($match[1])."</a><br />";
-					else if ($fact=="REPO") print_repository_record($match[1]);
-					else print_submitter_info($match[1]);
-
+					$gedrec=GedcomRecord::getInstance($match[1]);
+					if ($gedrec->getType()=='INDI') {
+						echo '<a href="', encode_url($gedrec->getLinkUrl()), '">', $gedrec->getFullName(), '</a><br />';
+					}	elseif ($fact=='REPO') {
+						print_repository_record($match[1]);
+					} else {
+						print_submitter_info($match[1]);
+					}
 				}
 				else if ($fact=="ALIA") {
 					//-- strip // from ALIA tag for FTM generated gedcoms
@@ -354,19 +370,19 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 						print $pgv_lang["yes"]."<br />";
 					}
 				}*/
-				else if ($event=="N") {
+				elseif ($event=="N") {
 					if (get_sub_record(2, "2 DATE", $factrec)=="") {
 						print $pgv_lang["no"];
 					}
-				}
-				else if (strstr("URL WWW ", $fact." ")) {
+				} elseif (strstr("URL WWW ", $fact." ")) {
 					print "<a href=\"".$event."\" target=\"new\">".PrintReady($event)."</a>";
-				}
-				else if (strstr("_EMAIL", $fact)) {
+				} elseif (strstr("_EMAIL", $fact)) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
-				}
-				else if (strstr('FAX PHON FILE ', $fact.' ')) print getLRM(). $event.' ' . getLRM();
-				else if ($event!='Y') {
+				} elseif (strstr("AFN", $fact)) {
+					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.htmlspecialchars($event,ENT_COMPAT,'UTF-8').'</a>';
+				} elseif (strstr('FAX PHON FILE ', $fact.' ')) {
+					print getLRM(). $event.' ' . getLRM();
+				} elseif ($event!='Y') {
 					if (!strstr('ADDR _RATID _CREM ', substr($fact,0,5).' ')) echo PrintReady($event);
 					echo ' ';
 				}
@@ -380,13 +396,15 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			$ct = preg_match("/2 DESC (.*)/", $factrec, $match);
 			if ($ct>0) print PrintReady($match[1]);
 				// -- print PLACe, TEMPle and STATus
-				echo format_fact_place($factrec, true, true, true);
+				echo format_fact_place($eventObj, true, true, true);
 				if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || (!empty($event)&&$fact!="ADDR")) print "<br />\n";
 				// -- print BURIal -> CEMEtery
 				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
 				if ($ct>0) {
-					print_fact_icon("CEME", $factrec, $factarray["CEME"], $pid);
-					print $factarray["CEME"].": ".$match[1]."<br />\n";
+					if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/CEME.gif"))
+						//print $eventObj->Icon().' '; // print incorrect fact icon !!!
+						print "<img src=\"{$PGV_IMAGE_DIR}/facts/CEME.gif\" alt=\"{$factarray["CEME"]}\" title=\"{$factarray["CEME"]}\" align=\"middle\" /> ";
+					print "<b>".$factarray["CEME"].":</b> ".$match[1]."<br />\n";
 				}
 			//-- print address structure
 			if ($fact!="ADDR") {
@@ -408,10 +426,9 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			}
 			if (preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
 				print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
-				print "<a href=\"".encode_url("family.php?famid={$match[1]}&ged={$GEDCOM}")."\">";
-				print get_family_descriptor($match[1]);
-				print "</a>";
-				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", str2upper($factrec), $match)) {
+				$family=Family::getInstance($match[1]);
+				echo "<a href=\"".encode_url($family->getLinkUrl())."\">", $family->getFullName(), "</a>";
+				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", UTF8_strtoupper($factrec), $match)) {
 					print '<br/><span class="indent"><span class="label">'.$factarray['ADOP'].':</span> ';
 					print '<span class="field">';
 					switch ($match[1]) {
@@ -448,7 +465,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				//-- catch all other facts that could be here
 				$special_facts = array("ADDR","ALIA","ASSO","CEME","CONC","CONT","DATE","DESC","EMAIL",
 				"FAMC","FAMS","FAX","NOTE","OBJE","PHON","PLAC","RESN","SOUR","STAT","TEMP",
-				"TIME","TYPE","WWW","_EMAIL","_PGVU", "URL", "AGE");
+				"TIME","TYPE","WWW","_EMAIL","_PGVU", "URL", "AGE","_PGVS","_PGVFS","_RATID");
 				$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $match, PREG_SET_ORDER);
 				if ($ct>0) print "<br />";
 				for($i=0; $i<$ct; $i++) {
@@ -456,8 +473,10 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 					if (!in_array($factref, $special_facts)) {
 						if (isset($factarray[$factref])) $label = $factarray[$factref];
 						else $label = $factref;
-					if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) print_fact_icon($factref, $factrec, $label, $pid);
-					else print "<span class=\"label\">".$label.": </span>";
+						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) 
+							//print $eventObj->Icon().' '; // print incorrect fact icon !!!
+							print "<img src=\"{$PGV_IMAGE_DIR}/facts/".$factref.".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
+						else print "<span class=\"label\">".$label.": </span>";
 						$value = trim($match[$i][2]);
 						if (isset($pgv_lang[strtolower($value)])) print $pgv_lang[strtolower($value)];
 						else print PrintReady($value);
@@ -570,25 +589,24 @@ function print_fact_sources($factrec, $level, $return=false) {
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
 			if ($lt>0) $data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 			$data .= $pgv_lang["source"].":</span> <span class=\"field\">";
-			$source = find_source_record($sid);
-			$data .= "<a href=\"".encode_url("source.php?sid={$sid}")."\">";
-			$text = PrintReady(get_source_descriptor($sid));
-			//-- Print additional source title
-			$add_descriptor = get_add_source_descriptor($sid);
-			if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
-			// if (strpos($source, " _ITALIC")) print "<i>".$text."</i>"; else print $text;
-			$data .= $text;
-			$data .= "</a>";
+			$source=Source::getInstance($sid);
+			if ($source) {
+				$data .= "<a href=\"".encode_url($source->getLinkUrl())."\">".PrintReady($source->getFullName())."</a>";
+			} else {
+				$data .= $sid;
+			}
 			$data .= "</span>";
 
 			$data .= "<div id=\"$elementID\"";
 			if ($EXPAND_SOURCES) $data .= " style=\"display:block\"";
 			$data .= " class=\"source_citations\">";
 			// PUBL
-			$text = get_gedcom_value("PUBL", "1", $source);
-			if (!empty($text)) {
-				$data .= "<span class=\"label\">".$factarray["PUBL"].": </span>";
-				$data .= $text;
+			if ($source) {
+				$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
+				if (!empty($text)) {
+					$data .= "<span class=\"label\">".$factarray["PUBL"].": </span>";
+					$data .= $text;
+				}
 			}
 			$data .= printSourceStructure(getSourceStructure($srec));
 			$data .= "<div class=\"indent\">";
@@ -653,7 +671,7 @@ function print_media_links($factrec, $level,$pid='') {
 					//LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 						$name = trim($row["m_titl"]);
-							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
+							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
 					}elseif ($USE_MEDIA_VIEWER) {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
@@ -679,11 +697,12 @@ function print_media_links($factrec, $level,$pid='') {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
 				}
 				if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() .  PrintReady($mediaTitle)."</i>";
-				else print "<i>".PrintReady($mediaTitle)."</i>";
+				else print "<i>".PrintReady($mediaTitle)."</i><br />";
 				if(empty($SEARCH_SPIDER)) {
 					print "</a>";
 				}
-
+				// NOTE: Print the notes of the media
+				print print_fact_notes($row["m_gedrec"], 1);
 				// NOTE: Print the format of the media
 				if (!empty($row["m_ext"])) {
 					print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$row["m_ext"]."</span>";
@@ -704,16 +723,17 @@ function print_media_links($factrec, $level,$pid='') {
 				//-- print spouse name for marriage events
 				$ct = preg_match("/PGV_SPOUSE: (.*)/", $factrec, $match);
 				if ($ct>0) {
-					$spouse=$match[1];
-					if ($spouse!=="") {
-						print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-						if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
-							print PrintReady(get_person_name($spouse));
+					$spouse=Person::getInstance($match[1]);
+					if ($spouse) {
+						print "<a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+						if ($spouse->canDisplayName()) {
+							print PrintReady($spouse->getFullName());
+						} else {
+							print $pgv_lang["private"];
 						}
-						else print $pgv_lang["private"];
 						print "</a>";
 					}
-					if (($view != "preview") && ($spouse!=="") && (empty($SEARCH_SPIDER))) print " - ";
+					if ($view!="preview" && $spouse && empty($SEARCH_SPIDER)) print " - ";
 					if ($view != "preview") {
 						$ct = preg_match("/PGV_FAMILY_ID: (.*)/", $factrec, $match);
 						if ($ct>0) {
@@ -944,20 +964,12 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			print "\n\t\t\t<td class=\"optionbox $styleadd wrap\">";
 			//print "\n\t\t\t<td class=\"facts_value$styleadd\">";
 			if (showFactDetails("SOUR", $pid)) {
-				$source = find_source_record($sid);
-				echo "<a href=\"".encode_url("source.php?sid={$sid}")."\">";
-				$text = PrintReady(get_source_descriptor($sid));
-				//-- Print additional source title
-				$add_descriptor = get_add_source_descriptor($sid);
-				if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
-				// if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
-				echo $text;
-				echo "</a>";
+				$source=Source::getInstance($sid);
+				echo "<a href=\"".encode_url($source->getLinkUrl())."\">", PrintReady($source->getFullName()), "</a>";
 				// PUBL
-				$text = get_gedcom_value("PUBL", "1", $source);
+				$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
 				if (!empty($text)) {
 					echo "<br /><span class=\"label\">".$factarray["PUBL"].": </span>";
-					// if (strpos($source, " _PAREN")) echo "(".$text.")"; else echo $text;
 					echo $text;
 				}
 				// See if RESN tag prevents display or edit/delete
@@ -967,6 +979,12 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 				if (isset($resn_value)) {
 					print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
 					print_help_link("RESN_help", "qm");
+				}
+				$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
+				if ($cs>0) {
+					print "<br /><span class=\"label\">".$factarray["EVEN"]." </span><span class=\"field\">".$cmatch[1]."</span>";
+					$cs = preg_match("/".($nlevel+1)." ROLE (.*)/", $srec, $cmatch);
+					if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"]." </span><span class=\"field\">$cmatch[1]</span>";
 				}
 				if ($source) {
 					print printSourceStructure(getSourceStructure($srec));
@@ -1521,7 +1539,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
 					$name = trim($rowm["m_titl"]);
-					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">" . "\n";
+					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
@@ -1531,22 +1549,22 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}
 			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle)) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle)) . "\" />";
+			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" />";
 			if ($mainFileExists) print "</a>";
 		}
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
-		else print "<i>".PrintReady(htmlspecialchars($mediaTitle)."&nbsp;&nbsp;({$rowm['m_media']})");
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')."&nbsp;&nbsp;({$rowm['m_media']})");
+		else print "<i>".PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')."&nbsp;&nbsp;({$rowm['m_media']})");
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $rowm["m_gedrec"]);
-		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle));
+		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle,ENT_COMPAT,'UTF-8'));
 		$addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 1, $rowm["m_gedrec"]);
-		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle));
+		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle,ENT_COMPAT,'UTF-8'));
 		print "</i>";
 		if(empty($SEARCH_SPIDER)) {
 			print "</a>";
@@ -1573,20 +1591,23 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if ($rowm['mm_gid']!=$pid) {
 			$parents = find_parents($rowm['mm_gid']);
 			if ($parents) {
-				if (!empty($parents['HUSB']) && $parents['HUSB']!=$pid) $spouse = $parents['HUSB'];
-				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) $spouse = $parents['WIFE'];
+				if (!empty($parents['HUSB']) && $parents['HUSB']!=$pid) $spouse = Person::getInstance($parents['HUSB']);
+				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) $spouse = Person::getInstance($parents['WIFE']);
+			} else {
+				$spouse=null;
 			}
-			if (!empty($spouse)) {
-				print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\">";
-				if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
-					print PrintReady(get_person_name($spouse));
+			if ($spouse) {
+				print "<a href=\"".$spouse->getLinkUrl()."\">";
+				if ($spouse->canDisplayName()) {
+					print PrintReady($spouse->getFullName());
+				} else {
+					print $pgv_lang["private"];
 				}
-				else print $pgv_lang["private"];
 				print "</a>";
 			}
 			if(empty($SEARCH_SPIDER)) {
-				if (($view != "preview") && (!empty($spouse))) print " - ";
-				if ($view != "preview") {
+				if ($view!="preview" && $spouse) print " - ";
+				if ($view!="preview") {
 						$famid = $rowm['mm_gid'];
 						print "<a href=\"".encode_url("family.php?famid={$famid}")."\">[".$pgv_lang["view_family"];
 						if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM();
@@ -1622,94 +1643,6 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	}
 	print "</td></tr>";
 	return true;
-}
-/**
- * Print a fact icon that varies by the decade, century, and subtype
- *
- * Many facts change over time.  Military uniforms, marriage dress, census forms.
- * This is a cutesy way to show the changes over time.  More icons need to be added
- * to the themes/?????/images/facts/ directory with a form of nn00_TYPE.gif or nnn0_TYPE.gif.
- * A special case of nn00_OCCU_FARM.gif has been added to celebrate farmers and farm hands.
- * A special case of nn00_OCCU_HOUS.gif has been added for KEEPing HOUSe or HOUSe KEEPers.
- * Generic subtyping is done by storing the first four characters of the value of the
- * record in a filename.  "1 RELI Methodist" is RELI_METH.gif or 1900_RELI_METH.gif.
- * 1960__MILI_CONF.gif would be Confederate soldier, and 1860__MILI_UNIO.gif would be
- * the counterpart Union soldier.  The most specific match wins.
- * Examples: 1900_CENS.gif 1910_CENS.gif 1900_OCCU_FARM.gif 1800_OCCU_FARM.gif
- *
- * @param string $fact		The fact type to print
- * @param string $factrec	The gedcom subrecord
- * @param string $label		The fact type described and possibly translated
- * @param string $pid		The gedcom id record the fact orginiated from
- */
-function print_fact_icon($fact, $factrec, $label, $pid) {
-	global $SHOW_FACT_ICONS, $PGV_IMAGE_DIR;
-
-	if ($SHOW_FACT_ICONS) {
-		$fact_image = "";
-		if (preg_match('/2 DATE (.+)/', $factrec, $match)) {
-			$factdate = new GedcomDate($match[1]);
-			$factyear = $factdate->gregorianYear();
-		} else
-			$factyear=0;
-		$joe = null;
-		if (gedcom_record_type($pid, PGV_GED_ID)=='INDI') $joe = Person::getInstance($pid);
-		$sexcheck = "";
-		if (!is_null($joe)) {
-			$sex = $joe->getSex();
-			if(($sex == "F") || ($sex == "M") || ($sex == "U"))
-				$sexcheck = "_".$sex;
-		}
-		// If the date is not on the fact, fall back to birth if available
-		// Does not catch the date if it is attached to the source of the fact
-		// (ratid entered OCCU) or if the fact comes from a family record. (MARR)
-		if ($factyear == 0 && !is_null($joe)) {
-			$fallback=$joe->getEstimatedBirthDate();
-			$fallback=$fallback->gregorianYear();
-			if($fallback)
-				$factyear=$fallback;
-		}
-
-		// converting from scalar to array string.
-		$century = $decade = sprintf("%04d", $factyear);
-		$decade[3] = '0';	// Zero out the years
-		$century[2] = '0';	// Zero out the decades
-		$century[3] = '0';
-
-		if(file_exists($PGV_IMAGE_DIR."/facts/".$fact.".gif"))
-			$fact_image = $PGV_IMAGE_DIR."/facts/".$fact;
-		if(file_exists($PGV_IMAGE_DIR."/facts/".$century."_".$fact.".gif"))
-			$fact_image = $PGV_IMAGE_DIR."/facts/".$century."_".$fact;
-		if(file_exists($PGV_IMAGE_DIR."/facts/".$decade."_".$fact.".gif"))
-			$fact_image = $PGV_IMAGE_DIR."/facts/".$decade."_".$fact;
-
-		// Since so much of the population before 1900 were farmers and their
-		// wives keeping house, why not show a special icon.
-		if(($fact == "OCCU") && ((stristr(substr($factrec, 7, 30), "house")) ||
-		                         (stristr(substr($factrec, 7, 30), "keep")))) {
-			if(file_exists($fact_image."_HOUS.gif"))
-				$fact_image = $fact_image."_HOUS";
-			}
-		if(($fact == "OCCU") && (stristr(substr($factrec, 7, 30), "farm"))) {
-			if(file_exists($fact_image."_FARM.gif"))
-				$fact_image = $fact_image."_FARM";
-			}
-		$j = explode(" ", substr($factrec, 0, 20));
-		if((!empty($j[2])) && (!empty($fact_image))) {
-			$subtype = strtoupper(substr($j[2], 0, 4));
-			if(file_exists($fact_image."_".$subtype.".gif"))
-				$fact_image = $fact_image."_".$subtype;
-			}
-		// Append _M, _F, or _U if available
-		if($sexcheck != "") {
-			if(file_exists($fact_image.$sexcheck.".gif"))
-				$fact_image = $fact_image.$sexcheck;
-			}
-
-		if(!empty($fact_image))
-			print "<img src=\"".$fact_image.".gif\" alt=\"".$label."\" title=\"".$label."\" align=\"middle\" /> ";
-	}
-	return;
 }
 
 // -----------------------------------------------------------------------------

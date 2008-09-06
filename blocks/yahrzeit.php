@@ -127,7 +127,8 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		foreach ($yahrzeits as $yahrzeit)
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
-				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".$ind->getFullName()."</a>".$ind->getSexImage();
+//@@			$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".$ind->getFullName()."</a>".$ind->getSexImage();
+				$content .= "<a href=\"".encode_url($ind->getLinkUrl())."\" class=\"list_item name2\">".PrintReady($ind->getFullName())."</a>".$ind->getSexImage();
 				$content .= "<div class=\"indent\">";
 				$content .= $yahrzeit['date']->Display(true);
 				$content .= ', '.str_replace("#year_var#", $yahrzeit['anniv'], $pgv_lang["year_anniversary"]);
@@ -226,17 +227,12 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		break;
 	}
 
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
+	global $THEME_DIR;
 	if ($block) {
-		print '<div class="small_inner_block">'.$content.'</div>';
+		include($THEME_DIR."templates/block_small_temp.php");
 	} else {
-		print $content;
+		include($THEME_DIR."templates/block_main_temp.php");
 	}
-	print '</div></div>';
 }
 
 function print_yahrzeit_config($config) {

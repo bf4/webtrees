@@ -89,7 +89,7 @@ class HourglassControllerRoot extends BaseController {
 	/**
 	 * Initialization function
 	 */
-	function init() {
+	function init($rootid='', $show_full=1, $generations=3) {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 		global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $show_full;
 
@@ -104,6 +104,7 @@ class HourglassControllerRoot extends BaseController {
 		$show_full=$this->show_full;
 
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
+		if (!empty($rootid)) $this->pid = $rootid;
 
 		//-- flip the arrows for RTL languages
 		if ($TEXT_DIRECTION=="rtl") {
@@ -128,10 +129,8 @@ class HourglassControllerRoot extends BaseController {
 		// Validate parameters
 		$this->pid=check_rootid($this->pid);
 
-		if ((DisplayDetailsByID($this->pid))||(showLivingNameByID($this->pid))) $this->name = get_person_name($this->pid);
-		else $this->name = $pgv_lang["private"];
-
 		$this->hourPerson = Person::getInstance($this->pid);
+		$this->name=$this->hourPerson->getFullName();
 
 		//Checks how many generations of descendency is for the person for formatting purposes
 		$this->dgenerations = $this->max_descendency_generations($this->pid, 0);

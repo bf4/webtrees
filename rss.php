@@ -92,7 +92,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$author=getUserFullName($CONTACT_EMAIL);
 
 	$feed = new UniversalFeedCreator();
-	$feed->generator = PGV_PHPGEDVIEW_URL.' '.PGV_VERSION_TEXT;
+	$feed->generator = PGV_PHPGEDVIEW_URL;
 	$feed->title = $GEDCOMS[$GEDCOM]["title"];
 	$feed->language = $lang_short_cut[$LANGUAGE]; //$lang_langcode[$LANGUAGE];
 	$feed->descriptionHtmlSyndicated = true;

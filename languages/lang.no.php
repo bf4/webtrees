@@ -965,7 +965,7 @@ $pgv_lang["hit_count"]				= "Antall treff:";
 $pgv_lang["phpgedview_message"]		= "PhpGedView beskjed";
 $pgv_lang["common_surnames"]		= "Mest brukte etternavn";
 $pgv_lang["default_news_title"]		= "Velkommen til disse slektssidene";
-$pgv_lang["default_news_text"]		= "Informasjon om slekten(e) på dette nettstedet blir vist ved hjelp av <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a><br />Sidene gir deg et innblikk og en oversikt over denne slekten/slektssamlingen.<br />Som en start, kan du velge personlisten på menyen, et av diagrammene eller søke etter et navn eller et sted.<br /><br />Dersom det er noe du ikke forstår på en side, sjekk Hjelp i menyen!<br />Der vil du til enhver tid få informasjon om den siden du er på.<br /><br /><b><i>Takk for at du besøker dette nettstedet.</i></b>";
+$pgv_lang["default_news_text"]		= "Informasjon om slekten(e) på dette nettstedet blir vist ved hjelp av <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a><br />Sidene gir deg et innblikk og en oversikt over denne slekten/slektssamlingen.<br />Som en start, kan du velge personlisten på menyen, et av diagrammene eller søke etter et navn eller et sted.<br /><br />Dersom det er noe du ikke forstår på en side, sjekk Hjelp i menyen!<br />Der vil du til enhver tid få informasjon om den siden du er på.<br /><br /><b><i>Takk for at du besøker dette nettstedet.</i></b>";
 $pgv_lang["reset_default_blocks"]	= "Tilbakestill til standardrammer";
 $pgv_lang["recent_changes"]			= "Siste endringer";
 $pgv_lang["recent_changes_block"]	= "Rammen Siste endringer";

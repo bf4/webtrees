@@ -159,18 +159,9 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$content=$pgv_lang['invalid_id'];
 	}
 		
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
-	if ($block) {
-		print '<div class="small_inner_block">'.$content.'</div>';
-	} else {
-		print '<div class="normal_inner_block">'.$content.'</div>';
-	}
-	print '</div></div>';
 	
+	global $THEME_DIR;
+	include($THEME_DIR."templates/block_small_temp.php");
 	// Restore GEDCOM configuration
 	unset($show_full);
 	if (isset($saveShowFull)) $show_full = $saveShowFull;
@@ -209,12 +200,9 @@ function print_charts_block_config($config) {
 			<input type="text" name="rootId" id="rootId" value="<?php print $config['rootId']; ?>" size="5" />
 			<?php
 			print_findindi_link('rootId','');
-			if ($config['rootId']) {
-				echo
-					'<span class="list_item">',
-					get_person_name($config['rootId']),
-					format_first_major_fact($config['rootId']),
-					'</span>';
+			$root=Person::getInstance($config['rootId']);
+			if ($root) {
+				echo '<span class="list_item">', $root->getFullName(), $root->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
 			}
 			?>
 		</td>

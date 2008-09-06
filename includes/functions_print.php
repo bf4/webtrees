@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require_once 'includes/functions_charts.php';
+require_once 'includes/menu.php';
 
 /**
  * print the information for an individual chart box
@@ -58,7 +59,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
 	// NOTE: Start div out-rand()
-	if ($pid==false) {
+	$person=Person::getInstance($pid);
+	if ($pid==false || empty($person)) {
 		print "<div id=\"out-".rand()."\" class=\"person_boxNN\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\">";
 		print "<br />";
 		print "</div>";
@@ -67,14 +69,21 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if ($count==0) $count = rand();
 	$lbwidth = $bwidth*.75;
 	if ($lbwidth < 150) $lbwidth = 150;
-	$indirec=find_person_record($pid);
-	if (!$indirec) $indirec = find_updated_record($pid);
 	
-	// TODO:  This routine works from the $indirec.  It needs to be updated
-	// to use the Person object.  I've made a start....
-	$person=Person::getInstance($pid);
 	$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
 	$isF=$tmp[$person->getSex()];
+
+	$personlinks = "";
+	$icons = "";
+	$classfacts = "";
+	$genderImage = "";
+	$BirthDeath = "";
+	$outBoxAdd = "";
+	$thumbnail = "";
+	$showid = "";
+	$iconsStyleAdd = "float: right; ";
+	if ($TEXT_DIRECTION=="rtl") $iconsStyleAdd="float: left; ";
+
 	$disp=$person->canDisplayDetails();
 
 	$boxID = $pid.".".$personcount.".".$count;
@@ -82,22 +91,20 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	$mouseAction2 = " onmouseover=\"expandbox('".$boxID."', $style); return false;\" onmouseout=\"restorebox('".$boxID."', $style); return false;\"";
 	$mouseAction3 = " onmousedown=\"expandbox('".$boxID."', $style); return false;\" onmouseup=\"restorebox('".$boxID."', $style); return false;\"";
 	$mouseAction4 = " onclick=\"expandbox('".$boxID."', $style); return false;\"";
-	if ($disp || showLivingNameByID($pid)) {
+	if ($person->canDisplayName()) {
 		if ($show_famlink && (empty($SEARCH_SPIDER))) {
 			if ($LINK_ICONS!="disabled") {
 				//-- draw a box for the family popup
 				// NOTE: Start div I.$pid.$personcount.$count.links
-				print "<div id=\"I".$boxID."links\" style=\"position:absolute; ";
-				print "left: 0px; top:0px; width: ".($lbwidth)."px; visibility:hidden; z-index:'100';\">";
-				print "<table class=\"person_box$isF\"><tr><td class=\"details1\">";
+				$personlinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td class=\"details1\">";
 				// NOTE: Zoom
 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
 				else $title = $pid." :".$pgv_lang["pedigree_chart"];
-				print "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>";
+				$personlinks .= "<a href=\"".encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>";
 
 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
 				else $title = $pid." :".$pgv_lang["descend_chart"];
-				print "<br /><a href=\"".encode_url("descendancy.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />";
+				$personlinks .= "<br /><a href=\"".encode_url("descendancy.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />";
 
 				$username = PGV_USER_NAME;
 				if (!empty($username)) {
@@ -105,94 +112,88 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					if ($myid) {
 						if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
 						else $title = $pid." :".$pgv_lang["relationship_chart"];
-						print "<a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$myid}&pid2={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&pretty=2&followspouse=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />";
+						$personlinks .= "<a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$myid}&pid2={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&pretty=2&followspouse=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />";
 					}
 				}
 				// NOTE: Zoom
 				if (file_exists("ancestry.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
-					print "<a href=\"".encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />";
+					$personlinks .= "<a href=\"".encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />";
 				}
 				if (file_exists("compact.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["compact_chart"];
-					print "<a href=\"".encode_url("compact.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />";
+					$personlinks .= "<a href=\"".encode_url("compact.php?rootid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />";
 				}
 				if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["fan_chart"];
-					print "<a href=\"".encode_url("fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />";
+					$personlinks .= "<a href=\"".encode_url("fanchart.php?rootid={$pid}&PEDIGREE_GENERATIONS={$OLD_PGENS}&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />";
 				}
 				if (file_exists("hourglass.php")) {
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
-					print "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
+					$personlinks .= "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
 				}
-				$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
-				for ($i=0; $i<$ct; $i++) {
-					$famid = $match[$i][1];
-					$famrec = find_family_record($famid);
-					if ($famrec) {
-						$parents = find_parents_in_record($famrec);
-						$spouse = "";
-						if ($pid==$parents["HUSB"]) $spouse = $parents["WIFE"];
-						if ($pid==$parents["WIFE"]) $spouse=$parents["HUSB"];
-						$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
+					
+				$fams = $person->getSpouseFamilies();
+				/* @var $family Family */
+				foreach($fams as $famid=>$family) {
+					if (!is_null($family)) {
+						$spouse = $family->getSpouse($person);
+							
+						$children = $family->getChildren();
+						$num = count($children);
 						if ((!empty($spouse))||($num>0)) {
 							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
 							else $title = $famid." :".$pgv_lang["familybook_chart"];
-							print "<a href=\"".encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br />";
+							$personlinks .= "<a href=\"".encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br />";
 							if (!empty($spouse)) {
-								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse;
-								else $title = $spouse." :".$pgv_lang["indi_info"];
-								print "<a href=\"".encode_url("individual.php?pid={$spouse}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
-								if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($spouse))||(showLivingNameByID($spouse))) print PrintReady(get_person_name($spouse));
-								else print $pgv_lang["private"];
-								print "</a><br />";
+								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse->getXref();
+								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
+								$tmp=$spouse->getXref();
+								$personlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
+								if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getFullName());
+								else $personlinks .= $pgv_lang["private"];
+								$personlinks .= "</a><br />\n";
 							}
 						}
-						for($j=0; $j<$num; $j++) {
-							$cpid = $smatch[$j][1];
+						/* @var $child Person */
+						foreach($children as $c=>$child) {
+							$cpid = $child->getXref();
 							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
 							else $title = $cpid." :".$pgv_lang["indi_info"];
-							print "&nbsp;&nbsp;<a href=\"".encode_url("individual.php?pid={$cpid}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
-							if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($cpid))||(showLivingNameByID($cpid))) print PrintReady(get_person_name($cpid));
-							else print $pgv_lang["private"];
-							print "<br /></a>";
+							$personlinks .= "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
+							if ($child->canDisplayName()) $personlinks .= PrintReady($child->getFullName());
+							else $personlinks .= $pgv_lang["private"];
+							$personlinks .= "<br /></a>";
 						}
 					}
 				}
-				print "</td></tr></table></div>";
+				$personlinks .= "</td></tr></table>\n\t\t";
 			}
 			// NOTE: Start div out-$pid.$personcount.$count
-			print "<div id=\"out-$boxID\"";
-			if ($style==1) print " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden; z-index:'-1';\"";
-			else print " style=\"padding: 2px;\"";
+			if ($style==1) $outBoxAdd .= " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden; z-index:'-1';\"";
+			else $outBoxAdd .= " style=\"padding: 2px;\"";
 			// NOTE: Zoom
 			if (($ZOOM_BOXES!="disabled")&&(!$show_full)) {
-				if ($ZOOM_BOXES=="mouseover") print $mouseAction2;
-				if ($ZOOM_BOXES=="mousedown") print $mouseAction3;
-				if (($ZOOM_BOXES=="click")&&($view!="preview")) print $mouseAction4;
+				if ($ZOOM_BOXES=="mouseover") $outBoxAdd .= $mouseAction2;
+				if ($ZOOM_BOXES=="mousedown") $outBoxAdd .= $mouseAction3;
+				if (($ZOOM_BOXES=="click")&&($view!="preview")) $outBoxAdd .= $mouseAction4;
 			}
-			print "><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
 			//-- links and zoom icons
 			// NOTE: Start div icons-$personcount.$pid.$count
-			if ($TEXT_DIRECTION == "rtl") {
-				print "<div id=\"icons-$boxID\" style=\"float:left; width: 25px; height: 50px;";
-			} else {
-					print "<div id=\"icons-$boxID\" style=\"float:right; width: 25px; height: 50px;";
-			}
-			if ($show_full) print " display: block;";
-			else print " display: none;";
-			print "\">";
+			if ($show_full) $iconsStyleAdd .= " display: block;";
+			else $iconsStyleAdd .= " display: none;";
+			//print "\">";
 			// NOTE: Zoom
 			if (($ZOOM_BOXES!="disabled")&&($show_full)) {
-				print "<a href=\"javascript:;\"";
-				if ($ZOOM_BOXES=="mouseover") print $mouseAction2;
-				if ($ZOOM_BOXES=="mousedown") print $mouseAction3;
-				if ($ZOOM_BOXES=="click") print $mouseAction4;
-				print "><img id=\"iconz-$boxID\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]."\" width=\"25\" height=\"25\" border=\"0\" alt=\"".$pgv_lang["zoom_box"]."\" title=\"".$pgv_lang["zoom_box"]."\" /></a>";
+				$icons .= "<a href=\"javascript:;\"";
+				if ($ZOOM_BOXES=="mouseover") $icons .= $mouseAction2;
+				if ($ZOOM_BOXES=="mousedown") $icons .= $mouseAction3;
+				if ($ZOOM_BOXES=="click") $icons .= $mouseAction4;
+				$icons .= "><img id=\"iconz-$boxID\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]."\" width=\"25\" height=\"25\" border=\"0\" alt=\"".$pgv_lang["zoom_box"]."\" title=\"".$pgv_lang["zoom_box"]."\" /></a>";
 			}
 			if ($LINK_ICONS!="disabled") {
 				$click_link="javascript:;";
@@ -238,48 +239,43 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang[$whichChart].": ".$whichID;
 					else $title = $whichID." :".$pgv_lang[$whichChart];
 				}
-				print "<a href=\"$click_link\" title=\"$title\" ";
+				$icons .= "<a href=\"$click_link\" title=\"$title\" ";
 				// NOTE: Zoom
-				if ($LINK_ICONS=="mouseover") print "onmouseover=\"show_family_box('".$boxID."', '";
-				if ($LINK_ICONS=="click") print "onclick=\"toggle_family_box('".$boxID."', '";
-				if ($style==1) print "box$pid";
-				else print "relatives";
-				print "');";
-				print " return false;\" ";
+				if ($LINK_ICONS=="mouseover") $icons .= "onmouseover=\"show_family_box('".$boxID."', '";
+				if ($LINK_ICONS=="click") $icons .= "onclick=\"toggle_family_box('".$boxID."', '";
+				if ($style==1) $icons .= "box$pid";
+				else $icons .= "relatives";
+				$icons .= "');";
+				$icons .= " return false;\" ";
 				// NOTE: Zoom
-				print "onmouseout=\"family_box_timeout('".$boxID."');";
-				print " return false;\"";
-				if (($click_link=="#")&&($LINK_ICONS!="click")) print "onclick=\"return false;\"";
-				print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" width=\"25\" border=\"0\" vspace=\"0\" hspace=\"0\" alt=\"".$pgv_lang["person_links"]."\" title=\"".$pgv_lang["person_links"]."\" /></a>";
+				$icons .= "onmouseout=\"family_box_timeout('".$boxID."');";
+				$icons .= " return false;\"";
+				if (($click_link=="#")&&($LINK_ICONS!="click")) $icons .= "onclick=\"return false;\"";
+				$icons .= "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" width=\"25\" border=\"0\" vspace=\"0\" hspace=\"0\" alt=\"".$pgv_lang["person_links"]."\" title=\"".$pgv_lang["person_links"]."\" /></a>";
 			}
-			// NOTE: Close div icons-$personcount.$pid.$count
-			print "</div>";
 		}
-		// NOTE: Start div out-$personcount.$pid.$count
 		else {
 			if ($style==1) {
-				print "<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
+				$outBoxAdd .= "class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
 			} else {
-				print "<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
+				$outBoxAdd .= "class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
 			}
 			// NOTE: Zoom
 			if (($ZOOM_BOXES!="disabled")&&(empty($SEARCH_SPIDER))) {
-				if ($ZOOM_BOXES=="mouseover") print $mouseAction2;
-				if ($ZOOM_BOXES=="mousedown") print $mouseAction3;
-				if (($ZOOM_BOXES=="click")&&($view!="preview")) print $mouseAction4;
+				if ($ZOOM_BOXES=="mouseover") $outBoxAdd .= $mouseAction2;
+				if ($ZOOM_BOXES=="mousedown") $outBoxAdd .= $mouseAction3;
+				if (($ZOOM_BOXES=="click")&&($view!="preview")) $outBoxAdd .= $mouseAction4;
 			}
-			print "><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
 		}
 	}
-	// NOTE: Start div out-$personcount.$pid.$count
 	else {
-		if ($style==1) print "<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
-		else print "<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
+		if ($style==1) $outBoxAdd .= "class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
+		else $outBoxAdd .= "class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
 	}
 	//-- find the name
 	$name = $person->getFullName();
 	if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
-		$object = find_highlighted_object($pid, $indirec);
+		$object = $person->findHighlightedMedia();
 		if (!empty($object["thumb"])) {
 			$size = findImageSize($object["thumb"]);
 			$class = "pedigree_image_portrait";
@@ -292,168 +288,81 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		
 			//LBox --------  change for Lightbox Album --------------------------------------------
 			if (file_exists("modules/lightbox/album.php")) {
-				print "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "\">";
+				$thumbnail .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">";
 			}else
 			// ---------------------------------------------------------------------------------------------
 			
 			if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
-				print "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
+				$thumbnail .= "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
 			}else{
-				print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
+				$thumbnail .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 			}
-			print "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"".strip_tags($name)."\"";
-			if (!$show_full) print " style=\"display: none;\"";
-			if ($imgsize) print " /></a>";
-			else print " />";
+			$thumbnail .= "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'))."\"";
+			if (!$show_full) $thumbnail .= " style=\"display: none;\"";
+			if ($imgsize) $thumbnail .= " /></a>";
+			else $thumbnail .= " />";
 		}
 	}
 	//-- find additional name
 	$addname=$person->getAddName();
-	//-- check if the persion is visible
-	if (!$disp) {
-		if (showLivingName($indirec)) {
-			// NOTE: Start span namedef-$personcount.$pid.$count
-			if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
-			else $title = $pid." :".$pgv_lang["indi_info"];
-			print "<a href=\"".encode_url("individual.php?pid={$pid}&ged={$GEDCOM}")."\" title=\"$title\"><span id=\"namedef-$boxID\" class=\"name$style\">";
-			print PrintReady($name);
-			if ($PEDIGREE_SHOW_GENDER) {
-				// NOTE: IMG ID
-				print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
-				if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-				else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-				else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-				print "\" class=\"gender_image\" />";
-			} print "&nbsp;";
-			print "</span>";
-			if ($SHOW_ID_NUMBERS) {
-				print "<span class=\"details$style\">";
-				if ($TEXT_DIRECTION=="ltr") print getLRM() . "($pid)" . getLRM();
-				else print getRLM() . "($pid)" . getRLM();
-				// NOTE: Close span namedef-$personcount.$pid.$count
-				print "</span>";
-			}
-			if (strlen($addname) > 0) {
-				print "<br />";
-				// NOTE: Start span addnamedef-$personcount.$pid.$count
-				// NOTE: Close span addnamedef-$personcount.$pid.$count
-				if (hasRTLText($addname) && $style=="1") print "<span id=\"addnamedef-$boxID\" class=\"name2\"> ";
-				else print "<span id=\"addnamedef-$boxID\" class=\"name$style\"> ";
-				print PrintReady($addname)."</span><br />";
-			}
-			print "</a>";
-		} else {
-			if(empty($SEARCH_SPIDER)) {
-				print "<a href=\"javascript:;\" onclick=\"if (confirm('".preg_replace("'<br />'", " ", $pgv_lang["privacy_error"])."\\n\\n".str_replace("#user[fullname]#", getUserFullName($CONTACT_EMAIL), $pgv_lang["clicking_ok"])."')) ";
-				if ($CONTACT_METHOD!="none") {
-					if ($CONTACT_METHOD=="mailto") {
-						print "window.location = 'mailto:".get_user_setting($CONTACT_EMAIL, 'email')."'; ";
-					} else {
-						print "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); ";
-					}
-				}
-				// NOTE: Start span namedef-$pid.$personcount.$count
-				// NOTE: Close span namedef-$pid.$personcount.$count
-				print "return false;\">";
-			}
-			print "<span id=\"namedef-$boxID\" class=\"name$style\">".$pgv_lang["private"]."</span>";
-			if(empty($SEARCH_SPIDER)) {
-				print "</a>";
-			}
-		}
-		if ($show_full && (empty($SEARCH_SPIDER))) {
-			// NOTE: Start span fontdef-$pid.$personcount.$count
-			// NOTE: Close span fontdef-$pid.$personcount.$count
-			print "<br /><span id=\"fontdef-$boxID\" class=\"details$style\">";
-			print $pgv_lang["private"];
-			print "</span>";
-		}
-		// NOTE: Close div out-$pid.$personcount.$count
-		print "</td></tr></table></div>";
-		return;
-	}
+	$name = PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'));
+
 	if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 	else $title = $pid." :".$pgv_lang["indi_info"];
-	print "<a href=\"".encode_url("individual.php?pid={$pid}&ged={$GEDCOM}")."\" title=\"$title\" ";
-	if (!$show_full) {
-		//not needed or wanted for mouseover //if ($ZOOM_BOXES=="mouseover") print " onmouseover=\"event.cancelBubble = true;\"";
-		if ($ZOOM_BOXES=="mousedown") print "onmousedown=\"event.cancelBubble = true;\"";
-		if ($ZOOM_BOXES=="click") print "onclick=\"event.cancelBubble = true;\"";
-	}
-	// NOTE: Start span namedef-$pid.$personcount.$count
-	print "><span id=\"namedef-$boxID\" class=\"name$style";
 	// add optional CSS style for each fact
+	$indirec = $person->getGedcomRecord();
 	$cssfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","CAST","DSCR","EDUC","IDNO",
 	"NATI","NCHI","NMR","OCCU","PROP","RELI","RESI","SSN","TITL","BAPL","CONL","ENDL","SLGC","_MILI");
 	foreach($cssfacts as $indexval => $fact) {
-		$ct = preg_match_all("/1 $fact/", $indirec, $nmatch, PREG_SET_ORDER);
-		if ($ct>0) print " $fact";
+		$ct = preg_match("/1 $fact/", $indirec, $nmatch);
+		if ($ct>0) $classfacts .= " $fact";
 	}
-	print "\">";
-	print PrintReady($name);
-	// NOTE: Close span namedef-$pid.$personcount.$count
-	print "</span>";
-	print "<span class=\"name$style\">";
-	if ($PEDIGREE_SHOW_GENDER) {
-		// NOTE: IMG ID
-		print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
-		if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-		else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-		else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-		print "\" class=\"gender_image\" />";
-	} else print "&nbsp;";
-	print "</span>";
+	if ($PEDIGREE_SHOW_GENDER)
+		$genderImage = " ".$person->getSexImage('', "box-$boxID-gender");
 	if ($SHOW_ID_NUMBERS) {
-		if ($TEXT_DIRECTION=="ltr") print "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
-		else print "<span class=\"details$style\">" . getRLM() . "($pid)" . getRLM() . " </span>";
-	}
-	if ($SHOW_LDS_AT_GLANCE) {
-		print "<span class=\"details$style\">".get_lds_glance($indirec)."</span>";
+		if ($TEXT_DIRECTION=="ltr") $showid .= "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
+		else $showid .= "<span class=\"details$style\">" . getRLM() . "($pid)" . getRLM() . " </span>";
 	}
 	if (strlen($addname) > 0) {
-		print "<br />";
-		if (hasRTLText($addname) && $style=="1")
-			print "<span id=\"addnamedef-$pid.$count\" class=\"name2\"> ";
-		else print "<span id=\"addnamedef-$pid.$count\" class=\"name$style\"> ";
-		print PrintReady($addname)."</span><br />";
+		$tempStyle = $style;
+		if (hasRTLText($addname) && $style=='1') $tempStyle = '2';
+		$addname = "<br /><span id=\"addnamedef-$boxID\" class=\"name$tempStyle\"> ".PrintReady($addname)."</span>";
 	}
-	print "</a>";
-	if(empty($SEARCH_SPIDER)) {
-	// NOTE: Start div inout-$pid.$personcount.$count
-		//if (!$show_full) print "<div id=\"inout-$boxID\" style=\"display: none;\">";
-		// NOTE: Start div fontdev-$pid.$personcount.$count
-		print "<div id=\"fontdef-$boxID\" class=\"details$style\">";
+	if ($SHOW_LDS_AT_GLANCE) {
+		$addname = ' <span class="details$style">'.get_lds_glance($indirec).'</span>' . $addname;
+	}
 
-		// NOTE: Start div inout2-$pid.$personcount.$count
-		// if ($show_full) print "<div id=\"inout2-$boxID\" style=\"display: block;\">";
 		if ($show_full) {
-			echo '<div id="inout2-', $boxID,'" style="display: block;">';
 
 			$opt_tags=preg_split('/\W/', $CHART_BOX_TAGS, 0, PREG_SPLIT_NO_EMPTY);
 
 			// Show BIRT or equivalent event
 			foreach (explode('|', PGV_EVENTS_BIRT) as $birttag) {
-				if (showFact($birttag, $pid) && !in_array($birttag, $opt_tags) && preg_match('/^1 '.$birttag.'\b(?! Y)/m', $indirec)) {
-					print_simple_fact($indirec, $birttag, $pid);
-					if (in_array($birttag, $opt_tags)) {
-						unset ($opt_tags[array_search($birttag, $opt_tags)]);
-					}
+			if (!in_array($birttag, $opt_tags)) {
+				$event = $person->getFactByType($birttag);
+				if (!is_null($event) && $event->canShow()) {
+					$BirthDeath .= $event->print_simple_fact(true);
 					break;
+					}
 				}
 			}
 
 			// Show optional events (before death)
 			foreach ($opt_tags as $key=>$tag) {
-				if (showFact($tag, $pid) && !preg_match('/^('.PGV_EVENTS_DEAT.')$/', $tag)) {
-					print_simple_fact($indirec, $tag, $pid);
+			if (!preg_match('/^('.PGV_EVENTS_DEAT.')$/', $tag)) {
+				$event = $person->getFactByType($tag);
+				if (!is_null($event) && $event->canShow()) {
+					$BirthDeath .= $event->print_simple_fact(true);
 					unset ($opt_tags[$key]);
 				}
 			}
+		}
 
 			// Show DEAT or equivalent event
 			foreach (explode('|', PGV_EVENTS_DEAT) as $deattag) {
-				if (showFact($deattag, $pid) && preg_match('/^1 '.$deattag.'\b/m', $indirec)) {
-					print_simple_fact($indirec, $deattag, $pid);
+			$event = $person->getFactByType($deattag);
+			if (!is_null($event) && $event->canShow()) {
+				$BirthDeath .= $event->print_simple_fact(true);
 					if (in_array($deattag, $opt_tags)) {
 						unset ($opt_tags[array_search($deattag, $opt_tags)]);
 					}
@@ -463,33 +372,14 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 
 			// Show remaining optional events (after death)
 			foreach ($opt_tags as $tag) {
-				if (showFact($tag, $pid)) {
-					print_simple_fact($indirec, $tag, $pid);
+			$event = $person->getFactByType($tag);
+			if (!is_null($event) && $event->canShow()) {
+				$BirthDeath .= $event->print_simple_fact(true);
 				}
 			}
-			echo '</div>';
 		}
-
-		// NOTE: Close div inout2-$pid.$personcount.$count
-		//if ($show_full) print "</div>";
-		print "</div>";
-	}// SEARCH_SPIDER
-
-	// -- find all level 1 sub records
-	// $skipfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO");
-	// $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
-	// NOTE: Open div inout-$pid.$personcount.$count
-
-	//   --All code to load information has been moved to expand_view.php
-	if (empty($SEARCH_SPIDER)) {
-		print "<div id=\"inout-$boxID\" style=\"display: none;\">";
-		print "<div id=\"LOADING-inout-$boxID\">";
-		print $pgv_lang['loading'];
-		print "</div></div>";
-	}// SEARCH_SPIDER
-
-	// NOTE: Close div out-rand()
-	print "</td></tr></table></div>";
+	global $THEME_DIR;
+	include($THEME_DIR."templates/personbox_template.php");
 }
 
 /**
@@ -536,27 +426,23 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 	// Determine browser type
-	if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
-		$BROWSERTYPE = "opera";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
-		$BROWSERTYPE = "netscape";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
-		$BROWSERTYPE = "mozilla";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
-		$BROWSERTYPE = "msie";
-	else
-		$BROWSERTYPE = "other";
-
-	print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
-	print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
-	print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t\t";
-	if( $FAVICON ) {
-		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
+	$BROWSERTYPE = "other";
+	if (!empty($_SERVER["HTTP_USER_AGENT"])) {
+		if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
+			$BROWSERTYPE = "opera";
+		else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
+			$BROWSERTYPE = "netscape";
+		else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
+			$BROWSERTYPE = "mozilla";
+		else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
+			$BROWSERTYPE = "msie";
 	}
 
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-	print "<title>".PrintReady(strip_tags($title.$metaTitle), TRUE)."</title>\n\t";
+	
+	$title = PrintReady(strip_tags($title.$metaTitle), TRUE);
+	
 	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
@@ -566,32 +452,8 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		if(empty($GEDCOM_TITLE)){
 			$GEDCOM_TITLE = "RSS";
 		}
-		if(! $REQUIRE_AUTHENTICATION){
-			print "<link href=\"".encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}")."\" rel=\"alternate\" type=\"$applicationType\" title=\"".PrintReady(strip_tags($GEDCOM_TITLE), TRUE)."\" />\n\t";
-		}
-		//print "<link href=\"".encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}&auth=basic")."\" rel=\"alternate\" type=\"$applicationType\" title=\"$GEDCOM_TITLE - " . $pgv_lang["authenticated_feed"] . "\" />\n\t";
 	}
-	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\" />";
-	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
-	if ($use_alternate_styles) {
-		if ($BROWSERTYPE != "other") {
-			print "<link rel=\"stylesheet\" href=\"".$THEME_DIR.$BROWSERTYPE.".css\" type=\"text/css\" media=\"all\" />";
-		}
-	}
-
-	//	-------------- Lightbox ----------------
-	if ($TEXT_DIRECTION=='rtl') {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
-	} else {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
-	}
-	//	-------------- Lightbox ----------------
-
-	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\" />";
-	if ($BROWSERTYPE == "msie") print "<style type=\"text/css\">\nFORM { margin-top: 0px; margin-bottom: 0px; }\n</style>\n";
-	echo '<!-- ', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, ' -->', "\n";
+	$javascript = '';
 	if (isset($changelanguage))
 		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
 	else
@@ -608,10 +470,6 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 			if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
 			if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
 		}
-		if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".PrintReady(strip_tags($META_AUTHOR), TRUE)."\" />\n";
-		if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".PrintReady(strip_tags($META_PUBLISHER), TRUE)."\" />\n";
-		if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".PrintReady(strip_tags($META_COPYRIGHT), TRUE)."\" />\n";
-		print "<meta name=\"keywords\" content=\"".PrintReady(strip_tags($META_KEYWORDS), TRUE);
 		if ($META_SURNAME_KEYWORDS) {
 			$surnames = get_common_surnames_index($GEDCOM);
 			$surnameList = '';
@@ -621,15 +479,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 					$surnameList .= $surname;
 				}
 			}
-			print PrintReady(strip_tags($surnameList), TRUE);
 		}
-		print "\" />\n";
 		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
 		if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
-		if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_DESCRIPTION), TRUE))."\" />\n";
-		if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_PAGE_TOPIC), TRUE))."\" />\n";
-		if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"".PrintReady(strip_tags($META_AUDIENCE), TRUE)."\" />\n";
-		if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"".PrintReady(strip_tags($META_PAGE_TYPE), TRUE)."\" />\n";
 
 		// Restrict good search engine spiders to the index page and the individual.php pages.
 		// Quick and dirty hack that will still leave some url only links in Google.
@@ -644,13 +496,108 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		   (strstr($SCRIPT_NAME, "/index.php")) ) {
 			// empty case is to index,follow anyways.
 			if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
-				print "<meta name=\"robots\" content=\"".PrintReady(strip_tags($META_ROBOTS), TRUE)."\" />\n";
 		}
 		else {
-			print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n";
+			$META_ROBOTS ="noindex,nofollow";
 		}
-		if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"".PrintReady(strip_tags($META_REVISIT), TRUE)."\" />\n";
-		echo '<meta name="generator" content="', PGV_PHPGEDVIEW, ' ', PGV_VERSION_TEXT, ' - ', PGV_PHPGEDVIEW_URL, "\" />\n";
+		$javascript .='<script language="JavaScript" type="text/javascript">
+	<!--
+	function hidePrint() {
+		var printlink = document.getElementById("printlink");
+		var printlinktwo = document.getElementById("printlinktwo");
+		if (printlink) {
+			printlink.style.display="none";
+			printlinktwo.style.display="none";
+		}
+	}
+	function showBack() {
+		var printlink = document.getElementById("printlink");
+		var printlinktwo = document.getElementById("printlinktwo");
+		if (printlink) {
+			printlink.style.display="inline";
+			printlinktwo.style.display="inline";
+		}
+	}
+	//-->
+	</script>';
+	}
+	$javascript.='<script language="JavaScript" type="text/javascript">
+		<!--
+		/* setup some javascript variables */
+		var query = "'.$query_string.'";
+		var textDirection = "'.$TEXT_DIRECTION.'";
+		var browserType = "'.$BROWSERTYPE.'";
+		var themeName = "'.strtolower($theme_name).'";
+		var SCRIPT_NAME = "'.$SCRIPT_NAME.'";
+		/* keep the session id when opening new windows */
+		var sessionid = "'.session_id().'";
+		var sessionname = "'.session_name().'";
+		var plusminus = new Array();
+		plusminus[0] = new Image();
+		plusminus[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"].'";
+		plusminus[1] = new Image();
+		plusminus[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"].'";
+		var zoominout = new Array();
+		zoominout[0] = new Image();
+		zoominout[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"].'";
+		zoominout[1] = new Image();
+		zoominout[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomout"]["other"].'";
+		var arrows = new Array();
+		arrows[0] = new Image();
+		arrows[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow2"]["other"].'";
+		arrows[1] = new Image();
+		arrows[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow2"]["other"].'";
+		arrows[2] = new Image();
+		arrows[2].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow2"]["other"].'";
+		arrows[3] = new Image();
+		arrows[3].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"].'";
+	';
+	if (PGV_USER_CAN_EDIT) {
+	
+	$javascript .= 'function delete_record(pid, linenum, mediaid) {
+		if (!mediaid) mediaid="";
+		if (confirm(\''.$pgv_lang["check_delete"].'\')) {
+			window.open(\'edit_interface.php?action=delete&pid=\'+pid+\'&linenum=\'+linenum+\'&mediaid=\'+mediaid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
+		}
+		return false;
+	}
+	function deleteperson(pid) {
+		if (confirm(\''.$pgv_lang["confirm_delete_person"].'\')) {
+			window.open(\'edit_interface.php?action=deleteperson&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
+		}
+		return false;
+	}
+	
+	function deleterepository(pid) {
+		if (confirm(\''.$pgv_lang["confirm_delete_repo"].'\')) {
+			window.open(\'edit_interface.php?action=deleterepo&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
+		}
+		return false;
+	}
+	';
+	}
+	$javascript .= '
+	function message(username, method, url, subject) {
+		if ((!url)||(url=="")) url=\''.urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING).'\';
+		if ((!subject)||(subject=="")) subject="";
+		window.open(\'message.php?to=\'+username+\'&method=\'+method+\'&url=\'+url+\'&subject=\'+subject+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
+		return false;
+	}
+	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
+	//-->
+	</script>
+	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+	';
+	$bodyOnLoad = '';
+	if ($view=="preview") $bodyOnLoad .= " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
+	$bodyOnLoad .= " onload=\"";
+	if (!empty($ONLOADFUNCTION)) $bodyOnLoad .= $ONLOADFUNCTION;
+	if ($TEXT_DIRECTION=="rtl") {
+		$bodyOnLoad .= " maxscroll = document.documentElement.scrollLeft;";
+	}
+	$bodyOnLoad .= "\"";
+	if ($view!="preview") {
+		include($headerfile);
 		$META_AUTHOR = $old_META_AUTHOR;
 		$META_PUBLISHER = $old_META_PUBLISHER;
 		$META_COPYRIGHT = $old_META_COPYRIGHT;
@@ -658,114 +605,10 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
 	}
 	else {
-?>
-<script language="JavaScript" type="text/javascript">
-<!--
-function hidePrint() {
-	var printlink = document.getElementById('printlink');
-	var printlinktwo = document.getElementById('printlinktwo');
-	if (printlink) {
-		printlink.style.display='none';
-		printlinktwo.style.display='none';
-	}
-}
-function showBack() {
-	var printlink = document.getElementById('printlink');
-	var printlinktwo = document.getElementById('printlinktwo');
-	if (printlink) {
-		printlink.style.display='inline';
-		printlinktwo.style.display='inline';
-	}
-}
-//-->
-</script>
-<?php
-}
-?>
-<script language="JavaScript" type="text/javascript">
-	<!--
-	<?php print "query = \"$query_string\";\n"; ?>
-	<?php print "textDirection = \"$TEXT_DIRECTION\";\n"; ?>
-	<?php print "browserType = \"$BROWSERTYPE\";\n"; ?>
-	<?php print "themeName = \"".strtolower($theme_name)."\";\n"; ?>
-	<?php print "SCRIPT_NAME = \"$SCRIPT_NAME\";\n"; ?>
-	/* keep the session id when opening new windows */
-	<?php print "sessionid = \"".session_id()."\";\n"; ?>
-	<?php print "sessionname = \"".session_name()."\";\n"; ?>
-	plusminus = new Array();
-	plusminus[0] = new Image();
-	plusminus[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>";
-	plusminus[1] = new Image();
-	plusminus[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]; ?>";
-	zoominout = new Array();
-	zoominout[0] = new Image();
-	zoominout[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]; ?>";
-	zoominout[1] = new Image();
-	zoominout[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomout"]["other"]; ?>";
-	arrows = new Array();
-	arrows[0] = new Image();
-	arrows[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow2"]["other"]; ?>";
-	arrows[1] = new Image();
-	arrows[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow2"]["other"]; ?>";
-	arrows[2] = new Image();
-	arrows[2].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow2"]["other"]; ?>";
-	arrows[3] = new Image();
-	arrows[3].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"]; ?>";
-
-<?php if (PGV_USER_CAN_EDIT) { ?>
-function delete_record(pid, linenum, mediaid) {
-	if (!mediaid) mediaid="";
-	if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) {
-		window.open('edit_interface.php?action=delete&pid='+pid+'&linenum='+linenum+'&mediaid='+mediaid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	}
-	return false;
-}
-function deleteperson(pid) {
-	if (confirm('<?php print $pgv_lang["confirm_delete_person"]; ?>')) {
-		window.open('edit_interface.php?action=deleteperson&pid='+pid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	}
-	return false;
-}
-
-function deleterepository(pid) {
-	if (confirm('<?php print $pgv_lang["confirm_delete_repo"]; ?>')) {
-		window.open('edit_interface.php?action=deleterepo&pid='+pid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	}
-	return false;
-}
-<?php } ?>
-function message(username, method, url, subject) {
-	if ((!url)||(url=="")) url='<?php print urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING); ?>';
-	if ((!subject)||(subject=="")) subject= '';
-	window.open('message.php?to='+username+'&method='+method+'&url='+url+'&subject='+subject+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	return false;
-}
-var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>';
-//-->
-</script>
-<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
-<?php
-	print $head;
-	print "</head>\n\t<body id=\"body\"";
-	if ($view=="preview") print " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
-	print " onload=\"";
-	if (!empty($ONLOADFUNCTION)) print $ONLOADFUNCTION;
-	if ($TEXT_DIRECTION=="rtl") {
-		print " maxscroll = document.documentElement.scrollLeft;";
-	}
-	print "\"";
-	print ">\n\t";
-	print "<!-- begin header section -->\n";
-	if ($view!="preview") {
-		include($headerfile);
-		include($toplinks);
-	}
-	else {
 		include($print_headerfile);
 	}
-	print "<!-- end header section -->\n";
-	print "<!-- begin content section -->\n";
 }
+
 /**
  * print simple HTML header
  *
@@ -778,160 +621,11 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>'
  * @param boolean $use_alternate_styles
  */
 function print_simple_header($title) {
-	global $pgv_lang;
-	global $HOME_SITE_URL;
-	global $HOME_SITE_TEXT, $SEARCH_SPIDER;
-	global $view, $rtl_stylesheet;
-	global $CHARACTER_SET, $PGV_IMAGE_DIR;
-	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage;
-	global $FAVICON, $stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile, $SCRIPT_NAME;
-	global $TEXT_DIRECTION, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD,$PGV_IMAGES;
-	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
-
-	// If not on allowed list, dump the spider onto the redirect page.
-	// This kills recognized spiders in their tracks.
-	// To stop unrecognized spiders, see META_ROBOTS below.
-	if(!empty($SEARCH_SPIDER)) {
-		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
-		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		     (strstr($SCRIPT_NAME, "/family.php")) ||
-		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		     (strstr($SCRIPT_NAME, "/source.php")) ||
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
-			header("Location: search_engine.php");
-			exit;
-		}
-	}
-	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
-	header("Content-Type: text/html; charset=$CHARACTER_SET");
-	print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
-	print "<html xmlns=\"http://www.w3.org/1999/xhtml\"><head>";
-	print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />";
-	if( $FAVICON ) {
-		print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\" />";
-	}
-	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
-	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>";
-	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" />";
-	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
-
-	//	-------------- Lightbox ----------------
-	if ($TEXT_DIRECTION=='rtl') {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
-	} else {
-		echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
-		echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
-	}
-	//	-------------- Lightbox ----------------
-
-	$old_META_AUTHOR = $META_AUTHOR;
-	$old_META_PUBLISHER = $META_PUBLISHER;
-	$old_META_COPYRIGHT = $META_COPYRIGHT;
-	$old_META_DESCRIPTION = $META_DESCRIPTION;
-	$old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
-	if (get_user_id($CONTACT_EMAIL)) {
-		$cuserName=getUserFullName($CONTACT_EMAIL);
-		if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
-		if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
-		if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
-	}
-	if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".PrintReady(strip_tags($META_AUTHOR), TRUE)."\" />";
-	if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".PrintReady(strip_tags($META_PUBLISHER), TRUE)."\" />";
-	if (!empty($META_COPYRIGHT)) print "<meta name=\"copyright\" content=\"".PrintReady(strip_tags($META_COPYRIGHT), TRUE)."\" />";
-	print "<meta name=\"keywords\" content=\"".PrintReady(strip_tags($META_KEYWORDS), TRUE);
-	if ($META_SURNAME_KEYWORDS) {
-		$surnames = get_common_surnames_index($GEDCOM);
-		$surnameList = '';
-		foreach($surnames as $surname=>$count) {
-			if ($surname != '?') {
-				$surnameList .= ', ';
-				$surnameList .= $surname;
-			}
-		}
-		print PrintReady(strip_tags($surnameList), TRUE);
-	}
-	print "\" />";
-	if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
-	if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
-	if (!empty($META_DESCRIPTION)) print "<meta name=\"description\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_DESCRIPTION), TRUE))."\" />";
-	if (!empty($META_PAGE_TOPIC)) print "<meta name=\"page-topic\" content=\"".preg_replace("/\"/", "", PrintReady(strip_tags($META_PAGE_TOPIC), TRUE))."\" />";
-	if (!empty($META_AUDIENCE)) print "<meta name=\"audience\" content=\"".PrintReady(strip_tags($META_AUDIENCE), TRUE)."\" />";
-	if (!empty($META_PAGE_TYPE)) print "<meta name=\"page-type\" content=\"".PrintReady(strip_tags($META_PAGE_TYPE), TRUE)."\" />";
-
-	// Restrict good search engine spiders to the index page and the individual.php pages.
-	// Quick and dirty hack that will still leave some url only links in Google.
-	// Also ignored by crawlers like wget, so other checks have to be done too.
-	if((strstr($SCRIPT_NAME, "/individual.php")) ||
-	   (strstr($SCRIPT_NAME, "/indilist.php")) ||
-	   (strstr($SCRIPT_NAME, "/family.php")) ||
-	   (strstr($SCRIPT_NAME, "/famlist.php")) ||
-	   (strstr($SCRIPT_NAME, "/help_text.php")) ||
-	   (strstr($SCRIPT_NAME, "/source.php")) ||
-	   (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-	   (strstr($SCRIPT_NAME, "/index.php")) ) {
-		// empty case is to index,follow anyways.
-		if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
-		print "<meta name=\"robots\" content=\"".PrintReady(strip_tags($META_ROBOTS), TRUE)."\" />";
-	}
-	else {
-		print "<meta name=\"robots\" content=\"noindex,nofollow\" />";
-	}
-	if (!empty($META_REVISIT)) print "<meta name=\"revisit-after\" content=\"".PrintReady(strip_tags($META_REVISIT), TRUE)."\" />";
-	echo '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - '.PGV_PHPGEDVIEW_URL.'" />';
-	$META_AUTHOR = $old_META_AUTHOR;
-	$META_PUBLISHER = $old_META_PUBLISHER;
-	$META_COPYRIGHT = $old_META_COPYRIGHT;
-	$META_DESCRIPTION = $old_META_DESCRIPTION;
-	$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
-?>
-	<style type="text/css">
-	<!--
-	.largechars {
-		font-size: 18px;
-	}
-	-->
-	</style>
-	<script language="JavaScript" type="text/javascript">
-	<!--
-	/* set these vars so that the session can be passed to new windows */
-	<?php print "sessionid = \"".session_id()."\";"; ?>
-	<?php print "sessionname = \"".session_name()."\";"; ?>
-	plusminus = new Array();
-	plusminus[0] = new Image();
-	plusminus[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>";
-	plusminus[1] = new Image();
-	plusminus[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]; ?>";
-	zoominout = new Array();
-	zoominout[0] = new Image();
-	zoominout[0].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]; ?>";
-	zoominout[1] = new Image();
-	zoominout[1].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomout"]["other"]; ?>";
-
-	var helpWin;
-	function helpPopup(which) {
-
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('help_text.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-
-		else helpWin.location = 'help_text.php?help='+which;
-		return false;
-	}
-function message(username, method, url, subject) {
-	if ((!url)||(url=="")) url='<?php print urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING); ?>';
-	if ((!subject)||(subject=="")) subject= '';
-	window.open('message.php?to='+username+'&method='+method+'&url='+url+'&subject='+subject+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
-	return false;
+	global $view;
+	$view = 'simple';
+	print_header($title);
 }
-	//-->
-	</script>
-	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
-	<?php
-	echo '</head>';
-	echo '<body style="margin:5px;" onload="loadHandler();">';
-}
+
 // -- print the html to close the page
 function print_footer() {
 	global $without_close, $pgv_lang, $view, $buildindex, $DBTYPE;
@@ -1204,32 +898,85 @@ function print_favorite_selector($option=0) {
 
 	print "<div class=\"favorites_form\">";
 	switch($option) {
-		case 1:
-			$menu = array();
-			$menu["label"] = $pgv_lang["favorites"];
-			$menu["labelpos"] = "right";
-			$menu["link"] = "#";
-			$menu["class"] = "favmenuitem";
-			$menu["hoverclass"] = "favmenuitem_hover";
-			$menu["flyout"] = "down";
-			$menu["submenuclass"] = "favsubmenu";
-			$menu["items"] = array();
-			$mygedcom = $GEDCOM;
+	case 1:
+		$menu = array();
+		$menu["label"] = $pgv_lang["favorites"];
+		$menu["labelpos"] = "right";
+		$menu["link"] = "#";
+		$menu["class"] = "favmenuitem";
+		$menu["hoverclass"] = "favmenuitem_hover";
+		$menu["flyout"] = "down";
+		$menu["submenuclass"] = "favsubmenu";
+		$menu["items"] = array();
+		$mygedcom = $GEDCOM;
+		$current_gedcom = $GEDCOM;
+		$mypid = $pid;
+		if (count($userfavs)>0) {
+			$submenu = array();
+			$submenu["label"] = "<b>".$pgv_lang["my_favorites"]."</b>";
+			$submenu["labelpos"] = "right";
+			$submenu["link"] = "#";
+			$submenu["class"] = "favsubmenuitem";
+			$submenu["hoverclass"] = "favsubmenuitem_hover";
+			$menu["items"][] = $submenu;
+		}
+		foreach($userfavs as $key=>$favorite) {
+			$pid = $favorite["gid"];
 			$current_gedcom = $GEDCOM;
-			$mypid = $pid;
-			if (count($userfavs)>0) {
-				$submenu = array();
-				$submenu["label"] = "<b>".$pgv_lang["my_favorites"]."</b>";
+			$GEDCOM = $favorite["file"];
+			$submenu = array();
+			if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+//				$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
+				$submenu["link"] = encode_url($favorite["url"]);
+				$submenu["label"] = PrintReady($favorite["title"]);
 				$submenu["labelpos"] = "right";
-				$submenu["link"] = "#";
 				$submenu["class"] = "favsubmenuitem";
 				$submenu["hoverclass"] = "favsubmenuitem_hover";
 				$menu["items"][] = $submenu;
+			} else {
+				$record=GedcomRecord::getInstance($pid);
+				if ($record && $record->canDisplayName()) {
+					$submenu["link"] = encode_url($record->getLinkUrl());
+					$submenu["label"] = PrintReady($record->getFullName());
+					if ($SHOW_ID_NUMBERS) {
+						if ($TEXT_DIRECTION=="ltr") {
+							$submenu["label"] .= " (".$record->getXref().")";
+						} else {
+							$submenu["label"] .= " " . getRLM() . "(".$record->getXref().")" . getRLM();
+						}
+					}
+					$submenu["labelpos"] = "right";
+					$submenu["class"] = "favsubmenuitem";
+					$submenu["hoverclass"] = "favsubmenuitem_hover";
+					$menu["items"][] = $submenu;
+				}
 			}
-			foreach($userfavs as $key=>$favorite) {
-				$pid = $favorite["gid"];
-				$current_gedcom = $GEDCOM;
+		}
+		$pid = $mypid;
+		$GEDCOM = $mygedcom;
+		if ((!empty($username))&&(strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false)) {
+			$menu["items"][]="separator";
+			$submenu = array();
+			$submenu["label"] = $pgv_lang["add_to_my_favorites"];
+			$submenu["labelpos"] = "right";
+			$submenu["link"] = encode_url("individual.php?action=addfav&gid={$pid}&pid={$pid}");
+			$submenu["class"] = "favsubmenuitem";
+			$submenu["hoverclass"] = "favsubmenuitem_hover";
+			$menu["items"][] = $submenu;
+		}
+		if (count($gedcomfavs)>0) {
+			$menu["items"][]="separator";
+			$submenu = array();
+			$submenu["label"] = "<b>".$pgv_lang["gedcom_favorites"]."</b>";
+			$submenu["labelpos"] = "right";
+			$submenu["link"] = "#";
+			$submenu["class"] = "favsubmenuitem";
+			$submenu["hoverclass"] = "favsubmenuitem_hover";
+			$menu["items"][] = $submenu;
+			$current_gedcom = $GEDCOM;
+			foreach($gedcomfavs as $key=>$favorite) {
 				$GEDCOM = $favorite["file"];
+				$pid = $favorite["gid"];
 				$submenu = array();
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
 //					$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
@@ -1239,47 +986,16 @@ function print_favorite_selector($option=0) {
 					$submenu["class"] = "favsubmenuitem";
 					$submenu["hoverclass"] = "favsubmenuitem_hover";
 					$menu["items"][] = $submenu;
-				}
-				else {
-					if (displayDetailsById($pid, $favorite["type"])) {
-						$indirec = find_gedcom_record($pid);
-						if ($favorite["type"]=="INDI") {
-							$submenu["link"] = encode_url("individual.php?pid={$favorite['gid']}&ged={$GEDCOM}");
-							$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							unset($indilist[$pid]);
-						}
-						if ($favorite["type"]=="FAM") {
-							$submenu["link"] = encode_url("family.php?famid={$favorite['gid']}&show_full=1&ged={$GEDCOM}");
-							$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							unset($famlist[$pid]);
-						}
-						if ($favorite["type"]=="SOUR") {
-							$submenu["link"] = encode_url("source.php?sid={$favorite['gid']}&ged={$GEDCOM}");
-							$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
-							if ($SHOW_ID_NUMBERS) {
-								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							unset($sourcelist[$pid]);
-						}
-						if ($favorite["type"]=="OBJE") {
-							$media = Media::getInstance($pid);
-							if (!is_null($media)) {
-								$submenu["link"] = encode_url("mediaviewer.php?mid={$favorite['gid']}&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady($media->getFullName());
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-								if (isset($medialist[$pid])) unset($medialist[$pid]);
+				} else {
+					$record=GedcomRecord::getInstance($pid);
+					if ($record && $record->canDisplayName()) {
+						$submenu["link"] = encode_url($record->getLinkUrl());
+						$submenu["label"] = PrintReady($record->getFullName());
+						if ($SHOW_ID_NUMBERS) {
+							if ($TEXT_DIRECTION=="ltr") {
+								$submenu["label"] .= " (".$record->getXref().")";
+							} else {
+								$submenu["label"] .= " " . getRLM() . "(".$record->getXref().")" . getRLM();
 							}
 						}
 						$submenu["labelpos"] = "right";
@@ -1291,201 +1007,78 @@ function print_favorite_selector($option=0) {
 			}
 			$pid = $mypid;
 			$GEDCOM = $mygedcom;
-			if ((!empty($username))&&(strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false)) {
-				$menu["items"][]="separator";
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["add_to_my_favorites"];
-				$submenu["labelpos"] = "right";
-				$submenu["link"] = encode_url("individual.php?action=addfav&gid={$pid}&pid={$pid}");
-				$submenu["class"] = "favsubmenuitem";
-				$submenu["hoverclass"] = "favsubmenuitem_hover";
-				$menu["items"][] = $submenu;
+			print_menu($menu);
+		}
+		break;
+	default:
+		print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
+		print "\" method=\"post\" onsubmit=\"return false;\">";
+		print "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}".normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$pid}&amp;pid={$pid}")."';\">";
+		print "<option value=\"\">".$pgv_lang["favorites"]."</option>";
+		if (!empty($username)) {
+			if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
+				print "<optgroup label=\"".$pgv_lang["my_favorites"]."\">";
 			}
-			if (count($gedcomfavs)>0) {
-				$menu["items"][]="separator";
-				$submenu = array();
-				$submenu["label"] = "<b>".$pgv_lang["gedcom_favorites"]."</b>";
-				$submenu["labelpos"] = "right";
-				$submenu["link"] = "#";
-				$submenu["class"] = "favsubmenuitem";
-				$submenu["hoverclass"] = "favsubmenuitem_hover";
-				$menu["items"][] = $submenu;
+			$mygedcom = $GEDCOM;
+			$current_gedcom = $GEDCOM;
+			$mypid = $pid;
+			if (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false) {
+				print "<option value=\"add\">- ".$pgv_lang["add_to_my_favorites"]." -</option>";
+			}
+			foreach($userfavs as $key=>$favorite) {
 				$current_gedcom = $GEDCOM;
-				foreach($gedcomfavs as $key=>$favorite) {
-					$GEDCOM = $favorite["file"];
-					$pid = $favorite["gid"];
-					$submenu = array();
-					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//						$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
-						$submenu["link"] = encode_url($favorite["url"]);
-						$submenu["label"] = PrintReady($favorite["title"]);
-						$submenu["labelpos"] = "right";
-						$submenu["class"] = "favsubmenuitem";
-						$submenu["hoverclass"] = "favsubmenuitem_hover";
-						$menu["items"][] = $submenu;
-					}
-					else {
-						if (displayDetailsById($pid, $favorite["type"])) {
-							$indirec = find_gedcom_record($pid);
-							if ($favorite["type"]=="INDI") {
-								$submenu["link"] = encode_url("individual.php?pid={$favorite['gid']}&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
+				$GEDCOM = $favorite["file"];
+				$pid = $favorite["gid"];
+				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+//					print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
+					print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
+					print "</option>";
+				} else {
+					$record=GedcomRecord::getInstance($pid);
+					if ($record && $record->canDisplayName()) {
+						$name=$record->getFullName();
+						if ($SHOW_ID_NUMBERS) {
+							if ($TEXT_DIRECTION=="ltr") {
+								$name.=' ('.$record->getXref().')';
+							} else {
+								$name.=' '.getRLM().'('.$record->getXref().')'.getRLM();
 							}
-							}
-							if ($favorite["type"]=="FAM") {
-								$submenu["link"] = encode_url("family.php?famid={$favorite['gid']}&show_full=1&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							}
-							if ($favorite["type"]=="SOUR") {
-								$submenu["link"] = encode_url("source.php?sid={$favorite['gid']}&ged={$GEDCOM}");
-								$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-							}
-							}
-							$submenu["labelpos"] = "right";
-							$submenu["class"] = "favsubmenuitem";
-							$submenu["hoverclass"] = "favsubmenuitem_hover";
-							$menu["items"][] = $submenu;
 						}
+						print "<option value=\"". encode_url($record->getLinkUrl())."\">".$name."</option>";
 					}
 				}
-				$pid = $mypid;
-				$GEDCOM = $mygedcom;
-				print_menu($menu);
 			}
-			break;
-		default:
-			print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
-			print "\" method=\"post\" onsubmit=\"return false;\">";
-			print "<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}".normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$pid}&amp;pid={$pid}")."';\">";
-			print "<option value=\"\">".$pgv_lang["favorites"]."</option>";
-			if (!empty($username)) {
-				if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
-					print "<optgroup label=\"".$pgv_lang["my_favorites"]."\">";
-				}
-				$mygedcom = $GEDCOM;
+			if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
+				print "</optgroup>";
+			}
+			$GEDCOM = $mygedcom;
+			$pid = $mypid;
+		}
+		if (count($gedcomfavs)>0) {
+			print "<optgroup label=\"".$pgv_lang["gedcom_favorites"]."\">";
+			$mygedcom = $GEDCOM;
+			$current_gedcom = $GEDCOM;
+			$mypid = $pid;
+			foreach($gedcomfavs as $key=>$favorite) {
 				$current_gedcom = $GEDCOM;
-				$mypid = $pid;
-				if (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false) {
-					print "<option value=\"add\">- ".$pgv_lang["add_to_my_favorites"]." -</option>";
-				}
-				foreach($userfavs as $key=>$favorite) {
-					$current_gedcom = $GEDCOM;
-					$GEDCOM = $favorite["file"];
-					$pid = $favorite["gid"];
-					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//						print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
-						print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
-						print "</option>";
-					}
-					else {
-						if (displayDetailsById($pid, $favorite["type"])) {
-							$indirec = find_gedcom_record($pid);
-							$name = $pgv_lang["unknown"];
-							if ($favorite["type"]=="INDI") {
-								$name = strip_tags(PrintReady(get_person_name($pid)));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-								$tempURL = "individual.php?pid=";
-								unset($indilist[$pid]);
+				$GEDCOM = $favorite["file"];
+				$pid = $favorite["gid"];
+				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
+//					print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
+					print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
+					print "</option>";
+				} else {
+					$record=GedcomRecord::getInstance($pid);
+					if ($record && $record->canDisplayName()) {
+						$name=$record->getFullName();
+						if ($SHOW_ID_NUMBERS) {
+							if ($TEXT_DIRECTION=="ltr") {
+								$name.=' ('.$record->getXref().')';
+							} else {
+								$name.=' '.getRLM().'('.$record->getXref().')'.getRLM();
 							}
-							if ($favorite["type"]=="FAM") {
-								$name = strip_tags(PrintReady(get_family_descriptor($pid)));
-								if (strlen($name)>50) $name = substr($name, 0, 50);
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-								$tempURL = "family.php?show_full=1&famid=";
-								unset($famlist[$pid]);
-							}
-							if ($favorite["type"]=="SOUR") {
-								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
-								if (strlen($name)>50) $name = substr($name, 0, 50);
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-								$tempURL = "source.php?sid=";
-								unset($sourcelist[$pid]);
-							}
-							if ($favorite["type"]=="OBJE") {
-								$media = Media::getInstance($pid);
-								if (!is_null($media)) {
-									$name = strip_tags(PrintReady($media->getFullName()));
-									if (strlen($name)>50) $name = substr($name, 0, 50);
-									if ($SHOW_ID_NUMBERS) {
-										if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-										else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-									}
-									$tempURL = "mediaviewer.php?mid=";
-									unset($sourcelist[$pid]);
-								}
-							}
-							print "<option value=\"". encode_url("{$tempURL}{$favorite['gid']}&ged={$GEDCOM}")."\">".$name."</option>";
 						}
-					}
-				}
-				if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
-					print "</optgroup>";
-				}
-				$GEDCOM = $mygedcom;
-				$pid = $mypid;
-			}
-			if (count($gedcomfavs)>0) {
-				print "<optgroup label=\"".$pgv_lang["gedcom_favorites"]."\">";
-					$mygedcom = $GEDCOM;
-					$current_gedcom = $GEDCOM;
-					$mypid = $pid;
-					foreach($gedcomfavs as $key=>$favorite) {
-						$current_gedcom = $GEDCOM;
-						$GEDCOM = $favorite["file"];
-						$pid = $favorite["gid"];
-						if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//							print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
-							print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
-							print "</option>";
-						}
-						else {
-						$indirec = find_gedcom_record($pid);
-						$name = $pgv_lang["unknown"];
-						if (displayDetailsById($pid, $favorite["type"])) {
-							if ($favorite["type"]=="INDI") {
-								$name = strip_tags(PrintReady(get_person_name($pid)));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-							$tempURL = "individual.php?pid=";
-							}
-							if ($favorite["type"]=="FAM") {
-								$name = strip_tags(PrintReady(get_family_descriptor($pid)));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-							$tempURL = "family.php?show_full=1&famid=";
-							}
-							if ($favorite["type"]=="SOUR") {
-								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
-								if ($SHOW_ID_NUMBERS) {
-									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
-								}
-							$tempURL = "source.php?sid=";
-						}
-						print "<option value=\"".encode_url("{$tempURL}{$favorite['gid']}&ged={$GEDCOM}")."\">".$name."</option>";
+						print "<option value=\"". encode_url($record->getLinkUrl())."\">".$name."</option>";
 					}
 				}
 			}
@@ -1496,49 +1089,7 @@ function print_favorite_selector($option=0) {
 		print "</select></form>";
 		break;
 	}
-	print "</div>";
-}
-
-/**
- * print a simple form of the fact
- *
- * function to print the details of a fact in a simple format
- * @param string $indirec the gedcom record to get the fact from
- * @param string $fact the fact to print
- * @param string $pid the id of the individual to print, required to check privacy
- */
-function print_simple_fact($indirec, $fact, $pid) {
-	global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS, $factAbbrev;
-	$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","OBJE","CHAN","_SEPR","RESI", "DATA", "MAP");
-	$factrec = get_sub_record(1, "1 $fact", $indirec);
-	if ((empty($factrec))||(FactViewRestricted($pid, $factrec))) return;
-	$label = "";
-	if (isset($pgv_lang[$fact])) $label = $pgv_lang[$fact];
-	else if (isset($factarray[$fact])) $label = $factarray[$fact];
-	if ($ABBREVIATE_CHART_LABELS) {
-		if (isset($factAbbrev[$fact])) $label = $factAbbrev[$fact];
-		else $label = get_first_letter($label);
-	}
-// RFE [ 1229233 ] "DEAT" vs "DEAT Y"
-// The check $factrec != "1 DEAT" will not show any records that only have 1 DEAT in them
-	if (trim($factrec) != "1 DEAT"){
-		print "<span class=\"details_label\">".$label."</span> ";
-	}
-	if (showFactDetails($fact, $pid)) {
-		if (!in_array($fact, $emptyfacts)) {
-			$ct = preg_match("/1 $fact(.*)/", $factrec, $match);
-			if ($ct>0) print PrintReady(trim($match[1]));
-		}
-		// 1 DEAT Y with no DATE => print YES
-		// 1 DEAT N is not allowed
-		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
-		/*-- handled by format_fact_date()
-		 * if (get_sub_record(2, "2 DATE", $factrec)=="") {
-			if (strtoupper(trim(substr($factrec,6,2)))=="Y") print $pgv_lang["yes"];
-		}*/
-		echo format_fact_date($factrec, false, false, $fact, $pid, $indirec), format_fact_place($factrec);
-	}
-	print "<br />";
+	print "</div>\n";
 }
 
 /**
@@ -1600,6 +1151,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
  * @param string $factrec	the factrecord to print the notes from
  * @param int $level		The level of the factrecord
  * @param bool $textOnly	Don't print the "Note: " introduction
+ * @param boolean $return	whether to return text or print the data
  */
 function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	global $pgv_lang;
@@ -1701,11 +1253,10 @@ function print_privacy_error($username) {
  * @param int $helpText		The text to be printed if the theme does not use images for help links
  * @param int $show_desc		The text to be shown as JavaScript description
  * @param boolean $use_print_text	If the text needs to be printed with the print_text() function
- * @param boolean $output	return the text instead of printing it
+ * @param boolean $return	return the text instead of printing it
  */
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
-	global $TEXT_DIRECTION;
 
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
@@ -1824,7 +1375,7 @@ function print_text($help, $level=0, $noprint=0){
 		if (stristr($mod_sentence, "~")){  // If there's a second one:
 			$pos2 = strpos($mod_sentence, "~");
 			$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
-			$replace_text = "<span class=\"helpstart\">".str2upper($replace)."</span>";
+			$replace_text = "<span class=\"helpstart\">".UTF8_strtoupper($replace)."</span>";
 			$sentence = str_replace("~".$replace."~", $replace_text, $sentence);
 		} else break;
 	}
@@ -1953,6 +1504,7 @@ function print_menu($menu, $parentmenu="") {
 	$obj->printMenu();
 }
 
+
 //-------------------------------------------------------------------------------------------------------------
 // switches between left and rigth align on chosen text direction
 //-------------------------------------------------------------------------------------------------------------
@@ -2049,9 +1601,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 					if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
 						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 					}
-					else if (@preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+					else if (@preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
 						$nlen = strlen($query1);
-						$npos = strpos(str2upper($text), str2upper($query1));
+						$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
 						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 						$newtext = substr_replace($newtext, "\x01", $npos, 0);
 					}
@@ -2069,9 +1621,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
+							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}
@@ -2088,9 +1640,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
+							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}
@@ -2107,9 +1659,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 						if (preg_match("/(".$query1esc.")/i", $text)) {
 							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 						}
-						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+						else if (preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
 							$nlen = strlen($query1);
-							$npos = strpos(str2upper($text), str2upper($query1));
+							$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
 							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
 							$newtext = substr_replace($newtext, "\x01", $npos, 0);
 						}
@@ -2200,12 +1752,13 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
  */
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
-	global $PEDIGREE_FULL_DETAILS;
+	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
 	// get ASSOciate(s) ID(s)
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$ct; $i++) {
 		$level = substr($match[$i][0],0,1);
 		$pid2 = $match[$i][1];
+		if (empty($pid) && isset($match[1][1])) $pid = $match[1][1];
 		// get RELAtionship field
 		$autoRela = false;		// Indicates that the RELA information was automatically generated
 		$assorec = get_sub_record($level, "$level ASSO ", $factrec, $i+1);
@@ -2217,6 +1770,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if (substr($key,0,1)=='*') {
 					$autoRela = true;
 					$key = substr($key,1);
+					
 				}
 				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
 				if ($cr > 0) {
@@ -2226,11 +1780,44 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					if (isset($pgv_lang[$key])) $rela = $pgv_lang[$key];
 					else if (isset($factarray[strtoupper($key)])) $rela = $factarray[strtoupper($key)];
 					else $rela = $rmatch[1];
+					if ($key == "nephew") {
+						$node = get_relationship($pid, $pid2);
+						if (isset($node["path"][1])) {
+							$sex3 = Person::getInstance($node["path"][1])->getSex();
+							if ($sex3 == "M")  $rela = $pgv_lang["bosa_brothers_offspring_2"];
+							else if ($sex3 == "F")  $rela = $pgv_lang["bosa_sisters_offspring_2"];
+						}
+					}
+					else if ($key == "niece") {
+						$node = get_relationship($pid, $pid2);
+						if (isset($node["path"][1])) {
+							$sex3 = Person::getInstance($node["path"][1])->getSex();
+							if ($sex3 == "M")  $rela = $pgv_lang["bosa_brothers_offspring_3"];
+							else if ($sex3 == "F")  $rela = $pgv_lang["bosa_sisters_offspring_3"];
+						}
+					}
+					else if ($key == "uncle" || $key == "aunt") {
+						$node = get_relationship($pid, $pid2);
+						if (isset($node["path"][1])) {
+							$sex3 = Person::getInstance($node["path"][1])->getSex();
+							if ($sex3 == "M")  $rela = $pgv_lang["sosa_{$key}_2"];
+							else if ($sex3 == "F")  $rela = $pgv_lang["sosa_{$key}_3"];
+						}
+					}
+					else if ($key == "twin" || $key == "twin_brother" || $key =="twin_sister") {
+						$autoRela = true;
+					}
 				}
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
 //				if ($pid2==$pid) print "<span class=\"details_label\">";
-				print " {$rela}: ";
+				// Allow special processing for different languages
+				$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func))
+					// Localise the relationship
+					$func($rela);
+				else
+					print " {$rela}: ";
 //				if ($pid2==$pid) print "</span>";
 			}
 			else $rela = $factarray["RELA"]; // default
@@ -2239,18 +1826,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 		// ASSOciate ID link
 		$gedrec = find_gedcom_record($pid2);
 		if (strstr($gedrec, "@ INDI")!==false || strstr($gedrec, "@ SUBM")!==false) {
-			// ID name
-			if ((DisplayDetailsByID($pid2))||(showLivingNameByID($pid2))) {
-				$name = get_person_name($pid2);
-				$addname = get_add_person_name($pid2);
-			}
-			else {
-				$name = $pgv_lang["private"];
-				$addname = "";
-			}
+			$record=GedcomRecord::getInstance($pid2);
+			$name=$record->getFullName();
 			print "<a href=\"".encode_url("individual.php?pid={$pid2}&ged={$GEDCOM}")."\">" . PrintReady($name);
-//			if (!empty($addname)) print "<br />" . PrintReady($addname);
-			if (!empty($addname)) print " - " . PrintReady($addname);
 			if ($SHOW_ID_NUMBERS) {
 				print "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -2259,13 +1837,26 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			}
 			print "</a>";
 			// ID age
-			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
+			if (preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
 				$tmp=new Person($gedrec);
 				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
-				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
-				if (!empty($age))
-					print " ({$pgv_lang['age']} {$age})";
+				$death_date=$tmp->getDeathDate(false);
+				$ageText = '';
+
+				if (!strstr($factrec, "_BIRT_") && !strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0 && $tmp->isDead()) {
+					// After death, print time since death
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $event_date), true);
+					if (!empty($age))
+						if (GedcomDate::GetAgeGedcom($death_date, $event_date)=="0d") $ageText = "(".$pgv_lang["at_death_day"].")";
+						else $ageText = "(".$age." ".$pgv_lang["after_death"].")";
+				}
+				else if (GedcomDate::GetAgeGedcom($birth_date, $event_date)!="0d") {
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
+					if (!empty($age))
+						$ageText = "({$pgv_lang['age']} {$age})";
+				}
+				if (!empty($ageText)) print '<span class="age"> '.PrintReady($ageText).'</span>';
 			}
 
 			// RELAtionship calculation : for a family print relationship to both spouses
@@ -2275,12 +1866,12 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
-						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
 						$pid1 = $parents["WIFE"];
-						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
 					}
 				}
-				else if ($pid!=$pid2) print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
+				else if ($pid!=$pid2 && $rela!="twin_sister") print " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
 
 		}
@@ -2336,7 +1927,7 @@ function format_parents_age($pid) {
 							$class='parentdeath';
 							$title=$factarray['_DEAT_MOTH'];
 						} else {
-							$title=$pgv_lang['mother'];
+							$title=$pgv_lang['mother_age'];
 						}
 						break;
 					case 'M':
@@ -2345,11 +1936,11 @@ function format_parents_age($pid) {
 							$class='parentdeath';
 							$title=$factarray['_DEAT_FATH'];
 						} else {
-							$title=$pgv_lang['father'];
+							$title=$pgv_lang['father_age'];
 						}
 						break;
 					default:
-						$title=$pgv_lang['parent'];
+						$title=$pgv_lang['parent_age'];
 						break;
 					}
 					if ($class) {
@@ -2369,16 +1960,15 @@ function format_parents_age($pid) {
 /**
  * print fact DATE TIME
  *
- * @param string $factrec	gedcom fact record
+ * @param Event $eventObj	Event to print the date for
  * @param boolean $anchor	option to print a link to calendar
  * @param boolean $time		option to print TIME value
- * @param string $fact		optional fact name (to print age)
- * @param string $pid		optional person ID (to print age)
- * @param string $indirec	optional individual record (to print age)
  */
-function format_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid=false, $indirec=false) {
-	global $factarray, $pgv_lang, $SEARCH_SPIDER;
+function format_fact_date(&$eventObj, $anchor=false, $time=false) {
+	global $factarray, $pgv_lang, $pid, $SEARCH_SPIDER;
 
+	if (!is_object($eventObj)) pgv_error_handler(2, "Must use Event object", __FILE__, __LINE__);
+	$factrec = $eventObj->getGedcomRecord();
 	$html='';
 	// Recorded age
 	$fact_age=get_gedcom_value('AGE', 2, $factrec);
@@ -2401,19 +1991,19 @@ function format_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pi
 				$html.=' - <span class="date">'.$tmatch[1].'</span>';
 			}
 		}
-		if ($fact && $pid) {
+		$fact = $eventObj->getTag();
+		$person = $eventObj->getParentObject();
+		if (!is_null($person) && $person->getType()=='INDI') {
 			// age of parents at child birth
 			if ($fact=='BIRT') {
-				$html.=format_parents_age($pid);
+				$html .= format_parents_age($person->getXref());
 			}
 			// age at event
 			else if ($fact!='CHAN' && $fact!='_TODO') {
-				if (!$indirec)
-					$indirec=find_person_record($pid);
-				$person=new Person($indirec);
-				$birth_date=$person->getBirthDate();
-				$death_date=$person->getDeathDate();
-				if (GedcomDate::Compare($date, $death_date)<=0 || $fact=='DEAT') {
+				$birth_date=$person->getBirthDate(false);
+				$death_date=$person->getDeathDate(false);
+				$ageText = '';
+				if ((GedcomDate::Compare($date, $death_date)<0 || !$person->isDead()) || $fact=='DEAT') {
 					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
@@ -2422,16 +2012,37 @@ function format_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pi
 						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
 						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!= $age ||
 						    !empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
-							$html.=' ('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+							$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
 					}
 				}
-				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>0) {
+				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>=0) {
 					// After death, print time since death
-					$age=GedcomDate::GetAgeGedcom($death_date, $date);
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $date), true);
 					if (!empty($age))
-						$html.=' ('.get_age_at_event($age, true).' '.$pgv_lang['after_death'].')';
+						if (GedcomDate::GetAgeGedcom($death_date, $date)=="0d") $ageText = '('.$pgv_lang['at_death_day'].')';
+						else $ageText = '('.$age.' '.$pgv_lang['after_death'].')';
+				}
+				if (!empty($ageText)) $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
+			}
+		}
+		else if (!is_null($person) && $person->getType()=='FAM') {
+			$indirec=find_person_record($pid);
+			$indi=new Person($indirec);
+			$birth_date=$indi->getBirthDate(false);
+			$death_date=$indi->getDeathDate(false);
+			$ageText = '';
+			if (GedcomDate::Compare($date, $death_date)<=0) {
+				$age=GedcomDate::GetAgeGedcom($birth_date, $date);
+				// Only show calculated age if it differs from recorded age
+				if (!empty($age) && $age>0) {
+					if (!empty($fact_age) && $fact_age!=$age ||
+					    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
+					    !empty($husb_age) && $indi->getSex()=='M' && $husb_age!= $age ||
+					    !empty($wife_age) && $indi->getSex()=='F' && $wife_age!=$age)
+						$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
 				}
 			}
+			if (!empty($ageText)) $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
 		}
 	} else {
 		// 1 DEAT Y with no DATE => print YES
@@ -2447,7 +2058,7 @@ function format_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pi
 	// print gedcom ages
 	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
 		if (!empty($age)) {
-			$html.=' <span class="label">'.$label.'</span>: '.get_age_at_event($age, false);
+			$html.=' <span class="label">'.$label.'</span>: <span class="age">'.PrintReady(get_age_at_event($age, false)).'</span>';
 		}
 	}
 	return $html;
@@ -2455,14 +2066,19 @@ function format_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pi
 /**
  * print fact PLACe TEMPle STATus
  *
- * @param string $factrec	gedcom fact record
+ * @param Event $eventObj	gedcom fact record
  * @param boolean $anchor	option to print a link to placelist
  * @param boolean $sub		option to print place subrecords
  * @param boolean $lds		option to print LDS TEMPle and STATus
  */
-function format_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
+function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $factarray, $SEARCH_SPIDER;
-
+	if ($eventObj==null) return '';
+	if (!is_object($eventObj)) {
+		pgv_error_handler("2", "Object was not sent in, please use Event object", __FILE__, __LINE__);
+		$factrec = $eventObj;
+	}
+	else $factrec = $eventObj->getGedcomRecord();
 	$html='';
 
 	$ct = preg_match("/2 PLAC (.*)/", $factrec, $match);
@@ -2569,22 +2185,14 @@ function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM"
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
 
 	$html='';
-	$indirec = find_person_record($key);
-	if (!$indirec) $indirec = find_family_record($key);
+	$person = GedcomRecord::getInstance($key);
+	if (is_null($person)) return;
 	foreach ($majorfacts as $indexval => $fact) {
-		$factrec = get_sub_record(1, "1 $fact", $indirec);
-		if (strlen($factrec)>7 and showFact("$fact", $key) and !FactViewRestricted($key, $factrec)) {
+		$event = $person->getFactByType($fact);
+		if (!is_null($event) && $event->hasDatePlace() && $event->canShow()) {
 			$html.='<span dir="'.$TEXT_DIRECTION.'"><br /><i>';
-			if (isset($pgv_lang[$fact])) {
-				$html.=$pgv_lang[$fact];
-			} else {
-				if (isset($factarray[$fact])) {
-					$html.=$factarray[$fact];
-				} else {
-					$html.=$fact;
-				}
-			}
-			$html.=' '.format_fact_date($factrec).format_fact_place($factrec).'</i></span>';
+			$html .= $event->getLabel();
+			$html.=' '.format_fact_date($event).format_fact_place($event).'</i></span>';
 			break;
 		}
 	}
@@ -2596,12 +2204,22 @@ function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM"
  * If the fact already exists in the second array, delete it from the first one.
  */
 function CheckFactUnique($uniquefacts, $recfacts, $type) {
-	foreach($recfacts as $indexval => $fact) {
-		if (($type == "SOUR") || ($type == "REPO")) $factrec = $fact[0];
-		if (($type == "FAM") || ($type == "INDI")) $factrec = $fact[1];
+	foreach($recfacts as $indexval => $factarray) {
+		$fact=false;
+		if (is_object($factarray)) {
+			/* @var $factarray Event */
+			$fact = $factarray->getTag();
+		}
+		else {
+			if (($type == "SOUR") || ($type == "REPO")) $factrec = $factarray[0];
+			if (($type == "FAM") || ($type == "INDI")) $factrec = $factarray[1];
+			 
 		$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
 		if ($ft>0) {
 			$fact = trim($match[1]);
+			}
+		}
+		if ($fact!==false) {
 			$key = array_search($fact, $uniquefacts);
 			if ($key !== false) unset($uniquefacts[$key]);
 		}
@@ -2669,6 +2287,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	print "</select>";
 	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" />";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
+
 	print "</form>";
 	print "</td></tr>";
 }
@@ -2714,7 +2333,7 @@ function init_calendar_popup() {
 function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='', $filter='') {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
-	$text = $pgv_lang["find_id"];
+	$text = $pgv_lang["find_individual"];
 	if (empty($ged)) $ged=$GEDCOM;
 	if (isset($PGV_IMAGES["indi"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indi"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -2743,7 +2362,7 @@ function print_findfamily_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_family"];
+	$text = $pgv_lang["find_familyid"];
 	if (isset($PGV_IMAGES["family"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["family"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findFamily(document.getElementById('".$element_id."'), '".$ged."'); return false;\">";

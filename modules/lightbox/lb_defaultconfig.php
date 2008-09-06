@@ -83,9 +83,9 @@ $LB_ML_THUMB_LINKS = "text"; 		// MultiMedia List Page Thumbnail Links
 
 	// Tab id no for Lightbox
 	if (file_exists("modules/googlemap/defaultconfig.php")) { 
-		$tabno=7;
+		$tabno=8;
 	}else{
-		$tabno=6;
+		$tabno=7;
 	}
 	
 ?>

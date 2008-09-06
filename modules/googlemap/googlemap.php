@@ -33,6 +33,27 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require('modules/googlemap/defaultconfig.php');
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
+global $SESSION_HIDE_GOOGLEMAP;
+$SESSION_HIDE_GOOGLEMAP = "empty";
+if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
+	if(stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
+		$SESSION_HIDE_GOOGLEMAP = "true";
+	}
+	if(stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
+		$SESSION_HIDE_GOOGLEMAP = "false";
+	}
+}
+
+// change the session values and store if needed.
+if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
+if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
+if($SESSION_HIDE_GOOGLEMAP == "empty") {
+	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
+		$SESSION_HIDE_GOOGLEMAP = "true";
+	else 
+		$SESSION_HIDE_GOOGLEMAP = "false";
+}
+
 loadLangFile("gm_lang");
 
 // functions copied from print_fact_place
@@ -309,8 +330,12 @@ function tool_tip_text($marker) {
 	$tool_tip=$marker['fact'];
 	if (!empty($marker['info']))
 		$tool_tip.=": {$marker['info']}";
-	if (!empty($marker['name']) && (displayDetailsById($marker['name']) || showLivingNameById($marker['name'])))
-		$tool_tip.=": ".PrintReady(get_person_name($marker['name']));
+	if (!empty($marker['name'])) {
+		$person=Person::getInstance($marker['name']);
+		if ($person && $person->canDisplayName()) {
+			$tool_tip.=": ".PrintReady($person->getFullName());
+		}
+	}
 	if (!empty($marker['date'])) {
 		$date=new GedcomDate($marker['date']);
 		$tool_tip.=" - ".$date->Display(false);
@@ -464,26 +489,26 @@ function build_indiv_map($indifacts, $famids) {
 	$tables = $DBCONN->getListOf('tables');
 	$placelocation=in_array($TBLPREFIX."placelocation", $tables);
 	//-- sort the facts
-	sort_facts($indifacts);
+	//sort_facts($indifacts); facts should already be sorted
 	$i = 0;
 	foreach ($indifacts as $key => $value) {
-		if (preg_match("/1 (\w+)(.*)/", $value[1], $match)) {
-			$fact = $match[1];
-			$fact_data=trim($match[2]);
+			$fact = $value->getTag();
+			$fact_data=$value->getDetail();
+			$factrec = $value->getGedComRecord();
 			$placerec = null;
-			if (preg_match("/2 PLAC (.*)/", $value[1], $match)) {
-				$placerec = get_sub_record(2, "2 PLAC", $value[1]);
+			if ($value->getPlace()!=null) {
+				$placerec = get_sub_record(2, "2 PLAC", $factrec);
 				$addrFound = false;
 			} else {
-				if (preg_match("/\d ADDR (.*)/", $value[1], $match)) {
-					$placerec = get_sub_record(1, "\d ADDR", $value[1]);
+				if (preg_match("/\d ADDR (.*)/", $factrec, $match)) {
+					$placerec = get_sub_record(1, "\d ADDR", $factrec);
 					$addrFound = true;
 				}
 			}
 			if (!empty($placerec)) {
 				$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
 				$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
-				$spouserec = get_sub_record(1, "1 _PGVS", $value[1]);
+				$spouserec = get_sub_record(2, "2 _PGVS", $factrec);
 				$ctlp = preg_match("/\d _PGVS @(.*)@/", $spouserec, $spouseid);
 				if ($ctlp>0) {
 					$useThisItem = displayDetailsByID($spouseid[1]);
@@ -494,7 +519,7 @@ function build_indiv_map($indifacts, $famids) {
 					$i = $i + 1;
 					$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
 					if ($fact == "EVEN" || $fact=="FACT") {
-						$eventrec = get_sub_record(1, "2 TYPE", $value[1]);
+						$eventrec = get_sub_record(1, "2 TYPE", $factrec);
 						if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
 							if (isset($factarray[$match3[1]]))
 								$markers[$i]["fact"]=$factarray[$match3[1]];
@@ -512,7 +537,7 @@ function build_indiv_map($indifacts, $famids) {
 					$match2[1] = trim($match2[1]);
 					$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]);
 					$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]);
-					$ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
+					$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
 					if ($ctd>0)
 						$markers[$i]["date"] = $match[1];
 					if ($ctlp>0)
@@ -532,7 +557,7 @@ function build_indiv_map($indifacts, $famids) {
 							$i = $i + 1;
 							$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
 							if ($fact == "EVEN" || $fact=="FACT") {
-								$eventrec = get_sub_record(1, "2 TYPE", $value[1]);
+								$eventrec = get_sub_record(1, "2 TYPE", $factrec);
 								if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
 									if (isset($factarray[$match3[1]]))
 										$markers[$i]["fact"]=$factarray[$match3[1]];
@@ -550,7 +575,7 @@ function build_indiv_map($indifacts, $famids) {
 							if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
 							$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]);
 							$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]);
-							$ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
+							$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
 							if ($ctd>0)
 								$markers[$i]["date"] = $match[1];
 							if ($ctlp>0)
@@ -559,7 +584,6 @@ function build_indiv_map($indifacts, $famids) {
 					}
 				}
 			}
-		}
 	}
 
 	// Add children to the list
@@ -705,12 +729,10 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]['info']))
 						print ": {$markers[$j]['info']}";
 					if (!empty($markers[$j]["name"])) {
-						print ": <a href=\\\"individual.php?pid=".$markers[$j]["name"]."&amp;ged=$GEDCOM\\\">";
-						if (displayDetailsById($markers[$j]["name"])||showLivingNameById($markers[$j]["name"]))
-							print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($markers[$j]["name"])));
-						else
-							print $pgv_lang["private"];
-						print "</a>";
+						$person=Person::getInstance($markers[$j]['name']);
+						if ($person) {
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+						}
 					}
 					print "<br />";
 					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
@@ -761,12 +783,10 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]['info']))
 						print ": {$markers[$j]['info']}";
 					if (!empty($markers[$j]["name"])) {
-						print ": <a href=\\\"individual.php?pid=".$markers[$j]["name"]."&amp;ged=$GEDCOM\\\">";
-						if (displayDetailsById($markers[$j]["name"])||showLivingNameById($markers[$j]["name"]))
-							print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($markers[$j]["name"])));
-						else
-							print $pgv_lang["private"];
-						print "</a>";
+						$person=Person::getInstance($markers[$j]['name']);
+						if ($person) {
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+						}
 					}
 					print "<br />";
 					if (preg_match("/2 PLAC (.*)/", $markers[$j]["placerec"]) == 0) {
@@ -830,12 +850,10 @@ function build_indiv_map($indifacts, $famids) {
 							if (!empty($markers[$k]['info']))
 								print ": {$markers[$k]['info']}";
 							if (!empty($markers[$k]["name"])) {
-								print ": <a href=\\\"individual.php?pid=".$markers[$k]["name"]."&amp;ged=$GEDCOM\\\">";
-								if (displayDetailsById($markers[$k]["name"])||showLivingNameById($markers[$k]["name"]))
-									print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($markers[$k]["name"])));
-								else
-									print $pgv_lang["private"];
-								print "</a>";
+								$person=Person::getInstance($markers[$k]['name']);
+								if ($person) {
+									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+								}
 							}
 							print "<br />";
 							if (preg_match("/2 PLAC (.*)/", $markers[$k]["placerec"]) == 0) {
@@ -880,12 +898,11 @@ function build_indiv_map($indifacts, $famids) {
 			if (!empty($marker["info"]))
 				print "<span class=\"field\">{$marker["info"]}</span><br />";
 			if (!empty($marker["name"])) {
-				print "<a href=\"individual.php?pid={$marker["name"]}&amp;ged=$GEDCOM\">";
-				if (displayDetailsById($marker["name"])||showLivingNameById($marker["name"]))
-					print PrintReady(get_person_name($marker["name"]));
-				else
-					print $pgv_lang["private"];
-				print "</a><br />";
+				$person=Person::getInstance($marker['name']);
+				if ($person) {
+					echo '<a href="', $person->getLinkUrl(), '">', $person->canDisplayName() ? $person->getFullName() : $pgv_lang['private'], '</a>';
+				}
+				print '<br />';
 			}
 			if (preg_match("/2 PLAC (.*)/", $marker["placerec"]) == 0) {
 				print_address_structure_map($marker["placerec"], 1);

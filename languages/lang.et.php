@@ -912,7 +912,7 @@ $pgv_lang["hit_count"]		= "Külastuste arv:";
 $pgv_lang["phpgedview_message"] 	= "PhpGedView sõnum";
 $pgv_lang["common_surnames"]	= "Enim kasutatud perekonnanimed";
 $pgv_lang["default_news_title"] 	= "Tere tulemast oma suguvõsa lehele";
-$pgv_lang["default_news_text"]		= "Selles veebisaidis olevat suguvõsa informatsiooni aitab näidata  genealoogiaprogramm <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>. Sellel lehel on on ülevaade suguvõsast.<br /><br />Andmete kasutamiseks vali menüüst sobiv tabel, leia nimekirjast isik või kasuta otsingut nime või koha leidmiseks.<br /><br />Probleemide korral kasuta  Spikri-ikooni abi saamiseks käsiloleva lehe kasutamisel.<br /><br />Tänan, et külastasid seda lehekülge.";
+$pgv_lang["default_news_text"]		= "Selles veebisaidis olevat suguvõsa informatsiooni aitab näidata  genealoogiaprogramm <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Sellel lehel on on ülevaade suguvõsast.<br /><br />Andmete kasutamiseks vali menüüst sobiv tabel, leia nimekirjast isik või kasuta otsingut nime või koha leidmiseks.<br /><br />Probleemide korral kasuta  Spikri-ikooni abi saamiseks käsiloleva lehe kasutamisel.<br /><br />Tänan, et külastasid seda lehekülge.";
 $pgv_lang["reset_default_blocks"]	= "Taasta algsed blokid";
 $pgv_lang["recent_changes"] 		= "Viimased muudatused";
 $pgv_lang["recent_changes_block"]	= "Viimased muudatused";

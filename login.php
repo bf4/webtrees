@@ -81,6 +81,25 @@ if ($action=='login') {
 				}
 			}
 		}
+		
+		//-- section added based on UI feedback
+		// $url is set to individual.php below if a URL is not passed in... it will then be resent as "individual.php" when the user attempts to login
+		if ($url=='individual.php') {
+			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+				if (get_user_gedcom_setting($user_id, $ged_id, 'gedcomid')) {
+					$pid = get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
+					$ged = $ged_name;
+					break;
+				}
+			}
+			if ($pid) {
+				$url = "individual.php?pid=".$pid;
+			} else {
+				//-- user does not have a pid?  Go to mygedview portal
+				$url = "index.php?ctype=user";
+			}
+		}
+
 		session_write_close();
 
 		// If we've clicked login from the login page, we don't want to go back there.
@@ -96,7 +115,7 @@ if ($action=='login') {
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
 		$url .= "&";	// Simplify the preg_replace following
-		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url)));	// Remove any existing &ged= parameter
+		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url),ENT_COMPAT,'UTF-8'));	// Remove any existing &ged= parameter
 		if (substr($url, -1)=="&") $url = substr($url, 0, -1);
 		$url .= "&ged=".$ged;
 		$url = str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url);
@@ -124,7 +143,7 @@ if ($action=='login') {
 			/* - commented out based on UI feedback	
 			else $url = "index.php?ctype=user";
 			*/
-			else $url = "index.php?ctype=gedcom";
+			else $url = "individual.php";
 		}
 	}
 	else if (stristr($url, "index.php")&&!stristr($url, "ctype=")) {
@@ -183,10 +202,10 @@ $tab=0;		// initialize tab index
 	?>
 	<form name="loginform" method="post" action="<?php print $LOGIN_URL; ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
 		<input type="hidden" name="action" value="login" />
-		<input type="hidden" name="url" value="<?php print htmlentities($url); ?>" />
-		<input type="hidden" name="ged" value="<?php if (isset($ged)) print htmlentities($ged); else print htmlentities($GEDCOM); ?>" />
-		<input type="hidden" name="pid" value="<?php if (isset($pid)) print htmlentities($pid); ?>" />
-		<input type="hidden" name="type" value="<?php print htmlentities($type); ?>" />
+		<input type="hidden" name="url" value="<?php print htmlentities($url,ENT_COMPAT,'UTF-8'); ?>" />
+		<input type="hidden" name="ged" value="<?php if (isset($ged)) print htmlentities($ged,ENT_COMPAT,'UTF-8'); else print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>" />
+		<input type="hidden" name="pid" value="<?php if (isset($pid)) print htmlentities($pid,ENT_COMPAT,'UTF-8'); ?>" />
+		<input type="hidden" name="type" value="<?php print htmlentities($type,ENT_COMPAT,'UTF-8'); ?>" />
 		<input type="hidden" name="usertime" value="" />
 		<?php
 		if (!empty($message)) print "<span class='error'><br /><b>$message</b><br /><br /></span>\r\n";
@@ -196,7 +215,7 @@ $tab=0;		// initialize tab index
 			<tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["login"]; ?></td></tr>
 			<tr>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("username_help", "qm", "username"); print $pgv_lang["username"]; ?></td>
-				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" tabindex="<?php echo ++$tab; ?>" name="username" value="<?php print htmlentities($username); ?>" size="20" class="formField" /></td>
+				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" tabindex="<?php echo ++$tab; ?>" name="username" value="<?php print htmlentities($username,ENT_COMPAT,'UTF-8'); ?>" size="20" class="formField" /></td>
 			</tr>
 			<tr>
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("password_help", "qm", "password"); print $pgv_lang["password"]; ?></td>

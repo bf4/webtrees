@@ -4,7 +4,7 @@
  * to keep bookmarks, see a list of upcoming events, etc.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -468,8 +468,8 @@ else {
 	<tr><td class="topbottombar" colspan="7">
 	<?php
 	print_help_link("portal_config_intructions", "qm");
-	if ($ctype=="user") print "<b>".str2upper($pgv_lang["customize_page"])."</b>";
-	else print "<b>".str2upper($pgv_lang["customize_gedcom_page"])."</b>";
+	if ($ctype=="user") print "<b>".UTF8_strtoupper($pgv_lang["customize_page"])."</b>";
+	else print "<b>".UTF8_strtoupper($pgv_lang["customize_gedcom_page"])."</b>";
 	print "</td></tr>";
 	// NOTE: Row 1: Column legends
 	print "<tr>";

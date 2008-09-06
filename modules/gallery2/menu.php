@@ -103,7 +103,8 @@ class gallery2_ModuleMenu
 */
 
 		// Site Admin
-		if(PGV_USER_IS_ADMIN) {
+		if(userIsAdmin(getUserName()))
+		{
 			$submenu = new Menu($pgv_lang['mod_gallery2_siteadmin'], 'index.php?mod=gallery2&amp;g2_view=core.SiteAdmin');
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}");
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");

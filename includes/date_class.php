@@ -1185,8 +1185,8 @@ class GedcomDate {
 	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
 	function GetAgeYears($d1, $d2=NULL) {
-		if (is_null($d1)) return;
-		if (is_null($d2))
+		if (!is_object($d1)) return;
+		if (!is_object($d2))
 			return $d1->date1->GetAge(false, client_jd());
 		else
 			return $d1->date1->GetAge(false, $d2->MinJD());
@@ -1201,6 +1201,8 @@ class GedcomDate {
 			// If dates overlap, then can't calculate age.
 			if (GedcomDate::Compare($d1, $d2)) {
 				return $d1->date1->GetAge(true, $d2->MinJD());
+			} if (GedcomDate::Compare($d1, $d2)==0 && $d1->date1->minJD==$d2->MinJD()) {
+				return '0d';
 			} else {
 				return '';
 			}
@@ -1212,7 +1214,7 @@ class GedcomDate {
 	// return >0 if $b>$a
 	// return  0 if dates same/overlap/invalid
 	// BEF/AFT sort as the day before/after.
-	function Compare($a, $b) {
+	function Compare(&$a, &$b) {
 		// Incomplete dates can't be sorted
 		if (!is_object($a) || !is_object($b) || !$a->isOK() || !$b->isOK())
 			return 0;
@@ -1251,7 +1253,12 @@ class GedcomDate {
 			if ($amin>$bmax)
 				return 1;
 			else
-				return 0;
+				if ($amin<$bmin && $amax<=$bmax) 
+					return -1;
+				else 
+					if ($amin>$bmin && $amax>=$bmax) 
+						return 1;
+				else return 0;
 	}
 
 	// Check whether a gedcom date contains usable calendar date(s).

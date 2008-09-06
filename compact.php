@@ -32,17 +32,12 @@ $showids   =safe_GET('showids' ,   '1', '0');
 $showthumbs=safe_GET('showthumbs', '1', '0');
 
 // Validate form variables
-$rootid = check_rootid($rootid);
+$rootid=check_rootid($rootid);
 
-$person = Person::getInstance($rootid);
+$person =Person::getInstance($rootid);
+$name   =$person->getFullName();
+$addname=$person->getAddName();
 
-if ($person->canDisplayName()) {
-	$name = get_person_name($rootid);
-	$addname = get_add_person_name($rootid);
-} else {
-	$name = $pgv_lang["private"];
-	$addname = "";
-}
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
 
@@ -58,7 +53,7 @@ if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"${cellwidth}px\" valign=\"top\">\n\t\t";
 print "<h2>" . $pgv_lang["compact_chart"] . ":";
-print "<br />".PrintReady($name);
+print "<br />".PrintReady($name) ;
 if ($addname != "") print "<br />" . PrintReady($addname);
 print "</h2>";
 
@@ -335,7 +330,7 @@ function print_td_person($n) {
 				$imgheight = $imgsize[1]+150;
 //LBox --------  change for Lightbox Album --------------------------------------------
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($name)) . "\">" . "\n";
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 				}else{
 // ---------------------------------------------------------------------------------------------
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
@@ -344,14 +339,14 @@ function print_td_person($n) {
 // ---------------------------------------------------------------------------------------------
 				$birth_date=$indi->getBirthDate();
 				$death_date=$indi->getDeathDate();
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".strip_tags($name).' '.strip_tags(html_entity_decode(($birth_date->Display(false).' - '.$death_date->Display(false)))).'" ';
+				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false),ENT_QUOTES,'UTF-8'))."\"";
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}
 		}
 
 		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" title=\"$title\"> ";
-		$text .= PrintReady(htmlspecialchars($name));
+		$text .= PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'));
 		if ($addname) $text .= "<br />" . PrintReady($addname);
 		$text .= "</a>";
 		if ($showids) {
@@ -374,7 +369,9 @@ function print_td_person($n) {
 			$text.="</span>";
 		}
 	}
-	$text = unhtmlentities($text);
+	
+	//Removed by BH causing problems with nicknames not printing
+	//$text = unhtmlentities($text);
 	
 	// -- empty box
 	if (empty($text)) $text = "&nbsp;<br />&nbsp;<br />";

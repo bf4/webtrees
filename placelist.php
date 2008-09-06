@@ -34,10 +34,10 @@ function case_in_array($value, $array) {
 	}
 	return false;
 }
-
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['display'])) $display = $_REQUEST['display'];
-if (isset($_REQUEST['parent'])) $parent = $_REQUEST['parent'];
+$action = safe_GET('action');
+$display = safe_GET('display');
+$parent = safe_GET('parent');
+$level = safe_GET('level');
 
 if (empty($action)) $action = "find";
 if (empty($display)) $display = "hierarchy";
@@ -373,9 +373,9 @@ if ($level > 0) {
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
 		$title = PrintReady(substr($title, 0, -2))." ";
 		// Sort each of the tables by Name
-		usort($myindilist,   array('GedcomRecord', 'CompareName'));
-		usort($myfamlist,    array('GedcomRecord', 'CompareName'));
-		usort($mysourcelist, array('GedcomRecord', 'CompareName'));
+		usort($myindilist,   array('GedcomRecord', 'Compare'));
+		usort($myfamlist,    array('GedcomRecord', 'Compare'));
+		usort($mysourcelist, array('GedcomRecord', 'Compare'));
 		// Print each of the tables
 		print_indi_table($myindilist,   $pgv_lang['individuals'].' @ '.$title);
 		print_fam_table ($myfamlist,    $pgv_lang['families'   ].' @ '.$title);

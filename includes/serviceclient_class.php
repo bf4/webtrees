@@ -3,7 +3,7 @@
  * Class used to access records and data on a remote server
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require_once('includes/gedcomrecord.php');
-include_once('SOAP/Client.php');
 include_once('includes/family_class.php');
 
 class ServiceClient extends GedcomRecord {
@@ -107,7 +106,8 @@ class ServiceClient extends GedcomRecord {
 		if (!empty($this->SID)) return $this->SID;
 		if (is_null($this->soapClient)) {
 			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
-				AddToLog('Using PEAR:SOAP library');
+				include_once('SOAP/Client.php');
+				//AddToLog('Using PEAR:SOAP library');
 				//	get the wsdl and cache it
 				$wsdl = new SOAP_WSDL($this->url);
 				//change the encoding style
@@ -115,12 +115,12 @@ class ServiceClient extends GedcomRecord {
 				$this->soapClient = $wsdl->getProxy();
 			}
 			else {
-				AddtoLog("Using SOAP Extension");
+				//AddtoLog("Using SOAP Extension");
 				//-- don't use exceptions in PHP 4
 				$this->soapClient = new SoapClient($this->url, array('exceptions' => 0));
 			}
 		}
-		if (!$this->isError($this->soapClient)) {
+		if ($this->soapClient!=null && !$this->isError($this->soapClient)) {
 			$res = $this->soapClient->Authenticate($this->username, $this->password, $this->gedfile, "",$this->data_type);
 			if (!is_object($res))
 			{
@@ -691,7 +691,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 		$count=0;
 		$Probability=0;
 		if (!empty($PersonName1)&&!empty($PersonName2)){
-			$lev = levenshtein(str2lower($PersonName1), str2lower($PersonName2));
+			$lev = levenshtein(UTF8_strtolower($PersonName1), UTF8_strtolower($PersonName2));
 			if($lev<4){
 				$Probability+=2;
 			} else

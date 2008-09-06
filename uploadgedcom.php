@@ -47,6 +47,7 @@
 // NOTE: $bakfile = Name and path of the backupfile, this file is created if a file with the same name exists
 
 ini_set('register_globals', 'Off');
+@import_request_variables('gcp');
 require "config.php";
 require_once "includes/functions_import.php";
 require_once "includes/functions_export.php";
@@ -95,10 +96,8 @@ else if ($check == "add") {
 	$ok = true;
 } else if ($check == "add_new") {
 	if (((!file_exists($INDEX_DIRECTORY.$GEDFILENAME)) && !file_exists($path.$GEDFILENAME)) || $override == "yes") {
-		if ($path != "")
-		$fp = fopen($path.$GEDFILENAME, "wb");
-		else
-		$fp = fopen($INDEX_DIRECTORY.$GEDFILENAME, "wb");
+		if ($path != "") $fp = fopen($path.$GEDFILENAME, "wb");
+		else $fp = fopen($INDEX_DIRECTORY.$GEDFILENAME, "wb");
 		if ($fp) {
 			$newgedcom = gedcom_header($GEDFILENAME).
 			"0 @I1@ INDI\r\n" .
@@ -111,7 +110,6 @@ else if ($check == "add") {
 			fwrite($fp, $newgedcom);
 			fclose($fp);
 			$logline = AddToLog($GEDFILENAME." updated");
-			if (!empty ($COMMIT_COMMAND))
 			check_in($logline, $GEDFILENAME, $INDEX_DIRECTORY);
 			$verify = "validate_form";
 			$exists = true;
@@ -504,7 +502,8 @@ if ($verify == "verify_gedcom") {
 			}
 			fclose($fp);
 			
-			if ($mc>0 && !$hasObje) {
+//			if ($mc>0 && !$hasObje) {
+			if ($mc>0) {
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
@@ -1152,7 +1151,6 @@ if ($stage == 1) {
 	} else {
 		@unlink($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new");
 		$logline = AddToLog($GEDCOM_FILE." updated");
-		if (!empty ($COMMIT_COMMAND))
 		check_in($logline, $GEDCOM_FILE, $INDEX_DIRECTORY);
 	}
 	$newtime = time();
@@ -1163,8 +1161,9 @@ if ($stage == 1) {
 	$go_welc = $pgv_lang["welcome_page"];
 	if ($LANGUAGE == "french" || $LANGUAGE == "italian") {
 		print "<script type=\"text/javascript\">complete_progress($importtime, \"$exec_text\", \"$go_pedi\", \"$go_welc\");</script>";
-	} else
-	print "<script type=\"text/javascript\">complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');</script>";
+	} else {
+		print "<script type=\"text/javascript\">complete_progress($importtime, '$exec_text', '$go_pedi', '$go_welc');</script>";
+	}
 	flush();
 
 	if ($marr_names == "yes") {

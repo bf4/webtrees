@@ -126,40 +126,18 @@ else {
 			if ($i==0) {
 				$changedgedcoms[$change["gedcom"]] = true;
 				$GEDCOM=$change["gedcom"];
-				$gedrec=find_gedcom_record($change['gid']);
-				if (empty($gedrec))
-					$gedrec=$change['undo'];
-				if (preg_match("/0\s*@\w+@\s*(\w+)/", $gedrec, $match))
-					$type=$match[1];
-				else
-					$type="INDI";
-				switch ($type) {
+
+				$record=GedcomRecord::getInstance($change['gid']);
+				$output.='<b>'.PrintReady($record->getFullName()).'</b> '.getLRM().'('.$record->getXref().')'.getLRM().'<br />';
+				switch ($record->getType()) {
 				case 'INDI':
-					$names = get_indi_names($gedrec);
-					$output .= "<b>".PrintReady(check_NN($names[0][0]))."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output .= "<a href=\"javascript:;\" onclick=\"return show_diff('".htmlentities(encode_url("individual.php?pid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes"))."');\">".$pgv_lang["view_change_diff"]."</a> | ";
-					break;
 				case 'FAM':
-					$output.= "<b>".PrintReady(get_family_descriptor($change["gid"]))."</b> " . getLRM() . "(" . $change["gid"]. ")" . getLRM() . "<br />";
-					$output.= "<a href=\"javascript:;\" onclick=\"return show_diff('".htmlentities(encode_url("family.php?famid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes"))."');\">".$pgv_lang["view_change_diff"]."</a> | ";
-					break;
 				case 'SOUR':
-					$name=get_gedcom_value("ABBR", 1, $gedrec);
-					if (empty($name))
-						$name=get_gedcom_value("TITL", 1, $gedrec);
-					$output.="<b>".PrintReady($name)."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('".htmlentities(encode_url("source.php?sid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes"))."');\">".$pgv_lang["view_change_diff"]."</a> | ";
-					break;
 				case 'OBJE':
-					$name = get_gedcom_value("TITL", 1, $gedrec);
-					if (empty($name)) $name = get_gedcom_value("TITL", 2, $gedrec);
-					$output.="<b>".PrintReady($name)."</b> " . getLRM() . "(".$change["gid"].")" . getLRM()  . "<br />";
-					$output.="<a href=\"javascript:;\" onclick=\"return show_diff('".htmlentities(encode_url("mediaviewer.php?mid=".$change["gid"]."&ged=".$change["gedcom"]."&show_changes=yes"))."');\">".$pgv_lang["view_change_diff"]."</a> | ";
-					break;
-				default:
-					$output.="<b>".$factarray[$type]."</b> " . getLRM() . "(".$change["gid"].")" . getLRM() ."<br />";
+					$output.='<a href="javascript:;" onclick="return show_diff(\''.encode_url($record->getLinkUrl().'&show_changes=yes').'\');">'.$pgv_lang['view_change_diff'].'</a> | ';
 					break;
 				}
+
 				$output.="<a href=\"javascript:show_gedcom_record('".$change["gid"]."');\">".$pgv_lang["view_gedcom"]."</a> | ";
 				$output.="<a href=\"javascript:;\" onclick=\"return edit_raw('".$change["gid"]."');\">".$pgv_lang["edit_raw"]."</a><br />";
 				$output.="<div class=\"indent\">\n";

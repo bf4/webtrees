@@ -47,6 +47,7 @@
 	global $pgv_lang, $pgv_changes, $factarray, $view;
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $DBCONN, $DBTYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+	
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
 	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
@@ -176,7 +177,7 @@
 		if ($t==5){ // do nothing
 		}else{
 			echo "\n\n";
-			echo '<table border="0" class="facts_table" ><tr>', "\n";
+			echo "<table cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"facts_table\"><tr>", "\n";
 			
 			echo '<td width="100" align="center" class="descriptionbox">';
 				if ($t==5){
@@ -189,10 +190,10 @@
 				}
 			echo '</td>';
 			
-			echo '<td width="2"></td>';
+			//echo '<td width="2"></td>';
 			
-			echo '<td class="facts_value">';
-			echo "<table width=\"100%\"><tr><td>" . "\n";
+			echo '<td class="facts_value" >';
+			echo '<table class="facts_table" width=\"100%\" cellpadding=\"0\"><tr><td >' . "\n";
 				echo "<div id=\"thumbcontainer".$t."\">" . "\n";
 				echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
 				//echo "<ul id=\"thumblist\">" . "\n\n";
@@ -200,6 +201,7 @@
 
 		// Album Reorder include =============================
 		// Following used for Album media sort ------------------
+		$reorder=safe_get('reorder', '1', '0');
 		if ($reorder==1) {
 			if ($t==1) { $rownum1=$numm; }
 			if ($t==2) { $rownum2=$numm; }
@@ -214,12 +216,10 @@
 
 		// Start pulling media items into thumbcontainer div ==============================
 		while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
-			
 			if (isset($foundObjs[$rowm['m_media']])) {
 				if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
 				continue;
 			}
-			
 			// NOTE: Determine the size of the mediafile
 			$imgwidth = 300+40;
 			$imgheight = 300+150;
@@ -237,9 +237,13 @@
 				$imgheight = $imgsize[1]+150;
 			}
 			$rows=array();
+			
+
 			//-- if there is a change to this media item then get the
 			//-- updated media item and show it
-			if (isset($pgv_changes[$rowm["m_media"]."&nbsp;".$GEDCOM])) {
+			// if (isset(find_updated_record($rowm["m_media"]) {
+			if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM][0]["gid"]) && $t!="5"  ){
+			// if (isset($pgv_changes[$rowm["m_media"]."&nbsp;".$GEDCOM])) {
 				$newrec = find_updated_record($rowm["m_media"]);
 				$row = array();
 				$row['m_media'] = $rowm["m_media"];
@@ -257,12 +261,16 @@
 				$rows['old'] = $rowm;
 				$current_objes[$rowm['m_media']]--;
 			}else{
-				if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) $rows['old'] = $rowm;
-				else {
+				if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) {
+					$rows['old'] = $rowm;
+				}else{
 					$rows['normal'] = $rowm;
-					if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
+					if (isset($current_objes[$rowm['m_media']])) {
+						$current_objes[$rowm['m_media']]--;
+					}
 				}
 			}
+
 			
 			foreach($rows as $rtype => $rowm) {
 				if ($t!=5){
@@ -278,26 +286,24 @@
 		
 		if ($t==5) {
 		}else{
-		echo "</ul>";
-		echo "</div>";
-		echo "<div class=\"clearlist\">";
-		echo "</div>";
-		// echo "</center>";
+			echo "</ul>";
+			echo "</div>";
+			echo "<div class=\"clearlist\">";
+			echo "</div>";
+			// echo "</center>";
 
-		echo '</td></tr></table>' . "\n";
+			echo '</td></tr></table>' . "\n";
 
-		if ($t==3 && $numm > 0) {
-			echo "<font size='1'>";
-			echo $pgv_lang["census_text"];
-			echo "</font>";
-		}else{
-		}
+			if ($t==3 && $numm > 0) {
+				echo "<font size='1'>";
+				echo $pgv_lang["census_text"];
+				echo "</font>";
+			}
 
-		// echo "</center>" . "\n";
-		echo '</td>'. "\n";
-//echo '</td>';
-		echo '</tr>';
-		echo '</table>' . "\n\n";
+			// echo "</center>" . "\n";
+			echo '</td>'. "\n";
+			echo '</tr>';
+			echo '</table>' . "\n\n";
 		}
 	}
 
@@ -377,7 +383,8 @@
 			$value--;
 		}
 	}
-	
+
+
 
 // ====================================================================================
 

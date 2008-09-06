@@ -344,7 +344,7 @@ class ra_form {
 				if (!isset($people[$pid])) {
 					if(is_object($person))
 					{
-					$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
+					$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person);
 					if ($newrec!=$person->getGedcomRecord()) replace_gedrec($pid, $newrec);
 					}
 				}
@@ -360,7 +360,7 @@ class ra_form {
 		else {
 			//-- delete all records from old people
 			foreach($oldpeople as $pid=>$person) {
-				$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
+				$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person);
 				if ($newrec!=$person->getGedcomRecord()) replace_gedrec($pid, $newrec);
 			}
 		}
@@ -796,11 +796,11 @@ END_OUT;
 		$oldfamilies = array();
 		$newpeoplerecs = array();
 		foreach($oldpeople as $pid=>$person) {
-			$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
+			$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person);
 			$newpeoplerecs[$pid]=$newrec;
 			$families = $person->getSpouseFamilies();
 			foreach($families as $famid=>$family) {
-				$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $family->getGedcomRecord());
+				$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $family);
 				$newpeoplerecs[$famid]=$newrec;
 				$oldfamilies[$famid] = $family;
 			}
@@ -816,7 +816,7 @@ END_OUT;
 //					print $pid." ";
 					$person = Person::getInstance($pid);
 					if (!is_null($person)) {
-						$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
+						$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person);
 						$newpeoplerecs[$pid] = $newrec; 
 						$oldpeople[$pid] = $person;
 					}

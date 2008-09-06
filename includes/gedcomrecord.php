@@ -34,6 +34,8 @@ require_once('includes/family_class.php');
 require_once('includes/source_class.php');
 require_once('includes/repository_class.php');
 require_once('includes/media_class.php');
+require_once('includes/event_class.php');
+
 class GedcomRecord {
 	var $gedrec = "";
 	var $xref = "";
@@ -41,6 +43,8 @@ class GedcomRecord {
 	var $type = "";
 	var $changed = false;
 	var $rfn = null;
+	var $facts = null;
+	var $changeEvent = null;
 	var $disp = null;
 
 	// Cached results from various functions.
@@ -390,14 +394,15 @@ class GedcomRecord {
 	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
 	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
 	function getAllNames($fact='!', $level=1) {
-		global $pgv_lang;
+		global $pgv_lang, $WORD_WRAPPED_NOTES;
 
 		if (is_null($this->_getAllNames)) {
 			$sublevel=$level+1;
 			$subsublevel=$sublevel+1;
 			if ($this->canDisplayName()) {
 				$this->_getAllNames=array();
-				if (preg_match_all('/^'.$level.' ('.$fact.') *([^\r\n]*)(([\r\n]+['.$sublevel.'-9][^\r\n]+)*)/m', $this->gedrec, $matches, PREG_SET_ORDER)) {
+				$gedrec=preg_replace('/[\r\n]+\d CONC /', $WORD_WRAPPED_NOTES ? ' ' : '', $this->gedrec);
+				if (preg_match_all('/^'.$level.' ('.$fact.') *([^\r\n]*)(([\r\n]+['.$sublevel.'-9][^\r\n]+)*)/m', $gedrec, $matches, PREG_SET_ORDER)) {
 					foreach ($matches as $match) {
 						$this->_addName($match[1], $match[2] ? $match[2] : $this->getFallBackName(), $match[0]);
 						if ($match[3] && preg_match_all('/^'.$sublevel.' (ROMN|FONE|_\w+) *([^\r\n]*)(([\r\n]+['.$subsublevel.'-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
@@ -482,26 +487,37 @@ class GedcomRecord {
 	}
 
 	// Static helper function to sort an array of objects by name
-	function CompareName($x, $y) {
+	function Compare($x, $y) {
 		return strcmp($x->getSortName(), $y->getSortName('sort'));
 	}
 
 	// Get the three variants of the name
 	function getFullName() {
-		$tmp=$this->getAllNames();
-		return $tmp[$this->getPrimaryName()]['full'];
+		global $pgv_lang;
+		if ($this->canDisplayName()) {
+			$tmp=$this->getAllNames();
+			return $tmp[$this->getPrimaryName()]['full'];
+		} else {
+			return $pgv_lang['private'];
+		}
 	}
 	function getSortName() {
+		// The sortable name is never displayed, no need to call canDisplayName()
 		$tmp=$this->getAllNames();
 		return $tmp[$this->getPrimaryName()]['sort'];
 	}
 	function getListName() {
-		$tmp=$this->getAllNames();
-		return $tmp[$this->getPrimaryName()]['list'];
+		global $pgv_lang;
+		if ($this->canDisplayName()) {
+			$tmp=$this->getAllNames();
+			return $tmp[$this->getPrimaryName()]['list'];
+		} else {
+			return $pgv_lang['private'];
+		}
 	}
 	// Get the fullname in an alternative character set
 	function getAddName() {
-		if ($this->getPrimaryName() != $this->getSecondaryName()) {
+		if ($this->canDisplayName() && $this->getPrimaryName()!=$this->getSecondaryName()) {
 			$all_names=$this->getAllNames();
 			return $all_names[$this->getSecondaryName()]['full'];
 		} else {
@@ -512,11 +528,14 @@ class GedcomRecord {
 	//////////////////////////////////////////////////////////////////////////////
 	// Format this object for display in a list
 	// If $find is set, then we are displaying items from a selection list.
+	// $name allows us to use something other than the record name.
 	//////////////////////////////////////////////////////////////////////////////
-	function format_list($tag='li', $find=false) {
+	function format_list($tag='li', $find=false, $name=null) {
 		global $SHOW_ID_NUMBERS;
 
-		$name=$this->getFullName();
+		if (is_null($name)) {
+			$name=($tag=='li') ? $this->getListName() : $this->getFullName();
+		}
 		$dir=begRTLText($name) ? 'rtl' : 'ltr';
 		if ($find) {
 			$href='javascript:;" onclick="pasteid(\''.$this->getXref().'\'); return false;';
@@ -539,15 +558,14 @@ class GedcomRecord {
 
 	// Extract/format the first fact from a list of facts.
 	function format_first_major_fact($facts, $style) {
-		global $factarray;
-		foreach (explode('|', $facts) as $fact) {
-			foreach ($this->getAllEvents($fact) as $factrec) {
-				// Only display if it has a date or place (or both)
-				if (preg_match('/^2 (DATE|PLAC) (.+)/m', $factrec)) {
-					switch ($style) {
-					case 1: return '<br /><i>'.$factarray[$fact].' '.format_fact_date($factrec).format_fact_place($factrec).'</i>';
-					case 2: return '<span class="label">'.$factarray[$fact].':</span> <span class="field">'.format_fact_date($factrec).format_fact_place($factrec).'</span><br />';
-					}
+		foreach ($this->getAllFactsByType(explode('|', $facts)) as $event) {
+			// Only display if it has a date or place (or both)
+			if ($event->getDate() || $event->getPlace()) {
+				switch ($style) {
+				case 1:
+					return '<br /><i>'.$event->getLabel().' '.format_fact_date($event).format_fact_place($event).'</i>';
+				case 2:
+					return '<span class="label">'.$event->getLabel().':</span> <span class="field">'.format_fact_date($event).format_fact_place($event).'</span><br />';
 				}
 			}
 		}
@@ -561,19 +579,15 @@ class GedcomRecord {
 	// It also allows us to combine dates/places from different events in the summaries.
 	function getAllEventDates($event) {
 		$dates=array();
-		foreach ($this->getAllEvents($event) as $event_rec) {
-			if (preg_match_all("/^2 DATE +(.+)/m", $event_rec, $ged_dates)) {
-				foreach ($ged_dates[1] as $ged_date) {
-					$dates[]=new GedcomDate($ged_date);
-				}
-			}
+		foreach ($this->getAllFactsByType($event) as $event) {
+			$dates[]=$event->getDate();
 		}
 		return $dates;
 	}
 	function getAllEventPlaces($event) {
 		$places=array();
-		foreach ($this->getAllEvents($event) as $event_rec) {
-			if (preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event_rec, $ged_places)) {
+		foreach ($this->getAllFactsByType($event) as $event) {
+			if (preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event->getGedComRecord(), $ged_places)) {
 				foreach ($ged_places[1] as $ged_place) {
 					$places[]=$ged_place;
 				}
@@ -582,28 +596,140 @@ class GedcomRecord {
 		return $places;
 	}
 
-	// Get all the events of a type.
-	function getAllEvents($event) {
-		$event_recs=array();
-		if (ShowFactDetails($event, $this->xref)) {
-			if (preg_match_all("/^1 *{$event}\b.*(?:[\r\n]+[2-9].*)*/m", $this->gedrec, $events)) {
-				foreach ($events[0] as $event_rec) {
-					if (!FactViewRestricted($this->xref, $event_rec)) {
-						$event_recs[]=$event_rec;
-					}
-				}
-			}	
-			// Some people use "1 EVEN/2 TYPE BIRT" instead of "1 BIRT".
-			// Find them and convert them back to the proper format.
-			if (preg_match_all("/^1 (?:FACT|EVEN)\b[^\r\n]*((?:[\r\n]+[2-9][^\r\n]*)*)(?:[\r\n]+2 TYPE {$event})((?:[\r\n]+[2-9][^\r\n]*)*)/m", $this->gedrec, $matches, PREG_SET_ORDER)) {
-				foreach ($matches as $match) {
-					if (!FactViewRestricted($this->xref, $match[0])) {
-						$event_recs[]='1 '.$event.$match[1].$match[2];
-					}
-				}
-			}	
+	/**
+	 * Get the first Event for the given Fact type
+	 *
+	 * @param string $fact
+	 * @return Event
+	 */
+	function &getFactByType($factType) {
+		$this->parseFacts();
+		if (empty($this->facts)) return null;
+		foreach($this->facts as $f=>$fact) {
+			if ($fact->getTag()==$factType || $fact->getType()==$factType) return $fact;
 		}
-		return $event_recs;
+		return null;
+	}
+
+	/**
+	 * Return an array of events that match the given types
+	 *
+	 * @param mixed $factTypes  may be a single string or an array of strings
+	 * @return Event
+	 */
+	function getAllFactsByType($factTypes) {
+		$this->parseFacts();
+		if (is_string($factTypes)) $factTypes = array($factTypes);
+		$facts = array();
+		foreach ($factTypes as $factType) {
+			foreach ($this->facts as $fact) {
+				if ($fact->getTag()==$factType) {
+					$facts[]=$fact;
+				}
+			}
+		}
+		return $facts;
+	}
+
+	/**
+	 * returns an array of all of the facts
+	 * @return Array
+	 */
+	function getFacts($nfacts=NULL) {
+		$this->parseFacts($nfacts);
+		return $this->facts;
+	}
+
+	/**
+	 * Get the CHAN event for this record
+	 *
+	 * @return Event
+	 */
+	function getChangeEvent() {
+		if (is_null($this->changeEvent)) {
+			$this->changeEvent = $this->getFactByType("CHAN");
+		}
+		return $this->changeEvent;
+	}
+
+	/**
+	 * Parse the facts from the record
+	 */
+	function parseFacts($nfacts=NULL) {
+		//-- only run this function once
+		if (!is_null($this->facts) && is_array($this->facts)) return;
+		$this->facts=array();
+		//-- don't run this function if privacy does not allow viewing of details
+		if (!$this->canDisplayDetails()) return;
+		//-- must trim the record here because the record is trimmed in edit and it could mess up line numbers
+		$this->gedrec = trim($this->gedrec);
+		//-- find all the fact information
+		$indilines = preg_split("/[\r\n]+/", $this->gedrec);   // -- find the number of lines in the individuals record
+		$lct = count($indilines);
+		$factrec = "";	 // -- complete fact record
+		$line = "";   // -- temporary line buffer
+		$linenum=1;
+		for($i=1; $i<=$lct; $i++) {
+			if ($i<$lct) $line = $indilines[$i];
+			else $line=" ";
+			if (empty($line)) $line=" ";
+			if ($i==$lct||$line{0}==1) {
+				if ($i>1){
+					$event = new Event($factrec, $linenum);
+					$fact = $event->getTag();
+					if ($nfacts==NULL || !in_array($fact, $nfacts)) {
+						$event->setParentObject($this);
+						$this->facts[] = $event;
+					}
+				}
+				$factrec = $line;
+				$linenum = $i;
+			}
+			else $factrec .= "\n".$line;
+		}
+	}
+	
+	/**
+	 * Merge the facts from another GedcomRecord object into this object
+	 * for generating a diff view
+	 * @param GedcomRecord $diff	the record to compare facts with
+	 */
+	function diffMerge(&$diff) {
+		if (is_null($diff)) return;
+		$this->parseFacts();
+		$diff->parseFacts();
+
+		//-- update old facts
+		foreach($this->facts as $key=>$event) {
+			$found = false;
+			foreach($diff->facts as $indexval => $newevent) {
+				$newfact = $newevent->getGedComRecord();
+				$newfact=preg_replace("/\\\/", "/", $newfact);
+				if (trim($newfact)==trim($event->getGedcomRecord())) {
+					$found = true;
+					break;
+				}
+			}
+			if (!$found) {
+				$this->facts[$key]->gedComRecord.="\r\nPGV_OLD\r\n";
+			}
+		}
+		//-- look for new facts
+		foreach($diff->facts as $key=>$newevent) {
+			$found = false;
+			foreach($this->facts as $indexval => $event) {
+				$newfact = $newevent->getGedcomRecord();
+				$newfact=preg_replace("/\\\/", "/", $newfact);
+				if (trim($newfact)==trim($event->getGedcomRecord())) {
+					$found = true;
+					break;
+				}
+			}
+			if (!$found) {
+				$newevent->gedComRecord.="\nPGV_NEW\n";
+				$this->facts[]=$newevent;
+			}
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -612,11 +738,13 @@ class GedcomRecord {
 	//////////////////////////////////////////////////////////////////////////////
 	function LastChangeTimestamp($add_url) {
 		global $DATE_FORMAT, $TIME_FORMAT;
-		$chan_rec=get_sub_record(1, '1 CHAN', $this->gedrec);
-		if (empty($chan_rec))
-			return '&nbsp;';
-		$d=new GedcomDate(get_gedcom_value('DATE', 2, $chan_rec, '', false));
-		if (preg_match('/^(\d\d):(\d\d):(\d\d)/', get_gedcom_value('DATE:TIME', 2, $chan_rec, '', false).':00', $match)) {
+
+		$chan = $this->getChangeEvent();
+
+		if (is_null($chan))	return '&nbsp;';
+
+		$d = $chan->getDate();
+		if (preg_match('/^(\d\d):(\d\d):(\d\d)$/', get_gedcom_value('DATE:TIME', 2, $chan->getGedComRecord(), '', false).':00', $match)) {
 			$t=mktime($match[1], $match[2], $match[3]);
 			$sort=$d->MinJD().$match[1].$match[2].$match[3];
 			$text=strip_tags($d->Display(false, "{$DATE_FORMAT} -", array()).date(" {$TIME_FORMAT}", $t));
@@ -633,12 +761,13 @@ class GedcomRecord {
 	// Get the last-change user for this record
 	//////////////////////////////////////////////////////////////////////////////
 	function LastchangeUser() {
-		$chan_rec=get_sub_record(1, '1 CHAN', $this->gedrec);
-		if (empty($chan_rec))
-			return '&nbsp;';
-		$chan_user=get_gedcom_value("_PGVU", 2, $chan_rec, '', false);
-		if (empty($chan_user))
-			return '&nbsp;';
+		$chan = $this->getChangeEvent();
+
+		if (is_null($chan))	return '&nbsp;';
+		
+		$chan_user = $chan->getValue("_PGVU");
+		if (empty($chan_user)) return '&nbsp;';
+		
 		return $chan_user;
 	}
 }

@@ -32,6 +32,8 @@ global $LANGUAGE, $mediatab, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT, $LB_TT_BALLOON ;
 global $reorder, $PHP_SELF, $rownum, $sort_i, $GEDCOM;
 
+$reorder=safe_get('reorder', '1', '0');
+
 // Get Javascript variables from lb_config.php --------------------------- 
 include_once('modules/lightbox/lb_defaultconfig.php'); 
 if (file_exists('modules/lightbox/lb_config.php')) include_once('modules/lightbox/lb_config.php'); 
@@ -69,6 +71,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 
 ?>
 	<script type="text/javascript">
+	<!--
 	// This script saves the dranNdrop reordered info into a hidden form input element (name=order2)
 	function saveOrder() {
 		var sections = document.getElementsByClassName('section');
@@ -78,6 +81,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 		});
 		document.getElementById("ord2").value = order;
 	}; 
+	//-->
 	</script>
 	
 	
@@ -89,7 +93,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 		<center>
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>" onclick="saveOrder();" ><?php print $pgv_lang["save"];?></button>&nbsp;
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='al_reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>&nbsp;
-		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?pid=" . $pid . "&tab=7"; ?>'"><?php print $pgv_lang["cancel"];?></button> 
+		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?pid=" . $pid . "&tab=" . $tabno; ?>'"><?php print $pgv_lang["cancel"];?></button> 
 <?php
 /*
 		// Debug ---------------------------------------------------------------------------
@@ -107,14 +111,14 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 //------------------------------------------------------------------------------
 // Start Main Table
 //------------------------------------------------------------------------------
-echo "<table border='0' width='100%'><tr>", "\n\n";
+echo "<table border='0' width='100%' cellpadding=\"0\" ><tr>", "\n\n";
 
 //------------------------------------------------------------------------------
 // Build Thumbnail Rows
 //------------------------------------------------------------------------------
-	echo "<td>";
-		echo "<table width=\"100%\"><tr>";
-		echo "<td valign=\"top\" >";
+	echo "<td valign=\"top\" >";
+		echo "<table width=\"100%\" cellpadding=\"0\" border=\"0\"><tr>";
+		echo "<td width=\"100%\" valign=\"top\" >";
 		for ($t=1; $t <=5; $t++) {
 			if ($t==1) {
 				lightbox_print_media($pid, 0, true, 1);
@@ -145,13 +149,13 @@ echo "<table border='0' width='100%'><tr>", "\n\n";
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
 	echo '<td valign="top" align="center" width="220">', "\n" ;
-	echo "<table><tr><td>";
-		echo "<table ><tr><td class=\"optionbox\" align=\"center\">";
+	//echo "<table cellpadding=\"0\" ><tr><td>";
+		echo "<table cellpadding=\"0\" STYLE=\"margin-top:2px; margin-left:0px;\" ><tr><td class=\"optionbox\" align=\"center\">";
 		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
 			$controller->lightbox();	 
 		echo "<br />";
 		echo "</td></tr></table>";
-	echo "</td></tr></table>";
+	//echo "</td></tr></table>";
 	echo "</td>" . "\n\n" ;
 // -----------------------------------------------------------------------------
 // end Relatives navigator
@@ -162,5 +166,6 @@ echo "<table border='0' width='100%'><tr>", "\n\n";
 // End Main Table
 //------------------------------------------------------------------------------
 echo "</tr></table>";
+
 
 ?>

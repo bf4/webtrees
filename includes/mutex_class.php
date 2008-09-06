@@ -5,7 +5,7 @@
  * This class provides a simple mutex lock
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ class Mutex {
 		//-- check if this mutex already exists
 		$sql="SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name='".$DBCONN->escapeSimple($name)."'";
 		$res=dbquery($sql);
+		if (DB::isError($res)) return false;
 		$num_rows=$res->numRows();
 		$res->free();
 		//-- mutex doesn't exist so create it
@@ -92,6 +93,7 @@ class Mutex {
 			//-- allow the same session to get the mutex more than once
 			$sql = "SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND (mx_thread='0' OR mx_thread='".session_id()."' OR mx_time < ".(time()-300).")";
 			$res = dbquery($sql);
+			if (DB::isError($res)) return false;
 			if ($res->numRows() > 0) {
 				$available = true;
 			}

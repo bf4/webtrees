@@ -137,7 +137,9 @@ function MM(e) {
 			yearform = document.getElementById('yearform'+personnum);
 			ageform = document.getElementById('ageform'+personnum);
 			yearform.innerHTML = year+"      "+month+" <?php print get_first_letter($pgv_lang["month"]);?>   "+day+" <?php print get_first_letter($pgv_lang["day"]);?>";
-			ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["year"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
+			if (ba*yage>1 || ba*yage<-1 || ba*yage==0) 
+				 ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["years"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
+			else ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["year"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
 			var line = document.getElementById('ageline'+personnum);
 			temp = newx-oldx;
 			if (textDirection=='rtl') temp = temp * -1;
@@ -284,7 +286,7 @@ $controller->checkPrivacy();
  			<a href="individual.php?pid=<?php print $pid; ?>">&nbsp;<?php print PrintReady($indi->getFullName()); ?><br />
  			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) print PrintReady($addname); ?>
 			</a>
-			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid); ?>" />
+			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid,ENT_COMPAT,'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
 				print "<br />";
 				print_help_link("remove_person_help", "qm");
@@ -305,7 +307,7 @@ $controller->checkPrivacy();
 		else {
 			print_privacy_error($CONTACT_EMAIL);
 			?>
-			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid); ?>" />
+			<input type="hidden" name="pids[<?php print $p; ?>]" value="<?php print htmlentities($pid,ENT_COMPAT,'UTF-8'); ?>" />
 			<?php if (!$controller->isPrintPreview()) {
 				print "<br />";
 				print_help_link("remove_person_help", "qm");

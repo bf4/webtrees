@@ -45,7 +45,7 @@ $pgv_lang["lb_unlinkmedia"]		= "Desvincular objeto";
 $pgv_lang["lb_balloon_true"]	= "Globo";
 $pgv_lang["lb_balloon_false"]	= "Normal";
 $pgv_lang["lb_tt_balloon"]		= "Página personal - Miniatura de pestaña de álbum - Ayuda de los enlaces superiores";
-$pgv_lang["lb_ttAppearance"]	= "Vínculos superiores - Apariencia de la ayuda";
+$pgv_lang["lb_ttAppearance"]	= "Notas - Apariencia de la ayuda";
 $pgv_lang["view_lightbox"]		= "Ver álbum de ...";
 $pgv_lang["lb_notes"]			= "Notas";
 // $pgv_lang["lb_notes_info"]		= "";
@@ -66,7 +66,7 @@ $pgv_lang["lb_close_win"]		= "Cerrar la ventana de Lightbox";
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]			= "Configuración del Álbum Lightbox";
-$pgv_lang["mediatab"]       			= "<b>Página de persona - Pestaña de objetos</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Apariencia";
+$pgv_lang["mediatab"]       			= "Página de persona - Pestaña de objetos";
 $pgv_lang["lb_appearance"]				= "Apariencia";
 $pgv_lang["lb_linkAppearance"]			= "Apariencia del vínculo";
 $pgv_lang["lb_MP3Only"]					= "(sólo mp3)";
@@ -78,10 +78,10 @@ $pgv_lang["lb_text"]					= "Texto";
 $pgv_lang["lb_both"]					= "Ambos";
 $pgv_lang["lb_none"]					= "Ninguno";
 
-$pgv_lang["lb_al_head_links"]			= "<b>Página de persona - Encabezamiento de la pestaña Álbum</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Apariencia del vínculo";
-$pgv_lang["lb_al_thumb_links"]			= "<b>Página de persona - Miniaturas en la pestaña Álbum</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Apariencia de los vínculos";
-$pgv_lang["lb_ml_thumb_links"]			= "<b>Página de objetos audiovisuales - Miniaturas</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Apariencia de los vínculos";
-$pgv_lang["lb_music_file"]				= "<b>Banda sonora para la presentación</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(sólo mp3)";
+$pgv_lang["lb_al_head_links"]			= "Página de persona - Encabezamiento de la pestaña Álbum";
+$pgv_lang["lb_al_thumb_links"]			= "Página de persona - Miniaturas en la pestaña Álbum";
+$pgv_lang["lb_ml_thumb_links"]			= "Página de objetos audiovisuales - Miniaturas";
+$pgv_lang["lb_music_file"]				= "Banda sonora para la presentación";
 $pgv_lang["lb_musicFileAdvice"]			= "Ubicación del archivo con la banda sonora (déjelo en blanco si no hay banda sonora)";
 $pgv_lang["lb_ss_speed"]				= "<b>Velocidad de la Presentación</b>";
 $pgv_lang["lb_ss_SpeedAdvice"]			= "Tiempo de permanencia de la imagen en segundos";
@@ -128,7 +128,7 @@ $pgv_lang["turn_edit_OFF"] 		= "Desactivar el modo de edición";
 
 $pgv_lang["lb_source_avail"] 	= "Hay información de la fuente - Haga clic aquí.";
 
-$pgv_lang["lb_private"] 		= "Imagen vinculada a <br> una persona privada";
+$pgv_lang["lb_private"] 		= "Imagen vinculada a <br /> una persona privada";
 $pgv_lang["lb_view_source_tip"] = "Ver fuente : ";
 $pgv_lang["lb_view_details_tip"] = "Ver detalles del objeto : ";
 

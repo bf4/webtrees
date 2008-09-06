@@ -266,7 +266,7 @@ function getIcalHeader(){
 	return "BEGIN:VCALENDAR"
 			."\r\nVERSION:2.0"
 			."\r\nCALSCALE:GREGORIAN"
-			."\r\nPRODID:-//".PGV_PHPGEDVIEW."//".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT."//EN"
+			."\r\nPRODID:-//".PGV_PHPGEDVIEW."//".PGV_PHPGEDVIEW."//EN"
 			."\r\nX-WR-CALNAME:".PGV_PHPGEDVIEW
   		."\r\nMETHOD:PUBLISH";
 }

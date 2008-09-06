@@ -4,7 +4,7 @@
  * Import specific functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -677,7 +677,7 @@ function update_places($gid, $indirec) {
 	$pt = preg_match_all("/[2-9] PLAC (.+)/", $indirec, $match, PREG_SET_ORDER);
 	for ($i = 0; $i < $pt; $i++) {
 		$place = trim($match[$i][1]);
-		$lowplace = str2lower($place);
+		$lowplace = UTF8_strtolower($place);
 		//-- if we have already visited this place for this person then we don't need to again
 		if (isset($personplace[$lowplace])) continue;
 		$personplace[$lowplace] = 1;
@@ -1665,7 +1665,7 @@ function write_file() {
 	//-- always release the mutex
 	$mutex->Release();
 	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
+ 	check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
 
 	return true;;
 }
@@ -1678,7 +1678,7 @@ function write_file() {
  */
 function accept_changes($cid) {
 	global $pgv_changes, $GEDCOM, $TBLPREFIX, $FILE, $DBCONN, $GEDCOMS;
-	global $COMMIT_COMMAND, $INDEX_DIRECTORY, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
+	global $INDEX_DIRECTORY, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
 
 	if (isset ($pgv_changes[$cid])) {
 		$changes = $pgv_changes[$cid];
@@ -1781,8 +1781,7 @@ function accept_changes($cid) {
 		if (isset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]))
 			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database");
-		if (!empty ($COMMIT_COMMAND))
-			check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
+		check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
 		if (isset ($change["linkpid"]))
 			accept_changes($change["linkpid"] . "_" . $GEDCOM);
 		return true;

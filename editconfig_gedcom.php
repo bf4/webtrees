@@ -232,6 +232,7 @@ $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;
 require($gedcom_config);
 if (!isset($_POST["GEDCOMLANG"])) $GEDCOMLANG = $LANGUAGE;
+else $GEDCOMLANG = $_POST["GEDCOMLANG"];
 $LANGUAGE = $USERLANG;
 $error_msg = "";
 
@@ -355,7 +356,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$META_SURNAME_KEYWORDS\s*=\s*.*;/', "\$META_SURNAME_KEYWORDS = ".$boolarray[$_POST["NEW_META_SURNAME_KEYWORDS"]].";", $configtext);
 	$configtext = preg_replace('/\$META_TITLE\s*=\s*".*";/', "\$META_TITLE = \"".$_POST["NEW_META_TITLE"]."\";", $configtext);
 	$configtext = preg_replace('/\$MULTI_MEDIA\s*=\s*.*;/', "\$MULTI_MEDIA = ".$boolarray[$_POST["NEW_MULTI_MEDIA"]].";", $configtext);
-	$configtext = preg_replace('/\$NAME_FROM_GEDCOM\s*=\s*.*;/', "\$NAME_FROM_GEDCOM = ".$boolarray[$_POST["NEW_NAME_FROM_GEDCOM"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_FULL_DETAILS\s*=\s*.*;/', "\$PEDIGREE_FULL_DETAILS = ".$boolarray[$_POST["NEW_PEDIGREE_FULL_DETAILS"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_SHOW_GENDER\s*=\s*.*;/', "\$PEDIGREE_SHOW_GENDER = ".$boolarray[$_POST["NEW_PEDIGREE_SHOW_GENDER"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_LAYOUT\s*=\s*.*;/', "\$PEDIGREE_LAYOUT = ".$boolarray[$_POST["NEW_PEDIGREE_LAYOUT"]].";", $configtext);
@@ -585,7 +585,7 @@ if ($action=="update") {
 
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated");
 	$gedcomconfname = $FILE."_conf.php";
-	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
+	check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
 	if (!$errors) {
 		$gednews = getUserNews($FILE);
 		if (count($gednews)==0) {
@@ -1001,18 +1001,13 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 	<td class="optionbox"><input type="text" name="NEW_PEDIGREE_ROOT_ID" id="NEW_PEDIGREE_ROOT_ID" value="<?php print $PEDIGREE_ROOT_ID; ?>" size="5" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('PEDIGREE_ROOT_ID_help');" />
 			<?php
 			if ($source == "") {
-				if (!empty($indirec)) {
-					if ($source == "") {
-						$indilist[$PEDIGREE_ROOT_ID]["gedcom"] = $indirec;
-						$indilist[$PEDIGREE_ROOT_ID]["names"] = get_indi_names($indirec);
-						$indilist[$PEDIGREE_ROOT_ID]["isdead"] = 1;
-						$indilist[$PEDIGREE_ROOT_ID]["gedfile"] = $GEDCOM;
-						echo '<span class="list_item">', get_person_name($PEDIGREE_ROOT_ID), format_first_major_fact($PEDIGREE_ROOT_ID), '</span>';
-					}
-				} else {
-					echo '<span class="error">', $pgv_lang['unable_to_find_record'], '</span>';
-				}
 				print_findindi_link("NEW_PEDIGREE_ROOT_ID","");
+				if (!empty($indirec)) {
+					$person=new Person($indirec);
+					echo ' <span class="list_item">', $person->getFullName(), ' ', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
+				} else {
+					echo ' <span class="error">'. $pgv_lang['unable_to_find_record']. '</span>';
+				}
 			}
 		?>
 		</td>
@@ -1438,14 +1433,6 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_names_conf"]."\" onclick=\
 		<td class="optionbox"><select name="NEW_SHOW_ID_NUMBERS" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SHOW_ID_NUMBERS_help');">
 				<option value="yes" <?php if ($SHOW_ID_NUMBERS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
 				<option value="no" <?php if (!$SHOW_ID_NUMBERS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("NAME_FROM_GEDCOM_help", "qm", "NAME_FROM_GEDCOM"); print $pgv_lang["NAME_FROM_GEDCOM"]; ?></td>
-		<td class="optionbox"><select name="NEW_NAME_FROM_GEDCOM" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('NAME_FROM_GEDCOM_help');">
-				<option value="yes" <?php if ($NAME_FROM_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$NAME_FROM_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
 			</select>
 		</td>
 	</tr>
@@ -2128,7 +2115,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("HOME_SITE_TEXT_help", "qm", "HOME_SITE_TEXT"); print $pgv_lang["HOME_SITE_TEXT"]; ?></td>
-		<td class="optionbox"><input type="text" dir="ltr" name="NEW_HOME_SITE_TEXT" value="<?php print htmlspecialchars($HOME_SITE_TEXT); ?>" size="50" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('HOME_SITE_TEXT_help');" /></td>
+		<td class="optionbox"><input type="text" dir="ltr" name="NEW_HOME_SITE_TEXT" value="<?php print htmlspecialchars($HOME_SITE_TEXT,ENT_COMPAT,'UTF-8'); ?>" size="50" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('HOME_SITE_TEXT_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("META_AUTHOR_help", "qm", "META_AUTHOR"); print $pgv_lang["META_AUTHOR"]; ?></td>
@@ -2240,5 +2227,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 	else print "document.configform.GEDCOMPATH.focus();"; ?>
 </script>
 <?php
+if ($CONTACT_EMAIL=="you@yourdomain.com") $CONTACT_EMAIL = PGV_USER_NAME;
+if ($WEBMASTER_EMAIL=="webmaster@yourdomain.com") $WEBMASTER_EMAIL = PGV_USER_NAME;
 print_footer();
 ?>

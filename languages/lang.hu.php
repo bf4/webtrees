@@ -1048,7 +1048,7 @@ $pgv_lang["record_not_found"]					= "A kért Gedcom rekord nem található. Ez v
 $pgv_lang["phpgedview_message"]					= "PhpGedView üzenet";
 $pgv_lang["common_surnames"]					= "Leggyakoribb vezetéknevek:";
 $pgv_lang["default_news_title"]					= "Üdvözöljük az Ön Családfájánál.";
-$pgv_lang["default_news_text"]					= "Ezen az oldalon a családfa-információk közlését a <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a> programmal tettük lehetővé. Az oldal áttekintést ad ehhez a programhoz.<br /><br />Ahhoz hogy megkezdhesse a munkát az adatokkal, válassza az egyik grafikont a Grafikonok menüből, menjen a személyek listájához, vagy keressen a nevek és a helyek közt.<br /><br />Ha nehézségei támadnak az oldal használata közben, kattintson a segítség menüre, és ott magyarázatot kaphat annak az oldalnak a használatához.<br /><br />Köszönjük hogy meglátogatta ezt az oldalt.";
+$pgv_lang["default_news_text"]					= "Ezen az oldalon a családfa-információk közlését a <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a> programmal tettük lehetővé. Az oldal áttekintést ad ehhez a programhoz.<br /><br />Ahhoz hogy megkezdhesse a munkát az adatokkal, válassza az egyik grafikont a Grafikonok menüből, menjen a személyek listájához, vagy keressen a nevek és a helyek közt.<br /><br />Ha nehézségei támadnak az oldal használata közben, kattintson a segítség menüre, és ott magyarázatot kaphat annak az oldalnak a használatához.<br /><br />Köszönjük hogy meglátogatta ezt az oldalt.";
 $pgv_lang["reset_default_blocks"]				= "Az alapértelmezett blokkok visszaállítása";
 $pgv_lang["recent_changes"]             			= "Aktuális változások";
 $pgv_lang["recent_changes_block"]       			= "Aktuális változások blokk";

@@ -551,7 +551,7 @@ $pgv_lang["bet"]			= "tra";
 $pgv_lang["recent_changes"] 		= "Cambiamenti Recenti";
 $pgv_lang["delete_selected_messages"]	= "Cancella i messaggi selezionati";
 $pgv_lang["default_news_title"] 	= "Benvenuto nella tua Genealogia";
-$pgv_lang["default_news_text"]		= "Le informazioni sulla genealogia di questo sito sono servite da <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>. La pagina fornisce un introduzione e una presentazione della genealogia.<br /><br />Per iniziare a lavorare con i dati, selezione uno dei grafici dal menu Diagrammi, vai sulla lista delle persone o seleziona un nome o un posto.<br /><br />Se hai problemi nell'uso del sito, puoi fare click sull'icona di aiuto per avere informazioni su come usare la pagina che stai vedendo.<br /><br />Grazie per la tua visita.";
+$pgv_lang["default_news_text"]		= "Le informazioni sulla genealogia di questo sito sono servite da <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. La pagina fornisce un introduzione e una presentazione della genealogia.<br /><br />Per iniziare a lavorare con i dati, selezione uno dei grafici dal menu Diagrammi, vai sulla lista delle persone o seleziona un nome o un posto.<br /><br />Se hai problemi nell'uso del sito, puoi fare click sull'icona di aiuto per avere informazioni su come usare la pagina che stai vedendo.<br /><br />Grazie per la tua visita.";
 $pgv_lang["and"]				= "e";
 $pgv_lang["bef"]			= "prima";
 $pgv_lang["customize_gedcom_page"]	= "Personalizza la pagina di benvenuto del GEDCOM";

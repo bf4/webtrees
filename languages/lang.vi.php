@@ -642,7 +642,7 @@ $pgv_lang["hit_count"]				= "Tổng số viếng thăm:";
 $pgv_lang["phpgedview_message"] 	= "Thông báo của PhpGedView";
 $pgv_lang["common_surnames"]		= "Tên họ thông thường nhất";
 $pgv_lang["default_news_title"] 	= "Bản Phả Hệ của Bạn";
-$pgv_lang["default_news_text"]		= "Gia Phả ở trên cái website này chu cấp bởi <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>. Trang này dùng làm bước đầu vào cái bản phả hệ này.<br /><br /> Đặng bắt đầu làm việc với dữ kiện, hoặc là lựa một trong mấy cái <b>Đồ Thị</b>, hoặc là dùng <b>Danh Sách</b>, hoặc là <b>Tìm Kiếm</b> tên hay là nơi.<br /><br /> Nếu có trở ngại,  hảy dùng tượng <b>Hướng Dẫn</b> đặng có thêm giảng giải làm sao sài cái trang bạn đang coi.<br /><br /> Xin cám ơn đã viếng thăm nơi này.";
+$pgv_lang["default_news_text"]		= "Gia Phả ở trên cái website này chu cấp bởi <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Trang này dùng làm bước đầu vào cái bản phả hệ này.<br /><br /> Đặng bắt đầu làm việc với dữ kiện, hoặc là lựa một trong mấy cái <b>Đồ Thị</b>, hoặc là dùng <b>Danh Sách</b>, hoặc là <b>Tìm Kiếm</b> tên hay là nơi.<br /><br /> Nếu có trở ngại,  hảy dùng tượng <b>Hướng Dẫn</b> đặng có thêm giảng giải làm sao sài cái trang bạn đang coi.<br /><br /> Xin cám ơn đã viếng thăm nơi này.";
 $pgv_lang["reset_default_blocks"]	= "Sửa lại như Khối Mặc Định";
 $pgv_lang["recent_changes"] 		= "Thay Đổi Mới Đây";
 $pgv_lang["recent_changes_block"]	= "Khối Thay Đổi Mới Đây";

@@ -3,7 +3,7 @@
  * Class file for a Repository (REPO) object
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ require_once('includes/gedcomrecord.php');
 class Repository extends GedcomRecord {
 	var $disp = true;
 	var $sourcelist = null;
+	var $repositoryfacts = null;
 
 	/**
 	 * Constructor for repository object
@@ -106,78 +107,26 @@ class Repository extends GedcomRecord {
 	 */
 	function getRepositoryFacts() {
 		$this->parseFacts();
-		return $this->repositoryfacts;
-	}
-
-	/**
-	 * Parse the facts from the repository record
-	 */
-	function parseFacts() {
-		if (!is_null($this->repositoryfacts)) return;
-		$this->repositoryfacts = array();
-		$gedlines = preg_split("/\n/", $this->gedrec);
-		$lct = count($gedlines);
-		$factrec = "";	// -- complete fact record
-		$line = "";	// -- temporary line buffer
-		$linenum = 1;
-		for($i=1; $i<=$lct; $i++) {
-			if ($i<$lct) $line = $gedlines[$i];
-			else $line=" ";
-			if (empty($line)) $line=" ";
-			if (($i==$lct)||($line{0}==1)) {
-				if (!empty($factrec) ) {
-					$this->repositoryfacts[] = array($factrec, $linenum);
-				}
-				$factrec = $line;
-				$linenum = $i;
-			}
-			else $factrec .= "\n".$line;
-		}
-	}
-
-	/**
-	 * Merge the facts from another Repository object into this object
-	 * for generating a diff view
-	 * @param Repository $diff	the repository to compare facts with
-	 */
-	function diffMerge(&$diff) {
-		if (is_null($diff)) return;
-		$this->parseFacts();
-		$diff->parseFacts();
-
-		//-- update old facts
-		foreach($this->repositoryfacts as $key=>$fact) {
-			$found = false;
-			foreach($diff->repositoryfacts as $indexval => $newfact) {
-				$newfact=preg_replace("/\\\/", "/", $newfact);
-				if (trim($newfact[0])==trim($fact[0])) {
-					$found = true;
-					break;
-				}
-			}
-			if (!$found) {
-				$this->repositoryfacts[$key][0].="\nPGV_OLD\n";
-			}
-		}
-		//-- look for new facts
-		foreach($diff->repositoryfacts as $key=>$newfact) {
-			$found = false;
-			foreach($this->repositoryfacts as $indexval => $fact) {
-				$newfact=preg_replace("/\\\/", "/", $newfact);
-				if (trim($newfact[0])==trim($fact[0])) {
-					$found = true;
-					break;
-				}
-			}
-			if (!$found) {
-				$newfact[0].="\nPGV_NEW\n";
-				$this->repositoryfacts[]=$newfact;
-			}
-		}
+		return $this->facts;
 	}
 
 	/**
 	 * get the list of sources connected to this repository
+	 * @return array
+	 */
+	function getRepositorySours() {
+		global $REGEXP_DB;
+		if (!is_null($this->sourcelist)) return $this->sourcelist;
+		$query = "REPO @".$this->xref."@";
+		if (!$REGEXP_DB) $query = "%".$query."%";
+
+		$this->sourcelist = search_sources($query);
+		uasort($this->sourcelist, "itemsort");
+		return $this->sourcelist;
+	}
+
+	/**
+	 * get the count of sources connected to this repository
 	 * @return array
 	 */
 	function countLinkedSources() {

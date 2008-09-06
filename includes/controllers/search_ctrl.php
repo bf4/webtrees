@@ -136,9 +136,10 @@ class SearchControllerRoot extends BaseController {
 			// Reset the "Search" text from the page header
 			if ($_REQUEST["query"] == $pgv_lang["search"] || strlen($_REQUEST["query"])<2 || preg_match("/^\.+$/", $_REQUEST["query"])>0) {
 				$this->query="";
+				$this->myquery="";
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
-				$this->myquery = htmlspecialchars($this->query);
+				$this->myquery = htmlspecialchars($this->query,ENT_COMPAT,'UTF-8');
 			}
 		}
 		if (isset ($_REQUEST["replace"])) {
@@ -818,7 +819,7 @@ class SearchControllerRoot extends BaseController {
 			foreach ($this->printname as $pkey => $pname) {
 				$print = true;
 				foreach ($barr as $key => $checkchar) {
-					if (str2upper(substr($pname[0], $checkchar[1], $checkchar[2])) != str2upper($checkchar[0])) {
+					if (UTF8_strtoupper(substr($pname[0], $checkchar[1], $checkchar[2])) != UTF8_strtoupper($checkchar[0])) {
 						$print = false;
 						break;
 					}
@@ -1045,7 +1046,7 @@ class SearchControllerRoot extends BaseController {
 							$found = false;
 							// First check if the hit is in the key!
 							if ($this->tagfilter == "off") {
-								if (strpos(str2upper($key), str2upper($this->query)) !== false)
+								if (strpos(UTF8_strtoupper($key), UTF8_strtoupper($this->query)) !== false)
 								$found = true;
 							}
 							if ($found == false) {
@@ -1172,7 +1173,7 @@ class SearchControllerRoot extends BaseController {
 						$hit = false;
 						// First check if the hit is in the key!
 						if (($this->tagfilter == "off") && ($found == false)) {
-							if (strpos(str2upper($key), str2upper($this->query)) !== false) {
+							if (strpos(UTF8_strtoupper($key), UTF8_strtoupper($this->query)) !== false) {
 								$found = true;
 								$hit = true;
 							}
@@ -1267,7 +1268,7 @@ class SearchControllerRoot extends BaseController {
 						$hit = false;
 						// First check if the hit is in the key!
 						if ($this->tagfilter == "off") {
-							if (strpos(str2upper($key), str2upper($this->query)) !== false) {
+							if (strpos(UTF8_strtoupper($key), UTF8_strtoupper($this->query)) !== false) {
 								$found = true;
 								$hit = true;
 							}

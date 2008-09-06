@@ -42,8 +42,56 @@ occur in the respective language files.
 
 VERSION 4.1.6
 
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["parent_family"]							26 August 2008			A		Line 34 in lang_en.php
++$pgv_lang["step_parent_family"]					26 August 2008			A		Line 35 in lang_en.php
++$pgv_lang["immediate_family"]						26 August 2008			A		Line 36 in lang_en.php
++$pgv_lang["NNhebrew"]                02 September 2008     A (do not translate this)
++$pgv_lang["PNhebrew"]                02 September 2008     A ditto
++$pgv_lang["NNarabic"]                02 September 2008     A ditto
++$pgv_lang["PNarabic"]                02 September 2008     A ditto
++$pgv_lang["NNgreek"]                 02 September 2008     A ditto
++$pgv_lang["PNgreek"]                 02 September 2008     A ditto
++$pgv_lang["NNrussian"]               02 September 2008     A ditto
++$pgv_lang["PNrussian"]               02 September 2008     A ditto
++$pgv_lang["NNchinese"]               02 September 2008     A ditto
++$pgv_lang["PNchinese"]               02 September 2008     A ditto
++$pgv_lang["NNvietnamese"]            02 September 2008     A ditto
++$pgv_lang["PNvietnamese"]            02 September 2008     A ditto
++$pgv_lang["NNthai"]                  02 September 2008     A ditto
++$pgv_lang["PNthai"]                  02 September 2008     A ditto
++$pgv_lang["NNother"]                 02 September 2008     A "unknown" in latin text
++$pgv_lang["PNother"]                 02 September 2008     A ditto
+-$pgv_lang["dynasty_list"]			      29 August 2008        D
+-$pgv_lang["patriarch_list"] 		      29 August 2008        D
++$pgv_lang["parent_age"]							26 August 2008			A
++$pgv_lang["father_age"]							26 August 2008			A
++$pgv_lang["mother_age"]							26 August 2008			A
++$pgv_lang["view_fam_nav_details"]					19 August 2008			A		Line 781 in lang_en.php
++$pgv_lang["husb_age"]								18 August 2008			A
++$pgv_lang["wife_age"]								18 August 2008			A
+*$pgv_lang["default_news_text"]						17 August 2008			w		removed #VERSION# from text (all "lang.xx.php" files)
++$pgv_lang["godson"]								15 August 2008			A
++$pgv_lang["goddaughter"]							15 August 2008			A
++$pgv_lang["godchild"]								15 August 2008			A
+*$pgv_lang["at_death_day"]							14 August 2008			W
++$pgv_lang["at_death_day"]							13 August 2008			A
+*$pgv_lang["m_cousin_in_law"]						12 August 2008			w		Removed "Male" (no distinction in English)
+*$pgv_lang["f_cousin_in_law"]						12 August 2008			w		Removed "Female" (no distinction in English)
++$pgv_lang["m_cousin_in_law"]						12 August 2008			A
++$pgv_lang["f_cousin_in_law"]						12 August 2008			A
++$pgv_lang["apply_filter"]							06 August 2008			A
+*$pgv_lang["hide_show_spouses"]						04 August 2008			C
++$pgv_lang["load_full_tree"]						04 August 2008			A
++$pgv_lang["hide_show_spouses"]						04 August 2008			A
++$pgv_lang["interactive_tree"]						01 August 2008			A
++$pgv_lang["example"]								29 July 2008			A
++$pgv_lang["first_letter_name"]						26 July 2008			A
++$pgv_lang["first_letter_iname"]					26 July 2008			A
++$pgv_lang["tree"]									11 July 2008			A
++$pgv_lang["ellipsis"]								4 July 2008				A
++$pgv_lang["repo_menu"]								4 July 2008				A
 +$pgv_lang["showUnknown"]							28 June 2008			A
 +$pgv_lang["stat_unknown"]							14 June 2008			A
 +$pgv_lang["total_unknown"]							14 June 2008			A

@@ -3,7 +3,7 @@
  * Create "admin.xx.php" and "editor.xx.php" language files
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ else if ($action=="adminonly") {
 	$files = array("./admin.php", "./downloadgedcom.php", "./edit_privacy.php", "./editconfig_gedcom.php", "./editconfig.php",
 	"./editgedcoms.php", "./editlang_edit_settings.php", "./editlang_edit.php", "./editlang.php", "./manageservers.php", 
 	"./media.php", "./pgvinfo.php", "./printlog.php", "./uploadgedcom.php", "./useradmin.php", "./usermigrate.php", 
-	"./viewconnections.php", "./includes/functions_editlang.php", "./includes/functions_export.php", "./includes/functions_tools.php",
+	"./includes/functions_editlang.php", "./includes/functions_export.php", "./includes/functions_tools.php",
 	"./sanity_check.php");
 	$adminlang = array();
 	foreach($files as $i=>$file) {

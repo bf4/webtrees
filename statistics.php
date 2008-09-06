@@ -6,7 +6,7 @@
  * age -> periodes of 10 years (different for 0-1,1-5,5-10,10-20 etc)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -314,11 +314,10 @@ global $match1,$match2;
 	else 	{	return false;}
 }
 
-function put_plot_data()
-{
+function put_plot_data() {
 	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY;
-global $nrfam, $famgeg, $nrpers, $persgeg,$key2ind,$nrman,$nrvrouw;
-global $pgv_lang;
+	global $nrfam, $famgeg, $nrpers, $persgeg,$key2ind,$nrman,$nrvrouw;
+	global $pgv_lang;
 
 	$indexfile = $INDEX_DIRECTORY.$GEDCOM."_statistiek.php";
 	$FP = fopen($indexfile, "wb");
@@ -340,7 +339,7 @@ global $pgv_lang;
 	fwrite($FP, '}');
 	fclose($FP);
 	$logline = AddToLog($GEDCOM."_statistiek.php updated");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, $GEDCOM."_statistiek.php", $INDEX_DIRECTORY);
+ 	check_in($logline, $GEDCOM."_statistiek.php", $INDEX_DIRECTORY);
 }
 
 //--	========= start of main program =========

@@ -309,19 +309,10 @@ function delete_gedrec($gid, $linkpid='') {
 
 //-- this function will check a GEDCOM record for valid gedcom format
 function check_gedcom($gedrec, $chan=true) {
-	global $pgv_lang, $DEBUG, $USE_RTL_FUNCTIONS;
+	global $pgv_lang, $DEBUG;
 
-	$gedrec = trim(stripslashes($gedrec));
+	$gedrec = trim(stripslashes(stripLRMRLM($gedrec)));
 
-	if ($USE_RTL_FUNCTIONS) {
-		//-- replace any added ltr processing codes
-//		$gedrec = preg_replace(array("/".html_entity_decode(getRLM(),ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $gedrec);
-		// Because of a bug in PHP 4, the above generates a run-time error message and does nothing.
-		// see:  http://bugs.php.net/bug.php?id=25670
-		// HTML entity &rlm; is the 3-byte UTF8 character 0xE2808F
-		// HTML entity &lrm; is the 3-byte UTF8 character 0xE2808E
-		$gedrec = str_replace(array(chr(0xE2).chr(0x80).chr(0x8F), chr(0xE2).chr(0x80).chr(0x8E)), "", $gedrec);
-	}
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 	if ($ct==0) {
 		print "ERROR 20: Invalid GEDCOM 5.5 format.\n";
@@ -363,7 +354,7 @@ function check_gedcom($gedrec, $chan=true) {
 		if (!empty($line)) $newrec .= $line."\r\n";
 	}
 
-	$newrec = html_entity_decode($newrec);
+	$newrec = html_entity_decode($newrec,ENT_COMPAT,'UTF-8');
 	return $newrec;
 }
 
@@ -742,7 +733,10 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		print $pgv_lang["no_update_CHAN"]."<br />\n";
-		if (isset($famrec)) echo format_fact_date(get_sub_record(1, "1 CHAN", $famrec), false, true);
+		if (isset($famrec)) {
+			$event = new Event(get_sub_record(1, "1 CHAN", $famrec));
+			echo format_fact_date($event, false, true);
+		}
 		print "</td></tr>\n";
 	}
 	print "</table>\n";
@@ -934,45 +928,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 		return true;
 	}
-
-	function valid_lati_long(field, pos, neg) {
-		// valid LATI or LONG according to Gedcom standard
-		// pos (+) : N or E
-		// neg (-) : S or W
-		txt=field.value.toUpperCase();
-		txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
-		txt=txt.replace(/ /g,':'); // N12 34 ==> N12:34
-		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
-		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
-		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
-		// 0�34'11 ==> 0:34:11
-		txt=txt.replace(/\uB0/g,':'); // �
-		txt=txt.replace(/\u27/g,':'); // '
-		// 0:34:11.2W ==> W0.5698
-		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
-		// 0:34W ==> W0.5667
-		txt=txt.replace(/^([0-9]+):([0-9]+)(.*)/g, function($0, $1, $2, $3) { var n=parseFloat($1); n+=($2/60); n=Math.round(n*1E4)/1E4; return $3+n; });
-		// 0.5698W ==> W0.5698
-		txt=txt.replace(/(.*)([N|S|E|W]+)$/g,'$2$1');
-		// 17.1234 ==> N17.1234
-		if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
-		field.value = txt;
-	}
-	
-	function toggle_lati_long() {
-		tr = document.getElementsByTagName('tr');
-		for (var i=0; i<tr.length; i++) {
-			if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
-				var disp = tr[i].style.display;
-				if (disp=="none") {
-					disp="table-row";
-					if (document.all && !window.opera) disp = "inline"; // IE
-				}
-				else disp="none";
-				tr[i].style.display=disp;
-			}
-		}
-	}
 	//-->
 	</script>
 	<?php
@@ -1060,7 +1015,54 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
-
+	global $lang_short_cut, $LANGUAGE;
+	
+	if (substr($tag, 0, strpos($tag, "PLAC"))) {
+		?>
+<script type="text/javascript">
+		<!--
+		function valid_lati_long(field, pos, neg) {
+			// valid LATI or LONG according to Gedcom standard
+			// pos (+) : N or E
+			// neg (-) : S or W
+			txt=field.value.toUpperCase();
+			txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
+			txt=txt.replace(/ /g,':'); // N12 34 ==> N12.34
+			txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
+			txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
+			txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
+			// 0�34'11 ==> 0:34:11
+			txt=txt.replace(/\uB0/g,':'); // �
+			txt=txt.replace(/\u27/g,':'); // '
+			// 0:34:11.2W ==> W0.5698
+			txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
+			// 0:34W ==> W0.5667
+			txt=txt.replace(/^([0-9]+):([0-9]+)(.*)/g, function($0, $1, $2, $3) { var n=parseFloat($1); n+=($2/60); n=Math.round(n*1E4)/1E4; return $3+n; });
+			// 0.5698W ==> W0.5698
+			txt=txt.replace(/(.*)([N|S|E|W]+)$/g,'$2$1');
+			// 17.1234 ==> N17.1234
+			if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
+			field.value = txt;
+		}
+	
+		function toggle_lati_long() {
+			tr = document.getElementsByTagName('tr');
+			for (var i=0; i<tr.length; i++) {
+				if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
+					var disp = tr[i].style.display;
+					if (disp=="none") {
+						disp="table-row";
+						if (document.all && !window.opera) disp = "inline"; // IE
+					}
+					else disp="none";
+					tr[i].style.display=disp;
+				}
+			}
+		}
+		//-->
+		</script>
+		<?php
+	}
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
 		$readOnly = "";
@@ -1144,6 +1146,14 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="DATE") print_help_link("def_gedcom_date_help", "qm", "date");
 		else if ($fact=="RESN") print_help_link($fact."_help", "qm");
 		else print_help_link("edit_".$fact."_help", "qm");
+	}
+	if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
+		// Allow special processing for different languages
+		$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+		if (function_exists($func)) {
+			// Localise the AKA fact
+			$func($fact, $pid);
+		}
 	}
 	if ($GLOBALS["DEBUG"]) print $element_name."<br />\n";
 	if (!empty($label)) print $label;
@@ -1229,7 +1239,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		               "foster" =>$pgv_lang["foster"],
 									 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
 			print "<option value='$k'";
-			if (str2lower($value)==$k)
+			if (UTF8_strtolower($value)==$k)
 				print " selected=\"selected\"";
 			print ">$v</option>";
 		}
@@ -1350,18 +1360,18 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value))."\" />";
-		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value))."</span>";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" />";
+		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."</span>";
 		print " <a href=\"#edit_name\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
 		if (isset($PGV_IMAGES["edit_indi"]["small"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" />";
 		else print "<span class=\"age\">[".$pgv_lang["edit_name"]."]</span>";
 		print "</a>";
 	} else {
 		// textarea
-		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value))."</textarea><br />\n";
+		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."</textarea><br />\n";
 		else {
 			// text
-			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
+			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" size=\"".$cols."\" dir=\"ltr\"";
 			// if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
 			// onkeyup should suffice.  Why the others?
 			if (in_array($fact, $subnamefacts)) print " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
@@ -1408,7 +1418,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="DATE") print_calendar_popup($element_id);
 		if ($fact=="FAMC") print_findfamily_link($element_id, "");
 		if ($fact=="FAMS") print_findfamily_link($element_id, "");
-		if ($fact=="ASSO") print_findindi_link($element_id, get_person_name($value));
+		if ($fact=="ASSO") print_findindi_link($element_id, "");
 		if ($fact=="FILE") print_findmedia_link($element_id, "0file");
 		if ($fact=="SOUR") {
 			print_findsource_link($element_id);
@@ -1454,17 +1464,25 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($fact=="DATE") {
 			$date=new GedcomDate($value);
-			print $date->Display(false);
+			echo $date->Display(false);
 		}
-		if ($fact=="ASSO" and $value) print " ".PrintReady(get_person_name($value))." (".$value.")";
-		if ($fact=="SOUR" and $value) print " ".PrintReady(get_source_descriptor($value))." (".$value.")";
+		if (($fact=="ASSO" || $fact=="SOUR") && $value) {
+			$record=GedcomRecord::getInstance($value);
+			if ($record) {
+				echo ' ', PrintReady($record->getFullName()), ' (', $value, ')';
+			}
+		}
 	} else {
 		if ($fact=="DATE") {
 			$date=new GedcomDate($value);
-			print getRLM().$date->Display(false).getRLM();
+			echo getRLM(), $date->Display(false), getRLM();
 		}
-		if ($fact=="ASSO" and $value) print " " . getRLM() . PrintReady(get_person_name($value))." (".$value.")" . getRLM();
-		if ($fact=="SOUR" and $value) print " " . getRLM() .PrintReady(get_source_descriptor($value)). getRLM() . "&nbsp;&nbsp;" . getLRM() . "(".$value.")" . getLRM();
+		if (($fact=="ASSO" || $fact=="SOUR") && $value) {
+			$record=GedcomRecord::getInstance($value);
+			if ($record) {
+				echo ' ', PrintReady($record->getFullName()), ' ', getLRM(), '(', $value, ')', getLRM();
+			}
+		}
 	}
 
 	// pastable values
@@ -1481,7 +1499,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 
 	if ($noClose != "NOCLOSE") print "</td></tr>\n";
-
+	
 	$tabkey++;
 	return $element_id;
 }
@@ -1972,7 +1990,7 @@ function create_add_form($fact) {
  */
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
-	global $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
+	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 	global $lang_short_cut, $LANGUAGE;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
@@ -2044,6 +2062,14 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 					$text=$conversion_function($text);
 				else
 					$text=default_gedcom_to_edit_date($text);
+			}
+			if ($type=="_AKAN" || $type=="_AKA" || $type=="ALIA") {
+				// Allow special processing for different languages
+				$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func)) {
+					// Localise the AKA fact
+					$func($type, $pid);
+				}
 			}
 			$subrecord = $level." ".$type." ".$text;
 			if ($inSource && $type=="DATE") add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);

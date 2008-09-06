@@ -33,6 +33,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require_once('includes/mutex_class.php');
 require_once('includes/media_class.php');
+require_once('includes/functions_UTF8.php');
 
 /**
  * The level of error reporting
@@ -52,7 +53,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
-	global $DBTYPE, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
+	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
 	global $INDEX_DIRECTORY, $BUILDING_INDEX;
 	global $DBH, $DBH_OK;
 
@@ -69,12 +70,14 @@ function check_db($ignore_previous=false) {
 			if (isset($_POST['NEW_DBUSER'])) $DBUSER = $_POST['NEW_DBUSER'];
 			if (isset($_POST['NEW_DBPASS'])) $DBPASS = $_POST['NEW_DBPASS'];
 			if (isset($_POST['NEW_DBHOST'])) $DBHOST = $_POST['NEW_DBHOST'];
+			if (isset($_POST['NEW_DBPORT'])) $DBPORT = $_POST['NEW_DBPORT'];
 			if (isset($_POST['NEW_DBNAME'])) $DBNAME = $_POST['NEW_DBNAME'];
 			if (isset($_POST['NEW_DBPERSIST'])) $DBPERSIST = $_POST['NEW_DBPERSIST'];
 		}
 	}
 	//-- initialize query counter
 	$TOTAL_QUERIES = 0;
+	if (!isset($DBPORT)) $DBPORT="";
 
 	$dsn = array(
 		'phptype'  => $DBTYPE,
@@ -83,6 +86,8 @@ function check_db($ignore_previous=false) {
 		'hostspec' => $DBHOST,
 		'database' => $DBNAME
 	);
+	
+	if (!empty($DBPORT)) $dsn['port'] = $DBPORT;
 	
 	if ($ignore_previous) $dsn['new_link'] = true;
 
@@ -221,18 +226,19 @@ function safe_REQUEST($arr, $var, $regex, $default) {
 }
 
 function encode_url($url, $entities=true) {
+	$url = decode_url($url, $entities);		// Make sure we don't do any double conversions
 	$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url);		// GEDCOM names can legitimately contain these chars
-//	if ($entities) $url = htmlentities($url);
-	if ($entities) {
-		$url = str_replace("&", "&amp;", ($url));
-		$url = str_replace("&amp;amp;", "&amp;", ($url));
-	}
+	if ($entities) $url = htmlspecialchars($url,ENT_COMPAT,'UTF-8');
+//	if ($entities) {
+//		$url = str_replace("&", "&amp;", ($url));
+//		$url = str_replace("&amp;amp;", "&amp;", ($url));
+//	}
 	return $url;
 }
 
 
 function decode_url($url, $entities=true) {
-	if ($entities) $url = html_entity_decode($url);
+	if ($entities) $url = html_entity_decode($url,ENT_COMPAT,'UTF-8');
 	$url = rawurldecode($url);		// GEDCOM names can legitimately contain " " and "+"
 	return $url;
 }
@@ -402,7 +408,7 @@ function get_privacy_file() {
  */
 function store_gedcoms() {
 	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $DEFAULT_GEDCOM, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
-	global $COMMIT_COMMAND, $IN_STORE_GEDCOMS;
+	global $IN_STORE_GEDCOMS;
 
 	if (!$CONFIGURED)
 		return false;
@@ -470,8 +476,7 @@ function store_gedcoms() {
 	} else {
 		fwrite($fp, $gedcomtext);
 		fclose($fp);
-		if (!empty($COMMIT_COMMAND))
-			check_in("store_gedcoms() ->" . PGV_USER_NAME ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
+		check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
 	$mutex->Release();
 	$IN_STORE_GEDCOMS = false;
@@ -738,7 +743,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 	}
 
 	if ($sort)
-		sort_facts($repeats);
+		sort_facts_old($repeats);
 	return $repeats;
 }
 
@@ -897,7 +902,8 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
  *
  * Break input GEDCOM subrecord into pieces not more than 255 chars long,
  * with CONC and CONT lines as needed.  Routine also pays attention to the
- * word wrapped Notes option.
+ * word wrapped Notes option.  Routine also avoids splitting UTF-8 encoded
+ * characters between lines.
  *
  * @param	string	$newline	Input GEDCOM subrecord to be worked on
  * @return	string	$newged		Output string with all necessary CONC and CONT lines
@@ -932,6 +938,19 @@ function breakConts($newline) {
 					// Make sure this piece doesn't end on a blank
 					// (Blanks belong at the start of the next piece)
 					$thisPiece = rtrim(substr($newlines[$k], 0, 255));
+					// Make sure this piece doesn't end in the middle of a UTF-8 character
+					$nextPieceFirstChar = substr($newlines[$k], strlen($thisPiece), 1);
+					if (($nextPieceFirstChar&"\xC0") == "\x80") {
+						// Include all of the UTF-8 character in next piece
+						while (true) {
+							// Find the start of the UTF-8 encoded character
+							$nextPieceFirstChar = substr($thisPiece, -1);
+							$thisPiece = substr($thisPiece, 0, -1);
+							if (($nextPieceFirstChar&"\xC0") != "\x80") break;
+						}
+						// Make sure we didn't back up to a blank
+						$thisPiece = rtrim($thisPiece);
+					}
 					$newged .= $thisPiece."\r\n";
 					$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
 					$newlines[$k] = "{$level} CONC ".$newlines[$k];
@@ -1212,7 +1231,7 @@ function find_updated_record($gid, $gedfile="") {
 function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $pgv_changes;
 
-	if (!userCanAccept($user_id, $ged_id)) {
+	if (!isset($pgv_changes) || !userCanAccept($user_id, $ged_id)) {
 		return false;
 	}
 
@@ -1571,8 +1590,8 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 				}
 
 				if ($ignoreCase) {
-					$aLetter = str2upper($aLetter);
-					$bLetter = str2upper($bLetter);
+					$aLetter = UTF8_strtoupper($aLetter);
+					$bLetter = UTF8_strtoupper($bLetter);
 				}
 
 				if ($aLetter!=$bLetter && $bLetter!="" && $aLetter!="") {
@@ -1613,8 +1632,8 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 						if (($bPos===false)&&($aPos!==false)) return 1;
 						if (($bPos===false)&&($aPos===false)) {
 							// Determine the binary value of both letters
-							$aValue = ord_UTF8($aLetter);
-							$bValue = ord_UTF8($bLetter);
+							$aValue = UTF8_ord($aLetter);
+							$bValue = UTF8_ord($bLetter);
 							return $aValue - $bValue;
 						}
 						return ($aPos-$bPos);
@@ -1772,8 +1791,9 @@ function lettersort($a, $b) {
 	return stringsort($a["letter"], $b["letter"]);
 }
 
+//**************************************** old sort functions
 // Helper function to sort facts.
-function compare_facts_type($arec, $brec) {
+function compare_facts_type_old($arec, $brec) {
 	global $factarray;
 	static $factsort;
 
@@ -1872,12 +1892,12 @@ function compare_facts_type($arec, $brec) {
 	//-- if the facts are the same, then go ahead and compare them by date
 	//-- this will improve the positioning of non-dated elements on the next pass
 	if ($ret==0)
-		$ret = compare_facts_date($arec, $brec);
+		$ret = compare_facts_date_old($arec, $brec);
 	return $ret;
 }
 
 // Helper function to sort facts.
-function compare_facts_date($arec, $brec) {
+function compare_facts_date_old($arec, $brec) {
 	if (is_array($arec))
 		$arec = $arec[1];
 	if (is_array($brec))
@@ -1966,14 +1986,14 @@ function compare_facts_date($arec, $brec) {
 // resort by date (preserving fact order where possible).
 // This results in the dates always being in sequence, and the facts
 // *mostly* being in sequence.
-function sort_facts(&$arr) {
+function sort_facts_old(&$arr) {
 	// Pass one - insertion sort on fact type
 	$lastDate = "";
 	for ($i=0; $i<count($arr); ++$i) {
 		if ($i>0) {
 			$tmp=$arr[$i];
 			$j=$i;
-			while ($j>0 && compare_facts_type($arr[$j-1], $tmp)>0) {
+			while ($j>0 && compare_facts_type_old($arr[$j-1], $tmp)>0) {
 				$arr[$j]=$arr[$j-1];
 				--$j;
 			}
@@ -2005,7 +2025,7 @@ function sort_facts(&$arr) {
 	// Pass two - modified bubble/insertion sort on date
 	for ($i=0; $i<count($arr)-1; ++$i)
 		for ($j=count($arr)-1; $j>$i; --$j)
-			if (compare_facts_date($arr[$i],$arr[$j])>0) {
+			if (compare_facts_date_old($arr[$i],$arr[$j])>0) {
 				$tmp=$arr[$i];
 				for ($k=$i; $k<$j; ++$k)
 					$arr[$k]=$arr[$k+1];
@@ -2026,6 +2046,176 @@ function sort_facts(&$arr) {
 	}
 }
 
+// Helper function to sort facts.
+function compare_facts_date($arec, $brec) {
+	if (is_array($arec))
+		$arec = $arec[1];
+	if (is_array($brec))
+		$brec = $brec[1];
+
+	// If either fact is undated, the facts sort equally.
+	if (!preg_match("/2 _?DATE (.*)/", $arec, $amatch) || !preg_match("/2 _?DATE (.*)/", $brec, $bmatch)) {
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
+			return $match1[1]-$match2[1];
+		}
+		return 0;
+	}
+
+	$adate = new GedcomDate($amatch[1]);
+	$bdate = new GedcomDate($bmatch[1]);
+	// If either date can't be parsed, don't sort.
+	if (!$adate->isOK() || !$bdate->isOK()) {
+		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
+			return $match1[1]-$match2[1];
+		}
+		return 0;
+	}
+
+	// Remember that dates can be ranges and overlapping ranges sort equally.
+	$amin=$adate->MinJD();
+	$bmin=$bdate->MinJD();
+	$amax=$adate->MaxJD();
+	$bmax=$bdate->MaxJD();
+
+	// BEF/AFT XXX sort as the day before/after XXX
+	if ($adate->qual1=='BEF') {
+		$amin=$amin-1;
+		$amax=$amin;
+	} else
+		if ($adate->qual1=='AFT') {
+			$amax=$amax+1;
+			$amin=$amax;
+		}
+	if ($bdate->qual1=='BEF') {
+		$bmin=$bmin-1;
+		$bmax=$bmin;
+	} else
+		if ($bdate->qual1=='AFT') {
+			$bmax=$bmax+1;
+			$bmin=$bmax;
+		}
+
+	if ($amax<$bmin)
+		return -1;
+	else
+		if ($amin>$bmax)
+			return 1;
+		else {
+			//-- ranged date... take the type of fact sorting into account
+			$factWeight = 0;
+			if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
+				$factWeight = $match1[1]-$match2[1];
+			}
+			//-- fact is prefered to come before, so compare using the minimum ranges
+			if ($factWeight < 0 && $amin!=$bmin) {
+				return ($amin-$bmin);
+			} else
+				if ($factWeight > 0 && $bmax!=$amax) {
+					//-- fact is prefered to come after, so compare using the max of the ranges
+					return ($bmax-$amax);
+				} else {
+					//-- facts are the same or the ranges don't give enough info, so use the average of the range
+					$aavg = ($amin+$amax)/2;
+					$bavg = ($bmin+$bmax)/2;
+					if ($aavg<$bavg)
+						return -1;
+					else
+						if ($aavg>$bavg)
+							return 1;
+						else
+							return $factWeight;
+				}
+		
+			return 0;
+		}
+}
+
+/**
+ * A multi-key sort
+ * 1. First divide the facts into two arrays one set with dates and one set without dates
+ * 2. Sort each of the two new arrays, the date using the compare date function, the non-dated
+ * using the compare type function
+ * 3. Then merge the arrays back into the original array using the compare type function
+ *
+ * @param unknown_type $arr
+ */
+function sort_facts(&$arr) {
+	$dated = array();
+	$nondated = array();
+	//-- split the array into dated and non-dated arrays
+	foreach($arr as $event) {
+		if ($event->getValue("DATE")==NULL) $nondated[] = $event;
+		else $dated[] = $event;
+	}
+	
+	//-- sort each type of array
+	usort($dated, array("Event","CompareDate"));
+	usort($nondated, array("Event","CompareType"));
+	
+	/* This commented out code is an algorithm for inserting non-dated events into the dated events
+	 * using a weighted comparison.  Non-dated events are sorted by inserting them next to the the dated
+	 * fact they should be closest to. 
+	$arr = $dated;
+	//-- find the best place to put each nondated event
+	$index = 0;
+	foreach($nondated as $event) {
+		$score = null;
+//		print "<br />".$event->getTag()." ";
+		for($i=$index; $i<count($arr); $i++) {
+			$tmp = Event::CompareType($event, $arr[$i]);
+//			print $i.":".$arr[$i]->getTag().":".$tmp." ";
+			if ($score==null || abs($tmp)<abs($score)) {
+				$score = $tmp;
+				$index = $i;
+			}
+		}
+		
+		if ($score!=null) {
+			if ($score>0) $index++;
+			$ct = count($arr);
+			for($i=$ct-1; $i>=$index; $i--) {
+				$arr[$i+1] = $arr[$i];
+			}
+		}
+		else {
+			$index=count($arr);
+		}
+//		print "[$score $index]";
+		$arr[$index] = $event;
+		//-- because they are already sorted, they should always be after the event we just added
+		$index++;
+	}
+	
+	*/
+	//-- merge the arrays back together comparing by Facts
+	$dc = count($dated);
+	$nc = count($nondated);
+	$i = 0;
+	$j = 0;
+	$k = 0;
+	// while there is anything in the dated array continue merging
+	while($i<$dc) {
+		// compare each fact by type to merge them in order
+		if ($j<$nc && Event::CompareType($dated[$i],$nondated[$j])>0) {
+			$arr[$k] = $nondated[$j];
+			$j++;
+		}
+		else {
+			$arr[$k] = $dated[$i];
+			$i++;
+		}
+		$k++; 
+	}
+	
+	// get anything that might be left in the nondated array
+	while($j<$nc) {
+		$arr[$k] = $nondated[$j];
+		$j++;
+		$k++;
+	}
+
+}
+
 /**
  * fact date sort
  *
@@ -2037,20 +2227,33 @@ function compare_date($a, $b) {
 	$tag = "BIRT";
 	if (!empty($sortby))
 		$tag = $sortby;
-	if (isset($a["undo"]) && $tag=="CHAN") {
-		// Look at record in pgv_changes.php
-		$abirt = get_sub_record(1, "1 $tag", $a["undo"]);
-		$bbirt = get_sub_record(1, "1 $tag", $b["undo"]);
-	} else {
-		// Look at record in GEDCOM
-		$abirt = get_sub_record(1, "1 $tag", $a["gedcom"]);
-		$bbirt = get_sub_record(1, "1 $tag", $b["gedcom"]);
-	}
-	$c = compare_facts_date($abirt, $bbirt);
-	if ($c==0)
+	if (is_object($a)) {
+		$afact = $a->getFactByType($tag);
+		$bfact = $b->getFactByType($tag);
+		if (!is_null($afact) && !is_null($bfact)) {
+			$cmp=GedcomDate::Compare($afact->getDate(), $bfact->getDate());
+			if ($cmp!=0)
+				return $cmp;
+		}
 		return itemsort($a, $b);
-	else
-		return $c;
+	}
+	else if (isset($a["undo"])) {
+		// Look at record in pgv_changes.php
+		$adate=get_gedcom_value("$tag:DATE", 1, $a['undo'], '', false);
+		$bdate=get_gedcom_value("$tag:DATE", 1, $b['undo'], '', false);
+	} else {
+		$adate=get_gedcom_value("$tag:DATE", 1, $a['gedcom'], '', false);
+		$bdate=get_gedcom_value("$tag:DATE", 1, $b['gedcom'], '', false);
+	}
+	if (!empty($adate) && !empty($bdate)){
+		$adate=new GedcomDate($adate);
+		$bdate=new GedcomDate($adate);
+		$cmp=GedcomDate::Compare($adate, $bdate);
+		if ($cmp!=0)
+			return $cmp;
+	}
+	// Same date?  Sort by name
+		return itemsort($a, $b);
 }
 function compare_date_descending($a, $b) {
 	$result = compare_date($a, $b);
@@ -2072,8 +2275,8 @@ function compare_date_gedcomrec($a, $b) {
 }
 
 function gedcomsort($a, $b) {
-	$aname = str2upper($a["title"]);
-	$bname = str2upper($b["title"]);
+	$aname = UTF8_strtoupper($a["title"]);
+	$bname = UTF8_strtoupper($b["title"]);
 
 	return stringsort($aname, $bname);
 }
@@ -2817,10 +3020,8 @@ function write_changes() {
 	//-- release the mutex acquired above
 	$mutex->Release();
 
- 	if (!empty($COMMIT_COMMAND)) {
-		$logline = AddToLog("pgv_changes.php updated");
- 		check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
- 	}
+	$logline = AddToLog("pgv_changes.php updated");
+	check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
 	return true;
 }
 
@@ -3000,7 +3201,7 @@ function get_report_list($force=false) {
 	@fwrite($fp, serialize($files));
 	@fclose($fp);
 	$logline = AddToLog("reports.dat updated");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, "reports.dat", $INDEX_DIRECTORY);
+ 	check_in($logline, "reports.dat", $INDEX_DIRECTORY);
 
 	return $files;
 }
@@ -3433,7 +3634,7 @@ function has_utf8($string) {
 function check_in($logline, $filename, $dirname, $bInsert = false) {
 	global $COMMIT_COMMAND;
 	$bRetSts = false;
-	if (($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
+	if (!empty($COMMIT_COMMAND) && ($COMMIT_COMMAND=='svn' || $COMMIT_COMMAND=='cvs') && $logline && $filename) {
 		$cwd = getcwd();
 		if ($dirname) {
 			chdir($dirname);
@@ -3737,7 +3938,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if (!isset($MULTI_LETTER_ALPHABET[$LANGUAGE]))
 		$MULTI_LETTER_ALPHABET[$LANGUAGE] = "";
 	if ($MULTI_LETTER_ALPHABET[$LANGUAGE]!="") {
-		$myList = str2upper($MULTI_LETTER_ALPHABET[$LANGUAGE]);
+		$myList = UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE]);
 		$myList = str_replace(array(";", ","), " ", $myList);
 		$myList = preg_replace("/\s\s+/", " ", $myList);
 		$myList = trim($myList);
@@ -3768,7 +3969,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		if ($lang!="all")
 			$MULTI_LETTER_ALPHABET["all"] .= $letters." ";
 	}
-	$MULTI_LETTER_ALPHABET["all"] = str2upper($MULTI_LETTER_ALPHABET["all"]);
+	$MULTI_LETTER_ALPHABET["all"] = UTF8_strtoupper($MULTI_LETTER_ALPHABET["all"]);
 	$MULTI_LETTER_ALPHABET["all"] = str_replace(array(";", ","), " ", $MULTI_LETTER_ALPHABET["all"]);
 	$MULTI_LETTER_ALPHABET["all"] = preg_replace("/\s\s+/", " ", $MULTI_LETTER_ALPHABET["all"]);
 	$wholeList = explode(" ", $MULTI_LETTER_ALPHABET["all"]);

@@ -114,7 +114,7 @@ print "</table><input type='submit' value='{$pgv_lang["show"]}'><input type='hid
 
 // Do not run until user clicks "show", as default page may take a while to load.
 // Instead, show some useful help info.
-if (!isset($action)) {
+if (!isset($_POST["action"])) {
 	print "<P>".$pgv_lang['gedcheck_text']."</P><HR />";
 	print_footer();
 	exit();
@@ -786,11 +786,6 @@ function check_indi($id)
 	$indi_list[$id]["checked"]=true;
 	$gedrec=$indi_list[$id]["gedcom"];
 	$errors="";
-
-	if (isset($indi_list[$id]["names"][0][0]))
-		$name=$indi_list[$id]["names"][0][0];
-	else
-		$name="???";
 
 	if ($err_level>=$error)
 		foreach ($indi_facts_unique as $fact)

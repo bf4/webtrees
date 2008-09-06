@@ -28,7 +28,7 @@ require("config.php");
 require("includes/functions_edit.php");
 
 loadLangFile("pgv_country");
-asort($countries);
+uasort($countries, "stringsort");
 
 if ($_SESSION["cookie_login"]) {
 	header("Location: ".encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
@@ -78,6 +78,9 @@ $assokeys = array(
 "godfather",
 "godmother",
 "godparent",
+"godson",
+"goddaughter",
+"godchild",
 "informant",
 "lodger",
 "nurse",
@@ -97,7 +100,7 @@ foreach ($assokeys as $indexval => $key) {
   if (isset($pgv_lang["$key"])) $assorela["$key"] = $pgv_lang["$key"];
   else $assorela["$key"] = "? $key";
 }
-natsort($assorela);
+uasort($assorela, "stringsort");
 
 print_simple_header('Edit Interface');
 
@@ -276,19 +279,25 @@ if (isset($gedrec)) $gedrec = privatize_gedcom($gedrec);
 if (!isset($type)) $type="";
 $level0type = $type;
 if ($type=="INDI") {
-	print "<b>".PrintReady(get_person_name($pid))."</b><br />";
+	$record=Person::getInstance($pid);
+	print "<b>".PrintReady($record->getFullName())."</b><br />";
 }
-else if ($type=="FAM") {
-	if (!empty($pid)) print "<b>".PrintReady(get_family_descriptor($pid))."</b><br />";
-	else print "<b>".PrintReady(get_family_descriptor($famid))."</b><br />";
-}
-else if ($type=="SOUR") {
-	print "<b>".PrintReady(get_source_descriptor($pid))."&nbsp;&nbsp;&nbsp;";
+elseif ($type=="FAM") {
+	if (!empty($pid)) {
+		$record=Family::getInstance($pid);
+	}	else {
+		$record=Family::getInstance($famid);
+	}
+	print "<b>".PrintReady($record->getFullName())."</b><br />";
+} elseif ($type=="SOUR") {
+	$record=Source::getInstance($pid);
+	print "<b>".PrintReady($record->getFullName())."&nbsp;&nbsp;&nbsp;";
 	if ($TEXT_DIRECTION=="rtl") print getRLM();
 	print "(".$pid.")";
 	if ($TEXT_DIRECTION=="rtl") print getRLM();
 	print "</b><br />";
 }
+
 if (strstr($action,"addchild")) {
 	if (empty($famid)) {
 		print_help_link("edit_add_unlinked_person_help", "qm");
@@ -358,7 +367,8 @@ case 'editraw':
 			print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 			print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 			print $pgv_lang["no_update_CHAN"]."<br />\n";
-			echo format_fact_date(get_sub_record(1, "1 CHAN", $gedrec), false, true);
+			$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+			echo format_fact_date($event, false, true);
 			print "</td></tr>\n";
 			print "</table>";
 		}
@@ -390,7 +400,8 @@ case 'edit':
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		print $pgv_lang["no_update_CHAN"]."<br />\n";
-		echo format_fact_date(get_sub_record(1, "1 CHAN", $gedrec), false, true);
+		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+		echo format_fact_date($event, false, true);
 		print "</td></tr>\n";
 		}
 	print "</table>";
@@ -432,7 +443,8 @@ case 'add':
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		print $pgv_lang["no_update_CHAN"]."<br />\n";
-		echo format_fact_date(get_sub_record(1, "1 CHAN", $gedrec), false, true);
+		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+		echo format_fact_date($event, false, true);
 		print "</td></tr>\n";
 	}
 	print "</table>";
@@ -480,7 +492,7 @@ case 'addfamlink':
 		print "<tr><td class=\"facts_label\">".$factarray["PEDI"]."</td>";
 		print "<td class=\"facts_value\"><select name=\"pedigree\">";
 		print "<option value=\"\"></option>";
-		print "<option value=\"birth\" >".$pgv_lang["birth"]."</option>";
+		print "<option value=\"birth\" >".$factarray["BIRT"]."</option>";
 		print "<option value=\"adopted\" >".$pgv_lang["adopted"]."</option>";
 		print "<option value=\"foster\" >".$pgv_lang["foster"]."</option>";
 		print "<option value=\"sealing\" >".$pgv_lang["sealing"]."</option>";
@@ -1874,9 +1886,9 @@ case 'al_reset_media_update': // Reset sort using Album Page
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
 		if (!file_exists("modules/googlemap/defaultconfig.php")) {
-			$tabno = "6";
-		}else{
 			$tabno = "7";
+		}else{
+			$tabno = "8";
 		}
 		?>
 		<script language="JavaScript" type="text/javascript" >
@@ -1913,9 +1925,9 @@ case 'al_reorder_media_update': // Update sort using Album Page
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) {
 		if (!file_exists("modules/googlemap/defaultconfig.php")) {
-			$tabno = "6";
-		}else{
 			$tabno = "7";
+		}else{
+			$tabno = "8";
 		}
 		if ($success) print "<br />".$pgv_lang["update_successful"]. "<br /><br />";
 		?>
@@ -2307,8 +2319,8 @@ case 'reorder_fams':
 			$i=0;
 			foreach($fams as $famid=>$family) {
 				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$famid\" >";
-				print "<span class=\"name2\">".PrintReady(get_family_descriptor($famid))."</span><br />";
-				print_simple_fact($family->getGedcomRecord(), "MARR", $famid);
+				print "<span class=\"name2\">".PrintReady($family->getFullName())."</span><br />";
+				print $family->format_first_major_fact(PGV_EVENTS_MARR, 2);
 				print "<input type=\"hidden\" name=\"order[$famid]\" value=\"$i\"/>";
 				print "</li>";
 				$i++;

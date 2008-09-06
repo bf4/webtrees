@@ -3,7 +3,7 @@
  * File contains var's to glue Help_text for PHPGedView together
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,6 @@ loadLangFile("pgv_confighelp");
 
 $pgv_lang["help_manageservers.php"]	= "#pgv_lang[help_managesites]#";
 $pgv_lang["edit_RESN_help"]			= "#pgv_lang[RESN_help]#";
-
-$pgv_lang["help_aliveinyear.php"]	= "#pgv_lang[alive_in_year_help]#";
 
 //General
 $pgv_lang["start_ahelp"]			= "<div class=\"list_value_wrap\"><center class=\"error\">#pgv_lang[start_admin_help]#</center>";
@@ -195,6 +193,7 @@ $pgv_lang["h38"]	= "help_hourglass.php,hourglass_chart";
 $pgv_lang["h39"]	= "help_familybook.php,familybook_chart";
 $pgv_lang["h40"]	= "search_replace_help,search_replace";
 $pgv_lang["h41"]	= "soundex_search_help,search_soundex";
+$pgv_lang["h42"]	= "help_treenav.php,interactive_tree";
 
 $pgv_lang["help_contents_help"] = "";
 $i=1;

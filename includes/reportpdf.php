@@ -382,7 +382,7 @@ class PGVRHtmlPDF extends PGVRHtml {
 		}
 		$this->text .= $this->getEnd();
 		if ($sub) return $this->text;
-//		print "[".htmlentities($this->text)."] ";
+//		print "[".htmlentities($this->text,ENT_COMPAT,'UTF-8')."] ";
 		$pdf->writeHTML($this->text);
 	}
 

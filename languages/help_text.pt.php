@@ -1,4 +1,4 @@
-<<?php
+<?php
 /**
  * Portugese Language file for PhpGedView.
  *

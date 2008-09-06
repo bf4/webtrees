@@ -552,6 +552,7 @@ if ($action == "save" or $action=="toggleActive") {
       fwrite($fp, "// Array definition of language_settings\r\n");
       fwrite($fp, "\$language_settings = array();\r\n");
       foreach ($language_settings as $key => $value) {
+	    if (!isset($languages[$key]) || (isset($pgv_language[$key]) && !file_exists($pgv_language[$key]))) continue;
         fwrite($fp, "\r\n");
         fwrite($fp, "//-- settings for {$languages[$key]}\r\n");
         fwrite($fp, "\$language_settings['{$languages[$key]}']=array(\r\n");
@@ -585,7 +586,7 @@ if ($action == "save" or $action=="toggleActive") {
       fwrite($fp, "?>");
       fclose($fp);
 	  $logline = AddToLog("lang_settings.php updated");
- 	  if (!empty($COMMIT_COMMAND)) check_in($logline, $Filename, $INDEX_DIRECTORY);	
+ 	  check_in($logline, $Filename, $INDEX_DIRECTORY);	
     } else $error = "lang_config_write_error";
   } else $error = "lang_set_file_read_error";
 

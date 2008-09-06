@@ -141,13 +141,11 @@ class DescendancyControllerRoot extends BaseController {
 	// Validate form variables
 	$this->pid=check_rootid($this->pid);
 
-	if ((DisplayDetailsByID($this->pid))||(showLivingNameByID($this->pid))) $this->name = get_person_name($this->pid);
-	else $this->name = $pgv_lang["private"];
-
 	if (strlen($this->name)<30) $this->cellwidth="420";
 	else $this->cellwidth=(strlen($this->name)*14);
 
 	$this->descPerson = Person::getInstance($this->pid);
+	$this->name=$this->descPerson->getFullName();
 
 	//-- if the person is from another gedcom then forward to the correct site
 	/*
@@ -298,7 +296,8 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		print "<span class=\"details1\" style=\"white-space: nowrap; \" >";
 		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a> ";
 		echo '<a href="', encode_url("family.php?famid={$famid}&ged={$GEDCOM}"), '" class="details1">';
-		if (showFact("MARR", $famid)) print_simple_fact($famrec, "MARR", $id);
+		$marriage = $family->getMarriage();
+		if ($marriage->canShow()) $marriage->print_simple_fact();
 		else print $pgv_lang["private"];
 		echo "</a>";
 		print "</span>";

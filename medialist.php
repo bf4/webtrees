@@ -31,28 +31,29 @@ require_once('includes/functions_print_facts.php');
 loadLangFile("lb_lang");
 // LBox --------------------------------------------------------
 
-// $LB_SS_SPEED = "5";	
-
-if (!isset($level)) $level = 0;
-if (!isset($action)) $action = "";
-if (!isset($filter)) $filter = "";
-else $filter = stripLRMRLM(stripslashes($filter));
-if (!isset($search)) $search = "yes";
-if (!isset($folder)) $folder = $MEDIA_DIRECTORY;
+// $LB_SS_SPEED = "5";
+$level = safe_GET("level","","0");
+$action = safe_GET('action');
+$filter = safe_GET('filter');
+$filter = stripLRMRLM(stripslashes($filter));
+$search = safe_GET('search');
+$folder = safe_GET('folder');
+if (empty($folder)) $folder = $MEDIA_DIRECTORY;
 if (!isset($_SESSION["medialist"])) $search = "yes";
-$currentdironly = (isset($subdirs) && $subdirs=="on") ? false : true;
+
+$currentdironly = (isset($_REQUEST['subdirs']) && $subdirs=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
 
 
 
-// LBox ============================================================================= 
-// Get Javascript variables from lb_config.php --------------------------- 
+// LBox =============================================================================
+// Get Javascript variables from lb_config.php ---------------------------
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');	
-	
+	include('modules/lightbox/functions/lb_call_js.php');
+
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
 		if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";
@@ -164,15 +165,15 @@ if ($search == "yes") {
 		</tr>
 		<tr>
 			<td class="list_label" colspan="2">
-				<input type="submit" value=" &gt; "/>
+				<input type="submit" value="<?php echo $pgv_lang["apply_filter"];?>"/>
 			</td>
 		</tr>
-<!-- LBox =========================== added for Lightbox Album ============================== --> 	
-		<?php 
-		if (file_exists("modules/lightbox/album.php")) { 
+<!-- LBox =========================== added for Lightbox Album ============================== -->
+		<?php
+		if (file_exists("modules/lightbox/album.php")) {
 			// do not need slideshow bar
 		}elseif (file_exists("modules/slideshow.php")) { ?>
-<!-- LBox ========================= end addition for Lightbox Album ========================== --> 
+<!-- LBox ========================= end addition for Lightbox Album ========================== -->
 		<tr>
 			<td class="list_label" colspan="2">
   				<?php
@@ -180,9 +181,9 @@ if ($search == "yes") {
   				?>
 			</td>
 		</tr>
-<!-- LBox ======================= BH changed for Lightbox Album ============================ --> 			
+<!-- LBox ======================= BH changed for Lightbox Album ============================ -->
 		<?php }else{} ?>
-<!-- LBox ======================= end change for Lightbox Album ============================= --> 
+<!-- LBox ======================= end change for Lightbox Album ============================= -->
 
 	</table>
 </form>
@@ -209,21 +210,7 @@ $count = $max;
 if ($start+$count > $ct) $count = $ct-$start;
 
 print "\n\t<div align=\"center\">".$ct." ".$pgv_lang["media_found"]." <br /><br />";
-if ($ct>0){
-	if (false) {
-		print "<form action=\"$SCRIPT_NAME\" method=\"get\" > ".$pgv_lang["medialist_show"];
-		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-		print "<input type=\"hidden\" name=\"search\" value=\"yes\" />";
-		print "<input type=\"hidden\" name=\"filter\" value=".$filter." />";
-		print "<select name=\"max\" onchange=\"javascript:submit();\">";
-		for ($i=1;($i<=20&&$i-1<ceil($ct/10));$i++) {
-		        print "<option value=\"".($i*10)."\" ";
-		        if ($i*10==$max) print "selected=\"selected\" ";
-		        print " >".($i*10)."</option>";
-		}
-		print "</select> ".$pgv_lang["per_page"];
-		print "</form>";
-	}
+if ($ct>0) {
 
 	$currentPage = ((int) ($start / $max)) + 1;
 	$lastPage = (int) (($ct + $max - 1) / $max);
@@ -236,7 +223,7 @@ if ($ct>0){
 
 	// print page back, page number, page forward controls
 	print "\n<tr><td colspan=\"2\">\n";
-	print"\n\t<table class=\"list_table width100\">\n";
+	print "\n\t<table class=\"list_table width100\">\n";
 	print "\n<tr>\n";
 	print "<td class=\"width30\" align=\"" . ($TEXT_DIRECTION == "ltr"?"left":"right") . "\">";
 	if ($TEXT_DIRECTION=="ltr") {
@@ -297,7 +284,7 @@ if ($ct>0){
 	// -- print the array
 	print "\n<tr>\n";
 
-	for($i=0; $i<$count; $i++) {
+	for ($i=0; $i<$count; $i++) {
 	    $media = $medialist[$start+$i];
 
 	    $isExternal = isFileExternal($media["FILE"]);
@@ -318,61 +305,59 @@ if ($ct>0){
 	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
 	    print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
 
-		
+
 //LBox --------  change for Lightbox Album --------------------------------------------
 		//Get media item Notes
 		$haystack = $media["GEDCOM"];
 		$needle   = "1 NOTE";
 		$before   = substr($haystack, 0, strpos($haystack, $needle));
-		$after    = substr(strstr($haystack, $needle), strlen($needle)); 
+		$after    = substr(strstr($haystack, $needle), strlen($needle));
 		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 		$final    = $before.$needle.$worked;
-		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true))));
-		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
-//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
-			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name)) . "::" . htmlspecialchars($notes) . "\">" . "\n";
-
-        }elseif ($USE_MEDIA_VIEWER) {
+		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
+		if (file_exists("modules/lightbox/album.php") && (eregi("\.(jpg|jpeg|gif|png)$",$media["FILE"]))) {
+			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+        } elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 		} else {
-			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";	
+			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
 		}
-//LBox ----------- end change for Lightbox Album ----------------------------------		
+//LBox ----------- end change for Lightbox Album ----------------------------------
 
 		print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
+		print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
-		
+
 //LBox --------  added for Lightbox Album --------------------------------------------
-		if ( file_exists("modules/lightbox/album.php"  )) {
+		if (file_exists("modules/lightbox/album.php")) {
 			if (PGV_USER_CAN_EDIT) {
-			
+
 				if ($LB_ML_THUMB_LINKS != "none") {
 					print "<table border=0><tr>";
-		
+
 					// ---------- Edit Media --------------------
 					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
 					print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&pid={$media['XREF']}&linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
 					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
 						print "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_edit_media"] . "\" />&nbsp;&nbsp;&nbsp;" ;
 					}
-					if($LB_ML_THUMB_LINKS == "both") { 
+					if ($LB_ML_THUMB_LINKS == "both") {
 						print "<br />";
 					}
-					if($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "text") { 
+					if ($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "text") {
 						print $pgv_lang["lb_edit_details"] ;
 					}
-					print "</a>" . "\n";			
+					print "</a>" . "\n";
 					print "</td>";
-			
+
 					// ---------- Link Media to person, family or source  ---------------
 					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
 					include ("modules/lightbox/functions/lb_link.php");
 					print "</td>";
-			
+
 					// ---------- View Media Details (mediaviewer) --------------------
-					print "<td class=\"width33 wrap center font9\" valign=\"top\">";	
+					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
 					print "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
 					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
 						print "&nbsp;&nbsp;&nbsp;<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
@@ -380,22 +365,19 @@ if ($ct>0){
 					if ($LB_ML_THUMB_LINKS == "both") {
 						print "<br />";
 					}
-					if($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "text") { 
+					if ($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "text") {
 						print $pgv_lang["lb_view_details"] ;
-					}					
+					}
 					print "</a>" . "\n" ;
 					print "</td>";
 
-					print "</tr></table>";	
-			}else{
-			}
+					print "</tr></table>";
+				}
 				// ------------ Linespace ---------------------
 				print "<br />";
-			}else{
 			}
-		}else{
 		}
-//LBox ----------- end addition for Lightbox Album ---------------------------------------	
+//LBox ----------- end addition for Lightbox Album ---------------------------------------
 
 	    print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 
@@ -414,14 +396,14 @@ if ($ct>0){
 		}
 		print "</a><br />";
 
-		if (!$isExternal && !$media["EXISTS"] ) {
+		if (!$isExternal && !$media["EXISTS"]) {
 			print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
 		}
-		if (!$isExternal && $media["EXISTS"]){
+		if (!$isExternal && $media["EXISTS"]) {
 			$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
-			if(!empty($imgsize[2])){
+			if (!empty($imgsize[2])) {
 				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageTypes[$imgsize[2]] . "</span>";
-			} else if(empty($imgsize[2])){
+			} else if (empty($imgsize[2])) {
 				$path_end=substr($media["FILE"], strlen($media["FILE"])-5);
 				$imageType = strtoupper(substr($path_end, strpos($path_end, ".")+1));
 				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageType . "</span>";
@@ -431,14 +413,14 @@ if ($ct>0){
 			$sizeString = getfilesize($fileSize);
 			print "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">" . $sizeString . "</span>";
 
-			if($imgsize[2]!==false){
+			if ($imgsize[2]!==false) {
 				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
 			}
 		}
 
 	    print "<div style=\"white-space: normal; width: 95%;\">";
 	    print_fact_sources($media["GEDCOM"], $media["LEVEL"]+1);
-	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);  
+	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
 	    print "</div>";
 
 		PrintMediaLinks($media["LINKS"], "small");

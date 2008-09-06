@@ -904,7 +904,7 @@ $pgv_lang["hit_count"]			= "Počet prístupov:";
 $pgv_lang["phpgedview_message"]		= "Správa PhpGedView";
 $pgv_lang["common_surnames"]		= "Najčastejšie priezviská";
 $pgv_lang["default_news_title"]		= "Vitajte vo svojom rodokmeni";
-$pgv_lang["default_news_text"]		= "Výstup tohoto rodokmeňa je zpracovaný pomocou <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>. Táto stránka ponúka úvod a prehľad k tomuto rodokmeňa. Pre vstup do rodokmeňa vyberte z menu jednu zo schém, zoznam osôb, alebo vyhľadávanie mena či miesta.<br /><br />V prípade problémov s používaním tohoto systému, kliknite na nápovedu a dozviete sa, ako pracovať zo stránkou, na ktorej sa práve nachádzate.<br /><br />Ďakujeme, že ste tieto stránky navštívili.";
+$pgv_lang["default_news_text"]		= "Výstup tohoto rodokmeňa je zpracovaný pomocou <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Táto stránka ponúka úvod a prehľad k tomuto rodokmeňa. Pre vstup do rodokmeňa vyberte z menu jednu zo schém, zoznam osôb, alebo vyhľadávanie mena či miesta.<br /><br />V prípade problémov s používaním tohoto systému, kliknite na nápovedu a dozviete sa, ako pracovať zo stránkou, na ktorej sa práve nachádzate.<br /><br />Ďakujeme, že ste tieto stránky navštívili.";
 $pgv_lang["reset_default_blocks"]	= "Obnoviť pôvodné bloky";
 $pgv_lang["recent_changes"]		= "Posledné zmeny";
 $pgv_lang["recent_changes_block"]	= "Blok posledných zmien";

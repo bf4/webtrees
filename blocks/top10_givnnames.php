@@ -52,67 +52,8 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	else $infoStyle = "style2";
 	if (isset($config["showUnknown"])) $showUnknown = $config["showUnknown"];  // "yes" or "no"
 	else $showUnknown = "yes";
-	
-	//-- cache the result in the session so that subsequent calls do not have to
-	//-- perform the calculation all over again.
-	if (isset($_SESSION["first_names_f"][$GEDCOM]) && isset($_SESSION["first_names_m"][$GEDCOM]) && isset($_SESSION["first_names_u"][$GEDCOM]) && (!isset($DEBUG)||($DEBUG==false))) {
-		$name_list_f = $_SESSION["first_names_f"][$GEDCOM];
-		$name_list_m = $_SESSION["first_names_m"][$GEDCOM];
-		$name_list_u = $_SESSION["first_names_u"][$GEDCOM];
-	} else {
-		$name_list_f = array();
-		$name_list_m = array();
-		$name_list_u = array();
-	
-		//DB query
-		$sql = "SELECT DISTINCT i_name, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
-		$res = dbquery($sql);
 
-		if (!DB::isError($res)) {
-			while ($row =& $res->fetchRow()) {
-				if (preg_match('/1 SEX F/', $row[1])>0) $genderList = 'name_list_f';
-				else if (preg_match('/1 SEX M/', $row[1])>0) $genderList = 'name_list_m';
-				else $genderList = 'name_list_u';
-				$allNames = get_indi_names($row[1], false, false);		// Get all names (except Married name)
-				foreach ($allNames as $name) {
-					$firstnamestring = preg_replace(':/.*/:', '', $name[0]);		// Remove surname
-					$firstnamestring = str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@'), ' ', $firstnamestring); 
-					$nameList = explode(" ", $firstnamestring);
-					foreach ($nameList as $givnName) {
-						// Remove names within quotes and apostrophes
-						$givnName = preg_replace(array(":^'.*'$:", ':^".*"$:'), '', $givnName);
-						$givnName = preg_replace(":^(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99).*(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99)$:", '', $givnName);
-						$givnName = trim($givnName);
-
-						// Ignore single letters
-						if (!empty($givnName)) {
-							$charLen = 1;
-							$letter = substr($givnName, 0, 1);
-							if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
-							if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
-							if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
-							if (strlen($givnName)>$charLen) {
-								if (!isset(${$genderList}[$givnName])) ${$genderList}[$givnName] = 0;
-								${$genderList}[$givnName] ++;
-							}
-						}
-					}
-				}
-			}
-			$res->free();
-		}
-		//Calculate Female names
-		arsort($name_list_f, SORT_NUMERIC);
-		$_SESSION["first_names_f"][$GEDCOM] = $name_list_f;
-
-		//Calculate Male names
-		arsort($name_list_m, SORT_NUMERIC);
-		$_SESSION["first_names_m"][$GEDCOM] = $name_list_m;
-
-		//Calculate Unknown names
-		arsort($name_list_u, SORT_NUMERIC);
-		$_SESSION["first_names_u"][$GEDCOM] = $name_list_u;
-	}
+	$stats=new Stats($GEDCOM);
 
 	//Print block header
 
@@ -128,101 +69,45 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	}
 	$title .= str_replace("10", $config["num"], $pgv_lang["block_givn_top10_title"]);
 		
-	print '<div id="'.$id.'" class="block"><table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
-	print '<td class="blockh1">&nbsp;</td>';
-	print '<td class="blockh2 blockhc"><b>'.$title.'</b></td>';
-	print '<td class="blockh3">&nbsp;</td>';
-	print '</tr></table><div class="blockcontent">';
-	if ($block) print '<div class="small_inner_block">';
-	else print '<div class="normal_inner_block">';
-	
+	$content = '<div class="normal_inner_block">';
 	//Select List or Table
 	switch ($infoStyle) {
 	case "style1":	// Output style 1:  Simple list style.  Better suited to left side of page.
 		if ($TEXT_DIRECTION=='ltr') $padding = 'padding-left: 15px';
 		else $padding = 'padding-right: 15px';
+		$params=array(1,$config['num'],'rcount');
 		//List Female names
-		$nameList = array_slice($name_list_f, 0, $config["num"]);
-		if (count($nameList)>0) {
-			print "<b>".$pgv_lang["female"]."</b>";
-			print "<div class=\"wrap\" style=\"$padding\">";
-			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
-			foreach ($nameList as $key => $value) {
-				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
-			}
-			print "</div><br />";
+		$totals=$stats->commonGivenFemaleTotals($params);
+		if ($totals) {
+			$content.='<b>'.$pgv_lang['female'].'</b><div class="wrap" style="'.$padding.'">'.$totals.'</div><br />';
 		}
 		//List Male names	
-		$nameList = array_slice($name_list_m, 0, $config["num"]);
-		if (count($nameList)>0) {
-			print "<b>".$pgv_lang["male"]."</b>";
-			print "<div class=\"wrap\" style=\"$padding\">";
-			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
-			foreach ($nameList as $key => $value) {
-				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
-			}
-			print "</div><br />";
+		$totals=$stats->commonGivenMaleTotals($params);
+		if ($totals) {
+			$content.='<b>'.$pgv_lang['male'].'</b><div class="wrap" style="'.$padding.'">'.$totals.'</div><br />';
 		}
 		//List Unknown names	
-		$nameList = array_slice($name_list_u, 0, $config["num"]);
-		if (count($nameList)>0 && $showUnknown=="yes") {
-			print "<b>".$pgv_lang["unknown"]."</b>";
-			print "<div class=\"wrap\" style=\"$padding\">";
-			if ($TEXT_DIRECTION=='rtl') $nameList = array_reverse($nameList, TRUE);		// This won't handle lists that span several lines
-			foreach ($nameList as $key => $value) {
-				if ($TEXT_DIRECTION=='ltr') echo ' ', PrintReady("{$key}&nbsp;({$value})&nbsp;&nbsp;");
-				else echo ' ', PrintReady("&nbsp;&nbsp;({$value})&nbsp;{$key}");
-			}
-			print "</div><br />";
+		$totals=$stats->commonGivenUnknownTotals($params);
+		if ($totals && $showUnknown=="yes") {
+			$content.='<b>'.$pgv_lang['unknown'].'</b><div class="wrap" style="'.$padding.'">'.$totals.'</div><br />';
 		}
 		break;
-	case "style2":	// Style 2: Tabular format.  Narrow, 2-column table, good on right side of page
-		$nameAlign = ($TEXT_DIRECTION=='ltr') ? 'left':'right';
-		//Table Headings
-		print "<table class=\"center\">";
-		print "<tr>";
-			if (count($name_list_f)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["female"]."</td>";
-			if (count($name_list_m)>0) print "<td class='descriptionbox' align='center'>".$pgv_lang["male"]."</td>";
-			if (count($name_list_u)>0 && $showUnknown=="yes") print "<td class='descriptionbox' align='center'>".$pgv_lang["unknown"]."</td>";
-		print "</tr>";
-		print "<tr>";
-		//List Female names
-			if (count($name_list_f)>0) {
-				print "<td valign='top'><table>";
-				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
-				$nameList = array_slice($name_list_f, 0, $config["num"]);
-				foreach ($nameList as $key => $value) {
-					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
-				}
-				print "</table></td>";
-			}
-		//List Male names
-			if (count($name_list_m)>0) {
-				print "<td valign='top'><table>";
-				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
-				$nameList = array_slice($name_list_m, 0, $config["num"]);
-				foreach ($nameList as $key => $value) {
-					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
-				}
-				print "</table></td>";
-			}
-		//List Unknown names	
-			if (count($name_list_u)>0 && $showUnknown=="yes") {
-				print "<td valign='top'><table>";
-				print "<tr><td class='descriptionbox' align='center'>".$pgv_lang["name"]."</td><td class='descriptionbox' align='center'>".$pgv_lang["count"]."</td></tr>";
-				$nameList = array_slice($name_list_u, 0, $config["num"]);
-				foreach ($nameList as $key => $value) {
-					echo "<tr><td class='optionbox' align='{$nameAlign}'>".PrintReady($key)."</td><td class='optionbox' align='right'>".$value."</td></tr>";
-				}
-				print "</table></td>";
-			}
-		//Close table off
-		print "</tr></table>";
+	case "style2":	// Style 2: Tabular format.  Narrow, 2 or 3 column table, good on right side of page
+		$params=array(1,$config['num'],'rcount');
+		$content.='<table class="center"><tr valign="top"><td>'.$stats->commonGivenFemaleTable($params);
+		$content.='</td><td>'.$stats->commonGivenMaleTable($params).'</td><td>';
+		if ($showUnknown=="yes") {
+			$content.=$stats->commonGivenUnknownTable($params).'</td><td>';
+		}
+		$content.='</tr></table>';
 		break;
 	}
-print "</div></div></div>";
+	$content .=  "</div>";
+
+	global $THEME_DIR;
+	if ($block) include($THEME_DIR."templates/block_small_temp.php");
+	else include($THEME_DIR."templates/block_main_temp.php");
+
 }
 
 function print_block_givn_top10_config($config) {

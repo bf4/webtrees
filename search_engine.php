@@ -31,12 +31,12 @@
 global $SEARCH_SPIDER, $CHARACTER_SET;
 global $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;
 
-require "config.php";
+require 'config.php';
 
-loadLangFile("pgv_help");
+loadLangFile('pgv_help');
 
-if (!isset($help)) $help = "";
-require ("includes/help_text_vars.php");
+if (!isset($help)) $help = '';
+require 'includes/help_text_vars.php';
 
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
@@ -48,7 +48,7 @@ print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"a
 if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) 
 	print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
 print "<meta name=\"robots\" content=\"noindex,follow\" />\n\t";
-print '<meta name="generator" content="'.PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT.' - '.PGV_PHPGEDVIEW_URL.'" />';
+print '<meta name="generator" content="'.PGV_PHPGEDVIEW.' - '.PGV_PHPGEDVIEW_URL.'" />';
 print "<title>".$pgv_lang['label_search_engine_detected']."</title>\n";
 print "</head>\n<body>";
 

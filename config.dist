@@ -7,7 +7,7 @@
  * Site administrators may edit these settings online through the editconfig.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ if (preg_match("/\Wconfig.php/", $_SERVER["SCRIPT_NAME"])>0) {
 
 $DBTYPE = "mysql";								//-- type of database to connect when using the PEAR:DB module
 $DBHOST = "localhost";							//-- Host where MySQL database is kept
+$DBPORT = "";									//-- Database port, leave blank for default
 $DBUSER = "root";									//-- MySQL database User Name
 $DBPASS = "";									//-- MySQL database User Password
 $DBNAME = "phpgedview";							//-- The MySQL database name where you want PHPGedView to build its tables
@@ -62,7 +63,6 @@ $PGV_MEMORY_LIMIT = "32M";						//-- the maximum amount of memory that PGV shoul
 $ALLOW_REMEMBER_ME = false;						//-- whether the users have the option of being remembered on the current computer
 $CONFIG_VERSION = "4.0";						//-- the version this config file goes to
 
-$DIRECTORY_MODE = "ldap";						//-- User info stored in db or ldap directory
 $COMMIT_COMMAND = "";						//-- Choices are empty string, cvs or svn
 
 $CONFIGURED = false;

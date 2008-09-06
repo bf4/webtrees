@@ -121,22 +121,40 @@ default:
 switch ($action) {
 case 'get':
 	$xref=safe_GET('xref', PGV_REGEX_XREF.'([ ,;]+'.PGV_REGEX_XREF.')*');
+	$view=safe_GET('view', PGV_REGEX_ALPHANUM);
 	if ($xref) {
 		$xrefs = preg_split("/[;, ]/", $xref, 0, PREG_SPLIT_NO_EMPTY);
 		$gedrecords="";
 		foreach ($xrefs as $xref1) {
-			$gedrec=find_updated_record($xref1);
-			if (!$gedrec) {
-				$gedrec=find_gedcom_record($xref1);
-			}
-			if ($gedrec) {
-				preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
-				$type = trim($match[2]);
-				if (!displayDetails($gedrec)) {
-					//-- do not have full access to this record, so privatize it
-					$gedrec=privatize_gedcom($gedrec);
+			if (!empty($xref1)) {
+				$gedrec=find_updated_record($xref1);
+				if (!$gedrec) {
+					$gedrec=find_gedcom_record($xref1);
+					if ($gedrec) {
+						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
+						$type = trim($match[2]);
+						if (!displayDetailsById($xref1, $type)) {
+							//-- do not have full access to this record, so privatize it
+							$gedrec = privatize_gedcom($gedrec);
+						}
+						else if ($view=='version' || $view=='change') {
+							$chan = get_gedcom_value('CHAN', 1, $gedrec);
+							if (empty($chan)) {
+								$head = find_gedcom_record("HEAD");
+								$head_date = get_sub_record(1, "1 DATE", $head);
+								$lines = preg_split("/\n/", $head_date);
+								$head_date = "";
+								foreach($lines as $line) {
+									$num = $line{0};
+									$head_date.=($num+1).substr($line, 1)."\n";
+								}
+								$chan = "1 CHAN\r\n".$head_date;
+							}
+							$gedrec = '0 @'.$xref1.'@ '.$type."\r\n".$chan;
+						}
+						if (!empty($gedrec)) $gedrecords = $gedrecords . "\n".trim($gedrec);
+					}
 				}
-				$gedrecords.="\n".$gedrec;
 			}
 		}
 		if (!safe_GET('keepfile')) {

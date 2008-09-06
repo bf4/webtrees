@@ -31,6 +31,16 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["parent_family"]			= "Parents Family";
+$pgv_lang["step_parent_family"]		= "Step-Parent Family";
+$pgv_lang["immediate_family"]		= "Immediate Family";
+
+$pgv_lang["load_full_tree"]			= "View this tree in the full page interactive tree";
+$pgv_lang["hide_show_spouses"]		= "Show or hide multiple spouses";
+$pgv_lang["interactive_tree"]		= "Interactive Tree";
+$pgv_lang["example"]				= "Example:";
+$pgv_lang["tree"]					= "Tree";
+$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "Show unknown gender";
 $pgv_lang["count"]					= "Count";
 $pgv_lang["age_differences"]		= "Show Date Differences";
@@ -73,6 +83,7 @@ $pgv_lang["child"]					= "Child";
 $pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
 $pgv_lang["source_menu"]			= "Options for source";
+$pgv_lang["repo_menu"]			= "Options for repository";
 $pgv_lang["other_records"]			= "Records that link to this Source:";
 $pgv_lang["other_repo_records"]		= "Records that link to this Repository:";
 $pgv_lang["repo_info"]				= "Repository Information";
@@ -270,6 +281,8 @@ $pgv_lang["other"]					= "Other";
 $pgv_lang["sort_by_marriage"]		= "Sort by marriage date";
 $pgv_lang["reorder_families"]		= "Reorder Families";
 $pgv_lang["indis_with_surname"]		= "Individuals with surname #surname#";
+$pgv_lang["first_letter_name"]		= "Choose a letter to show families whose name starts with that letter.";
+$pgv_lang["first_letter_iname"]		= "Choose a letter to show individuals whose family name starts with that letter.";
 $pgv_lang["first_letter_fname"]		= "Choose a letter to show individuals whose first name starts with that letter.";
 $pgv_lang["total_names"]			= "Total Names";
 $pgv_lang["top10_pageviews_nohits"]	= "There are currently no hits to show.";
@@ -400,6 +413,22 @@ $pgv_lang["text"]					= "Source Text:";
 $pgv_lang["note"]					= "Note";
 $pgv_lang["NN"] 					= "(unknown)";
 $pgv_lang["PN"] 					= "(unknown)";
+$pgv_lang["NNhebrew"] 		= "(לא ידוע)";
+$pgv_lang["PNhebrew"] 		= "(לא ידוע)";
+$pgv_lang["NNarabic"] 		= "(غير معروف)";
+$pgv_lang["PNarabic"] 		= "(غير معروف)";
+$pgv_lang["NNgreek"] 			= "(άγνωστος/η)";
+$pgv_lang["PNgreek"] 			= "(άγνωστος/η)";
+$pgv_lang["NNrussian"] 		= "(неопределено)";
+$pgv_lang["PNrussian"] 		= "(неопределено)";
+$pgv_lang["NNchinese"] 		= "(未知)";
+$pgv_lang["PNchinese"] 		= "(未知)";
+$pgv_lang["NNvietnamese"] = "(vô danh)";
+$pgv_lang["PNvietnamese"] = "(không biết tuổi)";
+$pgv_lang["NNthai"] 			= "(unknown)";
+$pgv_lang["PNthai"] 			= "(unknown)";
+$pgv_lang["NNother"] 			= "(unknown)";
+$pgv_lang["PNother"] 			= "(unknown)";
 $pgv_lang["unrecognized_code"]		= "Unrecognized GEDCOM Code";
 $pgv_lang["unrecognized_code_msg"]	= "This is an error, and we would like to fix it. Please report this error to";
 $pgv_lang["indi_info"]				= "Individual Information";
@@ -419,6 +448,9 @@ $pgv_lang["siblings"]				= "Sibling";
 $pgv_lang["father"] 				= "Father";
 $pgv_lang["mother"] 				= "Mother";
 $pgv_lang["parent"] 				= "Parent";
+$pgv_lang["parent_age"] 			= "Parent's age";
+$pgv_lang["father_age"]				= "Father's age";
+$pgv_lang["mother_age"]				= "Mother's age";
 $pgv_lang["self"] 					= "Self";
 $pgv_lang["relatives"]				= "Close Relatives";
 $pgv_lang["relatives_events"]		= "Events of close relatives";
@@ -580,6 +612,7 @@ $pgv_lang["ssourcess"]				= "Sources";
 $pgv_lang["media"]					= "Media";
 $pgv_lang["name_contains"]			= "Name contains:";
 $pgv_lang["filter"] 				= "Filter";
+$pgv_lang["apply_filter"]			= "Apply filter";
 $pgv_lang["find_individual"]		= "Find Individual ID";
 $pgv_lang["find_familyid"]			= "Find Family ID";
 $pgv_lang["find_sourceid"]			= "Find Source ID";
@@ -601,13 +634,16 @@ $pgv_lang["show_parents"] 			= "Show parents";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Age";
+$pgv_lang["husb_age"]				= "Husband's age";
+$pgv_lang["wife_age"]				= "Wife's age";
 $pgv_lang["days"]					= "days";
 $pgv_lang["months"]					= "months";
 $pgv_lang["years"]					= "years";
 $pgv_lang["day1"]					= "day";
 $pgv_lang["month1"]					= "month";
 $pgv_lang["year1"]					= "year";
-$pgv_lang["after_death"]        ="after death";
+$pgv_lang["after_death"]        	= "after death";
+$pgv_lang["at_death_day"]      		= "on the date of death";
 $pgv_lang["timeline_title"] 		= "PhpGedView Timeline";
 $pgv_lang["timeline_chart"] 		= "Timeline Chart";
 $pgv_lang["remove_person"]			= "Remove Person";
@@ -767,6 +803,7 @@ $pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media di
 $pgv_lang["media_firewall_invalid_dir"]	= "Error: The Media Firewall was launched from a directory other than the media directory.";
 
 //-- Relationship chart messages
+$pgv_lang["view_fam_nav_details"]	= "View Details of ...";
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";
 $pgv_lang["person1"]				= "Person 1";
@@ -811,7 +848,8 @@ $pgv_lang["daughter_in_law"]		= "Daughter-in-law";
 $pgv_lang["uncle_in_law"]			= "Uncle-in-law";
 $pgv_lang["aunt_in_law"]			= "Aunt-in-law";
 $pgv_lang["cousin_in_law"]			= "Cousin-in-law";
-
+$pgv_lang["m_cousin_in_law"]		= "Cousin-in-law";
+$pgv_lang["f_cousin_in_law"]		= "Cousin-in-law";
 $pgv_lang["step_son"]		        = "step son";
 $pgv_lang["step_daughter"]	    	= "step daughter";
 
@@ -1318,7 +1356,7 @@ $pgv_lang["hit_count"]				= "Hit Count:";
 $pgv_lang["phpgedview_message"] 	= "PhpGedView Message";
 $pgv_lang["common_surnames"]		= "Most Common Surnames";
 $pgv_lang["default_news_title"] 	= "Welcome to Your Genealogy";
-$pgv_lang["default_news_text"]		= "The genealogy information on this website is powered by <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>.  This page provides an introduction and overview to this genealogy.<br /><br />To begin working with the data, choose one of the charts from the Charts menu, go to the Individual list, or search for a name or place.<br /><br />If you have trouble using the site, you can click on the Help icon to give you information on how to use the page that you are currently viewing.<br /><br />Thank you for visiting this site.";
+$pgv_lang["default_news_text"]		= "The genealogy information on this website is powered by <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>.  This page provides an introduction and overview to this genealogy.<br /><br />To begin working with the data, choose one of the charts from the Charts menu, go to the Individual list, or search for a name or place.<br /><br />If you have trouble using the site, you can click on the Help icon to give you information on how to use the page that you are currently viewing.<br /><br />Thank you for visiting this site.";
 $pgv_lang["reset_default_blocks"]	= "Reset to Default Blocks";
 $pgv_lang["recent_changes"] 		= "Recent Changes";
 $pgv_lang["recent_changes_block"]	= "Recent Changes";
@@ -1408,8 +1446,6 @@ $pgv_lang["sort_by"]				= "Sort by";
 $pgv_lang["cleanup"]				= "Cleanup";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
-$pgv_lang["dynasty_list"]			= "Overview of families";
-$pgv_lang["patriarch_list"] 		= "Patriarch list";
 $pgv_lang["statistics"] 			= "Statistics";
 
 //-- Merge Records
@@ -1513,6 +1549,9 @@ $pgv_lang["friend"] = "Friend";
 $pgv_lang["godfather"] = "Godfather";
 $pgv_lang["godmother"] = "Godmother";
 $pgv_lang["godparent"] = "Godparent";
+$pgv_lang["godson"]		= "Godson";
+$pgv_lang["goddaughter"] = "Goddaughter";
+$pgv_lang["godchild"]	= "Godchild";
 $pgv_lang["informant"] = "Informant";
 $pgv_lang["lodger"] = "Lodger";
 $pgv_lang["nurse"] = "Nurse";

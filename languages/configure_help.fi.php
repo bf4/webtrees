@@ -173,6 +173,7 @@ $pgv_lang["lang_back"]			= "Palaa päävalikkoon muokataksesi ja hallitaksesi ki
 $pgv_lang["lang_back_admin"]	= "Palaa ylläpitovalikkoon";
 $pgv_lang["lang_back_manage_gedcoms"]	= "Palaa GEDCOM hallinta valikkoon";
 
+$pgv_lang["lang_name_catalan"]		= "Katalaani (Valencia)";
 $pgv_lang["lang_name_chinese"]		= "Kiina";
 $pgv_lang["lang_name_czech"]		= "Tšekki";
 $pgv_lang["lang_name_swedish"]		= "Ruotsi";
@@ -188,7 +189,7 @@ $pgv_lang["lang_name_french"]		= "Ranska";
 $pgv_lang["lang_name_spanish-ar"]		= "Espanja (Latinalainen Amerikka)";
 $pgv_lang["lang_name_spanish"]		= "Espanja";
 $pgv_lang["lang_name_russian"]		= "Venäjä";
-$pgv_lang["lang_name_portuguese-br"]	= "Portugali (Brasilia)";
+//$pgv_lang["lang_name_portuguese-br"]	= "Portugali (Brasilia)";
 $pgv_lang["lang_name_portuguese"]	= "Portugali";
 $pgv_lang["lang_name_polish"]		= "Puola";
 $pgv_lang["lang_name_norwegian"]		= "Norja";

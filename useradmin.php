@@ -325,15 +325,16 @@ if ($action=="edituser") {
 	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 		$varname='gedcomid'.$ged_id;
 		?>
-		<tr>
+		<tr valign="top">
 		<td><?php print $ged_name; ?>:&nbsp;&nbsp;</td>
 		<td><input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
 		$pid=get_user_gedcom_setting($user_id, $ged_id, 'gedcomid');
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $ged_name);
-		if ($pid) {
-			$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-			echo '<span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
+		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
+		$person=Person::getInstance($pid);
+		if ($person) {
+			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), $person->format_first_major_fact(PGV_EVENTS_DEAT, 1), '</span>';
 		}
 		print "</td></tr>";
 	}
@@ -346,15 +347,16 @@ if ($action=="edituser") {
 	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 		$varname='rootid'.$ged_id;
 		?>
-		<tr>
+		<tr valign="top">
 		<td><?php print $ged_name; ?>:&nbsp;&nbsp;</td>
 		<td> <input type="text" name="<?php print $varname; ?>" id="<?php print $varname; ?>" tabindex="<?php print ++$tab; ?>" value="<?php
 		$pid=get_user_gedcom_setting($user_id, $ged_id, 'rootid');
 		print $pid."\" />";
 		print_findindi_link($varname, "", false, false, $ged_name);
-		if ($pid) {
-			$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
-			echo '<span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady(get_person_name($pid)), '</a>', format_first_major_fact($pid), '</span>';
+		$GEDCOM=$ged_name; // library functions use global variable instead of parameter.
+		$person=Person::getInstance($pid);
+		if ($person) {
+			echo ' <span class="list_item"><a href="', encode_url("individual.php?pid={$pid}&ged={$ged_name}"), '">', PrintReady($person->getFullName()), '</a>', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), $person->format_first_major_fact(PGV_EVENTS_DEAT, 1), '</span>';
 		}
 		?>
 		</td></tr>
@@ -541,9 +543,9 @@ if ($action == "listusers") {
 		case "sortver":
 			$users = get_all_users("asc","verified");
 			break;
-		case "sortveradm":
+		case "sortveradmin":
 			$users = get_all_users("asc","verified_by_admin");
-			break;
+			break;	
 		default:
 			$users = get_all_users("asc","username");
 			break;
@@ -602,8 +604,8 @@ if ($action == "listusers") {
 	print "<td class=\"descriptionbox wrap\">";
 	print $pgv_lang["message"]."</td>";
 	} ?>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["username"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["full_name"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortusername&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["username"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortlname&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["full_name"]; ?></a></td>
 	<td class="descriptionbox wrap"><?php print $pgv_lang["inc_languages"]; ?></td>
 	<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php print $pgv_lang["privileges"]; ?>" onclick="<?php
 	$k = 1;
@@ -618,10 +620,10 @@ if ($action == "listusers") {
 	print "</div>&nbsp;";
 	print $pgv_lang["privileges"]; ?>
 	</td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortreg&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["date_registered"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortllgn&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["last_login"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortver&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["verified"]; ?></a></td>
-	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortveradmin&filter={$filter}&usrlang={$usrlang}&ged{$ged}"); ?>"><?php print $pgv_lang["verified_by_admin"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortreg&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["date_registered"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortllgn&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["last_login"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortver&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["verified"]; ?></a></td>
+	<td class="descriptionbox wrap"><a href="<?php print encode_url("useradmin.php?action=listusers&sort=sortveradmin&filter={$filter}&usrlang={$usrlang}&ged={$ged}"); ?>"><?php print $pgv_lang["verified_by_admin"]; ?></a></td>
 	<?php if ($view != "preview") {
 	print "<td class=\"descriptionbox wrap\">";
 	print $pgv_lang["delete"]."</td>";
@@ -760,6 +762,10 @@ if ($action == "createform") {
 			}
 			return true;
 		}
+		var pastefield;
+		function paste_id(value) {
+			pastefield.value=value;
+		}
 	//-->
 	</script>
 
@@ -819,14 +825,16 @@ if ($action == "createform") {
 		<td class="optionbox wrap"><input type="checkbox" name="new_sync_gedcom" tabindex="<?php print ++$tab; ?>" value="Y" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_admin_help", "qm","can_admin"); print $pgv_lang["can_admin"]; ?></td><td class="optionbox wrap"><input type="checkbox" name="canadmin" tabindex="<?php print ++$tab; ?>" value="Y" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_can_edit_help", "qm","can_edit");print $pgv_lang["can_edit"]; ?></td><td class="optionbox wrap">
+		<table class="<?php print $TEXT_DIRECTION; ?>">
 		<?php
 		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 			$varname='canedit'.$ged_id;
 			$tab++;
+			print "<tr><td>{$ged_name}:&nbsp;&nbsp;</td><td>";
 			print "<select name=\"$varname\" tabindex=\"".$tab."\">\n";
-			print "<option value=\"none\"";
+			print "<option value=\"none\" selected=\"selected\"";
 			print ">".$pgv_lang["none"]."</option>\n";
-			print "<option value=\"access\" selected=\"selected\"";
+			print "<option value=\"access\"";
 			print ">".$pgv_lang["access"]."</option>\n";
 			print "<option value=\"edit\"";
 			print ">".$pgv_lang["edit"]."</option>\n";
@@ -834,9 +842,10 @@ if ($action == "createform") {
 			print ">".$pgv_lang["accept"]."</option>\n";
 			print "<option value=\"admin\"";
 			print ">".$pgv_lang["admin_gedcom"]."</option>\n";
-			print "</select> $ged_name<br />\n";
+			print "</select></td></tr>\n";
 		}
 		?>
+		</table>
 		</td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_auto_accept_help", "qm", "user_auto_accept");print $pgv_lang["user_auto_accept"]; ?></td>
 			<td class="optionbox wrap"><input type="checkbox" name="new_auto_accept" tabindex="<?php print ++$tab; ?>" value="Y" /></td></tr>

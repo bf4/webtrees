@@ -5,7 +5,7 @@
  * used by the SAX parser to generate reports from the XML report file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -222,7 +222,7 @@ class PGVRElement {
 		}
    		if ($found) $embed_fonts = true;
    		$t = trim($t, "\r\n\t");
-		$t = preg_replace(array("/<br \/>/", "/&nbsp;/"), array("\n", " "), $t);
+		$t = str_replace(array('<br />', '&nbsp;'), array("\n", ' '), $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
 		if ($embed_fonts) $t = bidi_text($t);
@@ -436,13 +436,11 @@ class PGVRFootnote extends PGVRElement {
    		if ($found) $embed_fonts = true;
 
 		$t = trim($t, "\r\n\t");
-		$t = preg_replace("/<br \/>/", "\n", $t);
-		// NOTE -- this will cause user added <brackets> to disappear?
-		// TODO find out why strip_tags was added and how to fix the problem without it
+		$t = str_replace(array('<br />', '&nbsp;'), array("\n", ' '), $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
 		if ($embed_fonts) $t = bidi_text($t);
-		else $t = smart_utf8_decode($t);
+		//else $t = smart_utf8_decode($t);
 		$this->text .= $t;
 	}
 
@@ -1290,8 +1288,15 @@ function PGVRFactsSHandler($attrs) {
 		$tag = $vars[$match[1]]["id"];
 	}
 
-	if (empty($attrs["diff"])) {
-	$repeats = get_all_subrecords($gedrec, $tag, $families);
+	if (empty($attrs["diff"]) && !empty($id)) {
+		$record = GedcomRecord::getInstance($id);
+		$facts = $record->getFacts(explode(",",$tag));
+		if (!is_array($facts)) $facts = array($facts);
+		sort_facts($facts);
+		$repeats = array();
+		foreach($facts as $event) {
+			if (strpos($tag.",",$event->getTag())===false) $repeats[]=$event->getGedComRecord();
+		}
 	}
 	else {
 		global $nonfacts;
@@ -1330,7 +1335,7 @@ function PGVRFactsEHandler() {
 	$lineoffset++;
 //	var_dump($lineoffset);
 	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) {
-//		print $i." ".htmlentities($lines[$i]);
+//		print $i." ".htmlentities($lines[$i],ENT_COMPAT,'UTF-8');
 		$reportxml .= $lines[$i];
 	}
 	$reportxml .= "</tempdoc>\n";
@@ -1909,7 +1914,7 @@ function PGVRListEHandler() {
 	$line = $line1-1;
 	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) $reportxml .= $lines[$i];
 	$reportxml .= "</tempdoc>\n";
-	//print htmlentities($reportxml)."\n";
+	//print htmlentities($reportxml,ENT_COMPAT,'UTF-8')."\n";
 	array_push($parserStack, $parser);
 
 	$oldgedrec = $gedrec;
@@ -2108,7 +2113,7 @@ function PGVRRelativesEHandler() {
 	$line = $line1-1;
 	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) $reportxml .= $lines[$i];
 	$reportxml .= "</tempdoc>\n";
-//	print htmlentities($reportxml)."\n";
+//	print htmlentities($reportxml,ENT_COMPAT,'UTF-8')."\n";
 	array_push($parserStack, $parser);
 
 	$oldgedrec = $gedrec;

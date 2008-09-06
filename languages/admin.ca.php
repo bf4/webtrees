@@ -1,0 +1,356 @@
+<?php
+/**
+ * Catalan texts
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Languages
+ * @author Antoni Planas i Vilà
+ * @version $Id$
+ */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
+$pgv_lang["sanity_err0"]			= "Errors:";
+$pgv_lang["sanity_err1"]			= "Us cal disposar de PHP versió 4.3 o superior.";
+$pgv_lang["sanity_err2"]			= "El fitxer o directori <i>#GLOBALS[whichFile]#</i> no hi és. Reviseu si existeix o té un altre nom i té habilitada la propietat de lectura.";
+$pgv_lang["sanity_err3"]			= "No s'ha pogut carregar correctament el fitxer <i>#GLOBALS[whichFile]#</i>. Torneu-ho a provar.";
+$pgv_lang["sanity_err4"]			= "El fitxer <i>config.php</i> és malmès.";
+$pgv_lang["sanity_err5"]			= "El fitxer <i>config.php</i> és de només lectura, no s'hi pot escriure.";
+$pgv_lang["sanity_err6"]			= "El directori <i>#GLOBALS[INDEX_DIRECTORY]#</i> és de només lectura, no pot escriure-s'hi.";
+$pgv_lang["sanity_warn0"]			= "Atenció!";
+$pgv_lang["sanity_warn1"]			= "El directori <i>#GLOBALS[MEDIA_DIRECTORY]#</i> és de només lectura i no pot escriure-s'hi. No podeu carregar fitxers multimèdia o generar miniatures al PhpGedView.";
+$pgv_lang["sanity_warn2"]			= "El directori <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> és de només lectura, no pot escriure-s'hi. No podeu carregar fitxers multimèdia o generar miniatures al PhpGedView.";
+$pgv_lang["sanity_warn3"]			= "Manca llibreria de gestió d'imatges GD. El PhpGedView pot continuar funcionant però algunes habilitats com generar miniatures i el diagrama de cercle no funcionaran. Llegiu <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> per més informació.";
+$pgv_lang["sanity_warn4"]			= "Manca la llibreria d'anàlisi XML. El PhpGedView pot continuar funcionant però algunes habilitats com la generació de llistats i serveis web no funcionaran. Llegiu <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> per més informació.";
+$pgv_lang["sanity_warn5"]			= "Manca la llibreria DOM XML. El PhpGedView pot continuar funcionant però algunes habilitats com Gramps Export del cistell genealògic i serveis web no funcionaran. Llegiu <a href='http://www.php.net/manual/en/ref.dom.php'>http://www.php.net/manual/en/ref.dom.php</a> per més informació.";
+$pgv_lang["sanity_warn6"]			= "Manca la llibreria de calendari. El PhpGedView pot continuar funcionant però algunes habilitats com la conversió a altres calendaris com l'Hebreu o el Francès, no. Tanmateix no és essencial per al PhpGedView. Llegiu <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> per més informació.";
+$pgv_lang["ip_address"]				= "Adreça IP";
+$pgv_lang["date_time"]				= "Dia i hora";
+$pgv_lang["log_message"]			= "Missatge de registre";
+$pgv_lang["searchtype"]				= "Tipus de cerca";
+$pgv_lang["query"]					= "Pregunta";
+$pgv_lang["user"]					= "Usuari amb accés";
+$pgv_lang["thumbnail_deleted"]		= "Eliminat correctament el fitxer miniatura";
+$pgv_lang["thumbnail_not_deleted"]	= "No s'ha pogut eliminar el fitxer miniatura";
+$pgv_lang["step2"]					= "Pas 2 de 4:";
+$pgv_lang["refresh"]				= "Refresca";
+$pgv_lang["move_file_success"]		= "S'han canviat correctament els fitxers multimèdia i les miniatures.";
+$pgv_lang["media_folder_corrupt"]	= "S'ha malmès la carpeta de multimèdia.";
+$pgv_lang["media_file_not_deleted"]	= "El fitxer multimèdia no pot eliminar-se.";
+$pgv_lang["gedcom_deleted"] 		= "S'ha eliminat correctament el fitxer GEDCOM [#GED#].";
+$pgv_lang["gedadmin"]				= "Administrador GEDCOM";
+$pgv_lang["full_name"]				= "Nom complet";
+$pgv_lang["error_header"]			= "No hi ha el fitxer GEDCOM, <b>#GEDCOM#</b> al lloc especificat.";
+$pgv_lang["confirm_delete_file"]	= "Esteu segur que cal eliminar aquest fitxer?";
+$pgv_lang["confirm_folder_delete"] 	= "Esteu segur d'eliminar aquesta carpeta?";
+$pgv_lang["confirm_remove_links"]	= "Esteu segur d'eliminar tots els enllaços a aquest objecte?";
+$pgv_lang["PRIV_PUBLIC"]			= "Mostra-ho públicament";
+$pgv_lang["PRIV_USER"]				= "Mostra-ho solament a usuaris amb accés";
+$pgv_lang["PRIV_NONE"]				= "Mostra-ho solament als administradors";
+$pgv_lang["PRIV_HIDE"]				= "Oculta-ho fins i tot als administrador";
+$pgv_lang["manage_gedcoms"] 		= "Gestió de GEDCOMs i privadesa";
+$pgv_lang["keep_media"]				= "Conserva els enllaços de multimèdia";
+$pgv_lang["files_in_backup"]		= "Fitxers inclosos en aquesta còpia de seguretat";
+$pgv_lang["created_remotelinks"]	= "S'ha creat correctament la taula <i>Enllaços remots</i>.";
+$pgv_lang["created_remotelinks_fail"] 	= "No es pot crear la taula d'<i>Enllaços remots</i>.";
+$pgv_lang["created_indis"]			= "S'ha creat correctament la taula de <i>Persones</i>.";
+$pgv_lang["created_indis_fail"] 	= "No es pot crear la taula de <i>Persones</i>.";
+$pgv_lang["created_fams"]			= "S'ha creat correctament la taula de <i>Famílies</i>.";
+$pgv_lang["created_fams_fail"]		= "No es pot creat la taula de <i>Famílies</i>.";
+$pgv_lang["created_sources"]		= "S'ha creat correctament la taula de <i>Fonts</i>.";
+$pgv_lang["created_sources_fail"]	= "No es pot crear la taula de <i>Fonts</i>.";
+$pgv_lang["created_other"]			= "S'ha creat correctament la taula <i>Altres</i>.";
+$pgv_lang["created_other_fail"] 	= "No es pot crear la taula <i>Altres</i>.";
+$pgv_lang["created_places"] 		= "S'ha creat correctament la taula <i>Llocs</i>.";
+$pgv_lang["created_places_fail"]	= "No es pot crear la taula <i>Llocs</i>.";
+$pgv_lang["created_placelinks"] 	= "S'ha creat correctament la taula <i>Enllaços de llocs</i>.";
+$pgv_lang["created_placelinks_fail"]	= "No es pot crear la taula d'<i>Enllaços de llocs</i>.";
+$pgv_lang["created_media_fail"]		= "No es pot crear la taula <i>Multimèdia</i>.";
+$pgv_lang["created_media_mapping_fail"]	= "No es pot crear la taula <i>Mapatge Multimèdia</i>.";
+$pgv_lang["no_thumb_dir"]			= " no existeix el directori de miniatures i no es pot crear.";
+$pgv_lang["folder_created"]			= "S'ha creat el Directori";
+$pgv_lang["folder_no_create"]		= "No es pot crear el directori";
+$pgv_lang["security_no_create"]		= "Avís de seguretat: No es pot crear el fitxer <b><i>index.php</i></b> a ";
+$pgv_lang["security_not_exist"]		= "Avís de seguretat: El fitxer <b><i>index.php</i></b> no existeix a  ";
+$pgv_lang["label_add_search_server"]	= "Afegeix IP";
+$pgv_lang["label_add_server"]      	= "Afegeix";
+$pgv_lang["label_ban_server"]		= "Accepta";
+$pgv_lang["label_delete"]           = "Elimina";
+$pgv_lang["progress_bars_info"]		= "Les barres d'estat de sota, informen del progrés de la importació. Si s'excedeix el temps, la importació pararà i us demanarà que polseu el botó de continuar. Si no veieu el botó de continuar, torneu a començar amb un límit de temps més petit.";
+$pgv_lang["upload_replacement"]		= "Carrega i substitueix";
+$pgv_lang["about_user"]				= "Us cal crear primerament l'usuari administrador principal. Aquest usuari tindrà privilegis per modificar els fitxers de configuració, veure dades privades i crear altres usuaris.";
+$pgv_lang["access"]					= "Accés";
+$pgv_lang["add_gedcom"] 			= "Afegeix un GEDCOM";
+$pgv_lang["add_new_gedcom"] 		= "Crea un nou GEDCOM";
+$pgv_lang["add_new_language"]		= "Addició de fitxers i paràmetres d'un nou idioma";
+$pgv_lang["add_user"]				= "Afegeix un nou usuari";
+$pgv_lang["admin_gedcom"]			= "Administra el GEDCOM";
+$pgv_lang["admin_gedcoms"]			= "Polseu aquí per administrar els GEDCOM";
+$pgv_lang["admin_geds"]				= "Dades i administració GEDCOM";
+$pgv_lang["admin_info"]				= "Informació";
+$pgv_lang["admin_site"]				= "Administració del lloc";
+$pgv_lang["admin_user_warnings"]	= "Un o més comptes d'usuari tenen avisos";
+$pgv_lang["admin_verification_waiting"] 	= "Comptes d'usuari esperant la verificació de l'administrador";
+$pgv_lang["administration"] 		= "Administració";
+$pgv_lang["ALLOW_CHANGE_GEDCOM"]	= "Permet passar d'un GEDCOM a un altre";
+$pgv_lang["ALLOW_REMEMBER_ME"]		= "Mostra l'opció <b>Memoritzar-vos des d'aquest ordinador</b> a la pàgina d'accés";
+$pgv_lang["ALLOW_USER_THEMES"]		= "Permet als usuaris escollir la presentació preferida";
+$pgv_lang["ansi_encoding_detected"] = "S'ha detectat un fitxer codificat en ANSI. El PhpGedView treballa millor amb fitxers codificats en UTF-8.";
+$pgv_lang["ansi_to_utf8"]			= "Convertir aquest GEDCOM codificat en ANSI a UTF-8?";
+$pgv_lang["apply_privacy"]			= "Aplica paràmetres de privadesa?";
+$pgv_lang["back_useradmin"]			= "Torna a l'Administració d'usuaris";
+$pgv_lang["bytes_read"] 			= "Bytes llegits:";
+$pgv_lang["calc_marr_names"]		= "Calculant Noms de Casada";
+$pgv_lang["can_admin"]				= "L'usuari pot administrar";
+$pgv_lang["can_edit"]				= "Nivell d'accés";
+$pgv_lang["change_id"]				= "Canvia l'ID de la persona per:";
+$pgv_lang["choose_priv"]			= "Escolliu el nivells de privadesa:";
+$pgv_lang["cleanup_places"] 		= "Neteja de llocs";
+$pgv_lang["cleanup_users"]			= "Neteja d'usuaris";
+$pgv_lang["click_here_to_continue"]	= "Polseu aquí per continuar.";
+$pgv_lang["click_here_to_go_to_pedigree_tree"]	= "Polseu aquí per anar a l'arbre genealògic.";
+$pgv_lang["comment"]				= "Comentaris d'administració sobre l'usuari";
+$pgv_lang["comment_exp"]			= "Avisos d'administració en data";
+$pgv_lang["config_help"]			= "Ajuda de configuració";
+$pgv_lang["config_still_writable"]	= "El vostre fitxer <i>config.php</i> és encara editable. Per seguretat cal que li canvieu la propietat a sols lectura quan hagueu acabat la configuració del lloc.";
+$pgv_lang["configuration"]			= "Configuració";
+$pgv_lang["configure"]				= "Configura el PhpGedView";
+$pgv_lang["configure_head"]			= "Configuració del PhpGedView";
+$pgv_lang["confirm_gedcom_delete"]	= "Esteu segur que cal eliminar aquest GEDCOM";
+$pgv_lang["confirm_user_delete"]	= "Esteu segur que cal eliminar l'usuari";
+$pgv_lang["create_user"]			= "Crea usuari";
+$pgv_lang["current_users"]			= "Llista d'usuaris";
+$pgv_lang["daily"]					= "Diàriament";
+$pgv_lang["dataset_exists"] 		= "Un fitxer GEDCOM amb idèntic nom ja ha sigut importat a la base de dades.";
+$pgv_lang["unsync_warning"] 					= "Aquest fitxer GEDCOM <em>no</em> s'ha sincronitzat amb la base de dades. Pot ser que no contingui la última versió de les vostres dades. Per a reimportar (millor de la base de dades que del fitxer) us cal descarregar-la i recarregar-la.";
+$pgv_lang["date_registered"]		= "Registrat el dia";
+$pgv_lang["day_before_month"]		= "Dia abans del mes (DD MM AAAA)";
+$pgv_lang["DEFAULT_GEDCOM"]			= "GEDCOM per defecte";
+$pgv_lang["default_user"]			= "Crea l'usuari administrador per defecte.";
+$pgv_lang["del_gedrights"]			= "GEDCOM inactiu, treu les referències d'usuari.";
+$pgv_lang["del_proceed"]			= "Segueix";
+$pgv_lang["del_unvera"]				= "Usuari no verificat per l'administrador.";
+$pgv_lang["del_unveru"]				= "Usuari no verificat passats 7 dies.";
+$pgv_lang["do_not_change"]			= "No canviïs";
+$pgv_lang["download_gedcom"]		= "Descarrega el GEDCOM";
+$pgv_lang["download_here"]			= "Polseu aquí per descarregar el fitxer.";
+$pgv_lang["download_note"]			= "NOTA: Els GEDCOMs voluminosos poden requerir força temps de procés abans de descarregar-los. Si s'esgota el temps previst a PHP abans de que la descàrrega sigui total, us pot quedar un fitxer incomplet.<br /><br />Per estar segur de que el fitxer GEDCOM s'ha descarregat correctament, comproveu que la darrera línea sigui <b>0&nbsp;TRLR</b>. Els fitxers GEDCOM son de text; podeu fer servir un editor apropiat però assegureu-vos de <u>no</u> desar el fitxer GEDCOM descarregat, sense revisar-lo abans.<br /><br />En general cal el mateix temps per descarregar que per importar un fitxer GEDCOM.";
+$pgv_lang["editaccount"]			= "Permet a aquest usuari editar la informació del seu compte";
+$pgv_lang["empty_dataset"]			= "Voleu eliminar les dades antigues substituint-les per aquestes noves?";
+$pgv_lang["empty_lines_detected"]	= "S'han detectat línees buides al vostre fitxer GEDCOM. Netejant-les s'eliminaran.";
+$pgv_lang["enable_disable_lang"]	= "Configuració d'idiomes suportats";
+$pgv_lang["error_ban_server"]       = "Adreça IP incorrecta.";
+$pgv_lang["error_delete_person"]   	= "Us cal seleccionar la persona de la que vulgueu eliminar l'enllaç remot.";
+$pgv_lang["error_header_write"] 	= "El fitxer GEDCOM, <b>#GEDCOM#</b>, és de només lectura, no pot escriure-s'hi. Reviseu-ne les propietat i drets d'accés.";
+$pgv_lang["error_siteauth_failed"]	= "Falla la verificació del lloc remot";
+$pgv_lang["error_url_blank"]		= "No deixeu el títol del lloc remot o l'URL en blanc";
+$pgv_lang["error_view_info"]       	= "Us cal seleccionar la persona quina informació voleu veure.";
+$pgv_lang["example_date"]			= "Exemple de dada incorrecta del vostre GEDCOM:";
+$pgv_lang["example_place"]			= "Exemple de lloc incorrecte del vostre GEDCOM:";
+$pgv_lang["fbsql"]					= "FrontBase";
+$pgv_lang["found_record"]			= "Registre localitzat";
+$pgv_lang["ged_download"]			= "Descarrega";
+$pgv_lang["ged_import"] 			= "Importa";
+$pgv_lang["ged_check"] 				= "Comprova";
+$pgv_lang["gedcom_adm_head"]		= "Administració GEDCOM";
+$pgv_lang["gedcom_config_write_error"]	= "E R R O R !!!<br />No pot escriure's al fitxer <i>#GLOBALS[whichFile]#</i>. Reviseu-ne les propietats.";
+$pgv_lang["gedcom_downloadable"] 	= "Aquest fitxer GEDCOM pot descarregar-se des d'Internet!<br />Llegiu la secció de SEGURETAT del fitxer <a href=\"readme.txt\"><b>readme.txt</b></a> per solucionar-ho";
+$pgv_lang["gedcom_file"]			= "Fitxer GEDCOM:";
+$pgv_lang["gedcom_not_imported"]	= "Aquest GEDCOM encara no s'ha importat.";
+$pgv_lang["ibase"]					= "InterBase";
+$pgv_lang["ifx"]					= "Informix";
+$pgv_lang["img_admin_settings"] 	= "Editeu la configuració de manipulació d'imatges";
+$pgv_lang["autoContinue"]						= "Polsa automàticament el botó «Continuar»";
+$pgv_lang["import_complete"]		= "Importació completada";
+$pgv_lang["import_marr_names"]		= "Importa noms de casada";
+$pgv_lang["import_options"]			= "Opcions d'importació";
+$pgv_lang["import_progress"]		= "Progrés de la importació...";
+$pgv_lang["import_statistics"]		= "Estadístiques d'importació";
+$pgv_lang["import_time_exceeded"]	= "El temps d'execució s'ha superat. Polseu a sota al botó de continuar per continuar important el fitxer GEDCOM.";
+$pgv_lang["inc_languages"]			= " Idiomes";
+$pgv_lang["INDEX_DIRECTORY"]		= "Directori de fitxers índex";
+$pgv_lang["invalid_dates"]			= "Detectats formats de data incorrectes, netejant-los seran canviats al format de DD MMM AAAA (p.ex. 1 GEN 2004).";
+$pgv_lang["BOM_detected"] 						= "S'ha detectat una Marca d'Ordre de Bytes (en anglès BOM) al començament del fitxer. Netejant-lo aquest caràcter especial s'eliminarà";
+$pgv_lang["invalid_header"] 		= "Detectades línees abans de la capçalera del GEDCOM <b>0&nbsp;HEAD</b>. Netejant-les s'eliminaran.";
+$pgv_lang["label_add_server"]  		= "Afegeix";
+$pgv_lang["label_add_search_server"]	= "Afegeix IP";
+$pgv_lang["label_added_servers"]	= "Servidors remots habilitats";
+$pgv_lang["label_ban_server"]		= "D'acord";
+$pgv_lang["label_banned_servers"]  	= "Rebutgeu llocs per llur IP";
+$pgv_lang["label_families"]         = "Famílies";
+$pgv_lang["label_gedcom_id2"]       = "ID del GEDCOM:";
+$pgv_lang["label_individuals"]      = "Persones";
+$pgv_lang["label_manual_search_engines"]	= "Entreu manualment Motors de Recerca pel llur IP";
+$pgv_lang["label_new_server"]     	= "Habiliteu un nou servidor";
+$pgv_lang["label_password_id"]		= "Contrasenya";
+$pgv_lang["label_remove_ip"]		= "Adreça IP a rebutjar (p. ex.: 198.128.*.*): ";
+$pgv_lang["label_remove_search"]	= "Adreça IP identificada com a Motor de Recerca: ";
+$pgv_lang["label_server_info"]     	= "Totes les persones enllaçades remotament mitjançant el lloc:";
+$pgv_lang["label_server_url"]       = "URL del lloc/IP";
+$pgv_lang["label_username_id"]		= "Nom d'usuari";
+$pgv_lang["label_view_local"]       = "Mostra la informació local de la persona";
+$pgv_lang["label_view_remote"]     	= "Mostrar la informació remota de la persona";
+$pgv_lang["LANG_SELECTION"] 		= "Idiomes suportats";
+$pgv_lang["LANGUAGE_DEFAULT"]		= "No heu configurat els idiomes que el vostre lloc podrà suportar.<br />El PhpGedView farà servir els seus propis per defecte.";
+$pgv_lang["last_login"]				= "Darrer accés";
+$pgv_lang["lasttab"]				= "Mateix que el darrer cop";
+$pgv_lang["leave_blank"]			= "Deixeu la contrasenya en blanc si voleu conservar l'actual.";
+$pgv_lang["link_manage_servers"]   	= "Gestió de llocs remots";
+$pgv_lang["logfile_content"]		= "Contingut del fitxer de registre";
+$pgv_lang["macfile_detected"]		= "S'ha detectat un fitxer tipus Macintosh. Netejant-lo es convertirà a format DOS.";
+$pgv_lang["mailto"]					= "Enllaç per correu electrònic";
+$pgv_lang["merge_records"]			= "Refosa de registres";
+$pgv_lang["message_to_all"]			= "Envia missatge a tot els usuaris";
+$pgv_lang["messaging"]				= "Missatgeria interna PhpGedView";
+$pgv_lang["messaging2"]				= "Missatgeria interna amb correu electrònic";
+$pgv_lang["messaging3"]				= "El PhpGedView envia correus electrònics sense emmagatzemar-los";
+$pgv_lang["month_before_day"]		= "Mes abans del dia (MM DD AAAA)";
+$pgv_lang["monthly"]				= "Mensualment";
+$pgv_lang["msql"]					= "Mini SQL";
+$pgv_lang["mssql"]					= "Servidor SQL Microsoft";
+$pgv_lang["mysql"]					= "MySQL";
+$pgv_lang["mysqli"]					= "MySQL 4.1+ i PHP 5";
+$pgv_lang["never"]					= "Mai";
+$pgv_lang["no_logs"]				= "Desactiva el registre";
+$pgv_lang["no_messaging"]			= "Sense forma de contacte";
+$pgv_lang["oci8"]					= "Oracle 7+";
+$pgv_lang["page_views"]				= "&nbsp;&nbsp;mostra pàgina a&nbsp;&nbsp;";
+$pgv_lang["performing_validation"]	= "Executant la validació del GEDCOM...";
+$pgv_lang["pgsql"]					= "PostgreSQL";
+$pgv_lang["pgv_config_write_error"] = "Error!!! No pot escriure's al fitxer de configuració del PhpGedView. Reviseu les propietats dels fitxer i del directori i torneu-hi.";
+$pgv_lang["PGV_MEMORY_LIMIT"]		= "Llindar de memòria";
+$pgv_lang["pgv_registry"]			= "Altres llocs amb PhpGedView";
+$pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Camí per desar les Sessions";
+$pgv_lang["PGV_SESSION_TIME"]		= "Temps de sessió excedit";
+$pgv_lang["PGV_SIMPLE_MAIL"] 		= "Fes servir capçaleres simples de correu pels correus electrònics externs";
+$pgv_lang["PGV_STORE_MESSAGES"]		= "Permet desar els missatges en línea";
+$pgv_lang["phpinfo"]				= "Informació PHP";
+$pgv_lang["place_cleanup_detected"] = "Detectada codificació incorrecta de llocs. Cal arranjar-ho.";
+$pgv_lang["please_be_patient"]		= "Espereu-vos si us plau";
+$pgv_lang["privileges"]				= "Privilegis";
+$pgv_lang["reading_file"]			= "Llegint el fitxer GEDCOM";
+$pgv_lang["readme_documentation"]	= "Documentació 'Llegiu-me'(Readme)";
+$pgv_lang["remove_ip"] 				= "Elimina l'IP";
+$pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"] 	= "Cal un administrador per autoritzar el registre d'un nou usuari";
+$pgv_lang["review_readme"]			= "Cal que repasseu el fitxer <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> abans de continuar amb la configuració del PhpGedView.<br /><br />";
+$pgv_lang["rootid"] 				= "Persona arrel a l'arbre genealògic";
+$pgv_lang["seconds"]				= "&nbsp;&nbsp;segons";
+$pgv_lang["select_an_option"]		= "Seleccioneu una de les opcions següents:";
+$pgv_lang["SERVER_URL"]				= "URL PhpGedView";
+$pgv_lang["show_phpinfo"]			= "Mostra la pàgina d'informació PHP";
+$pgv_lang["siteadmin"]				= "Administradors del lloc";
+$pgv_lang["skip_cleanup"]			= "Salta't la neteja";
+$pgv_lang["sqlite"]					= "SQLite";
+$pgv_lang["sybase"]					= "Sybase";
+$pgv_lang["sync_gedcom"]			= "Sincronitza les dades d'usuari amb les del GEDCOM";
+$pgv_lang["system_time"]			= "Hora actual del servidor:";
+$pgv_lang["user_time"]				= "Hora actual de l'usuari:";
+$pgv_lang["TBLPREFIX"]				= "Taula de prefixos de la Base de Dades";
+$pgv_lang["themecustomization"]		= "Personalització de la presentació";
+$pgv_lang["time_limit"]				= "Temps límit:";
+$pgv_lang["title_manage_servers"]   = "Gestió de llocs remots";
+$pgv_lang["title_view_conns"]       = "Mostra connexions";
+$pgv_lang["translator_tools"]		= "Eines de traducció";
+$pgv_lang["update_myaccount"]		= "Modifica el meu Compte";
+$pgv_lang["update_user"]			= "Modifica el compte de l'usuari";
+$pgv_lang["upload_gedcom"]			= "Carrega un GEDCOM";
+$pgv_lang["USE_REGISTRATION_MODULE"]	= "Permet als visitants demanar enregistrar-se";
+$pgv_lang["user_auto_accept"]		= "Accepta automàticament els canvis fets per aquest usuari";
+$pgv_lang["user_contact_method"]	= "Mètode preferit de contacte";
+$pgv_lang["user_create_error"]		= "Impossible afegir l'usuari. Torneu-ho a provar.";
+$pgv_lang["user_created"]			= "S'ha creat correctament l'usuari.";
+$pgv_lang["user_default_tab"]		= "Format per defecte de la pàgina d'informació de persones";
+$pgv_lang["user_path_length"]		= "Màxima llargària de privadesa de parentiu";
+$pgv_lang["user_relationship_priv"]	= "Accés limitat a parents";
+$pgv_lang["users_admin"]			= "Administradors del lloc";
+$pgv_lang["users_gedadmin"]			= "Administradors del GEDCOM";
+$pgv_lang["users_total"]			= "Nombre total d'usuaris";
+$pgv_lang["users_unver"]			= "No verificats per l'usuari";
+$pgv_lang["users_unver_admin"]		= "No verificats per l'administrador";
+$pgv_lang["usr_deleted"]			= "Usuaris eliminats: ";
+$pgv_lang["usr_idle"]				= "Nombre de mesos d'ençà el darrer accés per a que un compte d'usuari es consideri inactiu: ";
+$pgv_lang["usr_idle_toolong"]		= "El compte de l'usuari ha restat inactiu molt de temps: ";
+$pgv_lang["usr_no_cleanup"]			= "No hi ha res a netejar";
+$pgv_lang["usr_unset_gedcomid"]		= "Desactiva l'ID GEDCOM per ";
+$pgv_lang["usr_unset_rights"]		= "Desactiva els drets sobre el GEDCOM per a ";
+$pgv_lang["usr_unset_rootid"]		= "Desactiva l'ID arrel per a ";
+$pgv_lang["valid_gedcom"]			= "S'ha detectat un GEDCOM vàlid. No cal netejar-lo.";
+$pgv_lang["validate_gedcom"]		= "Validant el GEDCOM";
+$pgv_lang["verified"]				= "Usuari autoconfirmat";
+$pgv_lang["verified_by_admin"]		= "Usuari autoritzat per l'administrador";
+$pgv_lang["verify_gedcom"]			= "Verifica el GEDCOM";
+$pgv_lang["verify_upload_instructions"]	= "S'ha trobat un fitxer GEDCOM amb el mateix nom. Si trieu continuar, l'antic serà substituït pel que haureu carregat i el procés d'importació s'iniciarà. Si escolliu cancel·lar, es mantindrà inalterat l'antic GEDCOM.";
+$pgv_lang["view_changelog"]			= "Veure el fitxer changelog.txt";
+$pgv_lang["view_logs"]				= "Mostra el fitxer de registre";
+$pgv_lang["view_readme"]			= "Veure el fitxer readme.txt";
+$pgv_lang["visibleonline"]			= "Visible a altres usuaris quan accediu";
+$pgv_lang["visitor"]				= "Visitant";
+$pgv_lang["warn_users"]				= "Usuaris amb avisos";
+$pgv_lang["weekly"]					= "Setmanalment";
+$pgv_lang["welcome_new"]			= "Benvingut al vostre lloc web PhpGedView.";
+$pgv_lang["yearly"]					= "Anualment";
+$pgv_lang["admin_OK_subject"]					= "Autorització de registre a #SERVER_NAME#|";
+$pgv_lang["admin_OK_message"]					= "L'Administrador del lloc PhpGedView #SERVER_NAME# ha autoritzat la vostra comanda de disposar-hi de compte. Ara podeu accedir-hi pel següent enllaç:\r\n\r\n#SERVER_NAME#\r\n";
+
+// Text for the Gedcom Checker
+$pgv_lang["gedcheck"]     			= "Comprovador Gedcom";
+$pgv_lang["gedcheck_text"]			= "Aquest mòdul contrasta el format del fitxer GEDCOM amb les <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">Especificacions GEDCOM 5.5.1</a>. També comprova errors corrents de les dades. Fixeu-vos que hi ha força versions, extensions i variacions de les especificacions, però el que us ha d'importar son les senyalades com a  \"Crític\". L'explicació de tots el errors línea a línea podeu trobar-la a les especificacions. Mireu-ho abans de demanar ajuda.";
+$pgv_lang["level"]        			= "Nivell";
+$pgv_lang["critical"]     			= "Crític";
+$pgv_lang["error"]        			= "Error";
+$pgv_lang["warning"]      			= "Avís";
+$pgv_lang["info"]         			= "Informació";
+$pgv_lang["open_link"]    			= "Obrir enllaços des de";
+$pgv_lang["same_win"]     			= "Mateixa pestanya/finestra";
+$pgv_lang["new_win"]      			= "Nova pestanya/finestra";
+$pgv_lang["context_lines"]			= "Línees contextuals al GEDCOM";
+$pgv_lang["all_rec"]      			= "Tots els registres";
+$pgv_lang["err_rec"]      			= "Registres amb errors";
+$pgv_lang["missing"]      			= "perdut";
+$pgv_lang["multiple"]     			= "múltiple";
+$pgv_lang["invalid"]      			= "incorrecte";
+$pgv_lang["too_many"]     			= "massa";
+$pgv_lang["too_few"]      			= "pocs";
+$pgv_lang["no_link"]      			= "no es pot retroenllaçar";
+$pgv_lang["data"]         			= "dades";
+$pgv_lang["see"]          			= "revisa";
+$pgv_lang["noref"]        			= "res fa referència a aquest registre";
+$pgv_lang["tag"]          			= "etiqueta";
+$pgv_lang["spacing"]      			= "espaiament";
+$pgv_lang["ADVANCED_NAME_FACTS"] = "Noms d'esdeveniments avançats";
+$pgv_lang["ADVANCED_PLAC_FACTS"] = "Esdeveniments de noms de lloc avançats";
+$pgv_lang["SURNAME_TRADITION"] = "Tradició dels cognoms";
+$pgv_lang["spanish"]           = "Español";
+// AQUÍ HI HA UN ERROR AMB EL NOM D'UNA VARIABLE DUPLICAT. PER AIXÒ LA TRADUCCIÓ NO ÉS CORRECTA.
+$pgv_lang["portuguese"]        = "Portuguesa";
+$pgv_lang["icelandic"]         = "Islandesa";
+$pgv_lang["paternal"]          = "Paterna";
+$pgv_lang["associated_files"]		= "Fitxers associats";
+$pgv_lang["remove_all_files"]		= "Elimina els fitxers no essencials";
+$pgv_lang["warn_file_delete"]		= "Aquest fitxer conté important informació com paràmetres d'idioma o canvis de dades pendents. Esteu segur que cal eliminar-lo?";
+$pgv_lang["deleted_files"]          = "Fitxers eliminats:";
+$pgv_lang["index_dir_cleanup_inst"]	= "Per eliminar un fitxer o sotsdirectori des del directori Índex, arrossegueu-lo a la paperera o seleccioneu-lo a la seva casella. Per procedir a l'eliminació efectiva polseu el botó d'eliminar.<br /><br />Els fitxer marcats amb <img src=\"./images/RESN_confidential.gif\" /> son necessaris per una correcta operatòria  i no poden eliminar-se.<br />El marcats amb <img src=\"./images/RESN_locked.gif\" /> contenen paràmetres importants o canvis pendents i solament podeu eliminar-los si esteu ben segur del que esteu fent.<br /><br />";
+$pgv_lang["index_dir_cleanup"]		= "Neteja del directori Índex";
+$pgv_lang["clear_cache_succes"]		= "S'han eliminat els fitxers cau.";
+$pgv_lang["clear_cache"]			= "Neteja els fitxers cau";
+?>
