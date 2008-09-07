@@ -1667,22 +1667,29 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
  * @return int negative numbers sort $a first, positive sort $b first
  */
 function itemsort($a, $b) {
-	if (isset($a["name"]))
+	if (isset($a["name"])) {
 		$aname = sortable_name_from_name($a["name"]);
-	elseif (is_array($a))
-		$aname = sortable_name_from_name(array_shift($a));
-	else
+	} elseif (isset($a["names"])) {
+		$aname = sortable_name_from_name($a["names"][0][0]);
+	} elseif (is_array($a)) {
+		$aname = sortable_name_from_name(reset($a));
+	} else {
 		$aname=$a;
-	if (isset($b["name"]))
+	}
+
+	if (isset($b["name"])) {
 		$bname = sortable_name_from_name($b["name"]);
-	elseif (is_array($b))
-		$bname = sortable_name_from_name(array_shift($b));
-	else
+	} elseif (isset($b["names"])) {
+		$bname = sortable_name_from_name($b["names"][0][0]);
+	} elseif (is_array($b)) {
+		$bname = sortable_name_from_name(reset($b));
+	} else {
 		$bname=$b;
+	}
 
 	$aname = strip_prefix($aname);
 	$bname = strip_prefix($bname);
-	$result = compareStrings($aname, $bname, true);		// Case-insensitive compare
+	$result = compareStrings($aname, $bname, true); // Case-insensitive compare
 	return $result;
 }
 
