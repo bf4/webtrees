@@ -1039,7 +1039,7 @@ class PGVServiceLogic extends GenealogyService
 	***/
 	function postGetAncestry($SID, $rootID, $generations, $returnGedcom)
 	{
-		global $list, $indilist, $genlist;
+		global $list, $indilist;
 
 		$list = array();
 		$list[$rootID] = $indilist[$rootID];
@@ -1080,7 +1080,7 @@ class PGVServiceLogic extends GenealogyService
 	*/
 	function postGetDescendants($SID, $rootID, $generations, $returnGedcom)
 	{
-		global $list, $indilist, $genlist;
+		global $list;
 
 		$list = array();
 

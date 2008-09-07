@@ -879,7 +879,7 @@ function contact_menus() {
 
 //-- print user favorites
 function print_favorite_selector($option=0) {
-	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $indilist, $famlist, $sourcelist, $medialist, $QUERY_STRING, $famid, $sid;
+	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $QUERY_STRING, $famid, $sid;
 	global $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 	$username = PGV_USER_NAME;
 	if (!empty($username)) $userfavs = getUserFavorites($username);
