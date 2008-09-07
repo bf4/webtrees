@@ -962,7 +962,7 @@ function filterMedia($media, $filter, $acceptExt) {
  * @return	array $myindilist array with all individuals that matched the query
  */
 function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
-	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $GEDCOMS;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $REGEXP_DB, $GEDCOMS;
 	$myindilist = array ();
 	if ($REGEXP_DB)
 		$term = "REGEXP";

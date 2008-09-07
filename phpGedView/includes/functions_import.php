@@ -77,7 +77,7 @@ $TRANSLATE_TAGS=array(
  * @param boolean $update whether or not this is an updated record that has been accepted
  */
 function import_record($indirec, $update) {
-	global $DBCONN, $gid, $type, $indilist, $famlist, $sourcelist, $otherlist, $TOTAL_QUERIES, $prepared_statement;
+	global $DBCONN, $gid, $type, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
 	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS, $GENERATE_UIDS;
@@ -324,7 +324,6 @@ function import_record($indirec, $update) {
 		$fam["CHIL"] = $chil;
 		$fam["gedcom"] = $indirec;
 		$fam["gedfile"] = $GEDCOMS[$FILE]["id"];
-		//$famlist[$gid] = $fam;
 		$sql = "INSERT INTO " . $TBLPREFIX . "families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($fam["gedfile"]) . "','" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
 		$res = dbquery($sql);
 		break;
@@ -578,7 +577,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
  */
 function update_media($gid, $indirec, $update = false) {
 	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $media_count, $found_ids;
-	global $zero_level_media, $fpnewged, $objelist, $MAX_IDS, $keepmedia;
+	global $zero_level_media, $fpnewged, $MAX_IDS, $keepmedia;
 
 	if (!isset ($media_count))
 		$media_count = 0;

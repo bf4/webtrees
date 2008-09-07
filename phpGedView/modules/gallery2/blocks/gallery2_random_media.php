@@ -42,7 +42,7 @@ $PGV_BLOCKS['print_g2_random_media']['config']		= array('cache'=>0);
 //-- function to display a random picture from the gedcom
 function print_g2_random_media($block = true, $config='', $side, $index)
 {
-	global $pgv_lang, $GEDCOM, $medialist, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
+	global $pgv_lang, $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
 
 	mod_gallery2_load(getUserName());
 

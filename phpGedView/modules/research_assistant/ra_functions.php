@@ -1408,8 +1408,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function getSourceTasks($sId) {
 		global $pgv_lang, $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
-		global $indilist;
-		global $factarray;
         	
 		$sql = "SELECT * FROM ".$TBLPREFIX."tasks, ".$TBLPREFIX."tasksource, ".$TBLPREFIX."sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id='".$DBCONN->escapeSimple($sId)."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
 		$res = dbquery($sql);
@@ -1493,7 +1491,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function tab(&$person) {
 		// Start our engines.
 		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
-		global $indilist;
 		global $factarray;
 		
 		if (!is_object($person)) return "";
