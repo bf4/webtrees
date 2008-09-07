@@ -54,8 +54,11 @@ $pgv_lang["bu_regex_bad"]="The regex appears to contain an error.  It can't be u
 $pgv_lang["bu_case"]="Case insensitive";
 $pgv_lang["bu_case_desc"]="Tick this box to match both upper and lower case letters.";
 
-$pgv_lang["bu_birth_death"]="Add missing birth and death records";
-$pgv_lang["bu_birth_death_desc"]="You can improve the performance of PGV by ensuring that all individuals have a &laquo;start of life&raquo; event and (where appropriate) an &laquo;end of life&raquo; event.";
+$pgv_lang["bu_birth_y"]="Add missing birth records";
+$pgv_lang["bu_birth_y_desc"]="You can improve the performance of PGV by ensuring that all individuals have a &laquo;start of life&raquo; event.";
+
+$pgv_lang["bu_death_y"]="Add missing death records";
+$pgv_lang["bu_death_y_desc"]="You can improve the performance of PGV by ensuring that all individuals have (where appropriate) an &laquo;end of life&raquo; event.";
 
 $pgv_lang["bu_married_names"]="Add missing married names";
 $pgv_lang["bu_married_names_desc"]="You can make it easier to search for married women by recording their married name.<br/>However not all women take their husband's surname, so beware of introducing incorrect data into your GEDCOM.";

@@ -26,16 +26,10 @@
 
 class plugin extends base_plugin {
 	static function doesRecordNeedUpdate($xref, $gedrec) {
-		return !preg_match('/^1\s+'.PGV_EVENTS_BIRT.'\b/m', $gedrec) || !preg_match('/^1\s+'.PGV_EVENTS_DEAT.'\b/m', $gedrec) && is_dead($gedrec);
+		return !preg_match('/^1\s+'.PGV_EVENTS_BIRT.'\b/m', $gedrec);
 	}
 
 	static function updateRecord($xref, $gedrec) {
-		if (!preg_match('/^1\s+'.PGV_EVENTS_BIRT.'\b/m', $gedrec)) {
-			$gedrec.="\n1 BIRT Y";
-		}
-		if (!preg_match('/^1\s+'.PGV_EVENTS_DEAT.'\b/m', $gedrec) && is_dead($gedrec)) {
-			$gedrec.="\n1 DEAT Y";
-		}
-		return $gedrec;
+		return $gedrec."\n1 BIRT Y";
 	}
 }
