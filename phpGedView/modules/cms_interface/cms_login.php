@@ -63,6 +63,7 @@ $CMS_VISIBLE_ONLINE        ='N';
 $CMS_USER_EDIT_ACCOUNT     ='N';
 $CMS_RELATIONSHIP_PRIVACY  ='N';
 $CMS_MAX_RELATION_PATH     =2;
+$CMS_LOGIN_URL             ='../../index.php?ctype=gedcom"';
 // Variables to be supplied by the caller via GET/POST/COOKIE
 $cms_firstname=array_key_exists('cms_firstname', $_REQUEST) ? $_REQUEST['cms_firstname'] : 'firstname';
 $cms_lastname =array_key_exists('cms_lastname',  $_REQUEST) ? $_REQUEST['cms_lastname' ] : 'lastname';
@@ -101,6 +102,7 @@ if ($cms_username && $cms_password) {
 				set_user_setting($user_id, 'verified',             $CMS_USER_VERIFIED);
 				set_user_setting($user_id, 'verified_by_admin',    $CMS_USER_VERIFIED_BY_ADMIN);
 				set_user_setting($user_id, 'sync_gedcom',          $CMS_SYNC_GEDCOM);
+				set_user_setting($user_id, 'reg_timestamp',        time()); 
 				foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 					set_user_gedcom_setting($user_id, $ged_id, 'canedit', $CMS_USER_ACCESS_LEVEL);
 				}
