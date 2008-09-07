@@ -142,7 +142,7 @@ class batch_update {
 					$newrecord=$this->PLUGIN->updateRecord($this->xref, $record);
 					if ($newrecord!=$record) {
 						if ($newrecord) {
-							replace_gedrec($this->xref, $newrecord, $this->PLUGIN->chan=='yes');
+							replace_gedrec($this->xref, $newrecord, $this->PLUGIN->chan);
 						} else {
 							delete_gedrec($this->xref);
 						}
@@ -157,7 +157,7 @@ class batch_update {
 						$newrecord=$this->PLUGIN->updateRecord($xref, $record);
 						if ($newrecord!=$record) {
 							if ($newrecord) {
-								replace_gedrec($xref, $newrecord, $this->PLUGIN->chan=='yes');
+								replace_gedrec($xref, $newrecord, $this->PLUGIN->chan);
 							} else {
 								delete_gedrec($xref);
 							}
@@ -329,7 +329,7 @@ class batch_update {
 //  string updateRecord($xref, $gedrec)
 //
 class base_plugin {
-	var $chan='yes'; // User option; update change record
+	var $chan=false; // User option; update change record
 	
 	// Default is to operate on INDI records
 	function getRecordTypesToUpdate() {
@@ -338,7 +338,7 @@ class base_plugin {
 
 	// Default option is just the "don't update CHAN record"
 	function getOptions() {
-		$this->update_chan=safe_GET_bool('chan');
+		$this->chan=safe_GET_bool('chan');
 	}
 
 	// Default option is just the "don't update CHAN record"
@@ -347,8 +347,8 @@ class base_plugin {
 		return
 			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_update_chan'].':</td>'.
 			'<td class="optionbox wrap"><select name="chan" onchange="this.form.submit();">'.
-			'<option value="no"' .($this->update_chan ? ' selected="selected"' : '').'>'.$pgv_lang['no'] .'</option>'.
-			'<option value="yes"'.($this->update_chan ? ' selected="selected"' : '').'>'.$pgv_lang['yes'].'</option>'.
+			'<option value="no"' .($this->chan ? '' : ' selected="selected"').'>'.$pgv_lang['no'] .'</option>'.
+			'<option value="yes"'.($this->chan ? ' selected="selected"' : '').'>'.$pgv_lang['yes'].'</option>'.
 			'</select></td></tr>';
 	}
 
