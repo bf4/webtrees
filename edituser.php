@@ -27,7 +27,8 @@
  */
 
 require 'config.php';
-require_once 'includes/functions_print_lists.php';
+require 'includes/functions_print_lists.php';
+include 'includes/functions_edit.php';
 
 // cannot edit account using a cookie login - login with password first
 if (!PGV_USER_ID || $_SESSION['cookie_login']) {
@@ -113,23 +114,17 @@ if ($form_action=='update') {
 					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 						$myid=get_user_gedcom_setting(PGV_USER_ID, $ged_id, 'gedcomid');
 						if ($myid) {
-							include_once 'includes/functions_edit.php';
-							$indirec=find_updated_record($myid, $ged_name);
-							if (!$indirec) {
-								$indirec=find_person_record($myid, $ged_name);
-							}
-							if ($indirec) {
-								$OLDGEDCOM=$GEDCOM;
-								$GEDCOM=$ged_name;
-								if (preg_match('/\d _?EMAIL/', $indirec)) {
-									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", '$1 '.$form_email, $indirec);
-									replace_gedrec($myid, $indirec);
+							$OLDGEDCOM=$GEDCOM;
+							$GEDCOM=$ged_name;
+							$person=Person::getInstance($myid);
+							if ($person) {
+								if (preg_match('/\d _?EMAIL/', $person->getGedcomRecord())) {
+									replace_gedrec($myid, preg_replace("/(\d _?EMAIL)[^\r\n]*/", '$1 '.$form_email, $person->getGedcomRecord()));
 								} else {
-									$indirec.="\r\n1 EMAIL ".$form_email;
-									replace_gedrec($myid, $indirec);
+									replace_gedrec($myid, $person->getGedcomRecord()."\r\n1 EMAIL ".$form_email);
 								}
-								$GEDCOM=$OLDGEDCOM;
 							}
+							$GEDCOM=$OLDGEDCOM;
 						}
 					}
 				}
