@@ -155,7 +155,9 @@ class Person extends GedcomRecord {
 	 * @return boolean	true if dead, false if alive
 	 */
 	function isDead() {
-		if ($this->isdead==-1) $this->isdead = is_dead_id($this->getXref());
+		if (is_null($this->isdead)) {
+			$this->isdead=is_dead($this->gedrec);
+		}
 		return $this->isdead;
 	}
 
