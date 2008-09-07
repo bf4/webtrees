@@ -43,7 +43,7 @@ class research_assistant_ModuleMenu {
 
 		if (!file_exists('modules/research_assistant/languages/lang.en.php')) return null;
 		
-		loadLangFile("ra_lang");
+		loadLangFile("research_assistant:lang");
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 

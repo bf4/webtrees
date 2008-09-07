@@ -26,7 +26,7 @@
  */
 require "config.php";
 
-loadLangFile("pgv_confighelp, pgv_help, gm_help");
+loadLangFile("pgv_confighelp, pgv_help, googlemap:help_text");
 
 print_simple_header($pgv_lang["config_help"]);
 print '<span class="helpheader">';

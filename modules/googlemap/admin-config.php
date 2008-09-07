@@ -28,7 +28,7 @@
  * $Id$
  */
 
-loadLangFile("gm_lang, gm_help");
+loadLangFile("googlemap:lang, googlemap:help_text");
 
 ?>
 <script language="JavaScript" type="text/javascript">

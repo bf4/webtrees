@@ -132,7 +132,7 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 	if (PGV_USER_CAN_EDIT) $langFiles .= "pgv_editor, ";
 	if ($searchuser == "yes") $langFiles .= "pgv_help, ";
 	if ($searchconfig == "yes") $langFiles .= "pgv_confighelp, ";
-	if ($searchmodules == "yes") $langFiles .= "ra_lang, ra_help, gm_lang, gm_help, sm_lang, sm_help, ";
+	if ($searchmodules == "yes") $langFiles .= "research_assistant:lang, research_assistant:help_text, googlemap:lang, googlemap:help_text, sitemap:lang, sitemap:help_text, ";
 	$langFiles = substr($langFiles, 0, -2);		// Trim last ", "
 	
 	$helpvarnames = array();

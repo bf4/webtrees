@@ -33,12 +33,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	exit;
 }
 
-if (file_exists('modules/batch_update/languages/help.'.$lang_short_cut[$LANGUAGE].'.php')) {
-	require 'modules/batch_update/languages/lang.'.$code.'.php';
-} else {
-	require 'modules/batch_update/languages/lang.en.php';
-}
-
+loadLangFile('batch_update:lang');
 require 'includes/functions_edit.php';
 
 class batch_update {

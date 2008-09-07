@@ -29,7 +29,7 @@
 
 require 'config.php';
 
-loadLangFile('pgv_help, pgv_admin, pgv_editor, ra_lang, gm_lang, gm_help, lb_lang, lb_help, sm_lang, sm_help');	// Load language keys
+loadLangFile('pgv_help, pgv_admin, pgv_editor, research_assistant:lang, googlemap:lang, googlemap:help_text, lightbox:lang, lightbox:help_text, sitemap:lang, sitemap:help_text');
 
 require 'includes/help_text_vars.php';
 

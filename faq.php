@@ -228,7 +228,7 @@ if ($action == "edit") {
 }
 
 if ($action == "show") {
-	loadLangFile("pgv_faqlib");	// Load FAQ library from language files
+	loadLangFile("pgv_faqlib");
 	
 	$faqs = get_faq_data();
 	print "<table class=\"list_table width100\">";

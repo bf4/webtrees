@@ -54,7 +54,7 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
 		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
-loadLangFile("gm_lang");
+loadLangFile("googlemap:lang");
 
 // functions copied from print_fact_place
 function print_fact_place_map($factrec) {

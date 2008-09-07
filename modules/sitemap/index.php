@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 // require "config.php";
 
-loadLangFile("pgv_confighelp, sm_lang, sm_help");
+loadLangFile("pgv_confighelp, sitemap:lang, sitemap:help_text");
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again

@@ -28,7 +28,7 @@
 
 require_once("includes/controllers/individual_ctrl.php");
 
-loadLangFile("lb_lang, gm_lang");	// Load Lightbox & GoogleMap language files
+loadLangFile("lightbox:lang, googlemap:lang");
 
 global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;

@@ -3663,6 +3663,8 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *			loadLangFile("pgv_confighelp, pgv_faqlib");
  *		To load all files, call the function this way:
  *			loadLangFile("all"); 
+ *		To load the file XXX for module YYY, call
+ *		  loadLangFile("YYY:XXX");
  */
 function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
@@ -3682,38 +3684,6 @@ function loadLangFile($fileListNames="") {
 	// Work on each input file type 
 	foreach ($list as $fileListName) {
 		switch ($fileListName) {
-		case "ra_lang":
-			$fileName1 = "modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "ra_help":
-			$fileName1 = "modules/research_assistant/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/research_assistant/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "gm_lang":
-			$fileName1 = "modules/googlemap/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/googlemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "gm_help":
-			$fileName1 = "modules/googlemap/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/googlemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "sm_lang":
-			$fileName1 = "modules/sitemap/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/sitemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "sm_help":
-			$fileName1 = "modules/sitemap/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/sitemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "lb_lang":
-			$fileName1 = "modules/lightbox/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/lightbox/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "lb_help":
-			$fileName1 = "modules/lightbox/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/lightbox/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
-			break;
 		case "pgv_lang":
 			$fileName1 = $pgv_language["english"];
 			$fileName2 = $pgv_language[$LANGUAGE];
@@ -3747,10 +3717,20 @@ function loadLangFile($fileListNames="") {
 			$fileName2 = $faqlistfile[$LANGUAGE];
 			break;
 		default:
-			return;
+			if (preg_match('/(.+):(.+)/', $fileListName, $match)) {
+				$fileName1 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut['english'].'.php';
+				$fileName2 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut[$LANGUAGE].'.php';
+				break;
+			} else {
+				continue 2;
+			}
 		}
-		if (file_exists($fileName1)) require $fileName1;
-		if ($LANGUAGE!="english" && file_exists($fileName2)) require $fileName2;
+		if (file_exists($fileName1)) {
+			require $fileName1;
+		}
+		if ($LANGUAGE!='english' && file_exists($fileName2)) {
+			require $fileName2;
+		}
 	}
 
 	// Now that the variables have been loaded in the desired language, load the optional 

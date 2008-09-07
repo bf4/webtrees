@@ -29,7 +29,7 @@ if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/conf
 require "includes/functions_edit.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
 
-loadLangFile("pgv_facts, gm_lang, gm_help");
+loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text");
 
 print_simple_header($pgv_lang["edit_place_locations"]);
 

@@ -26,7 +26,7 @@
  * @version $Id$
  * @author Brian Holland
  */
-loadLangFile("lb_lang");
+loadLangFile("lightbox:lang");
 
 global $LANGUAGE, $mediatab, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT, $LB_TT_BALLOON ;

@@ -32,7 +32,7 @@ global $lang_short_cut, $LANGUAGE, $PHP_SELF, $reorder, $GEDCOM;
 
 $reorder=safe_get('reorder', '1', '0');
 
-loadLangFile("lb_lang");
+loadLangFile("lightbox:lang");
 
 if (!file_exists("modules/googlemap/defaultconfig.php")) {
 	$tabno = "7";

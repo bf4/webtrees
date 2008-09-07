@@ -43,7 +43,7 @@ $linkToID = $controller->rid;	// -- Tell addmedia.php what to link to
 }
 // LBox  ============================================================================	
 
-loadLangFile("lb_lang");	// Load Lightbox language file	
+loadLangFile("lightbox:lang");
 
 ?>
 <?php if ($controller->repository->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
