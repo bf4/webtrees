@@ -479,40 +479,6 @@ function store_gedcoms() {
 	return true;
 }
 
-/**
- * Check if a person is dead
- *
- * For the given XREF id, this function will return true if the person is dead
- * and false if the person is alive.
- * @param string $pid		The Gedcom XREF ID of the person to check
- * @return boolean			True if dead, false if alive
- */
-function is_dead_id($pid) {
-	global $indilist, $BUILDING_INDEX, $GEDCOM, $GEDCOMS;
-
-	if (empty($pid))
-		return true;
-
-	//-- if using indexes then first check the indi_isdead array
-	if ((!$BUILDING_INDEX)&&(isset($indilist))) {
-		//-- check if the person is already in the $indilist cache
-		if ((!isset($indilist[$pid]["isdead"]))||($indilist[$pid]["gedfile"]!=$GEDCOMS[$GEDCOM]['id'])) {
-			//-- load the individual into the cache by calling the find_person_record function
-			$gedrec = find_person_record($pid);
-			if (empty($gedrec))
-				return true;
-		}
-		if (isset($indilist[$pid]["isdead"]) && $indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
-			if (!isset($indilist[$pid]["isdead"]))
-				$indilist[$pid]["isdead"] = -1;
-			if ($indilist[$pid]["isdead"]==-1)
-				$indilist[$pid]["isdead"] = update_isdead($pid, $indilist[$pid]);
-			return $indilist[$pid]["isdead"];
-		}
-	}
-	return is_dead(find_person_record($pid));
-}
-
 // This functions checks if an existing file is physically writeable
 // The standard PHP function only checks for the R/O attribute and doesn't
 // detect authorisation by ACL.

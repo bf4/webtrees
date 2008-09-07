@@ -400,20 +400,29 @@ function getRecentChanges() {
 				$disp = true;
 				switch($type) {
 					case 'INDI':
-						if (($filter=="living")&&(is_dead_id($gid)==1)) $disp = false;
+						if (($filter=="living")&&(is_dead($gedrec)==1)) $disp = false;
 						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid);
 						break;
 					case 'FAM':
 						if ($filter=="living") {
 							$parents = find_parents_in_record($gedrec);
-							if (is_dead_id($parents["HUSB"])==1) $disp = false;
-							else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($parents["HUSB"]);
-							if ($disp) {
-								if (is_dead_id($parents["WIFE"])==1) $disp = false;
-								else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($parents["WIFE"]);
+							$husb=Person::getInstance($parents['HUSB']);
+							$wife=Person::getInstance($parents['HUSB']);
+							if ($husb->isDead()) {
+								$disp = false;
+							} elseif ($HIDE_LIVE_PEOPLE) {
+								$disp = $husb->canDisplayDetails();
 							}
+							if ($disp) {
+								if ($wife->isDead()) {
+									$disp = false;
+								} elseif ($HIDE_LIVE_PEOPLE) {
+									$disp = $wife->canDisplayDetails();
+								}
+							}
+						} else {
+							if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid, "FAM");
 						}
-						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid, "FAM");
 						break;
 					default:
 						$disp = displayDetailsByID($gid, $type);
