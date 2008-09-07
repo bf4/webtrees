@@ -29,7 +29,7 @@
 
  require_once("config.php");
 
- loadLangFile("ra_lang");
+ loadLangFile("research_assistant:lang");
 
 /***********************************************************************************************************
  *                                        AUTHENTICATING                                                   *

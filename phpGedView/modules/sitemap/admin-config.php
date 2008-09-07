@@ -33,7 +33,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-loadLangFile("sm_lang, sm_help");
+loadLangFile("sitemap:lang, sitemap:help_text");
 
 if (PGV_USER_IS_ADMIN) { ?>
    <tr>

@@ -28,7 +28,7 @@
  */
 global $tabno ;
 
-loadLangFile("lb_lang");	// Load Lightbox language file
+loadLangFile("lightbox:lang");
 
 // Get Javascript variables from lb_config.php --------------------------- 
 //			include_once('modules/lightbox/lb_defaultconfig.php'); 

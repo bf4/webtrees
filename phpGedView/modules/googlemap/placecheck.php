@@ -29,7 +29,7 @@
 require_once ("config.php");
 require("googlemap.php"); // gives access to googlemap functions
 
-loadLangFile("gm_lang, gm_help");
+loadLangFile("googlemap:lang, googlemap:help_text");
 
 // Must be an admin user to use this module
 if (!PGV_USER_GEDCOM_ADMIN) {

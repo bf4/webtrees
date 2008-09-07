@@ -25,7 +25,7 @@
  */
 require "config.php";
 
-loadLangFile("pgv_confighelp, pgv_help, sm_help");
+loadLangFile("pgv_confighelp, pgv_help, sitemap:help_text");
 
 require ("includes/help_text_vars.php");
 print_simple_header($pgv_lang["config_help"]);

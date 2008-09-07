@@ -35,7 +35,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
 require( "modules/googlemap/defaultconfig.php" );
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, pgv_facts, gm_lang, gm_help");
+loadLangFile("pgv_lang, pgv_confighelp, pgv_help, pgv_facts, googlemap:lang, googlemap:help_text");
 
 if (!isset($action)) $action="";
 if (!isset($parent)) $parent=0;

@@ -38,7 +38,7 @@ global $pgv_lang, $pid, $GEDCOM ;
 $pid=safe_get('pid');
 $action = safe_POST("action");
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
+loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_text");
 print_header($pgv_lang["configure_lightbox"]);
 
 require('modules/lightbox/lb_defaultconfig.php');

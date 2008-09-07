@@ -50,7 +50,7 @@ global $tmb;
 }
 // LBox  ============================================================================	
 
-loadLangFile("lb_lang");	// Load Lightbox language file	
+loadLangFile("lightbox:lang");
 	
 	//The following lines of code are used to print the menu box on the top right hand corner
 	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {

@@ -31,7 +31,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
 	exit;
 }
 
-loadLangFile("ra_lang");	// Set up our default language file
+loadLangFile("research_assistant:lang");
 
 include_once("modules/research_assistant/forms/ra_privacy.php");
 require_once("includes/person_class.php");

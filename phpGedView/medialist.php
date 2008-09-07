@@ -27,9 +27,7 @@ require_once("config.php");
 require_once('includes/functions_print_facts.php');
 
 
-// LBox -------------------------------------------------------
-loadLangFile("lb_lang");
-// LBox --------------------------------------------------------
+loadLangFile("lightbox:lang");
 
 // $LB_SS_SPEED = "5";
 $level = safe_GET("level","","0");
