@@ -131,7 +131,7 @@ class TimelineControllerRoot extends BaseController {
 						$this->baseyear=min($this->baseyear, $date->y);
 						$this->topyear =max($this->topyear,  $date->y);
 
-						if (!is_dead_id($indi->getXref()))
+						if (!$indi->isDead())
 							$this->topyear=max($this->topyear, date('Y'));
 						$event->temp = $p;
 						//-- do not add the same fact twice (prevents marriages from being added multiple times)
