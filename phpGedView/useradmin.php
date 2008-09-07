@@ -212,23 +212,17 @@ if ($action=='createuser' || $action=='edituser2') {
 					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 						$myid=get_user_gedcom_setting($username, $ged_id, 'gedcomid');
 						if ($myid) {
-							include_once "includes/functions_edit.php";
-							$indirec=find_updated_record($myid, $ged_name);
-							if (!$indirec) {
-								$indirec=find_person_record($myid, $ged_name);
-							}
-							if ($indirec) {
-								$OLDGEDCOM=$GEDCOM;
-								$GEDCOM=$ged_name;
-								if (preg_match("/\d _?EMAIL/", $indirec)) {
-									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$emailaddress, $indirec);
-									replace_gedrec($myid, $indirec);
+							$OLDGEDCOM=$GEDCOM;
+							$GEDCOM=$ged_name;
+							$person=Person::getInstance($myid);
+							if ($person) {
+								if (preg_match('/\d _?EMAIL/', $person->getGedcomRecord())) {
+									replace_gedrec($myid, preg_replace("/(\d _?EMAIL)[^\r\n]*/", '$1 '.$emailaddress, $person->getGedcomRecord()));
 								} else {
-									$indirec.="\r\n1 EMAIL ".$emailaddress;
-									replace_gedrec($myid, $indirec);
+									replace_gedrec($myid, $person->getGedcomRecord()."\r\n1 EMAIL ".$emailaddress);
 								}
-								$GEDCOM=$OLDGEDCOM;
 							}
+							$GEDCOM=$OLDGEDCOM;
 						}
 					}
 				}
