@@ -1656,4 +1656,8 @@ $pgv_lang["example"]				= "Przykład:";
 $pgv_lang["interactive_tree"]		= "Interaktywne Drzewo";
 $pgv_lang["hide_show_spouses"]		= "Pokaż lub ukryj wielu małżonków";
 $pgv_lang["load_full_tree"]			= "Zobacz to drzewo na stronie interaktywnego drzewa";
+
+$pgv_lang["parent_family"]			= "Rodzice i rodzeństwo";
+$pgv_lang["step_parent_family"]		= "Przyrodni rodzice i rodzeństwo";
+$pgv_lang["immediate_family"]		= "Najbliższa rodzina";
 ?>
