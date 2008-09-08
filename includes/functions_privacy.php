@@ -430,9 +430,9 @@ function displayDetailsByID($pid, $type = "INDI") {
 			return true;
 		}
 		
-		$gedrec = find_gedcom_record($pid);
 		//-- look for an Ancestral File RESN (restriction) tag
 		if (isset($PRIVACY_BY_RESN) && ($PRIVACY_BY_RESN==true)) {
+			$gedrec = find_gedcom_record($pid);
 			$resn = get_gedcom_value("RESN", 1, $gedrec);
 			if (!empty($resn)) {
 				if ($resn == "confidential") $ret = false;
@@ -552,6 +552,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			}
 		}
 		
+		$gedrec = find_gedcom_record($pid);
 		$disp = is_dead($gedrec);
 		if ($disp) {
 			if ($SHOW_DEAD_PEOPLE>=PGV_USER_ACCESS_LEVEL) {
