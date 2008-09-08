@@ -494,10 +494,8 @@ if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
 
 require_once("includes/templecodes.php");  //-- load in the LDS temple code translations
 
-require_once("privacy.php");
-//-- load the privacy file
-require_once(get_privacy_file());
 //-- load the privacy functions
+load_privacy_file(get_id_from_gedcom($GEDCOM));
 require_once("includes/functions_privacy.php");
 
 //-----------------------------------
@@ -508,6 +506,8 @@ if ($logout) {
 		header("Location: {$SERVER_URL}");
 		exit;
 	}
+	// Logging out may change gedcom, so reload
+	load_privacy_file(get_id_from_gedcom($GEDCOM));
 }
 
 // Define some constants to save calculating the same value repeatedly.

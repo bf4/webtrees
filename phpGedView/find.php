@@ -397,7 +397,7 @@ if ($action=="filter") {
 			foreach($printname as $pkey => $pvalue) {
 				$GEDCOM = $pvalue[2];
 				if ($GEDCOM != $curged) {
-					include get_privacy_file();
+					load_privacy_file(get_id_from_gedcom($GEDCOM);
 					$curged = $GEDCOM;
 				}
 				$person=Person::getInstance($pvalue[1]);
@@ -407,7 +407,7 @@ if ($action=="filter") {
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				include get_privacy_file();
+				load_privacy_file(get_id_from_gedcom($GEDCOM);
 				$curged = $GEDCOM;
 			}
 			print "</tr>";
@@ -477,7 +477,7 @@ if ($action=="filter") {
 			foreach($printname as $pkey => $pvalue) {
 				$GEDCOM = $pvalue[2];
 				if ($GEDCOM != $curged) {
-					include get_privacy_file();
+					load_privacy_file(get_id_from_gedcom($GEDCOM);
 					$curged = $GEDCOM;
 				}
 				$family=Family::getInstance($pvalue[1]);
@@ -486,7 +486,7 @@ if ($action=="filter") {
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				include get_privacy_file();
+				load_privacy_file(get_id_from_gedcom($GEDCOM);
 				$curged = $GEDCOM;
 			}
 			print "</tr>\n";
@@ -713,14 +713,12 @@ if ($action=="filter") {
 	}
 	// Output Sources
 	if ($type == "source") {
-		$oldged = $GEDCOM;
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>\n\t\t<td class=\"list_value\"><tr>";
 		if (!isset($filter) || !$filter) $mysourcelist = get_source_list();
 		else $mysourcelist = search_sources($filter);
 		uasort($mysourcelist, "itemsort");
 		$cts=count($mysourcelist);
 		if ($cts>0) {
-			$curged = $GEDCOM;
 			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
 			foreach ($mysourcelist as $key => $value) {
 				print "<li>";
@@ -728,11 +726,6 @@ if ($action=="filter") {
 				print "</li>\n";
 			}
 			print "</ul></td></tr>";
-			$GEDCOM = $oldged;
-			if ($GEDCOM != $curged) {
-				include get_privacy_file();
-				$curged = $GEDCOM;
-			}
 			if ($cts > 0) print "<tr><td class=\"list_label\">".$pgv_lang["total_sources"]." ".$cts."</td></tr>";
 		}
 		else {

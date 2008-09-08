@@ -394,6 +394,30 @@ function get_privacy_file() {
 	return $privfile;
 }
 
+function load_privacy_file($ged_id=PGV_GED_ID) {
+	global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
+
+	// Load the privacy settings into global scope
+	global $SHOW_DEAD_PEOPLE, $SHOW_LIVING_NAMES, $SHOW_SOURCES, $MAX_ALIVE_AGE;
+	global $SHOW_RESEARCH_ASSISTANT, $ENABLE_CLIPPINGS_CART, $SHOW_MULTISITE_SEARCH;
+	global $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH, $CHECK_MARRIAGE_RELATIONS;
+	global $PRIVACY_BY_YEAR, $PRIVACY_BY_RESN, $SHOW_PRIVATE_RELATIONSHIPS;
+	global $person_privacy, $user_privacy, $global_facts, $person_facts;
+
+	// Load default settings
+	require 'privacy.php';
+
+	// Load settings for the specified gedcom
+	$privacy_file=get_gedcom_setting($ged_id, 'privacy');
+	if (
+		$privacy_file &&
+		file_exists($privacy_file) &&
+		version_compare(get_privacy_file_version($privacy_file), PGV_REQUIRED_PRIVACY_VERSION)>=0
+	) {
+		require $privacy_file;
+	}
+}
+
 /**
  * Get the current time in micro seconds
  *

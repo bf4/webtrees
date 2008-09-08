@@ -485,7 +485,7 @@ class SearchControllerRoot extends BaseController {
 							if ($GEDCOM != $ged) {
 								$oldged = $GEDCOM;
 								$GEDCOM = $ged;
-								include (get_privacy_file());
+								load_privacy_file(get_id_from_gedcom($GEDCOM));
 							}
 						} else {
 							$pid = $key;
@@ -499,7 +499,7 @@ class SearchControllerRoot extends BaseController {
 						}
 						if ((count($this->sgeds > 1)) && (isset ($oldged))) {
 							$GEDCOM = $oldged;
-							include (get_privacy_file());
+							load_privacy_file(get_id_from_gedcom($GEDCOM));
 						}
 					}
 				}
@@ -511,7 +511,7 @@ class SearchControllerRoot extends BaseController {
 							if ($GEDCOM != $ged) {
 								$oldged = $GEDCOM;
 								$GEDCOM = $ged;
-								include (get_privacy_file());
+								load_privacy_file(get_id_from_gedcom($GEDCOM));
 							}
 						}
 						if (displayDetailsByID($famid, "FAM") == true) {
@@ -523,7 +523,7 @@ class SearchControllerRoot extends BaseController {
 						}
 						if (count($this->sgeds > 1)) {
 							$GEDCOM = $oldged;
-							include (get_privacy_file());
+							load_privacy_file(get_id_from_gedcom($GEDCOM));
 						}
 					}
 				}
@@ -535,7 +535,7 @@ class SearchControllerRoot extends BaseController {
 							if ($GEDCOM != $ged) {
 								$oldged = $GEDCOM;
 								$GEDCOM = $ged;
-								include (get_privacy_file());
+								load_privacy_file(get_id_from_gedcom($GEDCOM));
 							}
 						}
 						if (displayDetailsByID($sid, "SOUR")) {
@@ -544,7 +544,7 @@ class SearchControllerRoot extends BaseController {
 						}
 						if (count($this->sgeds > 1)) {
 							$GEDCOM = $oldged;
-							include (get_privacy_file());
+							load_privacy_file(get_id_from_gedcom($GEDCOM));
 						}
 					}
 				}
@@ -869,13 +869,13 @@ class SearchControllerRoot extends BaseController {
 		if (count($this->printname) == 1 && $this->action!="replace") {
 			$oldged = $GEDCOM;
 			$GEDCOM = $this->printname[0][2];
-			include (get_privacy_file());
+			load_privacy_file(get_id_from_gedcom($GEDCOM));
 			if (showLivingNameByID($this->printname[0][1]) || displayDetailsByID($this->printname[0][1])) {
 				header("Location: ".encode_url("individual.php?pid={$this->printname[0][1]}&ged={$this->printname[0][2]}", false));
 				exit;
 			} else {
 				$GEDCOM = $oldged;
-				include (get_privacy_file());
+				load_privacy_file(get_id_from_gedcom($GEDCOM));
 			}
 		}
 		uasort($this->printname, "itemsort");
@@ -1017,7 +1017,7 @@ class SearchControllerRoot extends BaseController {
 							$GEDCOM = get_gedcom_from_id(splitkey($key, "ged"));
 							$key = splitkey($key, "id");
 							if ($GEDCOM != $curged) {
-								include (get_privacy_file());
+								load_privacy_file(get_id_from_gedcom($GEDCOM));
 								$curged = $GEDCOM;
 								// Recalculate the tags to skip
 								$skiptagsged = $skiptags;
@@ -1148,7 +1148,7 @@ class SearchControllerRoot extends BaseController {
 							$GEDCOM = splitkey($key, "ged");
 							$key = splitkey($key, "id");
 							if ($GEDCOM != $curged) {
-								include (get_privacy_file());
+								load_privacy_file(get_id_from_gedcom($GEDCOM));
 								$curged = $GEDCOM;
 								// Recalculate the tags to skip
 								$skiptagsged = $skiptags;
@@ -1252,7 +1252,7 @@ class SearchControllerRoot extends BaseController {
 							$GEDCOM = splitkey($key, "ged");
 							$key = splitkey($key, "id");
 							if ($curged != $GEDCOM) {
-								include (get_privacy_file());
+								load_privacy_file(get_id_from_gedcom($GEDCOM));
 								$curged = $GEDCOM;
 								// Recalculate the tags to skip
 								$skiptagsged = $skiptags;
@@ -1323,7 +1323,7 @@ class SearchControllerRoot extends BaseController {
 				global $GEDCOMS;
 				$oldged = $GEDCOM;
 				foreach ($this->sgeds as $key=>$GEDCOM) {
-					require(get_privacy_file());
+					load_privacy_file(get_id_from_gedcom($GEDCOM));
 					$datalist = array();
 					foreach ($printindiname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[$v[1]]=array("gid"=>$v[1]);
 					// I removed the "name"=>$v[0] from the $datalist[$v[1]]=array("gid"=>$v[1], "name"=>$v[0]);
@@ -1334,7 +1334,7 @@ class SearchControllerRoot extends BaseController {
 					print_indi_table($datalist, $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
-					require(get_privacy_file());
+					load_privacy_file(get_id_from_gedcom($GEDCOM));
 					$datalist = array();
 					foreach ($printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
 					if ( count($datalist) > 0 ) {
@@ -1343,7 +1343,7 @@ class SearchControllerRoot extends BaseController {
 					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
-					require(get_privacy_file());
+					load_privacy_file(get_id_from_gedcom($GEDCOM));
 					$datalist = array();
 					foreach ($actualsourcelist as $k=>$v) if ($v["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) $datalist[]=$k;
 					if ( count($datalist) > 0 ) {
@@ -1352,7 +1352,7 @@ class SearchControllerRoot extends BaseController {
 					print_sour_table(array_unique($datalist), $pgv_lang["sources"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 				}
 				$GEDCOM = $oldged;
-				require(get_privacy_file());
+				load_privacy_file(get_id_from_gedcom($GEDCOM));
 				//-- [end] new code for sortable tables
 				print "</div>";
 			} else
@@ -1378,7 +1378,7 @@ class SearchControllerRoot extends BaseController {
 			$oldged = $GEDCOM;
 			$this->myquery = trim($this->mylastname." ".$this->myfirstname." ".$this->myplace." ".$this->myyear);
 			foreach ($this->sgeds as $key=>$GEDCOM) {
-				require(get_privacy_file());
+				load_privacy_file(get_id_from_gedcom($GEDCOM));
 				$datalist = array();
 				foreach ($this->printname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
 				if ( count($datalist) > 0 ) {
@@ -1387,7 +1387,7 @@ class SearchControllerRoot extends BaseController {
 				print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".PrintReady($GEDCOMS[$GEDCOM]["title"], true));
 			}
 			foreach ($this->sgeds as $key=>$GEDCOM) {
-				require(get_privacy_file());
+				load_privacy_file(get_id_from_gedcom($GEDCOM));
 				$datalist = array();
 				foreach ($this->printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
 				if ( count($datalist) > 0 ) {
