@@ -77,30 +77,6 @@ function GetGEDFromZIP($zipfile, $extract=true) {
 	return $zipfile;
 }
 
-
-/**
- * print write_access option
- *
- * @param string $checkVar
- */
-function write_access_option($checkVar) {
-  global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
-  global $pgv_lang;
-
-  print "<option value=\"\$PRIV_PUBLIC\"";
-  if ($checkVar==$PRIV_PUBLIC) print " selected=\"selected\"";
-  print ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
-  print "<option value=\"\$PRIV_USER\"";
-  if ($checkVar==$PRIV_USER) print " selected=\"selected\"";
-  print ">".$pgv_lang["PRIV_USER"]."</option>\n";
-  print "<option value=\"\$PRIV_NONE\"";
-  if ($checkVar==$PRIV_NONE) print " selected=\"selected\"";
-  print ">".$pgv_lang["PRIV_NONE"]."</option>\n";
-  print "<option value=\"\$PRIV_HIDE\"";
-  if ($checkVar==$PRIV_HIDE) print " selected=\"selected\"";
-  print ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
-}
-
 loadLangFile("pgv_confighelp, pgv_help");
 
 // Remove slashes

@@ -41,37 +41,8 @@ if (!userGedcomAdmin(PGV_USER_ID, $ged) || empty($ged)) {
 
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
-$PRIVACY_CONSTANTS = array();
-$PRIVACY_CONSTANTS[$PRIV_HIDE] = "\$PRIV_HIDE";
-$PRIVACY_CONSTANTS[$PRIV_PUBLIC] = "\$PRIV_PUBLIC";
-$PRIVACY_CONSTANTS[$PRIV_USER] = "\$PRIV_USER";
-$PRIVACY_CONSTANTS[$PRIV_NONE] = "\$PRIV_NONE";
-
 if (!isset($PRIVACY_BY_YEAR)) $PRIVACY_BY_YEAR = false;
 if (!isset($MAX_ALIVE_AGE)) $MAX_ALIVE_AGE = 120;
-
-/**
- * print write_access option
- *
- * @param string $checkVar
- */
-function write_access_option($checkVar) {
-	global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
-	global $pgv_lang;
-
-	print "<option value=\"\$PRIV_PUBLIC\"";
-	if ($checkVar==$PRIV_PUBLIC) print " selected=\"selected\"";
-	print ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
-	print "<option value=\"\$PRIV_USER\"";
-	if ($checkVar==$PRIV_USER) print " selected=\"selected\"";
-	print ">".$pgv_lang["PRIV_USER"]."</option>\n";
-	print "<option value=\"\$PRIV_NONE\"";
-	if ($checkVar==$PRIV_NONE) print " selected=\"selected\"";
-	print ">".$pgv_lang["PRIV_NONE"]."</option>\n";
-	print "<option value=\"\$PRIV_HIDE\"";
-	if ($checkVar==$PRIV_HIDE) print " selected=\"selected\"";
-	print ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
-}
 
 /**
  * print yes/no select option
