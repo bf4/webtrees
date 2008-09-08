@@ -99,8 +99,4 @@ class plugin extends base_plugin {
 			'<br/><i>'.$pgv_lang['bu_case_desc'].'</i></td></tr>'.
 			parent::getOptionsForm();
 	}
-
-	function xgetActionPreview($xref, $gedrec) {
-		return '<pre>'.self::createEditLinks(preg_replace('/('.$this->regex.')/'.$this->case, self::decorateInsertedText($this->replace), $gedrec)).'</pre>';
-	}
 }

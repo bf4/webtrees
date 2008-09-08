@@ -358,32 +358,60 @@ class base_plugin {
 	}
 
 	// Default previewer for plugins with no custom preview.
-	// Simple diff - assumes only one change.
-	// TODO - implement a full diff algorithm.
 	function getActionPreview($xref, $gedrec) {
 		$old_lines=preg_split('/[\r\n]+/', $gedrec);
 		$new_lines=preg_split('/[\r\n]+/', $this->updateRecord($xref, $gedrec));
-		// Find matching lines at the start
-		$match1=array();
-		while ($old_lines && $new_lines && reset($old_lines)==reset($new_lines)) {
-			$match1[]=array_shift($old_lines);
-			array_shift($new_lines);
+		// Find matching lines using longest-common-subsequence algorithm.
+		$lcs=self::LCS($old_lines, $new_lines, 0, count($old_lines)-1, 0, count($new_lines)-1);
+
+		$diff_lines=array();
+		$last_old=-1;
+		$last_new=-1;
+		while ($lcs) {
+			list($old, $new)=array_shift($lcs);
+			while ($last_old<$old-1) {
+				$diff_lines[]=self::decorateDeletedText($old_lines[++$last_old]);
+			}
+			while ($last_new<$new-1) {
+				$diff_lines[]=self::decorateInsertedText($new_lines[++$last_new]);
+			}
+			$diff_lines[]=$new_lines[$new];		
+			$last_old=$old;
+			$last_new=$new;
 		}
-		// Find matching lines at the end
-		$match2=array();
-		while ($old_lines && $new_lines && end($old_lines)==end($new_lines)) {
-			array_unshift($match2, array_pop($old_lines));
-			array_pop($new_lines);
+		while ($last_old<count($old_lines)-1) {
+			$diff_lines[]=self::decorateDeletedText($old_lines[++$last_old]);
 		}
-		// Mark old lines as deleted
-		foreach ($old_lines as $key=>$value) {
-			$old_lines[$key]=self::decorateDeletedText($value);
+		while ($last_new<count($new_lines)-1) {
+			$diff_lines[]=self::decorateInsertedText($new_lines[++$last_new]);
 		}
-		// Mark new lines as inserted
-		foreach ($new_lines as $key=>$value) {
-			$new_lines[$key]=self::decorateInsertedText($value);
+		
+		return '<pre>'.self::createEditLinks(implode("\n", $diff_lines)).'</pre>';
+	}
+
+	// Longest Common Subsequence.
+	static function LCS($X, $Y, $x1, $x2, $y1, $y2) {
+		if ($x2-$x1>=0 && $y2-$y1>=0) {
+			if ($X[$x1]==$Y[$y1]) {
+				// Match at start of sequence
+				$tmp=self::LCS($X, $Y, $x1+1, $x2, $y1+1, $y2);
+				array_unshift($tmp, array($x1, $y1));
+				return $tmp;
+			} elseif ($X[$x2]==$Y[$y2]) {
+				// Match at end of sequence
+				$tmp=self::LCS($X, $Y, $x1, $x2-1, $y1, $y2-1);
+				array_push($tmp, array($x2, $y2));
+				return $tmp;
+			} else {
+				// No match.  Look for subsequences
+				$tmp1=self::LCS($X, $Y, $x1, $x2, $y1, $y2-1);
+				$tmp2=self::LCS($X, $Y, $x1, $x2-1, $y1, $y2);
+				return count($tmp1) > count($tmp2) ? $tmp1 : $tmp2;
+			}
+		} else {
+			// One array is empty - end recursion
+			return array();
 		}
-		return '<pre>'.self::createEditLinks(implode("\n", array_merge($match1, $old_lines, $new_lines, $match2))).'</pre>';
 	}
 
 	// Default handler for plugin with no custom actions.
