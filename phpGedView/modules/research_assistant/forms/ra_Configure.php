@@ -40,48 +40,10 @@ loadLangFile("pgv_confighelp");
  * @uses ra_form
  */
  
- global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
-$PRIVACY_CONSTANTS = array();
-$PRIVACY_CONSTANTS[$PRIV_HIDE] = "\$PRIV_HIDE";
-$PRIVACY_CONSTANTS[$PRIV_PUBLIC] = "\$PRIV_PUBLIC";
-$PRIVACY_CONSTANTS[$PRIV_USER] = "\$PRIV_USER";
-$PRIVACY_CONSTANTS[$PRIV_NONE] = "\$PRIV_NONE";
-
 global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;
 global $INDEX_DIRECTORY, $GEDCOM, $person_privacy;
 include_once("modules/research_assistant/forms/ra_privacy.php");
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
-
-/**
- * print write_access option
- * prints all the available privacy options defined in privacy.php
- * 
- * @param string $checkVar
- */
-function write_access_option($checkVar) {
- global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
- global $pgv_lang;
- 
-  //print 'show to public'
-  print "<option value=\"\$PRIV_PUBLIC\"";
-  if ($checkVar==$PRIV_PUBLIC) print " selected=\"selected\"";
-  print ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
-  
-  //print 'show only to authenticated'
-  print "<option value=\"\$PRIV_USER\"";
-  if ($checkVar==$PRIV_USER) print " selected=\"selected\"";
-  print ">".$pgv_lang["PRIV_USER"]."</option>\n";
-  
-  //print 'show to admin only'
-  print "<option value=\"\$PRIV_NONE\"";
-  if ($checkVar==$PRIV_NONE) print " selected=\"selected\"";
-  print ">".$pgv_lang["PRIV_NONE"]."</option>\n";
-  
-  //print 'hide even from admin'
-  print "<option value=\"\$PRIV_HIDE\"";
-  if ($checkVar==$PRIV_HIDE) print " selected=\"selected\"";
-  print ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
-}
 
 if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 

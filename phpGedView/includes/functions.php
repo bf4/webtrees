@@ -314,6 +314,31 @@ function get_config_file($ged="") {
 }
 
 /**
+ * print write_access option
+ *
+ * @param string $checkVar
+ */
+function write_access_option($checkVar) {
+  global $pgv_lang, $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
+
+  echo "<option value=\"\$PRIV_PUBLIC\"";
+  echo ($checkVar==$PRIV_PUBLIC) ? " selected=\"selected\"" : '';
+  echo ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
+
+  echo "<option value=\"\$PRIV_USER\"";
+  echo ($checkVar==$PRIV_USER) ? " selected=\"selected\"" : '';
+  echo ">".$pgv_lang["PRIV_USER"]."</option>\n";
+
+  echo "<option value=\"\$PRIV_NONE\"";
+  echo ($checkVar==$PRIV_NONE) ? " selected=\"selected\"" : '';
+  echo ">".$pgv_lang["PRIV_NONE"]."</option>\n";
+
+  echo "<option value=\"\$PRIV_HIDE\"";
+  echo ($checkVar==$PRIV_HIDE) ? " selected=\"selected\"" : '';
+  echo ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
+}
+
+/**
  * Get the version of the privacy file
  *
  * This function opens the given privacy file and returns the privacy version from the file
