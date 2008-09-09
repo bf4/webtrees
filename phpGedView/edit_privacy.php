@@ -27,15 +27,15 @@
  * @version $Id$
  */
 
-require "config.php";
-require_once("includes/gedcomrecord.php");
+require 'config.php';
+require 'includes/functions_print_facts.php';
 
-loadLangFile("pgv_confighelp, pgv_help");
+loadLangFile('pgv_confighelp, pgv_help');
 
 if (empty($ged)) $ged = $GEDCOM;
 
 if (!userGedcomAdmin(PGV_USER_ID, $ged) || empty($ged)) {
-	header("Location: editgedcoms.php");
+	header('Location: editgedcoms.php');
 	exit;
 }
 
