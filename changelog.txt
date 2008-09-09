@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2016270 ] Surname with commas (fisharebest)
  - Fixed:   Family_Nav - Possible "getLabel" error on certain indi's. (windmillway)
  - Changed: More aesthetic tidying up of Album Page Layout (fixed short table rows in IE) (windmillway)
  - Added:   Language support for Family navigator (ref. previous 2 entries). (windmillway)

@@ -221,7 +221,7 @@ if ($showList) {
 			$person=Person::getInstance($pid);
 			if (!is_object($person)) continue;
 			foreach ($person->getAllNames() as $name) {
-				$surn=reset(explode(',', $name['sort']));
+				$surn=UTF8_strtoupper($name['surn']);
 				// Ignore diacritics - need to use the same logic as get_indi_alpha()
 				// TODO: This ought to be a language-dependent conversion, as in some
 				// languages, letters with diacritics are regarded as separate letters.
@@ -240,13 +240,15 @@ if ($showList) {
 					}
 				}
 				if ($show_all=='yes' || $surname && $surname==$surn || !$surname && $alpha==$initial) {
-					$spfxsurn=reset(explode(',', $name['list']));
 					switch ($surn) {
 					case '@N.N.':
 						$spfxsurn=$pgv_lang['NN'];
 						break;
 					case '':
 						$spfxsurn='('.$pgv_lang['none'].')';
+						break;
+					default:
+						$spfxsurn=$name['spfx'] ? $name['spfx'].' '.$name['surn'] : $name['surn'];
 						break;
 					}
 					if (! array_key_exists($surn, $surnames)) {
@@ -285,9 +287,8 @@ if ($showList) {
 			if (!is_object($person)) continue;
 			foreach ($person->getAllNames() as $n=>$name) {
 				if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
-					list($surn,$givn)=explode(',', $name['sort']);
-					$givn_alpha=get_first_letter($givn);
-					if ((!$surname || $surname==$surn) &&
+					$givn_alpha=get_first_letter($name['givn']);
+					if ((!$surname || $surname==UTF8_strtoupper($name['surn'])) &&
 					    (!$alpha   || $alpha==get_first_letter($name['sort']))) {
 						$givn_initials[$givn_alpha]=$givn_alpha;
 						if (!$falpha || $falpha==$givn_alpha) {

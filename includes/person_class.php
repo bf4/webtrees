@@ -1647,36 +1647,40 @@ class Person extends GedcomRecord {
 		}
 
 		// Need the GIVN and SURN to generate the sortable name.
-		$givn=preg_match('/^'.$sublevel.' GIVN ([^\r\n]+)/m', $gedrec, $match) ? UTF8_strtoupper($match[1]) : '';
-		$surn=preg_match('/^'.$sublevel.' SURN ([^\r\n]+)/m', $gedrec, $match) ? UTF8_strtoupper($match[1]) : '';
+		$givn=preg_match('/^'.$sublevel.' GIVN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		$surn=preg_match('/^'.$sublevel.' SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
+		$spfx=preg_match('/^'.$sublevel.' SPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($givn || $surn) {
 			// GIVN and SURN can be comma-separated lists.
 			$surns=preg_split('/ *, */', $surn);
 			$givn=str_replace(array(',', ', '), ' ', $givn);
 		} else {
-			$name=UTF8_strtoupper($full);
+			$name=$full;
 			// We do not have a structured name - extract the GIVN and SURN(s) ourselves
 			// Strip the NPFX
-			if (preg_match('/^(?:(?:(?:ADM|AMB|BRIG|CAN|CAPT|CHAN|CHAPLN|CMDR|COL|CPL|CPT|DR|GEN|GOV|HON|LADY|LORD|LT|MR|MRS|MS|MSGR|PFC|PRES|PROF|PVT|RABBI|REP|REV|SEN|SGT|SIR|SR|SRA|SRTA|VEN)\.? +)+)(.+)/', $name, $match)) {
+			if (preg_match('/^(?:(?:(?:ADM|AMB|BRIG|CAN|CAPT|CHAN|CHAPLN|CMDR|COL|CPL|CPT|DR|GEN|GOV|HON|LADY|LORD|LT|MR|MRS|MS|MSGR|PFC|PRES|PROF|PVT|RABBI|REP|REV|SEN|SGT|SIR|SR|SRA|SRTA|VEN)\.? +)+)(.+)/i', $name, $match)) {
 				$name=$match[1];
 			}
 			// Strip the NSFX
-			if (preg_match('/(.+)(?:(?: +(?:ESQ|ESQUIRE|JR|JUNIOR|SR|SENIOR|[IVX]+)\.?)+)$/', $name, $match)) {
+			if (preg_match('/(.+)(?:(?: +(?:ESQ|ESQUIRE|JR|JUNIOR|SR|SENIOR|[IVX]+)\.?)+)$/i', $name, $match)) {
 				$name=$match[1];
 			}
 			// Extract GIVN/SURN.
 			if (strpos($full, '/')===false) {
 				$givn=trim($name);
+				$spfx='';
 				$surns=array('');
 			} else {
 				// Extract SURN.  Split at "/".  Odd numbered parts are SURNs.
+				$spfx='';
 				$surns=array();
 				foreach (preg_split(': */ *:', $name) as $key=>$value) {
 					if ($key%2==1) {
 						if ($value) {
 							// Strip SPFX
-							if (preg_match('/^(?:(?:(?:A|AAN|AB|AF|AL|AP|AS|AUF|AV|BAT|BEN|BIJ|BIN|BINT|DA|DE|DEL|DELLA|DEM|DEN|DER|DI|DU|EL|FITZ|HET|IBN|LA|LAS|LE|LES|LOS|ONDER|OP|OVER|\'S|ST|\'T|TE|TEN|TER|TILL|TOT|UIT|UIJT|VAN|VANDEN|VON|VOOR|VOR)[ -]+)+(?:[DL]\')?)(.+)$/', $value, $match)) {
-								$value=$match[1];
+							if (preg_match('/^((?:(?:A|AAN|AB|AF|AL|AP|AS|AUF|AV|BAT|BEN|BIJ|BIN|BINT|DA|DE|DEL|DELLA|DEM|DEN|DER|DI|DU|EL|FITZ|HET|IBN|LA|LAS|LE|LES|LOS|ONDER|OP|OVER|\'S|ST|\'T|TE|TEN|TER|TILL|TOT|UIT|UIJT|VAN|VANDEN|VON|VOOR|VOR)[ -]+)+(?:[DL]\')?)(.+)$/i', $value, $match)) {
+								$spfx=trim($match[1]);
+								$value=$match[2];
 							}
 							$surns[]=$value ? $value : '@N.N.';
 						} else {
@@ -1776,11 +1780,13 @@ class Person extends GedcomRecord {
 	
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
-		foreach ($surns as $surn) {
+		$GIVN=UTF8_strtoupper($givn);
+		foreach ($surns as $n=>$surn) {
+			$SURN=UTF8_strtoupper($surn);
 			// Scottish "Mc and Mac" prefixes sort under "Mac"
-			if (substr($surn, 0, 2)=='MC'  ) { $surn='MAC'.substr($surn, 2); }
-			if (substr($surn, 0, 4)=='MAC ') { $surn='MAC'.substr($surn, 4); }
-			$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$surn.','.$givn);
+			if (substr($SURN, 0, 2)=='MC'  ) { $SURN='MAC'.substr($surn, 2); }
+			if (substr($SURN, 0, 4)=='MAC ') { $SURN='MAC'.substr($surn, 4); }
+			$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$SURN.','.$GIVN, 'givn'=>$givn, 'spfx'=>($n?'':$spfx), 'surn'=>$surn);
 		}
 	}
 
