@@ -3071,8 +3071,7 @@ function get_theme_names() {
  * before it can be used on the filesystem
  */
 function filename_decode($filename) {
-	global $WIN32;
-	if ($WIN32)
+	if (DIRECTORY_SEPARATOR=='\\')
 		return utf8_decode($filename);
 	else
 		return $filename;
@@ -3085,8 +3084,7 @@ function filename_decode($filename) {
  * before it can be used in PGV
  */
 function filename_encode($filename) {
-	global $WIN32;
-	if ($WIN32)
+	if (DIRECTORY_SEPARATOR=='\\')
 		return utf8_encode($filename);
 	else
 		return $filename;

@@ -105,25 +105,11 @@ $CONFIG_VARS = array(
 	'COMMIT_COMMAND'
 	);
 
-
-//-- Detect and report Windows or OS/2 Server environment
-//  Windows and OS/2 use the semi-colon as a separator in the "include_path",
-//    *NIX uses a colon
-//  Windows and OS/2 use the ISO character set in the server-side file system,
-//    *NIX and PhpGedView use UTF-8.  Consequently, PGV needs to translate
-//    from UTF-8 to ISO when handing a file/folder name to Windows and OS/2,
-//    and all file/folder names received from Windows and OS/2 must be
-//    translated from ISO to UTF-8 before they can be processed by PGV.
-$WIN32 = false;
-if(substr(PHP_OS, 0, 3) == 'WIN') $WIN32 = true;
-if(substr(PHP_OS, 0, 4) == 'OS/2') $WIN32 = true;
-if(substr(PHP_OS, 0, 7) == 'NetWare') $WIN32 = true;
-if($WIN32) $seperator=";"; else $seperator = ":";
 //-- append our 'includes/' path to the include_path ini setting for ease of use.
 $ini_include_path = @ini_get('include_path');
 $includes_dir = dirname(@realpath(__FILE__));
-$includes_dir .= $seperator.dirname($includes_dir);
-@ini_set('include_path', ".{$seperator}{$includes_dir}{$seperator}{$ini_include_path}");
+$includes_dir .= PATH_SEPARATOR.dirname($includes_dir);
+@ini_set('include_path', '.'.PATH_SEPARATOR.$includes_dir.PATH_SEPARATOR.$ini_include_path);
 unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
 
 set_magic_quotes_runtime(0);
@@ -142,8 +128,8 @@ if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
 	}
 }
 
-if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
-	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.phpversion().'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
+	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
 }
 
 //-- load file for language settings
