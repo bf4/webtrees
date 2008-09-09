@@ -70,7 +70,7 @@ class Family extends GedcomRecord {
 	 * Static function used to get an instance of a family object
 	 * @param string $pid	the ID of the family to retrieve
 	 */
-	function &getInstance($pid, $simple=true) {
+	static function &getInstance($pid, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);

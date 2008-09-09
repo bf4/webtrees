@@ -39,7 +39,7 @@ class Repository extends GedcomRecord {
 	 * Static function used to get an instance of a repository object
 	 * @param string $pid	the ID of the repository to retrieve
 	 */
-	function &getInstance($pid, $simple=true) {
+	static function &getInstance($pid, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);

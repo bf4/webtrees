@@ -363,7 +363,7 @@ class Menu
 	 * convert an old array style menu to an object
 	 * @static 
 	 */
-	function convertMenu($menu) {
+	static function convertMenu($menu) {
 		$conv = array(
 			'label'=>'label',
 			'labelpos'=>'labelpos',
@@ -422,7 +422,7 @@ class MenuBar
 	 * get the home menu
 	 * @return Menu 	the menu item
 	 */
-	function &getHomeMenu() {
+	static function &getHomeMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $HOME_SITE_URL, $HOME_SITE_TEXT, $pgv_lang;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		//-- main home menu item
@@ -437,7 +437,7 @@ class MenuBar
 	 * get the menu with links to the gedcom portals
 	 * @return Menu 	the menu item
 	 */
-	function &getGedcomMenu() {
+	static function &getGedcomMenu() {
 		global $GEDCOMS, $ALLOW_CHANGE_GEDCOM;
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -471,7 +471,7 @@ class MenuBar
 	 * get the mygedview menu
 	 * @return Menu 	the menu item
 	 */
-	function &getMygedviewMenu() {
+	static function &getMygedviewMenu() {
 		global $GEDCOMS, $MEDIA_DIRECTORY, $MULTI_MEDIA;
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
@@ -579,7 +579,7 @@ class MenuBar
 	 * get the menu for the charts
 	 * @return Menu 	the menu item
 	 */
-	function &getChartsMenu($rootid='',$myid='') {
+	static function &getChartsMenu($rootid='',$myid='') {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
 
@@ -794,7 +794,7 @@ class MenuBar
 	 * get the menu for the lists
 	 * @return Menu 	the menu item
 	 */
-	function &getListsMenu($surname="") {
+	static function &getListsMenu($surname="") {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_SOURCES, $MULTI_MEDIA, $SEARCH_SPIDER;
 		global $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;
@@ -926,7 +926,7 @@ class MenuBar
 	 * get the menu for the calendar
 	 * @return Menu 	the menu item
 	 */
-	function &getCalendarMenu() {
+	static function &getCalendarMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER, $GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists("calendar.php")) || (!empty($SEARCH_SPIDER))) {
@@ -964,7 +964,7 @@ class MenuBar
 	 * get the reports menu
 	 * @return Menu 	the menu item
 	 */
-	function &getReportsMenu($pid="", $famid="") {
+	static function &getReportsMenu($pid="", $famid="") {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOMS, $GEDCOM, $pgv_lang;
 		global $LANGUAGE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -1033,7 +1033,7 @@ class MenuBar
 	 * get the clipping menu
 	 * @return Menu 	the menu item
 	 */
-	function &getClippingsMenu() {
+	static function &getClippingsMenu() {
 		global $ENABLE_CLIPPINGS_CART;
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -1055,7 +1055,7 @@ class MenuBar
 	 * get the optional site-specific menu
 	 * @return Menu 	the menu item
 	 */
-	function &getOptionalMenu() {
+	static function &getOptionalMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!file_exists("includes/extras/optional_menu.php") || !empty($SEARCH_SPIDER)) {
@@ -1071,7 +1071,7 @@ class MenuBar
 	 * get the print_preview menu
 	 * @return Menu 	the menu item
 	 */
-	function &getPreviewMenu() {
+	static function &getPreviewMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SCRIPT_NAME, $QUERY_STRING, $pgv_lang;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
@@ -1091,7 +1091,7 @@ class MenuBar
 	 * get the search menu
 	 * @return Menu 	the menu item
 	 */
-	function &getSearchMenu() {
+	static function &getSearchMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_MULTISITE_SEARCH, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -1171,7 +1171,7 @@ class MenuBar
 	 * get the help menu
 	 * @return Menu 	the menu item
 	 */
-	function &getHelpMenu() {
+	static function &getHelpMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		global $SHOW_CONTEXT_HELP, $SCRIPT_NAME, $QUERY_STRING, $helpindex, $action;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -1265,7 +1265,7 @@ class MenuBar
 	 * get the menu with links change to each theme
 	 * @return Menu 	the menu item
 	 */
-	function &getThemeMenu() {
+	static function &getThemeMenu() {
 		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME, $pgv_lang;
 
 		$current=$THEME;
@@ -1309,7 +1309,7 @@ class MenuBar
 	 * get the menu with links to change language
 	 * @return Menu 	the menu item
 	 */
-	function &getLanguageMenu() {
+	static function &getLanguageMenu() {
 		global $ENABLE_MULTI_LANGUAGE, $LANGUAGE, $pgv_lang, $pgv_lang_self, $language_settings, $flagsfile, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -1350,7 +1350,7 @@ class MenuBar
 	 * get the menu with links to the user/gedcom favourites
 	 * @return Menu 	the menu item
 	 */
-	function &getFavouritesMenu() {
+	static function &getFavouritesMenu() {
 		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 		global $controller; // Pages with a controller can be added to the favourites
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";

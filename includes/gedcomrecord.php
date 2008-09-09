@@ -94,7 +94,7 @@ class GedcomRecord {
 	 * @param string $pid	the ID of the object to retrieve
 	 * @return GedcomRecord
 	 */
-	function &getInstance($pid, $simple=true) {
+	static function &getInstance($pid, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);
@@ -341,7 +341,7 @@ class GedcomRecord {
 	 * get the URL to link to a place
 	 * @string a url that can be used to link to placelist
 	 */
-	function getPlaceUrl($gedcom_place) {
+	static function getPlaceUrl($gedcom_place) {
 		global $GEDCOM;
 		$exp = explode(",", $gedcom_place);
 		$level = count($exp);
@@ -357,7 +357,7 @@ class GedcomRecord {
 	 * get the first part of a place record
 	 * @string a url that can be used to link to placelist
 	 */
-	function getPlaceShort($gedcom_place) {
+	static function getPlaceShort($gedcom_place) {
 		global $GEDCOM;
 		$gedcom_place = trim($gedcom_place, " ,");
 		$exp = explode(",", $gedcom_place);
@@ -556,6 +556,7 @@ class GedcomRecord {
 		$html='<'.$tag.' class="'.$dir.'" dir="'.$dir.'">'.$html.'</a></'.$tag.'>';
 		return $html;
 	}
+
 	// This function should be redefined in derived classes to show any major
 	// identifying characteristics of this record.
 	function format_list_details() {

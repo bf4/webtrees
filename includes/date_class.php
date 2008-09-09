@@ -130,12 +130,12 @@ class CalendarDate {
 	}
 
 	// Calendars that use suffixes, etc. (e.g. 'B.C.') or OS/NS notation should redefine this.
-	function ExtractYear($year) {
+	static function ExtractYear($year) {
 		return empty($year)?0:$year;
 	}
 
 	// Compare two dates - helper function for sorting by date
-	function Compare($d1, $d2) {
+	static function Compare($d1, $d2) {
 		if ($d1->maxJD < $d2->minJD)
 			return -1;
 		if ($d2->minJD > $d1->maxJD)
@@ -407,7 +407,7 @@ class CalendarDate {
 	}
 
 	// Convert a decimal number to roman numerals
-	function NumToRoman($num) {
+	static function NumToRoman($num) {
 		$lookup=array(1000=>'M', '900'=>'CM', '500'=>'D', 400=>'CD', 100=>'C', 90=>'XC', 50=>'L', 40=>'XL', 10=>'X', 9=>'IX', 5=>'V', 4=>'IV', 1=>'I');
   	if ($num<1) return $num;
 		$roman='';
@@ -420,7 +420,7 @@ class CalendarDate {
 	}
 	
 	// Convert a roman numeral to decimal
-	function RomanToNum($roman) {
+	static function RomanToNum($roman) {
 		$lookup=array(1000=>'M', '900'=>'CM', '500'=>'D', 400=>'CD', 100=>'C', 90=>'XC', 50=>'L', 40=>'XL', 10=>'X', 9=>'IX', 5=>'V', 4=>'IV', 1=>'I');
 		$num=0;
 		foreach ($lookup as $key=>$value)
@@ -433,7 +433,7 @@ class CalendarDate {
 
 	// Convert a decimal number to hebrew - like roman numerals, but with extra punctuation
 	// and special rules.
-	function NumToHebrew($num) {
+	static function NumToHebrew($num) {
 		global $DISPLAY_JEWISH_THOUSANDS;
 		static $ALAFIM="אלפים";
 		static $GERSHAYIM="״";
@@ -494,7 +494,7 @@ class CalendarDate {
 	}
 	
 	// Get today's date in the current calendar
-	function TodayYMD() {
+	static function TodayYMD() {
 		return $this->JDtoYMD(GregorianDate::YMDtoJD(date('Y'), date('n'), date('j')));
 	}
 	function Today() {
@@ -556,7 +556,7 @@ class GregorianDate extends CalendarDate {
 		return $this->y%4==0 && $this->y%100!=0 || $this->y%400==0;
 	}
 
-	function YMDtoJD($y, $m, $d) {
+	static function YMDtoJD($y, $m, $d) {
 		if ($y<0) // 0=1BC, -1=2BC, etc.
 			++$y;
 		$a=floor((14-$m)/12);
@@ -565,7 +565,7 @@ class GregorianDate extends CalendarDate {
 		return $d+floor((153*$m+2)/5)+365*$y+floor($y/4)-floor($y/100)+floor($y/400)-32045;
 	}
 
-	function JDtoYMD($j) {
+	static function JDtoYMD($j) {
 		$a=$j+32044;
 		$b=floor((4*$a+3)/146097);
 		$c=$a-floor($b*146097/4);
@@ -578,27 +578,6 @@ class GregorianDate extends CalendarDate {
 		if ($year<1) // 0=1BC, -1=2BC, etc.
 			--$year;
 		return array($year, $month, $day);
-	}
-
-	// Get Easter date in JD format
-	function EasterJD($year) {
-		// See : http://www.php.net/manual/en/function.easter-days.php#14805
-		$a = $year % 19;
-		$b = floor($year / 100);
-		$c = $year % 100;
-		$d = floor($b / 4);
-		$e = $b % 4;
-		$f = floor(($b + 8) / 25);
-		$g = floor(($b - $f + 1) / 3);
-		$h = (19 * $a + $b - $d - $g + 15) % 30;
-		$i = floor($c / 4);
-		$k = $c % 4;
-		$l = (32 + 2 * $e + 2 * $i - $h - $k) % 7;
-		$m = floor(($a + 11 * $h + 22 * $l) / 451);
-		$n = ($h + $l - 7 * $m + 114);
-		$month = floor($n / 31);
-		$day = $n % 31 + 1;
-		return GregorianDate::YMDtoJD($year, $month, $day);
 	}
 
 } // class GregorianDate
@@ -631,7 +610,7 @@ class JulianDate extends CalendarDate {
 		return $this->y%4==0;
 	}
 
-	function YMDtoJD($y, $m, $d) {
+	static function YMDtoJD($y, $m, $d) {
 		if ($y<0) // 0=1BC, -1=2BC, etc.
 			++$y;
 		$a=floor((14-$m)/12);
@@ -640,7 +619,7 @@ class JulianDate extends CalendarDate {
 		return $d+floor((153*$m+2)/5)+365*$y+floor($y/4)-32083;
 	}
 
-	function JDtoYMD($j) {
+	static function JDtoYMD($j) {
 		$c=$j+32082;
 		$d=floor((4*$c+3)/1461);
 		$e=$c-floor(1461*$d/4);
@@ -654,7 +633,7 @@ class JulianDate extends CalendarDate {
 	}
 
 	// Process new-style/old-style years and years BC
-	function ExtractYear($year) {
+	static function ExtractYear($year) {
 		if (preg_match('/^(\d\d\d\d) \/ \d{1,4}$/', $year, $match)) { // Assume the first year is correct
 			$this->new_old_style=true;
 			return $match[1]+1;
@@ -713,7 +692,7 @@ class JewishDate extends CalendarDate {
 	}
 
 	// TODO implement this function locally
-	function YMDtoJD($y, $mh, $d) {
+	static function YMDtoJD($y, $mh, $d) {
 		if (function_exists('JewishToJD'))
 			return JewishToJD($mh, $d, $y);
 		else
@@ -721,7 +700,7 @@ class JewishDate extends CalendarDate {
 	}
 
 	// TODO implement this function locally
-	function JDtoYMD($j) {
+	static function JDtoYMD($j) {
 		if (function_exists('JdToJewish'))
 			list($m, $d, $y)=explode('/', JDToJewish($j));
 		else
@@ -805,11 +784,11 @@ class FrenchRDate extends CalendarDate {
 		return $this->y%4==3;
 	}
 
-	function YMDtoJD($y, $m, $d) {
+	static function YMDtoJD($y, $m, $d) {
 		return 2375444+$d+$m*30+$y*365+floor($y/4);
 	}
 
-	function JDtoYMD($j) {
+	static function JDtoYMD($j) {
 		$y=floor(($j-2375109)*4/1461)-1;
 		$m=floor(($j-2375475-$y*365-floor($y/4))/30)+1;
 		$d=$j-2375444-$m*30-$y*365-floor($y/4);
@@ -841,11 +820,11 @@ class HijriDate extends CalendarDate {
 		return ((11*$this->y+14)%30)<11;
 	}
 
-	function YMDtoJD($y, $m, $d) {
+	static function YMDtoJD($y, $m, $d) {
 		return $d+29*($m-1)+floor((6*$m-1)/11)+$y*354+floor((3+11*$y)/30)+1948085;
 	}
 
-	function JDtoYMD($j) {
+	static function JDtoYMD($j) {
 		$y=floor((30*($j-1948440)+10646)/10631);
 		$m=floor((11*($j-$y*354-floor((3+11*$y)/30)-1948086)+330)/325);
 		$d=$j-29*($m-1)-floor((6*$m-1)/11)-$y*354-floor((3+11*$y)/30)-1948085;
@@ -896,11 +875,11 @@ class RomanDate extends CalendarDate {
 	var $CAL_START_JD=0;
 	var $CAL_END_JD=99999999;
 
-	function YMDtoJD($y, $m, $d) {
+	static function YMDtoJD($y, $m, $d) {
 		return 0;
 	}
 
-	function JDtoYMD($j) {
+	static function JDtoYMD($j) {
 		return array(0, 0, 0);
 	}
 
@@ -978,7 +957,7 @@ class GedcomDate {
 	}
 
 	// Convert an individual gedcom date string into a CalendarDate object
-	function ParseDate($date) {
+	static function ParseDate($date) {
 		global $LANGUAGE;
 		// Calendar escape specified? - use it
 		if (preg_match_all('/^(@#[^@]+@) ?(.*)/', $date, $match)) {
@@ -1185,7 +1164,7 @@ class GedcomDate {
 
 	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
-	function GetAgeYears($d1, $d2=NULL) {
+	static function GetAgeYears($d1, $d2=NULL) {
 		if (!is_object($d1)) return;
 		if (!is_object($d2))
 			return $d1->date1->GetAge(false, client_jd());
@@ -1195,7 +1174,7 @@ class GedcomDate {
 
 	// Calculate the years/months/days between two events
 	// Return a gedcom style age string: "1y 2m 3d" (for fact details)
-	function GetAgeGedcom($d1, $d2=NULL) {
+	static function GetAgeGedcom($d1, $d2=NULL) {
 		if (is_null($d2)) {
 			return $d1->date1->GetAge(true, client_jd());
 		} else {
@@ -1215,7 +1194,7 @@ class GedcomDate {
 	// return >0 if $b>$a
 	// return  0 if dates same/overlap/invalid
 	// BEF/AFT sort as the day before/after.
-	function Compare(&$a, &$b) {
+	static function Compare(&$a, &$b) {
 		// Incomplete dates can't be sorted
 		if (!is_object($a) || !is_object($b) || !$a->isOK() || !$b->isOK())
 			return 0;

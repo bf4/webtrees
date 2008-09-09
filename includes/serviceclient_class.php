@@ -70,7 +70,7 @@ class ServiceClient extends GedcomRecord {
 	/**
 	 * check if the service returned an error
 	 */
-	function isError(&$result) {
+	static function isError(&$result) {
 		if (PEAR::isError($result) || isset($result->faultcode) || isset($result->message) || get_class($result)=='SOAP_Fault') {
 			return true;
 		}
@@ -657,7 +657,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	 * @param string $local	The local id
 	 * @param string $remote	the remote id that matches the $local id
 	 */
-	function setSameId($local, $remote) {
+	static function setSameId($local, $remote) {
 		global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 		
 		if ($local == $remote) {
@@ -677,7 +677,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	 * false if they are not. It only compares the name, sex birthdate, and deathdate
 	 * of the person
 	 */
-	 function ComparePeople(&$Person1,&$Person2){
+	 static function ComparePeople(&$Person1,&$Person2){
 		$PersonName1=$Person1->getFullName();
 		$PersonSex1=$Person1->getSex();
 		$PersonBirth1=$Person1->getEstimatedBirthDate();
@@ -945,7 +945,7 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 	 * get a singleton instance of this client
 	 * @return ServiceClient
 	 */
-	function &getInstance($id) {
+	static function &getInstance($id) {
 		global $PGV_SERVERS, $SERVER_URL, $GEDCOM;
 
 		if (isset($PGV_SERVERS[$id])) return $PGV_SERVERS[$id];

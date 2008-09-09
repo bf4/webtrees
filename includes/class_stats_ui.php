@@ -40,7 +40,7 @@ class stats_ui extends stats
 // Favorites                                                                 //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _getFavorites($isged=true)
+	static function _getFavorites($isged=true)
 	{
 		global $GEDCOM, $pgv_lang;
 		global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION, $INDEX_DIRECTORY;
@@ -207,17 +207,17 @@ class stats_ui extends stats
 		return $content;
 	}
 
-	function gedcomFavorites(){return $this->_getFavorites(true);}
-	function userFavorites(){return $this->_getFavorites(false);}
+	static function gedcomFavorites(){return self::_getFavorites(true);}
+	static function userFavorites(){return self::_getFavorites(false);}
 
-	function totalGedcomFavorites(){return count(getUserFavorites($GLOBALS['GEDCOM']));}
-	function totalUserFavorites(){return count(getUserFavorites(PGV_USER_ID));}
+	static function totalGedcomFavorites(){return count(getUserFavorites($GLOBALS['GEDCOM']));}
+	static function totalUserFavorites(){return count(getUserFavorites(PGV_USER_ID));}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Messages                                                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function userMessages()
+	static function userMessages()
 	{
 		global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
 
@@ -346,7 +346,7 @@ class stats_ui extends stats
 // Journal                                                                //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function userJournal()
+	static function userJournal()
 	{
 		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
 
@@ -412,7 +412,7 @@ class stats_ui extends stats
 // News                                                                      //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function gedcomNews($params=null)
+	static function gedcomNews($params=null)
 	{
 		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $PGV_BLOCKS;
 
@@ -537,7 +537,7 @@ class stats_ui extends stats
 // Block                                                                     //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function callBlock($params=null)
+	static function callBlock($params=null)
 	{
 		if($params === null){return '';}
 		if(isset($params[0]) && $params[0] != ''){$block = strtolower($params[0]);}else{return '';}
@@ -569,7 +569,7 @@ class stats_ui extends stats
 // Only allowed in GEDCOM Welcome page, not user portals for security.       //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function includeFile($params=null)
+	static function includeFile($params=null)
 	{
 		if(!isset($_GET['ctype']) || $_GET['ctype'] != 'gedcom'){return '';}
 		if($params === null){$params = array();}
