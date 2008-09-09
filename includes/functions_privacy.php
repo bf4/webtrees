@@ -447,6 +447,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	
 		if (PGV_USER_CAN_ACCESS) {
 			if ($type=="INDI") {
+				$gedrec = find_gedcom_record($pid);
 				$isdead = is_dead($gedrec);
 				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($username, 'relationship_privacy')=="Y") {
 					if ($isdead) {
