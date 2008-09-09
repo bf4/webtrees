@@ -45,9 +45,9 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
--$pgv_lang["import_marr_names"]           6 Aug 2008        D
--$pgv_lang["calc_marr_names"]             6 Aug 2008        D
-+$pgv_lang["batch_update"]                6 Aug 2008        A
+-$pgv_lang["import_marr_names"]           			6 Sep 2008				D
+-$pgv_lang["calc_marr_names"]             			6 Sep 2008				D
++$pgv_lang["batch_update"]                			6 Sep 2008				A
 +$pgv_lang["title_view_conns"]						3 Aug 2008				A	(oops -- should not have been deleted)
 -$pgv_lang["title_view_conns"]						3 Aug 2008				D
 *$pgv_lang["error_remove_site"]						3 Aug 2008				A

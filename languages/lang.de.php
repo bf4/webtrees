@@ -32,6 +32,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["parent_family"]			= "Familie der Eltern";
+$pgv_lang["step_parent_family"]		= "Familie der Stiefeltern";
+$pgv_lang["immediate_family"]		= "Eigene Familie";
+
 $pgv_lang["load_full_tree"]			= "Diesen Stammbaum im vollen interaktiven Baumdiagramm zeigen";
 $pgv_lang["hide_show_spouses"]		= "Alle oder nur den letzten Partner zeigen";
 $pgv_lang["interactive_tree"]		= "Interaktives Baumdiagramm";

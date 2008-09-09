@@ -105,7 +105,6 @@ $pgv_lang["ansi_to_utf8"]				= "Soll diese ANSI-codierte GEDCOM-Datei in den UTF
 $pgv_lang["apply_privacy"]				= "Datenschutz Einstellungen verwenden?";
 $pgv_lang["back_useradmin"]				= "Zurück zur Benutzerverwaltung";
 $pgv_lang["bytes_read"]					= "Gelesene Bytes:";
-$pgv_lang["calc_marr_names"]			= "Ehenamen Ermittlung in Gang";
 $pgv_lang["can_admin"]					= "darf verwalten";
 $pgv_lang["can_edit"]					= "Zugriffsrechte";
 $pgv_lang["change_id"]					= "Persönliche ID ändern in:";
@@ -170,7 +169,6 @@ $pgv_lang["ifx"]						= "Informix";
 $pgv_lang["img_admin_settings"]			= "Bild-Veränderungs-Konfiguration bearbeiten";
 $pgv_lang["autoContinue"]				= "«Fortsetzen» Button automatisch drücken";
 $pgv_lang["import_complete"]			= "Import beendet";
-$pgv_lang["import_marr_names"]			= "Ehenamen ermitteln";
 $pgv_lang["import_options"]				= "Import Optionen";
 $pgv_lang["import_progress"]			= "Import Fortschritt...";
 $pgv_lang["import_statistics"]			= "Import Statistiken";
@@ -294,6 +292,10 @@ $pgv_lang["welcome_new"]				= "Willkommen auf Ihrer neuen PhpGedView-Website.";
 $pgv_lang["yearly"]						= "Jährlich";
 $pgv_lang["admin_OK_subject"]			= "Zugangserlaubnis bei #SERVER_NAME#";
 $pgv_lang["admin_OK_message"]			= "Der Verwalter von PhpGedView bei #SERVER_NAME# hat Ihren Zugangsantrag erlaubt.  Sie können sich jetzt mit dem folgenden Link anmelden:\r\n\r\n#SERVER_NAME#\r\n";
+
+$pgv_lang["batch_update"]				= "Ihre Datenbank mittels Stapelverarbeitung aktualisieren oder ändern";
+
+// Text for the Gedcom Checker
 $pgv_lang["gedcheck"]					= "GEDCOM Verifizierungs-Modul";
 $pgv_lang["gedcheck_text"]				= "Dieses Modul verifiziert GEDCOM Dateien gegen den <a href='http://phpgedview.sourceforge.net/ged551-5.pdf'>GEDCOM 5.5.1 Standard</a>.  Es sucht auch nach oft vorkommenden Fehlern.<br /><br />Bitte beachten Sie, dass viele Programme den GEDCOM 5.5.1 Standard erweitert haben.  Deshalb sollten Sie sich zuerst nur mit «kritischen» Fehlern befassen.  Den Grund der meisten Fehlermeldungen können Sie durch gündliches Lesen des Standards ermitteln.  Wenn absolut notwending, können Sie auch Ihre Fragen im <a href='https://sourceforge.net/forum/forum.php?forum_id=185166'>Help-Forum</a> stellen.";
 $pgv_lang["info"]						= "Information";
