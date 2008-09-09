@@ -130,7 +130,7 @@ class CalendarDate {
 	}
 
 	// Calendars that use suffixes, etc. (e.g. 'B.C.') or OS/NS notation should redefine this.
-	static function ExtractYear($year) {
+	function ExtractYear($year) {
 		return empty($year)?0:$year;
 	}
 
@@ -633,7 +633,7 @@ class JulianDate extends CalendarDate {
 	}
 
 	// Process new-style/old-style years and years BC
-	static function ExtractYear($year) {
+	function ExtractYear($year) {
 		if (preg_match('/^(\d\d\d\d) \/ \d{1,4}$/', $year, $match)) { // Assume the first year is correct
 			$this->new_old_style=true;
 			return $match[1]+1;
