@@ -476,8 +476,8 @@ function valid_date(datefield) {
 	datefield.value=datefield.value.replace(/^([\w ]+)[-/]$/, "AFT $1");
 	datefield.value=datefield.value.replace(/^[</-]([\w ]+)$/, "BEF $1");
 	datefield.value=datefield.value.replace(/^([\w ]+) ?- ?([\w ]+)$/, "BET $1 AND $2");
-	if (datefield.value.match(/^=([\d ()/*+-]+)$/)) datefield.value=eval(RegExp.$1);
-	
+	if (datefield.value.match(/^=([\d ()/+*-]+)$/)) datefield.value=eval(RegExp.$1);
+
 	// other format
 	datestr = datefield.value;
 	datestr = datestr.replace(/-/g, "/");
@@ -1229,22 +1229,30 @@ function findSpecialChar(field) {
 }
 
 function toggleByClassName(tagName, className) {
+	var disp = "";
 	var elements = document.getElementsByTagName(tagName.toUpperCase());
 	for (var i = 0; i < elements.length; i++) {
 		var ecn = elements[i].className;
 		if (ecn && ecn.match(new RegExp("(^|\\s)" + className + "(\\s|$)"))) {
-			var disp = elements[i].style.display;
+			disp = elements[i].style.display;
 			if (disp == "none") {
 				if (tagName == "TR") {
 					disp = "table-row";
 					if (document.all && !window.opera) disp = "inline"; // IE
 				}
 				else disp = "block";
+				if (tagName == "SPAN") disp = "inline";
 			}
 			else disp = "none";
 			elements[i].style.display = disp;
 		}
 	}
+	// save status in a cookie
+	if (!navigator.cookieEnabled) return;
+	var cookieName = className;
+	var cookieValue = (disp=="none")? 0 : 1;
+	var cookieDate = new Date(2020,0,1);
+	document.cookie = cookieName+"="+cookieValue+"; expires="+cookieDate.toGMTString();
 }
 
 /**
