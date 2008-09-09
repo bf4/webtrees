@@ -408,7 +408,7 @@ class CalendarDate {
 
 	// Convert a decimal number to roman numerals
 	static function NumToRoman($num) {
-		$lookup=array(1000=>'M', '900'=>'CM', '500'=>'D', 400=>'CD', 100=>'C', 90=>'XC', 50=>'L', 40=>'XL', 10=>'X', 9=>'IX', 5=>'V', 4=>'IV', 1=>'I');
+		static $lookup=array(1000=>'M', '900'=>'CM', '500'=>'D', 400=>'CD', 100=>'C', 90=>'XC', 50=>'L', 40=>'XL', 10=>'X', 9=>'IX', 5=>'V', 4=>'IV', 1=>'I');
   	if ($num<1) return $num;
 		$roman='';
 		foreach ($lookup as $key=>$value)
@@ -421,7 +421,7 @@ class CalendarDate {
 	
 	// Convert a roman numeral to decimal
 	static function RomanToNum($roman) {
-		$lookup=array(1000=>'M', '900'=>'CM', '500'=>'D', 400=>'CD', 100=>'C', 90=>'XC', 50=>'L', 40=>'XL', 10=>'X', 9=>'IX', 5=>'V', 4=>'IV', 1=>'I');
+		static $lookup=array(1000=>'M', '900'=>'CM', '500'=>'D', 400=>'CD', 100=>'C', 90=>'XC', 50=>'L', 40=>'XL', 10=>'X', 9=>'IX', 5=>'V', 4=>'IV', 1=>'I');
 		$num=0;
 		foreach ($lookup as $key=>$value)
 			if (strpos($roman, $value)===0) {
@@ -431,68 +431,6 @@ class CalendarDate {
 		return $num;
 	}
 
-	// Convert a decimal number to hebrew - like roman numerals, but with extra punctuation
-	// and special rules.
-	static function NumToHebrew($num) {
-		global $DISPLAY_JEWISH_THOUSANDS;
-		static $ALAFIM="אלפים";
-		static $GERSHAYIM="״";
-		static $GERSH="׳";
-
-		$jHundreds = array("", "ק", "ר", "ש", "ת", "תק", "תר","תש", "תת", "תתק");
-		$jTens =    array("", "י", "כ", "ל", "מ", "נ", "ס", "ע", "פ", "צ");
-		$jTenEnds = array("", "י", "ך", "ל", "ם", "ן", "ס", "ע", "ף", "ץ");
-		$tavTaz = array("ט״ו", "ט״ז");
-		$jOnes = array("", "א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט");
-		//
-		$shortYear = $num %1000; //discard thousands
-		//next check for all possible single Hebrew digit years
-		$singleDigitYear=($shortYear < 11 || ($shortYear <100 && $shortYear % 10 == 0)  || ($shortYear <= 400 && $shortYear % 100 ==0));
-		$thousands = $num / 1000; //get # thousands
-		$sb = "";	
-		//append thousands to String
-		if($num % 1000 == 0) { // in year is 5000, 4000 etc
-			$sb .= $jOnes[$thousands];
-			$sb .= $GERSH;
-			$sb .= " ";
-			$sb .= $ALAFIM; //add # of thousands plus word thousand (overide alafim boolean)
-		} else if($DISPLAY_JEWISH_THOUSANDS) { // if alafim boolean display thousands
-			$sb .= $jOnes[$thousands];
-			$sb .= $GERSH; //append thousands quote
-			$sb .= " ";
-		}
-		$num = $num % 1000; //remove 1000s
-		$hundreds = $num / 100; // # of hundreds
-		$sb .= $jHundreds[$hundreds]; //add hundreds to String
-		$num = $num % 100; //remove 100s
-		if($num == 15) { //special case 15
-			$sb .= $tavTaz[0];
-		} else if($num == 16) { //special case 16
-			$sb .= $tavTaz[1];
-		} else {
-			$tens = $num / 10;
-			if($num % 10 == 0) {                                    // if evenly divisable by 10
-				if($singleDigitYear == false) {
-					$sb .= $jTenEnds[$tens]; // use end letters so that for example 5750 will end with an end nun
-				} else {
-					$sb .= $jTens[$tens]; // use standard letters so that for example 5050 will end with a regular nun
-				}
-			} else {
-				$sb .= $jTens[$tens];
-				$num = $num % 10;
-				$sb .= $jOnes[$num];
-			}
-		}
-		if($singleDigitYear == true) {
-			$sb .= $GERSH; //append single quote
-		} else { // append double quote before last digit
-        	$pos1 = strlen($sb)-2;
- 			$sb = substr($sb, 0, $pos1) . $GERSHAYIM . substr($sb, $pos1);
-			$sb = str_replace($GERSHAYIM . $GERSHAYIM, $GERSHAYIM, $sb); //replace double gershayim with single instance
-		}
-		return $sb;
-	}
-	
 	// Get today's date in the current calendar
 	function TodayYMD() {
 		return $this->JDtoYMD(GregorianDate::YMDtoJD(date('Y'), date('n'), date('j')));
@@ -727,15 +665,19 @@ class JewishDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class HebrewDate extends JewishDate {
-	var $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב'", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
-	var $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
+	static $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב'", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
+	static $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
+
+	const ALAFIM="אלפים";
+	const GERSHAYIM="״";
+	const GERSH="׳";
 
 	function FormatDayZeros() {
-		return $this->NumToHebrew($this->d);
+		return self::NumToHebrew($this->d);
 	}
 
 	function FormatDay() {
-		return $this->NumToHebrew($this->d);
+		return self::NumToHebrew($this->d);
 	}
 
 	function FormatLongMonth() {
@@ -743,24 +685,83 @@ class HebrewDate extends JewishDate {
 		if ($mon=='adr' &&$this->IsLeapYear())
 			return "אדר א'";
 		else
-			return $this->HEBREW_MONTHS[$this->m];
+			return self::$HEBREW_MONTHS[$this->m];
 	}
 
 	function FormatLongWeekday() {
-		return $this->HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
 	}
 
 	function FormatShortWeekday() {
-		return $this->HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
 	}
 
 	function FormatShortYear() {
-		return $this->NumToHebrew($this->y%1000);
+		return self::NumToHebrew($this->y%1000);
 	}
 
 	function FormatLongYear() {
-		return $this->NumToHebrew($this->y);
+		return self::NumToHebrew($this->y);
 	}
+	// Convert a decimal number to hebrew - like roman numerals, but with extra punctuation
+	// and special rules.
+	static function NumToHebrew($num) {
+		global $DISPLAY_JEWISH_THOUSANDS;
+
+		static $jHundreds = array("", "ק", "ר", "ש", "ת", "תק", "תר","תש", "תת", "תתק");
+		static $jTens     = array("", "י", "כ", "ל", "מ", "נ", "ס", "ע", "פ", "צ");
+		static $jTenEnds  = array("", "י", "ך", "ל", "ם", "ן", "ס", "ע", "ף", "ץ");
+		static $tavTaz    = array("ט״ו", "ט״ז");
+		static $jOnes     = array("", "א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט");
+
+		$shortYear = $num %1000; //discard thousands
+		//next check for all possible single Hebrew digit years
+		$singleDigitYear=($shortYear < 11 || ($shortYear <100 && $shortYear % 10 == 0)  || ($shortYear <= 400 && $shortYear % 100 ==0));
+		$thousands = $num / 1000; //get # thousands
+		$sb = "";	
+		//append thousands to String
+		if($num % 1000 == 0) { // in year is 5000, 4000 etc
+			$sb .= $jOnes[$thousands];
+			$sb .= self::GERSH;
+			$sb .= " ";
+			$sb .= self::ALAFIM; //add # of thousands plus word thousand (overide alafim boolean)
+		} else if($DISPLAY_JEWISH_THOUSANDS) { // if alafim boolean display thousands
+			$sb .= $jOnes[$thousands];
+			$sb .= self::GERSH; //append thousands quote
+			$sb .= " ";
+		}
+		$num = $num % 1000; //remove 1000s
+		$hundreds = $num / 100; // # of hundreds
+		$sb .= $jHundreds[$hundreds]; //add hundreds to String
+		$num = $num % 100; //remove 100s
+		if($num == 15) { //special case 15
+			$sb .= $tavTaz[0];
+		} else if($num == 16) { //special case 16
+			$sb .= $tavTaz[1];
+		} else {
+			$tens = $num / 10;
+			if($num % 10 == 0) {                                    // if evenly divisable by 10
+				if($singleDigitYear == false) {
+					$sb .= $jTenEnds[$tens]; // use end letters so that for example 5750 will end with an end nun
+				} else {
+					$sb .= $jTens[$tens]; // use standard letters so that for example 5050 will end with a regular nun
+				}
+			} else {
+				$sb .= $jTens[$tens];
+				$num = $num % 10;
+				$sb .= $jOnes[$num];
+			}
+		}
+		if ($singleDigitYear == true) {
+			$sb .= self::GERSH; //append single quote
+		} else { // append double quote before last digit
+        	$pos1 = strlen($sb)-2;
+ 			$sb = substr($sb, 0, $pos1) . self::GERSHAYIM . substr($sb, $pos1);
+			$sb = str_replace(self::GERSHAYIM . self::GERSHAYIM, self::GERSHAYIM, $sb); //replace double gershayim with single instance
+		}
+		return $sb;
+	}
+	
 } // class HebrewDate
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -838,23 +839,23 @@ class HijriDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class ArabicDate extends HijriDate {
-	var $ARABIC_MONTHS=array("", "محرّم", "صفر", "ربيع الأول", "ربيع الثانى", "جمادى الأول", "جمادى الثاني", "رجب", "شعبان", "رمضان", "شوّال", "ذو القعدة", "ذو الحجة");
-	var $ARABIC_DAYS=array("الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعه", "السبت", "الأحد");
+	static $ARABIC_MONTHS=array("", "محرّم", "صفر", "ربيع الأول", "ربيع الثانى", "جمادى الأول", "جمادى الثاني", "رجب", "شعبان", "رمضان", "شوّال", "ذو القعدة", "ذو الحجة");
+	static $ARABIC_DAYS=array("الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعه", "السبت", "الأحد");
 
 	function FormatLongMonth() {
-		return $this->ARABIC_MONTHS[$this->m];
+		return self::$ARABIC_MONTHS[$this->m];
 	}
 
 	function FormatShortMonth() {
-		return $this->ARABIC_MONTHS[$this->m];
+		return self::$ARABIC_MONTHS[$this->m];
 	}
 
 	function FormatLongWeekday() {
-		return $this->ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
 	}
 
 	function FormatShortWeekday() {
-		return $this->ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
 	}
 } // class ArabicDate
 
@@ -888,7 +889,6 @@ class RomanDate extends CalendarDate {
 	}
 
 	function FormatLongYear() {
-		global $pgv_lang;
 		return $this->y.'AUC';
 	}
 } // class RomanDate
