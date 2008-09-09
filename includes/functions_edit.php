@@ -787,6 +787,17 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		return "latin"; // No matched text implies latin :-)
 	}
 
+	// Generate a full name from the name components
+	function generate_name() {
+		var frm =document.forms[0];
+		var npfx=frm.NPFX.value;
+		var givn=frm.GIVN.value;
+		var spfx=frm.SPFX.value;
+		var surn=frm.SURN.value;
+		var nsfx=frm.NSFX.value;
+		return trim(npfx+" "+givn+" /"+trim(spfx+" "+surn.replace(/ *, */, " "))+"/ "+nsfx);
+	}
+
 	// Update the NAME and _MARNM fields from the name components
 	// and also display the value in read-only "gedcom" format.
 	function updatewholename() {
@@ -799,7 +810,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var spfx=frm.SPFX.value;
 		var surn=frm.SURN.value;
 		var nsfx=frm.NSFX.value;
-		document.getElementById('NAME').value=trim(npfx+" "+givn+" /"+trim(spfx+" "+surn)+"/ "+nsfx);
+		document.getElementById('NAME').value=generate_name();
 		document.getElementById('NAME_display').innerHTML=frm.NAME.value;
 		// Married names inherit some NSFX values, but not these
 		nsfx=nsfx.replace(/^(I|II|III|IV|V|VI|Junior|Jr\.?|Senior|Sr\.?)$/i, '');
@@ -925,19 +936,19 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			// Blank out temporary _MARNM_SURN and empty name fields
 			if (ip[i].id.indexOf("_MARNM_SURN")==0 || ip[i].value=='//')
 					ip[i].value='';
+			// Convert "xxx yyy" and "xxx y yyy" surnames to "xxx,yyy" 
+			if ('<?php echo $SURNAME_TRADITION; ?>'=='spanish' || '<?php echo $SURNAME_TRADITION; ?>'=='portuguese')
+				if (ip[i].id.indexOf("SURN")==0) ip[i].value=document.forms[0].SURN.value.replace(/^\s*([^\s,]{2,})\s+([iIyY] +)?([^\s,]{2,})\s*$/, "$1,$3");;
 		}
 		return true;
 	}
-	//-->
+
+	// If the name isn't initially formed from the components in a standard way,
+	// then don't automatically update it.
+	if (document.getElementById("NAME").value!=generate_name()) convertHidden("NAME");
+
 	</script>
 	<?php
-	// Force the 1 NAME record to be rebuilt from the 2 XXXX parts
-	// This tidies up whitespace and removes "nicknames".
-	// See [ 1830176 ] - don't automatically update the 1 NAME line from 2 parts
-	// in case the user wants them to be different
-	// if the user actually makes a change in one of the parts then the updatewholename
-	// will be called and the 1 NAME updated
-	//print "<script type='text/javascript'>updatewholename();</script>";
 }
 
 /**
