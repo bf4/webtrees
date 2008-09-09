@@ -226,7 +226,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 					echo '<div>', str_replace('<a', '<a name="'.$birth_date->MinJD().'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
 				}
 			}
-			if ($birth_dates[0]->gregorianYear()>=1550) {
+			if ($birth_dates[0]->gregorianYear()>=1550 && $birth_dates[0]->gregorianYear()<2030) {
 				$birt_by_decade[floor($birth_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
 			}
 		} else {
@@ -294,7 +294,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 					echo '<div>', $pgv_lang["yes"], '<a name="'.$est_death_date->JD().'"></a></div>';
 				}
 			}
-			if ($death_dates[0]->gregorianYear()>=1550) {
+			if ($death_dates[0]->gregorianYear()>=1550 && $death_dates[0]->gregorianYear()<2030) {
 				$deat_by_decade[floor($death_dates[0]->gregorianYear()/10)*10] .= $person->getSex();
 			}
 		} else {
@@ -573,7 +573,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "<td class=\"list_value_wrap\">";
 		$hdate=$husb->getBirthDate();
 		if ($hdate->isOK()) {
-			if ($hdate->gregorianYear()>=1550) {
+			if ($hdate->gregorianYear()>=1550 && $hdate->gregorianYear()<2030) {
 				$birt_by_decade[floor($hdate->gregorianYear()/10)*10] .= $husb->getSex();
 			}
 			if ($mdate->isOK()) {
@@ -622,7 +622,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "<td class=\"list_value_wrap\">";
 		$wdate=$wife->getBirthDate();
 		if ($wdate->isOK()) {
-			if ($wdate->gregorianYear()>=1550) {
+			if ($wdate->gregorianYear()>=1550 && $wdate->gregorianYear()<2030) {
 				$birt_by_decade[floor($wdate->gregorianYear()/10)*10] .= $wife->getSex();
 			}
 			if ($mdate->isOK()) {
@@ -657,7 +657,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 					}
 				}
 			}
-			if ($marriage_dates[0]->gregorianYear()>=1550) {
+			if ($marriage_dates[0]->gregorianYear()>=1550 && $marriage_dates[0]->gregorianYear()<2030) {
 				$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
 			}
 		} else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref()))) {
