@@ -494,7 +494,7 @@ class GedcomRecord {
 
 	// Static helper function to sort an array of objects by name
 	function Compare($x, $y) {
-		return strcmp($x->getSortName(), $y->getSortName('sort'));
+		return compareStrings($x->getSortName(), $y->getSortName());
 	}
 
 	// Get the three variants of the name
