@@ -164,11 +164,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		list($surn, $givn)=explode(',', $person->getSortName());
 		// If we're showing search results, then the highlighted name is not
 		// necessarily the person's primary name.
-		if (is_array($value) && isset($value['primary'])) {
-			$primary=$value['primary'];
-		} else {
-			$primary=$person->getPrimaryName();
-		}
+		$primary=$person->getPrimaryName();
 		$names=$person->getAllNames();
 		foreach ($names as $num=>$name) {
 			// Exclude duplicate names, which can occur when individuals have
@@ -545,17 +541,17 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink("_blank").'</td>';
 		//-- Husband name(s)
+		list($husb_name, $wife_name)=explode(' + ', $family->getSortName());
+		$n1=$husb->getPrimaryName();
+		$n2=$husb->getSecondaryName();
 		$names=$husb->getAllNames();
-		if (is_array($value) && isset($value['hname'])) {
-			$n1=$value['hname'];
-			if ($n1==$husb->getPrimaryName()) {
-				$n2=$husb->getSecondaryName();
-			} else {
-				$n2=$husb->getPrimaryName();
+		// The husband's primary/secondary name might not be the family's primary name
+		foreach ($names as $n=>$name) {
+			if ($n!=$n1 && $n!=$n2 && $name['sort']==$husb_name) {
+				$n2=$n1;
+				$n1=$n;
+				break;
 			}
-		} else {
-			$n1=$husb->getPrimaryName();
-			$n2=$husb->getSecondaryName();
 		}
 		$tdclass = "list_value_wrap";
 		if (!$husb->isDead()) $tdclass .= " alive";
@@ -570,7 +566,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($husb->xref) echo $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Husb GIVN
-		list($surn,$givn)=explode(',', $names[$n1]['sort']);
+		list($surn,$givn)=explode(',', $husb->getSortName());
 		echo '<td style="display:none">', $givn, '</td>';
 		$mdate=$family->getMarriageDate();
 		//-- Husband age
@@ -595,17 +591,16 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
+		$n1=$wife->getPrimaryName();
+		$n2=$wife->getSecondaryName();
 		$names=$wife->getAllNames();
-		if (is_array($value) && isset($value['wname'])) {
-			$n1=$value['wname'];
-			if ($n1==$wife->getPrimaryName()) {
-				$n2=$wife->getSecondaryName();
-			} else {
-				$n2=$wife->getPrimaryName();
+		// The wife's primary/secondary name might not be the family's primary name
+		foreach ($names as $n=>$name) {
+			if ($n!=$n1 && $n!=$n2 && $name['sort']==$wife_name) {
+				$n2=$n1;
+				$n1=$n;
+				break;
 			}
-		} else {
-			$n1=$wife->getPrimaryName();
-			$n2=$wife->getSecondaryName();
 		}
 		$tdclass = "list_value_wrap";
 		if (!$wife->isDead()) $tdclass .= " alive";
@@ -620,7 +615,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($wife->xref) echo $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Wife GIVN
-		list($surn,$givn)=explode(',', $names[$n1]['sort']);
+		list($surn,$givn)=explode(',', $wife->getSortName());
 		echo '<td style="display:none">', $givn, '</td>';
 		$mdate=$family->getMarriageDate();
 		//-- Wife age
