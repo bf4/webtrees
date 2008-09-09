@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: [ 1671551 ] 2-surnames support for PGV!!! (fisharebest)
  - Fixed: [ 2016270 ] Surname with commas (fisharebest)
  - Fixed:   Family_Nav - Possible "getLabel" error on certain indi's. (windmillway)
  - Changed: More aesthetic tidying up of Album Page Layout (fixed short table rows in IE) (windmillway)
