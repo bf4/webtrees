@@ -34,7 +34,6 @@ require_once 'includes/family_class.php';
 require_once 'includes/event_class.php';
 
 class Person extends GedcomRecord {
-	var $disp = true;
 	var $dispname = true;
 	var $indifacts = array();
 	var $otherfacts = array();
@@ -78,8 +77,6 @@ class Person extends GedcomRecord {
 	 */
 	function Person($gedrec,$simple=true) {
 		parent::GedcomRecord($gedrec, $simple);
-
-		$this->disp = displayDetailsById($this->xref, 'INDI');
 		$this->dispname = showLivingNameById($this->xref);
 	}
 

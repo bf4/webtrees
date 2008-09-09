@@ -32,7 +32,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once('includes/gedcomrecord.php');
 
 class Media extends GedcomRecord {
-	var $disp = true;
 	var $title = "";
 	var $file = "";
 	var $ext = "";
@@ -53,7 +52,6 @@ class Media extends GedcomRecord {
 	 */
 	function Media($gedrec) {
 		parent::GedcomRecord($gedrec);
-		$this->disp = displayDetailsByID($this->xref, "OBJE");
 		$this->title = get_gedcom_value("TITL", 1, $gedrec);
 		$this->note = get_gedcom_value("NOTE", 1, $gedrec);
 		if (empty($this->title)) $this->title = get_gedcom_value("TITL", 2, $gedrec);

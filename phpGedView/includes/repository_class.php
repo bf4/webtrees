@@ -32,18 +32,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once('includes/gedcomrecord.php');
 
 class Repository extends GedcomRecord {
-	var $disp = true;
 	var $sourcelist = null;
 	var $repositoryfacts = null;
-
-	/**
-	 * Constructor for repository object
-	 * @param string $gedrec	the raw repository gedcom record
-	 */
-	function Repository($gedrec) {
-		parent::GedcomRecord($gedrec);
-		$this->disp = displayDetailsByID($this->xref, "REPO");
-	}
 
 	/**
 	 * Static function used to get an instance of a repository object
