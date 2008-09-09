@@ -62,7 +62,7 @@ class Media extends GedcomRecord {
 	 * Static function used to get an instance of a media object
 	 * @param string $pid	the ID of the media to retrieve
 	 */
-	function &getInstance($pid, $simple=true) {
+	static function &getInstance($pid, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);
@@ -304,7 +304,7 @@ class Media extends GedcomRecord {
 	 * @param Media $obje
 	 * @return mixed  returns the ID for the for the matching media or false if not found
 	 */
-	function in_obje_list(&$obje) {
+	static function in_obje_list(&$obje) {
 		global $TBLPREFIX, $GEDCOMS, $GEDCOM, $FILE, $DBCONN;
 
 		if (is_null($obje)) return false;

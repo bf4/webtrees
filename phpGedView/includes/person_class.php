@@ -85,7 +85,7 @@ class Person extends GedcomRecord {
 	 * @param string $pid	the ID of the person to retrieve
 	 * @return Person	returns an instance of a person object
 	 */
-	function &getInstance($pid, $simple=true) {
+	static function &getInstance($pid, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);

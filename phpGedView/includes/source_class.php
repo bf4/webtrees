@@ -39,7 +39,7 @@ class Source extends GedcomRecord {
 	 * Static function used to get an instance of a source object
 	 * @param string $pid	the ID of the source to retrieve
 	 */
-	function &getInstance($pid, $simple=true) {
+	static function &getInstance($pid, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);
