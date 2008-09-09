@@ -40,7 +40,7 @@ global $errors, $warnings, $pgv_lang;
 $errors = array();
 $warnings = array();
 
-if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
+if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
 	$errors[] = "<span class=\"error\">".$pgv_lang["sanity_err1"]."</span>";
 }
 

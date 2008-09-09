@@ -158,7 +158,7 @@ if ($CONFIGURED) {
 else {
 	//-- set the default to sqlite for php 5+
 	if (empty($action) && !function_exists('mysql_connect')) {
-		if (phpversion()>=5) {
+		if (PHP_VERSION>='5') {
 			$DBTYPE="sqlite";
 			$DBNAME="index/phpgedview.db";
 		}
