@@ -44,27 +44,27 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["parent_family"]							26 August 2008			A		Line 34 in lang_en.php
-+$pgv_lang["step_parent_family"]					26 August 2008			A		Line 35 in lang_en.php
-+$pgv_lang["immediate_family"]						26 August 2008			A		Line 36 in lang_en.php
-+$pgv_lang["NNhebrew"]                02 September 2008     A (do not translate this)
-+$pgv_lang["PNhebrew"]                02 September 2008     A ditto
-+$pgv_lang["NNarabic"]                02 September 2008     A ditto
-+$pgv_lang["PNarabic"]                02 September 2008     A ditto
-+$pgv_lang["NNgreek"]                 02 September 2008     A ditto
-+$pgv_lang["PNgreek"]                 02 September 2008     A ditto
-+$pgv_lang["NNrussian"]               02 September 2008     A ditto
-+$pgv_lang["PNrussian"]               02 September 2008     A ditto
-+$pgv_lang["NNchinese"]               02 September 2008     A ditto
-+$pgv_lang["PNchinese"]               02 September 2008     A ditto
-+$pgv_lang["NNvietnamese"]            02 September 2008     A ditto
-+$pgv_lang["PNvietnamese"]            02 September 2008     A ditto
-+$pgv_lang["NNthai"]                  02 September 2008     A ditto
-+$pgv_lang["PNthai"]                  02 September 2008     A ditto
-+$pgv_lang["NNother"]                 02 September 2008     A "unknown" in latin text
-+$pgv_lang["PNother"]                 02 September 2008     A ditto
--$pgv_lang["dynasty_list"]			      29 August 2008        D
--$pgv_lang["patriarch_list"] 		      29 August 2008        D
++$pgv_lang["parent_family"]							4 Sep 2008				A		Line 34 in lang_en.php
++$pgv_lang["step_parent_family"]					4 Sep 2008				A		Line 35 in lang_en.php
++$pgv_lang["immediate_family"]						4 Sep 2008				A		Line 36 in lang_en.php
++$pgv_lang["NNhebrew"]								2 Sep 2008				A (do not translate this)
++$pgv_lang["PNhebrew"]								2 Sep 2008				A ditto
++$pgv_lang["NNarabic"]								2 Sep 2008				A ditto
++$pgv_lang["PNarabic"]								2 Sep 2008				A ditto
++$pgv_lang["NNgreek"]								2 Sep 2008				A ditto
++$pgv_lang["PNgreek"]								2 Sep 2008				A ditto
++$pgv_lang["NNrussian"]								2 Sep 2008				A ditto
++$pgv_lang["PNrussian"]								2 Sep 2008				A ditto
++$pgv_lang["NNchinese"]								2 Sep 2008				A ditto
++$pgv_lang["PNchinese"]								2 Sep 2008				A ditto
++$pgv_lang["NNvietnamese"]							2 Sep 2008				A ditto
++$pgv_lang["PNvietnamese"]							2 Sep 2008				A ditto
++$pgv_lang["NNthai"]								2 Sep 2008				A ditto
++$pgv_lang["PNthai"]								2 Sep 2008				A ditto
++$pgv_lang["NNother"]								2 Sep 2008				A "unknown" in latin text
++$pgv_lang["PNother"]								2 Sep 2008				A ditto
+-$pgv_lang["dynasty_list"]			      			29 August 2008			D
+-$pgv_lang["patriarch_list"] 		      			29 August 2008			D
 +$pgv_lang["parent_age"]							26 August 2008			A
 +$pgv_lang["father_age"]							26 August 2008			A
 +$pgv_lang["mother_age"]							26 August 2008			A
