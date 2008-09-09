@@ -967,7 +967,7 @@ class IndividualControllerRoot extends BaseController {
 
 	function printChildren(&$family, &$people) {
 		global $elderdate, $personcount, $factarray;
-		$elderdate = new GedcomDate($family->getMarriageDate());
+		$elderdate = $family->getMarriageDate();
 		foreach($people["children"] as $key=>$child) {
 			$label = $child->getLabel();
 			if ($label[0]=='+')
