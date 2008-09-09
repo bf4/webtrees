@@ -275,9 +275,6 @@ if ($showList) {
 		}
 	} else {
 		// Show the individual list
-		// Note that each person is listed as many times as they have names that
-		// match the search criteria.  e.g. Mary Black nee Brown is listed twice
-		// on the "B" list.
 
 		$individuals=array();
 		$givn_initials=array();
@@ -294,7 +291,9 @@ if ($showList) {
 					    (!$alpha   || $alpha==get_first_letter($name['sort']))) {
 						$givn_initials[$givn_alpha]=$givn_alpha;
 						if (!$falpha || $falpha==$givn_alpha) {
-							$individuals[]=array('gid'=>$pid, 'primary'=>$n, 'name'=>$name['sort']);
+							$person->setPrimaryName($n);
+							$individuals[]=$person;
+							continue 2;
 						}
 					}
 				}
@@ -312,7 +311,7 @@ if ($showList) {
 				$falpha=default_initial($givn_initials, $alpha);
 				$legend.=', '.$falpha;
 				foreach ($individuals as $key=>$value) {
-					if (strpos($value['name'], ','.$falpha)===false) {
+					if (strpos($value->getSortName(), ','.$falpha)===false) {
 						unset($individuals[$key]);
 					}
 				}
@@ -361,7 +360,7 @@ if ($showList) {
 		}
 
 		if ($showList) {
-			usort($individuals, 'itemsort');
+			usort($individuals, array('GedcomRecord', 'Compare'));
 			if ($legend && $show_all=='no') {
 				$legend=PrintReady(str_replace("#surname#", check_NN($legend), $pgv_lang['indis_with_surname']));
 			}

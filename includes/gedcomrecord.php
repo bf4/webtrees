@@ -486,6 +486,12 @@ class GedcomRecord {
 		return $this->_getSecondaryName;
 	}
 
+	// Allow the choice of primary name to be overidden, e.g. in a search result
+	function setPrimaryName($n) {
+		$this->_getPrimaryName=$n;
+		$this->_getSecondaryName=null;
+	}
+
 	// Static helper function to sort an array of objects by name
 	function Compare($x, $y) {
 		return strcmp($x->getSortName(), $y->getSortName('sort'));

@@ -277,9 +277,6 @@ if ($showList) {
 		}
 	} else {
 		// Show the family list
-		// Note that each person is listed as many times as they have names that
-		// match the search criteria.  e.g. Mary Black nee Brown is listed twice
-		// on the "B" list.
 
 		$families=array();
 		$givn_initials=array();
@@ -287,31 +284,30 @@ if ($showList) {
 		foreach (array_keys($fams) as $pid) {
 			if (empty($pid)) continue;
 			$family=Family::getInstance($pid);
-			foreach (array('M'=>$family->husb, 'F'=>$family->wife) as $sex=>$person) {
-				if (!is_object($person)) continue;
-				foreach ($person->getAllNames() as $n=>$name) {
-					if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
-						list($surn,$givn)=explode(',', $name['sort']);
-						$givn_alpha=get_first_letter($givn);
-						if ((!$surname || $surname==$surn) &&
-					    	(!$alpha   || $alpha==get_first_letter($name['sort']))) {
-							$givn_initials[$givn_alpha]=$givn_alpha;
-							if (!$falpha || $falpha==$givn_alpha) {
-								if ($sex=='M') {
-									if ($family->wife) {
-										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'hname'=>$n, 'name'=>$name['sort'].'+'.$family->wife->getSortName());
-									} else {
-										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'hname'=>$n, 'name'=>$name['sort'].'+@N.N.');
-									}
-								} else {
-									if ($family->husb) {
-										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'wname'=>$n, 'name'=>$family->husb->getSortName().'+'.$name['sort']);
-									} else {
-										$families[$pid]=array('gid'=>$pid, 'primary'.$sex=>$n, 'wname'=>$n, 'name'=>'@N.N.+'.$name['sort']);
-									}
-								}
-							}
-						}
+			foreach ($family->getAllNames() as $n=>$name) {
+				list($husb_name, $wife_name)=explode(' + ', $name['sort']);
+				// Check for husband name
+				list($husb_surn,$husb_givn)=explode(',', $husb_name);
+				$givn_alpha=get_first_letter($husb_givn);
+				if ((!$surname || $surname==$husb_surn) &&
+				    (!$alpha   || $alpha==get_first_letter($husb_name))) {
+					$givn_initials[$givn_alpha]=$givn_alpha;
+					if (!$falpha || $falpha==$givn_alpha) {
+						$family->setPrimaryName($n);
+						$families[]=$family;
+						continue 2;
+					}
+				}
+				// Check for wife name
+				list($wife_surn,$wife_givn)=explode(',', $wife_name);
+				$givn_alpha=get_first_letter($wife_givn);
+				if ((!$surname || $surname==$wife_surn) &&
+				    (!$alpha   || $alpha==get_first_letter($wife_name))) {
+					$givn_initials[$givn_alpha]=$givn_alpha;
+					if (!$falpha || $falpha==$givn_alpha) {
+						$family->setPrimaryName($n);
+						$families[]=$family;
+						continue 2;
 					}
 				}
 			}
@@ -377,7 +373,7 @@ if ($showList) {
 		}
 
 		if ($showList) {
-			usort($families, 'itemsort');
+			usort($families, array('GedcomRecord', 'Compare'));
 			if ($legend && $show_all=='no') {
 				$legend=PrintReady(str_replace("#surname#", check_NN($legend), $pgv_lang['fams_with_surname']));
 			}
