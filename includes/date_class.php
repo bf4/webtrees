@@ -494,7 +494,7 @@ class CalendarDate {
 	}
 	
 	// Get today's date in the current calendar
-	static function TodayYMD() {
+	function TodayYMD() {
 		return $this->JDtoYMD(GregorianDate::YMDtoJD(date('Y'), date('n'), date('j')));
 	}
 	function Today() {
