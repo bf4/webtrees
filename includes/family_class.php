@@ -37,7 +37,6 @@ class Family extends GedcomRecord {
 	var $wife = null;
 	var $children = array();
 	var $childrenIds = array();
-	var $disp = true;
 	var $marriage = null;
 	var $divorce = null; 
 	var $marr_est = false; // estimate
@@ -51,8 +50,6 @@ class Family extends GedcomRecord {
 	 * @param string $gedrec	the gedcom record
 	 */
 	function Family($gedrec, $simple=true) {
-		global $pgv_changes, $GEDCOM;
-
 		//-- get the husbands ids
 		$husb = get_gedcom_value("HUSB", 1, $gedrec);
 		if (!empty($husb)) $this->husb = Person::getInstance($husb, $simple);
@@ -67,7 +64,6 @@ class Family extends GedcomRecord {
 		}
 		//-- load the parents before privatizing the record because the parents may be remote records
 		parent::GedcomRecord($gedrec);
-		$this->disp = displayDetailsById($this->xref, "FAM");
 	}
 
 	/**

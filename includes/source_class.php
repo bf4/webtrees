@@ -32,18 +32,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once('includes/gedcomrecord.php');
 
 class Source extends GedcomRecord {
-	var $disp = true;
 	var $indilist = null;
 	var $famlist = null;
-
-	/**
-	 * Constructor for source object
-	 * @param string $gedrec	the raw source gedcom record
-	 */
-	function Source($gedrec) {
-		parent::GedcomRecord($gedrec);
-		$this->disp = displayDetailsByID($this->xref, "SOUR");
-	}
 
 	/**
 	 * Static function used to get an instance of a source object

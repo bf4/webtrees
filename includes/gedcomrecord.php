@@ -45,7 +45,7 @@ class GedcomRecord {
 	var $rfn = null;
 	var $facts = null;
 	var $changeEvent = null;
-	var $disp = null;
+	var $disp = true;
 
 	// Cached results from various functions.
 	// These should become private when we move to PHP5.  Do not use them from outside this class.
@@ -82,10 +82,10 @@ class GedcomRecord {
 
 		//-- set the gedcom record a privatized version
 		$this->gedrec = privatize_gedcom($gedrec);
-		$ct = preg_match("/0 @(.*)@ (.*)/", $this->gedrec, $match);
-		if ($ct>0) {
+		if (preg_match("/^0 +@(.*)@ +(.*)/", $this->gedrec, $match)) {
 			$this->xref = trim($match[1]);
 			$this->type = trim($match[2]);
+			$this->disp = displayDetailsByID($this->xref, $this->type);
 		}
 	}
 
