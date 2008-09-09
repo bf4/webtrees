@@ -105,9 +105,9 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			foreach (array_keys(get_surname_indis($surname)) as $pid) {
 				$person=Person::getInstance($pid);
 				foreach ($person->getAllNames() as $name) {
-					$surn=reset(explode(',', $name['sort']));
+					$surn=UTF8_strtoupper($name['surn']);
 					if ($surn && $surn!='@N.N.' && $surname==$surn) {
-						$spfxsurn=reset(explode(',', $name['list']));
+						$spfxsurn=$name['spfx'].($name['spfx'] ? ' ' : '').$name['surn'];
 						if (! array_key_exists($surn, $all_surnames)) {
 							$all_surnames[$surn]=array();
 						}
