@@ -346,7 +346,7 @@ function check_gedcom($gedrec, $chan=true) {
 	$gedrec = preg_replace('/\\\+/', "\\", $gedrec);
 
 	//-- remove any empty lines
-	$lines = preg_split("/\r?\n/", $gedrec);
+	$lines = explode("\n", $gedrec);
 	$newrec = "";
 	foreach($lines as $ind=>$line) {
 		//-- remove any whitespace
@@ -369,7 +369,7 @@ function check_gedcom($gedrec, $chan=true) {
  */
 function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
 	$newrec = "";
-	$gedlines = preg_split("/\n/", $oldrecord);
+	$gedlines = explode("\n", $oldrecord);
 
 	$n = 0;
 	$matchstr = $tag;
@@ -399,13 +399,13 @@ function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
  */
 function remove_subline($oldrecord, $linenum) {
 	$newrec = "";
-	$gedlines = preg_split("/\n/", $oldrecord);
+	$gedlines = explode("\n", $oldrecord);
 
 	for($i=0; $i<$linenum; $i++) {
 		if (trim($gedlines[$i])!="") $newrec .= $gedlines[$i]."\n";
 	}
 	if (isset($gedlines[$linenum])) {
-		$fields = preg_split("/\s/", $gedlines[$linenum]);
+		$fields = explode(' ', $gedlines[$linenum]);
 		$glevel = $fields[0];
 		$i++;
 		if ($i<count($gedlines)) {
@@ -653,7 +653,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
 	if ($namerec!="" && $namerec!="NEW") {
 		$gedlines = split("\n", $namerec);	// -- find the number of lines in the record
-		$fields = preg_split("/\s+/", $gedlines[0]);
+		$fields = explode(' ', $gedlines[0]);
 		$glevel = $fields[0];
 		$level = $glevel;
 		$type = trim($fields[1]);
@@ -680,9 +680,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			$tags[]=$type;
 			$i++;
 			if (isset($gedlines[$i])) {
-				$fields = preg_split("/\s/", $gedlines[$i]);
+				$fields = explode(' ', $gedlines[$i]);
 				$level = $fields[0];
-				if (isset($fields[1])) $type = trim($fields[1]);
+				if (isset($fields[1])) $type = $fields[1];
 			}
 		} while (($level>$glevel)&&($i<count($gedlines)));
 	}
@@ -2010,7 +2010,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		print $pgv_lang["edit_concurrency_reload"]."</span>";
 		return;
 	}
-	$fields = preg_split("/\s/", $gedlines[$linenum]);
+	$fields = explode(' ', $gedlines[$linenum]);
 	$glevel = $fields[0];
 	$level = $glevel;
 	if ($level!=1) {
@@ -2114,7 +2114,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 
 		$i++;
 		if (isset($gedlines[$i])) {
-			$fields = preg_split("/\s/", $gedlines[$i]);
+			$fields = explode(' ', $gedlines[$i]);
 			$level = $fields[0];
 			if (isset($fields[1])) $type = trim($fields[1]);
 			else $level = 0;
@@ -2227,7 +2227,7 @@ function delete_person($pid, $gedrec='') {
 			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
 			else $famrec = find_updated_record($famid);
 			if (!empty($famrec)) {
-				$lines = preg_split("/\n/", $famrec);
+				$lines = explode("\n", $famrec);
 				$newfamrec = "";
 				$lastlevel = -1;
 				foreach($lines as $indexval => $line) {
@@ -2287,7 +2287,7 @@ function delete_family($pid, $gedrec='') {
 			if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id);
 			else $indirec = find_updated_record($id);
 			if (!empty($indirec)) {
-				$lines = preg_split("/\n/", $indirec);
+				$lines = explode("\n", $indirec);
 				$newindirec = "";
 				$lastlevel = -1;
 				foreach($lines as $indexval => $line) {

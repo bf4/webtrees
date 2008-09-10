@@ -392,7 +392,7 @@ function real_path($path) {
 function set_media_path($filename, $moveto, $thumb = false) {
 	$movefile = "";
 	if ($moveto == "..") {
-		$directories = preg_split("/\//", $filename);
+		$directories = explode('/', $filename);
 		$ct = count($directories);
 		foreach ($directories as $key => $value) {
 			if ($key == 1 && $thumb == true)
@@ -403,7 +403,7 @@ function set_media_path($filename, $moveto, $thumb = false) {
 				$movefile .= "/";
 		}
 	} else {
-		$directories = preg_split("/\//", $filename);
+		$directories = explode('/', $filename);
 		$ct = count($directories);
 		foreach ($directories as $key => $value) {
 			if ($key == 1 && $thumb == true)

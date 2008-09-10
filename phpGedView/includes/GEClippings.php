@@ -314,7 +314,7 @@ class GEClippings extends GrampsExport {
 				if (empty($surn) || empty($givn)) {
 					$name = get_gedcom_value("NAME", 1, $nameRec);
 					if (!empty($name)) {
-						$nparts = preg_split("~/~", $name);
+						$nparts = explode('/', $name);
 						$givn = trim($nparts[0]);
 						if (count($nparts)>1) $surn = trim($nparts[1]);
 						if (count($nparts)>2) $nnsfx = trim($nparts[2]);

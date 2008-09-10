@@ -1303,7 +1303,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 
 		$farr = array ();
 		if (!empty ($firstname)) {
-			$firstnames = preg_split("/\s/", trim($firstname));
+			$firstnames = explode(' ', trim($firstname));
 			for ($j = 0; $j < count($firstnames); $j ++) {
 				if ($soundex == "Russell")
 					$farr[$j] = array(soundex($firstnames[$j]));
@@ -2953,7 +2953,7 @@ function delete_fact($linenum, $pid, $gedrec) {
 				$newged .= trim($gedlines[$i])."\r\n";
 			}
 			if (isset($gedlines[$linenum])) {
-				$fields = preg_split("/\s/", $gedlines[$linenum]);
+				$fields = explode(' ', $gedlines[$linenum]);
 				$glevel = $fields[0];
 				$ctlines = count($gedlines);
 				$i++;

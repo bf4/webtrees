@@ -105,7 +105,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	// -- avoid known non facts
 	if (in_array($fact, $nonfacts)) return;
 	//-- do not print empty facts
-	$lines = preg_split("/\n/", trim($factrec));
+	$lines = explode("\n", trim($factrec));
 	if ((count($lines)<2)&&($event=="")) return;
 	// See if RESN tag prevents display or edit/delete
 	$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $match);

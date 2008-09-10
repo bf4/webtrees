@@ -90,7 +90,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 		if ($cyear==date("Y")) {
 			$resn = get_gedcom_value("RESN", 2, $deathrec);
 			if (empty($resn) || ($resn!='confidential' && $resn!='privacy')) {
-				$lines = preg_split("/\n/", $deathrec);
+				$lines = explode("\n", $deathrec);
 				if (count($lines)>1) return true;
 				if (preg_match("/1 DEAT Y/", $deathrec)>0) return true;
 			}

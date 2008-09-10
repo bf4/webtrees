@@ -169,7 +169,7 @@ function get_add_person_name_in_record($name_record, $keep_slash=false) {
 	$romn = preg_match("/(2 ROMN (.*)|2 _HEB (.*))/", $name_record, $romn_match);
 	if ($romn > 0){
 		if ($keep_slash) return trim($romn_match[count($romn_match)-1]);
-		$names = preg_split("/\//", $romn_match[count($romn_match)-1]);
+		$names = explode('/', $romn_match[count($romn_match)-1]);
 		if (count($names)>1) {
 			if ($NAME_REVERSE) {
 				$name = trim($names[1])." ".trim($names[0]);
@@ -225,7 +225,7 @@ function extract_surname($indiname, $count=true) {
 	}
 	//-- get surname from a sortable name
 	else {
-		$names = preg_split("/,/", $indiname);
+		$names = explode(',', $indiname);
 		if (count($names)==1) $nsurname = "@N.N.";
 		else $nsurname = trim($names[0]);
 		$nsurname = preg_replace(array("/ [jJsS][rR]\.?/", "/ I+/"), array("",""), $nsurname);

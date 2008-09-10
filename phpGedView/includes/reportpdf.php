@@ -581,7 +581,7 @@ class PGVRTextPDF extends PGVRText {
 			}
 		}
 
-		$lines = preg_split("/\n/", $temptext);
+		$lines = explode("\n", $temptext);
 		$styleh = $pdf->getCurrentStyleHeight();
 		if (count($lines)>0) {
 			foreach($lines as $indexval => $line) {
@@ -617,14 +617,14 @@ class PGVRTextPDF extends PGVRText {
 		$lw = $pdf->GetStringWidth($this->text);
 		if ($this->wrapWidth > 0) {
 			if ($lw > $this->wrapWidth) {
-				$lines = preg_split("/\n/", $this->text);
+				$lines = explode("\n", $this->text);
 				$newtext = "";
 				$wrapwidth = $this->wrapWidth;
 				$i=0;
 				foreach($lines as $indexval => $line) {
 					$w = $pdf->GetStringWidth($line)+10;
 					if ($w>$wrapwidth) {
-						$words = preg_split("/\s/", $line);
+						$words = explode(' ', $line);
 						$lw = 0;
 						foreach($words as $indexval => $word) {
 							$lw += $pdf->GetStringWidth($word." ");
