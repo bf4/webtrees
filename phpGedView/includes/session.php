@@ -132,31 +132,6 @@ if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
 	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
 }
 
-//-- load file for language settings
-require_once( "includes/lang_settings_std.php");
-$Languages_Default = true;
-if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-	$DefaultSettings = $language_settings;  // Save default settings, so we can merge properly
-	require_once($INDEX_DIRECTORY . "lang_settings.php");
-	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
-	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
-	// Now copy new language settings into existing configuration
-	foreach ($DefaultSettings as $lang => $settings) {
-		foreach ($settings as $key => $value) {
-			if (!isset($language_settings[$lang][$key])) $language_settings[$lang][$key] = $value;
-		}
-	}
-	unset($DefaultSettings);
-	unset($ConfiguredSettings);  // We don't need these any more
-	$Languages_Default = false;
-}
-
-//-- build array of active languages (required for config override check)
-$pgv_lang_use = array();
-foreach ($language_settings as $key => $value) {
-	$pgv_lang_use[$key] = $value["pgv_lang_use"];
-}
-
 /**
  *  Check for configuration variable override.
  *
@@ -178,14 +153,10 @@ if (isset($_REQUEST["CONFIG_VARS"])) $configOverride = true;
 
 //-- check if they are trying to hack
 if ($configOverride) {
-	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
-		//-- load common functions
-		require_once("includes/functions.php");
-		//-- load db specific functions
-		require_once("includes/functions_db.php");
-		require_once("includes/authentication.php");      // -- load the authentication system
+	if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=="off") {
+		require_once("includes/authentication.php");
 		AddToLog("MSG>Configuration override detected; script terminated.");
-		AddToLog("UA>{$ua}<");
+		AddToLog("UA>{$_SERVER["HTTP_USER_AGENT"]}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 	}
 	header("HTTP/1.0 403 Forbidden");
