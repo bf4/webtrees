@@ -774,7 +774,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 
 	if (empty($gedrec))
 		return "";
-	$tags = preg_split("/:/", $tag);
+	$tags = explode(':', $tag);
 	$origlevel = $level;
 	if ($level==0) {
 		$level = $gedrec{0} + 1;
@@ -850,7 +850,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			//-- if it is a place value then apply the pedigree place limit
 			if ($convert && $t=="PLAC") {
 				if ($SHOW_PEDIGREE_PLACES>0) {
-					$plevels = preg_split("/,/", $value);
+					$plevels = explode(',', $value);
 					$value = "";
 					for ($plevel=0; $plevel<$SHOW_PEDIGREE_PLACES; $plevel++) {
 						if (!empty($plevels[$plevel])) {
@@ -862,7 +862,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 				}
 				if (!empty($truncate)) {
 					if (strlen($value)>$truncate) {
-						$plevels = preg_split("/,/", $value);
+						$plevels = explode(',', $value);
 						$value = "";
 						for ($plevel=0; $plevel<count($plevels); $plevel++) {
 							if (!empty($plevels[$plevel])) {
@@ -888,7 +888,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 				} else {
 					if (!empty($truncate)) {
 						if (strlen($value)>$truncate) {
-							$plevels = preg_split("/ /", $value);
+							$plevels = explode(' ', $value);
 							$value = "";
 							for ($plevel=0; $plevel<count($plevels); $plevel++) {
 								if (!empty($plevels[$plevel])) {

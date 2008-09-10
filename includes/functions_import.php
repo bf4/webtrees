@@ -336,7 +336,7 @@ function import_record($indirec, $update) {
 			$name = $smatch[1];
 		if (empty ($name))
 			$name = $gid;
-		$subindi = preg_split("/1 TITL /", $indirec);
+		$subindi = explode("1 TITL ", $indirec);
 		if (count($subindi) > 1) {
 			$pos = strpos($subindi[1], "\n1", 0);
 			if ($pos)
@@ -397,7 +397,7 @@ function update_places($gid, $indirec) {
 		//-- if we have already visited this place for this person then we don't need to again
 		if (isset($personplace[$lowplace])) continue;
 		$personplace[$lowplace] = 1;
-		$places = preg_split("/,/", $place);
+		$places = explode(',', $place);
 		//-- reverse the array to start at the highest level
 		$secalp = array_reverse($places);
 		$parent_id = 0;

@@ -645,7 +645,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 				} else if ($marriage_date->MinJD()!=0) {
 					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
 				} else {
-					$factdetail = preg_split("/ /", trim($family->getMarriageRecord()));
+					$factdetail = explode(' ', trim($family->getMarriageRecord()));
 					if (isset($factdetail)) {
 						if (count($factdetail) == 3) {
 							if (strtoupper($factdetail[2]) == "Y")

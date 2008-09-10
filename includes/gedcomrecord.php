@@ -64,7 +64,7 @@ class GedcomRecord {
 		//-- lookup the record from another gedcom
 		$remoterfn = get_gedcom_value("RFN", 1, $gedrec);
 		if (!empty($remoterfn)) {
-			$parts = preg_split("/:/", $remoterfn);
+			$parts = explode(':', $remoterfn);
 			if (count($parts)==2) {
 				$servid = $parts[0];
 				$aliaid = $parts[1];
@@ -208,7 +208,7 @@ class GedcomRecord {
 		if (is_null($this->rfn)) $this->rfn = get_gedcom_value("RFN", 1, $this->gedrec);
 		if (empty($this->rfn) || $this->xref!=$this->rfn) return false;
 		
-		$parts = preg_split("/:/", $this->rfn);
+		$parts = explode(':', $this->rfn);
 		if (count($parts)==2) {
 			return true;
 		}
@@ -261,7 +261,7 @@ class GedcomRecord {
 	function getLinkTitle() {
 		$title = get_gedcom_setting($this->ged_id, 'title');
 		if ($this->isRemote()) {
-			$parts = preg_split("/:/", $this->rfn);
+			$parts = explode(':', $this->rfn);
 			if (count($parts)==2) {
 				$servid = $parts[0];
 				$aliaid = $parts[1];

@@ -845,7 +845,7 @@ function PGVRGedcomSHandler($attrs) {
 	$tag = $attrs["id"];
 	$tag = preg_replace("/@fact/", $fact, $tag);
 	//print "[$tag]";
-	$tags = preg_split("/:/", $tag);
+	$tags = explode(':', $tag);
 	$newgedrec = "";
 	if (count($tags)<2) {
 		$newgedrec = find_gedcom_record($attrs["id"]);
@@ -879,7 +879,7 @@ function PGVRGedcomSHandler($attrs) {
 				}
 				else {
 					//$newgedrec = find_gedcom_record($gmatch[1]);
-					$temp = preg_split("/\s+/", trim($tgedrec));
+					$temp = explode(' ', trim($tgedrec));
 					$level = $temp[0] + 1;
 					if (showFact($tag, $id)&&showFactDetails($tag,$id)) {
 						$newgedrec = get_sub_record($level, "$level $tag", $tgedrec);
@@ -1036,7 +1036,7 @@ function PGVRGetPersonNameSHandler($attrs) {
 					$name = preg_replace("/\(.*\) ?/", "", $name);
 				}
 				if (strlen($name)>$attrs["truncate"]) {
-					$words = preg_split("/ /", $name);
+					$words = explode(' ', $name);
 					$name = $words[count($words)-1];
 					for($i=count($words)-2; $i>=0; $i--) {
 						$len = strlen($name);
@@ -1078,14 +1078,14 @@ function PGVRGedcomValueSHandler($attrs) {
 		else {
 			$tag = preg_replace("/@fact/", $fact, $tag);
 			if (empty($attrs["level"])) {
-				$temp = preg_split("/\s+/", trim($gedrec));
+				$temp = explode(' ', trim($gedrec));
 				$level = $temp[0];
 				if ($level==0) $level++;
 			}
 			else $level = $attrs["level"];
 			$truncate = "";
 			if (isset($attrs["truncate"])) $truncate=$attrs["truncate"];
-			$tags = preg_split("/:/", $tag);
+			$tags = explode(':', $tag);
 			//-- check all of the tags for privacy
 			foreach($tags as $t=>$subtag) {
 				if (!empty($subtag)) {
@@ -1126,8 +1126,8 @@ function PGVRRepeatTagSHandler($attrs) {
 		}
 		else {
 			$tag = preg_replace("/@fact/", $fact, $tag);
-			$tags = preg_split("/:/", $tag);
-			$temp = preg_split("/\s+/", trim($gedrec));
+			$tags = explode(':', $tag);
+			$temp = explode(' ', trim($gedrec));
 			$level = $temp[0];
 			if ($level==0) $level++;
 			$subrec = $gedrec;
@@ -1479,7 +1479,7 @@ function PGVRifSHandler($attrs) {
 			$value = "'$generation'";
 		}
 		else {
-			$temp = preg_split("/\s+/", trim($gedrec));
+			$temp = explode(' ', trim($gedrec));
 			$level = $temp[0];
 			if ($level==0) $level++;
 			$value = get_gedcom_value($id, $level, $gedrec, "", false);
@@ -1731,7 +1731,7 @@ function PGVRListSHandler($attrs) {
 						$val = trim($val);
 					}
 					$searchstr = "";
-					$tags = preg_split("/:/", $tag);
+					$tags = explode(':', $tag);
 					//-- only limit to a level number if we are specifically looking at a level
 					if (count($tags)>1) {
 						$level = 1;
@@ -1788,7 +1788,7 @@ function PGVRListSHandler($attrs) {
 			if (count($filters)>0) $list = search_indis($filters);
 			//-- handle date specific searches
 			foreach($filters2 as $f=>$filter) {
-				$tags = preg_split("/:/", $filter["tag"]);
+				$tags = explode(':', $filter["tag"]);
 				if (end($tags)=="DATE") {
 					if ($filter['expr']=='LTE') {
 						$enddate = new GedcomDate($filter['val']);
@@ -1827,13 +1827,13 @@ function PGVRListSHandler($attrs) {
 					$expr = $filter["expr"];
 					$val = $filter["val"];
 					if ($val=="''") $val = "";
-					$tags = preg_split("/:/", $tag);
+					$tags = explode(':', $tag);
 					$t = end($tags);
 					$v = get_gedcom_value($tag, 1, $value["gedcom"], '', false);
 					//-- check for EMAIL and _EMAIL (silly double gedcom standard :P)
 					if ($t=="EMAIL" && empty($v)) {
 						$tag = preg_replace("/EMAIL/", "_EMAIL", $tag);
-						$tags = preg_split("/:/", $tag);
+						$tags = explode(':', $tag);
 						$t = end($tags);
 						$v = get_sub_record(1, $tag, $value["gedcom"]);
 					}

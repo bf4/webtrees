@@ -37,7 +37,7 @@ function get_plac_label() {
 	$HEAD_PLAC_FORM = get_sub_record(1, "2 FORM", $HEAD_PLAC);
 	$HEAD_PLAC_FORM = substr($HEAD_PLAC_FORM, 7);
 	if (empty($HEAD_PLAC_FORM)) $HEAD_PLAC_FORM = $pgv_lang["default_form"];
-	$plac_label = preg_split ("/,/", $HEAD_PLAC_FORM);
+	$plac_label = explode(',', $HEAD_PLAC_FORM);
 	$plac_label = array_reverse($plac_label);
 	if ($HEAD_PLAC_FORM == $pgv_lang["default_form"]) $plac_label[0] = $factarray["CTRY"];
 	

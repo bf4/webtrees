@@ -1403,12 +1403,12 @@ function print_help_index($help){
 		$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
 		$sub = preg_replace(array("/pgv_lang\\[/","/\]/"), array("",""), $replace);
 		if (isset($pgv_lang[$sub])) {
-			$items = preg_split("/,/", $pgv_lang[$sub]);
+			$items = explode(',', $pgv_lang[$sub]);
 			$var = $pgv_lang[$items[1]];
 		}
 		$sub = preg_replace(array("/factarray\\[/","/\]/"), array("",""), $replace);
 		if (isset($factarray[$sub])) {
-			$items = preg_split("/,/", $factarray[$sub]);
+			$items = explode(',', $factarray[$sub]);
 			$var = $factarray[$items[1]];
 		}
 		if (substr($var,0,1)=="_") {
@@ -2050,7 +2050,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
 		$factrec = str_replace("\r\nPGV_OLD\r\n", '', $factrec);
 		$factrec = str_replace("\r\nPGV_NEW\r\n", '', $factrec);
-		$factdetail = preg_split('/ /', trim($factrec));
+		$factdetail = explode(' ', trim($factrec));
 		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == 'Y') {
 			$html.=$pgv_lang['yes'];
 		}
@@ -2084,7 +2084,7 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	$ct = preg_match("/2 PLAC (.*)/", $factrec, $match);
 	if ($ct>0) {
 		$html.=' ';
-		$levels = preg_split("/,/", $match[1]);
+		$levels = explode(',', $match[1]);
 		if ($anchor && (empty($SEARCH_SPIDER))) {
 			$place = trim($match[1]);
 			// reverse the array so that we get the top level first
