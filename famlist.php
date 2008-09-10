@@ -326,7 +326,7 @@ if ($showList) {
 				$falpha=default_initial($givn_initials, $alpha);
 				$legend.=', '.$falpha;
 				foreach ($families as $key=>$value) {
-					if (strpos($value['name'], ','.$falpha)===false) {
+					if (strpos($value->getSortName(), ','.$falpha)===false) {
 						unset($families[$key]);
 					}
 				}
