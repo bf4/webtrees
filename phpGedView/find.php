@@ -397,7 +397,7 @@ if ($action=="filter") {
 			foreach($printname as $pkey => $pvalue) {
 				$GEDCOM = $pvalue[2];
 				if ($GEDCOM != $curged) {
-					load_privacy_file(get_id_from_gedcom($GEDCOM);
+					load_privacy_file(get_id_from_gedcom($GEDCOM));
 					$curged = $GEDCOM;
 				}
 				$person=Person::getInstance($pvalue[1]);
@@ -407,7 +407,7 @@ if ($action=="filter") {
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				load_privacy_file(get_id_from_gedcom($GEDCOM);
+				load_privacy_file(get_id_from_gedcom($GEDCOM));
 				$curged = $GEDCOM;
 			}
 			print "</tr>";
@@ -477,7 +477,7 @@ if ($action=="filter") {
 			foreach($printname as $pkey => $pvalue) {
 				$GEDCOM = $pvalue[2];
 				if ($GEDCOM != $curged) {
-					load_privacy_file(get_id_from_gedcom($GEDCOM);
+					load_privacy_file(get_id_from_gedcom($GEDCOM));
 					$curged = $GEDCOM;
 				}
 				$family=Family::getInstance($pvalue[1]);
@@ -486,7 +486,7 @@ if ($action=="filter") {
 			print "\n\t\t</ul></td>";
 			$GEDCOM = $oldged;
 			if ($GEDCOM != $curged) {
-				load_privacy_file(get_id_from_gedcom($GEDCOM);
+				load_privacy_file(get_id_from_gedcom($GEDCOM));
 				$curged = $GEDCOM;
 			}
 			print "</tr>\n";
