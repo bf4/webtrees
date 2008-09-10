@@ -479,6 +479,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 					$surnameList .= $surname;
 				}
 			}
+		} else {
+			$surnames = array();
+			$surnameList = '';
 		}
 		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
 		if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
