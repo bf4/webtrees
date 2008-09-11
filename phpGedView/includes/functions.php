@@ -1684,8 +1684,6 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 function itemsort($a, $b) {
 	if (isset($a["name"])) {
 		$aname = sortable_name_from_name($a["name"]);
-	} elseif (isset($a["names"])) {
-		$aname = sortable_name_from_name($a["names"][0][0]);
 	} elseif (is_array($a)) {
 		$aname = sortable_name_from_name(reset($a));
 	} else {
@@ -1694,8 +1692,6 @@ function itemsort($a, $b) {
 
 	if (isset($b["name"])) {
 		$bname = sortable_name_from_name($b["name"]);
-	} elseif (isset($b["names"])) {
-		$bname = sortable_name_from_name($b["names"][0][0]);
 	} elseif (is_array($b)) {
 		$bname = sortable_name_from_name(reset($b));
 	} else {

@@ -449,8 +449,9 @@ class SearchControllerRoot extends BaseController {
 					$cntgeds = count($this->sgeds);
 					if ($cntgeds==1) $ged = $GEDCOMS[$this->sgeds[0]]["id"];
 					foreach ($this->myindilist as $key1 => $myindi) {
-						foreach ($myindi["names"] as $key2 => $name) {
-							if ((preg_match("/".$this->query."/i", $name[0]) > 0)) {
+						$person=Person::getInstance($myindi["id"]);
+						foreach ($person->getAllNames() as $name) {
+							if ((preg_match("/".$this->query."/i", $name['full']) > 0)) {
 								if ($cntgeds > 1) {
 									$ged = splitkey($key1, "ged");
 									$key1 = splitkey($key1, "id");
@@ -840,7 +841,6 @@ class SearchControllerRoot extends BaseController {
 					// if so, print all indi's where the indi is associated to
 					foreach ($assolist[$apid] as $indexval => $asso) {
 						if ($asso["type"] == "indi") {
-							$indi_printed[$indexval] = "1";
 							// print all names
 							foreach ($asso["name"] as $nkey => $assoname) {
 								$key = splitkey($indexval, "id");
@@ -983,7 +983,6 @@ class SearchControllerRoot extends BaseController {
 				if ($this->tagfilter == "on") $skiptags .= ", _PGVU, FILE, FORM, TYPE, CHAN, SUBM, REFN";
 
 				// Keep track of what indis are already printed to keep a reliable counter
-				$indi_printed = array ();
 				$fam_printed = array ();
 
 				// init various counters
@@ -1029,15 +1028,14 @@ class SearchControllerRoot extends BaseController {
 								}
 							}
 						}
+						$person=Person::getInstance($value["id"]);
 						//-- make sure that the data that was searched on is not in a private part of the record
 						$hit = false;
 						if (!displayDetailsById($key) && showLivingNameById($key)) {
 							//-- any record that is not a FAMC, FAMS is private
-							$ncnt = count($value["names"]);
 							$found = false;
-							for ($ci = 1; $ci <= $ncnt; $ci ++) {
-								$record = get_sub_record($ci, "1 NAME", $value["gedcom"]);
-								if (preg_match("/".$this->query."/i", $record) > 0) {
+							foreach ($person->getAllNames() as $name) {
+								if (preg_match("/".$this->query."/i", $name['full']) > 0) {
 									$hit = true;
 									$found = true;
 								}
@@ -1087,10 +1085,7 @@ class SearchControllerRoot extends BaseController {
 						if ($found == true) {
 
 							// print all names from the indi found
-							foreach ($value["names"] as $indexval => $namearray) {
-								$printindiname[] = array (check_NN(sortable_name_from_name($namearray[0])), $key, get_gedcom_from_id($value["gedfile"]), "");
-							}
-							$indi_printed[$key."[".$GEDCOM."]"] = "1";
+							$printindiname[]=array($key, get_gedcom_from_id($value["gedfile"]));
 
 							// If associates must be shown, see if we can display them and add them to the print array
 							if (($this->showasso == "on") && (strpos($skiptagsged, "ASSO") === false)) {
@@ -1100,12 +1095,7 @@ class SearchControllerRoot extends BaseController {
 									// if so, print all indi's where the indi is associated to
 									foreach ($assolist[$apid] as $indexval => $asso) {
 										if ($asso["type"] == "indi") {
-											$indi_printed[$indexval] = "1";
-											// print all names
-											foreach ($asso["name"] as $nkey => $assoname) {
-												$key = splitkey($indexval, "id");
-												$printindiname[] = array (sortable_name_from_name($assoname[0]), $key, get_gedcom_from_id($asso["gedfile"]), $apid);
-											}
+											$printindiname[] = array ($key, get_gedcom_from_id($asso["gedfile"]));
 										} else
 										if ($asso["type"] == "fam") {
 											$fam_printed[$indexval] = "1";
@@ -1325,7 +1315,7 @@ class SearchControllerRoot extends BaseController {
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					load_privacy_file(get_id_from_gedcom($GEDCOM));
 					$datalist = array();
-					foreach ($printindiname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[$v[1]]=array("gid"=>$v[1]);
+					foreach ($printindiname as $k=>$v) if ($v[1]==$GEDCOM) $datalist[$v[0]]=Person::getInstance($v[0]);
 					// I removed the "name"=>$v[0] from the $datalist[$v[1]]=array("gid"=>$v[1], "name"=>$v[0]);
 					// array because it contained an alternate name instead of the expected main name
 					if ( count($datalist) > 0 ) {
