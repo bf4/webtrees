@@ -74,6 +74,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 	global $PRIVACY_BY_YEAR;
 	global $pgv_lang;
 	global $BUILDING_INDEX;
+	global $GEDCOM;
 
 	$ct = preg_match("/0 @(.*)@ INDI/", $indirec, $match);
 	if ($ct>0) {
@@ -85,35 +86,35 @@ function is_dead($indirec, $cyear="", $import=false) {
 	if (empty($cyear)) $cyear = date("Y");
 
 	// -- check for a death record
-	$deathrec = get_sub_record(1, "1 DEAT", $indirec);
-	if (!empty($deathrec)) {
-		if ($cyear==date("Y")) {
-			$resn = get_gedcom_value("RESN", 2, $deathrec);
-			if (empty($resn) || ($resn!='confidential' && $resn!='privacy')) {
-				$lines = explode("\n", $deathrec);
-				if (count($lines)>1) return true;
-				if (preg_match("/1 DEAT Y/", $deathrec)>0) return true;
-			}
-		}
-		else {
-			$ct = preg_match("/\d DATE.*\s(\d{3,4})\s/", $deathrec, $match);
-			if ($ct>0) {
-				$dyear = $match[1];
-				if ($dyear<$cyear) return true;
-				else return false;
+	foreach (explode('|', PGV_EVENTS_DEAT) as $tag) {
+		$deathrec = get_sub_record(1, "1 ".$tag, $indirec);
+		if ($deathrec) {
+			if ($cyear==date("Y")) {
+				$resn = get_gedcom_value("RESN", 2, $deathrec);
+				if (empty($resn) || ($resn!='confidential' && $resn!='privacy')) {
+					if (preg_match("/^1 {$tag}\s*(\n|Y)/", $deathrec)>0) {
+						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
+					}
+				}
+			} else {
+				if (preg_match("/\d DATE.*\s(\d{3,4})\s/", $deathrec, $match)) {
+					return update_isdead($pid, get_id_from_gedcom($GEDCOM), $match[1] + $cyear < date("Y"));
+				}
 			}
 		}
 	}
 
 	//-- if birthdate less than $MAX_ALIVE_AGE return false
-	$birthrec = get_sub_record(1, "1 BIRT", $indirec);
-	if (!empty($birthrec)) {
-		$ct = preg_match("/\d DATE.*\s(\d{3,4})\s/", $birthrec, $match);
-		if ($ct>0) {
-			$byear = $match[1];
-			if (($cyear-$byear) < $MAX_ALIVE_AGE) {
-				//print "found birth record less that $MAX_ALIVE_AGE\n";
-				return false;
+	foreach (explode('|', PGV_EVENTS_BIRT) as $tag) {
+		$birthrec = get_sub_record(1, "1 ".$tag, $indirec);
+		if ($birthrec) {
+			$ct = preg_match("/\d DATE.*\s(\d{3,4})\s/", $birthrec, $match);
+			if ($ct>0) {
+				$byear = $match[1];
+				if (($cyear-$byear) < $MAX_ALIVE_AGE) {
+					//print "found birth record less that $MAX_ALIVE_AGE\n";
+					return update_isdead($pid, get_id_from_gedcom($GEDCOM), false);
+				}
 			}
 		}
 	}
@@ -126,13 +127,15 @@ function is_dead($indirec, $cyear="", $import=false) {
 			// If any date is prior to than MAX_ALIVE_AGE years ago assume they are dead
 			if (($cyear-$byear) > $MAX_ALIVE_AGE) {
 				//print "older than $MAX_ALIVE_AGE (".$match[$i][0].") year is $byear\n";
-				return true;
+				return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 			}
 		}
 	}
 
 	//-- during import we can't check child dates
-	if ($import) return -1;
+	if ($import) {
+		return -1;
+	}
 
 	// If we found no dates then check the dates of close relatives.
 	if($CHECK_CHILD_DATES ) {
@@ -149,7 +152,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 						// If any date is prior to than MAX_ALIVE_AGE years ago assume they are dead
 						if (($cyear-$byear) > $MAX_ALIVE_AGE+40) {
 							//print "father older than $MAX_ALIVE_AGE+40 (".$match[$i][0].") year is $byear\n";
-							return true;
+							return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 						}
 					}
 				}
@@ -161,7 +164,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 						// If any date is prior to than MAX_ALIVE_AGE years ago assume they are dead
 						if (($cyear-$byear) > $MAX_ALIVE_AGE+40) {
 							//print "mother older than $MAX_ALIVE_AGE+40 (".$match[$i][0].") year is $byear\n";
-							return true;
+							return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 						}
 					}
 				}
@@ -183,7 +186,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 					// if marriage was more than MAX_ALIVE_AGE-10 years ago assume the person has died
 					if (($cyear-$byear) > ($MAX_ALIVE_AGE-10)) {
 						//print "marriage older than $MAX_ALIVE_AGE-10 (".$bmatch[$h][0].") year is $byear\n";
-						return true;
+						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 					}
 				}
 			}
@@ -200,7 +203,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 					// if the spouse is > $MAX_ALIVE_AGE assume the individual is dead
 					if (($cyear-$byear) > $MAX_ALIVE_AGE) {
 						//print "spouse older than $MAX_ALIVE_AGE (".$bmatch[$h][0].") year is $byear\n";
-						return true;
+						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 					}
 				}
 			}
@@ -218,7 +221,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 					// if any child was born more than MAX_ALIVE_AGE-10 years ago assume the parent has died
 					if (($cyear-$byear) > ($MAX_ALIVE_AGE-10)) {
 						//print "child older than $MAX_ALIVE_AGE-10 (".$bmatch[$h][0].") year is $byear\n";
-						return true;
+						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 					}
 				}
 			}
@@ -244,14 +247,14 @@ function is_dead($indirec, $cyear="", $import=false) {
 						// if any grandchild was born more than MAX_ALIVE_AGE-30 years ago assume the grandparent has died
 						if (($cyear-$byear) > ($MAX_ALIVE_AGE-30)) {
 							//print "grandchild older than $MAX_ALIVE_AGE-30 (".$bmatch[$h][0].") year is $byear\n";
-							return true;
+							return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 						}
 					}
 				}
 			}
 		}
 	}
-	return false;
+	return update_isdead($pid, get_id_from_gedcom($GEDCOM), false);
 }
 }
 
