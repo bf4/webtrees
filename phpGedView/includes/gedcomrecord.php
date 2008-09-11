@@ -355,13 +355,20 @@ class GedcomRecord {
 
 	/**
 	 * get the first part of a place record
-	 * @string a url that can be used to link to placelist
+	 * @param string $gedcom_place	The original place to shorten
+	 * @return string 	a shortened version of the place
 	 */
 	static function getPlaceShort($gedcom_place) {
-		global $GEDCOM;
+		global $GEDCOM, $SHOW_LIST_PLACES;
+		if ($SHOW_LIST_PLACES==9) return $gedcom_place;
 		$gedcom_place = trim($gedcom_place, " ,");
 		$exp = explode(",", $gedcom_place);
-		return trim($exp[0]);
+		$place = "";
+		for($i=0; $i<$SHOW_LIST_PLACES && $i<count($exp); $i++) {
+			if ($i>0) $place .= ", ";
+			$place.=trim($exp[$i]);
+		}
+		return $place;
 	}
 
 	/**
