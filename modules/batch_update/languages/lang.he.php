@@ -22,12 +22,13 @@
  * @package PhpGedView
  * @subpackage BatchUpdate
  * @translator Meliza Amity 
- * @version $Id $
+ * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 $pgv_lang["batch_update"]		="עדכון אצוה (Batch)";
 $pgv_lang["bu_update_chan"]		="עדכן רשומת CHAN";
 $pgv_lang["bu_nothing"]		="לא נימצא כלום.";
