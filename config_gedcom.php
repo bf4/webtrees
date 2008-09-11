@@ -99,6 +99,7 @@ $SHOW_ID_NUMBERS = true;				// -- Show gedcom id numbers on charts next to  name
 $SHOW_LAST_CHANGE = true;				// -- Show gedcom record last change on lists
 $SHOW_EST_LIST_DATES = false;  // -- Show estimated birth/death dates on individual lists
 $SHOW_PEDIGREE_PLACES = "9";			// -- What level to show the birth and death places next to the birth and death dates on the pedigree and descendency charts.
+$SHOW_LIST_PLACES = "1";				// -- What level of detail to display for places in a list
 
 $MULTI_MEDIA = true;            		// -- if you have no multi-media files, set this to false
 $MEDIA_EXTERNAL = true;            		// -- Set whether or not to change links starting with http, ftp etc.
