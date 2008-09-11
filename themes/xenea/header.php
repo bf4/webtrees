@@ -29,7 +29,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-global $SEARCH_SPIDER; $TEXT_DIRECTION;
+global $SEARCH_SPIDER, $TEXT_DIRECTION;
 
 $date=new GedcomDate(date('j M Y', client_time()));
 $displayDate = $date->Display(false);
