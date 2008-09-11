@@ -103,7 +103,7 @@ $pgv_lang["ansi_to_utf8"]		= "Muunnetaanko tämä ANSI-koodattu GEDCOM UTF-8 muo
 $pgv_lang["apply_privacy"]		= "Toteuta yksityisyysasetukset?";
 $pgv_lang["back_useradmin"]				= "Takaisin käyttäjien hallintaan";
 $pgv_lang["bytes_read"]		= "Tavua luettu:";
-$pgv_lang["calc_marr_names"]	= "Lasketaan avionimet";
+//$pgv_lang["calc_marr_names"]	= "Lasketaan avionimet";
 $pgv_lang["can_edit"]					= "Käyttöoikeus";
 $pgv_lang["can_admin"]					= "Käyttäjä voi ylläpitä";
 $pgv_lang["change_id"]		= "Muuta henkilö-ID:";
@@ -165,7 +165,7 @@ $pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"] 	= "Editoi kuvankäsittelyn asetuksia";
 $pgv_lang["autoContinue"]						= "Paina automaattisesti «Continue»-painiketta.";
 $pgv_lang["import_complete"]		= "Tuonti onnistui";
-$pgv_lang["import_marr_names"]	= "Tuo avioniomet";
+//$pgv_lang["import_marr_names"]	= "Tuo avioniomet";
 $pgv_lang["import_options"]		= "Tuo vaihtoehdot";
 $pgv_lang["import_progress"]		= "Tuonti käynnissä...";
 $pgv_lang["import_statistics"]		= "Tuo tilastotiedot";
@@ -291,6 +291,8 @@ $pgv_lang["welcome_new"]						= "Tervetuloa sinun uudelle PhpGedView internet si
 $pgv_lang["admin_OK_message"]					= "PhpGedView sivuston #SERVER_NAME# ylläpitäjä on hyväksynyt anomuksesi tunnukselle. Voit kirjautua sivustolle käyttäen seuraavaa linkkiä:\r\n\r\n#SERVER_NAME#\r\n";
 $pgv_lang["yearly"]								= "Vuosittainen";
 $pgv_lang["admin_OK_subject"]					= "Tunnus anomus #SERVER_NAME#";
+
+$pgv_lang["batch_update"]="Suorita eräpäivitykset/-muokkaukset GEDCOMille";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     = "Gedcom-tarkastaja";

@@ -30,6 +30,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["interactive_tree"]		= "Interactiivinen puu";
 $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["age_differences"]		= "Näytä ikäerot";
 $pgv_lang["date_of_entry"]		= "Alkuperäisen lähteen päiväys";
@@ -258,6 +259,22 @@ $pgv_lang["text"]			= "Teksti:";
 $pgv_lang["note"]			= "Lisätieto";
 $pgv_lang["NN"]			= "(Tuntematon)";
 $pgv_lang["PN"]			= "(Tuntematon)";
+$pgv_lang["NNhebrew"] 		= "(לא ידוע)";
+$pgv_lang["PNhebrew"] 		= "(לא ידוע)";
+$pgv_lang["NNarabic"] 		= "(غير معروف)";
+$pgv_lang["PNarabic"] 		= "(غير معروف)";
+$pgv_lang["NNgreek"] 			= "(άγνωστος/η)";
+$pgv_lang["PNgreek"] 			= "(άγνωστος/η)";
+$pgv_lang["NNrussian"] 		= "(неопределено)";
+$pgv_lang["PNrussian"] 		= "(неопределено)";
+$pgv_lang["NNchinese"] 		= "(未知)";
+$pgv_lang["PNchinese"] 		= "(未知)";
+$pgv_lang["NNvietnamese"] = "(vô danh)";
+$pgv_lang["PNvietnamese"] = "(không biết tuổi)";
+$pgv_lang["NNthai"] 			= "(Tuntematon)";
+$pgv_lang["PNthai"] 			= "(Tuntematon)";
+$pgv_lang["NNother"] 			= "(Tuntematon)";
+$pgv_lang["PNother"] 			= "(Tuntematon)";
 $pgv_lang["unrecognized_code"]	= "Tuntematon GEDCOM-koodi";
 $pgv_lang["unrecognized_code_msg"]	= "Tämä on virhe jonka haluaisimme korjata. Ilmoita virhe osoitteeseen";
 $pgv_lang["indi_info"]		= "Henkilökohtainen tieto";
@@ -605,7 +622,7 @@ $pgv_lang["file_not_exists"]		= "Annettua tiedostonimeä ei ole.";
 $pgv_lang["research_assistant"]	= "Tutkimusavustaja";
 $pgv_lang["utf8_to_ansi"]		= "Muunnetaanko tämä UTF-8-koodattu GEDCOM ANSI (ISO-8859-1) muotoon?";
 //-- Relationship chart messages
-$pgv_lang["view_fam_nav_details"]	= "Näytä tiedot ..."; 
+$pgv_lang["view_fam_nav_details"]	= "Näytä tiedot ...";
 $pgv_lang["relationship_chart"]	= "Sukulaisuus";
 $pgv_lang["person1"]			= "Henkilö 1";
 $pgv_lang["person2"]			= "Henkilö 2";
@@ -944,7 +961,7 @@ $pgv_lang["welcome_text_cust_head"]	= "<center><b>Tervetuloa tähän sukututkimu
 $pgv_lang["acceptable_use"]		= "<div class=\\\"largeError\\\">Huomautus:</div><div class=\\\"error\\\">Täyttämällä ja lähettämällä tämän lomakkeen sitoudut:<ul><li>suojaamaan sivustoillamme esiintyvien elävien henkilöiden yksityisyyden;</li><li>ja kertomaan alla olevassa tekstikentässä kenelle olet sukua tai toimittamaan meille tietoa henkilöstä, jonka tulisi olla sivustollamme.</li></ul></div>";
 //-- mygedview page
 $pgv_lang["welcome"]			= "Tervetuloa";
-$pgv_lang["upcoming_events"]	= "Tulevia tapahtumia";
+$pgv_lang["upcoming_events"]	= "Tulevat tapahtumat";
 $pgv_lang["living_or_all"]		= "Näytä vain elossa olevien henkilöiden tapahtumat?";
 $pgv_lang["basic_or_all"]		= "Näytä vain syntymät, kuolemat ja avioliitot?";
 $pgv_lang["style"]			= "Esitystyyli";
@@ -1175,8 +1192,8 @@ $pgv_lang["marrdate2"]		= "Avioliittoonvihkimisajanjakso päättyy";
 $pgv_lang["sort_by"]			= "Lajittele seuraavan mukaan:";
 $pgv_lang["cleanup"]			= "Siivoa";
 //-- CONFIGURE (extra) messgaes for programs patriarch, slklist and statistics
-$pgv_lang["dynasty_list"]           	= "Perheiden yleiskuvaus";
-$pgv_lang["patriarch_list"]         	= "Patriarkkalista";
+//$pgv_lang["dynasty_list"]           	= "Perheiden yleiskuvaus";
+//$pgv_lang["patriarch_list"]         	= "Patriarkkalista";
 $pgv_lang["statistics"]             		= "Tilastot";
 //-- Merge Records
 $pgv_lang["merge_same"] 		= "Tietueet eivät ole samaa typpiä. Erityyppisiä tietueita ei voi yhdistää.";
@@ -1607,4 +1624,17 @@ $pgv_lang["invalid_search_input"] 	= "Anna vuosiluvun lisäksi etunimi, sukunimi
 $pgv_lang["duplicate_username"] 	= "Tämä käyttäjätunnus on jo olemassa. Valitse toinen käyttäjätunnus.";
 $pgv_lang["cache_life"]		= "Välimuistitiedoston elinikä";
 $pgv_lang["tree"]					= "Puu";
+$pgv_lang["husb_age"]				= "Aviomiehen ikä";
+$pgv_lang["wife_age"]				= "Vaimo ikä";
+$pgv_lang["at_death_day"]      		= "päivänä, jona kuolema";
+$pgv_lang["wife_age"]				= "Vaimon ikä";
+$pgv_lang["todo_block"] = "\"To Do\" tehtävät";
+$pgv_lang["block_givn_top10_title"]		= "Top 10 Etunimet";
+$pgv_lang["block_givn_top10"]			= "Top 10 Etunimet";
+$pgv_lang["godson"]		= "Kummipoika";
+$pgv_lang["todo_show_future"]    = "Näytä tulevat tehtävät";
+$pgv_lang["todo_show_other"]     = "Näytä muiden käyttäjien tehtävät";
+$pgv_lang["todo_show_unassigned"]= "Näytä määrittämättömät tehtävät";
+$pgv_lang["goddaughter"] = "Kummityttö";
+$pgv_lang["godchild"]	= "Kummilapsi";
 ?>

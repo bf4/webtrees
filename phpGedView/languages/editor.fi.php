@@ -223,4 +223,8 @@ $pgv_lang["edit_concurrency_change"] = "Tämän tietueen muutti viimeksi <i>#CHA
 $pgv_lang["edit_concurrency_msg2"]	= "Tietuetta, jonka tunnus on #PID# on muuttanut toinen käyttäjä sen jälkeen kun viimeksi käsittelit sitä.";
 $pgv_lang["edit_concurrency_msg1"]	= "Editointilomakkeen luonnissa tapahtui virhe. Joku toinen käyttäjä on ehkä muuttanut tätä tietuetta sen jälkeen kun viimeksi katsoit sitä.";
 $pgv_lang["edit_concurrency_reload"]	= "Näpäytä selaimesi \"Edellinen sivu\" (Previous Page)-painiketta ja lataa edellinen sivu uudestaan jotta varmistetaan, että työskentelet viimeismmän tietueen kanssa.";
+$pgv_lang["reorder_media"]					= "Järjestä media uudelleen";
+$pgv_lang["reorder_media_window"]			= "Järjestä media uudelleen (ikkuna)";
+$pgv_lang["reorder_media_window_title"]		= "Napsauta riville, vedä-ja-pudota uudelleen, jotta tiedotusvälineiden";
+$pgv_lang["reorder_media_title"]			= "Vedä-ja-pudota pikkukuvia, jotta media järjestyy uudelleen";
 ?>
