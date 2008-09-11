@@ -45,7 +45,7 @@ $pgv_lang["lb_balloon_true"]	= "Balloon";
 $pgv_lang["lb_balloon_false"]	= "Normal";
 $pgv_lang["lb_tt_balloon"]		= "Individual Page - Album Tab Thumbnail - Notes Tooltip";
 $pgv_lang["lb_ttAppearance"]	= "Notes - Tooltip appearance";
-$pgv_lang["view_lightbox"]		= "View Album of ...";
+$pgv_lang["view_lightbox"]		= "Näytä albumi ..."; //@@
 $pgv_lang["lb_notes"]			= "Notes";
 $pgv_lang["lb_notes_info"]		= "";
 

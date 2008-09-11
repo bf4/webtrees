@@ -133,7 +133,7 @@ $pgv_lang["ansi_to_utf8"]		= "הסב קובץ GEDCOM זה מ-ANSI ל-UTF-8?";
 $pgv_lang["apply_privacy"]		= "הפעל הגדרות פרטיות?";
 $pgv_lang["back_useradmin"]	= "חזור לניהול משתמשים";
 $pgv_lang["bytes_read"]		= "בתים שנקראו:";
-$pgv_lang["calc_marr_names"]	= "מחשב שמות נישואין";
+//$pgv_lang["calc_marr_names"]	= "מחשב שמות נישואין";
 $pgv_lang["can_admin"]		= "המשתמש יכול לנהל";
 $pgv_lang["can_edit"]		= "רמת גישה";
 $pgv_lang["change_id"]		= "שנה קוד זיהוי אישי ל:";
@@ -200,7 +200,7 @@ $pgv_lang["ifx"]			= "Informix";
 $pgv_lang["img_admin_settings"]	= "ערוך תצורה של פעולה על תמונות";
 $pgv_lang["autoContinue"]		= "לחץ על כפתור «המשך» להמשכה בצורה אוטומטית"; 
 $pgv_lang["import_complete"]		= "הייבוא הסתיים";
-$pgv_lang["import_marr_names"]	= "חשב שמות נישואין"; 
+//$pgv_lang["import_marr_names"]	= "חשב שמות נישואין"; 
 $pgv_lang["import_options"]		= "אופציות ייבוא";
 $pgv_lang["import_progress"]		= "התקדמות הייבוא...";
 $pgv_lang["import_statistics"]		= "סטטיסטיקות ייבוא";
@@ -329,6 +329,8 @@ $pgv_lang["yearly"]			= "שנתי";
 //$pgv_lang["you_may_login"]		= "הקישור מתחת מביא אותך לאתר ה-PhpGedView:";
 $pgv_lang["admin_OK_subject"]	= "אישור משתמש על #SERVER_NAME#"; 
 $pgv_lang["admin_OK_message"]	= "המנהלן של אתר PhpGedView #SERVER_NAME# אישר את הבקשה שלך לקוד משתמש. תוכל עכשיו להשתמש באתר ע\"י הקישור הבא: \r\n\r\n<a href=\"#SERVER_NAME#\">#SERVER_NAME#</a>\r\n"; 
+
+$pgv_lang["batch_update"]		= "בצע עדכונים/עריכה באצוה (batch) על קובץ ה-GEDCOM שלך";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]    	= "בדיקת Gedcom"; 	     // Module title

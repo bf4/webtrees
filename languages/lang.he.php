@@ -30,6 +30,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "אין לך גישה לתיקיית קובצי השפות.";
 	exit;
 }
+$pgv_lang["parent_family"]			= "משפחה של הורים"; 
+$pgv_lang["step_parent_family"]		= "משפחה של הורה חורג";
+$pgv_lang["immediate_family"]		= "משפחה מידית"; 
 
 $pgv_lang["load_full_tree"]			= "הצג עץ זה כעץ אינטראקטיבי על דף שלם";
 $pgv_lang["hide_show_spouses"]		= "הראה או החבא ריבוי בני זוג"; 
@@ -409,10 +412,26 @@ $pgv_lang["status"]			= "מצב";
 $pgv_lang["source"]			= "מקור";
 $pgv_lang["text"]			= "טקסט מקור:";
 $pgv_lang["note"]			= "הערה";
-//$pgv_lang["NN"]			= "(לא ידוע)";
-//$pgv_lang["PN"]			= "(לא ידוע)";
-$pgv_lang["NN"] 			= "(unknown)";
-$pgv_lang["PN"] 			= "(unknown)";
+$pgv_lang["NN"]			= "(לא ידוע)";
+$pgv_lang["PN"]			= "(לא ידוע)";
+//$pgv_lang["NN"] 			= "(unknown)";
+//$pgv_lang["PN"] 			= "(unknown)";
+$pgv_lang["NNhebrew"] 		= "(לא ידוע)";
+$pgv_lang["PNhebrew"] 		= "(לא ידוע)";
+$pgv_lang["NNarabic"] 		= "(غير معروف)";
+$pgv_lang["PNarabic"] 		= "(غير معروف)";
+$pgv_lang["NNgreek"] 			= "(άγνωστος/η)";
+$pgv_lang["PNgreek"] 			= "(άγνωστος/η)";
+$pgv_lang["NNrussian"] 		= "(неопределено)";
+$pgv_lang["PNrussian"] 		= "(неопределено)";
+$pgv_lang["NNchinese"] 		= "(未知)";
+$pgv_lang["PNchinese"] 		= "(未知)";
+$pgv_lang["NNvietnamese"] = "(vô danh)";
+$pgv_lang["PNvietnamese"] = "(không biết tuổi)";
+$pgv_lang["NNthai"] 			= "(unknown)";
+$pgv_lang["PNthai"] 			= "(unknown)";
+$pgv_lang["NNother"] 			= "(unknown)";
+$pgv_lang["PNother"] 			= "(unknown)";
 $pgv_lang["unrecognized_code"]	= "קוד GEDCOM לא מוכר";
 $pgv_lang["unrecognized_code_msg"]	= "זו שגיאה שברצוננו לתקן. דווח לנו על השגיאה הזו.";
 $pgv_lang["indi_info"]			= "מידע אישי";
@@ -432,6 +451,9 @@ $pgv_lang["siblings"] 			= "אח/אחות";
 $pgv_lang["father"] 			= "אב";
 $pgv_lang["mother"] 			= "אם";
 $pgv_lang["parent"] 			= "הורה";
+$pgv_lang["parent_age"] 		= "גיל ההורה"; 
+$pgv_lang["father_age"]		= "גיל האב"; 
+$pgv_lang["mother_age"]		= "גיל האם";
 $pgv_lang["self"] 			= "האדם עצמו"; 
 $pgv_lang["relatives"]		= "קרובי משפחה";
 $pgv_lang["relatives_events"]	= "אירועים של קרובי משפחה";
@@ -760,7 +782,6 @@ $pgv_lang["research_assistant"]	= "עוזר מחקר";
 $pgv_lang["utf8_to_ansi"]		= "הסב מ-UTF-8 ל-(ANSI (ISO-8859-1?";
 $pgv_lang["media_linked"]		= "המדיה הזו מקושרת ל-";
 $pgv_lang["media_not_linked"]	= "המדיה הזו אינה מקושרת לשום רשומת GEDCOM.";
-//$pgv_lang["deleted_files"]          	= "קבצים שנמחקו:";
 $pgv_lang["media_dir_1"]		= "ישות המדיה הזו נמצאת על שרת חיצוני"; 
 $pgv_lang["media_dir_2"]		= "ישות המדיה הזו נמצאת בתיקיית המדיה הרגילה"; 
 $pgv_lang["media_dir_3"]		= "ישות המדיה הזו נמצאת בתיקיית המדיה המוגנת"; 
@@ -830,7 +851,7 @@ $pgv_lang["brother_in_law"]		= "גיס";
 $pgv_lang["sister_in_law"]		= "גיסה";
 $pgv_lang["son_in_law"]		= "חתן";  // the husband of your daughter
 $pgv_lang["daughter_in_law"]		= "כלה"; // the wife of your son
-$pgv_lang["uncle_in_law"]		= "דוד באמצעות נישואין";  //Uncle-in-law";  
+$pgv_lang["uncle_in_law"]		= "דוד באמצעות נישואין";   //Uncle-in-law"; 
 $pgv_lang["aunt_in_law"]		= "דודה באמצעות נישואין"; //Aunt-in-law"; 
 
 $pgv_lang["step_son"]			= "בן חורג";
@@ -872,22 +893,22 @@ $pgv_lang["n_x_sisters_daughter"] = "נכדנית מדרגה %1\$d";
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_2"] 				= "בן";                   // son 
+$pgv_lang["bosa_2"] 				= "בן";                // son 
 $pgv_lang["bosa_3"] 				= "בת";              // daughter 
 // 2nd generation
 $pgv_lang["bosa_4"] 				= "נכד";              // son's son 
-$pgv_lang["bosa_5"] 				= "נכדה";         // son's daughter 
+$pgv_lang["bosa_5"] 				= "נכדה";            // son's daughter 
 $pgv_lang["bosa_6"] 				= "נכד";              // daughter's son 
-$pgv_lang["bosa_7"] 				= "נכדה";         // daughter's daughter 
+$pgv_lang["bosa_7"] 				= "נכדה";            // daughter's daughter 
 // 3rd generation
-$pgv_lang["bosa_8"] 				= "שלש";     // son's son's son   
-$pgv_lang["bosa_9"] 				= "שלשה";   // son's son's daughter
-$pgv_lang["bosa_10"] 			= "שלש";		// son's daughters son
-$pgv_lang["bosa_11"] 			= "שלשה";   // son's daughters daughter
-$pgv_lang["bosa_12"] 			= "שלש";     // daughter's son's son 
-$pgv_lang["bosa_13"] 			= "שלשה";   // daughter's son's daughter
-$pgv_lang["bosa_14"] 			= "שלש";		// daughter's daughters son
-$pgv_lang["bosa_15"] 			= "שלשה";   // daughter's daughters daughter
+$pgv_lang["bosa_8"] 				= "שלש";     	// son's son's son   
+$pgv_lang["bosa_9"] 				= "שלשה";   	// son's son's daughter
+$pgv_lang["bosa_10"] 			= "שלש";	// son's daughters son
+$pgv_lang["bosa_11"] 			= "שלשה";   	// son's daughters daughter
+$pgv_lang["bosa_12"] 			= "שלש";     	// daughter's son's son 
+$pgv_lang["bosa_13"] 			= "שלשה";   	// daughter's son's daughter
+$pgv_lang["bosa_14"] 			= "שלש"; 	// daughter's daughters son
+$pgv_lang["bosa_15"] 			= "שלשה";   	// daughter's daughters daughter
 // for the general case of offspring of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
@@ -1375,15 +1396,15 @@ $pgv_lang["ahnentafel_pronoun_m"]	= "הוא ";
 $pgv_lang["ahnentafel_pronoun_f"]	= "היא ";
 $pgv_lang["ahnentafel_born_m"]	= "נולד";		// male
 $pgv_lang["ahnentafel_born_f"]	= "נולדה";		// female
-$pgv_lang["ahnentafel_christened_m"] 	= "הוטבל";		// male
+$pgv_lang["ahnentafel_christened_m"] 	= "הוטבל";	// male
 $pgv_lang["ahnentafel_christened_f"] 	= "הוטבלה";	// female
-$pgv_lang["ahnentafel_married_m"]	= "התחתן";	// male
-$pgv_lang["ahnentafel_married_f"]	= "התחתנה";	// female
+$pgv_lang["ahnentafel_married_m"]	= "התחתן";		// male
+$pgv_lang["ahnentafel_married_f"]	= "התחתנה";		// female
 $pgv_lang["ahnentafel_died_m"]	= "נפתר";		// male
-$pgv_lang["ahnentafel_died_f"]	= "נפתרה";	// female
+$pgv_lang["ahnentafel_died_f"]	= "נפתרה";	    // female
 $pgv_lang["ahnentafel_buried_m"]	= "נקבר";		// male
 $pgv_lang["ahnentafel_buried_f"]	= "נקברה";		// female
-$pgv_lang["ahnentafel_place"]	= " ב-";		// place name follows this
+$pgv_lang["ahnentafel_place"]	= " ב-";			// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " אבל הפרטים אינם ידועים";
 
 //-- Changes report
@@ -1427,10 +1448,8 @@ $pgv_lang["sort_by"]			= "מיין לפי";
 
 $pgv_lang["cleanup"]			= "ניקיון";
 
-//-- CONFIGURE (extra) messgaes for programs patriarch, slklist and statistics
-$pgv_lang["dynasty_list"]		= "סקירה כללית של משפחות";
-$pgv_lang["patriarch_list"]		= "רשימת ראשי בית-אב";
-$pgv_lang["statistics"]			= "סטטיסטיקות";
+//-- CONFIGURE (extra) messages for programs patriarch and statistics
+$pgv_lang["statistics"] 			= "סטטיסטיקות"; 
 
 //-- Merge Records
 $pgv_lang["merge_same"]                   = "הרשומות אינן מסוג זהה. לא ניתן למזג רשומות מסוגים שונים.";
@@ -1649,17 +1668,17 @@ $pgv_lang["accesskey_individual_notes"]		= "ה"; //N
 $pgv_lang["accesskey_individual_sources"]		= "ק"; //O
 
 $pgv_lang["accesskey_individual_media"]		= "ד"; //A clash with IE addBookmark but not a likely problem
-$pgv_lang["accesskey_individual_research_log"]	= "י"; //L
+$pgv_lang["accesskey_individual_research_log"]	= "י";  //L
 $pgv_lang["accesskey_individual_pedigree"]		= "א"; //P
 $pgv_lang["accesskey_individual_descendancy"]	= "צ"; //D
-$pgv_lang["accesskey_individual_timeline"]		= "ו"; //T
+$pgv_lang["accesskey_individual_timeline"]		= "ו";  //T
 $pgv_lang["accesskey_individual_relation_to_me"]	= "ר"; //M
 
 $pgv_lang["accesskey_individual_gedcom"]		= "ג"; //G clash with rarely used Netscape/Mozilla Go menu
 
 $pgv_lang["accesskey_family_parents_timeline"]	= "א"; //P
 $pgv_lang["accesskey_family_children_timeline"]	= "צ"; //D
-$pgv_lang["accesskey_family_timeline"]		= "ו"; //T
+$pgv_lang["accesskey_family_timeline"]		= "ו";  //T
 
 $pgv_lang["accesskey_family_gedcom"]		= "ג"; //G clash with rarely used English Netscape/Mozilla English Go menu
 
@@ -1716,11 +1735,11 @@ $pgv_lang["TYPE__painting"] 			= "תמונה";
 $pgv_lang["TYPE__other"] 			= "אחר"; 
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] 			= "התבונן כמצגת שקופיות"; 
-$pgv_lang["download_image"]		= "הורד קובץ";
-$pgv_lang["no_media"]			= "לא נמצאה מדיה";
+$pgv_lang["view_slideshow"] 		= "התבונן כמצגת שקופיות"; 
+$pgv_lang["download_image"]	= "הורד קובץ";
+$pgv_lang["no_media"]		= "לא נמצאה מדיה";
 $pgv_lang["media_privacy"]		= "הגבלות פרטיות מונעות ממך לראות פריט זה"; 
-$pgv_lang["relations_heading"]		= "האימג' קשור ל-:";
+$pgv_lang["relations_heading"]	= "האימג' קשור ל-:";
 $pgv_lang["file_size"]			= "גודל הקובץ:";
 $pgv_lang["img_size"]			= "גודל האימג'";
 $pgv_lang["media_broken"]		= "קובץ המדיה הזה פגום ואינו ניתן לסמן אותו בסימן מים";
