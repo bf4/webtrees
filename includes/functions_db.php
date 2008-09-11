@@ -748,37 +748,17 @@ function find_first_person() {
  * calculated by the is_dead() function.  To improve import performance, the is_dead status is first
  * set to -1 during import.  The first time the is_dead status is retrieved this function is called to update
  * the database.  This makes the first request for a person slower, but will speed up all future requests.
- * @param string $gid	gedcom xref id of individual to update
- * @param array $indi	the $indi array struction for the individal as used in the <var>$indilist</var>
- * @return int	1 if the person is dead, 0 if living
+ * @param string $pid	id of individual to update
+ * @param string $ged_id	gedcom to update
+ * @param bool $isdead	true=dead
  */
-function update_isdead($gid, $indi) {
-	global $TBLPREFIX, $indilist, $DBCONN;
-
-	$isdead = 0;
-	if (isset($indi["gedcom"])) {
-		$isdead = is_dead($indi["gedcom"]);
-		if (empty($isdead))
-			$isdead = 0;
-		$sql = "UPDATE ".$TBLPREFIX."individuals SET i_isdead=$isdead WHERE i_id LIKE '".$DBCONN->escapeSimple($gid)."' AND i_file=".$DBCONN->escapeSimple($indi["gedfile"]);
-		$res = dbquery($sql);
-	}
-	if (isset($indilist[$gid]))
-		$indilist[$gid]["isdead"] = $isdead;
+function update_isdead($gid, $ged_id, $isdead) {
+	global $TBLPREFIX, $DBCONN;
+	$gid   =$DBCONN->escapeSimple($gid);
+	$ged_id=(int)$ged_id;
+	$isdead=$isdead ? 1 : 0; // DB uses int, not bool
+	dbquery("UPDATE {$TBLPREFIX}individuals SET i_isdead={$isdead} WHERE i_id='{$gid}' AND i_file={$ged_id}");
 	return $isdead;
-}
-
-/**
- * reset the i_isdead column
- *
- * This function will reset the i_isdead column with the default -1 so that all is dead status
- * items will be recalculated.
- */
-function reset_isdead() {
-	global $TBLPREFIX;
-
-	$sql = "UPDATE ".$TBLPREFIX."individuals SET i_isdead=-1 WHERE i_file=".PGV_GED_ID;
-	dbquery($sql);
 }
 
 /**
