@@ -22,6 +22,7 @@
  * @package PhpGedView
  * @subpackage BatchUpdate
  * @translator Meliza Amity 
+ * @version $Id $
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
