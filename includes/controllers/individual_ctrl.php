@@ -429,6 +429,7 @@ class IndividualControllerRoot extends BaseController {
 		print ">";
 		if (!preg_match("/^2 (SURN)|(GIVN)/m", $factrec)) {
 			$dummy=new Person($factrec);
+			$dummy->setPrimaryName(0);
 			echo '<span class="label">', $pgv_lang['name'], ': </span><br />';
 			echo PrintReady($dummy->getFullName()), '<br />';
 		}
