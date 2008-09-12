@@ -31,6 +31,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["SHOW_LIST_PLACES"]	= "In Listen zu zeigende Ebenen von Ortsangaben";
+$pgv_lang["SHOW_LIST_PLACES_help"]	= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />Diese Option bestimmt, wie viele Ebenen der Ortsangaben in Listen zu zeigen sind.<br /><br />Die Wahl <b>9</b> bestimmt, dass alle Ortsangaben gezeigt werden.  Wenn Sie <b>0</b> (Null) wählen, werden keine Orte gezeigt.  Die Wahl <b>1</b> bedeutet dass nur die höchste Ebene (normalerweise das Land) gezeigt wird.  Wenn Sie <b>2</b> wählen, werden die zwei höchsten Ebenen gezeigt.  Die zweit-höchste Ebene (unter dem Land) könnte Staat, Bundesland oder Provinz sein.  Etc.<br />";
+
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["gedcom_conf"]		= "GEDCOM Grundlagen";
 $pgv_lang["media_conf"]			= "Multimedia";
