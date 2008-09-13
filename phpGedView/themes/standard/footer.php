@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	echo "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -37,7 +37,7 @@ if (!isset($without_close)) echo "</div> <!-- closing div id=\"content\" -->\n";
 <br /><div align="center" style="width:99%;">
 <br />
 <a href="<?php echo PGV_PHPGEDVIEW_URL; ?>" target="_blank">
-	<img src="<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'];?>" width="100" height="45" border="0" alt="<?php echo PGV_PHPGEDVIEW; ?>" 
+	<img src="<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'];?>" width="100" height="45" border="0" alt="<?php echo PGV_PHPGEDVIEW; ?>"
 		title="<?php echo PGV_PHPGEDVIEW; if (PGV_USER_IS_ADMIN) echo " - ".PGV_VERSION_TEXT;?>" /></a><br />
 <br />
 <?php print_help_link("preview_help", "qm"); ?>

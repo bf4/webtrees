@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -35,82 +35,82 @@ $menubar = new MenuBar();
 		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="99%" height="3" alt="" />
 	<table id="topMenu">
 		<tr>
-			<?php 		
-			$menu = $menubar->getGedcomMenu(); 
+			<?php
+			$menu = $menubar->getGedcomMenu();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getMygedviewMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getChartsMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getListsMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getCalendarMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
-				print "\t</td>\n";
-			}	
-			$menu = $menubar->getReportsMenu(); 
-			if($menu->link != "") {
-				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
+				$menu->printMenu();
 				print "\t</td>\n";
 			}
-			$menu = $menubar->getClippingsMenu(); 
-			if ((!is_null($menu)) && ($menu->link != "")) { ?> 
+			$menu = $menubar->getMygedviewMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getChartsMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getListsMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getCalendarMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getReportsMenu();
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+			$menu = $menubar->getClippingsMenu();
+			if ((!is_null($menu)) && ($menu->link != "")) { ?>
 				<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
-			<?php 
-			} 
+			<?php
+			}
 
-			$menu = $menubar->getSearchMenu(); 
+			$menu = $menubar->getSearchMenu();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
+				$menu->printMenu();
 				print "\t</td>\n";
-			}	
+			}
 
-			$menu = $menubar->getOptionalMenu(); 
+			$menu = $menubar->getOptionalMenu();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
+				$menu->printMenu();
 				print "\t</td>\n";
-			}	
+			}
 
-			$menus = $menubar->getModuleMenus(); 
+			$menus = $menubar->getModuleMenus();
 			foreach($menus as $m=>$menu) {
 				if($menu->link != "") {
 					print "\t<td width=\"7%\" valign=\"top\">\n";
-					$menu->printMenu(); 
+					$menu->printMenu();
 					print "\t</td>\n";
 				}
-			} 
+			}
 
-			$menu = $menubar->getHelpMenu(); 
+			$menu = $menubar->getHelpMenu();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->printMenu(); 
+				$menu->printMenu();
 				print "\t</td>\n";
-			}	
+			}
 			?>
 		</tr>
 	</table>
-	<img align="middle" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="99%" height="3" alt="" />	
+	<img align="middle" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="99%" height="3" alt="" />
 </div>
 <?php include("accesskeyHeaders.php"); ?>
 </div>
