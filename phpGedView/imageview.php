@@ -23,7 +23,8 @@
  * @package PhpGedView
  * @subpackage Media
  */
-require("config.php");
+
+require './config.php';
 
 if (!isset($filename)) $filename = "";
 $filename = stripslashes($filename);
@@ -88,17 +89,17 @@ print_simple_header($pgv_lang["imageview"]);
 	}
 	// Main function to retrieve mouse x-y pos.s
 	function getMouseXY(e) {
-	  if (IE) { // grab the x-y pos.s if browser is IE
-	    msX = event.clientX + document.documentElement.scrollLeft;
-	    msY = event.clientY + document.documentElement.scrollTop;
-	  } else {  // grab the x-y pos.s if browser is NS
-	    msX = e.pageX;
-	    msY = e.pageY;
-	  }
-	  // catch possible negative values in NS4
-	  if (msX < 0){msX = 0;}
-	  if (msY < 0){msY = 0;}
-	  if (movei!="") {
+	if (IE) { // grab the x-y pos.s if browser is IE
+		msX = event.clientX + document.documentElement.scrollLeft;
+		msY = event.clientY + document.documentElement.scrollTop;
+	} else {  // grab the x-y pos.s if browser is NS
+		msX = e.pageX;
+		msY = e.pageY;
+	}
+	// catch possible negative values in NS4
+	if (msX < 0){msX = 0;}
+	if (msY < 0){msY = 0;}
+	if (movei!="") {
 		ileft = parseInt(movei.style.left);
 		itop = parseInt(movei.style.top);
 		ileft = ileft - (oldMx-msX);
@@ -108,10 +109,10 @@ print_simple_header($pgv_lang["imageview"]);
 		oldMx = msX;
 		oldMy = msY;
 		return false;
-	  }
+		}
 	}
 
-	 function resizeWindow() {
+	function resizeWindow() {
 		if (document.images) {
 			if (document.images.length == 3) {
 				height=document.images[0].height+80;

@@ -26,7 +26,8 @@
  * @version $Id$
  */
 
-require_once("config.php");
+require './config.php';
+
 require_once("includes/functions_edit.php");
 
 loadLangFile("pgv_editor");
@@ -144,7 +145,7 @@ $gedrec = privatize_gedcom($gedrec);
 if ($action=="update") {
 	function check_updated_facts($i, &$famrec, $TAGS, $prefix){
 		global $typefacts, $pid, $pgv_lang, $factarray;
-		
+
 		$famrec = trim($famrec);
 		$famupdate = false;
 		$repeat_tags = array();
@@ -163,14 +164,14 @@ if ($action=="update") {
 		$var = $prefix.$i."REMS";
 		if (!empty($_POST[$var])) $REMS = $_POST[$var];
 		else $REMS = array();
-		
+
 		for($j=0; $j<count($TAGS); $j++) {
 			if (!empty($TAGS[$j])) {
 				$fact = $TAGS[$j];
 //				print $fact;
 				if (!isset($repeat_tags[$fact])) $repeat_tags[$fact] = 1;
 				else $repeat_tags[$fact]++;
-				
+
 				$DATES[$j] = check_input_date($DATES[$j]);
 				if (!isset($REMS[$j])) $REMS[$j] = 0;
 				if ($REMS[$j]==1) {
@@ -213,7 +214,7 @@ if ($action=="update") {
 					}
 					else {
 						//-- delete the fact
-						if ($REMS[$j]==1) { 
+						if ($REMS[$j]==1) {
 							$famupdate = true;
 							$famrec = substr($famrec, 0, $pos1) . "\r\n". substr($famrec, $pos2);
 //							print "sfamupdate_del [".$factrec."]{".$oldfac."}";
@@ -236,7 +237,7 @@ if ($action=="update") {
 								if (strstr($factrec, "\n2 RESN")) $factrec = preg_replace("/2 RESN.*/", "2 RESN $RESNS[$j]", $factrec);
 								else $factrec = $factrec."\r\n2 RESN $RESNS[$j]";
 							}
-						
+
 							$factrec = preg_replace("/[\r\n]+/", "\r\n", $factrec);
 							$oldfac = preg_replace("/[\r\n]+/", "\r\n", $oldfac);
 //			print "<table><tr><th>new</th><th>old</th></tr><tr><td><pre>$factrec</pre></td><td><pre>$oldfac</pre></td></tr></table>";
@@ -261,7 +262,7 @@ if ($action=="update") {
 	$person=Person::getInstance($pid);
 	print "<h2>".$pgv_lang["quick_update_title"]."</h2>\n";
 	print "<b>".PrintReady($person->getFullName())."</b><br /><br />";
-	
+
 	AddToChangeLog("Quick update attempted for $pid by >".PGV_USER_NAME."<");
 
 	$updated = false;
@@ -310,7 +311,7 @@ if ($action=="update") {
 		$updated = true;
 //		print "<pre>NAME\n".$gedrec."</pre>\n";
 	}
-	
+
 	//-- update the person's gender
 	if (isset($_REQUEST['GENDER'])) $GENDER = $_REQUEST['GENDER'];
 	if (!empty($GENDER)) {
@@ -345,7 +346,7 @@ if ($action=="update") {
 					if ($pos1===false) $pos1 = strlen($gedrec)-1;
 					$gedrec = substr($gedrec, 0, $pos1)."\r\n2 _HEB $HGIVN /$HSURN/\r\n".substr($gedrec, $pos1+1);
 				}
-				else $gedrec .= "\r\n1 NAME $HGIVN /$HSURN/\r\n2 _HEB $HGIVN /$HSURN/\r\n"; 
+				else $gedrec .= "\r\n1 NAME $HGIVN /$HSURN/\r\n2 _HEB $HGIVN /$HSURN/\r\n";
 			}
 			$updated = true;
 		}
@@ -367,12 +368,12 @@ if ($action=="update") {
 					if ($pos1===false) $pos1 = strlen($gedrec)-1;
 					$gedrec = substr($gedrec, 0, $pos1)."\r\n2 ROMN $RGIVN /$RSURN/\r\n".substr($gedrec, $pos1+1);
 				}
-				else $gedrec .= "\r\n1 NAME $RGIVN /$RSURN/\r\n2 ROMN $RGIVN /$RSURN/\r\n"; 
+				else $gedrec .= "\r\n1 NAME $RGIVN /$RSURN/\r\n2 ROMN $RGIVN /$RSURN/\r\n";
 			}
 			$updated = true;
 		}
 	}
-	
+
 	//-- check for updated facts
 	if (isset($_REQUEST['TAGS'])) $TAGS = $_REQUEST['TAGS'];
 	if (count($TAGS)>0) {
@@ -417,7 +418,7 @@ if ($action=="update") {
 			$objrec .= "1 FILE ".$filename."\r\n";
 			if (!empty($TITL)) $objrec .= "2 TITL $TITL\r\n";
 			$objid = append_gedrec($objrec);
-			
+
 //			$factrec = "1 OBJE @".$objid."@\r\n1 _PRIM Y\r\n"; //@@ MA  _PRIM should either not exist or we should write it as 2 _PRIM here or as 1 _PRIM for the 0 OBJE
 			$factrec = "1 OBJE @".$objid."@\r\n";
 			if (empty($replace)) $gedrec .= "\r\n".$factrec;
@@ -518,7 +519,7 @@ if ($action=="update") {
 		$gedrec .= "\r\n".$factrec;
 		$updated = true;
 	}
-	
+
 	//-- spouse family tabs
 	$sfams = find_families_in_record($gedrec, "FAMS");
 	for($i=1; $i<=count($sfams); $i++) {
@@ -540,7 +541,7 @@ if ($action=="update") {
 				$spid = $parents['WIFE'];
 			}
 		}
-		
+
 		if (isset($_REQUEST['SGIVN'.$i])) $sgivn = $_REQUEST['SGIVN'.$i];
 		if (isset($_REQUEST['SSURN'.$i])) $ssurn = $_REQUEST['SSURN'.$i];
 		//--add new spouse name, birth
@@ -550,7 +551,7 @@ if ($action=="update") {
 			$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\r\n";
 			if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\r\n";
 			if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\r\n";
-			
+
 			if (isset($_REQUEST['HSGIVN'.$i])) $hsgivn = $_REQUEST['HSGIVN'.$i];
 			if (isset($_REQUEST['HSSURN'.$i])) $hssurn = $_REQUEST['HSSURN'.$i];
 			if (!empty($hsgivn) || !empty($hssurn)) {
@@ -563,7 +564,7 @@ if ($action=="update") {
 			}
 			if (isset($_REQUEST['SSEX'.$i])) $ssex = $_REQUEST['SSEX'.$i];
 			if (!empty($ssex)) $spouserec .= "1 SEX ".$ssex."\r\n";
-			
+
 			if (isset($_REQUEST['BDATE'.$i])) $bdate = $_REQUEST['BDATE'.$i];
 			if (isset($_REQUEST['BPLAC'.$i])) $bplac = $_REQUEST['BPLAC'.$i];
 			if (!empty($bdate)||!empty($bplac)) {
@@ -591,14 +592,14 @@ if ($action=="update") {
 			$spouserec .= "\r\n1 FAMS @$famid@\r\n";
 			$SPID[$i] = append_gedrec($spouserec);
 		}
-		
+
 		if (!empty($SPID[$i]) && $spid!=$SPID[$i]) {
 			if (strstr($famrec, "1 $tag")!==false) $famrec = preg_replace("/1 $tag @.*@/", "1 $tag @$SPID[$i]@", $famrec);
 			else $famrec .= "\r\n1 $tag @$SPID[$i]@";
 			$famupdate = true;
 //			print "sfamupdate1";
 		}
-		
+
 		//-- check for updated facts
 		$var = "F".$i."TAGS";
 		if (isset($_REQUEST[$var])) $TAGS = $_REQUEST[$var];
@@ -606,7 +607,7 @@ if ($action=="update") {
 		if (count($TAGS)>0) {
 			$famupdate |= check_updated_facts($i, $famrec, $TAGS, "F");
 		}
-		
+
 		//-- check for new fact
 		$var = "F".$i."newfact";
 		if (!empty($_REQUEST[$var])) $newfact = $_REQUEST[$var];
@@ -639,7 +640,7 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "sfamupdate4";
 		}
-		
+
 		if (isset($_REQUEST['CHIL'])) $CHIL = $_REQUEST['CHIL'];
 		if (!empty($CHIL[$i])) {
 			$famupdate = true;
@@ -652,7 +653,7 @@ if ($action=="update") {
 				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
 			}
 		}
-		
+
 		$var = "F".$i."CDEL";
 		if (!empty($_REQUEST[$var])) $fcdel = $_REQUEST[$var];
 		else $fcdel = "";
@@ -661,7 +662,7 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "sfamupdate6";
 		}
-		
+
 		//--add new child, name, birth
 		$cgivn = "";
 		$var = "C".$i."GIVN";
@@ -731,7 +732,7 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "sfamupdate7";
 		}
-		
+
 		if ($famupdate && ($famrec!=$oldfamrec)) replace_gedrec($famid, $famrec, $update_CHAN);
 	}
 
@@ -777,7 +778,7 @@ if ($action=="update") {
 		if (empty($spouserec)) $spouserec = find_person_record($xref);
 		$spouserec .= "\r\n1 FAMS @$newfamid@\r\n";
 		replace_gedrec($xref, $spouserec, $update_CHAN);
-		
+
 		//-- last add the new family id to the persons record
 		$gedrec .= "\r\n1 FAMS @$newfamid@\r\n";
 		$updated = true;
@@ -848,20 +849,20 @@ if ($action=="update") {
 			else $famrec .= "1 WIFE @$pid@\r\n";
 			$famrec .= "1 CHIL @$cxref@\r\n";
 			$newfamid = append_gedrec($famrec);
-			
+
 			//-- add the new family to the new child
 			$childrec = find_updated_record($cxref);
 			if (empty($childrec)) $childrec = find_person_record($cxref);
 			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
 			replace_gedrec($cxref, $childrec, $update_CHAN);
-			
+
 			//-- add the new family to the original person
 			$gedrec .= "\r\n1 FAMS @$newfamid@";
 			$updated = true;
 		}
 		else {
 			$famrec .= "\r\n1 CHIL @$cxref@\r\n";
-			
+
 			//-- add the family to the new child
 			$childrec = find_updated_record($cxref);
 			if (empty($childrec)) $childrec = find_person_record($cxref);
@@ -874,7 +875,7 @@ if ($action=="update") {
 		$famrec = preg_replace("/0 @(.*)@/", "0 @".$newfamid."@", $famrec);
 		replace_gedrec($newfamid, $famrec, $update_CHAN);
 	}
-	
+
 	//------------------------------------------- updates for family with parents
 	$cfams = find_families_in_record($gedrec, "FAMC");
 	if (count($cfams)==0) $cfams[] = "";
@@ -892,7 +893,7 @@ if ($action=="update") {
 			$famrec = "0 @REF@ FAM\r\n1 CHIL @$pid@";
 			$oldfamrec = "";
 		}
-		
+
 		if (isset($_REQUEST['FATHER'])) $FATHER = $_REQUEST['FATHER'];
 		if (empty($FATHER[$i])) {
 			//-- update the parents
@@ -975,7 +976,7 @@ if ($action=="update") {
 				replace_gedrec($FATHER[$i], $spouserec, $update_CHAN);
 			}
 		}
-		
+
 		$parents = find_parents_in_record($famrec);
 		if (!empty($FATHER[$i]) && $parents['HUSB']!=$FATHER[$i]) {
 			if (strstr($famrec, "1 HUSB")!==false) $famrec = preg_replace("/1 HUSB @.*@/", "1 HUSB @$FATHER[$i]@", $famrec);
@@ -983,7 +984,7 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "famupdate1";
 		}
-		
+
 		if (isset($_REQUEST['MOTHER'])) $MOTHER = $_REQUEST['MOTHER'];
 		if (empty($MOTHER[$i])) {
 			//-- update the parents
@@ -1071,7 +1072,7 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "famupdate2";
 		}
-		
+
 		//-- check for updated facts
 		$var = "F".$i."TAGS";
 		if (isset($_REQUEST[$var])) $TAGS = $_REQUEST[$var];
@@ -1079,7 +1080,7 @@ if ($action=="update") {
 		if (count($TAGS)>0) {
 			$famupdate |= check_updated_facts($i, $famrec, $TAGS, "F");
 		}
-		
+
 		//-- check for new fact
 		$var = "F".$i."newfact";
 		$newfact = "";
@@ -1116,7 +1117,7 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "famupdate5";
 		}
-		
+
 		if (isset($_REQUEST['CHIL'])) $CHIL = $_REQUEST['CHIL'];
 		if (!empty($CHIL[$i])) {
 			if (empty($famid)) {
@@ -1135,7 +1136,7 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "famupdate6";
 		}
-		
+
 		$var = "F".$i."CDEL";
 		if (isset($_REQUEST[$var])) $fcdel = $_REQUEST[$var];
 		else $fcdel = "";
@@ -1144,7 +1145,7 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "famupdate7";
 		}
-		
+
 		//--add new child, name, birth
 		$cgivn = "";
 		$csurn = "";
@@ -1239,7 +1240,7 @@ if ($action=="update") {
 	if ($closewin) {
 		// autoclose window when update successful
 		if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nif (window.opener.showchanges) window.opener.showchanges(); window.close();\n//-->\n</script>";
-		
+
 		print "<center><br /><br /><br />";
 		print "<a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
 		print_simple_footer();
@@ -1277,7 +1278,7 @@ if ($action=="choosepid") {
 		<td><?php print $pgv_lang["enter_pid"]; ?></td>
 		<td><input type="text" size="6" name="pid" id="pid" />
 		<?php print_findindi_link("pid","");?>
-        </td>
+		</td>
 	</tr>
 	</table>
 	<input type="submit" value="<?php print $pgv_lang["continue"]; ?>" />
@@ -1395,7 +1396,7 @@ if ($action=="choosepid") {
 			if ($ct>0) $FAX = trim($match[1]);
 			$FAX .= get_cont(2, $subrec);
 	}
-	
+
 	$indifacts = array();
 	$subrecords = get_all_subrecords($gedrec, "ADDR,PHON,FAX,EMAIL,_EMAIL,NAME,FAMS,FAMC,_UID", false, false, false);
 	$repeat_tags = array();
@@ -1428,7 +1429,7 @@ if ($action=="choosepid") {
 	$sfams = find_families_in_record($gedrec, "FAMS");
 	$cfams = find_families_in_record($gedrec, "FAMC");
 	if (count($cfams)==0) $cfams[] = "";
-		
+
 	$tabkey = 1;
 	$person=Person::getInstance($pid);
 	echo '<b>', PrintReady($person->getFullName());
@@ -1460,14 +1461,14 @@ function switch_tab(tab) {
 
 function checkform(frm) {
 	if (frm.EMAIL) {
-		if ((frm.EMAIL.value!="") && 
-			((frm.EMAIL.value.indexOf("@")==-1) || 
+		if ((frm.EMAIL.value!="") &&
+			((frm.EMAIL.value.indexOf("@")==-1) ||
 			(frm.EMAIL.value.indexOf("<")!=-1) ||
 			(frm.EMAIL.value.indexOf(">")!=-1))) {
 			alert("<?php print $pgv_lang["enter_email"]; ?>");
 			frm.EMAIL.focus();
 			return false;
-		} 
+		}
 	}
 	return true;
 }
@@ -1478,7 +1479,7 @@ function checkform(frm) {
 <input type="hidden" name="closewin" value="1" />
 <br /><input type="submit" value="<?php print $pgv_lang["save"]; ?>" /><br /><br />
 <table class="tabs_table">
-   <tr>
+	<tr>
 		<td id="pagetab0" class="tab_cell_active"><a href="javascript: <?php print $pgv_lang["personal_facts"];?>" onclick="switch_tab(0); return false;"><?php print $pgv_lang["personal_facts"]?></a></td>
 		<?php
 		for($i=1; $i<=count($sfams); $i++) {
@@ -1490,7 +1491,7 @@ function checkform(frm) {
 			if($parents) {
 				if($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
 				else $spid=$parents["WIFE"];
-			}			
+			}
 			print "<td id=\"pagetab$i\" class=\"tab_cell_inactive\" onclick=\"switch_tab($i); return false;\"><a href=\"javascript: ".$pgv_lang["family_with"]."&nbsp;";
 			$person=Person::getInstance($spid);
 			if ($person) {
@@ -1515,8 +1516,8 @@ function checkform(frm) {
 		?>
 		</tr>
 		<tr>
-		  <td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
-		  <?php
+			<td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+			<?php
 		for($i=1; $i<=count($sfams); $i++) {
 			print "<td id=\"pagetab{$i}bottom\" class=\"tab_inactive_bottom\"><img src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["spacer"]["other"]."\" width=\"1\" height=\"1\" alt=\"\" /></td>\n";
 		}
@@ -1527,7 +1528,7 @@ function checkform(frm) {
 		?>
 			<td id="pagetab<?php echo $i; ?>bottom" class="tab_inactive_bottom"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
 			<td class="tab_inactive_bottom_right" style="width:10%;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
-   </tr>
+	</tr>
 </table>
 <div id="tab0">
 <table class="<?php print $TEXT_DIRECTION; ?> width80">
@@ -1586,10 +1587,10 @@ foreach($indifacts as $f=>$fact) {
 	?>
 <tr>
 	<td class="descriptionbox">
-		<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag]; 
-		else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag]; 
+		<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag];
+		else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag];
 		else print $fact_tag;
-		?>		
+		?>
 		<input type="hidden" name="TAGS[]" value="<?php echo $fact_tag; ?>" />
 		<input type="hidden" name="NUMS[]" value="<?php echo $fact_num; ?>" />
 	</td>
@@ -1739,9 +1740,9 @@ if ($MULTI_MEDIA && (is_writable($MEDIA_DIRECTORY))) { ?>
 <?php }
 
 // Address update
-if (!$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empty($EMAIL)) { //-- don't show address for dead people 
-	 ?>
-<tr><td>&nbsp;</td></tr> 
+if (!$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empty($EMAIL)) { //-- don't show address for dead people
+?>
+<tr><td>&nbsp;</td></tr>
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_address_help", "qm"); print $pgv_lang["update_address"]; ?></td></tr>
 <tr>
 	<td class="descriptionbox">
@@ -1755,12 +1756,12 @@ if (!$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !emp
 			<?php  if (!empty($ADDR)) { ?><tr><td><?php print $factarray["ADDR"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) print "dir=\"ltr\""; ?> name="ADDR" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?>" /></td></tr><?php } ?>
 			<tr><td><?php print $factarray["ADR1"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) print "dir=\"ltr\""; ?> name="ADR1" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADR1),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 			<tr><td><?php print $factarray["ADR2"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR2)) print "dir=\"ltr\""; ?> name="ADR2" size="35" value="<?php print PrintReady(htmlspecialchars(strip_tags($ADR2),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
-			<tr><td><?php print $factarray["CITY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CITY)) print "dir=\"ltr\""; ?> name="CITY" value="<?php print PrintReady(htmlspecialchars(strip_tags($CITY),ENT_COMPAT,'UTF-8')); ?>" /> 
-			 <?php print $factarray["STAE"]; ?> <input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($STAE)) print "dir=\"ltr\""; ?> name="STAE" value="<?php print PrintReady(htmlspecialchars(strip_tags($STAE),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
+			<tr><td><?php print $factarray["CITY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CITY)) print "dir=\"ltr\""; ?> name="CITY" value="<?php print PrintReady(htmlspecialchars(strip_tags($CITY),ENT_COMPAT,'UTF-8')); ?>" />
+			<?php print $factarray["STAE"]; ?> <input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($STAE)) print "dir=\"ltr\""; ?> name="STAE" value="<?php print PrintReady(htmlspecialchars(strip_tags($STAE),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 			<tr><td><?php print $factarray["POST"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($POST)) print "dir=\"ltr\""; ?> name="POST" value="<?php print PrintReady(htmlspecialchars(strip_tags($POST),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 			<tr><td><?php print $factarray["CTRY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CTRY)) print "dir=\"ltr\""; ?> name="CTRY" value="<?php print PrintReady(htmlspecialchars(strip_tags($CTRY),ENT_COMPAT,'UTF-8')); ?>" /></td></tr>
 			</table>
-			
+
 		<?php } else { ?>
 		<textarea name="ADDR" tabindex="<?php print $tabkey; ?>" cols="35" rows="4"><?php print PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?></textarea>
 		<?php } ?>
@@ -1797,8 +1798,8 @@ if (!$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !emp
 </table>
 </div>
 
-<?php 
-//------------------------------------------- FAMILY WITH SPOUSE TABS ------------------------ 
+<?php
+//------------------------------------------- FAMILY WITH SPOUSE TABS ------------------------
 for($i=1; $i<=count($sfams); $i++) {
 	?>
 <div id="tab<?php echo $i; ?>" style="display: none;">
@@ -1857,7 +1858,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	<td class="descriptionbox"><?php print $pgv_lang["enter_pid"]; ?></td>
 	<td class="optionbox" colspan="3"><input type="text" size="10" name="SPID[<?php echo $i; ?>]" id="SPID<?php echo $i; ?>" value="<?php echo $spid; ?>" />
 		<?php print_findindi_link("SPID$i","");?>
-     </td>
+		</td>
 	</tr>
 <?php if (empty($spid)) { ?>
 <tr><td>&nbsp;</td></tr>
@@ -1927,7 +1928,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	<?php $tabkey++; ?>
 	</td>
 </tr>
-<?php print_quick_resn("BRESN".$i); 
+<?php print_quick_resn("BRESN".$i);
 }
 //NOTE: Update fact
 ?>
@@ -1948,8 +1949,8 @@ foreach($famfacts as $f=>$fact) {
 	?>
 			<tr>
 				<td class="descriptionbox">
-				<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag]; 
-					else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag]; 
+				<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag];
+					else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag];
 					else print $fact_tag;
 				?>
 					<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
@@ -1957,8 +1958,8 @@ foreach($famfacts as $f=>$fact) {
 				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date,ENT_COMPAT,'UTF-8')); ?>" /><?php print_calendar_popup("F{$i}DATE{$f}");?></td>
 				<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
 					<td class="optionbox"><input type="text" size="30" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac,ENT_COMPAT,'UTF-8')); ?>" />
-                                        <?php print_findplace_link("F{$i}place{$f}"); ?>
-                                        </td>
+					<?php print_findplace_link("F{$i}place{$f}"); ?>
+					</td>
 				<?php }
 				else {
 					print "<td class=\"optionbox\"><select tabindex=\"".$tabkey."\" name=\"F".$i."TEMP[]\" >\n";
@@ -2077,10 +2078,10 @@ $chil = find_children_in_record($famrec);
 			<tr>
 				<td class="descriptionbox"><?php print $pgv_lang["add_new_chil"]; ?></td>
 				<td class="optionbox" colspan="3"><input type="text" size="10" name="CHIL[]" id="CHIL<?php echo $i; ?>" />
-                                <?php print_findindi_link("CHIL$i","");?>
-                                </td>
+						<?php print_findindi_link("CHIL$i","");?>
+				</td>
 			</tr>
-<?php 
+<?php
 // NOTE: Add a child
 if (empty($child_surname)) $child_surname = "";
 ?>
@@ -2242,7 +2243,7 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	</td>
 </tr>
-<?php print_quick_resn("DRESN"); 
+<?php print_quick_resn("DRESN");
 
 // NOTE: Marriage
 ?>
@@ -2345,7 +2346,7 @@ if (empty($child_surname)) $child_surname = "";
 </table>
 </div>
 
-<?php //------------------------------------------- FAMILY AS CHILD TABS ------------------------ 
+<?php //------------------------------------------- FAMILY AS CHILD TABS ------------------------
 $i++;
 for($j=1; $j<=count($cfams); $j++) {
 	?>
@@ -2357,7 +2358,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	$famid = $cfams[$j-1];
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
 	else $famrec = find_updated_record($famid);
-	
+
 	$subrecords = get_all_subrecords($famrec, "HUSB,WIFE,CHIL", false, false, false);
 	$famfacts = array();
 	foreach($subrecords as $ind=>$subrec) {
@@ -2489,7 +2490,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	</td>
 	</tr>
-	<?php print_quick_resn("FDRESN$i"); 
+	<?php print_quick_resn("FDRESN$i");
 }
 ?>
 <?php
@@ -2590,9 +2591,9 @@ for($j=1; $j<=count($cfams); $j++) {
 	<?php $tabkey++; ?>
 	</td>
 </tr>
-<?php print_quick_resn("MDRESN$i"); 
+<?php print_quick_resn("MDRESN$i");
 }
-// NOTE: Update fact 
+// NOTE: Update fact
 ?>
 <tr><td>&nbsp;</td></tr>
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_fact_help", "qm"); print $pgv_lang["update_fact"]; ?></td></tr>
@@ -2611,8 +2612,8 @@ foreach($famfacts as $f=>$fact) {
 	?>
 	<tr>
 		<td class="descriptionbox">
-		<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag]; 
-			else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag]; 
+		<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag];
+			else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag];
 			else print $fact_tag;
 		?>
 			<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
@@ -2621,7 +2622,7 @@ foreach($famfacts as $f=>$fact) {
 		<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
 			<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac,ENT_COMPAT,'UTF-8')); ?>" />
 			<?php print_findplace_link("F".$i."place$f"); ?>
-                 </td>
+			</td>
 		<?php }
 		else {
 			print "<td class=\"optionbox\"><select tabindex=\"".$tabkey."\" name=\"F".$i."TEMP[]\" >\n";
@@ -2731,8 +2732,8 @@ $chil = find_children_in_record($famrec, $pid);
 	<tr>
 		<td class="descriptionbox"><?php print $pgv_lang["add_child_to_family"]; ?></td>
 		<td class="optionbox" colspan="3"><input type="text" size="10" name="CHIL[]" id="CHIL<?php echo $i; ?>" />
-                        <?php print_findindi_link("CHIL$i","");?>
-                        </td>
+		<?php print_findindi_link("CHIL$i","");?>
+		</td>
 	</tr>
 <?php
 // NOTE: Add a child

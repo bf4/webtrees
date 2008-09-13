@@ -26,7 +26,7 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
 
 // Must be an admin user to use this module
 if (!PGV_USER_GEDCOM_ADMIN) {
@@ -82,7 +82,7 @@ $err_level    =safe_POST('err_level',    '[0-3]', $error); // Higher numbers are
 $openinnew    =safe_POST('openinnew',    '[01]',  '0');    // Open links in same/new tab/window
 $context_lines=safe_POST('context_lines','[0-5]', '2');    // Lines of context to display
 $showall      =safe_POST('showall',      '[01]',  '0');    // Show details of records with no problems
- 
+
 print "<form method='post' name='gedcheck' action='gedcheck.php'>\n";
 print "<table class='list_table, $TEXT_DIRECTION'>\n";
 print "<tr><td class='list_label'>{$pgv_lang["gedcom_file"]}</td>\n";
@@ -908,7 +908,7 @@ function check_fam($id)
 
 	unset ($chil, $husb, $wife); $todo=array();
 	$facts=get_all_subrecords($gedrec, "CHAN OBJE", true, false, true);
-	foreach ($facts as $subged) 
+	foreach ($facts as $subged)
 		if (preg_match("/^1/", $subged)) { # Sometimes get_all_subrecords() gives just a CR
 			preg_match("/^1\s*(\S*)/", $subged, $fact);
 			preg_match("/^1\s*{$fact[1]}\s*@(.*)@{$EOL}/", $subged, $link);

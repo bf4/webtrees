@@ -26,7 +26,8 @@
  * @package PhpGedView
  * @subpackage Lists
  */
-require("config.php");
+
+require './config.php';
 
 function get_person()
 {
@@ -200,7 +201,7 @@ $dates= array();
 		else
 		if (dateplace($indirec,"1 MARS")!==false)
 			{$marriagedate= $match1[1]; $marriageplace=$match2[1]; $sex=0;}
-//--	 print ("gehuwd:".$marriagedate."--".$marriageplace."<br/>");
+//--	print ("gehuwd:".$marriagedate."--".$marriageplace."<br/>");
 		if (dateplace($indirec,"1 DIV")!==false)
 			{$divorcedate= $match1[1]; $divorceplace=$match2[1];}
 		if ($marriagedate !== "")

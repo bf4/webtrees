@@ -27,7 +27,8 @@
  * @author rbennett
  */
 
-require("config.php");
+require './config.php';
+
 require_once("includes/functions.php");
 require_once("includes/functions_edit.php");
 require_once("includes/functions_import.php");
@@ -97,14 +98,14 @@ if ($action=='addBanned') {
 	if (validIP($address)) {
 		$banned[] = $address;
 		$banned = array_unique($banned);		// Make sure we have no duplicates
-		
+
 		$bannedtext = "<?php\n//--List of banned IP addresses\n";
-		$bannedtext .= "\$banned = array();\n";	
+		$bannedtext .= "\$banned = array();\n";
 		foreach ($banned as $value) {
 			$bannedtext .= "\$banned[] = \"".$value."\";\n";
 		}
 		$bannedtext .= "\n"."?>";
-    	
+
 		$fp = @fopen($INDEX_DIRECTORY."banned.php", "w");
 		if (!$fp) {
 			global $whichFile;
@@ -114,10 +115,10 @@ if ($action=='addBanned') {
 			fwrite($fp, $bannedtext);
 			fclose($fp);
 			$logline = AddToLog("banned.php updated");
- 			check_in($logline, "banned.php", $INDEX_DIRECTORY);	
+ 			check_in($logline, "banned.php", $INDEX_DIRECTORY);
 		}
 	} else $errorBanned = $pgv_lang["error_ban_server"];
-	
+
 	$action = 'showForm';
 }
 
@@ -128,9 +129,9 @@ if ($action=='deleteBanned') {
 	$banned = array_flip($banned);
 	unset($banned[$address]);
 	$banned = array_flip($banned);
-	
+
 	$bannedtext = "<?php\n//--List of banned IP addresses\n";
-	$bannedtext .= "\$banned = array();\n";	
+	$bannedtext .= "\$banned = array();\n";
 	foreach ($banned as $value) {
 		$bannedtext .= "\$banned[] = \"".$value."\";\n";
 	}
@@ -145,9 +146,9 @@ if ($action=='deleteBanned') {
 		fwrite($fp, $bannedtext);
 		fclose($fp);
 		$logline = AddToLog("banned.php updated");
- 		check_in($logline, "banned.php", $INDEX_DIRECTORY);	
+ 		check_in($logline, "banned.php", $INDEX_DIRECTORY);
 	}
-	
+
 	$action = 'showForm';
 }
 
@@ -159,12 +160,12 @@ if ($action=='addSearch') {
 		$search_engines[] = $address;
 		$search_engines = array_unique($search_engines);		// Make sure we have no duplicates
 		$searchtext = "<?php\n//--List of search engine IP addresses\n";
-		$searchtext .= "\$search_engines = array();\n";	
+		$searchtext .= "\$search_engines = array();\n";
 		foreach ($search_engines as $value) {
 			$searchtext .= "\$search_engines[] = \"".$value."\";\n";
 		}
 		$searchtext .= "\n"."?>";
-	
+
 		$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "w");
 		if (!$fp) {
 			global $whichFile;
@@ -174,10 +175,10 @@ if ($action=='addSearch') {
 			fwrite($fp, $searchtext);
 			fclose($fp);
 			$logline = AddToLog("search_engines.php updated");
-	 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
+			check_in($logline, "search_engines.php", $INDEX_DIRECTORY);
 		}
 	} else $errorSearch = $pgv_lang["error_ban_server"];
-	
+
 	$action = 'showForm';
 }
 
@@ -188,9 +189,9 @@ if ($action=='deleteSearch') {
 	$search_engines = array_flip($search_engines);
 	unset($search_engines[$address]);
 	$search_engines = array_flip($search_engines);
-		
+
 	$searchtext = "<?php\n//--List of search engine IP addresses\n";
-	$searchtext .= "\$search_engines = array();\n";	
+	$searchtext .= "\$search_engines = array();\n";
 	foreach ($search_engines as $value) {
 		$searchtext .= "\$search_engines[] = \"".$value."\";\n";
 	}
@@ -205,9 +206,9 @@ if ($action=='deleteSearch') {
 		fwrite($fp, $searchtext);
 		fclose($fp);
 		$logline = AddToLog("search_engines.php updated");
- 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);	
+ 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);
 	}
-	
+
 	$action = 'showForm';
 }
 
@@ -220,7 +221,7 @@ if ($action=='addServer') {
 	$gedcom_id = trim(stripslashes(safe_POST('gedcom_id')));
 	$username = trim(stripslashes(safe_POST('username')));
 	$password = trim(stripslashes(safe_POST('password')));
-	
+
 	if (!$serverTitle=="" || !$serverURL=="") {
 		$errorServer = '';
 		$turl = preg_replace("~^\w+://~", "", $serverURL);
@@ -236,14 +237,14 @@ if ($action=='addServer') {
 		}
 		if (empty($errorServer)) {
 			$gedcom_string = "0 @new@ SOUR\r\n";
-    		$gedcom_string.= "1 TITL ".$serverTitle."\r\n";
+			$gedcom_string.= "1 TITL ".$serverTitle."\r\n";
 			$gedcom_string.= "1 URL ".$serverURL."\r\n";
 			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
 			$gedcom_string.= "2 _USER ".$username."\r\n";
 			$gedcom_string.= "2 _PASS ".$password."\r\n";
 			//-- only allow admin users to see password
 			$gedcom_string.= "3 RESN confidential\r\n";
-    		
+
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
 			if (empty($sid) || PEAR::isError($sid)) {
@@ -255,7 +256,7 @@ if ($action=='addServer') {
 			}
 		}
 	} else $errorServer = $pgv_lang["error_url_blank"];
-	
+
 	$action = 'showForm';
 }
 
@@ -265,7 +266,7 @@ if ($action=='addServer') {
 if ($action=='deleteServer') {
 	if (!empty($address)) {
 		$sid = stripslashes($address);
-		
+
 		// Search the database for references to this Source ID
 		$query = "SOUR @".$sid."@";
 		if (!$REGEXP_DB) $query = "%".$query."%";
@@ -278,7 +279,7 @@ if ($action=='deleteServer') {
 			} else $errorDelete = $pgv_lang["error_remove_site"];
 		} else $errorDelete = $pgv_lang["error_remove_site_linked"];
 	}
-	
+
 	$remoteServers = get_server_list();		// refresh the list
 	$action = 'showForm';
 }
@@ -302,49 +303,49 @@ function showSite(siteID) {
 </script>
 
 
-<!-- Search Engine IP address table --> 
+<!-- Search Engine IP address table -->
 <table class="width66" align="center">
  <tr>
-  <td colspan="2" class="title" align="center">
-   <?php echo $pgv_lang["title_manage_servers"];?>
-  </td>
+	<td colspan="2" class="title" align="center">
+	<?php echo $pgv_lang["title_manage_servers"];?>
+	</td>
  </tr>
  <tr>
-  <td>
-   <form name="searchengineform" action="manageservers.php" method="post">
-   <table class="width100" align="center">
-    <tr>
-     <td class="facts_label">
-      <?php print_help_link("help_manual_search_engines", "qm"); ?>
-      <b><?php echo $pgv_lang["label_manual_search_engines"];?></b>
-     </td>
-    </tr>
-    <tr>
-     <td class="facts_value">
-      <table align="center">
+	<td>
+	<form name="searchengineform" action="manageservers.php" method="post">
+	<table class="width100" align="center">
+		<tr>
+		<td class="facts_label">
+			<?php print_help_link("help_manual_search_engines", "qm"); ?>
+			<b><?php echo $pgv_lang["label_manual_search_engines"];?></b>
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_value">
+			<table align="center">
 <?php
-  foreach ($search_engines as $index=>$value) { 
-    ?>
-       <tr>
-        <td><span dir="ltr">
-         <input type="text" name="address<?php echo $index;?>" size="16" value="<?php echo $value;?>" READONLY />
-        </span></td>
-        <td>
-         &nbsp;&nbsp;&nbsp;
-         <button name="deleteSearch" value="<?php echo $value;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
-        </td>
-       </tr>
+	foreach ($search_engines as $index=>$value) {
+		?>
+			<tr>
+				<td><span dir="ltr">
+				<input type="text" name="address<?php echo $index;?>" size="16" value="<?php echo $value;?>" READONLY />
+				</span></td>
+				<td>
+				&nbsp;&nbsp;&nbsp;
+				<button name="deleteSearch" value="<?php echo $value;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
+				</td>
+			</tr>
 <?php }?>
-       <tr>
-        <td><span dir="ltr">
-         <input type="hidden" name="action" value="addSearch" />
-         <input type="text" name="address" size="16" value="<?php echo (empty($errorSearch))? '':$address;?>" />
-         </span></td>
-        <td>
-         &nbsp;&nbsp;&nbsp;
-         <input type="submit" value="<?php echo $pgv_lang['add'];?>" />
-        </td>
-       </tr>
+			<tr>
+				<td><span dir="ltr">
+				<input type="hidden" name="action" value="addSearch" />
+				<input type="text" name="address" size="16" value="<?php echo (empty($errorSearch))? '':$address;?>" />
+				</span></td>
+				<td>
+				&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="<?php echo $pgv_lang['add'];?>" />
+				</td>
+			</tr>
 <?php
 	if (!empty($errorSearch)) {
 		print '<tr><td colspan="2"><span class="warning">';
@@ -353,53 +354,53 @@ function showSite(siteID) {
 		$errorSearch = '';
 	}
 ?>
-      </table>
-     </td>
-    </tr>
-   </table>
-   </form>
-  </td>
+			</table>
+		</td>
+		</tr>
+	</table>
+	</form>
+	</td>
  </tr>
 </table>
 
-<!-- Banned IP address table --> 
+<!-- Banned IP address table -->
 <table class="width66" align="center">
  <tr>
-  <td>
-   <form name="banIPform" action="manageservers.php" method="post">
-   <table class="width100" align="center">
-    <tr>
-     <td class="facts_label">
-      <?php print_help_link("help_banning", "qm"); ?>
-      <b><?php echo $pgv_lang["label_banned_servers"];?></b>
-     </td>
-    </tr>
-    <tr>
-     <td class="facts_value">
-      <table align="center">
+	<td>
+	<form name="banIPform" action="manageservers.php" method="post">
+	<table class="width100" align="center">
+		<tr>
+		<td class="facts_label">
+			<?php print_help_link("help_banning", "qm"); ?>
+			<b><?php echo $pgv_lang["label_banned_servers"];?></b>
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_value">
+			<table align="center">
 <?php
-  foreach ($banned as $index=>$value) 
-    { ?>
-       <tr>
-        <td><span dir="ltr">
-         <input type="text" name="address<?php echo $index;?>" size="16" value="<?php echo $value;?>" READONLY />
-        </span></td>
-        <td>
-         &nbsp;&nbsp;&nbsp;
-         <button name="deleteBanned" value="<?php echo $value;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
-        </td>
-       </tr>
+	foreach ($banned as $index=>$value)
+		{ ?>
+			<tr>
+				<td><span dir="ltr">
+				<input type="text" name="address<?php echo $index;?>" size="16" value="<?php echo $value;?>" READONLY />
+				</span></td>
+				<td>
+				&nbsp;&nbsp;&nbsp;
+				<button name="deleteBanned" value="<?php echo $value;?>" type="submit"><?php echo $pgv_lang["remove"];?></button>
+				</td>
+			</tr>
 <?php }?>
-       <tr>
-        <td><span dir="ltr">
-         <input name="action" type="hidden" value="addBanned"/>
-         <input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo (empty($errorBanned))? '':$address;?>" />
-        </span></td>
-        <td>
-         &nbsp;&nbsp;&nbsp;
-         <input type="submit" value="<?php echo $pgv_lang['add'];?>" />
-        </td>
-       </tr>
+			<tr>
+				<td><span dir="ltr">
+				<input name="action" type="hidden" value="addBanned"/>
+				<input type="text" id="txtAddIp" name="address" size="16"  value="<?php echo (empty($errorBanned))? '':$address;?>" />
+				</span></td>
+				<td>
+				&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="<?php echo $pgv_lang['add'];?>" />
+				</td>
+			</tr>
 <?php
 	if (!empty($errorBanned)) {
 		print '<tr><td colspan="2"><span class="warning">';
@@ -408,95 +409,95 @@ function showSite(siteID) {
 		$errorBanned = '';
 	}
 ?>
-      </table>
-     </td>
-    </tr>
-   </table>
-   </form>
-  </td>
+			</table>
+		</td>
+		</tr>
+	</table>
+	</form>
+	</td>
  </tr>
 </table>
 
-<!-- remote server list --> 
+<!-- remote server list -->
 <table class="width66" align="center">
  <tr>
-  <td>
-   <form name="serverlistform" action="manageservers.php" method="post">
-   <table class="width100">
-    <tr>
-     <td class="facts_label">
-      <b><?php echo $pgv_lang["label_added_servers"];?></b>
-     </td>
-    </tr>
-    <tr>
-     <td class="facts_value">
-      <table>
+	<td>
+	<form name="serverlistform" action="manageservers.php" method="post">
+	<table class="width100">
+		<tr>
+		<td class="facts_label">
+			<b><?php echo $pgv_lang["label_added_servers"];?></b>
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_value">
+			<table>
 <?php
-  foreach ($remoteServers as $sid=>$server) {
-	  $serverTitle = $server['name'];
-	  $serverURL = $server['url'];
-	  $gedcom_id = get_gedcom_value('_DBID', 1, $server['gedcom']);
-	  $username = get_gedcom_value('_USER', 2, $server['gedcom']);
+	foreach ($remoteServers as $sid=>$server) {
+		$serverTitle = $server['name'];
+		$serverURL = $server['url'];
+		$gedcom_id = get_gedcom_value('_DBID', 1, $server['gedcom']);
+		$username = get_gedcom_value('_USER', 2, $server['gedcom']);
 ?>
-       <tr>
-        <td>
-         <button type="submit" onclick="return (confirm('<?php echo $pgv_lang["confirm_delete_source"];?>'))" name="deleteServer" value="<?php echo $sid;?>"><?php echo $pgv_lang["remove"];?></button>
-         &nbsp;&nbsp;
-         <button id="buttonShow_<?php echo $sid;?>" type="button" onclick="showSite('<?php echo $sid;?>');"><?php echo $pgv_lang["show_details"];?></button>
-         &nbsp;&nbsp;
-         <button type="button" onclick="window.open('source.php?sid=<?php echo $sid;?>&ged=<?php echo $GEDCOM;?>')"><?php echo $pgv_lang["title_view_conns"];?></button>
-         &nbsp;&nbsp;
-         <?php echo PrintReady($serverTitle); ?>
-         <div id="siteDetails_<?php echo $sid;?>" style="display:none">
-          <br />
-          <table>
-           <tr>
-            <td class="facts_label width20">
-             <?php print $pgv_lang["id"];?>
-            </td>
-            <td class="facts_value">
-             <?php echo $sid;?>
-            </td>
-           </tr>
-           <tr>
-            <td class="facts_label width20">
-             <?php print $pgv_lang["title"];?>
-            </td>
-            <td class="facts_value">
-             <?php echo PrintReady($serverTitle);?>
-            </td>
-           </tr>
-           <tr>
-            <td class="facts_label width20">
-             <?php print $pgv_lang["label_server_url"];?>
-            </td>
-            <td class="facts_value">
-             <?php echo PrintReady($serverURL);?>
-            </td>
-           </tr>
-           <tr>
-            <td class="facts_label width20">
-             <?php echo $pgv_lang["label_gedcom_id2"];?>
-            </td>
-            <td class="facts_value">
-             <?php echo PrintReady($gedcom_id);?>
-            </td>
-           </tr>
-           <tr>
-            <td class="facts_label width20">
-             <?php print $pgv_lang["label_username_id"];?>
-            </td>
-            <td class="facts_value">
-             <?php echo PrintReady($username);?>
-            </td>
-           </tr> 
-          </table>
-          <br />
-         </div>
-        </td>
-       </tr>
-<?php 
-      }
+			<tr>
+				<td>
+				<button type="submit" onclick="return (confirm('<?php echo $pgv_lang["confirm_delete_source"];?>'))" name="deleteServer" value="<?php echo $sid;?>"><?php echo $pgv_lang["remove"];?></button>
+				&nbsp;&nbsp;
+				<button id="buttonShow_<?php echo $sid;?>" type="button" onclick="showSite('<?php echo $sid;?>');"><?php echo $pgv_lang["show_details"];?></button>
+				&nbsp;&nbsp;
+				<button type="button" onclick="window.open('source.php?sid=<?php echo $sid;?>&ged=<?php echo $GEDCOM;?>')"><?php echo $pgv_lang["title_view_conns"];?></button>
+				&nbsp;&nbsp;
+				<?php echo PrintReady($serverTitle); ?>
+				<div id="siteDetails_<?php echo $sid;?>" style="display:none">
+					<br />
+					<table>
+					<tr>
+						<td class="facts_label width20">
+						<?php print $pgv_lang["id"];?>
+						</td>
+						<td class="facts_value">
+						<?php echo $sid;?>
+						</td>
+					</tr>
+					<tr>
+						<td class="facts_label width20">
+						<?php print $pgv_lang["title"];?>
+						</td>
+						<td class="facts_value">
+						<?php echo PrintReady($serverTitle);?>
+						</td>
+					</tr>
+					<tr>
+						<td class="facts_label width20">
+						<?php print $pgv_lang["label_server_url"];?>
+						</td>
+						<td class="facts_value">
+						<?php echo PrintReady($serverURL);?>
+						</td>
+					</tr>
+					<tr>
+						<td class="facts_label width20">
+						<?php echo $pgv_lang["label_gedcom_id2"];?>
+						</td>
+						<td class="facts_value">
+						<?php echo PrintReady($gedcom_id);?>
+						</td>
+					</tr>
+					<tr>
+						<td class="facts_label width20">
+						<?php print $pgv_lang["label_username_id"];?>
+						</td>
+						<td class="facts_value">
+						<?php echo PrintReady($username);?>
+						</td>
+					</tr>
+					</table>
+					<br />
+				</div>
+				</td>
+			</tr>
+<?php
+			}
 	if (!empty($errorDelete)) {
 		print '<tr><td colspan="2"><span class="warning">';
 		print $errorDelete;
@@ -504,12 +505,12 @@ function showSite(siteID) {
 		$errorDelete = '';
 	}
 ?>
-      </table>
-     </td>
-    </tr>
-   </table>
-   </form>
-  </td>
+			</table>
+		</td>
+		</tr>
+	</table>
+	</form>
+	</td>
  </tr>
 </table>
 
@@ -525,60 +526,60 @@ if (empty($errorServer)) {
 <form name="addserversform" action="manageservers.php" method="post"">
 <table class="width66" align="center">
  <tr>
-  <td valign="top">
-   <table class="width100">
-    <tr>
-     <td class="facts_label" colspan="2">
-      <?php print_help_link("help_remotesites", "qm"); ?>
-      <b><?php print $pgv_lang["label_new_server"];?></b>
-     </td>
-    </tr>
-    <tr>
-     <td class="facts_label width20">
-      <?php print $pgv_lang["title"];?>
-     </td>
-     <td class="facts_value">
-      <input type="text" size="66" name="serverTitle" value="<?php echo PrintReady($serverTitle);?>" />
-     </td>
-    </tr>
-    <tr>
-     <td class="facts_label width20">
-      <?php print_help_link('link_remote_site_help', 'qm');?>
-      <?php print $pgv_lang["label_server_url"];?>
-     </td>
-     <td class="facts_value">
-      <input type="text" size="66" name="serverURL" value="<?php echo PrintReady($serverURL);?>" />
-      <br /><?php echo $pgv_lang["example"];?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl
-     </td>
-    </tr>
-    <tr>
-     <td class="facts_label width20">
-      <?php echo $pgv_lang["label_gedcom_id2"];?>
-     </td>
-     <td class="facts_value">
-      <input type="text" name="gedcom_id" value="<?php echo PrintReady($gedcom_id);?>" />
-     </td>
-    </tr>
-    <tr>
-     <td class="facts_label width20">
-      <?php print $pgv_lang["label_username_id"];?>
-     </td>
-     <td class="facts_value">
-      <input type="text" name="username" value="<?php echo PrintReady($username);?>" />
-     </td>
-    </tr> 
-    <tr>
-     <td class="facts_label width20">
-      <?php print $pgv_lang["label_password_id"];?>
-     </td>
-     <td class="facts_value">
-      <input type="password" name="password" />
-     </td>
-    </tr>
-    <tr>
-     <td class="facts_value" align="center" colspan="2">
-      <input type="submit" value="<?php echo $pgv_lang['add'];?>" />
-      <input name="action" type="hidden" value="addServer"/>
+	<td valign="top">
+	<table class="width100">
+		<tr>
+		<td class="facts_label" colspan="2">
+			<?php print_help_link("help_remotesites", "qm"); ?>
+			<b><?php print $pgv_lang["label_new_server"];?></b>
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_label width20">
+			<?php print $pgv_lang["title"];?>
+		</td>
+		<td class="facts_value">
+			<input type="text" size="66" name="serverTitle" value="<?php echo PrintReady($serverTitle);?>" />
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_label width20">
+			<?php print_help_link('link_remote_site_help', 'qm');?>
+			<?php print $pgv_lang["label_server_url"];?>
+		</td>
+		<td class="facts_value">
+			<input type="text" size="66" name="serverURL" value="<?php echo PrintReady($serverURL);?>" />
+			<br /><?php echo $pgv_lang["example"];?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_label width20">
+			<?php echo $pgv_lang["label_gedcom_id2"];?>
+		</td>
+		<td class="facts_value">
+			<input type="text" name="gedcom_id" value="<?php echo PrintReady($gedcom_id);?>" />
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_label width20">
+			<?php print $pgv_lang["label_username_id"];?>
+		</td>
+		<td class="facts_value">
+			<input type="text" name="username" value="<?php echo PrintReady($username);?>" />
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_label width20">
+			<?php print $pgv_lang["label_password_id"];?>
+		</td>
+		<td class="facts_value">
+			<input type="password" name="password" />
+		</td>
+		</tr>
+		<tr>
+		<td class="facts_value" align="center" colspan="2">
+			<input type="submit" value="<?php echo $pgv_lang['add'];?>" />
+			<input name="action" type="hidden" value="addServer"/>
 <?php
 	if (!empty($errorServer)) {
 		print '<br /><br /><span class="warning">';
@@ -587,13 +588,13 @@ if (empty($errorServer)) {
 		$errorServer = '';
 	}
 ?>
-     </td>
-    </tr>
-   </table>
-  </td>
+		</td>
+		</tr>
+	</table>
+	</td>
  </tr>
 </table>
 </form>
 <?php
-  print_footer();
+	print_footer();
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005	John Finlay and Others
  *
@@ -23,7 +23,8 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
+
 require("includes/functions_edit.php");
 
 if (!PGV_USER_GEDCOM_ADMIN) {
@@ -69,7 +70,7 @@ print " Found ".count($indis)."<br /><br />\n";
 
 foreach($indis as $pid=>$indi) {
 	print "Checking record ".$pid."... ";
-	
+
 	$oldrecord = $indi['gedcom'];
 	if (isset($pgv_changes[$pid."_".$GEDCOM])) $oldrecord = find_updated_record($pid);
 	$newrec = fixmedia($oldrecord);
@@ -87,7 +88,7 @@ print " Found ".count($indis)."<br /><br />\n";
 foreach($indis as $pid=>$indi) {
 	print "Checking record ".$pid."... ";
 	if (isset($pgv_changes[$pid."_".$GEDCOM])) $oldrecord = find_updated_record($pid);
-	
+
 	$newrec = fixmedia($oldrecord);
 	if ($newrec!=trim($oldrecord)) {
 		print "Fixing record ".$pid."<br />\n";
@@ -103,7 +104,7 @@ print " Found ".count($indis)."<br /><br />\n";
 foreach($indis as $pid=>$indi) {
 	print "Checking record ".$pid."... ";
 	if (isset($pgv_changes[$pid."_".$GEDCOM])) $oldrecord = find_updated_record($pid);
-	
+
 	$newrec = fixmedia($oldrecord);
 	if ($newrec!=trim($oldrecord)) {
 		print "Fixing record ".$pid."<br />\n";

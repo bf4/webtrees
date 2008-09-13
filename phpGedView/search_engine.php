@@ -1,8 +1,8 @@
 <?php
 /**
  * A landing spot for pages that are restricted from search engines.
- * WARNING: The functions print_header() and print_simple_header() 
- * cannot be called from here because they would cause an infinite 
+ * WARNING: The functions print_header() and print_simple_header()
+ * cannot be called from here because they would cause an infinite
  * back to here.
  *
  * phpGedView: Genealogy Viewer
@@ -31,7 +31,7 @@
 global $SEARCH_SPIDER, $CHARACTER_SET;
 global $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;
 
-require 'config.php';
+require './config.php';
 
 loadLangFile('pgv_help');
 
@@ -45,7 +45,7 @@ print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n\t";
 print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n\t";
 
 print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\" />";
-if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) 
+if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl"))
 	print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\" />";
 print "<meta name=\"robots\" content=\"noindex,follow\" />\n\t";
 print '<meta name="generator" content="'.PGV_PHPGEDVIEW.' - '.PGV_PHPGEDVIEW_URL.'" />';

@@ -26,13 +26,15 @@
  * @TODO add Basic HTTP authentication to allow RSS aggregators to "log on"
  */
 
+require './config.php';
+
 if (isset($_SESSION["CLANGUAGE"])) $oldlang = $_SESSION["CLANGUAGE"];
 else $oldlang = "english";
 if (!empty($lang)) {
 	$changelanguage = "yes";
 	$NEWLANGUAGE = $lang;
 }
-require 'config.php';
+
 require 'includes/feedcreator.class.php';
 require 'includes/functions_rss.php';
 require 'includes/index_cache.php';

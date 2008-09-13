@@ -24,7 +24,7 @@
  * @version $Id$
  */
 
-require "config.php";
+require './config.php';
 
 if (!PGV_USER_GEDCOM_ADMIN || empty($fname)||preg_match("/\.zip$/", $fname)==0) {
 	print $pgv_lang['access_denied'];
@@ -36,7 +36,7 @@ if(ini_get('zlib.output_compression')) @ini_set('zlib.output_compression', 'Off'
 header("Pragma: public"); // required
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Cache-Control: private",false); // required for certain browsers 
+header("Cache-Control: private",false); // required for certain browsers
 header("Content-Type: application/zip");
 header("Content-Disposition: attachment; filename=$fname");
 header("Content-length: ".filesize($INDEX_DIRECTORY.$fname));

@@ -25,7 +25,8 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
+
 require_once("includes/functions_print_lists.php");
 require_once("includes/controllers/source_ctrl.php");
 
@@ -34,14 +35,14 @@ global $linkToID;
 print_header($controller->getPageTitle());
 $linkToID = $controller->sid;	// -- Tell addmedia.php what to link to
 
-// LBox ============================================================================= 
-// Get Javascript variables from lb_config.php --------------------------- 
+// LBox =============================================================================
+// Get Javascript variables from lb_config.php ---------------------------
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');	
+	include('modules/lightbox/functions/lb_call_js.php');
 }
-// LBox  ============================================================================	
+// LBox  ============================================================================
 
 loadLangFile("lightbox:lang");
 
@@ -67,9 +68,9 @@ loadLangFile("lightbox:lang");
 		</td>
 		<td valign="top" class="noprint">
 		<?php if (!$controller->isPrintPreview()) {
-			 $editmenu = $controller->getEditMenu();
-			 $othermenu = $controller->getOtherMenu();
-			 if ($editmenu!==false || $othermenu!==false) {
+			$editmenu = $controller->getEditMenu();
+			$othermenu = $controller->getOtherMenu();
+			if ($editmenu!==false || $othermenu!==false) {
 		?>
 			<table class="sublinks_table" cellspacing="4" cellpadding="0">
 				<tr>

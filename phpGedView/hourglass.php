@@ -34,12 +34,12 @@ $controller->init();
 print_header(PrintReady($controller->name)." ".$pgv_lang["hourglass_chart"]);
 if ($controller->view=="preview") {
 	print "<h2 style=\"text-align: center\">".$pgv_lang["hourglass_chart"].":&nbsp;&nbsp;&nbsp;".PrintReady($controller->name)."</h2>";
-} else { 
+} else {
 	print "<!-- // NOTE: Start table header -->";
 	print "<table><tr><td valign=\"top\">";
 	print "<h2>".$pgv_lang["hourglass_chart"].":<br />".PrintReady($controller->name)."</h2>";
 }
-	
+
 $controller->setupJavascript();
 
 // LBox =====================================================================================
@@ -47,7 +47,7 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
-}	
+}
 // ==========================================================================================
 
 $gencount=0;
@@ -57,16 +57,16 @@ if ($view!="preview") {
 	</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">
 	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
 	<table><tr>
-	
+
 		<!-- // NOTE: Root ID -->
 	<td class="descriptionbox">
-	<?php print_help_link("desc_rootid_help", "qm");	
+	<?php print_help_link("desc_rootid_help", "qm");
 	print $pgv_lang["root_person"] . "</td>"; ?>
 	<td class="optionbox">
 	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $controller->pid; ?>"	/>
 	<?php print_findindi_link("pid",""); ?>
 	</td>
-	
+
 	<!-- // NOTE: Show Details -->
 	<td class="descriptionbox">
 	<?php print_help_link("show_full_help", "qm");
@@ -79,12 +79,12 @@ if ($view!="preview") {
 	else print "0\" onclick=\"document.people.show_full.value='1';";?>"
 	/>
 	</td>
-	
+
 	<!-- // NOTE: Submit button -->
 	<td rowspan="3" class="topbottombar vmiddle">
 	<input type="submit" value="<?php print $pgv_lang["view"]; ?>" />
 	</td></tr>
-	
+
 	<!-- // NOTE: Generations -->
 	<tr><td class="descriptionbox" >
 	<?php print_help_link("desc_generations_help", "qm");
@@ -112,7 +112,7 @@ if ($view!="preview") {
 	<?php
 	if ($controller->show_spouse) print " checked=\"checked\""; ?> />
 	</td></tr>
-	
+
 	<!-- // NOTE: Box width -->
 	<tr><td class="descriptionbox">
 	<?php print_help_link("box_width_help", "qm");
@@ -121,16 +121,16 @@ if ($view!="preview") {
 	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php print $controller->box_width; ?>" />
 	<b>%</b>
 	</td>
-	
+
 	<!-- // NOTE: Empty field -->
 	<td class="descriptionbox">&nbsp;</td><td class="optionbox">&nbsp;</td></tr>
-	
+
 	<!-- // NOTE: End table and form -->
 	</table></form>
 
 	<!-- // NOTE: Close table header -->
 	</td></tr></table>
-<?php 
+<?php
 	if ($show_full==0) {
 		echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
 	}

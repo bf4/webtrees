@@ -1,6 +1,6 @@
 <?php
 /**
- * Search in help files 
+ * Search in help files
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reerved.
@@ -25,7 +25,7 @@
  * @version $Id$
  */
 
-require "config.php";
+require './config.php';
 
 print_simple_header($pgv_lang["hs_title"]);
 
@@ -134,10 +134,10 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 	if ($searchconfig == "yes") $langFiles .= "pgv_confighelp, ";
 	if ($searchmodules == "yes") $langFiles .= "research_assistant:lang, research_assistant:help_text, googlemap:lang, googlemap:help_text, sitemap:lang, sitemap:help_text, ";
 	$langFiles = substr($langFiles, 0, -2);		// Trim last ", "
-	
+
 	$helpvarnames = array();
 	unset($pgv_lang);
-	
+
 	loadLangFile($langFiles);
 
 	// Find all helpvars, so we know what vars to check after the lang.xx file has been reloaded
@@ -150,7 +150,7 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 	$criteria = array();
 	if ($searchhow == "sentence") $criteria[] = $searchtext;
 	else $criteria = preg_split("/ /", $searchtext);
-	
+
 	// Search in the previously stored vars for a hit and print it
 	foreach ($helpvarnames as $key => $value) {
 		$helptxt = print_text($value,0,1);

@@ -25,7 +25,9 @@
  * @subpackage MediaDB
  * @version $Id$
  */
-require("config.php");
+
+require './config.php';
+
 require("includes/functions_edit.php");
 
 //-- page parameters and checking

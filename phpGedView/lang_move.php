@@ -26,7 +26,8 @@
  * @version $Id$
  */
 
-require 'config.php';
+require './config.php';
+
 if (!PGV_USER_IS_ADMIN) {
 	header('Location: index.php');
 	exit;
@@ -41,7 +42,7 @@ if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 function findReferences($directory) {
 	global $lang, $files, $poundlang;
 	$d = dir($directory);
-	
+
 	while (false !== ($entry = $d->read())) {
 		if ($entry{0} !=".") {
 			$filename = $directory."/".$entry;
@@ -102,7 +103,7 @@ if ($action=="find") {
 	$temp = serialize($lang);
 	fwrite($fp, $temp);
 	fclose($fp);
-	
+
 	$fp = fopen($datastore2, "wb");
 	$temp = serialize($poundlang);
 	fwrite($fp, $temp);
@@ -144,8 +145,8 @@ if ($action=="list") {
 }
 else if ($action=="adminonly") {
 	$files = array("./admin.php", "./downloadgedcom.php", "./edit_privacy.php", "./editconfig_gedcom.php", "./editconfig.php",
-	"./editgedcoms.php", "./editlang_edit_settings.php", "./editlang_edit.php", "./editlang.php", "./manageservers.php", 
-	"./media.php", "./pgvinfo.php", "./printlog.php", "./uploadgedcom.php", "./useradmin.php", "./usermigrate.php", 
+	"./editgedcoms.php", "./editlang_edit_settings.php", "./editlang_edit.php", "./editlang.php", "./manageservers.php",
+	"./media.php", "./pgvinfo.php", "./printlog.php", "./uploadgedcom.php", "./useradmin.php", "./usermigrate.php",
 	"./includes/functions_editlang.php", "./includes/functions_export.php", "./includes/functions_tools.php",
 	"./sanity_check.php");
 	$adminlang = array();
@@ -188,7 +189,7 @@ else if ($action=="adminonly") {
 	print "</ul>\n";
 }
 else if ($action=="editoronly") {
-	$files = array("./addmedia.php", "./addremotelink.php", "./addsearchlink.php", "./edit_changes.php", 
+	$files = array("./addmedia.php", "./addremotelink.php", "./addsearchlink.php", "./edit_changes.php",
 	"./edit_interface.php", "./edit_merge.php", "./edit_quickupdate.php", "./inverselink.php", "./uploadmedia.php",
 	"./blocks/review_changes.php", "./includes/functions_edit.php");
 	$adminlang = array();
@@ -276,7 +277,7 @@ else if ($action=="fix_lang" && isset($_REQUEST['langcode'])) {
 		fwrite($fp, $adminconts);
 		$langconts = file_get_contents("./languages/lang.".$langcode.".php");
 		foreach($lang["./languages/admin.en.php"] as $k=>$key) {
-			if (in_array($key, $lang["./languages/lang.".$langcode.".php"]) 
+			if (in_array($key, $lang["./languages/lang.".$langcode.".php"])
 						&& stristr($adminconts, '$pgv_lang["'.$key.'"]')===false) {
 				$pos1 = strpos($langconts, '$pgv_lang["'.$key.'"]');
 				if ($pos1!==false) {
@@ -345,7 +346,7 @@ else if ($action=="fix_lang" && isset($_REQUEST['langcode'])) {
 		fwrite($fp, $adminconts);
 		$langconts = file_get_contents("./languages/lang.".$langcode.".php");
 		foreach($lang["./languages/editor.en.php"] as $k=>$key) {
-			if (in_array($key, $lang["./languages/lang.".$langcode.".php"]) 
+			if (in_array($key, $lang["./languages/lang.".$langcode.".php"])
 						&& stristr($adminconts, '$pgv_lang["'.$key.'"]')===false) {
 				$pos1 = strpos($langconts, '$pgv_lang["'.$key.'"]');
 				if ($pos1!==false) {
@@ -376,7 +377,7 @@ else if (isset($_REQUEST['file'])) {
 	print "<ul>";
 	if (isset($_REQUEST['file'])) $file = $_REQUEST['file'];
 	else $file = "./admin.php";
-	
+
 	$temp = $lang[$file];
 	foreach($temp as $i=>$key) {
 		print "<li><b>".$key."</b> - ";
@@ -412,7 +413,7 @@ else {
 		print "</li>\n";
 	}
 	print "</ul>";
-	
+
 	$unused = array();
 	foreach($langfiles as $f=>$file) {
 		$temp = $lang[$file];
@@ -438,7 +439,7 @@ else {
 		print "</li>\n";
 	}
 	print "</ul>";
-	
+
 	$undefined = array();
 	print "<b>Found ".count($undefined)." possible undefined<br /></b>\n";
 	print "<ul>";

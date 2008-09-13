@@ -25,7 +25,8 @@
  * @version $Id$
  */
 
-require "config.php";
+require './config.php';
+
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (empty($action)) $action = "";
 if (isset($_REQUEST['source'])) $source = $_REQUEST['source'];
@@ -414,7 +415,7 @@ if ($action=="update") {
 		$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_rootdir_no_exist"]."</span><br />\n";
 	}
 	if (!$errors) {
-		// create the media directory 
+		// create the media directory
 		// if NEW_MEDIA_FIREWALL_ROOTDIR is the INDEX_DIRECTORY, PGV will have perms to create it
 		// if PGV is unable to create the directory, tell the user to create it
 		if (($NEW_USE_MEDIA_FIREWALL=='yes') || $USE_MEDIA_FIREWALL) {
@@ -453,8 +454,8 @@ if ($action=="update") {
 	}
 	if (!$errors) {
 		$configtext = preg_replace('/\$MEDIA_FIREWALL_ROOTDIR\s*=\s*".*";/', "\$MEDIA_FIREWALL_ROOTDIR = \"".$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"]."\";", $configtext);
-	}	
-	if (file_exists($NTHEME_DIR)) 
+	}
+	if (file_exists($NTHEME_DIR))
 		$configtext = preg_replace('/\$THEME_DIR\s*=\s*".*";/', "\$THEME_DIR = \"".$_POST["NTHEME_DIR"]."\";", $configtext);
 	else {
 		$errors = true;
@@ -486,7 +487,7 @@ if ($action=="update") {
 			// create/modify an htaccess file in the main media directory
 			$mediafirewall_path = dirname($SCRIPT_NAME)."/mediafirewall.php";
 			$mediafirewall_path = str_replace('//', '/', $mediafirewall_path); // remove duplicate slashes if PGV being run from root directory
-			
+
 			$httext = "";
 			if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
 				$httext = implode('', file($MEDIA_DIRECTORY.".htaccess"));
@@ -632,8 +633,8 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 <form enctype="multipart/form-data" method="post" id="configform" name="configform" action="editconfig_gedcom.php">
 
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
-  <tr>
-    <td colspan="2" class="facts_label"><?php
+	<tr>
+		<td colspan="2" class="facts_label"><?php
 		print "<h2>".$pgv_lang["gedconf_head"]." - ";
 		if (isset($ged)) {
 //			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$GEDCOMS[$ged]["id"].")&nbsp;" . getRLM();
@@ -655,7 +656,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 <!--
 var searchable_tds, searchable_text;
 
-/* Function that returns all occurances of an element with the tagName "tag" that DO NOT have a parent (up to the root "node") with the same tagName 
+/* Function that returns all occurances of an element with the tagName "tag" that DO NOT have a parent (up to the root "node") with the same tagName
 (i.e. div A is a parent node of div B, this function would return only div A)*/
 function getFirstElementsByTagName(node, tag){
 	if (!node || !tag || !node.childNodes) return [];
@@ -713,13 +714,13 @@ function expand_to_the_top(td){
 /* Function that SHOWS all rows */
 function show_all(root, first){
 	if (root.childNodes){
-    	for(var i=0; i<root.childNodes.length; i++)
-    	{
-    		show_all(root.childNodes[i], false);
-    		if (root.style){
-    			root.style.display = "";
-    		}
-    	}
+		for(var i=0; i<root.childNodes.length; i++)
+		{
+			show_all(root.childNodes[i], false);
+			if (root.style){
+				root.style.display = "";
+			}
+		}
 	}
 	if (first == undefined){
 		collapse_divs(root);
@@ -778,7 +779,7 @@ function hide_irrelevant(txt){
 		}
 		display_results(matches);
 		show_hebrew();
-		
+
 	}
 	else{
 		display_results(-1);
@@ -802,8 +803,8 @@ function clear_gedfilter(){
 function display_results(amount_found){
 	if (amount_found == -1)
 		document.getElementById("gedfilter_results").innerHTML = "";
-    else
-    	document.getElementById("gedfilter_results").innerHTML = "<?php print $pgv_lang["ged_filter_results"]; ?>  " + amount_found;	
+	else
+		document.getElementById("gedfilter_results").innerHTML = "<?php print $pgv_lang["ged_filter_results"]; ?>  " + amount_found;
 }
 //-->
 </script>
@@ -825,12 +826,12 @@ function display_results(amount_found){
 					</font>
 				</b>
 			</p>
-    </td>
-  </tr>
+		</td>
+	</tr>
 </table>
 <?php } // ($source!="replace_form") ?>
-   </td>
-  </tr>
+		</td>
+	</tr>
 </table>
 
 <?php if ($source!="replace_form") { ?> <input type="hidden" name="action" value="update" />
@@ -1745,20 +1746,20 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_hide_conf"]."\" onclick=\"
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_LAST_CHANGE_help", "qm", "SHOW_LAST_CHANGE"); print $pgv_lang["SHOW_LAST_CHANGE"]; ?></td>
-        <td class="optionbox"><select name="NEW_SHOW_LAST_CHANGE" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SHOW_LAST_CHANGE_help');">
+		<td class="optionbox"><select name="NEW_SHOW_LAST_CHANGE" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SHOW_LAST_CHANGE_help');">
 			<option value="yes" <?php if ($SHOW_LAST_CHANGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-            <option value="no" <?php if (!$SHOW_LAST_CHANGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-            </select>
-        </td>
-    </tr>
+			<option value="no" <?php if (!$SHOW_LAST_CHANGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+		</td>
+		</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_EST_LIST_DATES_help", "qm", "SHOW_EST_LIST_DATES"); print $pgv_lang["SHOW_EST_LIST_DATES"]; ?></td>
-        <td class="optionbox"><select name="NEW_SHOW_EST_LIST_DATES" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SHOW_EST_LIST_DATES_help');">
+		<td class="optionbox"><select name="NEW_SHOW_EST_LIST_DATES" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SHOW_EST_LIST_DATES_help');">
 			<option value="yes" <?php if ($SHOW_EST_LIST_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-            <option value="no" <?php if (!$SHOW_EST_LIST_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-            </select>
-        </td>
-    </tr>
+			<option value="no" <?php if (!$SHOW_EST_LIST_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+		</td>
+	</tr>
 </table>
 </div>
 <table class="facts_table" border="0">

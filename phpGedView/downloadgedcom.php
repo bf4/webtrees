@@ -25,7 +25,8 @@
  * @version $Id$
  */
 
-require_once("config.php");
+require './config.php';
+
 require_once("includes/functions_export.php");
 
 if (!PGV_USER_GEDCOM_ADMIN || empty ($ged)) {
@@ -120,10 +121,10 @@ print_header($pgv_lang["download_gedcom"]);
 		<?php print $pgv_lang["options"]; ?>
 		</td></tr>
 		<td class="descriptionbox wrap" align="left"><?php print $pgv_lang["choose_file_type"] ?></td>
-		<td class="optionbox" align="left"><input type="radio" name="filetype" checked="checked"  value="gedcom" />GEDCOM 
+		<td class="optionbox" align="left"><input type="radio" name="filetype" checked="checked"  value="gedcom" />GEDCOM
 		<?php print_help_link("def_gedcom_help", "qm"); ?>
 		<br/>
-		<input type="radio" name="filetype" value="gramps" />Gramps XML 
+		<input type="radio" name="filetype" value="gramps" />Gramps XML
 		<?php print_help_link("def_gramps_help", "qm"); ?>
 		</td></tr>
 		<tr><td class="list_label" style="padding: 5px; text-align:<?php if ($TEXT_DIRECTION == "ltr") print "left"; else print "right";?>; "><?php print $pgv_lang["utf8_to_ansi"]; ?></td>

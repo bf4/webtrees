@@ -25,7 +25,7 @@
  * @version $Id$
  */
 
-require ("config.php");
+require './config.php';
 
 print_simple_header($pgv_lang["title_search_link"]);
 
@@ -38,7 +38,7 @@ if (!PGV_USER_CAN_EDIT) {
 
 if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
 if (isset($_REQUEST['server'])) $server = $_REQUEST['server'];
-if (isset($_REQUEST['indiName'])) $indiName = $_REQUEST['indiName']; 
+if (isset($_REQUEST['indiName'])) $indiName = $_REQUEST['indiName'];
 
 //To use addsearchlink you should have come from a multisearch result link
 if(isset($pid) && isset($server) && isset($indiName))
@@ -55,7 +55,7 @@ if(isset($pid) && isset($server) && isset($indiName))
 				<input type="hidden" name="location" value="remote" />
 				<input type="hidden" name="cbExistingServers" value="<?php print $server; ?>" />
 				<input type="hidden" name="txtPID" value="<?php print $pid; ?>" />
-		
+
 				<table class="facts_table" align="center">
 					<tr>
 						<td class="facts_label03" colspan="3" align="center">
@@ -81,10 +81,10 @@ if(isset($pid) && isset($server) && isset($indiName))
 								<option value="son"><?php echo $pgv_lang["son"];?></option>
 								<option value="daughter"><?php echo $pgv_lang["daughter"];?></option>
 							</select>
-						</td>		
+						</td>
 					</tr>
-    			</table><br/>
-    		</form>
+					</table><br/>
+				</form>
 		</td>
 	</tr>
 </table>

@@ -2,18 +2,18 @@
 /**
 * Checks to see if the version of php you are using is newer then 4.3.
 * Checks to see if the config.php, the index directory, the media directory, and the media/thumbs directory are writable.
-* Checks to see if the imagecreatefromjpeg, xml_parser_create, and GregorianToJD functions exist. 
+* Checks to see if the imagecreatefromjpeg, xml_parser_create, and GregorianToJD functions exist.
 * Checks to see if the DomDocument class exists.
 * Checks to see if the database is configured correctly.
 * Checks to see if the "config.php", "includes", "includes/session.php", "includes/functions.php",
 "includes/functions_db.php", "themes/", "includes/lang_settings_std.php", "includes/functions_db.php",
 "includes/authentication.php", "includes/functions_name.php", "includes/functions_print.php",
-"includes/functions_rtl.php", "includes/functions_mediadb.php", "includes/functions_date.php", 
+"includes/functions_rtl.php", "includes/functions_mediadb.php", "includes/functions_date.php",
 "includes/templecodes.php", "includes/functions_privacy.php", "includes/menu.php", "config_gedcom.php",
 "privacy.php", and "hitcount.php" files exist.
-* All of these things are checked when the editconfig.php file is first loaded. 
+* All of these things are checked when the editconfig.php file is first loaded.
 * If any of the checks fail the appropriate error or warning message will be displayed.
-*  
+*
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2008  John Finlay and Others.  All rights reserved.
 *
@@ -66,7 +66,7 @@ function print_sanity_errors() {
 		{
 //			print "<center><span style=\"color: green; font-weight: bold;\">Warnings: </span></center>";
 			print "<center><span style=\"color: green; font-weight: bold;\">".$pgv_lang["sanity_warn0"]."</span></center>";
-			foreach($warnings as $warning) 
+			foreach($warnings as $warning)
 			{
 				print "<center><span style=\"color: blue; font-weight: bold;\">".$warning."</span></center><br />";
 			}
@@ -76,7 +76,7 @@ function print_sanity_errors() {
 		{
 //			print "<center><span style=\"color: green; font-weight: bold;\">Errors: </span></center>";
 			print "<center><span style=\"color: green; font-weight: bold;\">".$pgv_lang["sanity_err0"]."</span></center>";
-			foreach($errors as $error) 
+			foreach($errors as $error)
 			{
 				print "<center><span style=\"color: red; font-weight: bold;\">".$error."</span></center><br />";
 			}
@@ -86,11 +86,11 @@ function print_sanity_errors() {
 }
 
 $arr = array("config.php", "includes", "includes/session.php", "includes/functions.php",
-			 "includes/functions_db.php", "themes/", "includes/lang_settings_std.php", 
-			 "includes/functions_db.php", "includes/authentication.php", "includes/functions_name.php", 
-			 "includes/functions_print.php", "includes/functions_rtl.php", "includes/functions_mediadb.php", 
-             "includes/functions_date.php", "includes/templecodes.php", "includes/functions_privacy.php",
-             "includes/menu.php", "config_gedcom.php", "privacy.php", "hitcount.php");
+			"includes/functions_db.php", "themes/", "includes/lang_settings_std.php",
+			"includes/functions_db.php", "includes/authentication.php", "includes/functions_name.php",
+			"includes/functions_print.php", "includes/functions_rtl.php", "includes/functions_mediadb.php",
+			"includes/functions_date.php", "includes/templecodes.php", "includes/functions_privacy.php",
+			"includes/menu.php", "config_gedcom.php", "privacy.php", "hitcount.php");
 global $whichFile;
 foreach($arr as $k => $whichFile)
 {
@@ -110,7 +110,7 @@ foreach($arr as $k => $whichFile)
 
 unset($CONFIGURED);
 global $CONFIGURED;
-@require("config.php");
+@require './config.php';
 if (!isset($CONFIGURED)) $errors[] = "<span class=\"error\">".$pgv_lang["sanity_err4"]."</span>";
 
 if (count($errors)>0) {
@@ -121,70 +121,70 @@ if (count($errors)>0) {
 //-- if we have a good configuration only allow admins to this page
 if ($CONFIGURED && adminUserExists() && !PGV_USER_IS_ADMIN) exit;
 
-if (!file_is_writable("config.php")) 
+if (!file_is_writable("config.php"))
 {
-	//if (!@ chmod("config.php", 0777)) 
+	//if (!@ chmod("config.php", 0777))
 	//{
 		if (!$CONFIGURED) $errors[] = "<span class=\"error\">".$pgv_lang["sanity_err5"]."</span>";
 		else $warnings[] = "<span class=\"error\">".$pgv_lang["sanity_err5"]."</span>";
 	//}
 }
 
-if (!is_writable($INDEX_DIRECTORY)) 
+if (!is_writable($INDEX_DIRECTORY))
 {
-	//if (!@ chmod($INDEX_DIRECTORY, 0777)) 
+	//if (!@ chmod($INDEX_DIRECTORY, 0777))
 	//{
 		$errors[] = "<span class=\"error\">".print_text("sanity_err6",0,1)."</span>";
 	//}
 }
 
-if (!is_writable($MEDIA_DIRECTORY)) 
+if (!is_writable($MEDIA_DIRECTORY))
 {
-	//if (!@ chmod($MEDIA_DIRECTORY, 0777)) 
+	//if (!@ chmod($MEDIA_DIRECTORY, 0777))
 	//{
 		$warnings[] = print_text("sanity_warn1",0,1);
 	//}
 }
-if (!is_writable($MEDIA_DIRECTORY . "thumbs")) 
+if (!is_writable($MEDIA_DIRECTORY . "thumbs"))
 {
-	//if (!@ chmod($MEDIA_DIRECTORY . "thumbs", 0777)) 
+	//if (!@ chmod($MEDIA_DIRECTORY . "thumbs", 0777))
 	//{
 		$warnings[] = print_text("sanity_warn2",0,1);
 	//}
 }
 
-if (!function_exists('imagecreatefromjpeg')) 
+if (!function_exists('imagecreatefromjpeg'))
 {
 	$warnings[] = $pgv_lang["sanity_warn3"];
 }
 
-if (!function_exists('xml_parser_create')) 
+if (!function_exists('xml_parser_create'))
 {
 	$warnings[] = $pgv_lang["sanity_warn4"];
 }
 
-if (!class_exists('DomDocument')) 
+if (!class_exists('DomDocument'))
 {
 	$warnings[] = $pgv_lang["sanity_warn5"];
-	
+
 }
 
-if (!function_exists('GregorianToJD')) 
+if (!function_exists('GregorianToJD'))
 {
 	$warnings[] = $pgv_lang["sanity_warn6"];
 }
 
-if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update")) && !check_db(true)) 
+if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update")) && !check_db(true))
 {
 	loadLangFile("pgv_confighelp");
 	$error = "";
 	$error = "<span class=\"error\">".$pgv_lang["db_setup_bad"]."</span><br />";
 	$error .= "<span class=\"error\">" . $DBCONN->getMessage() . " " . $DBCONN->getUserInfo() . "</span><br />";
-	
-	if ($CONFIGURED == true) 
+
+	if ($CONFIGURED == true)
 	{
 		//-- force the incoming user to enter the database password before they can configure the site for security.
-		if (!isset ($_POST["security_check"]) || !isset ($_POST["security_user"]) || (($_POST["security_check"] != $DBPASS) && ($_POST["security_user"] == $DBUSER))) 
+		if (!isset ($_POST["security_check"]) || !isset ($_POST["security_user"]) || (($_POST["security_check"] != $DBPASS) && ($_POST["security_user"] == $DBUSER)))
 		{
 			$error .= "<br /><br />".print_text("enter_db_pass", 0, 1);
 			$errors[] = $error;
@@ -193,6 +193,6 @@ if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update"
 	}
 	else $warnings[] = $error;
 }
-if (strstr($_SERVER['PHP_SELF'], "editconfig.php")===false) 
+if (strstr($_SERVER['PHP_SELF'], "editconfig.php")===false)
 	if (count($warnings!=0) || count($errors!=0)) print_sanity_errors();
 ?>

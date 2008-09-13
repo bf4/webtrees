@@ -23,7 +23,9 @@
  * @subpackage Charts
  * @version $Id$
  */
-require("config.php");
+
+require './config.php';
+
 require_once("includes/functions_charts.php");
 
 /**
@@ -51,7 +53,7 @@ function split_align_text($data, $maxlen) {
 
 	$found = false;
 	foreach($RTLOrd as $indexval => $ord) {
-    	if (strpos($data, chr($ord)) !== false) $found=true;
+		if (strpos($data, chr($ord)) !== false) $found=true;
 	}
 	if ($found) $line=$data;
 	else
@@ -76,7 +78,7 @@ function split_align_text($data, $maxlen) {
 	// last line
 	if (!empty($line)) {
 		$len = strlen($line);
-    	if (in_array(ord($line{0}),$RTLOrd)) $len/=2;
+		if (in_array(ord($line{0}),$RTLOrd)) $len/=2;
 		$p = max(0,floor(($maxlen-$len)/2));
 		$line = str_repeat(" ", $p) . "$line"; // center alignment using spaces
 		$text .= "$line";
@@ -112,10 +114,10 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	// parse CSS file
 	include("includes/cssparser.inc.php");
 	$css = new cssparser(false);
-    if ($view=="preview") $css->Parse($print_stylesheet);
-    else $css->Parse($stylesheet);
+	if ($view=="preview") $css->Parse($print_stylesheet);
+	else $css->Parse($stylesheet);
 
-    // check for fontfile
+	// check for fontfile
 	$fontfile = $css->Get(".fan_chart","font-family");
 	$fontsize = $css->Get(".fan_chart","font-size");
 	$fontfile = str_replace("url(", "", $fontfile);
@@ -221,16 +223,16 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				$name   =$person->getFullName();
 				$addname=$person->getAddName();
 
-//$name = str_replace(array('<span class="starredname">', '</span>'), '', $name); 
-//$addname = str_replace(array('<span class="starredname">', '</span>'), '', $addname); 
+//$name = str_replace(array('<span class="starredname">', '</span>'), '', $name);
+//$addname = str_replace(array('<span class="starredname">', '</span>'), '', $addname);
 //$name = str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $name); //@@
 //$addname = str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $addname); //@@
 // ToDo - print starred names underlined - 1985154
-// Todo - print Arabic letters combined - 1360209				
-								
+// Todo - print Arabic letters combined - 1360209
+
 				$text = reverseText($name) . "\r\n";
 				if (!empty($addname)) $text .= reverseText($addname). "\r\n";
-				
+
 				if (displayDetailsByID($pid)) {
 					$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 					$ct = preg_match("/2 DATE.*(\d\d\d\d)/", $birthrec, $match);
@@ -239,7 +241,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 					$ct = preg_match("/2 DATE.*(\d\d\d\d)/", $deathrec, $match);
 					if ($ct>0) $text.= "-".trim($match[1]);
 				}
-				
+
 				$text = unhtmlentities($text);
 				$text = strip_tags($text);
 //Do we still need?
@@ -462,7 +464,7 @@ if ($view != "preview") {
 	print $pgv_lang["root_person"]."</td>";
 	print "<td class=\"optionbox\">";
 	print "<input class=\"pedigree_form\" type=\"text\" name=\"rootid\" id=\"rootid\" size=\"3\" value=\"$rootid\" />";
-     print_findindi_link("rootid","");
+	print_findindi_link("rootid","");
 	print "</td>";
 
 	// NOTE: fan style

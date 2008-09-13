@@ -24,7 +24,8 @@
  * @version    $Id$
  */
 
-require "config.php";
+require './config.php';
+
 require_once("includes/functions_import.php");
 
 if (!PGV_USER_IS_ADMIN) {
@@ -37,14 +38,14 @@ print_header("UPGRADE 3.3 to 4.0");
 print "<h2>Upgrading database.</h2>\n";
 
 //-- make sure the gedcoms have an ID associated
-if (empty($GEDCOMS[$GEDCOM]['id'])) { 
+if (empty($GEDCOMS[$GEDCOM]['id'])) {
 	$i = 1;
 	foreach($GEDCOMS as $ged=>$gedarray) {
 	$GEDCOMS[$ged]["id"] = $i;
 	$i++;
 	}
 	store_gedcoms();
-	
+
 	print "New GEDCOM IDs stored<br />\n";
 }
 
@@ -126,7 +127,7 @@ if ($DBTYPE=='sqlite') {
 }
 else {
 		//-- drop all the tables and recreate them
-        create_dates_table();
+		create_dates_table();
 		create_individuals_table();
 		create_families_table();
 		create_individuals_table();
@@ -136,8 +137,8 @@ else {
 		create_places_table();
 		create_names_table();
 		create_remotelinks_table();
-                create_media_table();
-                create_media_mapping_table();
+		create_media_table();
+		create_media_mapping_table();
 		create_nextid_table();
 }
 

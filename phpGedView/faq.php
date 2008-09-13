@@ -25,8 +25,8 @@
  * @subpackage Charts
  * @version $Id$
  */
- 
-require("config.php");
+
+require './config.php';
 
 loadLangFile("pgv_confighelp");
 
@@ -63,7 +63,7 @@ if ($action=="commit") {
 		$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), $body);
 		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".$order."', b_username='".$whichGEDCOM."', b_config='".$DBCONN->escapeSimple(serialize($body))."' WHERE b_id='".$pidb."' and b_username='".$oldGEDCOM."' and b_location='body'";
 		$tempsql = dbquery($sql);
-		$res =& $tempsql;		
+		$res =& $tempsql;
 		AddToChangeLog("FAQ item has been edited.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $GEDCOM);
 		$action = "show";
 	}
@@ -110,7 +110,7 @@ if ($action=="commit") {
 		$res =& $tempsql;
 		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id-1)."' WHERE b_id='".$pidb."' and b_location='body'";
 		$tempsql = dbquery($sql);
-		$res =& $tempsql;		
+		$res =& $tempsql;
 		AddToChangeLog("FAQ item has been moved up.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $oldGEDCOM);
 		$action = "show";
 	}
@@ -124,7 +124,7 @@ if ($action=="commit") {
 			$tempsql = dbquery($sql);
 			$res =& $tempsql;
 		}
-		
+
 		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id+1)."' WHERE b_id='".$pidh."' and b_location='header'";;
 		$tempsql = dbquery($sql);
 		$res =& $tempsql;
@@ -133,7 +133,7 @@ if ($action=="commit") {
 		$res =& $tempsql;
 		AddToChangeLog("FAQ item has been moved down.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $GEDCOM);
 		$action = "show";
-	}	
+	}
 	$action = "show";
 }
 
@@ -182,7 +182,7 @@ if ($action == "edit") {
 	}
 	else {
 		$faqs = get_faq_data($id);
-		
+
 		$i=1;
 		print "<form name=\"editfaq\" method=\"post\" action=\"faq.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"commit\" />";
@@ -229,7 +229,7 @@ if ($action == "edit") {
 
 if ($action == "show") {
 	loadLangFile("pgv_faqlib");
-	
+
 	$faqs = get_faq_data();
 	print "<table class=\"list_table width100\">";
 	if (count($faqs) == 0 && $canconfig) {
@@ -249,7 +249,7 @@ if ($action == "show") {
 				print "<a href=\"faq.php?action=add\">".$pgv_lang["add"]."</a></td>";
 			}
 			print "<td class=\"descriptionbox center\" colspan=\"2\">";
-			
+
 			if ($adminedit) {
 				print_help_link("preview_faq_item_help","qm","preview_faq_item");
 				print "<a href=\"faq.php?adminedit=0\">".$pgv_lang["preview"]."</a>";
@@ -258,14 +258,14 @@ if ($action == "show") {
 				print "<a href=\"faq.php?adminedit=1\">".$pgv_lang["edit"]."</a>";
 			}
 			print "</td>";
-			
+
 			if ($adminedit) {
 				if (isset($error)) print "<td class=\"topbottombar red\">".$error_message."</td>";
 				else print "<td class=\"topbottombar\">&nbsp;</td>";
 			}
 			print "</tr>";
 		}
-		
+
 		foreach($faqs as $id => $data) {
 			if ($data["header"] && $data["body"]) {
 				print "<tr>";
@@ -290,7 +290,7 @@ if ($action == "show") {
 					print "\n<td class=\"optionbox center\">";
 					print_help_link("movedown_faq_item_help","qm","movedown_faq_item");
 					print "<a href=\"".encode_url("faq.php?action=commit&type=movedown&id={$id}&pidh=".$data["header"]["pid"]."&pidb=".$data["body"]["pid"])."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" /></a>";
-					print "\n</td>\n<td class=\"optionbox center\">";					
+					print "\n</td>\n<td class=\"optionbox center\">";
 					print_help_link("edit_faq_item_help","qm","edit_faq_item");
 					print "<a href=\"".encode_url("faq.php?action=edit&id={$id}")."\">".$pgv_lang["edit"]."</a>";
 					print "\n</td><td class=\"optionbox center\">";
@@ -299,7 +299,7 @@ if ($action == "show") {
 					print "</td>";
 				}
 				// NOTE: Print the body text of the current item
-				print "<td class=\"list_value wrap\">".nl2br($body)."</td></tr>";				
+				print "<td class=\"list_value wrap\">".nl2br($body)."</td></tr>";
 			}
 		}
 	}

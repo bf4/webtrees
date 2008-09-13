@@ -25,7 +25,8 @@
  * @version $Id$
  */
 
-require_once("config.php");
+require './config.php';
+
 require_once("includes/functions_edit.php");
 
 if (!PGV_USER_IS_ADMIN) {
@@ -47,7 +48,7 @@ function full_rmdir( $dir )
 			return FALSE;
 		}
 	}
-	 
+
 	$d = dir( $dir );
 	while ( FALSE !== ( $entry = $d->read() ) )
 	{
@@ -70,11 +71,11 @@ function full_rmdir( $dir )
 			return FALSE;
 		}
 	}
-	 
+
 	$d->close();
-	 
+
 	rmdir( $dir );
-	 
+
 	return TRUE;
 }
 
@@ -183,30 +184,30 @@ function warnuser(cbox) {
 		?> <script type="text/javascript" language="javascript">
 	<!--
 	new Effect.BlindDown('reorder_list', {duration: 1});
-	
-		<?php  
-		 foreach($element as $key=>$val)
-		 {
-		 	print "new Draggable('".$val."',{revert:true});";
-		 }
-		 ?>
-		 
-	 Droppables.add('trash', {
-	 hoverclass: 'facts_valuered',
-  onDrop: function(element) 
-     { 
-     	if (element.attributes.warn) {
-     		if (!confirm('<?php print $pgv_lang["warn_file_delete"]; ?>')) return;
-     	}
-     	$('trashlist').innerHTML += 
-        '<li class="facts_value">'+ element.attributes.name.value +'<input type="hidden" name="to_delete[]" value="'+element.attributes.name.value+'"/></li>' ; 
-        element.style.display = "none";
-       // element.className='facts_valuered';
-        }});
+
+		<?php
+		foreach($element as $key=>$val)
+		{
+			print "new Draggable('".$val."',{revert:true});";
+		}
+		?>
+
+	Droppables.add('trash', {
+	hoverclass: 'facts_valuered',
+	onDrop: function(element)
+	{
+		if (element.attributes.warn) {
+			if (!confirm('<?php print $pgv_lang["warn_file_delete"]; ?>')) return;
+		}
+		$('trashlist').innerHTML +=
+			'<li class="facts_value">'+ element.attributes.name.value +'<input type="hidden" name="to_delete[]" value="'+element.attributes.name.value+'"/></li>' ;
+			element.style.display = "none";
+			// element.className='facts_valuered';
+		}});
 function ul_clear()
 {
-	$('trashlist').innerHTML = ""; 
-	
+	$('trashlist').innerHTML = "";
+
 	list = document.getElementById('reorder_list');
 	children = list.childNodes;
 	for(i=0; i<children.length; i++) {
@@ -216,7 +217,7 @@ function ul_clear()
 			node.style.display='list-item';
 		}
 	}
-}	
+}
 
 function removeAll() {
 	var elements = document.getElementsByName('to_delete[]');
@@ -231,7 +232,7 @@ function removeAll() {
 
 		<button type="submit"><?php print $pgv_lang["delete"];?></button>
 		<button type="button" onclick="ul_clear(); return false;"><?php print $pgv_lang["cancel"];?></button><br /><br />
-		<button type="button" onclick="removeAll(); return false;"><?php print $pgv_lang["remove_all_files"];?></button>		
+		<button type="button" onclick="removeAll(); return false;"><?php print $pgv_lang["remove_all_files"];?></button>
 		<?php print_help_link("help_dir_editor.php","qm", '', false, false); ?></td>
 	</tr>
 </table>

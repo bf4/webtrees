@@ -25,7 +25,7 @@
  * @subpackage Charts
  */
 
-require 'config.php';
+require './config.php';
 
 /**
  * display any message as a PNG image

@@ -23,7 +23,7 @@
  * @version $Id$
  */
 
-require "config.php";
+require './config.php';
 
 //-- only allow admins
 if (!PGV_USER_GEDCOM_ADMIN) {

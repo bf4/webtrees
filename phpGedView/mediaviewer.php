@@ -39,19 +39,19 @@ $filename = $controller->getLocalFilename();
 
 	print_header($controller->getPageTitle());
 
-global $tmb;	
-	
-// LBox ============================================================================= 
-// Get Javascript variables from lb_config.php --------------------------- 
+global $tmb;
+
+// LBox =============================================================================
+// Get Javascript variables from lb_config.php ---------------------------
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');	
+	include('modules/lightbox/functions/lb_call_js.php');
 }
-// LBox  ============================================================================	
+// LBox  ============================================================================
 
 loadLangFile("lightbox:lang");
-	
+
 	//The following lines of code are used to print the menu box on the top right hand corner
 	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {
 		if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
@@ -78,16 +78,16 @@ loadLangFile("lightbox:lang");
 			<?php
 		}
 	}
-	
-	
+
+
 		//The next set of code draws the table that displays information about the person
 		?>
 		<table width="70%">
 			<tr>
 				<td class="name_head" colspan="2">
-					 <?php print PrintReady($controller->mediaobject->getFullName()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
-					 <?php print PrintReady($controller->mediaobject->getAddName()); ?> <br /><br />
-					 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
+					<?php print PrintReady($controller->mediaobject->getFullName()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
+					<?php print PrintReady($controller->mediaobject->getAddName()); ?> <br /><br />
+					<?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 				</td>
 			</tr>
 			<tr>
@@ -96,32 +96,32 @@ loadLangFile("lightbox:lang");
 					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
 					if (isFileExternal($filename) || $controller->mediaobject->fileExists()) {
-						// the file is external, or it exists locally 
+						// the file is external, or it exists locally
 						// attempt to get the image size
 						if ($controller->mediaobject->getWidth()) {
 							// this is an image
 							$imgwidth = $controller->mediaobject->getWidth()+40;
 							$imgheight = $controller->mediaobject->getHeight()+150;
-							if (file_exists("modules/lightbox/album.php")) {							
+							if (file_exists("modules/lightbox/album.php")) {
 								$dwidth = 150;
 							}else{
-								$dwidth = 300;							
+								$dwidth = 300;
 							}
 							if ($imgwidth<$dwidth) $dwidth = $imgwidth;
-							
+
 							//LBox -- If Lightbox installed, open image with Lightbox
-							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$filename) || eregi("\.jpeg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ) { 
+							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$filename) || eregi("\.jpeg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ) {
 								//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
-								print "<a 
-									href=\"" . $filename . "\" 
-									onmouseover=\"window.status='javascript:;'; return true;\" 
+								print "<a
+									href=\"" . $filename . "\"
+									onmouseover=\"window.status='javascript:;'; return true;\"
 									onmouseout=\"window.status=''; return true;\"
-									rel=\"clearbox[general]\" rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";	
+									rel=\"clearbox[general]\" rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 							}else{
 								//Else open image with the Image View Page
 								?>
-								<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);"> 
-								<?php 
+								<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
+								<?php
 							} ?>
 							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
 							</a>
@@ -170,7 +170,7 @@ loadLangFile("lightbox:lang");
 					$links = get_media_relations($controller->pid);
 					if (isset($links) && !empty($links)){
 					?>
-					 <br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
+					<br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
 					<?php
 						// PrintMediaLinks($links, "");
 						require_once 'includes/functions_print_lists.php';

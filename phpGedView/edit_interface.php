@@ -24,7 +24,8 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
+
 require("includes/functions_edit.php");
 
 loadLangFile("pgv_country");
@@ -97,8 +98,8 @@ $assokeys = array(
 );
 $assorela = array();
 foreach ($assokeys as $indexval => $key) {
-  if (isset($pgv_lang["$key"])) $assorela["$key"] = $pgv_lang["$key"];
-  else $assorela["$key"] = "? $key";
+	if (isset($pgv_lang["$key"])) $assorela["$key"] = $pgv_lang["$key"];
+	else $assorela["$key"] = "? $key";
 }
 uasort($assorela, "stringsort");
 
@@ -179,7 +180,7 @@ $success = false;
 
 /**
  * Check if the given gedcom record has any RESN editing restrictions
- * This is used to prevent raw editing and deletion of records that are locked 
+ * This is used to prevent raw editing and deletion of records that are locked
  * @param string $gedrec
  * @return boolean
  */
@@ -187,11 +188,11 @@ function checkFactEdit($gedrec) {
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return true;
 	}
-	
+
 	$ct = preg_match("/2 RESN ((privacy)|(locked))/i", $gedrec, $match);
 	if ($ct > 0) {
 		$match[1] = strtolower(trim($match[1]));
-		
+
 		$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 		if ($gt > 0) {
 			$gid = trim($gmatch[1]);
@@ -208,7 +209,7 @@ function checkFactEdit($gedrec) {
 		}
 		return false;
 	}
-	
+
 	return true;
 }
 //-- end checkFactEdit function
@@ -793,7 +794,7 @@ case 'addrepoaction':
 	if (isset($_REQUEST['FAX'])) $FAX = $_REQUEST['FAX'];
 	if (isset($_REQUEST['EMAIL'])) $EMAIL = $_REQUEST['EMAIL'];
 	if (isset($_REQUEST['WWW'])) $WWW = $_REQUEST['WWW'];
-	
+
 	if (!empty($NAME)) {
 		$newgedrec .= "1 NAME $NAME\r\n";
 		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\r\n";
@@ -891,7 +892,7 @@ case 'update':
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
-	
+
 	if (!empty($NAME)) $newged .= "1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\r\n";
@@ -902,12 +903,12 @@ case 'update':
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\r\n";
 
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
-	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added 
+	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $newged .= "2 FONE $FONE\r\n";
 	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
-	
-	$newged = handle_updates($newged);	
+
+	$newged = handle_updates($newged);
 
 	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
@@ -940,7 +941,7 @@ case 'addchildaction':
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
-	
+
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
@@ -955,7 +956,7 @@ case 'addchildaction':
 	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
-	
+
 	if (isset($_REQUEST['BIRT_DATE'])) $BIRT_DATE = $_REQUEST['BIRT_DATE'];
 	if (isset($_REQUEST['BIRT_PLAC'])) $BIRT_PLAC = $_REQUEST['BIRT_PLAC'];
 	if (isset($_REQUEST['BIRT_ROMN'])) $BIRT_ROMN = $_REQUEST['BIRT_ROMN'];
@@ -987,7 +988,7 @@ case 'addchildaction':
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
-	
+
 	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
 	if (isset($_REQUEST['DEAT_DATE'])) $DEAT_DATE = $_REQUEST['DEAT_DATE'];
 	if (isset($_REQUEST['DEAT_PLAC'])) $DEAT_PLAC = $_REQUEST['DEAT_PLAC'];
@@ -1105,7 +1106,7 @@ case 'addspouseaction':
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
-	
+
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
@@ -1120,7 +1121,7 @@ case 'addspouseaction':
 	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
-	
+
 	if (isset($_REQUEST['BIRT_DATE'])) $BIRT_DATE = $_REQUEST['BIRT_DATE'];
 	if (isset($_REQUEST['BIRT_PLAC'])) $BIRT_PLAC = $_REQUEST['BIRT_PLAC'];
 	if (isset($_REQUEST['BIRT_ROMN'])) $BIRT_ROMN = $_REQUEST['BIRT_ROMN'];
@@ -1152,7 +1153,7 @@ case 'addspouseaction':
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
-	
+
 	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
 	if (isset($_REQUEST['DEAT_DATE'])) $DEAT_DATE = $_REQUEST['DEAT_DATE'];
 	if (isset($_REQUEST['DEAT_PLAC'])) $DEAT_PLAC = $_REQUEST['DEAT_PLAC'];
@@ -1209,7 +1210,7 @@ case 'addspouseaction':
 			$famrec .= "1 WIFE @$xref@\r\n";
 			$famrec .= "1 HUSB @$pid@\r\n";
 		}
-		
+
 		if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
 		if (isset($_REQUEST['MARR_PLAC'])) $MARR_PLAC = $_REQUEST['MARR_PLAC'];
 		if (isset($_REQUEST['MARR_ROMN'])) $MARR_ROMN = $_REQUEST['MARR_ROMN'];
@@ -1417,7 +1418,7 @@ case 'addnewparentaction':
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 	if (isset($_REQUEST['SEX'])) $SEX = $_REQUEST['SEX'];
-	
+
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
@@ -1432,7 +1433,7 @@ case 'addnewparentaction':
 	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
-	
+
 	if (isset($_REQUEST['BIRT_DATE'])) $BIRT_DATE = $_REQUEST['BIRT_DATE'];
 	if (isset($_REQUEST['BIRT_PLAC'])) $BIRT_PLAC = $_REQUEST['BIRT_PLAC'];
 	if (isset($_REQUEST['BIRT_ROMN'])) $BIRT_ROMN = $_REQUEST['BIRT_ROMN'];
@@ -1464,7 +1465,7 @@ case 'addnewparentaction':
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
-	
+
 	if (isset($_REQUEST['DEAT'])) $DEAT = $_REQUEST['DEAT'];
 	if (isset($_REQUEST['DEAT_DATE'])) $DEAT_DATE = $_REQUEST['DEAT_DATE'];
 	if (isset($_REQUEST['DEAT_PLAC'])) $DEAT_PLAC = $_REQUEST['DEAT_PLAC'];
@@ -1519,7 +1520,7 @@ case 'addnewparentaction':
 			$famrec .= "1 WIFE @$xref@\r\n";
 			$famrec .= "1 CHIL @$pid@\r\n";
 		}
-		
+
 		if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
 		if (isset($_REQUEST['MARR_PLAC'])) $MARR_PLAC = $_REQUEST['MARR_PLAC'];
 		if (isset($_REQUEST['MARR_ROMN'])) $MARR_ROMN = $_REQUEST['MARR_ROMN'];
@@ -1565,7 +1566,7 @@ case 'addnewparentaction':
 		else $famrec = find_family_record($famid);
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\r\n1 $famtag @$xref@\r\n";
-			
+
 			if (isset($_REQUEST['MARR_DATE'])) $MARR_DATE = $_REQUEST['MARR_DATE'];
 			if (isset($_REQUEST['MARR_PLAC'])) $MARR_PLAC = $_REQUEST['MARR_PLAC'];
 			if (isset($_REQUEST['MARR_ROMN'])) $MARR_ROMN = $_REQUEST['MARR_ROMN'];
@@ -1829,7 +1830,7 @@ case 'paste':
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 	break;
 
-	
+
 //LBox  Reorder Media ========================================================
 
 //------------------------------------------------------------------------------
@@ -1837,7 +1838,7 @@ case 'reorder_media': // Sort page using Popup
 	require_once("js/prototype.js.htm");
 	require_once("js/scriptaculous.js.htm");
 	include_once("includes/media_reorder.php");
-	break;	
+	break;
 
 //------------------------------------------------------------------------------
 case 'reset_media_update': // Reset sort using popup
@@ -1892,7 +1893,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 		}
 		?>
 		<script language="JavaScript" type="text/javascript" >
-		<!-- 
+		<!--
 			location.href='<?php echo "individual.php?pid=" . $pid . "&tab=" . $tabno ;?>';
 		//-->
 		</script>
@@ -1903,7 +1904,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 case 'al_reorder_media_update': // Update sort using Album Page
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
-	
+
 	function SwapArray($Array){
 		$Values = array();
 		while(list($Key,$Val) = each($Array))
@@ -1932,7 +1933,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 		if ($success) print "<br />".$pgv_lang["update_successful"]. "<br /><br />";
 		?>
 		<script language="JavaScript" type="text/javascript" >
-		<!-- 
+		<!--
 			location.href='<?php echo "individual.php?pid=" . $pid . "&tab=" . $tabno ;?>';
 		//-->
 		</script>

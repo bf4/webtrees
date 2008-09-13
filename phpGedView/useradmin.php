@@ -26,7 +26,8 @@
  * @version $Id$
  */
 
-require_once 'config.php';
+require './config.php';
+
 require_once 'includes/functions_edit.php';
 
 loadLangFile('pgv_confighelp');
@@ -539,7 +540,7 @@ if ($action == "listusers") {
 			break;
 		case "sortveradmin":
 			$users = get_all_users("asc","verified_by_admin");
-			break;	
+			break;
 		default:
 			$users = get_all_users("asc","username");
 			break;

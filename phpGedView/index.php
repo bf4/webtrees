@@ -25,7 +25,8 @@
  * @version $Id$
  */
 
-require_once("config.php");
+require './config.php';
+
 require_once("includes/index_cache.php");
 require_once("includes/functions_print_facts.php");  //--needed for the expand url function in some of the blocks
 
@@ -50,7 +51,7 @@ $url = safe_POST("url");
 $favtitle = safe_POST("favtitle");
 $fv_id = safe_GET("fv_id");
 $news_id = safe_GET("news_id");
-	
+
 /**
  * Block definition array
  *
@@ -79,7 +80,7 @@ while (false !== ($entry = $d->read())) {
 $d->close();
 /**
  * End loading list of Blocks in blocks directory
- * 
+ *
  * Load List of Blocks in modules/XX/blocks directories
  */
 if (file_exists("modules")) {
@@ -280,7 +281,7 @@ if ($action=="ajax") {
 			}
 		}
 	}
-	
+
 	//-- not sure which block to call so call the first one we find
 	foreach($ublocks["main"] as $bindex=>$blockval) {
 		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
@@ -305,7 +306,7 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
-}	
+}
 
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -324,36 +325,36 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 		pastefield.value=value;
 	}
 	<?php if (isset($DEBUG)&&($DEBUG==true)) print "var DEBUG = true;\n"; else print "var DEBUG = false;\n"; ?>
-	/**
-	 * blocks may use this JS function to update themselves using AJAX technology
-	 * @param string targetId	the id of the block to target the results too
-	 * @param string block 	the method name of the block to call (e.g. 'print_random_media')
- 	 * @param string side 	the side of the page the block is on (e.g. 'main' or 'right')
-	 * @param int bindex 	the number of the block on that side, first block = 0
- 	 * @param string ctype 	shows whether block is on Welcome or MyGedView page ('gedcom' or 'user')
-	 * @param boolean loading  Whether or not to show the loading message
-	 */
+/**
+ * blocks may use this JS function to update themselves using AJAX technology
+ * @param string targetId	the id of the block to target the results too
+ * @param string block 	the method name of the block to call (e.g. 'print_random_media')
+ * @param string side 	the side of the page the block is on (e.g. 'main' or 'right')
+ * @param int bindex 	the number of the block on that side, first block = 0
+ * @param string ctype 	shows whether block is on Welcome or MyGedView page ('gedcom' or 'user')
+ * @param boolean loading  Whether or not to show the loading message
+ */
 	function ajaxBlock(targetId, block, side, bindex, ctype, loading) {
 		target = document.getElementById(targetId);
 		if (!target) return false;
-		
+
 		target.style.height = (target.offsetHeight) + "px";
 		if (loading) target.innerHTML = "<br /><br /><?php print $pgv_lang['loading']; ?><br /><br />";
-		
+
 		var oXmlHttp = createXMLHttp();
 		link = "index.php?action=ajax&block="+block+"&side="+side+"&bindex="+bindex+"&ctype="+ctype;
 		if (DEBUG) link = link + "&DEBUG="+DEBUG;
 		oXmlHttp.open("get", link, true);
 		oXmlHttp.onreadystatechange=function()
 		{
-  			if (oXmlHttp.readyState==4)
-  			{
-   				target.innerHTML = oXmlHttp.responseText;
-   				target.style.height = 'auto';
-   			}
-  		};
-  		oXmlHttp.send(null);
-  		return false;
+			if (oXmlHttp.readyState==4)
+ 			{
+ 				target.innerHTML = oXmlHttp.responseText;
+ 				target.style.height = 'auto';
+ 			}
+		};
+ 		oXmlHttp.send(null);
+ 		return false;
 	}
 //-->
 </script>

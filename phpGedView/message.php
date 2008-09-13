@@ -23,7 +23,8 @@
  * @subpackage Admin
  * @version $Id$
  */
-require("config.php");
+
+require './config.php';
 
 loadLangFile("pgv_confighelp");
 

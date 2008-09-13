@@ -23,7 +23,9 @@
  * @subpackage Lists
  * @version $Id$
  */
-require_once("config.php");
+
+require './config.php';
+
 require_once('includes/functions_print_facts.php');
 
 
@@ -79,23 +81,23 @@ if ($search == "yes") {
 
 	//-- remove all private media objects
 	foreach($medialist as $key => $media) {
-	    print " ";
+			print " ";
 
-	    // Display when user has Edit rights or when object belongs to current GEDCOM
-	    $disp = PGV_USER_CAN_EDIT || $media["GEDFILE"]==PGV_GED_ID;
-	    // Display when Media objects aren't restricted by global privacy
-	    $disp &= displayDetailsById($media["XREF"], "OBJE");
-	    // Display when this Media object isn't restricted
-	    $disp &= !FactViewRestricted($media["XREF"], $media["GEDCOM"]);
-	    /** -- already included in the displayDetailsById() function
+			// Display when user has Edit rights or when object belongs to current GEDCOM
+			$disp = PGV_USER_CAN_EDIT || $media["GEDFILE"]==PGV_GED_ID;
+			// Display when Media objects aren't restricted by global privacy
+			$disp &= displayDetailsById($media["XREF"], "OBJE");
+			// Display when this Media object isn't restricted
+			$disp &= !FactViewRestricted($media["XREF"], $media["GEDCOM"]);
+			/** -- already included in the displayDetailsById() function
 		if ($disp) {
-		    $links = $media["LINKS"];
-		    //-- make sure that only media with links are shown
+				$links = $media["LINKS"];
+				//-- make sure that only media with links are shown
 			if (count($links) != 0) {
-		        foreach($links as $id=>$type) {
-		        	$disp &= displayDetailsByID($id, $type);
-		        }
-		    }
+						foreach($links as $id=>$type) {
+							$disp &= displayDetailsByID($id, $type);
+						}
+				}
 		}
 		*/
 		if (!$disp) unset($medialist[$key]);
@@ -133,14 +135,14 @@ if ($search == "yes") {
 			} else print "<input name=\"folder\" type=\"hidden\" value=\"ALL\" />";
 			print "</td></tr>";
 		?>
-    <?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
+		<?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
 		<tr>
 			<td class="list_label" colspan="2">
 				<label for="subdirs"><?php print $pgv_lang["medialist_recursive"]; ?></label>
 				&nbsp;<input type="checkbox" id="subdirs" name="subdirs" <?php if (!$currentdironly) { ?>checked="checked"<?php } ?> />
 			</td>
 		</tr>
-    <?php } ?>
+		<?php } ?>
 		<tr>
 			<td class="list_label" colspan="2">
 				<?php print_help_link("simple_filter_help","qm"); print $pgv_lang["filter"]; ?>
@@ -174,9 +176,9 @@ if ($search == "yes") {
 <!-- LBox ========================= end addition for Lightbox Album ========================== -->
 		<tr>
 			<td class="list_label" colspan="2">
-  				<?php
-  				print "<a href=\"#\" onclick=\"runSlideShow(); showMe(); return false;\">$pgv_lang[view_slideshow]</a>\n";
-  				?>
+					<?php
+					print "<a href=\"#\" onclick=\"runSlideShow(); showMe(); return false;\">$pgv_lang[view_slideshow]</a>\n";
+					?>
 			</td>
 		</tr>
 <!-- LBox ======================= BH changed for Lightbox Album ============================ -->
@@ -283,25 +285,25 @@ if ($ct>0) {
 	print "\n<tr>\n";
 
 	for ($i=0; $i<$count; $i++) {
-	    $media = $medialist[$start+$i];
+			$media = $medialist[$start+$i];
 
-	    $isExternal = isFileExternal($media["FILE"]);
+			$isExternal = isFileExternal($media["FILE"]);
 
 		$imgsize = findImageSize($media["FILE"]);
-	    $imgwidth = $imgsize[0]+40;
-	    $imgheight = $imgsize[1]+150;
+			$imgwidth = $imgsize[0]+40;
+			$imgheight = $imgsize[1]+150;
 
-	    $name = trim($media["TITL"]);
+			$name = trim($media["TITL"]);
 //		$name1 = addslashes($media["TITL"]);
 		$showFile = PGV_USER_CAN_EDIT;
 		if ($name=="") {
 			//$showFile = false;
 			if ($isExternal) $name = "URL";
 			else $name = basename($media["FILE"]);
-	    }
+			}
 
-	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
-	    print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
+			print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
+			print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
 
 
 //LBox --------  change for Lightbox Album --------------------------------------------
@@ -315,7 +317,7 @@ if ($ct>0) {
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 		if (file_exists("modules/lightbox/album.php") && (eregi("\.(jpg|jpeg|gif|png)$",$media["FILE"]))) {
 			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-        } elseif ($USE_MEDIA_VIEWER) {
+				} elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 		} else {
 			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
@@ -377,12 +379,12 @@ if ($ct>0) {
 		}
 //LBox ----------- end addition for Lightbox Album ---------------------------------------
 
-	    print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
+			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 
-	    if (begRTLText($name) && $TEXT_DIRECTION=="ltr") {
+			if (begRTLText($name) && $TEXT_DIRECTION=="ltr") {
 			print "(".$media["XREF"].")&nbsp;&nbsp;&nbsp;";
 			print "<b>".PrintReady($name)."</b>";
-	    } else {
+			} else {
 			print "<b>".PrintReady($name)."</b>&nbsp;&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$media["XREF"].")";
@@ -416,16 +418,16 @@ if ($ct>0) {
 			}
 		}
 
-	    print "<div style=\"white-space: normal; width: 95%;\">";
-	    print_fact_sources($media["GEDCOM"], $media["LEVEL"]+1);
-	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
-	    print "</div>";
+			print "<div style=\"white-space: normal; width: 95%;\">";
+			print_fact_sources($media["GEDCOM"], $media["LEVEL"]+1);
+			print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
+			print "</div>";
 
 		PrintMediaLinks($media["LINKS"], "small");
 
-	    print "</td></tr></table>\n";
-	    print "</td>";
-	    if ($i%2 == 1 && $i < ($count-1)) print "\n\t\t</tr>\n\t\t<tr>";
+			print "</td></tr></table>\n";
+			print "</td>";
+			if ($i%2 == 1 && $i < ($count-1)) print "\n\t\t</tr>\n\t\t<tr>";
 	}
 	print "\n\t\t</tr>";
 

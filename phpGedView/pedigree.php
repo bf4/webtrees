@@ -41,7 +41,7 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include_once('modules/lightbox/functions/lb_call_js.php');
-}	
+}
 
 // -- print the form to change the number of displayed generations
 if (!$controller->isPrintPreview()) {
@@ -68,7 +68,7 @@ if (!$controller->isPrintPreview()) {
 				</td>
 				<td class="optionbox">
 					<input class="pedigree_form" type="text" id="rootid" name="rootid" size="3" value="<?php print $controller->rootid; ?>" />
-        			<?php print_findindi_link("rootid",""); ?>
+					<?php print_findindi_link("rootid",""); ?>
 				</td>
 			</tr>
 			<tr>
@@ -119,7 +119,7 @@ if (!$controller->isPrintPreview()) {
 			</tr>
 		</table>
 	</form>
-<?php 
+<?php
 	if ($show_full==0) {
 		echo '<br /><span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
 	}
@@ -163,7 +163,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 	}
 	// -- draw the box
 	if (!empty($controller->treeid[$i]) || $SHOW_EMPTY_BOXES) {
-		// Work around a bug in FireFox that mis-places some boxes in Portrait RTL, resulting in 
+		// Work around a bug in FireFox that mis-places some boxes in Portrait RTL, resulting in
 		// vertical lines that themselves appear to be mis-placed.
 		if ($TEXT_DIRECTION=="rtl" && $BROWSERTYPE=="mozilla" && ($curgen <= 2)) $xoffset += 10;
 		if ($TEXT_DIRECTION=="rtl") $xoffset += $brborder;		// Account for thickness of right box border
@@ -172,7 +172,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 		$widthadd = 0;
 		if ($i==0) $iref = rand();
 		else $iref = $i;
-		
+
 		if (($curgen==1)&&(!empty($controller->treeid[$i]))&&(count(find_family_ids($controller->treeid[$i]))>0)) $widthadd = 20;
 		if (($curgen >2) && ($curgen < $controller->PEDIGREE_GENERATIONS)) $widthadd = 10;
 		print "\n\t\t<div id=\"box";
@@ -197,7 +197,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 		}
 		if (!isset($controller->treeid[$i])) $controller->treeid[$i] = false;
 		print_pedigree_person($controller->treeid[$i], 1, $controller->show_famlink, $iref, 1);
-		
+
 		if (($curgen==1)&&(count(find_family_ids($controller->treeid[$i]))>0)) {
 			$did = 1;
 			if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) $did++;
@@ -264,12 +264,12 @@ if ($controller->rootPerson->canDisplayDetails()) {
 						$name = $spid->getFullName();
 						$name = rtrim($name);
 					} else $name = $pgv_lang["private"];
-					if (hasRTLText($name)) print "class=\"name2\">";								
-			   		else print "class=\"name1\">";
+					if (hasRTLText($name)) print "class=\"name2\">";
+						else print "class=\"name1\">";
 					print PrintReady($name);
 					print "<br /></span></a>";
 				}
-			
+
 				$children = $family->getChildren();
 				foreach($children as $ind2=>$child) {
 					print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
@@ -277,8 +277,8 @@ if ($controller->rootPerson->canDisplayDetails()) {
 						$name = $child->getFullName();
 						$name = rtrim($name);
 					} else $name = $pgv_lang["private"];
-					if (hasRTLText($name)) print "class=\"name2\">&lt; ";									
-			   		else print "class=\"name1\">&lt; ";
+					if (hasRTLText($name)) print "class=\"name2\">&lt; ";
+						else print "class=\"name1\">&lt; ";
 					print PrintReady($name);
 					print "<br /></span></a>";
 				}
@@ -296,8 +296,8 @@ if ($controller->rootPerson->canDisplayDetails()) {
 							$name = $child->getFullName();
 							$name = rtrim($name);
 						} else $name = $pgv_lang["private"];
-						if (hasRTLText($name)) print "class=\"name2\"> ";									 
-			   			else print "class=\"name1\"> ";
+						if (hasRTLText($name)) print "class=\"name2\"> ";
+							else print "class=\"name1\"> ";
 						print PrintReady($name);
 						print "<br /></span></a>";
 					}

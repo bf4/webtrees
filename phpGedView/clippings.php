@@ -28,8 +28,9 @@
  * @subpackage Charts
  * @version $Id$
  */
-// -- include config file
-require("config.php");
+
+require './config.php';
+
 require_once("includes/controllers/clippings_ctrl.php");
 
 // -- print html header information
@@ -113,7 +114,7 @@ if($ct==0) {
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
 				<?php print $pgv_lang["add_individual_by_id"];
-				 print_help_link("add_by_id_help", "qm");?>
+				print_help_link("add_by_id_help", "qm");?>
 			</td>
 		</tr>
 		<tr>
@@ -191,7 +192,7 @@ else {
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
 				<?php print $pgv_lang["add_individual_by_id"];
-				 print_help_link("add_by_id_help", "qm");?>
+				print_help_link("add_by_id_help", "qm");?>
 			</td>
 		</tr>
 		<tr>

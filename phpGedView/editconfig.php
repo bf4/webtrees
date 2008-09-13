@@ -27,7 +27,8 @@
  * @version $Id$
  */
 
-require_once "config.php";
+require './config.php';
+
 loadLangFile("pgv_confighelp, pgv_help");
 
 require_once "sanity_check.php";
@@ -238,7 +239,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 		foreach ($NEW_LANGS as $key => $name) {
 			$pgv_lang_use[$name] = true;
 		}
-	
+
 		// Set the other languages to non-active
 		foreach ($pgv_lang_use as $name => $value) {
 			if (!isset($NEW_LANGS[$name])) $pgv_lang_use[$name] = false;
@@ -290,7 +291,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 				}
 				fclose($fp);
 				$logline = AddToLog("Language settings file, lang_settings.php, updated");
-				check_in($logline, $Filename, $INDEX_DIRECTORY);	
+				check_in($logline, $Filename, $INDEX_DIRECTORY);
 			}
 			else $error = "lang_config_write_error";
 		}
@@ -313,7 +314,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 				fwrite($fp, $configtext);
 				fclose($fp);
 				$logline = AddToLog("config.php updated");
-				check_in($logline, "config.php", "");	
+				check_in($logline, "config.php", "");
 				if ($CONFIGURED) {
 					print "<script language=\"JavaScript\" type=\"text/javascript\">\nwindow.location = 'editconfig.php';\n</script>\n";
 				}
@@ -359,7 +360,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 <?php if (isset($_POST['security_check'])) { ?><input type="hidden" name="security_check" value="<?php print $_POST['security_check']; ?>" /><?php } ?>
 <?php if (isset($_POST['security_user'])) { ?><input type="hidden" name="security_user" value="<?php print $_POST['security_user']; ?>" /><?php } ?>
 <?php
-	
+
 	print "<table class=\"facts_table\">";
 	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
 	print "<span class=\"subheaders\">";

@@ -22,7 +22,9 @@
  * @version $Id$
  * @package PhpGedView
  */
-require("config.php");
+
+require './config.php';
+
 $useFCK = file_exists("./modules/FCKeditor/fckeditor.php");
 if($useFCK){
 	include("./modules/FCKeditor/fckeditor.php");

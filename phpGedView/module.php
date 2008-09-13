@@ -25,7 +25,8 @@
  * @author Patrick Kellum
  */
 
-require_once 'config.php';
+require './config.php';
+
 // TODO - this is added so that modules will continue to work, this should be removed as soon as modules have been cleaned up
 @import_request_variables("gcp");
 
@@ -99,77 +100,77 @@ switch($modinfo['Module']['type'])
 	}
 	case PGV_MOD_V2:
 	{
-		/*
-		 * Module Security
-		 *	1. Test if module is active.
-		 *	2. Only Admins can view an inactive module.
-		 */
+/*
+ * Module Security
+ *	1. Test if module is active.
+ *	2. Only Admins can view an inactive module.
+ */
 		if((!isset($modinfo['Config']['active']) || $modinfo['Config']['active'] === false) && !PGV_USER_IS_ADMIN)
 		{
 			header("Location: {$SERVER_URL}index.php");print ' ';exit;
 		}
-		/*
-		 * Class Security
-		 * 	1. Remove any directories that might have been passed.
-		 *	2. Test if class file actually exists.
-		 *	3. Ignore any filename that starts with an underscore.
-		 */
+/*
+ * Class Security
+ * 	1. Remove any directories that might have been passed.
+ *	2. Test if class file actually exists.
+ *	3. Ignore any filename that starts with an underscore.
+ */
 		if(isset($_REQUEST['class'])){$_REQUEST['class'] = basename($_REQUEST['class'], '.php');}
 		if(
 			!isset($_REQUEST['class']) ||
 			!file_exists("modules/{$_REQUEST['mod']}/{$_REQUEST['class']}.php") ||
 			$_REQUEST['class'][0] == '_'
 		){$_REQUEST['class'] = $_REQUEST['mod'];}
-		/*
-		 * Load Language
-		 *	1. Load english language if exists.
-		 *	2. Load current language if exists.
-		 */
+/*
+ * Load Language
+ *	1. Load english language if exists.
+ *	2. Load current language if exists.
+ */
 		if(file_exists("modules/{$_REQUEST['mod']}/pgvlang/lang_{$modinfo['Module']['default_language']}.php")){include_once "modules/{$_REQUEST['mod']}/pgvlang/lang_{$modinfo['Module']['default_language']}.php";}
 		if($deflang != $modinfo['Module']['default_language'] && file_exists("modules/{$_REQUEST['mod']}/pgvlang/lang_{$deflang}.php")){include_once "modules/{$_REQUEST['mod']}/pgvlang/lang_{$deflang}.php";}
 
-		/*
-		 * Load & Initialize
-		 * 	1. Load the class file.
-		 *	2. Create a module object.
-		 *	3. Initialize the module if needed.
-		 */
+/*
+ * Load & Initialize
+ * 	1. Load the class file.
+ *	2. Create a module object.
+ *	3. Initialize the module if needed.
+ */
 		include_once "modules/{$_REQUEST['mod']}/{$_REQUEST['class']}.php";
 		$mod = new $_REQUEST['class']();
 		if(method_exists($mod, 'init')){$mod->init();}
-		/*
-		 * Method Security
-		 *	1. Test if method actually exists in this object.
-		 *	2. Ignore any method that starts with an underscore.
-		 */
+/*
+ * Method Security
+ *	1. Test if method actually exists in this object.
+ *	2. Ignore any method that starts with an underscore.
+ */
 		if(
 			!isset($_REQUEST['method']) ||
 			!method_exists($mod, $_REQUEST['method']) ||
 			$_REQUEST['method'][0] == '_'
 		){$_REQUEST['method'] = 'main';}
-		/*
-		 * Execute Method
-		 *	1. Execute the requested method.
-		 *	2. Act upon the result of the method call.
-		 */
+/*
+ * Execute Method
+ *	1. Execute the requested method.
+ *	2. Act upon the result of the method call.
+ */
 		$results = $mod->$_REQUEST['method']();
 		switch($results[0])
 		{
-			/*
-			 * Action: Display Raw Output
-			 *	'content':	Raw content to display on the page.
-			 */
+/*
+ * Action: Display Raw Output
+ *	'content':	Raw content to display on the page.
+ */
 			case 'display':
 			{
 				print $results['content'];
 				break;
 			}
-			/*
-			 * Action: Wrap Output In Header & Footer
-			 *	'title'		Title of the page. [optional]
-			 *	'head'		Additional header content. [optional]
-			 *	'content'	Content to display on the page.
-			 */
+/*
+ * Action: Wrap Output In Header & Footer
+ *	'title'		Title of the page. [optional]
+ *	'head'		Additional header content. [optional]
+ *	'content'	Content to display on the page.
+ */
 			case 'wrap':
 			{
 				if(!isset($results['title']))
@@ -183,10 +184,10 @@ switch($modinfo['Module']['type'])
 				print_footer();
 				break;
 			}
-			/*
-			 * Action: Redirect Browser
-			 *	'url'		URL to redirect the browser to.
-			 */
+/*
+ * Action: Redirect Browser
+ *	'url'		URL to redirect the browser to.
+ */
 			case 'redirect':
 			{
 				// fully qualified url is recomended.
@@ -195,16 +196,16 @@ switch($modinfo['Module']['type'])
 				print ' '; // for some older browsers.
 				exit;
 			}
-			/*
-			 * Action: Exit
-			 */
+/*
+ * Action: Exit
+ */
 			case 'exit':
 			{
 				exit;
 			}
-			/*
-			 * Action: Error
-			 */
+/*
+ * Action: Error
+ */
 			default:
 			{
 				print_header($results['title'], $results['head']);

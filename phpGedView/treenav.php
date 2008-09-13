@@ -24,9 +24,10 @@
  * @package PhpGedView
  * @subpackage Display
  * @version $Id$
- */ 
+ */
 
-require_once("config.php");
+require './config.php';
+
 require_once("includes/treenav_class.php");
 
 $zoom = 0;

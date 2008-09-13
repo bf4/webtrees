@@ -27,7 +27,7 @@
  * @version $Id$
  */
 
-require 'config.php';
+require './config.php';
 
 loadLangFile('pgv_help, pgv_admin, pgv_editor, research_assistant:lang, googlemap:lang, googlemap:help_text, lightbox:lang, lightbox:help_text, sitemap:lang, sitemap:help_text');
 

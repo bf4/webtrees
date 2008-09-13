@@ -26,7 +26,8 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
+
 require("includes/functions_edit.php");
 require("includes/functions_import.php");
 
@@ -163,7 +164,7 @@ if ($action!="choose") {
 					if ($GEDCOM==$ged2) {
 						$success = delete_gedrec($gid2);
 						if ($success) print "<br />".$pgv_lang["gedrec_deleted"]."<br />\n";
-						
+
 						//-- replace all the records that link to gid2
 						$sql = "SELECT i_id, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom LIKE '%@$gid2@%'";
 						$res = dbquery($sql);
@@ -231,7 +232,7 @@ if ($action!="choose") {
 							}
 						}
 					}
-					
+
 					replace_gedrec($gid1, $newgedrec);
 					if ($SYNC_GEDCOM_FILE) write_file();
 					write_changes();
