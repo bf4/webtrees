@@ -22,8 +22,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -53,9 +53,9 @@ function create_person($personRec = "", $personID = "") {
 
 		}
 			$ePerson_new = $this->dom->createElement("person");
-			
+
 			$ePerson=$eRoot->appendChild($ePerson_new);
-			 
+
 			$ePerson->setAttribute("id", $personID);
 			$ePerson->setAttribute("handle",$personID);
 			$ePerson->setAttribute("change", time());
@@ -91,7 +91,7 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 					$surn = $pgv_lang["unknown"];
 				if (empty($givn))
 					$givn = $pgv_lang["unknown"];
-					
+
 				$eFirstName = $this->dom->createElement("first");
 				$etFirstName = $this->dom->createTextNode($givn);
 				$etFirstName = $eFirstName->appendChild($etFirstName);
@@ -111,7 +111,7 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 					$eSuffix = $eName->appendChild($eSuffix);
 				}
 
-				//retrieves name prefix 
+				//retrieves name prefix
 				if (($npfx = get_gedcom_value("NPFX", 2, $nameRec)) != null) {
 					$eTitle = $this->dom->createElement("title");
 					$etTitle = $this->dom->createTextNode($npfx);
@@ -160,10 +160,10 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 			 * where they are a spouse. These relations will only be included
 			 * if the family is also in the clippings cart. Otherwise, the relations
 			 * are simply left out of the XML file.
-			 * 
+			 *
 			 *
 			*create_fam_relation($ePerson,$personRec,"FAMC");
-			*create_fam_relation($ePerson,$personRec,"FAMS");		
+			*create_fam_relation($ePerson,$personRec,"FAMS");
 			*/
 			if (($note = get_sub_record(1, "1 NOTE", $personRec)) != null) {
 				$this->create_note($ePerson, $note, 1);
@@ -175,14 +175,14 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 			}
 			return $this->dom->saveXML();
 		}
-		
+
 	/**
 	* Creates the lds_ord element and appends the correct information depending
 	* on the type of lds_ord (Endowment, Sealing, Baptism). If there is a sealing,
-	* the function will search if the family is in the clippings cart and if the 
+	* the function will search if the family is in the clippings cart and if the
 	* family is created or not. If the family is not created yet, it will be created
-	* and added to the DOMDocument 
-	* 
+	* and added to the DOMDocument
+	*
 	* @param $indirec - The full INDI GEDCOM record of the person the lds_ord is being created
 	* @param $eventName - the name of the LDS event (Baptism, Sealing, Endowment, etc...)
 	* @param $eventABV - the event abbreviation in the GEDCOM (ie. SLGC, BAPL, ENDL)
@@ -218,7 +218,7 @@ require_once("includes/person_class.php");
 				}
 			}
 
-			// Check to see if the STAT of the ordinance is set and add it to the 
+			// Check to see if the STAT of the ordinance is set and add it to the
 			// <lds_ord> element
 			if (($stat = get_gedcom_value($eventABV . ":STAT", 1, $indirec)) != null) {
 				$eStatus = $this->dom->createElement("status");
@@ -228,20 +228,20 @@ require_once("includes/person_class.php");
 			}
 			// If the event is a sealing
 			if ($eventABV == "SLGC") {
-				// Create an instance of person and look for their family record	
+				// Create an instance of person and look for their family record
 				$person = Person :: getInstance($clipping["id"]);
 				$famId = $person->getChildFamilyIds();
 				$famrec = find_family_record($famId[0]);
 				$fid = $famId[0];
 				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
 				if ($handle == null && id_in_cart($fid)) {
-					/* 
+					/*
 					 * If the family does not exist and their ID is in the clippings cart,
 					 * you must create the family before you can query them in the dom to get
 					 * their hlink. The hlink is generated when the person element is created.
 					 * This causes overhead creating objects that are never added to the XML file
 					 * perhaps there is some other way this can be done reducing the overhead?
-					 * 
+					 *
 					 */
 					$this->create_family($famrec, $famId[0]);
 					$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
@@ -329,8 +329,8 @@ function create_source($sourceRec, $sourceID, $level = 1,$done=1) {
 		}
 		return $this->dom->saveXML();
 	}
-	
-	
+
+
 /**
  * Creates a GrampsXML for a family, if that family exists in the given GEDCOM record
  * @param $frec - The GEDCOM record where the family can be found
@@ -366,7 +366,7 @@ function create_family($frec, $fid) {
 		    $eFather->setAttribute("hlink", $id);
 			$eFather = $eFamily->appendChild($eFather);
 			}
-			
+
 			// Add the <mother> element
 			$id = get_gedcom_value("WIFE", 1, $famrec);
 			if (isset($id))
@@ -448,7 +448,7 @@ function create_media($mediaRec, $mediaID, $level = 1)
 		 $eRoot = $this->dom->createElementNS("http://gramps-project.org/xml/1.1.0/", "database");
 		 $eRoot = $this->dom->appendChild($eRoot);
 		}
-		
+
 		$object = $this->dom->createElement("object");
 		/*primary object elements and attributes*/
 		$object->setAttribute("id", $mediaID);
@@ -509,7 +509,7 @@ function create_media($mediaRec, $mediaID, $level = 1)
 		//               $this->create_media($mediaId,$mediaRecord);
 	}
 
-function create_sourceref($eParent, $sourcerefRec, $level,$done=1) 
+function create_sourceref($eParent, $sourcerefRec, $level,$done=1)
 	{
 		if (($sourceID = get_gedcom_value("SOUR", $level, $sourcerefRec)) != null) {
 				$eSourceRef = $this->dom->createElement("sourceref");

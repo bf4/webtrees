@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -94,7 +94,7 @@ function newConnection() {
 
 /**
  * Check if the given gedcom record has changed since the last session access
- * This is used to check if the gedcom record changed between the time the user 
+ * This is used to check if the gedcom record changed between the time the user
  * loaded the individual page and the time they clicked on a link to edit
  * the data.
  *
@@ -364,7 +364,7 @@ function check_gedcom($gedrec, $chan=true) {
  * @param string $oldrecord	the parent record to remove the subrecord from
  * @param string $tag	the GEDCOM subtag to start deleting at
  * @param string $gid	[optional] gid can be used to limit to @gid@
- * @param int $num		[optional] num specifies which multiple of the tag to remove, set to -1 to remove all 
+ * @param int $num		[optional] num specifies which multiple of the tag to remove, set to -1 to remove all
  * @return string		returns the oldrecord minus the subrecord(s)
  */
 function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
@@ -386,7 +386,7 @@ function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
 		}
 		else $newrec .= $gedlines[$i]."\n";
 	}
-	
+
 	return trim($newrec);
 }
 
@@ -418,7 +418,7 @@ function remove_subline($oldrecord, $linenum) {
 		}
 	}
 	else return $oldrecord;
-	
+
 	$newrec = trim($newrec);
 	return $newrec;
 }
@@ -774,7 +774,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		// name.  This is not encouraged, as it may confuse some logic that assumes
 		// "list" format names are always "surn, givn".
 		str=str.replace(/,/g," ");
-		
+
 		str=str.replace(/\s\s+/g," ");
 		return str.replace(/(^\s+)|(\s+$)/g,'');
 	}
@@ -846,7 +846,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			}
 		}
 	}
-	
+
 	/**
 	 * convert a hidden field to a text box
 	 */
@@ -908,9 +908,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			}
 		}
 	}
-	
+
 	/**
-	 * if the user manually changed the NAME field, then update the textual 
+	 * if the user manually changed the NAME field, then update the textual
 	 * HTML representation of it
 	 * If the value changed set manualChange to true so that changing
 	 * the other fields doesn't change the NAME line
@@ -936,7 +936,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			// Blank out temporary _MARNM_SURN and empty name fields
 			if (ip[i].id.indexOf("_MARNM_SURN")==0 || ip[i].value=='//')
 					ip[i].value='';
-			// Convert "xxx yyy" and "xxx y yyy" surnames to "xxx,yyy" 
+			// Convert "xxx yyy" and "xxx y yyy" surnames to "xxx,yyy"
 			if ('<?php echo $SURNAME_TRADITION; ?>'=='spanish' || '<?php echo $SURNAME_TRADITION; ?>'=='portuguese')
 				if (ip[i].id.indexOf("SURN")==0) ip[i].value=document.forms[0].SURN.value.replace(/^\s*([^\s,]{2,})\s+([iIyY] +)?([^\s,]{2,})\s*$/, "$1,$3");;
 		}
@@ -1027,7 +1027,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
 	global $lang_short_cut, $LANGUAGE;
-	
+
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
 <script type="text/javascript">
@@ -1055,7 +1055,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
 			field.value = txt;
 		}
-	
+
 		function toggle_lati_long() {
 			tr = document.getElementsByTagName('tr');
 			for (var i=0; i<tr.length; i++) {
@@ -1308,7 +1308,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		</script>
 		<?php
 		if (!$PRIVACY_BY_RESN && $level==1) {
-			// warn user that level 1 RESN tags have no effect when PRIVACY_BY_RESN is false 
+			// warn user that level 1 RESN tags have no effect when PRIVACY_BY_RESN is false
 			print "<small>".$pgv_lang["resn_disabled"]."</small>";
 		}
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />\n";
@@ -1510,7 +1510,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 
 	if ($noClose != "NOCLOSE") print "</td></tr>\n";
-	
+
 	$tabkey++;
 	return $element_id;
 }
@@ -1706,7 +1706,7 @@ function updateSOUR($inputRec, $levelOverride="no") {
 	global $glevelsRest, $tagRest, $islinkRest, $textRest;
 
 	if (count($tagSOUR)==0) return $inputRec;		// No update required
-	
+
 	// Save original interface update arrays before replacing them with the xxxSOUR ones
 	$glevelsSave = $glevels;
 	$tagSave = $tag;
@@ -1717,9 +1717,9 @@ function updateSOUR($inputRec, $levelOverride="no") {
 	$tag = $tagSOUR;
 	$islink = $islinkSOUR;
 	$text = $textSOUR;
-	
+
 	$myRecord = handle_updates($inputRec, $levelOverride);		// Now do the update
-	
+
 	// Restore the original interface update arrays (just in case ...)
 	$glevels = $glevelsSave;
 	$tag = $tagSave;
@@ -1742,7 +1742,7 @@ function updateRest($inputRec, $levelOverride="no") {
 	global $glevelsRest, $tagRest, $islinkRest, $textRest;
 
 	if (count($tagRest)==0) return $inputRec;		// No update required
-	
+
 	// Save original interface update arrays before replacing them with the xxxRest ones
 	$glevelsSave = $glevels;
 	$tagSave = $tag;
@@ -1753,9 +1753,9 @@ function updateRest($inputRec, $levelOverride="no") {
 	$tag = $tagRest;
 	$islink = $islinkRest;
 	$text = $textRest;
-	
+
 	$myRecord = handle_updates($inputRec, $levelOverride);		// Now do the update
-	
+
 	// Restore the original interface update arrays (just in case ...)
 	$glevels = $glevelsSave;
 	$tag = $tagSave;
@@ -1790,7 +1790,7 @@ function updateRest($inputRec, $levelOverride="no") {
  */
 function handle_updates($newged, $levelOverride="no") {
 	global $glevels, $islink, $tag, $uploaded_files, $text, $NOTE, $WORD_WRAPPED_NOTES;
-	
+
 	if ($levelOverride=="no" || count($glevels)==0) $levelAdjust = 0;
 	else $levelAdjust = $levelOverride - $glevels[0];
 
@@ -1982,7 +1982,7 @@ function create_add_form($fact) {
 		}
 		add_simple_tag("1 ".$fact);
 		insert_missing_subtags($tags[0]);
-		//-- handle the special SOURce case for level 1 sources [ 1759246 ] 
+		//-- handle the special SOURce case for level 1 sources [ 1759246 ]
 		if ($fact=="SOUR") {
 			add_simple_tag("2 PAGE");
 			add_simple_tag("3 TEXT");
@@ -2142,7 +2142,7 @@ function insert_missing_subtags($level1tag)
 		$type_val = substr($level1tag,5);
 		$level1tag = "MARR";
 	}
-	
+
 	foreach ($level2_tags as $key=>$value) {
 		if (in_array($level1tag, $value) && !in_array($key, $tags)) {
 			if ($key=="TYPE") {

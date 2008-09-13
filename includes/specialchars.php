@@ -1,14 +1,14 @@
 <?PHP
 /**
- * Special Character tables, for use by JavaScript to input characters 
+ * Special Character tables, for use by JavaScript to input characters
  * that aren't on your keyboard
- * 
+ *
  * THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost)
- * 
- * When updating, be sure to add the language into the array $specialchar_languages, 
- * add a case for that language into the switch, and add any new special characters 
+ *
+ * When updating, be sure to add the language into the array $specialchar_languages,
+ * add a case for that language into the switch, and add any new special characters
  * into the default case of the switch near the bottom.
- * 
+ *
  * Languages alpha by name in original language.
  * Special characters by language from European Commision, Research in Official Statistics:
  * http://europa.eu.int/comm/eurostat/research/index.htm?http://europa.eu.int/en/comm/eurostat/research/isi/special/&1
@@ -17,9 +17,9 @@
  * Irish: offline sources
  * Hawaiian: http://www.olelo.hawaii.edu/eng/resources/unicode.html
  * Lithuanian: http://www.eki.ee/letter/chardata.cgi?lang=lt+Lithuanian&script=latin
- * 
+ *
  * Other special characters are all listed at the bottom.
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team
  *
@@ -42,8 +42,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -442,7 +442,7 @@ case "lt": // Lithuanian
 		"&#279;" => "ė", // e with dot above
 		"&#303;" => "į", // i with ogonek
 		"&#353;" => "š", // s hachek
-		"&#371;" => "ų", // u with ogonek		
+		"&#371;" => "ų", // u with ogonek
 		"&#363;" => "ū", // u with macron
 		"&#382;" => "ž", // z hachek
          );
@@ -1230,7 +1230,7 @@ $otherspecialchars = array(
 	"&#187;" => "»",
 	"&#8224;" => "†",
 	"&#8225;" => "‡",
-	"&#8734;" => "∞",  // infinity 
+	"&#8734;" => "∞",  // infinity
 	"&#247;" => "÷",
 	"&#215;" => "×",
 	"&#170;" => "ª",  // feminine ordinal (nª)

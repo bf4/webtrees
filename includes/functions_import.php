@@ -25,8 +25,8 @@
  * @subpackage DB
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -94,7 +94,7 @@ function import_record($indirec, $update) {
 	$indirec=preg_replace('/(^ +| +$)/m', '', $indirec); // Leading/trailing space
 	$indirec=preg_replace('/\n{2,}/', "\n", $indirec); // Blank lines
 	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
-	
+
 	// Replace TAG_FORMAL_NAME (as sometimes created by FTM) with TAG
 	if (is_array($TRANSLATE_TAGS)) {
 		foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
@@ -197,27 +197,27 @@ function import_record($indirec, $update) {
 				$sql = "INSERT INTO ".$TBLPREFIX."names (n_gid, n_file, n_name, n_letter, n_surname, n_type) VALUES('".$DBCONN->escapeSimple($gid)."',".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).",'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."','".($name['type']=='_MARNM'?'C':'A')."')";
 				$res = dbquery($sql);
 			}
-			
+
 			// Calculate Soundex Values and insert them into the database.
-			
+
 			// Start building the SQL Insert
 			$sql = "INSERT INTO ".$TBLPREFIX."soundex VALUES(" .
 					"'".$DBCONN->escapeSimple($gid)."'," .
 					"'".$DBCONN->escapeSimple($n)."'," .
 					"'".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])."',";
-			
+
 			// Ensure there is a firstname or lastname.
 			// If there is no name in a field, it will contain the string "@N.N."
 			if ($givn!='@P.N.') {
 				Character_Substitute($givn);
 				// Split the first name array
 				$fnames = explode(" ", $givn);
-				
+
 				$std_array = array();
 				$firstName_std_soundex = "";
 				$firstName_dm_soundex = "";
 				$dm_array = array();
-				
+
 				$combined = "";
 				foreach($fnames as $fn) {
 					if (!empty($fn)) {
@@ -227,10 +227,10 @@ function import_record($indirec, $update) {
 				}
 				$fn_nospaces = strtr($givn, " ", "");
 				$dm_array = array_merge($dm_array, DMSoundex($fn_nospaces));
-				
+
 				$std_array[] = soundex($fn_nospaces);
 				$firstName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
-				
+
 				$std_array = array_unique($std_array);
 				$firstName_std_soundex = implode(":", $std_array);
 				$sql .= "'".$DBCONN->escapeSimple(trim($firstName_std_soundex, ":"))."'," .
@@ -238,7 +238,7 @@ function import_record($indirec, $update) {
 			} else {
 				$sql .= "NULL,NULL,";
 			}
-			
+
 			if ($surn!='@N.N.') {
 				Character_Substitute($surn);
 				$lnames = explode(" ", $surn);
@@ -246,19 +246,19 @@ function import_record($indirec, $update) {
 				$lastName_dm_soundex = "";
 				$dm_array = array();
 				$std_array = array();
-				
+
 				foreach($lnames as $ln) {
 					$std_array[] = soundex($ln);
 					$dm_array = array_merge($dm_array, DMSoundex($ln));
 				}
-				
+
 				$ln_nospaces = strtr($surn, " ", "");
-				
+
 				$std_array[] =  soundex($ln_nospaces);
 				$dm_array = array_merge($dm_array, DMSoundex($ln_nospaces));
 				$lastName_std_soundex .= ":" . implode(":", array_unique($std_array));
 				$lastName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
-				
+
 				$sql .= "'".$DBCONN->escapeSimple(trim($lastName_std_soundex,":"))."'," .
 							"'".$DBCONN->escapeSimple(trim($lastName_dm_soundex,":"))."'";
 			} else {
@@ -536,7 +536,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		$objrec = preg_replace("/ OBJE/", " @" . $m_media . "@ OBJE", $objrec);
 		//-- renumber the lines
 		$objrec = preg_replace("/^(\d+) /me", "($1-$objlevel).' '", $objrec);
-		
+
 		//-- check if another picture with the same file and title was previously imported
 		$media = new Media($objrec);
 		$new_media = Media :: in_obje_list($media);
@@ -569,7 +569,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		print "Media reference error ".$objrec;
 		return "";
 	}
-} 
+}
 /**
  * import media items from record
  * @todo Decide whether or not to update the original gedcom file
@@ -672,7 +672,7 @@ function update_media($gid, $indirec, $update = false) {
 			// NOTE: Renumber the old ID to a new ID and save the old ID
 			// NOTE: in case there are more references to it
 			$level = $line{0};
-			//-- putting this code back since $objlevel, $objrec, etc vars will be 
+			//-- putting this code back since $objlevel, $objrec, etc vars will be
 			//-- reset in sections after this
 			if ($objlevel>0 && ($level<=$objlevel)) {
 				$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
@@ -690,7 +690,7 @@ function update_media($gid, $indirec, $update = false) {
 					$objlevel = $level;
 					$inobj = true;
 					$objrec = $line . "\r\n";
-			} 
+			}
 			else if (preg_match("/[1-9]\sOBJE/", $line, $match)) {
 				// NOTE: Set the details for the next media record
 				$objlevel = $level;
@@ -719,14 +719,14 @@ function update_media($gid, $indirec, $update = false) {
 	}
 	}
 	else $newrec = $indirec;
-	
+
 	if ($keepmedia) {
 		$newrec = trim($newrec)."\r\n";
 		foreach($old_linked_media as $i=>$row) {
 			$newrec .= trim($row[1])."\r\n";
 		}
 	}
-	
+
 	return $newrec;
 }
 /**
@@ -771,7 +771,7 @@ function setup_database() {
 	$has_other = false;
 	$has_sources = false;
 	$has_soundex = false;
-	
+
 	$sqlite = ($DBTYPE == "sqlite");
 
 	$data = $DBCONN->getListOf('tables');
@@ -937,11 +937,11 @@ function setup_database() {
 			$res = dbquery($sql); //print "p_gid dropped<br/>\n";
 		}
 		if (!$has_places_std_soundex) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_std_soundex text";	
+			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_std_soundex text";
 			$res = dbquery($sql);//print "p_std_soundex added<br/>\n";
 		}
 		if (!$has_places_dm_soundex) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_dm_soundex text";	
+			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_dm_soundex text";
 			$res = dbquery($sql);//print "p_dm_soundex added<br/>\n";
 		}
 	}
@@ -1232,12 +1232,12 @@ function create_remotelinks_table() {
 function create_soundex_table()
 {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
-	
+
 	$sql = "DROP TABLE ".$TBLPREFIX."soundex";
 	$res = dbquery($sql, false);
 	$sql = "CREATE TABLE ".$TBLPREFIX."soundex (sx_i_id varchar(255) NOT NULL, sx_n_id varchar(255) NOT NULL, sx_file int NOT NULL, sx_fn_std_code text NULL, sx_fn_dm_code text NULL, sx_ln_std_code text NULL, sx_ln_dm_code text NULL)";
 	$res = dbquery($sql);
-	
+
 	if (DB::isError($res)) {
 		exit;
 	}
@@ -1407,10 +1407,10 @@ function empty_database($FILE, $keepmedia=false) {
 		$sql = "INSERT INTO ".$TBLPREFIX."nextid VALUES('".$DBCONN->escapeSimple($num-1)."', 'OBJE', '".$FILE."')";
 		$res2 = dbquery($sql);
 	}
-	
+
 	$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_file='$FILE'";
 	$res = dbquery($sql);
-	
+
 	//-- clear all of the cache files for this gedcom
 	clearCache();
 }
@@ -1485,7 +1485,7 @@ function write_file() {
 	$mutex = new Mutex($GEDCOM);
 	$mutex->Wait();
 	//-- what to do if file changed while waiting
-	
+
 	$fp = fopen($GEDCOMS[$GEDCOM]["path"], "wb");
 	if ($fp===false) {
 		print "ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request.\n";
@@ -1541,7 +1541,7 @@ function accept_changes($cid) {
 		}
 
 		update_record($indirec, $change["type"]=="delete");
-		
+
 		//-- write the changes back to the gedcom file
 		if ($SYNC_GEDCOM_FILE) {
 			if (!isset($manual_save) || $manual_save==false) {
@@ -1549,7 +1549,7 @@ function accept_changes($cid) {
 				$mutex = new Mutex("accept_changes");
 				$mutex->Wait();
 			}
-			
+
 			if (empty($fcontents)) read_gedcom_file();
 			if ($change["type"]=="delete") {
 				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
@@ -1694,7 +1694,7 @@ function update_record($indirec, $delete = false) {
 
 		$sql = "DELETE FROM " . $TBLPREFIX . "names WHERE n_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
-		
+
 		$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_i_id LIKE '".$DBCONN->escapeSimple($gid)."' AND sx_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 		$res = dbquery($sql);
 
@@ -1773,18 +1773,18 @@ function uuid() {
 
 /**
  * parse out specific subrecords (NOTE, _PRIM, _THUM) from a given OBJE record
- * 
- * @author Joseph King 
+ *
+ * @author Joseph King
  * @param string $objrec the OBJE record to retrieve the subrecords from
  * @param int $objlevel the level of the OBJE record
  * @param string $m_media that media id of the OBJE record
  * @return string containing NOTE, _PRIM, and _THUM subrecords parsed from the passed object record
  */
 function subrecord_createobjectref($objrec, $objlevel, $m_media){
-	
+
 	//- level of subrecords is object record level + 1
 	$level = $objlevel + 1;
-	
+
 	//- get and concatenate NOTE subrecords
 	$n = 1;
 	$nt = "";
@@ -1820,7 +1820,7 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	}while($tm != "");
 	//- add object reference
 	$objmed = addslashes($objlevel . ' OBJE @' . $m_media . "@\r\n" . $note . $prim . $thum);
-	
+
 	//- return the object media reference
 	return $objmed;
 }

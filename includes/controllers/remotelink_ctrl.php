@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -50,7 +50,7 @@ class RemoteLinkController extends BaseController {
 	 */
 	function init() {
 		global $GEDCOM;
-		
+
 		if (file_exists("modules/FamilySearch/familySearchWrapper.php")) {
 			$this->has_familysearch = true;
 			require_once("modules/FamilySearch/familySearchWrapper.php");
@@ -80,9 +80,9 @@ class RemoteLinkController extends BaseController {
 			$this->server_list = get_server_list();
 		}
 	}
-	
+
 	/**
-	 * Perform the desired action 
+	 * Perform the desired action
 	 *
 	 */
 	function runAction() {
@@ -117,7 +117,7 @@ class RemoteLinkController extends BaseController {
 						$gedcom_id = trim(stripslashes(safe_POST('txtFS_GID', PGV_REGEX_NOSCRIPT, '')));
 						$username = trim(stripslashes(safe_POST('txtFS_Username', PGV_REGEX_NOSCRIPT, '')));
 						$password = trim(stripslashes(safe_POST('txtFS_Password', PGV_REGEX_NOSCRIPT, '')));
-							
+
 						$serverID = $this->addFamilySearchServer($server_title, $server_URL, $gedcom_id, $username, $password);
 					}
 					break;
@@ -388,7 +388,7 @@ class RemoteLinkController extends BaseController {
 				return $id;
 			}
 		}
-		
+
 		//-- check for recent additions
 		foreach ($pgv_changes as $cid=>$changes) {
 			$change = $changes[count($changes) - 1];

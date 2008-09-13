@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -144,7 +144,7 @@ class SearchControllerRoot extends BaseController {
 		}
 		if (isset ($_REQUEST["replace"])) {
 			$this->replace = $_REQUEST["replace"];
-				
+
 			if(isset($_REQUEST["replaceNames"])) $this->replaceNames = true;
 			if(isset($_REQUEST["replacePlaces"])) $this->replacePlaces = true;
 			if(isset($_REQUEST["replacePlacesWord"])) $this->replacePlacesWord = true;
@@ -186,7 +186,7 @@ class SearchControllerRoot extends BaseController {
 		}
 		else
 		$this->sgeds[] = $GEDCOM;
-			
+
 		// Retrieve the sites that can be searched
 		$this->Sites = get_server_list();
 
@@ -632,7 +632,7 @@ class SearchControllerRoot extends BaseController {
 			$source["gedcom"] = find_updated_record($id);
 
 			$newRecord = $source["gedcom"];
-				
+
 			if($this->replaceAll) {
 				$newRecord = preg_replace("~".$oldquery."~i", $this->replace, $newRecord);
 			}
@@ -664,16 +664,16 @@ class SearchControllerRoot extends BaseController {
 		$sql = "SELECT i.i_id, i.i_file, i.i_name FROM ".$TBLPREFIX."places JOIN ".$TBLPREFIX."placelinks ON p_id = pl_p_id JOIN ".$TBLPREFIX."individuals as i ON pl_gid = i_id WHERE p_file = ".$GEDCOMS[$GEDCOM]['id']." AND i_file = p_file AND (";
 
 		$place_sdx = "";
-			
+
 		$placearr = explode(",", $this->place);
-			
+
 		//Determines type of soundex and performs it
 		foreach($placearr as $place)
 		{
 			if($this->soundex == "DaitchM")
 			{
 				$place_sdx = DMSoundex($place);
-					
+
 				foreach($place_sdx as $key=>$val)
 				{
 
@@ -684,16 +684,16 @@ class SearchControllerRoot extends BaseController {
 			if($this->soundex == "Russell")
 			{
 				$place_sdx = soundex($place);
-					
+
 				$sql .= "p_std_soundex = '".$place_sdx."' OR ";
 			}
 		}
-			
+
 		// Strip the extra 'OR' at the end of the sql query
 		$sql = substr($sql, 0, strlen($sql) - 3);
 		$sql .= ")";
 		$res = dbquery($sql);
-			
+
 		//Stores results in printname[]
 		$this->printname = array();
 		while($row = $res->fetchRow())
@@ -738,7 +738,7 @@ class SearchControllerRoot extends BaseController {
 			if (!empty ($this->year))
 			$logstring .= "Year: ".$this->year."<br />";
 			AddToSearchlog($logstring, $this->sgeds);
-			
+
 			if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
 			{
 				$this->Place_Search();
@@ -810,7 +810,7 @@ class SearchControllerRoot extends BaseController {
 							//								break; // leave out if we want all names from one indi shown
 						}
 					}
-						
+
 				}
 			}
 		}
@@ -1417,7 +1417,7 @@ class SearchControllerRoot extends BaseController {
 					if (isset ($this->multisiteResults) && (count($this->multisiteResults) > 0)) {
 						$this->totalResults = 0;
 						$this->multiTotalResults = 0;
-						$somethingPrinted = true;	
+						$somethingPrinted = true;
 						foreach ($this->multisiteResults as $key => $siteResults) {
 							include_once('includes/serviceclient_class.php');
 							$serviceClient = ServiceClient :: getInstance($key);

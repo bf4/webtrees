@@ -26,18 +26,18 @@
  * @package PhpGedView
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 class Mutex {
 	var $name; 	//-- the name of the mutex
 	var $waitCount;	//-- the number of cycles it we waited while trying to acquire the mutex
-	
+
 	function checkDBCONN() {
 		global $DBCONN, $CONFIGURED;
-		
+
 		if (!isset($DBCONN) || DB::isError($DBCONN)) {
 			if ($CONFIGURED) {
 				//-- fix bad configuration prevents edit config page from loading
@@ -57,7 +57,7 @@ class Mutex {
 	 */
 	function Mutex($name, $acquire=false) {
 		global $DBCONN, $TBLPREFIX;
-		
+
 		if (!Mutex::checkDBCONN()) return false;
 		$this->name = $name;
 		//-- check if this mutex already exists
@@ -74,7 +74,7 @@ class Mutex {
 		$this->waitCount = 0;
 		if ($acquire) $this->Wait();
 	}
-	
+
 	/**
 	 * Try to acquire the mutex.  Block the thread if it cannot obtain it.
 	 *
@@ -83,7 +83,7 @@ class Mutex {
 	 */
 	function Wait($time=-1) {
 		global $DBCONN, $TBLPREFIX;
-		
+
 		if (!Mutex::checkDBCONN()) return false;
 		//-- check if mutex is available
 		$available = false;
@@ -106,27 +106,27 @@ class Mutex {
 			}
 			$res->free();
 		}
-		
+
 		$sql = "UPDATE {$TBLPREFIX}mutex SET mx_time=".time().", mx_thread='".session_id()."' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."'";
 		$res = dbquery($sql);
 		return true;
 	}
-	
+
 	/**
 	 * Release the mutex previously acquired
 	 *
 	 */
 	function Release() {
 		global $DBCONN, $TBLPREFIX;
-		
+
 		if (!Mutex::checkDBCONN()) return false;
-		
+
 		$sql = "UPDATE {$TBLPREFIX}mutex SET mx_time=0, mx_thread='0' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND mx_thread='".session_id()."'";
 		$res = dbquery($sql);
 		$this->waitCount = 0;
 //		print "releasing mutex ".$this->name;
 	}
-	
+
 	/**
 	 * Get the number of times thread waited to acquire mutex
 	 *
@@ -135,7 +135,7 @@ class Mutex {
 	function getWaitCount() {
 		return $this->waitCount;
 	}
-	
+
 	/**
 	 * Get the name of this mutex
 	 *

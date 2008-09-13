@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005	John Finlay and Others
  *
@@ -23,8 +23,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -39,14 +39,14 @@ class LocalClient extends ServiceClient {
 		parent::ServiceClient($gedrec);
 		$this->type = "local";
 	}
-	
+
 	/**
 	 * authenticate the client
 	 */
 	function authenticate() {
 		//-- nothing to do in a local client
 	}
-	
+
 	/**
 	 * Get a record from the remote site
 	 * @param string $remoteid	the id of the record to get
@@ -56,7 +56,7 @@ class LocalClient extends ServiceClient {
 		$rec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $rec);
 		return $rec;
 	}
-	
+
 	/**
 	 * merge a local gedcom record with the information from the remote site
 	 * @param string $xref		the remote ID to merge with
@@ -67,7 +67,7 @@ class LocalClient extends ServiceClient {
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist;
 		global $TBLPREFIX, $GEDCOMS;
-		
+
 		$localkey = $this->xref.":".$xref;
 		//-- check the memory cache
 		if (!empty($indilist[$localkey]["gedcom"])) return $indilist[$localkey]["gedcom"];
@@ -80,7 +80,7 @@ class LocalClient extends ServiceClient {
 		$gedrec = $this->checkIds($gedrec);
 		if (empty($localrec)) return $gedrec;
 		$localrec = $this->_merge($localrec, $gedrec);
-		
+
 		//-- used to force an update on the first time linking a person
 		if ($firstLink) {
 			include_once("includes/functions_edit.php");
@@ -94,14 +94,14 @@ class LocalClient extends ServiceClient {
 				replace_gedrec($pid,$localrec);
 			}
 		}
-		
+
 		if (!empty($localrec)) {
 			$gid=$localkey;
 			$ct = preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0) $gid = trim($match[1]);
 			if ($gid!=$localkey) {
 				$localkey = $gid;
-			} 
+			}
 			//print "found record for ".$localkey;
 			if (isset($indilist[$xref])) {
 				$indi = $indilist[$xref];
@@ -131,20 +131,20 @@ class LocalClient extends ServiceClient {
 //		print "<pre>$localrec</pre>";
 		return $localrec;
 	}
-	
+
 	/**
 	 * get a singleton instance of the results
 	 * returned by the soapClient search method
-	 * 
+	 *
 	 * @param string $query - the query to search on
 	 * @param integer $start - the start index of the results to return
-	 * @param integer $max - the maximum number of results to return 
+	 * @param integer $max - the maximum number of results to return
 	 */
 	function &search($query, $start=0, $max=100) {
 		//$this->authenticate();
 		//$result = $this->soapClient->search($this->SID, $query, $start, $max);
 		$search_results = search_indis($query, array($this->gedfile));
-				
+
 		// loop thru the returned result of the method call
 		foreach($search_results as $gid=>$indi)
 		{
@@ -164,7 +164,7 @@ class LocalClient extends ServiceClient {
 				$person->gender = get_gedcom_value("SEX", 1, $gedrec, '', false);
 				//$search_result_element['gedcom'] = $gedrec;
 				$results_array[] = $person;
-			}						
+			}
 		}
 //			AddToLog('Found '.count($results_array).' after privatizing');
 		// set the number of possible results

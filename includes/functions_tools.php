@@ -25,8 +25,8 @@
  * @see validategedcom.php
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -200,7 +200,7 @@ function fixreplaceval($val1,$val7,$val3,$val5)
  *
  * Valid gedcom dates are in the form DD MMM YYYY (ie 01 JAN 2004).  However many people will enter
  * dates in an incorrect format.  This function checks if dates have been entered incorrectly.
- * This function will detect dates in the form YYYY-MM-DD, DD-MM-YYYY, and MM-DD-YYYY.  It will also 
+ * This function will detect dates in the form YYYY-MM-DD, DD-MM-YYYY, and MM-DD-YYYY.  It will also
  * look for \ / - and . as delimeters.
  * @return boolean	returns true if the cleanup is needed
  * @see date_cleanup()
@@ -298,7 +298,7 @@ function date_cleanup($dayfirst=1)
 /**
  * check if we need to cleanup the MAC style line endings
  *
- * PGV runs better with DOS (\r\n) or UNIX (\n) style line endings.  This function checks if 
+ * PGV runs better with DOS (\r\n) or UNIX (\n) style line endings.  This function checks if
  * Mac (\r) style line endings are used in the gedcom file.
  * @return boolean	returns true if the cleanup is needed
  * @see macfile_cleanup()

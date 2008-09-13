@@ -22,8 +22,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -87,7 +87,7 @@ function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 ////////////////////////////////////////////////////////////////////////////////
 function age_localisation_pl(&$agestring, &$show_years) {
 	global $pgv_lang;
-	
+
 	// Only suppress years if there are no months/days
 	if (preg_match('/\d[md]/i', $agestring)) {
 		$show_years=true;
@@ -120,8 +120,8 @@ function age_localisation_pl(&$agestring, &$show_years) {
 		),
 		array(
 			$pgv_lang['child'],
-			$pgv_lang['infant'],  
-	 		$pgv_lang['stillborn'], 
+			$pgv_lang['infant'],
+	 		$pgv_lang['stillborn'],
 			$show_years ? '1 '.$pgv_lang['year1'] : '1',
 			$show_years ? '2 '."lata" : '2', $show_years ? '3 '."lata" : '3', $show_years ? '4 '."lata" : '4',
 			$show_years ? '22 '."lata" : '22', $show_years ? '23 '."lata" : '23', $show_years ? '24 '."lata" : '24',
@@ -140,7 +140,7 @@ function age_localisation_pl(&$agestring, &$show_years) {
 			'2 '."miesiące", '3 '."miesiące", '4 '."miesiące",
 			'22 '."miesiące", '23 '."miesiące", '24 '."miesiące",
 	 		'$1 '.$pgv_lang['months'],
-			'1 '.$pgv_lang['day1'],  
+			'1 '.$pgv_lang['day1'],
 			'$1 '.$pgv_lang['days']
 		),
 		$agestring
@@ -181,7 +181,7 @@ function num_people_localisation_pl(&$count) {
 ///////////////////////////////////////////////////////////////////////////////////////////
 function fact_AKA_localisation_pl(&$fact, &$pid) {
 	global $factarray;
-	
+
 	$person = Person::getInstance($pid);
 	$sex = $person->getSex();
 	if ($fact == "_INTE") {
@@ -198,13 +198,13 @@ function fact_AKA_localisation_pl(&$fact, &$pid) {
 ////////////////////////////////////////////////////////////////////////////////
 function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 	global $factarray;
-	
+
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	if ($ct>0) $pid2 = $match[0][1];
 	if (isset($pid2)) {
 		$sex1 = Person::getInstance($pid)->getSex();
 		$sex2 = Person::getInstance($pid2)->getSex();
-	
+
 		if ($explode_fact[1] == "BIRT") {
 			switch ($explode_fact[2]) {
 			case "SIBL":
@@ -307,7 +307,7 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 // Localise the relationships. Lokalizacja pokrewieństwa.
 ////////////////////////////////////////////////////////////////////////////////
 function rela_localisation_pl(&$rela) {
-	
+
 	print " ".ucfirst($rela).": ";
 }
 ?>

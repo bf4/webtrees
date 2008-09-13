@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -105,11 +105,11 @@ class PGVReport extends PGVReportBase {
 		print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
 		print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
 		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n";
-		
+
 		// Delay all output until we've seen a page header
 		ob_start();
 		$waitTitle = true;
-		
+
 		print "<style type=\"text/css\">\n";
 		$this->PGVRStyles['footer'] = array('name'=>'footer', 'font'=>'Arial', 'size'=>'10', 'style'=>'');
 		foreach($this->PGVRStyles as $class=>$style) {
@@ -166,7 +166,7 @@ html {
 		}
 		print "</div>\n";
 		print "<script type=\"text/javascript\">\ndocument.getElementById('bodydiv').style.height='".($this->maxY+2)."pt';\n</script>\n";
-		
+
 		if (isset($waitTitle) && $waitTitle) {
 			// We haven't found a page title: take default action
 			$contents = ob_get_clean();
@@ -313,8 +313,8 @@ html {
 	function write($text, $color='') {
 		global $waitTitle;
 		$style = $this->getStyle($this->getCurrentStyle());
-		
-		// Look for first occurrence of a page header, 
+
+		// Look for first occurrence of a page header,
 		// and use this to complete the HTML <title> tag
 		if (isset($waitTitle) && $waitTitle && $style['name']=='header') {
 			$contents = ob_get_clean();

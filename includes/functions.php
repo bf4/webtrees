@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -85,9 +85,9 @@ function check_db($ignore_previous=false) {
 		'hostspec' => $DBHOST,
 		'database' => $DBNAME
 	);
-	
+
 	if (!empty($DBPORT)) $dsn['port'] = $DBPORT;
-	
+
 	if ($ignore_previous) $dsn['new_link'] = true;
 
 	$options = array(
@@ -1004,7 +1004,7 @@ function get_cont($nlevel, $nrec, $tobr=true) {
 			$text .= rtrim(substr($thisSubrecord, 7));
 		}
 	}
-	
+
 	return rtrim($text, " ");
 }
 
@@ -1810,7 +1810,7 @@ function compare_facts_type_old($arec, $brec) {
 	// Facts from different families stay grouped together
 	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
 		return 0;
-		
+
 	// Extract fact type from record
 	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
 		return 0;
@@ -1980,7 +1980,7 @@ function compare_facts_date_old($arec, $brec) {
 						else
 							return $factWeight;
 				}
-		
+
 			return 0;
 		}
 }
@@ -2026,7 +2026,7 @@ function sort_facts_old(&$arr) {
 			$arr[$i].="\r\n2 _SORT ".$i."\r\n";
 		}
 	}
-	
+
 	// Pass two - modified bubble/insertion sort on date
 	for ($i=0; $i<count($arr)-1; ++$i)
 		for ($j=count($arr)-1; $j>$i; --$j)
@@ -2036,7 +2036,7 @@ function sort_facts_old(&$arr) {
 					$arr[$k]=$arr[$k+1];
 				$arr[$j]=$tmp;
 			}
-			
+
 	//-- delete the temporary fields
 	for ($i=0; $i<count($arr); $i++) {
 		if (is_array($arr[$i])) {
@@ -2130,7 +2130,7 @@ function compare_facts_date($arec, $brec) {
 						else
 							return $factWeight;
 				}
-		
+
 			return 0;
 		}
 }
@@ -2152,14 +2152,14 @@ function sort_facts(&$arr) {
 		if ($event->getValue("DATE")==NULL) $nondated[] = $event;
 		else $dated[] = $event;
 	}
-	
+
 	//-- sort each type of array
 	usort($dated, array("Event","CompareDate"));
 	usort($nondated, array("Event","CompareType"));
-	
+
 	/* This commented out code is an algorithm for inserting non-dated events into the dated events
 	 * using a weighted comparison.  Non-dated events are sorted by inserting them next to the the dated
-	 * fact they should be closest to. 
+	 * fact they should be closest to.
 	$arr = $dated;
 	//-- find the best place to put each nondated event
 	$index = 0;
@@ -2174,7 +2174,7 @@ function sort_facts(&$arr) {
 				$index = $i;
 			}
 		}
-		
+
 		if ($score!=null) {
 			if ($score>0) $index++;
 			$ct = count($arr);
@@ -2190,7 +2190,7 @@ function sort_facts(&$arr) {
 		//-- because they are already sorted, they should always be after the event we just added
 		$index++;
 	}
-	
+
 	*/
 	//-- merge the arrays back together comparing by Facts
 	$dc = count($dated);
@@ -2209,9 +2209,9 @@ function sort_facts(&$arr) {
 			$arr[$k] = $dated[$i];
 			$i++;
 		}
-		$k++; 
+		$k++;
 	}
-	
+
 	// get anything that might be left in the nondated array
 	while($j<$nc) {
 		$arr[$k] = $nondated[$j];
@@ -2843,7 +2843,7 @@ function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
 				return false;
 			}
 		}
-		
+
 		// Does a path of length n exist?
 		if (isset($PATHS[$n][$pid1][$pid2])) {
 			return true;
@@ -2948,13 +2948,13 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
 				return false;
 			}
 		}
-		
+
 		// Does a path of length n exist?
 		if (isset($PATHS[$n][$pid1][$pid2])) {
 			foreach ($PATHS[$n][$pid1][$pid2] as $path) {
 				if ($path_to_find) {
 					--$path_to_find;
-				} else {				
+				} else {
 					$return=array('path'=>$path, 'length'=>$n, 'pid'=>$pid2, 'relations'=>array());
 					foreach ($path as $n=>$id) {
 						if ($n==0) {
@@ -3678,7 +3678,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *		would be called thus:
  *			loadLangFile("pgv_confighelp, pgv_faqlib");
  *		To load all files, call the function this way:
- *			loadLangFile("all"); 
+ *			loadLangFile("all");
  *		To load the file XXX for module YYY, call
  *		  loadLangFile("YYY:XXX");
  */
@@ -3686,7 +3686,7 @@ function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut;
 	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
-	
+
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
 
 	// Empty list or "all" means "load complete file set"
@@ -3697,7 +3697,7 @@ function loadLangFile($fileListNames="") {
 	$fileListNames = str_replace(array(";", " "), array(",", ""), $fileListNames);
 	$list = explode(",", $fileListNames);
 
-	// Work on each input file type 
+	// Work on each input file type
 	foreach ($list as $fileListName) {
 		switch ($fileListName) {
 		case "pgv_lang":
@@ -3749,7 +3749,7 @@ function loadLangFile($fileListNames="") {
 		}
 	}
 
-	// Now that the variables have been loaded in the desired language, load the optional 
+	// Now that the variables have been loaded in the desired language, load the optional
 	// "extra.xx.php" file so that they can be over-ridden as desired by the site Admin
 	// For compatibility reasons, we'll first look for optional file "lang.xx.extra.php"
 	//
@@ -3762,9 +3762,9 @@ function loadLangFile($fileListNames="") {
 	if (file_exists($extrafile[$LANGUAGE])) {
 		require $extrafile[$LANGUAGE];
 	}
-	
+
 }
-	
+
 
 /**
  *		Load language variables
@@ -3794,7 +3794,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $DBCONN;
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
-	
+
 	// Make sure we start with a clean slate
 	$pgv_lang = $pgv_lang_self;
 	$countries = array();
@@ -3802,7 +3802,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	$factarray = array();
 	$factAbbrev = array();
 	$faqlist = array();
-	
+
 	if ($forceLoad) {
 		$LANGUAGE = "english";
 		require($pgv_language[$LANGUAGE]);			// Load English
@@ -4002,9 +4002,9 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 /**
  * determines whether the passed in filename is a link to an external source (i.e. contains '://')
  */
-function isFileExternal($file) { 
+function isFileExternal($file) {
 	return strpos($file, '://') !== false;
-} 
+}
 
 // optional extra file
 if (file_exists( "includes/functions.extra.php"))

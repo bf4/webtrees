@@ -22,8 +22,9 @@
  * @package PhpGedView
  * @version $Id$
  */
-if (stristr($_SERVER["SCRIPT_NAME"], "/".basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -350,7 +351,7 @@ class Menu
 	{
 		print $this->getMenu();
 	}
-	
+
 	/**
 	 * returns the number of submenu's in this menu
 	 * @return int
@@ -358,10 +359,10 @@ class Menu
 	function subCount() {
 		return count($this->submenus);
 	}
-	
+
 	/**
 	 * convert an old array style menu to an object
-	 * @static 
+	 * @static
 	 */
 	static function convertMenu($menu) {
 		$conv = array(
@@ -486,7 +487,7 @@ class MenuBar
 			$menu->print_menu = null;
 			return $menu;
 		}
-		
+
 		//-- main menu
 		$menu = new Menu($pgv_lang["mygedview"], "index.php?ctype=user", "down");
 		if (!empty($PGV_IMAGES["mygedview"]["large"]))
@@ -589,7 +590,7 @@ class MenuBar
 			$menu->print_menu = null;
 			return $menu;
 		}
-		
+
 		$ged = $GEDCOM;
 
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
@@ -611,7 +612,7 @@ class MenuBar
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["large"]);
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		}
-		
+
 		// Build a sortable list of submenu items and then sort it in localized name order
 		$menuList = array();
 		$menuList["pedigree"] = $pgv_lang["pedigree_chart"];
@@ -844,7 +845,7 @@ class MenuBar
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["large"]);
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		}
-		
+
 		// Build a sortable list of submenu items and then sort it in localized name order
 		$menuList = array();
 		$menuList["individual"] = $pgv_lang["individual_list"];
@@ -856,7 +857,7 @@ class MenuBar
 		asort($menuList);
 
 		// Produce the submenus in localized name order
-		
+
 		foreach($menuList as $menuType => $menuName) {
 			switch ($menuType) {
 			case "individual":
@@ -1260,7 +1261,7 @@ class MenuBar
 		$menu->addSubmenu($submenu);
 		return $menu;
 	}
-	
+
 	/**
 	 * get the menu with links change to each theme
 	 * @return Menu 	the menu item

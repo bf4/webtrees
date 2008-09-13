@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -69,7 +69,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if ($count==0) $count = rand();
 	$lbwidth = $bwidth*.75;
 	if ($lbwidth < 150) $lbwidth = 150;
-	
+
 	$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
 	$isF=$tmp[$person->getSex()];
 
@@ -136,13 +136,13 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
 					$personlinks .= "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
 				}
-					
+
 				$fams = $person->getSpouseFamilies();
 				/* @var $family Family */
 				foreach($fams as $famid=>$family) {
 					if (!is_null($family)) {
 						$spouse = $family->getSpouse($person);
-							
+
 						$children = $family->getChildren();
 						$num = count($children);
 						if ((!empty($spouse))||($num>0)) {
@@ -285,13 +285,13 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			$imgsize = findImageSize($object["file"]);
 			$imgwidth = $imgsize[0]+50;
 			$imgheight = $imgsize[1]+150;
-		
+
 			//LBox --------  change for Lightbox Album --------------------------------------------
 			if (file_exists("modules/lightbox/album.php")) {
 				$thumbnail .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">";
 			}else
 			// ---------------------------------------------------------------------------------------------
-			
+
 			if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
 				$thumbnail .= "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
 			}else{
@@ -441,9 +441,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-	
+
 	$title = PrintReady(strip_tags($title.$metaTitle), TRUE);
-	
+
 	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
@@ -557,7 +557,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		arrows[3].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"].'";
 	';
 	if (PGV_USER_CAN_EDIT) {
-	
+
 	$javascript .= 'function delete_record(pid, linenum, mediaid) {
 		if (!mediaid) mediaid="";
 		if (confirm(\''.$pgv_lang["check_delete"].'\')) {
@@ -571,7 +571,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		}
 		return false;
 	}
-	
+
 	function deleterepository(pid) {
 		if (confirm(\''.$pgv_lang["confirm_delete_repo"].'\')) {
 			window.open(\'edit_interface.php?action=deleterepo&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
@@ -1203,7 +1203,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 		}
 		$printDone = true;
 	}
-	if ($printDone) $data .= "<br />"; 
+	if ($printDone) $data .= "<br />";
 	if (!$return) print $data;
 	else return $data;
 }
@@ -1774,7 +1774,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if (substr($key,0,1)=='*') {
 					$autoRela = true;
 					$key = substr($key,1);
-					
+
 				}
 				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
 				if ($cr > 0) {
@@ -2217,7 +2217,7 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
 		else {
 			if (($type == "SOUR") || ($type == "REPO")) $factrec = $factarray[0];
 			if (($type == "FAM") || ($type == "INDI")) $factrec = $factarray[1];
-			 
+
 		$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
 		if ($ft>0) {
 			$fact = trim($match[1]);

@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -38,7 +38,7 @@ class Family extends GedcomRecord {
 	var $children = array();
 	var $childrenIds = array();
 	var $marriage = null;
-	var $divorce = null; 
+	var $divorce = null;
 	var $marr_est = false; // estimate
 	var $marr_rec2 = null;
 	var $marr_date2 = null;
@@ -137,7 +137,7 @@ class Family extends GedcomRecord {
 	function &getWife() {
 		return $this->wife;
 	}
-	
+
 	/**
 	 * return the spouse of the given person
 	 * @param Person $person
@@ -149,7 +149,7 @@ class Family extends GedcomRecord {
 		if ($this->husb->equals($person)) return $this->wife;
 		return null;
 	}
-	
+
 	/**
 	 * return the spouse id of the given person id
 	 * @param string $pid
@@ -161,7 +161,7 @@ class Family extends GedcomRecord {
 		if ($this->husb->getXref()==$pid) return $this->wife->getXref();
 		return null;
 	}
-	
+
 	/**
 	 * get the children
 	 * @return array 	array of children Persons
@@ -210,13 +210,13 @@ class Family extends GedcomRecord {
 	 */
 	function getNumberOfChildren() {
 		global $famlist;
-		
+
 		if ($this->numChildren!==false) return $this->numChildren;
 		if (isset($famlist[$this->xref]['numchil'])) {
 			$this->numChildren = $famlist[$this->xref]['numchil'];
-			return $this->numChildren; 
+			return $this->numChildren;
 		}
-		
+
 		$this->numChildren = get_gedcom_value("NCHI", 1, $this->gedrec);
 		if ($this->numChildren!="") return $this->numChildren.".";
 		$this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch);
@@ -307,7 +307,7 @@ class Family extends GedcomRecord {
 		if (is_null($this->marriage)) $this->_parseMarriageRecord();
 		return $this->marriage->getGedcomRecord();
 	}
-	
+
 	function getDivorce() {
 		if (is_null($this->divorce)) $this->_parseMarriageRecord();
 		return $this->divorce;

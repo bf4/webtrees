@@ -22,13 +22,13 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 /*
- * The following routine is designed to produce text to describe the relationship 
+ * The following routine is designed to produce text to describe the relationship
  * between two people.  It's a direct copy of the corresponding English routine, except
  * that the output is NOT converted to lower-case.
  */
@@ -99,7 +99,7 @@ function getRelationshipText_de($relationshipDescription, $node, $pid1, $pid2) {
 			$finished = true;
 			break;
 		}
-		
+
 	}
 	// sanity check
 	if (!$started || !$finished) {
@@ -133,7 +133,7 @@ function getRelationshipText_de($relationshipDescription, $node, $pid1, $pid2) {
 			}
 		}
 	}
-	
+
 
 	if ($relationshipDescription != false) {
 		return $relationshipDescription;

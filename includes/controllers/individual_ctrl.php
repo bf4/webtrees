@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -76,7 +76,7 @@ class IndividualControllerRoot extends BaseController {
 	var $SEX_COUNT = 0;
 	var $sexarray = array();
 	var $tabarray = array("facts","notes","sources","media","relatives","tree","research","map","lightbox");
-	
+
 	/**
 	 * constructor
 	 */
@@ -90,10 +90,10 @@ class IndividualControllerRoot extends BaseController {
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
 		global $USE_QUICK_UPDATE, $pid;
-		
+
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
-		
+
 		$this->sexarray["M"] = $pgv_lang["male"];
 		$this->sexarray["F"] = $pgv_lang["female"];
 		$this->sexarray["U"] = $pgv_lang["unknown"];
@@ -103,7 +103,7 @@ class IndividualControllerRoot extends BaseController {
 		if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
 		$this->pid = clean_input($this->pid);
 		$pid = $this->pid;
-		
+
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
 		$indirec = find_person_record($this->pid);
 //		print_r($indirec);
@@ -385,14 +385,14 @@ class IndividualControllerRoot extends BaseController {
 					$imgheight = $imgsize[1]+150;
 					//Gets the Media View Link Information and Concatenate
 					$mid = $firstmediarec['mid'];
-					
+
 					//LBox --------  addition for Lightbox Album --------------------------------------------
 					$name = $this->indi->getFullName();
 					if (file_exists("modules/lightbox/album.php")) {
 						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 					}else
 					//Lbox -----------------------------------------------------------------------------------------
-					
+
 					if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
 					}else{
@@ -417,11 +417,11 @@ class IndividualControllerRoot extends BaseController {
 	function print_name_record(&$event) {
 		global $pgv_lang, $factarray, $NAME_REVERSE;
 		global $lang_short_cut, $LANGUAGE;
-		
+
 		if (!$event->canShowDetails()) return false;
 		$factrec = $event->getGedComRecord();
 		$linenum = $event->getLineNumber();
-		
+
 		$this->name_count++;
 		print "<td valign=\"top\"";
 		if (preg_match("/PGV_OLD/", $factrec)>0) print " class=\"namered\"";
@@ -487,7 +487,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function print_sex_record(&$event) {
 	   global $pgv_lang, $sex, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	   
+
 	   if (!$event->canShowDetails()) return false;
 	   $sex = $event->getDetail();
 	   if (empty($sex)) $sex = "U";
@@ -991,10 +991,10 @@ class IndividualControllerRoot extends BaseController {
 		}
 	}
 	function getTab($tab) {
-	
+
 // LB Fix for no googlemaps ==========================================================================
 
-		if (file_exists("modules/googlemap/defaultconfig.php")) { 
+		if (file_exists("modules/googlemap/defaultconfig.php")) {
 			$tab_array = array("facts","notes","sources","media","relatives","tree","research","map","lightbox");
 		}else{
 			$tab_array = array("facts","notes","sources","media","relatives","tree","research","lightbox");
@@ -1028,10 +1028,10 @@ class IndividualControllerRoot extends BaseController {
 				break;
 			case "lightbox":
 				$this->print_lightbox_tab();
-				break;				
+				break;
 			case "tree":
 				$this->print_tree_tab();
-				break;		
+				break;
 			default:
 				print "No tab found";
 				break;
@@ -1086,8 +1086,8 @@ class IndividualControllerRoot extends BaseController {
 				if ($value->getTag() == "DEAT") $yetdied = true;
 				if ($value->getTag() == "CREM") $yetdied = true;
 				if ($value->getTag() == "BURI") $yetdied = true;
-				
-				if (!is_null($value->getFamilyId())) {	
+
+				if (!is_null($value->getFamilyId())) {
 					if (!$yetdied) {
 						print_fact($value);
 					}
@@ -1103,7 +1103,7 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		</table>
 		</td>
-				<?php // ==================== Start Details Tab Navigator ======================================== 
+				<?php // ==================== Start Details Tab Navigator ========================================
 				?>
 				<td valign="top">
 				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
@@ -1320,10 +1320,10 @@ class IndividualControllerRoot extends BaseController {
 
 		if (isset($show_full)) $saved_show_full = $show_full;		// We always want to see full details here
 		$show_full = 1;
-				
+
 		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
 		$ABBREVIATE_CHART_LABELS = false;		// Override GEDCOM configuration
-		
+
 
 		if (isset($_COOKIE['elderdate'])) $SHOW_AGE_DIFF = ($_COOKIE['elderdate']);
 		if (!$this->isPrintPreview()) {
@@ -1445,7 +1445,7 @@ class IndividualControllerRoot extends BaseController {
 						$marrrec = get_sub_record(1, "1 MARR", $famrec);
 						if ($marrrec!=$family->getMarriageRecord()) {
 							$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
-							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
+							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false);
 							$styleadd = "blue";
 						}
 					}
@@ -1590,7 +1590,7 @@ class IndividualControllerRoot extends BaseController {
 						$marrrec = get_sub_record(1, "1 MARR", $famrec);
 						if ($marrrec!=$family->getMarriageRecord()) {
 							$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
-							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
+							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false);
 							$styleadd = "blue";
 						}
 					}
@@ -1752,7 +1752,7 @@ class IndividualControllerRoot extends BaseController {
 						$marrrec = get_sub_record(1, "1 MARR", $famrec);
 						if ($marrrec!=$family->getMarriageRecord()) {
 							$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
-							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
+							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false);
 							$styleadd = "blue";
 						}
 					}
@@ -1899,7 +1899,7 @@ class IndividualControllerRoot extends BaseController {
 		<?php } ?>
 		<br />
 		<?php
-		
+
 	$ABBREVIATE_CHART_LABELS = $saved_ABBREVIATE_CHART_LABELS;		// Restore GEDCOM configuration
 	unset($show_full);
 	if (isset($saved_show_full)) $show_full = $saved_show_full;
@@ -1985,7 +1985,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 // -----------------------------------------------------------------------------
-// Functions for Lightbox Album 
+// Functions for Lightbox Album
 // -----------------------------------------------------------------------------
 	/**
 	 * print the lightbox tab, ( which =  getTab8()  )
@@ -1996,23 +1996,23 @@ class IndividualControllerRoot extends BaseController {
 		global $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
-		global $typ2b, $edit ;	
+		global $typ2b, $edit ;
 		global $CONTACT_EMAIL, $pid, $tabno;
 
 		$media_found = false;
 		if (!$this->indi->canDisplayDetails()) {
-			print "<table class=\"facts_table\" cellpadding=\"0\">\n";		
+			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
 			print "<tr><td class=\"facts_value\">";
 			print_privacy_error($CONTACT_EMAIL);
 			print "</td></tr>";
 			print "</table>";
 		}else{
-			if (file_exists("modules/lightbox/album.php")) { 
-				include_once('modules/lightbox/album.php');	
-			}		
+			if (file_exists("modules/lightbox/album.php")) {
+				include_once('modules/lightbox/album.php');
+			}
 		}
 	}
-	
+
 	/**
 	 * include lightbox controller
 	 */
@@ -2025,7 +2025,7 @@ class IndividualControllerRoot extends BaseController {
 
 
 // -----------------------------------------------------------------------------
-// Functions for Census Assistant 
+// Functions for Census Assistant
 // -----------------------------------------------------------------------------
 	/**
 	 * include Census controller

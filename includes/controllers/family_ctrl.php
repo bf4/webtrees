@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -79,7 +79,7 @@ class FamilyRoot extends BaseController
 		$bwidth = $Dbwidth;
 		$pbwidth = $bwidth + 12;
 		$pbheight = $bheight + 14;
-		
+
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
 
@@ -109,7 +109,7 @@ class FamilyRoot extends BaseController
 		$_REQUEST['famid'] = clean_input($_REQUEST['famid']);
 		$this->famid = $_REQUEST['famid'];
 		$this->family = Family::getInstance($this->famid);
-		
+
 		if (empty($this->famrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->famid, $match);
 			if ($ct>0) {
@@ -123,7 +123,7 @@ class FamilyRoot extends BaseController
 				}
 			}
 		}
-		
+
 		//-- if no record was found create a default empty one
 		if (empty($this->family)) {
 			$this->famrec = "0 @".$this->famid."@ FAM\r\n";
@@ -289,7 +289,7 @@ class FamilyRoot extends BaseController
 		asort($menuList);
 
 		// Produce the submenus in localized name order
-		
+
 		foreach($menuList as $menuType => $menuName) {
 			switch ($menuType) {
 			case "parentTimeLine":
@@ -363,7 +363,7 @@ class FamilyRoot extends BaseController
 
 		// edit_fam menu
 		$menu = new Menu($pgv_lang['edit_fam']);
-		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) 
+		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
 			$menu->addOnclick('return edit_raw(\''.$this->getFamilyID().'\');');
 		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");

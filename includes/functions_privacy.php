@@ -26,8 +26,8 @@
  * @subpackage Privacy
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -295,7 +295,7 @@ function displayDetails($indirec) {
 
 //-- allow users to overide functions in privacy file
 if (!function_exists("displayDetailsByID")) {
-	
+
 /**
  * checks if the person has died recently before showing their data
  * @param string $pid	the id of the person to check
@@ -303,7 +303,7 @@ if (!function_exists("displayDetailsByID")) {
  */
 function checkPrivacyByYear($pid) {
 	global $MAX_ALIVE_AGE;
-	
+
 	$cyear = date("Y");
 	$indirec = find_person_record($pid);
 	//-- check death record
@@ -340,11 +340,11 @@ function checkPrivacyByYear($pid) {
 			return false;
 		}
 	}
-	
+
 	return true;
 }
 
-	
+
 /**
  * check if details for a GEDCOM XRef ID should be shown
  *
@@ -367,7 +367,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES;
 	global $indilist, $GEDCOMS, $SQL_LOG, $INDEX_DIRECTORY;
-	
+
 	static $privacy_cache = array();
 
 	if (!$HIDE_LIVE_PEOPLE) return true;
@@ -417,7 +417,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				return false;
 			}
 		}
-		
+
 		if (isset($person_privacy[$pid])) {
 			if ($person_privacy[$pid]>=PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
@@ -432,7 +432,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			if ($cache_privacy) $privacy_cache[$pkey] = true;
 			return true;
 		}
-		
+
 		//-- look for an Ancestral File RESN (restriction) tag
 		if (isset($PRIVACY_BY_RESN) && ($PRIVACY_BY_RESN==true)) {
 			$gedrec = find_gedcom_record($pid);
@@ -447,7 +447,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				}
 			}
 		}
-	
+
 		if (PGV_USER_CAN_ACCESS) {
 			if ($type=="INDI") {
 				$gedrec = find_gedcom_record($pid);
@@ -513,7 +513,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			}
 		}
 	} //-- end the user specif privacy settings
-	
+
 	//-- check the person privacy array for an exception
 	if (isset($person_privacy[$pid])) {
 		if ($person_privacy[$pid]>=PGV_USER_ACCESS_LEVEL) {
@@ -555,7 +555,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				return false;
 			}
 		}
-		
+
 		$gedrec = find_gedcom_record($pid);
 		$disp = is_dead($gedrec);
 		if ($disp) {
@@ -798,7 +798,7 @@ function showFactDetails($fact, $pid) {
 function privatize_gedcom($gedrec) {
 	global $pgv_lang, $factarray, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
-	
+
 	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 	if ($gt > 0) {
 		$gid = trim($gmatch[1]);
@@ -887,7 +887,7 @@ function privatize_gedcom($gedrec) {
 			}
 			//-- if no fact privacy then return the record
 			if (!$resn && !$ppriv && !$gpriv) return $gedrec;
-			
+
 			$newrec = "0 @".$gid."@ $type\r\n";
 			//-- check all of the sub facts for access
 			$subs = get_all_subrecords($gedrec, "", false, false, false);
@@ -955,7 +955,7 @@ function FactEditRestricted($pid, $factrec) {
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
 	}
-	
+
 	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "privacy" || $match[1]=="locked") {
@@ -988,7 +988,7 @@ function FactViewRestricted($pid, $factrec) {
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
 	}
-	
+
 	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "confidential") return true;
