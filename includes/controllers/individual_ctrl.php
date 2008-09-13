@@ -1455,7 +1455,7 @@ class IndividualControllerRoot extends BaseController {
 					</td>
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($date->isOK() || $place) {
+					<?php if ($date && $date->isOK() || $place) {
 						$marr_type = "MARR_".strtoupper($family->getMarriageType());
 						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
 						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
@@ -1600,7 +1600,7 @@ class IndividualControllerRoot extends BaseController {
 					</td>
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($date->isOK() || $place) {
+					<?php if ($date && $date->isOK() || $place) {
 						$marr_type = "MARR_".strtoupper($family->getMarriageType());
 						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
 						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
@@ -1762,7 +1762,7 @@ class IndividualControllerRoot extends BaseController {
 					</td>
 					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($date->isOK() || $place) {
+					<?php if ($date && $date->isOK() || $place) {
 						$marr_type = "MARR_".strtoupper($family->getMarriageType());
 						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
 						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
