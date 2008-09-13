@@ -24,10 +24,14 @@
  * @version $Id$
  * @author Brian Holland
  */
-?>
-<?php
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 	global $LB_AL_HEAD_LINKS, $gedrec;
-	
+
 	require_once("js/prototype.js.htm");
 	require_once("js/scriptaculous.js.htm");
 ?>
@@ -36,18 +40,18 @@
 	function reorder_media() {
 	var win02 = window.open("edit_interface.php?action=reorder_media&pid=<?php print $pid; ?>", "win02", "resizable=1, menubar=0, scrollbars=1, top=20, height=840, width=450 ");
 	if (window.focus) {win02.focus();}
-	}   
+	}
 -->
 </script>
 
 <?php
-	// Find if indi and family associated media exists and then count them ( $tot_med_ct)  
+	// Find if indi and family associated media exists and then count them ( $tot_med_ct)
 	include ('includes/media_reorder_count.php');
 
 	$gedrec = find_gedcom_record($pid);
 	$regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
-	
+
 	// If media exists and is greater than 1 item ---------------------
 	if ($tot_med_ct>1) {
 		print "<table border=\"0\" width=\"100%\"><tr>";

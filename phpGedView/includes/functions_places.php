@@ -24,14 +24,14 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 function get_plac_label() {
 	global $pgv_lang, $factarray;
-	
+
 	$HEAD = find_gedcom_record("HEAD");
 	$HEAD_PLAC = get_sub_record(1, "1 PLAC", $HEAD);
 	$HEAD_PLAC_FORM = get_sub_record(1, "2 FORM", $HEAD_PLAC);
@@ -40,7 +40,7 @@ function get_plac_label() {
 	$plac_label = explode(',', $HEAD_PLAC_FORM);
 	$plac_label = array_reverse($plac_label);
 	if ($HEAD_PLAC_FORM == $pgv_lang["default_form"]) $plac_label[0] = $factarray["CTRY"];
-	
+
 	return $plac_label;
 }
 
@@ -48,12 +48,12 @@ function setup_place_subfields($element_id) {
 	global $pgv_lang, $PGV_PLACES_SETUP;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $lang_short_cut, $LANGUAGE;
 	global $countries, $factarray;
-	
+
 	if (!empty($PGV_PLACES_SETUP)) return;
 	$PGV_PLACES_SETUP = true;
-	
+
 	$plac_label = get_plac_label();
-	
+
 	?>
 	<script language="JavaScript" type="text/javascript">
 	<!--
@@ -223,7 +223,7 @@ function setup_place_subfields($element_id) {
 	}
 	// called when clicking on a new state/region on country map
 	function setPlaceState(txt) {
-		if (txt!='') { 
+		if (txt!='') {
 			document.getElementsByName(element_id+'_PLAC_STAE_div')[0].style.height='32px';
 			document.getElementsByName(element_id+'_PLAC_CNTY_div')[0].style.height='32px';
 		}
@@ -273,7 +273,7 @@ function print_place_subfields($element_id) {
 	//if ($element_id=="DEAT_PLAC") return; // known bug - waiting for a patch
 	$plac_label = get_plac_label();
 	print "<div id='mapdata'></div>";
-	
+
 	$cols=40;
 	print "&nbsp;<a href=\"javascript:;\" onclick=\"expand_layer('".$element_id."_div'); toggleplace('".$element_id."'); return false;\"><img id=\"".$element_id."_div_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" />&nbsp;</a>";
 	print "<br /><div id=\"".$element_id."_div\" style=\"display: none; border-width:thin; border-style:none; padding:0px\">\n";

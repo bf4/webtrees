@@ -25,12 +25,17 @@
  * @author Brian Holland
  */
 
-	include_once("functions_print_facts.php");
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+include_once("functions_print_facts.php");
 
 	print "<br /><b>".$pgv_lang["reorder_media"]."</b>";
 //	print_help_link("reorder_children_help", "qm");
 	print "&nbsp --- &nbsp;" . $pgv_lang["reorder_media_window_title"];
-	
+
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_lang, $pgv_changes, $factarray, $view;
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
@@ -44,7 +49,7 @@
 	?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_media_update" />
-		<input type="hidden" name="pid" value="<?php print $pid; ?>" />  
+		<input type="hidden" name="pid" value="<?php print $pid; ?>" />
 <!--		<input type="hidden" name="option" value="bybirth" /> -->
 
 		<center><p>
@@ -57,14 +62,14 @@
 
 	<?php
 	  print "\n";
-		
+
       if (!showFact("OBJE", $pid)) return false;
       if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
       else $gedrec = find_updated_record($pid);
-	  
+
 	//related=true means show related items
 	$related="true";
-	
+
 	//-- find all of the related ids
 	$ids = array($pid);
 	if ($related) {
@@ -73,7 +78,7 @@
 			$ids[] = trim($match[$i][1]);
 		}
 	}
-	
+
 	//-- If  they exist, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
 	$sort_current_objes = array();
 	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
@@ -88,10 +93,10 @@
 	// -----------------------------------------------------------------------------------------------
 
 	// create ORDER BY list from Gedcom sorted records list  ---------------------------
-	$orderbylist = 'ORDER BY '; // initialize  
+	$orderbylist = 'ORDER BY '; // initialize
 	foreach ($sort_match as $media_id) {
 		$orderbylist .= "m_media='$media_id[1]' DESC, ";
-	}  
+	}
 	$orderbylist = rtrim($orderbylist, ', ');
 	//  print_r($orderbylist);
 	// -----------------------------------------------------------------------------------------------
@@ -108,7 +113,7 @@
 	}
 
 	$media_found = false;
-	
+
 	$sqlmm = "SELECT DISTINCT ";
 	// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
 	// but it may not work for all RDBMS.
@@ -139,12 +144,12 @@
 //      $numm = mysql_num_rows($resmm1);
 
 			while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
-				
+
 				if (isset($foundObjs[$rowm['m_media']])) {
 					if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
 					continue;
 				}
-				
+
 				// NOTE: Determine the size of the mediafile
 				$imgwidth = 300+40;
 				$imgheight = 300+150;
@@ -178,8 +183,8 @@
 					$res = media_reorder_row($rtype, $rowm, $pid);
 					$media_found = $media_found || $res;
 					$foundObjs[$rowm['m_media']] = true;
-					
-//					$media_data = $rowm['m_media']; 
+
+//					$media_data = $rowm['m_media'];
 //					print "<input type=\"hidden\" name=\"order1[$media_data]\" value=\"$j\" />";
 					print "\n\n";
 						//BH Debug

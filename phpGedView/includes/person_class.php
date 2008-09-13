@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -506,7 +506,7 @@ class Person extends GedcomRecord {
 			} else {
 				$this->sex='U';
 			}
-		}	
+		}
 		return $this->sex;
 	}
 
@@ -1191,7 +1191,7 @@ class Person extends GedcomRecord {
 								else if ($rela_sex=="M") $rela="twin_brother";
 							}
 							$factrec.="\n2 ASSO @".$spid."@\n3 RELA *".$rela;
-							
+
 							// add parents on grandchildren, cousin or nephew's birth
 							if ($option=='_GCHI' || $option=='_GGCH' || $option=='_COUS' || $option=='_NEPH') {
 								if ($family->getHusbId()) {
@@ -1267,7 +1267,7 @@ class Person extends GedcomRecord {
 						}
 					}
 				}
-				
+
 				// add children of children = grandchildren
 				if ($option=="_CHIL") {
 					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
@@ -1777,7 +1777,7 @@ class Person extends GedcomRecord {
 			$list=str_replace(array('@N.N.','@P.N.'), array($NN, $PN), $list);
 			$full=str_replace(array('@N.N.','@P.N.'), array($NN, $PN), $full);
 		}
-	
+
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
 		$GIVN=UTF8_strtoupper($givn);

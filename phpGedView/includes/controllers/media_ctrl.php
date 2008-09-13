@@ -27,8 +27,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -45,7 +45,7 @@ class MediaControllerRoot extends IndividualController{
 		if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
 		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
-		
+
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
 
@@ -81,7 +81,7 @@ class MediaControllerRoot extends IndividualController{
 				$this->mediaobject = new Media("0 @"."0"."@ OBJE\n1 FILE ".$filename);
 			}
 		}
-	
+
 		//checks to see if the Media ID ($mid) is set. If the Media ID isn't set then there isn't any information avaliable for that picture the picture doesn't exist.
 		if (isset($mid) && $mid!=false){
 			$mid = clean_input($mid);
@@ -97,7 +97,7 @@ class MediaControllerRoot extends IndividualController{
 		// ways this can happen:
 		//   if user failed to pass in a filename or mid to mediaviewer.php
 		//   if the server did not set the environmental variables correctly for the media firewall
-		//   if media firewall is being called from outside the media directory  
+		//   if media firewall is being called from outside the media directory
 		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @"."0"."@ OBJE");
 
 		//-- perform the desired action
@@ -112,7 +112,7 @@ class MediaControllerRoot extends IndividualController{
 				$this->mediaobject->undoChange();
 				break;
 		}
-		
+
 		if ($this->mediaobject->canDisplayDetails()) {
 			$this->canedit = PGV_USER_CAN_EDIT;
 		}
@@ -215,7 +215,7 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addOnclick($click_link);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-			
+
 			if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
 				$submenu = new Menu($pgv_lang["edit_raw"]);
 				$submenu->addOnclick("return edit_raw('".$this->pid."');");
@@ -362,7 +362,7 @@ class MediaControllerRoot extends IndividualController{
 		$ignore = array("TITL","FILE");
 		if ($this->show_changes=='yes') $ignore = array();
 		else if (PGV_USER_GEDCOM_ADMIN) $ignore = array("TITL");
-		
+
 		$facts = $this->mediaobject->getFacts($ignore);
 		sort_facts($facts);
 		if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
@@ -419,7 +419,7 @@ class MediaControllerRoot extends IndividualController{
 			$size = getLRM() . round($this->mediaobject->getFilesizeraw()/1024, 2)." kb" . getLRM();
 			$facts[] = new Event("1 EVEN ".$size."\r\n2 TYPE file_size");
 		}
-		
+
 		sort_facts($facts);
 		return $facts;
 	}

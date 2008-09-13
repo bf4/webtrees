@@ -23,10 +23,9 @@
  * @subpackage Charts
  * @version $Id$
  */
- 
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -249,7 +248,7 @@ class ClippingsControllerRoot extends BaseController {
 					$filetext = preg_replace("/UTF-8/", "ANSI", $filetext);
 					$filetext = utf8_decode($filetext);
 				}
-					
+
 				for ($i = 0; $i < $ct; $i++) {
 					$clipping = $cart[$i];
 					if ($clipping['gedcom'] == $GEDCOM) {

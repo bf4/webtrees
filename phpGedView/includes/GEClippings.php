@@ -22,8 +22,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -32,11 +32,11 @@ class GEClippings extends GrampsExport {
 /**
  * This function creates a family relation for a person and appends the relation
  * to the person element.
- * 
+ *
  * It searches through the DOMDocument first to see if the person is created,
  * if they are not, the person is created and then the DOMDocument is queried
  * and the persons HLINK is retrieved.
- * 
+ *
  * @param DOMElement $eParent - the parent XML element the date element should be appended to
  * @param GEDCOM record $personRec - the full INDI GEDCOM record of the person that the relation is being created
  * @param int $tag -  the name of the GEDCOM tag (FAMC, FAMS). This is used to allow the same function to work with childin and parent_in_family relations
@@ -48,13 +48,13 @@ class GEClippings extends GrampsExport {
 		$created = false;
 		if ($handle == null && id_in_cart($famid)) {
 			$frec = find_family_record($famid);
-			/* 
+			/*
 			* If the family does not exist and their ID is in the clippings cart,
 			* you must create the family before you can query them in the dom to get
 			* their hlink. The hlink is generated when the person element is created.
 			* This causes overhead creating objects that are never added to the XML file
 			* perhaps there is some other way this can be done reducing the overhead?
-			* 
+			*
 			*/
 			$this->create_family($frec, $famid);
 			$handle = $this->query_dom("./families/family[@id=\"$famid\"]/@handle");
@@ -73,10 +73,10 @@ class GEClippings extends GrampsExport {
 	}
 	/**
 	* Creates the Family element and all of it's child elements, and appends it to the
-	* Families element.  This function will search through the DOMDocument looking 
+	* Families element.  This function will search through the DOMDocument looking
 	* for people in the family. If they are not created yet and they are in the clippings
 	* cart, they will be created and ther hlink added to the family element.
-	* 
+	*
 	* @param string $frec - the full FAM GEDCOM record of the family to be created
 	* @param string $fid = the ID (F1, F2, F3) of the family that is being created
 	*/
@@ -95,13 +95,13 @@ class GEClippings extends GrampsExport {
 			$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
 			if (!isset ($pers) && id_in_cart($id)) {
 				/*
-				 * 
+				 *
 				 * If the person does not exist and their ID is in the clippings cart,
 				 * you must create the person before you can query them in the dom to get
 				 * their hlink. The hlink is generated when the person element is created.
 				 * This causes overhead creating objects that are never added to the XML file
 				 * perhaps there is some other way this can be done reducing the overhead?
-				 * 
+				 *
 				 */
 				$this->create_person(find_person_record($id), $id);
 				$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
@@ -117,13 +117,13 @@ class GEClippings extends GrampsExport {
 			$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
 			if (!isset ($pers) && id_in_cart($id)) {
 				/*
-				 * 
+				 *
 				 * If the person does not exist and their ID is in the clippings cart,
 				 * you must create the person before you can query them in the dom to get
 				 * their hlink. The hlink is generated when the person element is created.
 				 * This causes overhead creating objects that are never added to the XML file
 				 * perhaps there is some other way this can be done reducing the overhead?
-				 * 
+				 *
 				 */
 				$this->create_person(find_person_record($id), $id);
 				$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
@@ -137,7 +137,7 @@ class GEClippings extends GrampsExport {
 			foreach ($this->familyevents as $event) {
 				$this->create_event_ref($eFamily, $frec, $event);
 			}
-			
+
 
 			// Add the <child> element
 			$childrenIds = find_children_in_record($famrec);
@@ -152,7 +152,7 @@ class GEClippings extends GrampsExport {
 				$eChild = $eFamily->appendChild($eChild);
 			}
 			}
-			
+
 
 			if (($note = get_sub_record(1, "1 NOTE", $frec)) != null) {
 				$this->create_note($eFamily, $note, 1);
@@ -169,8 +169,8 @@ class GEClippings extends GrampsExport {
 				$this->create_mediaref($eFamily, $nameSource, 1);
 				$num++;
 			}
-	
-		
+
+
 
 		}
 	}
@@ -178,10 +178,10 @@ class GEClippings extends GrampsExport {
 	/**
 	* Creates the lds_ord element and appends the correct information depending
 	* on the type of lds_ord (Endowment, Sealing, Baptism). If there is a sealing,
-	* the function will search if the family is in the clippings cart and if the 
+	* the function will search if the family is in the clippings cart and if the
 	* family is created or not. If the family is not created yet, it will be created
-	* and added to the DOMDocument 
-	* 
+	* and added to the DOMDocument
+	*
 	* @param $indirec - The full INDI GEDCOM record of the person the lds_ord is being created
 	* @param $eventName - the name of the LDS event (Baptism, Sealing, Endowment, etc...)
 	* @param $eventABV - the event abbreviation in the GEDCOM (ie. SLGC, BAPL, ENDL)
@@ -217,7 +217,7 @@ class GEClippings extends GrampsExport {
 				}
 			}
 
-			// Check to see if the STAT of the ordinance is set and add it to the 
+			// Check to see if the STAT of the ordinance is set and add it to the
 			// <lds_ord> element
 			if (($stat = get_gedcom_value($eventABV . ":STAT", 1, $indirec)) != null) {
 				$eStatus = $this->dom->createElement("status");
@@ -227,20 +227,20 @@ class GEClippings extends GrampsExport {
 			}
 			// If the event is a sealing
 			if ($eventABV == "SLGC") {
-				// Create an instance of person and look for their family record	
+				// Create an instance of person and look for their family record
 				$person = Person :: getInstance($clipping["id"]);
 				$famId = $person->getChildFamilyIds();
 				$famrec = find_family_record($famId[0]);
 				$fid = $famId[0];
 				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
 				if ($handle == null && id_in_cart($fid)) {
-					/* 
+					/*
 					 * If the family does not exist and their ID is in the clippings cart,
 					 * you must create the family before you can query them in the dom to get
 					 * their hlink. The hlink is generated when the person element is created.
 					 * This causes overhead creating objects that are never added to the XML file
 					 * perhaps there is some other way this can be done reducing the overhead?
-					 * 
+					 *
 					 */
 					$this->create_family($famrec, $famId[0]);
 					$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
@@ -272,13 +272,13 @@ class GEClippings extends GrampsExport {
 
 	/**
 	* Creates the Person element and all of it's child elements, and appends it to the
-	* 	People element.  Given the link for certain LDS events to a family, if the Family 
-	* 	has not been previously created, create_family is called to create the family. 
+	* 	People element.  Given the link for certain LDS events to a family, if the Family
+	* 	has not been previously created, create_family is called to create the family.
 	* 	The family relations in the LDS events and in the person element are only created
-	* 	if the family they have a relation with are also included in the clippings cart   
-	* 
+	* 	if the family they have a relation with are also included in the clippings cart
+	*
 	* @param string $personRec - the full INDI GEDCOM record of the person to be created
-	* @param string $personID - the ID (I1, I2, I3) of the person the is being created 
+	* @param string $personID - the ID (I1, I2, I3) of the person the is being created
 	*/
 	function create_person($personRec = "", $personID = "") {
 		global $pgv_lang;
@@ -324,7 +324,7 @@ class GEClippings extends GrampsExport {
 					$surn = $pgv_lang["unknown"];
 				if (empty($givn))
 					$givn = $pgv_lang["unknown"];
-					
+
 				$eFirstName = $this->dom->createElement("first");
 				$etFirstName = $this->dom->createTextNode($givn);
 				$etFirstName = $eFirstName->appendChild($etFirstName);
@@ -344,7 +344,7 @@ class GEClippings extends GrampsExport {
 					$eSuffix = $eName->appendChild($eSuffix);
 				}
 
-				//retrieves name prefix 
+				//retrieves name prefix
 				if (($npfx = get_gedcom_value("NPFX", 2, $nameRec)) != null) {
 					$eTitle = $this->dom->createElement("title");
 					$etTitle = $this->dom->createTextNode($npfx);
@@ -394,10 +394,10 @@ class GEClippings extends GrampsExport {
 			 * where they are a spouse. These relations will only be included
 			 * if the family is also in the clippings cart. Otherwise, the relations
 			 * are simply left out of the XML file.
-			 * 
+			 *
 			 *
 			*create_fam_relation($ePerson,$personRec,"FAMC");
-			*create_fam_relation($ePerson,$personRec,"FAMS");		
+			*create_fam_relation($ePerson,$personRec,"FAMS");
 			*/
 			if (($note = get_sub_record(1, "1 NOTE", $personRec)) != null) {
 				$this->create_note($ePerson, $note, 1);
@@ -416,15 +416,15 @@ class GEClippings extends GrampsExport {
 	/**
 	* Creates the SourceRef element and appends it to the Parent Element.  If the actual Source has not
 	* 	been previously created, this will retrieve the record for that, and create that also.
-	* 
+	*
 	* @param DOMElement $eParent - the parent DOMElement to which the created Note Element is appended
 	* @param string $sourcerefRec - the record containing the reference to a Source
 	* @param int $level - The GEDCOM line level where the SOUR tag may be found
 	*/
 	function create_sourceref($eParent, $sourcerefRec, $level) {
 		if (($sourceID = get_gedcom_value("SOUR", $level, $sourcerefRec)) != null) {
-			
-			
+
+
 			if (id_in_cart($sourceID)) {
 				$eSourceRef = $this->dom->createElement("sourceref");
 				$eSourceRef = $eParent->appendChild($eSourceRef);
@@ -468,9 +468,9 @@ class GEClippings extends GrampsExport {
 
 	/**
 	  * Check if the element is in the cart
-	  * 
+	  *
 	  */
-	
+
 	function items_in_cart($elementName) {
 		$passed = true;
 		$people = $this->dom->getElementsByTagName($elementName);

@@ -29,8 +29,8 @@
  * @subpackage DB
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -1566,7 +1566,7 @@ function search_indis_year_range($startyear, $endyear) {
 	load_people($indis);
 	return $indis;
 }
-	
+
 //-- search through the gedcom records for families
 function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $DBTYPE, $GEDCOMS;
@@ -3344,7 +3344,7 @@ function set_user_setting($user_id, $parameter, $value) {
 	$user_id=$DBCONN->escapeSimple($user_id);
 	$value  =$DBCONN->escapeSimple($value);
 	dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user_id}'");
-	
+
 	global $PGV_USERS_cache;
 	if (isset($PGV_USERS_cache[$user_id])) {
 		unset($PGV_USERS_cache[$user_id]);
@@ -3423,7 +3423,7 @@ function set_user_gedcom_setting($user_id, $ged_id, $parameter, $value) {
 		$tmp_array[$ged_name]=$value;
 	}
 	set_user_setting($user_id, $parameter, serialize($tmp_array));
-	
+
 	global $PGV_USERS_cache;
 	if (isset($PGV_USERS_cache[$user_id])) {
 		unset($PGV_USERS_cache[$user_id]);

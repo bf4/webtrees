@@ -22,8 +22,13 @@
  * @package PhpGedView
  * @author Joel A. Bruce
  * @version $Id$
- * 
+ *
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 require_once("includes/date_class.php");
 
@@ -37,7 +42,7 @@ class Event {
 //	var $notes = array(); //[0..*]: string
 //	var $sourceCitations = array(); //[0..*]: SourceCitation
 //	var $multimediaLinks = array(); //[0..*]: MultimediaLink
-	
+
 	var $lineNumber = null;
 	var $canShow = null;
 	var $canShowDetails = null;
@@ -58,7 +63,7 @@ class Event {
 	var $sortDate = NULL;
 	//-- temporary state variable that can be used by other scripts
 	var $temp = NULL;
-	
+
 	/**
 	 * Get the value for the first given GEDCOM tag
 	 *
@@ -77,11 +82,11 @@ class Event {
 			return $this->values[$code];
 		return NULL;
 	}
-	
+
 	/**
 	 * Parses supplied subrecord to fill in the properties of the class.
 	 * Assumes the level of the subrecord is 1, and that all its associated sub records are provided.
-	 * 
+	 *
 	 * @param string $subrecord
 	 * @param int $lineNumber
 	 * @return Event
@@ -98,15 +103,15 @@ class Event {
 				$this->tag=$match[1];
 		}
 	}
-	
+
 	function setState($s) {
 		$this->state = $s;
 	}
-	
+
 	function getState() {
 		return $this->state;
 	}
-	
+
 	/**
 	 * Check whether or not this event can be shown
 	 *
@@ -122,7 +127,7 @@ class Event {
 		}
 		return $this->canShow;
 	}
-	
+
 	/**
 	 * Check whether or not the details of this event can be shown
 	 *
@@ -138,7 +143,7 @@ class Event {
 		}
 		return $this->canShowDetails;
 	}
-	
+
 	/**
 	 * check whether or not this fact can be edited
 	 *
@@ -154,7 +159,7 @@ class Event {
 		}
 		return $this->canEdit;
 	}
-	
+
 	/**
 	 * The 4 character event type specified by GEDCom.
 	 *
@@ -165,7 +170,7 @@ class Event {
 			$this->type=$this->getValue('TYPE');
 		return $this->type;
 	}
-	
+
 	/**
 	 * The place where the event occured.
 	 *
@@ -177,15 +182,15 @@ class Event {
 		}
 		return $this->place;
 	}
-	
+
 	function getFamilyId() {
 		return $this->getValue("_PGVFS");
 	}
-	
+
 	function getSpouseId() {
 		return $this->getValue("_PGVS");
 	}
-	
+
 	/**
 	 * Get the date object for this event
 	 *
@@ -198,7 +203,7 @@ class Event {
 		if (!$estimate && $this->dest) return null;
 		return $this->date;
 	}
-	
+
 	/**
 	 * Set the date of this event.  This method should only be used to force a date.
 	 *
@@ -208,7 +213,7 @@ class Event {
 		$this->date = $date;
 		$this->dest = true;
 	}
-	
+
 	/**
 	 * The remaining unparsed GEDCom record
 	 *
@@ -217,7 +222,7 @@ class Event {
 	function getGedComRecord() {
 		return $this->gedComRecord;
 	}
-	
+
 	/**
 	 * The line number, or line of occurrence in the GEDCom record.
 	 *
@@ -226,9 +231,9 @@ class Event {
 	function getLineNumber() {
 		return $this->lineNumber;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	function getTag() {
 		return $this->tag;
@@ -240,23 +245,23 @@ class Event {
 	 * @return GedcomRecord
 	 */
 	function getParentObject() {
-		return $this->parentObject;		
+		return $this->parentObject;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	function setParentObject(&$parent) {
 		$this->parentObject = $parent;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	function getDetail() {
 		return $this->detail;
 	}
-	
+
 	/**
 	 * Check whether this fact has information to display
 	 * Checks for a date or a place
@@ -266,7 +271,7 @@ class Event {
 	function hasDatePlace() {
 		return ($this->getDate() || $this->getPlace());
 	}
-	
+
 	function getLabel($abbreviate=false) {
 		global $factarray, $factAbbrev;
 
@@ -275,14 +280,14 @@ class Event {
 				$this->label=$factarray[$this->tag];
 			else
 				$this->label=$this->tag;
-		
+
 		if ($abbreviate)
 			if (isset ($factAbbrev[$this->tag])) return $factAbbrev[$this->tag];
 			else return get_first_letter($this->label);
 		else
 			return $this->label;
 	}
-	
+
 	/**
 	 * Print a simple fact version of this event
 	 *
@@ -290,7 +295,7 @@ class Event {
 	 */
 	function print_simple_fact($return=false) {
 		global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS;
-		
+
 		if (!$this->canShow()) return "";
 		$data = "";
 		if ($this->gedComRecord != "1 DEAT"){
@@ -399,7 +404,7 @@ class Event {
 	 */
 	static function CompareType(&$a, &$b) {
 		global $factsort;
-		
+
 		if (empty($factsort))
 			$factsort=array_flip(array(
 				"BIRT",
@@ -465,7 +470,7 @@ class Event {
 
 		$atag = $a->getTag();
 		$btag = $b->getTag();
-		
+
 		// Events not in the above list get mapped onto one that is.
 		if (!array_key_exists($atag, $factsort))
 			if (preg_match('/^(_(BIRT|MARR|DEAT|BURI)_)/', $atag, $match))

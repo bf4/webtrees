@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
  *
@@ -23,8 +23,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -54,7 +54,7 @@ class PedigreeControllerRoot extends BaseController {
 	var $prevyoffset;
 	var $offsetarray;
 	var $minyoffset;
-	
+
 	/**
 	 * constructor
 	 */
@@ -69,7 +69,7 @@ class PedigreeControllerRoot extends BaseController {
 		global $DEFAULT_PEDIGREE_GENERATIONS, $SHOW_EMPTY_BOXES;
 		global $bwidth, $bheight, $baseyoffset, $basexoffset, $byspacing, $bxspacing;
 		global $TEXT_DIRECTION, $BROWSER_TYPE, $show_full, $talloffset;
-		
+
 		$this->log2 = log(2);
 		if ($this->isPrintPreview()) {
 			$this->show_famlink = false;
@@ -88,10 +88,10 @@ class PedigreeControllerRoot extends BaseController {
 
 		// Validate parameters
 		$this->rootid=check_rootid($this->rootid);
-		
+
 		$this->rootPerson = Person::getInstance($this->rootid);
 		if (is_null($this->rootPerson)) $this->rootPerson = new Person('');
-				
+
 		//-- adjustments for hide details
 		if ($this->show_full==false) {
 			$bheight=30;
@@ -108,22 +108,22 @@ class PedigreeControllerRoot extends BaseController {
 		if ($this->isPrintPreview()) {
 			$baseyoffset -= 20;
 		}
-		
+
 		$this->pbwidth = $bwidth+6;
 		$this->pbheight = $bheight+5;
-		
+
 		$this->treeid = pedigree_array($this->rootid);
 		$this->treesize = pow(2, (int)($this->PEDIGREE_GENERATIONS))-1;
-		
+
 		if (($this->PEDIGREE_GENERATIONS < 5)&&($this->show_full==false)) {
 			$baseyoffset+=($this->PEDIGREE_GENERATIONS*$this->pbheight/2)+50;
 			if ($this->isPrintPreview()) $baseyoffset-=120;
 		}
-		
+
 		if ($this->PEDIGREE_GENERATIONS==3) {
 			$baseyoffset+=$this->pbheight*1.6;
 		}
-		
+
 		// -- this next section will create and position the DIV layers for the pedigree tree
 		$this->curgen = 1;			// -- variable to track which generation the algorithm is currently working on
 		$this->yoffset=0;				// -- used to offset the position of each box as it is generated
@@ -152,7 +152,7 @@ class PedigreeControllerRoot extends BaseController {
 					$parent = floor(($i-1)/2);
 					if ($i%2 == 0) $this->yoffset=$this->yoffset - (($boxspacing/2) * ($this->curgen-1));
 					else $this->yoffset=$this->yoffset + (($boxspacing/2) * ($this->curgen-1));
-		
+
 					$pgen = $this->curgen;
 					while($parent>0) {
 						if ($parent%2 == 0) $this->yoffset=$this->yoffset - (($boxspacing/2) * $pgen);
@@ -187,12 +187,12 @@ class PedigreeControllerRoot extends BaseController {
 			$this->offsetarray[$i]["x"]=$this->xoffset;
 			$this->offsetarray[$i]["y"]=$this->yoffset;
 		}
-		
+
 		//-- collapse the tree if boxes are missing
 		if (!$SHOW_EMPTY_BOXES) {
 			if ($this->PEDIGREE_GENERATIONS>1) $this->collapse_tree(0, 1, 0);
 		}
-		
+
 		//-- calculate the smallest yoffset and adjust the tree to that offset
 		$minyoffset = 0;
 		for($i=0; $i<count($this->treeid); $i++) {
@@ -202,49 +202,49 @@ class PedigreeControllerRoot extends BaseController {
 				}
 			}
 		}
-		
+
 		$ydiff = $baseyoffset+35-$minyoffset;
 		$this->adjust_subtree(0, $ydiff);
-				
+
 		//-- if no father keep the tree off of the pedigree form
 		if (($this->isPrintPreview())&&($this->offsetarray[0]["y"]+$baseyoffset<300)) $this->adjust_subtree(0, 300-($this->offsetarray[0]["y"]+$baseyoffset));
 	}
-	
+
 	/**
 	 * return the title of this page
 	 * @return string	the title of the page to go in the <title> tags
 	 */
 	function getPageTitle() {
 		global $pgv_lang, $GEDCOM;
-		
+
 		$name = $pgv_lang['unknown'];
 		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
 		return $name." ".$pgv_lang["index_header"];
 	}
-	
+
 	function getPersonName() {
 		global $pgv_lang;
-		
+
 		$name = $pgv_lang['unknown'];
 		if (!is_null($this->rootPerson)) $name = $this->rootPerson->getFullName();
 		return $name;
 	}
-	
+
 	function adjust_subtree($index, $diff) {
 		global $offsetarray, $treeid, $PEDIGREE_GENERATIONS, $log2, $talloffset,$boxspacing, $mdiff, $SHOW_EMPTY_BOXES;
 		$f = ($index*2)+1; //-- father index
 		$m = $f+1; //-- mother index
-	
+
 		if (!$SHOW_EMPTY_BOXES && empty($treeid[$index])) return;
 		if (empty($offsetarray[$index])) return;
 		$offsetarray[$index]["y"] += $diff;
 		if ($f<count($treeid)) adjust_subtree($f, $diff);
 		if ($m<count($treeid)) adjust_subtree($m, $diff);
 	}
-	
+
 	function collapse_tree($index, $curgen, $diff) {
 		global $offsetarray, $treeid, $PEDIGREE_GENERATIONS, $log2, $talloffset,$boxspacing, $mdiff, $minyoffset;
-	
+
 		//print "$index:$curgen:$diff<br />\n";
 		$f = ($index*2)+1; //-- father index
 		$m = $f+1; //-- mother index

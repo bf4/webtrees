@@ -27,8 +27,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -1184,7 +1184,7 @@ function format_surname_table($surnames, $type) {
 	$html.='<th style="display:none;">SURN</th>'; // hidden column for sorting surnames
 	$html.='<th class="list_label">';
 	if ($type=='famlist') {
-		$html.=$pgv_lang['spouses']; 
+		$html.=$pgv_lang['spouses'];
 	} else {
 		$html.=$pgv_lang['individuals'];
 	}
@@ -1360,8 +1360,8 @@ function format_surname_list($surnames, $style, $totals) {
 				$first_spfxsurn=$spfxsurn;
 			}
 		}
-		$subhtml='<a href="'.$url.'">'.implode(', ', array_keys($surns)).'</a>'; 
-		
+		$subhtml='<a href="'.$url.'">'.implode(', ', array_keys($surns)).'</a>';
+
 		if ($totals) {
 			$subtotal=0;
 			foreach ($surns as $spfxsurn=>$indis) {
@@ -1369,8 +1369,8 @@ function format_surname_list($surnames, $style, $totals) {
 			}
 			$subhtml.=' ['.$subtotal.']';
 		}
-		$html[]=PrintReady($subhtml);  
-		
+		$html[]=PrintReady($subhtml);
+
 	}
 	switch ($style) {
 	case 1:
@@ -1615,10 +1615,10 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	}
 
 	// Print a final summary message about restricted/filtered facts
-	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days 
+	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days
 
 	$summary = "";
-	
+
 	if ($endjd==client_jd()) {
 		// We're dealing with the Today's Events block
 		if ($private!=0) {
@@ -1628,7 +1628,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		} else if ($filter!=0) {
 			// We lost some output due to filtering for living people
 			if ($output==0) $summary = "none_today_living";
-		} else if ($output==0) $summary = "none_today_all";		
+		} else if ($output==0) $summary = "none_today_all";
 	} else {
 		// We're dealing with the Upcoming Events block
 		if ($private!=0) {
@@ -1639,7 +1639,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			// We lost some output due to filtering for living people
 			if ($output==0) $summary = "no_events_living";
 		} else if ($output==0) $summary = "no_events_all";
-		// If we're only looking at tomorrow, change the messages to refer 
+		// If we're only looking at tomorrow, change the messages to refer
 		// to tomorrow instead of "the next 1 days"
 		if ($summary!="" && $endjd==$startjd) $summary .= "1";
 	}
@@ -1719,10 +1719,10 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	}
 
 	// Print a final summary message about restricted/filtered facts
-	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days 
+	$pgv_lang["global_num1"] = $endjd-$startjd+1;		// This is the number of days
 
 	$summary = "";
-	
+
 	if ($endjd==client_jd()) {
 		// We're dealing with the Today's Events block
 		if ($private!=0) {
@@ -1732,7 +1732,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		} else if ($filter!=0) {
 			// We lost some output due to filtering for living people
 			if ($output==0) $summary = "none_today_living";
-		} else if ($output==0) $summary = "none_today_all";		
+		} else if ($output==0) $summary = "none_today_all";
 	} else {
 		// We're dealing with the Upcoming Events block
 		if ($private!=0) {

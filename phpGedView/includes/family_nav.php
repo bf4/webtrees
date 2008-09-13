@@ -28,6 +28,11 @@
  * @author Brian Holland
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 // -----------------------------------------------------------------------------
 // Function Family Nav for PHPGedView - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
@@ -78,19 +83,19 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
-		
+
 		//-- parent families ---------------------------------------------------------------------------------------------------
 		foreach($families as $famid=>$family) {
 			$label = $this->indi->getChildFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "parents");
 			$styleadd = "";
-			
+
 			?>
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["parent_family"] ?></b></td>
 			</tr>
 			<?php
-			
+
 			if (isset($people["husb"])) {
 				?>
 				<tr>
@@ -109,7 +114,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<?php
 			}
-			
+
 			if (isset($people["wife"])) {
 				?>
 				<tr>
@@ -128,7 +133,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<?php
 			}
-			
+
 			if (isset($people["children"])) {
 				$elderdate = $family->getMarriageDate();
 				foreach($people["children"] as $key=>$child) {
@@ -165,7 +170,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			if ($people){
 				echo "<tr><td><br /></td><td></td></tr>";
 			}
-				
+
 			$styleadd = "";
 			$elderdate = "";
 			if (isset($people["husb"])) {
@@ -179,7 +184,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 						if ($people["husb"]->getLabel() == ".") {
 							print $pgv_lang["stepdad"];
 						}else{
-							print $people["husb"]->getLabel(); 
+							print $people["husb"]->getLabel();
 						}
 						?>
 					</td>
@@ -198,7 +203,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				<?php
 				$elderdate = $people["husb"]->getBirthDate(false);
 			}
-			
+
 			$styleadd = "";
 			if (isset($people["wife"])) {
 				?>
@@ -208,7 +213,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 						if ($people["wife"]->getLabel() == ".") {
 							print $pgv_lang["stepmom"];
 						}else{
-							print $people["wife"]->getLabel(); 
+							print $people["wife"]->getLabel();
 						}
 						?>
 					</td>
@@ -235,7 +240,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
-							print $child->getLabel(); 
+							print $child->getLabel();
 						?>
 					</td>
 					<td class="<?php print $this->getPersonStyle($child); ?>">
@@ -266,7 +271,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["immediate_family"] ?></b></td>
 			</tr>
 		<?php
-			
+
 			//$personcount = 0;
 			$people = $this->buildFamilyList($family, "spouse");
 			if ($this->indi->equals($people["husb"])){
@@ -299,7 +304,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<?php
 			}
-			
+
 			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
 				?>
 				<tr>
@@ -323,7 +328,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<?php
 			}
-			
+
 			$styleadd = "";
 			if (isset($people["children"])) {
 				foreach($people["children"] as $key=>$child) {
@@ -345,11 +350,11 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					<?php
 				}
 			}
-			
+
 		}
 		echo "</table>";
-	 
-	 
+
+
 // -----------------------------------------------------------------------------
 // }
 // -----------------------------------------------------------------------------

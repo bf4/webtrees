@@ -24,9 +24,11 @@
  * @version $Id$
  * @author Brian Holland
  */
-?>
 
-<?php
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 // Find if indi and family associated media exists and then count them ( $tot_med_ct)  ===================================================
 	// Check indi gedcom items
@@ -80,7 +82,7 @@
 		// Get related media item count
 		$ct_db = 0;
 	}
-	
+
 	// Gedcom media count --------------------------------
 	if (isset($current_objes)) {
 		$ct_objs = count($current_objes);

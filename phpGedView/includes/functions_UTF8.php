@@ -23,24 +23,23 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 
 /*
  * Expand the input string into an array of UTF-8 characters
  */
 function UTF8_str_split($text, $splitLen=1) {
 	if (is_array($text)) return $text;		// No action:  input has already been expanded
-	if (is_int($text)) return array(UTF8_chr($text));		// Integer: Convert to UTF8 character  
+	if (is_int($text)) return array(UTF8_chr($text));		// Integer: Convert to UTF8 character
 	$result = array();
 	if ($text=='' || $splitLen<1) return $result;
-	
+
 	$charPos = 0;
 	$textLen = strlen($text);
-	
+
 	while ($charPos<$textLen) {
 		$UTF8_string = '';
 		for ($i=0; ($i<$splitLen && $charPos<$textLen); $i++) {
@@ -76,7 +75,7 @@ function UTF8_ord($char) {
 	$charLen = strlen($char);
 
 	switch ($charLen) {
-	case 1: 
+	case 1:
 		$value = ord($char);
 		break;
 	case 2:
@@ -104,11 +103,11 @@ function UTF8_chr($value) {
 	if ($value<=0x7F) return chr($value);		// values from \x00 to \x7F are returned as single letters
 
 	$value = $value & 0x1FFFFF;		// make sure we don't exceed the range covered by 4-byte sequences
-	
+
 	$mask1 = 0x80;
 	$char = array();
 
-	// Split the input integer into 6-bit chunks.  
+	// Split the input integer into 6-bit chunks.
 	// Emit each chunk except the first as an 8-bit byte with the high-order bit set.
 	while ($value>0x3F) {
 		$char[] = chr(0x80 | ($value & 0x3F));
@@ -333,7 +332,7 @@ function UTF8_strrpos($haystack, $needle, $offset=0) {
 	$needleLen = count($UTF8_needle);
 	if ($offset<=0) $offset += $haystackLen;
 	if ($haystackLen==0 || $needleLen==0 || $offset<0) return false;
-	
+
 	$lastPos = $offset - $needleLen - 1;
 	if ($lastPos>($haystackLen-$needleLen)) return false;
 
@@ -345,7 +344,7 @@ function UTF8_strrpos($haystack, $needle, $offset=0) {
 				break;
 			}
 		}
-		if ($found) break;		
+		if ($found) break;
 	}
 
 	if ($found) return $currPos;
@@ -401,7 +400,7 @@ function UTF8_strncmp($text1, $text2, $maxLen=0) {
 }
 
 
-/* 
+/*
  * Case insensitive comparison of two strings
  */
 function UTF8_strcasecmp($text1, $text2) {

@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -84,7 +84,7 @@ class LifespanControllerRoot extends BaseController {
 	function TimelineRootController() {
 		parent :: BaseController();
 	}
-	
+
 	/**
 	 * Initialization function
 	 */
@@ -98,7 +98,7 @@ class LifespanControllerRoot extends BaseController {
 		$this->currentYear = date("Y");
 		$this->deathMod = 0;
 		$this->endDate = $this->currentYear;
-		
+
 
 		//--new pid
 		$newpid=safe_GET_xref('newpid');
@@ -112,7 +112,7 @@ class LifespanControllerRoot extends BaseController {
 			//-- make sure we have the id from the gedcom record
 			else $newpid = $person->getXref();
 		}
-		
+
 		if (safe_GET('clear', '1')=='1') {
 			unset($_SESSION['timeline_pids']);
 		} else {
@@ -121,7 +121,7 @@ class LifespanControllerRoot extends BaseController {
 
 			if (!empty ($newpid))
 				$this->pids[] = $newpid;
-			
+
 			//-- pids array
 			$pids=safe_GET_xref('pids');
 			if ($pids) {
@@ -129,19 +129,19 @@ class LifespanControllerRoot extends BaseController {
 				if (!empty ($newpid))
 					$this->pids[] = $newpid;
 			}
-	
+
 			//-- gets the immediate family for the individual being added if the include immediate family checkbox is checked.
 			if (safe_GET('addFamily', 'yes')=='yes'){
 				if (isset($newpid)) $this->addFamily($newpid);
 			}
-			
+
 			$remove = safe_GET_xref('remove');
-			
+
 			//-- always start with someone on the chart
 			if (count($this->pids)==0) {
 				$this->pids[] = $this->addFamily(check_rootid(""));
 			}
-			
+
 			//-- limit to a certain place
 			$searchplace=safe_GET('place');
 			if (!empty($searchplace)) {
@@ -150,10 +150,10 @@ class LifespanControllerRoot extends BaseController {
 					$this->pids = $place_pids;
 				}
 			}
-			
-			//-- store the people in the session	
+
+			//-- store the people in the session
 			$_SESSION['timeline_pids'] = $this->pids;
-			
+
 			$beginYear  =safe_GET_integer('beginYear', 0, date('Y')+100, 0);
 			$endYear    =safe_GET_integer('endYear',   0, date('Y')+100, 0);
 			if ($beginYear==0 || $endYear==0) {
@@ -164,11 +164,11 @@ class LifespanControllerRoot extends BaseController {
 						$value = clean_input($value);
 						$this->pids[$key] = $value;
 						$person = Person::getInstance($value);
-								
+
 						if ($person) {
 							$bdate = $person->getEstimatedBirthDate();
 							$ddate = $person->getEstimatedDeathDate();
-								
+
 							//--Checks to see if the details of that person can be viewed
 							if ($bdate->isOK() && $person->canDisplayDetails()) {
 								$this->people[] = $person;
@@ -177,20 +177,20 @@ class LifespanControllerRoot extends BaseController {
 					}
 				}
 			}
-			
-	
+
+
 			//--Finds if the begin year and end year textboxes are not empty
 			else {
 				//-- reset the people array when doing a year range search
 				$this->people = array();
 				//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
 				//the time line
-	
+
 				//Variables to restrict the person boxes to the year searched.
 				//--Searches for individuals who had an even between the year begin and end years
 				$indis = search_indis_year_range($beginYear, $endYear);
 				//--Populates an array of people that had an event within those years
-						
+
 				foreach ($indis as $pid) {
 					if (empty($searchplace) || in_array($pid, $this->pids)) {
 						$person = Person::getInstance($pid);
@@ -206,7 +206,7 @@ class LifespanControllerRoot extends BaseController {
 				}
 				unset($_SESSION['timeline_pids']);
 			}
-			
+
 			//--Sort the arrar in order of being year
 			uasort($this->people, "compare_people");
 				//		print "after sort";
@@ -224,12 +224,12 @@ class LifespanControllerRoot extends BaseController {
 					$this->timelineMinYear=min($this->timelineMinYear, $bdate->gregorianYear());
 					$this->timelineMaxYear=max($this->timelineMaxYear, $ddate->gregorianYear() ? $ddate->gregorianYear() : date('Y'));
 				}
-				
+
 				if($this->timelineMaxYear > $this->currentYear){
-					$this->timelineMaxYear = $this->currentYear;	
+					$this->timelineMaxYear = $this->currentYear;
 				}
-	
-			} 
+
+			}
 			else {
 				// Sets the default timeline length
 				$this->timelineMinYear = date("Y") - 101;
@@ -237,7 +237,7 @@ class LifespanControllerRoot extends BaseController {
 			}
 		}
 	}
-	
+
 	/**
 	 * Add a person and his or her immediate family members to
 	 * the pids array
@@ -247,10 +247,10 @@ class LifespanControllerRoot extends BaseController {
 		if (!empty ($newpid)) {
 			$person = Person::getInstance($newpid);
 			if (is_null($person)) return;
-			$this->pids[] = $newpid; 
+			$this->pids[] = $newpid;
 			$families = $person->getSpouseFamilies();
 			//-- foreach gets the spouse and children of the individual.
-			foreach($families as $famID => $family){ 
+			foreach($families as $famID => $family){
 				if($newpid != $family->getHusbId()) {
 					if ($gen>0) $this->pids[] = addFamily($family->getHusbId(), $gen-1);
 					else $this->pids[] = $family->getHusbId();
@@ -263,7 +263,7 @@ class LifespanControllerRoot extends BaseController {
 				foreach($children as $childID => $child){
 					if ($gen>0) $this->pids[] = addFamily($child->getXref(), $gen-1);
 					else $this->pids[] = $child->getXref();
-				}					
+				}
 			}
 			$families = $person->getChildFamilies();
 			//-- foreach gets the father, mother and sibblings of the individual.
@@ -278,11 +278,11 @@ class LifespanControllerRoot extends BaseController {
 						if ($gen>0) $this->pids[] = addFamily($child->getXref(), $gen-1);
 						else $this->pids[] = $child->getXref();
 					}
-				}					
+				}
 			}
 		}
 	}
-	
+
 	// sets the start year and end year to a factor of 5
 	function ModifyYear($year, $key) {
 		$temp = $year;
@@ -291,7 +291,7 @@ class LifespanControllerRoot extends BaseController {
 				$this->birthMod = ($year % 5);
 				$year = $year - ($this->birthMod);
 				if($temp == $year){
-					$this->modTest = 0;	
+					$this->modTest = 0;
 				}
 				else $this->modTest = 1;
 				break;
@@ -299,10 +299,10 @@ class LifespanControllerRoot extends BaseController {
 				$this->deathMod = ($year % 5);
 				//Only executed if the year needs to be modified
 				if($this->deathMod > 0) {
-					$this->endMod = (5 - ($this->deathMod));		
+					$this->endMod = (5 - ($this->deathMod));
 				}
 				else {
-					$this->endMod = 0;	
+					$this->endMod = 0;
 				}
 				$year = $year + ($this->endMod);
 				break;
@@ -331,13 +331,13 @@ class LifespanControllerRoot extends BaseController {
 		}
 		echo "<div class=\"sublinks_cell\" style=\"text-align: left; position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;\">$newStartYear</div>";
 	}
-	
+
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $top) {
 		global $maxX, $zindex, $pgv_lang, $factarray, $factAbbrev;
-		
+
 		$zindex = count($ar);
-		
+
 		$rows = array();
 		$modFix = 0;
 		if($this->modTest == 1){
@@ -370,7 +370,7 @@ class LifespanControllerRoot extends BaseController {
 			}
 			else if($this->currentsex == "F"){
 				$this->Fcolorindex++;
-				if (!isset($this->femalecolorG[$this->Fcolorindex])) $this->Fcolorindex = 0; 
+				if (!isset($this->femalecolorG[$this->Fcolorindex])) $this->Fcolorindex = 0;
 				$this->femalecolorG[$this->Fcolorindex];
 				$this->Fcolorindex++;
 				if (!isset($this->femalecolorB[$this->Fcolorindex])) $this->Fcolorindex = 0;
@@ -380,7 +380,7 @@ class LifespanControllerRoot extends BaseController {
 			else{
 				$this->color = $this->colors[$this->colorindex];
 			}
-				
+
 			//set start position and size of person-box according to zoomfactor
 			/* @var $value Person */
 				$bdate=$value->getEstimatedBirthDate();
@@ -390,7 +390,7 @@ class LifespanControllerRoot extends BaseController {
 
 				$width = ($deathYear - $birthYear) * $this->zoomfactor;
 				$height = 2 * $this->zoomfactor;
-				
+
 				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
 				if (stristr($value->getFullName(), "starredname"))
 //						$minlength = (strlen($value->getFullName())-34) * $this->zoomfactor;
@@ -409,13 +409,13 @@ class LifespanControllerRoot extends BaseController {
 					$width = 10;
 					$int = $birthYear+1;
 				}
-				
+
 				$lifespan = $birthYear."-";
 				$deathReal = $value->getDeathDate(false)->isOK();
 				$birthReal = $value->getBirthDate(false)->isOK();
-				if ($value->isDead() && $deathReal) $lifespan .= $deathYear; 
+				if ($value->isDead() && $deathReal) $lifespan .= $deathYear;
 				$lifespannumeral = $deathYear - $birthYear;
-				
+
 				//-- calculate a good Y top value
 				$Y = $top;
 				$Z = $zindex;
@@ -445,7 +445,7 @@ class LifespanControllerRoot extends BaseController {
 						}
 					}
 				}
-				
+
 				//Need to calculate each event and the spacing between them
 				// event1 distance will be event - birthyear   that will be the distance. then each distance will chain off that
 
@@ -463,7 +463,7 @@ class LifespanControllerRoot extends BaseController {
 					if (!empty($date)) {
 						$fact = $val->getTag();
 						$yearsin = $date->date1->y-$birthYear;
-						if ($lifespannumeral==0) $lifespannumeral = 1; 
+						if ($lifespannumeral==0) $lifespannumeral = 1;
 						$eventwidth = ($yearsin/$lifespannumeral)* 100; // percent of the lifespan before the event occured used for determining div spacing
 						// figure out some schema
 						$evntwdth = $eventwidth."%";
@@ -474,12 +474,12 @@ class LifespanControllerRoot extends BaseController {
 						$place = $val->getPlace();
 						$trans = $fact;
 						if (isset($factarray[$fact])) $trans = $factarray[$fact];
-						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];  
+						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];
 						if (isset($eventinformation[$evntwdth])) $eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
 						else $eventinformation[$evntwdth]= $fact."-fact,".$trans."<br />\n".strip_tags($date->Display(false,'',NULL, false))." ".$place;
 					}
 				}
-					
+
 				$bdate=$value->getEstimatedBirthDate();
 				$ddate=$value->getEstimatedDeathDate();
 				if ($width > ($minlength +110)) {
@@ -560,7 +560,7 @@ class LifespanControllerRoot extends BaseController {
 					}
 				}
 				$zindex--;
-				
+
 				if ($maxX < $startPos + $width)
 					$maxX = $startPos + $width;
 				if ($maxY < $Y) $maxY = $Y;

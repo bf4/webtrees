@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -138,7 +138,7 @@ class ServiceClient extends GedcomRecord {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Get a record from the remote site
 	 * @param string $remoteid	the id of the record to get
@@ -227,12 +227,12 @@ if ($this->DEBUG) {
 				$newrecs[] = $orig_subrec;
 			}
 		}
-		
+
 		//-- start with the first line from the local record
 		$pos1 = strpos($record1, "\n1");
 		if ($pos1!==false) $localrec = substr($record1, 0, $pos1+1);
 		else $localrec = $record1;
-		
+
 		//-- update the type of the remote record
 		$ct = preg_match("/0 @(.*)@ (\w*)/", $record2, $match);
 		if ($ct>0) $localrec = preg_replace("/0 @(.*)@ (\w*)/", "0 @$1@ ".trim($match[2]), $localrec);
@@ -298,11 +298,11 @@ if ($this->DEBUG) print "In UpdateFamily()<br />";
 				return $record1;
 			}
 		}
-		
+
 		//-- remove all remote family links added in _merge() so that we can add them back in if we need to
 		$record1 = preg_replace("/\d FAM[SC] @".$this->xref.":[\w\d]+@\r?\n/", "", $record1);
 //		print "[<pre>$record1</pre>]";
-		
+
 		//debug_print_backtrace();
 		// holds the arrays of the current individual Familys
 		$List1FamilyChildID = find_families_in_record($record1, "FAMC");
@@ -323,7 +323,7 @@ if ($this->DEBUG) print "In UpdateFamily()<br />";
 			}
 		}
 		elseif(empty($List2FamilyChildID)){
-			//-- nothing to do if there are no remote families  
+			//-- nothing to do if there are no remote families
 		}
 		else{
 			// Creating the first family
@@ -421,7 +421,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 			$famrec2 = $this->getRemoteRecord($remoteid);
 		}
 		else return $famrec1;
-		
+
 		// Creating the familys from the xref
 		$family1 = Family::getInstance($Family1);
 		$family2 = new Family($famrec2);
@@ -488,7 +488,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 				}
 			}
 		}
-		
+
 		//-- update the family record
 		if (preg_match("/1 RFN ".$this->xref.":/", $famrec1)==0) {
 			$famrec1 .= "\r\n1 RFN ".$family2->getXref();
@@ -651,7 +651,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 		}
 		else { return true; }
 	}
-	
+
 	/**
 	 * set two ids in the same person
 	 * @param string $local	The local id
@@ -659,7 +659,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	 */
 	static function setSameId($local, $remote) {
 		global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
-		
+
 		if ($local == $remote) {
 			debug_print_backtrace();
 			return;
@@ -671,7 +671,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 			$res = dbquery($sql);
 		}
 	}
-	
+
 	/**
 	 * Compares to see if two people are the same, and it returns true if they are, but
 	 * false if they are not. It only compares the name, sex birthdate, and deathdate
@@ -786,7 +786,7 @@ if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 			include_once("includes/functions_edit.php");
 			if ($this->DEBUG) print $localrec."<b>$gedrec</b>";
 			$localrec = $this->UpdateFamily($localrec,$gedrec);
-		if ($this->DEBUG) print "post updatefamily<pre>".$localrec."</pre>Whynot?";	
+		if ($this->DEBUG) print "post updatefamily<pre>".$localrec."</pre>Whynot?";
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0)
 			{
@@ -813,7 +813,7 @@ if ($this->DEBUG) print_r($result);
 			$gedrec = $result;
 			$gedrec = preg_replace("/@([^#@\s]+)@/", "@".$this->xref.":$1@", $gedrec);
 			$gedrec = $this->checkIds($gedrec);
-			
+
 			$localrec = $this->_merge($localrec, $gedrec);
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0)

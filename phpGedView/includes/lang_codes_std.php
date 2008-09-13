@@ -5,8 +5,8 @@
  * @subpackage Languages
  * @version $Id$
  *
- * RFC1766 (HTML language codes) refers to ISO standard 639, and specifies that the 
- * 2-character language code of the ISO standard should be used, and that an ISO 
+ * RFC1766 (HTML language codes) refers to ISO standard 639, and specifies that the
+ * 2-character language code of the ISO standard should be used, and that an ISO
  * standard country code can be used as a suffix to the two-character major language
  * code to produce regional variants.  For example, en-us for the English (US) variant.
  *
@@ -16,13 +16,13 @@
  * See Library of Congress http://www.loc.gov/standards/iso639-2/langcodes.html
  *
  */
- 
+
 /**
  * This table lists various languages and an appropriate flag for that language.
  * The key field is the abbreviation, internal to PhpGedView, for the language.
  *
  * The abbreviations are used when a new language is to be implemented in PhpGedView.
- * For example, the abbreviation for "Croatian" is "hr".  This means that the various 
+ * For example, the abbreviation for "Croatian" is "hr".  This means that the various
  * files within PhpGedView that are specific to Croatian would have .hr. as the last
  * part of the file name, and the Croatian flag would be croatia.gif.
  *
@@ -34,8 +34,8 @@
  *
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -226,8 +226,8 @@ $lng_codes["zu"]    = array("Zulu", "South Africa");
  * This table provides the list of browser languages that are handled by the same
  * basic language code.  Essentially, it's a list of code synonyms.
  *
- * For example, language code "de" (German) also applies to language code "de-at" 
- * (German, Austria), "de-ch" (German, Switzerland), "de-de" (German, Germany) "de-li" 
+ * For example, language code "de" (German) also applies to language code "de-at"
+ * (German, Austria), "de-ch" (German, Switzerland), "de-de" (German, Germany) "de-li"
  * (German, Liechtenstein), and "de-lu" (German, Luxemburg).
  *
  * If a given language code isn't in the list, that language doesn't have any
@@ -235,7 +235,7 @@ $lng_codes["zu"]    = array("Zulu", "South Africa");
  * any synonym codes for Welsh.
  *
  */
- 
+
 $lng_synonyms["ar"]	= "ar-ae;ar-bh;ar-dz;ar-eg;ar-iq;ar-jo;ar-kw;ar-lb;ar-ly;ar-ma;ar-om;ar-qa;ar-sa;ar-sy;ar-tn;ar-ye;";
 $lng_synonyms["zh"]	= "zh-cn;zh-hk;zh-mo;zh-sg;zh-tw;";
 $lng_synonyms["nl"]	= "nl-be;";

@@ -25,6 +25,11 @@
  * @author Brian Holland
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 /**
  * print a media row in a table
  * @param string $rtype whether this is a 'new', 'old', or 'normal' media row... this is used to determine if the rows should be printed with an outline color
@@ -40,11 +45,11 @@
     global $SEARCH_SPIDER;
     global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $mediaType;
-	
+
 	if (!isset($rowm)) {
 		$rowm=$row;
 	}
-	print "<li class=\"facts_value\" style=\"list-style:none;cursor:move;margin-bottom:2px;\" id=\"li_" . $rowm['m_media'] . "\" >";	
+	print "<li class=\"facts_value\" style=\"list-style:none;cursor:move;margin-bottom:2px;\" id=\"li_" . $rowm['m_media'] . "\" >";
 
     //print $rtype." ".$rowm["m_media"]." ".$pid;
     if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
@@ -55,7 +60,7 @@
     $styleadd="";
     if ($rtype=='new') $styleadd = "change_new";
     if ($rtype=='old') $styleadd = "change_old";
-	
+
     // NOTE Start printing the media details
     $thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
     // $isExternal = stristr($thumbnail,"://");
@@ -73,7 +78,7 @@
         if (!empty($subtitle)) $mediaTitle = $subtitle;
             $mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
         if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
-		
+
 		print "\n" . "<table class=\"pic\"><tr>" . "\n";
 		print "<td width=\"80\" valign=\"top\" align=\"center\" >". "\n";
 		print "<img src=\"".$thumbnail."\" height=\"38\" border=\"0\" " ;
@@ -84,7 +89,7 @@
 			}else{
 				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
 			}
-		
+
 			//print media info
 			$ttype2 = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 			if ($ttype2>0) {
@@ -92,14 +97,14 @@
 				$varName = "TYPE__".strtolower($mediaType);
 				if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
 //			print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
-			}			
+			}
 
 			print "\n" . "</td><td>&nbsp;</td>" . "\n";
 			print "<td valign=\"top\" align=\"left\">";
 			//print "<font color=\"blue\">";
 			print $rowm['m_media'];
 			//print "</font>";
-			
+
 			print "<b>";
 			print "&nbsp;&nbsp;" . $mediaType;
 			print "</b>";
@@ -117,9 +122,9 @@
 	}else{
 		$j=$j;
 	}
-	$media_data = $rowm['m_media']; 
+	$media_data = $rowm['m_media'];
 	print "<input type=\"hidden\" name=\"order1[$media_data]\" value=\"$j\" />";
-	
+
     print "</li>";
     print "\n\n";;
     return true;

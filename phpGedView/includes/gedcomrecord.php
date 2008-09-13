@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -207,7 +207,7 @@ class GedcomRecord {
 	function isRemote() {
 		if (is_null($this->rfn)) $this->rfn = get_gedcom_value("RFN", 1, $this->gedrec);
 		if (empty($this->rfn) || $this->xref!=$this->rfn) return false;
-		
+
 		$parts = explode(':', $this->rfn);
 		if (count($parts)==2) {
 			return true;
@@ -253,7 +253,7 @@ class GedcomRecord {
 		}
 		return $url;
 	}
-	
+
 	/**
 	 * Get the title that should be used in the link
 	 * @return string
@@ -336,7 +336,7 @@ class GedcomRecord {
 		if (is_null($this->disp)) $this->disp = displayDetailsById($this->xref, $this->type);
 		return $this->disp;
 	}
-	
+
 	/**
 	 * get the URL to link to a place
 	 * @string a url that can be used to link to placelist
@@ -379,7 +379,7 @@ class GedcomRecord {
 	function getName() {
 		return get_gedcom_value("NAME", 1, $this->gedrec);
 	}
-	
+
 	// Convert a name record into sortable and listable versions.  This default
 	// should be OK for simple record types.  INDI records will need to redefine it.
 	function _addName($type, $value, $gedrec) {
@@ -702,7 +702,7 @@ class GedcomRecord {
 			else $factrec .= "\n".$line;
 		}
 	}
-	
+
 	/**
 	 * Merge the facts from another GedcomRecord object into this object
 	 * for generating a diff view
@@ -778,10 +778,10 @@ class GedcomRecord {
 		$chan = $this->getChangeEvent();
 
 		if (is_null($chan))	return '&nbsp;';
-		
+
 		$chan_user = $chan->getValue("_PGVU");
 		if (empty($chan_user)) return '&nbsp;';
-		
+
 		return $chan_user;
 	}
 }

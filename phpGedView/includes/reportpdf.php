@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -42,11 +42,11 @@ require_once("tcpdf/tcpdf.php");
  */
 class PGVReport extends PGVReportBase {
 	var $pdf;
-	
+
 	function setup($pw, $ph, $pageSize, $o, $m, $showGenText=true) {
 		global $pgv_lang;
 		parent::setup($pw, $ph, $pageSize, $o, $m, $showGenText);
-		
+
 		if (empty($this->pageFormat)) {		//-- send a custom size
 			$this->pdf = new PGVRPDF($this->orientation, 'pt', array($pw*72,$ph*72));
 		} else {							//-- send a known size
@@ -56,7 +56,7 @@ class PGVReport extends PGVReportBase {
 		$this->pdf->setMargins($m, $m);
 		$this->pdf->SetCompression(true);
 		$this->pdf->setReport($this);
-		
+
 		if ($showGenText) {
 			$element = new PGVRCellPDF(0,10, "C", "");
 			$element->addText("$pgv_lang[generated_by] ".PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT);
@@ -89,7 +89,7 @@ class PGVReport extends PGVReportBase {
 		if ($download=="") $this->pdf->Output();
 		else $this->pdf->Output("pgv_report_".basename($_REQUEST["report"], ".xml").".pdf", "D");
 	}
-	
+
 	function getStyle($s) {
 		if (!isset($this->PGVRStyles[$s])) {
 			$s = $this->pdf->getCurrentStyle();
@@ -110,35 +110,35 @@ class PGVReport extends PGVReportBase {
 	function clearPageHeader() {
 		$this->pdf->clearPageHeader();
 	}
-	
+
 	function createCell($width, $height, $align, $style, $top=".", $left=".") {
 		return new PGVRCellPDF($width, $height, $align, $style, $top, $left);
 	}
-	
+
 	function createTextBox($width, $height, $border, $fill, $newline, $left=".", $top=".", $pagecheck="true") {
 		return new PGVRTextBoxPDF($width, $height, $border, $fill, $newline, $left, $top, $pagecheck);
 	}
-	
+
 	function createText($style, $color) {
 		return new PGVRTextPDF($style, $color);
 	}
-	
+
 	function createFootnote($style="") {
 		return new PGVRFootnotePDF($style);
 	}
-	
+
 	function createPageHeader() {
 		return new PGVRPageHeaderPDF();
 	}
-	
+
 	function createImage($file, $x, $y, $w, $h) {
 		return new PGVRImagePDF($file, $x, $y, $w, $h);
 	}
-	
+
 	function createLine($x1, $y1, $x2, $y2) {
 		return new PGVRLinePDF($x1, $y1, $x2, $y2);
 	}
-	
+
 	function createHTML($tag, $attrs) {
 		return new PGVRHtmlPDF($tag, $attrs);
 	}
@@ -216,7 +216,7 @@ class PGVRPDF extends TCPDF {
 			//print ($this->GetY() + $element->getFootnoteHeight($this)).">".$this->getPageHeight();
 			if (($this->GetY() + $element->getFootnoteHeight($this)) > $this->getPageHeight()) $this->AddPage();
 			$element->renderFootnote($this);
-			
+
 			if ($this->GetY() > $this->getPageHeight()) $this->AddPage();
 		}
 	}
@@ -325,11 +325,11 @@ $PGVReportRoot = $pgvreport;
  * Cell element
  */
 class PGVRCellPDF extends PGVRCell {
-	
+
 	function PGVRCellPDF($width, $height, $align, $style, $top=".", $left=".") {
 		parent::PGVRCell($width, $height, $align, $style, $top, $left);
 	}
-	
+
 	function render(&$pdf) {
 		global $TEXT_DIRECTION, $embed_fonts;
 		/* -- commenting out because it causes too many problems
@@ -358,24 +358,24 @@ class PGVRCellPDF extends PGVRCell {
  * Cell element
  */
 class PGVRHtmlPDF extends PGVRHtml {
-	
+
 	function PGVRHtmlPDF($tag, $attrs) {
 		parent::PGVRHtml($tag, $attrs);
 	}
-	
+
 	function render(&$pdf, $sub = false) {
 		global $TEXT_DIRECTION, $embed_fonts;
 		//print "[".$this->text."] ";
 
 		if (!empty($this->attrs['pgvrstyle'])) $pdf->setCurrentStyle($this->attrs['pgvrstyle']);
 		if (!empty($this->attrs['width'])) $this->attrs['width'] *= 3.9;
-		
+
 		$this->text = $this->getStart().$this->text;
 		foreach($this->elements as $k=>$element) {
 			if (is_string($element) && $element=="footnotetexts") $pdf->Footnotes();
 			else if (is_string($element) && $element=="addpage") $pdf->AddPage();
 			else if ($element->get_type()=='PGVRHtml') {
-//				$this->text .= $element->getStart(); 
+//				$this->text .= $element->getStart();
 				$this->text .= $element->render($pdf, true);
 			}
 			else $element->render($pdf);
@@ -392,11 +392,11 @@ class PGVRHtmlPDF extends PGVRHtml {
  * TextBox element
  */
 class PGVRTextBoxPDF extends PGVRTextBox {
-	
+
 	function PGVRTextBoxPDF($width, $height, $border, $fill, $newline, $left=".", $top=".", $pagecheck="true") {
 		parent::PGVRTextBox($width, $height, $border, $fill, $newline, $left, $top, $pagecheck);
 	}
-	
+
 	function render(&$pdf) {
 		global $lastheight;
 
@@ -561,7 +561,7 @@ class PGVRTextPDF extends PGVRText {
 	function PGVRTextPDF($style, $color) {
 		parent::PGVRText($style, $color);
 	}
-	
+
 	function render(&$pdf, $curx=0) {
 		global $embed_fonts;
 		$pdf->setCurrentStyle($this->styleName);
@@ -636,7 +636,7 @@ class PGVRTextPDF extends PGVRText {
 								$wrapwidth = $this->wrapWidth2;
 							}
 						}
-						
+
 						$newtext .= "\n";
 					}
 					else {
@@ -665,7 +665,7 @@ class PGVRFootnotePDF extends PGVRFootnote {
 	var $styleName;
 	var $addlink;
 	var $num;
-	
+
 	function PGVRFootnotePDF($style="") {
 		parent::PGVRFootnote($style);
 	}
@@ -704,7 +704,7 @@ class PGVRFootnotePDF extends PGVRFootnote {
 		$pdf->SetLink($this->addlink, -1);
 		$pdf->Write($pdf->getCurrentStyleHeight(),$this->num.". ".$temptext."\n\n");
 	}
-	
+
 	function getFootnoteHeight(&$pdf) {
 		$ct = substr_count($this->text, "\n");
 		if ($ct>0) $ct+=1;
@@ -719,7 +719,7 @@ class PGVRFootnotePDF extends PGVRFootnote {
  * PageHeader element
  */
 class PGVRPageHeaderPDF extends PGVRPageHeader {
-	
+
 	function PGVRPageHeaderPDF() {
 		parent::PGVRPageHeader();
 	}
@@ -735,11 +735,11 @@ class PGVRPageHeaderPDF extends PGVRPageHeader {
  * image element
  */
 class PGVRImagePDF extends PGVRImage {
-	
+
 	function PGVRImagePDF($file, $x, $y, $w, $h) {
 		parent::PGVRImage($file, $x, $y, $w, $h);
 	}
-	
+
 	function render(&$pdf) {
 		global $lastpicbottom, $lastpicpage, $lastpicleft, $lastpicright;;
 		if ($this->x==0) $this->x=$pdf->GetX();
@@ -772,11 +772,11 @@ class PGVRImagePDF extends PGVRImage {
  * line element
  */
 class PGVRLinePDF extends PGVRLine {
-	
+
 	function PGVRLinePDF($x1, $y1, $x2, $y2) {
 		parent::PGVRLine($x1, $y1, $x2, $y2);
 	}
-	
+
 	function render(&$pdf) {
 		if ($this->x1==".") $this->x1=$pdf->GetX();
 		if ($this->y1==".") $this->y1=$pdf->GetY();

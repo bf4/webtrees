@@ -27,10 +27,12 @@
 
 // The variables in this file are used to glue together other var's in the help_text.xx.php
 // Do NOT put any var's, that need to be translated, in this file
-if (strstr($_SERVER["SCRIPT_NAME"],"help_text_vars")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 loadLangFile("pgv_confighelp");
 
 $pgv_lang["help_manageservers.php"]	= "#pgv_lang[help_managesites]#";

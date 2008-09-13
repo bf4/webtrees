@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -76,7 +76,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
-	
+
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
 
@@ -417,7 +417,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
-//			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];			
+//			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];
 			if ($ct>0) print " - ".$factarray["_PGVU"].": ".$match[1];
 			// -- Find RESN tag
 			if (isset($resn_value)) {
@@ -473,7 +473,7 @@ function print_fact(&$eventObj, $noedit=false) {
 					if (!in_array($factref, $special_facts)) {
 						if (isset($factarray[$factref])) $label = $factarray[$factref];
 						else $label = $factref;
-						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) 
+						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif"))
 							//print $eventObj->Icon().' '; // print incorrect fact icon !!!
 							print "<img src=\"{$PGV_IMAGE_DIR}/facts/".$factref.".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
 						else print "<span class=\"label\">".$label.": </span>";
@@ -616,7 +616,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 			$data .= print_fact_notes($srec, $nlevel, false, true);
 			$data .= "</div>";
 			$data .= "</div>";
-			
+
 			$printDone = true;
 		}
 	}
@@ -658,7 +658,7 @@ function print_media_links($factrec, $level,$pid='') {
 			$thumbnail = thumbnail_file($mainMedia, true, false, $pid);
 			$isExternal = isFileExternal($row["m_file"]);
 			$mediaTitle = $row["m_titl"];
-			
+
 			// Determine the size of the mediafile
 			$imgsize = findImageSize($mainMedia);
 			$imgwidth = $imgsize[0]+40;
@@ -667,9 +667,9 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($objectNum > 0) print "<br clear=\"all\" />";
 				print "<table><tr><td>";
 				if ($isExternal || media_exists($thumbnail)) {
-				
+
 					//LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
+					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) {
 						$name = trim($row["m_titl"]);
 							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
@@ -678,7 +678,7 @@ function print_media_links($factrec, $level,$pid='') {
 					}else{
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
-					
+
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"" . PrintReady($mediaTitle) . "\"";
@@ -888,10 +888,10 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $factarray, $view;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
 	if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) return;
-	
+
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
-	
+
 	$nlevel = $level+1;
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
@@ -999,14 +999,14 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	}
 }
 
-/** 
+/**
  *	Print SOUR structure
  *
- *  This function prints the input array of SOUR sub-records built by the 
+ *  This function prints the input array of SOUR sub-records built by the
  *  getSourceStructure() function.
  *
  *  The input array is defined as follows:
- *	$textSOUR["PAGE"] = +1  Source citation	
+ *	$textSOUR["PAGE"] = +1  Source citation
  *	$textSOUR["EVEN"] = +1  Event type
  *	$textSOUR["ROLE"] = +2  Role in event
  *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
@@ -1055,7 +1055,7 @@ function printSourceStructure($textSOUR) {
  * Extract SOUR structure from the incoming Source sub-record
  *
  *  The output array is defined as follows:
- *	$textSOUR["PAGE"] = +1  Source citation	
+ *	$textSOUR["PAGE"] = +1  Source citation
  *	$textSOUR["EVEN"] = +1  Event type
  *	$textSOUR["ROLE"] = +2  Role in event
  *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
@@ -1125,10 +1125,10 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
-	
+
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
-	
+
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
 	if ($ct>0) $styleadd="change_new";
@@ -1266,7 +1266,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
 	$ids = array($pid);
-	
+
 	//-- find all of the related ids
 	if ($related) {
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -1274,7 +1274,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			$ids[] = trim($match[$i][1]);
 		}
 	}
-	
+
 	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
 	$sort_current_objes = array();
 	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
@@ -1289,13 +1289,13 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	// -----------------------------------------------------------------------------------------------
 
 	// create ORDER BY list from Gedcom sorted records list  ---------------------------
-	$orderbylist = 'ORDER BY '; // initialize  
+	$orderbylist = 'ORDER BY '; // initialize
 	foreach ($sort_match as $id) {
 		$orderbylist .= "m_media='$id[1]' DESC, ";
-	}  
+	}
 	$orderbylist = rtrim($orderbylist, ', ');
 	// -----------------------------------------------------------------------------------------------
-	
+
 	//-- get a list of the current objects in the record
 	$current_objes = array();
 	if ($level>0) $regexp = "/".$level." OBJE @(.*)@/";
@@ -1323,7 +1323,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
-	
+
 	// LBox --- media sort -------------------------------------
 	if ($sort_ct>0) {
 		$sqlmm .= $orderbylist;
@@ -1331,7 +1331,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		$sqlmm .= " ORDER BY mm_gid DESC ";
 	}
 	// ---------------------------------------------------------------
-	
+
 	$resmm = dbquery($sqlmm);
 	$foundObjs = array();
 	while($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1466,7 +1466,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
-		
+
 	$styleadd="";
 	if ($rtype=='new') $styleadd = "change_new";
 	if ($rtype=='old') $styleadd = "change_old";
@@ -1537,7 +1537,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
 //LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
+					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) {
 					$name = trim($rowm["m_titl"]);
 					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 // ---------------------------------------------------------------------------------------------

@@ -26,8 +26,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -407,7 +407,7 @@ function hasLTRText($text) {
  * and by the GD library (the Circle Diagram).
  *
  * Note 1: Numbers must always be rendered LTR, even when the rest of the text is RTL.
- * Note 2: The visual direction of paired characters such as parentheses, brackets, directional 
+ * Note 2: The visual direction of paired characters such as parentheses, brackets, directional
  *         quotation marks, etc. must be reversed so that the appearance of the RTL text is preserved.
  */
 function reverseText($text) {

@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -37,7 +37,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
  */
 function loadCachedBlock($block, $index) {
 	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
-	
+
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
 
@@ -62,7 +62,7 @@ function loadCachedBlock($block, $index) {
 			$checktime = ($cacheLife*24*60*60);
 			$modtime = $modtime+$checktime;
 			if ($modtime<time()) return false;
-		}		
+		}
 		return @readfile($fname);
 	}
 	return false;
@@ -77,7 +77,7 @@ function loadCachedBlock($block, $index) {
  */
 function saveCachedBlock($block, $index, $content) {
 	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
-	
+
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
 
@@ -89,7 +89,7 @@ function saveCachedBlock($block, $index, $content) {
 	if (isset($block[1]['cache'])) $cacheLife = $block[1]['cache'];
 	else if (isset($PGV_BLOCKS[$block[0]]['config']['cache'])) $cacheLife = $PGV_BLOCKS[$block[0]]['config']['cache'];
 	if ($cacheLife==0) return false;
-	
+
 	$fname = $INDEX_DIRECTORY."/cache";
 	@mkdir($fname);
 	//--many people are not going to like automatically setting the permissions
@@ -118,7 +118,7 @@ function saveCachedBlock($block, $index, $content) {
  */
 function clearCache() {
 	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
-	
+
 	foreach($lang_short_cut as $key=>$value) {
 		$fname = $INDEX_DIRECTORY."/cache/".$value."/".$GEDCOM;
 		if (file_exists($fname)) {
@@ -128,7 +128,7 @@ function clearCache() {
 			}
 		}
 	}
-	
+
 	if (file_exists($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php")) {
 		@unlink($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php");
 	}

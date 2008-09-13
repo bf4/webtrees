@@ -24,37 +24,37 @@
  * @version $Id$
  */
  /*
- * This is a sample customizable menu, with sub-menus, that will appear in the top links of each 
+ * This is a sample customizable menu, with sub-menus, that will appear in the top links of each
  * page.
  *
  * To make this menu appear between the Search and the Help menus at the top of each page, this
- * file needs to be named "optional_menu.php".  Furthermore, the individual menu and sub-menu 
- * entries need to be valid.  You can remove the extra comments but, for copyright reasons, the 
+ * file needs to be named "optional_menu.php".  Furthermore, the individual menu and sub-menu
+ * entries need to be valid.  You can remove the extra comments but, for copyright reasons, the
  * first comment block at the top of this file should be retained.
  *
  * Please note:
  * This menu is NEVER visible when a Search robot is accessing the site.  This is controlled by
  * "includes/menu.php".
  *
- * Use the code in "includes/menu.php" as a guide to how valid menus and sub-menus should be 
+ * Use the code in "includes/menu.php" as a guide to how valid menus and sub-menus should be
  * constructed.
  */
  /*
- * Explanation of the '$menu = new Menu("whatever 1", "whatever 2")' and 
+ * Explanation of the '$menu = new Menu("whatever 1", "whatever 2")' and
  * '$submenu = new Menu("whatever 1", "whatever 2")'line:
  *	'whatever 1' is the text that is to appear for this sub-menu entry.  If you code this as
  *		shown, the text will appear exactly as entered no matter what the page language is.
  *
  *		If you replace the '"whatever 1"' (replace the quotation marks too) with something like
- *		'$pgv_lang["whatever_1"]' (don't enter the apostrophes), you can then make the text vary 
- *		according to the page language.  You should put your English text into file 
+ *		'$pgv_lang["whatever_1"]' (don't enter the apostrophes), you can then make the text vary
+ *		according to the page language.  You should put your English text into file
  *		"languages/extra.en.php" like this:
  *			$pgv_lang["whatever_1"] = "My submenu title 1";
  *
  *		Similar entries should appear in each of the other "languages/extra.xx.php" files, where
  *		"xx" corresponds to the language (Dutch is "nl", French is "fr", German is "de" etc.)
  *		You should have a "languages/extra.xx.php" file for each of the languages your site
- *		supports.  You don't need these files for unsupported languages.  
+ *		supports.  You don't need these files for unsupported languages.
  *
  *		If the "languages/extra.xx.php" (including the English version) file doesn't exist, you
  *		can create your own by copying the "languages/lang.xx.php" file and giving it the new
@@ -65,14 +65,20 @@
  *		anywhere, you will see an error message instead.  This is probably not desirable.
  *
  *
- * 'whatever 2' is the URL required to launch the desired module, web site, or PhpGedView 
+ * 'whatever 2' is the URL required to launch the desired module, web site, or PhpGedView
  *		script.  You need to provide all of the input parameters or variables that the script
  *		needs.  For example, to get to the Yahoo web site, you'd replace '"whatever 2"' with
  *		'"http://www.yahoo.com"'.  Note that the URL you enter here is enclosed in quotation marks.
  *
- *		If the URL requires something enclosed in quotation marks, you should precede each of them 
+ *		If the URL requires something enclosed in quotation marks, you should precede each of them
  *		with a backslash or enclose the entire URL in apostrophes instead of quotation marks.
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 	//-- main Optional menu item
 	$menu = new Menu("Optional Menu name", "custom link #1", "down");
 	if (!empty($PGV_IMAGES["gedcom"]["large"]))

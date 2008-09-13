@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -228,7 +228,7 @@ class HourglassControllerRoot extends BaseController {
 	function print_descendency($pid, $count, $showNav=true) {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
 		global $lastGenSecondFam;
-		
+
 		if ($count>$this->dgenerations) return 0;
 		$person = Person::getInstance($pid);
 		if (is_null($person)) return;
@@ -301,7 +301,7 @@ class HourglassControllerRoot extends BaseController {
 
 				}
 				print "</table>\n";
-					
+
 			}
 			print "</td>\n";
 			print "<td width=\"$bwidth\">";
@@ -339,7 +339,7 @@ class HourglassControllerRoot extends BaseController {
 		print "<table id=\"table2_$pid\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td>";
 		print_pedigree_person($pid);
 		print "</td><td><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" />";
-		
+
 		//----- Print the spouse
 		if ($this->show_spouse) {
 			foreach($families as $famid => $family) {
@@ -388,7 +388,7 @@ class HourglassControllerRoot extends BaseController {
 						print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',3);\" onmouseout=\"swap_image('larrow',3);\">";
 						print "<img id=\"larrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
 						print "</a><br />";
-							
+
 					}
 					print "\n\t\t<div id=\"childbox\" dir=\"".$TEXT_DIRECTION."\" style=\"width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";
 					print "\n\t\t\t<table class=\"person_box\"><tr><td>";
@@ -419,9 +419,9 @@ class HourglassControllerRoot extends BaseController {
 								print "class=\"name2\">&lt; ";
 								else print "class=\"name1\">&lt; ";
 								print PrintReady($name);
-									
+
 								print "<br /></span></a>";
-									
+
 							}
 						}
 					}
@@ -531,41 +531,41 @@ class HourglassControllerRoot extends BaseController {
 	function paste_id(value) {
 		pastefield.value=value;
 	}
-	
+
 	// Hourglass control..... Ajax arrows at the end of chart
  	function ChangeDiv(div_id, ARID, full, spouse, width) {
  		var divelement = document.getElementById(div_id);
- 		var oXmlHttp = createXMLHttp();	
+ 		var oXmlHttp = createXMLHttp();
  		oXmlHttp.open("get", "hourglass_ajax.php?show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
  		oXmlHttp.onreadystatechange=function()
  		{
   			if (oXmlHttp.readyState==4)
-   			{	
+   			{
     			divelement.innerHTML = oXmlHttp.responseText;
     			sizeLines();
     		}
    		};
-  		oXmlHttp.send(null);	
+  		oXmlHttp.send(null);
   		return false;
 	}
-	
+
 	// Hourglass control..... Ajax arrows at the end of descendants chart
 	function ChangeDis(div_id, ARID, full, spouse, width) {
  		var divelement = document.getElementById(div_id);
- 		var oXmlHttp = createXMLHttp();	
+ 		var oXmlHttp = createXMLHttp();
  		oXmlHttp.open("get", "hourglass_ajax.php?type=desc&show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
  		oXmlHttp.onreadystatechange=function()
  		{
   			if (oXmlHttp.readyState==4)
-   			{	
+   			{
     				divelement.innerHTML = oXmlHttp.responseText;
     				sizeLines();
     		}
    		};
-  		oXmlHttp.send(null);	
+  		oXmlHttp.send(null);
   		return false;
 	}
-	
+
 	function sizeLines() {
 		var vlines;
 		vlines = document.getElementsByName("tvertline");
@@ -576,7 +576,7 @@ class HourglassControllerRoot extends BaseController {
 			var newHeight = Math.abs(hline.offsetHeight - (hline2.offsetTop + <?php print $bhalfheight+2;1?>));
 			vlines[i].style.height=newHeight+'px';
 		}
-		
+
 		vlines = document.getElementsByName("bvertline");
 		for(i=0; i < vlines.length; i++) {
 			var pid = vlines[i].id.substr(vlines[i].id.indexOf("_")+1);
@@ -584,7 +584,7 @@ class HourglassControllerRoot extends BaseController {
 			var hline2 = document.getElementById("table2_"+pid);
 			vlines[i].style.height=(hline.offsetTop+hline2.offsetTop + <?php print $bhalfheight+2; ?>)+'px';
 		}
-		
+
 		vlines = document.getElementsByName("pvline");
 		//alert(vlines[0].parentNode.parentNode.parentNode);
 		for(i=0; i < vlines.length; i++) {

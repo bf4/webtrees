@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -204,13 +204,13 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 						$InfoArray[$LineCounter][0] = $key;				// keystring
 						# print "#".$key."# ";
 						$InfoArray[$LineCounter][1] = $content;			// message of keystring
-            	
+
 						# print "#".$content."#<br />";
 						if ($content != "") {
 							$InfoArray[$LineCounter][2] = get_last_string($line_mine, $content);	// pos of the first char of the message
 						}
 						else $InfoArray[$LineCounter][2] = "";
-            	
+
 						$InfoArray[$LineCounter][3] = $line_mine;			// complete line
 						$foundNeedle = true;
 					}

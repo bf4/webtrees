@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -181,7 +181,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		else print str_repeat("&nbsp;", 10);
 		$marriage = $family->getMarriage();
 		if ($marriage->canShow()) {
-			$marriage->print_simple_fact(); 
+			$marriage->print_simple_fact();
 		} else print $pgv_lang["private"];
 		print "</a>";
 	}
@@ -443,10 +443,10 @@ function print_family_facts(&$family, $sosa = 0) {
 		$linkToID = $famid;		// -- Tell addmedia.php what to link to
 		// -- array of GEDCOM elements that will be found but should not be displayed
 		$nonfacts = array("FAMS", "FAMC", "MAY", "BLOB", "HUSB", "WIFE", "CHIL", "");
-		
+
 		// -- find all the fact information
 		$indifacts = $family->getFacts();
-		
+
 		if (count($indifacts) > 0) {
 			sort_facts($indifacts);
 			print "\n\t<span class=\"subheaders\">" . $pgv_lang["family_group_info"];
@@ -727,7 +727,7 @@ function get_sosa_name($sosa) {
 			}
 			if ($gen >= 2) $sosaname .= $great;
 			if ($gen == 1) $sosaname .= $grand;
-	
+
 			for ($i=$gen; $i>0; $i--){
 				if (!(floor($sosa/(pow(2,$i)))%2)) $addname .= $father;
 				else $addname .= $mother;
@@ -746,7 +746,7 @@ function get_sosa_name($sosa) {
 			$sosaname = implode('', $sosaname);
 			if ($LANGUAGE != "swedish") if (!empty($addname)) $sosaname .= ($gen>5?"<br />&nbsp;&nbsp;&nbsp;&nbsp;":"")." <small>(".$addname.")</small>";
 			break;
-	
+
 		case "dutch":
 			// reference: http://nl.wikipedia.org/wiki/Voorouder
 			// Our numbers are 2 less than those shown in the article.  We number parents
@@ -769,7 +769,7 @@ function get_sosa_name($sosa) {
 			else $sosaname .= $pgv_lang["mother"];
 			$sosaname = strtolower($sosaname);
 			break;
-	
+
 		case "finnish":
 		    $sosaname = "";
 			$father = UTF8_strtolower($pgv_lang["father"]);
@@ -788,7 +788,7 @@ function get_sosa_name($sosa) {
 			$sosaname[0] = UTF8_strtoupper($sosaname[0]);
 			$sosaname = implode('',$sosaname);
 			break;
-	
+
 		case "hebrew":
 		    $sosaname = "";
 			$addname = "";
@@ -831,7 +831,7 @@ function get_sosa_name($sosa) {
 				}
 			}
 			break;
-	
+
 		default:
 			$paternal = (floor($sosa/pow(2,$gen)) == 2) ? "paternal" : "maternal";
 			$male = ($sosa%2==0) ? "male" : "female";

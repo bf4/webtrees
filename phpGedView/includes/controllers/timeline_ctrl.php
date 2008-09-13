@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -73,7 +73,7 @@ class TimelineControllerRoot extends BaseController {
 				if (stristr($newpid, $GEDCOM_ID_PREFIX)===false) $newpid = $GEDCOM_ID_PREFIX.$newpid;
 			}
 		}
-		
+
 		if (safe_GET('clear', '1')=='1') {
 			unset($_SESSION['timeline_pids']);
 		} else {
@@ -96,7 +96,7 @@ class TimelineControllerRoot extends BaseController {
 				$value = clean_input($value);
 				$newpids[] = $value;
 				$person = Person::getInstance($value);
-				if (!is_null($person)) $this->people[] = $person; 
+				if (!is_null($person)) $this->people[] = $person;
 			}
 		}
 		$this->pids = $newpids;
@@ -141,7 +141,7 @@ class TimelineControllerRoot extends BaseController {
 			}
 		}
 		$_SESSION['timeline_pids'] = $this->pids;
-		$scale=safe_GET_integer('scale', 0, 200, 0); 
+		$scale=safe_GET_integer('scale', 0, 200, 0);
 		if ($scale==0) {
 			$this->scale = round(($this->topyear-$this->baseyear)/20 * count($this->indifacts)/4);
 			if ($this->scale<6) $this->scale = 6;
@@ -174,7 +174,7 @@ class TimelineControllerRoot extends BaseController {
 			}
 		}
 	}
-	
+
 	function print_time_fact($event) {
 		global $basexoffset, $baseyoffset, $factcount, $TEXT_DIRECTION;
 		global $factarray, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;

@@ -2,7 +2,7 @@
 
 /**
  * Gramps Export
- * An abstract class that has the basic methods for exporting GRAMPS XML implemented. 
+ * An abstract class that has the basic methods for exporting GRAMPS XML implemented.
  * The class is not tied to any particlular web page(or GUI) and needs to be inherited for proper use
  *
  * phpGedView: Genealogy Viewer
@@ -21,25 +21,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
- * 
+ *
+ *
  *
  * @package PhpGedView
- * 
+ *
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 global $LANGUAGE;
- 
+
  /*
   * This is an abstract class and should only be used through its subclasses, all
   * of which are prefixed by GE.
   */
- 
+
 class GrampsExport {
 
 	var $mediaFiles = array(),$i;
@@ -83,7 +83,7 @@ class GrampsExport {
 );
 /**
  * Creates the root elements for the GRAMPS XML file.
- * 
+ *
  * The methods adds all the root elements and appends them to a DOMDocument.
  */
 	function begin_xml() {
@@ -137,11 +137,11 @@ class GrampsExport {
 	/**
 	 * Creates the date elements used throughout the GRAMPS XML file.
 	 * The function will parse the date record and determine the type of date
-	 * (regular, range). 
-	 * 
+	 * (regular, range).
+	 *
 	 * @param DOMObject $eParent - The parent element the date should be attached to
 	 * @param string $dateRec - the entire GEDCOM date record to be parsed
-	 * @param int $level - the level the date record was found on in the GEDCOM 
+	 * @param int $level - the level the date record was found on in the GEDCOM
 	 * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
 	 */
 	function create_date($eParent, $dateRec, $level) {
@@ -182,7 +182,7 @@ class GrampsExport {
 	}
 
 	/**
-	 * Returns all the path to all media files that were used in the family, people, source in the created GRAMPS XML  
+	 * Returns all the path to all media files that were used in the family, people, source in the created GRAMPS XML
 	 */
 	function get_all_media() {
 		return $this->mediaFiles;
@@ -200,16 +200,16 @@ class GrampsExport {
 			($date->m==0 ? '??'   : $date->Format('m')) .'-'.
 			($date->d==0 ? '??'   : $date->Format('d'));
 	}
-	
+
 	/**
 	 * Creates a reference(handle) for xml element to element in the events element of the root element
-	 * If such an element does not exists it is created using create_event method. 
+	 * If such an element does not exists it is created using create_event method.
 	 * @param DOMElement $eParent - the parent you want to apend the elemnt to
 	 * @param GEDCOM record $personrec - the record use to get more information about the event(used when the event is being created)
 	 * @param int $event - the $event record
 	 */
 	function create_event_ref($eParent, $personrec, $event)
-	{		
+	{
 		if (($eventRec = get_sub_record(1, "1 " . $event, $personrec)) != null) {
 		$eEventRef = $this->dom->createElement("eventref");
 		$eEventRef = $eParent->appendChild($eEventRef);
@@ -226,10 +226,10 @@ class GrampsExport {
 	  * 	given event has not been created, this method calls create_placeobj thus creating the
 	  * 	place and then links them together accordingly, otherwise the method just searches for
 	  * 	the place and creates the link.
-	  * 
+	  *
 	  * @param DOMElement $personrec - the person(or top element) that contains the event
 	  * @param string $event - the abbreviation of the event to be created; BIRT, DEAT, ADOP.....
-	  * @param DOMElement $eventRec - the parent DOMElement to which the created Event Element is appended 
+	  * @param DOMElement $eventRec - the parent DOMElement to which the created Event Element is appended
 	  * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
 	  */
 		function create_event($personrec, $event, $eventRec,$done=1) {
@@ -293,18 +293,18 @@ class GrampsExport {
 			}
 			$eEvent = $this->eEvents->appendChild($eEvent);
 			return $eventID;
-		
+
 	}
 
 
 	/**
 	 * This function creates a family relation for a person and appends the relation
 	 * to the person element.
-	 * 
+	 *
 	 * It searches through the DOMDocument first to see if the person is created,
 	 * if they are not, the person is created and then the DOMDocument is queried
 	 * and the persons HLINK is retrieved.
-	 * 
+	 *
 	 * @param DOMElement $eParent - the parent XML element the date element should be appended to
 	 * @param GEDCOM record $personRec - the full INDI GEDCOM record of the person that the relation is being created
 	 * @param int $tag -  the name of the GEDCOM tag (FAMC, FAMS). This is used to allow the same function to work with childin and parent_in_family relations
@@ -316,10 +316,10 @@ class GrampsExport {
 
 	/**
 	 * Creates the Family element and all of it's child elements, and appends it to the
-	 * Families element.  This function will search through the DOMDocument looking 
+	 * Families element.  This function will search through the DOMDocument looking
 	 * for people in the family. If they are not created yet and they are in the clippings
 	 * cart, they will be created and ther hlink added to the family element.
-	 * 
+	 *
 	 * @param string $frec - the full FAM GEDCOM record of the family to be created
 	 * @param string $fid = the ID (F1, F2, F3) of the family that is being created
 	 */
@@ -331,10 +331,10 @@ class GrampsExport {
 	/**
 	* Creates the lds_ord element and appends the correct information depending
 	* on the type of lds_ord (Endowment, Sealing, Baptism). If there is a sealing,
-	* the function will search if the family is in the clippings cart and if the 
+	* the function will search if the family is in the clippings cart and if the
 	* family is created or not. If the family is not created yet, it will be created
-	* and added to the DOMDocument 
-	* 
+	* and added to the DOMDocument
+	*
 	* @param $indirec - The full INDI GEDCOM record of the person the lds_ord is being created
 	* @param $eventName - the name of the LDS event (Baptism, Sealing, Endowment, etc...)
 	* @param $eventABV - the event abbreviation in the GEDCOM (ie. SLGC, BAPL, ENDL)
@@ -347,7 +347,7 @@ class GrampsExport {
 
 	/**
 	  * Creates the Note element and appends it to the parent element
-	  * 
+	  *
 	  * @param DOMElement $eParent - the parent DOMElement to which the created Note Element is appended
 	  * @param string $noteRec - the entire Family, Individual, etc. record in which the event may be found
 	  * @param int $level - The GEDCOM line level where the NOTE tag may be found
@@ -368,24 +368,24 @@ class GrampsExport {
 
 	/**
 	  * Creates the Person element and all of it's child elements, and appends it to the
-	  * 	People element.  Given the link for certain LDS events to a family, if the Family 
-	  * 	has not been previously created, create_family is called to create the family. 
+	  * 	People element.  Given the link for certain LDS events to a family, if the Family
+	  * 	has not been previously created, create_family is called to create the family.
 	  * 	The family relations in the LDS events and in the person element are only created
-	  * 	if the family they have a relation with are also included in the clippings cart   
-	  * 
+	  * 	if the family they have a relation with are also included in the clippings cart
+	  *
 	  * @param string $personRec - the full INDI GEDCOM record of the person to be created
-	  * @param string $personID - the ID (I1, I2, I3) of the person the is being created 
+	  * @param string $personID - the ID (I1, I2, I3) of the person the is being created
 	  */
 	function create_person($personRec = "", $personID = "")
 	{
 		//throw new exception("create_person - this function is not implemented");
-	
+
 	}
 	/**
-	  * Creates the Place Element and appends it to the Parent element given   
-	  * 
+	  * Creates the Place Element and appends it to the Parent element given
+	  *
 	  * @param DOMElement $eParent - the parent DOMElement to which the created Place Element is appended
-	  * @param string $hlink - the value to which the 'hlink' attribute is set 
+	  * @param string $hlink - the value to which the 'hlink' attribute is set
 	  */
 	function create_place($eParent, $hlink) {
 		$ePlace = $this->dom->createElement("place");
@@ -394,8 +394,8 @@ class GrampsExport {
 	}
 
 	/**
-	  * Creates the PlaceObj element and appends it to the Places element  
-	  * 
+	  * Creates the PlaceObj element and appends it to the Places element
+	  *
 	  * @param string $place - the string containing the value for the placeobj to be created
 	  * @param string $hlink - the value to which the 'hlink' attribute is set \
 	  * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
@@ -405,7 +405,7 @@ class GrampsExport {
 		$ePlaceObj->setAttribute("handle", $hlink);
 		$ePlaceObj->setAttribute("id", $hlink);
 		$ePlaceObj->setAttribute("change", time());
-		
+
 		$ePTitle = $this->dom->createElement("ptitle");
 		$ePTitle = $ePlaceObj->appendChild($ePTitle);
 		$ePlaceObj = $this->ePlaces->appendChild($ePlaceObj);
@@ -499,7 +499,7 @@ class GrampsExport {
 	/**
 	  * Creates the SourceRef element and appends it to the Parent Element.  If the actual Source has not
 	  * 	been previously created, this will retrieve the record for that, and create that also.
-	  * 
+	  *
 	  * @param DOMElement $eParent - the parent DOMElement to which the created Note Element is appended
 	  * @param string $sourcerefRec - the record containing the reference to a Source
 	  * @param int $level - The GEDCOM line level where the SOUR tag may be found
@@ -511,7 +511,7 @@ class GrampsExport {
 
 	/**
 	  * Creates the Source and appends it to the Sources Element
-	  * 
+	  *
 	  * @param string $sourceID - the ID of the source to be created
 	  * @param string $sourceRec - the entire GEDCOM record containing the Source
 	  * @param int $level - the level the source is on in the GEDCOM record
@@ -560,7 +560,7 @@ function create_source($sourceID, $sourceRec, $level = 1, $done=1) {
 	/**
 	* Generates a unique identifier for linking elements in the DOMDocument
 	* This function was created to conform to how GRAMPS formats their XML
-	* documents. The handle only has to be unique among the file, but this 
+	* documents. The handle only has to be unique among the file, but this
 	* allows for a creation of a huge XML file with little chance of overlap
 	*/
 	function generateHandle() {
@@ -570,9 +570,9 @@ function create_source($sourceID, $sourceRec, $level = 1, $done=1) {
 
 	/**
 	* Reads in an xpath expression and returns the value searched for by the expression
-	* 
+	*
 	* @param string $query - XPath expression to be executed on the DOMDocument
-	* 
+	*
 	* @return string - The result of the XPath expression (null if no record is found)
 	*/
 	function query_dom($query) {
@@ -592,13 +592,13 @@ function create_source($sourceID, $sourceRec, $level = 1, $done=1) {
 	* This function takes the dom document and validates it against the
 	* GRAMPS RNG schema. It then prints out the results of the validation
 	* to the screen.
-	* 
+	*
 	* Validating against the DTD could be easily added
 	* if that is deemed useful.
-	* 
+	*
 	* @param DOMDocument $domObj - this is the dom document to be validated
 	* @param boolean $printXML - set to true, this parameter will make validate print out the DOMDocuments XML to the screen
-	* 
+	*
 	*/
 	function validate($domObj, $printXML = true) {
 		if ($printXML) {

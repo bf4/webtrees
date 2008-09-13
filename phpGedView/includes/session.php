@@ -146,8 +146,8 @@ if (isset($_REQUEST["CONFIG_VARS"])) $configOverride = true;
 	// $CONFIG_VARS is safe: now check for any in its list
 	foreach($CONFIG_VARS as $VAR) {
 	if (isset($_REQUEST[$VAR])) {
-		$configOverride = true; 
-		break ; 
+		$configOverride = true;
+		break ;
 	}
 }
 
@@ -239,7 +239,7 @@ $OLD_HANDLER = set_error_handler("pgv_error_handler");
 //-- load db specific functions
 require_once("includes/functions_db.php");
 // -- load the authentication system, also logging
-require_once("includes/authentication.php");      
+require_once("includes/authentication.php");
 
 //-- setup execution timer
 $start_time = getmicrotime();
@@ -400,7 +400,7 @@ foreach ($language_settings as $key => $value) {
  * 1. Use the language in visitor's browser settings if it is supported in the PGV site.
  *    If it is not supported, use the GEDCOM configuration setting.
  * 2. If the user has chosen a language from the list or the flags, use their choice.
- * 3. When the user logs in, switch to the language in their user profile unless the 
+ * 3. When the user logs in, switch to the language in their user profile unless the
  *    user made a language choice prior to logging in.
  * 4. When a user logs out their current language choice is ignored and the site will
  *    revert back to the language they first saw when arriving at the site according to
@@ -507,7 +507,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 		header("Location: editconfig.php");
 		exit;
 	}
-	
+
 	if ((count($GEDCOMS)==0)||(!check_for_import($GEDCOM))) {
 		$scriptList = array("editconfig_gedcom.php", "help_text.php", "editconfig_help.php", "editgedcoms.php", "uploadgedcom.php", "login.php", "admin.php", "config_download.php", "addnewgedcom.php", "validategedcom.php", "addmedia.php", "importgedcom.php", "client.php", "edit_privacy.php", "upgrade33-40.php", "gedcheck.php", "printlog.php", "editlang.php", "editlang_edit.php" ,"useradmin.php");
 		$inList = false;
