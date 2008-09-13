@@ -23,8 +23,8 @@
  * @subpackage Languages
  * @version $Id$
  */
-// -- include config file
-require("config.php");
+
+require './config.php';
 
 print_header("checklang");
 
@@ -142,7 +142,7 @@ function checkfile($filename) {
 	if (!$fd = fopen($filename, 'r')) print("Cannot open $filename");
 	$header = "";
 	while ($data = @fgets($fd)) {
-	  if ($data[1]=='*' or $data[1]=='?') $header .= $data;
+		if ($data[1]=='*' or $data[1]=='?') $header .= $data;
 		if (substr($data, 0, 1) == "\$") $target[] = $data; //smart_utf8_decode($data);
 	}
 	@fclose($fd);
@@ -200,7 +200,7 @@ function checkfile($filename) {
 	}
 	fclose($fd);
 	?>
-   <script type="text/javascript">
+		<script type="text/javascript">
 		var OK = <?php print $ok;?>;
 		var TOT = <?php print ($ok + $nok);?>;
 		var ELT = "<?php print "$flag." . substr(basename($filename), 0, 1);?>";

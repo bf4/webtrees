@@ -23,7 +23,9 @@
  * @package PhpGedView
  * @subpackage Lists
  */
-require("config.php");
+
+require './config.php';
+
 require_once("includes/functions_print_lists.php");
 
 print_header($pgv_lang["source_list"]);

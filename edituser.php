@@ -26,7 +26,8 @@
  * @version $Id$
  */
 
-require 'config.php';
+require './config.php';
+
 require 'includes/functions_print_lists.php';
 include 'includes/functions_edit.php';
 
@@ -44,7 +45,7 @@ if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {
 
 // Load language variables
 loadLangFile('pgv_confighelp, pgv_admin, pgv_editor');
-	
+
 // Valid values for form variables
 $ALL_ACTIONS=array('update');
 $ALL_CONTACT_METHODS=array('messaging', 'messaging2', 'messaging3', 'mailto', 'none');
@@ -220,7 +221,7 @@ echo print_help_link('edituser_lastname_help', 'qm', '', false, true);
 echo $pgv_lang['lastname'], '</td><td class="optionbox">';
 echo '<input type="text" name="form_lastname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'lastname'), '" />';
 echo '</td></tr>';
-	
+
 $person=Person::getInstance(PGV_USER_GEDCOM_ID);
 if ($person) {
 	echo '<tr><td class="descriptionbox wrap">';
@@ -229,7 +230,7 @@ if ($person) {
 	echo $person->format_list('span');
 	echo '</td></tr>';
 }
-	
+
 $person=Person::getInstance(PGV_USER_ROOT_ID);
 echo '<tr><td class="descriptionbox wrap">';
 echo print_help_link('edituser_rootid_help', 'qm', '', false, true);

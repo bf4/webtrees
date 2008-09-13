@@ -24,7 +24,8 @@
  * @version $Id$
  */
 
-require 'config.php';
+require './config.php';
+
 require_once 'includes/functions_print_lists.php';
 
 if (!isset($type)) $type = "indi";

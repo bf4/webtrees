@@ -27,7 +27,8 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
+
 require_once("includes/index_cache.php");
 
 /**
@@ -104,7 +105,7 @@ while (false !== ($entry = $d->read())) {
 $d->close();
 /**
  * End loading list of Blocks in blocks directory
- * 
+ *
  * Load List of Blocks in modules/XX/blocks directories
  */
 if (file_exists("modules")) {
@@ -329,12 +330,12 @@ else {
 	?>
 	<script language="JavaScript" type="text/javascript">
 	<!--
-	/**
-	 * Move Up Block JavaScript function
-	 *
-	 * This function moves the selected option up in the given select list
-	 * @param String section_name the name of the select to move the options
-	 */
+/**
+ * Move Up Block JavaScript function
+ *
+ * This function moves the selected option up in the given select list
+ * @param String section_name the name of the select to move the options
+ */
 	function move_up_block(section_name) {
 		section_select = document.getElementById(section_name);
 		if (section_select) {
@@ -347,12 +348,12 @@ else {
 		}
 	}
 
-	/**
-	 * Move Down Block JavaScript function
-	 *
-	 * This function moves the selected option down in the given select list
-	 * @param String section_name the name of the select to move the options
-	 */
+/**
+ * Move Down Block JavaScript function
+ *
+ * This function moves the selected option down in the given select list
+ * @param String section_name the name of the select to move the options
+ */
 	function move_down_block(section_name) {
 		section_select = document.getElementById(section_name);
 		if (section_select) {
@@ -366,14 +367,14 @@ else {
 		}
 	}
 
-	/**
-	 * Move Block from one column to the other JavaScript function
-	 *
-	 * This function moves the selected option down in the given select list
-	 * @author KosherJava
-	 * @param String add_to_column the name of the select to move the option to
-	 * @param String remove_from_column the name of the select to remove the option from
-	 */
+/**
+ * Move Block from one column to the other JavaScript function
+ *
+ * This function moves the selected option down in the given select list
+ * @author KosherJava
+ * @param String add_to_column the name of the select to move the option to
+ * @param String remove_from_column the name of the select to remove the option from
+ */
 	function move_left_right_block(add_to_column, remove_from_column) {
 		section_select = document.getElementById(remove_from_column);
 		add_select = document.getElementById(add_to_column);
@@ -388,11 +389,11 @@ else {
 			}
 		}
 	}
-	/**
-	 * Select Options JavaScript function
-	 *
-	 * This function selects all the options in the multiple select lists
-	 */
+/**
+ * Select Options JavaScript function
+ *
+ * This function selects all the options in the multiple select lists
+ */
 	function select_options() {
 		section_select = document.getElementById('main_select');
 		if (section_select) {
@@ -409,9 +410,9 @@ else {
 		return true;
 	}
 
-	/**
-	 * Load Block Description array for use by jscript
-	 */
+/**
+ * Load Block Description array for use by jscript
+ */
 	<?php
 	print "var block_descr = new Array();\n";
 	foreach($PGV_BLOCKS as $b=>$block) {
@@ -421,12 +422,12 @@ else {
 	?>
 
 
-	/**
-	 * Show Block Description JavaScript function
-	 *
-	 * This function shows a description for the selected option
-	 * @param String list_name the name of the select to get the option from
-	 */
+/**
+ * Show Block Description JavaScript function
+ *
+ * This function shows a description for the selected option
+ * @param String list_name the name of the select to get the option from
+ */
 	function show_description(list_name) {
 		list_select = document.getElementById(list_name);
 		instruct = document.getElementById('instructions');

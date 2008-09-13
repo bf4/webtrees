@@ -1,8 +1,8 @@
 <?php
 /**
- * Exports users and their data to either SQL queries (Index mode) or 
+ * Exports users and their data to either SQL queries (Index mode) or
  * authenticate.php and xxxxxx.dat files (MySQL mode).
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2006  PGV Development Team
  *
@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
  * @author Boudewijn Sjouke	sjouke@users.sourceforge.net
  * @package PhpGedView
  * @subpackage Admin
@@ -67,7 +67,7 @@ if ($controller->proceed == "backup") {
 		<tr class="label">
 			<td style="padding: 5px" class="facts_label03"><?php print $pgv_lang["um_results"]; ?></td>
 		</tr>
-	<?php	
+	<?php
 	// Make the zip
 	if (count($controller->flist) > 0) {
 		?>
@@ -83,7 +83,7 @@ if ($controller->proceed == "backup") {
 		</tr>
 		<tr>
 			<td class="list_value" style="padding: 5px;" >
-				<a href="downloadbackup.php?fname=<?php print $controller->buname; ?>" target="_blank"><?php print $pgv_lang["um_zip_dl"]; ?> <?php print $controller->fname; ?></a>  
+				<a href="downloadbackup.php?fname=<?php print $controller->buname; ?>" target="_blank"><?php print $pgv_lang["um_zip_dl"]; ?> <?php print $controller->fname; ?></a>
 				( <?php printf("%.0f Kb", (filesize($controller->fname)/1024)); ?> ) <br />
 				<?php print $pgv_lang["files_in_backup"]; ?>
 				<ul>
@@ -117,7 +117,7 @@ if (($controller->proceed == "export") || ($controller->proceed == "exportovr"))
 	<h2><?php print $pgv_lang["um_header"];?></h2>
 	<br /><br />
 	<?php print $pgv_lang["um_sql_index"]; ?>
-<?php } 
+<?php }
 if ($controller->proceed == "import") { ?>
 	<h2><?php print $pgv_lang["um_header"]; ?></h2>
 	<br /><br />
@@ -144,7 +144,7 @@ if (($controller->proceed != "import") && ($controller->proceed != "export") && 
 	exit;
 }
 if (($controller->proceed == "export") || ($controller->proceed == "exportovr")) {
-	
+
 	// Check if one of the files already exists
 	if ($controller->fileExists) { ?>
 		<br />
@@ -168,7 +168,7 @@ if ($controller->proceed == "import") { ?>
 		<a href="admin.php"><?php print $pgv_lang["lang_back_admin"]; ?></a><br /><br />
 		<?php exit;
 	}
-	
+
 	if ($controller->impSuccess) {
 		print $pgv_lang["um_imp_succ"]."<br /><br />";
 	}

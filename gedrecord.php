@@ -23,7 +23,9 @@
  * @package PhpGedView
  * @subpackage Charts
  */
-require("config.php");
+
+require './config.php';
+
 require_once("includes/gedcomrecord.php");
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 

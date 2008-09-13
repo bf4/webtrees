@@ -24,7 +24,8 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
+
 if (file_exists('modules/googlemap/placehierarchy.php')) require("modules/googlemap/placehierarchy.php");
 require_once("includes/functions_print_lists.php");
 
@@ -123,7 +124,7 @@ if ($display=="hierarchy") {
 		print "<a href=\"?level=0\">";
 		if ($numls>=0 && (($TEXT_DIRECTION=="ltr" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="rtl" && !hasRtLText($parent[$numls])))) print $pgv_lang["top_level"].", ";
 		print "</a>";
-	    for($i=$numls; $i>=0; $i--) {
+			for($i=$numls; $i>=0; $i--) {
 			print "<a href=\"?level=".($i+1)."&amp;";
 			for ($j=0; $j<=$i; $j++) {
 				$levels = preg_split ("/,/", trim($parent[$j]));
@@ -304,7 +305,7 @@ if ($display=="hierarchy") {
 		}
 
 		if (begRTLText($value))
-			 print "<li class=\"rtl\" dir=\"rtl\"";
+			print "<li class=\"rtl\" dir=\"rtl\"";
 		else print "<li class=\"ltr\" dir=\"ltr\"";
 		print " type=\"square\">\n<a href=\"?action=$action&amp;level=".($level+1).$linklevels;
 		print "&amp;parent[$level]=".urlencode($value)."\" class=\"list_item\">";
@@ -318,7 +319,7 @@ if ($display=="hierarchy") {
 			if ($i == floor(($ct1 / 3) * 2)) print "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
 		}
 		else if ($ct1 > 4 && $i == floor($ct1 / 2)) print "\n\t\t</ul></td>\n\t\t<td class=\"list_value\"><ul>";
-	    $i++;
+		$i++;
 	}
 	if ($i>0){
 		print "\n\t\t</ul></td></tr>";
@@ -419,8 +420,8 @@ if ($display=="list") {
 				else $revplace .= $place;
 			}
 			if (begRTLText($revplace))
-			     print "<li class=\"rtl\" dir=\"rtl\"";
-		    else print "<li class=\"ltr\" dir=\"ltr\"";
+				print "<li class=\"rtl\" dir=\"rtl\"";
+			else print "<li class=\"ltr\" dir=\"ltr\"";
 			print " type=\"square\"><a href=\"?action=show&amp;display=hierarchy&amp;level=$level$linklevels\">";
 			print PrintReady($revplace)."</a></li>\n";
 			$i++;

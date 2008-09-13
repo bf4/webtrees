@@ -23,8 +23,9 @@
  * @subpackage Languages
  * @version $Id$
  */
- 
-require "config.php";
+
+require './config.php';
+
 loadLangFile("pgv_confighelp");
 
 //-- make sure that they have admin status before they can use this page
@@ -39,7 +40,7 @@ if (!isset($action) or $action=="") $action="editold";
 switch ($action) {
 	case "addnew" :
 		$helpindex = "add_new_language_help";
-		print_header($pgv_lang["add_new_language"]); 
+		print_header($pgv_lang["add_new_language"]);
 		break;
 
 	case "editold" :
@@ -92,7 +93,7 @@ $split_langs_active = array();
 $split_langs_inactive = array();
 foreach ($Sorted_Langs as $key => $value){
 	if ($pgv_lang_use["$key"]) {
-		$split_langs_active[count($split_langs_active)+1] = $key; 
+		$split_langs_active[count($split_langs_active)+1] = $key;
 	}
 	else {
 		$split_langs_inactive[count($split_langs_inactive)+1] = $key;
@@ -115,9 +116,9 @@ print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\
 
 switch ($action) {
 	case "addnew" :
-    	print "<form name=\"new_lang_form\" method=\"get\" action=\"$SCRIPT_NAME\">";
-      	print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
-      	print "<input type=\"hidden\" name=\"action\" value=\"new_lang\" />";
+		print "<form name=\"new_lang_form\" method=\"get\" action=\"$SCRIPT_NAME\">";
+		print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
+		print "<input type=\"hidden\" name=\"action\" value=\"new_lang\" />";
 		print "<input type=\"hidden\" name=\"execute\" value=\"true\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";
 		print "<tr><td class=\"facts_label03\" colspan=\"2\">";
@@ -139,7 +140,7 @@ switch ($action) {
 			}
 			if ($showLang) {
 				print "<option value=\"$key\"";
-			  	print ">".$lng_codes[$key][0]."</option>\n";
+				print ">".$lng_codes[$key][0]."</option>\n";
 			}
 		}
 		print "</select>\n\n";
@@ -167,31 +168,31 @@ switch ($action) {
 		print "<td class=\"facts_label03\">";
 		print $pgv_lang["lang_language"];
 		print "</td>";
-		
+
 		print "<td class=\"facts_label03\">";
 		print $pgv_lang["active"];
 		print "</td>";
-		
+
 		print "<td class=\"facts_label03\">";
 		print $pgv_lang["edit_settings"];
 		print "</td>";
-		
+
 		// Separator
 		print "<td class=\"facts_label03\">" . "&nbsp;" . "</td>";
-		
+
 		// Column headings, right set
 		print "<td class=\"facts_label03\">";
 		print $pgv_lang["lang_language"];
 		print "</td>";
-		
+
 		print "<td class=\"facts_label03\">";
 		print $pgv_lang["active"];
 		print "</td>";
-		
+
 		print "<td class=\"facts_label03\">";
 		print $pgv_lang["edit_settings"];
 		print "</td>";
-		
+
 		// End of row
 		print "</tr>\n";
 
@@ -202,10 +203,10 @@ switch ($action) {
 			// Left 3 columns: Active language
 			$value = "";
 			if ($i <= $active) $value = $split_langs_active[$i];
-		
+
 			if ($value == "") {
 				print "<td class=\"facts_value\">&nbsp;</td><td class=\"facts_value\">&nbsp;</td><td class=\"facts_value\">&nbsp;</td>";
-			} else { 
+			} else {
 				$d_LangName = "lang_name_" . $value;
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
 					print $pgv_lang[$d_LangName];
@@ -220,23 +221,23 @@ switch ($action) {
 					print $pgv_lang["lang_edit"] . "</a>";
 				print "</td>";
 			}
-			
+
 			// Middle column: Separator
 			print "<td class=\"facts_label03\">" . "&nbsp;" . "</td>";
-			
+
 			// Right 3 columns: Inactive language
 			$value = "";
 			if ($i <= $inactive) $value = $split_langs_inactive[$i];
-		
+
 			if ($value == "") {
 				print "<td class=\"facts_value\">&nbsp;</td><td class=\"facts_value\">&nbsp;</td><td class=\"facts_value\">&nbsp;</td>";
-			} else { 
+			} else {
 				$d_LangName = "lang_name_" . $value;
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
 					print $pgv_lang[$d_LangName];
 				print "</td>";
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
-					print "<input type=\"checkbox\" value=\"$value\" onclick=\"enabledisablelanguage('$value');\"/>"; 
+					print "<input type=\"checkbox\" value=\"$value\" onclick=\"enabledisablelanguage('$value');\"/>";
 				print "</td>";
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
 					print "<a href=\"editlang_edit_settings.php?ln=" . $value . "\">";
@@ -263,7 +264,7 @@ switch ($action) {
 				$currentkey = $key;
 			}
 			else print "<td class=\"facts_value\" colspan=\"2\" valign=\"top\">";
-			
+
 			// Print gedcom names
 			foreach($value as $gedcomname => $used) {
 				echo '<a href="', encode_url("editconfig_gedcom.php?ged={$gedcomname}"), '" target="blank">', $gedcomname, '</a><br />';

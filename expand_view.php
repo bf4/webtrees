@@ -1,7 +1,7 @@
 <?php
 /**
  * Used by AJAX to load the expanded view inside person boxes
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
@@ -22,7 +22,8 @@
  * @package PhpGedView
  * @version $Id$
  */
-require_once("config.php");
+
+require './config.php';
 
 $pid = "";
 if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
@@ -35,11 +36,11 @@ $person->add_family_facts(false);
 $subfacts = $person->getIndiFacts();
 
 sort_facts($subfacts);
-	  
-	  $f2 = 0;
+
+$f2 = 0;
 /* @var $event Event */
 foreach($subfacts as $indexval => $event) {
-	if ($event->canShowDetails()) {	  	
+	if ($event->canShowDetails()) {
 			if ($f2>0) print "<br />\n";
 			$f2++;
 			// handle ASSO record
@@ -49,11 +50,11 @@ foreach($subfacts as $indexval => $event) {
 			}
 		$fact = $event->getTag();
 		$details = $event->getDetail();
-					 print "<span class=\"details_label\">";
+		print "<span class=\"details_label\">";
 		print $event->getLabel();
-					 print "</span> ";
+		print "</span> ";
 		$details = $event->getDetail();
-				if ($details!="Y" && $details!="N") print PrintReady($details);
+		if ($details!="Y" && $details!="N") print PrintReady($details);
 		echo format_fact_date($event, false, false, $fact, $pid, $person->getGedcomRecord());
 			//-- print spouse name for marriage events
 		$famid = $event->getFamilyId();
@@ -63,7 +64,7 @@ foreach($subfacts as $indexval => $event) {
 			if (!is_null($spouse)) {
 				print " <a href=\"".encode_url("individual.php?pid={$spouseid}&ged=$GEDCOM")."\">";
 				print PrintReady($spouse->getFullName());
-					 print "</a>";
+				print "</a>";
 				print " - ";
 				}
 			}
@@ -72,5 +73,5 @@ foreach($subfacts as $indexval => $event) {
 			}
 		echo format_fact_place($event, true, true);
 		}
-	 }
+	}
 ?>

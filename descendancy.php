@@ -35,7 +35,7 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
-}	
+}
 // ==========================================================================================
 
 ?>
@@ -60,7 +60,7 @@ if ($view!="preview") {
 	</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">
 	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
 	<table class="<?php print "list_table".$TEXT_DIRECTION; ?>">
-	
+
 		<!-- NOTE: rootid -->
 	<tr><td class="descriptionbox">
 	<?php
@@ -115,7 +115,7 @@ if ($view!="preview") {
 	<?php print_help_link("desc_generations_help", "qm");
 	print $pgv_lang["generations"] . "&nbsp;</td>";
 	?>
-	
+
 	<td class="optionbox vmiddle">
 	<select name="generations">
 	<?php
@@ -126,7 +126,7 @@ if ($view!="preview") {
 	}
 	?>
 	</select>
-	
+
 	</td>
 	<!-- // NOTE: show full -->
 	<td class="descriptionbox">

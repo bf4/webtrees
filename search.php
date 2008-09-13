@@ -579,7 +579,7 @@ else
 			}
 		}
 	}
-	 else
+	else
 		if ($controller->action == "multisite")
 		{
 			if(PGV_USER_CAN_EDIT)

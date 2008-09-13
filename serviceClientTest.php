@@ -1,6 +1,8 @@
 <pre>
 <?php
-require_once('config.php');
+
+require './config.php';
+
 ob_start();
 require_once('SOAP/Client.php');
 

@@ -23,7 +23,8 @@
  * @package PhpGedView
  * @subpackage Admin
  */
-require "config.php";
+
+require './config.php';
 
 loadLangFile("all");
 require ("includes/help_text_vars.php");

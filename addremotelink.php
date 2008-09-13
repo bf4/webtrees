@@ -63,35 +63,35 @@ $success = $controller->runAction();
 <script language="JavaScript" type="text/javascript">
 <!--
 function sameServer() {
-  alert('<?php print $pgv_lang["error_same"];?>');
+	alert('<?php print $pgv_lang["error_same"];?>');
 }
 
 function remoteServer() {
-  alert('<?php print $pgv_lang["error_remote"];?>');
+	alert('<?php print $pgv_lang["error_remote"];?>');
 }
 
 function swapComponents(btnPressed) {
 	var labelSite = document.getElementById('labelSite');
-    var existingContent = document.getElementById('existingContent');
-    var localContent = document.getElementById('localContent');
-    var remoteContent = document.getElementById('remoteContent');
+	var existingContent = document.getElementById('existingContent');
+	var localContent = document.getElementById('localContent');
+	var remoteContent = document.getElementById('remoteContent');
 
-    if (btnPressed=="remote") {
-	    labelSite.innerHTML = '<?php echo $pgv_lang["label_site"];?>';
+	if (btnPressed=="remote") {
+		labelSite.innerHTML = '<?php echo $pgv_lang["label_site"];?>';
 		existingContent.style.display='none';
 		localContent.style.display='none';
 		remoteContent.style.display='block';
-    } else if (btnPressed=="local") {
-	    labelSite.innerHTML = '<?php echo $pgv_lang["label_gedcom_id"];?>';
+	} else if (btnPressed=="local") {
+		labelSite.innerHTML = '<?php echo $pgv_lang["label_gedcom_id"];?>';
 		existingContent.style.display='none';
 		localContent.style.display='block';
 		remoteContent.style.display='none';
-    } else {
-	    labelSite.innerHTML = '<?php echo $pgv_lang["label_site"];?>';
+	} else {
+		labelSite.innerHTML = '<?php echo $pgv_lang["label_site"];?>';
 		existingContent.style.display='block';
 		localContent.style.display='none';
 		remoteContent.style.display='none';
-    }
+	}
 }
 
 function edit_close() {
@@ -108,7 +108,7 @@ function checkform(frm) {
 }
 //-->
 </script>
-<?php if ($action!="addlink") { 
+<?php if ($action!="addlink") {
 	$success = false;
 ?>
 <form method="post" name="addRemoteRelationship" action="addremotelink.php" onsubmit="return checkform(this);">
@@ -132,7 +132,7 @@ function checkform(frm) {
 		<td class="optionbox"><select id="cbRelationship"
 			name="cbRelationship">
 			<option value="self" selected="selected"><?php echo $pgv_lang["current_person"];?></option>
-			<!--  for now only allow creation of same person links... other links are confusing and cause problems 
+			<!--  for now only allow creation of same person links... other links are confusing and cause problems
 			<option value="mother"><?php echo $pgv_lang["mother"];?></option>
 			<option value="father"><?php echo $pgv_lang["father"];?></option>
 			<option value="husband"><?php echo $pgv_lang["husband"];?></option>
@@ -148,19 +148,19 @@ function checkform(frm) {
 		<?php echo $pgv_lang["label_location"];?></td>
 		<td class="optionbox">
 			<?php if (count($gedcomList)>0) { ?>
-				<input type="radio" id="local" name="location" value="local" onclick="swapComponents('local')" /> 
+				<input type="radio" id="local" name="location" value="local" onclick="swapComponents('local')" />
 				<?php echo $pgv_lang["label_same_server"];?>&nbsp;&nbsp;&nbsp;
-			<?php 
+			<?php
 			} if (count($remoteServers)>0) { ?>
-				<input type="radio" id="existing" name="location" value="existing" onclick="swapComponents('existing');" /> 
+				<input type="radio" id="existing" name="location" value="existing" onclick="swapComponents('existing');" />
 				<?php echo $pgv_lang["lbl_server_list"];?>&nbsp;&nbsp;&nbsp;
 			<?php } ?>
-			<input type="radio" id="remote" name="location" value="remote" checked="checked" onclick="swapComponents('remote');" /> 
+			<input type="radio" id="remote" name="location" value="remote" checked="checked" onclick="swapComponents('remote');" />
 			<?php echo $pgv_lang["label_diff_server"];?>
 		</td>
 	</tr>
 	<?php } ?>
-	
+
 	<tr>
 		<td class="descriptionbox wrap width20">
 		<?php print_help_link('link_person_id_help', 'qm');?>
@@ -193,7 +193,7 @@ function checkform(frm) {
 				</tr><tr>
 					<td valign="top"><?php echo $pgv_lang["label_site_url"];?></td>
 					<td><input type="text" id="txtURL" name="txtURL" size="66" />
-      				<br /><?php echo $pgv_lang["example"];?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl</td>
+					<br /><?php echo $pgv_lang["example"];?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl</td>
 				</tr><tr>
 					<td><?php echo $pgv_lang["label_gedcom_id2"];?></td>
 					<td><input type="text" id="txtGID" name="txtGID" /></td>

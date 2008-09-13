@@ -23,7 +23,8 @@
  * @package PhpGedView
  * @subpackage Media
  */
-require "config.php";
+
+require './config.php';
 
 if (!PGV_USER_CAN_EDIT) {
 	header("Location: login.php?url=uploadmedia.php");
@@ -49,7 +50,7 @@ print_header($pgv_lang["upload_media"]);
 				$_POST["folder".$i] .= "/";
 				$_POST["folder".$i] = str_replace("//", "/", $_POST["folder".$i]);
 				if ($_POST["folder".$i] == "/") $_POST["folder".$i] = "";
-				
+
 				AddToLog("Media file ".$MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name'])." uploaded");
 				$thumbgenned = false;
 				if (!move_uploaded_file($_FILES['mediafile'.$i]['tmp_name'], $MEDIA_DIRECTORY.$_POST["folder".$i].basename($_FILES['mediafile'.$i]['name']))) {

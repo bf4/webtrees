@@ -26,10 +26,8 @@
  * @version $Id$
  */
 
-/**
- * load the main configuration and context
- */
-require "config.php";
+require './config.php';
+
 if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=admin.php");
 	exit;
@@ -53,7 +51,7 @@ $dir_var = opendir ($INDEX_DIRECTORY);
 $dir_array = array();
 while ($file = readdir ($dir_var)) {
 	if (substr($file,-4)==".log" && substr($file,0,4)== "pgv-") {
-		$dir_array[$file_nr] = $file; 
+		$dir_array[$file_nr] = $file;
 		$file_nr++;
 	}
 }

@@ -137,7 +137,7 @@ function MM(e) {
 			yearform = document.getElementById('yearform'+personnum);
 			ageform = document.getElementById('ageform'+personnum);
 			yearform.innerHTML = year+"      "+month+" <?php print get_first_letter($pgv_lang["month"]);?>   "+day+" <?php print get_first_letter($pgv_lang["day"]);?>";
-			if (ba*yage>1 || ba*yage<-1 || ba*yage==0) 
+			if (ba*yage>1 || ba*yage<-1 || ba*yage==0)
 				 ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["years"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
 			else ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["year"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
 			var line = document.getElementById('ageline'+personnum);

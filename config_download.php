@@ -23,7 +23,9 @@
  * @package PhpGedView
  * @subpackage Admin
  */
-require "config.php";
+
+require './config.php';
+
 loadLangFile("pgv_confighelp");
 
 if (adminUserExists() && !PGV_USER_IS_ADMIN && $CONFIGURED) {

@@ -23,7 +23,9 @@
  * @subpackage Charts
  * @version $Id$
  */
-require("config.php");
+
+require './config.php';
+
 require_once("includes/functions_charts.php");
 
 // Extract form variables
@@ -46,7 +48,7 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
-}	
+}
 // ==========================================================================================
 
 if (strlen($name)<30) $cellwidth="420";
@@ -316,7 +318,7 @@ function print_td_person($n) {
 		$indi=Person::getInstance($pid);
 		$name=$indi->getFullName();
 		$addname=$indi->getAddName();
-		
+
 		if (($showthumbs) && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
 			$object = find_highlighted_object($pid, $indi->gedrec);
 			if (!empty($object["thumb"])) {
@@ -351,9 +353,9 @@ function print_td_person($n) {
 		$text .= "</a>";
 		if ($showids) {
 			$text .= " <span class='details1' ";
-		   if ($TEXT_DIRECTION=="ltr") $text .= "dir=\"ltr\">";
-  		   else $text .= "dir=\"rtl\">";
-  		   $text .= "(".$pid.")</span>";
+			if ($TEXT_DIRECTION=="ltr") $text .= "dir=\"ltr\">";
+			else $text .= "dir=\"rtl\">";
+ 			$text .= "(".$pid.")</span>";
 		}
 		$text .= "<br />";
 		if ($indi->canDisplayDetails()) {
@@ -365,14 +367,14 @@ function print_td_person($n) {
 			$text.=$death->date1->Format('Y');
 			$age=GedcomDate::GetAgeYears($birth, $death);
 			if ($age)
- 			$text.=" <span class=\"age\">".PrintReady("({$age})")."</span>";			
+ 			$text.=" <span class=\"age\">".PrintReady("({$age})")."</span>";
 			$text.="</span>";
 		}
 	}
-	
+
 	//Removed by BH causing problems with nicknames not printing
 	//$text = unhtmlentities($text);
-	
+
 	// -- empty box
 	if (empty($text)) $text = "&nbsp;<br />&nbsp;<br />";
 	// -- box color

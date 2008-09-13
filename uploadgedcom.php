@@ -48,7 +48,9 @@
 
 ini_set('register_globals', 'Off');
 @import_request_variables('gcp');
-require "config.php";
+
+require './config.php';
+
 require_once "includes/functions_import.php";
 require_once "includes/functions_export.php";
 
@@ -234,7 +236,7 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 				date_cleanup($_POST["datetype"]);
 			}
 			/**
-			 if($_POST["xreftype"]!="NA") {
+			if($_POST["xreftype"]!="NA") {
 				$filechanged=true;
 				xref_change($_POST["xreftype"]);
 				}
@@ -307,7 +309,7 @@ if ($action == "add_form") {
 	<input type="hidden" name="import_existing" value="<?php print $import_existing; ?>" />
 	<table class="facts_table">
 	<?php
-	
+
 	$i = 0;
 	if (!empty ($error)) {
 		print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
@@ -460,9 +462,9 @@ if ($verify == "verify_gedcom") {
 		<input type="hidden" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME)) print $GEDFILENAME; ?>" />
 		<input type="hidden" name="bakfile" value="<?php if (isset($bakfile)) print $bakfile; ?>" />
 		<input type="hidden" name="path" value="<?php if (isset($path)) print $path; ?>" />
-		
+
 		<?php
-		
+
 		if ($imported) {
 			print "<span class=error>".$pgv_lang["dataset_exists"]."</span><br /><br />";
 			if (!$SYNC_GEDCOM_FILE)
@@ -491,7 +493,7 @@ if ($verify == "verify_gedcom") {
 			print "</select></td></tr>";
 			//-- check if there are media in the DB already
 			$mc = get_list_size('objectlist');
-			
+
 			$hasObje = false;
 			//-- read the gedcom and check if it has OBJE records
 			$fp = fopen($GEDCOMS[$GEDFILENAME]["path"], "r");
@@ -500,7 +502,7 @@ if ($verify == "verify_gedcom") {
 				if (strpos($fcontents, "@ OBJE")!==false) $hasObje = true;
 			}
 			fclose($fp);
-			
+
 //			if ($mc>0 && !$hasObje) {
 			if ($mc>0) {
 			?>
@@ -809,39 +811,39 @@ if ($startimport == "true") {
 		<!--
 		function complete_progress(time, exectext, go_pedi, go_welc) {
 			progress = document.getElementById("progress_header");
-			if (progress) progress.innerHTML = '<span class="error"><b><?php print $pgv_lang["import_complete"]; ?></b></span><br />'+exectext+' '+time+' <?php print $pgv_lang["sec"]; ?>'; 
-			progress = document.getElementById("link1"); 
-			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_pedi+'</a>'; 
-			progress = document.getElementById("link2"); 
-			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_welc+'</a>'; 
-			progress = document.getElementById("link3"); 
+			if (progress) progress.innerHTML = '<span class="error"><b><?php print $pgv_lang["import_complete"]; ?></b></span><br />'+exectext+' '+time+' <?php print $pgv_lang["sec"]; ?>';
+			progress = document.getElementById("link1");
+			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_pedi+'</a>';
+			progress = document.getElementById("link2");
+			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_welc+'</a>';
+			progress = document.getElementById("link3");
 			if (progress) progress.innerHTML = '<a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"]; ?></a>';
 		}
-		function wait_progress() { 
-			progress = document.getElementById("progress_header"); 
-			if (progress) progress.innerHTML = '<?php print $pgv_lang["please_be_patient"]; ?>'; 
+		function wait_progress() {
+			progress = document.getElementById("progress_header");
+			if (progress) progress.innerHTML = '<?php print $pgv_lang["please_be_patient"]; ?>';
 		}
-		
-		var FILE_SIZE = <?php print $FILE_SIZE; ?>; 
+
+		var FILE_SIZE = <?php print $FILE_SIZE; ?>;
 		var TIME_LIMIT = <?php print $timelimit; ?>;
-		
-		function update_progress(bytes, time) { 
-			perc = Math.round(100*(bytes / FILE_SIZE)); 
-			if (perc>100) perc = 100; 
-			progress = document.getElementById("progress_div"); 
+
+		function update_progress(bytes, time) {
+			perc = Math.round(100*(bytes / FILE_SIZE));
+			if (perc>100) perc = 100;
+			progress = document.getElementById("progress_div");
 			if (progress) {
-				progress.style.width = perc+"%"; 
-				progress.innerHTML = perc+"%"; 
-			} 
-			perc = Math.round(100*(time / TIME_LIMIT)); 
-			if (perc>100) perc = 100; 
-			progress = document.getElementById("time_div"); 
+				progress.style.width = perc+"%";
+				progress.innerHTML = perc+"%";
+			}
+			perc = Math.round(100*(time / TIME_LIMIT));
+			if (perc>100) perc = 100;
+			progress = document.getElementById("time_div");
 			if (progress) {
-				progress.style.width = perc+"%"; progress.innerHTML = perc+"%"; 
-			} 
+				progress.style.width = perc+"%"; progress.innerHTML = perc+"%";
+			}
 		}
-		//--> 
-		</script> 
+		//-->
+		</script>
 		<?php
 		print "\n<table style=\"width: 800px;\"><tr><td>";
 		print "<div id=\"progress_header\" class=\"person_box\" style=\"width: 350px; margin: 10px; text-align: center;\">\n";
@@ -1106,7 +1108,7 @@ if ($stage == 1) {
 						});
 						//-->
 					</script>
-					<?php 
+					<?php
 					}
 					cleanup_database();
 					print_footer();
@@ -1185,7 +1187,7 @@ if ($stage == 1) {
 	$GEDCOMS[$ged]["pgv_ver" ] = PGV_VERSION;
 	store_gedcoms();
 	print "</td></tr>";
-	
+
 	$record_count = 0;
 	$_SESSION["resumed"] = 0;
 	unset ($_SESSION["TOTAL_BYTES"]);

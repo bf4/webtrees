@@ -28,10 +28,8 @@
  * @subpackage Calendar
  */
 
-/**
- * load the configuration and create the context
- */
-require("config.php");
+require './config.php';
+
 require_once("includes/functions_print_lists.php");
 
 if (isset($_REQUEST['cal'])) $cal = $_REQUEST['cal'];
@@ -407,7 +405,7 @@ case 'today':
 	$females=0;
 	$numfams=0;
 	print "<td class=\"optionbox {$TEXT_DIRECTION} wrap\">";
-	
+
 	// Avoid an empty unordered list
 	ob_start();
 	print calendar_list_text($indis, "<li>", "</li>", true);
@@ -415,10 +413,10 @@ case 'today':
 	if (!empty($content)) {
 		echo '<ul>', $content, '</ul>';
 	}
-	
+
 	print '</td>';
 	print "<td class=\"optionbox {$TEXT_DIRECTION} wrap\">";
-	
+
 	// Avoid an empty unordered list
 	ob_start();
 	print calendar_list_text($fams, "<li>", "</li>", true);
@@ -426,7 +424,7 @@ case 'today':
 	if (!empty($content)) {
 		echo '<ul>', $content, '</ul>';
 	}
-	
+
 	echo '</td>';
 	print "</tr><tr>";
 	// Table footers

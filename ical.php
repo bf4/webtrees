@@ -30,8 +30,8 @@
  * @TODO use language files
  */
 
-// -- include config file
-require("config.php");
+require './config.php';
+
 require_once 'includes/person_class.php';
 require_once 'includes/family_class.php';
 
@@ -130,13 +130,13 @@ function generateFamilyDescendancyIcal(&$person, &$family, $depth) {
 function outputIcal(){
 	global $icalEvents;
 
-  	echo getIcalHeader();
+	echo getIcalHeader();
 	$eventList = "";
 	foreach ($icalEvents  as $event) {
-	   $eventList .=  $event;
+		$eventList .=  $event;
 	}
 	echo $eventList;
-  	echo getIcalFooter();
+	echo getIcalFooter();
 }
 
 /**
@@ -156,10 +156,10 @@ function getIndiBDIcalEvent($indi){
 	$summary = $indi->getFullName() ."'s Birthday";
 	$place = $indi->getBirthPlace();
 	$description = "Born on " . $birthDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . encode_url($indi->getAbsoluteLinkUrl());
-  	$iCalRecord = getIcalRecord($birthDate, $summary, $description, encode_url($indi->getAbsoluteLinkUrl()));
+ 	$iCalRecord = getIcalRecord($birthDate, $summary, $description, encode_url($indi->getAbsoluteLinkUrl()));
 
 
-  	return $iCalRecord;
+ 	return $iCalRecord;
 }
 
 /**
@@ -191,7 +191,7 @@ function getFamilyAnniversaryIcalEvent($family){
 	$description = "Married on " . $anniversaryDate->Display(false) . ($place==""?"" : "in " .$place) . "\n" . encode_url($family->getAbsoluteLinkUrl());
 	$iCalRecord = getIcalRecord($anniversaryDate, $summary, $description, encode_url($family->getAbsoluteLinkUrl()));
 
-  	return $iCalRecord;
+ 	return $iCalRecord;
 }
 
 /**
@@ -209,19 +209,19 @@ function getIcalRecord($date, $summary, $description, $URL=""){
 	$startDate = getIcalDate($date);
 	$endDate = getIcalDate($date, true); //not needed as per RFC2445 spec
 	$iCalString = "\r\nBEGIN:VEVENT"
-		    		. "\r\nDTSTAMP:$dtstamp"
-		    		. "\r\nDTSTART;VALUE=DATE:$startDate"
-					. "\r\nDTEND;VALUE=DATE:$endDate" //not needed as per RFC2445 spec
-		    		. "\r\n" . formatIcalData("SUMMARY:$summary")
-		    		. "\r\n" . formatIcalData("DESCRIPTION:$description")
-		    		. "\r\nRRULE:FREQ=YEARLY"
-		    		. "\r\nCLASS:CONFIDENTIAL" //CLASS:PRIVATE together with TRANSP:TRANSPARENT can be used as well
-		    		. "\r\nTRANSP:TRANSPARENT" //Not needed if CLASS:CONFIDENTIAL is used, but will not hurt
-		    		. "\r\nUID:".PGV_PHPGEDVIEW.'-'.generate_guid() //unique ID
-		    		. "\r\nCATEGORIES:".PGV_PHPGEDVIEW." Events"
+						. "\r\nDTSTAMP:$dtstamp"
+						. "\r\nDTSTART;VALUE=DATE:$startDate"
+						. "\r\nDTEND;VALUE=DATE:$endDate" //not needed as per RFC2445 spec
+						. "\r\n" . formatIcalData("SUMMARY:$summary")
+						. "\r\n" . formatIcalData("DESCRIPTION:$description")
+						. "\r\nRRULE:FREQ=YEARLY"
+						. "\r\nCLASS:CONFIDENTIAL" //CLASS:PRIVATE together with TRANSP:TRANSPARENT can be used as well
+						. "\r\nTRANSP:TRANSPARENT" //Not needed if CLASS:CONFIDENTIAL is used, but will not hurt
+						. "\r\nUID:".PGV_PHPGEDVIEW.'-'.generate_guid() //unique ID
+						. "\r\nCATEGORIES:".PGV_PHPGEDVIEW." Events"
 					. "\r\n" . formatIcalData("URL:$URL")
 					. "\r\nEND:VEVENT";
-   return $iCalString;
+	return $iCalString;
 }
 
 /**
@@ -262,13 +262,13 @@ function getIcalTS($time=""){
 function getIcalHeader(){
 	//header('Content-type: text/plain');
 	header('Content-type: text/calendar; method=PUBLISH');
-  	header('Content-Disposition: attachment; filename="'.PGV_PHPGEDVIEW.'.ics"');
+ 	header('Content-Disposition: attachment; filename="'.PGV_PHPGEDVIEW.'.ics"');
 	return "BEGIN:VCALENDAR"
 			."\r\nVERSION:2.0"
 			."\r\nCALSCALE:GREGORIAN"
 			."\r\nPRODID:-//".PGV_PHPGEDVIEW."//".PGV_PHPGEDVIEW."//EN"
 			."\r\nX-WR-CALNAME:".PGV_PHPGEDVIEW
-  		."\r\nMETHOD:PUBLISH";
+			."\r\nMETHOD:PUBLISH";
 }
 
 /**
@@ -302,16 +302,16 @@ function formatIcalData($data){
  * @return	string the properly folded value
  */
 function rfc2445Fold($string) {
-    if(strlen($string) <= 75) {
-        return $string;
-    }
-    $retval = '';
-    while(strlen($string) > 75) {
-        $retval .= substr($string, 0, 75 - 1) . "\r\n" . ' ';
-        $string  = substr($string, 75 - 1);
-    }
-    $retval .= $string;
-    return $retval;
+ if(strlen($string) <= 75) {
+		return $string;
+	}
+	$retval = '';
+	while(strlen($string) > 75) {
+		$retval .= substr($string, 0, 75 - 1) . "\r\n" . ' ';
+		$string  = substr($string, 75 - 1);
+	}
+	$retval .= $string;
+	return $retval;
 }
 
 /**

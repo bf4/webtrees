@@ -42,7 +42,8 @@
  * @subpackage Lists
  */
 
-require 'config.php';
+require './config.php';
+
 require_once 'includes/functions_print_lists.php';
 
 // We show three different lists:
@@ -292,7 +293,7 @@ if ($showList) {
 				list($husb_surn,$husb_givn)=explode(',', $husb_name);
 				$givn_alpha=get_first_letter($husb_givn);
 				if ((!$surname || $surname==$husb_surn) &&
-				    (!$alpha   || $alpha==get_first_letter($husb_name))) {
+					(!$alpha   || $alpha==get_first_letter($husb_name))) {
 					$givn_initials[$givn_alpha]=$givn_alpha;
 					if (!$falpha || $falpha==$givn_alpha) {
 						$family->setPrimaryName($n);
@@ -304,7 +305,7 @@ if ($showList) {
 				list($wife_surn,$wife_givn)=explode(',', $wife_name);
 				$givn_alpha=get_first_letter($wife_givn);
 				if ((!$surname || $surname==$wife_surn) &&
-				    (!$alpha   || $alpha==get_first_letter($wife_name))) {
+					(!$alpha   || $alpha==get_first_letter($wife_name))) {
 					$givn_initials[$givn_alpha]=$givn_alpha;
 					if (!$falpha || $falpha==$givn_alpha) {
 						$family->setPrimaryName($n);

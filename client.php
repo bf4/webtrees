@@ -23,13 +23,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
  * @package PhpGedView
  * @subpackage Edit
  * @version $Id$
  */
 
-require 'config.php';
+require './config.php';
+
 require_once 'includes/functions_edit.php';
 
 header("Content-Type: text/plain; charset=$CHARACTER_SET");
@@ -307,7 +308,7 @@ case 'soundex':
 	$firstname=safe_GET('firstname');
 	$place=safe_GET('place');
 	$soundex=safe_GET('soundex', '\w+', 'Russell');
-	
+
 	if ($lastname || $firstname) {
 		$res = search_indis_soundex($soundex, $lastname, $firstname, $place);
 		print "SUCCESS\n";
@@ -384,7 +385,7 @@ case 'getxref':
 		}
 		$res = dbquery($sql);
 		print "SUCCESS\n";
-		while ($row = $res->fetchRow()) {		
+		while ($row = $res->fetchRow()) {
 			print "$row[0]\n";
 		}
 		$res->free();

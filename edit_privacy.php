@@ -27,7 +27,8 @@
  * @version $Id$
  */
 
-require 'config.php';
+require './config.php';
+
 require 'includes/functions_print_facts.php';
 
 loadLangFile('pgv_confighelp, pgv_help');
