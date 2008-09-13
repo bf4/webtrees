@@ -7,6 +7,10 @@
    Comments: Norwegian Language file for Google map module
 ===================================================*/
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 $pgv_lang["googlemap"]              = "Kart";
 $pgv_lang["no_gmtab"]               = "Det er ingen kartreferanser knyttet til denne personen";

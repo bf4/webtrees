@@ -6,6 +6,10 @@
    Comments:        Hungarian Language file for Google map module
 ===================================================*/
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 $pgv_lang["googlemap"]              = "Térkép";
 $pgv_lang["no_gmtab"]               = "Nincsen térképe annek a személynek";

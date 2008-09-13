@@ -25,8 +25,9 @@
  * @translator Gerd Kroll
  * @version $Id$
  */
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 

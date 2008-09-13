@@ -25,6 +25,11 @@
  * $Id: defaultconfig.php 2666 2008-04-23 21:38:56Z wooc$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $GOOGLEMAP_ENABLED = "false";          // Enable or disable Googlemap
 
 $GOOGLEMAP_API_KEY = "Fill in your key here. Request key from http://www.google.com/apis/maps/";
