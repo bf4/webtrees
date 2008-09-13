@@ -27,6 +27,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_block_givn_top10"]["name"]		= $pgv_lang["block_givn_top10"];
 $PGV_BLOCKS["print_block_givn_top10"]["descr"]		= "block_givn_top10_descr";
 $PGV_BLOCKS["print_block_givn_top10"]["type"]		= "both";
@@ -34,7 +39,7 @@ $PGV_BLOCKS["print_block_givn_top10"]["infoStyle"]	= "style2";
 $PGV_BLOCKS["print_block_givn_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
 	"cache"=>7,
-	"num"=>10, 
+	"num"=>10,
 	"infoStyle"=>"style2",
 	"showUnknown"=>"yes"
 	);
@@ -68,7 +73,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		}
 	}
 	$title .= str_replace("10", $config["num"], $pgv_lang["block_givn_top10_title"]);
-		
+
 	$content = '<div class="normal_inner_block">';
 	//Select List or Table
 	switch ($infoStyle) {
@@ -81,12 +86,12 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 		if ($totals) {
 			$content.='<b>'.$pgv_lang['female'].'</b><div class="wrap" style="'.$padding.'">'.$totals.'</div><br />';
 		}
-		//List Male names	
+		//List Male names
 		$totals=$stats->commonGivenMaleTotals($params);
 		if ($totals) {
 			$content.='<b>'.$pgv_lang['male'].'</b><div class="wrap" style="'.$padding.'">'.$totals.'</div><br />';
 		}
-		//List Unknown names	
+		//List Unknown names
 		$totals=$stats->commonGivenUnknownTotals($params);
 		if ($totals && $showUnknown=="yes") {
 			$content.='<b>'.$pgv_lang['unknown'].'</b><div class="wrap" style="'.$padding.'">'.$totals.'</div><br />';

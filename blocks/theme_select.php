@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_block_theme_select"]["name"]			= $pgv_lang["theme_select_block"];
 $PGV_BLOCKS["print_block_theme_select"]["descr"]		= "theme_select_descr";
 $PGV_BLOCKS["print_block_theme_select"]["type"]			= "gedcom";
@@ -35,14 +40,14 @@ $PGV_BLOCKS["print_block_theme_select"]["config"]		= array("cache"=>-1);
 function print_block_theme_select($style=0, $config="", $side, $index) {
 	global $pgv_lang;
 	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
-	
+
 	$id="theme_select";
 	$title = $pgv_lang["change_theme"];
 	$title .= print_help_link("change_theme", "qm","",false,true);
 
 	$theme_menu=MenuBar::getThemeMenu();
 	$content='<div class="center theme_form"><br />'.$theme_menu->getMenuAsDropdown().'<br /<br /></div>';
-	
+
 	global $THEME_DIR;
 	if ($style) {
 		include($THEME_DIR."templates/block_small_temp.php");

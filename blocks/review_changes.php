@@ -27,6 +27,11 @@
  * @todo add a time configuration option
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["review_changes_block"]["name"]			= $pgv_lang["review_changes_block"];
 $PGV_BLOCKS["review_changes_block"]["descr"]		= "review_changes_descr";
 $PGV_BLOCKS["review_changes_block"]["canconfig"]	= false;
@@ -94,7 +99,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 				}
 			}
 			$title .= $pgv_lang["review_changes"];
-				
+
 			$content = "";
 			if (PGV_USER_CAN_ACCEPT) {
 				$content .= "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />";

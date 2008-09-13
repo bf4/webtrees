@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_html_block"]["name"]			= $pgv_lang["html_block_name"];
 $PGV_BLOCKS["print_html_block"]["descr"]		= "html_block_descr";
 $PGV_BLOCKS["print_html_block"]["canconfig"]= true;

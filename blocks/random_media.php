@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 //-- only enable this block if multi media has been enabled
 if ($MULTI_MEDIA) {
 	$PGV_BLOCKS["print_random_media"]["name"]		= $pgv_lang["random_media_block"];
@@ -68,7 +73,7 @@ if ($MULTI_MEDIA) {
 	);
 
 	require_once 'includes/functions_print_facts.php';
-	
+
 	//-- function to display a random picture from the gedcom
 	function print_random_media($block = true, $config="", $side, $index) {
 		global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
@@ -76,18 +81,18 @@ if ($MULTI_MEDIA) {
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
 		global $PGV_BLOCKS, $ctype, $action;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
-	
+
 		if (!$MULTI_MEDIA) return;
-	
+
 			if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
 			if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
 			else $filter = "all";
 			if (!isset($config['controls'])) $config['controls'] ="yes";
 			if (!isset($config['start'])) $config['start'] ="no";
-	
+
 		$medialist = array();
 		$foundlist = array();
-	
+
 		$medialist = get_medialist(false, '', true, true);
 		$ct = count($medialist);
 		if ($ct>0) {
@@ -104,22 +109,22 @@ if ($MULTI_MEDIA) {
 				$links = $medialist[$value]["LINKS"];
 				$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />";}
-	
+
 				$disp &= displayDetailsByID($medialist[$value]["XREF"], "OBJE");
 				$disp &= !FactViewRestricted($medialist[$value]["XREF"], $medialist[$value]["GEDCOM"]);
-	
+
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />";}
-	
+
 				$isExternal = isFileExternal($medialist[$value]["FILE"]);
-	
+
 				if ($block && !$isExternal) $disp &= ($medialist[$value]["THUMBEXISTS"]>0);
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
-	
+
 				// Filter according to format and type  (Default: unless configured otherwise, don't filter)
 				if (!empty($medialist[$value]["FORM"]) && isset($config["filter_".$medialist[$value]["FORM"]]) && $config["filter_".$medialist[$value]["FORM"]]!="yes") $disp = false;
 				if (!empty($medialist[$value]["TYPE"]) && isset($config["filter_".$medialist[$value]["TYPE"]]) && $config["filter_".$medialist[$value]["TYPE"]]!="yes") $disp = false;
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";}
-	
+
 				if ($disp && count($links) != 0){
 					/** link privacy allready checked in displayDetailsById
 					foreach($links as $key=>$type) {
@@ -163,7 +168,7 @@ if ($MULTI_MEDIA) {
 				$i++;
 			}
 			if (!$disp) return false;
-	
+
 				$content = "";
 				$id = "";
 			if ($action!="ajax") {
@@ -186,7 +191,7 @@ if ($MULTI_MEDIA) {
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
 					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['rdarrow']['other']}\" border=\"0\" alt=\"{$pgv_lang['next_image']}\" title=\"{$pgv_lang['next_image']}\" /></a>";
-	
+
 						$content .= "<div class=\"center\" id=\"random_picture_controls$index\"><br />";
 						if ($TEXT_DIRECTION=="rtl") $content .= $linkNextImage;
 						$content .= "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" onclick=\"togglePlay(); return false;\">";
@@ -212,7 +217,7 @@ if ($MULTI_MEDIA) {
 								imgid.src = \''.$PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other'].'\';
 							}
 						}
-	 
+
 						function playSlideShow() {
 							if (play) {
 									ajaxBlock(\'random_picture_content'.$index.'\', \'print_random_media\', \''.$side.'\', '.$index.', \''.$ctype.'\', false);
@@ -239,11 +244,11 @@ if ($MULTI_MEDIA) {
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
 				$content .= "<table id=\"random_picture_box\" width=\"100%\"><tr><td valign=\"top\"";
-	
+
 				if ($block) $content .= " align=\"center\" class=\"details1\"";
 				else $content .= " class=\"details2\"";
 			$mediaid = $medialist[$value]["XREF"];
-			
+
 //LBox --------  change for Lightbox Album --------------------------------------------
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -254,7 +259,7 @@ function openPic(filename, width, height) {
 	 	screenH = screen.height;
 	 	if (width>screenW-100) width=screenW-100;
 	 	if (height>screenH-110) height=screenH-120;
-		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) 
+		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1))
 			win02 = window.open('imageview.php?filename='+filename,'win02','top=50,left=150,height='+height+',width='+width+',scrollbars=1,resizable=1');
 			// win03.resizeTo(winWidth 2,winHeight 30);
 		else window.open(unescape(filename),'win02','top=50,left=150,height='+height+',width='+width+',scrollbars=1,resizable=1');
@@ -298,7 +303,7 @@ function openPic(filename, width, height) {
 			$content .= "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
 			$content .= "<b>". $mediaTitle ."</b>";
 			$content .= "</a><br />";
-	
+
 			ob_start();
 			PrintMediaLinks($medialist[$value]["LINKS"], "normal");
 			$content .= ob_get_clean();
@@ -315,16 +320,16 @@ function openPic(filename, width, height) {
 				else print $content;
 		}
 	}
-	
-	
+
+
 	function print_random_media_config($config) {
 		global $pgv_lang, $factarray, $PGV_BLOCKS, $TEXT_DIRECTION;
-	
+
 		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
 		if (!isset($config["filter"])) $config["filter"] = "all";
 		if (!isset($config["controls"])) $config["controls"] = "yes";
 		if (!isset($config["start"])) $config["start"] = "no";
-	
+
 		if (!isset($config["filter_avi"])) {
 			$config["filter_avi"]	= "no";
 			$config["filter_bmp"]	= "yes";
@@ -336,7 +341,7 @@ function openPic(filename, width, height) {
 			$config["filter_png"]	= "yes";
 			$config["filter_tiff"]	= "yes";
 			$config["filter_wav"]	= "no";
-	
+
 			$config["filter_audio"]			= "no";
 			$config["filter_book"]			= "yes";
 			$config["filter_card"]			= "yes";
@@ -355,7 +360,7 @@ function openPic(filename, width, height) {
 		}
 		if (!isset($config["filter_other"])) $config["filter_other"] = "yes";
 		if (!isset($config["filter_painting"])) $config["filter_painting"] = "yes";
-	
+
 		print "<tr><td class=\"descriptionbox wrap width33\">";
 				print_help_link("random_media_persons_or_all_help", "qm");
 			print $pgv_lang["random_media_persons_or_all"];
@@ -369,7 +374,7 @@ function openPic(filename, width, height) {
 	<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["all"]; ?></option>
 	</select></td>
 	</tr>
-	
+
 	<tr>
 	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_filter_help", "qm"); print $pgv_lang["filter"]; ?></td>
 		<td class="optionbox">
@@ -421,7 +426,7 @@ function openPic(filename, width, height) {
 			<table class="width100">
 				<tr>
 				<?php
-				
+
 				//-- Build array of currently defined values for the Media Type
 				foreach ($pgv_lang as $varname => $typeValue) {
 					if (substr($varname, 0, 6) == "TYPE__") {
@@ -451,7 +456,7 @@ function openPic(filename, width, height) {
 			</table>
 	</td>
 	</tr>
-	
+
 	<tr>
 	<td class="descriptionbox wrap width33"><?php print_help_link("random_media_ajax_controls_help", "qm"); print $pgv_lang["random_media_ajax_controls"]; ?></td>
 		<td class="optionbox"><select name="controls">
@@ -471,9 +476,9 @@ function openPic(filename, width, height) {
 	</select>
 	<input type="hidden" name="cache" value="0" />
 	</td></tr>
-	
+
 		<?php
 	}
-	
+
 } // if ($MULTI_MEDIA)
 ?>
