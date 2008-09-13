@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_logged_in_users"]["name"]		= $pgv_lang["logged_in_users_block"];
 $PGV_BLOCKS["print_logged_in_users"]["descr"]		= "logged_in_users_descr";
 $PGV_BLOCKS["print_logged_in_users"]["canconfig"]	= false;

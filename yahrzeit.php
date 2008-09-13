@@ -27,6 +27,11 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS['print_yahrzeit']['name']     =$pgv_lang['yahrzeit_block'];
 $PGV_BLOCKS['print_yahrzeit']['descr']    ='yahrzeit_descr';
 $PGV_BLOCKS['print_yahrzeit']['canconfig']=true;
@@ -282,7 +287,7 @@ function print_yahrzeit_config($config) {
 
 	// Cache file life is not configurable by user:  anything other than 1 day doesn't make sense
 	print '<input type="hidden" name="cache" value="1" />';
-	
+
 	print '</td></tr>';
 }
 ?>

@@ -26,6 +26,11 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_todays_events"]["name"]		= $pgv_lang["todays_events_block"];
 $PGV_BLOCKS["print_todays_events"]["descr"]		= "todays_events_descr";
 $PGV_BLOCKS["print_todays_events"]["infoStyle"]	= "style2";
