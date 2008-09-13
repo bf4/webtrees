@@ -24,9 +24,14 @@
  * $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 class plugin extends base_plugin {
 	var $surname=null; // User option: add or replace husband's surname
-	
+
 	function doesRecordNeedUpdate($xref, $gedrec) {
 		return preg_match('/^1 SEX F/m', $gedrec) && preg_match('/^1 NAME /m', $gedrec) && self::_surnames_to_add($xref, $gedrec);
 	}
