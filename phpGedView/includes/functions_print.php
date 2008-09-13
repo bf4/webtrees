@@ -305,7 +305,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	}
 	//-- find additional name
 	$addname=$person->getAddName();
-	$name = PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'));
+	//$name = PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'));
+	$name = PrintReady($name);
 
 	if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 	else $title = $pid." :".$pgv_lang["indi_info"];
