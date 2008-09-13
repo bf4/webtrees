@@ -24,6 +24,11 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once('webservice/genealogyService.php');
 require_once("includes/functions_edit.php");
 require_once('includes/GEWebService.php');
