@@ -24,19 +24,19 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-global $SEARCH_SPIDER; 
+global $SEARCH_SPIDER;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php print $CHARACTER_SET; ?>" />
 		<?php if( $FAVICON ) { ?><link rel="shortcut icon" href="<?php print $FAVICON; ?>" type="image/x-icon" /> <?php	} ?>
-	
+
 		<title><?php print $title; ?></title>
 		<?php if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION){ ?>
 			<link href="<?php print encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php print $applicationType; ?>" title=" <?php print PrintReady(strip_tags($GEDCOM_TITLE), TRUE); ?>" />
@@ -59,7 +59,7 @@ global $SEARCH_SPIDER;
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
 	</style>
-	<?php } 
+	<?php }
 	if ($view!="preview") { ?>
 		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php print PrintReady(strip_tags($META_AUTHOR), TRUE); ?>" /><?php } ?>
 		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php print PrintReady(strip_tags($META_PUBLISHER), TRUE); ?>" /><?php } ?>
@@ -73,14 +73,14 @@ global $SEARCH_SPIDER;
 		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php print PrintReady(strip_tags($META_REVISIT), TRUE);?>" /><?php } ?>
 		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW." - ".PGV_PHPGEDVIEW_URL;?>" />
 	<?php }	?>
-	<?php print $javascript; ?> 
+	<?php print $javascript; ?>
 	<?php print $head; //-- additional header information ?>
 </head>
 <body id="body" <?php print $bodyOnLoad; ?>>
 <!-- begin header section -->
 <?php
-if ($view!='simple') 
-if ($view=='preview') include($print_headerfile); 
+if ($view!='simple')
+if ($view=='preview') include($print_headerfile);
 else {?>
 <div id="header" class="<?php print $TEXT_DIRECTION; ?>">
 <table class="<?php print $TEXT_DIRECTION; ?>" border="0" width="95%">
@@ -115,8 +115,7 @@ else {?>
 <table cellpadding="3">
 	<tr>
 		<td valign="top">
-<?php include($toplinks); 
+<?php include($toplinks);
 } ?>
 <!-- end header section -->
 <!-- begin content section -->
-		

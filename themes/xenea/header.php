@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -40,7 +40,7 @@ $displayDate = $date->Display(false);
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php print $CHARACTER_SET; ?>" />
 		<?php if( $FAVICON ) { ?><link rel="shortcut icon" href="<?php print $FAVICON; ?>" type="image/x-icon" /> <?php	} ?>
-	
+
 		<title><?php print $title; ?></title>
 		<?php if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION){ ?>
 			<link href="<?php print encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php print $applicationType; ?>" title=" <?php print PrintReady(strip_tags($GEDCOM_TITLE), TRUE); ?>" />
@@ -63,7 +63,7 @@ $displayDate = $date->Display(false);
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
 	</style>
-	<?php } 
+	<?php }
 	if ($view!="preview") { ?>
 		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php print PrintReady(strip_tags($META_AUTHOR), TRUE); ?>" /><?php } ?>
 		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php print PrintReady(strip_tags($META_PUBLISHER), TRUE); ?>" /><?php } ?>
@@ -77,20 +77,20 @@ $displayDate = $date->Display(false);
 		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php print PrintReady(strip_tags($META_REVISIT), TRUE);?>" /><?php } ?>
 		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW." - ".PGV_PHPGEDVIEW_URL;?>" />
 	<?php }	?>
-	<?php print $javascript; ?> 
+	<?php print $javascript; ?>
 	<?php print $head; //-- additional header information ?>
 </head>
 <body id="body" <?php print $bodyOnLoad; ?>>
 <!-- begin header section -->
 <?php
-if ($view!='simple') 
-if ($view=='preview') include($print_headerfile); 
+if ($view!='simple')
+if ($view=='preview') include($print_headerfile);
 else {?>
 <div id="header" class="<?php print $TEXT_DIRECTION; ?>">
 <table width="100%" border="0" cellspacing="0" cellpadding="1" bgcolor="#003399">
    <tr>
       <td>
-      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php
       		if ($TEXT_DIRECTION=="ltr") {
 	      		print $PGV_IMAGE_DIR."/cabeza.jpg'); ";
 	      		print "background-position:left top; ";
@@ -126,8 +126,7 @@ else {?>
 
                 </div></td><td width="10"><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td></tr></table>
 		<?php } ?>
-<?php include($toplinks); 
+<?php include($toplinks);
 } ?>
 <!-- end header section -->
 <!-- begin content section -->
-		

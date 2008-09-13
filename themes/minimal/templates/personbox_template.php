@@ -27,6 +27,12 @@
  * @subpackage Themes
  * @version $Id$
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 ?>
 <div id="I<?php print $boxID; ?>links"
 	style="position: absolute; left: 0px; top: 0px; width: <?php print $lbwidth; ?>px; visibility: hidden; z-index: '100';">
@@ -37,14 +43,14 @@
 		<div id="icons-<?php print $boxID; ?>"
 			style="<?php print $iconsStyleAdd; ?> width: 25px; height: 50px;"><?php print $icons; ?>
 		</div>
-		<?php print $thumbnail; ?> 
+		<?php print $thumbnail; ?>
 		<a onclick="event.cancelBubble = true;"
 			href="individual.php?pid=<?php print $pid; ?>&amp;ged=<?php print $GEDCOM; ?>"
-			title="<?php print $title; ?>"> 
-		<span id="namedef-<?php print $boxID; ?>" class="name<?php print $style; ?> <?php print $classfacts; ?>"> 
+			title="<?php print $title; ?>">
+		<span id="namedef-<?php print $boxID; ?>" class="name<?php print $style; ?> <?php print $classfacts; ?>">
 			<?php print $name.$addname; ?>
 		</span>
-		<span class="name<?php print $style; ?>"> <?php print $genderImage; ?></span> 
+		<span class="name<?php print $style; ?>"> <?php print $genderImage; ?></span>
 		<?php print $showid; ?> </a>
 		<div id="fontdef-<?php print $boxID; ?>" class="details<?php print $style; ?>">
 			<div id="inout2-<?php print $boxID; ?>" style="display: block;"><?php print $BirthDeath; ?></div>

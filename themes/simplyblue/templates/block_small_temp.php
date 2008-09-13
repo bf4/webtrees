@@ -1,7 +1,7 @@
 <?php
 /**
  * Template for drawing the height-restricted blocks on the portal pages
- * 
+ *
  * This template expects that the following variables will be set
  * $id - the DOM id for the block div
  * $title - the title of the block
@@ -28,6 +28,12 @@
  * @subpackage Themes
  * @version $Id$
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 ?>
 <div id="<?php print $id; ?>" class="block" >
 	<table class="blockheader" cellpadding="0" cellspacing="0" style="direction:ltr;padding:0;margin:0;">
