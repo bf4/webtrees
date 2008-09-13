@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: (1) Missing underline of starred names on Charts. (2) Erratic width of Navigator on Album Tab page. (windmillway)  
  - Added list place size configuration setting (yalnifj)
  - Added: [ 1671551 ] 2-surnames support for PGV!!! (fisharebest)
  - Fixed: [ 2016270 ] Surname with commas (fisharebest)

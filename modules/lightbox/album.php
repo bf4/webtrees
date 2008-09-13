@@ -116,7 +116,7 @@ echo "<table border='0' width='100%' cellpadding=\"0\" ><tr>", "\n\n";
 //------------------------------------------------------------------------------
 // Build Thumbnail Rows
 //------------------------------------------------------------------------------
-	echo "<td valign=\"top\" >";
+	echo "<td valign=\"top\">";
 		echo "<table width=\"100%\" cellpadding=\"0\" border=\"0\"><tr>";
 		echo "<td width=\"100%\" valign=\"top\" >";
 		for ($t=1; $t <=5; $t++) {
@@ -148,9 +148,9 @@ echo "<table border='0' width='100%' cellpadding=\"0\" ><tr>", "\n\n";
 //------------------------------------------------------------------------------
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
-	echo '<td valign="top" align="center" width="220">', "\n" ;
+	echo '<td valign="top" align="center" width="220px">', "\n" ;
 	//echo "<table cellpadding=\"0\" ><tr><td>";
-		echo "<table cellpadding=\"0\" STYLE=\"margin-top:2px; margin-left:0px;\" ><tr><td class=\"optionbox\" align=\"center\">";
+		echo "<table cellpadding=\"0\" STYLE=\"margin-top:2px; margin-left:0px;\" ><tr><td width=\"220px\" class=\"optionbox\" align=\"center\">";
 		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
 			$controller->lightbox();	 
 		echo "<br />";
