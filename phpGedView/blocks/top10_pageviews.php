@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["top10_pageviews"]["name"]		= $pgv_lang["top10_pageviews"];
 $PGV_BLOCKS["top10_pageviews"]["descr"]		= "top10_pageviews_descr";
 $PGV_BLOCKS["top10_pageviews"]["canconfig"]	= true;

@@ -27,6 +27,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once 'includes/functions_print_lists.php';
 require_once 'includes/class_stats.php';
 

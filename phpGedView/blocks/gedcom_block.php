@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_gedcom_block"]["name"]		= $pgv_lang["gedcom_block"];
 $PGV_BLOCKS["print_gedcom_block"]["descr"]		= "gedcom_descr";
 $PGV_BLOCKS["print_gedcom_block"]["type"]		= "gedcom";
@@ -47,7 +52,7 @@ function print_gedcom_block($block = true, $config="", $side, $index) {
 		$content .=  "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".preg_replace("/'/", "\'", $GEDCOM)."&ctype=gedcom")."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1'); return false;\">".$pgv_lang["customize_gedcom_page"]."</a><br />\n";
 	}
 	$content .=  "</div>";
-	
+
 	global $THEME_DIR;
 	include($THEME_DIR."templates/block_main_temp.php");
 }

@@ -27,6 +27,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once 'includes/functions_print_lists.php';
 
 $PGV_BLOCKS["print_gedcom_stats"]["name"]     =$pgv_lang["gedcom_stats_block"];

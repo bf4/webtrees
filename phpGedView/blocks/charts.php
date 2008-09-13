@@ -27,6 +27,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_charts_block"]["name"]		= $pgv_lang["charts_block"];
 $PGV_BLOCKS["print_charts_block"]["descr"]		= "charts_block_descr";
 $PGV_BLOCKS["print_charts_block"]["canconfig"]	= true;
@@ -36,11 +41,11 @@ $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	"type"=>'pedigree',
 	"details"=>'no'
 	);
-	
+
 function print_charts_block($block = true, $config="", $side, $index) {
 	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ctype, $PGV_IMAGE_DIR, $PGV_IMAGES, $PEDIGREE_ROOT_ID, $PEDIGREE_FULL_DETAILS;
 	global $show_full, $bwidth, $bheight;
-	
+
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config['details'])) $config['details'] = 'no';
 	if (empty($config["rootId"])) {
@@ -54,19 +59,19 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			}
 		}
 	}
-	
-	// Override GEDCOM configuration temporarily	
+
+	// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
 	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
 	if ($config["details"]=="no") {
 		$show_full = 0;
-		// Here we could adjust the block width & height to accommodate larger displays 
+		// Here we could adjust the block width & height to accommodate larger displays
 	} else {
 		$show_full = 1;
-		// Here we could adjust the block width & height to accommodate larger displays 
+		// Here we could adjust the block width & height to accommodate larger displays
 	}
 	$PEDIGREE_FULL_DETAILS = $show_full;
-	
+
 	if ($config['type']!='treenav') {
 		include_once("includes/controllers/hourglass_ctrl.php");
 		/* @var $controller HourglassController */
@@ -78,13 +83,13 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$nav = new TreeNav($config['rootId'],'blocknav',-1);
 		$nav->generations = 2;
 	}
-	
+
 	$person = Person::getInstance($config["rootId"]);
 	if ($person==null) {
 		$config["rootId"] = $PEDIGREE_ROOT_ID;
 		$person = Person::getInstance($PEDIGREE_ROOT_ID);
 	}
-	
+
 	$id = "charts_block";
 	$title = print_help_link("index_charts_help", "qm", "", false, true);
 	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
@@ -158,8 +163,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	} else {
 		$content=$pgv_lang['invalid_id'];
 	}
-		
-	
+
 	global $THEME_DIR;
 	include($THEME_DIR."templates/block_small_temp.php");
 	// Restore GEDCOM configuration

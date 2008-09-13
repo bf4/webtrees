@@ -26,6 +26,11 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_upcoming_events"]["name"]		= $pgv_lang["upcoming_events_block"];
 $PGV_BLOCKS["print_upcoming_events"]["descr"]		= "upcoming_events_descr";
 $PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";

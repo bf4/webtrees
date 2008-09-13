@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_welcome_block"]["name"]		= $pgv_lang["welcome_block"];
 $PGV_BLOCKS["print_welcome_block"]["descr"]		= "welcome_descr";
 $PGV_BLOCKS["print_welcome_block"]["type"]		= "user";
@@ -38,7 +43,7 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 
 	$id="user_welcome";
 	$title = $pgv_lang["welcome"]." ".getUserFullName(PGV_USER_ID);
-	
+
 	$content = "<table class=\"blockcontent\" cellspacing=\"0\" cellpadding=\"0\" style=\" width: 100%; direction:ltr;\"><tr>";
 	$content .= "<td class=\"tab_active_bottom\" colspan=\"3\" ></td></tr><tr>";
 	if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {

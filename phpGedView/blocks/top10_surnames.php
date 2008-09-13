@@ -26,12 +26,17 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_block_name_top10"]["name"]		= $pgv_lang["block_top10"];
 $PGV_BLOCKS["print_block_name_top10"]["descr"]		= "block_top10_descr";
 $PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
 	"cache"=>7,
-	"num"=>10, 
+	"num"=>10,
 	);
 
 function top_surname_sort($a, $b) {

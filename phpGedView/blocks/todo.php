@@ -27,6 +27,11 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS['print_todo']['name']     =$pgv_lang['todo_block'];
 $PGV_BLOCKS['print_todo']['descr']    ='todo_descr';
 $PGV_BLOCKS['print_todo']['canconfig']=true;
@@ -144,7 +149,7 @@ function print_todo_config($config) {
 		print ">{$pgv_lang[$option]}</option>";
 	}
 	print '</select></td></tr>';
-	
+
 	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link('todo_show_unassigned_help', 'qm');
 	print $pgv_lang['todo_show_unassigned']."</td>";

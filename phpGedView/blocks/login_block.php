@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $PGV_BLOCKS["print_login_block"]["name"]		= $pgv_lang["login_block"];
 $PGV_BLOCKS["print_login_block"]["descr"]		= "login_descr";
 $PGV_BLOCKS["print_login_block"]["type"]		= "both";		// On Portal page, this becomes a Logout block
