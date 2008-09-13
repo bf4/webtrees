@@ -26,6 +26,11 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 // Activate this block only if the Research Assistant is visible to this user
 if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 	loadLangFile("research_assistant:lang");

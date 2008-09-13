@@ -25,10 +25,11 @@
  * @translator Matti Valve
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Et pääse suoraan kielitiedostoon.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 $pgv_lang["autosearch_ssurname"] 	= "Lisää puolison sukunimi:";
 $pgv_lang["autosearch_sgivennames"] = "Lisää puolison etunimet:";
 $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com lisäke";

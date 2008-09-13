@@ -1,4 +1,10 @@
 <?php
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $inferences[] = array('local'=>'SURN', 'record'=>'FAMC:HUSB', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
 $inferences[] = array('local'=>'SURN', 'record'=>'FAMC:WIFE', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
 $inferences[] = array('local'=>'BIRT:PLAC', 'record'=>'FAMC:HUSB', 'comp'=>'BIRT:PLAC', 'value'=>0, 'count'=>0);

@@ -28,11 +28,12 @@
  * @author Brian Kramer
  * @author Julian Gautier
  */
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"research_assistant.php")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 // Require our base class and db functions
 require_once ("modules/research_assistant/ra_functions.php");
 require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';

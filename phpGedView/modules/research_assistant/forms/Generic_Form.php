@@ -25,13 +25,12 @@
  * @author Brandon Gagnon
  * @author Wade Lasson
  */
- 
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"Generic_Form.php")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
- 
+
 // Require the base class and any functions we need.
 require_once "ra_form.php";
 require_once "includes/functions_edit.php";
