@@ -24,6 +24,11 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once "config.php";
 require "modules/googlemap/defaultconfig.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');

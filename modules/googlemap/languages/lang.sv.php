@@ -8,6 +8,10 @@
    Comments:        Swedish Language file for Google map module
 ===================================================*/
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 $pgv_lang["googlemap"]              = "Karta";
 $pgv_lang["no_gmtab"]               = "Det finns ingen kartdata för denna person";

@@ -25,8 +25,8 @@
  * $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -102,7 +102,7 @@ function set_levelm($level, $parent) {
 		$levelm=0;
 	}
 	$fullplace = "";
-	if ($level==0) 
+	if ($level==0)
 		$levelm=0;
 	else {
 		for ($i=1; $i<=$level; $i++) {
@@ -219,7 +219,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				else echo PrintReady(addslashes($place2['place']));
 		}
 		echo "</a>";
-		if ($GM_DISP_COUNT != "false") 
+		if ($GM_DISP_COUNT != "false")
 			if ($lastlevel)
 				print_how_many_people($level, $parent);
 			else {
@@ -281,7 +281,7 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 				else echo PrintReady(addslashes($place2['place']));
 		}
 		echo "</a>";
-		if ($GM_DISP_COUNT != "false") 
+		if ($GM_DISP_COUNT != "false")
 			if ($lastlevel)
 				print_how_many_people($level, $parent);
 			else {

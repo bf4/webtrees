@@ -24,6 +24,11 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once "config.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 require "includes/functions_edit.php";
@@ -351,7 +356,7 @@ if ($action=="add") {
 			map.addOverlay(childplaces[i]);
 		}
 	}
-	
+
 	function Map_type() {}
 	Map_type.prototype = new GControl();
 
@@ -413,7 +418,7 @@ if ($action=="add") {
 	{
 		return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(2, 2));
 	}
-	
+
 	function loadMap() {
 		var zoom;
 		if (GBrowserIsCompatible()) {
@@ -525,7 +530,7 @@ if ($action=="add") {
 					else if ($pl_lati < 0) 	$row[1] = "-".abs($pl_lati);
 					if ($pl_long >= 0) 		$row[2] = abs($pl_long);
 					else if ($pl_long < 0) 	$row[2] = "-".abs($pl_long);
-					
+
 					if (($row[3] == null) || ($row[3] == "")) {
 						print "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row[1].", ".$row[2]."), childicon));\n";
 					}
@@ -657,22 +662,22 @@ if ($action=="add") {
 				zoomlevel = document.editplaces.NEW_ZOOM_FACTOR.value;
 				if (zoomlevel < <?php print $GOOGLEMAP_MIN_ZOOM;?>) zoomlevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
 				if (zoomlevel > <?php print $GOOGLEMAP_MAX_ZOOM;?>) zoomlevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
-				
+
 			}
 			map.setCenter(bounds.getCenter(),zoomlevel);
 		}
 	  }
 	 }
-	 
+
 	function showLocation_level(address) {
 		address += '<?php if ($level>0) print ", ".addslashes(PrintReady(implode(', ', array_reverse($where_am_i, true))));?>';
 		geocoder.getLocations(address, addAddressToMap);
 	}
-	
+
 	function showLocation_all(address) {
 		geocoder.getLocations(address, addAddressToMap);
 	}
-		 
+
 	function updatewholename() {
 	}
 

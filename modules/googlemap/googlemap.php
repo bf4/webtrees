@@ -25,8 +25,8 @@
  * @author Johan Borkhuis
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -50,7 +50,7 @@ if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
 if($SESSION_HIDE_GOOGLEMAP == "empty") {
 	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
 		$SESSION_HIDE_GOOGLEMAP = "true";
-	else 
+	else
 		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 

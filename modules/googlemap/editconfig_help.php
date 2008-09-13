@@ -24,6 +24,12 @@
  * @subpackage Admin
  * $Id$
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require "config.php";
 
 loadLangFile("pgv_confighelp, pgv_help, googlemap:help_text");

@@ -28,10 +28,9 @@
  * $Id: editconfig.php 2698 2008-04-23 21:38:56Z wooc$
  */
 
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
-    print "Now, why would you want to do that.  You're not hacking are you?";
-    exit;
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 require('modules/googlemap/defaultconfig.php');

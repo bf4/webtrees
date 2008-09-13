@@ -27,11 +27,11 @@
  * $Id$
  */
 
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
-	echo "Now, why would you want to do that.  You're not hacking are you?";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 require( "modules/googlemap/defaultconfig.php" );
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
@@ -306,14 +306,14 @@ if ($action=="ImportFile") {
 			$dir = dir($path);
 			while (false !== ($entry = $dir->read())) {
 				if ($entry!="." && $entry!=".." && $entry!=".svn") {
-					if (is_dir($path."/".$entry)) findFiles($path."/".$entry); 
+					if (is_dir($path."/".$entry)) findFiles($path."/".$entry);
 					else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
 				}
 			}
 			$dir->close();
 		}
 	}
-	
+
 	$placefiles = array();
 	findFiles("modules/googlemap/extra");
 	sort($placefiles);
@@ -545,21 +545,21 @@ foreach (array_reverse($where_am_i, true) as $id=>$place) {
 	if ($id==$parent)
 		if ($place != "Unknown")
 			echo PrintReady($place);
-		else 
+		else
 			echo $pgv_lang["pl_unknown"];
 	else {
 // phre7d 2008-901-23 modified for persistant display of inactive records
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">";
 		if ($place != "Unknown")
 			echo PrintReady($place)."</a>";
-		else 
+		else
 			echo $pgv_lang["pl_unknown"]."</a>";
 	}
 	echo " - ";
 }
-// phre7d 2008-901-23 modified for persistant display of inactive records	
+// phre7d 2008-901-23 modified for persistant display of inactive records
 echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0&display=$display\">{$pgv_lang['top_level']}</a>";
-// phre7d 2008-901-23 modified for persistant display of inactive records	
+// phre7d 2008-901-23 modified for persistant display of inactive records
 echo "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&parent=$parent&display=$display\">";
 echo "\n<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"].": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
 if ($display == 'inactive') echo " checked=\"checked\"";
@@ -577,16 +577,16 @@ echo "<th class=\"descriptionbox\">{$factarray['LONG']}</th>";
 echo "<th class=\"descriptionbox\">{$pgv_lang['pl_zoom_factor']}</th>";
 echo "<th class=\"descriptionbox\">{$pgv_lang['pl_place_icon']}</th>";
 echo "<th class=\"descriptionbox\" colspan=\"2\">";
-print_help_link('PL_EDIT_LOCATION_help', 'qm', 'PL_EDIT_LOCATION'); 
+print_help_link('PL_EDIT_LOCATION_help', 'qm', 'PL_EDIT_LOCATION');
 echo "{$pgv_lang['pl_edit']}</th></tr>";
 if (count($placelist) == 0)
 	echo "<tr><td colspan=\"7\" class=\"facts_value\">{$pgv_lang['pl_no_places_found']}</td></tr>";
 foreach ($placelist as $place) {
-	// phre7d 2008-901-23 modified for persistant display of inactive records	
+	// phre7d 2008-901-23 modified for persistant display of inactive records
 	echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}&display={$display}\">";
 	if ($place["place"] != "Unknown")
 			echo PrintReady($place["place"])."</a></td>";
-		else 
+		else
 			echo $pgv_lang["pl_unknown"]."</a></td>";
 	echo "<td class=\"optionbox\">{$place['lati']}</td>";
 	echo "<td class=\"optionbox\">{$place['long']}</td>";

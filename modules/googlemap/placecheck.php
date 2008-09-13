@@ -26,6 +26,12 @@
  * @version 4.1 09 Jul 2007
  * $Id$
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once ("config.php");
 require("googlemap.php"); // gives access to googlemap functions
 
@@ -301,7 +307,7 @@ while ($x<$i) {
 			$row=& $res->fetchRow(DB_FETCHMODE_ASSOC);
 			$res->free();
 			if (!empty($row['pl_id'])) {
-				$row['pl_placerequested']=$levels[$z]; // keep the actual place name that was requested so we can display that instead of what is in the db 
+				$row['pl_placerequested']=$levels[$z]; // keep the actual place name that was requested so we can display that instead of what is in the db
 				break;
 			}
 		}

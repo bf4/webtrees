@@ -28,6 +28,11 @@
  * $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 loadLangFile("googlemap:lang, googlemap:help_text");
 
 ?>
