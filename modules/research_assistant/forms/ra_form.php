@@ -24,11 +24,12 @@
  * @version $Id$
  * @author Jason Porter
  */
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 global $LANGUAGE, $factarray;
 require_once "includes/person_class.php";
 

@@ -5,10 +5,12 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
- if (strstr($_SERVER["SCRIPT_NAME"],"ra_privacy.php")!==false) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
- }
+}
+
  global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
  
  $SHOW_MY_TASKS              = $PRIV_USER;

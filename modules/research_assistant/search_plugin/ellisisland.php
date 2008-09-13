@@ -24,6 +24,11 @@
  *
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once 'modules/research_assistant/search_plugin/base_autosearch.php';
 
 class AutoSearch extends Base_AutoSearch {

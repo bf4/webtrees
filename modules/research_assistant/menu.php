@@ -22,9 +22,9 @@
  * @subpackage Modules, Research Assistant
  * @version $Id$
  */
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -42,7 +42,7 @@ class research_assistant_ModuleMenu {
 		if ($SHOW_RESEARCH_ASSISTANT<PGV_USER_ACCESS_LEVEL) return null;
 
 		if (!file_exists('modules/research_assistant/languages/lang.en.php')) return null;
-		
+
 		loadLangFile("research_assistant:lang");
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
@@ -52,7 +52,7 @@ class research_assistant_ModuleMenu {
 		if(!empty($PGV_IMAGES['menu_research']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_research']['large']}");}
 		else $menu->addIcon("images/source.gif");
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
-		
+
 		//'My Tasks' ddl menu item
 		if (PGV_USER_ACCESS_LEVEL<= $SHOW_MY_TASKS)
 		{
@@ -61,7 +61,7 @@ class research_assistant_ModuleMenu {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
-		
+
 		//'Add Task' ddl menu item
 		if (PGV_USER_ACCESS_LEVEL<= $SHOW_ADD_TASK)
 		{

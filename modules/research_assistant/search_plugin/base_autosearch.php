@@ -24,6 +24,11 @@
  * @subpackage Research Assistant
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once 'includes/person_class.php';
 
 class Base_AutoSearch {

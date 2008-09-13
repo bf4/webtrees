@@ -25,10 +25,11 @@
  * @translator Meliza Amity
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "אין לך גישה ישירה לקובץ השפות.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 $pgv_lang["autosearch_ssurname"] 	= "כלול שם משפחה של בן/בת זוג:"; 
 $pgv_lang["autosearch_sgivennames"] = "כלול שמות פרטיים של בן/בת זוג:"; 
 $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "חיבור Genealogy-Search-Help.com";
