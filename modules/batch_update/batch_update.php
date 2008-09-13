@@ -24,8 +24,9 @@
  * $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	die ('Access denied.');
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 if (!PGV_USER_GEDCOM_ADMIN) {
@@ -185,7 +186,7 @@ class batch_update {
 
 			// Make sure that our requested record really does need updating.
 			// It may have been updated in another session, or may not have
-			// been specified at all. 
+			// been specified at all.
 			if (array_key_exists($this->xref, $this->all_xrefs) &&
 				$this->PLUGIN->doesRecordNeedUpdate($this->xref, self::getLatestRecord($this->xref, $this->all_xrefs[$this->xref]))) {
 				$this->curr_xref=$this->xref;
@@ -289,7 +290,7 @@ class batch_update {
 
 	// Create a submit button for our form
 	static function createSubmitButton($text, $xref, $action='', $data='') {
-		return 
+		return
 			'<input type="submit" value="'.$text.'" onclick="'.
 			'this.form.xref.value=\''.htmlspecialchars($xref).'\';'.
 			'this.form.action.value=\''.htmlspecialchars($action).'\';'.
@@ -325,7 +326,7 @@ class batch_update {
 //
 class base_plugin {
 	var $chan=false; // User option; update change record
-	
+
 	// Default is to operate on INDI records
 	function getRecordTypesToUpdate() {
 		return array('INDI');
@@ -375,7 +376,7 @@ class base_plugin {
 			while ($last_new<$new-1) {
 				$diff_lines[]=self::decorateInsertedText($new_lines[++$last_new]);
 			}
-			$diff_lines[]=$new_lines[$new];		
+			$diff_lines[]=$new_lines[$new];
 			$last_old=$old;
 			$last_new=$new;
 		}
@@ -385,7 +386,7 @@ class base_plugin {
 		while ($last_new<count($new_lines)-1) {
 			$diff_lines[]=self::decorateInsertedText($new_lines[++$last_new]);
 		}
-		
+
 		return '<pre>'.self::createEditLinks(implode("\n", $diff_lines)).'</pre>';
 	}
 

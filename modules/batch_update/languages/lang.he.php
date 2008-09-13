@@ -21,11 +21,12 @@
  *
  * @package PhpGedView
  * @subpackage BatchUpdate
- * @translator Meliza Amity 
+ * @translator Meliza Amity
  * @version $Id$
  */
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -53,10 +54,10 @@ $pgv_lang["bu_regex"]		="ביטויים רגילים";
 $pgv_lang["bu_regex_desc"]		="ביטויים רגילים הם טכנית התאמה מתקדמת.  ראה <a href=\"http://php.net/manual/en/regexp.reference.php\" target=\"_new\">php.net/manual/en/regexp.reference.php</a> לפרטים נוספים.";
 $pgv_lang["bu_regex_bad"]		="נראה שבביטוי הרגיל יש שגיאה. לא ניתן להשתמש בו.";
 $pgv_lang["bu_case"]			="אין רגישות לאותיות הלועזיות הקטנות והגדולות";
-$pgv_lang["bu_case_desc"]		="סמן את התיבה כדי להתאים אותיות לועזיות קטנות וגדולות."; 
+$pgv_lang["bu_case_desc"]		="סמן את התיבה כדי להתאים אותיות לועזיות קטנות וגדולות.";
 
 $pgv_lang["bu_birth_y"]		="הוסף רשומות לידה חסרות";
-$pgv_lang["bu_birth_y_desc"]		="תוכל לשפר את ביצוע ה-PGV ע\"י כך שתבטיח שלכל האנשים יש ארוע של &laquo;תחילת החיים&raquo;."; 
+$pgv_lang["bu_birth_y_desc"]		="תוכל לשפר את ביצוע ה-PGV ע\"י כך שתבטיח שלכל האנשים יש ארוע של &laquo;תחילת החיים&raquo;.";
 
 $pgv_lang["bu_death_y"]		="הוסף רשומות פטירה חסרות";
 $pgv_lang["bu_death_y_desc"]	="תוכל לשפר את ביצוע ה-PGV ע\"י כך שתבטיח שלכל האנשים יש (אם מתאים) ארוע של &laquo;סוף החיים&raquo;.";

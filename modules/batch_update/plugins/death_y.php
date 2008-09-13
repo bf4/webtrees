@@ -24,6 +24,11 @@
  * $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 class plugin extends base_plugin {
 	static function doesRecordNeedUpdate($xref, $gedrec) {
 		return !preg_match('/^1\s+'.PGV_EVENTS_DEAT.'\b/m', $gedrec) && is_dead($gedrec);

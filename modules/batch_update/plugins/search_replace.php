@@ -24,6 +24,11 @@
  * $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 class plugin extends base_plugin {
 	var $search =null; // Search string
 	var $replace=null; // Replace string
@@ -31,7 +36,7 @@ class plugin extends base_plugin {
 	var $regex  =null; // Search string, converted to a regex
 	var $case   =null; // "i" for case insensitive, "" for case sensitive
 	var $error  =null; // Message for bad user parameters
-	
+
 	function doesRecordNeedUpdate($xref, $gedrec) {
 		return !$this->error && preg_match('/(?:'.$this->regex.')/'.$this->case, $gedrec);
 	}
