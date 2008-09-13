@@ -3,7 +3,7 @@
  * Abstract Genealogy Service Interface class
  * This file is released under the LGPL so that others may use it when
  * building compatible web services for their respective applications.
- * 
+ *
  * To build a compatible web service simply include this file and extend
  * it with your own class and implement the following abstract methods:
  * - postAuthenticate($username, $password, $gedcom_id, $compression)
@@ -19,27 +19,27 @@
  * - getKnownServers($SID,$limit)
  * - postGetAncestry($SID, $rootID, $generations, $returnGedcom)
  * - postGetDescendants($SID, $rootID, $generations, $returnGedcom)
- * 
- * See the PGVServiceLogic.class.php file for details about how this was 
+ *
+ * See the PGVServiceLogic.class.php file for details about how this was
  * done in PhpGedView.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005  PGV Development Team
  *
- * This library is free software; you can redistribute it and/or modify it 
+ * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your 
+ * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License 
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
  * for more details.
- * 
+ *
  * You can obtain a copy of the GNU Lesser General Public License here:
  * http://www.opensource.org/licenses/lgpl-license.php
- * 
- * Or by writing to the Free Software Foundation, Inc., 59 Temple Place, Suite 
+ *
+ * Or by writing to the Free Software Foundation, Inc., 59 Temple Place, Suite
  * 330,Boston, MA 02111-1307 USA
  *
  * @package PhpGedView
@@ -47,11 +47,16 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once 'SOAP/Server.php';
 
 // Genealogy class
-class GenealogyService 
-{	 
+class GenealogyService
+{
 	var $__varValues = array();
 	var $__dispatch_map = array();
 	var $__typeref = array();
@@ -60,14 +65,14 @@ class GenealogyService
 	var $varNames = array();
 	var $logging = false;
 
-	function GenealogyService() 
+	function GenealogyService()
 	{
 		/*
 		 * SOAP Method declarations
 		 * Here is where you declare the methods
 		 * and paramaters that are used in the service
 		 */
-		
+
 		/**
 		* serviceInfo
 		*/
@@ -78,11 +83,11 @@ class GenealogyService
 				'result' => '{urn:' . $this->__namespace . '}serviceInfoResult'
 			)
 		);
-		
+
 		/**
 		* Authenticate
 		*/
-		$this->__dispatch_map['Authenticate'] = 
+		$this->__dispatch_map['Authenticate'] =
 		array(
 			'in' => array(
 				'username' => 'string',
@@ -95,11 +100,11 @@ class GenealogyService
 				'result' => '{urn:' . $this->__namespace . '}authResult'//declared below
 			)
 		);
-		
+
 		/**
 		* Authenticate
 		*/
-		$this->__dispatch_map['changeGedcom'] = 
+		$this->__dispatch_map['changeGedcom'] =
 		array(
 			'in' => array(
 				'gedcom' => 'string'
@@ -108,56 +113,56 @@ class GenealogyService
 				'result' => 'string'
 			)
 		);
-		
+
 		/**
 		* Gets requested variable's value
 		*/
-		$this->__dispatch_map['getVar'] = 
+		$this->__dispatch_map['getVar'] =
 		array(
 			'in' => array(
-				'SID' => 'string', //session 
+				'SID' => 'string', //session
 				'var' => 'string', //variable name
 			),
 			'out' => array(
 				'value'=>'string'
 			)
 		);
-		
+
 		/**
 		* Appends a record
 		*/
-		$this->__dispatch_map['appendRecord'] = 
+		$this->__dispatch_map['appendRecord'] =
 		array(
 			'in' => array(
-				'SID' => 'string', //session 
+				'SID' => 'string', //session
 				'gedrec' => 'string' //record to append
 			),
 			'out' => array(
 				'message'=>'string'
 			)
 		);
-		
+
 		/**
 		* Deletes a record
 		*/
-		$this->__dispatch_map['deleteRecord'] = 
+		$this->__dispatch_map['deleteRecord'] =
 		array(
 			'in' => array(
-				'SID' => 'string', //session 
+				'SID' => 'string', //session
 				'RID' => 'string', //record id of record to delete
 			),
 			'out' => array(
 				'message'=>'string'
 			)
 		);
-		
+
 		/**
 		* Updates a record
 		*/
-		$this->__dispatch_map['updateRecord'] = 
+		$this->__dispatch_map['updateRecord'] =
 		array(
 			'in' => array(
-				'SID' => 'string', //session 
+				'SID' => 'string', //session
 				'RID' => 'string', //record id
 				'gedcom' => 'string' //return gedcom (bool)
 			),
@@ -165,24 +170,24 @@ class GenealogyService
 				'message'=>'string'
 			)
 		);
-			
+
 		/**
  		 * Check updates
- 		 */	
-		$this->__dispatch_map['checkUpdates'] = 
+ 		 */
+		$this->__dispatch_map['checkUpdates'] =
 		array(
 			'in' => array(
 				'SID' => 'string',//session id
 				'lastUpdate' => 'string' //last update date
 			),
-			'out' => array(				
+			'out' => array(
 				'result' => '{urn:' . $this->__namespace . '}ArrayOfIds'
 			)
 		);
 		/**
 		* check updates by id
 		*/
-		$this->__dispatch_map['checkUpdatesByID'] = 
+		$this->__dispatch_map['checkUpdatesByID'] =
 		array(
 			'in' => array(
 				'SID' => 'string',//session id
@@ -193,7 +198,7 @@ class GenealogyService
 				'result' => '{urn:' . $this->__namespace . '}Person'
 			)
 		);
-		
+
 		/**
 		 * get known servers
 		*/
@@ -207,7 +212,7 @@ class GenealogyService
 				'servers' => '{urn:' . $this->__namespace . '}ArrayOfServer'
 			)
 		);
-			
+
 		/**
 		* doSearch
 		*/
@@ -218,7 +223,7 @@ class GenealogyService
 				'query' => 'string', //query string
 				'start' => 'int', //index to start at
 				'maxResults' => 'int' //max results to return
-			), 
+			),
 			'out' => array(
 				'Results' => '{urn:' . $this->__namespace . '}SearchResult'
 			)
@@ -226,7 +231,7 @@ class GenealogyService
 		/**
 		* getpersonbyid
 		*/
-		$this->__dispatch_map['getPersonByID'] = 
+		$this->__dispatch_map['getPersonByID'] =
 		array(
 			'in' => array(
 				'SID' => 'string', //Session ID
@@ -239,7 +244,7 @@ class GenealogyService
 		/**
 		* getfamilybyid
 		*/
-		$this->__dispatch_map['getFamilyByID'] = 
+		$this->__dispatch_map['getFamilyByID'] =
 		array(
 			'in' => array(
 				'SID' => 'string', //Session ID
@@ -252,7 +257,7 @@ class GenealogyService
 		/**
 		 * getsourcebyid
 		 */
-		 $this->__dispatch_map['getSourceByID'] = 
+		 $this->__dispatch_map['getSourceByID'] =
 		array(
 			'in' => array(
 				'SID' => 'string', //Session ID
@@ -262,11 +267,11 @@ class GenealogyService
 				'result' => '{urn:' . $this->__namespace . '}Source'
 			)
 		);
-		 
+
 		/*
 		* getgedcomrecord
 		*/
-		$this->__dispatch_map['getGedcomRecord'] = 
+		$this->__dispatch_map['getGedcomRecord'] =
 		array(
 			'in' => array(
 				'SID' => 'string', //Session ID
@@ -291,7 +296,7 @@ class GenealogyService
 				'results' => '{urn:' . $this->__namespace . '}ArrayOfPerson'
 			)
 		);
-		
+
 		/*
 		* getDescendants
 		*/
@@ -307,7 +312,7 @@ class GenealogyService
 				'results' => '{urn:' . $this->__namespace . '}ArrayOfPerson'
 			)
 		);
-		
+
 		/*
 		* getXref
 		*/
@@ -326,12 +331,12 @@ class GenealogyService
 		/*
 		 * Type declarations (Complex types)
 		 */
-		
+
 		$this->__typedef['updateResult'] =
 		array(
-			'gedcom' => 'string'			
+			'gedcom' => 'string'
 		);
-		
+
 		$this->__typedef['authResult'] =
 		array(
 			'SID' => 'string',
@@ -346,15 +351,15 @@ class GenealogyService
 			'compression' => 'string', //none, zlib, etc
 			'apiVersion' => 'string',
 			'server' => 'string',
-			'gedcoms' => '{urn:' . $this->__namespace . '}ArrayOfGedcomList' 
+			'gedcoms' => '{urn:' . $this->__namespace . '}ArrayOfGedcomList'
 		);
-		
-		$this->__typedef['GedcomInfo'] = 
+
+		$this->__typedef['GedcomInfo'] =
 		array(
 			'title'		=>	'string',
 			'ID'		=>	'string'
 		);
-		
+
 		$this->__typedef['ArrayOfGedcomList'] =
 		array(
 			array(
@@ -376,7 +381,7 @@ class GenealogyService
 			'spouseFamilies'=>	 '{urn:' . $this->__namespace . '}ArrayOfIds',
 			'childFamilies'	=>	 '{urn:' . $this->__namespace . '}ArrayOfIds'
 		);
-		
+
 		//Source complex type
 		$this->__typedef['Source'] =
 		array(
@@ -385,9 +390,9 @@ class GenealogyService
 			'published'     =>	'string',
 			'author'        =>	'string',
 			'gedcom'        =>	'string'
-		
+
 		);
-		
+
 		// Family complex type
 		$this->__typedef['Family'] =
 		array(
@@ -398,18 +403,18 @@ class GenealogyService
 	  		'gedcom'		=>	 'string'
 		);
 
-		$this->__typedef['SearchResult'] = 
+		$this->__typedef['SearchResult'] =
 		array(
 			'totalResults'	=>	'int',
 			'persons'		=>	'{urn:' . $this->__namespace . '}ArrayOfPerson'
 		);
 
-		$this->__typedef['Server'] = 
+		$this->__typedef['Server'] =
 		array(
 			'name' => 'string',
 			'address' => 'string' //address to server URL/IP
 		);
-		
+
 		$this->__typedef['{urn:' . $this->__namespace . '}ArrayOfServer'] =
 		array(
 			array(
@@ -417,21 +422,21 @@ class GenealogyService
 			)
 		);
 		//Creates the Person array type
-		$this->__typedef['{urn:' . $this->__namespace . '}ArrayOfPerson'] = 
+		$this->__typedef['{urn:' . $this->__namespace . '}ArrayOfPerson'] =
 		array(
 			array(
 				'item' => '{urn:' . $this->__namespace . '}Person'
 			)
 		);
 		//Creates the Family array type
-		$this->__typedef['{urn:' . $this->__namespace . '}ArrayOfFamily'] = 
+		$this->__typedef['{urn:' . $this->__namespace . '}ArrayOfFamily'] =
 		array(
 			array(
 				'item' => '{urn:' . $this->__namespace . '}Family'
 			)
 		);
 		//Creates the array of strings
-		$this->__typedef['{urn:' . $this->__namespace . '}ArrayOfIds'] = 
+		$this->__typedef['{urn:' . $this->__namespace . '}ArrayOfIds'] =
 		array(
 			array(
 				'id' => 'string'
@@ -440,7 +445,7 @@ class GenealogyService
 	}
 
 	// Required function by SOAP_Server
-	function __dispatch($methodname) 
+	function __dispatch($methodname)
 	{
 		if (isset($this->__dispatch_map[$methodname]))
 			return $this->__dispatch_map[$methodname];
@@ -464,12 +469,12 @@ class GenealogyService
 		{
 			return $result;
 		}
-		
+
 		return new SOAP_Fault('Unable to retrieve service info',
 							  'Server',
 							  '',
 							  null);
-		
+
 	}
 	/***
 	* Method to override
@@ -478,7 +483,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/**
 	* Authenticates a user on the given server
 	* @param string username
@@ -490,23 +495,23 @@ class GenealogyService
 	function Authenticate($username, $password, $gedcom, $compression, $data_type="GEDCOM")
 	{
 		if (empty($data_type)) $data_type='GEDCOM';
-		
+
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") Authenticate($username, '****', $gedcom, $compression, $data_type)");
 		$result = $this->postAuthenticate($username, $password, $gedcom, $compression, $data_type);
 		if($result !== false)
 		{
 			//if everything worked set the session value to true
-			if (!PEAR::isError($result)) 
+			if (!PEAR::isError($result))
 				$_SESSION["SOAP_CONNECTED"] = true;
 			return $result;
 		}
-		
+
 		return new SOAP_Fault('Unable to login',
 							'Server',
 							'',
 							null);
 	}
-	
+
 	/**
 	* Method to override
 	*/
@@ -514,7 +519,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/**
 	* Switches GEDCOM
 	* @param string gedcom id of the gedcom to use
@@ -527,17 +532,17 @@ class GenealogyService
 		if($result !== false)
 		{
 			//if everything worked set the session value to true
-			if (!PEAR::isError($result)) 
+			if (!PEAR::isError($result))
 				$_SESSION["SOAP_CONNECTED"] = true;
 			return $result;
 		}
-		
+
 		return new SOAP_Fault('Unable to change gedcom',
 							'Server',
 							'',
 							null);
 	}
-	
+
 	/**
 	* Method to override
 	*/
@@ -545,7 +550,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	* Retrieves a person with the given id
 	* @param string SID session id
@@ -556,7 +561,7 @@ class GenealogyService
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getPersonByID($SID, $PID)");
 		//check the session
 		$result = $this->start_session($SID);
-		if ($result !== true) 
+		if ($result !== true)
 			return $result;
 		//session id is valid continue the call
 		$result = $this->postGetPersonByID($SID, $PID);
@@ -567,7 +572,7 @@ class GenealogyService
 		//method was not overriden
 		return new SOAP_Fault('Unable to get person by id '.$PID,'Server','',null);
 	}
-	
+
 	/***
 	 * Retrieves a family with the given id
 	 * @param string FID family id
@@ -578,7 +583,7 @@ class GenealogyService
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getFamilyByID($SID, $FID)");
 		//check the session
 		$result = $this->start_session($SID);
-		if ($result !== true) 
+		if ($result !== true)
 			return $result;
 		//session id is valid continue the call
 		$result = $this->postGetFamilyByID($SID,$FID);
@@ -589,7 +594,7 @@ class GenealogyService
 		//method was not overriden
 		return new SOAP_Fault('Unable to get family by id '.$FID,'Server','',null);
 	}
-	
+
 	/***
 	 * Method to be overriden
 	 * @param string SID session id
@@ -600,7 +605,7 @@ class GenealogyService
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getSourceByID($SID, $SCID)");
 		//check the session
 		$result = $this->start_session($SID);
-		if ($result !== true) 
+		if ($result !== true)
 			return $result;
 		//session id is valid continue the call
 		$result = $this->postGetSourceByID($SID,$SCID);
@@ -611,7 +616,7 @@ class GenealogyService
 		//method was not overriden
 		return new SOAP_Fault('Unable to get source by id '.$SCID,'Server','',null);
 	}
-	
+
 	/***
 	* Method to be overriden
 	* @param string SID session id
@@ -621,7 +626,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	* Method to be overriden
 	* @param string FID Family id
@@ -631,7 +636,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	 * Method to be overriden
 	 * @param string SID session id
@@ -641,7 +646,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	* Retrieves the gedcom for a person with the given PID
 	* @param string $SID session id
@@ -651,7 +656,7 @@ class GenealogyService
 	{
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getGedcomRecord($SID, $PID)");
 		$result = $this->start_session($SID);
-		if ($result !== true) 
+		if ($result !== true)
 			return $result;
 
 		$result = $this->postGetGedcomRecord($SID, $PID);
@@ -669,7 +674,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	* Returns the value of the specified variable
 	* @param string $SID session id
@@ -680,7 +685,7 @@ class GenealogyService
 		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getVar($SID, $var)");
 		//check the session
 		$result = $this->start_session($SID);
-		if ($result !== true) 
+		if ($result !== true)
 			return $result;
 		//session id is valid continue the call
 		$result = $this->postGetVar($SID, $var);
@@ -714,13 +719,13 @@ class GenealogyService
 		//if ($returnGedcom=="false") $returnGedcom=false;
 
 		$result = $this->postGetAncestry($SID, $rootID, $generations, $returnGedcom);
-		
+
 		if($result !== false)
 			return $result;
 
 		return new SOAP_Fault('Unable to retrieve ancestry','Server','',null);
 	}
-	
+
 	/**
 	* Method to override
 	*/
@@ -728,7 +733,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	* Returns the decendancy of a person
 	* @param string SID
@@ -742,17 +747,17 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
-		
+
 		//if($returnGedcom == 'false') $returnGedcom = false;
 
 		$result = $this->postGetDescendants($SID, $rootID, $generations, $returnGedcom);
 
 		if($result !== false)
 			return $result;
-		
+
 		return new SOAP_Fault('Unable to retrieve descendants','Server','',null);
 	}
-	
+
 	/*
 	* method to override
 	*/
@@ -760,13 +765,13 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	* Appends the provided record to the gedcom with the provided record id
-	* 
+	*
 	* @param string $SID session id of authenticated user
 	* @param string $gedrec record to append
-	* 
+	*
 	* @return mixed SOAP_Fault or array of result from the postAppendRecord method
 	*/
 	function appendRecord($SID, $gedrec)
@@ -775,7 +780,7 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if ($result !== true)
 			return $result;
-		
+
 		$result = $this->postAppendRecord($SID, $gedrec);
 
 		if($result !== false)
@@ -793,13 +798,13 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	* Deletes the record with the provided record id
-	* 
+	*
 	* @param string $SID session id of authenticated user
 	* @param string $RID record id of record to delete
-	* 
+	*
 	* @return mixed SOAP_Fault or array of result from the postAppendRecord method
 	*/
 	function deleteRecord($SID, $RID)
@@ -808,7 +813,7 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if ($result !== true)
 			return $result;
-		
+
 		$result = $this->postDeleteRecord($SID, $RID);
 
 		if($result !== false)
@@ -826,7 +831,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	* Updates a record with the provided gedcom record for a record id
 	* @param string SID
@@ -839,7 +844,7 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if ($result !== true)
 			return $result;
-		
+
 		$result = $this->postUpdateRecord($SID,$RID, $gedcom);
 
 		if($result !== false)
@@ -860,7 +865,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/**
 	* Checks for updates to the record
 	* @param string SID
@@ -873,9 +878,9 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
-			
+
 		$result = $this->postCheckUpdatesByID($SID,$RID,$lastUpdate);
-		
+
 		if($result !== false)
 			return $result;
 		//AddToLog('Unable to complete update check');
@@ -888,7 +893,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/**
 	* Checks for updates to the record
 	* @param string SID
@@ -900,9 +905,9 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
-			
+
 		$result = $this->postCheckUpdates($SID,$lastUpdate);
-		
+
 		if($result !== false)
 			return $result;
 		//AddToLog('Unable to complete update check');
@@ -915,10 +920,10 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
-	* Returns the list of known servers 
-	* @param string SID 
+	* Returns the list of known servers
+	* @param string SID
 	* @param int limit limit the number of servers coming back
 	*/
 	function getKnownServers($SID,$limit)
@@ -927,9 +932,9 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
-			
+
 		$result = $this->postGetKnownServers($SID,$limit);
-		
+
 		if($result !== false)
 			return $result;
 		new SOAP_Fault('Unable to complete get known servers','Server','',null);
@@ -941,9 +946,9 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
-	 * Searches the server 
+	 * Searches the server
 	* @param string SID
 	* @param string query query to use for the search
 	* @param string start index to start the search at
@@ -955,9 +960,9 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
-			
+
 		$result = $this->postSearch($SID, $query, $start, $maxResults);
-		
+
 		if($result !== false)
 			return $result;
 		return new SOAP_Fault('Unable to complete search','Server','',null);
@@ -969,7 +974,7 @@ class GenealogyService
 	{
 		return false;
 	}
-	
+
 	/***
 	 * Gets an XREF Identifier
 	* @param string SID
@@ -982,9 +987,9 @@ class GenealogyService
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
-			
+
 		$result = $this->postGetXref($SID, $position, $type);
-		
+
 		if($result !== false)
 			return $result;
 		return new SOAP_Fault('Unable to get XREF','Server','',null);
@@ -1006,7 +1011,7 @@ class GenealogyService
 	***/
 	function start_session($SID)
 	{
-		/*if (!isset($_SESSION["SOAP_CONNECTED"]) || $_SESSION["SOAP_CONNECTED"]!==true) 
+		/*if (!isset($_SESSION["SOAP_CONNECTED"]) || $_SESSION["SOAP_CONNECTED"]!==true)
 		{
 			return new SOAP_Fault('Invalid session id '.$SID.'. Please authenticate',
 								'Client',
@@ -1019,7 +1024,7 @@ class GenealogyService
 	* Depricated
 	*/
 	function cleanSID($sid)
-	{	
+	{
 		$sid = str_replace('PHPSESSID=','',$sid);
 		return strip_tags($sid);
 	}
@@ -1036,9 +1041,9 @@ class GenealogyService
 
 		// Handle SOAP requests coming is as POST data
 		if (isset($_SERVER['REQUEST_METHOD']) &&
-			$_SERVER['REQUEST_METHOD']=='POST') 
+			$_SERVER['REQUEST_METHOD']=='POST')
 		{
-			
+
 			$server->service($HTTP_RAW_POST_DATA);
 			return $server;
 		}
@@ -1053,7 +1058,7 @@ class GenealogyService
 			header("Content-type: text/xml");
 
 			if (isset($_SERVER['QUERY_STRING']) &&
-				strcasecmp($_SERVER['QUERY_STRING'],'wsdl')==0) 
+				strcasecmp($_SERVER['QUERY_STRING'],'wsdl')==0)
 			{
 				echo $disco->getWSDL(); // if we're talking http://www.example.com/index.php?wsdl
 			}
