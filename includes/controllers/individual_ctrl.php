@@ -1043,9 +1043,9 @@ class IndividualControllerRoot extends BaseController {
 		global $n_chil, $n_gchi, $n_ggch;
 		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 
-		if (isset($_COOKIE['row_rela'])) $EXPAND_RELATIVES_EVENTS = ($_COOKIE['row_rela']);
+		/*if (isset($_COOKIE['row_rela'])) $EXPAND_RELATIVES_EVENTS = ($_COOKIE['row_rela']);
 		if (isset($_COOKIE['row_histo'])) $EXPAND_HISTO_EVENTS = ($_COOKIE['row_histo']);
-		else $EXPAND_HISTO_EVENTS = false;
+		else*/ $EXPAND_HISTO_EVENTS = false;
 
 		//-- only need to add family facts on this tab
 		$this->indi->add_family_facts();
@@ -1137,7 +1137,7 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_lang, $factarray, $CONTACT_EMAIL, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 
-		if (isset($_COOKIE['row_note2'])) $SHOW_LEVEL2_NOTES = ($_COOKIE['row_note2']);
+		//if (isset($_COOKIE['row_note2'])) $SHOW_LEVEL2_NOTES = ($_COOKIE['row_note2']);
 		?>
 		<table class="facts_table">
 		<?php
@@ -1208,8 +1208,8 @@ class IndividualControllerRoot extends BaseController {
 		global $CONTACT_EMAIL, $pgv_lang, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 
-		if (isset($_COOKIE['row_sour2'])) $SHOW_LEVEL2_SOURCES = ($_COOKIE['row_sour2']);
-		else $SHOW_LEVEL2_SOURCES = $SHOW_LEVEL2_NOTES;
+		/*if (isset($_COOKIE['row_sour2'])) $SHOW_LEVEL2_SOURCES = ($_COOKIE['row_sour2']);
+		else*/ $SHOW_LEVEL2_SOURCES = $SHOW_LEVEL2_NOTES;
 		?>
 		<table class="facts_table">
 		<?php
@@ -1325,7 +1325,7 @@ class IndividualControllerRoot extends BaseController {
 		$ABBREVIATE_CHART_LABELS = false;		// Override GEDCOM configuration
 
 
-		if (isset($_COOKIE['elderdate'])) $SHOW_AGE_DIFF = ($_COOKIE['elderdate']);
+		//if (isset($_COOKIE['elderdate'])) $SHOW_AGE_DIFF = ($_COOKIE['elderdate']);
 		if (!$this->isPrintPreview()) {
 		?>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
