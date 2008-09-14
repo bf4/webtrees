@@ -26,7 +26,11 @@
  * @version $Id$
  */
 
+require './config.php';
+
 require_once("includes/controllers/media_ctrl.php");
+$controller = new MediaController();
+$controller->init();
 
 $debug_mediafirewall	= 0; 	// set to 1 if you want to see media firewall values displayed instead of images
 $debug_watermark		= 0; 	// set to 1 if you want to see error messages from the watermark module instead of broken images

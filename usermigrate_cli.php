@@ -25,6 +25,12 @@
  * @version $Id$
  */
 
+require './config.php';
+require_once 'includes/controllers/usermigrate_ctrl.php';
+
+$controller = new UserMigrateController();
+$controller->init();
+
 function print_usage() {
 	?>
 	PhpGedView Command Line Backup Utility
@@ -84,7 +90,6 @@ else {
 	}
 }
 
-require_once("includes/controllers/usermigrate_ctrl.php");
 // load admin lang keys
 $file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
 if (file_exists($file)) include($file);

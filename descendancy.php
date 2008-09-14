@@ -24,8 +24,12 @@
  * @version $Id$
  */
 
-// -- include config file
+require './config.php';
+
 require_once("includes/controllers/descendancy_ctrl.php");
+
+$controller = new DescendancyController();
+$controller->init();
 
 // -- print html header information
 print_header($controller->name." ".$pgv_lang["descend_chart"]);

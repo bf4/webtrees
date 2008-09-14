@@ -26,7 +26,11 @@
  * @version $Id$
  */
 
-require_once("includes/controllers/individual_ctrl.php");
+require './config.php';
+
+require_once 'includes/controllers/individual_ctrl.php';
+$controller = new IndividualController();
+$controller->init();
 
 loadLangFile("lightbox:lang, googlemap:lang");
 

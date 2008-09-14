@@ -25,10 +25,10 @@
  * @version $Id$
  */
 
-//if (!defined('PGV_PHPGEDVIEW')) {
-//	header('HTTP/1.0 403 Forbidden');
-//	exit;
-//}
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 require_once ("config.php");
 require_once ("includes/functions_charts.php");
@@ -599,6 +599,5 @@ if (file_exists('includes/controllers/timeline_ctrl_user.php')) {
 	class LifespanController extends LifespanControllerRoot {
 	}
 }
-$controller = new LifespanController();
-$controller->init();
+
 ?>

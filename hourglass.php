@@ -27,7 +27,12 @@
  * @subpackage Charts
  * @version $Id$
  */
-require_once("includes/controllers/hourglass_ctrl.php");
+
+require './config.php';
+
+require_once 'includes/controllers/hourglass_ctrl.php';
+
+$controller = new HourglassController();
 $controller->init();
 
 // -- print html header information

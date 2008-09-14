@@ -26,7 +26,12 @@
  * @version $Id$
  */
 
+require './config.php';
+
 require_once 'includes/controllers/family_ctrl.php';
+
+$controller = new FamilyController();
+$controller->init();
 
 print_header($controller->getPageTitle());
 // completely prevent display if privacy dictates so

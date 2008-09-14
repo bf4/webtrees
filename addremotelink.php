@@ -26,6 +26,8 @@
  * @version $Id$
  */
 
+require './config.php';
+
 require_once("includes/controllers/remotelink_ctrl.php");
 $controller = new RemoteLinkController();
 $controller->init();
