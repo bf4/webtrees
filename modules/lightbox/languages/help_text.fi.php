@@ -28,11 +28,11 @@
  * @translator Matti Valve 
  */
 
-//-- security check, only allow access from module.php
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 // Added in VERSION 4.1.6
 
 // Lightbox general help file  ---------------------------------------------------------------------------------------------------------

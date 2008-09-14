@@ -21,6 +21,11 @@
  * @version 0.2beta
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 class wordsearch
 {
 	function main()

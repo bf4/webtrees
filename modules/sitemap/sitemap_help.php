@@ -23,6 +23,12 @@
  * @package PhpGedView
  * @subpackage Admin
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require "config.php";
 
 loadLangFile("pgv_confighelp, pgv_help, sitemap:help_text");

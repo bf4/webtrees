@@ -26,6 +26,12 @@
  * @version $Id$
  * @author Brian Holland
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 	// Set Link
 	/**
 	 * Generate link flyout menu
@@ -44,14 +50,14 @@
 		if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
 			$menu["icon"] = "modules/lightbox/images/image_link.gif";
 		}
-		if ($LB_ML_THUMB_LINKS == "both") { 
+		if ($LB_ML_THUMB_LINKS == "both") {
 			$menu["label"] = $pgv_lang["set_link"];
 			$menu["labelpos"] = "down";
 		}
-		if ($LB_ML_THUMB_LINKS == "text") { 
+		if ($LB_ML_THUMB_LINKS == "text") {
 			$menu["label"] = $pgv_lang["set_link"];
 		}
-		
+
 		$menu["link"] = "#";
 		$menu["onclick"] = "return ilinkitem('$mediaid','person')";
 //		$menu["class"] = "thememenuitem";
@@ -94,12 +100,12 @@
 	}
 </script>
 <?php
-		
-//	}			
-			
+
+//	}
+
 	// Only set link on media that is in the DB
 //	if ($media["XREF"] != "") {
-//		print_link_menu($media2["XREF"]);  
+//		print_link_menu($media2["XREF"]);
 //	}
 
 ?>

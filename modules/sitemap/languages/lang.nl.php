@@ -24,6 +24,11 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 // Admin menu
 $pgv_lang["generate_sitemap"]       = "Genereer Sitemap files";
 

@@ -26,18 +26,22 @@
  * @version $Id$
  * @author Brian Holland
  */
-?>
-<?php 
-	if ($MULTI_MEDIA){ 
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+	if ($MULTI_MEDIA){
 		if (!file_exists("modules/googlemap/defaultconfig.php")) {  ?>
 			<?php if (file_exists("modules/lightbox/album.php") ) {?>
 				<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
-			<?php } 
+			<?php }
 		}elseif (file_exists("modules/googlemap/defaultconfig.php")) {  ?>
 			<?php if (file_exists("modules/lightbox/album.php") ) {?>
-				<dd id="door9"><a href="javascript:;" onclick="tabswitch(9); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd> 
-			<?php } 
-		} 
+				<dd id="door9"><a href="javascript:;" onclick="tabswitch(9); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
+			<?php }
+		}
 	}
  ?>
 

@@ -26,8 +26,12 @@
  * @version $Id$
  * @author Brian Holland
  */
-?>
-<?php
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 global $lang_short_cut, $LANGUAGE, $PHP_SELF, $reorder, $GEDCOM;
 
 $reorder=safe_get('reorder', '1', '0');
@@ -58,14 +62,14 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 	var win02 = window.open(
 	"edit_interface.php?action=reorder_media&pid=<?php print $pid; ?>", "win02", "resizable=1, menubar=0, scrollbars=1, top=20, HEIGHT=840, WIDTH=450 ");
 	if (window.focus) {win02.focus();}
-	}   
-	
+	}
+
 	function album_add() {
 		win03 = window.open(
 		"addmedia.php?action=showmediaform&linktoid=<?php print $pid; ?>", "win03", "resizable=1, scrollbars=1, top=50, HEIGHT=780, WIDTH=600 ");
 		if (window.focus) {win03.focus();}
 	}
-	
+
 	function album_link() {
 		win04 = window.open(
 		"inverselink.php?linktoid=<?php print $pid; ?>&linkto=person", "win04", "resizable=1, scrollbars=1, top=50, HEIGHT=200, WIDTH=600 ");
@@ -79,14 +83,14 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 // Load Lightbox javascript and css files
 include('modules/lightbox/functions/lb_call_js.php');
 
-// Find if indi and family associated media exists and then count them ( $tot_med_ct)  
+// Find if indi and family associated media exists and then count them ( $tot_med_ct)
 include ('includes/media_reorder_count.php');
 
 	// If in re-order mode do not show header links, but instead, show drag and drop title.
 	if (isset($reorder) && $reorder==1){
 		echo "<center><b>".$pgv_lang["reorder_media_title"]."</b></center>" ;
 		echo "<br />";
-		
+
 	}else{
 		//Show Lightbox-Album header Links
 		//print "<br />";
@@ -99,44 +103,44 @@ include ('includes/media_reorder_count.php');
 
 		// Configuration
         if (PGV_USER_IS_ADMIN) {
-			if ($LB_AL_HEAD_LINKS == "both") {	
+			if ($LB_AL_HEAD_LINKS == "both") {
 	            print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}&gedcom={$GEDCOM}")."\">";
 				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$pgv_lang['configure_lightbox']}\" alt=\"{$pgv_lang['configure_lightbox']}\" /><br />" ;
 				print "" . $pgv_lang["configure_lightbox"] . "&nbsp;";
 				print "</a>";
-				print "</td>"; 
-	        //    print "<td width=\"5%\">&nbsp;</td>";			
+				print "</td>";
+	        //    print "<td width=\"5%\">&nbsp;</td>";
 	            print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 	            print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}")."\">";
 				print "" . $pgv_lang["configure_lightbox"] . "&nbsp;";
 				print "</a>";
-				print "</td>"; 
-	        //    print "<td width=\"5%\">&nbsp;</td>";			
+				print "</td>";
+	        //    print "<td width=\"5%\">&nbsp;</td>";
 	            print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
 	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}")."\">";
-				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$pgv_lang['configure_lightbox']}\" alt=\"{$pgv_lang['configure_lightbox']}\" />" ;	
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$pgv_lang['configure_lightbox']}\" alt=\"{$pgv_lang['configure_lightbox']}\" />" ;
 				print "</a>";
 				print "\n";
 			}
-        }		
+        }
 
 		//Add a new multimedia object
         if (PGV_USER_CAN_EDIT) {
-			if ($LB_AL_HEAD_LINKS == "both") {	
+			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_add()\"> ";
 				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"{$pgv_lang['lb_add_media_full']}\" alt=\"{$pgv_lang['lb_add_media_full']}\" /><br />" ;
 				print "" . $pgv_lang["lb_add_media"] . "&nbsp;";
 	            print " </a> ";
 	            print "</td>";
-	            //print "<td width=\"5%\">&nbsp;</td>"; 
+	            //print "<td width=\"5%\">&nbsp;</td>";
 				print "\n";
-			}else if ($LB_AL_HEAD_LINKS == "text") {	
+			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_add()\"> ";
 				print "" . $pgv_lang["lb_add_media"] . "&nbsp;";
@@ -155,14 +159,14 @@ include ('includes/media_reorder_count.php');
 
 		//Link to an existing item
         if (PGV_USER_CAN_EDIT) {
-			if ($LB_AL_HEAD_LINKS == "both") {	
+			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
 	            print "<a href=\"javascript: album_link()\"> ";
 				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"{$pgv_lang['lb_link_media_full']}\" alt=\"{$pgv_lang['lb_link_media_full']}\" /><br />" ;
 				print "" . $pgv_lang["lb_link_media"] . "&nbsp;";
 	            print " </a> ";
 	            print "</td>";
-				//    print "<td width=\"5%\">&nbsp;</td>"; 
+				//    print "<td width=\"5%\">&nbsp;</td>";
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
@@ -170,7 +174,7 @@ include ('includes/media_reorder_count.php');
 				print "" . $pgv_lang["lb_link_media"] . "&nbsp;";
 	            print " </a> ";
 	            print "</td>";
-				//    print "<td width=\"5%\">&nbsp;</td>"; 
+				//    print "<td width=\"5%\">&nbsp;</td>";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
 	            print "<a href=\"javascript: album_link()\">";
@@ -218,7 +222,7 @@ include ('includes/media_reorder_count.php');
 			}
 		}
 		*/
-		
+
 		//Album Reorder Media  ( If media exists and is greater than 1 item ) -----
 		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
@@ -247,7 +251,7 @@ include ('includes/media_reorder_count.php');
 				//print "<td width=\"5%\">&nbsp;</td>";
 			}
 		}
-		
+
 		//Popup Reorder Media ( If media exists and is greater than 1 item ) -----
 		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
@@ -276,11 +280,11 @@ include ('includes/media_reorder_count.php');
 				print "\n";
 			}
 		}
-		
+
 		if ($LB_AL_HEAD_LINKS == "icon" || (!PGV_USER_IS_ADMIN && !PGV_USER_CAN_EDIT)) {
 		print "</td>";
 		}
-		
+
 		print "</tr></table>";
 	}
 ?>

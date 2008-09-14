@@ -25,6 +25,11 @@
  * @author John Finlay / Neumont students
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 // TODO - Fix preview bar which is currently commented out
 ?>
 <script type="text/javascript">

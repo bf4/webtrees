@@ -23,9 +23,10 @@
  * @subpackage SiteMap
  * @version $Id$
  */
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-  print "You cannot access a language file directly.";
-  exit;
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 #pgv_lang["SITEMAP"]                    = "Sitemap information";

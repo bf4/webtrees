@@ -25,9 +25,9 @@
  * @version $Id$
  */
 
-if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
-  exit;
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 // Admin menu
