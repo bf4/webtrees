@@ -24,11 +24,11 @@
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Doğrudan lisan dosyasına erişemezsiniz.";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 
 $pgv_lang["accept_changes"]		= "Veritabanındaki değişiklikleri kabul/ret et";
 $pgv_lang["replace"]			= "Kayıdı değiştir";

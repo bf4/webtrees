@@ -26,10 +26,11 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "אין לך גישה לתיקיית קובצי השפות.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 $pgv_lang["parent_family"]			= "משפחה של הורים"; 
 $pgv_lang["step_parent_family"]		= "משפחה של הורה חורג";
 $pgv_lang["immediate_family"]		= "משפחה מידית"; 

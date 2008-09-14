@@ -23,9 +23,9 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Du kan ikke tilgå en sprogfil direkte.";
-exit;
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 $pgv_lang["import_options_help"] 	= "Du kan vælge yderligere indstillinger der skal bruges ved import af GEDCOM filen.";

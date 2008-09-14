@@ -25,11 +25,10 @@
  * @subpackage Languages
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Du har ikke direkte tilgang til språkfilen.<br />You cannot access a language file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 
 //-- Edit Interface
 $pgv_lang["edit_SEX_help"]			= "#pgv_lang[edit_sex_help]#";
