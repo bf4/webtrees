@@ -32,6 +32,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+include_once 'includes/controllers/hourglass_ctrl.php';
+require_once 'includes/treenav_class.php';
+
 $PGV_BLOCKS["print_charts_block"]["name"]		= $pgv_lang["charts_block"];
 $PGV_BLOCKS["print_charts_block"]["descr"]		= "charts_block_descr";
 $PGV_BLOCKS["print_charts_block"]["canconfig"]	= true;
@@ -73,13 +76,11 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	$PEDIGREE_FULL_DETAILS = $show_full;
 
 	if ($config['type']!='treenav') {
-		include_once("includes/controllers/hourglass_ctrl.php");
-		/* @var $controller HourglassController */
+		$controller = new HourglassController();
 		$controller->init($config["rootId"],0,3);
 		$controller->setupJavascript();
 	}
 	else {
-		require_once('includes/treenav_class.php');
 		$nav = new TreeNav($config['rootId'],'blocknav',-1);
 		$nav->generations = 2;
 	}
