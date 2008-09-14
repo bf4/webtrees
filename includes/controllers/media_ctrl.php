@@ -27,10 +27,10 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
-	header('HTTP/1.0 403 Forbidden');
-	exit;
-}
+//if (!defined('PGV_PHPGEDVIEW')) {
+//	header('HTTP/1.0 403 Forbidden');
+//	exit;
+//}
 
 require_once('includes/controllers/individual_ctrl.php');
 require_once("includes/media_class.php");
