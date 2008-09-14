@@ -24,9 +24,15 @@
  * @subpackage Display
  * @version $Id$
  */
-// Include the search controller from now on refered to as $controller
-require_once ("includes/controllers/search_ctrl.php");
-require_once ("includes/functions_print_lists.php");
+
+require './config.php';
+
+require_once 'includes/controllers/search_ctrl.php';
+require_once 'includes/functions_print_lists.php';
+
+$controller = new SearchController();
+$controller->init();
+
 // Print the top header
 print_header($pgv_lang["search"]);
 ?>

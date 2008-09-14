@@ -26,12 +26,11 @@
  * @version $Id$
  */
 
-//if (!defined('PGV_PHPGEDVIEW')) {
-//	header('HTTP/1.0 403 Forbidden');
-//	exit;
-//}
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
-require_once 'config.php';
 require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/functions_charts.php';
@@ -535,6 +534,5 @@ else
 	{
 	}
 }
-$controller = new FamilyController();
-$controller->init();
+
 ?>

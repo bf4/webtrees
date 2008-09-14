@@ -26,7 +26,12 @@
  * @version $Id$
  */
 
+require './config.php';
+
 require_once("includes/controllers/ancestry_ctrl.php");
+
+$controller = new AncestryController();
+$controller->init();
 
 // -- print html header information
 print_header($controller->name . " " . $pgv_lang["ancestry_chart"]);

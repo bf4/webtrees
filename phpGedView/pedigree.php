@@ -28,7 +28,13 @@
  * @package PhpGedView
  * @subpackage Charts
  */
-require("includes/controllers/pedigree_ctrl.php");
+
+require './config.php';
+
+require 'includes/controllers/pedigree_ctrl.php';
+
+$controller = new PedigreeController();
+$controller->init();
 
 // -- print html header information
 print_header($controller->getPageTitle());

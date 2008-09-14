@@ -25,7 +25,13 @@
  * @subpackage Admin
  * @version $Id$
  */
-require_once("includes/controllers/usermigrate_ctrl.php");
+
+require './config.php';
+
+require_once 'includes/controllers/usermigrate_ctrl.php';
+
+$controller = new UserMigrateController();
+$controller->init();
 
 print_header($controller->getPageTitle());
 

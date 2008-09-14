@@ -24,16 +24,16 @@
  * @version $Id$
  */
 
-//if (!defined('PGV_PHPGEDVIEW')) {
-//	header('HTTP/1.0 403 Forbidden');
-//	exit;
-//}
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
-require_once ("includes/GrampsExport.php");
-require_once ("includes/person_class.php");
-require_once ("includes/functions.php");
-require_once ("includes/controllers/basecontrol.php");
-require_once ("includes/pclzip.lib.php");
+require_once 'includes/GrampsExport.php';
+require_once 'includes/person_class.php';
+require_once 'includes/functions.php';
+require_once 'includes/controllers/basecontrol.php';
+require_once 'includes/pclzip.lib.php';
 
 function same_group($a, $b) {
 	if ($a['type'] == $b['type'])
@@ -726,6 +726,4 @@ if (file_exists('includes/controllers/clippings_ctrl_user.php')) {
 	}
 }
 
-$controller = new ClippingsController();
-$controller->init();
 ?>

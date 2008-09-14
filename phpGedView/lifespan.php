@@ -28,7 +28,13 @@
  * @version $Id$
  */
 
-require_once("includes/controllers/lifespan_ctrl.php");
+require './config.php';
+
+require_once 'includes/controllers/lifespan_ctrl.php';
+
+$controller = new LifespanController();
+$controller->init();
+
 $zoomfactor = 10;
 //if peeps !null then pass new array for zooming
 

@@ -31,7 +31,10 @@
 
 require './config.php';
 
-require_once("includes/controllers/clippings_ctrl.php");
+require_once 'includes/controllers/clippings_ctrl.php';
+
+$controller = new ClippingsController();
+$controller->init();
 
 // -- print html header information
 print_header($pgv_lang["clip_cart"]); ?>

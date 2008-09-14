@@ -28,7 +28,12 @@
  * @version $Id$
  */
 
-require_once("includes/controllers/timeline_ctrl.php");
+require './config.php';
+
+require_once 'includes/controllers/timeline_ctrl.php';
+
+$controller = new TimelineController();
+$controller->init();
 
 print_header($pgv_lang["timeline_title"]);
 ?>

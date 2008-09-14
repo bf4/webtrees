@@ -26,8 +26,13 @@
  * @version $Id$
  * @TODO use more theme specific CSS, allow a more fluid layout to take advantage of the page width
  */
-//These files are required for this page to work
-require_once("includes/controllers/media_ctrl.php");
+
+require './config.php';
+
+require_once 'includes/controllers/media_ctrl.php';
+
+$controller = new MediaController();
+$controller->init();
 
 
 /* Note:

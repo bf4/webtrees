@@ -28,6 +28,9 @@
  * @version $Id$
  */
 
+require './config.php';
+
+require_once 'includes/controllers/hourglass_ctrl.php';
 
 /*
  * The purpose of this page is to build the left half of the Hourglass chart via Ajax.
@@ -35,7 +38,7 @@
  * 	label the pair as a pair.
  */
 
-require_once("includes/controllers/hourglass_ctrl.php");
+$controller = new HourglassController();
 $controller->init();
 
 // -- print html header information
