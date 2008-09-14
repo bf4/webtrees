@@ -449,14 +449,22 @@ class SearchControllerRoot extends BaseController {
 					if ($cntgeds==1) $ged = $GEDCOMS[$this->sgeds[0]]["id"];
 					foreach ($this->myindilist as $key1 => $myindi) {
 						$person=Person::getInstance($myindi["id"]);
-						foreach ($person->getAllNames() as $name) {
-							if ((preg_match("/".$this->query."/i", $name['full']) > 0)) {
-								if ($cntgeds > 1) {
-									$ged = splitkey($key1, "ged");
-									$key1 = splitkey($key1, "id");
+						// TODO See this bug report:
+						// [ 2108040 ] 3847 - Fatal error in search_ctrl.php
+						// We're getting records that are not found here - probably
+						// from the wrong gedcom.  To suppress the error, I've simply
+						// ignored null person objects.  If the ID exists in the current
+						// gedcom, we'll still see the wrong person.
+						if ($person) {
+							foreach ($person->getAllNames() as $name) {
+								if ((preg_match("/".$this->query."/i", $name['full']) > 0)) {
+									if ($cntgeds > 1) {
+										$ged = splitkey($key1, "ged");
+										$key1 = splitkey($key1, "id");
+									}
+									$famquery[] = array ($key1, $ged);
+									break;
 								}
-								$famquery[] = array ($key1, $ged);
-								break;
 							}
 						}
 					}
