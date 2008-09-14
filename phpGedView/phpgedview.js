@@ -1248,11 +1248,11 @@ function toggleByClassName(tagName, className) {
 		}
 	}
 	// save status in a cookie
-	if (!navigator.cookieEnabled) return;
+	/*if (!navigator.cookieEnabled) return;
 	var cookieName = className;
 	var cookieValue = (disp=="none")? 0 : 1;
 	var cookieDate = new Date(2020,0,1);
-	document.cookie = cookieName+"="+cookieValue+"; expires="+cookieDate.toGMTString();
+	document.cookie = cookieName+"="+cookieValue+"; expires="+cookieDate.toGMTString();*/
 }
 
 /**
