@@ -26,34 +26,39 @@
  * @version $Id$
  * @author Brian Holland
  */
- 
+
 // -------------------------------------------------------
-// Configuration parameters for Lightbox Album 
+// Configuration parameters for Lightbox Album
 // -------------------------------------------------------
- 
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 global $mediatab,$LB_AL_HEAD_LINKS,$LB_AL_THUMB_LINKS,$LB_ML_THUMB_LINKS,$LB_SS_SPEED;
 global $LB_MUSIC_FILE,$LB_TRANSITION,$LB_URL_WIDTH,$LB_URL_HEIGHT,$GEDCOM;
 
 $mediatab = "1";  					// Individual Page Media Tab
-										// Set to 	0	to hide Media Tab on Indi page from All Users, 
+										// Set to 	0	to hide Media Tab on Indi page from All Users,
 										// Set to 	1	to show Media Tab on Indi page to All Users,  [Default]
-										
-					
+
+
 $LB_AL_HEAD_LINKS = "both";			// Album Tab Page Header Links.
 										// Set to "icon"	to view icon links.
-										// Set to "text"	to view text links. 
+										// Set to "text"	to view text links
 										// Set to "both"	to view both.  [Default]
-								
+
 $LB_TT_BALLOON = "true"; 			// Album Tab Page - Above Thumbnail Links.
 										// Set to "true"	to view Tooltip Balloon. [Default]
-										// Set to "false"	to view Tooltip Normal. 
-										
+										// Set to "false"	to view Tooltip Normal.
+
 $LB_AL_THUMB_LINKS = "text"; 		// Album Tab Page - Below Thumbnail Links.
-										// Set to "icon"	to view icon links. 
+										// Set to "icon"	to view icon links.
 										// Set to "text"	to view text links. [Default]
-										
+
 $LB_SS_SPEED = "6";					// SlideShow speed in seconds.  [Min 2  max 25]  [Default=4]
-										
+
 $LB_MUSIC_FILE = "modules/lightbox/music/music.mp3";  // The music file. [mp3 only] [Default = modules/lightbox/music/music.mp3]
 
 $LB_TRANSITION = "warp";			// Next or Prvious Image Transition effect
@@ -61,15 +66,15 @@ $LB_TRANSITION = "warp";			// Next or Prvious Image Transition effect
 										// Set to "normal"		Normal transtion effect.
 										// Set to "double"		Fast transition effect.
 										// Set to "warp"		Stretch transtition effect. [Default]
-										
+
 $LB_URL_WIDTH = "1000";				//  URL Window width in pixels. [default 1000]
-	
+
 $LB_URL_HEIGHT = "600";				//  URL Window height in pixels. [default 600]
-									
+
 $LB_ML_THUMB_LINKS = "text"; 		// MultiMedia List Page Thumbnail Links
-										// Set to "icon"	to view icon links. 
+										// Set to "icon"	to view icon links.
 										// Set to "text"	to view text links. [Default]
-										// Set to "both"	to view both. 
+										// Set to "both"	to view both.
 										// Set to "none"	to view neither.
 
 // End Configuration Parameters -------------------------------------------------
@@ -82,10 +87,10 @@ $LB_ML_THUMB_LINKS = "text"; 		// MultiMedia List Page Thumbnail Links
 // Do not change parameters below this line -------------------------------------------
 
 	// Tab id no for Lightbox
-	if (file_exists("modules/googlemap/defaultconfig.php")) { 
+	if (file_exists("modules/googlemap/defaultconfig.php")) {
 		$tabno=8;
 	}else{
 		$tabno=7;
 	}
-	
+
 ?>

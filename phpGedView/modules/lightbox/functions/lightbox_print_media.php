@@ -26,6 +26,12 @@
  * @version $Id$
  * @author Brian Holland
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 /**
  * -----------------------------------------------------------------------------
  * Print the links to multi-media objects
@@ -47,11 +53,11 @@
 	global $pgv_lang, $pgv_changes, $factarray, $view;
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $DBCONN, $DBTYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
-	
+
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
 	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
-	
+
 	// Set type of media from call in album
 	if ($t==1) {
 		$tt      = $pgv_lang["TYPE__photo"];
@@ -100,7 +106,7 @@
 	if (!isset($pgv_changes[$pid."&nbsp;".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
 	$ids = array($pid);
-	
+
 	//-- find all of the related ids
 	if ($related) {
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -120,15 +126,15 @@
 		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
 	}
 	$sort_media_found = false;
-		
+
 	// create ORDER BY list from Gedcom sorted records list  ---------------------------
-	$orderbylist = 'ORDER BY '; // initialize  
+	$orderbylist = 'ORDER BY '; // initialize
 	foreach ($sort_match as $id) {
 		$orderbylist .= "m_media='$id[1]' DESC, ";
-	}  
+	}
 	$orderbylist = rtrim($orderbylist, ', ');
 	// ---------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	//-- get a list of the current objects in the record
 	$current_objes = array();
 	if ($level>0) $regexp = "/".$level." OBJE @(.*)@/";
@@ -141,7 +147,7 @@
 	}
 
 	$media_found = false;
-	
+
 	// Get the related media items
 		// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
 		// but it may not work for all RDBMS.
@@ -169,16 +175,16 @@
 
 	$resmm = dbquery($sqlmm);
 	$foundObjs = array();
- 
+
 	$numm = $resmm->numRows();
-	
+
 	// Begin to Layout the Album Media Rows
 	if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) ) {
 		if ($t==5){ // do nothing
 		}else{
 			echo "\n\n";
 			echo "<table cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"facts_table\"><tr>", "\n";
-			
+
 			echo '<td width="100" align="center" class="descriptionbox">';
 				if ($t==5){
 					echo "<b><br />" . $tt . "</b><br /><br />";
@@ -186,12 +192,12 @@
 					echo "<b><br /><br />" . $tt . "</b><br /><br />";
 					// echo "(" . $numm . ")";
 				}else{
-					echo "<b><br />" . $tt . "</b><br /><br />";	
+					echo "<b><br />" . $tt . "</b><br /><br />";
 				}
 			echo '</td>';
-			
+
 			//echo '<td width="2"></td>';
-			
+
 			echo '<td class="facts_value" >';
 			echo '<table class="facts_table" width=\"100%\" cellpadding=\"0\"><tr><td >' . "\n";
 				echo "<div id=\"thumbcontainer".$t."\">" . "\n";
@@ -211,7 +217,7 @@
 		// ----------------------------------------------------------------
 		if (($reorder==1 && $t==5) ) {
 			 include ("modules/lightbox/functions/lb_horiz_sort.php");
-		} 
+		}
 		// ==================================================
 
 		// Start pulling media items into thumbcontainer div ==============================
@@ -237,7 +243,7 @@
 				$imgheight = $imgsize[1]+150;
 			}
 			$rows=array();
-			
+
 
 			//-- if there is a change to this media item then get the
 			//-- updated media item and show it
@@ -271,19 +277,19 @@
 				}
 			}
 
-			
+
 			foreach($rows as $rtype => $rowm) {
 				if ($t!=5){
-				
+
 					$res = lightbox_print_media_row($rtype, $rowm, $pid);
-				
+
 				}
 				$media_found = $media_found || $res;
 				$foundObjs[$rowm['m_media']]=true;
 			}
 			$mgedrec[] = $rowm["m_gedrec"];
 		}
-		
+
 		if ($t==5) {
 		}else{
 			echo "</ul>";
@@ -310,7 +316,7 @@
 	//-- objects are removed from the $current_objes list as they are printed
 	//-- any objects left in the list are new objects recently added to the gedcom
 	//-- but not yet accepted into the database.  We will print them too.
-	
+
 	foreach($current_objes as $media_id=>$value) {
 		while($value>0) {
 			$objSubrec = array_pop($obje_links[$media_id]);
@@ -369,10 +375,10 @@
 						echo "<div id=\"clearlist\">";
 						echo "</div";
 						echo "</center>";
-						
+
 						echo '</td></tr></table>';
 						echo "</center>";
-						
+
 						echo '</td>';
 						echo '</td>';
 						echo '</tr>';

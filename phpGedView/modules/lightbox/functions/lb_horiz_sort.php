@@ -26,9 +26,12 @@
  * @version $Id$
   * @author Brian Holland
  */
-?> 
 
-<?php
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 /*
     <script type="text/javascript" src="js/conio/prototype.js"></script>
     <script type="text/javascript" src="js/scriptaculous/scriptaculous.js"></script>
@@ -39,7 +42,7 @@
 		var sections = document.getElementsByClassName('section');
 		var alerttext = '';
 		var order = '';
-		
+
 		sections.each(function(section) {
 			order += Sortable.sequence(section) + ',';
 			alerttext = order;
@@ -56,7 +59,7 @@
 		font-family: Arial, Helvetica;
 		font-size: 12px;
 	}
-    
+
 	ul {
 		width: 100%;
 		list-style-type:none;
@@ -88,7 +91,7 @@
 	<?php if ($rownum4>0) { ?>
 		Sortable.create( "thumblist_4", 	{ tag:'li', dropOnEmpty: false, constraint: false, only:'facts_value' } );
 	<?php } ?>
-	
+
 //		Sortable.create( "thumblist", 	{ tag:'li', dropOnEmpty: false, constraint: false, only:'facts_value' } );
 	// ]]>
 </script>

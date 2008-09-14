@@ -24,12 +24,10 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
-// require "config.php";
 
 loadLangFile("pgv_confighelp, sitemap:lang, sitemap:help_text");
 

@@ -23,8 +23,9 @@
  * @subpackage SiteMap
  * @version $Id: help_text.en.php 1380 2007-08-03 14:27:47Z canajun2eh $
  */
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nie można uzyskać bezpośrednego dostępu.";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
