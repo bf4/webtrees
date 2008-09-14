@@ -24,10 +24,10 @@
  * @version $Id$
  */
 
-if (!defined('PGV_PHPGEDVIEW')) {
-	header('HTTP/1.0 403 Forbidden');
-	exit;
-}
+//if (!defined('PGV_PHPGEDVIEW')) {
+//	header('HTTP/1.0 403 Forbidden');
+//	exit;
+//}
 
 class BaseController {
 	var $view = "";
