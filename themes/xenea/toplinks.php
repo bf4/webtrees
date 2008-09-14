@@ -113,7 +113,7 @@ $menubar = new MenuBar();
 			print "\t<td width=\"7%\" valign=\"top\">\n";
 			$menu->printMenu();
 			print "\t</td>\n";
-
+		}
 		?>
 		<td width="10">
 			&nbsp;
