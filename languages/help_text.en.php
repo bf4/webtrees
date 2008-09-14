@@ -23,11 +23,10 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 
 $pgv_lang["help_treenav.php"]		= "~#pgv_lang[interactive_tree]#~<br />Use the #pgv_lang[interactive_tree]# to view the entire family tree of a person in both directions.  This view is similar to the Hourglass view in that it shows both ancestors and descendants of a given root person.  This chart gives you a more compact view by showing boxes for couples or families instead of just individuals.<br /><ul><li><b>Scrolling</b><br />Whenever your mouse cursor changes to a Move icon, you can click and drag the tree to view other portions of the tree.  As you drag the tree future generations will automatically expand until there are no more generations left to view in that direction.<br /></li><li><b>Zoom</b><br />You can use the icons on the left of the tree to zoom in and out.  Zooming out will allow you to see more of the tree on the screen at a time.  As you zoom out the text can become difficult to read; when your mouse hovers over a box you will get an enlarged view of what is inside it.<br /></li><li><b>Expanding Details</b><br />Clicking on any box will expand the box and display a more detailed view.  While in expanded mode, clicking on a person's name will open their #pgv_lang[indi_info]# page.  Clicking <img src='#GLOBALS[PGV_IMAGE_DIR]#/small/gedcom.gif' width='15px' height='15px' alt='' /> will redraw the tree with that person as the new root.  Clicking <img src='#GLOBALS[PGV_IMAGE_DIR]#/buttons/family.gif' alt='' /> will take you to that family's detail page.<br /></li><li><b>Toggle Spouses</b><br />The <img src='#GLOBALS[PGV_IMAGE_DIR]#/small/sfamily.gif' width='15px' height='15px' alt='' /> icon directly under the Zoom buttons will toggle the display of all spouses on or off on the descendancy side.  When the display is set to show spouses, all of a person's spouses will appear in the box with them.  All of the person's children will be shown as well.  When the option to show spouses is off, only the person's last spouse and children with that spouse will be shown.<br /></li><li><b>Large Tree</b><br />The #pgv_lang[interactive_tree]# is available from many different pages including the Tree tab on the #pgv_lang[indi_info]# page and the Charts block on the Welcome page.  When viewing the tree from one of these other pages, you will also have a Tree icon under the Zoom icons.  If you click <img src='#GLOBALS[PGV_IMAGE_DIR]#/small/gedcom.gif' width='15px' height='15px' alt='' /> you will be taken to the #pgv_lang[interactive_tree]# page.</li></ul><br />";
 

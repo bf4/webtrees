@@ -24,10 +24,11 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nemáte přímý přístup k souboru s češtinou.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 // -- Přiřaďte údaji v poli (Gedcom kódu) jeho český význam
 $factarray["ABBR"]	= "Zkratka";
 $factarray["ADDR"]	= "Adresa";

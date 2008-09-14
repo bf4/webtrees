@@ -25,10 +25,11 @@
  * @version $Id$
 */
 
-if (preg_match("/countries\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-		print "No pots accedir directament al fitxer d’idioma.";
-		exit;
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
+
 $countries["ABW"]="Aruba";
 $countries["ACA"]="Arcàdia";
 $countries["AFG"]="Afganistan";
