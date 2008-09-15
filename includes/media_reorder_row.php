@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_MEDIA_REORDER_ROW_PHP', '');
+
 /**
  * print a media row in a table
  * @param string $rtype whether this is a 'new', 'old', or 'normal' media row... this is used to determine if the rows should be printed with an outline color

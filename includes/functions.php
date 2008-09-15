@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_PHP', '');
+
 require_once('includes/mutex_class.php');
 require_once('includes/media_class.php');
 require_once('includes/functions_UTF8.php');

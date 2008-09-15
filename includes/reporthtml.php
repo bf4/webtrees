@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_REPORTHTML_PHP', '');
+
 require_once("includes/reportbase.php");
 
 /**

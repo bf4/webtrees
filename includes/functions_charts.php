@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_CHARTS_PHP', '');
+
 require_once("includes/person_class.php");
 
 /**

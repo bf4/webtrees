@@ -30,10 +30,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-	global $LB_AL_HEAD_LINKS, $gedrec;
+define('PGV_MEDIA_TAB_HEAD_PHP', '');
 
-	require_once("js/prototype.js.htm");
-	require_once("js/scriptaculous.js.htm");
+global $LB_AL_HEAD_LINKS, $gedrec;
+
+require_once("js/prototype.js.htm");
+require_once("js/scriptaculous.js.htm");
 ?>
 <script language="javascript" type="text/javascript">
 <!--

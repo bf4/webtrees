@@ -28,6 +28,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_MENU_PHP', '');
+
 class Menu
 {
 	var $seperator = false;

@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_RECENT_CHANGES_PHP', '');
+
 $PGV_BLOCKS["print_recent_changes"]["name"]     = $pgv_lang["recent_changes_block"];
 $PGV_BLOCKS["print_recent_changes"]["descr"]    = "recent_changes_descr";
 $PGV_BLOCKS["print_recent_changes"]["canconfig"]= true;

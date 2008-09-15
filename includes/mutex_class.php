@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_MUTEX_CLASS_PHP', '');
+
 class Mutex {
 	var $name; 	//-- the name of the mutex
 	var $waitCount;	//-- the number of cycles it we waited while trying to acquire the mutex

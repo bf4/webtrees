@@ -28,6 +28,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_TREENAV_CLASS_PHP', '');
+
 require_once('includes/person_class.php');
 require_once('includes/functions_charts.php');
 

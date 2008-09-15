@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_PRINT_FACTS_PHP', '');
+
 require_once 'includes/person_class.php';
 
 /**

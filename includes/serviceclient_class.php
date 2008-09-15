@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_SERVICECLIENT_CLASS_PHP', '');
+
 require_once('includes/gedcomrecord.php');
 include_once('includes/family_class.php');
 

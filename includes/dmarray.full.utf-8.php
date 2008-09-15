@@ -5,6 +5,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_DMARRAY_FULL_UTF_8_PHP', '');
+
 $maxchar = 7;
 $dmcoding = array();
 $dmcoding["A"] = array(0, -1, -1);

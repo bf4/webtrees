@@ -28,6 +28,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_UTF8_PHP', '');
+
 /*
  * Expand the input string into an array of UTF-8 characters
  */

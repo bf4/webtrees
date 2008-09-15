@@ -16,6 +16,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_CSS_PARSER_PHP', '');
+
 class cssparser {
   var $css;
   var $html;

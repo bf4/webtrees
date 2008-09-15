@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_EVENT_CLASS_PHP', '');
+
 require_once("includes/date_class.php");
 
 /**

@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_GRAMPSEXPORT_PHP', '');
+
 global $LANGUAGE;
 
  /*

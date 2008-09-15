@@ -51,6 +51,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FEEDCREATOR_CLASS_PHP', '');
+
 // your local timezone, set to "" to disable or for GMT
 define("TIME_ZONE","");
 

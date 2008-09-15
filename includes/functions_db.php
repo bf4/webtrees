@@ -34,6 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_DB_PHP', '');
+
 //-- load the PEAR:DB files
 require_once 'DB.php';
 

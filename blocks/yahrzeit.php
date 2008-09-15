@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_YAHRZEIT_PHP', '');
+
 $PGV_BLOCKS['print_yahrzeit']['name']     =$pgv_lang['yahrzeit_block'];
 $PGV_BLOCKS['print_yahrzeit']['descr']    ='yahrzeit_descr';
 $PGV_BLOCKS['print_yahrzeit']['canconfig']=true;

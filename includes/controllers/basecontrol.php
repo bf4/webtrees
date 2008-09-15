@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_BASECONTROL_PHP', '');
+
 class BaseController {
 	var $view = "";
 	/**

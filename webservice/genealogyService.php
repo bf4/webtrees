@@ -52,6 +52,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_GENEALOGYSERVICE_PHP', '');
+
 require_once 'SOAP/Server.php';
 
 // Genealogy class

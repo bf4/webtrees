@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_LANG_PHP', '');
+
 /**
  * Takes a string and converts certain characters in the string to others for the purpose of soundex searches
  */

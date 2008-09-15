@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_TOP10_GIVNNAMES_PHP', '');
+
 $PGV_BLOCKS["print_block_givn_top10"]["name"]		= $pgv_lang["block_givn_top10"];
 $PGV_BLOCKS["print_block_givn_top10"]["descr"]		= "block_givn_top10_descr";
 $PGV_BLOCKS["print_block_givn_top10"]["type"]		= "both";

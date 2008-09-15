@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_PGV_SERVICELOGIC_CLASS_PHP', '');
+
 require_once('webservice/genealogyService.php');
 require_once("includes/functions_edit.php");
 require_once('includes/GEWebService.php');

@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_SESSION_SPIDER_PHP', '');
+
 /**
  * Changes the session same for known spiders
  * session names are limited to alphanum upper and lower only.

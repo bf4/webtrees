@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_HELP_TEXT_VARS_PHP', '');
+
 loadLangFile("pgv_confighelp");
 
 $pgv_lang["help_manageservers.php"]	= "#pgv_lang[help_managesites]#";

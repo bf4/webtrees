@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_IMPORT_PHP', '');
+
 require_once('includes/media_class.php');
 include_once('includes/functions_lang.php');
 require_once('includes/mutex_class.php');

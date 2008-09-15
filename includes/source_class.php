@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_SOURCE_CLASS_PHP', '');
+
 require_once('includes/gedcomrecord.php');
 
 class Source extends GedcomRecord {

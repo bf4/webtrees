@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_MEDIA_REORDER_PHP', '');
+
 include_once("functions_print_facts.php");
 
 	print "<br /><b>".$pgv_lang["reorder_media"]."</b>";

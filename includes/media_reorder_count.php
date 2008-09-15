@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_MEDIA_REORDER_COUNT_PHP', '');
+
 // Find if indi and family associated media exists and then count them ( $tot_med_ct)  ===================================================
 	// Check indi gedcom items
 		$gedrec = find_gedcom_record($pid);

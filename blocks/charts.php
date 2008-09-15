@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_CHARTS_PHP', '');
+
 include_once 'includes/controllers/hourglass_ctrl.php';
 require_once 'includes/treenav_class.php';
 

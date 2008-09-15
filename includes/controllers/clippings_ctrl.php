@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_CLIPPINGS_CTRL', '');
+
 require_once 'includes/GrampsExport.php';
 require_once 'includes/person_class.php';
 require_once 'includes/functions.php';

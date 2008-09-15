@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_MEDIA_CTRL_PHP', '');
+
 require_once 'includes/controllers/individual_ctrl.php';
 require_once 'includes/media_class.php';
 

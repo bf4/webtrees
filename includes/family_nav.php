@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FAMILY_NAV_PHP', '');
+
 // -----------------------------------------------------------------------------
 // Function Family Nav for PHPGedView - called by individual_ctrl.php
 // -----------------------------------------------------------------------------

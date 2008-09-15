@@ -28,6 +28,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_PEDIGREE_CTRL_PHP', '');
+
 require_once("config.php");
 require_once("includes/functions_charts.php");
 require_once 'includes/controllers/basecontrol.php';

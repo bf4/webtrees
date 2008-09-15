@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_REPORTBASE_PHP', '');
+
 /**
  * page sizes
  *

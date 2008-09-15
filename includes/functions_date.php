@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_DATE_PHP', '');
+
 require_once('includes/date_class.php');
 
 /**

@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_RANDOM_MEDIA_PHP', '');
+
 //-- only enable this block if multi media has been enabled
 if ($MULTI_MEDIA) {
 	$PGV_BLOCKS["print_random_media"]["name"]		= $pgv_lang["random_media_block"];

@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_THEME_SELECT_PHP', '');
+
 $PGV_BLOCKS["print_block_theme_select"]["name"]			= $pgv_lang["theme_select_block"];
 $PGV_BLOCKS["print_block_theme_select"]["descr"]		= "theme_select_descr";
 $PGV_BLOCKS["print_block_theme_select"]["type"]			= "gedcom";

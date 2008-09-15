@@ -28,6 +28,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_MAIL_PHP', '');
+
 /**
  * this function is a wrapper to the php mail() function so that we can change settings globally
  * for more info on format="flowed" see: http://www.joeclark.org/ffaq.html

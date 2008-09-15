@@ -27,6 +27,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_GEWEBSERVICE_PHP', '');
+
 include_once("includes/GrampsExport.php");
 class GEWebService extends GrampsExport
 {

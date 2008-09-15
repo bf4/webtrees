@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_GEDCOM_BLOCK_PHP', '');
+
 $PGV_BLOCKS["print_gedcom_block"]["name"]		= $pgv_lang["gedcom_block"];
 $PGV_BLOCKS["print_gedcom_block"]["descr"]		= "gedcom_descr";
 $PGV_BLOCKS["print_gedcom_block"]["type"]		= "gedcom";

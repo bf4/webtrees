@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_CLASS_STATS_PHP', '');
+
 require_once 'includes/functions_print_lists.php';
 
 // Methods not allowed to be used in a statistic

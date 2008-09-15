@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_BLOCK_HTMLPLUS_PHP', '');
+
 require_once 'includes/functions_print_lists.php';
 require_once 'includes/class_stats.php';
 

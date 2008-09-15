@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_INDEX_CACHE_PHP', '');
+
 /**
  * load a cached block from a file
  * @param array $block	[0]:name of the block to load, [1]:block's configuration

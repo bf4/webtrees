@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FAMILY_CLASS_PHP', '');
+
 require_once 'includes/gedcomrecord.php';
 require_once 'includes/person_class.php';
 
