@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_PRINT_PHP', '');
+
 require_once 'includes/functions_charts.php';
 require_once 'includes/menu.php';
 

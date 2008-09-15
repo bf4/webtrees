@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_EDITLANG_PHP', '');
+
 //-----------------------------------------------------------------
 function add_backslash_before_dollarsign($dstring)
 {

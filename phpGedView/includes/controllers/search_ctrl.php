@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_SEARCH_CTRL_PHP', '');
+
 require_once 'includes/controllers/basecontrol.php';
 
 /**

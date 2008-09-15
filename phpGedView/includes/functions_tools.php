@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_TOOLS_PHP', '');
+
 /**
  * check if Gedcom needs BOM cleanup
  *

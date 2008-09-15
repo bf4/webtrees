@@ -39,6 +39,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_LANG_CODES_STD_PHP', '');
+
 $lng_codes["aa"]    = array("Afar", "Ethiopia");
 $lng_codes["ab"]    = array("Abkhazian", "Georgia");
 $lng_codes["af"]    = array("Afrikaans", "South Africa");

@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_REVIEW_CHANGES_PHP', '');
+
 $PGV_BLOCKS["review_changes_block"]["name"]			= $pgv_lang["review_changes_block"];
 $PGV_BLOCKS["review_changes_block"]["descr"]		= "review_changes_descr";
 $PGV_BLOCKS["review_changes_block"]["canconfig"]	= false;

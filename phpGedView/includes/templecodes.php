@@ -5,6 +5,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_TEMPLECODES_PHP', '');
+
 # $Id$
 $TEMPLE_CODES = array();
 $TEMPLE_CODES["ABA"]=	"Aba, Nigeria";

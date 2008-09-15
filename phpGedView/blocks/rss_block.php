@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_RSS_BLOCK_PHP', '');
+
 $PGV_BLOCKS["print_RSS_block"]["name"]			= $pgv_lang["rss_feeds"];
 $PGV_BLOCKS["print_RSS_block"]["descr"]			= "rss_descr";
 $PGV_BLOCKS["print_RSS_block"]["type"]			= "gedcom";

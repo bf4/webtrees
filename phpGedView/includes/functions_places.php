@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_PLACE_PHP', '');
+
 function get_plac_label() {
 	global $pgv_lang, $factarray;
 

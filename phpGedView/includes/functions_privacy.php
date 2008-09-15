@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_PRIVACY_PHP', '');
+
 if ($USE_RELATIONSHIP_PRIVACY) {
 	/**
 	 * store relationship paths in a cache

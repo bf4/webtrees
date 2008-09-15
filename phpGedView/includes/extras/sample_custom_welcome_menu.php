@@ -72,39 +72,39 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-	// Menu separator line
-	$menu->addSeperator();
+// Menu separator line
+$menu->addSeperator();
 
-	// First sub-menu (visible even when Search robots are looking at the site)
-	$submenu = new Menu("Custom Menu Item 1", "custom link #1");
+// First sub-menu (visible even when Search robots are looking at the site)
+$submenu = new Menu("Custom Menu Item 1", "custom link #1");
+$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+$menu->addSubmenu($submenu);
+
+// Second sub-menu (invisible to Search robots)
+if (empty($SEARCH_SPIDER)) {
+	$submenu = new Menu("Custom Menu Item 2", "custom link #2");
 	$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 	$menu->addSubmenu($submenu);
+}
 
-	// Second sub-menu (invisible to Search robots)
-	if (empty($SEARCH_SPIDER)) {
-		$submenu = new Menu("Custom Menu Item 2", "custom link #2");
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-		$menu->addSubmenu($submenu);
-	}
+// Third sub-menu (visible only to users with site Admin rights)
+if (PGV_USER_IS_ADMIN) {
+	$submenu = new Menu("Custom Menu Item 3", "custom link #2");
+	$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+	$menu->addSubmenu($submenu);
+}
 
-	// Third sub-menu (visible only to users with site Admin rights)
-	if (PGV_USER_IS_ADMIN) {
-		$submenu = new Menu("Custom Menu Item 3", "custom link #2");
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-		$menu->addSubmenu($submenu);
-	}
+// Fourth sub-menu (visible only to users with GEDCOM Admin rights)
+if (PGV_USER_GEDCOM_ADMIN) {
+	$submenu = new Menu("Custom Menu Item 4", "custom link #2");
+	$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+	$menu->addSubmenu($submenu);
+}
 
-	// Fourth sub-menu (visible only to users with GEDCOM Admin rights)
-	if (PGV_USER_GEDCOM_ADMIN) {
-		$submenu = new Menu("Custom Menu Item 4", "custom link #2");
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-		$menu->addSubmenu($submenu);
-	}
-
-	// Fifth sub-menu (visible only Clippings Cart is enabled and not a Search robot)
-	if (empty($SEARCH_SPIDER) && $GLOBALS["ENABLE_CLIPPINGS_CART"]) {
-		$submenu = new Menu("Custom Menu Item 5", "custom link #2");
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-		$menu->addSubmenu($submenu);
-	}
+// Fifth sub-menu (visible only Clippings Cart is enabled and not a Search robot)
+if (empty($SEARCH_SPIDER) && $GLOBALS["ENABLE_CLIPPINGS_CART"]) {
+	$submenu = new Menu("Custom Menu Item 5", "custom link #2");
+	$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+	$menu->addSubmenu($submenu);
+}
 ?>

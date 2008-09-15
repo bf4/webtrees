@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_HOURGLASS_CTRL_PHP', '');
+
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/person_class.php';
 require_once 'includes/functions_charts.php';

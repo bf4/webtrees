@@ -29,6 +29,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_EXPORT_PHP', '');
+
 /*
  * Create a header for a (newly-created or already-imported) gedcom file.
  */

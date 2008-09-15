@@ -27,6 +27,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_GEDOWNLOADGEDCOM_PHP', '');
+
 require_once("includes/GrampsExport.php");
 class GEDownloadGedcom extends GrampsExport
 {

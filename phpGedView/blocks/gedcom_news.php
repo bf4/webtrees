@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_GEDCOM_NEWS_PHP', '');
+
 $PGV_BLOCKS['print_gedcom_news']['name']		= $pgv_lang['gedcom_news_block'];
 $PGV_BLOCKS['print_gedcom_news']['descr']		= 'gedcom_news_descr';
 $PGV_BLOCKS['print_gedcom_news']['type']		= 'gedcom';

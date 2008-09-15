@@ -32,7 +32,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_USERMIGRATE_CTRL_PHP', '');
+
 require_once 'includes/controllers/basecontrol.php';
+require_once 'includes/functions_export.php';
 
 loadLangFile("pgv_confighelp");
 
@@ -49,7 +52,6 @@ else if (!PGV_USER_IS_ADMIN) {
 	exit;
 }
 
-require_once("includes/functions_export.php");
 
 class UserMigrateControllerRoot extends BaseController {
 	var $proceed;

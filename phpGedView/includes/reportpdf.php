@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_REPORTPDF_PHP', '');
+
 require_once("includes/reportbase.php");
 require_once('tcpdf/config/lang/eng.php');
 require_once("tcpdf/tcpdf.php");

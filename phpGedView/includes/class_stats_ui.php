@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_CLASS_STATS_UI_PHP', '');
+
 require_once 'includes/class_stats.php';
 class stats_ui extends stats
 {

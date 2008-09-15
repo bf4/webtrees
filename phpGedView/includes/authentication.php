@@ -36,6 +36,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_AUTHENTICATION_PHP', '');
+
 /**
  * authenticate a username and password
  *

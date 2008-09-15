@@ -40,6 +40,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_DATE_CLASS_PHP', '');
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // CalendarDate is a base class for classes such as GregorianDate, etc.

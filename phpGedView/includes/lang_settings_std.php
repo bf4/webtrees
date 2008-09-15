@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_LANG_SETTINGS_STD_PHP', '');
+
 //-- NEVER manually delete or edit this entry and every line below this entry! --START--//
 
 // Array definition of language_settings

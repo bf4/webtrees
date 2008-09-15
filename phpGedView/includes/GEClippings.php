@@ -27,6 +27,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_GECLIPPINGS_PHP', '');
+
 require_once("includes/GrampsExport.php");
 class GEClippings extends GrampsExport {
 /**

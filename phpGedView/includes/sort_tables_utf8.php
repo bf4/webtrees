@@ -26,6 +26,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_SORT_TABLES_UTF8_PHP', '');
+
 /**********************************************************************************
  *                                                                                *
  *	To prevent loss of some characters, this file MUST be saved in UTF-8 mode     *

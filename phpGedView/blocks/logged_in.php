@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_LOGGED_IN_PHP', '');
+
 $PGV_BLOCKS["print_logged_in_users"]["name"]		= $pgv_lang["logged_in_users_block"];
 $PGV_BLOCKS["print_logged_in_users"]["descr"]		= "logged_in_users_descr";
 $PGV_BLOCKS["print_logged_in_users"]["canconfig"]	= false;

@@ -15,6 +15,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_REPORTHEADER_PHP', '');
+
 /**
  * element handlers array
  *

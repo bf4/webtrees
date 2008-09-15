@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_EDIT_PHP', '');
+
 /**
  * The DEBUG variable allows you to turn on debugging
  * which will write all communication output to the pgv log files

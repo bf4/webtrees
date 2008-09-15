@@ -47,6 +47,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_SPECIALCHARS_PHP', '');
+
 loadLangFile("pgv_confighelp");
 
 $specialchar_languages = array(

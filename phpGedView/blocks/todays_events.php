@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_TODAYS_EVENTS_PHP', '');
+
 $PGV_BLOCKS["print_todays_events"]["name"]		= $pgv_lang["todays_events_block"];
 $PGV_BLOCKS["print_todays_events"]["descr"]		= "todays_events_descr";
 $PGV_BLOCKS["print_todays_events"]["infoStyle"]	= "style2";

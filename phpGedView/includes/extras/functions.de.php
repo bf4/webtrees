@@ -27,6 +27,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_FUNCTIONS_DE_PHP', '');
+
 /*
  * The following routine is designed to produce text to describe the relationship
  * between two people.  It's a direct copy of the corresponding English routine, except
