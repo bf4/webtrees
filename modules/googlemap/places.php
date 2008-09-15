@@ -250,7 +250,7 @@ if ($action=="ImportGedcom") {
 
 	$default_zoom_level=array(4,7,10,12);
 	foreach ($placelistUniq as $k=>$place) {
-		$parent=preg_split ("/,/", $place["place"]);
+		$parent=explode(',', $place["place"]);
 		$parent=array_reverse($parent);
 		$parent_id=0;
 		for($i=0; $i<count($parent); $i++) {
@@ -372,11 +372,11 @@ if ($action=="ImportFile2") {
 	$j = 0;
 	$maxLevel = 0;
 	foreach ($lines as $p => $placerec){
-		$fieldrec = preg_split ("/;/", $placerec);
+		$fieldrec = explode(';', $placerec);
 		if($fieldrec[0] > $maxLevel) $maxLevel = $fieldrec[0];
 	}
 	foreach ($lines as $p => $placerec){
-		$fieldrec = preg_split ("/;/", $placerec);
+		$fieldrec = explode(';', $placerec);
 		if (is_numeric($fieldrec[0]) && $fieldrec[0]<=3) {
 			$placelist[$j] = array();
 			$placelist[$j]["place"] = "";
@@ -427,7 +427,7 @@ if ($action=="ImportFile2") {
 	$default_zoom_level[2] = 10;
 	$default_zoom_level[3] = 12;
 	foreach ($placelistUniq as $k=>$place) {
-		$parent = preg_split ("/,/", $place["place"]);
+		$parent = explode(',', $place["place"]);
 		$parent = array_reverse($parent);
 		$parent_id=0;
 		for($i=0; $i<count($parent); $i++) {

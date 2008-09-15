@@ -290,7 +290,7 @@ class UserMigrateControllerRoot extends BaseController {
 				//-- make sure fields are set for v4.0 DB
 				if (!isset($user["firstname"])) {
 					if (isset($user["fullname"])) {
-						$parts = preg_split("/ /", trim($user["fullname"]));
+						$parts = explode(' ', trim($user["fullname"]));
 						$user["lastname"] = array_pop($parts);
 						$user["firstname"] = implode(" ", $parts);
 					}

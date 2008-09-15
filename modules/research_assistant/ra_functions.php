@@ -81,7 +81,7 @@ function trimLocation($loc) {
 	if (!$loc) return "";
 	$newLoc = ""; 
 	// reverse the array so that we get the top level first
-	$levels = array_reverse(preg_split("/,/", $loc));
+	$levels = array_reverse(explode(',', $loc));
 	foreach($levels as $pindex=>$ppart) {
 		// build the location string in reverse order, up to the requested number of levels
 		if ($pindex < $loclevels) $newLoc .= trim($ppart).",";
@@ -155,7 +155,7 @@ class ra_functions {
 		}
 		
 		if (!empty($place)) {
-			$parts = preg_split("/,/",$place);
+			$parts = explode(',',$place);
 			for($i = 0; $i < count($parts); $i++)
 			{
 				$parts[$i] = trim($parts[$i]);
@@ -1184,7 +1184,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function add_sources($task_id, $sources = -1) {
 		global $TBLPREFIX, $DBCONN;
 		if (!is_array($sources)) {
-			$sources = preg_split("/;/", $sources);
+			$sources = explode(';', $sources);
 		}
 		foreach($sources as $s=>$source_id) {
 			if (!empty($source_id)) {
@@ -1290,7 +1290,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				//-- set to the record from the inferences table that we want to compare the value to
 				$record = $indi;
 				if ($record) {
-					$rec_tags = preg_split("/:/", $value['record']);
+					$rec_tags = explode(':', $value['record']);
 					while ($record && $rec_tags) {
 						$tag = array_shift($rec_tags);
 						if (preg_match("/1 $tag @(.*)@/", $record->getGedcomRecord(), $match)) {

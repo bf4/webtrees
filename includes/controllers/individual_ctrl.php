@@ -197,7 +197,7 @@ class IndividualControllerRoot extends BaseController {
 			// print "remoterfn=".$remoterfn;
 			//-- get an updated record from the web service
 			if (!empty($remoterfn)) {
-				$parts = preg_split("/:/", $remoterfn);
+				$parts = explode(':', $remoterfn);
 				if (count($parts)==2) {
 					$servid = $parts[0];
 					$aliaid = $parts[1];
@@ -318,9 +318,9 @@ class IndividualControllerRoot extends BaseController {
 	function getCookieTabString() {
 		$str = "";
 		if (isset($_COOKIE['lasttabs'])) {
-			$parts = preg_split("/:/", $_COOKIE['lasttabs']);
+			$parts = explode(':', $_COOKIE['lasttabs']);
 			foreach($parts as $i=>$val) {
-				$inner = preg_split("/=/", $val);
+				$inner = explode('=', $val);
 				if (count($inner)>1) {
 					if ($inner[0]!=$this->pid) $str .= $val.":";
 				}
@@ -1133,7 +1133,7 @@ class IndividualControllerRoot extends BaseController {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
 					}
 					else {
-						$factdetail = preg_split("/ /", trim($family->getMarriageRecord()));
+						$factdetail = explode(' ', trim($family->getMarriageRecord()));
 						if ($family->getMarriageType())	$marr_type = "MARR_".strtoupper($family->getMarriageType());
 						else $marr_type = "MARR";
 						if (isset($factarray[$marr_type])) {

@@ -50,7 +50,7 @@ class ra_ViewInferences extends ra_form {
 		if ($input=="FAMC:HUSB") $input = $pgv_lang["father"];
 		if ($input=="FAMC:WIFE") $input = $pgv_lang["mother"];
 		if ($input=="FAMS:SPOUSE") $input = $pgv_lang["spouse"];
-		$parts = preg_split("/:/", $input);
+		$parts = explode(':', $input);
 		$out = "";
 		
 			if(!empty($otherFact) && !empty($input))

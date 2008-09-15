@@ -149,7 +149,7 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 	// Split the search criteria if all or any is chosen. Otherwise, just fill the array with the sentence
 	$criteria = array();
 	if ($searchhow == "sentence") $criteria[] = $searchtext;
-	else $criteria = preg_split("/ /", $searchtext);
+	else $criteria = explode(' ', $searchtext);
 
 	// Search in the previously stored vars for a hit and print it
 	foreach ($helpvarnames as $key => $value) {

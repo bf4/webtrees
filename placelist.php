@@ -127,7 +127,7 @@ if ($display=="hierarchy") {
 			for($i=$numls; $i>=0; $i--) {
 			print "<a href=\"?level=".($i+1)."&amp;";
 			for ($j=0; $j<=$i; $j++) {
-				$levels = preg_split ("/,/", trim($parent[$j]));
+				$levels = explode(',', trim($parent[$j]));
 				// Routine for replacing ampersands
 				foreach($levels as $pindex=>$ppart) {
 					$ppart = rawurlencode($ppart);
@@ -408,7 +408,7 @@ if ($display=="list") {
 		$i=0;
 		foreach($placelist as $indexval => $revplace) {
 			$linklevels = "";
-			$levels = preg_split ("/,/", $revplace);	// -- split the place into comma seperated values
+			$levels = explode(',', $revplace);	// -- split the place into comma seperated values
 			$level=0;
 			$revplace = "";
 			foreach($levels as $indexval => $place) {

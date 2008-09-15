@@ -75,7 +75,7 @@ if ($auth) {
 		print "<tr><td class=\"list_label width10\">".$pgv_lang["date_time"]."</td><td class=\"list_label width10\">".$pgv_lang["ip_address"]."</td><td class=\"list_label width80\">".$pgv_lang["log_message"]."</td></tr>";
 		for ($i = 0; $i < $num ; $i++)	{
 			print "<tr>";
-			$result = preg_split("/ - /", $lines[$i], 3);
+			$result = explode(' - ', $lines[$i], 3);
 			//-- properly handle lines that may not have the correct format
 			if (count($result)<3) {
 				print "<td class=\"optionbox\" colspan=\"3\" dir=\"ltr\">".PrintReady($lines[$i])."</td>";
@@ -98,8 +98,8 @@ if ($auth) {
 		print "<tr><td class=\"list_label width10\">".$pgv_lang["date_time"]."</td><td class=\"list_label width10\">".$pgv_lang["ip_address"]."</td><td class=\"list_label width10\">".$pgv_lang["user_name"]."</td><td class=\"list_label width10\">".$pgv_lang["searchtype"]."</td><td class=\"list_label width10\">".$pgv_lang["type"]."</td><td class=\"list_label width50\">".$pgv_lang["query"]."</td></tr>";
 		for ($i = 0; $i < $num ; $i++)	{
 			print "<tr>";
-			$result1 = preg_split("/<br \/>/", $lines[$i], 4);
-			$result2 = preg_split("/ - /", $result1[0], 3);
+			$result1 = explode('<br />', $lines[$i], 4);
+			$result2 = explode(' - ', $result1[0], 3);
 			print "<td class=\"optionbox\" dir=\"ltr\">".substr($result2[0],13)."</td>";
 			print "<td class=\"optionbox\" dir=\"ltr\">".substr($result2[1], 4)."</td>";
 			print "<td class=\"optionbox\" dir=\"ltr\">";

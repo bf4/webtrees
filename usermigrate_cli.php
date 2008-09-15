@@ -66,7 +66,7 @@ if ($argv[1]=="--backup") {
 	$argsarray = array("-Xc"=>"um_config","-Xu"=>"um_usinfo","-Xg"=>"um_gedcoms","-Xs"=>"um_gedsets","-Xl"=>"um_logs","-Xm"=>"um_media");
 	for($i=2; $i<$argc; $i++) {
 		if (!isset($argsarray[$argv[$i]])) {
-			$parts = preg_split("/=/", $argv[$i]);
+			$parts = explode('=', $argv[$i]);
 			if ($parts[0]=="-t") {
 				set_time_limit($parts[1]);
 			}

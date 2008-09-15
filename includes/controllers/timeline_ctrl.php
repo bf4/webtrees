@@ -281,7 +281,7 @@ class TimelineControllerRoot extends BaseController {
 					$place = $event->getPlace();
 					if ($place!=null) {
 						print " - ";
-						$plevels = preg_split("/,/", $place);
+						$plevels = explode(',', $place);
 						for($plevel=0; $plevel<$SHOW_PEDIGREE_PLACES; $plevel++) {
 							if (!empty($plevels[$plevel])) {
 								if ($plevel>0) print ", ";

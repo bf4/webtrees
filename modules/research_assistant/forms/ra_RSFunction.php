@@ -185,7 +185,7 @@ require_once("includes/person_class.php");
 				//check the array of record types coming in to make sure there is something there
 				if ($recordTag!='') {
 					//try and split the tag we are searching for in case of a colon.
-					$rec_tags = preg_split("/:/", $recordTag);
+					$rec_tags = explode(':', $recordTag);
 					//iterate over the count of the number of tags
 					for($i=0; $i<count($rec_tags); $i++) {
 						//set tag to the value in $rec_tags in the position of current loop position
@@ -432,7 +432,7 @@ require_once("includes/person_class.php");
 		if ($input=="FAMC:HUSB") $input = "father";
 		if ($input=="FAMC:WIFE") $input = "mother";
 		if ($input=="FAMS:SPOUSE") $input = "spouse";
-		$parts = preg_split("/:/", $input);
+		$parts = explode(':', $input);
 		$out = "";
 		foreach($parts as $part) {
 			if (isset($factarray[$part])) $out .= $factarray[$part];

@@ -418,7 +418,7 @@ class PGVServiceLogic extends GenealogyService
 
 		if (!empty($PID))
 		{
-			$xrefs = preg_split("/;/", $PID);
+			$xrefs = explode(';', $PID);
 			$success = true;
 			$person = array();
 			foreach($xrefs as $indexval => $xref1)
@@ -502,7 +502,7 @@ class PGVServiceLogic extends GenealogyService
 			else $returnType = 'gramps';
 		if (!empty($FID))
 		{
-			$xrefs = preg_split("/;/", $FID);
+			$xrefs = explode(';', $FID);
 			$success = true;
 			$family = array();
 			foreach($xrefs as $indexval => $xref1)
@@ -573,7 +573,7 @@ class PGVServiceLogic extends GenealogyService
 
 		if (!empty($SCID))
 		{
-			$xrefs = preg_split("/;/", $SCID);
+			$xrefs = explode(';', $SCID);
 			$success = true;
 			$source = array();
 			foreach($xrefs as $indexval => $xref1)
@@ -623,7 +623,7 @@ class PGVServiceLogic extends GenealogyService
 
 		if (!empty($PID))
 		{
-			$xrefs = preg_split("/;/", $PID);
+			$xrefs = explode(';', $PID);
 			$success = true;
 			$gedrecords="";
 			foreach($xrefs as $indexval => $xref1)
@@ -745,12 +745,12 @@ class PGVServiceLogic extends GenealogyService
 			$array_querys = array();
 
 			// array used to split the string $query into parts
-			$temp_queries = preg_split("/&/", $query);
+			$temp_queries = explode('&', $query);
 
 			// each part is gone through to select the field and the values
 			foreach($temp_queries as $index=>$query)
 			{
-				$part = preg_split("/=/", $query);
+				$part = explode('=', $query);
 				// $part[0] = field $part[1] = value;
 				$array_querys[$part[0]] = $part[1];
 			}

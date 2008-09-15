@@ -658,12 +658,12 @@ case 'addnewsource':
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN_help", "qm"); print $pgv_lang['select_events']; ?></td>
 				<td class="optionbox wrap"><select name="EVEN[]" multiple="multiple" size="5">
 					<?php
-					$parts = preg_split("/,/", $INDI_FACTS_ADD);
+					$parts = explode(',', $INDI_FACTS_ADD);
 					foreach($parts as $p=>$key) {
 						?><option value="<?php print $key; ?>"><?php print $factarray[$key]. " ($key)"; ?></option>
 					<?php
 					}
-					$parts = preg_split("/,/", $FAM_FACTS_ADD);
+					$parts = explode(',', $FAM_FACTS_ADD);
 					foreach($parts as $p=>$key) {
 						?><option value="<?php print $key; ?>"><?php print $factarray[$key]. " ($key)"; ?></option>
 					<?php
@@ -864,7 +864,7 @@ case 'update':
 			else $uploaded_files[] = "";
 		}
 	}
-	$gedlines = preg_split("/\n/", trim($gedrec));
+	$gedlines = explode("\n", trim($gedrec));
 	//-- for new facts set linenum to number of lines
 	if ($linenum=="new") $linenum = count($gedlines);
 	$newged = "";
@@ -873,7 +873,7 @@ case 'update':
 	}
 	//-- for edits get the level from the line
 	if (isset($gedlines[$linenum])) {
-		$fields = preg_split("/\s/", $gedlines[$linenum]);
+		$fields = explode(' ', $gedlines[$linenum]);
 		$glevel = $fields[0];
 		$i++;
 		while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
@@ -1675,7 +1675,7 @@ case 'deletesource':
 		foreach($myindilist as $key=>$value) {
 			if (!isset($pgv_changes[$key."_".$GEDCOM])) $indirec = $value["gedcom"];
 			else $indirec = find_updated_record($key);
-			$lines = preg_split("/\n/", $indirec);
+			$lines = explode("\n", $indirec);
 			$newrec = "";
 			$skipline = false;
 			$glevel = 0;
@@ -1701,7 +1701,7 @@ case 'deletesource':
 		foreach($myfamlist as $key=>$value) {
 			if (!isset($pgv_changes[$key."_".$GEDCOM])) $indirec = $value["gedcom"];
 			else $indirec = find_updated_record($key);
-			$lines = preg_split("/\n/", $indirec);
+			$lines = explode("\n", $indirec);
 			$newrec = "";
 			$skipline = false;
 			$glevel = 0;
@@ -1743,7 +1743,7 @@ case 'deleterepo':
 		foreach($mysourlist as $key=>$value) {
 			if (!isset($pgv_changes[$key."_".$GEDCOM])) $sourrec = $value["gedcom"];
 			else $sourrec = find_updated_record($key);
-			$lines = preg_split("/\n/", $sourrec);
+			$lines = explode("\n", $sourrec);
 			$newrec = "";
 			$skipline = false;
 			$glevel = 0;
@@ -1773,8 +1773,8 @@ case 'deleterepo':
 	break;
 //------------------------------------------------------------------------------
 case 'editname':
-	$gedlines = preg_split("/\n/", trim($gedrec));
-	$fields = preg_split("/\s/", $gedlines[$linenum]);
+	$gedlines = explode("\n", trim($gedrec));
+	$fields = explode(' ', $gedlines[$linenum]);
 	$glevel = $fields[0];
 	$i = $linenum+1;
 	$namerec = $gedlines[$linenum];
@@ -1797,8 +1797,8 @@ case 'copy':
 		print "<br />";
 	}
 	else {
-		$gedlines = preg_split("/\n/", trim($gedrec));
-		$fields = preg_split("/\s/", $gedlines[$linenum]);
+		$gedlines = explode("\n", trim($gedrec));
+		$fields = explode(' ', $gedlines[$linenum]);
 		$glevel = $fields[0];
 		$i = $linenum+1;
 		$factrec = $gedlines[$linenum];
@@ -1842,7 +1842,7 @@ case 'reorder_media': // Sort page using Popup
 
 //------------------------------------------------------------------------------
 case 'reset_media_update': // Reset sort using popup
-	$lines = preg_split("/\n/", $gedrec);
+	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
 		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
@@ -1855,7 +1855,7 @@ case 'reset_media_update': // Reset sort using popup
 case 'reorder_media_update': // Update sort using popup
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
-	$lines = preg_split("/\n/", $gedrec);
+	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
 		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
@@ -1879,7 +1879,7 @@ case 'reorder_media_update': // Update sort using popup
 
 //------------------------------------------------------------------------------
 case 'al_reset_media_update': // Reset sort using Album Page
-	$lines = preg_split("/\n/", $gedrec);
+	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
 		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
@@ -1914,7 +1914,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 	if (isset($_REQUEST['order2'])) $order2 = $_REQUEST['order2'];
 	$order2 = SwapArray(explode(",", substr($order2, 0, -1)));
 
-	$lines = preg_split("/\n/", $gedrec);
+	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
 		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
@@ -2354,7 +2354,7 @@ case 'reorder_fams_update':
 	if (isset($_REQUEST['order'])) $order = $_REQUEST['order'];
 	asort($order);
 	reset($order);
-	$lines = preg_split("/\n/", $gedrec);
+	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
 		if (preg_match("/1 FAMS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";

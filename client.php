@@ -143,7 +143,7 @@ case 'get':
 							if (empty($chan)) {
 								$head = find_gedcom_record("HEAD");
 								$head_date = get_sub_record(1, "1 DATE", $head);
-								$lines = preg_split("/\n/", $head_date);
+								$lines = explode("\n", $head_date);
 								$head_date = "";
 								foreach($lines as $line) {
 									$num = $line{0};
