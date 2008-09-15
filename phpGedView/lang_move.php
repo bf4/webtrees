@@ -48,7 +48,7 @@ function findReferences($directory) {
 			$filename = $directory."/".$entry;
 			if (is_dir($filename)) findReferences($filename);
 			else {
-				$parts = preg_split("/\./", $entry);
+				$parts = explode('.', $entry);
 				$ext = strtolower(end($parts));
 				if ($ext != "txt" && $ext != "gif" && $ext != "jpg" && $ext!="z" && $ext!="ttf" && $ext!="log" && $ext!="bak") {
 					$fcontents = file_get_contents($filename);

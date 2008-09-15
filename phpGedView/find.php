@@ -665,7 +665,7 @@ if ($action=="filter") {
 			if ($ctplace>0) {
 				print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 				foreach($placelist as $indexval => $revplace) {
-					$levels = preg_split ("/,/", $revplace);		// -- split the place into comma seperated values
+					$levels = explode(',', $revplace);		// -- split the place into comma seperated values
 					$levels = array_reverse($levels);				// -- reverse the array so that we get the top level first
 					$placetext="";
 					$j=0;

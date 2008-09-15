@@ -493,11 +493,11 @@ class research_assistant extends ra_functions {
         
 		if(!is_object($task)) {
 			$task_id = $_POST["taskid"];
-			$people = preg_split("/;/", $_POST['personid']);
+			$people = explode(';', $_POST['personid']);
 		}
 		else {
 			$task_id = $task->getId();
-			$people = preg_split("/;/", $task->getPersonId());
+			$people = explode(';', $task->getPersonId());
 		}
 		foreach($people as $i=>$person_id) {
 			if (!empty($person_id)) {
