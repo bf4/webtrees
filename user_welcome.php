@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_USER_WELCOME_PHP', '');
+
 $PGV_BLOCKS["print_welcome_block"]["name"]		= $pgv_lang["welcome_block"];
 $PGV_BLOCKS["print_welcome_block"]["descr"]		= "welcome_descr";
 $PGV_BLOCKS["print_welcome_block"]["type"]		= "user";

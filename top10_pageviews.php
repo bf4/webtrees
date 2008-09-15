@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_TOP10_PAGEVIEWS_PHP', '');
+
 $PGV_BLOCKS["top10_pageviews"]["name"]		= $pgv_lang["top10_pageviews"];
 $PGV_BLOCKS["top10_pageviews"]["descr"]		= "top10_pageviews_descr";
 $PGV_BLOCKS["top10_pageviews"]["canconfig"]	= true;

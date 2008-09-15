@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_USER_MESSAGES_PHP', '');
+
 $PGV_BLOCKS["print_user_messages"]["name"]		= $pgv_lang["user_messages_block"];
 $PGV_BLOCKS["print_user_messages"]["descr"]		= "user_messages_descr";
 $PGV_BLOCKS["print_user_messages"]["type"]		= "user";

@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+define('PGV_TOP10SURNAMES_PHP', '');
+
 $PGV_BLOCKS["print_block_name_top10"]["name"]		= $pgv_lang["block_top10"];
 $PGV_BLOCKS["print_block_name_top10"]["descr"]		= "block_top10_descr";
 $PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
