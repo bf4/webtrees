@@ -2826,14 +2826,14 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 	$found_facts=array();
 	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JewishDate($jd), new HijriDate($jd)) as $anniv) {
 		// Build a SQL where clause to match anniversaries in the appropriate calendar.
-		if ($anniv->CALENDAR_ESCAPE=='@#DGREGORIAN@')
-			$where="WHERE (d_type IS NULL OR d_type='{$anniv->CALENDAR_ESCAPE}')";
+		if ($anniv->CALENDAR_ESCAPE()=='@#DGREGORIAN@')
+			$where="WHERE (d_type IS NULL OR d_type='".$anniv->CALENDAR_ESCAPE()."')";
 		else
-			$where="WHERE d_type='{$anniv->CALENDAR_ESCAPE}'";
+			$where="WHERE d_type='".$anniv->CALENDAR_ESCAPE()."'";
 		// SIMPLE CASES:
 		// a) Non-hebrew anniversaries
 		// b) Hebrew months TVT, SHV, IYR, SVN, TMZ, AAV, ELL
-		if ($anniv->CALENDAR_ESCAPE!='@#DHEBREW@' || in_array($anniv->m, array(1, 5, 9, 10, 11, 12, 13))) {
+		if ($anniv->CALENDAR_ESCAPE()!='@#DHEBREW@' || in_array($anniv->m, array(1, 5, 9, 10, 11, 12, 13))) {
 			// Dates without days go on the first day of the month
 			// Dates with invalid days go on the last day of the month
 			if ($anniv->d==1) {
