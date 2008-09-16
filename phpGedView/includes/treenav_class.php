@@ -141,12 +141,12 @@ class TreeNav {
 			</div>
 			<div id="controls" style="position: absolute; left: 0px; top: 0px; z-index: 100; background-color: #EEEEEE">
 			<table>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" /></a></td></tr>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" /></a></td></tr>
-				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print $pgv_lang["load_full_tree"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" /></a></td></tr>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print $pgv_lang["hide_show_spouses"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" /></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" alt="zoomin" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" alt="zoomout" /></a></td></tr>
+				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print $pgv_lang["load_full_tree"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" alt="" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print $pgv_lang["hide_show_spouses"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" alt="" /></a></td></tr>
 				<tr><td><?php print_help_link('help_treenav.php','qm'); ?></td></tr>
-				<tr><td><img id="<?php print $this->name; ?>_loading" src="images/loading.gif" style="display: none;" /></td></tr>
+				<tr><td><img id="<?php print $this->name; ?>_loading" src="images/loading.gif" style="display: none;" alt="Loading..." /></td></tr>
 			</table>
 			</div>
 		</div>
@@ -187,7 +187,7 @@ class TreeNav {
 				if (helptext=='' || helptext==undefined) helptext = element.innerHTML;
 				this.title = helptext; if (document.all) return; // IE = title
 				this.value = helptext; this.title = ''; // Firefox = value
-				//-- show images
+				// show images
 				helptext=helptext.replace(/display: none;/gi, "display: inline;");
 				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");
 			}
@@ -197,7 +197,7 @@ class TreeNav {
 		}
 		}
 		Behaviour.register(myrules);
-		/*-- not used yet
+		/* not used yet
 		function dragObserver() {
 			this.parent = null;
 			this.onEnd = function(eventName, draggable, event) {
