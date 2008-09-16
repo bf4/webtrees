@@ -93,7 +93,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	for ($jd=$startjd-1; $jd<=$endjd+30;++$jd) {
 		foreach (get_anniversary_events($jd, 'DEAT _YART') as $fact) {
 			// Extract hebrew dates only
-			if ($fact['date']->date1->CALENDAR_ESCAPE=='@#DHEBREW@' && $fact['date']->MinJD()==$fact['date']->MaxJD()) {
+			if ($fact['date']->date1->CALENDAR_ESCAPE()=='@#DHEBREW@' && $fact['date']->MinJD()==$fact['date']->MaxJD()) {
 				// Apply privacy
 				if (displayDetailsByID($fact['id']) && showFactDetails($fact['fact'], $fact['id']) && !FactViewRestricted($fact['id'], $fact['factrec'])) {
 					$yahrzeits[]=$fact;
