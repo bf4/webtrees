@@ -3998,7 +3998,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
  *		have 52 different UTF8 characters all mapping to the same base character.  This will
  *		handle Vietnamese, which is by far the richest language in terms of diacritic marks.
  */
- 	require "includes/sort_tables_utf8.php";
+ 	require_once "includes/sort_tables_utf8.php";
 }
 
 /**
