@@ -106,11 +106,11 @@ if ($cms_username && $cms_password) {
 				foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 					set_user_gedcom_setting($user_id, $ged_id, 'canedit', $CMS_USER_ACCESS_LEVEL);
 				}
-				AddToLog(__FILE__.' login for '.$username);
+				AddToLog(__FILE__.' login for '.$cms_username);
 				$_SESSION['pgv_user'] = $user_id;
 			} else {
 				// Create user failed.
-				AddToLog(__FILE__.' failed to create user account for '.$username);
+				AddToLog(__FILE__.' failed to create user account for '.$cms_username);
 				header('Location: index.php?logout=1');
 			}
 		}
