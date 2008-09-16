@@ -70,8 +70,8 @@ class CalendarDate {
 				$this->d=0+$date[2];
 			else
 				$this->d=0;
-			if (isset($this->MONTH_TO_NUM[$date[1]])) {
-				$this->m=$this->MONTH_TO_NUM[$date[1]];
+			if (!is_null($this->MONTH_TO_NUM($date[1]))) {
+				$this->m=$this->MONTH_TO_NUM($date[1]);
 			} else {
 				$this->m=0;
 				$this->d=0;
@@ -82,7 +82,7 @@ class CalendarDate {
 		}
 
 		// Construct from an equivalent xxxxDate object
-		if ($this->CALENDAR_ESCAPE==$date->CALENDAR_ESCAPE) {
+		if ($this->CALENDAR_ESCAPE()==$date->CALENDAR_ESCAPE()) {
 			// NOTE - can't copy whole object - need to be able to copy Hebrew to Jewish, etc.
 			$this->y=$date->y;
 			$this->m=$date->m;
@@ -117,7 +117,7 @@ class CalendarDate {
 		} else
 			if ($this->m==0) {
 				$this->minJD=$this->YMDtoJD($this->y, 1, 1);
-				$this->maxJD=$this->YMDtoJD($this->NextYear(), 1, 1)-1;
+				$this->maxJD=$this->YMDtoJD($this->NextYear($this->y), 1, 1)-1;
 			} else {
 				if ($this->d==0) {
 					list($ny,$nm)=$this->NextMonth();
@@ -130,9 +130,60 @@ class CalendarDate {
 			}
 	}
 
+	// Calendars are defined in terms of the following static functions.
+	// They should redefine them as necessary.
+	static function CALENDAR_ESCAPE() {
+		return '@#DUNKNOWN@';
+	}
+	static function NUM_MONTHS() {
+		return 12;
+	}
+	static function MONTH_TO_NUM($m) {
+		static $months=array(''=>0, 'jan'=>1, 'feb'=>2, 'mar'=>3, 'apr'=>4, 'may'=>5, 'jun'=>6, 'jul'=>7, 'aug'=>8, 'sep'=>9, 'oct'=>10, 'nov'=>11, 'dec'=>12);
+		if (isset($months[$m])) {
+			return $months[$m];
+		} else {
+			return null;
+		}
+	}
+	static function NUM_TO_MONTH($n) {
+		static $months=array(0=>'', 1=>'jan', 2=>'feb', 3=>'mar', 4=>'apr', 5=>'may', 6=>'jun', 7=>'jul', 8=>'aug', 9=>'sep', 10=>'oct', 11=>'nov', 12=>'dec');
+		if (isset($months[$n])) {
+			return $months[$n];
+		} else {
+			return null;
+		}
+	}
+	static function CAL_START_JD() {
+		return 0; // @#DJULIAN@ 01 JAN 4713B.C.
+	}
+	static function CAL_END_JD() {
+		return 99999999;
+	}
+	static function NUM_DAYS_OF_WEEK() {
+		return 7;
+	}
+	static function DAYS_OF_WEEK($n) {
+		static $days=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+		return $days[$n];
+	}
+	static function YMDtoJD($y, $m, $d) {
+		return 0;
+	}
+	static function JDtoYMD($j) {
+		return array(0, 0, 0);
+	}
+	// Most years are 1 more than the previous, but not always (e.g. 1BC->1AD)
+	static function NextYear($y) {
+		return $y+1;
+	}
 	// Calendars that use suffixes, etc. (e.g. 'B.C.') or OS/NS notation should redefine this.
 	function ExtractYear($year) {
 		return empty($year)?0:$year;
+	}
+	// Leap years may have extra days, extra months, etc.
+	function IsLeapYear() {
+		return false;
 	}
 
 	// Compare two dates - helper function for sorting by date
@@ -170,7 +221,7 @@ class CalendarDate {
 			$dm--;
 		}
 		if ($dm<0) {
-			$dm+=$this->NUM_MONTHS;
+			$dm+=$this->NUM_MONTHS();
 			$dy--;
 		}
 		// Not a full age?  Then just the years
@@ -179,7 +230,7 @@ class CalendarDate {
 		// Age in years?
 		if ($dy>1)
 			return $dy.'y';
-		$dm+=$dy*$this->NUM_MONTHS;
+		$dm+=$dy*$this->NUM_MONTHS();
 		// Age in months?
 		if ($dm>1)
 			return $dm.'m';
@@ -216,7 +267,7 @@ class CalendarDate {
 
 	// Is this date within the valid range of the calendar
 	function InValidRange() {
-		return $this->minJD>=$this->CAL_START_JD && $this->maxJD<=$this->CAL_END_JD;
+		return $this->minJD>=$this->CAL_START_JD() && $this->maxJD<=$this->CAL_END_JD();
 	}
 
 	// How many days in the current month
@@ -227,7 +278,7 @@ class CalendarDate {
 
 	// How many days in the current week
 	function DaysInWeek() {
-		return $this->NUM_DAYS_OF_WEEK;
+		return $this->NUM_DAYS_OF_WEEK();
 	}
 
 	// Format a date
@@ -263,19 +314,17 @@ class CalendarDate {
 			case 'M': $str.=$this->FormatShortMonth(); break;
 			case 'n': $str.=$this->FormatMonth(); break;
 			case 't': $str.=$this->DaysInMonth(); break;
-			case 'L': $str.=$this->IsLeapYear() ? 1 : 0; break;
+			case 'L': $str.=(int)$this->IsLeapYear(); break;
 			case 'Y': $str.=$this->FormatLongYear(); break;
 			case 'y': $str.=$this->FormatShortYear(); break;
 			// The 4 extensions might be useful for re-formatting gedcom dates.
-			case '@': $str.=$this->CALENDAR_ESCAPE; break;
+			case '@': $str.=$this->CALENDAR_ESCAPE(); break;
 			case 'A': $str.=$this->FormatGedcomDay(); break;
 			case 'O': $str.=$this->FormatGedcomMonth(); break;
 			case 'E': $str.=$this->FormatGedcomYear(); break;
 			default:  $str.=$code; break;
 			}
-		// Don't allow dates to wrap.
 		return trim($str);
-		//return str_replace(' ', '&nbsp;', trim($str));
 	}
 
 	// Functions to extract bits of the date in various formats.  Individual calendars
@@ -293,7 +342,7 @@ class CalendarDate {
 
 	function FormatLongWeekday() {
 		global $pgv_lang;
-		$day=$this->DAYS_OF_WEEK[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		$day=$this->DAYS_OF_WEEK($this->minJD % $this->NUM_DAYS_OF_WEEK());
 		if (isset($pgv_lang[$day]))
 			return $pgv_lang[$day];
 		return $day;
@@ -301,7 +350,7 @@ class CalendarDate {
 
 	function FormatShortWeekday() {
 		global $pgv_lang;
-		$day=$this->DAYS_OF_WEEK[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		$day=$this->DAYS_OF_WEEK($this->minJD % $this->NUM_DAYS_OF_WEEK());
 		if (isset($pgv_lang[$day.'_1st']))
 			return $pgv_lang[$day.'_1st'];
 		if (isset($pgv_lang[$day]))
@@ -324,7 +373,7 @@ class CalendarDate {
 	}
 
 	function FormatNumericWeekday() {
-		return ($this->minJD + 1) % $NUM_DAYS_OF_WEEK;
+		return ($this->minJD + 1) % $NUM_DAYS_OF_WEEK();
 	}
 
 	function FormatDayOfYear() {
@@ -344,7 +393,7 @@ class CalendarDate {
 
 	function FormatLongMonth() {
 		global $pgv_lang;
-		$tmp=$this->NUM_TO_MONTH[$this->m];
+		$tmp=$this->NUM_TO_MONTH($this->m);
 		if (isset($pgv_lang[$tmp]))
 			return $pgv_lang[$tmp];
 		else
@@ -353,7 +402,7 @@ class CalendarDate {
 
 	function FormatShortMonth() {
 		global $pgv_lang;
-		$tmp=$this->NUM_TO_MONTH[$this->m].'_1st';
+		$tmp=$this->NUM_TO_MONTH($this->m).'_1st';
 		if (isset($pgv_lang[$tmp]))
 			return $pgv_lang[$tmp];
 		else
@@ -366,16 +415,6 @@ class CalendarDate {
 		return $this->y;
 	}
 
-	// Most years are 1 more than the previous, but not always (e.g. 1BC->1AD)
-	function NextYear() {
-		return $this->y+1;
-	}
-
-	// Most calendars will need to redefine this.
-	function IsLeapYear() {
-		return false;
-	}
-
 	function FormatGedcomDay() {
 		if ($this->d==0)
 			return '';
@@ -384,8 +423,7 @@ class CalendarDate {
 	}
 
 	function FormatGedcomMonth() {
-		if (isset($this->NUM_TO_MONTH[$this->m])) return strtoupper($this->NUM_TO_MONTH[$this->m]);
-		else return "";
+		return strtoupper($this->NUM_TO_MONTH($this->m));
 	}
 
 	function FormatGedcomYear() {
@@ -402,8 +440,8 @@ class CalendarDate {
 	// Calendars with leap-months should redefine this.
 	function NextMonth() {
 		return array(
-			$this->m==$this->NUM_MONTHS ? $this->NextYear() : $this->y,
-			($this->m%$this->NUM_MONTHS)+1
+			$this->m==$this->NUM_MONTHS() ? $this->NextYear($this->y) : $this->y,
+			($this->m%$this->NUM_MONTHS())+1
 		);
 	}
 
@@ -451,7 +489,7 @@ class CalendarDate {
 		global $DATE_FORMAT;
 		if (empty($date_fmt))
 			$date_fmt=$DATE_FORMAT;
-		$URL='calendar.php?cal='.$this->CALENDAR_ESCAPE;
+		$URL='calendar.php?cal='.$this->CALENDAR_ESCAPE();
 		$action="year";
 		if (strpos($date_fmt, "Y")!==false
 		||  strpos($date_fmt, "y")!==false) {
@@ -480,16 +518,12 @@ class CalendarDate {
 // Definitions for the Gregorian calendar
 ////////////////////////////////////////////////////////////////////////////////
 class GregorianDate extends CalendarDate {
-	// TODO these variables should be STATIC, but this makes them invisible to CalendarDate
-	// SUGGESTION - replace them with functions?
-	var $CALENDAR_ESCAPE='@#DGREGORIAN@';
-	var $MONTH_TO_NUM=array(''=>0, 'jan'=>1, 'feb'=>2, 'mar'=>3, 'apr'=>4, 'may'=>5, 'jun'=>6, 'jul'=>7, 'aug'=>8, 'sep'=>9, 'oct'=>10, 'nov'=>11, 'dec'=>12);
-	var $NUM_TO_MONTH=array(0=>'', 1=>'jan', 2=>'feb', 3=>'mar', 4=>'apr', 5=>'may', 6=>'jun', 7=>'jul', 8=>'aug', 9=>'sep', 10=>'oct', 11=>'nov', 12=>'dec');
-	var $NUM_MONTHS=12;
-	var $DAYS_OF_WEEK=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
-	var $NUM_DAYS_OF_WEEK=7;
-	var $CAL_START_JD=2299161; // 15 OCT 1582
-	var $CAL_END_JD=99999999;
+	static function CALENDAR_ESCAPE() {
+		return '@#DGREGORIAN@';
+	}
+	static function CAL_START_JD() {
+		return 2299161; // 15 OCT 1582
+	}
 
 	function IsLeapYear() {
 		return $this->y%4==0 && $this->y%100!=0 || $this->y%400==0;
@@ -526,10 +560,10 @@ class GregorianDate extends CalendarDate {
 // (Proleptic means we extend it backwards, prior to its introduction in 46BC)
 ////////////////////////////////////////////////////////////////////////////////
 class JulianDate extends CalendarDate {
-	// TODO these variables should be STATIC, but this makes them invisible to CalendarDate
-	var $CALENDAR_ESCAPE='@#DJULIAN@';
-	var $MONTH_TO_NUM=array(''=>0, 'jan'=>1, 'feb'=>2, 'mar'=>3, 'apr'=>4, 'may'=>5, 'jun'=>6, 'jul'=>7, 'aug'=>8, 'sep'=>9, 'oct'=>10, 'nov'=>11, 'dec'=>12);
-	var $NUM_TO_MONTH=array(0=>'', 1=>'jan', 2=>'feb', 3=>'mar', 4=>'apr', 5=>'may', 6=>'jun', 7=>'jul', 8=>'aug', 9=>'sep', 10=>'oct', 11=>'nov', 12=>'dec');
+	static function CALENDAR_ESCAPE() {
+		return '@#DJULIAN@';
+	}
+
 	var $NUM_MONTHS=12;
 	var $DAYS_OF_WEEK=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
 	var $NUM_DAYS_OF_WEEK=7;
@@ -538,11 +572,11 @@ class JulianDate extends CalendarDate {
 	// 
 	var $new_old_style=false;
 
-	function NextYear() {
-		if ($this->y==-1)
+	static function NextYear($y) {
+		if ($y==-1)
 			return 1;
 		else
-			return $this->y+1;
+			return $y+1;
 	}
 
 	function IsLeapYear() {
@@ -609,15 +643,32 @@ class JulianDate extends CalendarDate {
 // Definitions for the Jewish calendar
 ////////////////////////////////////////////////////////////////////////////////
 class JewishDate extends CalendarDate {
-	// TODO these variables should be STATIC, but this makes them invisible to CalendarDate
-	var $CALENDAR_ESCAPE='@#DHEBREW@';
-	var $MONTH_TO_NUM=array(''=>0, 'tsh'=>1, 'csh'=>2, 'ksl'=>3, 'tvt'=>4, 'shv'=>5, 'adr'=>6, 'ads'=>7, 'nsn'=>8, 'iyr'=>9, 'svn'=>10, 'tmz'=>11, 'aav'=>12, 'ell'=>13);
-	var $NUM_TO_MONTH=array(0=>'', 1=>'tsh', 2=>'csh', 3=>'ksl', 4=>'tvt', 5=>'shv', 6=>'adr', 7=>'ads', 8=>'nsn', 9=>'iyr', 10=>'svn', 11=>'tmz', 12=>'aav', 13=>'ell');
-	var $DAYS_OF_WEEK=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
-	var $NUM_MONTHS=13; // Temporary - until we find a better solution.
-	var $NUM_DAYS_OF_WEEK=7;
-	var $CAL_START_JD=347998; // 01 TSH 0001 = @#JULIAN@ 7 OCT 3761B.C.
-	var $CAL_END_JD=99999999;
+	static function CALENDAR_ESCAPE() {
+		return '@#DHEBREW@';
+	}
+	
+	static function MONTH_TO_NUM($m) {
+		static $months=array(''=>0, 'tsh'=>1, 'csh'=>2, 'ksl'=>3, 'tvt'=>4, 'shv'=>5, 'adr'=>6, 'ads'=>7, 'nsn'=>8, 'iyr'=>9, 'svn'=>10, 'tmz'=>11, 'aav'=>12, 'ell'=>13);
+		if (isset($months[$m])) {
+			return $months[$m];
+		} else {
+			return null;
+		}
+	}
+	static function NUM_TO_MONTH($n) {
+		static $months=array(0=>'', 1=>'tsh', 2=>'csh', 3=>'ksl', 4=>'tvt', 5=>'shv', 6=>'adr', 7=>'ads', 8=>'nsn', 9=>'iyr', 10=>'svn', 11=>'tmz', 12=>'aav', 13=>'ell');
+		if (isset($months[$n])) {
+			return $months[$n];
+		} else {
+			return null;
+		}
+	}
+	static function NUM_MONTHS() {
+		return 13;
+	}
+	static function CAL_START_JD() {
+		return 347998; // 01 TSH 0001 = @#JULIAN@ 7 OCT 3761B.C.
+	}
 
 	function NextMonth() {
 		if ($this->m==6 && !$this->IsLeapYear())
@@ -649,7 +700,7 @@ class JewishDate extends CalendarDate {
 
 	function FormatLongMonth() {
 		global $pgv_lang;
-		$mon=$this->NUM_TO_MONTH[$this->m];
+		$mon=$this->NUM_TO_MONTH($this->m);
 		if ($mon=='adr' && $this->IsLeapYear())
 			$mon.='_leap_year';
 		return $pgv_lang[$mon];
@@ -682,8 +733,8 @@ class HebrewDate extends JewishDate {
 	}
 
 	function FormatLongMonth() {
-		$mon=$this->NUM_TO_MONTH[$this->m];
-		if ($mon=='adr' &&$this->IsLeapYear())
+		$mon=$this->NUM_TO_MONTH($this->m);
+		if ($mon=='adr' && $this->IsLeapYear())
 			return "אדר א'";
 		else
 			return self::$HEBREW_MONTHS[$this->m];
@@ -769,15 +820,42 @@ class HebrewDate extends JewishDate {
 // Definitions for the French Republican calendar
 ////////////////////////////////////////////////////////////////////////////////
 class FrenchRDate extends CalendarDate {
-	// TODO these variables should be STATIC, but this makes them invisible to CalendarDate
-	var $CALENDAR_ESCAPE='@#DFRENCH R@';
-	var $MONTH_TO_NUM=array(''=>0, 'vend'=>1, 'brum'=>2, 'frim'=>3, 'nivo'=>4, 'pluv'=>5, 'vent'=>6, 'germ'=>7, 'flor'=>8, 'prai'=>9, 'mess'=>10, 'ther'=>11, 'fruc'=>12, 'comp'=>13);
-	var $NUM_TO_MONTH=array(0=>'', 1=>'vend', 2=>'brum', 3=>'frim', 4=>'nivo', 5=>'pluv', 6=>'vent', 7=>'germ', 8=>'flor', 9=>'prai', 10=>'mess', 11=>'ther', 12=>'fruc', 13=>'comp');
-	var $NUM_MONTHS=13;
-	var $DAYS_OF_WEEK=array('primidi', 'duodi', 'tridi', 'quartidi', 'quintidi', 'sextidi', 'septidi', 'octidi', 'nonidi', 'decidi');
-	var $NUM_DAYS_OF_WEEK=10; // A "metric" week of 10 unimaginatively named days.
-	var $CAL_START_JD=2375840; // 22 SEP 1792 = 01 VEND 0001
-	var $CAL_END_JD=2380687; // 31 DEC 1805 = 10 NIVO 0014
+	static function CALENDAR_ESCAPE() {
+		return '@#DFRENCH R@';
+	}
+	
+	static function MONTH_TO_NUM($m) {
+		static $months=array(''=>0, 'vend'=>1, 'brum'=>2, 'frim'=>3, 'nivo'=>4, 'pluv'=>5, 'vent'=>6, 'germ'=>7, 'flor'=>8, 'prai'=>9, 'mess'=>10, 'ther'=>11, 'fruc'=>12, 'comp'=>13);
+		if (isset($months[$m])) {
+			return $months[$m];
+		} else {
+			return null;
+		}
+	}
+	static function NUM_TO_MONTH($n) {
+		static $months=array(0=>'', 1=>'vend', 2=>'brum', 3=>'frim', 4=>'nivo', 5=>'pluv', 6=>'vent', 7=>'germ', 8=>'flor', 9=>'prai', 10=>'mess', 11=>'ther', 12=>'fruc', 13=>'comp');
+		if (isset($months[$n])) {
+			return $months[$n];
+		} else {
+			return null;
+		}
+	}
+	static function NUM_MONTHS() {
+		return 13;
+	}
+	static function DAYS_OF_WEEK($n) {
+		static $days=array('primidi', 'duodi', 'tridi', 'quartidi', 'quintidi', 'sextidi', 'septidi', 'octidi', 'nonidi', 'decidi');
+		return $days[$n];
+	}
+	static function NUM_DAYS_OF_WEEK() {
+		return 10; // A "metric" week of 10 unimaginatively named days.
+	}
+	static function CAL_START_JD() {
+		return 2375840; // 22 SEP 1792 = 01 VEND 0001
+	}
+	static function CAL_END_JD() {
+		return 2380687; // 31 DEC 1805 = 10 NIVO 0014
+	}
 
 	// Leap years were based on astronomical observations.  Only years 3, 7 and 11
 	// were ever observed.  Moves to a gregorian-like (fixed) system were proposed
@@ -808,15 +886,28 @@ class FrenchRDate extends CalendarDate {
 // "True" dates are based on local lunar observations, and can be a +/- one day.
 ////////////////////////////////////////////////////////////////////////////////
 class HijriDate extends CalendarDate {
-	// TODO these variables should be STATIC, but this makes them invisible to CalendarDate
-	var $CALENDAR_ESCAPE='@#DHIJRI@';
-	var $MONTH_TO_NUM=array(''=>0, 'muhar'=>1, 'safar'=>2, 'rabia'=>3, 'rabit'=>4, 'jumaa'=>5, 'jumat'=>6, 'rajab'=>7, 'shaab'=>8, 'ramad'=>9, 'shaww'=>10, 'dhuaq'=>11, 'dhuah'=>12);
-	var $NUM_TO_MONTH=array(0=>'', 1=>'muhar', 2=>'safar', 3=>'rabia', 4=>'rabit', 5=>'jumaa', 6=>'jumat', 7=>'rajab', 8=>'shaab', 9=>'ramad', 10=>'shaww', 11=>'dhuaq', 12=>'dhuah');
-	var $NUM_MONTHS=12;
-	var $DAYS_OF_WEEK=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
-	var $NUM_DAYS_OF_WEEK=7;
-	var $CAL_START_JD=1948440; // @#DHIJRI@ 1 MUHAR 0001 = @#JULIAN@ 16 JUL 0622
-	var $CAL_END_JD=99999999;
+	static function CALENDAR_ESCAPE() {
+		return '@#DHIJRI@';
+	}
+	static function MONTH_TO_NUM($m) {
+		static $months=array(''=>0, 'muhar'=>1, 'safar'=>2, 'rabia'=>3, 'rabit'=>4, 'jumaa'=>5, 'jumat'=>6, 'rajab'=>7, 'shaab'=>8, 'ramad'=>9, 'shaww'=>10, 'dhuaq'=>11, 'dhuah'=>12);
+		if (isset($months[$m])) {
+			return $months[$m];
+		} else {
+			return null;
+		}
+	}
+	static function NUM_TO_MONTH($n) {
+		static $months=array(0=>'', 1=>'muhar', 2=>'safar', 3=>'rabia', 4=>'rabit', 5=>'jumaa', 6=>'jumat', 7=>'rajab', 8=>'shaab', 9=>'ramad', 10=>'shaww', 11=>'dhuaq', 12=>'dhuah');
+		if (isset($months[$n])) {
+			return $months[$n];
+		} else {
+			return null;
+		}
+	}
+	static function CAL_START_JD() {
+		return 1948440; // @#DHIJRI@ 1 MUHAR 0001 = @#JULIAN@ 16 JUL 0622
+	}
 
 	function IsLeapYear() {
 		return ((11*$this->y+14)%30)<11;
@@ -852,11 +943,11 @@ class ArabicDate extends HijriDate {
 	}
 
 	function FormatLongWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 } // class ArabicDate
 
@@ -867,22 +958,8 @@ class ArabicDate extends HijriDate {
 // PGV won't compain if it receives one.
 ////////////////////////////////////////////////////////////////////////////////
 class RomanDate extends CalendarDate {
-	// TODO these variables should be STATIC, but this makes them invisible to CalendarDate
-	var $CALENDAR_ESCAPE='@#DROMAN@';
-	var $MONTH_TO_NUM=NULL;
-	var $NUM_TO_MONTH=NULL;
-	var $NUM_MONTHS=NULL;
-	var $DAYS_OF_WEEK=NULL;
-	var $NUM_DAYS_OF_WEEK=NULL;
-	var $CAL_START_JD=0;
-	var $CAL_END_JD=99999999;
-
-	static function YMDtoJD($y, $m, $d) {
-		return 0;
-	}
-
-	static function JDtoYMD($j) {
-		return array(0, 0, 0);
+	static function CALENDAR_ESCAPE() {
+		return '@#DROMAN@';
 	}
 
 	function FormatGedcomYear() {
@@ -900,17 +977,17 @@ class RomanDate extends CalendarDate {
 // 
 ////////////////////////////////////////////////////////////////////////////////
 class GedcomDate {
-	var $qual1='';   // Optional qualifier, such as BEF, FROM, ABT
-	var $date1=NULL; // The first (or only) date
-	var $qual2='';   // Optional qualifier, such as TO, AND
-	var $date2=NULL; // Optional second date
-	var $text='';    // Optional text, as included with an INTerpreted date
+	var $qual1=null; // Optional qualifier, such as BEF, FROM, ABT
+	var $date1=null; // The first (or only) date
+	var $qual2=null; // Optional qualifier, such as TO, AND
+	var $date2=null; // Optional second date
+	var $text =null; // Optional text, as included with an INTerpreted date
 
 	function GedcomDate($date) {
 		// Extract any explanatory text
-		if (preg_match('/^(.*)( ?\(.*)$/', $date, $match)) {
+		if (preg_match('/^(?:.*)( ?\(.*)$/', $date, $match)) {
 			$date=$match[1];
-			$this->text=$match[2];
+			$this->text=$match[1];
 		}
 		// Ignore punctuation and normalise whitespace
 		$date=preg_replace(
@@ -974,7 +1051,7 @@ class GedcomDate {
 			$y=$match[3][0];
 		} else
 			// A date with just a year
-			if (preg_match('/^(\d+( b ?c)?|\d\d\d\d \/ \d{1,4})$/', $date, $match)) {
+			if (preg_match('/^(\d+(?: b ?c)?|\d\d\d\d \/ \d{1,4})$/', $date, $match)) {
 				$d='';
 				$m='';
 				$y=$match[1];
@@ -1040,11 +1117,11 @@ class GedcomDate {
 
 	// Convert a date to the prefered format and calendar(s) display.
 	// Optionally make the date a URL to the calendar.
-	function Display($url=false, $date_fmt='', $cal_fmts=NULL) {
+	function Display($url=false, $date_fmt=null, $cal_fmts=null) {
 		global $pgv_lang, $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
 		// Convert dates to given calendars and given formats
-		if (empty($date_fmt))
+		if (!$date_fmt)
 			$date_fmt=$DATE_FORMAT;
 		if (is_null($cal_fmts))
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);
@@ -1159,13 +1236,13 @@ class GedcomDate {
 		$tmp->date1->SetJDfromYMD();
 		$tmp->qual1=$qual;
 		$tmp->qual2='';
-		$tmp->date2=NULL;
+		$tmp->date2=null;
 		return $tmp;
 	}
 
 	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
-	static function GetAgeYears($d1, $d2=NULL) {
+	static function GetAgeYears($d1, $d2=null) {
 		if (!is_object($d1)) return;
 		if (!is_object($d2))
 			return $d1->date1->GetAge(false, client_jd());
@@ -1175,7 +1252,7 @@ class GedcomDate {
 
 	// Calculate the years/months/days between two events
 	// Return a gedcom style age string: "1y 2m 3d" (for fact details)
-	static function GetAgeGedcom($d1, $d2=NULL) {
+	static function GetAgeGedcom($d1, $d2=null) {
 		if (is_null($d2)) {
 			return $d1->date1->GetAge(true, client_jd());
 		} else {
