@@ -101,7 +101,7 @@ class batch_update {
 						'</h1></td>'.
 						'</tr><tr><td valign="top" class="list_label center width20">'.
 						'<br/>'.implode('<br/>',$this->PLUGIN->getActionButtons($this->curr_xref, $this->record)).'<br/>'.
-						'</td><td class="optionbox width80">'.
+						'</td><td dir="ltr" align="left" class="optionbox width80">'.
 						$this->PLUGIN->getActionPreview($this->curr_xref, $this->record);
 						'</td></tr>';
 				} else {
