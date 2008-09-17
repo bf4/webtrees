@@ -37,6 +37,7 @@ require_once('includes/source_class.php');
 require_once('includes/repository_class.php');
 require_once('includes/media_class.php');
 require_once('includes/event_class.php');
+require_once 'includes/serviceclient_class.php';
 
 class GedcomRecord {
 	var $gedrec = "";
@@ -71,7 +72,6 @@ class GedcomRecord {
 				$servid = $parts[0];
 				$aliaid = $parts[1];
 				if (!empty($servid)&&!empty($aliaid)) {
-					require_once 'includes/serviceclient_class.php';
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!is_null($serviceClient)) {
 						if (!$simple || $serviceClient->type=='local') {
@@ -113,7 +113,6 @@ class GedcomRecord {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
 				//-- the INDI will be replaced with the type from the remote record
 				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
@@ -234,7 +233,6 @@ class GedcomRecord {
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
 			if ($aliaid && $servid) {
-				require_once 'includes/serviceclient_class.php';
 				$serviceClient = ServiceClient::getInstance($servid);
 				if ($serviceClient) {
 					$surl = $serviceClient->getURL();
@@ -268,7 +266,6 @@ class GedcomRecord {
 				$servid = $parts[0];
 				$aliaid = $parts[1];
 				if (!empty($servid)&&!empty($aliaid)) {
-					require_once 'includes/serviceclient_class.php';
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!empty($serviceClient)) {
 						$title = $serviceClient->getTitle();
