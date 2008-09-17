@@ -32,7 +32,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_PERSON_CLASS_PHP', '');
 
 require_once 'includes/gedcomrecord.php';
-require_once 'includes/family_class.php';
 require_once 'includes/event_class.php';
 
 class Person extends GedcomRecord {
@@ -102,7 +101,6 @@ class Person extends GedcomRecord {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
 				if (!empty($service)) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);

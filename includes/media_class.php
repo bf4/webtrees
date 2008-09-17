@@ -79,7 +79,6 @@ class Media extends GedcomRecord {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				require_once 'includes/serviceclient_class.php';
 				$service = ServiceClient::getInstance($servid);
 				if (!empty($service)) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ OBJE\r\n1 RFN ".$pid, false);
