@@ -1033,7 +1033,7 @@ class IndividualControllerRoot extends BaseController {
 				?>
 				<tr>
 					<td class="facts_label"><?php print $pgv_lang["add_father"]; ?></td>
-					<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript <?php print $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'HUSB', '<?php print $famid; ?>');"><?php print $pgv_lang["add_father"]; ?></a></td>
+					<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript <?php print $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'HUSB', '<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_father"]; ?></a></td>
 				</tr>
 				<?php
 			}
@@ -1044,7 +1044,7 @@ class IndividualControllerRoot extends BaseController {
 				?>
 				<tr>
 					<td class="facts_label"><?php print $pgv_lang["add_husb"]; ?></td>
-					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $famid; ?>', 'HUSB');"><?php print $pgv_lang["add_husb_to_family"]; ?></a></td>
+					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $family->getXref(); ?>', 'HUSB');"><?php print $pgv_lang["add_husb_to_family"]; ?></a></td>
 				</tr>
 				<?php
 			}
@@ -1079,7 +1079,7 @@ class IndividualControllerRoot extends BaseController {
 				?>
 				<tr>
 					<td class="facts_label"><?php print $pgv_lang["add_mother"]; ?></td>
-					<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript:;" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'WIFE', '<?php print $famid; ?>');"><?php print $pgv_lang["add_mother"]; ?></a></td>
+					<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript:;" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'WIFE', '<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_mother"]; ?></a></td>
 				</tr>
 				<?php
 			}
@@ -1090,7 +1090,7 @@ class IndividualControllerRoot extends BaseController {
 				?>
 				<tr>
 					<td class="facts_label"><?php print $pgv_lang["add_wife"]; ?></td>
-					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $famid; ?>', 'WIFE');"><?php print $pgv_lang["add_wife_to_family"]; ?></a></td>
+					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $family->getXref(); ?>', 'WIFE');"><?php print $pgv_lang["add_wife_to_family"]; ?></a></td>
 				</tr>
 				<?php
 			}
