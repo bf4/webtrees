@@ -692,4 +692,6 @@ $pgv_lang["THUMBNAIL_WIDTH"]			= "Szerokość generowanych miniaturek";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />To jest szerokość (w pikselach), którą system zastosuje podczas automatycznego generowania miniaturek. Domyślna wartość to 100.<br />";
 $pgv_lang["SHOW_EST_LIST_DATES"]		="Pokaż przybliżone daty na listach i wykresach";
 $pgv_lang["SHOW_EST_LIST_DATES_help"]	= "~#pgv_lang[SHOW_EST_LIST_DATES]#~<br /><br />Ta opcja określa czy przybliżone daty urodzin i śmierci  mają być pokazane zamiast pustych pól na listach i wykresach.<br />";
+$pgv_lang["SHOW_LIST_PLACES"]			= "Liczba poziomów miejsc widoczna na listach";
+$pgv_lang["SHOW_LIST_PLACES_help"]		= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />Ta opcja określa, jak wiele informacji o miejscach będzie widoczne na wykresach w ramkach osoby.<br /><br />Ustawienie wartości na 9 zagwarantuje pokazanie wszystkich poziomów hierarchii miejsc. Wartość 0 spowoduje całkowite ukrycie informacji o miejscach. Wartość 1 pozwoli pokazać pierwszy poziom, 2 - pierwsze dwa poziomy, itd.<br />";
 ?>

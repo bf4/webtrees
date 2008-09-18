@@ -85,11 +85,11 @@ $pgv_lang["GlobalPercent"]						= "Globalnie procent";
 $pgv_lang["Average"]							= "Średnio";
 $pgv_lang["NoData"]								= "Brak danych!";
 $pgv_lang["NotEnoughData"]						= "Nie wystarczające dane!";
-$pgv_lang["InferIndvBirthPlac"]					= "Jest %PERCENT% szansy, że miejsce urodzenia to:";
-$pgv_lang["InferIndvDeathPlac"]					= "Jest %PERCENT% szansy, że miejsce śmierci to:";
-$pgv_lang["InferIndvSurn"]						= "Jest %PERCENT% szansy, że Nazwisko to:";
-$pgv_lang["InferIndvMarriagePlace"]				= "Jest %PERCENT% szansy, że miejsce ślubu to:";
-$pgv_lang["InferIndvGivn"]						= "Jest %PERCENT% szansy, że imię to:";
+$pgv_lang["InferIndvBirthPlac"]					= "Jest %PERCENT% prawdopodobieństwa, że miejsce urodzenia to:";
+$pgv_lang["InferIndvDeathPlac"]					= "Jest %PERCENT% prawdopodobieństwa, że miejsce śmierci to:";
+$pgv_lang["InferIndvSurn"]						= "Jest %PERCENT% prawdopodobieństwa, że nazwisko osoby to:";
+$pgv_lang["InferIndvMarriagePlace"]				= "Jest %PERCENT% prawdopodobieństwa, że miejsce ślubu to:";
+$pgv_lang["InferIndvGivn"]						= "Jest %PERCENT% prawdopodobieństwa, że imię osoby to:";
 $pgv_lang["All"]								= "Wszystko";
 $pgv_lang["More"]								= "Więcej";
 $pgv_lang["ThereIsChance"]						= "Prawdopodobnie źródła mogą zawierać:";
@@ -98,7 +98,6 @@ $pgv_lang["DataCorrelations"]					= "Współzależności danych";
 $pgv_lang["ViewProbExplanation"]				= "Ta strona analizuje dane z aktywnego pliku GEDCOM i pokazuje współzależności pomiędzy różnymi danymi. Na przykład może być 95% współzaleźności między nazwiskiem a nazwiskiem ojca. To znaczy, że 95% osób w danym pliku GEDCOM ma nazwisko po swoim ojcu.";
 $pgv_lang["Folder"]                             = "Folder:";
 $pgv_lang["Edit_Gen_Task"]                 		= "Edytuj wygenerowane zadanie";
-$pgv_lang["Folder"]                             = "Folder:";
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Start_Date"]                 		= "Data początkowa";
