@@ -378,6 +378,7 @@ function Browser() {
 
   this.isIE    = false;
   this.isNS    = false;
+  this.isOpera = false;
   this.version = null;
 
   ua = navigator.userAgent;
@@ -396,6 +397,13 @@ function Browser() {
     return;
   }
 
+  s = "Opera";
+  if ((i = ua.indexOf(s)) >= 0) {
+    this.isOpera = true;
+	this.version = parseFloat(ua.substr(i + s.length + 1));
+    return;
+  }
+  
   // Treat any other "Gecko" browser as NS 6.1.
 
   s = "Gecko";
@@ -425,7 +433,7 @@ curLeft = 0;
   if (id)
     dragObj.elNode = document.getElementById(id);
   else {
-    if (browser.isIE)
+    if (browser.isIE || browser.isOpera)
       dragObj.elNode = window.event.srcElement;
     if (browser.isNS)
       dragObj.elNode = event.target;
@@ -440,7 +448,7 @@ curLeft = 0;
 
   // Get cursor position with respect to the page.
 
-  if (browser.isIE) {
+  if (browser.isIE || browser.isOpera) {
     x = window.event.clientX + document.documentElement.scrollLeft
       + document.body.scrollLeft;
     y = window.event.clientY + document.documentElement.scrollTop
@@ -467,7 +475,7 @@ curLeft = 0;
 
   // Capture mousemove and mouseup events on the page.
 
-  if (browser.isIE) {
+  if (browser.isIE || browser.isOpera) {
     document.attachEvent("onmousemove", dragGo);
     document.attachEvent("onmouseup",   dragStop);
     window.event.cancelBubble = true;
@@ -487,7 +495,7 @@ function dragGo(event) {
 
   // Get cursor position with respect to the page.
 
-  if (browser.isIE) {
+  if (browser.isIE || browser.isOpera) {
     x = window.event.clientX + document.documentElement.scrollLeft
       + document.body.scrollLeft;
     y = window.event.clientY + document.documentElement.scrollTop
@@ -506,7 +514,7 @@ function dragGo(event) {
     window.event.cancelBubble = true;
     window.event.returnValue = false;
   }
-  if (browser.isNS)
+  if (browser.isNS || browser.isOpera)
     event.preventDefault();
   
   //-- load children by ajax  
@@ -522,7 +530,7 @@ function dragStop(event) {
 	//dragObj.nav.collapseBox = true;
 	
   // Stop capturing mousemove and mouseup events.
-  if (browser.isIE) {
+  if (browser.isIE || browser.isOpera) {
     document.detachEvent("onmousemove", dragGo);
     document.detachEvent("onmouseup",   dragStop);
   }
