@@ -1889,7 +1889,8 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>"; else print getRLM() . "]</a>";
 		}
 		else {
-			print $pgv_lang["unknown"];
+			if (strstr($pid2, " ")) print $pid2;
+			else print $pgv_lang["unknown"];
 			if ($SHOW_ID_NUMBERS) {
 				print "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -2009,16 +2010,16 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 				$birth_date=$person->getBirthDate(false);
 				$death_date=$person->getDeathDate(false);
 				$ageText = '';
-				if ((GedcomDate::Compare($date, $death_date)<0 || !$person->isDead()) || $fact=='DEAT') {
+				if ((GedcomDate::Compare($date, $death_date)<=0 || !$person->isDead()) || $fact=='DEAT') {
 					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
 						if (!empty($fact_age) && $fact_age!=$age ||
 						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!= $age ||
+						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!=$age ||
 						    !empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
-							$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+							if ($age!="0d") $ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
 					}
 				}
 				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>=0) {
