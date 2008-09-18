@@ -286,7 +286,7 @@ $pgv_lang["welcome_new"]			= "Witaj na swojej nowej stronie PhpGedView.";
 $pgv_lang["yearly"]					= "Co rok";
 $pgv_lang["admin_OK_subject"]		= "Zatwierdzenie konta na #SERVER_NAME#";
 $pgv_lang["admin_OK_message"]		= "Administrator strony #SERVER_NAME# zatwierdził twoje zgłoszenie. Możesz się teraz zalogować używając odnośnika:\r\n\r\n#SERVER_NAME#\r\n";
-$pgv_lang["batch_update"]			= "Uaktualnij/edytuj pliki w Twoim pliku GEDCOM";
+$pgv_lang["batch_update"]			= "Uaktualnij/edytuj informacje w plikach GEDCOM";
 $pgv_lang["gedcheck"]     			= "Tester GEDCOM";
 $pgv_lang["gedcheck_text"]			= "Ten moduł sprawdza poprawność formatu pliku GEDCOM według <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">Specyfikacji 5.5.1 GEDCOM</a>. Wykrywa także wiele rodzajów częstych błędów w danych. Pamiętaj, że istnieje wiele wersji, rozszerzeń i odmian specyfikacji, więc nie musisz się przejmować żadnymi błędami poza tymi oznaczonymi jako krytyczne. Objaśnienia do wszystkich błędów możesz znaleźć w specyfikacji, więc zajrzyj do niej zanim poprosisz o pomoc.";
 $pgv_lang["level"]					= "Poziom";
