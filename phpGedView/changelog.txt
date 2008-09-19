@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2104235 ] Add Favorites refuses a long URL (fisharebest)
  - Fixed: IE script error message "wz_tooltip.js must be included INSIDE the body section...." (windmillway)
  - Added: 2nd generation fly-out menus for Details and Album Family Navigator (windmillway)
  - Fixed: (1) Missing underline of starred names on Charts. (2) Erratic width of Navigator on Album Tab page. (windmillway)  
