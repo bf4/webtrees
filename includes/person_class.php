@@ -1721,13 +1721,12 @@ class Person extends GedcomRecord {
 		}
 
 		// Make sure the NICK is included in the NAME record.
-		$nick=preg_match('/^'.$sublevel.' NICK ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
-		if ($nick && !preg_match('/[\/ "^]'.preg_quote($nick, '/').'[\/ "$]/', $full)) {
+		if (preg_match('/^'.$sublevel.' NICK ([^\r\n]+)/m', $gedrec, $match)) {
 			$pos=strpos($full, '/');
 			if ($pos===false) {
-				$full.=' "'.$nick.'"';
+				$full.=' "'.$match[1].'"';
 			} else {
-				$full=substr($full, 0, $pos).'"'.$nick.'" '.substr($full, $pos);
+				$full=substr($full, 0, $pos).'"'.$match[1].'" '.substr($full, $pos);
 			}
 		}
 
