@@ -1740,7 +1740,7 @@ if ($MULTI_MEDIA && (is_writable($MEDIA_DIRECTORY))) { ?>
 <?php }
 
 // Address update
-if (!$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empty($EMAIL)) { //-- don't show address for dead people
+if ($person && !$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empty($EMAIL)) { //-- don't show address for dead people
 ?>
 <tr><td>&nbsp;</td></tr>
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_address_help", "qm"); print $pgv_lang["update_address"]; ?></td></tr>
