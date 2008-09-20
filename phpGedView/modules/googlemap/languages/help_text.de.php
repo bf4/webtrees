@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+$pgv_lang["GOOGLEMAP_CONFIG"]           = "Googlemap konfigurieren";
+$pgv_lang["GOOGLEMAP_CONFIG_help"]      = "~#pgv_lang[GOOGLEMAP_CONFIG]#~<br /><br />Hier konfigurieren Sie alle Aspekte des Modul Googlemap.";
 
 $pgv_lang["GOOGLEMAP_ENABLE"]           = "Kartendarstellung aktivieren";
 $pgv_lang["GOOGLEMAP_ENABLE_help"]      = "Kartendarstellung aktivieren<br /><br />Diese Option aktiviert oder deaktiviert die Kartendarstellung mit Google-Map.<br />Bei deaktivierter Kartendarstellung bleibt der Karteireiter für die Kartendarstellung zwar leer, der Link um die Darstellung zu verwalten ist aber weiterhin aktiv.";
@@ -86,36 +89,59 @@ $pgv_lang["PL_EXPORT_ALL_FILE"]         = "Alle Ortsdaten exportieren";
 $pgv_lang["PL_EXPORT_ALL_FILE_help"]    = "Alle Ortsdaten exportieren<br /><br />Mit dieser Option werden alle Ortsdaten exportiert und auf den PC heruntergeladen.";
 
 // Help texts for places_edit.php
+$pgv_lang["PLE_EDIT"]               	= "Googlemap Orte editieren";
+$pgv_lang["PLE_EDIT_help"]              = "~#pgv_lang[PLE_EDIT]#~<br /><br />Hier erfassen, ändern, oder löschen Sie die Orte für das Modul Googlemap.";
 
 $pgv_lang["PLE_PLACES"]                 = "Ortsname";
-$pgv_lang["PLE_PLACES_help"]            = "Ortsname<br /><br />Hier kann der Ortsname eingetragen bzw. geändert werden.";
+$pgv_lang["PLE_PLACES_help"]            = "~#pgv_lang[PLE_PLACES]#~<br /><br />Hier kann der Ortsname eingetragen bzw. geändert werden.";
 
 $pgv_lang["PLE_PRECISION"]              = "Genauigkeit";
-$pgv_lang["PLE_PRECISION_help"]         = "Genauigkeit<br /><br />Hier wird die Detailtiefe (Genauigkeit) der Kartendarstellung eingetragen. Dieser Wert bestimmt die Anzahl der Nachkommastellen für die Längen- und Breitengrade.";
+$pgv_lang["PLE_PRECISION_help"]         = "~#pgv_lang[PLE_PRECISION]#~<br /><br />Hier wird die Detailtiefe (Genauigkeit) der Kartendarstellung eingetragen. Dieser Wert bestimmt die Anzahl der Nachkommastellen für die Längen- und Breitengrade.";
 
 $pgv_lang["PLE_LATLON_CTRL"]            = "Breiten- / Längengrad";
-$pgv_lang["PLE_LATLON_CTRL_help"]       = "Breiten- / Längengrad<br /><br />Hier können Breiten- und Längengrad eingetragen werden. Zuerst bitte den Bereich (N/S oder O/W) auswählen. Danach den Breiten- oder Längengrad als Dezimalwert eintragen. <br />Der Dezimalwert errechnet sich anhand folgender Formel:<br />Grad_dezimal = ((Sekunden / 60) + Minuten) / 60 + Grad.";
+$pgv_lang["PLE_LATLON_CTRL_help"]       = "~#pgv_lang[PLE_LATLON_CTRL]#~<br /><br />Hier können Breiten- und Längengrad eingetragen werden. Zuerst bitte den Bereich (N/S oder O/W) auswählen. Danach den Breiten- oder Längengrad als Dezimalwert eintragen. <br />Der Dezimalwert errechnet sich anhand folgender Formel:<br />Grad_dezimal = ((Sekunden / 60) + Minuten) / 60 + Grad.";
 
 $pgv_lang["PLE_ZOOM"]                   = "Zoomstufe";
-$pgv_lang["PLE_ZOOM_help"]              = "Zoomstufe<br /><br />Hier wird die Vergrößerungsstufe eingetragen. Der Wert stellt die kleinste Zoomstufe dieses Ortes auf der Karte dar.";
+$pgv_lang["PLE_ZOOM_help"]              = "~#pgv_lang[PLE_ZOOM]#~<br /><br />Hier wird die Vergrößerungsstufe eingetragen. Der Wert stellt die kleinste Zoomstufe dieses Ortes auf der Karte dar.";
 
 $pgv_lang["PLE_ICON"]                   = "Icon";
-$pgv_lang["PLE_ICON_help"]              = "Icon<br /><br />Hier können Sie ein Icon bestimmen oder entfernen. Mit dem Link kann die Flagge bestimmt werden, die zu diesem Ort angezeigt werden soll.";
+$pgv_lang["PLE_ICON_help"]              = "~#pgv_lang[PLE_ICON]#~<br /><br />Hier können Sie ein Icon bestimmen oder entfernen. Mit dem Link kann die Flagge bestimmt werden, die zu diesem Ort angezeigt werden soll.";
 
 $pgv_lang["PLE_FLAGS"]                  = "Flaggen";
-$pgv_lang["PLE_FLAGS_help"]             = "Flaggen<br /><br />Aus dieser Liste wählen Sie das Land aus, aus dessen Flaggen Sie eine auswählen wollen. Wenn keine Flaggen angezeigt werden, sind auch noch keine Flaggen für dieses Land hinterlegt.";
+$pgv_lang["PLE_FLAGS_help"]             = "~#pgv_lang[PLE_FLAGS]#~<br /><br />Aus dieser Liste wählen Sie das Land aus, aus dessen Flaggen Sie eine auswählen wollen. Wenn keine Flaggen angezeigt werden, sind auch noch keine Flaggen für dieses Land hinterlegt.";
 
 $pgv_lang["PLIF_FILENAME"]              = "Dateiname";
-$pgv_lang["PLIF_FILENAME_help"]         = "Dateiname<br /><br />Durchsuchen Sie Ihren lokalen Computer nach der Datei die Ortsdaten im CSV-Format enthält.";
-$pgv_lang["PLIF_LOCALFILE_help"]        = "Dateiname<br /><br />Wählen Sie aus der Liste der bereits auf dem Server bestehenden Dateien die Datei die Ortsdaten im CSV-Format enthält.";
+$pgv_lang["PLIF_FILENAME_help"]         = "~#pgv_lang[PLE_FILENAME]#~<br /><br />Durchsuchen Sie Ihren lokalen Computer nach der Datei die Ortsdaten im CSV-Format enthält.";
+$pgv_lang["PLIF_LOCALFILE_help"]        = "~#pgv_lang[PLE_FILENAME]#~<br /><br />Wählen Sie aus der Liste der bereits auf dem Server bestehenden Dateien die Datei die Ortsdaten im CSV-Format enthält.";
 
 $pgv_lang["PLIF_CLEAN"]                 = "Bereinigen der Ortsdaten DB";
-$pgv_lang["PLIF_CLEAN_help"]            = "Bereinigen der Ortsdaten DB<br /><br />Mit dieser Option kann die Ortsdatenbank gelöscht werden. Nur die (zusätzliche) Tabelle mit den Ortsdateninformationen für die Kartendarstellung wird in der Datenbank gelöscht, Die GEDCOM Datei mit ihren Ortsdaten ist davon niocht berührt!";
+$pgv_lang["PLIF_CLEAN_help"]            = "~#pgv_lang[PLE_CLEAN]#~<br /><br />Mit dieser Option kann die Ortsdatenbank gelöscht werden. Nur die (zusätzliche) Tabelle mit den Ortsdateninformationen für die Kartendarstellung wird in der Datenbank gelöscht, Die GEDCOM Datei mit ihren Ortsdaten ist davon niocht berührt!";
 
 $pgv_lang["PLIF_UPDATE"]                = "Aktualisieren vorhandener Datensätze";
-$pgv_lang["PLIF_UPDATE_help"]           = "Aktualisieren vorhandener Datensätze<br /><br />Mit dieser Option kann man selektiv nur die vorhandenen Datensätze aktualisieren. Das kann man zum Eintragen der Längen- und Breitengrade von Orten benutzen, die aus einer GEDCOM-Datei importiert wurden. Neue Orte werden nicht in die Datenbank eingefügt.";
+$pgv_lang["PLIF_UPDATE_help"]           = "~#pgv_lang[PLE_UPDATE]#~<br /><br />Mit dieser Option kann man selektiv nur die vorhandenen Datensätze aktualisieren. Das kann man zum Eintragen der Längen- und Breitengrade von Orten benutzen, die aus einer GEDCOM-Datei importiert wurden. Neue Orte werden nicht in die Datenbank eingefügt.";
 
 $pgv_lang["PLIF_OVERWRITE"]             = "Überschreiben der Ortsdaten";
-$pgv_lang["PLIF_OVERWRITE_help"]        = "Überschreiben der Ortsdaten<br /><br />Überschreibt die Ortsdaten in der Datenbank mit den Daten aus der Datei.<br />Diese Option überschreibt Ortsdaten in der DB (Längengrad, Breitengrad, Vergrößerungsstufe und Flagge) mit den Daten aus der Datei, soweit vorhanden. Ist ein Datensatz in der DB noch nicht vorhanden, wird er angelegt, es sei denn, die Option 'Aktualisieren vorhandener Datensätze' ist ausgewählt.";
+$pgv_lang["PLIF_OVERWRITE_help"]        = "~#pgv_lang[PLE_OVERWRITE]#~<br /><br />Überschreibt die Ortsdaten in der Datenbank mit den Daten aus der Datei.<br />Diese Option überschreibt Ortsdaten in der DB (Längengrad, Breitengrad, Vergrößerungsstufe und Flagge) mit den Daten aus der Datei, soweit vorhanden. Ist ein Datensatz in der DB noch nicht vorhanden, wird er angelegt, es sei denn, die Option 'Aktualisieren vorhandener Datensätze' ist ausgewählt.";
+
+$pgv_lang["PLE_ACTIVE"]             	= "Liste inaktiver Orte";
+$pgv_lang["PLE_ACTIVE_help"]        	= "~#pgv_lang[PLE_ACTIVE]#~<br /><br /><strong>Liste aller Orte in der Googlemap Tabelle, zur Zeit in keiner GEDCOM Datei definiert sind. </strong><br/><br/>Normalerweise werden nur die Orte angezeigt, die <b>sowohl</b> in einer GEDCOM-Datei <b>als auch</b> in der Googlemap-Tabelle definiert sind. <br/><br/>Wenn diese Option aktiviert ist und \"Anzeigen\" wird angeklickt, enthält die Liste ALLE Orte dieser Stufe.<br/><br/>Diese Option wird benutzt, um die Anzeige großer, importierter Listen zu beschleunigen, bei denen noch nicht alle Orte verwendet werden.<br/><br/>ACHTUNG - Mit dieser Option kann die Anzeige großer Listen unter Umständen mehrere Minuten dauern!";
+
+// Help text for placecheck.php
+$pgv_lang["GOOGLEMAP_PLACECHECK"] = "Orteüberprüfungswerkzeug";
+$pgv_lang["GOOGLEMAP_PLACECHECK_help"] = "~#pgv_lang[GOOGLEMAP_PLACECHECK]#~<br /><br /><strong>This tool</strong> provides a way to compare places in your gedcom file with the matching entries in the googlemaps 'placelocations' table.<BR/><BR/><strong>The display</strong> can be structured for a specific gedcom file; for a specific country within that file; and for a particular area (e.g. state or county) within that country.<BR/><BR/><strong>Places</strong>are listed alphabetically so that minor spelling differences can be easily spotted, and corrected.<BR/><BR/><strong>From</strong> the results of the comparison you can click on place names for one of these three options:<BR/><BR/><strong>1 - </strong>For gedcom file places you will be taken to the Place Heirarchy view. Here you will see all records that are linked to that place.<BR/><BR/><strong>2 - </strong>For places that exist in the gedcom file, but not in the googlemap table (highlighted in red), you will get the googlemap \"Add place\" screen.<BR/><BR/><strong>3 - </strong>For places that exist in both the gedcom file and the googlemap table (perhaps without coordinates) you will get the googlemap \"edit place\" screen. Here you can edit any aspect of the place record for the googlemap display.<BR/><BR/><strong>Hovering</strong> over any place in the googlemap table columns will display the zoom level curently set for that place.";
+$pgv_lang["PLACECHECK_FILTER"] = "Orteüberprüfung - Optionen für die Anzeige";
+$pgv_lang["PLACECHECK_FILTER_help"] = "~#pgv_lang[PLACECHECK_FILTER]#~<br /><br />This section includes options to limit or extend the scope of the listed places.<br /><br />It is hoped to add more options in the future.";
+$pgv_lang["PLACECHECK_MATCH"] = "vollständig definierte Orte mit einschließen";
+$pgv_lang["PLACECHECK_MATCH_help"] = "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br />Normalerweise zeigt die Liste keine Orte an, die bereits für jede Stufe vollständig definiert sind.<br/><br/>Wählen Sie diese Option, um diese Orte trotzdem mit anzuzeigen";
+
+//wooc Options for Place Hierarchy display
+$pgv_lang["GOOGLEMAP_PH"] = "Googlemap bei den Ortslisten verwenden";
+$pgv_lang["GOOGLEMAP_PH_help"] = "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Mit dieser Option kann das Modul Googlemap für die Ortslisten ein- oder ausgeschaltet werden. Zur korrekten Verwendung muss das Modul Googlemap natürlich auch aktiviert sein! Vor dem Einsatz empfiehlt es sich, alle Orte in die Googlemap-Tabelle zu laden.";
+$pgv_lang["GOOGLEMAP_PH_MARKER"] = "Typ des Orte Markierers in den Ortslisten";
+$pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "~#pgv_lang[GOOGLEMAP_PH_MARKER]#~<br /><br />Hier bestimmen Sie, welche Art Markierer verwendet werden soll (Standard oder Flagge). Wenn dem Ort keine Flagge zugeordnet ist, wird der Standard Markierer verwendet.";
+$pgv_lang["GM_DISP_SHORT_PLACE"] = "Verkürzte Orte-Namen anzeigen?";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "~#pgv_lang[GM_DISP_SHORT_PLACE]#~<br /><br />Hier bestimmen Sie, wie die Orte angezeigt werden sollen. Bei Ja werden nur die Namen der aktuellen Stufe angezeigt, bei Nein werden alle Stufennamen angezeigt.";
+$pgv_lang["GOOGLEMAP_PH_WHEEL"] = "Mausrad für den Zoom benutzen?";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"] = "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Hier bestimmen Sie, ob das Mausrad für die Zoomfunktion benutzt werden soll.";
 
 ?>
