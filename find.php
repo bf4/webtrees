@@ -402,7 +402,7 @@ if ($action=="filter") {
 					$curged = $GEDCOM;
 				}
 				$person=Person::getInstance($pvalue[1]);
-				echo $person->format_list('li', false, $pvalue[0]);
+				echo $person->format_list('li', true, $pvalue[0]);
 				print "\n";
 			}
 			print "\n\t\t</ul></td>";
