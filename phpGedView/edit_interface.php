@@ -39,8 +39,12 @@ if ($_SESSION["cookie_login"]) {
 $action =safe_GET('action');
 $linenum=safe_GET('linenum');
 $pid    =safe_GET_xref('pid');
+$famid  =safe_GET_xref('famid');
 
-$famid  =safe_POST_xref('famid');
+if (!$pid) $pid=safe_POST_xref('pid');
+if (!$famid) $famid=safe_POST_xref('famid');
+if (!$action) $action=safe_POST_xref('action');
+
 $text   =safe_POST('text');
 $tag    =safe_POST('tag');
 $famtag =safe_POST('famtag');
