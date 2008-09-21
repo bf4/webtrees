@@ -36,21 +36,19 @@ if ($_SESSION["cookie_login"]) {
 	exit;
 }
 
-$action="";
-$linenum="";
-$pid="";
-$famid="";
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['linenum'])) $linenum = $_REQUEST['linenum'];
-if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-if (isset($_REQUEST['famid'])) $famid = $_REQUEST['famid'];
-if (isset($_REQUEST['text'])) $text = $_REQUEST['text'];
-if (isset($_REQUEST['tag'])) $tag = $_REQUEST['tag'];
-if (isset($_REQUEST['famtag'])) $famtag = $_REQUEST['famtag'];
-if (isset($_REQUEST['glevels'])) $glevels = $_REQUEST['glevels'];
-if (isset($_REQUEST['islink'])) $islink = $_REQUEST['islink'];
-if (isset($_REQUEST['type'])) $type = $_REQUEST['type'];
-if (isset($_REQUEST['fact'])) $fact = $_REQUEST['fact'];
+$action =safe_GET('action');
+$linenum=safe_GET('linenum');
+$pid    =safe_GET_xref('pid');
+
+$famid  =safe_POST_xref('famid');
+$text   =safe_POST('text');
+$tag    =safe_POST('tag');
+$famtag =safe_POST('famtag');
+$glevels=safe_POST('glevels');
+$islink =safe_POST('islink');
+$type   =safe_POST('type');
+$fact   =safe_POST('fact');
+$update_CHAN=safe_POST('preserve_last_changed');
 
 // Remove slashes
 if (isset($text)){
@@ -58,11 +56,6 @@ if (isset($text)){
 		$text[$l] = stripslashes($line);
 	}
 }
-//$DEBUG=1;
-if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"] == "on"))
-	$update_CHAN = false;
-else
-	$update_CHAN = true;
 
 $uploaded_files = array();
 
@@ -215,7 +208,6 @@ function checkFactEdit($gedrec) {
 //-- end checkFactEdit function
 
 if (!empty($pid)) {
-	$pid = clean_input($pid);
 	if (($pid!="newsour") && ($pid!="newrepo")) {
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 		else $gedrec = find_updated_record($pid);
@@ -232,7 +224,6 @@ if (!empty($pid)) {
 	}
 }
 else if (!empty($famid)) {
-	$famid = clean_input($famid);
 	if ($famid != "new") {
 		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $gedrec = find_gedcom_record($famid);
 		else $gedrec = find_updated_record($famid);

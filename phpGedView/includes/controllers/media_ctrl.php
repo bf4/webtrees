@@ -40,13 +40,13 @@ require_once 'includes/media_class.php';
 class MediaControllerRoot extends IndividualController{
 
 	var $mediaobject;
+	var $show_changes=true;
 
 	function init() {
 		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL;
-		if (isset($_REQUEST['filename'])) $filename = $_REQUEST['filename'];
-		if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
-		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
-		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
+
+		$filename=safe_GET('filename');
+		$mid     =safe_GET_xref('mid');
 
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
@@ -85,8 +85,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 
 		//checks to see if the Media ID ($mid) is set. If the Media ID isn't set then there isn't any information avaliable for that picture the picture doesn't exist.
-		if (isset($mid) && $mid!=false){
-			$mid = clean_input($mid);
+		if ($mid){
 			//This creates a Media Object from the getInstance method of the Media Class. It takes the Media ID ($mid) and creates the object.
 			$this->mediaobject = Media::getInstance($mid);
 			//This sets the controller ID to be the Media ID
@@ -154,7 +153,7 @@ class MediaControllerRoot extends IndividualController{
 		if (!PGV_USER_CAN_ACCEPT) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
-			$this->show_changes="no";
+			$this->show_changes=false;
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
 			if (isset($medialist[$this->pid])) unset($medialist[$this->pid]);
@@ -258,7 +257,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 			$menu->addSeperator();
-			if ($this->show_changes=="no") {
+			if (!$this->show_changes) {
 				$label = $pgv_lang["show_changes"];
 				$link = "mediaviewer.php?mid={$this->pid}&show_changes=yes";
 			}
@@ -307,7 +306,7 @@ class MediaControllerRoot extends IndividualController{
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && PGV_USER_CAN_EDIT)
+			if ($this->show_changes && PGV_USER_CAN_EDIT)
 				$menu->addOnclick("return show_gedcom_record('new');");
 			else
 				$menu->addOnclick("return show_gedcom_record('');");
@@ -322,7 +321,7 @@ class MediaControllerRoot extends IndividualController{
 			$submenu = new Menu($pgv_lang["view_gedcom"]);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
+			if ($this->show_changes && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
@@ -362,7 +361,7 @@ class MediaControllerRoot extends IndividualController{
 		global $pgv_changes, $GEDCOM, $pgv_lang;
 
 		$ignore = array("TITL","FILE");
-		if ($this->show_changes=='yes') $ignore = array();
+		if ($this->show_changes) $ignore = array();
 		else if (PGV_USER_GEDCOM_ADMIN) $ignore = array("TITL");
 
 		$facts = $this->mediaobject->getFacts($ignore);
@@ -373,7 +372,7 @@ class MediaControllerRoot extends IndividualController{
 		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);
 		else $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__other"]);
 
-		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes=="yes")) {
+		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes)) {
 			$newrec = find_updated_record($this->pid);
 			$newmedia = new Media($newrec);
 			$newfacts = $newmedia->getFacts($ignore);

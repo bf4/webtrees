@@ -25,9 +25,7 @@
 
 require './config.php';
 
-$pid = "";
-if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-$pid = clean_input($pid);
+$pid = safe_GET_xref('pid');
 $person = Person::getInstance($pid);
 if (!$person->canDisplayDetails()) return $pgv_lang['private'];
 

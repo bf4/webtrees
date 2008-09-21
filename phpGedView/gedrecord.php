@@ -29,8 +29,7 @@ require './config.php';
 require_once("includes/gedcomrecord.php");
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
-if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-if (!isset($pid)) $pid = "";
+$pid=safe_GET_xref('pid');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -40,8 +39,6 @@ if (!isset($pid)) $pid = "";
 		<title><?php print "$pid Record"; ?></title>
 	</head>
 	<body><?php
-
-$pid = clean_input($pid);
 
 if (!$SHOW_GEDCOM_RECORD && !PGV_USER_CAN_ACCEPT) {
 	print "<span class=\"error\">".$pgv_lang["ged_noshow"]."</span>\n";

@@ -42,8 +42,6 @@ $nonfacts = array();
  */
 class SourceControllerRoot extends BaseController {
 	var $sid;
-	var $show_changes = "yes";
-	var $action = "";
 	/* @var Source */
 	var $source = null;
 	var $uname = "";
@@ -67,10 +65,7 @@ class SourceControllerRoot extends BaseController {
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
 
-		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
-		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
-		if (!empty($_REQUEST["sid"])) $this->sid = strtoupper($_REQUEST["sid"]);
-		$this->sid = clean_input($this->sid);
+		$this->sid = safe_GET_xref('sid');
 
 		$sourcerec = find_source_record($this->sid);
 		if (!$sourcerec) $sourcerec = "0 @".$this->sid."@ SOUR\r\n";
@@ -101,7 +96,7 @@ class SourceControllerRoot extends BaseController {
 
 		//-- check for the user
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->sid."_".$GEDCOM])) {
+		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->sid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->sid);
 			$this->diffsource = new Source($newrec);
 			$this->diffsource->setChanged(true);
@@ -112,7 +107,7 @@ class SourceControllerRoot extends BaseController {
 			$this->canedit = PGV_USER_CAN_EDIT;
 		}
 
-		if ($this->show_changes=="yes" && $this->canedit) {
+		if ($this->show_changes && $this->canedit) {
 			$this->source->diffMerge($this->diffsource);
 		}
 	}
@@ -149,7 +144,7 @@ class SourceControllerRoot extends BaseController {
 		if (!PGV_USER_CAN_ACCEPT) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->sid."_".$GEDCOM)) {
-			$this->show_changes="no";
+			$this->show_changes=false;
 			$this->accept_success=true;
 			$indirec = find_source_record($this->sid);
 			//-- check if we just deleted the record and redirect to index
@@ -226,7 +221,7 @@ class SourceControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 
 			// edit_sour / show/hide changes
-			if ($this->show_changes == 'no')
+			if (!$this->show_changes)
 			{
 				$submenu = new Menu($pgv_lang['show_changes'], encode_url("source.php?sid={$this->sid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
@@ -283,7 +278,7 @@ class SourceControllerRoot extends BaseController {
 		if ($SHOW_GEDCOM_RECORD)
 		{
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($this->show_changes == 'yes'  && $this->userCanEdit())
+			if ($this->show_changes && $this->userCanEdit())
 			{
 				$menu->addLink("javascript:show_gedcom_record('new');");
 			}
@@ -302,7 +297,7 @@ class SourceControllerRoot extends BaseController {
 		{
 				// other / view_gedcom
 				$submenu = new Menu($pgv_lang['view_gedcom']);
-				if ($this->show_changes == 'yes' && $this->userCanEdit())
+				if ($this->show_changes && $this->userCanEdit())
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				}

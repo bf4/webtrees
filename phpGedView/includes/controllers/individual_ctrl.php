@@ -60,7 +60,7 @@ $nonfamfacts[] = "";
  * Main controller class for the individual page.
  */
 class IndividualControllerRoot extends BaseController {
-	var $show_changes = "yes";
+	var $show_changes = true;
 	var $action = "";
 	var $pid = "";
 	var $default_tab = 0;
@@ -99,16 +99,16 @@ class IndividualControllerRoot extends BaseController {
 		$this->sexarray["F"] = $pgv_lang["female"];
 		$this->sexarray["U"] = $pgv_lang["unknown"];
 
-		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
-		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
-		if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
-		$this->pid = clean_input($this->pid);
+		$this->pid = safe_GET_xref('pid');	
+
+		$show_famlink = $this->view!='preview';
+
 		$pid = $this->pid;
 
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
 		$indirec = find_person_record($this->pid);
-//		print_r($indirec);
-		if (($USE_RIN)&&($indirec==false)) {
+
+		if ($USE_RIN && $indirec==false) {
 		   $this->pid = find_rin_id($this->pid);
 		   $indirec = find_person_record($this->pid);
 		}
@@ -184,7 +184,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT) {
+		if ($this->show_changes && PGV_USER_CAN_EDIT) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 				 //-- get the changed record from the file
 				$newrec = find_updated_record($this->pid);
@@ -224,7 +224,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 
-		if ($this->show_changes=="yes") {
+		if ($this->show_changes) {
 			$this->indi->diffMerge($this->diffindi);
 		}
 
@@ -288,7 +288,7 @@ class IndividualControllerRoot extends BaseController {
 		if (!PGV_USER_CAN_ACCEPT) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
-			$this->show_changes="no";
+			$this->show_changes=false;
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
 			if (isset($indilist[$this->pid])) unset($indilist[$this->pid]);
@@ -581,7 +581,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 			$menu->addSeperator();
-			if ($this->show_changes=="no") {
+			if (!$this->show_changes) {
 				$label = $pgv_lang["show_changes"];
 				$link = "individual.php?pid=".$this->pid."&show_changes=yes";
 			}
@@ -633,7 +633,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($SHOW_GEDCOM_RECORD) {
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && PGV_USER_CAN_EDIT)
+			if ($this->show_changes && PGV_USER_CAN_EDIT)
 				$menu->addOnclick("return show_gedcom_record('new');");
 			else
 				$menu->addOnclick("return show_gedcom_record('');");
@@ -648,7 +648,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu = new Menu($pgv_lang["view_gedcom"]);
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes=="yes"  && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
+			if ($this->show_changes && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
@@ -835,7 +835,7 @@ class IndividualControllerRoot extends BaseController {
 			if ($wife->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
 			$wife->setLabel($label);
 		}
-		if ($this->show_changes=="yes") {
+		if ($this->show_changes) {
 			$newfamily = $family->getUpdatedFamily();
 			if (!is_null($newfamily)) {
 				$newhusb = $newfamily->getHusband();
@@ -1100,7 +1100,7 @@ class IndividualControllerRoot extends BaseController {
 			$styleadd = "";
 			$date = $family->getMarriageDate();
 			$place = $family->getMarriagePlace();
-			if (!$date && $this->show_changes=="yes" && isset($pgv_changes[$family->getXref()."_".$GEDCOM])) {
+			if (!$date && $this->show_changes && isset($pgv_changes[$family->getXref()."_".$GEDCOM])) {
 				$famrec = find_updated_record($family->getXref());
 				$marrrec = get_sub_record(1, "1 MARR", $famrec);
 				if ($marrrec!=$family->getMarriageRecord()) {
