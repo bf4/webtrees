@@ -1749,11 +1749,17 @@ function cleanup_tags_y(& $irec) {
 	$irec = substr($irec, 0, -3);
 }
 
-// Create a pseudo-random UUID, as per RFC4122
+// Create a pseudo-random UUID
 function uuid() {
+	if (defined('PGV_USE_RFC4122')) {
+		// Standards purists want this format (RFC4122)
+		$fmt='%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X';
+	} else {
+		// Most users want this format (for compatibility with PAF)
+		$fmt='%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X';
+	}
 	return sprintf(
-		//'%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X', // RFC4122 format (with hyphens)
-		'%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X', // PAF format (without hyphens)
+		$fmt,
 		rand(0, 255),
 		rand(0, 255),
 		rand(0, 255),
