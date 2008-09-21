@@ -37,6 +37,11 @@ class plugin extends base_plugin {
 	var $case   =null; // "i" for case insensitive, "" for case sensitive
 	var $error  =null; // Message for bad user parameters
 
+	// Default is to operate on INDI records
+	function getRecordTypesToUpdate() {
+		return array('INDI', 'FAM', 'SOUR', 'REPO', 'NOTE', 'OBJE');
+	}
+
 	function doesRecordNeedUpdate($xref, $gedrec) {
 		return !$this->error && preg_match('/(?:'.$this->regex.')/'.$this->case, $gedrec);
 	}
