@@ -74,7 +74,6 @@ class ClippingsControllerRoot extends BaseController {
 	var $media_list = array();
 	var $addCount = 0;
 	var $privCount = 0;
-	var $action="";
 	var $type="";
 	var $id="";
 	var $IncludeMedia;

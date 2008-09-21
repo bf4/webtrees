@@ -41,7 +41,6 @@ require_once 'includes/controllers/basecontrol.php';
 class SearchControllerRoot extends BaseController {
 	var $isPostBack = false;
 	var $topsearch;
-	var $action = "general";
 	var $srfams;
 	var $srindi;
 	var $srsour;
@@ -54,7 +53,6 @@ class SearchControllerRoot extends BaseController {
 	var $srcResultsPrinted = -1;
 	var $multiResultsPerPage = -1;
 	var $multiTotalResults = -1;
-	var $view = "";
 	var $query;
 	var $myquery = "";
 	var $soundex = "Russell";
@@ -122,6 +120,10 @@ class SearchControllerRoot extends BaseController {
 	 */
 	function init() {
 		global $pgv_lang, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS;
+
+		if ($this->action=='') {
+			$this->action='general';
+		}
 
 		if (!empty ($_REQUEST["topsearch"])) {
 			$this->topsearch = true;

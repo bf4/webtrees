@@ -60,8 +60,6 @@ $nonfamfacts[] = "";
  * Main controller class for the individual page.
  */
 class IndividualControllerRoot extends BaseController {
-	var $show_changes = true;
-	var $action = "";
 	var $pid = "";
 	var $default_tab = 0;
 	var $indi = null;

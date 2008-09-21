@@ -132,7 +132,7 @@ class FamilyRoot extends BaseController
 		}
 
 		//-- add favorites action
-		if ($action=='addfav' && !empty($_REQUEST['gid']) && PGV_USER_NAME) {
+		if ($this->action=='addfav' && !empty($_REQUEST['gid']) && PGV_USER_NAME) {
 			$_REQUEST['gid'] = strtoupper($_REQUEST['gid']);
 			$indirec = find_gedcom_record($_REQUEST['gid']);
 			if ($indirec) {
@@ -151,7 +151,7 @@ class FamilyRoot extends BaseController
 
 		if (PGV_USER_CAN_ACCEPT)
 		{
-			if ($action=='accept')
+			if ($this->action=='accept')
 			{
 				require_once("includes/functions_import.php");
 				if (accept_changes($_REQUEST['famid'].'_'.$GEDCOM))
@@ -169,7 +169,7 @@ class FamilyRoot extends BaseController
 				}
 			}
 
-			if ($action=='undo')
+			if ($this->action=='undo')
 			{
 				$this->family->undoChange();
 				unset($famlist[$_REQUEST['famid']]);

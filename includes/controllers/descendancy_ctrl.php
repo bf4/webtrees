@@ -59,8 +59,6 @@ $nonfamfacts[] = "";
  * Main controller class for the individual page.
  */
 class DescendancyControllerRoot extends BaseController {
-	var $show_changes = "yes";
-	var $action = "";
 	var $pid = "";
 	var $descPerson = null;
 
@@ -78,7 +76,6 @@ class DescendancyControllerRoot extends BaseController {
 	var $chart_style;
 	var $sexarray = array();
 	var $generations;
-	var $view;
 	var $personcount;
 	var $box_width;
 	var $Dbwidth;

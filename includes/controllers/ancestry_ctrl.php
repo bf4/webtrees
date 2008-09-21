@@ -55,8 +55,6 @@ $nonfamfacts[] = "";
  * Main controller class for the Ancestry page.
  */
 class AncestryControllerRoot extends BaseController {
-	var $show_changes = "yes";
-	var $action = "";
 	var $pid = "";
 
 	var $user = false;
@@ -64,7 +62,6 @@ class AncestryControllerRoot extends BaseController {
 	var $visibility = "visible";
 	var $position = "relative";
 	var $display = "block";
-	var $view;
 	var $show_cousins;
 	var $rootid;
 	var $name;

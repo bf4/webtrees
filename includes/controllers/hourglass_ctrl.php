@@ -55,8 +55,6 @@ $nonfamfacts[] = "";
  * Main controller class for the individual page.
  */
 class HourglassControllerRoot extends BaseController {
-	var $show_changes = "yes";
-	var $action = "";
 	var $pid = "";
 
 	var $accept_success = false;
@@ -72,7 +70,6 @@ class HourglassControllerRoot extends BaseController {
 	var $show_spouse = 0;
 	var $generations;
 	var $dgenerations;
-	var $view;
 	var $box_width;
 	var $name;
 	//  the following are ajax variables  //

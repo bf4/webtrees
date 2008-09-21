@@ -40,7 +40,6 @@ require_once("includes/serviceclient_class.php");
 class RemoteLinkController extends BaseController {
 	var $has_familysearch = false;
 	var $pid="";
-	var $action="";
 	var $success = false;
 	var $person = null;
 	var $server_list = array();
