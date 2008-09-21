@@ -27,9 +27,6 @@
 
 require './config.php';
 
-// TODO - this is added so that modules will continue to work, this should be removed as soon as modules have been cleaned up
-@import_request_variables("gcp");
-
 // Simple mod system, based on the older phpnuke/postnuke
 define('PGV_MOD_SIMPLE', 1);
 // More advanced OO module system
