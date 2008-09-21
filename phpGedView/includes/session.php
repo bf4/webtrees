@@ -626,6 +626,4 @@ if ($TEXT_DIRECTION=='ltr') {
 	define ('PGV_RPARENS', ')&rlm;');
 }
 
-//-- temporarily adding back in
-@import_request_variables('gcp');
 ?>

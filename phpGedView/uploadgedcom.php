@@ -46,9 +46,6 @@
 // NOTE: $replace_gedcom = When uploading a GEDCOM, user will be asked to replace an existing one. If yes, overwrite
 // NOTE: $bakfile = Name and path of the backupfile, this file is created if a file with the same name exists
 
-ini_set('register_globals', 'Off');
-@import_request_variables('gcp');
-
 require './config.php';
 
 require_once "includes/functions_import.php";
@@ -60,6 +57,29 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=uploadgedcom.php");
 	exit;
 }
+
+$action         =isset($_REQUEST['action'         ]) ? $_REQUEST['action'         ] : null;
+$autoContinue   =isset($_REQUEST['autoContinue'   ]) ? $_REQUEST['autoContinue'   ] : null;
+$bakfile        =isset($_REQUEST['bakfile'        ]) ? $_REQUEST['bakfile'        ] : null;
+$check          =isset($_REQUEST['check'          ]) ? $_REQUEST['check'          ] : null;
+$continue       =isset($_REQUEST['continue'       ]) ? $_REQUEST['continue'       ] : null;
+$ged            =isset($_REQUEST['ged'            ]) ? $_REQUEST['ged'            ] : null;
+$exists         =isset($_REQUEST['exists'         ]) ? $_REQUEST['exists'         ] : null;
+$GEDFILENAME    =isset($_REQUEST['GEDFILENAME'    ]) ? $_REQUEST['GEDFILENAME'    ] : null;
+$import         =isset($_REQUEST['import'         ]) ? $_REQUEST['import'         ] : null;
+$import_existing=isset($_REQUEST['import_existing']) ? $_REQUEST['import_existing'] : null;
+$keepmedia      =isset($_REQUEST['keepmedia'      ]) ? $_REQUEST['keepmedia'      ] : null;
+$l_isansi       =isset($_REQUEST['l_isansi'       ]) ? $_REQUEST['l_isansi'       ] : null;
+$no_upload      =isset($_REQUEST['no_upload'      ]) ? $_REQUEST['no_upload'      ] : null;
+$ok             =isset($_REQUEST['ok'             ]) ? $_REQUEST['ok'             ] : null;
+$override       =isset($_REQUEST['override'       ]) ? $_REQUEST['override'       ] : null;
+$path           =isset($_REQUEST['path'           ]) ? $_REQUEST['path'           ] : null;
+$row_histo      =isset($_REQUEST['row_histo'      ]) ? $_REQUEST['row_histo'      ] : null;
+$row_rela       =isset($_REQUEST['row_rela'       ]) ? $_REQUEST['row_rela'       ] : null;
+$startimport    =isset($_REQUEST['startimport'    ]) ? $_REQUEST['startimport'    ] : null;
+$timelimit      =isset($_REQUEST['timelimit'      ]) ? $_REQUEST['timelimit'      ] : null;
+$verify         =isset($_REQUEST['verify'         ]) ? $_REQUEST['verify'         ] : null;
+$xreftype       =isset($_REQUEST['xreftype'       ]) ? $_REQUEST['xreftype'       ] : null;
 
 @ini_set('zlib.output_compression','0');
 
