@@ -62,17 +62,14 @@ class RemoteLinkController extends BaseController {
 			header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
 			exit;
 		}
-
-		if (isset($_REQUEST['pid'])) $this->pid = $_REQUEST['pid'];
-		if (isset($_REQUEST['action'])) $this->action = $_REQUEST['action'];
+		
+		$this->pid   =safe_GET('pid', PGV_REGEX_XREF);
 
 		//check for pid
 		if (empty($this->pid)) {
 			$name="no name passed";
 			$this->disp = false;
 		} else{
-			$this->pid = clean_input($this->pid);
-
 			if (!isset($pgv_changes[$this->pid."_".$GEDCOM])) $this->person = Person::getInstance($this->pid);
 			else {
 				$gedrec = find_updated_record($this->pid);

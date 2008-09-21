@@ -47,7 +47,7 @@ class FamilyRoot extends BaseController
 	var $parents = '';
 	var $display = false;
 	var $accept_success = false;
-	var $show_changes = 'yes';
+	var $show_changes = true;
 	var $famrec = '';
 	var $link_relation = 0;
 	var $title = '';
@@ -84,32 +84,11 @@ class FamilyRoot extends BaseController
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
 
-		if (!isset($_REQUEST['action']))
-		{
-			$_REQUEST['action'] = '';
-		}
-		if (!isset($_REQUEST['show_changes']))
-		{
-			$_REQUEST['show_changes'] = 'yes';
-		}
-		$this->show_changes = $_REQUEST['show_changes'];
-		if (!isset($_REQUEST['view']))
-		{
-			$_REQUEST['view'] = '';
-		}
-		$show_famlink = true;
-		if ($_REQUEST['view'] == 'preview')
-		{
-			$show_famlink = false;
-		}
+		$show_famlink = $this->view!='preview';
 
-		if (!isset($_REQUEST['famid']))
-		{
-			$_REQUEST['famid'] = '';
-		}
-		$_REQUEST['famid'] = clean_input($_REQUEST['famid']);
-		$this->famid = $_REQUEST['famid'];
-		$this->family = Family::getInstance($this->famid);
+		$this->famid       =safe_GET_xref('famid');	
+
+		$this->family      =Family::getInstance($this->famid);
 
 		if (empty($this->famrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->famid, $match);
@@ -134,7 +113,7 @@ class FamilyRoot extends BaseController
 		$this->display = displayDetailsByID($this->famid, 'FAM');
 
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
+		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->famid);
 			if (empty($newrec)) $newrec = find_family_record($this->famid);
 			$this->difffam = new Family($newrec);
@@ -153,7 +132,7 @@ class FamilyRoot extends BaseController
 		}
 
 		//-- add favorites action
-		if ($_REQUEST['action']=='addfav' && !empty($_REQUEST['gid']) && PGV_USER_NAME) {
+		if ($action=='addfav' && !empty($_REQUEST['gid']) && PGV_USER_NAME) {
 			$_REQUEST['gid'] = strtoupper($_REQUEST['gid']);
 			$indirec = find_gedcom_record($_REQUEST['gid']);
 			if ($indirec) {
@@ -172,12 +151,12 @@ class FamilyRoot extends BaseController
 
 		if (PGV_USER_CAN_ACCEPT)
 		{
-			if ($_REQUEST['action'] == 'accept')
+			if ($action=='accept')
 			{
 				require_once("includes/functions_import.php");
 				if (accept_changes($_REQUEST['famid'].'_'.$GEDCOM))
 				{
-					$this->show_changes = 'no';
+					$this->show_changes = false;
 					$this->accept_success = true;
 					unset($famlist[$_REQUEST['famid']]);
 					//-- check if we just deleted the record and redirect to index
@@ -190,7 +169,7 @@ class FamilyRoot extends BaseController
 				}
 			}
 
-			if ($_REQUEST['action'] == 'undo')
+			if ($action=='undo')
 			{
 				$this->family->undoChange();
 				unset($famlist[$_REQUEST['famid']]);
@@ -422,7 +401,7 @@ class FamilyRoot extends BaseController
 			$menu->addSubmenu($submenu);
 
 			// edit_fam / show/hide changes
-			if ($_REQUEST['show_changes'] == 'no')
+			if (!$this->show_changes)
 			{
 				$submenu = new Menu($pgv_lang['show_changes'], encode_url('family.php?famid='.$this->getFamilyID().'&show_changes=yes'));
 				if (!empty($PGV_IMAGES["edit_fam"]["small"]))
@@ -474,7 +453,7 @@ class FamilyRoot extends BaseController
 		if ($SHOW_GEDCOM_RECORD)
 		{
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($_REQUEST['show_changes'] == 'yes'  && PGV_USER_CAN_EDIT)
+			if ($this->show_changes && PGV_USER_CAN_EDIT)
 			{
 				$menu->addLink("javascript:show_gedcom_record('new');");
 			}
@@ -493,7 +472,7 @@ class FamilyRoot extends BaseController
 		{
 				// other / view_gedcom
 				$submenu = new Menu($pgv_lang['view_gedcom']);
-				if ($_REQUEST['show_changes'] == 'yes'  && PGV_USER_CAN_EDIT)
+				if ($this->show_changes && PGV_USER_CAN_EDIT)
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				}

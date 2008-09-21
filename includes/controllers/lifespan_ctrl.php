@@ -163,7 +163,6 @@ class LifespanControllerRoot extends BaseController {
 			$this->pids = array_unique($this->pids);  //removes duplicates
 				foreach ($this->pids as $key => $value) {
 					if ($value != $remove) {
-						$value = clean_input($value);
 						$this->pids[$key] = $value;
 						$person = Person::getInstance($value);
 

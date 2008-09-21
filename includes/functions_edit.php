@@ -2006,6 +2006,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 	global $lang_short_cut, $LANGUAGE;
 
+	$tags=array();
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
 	if (!isset($gedlines[$linenum])) {
 		print "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
@@ -2027,7 +2028,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		$levellink = $ct > 0;
 	}
 	else $levellink = false;
-	$tags=array();
 	$i = $linenum;
 	$inSource = false;
 	$levelSource = 0;

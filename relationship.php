@@ -552,10 +552,10 @@ $bwidth = $Dbwidth;
 $bheight = $Dbheight;
 
 $title_string = "";
-if (!isset($_REQUEST['pid1'])) $pid1 = "";
-else $pid1 = $_REQUEST['pid1'];
-if (!isset($_REQUEST['pid2'])) $pid2 = "";
-else $pid2 = $_REQUEST['pid2'];
+
+$pid1=safe_GET_xref('pid1');
+$pid2=safe_GET_xref('pid2');
+
 if (!isset($_REQUEST['followspouse'])) $followspouse = 0;
 else $followspouse = $_REQUEST['followspouse'];
 if (!isset($_REQUEST['pretty'])) $pretty = 0;
@@ -570,10 +570,6 @@ if (empty($pid1)) {
 $check_node = true;
 $disp = true;
 
-//-- cleanup user input
-$pid1 = clean_input($pid1);
-$pid2 = clean_input($pid2);
-
 $title_string .= $pgv_lang["relationship_chart"];
 // -- print html header information
 print_header($title_string);
@@ -586,11 +582,16 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
-if (!empty($pid1)) {
+if ($pid1) {
 	//-- check if the id is valid
 	$indirec = Person::getInstance($pid1);
+	// Allow entry of i123 instead of I123
+	if (!$indirec && $pid1!=strtoupper($pid1)) {
+		$pid1=strtoupper($pid1);
+		$indirec=Person::getInstance($pid1);
+	}
+	// Allow user to specify person without the prefix
 	if (!$indirec && $GEDCOM_ID_PREFIX) {
-		// Allow user to specify person without the prefix
 		$pid1=$GEDCOM_ID_PREFIX.$pid1;
 		$indirec=Person::getInstance($pid1);
 	}
@@ -604,11 +605,16 @@ if (!empty($pid1)) {
 		$path_to_find=0;
 	}
 }
-if (!empty($pid2)) {
+if ($pid2) {
 	//-- check if the id is valid
 	$indirec = Person::getInstance($pid2);
+	// Allow entry of i123 instead of I123
+	if (!$indirec && $pid2!=strtoupper($pid2)) {
+		$pid1=strtoupper($pid2);
+		$indirec=Person::getInstance($pid2);
+	}
+	// Allow user to specify person without the prefix
 	if (!$indirec && $GEDCOM_ID_PREFIX) {
-		// Allow user to specify person without the prefix
 		$pid2=$GEDCOM_ID_PREFIX.$pid2;
 		$indirec = Person::getInstance($pid2);
 	}

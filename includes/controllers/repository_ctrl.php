@@ -42,8 +42,6 @@ $nonfacts = array();
  */
 class RepositoryControllerRoot extends BaseController {
 	var $rid;
-	var $show_changes = "yes";
-	var $action = "";
 	var $repository = null;
 	var $uname = "";
 	var $diffrepository = null;
@@ -66,10 +64,7 @@ class RepositoryControllerRoot extends BaseController {
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
 
-		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
-		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
-		if (!empty($_REQUEST["rid"])) $this->rid = strtoupper($_REQUEST["rid"]);
-		$this->rid = clean_input($this->rid);
+		$this->rid         =safe_GET_xref('rid');
 
 		$repositoryrec = find_repo_record($this->rid);
 		if (!$repositoryrec) $repositoryrec = "0 @".$this->rid."@ REPO\r\n";
@@ -100,7 +95,7 @@ class RepositoryControllerRoot extends BaseController {
 
 		//-- check for the user
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->rid."_".$GEDCOM])) {
+		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->rid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->rid);
 			$this->diffrepository = new Repository($newrec);
 			$this->diffrepository->setChanged(true);
@@ -111,7 +106,7 @@ class RepositoryControllerRoot extends BaseController {
 			$this->canedit = PGV_USER_CAN_EDIT;
 		}
 
-		if ($this->show_changes=="yes" && $this->canedit) {
+		if ($this->show_changes && $this->canedit) {
 			$this->repository->diffMerge($this->diffrepository);
 		}
 	}
@@ -148,7 +143,7 @@ class RepositoryControllerRoot extends BaseController {
 		if (!PGV_USER_CAN_ACCEPT) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->rid."_".$GEDCOM)) {
-			$this->show_changes="no";
+			$this->show_changes=false;
 			$this->accept_success=true;
 			$indirec = find_repo_record($this->rid);
 			//-- check if we just deleted the record and redirect to index
@@ -225,7 +220,7 @@ class RepositoryControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 
 			// edit_repo / show/hide changes
-			if ($this->show_changes == 'no')
+			if (!$this->show_changes)
 			{
 				$submenu = new Menu($pgv_lang['show_changes'], encode_url("repo.php?rid={$this->rid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["edit_repo"]["small"]))
@@ -282,7 +277,7 @@ class RepositoryControllerRoot extends BaseController {
 		if ($SHOW_GEDCOM_RECORD)
 		{
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($this->show_changes == 'yes'  && $this->userCanEdit())
+			if ($this->show_changes && $this->userCanEdit())
 			{
 				$menu->addLink("javascript:show_gedcom_record('new');");
 			}
@@ -301,7 +296,7 @@ class RepositoryControllerRoot extends BaseController {
 		{
 				// other / view_gedcom
 				$submenu = new Menu($pgv_lang['view_gedcom']);
-				if ($this->show_changes == 'yes' && $this->userCanEdit())
+				if ($this->show_changes && $this->userCanEdit())
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				}
