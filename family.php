@@ -98,7 +98,7 @@ $show_full = "1";
 			<?php } ?>
 			</div>
 			<?php
-			if (empty($SEARCH_SPIDER) && ($_REQUEST['view'] != 'preview')) :
+			if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview()) :
 			?>
 			<table class="sublinks_table" cellspacing="4" cellpadding="0">
 				<tr>
