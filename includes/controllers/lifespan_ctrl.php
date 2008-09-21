@@ -395,9 +395,10 @@ class LifespanControllerRoot extends BaseController {
 
 				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
 				if (stristr($value->getFullName(), "starredname"))
-//						$minlength = (strlen($value->getFullName())-34) * $this->zoomfactor;
-						$minlength = (strlen($value->getFullName())-7) * $this->zoomfactor;  // Assumes <span class="starredname> becomes <u>
-				else	$minlength = strlen($value->getFullName()) * $this->zoomfactor;
+					    $minlength = (UTF8_strlen($value->getFullName())-34) * $this->zoomfactor;
+//						$minlength = (strlen($value->getFullName())-7) * $this->zoomfactor;  // Assumes <span class="starredname> becomes <u>
+				else	$minlength = UTF8_strlen($value->getFullName()) * $this->zoomfactor;
+		
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15;
@@ -412,10 +413,10 @@ class LifespanControllerRoot extends BaseController {
 					$int = $birthYear+1;
 				}
 
-				$lifespan = $birthYear."-";
+				$lifespan = "<span dir=\"ltr\">$birthYear-</span>"; 
 				$deathReal = $value->getDeathDate(false)->isOK();
 				$birthReal = $value->getBirthDate(false)->isOK();
-				if ($value->isDead() && $deathReal) $lifespan .= $deathYear;
+				if ($value->isDead() && $deathReal) $lifespan .= "<span dir=\"ltr\">$deathYear</span>"; 
 				$lifespannumeral = $deathYear - $birthYear;
 
 				//-- calculate a good Y top value
@@ -504,11 +505,13 @@ class LifespanControllerRoot extends BaseController {
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
 					if ($value->isDead()) {
-						print "<a class=\"showit\" href=\"#\"><b>";
-						if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-						else print get_first_letter($factarray["DEAT"]);
-						if (!$deathReal) print "*";
-						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						if ($deathReal || $value->isDead()) { 
+			 				print "<a class=\"showit\" href=\"#\"><b>";
+							if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
+							else print get_first_letter($factarray["DEAT"]);
+							if (!$deathReal) print "*";
+							print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						} 
 					}
 					print "</td></tr></table>";
 					echo '</div>';
@@ -533,12 +536,14 @@ class LifespanControllerRoot extends BaseController {
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
-						if ($value->isDead()) {
-							print "<a class=\"showit\" href=\"#\"><b>";
-							if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-							else print get_first_letter($factarray["DEAT"]);
-							if (!$deathReal) print "*";
-							print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						if ($value->isDead()) { 
+							if ($deathReal || $value->isDead()) { 
+								print "<a class=\"showit\" href=\"#\"><b>";
+								if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
+								else print get_first_letter($factarray["DEAT"]);
+								if (!$deathReal) print "*";
+								print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
+							} 
 						}
 						print "</td></tr></table>";
 						echo '</div>';
