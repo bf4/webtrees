@@ -32,6 +32,9 @@ require_once("includes/controllers/repository_ctrl.php");
 
 global $linkToID;
 
+$controller = new RepositoryController();
+$controller->init();
+
 print_header($controller->getPageTitle());
 $linkToID = $controller->rid;	// -- Tell addmedia.php what to link to
 
