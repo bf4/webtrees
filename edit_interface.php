@@ -36,33 +36,21 @@ if ($_SESSION["cookie_login"]) {
 	exit;
 }
 
-$action="";
-$linenum="";
-$pid="";
-$famid="";
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['linenum'])) $linenum = $_REQUEST['linenum'];
-if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-if (isset($_REQUEST['famid'])) $famid = $_REQUEST['famid'];
-if (isset($_REQUEST['text'])) $text = $_REQUEST['text'];
-if (isset($_REQUEST['tag'])) $tag = $_REQUEST['tag'];
-if (isset($_REQUEST['famtag'])) $famtag = $_REQUEST['famtag'];
-if (isset($_REQUEST['glevels'])) $glevels = $_REQUEST['glevels'];
-if (isset($_REQUEST['islink'])) $islink = $_REQUEST['islink'];
-if (isset($_REQUEST['type'])) $type = $_REQUEST['type'];
-if (isset($_REQUEST['fact'])) $fact = $_REQUEST['fact'];
+// TODO work out whether to use GET/POST for these
+// TODO decide what (if any) validation is required on these parameters
+$action =safe_REQUEST($_REQUEST, 'action',  PGV_REGEX_UNSAFE);
+$linenum=safe_REQUEST($_REQUEST, 'linenum', PGV_REGEX_UNSAFE);
+$pid    =safe_REQUEST($_REQUEST, 'pid',     PGV_REGEX_XREF);
+$famid  =safe_REQUEST($_REQUEST, 'famid',   PGV_REGEX_XREF);
+$text   =safe_REQUEST($_REQUEST, 'text',    PGV_REGEX_UNSAFE);
+$tag    =safe_REQUEST($_REQUEST, 'tag',     PGV_REGEX_UNSAFE);
+$famtag =safe_REQUEST($_REQUEST, 'famtag',  PGV_REGEX_UNSAFE);
+$glevels=safe_REQUEST($_REQUEST, 'glevels', PGV_REGEX_UNSAFE);
+$islink =safe_REQUEST($_REQUEST, 'islink',  PGV_REGEX_UNSAFE);
+$type   =safe_REQUEST($_REQUEST, 'type',    PGV_REGEX_UNSAFE);
+$fact   =safe_REQUEST($_REQUEST, 'fact',    PGV_REGEX_UNSAFE);
 
-// Remove slashes
-if (isset($text)){
-	foreach ($text as $l => $line){
-		$text[$l] = stripslashes($line);
-	}
-}
-//$DEBUG=1;
-if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"] == "on"))
-	$update_CHAN = false;
-else
-	$update_CHAN = true;
+$update_CHAN=!safe_POST_bool('preserve_last_changed');
 
 $uploaded_files = array();
 
@@ -215,7 +203,6 @@ function checkFactEdit($gedrec) {
 //-- end checkFactEdit function
 
 if (!empty($pid)) {
-	$pid = clean_input($pid);
 	if (($pid!="newsour") && ($pid!="newrepo")) {
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 		else $gedrec = find_updated_record($pid);
@@ -232,7 +219,6 @@ if (!empty($pid)) {
 	}
 }
 else if (!empty($famid)) {
-	$famid = clean_input($famid);
 	if ($famid != "new") {
 		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $gedrec = find_gedcom_record($famid);
 		else $gedrec = find_updated_record($famid);

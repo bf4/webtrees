@@ -41,30 +41,31 @@ if ($_SESSION["cookie_login"]) {
 	exit;
 }
 
-if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['linktoid'])) $linktoid = $_REQUEST['linktoid'];
-if (isset($_REQUEST['gid'])) $gid = $_REQUEST['gid'];
-if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
-if (isset($_REQUEST['oldFolder'])) $oldFolder = $_REQUEST['oldFolder'];
-if (isset($_REQUEST['filename'])) $filename = $_REQUEST['filename'];
-if (isset($_REQUEST['oldFilename'])) $oldFilename = $_REQUEST['oldFilename'];
-
-if (isset($_REQUEST['m_ext'])) $m_ext = $_REQUEST['m_ext'];
-if (isset($_REQUEST['m_titl'])) $m_titl = $_REQUEST['m_titl'];
-if (isset($_REQUEST['m_file'])) $m_file = $_REQUEST['m_file'];
-if (isset($_REQUEST['level'])) $level = $_REQUEST['level'];
-if (isset($_REQUEST['text'])) $text = $_REQUEST['text'];
-if (isset($_REQUEST['tag'])) $tag = $_REQUEST['tag'];
-if (isset($_REQUEST['islink'])) $islink = $_REQUEST['islink'];
-if (isset($_REQUEST['glevels'])) $glevels= $_REQUEST['glevels'];
+// TODO use GET/POST, rather than $_REQUEST
+// TODO decide what validation is required on these input parameters
+$pid        =safe_REQUEST($_REQUEST, 'pid',         PGV_REGEX_XREF);
+$mid        =safe_REQUEST($_REQUEST, 'mid',         PGV_REGEX_XREF);
+$gid        =safe_REQUEST($_REQUEST, 'mid',         PGV_REGEX_XREF);
+$linktoid   =safe_REQUEST($_REQUEST, 'linktoid',    PGV_REGEX_XREF);
+$action     =safe_REQUEST($_REQUEST, 'action',      PGV_REGEX_NOSCRIPT, 'showmediaform');
+$folder     =safe_REQUEST($_REQUEST, 'folder',      PGV_REGEX_UNSAFE);
+$oldFolder  =safe_REQUEST($_REQUEST, 'oldFolder',   PGV_REGEX_UNSAFE);
+$filename   =safe_REQUEST($_REQUEST, 'filename',    PGV_REGEX_UNSAFE);
+$oldFilename=safe_REQUEST($_REQUEST, 'oldFilename', PGV_REGEX_UNSAFE, $filename);
+$level      =safe_REQUEST($_REQUEST, 'level',       PGV_REGEX_UNSAFE);
+$text       =safe_REQUEST($_REQUEST, 'text',        PGV_REGEX_UNSAFE);
+$tag        =safe_REQUEST($_REQUEST, 'tag',         PGV_REGEX_UNSAFE);
+$islink     =safe_REQUEST($_REQUEST, 'islink',      PGV_REGEX_UNSAFE);
+$glevels    =safe_REQUEST($_REQUEST, 'glevels',     PGV_REGEX_UNSAFE);
+// TODO are these used?
+$m_ext      =safe_REQUEST($_REQUEST, 'm_ext',       PGV_REGEX_UNSAFE);
+$m_titl     =safe_REQUEST($_REQUEST, 'm_titl',      PGV_REGEX_UNSAFE);
+$m_file     =safe_REQUEST($_REQUEST, 'm_file',      PGV_REGEX_UNSAFE);
 
 print_simple_header($pgv_lang["add_media_tool"]);
 $disp = true;
 if (empty($pid) && !empty($mid)) $pid = $mid;
 if (!empty($pid)) {
-	$pid = clean_input($pid);
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_media_record($pid);
 	else $gedrec = find_updated_record($pid);
 	if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
@@ -74,7 +75,6 @@ if ($action=="update" || $action=="newentry") {
 	if (!isset($linktoid) || $linktoid=="new") $linktoid="";
 	if (empty($linktoid) && !empty($gid)) $linktoid = $gid;
 	if (!empty($linktoid)) {
-		$linktoid = clean_input($linktoid);
 		$disp = displayDetailsById($linktoid);
 	}
 }
@@ -127,16 +127,6 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 // serverThumbFolderName - this is where the thumbnail file is physically located
 
 if (empty($action)) $action="showmediaform";
-
-if (isset($filename)) {
-	$filename = stripslashes(trim($filename));
-} else {
-	$filename = "";
-}
-
-if (!isset($m_ext)) $m_ext="";
-if (!isset($m_titl)) $m_titl="";
-if (!isset($m_file)) $m_file="";
 
 // **** begin action "newentry"
 // NOTE: Store the entered data
@@ -280,7 +270,6 @@ if ($action=="newentry") {
 		} else {
 			//-- check if the file is used in more than one gedcom
 			//-- do not allow it to be moved or renamed if it is
-			if (!isset($oldFilename)) $oldFilename = $filename;
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
 			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
 			$res = dbquery($sql);

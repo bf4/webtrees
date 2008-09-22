@@ -64,7 +64,6 @@ if (!isset($type)) $type = array();
 //-- setup the arrays
 $newvars = array();
 foreach($vars as $name=>$var) {
-	$var = clean_input($var);
 	$newvars[$name]["id"] = $var;
 	if (!empty($type[$name]) && (($type[$name]=="INDI")||($type[$name]=="FAM")||($type[$name]=="SOUR"))) {
 		$gedcom = find_gedcom_record($var);
@@ -198,14 +197,14 @@ function paste_id(value) {
 					if (!isset($input["default"])) $input["default"] = "";
 					if (isset($input["lookup"])) {
 						if ($input["lookup"]=="INDI") {
-							if (!empty($pid)) $input["default"] = clean_input($pid);
+							if (!empty($pid)) $input["default"] = $pid;
 							else $input["default"] = check_rootid($input["default"]);
 						}
 						if ($input["lookup"]=="FAM") {
-							if (!empty($famid)) $input["default"] = clean_input($famid);
+							if (!empty($famid)) $input["default"] = $famid;
 						}
 						if ($input["lookup"]=="SOUR") {
-							if (!empty($sid)) $input["default"] = clean_input($sid);
+							if (!empty($sid)) $input["default"] = $sid;
 						}
 					}
 					if ($input["type"]=="text") {
