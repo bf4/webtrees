@@ -1040,7 +1040,26 @@ function print_favorite_selector($option=0) {
 					print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
 					print "</option>";
 				} else {
-					$record=GedcomRecord::getInstance($pid);
+					switch ($favorite['type']) {
+					case 'INDI':
+						$record=Person::getInstance($pid);
+						break;
+					case 'FAM':
+						$record=Family::getInstance($pid);
+						break;
+					case 'SOUR':
+						$record=Source::getInstance($pid);
+						break;
+					case 'REPO':
+						$record=Repository::getInstance($pid);
+						break;
+					case 'OBJE':
+						$record=Media::getInstance($pid);
+						break;
+					default:
+						$record=GedcomRecord::getInstance($pid);
+						break;
+					}
 					if ($record && $record->canDisplayName()) {
 						$name=$record->getFullName();
 						if ($SHOW_ID_NUMBERS) {

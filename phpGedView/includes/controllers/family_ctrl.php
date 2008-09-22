@@ -134,7 +134,7 @@ class FamilyRoot extends BaseController
 		//-- add favorites action
 		if ($this->action=='addfav' && !empty($_REQUEST['gid']) && PGV_USER_NAME) {
 			$_REQUEST['gid'] = strtoupper($_REQUEST['gid']);
-			$indirec = find_gedcom_record($_REQUEST['gid']);
+			$indirec = find_family_record($_REQUEST['gid']);
 			if ($indirec) {
 				$favorite = array(
 					'username' => PGV_USER_NAME,

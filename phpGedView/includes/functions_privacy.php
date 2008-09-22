@@ -452,7 +452,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 
 		if (PGV_USER_CAN_ACCESS) {
 			if ($type=="INDI") {
-				$gedrec = find_gedcom_record($pid);
+				$gedrec = find_person_record($pid);
 				$isdead = is_dead($gedrec);
 				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($username, 'relationship_privacy')=="Y") {
 					if ($isdead) {
@@ -558,7 +558,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			}
 		}
 
-		$gedrec = find_gedcom_record($pid);
+		$gedrec = find_person_record($pid);
 		$disp = is_dead($gedrec);
 		if ($disp) {
 			if ($SHOW_DEAD_PEOPLE>=PGV_USER_ACCESS_LEVEL) {

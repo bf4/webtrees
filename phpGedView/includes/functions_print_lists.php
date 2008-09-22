@@ -1508,7 +1508,26 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 
 	foreach (get_events_list($startjd, $endjd, $events) as $value) {
-		$record = GedcomRecord::getInstance($value['id']);
+		switch ($value['objtype']) {
+		case 'INDI':
+			$record=Person::getInstance($value['id']);
+			break;
+		case 'FAM':
+			$record=Family::getInstance($value['id']);
+			break;
+		case 'SOUR':
+			$record=Source::getInstance($value['id']);
+			break;
+		case 'REPO':
+			$record=Repository::getInstance($value['id']);
+			break;
+		case 'OBJE':
+			$record=Media::getInstance($value['id']);
+			break;
+		default:
+			$record=GedcomRecord::getInstance($value['id']);
+			break;
+		}
 		//-- only living people ?
 		if ($only_living) {
 			if ($record->type=="INDI" && $record->isDead()) {

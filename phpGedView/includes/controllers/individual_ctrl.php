@@ -236,7 +236,7 @@ class IndividualControllerRoot extends BaseController {
 					else {
 						$famids = array_merge(find_sfamily_ids($my_id), find_family_ids($my_id));
 						foreach($famids as $indexval => $famid) {
-							if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
+							if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
 							else $famrec = find_updated_record($famid);
 							if (preg_match("/1 (HUSB|WIFE|CHIL) @$this->pid@/", $famrec)>0) $this->canedit=true;
 						}
@@ -290,7 +290,7 @@ class IndividualControllerRoot extends BaseController {
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
 			if (isset($indilist[$this->pid])) unset($indilist[$this->pid]);
-			$indirec = find_gedcom_record($this->pid);
+			$indirec = find_person_record($this->pid);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");

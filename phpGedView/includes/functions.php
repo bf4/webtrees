@@ -720,7 +720,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 		$ft = preg_match_all("/1 FAMS @(.+)@/", $gedrec, $fmatch, PREG_SET_ORDER);
 		for ($f=0; $f<$ft; $f++) {
 			$famid = $fmatch[$f][1];
-			$famrec = find_gedcom_record($fmatch[$f][1]);
+			$famrec = find_family_record($fmatch[$f][1]);
 			$parents = find_parents_in_record($famrec);
 			if ($id==$parents["HUSB"])
 				$spid = $parents["WIFE"];
@@ -818,7 +818,26 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 		$ct = preg_match("/@(.*)@/", $value, $match);
 		if (($ct > 0 ) && ($t!="DATE")) {
 			$oldsub = $subrec;
-			$subrec = find_gedcom_record($match[1]);
+			switch ($t) {
+			case 'HUSB':
+			case 'WIFE':
+			case 'CHIL':
+				$subrec = find_person_record($match[1]);
+				break;
+			case 'FAMC':
+			case 'FAMS':
+				$subrec = find_family_record($match[1]);
+				break;
+			case 'SOUR':
+				$subrec = find_source_record($match[1]);
+				break;
+			case 'REPO':
+				$subrec = find_repository_record($match[1]);
+				break;
+			default:
+				$subrec = find_gedcom_record($match[1]);
+				break;
+			}
 			if ($subrec) {
 				$value=$match[1];
 				$ct = preg_match("/0 @$match[1]@ $t (.+)/", $subrec, $match);
