@@ -64,22 +64,14 @@ if (!$ALLOW_EDIT_GEDCOM || !$USE_QUICK_UPDATE || !PGV_USER_ID) {
 	exit;
 }
 
-if (!isset($action)) {
-	$action="";
-}
 if (!isset($closewin)) {
 	$closewin=0;
 }
 
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['closewid'])) $closewid = $_REQUEST['closewid'];
-if (isset($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
-if (!isset($action)) $action="";
-if (!isset($closewin)) $closewin=0;
-$pid=clean_input($pid);
-if (empty($pid)) {
-	$pid=PGV_USER_GEDCOM_ID;
-}
+// TODO Decide whether to use GET/POST and appropriate validation
+$pid     =safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF, PGV_USER_GEDCOM_ID);
+$action  =safe_REQUEST($_REQUEST, 'action');
+$closewin=safe_REQUEST($_REQUEST, 'closewin', '1', '0');
 
 //-- only allow editors or users who are editing their own individual or their immediate relatives
 if (!PGV_USER_CAN_EDIT) {

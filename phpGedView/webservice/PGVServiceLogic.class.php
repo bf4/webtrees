@@ -425,7 +425,6 @@ class PGVServiceLogic extends GenealogyService
 			{
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				$xref1 = clean_input($xref1);
 				if (!empty($xref1))
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
@@ -509,7 +508,6 @@ class PGVServiceLogic extends GenealogyService
 			{
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				$xref1 = clean_input($xref1);
 				if (!empty($xref1))
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
@@ -580,7 +578,6 @@ class PGVServiceLogic extends GenealogyService
 			{
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				$xref1 = clean_input($xref1);
 				if (!empty($xref1))
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
@@ -630,7 +627,6 @@ class PGVServiceLogic extends GenealogyService
 			{
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				$xref1 = clean_input($xref1);
 				if (!empty($xref1))
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM]))

@@ -187,7 +187,7 @@ function safe_POST_xref($var, $default=null) {
 	return safe_POST($var, PGV_REGEX_XREF, $default);
 }
 
-function safe_REQUEST($arr, $var, $regex, $default) {
+function safe_REQUEST($arr, $var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
@@ -3209,21 +3209,6 @@ function get_report_list($force=false) {
  	check_in($logline, "reports.dat", $INDEX_DIRECTORY);
 
 	return $files;
-}
-
-/**
- * clean up user submitted input before submitting it to the SQL query
- *
- * This function will take user submitted input string and remove any special characters
- * before they are submitted to the SQL query.
- * Examples of invalid characters are _ & ? < > " '
- * @param string $pid	The string to cleanup
- * @return string	The cleaned up string
- */
-function clean_input($pid) {
-	$pid = preg_replace("/[%?_\"'\(\);]/", "", trim($pid));
-	$pid = strip_tags($pid);
-	return $pid;
 }
 
 /**
