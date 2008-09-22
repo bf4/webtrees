@@ -129,7 +129,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_gedcom_record($gid);
+			$indirec = find_media_record($gid);
 			if ($indirec) {
 				$favorite = array();
 				$favorite["username"] = PGV_USER_NAME;
@@ -157,7 +157,7 @@ class MediaControllerRoot extends IndividualController{
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
 			if (isset($medialist[$this->pid])) unset($medialist[$this->pid]);
-			$indirec = find_gedcom_record($this->pid);
+			$indirec = find_media_record($this->pid);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");

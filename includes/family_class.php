@@ -329,7 +329,7 @@ class Family extends GedcomRecord {
 	 */
 	function isDivorced() {
 		// Bypass privacy rules so we can differentiate Spouse from Ex-Spouse
-		return preg_match('/[\r\n]1 DIV( Y)?[\r\n]/', find_gedcom_record($this->xref));
+		return preg_match('/[\r\n]1 DIV( Y)?[\r\n]/', find_family_record($this->xref));
 	}
 
 	/**
