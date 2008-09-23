@@ -832,7 +832,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 				$subrec = find_source_record($match[1]);
 				break;
 			case 'REPO':
-				$subrec = find_repository_record($match[1]);
+				$subrec = find_other_record($match[1]);
 				break;
 			default:
 				$subrec = find_gedcom_record($match[1]);

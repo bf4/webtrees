@@ -253,7 +253,7 @@ class stats {
 		if (is_array($cache)) {
 			return $cache;
 		}
-		$head=find_gedcom_record('HEAD');
+		$head=find_other_record('HEAD');
 		$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 		if ($ct > 0) {
 			$softrec=get_sub_record(1, '1 SOUR', $head);
@@ -308,7 +308,7 @@ class stats {
 
 	static function gedcomDate()
 	{
-		$head=find_gedcom_record('HEAD');
+		$head=find_other_record('HEAD');
 		if (preg_match("/1 DATE (.+)/", $head, $match)) {
 			$date=new GedcomDate($match[1]);
 			return $date->Display(false);

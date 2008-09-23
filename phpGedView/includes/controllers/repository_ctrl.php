@@ -66,7 +66,7 @@ class RepositoryControllerRoot extends BaseController {
 
 		$this->rid         =safe_GET_xref('rid');
 
-		$repositoryrec = find_repo_record($this->rid);
+		$repositoryrec = find_other_record($this->rid);
 		if (!$repositoryrec) $repositoryrec = "0 @".$this->rid."@ REPO\r\n";
 
 		$this->repository = new Repository($repositoryrec);
@@ -119,7 +119,7 @@ class RepositoryControllerRoot extends BaseController {
 		if (empty($this->uname)) return;
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_repo_record($gid);
+			$indirec = find_other_record($gid);
 			if ($indirec) {
 				$favorite = array();
 				$favorite["username"] = $this->uname;
@@ -145,7 +145,7 @@ class RepositoryControllerRoot extends BaseController {
 		if (accept_changes($this->rid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;
-			$indirec = find_repo_record($this->rid);
+			$indirec = find_other_record($this->rid);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");

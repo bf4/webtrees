@@ -50,7 +50,7 @@ class Repository extends GedcomRecord {
 			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
-		$repositoryrec = find_repo_record($pid);
+		$repositoryrec = find_other_record($pid);
 		if (empty($repositoryrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
 			if ($ct>0) {

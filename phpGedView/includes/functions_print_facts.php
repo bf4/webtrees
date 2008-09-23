@@ -529,7 +529,7 @@ function print_submitter_info($sid) {
 function print_repository_record($sid) {
 	global $TEXT_DIRECTION;
 	if (displayDetailsById($sid, "REPO")) {
-		$source = find_repo_record($sid);
+		$source = find_other_record($sid);
 		$ct = preg_match("/1 NAME (.*)/", $source, $match);
 		if ($ct > 0) {
 			$ct2 = preg_match("/0 @(.*)@/", $source, $rmatch);
