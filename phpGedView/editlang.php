@@ -697,7 +697,6 @@ switch ($action) {
 <?php
 
 //-- load file for language settings
-require("includes/lang_settings_std.php");
 $Languages_Default = true;
 if (file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
 	$DefaultSettings = $language_settings;    // Save default settings, so we can merge properly
