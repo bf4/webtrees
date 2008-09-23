@@ -654,7 +654,7 @@ function find_source_record($pid, $gedfile="") {
  * @param string $rid	the record id
  * @param string $gedfile	the gedcom file id
  */
-function find_repo_record($pid, $gedfile="") {
+function find_other_record($pid, $gedfile="") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
 	if (!$pid) {
@@ -669,7 +669,7 @@ function find_repo_record($pid, $gedfile="") {
 
 	$pid=$DBCONN->escapeSimple($pid);
 	$res=dbquery(
-		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_id='{$pid}' AND o_file={$ged_id}"
+		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id='{$pid}' AND o_file={$ged_id}"
 	);
 	$row=$res->fetchRow();
 	$res->free();

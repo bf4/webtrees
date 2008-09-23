@@ -310,9 +310,8 @@ class batch_update {
 			case 'INDI': return find_person_record($xref);
 			case 'FAM':  return find_family_record($xref);
 			case 'SOUR': return find_source_record($xref);
-			case 'REPO': return find_repo_record  ($xref);
 			case 'OBJE': return find_media_record ($xref);
-			default:     return find_gedcom_record($xref);
+			default:     return find_other_record ($xref);
 			}
 		}
 	}

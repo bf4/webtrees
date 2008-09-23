@@ -395,7 +395,7 @@ class SearchControllerRoot extends BaseController {
 
 			// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
-				if (find_repo_record($this->query)) {
+				if (find_other_record($this->query)) {
 					header("Location: ".encode_url("repo.php?rid={$this->query}&ged={$GEDCOM}", false));
 					exit;
 				}
