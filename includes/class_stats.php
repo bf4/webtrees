@@ -407,7 +407,7 @@ class stats {
 	function totalIndividuals()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id);
+		$rows=self::_runSQL("SELECT COUNT(i_file) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -419,7 +419,7 @@ class stats {
 	function totalFamilies()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id);
+		$rows=self::_runSQL("SELECT COUNT(f_file) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -431,7 +431,7 @@ class stats {
 	function totalSources()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(s_id) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_ged_id);
+		$rows=self::_runSQL("SELECT COUNT(s_file) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -443,7 +443,7 @@ class stats {
 	function totalOtherRecords()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(o_id) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_ged_id);
+		$rows=self::_runSQL("SELECT COUNT(o_file) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -501,14 +501,12 @@ class stats {
 				$opt[] = ' AND d_fact NOT IN ('.join(',', $no_types).') ';
 			}
 			$opt = join('', $opt);
-			$dis = ' DISTINCT ';
 		}
 		else
 		{
 			$opt = '';
-			$dis = '';
 		}
-		$rows = self::_runSQL("SELECT {$dis}COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}", 1);
+		$rows = self::_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -543,7 +541,7 @@ class stats {
 	function totalSexMales()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX M%'", 1);
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX M%'");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -556,7 +554,7 @@ class stats {
 	function totalSexFemales()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX F%'", 1);
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX F%'");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -570,7 +568,7 @@ class stats {
 	function totalSexUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT DISTINCT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')", 1);
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -601,7 +599,7 @@ class stats {
 	function totalLiving()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=0", 1);
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=0");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -615,7 +613,7 @@ class stats {
 	function totalDeceased()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=1", 1);
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=1");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -629,7 +627,7 @@ class stats {
 	function totalMortalityUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1", 1);
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -667,7 +665,7 @@ class stats {
 	static function totalAdmins()
 	{
 		global $TBLPREFIX;
-		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin='Y'", 1);
+		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin='Y'");
 		if (!isset($rows[0])) {return 0;}
 		return $rows[0]['tot'];
 	}
@@ -675,7 +673,7 @@ class stats {
 	static function totalNonAdmins()
 	{
 		global $TBLPREFIX;
-		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin!='Y'", 1);
+		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin!='Y'");
 		if (!isset($rows[0])) {return 0;}
 		return $rows[0]['tot'];
 	}
@@ -704,7 +702,7 @@ class stats {
 				$like = " AND ({$nolike})";
 			}
 		}
-		$rows = self::_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_ged_id}'{$like}", 1);
+		$rows = self::_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_ged_id}'{$like}");
 		if (!isset($rows[0])) {return 0;}
 		return $rows[0]['tot'];
 	}
@@ -1462,7 +1460,7 @@ class stats {
 	function averageChildren()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT AVG(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}", 1);
+		$rows=self::_runSQL("SELECT AVG(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}");
 		$row=$rows[0];
 		return sprintf('%.2f', $row['tot']);
 	}
