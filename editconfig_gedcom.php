@@ -91,6 +91,9 @@ if (isset($_REQUEST['ged'])) $ged = $_REQUEST['ged'];
 if (isset($_REQUEST['gedcom_title'])) $gedcom_title = $_REQUEST['gedcom_title'];
 if (isset($_REQUEST['THEME_DIR'])) $THEME_DIR = $_REQUEST['THEME_DIR'];
 
+$NEW_USE_MEDIA_FIREWALL=safe_POST('NEW_USE_MEDIA_FIREWALL');
+$NTHEME_DIR            =safe_POST('NTHEME_DIR');
+
 if (empty($oldged)) $oldged = "";
 else $ged = $oldged;
 if (!isset($path)) $path = "";
