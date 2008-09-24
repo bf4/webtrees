@@ -26,8 +26,7 @@
 
 require './config.php';
 
-if (!isset($filename)) $filename = "";
-$filename = stripslashes($filename);
+$filename=safe_GET('filename');
 
 print_simple_header($pgv_lang["imageview"]);
 ?>
