@@ -32,8 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_LIFESPAN_CTRL_PHP', '');
 
-require_once ("config.php");
-require_once ("includes/functions_charts.php");
+require_once 'includes/functions_charts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/person_class.php';
 
