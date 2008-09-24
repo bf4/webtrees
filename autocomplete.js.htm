@@ -1,0 +1,194 @@
+<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.autocomplete.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
+<link type="text/css" rel="stylesheet" href="js/jquery/jquery.autocomplete.css" />
+<script type="text/javascript">
+jQuery.noConflict(); // @see http://docs.jquery.com/Using_jQuery_with_Other_Libraries/
+jQuery(document).ready(function($){
+	// INDI
+	$(".ASSO, #spouseid, input[id*=pid], input[id^=gedcomid], input[id^=rootid], input[id$=ROOT_ID], input[name^=FATHER], input[name^=MOTHER], input[name^=CHIL]").autocomplete("autocomplete.php", {
+		extraParams: {field:'INDI'},
+		formatItem: function(row, i) {
+			return row[0] + " (" + row[1] + ")";
+		},
+		formatResult: function(row) {
+			return row[1];
+		},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// FAM
+	$(".FAM, #famid").autocomplete("autocomplete.php", {
+		extraParams: {field:'FAM'},
+		formatItem: function(row, i) {
+			return row[0] + " (" + row[1] + ")";
+		},
+		formatResult: function(row) {
+			return row[1];
+		},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// SOUR
+	$(".SOUR").autocomplete("autocomplete.php", {
+		extraParams: {field:'SOUR'},
+		formatItem: function(row, i) {
+			return row[0] + " (" + row[1] + ")";
+			//return i + ". " + row[0] + " (" + row[1] + ")";
+		},
+		formatResult: function(row) {
+			return row[1];
+		},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// SOUR:TITL
+	$("#TITL").autocomplete("autocomplete.php", {
+		extraParams: {field: 'SOUR_TITL'},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// SOUR*:PAGE*
+	$("input[id^=PAGE]").autocomplete("autocomplete.php", {
+		extraParams: {
+			field: 'SOUR_PAGE',
+			option: function() { return $("input[id^=SOUR]").val(); }
+		},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// *SOUR:*PAGE
+	$("input[id$=PAGE]").autocomplete("autocomplete.php", {
+		extraParams: {
+			field: 'SOUR_PAGE',
+			option: function() { return $("input[id$=SOUR]").val(); }
+		},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// Reset PAGE autocomplete cache when SOUR is changed
+	$("input[id^=SOUR]").change( function() { $("input[id^=PAGE]").flushCache(); } );
+	$("input[id$=SOUR]").change( function() { $("input[id$=PAGE]").flushCache(); } );
+	// REPO
+	$(".REPO, #REPO").autocomplete("autocomplete.php", {
+		extraParams: {field:'REPO'},
+		formatItem: function(row, i) {
+			return row[0] + " (" + row[1] + ")";
+		},
+		formatResult: function(row) {
+			return row[1];
+		},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// REPO:NAME
+	$("#NAME").autocomplete("autocomplete.php", {
+		extraParams: {field: 'REPO_NAME'},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// OBJE
+	$(".OBJE, #OBJE").autocomplete("autocomplete.php", {
+		extraParams: {field:'OBJE'},
+		formatItem: function(row, i) {
+			return row[0] + " (" + row[1] + ")";
+		},
+		formatResult: function(row) {
+			return row[1];
+		},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 0
+	});
+	// INDI or FAM or SOUR or REPO or OBJE
+	$("input[id$=privacy_access_ID], input[name^=gid], #cart_item_id").autocomplete("autocomplete.php", {
+		extraParams: {field:'IFSRO'},
+		formatItem: function(row, i) {
+			return row[0] + " (" + row[1] + ")";
+		},
+		formatResult: function(row) {
+			return row[1];
+		},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 2
+	});
+	// PLAC : full [City, County, State/Province, Country]
+	$(".PLAC, #place, input[id*=place], input[name^=PLAC], input[name$=PLAC]").autocomplete("autocomplete.php", {
+		extraParams: {field:'PLAC'},
+		width: 400,
+	  max: 100,
+		matchContains: true,
+		minChars: 2
+	});
+	// PLAC : splitted (mainly for search.php)
+	$("input[name=place]").autocomplete("autocomplete.php", {
+		extraParams: {
+			field:'PLAC',
+			option:'split'
+		},
+		width: 300,
+	  max: 100,
+		matchContains: true,
+		minChars: 2
+	});
+	// GIVN
+	$("#GIVN, input[name*=GIVN], input[name*=firstname]").autocomplete("autocomplete.php", {
+		extraParams: {field:'GIVN'},
+		width: 300,
+	  max: 100,
+		matchContains: true,
+		minChars: 1
+	});
+	// SURN
+	$("#SURN, input[name*=SURN], input[name*=lastname]").autocomplete("autocomplete.php", {
+		extraParams: {field:'SURN'},
+		width: 300,
+	  max: 100,
+		matchContains: true,
+		minChars: 1
+	});
+	// NPFX
+	var npfx_accept = new Array(<?php if (isset($NPFX_accept)) foreach($NPFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
+	$("#NPFX").autocomplete(npfx_accept, {
+	  max: 100,
+		minChars: 0
+	});
+	// SPFX
+	var spfx_accept = new Array(<?php if (isset($SPFX_accept)) foreach($SPFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
+	$("#SPFX").autocomplete(spfx_accept, {
+	  max: 100,
+		minChars: 0
+	});
+	// NSFX
+	var nsfx_accept = new Array(<?php if (isset($NSFX_accept)) foreach($NSFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
+	$("#NSFX").autocomplete(nsfx_accept, {
+	  max: 100,
+		minChars: 0
+	});
+	// FILE_FORM
+	var file_form_accept = new Array(<?php if (isset($FILE_FORM_accept)) foreach($FILE_FORM_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
+	$("#FILE_FORM").autocomplete(file_form_accept, {
+	  max: 100,
+		minChars: 0
+	});
+});
+</script>
