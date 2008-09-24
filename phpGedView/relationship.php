@@ -573,6 +573,7 @@ $disp = true;
 $title_string .= $pgv_lang["relationship_chart"];
 // -- print html header information
 print_header($title_string);
+require 'js/autocomplete.js.htm';
 
 // Lbox additions if installed ---------------------------------------------------------------------------------------------
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {

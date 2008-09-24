@@ -19,8 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 30 August 2005
- *
  * @package PhpGedView
  * @subpackage Admin
  * @version $Id$
@@ -235,6 +233,7 @@ if ($action=='createuser' || $action=='edituser2') {
 	}
 } else {
 	print_header($pgv_lang['user_admin']);
+	require 'js/autocomplete.js.htm';
 }
 
 // Print the form to edit a user

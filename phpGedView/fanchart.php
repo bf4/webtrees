@@ -434,6 +434,8 @@ $addname=$person->getAddName();
 
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["fan_chart"]);
+require 'js/autocomplete.js.htm';
+
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$cellwidth."px\" valign=\"top\">\n\t\t";

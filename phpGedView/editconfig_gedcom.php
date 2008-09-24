@@ -590,10 +590,12 @@ else if ($action=="replace") {
 }
 
 //-- output starts here
+print_header($pgv_lang["gedconf_head"]);
+require 'js/autocomplete.js.htm';
+
 if (!isset($GENERATE_UIDS)) $GENERATE_UIDS = false;
 $temp2 = $THEME_DIR;
 $THEME_DIR = $temp;
-print_header($pgv_lang["gedconf_head"]);
 $THEME_DIR = $temp2;
 // if (isset($FILE) && !check_for_import($FILE)) print "<span class=\"subheaders\">".$pgv_lang["step2"]." ".$pgv_lang["configure"]." + ".$pgv_lang["ged_gedcom"]."</span><br /><br />";
 if (!isset($NTHEME_DIR)) $NTHEME_DIR=$THEME_DIR;

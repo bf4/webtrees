@@ -39,6 +39,7 @@ if (empty($keep1)) $keep1=array();
 if (empty($keep2)) $keep2=array();
 
 print_header($pgv_lang["merge_records"]);
+require 'js/autocomplete.js.htm';
 
 //-- make sure they have accept access privileges
 if (!PGV_USER_CAN_ACCEPT) {

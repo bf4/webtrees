@@ -5,8 +5,6 @@
  * Uses the $_SESSION["cart"] to store the ids of clippings to download
  * @TODO print a message if people are not included due to privacy
  *
- * XHTML Validated 12 Feb 2006
- *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
@@ -32,12 +30,15 @@
 require './config.php';
 
 require_once 'includes/controllers/clippings_ctrl.php';
-
 $controller = new ClippingsController();
 $controller->init();
 
 // -- print html header information
-print_header($pgv_lang["clip_cart"]); ?>
+print_header($pgv_lang["clip_cart"]);
+require 'js/autocomplete.js.htm';
+require 'js/sorttable.js.htm';
+?>
+
 <h2><?php $pgv_lang["clippings_cart"] ?></h2>
 <?php
 
@@ -48,12 +49,12 @@ if ($controller->action=='add') {
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_links"]?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
 			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
-			<input type="hidden" name="action" value="add1" /></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_family"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["parents_and_family"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print $pgv_lang["parents_and_child"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" /><?php print $pgv_lang["parents_desc"]?></tr></td>
-			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" /></tr></td>
+			<input type="hidden" name="action" value="add1" /></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_family"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["parents_and_family"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print $pgv_lang["parents_and_child"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" /><?php print $pgv_lang["parents_desc"]?></td></tr>
+			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" /></td></tr>
 
 		</table>
 		</form>
@@ -64,13 +65,13 @@ if ($controller->action=='add') {
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_p_links"]?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
 			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
-			<input type="hidden" name="action" value="add1" /></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_person"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["person_parents_sibs"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="ancestors" /><?php print $pgv_lang["person_ancestors"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="ancestorsfamilies" /><?php print $pgv_lang["person_ancestor_fams"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print $pgv_lang["person_spouse"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" /><?php print $pgv_lang["person_desc"]?></tr></td>
+			<input type="hidden" name="action" value="add1" /></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_person"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["person_parents_sibs"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="ancestors" /><?php print $pgv_lang["person_ancestors"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="ancestorsfamilies" /><?php print $pgv_lang["person_ancestor_fams"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print $pgv_lang["person_spouse"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" /><?php print $pgv_lang["person_desc"]?></td></tr>
 			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
 		</table>
 		</form>
@@ -80,9 +81,9 @@ if ($controller->action=='add') {
 			<tr><td class="topbottombar"><?php print $pgv_lang["which_s_links"]?>
 			<input type="hidden" name="id" value="<?php print $controller->id; ?>" />
 			<input type="hidden" name="type" value="<?php print $controller->type ?>" />
-			<input type="hidden" name="action" value="add1" /></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_source"]?></tr></td>
-			<tr><td class="optionbox"><input type="radio" name="others" value="linked" /><?php print $pgv_lang["linked_source"]?></tr></td>
+			<input type="hidden" name="action" value="add1" /></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_source"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="linked" /><?php print $pgv_lang["linked_source"]?></td></tr>
 			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
 		</table>
 		</form>
@@ -123,12 +124,12 @@ if($ct==0) {
 		<tr>
 			<td class="optionbox">
 				<input type="hidden" name="action" value="add"/>
-				<input type="text" name="id" id="pid" size="5"/>
+				<input type="text" name="id" id="cart_item_id" size="5"/>
 			</td>
 			<td class="optionbox">
-				<?php print_findindi_link('pid',''); ?>
-				<?php print_findfamily_link('pid',''); ?>
-				<?php print_findsource_link('pid',''); ?>
+				<?php //print_findindi_link('pid',''); ?>
+				<?php //print_findfamily_link('pid',''); ?>
+				<?php //print_findsource_link('pid',''); ?>
 				<input type="submit" value="<?php print $pgv_lang["add"];?>"/>
 
 			</td>
@@ -152,7 +153,7 @@ else {
 		<td class="descriptionbox wrap"><?php print $pgv_lang["choose_file_type"] ?></td>
 		<td class="optionbox">
 		<?php print getLRM();?><input type="radio" name="filetype" checked="checked"  value="gedcom" /> GEDCOM <?php print_help_link("def_gedcom_help", "qm"); ?><?php print getLRM();?>
-		<br/>
+		<br />
 		<?php print getLRM();?><input type="radio" name="filetype" value="gramps" /> Gramps XML <?php print_help_link("def_gramps_help", "qm"); ?><?php print getLRM();?>
 		</td></tr>
 
@@ -162,7 +163,7 @@ else {
 		<td class="optionbox"> <input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /><?php print_help_link("include_media_help", "qm"); ?></td></tr>
 
 		<tr><td class="optionbox" colspan="2">
-		<br/>
+		<br />
 		<a href="javascript:;" onclick="return expand_layer('advanced');"><img id="advanced_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" /> <?php print $pgv_lang["advanced_options"]; ?></a>
 		<div id="advanced" style="display: none;">
 		<table>
@@ -170,16 +171,16 @@ else {
 		<tr><td><input type="checkbox" name="remove" value="yes" checked="checked" /></td><td><?php print $pgv_lang["remove_custom_tags"]; print_help_link("remove_tags_help", "qm"); ?></td></tr>
 		</table>
 		</div>
-		<br/>
+		<br />
 		<tr><td class="topbottombar" colspan="2">
 		<input type="submit" value="<?php print $pgv_lang["download_now"]; ?>" />
 		<?php print_help_link("clip_download_help", "qm"); ?>
-		</tr></td>
+		</td></tr>
 		</form>
 
 		</td></tr>
 		</table>
-		<br/>
+		<br />
 
 		<script language="JavaScript" type="text/javascript">
 		<!--
@@ -201,12 +202,12 @@ else {
 		<tr>
 			<td class="optionbox">
 				<input type="hidden" name="action" value="add"/>
-				<input type="text" name="id" id="pid" size="5"/>
+				<input type="text" name="id" id="cart_item_id" size="8" />
 			</td>
 			<td class="optionbox">
-				<?php print_findindi_link('pid',''); ?>
-				<?php print_findfamily_link('pid',''); ?>
-				<?php print_findsource_link('pid',''); ?>
+				<?php //print_findindi_link('pid',''); ?>
+				<?php //print_findfamily_link('pid',''); ?>
+				<?php //print_findsource_link('pid',''); ?>
 				<input type="submit" value="<?php print $pgv_lang["add"];?>"/>
 
 			</td>
@@ -219,13 +220,13 @@ else {
 	<br /><a href="clippings.php?action=empty"><?php print $pgv_lang["empty_cart"]."  "; ?></a>
 	<?php print_help_link("empty_cart_help", "qm"); ?>
 	</td><td valign="top">
-	<table class="list_table">
+	<table id="mycart" class="sortable list_table">
 		<tr>
-			<td class="list_label"><?php echo $pgv_lang["type"]?></td>
-			<td class="list_label"><?php echo $pgv_lang["id"]?></td>
-			<td class="list_label"><?php echo $pgv_lang["name_description"]?></td>
-			<td class="list_label"><?php echo $pgv_lang["remove"]?></td>
-			<td class="list_label"><?php print_help_link("clip_cart_help", "qm"); ?></td>
+			<th class="list_label"><?php echo $pgv_lang["type"]?></th>
+			<th class="list_label"><?php echo $pgv_lang["id"]?></th>
+			<th class="list_label"><?php echo $pgv_lang["name_description"]?></th>
+			<th class="list_label"><?php echo $pgv_lang["remove"]?></th>
+			<th class="list_label"><?php print_help_link("clip_cart_help", "qm"); ?></th>
 		</tr>
 <?php
 	for ($i=0; $i<$ct; $i++) {

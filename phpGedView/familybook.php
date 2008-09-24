@@ -362,6 +362,7 @@ function print_family_book($pid, $descent)
 
 // -- print html header information
 print_header(PrintReady($name)." ".$pgv_lang["familybook_chart"]);
+require 'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {

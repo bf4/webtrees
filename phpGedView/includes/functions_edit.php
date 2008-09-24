@@ -42,9 +42,8 @@ define('PGV_FUNCTIONS_EDIT_PHP', '');
  */
 $DEBUG = false;
 
-$NPFX_accept = array("Adm", "Amb", "Brig", "Can", "Capt", "Chan", "Chapln", "Cmdr", "Col", "Cpl", "Cpt", "Dr", "Gen", "Gov", "Hon", "Lady", "Lt", "Mr", "Mrs", "Ms", "Msgr", "Pfc", "Pres", "Prof", "Pvt", "Rabbi", "Rep", "Rev", "Sen", "Sgt", "Sir", "Sr", "Sra", "Srta", "Ven");
-$SPFX_accept = array("al", "da", "de", "den", "dem", "der", "di", "du", "el", "la", "van", "von");
-$NSFX_accept = array("Jr", "Sr", "I", "II", "III", "IV", "MD", "PhD");
+$NPFX_accept = array( "Adm", "Amb", "Brig", "Can", "Capt", "Chan", "Chapln", "Cmdr", "Col", "Cpl", "Cpt", "Dr", "Gen", "Gov", "Hon", "Lady", "Lt", "Mr", "Mrs", "Ms", "Msgr", "Pfc", "Pres", "Prof", "Pvt", "Rabbi", "Rep", "Rev", "Sen", "Sgt", "Sir", "Sr", "Sra", "Srta", "Ven");$SPFX_accept = array("al", "da", "de", "den", "dem", "der", "di", "du", "el", "la", "van", "von");
+$NSFX_accept = array( "I", "II", "III", "IV", "V", "VI", "Jr", "Junior", "MD", "PhD", "Senior", "Sr");
 $FILE_FORM_accept = array("avi", "bmp", "gif", "jpeg", "mp3", "ole", "pcx", "png", "tiff", "wav");
 $emptyfacts = array("_HOL", "_NMR", "_SEPR", "ADOP", "ANUL", "BAPL", "BAPM", "BARM", "BASM",
 "BIRT", "BLES", "BURI", "CENS", "CHAN", "CHR", "CHRA", "CONF", "CONL", "CREM",
@@ -756,18 +755,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 	print "</form>\n";
 	?>
-	<script type="text/javascript" src="autocomplete.js"></script>
 	<script type="text/javascript">
 	<!--
-	//	copy php arrays into js arrays
-	var npfx_accept = new Array(<?php foreach ($NPFX_accept as $indexval => $npfx) print "'".$npfx."',"; print "''";?>);
-	var spfx_accept = new Array(<?php foreach ($SPFX_accept as $indexval => $spfx) print "'".$spfx."',"; print "''";?>);
-	Array.prototype.in_array = function(val) {
-		for (var i in this) {
-			if (this[i] == val) return true;
-		}
-		return false;
-	}
 	function trim(str) {
 		// Commas are used in the GIVN and SURN field to separate lists of surnames.
 		// For example, to differentiate the two Spanish surnames from an English
@@ -1385,7 +1374,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		else {
 			// text
 			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" size=\"".$cols."\" dir=\"ltr\"";
-			// if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
+			echo " class=\"{$fact}\"";
+			echo " autocomplete=\"off\"";
 			// onkeyup should suffice.  Why the others?
 			if (in_array($fact, $subnamefacts)) print " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
 			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
@@ -1500,12 +1490,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// pastable values
 	if ($readOnly=="") {
-/*		if ($fact=="NPFX") {
-			$text = $pgv_lang["autocomplete"];
-			if (isset($PGV_IMAGES["autocomplete"]["button"])) $Link = "<img id=\"".$element_id."_spec\" name=\"".$element_id."_spec\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["autocomplete"]["button"]."\"  alt=\"".$text."\"  title=\"".$text."\" border=\"0\" align=\"middle\" />";
-			else $Link = $text;
-			print "&nbsp;".$Link;
-		} */
 		if ($fact=="SPFX") print_autopaste_link($element_id, $SPFX_accept);
 		if ($fact=="NSFX") print_autopaste_link($element_id, $NSFX_accept);
 		if ($fact=="FORM") print_autopaste_link($element_id, $FILE_FORM_accept, false, false);
@@ -1549,7 +1533,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		// 3 QUAY
 		add_simple_tag(($level+1)." QUAY");
 		// 3 OBJE
-		add_simple_tag(($level+1)." OBJE @@");
+		add_simple_tag(($level+1)." OBJE");
 		print "</table></div>";
 	}
 	if ($tag=="ASSO") {
@@ -1589,7 +1573,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		print "<div id=\"newobje\" style=\"display: none;\">\n";
 		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
-		add_simple_tag($level." OBJE @@");
+		add_simple_tag($level." OBJE");
 		print "</table></div>";
 	}
 	if ($tag=="RESN") {

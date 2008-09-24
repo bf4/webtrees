@@ -31,7 +31,6 @@
 require './config.php';
 
 require_once 'includes/controllers/lifespan_ctrl.php';
-
 $controller = new LifespanController();
 $controller->init();
 
@@ -39,6 +38,7 @@ $zoomfactor = 10;
 //if peeps !null then pass new array for zooming
 
 print_header($pgv_lang["lifespan_chart"]);
+require 'js/autocomplete.js.htm';
 ?>
 	<script language="JavaScript" type="text/javascript">
 	<!--
@@ -315,7 +315,7 @@ var oldMx = 0;
 				</select></td>
 			<td><input type="text" name="beginYear" size="5" value="<?php if (isset($beginYear)) print $beginYear; ?>" /></td>
 			<td><input type="text" name="endYear" size="5" value="<?php if (isset($endYear)) print $endYear; ?>" /></td>
-			<td><input type="text" name="place" size="15" value="<?php if (isset($place)) print $place; ?>" /></td>
+			<td><input type="text" name="place" size="15" value="<?php if (isset($place)) print $place; ?>"/></td>
 			<td><input type="submit" name="search" value="<?php print $pgv_lang["search"]; ?>" /></td>
 		<td><input type="button" value="<?php print $pgv_lang["clear_chart"]; ?>" onclick="window.location = 'lifespan.php?clear=1';" /></td>
 		</tr>

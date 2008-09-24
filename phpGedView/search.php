@@ -29,12 +29,12 @@ require './config.php';
 
 require_once 'includes/controllers/search_ctrl.php';
 require_once 'includes/functions_print_lists.php';
-
 $controller = new SearchController();
 $controller->init();
 
 // Print the top header
 print_header($pgv_lang["search"]);
+require 'js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -302,7 +302,7 @@ if ($controller->action == "soundex") {
 			<?php print $pgv_lang["firstname_search"]; ?>
 		</td>
 		<td class="list_value">
-			<input tabindex="3" type="text" id="firstfocus" name="firstname" value="<?php print $controller->myfirstname; ?>" />
+			<input tabindex="3" type="text" id="firstfocus" name="firstname" autocomplete="off" value="<?php print $controller->myfirstname; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="6">
 			<input tabindex="7" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
@@ -313,7 +313,7 @@ if ($controller->action == "soundex") {
 			<?php print $pgv_lang["lastname_search"]; ?>
 		</td>
 		<td class="list_value">
-			<input tabindex="4" type="text" name="lastname" value="<?php print $controller->mylastname; ?>" />
+			<input tabindex="4" type="text" name="lastname" autocomplete="off" value="<?php print $controller->mylastname; ?>" />
 		</td>
 	</tr>
 	<tr>
