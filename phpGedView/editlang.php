@@ -26,24 +26,26 @@
 
 require './config.php';
 
-loadLangFile("pgv_confighelp");
-
-require  "includes/functions_editlang.php";
-
-if (!isset($action)) $action = "";
-if (!isset($hide_translated)) $hide_translated = false;
-if (!isset($language2)) $language2 = $LANGUAGE;
-if (!isset($file_type)) $file_type = "lang";
-if (!isset($language1)) $language1 = "english";
-if (!isset($commitTranslationsLink)) $commitTranslationsLink = false;
-$lang_shortcut = $language_settings[$language2]["lang_short_cut"];
-
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (!PGV_USER_IS_ADMIN) {
 	header("Location: login.php?url=editlang.php");
 	exit;
 }
+
+loadLangFile("pgv_confighelp");
+
+if (!defined('PGV_FUNCTIONS_EDITLANG_PHP')) require 'includes/functions_editlang.php';
+
+$action                =safe_GET('action', PGV_REGEX_ALPHA, 'compare');
+$file_type             =safe_GET('file_type');
+$language1             =safe_GET('language1', array_keys($language_settings), 'english');
+$language2             =safe_GET('language2', array_keys($language_settings), $LANGUAGE);
+$hide_translated       =safe_GET_bool('hide_translated');
+$commitTranslationsLink=safe_GET_bool('commitTranslationsLink');
+$execute               =safe_GET_bool('execute');
+
+$lang_shortcut = $language_settings[$language2]["lang_short_cut"];
 
 $fromEscapedChars	= array("&",     "<",    ">",    "\\\"");
 $toPlainChars		= array("&amp;", "&lt;", "&gt;", "\\\\&quot;");
@@ -57,7 +59,7 @@ switch ($action){
 	case "compare": print_header($pgv_lang["compare_lang_utility"]); break;
 	default  : print_header($pgv_lang["edit_langdiff"]); break;
 }
-if (isset($execute) && $action == "debug") {
+if ($execute && $action=='debug') {
 	if (isset($_POST["DEBUG_LANG"])) $_SESSION["DEBUG_LANG"] = $_POST["DEBUG_LANG"];
 	else $_SESSION["DEBUG_LANG"] = "no";
 	$DEBUG_LANG = $_SESSION["DEBUG_LANG"];
@@ -205,7 +207,7 @@ switch ($action) {
 		print "</b></a></td></tr>";
 		print "</table>";
 		print "</form>";
-		if (isset($execute)) {
+		if ($execute) {
 			switch ($file_type) {
 				case "facts":
 					$whichFile = $factsfile;
@@ -413,7 +415,7 @@ switch ($action) {
 		print $pgv_lang["lang_back"];
 		print "</b></a></td></tr>";
 		print "</table></form>";
-		if (isset($execute)) {
+		if ($execute) {
 			$FileName = $pgv_language[$language2] . ".html";
 			$fp = @fopen($FileName, "w");
 
@@ -552,7 +554,7 @@ switch ($action) {
 		print "</b></a></td></tr>";
 		print "</table>";
 		print "</form>";
-		if (isset($execute)) {
+		if ($execute) {
 			foreach(array("admin", "configure_help", "countries", "editor", "extra", "facts", "faqlist", "help_text", "lang") as $file_type) {
 				switch ($file_type) {
 					case "facts":
