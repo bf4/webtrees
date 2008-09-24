@@ -92,7 +92,7 @@ foreach ($assokeys as $indexval => $key) {
 uasort($assorela, "stringsort");
 
 print_simple_header('Edit Interface');
-
+require 'js/autocomplete.js.htm';
 ?>
 <script type="text/javascript">
 <!--
@@ -664,7 +664,7 @@ case 'addnewsource':
 			?>
 			</table>
 			</div>
-		<br/><br/>
+		<br /><br />
 		<input type="submit" value="<?php print $pgv_lang["create_source"]; ?>" />
 	</form>
 	<?php

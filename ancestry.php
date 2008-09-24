@@ -29,12 +29,12 @@
 require './config.php';
 
 require_once("includes/controllers/ancestry_ctrl.php");
-
 $controller = new AncestryController();
 $controller->init();
 
 // -- print html header information
 print_header($controller->name . " " . $pgv_lang["ancestry_chart"]);
+require 'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {

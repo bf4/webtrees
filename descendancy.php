@@ -27,13 +27,12 @@
 require './config.php';
 
 require_once("includes/controllers/descendancy_ctrl.php");
-
 $controller = new DescendancyController();
 $controller->init();
 
 // -- print html header information
 print_header($controller->name." ".$pgv_lang["descend_chart"]);
-
+require 'js/autocomplete.js.htm';
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');

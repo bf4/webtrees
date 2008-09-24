@@ -19,8 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 19 August 2005
- *
  * @package PhpGedView
  * @subpackage Admin
  * @version $Id$
@@ -147,6 +145,7 @@ if ($form_action=='update') {
 	}
 } else {
 	print_header($pgv_lang['user_admin']);
+	require 'js/autocomplete.js.htm';
 }
 
 // Form validation
@@ -165,22 +164,22 @@ function checkform(frm) {
 		return false;
 	}
 	if (frm.form_lastname.value=="") {
-		alert("<?php print $pgv_lang['enter_fullname'];?>);
+		alert("<?php print $pgv_lang['enter_fullname'];?>");
 		frm.form_lastname.focus();
 		return false;
 	}
 	if (frm.form_email.value.indexOf("@")==-1) {
-		alert("<?php print $pgv_lang['enter_email'];?>);
+		alert("<?php print $pgv_lang['enter_email'];?>");
 		frm.user_email.focus();
 		return false;
 	}
 	if (frm.form_pass1.value!=frm.form_pass2.value) {
-		alert("<?php print $pgv_lang['password_mismatch'];?>);
+		alert("<?php print $pgv_lang['password_mismatch'];?>");
 		frm.form_pass1.focus();
 		return false;
 	}
 	if (frm.form_pass1.value.length > 0 && frm.form_pass1.value.length < 6) {
-		alert("<?php print $pgv_lang['passwordlength'];?>);
+		alert("<?php print $pgv_lang['passwordlength'];?>");
 		frm.form_pass1.focus();
 		return false;
 	}

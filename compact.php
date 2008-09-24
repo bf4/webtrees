@@ -42,6 +42,7 @@ $addname=$person->getAddName();
 
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
+require 'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
