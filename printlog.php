@@ -35,6 +35,8 @@ loadLangFile("pgv_confighelp");
 
 print_simple_header("Print logfile");
 
+$logfile=safe_GET('logfile');
+
 // Check for logtype
 if (!isset($logfile)) exit;
 if (substr($logfile,-4) != ".log") exit;
