@@ -37,7 +37,7 @@ loadLangFile("pgv_confighelp");
 
 if (!defined('PGV_FUNCTIONS_EDITLANG_PHP')) require 'includes/functions_editlang.php';
 
-$action                =safe_GET('action', PGV_REGEX_ALPHA, 'compare');
+$action                =safe_GET('action');
 $file_type             =safe_GET('file_type');
 $language1             =safe_GET('language1', array_keys($language_settings), 'english');
 $language2             =safe_GET('language2', array_keys($language_settings), $LANGUAGE);
