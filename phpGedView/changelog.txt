@@ -10,7 +10,9 @@
 
 
 Version 4.1.6
- - Added [ 1428937 ] autocompletion of fields like place of birth (opus27)
+ - Fix: [ 1791639 ] create_dates_table and SQL Server (fisharebest)
+ - Fix: [ 1928205 ] SVN 2778 V4.1.4 Errors with MS SQL (fisharebest)
+ - Added: [ 1428937 ] autocompletion of fields like place of birth (opus27)
  - Fixed: [ 2104235 ] Add Favorites refuses a long URL (fisharebest)
  - Fixed: IE script error message "wz_tooltip.js must be included INSIDE the body section...." (windmillway)
  - Added: 2nd generation fly-out menus for Details and Album Family Navigator (windmillway)

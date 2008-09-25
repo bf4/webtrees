@@ -440,162 +440,177 @@ function checkTableExists() {
 	}
 	if (!$has_users || !$has_gedcomid ||$DBTYPE == "mssql" && !$has_first_name ||
 			$sqlite && (!$has_email || !$has_sessiontime || !$has_contactmethod || !$has_visible || !$has_account || !$has_defaulttab || !$has_comment || !$has_sync_gedcom || !$has_first_name || !$has_relation_privacy || !$has_auto_accept)) {
-		$sql = "DROP TABLE ".$TBLPREFIX."users";
-		$res = dbquery($sql, false);
 
-		$sql = "CREATE TABLE ".$TBLPREFIX."users (u_username VARCHAR(30) NOT NULL, u_password VARCHAR(255), " .
-				"u_firstname VARCHAR(255), u_lastname VARCHAR(255), u_gedcomid TEXT, u_rootid TEXT, " .
-				"u_canadmin VARCHAR(2), u_canedit TEXT, u_email TEXT, u_verified VARCHAR(20), " .
-				"u_verified_by_admin VARCHAR(20), u_language VARCHAR(50), u_pwrequested VARCHAR(20), " .
-				"u_reg_timestamp VARCHAR(50), u_reg_hashcode VARCHAR(255), u_theme VARCHAR(50), u_loggedin VARCHAR(2), " .
-				"u_sessiontime INT, u_contactmethod VARCHAR(20), u_visibleonline VARCHAR(2), u_editaccount VARCHAR(2), " .
-				"u_defaulttab INT, u_comment VARCHAR(255), u_comment_exp VARCHAR(20), u_sync_gedcom VARCHAR(2), " .
-				"u_relationship_privacy VARCHAR(2), u_max_relation_path INT, u_auto_accept VARCHAR(2), PRIMARY KEY(u_username))";
-		/*
-		 * -- the following sql queries will revert the users table back to 3.x
-		alter table pgv_users drop column u_comment;
-		alter table pgv_users drop column u_comment_exp;
-		alter table pgv_users drop column u_sync_gedcom;
-		alter table pgv_users drop column u_relationship_privacy;
-		alter table pgv_users drop column u_max_relation_path;
-		alter table pgv_users drop column u_auto_accept;
-		alter table pgv_users add column u_fullname VARCHAR(255) after u_password;
-		update table pgv_users set u_fullname = concat(u_firstname," ",u_lastname);
-		alter table pgv_users drop column u_firstname;
-		alter table pgv_users drop column u_lastname;
-		 */
-		$res = dbquery($sql);
+		dbquery("DROP TABLE {$TBLPREFIX}users", false);
+		dbquery(
+			"CREATE TABLE {$TBLPREFIX}users (".
+			" u_username             VARCHAR(30) NOT NULL,".
+			" u_password             VARCHAR(255)    NULL,".
+			" u_firstname            VARCHAR(255)    NULL,".
+			" u_lastname             VARCHAR(255)    NULL,".
+			" u_gedcomid             TEXT            NULL,".
+			" u_rootid               TEXT            NULL,".
+			" u_canadmin             VARCHAR(2)      NULL,".
+			" u_canedit              TEXT            NULL,".
+			" u_email                TEXT            NULL,".
+			" u_verified             VARCHAR(20)     NULL,".
+			" u_verified_by_admin    VARCHAR(20)     NULL,".
+			" u_language             VARCHAR(50)     NULL,".
+			" u_pwrequested          VARCHAR(20)     NULL,".
+			" u_reg_timestamp        VARCHAR(50)     NULL,".
+			" u_reg_hashcode         VARCHAR(255)    NULL,".
+			" u_theme                VARCHAR(50)     NULL,".
+			" u_loggedin             VARCHAR(2)      NULL,".
+			" u_sessiontime          INT             NULL,".
+			" u_contactmethod        VARCHAR(20)     NULL,".
+			" u_visibleonline        VARCHAR(2)      NULL,".
+			" u_editaccount          VARCHAR(2)      NULL,".
+			" u_defaulttab           INT             NULL,".
+			" u_comment              VARCHAR(255)    NULL,".
+			" u_comment_exp          VARCHAR(20)     NULL,".
+			" u_sync_gedcom          VARCHAR(2)      NULL,".
+			" u_relationship_privacy VARCHAR(2)      NULL,".
+			" u_max_relation_path    INT             NULL,".
+			" u_auto_accept          VARCHAR(2)      NULL,".
+			" PRIMARY KEY (u_username)".
+			")"
+		);
 	} else {
 		if (!$has_email) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_email TEXT";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_verified VARCHAR(20)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_verified_by_admin VARCHAR(20)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_language VARCHAR(50)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_pwrequested VARCHAR(20)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_reg_timestamp VARCHAR(50)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_reg_hashcode VARCHAR(255)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_theme VARCHAR(50)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_loggedin VARCHAR(1)";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_email             TEXT         NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_verified          VARCHAR(20)  NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_verified_by_admin VARCHAR(20)  NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_language          VARCHAR(50)  NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_pwrequested       VARCHAR(20)  NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_reg_timestamp     VARCHAR(50)  NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_reg_hashcode      VARCHAR(255) NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_theme             VARCHAR(50)  NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_loggedin          VARCHAR(1)   NULL");
 		}
 		if (!$has_sessiontime) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_sessiontime INT";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_sessiontime INT NULL");
 		}
 		if (!$has_contactmethod) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_contactmethod VARCHAR(20)";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_contactmethod VARCHAR(20) NULL");
 		}
 		if (!$has_visible) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_visibleonline VARCHAR(2)";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_visibleonline VARCHAR(2) NULL");
 		}
 		if (!$has_account) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_editaccount VARCHAR(2)";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_editaccount VARCHAR(2) NULL");
 		}
 		if (!$has_defaulttab) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_defaulttab INT";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_defaulttab INT NULL");
 		}
 		if (!$has_comment) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_comment VARCHAR(255)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_comment_exp VARCHAR(20)";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_comment     VARCHAR(255) NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_comment_exp VARCHAR(20)  NULL");
 		}
 		if (!$has_sync_gedcom) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_sync_gedcom VARCHAR(2)";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_sync_gedcom VARCHAR(2) NULL");
 		}
 		if (!$has_first_name) {
-			//-- add new first and last name fields
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_firstname VARCHAR(255) AFTER u_fullname";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_lastname VARCHAR(255) AFTER u_firstname";
-			$pres = dbquery($sql);
-			//-- convert the old fullname to first and last names
-			$sql = "UPDATE ".$TBLPREFIX."users SET u_lastname=SUBSTRING_INDEX(u_fullname, ' ', -1), u_firstname=SUBSTRING_INDEX(u_fullname, ' ', 1)";
-			$pres = dbquery($sql);
-			//-- drop the old fullname field
-			$sql = "ALTER TABLE ".$TBLPREFIX."users DROP COLUMN u_fullname";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_firstname VARCHAR(255) NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_lastname  VARCHAR(255) NULL");
+			dbquery(
+				"UPDATE {$TBLPREFIX}users SET".
+				" u_lastname =SUBSTRING_INDEX(u_fullname, ' ', -1), ".
+				" u_firstname=SUBSTRING_INDEX(u_fullname, ' ', 1)"
+			);
+			dbquery("ALTER TABLE {$TBLPREFIX}users DROP COLUMN u_fullname");
 		}
 		if (!$has_relation_privacy) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_relationship_privacy VARCHAR(2)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_max_relation_path INT";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_relationship_privacy VARCHAR(2) NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_max_relation_path    INT        NULL");
 		}
 		if (!$has_auto_accept) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_auto_accept VARCHAR(2)";
-			$pres = dbquery($sql);
-			//-- set default for auto_accept to N
-			$sql = "UPDATE ".$TBLPREFIX."users SET u_auto_accept='N'";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_auto_accept VARCHAR(2) NULL");
+			dbquery("UPDATE {$TBLPREFIX}users SET u_auto_accept='N'");
 		}
 	}
 	if (!$has_messages) {
-		$sql = "DROP TABLE ".$TBLPREFIX."messages";
-		$res = dbquery($sql, false);
-		$sql = "CREATE TABLE ".$TBLPREFIX."messages (m_id INT NOT NULL, m_from VARCHAR(255), m_to VARCHAR(30), m_subject VARCHAR(255), m_body TEXT, m_created VARCHAR(255), PRIMARY KEY(m_id))";
-		$res = dbquery($sql);
-		$sql = "CREATE INDEX messages_to ON ".$TBLPREFIX."messages (m_to)";
-		$res = dbquery($sql);
+		$res = dbquery("DROP TABLE {$TBLPREFIX}messages", false);
+		dbquery(
+			"CREATE TABLE {$TBLPREFIX}messages (".
+			" m_id      INT          NOT NULL,".
+			" m_from    VARCHAR(255)     NULL,".
+			" m_to      VARCHAR(30)      NULL,".
+			" m_subject VARCHAR(255)     NULL,".
+			" m_body    TEXT             NULL,".
+			" m_created VARCHAR(255)     NULL,".
+			" PRIMARY KEY(m_id)".
+			")"
+		);
+		dbquery("CREATE INDEX messages_to ON {$TBLPREFIX}messages (m_to)");
 	}
 	if (!$has_favorites || $sqlite && (!$has_fav_note)) {
-		$sql = "DROP TABLE ".$TBLPREFIX."favorites";
-		$res = dbquery($sql, false);
-		$sql = "CREATE TABLE ".$TBLPREFIX."favorites (fv_id INT NOT NULL, fv_username VARCHAR(30), fv_gid VARCHAR(10), fv_type VARCHAR(10), fv_file VARCHAR(100), fv_url VARCHAR(255), fv_title VARCHAR(255), fv_note TEXT, PRIMARY KEY(fv_id))";
-		$res = dbquery($sql);
-		$sql = "CREATE INDEX favorites_username ON ".$TBLPREFIX."favorites (fv_username)";
-		$res = dbquery($sql);
+		dbquery("DROP TABLE {$TBLPREFIX}favorites", false);
+		dbquery(
+			"CREATE TABLE {$TBLPREFIX}favorites (".
+			" fv_id       INT         NOT NULL,".
+		 	" fv_username VARCHAR(30)     NULL,".
+			" fv_gid      VARCHAR(10)     NULL,".
+			" fv_type     VARCHAR(10)     NULL,".
+			" fv_file     VARCHAR(100)    NULL,".
+			" fv_url      VARCHAR(255)    NULL,".
+		 	" fv_title    VARCHAR(255)    NULL,".
+			" fv_note     TEXT,".
+			" PRIMARY KEY(fv_id)".
+			")"
+		);
+		dbquery("CREATE INDEX favorites_username ON {$TBLPREFIX}favorites (fv_username)");
 	} else {
 		if (!$has_fav_note) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD fv_url VARCHAR(255)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD fv_title VARCHAR(255)";
-			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD fv_note TEXT";
-			$pres = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}favorites ADD fv_url   VARCHAR(255) NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}favorites ADD fv_title VARCHAR(255) NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}favorites ADD fv_note  TEXT         NULL");
 		}
 	}
 	if (!$has_blocks || $sqlite && (!$has_blockconfig)) {
-		$sql = "DROP TABLE ".$TBLPREFIX."blocks";
-		$res = dbquery($sql, false);
-		$sql = "CREATE TABLE ".$TBLPREFIX."blocks (b_id INT NOT NULL, b_username VARCHAR(100), b_location VARCHAR(30), b_order INT, b_name VARCHAR(255), b_config TEXT, PRIMARY KEY(b_id))";
-		$res = dbquery($sql);
-		$sql = "CREATE INDEX blocks_username ON ".$TBLPREFIX."blocks (b_username)";
-		$res = dbquery($sql);
+		dbquery("DROP TABLE {$TBLPREFIX}blocks", false);
+		dbquery(
+			"CREATE TABLE {$TBLPREFIX}blocks (".
+			" b_id       INT          NOT NULL,".
+			" b_username VARCHAR(100)     NULL,".
+			" b_location VARCHAR(30)      NULL,".
+		 	" b_order    INT              NULL,".
+			" b_name     VARCHAR(255)     NULL,".
+			" b_config   TEXT             NULL,".
+			" PRIMARY KEY(b_id)".
+			")"
+		);
+		dbquery("CREATE INDEX blocks_username ON {$TBLPREFIX}blocks (b_username)");
 	} else {
 		if (!$has_blockconfig) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."blocks ADD b_config TEXT";
-			$res = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}blocks ADD b_config TEXT NOT NULL");
 		}
 	}
 	if (!$has_news) {
-		$sql = "DROP TABLE ".$TBLPREFIX."news";
-		$res = dbquery($sql, false);
-		$sql = "CREATE TABLE ".$TBLPREFIX."news (n_id INT NOT NULL, n_username VARCHAR(100), n_date INT, n_title VARCHAR(255), n_text TEXT, PRIMARY KEY(n_id))";
-		$res = dbquery($sql);
-		$sql = "CREATE INDEX news_username ON ".$TBLPREFIX."news (n_username)";
-		$res = dbquery($sql);
+		dbquery("DROP TABLE {$TBLPREFIX}news", false);
+		dbquery(
+			"CREATE TABLE {$TBLPREFIX}news (".
+			" n_id       INT          NOT NULL,".
+			" n_username VARCHAR(100)     NULL,".
+			" n_date     INT              NULL,".
+			" n_title    VARCHAR(255)     NULL,".
+			" n_text     TEXT             NULL,".
+			" PRIMARY KEY(n_id)".
+			")"
+		);
+		dbquery("CREATE INDEX news_username ON {$TBLPREFIX}news (n_username)");
 	}
 	if (!$has_mutex) {
-		$sql = "DROP TABLE ".$TBLPREFIX."mutex";
-		$res = dbquery($sql, false);
-		$sql = "create table ".$TBLPREFIX."mutex (mx_id INT NOT NULL, mx_name VARCHAR(255), mx_thread VARCHAR(255), mx_time INT, PRIMARY KEY (mx_id))";
-		$res = dbquery($sql);
-		$sql = "CREATE INDEX mutex_name ON ".$TBLPREFIX."mutex (mx_name)";
-		$res = dbquery($sql);
+		dbquery("DROP TABLE {$TBLPREFIX}mutex", false);
+		dbquery(
+			"CREATE TABLE {$TBLPREFIX}mutex (".
+			" mx_id     INT          NOT NULL,".
+			" mx_name   VARCHAR(255)     NULL,".
+		 	" mx_thread VARCHAR(255)     NULL,".
+			" mx_time   INT              NULL,".
+			" PRIMARY KEY (mx_id)".
+			")"
+		);
+		dbquery("CREATE INDEX mutex_name ON {$TBLPREFIX}mutex (mx_name)");
 	}
 	return true;
 }
@@ -846,7 +861,7 @@ function addMessage($message) {
 		$message["created"] = gmdate ("M d Y H:i:s");
 	if ($PGV_STORE_MESSAGES && ($message["method"]!="messaging3" && $message["method"]!="mailto" && $message["method"]!="none")) {
 		$newid = get_next_id("messages", "m_id");
-		$sql = "INSERT INTO ".$TBLPREFIX."messages VALUES ($newid, '".$DBCONN->escapeSimple($message["from"])."','".$DBCONN->escapeSimple($message["to"])."','".$DBCONN->escapeSimple($message["subject"])."','".$DBCONN->escapeSimple($message["body"])."','".$DBCONN->escapeSimple($message["created"])."')";
+		$sql = "INSERT INTO {$TBLPREFIX}messages VALUES ($newid, '".$DBCONN->escapeSimple($message["from"])."','".$DBCONN->escapeSimple($message["to"])."','".$DBCONN->escapeSimple($message["subject"])."','".$DBCONN->escapeSimple($message["body"])."','".$DBCONN->escapeSimple($message["created"])."')";
 		$res = dbquery($sql);
 
 	}
@@ -887,7 +902,7 @@ function addMessage($message) {
 function deleteMessage($message_id) {
 	global $TBLPREFIX;
 
-	$sql = "DELETE FROM ".$TBLPREFIX."messages WHERE m_id=".$message_id;
+	$sql = "DELETE FROM {$TBLPREFIX}messages WHERE m_id=".$message_id;
 	$res = dbquery($sql);
 
 	if ($res)
@@ -902,7 +917,7 @@ function getUserMessages($username) {
 	global $TBLPREFIX;
 
 	$messages = array();
-	$sql = "SELECT * FROM ".$TBLPREFIX."messages WHERE m_to='$username' ORDER BY m_id DESC";
+	$sql = "SELECT * FROM {$TBLPREFIX}messages WHERE m_to='$username' ORDER BY m_id DESC";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -931,7 +946,7 @@ function addFavorite($favorite) {
 		return false;
 
 	//-- make sure this is not a duplicate entry
-	$sql = "SELECT * FROM ".$TBLPREFIX."favorites WHERE ";
+	$sql = "SELECT * FROM {$TBLPREFIX}favorites WHERE ";
 	if (!empty($favorite["gid"]))
 		$sql .= "fv_gid='".$DBCONN->escapeSimple($favorite["gid"])."' ";
 	if (!empty($favorite["url"]))
@@ -945,7 +960,7 @@ function addFavorite($favorite) {
 	$newid = get_next_id("favorites", "fv_id");
 
 	//-- add the favorite to the database
-	$sql = "INSERT INTO ".$TBLPREFIX."favorites VALUES ($newid, '".$DBCONN->escapeSimple($favorite["username"])."'," .
+	$sql = "INSERT INTO {$TBLPREFIX}favorites VALUES ($newid, '".$DBCONN->escapeSimple($favorite["username"])."'," .
 			"'".$DBCONN->escapeSimple($favorite["gid"])."','".$DBCONN->escapeSimple($favorite["type"])."'," .
 			"'".$DBCONN->escapeSimple($favorite["file"])."'," .
 			"'".$DBCONN->escapeSimple($favorite["url"])."'," .
@@ -967,7 +982,7 @@ function addFavorite($favorite) {
 function deleteFavorite($fv_id) {
 	global $TBLPREFIX;
 
-	$sql = "DELETE FROM ".$TBLPREFIX."favorites WHERE fv_id=".$fv_id;
+	$sql = "DELETE FROM {$TBLPREFIX}favorites WHERE fv_id=".$fv_id;
 	$res = dbquery($sql);
 
 	if ($res)
@@ -989,7 +1004,7 @@ function getUserFavorites($username) {
 	if (!$CONFIGURED || DB::isError($DBCONN))
 		return $favorites;
 
-	$sql = "SELECT * FROM ".$TBLPREFIX."favorites WHERE fv_username='".$DBCONN->escapeSimple($username)."'";
+	$sql = "SELECT * FROM {$TBLPREFIX}favorites WHERE fv_username='".$DBCONN->escapeSimple($username)."'";
 	$res = dbquery($sql);
 
 	if (DB::isError($res))
@@ -1028,7 +1043,7 @@ function getBlocks($username) {
 	$blocks = array();
 	$blocks["main"] = array();
 	$blocks["right"] = array();
-	$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' ORDER BY b_location, b_order";
+	$sql = "SELECT * FROM {$TBLPREFIX}blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' ORDER BY b_location, b_order";
 	$res = dbquery($sql);
 	if (DB::isError($res))
 		return $blocks;
@@ -1049,7 +1064,7 @@ function getBlocks($username) {
 	} else {
 		if (get_user_id($username)) {
 			//-- if no blocks found, check for a default block setting
-			$sql = "SELECT * FROM ".$TBLPREFIX."blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
+			$sql = "SELECT * FROM {$TBLPREFIX}blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
 			$res2 = dbquery($sql);
 			if (DB::isError($res2))
 				return $blocks;
@@ -1081,29 +1096,29 @@ function getBlocks($username) {
 function setBlocks($username, $ublocks, $setdefault=false) {
 	global $TBLPREFIX, $DBCONN;
 
-	$sql = "DELETE FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' AND b_name!='faq'";
+	$sql = "DELETE FROM {$TBLPREFIX}blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' AND b_name!='faq'";
 	$res = dbquery($sql);
 
 	foreach($ublocks["main"] as $order=>$block) {
 		$newid = get_next_id("blocks", "b_id");
-		$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES ($newid, '".$DBCONN->escapeSimple($username)."', 'main', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
+		$sql = "INSERT INTO {$TBLPREFIX}blocks VALUES ($newid, '".$DBCONN->escapeSimple($username)."', 'main', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
 		$res = dbquery($sql);
 
 		if ($setdefault) {
 			$newid = get_next_id("blocks", "b_id");
-			$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES ($newid, 'defaultuser', 'main', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
+			$sql = "INSERT INTO {$TBLPREFIX}blocks VALUES ($newid, 'defaultuser', 'main', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
 			$res = dbquery($sql);
 
 		}
 	}
 	foreach($ublocks["right"] as $order=>$block) {
 		$newid = get_next_id("blocks", "b_id");
-		$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES ($newid, '".$DBCONN->escapeSimple($username)."', 'right', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
+		$sql = "INSERT INTO {$TBLPREFIX}blocks VALUES ($newid, '".$DBCONN->escapeSimple($username)."', 'right', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
 		$res = dbquery($sql);
 
 		if ($setdefault) {
 			$newid = get_next_id("blocks", "b_id");
-			$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES ($newid, 'defaultuser', 'right', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
+			$sql = "INSERT INTO {$TBLPREFIX}blocks VALUES ($newid, 'defaultuser', 'right', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
 			$res = dbquery($sql);
 
 		}
@@ -1128,18 +1143,18 @@ function addNews($news) {
 	if (!empty($news["id"])) {
 		// In case news items are added from usermigrate, it will also contain an ID.
 		// So we check first if the ID exists in the database. If not, insert instead of update.
-		$sql = "SELECT * FROM ".$TBLPREFIX."news where n_id=".$news["id"];
+		$sql = "SELECT * FROM {$TBLPREFIX}news where n_id=".$news["id"];
 		$res = dbquery($sql);
 
 		if ($res->numRows() == 0) {
-			$sql = "INSERT INTO ".$TBLPREFIX."news VALUES (".$news["id"].", '".$DBCONN->escapeSimple($news["username"])."','".$DBCONN->escapeSimple($news["date"])."','".$DBCONN->escapeSimple($news["title"])."','".$DBCONN->escapeSimple($news["text"])."')";
+			$sql = "INSERT INTO {$TBLPREFIX}news VALUES (".$news["id"].", '".$DBCONN->escapeSimple($news["username"])."','".$DBCONN->escapeSimple($news["date"])."','".$DBCONN->escapeSimple($news["title"])."','".$DBCONN->escapeSimple($news["text"])."')";
 		} else {
-			$sql = "UPDATE ".$TBLPREFIX."news SET n_date='".$DBCONN->escapeSimple($news["date"])."', n_title='".$DBCONN->escapeSimple($news["title"])."', n_text='".$DBCONN->escapeSimple($news["text"])."' WHERE n_id=".$news["id"];
+			$sql = "UPDATE {$TBLPREFIX}news SET n_date='".$DBCONN->escapeSimple($news["date"])."', n_title='".$DBCONN->escapeSimple($news["title"])."', n_text='".$DBCONN->escapeSimple($news["text"])."' WHERE n_id=".$news["id"];
 		}
 		$res->free();
 	} else {
 		$newid = get_next_id("news", "n_id");
-		$sql = "INSERT INTO ".$TBLPREFIX."news VALUES ($newid, '".$DBCONN->escapeSimple($news["username"])."','".$DBCONN->escapeSimple($news["date"])."','".$DBCONN->escapeSimple($news["title"])."','".$DBCONN->escapeSimple($news["text"])."')";
+		$sql = "INSERT INTO {$TBLPREFIX}news VALUES ($newid, '".$DBCONN->escapeSimple($news["username"])."','".$DBCONN->escapeSimple($news["date"])."','".$DBCONN->escapeSimple($news["title"])."','".$DBCONN->escapeSimple($news["text"])."')";
 	}
 	$res = dbquery($sql);
 
@@ -1158,7 +1173,7 @@ function addNews($news) {
 function deleteNews($news_id) {
 	global $TBLPREFIX;
 
-	$sql = "DELETE FROM ".$TBLPREFIX."news WHERE n_id=".$news_id;
+	$sql = "DELETE FROM {$TBLPREFIX}news WHERE n_id=".$news_id;
 	$res = dbquery($sql);
 
 	if ($res)
@@ -1176,7 +1191,7 @@ function getUserNews($username) {
 	global $TBLPREFIX, $DBCONN;
 
 	$news = array();
-	$sql = "SELECT * FROM ".$TBLPREFIX."news WHERE n_username='".$DBCONN->escapeSimple($username)."' ORDER BY n_date DESC";
+	$sql = "SELECT * FROM {$TBLPREFIX}news WHERE n_username='".$DBCONN->escapeSimple($username)."' ORDER BY n_date DESC";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -1203,7 +1218,7 @@ function getNewsItem($news_id) {
 	global $TBLPREFIX;
 
 	$news = array();
-	$sql = "SELECT * FROM ".$TBLPREFIX."news WHERE n_id='$news_id'";
+	$sql = "SELECT * FROM {$TBLPREFIX}news WHERE n_id='$news_id'";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
