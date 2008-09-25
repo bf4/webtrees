@@ -34,7 +34,6 @@ if (!PGV_USER_CAN_EDIT) {
 
 
 //-- args
-//phpinfo(32);exit;
 $FILTER = @$_GET["q"];
 $OPTION = @$_GET["option"];
 $field = @$_GET["field"];
@@ -44,12 +43,11 @@ if (!function_exists("autocomplete_{$field}"))
 //-- database query
 eval("\$data = autocomplete_".$field."();");
 if (empty($data))
-	die("|");
+	die();
 
 //-- sort
 $data = array_unique($data);
 uasort($data, "stringsort");
-//print_r($data);
 
 //-- output
 foreach ($data as $k=>$v)
