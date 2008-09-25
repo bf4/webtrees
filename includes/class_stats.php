@@ -848,7 +848,7 @@ class stats {
 			default:
 			case 'full':
 				if (displayDetailsById($row['d_gid'])) {
-					$result=$person->format_list('span');
+					$result=$person->format_list('span', false, $person->getListName());
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
@@ -950,7 +950,7 @@ class stats {
 			default:
 			case 'full':
 				if (displayDetailsById($row['id'])) {
-					$result=$person->format_list('span');
+					$result=$person->format_list('span', false, $person->getListName());
 				} else {
 					$result= $pgv_lang['privacy_error'];
 				}
@@ -1162,7 +1162,7 @@ class stats {
 			default:
 			case 'full':
 				if ($record->canDisplayDetails()) {
-					$result=$record->format_list('span');
+					$result=$record->format_list('span', false, $record->getListName());
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
@@ -1347,7 +1347,7 @@ class stats {
 			case 'full':
 				if ($family->canDisplayDetails())
 				{
-					$result=$family->format_list('span');
+					$result=$family->format_list('span', false, $family->getListName());
 				} else {
 					$result = $pgv_lang['privacy_error'];
 				}
