@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ $factarray["ADR2"] 	= "Adres 2";
 $factarray["ADOP"] 	= "Adopcja";
 $factarray["AFN"] 	= "Numer pliku genealogicznego (AFN)";
 $factarray["AGE"] 	= "W wieku";
-$factarray["AGNC"] 	= "Agencja";
+$factarray["AGNC"] 	= "Instytucja";
 $factarray["ALIA"] 	= "Znany(a) także jako";
 $factarray["ANCE"] 	= "Przodkowie";
 $factarray["ANCI"] 	= "Udział przodków";

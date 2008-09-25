@@ -473,6 +473,14 @@ function print_fact(&$eventObj, $noedit=false) {
 				for($i=0; $i<$ct; $i++) {
 					$factref = $match[$i][1];
 					if (!in_array($factref, $special_facts)) {
+						if ($factref=="AGNC") {
+							// Allow special processing for different languages
+							$func="fact_AGNC_localisation_{$lang_short_cut[$LANGUAGE]}";
+							if (function_exists($func)) {
+								// Localise the AGNC fact
+								$func($factref, $fact);
+							}
+						}
 						if (isset($factarray[$factref])) $label = $factarray[$factref];
 						else $label = $factref;
 						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif"))
