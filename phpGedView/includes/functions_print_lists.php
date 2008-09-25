@@ -507,7 +507,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	//-- table body
 	echo "<tbody>\n";
 	$hidden = 0;
-	$n = 0;
+	$num = 0;
 	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	foreach($datalist as $key => $value) {
 		if (is_object($value)) { // Array of objects
@@ -535,7 +535,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($option=="MARR_PLAC" && strstr($family->getMarriagePlace(), $filter)===false) continue;
 		//-- Counter
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$num."</td>";
 		//-- Family ID
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$family->getXrefLink("_blank").'</td>';
@@ -641,8 +641,8 @@ function print_fam_table($datalist, $legend="", $option="") {
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		if ($marriage_dates=$family->getAllMarriageDates()) {
-			foreach ($marriage_dates as $num=>$marriage_date) {
-				if ($num) {
+			foreach ($marriage_dates as $n=>$marriage_date) {
+				if ($n) {
 					echo '<div>', $marriage_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else if ($marriage_date->MinJD()!=0) {
 					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
@@ -754,7 +754,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<td class=\"list_label\">"; // HUSB:NAME
 	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
-	echo $pgv_lang["total_fams"]." : ".$n;
+	echo $pgv_lang["total_fams"]." : ".$num;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	echo "<td style=\"display:none\">HUSB:GIVN</td>";
