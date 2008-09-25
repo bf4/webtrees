@@ -195,6 +195,22 @@ function fact_AKA_localisation_pl(&$fact, &$pid) {
 		else if ($sex == "F") $factarray[$fact] = "Znana także jako"; // kobieta
 	}
 }
+///////////////////////////////////////////////////////////////////////////////////////////
+// Localise the AGNC fact. Lokalizacja faktu AGNC.
+///////////////////////////////////////////////////////////////////////////////////////////
+function fact_AGNC_localisation_pl($fact, $main_fact) {
+	global $factarray;
+
+	if ($main_fact == "EDUC") {
+		$factarray[$fact] = "Szkoła/uczelnia";
+	}
+	else if ($main_fact == "OCCU") {
+		$factarray[$fact] = "Miejsce pracy";
+	}
+	else if ($main_fact == "ORDN") {
+		$factarray[$fact] = "Seminarium duchowne";
+	}
+}
 ////////////////////////////////////////////////////////////////////////////////
 // Localise the close relatives facts. Lokalizacja faktów dotyczących bliskich
 ////////////////////////////////////////////////////////////////////////////////

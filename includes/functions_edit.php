@@ -1013,7 +1013,7 @@ function print_addnewsource_link($element_id) {
  */
 function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="", $rowDisplay=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
-	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
+	global $assorela, $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
@@ -1085,7 +1085,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($upperlevel) $element_name=$upperlevel."_".$fact; // ex: BIRT_DATE | DEAT_DATE | ...
 		else $element_name=$fact; // ex: OCCU
 	} else $element_name="text[]";
-
+	if ($level==1) $main_fact=$fact;
+	
 	// element id : used by javascript functions
 	if ($level==0) $element_id=$fact; // ex: NPFX | GIVN ...
 	else $element_id=$fact.floor(microtime()*1000000); // ex: SOUR56402
@@ -1155,6 +1156,14 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if (function_exists($func)) {
 			// Localise the AKA fact
 			$func($fact, $pid);
+		}
+	}
+	else if ($fact=="AGNC" && !empty($main_fact)) {
+		// Allow special processing for different languages
+		$func="fact_AGNC_localisation_{$lang_short_cut[$LANGUAGE]}";
+		if (function_exists($func)) {
+			// Localise the AGNC fact
+			$func($fact, $main_fact);
 		}
 	}
 	if ($GLOBALS["DEBUG"]) print $element_name."<br />\n";
