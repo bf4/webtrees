@@ -47,16 +47,15 @@ $REGEXP_DB = (stristr($DBTYPE,'mysql') !== false || $DBTYPE=='pgsql');
  */
 switch ($DBTYPE) {
 case 'mssql':
-	define('DB_INT1_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT2_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT3_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT4_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT8_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_CHAR_TYPE',     'VARCHAR'); // TODO - determine appropriate value for this DB
-	define('DB_VARCHAR_TYPE',  'VARCHAR'); // TODO - determine appropriate value for this DB
-	define('DB_UNSIGNED',      '');        // TODO - determine appropriate value for this DB
-	define('DB_ASCII',         '');        // TODO - determine appropriate value for this DB
-	define('DB_UTF8',          '');        // TODO - determine appropriate value for this DB
+	define('DB_AUTO_ID_TYPE',  'INTEGER IDENTITY');
+	define('DB_INT1_TYPE',     'INTEGER');
+	define('DB_INT2_TYPE',     'INTEGER');
+	define('DB_INT3_TYPE',     'INTEGER');
+	define('DB_INT4_TYPE',     'INTEGER');
+	define('DB_INT8_TYPE',     'INTEGER');
+	define('DB_CHAR_TYPE',     'VARCHAR');
+	define('DB_VARCHAR_TYPE',  'VARCHAR');
+	define('DB_UNSIGNED',      '');
 	define('DB_LIKE',          'LIKE');
 	define('DB_RANDOM',        'NEWID');
 	define('DB_TEXT_TYPE',     'TEXT');
@@ -65,16 +64,15 @@ case 'mssql':
 	define('DB_COMMIT_TRANS',  'COMMIT TRANSACTION');
 	break;
 case 'sqlite':
-	define('DB_INT1_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT2_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT3_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT4_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT8_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_CHAR_TYPE',     'VARCHAR'); // TODO - determine appropriate value for this DB
-	define('DB_VARCHAR_TYPE',  'VARCHAR'); // TODO - determine appropriate value for this DB
-	define('DB_UNSIGNED',      '');        // TODO - determine appropriate value for this DB
-	define('DB_ASCII',         '');        // TODO - determine appropriate value for this DB
-	define('DB_UTF8',          '');        // TODO - determine appropriate value for this DB
+	define('DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
+	define('DB_INT1_TYPE',     'INTEGER');
+	define('DB_INT2_TYPE',     'INTEGER');
+	define('DB_INT3_TYPE',     'INTEGER');
+	define('DB_INT4_TYPE',     'INTEGER');
+	define('DB_INT8_TYPE',     'INTEGER');
+	define('DB_CHAR_TYPE',     'VARCHAR');
+	define('DB_VARCHAR_TYPE',  'VARCHAR');
+	define('DB_UNSIGNED',      '');
 	define('DB_LIKE',          'LIKE');
 	define('DB_RANDOM',        'RANDOM');
 	define('DB_TEXT_TYPE',     'TEXT');
@@ -83,16 +81,15 @@ case 'sqlite':
 	define('DB_COMMIT_TRANS',  'COMMIT');
 	break;
 case 'pgsql':
-	define('DB_INT1_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT2_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT3_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT4_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_INT8_TYPE',     'INT');     // TODO - determine appropriate value for this DB
-	define('DB_CHAR_TYPE',     'VARCHAR'); // TODO - determine appropriate value for this DB
-	define('DB_VARCHAR_TYPE',  'VARCHAR'); // TODO - determine appropriate value for this DB
+	define('DB_AUTO_ID_TYPE',  'SERIAL');
+	define('DB_INT1_TYPE',     'SMALLINT');
+	define('DB_INT2_TYPE',     'SMALLINT');
+	define('DB_INT3_TYPE',     'INTEGER');
+	define('DB_INT4_TYPE',     'INTEGER');
+	define('DB_INT8_TYPE',     'BIGINT');
+	define('DB_CHAR_TYPE',     'CHAR');
+	define('DB_VARCHAR_TYPE',  'VARCHAR');
 	define('DB_UNSIGNED',      '');
-	define('DB_ASCII',         '');        // TODO - determine appropriate value for this DB
-	define('DB_UTF8',          '');        // TODO - determine appropriate value for this DB
 	define('DB_LIKE',          'ILIKE');
 	define('DB_RANDOM',        'RANDOM');
 	define('DB_TEXT_TYPE',     'TEXT');
@@ -102,6 +99,7 @@ case 'pgsql':
 	break;
 case 'mysql':
 default:
+	define('DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');
 	define('DB_INT1_TYPE',     'TINYINT');
 	define('DB_INT2_TYPE',     'SMALLINT');
 	define('DB_INT3_TYPE',     'MEDIUMINT');
@@ -116,14 +114,12 @@ default:
 	define('DB_LONGTEXT_TYPE', 'LONGTEXT');
 	define('DB_BEGIN_TRANS',   'BEGIN');
 	define('DB_COMMIT_TRANS',  'COMMIT');
-	define('DB_ASCII',         'CHARACTER SET ascii');
-	define('DB_UTF8',          'CHARACTER SET utf8');
 	break;
 }
 
 // Define some "standard" columns, so we create our tables consistently
 define('PGV_DB_COL_FILE', DB_INT2_TYPE.' '.DB_UNSIGNED);
-define('PGV_DB_COL_XREF', DB_VARCHAR_TYPE.'(63) '.DB_ASCII);
+define('PGV_DB_COL_XREF', DB_VARCHAR_TYPE.'(63)');
 
 //-- uncomment the following line to turn on sql query logging
 //$SQL_LOG = true;
@@ -2655,7 +2651,7 @@ function get_list_size($list, $filter="") {
 			$sql = "SELECT count(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile=".PGV_GED_ID;
 			if ($filter)
 				$sql .= " AND m_gedrec $term '$filter'";
-			$res = dbquery($sql);
+			$res = dbquery($sql, false);
 			//-- prevent failure if DB tables are lost
 			if (DB::isError($res)) return 0;
 			$row =& $res->fetchRow();

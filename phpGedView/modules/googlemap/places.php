@@ -45,18 +45,24 @@ if (!isset($display)) $display="";
 // Create GM tables, if not already present
 $tables = $DBCONN->getListOf('tables');
 if (!in_array($TBLPREFIX."placelocation", $tables)) {
-	$sql = "CREATE TABLE ".$TBLPREFIX."placelocation (pl_id int NOT NULL, pl_parent_id int default NULL, pl_level int default NULL, pl_place varchar(255) default NULL, pl_long varchar(30) default NULL, pl_lati varchar(30) default NULL, pl_zoom int default NULL, pl_icon varchar(255) default NULL, PRIMARY KEY (pl_id));";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX pl_level ON ".$TBLPREFIX."placelocation (pl_level)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX pl_long ON ".$TBLPREFIX."placelocation (pl_long)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX pl_lati ON ".$TBLPREFIX."placelocation (pl_lati)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX pl_name ON ".$TBLPREFIX."placelocation (pl_place)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX pl_parent_id ON ".$TBLPREFIX."placelocation (pl_parent_id)";
-	$res = dbquery($sql);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}placelocation (".
+		" pl_id        INT          NOT NULL,".
+		" pl_parent_id INT              NULL,".
+		" pl_level     INT              NULL,".
+		" pl_place     VARCHAR(255)     NULL,".
+		" pl_long      VARCHAR(30)      NULL,".
+		" pl_lati      VARCHAR(30)      NULL,".
+		" pl_zoom      INT              NULL,".
+		" pl_icon      VARCHAR(255)     NULL,".
+		" PRIMARY KEY (pl_id)".
+		")"
+	);
+	dbquery("CREATE INDEX {$TBLPREFIX}pl_level     ON {$TBLPREFIX}placelocation (pl_level    )");
+	dbquery("CREATE INDEX {$TBLPREFIX}p            ON {$TBLPREFIX}placelocation (pl_long     )");
+	dbquery("CREATE INDEX {$TBLPREFIX}pl_lati      ON {$TBLPREFIX}placelocation (pl_lati     )");
+	dbquery("CREATE INDEX {$TBLPREFIX}pl_name      ON {$TBLPREFIX}placelocation (pl_place    )");
+	dbquery("CREATE INDEX {$TBLPREFIX}pl_parent_id ON {$TBLPREFIX}placelocation (pl_parent_id)");
 	$tables = $DBCONN->getListOf('tables');
 	if (!in_array($TBLPREFIX."placelocation", $tables)) {
 		echo "<table class=\"facts_table\">\n";
@@ -66,10 +72,6 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
 		print_footer();
 		exit;
 	}
-	echo "<table class=\"facts_table\">\n";
-	echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_table_created"];
-	echo "</td></tr></table>\n";
-	echo "<br /><br /><br />\n";
 }
 
 // Take a place id and find its place in the hierarchy
