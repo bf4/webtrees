@@ -28,21 +28,22 @@ require './config.php';
 
 require_once 'includes/functions_print_lists.php';
 
-if (!isset($type)) $type = "indi";
-if (!isset($filter)) $filter="";
-else $filter = trim($filter);
-if (!isset($callback)) $callback="paste_id";
+$type          =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
+$filter        =safe_GET('filter');
+$action        =safe_GET('action');
+$callback      =safe_GET('filter', PGV_REGEX_NOSCRIPT, 'paste_id');
+$create        =safe_GET('create');
+$media         =safe_GET('media');
+$external_links=safe_GET('external_links');
+$directory     =safe_GET('directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
+$multiple      =safe_GET_bool('multiple');
+$showthumb     =safe_GET_bool('showthumb');
+$all           =safe_GET_bool('all');
+$choose=safe_GET('choose', PGV_REGEX_NOSCRIPT, '0all');
 
-// Variables for find media
-if (!isset($create)) $create="";
-if (!isset($media)) $media="";
-if (!isset($external_links)) $external_links = "";
-if (!isset($directory)) $directory = $MEDIA_DIRECTORY;
-if (!isset($multiple)) $multiple = false;
-if (!isset($showthumb)) $showthumb = true;
 $thumbget = "";
 if ($showthumb) {$thumbget = "&showthumb=true";}
-if (!isset($choose)) $choose = "0all";
+
 $embed = substr($choose,0,1)=="1";
 $chooseType = substr($choose,1);
 if ($chooseType!="media" && $chooseType!="file") $chooseType = "all";
@@ -52,7 +53,7 @@ if ($chooseType!="media" && $chooseType!="file") $chooseType = "all";
 $srch = "/".addcslashes($MEDIA_DIRECTORY,'/.')."/";
 $repl = addcslashes($MEDIA_DIRECTORY."thumbs/",'/.');
 $thumbdir = stripcslashes(preg_replace($srch, $repl, $directory));
-if (!isset($level)) $level=0;
+$level=safe_GET('level', PGV_REGEX_INTEGER, 0);
 
 //-- prevent script from accessing an area outside of the media directory
 //-- and keep level consistency
@@ -66,12 +67,14 @@ if (($level < 0) || ($level > $MEDIA_DIRECTORY_LEVELS)){
 // End variables for find media
 
 // Variables for Find Special Character
-if (!isset($language_filter)) $language_filter="";
+$language_filter=safe_GET('language_filter');
+
 if (empty($language_filter)) {
 	if (!empty($_SESSION["language_filter"])) $language_filter = $_SESSION["language_filter"];
 	else $language_filter=$lang_short_cut[$LANGUAGE];
 }
-if (!isset($magnify)) $magnify=false;
+$magnify=safe_GET_bool('magnify');
+
 require 'includes/specialchars.php';
 
 // End variables for Find Special Character
@@ -203,7 +206,7 @@ switch ($type) {
 	// Show indi and hide the rest
 	if ($type == "indi") {
 		print "<div align=\"center\">";
-		print "<form name=\"filterindi\" method=\"post\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+		print "<form name=\"filterindi\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
 		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
 		print "<input type=\"hidden\" name=\"type\" value=\"indi\" />";
@@ -211,7 +214,7 @@ switch ($type) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 		print $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if (isset($filter)) print $filter;
+		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
@@ -223,7 +226,7 @@ switch ($type) {
 	// Show fam and hide the rest
 	if ($type == "fam") {
 		print "<div align=\"center\">";
-		print "<form name=\"filterfam\" method=\"post\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+		print "<form name=\"filterfam\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
 		print "<input type=\"hidden\" name=\"type\" value=\"fam\" />";
 		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
@@ -231,7 +234,7 @@ switch ($type) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 		print $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if (isset($filter)) print $filter;
+		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
@@ -243,7 +246,7 @@ switch ($type) {
 	// Show media and hide the rest
 	if ($type == "media" && $MULTI_MEDIA) {
 		print "<div align=\"center\">";
-		print "<form name=\"filtermedia\" method=\"post\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+		print "<form name=\"filtermedia\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"choose\" value=\"".$choose."\" />";
 		print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
 		print "<input type=\"hidden\" name=\"thumbdir\" value=\"".$thumbdir."\" />";
@@ -255,7 +258,7 @@ switch ($type) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 		print $pgv_lang["media_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if (isset($filter)) print $filter;
+		if ($filter) print $filter;
 		print "\" />";
 		print_help_link("simple_filter_help","qm");
 		print "</td></tr>";
@@ -275,7 +278,7 @@ switch ($type) {
 	// Show place and hide the rest
 	if ($type == "place") {
 		print "<div align=\"center\">";
-		print "<form name=\"filterplace\" method=\"post\"  onsubmit=\"return checknames(this);\" action=\"find.php\">";
+		print "<form name=\"filterplace\" method=\"get\"  onsubmit=\"return checknames(this);\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
 		print "<input type=\"hidden\" name=\"type\" value=\"place\" />";
 		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
@@ -283,7 +286,7 @@ switch ($type) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 		print $pgv_lang["place_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if (isset($filter)) print $filter;
+		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
@@ -296,7 +299,7 @@ switch ($type) {
 	// Show repo and hide the rest
 	if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 		print "<div align=\"center\">";
-		print "<form name=\"filterrepo\" method=\"post\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+		print "<form name=\"filterrepo\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
 		print "<input type=\"hidden\" name=\"type\" value=\"repo\" />";
 		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
@@ -304,7 +307,7 @@ switch ($type) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 		print $pgv_lang["repo_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if (isset($filter)) print $filter;
+		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
@@ -317,7 +320,7 @@ switch ($type) {
 	// Show source and hide the rest
 	if ($type == "source" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 		print "<div align=\"center\">";
-		print "<form name=\"filtersource\" method=\"post\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+		print "<form name=\"filtersource\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
 		print "<input type=\"hidden\" name=\"type\" value=\"source\" />";
 		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
@@ -325,7 +328,7 @@ switch ($type) {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 		print $pgv_lang["source_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if (isset($filter)) print $filter;
+		if ($filter) print $filter;
 		print "\" />";
 		print "</td></tr>";
 		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
@@ -338,7 +341,7 @@ switch ($type) {
 	// Show specialchar and hide the rest
 	if ($type == "specialchar") {
 		print "<div align=\"center\">";
-		print "<form name=\"filterspecialchar\" method=\"post\" action=\"find.php\">";
+		print "<form name=\"filterspecialchar\" method=\"get\" action=\"find.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
 		print "<input type=\"hidden\" name=\"type\" value=\"specialchar\" />";
 		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
@@ -657,7 +660,7 @@ if ($action=="filter") {
 	if ($type == "place") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
 		$placelist = array();
-		if ( isset($all) || !empty($filter) )
+		if ($all || $filter)
 		{
 			find_place_list($filter);
 			uasort($placelist, "stringsort");
@@ -715,7 +718,7 @@ if ($action=="filter") {
 	// Output Sources
 	if ($type == "source") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>\n\t\t<td class=\"list_value\"><tr>";
-		if (!isset($filter) || !$filter) $mysourcelist = get_source_list();
+		if (!$filter) $mysourcelist = get_source_list();
 		else $mysourcelist = search_sources($filter);
 		uasort($mysourcelist, "itemsort");
 		$cts=count($mysourcelist);
