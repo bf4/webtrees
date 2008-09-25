@@ -165,7 +165,7 @@ function import_record($indirec, $update) {
 	$ct = preg_match("/1 RFN (.*)/", $indirec, $rmatch);
 	if ($ct) {
 		$rfn = trim($rmatch[1]);
-		$sql = "INSERT INTO " . $TBLPREFIX . "remotelinks VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($rfn) . "','" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "')";
+		$sql = "INSERT INTO {$TBLPREFIX}remotelinks VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($rfn) . "','" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "')";
 		$res = dbquery($sql);
 	}
 
@@ -196,14 +196,14 @@ function import_record($indirec, $update) {
 				// etc.  It would be more efficient to store all the names in the names table
 				// and just search that one.  This would require users to reimport their gedcoms,
 				// so this change will have to wait until a major version change.
-				$sql = "INSERT INTO ".$TBLPREFIX."names (n_gid, n_file, n_name, n_letter, n_surname, n_type) VALUES('".$DBCONN->escapeSimple($gid)."',".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).",'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."','".($name['type']=='_MARNM'?'C':'A')."')";
+				$sql = "INSERT INTO {$TBLPREFIX}names (n_gid, n_file, n_name, n_letter, n_surname, n_type) VALUES('".$DBCONN->escapeSimple($gid)."',".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).",'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."','".($name['type']=='_MARNM'?'C':'A')."')";
 				$res = dbquery($sql);
 			}
 
 			// Calculate Soundex Values and insert them into the database.
 
 			// Start building the SQL Insert
-			$sql = "INSERT INTO ".$TBLPREFIX."soundex VALUES(" .
+			$sql = "INSERT INTO {$TBLPREFIX}soundex VALUES(" .
 					"'".$DBCONN->escapeSimple($gid)."'," .
 					"'".$DBCONN->escapeSimple($n)."'," .
 					"'".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])."',";
@@ -288,15 +288,15 @@ function import_record($indirec, $update) {
 		$isdead = (int)is_dead($indirec, '', true);
 		list($surn, $givn)=explode(',', $names[0]['sort']);
 		$initial=get_first_letter($names[0]['sort']);
-		$sql = "INSERT INTO ".$TBLPREFIX."individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('".$DBCONN->escapeSimple($gid)."','".$DBCONN->escapeSimple($indi["gedfile"])."','".$DBCONN->escapeSimple($indi["rin"])."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($indi["gedcom"])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
+		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('".$DBCONN->escapeSimple($gid)."','".$DBCONN->escapeSimple($indi["gedfile"])."','".$DBCONN->escapeSimple($indi["rin"])."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($indi["gedcom"])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
 		$res = dbquery($sql);
 
 		//-- PEAR supports prepared statements in mysqli we will use this code instead of the code above
-		//if (!isset($prepared_statement)) $prepared_statement = $DBCONN->prepare("INSERT INTO ".$TBLPREFIX."individuals VALUES (?,?,?,?,?,?,?,?)");
+		//if (!isset($prepared_statement)) $prepared_statement = $DBCONN->prepare("INSERT INTO {$TBLPREFIX}individuals VALUES (?,?,?,?,?,?,?,?)");
 		//$data = array($DBCONN->escapeSimple($gid), $DBCONN->escapeSimple($indi["file"]), $indi["rin"], $names[0][0], -1, $indi["gedcom"], $DBCONN->escapeSimple($names[0][1]), $names[0][2]);
 		//$res =& $DBCONN->execute($prepared_statement, $data);
 		//$TOTAL_QUERIES++;
-		if (DB :: isError($res)) {
+		if (DB::isError($res)) {
 			// die(__LINE__." ".__FILE__."  ".$res->getMessage());
 		}
 		break;
@@ -326,7 +326,7 @@ function import_record($indirec, $update) {
 		$fam["CHIL"] = $chil;
 		$fam["gedcom"] = $indirec;
 		$fam["gedfile"] = $GEDCOMS[$FILE]["id"];
-		$sql = "INSERT INTO " . $TBLPREFIX . "families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($fam["gedfile"]) . "','" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
+		$sql = "INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($fam["gedfile"]) . "','" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
 		$res = dbquery($sql);
 		break;
 	case 'SOUR':
@@ -352,7 +352,7 @@ function import_record($indirec, $update) {
 					$name .= $match[$i][1];
 			}
 		}
-		$sql = "INSERT INTO " . $TBLPREFIX . "sources VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($indirec) . "')";
+		$sql = "INSERT INTO {$TBLPREFIX}sources VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($indirec) . "')";
 		$res = dbquery($sql);
 		break;
 	case 'OBJE':
@@ -369,7 +369,7 @@ function import_record($indirec, $update) {
 				}
 			}
 			if ($gid=="") $gid = $type;
-			$sql = "INSERT INTO " . $TBLPREFIX . "other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($indirec) . "')";
+			$sql = "INSERT INTO {$TBLPREFIX}other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($indirec) . "')";
 			$res = dbquery($sql);
 		}
 		break;
@@ -541,11 +541,11 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 
 		//-- check if another picture with the same file and title was previously imported
 		$media = new Media($objrec);
-		$new_media = Media :: in_obje_list($media);
+		$new_media = Media::in_obje_list($media);
 		if ($new_media === false) {
 			//-- add it to the media database table
 			$m_id = get_next_id("media", "m_id");
-			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
+			$sql = "INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
 			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($objrec) . "')";
 			$res = dbquery($sql);
 			$media_count++;
@@ -562,7 +562,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 	if (isset($m_media)) {
 	//-- add the entry to the media_mapping table
 	$mm_id = get_next_id("media_mapping", "mm_id");
-	$sql = "INSERT INTO " . $TBLPREFIX . "media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
+	$sql = "INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
 	$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . $DBCONN->escapeSimple($objref) . "')";
 	$res = dbquery($sql);
 	return $objref;
@@ -590,7 +590,7 @@ function update_media($gid, $indirec, $update = false) {
 	if (!$update && !isset ($MAX_IDS["OBJE"])) {
 		if (!$keepmedia) $MAX_IDS["OBJE"] = 1;
 		else {
-			$sql = "SELECT ni_id FROM ".$TBLPREFIX."nextid WHERE ni_type='OBJE' AND ni_gedfile='".$GEDCOMS[$FILE]['id']."'";
+			$sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='".$GEDCOMS[$FILE]['id']."'";
 			$res = dbquery($sql);
 			$row =& $res->fetchRow();
 			$MAX_IDS["OBJE"] = $row[0];
@@ -627,9 +627,9 @@ function update_media($gid, $indirec, $update = false) {
 		$indirec = preg_replace("/@" . $old_m_media . "@/", "@" . $new_m_media . "@", $indirec);
 		$media = new Media($indirec);
 		//--check if we already have a similar object
-		$new_media = Media :: in_obje_list($media);
+		$new_media = Media::in_obje_list($media);
 		if ($new_media === false) {
-			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
+			$sql = "INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
 			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($indirec) . "')";
 			$res = dbquery($sql);
 			$media_count++;
@@ -645,7 +645,7 @@ function update_media($gid, $indirec, $update = false) {
 	}
 
 	if ($keepmedia) {
-		$sql = "SELECT mm_media, mm_gedrec FROM ".$TBLPREFIX."media_mapping WHERE mm_gid='".$DBCONN->escapeSimple($gid)."' AND mm_gedfile='".$GEDCOMS[$FILE]['id']."'";
+		$sql = "SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid='".$DBCONN->escapeSimple($gid)."' AND mm_gedfile='".$GEDCOMS[$FILE]['id']."'";
 		$res = dbquery($sql);
 		$old_linked_media = array();
 		while($row =& $res->fetchRow()) {
@@ -893,58 +893,38 @@ function setup_database() {
 		create_individuals_table();
 	} else { // check columns in the table
 		if (!$has_individuals_rin) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "individuals ADD i_rin VARCHAR(255)";
-			$res = dbquery($sql); //print "i_rin added<br/>\n";
+			dbquery("ALTER TABLE {$TBLPREFIX}individuals ADD i_rin VARCHAR(255) NULL");
 		}
 		if (!$has_individuals_letter) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "individuals ADD i_letter VARCHAR(5)";
-			$res = dbquery($sql); //print "i_letter added<br/>\n";
-
-			if (DB :: isError($res)) {
-				print $pgv_lang["created_indis_fail"] . "<br />\n";
-				exit;
-			}
-			$sql = "CREATE INDEX indi_letter ON " . $TBLPREFIX . "individuals (i_letter)";
-			$res = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}individuals ADD i_letter VARCHAR(5) NULL");
+			dbquery("CREATE INDEX indi_letter ON {$TBLPREFIX}individuals (i_letter)");
 		}
 		if (!$has_individuals_surname) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "individuals ADD i_surname VARCHAR(100)";
-			$res = dbquery($sql); //print "i_surname added<br/>\n";
-
-			if (DB :: isError($res)) {
-				print $pgv_lang["created_indis_fail"] . "<br />\n";
-				exit;
-			}
-			$sql = "CREATE INDEX indi_surn ON " . $TBLPREFIX . "individuals (i_surname)";
-			$res = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}individuals ADD i_surname VARCHAR(100) NULL");
+			dbquery("CREATE INDEX indi_surn ON {$TBLPREFIX}individuals (i_surname)");
 		}
 	}
 	if (!$has_families || $sqlite && ($has_families_name || !$has_families_numchil)) {
 		create_families_table();
 	} else { // check columns in the table
 		if ($has_families_name) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "families DROP COLUMN f_name";
-			$res = dbquery($sql); //print "f_name dropped<br/>\n";
+			dbquery("ALTER TABLE {$TBLPREFIX}families DROP COLUMN f_name");
 		}
 		if (!$has_families_numchil) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "families ADD f_numchil INT";
-			$res = dbquery($sql); //print "f_numchil added<br/>\n";
+			dbquery("ALTER TABLE {$TBLPREFIX}families ADD f_numchil INT NULL");
 		}
 	}
 	if (!$has_places || $sqlite && ($has_places_gid || !$has_places_std_soundex || !$has_places_dm_soundex)) {
 		create_places_table();
-	} else { // check columns in the table
+	} else {
 		if ($has_places_gid) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "places DROP COLUMN p_gid";
-			$res = dbquery($sql); //print "p_gid dropped<br/>\n";
+			dbquery("ALTER TABLE {$TBLPREFIX}places DROP COLUMN p_gid");
 		}
 		if (!$has_places_std_soundex) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_std_soundex text";
-			$res = dbquery($sql);//print "p_std_soundex added<br/>\n";
+			dbquery("ALTER TABLE {$TBLPREFIX}places ADD p_std_soundex TEXT NULL");
 		}
 		if (!$has_places_dm_soundex) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_dm_soundex text";
-			$res = dbquery($sql);//print "p_dm_soundex added<br/>\n";
+			dbquery("ALTER TABLE {$TBLPREFIX}places ADD p_dm_soundex TEXT NULL");
 		}
 	}
 	if (!$has_placelinks) {
@@ -952,47 +932,31 @@ function setup_database() {
 	}
 	if (!$has_names || $sqlite && (!$has_names_surname || !$has_names_type)) {
 		create_names_table();
-	} else { // check columns in the table
+	} else {
 		if (!$has_names_surname) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "names ADD n_surname VARCHAR(100)";
-			$res = dbquery($sql); //print "n_surname added<br/>\n";
-
-			if (DB :: isError($res)) {
-				exit;
-			}
-			$sql = "CREATE INDEX name_surn ON " . $TBLPREFIX . "names (n_surname)";
-			$res = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}names ADD n_surname VARCHAR(100) NULL");
+			dbquery("CREATE INDEX name_surn ON {$TBLPREFIX}names (n_surname)");
 		}
 		if (!$has_names_type) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "names ADD n_type VARCHAR(10)";
-			$res = dbquery($sql); //print "n_type added<br/>\n";
+			dbquery("ALTER TABLE {$TBLPREFIX}names ADD n_type VARCHAR(10) NULL");
 		}
 	}
-	if (!$has_dates || stristr($DBTYPE, "mysql") === false && // AFTER keyword only in mysql
-	(!$has_dates_mon || !$has_dates_datestamp || !$has_dates_juliandays)) {
+	if (!$has_dates || $sqlite && (!$has_dates_mon || !$has_dates_datestamp || !$has_dates_juliandays)) {
 		create_dates_table();
-	} else { // check columns in the table
+	} else {
 		if (!$has_dates_mon) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_mon INT AFTER d_month";
-			$res = dbquery($sql); //print "d_mon added<br/>\n";
-			$sql = "CREATE INDEX date_mon ON " . $TBLPREFIX . "dates (d_mon)";
-			$res = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}dates ADD d_mon INT NULL");
+			dbquery("CREATE INDEX date_mon ON {$TBLPREFIX}dates (d_mon)");
 		}
 		if (!$has_dates_datestamp) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_datestamp INT AFTER d_year";
-			$res = dbquery($sql); //print "d_datestamp added<br/>\n";
-			$sql = "CREATE INDEX date_datestamp ON " . $TBLPREFIX . "dates (d_datestamp)";
-			$res = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}dates ADD d_datestamp INT NULL");
+			dbquery("CREATE INDEX date_datestamp ON {$TBLPREFIX}dates (d_datestamp)");
 		}
 		if (!$has_dates_juliandays) {
-			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_julianday1 INT AFTER d_datestamp";
-			$res = dbquery($sql);
-			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_julianday2 INT AFTER d_julianday1";
-			$res = dbquery($sql);
-			$sql = "CREATE INDEX date_julianday1 ON " . $TBLPREFIX . "dates (d_julianday1)";
-			$res = dbquery($sql);
-			$sql = "CREATE INDEX date_julianday2 ON " . $TBLPREFIX . "dates (d_julianday2)";
-			$res = dbquery($sql);
+			dbquery("ALTER TABLE {$TBLPREFIX}dates ADD d_julianday1 INT NULL");
+			dbquery("ALTER TABLE {$TBLPREFIX}dates ADD d_julianday2 INT NULL");
+			dbquery("CREATE INDEX date_julianday1 ON {$TBLPREFIX}dates (d_julianday1)");
+			dbquery("CREATE INDEX date_julianday2 ON {$TBLPREFIX}dates (d_julianday2)");
 		}
 	}
 	if (!$has_media) {
@@ -1018,7 +982,7 @@ function setup_database() {
 		create_soundex_table();
 	}
 	/*-- commenting out as it seems to cause more problems than it helps
-	$sql = "LOCK TABLE ".$TBLPREFIX."individuals WRITE, ".$TBLPREFIX."families WRITE, ".$TBLPREFIX."sources WRITE, ".$TBLPREFIX."other WRITE, ".$TBLPREFIX."places WRITE, ".$TBLPREFIX."users WRITE";
+	$sql = "LOCK TABLE {$TBLPREFIX}individuals WRITE, {$TBLPREFIX}families WRITE, {$TBLPREFIX}sources WRITE, {$TBLPREFIX}other WRITE, {$TBLPREFIX}places WRITE, {$TBLPREFIX}users WRITE";
 	$res = dbquery($sql); */
 	if (preg_match("/mysql|pgsql/", $DBTYPE) > 0)
 		$DBCONN->autoCommit(false);
@@ -1035,320 +999,289 @@ function setup_database() {
 function create_individuals_table() {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "individuals";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255) NOT NULL, i_file INT NOT NULL, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100), PRIMARY KEY(i_id, i_file))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_indis_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX indi_id ON " . $TBLPREFIX . "individuals (i_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX indi_name ON " . $TBLPREFIX . "individuals (i_name)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX indi_letter ON " . $TBLPREFIX . "individuals (i_letter)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX indi_file ON " . $TBLPREFIX . "individuals (i_file)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX indi_surn ON " . $TBLPREFIX . "individuals (i_surname)";
-	$res = dbquery($sql);
-
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_indis"] . "<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}individuals", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}individuals (".
+		" i_id       VARCHAR(255)       NOT NULL,".
+		" i_file     INT                NOT NULL,".
+		" i_rin      VARCHAR(255)           NULL,".
+		" i_name     VARCHAR(255)           NULL,".
+		" i_isdead   INT DEFAULT 1          NULL,".
+		" i_gedcom ".DB_LONGTEXT_TYPE."     NULL,".
+		" i_letter   VARCHAR(5)             NULL,".
+		" i_surname  VARCHAR(100)           NULL,".
+		" PRIMARY KEY (i_id, i_file)".
+		")"
+	);
+	dbquery("CREATE INDEX indi_id     ON {$TBLPREFIX}individuals (i_id     )");
+	dbquery("CREATE INDEX indi_name   ON {$TBLPREFIX}individuals (i_name   )");
+	dbquery("CREATE INDEX indi_letter ON {$TBLPREFIX}individuals (i_letter )");
+	dbquery("CREATE INDEX indi_file   ON {$TBLPREFIX}individuals (i_file   )");
+	dbquery("CREATE INDEX indi_surn   ON {$TBLPREFIX}individuals (i_surname)");
 }
 /**
  * Create the families table
  */
 function create_families_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "families";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255) NOT NULL, f_file INT NOT NULL, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom ".DB_LONGTEXT_TYPE.", f_numchil INT, PRIMARY KEY(f_id, f_file))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_fams_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX fam_id ON " . $TBLPREFIX . "families (f_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX fam_file ON " . $TBLPREFIX . "families (f_file)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX fam_husb ON " . $TBLPREFIX . "families (f_husb)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX fam_wife ON " . $TBLPREFIX . "families (f_wife)";
-	$res = dbquery($sql);
-
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_fams"] . "<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}families", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}families (".
+		" f_id       VARCHAR(255)       NOT NULL,".
+		" f_file     INT                NOT NULL,".
+		" f_husb     VARCHAR(255)           NULL,".
+		" f_wife     VARCHAR(255)           NULL,".
+		" f_chil     TEXT                   NULL,".
+		" f_gedcom ".DB_LONGTEXT_TYPE."     NULL,".
+		" f_numchil   INT                   NULL,".
+		" PRIMARY KEY (f_id, f_file)".
+		")"
+	);
+	dbquery("CREATE INDEX fam_id   ON {$TBLPREFIX}families (f_id  )");
+	dbquery("CREATE INDEX fam_file ON {$TBLPREFIX}families (f_file)");
+	dbquery("CREATE INDEX fam_husb ON {$TBLPREFIX}families (f_husb)");
+	dbquery("CREATE INDEX fam_wife ON {$TBLPREFIX}families (f_wife)");
 }
 /**
  * Create the sources table
  */
 function create_sources_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "sources";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "sources (s_id VARCHAR(255)NOT NULL, s_file INT NOT NULL, s_name VARCHAR(255), s_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(s_id, s_file))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_sources_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX sour_id ON " . $TBLPREFIX . "sources (s_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX sour_name ON " . $TBLPREFIX . "sources (s_name)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX sour_file ON " . $TBLPREFIX . "sources (s_file)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_sources"] . "<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}sources", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}sources (".
+		" s_id       VARCHAR(255)       NOT NULL,".
+		" s_file     INT                NOT NULL,".
+		" s_name     VARCHAR(255)           NULL,".
+		" s_gedcom ".DB_LONGTEXT_TYPE."     NULL,".
+		" PRIMARY KEY (s_id, s_file)".
+		")"
+	);
+	dbquery("CREATE INDEX sour_id   ON {$TBLPREFIX}sources (s_id  )");
+	dbquery("CREATE INDEX sour_name ON {$TBLPREFIX}sources (s_name)");
+	dbquery("CREATE INDEX sour_file ON {$TBLPREFIX}sources (s_file)");
 }
 /**
  * Create the other table
  */
 function create_other_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "other";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "other (o_id VARCHAR(255) NOT NULL, o_file INT NOT NULL, o_type VARCHAR(20), o_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(o_id, o_file))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_other_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX other_id ON " . $TBLPREFIX . "other (o_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX other_file ON " . $TBLPREFIX . "other (o_file)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_other"] . "<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}other", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}other (".
+		" o_id     VARCHAR(255)         NOT NULL,".
+		" o_file   INT                  NOT NULL,".
+	 	" o_type   VARCHAR(20)              NULL,".
+		" o_gedcom ".DB_LONGTEXT_TYPE."     NULL,".
+		" PRIMARY KEY (o_id, o_file)".
+		")"
+	);
+	dbquery("CREATE INDEX other_id   ON {$TBLPREFIX}other (o_id  )");
+	dbquery("CREATE INDEX other_file ON {$TBLPREFIX}other (o_file)");
 }
 /**
  * Create the placelinks table
  */
 function create_placelinks_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "placelinks";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "placelinks (pl_p_id INT NOT NULL, pl_gid VARCHAR(255) NOT NULL, pl_file INT NOT NULL, PRIMARY KEY(pl_p_id, pl_gid, pl_file))";
-	$res = dbquery($sql);
-	if (DB::isError($res)) {
-		print $pgv_lang["created_placelinks_fail"]."<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX plindex_place ON ".$TBLPREFIX."placelinks (pl_p_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX plindex_gid ON ".$TBLPREFIX."placelinks (pl_gid)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX plindex_file ON ".$TBLPREFIX."placelinks (pl_file)";
-	$res = dbquery($sql);
-
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_placelinks"] . "<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}placelinks", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}placelinks (".
+		" pl_p_id INT          NOT NULL,".
+		" pl_gid  VARCHAR(255) NOT NULL,".
+		" pl_file INT          NOT NULL,".
+		" PRIMARY KEY (pl_p_id, pl_gid, pl_file)".
+		")"
+	);
+	dbquery("CREATE INDEX plindex_place ON {$TBLPREFIX}placelinks (pl_p_id)");
+	dbquery("CREATE INDEX plindex_gid   ON {$TBLPREFIX}placelinks (pl_gid )");
+	dbquery("CREATE INDEX plindex_file  ON {$TBLPREFIX}placelinks (pl_file)");
 }
 /**
  * Create the places table
  */
 function create_places_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "places";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE ".$TBLPREFIX."places (p_id INT NOT NULL, p_place VARCHAR(150), p_level INT, p_parent_id INT, p_file INT, p_std_soundex text, p_dm_soundex text, PRIMARY KEY(p_id))";
-	$res = dbquery($sql);
-	if (DB::isError($res)) {
-		print $pgv_lang["created_places_fail"]."<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX place_place ON " . $TBLPREFIX . "places (p_place)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX place_level ON " . $TBLPREFIX . "places (p_level)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX place_parent ON " . $TBLPREFIX . "places (p_parent_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX place_file ON " . $TBLPREFIX . "places (p_file)";
-	$res = dbquery($sql);
-
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_places"] . "<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}places", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}places (".
+		" p_id          INT          NOT NULL,".
+		" p_place       VARCHAR(150)     NULL,".
+		" p_level       INT              NULL,".
+		" p_parent_id   INT              NULL,".
+		" p_file        INT              NULL,".
+		" p_std_soundex TEXT             NULL,".
+		" p_dm_soundex  TEXT             NULL,".
+		" PRIMARY KEY (p_id)".
+		")"
+	);
+	dbquery("CREATE INDEX place_place  ON {$TBLPREFIX}places (p_place    )");
+	dbquery("CREATE INDEX place_level  ON {$TBLPREFIX}places (p_level    )");
+	dbquery("CREATE INDEX place_parent ON {$TBLPREFIX}places (p_parent_id)");
+	dbquery("CREATE INDEX place_file   ON {$TBLPREFIX}places (p_file     )");
 }
 /**
  * Create the names table
  */
 function create_names_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "names";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "names (n_gid VARCHAR(255), n_file INT, n_name VARCHAR(255), n_letter VARCHAR(5), n_surname VARCHAR(100), n_type VARCHAR(10))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print "Unable to create names table";
-		exit;
-	}
-	$sql = "CREATE INDEX name_gid ON " . $TBLPREFIX . "names (n_gid)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_name ON " . $TBLPREFIX . "names (n_name)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_letter ON " . $TBLPREFIX . "names (n_letter)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_type ON " . $TBLPREFIX . "names (n_type)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_surn ON " . $TBLPREFIX . "names (n_surname)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX name_file ON " . $TBLPREFIX . "names (n_file)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print "Successfully created names table.<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}names", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}names (".
+		" n_gid     VARCHAR(255) NULL,".
+		" n_file    INT          NULL,".
+		" n_name    VARCHAR(255) NULL,".
+		" n_letter  VARCHAR(5)   NULL,".
+		" n_surname VARCHAR(100) NULL,".
+		" n_type    VARCHAR(10)  NULL".
+		")"
+	);
+	dbquery("CREATE INDEX name_gid    ON {$TBLPREFIX}names (n_gid    )");
+	dbquery("CREATE INDEX name_name   ON {$TBLPREFIX}names (n_name   )");
+	dbquery("CREATE INDEX name_letter ON {$TBLPREFIX}names (n_letter )");
+	dbquery("CREATE INDEX name_type   ON {$TBLPREFIX}names (n_type   )");
+	dbquery("CREATE INDEX name_surn   ON {$TBLPREFIX}names (n_surname)");
+	dbquery("CREATE INDEX name_file   ON {$TBLPREFIX}names (n_file   )");
 }
 /**
  * Create the remotelinks table
  */
 function create_remotelinks_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "remotelinks";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "remotelinks (r_gid VARCHAR(255), r_linkid VARCHAR(255), r_file INT)";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_remotelinks_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX r_gid ON " . $TBLPREFIX . "remotelinks (r_gid)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX r_link_id ON " . $TBLPREFIX . "remotelinks (r_linkid)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX r_file ON " . $TBLPREFIX . "remotelinks (r_file)";
-	$res = dbquery($sql);
-
-	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_remotelinks"] . "<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}remotelinks", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}remotelinks (".
+		" r_gid    VARCHAR(255) NULL,".
+		" r_linkid VARCHAR(255) NULL,".
+		" r_file   INT          NULL".
+		")"
+	);
+	dbquery("CREATE INDEX r_gid     ON {$TBLPREFIX}remotelinks (r_gid   )");
+	dbquery("CREATE INDEX r_link_id ON {$TBLPREFIX}remotelinks (r_linkid)");
+	dbquery("CREATE INDEX r_file    ON {$TBLPREFIX}remotelinks (r_file  )");
 }
 /**
  * Create the soundex table
  */
-function create_soundex_table()
-{
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+function create_soundex_table() {
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE ".$TBLPREFIX."soundex";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE ".$TBLPREFIX."soundex (sx_i_id varchar(255) NOT NULL, sx_n_id varchar(255) NOT NULL, sx_file int NOT NULL, sx_fn_std_code text NULL, sx_fn_dm_code text NULL, sx_ln_std_code text NULL, sx_ln_dm_code text NULL)";
-	$res = dbquery($sql);
-
-	if (DB::isError($res)) {
-		exit;
-	}
-	$sql = "CREATE INDEX sx_i_id_ix ON ".$TBLPREFIX."soundex (sx_i_id)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX sx_file_ix ON " . $TBLPREFIX . "soundex (sx_file)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print "Successfully created soundex table.<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}soundex", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}soundex (".
+		" sx_i_id        VARCHAR(255) NOT NULL,".
+		" sx_n_id        VARCHAR(255) NOT NULL,".
+		" sx_file        INT          NOT NULL,".
+		" sx_fn_std_code TEXT             NULL,".
+		" sx_fn_dm_code  TEXT             NULL,".
+		" sx_ln_std_code TEXT             NULL,".
+		" sx_ln_dm_code  TEXT             NULL".
+		")"
+	);
+	dbquery("CREATE INDEX sx_i_id_ix ON {$TBLPREFIX}soundex (sx_i_id)");
+	dbquery("CREATE INDEX sx_file_ix ON {$TBLPREFIX}soundex (sx_file)");
 }
 /**
  * Create the media table
  */
 function create_media_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "media";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "media (m_id INT NOT NULL, m_media VARCHAR(15), m_ext VARCHAR(6), m_titl VARCHAR(255), m_file VARCHAR(255), m_gedfile INT, m_gedrec ".DB_LONGTEXT_TYPE.", PRIMARY KEY (m_id))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_media_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX m_media ON " . $TBLPREFIX . "media (m_media)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX m_media_file ON " . $TBLPREFIX . "media (m_media, m_gedfile)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) "Successfully created media table.<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}media", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}media (".
+		" m_id       INT                NOT NULL,".
+		" m_media    VARCHAR(15)            NULL,".
+		" m_ext      VARCHAR(6)             NULL,".
+		" m_titl     VARCHAR(255)           NULL,".
+		" m_file     VARCHAR(255)           NULL,".
+		" m_gedfile  INT                    NULL,".
+		" m_gedrec ".DB_LONGTEXT_TYPE."     NULL,".
+		" PRIMARY KEY (m_id)".
+		")"
+	);
+	dbquery("CREATE INDEX m_media      ON {$TBLPREFIX}media (m_media           )");
+	dbquery("CREATE INDEX m_media_file ON {$TBLPREFIX}media (m_media, m_gedfile)");
 }
 /**
  * Create the dates table
  */
 function create_dates_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "dates";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "dates (d_day INT, d_month VARCHAR(5), d_mon INT, d_year INT, d_datestamp INT, d_julianday1 INT, d_julianday2 INT, d_fact VARCHAR(10), d_gid VARCHAR(255), d_file INT, d_type VARCHAR(13) NULL)";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		exit;
-	}
-	$sql = "CREATE INDEX date_day ON " . $TBLPREFIX . "dates (d_day)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_month ON " . $TBLPREFIX . "dates (d_month)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_mon ON " . $TBLPREFIX . "dates (d_mon)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_year ON " . $TBLPREFIX . "dates (d_year)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_datestamp ON " . $TBLPREFIX . "dates (d_datestamp)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_julianday1 ON " . $TBLPREFIX . "dates (d_julianday1)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_julianday2 ON " . $TBLPREFIX . "dates (d_julianday2)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_gid ON " . $TBLPREFIX . "dates (d_gid)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_file ON " . $TBLPREFIX . "dates (d_file)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_type ON " . $TBLPREFIX . "dates (d_type)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_fact_gid ON ".$TBLPREFIX."dates (d_fact, d_gid)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print "Successfully created dates table.<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}dates", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}dates (".
+		" d_day        INT          NULL,".
+		" d_month      VARCHAR(5)   NULL,".
+		" d_mon        INT          NULL,".
+		" d_year       INT          NULL,".
+		" d_datestamp  INT          NULL,".
+		" d_julianday1 INT          NULL,".
+		" d_julianday2 INT          NULL,".
+		" d_fact       VARCHAR(10)  NULL,".
+		" d_gid        VARCHAR(255) NULL,".
+		" d_file       INT          NULL,".
+		" d_type       VARCHAR(13)  NULL".
+		" )"
+	);
+	dbquery("CREATE INDEX date_day        ON {$TBLPREFIX}dates (d_day        )") ;
+	dbquery("CREATE INDEX date_month      ON {$TBLPREFIX}dates (d_month      )");
+	dbquery("CREATE INDEX date_mon        ON {$TBLPREFIX}dates (d_mon        )");
+	dbquery("CREATE INDEX date_year       ON {$TBLPREFIX}dates (d_year       )");
+	dbquery("CREATE INDEX date_datestamp  ON {$TBLPREFIX}dates (d_datestamp  )");
+	dbquery("CREATE INDEX date_julianday1 ON {$TBLPREFIX}dates (d_julianday1 )");
+	dbquery("CREATE INDEX date_julianday2 ON {$TBLPREFIX}dates (d_julianday2 )");
+	dbquery("CREATE INDEX date_gid        ON {$TBLPREFIX}dates (d_gid        )");
+	dbquery("CREATE INDEX date_file       ON {$TBLPREFIX}dates (d_file       )");
+	dbquery("CREATE INDEX date_type       ON {$TBLPREFIX}dates (d_type       )");
+	dbquery("CREATE INDEX date_fact_gid   ON {$TBLPREFIX}dates (d_fact, d_gid)");
 }
 
 /**
  * Create the media_mapping table
  */
 function create_media_mapping_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "media_mapping";
-	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "media_mapping (mm_id INT NOT NULL, mm_media VARCHAR(15) NOT NULL DEFAULT '', mm_gid VARCHAR(15) NOT NULL DEFAULT '', mm_order INT NOT NULL DEFAULT '0', mm_gedfile INT DEFAULT NULL, mm_gedrec ".DB_LONGTEXT_TYPE.", PRIMARY KEY (mm_id))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		print $pgv_lang["created_media_mapping_fail"] . "<br />\n";
-		exit;
-	}
-	$sql = "CREATE INDEX mm_media_id ON " . $TBLPREFIX . "media_mapping (mm_media, mm_gedfile)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX mm_media_gid ON " . $TBLPREFIX . "media_mapping (mm_gid, mm_gedfile)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX mm_media_gedfile ON " . $TBLPREFIX . "media_mapping (mm_gedfile)";
-	$res = dbquery($sql);
-	if (isset($DEBUG) && $DEBUG==true) print "Successfully created media_mapping table.<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}media_mapping", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}media_mapping (".
+		" mm_id       INT                NOT NULL,".
+		" mm_media    VARCHAR(15)        NOT NULL DEFAULT '',".
+		" mm_gid      VARCHAR(15)        NOT NULL DEFAULT '',".
+		" mm_order    INT                NOT NULL DEFAULT '0',".
+		" mm_gedfile  INT                NULL,".
+		" mm_gedrec ".DB_LONGTEXT_TYPE." NULL,".
+		" PRIMARY KEY (mm_id)".
+		")"
+	);
+	dbquery("CREATE INDEX mm_media_id      ON {$TBLPREFIX}media_mapping (mm_media, mm_gedfile)");
+	dbquery("CREATE INDEX mm_media_gid     ON {$TBLPREFIX}media_mapping (mm_gid, mm_gedfile  )");
+	dbquery("CREATE INDEX mm_media_gedfile ON {$TBLPREFIX}media_mapping (mm_gedfile          )");
 }
 /**
  * Create the nextid table
  */
 function create_nextid_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX;
 
-	$sql = "DROP TABLE " . $TBLPREFIX . "nextid ";
-	$res = dbquery($sql, false);
-        // Changed the following line because it is unecessary to use UNSIGNED for this field and because it breaks PostgreSQL to use it.
-        // $sql = "CREATE TABLE {$TBLPREFIX}nextid (ni_id INT UNSIGNED NOT NULL, ni_type VARCHAR(30) NOT NULL, ni_gedfile INT NOT NULL, PRIMARY KEY(ni_type, ni_gedfile))"; */
-        $sql = "CREATE TABLE {$TBLPREFIX}nextid (ni_id INT NOT NULL, ni_type VARCHAR(30) NOT NULL, ni_gedfile INT NOT NULL, PRIMARY KEY(ni_type, ni_gedfile))";
-	$res = dbquery($sql);
-
-	if (DB :: isError($res)) {
-		exit;
-	}
-	if (isset($DEBUG) && $DEBUG==true) print "Created nextid table.<br />\n";
+	dbquery("DROP TABLE {$TBLPREFIX}nextid ", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}nextid (".
+		" ni_id      INT         NOT NULL,".
+		" ni_type    VARCHAR(30) NOT NULL,".
+		" ni_gedfile INT         NOT NULL,".
+		" PRIMARY KEY (ni_type, ni_gedfile)".
+		")"
+	);
 }
 /**
  * delete a gedcom from the database
@@ -1358,43 +1291,24 @@ function create_nextid_table() {
  * @param boolean $keepmedia	Whether or not to keep media and media links in the tables
  */
 function empty_database($FILE, $keepmedia=false) {
-	global $TBLPREFIX, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX;
 
-	$FILE = $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]);
-	$sql = "DELETE FROM " . $TBLPREFIX . "individuals WHERE i_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "families WHERE f_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "sources WHERE s_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "other WHERE o_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "places WHERE p_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "placelinks WHERE pl_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "names WHERE n_file='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "dates WHERE d_file='$FILE'";
-	$res = dbquery($sql);
+	$FILE=get_id_from_gedcom($FILE);
+	dbquery("DELETE FROM {$TBLPREFIX}individuals WHERE i_file ={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}families    WHERE f_file ={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}sources     WHERE s_file ={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}other       WHERE o_file ={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}places      WHERE p_file ={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}names       WHERE n_file ={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}dates       WHERE d_file ={$FILE}");
 
 	if (!$keepmedia) {
-	$sql = "DELETE FROM " . $TBLPREFIX . "media WHERE m_gedfile='$FILE'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='$FILE'";
-	$res = dbquery($sql);
-	}
-	else {
+		dbquery("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile ={$FILE}");
+		dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile={$FILE}");
+	} else {
 		//-- make sure that we keep the correct IDs for media
-                $sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='{$FILE}'";
+    $sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='{$FILE}'";
 		$res =& dbquery($sql);
 		if ($res->numRows() > 0) {
 			$row =& $res->fetchRow();
@@ -1403,15 +1317,18 @@ function empty_database($FILE, $keepmedia=false) {
 		$res->free();
 	}
 
-	$sql = "DELETE FROM " . $TBLPREFIX . "nextid WHERE ni_gedfile='$FILE'";
-	$res = dbquery($sql);
+	dbquery("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile={$FILE}");
 	if ($keepmedia && isset($num)) {
-		$sql = "INSERT INTO ".$TBLPREFIX."nextid VALUES('".$DBCONN->escapeSimple($num-1)."', 'OBJE', '".$FILE."')";
-		$res2 = dbquery($sql);
+		dbquery(
+			"INSERT INTO {$TBLPREFIX}nextid (".
+			" ni_id, ni_type, ni_gedfile".
+			") VALUES (".
+			(int)($num-1).", 'OBJE', {$FILE}".
+			")"
+		);
 	}
 
-	$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_file='$FILE'";
-	$res = dbquery($sql);
+	dbquery("DELETE FROM {$TBLPREFIX}soundex WHERE sx_file={$FILE}");
 
 	//-- clear all of the cache files for this gedcom
 	clearCache();
@@ -1431,10 +1348,10 @@ function cleanup_database() {
 	$res = dbquery($sql); */
 	//-- end the transaction
 	if (isset ($MAX_IDS)) {
-		$sql = "DELETE FROM " . $TBLPREFIX . "nextid WHERE ni_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "'";
+		$sql = "DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "'";
 		$res = dbquery($sql);
 		foreach ($MAX_IDS as $type => $id) {
-			$sql = "INSERT INTO " . $TBLPREFIX . "nextid VALUES('" . $DBCONN->escapeSimple($id +1) . "', '" . $DBCONN->escapeSimple($type) . "', '" . $GEDCOMS[$FILE]["id"] . "')";
+			$sql = "INSERT INTO {$TBLPREFIX}nextid (ni_id, ni_type, ni_gedfile) VALUES('" . $DBCONN->escapeSimple($id +1) . "', '" . $DBCONN->escapeSimple($type) . "', '" . $GEDCOMS[$FILE]["id"] . "')";
 			$res = dbquery($sql);
 		}
 	}
@@ -1657,65 +1574,65 @@ function update_record($indirec, $delete = false) {
 		return false;
 	}
 
-	$sql = "SELECT pl_p_id FROM " . $TBLPREFIX . "placelinks WHERE pl_gid='" . $DBCONN->escapeSimple($gid) . "' AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$sql = "SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid='" . $DBCONN->escapeSimple($gid) . "' AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
 	$placeids = array ();
 	while ($row = & $res->fetchRow()) {
 		$placeids[] = $row[0];
 	}
-	$sql = "DELETE FROM " . $TBLPREFIX . "placelinks WHERE pl_gid='" . $DBCONN->escapeSimple($gid) . "' AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$sql = "DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid='" . $DBCONN->escapeSimple($gid) . "' AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
-	$sql = "DELETE FROM " . $TBLPREFIX . "dates WHERE d_gid='" . $DBCONN->escapeSimple($gid) . "' AND d_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$sql = "DELETE FROM {$TBLPREFIX}dates WHERE d_gid='" . $DBCONN->escapeSimple($gid) . "' AND d_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
 	//-- delete any unlinked places
 	foreach ($placeids as $indexval => $p_id) {
-		$sql = "SELECT count(pl_p_id) FROM " . $TBLPREFIX . "placelinks WHERE pl_p_id=$p_id AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+		$sql = "SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
 
 		$row = & $res->fetchRow();
 		if ($row[0] == 0) {
-			$sql = "DELETE FROM " . $TBLPREFIX . "places WHERE p_id=$p_id AND p_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+			$sql = "DELETE FROM {$TBLPREFIX}places WHERE p_id=$p_id AND p_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 			$res = dbquery($sql);
 
 		}
 	}
 
 	//-- delete any media mapping references
-	$sql = "DELETE FROM " . $TBLPREFIX . "media_mapping WHERE mm_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND mm_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$sql = "DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND mm_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
-	$sql = "DELETE FROM " . $TBLPREFIX . "remotelinks WHERE r_gid='" . $DBCONN->escapeSimple($gid) . "' AND r_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$sql = "DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid='" . $DBCONN->escapeSimple($gid) . "' AND r_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
 	if ($type == "INDI") {
-		$sql = "DELETE FROM " . $TBLPREFIX . "individuals WHERE i_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+		$sql = "DELETE FROM {$TBLPREFIX}individuals WHERE i_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
 
-		$sql = "DELETE FROM " . $TBLPREFIX . "names WHERE n_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+		$sql = "DELETE FROM {$TBLPREFIX}names WHERE n_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
 
-		$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_i_id LIKE '".$DBCONN->escapeSimple($gid)."' AND sx_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+		$sql = "DELETE FROM {$TBLPREFIX}soundex WHERE sx_i_id LIKE '".$DBCONN->escapeSimple($gid)."' AND sx_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 		$res = dbquery($sql);
 
 	} else
 		if ($type == "FAM") {
-			$sql = "DELETE FROM " . $TBLPREFIX . "families WHERE f_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND f_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+			$sql = "DELETE FROM {$TBLPREFIX}families WHERE f_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND f_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 			$res = dbquery($sql);
 
 		} else
 			if ($type == "SOUR") {
-				$sql = "DELETE FROM " . $TBLPREFIX . "sources WHERE s_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND s_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+				$sql = "DELETE FROM {$TBLPREFIX}sources WHERE s_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND s_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 				$res = dbquery($sql);
 
 			} else
 				if ($type == "OBJE") {
-					$sql = "DELETE FROM " . $TBLPREFIX . "media WHERE m_media LIKE '" . $DBCONN->escapeSimple($gid) . "' AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+					$sql = "DELETE FROM {$TBLPREFIX}media WHERE m_media LIKE '" . $DBCONN->escapeSimple($gid) . "' AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 					$res = dbquery($sql);
 				} else {
-					$sql = "DELETE FROM " . $TBLPREFIX . "other WHERE o_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND o_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+					$sql = "DELETE FROM {$TBLPREFIX}other WHERE o_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND o_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 					$res = dbquery($sql);
 
 				}

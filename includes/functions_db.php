@@ -45,28 +45,85 @@ $REGEXP_DB = (stristr($DBTYPE,'mysql') !== false || $DBTYPE=='pgsql');
 /**
  * Field and function definition variances between sql databases
  */
-//-- mysql
-if (stristr($DBTYPE,'mysql') !== false) {
-	define('DB_RANDOM', 'RAND');
+switch ($DBTYPE) {
+case 'mssql':
+	define('DB_INT1_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT2_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT3_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT4_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT8_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_CHAR_TYPE',     'VARCHAR'); // TODO - determine appropriate value for this DB
+	define('DB_VARCHAR_TYPE',  'VARCHAR'); // TODO - determine appropriate value for this DB
+	define('DB_UNSIGNED',      '');        // TODO - determine appropriate value for this DB
+	define('DB_ASCII',         '');        // TODO - determine appropriate value for this DB
+	define('DB_UTF8',          '');        // TODO - determine appropriate value for this DB
+	define('DB_LIKE',          'LIKE');
+	define('DB_RANDOM',        'NEWID');
+	define('DB_TEXT_TYPE',     'TEXT');
+	define('DB_LONGTEXT_TYPE', 'TEXT');
+	define('DB_BEGIN_TRANS',   'BEGIN TRANSACTION');
+	define('DB_COMMIT_TRANS',  'COMMIT TRANSACTION');
+	break;
+case 'sqlite':
+	define('DB_INT1_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT2_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT3_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT4_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT8_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_CHAR_TYPE',     'VARCHAR'); // TODO - determine appropriate value for this DB
+	define('DB_VARCHAR_TYPE',  'VARCHAR'); // TODO - determine appropriate value for this DB
+	define('DB_UNSIGNED',      '');        // TODO - determine appropriate value for this DB
+	define('DB_ASCII',         '');        // TODO - determine appropriate value for this DB
+	define('DB_UTF8',          '');        // TODO - determine appropriate value for this DB
+	define('DB_LIKE',          'LIKE');
+	define('DB_RANDOM',        'RANDOM');
+	define('DB_TEXT_TYPE',     'TEXT');
+	define('DB_LONGTEXT_TYPE', 'TEXT');
+	define('DB_BEGIN_TRANS',   'BEGIN');
+	define('DB_COMMIT_TRANS',  'COMMIT');
+	break;
+case 'pgsql':
+	define('DB_INT1_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT2_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT3_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT4_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_INT8_TYPE',     'INT');     // TODO - determine appropriate value for this DB
+	define('DB_CHAR_TYPE',     'VARCHAR'); // TODO - determine appropriate value for this DB
+	define('DB_VARCHAR_TYPE',  'VARCHAR'); // TODO - determine appropriate value for this DB
+	define('DB_UNSIGNED',      '');
+	define('DB_ASCII',         '');        // TODO - determine appropriate value for this DB
+	define('DB_UTF8',          '');        // TODO - determine appropriate value for this DB
+	define('DB_LIKE',          'ILIKE');
+	define('DB_RANDOM',        'RANDOM');
+	define('DB_TEXT_TYPE',     'TEXT');
+	define('DB_LONGTEXT_TYPE', 'TEXT');
+	define('DB_BEGIN_TRANS',   'BEGIN');
+	define('DB_COMMIT_TRANS',  'COMMIT');
+	break;
+case 'mysql':
+default:
+	define('DB_INT1_TYPE',     'TINYINT');
+	define('DB_INT2_TYPE',     'SMALLINT');
+	define('DB_INT3_TYPE',     'MEDIUMINT');
+	define('DB_INT4_TYPE',     'INT');
+	define('DB_INT8_TYPE',     'BIGINT');
+	define('DB_CHAR_TYPE',     'CHAR');
+	define('DB_VARCHAR_TYPE',  'VARCHAR');
+	define('DB_UNSIGNED',      'UNSIGNED');
+	define('DB_LIKE',          'LIKE');
+	define('DB_RANDOM',        'RAND');
+	define('DB_TEXT_TYPE',     'TEXT');
 	define('DB_LONGTEXT_TYPE', 'LONGTEXT');
-	define('DB_BEGIN_TRANS', 'BEGIN');
-	define('DB_COMMIT_TRANS', 'COMMIT');
-} else if ($DBTYPE=='pgsql') {
-	define('DB_RANDOM', 'RANDOM');
-	define('DB_LONGTEXT_TYPE', 'TEXT');
-	define('DB_BEGIN_TRANS', 'BEGIN');
-	define('DB_COMMIT_TRANS', 'COMMIT');
-} else if ($DBTYPE=='sqlite') {
-	define('DB_RANDOM', 'RANDOM');
-	define('DB_LONGTEXT_TYPE', 'TEXT');
-	define('DB_BEGIN_TRANS', 'BEGIN');
-	define('DB_COMMIT_TRANS', 'COMMIT');
-} else if ($DBTYPE=='mssql') {
-	define('DB_RANDOM', 'NEWID');
-	define('DB_LONGTEXT_TYPE', 'TEXT');
-	define('DB_BEGIN_TRANS', 'BEGIN TRANSACTION');
-	define('DB_COMMIT_TRANS', 'COMMIT TRANSACTION');
+	define('DB_BEGIN_TRANS',   'BEGIN');
+	define('DB_COMMIT_TRANS',  'COMMIT');
+	define('DB_ASCII',         'CHARACTER SET ascii');
+	define('DB_UTF8',          'CHARACTER SET utf8');
+	break;
 }
+
+// Define some "standard" columns, so we create our tables consistently
+define('PGV_DB_COL_FILE', DB_INT2_TYPE.' '.DB_UNSIGNED);
+define('PGV_DB_COL_XREF', DB_VARCHAR_TYPE.'(63) '.DB_ASCII);
 
 //-- uncomment the following line to turn on sql query logging
 //$SQL_LOG = true;
@@ -2209,11 +2266,11 @@ function get_alpha_indis($letter) {
 			if ($isMultiLetter!==false) {
 				$sql .= "i_letter = '".$DBCONN->escapeSimple($letter)."' ";
 				$checkDictSort = false;
-			}
 		}
+	}
 	if ($checkDictSort) {
 		$text = "";
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
+	if ($DICTIONARY_SORT[$LANGUAGE]) {
 			$inArray = strpos($UCDiacritStrip, $letter);
 			if ($inArray!==false) {
 				while (true) {
@@ -2223,7 +2280,7 @@ function get_alpha_indis($letter) {
 						break;
 					if (substr($UCDiacritStrip, $inArray, 1)!=$letter)
 						break;
-				}
+			}
 				if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
 					$sql .= "(i_letter LIKE '".$DBCONN->escapeSimple($letter)."%'".$text.") ";
 				else
@@ -2238,12 +2295,12 @@ function get_alpha_indis($letter) {
 							break;
 						if (substr($LCDiacritStrip, $inArray, 1)!=$letter)
 							break;
-					}
+		}
 					if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
 						$sql .= "(i_letter LIKE '".$DBCONN->escapeSimple($letter)."%'".$text.") ";
 					else
 						$sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."'".$text.") ";
-				}
+	}
 			}
 		}
 		if ($text=="") {
@@ -2342,12 +2399,12 @@ function get_alpha_indis($letter) {
 	if (!$SHOW_MARRIED_NAMES)
 		$sql .= "AND n_type!='C' ";
 	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY i_name";
-	$res = dbquery($sql);
+	$res=dbquery($sql);
 	if (!DB::isError($res)) {
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$tindilist[$row["i_id"]] = $row["i_id"];
-	}
-	$res->free();
+		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+			$tindilist[$row["i_id"]] = $row["i_id"];
+		}
+		$res->free();
 	}
 
 	return $tindilist;
@@ -2380,7 +2437,7 @@ function get_surname_indis($surname) {
 	$sql .= "AND i_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$tindilist[$row["i_id"]] = $row["i_id"];
 	}
 	$res->free();
