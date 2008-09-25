@@ -1013,11 +1013,11 @@ function create_individuals_table() {
 		" PRIMARY KEY (i_id, i_file)".
 		")"
 	);
-	dbquery("CREATE INDEX indi_id     ON {$TBLPREFIX}individuals (i_id     )");
-	dbquery("CREATE INDEX indi_name   ON {$TBLPREFIX}individuals (i_name   )");
-	dbquery("CREATE INDEX indi_letter ON {$TBLPREFIX}individuals (i_letter )");
-	dbquery("CREATE INDEX indi_file   ON {$TBLPREFIX}individuals (i_file   )");
-	dbquery("CREATE INDEX indi_surn   ON {$TBLPREFIX}individuals (i_surname)");
+	dbquery("CREATE INDEX {$TBLPREFIX}indi_id     ON {$TBLPREFIX}individuals (i_id     )");
+	dbquery("CREATE INDEX {$TBLPREFIX}indi_name   ON {$TBLPREFIX}individuals (i_name   )");
+	dbquery("CREATE INDEX {$TBLPREFIX}indi_letter ON {$TBLPREFIX}individuals (i_letter )");
+	dbquery("CREATE INDEX {$TBLPREFIX}indi_file   ON {$TBLPREFIX}individuals (i_file   )");
+	dbquery("CREATE INDEX {$TBLPREFIX}indi_surn   ON {$TBLPREFIX}individuals (i_surname)");
 }
 /**
  * Create the families table
@@ -1038,10 +1038,10 @@ function create_families_table() {
 		" PRIMARY KEY (f_id, f_file)".
 		")"
 	);
-	dbquery("CREATE INDEX fam_id   ON {$TBLPREFIX}families (f_id  )");
-	dbquery("CREATE INDEX fam_file ON {$TBLPREFIX}families (f_file)");
-	dbquery("CREATE INDEX fam_husb ON {$TBLPREFIX}families (f_husb)");
-	dbquery("CREATE INDEX fam_wife ON {$TBLPREFIX}families (f_wife)");
+	dbquery("CREATE INDEX {$TBLPREFIX}fam_id   ON {$TBLPREFIX}families (f_id  )");
+	dbquery("CREATE INDEX {$TBLPREFIX}fam_file ON {$TBLPREFIX}families (f_file)");
+	dbquery("CREATE INDEX {$TBLPREFIX}fam_husb ON {$TBLPREFIX}families (f_husb)");
+	dbquery("CREATE INDEX {$TBLPREFIX}fam_wife ON {$TBLPREFIX}families (f_wife)");
 }
 /**
  * Create the sources table
@@ -1059,9 +1059,9 @@ function create_sources_table() {
 		" PRIMARY KEY (s_id, s_file)".
 		")"
 	);
-	dbquery("CREATE INDEX sour_id   ON {$TBLPREFIX}sources (s_id  )");
-	dbquery("CREATE INDEX sour_name ON {$TBLPREFIX}sources (s_name)");
-	dbquery("CREATE INDEX sour_file ON {$TBLPREFIX}sources (s_file)");
+	dbquery("CREATE INDEX {$TBLPREFIX}sour_id   ON {$TBLPREFIX}sources (s_id  )");
+	dbquery("CREATE INDEX {$TBLPREFIX}sour_name ON {$TBLPREFIX}sources (s_name)");
+	dbquery("CREATE INDEX {$TBLPREFIX}sour_file ON {$TBLPREFIX}sources (s_file)");
 }
 /**
  * Create the other table
@@ -1079,8 +1079,8 @@ function create_other_table() {
 		" PRIMARY KEY (o_id, o_file)".
 		")"
 	);
-	dbquery("CREATE INDEX other_id   ON {$TBLPREFIX}other (o_id  )");
-	dbquery("CREATE INDEX other_file ON {$TBLPREFIX}other (o_file)");
+	dbquery("CREATE INDEX {$TBLPREFIX}other_id   ON {$TBLPREFIX}other (o_id  )");
+	dbquery("CREATE INDEX {$TBLPREFIX}other_file ON {$TBLPREFIX}other (o_file)");
 }
 /**
  * Create the placelinks table
@@ -1097,9 +1097,9 @@ function create_placelinks_table() {
 		" PRIMARY KEY (pl_p_id, pl_gid, pl_file)".
 		")"
 	);
-	dbquery("CREATE INDEX plindex_place ON {$TBLPREFIX}placelinks (pl_p_id)");
-	dbquery("CREATE INDEX plindex_gid   ON {$TBLPREFIX}placelinks (pl_gid )");
-	dbquery("CREATE INDEX plindex_file  ON {$TBLPREFIX}placelinks (pl_file)");
+	dbquery("CREATE INDEX {$TBLPREFIX}plindex_place ON {$TBLPREFIX}placelinks (pl_p_id)");
+	dbquery("CREATE INDEX {$TBLPREFIX}plindex_gid   ON {$TBLPREFIX}placelinks (pl_gid )");
+	dbquery("CREATE INDEX {$TBLPREFIX}plindex_file  ON {$TBLPREFIX}placelinks (pl_file)");
 }
 /**
  * Create the places table
@@ -1120,10 +1120,10 @@ function create_places_table() {
 		" PRIMARY KEY (p_id)".
 		")"
 	);
-	dbquery("CREATE INDEX place_place  ON {$TBLPREFIX}places (p_place    )");
-	dbquery("CREATE INDEX place_level  ON {$TBLPREFIX}places (p_level    )");
-	dbquery("CREATE INDEX place_parent ON {$TBLPREFIX}places (p_parent_id)");
-	dbquery("CREATE INDEX place_file   ON {$TBLPREFIX}places (p_file     )");
+	dbquery("CREATE INDEX {$TBLPREFIX}place_place  ON {$TBLPREFIX}places (p_place    )");
+	dbquery("CREATE INDEX {$TBLPREFIX}place_level  ON {$TBLPREFIX}places (p_level    )");
+	dbquery("CREATE INDEX {$TBLPREFIX}place_parent ON {$TBLPREFIX}places (p_parent_id)");
+	dbquery("CREATE INDEX {$TBLPREFIX}place_file   ON {$TBLPREFIX}places (p_file     )");
 }
 /**
  * Create the names table
@@ -1142,12 +1142,12 @@ function create_names_table() {
 		" n_type    VARCHAR(10)  NULL".
 		")"
 	);
-	dbquery("CREATE INDEX name_gid    ON {$TBLPREFIX}names (n_gid    )");
-	dbquery("CREATE INDEX name_name   ON {$TBLPREFIX}names (n_name   )");
-	dbquery("CREATE INDEX name_letter ON {$TBLPREFIX}names (n_letter )");
-	dbquery("CREATE INDEX name_type   ON {$TBLPREFIX}names (n_type   )");
-	dbquery("CREATE INDEX name_surn   ON {$TBLPREFIX}names (n_surname)");
-	dbquery("CREATE INDEX name_file   ON {$TBLPREFIX}names (n_file   )");
+	dbquery("CREATE INDEX {$TBLPREFIX}name_gid    ON {$TBLPREFIX}names (n_gid    )");
+	dbquery("CREATE INDEX {$TBLPREFIX}name_name   ON {$TBLPREFIX}names (n_name   )");
+	dbquery("CREATE INDEX {$TBLPREFIX}name_letter ON {$TBLPREFIX}names (n_letter )");
+	dbquery("CREATE INDEX {$TBLPREFIX}name_type   ON {$TBLPREFIX}names (n_type   )");
+	dbquery("CREATE INDEX {$TBLPREFIX}name_surn   ON {$TBLPREFIX}names (n_surname)");
+	dbquery("CREATE INDEX {$TBLPREFIX}name_file   ON {$TBLPREFIX}names (n_file   )");
 }
 /**
  * Create the remotelinks table
@@ -1163,9 +1163,9 @@ function create_remotelinks_table() {
 		" r_file   INT          NULL".
 		")"
 	);
-	dbquery("CREATE INDEX r_gid     ON {$TBLPREFIX}remotelinks (r_gid   )");
-	dbquery("CREATE INDEX r_link_id ON {$TBLPREFIX}remotelinks (r_linkid)");
-	dbquery("CREATE INDEX r_file    ON {$TBLPREFIX}remotelinks (r_file  )");
+	dbquery("CREATE INDEX {$TBLPREFIX}r_gid     ON {$TBLPREFIX}remotelinks (r_gid   )");
+	dbquery("CREATE INDEX {$TBLPREFIX}r_link_id ON {$TBLPREFIX}remotelinks (r_linkid)");
+	dbquery("CREATE INDEX {$TBLPREFIX}r_file    ON {$TBLPREFIX}remotelinks (r_file  )");
 }
 /**
  * Create the soundex table
@@ -1185,8 +1185,8 @@ function create_soundex_table() {
 		" sx_ln_dm_code  TEXT             NULL".
 		")"
 	);
-	dbquery("CREATE INDEX sx_i_id_ix ON {$TBLPREFIX}soundex (sx_i_id)");
-	dbquery("CREATE INDEX sx_file_ix ON {$TBLPREFIX}soundex (sx_file)");
+	dbquery("CREATE INDEX {$TBLPREFIX}sx_i_id_ix ON {$TBLPREFIX}soundex (sx_i_id)");
+	dbquery("CREATE INDEX {$TBLPREFIX}sx_file_ix ON {$TBLPREFIX}soundex (sx_file)");
 }
 /**
  * Create the media table
@@ -1207,8 +1207,8 @@ function create_media_table() {
 		" PRIMARY KEY (m_id)".
 		")"
 	);
-	dbquery("CREATE INDEX m_media      ON {$TBLPREFIX}media (m_media           )");
-	dbquery("CREATE INDEX m_media_file ON {$TBLPREFIX}media (m_media, m_gedfile)");
+	dbquery("CREATE INDEX {$TBLPREFIX}m_media      ON {$TBLPREFIX}media (m_media           )");
+	dbquery("CREATE INDEX {$TBLPREFIX}m_media_file ON {$TBLPREFIX}media (m_media, m_gedfile)");
 }
 /**
  * Create the dates table
@@ -1232,17 +1232,17 @@ function create_dates_table() {
 		" d_type       VARCHAR(13)  NULL".
 		" )"
 	);
-	dbquery("CREATE INDEX date_day        ON {$TBLPREFIX}dates (d_day        )") ;
-	dbquery("CREATE INDEX date_month      ON {$TBLPREFIX}dates (d_month      )");
-	dbquery("CREATE INDEX date_mon        ON {$TBLPREFIX}dates (d_mon        )");
-	dbquery("CREATE INDEX date_year       ON {$TBLPREFIX}dates (d_year       )");
-	dbquery("CREATE INDEX date_datestamp  ON {$TBLPREFIX}dates (d_datestamp  )");
-	dbquery("CREATE INDEX date_julianday1 ON {$TBLPREFIX}dates (d_julianday1 )");
-	dbquery("CREATE INDEX date_julianday2 ON {$TBLPREFIX}dates (d_julianday2 )");
-	dbquery("CREATE INDEX date_gid        ON {$TBLPREFIX}dates (d_gid        )");
-	dbquery("CREATE INDEX date_file       ON {$TBLPREFIX}dates (d_file       )");
-	dbquery("CREATE INDEX date_type       ON {$TBLPREFIX}dates (d_type       )");
-	dbquery("CREATE INDEX date_fact_gid   ON {$TBLPREFIX}dates (d_fact, d_gid)");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_day        ON {$TBLPREFIX}dates (d_day        )") ;
+	dbquery("CREATE INDEX {$TBLPREFIX}date_month      ON {$TBLPREFIX}dates (d_month      )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_mon        ON {$TBLPREFIX}dates (d_mon        )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_year       ON {$TBLPREFIX}dates (d_year       )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_datestamp  ON {$TBLPREFIX}dates (d_datestamp  )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_julianday1 ON {$TBLPREFIX}dates (d_julianday1 )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_julianday2 ON {$TBLPREFIX}dates (d_julianday2 )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_gid        ON {$TBLPREFIX}dates (d_gid        )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_file       ON {$TBLPREFIX}dates (d_file       )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_type       ON {$TBLPREFIX}dates (d_type       )");
+	dbquery("CREATE INDEX {$TBLPREFIX}date_fact_gid   ON {$TBLPREFIX}dates (d_fact, d_gid)");
 }
 
 /**
@@ -1263,9 +1263,9 @@ function create_media_mapping_table() {
 		" PRIMARY KEY (mm_id)".
 		")"
 	);
-	dbquery("CREATE INDEX mm_media_id      ON {$TBLPREFIX}media_mapping (mm_media, mm_gedfile)");
-	dbquery("CREATE INDEX mm_media_gid     ON {$TBLPREFIX}media_mapping (mm_gid, mm_gedfile  )");
-	dbquery("CREATE INDEX mm_media_gedfile ON {$TBLPREFIX}media_mapping (mm_gedfile          )");
+	dbquery("CREATE INDEX {$TBLPREFIX}mm_media_id      ON {$TBLPREFIX}media_mapping (mm_media, mm_gedfile)");
+	dbquery("CREATE INDEX {$TBLPREFIX}mm_media_gid     ON {$TBLPREFIX}media_mapping (mm_gid, mm_gedfile  )");
+	dbquery("CREATE INDEX {$TBLPREFIX}mm_media_gedfile ON {$TBLPREFIX}media_mapping (mm_gedfile          )");
 }
 /**
  * Create the nextid table

@@ -538,10 +538,10 @@ function checkTableExists() {
 			" m_subject VARCHAR(255)     NULL,".
 			" m_body    TEXT             NULL,".
 			" m_created VARCHAR(255)     NULL,".
-			" PRIMARY KEY(m_id)".
+			" PRIMARY KEY (m_id)".
 			")"
 		);
-		dbquery("CREATE INDEX messages_to ON {$TBLPREFIX}messages (m_to)");
+		dbquery("CREATE INDEX {$TBLPREFIX}messages_to ON {$TBLPREFIX}messages (m_to)");
 	}
 	if (!$has_favorites || $sqlite && (!$has_fav_note)) {
 		dbquery("DROP TABLE {$TBLPREFIX}favorites", false);
@@ -555,10 +555,10 @@ function checkTableExists() {
 			" fv_url      VARCHAR(255)    NULL,".
 		 	" fv_title    VARCHAR(255)    NULL,".
 			" fv_note     TEXT,".
-			" PRIMARY KEY(fv_id)".
+			" PRIMARY KEY (fv_id)".
 			")"
 		);
-		dbquery("CREATE INDEX favorites_username ON {$TBLPREFIX}favorites (fv_username)");
+		dbquery("CREATE INDEX {$TBLPREFIX}favorites_username ON {$TBLPREFIX}favorites (fv_username)");
 	} else {
 		if (!$has_fav_note) {
 			dbquery("ALTER TABLE {$TBLPREFIX}favorites ADD fv_url   VARCHAR(255) NULL");
@@ -576,10 +576,10 @@ function checkTableExists() {
 		 	" b_order    INT              NULL,".
 			" b_name     VARCHAR(255)     NULL,".
 			" b_config   TEXT             NULL,".
-			" PRIMARY KEY(b_id)".
+			" PRIMARY KEY (b_id)".
 			")"
 		);
-		dbquery("CREATE INDEX blocks_username ON {$TBLPREFIX}blocks (b_username)");
+		dbquery("CREATE INDEX {$TBLPREFIX}blocks_username ON {$TBLPREFIX}blocks (b_username)");
 	} else {
 		if (!$has_blockconfig) {
 			dbquery("ALTER TABLE {$TBLPREFIX}blocks ADD b_config TEXT NOT NULL");
@@ -594,10 +594,10 @@ function checkTableExists() {
 			" n_date     INT              NULL,".
 			" n_title    VARCHAR(255)     NULL,".
 			" n_text     TEXT             NULL,".
-			" PRIMARY KEY(n_id)".
+			" PRIMARY KEY (n_id)".
 			")"
 		);
-		dbquery("CREATE INDEX news_username ON {$TBLPREFIX}news (n_username)");
+		dbquery("CREATE INDEX {$TBLPREFIX}news_username ON {$TBLPREFIX}news (n_username)");
 	}
 	if (!$has_mutex) {
 		dbquery("DROP TABLE {$TBLPREFIX}mutex", false);
@@ -610,7 +610,7 @@ function checkTableExists() {
 			" PRIMARY KEY (mx_id)".
 			")"
 		);
-		dbquery("CREATE INDEX mutex_name ON {$TBLPREFIX}mutex (mx_name)");
+		dbquery("CREATE INDEX {$TBLPREFIX}mutex_name ON {$TBLPREFIX}mutex (mx_name)");
 	}
 	return true;
 }
