@@ -282,6 +282,12 @@ class Event {
 				$this->label=$factarray[$this->tag];
 			else
 				$this->label=$this->tag;
+			// MARR_XXXX
+			if ($this->GetType()) {
+				$key = $this->tag."_".strtoupper($this->type);
+				if (array_key_exists($key, $factarray))
+					$this->label=$factarray[$key];
+			}
 
 		if ($abbreviate)
 			if (isset ($factAbbrev[$this->tag])) return $factAbbrev[$this->tag];
@@ -294,8 +300,9 @@ class Event {
 	 * Print a simple fact version of this event
 	 *
 	 * @param boolean $return	whether to print or return
+	 * @param boolean $anchor	whether to add anchor to date and place
 	 */
-	function print_simple_fact($return=false) {
+	function print_simple_fact($return=false, $anchor=false) {
 		global $pgv_lang, $SHOW_PEDIGREE_PLACES, $factarray, $ABBREVIATE_CHART_LABELS;
 
 		if (!$this->canShow()) return "";
@@ -307,8 +314,9 @@ class Event {
 			$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","OBJE","CHAN","_SEPR","RESI", "DATA", "MAP");
 			if (!in_array($this->tag, $emptyfacts))
 				$data .= PrintReady($this->detail);
-			if (!$this->dest) $data .= format_fact_date($this, false, false, true);
-			$data .= format_fact_place($this, false, false, false, true);
+			if (!$this->dest)
+				$data .= format_fact_date($this, $anchor, false, true);
+			$data .= format_fact_place($this, $anchor, false, false);
 		}
 		$data .= "<br />\n";
 		if (!$return) print $data;
