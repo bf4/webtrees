@@ -1007,7 +1007,7 @@ function create_individuals_table() {
 		" i_rin      VARCHAR(255)           NULL,".
 		" i_name     VARCHAR(255)           NULL,".
 		" i_isdead   INT DEFAULT 1          NULL,".
-		" i_gedcom ".DB_LONGTEXT_TYPE."     NULL,".
+		" i_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" i_letter   VARCHAR(5)             NULL,".
 		" i_surname  VARCHAR(100)           NULL,".
 		" PRIMARY KEY (i_id, i_file)".
@@ -1033,7 +1033,7 @@ function create_families_table() {
 		" f_husb     VARCHAR(255)           NULL,".
 		" f_wife     VARCHAR(255)           NULL,".
 		" f_chil     TEXT                   NULL,".
-		" f_gedcom ".DB_LONGTEXT_TYPE."     NULL,".
+		" f_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" f_numchil   INT                   NULL,".
 		" PRIMARY KEY (f_id, f_file)".
 		")"
@@ -1055,7 +1055,7 @@ function create_sources_table() {
 		" s_id       VARCHAR(255)       NOT NULL,".
 		" s_file     INT                NOT NULL,".
 		" s_name     VARCHAR(255)           NULL,".
-		" s_gedcom ".DB_LONGTEXT_TYPE."     NULL,".
+		" s_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (s_id, s_file)".
 		")"
 	);
@@ -1075,7 +1075,7 @@ function create_other_table() {
 		" o_id     VARCHAR(255)         NOT NULL,".
 		" o_file   INT                  NOT NULL,".
 	 	" o_type   VARCHAR(20)              NULL,".
-		" o_gedcom ".DB_LONGTEXT_TYPE."     NULL,".
+		" o_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (o_id, o_file)".
 		")"
 	);
@@ -1203,7 +1203,7 @@ function create_media_table() {
 		" m_titl     VARCHAR(255)           NULL,".
 		" m_file     VARCHAR(255)           NULL,".
 		" m_gedfile  INT                    NULL,".
-		" m_gedrec ".DB_LONGTEXT_TYPE."     NULL,".
+		" m_gedrec ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (m_id)".
 		")"
 	);
@@ -1254,12 +1254,12 @@ function create_media_mapping_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}media_mapping", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}media_mapping (".
-		" mm_id       INT                NOT NULL,".
-		" mm_media    VARCHAR(15)        NOT NULL DEFAULT '',".
-		" mm_gid      VARCHAR(15)        NOT NULL DEFAULT '',".
-		" mm_order    INT                NOT NULL DEFAULT '0',".
-		" mm_gedfile  INT                NULL,".
-		" mm_gedrec ".DB_LONGTEXT_TYPE." NULL,".
+		" mm_id       INT                    NOT NULL,".
+		" mm_media    VARCHAR(15)            NOT NULL DEFAULT '',".
+		" mm_gid      VARCHAR(15)            NOT NULL DEFAULT '',".
+		" mm_order    INT                    NOT NULL DEFAULT '0',".
+		" mm_gedfile  INT                    NULL,".
+		" mm_gedrec ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (mm_id)".
 		")"
 	);

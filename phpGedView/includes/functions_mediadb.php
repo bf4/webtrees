@@ -530,7 +530,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	$sql = "SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	if ($random == true) {
-		$sql .= " ORDER BY ".DB_RANDOM."()";
+		$sql .= " ORDER BY ".PGV_DB_RANDOM;
 		$res = & dbquery($sql, true, 5);
 	} else {
 		$sql .= " AND (m_file LIKE '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file LIKE '%://%') ORDER BY m_id desc";
