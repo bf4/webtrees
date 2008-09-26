@@ -1,5 +1,5 @@
 <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery/jquery.autocomplete.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
 <link type="text/css" rel="stylesheet" href="js/jquery/jquery.autocomplete.css" />
 <script type="text/javascript">
@@ -15,8 +15,6 @@ jQuery(document).ready(function($){
 			return row[1];
 		},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});
 	// FAM
@@ -29,8 +27,6 @@ jQuery(document).ready(function($){
 			return row[1];
 		},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});
 	// SOUR
@@ -44,16 +40,12 @@ jQuery(document).ready(function($){
 			return row[1];
 		},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});
 	// SOUR:TITL
 	$("#TITL").autocomplete("autocomplete.php", {
 		extraParams: {field: 'SOUR_TITL'},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});
 	// SOUR*:PAGE*
@@ -63,8 +55,6 @@ jQuery(document).ready(function($){
 			option: function() { return $("input[id^=SOUR]").val(); }
 		},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});
 	// *SOUR:*PAGE
@@ -74,8 +64,6 @@ jQuery(document).ready(function($){
 			option: function() { return $("input[id$=SOUR]").val(); }
 		},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});
 	// Reset PAGE autocomplete cache when SOUR is changed
@@ -91,16 +79,12 @@ jQuery(document).ready(function($){
 			return row[1];
 		},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});
 	// REPO:NAME
 	/*$("#NAME").autocomplete("autocomplete.php", {
 		extraParams: {field: 'REPO_NAME'},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});*/
 	// OBJE
@@ -113,8 +97,6 @@ jQuery(document).ready(function($){
 			return row[1];
 		},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 0
 	});
 	// INDI or FAM or SOUR or REPO or OBJE
@@ -127,16 +109,12 @@ jQuery(document).ready(function($){
 			return row[1];
 		},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 2
 	});
 	// PLAC : full [City, County, State/Province, Country]
 	$(".PLAC, #place, input[id*=place], input[name^=PLAC], input[name$=PLAC]").autocomplete("autocomplete.php", {
 		extraParams: {field:'PLAC'},
 		width: 400,
-	  max: 100,
-		matchContains: true,
 		minChars: 2
 	});
 	// PLAC : splitted (mainly for search.php)
@@ -146,48 +124,37 @@ jQuery(document).ready(function($){
 			option:'split'
 		},
 		width: 300,
-	  max: 100,
-		matchContains: true,
 		minChars: 2
 	});
 	// GIVN
 	$("#GIVN, input[name*=GIVN], input[name*=firstname]").autocomplete("autocomplete.php", {
 		extraParams: {field:'GIVN'},
-		width: 300,
-	  max: 100,
-		matchContains: true,
 		minChars: 1
 	});
 	// SURN
 	$("#SURN, input[name*=SURN], input[name*=lastname]").autocomplete("autocomplete.php", {
 		extraParams: {field:'SURN'},
 		width: 300,
-	  max: 100,
-		matchContains: true,
 		minChars: 1
 	});
 	// NPFX
 	var npfx_accept = new Array(<?php if (isset($NPFX_accept)) foreach($NPFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
 	$("#NPFX").autocomplete(npfx_accept, {
-	  max: 100,
 		minChars: 0
 	});
 	// SPFX
 	var spfx_accept = new Array(<?php if (isset($SPFX_accept)) foreach($SPFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
 	$("#SPFX").autocomplete(spfx_accept, {
-	  max: 100,
 		minChars: 0
 	});
 	// NSFX
 	var nsfx_accept = new Array(<?php if (isset($NSFX_accept)) foreach($NSFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
 	$("#NSFX").autocomplete(nsfx_accept, {
-	  max: 100,
 		minChars: 0
 	});
 	// FILE_FORM
 	var file_form_accept = new Array(<?php if (isset($FILE_FORM_accept)) foreach($FILE_FORM_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);
 	$("#FILE_FORM").autocomplete(file_form_accept, {
-	  max: 100,
 		minChars: 0
 	});
 });

@@ -27,10 +27,10 @@ require './config.php';
 define('PGV_AUTOCOMPLETE_LIMIT', 100);
 
 //-- test user privilege
-if (!PGV_USER_CAN_EDIT) {
+/*if (!PGV_USER_CAN_EDIT) {
 	header('HTTP/1.0 403 Forbidden');
 	die('<h1>403 Forbidden</h1>');
-}
+}*/
 
 
 //-- args
