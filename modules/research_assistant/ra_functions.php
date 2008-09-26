@@ -115,7 +115,7 @@ class ra_functions {
 		if (!in_array($TBLPREFIX.'factlookup', $data)) {
 			dbquery(
 				"CREATE TABLE {$TBLPREFIX}factlookup (".
-				" id        ".DB_AUTO_ID_TYPE." NOT NULL,".
+				" id        ".PGV_DB_AUTO_ID_TYPE." NOT NULL,".
 				" description VARCHAR(255)      NOT NULL,".
 				" startdate   INT               NOT NULL,".
 				" enddate     INT               NOT NULL,".
