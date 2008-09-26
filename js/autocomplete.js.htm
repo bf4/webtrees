@@ -6,8 +6,23 @@
 jQuery.noConflict(); // @see http://docs.jquery.com/Using_jQuery_with_Other_Libraries/
 jQuery(document).ready(function($){
 	// INDI
-	$(".ASSO, #spouseid, input[id*=pid], input[id^=gedcomid], input[id^=rootid], input[id$=ROOT_ID], input[name^=FATHER], input[name^=MOTHER], input[name^=CHIL]").autocomplete("autocomplete.php", {
+	$("#spouseid, input[id*=pid], input[id^=gedcomid], input[id^=rootid], input[id$=ROOT_ID], input[name^=FATHER], input[name^=MOTHER], input[name^=CHIL]").autocomplete("autocomplete.php", {
 		extraParams: {field:'INDI'},
+		formatItem: function(row, i) {
+			return row[0] + " (" + row[1] + ")";
+		},
+		formatResult: function(row) {
+			return row[1];
+		},
+		width: 400,
+		minChars: 0
+	});
+	// INDI ASSOciate
+	$(".ASSO").autocomplete("autocomplete.php", {
+		extraParams: {
+			field:'INDI',
+			option: function() { return $("input[name=pid]").val(); }
+		},
 		formatItem: function(row, i) {
 			return row[0] + " (" + row[1] + ")";
 		},
@@ -34,7 +49,6 @@ jQuery(document).ready(function($){
 		extraParams: {field:'SOUR'},
 		formatItem: function(row, i) {
 			return row[0] + " (" + row[1] + ")";
-			//return i + ". " + row[0] + " (" + row[1] + ")";
 		},
 		formatResult: function(row) {
 			return row[1];
@@ -127,10 +141,10 @@ jQuery(document).ready(function($){
 		minChars: 2
 	});
 	// GIVN
-	$("#GIVN, input[name*=GIVN], input[name*=firstname]").autocomplete("autocomplete.php", {
+	/*$("#GIVN, input[name*=GIVN], input[name*=firstname]").autocomplete("autocomplete.php", {
 		extraParams: {field:'GIVN'},
 		minChars: 1
-	});
+	});*/
 	// SURN
 	$("#SURN, input[name*=SURN], input[name*=lastname]").autocomplete("autocomplete.php", {
 		extraParams: {field:'SURN'},

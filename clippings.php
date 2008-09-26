@@ -127,9 +127,9 @@ if($ct==0) {
 				<input type="text" name="id" id="cart_item_id" size="5"/>
 			</td>
 			<td class="optionbox">
-				<?php //print_findindi_link('pid',''); ?>
-				<?php //print_findfamily_link('pid',''); ?>
-				<?php //print_findsource_link('pid',''); ?>
+				<?php print_findindi_link('pid',''); ?>
+				<?php print_findfamily_link('pid',''); ?>
+				<?php print_findsource_link('pid',''); ?>
 				<input type="submit" value="<?php print $pgv_lang["add"];?>"/>
 
 			</td>
