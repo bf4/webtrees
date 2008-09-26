@@ -88,11 +88,8 @@ $hasplaceform = strpos($header, "1 PLAC");
 
 //-- hierarchical display
 if ($display=="hierarchy") {
-	// -- array of names
-	$placelist = array();
-	$positions = array();
-	$numfound = 0;
-	get_place_list();
+	$placelist=get_place_list($parent, $level);
+	$numfound=count($placelist);
 	// -- sort the array
 	$placelist = array_unique($placelist);
 	uasort($placelist, "stringsort");
@@ -125,7 +122,7 @@ if ($display=="hierarchy") {
 		if ($numls>=0 && (($TEXT_DIRECTION=="ltr" && hasRtLText($parent[$numls])) || ($TEXT_DIRECTION=="rtl" && !hasRtLText($parent[$numls])))) print $pgv_lang["top_level"].", ";
 		print "</a>";
 			for($i=$numls; $i>=0; $i--) {
-			print "<a href=\"?level=".($i+1)."&amp;";
+			print "<a href=\"?level=".($i+1);
 			for ($j=0; $j<=$i; $j++) {
 				$levels = explode(',', trim($parent[$j]));
 				// Routine for replacing ampersands
@@ -363,7 +360,7 @@ if ($level > 0) {
 				$myindilist[]=$record;
 				break;
 			case 'SOUR':
-				$mysourlist[]=$record;
+				$mysourcelist[]=$record;
 				break;
 			case 'FAM':
 				$myfamlist[]=$record;
