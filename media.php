@@ -183,24 +183,22 @@ function set_perms($path, $filemode, $dirmode) {
 // global var used by recursive functions
 $starttime = time();
 
-// Get rid of extra slashes in input variables
-if (isset($filename)) $filename = stripslashes($filename);
-if (isset($directory))$directory = stripslashes($directory);
-if (isset($movetodir))$movetodir = stripslashes($movetodir);
-if (isset($movefile))$movefile = stripslashes($movefile);
+// TODO Determine source and validation requirements for these variables
+$filename=safe_REQUEST($_REQUEST, 'filename');
+$directory=safe_REQUEST($_REQUEST, 'directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
+$movetodir=safe_REQUEST($_REQUEST, 'movetodir');
+$movefile=safe_REQUEST($_REQUEST, 'movefile');
+$action=safe_REQUEST($_REQUEST, 'action', PGV_REGEX_ALPHA, 'filter');
+$subclick=safe_REQUEST($_REQUEST, 'subclick', PGV_REGEX_ALPHA, 'none');
+$media=safe_REQUEST($_REQUEST, 'media');
+$filter=safe_REQUEST($_REQUEST, 'filter', PGV_REGEX_NOSCRIPT);
 
-if (empty($action)) $action="filter";
-if (empty($subclick)) $subclick = "none";
+$level=safe_REQUEST($_REQUEST, 'level', PGV_REGEX_INTEGER, 0);
+$start=safe_REQUEST($_REQUEST, 'start', PGV_REGEX_INTEGER, 0);
+$max=safe_REQUEST($_REQUEST, 'max', PGV_REGEX_INTEGER, 20);
 
-if (!isset($media)) $media="";
-if (!isset($filter) || strlen($filter)<2) $filter="";
-if (!isset($directory)) $directory = $MEDIA_DIRECTORY;
-if (!isset($level)) $level=0;
-if (!isset($start)) $start = 0;
-if (!isset($max)) $max = 20;
+$showthumb=safe_REQUEST($_REQUEST, 'showthumb');
 
-if (!isset($showthumb)) $showthumb = false;
-else $showthumb= isset($showthumb);
 if (count($_POST) == 0) $showthumb = true;
 
 $thumbget = "";
@@ -299,7 +297,7 @@ print_header($pgv_lang["manage_media"]);
 	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
 	<!-- // NOTE: Filter options -->
 	<tr><td class="descriptionbox wrap width25"><?php print_help_link("simple_filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
-	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if(isset($filter)) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
+	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Upload media files -->
 	<td class="descriptionbox wrap width25"><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"]; ?></td>
