@@ -1,6 +1,6 @@
 <?php
 /**
- * Russian texts
+ * Vietnamese texts
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2008  PGV Development Team. All rights reserved.
