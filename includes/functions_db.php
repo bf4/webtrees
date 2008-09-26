@@ -1917,8 +1917,10 @@ function get_place_parent_id($parent, $level) {
  * we want to get.  The level holds the level in the hierarchy that
  * we are at.
  */
-function get_place_list() {
-	global $numfound, $level, $parent, $TBLPREFIX, $placelist;
+function get_place_list($parent, $level) {
+	global $TBLPREFIX;
+
+	$placelist=array();
 
 	// --- find all of the place in the file
 	if ($level==0)
@@ -1931,9 +1933,10 @@ function get_place_list() {
 
 	while ($row =& $res->fetchRow()) {
 		$placelist[] = $row[0];
-		$numfound++;
 	}
 	$res->free();
+
+	return $placelist;
 }
 
 /**
@@ -1943,7 +1946,9 @@ function get_place_list() {
  * @return array
  */
 function get_place_positions($parent, $level='') {
-	global $positions, $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX, $DBCONN;
+
+	$positions=array();
 
 	if ($level!='')
 		$p_id = get_place_parent_id($parent, $level);
