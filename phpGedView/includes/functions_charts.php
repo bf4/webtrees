@@ -162,7 +162,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	if (!empty($upfamid) and ($sosa!=-1) and ($view != "preview")) {
 		print "<td valign=\"middle\" rowspan=\"2\">";
-		print_url_arrow($upfamid, encode_url(($sosa==0 ? "?famid={$upfamid}&show_full={$show_full}" : "#{$upfamid}")), "$upfamid", 1);
+		print_url_arrow($upfamid, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "$upfamid", 1);
 		print "</td>\n";
 	}
 	if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
@@ -178,7 +178,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	print "</tr></table>\n\n";
 	if ($sosa!=0) {
-		print "<a href=\"".encode_url("family.php?famid={$famid}")."\" class=\"details1\">";
+		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
 		if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)" . getLRM() . "&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
 		$marriage = $family->getMarriage();
@@ -237,7 +237,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	if (!empty($upfamid) and ($sosa!=-1) and ($view != "preview")) {
 		print "<td valign=\"middle\" rowspan=\"2\">";
-		print_url_arrow($upfamid.$label, encode_url(($sosa==0 ? "?famid={$upfamid}&show_full={$show_full}" : "#{$upfamid}")), "$upfamid", 1);
+		print_url_arrow($upfamid, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "$upfamid", 1);
 		print "</td>\n";
 	}
 	if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
@@ -352,7 +352,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 						// family link
 						if ($famid) {
 							print "<br />";
-							print "<a class=\"details1\" href=\"".encode_url("family.php?famid={$famid}")."\">";
+							print "<a class=\"details1\" href=\"family.php?famid=$famid\">";
 							if ($SHOW_ID_NUMBERS) print getLRM() . "&nbsp;($famid)&nbsp;" . getLRM();
 							print "</a>";
 						}
