@@ -62,11 +62,10 @@ function autocomplete_INDI($limit=PGV_AUTOCOMPLETE_LIMIT) {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT i_id".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE (i_surname {$like} '".$DBCONN->escapeSimple($FILTER)."%'".
-				" OR i_id {$like} '%".$DBCONN->escapeSimple($FILTER)."%')".
+				" WHERE (i_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%'".
+				" OR i_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%')".
 				" AND i_file=".PGV_GED_ID.
 				" LIMIT ".$limit;
 	$res = dbquery($sql);
@@ -100,10 +99,9 @@ function autocomplete_FAM() {
 	foreach (autocomplete_INDI(PGV_AUTOCOMPLETE_LIMIT*2) as $k=>$v)
 		$ids[] = "'".$DBCONN->escapeSimple($k)."'";
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	if (empty($ids))
 		//-- no match : search for FAM id
-		$where = " WHERE f_id {$like} '%".$DBCONN->escapeSimple($FILTER)."%'";
+		$where = " WHERE f_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'";
 	else
 		//-- search for spouses
 		$where = " WHERE (f_husb IN (".join(',', $ids).") OR f_wife IN (".join(',', $ids).") )";
@@ -136,11 +134,10 @@ function autocomplete_SOUR() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT s_id".
 				" FROM {$TBLPREFIX}sources".
-				" WHERE (s_name {$like} '%".$DBCONN->escapeSimple($FILTER)."%'".
-				" OR s_id {$like} '%".$DBCONN->escapeSimple($FILTER)."%')".
+				" WHERE (s_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'".
+				" OR s_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%')".
 				" AND s_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -163,10 +160,9 @@ function autocomplete_SOUR_TITL() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT s_id".
 				" FROM {$TBLPREFIX}sources".
-				" WHERE s_name {$like} '%".$DBCONN->escapeSimple($FILTER)."%'".
+				" WHERE s_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'".
 				" AND s_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -192,11 +188,10 @@ function autocomplete_INDI_SOUR_PAGE() {
 	$sid = $DBCONN->escapeSimple($OPTION);
 	$pag = $DBCONN->escapeSimple($FILTER);
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT i_id".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE (i_gedcom {$like} '%1 SOUR @{$sid}@%2 PAGE %{$pag}%'".
-				" OR     i_gedcom {$like} '%2 SOUR @{$sid}@%3 PAGE %{$pag}%')".
+				" WHERE (i_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$sid}@%2 PAGE %{$pag}%'".
+				" OR     i_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$sid}@%3 PAGE %{$pag}%')".
 				" AND i_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -238,11 +233,10 @@ function autocomplete_FAM_SOUR_PAGE() {
 	$sid = $DBCONN->escapeSimple($OPTION);
 	$pag = $DBCONN->escapeSimple($FILTER);
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT f_id".
 				" FROM {$TBLPREFIX}families".
-				" WHERE (f_gedcom {$like} '%1 SOUR @{$sid}@%2 PAGE %{$pag}%'".
-				" OR     f_gedcom {$like} '%2 SOUR @{$sid}@%3 PAGE %{$pag}%')".
+				" WHERE (f_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$sid}@%2 PAGE %{$pag}%'".
+				" OR     f_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$sid}@%3 PAGE %{$pag}%')".
 				" AND f_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -291,11 +285,10 @@ function autocomplete_REPO() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT o_id".
 				" FROM {$TBLPREFIX}other".
-				" WHERE (o_gedcom {$like} '%1 NAME %".$DBCONN->escapeSimple($FILTER)."%\n%'".
-				" OR o_id {$like} '%".$DBCONN->escapeSimple($FILTER)."%')".
+				" WHERE (o_gedcom ".PGV_DB_LIKE." '%1 NAME %".$DBCONN->escapeSimple($FILTER)."%\n%'".
+				" OR o_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%')".
 				" AND o_file=".PGV_GED_ID.
 				" AND o_type='REPO'".
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
@@ -319,10 +312,9 @@ function autocomplete_REPO_NAME() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT o_id".
 				" FROM {$TBLPREFIX}other".
-				" WHERE o_gedcom {$like} '%1 NAME %".$DBCONN->escapeSimple($FILTER)."%\n%'".
+				" WHERE o_gedcom ".PGV_DB_LIKE." '%1 NAME %".$DBCONN->escapeSimple($FILTER)."%\n%'".
 				" AND o_file=".PGV_GED_ID.
 				" AND o_type='REPO'".
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
@@ -346,11 +338,10 @@ function autocomplete_OBJE() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT m_media".
 				" FROM {$TBLPREFIX}media".
-				" WHERE (m_titl {$like} '%".$DBCONN->escapeSimple($FILTER)."%'".
-				" OR m_media {$like} '".$DBCONN->escapeSimple($FILTER)."%')".
+				" WHERE (m_titl ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'".
+				" OR m_media ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%')".
 				" AND m_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -408,10 +399,9 @@ function autocomplete_SURN() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT i_id, i_surname".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE i_surname {$like} '".$DBCONN->escapeSimple($FILTER)."%'".
+				" WHERE i_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%'".
 				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT*10;
 	$res = dbquery($sql);
@@ -434,10 +424,9 @@ function autocomplete_GIVN() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$like = ($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$sql = "SELECT i_name".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE i_name {$like} '%".$DBCONN->escapeSimple($FILTER)."%/%/%'".
+				" WHERE i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%/%/%'".
 				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT*5;
 	$res = dbquery($sql);

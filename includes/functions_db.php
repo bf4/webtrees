@@ -47,79 +47,79 @@ $REGEXP_DB = (stristr($DBTYPE,'mysql') !== false || $DBTYPE=='pgsql');
  */
 switch ($DBTYPE) {
 case 'mssql':
-	define('DB_AUTO_ID_TYPE',  'INTEGER IDENTITY');
-	define('DB_INT1_TYPE',     'INTEGER');
-	define('DB_INT2_TYPE',     'INTEGER');
-	define('DB_INT3_TYPE',     'INTEGER');
-	define('DB_INT4_TYPE',     'INTEGER');
-	define('DB_INT8_TYPE',     'INTEGER');
-	define('DB_CHAR_TYPE',     'VARCHAR');
-	define('DB_VARCHAR_TYPE',  'VARCHAR');
-	define('DB_UNSIGNED',      '');
-	define('DB_LIKE',          'LIKE');
-	define('DB_RANDOM',        'NEWID');
-	define('DB_TEXT_TYPE',     'TEXT');
-	define('DB_LONGTEXT_TYPE', 'TEXT');
-	define('DB_BEGIN_TRANS',   'BEGIN TRANSACTION');
-	define('DB_COMMIT_TRANS',  'COMMIT TRANSACTION');
+	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER IDENTITY');
+	define('PGV_DB_INT1_TYPE',     'INTEGER');
+	define('PGV_DB_INT2_TYPE',     'INTEGER');
+	define('PGV_DB_INT3_TYPE',     'INTEGER');
+	define('PGV_DB_INT4_TYPE',     'INTEGER');
+	define('PGV_DB_INT8_TYPE',     'INTEGER');
+	define('PGV_DB_CHAR_TYPE',     'VARCHAR');
+	define('PGV_DB_VARCHAR_TYPE',  'VARCHAR');
+	define('PGV_DB_UNSIGNED',      '');
+	define('PGV_DB_LIKE',          'LIKE');
+	define('PGV_DB_RANDOM',        'NEWID');
+	define('PGV_DB_TEXT_TYPE',     'TEXT');
+	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
+	define('PGV_DB_BEGIN_TRANS',   'BEGIN TRANSACTION');
+	define('PGV_DB_COMMIT_TRANS',  'COMMIT TRANSACTION');
 	break;
 case 'sqlite':
-	define('DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
-	define('DB_INT1_TYPE',     'INTEGER');
-	define('DB_INT2_TYPE',     'INTEGER');
-	define('DB_INT3_TYPE',     'INTEGER');
-	define('DB_INT4_TYPE',     'INTEGER');
-	define('DB_INT8_TYPE',     'INTEGER');
-	define('DB_CHAR_TYPE',     'VARCHAR');
-	define('DB_VARCHAR_TYPE',  'VARCHAR');
-	define('DB_UNSIGNED',      '');
-	define('DB_LIKE',          'LIKE');
-	define('DB_RANDOM',        'RANDOM');
-	define('DB_TEXT_TYPE',     'TEXT');
-	define('DB_LONGTEXT_TYPE', 'TEXT');
-	define('DB_BEGIN_TRANS',   'BEGIN');
-	define('DB_COMMIT_TRANS',  'COMMIT');
+	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
+	define('PGV_DB_INT1_TYPE',     'INTEGER');
+	define('PGV_DB_INT2_TYPE',     'INTEGER');
+	define('PGV_DB_INT3_TYPE',     'INTEGER');
+	define('PGV_DB_INT4_TYPE',     'INTEGER');
+	define('PGV_DB_INT8_TYPE',     'INTEGER');
+	define('PGV_DB_CHAR_TYPE',     'VARCHAR');
+	define('PGV_DB_VARCHAR_TYPE',  'VARCHAR');
+	define('PGV_DB_UNSIGNED',      '');
+	define('PGV_DB_LIKE',          'LIKE');
+	define('PGV_DB_RANDOM',        'RANDOM()');
+	define('PGV_DB_TEXT_TYPE',     'TEXT');
+	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
+	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
+	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	break;
 case 'pgsql':
-	define('DB_AUTO_ID_TYPE',  'SERIAL');
-	define('DB_INT1_TYPE',     'SMALLINT');
-	define('DB_INT2_TYPE',     'SMALLINT');
-	define('DB_INT3_TYPE',     'INTEGER');
-	define('DB_INT4_TYPE',     'INTEGER');
-	define('DB_INT8_TYPE',     'BIGINT');
-	define('DB_CHAR_TYPE',     'CHAR');
-	define('DB_VARCHAR_TYPE',  'VARCHAR');
-	define('DB_UNSIGNED',      '');
-	define('DB_LIKE',          'ILIKE');
-	define('DB_RANDOM',        'RANDOM');
-	define('DB_TEXT_TYPE',     'TEXT');
-	define('DB_LONGTEXT_TYPE', 'TEXT');
-	define('DB_BEGIN_TRANS',   'BEGIN');
-	define('DB_COMMIT_TRANS',  'COMMIT');
+	define('PGV_DB_AUTO_ID_TYPE',  'SERIAL');
+	define('PGV_DB_INT1_TYPE',     'SMALLINT');
+	define('PGV_DB_INT2_TYPE',     'SMALLINT');
+	define('PGV_DB_INT3_TYPE',     'INTEGER');
+	define('PGV_DB_INT4_TYPE',     'INTEGER');
+	define('PGV_DB_INT8_TYPE',     'BIGINT');
+	define('PGV_DB_CHAR_TYPE',     'CHAR');
+	define('PGV_DB_VARCHAR_TYPE',  'VARCHAR');
+	define('PGV_DB_UNSIGNED',      '');
+	define('PGV_DB_LIKE',          'ILIKE');
+	define('PGV_DB_RANDOM',        'RANDOM()');
+	define('PGV_DB_TEXT_TYPE',     'TEXT');
+	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
+	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
+	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	break;
 case 'mysql':
 default:
-	define('DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');
-	define('DB_INT1_TYPE',     'TINYINT');
-	define('DB_INT2_TYPE',     'SMALLINT');
-	define('DB_INT3_TYPE',     'MEDIUMINT');
-	define('DB_INT4_TYPE',     'INT');
-	define('DB_INT8_TYPE',     'BIGINT');
-	define('DB_CHAR_TYPE',     'CHAR');
-	define('DB_VARCHAR_TYPE',  'VARCHAR');
-	define('DB_UNSIGNED',      'UNSIGNED');
-	define('DB_LIKE',          'LIKE');
-	define('DB_RANDOM',        'RAND');
-	define('DB_TEXT_TYPE',     'TEXT');
-	define('DB_LONGTEXT_TYPE', 'LONGTEXT');
-	define('DB_BEGIN_TRANS',   'BEGIN');
-	define('DB_COMMIT_TRANS',  'COMMIT');
+	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');
+	define('PGV_DB_INT1_TYPE',     'TINYINT');
+	define('PGV_DB_INT2_TYPE',     'SMALLINT');
+	define('PGV_DB_INT3_TYPE',     'MEDIUMINT');
+	define('PGV_DB_INT4_TYPE',     'INT');
+	define('PGV_DB_INT8_TYPE',     'BIGINT');
+	define('PGV_DB_CHAR_TYPE',     'CHAR');
+	define('PGV_DB_VARCHAR_TYPE',  'VARCHAR');
+	define('PGV_DB_UNSIGNED',      'UNSIGNED');
+	define('PGV_DB_LIKE',          'LIKE');
+	define('PGV_DB_RANDOM',        'RAND()');
+	define('PGV_DB_TEXT_TYPE',     'TEXT');
+	define('PGV_DB_LONGTEXT_TYPE', 'LONGTEXT');
+	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
+	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	break;
 }
 
 // Define some "standard" columns, so we create our tables consistently
-define('PGV_DB_COL_FILE', DB_INT2_TYPE.' '.DB_UNSIGNED);
-define('PGV_DB_COL_XREF', DB_VARCHAR_TYPE.'(63)');
+define('PGV_DB_COL_FILE', PGV_DB_INT2_TYPE.' '.PGV_DB_UNSIGNED);
+define('PGV_DB_COL_XREF', PGV_DB_VARCHAR_TYPE.'(63)');
 
 //-- uncomment the following line to turn on sql query logging
 //$SQL_LOG = true;
@@ -615,13 +615,12 @@ function find_gedcom_record($pid, $gedfile='') {
 	// Should only get here if the user is searching using the wrong upper/lower case.
 	// Use LIKE to match case-insensitively, as this can still use the database indexes.
 	$pid=str_replace(array('_', '%','@'), array('@_','@%', '@@'), $pid);
-	$like=($DBTYPE=='pgsql') ? 'ILIKE' : 'LIKE';
 	$res=dbquery(
-		"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id {$like} '{$pid}' ESCAPE '@' AND i_file={$ged_id} UNION ALL ".
-		"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id {$like} '{$pid}' ESCAPE '@' AND f_file={$ged_id} UNION ALL ".
-		"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id {$like} '{$pid}' ESCAPE '@' AND s_file={$ged_id} UNION ALL ".
-		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media {$like} '{$pid}' ESCAPE '@' AND m_gedfile={$ged_id} UNION ALL ".
-		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id {$like} '{$pid}' ESCAPE '@' AND o_file={$ged_id}"
+		"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND i_file={$ged_id} UNION ALL ".
+		"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND f_file={$ged_id} UNION ALL ".
+		"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND s_file={$ged_id} UNION ALL ".
+		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND m_gedfile={$ged_id} UNION ALL ".
+		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND o_file={$ged_id}"
 	);
 	$row=$res->fetchRow();
 	$res->free();
