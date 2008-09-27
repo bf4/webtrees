@@ -31,10 +31,13 @@ require './config.php';
 require("includes/functions_edit.php");
 require("includes/functions_import.php");
 
-if (empty($action)) $action="choose";
-if (empty($gid1)) $gid1="";
-if (empty($gid2)) $gid2="";
-if (empty($ged2)) $ged2=$GEDCOM;
+$ged=$GEDCOM;
+$gid1=safe_POST_xref('gid1');
+$gid2=safe_POST_xref('gid2');
+$action=safe_POST('action', PGV_REGEX_ALPHA, 'choose');
+$ged2=safe_POST('ged2', PGV_REGEX_NOSCRIPT, $GEDCOM);
+$keep1=safe_POST('keep1', PGV_REGEX_UNSAFE);
+$keep2=safe_POST('keep2', PGV_REGEX_UNSAFE);
 if (empty($keep1)) $keep1=array();
 if (empty($keep2)) $keep2=array();
 
