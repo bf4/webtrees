@@ -26,13 +26,6 @@
 require './config.php';
 define('PGV_AUTOCOMPLETE_LIMIT', 100);
 
-//-- test user privilege
-/*if (!PGV_USER_CAN_EDIT) {
-	header('HTTP/1.0 403 Forbidden');
-	die('<h1>403 Forbidden</h1>');
-}*/
-
-
 //-- args
 $FILTER = @$_GET["q"];
 $OPTION = @$_GET["option"];
@@ -474,7 +467,8 @@ function autocomplete_PLAC() {
 
 	function place_ok($v) {
 		global $FILTER;
-		return (substr_count($v, ", ")==3 && stripos($v, $FILTER)!==false);
+		return (stripos($v, $FILTER)!==false);
+		//return (substr_count($v, ", ")==3 && stripos($v, $FILTER)!==false);
 	}
 	$data = array_filter($data, "place_ok");
 
