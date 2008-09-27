@@ -27,22 +27,22 @@
 
 require './config.php';
 
-require_once("includes/functions_export.php");
+require_once 'includes/functions_export.php';
 
-if (!PGV_USER_GEDCOM_ADMIN || empty ($ged)) {
+// Validate user parameters
+$ged                   =safe_GET('ged',                     get_all_gedcoms());
+$action                =safe_GET('action',                 'download');
+$remove                =safe_GET('remove',                 'yes', 'no');
+$convert               =safe_GET('convert',                'yes', 'no');
+$zip                   =safe_GET('zip',                    'yes', 'no');
+$privatize_export      =safe_GET('privatize_export',       'yes', 'no');
+$privatize_export_level=safe_GET('privatize_export_level', array('visitor', 'user', 'gedadmin', 'admin'));
+$filetype              =safe_GET('filetype',               array('gedcom', 'gramps'));
+
+if (!PGV_USER_GEDCOM_ADMIN || !$ged) {
 	header("Location: editgedcoms.php");
 	exit;
 }
-if (!isset ($action))
-	$action = "";
-if (!isset ($remove))
-	$remove = "no";
-if (!isset ($convert))
-	$convert = "no";
-if (!isset ($zip))
-	$zip = "no";
-if (!isset ($privatize_export))
-	$privatize_export = "no";
 
 if ($action == "download" && $zip == "yes") {
 	require "includes/pclzip.lib.php";
@@ -113,7 +113,7 @@ print_header($pgv_lang["download_gedcom"]);
 	<div class="center">
 	<h2><?php print $pgv_lang["download_gedcom"]; ?></h2>
 	<br />
-	<form name="convertform" method="post">
+	<form name="convertform" method="get">
 		<input type="hidden" name="action" value="download" />
 		<input type="hidden" name="ged" value="<?php print $ged; ?>" />
 		<table class="list_table" border="0" align="center" valign="top">
