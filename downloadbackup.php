@@ -26,7 +26,9 @@
 
 require './config.php';
 
-if (!PGV_USER_GEDCOM_ADMIN || empty($fname)||preg_match("/\.zip$/", $fname)==0) {
+$fname=safe_GET('fname');
+
+if (!PGV_USER_GEDCOM_ADMIN || empty($fname) || preg_match("/\.zip$/", $fname)==0) {
 	print $pgv_lang['access_denied'];
 	exit;
 }
