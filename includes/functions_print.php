@@ -637,12 +637,15 @@ function print_footer() {
 	global $without_close, $pgv_lang, $view, $buildindex, $DBTYPE;
 	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
-
+	
+	$view = safe_get('view');
+	
 	if (!isset($footer_count)) $footer_count = 1;
 	else $footer_count++;
 	print "<!-- begin footer -->";
 	if ($view!="preview") {
 		include($footerfile);
+		echo "<br />";
 	}
 	else {
 		include($print_footerfile);
@@ -654,6 +657,7 @@ function print_footer() {
 		}
 		$printlink = true;
 		print "</div>";
+		echo "<br />";
 	}
 	if (function_exists("load_behaviour")) {
 		load_behaviour();  // @see function_print_lists.php
