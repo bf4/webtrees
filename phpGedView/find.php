@@ -31,7 +31,7 @@ require_once 'includes/functions_print_lists.php';
 $type          =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
 $filter        =safe_GET('filter');
 $action        =safe_GET('action');
-$callback      =safe_GET('filter', PGV_REGEX_NOSCRIPT, 'paste_id');
+$callback      =safe_GET('callback', PGV_REGEX_NOSCRIPT, 'paste_id');
 $create        =safe_GET('create');
 $media         =safe_GET('media');
 $external_links=safe_GET('external_links');
