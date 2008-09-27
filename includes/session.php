@@ -64,7 +64,7 @@ define('PGV_UTF8_RLM', "\xE2\x80\x8F"); // U+200F
 define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
 define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
 define('PGV_EVENTS_MARR', 'MARR|MARB');
-define('PGV_EVENTS_DIV',  'DIV|ANUL');
+define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);
 @ini_set('display_errors', '1');
