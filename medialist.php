@@ -204,8 +204,10 @@ if ($search=="yes") {
 }
 // Count the number of items in the medialist
 $ct=count($medialist);
-if (!isset($start)) $start = 0;
-if (!isset($max)) $max = 20;
+$start = 0;
+$max = 20;
+if (isset($_GET["start"])) $start = $_GET["start"];
+if (isset($_GET["max"])) $max = $_GET["max"];
 $count = $max;
 if ($start+$count > $ct) $count = $ct-$start;
 
