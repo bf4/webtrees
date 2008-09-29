@@ -24,7 +24,6 @@
  * @version $Id$
  */
 require './config.php';
-define('PGV_AUTOCOMPLETE_LIMIT', 100);
 
 //-- args
 $FILTER = @$_GET["q"];
@@ -34,6 +33,7 @@ if (!function_exists("autocomplete_{$field}"))
 	die("Bad arg: field={$field}");
 
 //-- database query
+define('PGV_AUTOCOMPLETE_LIMIT', 200+100*strlen($FILTER));
 eval("\$data = autocomplete_".$field."();");
 if (empty($data))
 	die();
@@ -51,29 +51,30 @@ exit;
  * returns INDIviduals matching filter
  * @return Array of string
  */
-function autocomplete_INDI($limit=PGV_AUTOCOMPLETE_LIMIT) {
+function autocomplete_INDI() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
-	global $FILTER;
+	global $FILTER, $OPTION;
 
 	$sql = "SELECT i_id".
 				" FROM {$TBLPREFIX}individuals".
 				" WHERE (i_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%'".
 				" OR i_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%')".
 				" AND i_file=".PGV_GED_ID.
-				" LIMIT ".$limit;
+				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Person::getInstance($row["i_id"]);
-		if ($record->canDisplayName())
+		// check privacy
+		if ($person->canDisplayName()) {
 			$data[$row["i_id"]] =
-				$record->getListName().
+				$person->getListName().
 				" <u>".
-				ltrim($record->getBirthYear(), "0").
+				ltrim($person->getBirthYear(), "0").
 				"-".
-				ltrim($record->getDeathYear(), "0").
+				ltrim($person->getDeathYear(), "0").
 				"</u>";
+		}
 	}
 	$res->free();
 	return $data;
@@ -89,7 +90,7 @@ function autocomplete_FAM() {
 
 	//-- search for INDI names
 	$ids = array();
-	foreach (autocomplete_INDI(PGV_AUTOCOMPLETE_LIMIT*2) as $k=>$v)
+	foreach (autocomplete_INDI() as $k=>$v)
 		$ids[] = "'".$DBCONN->escapeSimple($k)."'";
 
 	if (empty($ids))
@@ -107,12 +108,12 @@ function autocomplete_FAM() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Family::getInstance($row["f_id"]);
-		if ($record->canDisplayName())
+		$family = Family::getInstance($row["f_id"]);
+		if ($family->canDisplayName())
 			$data[$row["f_id"]] =
-				$record->getSortName().
+				$family->getSortName().
 				" <u>".
-				ltrim($record->getMarriageYear(), "0").
+				ltrim($family->getMarriageYear(), "0").
 				"</u>";
 	}
 	$res->free();
@@ -137,9 +138,9 @@ function autocomplete_SOUR() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Source::getInstance($row["s_id"]);
-		if ($record->canDisplayName())
-			$data[$row["s_id"]] = $record->getFullName(); //$row["s_name"];
+		$source = Source::getInstance($row["s_id"]);
+		if ($source->canDisplayName())
+			$data[$row["s_id"]] = $source->getFullName(); //$row["s_name"];
 	}
 	$res->free();
 	return $data;
@@ -162,9 +163,9 @@ function autocomplete_SOUR_TITL() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Source::getInstance($row["s_id"]);
-		if ($record->canDisplayName())
-			$data[] = $record->getFullName();
+		$source = Source::getInstance($row["s_id"]);
+		if ($source->canDisplayName())
+			$data[] = $source->getFullName();
 	}
 	$res->free();
 	return $data;
@@ -191,20 +192,20 @@ function autocomplete_INDI_SOUR_PAGE() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Person::getInstance($row["i_id"]);
-		if ($record->canDisplayDetails()) {
-		  // a single INDI may have multiple level 1 sources
+		$person = Person::getInstance($row["i_id"]);
+		if ($person->canDisplayDetails()) {
+			// a single INDI may have multiple level 1 sources
 			$i = 1;
 			do {
-				$srec = get_sub_record("SOUR @{$sid}@", 1, $record->gedrec, $i++);
+				$srec = get_sub_record("SOUR @{$sid}@", 1, $person->gedrec, $i++);
 				$page = get_gedcom_value("PAGE", 2, $srec);
 				if (stripos($page, $FILTER)!==false || empty($FILTER))
 					$data[] = $page;
 			} while ($srec);
-		  // a single event may have multiple level 2 sources
+			// a single event may have multiple level 2 sources
 			$i = 1;
 			do {
-				$srec = get_sub_record("SOUR @{$sid}@", 2, $record->gedrec, $i++);
+				$srec = get_sub_record("SOUR @{$sid}@", 2, $person->gedrec, $i++);
 				$page = get_gedcom_value("PAGE", 3, $srec);
 				if (stripos($page, $FILTER)!==false || empty($FILTER))
 					$data[] = $page;
@@ -236,20 +237,20 @@ function autocomplete_FAM_SOUR_PAGE() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Family::getInstance($row["f_id"]);
-		if ($record->canDisplayDetails()) {
-		  // a single FAM may have multiple level 1 sources
+		$family = Family::getInstance($row["f_id"]);
+		if ($family->canDisplayDetails()) {
+			// a single FAM may have multiple level 1 sources
 			$i = 1;
 			do {
-				$srec = get_sub_record("SOUR @{$sid}@", 1, $record->gedrec, $i++);
+				$srec = get_sub_record("SOUR @{$sid}@", 1, $family->gedrec, $i++);
 				$page = get_gedcom_value("PAGE", 2, $srec);
 				if (stripos($page, $FILTER)!==false || empty($FILTER))
 					$data[] = $page;
 			} while ($srec);
-		  // a single event may have multiple level 2 sources
+			// a single event may have multiple level 2 sources
 			$i = 1;
 			do {
-				$srec = get_sub_record("SOUR @{$sid}@", 2, $record->gedrec, $i++);
+				$srec = get_sub_record("SOUR @{$sid}@", 2, $family->gedrec, $i++);
 				$page = get_gedcom_value("PAGE", 3, $srec);
 				if (stripos($page, $FILTER)!==false || empty($FILTER))
 					$data[] = $page;
@@ -289,9 +290,9 @@ function autocomplete_REPO() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Repository::getInstance($row["o_id"]);
-		if ($record->canDisplayName())
-			$data[$row["o_id"]] = $record->getFullName();
+		$repository = Repository::getInstance($row["o_id"]);
+		if ($repository->canDisplayName())
+			$data[$row["o_id"]] = $repository->getFullName();
 	}
 	$res->free();
 	return $data;
@@ -315,9 +316,9 @@ function autocomplete_REPO_NAME() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Repository::getInstance($row["o_id"]);
-		if ($record->canDisplayName())
-			$data[] = $record->getFullName();
+		$repository = Repository::getInstance($row["o_id"]);
+		if ($repository->canDisplayName())
+			$data[] = $repository->getFullName();
 	}
 	$res->free();
 	return $data;
@@ -340,15 +341,15 @@ function autocomplete_OBJE() {
 	$res = dbquery($sql);
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Media::getInstance($row["m_media"]);
-		if ($record && $record->canDisplayDetails())
+		$media = Media::getInstance($row["m_media"]);
+		if ($media && $media->canDisplayDetails())
 			$data[$row["m_media"]] =
 				"<img alt=\"".
-				$record->getXref().
+				$media->getXref().
 				"\" src=\"".
-				$record->getThumbnail().
+				$media->getThumbnail().
 				"\" /> ".
-				$record->getFullName();
+				$media->getFullName();
 	}
 	$res->free();
 	return $data;
@@ -396,13 +397,13 @@ function autocomplete_SURN() {
 				" FROM {$TBLPREFIX}individuals".
 				" WHERE i_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%'".
 				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
-				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT*10;
+				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$record = Person::getInstance($row["i_id"]);
-		if ($record->canDisplayName())
+		$person = Person::getInstance($row["i_id"]);
+		if ($person->canDisplayName())
 			$data[] = $row["i_surname"];
 	}
 	$res->free();
@@ -419,22 +420,20 @@ function autocomplete_GIVN() {
 
 	$sql = "SELECT i_name".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%/%/%'".
+				" WHERE i_name ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%'".
 				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
-				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT*5;
+				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		// assuming there is no privacy on GIVN
-		$exp = explode("/", $row["i_name"]);
-		$exp = $exp[0];
-		// split multiple GIVN
-		$exp = str_replace(",", " ", $exp);
-		$exp = str_replace("*", " ", $exp);
-		$exp = explode(" ", $exp);
-		foreach ($exp as $k=>$v)
-			if (stripos($v, $FILTER)!==false) $data[] = $v;
+		list($givn) = explode("/", $row["i_name"]);
+		list($givn) = explode(",", $givn);
+		list($givn) = explode("*", $givn);
+		list($givn) = explode(" ", $givn);
+		if ($givn)
+			$data[] = $givn;
 	}
 	$res->free();
 	return $data;
@@ -449,26 +448,59 @@ function autocomplete_PLAC() {
 	global $lang_short_cut, $LANGUAGE;
 	global $FILTER, $OPTION;
 
+	//-- search for place elements matching filter
 	$sql = "SELECT p_id, p_place, p_parent_id".
 				" FROM {$TBLPREFIX}places".
-				" WHERE p_file=".PGV_GED_ID. // comment this line to search all Gedcoms
-				" ORDER BY p_parent_id, p_id";
+				" WHERE p_place ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'".
+				" AND p_file=".PGV_GED_ID. // comment this line to search all Gedcoms
+				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
 
-	$data = array();
-	while ($row =& $res->fetchRow()) {
-		if ($row[2]==0)
-			$data[$row[0]] = $row[1];
-		else {
-			$data[$row[0]] = $row[1].", ".$data[$row[2]];
+	$place = array();
+	$parent = array();
+	do {
+		while ($row =& $res->fetchRow()) {
+			$place[$row[0]] = $row[1];
+			$parent[$row[0]] = $row[2];
 		}
-	}
-	$res->free();
+		$res->free();
+		//-- search for missing parents
+		$missing = array();
+		foreach($parent as $k=>$v) {
+			if ($v && !isset($place[$v]))
+				$missing[] = $v;
+		}
+		if (count($missing)==0)
+			break;
+		$sql = "SELECT p_id, p_place, p_parent_id".
+					" FROM {$TBLPREFIX}places".
+					" WHERE p_id IN (".join(',', $missing).")".
+					" AND p_file=".PGV_GED_ID. // comment this line to search all Gedcoms
+					" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
+		$res = dbquery($sql);
+	} while (true);
 
+	//-- build place list
+	$place = array_reverse($place, true);
+	$data = array();
+	do {
+		$repeat = false;
+		foreach($place as $k=>$v) {
+			if ($parent[$k]==0)
+				$data[$k] = $v;
+			else {
+				if (isset($data[$parent[$k]]))
+					$data[$k] = $v.", ".$data[$parent[$k]];
+				else
+					$repeat = true;
+			}
+		}
+	} while ($repeat);
+	
+	//-- filter
 	function place_ok($v) {
 		global $FILTER;
 		return (stripos($v, $FILTER)!==false);
-		//return (substr_count($v, ", ")==3 && stripos($v, $FILTER)!==false);
 	}
 	$data = array_filter($data, "place_ok");
 
@@ -503,16 +535,11 @@ function autocomplete_PLAC() {
 
 	// split ?
 	if ($OPTION=="split") {
-		$tmp = $data;
-		$data = array();
-		foreach ($tmp as $k1=>$v1) {
-			$exp = explode(",", $v1);
-			foreach ($exp as $k=>$v)
-				if (stripos($v, $FILTER)!==false) $data[] = trim($v);
-		}
+		foreach ($data as $k=>$v)
+			list($data[$k]) = explode(",", $v);
+		$data = array_filter($data, "place_ok");
 	}
 	
 	return $data;
 }
-
 ?>
