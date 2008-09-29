@@ -1787,57 +1787,14 @@ class Person extends GedcomRecord {
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
 		
-//		foreach ($surns as $surn) { }
 		$GIVN=UTF8_strtoupper($givn);
 		foreach ($surns as $n=>$surn) {
 			$SURN=UTF8_strtoupper($surn);
 			// Scottish "Mc and Mac" prefixes sort under "Mac"
 			if (substr($SURN, 0, 2)=='MC'  ) { $SURN='MAC'.substr($surn, 2); }
 			if (substr($SURN, 0, 4)=='MAC ') { $SURN='MAC'.substr($surn, 4); }
-/*			
-//echo "<br />>".$surn."<"; //@@
-// after the following changes the data has to be updated/uploaded in order to see the names together in sorttable lists
-// at the end of the name is $
-// beginning of name is ^
-// * - zero or more
-// + - one or more ?
-$surn2='';
-$patterns[0] = '/^(SHTEIN|SZTEJN|SHTEYN|SZTEIN|SZTEYN|SZTAJN|SZTAYN|SCHTEIN)$/';
-$patterns[1] = '/^(JAARI|JANKELOFF|JAAVAMO)$/';
-$patterns[2] = '/^(AMITA|AMITI|TCHICHELNITZK)(.*)/';
-$patterns[3] = '/^(WARDI|VEPRINSK|VAPRINSK|WEPRINSK|WAPRINSK)(.*)/';
-$patterns[4] = '/^ROZENTHAL$/';
-$patterns[5] = '/^(MERDACH|MORDACH|MORDAH)$/';
-$patterns[6] = '/^(MAIZEL|MAISEL)$/';
-$patterns[7] = '/^(KAVAL|KAWAL|KOVALE|KOVALLE|KOWAL|KOWLE)(.+)/';
-$patterns[8] = '/^PILO(.*)/';
-$patterns[9] = '/^(ZASLOW|ZASLAV|ZASLAW|SASLOW)(.*)/';
-$patterns[10] = '/^(BESPRASVA|BESPRO|VANNI)(.*)/';
-$patterns[11] = '/^(RUBINSHTEIN|RUBINSZTEJN|RUBINSHTEYN|RUBINSZTEIN|RUBINSZTEYN|RUBINSZTAJN|RUBINSZTAYN|RUBENSCHTEIN|RUBENSTEIN)$/';
-$patterns[12] = '/^SILBER(SHTEIN|SZTEJN|SHTEYN|SZTEIN|SZTEYN|SZTAJN|SZTAYN|SCHTEIN)$/';
-$replacements[0] = 'STEIN';
-$replacements[1] = 'JANKELOW';
-$replacements[2] = 'AMITY';
-$replacements[3] = 'WAPRINSKY';
-$replacements[4] = 'ROSENTHAL';
-$replacements[5] = 'MORDUCH';
-$replacements[6] = 'MEISEL';
-$replacements[7] = 'KAVALER';
-$replacements[8] = 'PILOVSKY';
-$replacements[9] = 'ZASLAVSKY';
-$replacements[10] = 'BESPROSVANNI';
-$replacements[11] = 'RUBINSTEIN';
-$replacements[12] = 'SILBERSTEIN';
 
-$surn2=preg_replace($patterns, $replacements, $surn);
-*/
 			$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$SURN.','.$GIVN, 'givn'=>$givn, 'spfx'=>($n?'':$spfx), 'surn'=>$surn);
-/*
-			if ($surn!=$surn2) {
-//				echo "  >".$surn2."<"; 	//@@					
-				$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$surn2.','.$givn);
-			}
-*/			
 		}
 	}
 
