@@ -1603,21 +1603,23 @@ class stats {
 
 			foreach (array_keys(get_indi_list()) as $pid) {
 				$person=Person::getInstance($pid);
-				$genderList='name_list_'.$person->getSex();
-				foreach ($person->getAllNames() as $name) {
-					if ($name['type']!='_MARNM') {
-						$firstnamestring = ' '.str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@'), ' ', $name['givn']).' '; 
-						// Remove names within quotes and apostrophes
-						$firstnamestring = preg_replace(array(": '.*' :", ': ".*" :'), ' ', $firstnamestring);
-						$firstnamestring = preg_replace(": (\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99).*(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99) :", ' ', $firstnamestring);
-
-						foreach (explode(' ', $firstnamestring) as $givnName) {
-							// Ignore single letters (but not single-character japanese/chinese names?)
-							if (strlen($givnName)>1) {
-								if (isset(${$genderList}[$givnName])) {
-									${$genderList}[$givnName] ++;
-								} else {
-									${$genderList}[$givnName] = 1;
+				if ($person->canDisplayName()) {
+					$genderList='name_list_'.$person->getSex();
+					foreach ($person->getAllNames() as $name) {
+						if ($name['type']!='_MARNM') {
+							$firstnamestring = ' '.str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@'), ' ', $name['givn']).' '; 
+							// Remove names within quotes and apostrophes
+							$firstnamestring = preg_replace(array(": '.*' :", ': ".*" :'), ' ', $firstnamestring);
+							$firstnamestring = preg_replace(": (\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99).*(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99) :", ' ', $firstnamestring);
+	
+							foreach (explode(' ', $firstnamestring) as $givnName) {
+								// Ignore single letters (but not single-character japanese/chinese names?)
+								if (strlen($givnName)>1) {
+									if (isset(${$genderList}[$givnName])) {
+										${$genderList}[$givnName] ++;
+									} else {
+										${$genderList}[$givnName] = 1;
+									}
 								}
 							}
 						}
