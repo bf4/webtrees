@@ -65,6 +65,7 @@ function autocomplete_INDI() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$person = Person::getInstance($row["i_id"]);
 		// check privacy
 		if ($person->canDisplayName()) {
 			$data[$row["i_id"]] =
