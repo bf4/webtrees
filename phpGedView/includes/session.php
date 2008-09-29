@@ -120,10 +120,10 @@ if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
     ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
 	foreach (array('_GET', '_POST', '_COOKIE', '_REQUEST') as $var) {
 		foreach (array_keys($$var) as $key) {
-			if (is_array($$var[$key])) {
-				$$var[$key]=array_map('stripslashes', $$var[$key]);
+			if (is_array($GLOBALS[$var][$key])) {
+				$GLOBALS[$var][$key]=array_map('stripslashes', $GLOBALS[$var][$key]);
 			} else {
-				$$var[$key]=stripslashes($$var[$key]);
+				$GLOBALS[$var][$key]=stripslashes($GLOBALS[$var][$key]);
 			}
 		}
 	}
