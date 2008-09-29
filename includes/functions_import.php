@@ -189,6 +189,10 @@ function import_record($indirec, $update) {
 		$names=$person->getAllNames();
 		foreach ($names as $n=>$name) {
 			list($surn, $givn)=explode(',', $name['sort']);
+			if ($givn!='' && $surn=='') {
+				$surn='@N.N.';
+				$name['sort']=$surn.$name['sort'];
+			}
 			$initial=get_first_letter($name['sort']);
 			if ($n) {
 				// TODO: we store the first (main) name in the indi table, and the others in
@@ -287,6 +291,10 @@ function import_record($indirec, $update) {
 
 		$isdead = (int)is_dead($indirec, '', true);
 		list($surn, $givn)=explode(',', $names[0]['sort']);
+		if ($givn!='' && $surn=='') {
+			$surn='@N.N.';
+			$names[0]['sort']=$surn.$names[0]['sort'];
+		}
 		$initial=get_first_letter($names[0]['sort']);
 		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('".$DBCONN->escapeSimple($gid)."','".$DBCONN->escapeSimple($indi["gedfile"])."','".$DBCONN->escapeSimple($indi["rin"])."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($indi["gedcom"])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
 		$res = dbquery($sql);
