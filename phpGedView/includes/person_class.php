@@ -1651,9 +1651,12 @@ class Person extends GedcomRecord {
 		$surn=preg_match('/^'.$sublevel.' SURN ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		$spfx=preg_match('/^'.$sublevel.' SPFX ([^\r\n]+)/m', $gedrec, $match) ? $match[1] : '';
 		if ($givn || $surn) {
+			// An empty surname won't have a SURN field
+			if (strpos($full, '//')) {
+				$surn='@N.N.';
+			}
 			// GIVN and SURN can be comma-separated lists.
 			$surns=preg_split('/ *, */', $surn);
-			if ($surn=='') $surn='@N.N.';  
 			$givn=str_replace(array(',', ', '), ' ', $givn);
 		} else {
 			$name=$full;
