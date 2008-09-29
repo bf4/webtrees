@@ -223,7 +223,7 @@ if ($showList) {
 			foreach (array($family->husb, $family->wife) as $person) {
 				if (!is_object($person)) continue;
 				foreach ($person->getAllNames() as $name) {
-					$surn=UTF8_strtoupper($name['surn']);
+					list($surn)=explode(',', $name['sort']);
 					// Ignore diacritics - need to use the same logic as get_fam_alpha()
 					// TODO: This ought to be a language-dependent conversion, as in some
 					// languages, letters with diacritics are regarded as separate letters.
