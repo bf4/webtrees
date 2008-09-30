@@ -1624,8 +1624,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 						print "]</a>\n";
 				}
 			}
+			print "<br />\n";
 		}
-		//print "<br />\n";
 		//-- don't show _PRIM option to regular users
 		if (PGV_USER_GEDCOM_ADMIN) {
 			$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
