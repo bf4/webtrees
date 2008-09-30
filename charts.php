@@ -188,7 +188,7 @@ function print_charts_block_config($config) {
 			<option value="descendants"<?php if ($config["type"]=="descendants") print " selected=\"selected\""; ?>><?php print $pgv_lang["descend_chart"]; ?></option>
 			<option value="hourglass"<?php if ($config["type"]=="hourglass") print " selected=\"selected\""; ?>><?php print $pgv_lang["hourglass_chart"]; ?></option>
 			<?php if (file_exists("includes/treenav_class.php")) { ?>
-			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\""; ?>>TreeNav</option>
+			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\""; ?>><?php print $pgv_lang["interactive_tree"]; ?></option>
 			<?php } ?>
 		</select>
 	</td></tr>
