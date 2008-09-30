@@ -212,6 +212,7 @@ $factarray["_MREL"]	= "Relationship to Mother";
 $factarray["_FREL"]	= "Relationship to Father";
 $factarray["_MSTAT"]	= "Marriage Beginning Status";
 $factarray["_MEND"]	= "Marriage Ending Status";
+$factarray["_NAMS"]	= "Namesake";
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"] = "FAX";
