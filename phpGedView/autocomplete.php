@@ -27,7 +27,12 @@ require './config.php';
 
 //-- args
 $FILTER = @$_GET["q"];
+if (has_utf8($FILTER))
+	$FILTER = UTF8_strtoupper($FILTER);
+$FILTER = $DBCONN->escapeSimple($FILTER);
+
 $OPTION = @$_GET["option"];
+
 $field = @$_GET["field"];
 if (!function_exists("autocomplete_{$field}"))
 	die("Bad arg: field={$field}");
@@ -57,8 +62,8 @@ function autocomplete_INDI() {
 
 	$sql = "SELECT i_id".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE (i_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%'".
-				" OR i_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%')".
+				" WHERE (i_surname ".PGV_DB_LIKE." '".$FILTER."%'".
+				" OR i_id ".PGV_DB_LIKE." '%".$FILTER."%')".
 				" AND i_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -96,7 +101,7 @@ function autocomplete_FAM() {
 
 	if (empty($ids))
 		//-- no match : search for FAM id
-		$where = " WHERE f_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'";
+		$where = " WHERE f_id ".PGV_DB_LIKE." '%".$FILTER."%'";
 	else
 		//-- search for spouses
 		$where = " WHERE (f_husb IN (".join(',', $ids).") OR f_wife IN (".join(',', $ids).") )";
@@ -131,8 +136,8 @@ function autocomplete_SOUR() {
 
 	$sql = "SELECT s_id".
 				" FROM {$TBLPREFIX}sources".
-				" WHERE (s_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'".
-				" OR s_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%')".
+				" WHERE (s_name ".PGV_DB_LIKE." '%".$FILTER."%'".
+				" OR s_id ".PGV_DB_LIKE." '%".$FILTER."%')".
 				" AND s_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -157,7 +162,7 @@ function autocomplete_SOUR_TITL() {
 
 	$sql = "SELECT s_id".
 				" FROM {$TBLPREFIX}sources".
-				" WHERE s_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'".
+				" WHERE s_name ".PGV_DB_LIKE." '%".$FILTER."%'".
 				" AND s_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -180,13 +185,10 @@ function autocomplete_INDI_SOUR_PAGE() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER, $OPTION;
 
-	$sid = $DBCONN->escapeSimple($OPTION);
-	$pag = $DBCONN->escapeSimple($FILTER);
-
 	$sql = "SELECT i_id".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE (i_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$sid}@%2 PAGE %{$pag}%'".
-				" OR     i_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$sid}@%3 PAGE %{$pag}%')".
+				" WHERE (i_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$OPTION}@%2 PAGE %{$FILTER}%'".
+				" OR     i_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$OPTION}@%3 PAGE %{$FILTER}%')".
 				" AND i_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -198,7 +200,7 @@ function autocomplete_INDI_SOUR_PAGE() {
 			// a single INDI may have multiple level 1 sources
 			$i = 1;
 			do {
-				$srec = get_sub_record("SOUR @{$sid}@", 1, $person->gedrec, $i++);
+				$srec = get_sub_record("SOUR @{$OPTION}@", 1, $person->gedrec, $i++);
 				$page = get_gedcom_value("PAGE", 2, $srec);
 				if (stripos($page, $FILTER)!==false || empty($FILTER))
 					$data[] = $page;
@@ -206,7 +208,7 @@ function autocomplete_INDI_SOUR_PAGE() {
 			// a single event may have multiple level 2 sources
 			$i = 1;
 			do {
-				$srec = get_sub_record("SOUR @{$sid}@", 2, $person->gedrec, $i++);
+				$srec = get_sub_record("SOUR @{$OPTION}@", 2, $person->gedrec, $i++);
 				$page = get_gedcom_value("PAGE", 3, $srec);
 				if (stripos($page, $FILTER)!==false || empty($FILTER))
 					$data[] = $page;
@@ -225,13 +227,10 @@ function autocomplete_FAM_SOUR_PAGE() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER, $OPTION;
 
-	$sid = $DBCONN->escapeSimple($OPTION);
-	$pag = $DBCONN->escapeSimple($FILTER);
-
 	$sql = "SELECT f_id".
 				" FROM {$TBLPREFIX}families".
-				" WHERE (f_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$sid}@%2 PAGE %{$pag}%'".
-				" OR     f_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$sid}@%3 PAGE %{$pag}%')".
+				" WHERE (f_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$OPTION}@%2 PAGE %{$FILTER}%'".
+				" OR     f_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$OPTION}@%3 PAGE %{$FILTER}%')".
 				" AND f_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -243,7 +242,7 @@ function autocomplete_FAM_SOUR_PAGE() {
 			// a single FAM may have multiple level 1 sources
 			$i = 1;
 			do {
-				$srec = get_sub_record("SOUR @{$sid}@", 1, $family->gedrec, $i++);
+				$srec = get_sub_record("SOUR @{$OPTION}@", 1, $family->gedrec, $i++);
 				$page = get_gedcom_value("PAGE", 2, $srec);
 				if (stripos($page, $FILTER)!==false || empty($FILTER))
 					$data[] = $page;
@@ -251,7 +250,7 @@ function autocomplete_FAM_SOUR_PAGE() {
 			// a single event may have multiple level 2 sources
 			$i = 1;
 			do {
-				$srec = get_sub_record("SOUR @{$sid}@", 2, $family->gedrec, $i++);
+				$srec = get_sub_record("SOUR @{$OPTION}@", 2, $family->gedrec, $i++);
 				$page = get_gedcom_value("PAGE", 3, $srec);
 				if (stripos($page, $FILTER)!==false || empty($FILTER))
 					$data[] = $page;
@@ -282,8 +281,8 @@ function autocomplete_REPO() {
 
 	$sql = "SELECT o_id".
 				" FROM {$TBLPREFIX}other".
-				" WHERE (o_gedcom ".PGV_DB_LIKE." '%1 NAME %".$DBCONN->escapeSimple($FILTER)."%\n%'".
-				" OR o_id ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%')".
+				" WHERE (o_gedcom ".PGV_DB_LIKE." '%1 NAME %".$FILTER."%\n%'".
+				" OR o_id ".PGV_DB_LIKE." '%".$FILTER."%')".
 				" AND o_file=".PGV_GED_ID.
 				" AND o_type='REPO'".
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
@@ -309,7 +308,7 @@ function autocomplete_REPO_NAME() {
 
 	$sql = "SELECT o_id".
 				" FROM {$TBLPREFIX}other".
-				" WHERE o_gedcom ".PGV_DB_LIKE." '%1 NAME %".$DBCONN->escapeSimple($FILTER)."%\n%'".
+				" WHERE o_gedcom ".PGV_DB_LIKE." '%1 NAME %".$FILTER."%\n%'".
 				" AND o_file=".PGV_GED_ID.
 				" AND o_type='REPO'".
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
@@ -335,8 +334,8 @@ function autocomplete_OBJE() {
 
 	$sql = "SELECT m_media".
 				" FROM {$TBLPREFIX}media".
-				" WHERE (m_titl ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'".
-				" OR m_media ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%')".
+				" WHERE (m_titl ".PGV_DB_LIKE." '%".$FILTER."%'".
+				" OR m_media ".PGV_DB_LIKE." '".$FILTER."%')".
 				" AND m_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -396,7 +395,7 @@ function autocomplete_SURN() {
 
 	$sql = "SELECT i_id, i_surname".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE i_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%'".
+				" WHERE i_surname ".PGV_DB_LIKE." '".$FILTER."%'".
 				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -421,7 +420,7 @@ function autocomplete_GIVN() {
 
 	$sql = "SELECT i_name".
 				" FROM {$TBLPREFIX}individuals".
-				" WHERE i_name ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($FILTER)."%'".
+				" WHERE i_name ".PGV_DB_LIKE." '".$FILTER."%'".
 				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -452,7 +451,7 @@ function autocomplete_PLAC() {
 	//-- search for place elements matching filter
 	$sql = "SELECT p_id, p_place, p_parent_id".
 				" FROM {$TBLPREFIX}places".
-				" WHERE p_place ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($FILTER)."%'".
+				" WHERE p_place ".PGV_DB_LIKE." '%".$FILTER."%'".
 				" AND p_file=".PGV_GED_ID. // comment this line to search all Gedcoms
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
@@ -472,7 +471,7 @@ function autocomplete_PLAC() {
 				$missing[] = $v;
 		}
 		if (count($missing)==0)
-			break;
+		  break;
 		$sql = "SELECT p_id, p_place, p_parent_id".
 					" FROM {$TBLPREFIX}places".
 					" WHERE p_id IN (".join(',', $missing).")".
@@ -536,8 +535,8 @@ function autocomplete_PLAC() {
 
 	// split ?
 	if ($OPTION=="split") {
-		foreach ($data as $k=>$v)
-			list($data[$k]) = explode(",", $v);
+	  foreach ($data as $k=>$v)
+	    list($data[$k]) = explode(",", $v);
 		$data = array_filter($data, "place_ok");
 	}
 	
