@@ -285,8 +285,8 @@ if ($showList) {
 		$givn_initials=array();
 		// Show the fam list
 		foreach (array_keys($fams) as $pid) {
-			if (empty($pid)) continue;
 			$family=Family::getInstance($pid);
+			if (!$family) continue;
 			foreach ($family->getAllNames() as $n=>$name) {
 				list($husb_name, $wife_name)=explode(' + ', $name['sort']);
 				// Check for husband name
