@@ -116,16 +116,18 @@ unset($ini_include_path, $includes_dir); // destroy some variables for security 
 set_magic_quotes_runtime(0);
 
 // magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
+function stripslashes_recursive($var) {
+	if (is_array($var)) {
+		foreach ($var as $k=>$v) {
+			$var[$k]=stripslashes_recursive($v);
+		}
+	}
+	return $var;
+}
 if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
     ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
 	foreach (array('_GET', '_POST', '_COOKIE', '_REQUEST') as $var) {
-		foreach (array_keys($$var) as $key) {
-			if (is_array($GLOBALS[$var][$key])) {
-				$GLOBALS[$var][$key]=array_map('stripslashes', $GLOBALS[$var][$key]);
-			} else {
-				$GLOBALS[$var][$key]=stripslashes($GLOBALS[$var][$key]);
-			}
-		}
+		$GLOBALS[$var]=stripslashes_recursive($GLOBALS[$var]);
 	}
 }
 
@@ -305,11 +307,16 @@ if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
       }
 $_SESSION["GEDCOM"] = $GEDCOM;
 
-// privacy constants moved from privacy.php
-$PRIV_HIDE = -1; //  Global constant privacy level to hide the item to all users including the admin
-$PRIV_PUBLIC = 2; //  Global constant privacy level that allows non-authenticated public visitors to view the marked information
-$PRIV_USER = 1; //  Global constant privacy level that only allows authenticated users to access the marked information
-$PRIV_NONE = 0; //  Global constant privacy level that only allows admin users to access the marked information
+// Privacy constants
+define('PGV_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
+define('PGV_PRIV_USER',    1); // Allows authenticated users to access the marked information
+define('PGV_PRIV_NONE',    0); // Allows admin users to access the marked information
+define('PGV_PRIV_HIDE',   -1); // Hide the item to all users including the admin
+// Older code uses variables instead of constants
+$PRIV_PUBLIC = PGV_PRIV_PUBLIC;
+$PRIV_USER   = PGV_PRIV_USER;
+$PRIV_NONE   = PGV_PRIV_NONE;
+$PRIV_HIDE   = PGV_PRIV_HIDE; 
 
 /**
  * Load GEDCOM configuration

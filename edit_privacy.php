@@ -40,8 +40,38 @@ if (!userGedcomAdmin(PGV_USER_ID, $ged) || empty($ged)) {
 
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
+if (isset($_REQUEST['v_new_person_privacy_access_ID']))    $v_new_person_privacy_access_ID=$_REQUEST['v_new_person_privacy_access_ID'];
+if (isset($_REQUEST['v_new_person_privacy_acess_option'])) $v_new_person_privacy_acess_option=$_REQUEST['v_new_person_privacy_acess_option'];
+if (isset($_REQUEST['v_person_privacy_del']))              $v_person_privacy_del=$_REQUEST['v_person_privacy_del'];
+
+
+if (isset($_REQUEST['v_new_user_privacy_username']))     $v_new_user_privacy_username=$_REQUEST['v_new_user_privacy_username'];
+if (isset($_REQUEST['v_new_user_privacy_access_ID']))    $v_new_user_privacy_access_ID=$_REQUEST['v_new_user_privacy_access_ID'];
+if (isset($_REQUEST['v_new_user_privacy_acess_option'])) $v_new_user_privacy_acess_option=$_REQUEST['v_new_user_privacy_acess_option'];
+if (isset($_REQUEST['v_user_privacy_del']))              $v_user_privacy_del=$_REQUEST['v_user_privacy_del'];
+
+
+if (isset($_REQUEST['v_new_global_facts_abbr']))         $v_new_global_facts_abbr=$_REQUEST['v_new_global_facts_abbr'];
+if (isset($_REQUEST['v_new_global_facts_choice']))       $v_new_global_facts_choice=$_REQUEST['v_new_global_facts_choice'];
+if (isset($_REQUEST['v_new_global_facts_acess_option'])) $v_new_global_facts_acess_option=$_REQUEST['v_new_global_facts_acess_option'];
+if (isset($_REQUEST['v_global_facts_del']))              $v_global_facts_del=$_REQUEST['v_global_facts_del'];
+
+
+if (isset($_REQUEST['v_new_person_facts_access_ID']))    $v_new_person_facts_access_ID=$_REQUEST['v_new_person_facts_access_ID'];
+if (isset($_REQUEST['v_new_person_facts_abbr']))         $v_new_person_facts_abbr=$_REQUEST['v_new_person_facts_abbr'];
+if (isset($_REQUEST['v_new_person_facts_choice']))       $v_new_person_facts_choice=$_REQUEST['v_new_person_facts_choice'];
+if (isset($_REQUEST['v_new_person_facts_acess_option'])) $v_new_person_facts_acess_option=$_REQUEST['v_new_person_facts_acess_option'];
+if (isset($_REQUEST['v_person_facts_del']))              $v_person_facts_del=$_REQUEST['v_person_facts_del'];
+
 if (!isset($PRIVACY_BY_YEAR)) $PRIVACY_BY_YEAR = false;
 if (!isset($MAX_ALIVE_AGE)) $MAX_ALIVE_AGE = 120;
+
+$PRIVACY_CONSTANTS=array(
+	PGV_PRIV_NONE  =>'PGV_PRIV_NONE',
+	PGV_PRIV_USER  =>'PGV_PRIV_USER',
+	PGV_PRIV_PUBLIC=>'PGV_PRIV_PUBLIC',
+	PGV_PRIV_HIDE  =>'PGV_PRIV_HIDE'
+);
 
 /**
  * print yes/no select option
@@ -126,7 +156,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_LIVING_NAMES\s*=\s*.*;/', "\$SHOW_LIVING_NAMES = ".$_POST["v_SHOW_LIVING_NAMES"].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_SOURCES\s*=\s*.*;/', "\$SHOW_SOURCES = ".$_POST["v_SHOW_SOURCES"].";", $configtext);
 	$configtext = preg_replace('/\$MAX_ALIVE_AGE\s*=\s*".*";/', "\$MAX_ALIVE_AGE = \"".$_POST["v_MAX_ALIVE_AGE"]."\";", $configtext);
-	if ($MAX_ALIVE_AGE!=$_POST["v_MAX_ALIVE_AGE"]) reset_isdead();
+	if ($MAX_ALIVE_AGE!=$_POST["v_MAX_ALIVE_AGE"]) reset_isdead(get_id_from_gedcom($ged));
 	if (file_exists("modules/research_assistant.php")) {
 		$configtext = preg_replace('/\$SHOW_RESEARCH_ASSISTANT\s*=\s*.*;/', "\$SHOW_RESEARCH_ASSISTANT = ".$_POST["v_SHOW_RESEARCH_ASSISTANT"].";", $configtext);
 	}
