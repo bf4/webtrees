@@ -2634,7 +2634,7 @@ function get_list_size($list, $filter="") {
 		case "indilist":
 			$sql = "SELECT count(i_file) FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND i_gedcom $term '$filter'";
+				$sql .= " AND i_gedcom $term '%$filter%'";
 			$res = dbquery($sql);
 			$row =& $res->fetchRow();
 			$res->free();
@@ -2643,7 +2643,7 @@ function get_list_size($list, $filter="") {
 		case "famlist":
 			$sql = "SELECT count(f_file) FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND f_gedcom $term '$filter'";
+				$sql .= " AND f_gedcom $term '%$filter%'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2653,7 +2653,7 @@ function get_list_size($list, $filter="") {
 		case "sourcelist":
 			$sql = "SELECT count(s_file) FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND s_gedcom $term '$filter'";
+				$sql .= " AND s_gedcom $term '%$filter%'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2663,7 +2663,7 @@ function get_list_size($list, $filter="") {
 		case "objectlist": // media object
 			$sql = "SELECT count(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND m_gedrec $term '$filter'";
+				$sql .= " AND m_gedrec $term '%$filter%'";
 			$res = dbquery($sql, false);
 			//-- prevent failure if DB tables are lost
 			if (DB::isError($res)) return 0;
@@ -2674,7 +2674,7 @@ function get_list_size($list, $filter="") {
 		case "otherlist": // REPO
 			$sql = "SELECT count(o_file) FROM ".$TBLPREFIX."other WHERE o_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND o_gedcom $term '$filter'";
+				$sql .= " AND o_gedcom $term '%$filter%'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
