@@ -86,7 +86,6 @@ if (isset($_POST["NEW_COMMON_NAMES_REMOVE"])) $_POST["NEW_COMMON_NAMES_REMOVE"] 
 if (isset($_REQUEST['path'])) $path = $_REQUEST['path'];
 if (isset($_REQUEST['oldged'])) $oldged = $_REQUEST['oldged'];
 if (isset($_REQUEST['GEDFILENAME'])) $GEDFILENAME = $_REQUEST['GEDFILENAME'];
-if (isset($_REQUEST['GEDCOMPATH'])) $GEDCOMPATH = $_REQUEST['GEDCOMPATH'];
 if (isset($_REQUEST['ged'])) $ged = $_REQUEST['ged'];
 if (isset($_REQUEST['gedcom_title'])) $gedcom_title = $_REQUEST['gedcom_title'];
 if (isset($_REQUEST['THEME_DIR'])) $THEME_DIR = $_REQUEST['THEME_DIR'];
@@ -99,7 +98,7 @@ else $ged = $oldged;
 if (!isset($path)) $path = "";
 if (!isset($GEDFILENAME)) $GEDFILENAME = "";
 
-if (isset($GEDCOMPATH)) {
+if (isset($_FILES['GEDCOMPATH'])) {
 	$ctupload = count($_FILES);
 	if ($ctupload > 0) {
 		// NOTE: Extract the GEDCOM filename
