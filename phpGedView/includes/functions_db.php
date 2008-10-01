@@ -815,6 +815,15 @@ function update_isdead($gid, $ged_id, $isdead) {
 	return $isdead;
 }
 
+// Reset the i_isdead status for individuals
+// This is necessary when we change the MAX_ALIVE_YEARS value
+function reset_isdead($ged_id=PGV_GED_ID) {
+	global $TBLPREFIX;
+	$ged_id=(int)$ged_id;
+
+	dbquery("UPDATE {$TBLPREFIX}individuals SET i_isdead=-1 WHERE i_file=".$ged_id);
+}
+
 /**
  * get a list of all the source titles
  *
