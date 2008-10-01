@@ -30,7 +30,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_MEDIA_REORDER_ROW_PHP', '');
 
 /**
  * print a media row in a table
