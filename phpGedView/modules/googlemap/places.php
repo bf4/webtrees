@@ -37,9 +37,13 @@ if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/conf
 
 loadLangFile("pgv_lang, pgv_confighelp, pgv_help, pgv_facts, googlemap:lang, googlemap:help_text");
 
+if (isset($_REQUEST['action']))	 $action=$_REQUEST['action'];
+if (isset($_REQUEST['parent']))	 $parent=$_REQUEST['parent'];
+if (isset($_REQUEST['display'])) $display=$_REQUEST['display'];
+if (isset($_REQUEST['mode']))	 $mode=$_REQUEST['mode'];
+
 if (!isset($action)) $action="";
 if (!isset($parent)) $parent=0;
-// phre7d 2008-901-23 added for persistant display of inactive records
 if (!isset($display)) $display="";
 
 // Create GM tables, if not already present
@@ -550,7 +554,6 @@ foreach (array_reverse($where_am_i, true) as $id=>$place) {
 		else
 			echo $pgv_lang["pl_unknown"];
 	else {
-// phre7d 2008-901-23 modified for persistant display of inactive records
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}&display={$display}\">";
 		if ($place != "Unknown")
 			echo PrintReady($place)."</a>";
@@ -559,9 +562,7 @@ foreach (array_reverse($where_am_i, true) as $id=>$place) {
 	}
 	echo " - ";
 }
-// phre7d 2008-901-23 modified for persistant display of inactive records
 echo "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0&display=$display\">{$pgv_lang['top_level']}</a>";
-// phre7d 2008-901-23 modified for persistant display of inactive records
 echo "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&parent=$parent&display=$display\">";
 echo "\n<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"].": <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
 if ($display == 'inactive') echo " checked=\"checked\"";
@@ -584,7 +585,6 @@ echo "{$pgv_lang['pl_edit']}</th></tr>";
 if (count($placelist) == 0)
 	echo "<tr><td colspan=\"7\" class=\"facts_value\">{$pgv_lang['pl_no_places_found']}</td></tr>";
 foreach ($placelist as $place) {
-	// phre7d 2008-901-23 modified for persistant display of inactive records
 	echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}&display={$display}\">";
 	if ($place["place"] != "Unknown")
 			echo PrintReady($place["place"])."</a></td>";
