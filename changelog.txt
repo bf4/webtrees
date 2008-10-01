@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed [ 2130589 ] [3942] No GEDCOM upload replacement (fisharebest)
  - Fixed [ 2139591 ] Errors in configuration code (fisharebest)
  - Fixed [ 2078143 ] [3724] Ancestry chart errors (opus27)
  - Fix: [ 1791639 ] create_dates_table and SQL Server (fisharebest)
