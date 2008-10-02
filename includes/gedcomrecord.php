@@ -453,7 +453,7 @@ class GedcomRecord {
 			case 'vietnamese':
 			case 'chinese':
 				foreach ($this->getAllNames() as $n=>$name) {
-					if ($name['type']!='_MARNM' && whatLanguage($name['full'])==$LANGUAGE) {
+					if ($name['type']!='_MARNM' && whatLanguage($name['sort'])==$LANGUAGE) {
 						$this->_getPrimaryName=$n;
 						break;
 					}
@@ -461,7 +461,7 @@ class GedcomRecord {
 				break;
 			default:
 				foreach ($this->getAllNames() as $n=>$name) {
-					if (whatLanguage($name['full'])=='other') {
+					if (whatLanguage($name['sort'])=='other') {
 						$this->_getPrimaryName=$n;
 						break;
 					}
@@ -480,9 +480,9 @@ class GedcomRecord {
 			// ....except when there are names with different character sets
 			$all_names=$this->getAllNames();
 			if (count($all_names)>1) {
-				$primary_language=whatLanguage($all_names[$this->getPrimaryName()]['full']);
+				$primary_language=whatLanguage($all_names[$this->getPrimaryName()]['sort']);
 				foreach ($all_names as $n=>$name) {
-					if ($n!=$this->getPrimaryName() && $name['type']!='_MARNM' && whatLanguage($name['full'])!=$primary_language) {
+					if ($n!=$this->getPrimaryName() && $name['type']!='_MARNM' && whatLanguage($name['sort'])!=$primary_language) {
 						$this->_getSecondaryName=$n;
 						break;
 					}
