@@ -536,59 +536,7 @@ if ($action == "save") {
 }
 
 if ($action == "save" or $action=="toggleActive") {
-	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
-	if (!file_exists($Filename)) copy("includes/lang_settings_std.php", $Filename);
-
-	$error = "";
-	if ($file_array = file($Filename)) {
-		@copy($Filename, $Filename . ".old");
-		if ($fp = @fopen($Filename, "w")) {
-			for ($x = 0; $x < count($file_array); $x++) {
-				fwrite($fp, $file_array[$x]);
-				$dDummy00 = trim($file_array[$x]);
-				if ($dDummy00 == "//-- NEVER manually delete or edit this entry and every line below this entry! --START--//") break;
-			}
-			fwrite($fp, "\r\n");
-			fwrite($fp, "// Array definition of language_settings\r\n");
-			fwrite($fp, "\$language_settings = array();\r\n");
-			foreach ($language_settings as $key => $value) {
-			if (!isset($languages[$key]) || (isset($pgv_language[$key]) && !file_exists($pgv_language[$key]))) continue;
-				fwrite($fp, "\r\n");
-				fwrite($fp, "//-- settings for {$languages[$key]}\r\n");
-				fwrite($fp, "\$language_settings['{$languages[$key]}']=array(\r\n");
-				fwrite($fp, "'pgv_langname'=>'{$languages[$key]}',\r\n");
-				fwrite($fp, "'pgv_lang_use'=>".($pgv_lang_use[$key]?'true':'false').",\r\n");
-				fwrite($fp, "'pgv_lang_self'=>'{$pgv_lang_self[$key]}',\r\n");
-				fwrite($fp, "'lang_short_cut'=>'{$lang_short_cut[$key]}',\r\n");
-				fwrite($fp, "'langcode'=>'{$lang_langcode[$key]}',\r\n");
-				fwrite($fp, "'pgv_language'=>'{$pgv_language[$key]}',\r\n");
-				fwrite($fp, "'confighelpfile'=>'{$confighelpfile[$key]}',\r\n");
-				fwrite($fp, "'helptextfile'=>'{$helptextfile[$key]}',\r\n");
-				fwrite($fp, "'flagsfile'=>'{$flagsfile[$key]}',\r\n");
-				fwrite($fp, "'factsfile'=>'{$factsfile[$key]}',\r\n");
-				fwrite($fp, "'adminfile'=>'{$adminfile[$key]}',\r\n");
-				fwrite($fp, "'editorfile'=>'{$editorfile[$key]}',\r\n");
-				fwrite($fp, "'countryfile'=>'{$countryfile[$key]}',\r\n");
-				fwrite($fp, "'faqlistfile'=>'{$faqlistfile[$key]}',\r\n");
-				fwrite($fp, "'extrafile'=>'{$extrafile[$key]}',\r\n");
-				fwrite($fp, "'DATE_FORMAT'=>'{$DATE_FORMAT_array[$key]}',\r\n");
-				fwrite($fp, "'TIME_FORMAT'=>'{$TIME_FORMAT_array[$key]}',\r\n");
-				fwrite($fp, "'WEEK_START'=>'{$WEEK_START_array[$key]}',\r\n");
-				fwrite($fp, "'TEXT_DIRECTION'=>'{$TEXT_DIRECTION_array[$key]}',\r\n");
-				fwrite($fp, "'NAME_REVERSE'=>".($NAME_REVERSE_array[$key]?'true':'false').",\r\n");
-				fwrite($fp, "'ALPHABET_upper'=>'{$ALPHABET_upper[$key]}',\r\n");
-				fwrite($fp, "'ALPHABET_lower'=>'{$ALPHABET_lower[$key]}',\r\n");
-				fwrite($fp, "'MULTI_LETTER_ALPHABET'=>'{$MULTI_LETTER_ALPHABET[$key]}',\r\n");
-				fwrite($fp, "'DICTIONARY_SORT'=>".($DICTIONARY_SORT[$key]?'true':'false')."\r\n");
-				fwrite($fp, ");\r\n");
-			}
-			fwrite($fp, "\r\n");
-			fwrite($fp, "?>");
-			fclose($fp);
-		$logline = AddToLog("lang_settings.php updated");
- 		check_in($logline, $Filename, $INDEX_DIRECTORY);
-		} else $error = "lang_config_write_error";
-	} else $error = "lang_set_file_read_error";
+	$error = update_lang_settings();
 
 	if ($error != "") {
 		if (!$sentHeader) {

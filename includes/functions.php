@@ -51,7 +51,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  * initialize and check the database
  *
  * this function will create a database connection and return false if any errors occurred
- * @param boolean $ignore_previous	whether or not to ignore a previous connection , this parameter is used mainly for the editconfig.php page when setting everything up
+ * @param boolean $ignore_previous	whether or not to ignore a previous connection , this parameter is used mainly for the install.php page when setting everything up
  * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
@@ -118,8 +118,7 @@ function check_db($ignore_previous=false) {
 	}
 
 	//-- protect the username and password on pages other than the Configuration page
-	if (strpos($_SERVER["PHP_SELF"], "editconfig.php") === false
-		&& strpos($_SERVER["PHP_SELF"], "sanity_check.php") === false) {
+	if (strpos($_SERVER["PHP_SELF"], "install.php") === false) {
 		$DBUSER = "";
 		$DBPASS = "";
 	}
@@ -528,6 +527,152 @@ function store_gedcoms() {
 	$mutex->Release();
 	$IN_STORE_GEDCOMS = false;
 	return true;
+}
+
+/**
+ * Update the site configuration settings
+ * New settings are passed in as an array of key value pairs
+ * The key in the array should be the name of the setting to change
+ * the value should be the new value
+ * $newconfig['CONFIGURED'] = true;
+ *
+ * @param array	$newconfig
+ * @param boolean $return	return the text or try to write the file
+ * @return mixed	returns true on success, or returns an array of error messages on failure
+ */
+function update_site_config($newconfig, $return = false) {
+	global $pgv_lang, $COMMIT_COMMAND;
+	
+	$errors = array();
+	
+	//-- load the configuration file text
+	if (file_exists("config.php")) $configtext = file_get_contents("config.php");
+	else $configtext = file_get_contents("config.dist");
+	
+	foreach($newconfig as $setting=>$value) {
+		update_config($configtext, $setting, $value);
+	}
+	
+	//-- check if the configtext is valid PHP
+	$res = @eval($configtext);
+	if ($res===false) {
+		if ($return) return $configtext;
+		 
+		$fp = fopen("config.php", "wb");
+		if (!$fp) {
+			$error['msg'] = $pgv_lang["pgv_config_write_error"];
+			$errors[] = $error;
+		}
+		else {
+			fwrite($fp, $configtext);
+			fclose($fp);
+			$logline = AddToLog("config.php updated by >".getUserName()."<");
+ 			if (!empty($COMMIT_COMMAND)) check_in($logline, "config.php", "");	
+		}
+	}
+	else {
+		$error['msg'] = "There was an error in the generated config.php. ".htmlentities($configtext);
+		$errors[] = $error;
+	}
+	
+	if (count($errors)>0) return $errors;
+	return true;
+}
+
+// Save the languages the user has chosen to have active on the website
+function update_lang_settings() {
+	global $INDEX_DIRECTORY, $language_settings, $languages, $pgv_language, $lang_short_cut, $pgv_lang_self, $pgv_lang_use, $confighelpfile, $helptextfile, $factsfile;
+	global $flagsfile, $adminfile, $countryfile, $faqlistfile, $extrafile, $ALPHABET_lower, $ALPHABET_upper, $DATE_FORMAT_array, $editorfile, $lang_langcode;
+	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array;
+	
+	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
+	if (!file_exists($Filename)) copy("includes/lang_settings_std.php", $Filename);
+
+	$error = "";
+	if ($file_array = file($Filename)) {
+		@copy($Filename, $Filename . ".old");
+		if ($fp = @fopen($Filename, "w")) {
+			for ($x = 0; $x < count($file_array); $x++) {
+				fwrite($fp, $file_array[$x]);
+				$dDummy00 = trim($file_array[$x]);
+				if ($dDummy00 == "//-- NEVER manually delete or edit this entry and every line below this entry! --START--//") break;
+			}
+			fwrite($fp, "\r\n");
+			fwrite($fp, "// Array definition of language_settings\r\n");
+			fwrite($fp, "\$language_settings = array();\r\n");
+			foreach ($language_settings as $key => $value) {
+			if (!isset($languages[$key]) || (isset($pgv_language[$key]) && !file_exists($pgv_language[$key]))) continue;
+				fwrite($fp, "\r\n");
+				fwrite($fp, "//-- settings for {$languages[$key]}\r\n");
+				fwrite($fp, "\$language_settings['{$languages[$key]}']=array(\r\n");
+				fwrite($fp, "'pgv_langname'=>'{$languages[$key]}',\r\n");
+				fwrite($fp, "'pgv_lang_use'=>".($pgv_lang_use[$key]?'true':'false').",\r\n");
+				fwrite($fp, "'pgv_lang_self'=>'{$pgv_lang_self[$key]}',\r\n");
+				fwrite($fp, "'lang_short_cut'=>'{$lang_short_cut[$key]}',\r\n");
+				fwrite($fp, "'langcode'=>'{$lang_langcode[$key]}',\r\n");
+				fwrite($fp, "'pgv_language'=>'{$pgv_language[$key]}',\r\n");
+				fwrite($fp, "'confighelpfile'=>'{$confighelpfile[$key]}',\r\n");
+				fwrite($fp, "'helptextfile'=>'{$helptextfile[$key]}',\r\n");
+				fwrite($fp, "'flagsfile'=>'{$flagsfile[$key]}',\r\n");
+				fwrite($fp, "'factsfile'=>'{$factsfile[$key]}',\r\n");
+				fwrite($fp, "'adminfile'=>'{$adminfile[$key]}',\r\n");
+				fwrite($fp, "'editorfile'=>'{$editorfile[$key]}',\r\n");
+				fwrite($fp, "'countryfile'=>'{$countryfile[$key]}',\r\n");
+				fwrite($fp, "'faqlistfile'=>'{$faqlistfile[$key]}',\r\n");
+				fwrite($fp, "'extrafile'=>'{$extrafile[$key]}',\r\n");
+				fwrite($fp, "'DATE_FORMAT'=>'{$DATE_FORMAT_array[$key]}',\r\n");
+				fwrite($fp, "'TIME_FORMAT'=>'{$TIME_FORMAT_array[$key]}',\r\n");
+				fwrite($fp, "'WEEK_START'=>'{$WEEK_START_array[$key]}',\r\n");
+				fwrite($fp, "'TEXT_DIRECTION'=>'{$TEXT_DIRECTION_array[$key]}',\r\n");
+				fwrite($fp, "'NAME_REVERSE'=>".($NAME_REVERSE_array[$key]?'true':'false').",\r\n");
+				fwrite($fp, "'ALPHABET_upper'=>'{$ALPHABET_upper[$key]}',\r\n");
+				fwrite($fp, "'ALPHABET_lower'=>'{$ALPHABET_lower[$key]}',\r\n");
+				fwrite($fp, "'MULTI_LETTER_ALPHABET'=>'{$MULTI_LETTER_ALPHABET[$key]}',\r\n");
+				fwrite($fp, "'DICTIONARY_SORT'=>".($DICTIONARY_SORT[$key]?'true':'false')."\r\n");
+				fwrite($fp, ");\r\n");
+			}
+			fwrite($fp, "\r\n");
+			fwrite($fp, "?>");
+			fclose($fp);
+		$logline = AddToLog("lang_settings.php updated");
+ 		check_in($logline, $Filename, $INDEX_DIRECTORY);
+		} else $error = "lang_config_write_error";
+	} else $error = "lang_set_file_read_error";
+	return $error;
+}
+
+/**
+ * Check if a person is dead
+ *
+ * For the given XREF id, this function will return true if the person is dead
+ * and false if the person is alive.
+ * @param string $pid		The Gedcom XREF ID of the person to check
+ * @return boolean			True if dead, false if alive
+ */
+function is_dead_id($pid) {
+	global $indilist, $BUILDING_INDEX, $GEDCOM, $GEDCOMS;
+
+	if (empty($pid))
+		return true;
+
+	//-- if using indexes then first check the indi_isdead array
+	if ((!$BUILDING_INDEX)&&(isset($indilist))) {
+		//-- check if the person is already in the $indilist cache
+		if ((!isset($indilist[$pid]["isdead"]))||($indilist[$pid]["gedfile"]!=$GEDCOMS[$GEDCOM]['id'])) {
+			//-- load the individual into the cache by calling the find_person_record function
+			$gedrec = find_person_record($pid);
+			if (empty($gedrec))
+				return true;
+		}
+		if (isset($indilist[$pid]["isdead"]) && $indilist[$pid]["gedfile"]==$GEDCOMS[$GEDCOM]['id']) {
+			if (!isset($indilist[$pid]["isdead"]))
+				$indilist[$pid]["isdead"] = -1;
+			if ($indilist[$pid]["isdead"]==-1)
+				$indilist[$pid]["isdead"] = update_isdead($pid, $indilist[$pid]);
+			return $indilist[$pid]["isdead"];
+		}
+	}
+	return is_dead(find_person_record($pid));
 }
 
 // This functions checks if an existing file is physically writeable

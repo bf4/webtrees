@@ -144,7 +144,7 @@ if ($action=="list") {
 	print "</ul>";
 }
 else if ($action=="adminonly") {
-	$files = array("./admin.php", "./downloadgedcom.php", "./edit_privacy.php", "./editconfig_gedcom.php", "./editconfig.php",
+	$files = array("./admin.php", "./downloadgedcom.php", "./edit_privacy.php", "./editconfig_gedcom.php", "./install.php",
 	"./editgedcoms.php", "./editlang_edit_settings.php", "./editlang_edit.php", "./editlang.php", "./manageservers.php",
 	"./media.php", "./pgvinfo.php", "./printlog.php", "./uploadgedcom.php", "./useradmin.php", "./usermigrate.php",
 	"./includes/functions_editlang.php", "./includes/functions_export.php", "./includes/functions_tools.php",

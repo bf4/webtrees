@@ -194,7 +194,7 @@ function showchanges() {
 		<td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_site"]; ?></td>
 	</tr>
 	<tr>
-			<td class="optionbox width50"><?php print_help_link("help_editconfig.php", "qm"); ?><a href="editconfig.php"><?php print $pgv_lang["configuration"];?></a></td>
+			<td class="optionbox width50"><?php print_help_link("help_editconfig.php", "qm"); ?><a href="install.php?step=4"><?php print $pgv_lang["configuration"];?></a></td>
 			<td class="optionbox width50"><?php print_help_link("um_tool_help", "qm"); ?><a href="usermigrate.php?proceed=migrate"><?php print $pgv_lang["um_header"];?></a></td>
 	</tr>
 	<tr>
