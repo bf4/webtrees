@@ -31,27 +31,28 @@ require './config.php';
 require("includes/functions_edit.php");
 
 //-- page parameters and checking
-$paramok = true;
-if (!isset($mediaid)) $mediaid = "";
-if (!isset($linkto)) {$linkto = ""; $paramok = false;}
-if (!isset($action)) $action = "choose";
-if ($linkto == "person") $toitems = $pgv_lang["to_person"];
-else if ($linkto == "source") $toitems = $pgv_lang["to_source"];
-else if ($linkto == "family") $toitems = $pgv_lang["to_family"];
-else {
-	$toitems = "???";
+
+$linktoid=safe_GET_xref('linktoid');
+$mediaid =safe_GET_xref('mediaid');
+$linkto  =safe_GET     ('linkto', array('person', 'source', 'family'));
+$action  =safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
+
+if (empty($linktoid) || empty($linkto)) {
 	$paramok = false;
-}
-
-if (!empty($mediaid)) {
-	//-- evil script protection
-	if ( preg_match("/M\d{4,8}/",$mediaid, $matches) == 1 ) {
-		$mediaid=$matches[0];
+	$toitems = "???";
+} else {
+	switch ($linkto) {
+	case 'person':
+		$toitems = $pgv_lang['to_person'];
+		break;
+	case 'family':
+		$toitems = $pgv_lang['to_family'];
+		break;
+	case 'source':
+		$toitems = $pgv_lang['to_source'];
+		break;
 	}
-	else $paramok = false;
 }
-else if (empty($linktoid)) $paramok = false;
-
 
 print_simple_header($pgv_lang["link_media"]." ".$toitems);
 
@@ -87,7 +88,7 @@ if ($action == "choose" && $paramok) {
 	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 
 	<?php
-	print "<form name=\"link\" method=\"post\" action=\"inverselink.php\">\n";
+	print "<form name=\"link\" method=\"get\" action=\"inverselink.php\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
 	if (!empty($mediaid)) print "<input type=\"hidden\" name=\"mediaid\" value=\"".$mediaid."\" />\n";
 	if (!empty($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"".$linktoid."\" />\n";
