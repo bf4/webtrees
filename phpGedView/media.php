@@ -199,6 +199,8 @@ $max=safe_REQUEST($_REQUEST, 'max', PGV_REGEX_INTEGER, 20);
 
 $showthumb=safe_REQUEST($_REQUEST, 'showthumb');
 
+if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
+
 if (count($_POST) == 0) $showthumb = true;
 
 $thumbget = "";

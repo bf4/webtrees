@@ -34,12 +34,15 @@ $controller->init();
 
 print_simple_header($pgv_lang["title_remote_link"]);
 
+if (isset($_REQUEST['pid'])) 	$pid = $_REQUEST['pid'];
+if (isset($_REQUEST['famid']))  $famid = $_REQUEST['famid'];
+
 //-- only allow gedcom admins to create remote links
 if (!$controller->canAccess()) {
 	//print "pid: $pid<br />";
 	//print "gedrec: $gedrec<br />";
 	print '<span class="error">';
-	print $pgv_lang["access_denied"].'<br /';
+	print $pgv_lang["access_denied"].'<br />';
 	//-- display messages as to why the editing access was denied
 	if (!PGV_USER_GEDCOM_ADMIN) {
 		print $pgv_lang["user_cannot_edit"];
