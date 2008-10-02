@@ -438,7 +438,7 @@ class Family extends GedcomRecord {
 			foreach ($husb->getAllNames() as $husb_name) {
 				foreach ($wife->getAllNames() as $wife_name) {
 					// Match latin names with latin names, arabic with arabic, etc.
-					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM' && whatLanguage($husb_name['full'])==whatLanguage($wife_name['full'])) {
+					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM' && whatLanguage($husb_name['sort'])==whatLanguage($wife_name['sort'])) {
 						$this->_getAllNames[]=array(
 							'type'=>$husb_name['type'],
 							'full'=>$husb_name['full'].' + '.$wife_name['full'],
