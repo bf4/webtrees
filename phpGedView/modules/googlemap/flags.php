@@ -37,6 +37,9 @@ require $INDEX_DIRECTORY."pgv_changes.php";
 
 loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text");
 
+if (isset($_REQUEST['countrySelected'])) $countrySelected = $_REQUEST['countrySelected'];
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+
 $saveLanguage = $LANGUAGE;
 $LANGUAGE = $deflang;
 loadLangFile("pgv_country");

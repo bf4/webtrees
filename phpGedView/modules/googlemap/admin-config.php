@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,16 +57,16 @@ loadLangFile("googlemap:lang, googlemap:help_text");
 
 if (PGV_USER_IS_ADMIN) { ?>
    <tr>
-	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["configure_googlemap"]; ?></td>
+	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["configure_googlemap"]; ?></td>
    </tr>
    <tr>
-      <td class="optionbox"><?php print_help_link("GOOGLEMAP_CONFIG_help", "qm", "GOOGLEMAP_CONFIG");?><a href="module.php?mod=googlemap&pgvaction=editconfig"><?php print $pgv_lang["gm_manage"];?></a>
+      <td class="optionbox"><?php print_help_link("GOOGLEMAP_CONFIG_help", "qm", "GOOGLEMAP_CONFIG");?><a href="module.php?mod=googlemap&pgvaction=editconfig"><?php echo $pgv_lang["gm_manage"];?></a>
 	  </td>
-      <td class="optionbox"><?php print_help_link("PLE_EDIT_help", "qm", "PLE_EDIT");?><a href="module.php?mod=googlemap&pgvaction=places"><?php print $pgv_lang["edit_place_locations"];?></a>
+      <td class="optionbox"><?php print_help_link("PLE_EDIT_help", "qm", "PLE_EDIT");?><a href="module.php?mod=googlemap&pgvaction=places"><?php echo $pgv_lang["edit_place_locations"];?></a>
 	  </td>
    </tr>
    <tr>
-      <td class="optionbox"><?php print_help_link("GOOGLEMAP_PLACECHECK_help", "qm", "GOOGLEMAP_PLACECHECK");?><a href="module.php?mod=googlemap&pgvaction=placecheck"><?php print $pgv_lang["placecheck"];?></a>
+      <td class="optionbox"><?php print_help_link("GOOGLEMAP_PLACECHECK_help", "qm", "GOOGLEMAP_PLACECHECK");?><a href="module.php?mod=googlemap&pgvaction=placecheck"><?php echo $pgv_lang["placecheck"];?></a>
 	  </td>
       <td class="optionbox">&nbsp;
 	  </td>
