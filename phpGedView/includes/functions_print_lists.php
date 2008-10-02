@@ -544,17 +544,16 @@ function print_fam_table($datalist, $legend="", $option="") {
 			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink("_blank").'</td>';
 		//-- Husband name(s)
 		list($husb_name, $wife_name)=explode(' + ', $family->getSortName());
-		$n1=$husb->getPrimaryName();
-		$n2=$husb->getSecondaryName();
 		$names=$husb->getAllNames();
 		// The husband's primary/secondary name might not be the family's primary name
 		foreach ($names as $n=>$name) {
-			if ($n!=$n1 && $n!=$n2 && $name['sort']==$husb_name) {
-				$n2=$n1;
-				$n1=$n;
+			if ($name['sort']==$husb_name) {
+				$husb->setPrimaryName($n);
 				break;
 			}
 		}
+		$n1=$husb->getPrimaryName();
+		$n2=$husb->getSecondaryName();
 		$tdclass = "list_value_wrap";
 		if (!$husb->isDead()) $tdclass .= " alive";
 		if (!$husb->getChildFamilyIds()) $tdclass .= " patriarch";
@@ -593,17 +592,16 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink("_blank").'</td>';
 		//-- Wife name(s)
-		$n1=$wife->getPrimaryName();
-		$n2=$wife->getSecondaryName();
 		$names=$wife->getAllNames();
-		// The wife's primary/secondary name might not be the family's primary name
+		// The husband's primary/secondary name might not be the family's primary name
 		foreach ($names as $n=>$name) {
-			if ($n!=$n1 && $n!=$n2 && $name['sort']==$wife_name) {
-				$n2=$n1;
-				$n1=$n;
+			if ($name['sort']==$wife_name) {
+				$wife->setPrimaryName($n);
 				break;
 			}
 		}
+		$n1=$wife->getPrimaryName();
+		$n2=$wife->getSecondaryName();
 		$tdclass = "list_value_wrap";
 		if (!$wife->isDead()) $tdclass .= " alive";
 		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";
