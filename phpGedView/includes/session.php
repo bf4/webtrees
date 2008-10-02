@@ -179,7 +179,7 @@ if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_D
 	foreach ($DefaultSettings as $lang => $settings) {
 		foreach ($settings as $key => $value) {
 			if (!isset($language_settings[$lang][$key])) $language_settings[$lang][$key] = $value;
-	}
+		}
 	}
 	unset($DefaultSettings);
 	unset($ConfiguredSettings);		// We don't need these any more
@@ -212,10 +212,9 @@ $QUERY_STRING = preg_replace("/show_context_help=(no|yes)/", "", $QUERY_STRING);
 if (!$CONFIGURED) {
    if ((strstr($SCRIPT_NAME, "admin.php")===false)
    &&(strstr($SCRIPT_NAME, "login.php")===false)
-   &&(strstr($SCRIPT_NAME, "editconfig.php")===false)
-   &&(strstr($SCRIPT_NAME, "config_download.php")===false)
+   &&(strstr($SCRIPT_NAME, "install.php")===false)
    &&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
-      header("Location: editconfig.php");
+      header("Location: install.php");
       exit;
    }
 }
@@ -509,10 +508,10 @@ if (!isset($_SESSION["cookie_login"])) $_SESSION["cookie_login"] = false;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION["show_context_help"] = true;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_context_help"] = false;
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
-if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
+if ((strstr($SCRIPT_NAME, "install.php")===false)
 	&&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
 	if (!$PGV_DB_CONNECTED || !adminUserExists()) {
-		header("Location: editconfig.php");
+		header("Location: install.php");
 		exit;
 	}
 

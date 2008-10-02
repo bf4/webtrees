@@ -325,9 +325,9 @@ class Person extends GedcomRecord {
 		$this->_parseBirthDeath();
 		//if (!$estimate && $this->dest) new GedcomDate("({$pgv_lang['private']})");
 		if (empty($this->deathEvent))
-		return new GedcomDate(NULL);
+			return new GedcomDate(NULL);
 		else
-		return $this->deathEvent->getDate($estimate);
+			return $this->deathEvent->getDate($estimate);
 	}
 
 	/**

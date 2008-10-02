@@ -24,7 +24,8 @@
  * @subpackage Admin
  */
 
-require './config.php';
+if (file_exists('./config.php')) require './config.php';
+else require './config.dist';
 
 loadLangFile("all");
 require ("includes/help_text_vars.php");
