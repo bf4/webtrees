@@ -32,6 +32,9 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
+$action=safe_POST('action', array('delete', 'setdefault'));
+$default_ged=safe_POST('default_ged', get_all_gedcoms());
+
 /**
  * Check if a gedcom file is downloadable over the internet
  *
@@ -75,9 +78,10 @@ if ($action=="delete") {
 	print "<br />".str_replace("#GED#", $ged, $pgv_lang["gedcom_deleted"])."<br />\n";
 }
 
-if (($action=="setdefault") && isset($default_ged)) {
+if (($action=="setdefault") && $default_ged) {
+	$DEFAULT_GEDCOM = $default_ged;
 	$configtext = implode('', file($INDEX_DIRECTORY."gedcoms.php"));
-	$configtext = preg_replace('/\$DEFAULT_GEDCOM\s*=\s*".*";/', "\$DEFAULT_GEDCOM = \"".urldecode($_POST["default_ged"])."\";", $configtext);
+	$configtext = preg_replace('/\$DEFAULT_GEDCOM\s*=\s*".*";/', "\$DEFAULT_GEDCOM = \"".$default_ged."\";", $configtext);
 	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
 	if (!$fp) {
 		global $whichFile;
@@ -85,7 +89,6 @@ if (($action=="setdefault") && isset($default_ged)) {
 		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
-		$DEFAULT_GEDCOM = urldecode($_POST["default_ged"]);
 		fwrite($fp, $configtext);
 		fclose($fp);
 		$logline = AddToLog("gedcoms.php updated");
