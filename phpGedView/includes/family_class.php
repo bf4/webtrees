@@ -448,14 +448,18 @@ class Family extends GedcomRecord {
 					}
 				}
 			}
-			// The spouses have no matching name types.
+			// The spouses have no names in matching languages, so match everything.
 			if (!$this->_getAllNames) {
-				$this->_getAllNames[]=array(
-					'type'=>'NAME',
-					'full'=>$husb->getFullName().' + '.$wife->getFullName(),
-					'list'=>$husb->getListName().$husb->getSexImage().'<br />'.$wife->getListName().$wife->getSexImage(),
-					'sort'=>$husb->getSortName().' + '.$wife->getSortName()
-				);
+				foreach ($husb->getAllNames() as $husb_name) {
+					foreach ($wife->getAllNames() as $wife_name) {
+						$this->_getAllNames[]=array(
+								'type'=>'NAME',
+								'full'=>$husb_name['full'].' + '.$wife_name['full'],
+								'list'=>$husb_name['list'].$husb->getSexImage().'<br />'.$wife_name['list'].$wife->getSexImage(),
+								'sort'=>$husb_name['sort'].' + '.$wife_name['sort'],
+						);
+					}
+				}
 			}
 		}
 		return $this->_getAllNames;
