@@ -37,7 +37,7 @@ function case_in_array($value, $array) {
 }
 $action = safe_GET('action');
 $display = safe_GET('display');
-$parent = safe_GET('parent');
+$parent = safe_GET('parent', PGV_REGEX_UNSAFE);
 $level = safe_GET('level');
 
 if (empty($action)) $action = "find";
