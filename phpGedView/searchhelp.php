@@ -42,10 +42,11 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 // Initialize variables
-if (!isset($searchtext)) $searchtext = "";
-if (!isset($searchuser)) $searchuser = "no";
-if (!isset($searchconfig)) $searchconfig = "no";
-if (!isset($searchmodules)) $searchmodules = "no";
+$searchtext   =safe_POST('searchtext');
+$searchuser   =safe_POST('searchuser',    'yes', 'no');
+$searchconfig =safe_POST('searchconfig',  'yes', 'no');
+$searchuser   =safe_POST('searchuser',    'yes', 'no');
+$searchmodules=safe_POST('searchmodules', 'yes', 'no');
 $found = 0;
 
 ?>
