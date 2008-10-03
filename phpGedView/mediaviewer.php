@@ -108,13 +108,14 @@ loadLangFile("lightbox:lang");
 							$imgwidth = $controller->mediaobject->getWidth()+40;
 							$imgheight = $controller->mediaobject->getHeight()+150;
 							if (file_exists("modules/lightbox/album.php")) {
-								$dwidth = 150;
+								$dwidth = 200;
 							}else{
 								$dwidth = 300;
 							}
 							if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 
 							//LBox -- If Lightbox installed, open image with Lightbox
+
 							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$filename) || eregi("\.jpeg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ) {
 								//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
 								print "<a
@@ -122,8 +123,9 @@ loadLangFile("lightbox:lang");
 									onmouseover=\"window.status='javascript:;'; return true;\"
 									onmouseout=\"window.status=''; return true;\"
 									rel=\"clearbox[general]\" rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+									
+							//Else open image with the Image View Page
 							}else{
-								//Else open image with the Image View Page
 								?>
 								<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
 								<?php
@@ -134,11 +136,39 @@ loadLangFile("lightbox:lang");
 						}
 						else{
 							// this is not an image
-							?>
-							<a href="<?php print $filename; ?>" target="_BLANK">
-							<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
-							</a>
-							<?php
+							//  If flv native (Lightbox)
+							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.flv", $filename) ) ) {
+								print "<a 
+									href=\"flv.php?flvVideo=" . $filename . "\" 
+									onmouseover=\"window.status='javascript:;'; return true;\"
+									onmouseout=\"window.status=''; return true;\"
+									rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+									if (media_exists($controller->mediaobject->getThumbnail()) && eregi("\media.gif",$controller->mediaobject->getThumbnail()) && eregi("\.flv",$filename)) {
+										print "<img src=\"modules/lightbox/JWplayer/flash.png\" height=\"80\" border=\"0\" " ;
+									}else{
+										?>
+										<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="120" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
+										<?php
+									} ?>
+								</a>
+								<?php
+								
+							// Else If url filetype (Lightbox)
+							}elseif ( file_exists("modules/lightbox/album.php") && ( eregi("\http", $filename) ) ) {
+								include ('modules/lightbox/lb_config.php');
+								print "<a 
+									href=\"" . $filename . "\" 
+									rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+								print "<img src=\"images/URL.png\" height=\"80\" border=\"0\" " ;
+								print "</a>";
+							// Else regular image
+							}else{
+								?>
+								<a href="<?php print $filename; ?>" target="_BLANK">
+								<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
+								</a>
+								<?php
+							}
 						}
 						if ($SHOW_MEDIA_DOWNLOAD) print "<br /><br /><a href=\"".$filename."\">".$pgv_lang["download_image"]."</a><br/>";
 					}

@@ -60,7 +60,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 	// Set type of media from call in album
 	if ($t==1) {
-		$tt      = $pgv_lang["TYPE__photo"];
+		$tt      = $pgv_lang["ROW_TYPE__photo"];
 		$typ2b   = "(";
 		$typ2b  .= " (m_gedrec LIKE '%TYPE photo%')       OR ";
 		$typ2b  .= " (m_gedrec LIKE '%TYPE map%')         OR ";
@@ -69,7 +69,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		$typ2b  .= ")";
 	}
 	if ($t==2){
-		$tt      = $pgv_lang["TYPE__document"];
+		$tt      = $pgv_lang["ROW_TYPE__document"];
 		$typ2b   = "(";
 		$typ2b  .= " (m_gedrec LIKE '%TYPE card%')        OR ";
 		$typ2b  .= " (m_gedrec LIKE '%TYPE certificate%') OR ";
@@ -80,7 +80,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		$typ2b  .= ")";
 	}
 	if ($t==3){
-		$tt      = $factarray["CENS"];
+		$tt      = $pgv_lang["ROW_TYPE__census"];
 		$typ2b   = "(";
 		$typ2b  .= " (m_gedrec LIKE '%TYPE electronic%')  OR ";
 		$typ2b  .= " (m_gedrec LIKE '%TYPE fiche%')       OR ";
@@ -88,7 +88,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		$typ2b  .= ")";
 	}
 	if ($t==4){
-		$tt      = $pgv_lang["TYPE__other"];
+		$tt      = $pgv_lang["ROW_TYPE__other"];
 		$typ2b   = "(";
 		$typ2b  .= " (m_gedrec NOT LIKE '%TYPE %')        OR ";
 		$typ2b  .= " (m_gedrec LIKE     '%TYPE book%')    OR ";
@@ -98,7 +98,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		$typ2b  .= ")";
 	}
 	if ($t==5){
-		$tt      = $pgv_lang["TYPE__footnotes"];
+		$tt      = $pgv_lang["ROW_TYPE__footnotes"];
 		$typ2b   = "(m_gedrec LIKE     '%%')";
 	}
 
@@ -185,14 +185,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			echo "\n\n";
 			echo "<table cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"facts_table\"><tr>", "\n";
 
-			echo '<td width="100" align="center" class="descriptionbox">';
+			echo '<td width="100" align="center" class="descriptionbox" style="vertical-align:middle;">';
 				if ($t==5){
-					echo "<b><br />" . $tt . "</b><br /><br />";
+					echo "<b>" . $tt . "</b>";
 				}else if ( ($t!=5) && PGV_USER_CAN_ACCESS){
-					echo "<b><br /><br />" . $tt . "</b><br /><br />";
+					echo "<b>" . $tt . "</b>";
 					// echo "(" . $numm . ")";
 				}else{
-					echo "<b><br />" . $tt . "</b><br /><br />";
+					echo "<b>" . $tt . "</b>";
 				}
 			echo '</td>';
 

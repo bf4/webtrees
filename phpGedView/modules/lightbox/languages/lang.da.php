@@ -104,8 +104,13 @@ $pgv_lang["lightbox"]		 = "Album";
 $pgv_lang["showmenu"] 		 = "Vis menu:";
 
 $pgv_lang["TYPE__other"] 	 = "Andet";
-
 $pgv_lang["TYPE__footnotes"] = "Fodnoter";
+
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["census_text"]  	 = "\"These census images have been obtained from \"The National Archives\", the custodian of the original records, ";
 $pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;

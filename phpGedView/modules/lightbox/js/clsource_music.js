@@ -5,12 +5,66 @@
  * @author Brian Holland
 */
 
+//Browser detection ====================================================================
+
+var nVer = navigator.appVersion;
+var nAgt = navigator.userAgent;
+var browserName  = '';
+var fullVersion  = 0; 
+var majorVersion = 0;
+
+// In Internet Explorer, the true version is after "MSIE" in userAgent
+if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
+ browserName  = "Microsoft Internet Explorer";
+ fullVersion  = parseFloat(nAgt.substring(verOffset+5));
+ majorVersion = parseInt(''+fullVersion);
+}
+
+// In Opera, the true version is after "Opera" 
+else if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
+ browserName  = "Opera";
+ fullVersion  = parseFloat(nAgt.substring(verOffset+6));
+ majorVersion = parseInt(''+fullVersion);
+}
+
+// In Firefox, the true version is after "Firefox" 
+else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
+ browserName  = "Firefox";
+ fullVersion  = parseFloat(nAgt.substring(verOffset+8));
+ majorVersion = parseInt(''+fullVersion);
+}
+
+// In most other browsers, "name/version" is at the end of userAgent 
+else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < (verOffset=nAgt.lastIndexOf('/')) ) 
+{
+ browserName  = nAgt.substring(nameOffset,verOffset);
+ fullVersion  = parseFloat(nAgt.substring(verOffset+1));
+ if (!isNaN(fullVersion)) majorVersion = parseInt(''+fullVersion);
+ else {fullVersion  = 0; majorVersion = 0;}
+}
+
+// Finally, if no name and/or no version detected from userAgent...
+if (browserName.toLowerCase() == browserName.toUpperCase()
+ || fullVersion==0 || majorVersion == 0 )
+{
+ browserName  = navigator.appName;
+ fullVersion  = parseFloat(nVer);
+ majorVersion = parseInt(nVer);
+}
+
+//document.write('Browser name  = '+browserName+'<br>');
+//document.write('Full version  = '+fullVersion+'<br>');
+//document.write('Major version = '+majorVersion+'<br>');
+//document.write('navigator.appName = '+navigator.appName+'<br>');
+//document.write('navigator.userAgent = '+navigator.userAgent+'<br>');
+
+// =================================================================================================
+
+
 // Initial variable settings
 
 var CB_Show = 1;
-
 var CB_Zoom = null;
-
 var zoomSet = 0; 	// ZoomSet = 0 means No Lightbox window.  (Leave at 0 here please)
 					// Note: ZoomSet = 1 means Lightbox window open. 
 					// Note: ZoomSet = 2 means Lightbox window open and zoomed. 
@@ -883,8 +937,32 @@ var CB_Close_Win		= CB_Close_Win;
         CB_HideContent.style.visibility = "visible";
         return;
     }
+	
+	var clicks=0;
+	function CB_BrBack_Close() {
+		// Debug -----------------
+		// alert(browserName);
+		if (browserName=="Firefox" || browserName=="Opera"){
+			CB_Close();
+			history.go(-1);
+		}else if (browserName=="Microsoft Internet Explorer") {
+			clicks=(clicks+1);
+			if (clicks==1) {
+				CB_Close();
+			}else{
+				CB_Close();
+				clicks=0;
+				history.go(-1); 
+			}
+		}else{
+			CB_Close(); 
+		} 
+	}
+	
 
     function CB_ClickURL(a) {
+		CB_iFr.src = "";
+		// alert("Open = " + clicks);
         if (CB_Show == 0) {
             return false;
         }
@@ -892,9 +970,9 @@ var CB_Close_Win		= CB_Close_Win;
         CB_Clicked = a.split("+\\+");
         CB_PrvNxt.display = "none";
 		CB_Cls.style.display = "block";
-		CB_Cls.onclick = function () {CB_Close();return false;};
+		CB_Cls.onclick = function () { CB_BrBack_Close();return false; };
         CB_Rel = CB_Clicked[0].split(",");
-// alert(CB_Clicked[0] + " and " + CB_Clicked[1] + " and " + CB_Clicked[2]);
+		// alert(CB_Clicked[0] + " and " + CB_Clicked[1] + " and " + CB_Clicked[2]);
         CB_SetAllPositions();
         CB_ImgWidth = parseInt(CB_Rel[0]);
         CB_ImgHeight = parseInt(CB_Rel[1]);
@@ -913,11 +991,12 @@ var CB_Close_Win		= CB_Close_Win;
         CB_Win.style.visibility = "visible";
         CB_SlideS.style.display = "none";
         CB_SlideP.style.display = "none";
-		CB_Speak.style.display = "none";		
+		CB_Speak.style.display = "none";
         CB_ZoomS.style.display = "none";
         CB_ZoomP.style.display = "none";
 
- //       CB_Txt2.style.display = "none";	
+        CB_Txt2.style.visibility = "hidden";
+        CB_Txt2a.style.visibility = "hidden";
         CB_HideDocument("x");
 		CB_HideContent.onclick = function () {CB_Close();return false;};
 		CB_SS = "pause";
@@ -1215,7 +1294,7 @@ var CB_Close_Win		= CB_Close_Win;
                 clearTimeout(CB_ResizeTimer);
             }
             CB_Gallery = "";
-            CB_iFr.src = CB_Clicked[1];
+			CB_iFr.src = CB_Clicked[1];
             CB_Img.style.visibility = "visible";
             CB_LoadingImg.style.visibility = "hidden";
             CB_iFr.style.top = CB_ImgBorder + "px";
@@ -1257,7 +1336,7 @@ var CB_Close_Win		= CB_Close_Win;
                 CB_Txt.innerHTML = CB_Clicked[1];
             }
 //Temp            CB_Txt.innerHTML += " " + CB_ImgNumBracket.substring(0, 1) + "<a class=\"CB_TextNav\" href=\"javascript:void(0)\" onclick=\"CB_Close();\">" + CB_NavTextCls + "</a>" + CB_ImgNumBracket.substring(1, 2);
-            CB_HideContent.onclick = function () {CB_Close();return false;};
+            CB_HideContent.onclick = function () {CB_BrBack_Close();return false;};
             CB_ClearBox = "be";
             CB_IsAnimating = 0;
             return;
@@ -1762,7 +1841,7 @@ var CB_Close_Win		= CB_Close_Win;
         CB_Img.style.display = "none";
         CB_Win.style.visibility = "hidden";
         CB_HideContent.onclick = "";
-        CB_iFr.src = "";
+	 CB_iFr.src = "";
         CB_iFr.style.top = "0px";
         CB_iFr.style.left = "0px";
         CB_iFr.style.width = "0px";

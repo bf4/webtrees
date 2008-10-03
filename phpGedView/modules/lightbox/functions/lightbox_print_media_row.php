@@ -47,6 +47,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	global $SEARCH_SPIDER;
 	global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT, $order1, $sort_i, $notes, $q, $LB_TT_BALLOON, $theme_name ;
+	global $SERVER_URL;
 
 	$reorder=safe_get('reorder', '1', '0');
 
@@ -114,6 +115,23 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		)
 	{
 		$file_type = "regular";
+		
+/*
+	// FLV as http ----------------------------------
+	}else if(eregi("http" ,$rowm['m_file']) &&
+			eregi("\flvVideo.php",$rowm['m_file']) 
+			) 
+	{
+		$file_type = "flv";
+*/
+
+	// FLV local file----------------------------------
+	}else if(
+			eregi("\.flv" ,$rowm['m_file']) 
+			)
+	{
+		$file_type = "flvfile";
+
 	// URL ----------------------------------
 	}else if(eregi("http" ,$rowm['m_file']) ||
 			eregi("\.pdf",$rowm['m_file'])
@@ -227,6 +245,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			// If regular filetype (Lightbox)
 			if ($file_type == "regular") {
 				$menu["link"] = $mainMedia . "\" rel='clearbox[general_8]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "";
+			//Else if Local flv file
+			}elseif ($file_type == "flvfile") {
+				$menu["link"] = "flv.php?flvVideo=" . $mainMedia . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "";
 			// Else If url filetype (Lightbox)
 			}elseif ($file_type == "url") {
 				$menu["link"] = $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "";
@@ -352,22 +373,29 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						}
 					$item++;
 
-					print "<td colspan=\"3\" valign=\"top\" align=\"center\" >". "\n";
+					print "<td colspan=\"3\" valign=\"middle\" align=\"center\" >". "\n";
 					//If reordering media, do NOT Enable Lightbox nor show thumbnail tooltip
 					if ( $reorder==1 ) {
 					// Else Enable Lightbox (Or popup) and show thumbnail tooltip ----------
 					}else{
 						// If regular filetype (Lightbox)
 						if ($file_type == "regular") {
-							print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "\"";
+							print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) .  "::" . htmlspecialchars($notes) . "\">\n";
+						// Else If flv native (Lightbox)
+						}elseif ($file_type == "flvfile") {
+							print "<a href=\"flv.php?flvVideo=" . $mainMedia . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "\">\n";
+
+						// Else If flv url filetype (Lightbox)
+//						}elseif ($file_type == "flv") {
+//							print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . 350 . "," . 320 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "\">\n";
+
 						// Else If url filetype (Lightbox)
 						}elseif ($file_type == "url") {
-							print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "\"";
+							print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(strip_tags($mediaTitle)) . "::" . htmlspecialchars($notes) . "\">\n";
 						// Else Other filetype (Pop-up Window)
 						}else{
-							print 	"<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "\"";
+							print 	"<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . $mediaTitle . "\">\n";
 						}
-						print ">\n";
 					}
 				} // End If media is external or media_exists($mainmedia)
 
@@ -376,8 +404,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				// Now finally print the thumbnail ----------------------------------
 				// If Plain URL Print the Common Thumbnail
 				if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
-					print "<img src=\"{$MEDIA_DIRECTORY}thumbs/urls/URL.jpg\" height=\"80\" border=\"0\" " ;
-				// Else Print the Regular Thumbnail if associated with an image,
+					print "<img src=\"images/URL.png\" height=\"80\" border=\"0\" " ;
+				// If local flv file, print the common flv thumbnail
+				}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
+					print "<img src=\"modules/lightbox/JWplayer/flash.png\" height=\"60\" border=\"0\" " ;
+				// Else Print the Regular Thumbnail if associated with a thumbnail image,
 				}else{
 					$browser = $_SERVER['HTTP_USER_AGENT'];
 					if(strstr($browser,"MSIE")) {
@@ -446,3 +477,4 @@ if (!defined('PGV_PHPGEDVIEW')) {
 // -----------------------------------------------------------------------------
 
 ?>
+

@@ -99,10 +99,14 @@ $pgv_lang["lightbox"]		 = "Album";
 $pgv_lang["showmenu"] 		 = "Pokaż Menu:";
 
 $pgv_lang["TYPE__other"] 	 = "Inne";
-
 $pgv_lang["TYPE__footnotes"] = "Notes";
-
 $pgv_lang["census_text"]  	 = "" ;
+
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["lb_edit_details"] 	= "Edytuj szczegóły";
 $pgv_lang["lb_view_details"] 	= "Pokaż szczegóły";

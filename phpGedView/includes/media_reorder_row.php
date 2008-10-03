@@ -63,6 +63,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
     if ($rtype=='old') $styleadd = "change_old";
 
     // NOTE Start printing the media details
+
     $thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
     // $isExternal = stristr($thumbnail,"://");
 	$isExternal = isFileExternal($thumbnail);
@@ -82,9 +83,22 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 		print "\n" . "<table class=\"pic\"><tr>" . "\n";
 		print "<td width=\"80\" valign=\"top\" align=\"center\" >". "\n";
-		print "<img src=\"".$thumbnail."\" height=\"38\" border=\"0\" " ;
-
-			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
+		
+		//Finally Print the thumbnail ---------------------------------
+			// If Plain URL Print the Common URL Thumbnail
+			if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
+				print "<img src=\"images/URL.png\" height=\"48\" width=\"44\"border=\"0\" " ;
+			//Else If local flv file, print the common flash thumbnail
+			}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
+				print "<img src=\"modules/lightbox/JWplayer/flash.png\" height=\"38\" border=\"0\" " ;
+			// Else Print the Regular Thumbnail if associated with a thumbnail image,
+			}else{
+				print "<img src=\"".$thumbnail."\" height=\"38\" border=\"0\" " ;
+			}
+			
+			if ($isExternal) {
+				print " width=\"".($THUMBNAIL_WIDTH * (38/80))."\"";
+			}
 			if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
 				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info available\" />";
 			}else{
