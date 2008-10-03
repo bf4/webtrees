@@ -58,7 +58,6 @@ VERSION 4.1.6
 +$pgv_lang["install_step_5"] 						2 Oct 2008				A
 +$pgv_lang["install_step_6"]						2 Oct 2008				A
 +$pgv_lang["install_step_7"] 						2 Oct 2008				A
-+$pgv_lang["install_step_8"]						2 Oct 2008				A
 +$pgv_lang["install_wizard"]						2 Oct 2008				A
 +$pgv_lang["basic_site_config"]						2 Oct 2008				A
 +$pgv_lang["adv_site_config"]						2 Oct 2008				A

@@ -407,7 +407,9 @@ $errormsg = "";
 					break;
 				case 3:
 					require_once('includes/functions_import.php');
+					//-- setup user tables
 					checkTableExists();
+					//-- setup genealogy tables
 					setup_database();
 					cleanup_database();
 					print "<span class=\"pass\">".$pgv_lang["db_tables_created"]."</span><br /><br /><br />";

@@ -45,7 +45,6 @@ $pgv_lang["install_step_4"] = "Site Configuration";
 $pgv_lang["install_step_5"] = "Languages";
 $pgv_lang["install_step_6"] = "Save Configuration";
 $pgv_lang["install_step_7"] = "Create admin user";
-$pgv_lang["install_step_8"] = "Get Started";
 $pgv_lang["install_wizard"] = "Installation Wizard";
 $pgv_lang["basic_site_config"] = "Basic Settings";
 $pgv_lang["adv_site_config"] = "Advanced Settings";
