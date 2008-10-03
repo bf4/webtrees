@@ -1391,19 +1391,13 @@ if ($action=="choosepid") {
 	}
 
 	$indifacts = array();
-	$subrecords = get_all_subrecords($gedrec, "ADDR,PHON,FAX,EMAIL,_EMAIL,NAME,FAMS,FAMC,_UID", false, false, false);
+	$person = Person::getInstance($pid);
+    $facts = $person->getIndiFacts();
 	$repeat_tags = array();
-	foreach($subrecords as $ind=>$subrec) {
-		$ft = preg_match("/1 (\w+)(.*)/", $subrec, $match);
-		if ($ft>0) {
-			$fact = trim($match[1]);
-			$event = trim($match[2]);
-		}
-		else {
-			$fact="";
-			$event="";
-		}
-		if ($fact=="EVEN" || $fact=="FACT") $fact = get_gedcom_value("TYPE", 2, $subrec, '', false);
+
+    foreach($facts as $event) {    
+    	$fact = $event->getTag();
+		if ($fact=="EVEN" || $fact=="FACT") $fact = $event->getType();
 		if (in_array($fact, $addfacts)) {
 			if (!isset($repeat_tags[$fact])) $repeat_tags[$fact]=1;
 			else $repeat_tags[$fact]++;
@@ -1412,13 +1406,16 @@ if ($action=="choosepid") {
 				if ($rfact!=$fact) $newreqd[] = $rfact;
 			}
 			$reqdfacts = $newreqd;
-			$indifacts[] = array($fact, $subrec, false, $repeat_tags[$fact]);
+            $indifacts[] = $event;
 		}
 	}
 	foreach($reqdfacts as $ind=>$fact) {
-		$indifacts[] = array($fact, "1 $fact\r\n", true, 0);
+		$e = new Event("1 $fact\r\n");
+        $e->temp = true;
+        $indifacts[] = $e;
 	}
-	sort_facts_old($indifacts);
+        
+	sort_facts($indifacts);
 	$sfams = find_families_in_record($gedrec, "FAMS");
 	$cfams = find_families_in_record($gedrec, "FAMC");
 	if (count($cfams)==0) $cfams[] = "";
@@ -1571,18 +1568,16 @@ function checkform(frm) {
 </tr>
 <?php
 foreach($indifacts as $f=>$fact) {
-	$fact_tag = $fact[0];
-	$fact_num = $fact[3];
-	$date = get_gedcom_value("DATE", 2, $fact[1], '', false);
-	$plac = get_gedcom_value("PLAC", 2, $fact[1], '', false);
-	$temp = get_gedcom_value("TEMP", 2, $fact[1], '', false);
-	$desc = get_gedcom_value($fact_tag, 1, $fact[1], '', false);
+	$fact_tag = $fact->getTag();
+	$fact_num = $fact->getLineNumber();
+    $date = $fact->getValue("DATE");
+    $plac = $fact->getPlace();
+    $temp = $fact->getValue("TEMP");
+    $desc = $fact->getDetail();
 	?>
 <tr>
 	<td class="descriptionbox">
-		<?php if (isset($factarray[$fact_tag])) print $factarray[$fact_tag];
-		else if (isset($pgv_lang[$fact_tag])) print $pgv_lang[$fact_tag];
-		else print $fact_tag;
+		<?php print $fact->getLabel();
 		?>
 		<input type="hidden" name="TAGS[]" value="<?php echo $fact_tag; ?>" />
 		<input type="hidden" name="NUMS[]" value="<?php echo $fact_num; ?>" />
@@ -1623,7 +1618,7 @@ foreach($indifacts as $f=>$fact) {
 			$tabkey++;
 		}
 	}
-	if (!$fact[2]) { ?>
+	if (!$fact->temp) { ?>
 		<td class="optionbox center">
 			<input type="hidden" name="REMS[<?php echo $f; ?>]" id="REM<?php echo $f; ?>" value="0" />
 			<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="document.quickupdate.closewin.value='0'; document.quickupdate.REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); return false;">
@@ -1676,7 +1671,7 @@ if (count($addfacts)>0) { ?>
 	foreach($addfacts as $indexval => $fact) {
 		$found = false;
 		foreach($indifacts as $ind=>$value) {
-			if ($fact==$value[0]) {
+			if ($fact==$value->getTag()) {
 				$found=true;
 				break;
 			}
@@ -1801,8 +1796,12 @@ for($i=1; $i<=count($sfams); $i++) {
 <?php
 	$famreqdfacts = preg_split("/[,; ]/", $QUICK_REQUIRED_FAMFACTS);
 	$famid = $sfams[$i-1];
-	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-	else $famrec = find_updated_record($famid);
+	$family=Family::getInstance($famid);
+	$famrec = $family->getGedcomRecord();
+	if (isset($pgv_changes[$famid."_".$GEDCOM])) {
+		$famrec = find_updated_record($famid);
+		$family = new Family($famrec);
+	}
 	print $pgv_lang["family_with"]." ";
 	$parents = find_parents_in_record($famrec);
 	$spid = "";
@@ -1819,32 +1818,28 @@ for($i=1; $i<=count($sfams); $i++) {
 		print $name."</a>\n";
 	}
 	else print $pgv_lang["unknown"];
-	$subrecords = get_all_subrecords($famrec, "HUSB,WIFE,CHIL", false, false, false);
+    $subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
 	$famfacts = array();
-	foreach($subrecords as $ind=>$subrec) {
-		$ft = preg_match("/1 (\w+)(.*)/", $subrec, $match);
-		if ($ft>0) {
-			$fact = trim($match[1]);
-			$event = trim($match[2]);
-		}
-		else {
-			$fact="";
-			$event="";
-		}
-		if ($fact=="EVEN" || $fact=="FACT") $fact = get_gedcom_value("TYPE", 2, $subrec, '', false);
+	foreach($subrecords as $ind=>$eventObj) {
+        $fact = $eventObj->getTag();
+        $event = $eventObj->getDetail();
+		if ($fact=="EVEN" || $fact=="FACT") $fact = $eventObj->getValue("TYPE");
 		if (in_array($fact, $famaddfacts)) {
 			$newreqd = array();
 			foreach($famreqdfacts as $r=>$rfact) {
 				if ($rfact!=$fact) $newreqd[] = $rfact;
 			}
 			$famreqdfacts = $newreqd;
-			$famfacts[] = array($fact, $subrec, 0);
+			$famfacts[] = $eventObj;
 		}
 	}
-	foreach($famreqdfacts as $ind=>$fact) {
-		$famfacts[] = array($fact, "1 $fact\r\n", 1);
+    
+	foreach($reqdfacts as $ind=>$fact) {
+    	$e = new Event("1 $fact\r\n");
+        $e->temp = true;
+        $famfacts[] = $e;
 	}
-	sort_facts_old($famfacts);
+	sort_facts($famfacts);
 ?>
 </td></tr>
 <tr>
@@ -1934,11 +1929,11 @@ for($i=1; $i<=count($sfams); $i++) {
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
 	</tr>
 <?php
-foreach($famfacts as $f=>$fact) {
-	$fact_tag = $fact[0];
-	$date = get_gedcom_value("DATE", 2, $fact[1], '', false);
-	$plac = get_gedcom_value("PLAC", 2, $fact[1], '', false);
-	$temp = get_gedcom_value("TEMP", 2, $fact[1], '', false);
+foreach($famfacts as $f=>$eventObj) {
+        $fact_tag = $eventObj->getTag();
+        $date = $eventObj->getValue("DATE");
+        $plac = $eventObj->getValue("PLAC");
+        $temp = $eventObj->getValue("TEMP");
 	?>
 			<tr>
 				<td class="descriptionbox">
@@ -1998,7 +1993,7 @@ if (count($famaddfacts)>0) { ?>
 	foreach($famaddfacts as $indexval => $fact) {
 		$found = false;
 		foreach($famfacts as $ind=>$value) {
-			if ($fact==$value[0]) {
+			if ($fact==$value->getTag()) {
 				$found=true;
 				break;
 			}
@@ -2352,32 +2347,28 @@ for($j=1; $j<=count($cfams); $j++) {
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
 	else $famrec = find_updated_record($famid);
 
-	$subrecords = get_all_subrecords($famrec, "HUSB,WIFE,CHIL", false, false, false);
+    $subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
 	$famfacts = array();
-	foreach($subrecords as $ind=>$subrec) {
-		$ft = preg_match("/1 (\w+)(.*)/", $subrec, $match);
-		if ($ft>0) {
-			$fact = trim($match[1]);
-			$event = trim($match[2]);
-		}
-		else {
-			$fact="";
-			$event="";
-		}
-		if ($fact=="EVEN" || $fact=="FACT") $fact = get_gedcom_value("TYPE", 2, $subrec, '', false);
+	foreach($subrecords as $ind=>$eventObj) {
+        $fact = $eventObj->getTag();
+        $event = $eventObj->getDetail();    
+		if ($fact=="EVEN" || $fact=="FACT") $fact = $eventObj->getValue("TYPE");
+
 		if (in_array($fact, $famaddfacts)) {
 			$newreqd = array();
 			foreach($famreqdfacts as $r=>$rfact) {
 				if ($rfact!=$fact) $newreqd[] = $rfact;
 			}
 			$famreqdfacts = $newreqd;
-			$famfacts[] = array($fact, $subrec, 0);
+			
+            $famfacts[] = $eventObj;
 		}
 	}
 	foreach($famreqdfacts as $ind=>$fact) {
-		$famfacts[] = array($fact, "1 $fact\r\n", 1);
+        $newEvent = new Event("1 $fact\r\n");
+        $famfacts[] = $newEvent;
 	}
-	sort_facts_old($famfacts);
+	sort_facts($famfacts);
 	$spid = "";
 	if($parents) {
 		if($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];
@@ -2597,11 +2588,11 @@ for($j=1; $j<=count($cfams); $j++) {
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
 </tr>
 <?php
-foreach($famfacts as $f=>$fact) {
-	$fact_tag = $fact[0];
-	$date = get_gedcom_value("DATE", 2, $fact[1], '', false);
-	$plac = get_gedcom_value("PLAC", 2, $fact[1], '', false);
-	$temp = get_gedcom_value("TEMP", 2, $fact[1], '', false);
+foreach($famfacts as $f=>$eventObj) {
+        $fact_tag = $eventObj->getTag();
+        $date = $eventObj->getValue("DATE");
+        $plac = $eventObj->getValue("PLAC");
+        $temp = $eventObj->getValue("TEMP");
 	?>
 	<tr>
 		<td class="descriptionbox">
@@ -2664,7 +2655,7 @@ foreach($famfacts as $f=>$fact) {
 		foreach($famaddfacts as $indexval => $fact) {
 			$found = false;
 			foreach($famfacts as $ind=>$value) {
-				if ($fact==$value[0]) {
+				if ($fact==$value->getTag()) {
 					$found=true;
 					break;
 				}
