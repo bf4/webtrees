@@ -1761,14 +1761,15 @@ class Person extends GedcomRecord {
 			$full=$list;
 		}
 
-		// Preferred names should have a suffix of "*"
-		$full=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $full);
-		$list=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $list);
-		// Alternatively, some people put preferred names in quotes
+		// Some people put preferred names in quotes
 		if ($UNDERLINE_NAME_QUOTES) {
 			$full=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $full);
 			$list=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $list);
 		}
+
+		// The standards say you should use a suffix of "*"
+		$full=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $full);
+		$list=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $list);
 
 		// If the name is written in greek/cyrillic/hebrew/etc., use the "unknown" name
 		// from that character set.  Otherwise use the one in the language file.
