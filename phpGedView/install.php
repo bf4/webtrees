@@ -217,7 +217,9 @@ switch($step) {
 			$step = 2;
 			$_SESSION['install_step'] = 2;
 		}
-		else if ($_SESSION['install_step']<3) $_SESSION['install_step'] = 3;
+		else {
+			if ($_SESSION['install_step']<3) $_SESSION['install_step'] = 3;
+		}
 		break;
 	case 4:
 		if (isset($_POST['NEW_ALLOW_CHANGE_GEDCOM'])) {
@@ -407,11 +409,14 @@ $errormsg = "";
 					break;
 				case 3:
 					require_once('includes/functions_import.php');
+					//-- temporarily set configured so that tables will be created
+					$CONFIGURED = true;
 					//-- setup user tables
 					checkTableExists();
 					//-- setup genealogy tables
 					setup_database();
 					cleanup_database();
+					$CONFIGURED = false;
 					print "<span class=\"pass\">".$pgv_lang["db_tables_created"]."</span><br /><br /><br />";
 					$success = true;
 					break;

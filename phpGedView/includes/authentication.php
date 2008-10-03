@@ -50,7 +50,7 @@ define('PGV_AUTHENTICATION_PHP', '');
  * @return the user_id if sucessful, false otherwise
  */
 function authenticateUser($user_name, $password, $basic=false) {
-	checkTableExists();
+//	checkTableExists();
 
 	// If we were already logged in, log out first
 	if (PGV_USER_ID) {
@@ -310,10 +310,10 @@ function adminUserExists() {
 	if (!is_null($PGV_ADMIN_EXISTS))
 		return $PGV_ADMIN_EXISTS;
 
-	if (checkTableExists()) {
+//	if (checkTableExists()) {
 		$PGV_ADMIN_EXISTS=admin_user_exists();
 		return $PGV_ADMIN_EXISTS;
-	}
+//	}
 	return false;
 }
 
