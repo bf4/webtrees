@@ -41,7 +41,7 @@ $folder = safe_GET('folder');
 if (empty($folder)) $folder = $MEDIA_DIRECTORY;
 if (!isset($_SESSION["medialist"])) $search = "yes";
 
-$currentdironly = (isset($_REQUEST['subdirs']) && $subdirs=="on") ? false : true;
+$currentdironly = (isset($_REQUEST['subdirs']) && $_REQUEST['subdirs']=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
 
