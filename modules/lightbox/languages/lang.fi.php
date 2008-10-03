@@ -102,6 +102,12 @@ $pgv_lang["showmenu"] 			= "Näytä menu:";
 $pgv_lang["TYPE__other"] 	 		= "Muu"; 
 $pgv_lang["TYPE__footnotes"]		= "Alaviite"; 
 
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
+
 $pgv_lang["census_text"]  	 		= "\"Nämä CENSUS kuvat on saatu \"Kansallisarkistosta\", joka hallitsee alkuperäisiä tiedostoja, ";
 $pgv_lang["census_text"] 			.= "ja on pantu esille tänne heidän suostumuksellaan edellyttäen, ettei niitä luvatta käytetä aupallisesti hyväksi.\".\"\n";
 $pgv_lang["census_text"] 			.= "Lupa näiden tai muiden täll sivustolla olevien CENSUS kuvien kaupalliseen käyttöön on pyydettävä: ";
@@ -119,6 +125,17 @@ $pgv_lang["lb_link_media"] 		= "Linkitä olemassaolevaan mediaan";
 $pgv_lang["lb_link_media_full"] 		= "Linkitä tämä henkilצö olemassa olevaan multimediakohteeseen";
 
 $pgv_lang["lb_slide_show"] 		= "Diaesitys";
+$pgv_lang["turn_edit_ON"] 			= "Avaa editiomuoto"; 
+$pgv_lang["turn_edit_OFF"] 		= "Sulje editiomuoto"; 
+
+$pgv_lang["lb_source_avail"] 		= "Lähdetietoa olemassa - näpäytä tästä.";
+
+$pgv_lang["lb_private"] 			= "Kuva linkitetty <br />yksityiseen henkilöön";
+$pgv_lang["lb_view_source_tip"] 		= "Näytä lähde: ";
+$pgv_lang["lb_view_details_tip"] 		= "Näytä median tiedot: ";
+
+?>
+lang["lb_slide_show"] 		= "Diaesitys";
 $pgv_lang["turn_edit_ON"] 			= "Avaa editiomuoto"; 
 $pgv_lang["turn_edit_OFF"] 		= "Sulje editiomuoto"; 
 

@@ -1546,22 +1546,91 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-//LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) {
+				
+			//LBox --------  Addition for Lightbox Album --------------------------------------------
+
+				if (file_exists("modules/lightbox/album.php") ) {
+					include('modules/lightbox/lb_config.php');
+					// Check Filetype of media item ( Regular, URL, or Not supported by lightbox at the moment )
+					// Regular ----------------------------------
+					if (eregi("\.jpg" ,$rowm['m_file']) ||
+						eregi("\.jpeg",$rowm['m_file']) ||
+						eregi("\.gif" ,$rowm['m_file']) ||
+						eregi("\.png" ,$rowm['m_file'])
+						)
+					{
+						$file_type = "regular";
+					
+					// FLV local file----------------------------------
+					}else if(eregi("\.flv" ,$rowm['m_file']) 
+							)
+					{
+						$file_type = "flvfile";
+						
+					// URL ----------------------------------
+					}else if(eregi("http" ,$rowm['m_file']) ||
+							 eregi("\.pdf",$rowm['m_file'])
+							)
+					{
+						$file_type = "url";
+					// Other ------------------------------
+					}else{
+						$file_type = "other";
+					}
+					
 					$name = trim($rowm["m_titl"]);
-					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
-// ---------------------------------------------------------------------------------------------
+					// If regular filetype (Lightbox)
+					if ($file_type == "regular") {
+						print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+					// Else If flv native (Lightbox)
+					}elseif ($file_type == "flvfile") {
+						print "<a href=\"flv.php?flvVideo=" . $mainMedia . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+					// Else If url filetype (Lightbox)
+					}elseif ($file_type == "url") {
+						print "<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+					// Else Other filetype (Pop-up Window)
+					}
+			// ---------------------------------------------------------------------------------------------
+				
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 				}else{
 					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 				}
 			}
-			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
+				
+			//LBox --------  Addition for Lightbox Album --------------------------------------------
+				// Now finally print the thumbnail 
+				// If Plain URL Print the Common URL Thumbnail
+				if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
+					print "<img src=\"images/URL.png\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\"  width=\"72\" height=\"80\" " ;
+				// If local flv file, print the common flv thumbnail
+				}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
+					if (file_exists("modules/lightbox/album.php") ) {
+						print "<img src=\"modules/lightbox/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+					}else{
+						print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+					}
+				// Else Print the Regular Thumbnail if associated with a thumbnail image,
+				}else{
+			// ---------------------------------------------------------------------------------------------
+					
+					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+
+					
+			//LBox --------  Addition for Lightbox Album --------------------------------------------
+				}
+			// ---------------------------------------------------------------------------------------------
+				
+			if ($isExternal) {
+				print " width=\"".$THUMBNAIL_WIDTH."\"";
+			}
 			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" />";
-			if ($mainFileExists) print "</a>";
+			if ($mainFileExists) {
+				print "</a>";
+			}
 		}
+
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 		}

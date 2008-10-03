@@ -74,6 +74,12 @@ $pgv_lang["TYPE__other"] 	 = "Diğer";
 $pgv_lang["no_media"] 		 = "Hiç biri";
 $pgv_lang["TYPE__footnotes"] = "Medya notları";
 
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
+
 $pgv_lang["census_text"]  	 = "\"Bu nüfüs sayımı görüntüleri \"Ulusal Arşivden\" orjinal kayıtlarından elde edildiler ";
 $pgv_lang["census_text"] 	.= "ve ticari kullanmamak şartıyla burada gösterildiler." . "\n" ;
 $pgv_lang["census_text"] 	.= "Bu web sitesinden beliren bunlar veya diğer nüfüs sayımı görüntülerinin ticari yayınlamak için talepler yöneticlerden izin alınması gerekir: ";

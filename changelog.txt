@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Lightbox: added JW flash player video support for .flv media files (windmillway)
  - Added Install Wizard.  Removed old editconfig.php (yalnifj)
  - Fixed [ 2130589 ] [3942] No GEDCOM upload replacement (fisharebest)
  - Fixed [ 2139591 ] Errors in configuration code (fisharebest)
