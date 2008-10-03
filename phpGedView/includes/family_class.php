@@ -437,26 +437,12 @@ class Family extends GedcomRecord {
 			$wife=$this->wife ? $this->wife : new Person('1 SEX F');
 			foreach ($husb->getAllNames() as $husb_name) {
 				foreach ($wife->getAllNames() as $wife_name) {
-					// Match latin names with latin names, arabic with arabic, etc.
-					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM' && whatLanguage($husb_name['sort'])==whatLanguage($wife_name['sort'])) {
+					if ($husb_name['type']!='_MARNM' && $wife_name['type']!='_MARNM') {
 						$this->_getAllNames[]=array(
 							'type'=>$husb_name['type'],
 							'full'=>$husb_name['full'].' + '.$wife_name['full'],
 							'list'=>$husb_name['list'].$husb->getSexImage().'<br />'.$wife_name['list'].$wife->getSexImage(),
 							'sort'=>$husb_name['sort'].' + '.$wife_name['sort'],
-						);
-					}
-				}
-			}
-			// The spouses have no names in matching languages, so match everything.
-			if (!$this->_getAllNames) {
-				foreach ($husb->getAllNames() as $husb_name) {
-					foreach ($wife->getAllNames() as $wife_name) {
-						$this->_getAllNames[]=array(
-								'type'=>'NAME',
-								'full'=>$husb_name['full'].' + '.$wife_name['full'],
-								'list'=>$husb_name['list'].$husb->getSexImage().'<br />'.$wife_name['list'].$wife->getSexImage(),
-								'sort'=>$husb_name['sort'].' + '.$wife_name['sort'],
 						);
 					}
 				}
