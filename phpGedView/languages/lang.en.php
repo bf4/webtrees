@@ -521,6 +521,7 @@ $pgv_lang["download_file"]			= "Download file #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "This Individual was downloaded from:";
 $pgv_lang["family_downloaded_from"] = "This Family was downloaded from:";
 $pgv_lang["source_downloaded_from"] = "This Source was downloaded from:";
+$pgv_lang["enter_person_generations"] = "Number of generations:";
 
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]			= "Place connections found";

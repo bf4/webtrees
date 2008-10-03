@@ -44,6 +44,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["enter_person_generations"]				3 Oct 2008				A
 +$pgv_lang["install_step_8"]						2 Oct 2008				A
 +$pgv_lang["parent_family"]							4 Sep 2008				A		Line 34 in lang_en.php
 +$pgv_lang["step_parent_family"]					4 Sep 2008				A		Line 35 in lang_en.php
