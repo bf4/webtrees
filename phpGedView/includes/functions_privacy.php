@@ -892,7 +892,7 @@ function privatize_gedcom($gedrec) {
 
 			$newrec = "0 @".$gid."@ $type\r\n";
 			//-- check all of the sub facts for access
-			$subs = get_all_subrecords($gedrec, "", false, false, false);
+			$subs = get_all_subrecords($gedrec, "", false, false);
 			foreach($subs as $indexval => $sub) {
 				$ct = preg_match("/1 (\w+)/", $sub, $match);
 				if ($ct > 0) $type = trim($match[1]);

@@ -149,7 +149,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 	//-- restore any data that was hidden during privatizing
 	if (isset($pgv_private_records[$gid])) {
 		$privatedata = trim(get_last_private_data($gid));
-		$subs = get_all_subrecords($privatedata, '', false, false, false);
+		$subs = get_all_subrecords($privatedata, '', false, false);
 		foreach($subs as $s=>$sub) {
 			if (strstr($gedrec, $sub)===false) $gedrec = trim($gedrec)."\r\n".$privatedata;
 		}

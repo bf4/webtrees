@@ -595,6 +595,7 @@ class SearchControllerRoot extends BaseController {
 		//$this->myindilist;
 		$adv_name_tags = preg_split("/[\s,;: ]+/", $ADVANCED_NAME_FACTS);
 		$name_tags = array_unique(array_merge($STANDARD_NAME_FACTS, $adv_name_tags));
+		$name_tags[] = "_MARNM";
 		foreach($this->myindilist as $id => $individual) {
 			if (isset($pgv_changes[$id."_".$GEDCOM])) $individual["gedcom"] = find_updated_record($id);
 
@@ -736,7 +737,7 @@ class SearchControllerRoot extends BaseController {
 	function SoundexSearch() {
 		global $REGEXP_DB, $GEDCOM, $GEDCOMS;
 		global $TBLPREFIX;
-		global $DBCONN, $indilist;
+		global $DBCONN;
 
 		if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (count($this->sgeds) > 0)) {
 			$logstring = "Type: Soundex<br />";
@@ -764,9 +765,6 @@ class SearchControllerRoot extends BaseController {
 				$res = search_indis_soundex($this->soundex, $this->lastname, $this->firstname, $this->place, $this->sgeds);
 				if ($res!==false) {
 					while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-						$indilist[$row['i_id']]["gedcom"] = $row['i_gedcom'];
-						$indilist[$row['i_id']]["isdead"] = $row['i_isdead'];
-						$indilist[$row['i_id']]["gedfile"] = $row['i_file'];
 						$save = true;
 						if ((!empty ($this->place)) || (!empty ($this->year))) {
 							$indirec = $row['i_gedcom'];
@@ -1059,7 +1057,7 @@ class SearchControllerRoot extends BaseController {
 								$found = true;
 							}
 							if ($found == false) {
-								$recs = get_all_subrecords($value["gedcom"], "", false, false, false);
+								$recs = get_all_subrecords($value["gedcom"], "", false, false);
 								// Also levels>1 must be checked for tags. This is done below.
 								foreach ($recs as $keysr => $subrec) {
 									$recs2 = preg_split("/\r?\n/", $subrec);
@@ -1181,7 +1179,7 @@ class SearchControllerRoot extends BaseController {
 						}
 						// If no hit in a name or ID, check if there is a hit on a valid tag
 						if ($found == false) {
-							$recs = get_all_subrecords($value["gedcom"], $skiptagsged, false, false, false);
+							$recs = get_all_subrecords($value["gedcom"], $skiptagsged, false, false);
 							// Also levels>1 must be checked for tags. This is done below.
 							foreach ($recs as $keysr => $subrec) {
 								$recs2 = preg_split("/\r?\n/", $subrec);
@@ -1275,7 +1273,7 @@ class SearchControllerRoot extends BaseController {
 							}
 						}
 						if ($found == false) {
-							$recs = get_all_subrecords($value["gedcom"], $skiptagsged, false, false, false);
+							$recs = get_all_subrecords($value["gedcom"], $skiptagsged, false, false);
 							// Also levels>1 must be checked for tags. This is done below.
 							foreach ($recs as $keysr => $subrec) {
 								$recs2 = preg_split("/[\r\n]+/", $subrec);

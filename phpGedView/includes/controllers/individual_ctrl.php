@@ -282,14 +282,13 @@ class IndividualControllerRoot extends BaseController {
 	 * Also update the indirec we will use to generate the page
 	 */
 	function acceptChanges() {
-		global $GEDCOM, $indilist;
+		global $GEDCOM;
 		if (!PGV_USER_CAN_ACCEPT) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
-			if (isset($indilist[$this->pid])) unset($indilist[$this->pid]);
 			$indirec = find_person_record($this->pid);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {

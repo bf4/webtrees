@@ -190,8 +190,8 @@ if ($this->DEBUG) {
 		// Returns first record if second is empty, no merge needed
 		if (empty($record2)) return $record1;
 
-		$remoterecs = get_all_subrecords($record2, "", false, false, false);
-		$localrecs = get_all_subrecords($record1, "", false, false, false);
+		$remoterecs = get_all_subrecords($record2, "", false, false);
+		$localrecs = get_all_subrecords($record1, "", false, false);
 
 		$newrecs = array();
 		//-- make sure we don't get circular links
@@ -477,7 +477,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 						if (preg_match("/1 RFN ".$this->xref.":/", $childrec)==0) {
 							$childrec .= "\r\n1 RFN ".$Child2->getXref();
 							//print "<br/> repalcing for child ".$Child1->getXref();
-							$indilist[$Child1->getXref()]['gedcom']=$childrec;
+//							$indilist[$Child1->getXref()]['gedcom']=$childrec;
 							replace_gedrec($Child1->getXref(), $childrec);
 							$this->setSameId($Child1->getXref(), $Child2->getXref());
 						}
@@ -518,7 +518,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 				if (preg_match("/1 RFN ".$this->xref.":/", $fatherrec)==0) {
 					$fatherrec .= "\r\n1 RFN ".$father2->getXref();
 					//print "<br/> repalcing for father ".$father1->getXref();
-					$indilist[$father1->getXref()]['gedcom']=$fatherrec;
+//					$indilist[$father1->getXref()]['gedcom']=$fatherrec;
 					replace_gedrec($father1->getXref(), $fatherrec);
 					$this->setSameId($father1->getXref(), $father2->getXref());
 				}
@@ -540,7 +540,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 				if (preg_match("/1 RFN ".$this->xref.":/", $motherrec)==0) {
 					$motherrec .= "\r\n1 RFN ".$mother2->getXref();
 					//print "<br/> repalcing for mother ".$mother1->getXref();
-					$indilist[$mother1->getXref()]['gedcom']=$motherrec;
+//					$indilist[$mother1->getXref()]['gedcom']=$motherrec;
 					replace_gedrec($mother1->getXref(), $motherrec);
 					$this->setSameId($mother1->getXref(), $mother2->getXref());
 				}
