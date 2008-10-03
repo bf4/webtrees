@@ -48,7 +48,7 @@ $pgv_lang["install_step_7"] = "Create admin user";
 $pgv_lang["install_wizard"] = "Installation Wizard";
 $pgv_lang["basic_site_config"] = "Basic Settings";
 $pgv_lang["adv_site_config"] = "Advanced Settings";
-$pgv_lang["config_not_saved"] = "*Your settings will not<br />be saved until step 8";
+$pgv_lang["config_not_saved"] = "*Your settings will not<br />be saved until step 6";
 $pgv_lang["download_config"] = "Download config.php";
 $pgv_lang["site_unavailable"] = "Site is currently unavailable";
 $pgv_lang["to_manage_users"] = "To manage users, use the <a href=\"useradmin.php\">User Administration</a> page.";
