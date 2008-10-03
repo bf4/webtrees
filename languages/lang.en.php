@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["install_step_8"] 		= "Get Started";
 $pgv_lang["parent_family"]			= "Parents Family";
 $pgv_lang["step_parent_family"]		= "Step-Parent Family";
 $pgv_lang["immediate_family"]		= "Immediate Family";

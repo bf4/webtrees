@@ -43,15 +43,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_GETTING_STARTED_BLOCK_PHP', '');
 
-$pgv_lang['upload_a_gedcom'] 		= "Upload a GEDCOM file";
-$pgv_lang['start_entering'] 		= "Start entering data";
-$pgv_lang['add_gedcom_from_path'] 	= "Add a GEDCOM from a file location";
-$pgv_lang['manage_gedcoms']			= "Manage GEDCOMs";
-$pgv_lang['get_started_instructions']	= "Choose from one of the options below to get started using PhpGedView";
+
 
 $PGV_BLOCKS["getting_started_block"]["name"]		= $pgv_lang["install_step_8"];
 $PGV_BLOCKS["getting_started_block"]["descr"]		= "gedcom_descr";
-$PGV_BLOCKS["getting_started_block"]["type"]		= "gedcom";
+$PGV_BLOCKS["getting_started_block"]["type"]		= "none";
 $PGV_BLOCKS["getting_started_block"]["canconfig"]	= false;
 $PGV_BLOCKS["getting_started_block"]["config"]		= array("cache"=>5);
 
