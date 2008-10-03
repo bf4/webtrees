@@ -38,11 +38,20 @@ print_header($pgv_lang["clip_cart"]);
 require 'js/autocomplete.js.htm';
 require 'js/sorttable.js.htm';
 ?>
-
-<h2><?php $pgv_lang["clippings_cart"] ?></h2>
+<script type="text/javascript">
+<!--
+function radAncestors(elementid) {
+     var radFamilies = document.getElementById(elementid);
+     radFamilies.checked = true;
+ }
+//-->
+</script>
+<h2><?php print $pgv_lang["clippings_cart"] ?></h2>
 <?php
 
 if ($controller->action=='add') {
+	$person = GedcomRecord::getInstance($controller->id);
+	print "<b>".$person->getFullName()."</b>";
 	if ($controller->type=='fam') {?>
 		<form action="clippings.php" method="get">
 		<table>
@@ -68,10 +77,13 @@ if ($controller->action=='add') {
 			<input type="hidden" name="action" value="add1" /></td></tr>
 			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_person"]?></td></tr>
 			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["person_parents_sibs"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="ancestors" /><?php print $pgv_lang["person_ancestors"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="ancestorsfamilies" /><?php print $pgv_lang["person_ancestor_fams"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="ancestors" id="ancestors" /><?php print $pgv_lang["person_ancestors"]?><br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level1" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('ancestors');"/></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="ancestorsfamilies" id="ancestorsfamilies" /><?php print $pgv_lang["person_ancestor_fams"]?><br > 
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level2" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('ancestorsfamilies');" /></td></tr>
 			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print $pgv_lang["person_spouse"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" /><?php print $pgv_lang["person_desc"]?></td></tr>
+			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" id="descendants" /><?php print $pgv_lang["person_desc"]?><br > 
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level3" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('descendants');" /></td></tr>
 			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
 		</table>
 		</form>
@@ -249,7 +261,7 @@ else {
 			<td class="list_value">
 			<?php
 			$record=GedcomRecord::getInstance($clipping['id']);
-			echo '<a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($record->getListName()).'</a>';
+			if ($record) echo '<a href="'.encode_url($record->getLinkUrl()).'">'.PrintReady($record->getListName()).'</a>';
 			?>
 			</td>
 			<td class="list_value center vmiddle"><a href="clippings.php?action=remove&amp;item=<?php echo $i;?>"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"];?>" border="0" alt="<?php echo $pgv_lang["remove"]?>" title="<?php echo $pgv_lang["remove"];?>" /></a></td>
