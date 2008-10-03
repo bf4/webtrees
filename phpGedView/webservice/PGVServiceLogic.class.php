@@ -1042,12 +1042,10 @@ class PGVServiceLogic extends GenealogyService
 	***/
 	function postGetAncestry($SID, $rootID, $generations, $returnGedcom)
 	{
-		global $list, $indilist;
-
 		$list = array();
-		$list[$rootID] = $indilist[$rootID];
+		$list[$rootID] = Person::getInstance($rootID);
 
-		add_ancestors($rootID, false, $generations);
+		add_ancestors($list, $rootID, false, $generations);
 
 		if(empty($list)){
 			return new SOAP_Fault('Could not retrieve ancestory', 'Server', '',null);
@@ -1057,9 +1055,9 @@ class PGVServiceLogic extends GenealogyService
 			$count = 0;
 			foreach($list as $key => $value)
 			{
-				if(isset($value['gedcom']))
+				if($value!=null)
 				{
-					$person = $this->createPerson($key, $value['gedcom'], "item", $returnGedcom);
+					$person = $this->createPerson($key, $value->getGedcomRecord(), "item", $returnGedcom);
 					$result[] = $person;
 					$count++;
 				}
@@ -1083,11 +1081,9 @@ class PGVServiceLogic extends GenealogyService
 	*/
 	function postGetDescendants($SID, $rootID, $generations, $returnGedcom)
 	{
-		global $list;
-
 		$list = array();
 
-		add_descendancy($rootID, false, $generations);
+		add_descendancy($list, $rootID, false, $generations);
 
 		if(empty($list)){
 			return new SOAP_Fault('Could not retrieve descendancy', 'Server', '',null);
@@ -1098,9 +1094,9 @@ class PGVServiceLogic extends GenealogyService
 			$count = 0;
 			foreach($list as $key => $value)
 			{
-				if(isset($value['gedcom']))
+				if($value!=null)
 				{
-					$person = $this->createPerson($key, $value['gedcom'], "item", $returnGedcom);
+					$person = $this->createPerson($key, $value->getGedcomRecord(), "item", $returnGedcom);
 					$result[] = $person;
 					$count++;
 				}

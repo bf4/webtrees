@@ -2006,75 +2006,73 @@ function PGVRRelativesSHandler($attrs) {
 
 
 	$list = array();
-	$indirec = find_person_record($id);
-	if (!empty($indirec)) {
-		$list[$id] = $indilist[$id];
+	$person = Person::getInstance($id);
+	if (!empty($person)) {
+		$list[$id] = $person;
 		switch ($group) {
 			case "child-family":
-				$famids = find_family_ids($id);
-				foreach($famids as $indexval => $famid) {
-					$parents = find_parents($famid);
-					if (!empty($parents["HUSB"])) {
-						$temp = find_person_record($parents["HUSB"]);
-						if (!empty($temp)) $list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
+				$famids = $person->getChildFamilies();
+				foreach($famids as $famid => $family) {
+					$husband = $family->getHusband();
+					$wife = $family->getWife();
+					if (!empty($husband)) {
+						$list[$husband->getXref()] = $husband;
 					}
-					if (!empty($parents["WIFE"])) {
-						$temp = find_person_record($parents["WIFE"]);
-						if (!empty($temp)) $list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
+					if (!empty($wife)) {
+						$list[$wife->getXref()] = $wife;
 					}
-					$famrec = find_family_record($famid);
-					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-					for($i=0; $i<$num; $i++) {
-						$temp = find_person_record($smatch[$i][1]);
-						if (!empty($temp)) $list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
+					$children = $family->getChildren();
+					foreach($children as $child) {
+						if (!empty($child)) $list[$child->getXref()] = $child;
 					}
 				}
 				break;
 			case "spouse-family":
-				$famids = find_sfamily_ids($id);
-				foreach($famids as $indexval => $famid) {
-					$parents = find_parents($famid);
-					$temp = find_person_record($parents["HUSB"]);
-					if (!empty($temp)) $list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
-					$temp = find_person_record($parents["WIFE"]);
-					if (!empty($temp)) $list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
-					$famrec = find_family_record($famid);
-					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-					for($i=0; $i<$num; $i++) {
-						$temp = find_person_record($smatch[$i][1]);
-						if (!empty($temp)) $list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
+				$famids = $person->getSpouseFamilies();
+				foreach($famids as $famid => $family) {
+				$husband = $family->getHusband();
+					$wife = $family->getWife();
+					if (!empty($husband)) {
+						$list[$husband->getXref()] = $husband;
+					}
+					if (!empty($wife)) {
+						$list[$wife->getXref()] = $wife;
+					}
+					$children = $family->getChildren();
+					foreach($children as $child) {
+						if (!empty($child)) $list[$child->getXref()] = $child;
 					}
 				}
 				break;
 			case "direct-ancestors":
-				add_ancestors($id,false,$maxgen, $showempty);
+				add_ancestors($list, $id,false,$maxgen, $showempty);
 				break;
 			case "ancestors":
-				add_ancestors($id,true,$maxgen,$showempty);
+				add_ancestors($list, $id,true,$maxgen,$showempty);
 				break;
 			case "descendants":
-				$list[$id]["generation"] = 1;
-				add_descendancy($id,false,$maxgen);
+				$list[$id]->generation = 1;
+				add_descendancy($list, $id,false,$maxgen);
 				break;
 			case "all":
-				add_ancestors($id,true,$maxgen,$showempty);
-				add_descendancy($id,true,$maxgen);
+				add_ancestors($list, $id,true,$maxgen,$showempty);
+				add_descendancy($list, $id,true,$maxgen);
 				break;
 		}
 	}
 
 	if ($sortby!="none") {
-		if ($sortby=="NAME") uasort($list, "itemsort");
-		else if ($sortby=="ID") uasort($list, "idsort");
+		if ($sortby=="NAME") usort($list, array('GedcomRecord', 'Compare'));
+		else if ($sortby=="ID") usort($list, 'idsort');
 		else if ($sortby=="generation") {
 			$newarray = array();
 			reset($list);
 			$genCounter = 1;
 			while (count($newarray) < count($list)) {
 		        	foreach ($list as $key => $value) {
-			                $generation = $value["generation"];
+			                $generation = $value->generation;
 			                if ($generation == $genCounter) {
-						$newarray[$key]["generation"]=$generation;
+						$newarray[$key]->generation=$generation;
 					}
 				}
 				$genCounter++;
@@ -2122,9 +2120,9 @@ function PGVRRelativesEHandler() {
 	$list_total = count($list);
 	$list_private = 0;
 	foreach($list as $key=>$value) {
-		if (isset($value["generation"])) $generation = $value["generation"];
+		if (isset($value->generation)) $generation = $value->generation;
 //KN		if (displayDetailsById($key)) {
-			$gedrec = find_gedcom_record($key);
+			$gedrec = $value->getGedcomRecord();
 			//-- start the sax parser
 			$repeat_parser = xml_parser_create();
 			$parser = $repeat_parser;

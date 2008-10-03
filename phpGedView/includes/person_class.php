@@ -57,6 +57,7 @@ class Person extends GedcomRecord {
 	var $file = "";
 	var $age = null;
 	var $isdead = -1;
+	var $generation; // used in some lists to keep track of this Person's generation in that list
 
 	// Cached results from various functions.
 	// These should become private when we move to PHP5.  Do not use them from outside this class.

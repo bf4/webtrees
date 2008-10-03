@@ -1940,12 +1940,14 @@ function mediasort($a, $b) {
  * @return int negative numbers sort $a first, positive sort $b first
  */
 function idsort($a, $b) {
-	if (isset($a["gedcom"])) {
+	if(is_object($a)) $aid = $a->getXref();
+	else if (isset($a["gedcom"])) {
 		$ct = preg_match("/0 @(.*)@/", $a["gedcom"], $match);
 		if ($ct>0)
 			$aid = $match[1];
 	}
-	if (isset($b["gedcom"])) {
+	if (is_object($b)) $bid = $b->getXref();
+	else if (isset($b["gedcom"])) {
 		$ct = preg_match("/0 @(.*)@/", $b["gedcom"], $match);
 		if ($ct>0)
 			$bid = $match[1];
@@ -2399,14 +2401,21 @@ function compare_date($a, $b) {
 	if (!empty($sortby))
 		$tag = $sortby;
 	if (is_object($a)) {
-		$afact = $a->getFactByType($tag);
-		$bfact = $b->getFactByType($tag);
+		//-- use estimated dates for sorting
+		if ($tag=='BIRT') $afact = $a->getBirthEvent();
+		else if ($tag=='DEAT') $afact = $a->getDeathEvent();
+		else $afact = $a->getFactByType($tag);
+		if ($tag=='BIRT') $bfact = $b->getBirthEvent();
+		else if ($tag=='DEAT') $bfact = $b->getDeathEvent();
+		else $bfact = $b->getFactByType($tag);
 		if (!is_null($afact) && !is_null($bfact)) {
 			$cmp=GedcomDate::Compare($afact->getDate(), $bfact->getDate());
 			if ($cmp!=0)
 				return $cmp;
 		}
-		return itemsort($a, $b);
+		if (is_null($afact) && !is_null($bfact)) return -1;
+		if (!is_null($afact) && is_null($bfact)) return 1;
+		return GedcomRecord::Compare($a, $b);
 	}
 	else if (isset($a["undo"])) {
 		// Look at record in pgv_changes.php
@@ -3482,88 +3491,79 @@ function get_query_string() {
 //the pdf witout regard to if a known person exists in each generation.
 //ToDo: If a known individual is found in a generation, add prior empty positions
 //and add remaining empty spots automatically.
-function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false) {
-	global $list, $indilist, $genlist;
+function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_empty=false) {
 	$total_num_skipped = 0;
 	$skipped_gen = 0;
 	$num_skipped = 0;
 	$genlist = array($pid);
-	$list[$pid]["generation"] = 1;
+	$list[$pid]->generation = 1;
 	while (count($genlist)>0) {
 		$id = array_shift($genlist);
-		$famids = find_family_ids($id);
+		if ($id=="empty") continue;
+		$person = Person::getInstance($id);
+		$famids = $person->getChildFamilies();
 		if (count($famids)>0) {
 			if ($show_empty) {
 				for ($i=0;$i<$num_skipped;$i++) {
-					$list["empty" . $total_num_skipped] = array();
-					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-					$list["empty" . $total_num_skipped]["gedcom"] = "";
+					$list["empty" . $total_num_skipped] = new Person();
+					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					array_push($genlist, "empty" . $total_num_skipped);
 					$total_num_skipped++;
 				}
 			}
 			$num_skipped = 0;
-			foreach ($famids as $indexval => $famid) {
-				$parents = find_parents($famid);
-				if (!empty($parents["HUSB"])) {
-					find_person_record($parents["HUSB"]);
-					$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
-					$list[$parents["HUSB"]]["generation"] = $list[$id]["generation"]+1;
+			foreach ($famids as $famid => $family) {
+				$husband = $family->getHusband();
+				$wife = $family->getWife();
+				if ($husband) {
+					$list[$husband->getXref()] = $husband;
+					$list[$husband->getXref()]->generation = $list[$id]->generation+1;
 				} else
 					if ($show_empty) {
-						$list["empty" . $total_num_skipped] = array("empty");
-						$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-						$list["empty" . $total_num_skipped]["gedcom"] = "";
+						$list["empty" . $total_num_skipped] = new Person();
+						$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					}
-				if (!empty($parents["WIFE"])) {
-					find_person_record($parents["WIFE"]);
-					$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
-					$list[$parents["WIFE"]]["generation"] = $list[$id]["generation"]+1;
+				if ($wife) {
+					$list[$wife->getXref()] = $wife;
+					$list[$wife->getXref()]->generation = $list[$id]->generation+1;
 				} else
 					if ($show_empty) {
-						$list["empty" . $total_num_skipped] = array("empty");
-						$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-						$list["empty" . $total_num_skipped]["gedcom"] = "";
+						$list["empty" . $total_num_skipped] = new Person();
+						$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					}
-				if ($generations == -1 || $list[$id]["generation"]+1 < $generations) {
-					$skipped_gen = $list[$id]["generation"]+1;
-					if (!empty($parents["HUSB"]))
-						array_push($genlist, $parents["HUSB"]);
+				if ($generations == -1 || $list[$id]->generation+1 < $generations) {
+					$skipped_gen = $list[$id]->generation+1;
+					if ($husband)
+						array_push($genlist, $husband->getXref());
 					else
 						if ($show_empty)
 							array_push($genlist, "empty" . $total_num_skipped);
-					if (!empty($parents["WIFE"]))
-						array_push($genlist, $parents["WIFE"]);
+					if ($wife)
+						array_push($genlist, $wife->getXref());
 					else
 						if ($show_empty)
 							array_push($genlist, "empty" . $total_num_skipped);
 				}
 				$total_num_skipped++;
 				if ($children) {
-					$famrec = find_family_record($famid);
-					if ($famrec) {
-						$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-						for ($i=0; $i<$num; $i++) {
-							find_person_record($smatch[$i][1]);
-							$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
-							if (isset($list[$id]["generation"]))
-								$list[$smatch[$i][1]]["generation"] = $list[$id]["generation"];
-							else
-								$list[$smatch[$i][1]]["generation"] = 1;
-						}
+					$childs = $family->getChildren();
+					foreach($childs as $child) {
+						$list[$child->getXref()] = $child;
+						if (isset($list[$id]->generation))
+							$list[$child->getXref()]->generation = $list[$id]->generation;
+						else
+							$list[$child->getXref()]->generation = 1;
 					}
 				}
 			}
 		} else
 			if ($show_empty) {
-				if ($skipped_gen > $list[$id]["generation"]) {
+				if ($skipped_gen > $list[$id]->generation) {
 					$list["empty" . $total_num_skipped] = array();
-					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-					$list["empty" . $total_num_skipped]["gedcom"] = "";
+					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					$total_num_skipped++;
 					$list["empty" . $total_num_skipped] = array();
-					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-					$list["empty" . $total_num_skipped]["gedcom"] = "";
+					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					array_push($genlist, "empty" . ($total_num_skipped - 1));
 					array_push($genlist, "empty" . $total_num_skipped);
 					$total_num_skipped++;
@@ -3575,57 +3575,52 @@ function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false
 }
 
 //--- copied from reportpdf.php
-function add_descendancy($pid, $parents=false, $generations=-1) {
-	global $list, $indilist;
+function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
+	global $indilist;
 
+	$person = Person::getInstance($pid);
+	if ($person==null) return;
 	if (!isset($list[$pid])) {
-		$indirec = find_person_record($pid);
-		if (!empty($indirec))
-			$list[$pid] = $indilist[$pid];
-		else
-			return;
+		$list[$pid] = $person;
 	}
-	if (!isset($list[$pid]["generation"])) {
-		$list[$pid]["generation"] = 0;
+	if (!isset($list[$pid]->generation)) {
+		$list[$pid]->generation = 0;
 	}
-	$famids = find_sfamily_ids($pid);
+	$famids = $person->getSpouseFamilies();
 	if (count($famids)>0) {
-		foreach ($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid);
-			if ($famrec) {
+		foreach ($famids as $famid => $family) {
+			if ($family) {
 				if ($parents) {
-					$parents = find_parents_in_record($famrec);
-					if (!empty($parents["HUSB"])) {
-						find_person_record($parents["HUSB"]);
-						$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
-						if (isset($list[$pid]["generation"]))
-							$list[$parents["HUSB"]]["generation"] = $list[$pid]["generation"]-1;
+					$husband = $family->getHusband();
+					$wife = $family->getWife();
+					if ($husband) {
+						$list[$husband->getXref()] = $husband;
+						if (isset($list[$pid]->generation))
+							$list[$husband->getXref()]->generation = $list[$pid]->generation-1;
 						else
-							$list[$parents["HUSB"]]["generation"] = 1;
+							$list[$husband->getXref()]->generation = 1;
 					}
-					if (!empty($parents["WIFE"])) {
-						find_person_record($parents["WIFE"]);
-						$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
-						if (isset($list[$pid]["generation"]))
-							$list[$parents["WIFE"]]["generation"] = $list[$pid]["generation"]-1;
+					if ($wife) {
+						$list[$wife->getXref()] = $wife;
+						if (isset($list[$pid]->generation))
+							$list[$wife->getXref()]->generation = $list[$pid]->generation-1;
 						else
-							$list[$parents["WIFE"]]["generation"] = 1;
-					}
-				}
-				$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-				for ($i=0; $i<$num; $i++) {
-					$indirec = find_person_record($smatch[$i][1]);
-					if (!empty($indirec)) {
-						$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
-						if (isset($list[$pid]["generation"]))
-							$list[$smatch[$i][1]]["generation"] = $list[$pid]["generation"]+1;
-						else
-							$list[$smatch[$i][1]]["generation"] = 2;
+							$list[$wife->getXref()]->generation = 1;
 					}
 				}
-				if ($generations == -1 || $list[$pid]["generation"]+1 < $generations) {
-					for ($i=0; $i<$num; $i++) {
-						add_descendancy($smatch[$i][1], $parents, $generations);	// recurse on the childs family
+				$children = $family->getChildren();
+				foreach($children as $child) {
+					if ($child) {
+						$list[$child->getXref()] = $child;
+						if (isset($list[$pid]->generation))
+							$list[$child->getXref()]->generation = $list[$pid]->generation+1;
+						else
+							$list[$child->getXref()]->generation = 2;
+					}
+				}
+				if ($generations == -1 || $list[$pid]->generation+1 < $generations) {
+					foreach($children as $child) {
+						add_descendancy($list, $child->getXref(), $parents, $generations);	// recurse on the childs family
 					}
 				}
 			}
