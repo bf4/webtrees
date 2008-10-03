@@ -794,7 +794,7 @@ function check_indi($id)
 
 	unset ($famc, $fams); $foundf=false; $patok=false; $todo=array();
 
-	$facts=get_all_subrecords($gedrec, "CHAN OBJE NOTE SOUR", true, false, false);
+	$facts=get_all_subrecords($gedrec, "CHAN OBJE NOTE SOUR", true, false);
 	$min_fact_date=array();
 	$max_fact_date=array();
 	foreach ($facts as $subged) {
@@ -907,7 +907,7 @@ function check_fam($id)
 				$errors.=multiple($fact);
 
 	unset ($chil, $husb, $wife); $todo=array();
-	$facts=get_all_subrecords($gedrec, "CHAN OBJE", true, false, true);
+	$facts=get_all_subrecords($gedrec, "CHAN OBJE", true, true);
 	foreach ($facts as $subged)
 		if (preg_match("/^1/", $subged)) { # Sometimes get_all_subrecords() gives just a CR
 			preg_match("/^1\s*(\S*)/", $subged, $fact);

@@ -466,7 +466,7 @@ function update_dates($gid, $indirec) {
 	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
 	if ($pt == 0)
 		return 0;
-	$facts = get_all_subrecords($indirec, "", false, false, false);
+	$facts = get_all_subrecords($indirec, "", false, false);
 	foreach ($facts as $f => $factrec) {
 		if (preg_match("/1 (\w+)/", $factrec, $match)) {
 			$fact = trim($match[1]);
