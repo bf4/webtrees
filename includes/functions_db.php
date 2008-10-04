@@ -976,7 +976,7 @@ function get_repo_list($ged_id=PGV_GED_ID, $filters=null, $conjunction="AND") {
 
 	if ($filters) {
 		if (!is_array($filters)) {
-			$filters=array($filters)
+			$filters=array($filters);
 		}
 		foreach ($filters as $key=>$value) {
 			$filter[$key]=
