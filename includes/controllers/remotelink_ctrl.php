@@ -67,7 +67,6 @@ class RemoteLinkController extends BaseController {
 		//check for pid
 		if (empty($this->pid)) {
 			$name="no name passed";
-			$this->disp = false;
 		} else{
 			if (!isset($pgv_changes[$this->pid."_".$GEDCOM])) $this->person = Person::getInstance($this->pid);
 			else {

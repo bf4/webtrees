@@ -134,18 +134,11 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * Check if privacy options allow this record to be displayed
-	 * @return boolean
-	 */
-	function canDisplayDetails() {
-		return $this->disp;
-	}
-	/**
 	 * Check if privacy options allow the display of the persons name
 	 * @return boolean
 	 */
 	function canDisplayName() {
-		return ($this->disp || $this->dispname);
+		return ($this->canDisplayDetails() || $this->dispname);
 	}
 
 	/**
@@ -276,7 +269,7 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthDate($estimate = true) {
 		global $pgv_lang;
-		if (!$this->disp) return new GedcomDate("({$pgv_lang['private']})");
+		if (!$this->canDisplayDetails()) return new GedcomDate("({$pgv_lang['private']})");
 		$this->_parseBirthDeath();
 		//if (!$estimate && $this->best) new GedcomDate("({$pgv_lang['private']})");
 		if (empty($this->birthEvent))
@@ -322,7 +315,7 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathDate($estimate = true) {
 		global $pgv_lang;
-		if (!$this->disp) return new GedcomDate("({$pgv_lang['private']})");
+		if (!$this->canDisplayDetails()) return new GedcomDate("({$pgv_lang['private']})");
 		$this->_parseBirthDeath();
 		//if (!$estimate && $this->dest) new GedcomDate("({$pgv_lang['private']})");
 		if (empty($this->deathEvent))
@@ -608,7 +601,7 @@ class Person extends GedcomRecord {
 				$family = Family::getInstance($famid);
 				// only include family if it is displayable by current user
 				if (!is_null($family)) {
-					if ($SHOW_LIVING_NAMES || $family->disp) $families[$famid] = $family;
+					if ($SHOW_LIVING_NAMES || $family->canDisplayDetails()) $families[$famid] = $family;
 				}
 				else echo "<span class=\"warning\">".$pgv_lang["unable_to_find_family"]." ".$famid."</span>";
 			}
@@ -674,7 +667,7 @@ class Person extends GedcomRecord {
 				$family = Family::getInstance($famid);
 				// only include family if it is displayable by current user
 				if (!is_null($family)) {
-					if ($SHOW_LIVING_NAMES || $family->disp) $families[$famid] = $family;
+					if ($SHOW_LIVING_NAMES || $family->canDisplayDetails()) $families[$famid] = $family;
 				}
 				else echo "<span class=\"warning\">".$pgv_lang["unable_to_find_family"]." ".$famid."</span>";
 			}
@@ -853,7 +846,7 @@ class Person extends GedcomRecord {
 	function &getUpdatedPerson() {
 		global $GEDCOM, $pgv_changes;
 		if ($this->changed) return null;
-		if (PGV_USER_CAN_EDIT && $this->disp) {
+		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
 				$newrec = find_updated_record($this->xref);
 				if (!empty($newrec)) {

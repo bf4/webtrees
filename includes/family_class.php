@@ -224,14 +224,6 @@ class Family extends GedcomRecord {
 	}
 
 	/**
-	 * Check if privacy options allow this record to be displayed
-	 * @return boolean
-	 */
-	function canDisplayDetails() {
-		return $this->disp;
-	}
-
-	/**
 	 * get updated Family
 	 * If there is an updated family record in the gedcom file
 	 * return a new family object for it
@@ -239,7 +231,7 @@ class Family extends GedcomRecord {
 	function &getUpdatedFamily() {
 		global $GEDCOM, $pgv_changes;
 		if ($this->changed) return $this;
-		if (PGV_USER_CAN_EDIT && $this->disp) {
+		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
 				$newrec = find_updated_record($this->xref);
 				if (!empty($newrec)) {
@@ -338,7 +330,7 @@ class Family extends GedcomRecord {
 	 */
 	function getMarriageDate() {
 		global $pgv_lang;
-		if (!$this->disp) return $pgv_lang["private"];
+		if (!$this->canDisplayDetails()) return $pgv_lang["private"];
 		if (is_null($this->marriage)) $this->_parseMarriageRecord();
 		return $this->marriage->getDate();
 	}
