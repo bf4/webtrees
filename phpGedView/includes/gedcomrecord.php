@@ -603,7 +603,9 @@ class GedcomRecord {
 	function getAllEventDates($event) {
 		$dates=array();
 		foreach ($this->getAllFactsByType($event) as $event) {
-			$dates[]=$event->getDate();
+			if ($event->getDate()->isOK()) {
+				$dates[]=$event->getDate();
+			}
 		}
 		return $dates;
 	}
