@@ -384,6 +384,86 @@ function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
 	return $row[0];
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Fetch a row from the database, corresponding to a gedcom record.
+// These functions are used to create gedcom objects.
+// To simplify common processing, the xref, gedcom id and gedcom record are
+// renamed consistently.  The other columns are fetched as they are.
+////////////////////////////////////////////////////////////////////////////////
+function fetch_person_record($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead ".
+		"FROM {$TBLPREFIX}individuals WHERE i_id='{$xref}' AND i_file={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
+}
+function fetch_family_record($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+		"FROM {$TBLPREFIX}families WHERE f_id='{$xref}' AND f_file={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
+}
+function fetch_source_record($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}sources WHERE s_id='{$xref}' AND s_file={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
+}
+function fetch_media_record($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
+		"FROM {$TBLPREFIX}media WHERE m_media='{$xref}' AND m_gedfile={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
+}
+function fetch_other_record($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other WHERE o_id='{$xref}' AND o_file={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
+}
+function fetch_gedcom_record($xref, $ged_id) {
+	if ($row=fetch_person_record($xref, $ged_id)) {
+		return $row;
+	} elseif ($row=fetch_family_record($xref, $ged_id)) {
+		return $row;
+	} elseif ($row=fetch_source_record($xref, $ged_id)) {
+		return $row;
+	} elseif ($row=fetch_media_record($xref, $ged_id)) {
+		return $row;
+	} else {
+		return fetch_other_record($xref, $ged_id);
+	}
+}
+
 /**
  * find the gedcom record for a family
  *
