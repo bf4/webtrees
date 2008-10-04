@@ -395,7 +395,7 @@ function fetch_person_record($xref, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$ged_id=(int)$ged_id;
 	$res=dbquery(
-		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead ".
+		"SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead ".
 		"FROM {$TBLPREFIX}individuals WHERE i_id='{$xref}' AND i_file={$ged_id}"
 	);
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -407,7 +407,7 @@ function fetch_family_record($xref, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$ged_id=(int)$ged_id;
 	$res=dbquery(
-		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+		"SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 		"FROM {$TBLPREFIX}families WHERE f_id='{$xref}' AND f_file={$ged_id}"
 	);
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -419,7 +419,7 @@ function fetch_source_record($xref, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$ged_id=(int)$ged_id;
 	$res=dbquery(
-		"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+		"SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec ".
 		"FROM {$TBLPREFIX}sources WHERE s_id='{$xref}' AND s_file={$ged_id}"
 	);
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -431,7 +431,7 @@ function fetch_media_record($xref, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$ged_id=(int)$ged_id;
 	$res=dbquery(
-		"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
+		"SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
 		"FROM {$TBLPREFIX}media WHERE m_media='{$xref}' AND m_gedfile={$ged_id}"
 	);
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -443,7 +443,7 @@ function fetch_other_record($xref, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$ged_id=(int)$ged_id;
 	$res=dbquery(
-		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+		"SELECT o_type AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
 		"FROM {$TBLPREFIX}other WHERE o_id='{$xref}' AND o_file={$ged_id}"
 	);
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -965,22 +965,44 @@ function get_source_list() {
 	return $sourcelist;
 }
 
-//-- get the repositorylist from the datastore
-function get_repo_list() {
-	global $TBLPREFIX;
+// Get a list of repositories from the database
+// $ged_id - the gedcom to search
+// $filter - an array of search criteria
+// $conjunction - match filter terms with "AND" or "OR"
+function get_repo_list($ged_id=PGV_GED_ID, $filters=null, $conjunction="OR") {
+	global $TBLPREFIX, $DBCONN;
 
-	$repo_list = array();
+	$ged_id=(int)$ged_id;
 
-	$sql = "SELECT o_id FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file=".PGV_GED_ID;
-	$res = dbquery($sql);
-	while ($row =& $res->fetchRow()) {
-		$repo=Repository::getInstance($row[0]);
-		if ($repo->canDisplayDetails()) {
-			$repo_list[]=$repo;
+	if ($filters) {
+		if (!is_array($filters)) {
+			$filters=array($filters)
 		}
+		foreach ($filters as $key=>$value) {
+			$filter[$key]=
+				"o_gedcom ".PGV_DB_LIKE." '".
+				str_replace(array('@', '_', '%'), array('@@', '@_', '@%'), $DBCONN->escapeSimple($value)).
+				"' ESCAPE '@'";
+		}
+		$where.=" AND (".implode(" {$conjunction} ", $filter).")";
+	} else {
+		$where='';
 	}
-	usort($repo_list, array('GedcomRecord', 'Compare')); // sort by repo name
-	return $repo_list;
+
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'REPO' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file={$ged_id} ${where}"
+	);
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$list[]=Repository::getInstance($row);
+	}
+	$res->free();
+
+	usort($list, array('GedcomRecord', 'Compare'));
+
+	return $list;
 }
 
 //-- get the indilist from the datastore
