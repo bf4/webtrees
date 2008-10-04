@@ -10,6 +10,8 @@
 
 
 Version 4.1.6
+ - Added: JW flash video player support whether Lightbox module installed or not. 
+          Note: JWplayer module IS required for either case for flv playback. (windmillway)
  - Changed: JW flash video player support now in separate module. Prepares for upcoming flash video support with or w/o Lightbox. (windmillway)
  - Added [ 2014313 ] Clippings: limit number of generations (yalnifj)
  - Lightbox: added JW flash player video support for .flv media files (windmillway)

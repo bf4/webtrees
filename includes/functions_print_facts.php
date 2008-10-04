@@ -1548,7 +1548,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgheight = $imgsize[1]+150;
 				
 			//LBox --------  Addition for Lightbox Album --------------------------------------------
-
+				// if Lightbox installed
 				if (file_exists("modules/lightbox/album.php") ) {
 					include('modules/lightbox/lb_config.php');
 					// Check Filetype of media item ( Regular, URL, or Not supported by lightbox at the moment )
@@ -1591,22 +1591,26 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					// Else Other filetype (Pop-up Window)
 					}
 			// ---------------------------------------------------------------------------------------------
-				
+				// else if Media viewer enabled 
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
+				// else if JWplayer installed
+				}elseif (file_exists("modules/JWplayer/flvVideo.php") && eregi("\.flv" ,$rowm['m_file'])) {
+					print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
+				// else just use normal image viewer
 				}else{
 					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 				}
 			}
 				
-			//LBox --------  Addition for Lightbox Album --------------------------------------------
+			// --------------  Addition for Lightbox Album and JWPlayer ------------------------
 				// Now finally print the thumbnail 
 				// If Plain URL Print the Common URL Thumbnail
 				if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
 					print "<img src=\"images/URL.png\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\"  width=\"72\" height=\"80\" " ;
 				// If local flv file, print the common flv thumbnail
 				}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
-					if (file_exists("modules/lightbox/album.php") ) {
+					if (file_exists("modules/lightbox/album.php") || file_exists("modules/JWplayer/flvVideo.php") ) {
 						print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
 					}else{
 						print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
@@ -1616,9 +1620,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			// ---------------------------------------------------------------------------------------------
 					
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-
 					
-			//LBox --------  Addition for Lightbox Album --------------------------------------------
+			// --------------  Addition for Lightbox Album and JWPlayer ------------------------
 				}
 			// ---------------------------------------------------------------------------------------------
 				
