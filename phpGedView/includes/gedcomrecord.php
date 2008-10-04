@@ -84,10 +84,10 @@ class GedcomRecord {
 
 		//-- set the gedcom record a privatized version
 		$this->gedrec = privatize_gedcom($gedrec);
-		if (preg_match("/^0 +@(.*)@ +(.*)/", $this->gedrec, $match)) {
-			$this->xref = trim($match[1]);
-			$this->type = trim($match[2]);
-			$this->disp = displayDetailsByID($this->xref, $this->type);
+		if (preg_match("/^0 +@(.*)@ +([A-Z0-9_]+)/", $this->gedrec, $match)) {
+			$this->xref=$match[1];
+			$this->type=$match[2];
+			$this->disp=displayDetailsByID($this->xref, $this->type);
 		}
 	}
 
@@ -332,7 +332,6 @@ class GedcomRecord {
 	 * @return boolean
 	 */
 	function canDisplayDetails() {
-		if (is_null($this->disp)) $this->disp = displayDetailsById($this->xref, $this->type);
 		return $this->disp;
 	}
 

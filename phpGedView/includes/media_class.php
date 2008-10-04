@@ -102,14 +102,6 @@ class Media extends GedcomRecord {
 	}
 
 	/**
-	 * Check if privacy options allow this record to be displayed
-	 * @return boolean
-	 */
-	function canDisplayDetails() {
-		return $this->disp;
-	}
-
-	/**
 	 * get the media note
 	 * @return string
 	 */

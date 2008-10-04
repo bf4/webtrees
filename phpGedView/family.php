@@ -35,7 +35,7 @@ $controller->init();
 
 print_header($controller->getPageTitle());
 // completely prevent display if privacy dictates so
-if (!$controller->family->disp) {
+if (!$controller->family->canDisplayDetails()) {
 	print_privacy_error($CONTACT_EMAIL);
 	print_footer();
 	exit;
