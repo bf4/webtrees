@@ -95,7 +95,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 			// Extract hebrew dates only
 			if ($fact['date']->date1->CALENDAR_ESCAPE()=='@#DHEBREW@' && $fact['date']->MinJD()==$fact['date']->MaxJD()) {
 				// Apply privacy
-				if (displayDetailsByID($fact['id']) && showFactDetails($fact['fact'], $fact['id']) && !FactViewRestricted($fact['id'], $fact['factrec'])) {
+				if (displayDetailsById($fact['id']) && showFactDetails($fact['fact'], $fact['id']) && !FactViewRestricted($fact['id'], $fact['factrec'])) {
 					$yahrzeits[]=$fact;
 				} else {
 					++$hidden;

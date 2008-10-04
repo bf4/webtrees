@@ -905,7 +905,7 @@ function filterMedia($media, $filter, $acceptExt) {
 	$links = $media["LINKS"];
 	if (count($links) != 0) {
 		foreach ($links as $id => $type) {
-			if (!displayDetailsByID($id, $type)) {
+			if (!displayDetailsById($id, $type)) {
 				return false;
 			}
 		}

@@ -233,7 +233,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				$text = reverseText($name) . "\r\n";
 				if (!empty($addname)) $text .= reverseText($addname). "\r\n";
 
-				if (displayDetailsByID($pid)) {
+				if (displayDetailsById($pid)) {
 					$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 					$ct = preg_match("/2 DATE.*(\d\d\d\d)/", $birthrec, $match);
 					if ($ct>0) $text.= trim($match[1]);

@@ -110,7 +110,7 @@ class FamilyRoot extends BaseController
 			$this->family = new Family($this->famrec);
 		}
 		$this->famrec = $this->family->getGedcomRecord();
-		$this->display = displayDetailsByID($this->famid, 'FAM');
+		$this->display = displayDetailsById($this->famid, 'FAM');
 
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
@@ -127,8 +127,8 @@ class FamilyRoot extends BaseController
 		//-- check if we can display both parents
 		if ($this->display == false)
 		{
-			$this->showLivingHusb = showLivingNameByID($this->parents['HUSB']);
-			$this->showLivingWife = showLivingNameByID($this->parents['WIFE']);
+			$this->showLivingHusb = showLivingNameById($this->parents['HUSB']);
+			$this->showLivingWife = showLivingNameById($this->parents['WIFE']);
 		}
 
 		//-- add favorites action

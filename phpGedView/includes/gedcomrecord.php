@@ -88,7 +88,7 @@ class GedcomRecord {
 		if (preg_match("/^0 +@(.*)@ +([A-Z0-9_]+)/", $this->gedrec, $match)) {
 			$this->xref=$match[1];
 			$this->type=$match[2];
-			$this->disp    =displayDetailsByID($this->xref, $this->type);
+			$this->disp    =displayDetailsById($this->xref, $this->type);
 			$this->dispname=$this->disp;
 		}
 	}

@@ -95,7 +95,7 @@ if ($search == "yes") {
 				//-- make sure that only media with links are shown
 			if (count($links) != 0) {
 						foreach($links as $id=>$type) {
-							$disp &= displayDetailsByID($id, $type);
+							$disp &= displayDetailsById($id, $type);
 						}
 				}
 		}

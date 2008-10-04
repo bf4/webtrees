@@ -1202,7 +1202,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 			$closeSpan = print_note_record($match[$j][1], $nlevel, $nrec, $textOnly, true);
 			$data .= $closeSpan;
 		} else {
-			if (displayDetailsByID($nmatch[1], "NOTE")) {
+			if (displayDetailsById($nmatch[1], "NOTE")) {
 				//-- print linked note records
 				$noterec = find_gedcom_record($nmatch[1]);
 				$nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);

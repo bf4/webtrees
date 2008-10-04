@@ -403,7 +403,7 @@ function getRecentChanges() {
 				switch($type) {
 					case 'INDI':
 						if (($filter=="living")&&(is_dead($gedrec)==1)) $disp = false;
-						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid);
+						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsById($gid);
 						break;
 					case 'FAM':
 						if ($filter=="living") {
@@ -423,11 +423,11 @@ function getRecentChanges() {
 								}
 							}
 						} else {
-							if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid, "FAM");
+							if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsById($gid, "FAM");
 						}
 						break;
 					default:
-						$disp = displayDetailsByID($gid, $type);
+						$disp = displayDetailsById($gid, $type);
 						break;
 				}
 				if ($disp) {
@@ -508,7 +508,7 @@ function getRandomMedia() {
 			$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
 
-			$disp &= displayDetailsByID($value["XREF"], "OBJE");
+			$disp &= displayDetailsById($value["XREF"], "OBJE");
 			$disp &= !FactViewRestricted($value["XREF"], $value["GEDCOM"]);
 
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
