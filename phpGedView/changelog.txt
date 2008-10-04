@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: JW flash video player support now in separate module. Prepares for upcoming flash video support with or w/o Lightbox. (windmillway)
  - Added [ 2014313 ] Clippings: limit number of generations (yalnifj)
  - Lightbox: added JW flash player video support for .flv media files (windmillway)
  - Added Install Wizard.  Removed old editconfig.php (yalnifj)

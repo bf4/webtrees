@@ -139,19 +139,18 @@ loadLangFile("lightbox:lang");
 							//  If flv native (Lightbox)
 							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.flv", $filename) ) ) {
 								print "<a 
-									href=\"flv.php?flvVideo=" . $filename . "\" 
+									href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $filename . "\" 
 									onmouseover=\"window.status='javascript:;'; return true;\"
 									onmouseout=\"window.status=''; return true;\"
 									rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 									if (media_exists($controller->mediaobject->getThumbnail()) && eregi("\media.gif",$controller->mediaobject->getThumbnail()) && eregi("\.flv",$filename)) {
-										print "<img src=\"modules/lightbox/JWplayer/flash.png\" height=\"80\" border=\"0\" " ;
+										print "<img src=\"modules/JWplayer/flash.png\" height=\"80\" border=\"0\" " ;
 									}else{
 										?>
 										<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="120" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
 										<?php
-									} ?>
-								</a>
-								<?php
+									} 
+								print "</a>";
 								
 							// Else If url filetype (Lightbox)
 							}elseif ( file_exists("modules/lightbox/album.php") && ( eregi("\http", $filename) ) ) {
