@@ -35,7 +35,6 @@ require_once 'includes/gedcomrecord.php';
 require_once 'includes/event_class.php';
 
 class Person extends GedcomRecord {
-	var $dispname = true;
 	var $indifacts = array();
 	var $otherfacts = array();
 	var $globalfacts = array();
@@ -79,7 +78,7 @@ class Person extends GedcomRecord {
 	 */
 	function Person($gedrec,$simple=true) {
 		parent::GedcomRecord($gedrec, $simple);
-		$this->dispname = showLivingNameById($this->xref);
+		$this->dispname=$this->dispname || showLivingNameById($this->xref);
 	}
 
 	/**
@@ -131,14 +130,6 @@ class Person extends GedcomRecord {
 		$person->ged_id=$ged_id;
 		$gedcom_record_cache[$pid][$ged_id]=&$person;
 		return $person;
-	}
-
-	/**
-	 * Check if privacy options allow the display of the persons name
-	 * @return boolean
-	 */
-	function canDisplayName() {
-		return ($this->canDisplayDetails() || $this->dispname);
 	}
 
 	/**
