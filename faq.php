@@ -34,6 +34,7 @@ global $PGV_IMAGES, $faqs;
 
 if (PGV_USER_GEDCOM_ADMIN) $canconfig = true;
 else $canconfig = false;
+$action =safe_REQUEST($_REQUEST, 'action',  PGV_REGEX_UNSAFE);
 if (!isset($action)) $action = "show";
 if (!isset($adminedit) && $canconfig) $adminedit = true;
 else if (!isset($adminedit)) $adminedit = false;

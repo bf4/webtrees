@@ -45,7 +45,7 @@ if ($_SESSION["cookie_login"]) {
 // TODO decide what validation is required on these input parameters
 $pid        =safe_REQUEST($_REQUEST, 'pid',         PGV_REGEX_XREF);
 $mid        =safe_REQUEST($_REQUEST, 'mid',         PGV_REGEX_XREF);
-$gid        =safe_REQUEST($_REQUEST, 'mid',         PGV_REGEX_XREF);
+$gid        =safe_REQUEST($_REQUEST, 'gid',         PGV_REGEX_XREF);
 $linktoid   =safe_REQUEST($_REQUEST, 'linktoid',    PGV_REGEX_XREF);
 $action     =safe_REQUEST($_REQUEST, 'action',      PGV_REGEX_NOSCRIPT, 'showmediaform');
 $folder     =safe_REQUEST($_REQUEST, 'folder',      PGV_REGEX_UNSAFE);

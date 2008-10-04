@@ -28,8 +28,10 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
-if (!isset($ln)) $ln = "";
-if (!isset($action)) $action = "";
+$action 	 =safe_REQUEST($_REQUEST, 'action',			PGV_REGEX_UNSAFE);
+$ln			 =safe_REQUEST($_REQUEST, 'ln',				PGV_REGEX_UNSAFE);
+$new_shortcut=safe_REQUEST($_REQUEST, 'new_shortcut',	PGV_REGEX_UNSAFE);
+
 if ($action == "" and $ln == "") {
 	header("Location: admin.php");
 	exit;
