@@ -95,46 +95,45 @@ class Person extends GedcomRecord {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);
+
 		// Check the cache first
 		if (isset($gedcom_record_cache[$pid][$ged_id])) {
 			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
-		$indirec = find_person_record($pid);
-		if (empty($indirec)) {
-			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
-			if ($ct>0) {
-				$servid = trim($match[1]);
-				$remoteid = trim($match[2]);
-				$service = ServiceClient::getInstance($servid);
-				if (!empty($service)) {
-					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
-					$indirec = $newrec;
-				}
-			}
-		}
-		if (empty($indirec)) {
-			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$indirec = find_updated_record($pid);
-				$fromfile = true;
-			}
-		}
-		if (empty($indirec)) return null;
+		// Look for the record in the database
+		$data=fetch_person_record($pid, $ged_id);
 
-		$person = new Person($indirec, $simple);
-		if (!empty($fromfile)) $person->setChanged(true);
-		//-- update the cache
-		if ($person->isRemote() && $ged_id==PGV_GED_ID) {
-			global $indilist;
-			$indilist[$pid]['gedcom'] = $person->gedrec;
-			$indilist[$pid]["isdead"] = is_dead($person->gedrec);
-			$indilist[$pid]["gedfile"] = $ged_id;
-			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
+		// If we didn't find the record in the database, it may be remote
+		if (!$data && strpos($pid, ':')) {
+			list($servid, $remoteid)=explode(':', $pid);
+			$service=ServiceClient::getInstance($servid);
+			if ($service) {
+				// TYPE will be replaced with the type from the remote record
+				$data=$service->mergeGedcomRecord($remoteid, "0 @{$pid}@ TYPE\n1 RFN {$pid}", false);
+			}
 		}
-		// Store the record in the cache
-		$person->ged_id=$ged_id;
-		$gedcom_record_cache[$pid][$ged_id]=&$person;
-		return $person;
+
+		// If we didn't find the record in the database, it may be new/pending
+		if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
+			$data=find_updated_record($pid);
+			$fromfile=true;
+		}
+
+		// If we still didn't find it, it doesn't exist
+		if (!$data) {
+			return null;
+		}
+
+		// Create the object
+		$object=new Person($data, $simple);
+		if (!empty($fromfile)) {
+			$object->setChanged(true);
+		}
+
+		// Store it in the cache
+		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
+		return $object;
 	}
 
 	/**

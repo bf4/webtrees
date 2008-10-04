@@ -108,64 +108,71 @@ class GedcomRecord {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);
+
 		// Check the cache first
 		if (isset($gedcom_record_cache[$pid][$ged_id])) {
 			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
-		//-- look for the gedcom record
-		$indirec = find_gedcom_record($pid);
-		if (empty($indirec)) {
-			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
-			//-- check if it is a remote object
-			if ($ct>0) {
-				$servid = trim($match[1]);
-				$remoteid = trim($match[2]);
-				$service = ServiceClient::getInstance($servid);
-				//-- the INDI will be replaced with the type from the remote record
-				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
-				$indirec = $newrec;
-			}
-		}
-		//-- check if it is a new object not yet in the database
-		if (empty($indirec)) {
-			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$indirec = find_updated_record($pid);
-				$fromfile = true;
-			}
-		}
-		if (empty($indirec)) return null;
+		// Look for the record in the database
+		$data=fetch_gedcom_record($pid, $ged_id);
 
-		if (preg_match("/^0 +@.+@ +(\w+)/", $indirec, $match)) {
-			switch ($match[1]) {
-			case 'INDI':
-				$record = new Person($indirec, $simple);
-				break;
-			case 'FAM':
-				$record = new Family($indirec, $simple);
-				break;
-			case 'SOUR':
-				$record = new Source($indirec, $simple);
-				break;
-			case 'REPO':
-				$record = new Repository($indirec, $simple);
-				break;
-			case 'OBJE':
-				$record = new Media($indirec, $simple);
-				break;
-			default:
-				$record = new GedcomRecord($indirec, $simple);
-				break;
+		// If we didn't find the record in the database, it may be remote
+		if (!$data && strpos($pid, ':')) {
+			list($servid, $remoteid)=explode(':', $pid);
+			$service=ServiceClient::getInstance($servid);
+			if ($service) {
+				// TYPE will be replaced with the type from the remote record
+				$data=$service->mergeGedcomRecord($remoteid, "0 @{$pid}@ TYPE\n1 RFN {$pid}", false);
 			}
-			if (!empty($fromfile)) {
-				$record->setChanged(true);
-			}
-			$record->ged_id=$ged_id;
-			// Store the object in the cache
-			$gedcom_record_cache[$pid][$ged_id]=&$record;
-			return $record;
 		}
-		return null;
+
+		// If we didn't find the record in the database, it may be new/pending
+		if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
+			$data=find_updated_record($pid);
+			$fromfile=true;
+		}
+
+		// If we still didn't find it, it doesn't exist
+		if (!$data) {
+			return null;
+		}
+
+		// Create the object
+		if (is_array($data)) {
+			$type=$data['type'];
+		} elseif (preg_match("/^0 +@.+@ +(\w+)/", $data, $match)) {
+			$type=$match[1];
+		} else {
+			$type='';
+		}
+		switch ($type) {
+		case 'INDI':
+			$object=new Person($data, $simple);
+			break;
+		case 'FAM':
+			$object=new Family($data, $simple);
+			break;
+		case 'SOUR':
+			$object=new Source($data, $simple);
+			break;
+		case 'REPO':
+			$object=new Repository($data, $simple);
+			break;
+		case 'OBJE':
+			$object=new Media($data, $simple);
+			break;
+		default:
+			$object=new GedcomRecord($data, $simple);
+			break;
+		}
+		if (!empty($fromfile)) {
+			$object->setChanged(true);
+		}
+
+		// Store it in the cache
+		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
+		return $object;
 	}
 
 	/**

@@ -48,39 +48,45 @@ class Source extends GedcomRecord {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		$ged_id=get_id_from_gedcom($GEDCOM);
+
 		// Check the cache first
 		if (isset($gedcom_record_cache[$pid][$ged_id])) {
 			return $gedcom_record_cache[$pid][$ged_id];
 		}
 
-		$sourcerec = find_source_record($pid);
-		if (empty($sourcerec)) {
-			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
-			if ($ct>0) {
-				$servid = trim($match[1]);
-				$remoteid = trim($match[2]);
-				$service = ServiceClient::getInstance($servid);
-				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ SOUR\r\n1 RFN ".$pid, false);
-				$sourcerec = $newrec;
+		// Look for the record in the database
+		$data=fetch_source_record($pid, $ged_id);
+
+		// If we didn't find the record in the database, it may be remote
+		if (!$data && strpos($pid, ':')) {
+			list($servid, $remoteid)=explode(':', $pid);
+			$service=ServiceClient::getInstance($servid);
+			if ($service) {
+				// TYPE will be replaced with the type from the remote record
+				$data=$service->mergeGedcomRecord($remoteid, "0 @{$pid}@ TYPE\n1 RFN {$pid}", false);
 			}
 		}
-		if (empty($sourcerec)) {
-			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$sourcerec = find_updated_record($pid);
-				$fromfile = true;
-			}
+
+		// If we didn't find the record in the database, it may be new/pending
+		if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
+			$data=find_updated_record($pid);
+			$fromfile=true;
 		}
-		if (empty($sourcerec)) {
+
+		// If we still didn't find it, it doesn't exist
+		if (!$data) {
 			return null;
 		}
-		$source = new Source($sourcerec, $simple);
+
+		// Create the object
+		$object=new Source($data, $simple);
 		if (!empty($fromfile)) {
-			$source->setChanged(true);
+			$object->setChanged(true);
 		}
-		// Store the object in the cache
-		$source->ged_id=$ged_id;
-		$gedcom_record_cache[$pid][$ged_id]=&$source;
-		return $source;
+		
+		// Store it in the cache
+		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
+		return $object;
 	}
 
 	/**
