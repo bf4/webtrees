@@ -34,30 +34,36 @@ define('PGV_MEDIA_CLASS_PHP', '');
 require_once('includes/gedcomrecord.php');
 
 class Media extends GedcomRecord {
-	var $title = "";
-	var $file = "";
-	var $ext = "";
-	var $mime = "";
-	var $note = "";
-	var $filesizeraw = -1;
-	var $width = 0;
-	var $height = 0;
-	var $indilist = null;
-	var $famlist = null;
-	var $serverfilename = "";
-	var $fileexists = false;
-	var $filepropset = false;
+	var $title         =null;
+	var $file          =null;
+	var $ext           ='';
+	var $mime          ='';
+	var $note          =null;
+	var $filesizeraw   =-1;
+	var $width         =0;
+	var $height        =0;
+	var $indilist      =null;
+	var $famlist       =null;
+	var $serverfilename='';
+	var $fileexists    =false;
+	var $filepropset   =false;
 
-	/**
-	 * Constructor for media object
-	 * @param string $gedrec	the raw repository gedcom record
-	 */
-	function Media($gedrec) {
-		parent::GedcomRecord($gedrec);
-		$this->title = get_gedcom_value("TITL", 1, $gedrec);
-		$this->note = get_gedcom_value("NOTE", 1, $gedrec);
-		if (empty($this->title)) $this->title = get_gedcom_value("TITL", 2, $gedrec);
-		$this->file = get_gedcom_value("FILE", 1, $gedrec);
+	// Create a Media object from either raw GEDCOM data or a database row
+	function Media($data) {
+		if (is_array($data)) {
+			// Construct from a row from the database
+			$this->title=$data['m_titl'];
+			$this->file =$data['m_file'];
+		} else {
+			// Construct from raw GEDCOM data
+			$this->title = get_gedcom_value('TITL', 1, $data);
+			if (empty($this->title)) {
+				$this->title = get_gedcom_value('TITL', 2, $data);
+			}
+			$this->file = get_gedcom_value('FILE', 1, $data);
+		}
+
+		parent::GedcomRecord($data);
 	}
 
 	/**
@@ -106,6 +112,9 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getNote(){
+		if (is_null($this->note)) {
+			$this->note=get_gedcom_value('NOTE', 1, $this->getGedcomRecord());
+		}	
 		return $this->note;
 	}
 

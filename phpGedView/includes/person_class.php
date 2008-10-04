@@ -72,13 +72,18 @@ class Person extends GedcomRecord {
 	var $_getAllDeathPlaces=null;
 	var $_getEstimatedDeathDate=null;
 
-	/**
-	 * Constructor for person object
-	 * @param string $gedrec	the raw individual gedcom record
-	 */
-	function Person($gedrec,$simple=true) {
-		parent::GedcomRecord($gedrec, $simple);
-		$this->dispname=$this->dispname || showLivingNameById($this->xref);
+	// Create a Person object from either raw GEDCOM data or a database row
+	function Person($data, $simple=true) {
+		if (is_array($data)) {
+			// Construct from a row from the database
+			$this->isdead=$data['i_isdead'];
+		} else {
+			// Construct from raw GEDCOM data
+		}
+
+		parent::GedcomRecord($data, $simple);
+
+		$this->dispname=$this->disp || showLivingNameById($this->xref);
 	}
 
 	/**
