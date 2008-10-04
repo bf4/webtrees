@@ -969,7 +969,7 @@ function get_source_list() {
 // $ged_id - the gedcom to search
 // $filter - an array of search criteria
 // $conjunction - match filter terms with "AND" or "OR"
-function get_repo_list($ged_id=PGV_GED_ID, $filters=null, $conjunction="OR") {
+function get_repo_list($ged_id=PGV_GED_ID, $filters=null, $conjunction="AND") {
 	global $TBLPREFIX, $DBCONN;
 
 	$ged_id=(int)$ged_id;
@@ -989,7 +989,6 @@ function get_repo_list($ged_id=PGV_GED_ID, $filters=null, $conjunction="OR") {
 		$where='';
 	}
 
-	$ged_id=(int)$ged_id;
 	$res=dbquery(
 		"SELECT 'REPO' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
 		"FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file={$ged_id} ${where}"
