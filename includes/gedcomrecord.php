@@ -31,25 +31,25 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_GEDCOMRECORD_PHP', '');
 
-require_once('includes/person_class.php');
-require_once('includes/family_class.php');
-require_once('includes/source_class.php');
-require_once('includes/repository_class.php');
-require_once('includes/media_class.php');
-require_once('includes/event_class.php');
+require_once 'includes/person_class.php';
+require_once 'includes/family_class.php';
+require_once 'includes/source_class.php';
+require_once 'includes/repository_class.php';
+require_once 'includes/media_class.php';
+require_once 'includes/event_class.php';
 require_once 'includes/serviceclient_class.php';
 
 class GedcomRecord {
-	var $gedrec     =null;
-	var $xref       =null;
-	var $ged_id     =null; // only set if this record comes from a file
-	var $type       =null;
-	var $changed    =false;
+	var $gedrec     =null;  // Raw gedcom text (privatised)
+	var $xref       =null;  // The record identifier
+	var $ged_id     =null;  // The gedcom file, only set if this record comes from the database
+	var $type       =null;  // INDI, FAM, etc.
+	var $changed    =false; // Is this a new record from pgv_changes[]
 	var $rfn        =null;
 	var $facts      =null;
 	var $changeEvent=null;
-	var $disp       =true;
-	var $dispname   =true;
+	var $disp       =true;  // Can we display details of this object
+	var $dispname   =true;  // Can we display the name of this object
 
 	// Cached results from various functions.
 	// These should become private when we move to PHP5.  Do not use them from outside this class.
@@ -57,16 +57,25 @@ class GedcomRecord {
 	var $_getPrimaryName=null;
 	var $_getSecondaryName=null;
 
-	/**
-	 * constructor for this class
-	 */
-	function GedcomRecord($gedrec, $simple=false) {
-		if (empty($gedrec)) return;
-
-		$this->ged_id=PGV_GED_ID;
+	// Create a GedcomRecord object from either raw GEDCOM data or a database row
+	function GedcomRecord($data, $simple=false) {
+		if (is_array($data)) {
+			// Construct from a row from the database
+			$this->xref  =$data['xref'];
+			$this->type  =$data['type'];
+			$this->ged_id=$data['ged_id'];
+			$this->gedrec=$data['gedrec'];
+		} else {
+			// Construct from raw GEDCOM data
+			$this->gedrec=$data;
+			if (preg_match('/^0 @(.+)@ (\w+)/', $data, $match)) {
+				$this->xref=$match[1];
+				$this->type=$match[2];
+			}
+		}
 
 		//-- lookup the record from another gedcom
-		$remoterfn = get_gedcom_value("RFN", 1, $gedrec);
+		$remoterfn = get_gedcom_value("RFN", 1, $this->gedrec);
 		if (!empty($remoterfn)) {
 			$parts = explode(':', $remoterfn);
 			if (count($parts)==2) {
@@ -76,7 +85,7 @@ class GedcomRecord {
 					$serviceClient = ServiceClient::getInstance($servid);
 					if (!is_null($serviceClient)) {
 						if (!$simple || $serviceClient->type=='local') {
-							$gedrec = $serviceClient->mergeGedcomRecord($aliaid, $gedrec, true);
+							$this->gedrec = $serviceClient->mergeGedcomRecord($aliaid, $this->gedrec, true);
 						}
 					}
 				}
@@ -84,12 +93,9 @@ class GedcomRecord {
 		}
 
 		//-- set the gedcom record a privatized version
-		$this->gedrec = privatize_gedcom($gedrec);
-		if (preg_match("/^0 +@(.*)@ +([A-Z0-9_]+)/", $this->gedrec, $match)) {
-			$this->xref=$match[1];
-			$this->type=$match[2];
-			$this->disp    =displayDetailsById($this->xref, $this->type);
-			$this->dispname=$this->disp;
+		$this->gedrec = privatize_gedcom($this->gedrec);
+		if ($this->xref && $this->type) {
+			$this->disp=displayDetailsById($this->xref, $this->type);
 		}
 	}
 

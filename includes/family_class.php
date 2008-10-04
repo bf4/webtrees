@@ -46,25 +46,44 @@ class Family extends GedcomRecord {
 	var $children_loaded = false;
 	var $numChildren = false;
 
-	/**
-	 * constructor
-	 * @param string $gedrec	the gedcom record
-	 */
-	function Family($gedrec, $simple=true) {
-		//-- get the husbands ids
-		$husb = get_gedcom_value("HUSB", 1, $gedrec);
-		if (!empty($husb)) $this->husb = Person::getInstance($husb, $simple);
-		//-- get the wifes ids
-		$wife = get_gedcom_value("WIFE", 1, $gedrec);
-		if (!empty($wife)) $this->wife = Person::getInstance($wife, $simple);
+	// Create a Family object from either raw GEDCOM data or a database row
+	function Family($data, $simple=true) {
+		if (is_array($data)) {
+			// Construct from a row from the database
+			if ($data['f_husb']) {
+				$this->husb=Person::getInstance($data['f_husb']);
+			}
+			if ($data['f_wife']) {
+				$this->wife=Person::getInstance($data['f_wife']);
+			}
+			if (strpos($data['f_chil'], ';')) {
+				$this->childrenIds=explode(';', trim($data['f_chil'], ';'));
+			}
+			$this->numChildren=$data['f_numchil'];
+		} else {
+			// Construct from raw GEDCOM data
+			if (preg_match('/^1 HUSB @(.+)@/m', $data, $match)) {
+				$this->husb=Person::getInstance($match[1], $simple);
+			}
+			if (preg_match('/^1 WIFE @(.+)@/m', $data, $match)) {
+				$this->wife=Person::getInstance($match[1], $simple);
+			}
+			if (preg_match_all('/^1 CHIL @(.+)@/m', $data, $match)) {
+				$this->childrenIds=$match[1];
+			}
+			if (preg_match('/^1 NCHI (\d+)/m', $data, $match)) {
+				$this->numChildren=$match[1];
+			} else {
+				$this->numChildren=count($this->childrenIds);
+			}
+		}
+
 		// Make sure husb/wife are the right way round.
 		if ($this->husb && $this->husb->getSex()=='F' || $this->wife && $this->wife->getSex()=='M') {
-			$tmp=$this->husb;
-			$this->husb=$this->wife;
-			$this->wife=$tmp;
+			list($this->husb, $this->wife)=array($this->wife, $this->husb);
 		}
-		//-- load the parents before privatizing the record because the parents may be remote records
-		parent::GedcomRecord($gedrec);
+	
+		parent::GedcomRecord($data);
 	}
 
 	/**
