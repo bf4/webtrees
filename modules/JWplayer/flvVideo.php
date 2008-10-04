@@ -1,8 +1,8 @@
 <?php
 /**
- * Lightbox Album module for phpGedView
+ * JWplayer module for phpGedView
  *
- * Display flv video media Items using JW Player in PGV Lightbox
+ * Display flv video media Items using JW Player in PGV 
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
@@ -43,11 +43,11 @@ $preview="";
 ?>
 
 	<div id="container"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</div>
-	<script type="text/javascript" src="modules/lightbox/JWplayer/swfobject.js"></script>
+	<script type="text/javascript" src="modules/JWplayer/swfobject.js"></script>
 	<script type="text/javascript">
 		var video 	= "<?php print $SERVER_URL.$flvVideo; ?>";
 		var preview = "<?php print $preview; ?>";
-		var s1 = new SWFObject("modules/lightbox/JWplayer/player.swf","ply","425","344","9","#FFFFFF");
+		var s1 = new SWFObject("modules/JWplayer/player.swf","ply","425","344","9","#FFFFFF");
 		s1.addParam("allowfullscreen","true");
 		s1.addParam("allowscriptaccess","always");
 		s1.addParam("flashvars","file=" +video+ "&image=" +preview+ "&autostart=true");
