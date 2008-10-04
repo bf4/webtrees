@@ -31,11 +31,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_SOURCE_CLASS_PHP', '');
 
-require_once('includes/gedcomrecord.php');
+require_once 'includes/gedcomrecord.php';
+require_once 'includes/serviceclient_class.php';
 
 class Source extends GedcomRecord {
-	var $indilist = null;
-	var $famlist = null;
+	var $indilist=null;
+	var $famlist =null;
+	var $repo    =null;
+	var $auth    =null;
 
 	/**
 	 * Static function used to get an instance of a source object
@@ -99,23 +102,26 @@ class Source extends GedcomRecord {
 	 */
 	function getSourceIndis() {
 		global $REGEXP_DB;
-		if (!is_null($this->indilist)) return $this->indilist;
-		$query = "SOUR @".$this->xref."@";
-		if (!$REGEXP_DB) $query = "%".$query."%";
-
-		$this->indilist = search_indis($query);
-		uasort($this->indilist, "itemsort");
-
-		//-- load up the families with 1 query
-		$famids = array();
-		foreach($this->indilist as $gid=>$indi) {
-			$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$famid = $match[$i][1];
-				$famids[] = $famid;
+		if (is_null($this->indilist)) {
+			$query="SOUR @".$this->xref."@";
+			if (!$REGEXP_DB) {
+				$query="%".$query."%";
 			}
+
+			$this->indilist = search_indis($query);
+			uasort($this->indilist, "itemsort");
+
+			//-- load up the families with 1 query
+			$famids = array();
+			foreach($this->indilist as $gid=>$indi) {
+				$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
+				for($i=0; $i<$ct; $i++) {
+					$famid = $match[$i][1];
+					$famids[] = $famid;
+				}
+			}
+			load_families($famids);
 		}
-		load_families($famids);
 		return $this->indilist;
 	}
 
@@ -133,12 +139,16 @@ class Source extends GedcomRecord {
 	 */
 	function getSourceFams() {
 		global $REGEXP_DB;
-		if (!is_null($this->famlist)) return $this->famlist;
-		$query = "SOUR @".$this->xref."@";
-		if (!$REGEXP_DB) $query = "%".$query."%";
 
-		$this->famlist = search_fams($query);
-		uasort($this->famlist, "itemsort");
+		if (is_null($this->famlist)) {
+			$query="SOUR @".$this->xref."@";
+			if (!$REGEXP_DB) {
+				$query="%".$query."%";
+			}
+
+			$this->famlist=search_fams($query);
+			uasort($this->famlist, "itemsort");
+		}
 		return $this->famlist;
 	}
 
@@ -163,7 +173,9 @@ class Source extends GedcomRecord {
 	 * @return string
 	 */
 	function getRepo() {
-		if (!isset($this->repo)) $this->repo = get_gedcom_value("REPO", 1, $this->gedrec, '', false);
+		if (is_null($this->repo)) {
+			$this->repo=get_gedcom_value("REPO", 1, $this->gedrec, '', false);
+		}
 		return $this->repo;
 	}
 
@@ -172,7 +184,9 @@ class Source extends GedcomRecord {
 	 * @return string
 	 */
 	function getAuth() {
-		if (!isset($this->auth)) $this->auth = get_gedcom_value("AUTH", 1, $this->gedrec, '', false);
+		if (is_null($this->auth)) {
+			$this->auth=get_gedcom_value("AUTH", 1, $this->gedrec, '', false);
+		}
 		return $this->auth;
 	}
 
