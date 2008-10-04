@@ -40,15 +40,16 @@ require_once('includes/event_class.php');
 require_once 'includes/serviceclient_class.php';
 
 class GedcomRecord {
-	var $gedrec = "";
-	var $xref = "";
-	var $ged_id=null; // only set if this record comes from a file
-	var $type = "";
-	var $changed = false;
-	var $rfn = null;
-	var $facts = null;
-	var $changeEvent = null;
-	var $disp = true;
+	var $gedrec     =null;
+	var $xref       =null;
+	var $ged_id     =null; // only set if this record comes from a file
+	var $type       =null;
+	var $changed    =false;
+	var $rfn        =null;
+	var $facts      =null;
+	var $changeEvent=null;
+	var $disp       =true;
+	var $dispname   =true;
 
 	// Cached results from various functions.
 	// These should become private when we move to PHP5.  Do not use them from outside this class.
@@ -87,7 +88,8 @@ class GedcomRecord {
 		if (preg_match("/^0 +@(.*)@ +([A-Z0-9_]+)/", $this->gedrec, $match)) {
 			$this->xref=$match[1];
 			$this->type=$match[2];
-			$this->disp=displayDetailsByID($this->xref, $this->type);
+			$this->disp    =displayDetailsByID($this->xref, $this->type);
+			$this->dispname=$this->disp;
 		}
 	}
 
@@ -327,13 +329,21 @@ class GedcomRecord {
 	}
 
 	/**
-	 * can the details of this record be shown
-	 * This method should be overridden in sub classes
+	 * Can the details of this record be shown?
 	 * @return boolean
 	 */
 	function canDisplayDetails() {
 		return $this->disp;
 	}
+
+	/**
+	 * Can the name of this record be shown?
+	 * @return boolean
+	 */
+	function canDisplayName() {
+		return $this->dispname;
+	}
+
 
 	/**
 	 * get the URL to link to a place
@@ -430,11 +440,6 @@ class GedcomRecord {
 	// If this object has no name, what do we call it?
 	function getFallBackName() {
 		return $this->getXref();
-	}
-
-	// Can we display the name of this object?
-	function canDisplayName() {
-		return true;
 	}
 
 	// Which of the (possibly several) names of this record is the primary one.
