@@ -511,7 +511,7 @@ function build_indiv_map($indifacts, $famids) {
 				$spouserec = get_sub_record(2, "2 _PGVS", $factrec);
 				$ctlp = preg_match("/\d _PGVS @(.*)@/", $spouserec, $spouseid);
 				if ($ctlp>0) {
-					$useThisItem = displayDetailsByID($spouseid[1]);
+					$useThisItem = displayDetailsById($spouseid[1]);
 				} else {
 					$useThisItem = true;
 				}
@@ -605,7 +605,7 @@ function build_indiv_map($indifacts, $famids) {
 							$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
 							$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
 							if (($ctla>0) && ($ctlo>0)) {
-								if (displayDetailsByID($smatch[$j][1])) {
+								if (displayDetailsById($smatch[$j][1])) {
 									$i = $i + 1;
 									$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
 									if (strpos($srec, "1 SEX F")!==false) {
@@ -640,7 +640,7 @@ function build_indiv_map($indifacts, $famids) {
 										}
 									}
 									if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
-										if (displayDetailsByID($smatch[$j][1])) {
+										if (displayDetailsById($smatch[$j][1])) {
 											$i = $i + 1;
 											$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
 											$markers[$i]["fact"]     = $factarray["CHIL"];

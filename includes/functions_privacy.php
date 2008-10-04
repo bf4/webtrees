@@ -269,9 +269,9 @@ if (!function_exists("displayDetails")) {
  * This function checks if the details of the given GEDCOM record represented by <var>$indirec</var>
  * should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
  * XRef ID and type from the gedcom record and pass them as parameters to the
- * <var>displayDetailsByID</var> function.
+ * <var>displayDetailsById</var> function.
  *
- * @deprecated	This function has been deprecated by the displayDetailsByID function, it is still
+ * @deprecated	This function has been deprecated by the displayDetailsById function, it is still
  *				provided for backwards compatibility but it should no longer be used in new code
  * @param	string $indirec the raw gedcom record to check privacy settings for
  * @return	boolean return true to show the persons details, return false to keep them private
@@ -291,12 +291,12 @@ function displayDetails($indirec) {
 		$type = "INDI";
 	}
 
-	return displayDetailsByID($pid, $type);
+	return displayDetailsById($pid, $type);
 }
 }
 
 //-- allow users to overide functions in privacy file
-if (!function_exists("displayDetailsByID")) {
+if (!function_exists("displayDetailsById")) {
 
 /**
  * checks if the person has died recently before showing their data
@@ -364,7 +364,7 @@ function checkPrivacyByYear($pid) {
  *          - "REPO" record is a repository
  * @return	boolean return true to show the persons details, return false to keep them private
  */
-function displayDetailsByID($pid, $type = "INDI") {
+function displayDetailsById($pid, $type = "INDI") {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES;
@@ -600,7 +600,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	if ($type=="FAM") {
 		//-- check if we can display at least one parent
 		$parents = find_parents($pid);
-		$display = displayDetailsByID($parents["HUSB"]) || displayDetailsByID($parents["WIFE"]);
+		$display = displayDetailsById($parents["HUSB"]) || displayDetailsById($parents["WIFE"]);
 		$privacy_cache[$pkey] = $display;
 		return $display;
 	}
@@ -610,7 +610,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			$sourcerec = find_source_record($pid);
 			if (!empty($sourcerec)) {
 				$repoid = get_gedcom_value("REPO", 1, $sourcerec);
-				$disp = displayDetailsByID($repoid, "REPO");
+				$disp = displayDetailsById($repoid, "REPO");
 			}
 			$privacy_cache[$pkey] = $disp;
 			return $disp;
@@ -656,9 +656,9 @@ if (!function_exists("showLivingName")) {
  * This function checks if the name of the given GEDCOM record represented by <var>$indirec</var>
  * should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
  * XRef ID and type from the gedcom record and pass them as parameters to the
- * <code>showLivingNameByID</code> function.
+ * <code>showLivingNameById</code> function.
  *
- * @deprecated	This function has been deprecated by the showLivingNameByID function, it is still
+ * @deprecated	This function has been deprecated by the showLivingNameById function, it is still
  *				provided for backwards compatibility but it should no longer be used in new code
  * @param	string $indirec the raw gedcom record to check privacy settings for
  * @return	boolean return true to show the persons details, return false to keep them private
@@ -671,12 +671,12 @@ function showLivingName($indirec) {
 	if ($ct>0) $pid = $match[1];
 	else $pid=0;
 
-	return showLivingNameByID($pid);
+	return showLivingNameById($pid);
 }
 }
 
 //-- allow users to overide functions in privacy file
-if (!function_exists("showLivingNameByID")) {
+if (!function_exists("showLivingNameById")) {
 /**
  * check if the name for a GEDCOM XRef ID should be shown
  *
@@ -691,7 +691,7 @@ if (!function_exists("showLivingNameByID")) {
  * @param	string $pid the GEDCOM XRef ID for the entity to check privacy settings for
  * @return	boolean return true to show the person's name, return false to keep it private
  */
-function showLivingNameByID($pid) {
+function showLivingNameById($pid) {
 	global $SHOW_LIVING_NAMES, $person_privacy, $user_privacy;
 
 	if (displayDetailsById($pid)) return true;

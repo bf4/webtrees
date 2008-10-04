@@ -779,8 +779,8 @@ if ($view!="preview") {
 	}
 	else {
 		if ((!empty($pid1))&&(!empty($pid2))) {
-			if ((!displayDetailsByID($pid1))&&(!showLivingNameByID($pid1))) $disp = false;
-			else if ((!displayDetailsByID($pid2))&&(!showLivingNameByID($pid2))) $disp = false;
+			if ((!displayDetailsById($pid1))&&(!showLivingNameById($pid1))) $disp = false;
+			else if ((!displayDetailsById($pid2))&&(!showLivingNameById($pid2))) $disp = false;
 			if ($disp) {
 				print $pgv_lang["show_path"].": </td>";
 				print "\n\t\t<td class=\"optionbox\">";
