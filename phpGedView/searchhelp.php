@@ -45,8 +45,9 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 $searchtext   =safe_POST('searchtext');
 $searchuser   =safe_POST('searchuser',    'yes', 'no');
 $searchconfig =safe_POST('searchconfig',  'yes', 'no');
-$searchuser   =safe_POST('searchuser',    'yes', 'no');
 $searchmodules=safe_POST('searchmodules', 'yes', 'no');
+$searchhow	  =safe_POST('searchhow');
+$searchintext =safe_POST('searchintext');
 $found = 0;
 
 ?>

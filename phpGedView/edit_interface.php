@@ -49,6 +49,7 @@ $glevels=safe_REQUEST($_REQUEST, 'glevels', PGV_REGEX_UNSAFE);
 $islink =safe_REQUEST($_REQUEST, 'islink',  PGV_REGEX_UNSAFE);
 $type   =safe_REQUEST($_REQUEST, 'type',    PGV_REGEX_UNSAFE);
 $fact   =safe_REQUEST($_REQUEST, 'fact',    PGV_REGEX_UNSAFE);
+$option =safe_REQUEST($_REQUEST, 'option',  PGV_REGEX_UNSAFE);
 
 $update_CHAN=!safe_POST_bool('preserve_last_changed');
 

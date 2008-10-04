@@ -35,6 +35,8 @@ if (!PGV_USER_IS_ADMIN) {
 	exit;
 }
 
+$action =safe_REQUEST($_REQUEST, 'action',  PGV_REGEX_UNSAFE);
+
 if (!isset($action) or $action=="") $action="editold";
 
 switch ($action) {
