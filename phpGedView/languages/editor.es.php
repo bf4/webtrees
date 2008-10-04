@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["add_marriage"]			= "Agregar un nuevo matrimonio";
+$pgv_lang["add_marriage"]			= "Agregar detalles del matrimonio";
 $pgv_lang["edit_concurrency_change"] = "Este registro fue modificado por última vez por <i>#CHANGEUSER#</i> el #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]	= "El registro con id #PID# fue modificado por otro usuario desde que accedió a él por última vez.";
 $pgv_lang["edit_concurrency_msg1"]	= "Ocurrió un error mientras se creaba el formulario de Edición.  Otro usuario puede haber cambiado este registro desde que lo visualizó.";
@@ -184,7 +184,7 @@ $pgv_lang["label_rel_to_current"]   = "Parentesco con la persona actual";
 $pgv_lang["label_same_server"]      = "Mismo sitio web";
 $pgv_lang["label_site"]             = "Sitio";
 $pgv_lang["label_site_url"]         = "URL del sitio:";
-$pgv_lang["label_username_id2"]		= "Nombre de usuario: ";
+$pgv_lang["label_username_id2"]		= "Identificador: ";
 $pgv_lang["lbl_server_list"]        = "Sitio remoto ya existente";
 $pgv_lang["lbl_type_server"]		= "Introduzca un nuevo sitio.";
 $pgv_lang["link_as_child"]			= "Vincular esta persona como hijo o hija de una familia ya existente";

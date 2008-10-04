@@ -216,6 +216,7 @@ $factarray["_MREL"]	= "Relación con la madre";
 $factarray["_FREL"]	= "Relación con el padre";
 $factarray["_MSTAT"]	= "Comienzo del matrimonio";
 $factarray["_MEND"]	= "Final del matrimonio";
+$factarray["_NAMS"]	= "Tocayo/a";
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"] = "FAX";

@@ -76,7 +76,8 @@ $pgv_lang["DBTYPE"]				= "Typ bazy danych";
 $pgv_lang["DBTYPE_help"]		= "~#pgv_lang[DBTYPE]#~<br /><br />Typ bazy danych ze sterownikiem PEAR.<br /><br />PhpGedView obsługuje bazy danych MySQL, PostgreSQL i SQLite. MySQL i PostgreSQL wymagają zainstalowania odpowiednich bibliotek w PHP. SQLite jest domyślnie zainstalowany w PHP 5.<br /><br />Jeśli używasz SQLite, nie musisz konfigurować hosta, loginu ani hasła, ale musisz ustawić ścieżkę pliku do swojej bazy danych w polu \"Nazwa bazy danych\".<br /><br />Ustawia zmienną \$DBTYPE w pliku <i>config.php</i>.<br />";
 $pgv_lang["DBHOST"]				= "Host bazy danych";
 $pgv_lang["DBHOST_help"]		= "~#pgv_lang[DBHOST]#~<br /><br />Adres DNS lub IP komputera, na którym znajduje się twój serwer bazy danych. Ten parametr nie jest brany pod uwagę jeśli korzystasz z bazy danych SQLite.<br /><br />Ustawia zmienną \$DBHOST w pliku <i>config.php</i>.<br />";
-
+$pgv_lang["DBPORT"]				= "Port bazy danych";
+$pgv_lang["DBPORT_help"]		= "~#pgv_lang[DBPORT]#~<br /><br />Port TCP jaki powinien być używany do połączeń z bazą danych. Pozostaw to pole puste, aby użyć domyślnego portu dla konkretnego rodzaju bazy danych. To ustawienie jest ignorowane, jeżeli używana jest baza danych SQLite.<br />";
 $pgv_lang["DBUSER"]			= "Użytkownik bazy danych";
 $pgv_lang["DBUSER_help"]	= "~#pgv_lang[DBUSER]#~<br /><br />Nazwa użytkownika bazy danych, wymagana do zalogowania do twojej bazy danych. Ten parametr nie jest brany pod uwagę jeśli korzystasz z bazy danych SQLite.<br /><br />Ustawia zmienną \$DBUSER w pliku <i>config.php</i>.<br />";
 $pgv_lang["DBPASS"]			= "Hasło do bazy danych";

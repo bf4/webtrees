@@ -244,6 +244,8 @@ $pgv_lang["download_file"]			= "Pobierz plik #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "Ta osoba została pobrana z:";
 $pgv_lang["family_downloaded_from"]	= "Ta rodzina została pobrana z:";
 $pgv_lang["source_downloaded_from"]	= "To źródło zostało pobrane z:";
+$pgv_lang["enter_person_generations"] = "Liczba pokoleń:";
+
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "powiązań z miejscem";
 $pgv_lang["top_level"]			= "Najwyższy poziom hierarchii";
@@ -1653,11 +1655,13 @@ $pgv_lang["showUnknown"]			= "Pokaż osoby o nieznanej płci";
 $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["tree"]					= "Drzewo";
 $pgv_lang["example"]				= "Przykład:";
-$pgv_lang["interactive_tree"]		= "Interaktywne Drzewo";
+$pgv_lang["interactive_tree"]		= "Interaktywne drzewo";
 $pgv_lang["hide_show_spouses"]		= "Pokaż lub ukryj wielu małżonków";
-$pgv_lang["load_full_tree"]			= "Zobacz to drzewo na stronie interaktywnego drzewa";
+$pgv_lang["load_full_tree"]			= "Zobacz to drzewo na stronie Interaktywnego drzewa";
 
 $pgv_lang["parent_family"]			= "Rodzice i rodzeństwo";
 $pgv_lang["step_parent_family"]		= "Przyrodni rodzice i rodzeństwo";
 $pgv_lang["immediate_family"]		= "Najbliższa rodzina";
+
+$pgv_lang["install_step_8"] 		= "Rozpocznij korzystanie";
 ?>
