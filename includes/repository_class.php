@@ -31,11 +31,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_REPOSITORY_CLASS_PHP', '');
 
-require_once('includes/gedcomrecord.php');
+require_once 'includes/gedcomrecord.php';
+require_once 'includes/serviceclient_class.php';
 
 class Repository extends GedcomRecord {
-	var $sourcelist = null;
-	var $repositoryfacts = null;
+	var $sourcelist     =null;
+	var $repositoryfacts=null;
 
 	/**
 	 * Static function used to get an instance of a repository object
@@ -67,9 +68,13 @@ class Repository extends GedcomRecord {
 				$fromfile = true;
 			}
 		}
-		if (empty($repositoryrec)) return null;
+		if (empty($repositoryrec)) {
+			return null;
+		}
 		$repository = new Repository($repositoryrec, $simple);
-		if (!empty($fromfile)) $repository->setChanged(true);
+		if (!empty($fromfile)) {
+			$repository->setChanged(true);
+		}
 		// Store the object in the cache
 		$repository->ged_id=$ged_id;
 		$gedcom_record_cache[$pid][$ged_id]=&$repository;
@@ -99,12 +104,15 @@ class Repository extends GedcomRecord {
 	 */
 	function getRepositorySours() {
 		global $REGEXP_DB;
-		if (!is_null($this->sourcelist)) return $this->sourcelist;
-		$query = "REPO @".$this->xref."@";
-		if (!$REGEXP_DB) $query = "%".$query."%";
+		if (is_null($this->sourcelist)) {
+			$query="REPO @".$this->xref."@";
+			if (!$REGEXP_DB) {
+				$query="%".$query."%";
+			}
 
-		$this->sourcelist = search_sources($query);
-		uasort($this->sourcelist, "itemsort");
+			$this->sourcelist=search_sources($query);
+			uasort($this->sourcelist, "itemsort");
+		}
 		return $this->sourcelist;
 	}
 
