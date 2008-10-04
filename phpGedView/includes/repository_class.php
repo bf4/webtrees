@@ -38,14 +38,20 @@ class Repository extends GedcomRecord {
 	var $sourcelist     =null;
 	var $repositoryfacts=null;
 
-	/**
-	 * Static function used to get an instance of a repository object
-	 * @param string $pid	the ID of the repository to retrieve
-	 */
-	static function &getInstance($pid, $simple=true) {
+	// Get an instance of a Repository.  We either specify
+	// an XREF (in the current gedcom), or we can provide a row
+	// from the database (if we anticipate the record hasn't
+	// been fetched previously).
+	static function &getInstance($data, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
-		$ged_id=get_id_from_gedcom($GEDCOM);
+		if (is_array($data)) {
+			$ged_id=$data['ged_id'];
+			$pid   =$data['xref'];
+		} else {
+			$ged_id=get_id_from_gedcom($GEDCOM);
+			$pid   =$data;	
+		}
 
 		// Check the cache first
 		if (isset($gedcom_record_cache[$pid][$ged_id])) {
@@ -53,27 +59,29 @@ class Repository extends GedcomRecord {
 		}
 
 		// Look for the record in the database
-		$data=fetch_other_record($pid, $ged_id);
+		if (!is_array($data)) {
+			$data=fetch_other_record($pid, $ged_id);
+	
+			// If we didn't find the record in the database, it may be remote
+			if (!$data && strpos($pid, ':')) {
+				list($servid, $remoteid)=explode(':', $pid);
+				$service=ServiceClient::getInstance($servid);
+				if ($service) {
+					// TYPE will be replaced with the type from the remote record
+					$data=$service->mergeGedcomRecord($remoteid, "0 @{$pid}@ TYPE\n1 RFN {$pid}", false);
+				}
+			}	
 
-		// If we didn't find the record in the database, it may be remote
-		if (!$data && strpos($pid, ':')) {
-			list($servid, $remoteid)=explode(':', $pid);
-			$service=ServiceClient::getInstance($servid);
-			if ($service) {
-				// TYPE will be replaced with the type from the remote record
-				$data=$service->mergeGedcomRecord($remoteid, "0 @{$pid}@ TYPE\n1 RFN {$pid}", false);
+			// If we didn't find the record in the database, it may be new/pending
+			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
+				$data=find_updated_record($pid);
+				$fromfile=true;
 			}
-		}
 
-		// If we didn't find the record in the database, it may be new/pending
-		if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
-			$data=find_updated_record($pid);
-			$fromfile=true;
-		}
-
-		// If we still didn't find it, it doesn't exist
-		if (!$data) {
-			return null;
+			// If we still didn't find it, it doesn't exist
+			if (!$data) {
+				return null;
+			}
 		}
 
 		// Create the object
