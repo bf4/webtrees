@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["install_step_8"] 			= "התחל"; 
 $pgv_lang["parent_family"]			= "משפחה של הורים"; 
 $pgv_lang["step_parent_family"]		= "משפחה של הורה חורג";
 $pgv_lang["immediate_family"]		= "משפחה מידית"; 
@@ -415,8 +416,6 @@ $pgv_lang["text"]			= "טקסט מקור:";
 $pgv_lang["note"]			= "הערה";
 $pgv_lang["NN"]			= "(לא ידוע)";
 $pgv_lang["PN"]			= "(לא ידוע)";
-//$pgv_lang["NN"] 			= "(unknown)";
-//$pgv_lang["PN"] 			= "(unknown)";
 $pgv_lang["NNhebrew"] 		= "(לא ידוע)";
 $pgv_lang["PNhebrew"] 		= "(לא ידוע)";
 $pgv_lang["NNarabic"] 		= "(غير معروف)";
@@ -524,6 +523,7 @@ $pgv_lang["download_file"]		= "הורד קובץ #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "האדם הורד מהאתר:";
 $pgv_lang["family_downloaded_from"]	= "המשפחה הורדה מהאתר:";
 $pgv_lang["source_downloaded_from"]	= "המקור הורד מהאתר:";
+$pgv_lang["enter_person_generations"] 	= "מספר דורות:"; 
 
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "קשרים נמצאו למקום";
