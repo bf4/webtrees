@@ -494,17 +494,18 @@ function smart_utf8_decode($in_str) {
  * @return array		The array of codes
  */
 function DMSoundex($name, $option = "") {
-	global $PGV_BASEDIRECTORY, $dmsoundexlist, $dmcoding, $maxchar, $INDEX_DIRECTORY, $cachecount, $cachename;
+	global $dmsoundexlist, $dmcoding, $maxchar, $INDEX_DIRECTORY, $cachecount, $cachename;
 
 	// If the code tables are not loaded, reload! Keep them global!
-	if (!isset($dmcoding)) {
-		$fname = $PGV_BASEDIRECTORY."includes/dmarray.full.utf-8.php";
+	if (!defined('PGV_DMARRAY_FULL_UTF_8_PHP')) {
+		$fname = "includes/dmarray.full.utf-8.php";
 		require($fname);
 	}
 
 	// Load the previously saved cachefile and return. Keep the cache global!
 
 	if ($option == "opencache") {
+		$fname = "includes/dmarray.full.utf-8.php";
 		$cachename = $INDEX_DIRECTORY."DM".date("mdHis", filemtime($fname)).".dat";
 		if (file_exists($cachename)) {
 			$fp = fopen($cachename, "r");

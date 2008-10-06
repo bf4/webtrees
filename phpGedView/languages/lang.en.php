@@ -31,6 +31,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["exact"]				= "Exact";
+$pgv_lang["advanced_search"] 	= "Advanced Search";
+$pgv_lang["more_fields"]		= "Add More Fields";
 $pgv_lang["install_step_8"] 		= "Get Started";
 $pgv_lang["parent_family"]			= "Parents Family";
 $pgv_lang["step_parent_family"]		= "Step-Parent Family";
