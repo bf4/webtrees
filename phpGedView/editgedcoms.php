@@ -32,8 +32,9 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
-$action=safe_POST('action', array('delete', 'setdefault'));
-$default_ged=safe_POST('default_ged', get_all_gedcoms());
+$action     =safe_GET('action', array('delete', 'setdefault'));
+$ged        =safe_GET('ged',         get_all_gedcoms());
+$default_ged=safe_GET('default_ged', get_all_gedcoms());
 
 /**
  * Check if a gedcom file is downloadable over the internet
@@ -59,9 +60,6 @@ function check_gedcom_downloadable($gedfile) {
 	if (strpos($txt, " HEAD")==false) return false;
 	return $url;
 }
-
-if (!isset($action)) $action="";
-if (!isset($ged)) $ged = "";
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
@@ -99,7 +97,7 @@ if (($action=="setdefault") && $default_ged) {
 print "<br /><br />";
 ?>
 <span class="subheaders"><?php print_text("current_gedcoms"); ?></span><br />
-<form name="defaultform" method="post" action="editgedcoms.php">
+<form name="defaultform" method="get" action="editgedcoms.php">
 <input type="hidden" name="action" value="setdefault" />
 <?php
 // Default gedcom choice
