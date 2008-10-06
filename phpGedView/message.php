@@ -34,6 +34,7 @@ $subject   =isset($_REQUEST['subject'   ]) ? $_REQUEST['subject'   ] : '';
 $url       =isset($_REQUEST['url'       ]) ? $_REQUEST['url'       ] : '';
 $method    =isset($_REQUEST['method'    ]) ? $_REQUEST['method'    ] : 'messaging2';
 $body      =isset($_REQUEST['body'      ]) ? $_REQUEST['body'      ] : '';
+$from_email=isset($_REQUEST['from_email']) ? $_REQUEST['from_email'] : '';
 $from_name =isset($_REQUEST['from_name' ]) ? $_REQUEST['from_name' ] : '';
 $to        =isset($_REQUEST['to'        ]) ? $_REQUEST['to'        ] : '';
 $action    =isset($_REQUEST['action'    ]) ? $_REQUEST['action'    ] : 'compose';
