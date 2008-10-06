@@ -1120,6 +1120,12 @@ class MenuBar
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
+		//-- advanced search
+		$submenu = new Menu($pgv_lang["advanced_search"], encode_url("search_advanced.php?ged={$GEDCOM}"));
+		if (!empty($PGV_IMAGES["search"]["small"]))
+			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$menu->addSubmenu($submenu);
 		//-- search_replace sub menu
 		if (PGV_USER_CAN_EDIT) {
 			$submenu = new Menu($pgv_lang["search_replace"], encode_url("search.php?ged={$GEDCOM}&action=replace"));
