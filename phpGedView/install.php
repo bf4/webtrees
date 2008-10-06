@@ -119,9 +119,9 @@ header("Content-Type: text/html; charset=$CHARACTER_SET");
 	//-->
 </script>
 </head>
-<body id="body">
+<body id="body" dir="<?php print $TEXT_DIRECTION; ?>">
 <br />
-<table class="list_table person_boxNN width70" cellspacing="0" cellpadding="5">
+<table class="list_table person_boxNN width70" style="background-color: none;" cellspacing="0" cellpadding="5">
 <?php
 
 //-- don't allow configuration if the DB is down but the site is configured
@@ -129,7 +129,11 @@ if ($CONFIGURED && DB::isError($DBCONN)) {
 	?>
 	<tr>
 		<td class="center">
+			<?php if (file_exists($THEME_DIR."/header.jpg")) { ?>
 			<img src="<?php print $THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
+			<?php } else { ?>
+			<h2>PhpGedView</h2>
+			<?php } ?>
 		</td>
 	</tr>
 	<tr>
@@ -368,7 +372,11 @@ $errormsg = "";
 		<h2><?php print $pgv_lang["install_wizard"]; ?></h2>
 		</td>
 		<td class="center">
+			<?php if (file_exists($THEME_DIR."/header.jpg")) { ?>
 			<img src="<?php print $THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
+			<?php } else { ?>
+			<h1>PhpGedView</h1>
+			<?php } ?>
 		</td>
 	</tr>
 	<tr>
