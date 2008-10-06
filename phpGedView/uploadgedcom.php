@@ -58,32 +58,9 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	exit;
 }
 
-$action         =isset($_REQUEST['action'         ]) ? $_REQUEST['action'         ] : null;
-$autoContinue   =isset($_REQUEST['autoContinue'   ]) ? $_REQUEST['autoContinue'   ] : null;
-$bakfile        =isset($_REQUEST['bakfile'        ]) ? $_REQUEST['bakfile'        ] : null;
-$check          =isset($_REQUEST['check'          ]) ? $_REQUEST['check'          ] : null;
-$continue       =isset($_REQUEST['continue'       ]) ? $_REQUEST['continue'       ] : null;
-$ged            =isset($_REQUEST['ged'            ]) ? $_REQUEST['ged'            ] : null;
-$exists         =isset($_REQUEST['exists'         ]) ? $_REQUEST['exists'         ] : null;
-$FILE           =isset($_REQUEST['FILE'           ]) ? $_REQUEST['FILE'           ] : null;
-$GEDFILENAME    =isset($_REQUEST['GEDFILENAME'    ]) ? $_REQUEST['GEDFILENAME'    ] : null;
-$import         =isset($_REQUEST['import'         ]) ? $_REQUEST['import'         ] : null;
-$importtime     =isset($_REQUEST['importtime'     ]) ? $_REQUEST['importtime'     ] : null;
-$import_existing=isset($_REQUEST['import_existing']) ? $_REQUEST['import_existing'] : null;
-$keepmedia      =isset($_REQUEST['keepmedia'      ]) ? $_REQUEST['keepmedia'      ] : null;
-$l_isansi       =isset($_REQUEST['l_isansi'       ]) ? $_REQUEST['l_isansi'       ] : null;
-$no_upload      =isset($_REQUEST['no_upload'      ]) ? $_REQUEST['no_upload'      ] : null;
-$ok             =isset($_REQUEST['ok'             ]) ? $_REQUEST['ok'             ] : null;
-$override       =isset($_REQUEST['override'       ]) ? $_REQUEST['override'       ] : null;
-$path           =isset($_REQUEST['path'           ]) ? $_REQUEST['path'           ] : null;
-$row_histo      =isset($_REQUEST['row_histo'      ]) ? $_REQUEST['row_histo'      ] : null;
-$row_rela       =isset($_REQUEST['row_rela'       ]) ? $_REQUEST['row_rela'       ] : null;
-$stage          =isset($_REQUEST['stage'          ]) ? $_REQUEST['stage'          ] : null;
-$startimport    =isset($_REQUEST['startimport'    ]) ? $_REQUEST['startimport'    ] : null;
-$timelimit      =isset($_REQUEST['timelimit'      ]) ? $_REQUEST['timelimit'      ] : null;
-$utf8convert    =isset($_REQUEST['utf8convert'    ]) ? $_REQUEST['utf8convert'    ] : null;
-$verify         =isset($_REQUEST['verify'         ]) ? $_REQUEST['verify'         ] : null;
-$xreftype       =isset($_REQUEST['xreftype'       ]) ? $_REQUEST['xreftype'       ] : null;
+// editconfig.php and uploadgedcom.php make extensive use of
+// import_request_variables and are heavily inter-dependent.
+@import_request_variables('cgp');
 
 @ini_set('zlib.output_compression','0');
 
