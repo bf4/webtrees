@@ -90,7 +90,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				print "<img src=\"images/URL.png\" height=\"48\" width=\"44\"border=\"0\" " ;
 			//Else If local flv file, print the common flash thumbnail
 			}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
-				print "<img src=\"modules/lightbox/JWplayer/flash.png\" height=\"38\" border=\"0\" " ;
+				print "<img src=\"modules/JWplayer/flash.png\" height=\"38\" border=\"0\" " ;
 			// Else Print the Regular Thumbnail if associated with a thumbnail image,
 			}else{
 				print "<img src=\"".$thumbnail."\" height=\"38\" border=\"0\" " ;
