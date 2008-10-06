@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: JWplayer : Corrected wrong path to Reorder option, now incudes correct thumbnail (windmillway)
  - Added: JW flash video player support whether Lightbox module installed or not. 
           Note: JWplayer module IS required for either case for flv playback. (windmillway)
  - Changed: JW flash video player support now in separate module. Prepares for upcoming flash video support with or w/o Lightbox. (windmillway)
