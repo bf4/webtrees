@@ -1,6 +1,8 @@
 <?php
 /**
  * Script to test the Tree Navigation modules.
+ * To embed the tree for use in mashups or on blogs use code such as this:
+ * <script type="text/javascript" src="http://yourserver/phpgedview/treenav.php?navAjax=embed&rootid=I14&width=400&height=300"></script> 
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2008  PGV Development Team.  All rights reserved.

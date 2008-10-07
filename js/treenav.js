@@ -30,7 +30,7 @@ function NavTree(outerId, innerId, name, xref) {
 
 	this.innerPort = document.getElementById(innerId);
 	this.outerPort = document.getElementById(outerId);
-	this.rootTable = this.innerPort.getElementsByTagName("table")[0];
+	if (this.innerPort) this.rootTable = this.innerPort.getElementsByTagName("table")[0];
 	this.loading = document.getElementById(name+"_loading");
 	this.oldText = new Array();
 	this.oldWidth = new Array();
