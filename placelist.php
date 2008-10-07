@@ -157,18 +157,18 @@ if ($display=="hierarchy") {
 		if ($level>=1 and $level<=3) {
 			$country = $parent[0];
 			if ($country == "\xD7\x99\xD7\xA9\xD7\xA8\xD7\x90\xD7\x9C") $country = "ISR"; // Israel hebrew name
-			$country = strtoupper($country);
+			$country = UTF8_strtoupper($country);
 			if (strlen($country)!=3) {
 				// search country code using current language countries table
 				require("languages/countries.en.php");
 				if (file_exists("languages/countries.".$lang_short_cut[$deflang].".php")) require("languages/countries.".$lang_short_cut[$deflang].".php");
 				foreach ($countries as $countrycode => $countryname) {
-					if (strtoupper($countryname) == $country) {
+					if (UTF8_strtoupper($countryname) == $country) {
 						$country = $countrycode;
 						break;
 					}
 				}
-				if (strlen($country)!=3) $country=substr($country,0,3);
+				//if (strlen($country)!=3) $country=substr($country,0,3);	//Indiana -> IND (India)
 			}
 			$mapname = $country;
 			$areaname = $parent[0];

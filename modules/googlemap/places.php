@@ -41,6 +41,7 @@ if (isset($_REQUEST['action']))	 $action=$_REQUEST['action'];
 if (isset($_REQUEST['parent']))	 $parent=$_REQUEST['parent'];
 if (isset($_REQUEST['display'])) $display=$_REQUEST['display'];
 if (isset($_REQUEST['mode']))	 $mode=$_REQUEST['mode'];
+if (isset($_REQUEST['deleteRecord'])) $deleteRecord=$_REQUEST['deleteRecord'];
 
 if (!isset($action)) $action="";
 if (!isset($parent)) $parent=0;
