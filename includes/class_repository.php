@@ -1,6 +1,6 @@
 <?php
 /**
- * Class file for a Source (SOUR) object
+ * Class file for a Repository (REPO) object
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
@@ -29,18 +29,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_SOURCE_CLASS_PHP', '');
+define('PGV_CLASS_REPOSITORY_PHP', '');
 
-require_once 'includes/gedcomrecord.php';
-require_once 'includes/serviceclient_class.php';
+require_once 'includes/class_gedcomrecord.php';
+require_once 'includes/class_serviceclient.php';
 
-class Source extends GedcomRecord {
-	var $indilist=null;
-	var $famlist =null;
-	var $repo    =null;
-	var $auth    =null;
+class Repository extends GedcomRecord {
+	var $sourcelist     =null;
+	var $repositoryfacts=null;
 
-	// Get an instance of a Source.  We either specify
+	// Get an instance of a Repository.  We either specify
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
@@ -62,7 +60,7 @@ class Source extends GedcomRecord {
 
 		// Look for the record in the database
 		if (!is_array($data)) {
-			$data=fetch_source_record($pid, $ged_id);
+			$data=fetch_other_record($pid, $ged_id);
 	
 			// If we didn't find the record in the database, it may be remote
 			if (!$data && strpos($pid, ':')) {
@@ -87,7 +85,7 @@ class Source extends GedcomRecord {
 		}
 
 		// Create the object
-		$object=new Source($data, $simple);
+		$object=new Repository($data, $simple);
 		if (!empty($fromfile)) {
 			$object->setChanged(true);
 		}
@@ -98,127 +96,68 @@ class Source extends GedcomRecord {
 	}
 
 	/**
-	 * get source facts array
+	 * get the repository name
+	 * @return string
+	 */
+	function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * get repository facts array
 	 * @return array
 	 */
-	function getSourceFacts() {
+	function getRepositoryFacts() {
 		$this->parseFacts();
 		return $this->facts;
 	}
 
 	/**
-	 * get the count of individuals connected to this source
+	 * get the list of sources connected to this repository
 	 * @return array
 	 */
-	function countSourceIndis() {
-		return get_list_size("indilist", "SOUR @".$this->xref."@");
-	}
-
-	/**
-	 * get the list of individuals connected to this source
-	 * @return array
-	 */
-	function getSourceIndis() {
+	function getRepositorySours() {
 		global $REGEXP_DB;
-		if (is_null($this->indilist)) {
-			$query="SOUR @".$this->xref."@";
+		if (is_null($this->sourcelist)) {
+			$query="REPO @".$this->xref."@";
 			if (!$REGEXP_DB) {
 				$query="%".$query."%";
 			}
 
-			$this->indilist = search_indis($query);
-			uasort($this->indilist, "itemsort");
-
-			//-- load up the families with 1 query
-			$famids = array();
-			foreach($this->indilist as $gid=>$indi) {
-				$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
-				for($i=0; $i<$ct; $i++) {
-					$famid = $match[$i][1];
-					$famids[] = $famid;
-				}
-			}
-			load_families($famids);
+			$this->sourcelist=search_sources($query);
+			uasort($this->sourcelist, "itemsort");
 		}
-		return $this->indilist;
+		return $this->sourcelist;
 	}
 
 	/**
-	 * get the count of families connected to this source
+	 * get the count of sources connected to this repository
 	 * @return array
 	 */
-	function countSourceFams() {
-		return get_list_size("famlist", "SOUR @".$this->xref."@");
+	function countLinkedSources() {
+		global $DBCONN, $TBLPREFIX, $TOTAL_QUERIES;
+
+		$query=preg_replace('/([_%@])/', '@$1', $DBCONN->escapeSimple($this->getXref()));
+
+		++$TOTAL_QUERIES;
+		return $DBCONN->getOne(
+			"SELECT COUNT(s_id) FROM {$TBLPREFIX}sources ".
+			"WHERE s_gedcom LIKE '%\n1 REPO @@{$query}@@%' ESCAPE '@' ".
+			"AND s_file=".$this->ged_id
+		);
 	}
 
 	/**
-	 * get the list of families connected to this source
-	 * @return array
-	 */
-	function getSourceFams() {
-		global $REGEXP_DB;
-
-		if (is_null($this->famlist)) {
-			$query="SOUR @".$this->xref."@";
-			if (!$REGEXP_DB) {
-				$query="%".$query."%";
-			}
-
-			$this->famlist=search_fams($query);
-			uasort($this->famlist, "itemsort");
-		}
-		return $this->famlist;
-	}
-
-	/**
-	 * get the count of objects connected to this source
-	 * @return array
-	 */
-	function countSourceObjects() {
-		return get_list_size("objectlist", "SOUR @".$this->xref."@");
-	}
-
-	/**
-	 * get the source name
-	 * @return string
-	 */
-	function getName() {
-		return $this->getFullName();
-	}
-
-	/**
-	 * get the repository of this source record
-	 * @return string
-	 */
-	function getRepo() {
-		if (is_null($this->repo)) {
-			$this->repo=get_gedcom_value("REPO", 1, $this->gedrec, '', false);
-		}
-		return $this->repo;
-	}
-
-	/**
-	 * get the author of this source record
-	 * @return string
-	 */
-	function getAuth() {
-		if (is_null($this->auth)) {
-			$this->auth=get_gedcom_value("AUTH", 1, $this->gedrec, '', false);
-		}
-		return $this->auth;
-	}
-
-	/**
-	 * get the URL to link to this source
-	 * @string a url that can be used to link to this source
+	 * get the URL to link to this repository
+	 * @string a url that can be used to link to this repository
 	 */
 	function getLinkUrl() {
-		return parent::getLinkUrl('source.php?sid=');
+		return parent::getLinkUrl('repo.php?rid=');
 	}
 
 	// Get an array of structures containing all the names in the record
 	function getAllNames() {
-		return parent::getAllNames('TITL');
+		return parent::getAllNames('NAME');
 	}
 }
 ?>

@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once("includes/gedcomrecord.php");
+require_once("includes/class_gedcomrecord.php");
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 $pid=safe_GET_xref('pid');

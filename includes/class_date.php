@@ -40,7 +40,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_DATE_CLASS_PHP', '');
+define('PGV_CLASS_DATE_PHP', '');
 
 ////////////////////////////////////////////////////////////////////////////////
 //

@@ -32,9 +32,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_IMPORT_PHP', '');
 
-require_once('includes/media_class.php');
+require_once('includes/class_media.php');
 include_once('includes/functions_lang.php');
-require_once('includes/mutex_class.php');
+require_once('includes/class_mutex.php');
 require_once('includes/index_cache.php');
 
 // Programs such as FTM use the "tag formal names" instead of the actual tags.  This list lets us convert.

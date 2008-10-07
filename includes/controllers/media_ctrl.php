@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_MEDIA_CTRL_PHP', '');
 
 require_once 'includes/controllers/individual_ctrl.php';
-require_once 'includes/media_class.php';
+require_once 'includes/class_media.php';
 
 class MediaControllerRoot extends IndividualController{
 

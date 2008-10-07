@@ -497,12 +497,12 @@ else
 
 <!-- ============================= Start 6th tab individual page ==== Tree -->
 <?php
-if(empty($SEARCH_SPIDER) && file_exists("includes/treenav_class.php")) {
+if(empty($SEARCH_SPIDER) && file_exists("includes/class_treenav.php")) {
 	print "<div id=\"tree\" class=\"tab_page\" style=\"display:none; border: solid blue 1px;\" >\n";
 ?>
 <div id="tree_content">
 <?php
-	require_once('includes/treenav_class.php');
+	require_once('includes/class_treenav.php');
 	if ($controller->default_tab==5) {
 		$inav = new TreeNav($controller->pid,'treetab');
 	}

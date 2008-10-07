@@ -29,10 +29,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_PERSON_CLASS_PHP', '');
+define('PGV_CLASS_PERSON_PHP', '');
 
-require_once 'includes/gedcomrecord.php';
-require_once 'includes/event_class.php';
+require_once 'includes/class_gedcomrecord.php';
+require_once 'includes/class_event.php';
 
 class Person extends GedcomRecord {
 	var $indifacts = array();

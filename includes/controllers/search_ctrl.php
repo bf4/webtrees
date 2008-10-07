@@ -896,7 +896,7 @@ class SearchControllerRoot extends BaseController {
 	 */
 	function MultiSiteSearch() {
 		global $REGEXP_DB;
-		require_once ('includes/serviceclient_class.php');
+		require_once ('includes/class_serviceclient.php');
 
 		if (!empty ($this->Sites) && count($this->Sites) > 0) {
 			$this->myindilist = array ();
@@ -1428,7 +1428,7 @@ class SearchControllerRoot extends BaseController {
 						$this->multiTotalResults = 0;
 						$somethingPrinted = true;
 						foreach ($this->multisiteResults as $key => $siteResults) {
-							include_once('includes/serviceclient_class.php');
+							include_once('includes/class_serviceclient.php');
 							$serviceClient = ServiceClient :: getInstance($key);
 							$siteName = $serviceClient->getServiceTitle();
 							$siteURL = dirname($serviceClient->getURL());

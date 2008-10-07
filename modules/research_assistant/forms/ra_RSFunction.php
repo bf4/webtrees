@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 loadLangFile("research_assistant:lang");
 
 include_once("modules/research_assistant/forms/ra_privacy.php");
-require_once("includes/person_class.php");
+require_once("includes/class_person.php");
 
 	//the inferences function will look for correlations 
 	//and return an array with each probability

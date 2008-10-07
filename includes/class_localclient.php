@@ -28,9 +28,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_LOCALCLIENT_CLASS_PHP', '');
+define('PGV_CLASS_LOCALCLIENT_PHP', '');
 
-require_once 'includes/serviceclient_class.php';
+require_once 'includes/class_serviceclient.php';
 
 class LocalClient extends ServiceClient {
 	/**

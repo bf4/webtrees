@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'includes/person_class.php';
+require_once 'includes/class_person.php';
 
 class Base_AutoSearch {
 	// These values should be class static/constant properties.

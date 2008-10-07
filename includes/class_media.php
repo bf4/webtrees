@@ -29,9 +29,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_MEDIA_CLASS_PHP', '');
+define('PGV_class_MEDIA_PHP', '');
 
-require_once('includes/gedcomrecord.php');
+require_once('includes/class_gedcomrecord.php');
 
 class Media extends GedcomRecord {
 	var $title         =null;

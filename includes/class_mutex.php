@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_MUTEX_CLASS_PHP', '');
+define('PGV_CLASS_MUTEX_PHP', '');
 
 class Mutex {
 	var $name; 	//-- the name of the mutex

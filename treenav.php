@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require_once("includes/treenav_class.php");
+require_once("includes/class_treenav.php");
 
 $zoom = 0;
 $rootid = '';

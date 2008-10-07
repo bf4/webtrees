@@ -36,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 // Require the database functions
 require_once("includes/functions_db.php");
-require_once("includes/person_class.php");
+require_once("includes/class_person.php");
 global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
  
  	/**

@@ -35,7 +35,7 @@ if (!empty($lang)) {
 	$NEWLANGUAGE = $lang;
 }
 
-require 'includes/feedcreator.class.php';
+require 'includes/class_feedcreator.php';
 require 'includes/functions_rss.php';
 require 'includes/index_cache.php';
 

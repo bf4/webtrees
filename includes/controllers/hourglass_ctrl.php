@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_HOURGLASS_CTRL_PHP', '');
 
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/person_class.php';
+require_once 'includes/class_person.php';
 require_once 'includes/functions_charts.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying

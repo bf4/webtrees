@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PRINT_FACTS_PHP', '');
 
-require_once 'includes/person_class.php';
+require_once 'includes/class_person.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -1414,7 +1414,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		//-- check if we need to get the object from a remote location
 		$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 		if ($ct>0) {
-			require_once 'includes/serviceclient_class.php';
+			require_once 'includes/class_serviceclient.php';
 			$client = ServiceClient::getInstance($match[1]);
 			if (!is_null($client)) {
 				$newrec = $client->getRemoteRecord($match[2]);

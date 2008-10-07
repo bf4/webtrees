@@ -35,7 +35,7 @@ define('PGV_REMOTELINK_CTRL_PHP', '');
 
 require_once('includes/controllers/basecontrol.php');
 require_once("includes/functions_edit.php");
-require_once("includes/serviceclient_class.php");
+require_once("includes/class_serviceclient.php");
 
 class RemoteLinkController extends BaseController {
 	var $has_familysearch = false;

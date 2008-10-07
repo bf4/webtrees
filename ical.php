@@ -32,8 +32,8 @@
 
 require './config.php';
 
-require_once 'includes/person_class.php';
-require_once 'includes/family_class.php';
+require_once 'includes/class_person.php';
+require_once 'includes/class_family.php';
 
 //Basic http auth needed for non browser authentication. If the user is not logged in and fails basic auth, nothing will be returned
 basicHTTPAuthenticateUser();
