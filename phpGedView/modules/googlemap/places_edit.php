@@ -730,18 +730,27 @@ if ($action=="add") {
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("PLE_PRECISION_help", "qm", "PLE_PRECISION");?><?php echo $pgv_lang["pl_precision"];?></td>
+		<?php
+			$exp = explode(".", $place_lati);
+			if (isset($exp[1])) $precision1 = strlen($exp[1]);
+			else $precision1 = 0;
+			$exp = explode(".", $place_long);
+			if (isset($exp[1])) $precision2 = strlen($exp[1]);
+			else $precision2 = 0;
+			($precision1 > $precision2) ? ($precision = $precision1) : ($precision = $precision2);
+		?>
 		<td class="optionbox">
-			<input type="radio" id="new_prec_0" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==0) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_0" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_0) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_0"><?php echo $pgv_lang["pl_country"];?></label>
-			<input type="radio" id="new_prec_1" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==1) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_1;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_1" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_1) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_1;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_1"><?php echo $pgv_lang["pl_state"];?></label>
-			<input type="radio" id="new_prec_2" name="NEW_PRECISION" onchange="updateMap();" <?php if(($level==2)||($level==3)) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_2;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_2" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_2) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_2;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_2"><?php echo $pgv_lang["pl_city"];?></label>
-			<input type="radio" id="new_prec_3" name="NEW_PRECISION" onchange="updateMap();" <?php if($level==4) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_3;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_3" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_3) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_3;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_3"><?php echo $pgv_lang["pl_neighborhood"];?></label>
-			<input type="radio" id="new_prec_4" name="NEW_PRECISION" onchange="updateMap();"<?php if($level==5) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_4;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_4" name="NEW_PRECISION" onchange="updateMap();"<?php if($precision==$GOOGLEMAP_PRECISION_4) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_4;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_4"><?php echo $pgv_lang["pl_house"];?></label>
-			<input type="radio" id="new_prec_5" name="NEW_PRECISION" onchange="updateMap();" value="<?php echo $GOOGLEMAP_PRECISION_5;?>" />
+			<input type="radio" id="new_prec_5" name="NEW_PRECISION" onchange="updateMap();"<?php if($precision>$GOOGLEMAP_PRECISION_4) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_5;?>" />
 			<label for="new_prec_5"><?php echo $pgv_lang["pl_max"];?></label>
 		</td>
 	</tr>
